@@ -4,9 +4,9 @@
 // the zero-dep posture; the GLSL→WGSL transcription is largely mechanical:
 // `fwidth`→`dpdx`/`dpdy`, `gl.uniform*`→`writeBuffer`). The WebGL2 single-pass
 // fragment shader (aurora.frag.ts) stays the universal floor; this is its
-// capability-gated twin drawing the SAME single-pass aurora. The full-quality
-// multi-pass painterly half (the smoothed-tensor + the anisotropic Kuwahara) is
-// painterly.wgsl.ts (W7c), no-op on WebGL2.
+// capability-gated twin drawing the SAME single-pass aurora. AX.W14 — WebGPU is a
+// parity-floor SINGLE-pass opt-in enhancement; the dead multi-pass painterly half
+// (the smoothed-tensor + anisotropic Kuwahara) was excised (zero consumers).
 //
 // The color/noise math is SPLICED from the shared procedural-color chunk's WGSL twin
 // (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL) — NOT re-authored — so the WebGPU

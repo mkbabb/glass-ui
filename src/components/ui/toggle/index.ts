@@ -24,10 +24,14 @@ export { default as Toggle } from './Toggle.vue'
 export const toggleVariants = cva(
   // AW.W25 — `transition-control` (border/shadow/transform/color, not just
   // color) + `.tap-squish` for the iOS press-spring; the four-state contract.
-  // AW.W26 — the shadcn-2025 icon-sizing/gap idiom (un-sized child svg → size-4,
-  // every svg non-shrinking + pointer-transparent; `cn()`'s `/^size-/` bucket
-  // never collides a host-sized icon thanks to the `:not([class*=size-])` guard).
-  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-sm font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-4 [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  // AW.W26 — the shadcn-2025 icon-sizing/gap idiom (un-sized child svg → the glyph
+  // register, every svg non-shrinking + pointer-transparent; `cn()`'s `/^size-/`
+  // bucket never collides a host-sized icon thanks to the `:not([class*=size-])`
+  // guard).
+  // AX.W51 D18 — the control FONT reads `--control-text` (scaled `text-sm`), the
+  // un-sized GLYPH reads `--ui-glyph` (scaled `size-4`), so both grow on the ONE
+  // comfort axis with the height.
+  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-[length:var(--control-text)] font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-[var(--ui-glyph)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -38,9 +42,10 @@ export const toggleVariants = cva(
           'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
       },
       size: {
-        default: 'h-10 px-3',
-        sm: 'h-9 px-2.5',
-        lg: 'h-11 px-5',
+        // AX.W51 D18 — the height rungs read the `--control-h-*` comfort cohort.
+        default: 'h-[var(--control-h-md)] px-3',
+        sm: 'h-[var(--control-h-sm)] px-2.5',
+        lg: 'h-[var(--control-h-lg)] px-5',
       },
     },
     compoundVariants: [

@@ -91,16 +91,22 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 <template>
     <!-- No per-section radius: rounding is owned at the container root clip (Configurator.vue rounded-panel + overflow-hidden); flush sections keep straight border-b dividers — a per-section radius only deforms the hairline on a transparent border-only element. -->
     <div
+        data-slot="configurator-layer"
         :class="cn('configurator-layer border-b border-border/40 last:border-b-0', props.class)"
         :data-state="stateAttr"
     >
         <button
             type="button"
+            data-slot="configurator-layer-trigger"
             :class="
                 cn(
                     'configurator-layer-trigger',
+                    // Glass-atoms section trigger: tap-squish press-spring +
+                    // transition-control surface cross-fade + the canonical
+                    // focus-ring under the full four-state contract. The press
+                    // springs on the same register every band atom uses.
                     'group flex w-full items-center justify-between gap-2 px-3 py-2',
-                    'text-left transition-colors hover:bg-foreground/5 focus-ring',
+                    'tap-squish transition-control text-left hover:bg-foreground/5 focus-ring',
                 )
             "
             :aria-expanded="open"
@@ -117,8 +123,10 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     {{ sub }}
                 </span>
             </div>
+            <!-- Chevron rotates on the fast snappy spring register (the §6 enter
+                 vocabulary) — a crisp settle, not the prior flat 200ms bezier. -->
             <ChevronDown
-                class="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180"
+                class="configurator-layer-chevron h-4 w-4 shrink-0 text-muted-foreground group-data-[state=open]:rotate-180"
                 aria-hidden="true"
             />
         </button>
@@ -137,7 +145,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             :aria-hidden="!open"
             :inert="!open || undefined"
             :data-state="stateAttr"
-            class="configurator-layer-region grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+            class="configurator-layer-region grid motion-reduce:transition-none"
             :style="{ gridTemplateRows: open ? '1fr' : '0fr' }"
         >
             <div class="min-h-0 overflow-hidden">
@@ -157,3 +165,28 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
         </div>
     </div>
 </template>
+
+<style scoped>
+/*
+ * Section-reveal MOTION (the D1 "faster/smoother/springier" ask). The
+ * `grid-template-rows: 0fr ↔ 1fr` reveal machinery is the M.W2 Lane A
+ * recursion-free CSS-only pattern — UNTOUCHED. Only its TIMING moves: from
+ * the prior flat `duration-200 ease-out` bezier onto the §6 enter register —
+ * the fast snappy spring (`--spring-snappy`) at `--duration-fast`. The
+ * height axis is a layout property; the snappy `linear()` overshoot reads as
+ * a quick settle (sub-perceptual peak), not a sluggish 200ms ramp. The
+ * chevron rotation rides the SAME spring for one coherent open gesture.
+ */
+.configurator-layer-region {
+    transition: grid-template-rows var(--duration-fast) var(--spring-snappy);
+}
+.configurator-layer-chevron {
+    transition: transform var(--duration-fast) var(--spring-snappy);
+}
+@media (prefers-reduced-motion: reduce) {
+    .configurator-layer-region,
+    .configurator-layer-chevron {
+        transition: none;
+    }
+}
+</style>

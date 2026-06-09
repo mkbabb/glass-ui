@@ -1,0 +1,88 @@
+{
+  "wave": "AX.W36",
+  "title": "Forced-colors / Windows-High-Contrast glass-language skin",
+  "band": "G",
+  "severity": "major",
+  "dependsOn": ["AX.W00", "AX.W09"],
+  "status": "GREEN",
+  "headBaseline": "391d8fb",
+  "summary": "Ship one library-level @media (forced-colors: active) skin for the entire glass language so structure, hierarchy, and meaning survive when the glass evaporates under Windows-High-Contrast. The skin restores STRUCTURE (borders/fills/outlines via the standard WHC system keywords) and YIELDS color to the user's forced palette — no forced-color-adjust: none brand pin, no parallel WHC stylesheet.",
+  "redWitness": {
+    "head": "391d8fb (the dispatch HEAD; the wave doc's eaba94f baseline lineage)",
+    "witness1": "the glass language had NO forced-colors structure-survival skin — the only @media (forced-colors: active) block in glass-ui CSS was the AS-era focus-ring/silhouette fallback (utilities.css), covering 5 focus-visible selectors + 3 silhouette carriers, NONE of which were the five-rung glass-material ladder, the StatusDot hue glyph, or the floating/overlay surfaces.",
+    "witness1Falsifiable": "at HEAD: glass.css had 0 `forced-colors: active` blocks; StatusDot.vue had 0 `data-status`; utilities.css had 0 dock-control/btn-pill focus generalization. Confirmed via git show HEAD.",
+    "witness2": "the AS-era block scoped itself by its own commentary to the focus-ring + silhouette-edge case — the glass-material ladder / StatusDot hue identity / floating surfaces were never covered. The constellation audit (result[5], muster K cross-repo evidence) routed the gap to a NEW AX wave (W36).",
+    "liveRedRender": "Playwright forcedColors:'active' readback on the patched-tree-MINUS-skin would resolve: a .glass-floating pane's border-style as `none` (no CanvasText edge); two StatusDots of different status the SAME painted fill (the chroma collapse — all inline hues forced-color-adjust-remapped to one Canvas color)."
+  },
+  "ratifyDispositions": {
+    "skinHome": {
+      "decision": "RATIFY-BEFORE-IMPL #1 — skin home glass-material.css vs a consolidated utilities/media.css forced-colors family.",
+      "resolution": "W25b has NOT landed at dispatch (no src/styles/glass-material.css, no src/styles/utilities/ dir). Per the §6.2 Class-3 HALT-AND-RATIFY clause: took the recorded default home — the glass-LANGUAGE extension (tier-pane borders + ::before/::after yield + floating fills + StatusDot triplet) landed in glass.css (co-located with the ladder it skins, adjacent to the existing reduced-transparency / prefers-contrast a11y brackets); the FOCUS-RING rung stays generalized in utilities.css (the existing AS-era block extended in place).",
+      "w25bRelocationNote": "When W25b carves, it must RELOCATE: (a) the glass.css @media (forced-colors: active) block → glass-material.css (the renamed home); (b) the utilities.css forced-colors focus block → utilities/media.css. W36 lands its skin content in the CURRENT homes; W25b carries the two blocks as relocation targets. The skin is correct in either home — this is a sequencing coordinate, not a collision."
+    },
+    "statusDotCue": {
+      "decision": "RATIFY-BEFORE-IMPL #3 — StatusDot non-chroma differentiation cue (border-weight vs shape vs system-color triplet).",
+      "resolution": "Took the recommended system-color triplet keyed off the existing variant via data-status: active(ok)→Highlight, paused(warn)→Mark, error→CanvasText, idle/custom→Canvas, every dot bordered 1px solid CanvasText. The diagnostic loop did NOT need a fourth re-roll — the FIRST triplet resolves to four genuinely distinct WHC system colors (painted-pixel-verified: active=[55,51,109] indigo, paused=[255,255,0] yellow, error=[0,0,0] black, idle=[255,255,255] white-hollow).",
+      "loadBearingFix": "The component paints the dot fill via an INLINE :style on .status-dot__fill (and an optional pulse ring) — inline (specificity 1,0,0,0) outranks the [data-status] rule AND forced-color-adjust-remaps to ONE Canvas color, covering the outer glyph (the row collapsed to one white dot even with the outer system color set). Resolved with `!important` on the outer system-color fills (beats inline) + display:none on the inner .status-dot__fill / .status-dot__pulse (so the inline-remapped fill does not cover the outer glyph). The painted-pixel π readback (not the outer computed style) is the live-truth that catches this inline-cover class."
+    },
+    "floatingEdgeScope": {
+      "decision": "RATIFY #4 — scope of the floating/overlay edge restoration.",
+      "resolution": "Applied the CanvasText border (the whole ladder) + the Canvas opaque fill to the .glass-floating/.glass-overlay rungs (the ladder-level carriers Dialog/Sheet/Popover/DropdownMenu/HoverCard compose). One path — the ladder-level border suffices; the live render reads the floating Dialog over the resting Card as two distinct boxed regions, no per-component WHC arm needed."
+    },
+    "demoStory": {
+      "decision": "RATIFY #5 — a dedicated forced-colors demo story vs auditing the existing stories under forcedColors:'active'.",
+      "resolution": "No new story. The skin is library-CSS-level and auto-applies; the π audit renders the EXISTING substrates/glass-material + display/status-dot stories under forcedColors:'active' emulation. No proof:story-language exposure (the audit is in tests-visual/, not a demo SFC)."
+    }
+  },
+  "w54w55Coordination": {
+    "w54OpaqueEscape": "the WHC block sets --glass-level: 0 (W54's opaque escape) on :root — the --glass-bg-* opacity recipe firms to solid --card + the --glass-blur-* radii collapse to blur(0) through the SAME ONE-knob machinery, NOT a parallel solid recipe. The grain + highlight kills match the reduced-transparency bracket (off the level axis).",
+    "w55TintAxis": "the W55 --glass-tint-* axis is moot under WHC (the user's forced palette supersedes the ink-darken) but harmless — the opaque plate is system-painted to Canvas. The W55 brackets (the bright bucket + prefers-contrast tint) are untouched.",
+    "preserved": "the W54 --glass-level a11y brackets (reduced-transparency level 0, prefers-contrast level 0.3) + the W55 adaptive tint are intact; W36 adds a third a11y bracket coordinate on the same --glass-level knob."
+  },
+  "folds": {
+    "fold1_ladderSkin": "the five-rung ladder (wash/quiet/resting/floating/overlay) + .glass-card → border: 1px solid CanvasText; the decorative ::before specular + ::after grain → display:none. The selector group mirrors the ladder definition (one source). Co-located in glass.css.",
+    "fold2_meaningSurvival": "StatusDot hue identity → a bordered system-color glyph keyed off data-status (the system-color triplet); the inner inline fill + pulse ring yield. role=img + aria-label unchanged (AN.W4; the accessible name already ships — WHC adds only the visual differentiation). Notification composes .glass-wash (inherits the ladder skin's edge) + carries an icon glyph per type that survives WHC — no extra Notification arm. MetricBadge has no semantic status-tint surface (color is a freeform prop) — no arm (overfitting guard).",
+    "fold3_floatingEdges": "the .glass-floating/.glass-overlay rungs → Canvas background + CanvasText edge so the modal reads as a distinct boxed region over the page.",
+    "fold4_focusGeneralize": "the AS-era utilities.css focus-ring block GENERALIZED — the Highlight outline selector set extended to the dock controls (.dock-icon-button/.dock-tab-button/.dock-select-trigger/.dock-dropdown-trigger) + .btn-pill (all carry a box-shadow focus ring that vanishes under WHC). ONE block, one path — the .glass-dock SHELL keeps its WHC silhouette border here (it is out of the glass-material group by design); the ladder + card get their border from glass.css (one source per surface family)."
+  },
+  "filesEdited": [
+    "src/styles/glass.css — ADD the @media (forced-colors: active) glass-language skin (the ladder borders + the ::before/::after yield + the floating Canvas fills + the StatusDot system-color triplet + the inner-fill yield), co-located with the a11y brackets.",
+    "src/styles/utilities.css — GENERALIZE the AS-era forced-colors focus-ring block (the Highlight outline set extended to the dock controls + .btn-pill; the silhouette border keeps .hairline-accent + .glass-dock, drops .glass-card which now rides the glass.css ladder skin).",
+    "src/components/custom/status-dot/StatusDot.vue — emit :data-status=\"variant\" + carry the .status-dot__dot / .status-dot__fill / .status-dot__pulse hooks (structural attrs/classes from the existing prop; NO new prop, NO ARIA change).",
+    "scripts/proof-forced-colors-skin.mjs — NEW source-arm gate (14 checks; the recipe structure + the W54 coordinate + the no-forced-color-adjust:none yield + the π-spec-exists assert).",
+    "tests-visual/forced-colors-skin.spec.ts — NEW π forcedColors:'active' readback (3 viewports + a normal-mode non-regression arm; the StatusDot row read by PAINTED center pixel — the live-truth path that catches the inline-cover collapse).",
+    "docs/tranches/AX/audit/visual/W36/*.png — the paired-π BEFORE/AFTER + DELTA captures (ladder + StatusDot row + focus, normal vs WHC, at 3 viewports)."
+  ],
+  "gate": {
+    "name": "proof:forced-colors-skin",
+    "sourceArm": "scripts/proof-forced-colors-skin.mjs — 14/14 GREEN (recipe structure; born-RED at HEAD where glass.css had 0 forced-colors blocks + StatusDot had 0 data-status + utilities had 0 dock-focus generalization).",
+    "piArm": "tests-visual/forced-colors-skin.spec.ts — 4/4 GREEN (3 WHC viewports + 1 normal-mode non-regression). The BINDING close; a source grep alone is REJECTED.",
+    "registration": "ROUTED TO W33 — the orchestrator wires the `proof:forced-colors-skin` npm script + the proof:ax-final / release gate-fleet registration. W36 AUTHORS + born-RED→GREEN-proves it.",
+    "form": "RUNTIME-readback (the precept-valid form) — NOT a `grep \"forced-colors\" src/styles/` source-string gate (a collapsed live render would pass it; the corpus demands the visual-truth pass)."
+  },
+  "liveAudit": {
+    "protocol": "Playwright forcedColors:'active' emulation (the Chromium Windows-High-Contrast simulation) at 3 viewports (375x667 / 1280x800 / 1440x900).",
+    "ladderDelta": "BEFORE (normal): three nested glass tiers with subtle translucent edges. AFTER (WHC): three nested DISTINCT bordered boxed regions (CanvasText edges) with legible hierarchy; the decorative specular/grain gone; opaque Canvas fills — the three-transparent-rectangles collapse is reversed.",
+    "statusDotDelta": "BEFORE (normal): ok=green / warn=amber / error=red / idle=grey (meaning by chroma). AFTER (WHC): ok=Highlight indigo [55,51,109] / warn=Mark yellow [255,255,0] / error=CanvasText black [0,0,0] / idle=Canvas white-hollow [255,255,255] (meaning by WHC system color, painted-pixel-verified on the REAL story, not synthetic).",
+    "focusDelta": "the .glass-btn focus ring (box-shadow, gone under WHC) → a visible 2px Highlight outline.",
+    "normalModeNonRegression": "toggling forced-colors OFF returns the exact pre-wave glass aesthetic — the @media arm is inert outside WHC (the W09 specular ::before is NOT display:none, the tier panes keep their glass border). Asserted by the π non-regression arm.",
+    "captures": "docs/tranches/AX/audit/visual/W36/{before-normal,after-whc}-{375x667,1280x800,1440x900}.png + dots-{before-normal,after-whc}.png"
+  },
+  "musterCrossRepo": {
+    "evidence": "muster docs/tranches/K/design/WC-design-atmosphere-a11y.md:16,61-69 — '0 forced-colors hits in glass-ui dist' for the GLASS LANGUAGE as of 3.1.0, the focus-ring rung the sole survivor. The load-bearing evidence this is a LIBRARY-LEVEL a11y hole, not muster-local.",
+    "adoptionRoute": "ROUTED TO W34 — muster pin-bumps to the AX cut and INHERITS the skin for free (library-CSS-level, auto-applies to every .glass-* surface muster mounts). A pin-bump, NOT a muster src edit."
+  },
+  "preceptAlignment": {
+    "substrateWithConsumer": "the consumer is every .glass-* surface under WHC + the named muster K reporter — a universal a11y obligation, not speculative substrate.",
+    "noOverfitting": "keys off the EXISTING five-rung ladder selector group + the EXISTING StatusDot variant/role=img contract; invents NO new token, NO new component prop, NO new ARIA. data-status is a structural attr derived from the existing variant prop. No Notification/MetricBadge arm where no semantic status-tint surface exists.",
+    "onePath": "EXTENDS the single existing @media (forced-colors: active) block per owning file (one per glass.css + utilities.css) — no parallel WHC stylesheet, no .dark forced-colors fork.",
+    "yieldNotPin": "no forced-color-adjust: none — the chrome yields to the user's palette; only the standard WHC keywords (CanvasText/Canvas/Highlight/Mark) leak into the arm.",
+    "piVisualRuntime": "the close is the executed live forcedColors:'active' readback (painted-pixel truth on the real StatusDot story), captured as a paired-π BEFORE/AFTER + DELTA — never a source grep."
+  },
+  "disjointness": {
+    "w09": "W36 only display:none's the .glass-*::before under the WHC arm — it does NOT touch the W09 rest-state specular gradient or any --glass-specular-intensity-* token (disjoint by media-query arm; the normal-mode non-regression arm asserts the ::before is NOT display:none outside WHC).",
+    "w25b": "W36 lands its skin in the CURRENT homes (glass.css + utilities.css) with the relocation note above (W25b carries the two blocks as relocation targets when it carves). W36 does NOT perform the rename/carve.",
+    "w20": "synergy — a GlassPanel surface that becomes a .glass-material div via the W20 retire inherits the WHC border for free (the skin keys off the selector). Verified: .glass-material is in the ladder border selector group.",
+    "siblingBandG": "W19/W20/W21/W22 do not touch the forced-colors arm or StatusDot — file-disjoint at merge (different src/styles files)."
+  }
+}

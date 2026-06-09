@@ -70,6 +70,7 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
 
 <template>
     <div
+        data-slot="configurator-row"
         :class="cn('configurator-row flex flex-col gap-1.5 py-2', props.class)"
         :data-density="resolvedDensity"
     >
@@ -88,7 +89,8 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
             <button
                 v-if="canReset"
                 type="button"
-                class="focus-ring inline-flex h-6 w-6 items-center justify-center rounded-pill text-muted-foreground/60 transition-colors hover:bg-foreground/5 hover:text-foreground active:scale-[var(--scale-press,0.97)]"
+                data-slot="configurator-reset"
+                class="tap-squish transition-control focus-ring inline-flex h-6 w-6 items-center justify-center rounded-pill text-muted-foreground/60 hover:bg-foreground/5 hover:text-foreground"
                 :aria-label="`Reset ${label}`"
                 @click="emit('reset')"
             >

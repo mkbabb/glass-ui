@@ -4,10 +4,7 @@
 // the bind group on a `GPUDevice`, and returns the per-frame hooks that pack +
 // writeBuffer the config and draw the SAME single-pass aurora the WebGL2 fragment path
 // draws. The WGSL module is `aurora.wgsl.ts` (which splices the shared procedural-color
-// WGSL twin — the color math NEVER diverges from the WebGL2/GLSL reference). The
-// multi-pass painterly half (the smoothed tensor + the anisotropic Kuwahara) is
-// `painterly.wgsl.ts` (W7c), wired through the generic FBO/storageTexture seam — NOT
-// baked here.
+// WGSL twin — the color math NEVER diverges from the WebGL2/GLSL reference).
 //
 // AX.W07 — the dynamically-indexed palette/nuclei arrays bind to a SECOND buffer,
 // `var<storage, read> F: Field` at @binding(1) (the int-in-float + uniform-dynamic-index
@@ -15,10 +12,12 @@
 // advanceCursor + carries the `cursor.burst` liveness term, matching the WebGL2
 // `frameLoop` demand gate.
 //
-// This module BAKES NO pass-count / tensor format / Kuwahara-sector-count (the
-// proof:webgpu-substrate-single clause-2 leak): it draws ONE render pass (the base
-// field), exactly as the WebGL2 single-pass fragment shader does. The W7c multi-pass
-// passes are a GENERIC N-pass declaration the consumer configures.
+// AX.W14 — WebGPU is a parity-floor SINGLE-pass opt-in enhancement. The runtime draws
+// ONE render pass (the base field), exactly as the WebGL2 single-pass fragment shader
+// does. The dead multi-pass painterly scaffold (the structure-tensor + anisotropic
+// Kuwahara, the stable-fluids wake) was EXCISED — it shipped as substrate-without-
+// consumer (zero importers) and is forbidden by the no-overfitting bar. The Kuwahara
+// finish is deferred to a future tranche if a real consumer demands it.
 
 import { AURORA_WGSL } from "../constants/shaders/aurora.wgsl";
 import { packGPUUniforms, WGPU_UNIFORM_FLOATS, WGPU_FIELD_FLOATS } from "./uniformBridge";

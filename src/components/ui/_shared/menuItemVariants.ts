@@ -30,7 +30,11 @@ export const menuItemVariants = cva(
     [
         "interactive-item",
         "relative flex w-full cursor-default select-none items-center",
-        "text-sm outline-none",
+        // AX.W50 D17 — the shared item base reads the family `--dropdown-text`
+        // PRIMARY rung (via the `text-dropdown` @theme utility) instead of the raw
+        // `text-sm` literal; all 13 item SFCs that compose this CVA inherit the
+        // governed scale in ONE edit, and the family re-tints from one token.
+        "text-dropdown outline-none",
         // Hover/focus/data-highlighted accent triad — paints the same surface
         // across pointer, keyboard, and reka-ui's internal highlight.
         "hover:bg-accent hover:text-accent-foreground",

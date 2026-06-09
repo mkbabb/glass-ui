@@ -6,7 +6,10 @@ export const badgeVariants = cva(
   // AW.W25 — `transition-control` (border/shadow/transform/color uniformly).
   // AW.W26 — the shadcn-2025 icon-sizing/gap idiom + `wrap-anywhere` value slot
   // (a long value breaks within the badge rather than overflowing its clip).
-  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-3.5 [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  // AX.W51 D18 — the un-sized GLYPH reads `--ui-glyph-sm` (the scaled `size-3.5`
+  // register — a badge is a smaller control, so the quieter glyph rung), grown on
+  // the ONE comfort axis with the size-rung fonts below.
+  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-[var(--ui-glyph-sm)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -29,9 +32,13 @@ export const badgeVariants = cva(
           'border-transparent bg-info text-info-foreground hover:bg-info/80',
       },
       size: {
-        sm: 'text-xs leading-4 px-2 py-0.5',
-        md: 'text-sm leading-5 px-2.5 py-1',
-        lg: 'text-base leading-6 px-3 py-1.5',
+        // AX.W51 D18 — the badge font rungs ride the ONE comfort axis: sm reads the
+        // quieter `--control-text-sm` (scaled `text-xs`), md the `--control-text`
+        // workhorse (scaled `text-sm`), lg the scaled body register, so the badge's
+        // three-rung scale grows in lockstep on a `--ui-scale` override.
+        sm: 'text-[length:var(--control-text-sm)] leading-4 px-2 py-0.5',
+        md: 'text-[length:var(--control-text)] leading-5 px-2.5 py-1',
+        lg: 'text-[length:calc(var(--type-body)*var(--ui-scale))] leading-6 px-3 py-1.5',
       },
     },
     defaultVariants: {

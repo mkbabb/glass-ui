@@ -15,11 +15,16 @@ export const buttonVariants = cva(
   // (0.96); only the spring TRANSITION channel is shared. ONE press source.
   //
   // AW.W26 — the modern shadcn-2025 icon-sizing idiom: an un-sized child `<svg>`
-  // resolves `size-4`, every `<svg>` is non-shrinking + pointer-transparent. The
-  // `:not([class*='size-'])` guard means a host-sized icon (`size-9`/`size-10`)
+  // resolves the glyph register, every `<svg>` is non-shrinking + pointer-transparent.
+  // The `:not([class*='size-'])` guard means a host-sized icon (`size-9`/`size-10`)
   // keeps its own size — `cn()`'s `/^size-/` deduplicator never collides them.
-  // The `gap` already rides `.btn-pill` (0.375rem).
-  'btn-pill tap-squish focus-ring whitespace-nowrap text-sm font-medium cursor-pointer active:scale-[var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-4 [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  // The `gap` already rides `.btn-pill` (scaled).
+  //
+  // AX.W51 D18 — the control FONT + GLYPH ride the ONE `--ui-scale` comfort axis:
+  // the base font reads `--control-text` (the scaled `text-sm` register — RED 3,
+  // "font too small"), the un-sized glyph reads `--ui-glyph` (the scaled `size-4`
+  // register — RED 4, glyph grows WITH the box), keeping the host-sized-icon escape.
+  'btn-pill tap-squish focus-ring whitespace-nowrap text-[length:var(--control-text)] font-medium cursor-pointer active:scale-[var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-[var(--ui-glyph)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -76,12 +81,17 @@ export const buttonVariants = cva(
         // AW.W26 — `has-[>svg]:px-3` tightens the horizontal padding when the
         // button hosts an icon (icon+label), matching the shadcn-2025 size
         // idiom; the icon-only sizes stay `p-0`.
-        default: 'h-10 px-4 py-2 has-[>svg]:px-3',
-        xs: 'h-7 rounded-pill px-2 text-xs',
-        sm: 'h-9 rounded-pill px-3',
-        lg: 'h-11 rounded-pill px-8 has-[>svg]:px-5',
-        icon: 'h-10 w-10 p-0',
-        'icon-sm': 'h-7 w-7 p-0',
+        // AX.W51 D18 — the control HEIGHT rungs read the `--control-h-*` cohort
+        // (the scaled h-7/h-9/h-10/h-11 register, each `max(scaled, --control-floor)`
+        // with the WCAG-44px coarse clamp) instead of the raw `h-N` literal, so the
+        // height grows on the ONE comfort axis. The `xs` rung's quieter font reads
+        // `--control-text-sm` (the scaled `text-xs` register).
+        default: 'h-[var(--control-h-md)] px-4 py-2 has-[>svg]:px-3',
+        xs: 'h-[var(--control-h-xs)] rounded-pill px-2 text-[length:var(--control-text-sm)]',
+        sm: 'h-[var(--control-h-sm)] rounded-pill px-3',
+        lg: 'h-[var(--control-h-lg)] rounded-pill px-8 has-[>svg]:px-5',
+        icon: 'h-[var(--control-h-md)] w-[var(--control-h-md)] p-0',
+        'icon-sm': 'h-[var(--control-h-xs)] w-[var(--control-h-xs)] p-0',
       },
     },
     defaultVariants: {

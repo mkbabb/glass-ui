@@ -163,27 +163,37 @@
         white-space: nowrap;
     }
 
-    /* AX.W45 D15 — the ONE coarse-pointer multiplier (the two prior FLOOR blocks
-       SUBSUMED). On touch, the dock grows ~1.5× via `--dock-scale: var(--dock-
-       mobile-scale, 1.5)` — the SAME knob that threads the WHOLE density cascade, so
-       box + padding + gap + tab + tile-min + glyph all grow in LOCKSTEP (the desktop
-       proportion preserved, never a 44px box around a 20px glyph swimming in desktop
-       padding — the prior floor-not-scale state). At 1.5× comfortable's 40px control
-       → 60px and spacious's 44px → 66px, both PAST the 44px WCAG 2.5.5 target, so the
-       scale SUBSUMES the floor. The 44px guarantee survives as a CLAMP, not a parallel
-       rule: `--dock-control-floor: var(--dock-touch-target)` feeds the `max(…, floor)`
-       in the scaled control-size, so a consumer dialing `--dock-mobile-scale` below
-       1.0 still cannot drop the touch target under 44px. `--size-icon-btn` keeps its
-       floor for STANDALONE icon-button surfaces (a routed gear, no dock ancestor)
-       that read it directly. Fine pointer byte-identical (`--dock-scale` stays 1).
+    /* AX.W45 D15 / AX.W51 D18 RECONCILE — the coarse-pointer dock growth now rides
+       the GLOBAL `--ui-scale` comfort axis, NOT a parallel dock-only 1.5×. The
+       library-wide `@media (pointer: coarse) { :root { --ui-scale:
+       var(--ui-coarse-scale, 1.5) } }` block (tokens.css) lifts the master scalar,
+       and `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))` (its
+       re-homed definition) inherits it FOR FREE — so the dock grows ~1.5× on touch
+       WITH the buttons/inputs/badges (ONE consistent touch scale; at HEAD the dock
+       grew but the rest of the library did not — the three-scale split this resolves).
+       The whole density cascade (box + padding + gap + tab + tile-min + glyph) scales
+       in LOCKSTEP through its existing `calc(<base> * --dock-scale)` chain, zero edit.
+
+       This block keeps ONLY the dock-LOCAL extras the global axis cannot supply:
+         • `--dock-local-scale: var(--dock-mobile-scale, 1)` — the dock-local EXTRA
+           multiplier (default 1 → no extra; the dock matches the global comfort by
+           default). A consumer who wants the dock LARGER than the library on touch
+           sets `--dock-mobile-scale` and it STACKS on top of the global coarse default
+           (NOT a parallel hardcoded 1.5 — the no-double-scale reconcile).
+         • the 44px touch floor: `--dock-control-floor` + `--size-icon-btn` lift to
+           `--dock-touch-target` so the `max(…, floor)` clamp in the scaled control-size
+           guarantees ≥ 44px regardless of the scalar (a sub-1 scale cannot drop the
+           target). `--size-icon-btn` keeps its floor for STANDALONE icon-button
+           surfaces (a routed gear, no dock ancestor) that read it directly.
+       Fine pointer byte-identical (`--ui-scale` stays 1).
 
        AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare `.glass-dock`:
        the always-present density setter (0,2,0) would shadow a bare (0,1,0) rule. The
-       presence-selector (0,2,0) wins by source order, lifting `--dock-scale` so the
-       cascade re-resolves at touch scale. */
+       presence-selector (0,2,0) wins by source order, lifting `--dock-local-scale` +
+       the floor so the cascade re-resolves at touch scale. */
     @media (pointer: coarse) {
         .glass-dock[data-density] {
-            --dock-scale: var(--dock-mobile-scale, 1.5);
+            --dock-local-scale: var(--dock-mobile-scale, 1);
             --dock-control-floor: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
         }

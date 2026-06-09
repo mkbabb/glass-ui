@@ -13,11 +13,24 @@
 
 import type { AuroraConfig, AuroraMedium } from "../../../src/components/custom/aurora";
 import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+import { mediumOptions } from "./config/options";
 
 type PresetOverrides = Partial<AuroraConfig>;
 
 function cfg(overrides: PresetOverrides): AuroraConfig {
     return { ...DEFAULT_AURORA_CONFIG, ...overrides };
+}
+
+// One-source the medium display name off the canonical mediumOptions map (the
+// medium→label single-source already carrying "Van Gogh"/"Oil Pastel"/"Crayon").
+// Each PRESET_META.sub derives its medium segment from here so a medium repoint
+// cannot leave the label stale.
+const MEDIUM_LABEL = Object.fromEntries(
+    mediumOptions.map((o) => [o.value, o.label]),
+) as Record<AuroraMedium, string>;
+
+function mediumLabel(value: AuroraMedium): string {
+    return MEDIUM_LABEL[value];
 }
 
 // ── OPENAI_SKY ────────────────────────────────────────────────────────────
@@ -252,9 +265,10 @@ const OIL_GESTURAL = cfg({
     paperGrain: 0.009,
 });
 
-// ── OIL_VANGOGH ───────────────────────────────────────────────────────────
-// Swirling short directional strokes — Starry Night dynamics on a warm palette.
-const OIL_VANGOGH = cfg({
+// ── VANGOGH ───────────────────────────────────────────────────────────────
+// The van-Gogh medium hero — atomic comma/crescent dabs queued into Starry
+// Night swirl rows on the iconic indigo/cobalt/sky/yellow ramp.
+const VANGOGH = cfg({
     palette: [
         { L: 0.35, C: 0.15, h: 245 },  // deep indigo
         { L: 0.55, C: 0.18, h: 235 },  // cobalt
@@ -276,13 +290,15 @@ const OIL_VANGOGH = cfg({
     warpScale: 1.6,
     warpDrift: 0.008,
     noiseOctaves: 4,
-    medium: "oil",
+    medium: "vangogh",
     flow: { pattern: "swirl", focalX: 0.55, focalY: 0.45, angle: 0, curl: 0.55 },
     strokeAmount: 0.85,
     strokeScale: 110,
     strokeAnisotropy: 0.92,
     strokeLayers: 1,
-    strokeMode: "oil",
+    // The painterly mediums force the structure-tensor orientation regardless of
+    // this field; declared so the config reads true to the engine's behaviour.
+    strokeOrient: "tensor",
     impasto: 0.48,
     brokenColor: 0.30,
     canvasGrain: 0.03,
@@ -292,9 +308,9 @@ const OIL_VANGOGH = cfg({
     paperGrain: 0.009,
 });
 
-// ── CRAYON_SUNSET ─────────────────────────────────────────────────────────
-// Oil-pastel feel — creamy, long strokes, rich pigment, warm sunset palette.
-const CRAYON_SUNSET = cfg({
+// ── OILPASTEL_SUNSET ──────────────────────────────────────────────────────
+// Oil-pastel — creamy, long strokes, rich pigment, warm sunset palette.
+const OILPASTEL_SUNSET = cfg({
     palette: [
         { L: 0.56, C: 0.20, h: 22  },  // deep vermillion
         { L: 0.70, C: 0.20, h: 40  },  // tangerine
@@ -322,7 +338,7 @@ const CRAYON_SUNSET = cfg({
     strokeScale: 160,
     strokeAnisotropy: 0.90,
     strokeLayers: 1,
-    strokeMode: "oil",
+    strokeOrient: "tensor",
     impasto: 0.0,
     brokenColor: 0.30,
     canvasGrain: 0.05,
@@ -332,9 +348,9 @@ const CRAYON_SUNSET = cfg({
     paperGrain: 0.012,
 });
 
-// ── CRAYON_RAINBOW ────────────────────────────────────────────────────────
+// ── OILPASTEL_RAINBOW ─────────────────────────────────────────────────────
 // Creamy oil-pastel rainbow. Wide smooth zones with long directional strokes.
-const CRAYON_RAINBOW = cfg({
+const OILPASTEL_RAINBOW = cfg({
     palette: [
         { L: 0.70, C: 0.16, h: 28  },  // warm orange
         { L: 0.82, C: 0.16, h: 75  },  // yellow
@@ -363,7 +379,7 @@ const CRAYON_RAINBOW = cfg({
     strokeScale: 165,
     strokeAnisotropy: 0.88,
     strokeLayers: 1,
-    strokeMode: "oil",
+    strokeOrient: "tensor",
     impasto: 0.0,
     brokenColor: 0.25,
     canvasGrain: 0.05,
@@ -410,7 +426,6 @@ const SPEEDTEST = cfg({
     strokeScale: 140,
     strokeAnisotropy: 0.7,
     strokeLayers: 1,
-    strokeMode: "oil",
     wetEdge: 0,
     granulation: 0,
     impasto: 0,
@@ -425,9 +440,9 @@ const SPEEDTEST = cfg({
     alpha: 0.26,
 });
 
-// ── CRAYON_OCEAN ──────────────────────────────────────────────────────────
+// ── OILPASTEL_OCEAN ───────────────────────────────────────────────────────
 // Oil-pastel cool palette — blues/greens/violets with creamy tooth.
-const CRAYON_OCEAN = cfg({
+const OILPASTEL_OCEAN = cfg({
     palette: [
         { L: 0.36, C: 0.12, h: 248 },  // deep ocean
         { L: 0.54, C: 0.14, h: 228 },  // mid blue
@@ -455,7 +470,7 @@ const CRAYON_OCEAN = cfg({
     strokeScale: 155,
     strokeAnisotropy: 0.88,
     strokeLayers: 1,
-    strokeMode: "oil",
+    strokeOrient: "tensor",
     impasto: 0.0,
     brokenColor: 0.28,
     canvasGrain: 0.05,
@@ -463,6 +478,48 @@ const CRAYON_OCEAN = cfg({
     breathPeriod: 52,
     saturation: 1.05,
     paperGrain: 0.011,
+});
+
+// ── CRAYON ────────────────────────────────────────────────────────────────
+// The crayon medium hero — DRY tooth-multiply, no sheen. Matte waxy deposition
+// on a high-tooth paper: bold primary-box-of-crayons palette, modest grain for
+// the paper bite, zero impasto/sheen so it reads dry, not creamy.
+const CRAYON = cfg({
+    palette: [
+        { L: 0.58, C: 0.20, h: 28  },  // burnt orange
+        { L: 0.72, C: 0.19, h: 60  },  // marigold
+        { L: 0.66, C: 0.17, h: 145 },  // grass green
+        { L: 0.58, C: 0.16, h: 235 },  // crayon blue
+        { L: 0.60, C: 0.17, h: 320 },  // magenta
+        { L: 0.90, C: 0.03, h: 80  },  // manila paper
+    ],
+    nuclei: [
+        { x: 0.20, y: 0.30, radius: 0.46, paletteBias: 0.00, valueBias:  0.00, driftRadius: 0.008, driftPhase: 0.2 },
+        { x: 0.56, y: 0.26, radius: 0.42, paletteBias: 0.25, valueBias:  0.02, driftRadius: 0.009, driftPhase: 1.5 },
+        { x: 0.84, y: 0.44, radius: 0.42, paletteBias: 0.50, valueBias: -0.02, driftRadius: 0.008, driftPhase: 2.8 },
+        { x: 0.30, y: 0.78, radius: 0.44, paletteBias: 0.78, valueBias:  0.00, driftRadius: 0.009, driftPhase: 4.0 },
+        { x: 0.74, y: 0.82, radius: 0.40, paletteBias: 1.00, valueBias:  0.03, driftRadius: 0.008, driftPhase: 5.3 },
+    ],
+    softmaxBeta: 4.2,
+    valueVariance: 0.10,
+    warpAmount: 0.42,
+    warpScale: 1.5,
+    warpDrift: 0.006,
+    noiseOctaves: 4,
+    medium: "crayon",
+    flow: { pattern: "diagonal", focalX: 0.5, focalY: 0.5, angle: -18, curl: 0.14 },
+    strokeAmount: 0.60,
+    strokeScale: 140,
+    strokeAnisotropy: 0.82,
+    strokeLayers: 2,
+    strokeOrient: "tensor",
+    impasto: 0.0,
+    brokenColor: 0.35,
+    canvasGrain: 0.07,
+    breathDepth: 0.03,
+    breathPeriod: 56,
+    saturation: 1.04,
+    paperGrain: 0.018,
 });
 
 export const PRESETS = {
@@ -473,10 +530,11 @@ export const PRESETS = {
     DAY9_YELLOW,
     OIL_IMPASTO,
     OIL_GESTURAL,
-    OIL_VANGOGH,
-    CRAYON_SUNSET,
-    CRAYON_RAINBOW,
-    CRAYON_OCEAN,
+    VANGOGH,
+    OILPASTEL_SUNSET,
+    OILPASTEL_RAINBOW,
+    OILPASTEL_OCEAN,
+    CRAYON,
     SPEEDTEST,
 } as const;
 
@@ -488,19 +546,27 @@ export interface PresetMeta {
     medium: AuroraMedium;
 }
 
+// The `sub` medium-segment derives from mediumLabel(medium) (the single source);
+// the trailing prose is the per-preset flavour. So a medium repoint re-derives
+// the label and cannot drift.
+function meta(label: string, medium: AuroraMedium, tail: string): PresetMeta {
+    return { label, sub: `${mediumLabel(medium)} · ${tail}`, medium };
+}
+
 export const PRESET_META: Record<PresetKey, PresetMeta> = {
-    OPENAI_SKY:     { label: "Sky",           sub: "smooth · 4 nuclei",            medium: "smooth" },
-    OPENAI_DAWN:    { label: "Dawn",          sub: "smooth · diagonal",            medium: "smooth" },
-    OPENAI_MEADOW:  { label: "Meadow",        sub: "watercolor · hybrid warp",     medium: "watercolor" },
-    DELIBERATIVE:   { label: "Deliberative",  sub: "pastel · radial flow",         medium: "pastel" },
-    DAY9_YELLOW:    { label: "Day 9",         sub: "watercolor · diagonal",        medium: "watercolor" },
-    OIL_IMPASTO:    { label: "Oil Impasto",   sub: "palette-knife · ridge edges",  medium: "oil" },
-    OIL_GESTURAL:   { label: "Oil Gestural",  sub: "chunky · crosshatch bristle",  medium: "oil" },
-    OIL_VANGOGH:    { label: "Oil Swirl",     sub: "swirl flow · directional",     medium: "oil" },
-    CRAYON_SUNSET:  { label: "Pastel Sunset", sub: "creamy · warm",                medium: "oil-pastel" },
-    CRAYON_RAINBOW: { label: "Pastel Rainbow",sub: "creamy · full spectrum",       medium: "oil-pastel" },
-    CRAYON_OCEAN:   { label: "Pastel Ocean",  sub: "creamy · cool",                medium: "oil-pastel" },
-    SPEEDTEST:      { label: "Speedtest",     sub: "smooth · 6 nuclei · 6-hue",    medium: "smooth" },
+    OPENAI_SKY:        meta("Sky",          "smooth",     "4 nuclei"),
+    OPENAI_DAWN:       meta("Dawn",         "smooth",     "diagonal"),
+    OPENAI_MEADOW:     meta("Meadow",       "watercolor", "hybrid warp"),
+    DELIBERATIVE:      meta("Deliberative", "pastel",     "radial flow"),
+    DAY9_YELLOW:       meta("Day 9",        "watercolor", "diagonal"),
+    OIL_IMPASTO:       meta("Oil Impasto",  "oil",        "palette-knife · ridge edges"),
+    OIL_GESTURAL:      meta("Oil Gestural", "oil",        "chunky · crosshatch bristle"),
+    VANGOGH:           meta("Van Gogh",     "vangogh",    "swirl-row atomic dabs"),
+    OILPASTEL_SUNSET:  meta("Oil Pastel Sunset", "oil-pastel", "creamy · warm"),
+    OILPASTEL_RAINBOW: meta("Oil Pastel Rainbow", "oil-pastel", "creamy · full spectrum"),
+    OILPASTEL_OCEAN:   meta("Oil Pastel Ocean", "oil-pastel", "creamy · cool"),
+    CRAYON:            meta("Crayon",       "crayon",     "dry tooth · no sheen"),
+    SPEEDTEST:         meta("Speedtest",    "smooth",     "6 nuclei · 6-hue"),
 };
 
 export const PRESET_KEYS = Object.keys(PRESETS) as PresetKey[];

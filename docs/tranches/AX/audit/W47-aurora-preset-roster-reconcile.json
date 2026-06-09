@@ -1,0 +1,37 @@
+{
+  "wave": "AX.W47",
+  "gate": "proof:aurora-preset-roster",
+  "status": "GREEN",
+  "redWitnesses": {
+    "1 (zero presets use the van-Gogh body)": "RED at HEAD — `grep medium:\"vangogh\" presets.ts` = 0; OIL_VANGOGH baked medium:\"oil\". GREEN: VANGOGH bakes medium:\"vangogh\".",
+    "2 (\"Van Gogh\" paints nowhere visible)": "RED at HEAD — OIL_VANGOGH labeled \"Oil Swirl\". GREEN: PRESET_META.VANGOGH.label = \"Van Gogh\".",
+    "3 (the W13 medium roster named for zero of its three first-class mediums)": "RED at HEAD — vangogh hidden behind \"Oil Swirl\", oil-pastel labeled \"Pastel\", crayon baked by ZERO presets. GREEN: all three baked + named on the strip.",
+    "4 (medium label hand-typed twice + drifts)": "RED at HEAD — PRESET_META.sub hand-typed a prose medium name off the canonical mediumOptions. GREEN: the sub medium-segment derives from mediumLabel() off mediumOptions (single-source)."
+  },
+  "edits": {
+    "OIL_VANGOGH → VANGOGH": "medium:\"oil\" → \"vangogh\"; dropped dead strokeMode:\"oil\"; added strokeOrient:\"tensor\" (honesty declaration — the bridge forces tensor for painterly mediums); key + PRESETS + PRESET_META renamed; label \"Oil Swirl\" → \"Van Gogh\"; sub → \"Van Gogh · swirl-row atomic dabs\"",
+    "CRAYON_* → OILPASTEL_*": "CRAYON_SUNSET/RAINBOW/OCEAN → OILPASTEL_SUNSET/RAINBOW/OCEAN; dropped dead strokeMode:\"oil\" (medium is oil-pastel, not oil); added strokeOrient:\"tensor\"; labels → \"Oil Pastel Sunset/Rainbow/Ocean\"",
+    "new CRAYON hero": "medium:\"crayon\" (the DRY tooth-multiply, no sheen) — bold primary-box palette, impasto:0, modest canvasGrain/paperGrain for the tooth, strokeOrient:\"tensor\"; label \"Crayon\"",
+    "SPEEDTEST dead strokeMode": "dropped the dead strokeMode:\"oil\" under medium:\"smooth\" (the same dead-config class the gate forbids)",
+    "one-source the label": "added mediumLabel(value) lookup off config/options.ts mediumOptions; PRESET_META built by meta(label, medium, tail) where sub = `${mediumLabel(medium)} · ${tail}`"
+  },
+  "cleanBreak": "OIL_VANGOGH/CRAYON_* keys renamed with NO alias — the demo is the only consumer of these keys (PRESETS/PRESET_KEYS/PRESET_META/PresetKey all demo-internal, grep-confirmed no external import; all consumers reference the keys dynamically via PRESET_KEYS).",
+  "structureGate": {
+    "every W13 medium baked": "bakedMedia ⊇ {vangogh, oil-pastel, crayon} — GREEN",
+    "every W13 medium named": "\"Van Gogh\" / \"Oil Pastel\" / \"Crayon\" each in a visible PRESET_META label/sub — GREEN",
+    "no meta-mismatch": "every PRESET_META row's medium is baked by a preset; sub derives from mediumLabel() — GREEN",
+    "no dead strokeMode": "no preset carries strokeMode under medium !== oil — GREEN (the OILPASTEL_* + SPEEDTEST dead strokeModes cleaned)",
+    "clean-break keys": "no OIL_VANGOGH / CRAYON_SUNSET / CRAYON_RAINBOW / CRAYON_OCEAN legacy key survives — GREEN"
+  },
+  "piLane": {
+    "method": "Playwright headless-new over the LIVE aurora story; the PresetPickerRow strip + the Van Gogh card click → live stage",
+    "spec": "tests-visual/w38-w47-verify.spec.ts + w47-strip (capture)",
+    "verdict": "GREEN — the strip ADVERTISES \"Van Gogh\", \"Oil Pastel Sunset/Rainbow/Ocean\", and \"Crayon\" by name (live DOM scan + visible cards). The Van Gogh thumbnail is the indigo/cobalt Starry-Night field (visibly distinct from the warm oil cards); clicking it drives the live stage to the atomic-dab van-Gogh body (the usePresetThumbnails re-bake + the live medium:\"vangogh\" render). The D2 defect — 'Where are the van-Gogh items?' — is visibly gone. The existing OIL_IMPASTO/OIL_GESTURAL oil presets render unchanged.",
+    "screens": [
+      "docs/tranches/AX/audit/screens/W47-preset-strip-painterly.png",
+      "docs/tranches/AX/audit/screens/W47-vangogh-stage.png"
+    ]
+  },
+  "noLibraryEdit": "presets.ts is demo content (presets-in-consumers). The W13 medium bodies + the AuroraMedium union + the uniformBridge dispatch are CONSUMED verbatim. config/options.ts (mediumOptions) is READ-only (one-sourced from, not edited).",
+  "needsRegistration": "package.json: \"proof:aurora-preset-roster\": \"node scripts/proof-aurora-preset-roster.mjs\""
+}

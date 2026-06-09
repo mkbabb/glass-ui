@@ -1,0 +1,82 @@
+{
+  "wave": "AX.W51",
+  "title": "Comfortable UI sizing — ONE library-wide --ui-scale comfort scalar; the dock/dropdown scales re-homed as specializations; coarse-pointer amplification global",
+  "base": "391d8fb1db3c7dcdad7d63085e6f8b01af985db6",
+  "headline": "Mint --ui-scale (@property <number>, inherits:true, default identity 1) as the ONE master comfortable-sizing scalar every interactive-control magnitude (height, padding, gap, font, glyph) derives through calc(<base> * var(--ui-scale)); re-home the already-shipped --dock-scale (W45) as calc(var(--ui-scale) * var(--dock-local-scale, 1)) so the dock is a specialization ON the global axis (ONE scale system, not three); lift the coarse-pointer 1.5x to the GLOBAL :root so the WHOLE library grows in lockstep on touch; the WCAG-2.5.5 44px floor survives as a max(scaled, --control-floor) clamp; the phi-display ladder stays EXCLUDED (a hero is not a touch target).",
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — source-level re-diagnosis confirmed at HEAD before any edit",
+    "fiveRedWitnessesConfirmedAtHead": [
+      {
+        "witness": "RED 1 — no --ui-scale token anywhere",
+        "evidence": "git show HEAD:src/styles/tokens.css | grep -c ui-scale = 0. The only size-scale token is the dock-local --dock-scale (a specialization with no master)."
+      },
+      {
+        "witness": "RED 2 — control heights are buried raw h-* literals",
+        "evidence": "button/index.ts (h-10/h-7/h-9/h-11), toggle/index.ts (h-10/h-9/h-11), avatar (h-10), select (h-9/h-10), combobox (h-10), command (h-11), number-field (h-10), tabs (h-10), toast (h-8), glass.css .input-pill height:2.5rem — 0 reading a scale axis."
+      },
+      {
+        "witness": "RED 3 — control fonts are buried raw text-sm/text-xs literals",
+        "evidence": "button/toggle base text-sm, badge size rungs text-xs/text-sm/text-base, alert text-sm, glass.css .btn-pill/.input-pill font-size:1rem — the static --type-* phi-ladder read directly, no comfort multiplier."
+      },
+      {
+        "witness": "RED 4 — glyphs are buried raw size-* literals",
+        "evidence": "button/toggle size-4, badge size-3.5, alert [&>svg]:size-4. Only the dock glyph scales (--dock-icon-glyph reads --dock-scale, NOT a global axis), so a library-wide bump breaks the box-glyph proportion."
+      },
+      {
+        "witness": "RED 5 — three uncoordinated scale systems",
+        "evidence": "--dock-scale: 1 (coarse 1.5) is a complete local axis reading NO global master; W50's --dropdown-text would be a second; the rest of the library a third (un-scaled). A coarse bump the dock honors the buttons/inputs/badges do NOT — inconsistent touch scaling."
+      }
+    ]
+  },
+  "folds": [
+    {
+      "finding": "RED 1 — mint the master scalar",
+      "gestaltFix": "ADD --ui-scale (@property { syntax:<number>; inherits:true; initial-value:1 } mirroring the W54 --glass-level idiom) + :root default 1 + --ui-coarse-scale 1.5, with the scale-system doctrine recorded in a tokens.css section comment (ONE scalar; dock/dropdown specialize; phi-display ladder excluded).",
+      "evidence": "src/styles/tokens.css section 10 + section 18 @property block"
+    },
+    {
+      "finding": "RED 2 — control-height cohort",
+      "gestaltFix": "Mint --control-h-{xs,sm,md,lg} = max(calc(<base> * var(--ui-scale)), var(--control-floor)) (28/36/40/44px register, the WCAG-44px coarse clamp baked in); re-point every CVA size rung + the .input-pill height onto them.",
+      "evidence": "tokens.css cohort + button/toggle/avatar/select/combobox/command/number-field/tabs/toast + glass.css .input-pill"
+    },
+    {
+      "finding": "RED 3 — control-font register",
+      "gestaltFix": "Mint --control-text = calc(var(--type-small) * var(--ui-scale)) + --control-text-sm = calc(var(--type-caption) * var(--ui-scale)); re-point the button/toggle/badge/alert base fonts + the .btn-pill/.input-pill font onto them. The phi-DISPLAY ladder stays a pure typographic scale (display headings do NOT grow on touch).",
+      "evidence": "tokens.css register + the 4 CVA bases + glass.css pills"
+    },
+    {
+      "finding": "RED 4 — glyph cohort",
+      "gestaltFix": "Mint --ui-glyph = calc(1rem * var(--ui-scale)) + --ui-glyph-sm = calc(0.875rem * var(--ui-scale)); re-point the un-sized-<svg> CVA rule onto size-[var(--ui-glyph)], KEEPING the :not([class*=size-]) host-sized-icon escape intact.",
+      "evidence": "button/toggle (--ui-glyph), badge/alert (--ui-glyph-sm/--ui-glyph)"
+    },
+    {
+      "finding": "RED 5 — retro-reconcile --dock-scale onto the master",
+      "gestaltFix": "Re-home --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1)) — a ONE-line scalar-definition edit that cascades the global axis through W45's existing 150-line dock geometry calc chain for FREE (zero edit to the density cascade). The dock coarse block (dock/overflow.css) re-expresses to set --dock-local-scale: var(--dock-mobile-scale, 1) (the stack-extra) so the dock inherits the GLOBAL coarse 1.5x, NOT a parallel hardcoded 1.5 (no double-scale). --dock-mobile-scale default flipped 1.5 -> 1 (the optional stack-extra default).",
+      "evidence": "tokens.css --dock-scale definition + dock/overflow.css coarse block; dock/density.css UNTOUCHED (reads the re-homed scalar)"
+    },
+    {
+      "finding": "RED 5 — global coarse-pointer amplification",
+      "gestaltFix": "Add @media (pointer: coarse) { :root { --ui-scale: var(--ui-coarse-scale, 1.5); --control-floor: var(--touch-target, 2.75rem) } } so the WHOLE library grows ~1.5x on touch from ONE place + the WCAG-44px floor clamp engages.",
+      "evidence": "tokens.css global coarse block after the main :root close"
+    }
+  ],
+  "preservedAxes": {
+    "W54_glass_level": "--glass-level token block UNTOUCHED — size and material are orthogonal axes; proof:glass-level stays GREEN (6/6 + 8/8).",
+    "W55_glass_tint": "--glass-tint-* token block UNTOUCHED — size and legibility are orthogonal axes.",
+    "W36_forced_colors": "scaled heights/fonts paint identically under WHC (a calc(<base> * var(--ui-scale)) is forced-colors-agnostic); --glass-level:0 under forced-colors coordinates with the size axis cleanly. proof:forced-colors-skin GREEN (13/13).",
+    "phi_display_ladder": "--type-display-*/title/heading/subheading carry NO --ui-scale factor (the typographic identity, excluded by the scope-discipline regression-guard)."
+  },
+  "gate": {
+    "name": "proof:ui-scale",
+    "script": "scripts/proof-ui-scale.mjs",
+    "arm": "device-free SOURCE arm (master-mint + no-buried-literal + dock-reconcile + global-coarse-block + 44px-floor + display-ladder-untouched). The painted lockstep-growth truth is the orchestrator's live pi getComputedStyle readback.",
+    "bornRed": "confirmed at HEAD (no @property --ui-scale, the raw h-N/text-sm/size-4 literals, the calc-free --dock-scale: 1, no global coarse block)",
+    "green": "28/28 pass on the patched tree"
+  },
+  "calcResolutionVerified": {
+    "atScale1_desktopIdentity": "control-h-md=40px, control-h-sm=36px, control-h-lg=44px, control-h-xs=28px, control-text=14px, ui-glyph=16px — byte-identical to HEAD (no reflow).",
+    "atScale1p3_consumerOverride": "control-h-md 40->52px, control-text 14->18.2px, ui-glyph 16->20.8px — all grow ~1.3x in LOCKSTEP.",
+    "atCoarse_1p5_floor44": "control-h-md=60px; control-h-xs base 28px scales to 42px then CLAMPS to 44px via max(scaled, floor) — the WCAG-2.5.5 floor holds."
+  },
+  "status": "DEV-COMPLETE — source arm GREEN, build + typecheck GREEN, calc math verified; the live pi BEFORE/AFTER + DELTA capture is the orchestrator's binding close (chrome extension not connected in this session)."
+}

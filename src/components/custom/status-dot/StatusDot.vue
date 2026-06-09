@@ -9,21 +9,21 @@
         "
     >
         <span
-            :class="
-                cn(
-                    'relative inline-flex shrink-0 rounded-pill',
-                    sizeClass,
-                )
-            "
+            class="status-dot__dot relative inline-flex shrink-0 rounded-pill"
+            :class="sizeClass"
+            :data-status="variant"
             :style="dotStyle"
         >
             <span
                 v-if="pulse"
                 aria-hidden="true"
-                class="absolute inset-0 rounded-pill opacity-60 motion-safe:animate-ping"
+                class="status-dot__pulse absolute inset-0 rounded-pill opacity-60 motion-safe:animate-ping"
                 :style="ringStyle"
             />
-            <span class="relative inline-block h-full w-full rounded-pill" :style="dotStyle" />
+            <span
+                class="status-dot__fill relative inline-block h-full w-full rounded-pill"
+                :style="dotStyle"
+            />
         </span>
         <span v-if="label" class="text-xs leading-none text-muted-foreground">
             {{ label }}

@@ -3,7 +3,7 @@ import { reactive, watch } from "vue";
 import { RefreshCw } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
-import { DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
+import { ConfiguratorLayer } from "../../../src/components/custom/configurator";
 import {
     resolveAtoms,
     type AuroraConfig,
@@ -16,7 +16,6 @@ import MediumLayer from "./config/MediumLayer.vue";
 import NucleiLayer from "./config/NucleiLayer.vue";
 import PaletteLayer from "./config/PaletteLayer.vue";
 import TextureLayer from "./config/TextureLayer.vue";
-import { layerOptions } from "./config/options";
 
 /**
  * The dock opens on the "Atoms" tab — the few intuitive controls (COLOR / ZONES
@@ -32,7 +31,13 @@ import { layerOptions } from "./config/options";
 
 const props = defineProps<{
     config: AuroraConfig;
-    activeLayer: string;
+    /**
+     * Retained for the consumer's threaded layer state. The Advanced
+     * disclosure now composes independently-collapsible ConfiguratorLayer
+     * sections (no single "active layer" switcher), so this is no longer
+     * read internally; kept on the interface so the host wiring is stable.
+     */
+    activeLayer?: string;
     /** "atoms" (default) | "advanced" — which top-level surface is shown. */
     tab: string;
 }>();
@@ -71,9 +76,6 @@ const TOP_TABS = [
 
 function setTab(next: string | string[]) {
     emit("update:tab", String(next));
-}
-function activeLayerProxy(next: string | string[]) {
-    emit("update:activeLayer", String(next));
 }
 </script>
 
@@ -116,43 +118,30 @@ function activeLayerProxy(next: string | string[]) {
             <AuroraAtomsPanel v-model:atoms="atoms" />
         </div>
 
-        <!-- ── Advanced surface — the raw config layers (the escape hatch). ── -->
+        <!-- ── Advanced surface — the raw config layers (the escape hatch). ──
+             Composes the library's own ConfiguratorLayer collapse sections
+             (independently expandable) instead of a DockLayerGroup crossfade —
+             the idiomatic preset-controls column the studio is built to use. -->
         <template v-if="tab === 'advanced'">
-            <div class="border-b border-border/40 px-3 py-2">
-                <SegmentedTabs
-                    :options="[...layerOptions]"
-                    :model-value="activeLayer"
-                    variant="pill"
-                    overflow="scroll"
-                    @update:model-value="activeLayerProxy"
-                />
-            </div>
             <div class="flex-1 min-h-0 overflow-y-auto overflow-x-clip scroll-fade-y scrollbar-hidden">
-                <DockLayerGroup
-                    :active="activeLayer"
-                    @update:active="activeLayerProxy"
-                    orientation="vertical"
-                    :show-rail="false"
-                >
-                    <DockLayer id="medium" label="Medium">
-                        <MediumLayer :config="config" />
-                    </DockLayer>
-                    <DockLayer id="palette" label="Palette">
-                        <PaletteLayer :config="config" />
-                    </DockLayer>
-                    <DockLayer id="flow" label="Flow">
-                        <FlowLayer :config="config" />
-                    </DockLayer>
-                    <DockLayer id="texture" label="Texture">
-                        <TextureLayer :config="config" />
-                    </DockLayer>
-                    <DockLayer id="composition" label="Comp">
-                        <CompositionLayer :config="config" />
-                    </DockLayer>
-                    <DockLayer id="nuclei" label="Nuclei">
-                        <NucleiLayer :config="config" />
-                    </DockLayer>
-                </DockLayerGroup>
+                <ConfiguratorLayer label="Medium">
+                    <MediumLayer :config="config" />
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Palette" :default-open="false">
+                    <PaletteLayer :config="config" />
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Flow" :default-open="false">
+                    <FlowLayer :config="config" />
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Texture" :default-open="false">
+                    <TextureLayer :config="config" />
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Comp" :default-open="false">
+                    <CompositionLayer :config="config" />
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Nuclei" :default-open="false">
+                    <NucleiLayer :config="config" />
+                </ConfiguratorLayer>
             </div>
         </template>
     </div>

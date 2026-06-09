@@ -1,0 +1,296 @@
+// AX.W36 — forced-colors-skin.spec.ts, the π forcedColors:'active' readback over the
+// glass language (the W00 workspace member; the BINDING close criterion).
+//
+// THE DEFECT: under Windows High Contrast the platform strips the whole decorative
+// glass register — `backdrop-filter` is dropped, the `--glass-*` inset/box-shadow rungs
+// vanish, and every meaning-bearing chroma flattens to one system color. A `.glass-
+// floating` Dialog over a `.glass-resting` Card reads as two borderless transparent
+// rectangles, and a green-vs-red StatusDot reads as one indistinguishable dot. The skin
+// (glass.css + utilities.css) restores the STRUCTURE: tier panes → a `CanvasText`
+// border, floating rungs → a `Canvas` fill + edge, StatusDot hue → a bordered system-
+// color glyph keyed off `data-status`, focus → a `Highlight` outline.
+//
+// THE SOURCE GATE (proof-forced-colors-skin.mjs) proves the RECIPE STRUCTURE; THIS SPEC
+// PROVES THE RENDER — Playwright launches with `forcedColors: 'active'` (the Chromium
+// Windows-High-Contrast simulation), injects synthetic `.glass-*` panes + a StatusDot
+// row + a focusable control onto the live demo (which loads the `/styles` cascade), and
+// reads back the PAINTED result off the live DOM:
+//   - every glass-material tier pane resolves a non-`none` border (born-RED: `none`);
+//   - the floating rung resolves an opaque fill (the boxed-region separation);
+//   - two StatusDots of different `data-status` resolve DISTINGUISHABLE painted fills
+//     (born-RED: the same flat system color);
+//   - a focused control resolves a `Highlight`-keyed outline (born-RED: no outline).
+//
+// THE BINDING ASSERTION IS THE getComputedStyle READBACK under forcedColors:'active'
+// (NOT a source-string grep — a render that paints the skin but still collapses would
+// pass a grep; the live readback is the precept-valid form). A NORMAL-mode (forcedColors
+// off) arm confirms the skin is INERT outside WHC (the tier panes keep their glass
+// border, the `::before` specular is not display:none) — the non-regression guard.
+//
+// At ≥3 viewports (375×667, 1280×800, 1440×900). Fail-CLOSED: a collapsed WHC render
+// reds the readback, exit non-zero (never SKIP-with-EXIT=0).
+
+import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { resolveScene } from "./pi-manifest.ts";
+
+// The canonical glass-language render — the five-rung ladder + StatusDot stories live
+// here; ANY route loads the global `/styles` cascade so the synthetic `.glass-*`
+// fixtures resolve, but the glass-material story is the on-topic stable surface. Resolved
+// against the re-sourced manifest (fails the resolution rather than driving a dead route).
+const GLASS_SCENE = resolveScene("substrates", "glass-material");
+
+const VIEWPORTS = [
+    { name: "mobile", width: 375, height: 667 },
+    { name: "desktop", width: 1280, height: 800 },
+    { name: "wide", width: 1440, height: 900 },
+] as const;
+
+// The five-rung ladder + card are the structure-survival carriers.
+const LADDER = [
+    "glass-wash",
+    "glass-quiet",
+    "glass-resting",
+    "glass-floating",
+    "glass-overlay",
+    "glass-card",
+] as const;
+
+const STATUSES = ["active", "paused", "error", "idle"] as const;
+
+interface LadderReadout {
+    /** The resolved border-style (born-RED under WHC: `none`). */
+    borderStyle: string;
+    /** The resolved border-width. */
+    borderWidth: string;
+    /** The resolved background (floating/overlay → opaque Canvas under WHC). */
+    background: string;
+    /** Whether the decorative `::before` specular is display:none under WHC. */
+    beforeHidden: boolean;
+    /** Whether the forced-colors media query is active in this readback context. */
+    fcMQ: boolean;
+}
+
+/**
+ * Inject a synthetic `.glass-<kind>` pane onto the live demo and read back its border /
+ * background / `::before` display off the LIVE painted DOM. The fixture is removed after.
+ */
+async function readLadder(page: Page, kind: string): Promise<LadderReadout> {
+    return page.evaluate((kind) => {
+        const FIXTURE_ID = "__w36_ladder__";
+        document.getElementById(FIXTURE_ID)?.remove();
+        const el = document.createElement("div");
+        el.id = FIXTURE_ID;
+        el.className = kind;
+        el.style.cssText =
+            "position:fixed;left:0;top:0;width:200px;height:120px;border-radius:12px;z-index:99999;";
+        document.body.appendChild(el);
+        void el.offsetHeight;
+        const cs = getComputedStyle(el);
+        const beforeCS = getComputedStyle(el, "::before");
+        const out = {
+            borderStyle: cs.borderTopStyle,
+            borderWidth: cs.borderTopWidth,
+            background: cs.backgroundColor,
+            beforeHidden: beforeCS.display === "none",
+            fcMQ: matchMedia("(forced-colors: active)").matches,
+        };
+        document.getElementById(FIXTURE_ID)?.remove();
+        return out;
+    }, kind);
+}
+
+/**
+ * Render a StatusDot-shaped dot that MIRRORS the shipped component markup — the outer
+ * `.status-dot__dot[data-status]` glyph PLUS the inner `.status-dot__fill` span that
+ * carries the component's inline glass-ui hue (`background-color`). The inline fill is
+ * the load-bearing trap: it outranks the stylesheet AND `forced-color-adjust`-remaps to
+ * one Canvas color, collapsing the row UNLESS the WHC skin yields the inner fill so the
+ * outer system-color glyph reads. We screenshot the dot and sample its PAINTED center
+ * pixel (the live-truth path — the computed style of the OUTER dot would pass even with
+ * the inner-fill cover bug; only the painted pixel catches it). Returns [r,g,b].
+ */
+async function readDotPaintedFill(
+    page: Page,
+    status: string,
+): Promise<[number, number, number]> {
+    const HUE: Record<string, string> = {
+        active: "hsl(142 71% 45%)",
+        paused: "hsl(48 96% 53%)",
+        error: "var(--destructive)",
+        idle: "var(--muted-foreground)",
+        custom: "var(--muted-foreground)",
+    };
+    await page.evaluate(
+        ({ status, hue }) => {
+            const FIXTURE_ID = "__w36_dot__";
+            document.getElementById(FIXTURE_ID)?.remove();
+            const dot = document.createElement("span");
+            dot.id = FIXTURE_ID;
+            dot.className = "status-dot__dot relative inline-flex shrink-0 rounded-pill";
+            dot.setAttribute("data-status", status);
+            dot.style.cssText =
+                "position:fixed;left:40px;top:40px;width:40px;height:40px;z-index:99999;";
+            // The inner painted fill — the shipped component paints THIS inline (the trap).
+            const fill = document.createElement("span");
+            fill.className = "status-dot__fill relative inline-block h-full w-full rounded-pill";
+            fill.style.backgroundColor = hue;
+            dot.appendChild(fill);
+            document.body.appendChild(dot);
+            void dot.offsetHeight;
+        },
+        { status, hue: HUE[status] ?? "var(--muted-foreground)" },
+    );
+    // Sample the painted center pixel via a clip screenshot (DPR-aware center).
+    const buf = await page.locator("#__w36_dot__").screenshot();
+    const px = await decodeCenterPixel(buf);
+    await page.evaluate(() => document.getElementById("__w36_dot__")?.remove());
+    return px;
+}
+
+/** Decode the center pixel [r,g,b] of a PNG buffer (the painted-truth sampler). */
+async function decodeCenterPixel(buf: Buffer): Promise<[number, number, number]> {
+    // pngjs is a tests-visual devDependency (the substrate specs sample canvas pixels).
+    const { PNG } = await import("pngjs");
+    const png = PNG.sync.read(buf);
+    const cx = Math.floor(png.width / 2);
+    const cy = Math.floor(png.height / 2);
+    const i = (png.width * cy + cx) * 4;
+    return [png.data[i]!, png.data[i + 1]!, png.data[i + 2]!];
+}
+
+/** Inject a focusable `.glass-btn`, focus it via keyboard, read back the outline. */
+async function readFocusOutline(
+    page: Page,
+): Promise<{ outlineStyle: string; outlineWidth: string }> {
+    return page.evaluate(() => {
+        const FIXTURE_ID = "__w36_focus__";
+        document.getElementById(FIXTURE_ID)?.remove();
+        const btn = document.createElement("button");
+        btn.id = FIXTURE_ID;
+        btn.className = "glass-btn";
+        btn.textContent = "F";
+        btn.style.cssText = "position:fixed;left:0;top:0;z-index:99999;";
+        document.body.appendChild(btn);
+        // :focus-visible matches on a keyboard-routed focus; programmatic focus on a
+        // freshly-injected button under a keyboard-driven session resolves it here.
+        btn.focus({ focusVisible: true } as FocusOptions);
+        void btn.offsetHeight;
+        const cs = getComputedStyle(btn);
+        const out = { outlineStyle: cs.outlineStyle, outlineWidth: cs.outlineWidth };
+        document.getElementById(FIXTURE_ID)?.remove();
+        return out;
+    });
+}
+
+// ── The WHC arm — the binding forcedColors:'active' readback ──────────────────────
+test.describe("forced-colors-skin (π lane — the WHC structure-survival readback, fail-CLOSED)", () => {
+    for (const vp of VIEWPORTS) {
+        test(`glass language survives WHC @ ${vp.name}`, async ({ page }) => {
+            await page.setViewportSize({ width: vp.width, height: vp.height });
+            // Any demo route loads the global `/styles` cascade so the `.glass-*` classes
+            // + the forced-colors skin resolve; the glass-material story is the on-topic
+            // stable surface.
+            await page.goto(GLASS_SCENE.path, { waitUntil: "networkidle" });
+            // Emulate Windows-High-Contrast — `emulateMedia({ forcedColors })` is the
+            // deterministic per-page activation (the @media (forced-colors: active) arm
+            // engages). Asserted live below via the `fcMQ` readback.
+            await page.emulateMedia({ forcedColors: "active" });
+
+            // ── (1) Every tier pane resolves a real CanvasText border (born-RED: none) ──
+            for (const kind of LADDER) {
+                const r = await readLadder(page, kind);
+                expect(
+                    r.fcMQ,
+                    `forced-colors emulation did NOT engage for .${kind} — the WHC arm is not active (the readback would test the normal-mode render)`,
+                ).toBe(true);
+                expect(
+                    r.borderStyle,
+                    `.${kind} resolved border-style "${r.borderStyle}" under WHC — the tier pane has NO edge (the structure collapsed; expected a CanvasText border)`,
+                ).not.toBe("none");
+                expect(
+                    parseFloat(r.borderWidth),
+                    `.${kind} resolved border-width "${r.borderWidth}" under WHC — a zero-width edge does not paint`,
+                ).toBeGreaterThan(0);
+                // The decorative specular `::before` is yielded under WHC.
+                expect(
+                    r.beforeHidden,
+                    `.${kind}::before is NOT display:none under WHC (fcMQ=${r.fcMQ}) — the decorative specular ghost survives (it should yield to the user palette)`,
+                ).toBe(true);
+            }
+
+            // ── (2) The floating + overlay rungs resolve an OPAQUE boxed-region fill ────
+            // (a transparent floating surface overlaps the content — the hierarchy
+            // evaporates). The WHC arm fills them with the system Canvas so the modal
+            // reads as a distinct region over the page.
+            for (const kind of ["glass-floating", "glass-overlay"] as const) {
+                const r = await readLadder(page, kind);
+                const alphaMatch =
+                    r.background.match(/rgba?\([^)]*,\s*([\d.]+)\s*\)/) ??
+                    r.background.match(/\/\s*([\d.]+)\s*\)/);
+                const alpha = alphaMatch ? Number(alphaMatch[1]) : 1;
+                expect(
+                    alpha,
+                    `.${kind} resolved a transparent fill "${r.background}" under WHC — the floating surface does not separate from the content beneath (expected an opaque Canvas fill)`,
+                ).toBeGreaterThan(0.99);
+            }
+
+            // ── (3) Different-status StatusDots resolve DISTINGUISHABLE PAINTED fills ───
+            // The PAINTED-pixel readback (not the outer computed style) — the shipped
+            // component paints the dot via an INLINE fill on `.status-dot__fill`, which
+            // `forced-color-adjust`-remaps to one Canvas color AND covers the outer glyph
+            // (the row collapses to one white dot) UNLESS the WHC skin yields the inner
+            // fill so the outer system-color triplet reads. Only the painted center pixel
+            // catches this inline-cover class; the outer computed style would pass.
+            const paintedFills: Record<string, [number, number, number]> = {};
+            for (const status of STATUSES) {
+                paintedFills[status] = await readDotPaintedFill(page, status);
+            }
+            const fillKey = (p: [number, number, number]) => p.join(",");
+            const distinctFills = new Set(STATUSES.map((s) => fillKey(paintedFills[s]!)));
+            expect(
+                distinctFills.size,
+                `the StatusDot row collapsed to ${distinctFills.size} distinct PAINTED fill(s) under WHC (${JSON.stringify(
+                    paintedFills,
+                )}) — meaning did not survive the chroma collapse (the inline fill covered the system-color glyph); expected ok/warn/error/idle distinguishable`,
+            ).toBeGreaterThanOrEqual(3);
+            // The strongest pairwise tell: ok (active→Highlight) ≠ error (→CanvasText).
+            expect(
+                fillKey(paintedFills["active"]!),
+                `the ok and error StatusDots painted the SAME fill under WHC (${fillKey(
+                    paintedFills["active"]!,
+                )}) — green-vs-red is indistinguishable`,
+            ).not.toBe(fillKey(paintedFills["error"]!));
+
+            // ── (4) A focused control resolves a Highlight outline (born-RED: none) ─────
+            const focus = await readFocusOutline(page);
+            expect(
+                focus.outlineStyle,
+                `the focused .glass-btn resolved outline-style "${focus.outlineStyle}" under WHC — keyboard focus has no visible ring (the box-shadow ring vanished and no Highlight outline was restored)`,
+            ).not.toBe("none");
+            expect(
+                parseFloat(focus.outlineWidth),
+                `the focused .glass-btn resolved outline-width "${focus.outlineWidth}" under WHC — a zero-width outline does not paint`,
+            ).toBeGreaterThan(0);
+        });
+    }
+});
+
+// ── The NORMAL-mode non-regression arm — the skin is INERT outside WHC ────────────
+test.describe("forced-colors-skin (π lane — the normal-mode non-regression guard)", () => {
+    test("the WHC skin is inert outside forced-colors", async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await page.goto(GLASS_SCENE.path, { waitUntil: "networkidle" });
+
+        // Outside WHC the decorative specular `::before` is NOT display:none (the W09
+        // catch-light is untouched) and the tier panes keep their normal glass border —
+        // proving the @media (forced-colors: active) arm adds ZERO normal-mode change.
+        for (const kind of LADDER) {
+            const r = await readLadder(page, kind);
+            expect(
+                r.beforeHidden,
+                `.${kind}::before is display:none OUTSIDE forced-colors — the WHC skin leaked into the normal render (the W09 specular catch-light was suppressed)`,
+            ).toBe(false);
+        }
+    });
+});

@@ -636,6 +636,42 @@ export const GATES = [
         note: "AX.W18/Q2 — the aurora black-bar root fix: the runtime resize() measures the laid-out border-box via getBoundingClientRect() (NOT the content-visibility-skip-degenerate canvas.clientWidth/Height that sized a 1px sliver buffer stretched as a black band), + the .aurora-root contain-intrinsic-size reserves a non-zero block fallback. Bite: revert resize() to clientWidth/clientHeight → RED.",
     },
     {
+        id: "proof:configurator-glass-atoms",
+        cmd: "proof:configurator-glass-atoms",
+        tags: ["local", "ci"],
+        note: "AX.W38 — the Configurator atoms restyle: the preset chip reads a glass tier (.glass-quiet, not an opaque bg-foreground stamp) + .tap-squish + rounded-pill + focus-ring; the layer trigger + row reset compose the same recipe; the section-reveal animates the fast --spring-snappy register (PRM-gated). Bite: revert a control to the opaque stamp / the slow bezier reveal → RED.",
+    },
+    {
+        id: "proof:aurora-chrome-idiomatic",
+        cmd: "proof:aurora-chrome-idiomatic",
+        tags: ["local", "ci"],
+        note: "AX.W38 — the aurora demo-chrome idiom pass: the AuroraAtomsPanel composes LabeledSelect/LabeledSlider/LabeledField (zero native <select>/<range>), the 7-way medium enum renders one way (LabeledSelect), the short enums stay SegmentedTabs, the Advanced disclosure uses ConfiguratorLayer collapse. Bite: re-inject a native control → RED.",
+    },
+    {
+        id: "proof:aurora-preset-roster",
+        cmd: "proof:aurora-preset-roster",
+        tags: ["local", "ci"],
+        note: "AX.W47 — the aurora preset roster reconcile: VANGOGH (medium:vangogh, strokeOrient:tensor) + OILPASTEL_* + a CRAYON hero are NAMED (Van Gogh / Oil Pastel / Crayon) and baked; the dead strokeMode is dropped; PRESET_META.sub one-sourced off mediumLabel(). Bite: a preset's medium ≠ its label / a dead strokeMode survives → RED.",
+    },
+    {
+        id: "proof:ui-scale",
+        cmd: "proof:ui-scale",
+        tags: ["local", "ci"],
+        note: "AX.W51 — the comfortable library-wide --ui-scale axis (the D18 umbrella; W45/W50 specialize): --ui-scale minted + threaded so components size comfortably; --dock-scale reconciled onto the one --ui-scale axis. SEPARATE from --glass-level (opacity+blur) + --glass-tint-* (legibility). Bite: a component sizing off a hardcoded literal instead of --ui-scale → RED.",
+    },
+    {
+        id: "proof:dropdown-type-scale",
+        cmd: "proof:dropdown-type-scale",
+        tags: ["local", "ci"],
+        note: "AX.W50 — the uniform dropdown/select/menu type-scale (D17): the dropdown/select/menu item type sizes read ONE unified scale token, not per-component literals. Bite: a divergent menu type size → RED.",
+    },
+    {
+        id: "proof:forced-colors-skin",
+        cmd: "proof:forced-colors-skin",
+        tags: ["local", "ci"],
+        note: "AX.W36 — the forced-colors (Windows High Contrast) glass-language skin: a @media (forced-colors: active) block maps the glass surfaces to system color keywords coherently, riding the W54 --glass-level:0 opaque path (ONE opaque path, no parallel fork). Bite: a glass surface with no forced-colors mapping / a parallel forced-colors recipe → RED.",
+    },
+    {
         id: "proof:page-redesign",
         cmd: "proof:page-redesign",
         tags: ["local", "ci"],

@@ -1,0 +1,65 @@
+{
+  "wave": "AX.W38",
+  "arm": "Arm 1 (library glass-atoms restyle) + Arm 3 (the D1 MOTION half)",
+  "gate": "proof:configurator-glass-atoms",
+  "status": "GREEN",
+  "ratify": {
+    "A-2 (label/sub typography-ladder bind)": "ALREADY-SATISFIED — ConfiguratorLayer.vue already uses text-small/text-micro ladder rungs (the 'magic literal' framing was stale); no class-swap needed.",
+    "A-1 (machined-groove inter-row divider)": "DEFERRED out of W38 (recommended path) — it mints a new groove recipe + token (a src/styles/ write), which W38's compose-only bound forbids. Home: W21/W25b-sequenced.",
+    "Arm-3 height-axis spring (grid-template-rows)": "RATIFIED LIVE — the snappy spring on grid-template-rows reads as a fast clean settle at 1440 + 375; no jank observed (the §6 layout-property caveat checked, no scaleY proxy needed)."
+  },
+  "subSurfaces": {
+    "preset-chip (Configurator.vue)": {
+      "before": "opaque stamp — `border-foreground/40 bg-foreground text-background`, `transition-colors`, no press transform, no data-slot",
+      "after": "glass-tier active — `glass-quiet border-border/50 text-foreground` + `.tap-squish` + `transition-control` + `rounded-pill` + `focus-ring` + `data-slot=configurator-preset` + `data-active`",
+      "recipe": ".tap-squish + transition-control + rounded-pill + focus-ring + glass-quiet (active)"
+    },
+    "layer-trigger (ConfiguratorLayer.vue)": {
+      "before": "`transition-colors hover:bg-foreground/5 focus-ring`, no press transform",
+      "after": "`.tap-squish transition-control hover:bg-foreground/5 focus-ring` + `data-slot=configurator-layer-trigger`",
+      "recipe": ".tap-squish + transition-control + focus-ring"
+    },
+    "row-reset (ConfiguratorRow.vue)": {
+      "before": "`transition-colors … active:scale-[var(--scale-press,0.97)]` raw literal",
+      "after": "`.tap-squish transition-control focus-ring rounded-pill` + `data-slot=configurator-reset`; the raw active:scale literal RETIRED onto .tap-squish",
+      "recipe": ".tap-squish + transition-control + rounded-pill + focus-ring"
+    }
+  },
+  "dataSlots": [
+    "configurator (root)",
+    "configurator-preset (chip)",
+    "configurator-layer (root)",
+    "configurator-layer-trigger (header button)",
+    "configurator-row (root)",
+    "configurator-reset (reset button)"
+  ],
+  "arm3Motion": {
+    "before": "section reveal `transition-[grid-template-rows] duration-200 ease-out` (flat 200ms bezier — the sluggish read the user called slow); chevron `transition-transform duration-200`",
+    "after": "section reveal + chevron animate `var(--duration-fast) var(--spring-snappy)` (the §6 enter register — a fast snappy spring) in a <style scoped> block; PRM-gated (transition:none under reduce)",
+    "liveComputedStyle": {
+      "transitionProperty": "grid-template-rows",
+      "transitionDuration": "0.2s",
+      "transitionTimingFunction": "linear(0 0%, 0.10438 2.041%, 0.32622 4.082%, … 1.06804 16.327% (the snappy overshoot) … 1 100%)",
+      "verdict": "CONFIRMED springy + fast — the multi-stop linear() with the ~1.068 overshoot at 16% IS --spring-snappy; the 0.2s duration reads fast. NOT the prior flat ease-out."
+    }
+  },
+  "preserved": [
+    "the M.W2 Lane A recursion-free grid-template-rows: 0fr↔1fr reveal machinery (re-timed, not re-authored)",
+    "the inert/aria-expanded/role collapse contract",
+    "the N.W2 density axis (data-density + @container style(--density))",
+    "the per-preset clone state, the aside-grid / asideSide / asideWidth layout"
+  ],
+  "piLane": {
+    "method": "Playwright headless-new (Chromium, --use-angle=metal on darwin) over the LIVE aurora story (/substrates/aurora); computed-style readback + light/dark screenshots",
+    "spec": "tests-visual/w38-w47-verify.spec.ts",
+    "schemes": ["light", "dark"],
+    "verdict": "GREEN — the section reveal animates on the snappy spring at 0.2s (fast/springy, the user's literal ask); the atoms panel + advanced sections read as coherent glass-ui. Note: the live aurora story overrides the Configurator `presets` slot with PresetPickerRow, so the default chip-row (data-slot=configurator-preset) is not rendered in THIS story — the chip restyle is verified by the gate (source) + applies to default-slot consumers. The library frame restyle is otherwise live-confirmed.",
+    "screens": [
+      "docs/tranches/AX/audit/screens/W38-aurora-after-light.png",
+      "docs/tranches/AX/audit/screens/W38-aurora-after-dark.png",
+      "docs/tranches/AX/audit/screens/W38-advanced-configurator-layers.png"
+    ]
+  },
+  "noOverfitting": "composes-only — no new token, no new CVA variant, no new primitive, no src/styles/ edit. The <style scoped> in ConfiguratorLayer.vue binds the SHIPPED --duration-fast + --spring-snappy tokens.",
+  "needsRegistration": "package.json: \"proof:configurator-glass-atoms\": \"node scripts/proof-configurator-glass-atoms.mjs\""
+}

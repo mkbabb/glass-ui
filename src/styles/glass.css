@@ -563,10 +563,17 @@
            below animates the `scale` longhand (not `transform`) coherently and
            does not flicker the stacking context into being (AQ.W3 §W3.2). */
         scale: 1;
-        gap: 0.375rem;
+        /* AX.W51 D18 — the pill GEOMETRY rides the ONE `--ui-scale` comfort axis.
+           gap / padding scale by the master scalar; the font reads the
+           `--control-text` register (`calc(--type-small * --ui-scale)`, the same
+           `text-sm` register the Button CVA paints), so a bare `.btn-pill` consumer
+           and a `<Button>` agree on the control font, and ONE `--ui-scale` override
+           grows the pill's height (via padding) + gap + font in lockstep. Desktop
+           default is the identity (scale 1 → the prior proportion). */
+        gap: calc(0.375rem * var(--ui-scale));
         border-radius: var(--radius-pill);
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
+        padding: calc(0.5rem * var(--ui-scale)) calc(1rem * var(--ui-scale));
+        font-size: var(--control-text);
         /* AX.W52 — the ONE coherent button transition (RED witness 5/6). The
            SURFACE legs (bg/border/box-shadow/color/opacity) ride the bezier
            `--ease-standard` (a colour cross-fade reads as a wobble on a spring);
@@ -620,7 +627,13 @@
     .input-pill {
         @apply flex w-full;
 
-        height: 2.5rem;
+        /* AX.W51 D18 — the input pill rides the ONE `--ui-scale` comfort axis: the
+           height reads the `--control-h-md` cohort (`max(calc(2.5rem * --ui-scale),
+           --control-floor)`, the h-10 register with the WCAG-44px coarse clamp), the
+           font reads `--control-text`, the inline padding scales — so ONE override
+           grows the field's height + padding + font in lockstep. Desktop default is
+           the identity. */
+        height: var(--control-h-md);
         border-radius: var(--radius-pill);
         /* AW.W13 — the resting field edge reads as an enclosed control at rest
            (~15%α — ~2× the prior 8% glass-wash floor that vanished on cream). The
@@ -637,8 +650,8 @@
            not the sub-perceptual `blur(1px)` wash it carried — and the
            `--glass-level` knob now clarifies it in lockstep with every surface. */
         backdrop-filter: var(--glass-blur-quiet);
-        padding: 0 1rem;
-        font-size: 1rem;
+        padding: 0 calc(1rem * var(--ui-scale));
+        font-size: var(--control-text);
         color: var(--foreground);
         transition:
             background-color var(--duration-fast) var(--ease-standard),
@@ -891,6 +904,131 @@
         --glass-level: 0.3;
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-aa);
+    }
+}
+
+/* ── Accessibility: forced-colors (Windows High Contrast) glass-language skin ──
+   AX.W36 — when the OS forces a palette (Windows High Contrast), the platform
+   strips the whole decorative glass register: `backdrop-filter` is dropped, the
+   `--glass-*` inset/box-shadow rungs vanish, and every meaning-bearing chroma
+   flattens to one system color. A `.glass-floating` Dialog over a `.glass-resting`
+   Card would read as two borderless transparent rectangles with no edge, and a
+   green-vs-red StatusDot would resolve to one indistinguishable dot. This skin
+   restores the STRUCTURE the glass chrome encoded — it does NOT pin glass-ui's
+   brand colours (no `forced-color-adjust: none`); the chrome is decorative and
+   YIELDS to the user's forced palette (css forced-colors guidance). Only the
+   standard WHC system keywords are used (`Canvas`/`CanvasText`/`Highlight`) — no
+   glass-ui token leaks into the WHC arm.
+
+   COORDINATES WITH W54 — the same `--glass-level: 0` opaque escape the reduced-
+   transparency / high-contrast brackets ride. Setting the ONE clarity knob to 0
+   collapses the `--glass-bg-*` opacity recipe to solid `--card` + `blur(0)` through
+   the SAME machinery (no parallel solid recipe), so the platform sees opaque plates
+   it maps to `Canvas`. The grain + highlight kills match the reduce bracket (they
+   sit off the level axis). The W55 tint axis is moot under WHC (the user's palette
+   supersedes the ink-darken) but harmless — the opaque plate is system-painted. */
+@media (forced-colors: active) {
+    :root {
+        --glass-level: 0;
+        --glass-grain-opacity: 0;
+        --glass-highlight: 0 0 0 0 transparent;
+    }
+
+    /* Every glass-material ladder rung relied on `backdrop-filter` + an inset
+       `box-shadow` rim for its silhouette — both gone under WHC. Restore a real
+       `border` keyed to the system text colour so each tier pane reads as a boxed
+       region. The selector group MIRRORS the ladder definition above (one source,
+       not a hand-rolled re-list) so a future rung added to the material group
+       inherits the WHC edge for free — and a `.glass-material` div that became one
+       via the GlassPanel retire gets the edge with no per-component arm. */
+    .glass-material,
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay,
+    .glass-card {
+        border: 1px solid CanvasText;
+    }
+
+    /* The floating + overlay rungs (Dialog / Sheet / Popover / DropdownMenu /
+       HoverCard compose them) get the canonical `Canvas` fill so the modal reads as
+       a DISTINCT boxed region OVER the page, not a transparent overlap — the
+       hierarchy survives. The `CanvasText` edge above already draws the box; this
+       opaque fill separates the floating layer from the content beneath it. */
+    .glass-floating,
+    .glass-overlay {
+        background: Canvas;
+    }
+
+    /* The decorative specular catch-light (`::before`) + grain overlay (`::after`)
+       paint nothing meaningful once chroma collapses — yield them entirely (the
+       same decorative-chrome cede the `--glass-level: 0` opaque escape performs on
+       the body). They are NOT part of the structure the skin restores. */
+    .glass-material::before,
+    .glass-wash::before,
+    .glass-quiet::before,
+    .glass-resting::before,
+    .glass-floating::before,
+    .glass-overlay::before,
+    .glass-card::before,
+    .glass-wash::after,
+    .glass-quiet::after,
+    .glass-resting::after,
+    .glass-floating::after,
+    .glass-overlay::after {
+        display: none;
+    }
+
+    /* Meaning-bearing hue identity → a bordered glyph that keeps ok/warn/error
+       distinguishable by a WHC-HONORED system color, NOT a glass-ui hue (which WHC
+       strips to one fill). StatusDot reflects its variant onto `data-status`
+       (StatusDot.vue) and the inner dot carries `.status-dot__dot`; the
+       `role="img"` + `aria-label` accessible name already ships, so this is the
+       VISUAL differentiation only. A bare bordered dot + the per-status fill triplet
+       below means a sighted WHC user can still tell the row apart.
+
+       `!important` IS load-bearing here: StatusDot paints the dot fill via an INLINE
+       `:style="dotStyle"` (`background-color`, specificity 1,0,0,0), which outranks
+       any stylesheet selector AND which forced-colors then `forced-color-adjust:
+       auto`-remaps to a single Canvas-white — collapsing the row to one indistinct
+       dot. The WHC arm must override that inline fill, and inline can only be beaten
+       by `!important`; this is the documented forced-colors degradation path (the
+       arm only activates under WHC). The component keeps its inline hue in normal
+       mode untouched. */
+    .status-dot__dot {
+        border: 1px solid CanvasText;
+        /* The bordered ring alone separates a dot from its surround; the per-status
+           fill below adds the WHC-honored distinction. */
+    }
+    /* The inner painted fill (`.status-dot__fill`, `h-full w-full`) + the pulse ring
+       carry the SAME inline glass-ui hue StatusDot paints — under WHC they cover the
+       outer `.status-dot__dot` glyph with a `forced-color-adjust`-remapped Canvas
+       fill (the row collapses to one white dot even with the outer system color set).
+       Yield them so the outer bordered + system-color glyph is the sole visible dot. */
+    .status-dot__fill,
+    .status-dot__pulse {
+        display: none;
+    }
+    /* The ok/warn/error/idle distinction rides the standard WHC keyword palette:
+         active (ok)   → Highlight   (the affirmative system accent)
+         paused (warn) → Mark        (the marked/attention system color)
+         error         → CanvasText  (a solid filled dot — the strongest weight)
+         idle/custom   → Canvas      (a hollow dot — only the CanvasText ring reads)
+       Each stays distinguishable by the system color the user's palette assigns,
+       never glass-ui chroma. The `!important` beats the component's inline fill. */
+    .status-dot__dot[data-status="active"] {
+        background: Highlight !important;
+    }
+    .status-dot__dot[data-status="paused"] {
+        background: Mark !important;
+    }
+    .status-dot__dot[data-status="error"] {
+        background: CanvasText !important;
+    }
+    .status-dot__dot[data-status="idle"],
+    .status-dot__dot[data-status="custom"] {
+        background: Canvas !important;
     }
 }
 

@@ -161,14 +161,23 @@ export function detect(sources) {
     }
 
     // ── 3. ONE --dock-scale MULTIPLIER + clamp, no floor blocks ───────────────
+    // AX.W51 D18 RECONCILE — the coarse block now sets the dock multiplier knob via
+    // the reconciled axis: the dock grows on coarse through the GLOBAL `--ui-scale`
+    // (its `--dock-scale` re-homed as `calc(var(--ui-scale) * var(--dock-local-scale,
+    // 1))`), and the coarse block sets the dock-LOCAL stack-extra
+    // `--dock-local-scale: var(--dock-mobile-scale, …)`. The gate's intent — the
+    // coarse block sets the ONE multiplier knob, NOT a per-property floor — is
+    // satisfied by EITHER the W45 `--dock-scale:` set OR the W51 `--dock-local-scale:`
+    // stack-extra (both route through the single `--dock-scale` multiplier the density
+    // cascade reads).
     const coarseSetsScale =
-        /@media\s*\(\s*pointer\s*:\s*coarse\s*\)[\s\S]*?--dock-scale\s*:\s*var\(--dock-mobile-scale/.test(
+        /@media\s*\(\s*pointer\s*:\s*coarse\s*\)[\s\S]*?--dock-(?:local-)?scale\s*:\s*var\(--dock-mobile-scale/.test(
             dockCss,
         );
     facts.coarseSetsScale = coarseSetsScale;
     if (!coarseSetsScale) {
         violations.push(
-            "the `@media (pointer: coarse)` dock block must set `--dock-scale: var(--dock-mobile-scale, …)` (the ONE multiplier), not a per-property floor",
+            "the `@media (pointer: coarse)` dock block must set the dock multiplier knob — `--dock-scale: var(--dock-mobile-scale, …)` (W45) or `--dock-local-scale: var(--dock-mobile-scale, …)` (the W51 stack-extra) — not a per-property floor",
         );
     }
     // The density geometry is calc(* --dock-scale)-threaded — the control-size is a

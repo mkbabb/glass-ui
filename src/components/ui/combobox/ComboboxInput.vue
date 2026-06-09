@@ -30,7 +30,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <ComboboxInput
       data-slot="command-input"
       :class="cn(
-        'placeholder:text-muted-foreground flex h-10 w-full rounded-input bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-disabled aria-invalid:text-[var(--destructive)] aria-invalid:placeholder:text-[color-mix(in_srgb,var(--destructive)_60%,transparent)]',
+        // AX.W51 D18 — the filter-input HEIGHT reads the shared `--dropdown-input-height`
+        // register (= W51's `--control-h-md`, unifying the Combobox h-10 / Command h-11
+        // split onto ONE comfort-scaled register).
+        // AX.W50 D17 — the font reads the family PRIMARY rung (`text-dropdown`).
+        'placeholder:text-muted-foreground flex h-[var(--dropdown-input-height)] w-full rounded-input bg-transparent py-3 text-dropdown outline-hidden disabled:cursor-not-allowed disabled:opacity-disabled aria-invalid:text-[var(--destructive)] aria-invalid:placeholder:text-[color-mix(in_srgb,var(--destructive)_60%,transparent)]',
         props.class,
       )"
 

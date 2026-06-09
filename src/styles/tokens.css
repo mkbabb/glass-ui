@@ -1135,6 +1135,105 @@
     /* ═══════════════════════════════════════════════
        §10 SIZING
        ═══════════════════════════════════════════════ */
+    /* ── The ONE comfortable-sizing scale doctrine (AX.W51 D18) ──────────────
+       `--ui-scale` is the MASTER comfortable-sizing scalar — ONE unitless knob
+       (registered @property <number>, inherits:true, default the identity 1)
+       every interactive-control magnitude derives through `calc(<base> *
+       var(--ui-scale))`, so a single override grows control HEIGHT + PADDING +
+       GAP + FONT-SIZE + GLYPH in LOCKSTEP, proportion preserved, no per-component
+       hack. The cohorts below (`--control-h-*` heights, `--control-text*` control
+       fonts, `--ui-glyph*` glyphs) are its reading surfaces; the CVA bases + the
+       `.btn-pill`/`.input-pill` pills consume them.
+
+       ONE scale system, not three. The dock (`--dock-scale`) and the dropdown
+       family (`--dropdown-text`, W50) are SPECIALIZATIONS that read this axis:
+       `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))` — the
+       dock multiplies ON TOP of the global comfort axis (its existing geometry
+       `calc` cascade inherits the global axis for free, zero edit). A consumer
+       re-tints the whole library's comfort from ONE `:root { --ui-scale: … }`
+       override (or a scoped region — a dense data-table sets it lower) — the
+       token-first axis.
+
+       EXCLUDED — the φ-DISPLAY ladder (`--type-display-*` / `--type-title` /
+       `--type-heading` / `--type-subheading`): a hero/title is a TYPOGRAPHIC
+       identity, NOT a touch target, so it does NOT grow on the comfort/coarse
+       axis. Only interactive-CONTROL text rides `--ui-scale`. Containers (card /
+       panel radii + paddings) are separate `--radius-*` / `--space-*` axes.
+
+       The desktop default is the IDENTITY (1) — byte-exact preservation, no
+       reflow of shipped consumers. The comfort GROWTH lives at the coarse-pointer
+       default (`--ui-coarse-scale`, §below) + the consumer override. The
+       WCAG-2.5.5 44px touch floor survives as a `max(…, --control-floor)` clamp
+       inside the scaled control-size (the coarse block lifts `--control-floor` to
+       `--touch-target`, so a sub-1 scale cannot drop a control under the target).
+       Coordinates with W54's `--glass-level` + W55's `--glass-tint-*` — SEPARATE
+       axes (size vs material vs legibility); a control is comfortably-sized AND
+       glass AND legible, three orthogonal knobs. */
+    --ui-scale: 1;
+    /* The global coarse-pointer comfort default — the WHOLE library grows ~1.5×
+       on touch from ONE place (the @media (pointer: coarse) block at §below lifts
+       :root --ui-scale to this). The dock's prior parallel 1.5× becomes the global
+       default it now shares. Public library-default identity — a consumer sets
+       1.3 / 1.75 on :root or a scope. */
+    --ui-coarse-scale: 1.5;
+    /* The control-height cohort — the h-7/h-9/h-10/h-11 register (28/36/40/44px)
+       the CVA size rungs encode, each scaled by the master axis. The CVA rungs
+       read these via `h-[var(--control-h-*)]` instead of the raw `h-N` literal.
+       `--control-floor` is the WCAG-2.5.5 clamp seam (0 at desktop, lifted to
+       --touch-target under coarse-pointer); each height is `max(scaled, floor)`. */
+    --control-floor: 0px;
+    --control-h-xs: max(calc(1.75rem * var(--ui-scale)), var(--control-floor));
+    --control-h-sm: max(calc(2.25rem * var(--ui-scale)), var(--control-floor));
+    --control-h-md: max(calc(2.5rem  * var(--ui-scale)), var(--control-floor));
+    --control-h-lg: max(calc(2.75rem * var(--ui-scale)), var(--control-floor));
+    /* The control-FONT register (RED 3 — the user's "font too small"). A comfort
+       multiplier BETWEEN the static φ-ladder rung and the painted control font,
+       so interactive-control text grows on the comfort axis while the φ-DISPLAY
+       ladder stays a pure typographic scale (display headings do NOT grow on
+       touch). `--control-text` is the workhorse (the `text-sm` register the
+       buttons/inputs/triggers carried); `--control-text-sm` is the quieter rung
+       (the `text-xs` badge/caption register). W50's `--dropdown-text` IS the
+       picker-family specialization of this register. */
+    --control-text:    calc(var(--type-small) * var(--ui-scale));
+    --control-text-sm: calc(var(--type-caption) * var(--ui-scale));
+    /* The control-GLYPH cohort (RED 4 — the glyph grows WITH the box). The
+       1rem/0.875rem control-glyph register the `size-4`/`size-3.5` literals
+       encode; the un-sized-<svg> CVA rule reads these via
+       `size-[var(--ui-glyph)]`, KEEPING the `:not([class*=size-])` host-sized-icon
+       escape intact (an explicit `size-9` still wins). */
+    --ui-glyph:    calc(1rem     * var(--ui-scale));
+    --ui-glyph-sm: calc(0.875rem * var(--ui-scale));
+
+    /* ── The picker-family type-scale (AX.W50 D17) ───────────────────────────
+       ONE governed two-rung scale the WHOLE shadcn picker family (Select /
+       DropdownMenu / Combobox / ContextMenu / Command / MultiSelect) reads, so the
+       family paints at ONE uniform scale instead of the scattered raw
+       `text-sm`/`text-xs` Tailwind-literal lottery (item rows at `text-sm`,
+       headings/shortcuts at `text-xs`, the two filter inputs at mismatched heights).
+       A consumer re-tints the whole family from ONE override.
+
+       It is a SPECIALIZATION of W51's control-font register (one scale system, not
+       three): `--dropdown-text` reads `--control-text` (the comfort-scaled `text-sm`)
+       and `--dropdown-text-secondary` reads `--control-text-sm` (the comfort-scaled
+       `text-xs`), so the picker family rides the SAME `--ui-scale` comfort axis as
+       every other control — a `--ui-scale` bump grows the dropdowns too. A consumer
+       wanting the family LARGER than the rest overrides `--dropdown-text` directly
+       (e.g. `var(--type-body)`); the override re-resolves every family surface.
+
+       Scale-contract (which surface reads which rung):
+         • PRIMARY (`--dropdown-text`)   → item rows, triggers, filter inputs, empties.
+         • SECONDARY (`--dropdown-text-secondary`) → section labels, group-headings,
+           keyboard shortcuts (the quieter-than-item caption register; resolves the
+           witness-2 contradiction — the Select/DropdownMenu/ContextMenu labels
+           collapse DOWN to the secondary rung to match the Combobox/Command headings,
+           ONE rung for the section-label role family-wide).
+       `--dropdown-input-height` unifies the two filter-input heights (Combobox was
+       h-10, Command was h-11) onto ONE register — a specialization of W51's
+       `--control-h-md` so the picker input scales on the comfort axis with the font. */
+    --dropdown-text:           var(--control-text);
+    --dropdown-text-secondary: var(--control-text-sm);
+    --dropdown-input-height:   var(--control-h-md);
+
     --size-icon-btn: 2.5rem;
     --icon-xs: 0.75rem;
     --icon-sm: 0.875rem;
@@ -1168,18 +1267,30 @@
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
 
-    /* AX.W45 — the ONE coarse-pointer multiplier. `--dock-scale` (default 1, the
-       identity) threads the WHOLE `.glass-dock[data-density]` geometry cascade
-       (box, padding, gap, tab, tile-min, glyph) via `calc(<base> * --dock-scale)`,
-       so a single knob grows every dock axis in lockstep. `@media (pointer: coarse)`
-       sets `--dock-scale: var(--dock-mobile-scale, 1.5)` and the chrome scales ~1.5×
-       on touch — the desktop proportion preserved, the box+glyph+pad in step. The
-       WCAG 2.5.5 44px floor survives as a `max(…, 44px)` clamp INSIDE the scaled
-       control-size (so a consumer dialing `--dock-mobile-scale` below 1.0 cannot drop
-       under the target). `--dock-mobile-scale` is the public library-default identity
+    /* AX.W45 — the dock geometry multiplier. `--dock-scale` threads the WHOLE
+       `.glass-dock[data-density]` geometry cascade (box, padding, gap, tab,
+       tile-min, glyph) via `calc(<base> * --dock-scale)`, so a single knob grows
+       every dock axis in lockstep. The WCAG 2.5.5 44px floor survives as a `max(…,
+       44px)` clamp INSIDE the scaled control-size.
+
+       AX.W51 RECONCILE (D18) — `--dock-scale` is RE-HOMED as a SPECIALIZATION of
+       the global `--ui-scale` comfort axis: `calc(var(--ui-scale) *
+       var(--dock-local-scale, 1))`. The dock now MULTIPLIES on top of the global
+       comfort scalar — its whole existing geometry `calc` chain inherits the global
+       axis for FREE (zero edit to the density cascade; the reconcile is at this ONE
+       definition line). At the desktop identity (`--ui-scale: 1`,
+       `--dock-local-scale: 1`) the dock is byte-identical to HEAD. On coarse-pointer
+       the GLOBAL `:root { --ui-scale: var(--ui-coarse-scale, 1.5) }` block grows the
+       dock WITH the rest of the library — ONE consistent touch scale, not a parallel
+       dock-only 1.5×. `--dock-local-scale` is the dock-local EXTRA multiplier
+       (default 1): a consumer who wants the dock LARGER than the global comfort sets
+       it, and the coarse block lifts it to `--dock-mobile-scale` (default 1, the
+       stack-extra) so the dock can grow an extra notch ON TOP of the global coarse
+       default. `--dock-mobile-scale` is the public library-default identity
        (presets-in-consumers: a consumer sets 1.3/1.75 on `:root` or a dock scope). */
-    --dock-scale: 1;
-    --dock-mobile-scale: 1.5;
+    --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1));
+    --dock-local-scale: 1;
+    --dock-mobile-scale: 1;
     /* Library glyph ownership — `.dock-icon-button > svg` reads this so the dock
        icon glyph scales WITH the box (mirroring `.dark-mode-toggle-button > svg`).
        A consumer-passed explicit lucide size class still WINS (utility layer >
@@ -1660,6 +1771,24 @@
     --dock-press-spring: var(--duration-fast) var(--spring-bouncy);
 }
 
+/* AX.W51 D18 — the GLOBAL coarse-pointer comfort amplification. The WHOLE library
+   — buttons, inputs, badges, toggles, the dock (a specialization that reads
+   `--ui-scale`) — grows ~1.5× on touch from this ONE place, the W45 dock-only 1.5×
+   lifted to the master scalar so the touch scale is CONSISTENT across the library
+   (at HEAD the dock grew but the buttons did not — the three-scale split). The
+   WCAG-2.5.5 44px touch floor is enforced HERE too: `--control-floor` lifts to
+   `--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at
+   ≥ 44px regardless of the scalar (a consumer dialing `--ui-scale` below 1 still
+   cannot drop a control under the target). Fine-pointer is byte-identical
+   (`--ui-scale` stays 1). `--ui-coarse-scale` is the public default a consumer
+   retunes. */
+@media (pointer: coarse) {
+    :root {
+        --ui-scale: var(--ui-coarse-scale, 1.5);
+        --control-floor: var(--touch-target, 2.75rem);
+    }
+}
+
 /* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
    richer 24px overlay wash is amortised by the extra device pixels (the blur
    samples a denser backing store), so the design ceiling is restored where it
@@ -2099,6 +2228,21 @@
    two axes coordinate but never collapse: the a11y Clear↔Tinted escape rides
    level-up here AND tint-toward-ink under `prefers-contrast: more`). */
 @property --glass-level {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
+/* AX.W51 D18 — the master comfortable-sizing scalar registered typed. The
+   `<number>` syntax guarantees `calc(<base> * var(--ui-scale))` is always valid (a
+   malformed override CLAMPS to the initial value 1, not an invalidated calc — the
+   fail-safe); `inherits: true` (unlike the per-element specular @property cohort)
+   so a SCOPED override (a dense data-table region) cascades to every descendant
+   control without a per-element set; the type makes it animatable (a density
+   toggle COULD spring it). Mirrors the `--glass-level` registration above (the
+   cascading-scalar idiom), distinct from the per-element specular @property cohort
+   (those are `inherits: false`). */
+@property --ui-scale {
     syntax: "<number>";
     inherits: true;
     initial-value: 1;

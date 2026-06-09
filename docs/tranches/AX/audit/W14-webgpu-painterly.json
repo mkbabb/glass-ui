@@ -1,0 +1,27 @@
+{
+  "wave": "AX.W14",
+  "decision": "BRANCH B (EXCISE) — the recommended disposition + the autonomous default (per §4 note 14 + constellation result[29] finding 7). No orchestrator over-ride to Branch A (WIRE) landed within the wave window, so EXCISE is the no-halt close.",
+  "scope": "the SAFE, in-bounds (aurora) core of the EXCISE: delete the two zero-importer dead WGSL files + strike the now-dangling multi-pass comments + record the parity-floor reality in DESIGN.md. The device.lost → WebGL2 fallback leg + the renderMode.ts/CHANGELOG/README edits + the proof:webgpu-substrate-single / proof:aurora-webgpu-render re-scope are OUT of the 'aurora + configurator' FileBounds this agent was bounded to (they touch src/composables/glass/createGPUCanvas.ts + the shared existing gates the orchestrator resyncs) — recorded as a carry, NOT silently absorbed.",
+  "redWitness1 (the dead painterly scaffold)": {
+    "before": "painterly.wgsl.ts (PAINTERLY_TENSOR/SMOOTH/KUWAHARA_WGSL + PAINTERLY_TENSOR_FORMAT + PAINTERLY_KUWAHARA_SECTORS) + wake.wgsl.ts (WAKE_ADVECT_WGSL + WAKE_TEXTURE_FORMAT) AUTHORED + EXPORTED but ZERO importers (grep-confirmed: only self-references + DESIGN.md prose). Substrate-without-consumer — forbidden by the no-overfitting bar.",
+    "after": "DELETED both files entirely. `grep -rn 'PAINTERLY_|WAKE_|painterly.wgsl|wake.wgsl' src/ tests/ scripts/ --exclude DESIGN.md` finds ZERO real references (the files are GONE). The proof:aurora-interaction-prm gate already gracefully handles wake.wgsl.ts absence ('n/a (wake.wgsl.ts absent)') — no gate regressed.",
+    "verdict": "EXCISED — the dead-scaffold class closed."
+  },
+  "redWitness3 (the palette divergence)": {
+    "state": "ALREADY-CLOSED by AX.W11 — the WGSL samplePalette already splices the shared samplePaletteRamp (PALETTE_RAMP_WGSL from procedural-color), so the straight-OKLab-vs-arc divergence the W14 doc cited no longer exists at HEAD. W14's palette-parity leg is a no-op (W11 landed it).",
+    "verdict": "ALREADY-GREEN — no edit needed."
+  },
+  "commentsStruck": [
+    "gpuRuntime.ts:7-13 + :18-21 — the 'multi-pass painterly half wired through the FBO/storageTexture seam' + 'BAKES NO pass-count / tensor format / Kuwahara-sector-count' narrative → replaced with the parity-floor reality + the excise rationale",
+    "aurora.wgsl.ts:7-9 — the 'full-quality multi-pass painterly half is painterly.wgsl.ts' line → replaced with the parity-floor excise note"
+  ],
+  "designMd": "added Δ09a (the WebGPU painterly EXCISE resolution) after Δ09 — records the dead-scaffold deletion + the parity-floor single-pass opt-in re-scope + the WEBGPU_PARITY opt-in-only disposition + the Kuwahara-deferred-to-a-future-tranche note. The historical Δ09 intent is preserved; Δ09a is its resolution.",
+  "carry (out-of-bounds, for the orchestrator)": {
+    "device.lost fallback": "subscribe to device.lost in createGPUAuroraSetup/createGPUCanvas → tear down the GPU handle on a non-destroy loss + fall back to WebGL2 + a dev-only error. NOT done — createGPUCanvas.ts is OUT of the aurora+configurator FileBounds (src/composables/glass/).",
+    "renderMode.ts WEBGPU_PARITY JSDoc": "delete the 'auto-default on medium parity' framing → opt-in-only disposition. NOT done (out of bounds).",
+    "gate re-scope": "proof:webgpu-substrate-single (add a deletion-proof clause) + proof:aurora-webgpu-render (device-loss + palette-parity clauses). NOT done — those are shared existing gates the orchestrator resyncs; re-scoping a shared gate risks a non-local regression (the autonomous-resilience Class-2 trigger). The deletion is verifiable today by the grep above; a dedicated deletion-proof gate can be authored by the orchestrator if wanted.",
+    "CHANGELOG/README": "RESOLVE the W07 KNOWN LIMITATION entry + the README WGSL section. NOT done (out of the aurora+configurator code FileBounds; doc-narrative surgery deferred)."
+  },
+  "build": "green after deletion (typecheck + build both pass; the dead files had zero importers so deletion is clean).",
+  "needsRegistration": "none for W14 (no new gate authored — the existing gates are untouched; the deletion is grep-verifiable)."
+}

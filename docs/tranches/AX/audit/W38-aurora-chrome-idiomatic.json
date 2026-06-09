@@ -1,0 +1,48 @@
+{
+  "wave": "AX.W38",
+  "arm": "Arm 2 (the demo-chrome idiom pass — D1), re-grounded to the post-W53 reality",
+  "gate": "proof:aurora-chrome-idiomatic",
+  "status": "GREEN",
+  "ratify": {
+    "color-swatch (the 3 type=color sites)": "Option B (keep-native + LabeledField-wrap) — RECOMMENDED path. The seed swatch stays a native <input type=color> (the deliberate hex-paste affordance) wrapped in LabeledField so it carries the label contract. NO ColorSwatch primitive minted (Option A would be a dedicated sub-wave, NOT W38).",
+    "short enums (stroke-mode/stroke-layers/noise-octaves/flow-pattern/warp-mode)": "KEEP as SegmentedTabs variant=pill — per the Hardening amendment, W53 already made these the correct ToggleGroup-shaped surface (role=group + aria-pressed). They are NOT cramped (≤5 segments) and read well as segmented toggles mutating one canvas. Only the 7-way medium enum was the cramped/cross-surface-divergent defect.",
+    "D2 medium-label-casing": "INTO W38 — the reauthored medium LabeledSelect surfaces Title-Case labels (Van Gogh / Oil Pastel / Crayon) off the canonical mediumOptions map. Disjoint from W47's preset-KEY half."
+  },
+  "reGrounding": "The original Arm-2 witnesses cited `BouncyTabs` (DELETED by W53). Live probe `grep -rn BouncyTabs demo/stories/aurora/` = ZERO. The a11y 'enum-as-panel-nav / role=tablist category error' the diagnosis rested on is W53-CLOSED (SegmentedTabs variant=pill resolves role=group + aria-pressed). The actionable defect is VISUAL/cross-surface: the 7-way `medium` enum rendered as a native <select> in Atoms AND a cramped 7-segment pill in Advanced (two renderings of one enum). The reauthor unifies it onto LabeledSelect in BOTH surfaces.",
+  "subSurfaces": {
+    "AuroraAtomsPanel.vue (9 native controls)": {
+      "before": "4 native <select> (harmony/arrangement/medium/motion) + 4 native <input type=range> (energy/zones-count/noise/texture) + 1 native <input type=color> (seed), each in a hand-rolled <label class='grid gap-1 text-sm'>",
+      "after": "4 LabeledSelect + 4 LabeledSlider + 1 LabeledField-wrapped native color swatch. The hand-rolled <label> sections subsumed by the LabeledField contract.",
+      "liveCount": { "nativeSelects": 0, "nativeRanges": 0, "labeledSelectTriggers": 4 }
+    },
+    "config/MediumLayer.vue (the 7-way medium enum)": {
+      "before": "medium rendered as SegmentedTabs variant=pill (the cramped 7-segment cross-surface-divergent defect)",
+      "after": "medium → LabeledSelect (matching the atoms panel — one enum, one rendering). The short stroke-mode/stroke-layers/noise-octaves enums STAY SegmentedTabs (correct short-toggle idiom).",
+      "preserved": "the setMedium/setStrokeMode/setStrokeLayers/setNoiseOctaves handlers + the *Options arrays route unchanged"
+    },
+    "config/FlowLayer.vue + CompositionLayer.vue": {
+      "decision": "UNCHANGED — flow-pattern (5-way) + warp-mode (3-way) are short, non-cramped, not duplicated cross-surface; they stay SegmentedTabs (the correct ToggleGroup-shaped idiom per the amendment). The existing LabeledSlider rows were already idiomatic.",
+      "rationale": "The amendment re-grounds the defect to the 7-segment cramped medium pill specifically; the short non-duplicated enums are not the defect and a LabeledSelect for a 3-way warp-mode would be a regression in affordance."
+    },
+    "AuroraConfigDock.vue (Advanced disclosure)": {
+      "before": "the Advanced disclosure hosted the 6 config panels inside a DockLayerGroup/DockLayer (named panes with crossfade + inert) + a SegmentedTabs layer-switch — a heavier, semantically-wrong substrate",
+      "after": "composes ConfiguratorLayer collapse sections (Medium open by default, the rest collapsed) — the library's own preset-controls column. The DockLayerGroup/DockLayer + the layer-switch tab are RETIRED.",
+      "preserved": "the top-level Atoms↔Advanced SegmentedTabs (a real tablist) STAYS; the activeLayer prop kept on the interface (vestigial) so aurora.vue's host wiring is untouched"
+    }
+  },
+  "crossSurfaceConsistency": "the `medium` enum renders the SAME way (LabeledSelect) in BOTH the Atoms panel and the Advanced MediumLayer — live-confirmed (the Medium LabeledSelect shows 'Smooth' in both).",
+  "piLane": {
+    "method": "Playwright headless-new over the LIVE aurora story; light + dark; element-clipped panel screenshots",
+    "spec": "tests-visual/w38-w47-verify.spec.ts",
+    "verdict": "GREEN — the DEFAULT atoms panel reads as a coherent glass-ui form (LabeledSelect triggers + LabeledSlider rows + glass-tinted seed swatch, NOT raw UA controls); the Advanced disclosure reads as ConfiguratorLayer collapse sections; the medium enum renders one way (LabeledSelect) across both surfaces; van-Gogh/oil-pastel surface with Title-Case labels in the medium picker; no occlusion against the aurora canvas; light + dark both clean.",
+    "screens": [
+      "docs/tranches/AX/audit/screens/W38-atoms-panel.png",
+      "docs/tranches/AX/audit/screens/W38-advanced-configurator-layers.png",
+      "docs/tranches/AX/audit/screens/W38-studio-1440-light.png",
+      "docs/tranches/AX/audit/screens/W38-aurora-after-dark.png"
+    ]
+  },
+  "bindingVerification": "the LabeledSelect/LabeledSlider @update:model-value handlers route through the SAME patch/setMedium/setTexture mutators — live-driven (the canvas re-resolves on atom change, confirmed by the W10 proof:aurora-atoms-render path + the live atoms drive); the v-if=isTextured guard preserved.",
+  "noOverfitting": "composes-only — no new token, no new CVA variant, no new src/components/ primitive, no src/styles/ edit. Dogfoods the already-shipped LabeledSelect/LabeledSlider/LabeledField/ConfiguratorLayer family.",
+  "needsRegistration": "package.json: \"proof:aurora-chrome-idiomatic\": \"node scripts/proof-aurora-chrome-idiomatic.mjs\""
+}

@@ -121,6 +121,13 @@
     --text-subheading:  var(--type-subheading);
     --text-heading:     var(--type-heading);
     --text-title:       var(--type-title);
+    /* AX.W50 D17 — the picker-family type-scale → `text-dropdown` /
+       `text-dropdown-secondary` utilities, bridging the `--dropdown-text` token pair
+       (tokens.css §10, a specialization of W51's `--control-text` comfort register)
+       so a Tailwind `text-dropdown` utility resolves the family scale. Mirrors the
+       `--text-small: var(--type-small)` ladder-bridge idiom above. */
+    --text-dropdown:           var(--dropdown-text);
+    --text-dropdown-secondary: var(--dropdown-text-secondary);
     --text-display:     var(--type-display-1);
     --text-display-1:   var(--type-display-1);
     --text-display-2:   var(--type-display-2);

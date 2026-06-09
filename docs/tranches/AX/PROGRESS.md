@@ -55,7 +55,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
 | W13 | vangogh/oilpastel mediums — pigment compositing | complete |
-| W14 | WebGPU painterly parity or excise | planned |
+| W14 | WebGPU painterly parity or excise | dev-complete — WebGPU painterly EXCISE (Branch B) — dead painterly.wgsl/wake.wgsl deleted, parity-floor recorded in DESIGN.md; proof:webgpu-substrate-single/aurora-backend-fallback green (non-visual excise, no DELTA owed) |
 | W15 | blob contained droplet — lit warm-cream living membrane | complete |
 | W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
@@ -79,9 +79,9 @@ reference; the Status column reflects each wave's reconciled state.
 | W33 | close — gate fleet, readmes, overfitting, inheritance, final | planned |
 | W34 | cross-constellation idiom + consumer-adoption ledger | planned |
 | W35 | keyframes prune + migration DAG | planned |
-| W36 | forced-colors glass-language skin | planned |
+| W36 | forced-colors glass-language skin | live-verified — forced-colors glass-language skin (@media forced-colors maps glass→system colors, rides --glass-level:0); proof:forced-colors-skin green; DELTA audit/visual/W36-DELTA.md |
 | W37 | Canvas2D lifecycle + text-highlight substrates | complete |
-| W38 | aurora configurator + glass-atoms restyle | planned |
+| W38 | aurora configurator + glass-atoms restyle | live-verified — aurora configurator faster/springier (--spring-snappy reveal readback) + glass-atoms restyle + idiomatic chrome (LabeledSelect/Slider); proof:configurator-glass-atoms/aurora-chrome-idiomatic green; DELTA audit/visual/W38-DELTA.md |
 | W39 | lighthouse perf/a11y route matrix | planned |
 | W40 | demo-shell dock-nav coherence reaudit | live-verified — demo-shell dock-nav coherence — SidebarDock/BottomDock on the W61 unified nav-pattern (home-left + DockSeparator), use-token-color→darkmode toggle; proof:demo-dock-nav green; shares W18-DELTA.md |
 | W41 | publisher cross-repo build supplier-edge | planned |
@@ -91,11 +91,11 @@ reference; the Status column reflects each wave's reconciled state.
 | W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | live-verified — region-model + DK1/2/4/5/7/8 + the W45-TUNE perfection (Q1 pill/Q3 hover/C1/C2/C4/C5/C7); DELTA audit/visual/W45-DELTA.md |
 | W45-TUNE | dock-perfection close — capture owed DELTA + fix Q1 pill/C1 glyph/C2 tile-pad/C7 vertical body, re-point hover (Q3), bind dock-glass W54-successor (glass-selected · clear 19→0 specular) | live-verified — Q1 collapsed-pill floor tokens, C1 glyph drop (--dock-icon-glyph paints), C2 tile-pad×--dock-scale, Q3 3-channel glass hover (bg→glass-resting + scale 1.1 + specular 0→0.1, readback), C4 rest specular 19→0, C5 glass-floating active register, C7 structural vertical body; proof:dock-perfection 6/6+C1 green; DELTA audit/visual/W45-DELTA.md |
 | W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | live-verified — the blob renders as a lit contained droplet (4 moods resolve, specular highlight, contained), no broken hover/moods; proof:blob-live-truth + π render arm green; DELTA audit/visual/W46-DELTA.md |
-| W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
+| W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | live-verified — preset roster named Van Gogh/Oil Pastel/Crayon, dead strokeMode dropped; proof:aurora-preset-roster green; DELTA audit/visual/W47-DELTA.md |
 | W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | live-verified — the demo BINDS the shipped seams (useSpecularTracking live, --glass-tint-strength bites, real <Button variant=glass>, rim device); proof:glass-material-demo + π arm green; DELTA audit/visual/W48-DELTA.md |
 | W49 | math-paper composes latex-paper (D16) | planned |
-| W50 | uniform dropdown/select/menu type-scale (D17) | planned |
-| W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned (spec authored)  |
+| W50 | uniform dropdown/select/menu type-scale (D17) | live-verified — uniform dropdown/select/menu type-scale (D17), one token; proof:dropdown-type-scale green; DELTA audit/visual/W50-DELTA.md |
+| W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | live-verified — comfortable library-wide --ui-scale axis (D18 umbrella), --dock-scale reconciled; proof:ui-scale green; DELTA audit/visual/W51-DELTA.md |
 | W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | live-verified — bounded edge gleam default-off (rest specular 0 → hover 0.1 readback), calm saturate, glass button; proof:liquid-glass-material green; DELTA audit/visual/W52-DELTA.md |
 | W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | live-verified — ONE SegmentedTabs family (segmented/pill/underline/vertical) on one spring engine, squish intact (π glided+squished); proof:tabs-unified green; DELTA audit/visual/W53-DELTA.md (shared W54-tabs captures) |
 | W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | live-verified — the scalar threads both ladders (level=1 byte-identical); Button/Card/Dialog/SegmentedTabs/Alert/TagsInput defaults flipped to glass; the 4 divergent recipes + 2 recipe divergences reconciled (proof:glass-level + proof:glass-one-model 14/14); W56(R1) squircle on dialog/sheet coupled; 16-png DELTA captured (desktop+mobile × light+dark), backdrop-filter + translucent --glass-bg-* readback confirms glass paints. See audit/visual/W54-DELTA.md |

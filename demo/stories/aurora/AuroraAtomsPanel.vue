@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import {
+    LabeledField,
+    LabeledSelect,
+    LabeledSlider,
+} from "../../../src/components/custom/labeled-field";
 import type {
     AuroraAtoms,
     AuroraHarmony,
@@ -13,6 +18,13 @@ import type {
  * (count + arrangement), NOISE (one organic-boundary knob), MEDIUM (+ texture
  * when textured), and MOTION. A `v-model:atoms` surface; the host
  * (`AuroraConfigDock`) resolves the atoms to a config and drives the canvas.
+ *
+ * The controls are the library's own form primitives — LabeledSelect /
+ * LabeledSlider / LabeledField — so the default-visible surface reads as the
+ * same glass-ui idiom the rest of the studio speaks (no raw UA-styled native
+ * <select>/<input type=range>). The seed swatch stays a native <input
+ * type=color> (a deliberate hex-paste affordance) wrapped in LabeledField so
+ * it carries the same label contract.
  */
 const props = defineProps<{
     atoms: AuroraAtoms;
@@ -29,29 +41,58 @@ function patch(fn: (a: AuroraAtoms) => void) {
     emit("update:atoms", props.atoms);
 }
 
-const HARMONIES: readonly AuroraHarmony[] = [
-    "analogous",
-    "complementary",
-    "split-complementary",
-    "triad",
-    "tetradic",
-    "monochrome",
-];
-const ARRANGEMENTS: readonly AuroraZoneArrangement[] = ["scattered", "composed", "centred"];
-const MEDIA: readonly AuroraMedium[] = [
-    "smooth",
-    "pastel",
-    "watercolor",
-    "oil",
-    "crayon",
-    "vangogh",
-    "oil-pastel",
-];
-const MOTIONS: readonly AuroraMotionAtom[] = ["still", "breathing", "drifting"];
+// Each picker exposes Title-Case display labels (the LabeledSelect renders the
+// item string verbatim); a label→value map round-trips the typed union. ONE
+// medium picker, Title-Cased — van-Gogh + oil-pastel surface by name.
+const HARMONIES: Record<string, AuroraHarmony> = {
+    Analogous: "analogous",
+    Complementary: "complementary",
+    "Split complementary": "split-complementary",
+    Triad: "triad",
+    Tetradic: "tetradic",
+    Monochrome: "monochrome",
+};
+const ARRANGEMENTS: Record<string, AuroraZoneArrangement> = {
+    Scattered: "scattered",
+    Composed: "composed",
+    Centred: "centred",
+};
+const MEDIA: Record<string, AuroraMedium> = {
+    Smooth: "smooth",
+    Pastel: "pastel",
+    Watercolor: "watercolor",
+    Oil: "oil",
+    Crayon: "crayon",
+    "Van Gogh": "vangogh",
+    "Oil Pastel": "oil-pastel",
+};
+const MOTIONS: Record<string, AuroraMotionAtom> = {
+    Still: "still",
+    Breathing: "breathing",
+    Drifting: "drifting",
+};
+
+// Reverse maps (value → display label) so the bound select shows the
+// Title-Case label for the live value.
+function labelFor<T extends string>(map: Record<string, T>, value: T): string {
+    return Object.keys(map).find((k) => map[k] === value) ?? Object.keys(map)[0]!;
+}
+
+const harmonyItems = Object.keys(HARMONIES);
+const arrangementItems = Object.keys(ARRANGEMENTS);
+const mediaItems = Object.keys(MEDIA);
+const motionItems = Object.keys(MOTIONS);
+
+const harmonyLabel = computed(() => labelFor(HARMONIES, props.atoms.harmony ?? "analogous"));
+const arrangementLabel = computed(() =>
+    labelFor(ARRANGEMENTS, props.atoms.zones?.arrangement ?? "composed"),
+);
+const motionLabel = computed(() => labelFor(MOTIONS, props.atoms.motion ?? "drifting"));
 
 // The medium's texture amount is STRUCTURALLY ABSENT on a smooth medium — the
 // slider is hidden, not disabled-and-ignored (no dead affordance).
 const mediumKind = computed(() => props.atoms.medium?.kind ?? "smooth");
+const mediumLabel = computed(() => labelFor(MEDIA, mediumKind.value));
 const isTextured = computed(() => mediumKind.value !== "smooth");
 const textureAmount = computed<number>(() =>
     props.atoms.medium && props.atoms.medium.kind !== "smooth"
@@ -59,7 +100,26 @@ const textureAmount = computed<number>(() =>
         : 0.5,
 );
 
-function setMedium(kind: AuroraMedium) {
+const seedHex = computed(() =>
+    typeof props.atoms.seed === "string" ? props.atoms.seed : "#3a7bd5",
+);
+
+function setHarmony(label: string) {
+    patch((a) => (a.harmony = HARMONIES[label]!));
+}
+function setArrangement(label: string) {
+    patch((a) => {
+        a.zones = {
+            count: a.zones?.count ?? 2,
+            arrangement: ARRANGEMENTS[label]!,
+        };
+    });
+}
+function setMotion(label: string) {
+    patch((a) => (a.motion = MOTIONS[label]!));
+}
+function setMedium(label: string) {
+    const kind = MEDIA[label]!;
     patch((a) => {
         a.medium = kind === "smooth" ? { kind } : { kind, amount: textureAmount.value };
     });
@@ -69,121 +129,127 @@ function setTexture(amount: number) {
         if (a.medium && a.medium.kind !== "smooth") a.medium.amount = amount;
     });
 }
+function setSeed(value: string) {
+    patch((a) => (a.seed = value));
+}
+function setColorEnergy(v: number) {
+    patch((a) => (a.colorEnergy = v));
+}
+function setZonesCount(v: number) {
+    patch((a) => {
+        a.zones = { count: v, arrangement: a.zones?.arrangement ?? "composed" };
+    });
+}
+function setNoise(v: number) {
+    patch((a) => (a.noise = v));
+}
 </script>
 
 <template>
     <div class="flex flex-col gap-3 p-3">
         <!-- ── COLOR ──────────────────────────────────────────────────────── -->
         <p class="text-admin-label text-muted-foreground">Color</p>
-        <label class="grid gap-1 text-sm" data-atom="seed">
-            <span>seed</span>
+        <LabeledField label="Seed" tooltip="Base color the harmony derives from" data-atom="seed">
             <input
-                :value="typeof atoms.seed === 'string' ? atoms.seed : '#3a7bd5'"
+                :value="seedHex"
                 type="color"
-                class="h-8 w-full rounded"
-                @input="patch((a) => (a.seed = ($event.target as HTMLInputElement).value))"
+                class="h-8 w-full cursor-pointer appearance-none rounded-control border border-border/40 bg-card/40 p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-control [&::-webkit-color-swatch]:border-none"
+                @input="setSeed(($event.target as HTMLInputElement).value)"
             />
-        </label>
+        </LabeledField>
 
-        <label class="grid gap-1 text-sm" data-atom="harmony">
-            <span>harmony</span>
-            <select
-                :value="atoms.harmony"
-                class="rounded border bg-card px-2 py-1"
-                @change="patch((a) => (a.harmony = ($event.target as HTMLSelectElement).value as AuroraHarmony))"
-            >
-                <option v-for="h in HARMONIES" :key="h" :value="h">{{ h }}</option>
-            </select>
-        </label>
+        <LabeledSelect
+            label="Harmony"
+            tooltip="Color relationship the palette is built from"
+            :items="harmonyItems"
+            :is-open="false"
+            :model-value="harmonyLabel"
+            data-atom="harmony"
+            @update:model-value="setHarmony"
+        />
 
-        <label class="grid gap-1 text-sm" data-atom="colorEnergy">
-            <span>energy ({{ (atoms.colorEnergy ?? 0.5).toFixed(2) }})</span>
-            <input
-                :value="atoms.colorEnergy ?? 0.5"
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                @input="patch((a) => (a.colorEnergy = Number(($event.target as HTMLInputElement).value)))"
-            />
-        </label>
+        <LabeledSlider
+            label="Energy"
+            tooltip="0..1 · chroma/contrast of the palette"
+            :model-value="atoms.colorEnergy ?? 0.5"
+            :min="0"
+            :max="1"
+            :step="0.05"
+            data-atom="colorEnergy"
+            @update:model-value="setColorEnergy"
+        />
 
         <!-- ── ZONES ──────────────────────────────────────────────────────── -->
         <p class="mt-1 text-admin-label text-muted-foreground">Zones</p>
-        <label class="grid gap-1 text-sm" data-atom="zones-count">
-            <span>count ({{ atoms.zones?.count ?? 2 }})</span>
-            <input
-                :value="atoms.zones?.count ?? 2"
-                type="range"
-                min="1"
-                max="6"
-                step="1"
-                @input="patch((a) => { a.zones = { count: Number(($event.target as HTMLInputElement).value), arrangement: a.zones?.arrangement ?? 'composed' }; })"
-            />
-        </label>
+        <LabeledSlider
+            label="Count"
+            tooltip="1..6 · number of color zones"
+            :model-value="atoms.zones?.count ?? 2"
+            :min="1"
+            :max="6"
+            :step="1"
+            data-atom="zones-count"
+            @update:model-value="setZonesCount"
+        />
 
-        <label class="grid gap-1 text-sm" data-atom="zones-arrangement">
-            <span>arrangement</span>
-            <select
-                :value="atoms.zones?.arrangement ?? 'composed'"
-                class="rounded border bg-card px-2 py-1"
-                @change="patch((a) => { a.zones = { count: a.zones?.count ?? 2, arrangement: ($event.target as HTMLSelectElement).value as AuroraZoneArrangement }; })"
-            >
-                <option v-for="ar in ARRANGEMENTS" :key="ar" :value="ar">{{ ar }}</option>
-            </select>
-        </label>
+        <LabeledSelect
+            label="Arrangement"
+            tooltip="How the zones are placed across the field"
+            :items="arrangementItems"
+            :is-open="false"
+            :model-value="arrangementLabel"
+            data-atom="zones-arrangement"
+            @update:model-value="setArrangement"
+        />
 
         <!-- ── NOISE ──────────────────────────────────────────────────────── -->
         <p class="mt-1 text-admin-label text-muted-foreground">Noise</p>
-        <label class="grid gap-1 text-sm" data-atom="noise">
-            <span>organic boundary ({{ (atoms.noise ?? 0.5).toFixed(2) }})</span>
-            <input
-                :value="atoms.noise ?? 0.5"
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                @input="patch((a) => (a.noise = Number(($event.target as HTMLInputElement).value)))"
-            />
-        </label>
+        <LabeledSlider
+            label="Organic boundary"
+            tooltip="0..1 · how irregular the zone edges read"
+            :model-value="atoms.noise ?? 0.5"
+            :min="0"
+            :max="1"
+            :step="0.05"
+            data-atom="noise"
+            @update:model-value="setNoise"
+        />
 
         <!-- ── MEDIUM (+ texture only when textured) ──────────────────────── -->
         <p class="mt-1 text-admin-label text-muted-foreground">Medium</p>
-        <label class="grid gap-1 text-sm" data-atom="medium">
-            <span>medium</span>
-            <select
-                :value="mediumKind"
-                class="rounded border bg-card px-2 py-1"
-                @change="setMedium(($event.target as HTMLSelectElement).value as AuroraMedium)"
-            >
-                <option v-for="m in MEDIA" :key="m" :value="m">{{ m }}</option>
-            </select>
-        </label>
+        <LabeledSelect
+            label="Medium"
+            tooltip="Painterly body the field is rendered with"
+            :items="mediaItems"
+            :is-open="false"
+            :model-value="mediumLabel"
+            data-atom="medium"
+            @update:model-value="setMedium"
+        />
 
         <!-- texture amount is STRUCTURALLY ABSENT on smooth (no dead slider). -->
-        <label v-if="isTextured" class="grid gap-1 text-sm" data-atom="texture">
-            <span>texture ({{ textureAmount.toFixed(2) }})</span>
-            <input
-                :value="textureAmount"
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                @input="setTexture(Number(($event.target as HTMLInputElement).value))"
-            />
-        </label>
+        <LabeledSlider
+            v-if="isTextured"
+            label="Texture"
+            tooltip="0..1 · strength of the painterly texture"
+            :model-value="textureAmount"
+            :min="0"
+            :max="1"
+            :step="0.05"
+            data-atom="texture"
+            @update:model-value="setTexture"
+        />
 
         <!-- ── MOTION ─────────────────────────────────────────────────────── -->
         <p class="mt-1 text-admin-label text-muted-foreground">Motion</p>
-        <label class="grid gap-1 text-sm" data-atom="motion">
-            <span>motion</span>
-            <select
-                :value="atoms.motion"
-                class="rounded border bg-card px-2 py-1"
-                @change="patch((a) => (a.motion = ($event.target as HTMLSelectElement).value as AuroraMotionAtom))"
-            >
-                <option v-for="m in MOTIONS" :key="m" :value="m">{{ m }}</option>
-            </select>
-        </label>
+        <LabeledSelect
+            label="Motion"
+            tooltip="How the field animates over time"
+            :items="motionItems"
+            :is-open="false"
+            :model-value="motionLabel"
+            data-atom="motion"
+            @update:model-value="setMotion"
+        />
     </div>
 </template>

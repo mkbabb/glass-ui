@@ -1,0 +1,63 @@
+{
+  "wave": "AX.W50",
+  "title": "Uniform dropdown/select/menu type-scale — one --dropdown-text token pair the whole picker family reads",
+  "base": "391d8fb1db3c7dcdad7d63085e6f8b01af985db6",
+  "headline": "The whole shadcn picker family (Select / DropdownMenu / Combobox / ContextMenu / Command + MultiSelect) converges onto ONE governed two-rung type-scale — --dropdown-text (primary) + --dropdown-text-secondary (secondary) — that every item, trigger, label, heading, shortcut, input, and empty reads; the two filter inputs share one height register (--dropdown-input-height); the scattered raw text-sm/text-xs leak excised; a consumer re-tints the family from ONE override. Landed AS a specialization of W51's --control-text comfort register (one scale system, not three).",
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — source-level re-grep confirmed at HEAD before any edit",
+    "fourRedWitnessesConfirmedAtHead": [
+      {
+        "witness": "RED 1 — no --dropdown-text token; every site a raw Tailwind literal",
+        "evidence": "git show HEAD:src/styles/tokens.css | grep -c dropdown-text = 0; menuItemVariants.ts text-sm + 13+ raw text-sm/text-xs across SelectTrigger/SelectLabel/DropdownMenuLabel/Shortcut/ContextMenuLabel/Shortcut/ComboboxInput/Empty/Group/CommandInput/Empty/Shortcut/Group."
+      },
+      {
+        "witness": "RED 2 — internally inconsistent (three literals for one scale)",
+        "evidence": "section labels at text-sm in Select/DropdownMenu/ContextMenu but text-xs in Combobox/Command group-headings — the same conceptual section-label role at two scales."
+      },
+      {
+        "witness": "RED 3 — the two filter inputs scale-mismatch on font AND height",
+        "evidence": "ComboboxInput h-10 + text-sm vs CommandInput h-11 + text-sm — the same picker-filter role at two heights, neither font reading a token."
+      },
+      {
+        "witness": "RED 4 — the scale is not overridable from one token",
+        "evidence": "every site a raw literal, so a :root { --dropdown-text } override is dead (no component reads it). The only path is per-call-site class overrides — the anti-pattern the token-first axis kills."
+      }
+    ]
+  },
+  "folds": [
+    {
+      "finding": "RED 1 — mint the token pair",
+      "gestaltFix": "Mint --dropdown-text: var(--control-text) + --dropdown-text-secondary: var(--control-text-sm) + --dropdown-input-height: var(--control-h-md) in tokens.css (SPECIALIZATIONS of W51's comfort register — one scale system), bridged in theme.css (--text-dropdown / --text-dropdown-secondary) so the text-dropdown Tailwind utility resolves. The family scale-contract recorded in a tokens.css section comment.",
+      "evidence": "tokens.css picker-family block + theme.css @theme inline bridge"
+    },
+    {
+      "finding": "RED 1 — route the shared item base",
+      "gestaltFix": "menuItemVariants.ts 'text-sm outline-none' -> 'text-dropdown outline-none'; all 13 item SFCs inherit in ONE edit.",
+      "evidence": "src/components/ui/_shared/menuItemVariants.ts"
+    },
+    {
+      "finding": "RED 1/2 — route every non-item surface + resolve the section-label contradiction",
+      "gestaltFix": "Primary (text-dropdown): SelectTrigger, ComboboxInput, ComboboxEmpty, CommandInput, CommandEmpty. Secondary (text-dropdown-secondary): all *Label, all *Shortcut, ComboboxGroup heading, CommandGroup headings (the arbitrary-selector [&_[cmdk-group-heading]] + the inline ComboboxLabel). RATIFY satisfied: section-labels collapse DOWN to the secondary rung to match the combobox/command headings — ONE rung for the section-label role family-wide.",
+      "evidence": "the ~14 picker-family SFCs"
+    },
+    {
+      "finding": "RED 3 — unify the filter-input heights",
+      "gestaltFix": "ComboboxInput h-10 + CommandInput h-11 -> both h-[var(--dropdown-input-height)] (= W51's --control-h-md). The height + font co-vary on the comfort axis.",
+      "evidence": "ComboboxInput.vue + CommandInput.vue"
+    }
+  ],
+  "ratifyRecords": {
+    "sectionLabelRung": "RESOLVED -> secondary (--dropdown-text-secondary). The Select/DropdownMenu/ContextMenu labels collapse to the same rung as the Combobox/Command group-headings (a section label is a quieter-than-item caption).",
+    "multiSelectBadge": "LEFT on the Badge family (the recommended default). MultiSelect.vue:139 is a <Badge variant=secondary> chip, conceptually a Badge-family surface not a picker menu surface; the gate scopes the picker SURFACES, not the chip. multi-select/ is outside the gate's family-dir scope.",
+    "inputHeightRegister": "--dropdown-input-height = var(--control-h-md) (2.5rem/h-10 register at scale 1) — the more common picker-input height; Command's h-11 was the outlier.",
+    "w51Reconcile": "Landed AS the specialization (W51 landed first in this session) — --dropdown-text reads --control-text directly (not a standalone ladder anchor), so the picker family rides the SAME --ui-scale comfort axis as every other control. ONE scale system, not three."
+  },
+  "gate": {
+    "name": "proof:dropdown-type-scale",
+    "script": "scripts/proof-dropdown-type-scale.mjs",
+    "arm": "device-free SOURCE + deletion-proof arm (no raw text-sm/text-xs in the family dirs + every surface reads the token + the token resolves on the cascade + the two filter inputs share the height register). The painted font-size parity + the single-override-scales-the-family truth is the orchestrator's live pi readback.",
+    "bornRed": "confirmed at HEAD (14+ raw literals, 0 token reads, no --dropdown-text defined)",
+    "green": "20/20 pass on the patched tree"
+  },
+  "status": "DEV-COMPLETE — source arm GREEN, build + typecheck GREEN; the live pi family-open-side-by-side + single-override demo is the orchestrator's binding close (chrome extension not connected in this session)."
+}

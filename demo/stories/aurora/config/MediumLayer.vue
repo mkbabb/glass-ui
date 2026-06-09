@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { SegmentedTabs } from "../../../../src/components/custom/tabs";
+import { LabeledSelect } from "../../../../src/components/custom/labeled-field";
 import type {
     AuroraConfig,
     AuroraMedium,
@@ -19,12 +20,26 @@ const props = defineProps<{
 
 const showStrokeMode = computed(() => props.config.medium === "oil");
 
-// SegmentedTabs single-select round-trips a string; the handlers accept the
-// model union and coerce (these are single-select pickers).
-function setMedium(v: string | string[]) {
-    props.config.medium = String(v) as AuroraMedium;
+// The 7-way medium enum reads better as a glass Select than a cramped 7-segment
+// pill, and renders the SAME way as the atoms-panel medium picker (one enum,
+// one rendering). A label↔value map round-trips the typed union since
+// LabeledSelect displays the item string verbatim.
+const mediumLabels = mediumOptions.map((o) => o.label);
+const mediumByLabel = Object.fromEntries(
+    mediumOptions.map((o) => [o.label, o.value]),
+) as Record<string, AuroraMedium>;
+const mediumLabelByValue = Object.fromEntries(
+    mediumOptions.map((o) => [o.value, o.label]),
+) as Record<AuroraMedium, string>;
+const mediumLabel = computed(() => mediumLabelByValue[props.config.medium]);
+
+function setMedium(label: string) {
+    props.config.medium = mediumByLabel[label]!;
 }
 
+// SegmentedTabs single-select round-trips a string; the short stroke/noise
+// enums stay segmented (the role=group + aria-pressed ToggleGroup-shaped
+// surface — a short set of toggles mutating one canvas).
 function setStrokeMode(v: string | string[]) {
     props.config.strokeMode = String(v) as StrokeMode;
 }
@@ -40,15 +55,14 @@ function setNoiseOctaves(v: string | string[]) {
 
 <template>
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
-        <div class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Medium</p>
-            <SegmentedTabs
-                :options="[...mediumOptions]"
-                :model-value="config.medium"
-                variant="pill"
-                @update:model-value="setMedium"
-            />
-        </div>
+        <LabeledSelect
+            label="Medium"
+            tooltip="Painterly body the field is rendered with"
+            :items="mediumLabels"
+            :is-open="false"
+            :model-value="mediumLabel"
+            @update:model-value="setMedium"
+        />
         <div v-if="showStrokeMode" class="flex flex-col gap-1">
             <p class="text-admin-label text-muted-foreground">Stroke mode</p>
             <SegmentedTabs

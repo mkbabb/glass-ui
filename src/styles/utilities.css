@@ -1101,36 +1101,52 @@ html.no-transition *::after {
     transition-duration: 0s !important;
 }
 
-/* ── Forced-colors restoration (AQ.W2 §5) ──────────────────────────────
+/* ── Forced-colors focus + silhouette rung (AQ.W2 §5 · generalized AX.W36) ────
    Windows High Contrast / forced-colors mode STRIPS `box-shadow` — so the
    glass focus rings (box-shadow + `outline: none`) vanish, leaving keyboard
-   users with no visible focus (a WCAG 2.4.7 failure forced-colors exposes).
-   Restore a real `outline` keyed to the system `Highlight` color (outline
-   survives forced-colors; box-shadow does not). The box-shadow ring stays the
-   primary in normal mode (it carries the glass aesthetic) — these two are
-   mutually exclusive by media query, NOT a parallel path.
+   users with no visible focus. Restore a real `outline` keyed to the system
+   `Highlight` color (outline survives forced-colors; box-shadow does not). The
+   box-shadow ring stays the primary in normal mode (it carries the glass
+   aesthetic) — these two are mutually exclusive by media query, NOT a parallel
+   path.
 
-   `forced-color-adjust: none` is deliberately NOT used — glass-ui's
-   glassmorphic chrome is decorative and yields to the user's forced palette
-   (css forced-colors guidance). Baseline Widely Available; this IS the
-   fallback mechanism (it only activates under forced-colors), so no nested
-   guard. */
+   AX.W36 — the focus-survival selector set is GENERALIZED to the broader
+   interactive surface: the dock CONTROLS (`.dock-icon-button` / `.dock-tab-button`
+   / `.dock-select-trigger` / `.dock-dropdown-trigger`) + the pill button base
+   (`.btn-pill`) all carry a box-shadow focus ring (dock.css / utilities.css) that
+   vanishes under WHC just like the original five. This is the SAME `Highlight`
+   outline rung extended to cover them — ONE block, ONE path (the glass-language
+   structure-survival skin for the tier panes / StatusDot / floating surfaces lives
+   co-located with the ladder it skins, in glass.css).
+
+   `forced-color-adjust: none` is deliberately NOT used — glass-ui's glassmorphic
+   chrome is decorative and yields to the user's forced palette (css forced-colors
+   guidance). Baseline Widely Available; this IS the fallback mechanism (it only
+   activates under forced-colors), so no nested guard. */
 @media (forced-colors: active) {
     .focus-ring:focus-visible,
     .glass-btn:focus-visible,
     .interactive-item:focus-visible,
+    .btn-pill:focus-visible,
+    .dock-icon-button:focus-visible,
+    .dock-tab-button:focus-visible,
+    .dock-select-trigger:focus-visible,
+    .dock-dropdown-trigger:focus-visible,
     .input-pill:focus,
     .input-pill:focus-visible {
         outline: 2px solid Highlight;
         outline-offset: 2px;
     }
 
-    /* Structural edges borne ONLY by box-shadow (the hairline catch-light /
-       glass pill edge / card plate) also vanish — restore a real border so
-       the silhouette survives. CanvasText is the system text/border color. */
+    /* Structural edges borne ONLY by box-shadow (the hairline catch-light + the
+       dock SHELL pill edge) also vanish — restore a real border so the silhouette
+       survives. CanvasText is the system text/border color. The `.glass-dock`
+       shell is OUT of the glass-material group BY DESIGN (it hand-rolls a parallel
+       surface — see glass.css), so it keeps its WHC edge HERE; the five-rung ladder
+       + `.glass-card` get their WHC border from the co-located glass-language skin
+       in glass.css (one source per surface family, no double-declaration). */
     .hairline-accent,
-    .glass-dock,
-    .glass-card {
+    .glass-dock {
         border: 1px solid CanvasText;
     }
 }

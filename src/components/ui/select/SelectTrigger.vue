@@ -29,7 +29,12 @@ const variantClass = computed(() =>
     : 'glass-wash',
 )
 
-const sizeClass = computed(() => (props.size === 'sm' ? 'h-9' : 'h-10'))
+// AX.W51 D18 — the trigger HEIGHT rides the `--control-h-*` comfort cohort (the
+// scaled h-9/h-10 register). The font (`text-sm`, in the template `cn()` below) is
+// W50's picker-family `--dropdown-text` bound, untouched here.
+const sizeClass = computed(() =>
+  props.size === 'sm' ? 'h-[var(--control-h-sm)]' : 'h-[var(--control-h-md)]',
+)
 </script>
 
 <template>
@@ -39,7 +44,7 @@ const sizeClass = computed(() => (props.size === 'sm' ? 'h-9' : 'h-10'))
     :class="cn(
       variantClass,
       sizeClass,
-      'tap-squish focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-[var(--destructive)] aria-invalid:shadow-[0_0_0_var(--focus-ring-width)_color-mix(in_srgb,var(--destructive)_35%,transparent)]',
+      'tap-squish focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-dropdown placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-[var(--destructive)] aria-invalid:shadow-[0_0_0_var(--focus-ring-width)_color-mix(in_srgb,var(--destructive)_35%,transparent)]',
       props.class,
     )"
   >

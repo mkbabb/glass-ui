@@ -186,7 +186,7 @@ const controlsScrollClass = computed(() => {
 </script>
 
 <template>
-    <section :class="containerClass" :style="containerStyle">
+    <section data-slot="configurator" :class="containerClass" :style="containerStyle">
         <!-- ── Stage column (live specimen viewport) ─────────────────── -->
         <div
             :class="
@@ -229,12 +229,22 @@ const controlsScrollClass = computed(() => {
                             :key="p.key"
                             type="button"
                             role="tab"
+                            data-slot="configurator-preset"
                             :aria-selected="p.key === activePreset"
+                            :data-active="p.key === activePreset || undefined"
                             :class="
                                 cn(
-                                    'focus-ring shrink-0 rounded-pill border px-3 py-1 text-xs font-medium transition-colors',
+                                    // Glass-atoms chip: tap-squish press-spring +
+                                    // transition-control surface cross-fade + the
+                                    // canonical focus-ring + --radius-pill geometry.
+                                    // The active chip is a translucent glass-tier
+                                    // fill (the quiet glass-tint rung over a real
+                                    // backdrop-blur) — NOT an opaque bg-foreground
+                                    // stamp — so it reads as a glass pill seated on
+                                    // the aside, legible over the live AuroraStage.
+                                    'tap-squish focus-ring transition-control shrink-0 rounded-pill border px-3 py-1 text-xs font-medium',
                                     p.key === activePreset
-                                        ? 'border-foreground/40 bg-foreground text-background'
+                                        ? 'glass-quiet border-border/50 text-foreground'
                                         : 'border-border/40 bg-card/40 text-foreground hover:bg-card/70',
                                 )
                             "

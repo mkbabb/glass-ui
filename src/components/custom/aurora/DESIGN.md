@@ -306,6 +306,20 @@ proof gate that machine-locks it.
   re-statement.) Hand-written WGSL — no Three.js/TSL (the zero-dep posture
   survives).
 
+- **Δ09a — WebGPU painterly EXCISE (AX.W14, LANDED).** The Δ09 multi-pass painterly
+  half (`painterly.wgsl.ts`'s structure-tensor / smoothed-tensor / anisotropic-Kuwahara
+  passes + `wake.wgsl.ts`'s stable-fluids pointer wake) shipped as DEAD substrate — the
+  WGSL strings + format constants were authored and exported but NEVER wired to a
+  consumer FBO ladder (zero importers). Per the no-overfitting bar (substrate-without-
+  consumer is binary), the two files are DELETED. WebGPU is RE-SCOPED to a **parity-floor
+  single-pass opt-in enhancement**: it draws the SAME single-pass base field the WebGL2
+  path draws, with the OKLCh palette ramp spliced from the shared chunk (no divergence).
+  `WEBGPU_PARITY` stays the opt-in lever; the auto-probe never routes a capable machine to
+  WebGPU by default — WebGL2 is the universal shipped default. The Kuwahara/LIC finish is
+  deferred to a future tranche if a real consumer demands it (then wired live, not shipped
+  as dead scaffold). The earlier "WebGPU full-quality multi-pass half" framing above is
+  the historical Δ09 intent; Δ09a is its resolution.
+
 - **Δ10 — Color-seam single-sourcing (AX.W11, LANDED).** Two OKLCh seam leaks the
   W5 migration left closed: (1) the **catch-light** (`lightColor`) is OKLCh-derived
   off the shared `warmCatchLight(L,C,h)` `/color` helper at the `(0.985, 0.0125,
