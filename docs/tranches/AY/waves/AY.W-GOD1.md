@@ -45,6 +45,18 @@ re-run at HEAD):
 | `src/components/custom/dock/GlassDock.vue` | **608** | SFC; `<script setup>` 1–500 (499-line script), `<template>` 502–608 (106), no `<style>` — carries a STALE `DO-NOT-SPLIT (AW.W15 assay): … 421-line` banner at `:2-6` |
 | `src/components/custom/constellation/constellationField.ts` | **510** | pure engine module; ~13 exported fns/ifaces; the cleanest carve (function-family split) |
 
+> **RE-GROUND (post-Batch-2, from `audit/hardening/b2/`).** Two of these GREW after this table was
+> written, because the **F5 ordering was inverted** — W-CON1 and W-BLOB2 (Batch 2, committed
+> `tranche/AY @ 1151899`) added to the very god-modules W-GOD1 was meant to carve FIRST:
+> `constellationField.ts` is now **653** (W-CON1 added `refitField` + the wander/auto-drift cluster,
+> +143; carve target = shed 153+, not 10) and `useMetaballRenderer.ts` is now **707** (W-BLOB2's
+> `cCol.*` color-perturbation uploads, +13; the largest violator). `proof:no-god-module` is therefore
+> **RED on `tranche/AY` HEAD** (the Batch-2 commit landed over it — a missed verify). The carve plan
+> stands, re-scoped to 653/707; the natural cut is `constellationField` → `constellationWarp.ts`
+> (the warp/wander cluster the B2 refinement names) re-composed by the field. The DELTA-honesty +
+> stunning-bar findings for those same waves live in `audit/hardening/b2/{B2-con1,B2-blob}.md` and
+> fold into W-CON1/W-BLOB2's own re-capture clauses, not here.
+
 Five compounding facts make the as-stated "carve 4 god-modules" framing under-specced:
 
 - **D-CI — the gate is `tags:["local"]`, INVISIBLE to CI.** `gates.mjs:384-387` registers
