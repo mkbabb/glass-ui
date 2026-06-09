@@ -852,6 +852,10 @@ export function renderCiYaml() {
     L.push("        runs-on: ubuntu-latest");
     L.push("        steps:");
     L.push("            - uses: actions/checkout@v4");
+    L.push("              with:");
+    // fetch-depth: 0 — full history so the git-ancestor gates (proof:au-w0-reground
+    // et al.) can resolve the historical dock SHAs (a shallow clone fails them).
+    L.push("                  fetch-depth: 0");
     L.push("            - uses: actions/setup-node@v4");
     L.push("              with:");
     L.push("                  node-version: 24");
