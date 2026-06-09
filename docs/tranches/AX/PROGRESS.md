@@ -66,15 +66,17 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
 | W49 | math-paper composes latex-paper (D16) | planned |
 | W50 | uniform dropdown/select/menu type-scale (D17) | planned |
-| W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned |
+| W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned (spec authored)  |
 | W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | live-verified (DEVELOPED) |
 | W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | live-verified (DEVELOPED) |
-| W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | planned |
-| W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned |
+| W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | planned (spec authored)  |
+| W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned (spec authored)  |
 | W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified (DEVELOPED) |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified (DEVELOPED) |
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | live-verified (DEVELOPED) |
+| W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
+| W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
