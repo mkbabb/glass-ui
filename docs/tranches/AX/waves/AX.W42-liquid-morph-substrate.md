@@ -604,3 +604,72 @@ Pursuant to `docs/precepts/` (pinned `63240e6`); the band-A binding precepts (AX
    expand the union only when a consumer needs a new axis. The fold-7 `superellipse`/`k` silhouette axis is a
    union member ONLY if the dock consumer drives a `k`-continuous reshape at landing (else it stays
    flagged-door, not an enumerated dead axis). RATIFY at the census.
+
+---
+
+## Hardening amendment (golden pass) — 2026-06-09
+
+The golden hand-challenge (`audit/hardening/CH-misc.md` C1/C2, `CH-aurora.md` C1) re-diagnosed this spec
+against live HEAD and found it STALE at three load-bearing points: two of the three born-RED witnesses are
+born-GREEN, and EVERY named second consumer was deleted by the now-landed W53. The amendment re-grounds the
+witnesses + RE-SCOPES the second consumer; the existing body above is the substrate ARCHITECTURE (correct,
+unchanged) — only the diagnosis it drives from is re-pinned.
+
+**(A) RED witness 1 is FALSE at HEAD — `MorphGroup` half-landed; re-diagnose as "no GENERAL substrate."**
+The §State witness 1 (`:30-39`) asserts `grep -rn 'MorphGroup\|provideMorphGroup\|--morph-t\b' src/`
+returns ZERO. It does NOT — W02 already shipped `src/components/custom/dock/composables/dockMorphContext.ts`
+with `DockMorphGroupRegistration`/`DockMorphGroupHandle`/`addTarget` (and `dock/composables/index.ts:33`
+re-exports the type). W02 (`complete` in PROGRESS) landed the dock-flavored `DockMorphGroup` this wave's own
+body names as its lift target (`:130`). So the wave's FIRST gate (`proof:morph-substrate-single`, "born-RED
+at HEAD" per `:336`) is **born-GREEN-failing** — it cannot witness a substrate that half-exists. The
+corrected witness 1: *the dock orchestrator (`dockMorphContext.ts`) is dock-PRIVATE and is NOT lifted to a
+general `MorphGroup`/`useLiquidMorph`/`--morph-t`; NO non-dock consumer reads a generalized substrate; the
+`--morph-t` `@property` registration + the general `useLiquidMorph` driver are absent (RED).* The witness is
+"the dock context is not generalized + no second non-dock consumer," not "MorphGroup absent." The W00
+live-re-diagnosis ritual (`:64`) exists to catch exactly this — it was not re-run before the spec froze.
+Re-run it at wave-open against live HEAD.
+
+**(B) The SECOND-CONSUMER set is GONE — every candidate was deleted by W53; RE-CHOOSE off the SURVIVING
+surface.** Open-Questions-2 (`:580-585`) enumerates the candidates — *a card→detail expand, a Dialog/Popover
+materialize, a tab-indicator glide (`UnderlineTabs` inset morph), or a segmented-toggle thumb
+(`BouncyToggle`/`ToggleGroup`)* — and RECOMMENDS the tab-indicator glide OR the card→detail expand. Live
+probe: `BouncyToggle.vue`/`BouncyTabs.vue`/`UnderlineTabs.vue`/`ResponsiveTabs.vue` are ALL **ABSENT** — W53
+unified them into ONE `SegmentedTabs` driven by its OWN already-shipped, live-verified elastic indicator
+engine (`useTabIndicator`, glides on `--spring-snappy` + squishes via a volume-preserving `--stretch`
+scalar). The recommended second consumer (the tab-indicator glide) is now owned by a SEPARATE engine;
+re-pointing it at `useLiquidMorph` would be a regression-rewrite of a live-verified surface, not a clean
+second-consumer landing. **Amendment: RETIRE the four deleted candidates from the Open-Questions-2 list and
+the Recommendation. The new second consumer is the `<Card>` card→detail self-reshape OR a Dialog/Popover
+materialize** (a genuine self-reshape that exercises the `axes` declaration + the 3-state lifecycle and does
+NOT duplicate the dock). The card→detail expand is the lead recommendation (a real `<Card>` surface morph,
+not `@starting-style`-native, so it is a composable-tier consumer that exercises the substrate, per the
+already-stated `:584` avoid-CSS-only-tier caution). RATIFY against the live π audit (the consumer must read
+BETTER on the substrate, not merely compile).
+
+**(C) NEW Disjointness clause — vs W53 (the one-path-for-motion question).** W53 owns `useTabIndicator`
+(the tab squish+glide engine); W42 owns `useLiquidMorph` (the general morph substrate). Two independent
+morph engines in the tree is the one-path violation W42 exists to kill — so the boundary MUST be ratified,
+not left implicit. **Wave-open RATIFY (before the substrate lands): prototype whether `useTabIndicator`'s
+`--stretch` glide+squish CAN be re-expressed as a `useLiquidMorph` consumer** (the `axes` declaration + the
+3-state lifecycle). If YES, `SegmentedTabs` becomes the substrate's THIRD consumer (the real
+single-authorship win) — but the re-point rides a SEPARATE follow-wave, never a regression-rewrite folded
+into W42's landing (W53 is live-verified; a same-wave rewrite re-opens a closed surface). If NO (the squish
+physics genuinely diverge from a single-scalar morph), W42 records `useTabIndicator` as a DELIBERATE
+separate engine with the divergence rationale (the glass-cohesion ONE-model verdict for motion), and the
+boundary is documented, not a drift. Either way the verdict is recorded in `W42-…json`. This clause does
+NOT block W42's landing — it picks the card→detail second consumer (B) regardless; the tab-indicator
+unification is the additive third-consumer question.
+
+**(D) Gate correction — drop the false-RED grep arm.** `proof:morph-substrate-single`'s witness-1 assertion
+must NOT key off "`grep MorphGroup src/` returns ZERO" (born-GREEN-failing per A). The born-RED arm asserts
+the ABSENCE of the GENERAL surface: no `useLiquidMorph` driver, no `@property --morph-t` registration, no
+non-dock `--morph-t`-reading consumer — with `dockMorphContext.ts` PRESENT-but-dock-private as the explicit
+allow-listed pre-existing state (W02's landed dock orchestrator is the lift SOURCE, not a born-GREEN
+contradiction).
+
+**Net:** the substrate ARCHITECTURE (the single-scalar kernel, the `MorphGroup` orchestrator as the
+generalization of `dockMorphContext`, the 3-state lifecycle, the four invariants, the bifurcated seam, the
+`@supports`-gated lensing fold) is UNCHANGED and correct. The amendment re-pins the born-RED diagnosis to
+the post-W02/post-W53 tree, re-chooses the second consumer onto the surviving `<Card>` surface, and adds the
+W53 one-path-for-motion ratify so two morph engines never silently coexist. Capture the paired-π DELTA at
+close (the wave's `audit/visual/` capture, still owed per GOLDEN G-4).

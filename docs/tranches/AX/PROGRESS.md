@@ -1,15 +1,43 @@
 # AX tranche — PROGRESS
 
-The dock-first, visual-truth tranche. 46 waves (W00–W43 + W25a/b, W27a/b). W00 stands
-up the fail-CLOSED π visual-runtime lane — the close-criterion machinery every
-downstream visual wave depends on.
+The dock-first, visual-truth tranche. W00 stands up the fail-CLOSED π visual-runtime
+lane — the close-criterion machinery every downstream visual wave depends on.
 
-Status legend: `planned` · `in-progress` · `complete` · `live-pending`. A wave is
-`complete` only when audited GREEN against the LIVE product (the AX cardinal lesson: a
-green headless proof over a black live canvas is NOT done). `live-pending` means the
-device-free gates closed GREEN but the binding real-device visual audit surfaced a
-contradiction — the wave re-opens until the live truth is GREEN (the convergence
-soundness discipline: "complete" never collapses to "headless-green").
+**Binding done-definition + run order: [`GOLDEN.md`](./GOLDEN.md).** The 32-lane hardening
+hand-challenge returned the tranche structurally sound in PLAN, inflated in LEDGER. GOLDEN
+is the source of truth this file syncs FROM: the 9 §A done-criteria, the §B Batch −1
+soundness battery that lands FIRST (W62), the §C hardened wave order (Batch −1 before
+everything), and the §E glass-cohesion unification. "Perfected" is GOLDEN's 9-criteria
+GREEN with a falsifying gate, NOT a row count.
+
+Status legend (the reconciled vocabulary — `(DEVELOPED)` RETIRED, gate-rejected by
+`proof:live-verified-ledger`, see W62):
+- `planned` — spec authored or not yet authored; no code landed. `planned (spec authored)`
+  marks a wave whose tranche-format wave-doc exists under `waves/` but is unbuilt.
+- `in-progress` — code landing.
+- `dev-complete` — the device-free gates closed GREEN; no live DELTA owed (a non-visual
+  wave, e.g. W58 story-language).
+- `dev-landed · live-pending (DELTA owed)` — the device-free gates closed GREEN AND the
+  code landed, but the binding on-disk `.png` DELTA capture is OWED. This is the reconciled
+  status for the 7 waves that previously carried the retired `live-verified (DEVELOPED)`
+  label (W19/W45/W52/W53/W56/W57/W59). They flip to `live-verified` only THROUGH the gate
+  (a fresh `audit/visual/W<NN>-DELTA.md` referencing a real on-disk pixel — the GOLDEN §C
+  Batch 0 owed-capture sweep).
+- `live-pending` — the device-free gates closed GREEN but the real-device audit surfaced a
+  CONTRADICTION; the wave re-opens until the live truth is GREEN.
+- `live-verified` — GATE-DEFINED (a fresh on-disk capture exists), never author-asserted.
+  A wave is "done" ONLY at this state (the AX cardinal lesson: a green headless proof over a
+  black live canvas is NOT done; "complete" never collapses to "headless-green").
+
+The DELTA-owed column note: every `dev-landed · live-pending (DELTA owed)` row owes a
+captured before/after `.png` to `audit/visual/` before it can flip to `live-verified` —
+this IS §4 drop-risk item 27 (the screenshot DELTA discipline) and G-4/G-9 of GOLDEN.
+
+Run order is GOLDEN §C, NOT numeric. **Batch −1 lands FIRST: W62, the soundness gate
+battery — nothing else dispatches until those five forcing functions are GREEN** (a
+close-gate that lands last can only post-hoc discover the inflation it was built to
+prevent). Then the GOLDEN §C batches drive one at a time. The table is wave-numbered for
+reference; the Status column reflects each wave's reconciled state.
 
 | Wave | Title | Status |
 |---|---|---|
@@ -22,7 +50,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W06 | dock storybook honest rail + css split | planned |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
-| W09 | specular tune to subtle | live-pending → D11 radials absorbed by W52 (developed) |
+| W09 | specular tune to subtle | live-pending — D11 radials absorbed by W52 (cardinal re-open) |
 | W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
@@ -61,6 +89,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W43 | fourier-field first-class | planned |
 | W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | planned |
 | W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | dev-landed · live-pending (DELTA owed) — region-model + DK1/2/4/5/7/8 |
+| W45-TUNE | dock-perfection close — capture owed DELTA + fix Q1 pill/C1 glyph/C2 tile-pad/C7 vertical body, re-point hover (Q3), bind dock-glass W54-successor (glass-selected · clear 19→0 specular) | planned (spec authored) |
 | W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | planned |
 | W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
 | W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
@@ -77,6 +106,8 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | dev-landed · live-pending (DELTA owed) |
 | W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
 | W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
+| W62 | soundness gate battery (Batch −1, lands FIRST) — proof:live-verified-ledger + tsconfig.test.json fold + proof:consumer-staleness + gates:verify-ci/gen-ci-fresh + proof:disposition-live (GOLDEN §B) | planned (spec authored) |
+| W63 | gate-pattern de-trap (Q8 BLOCKER) — /compositions/gate-pattern open=ref(true) traps the visitor on click; make it dismissable, lands BEFORE W60 wraps pages | planned (spec authored) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
@@ -189,3 +220,64 @@ against the 46-wave set (`audit/convergence/CONVERGENCE-PLAN.md`). Disposition:
 - **Structural**: all of W25-W29/W33-W35/W41 stay valid + born-RED; targets grew ~30%.
   The `verify-ci` ci.yml drift (14 ci-tagged gates absent, mostly π-lane) is a **W33 /
   band-close** task needing the π-gate-in-CI infra decision.
+
+## Hardening pass (the GOLDEN reconcile) — 2026-06-09
+
+The 32-lane hardening hand-challenge (`audit/hardening/`) returned the tranche sound in
+PLAN, inflated in LEDGER. [`GOLDEN.md`](./GOLDEN.md) is the binding done-definition this
+file now syncs FROM. Three reconciles landed:
+
+- **Vocabulary clean-break.** `live-verified (DEVELOPED)` is RETIRED (the linguistic
+  vehicle of the inflation — "developed AND verified" meaning "developed; the live arm is
+  owed"). The 7 carriers (W19/W45/W52/W53/W56/W57/W59) read `dev-landed · live-pending
+  (DELTA owed)`. W09's `(developed)` modifier reconciled to `live-pending` (cardinal
+  re-open). `proof:live-verified-ledger` (W62) gate-rejects any `(DEVELOPED)` cell and
+  defines `live-verified` by a fresh on-disk pixel, not author prose.
+- **Three new waves.** **W62** soundness gate battery (Batch −1, GOLDEN §B — lands FIRST,
+  pulled forward from the W33-last trap; spec `waves/AX.W62-soundness-gate-battery.md`).
+  **W45-TUNE** dock-perfection close (capture the owed DELTA + Q1/C1/C2/C7 + Q3 hover
+  re-point + the W54-successor dock-glass re-points; spec `waves/AX.W45-TUNE-dock-perfection.md`).
+  **W63** gate-pattern de-trap (Q8 BLOCKER, net-new owner per GOLDEN-synthesis §6b — must
+  land BEFORE W60).
+- **Owed-capture sweep is Batch 0.** The 7 `DELTA owed` rows are the FIRST consumers of
+  `proof:live-verified-ledger`: drive the browser at ≥2 viewports × light/dark, land the
+  first `.png` DELTAs to `audit/visual/`, flip each `dev-landed · live-pending (DELTA owed)`
+  → `live-verified` THROUGH the gate (§4 drop-risk item 27 discharged).
+
+### §4 drop-risk → wave-row home (the "nothing dropped" cross-check)
+
+Every command-ledger §4 drop-risk item (`audit/AU-AX-COMMAND-LEDGER.md`) has a wave-row
+home above:
+
+| §4 item | Ask | Wave-row home |
+|---|---|---|
+| 1 | Q8 gate-pattern locks you out | **W63** (net-new BLOCKER) |
+| 2 | D8 glass-material broken | W48 |
+| 3 | D4/D5/D7 blob live-truth tune | W46 |
+| 4 | Q3/DK2 hover only-on-click (contradicts W52) | **W45-TUNE** (Q3 re-point) |
+| 5 | Q4 buttons in glass container + paper/grid | W60 |
+| 6 | Q7 all pages glass cards + hierarchy | W60 |
+| 7 | speedtest grid idiom on pages | W60 |
+| 8 | pill-list scrollable + Number Field rounded | W60 |
+| 9 | Q5 motion-page union | W18 (Q5 dissolved, not frozen) |
+| 10 | Q6 broken motion section + background | W18 / Batch 5 |
+| 11 | Q2 aurora black-bar | W47 (FileBounds extension) |
+| 12 | DK same-root dock, home-left, dividers | W61 |
+| 13 | collapsible dock not modify page flow, icon missing | W45-TUNE / W61 |
+| 14 | DockPopover nested components survived rebuild | W61 (verify) |
+| 15 | G-3 LabeledField horizontal settings-row | W60 / book |
+| 16 | G-4 directional View-Transition helper | W21 / book (`proof:disposition-live`) |
+| 17 | G-5 DrawerContent spring (LOW/book) | book (`proof:disposition-live`) |
+| 18 | G-6 cartoon×quiet preset (LOW) | book (`proof:disposition-live`) |
+| 19 | G-2 dock-icon specular tune | W06 / W45-TUNE |
+| 20 | D1 configurator faster/springier | W38 |
+| 21 | G2 glass-over-light darken (iOS27) | W55 |
+| 22 | D18 library-wide `--ui-scale` | W51 |
+| 23 | slides 5/6/7 + xray + Tranche-K re-seed | W30-W32 |
+| 24 | slides bottom progress bar page-element | W30-W32 |
+| 25 | D16 math-paper × real katex + latex-paper | W49 |
+| 26 | 3.9.0 provenance-clean publish + consumer bumps | W33 (terminal) |
+| 27 | audit/visual/ capture discipline | **W62** (`proof:live-verified-ledger`) + Batch 0 sweep |
+
+Items 16/17/18 land as `proof:disposition-live` BOOK rows (W62 builds the gate; the close
+re-evaluates each named trigger un-MET). The §4 list IS the close checklist.

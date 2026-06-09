@@ -710,3 +710,128 @@ violate:
    **Recommendation: `@property`-registered** (the typed `<number>` + the guaranteed `initial-value:1` make the
    byte-identity robust + future-proof a W42 animated level); revisit only if the registration trips a
    Lightning-CSS emit issue (then a plain property with a documented default).
+
+---
+
+## Hardening amendment (golden pass · 2026-06-09)
+
+The 32-lane hand-challenge returned the component layer **INCOHERENT** (`audit/hardening/GLASS-ui-components.md`,
+the lone INCOHERENT verdict; corroborated by `GLASS-tokens-model.md` WEAK). The W54 body above flips Button +
+Card + Dialog onto the `--glass-level` model — but the census found **FOUR independent glass recipes** the body
+DOES NOT name, plus a set of fully-opaque chrome/content `ui/` surfaces that stay solid after the ROOT lands. So
+W54-as-specced collapses Button+Card+Dialog and leaves Tabs/Alert/TagsInput/.input-pill/the-dock-bg as the NEW
+divergences — the cohesion claim (G-1) is still FALSE post-wave. This amendment EXPANDS the FileBounds to absorb
+all four recipes onto the ONE `--glass-level` + oklab tint seam, adds the `proof:glass-one-model` (G-1) gate
+clause, and records the W56(R1) squircle COUPLING. The §Scope/§Goal/§Cadence above stand; this is an
+ABSORPTION, not a rewrite — the same five folds, widened to the surfaces the census enumerated.
+
+### The four divergent recipes the body under-scoped (source-true at HEAD `89edffc`)
+
+The census (`GLASS-ui-components.md:36-53` glassCohesion table + `:62-108` surface census) found no single
+`--glass-level`-driven model — four families, each with its own blur/opacity/tint contract, no shared knob:
+
+| Recipe | Site (source-true) | Surface | What's wrong under MAXIMAL |
+|--------|--------------------|---------|----------------------------|
+| **SegmentedTabs (flagship)** | `custom/tabs/SegmentedTabs.vue:448` (`background: var(--muted-medium)`) + `:462` (`.segmented-indicator { background: var(--background) }`) | the AX.W53 unified tab family — the most-celebrated interactive surface | OPAQUE track + OPAQUE solid slider; tabs are nav chrome (the "chrome default" the MAXIMAL decision says is glass) yet fully OFF the glass model |
+| **ui Tabs indicator** | `ui/tabs/TabsIndicator.vue:19` (`bg-secondary/80`) | the reka-ui `<Tabs>` underline/slider | opaque `bg-secondary/80`, no glass tier |
+| **Alert** | `ui/alert/index.ts:12-26` — EVERY variant is `bg-card` (`grep -c glass → 0`) | a content panel | zero glass path; under MAXIMAL a content panel is a glass tier rung |
+| **TagsInput** | `ui/tags-input/TagsInput.vue:18` (`bg-background`) | a form control | the sibling `.input-pill` family (Input/Textarea/NumberField) is glass-tinted; TagsInput was left `bg-background` — a surface-migration SIBLING-MISS inside the form atoms |
+
+Plus the two RECIPE-level divergences (not new surfaces — the existing glass families that bypass the model):
+
+- **`.input-pill` is a `blur(1px)` tinted plate, NOT real glass** (`glass.css:520-543`, `backdrop-filter:
+  var(--glass-blur-wash)` = `blur(1px)`, `tokens.css:692` `--glass-blur-wash-radius: 1px`). It does NOT read as
+  glass; it is a tinted plate with a 1px frost + a `--surface-tint-15` border that sits OFF the glass tint seam.
+- **The dock background bypasses the oklab tint seam** (`tokens.css:774` `--glass-bg-dock: color-mix(in srgb,
+  var(--card) …)` — a FLAT srgb mix with NO `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)`
+  wrapper the five rungs use). So even after W55's adaptive axis the dock — the literal G2 unreadable-over-light
+  surface — would not darken (`GLASS-tokens-model.md:80-84` C2; cross-walked to W55 RED witness 2). The dock
+  SHELL is a second hand-rolled glass material (`GLASS-tokens-model.md:24-32` — duplicated `::after` grain, an
+  inline-box-shadow rim vs the unified `::after` ring), carved out "by design" since AV.W15.
+
+The keyframes I.W6 finding (19 dock/Button specular tracks bloom where Card is clean) is the SAME class one
+level up — the specular layer is wired per-recipe (`.glass-card::before`, `.dock-icon-button`,
+`.glass-specular-track`, `.btn-glass`) rather than from one model. The specular-discipline unification rides the
+dock band (W45/DK2 owns the dock-control surfaces; W54 confirms the default-register intent) — W54 does NOT
+re-author the dock specular here, it reconciles the dock BACKGROUND onto the tint seam so W55 can reach it.
+
+### FileBounds ABSORPTION (the body's §FileBounds table is EXTENDED by these rows)
+
+| File | Edit |
+|------|------|
+| `src/components/custom/tabs/SegmentedTabs.vue` | **RECONCILE the flagship opaque tab surfaces onto the glass model.** `:448` `.segmented-tabs { background: var(--muted-medium) }` → the glass track (a glass tier rung / a `--glass-level`-driven wash-or-quiet surface, NOT an opaque `--muted-medium` plate); `:462` `.segmented-indicator { background: var(--background) }` → the glass slider (the active indicator reads as a glass tile over the track — the keyframes-dock-selected model the user names, NOT an opaque `--background` solid). KEEP the AX.W53 spring-slider geometry + the volume-preserving squish UNTOUCHED — the SURFACE moves onto glass, the indicator MOTION does not change. Re-run `proof:tabs-unified` to confirm the geometry contract survives the surface re-point. |
+| `src/components/ui/tabs/TabsIndicator.vue` | **`:19`** `bg-secondary/80` → the glass tier (the underline/slider indicator reads glass over the tab strip, one model with SegmentedTabs). The `rounded-pill` + the `--spring-snappy` transition stay. |
+| `src/components/ui/alert/index.ts` | **`:12-26`** — every variant is `bg-card` opaque. RE-POINT the `default` variant onto a glass tier rung (a content panel = a glass surface under MAXIMAL); KEEP the AW.W25 semantic-tone parity (the success/warning/info border/glyph/description toning rides ON the glass surface, not a re-faked solid plate); the body text stays `--card-foreground` for legibility (W55 carries the over-light legibility). The opaque escape (`.glass-opaque`) is available for a dense/forced-colors alert. |
+| `src/components/ui/tags-input/TagsInput.vue` | **`:18`** `bg-background` → the SAME `.input-pill` glass family its form-atom siblings (Input/Textarea/NumberField) compose — close the surface-migration sibling-miss so the form atoms are one register. (This rides the `.input-pill` real-glass fix below — TagsInput inherits the fixed pill, it does not fork a new recipe.) |
+| `src/styles/glass.css` | **EXTEND the body's glass.css bounds:** RE-POINT `.input-pill` (`:520-543`) off the `blur(1px)` `--glass-blur-wash` onto the REAL-glass register — the level-scaled wash radius (so the level knob clarifies it) OR a quiet-tier re-point, so the form-pill reads as glass not a 1px-frosted plate; the `--surface-tint-15` border moves onto the glass tint seam (one tint axis, not the srgb `--surface-tint-*` fork). Line-region-disjoint from the body's a11y-bracket region (`:730-757`) + the new `.glass-opaque` rule — the orchestrator serializes by line-region. |
+| `src/styles/tokens.css` | **EXTEND the body's tokens.css bounds:** WRAP `--glass-bg-dock` (`:774`) in the `color-mix(in oklab, var(--glass-bg-dock), var(--glass-tint-source) var(--glass-tint-strength))` tint wrapper the five rungs use (ZERO-delta at `--glass-tint-strength: 0%`, so byte-identical at HEAD) — so the dock background rides the SAME oklab tint seam + so W55's adaptive darken can reach the dock (the G2 over-light fix W55 owns; W54 lays the seam, W55 lifts the strength). W54 does NOT touch `--glass-tint-strength` (W55's) — it only routes the dock bg THROUGH the wrapper. The `--glass-level` thread (the body) already reaches `--glass-bg-dock`; this amendment adds the oklab tint wrapper on the same line. |
+
+**The fully-opaque atoms that STAY opaque (the legibility allowlist — NOT a divergence).** Per the census
+(`GLASS-ui-components.md:72-73`): `avatar`, `label`, `separator`, `skeleton`, `table`/`data-table` rows (dense
+data — W54's own opaque-escape case). These are LEGITIMATELY solid and are the named allowlist the
+`proof:glass-one-model` gate exempts. Badge stays a solid pill (R1 — pills stay rounded + Badge/Toast is the
+loud-saturated-plate register, the deliberate counterpoint to the content-band glass surfaces); the "glass badge
+variant" the census flags as a gap is NOT W54 scope (a future opt-in variant, not the default-register flip).
+
+### The G-1 gate clause — `proof:glass-one-model` (NEW; folds into `proof:glass-level`)
+
+G-1 of the GOLDEN done-definition (`GOLDEN.md:29`, `GOLDEN-criteria.md:22`) is the machine-lock this amendment
+exists to satisfy: **glass cohesion is MEASURED, not asserted.** Add to the W54 gate (either a standalone
+`proof:glass-one-model.mjs` or a fold into `proof-glass-level.mjs` — register `proof:glass-one-model` in
+`package.json` either way; it is the named G-1 falsifier):
+
+- **No solid chrome/content surface without the glass tier or the named escape.** Assert NO `ui/` chrome-or-
+  content surface paints a solid `bg-{card,background,muted,secondary,primary}` (or the CSS `background:
+  var(--{muted-medium,background,card})` equivalent in an SFC `<style>`) WITHOUT routing through the glass tier
+  (the `--glass-level`-driven `--glass-bg-*` recipe / a `.glass-*` ladder class) OR the named `.glass-opaque`
+  escape. **Born-RED at HEAD** on the four named sites (`SegmentedTabs.vue:448,462`; `TabsIndicator.vue:19`;
+  `alert/index.ts:12-26`; `TagsInput.vue:18`).
+- **The legibility allowlist.** EXEMPT the legitimately-opaque atoms — `avatar`, `label`, `separator`,
+  `skeleton`, `table`/`data-table`, and Badge's solid-pill register — by an explicit allowlist constant (the
+  same shape `proof:tabs-unified` uses for the tab family). A future component re-introducing a solid chrome
+  surface OUTSIDE the allowlist REDs the gate (so the census cannot silently regress).
+- **One recipe, one knob.** Assert every glass surface class (the 5 rungs, `.glass-card`, `.glass-dock`,
+  `.dock-icon-button`, `.glass-btn`, `.input-pill`, and the re-pointed SegmentedTabs/Tabs/Alert surfaces)
+  composes the `--glass-level`-driven `--glass-bg-*` recipe + the oklab tint wrapper (NO surface reads
+  `--surface-tint-*` or an inline `[backdrop-filter:…]` OFF the `--glass-bg-*` recipe). The `.input-pill`
+  `blur(1px)` and the `--glass-bg-dock` flat-srgb are the two born-RED divergences this asserts away.
+
+This is the same role `proof:tabs-unified` plays for the tab family — it locks the census so a future surface
+cannot re-introduce a divergent glass recipe. The π live arm (the body's `proof:glass-level` live arm)
+additionally reads a mounted SegmentedTabs / Alert / TagsInput's `getComputedStyle().backdropFilter` and asserts
+it is a glass blur (NOT `none`) over its rich backdrop — the VISUAL-TRUTH half (a source gate alone is the
+cardinal-lesson trap).
+
+### W56(R1) squircle COUPLING — land in the SAME batch (Batch 1)
+
+The glass-default flip and the squircle hinge are ONE surface decision (`GOLDEN.md:68-69` — "Couple W56(R1)
+squircle in the same batch (the glass+squircle hinges are one surface decision)"). When W54 makes the
+dialog/sheet/panel/hero surfaces glass-default, W56's R1 squircle (`MASTER-PLAN.md:59` — USER-DECIDED: extend
+the superellipse to dialogs + sheets + panels + glass hero cards + where befitting; cards + pills STAY rounded)
+must land on the SAME surfaces in the SAME batch — NOT as two passes that each re-touch `rounded-dialog`
+(`theme.css:47`, a plain `border-radius` today, no `corner-shape`) / SheetContent. The squircle rides the
+`@supports (corner-shape: superellipse(2))` guard the big-dock already uses (`dock.css:637`); the glass-default
+surfaces inherit the W56 corner vocabulary (the body's §KEEP `:224`) — but that vocabulary must EXIST on
+dialog/sheet/panel before W54's glass-default surfaces can inherit it. The two hinges are coupled and currently
+BOTH un-landed for these surfaces (`GLASS-ui-components.md:C9`). **Coordination:** W54 authors NO `corner-shape`
+edit (W56 owns the corner axis — the body's §Disjointness vs W56 holds); the COUPLING is a batch-sequencing
+clause — the orchestrator lands W54 (glass-default) + W56(R1) (squircle) on dialog/sheet/panel/hero in Batch 1
+together, so the glass-first + squircle surfaces arrive as one coherent re-skin, not two re-touches.
+
+### Amended disjointness + triumvirate notes
+
+- **The SegmentedTabs surface re-point COORDINATES with `proof:tabs-unified` (AX.W53's gate)** — W54 moves the
+  SURFACE onto glass, NOT the MOTION; the W53 spring-slider geometry + volume-preserving squish are OUT of
+  bounds. If the surface re-point REDs `proof:tabs-unified` (the surface change desyncing the geometry contract),
+  that is a Class-2 non-local gate failure → triumvirate (do NOT relax the W53 contract to pass W54).
+- **The dock-bg oklab tint wrapper COORDINATES with W55** — W54 lays the seam (routes `--glass-bg-dock` through
+  the oklab wrapper at zero-delta); W55 lifts `--glass-tint-strength` so the dock darkens over light. W54 does
+  NOT touch the tint STRENGTH (the body's §KEEP `:228-230` + §Disjointness vs W55 hold) — only the WRAPPER.
+- **The dock specular-discipline unification is OUT of W54's bounds** (the dock band / DK2 owns the dock-control
+  specular recipes; the I.W6 19-track bloom clears there). W54 reconciles the dock BACKGROUND onto the tint seam
+  ONLY. A need to re-author the dock specular `::before` → Class-2 out-of-FileBounds → triumvirate.
+- **Open question (RATIFY).** The SegmentedTabs glass-track TIER (wash vs quiet) and the Alert glass TIER
+  (wash content-panel vs quiet) are ratify-before-impl hinges — take the recorded default (SegmentedTabs track =
+  wash, the active indicator = quiet so it reads forward of the track; Alert = wash content-panel) and verify
+  LIVE that the tab indicator reads forward of the track + the alert reads legible over the existing backdrops,
+  do NOT self-ratify a divergent tier.

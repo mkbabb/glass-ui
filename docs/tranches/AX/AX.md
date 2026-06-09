@@ -31,7 +31,20 @@ real class of "still broken" findings is in fact a PUBLISH-CURRENCY gap, not a c
 `FINAL.md`). This file is the CHARTER only — DEV (it writes no `src`). AX is **tranche-development
 ONLY**: plan / research / harden / synthesize / write. No merges, no publish, no `src` edits.
 
-**Status — CONVERGED + HARDENED + SOTA-DEEPENED (this pass).** This is the post-CONVERGE charter: the
+**Status — GOLDEN (2026-06-09).** AX is mid-execution (3.8.0 published; ~28 waves done/live-verified; the
+dock band landed). Three convergence passes (the pass-1/2/3 defect ledgers), a 32-lane inventory
+(`audit/inventory/MASTER-PLAN.md` — the 10-batch DAG), and a 32-finding red-team hardening hand-challenge
+(`audit/hardening/`) have re-grounded the roadmap. The hand-challenge verdict: **not one of 32 lanes returned
+SOUND** — AX is structurally sound in PLAN, inflated in LEDGER, and the founding chronic (headless-green over
+a live-broken product) is recurring INSIDE AX. The corrective is `GOLDEN.md`: the binding 9-criterion
+done-definition, the Batch −1 soundness gate battery that lands FIRST (it makes the chronics IMPOSSIBLE, not
+just noted), the hardened wave order, and the glass-cohesion unification. The user decided the three
+foundational hinges — **MAXIMAL glass-first (W54 root), squircle→dialogs+sheets+panels+hero+befitting (W56),
+page-redesign as a thin container-layer wave (W60)**. See `## Design axes (golden pass)`,
+`## The GOLDEN done-definition`, and `## Convergence history (golden pass)` below; the convergence-cohort
+W44-W61 + the Batch −1 / W45-TUNE / dock-glass-successor / Q8 waves are in the §1 table.
+
+**Status — CONVERGED + HARDENED + SOTA-DEEPENED (the prior pass).** This is the post-CONVERGE charter: the
 34-slice deep audit + the 32-agent §16 cross-constellation analysis + the four adversarial band-critiques
 are FOLDED, the D5 hardening corrections APPLIED (POS_SCALE §4 note 13, WEBGPU_PARITY §4 note 14,
 §15-warp-is-net-new §4 note 15, the W24/W32 double-assignment §4 note 18, the W25/W27 splits + tag-model §4
@@ -204,12 +217,50 @@ the cross-session clobber ritual, and the HARDENING.md §F deploy DAG for the en
 | **AX.W42** | A · DOCK / SUBSTRATE | major | The unified liquid-morph substrate — `useLiquidMorph` / `--morph-t` / `MorphGroup` as ONE idiom (the web `GlassEffectContainer`+`glassEffectID` / Motion `LayoutGroup`+`layoutId` transposition); W01's `--dock-morph-t` is the FIRST consumer; ≥2-consumer-at-landing (dock + ≥1 glass primitive); bifurcated self-reshape-vs-route seam; `@supports`-gated lensing fold *(net-new §18.3 substrate, ~70% assembly — see waves/AX.W42 + §5)* |
 | **AX.W43** | B/E · GRAPHICS-SUBSTRATES | major | Fourier-field first-class — the J.W1 per-variant intensity BUNDLE (`peakAlpha`/head-glow/`trailFadeExp`) + `intensity` prop (the Aurora `opacityCeiling` seam, DELETE `OUTLINE_PEAK_ALPHA` no-alias; hero≈0.55/final≈0.45 §7.1 targets; age^1.4 trail; zero-alloc loop) + full citizenship (README/api-seat/story/smoke/subpath) + the MID-TRANCHE SOTA research HOOK (orchestrator-driven, DEFERRED to the drive window after the W07/W14 GPU band settles) *(absorbs slides J.W1 + the J.W9 glass-ui-half citizenship — see waves/AX.W43 + §7)* |
 
-**46 waves** (AX.W00…AX.W43, with W25/W27 each split into a/b → W25a·W25b·W27a·W27b; numbering runs
-W00…W33 then W34…W43, 44 numbered slots, 46 dispatchable waves counting the two splits). W43 is the
-first-class fourier-field perfection added this pass — the §26 / J.W1+J.W9 fold (the fourth signature graphics
+### The convergence cohort (W44-W61 + the GOLDEN hardening waves — added the pass-1/2/3 + golden passes)
+
+The post-3.8.0 live-audit + 32-lane inventory + 32-finding hardening passes surfaced these (their per-wave
+specs ship under `waves/`; the binding done-definition + the hardened batch order live in `GOLDEN.md`):
+
+| Wave | Band | Severity | One-line |
+|------|------|----------|----------|
+| **AX.W44** | G · PRIMITIVES | major | Dark-mode semantic-token contrast — destructive/alert AA floor (D10); `proof:semantic-token-contrast` |
+| **AX.W45** | A · DOCK | major | Dock region-model + `<DockSeparator>` + mobile `--dock-scale` (D13+D15); the W45-TUNE finish folds in (below) |
+| **AX.W46** | D · BLOB | blocker | Blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7); a live BLOCKER |
+| **AX.W47** | C · AURORA | major | Aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) + Q2 black-bar (usePresetThumbnails) |
+| **AX.W48** | G · GLASS-MATERIAL | blocker | glass-material demo reauthor — bind the shipped specular seams (D8); a live BLOCKER |
+| **AX.W49** | G · PAPER | minor | math-paper composes latex-paper (D16) — real katex + latex-paper search/virtualization |
+| **AX.W50** | G · PRIMITIVES | minor | Uniform dropdown/select/menu type-scale (D17); specializes onto the W51 `--ui-scale` |
+| **AX.W51** | G · SIZING | major | Comfortable component sizing — library-wide `--ui-scale` (D18 umbrella; W45/W50 specialize; `--dock-scale` reconciles onto it) |
+| **AX.W52** | G · GLASS-MATERIAL | major | Liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold |
+| **AX.W53** | G · TABS | major | Tabs-unify — ONE `<SegmentedTabs>` (segmented default/pill/underline), drop Bouncy*, merge toggle/responsive (T1-T4) |
+| **AX.W54** | GLASS-ROOT | blocker | **glass-first-class — `--glass-level` scalar + the explicit `.glass-opaque` escape (G1); the ROOT default. MAXIMAL: glass for EVERY surface. Blocks W55/W60/the dock-glass-successor. AMENDED FileBounds absorb the 4 divergent recipes (SegmentedTabs/TabsIndicator/alert/TagsInput + .input-pill + the dock flat-srgb bypass) onto the one oklab tint seam** |
+| **AX.W55** | GLASS-ROOT | major | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2); carries the maximal-glass legibility (heavy-tint-where-needed). Hard-serial after W54 |
+| **AX.W56** | DESIGN-LANGUAGE | major | Squircle design-language — `corner-shape: superellipse()` token axis (G3, foundational). R1 membership: dialogs + sheets + panels + glass hero cards + big-docks + where befitting; cards + pills STAY rounded |
+| **AX.W57** | F · STORYBOOK IA | major | Demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) |
+| **AX.W58** | F · STORYBOOK IA | minor | Storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11; `proof:story-language`) |
+| **AX.W59** | H · SLIDERS | major | Slider redesign — integrated-cylinder glass default + squircle-thumb spectrum |
+| **AX.W60** | F · PAGE-REDESIGN | major | **page-redesign container-layer (NET-NEW, thin) — wrap each story page in a glass card + a rich per-page background (paper/grid/aurora/constellation/fourier) + proper hierarchy (Q4/Q7/Q9 + P8/P10 + S1/S2). W18/W40/W57/W58 stay as-is, layered on top. Blocked on W54** |
+| **AX.W61** | A · DOCK | major | **dock-unify-root — all docks ONE GlassDock root, home button left + navs + dividing lines, Q1 collapsed size; author + migrate EVERY demo dock; verify DockPopover nested-components survived (S1 oldest dock ask)** |
+| **W45-TUNE** | A · DOCK | major | The dock-perfection finish (folds into W45/W06, Batch 3) — FIX Q1 collapsed size, Q3/DK2 hover as a GLASS REGISTER not a scale, C1 drop the 47 demo glyph-size classes so `--dock-icon-glyph` paints, C2 thread `--dock-tile-pad` through `--dock-scale`, C7 build the vertical three-region body |
+| **dock-glass-successor** | A · DOCK | major | The HARD W54-successor (Batch 3, opens after W54 lands) — the dock selected/active register becomes a GLASS register (the keyframes-dock model), clearing the 19 specular tracks → 0; re-points the dock flat-srgb bypass onto the one `--glass-level` + oklab tint seam |
+| **Q8 gate-pattern de-trap** | F · DEMO-IA | blocker | New owner for the un-owned BLOCKER — `/compositions/gate-pattern` `open=ref(true)` non-dismissable modal locks the visitor out of the page; de-trap it. Precedes W60 |
+
+**Batch −1 — the soundness gate battery (lands FIRST; see GOLDEN §B).** Five born-RED institutional gates that
+make the chronics IMPOSSIBLE, not just noted: `proof:live-verified-ledger` (a `live-verified` mark MUST attach
+an on-disk `.png` DELTA), `tsconfig.test.json` folded into typecheck+CI (catches the stale-import class),
+`proof:consumer-staleness` (the reverse cross-repo gate — every present sibling's named imports resolve against
+the CURRENT surface), `gates:verify-ci` + `proof:gen-ci-fresh` (kill the ci.yml hand-mirror drift), and
+`proof:disposition-live` (a BOOK/ARCHIVED item carries forward only if its named trigger re-evaluates each
+close). Nothing else dispatches until these land.
+
+**~70 dispatchable waves** (the W00…W43 base set — 46 with the W25/W27 a/b splits — plus the W44-W61
+convergence cohort, the Batch −1 battery, and the W45-TUNE / dock-glass-successor / Q8-de-trap finish waves).
+The base set runs W00…W33 then W34…W43 (W25/W27 each split a/b → W25a·W25b·W27a·W27b); W43 is the
+first-class fourier-field perfection (the §26 / J.W1+J.W9 fold — the fourth signature graphics
 primitive joins the first-class set aurora/blob/constellation; its SOTA research is DEFERRED-to-mid-tranche so
 it lands on the W07/W14-settled GPU substrate, see §7). W42 is the
-unified-morph substrate added this pass — the §18.3 net-new facility the dock single-scalar `--dock-morph-t`
+unified-morph substrate — the §18.3 net-new facility the dock single-scalar `--dock-morph-t`
 (W01) is the FIRST consumer of. Dependency-ordered, dock-first. The two graphics blockers (aurora-black W07, blob-flood W08) and the dock-desync
 (W01) are co-headline; the visual-truth π lane (W00) is the structural precondition every visual wave's
 close depends on. W35 (consumer-migration DAG) is a hard predecessor of the W19/W20 prune PUBLISH; W34
@@ -298,6 +349,83 @@ cites and MUST NOT violate (per-wave specs cite the specific clause + use a prec
 | **L · SLIDES (W30-W32)** | π visual-runtime binding on the consumer repo; cross-repo coordination + clean-branch landing; one-path (Canvas2D plain-hsl); substrate-with-consumer (DeckProgress consumer #2) |
 | **M · CLOSE (W33, W39)** | P-inv-28 zero-deferral close (inheritance-ledger cross-walk: ADDRESSED / RETIRES / ARCHIVES — never "deferred to next tranche"); carry-closure gate (bbnf BD-G7 form); ι integrity-sweep + stash-list; π README live-currency; overfitting-audit; canonical-readme-shape |
 | **N · CROSS-REPO (W34, W35, W41)** | cross-repo coordination doc + sibling-baseline-capture; substrate-with-consumer / wire-before-retire; no-silent-deferrals (§16.4 zero-loss); chronic-closure meta-invariant (system-gate OR born-RED paired handoff gate — no bare-tag terminal); the keyframes.js-collaboration clause; **cross-repo-dev-resolution contract-v2** (W41: every consumer dev-resolves the built `dist/`, so `build:watch` MUST keep `dist/` fresh INCLUDING dts — the `cross-repo-dev-resolution.md` invariant-30/contract-v2 the dts-watch gap violates); fail-explicit vs befitting-silent (a stale-dist silent-failure class is a library defect, not a befitting degradation) |
+
+---
+
+## Design axes (golden pass)
+
+The user-decided foundational hinges + the convergence-pass axes layered on the §0 mandate. These bind every
+convergence-cohort wave:
+
+- **MAXIMAL glass-first (W54 — the ROOT default).** Glass is the default for EVERY surface — containers, chrome,
+  buttons, AND content panels — over the rich backgrounds. The `--glass-level` scalar + the explicit
+  `.glass-opaque` escape remain for the rare solid need; glass-first is the root default, not an opt-in. The
+  four divergent glass recipes (the 5-rung tier ladder / `.btn-glass` / `.input-pill` at non-glass `blur(1px)` /
+  the dock flat-srgb bypass) reconcile onto the one `--glass-level` + the one oklab tint seam — this is GOLDEN
+  G-1 (`proof:glass-one-model`).
+- **Squircle membership (W56).** `corner-shape: superellipse()` extends from big-docks to dialogs + sheets +
+  panels + glass hero cards + where befitting (large-radius surfaces). Cards + pills STAY rounded.
+- **Page-redesign container-layer (W60 — thin, net-new).** Each story page wraps in a glass card + a rich
+  per-page background (paper/grid/aurora/constellation/fourier) + proper hierarchy; W18/W40/W57/W58 stay as-is
+  and layer on top. This is GOLDEN G-8.
+- **`--ui-scale` (W51).** ONE library-wide comfortable-sizing scalar (touch-target + font-size up); `--dock-scale`
+  (W45) and the dropdown type-scale (W50) reconcile onto it — no double-scale.
+- **Adaptive legibility carries the maximal glass (W55).** The iOS27 backdrop-luminance darken is the
+  heavy-tint-where-needed register that makes MAXIMAL glass-first legible over light/busy backgrounds.
+
+---
+
+## The GOLDEN done-definition
+
+The binding done-definition lives in `GOLDEN.md` (the hardened roadmap + the §A 9-criterion battery). The
+tranche is "perfected" ONLY when all 9 are GREEN with a falsifying gate: G-1 glass cohesion (one `--glass-level`
+model) · G-2 dock perfected (8 facets, one root) · G-3 zero chronic-defer carry · G-4 every live-verified wave
+has a captured `.png` DELTA · G-5 publish clean (CI GREEN, provenance from master) · G-6 no headless-green over
+broken · G-7 maximal glass LANDED + LEGIBLE (W54+W55) · G-8 every page demonstrates glass over a rich background ·
+G-9 PROGRESS = JSON = DELTA = live-truth (no inflation). Six of the nine gates do not yet exist — building them is
+Batch −1.
+
+**The Batch −1 soundness battery is the FIRST-landing band** (GOLDEN §B). The five born-RED institutional gates
+(`proof:live-verified-ledger`, `tsconfig.test.json`-in-typecheck, `proof:consumer-staleness`, `gates:verify-ci` +
+`proof:gen-ci-fresh`, `proof:disposition-live`) make the chronics IMPOSSIBLE — they bite at commit/authoring time.
+Nothing else dispatches until these land. The §1 table's `### convergence cohort` block summarizes the battery;
+`GOLDEN.md` §B-§C carries the full hardened batch order.
+
+---
+
+## Cardinal-lesson reconcile (golden pass)
+
+The hand-challenge found the founding chronic recurring inside AX: `find audit -name "*.png"` returned **0
+captures** — the DELTA discipline (`CAPTURE-PROTOCOL.md`) was written and never executed, and 7 waves carried a
+`live-verified (DEVELOPED)` mark with no artifact. Two corrections are now binding:
+
+- **The `(DEVELOPED)` compound label is RETIRED** — it was the linguistic vehicle of the inflation (a
+  source-claim masquerading as a live-verification). PROGRESS rows reconcile to `dev-landed · live-pending (DELTA
+  owed)`; "complete" requires the captured pixel.
+- **The DELTA-capture obligation is gate-enforced** — `proof:live-verified-ledger` (Batch −1) rejects any
+  `live-verified` mark / PROGRESS-cell flip that does not attach an on-disk `.png` DELTA to `audit/visual/`
+  (the SOURCE arm rejects prose / section-markers / static attestations). Batch 0 runs the OWED live-capture
+  sweep over the reconciled waves — the FIRST `.png` DELTAs. The cardinal lesson is no longer a precept the
+  ledger can drift from; it is a gate a grep cannot fake.
+
+---
+
+## Convergence history (golden pass)
+
+How AX reached GOLDEN — the audit lineage this charter propagates FROM:
+
+- **The pass-1/2/3 defect ledgers** — three convergence passes after the 3.8.0 live-audit. Pass-3 promoted
+  glass-first-class to the ROOT default (TOP), minted the page-redesign umbrella, pulled up the W43 fourier SOTA,
+  and surfaced the un-owned-shipped blockers (W46 blob, W48 glass-material, Q8 gate-pattern). The 17 visual-truth
+  defects are in `audit/USER-DEFECTS-2026-06-08.md`; the 23-lane mapping in `audit/convergence/`.
+- **The 32-lane inventory → MASTER-PLAN** (`audit/inventory/MASTER-PLAN.md`) — consolidated the convergence
+  findings into the 10-batch DAG and the NEEDS-USER-DECISION adjudication batch (R1/R3/PR resolved as the three
+  hinges above).
+- **The 32-finding red-team hardening hand-challenge** (`audit/hardening/`) — 32 adversarial lanes; not one
+  returned SOUND (24 WEAK · 6 DEFERRED-CHRONIC · 1 BROKEN · 1 INCOHERENT). The headline INCOHERENT verdict (four
+  divergent glass recipes) routes to W54 G-1; the chronic findings synthesize into `GOLDEN.md`. The §4 drop-risk
+  list (`audit/AU-AX-COMMAND-LEDGER.md` §4) is the 27-item "nothing dropped" backstop — every item has a named
+  owning wave (the §4 list IS the close checklist).
 
 ---
 

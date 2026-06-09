@@ -740,3 +740,87 @@ Per §2b the band-M binding precepts (pinned `docs/precepts/` @ `63240e6`):
   what a consumer dev-resolves — a publish-currency gap, recorded with the publish hinge (the W41 dts-watch +
   the W33/W34/W35 pin-bump) as the restoration gate. MUST NOT re-route a publish-currency finding as a code
   defect to re-fix (verify against HEAD, then publish).
+
+---
+
+## Hardening amendment (golden pass) — 2026-06-09
+
+The golden hand-challenge (`GOLDEN.md` §B/§C, `audit/hardening/CHRONIC-miss-release.md`,
+`CH-close-crossrepo.md`) RE-VERSIONED the close band. Two structural moves: (1) the **soundness gate battery
+MOVED to Batch −1** (lands FIRST, the single highest-leverage move — was mis-placed here at the W33-last
+terminal); (2) the **publish leg RE-VERSIONED 3.8.0 → 3.9.0** (3.8.0 already shipped — the W33 body says
+3.8.0 throughout, a version-drift the close cannot pass its own `proof:ax-final` FINAL gate with). The
+amendment also re-sizes the budget rebaseline as the LAST pre-tag act and folds `gates:verify-ci` into the
+release set. The close-machinery authorship (the gate-fleet meta-assert, `proof:ax-final`, the README
+sweep, the overfitting audit, the inheritance cross-walk, the carry-closure gate, FINAL) — the body above —
+is UNCHANGED; the amendment re-pins the SEQUENCE + the VERSION + the budget/CI-parity ownership.
+
+**(A) The soundness battery is Batch −1, NOT a W33 rider.** Per GOLDEN §B, the five soundness gates that
+make the chronics IMPOSSIBLE land FIRST, before any glass/dock/page wave: (1) `proof:live-verified-ledger`
+(the commit-time hook — any `live-verified` claim or PROGRESS-cell flip MUST attach an on-disk `.png` DELTA;
+the SOURCE arm rejects prose/section-markers; retire the `(DEVELOPED)` compound label); (2)
+`tsconfig.test.json` (extends tsconfig, includes `[tests/, src/]`) folded into `typecheck` + CI (catches the
+stale-import class); (3) `proof:consumer-staleness` (the reverse cross-repo gate — grep every present
+sibling's `@mkbabb/glass-ui[/sub]` imports, assert each resolves against the CURRENT surface; the speedtest
+`responsive-tabs` 3-site break is a born-RED witness here); (4) `gates:verify-ci` via `gates.mjs --emit-ci`
++ `proof:gen-ci-fresh` byte-match (kill the ci.yml hand-mirror drift — a drifted ci.yml refuses to publish);
+(5) `proof:disposition-live` (a BOOK/ARCHIVED item carries forward ONLY if a gate re-evaluates its named
+trigger each close). **W33's role re the battery:** W33 no longer AUTHORS these as close riders — it CONFIRMS
+they exist and are green at the terminal (the meta-assert reads them as part of the fleet). The `proof:ax-final`
+GATE-FLEET-REGISTERED assertion must include the Batch −1 five.
+
+**(B) RE-VERSION the entire publish leg 3.8.0 → 3.9.0.** Every "cut 3.8.0 / npm view == 3.8.0" in §Scope
+fold 11, the FileBounds `proof-prod-validation.mjs` row, the `proof:ax-final` STAGED-NOT-PUBLISHED bump
+target, HardGate 8, and the Cadence/CommitPlan publish steps are WRONG — 3.8.0 already shipped (from
+`c075467` on master). The close cuts **3.9.0**: the `.changeset/*.md` stages the bump from the current line
+→ **3.9.0**; `proof:prod-validation` asserts `npm view @mkbabb/glass-ui version == 3.9.0` (not 3.8.0) +
+`slides.friday.institute` HTTP-200 + the AX-deck content marker + pptx-200. PROGRESS + MASTER-PLAN already
+say 3.9.0; the W33 body did not get the memo. Provenance: the 3.9.0 tag MUST sit on master — re-merge
+`at-dock-convergence → master` and re-tag FROM master (master is currently behind HEAD; the "resolved going
+forward" claim is a PROGRESS-vs-reality inflation). Add a `release.yml`/`release.sh` master-ancestry guard
+(`git merge-base --is-ancestor $SHA origin/master`) so a branch-tip tag cannot publish (the 3.8.0
+branch-tip-cut class structurally closed, not FF-luck-resolved).
+
+**(C) The 8th budget rebaseline is the LAST pre-tag act, sized for glass-first CSS + a DOWN-ratchet.** Per
+GOLDEN §C Batch 9 + `CHRONIC-miss-release.md` C4: the CSS budget is BREACHING NOW (`dist/styles/index.css`
+gzip 144852 / 140000 = 103.5%; the `f2fc614` "unblock the 3.8.0 publish" commit manually unblocked past it),
+and W54 (MAXIMAL glass-first) + W55 (adaptive-glass) + W56 (squircle) will ADD MORE CSS. The MASTER-PLAN
+Batch 8 sequences "W27a/b carves BEFORE the budget rebaseline" — but the close band must own the EIGHTH
+conscious lift as the **LAST act before the 3.9.0 tag**, sized to carry the glass-first + adaptive-glass +
+squircle CSS that lands across the tranche (not a Batch-8 rebaseline that the later glass waves re-breach).
+Two obligations: (i) `proof:budget-gate-present` (the budget gate is registered + release-tagged + GREEN
+before the tag); (ii) a DOWN-ratchet obligation at the close — after the W19/W25/W27 prune+carve waves free
+CSS headroom, the ceiling RE-TIGHTENS to the new real draw + headroom, so the budget can FALL, not only
+rise (a budget that only ever rises is a growth logbook wearing a gate's clothing — prove it can bite by
+tightening it once). The rebaseline is a SINGLE atomic pre-tag commit, NOT a mid-tranche Batch-8 lift the
+glass waves invalidate.
+
+**(D) `gates:verify-ci` (or the codegen-fresh check) is in the RELEASE set.** Per GOLDEN G-5 + §B item 4 +
+`CHRONIC-miss-release.md` C1/C2: `gates:verify-ci` exits 1 at HEAD (20 ci-tagged gates missing from ci.yml)
+but the RELEASE path never runs it — `gates.mjs --list release` does not include it, so `release.sh` +
+`release.yml` publish over a 20-gate-drifted ci.yml. The clean-break fix is the Batch −1 `gates.mjs --emit-ci`
+codegen + `proof:gen-ci-fresh` byte-match (drift becomes IMPOSSIBLE, not merely detected) — and EITHER the
+codegen-fresh check OR `gates:verify-ci` is added to the `release` tag in the manifest so the release path
+REFUSES to publish while ci.yml has drifted. W33's `proof:ax-final` GATE-FLEET-REGISTERED assertion + the
+fleet meta-assert CONFIRM the ci-parity gate is release-tagged and green. Also resolve the two dangling
+ci-tagged scripts (`proof:styling-hygiene` MIA since AW.W20, `proof:glass-card-tiers` MIA since AW.W12) —
+FIX or DELETE (clean break, no `KNOWN_DANGLING` amnesty; a known-dangling baseline surviving two tranches is
+a fail-open in disguise).
+
+**(E) Orphan-script count correction + the `av-final` dangling lineage.** The §State RED witness 2 says "12
+orphan scripts" — the live sweep at HEAD returns **11** (`proof:deck-progress-rail` was registered by W24
+since the spec froze): `affordance-contrast, composable-return-types, consumers-static, datatable-split,
+dock-big-dock, dock-controls-split, frostshader-deleted, glass-panel-tiers, resolution-contract,
+supports-post-task-wired, theme-style`. Re-ground witness 2 to 11 (else it births a false witness). And
+`proof:ax-final`'s PRIOR-CLOSE-META-ASSERT points at a BROKEN lineage — `gates.mjs` says "AV is the
+successor (`proof:av-final` is its close gate)" but `proof:av-final` never existed (the AU→AV→AX close-gate
+chain is broken). W33 must reconcile the dangling `av-final` reference (point the meta-assert at the real
+`proof:au-final` predecessor, or document the AV non-close), not assert against a phantom.
+
+**Net:** the close-machinery authorship is unchanged. The amendment moves the soundness battery to Batch −1
+(W33 confirms, does not author it), re-versions the publish leg to 3.9.0 with a master-ancestry guard, makes
+the 8th budget rebaseline the LAST pre-tag act with a down-ratchet + `proof:budget-gate-present`, folds the
+ci-parity gate into the release set (codegen-fresh, clean-break the ci.yml mirror), and corrects the
+orphan-count (11) + the dangling `av-final` lineage. The terminal still cannot close `complete` over a RED
+CI / a breaching budget / an un-captured DELTA — `complete_with_misses` with the unmet leg explicit
+otherwise.

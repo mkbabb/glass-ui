@@ -593,3 +593,60 @@ for the shipped `<DarkModeToggle>` (`custom/controls`); the story KEEPS its mani
 composable is NOT pruned, so the conditional "remove the story IF the composable is pruned" does not fire).
 This is the reconciliation of the prior W21 fold-5 (justify-and-annotate-KEEP) with pass-2 P1 (the
 load-bearing argument holds; only the demo affordance changes).
+
+---
+
+## Hardening amendment (golden pass) — 2026-06-09
+
+The golden hand-challenge (`audit/hardening/CH-primitives.md` C1, `CH-close-crossrepo.md` C3) re-diagnosed
+this wave against live HEAD and found a PROGRESS↔reality inflation: the wave's HEADLINE fold (F0
+header-ribbon, named FIRST in the title) NEVER landed, yet the row carried `live-verified (DEVELOPED)`. The
+"DEVELOPED" compound label is the linguistic vehicle of exactly the inflation AX exists to kill — a PARTIAL
+landing reported as a full one. This amendment reconciles the doc to what ACTUALLY shipped (no rewrite of the
+body — the F1/F3/P4 prune is correct and landed; the F0 over-claim is the correction).
+
+**What actually landed at HEAD (live-probed 2026-06-09):**
+- `src/components/custom/glyph-face/` → **GONE** (P3 EXCISED).
+- `src/components/custom/disco-glyph/` → **GONE** (P2 EXCISED; the silhouette DI coupling severed).
+- `src/components/custom/glass-carousel/` → **GONE** (P4 EXCISED — the convergence-2 fold below).
+- `useTokenColor` → **KEPT** (P1; `src/composables/dom/useTokenColor.ts` present, `dom/index.ts` exports it;
+  the ≥2-consumer bar held via the constellation consumer — a CORRECT keep, not an unlanded prune).
+- `src/components/custom/header-ribbon/` → **STILL EXISTS** (dir + `src/subpaths/header-ribbon.ts` present +
+  5 `header-ribbon` refs in `package.json` exports/typesVersions). **F0 NEVER EXECUTED.**
+
+**(A) F0 header-ribbon is UNLANDED — the title fold did not ship.** The §Scope fold (1) "DELETE
+header-ribbon (F0) — independent, no coupling" + RED witness 1 (the header-ribbon live surface) are STILL
+RED at HEAD. The convergence-2 augment ABOVE confesses it (`:543` "Header-ribbon is out of THIS lane's scope
+— it is the wave doc's original F0 — owned separately"), but the PROGRESS row was nonetheless flipped to
+`live-verified (DEVELOPED)`. The honest disposition: the row SPLITS — *glyph-face/disco-glyph/glass-carousel
+DONE; header-ribbon F0 PENDING.* The F0 in-repo excision (dir + subpath + the 5 `package.json` refs + the
+`api/index.ts` `HeaderRibbon*` block + the `proof:storybook-ia:55` slug + the demo + manifest row) MUST
+still land — it was deferred and never executed, NOT shipped. Note the mitigating sequence (NOT absolving):
+W19's §Dependencies correctly gates the header-ribbon PUBLISH behind W35 (keyframes.js `EditorShell.vue` is
+a live cross-repo consumer), but that gates the PUBLISH, not the IN-REPO excision — the doc is explicit
+("W19 may LAND its in-repo excision independently"). The in-repo F0 prune simply did not run.
+
+**(B) De-inflate the PROGRESS mark — retire the `(DEVELOPED)` label (GOLDEN Batch −1).** Per GOLDEN §B item
+1 + G-4, the `(DEVELOPED)` compound label is retired tranche-wide (it is the inflation vehicle). W19's row
+re-states to `dev-landed (glyph/disco/glass-carousel subset) · header-ribbon F0 PENDING · live-pending
+(DELTA owed)`. The row may NOT read `live-verified` until BOTH (i) the F0 in-repo excision lands AND (ii) a
+captured on-disk `.png` DELTA exists in `audit/visual/` (the `proof:live-verified-ledger` close gate, GOLDEN
+Batch −1, rejects a prose/section-marker stand-in). The landed F1/F3/P4 subset is itself still owed its
+paired-π DELTA capture (the cardinal-lesson backfill — add W19 to the CAPTURE-PROTOCOL retroactive-backfill
+ledger; it is currently NOT on it, so the debt is under-counted).
+
+**(C) The `proof:consumers:static` sibling-consumer RED (a W53 cross-repo miss, NOT W19's prune — record the
+seam).** Adjacent to this wave's prune class: `npm run proof:consumers:static` is RED at HEAD on a W53
+clean-break miss — speedtest still imports the retired `@mkbabb/glass-ui/responsive-tabs` at 3 call sites
+(`AdminDashboardLayout.vue:119` + 2 more). This is NOT W19's defect (W19's three deleted subpaths have no
+surviving sibling import — the prune was clean), but it is the SAME chronic class (clean-break rename misses
+the sibling-consumer sweep) and it blocks the band's green close. Routed to the W53/W28 consumer-migration
+ledger (the speedtest 3 sites → `SegmentedTabs :responsive`); recorded here as the adjacent seam, not
+absorbed.
+
+**Net:** the F1/F3 glyph/disco prune + the convergence-2 P2/P3/P4 (glyph-face/disco-glyph/glass-carousel) +
+the P1 useTokenColor KEEP are CORRECT and LANDED — the body above is accurate for them. The over-claim is
+narrow and specific: the title's F0 header-ribbon never shipped in-repo, yet the row read `live-verified
+(DEVELOPED)`. The amendment splits the row honestly, retires the `(DEVELOPED)` label, names F0 as the
+pending in-repo excision (PUBLISH still gated on W35), and owes the paired-π DELTA backfill for the landed
+subset.

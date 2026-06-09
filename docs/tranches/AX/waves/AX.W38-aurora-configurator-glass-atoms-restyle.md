@@ -272,3 +272,78 @@ Per the §2b C·AURORA band-binding precepts (`docs/precepts/` pinned `63240e6`)
 - **fail-explicit on library-internal violations vs befitting-silent browser-API degradation** (`README.md §Edicts`; AX §0). PURSUANT: a sub-surface NOT resolving its band recipe is a library-internal violation the gate fails LOUDLY on (born-RED→GREEN); there is no fall-through/graceful-degrade path for a missing glass tier.
 
 MUST NOT VIOLATE: the `inert`/`aria-expanded`/`role` collapse contract, the `grid-template-rows` recursion-free reveal, the density axis, and the per-preset clone state are PRESERVED VERBATIM — a regression there (especially re-introducing the M.W2 Lane A reka-`<Presence>` recursion race) is a triumvirate-escalation, not an inline patch.
+
+---
+
+## Hardening amendment (golden pass) — 2026-06-09
+
+The golden hand-challenge (`audit/hardening/CH-aurora.md` C1/C2, `CH-tabs-motion.md`) re-diagnosed this
+wave against live HEAD and found TWO load-bearing gaps: (1) D1's user ask has a MOTION half ("animate much
+FASTER, smoother, SPRINGY") that BOTH arms of the spec leave ORPHANED — the wave only restyles + re-idioms,
+it never re-times the panel reveal/crossfade the user actually called slow; (2) the Arm-2 born-RED witnesses
++ the `proof:aurora-chrome-idiomatic` clauses cite `BouncyTabs`, which W53 DELETED — the grep-witnesses are
+born-GREEN, and the a11y "category error" diagnosis the gate rests on is ALREADY FIXED by W53. The amendment
+RE-BROADENS the wave to cover the orphaned D1 MOTION half (a third arm) and re-grounds the Arm-2 diagnosis
+to the post-W53 reality. The Arm-1 library restyle + the Arm-2 native-control reauthor (the existing body)
+are UNCHANGED.
+
+**(A) RE-BROADEN — Arm 3: the D1 MOTION half (configurator faster/springier).** The pass-3 user defect D1
+is literally *"The configurator/settings should animate much FASTER, smoother, SPRINGY"* — a MOTION-SPEED
+ask. The existing two arms own only the IDIOM half (glass-tier styling + `.tap-squish` press + native→
+LabeledSelect); neither touches the panel/section/crossfade TIMING that is the substance of the ask. The
+orphaned timing lives at three live sites (HEAD-grounded): `ConfiguratorLayer.vue:140` the section reveal is
+`transition-[grid-template-rows] duration-200 ease-out` (a FLAT 200ms bezier — not a spring, not fast, not
+bouncy); `:121` the chevron is `transition-transform duration-200`; and the Advanced layer crossfade rides
+`DockLayerGroup`'s `useLayerTransition` (which Arm-2 sub-surface-3 RETIRES for `ConfiguratorLayer` collapse
+sections — removing the crossfade, not making it faster). **Arm 3 re-targets the section-reveal +
+chevron onto a fast SPRING register** per the §6 easing doctrine (enter → `--spring-snappy`/`--spring-bouncy`;
+the reveal is an enter, so it springs, not a bezier ease-out). The §6 doctrine note: `grid-template-rows` is
+a LAYOUT property — confirm at the π-lane whether the spring on the height axis reads fluid or janks on the
+375px viewport, and if it janks, drive the spring off a compositor-friendly proxy (a `transform: scaleY()`
+content-clip or the `--morph-t`-scalar idiom) rather than the layout prop directly. Arm 3 is COMPOSE-ONLY
+like the other two — it re-targets the existing transition channels onto the governed `--spring-*` register
+(coordinated with the W05 one-spring-vocabulary canon), it mints no new token/spring. **Arm-3 gate close: a
+live rAF-sampled timing capture (≥5 frames) per the CAPTURE-PROTOCOL motion clause** — the section
+open/close reads as a fast settle, NOT the sluggish 200ms ease-out it does today. This is the half of D1 the
+user actually asked for, and at HEAD no wave owns it. FileBounds delta: Arm 3 touches the SAME
+`ConfiguratorLayer.vue` (the `:140`/`:121` transition channels) already in Arm-1's bounds — no new file. The
+M.W2 Lane A recursion-race + the `inert`/`aria` collapse contract stay PRESERVED VERBATIM (the spring
+re-targets the TIMING of the same `grid-template-rows: 0fr↔1fr` reveal machinery, it does not re-author it).
+
+**(B) RE-GROUND Arm-2 — the BouncyTabs witnesses are STALE; W53 already fixed the a11y category error.**
+Live probe: `grep -rn "BouncyTabs" demo/stories/aurora/` returns **ZERO**. The Arm-2 born-RED witness 2
+(`:35`, "`grep -rn 'BouncyTabs' demo/stories/aurora/config/` returns 6") and the `proof:aurora-chrome-idiomatic`
+clause 2 (`:176`, "`grep -rn 'BouncyTabs'` returns 0") are **born-GREEN-failing** — the component is gone.
+The actual current state is **6 `<SegmentedTabs variant="pill">` enum-picker sites** (`MediumLayer.vue` ×4 +
+`FlowLayer.vue` ×1 + `CompositionLayer.vue` ×1) + the 2 legitimate panel-nav sites in `AuroraConfigDock.vue`.
+Critically, the **a11y "category error" the entire Arm-2 diagnosis rests on is ALREADY FIXED by W53** —
+`SegmentedTabs variant="pill"` resolves `role="group"` + `aria-pressed` (NOT `role="tablist"`), which IS the
+ToggleGroup-shaped surface CLAUDE.md prescribes for "single-select-of-an-enum mutating one surface." So the
+`role="tablist"`-on-a-control-with-no-tabpanel framing (`:35`) is FALSE at HEAD. **Amendment: re-author the
+witness 2 + clause 2 from "`BouncyTabs` = 6" to "`SegmentedTabs variant=pill` enum-pickers = 6," and RE-FRAME
+the remaining issue as VISUAL-ONLY** — (a) the cross-surface RENDERING divergence (`medium` renders native
+`<select>` in Atoms vs `SegmentedTabs pill` in Advanced — two renderings of one enum), and (b) the 7-segment
+cramped pill strip (`mediumOptions` has 7 entries — a `LabeledSelect` reads better than a 7-way pill cram).
+DELETE the "enum-as-panel-nav / role=tablist category error" diagnosis everywhere it appears in Arm 2 (it is
+a W53-closed ARIA concern). The reauthor target is unchanged (the off-idiom enum pickers → `LabeledSelect`,
+or `ToggleGroup` for the short enums) — only the DIAGNOSIS the gate witnesses is re-pinned, so the gate is
+born-RED on the real (visual/cross-surface) defect, not a deleted component.
+
+**(C) The MAXIMAL-glass-first (W54) cohesion seam — record the carry.** Per the USER-DECIDED MAXIMAL hinge
+(R3: everything glass), the aurora studio chrome is the LEAST glass-first surface in the library (the
+default-visible `AuroraAtomsPanel.vue` is 9 raw UA-styled native controls). W38 makes them IDIOMATIC
+(`LabeledSelect`/`LabeledSlider`, glass-tinted) — but idiomatic ≠ glass-first-cohered. The 3 `type=color`
+swatches stay native under the recommended RATIFY Option B (a residual opaque hole), and the 7-segment
+medium picker is not glass-first-evaluated against W54. **Amendment: after W38's idiom pass, the aurora
+chrome carries a NAMED carry to the W54 glass-first cohesion pass** (`proof:glass-one-model`, GOLDEN G-1) —
+the default-visible demo surface must conform to the ONE glass model the user decided, and the `type=color`
+swatch's glass disposition is re-decided there (the keep-native Option B leaves a hole the MAXIMAL hinge does
+not bless). W38 does NOT absorb the W54 cohesion (that is a scope reveal) — it RECORDS the carry so the
+most-visible demo surface does not orphan against the glass-first ROOT.
+
+**Net:** Arm 1 (library restyle) + Arm 2 (native-control reauthor) are UNCHANGED. The amendment adds Arm 3
+(the orphaned D1 MOTION half — the user's literal "faster/springier" ask, re-targeted onto the governed
+`--spring-*` register, gated by a live rAF-timing capture), re-grounds the Arm-2 born-RED witnesses to the
+post-W53 `SegmentedTabs`-pill reality (the BouncyTabs greps are dead; the a11y category error is W53-closed;
+re-frame the defect as VISUAL cross-surface divergence), and records the W54 MAXIMAL-glass cohesion carry so
+the aurora chrome converges onto the ONE glass model. Capture the paired-π + rAF-timing DELTA at close.
