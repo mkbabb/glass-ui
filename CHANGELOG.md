@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.9.0
+
+### Minor Changes
+
+-   **AX — the GOLDEN convergence: glass-first MAXIMAL, the dock perfected, every page a glass container over a rich background, and the cardinal-lesson capture discipline made a forcing function.** The headline is `--glass-level`: ONE typed inheriting `@property` scalar threaded through both glass ladders at their single sites, so glass is the DEFAULT surface register for every band (containers, chrome, buttons, content panels) with `level=0` the opaque escape (`.glass-opaque`, the `opaque` CardTier rung, and the a11y brackets all ride the one path). The four divergent glass recipes (SegmentedTabs, ui Tabs, Alert, TagsInput) reconciled onto the one model; W55's adaptive `--glass-tint-*` axis darkens glass over light so the maximal default stays legible.
+-   **The dock, perfected** — every dock on ONE `<GlassDock>` root with the home-left `#persistent` nav pattern + `<DockSeparator>` dividers + a glass-first selected register (the keyframes-dock model); the collapsed pill correctly sized; the hover a 3-channel glass register (bg → glass-resting, scale, specular gleam) reading on hover; the 19 resting specular tracks cleared to 0; `dock.css` carved into cohesive partials.
+-   **Every page a glass container over a rich background** — the StoryPage→StoryHero chassis wraps each page in a glass card; the hero pages each demonstrate glass over a unique aurora / constellation / fourier / paper background.
+-   **The soundness battery** — five forcing functions land FIRST: `proof:live-verified-ledger` (a wave is `live-verified` only with a fresh on-disk `.png` DELTA), the `tests/` typecheck fold, `proof:consumer-staleness` (the reverse cross-repo gate), `gates.mjs --emit-ci` + `proof:gen-ci-fresh` (ci.yml is a byte-matched generated artefact), and `proof:disposition-live`.
+-   **W56(R1) squircle** on dialog/sheet; the gate-pattern un-trapped; the blob a lit contained droplet; the aurora black-bar root-fixed; the configurator animates on the snappy spring; dark-mode semantic contrast to AA; the comfortable `--ui-scale` axis; the forced-colors glass skin; the slider's integrated-cylinder + squircle-spectrum; the 12-category storybook IA.
+-   Clean break, no aliases (the Button `default` is now glass; `solid` is the opaque escape). Every shipped wave carries a captured live DELTA under `docs/tranches/AX/audit/visual/`.
+
 ## 3.3.0
 
 ### Minor Changes
