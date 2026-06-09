@@ -89,6 +89,7 @@ tranche has no past); the table fills as waves close.
 | W-MOTION2 | the FULL keyframes.js suite + every curve re-exported through /motion + the CSS↔JS curve table + the curve-gallery story (user-directed 2026-06-09) | planned |
 | W-ANIM1 | the first-principles animation audit — the falsifiable rubric, the element×principle conformance matrix, the routed fix list, the extended proof:animation-coherence (user-directed 2026-06-09) | planned |
 | W-LIQUID | the iOS-27 Siri liquid-glass facility — useLiquidFlex amorphous flex+squish shared primitive (blob/dock/tabs-indicator consumers; SOTA research lane in the hand-challenge; extends W52/W53) (user-directed 2026-06-09) | planned |
+| W-BLOB-GLASS | the uBackdrop Snell-refraction glass-not-enamel move (user-greenlit 2026-06-09 CONDITIONAL on G-PERF frame-budget-unchanged + G-BROWSER all-three-engines; the recorded H-research-blob T1/T2 decision; aurora-FBO seam) | planned |
 | W-LEG1 | legibility reconcile | planned |
 | W-LIVE1 | the local-only live-gate CI decision | planned |
 | W-NDA | NDA / scope-clause reconcile | planned |
