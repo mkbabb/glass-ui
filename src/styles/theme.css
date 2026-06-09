@@ -93,6 +93,14 @@
     --corner-shape-pill:    round;
     --corner-shape-panel:   round;
     --corner-shape-bigdock: superellipse(var(--corner-k-squircle));
+    /* AX.W56(R1) — the overlay-band glass surfaces W54 makes glass-default
+       (Dialog + Sheet content) ride the squircle alongside the big-dock. They
+       sit at the large `--radius-dialog` (16px) modal radius where the
+       superellipse READS — the same iOS-26 idiom. @supports-gated in glass.css
+       over the `border-radius` round CONTRACT; a consumer dials either back to
+       round by re-pointing the alias. */
+    --corner-shape-dialog:  superellipse(var(--corner-k-squircle));
+    --corner-shape-sheet:   superellipse(var(--corner-k-squircle));
     /* AX.W59 — the spectrum slider's track-height thumb reads as a SQUIRCLE
        (the iOS color-picker idiom). It rides the same --corner-k-squircle
        vocabulary; @supports-gated in Slider.vue over a --radius-* round

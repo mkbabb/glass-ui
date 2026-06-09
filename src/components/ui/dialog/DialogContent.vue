@@ -79,9 +79,12 @@ const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 p
 // Default cubic path retains the canonical popover-animate + translate trick.
 const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-normal popover-animate'
 
+// One opaque path (AX.W54): the `opaque` arm rides the SAME glass-floating tier
+// (edge, rim, under-shadow preserved) and adds `.glass-opaque`, which drives
+// `--glass-level:0` through the ONE glass knob — NOT a parallel solid recipe.
 const variantClasses = computed(() =>
   props.variant === 'opaque'
-    ? 'bg-background border sm:rounded-dialog'
+    ? 'glass-floating rounded-dialog glass-opaque'
     : 'glass-floating rounded-dialog'
 )
 

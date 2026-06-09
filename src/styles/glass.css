@@ -745,6 +745,33 @@
    re-add a squircle rule to the card/button/pill surfaces — they are round by
    policy. */
 
+/* ── AX.W56(R1) — squircle coupling onto the overlay-band glass surfaces ───────
+   W54 makes GLASS the default for the Dialog + Sheet content surfaces; W56 couples
+   the SQUIRCLE onto them too. Both ride `.glass-floating` at the large
+   `--radius-dialog` (16px) modal radius where the superellipse READS — the same
+   iOS-26 idiom the big-dock card shell carries. The compound selectors scope the
+   shape to the dialog/sheet content ONLY (the `.rounded-dialog` class the
+   DialogContent surface composes, the `.sheet-animate` class the SheetContent
+   surface composes via `sheetVariants`) so it never leaks onto a bare
+   `.glass-floating` panel. Mirrors the big-dock idiom EXACTLY: an `@supports`-
+   gated ENHANCEMENT (Chrome 139+, no FF/Safari 2026) over the `border-radius`
+   round CONTRACT — the squircle is the better tier, NOT a degraded fallback. The
+   shape is the tokenized `var(--corner-shape-{dialog,sheet})` (theme.css) so it is
+   as overridable as the radius; a consumer dials either back to round by
+   re-pointing the alias. The `@supports` condition tests the LITERAL
+   `superellipse(2)` (a `var()` is not evaluable in an `@supports` query) — the same
+   Chrome-139 feature the token resolves to. */
+@layer components {
+    @supports (corner-shape: superellipse(2)) {
+        .glass-floating.rounded-dialog {
+            corner-shape: var(--corner-shape-dialog);
+        }
+        .glass-floating.sheet-animate {
+            corner-shape: var(--corner-shape-sheet);
+        }
+    }
+}
+
 /* ── Accessibility: reduced transparency ──────────
    AX.W54 — the gestalt collapse: ONE `--glass-level: 0` replaces the ten per-rung
    opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`

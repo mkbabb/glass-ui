@@ -23,7 +23,14 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
+        // AX.W54 — GLASS is the DEFAULT surface register: a bare <Button> paints
+        // liquid glass (resolves the same recipe as the `glass` variant below).
+        // The opaque primary-fill is no longer the default — reach for `solid`.
         default:
+          'glass-wash btn-glass text-foreground hover:bg-[var(--glass-bg-resting)] hover:border-[var(--glass-border-resting)] active:bg-[var(--glass-bg-floating)] active:border-[var(--glass-border-floating)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+        // AX.W54 — `solid` is the opaque escape: the previous default's primary-fill
+        // recipe, named so consumers can still get the solid bg-primary look.
+        solid:
           'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 aria-pressed:bg-primary/85',
         // AX.W52 — the hover lift is the restrained `--scale-hover-btn` (1.035),
         // not the emphatic `--scale-hover` (1.08); routed through `--spring-smooth`

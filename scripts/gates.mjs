@@ -582,6 +582,18 @@ export const GATES = [
         note: "AX.W56 — the corner-SHAPE token axis + the rounded-vs-squircle POLICY. Device-free SOURCE arm (runs + hard-REDs on EVERY runner): theme.css mints --corner-k-{squircle:2,soft:1.7,sharp:2.4} (the superellipse-k primitives; squircle == superellipse(2) == n=4) + the semantic --corner-shape-{card:round,pill:round,panel:round,bigdock:superellipse(var(--corner-k-squircle))} POLICY aliases; the big-dock dock.css site reads `corner-shape: var(--corner-shape-bigdock)` (the bite — NOT a bare squircle keyword) ONLY inside `@supports (corner-shape: superellipse(2))` (no leak onto the un-gated base) over a `border-radius` round fallback; glass.css carries NO corner-shape on .glass-card/.glass-btn/.btn-pill (the AW.W23 inversion RE-HOMED — cards stay round). π render arm (fail-CLOSED when the tests-visual workspace is present; squircle-language.spec.ts): getComputedStyle(...).cornerShape readback === superellipse(2) on the big-dock card shell on a Chrome-139 engine (or the round fallback on a non-supporting engine), a card stays round. Bite: re-hardcode `corner-shape: squircle` on the big-dock → BIGDOCK-READS-TOKEN RED; re-add a squircle to .glass-card → CARD-REHOMED RED; leak the decl outside @supports → SUPPORTS-GATE-INTACT RED; flip --corner-shape-card to a superellipse → POLICY-CARD-ROUND RED.",
     },
     {
+        id: "proof:glass-level",
+        cmd: "proof:glass-level",
+        tags: ["local", "ci"],
+        note: "AX.W54 — the glass-first ROOT gate (the --glass-level scalar arm + the G-1 cohesion arm). Device-free SOURCE: @property --glass-level threads BOTH ladders (level=1 byte-identical by construction); the opaque escape + the a11y brackets ride the ONE level path; the four divergent recipes (SegmentedTabs track+indicator, ui Tabs indicator, Alert, TagsInput) + the two recipe divergences (.input-pill blur(1px), --glass-bg-dock flat-srgb) are reconciled onto the one model; Button default = glass; Card carries the opaque rung. The PAINTED level=1 byte-identity + the mounted glass backdrop-filter is the W00 π live audit. Bite: detach a rung from the level, restore a solid chrome/content surface off the allowlist → RED.",
+    },
+    {
+        id: "proof:glass-one-model",
+        cmd: "proof:glass-one-model",
+        tags: ["local", "ci"],
+        note: "AX.W54 — G-1 of the GOLDEN done-definition: glass cohesion MEASURED, not asserted (the --one-model arm of proof:glass-level). No ui/ chrome-or-content surface paints a solid bg-{card,background,muted,secondary,primary} without the glass tier or the named .glass-opaque escape; the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) is exempt. Bite: re-introduce a solid chrome surface off the allowlist → RED.",
+    },
+    {
         id: "proof:live-verified-ledger",
         cmd: "proof:live-verified-ledger",
         tags: ["local", "ci"],

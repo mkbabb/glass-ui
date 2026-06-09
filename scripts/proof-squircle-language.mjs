@@ -244,13 +244,68 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             "dock.css: the big-dock `.shape-card` has no un-gated `border-radius` fallback — the cross-engine round contract is missing",
         );
 
-    // ── 5. CARD-REHOMED ──────────────────────────────────────────────────
-    // glass.css must carry NO `corner-shape` on the card/button/pill surfaces.
-    const glassCornerShape = /corner-shape\s*:/.test(glassCss);
-    facts.glassCardSquircle = glassCornerShape;
-    if (glassCornerShape)
+    // ── 5. CARD-REHOMED + W56(R1) dialog/sheet squircle ──────────────────
+    // glass.css carries NO `corner-shape` on .glass-card/.glass-btn/.btn-pill
+    // (round by policy), AND any corner-shape it DOES carry (the W56 R1
+    // dialog/sheet glass surfaces) sits ONLY inside `@supports (corner-shape:
+    // superellipse(2))` reading the `var(--corner-shape-{dialog,sheet})` token
+    // over the un-gated `border-radius` round fallback.
+    const glassSupports = matchAtSupportsBody(
+        glassCss,
+        /@supports\s*\(\s*corner-shape\s*:\s*superellipse\(\s*2\s*\)\s*\)/,
+    );
+    const glassNoSupports = glassSupports
+        ? glassCss.replace(glassSupports.whole, "")
+        : glassCss;
+    // (a) no corner-shape leaks onto the un-gated base (a partial-support engine
+    //     would apply it and break the round fallback).
+    const glassLeak = /corner-shape\s*:/.test(glassNoSupports);
+    facts.glassCornerShapeLeak = glassLeak;
+    if (glassLeak)
         violations.push(
-            "glass.css: a `corner-shape` declaration is present — the AW.W23 card/button/pill squircle must be RE-HOMED off cards (cards stay round by policy; the squircle lives on the big-dock in dock.css)",
+            "glass.css: a `corner-shape` declaration sits OUTSIDE the @supports block — it must be PE-gated (the un-gated round fallback is the cross-engine contract)",
+        );
+    // (b) cards/buttons/pills stay ROUND even where supported — no corner-shape
+    //     on a .glass-card/.glass-btn/.btn-pill selector anywhere.
+    const cardSquircle =
+        /\.(glass-card|glass-btn|btn-pill)[^{}]*\{[^}]*corner-shape\s*:/.test(glassCss);
+    facts.glassCardSquircle = cardSquircle;
+    if (cardSquircle)
+        violations.push(
+            "glass.css: .glass-card/.glass-btn/.btn-pill carry a `corner-shape` — cards/pills stay ROUND by policy (the squircle is the dialog/sheet/big-dock register, AW.W23 re-homed)",
+        );
+    // (c) the W56 R1 dialog + sheet glass surfaces read their tokenized shape
+    //     inside the @supports block.
+    if (glassSupports) {
+        const readsDialog = /corner-shape\s*:\s*var\(\s*--corner-shape-dialog\s*\)/.test(
+            glassSupports.body,
+        );
+        const readsSheet = /corner-shape\s*:\s*var\(\s*--corner-shape-sheet\s*\)/.test(
+            glassSupports.body,
+        );
+        facts.dialogReadsShapeToken = readsDialog;
+        facts.sheetReadsShapeToken = readsSheet;
+        if (!readsDialog)
+            violations.push(
+                "glass.css: the dialog glass surface must read `corner-shape: var(--corner-shape-dialog)` inside @supports (W56 R1 — dialogs get the squircle)",
+            );
+        if (!readsSheet)
+            violations.push(
+                "glass.css: the sheet glass surface must read `corner-shape: var(--corner-shape-sheet)` inside @supports (W56 R1 — sheets get the squircle)",
+            );
+    }
+    // (d) the dialog/sheet shape tokens resolve a superellipse(...) in theme.css.
+    const shapeDialog = tokenValue(themeCss, "--corner-shape-dialog");
+    const shapeSheet = tokenValue(themeCss, "--corner-shape-sheet");
+    facts.shapeDialog = shapeDialog;
+    facts.shapeSheet = shapeSheet;
+    if (!shapeDialog || !/superellipse\(/.test(shapeDialog))
+        violations.push(
+            `theme.css: --corner-shape-dialog must resolve a superellipse(...) (W56 R1); got ${shapeDialog ?? "(missing)"}`,
+        );
+    if (!shapeSheet || !/superellipse\(/.test(shapeSheet))
+        violations.push(
+            `theme.css: --corner-shape-sheet must resolve a superellipse(...) (W56 R1); got ${shapeSheet ?? "(missing)"}`,
         );
 
     facts.sourceClean = violations.length === 0;

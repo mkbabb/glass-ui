@@ -6,16 +6,24 @@ import { useSpecularTracking } from "../../../composables/glass";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";
 
 /**
- * The five-tier glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css
- * after the v0.8.0 R3-spec rename:
+ * The glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css after the
+ * v0.8.0 R3-spec rename:
  *
  *   wash     — lightest (~0.30α)        : inline workspace chrome, scroll-pane host
  *   quiet    — light    (~0.50α)        : ambient panels, secondary surfaces
  *   resting  — canonical (~0.65α)       : the protagonist plate (default)
  *   floating — heavy   (~0.80α)         : popover-class, login surfaces
  *   overlay  — heaviest (~0.95α + blur) : modal-on-modal, dialog over content
+ *   opaque   — `--glass-level:0` escape : the solid-card opt-out (AX.W54), maps to
+ *              `.glass-opaque` through the same `glass-${tier}` rung as the rest
  */
-export type CardTier = "wash" | "quiet" | "resting" | "floating" | "overlay";
+export type CardTier =
+    | "wash"
+    | "quiet"
+    | "resting"
+    | "floating"
+    | "overlay"
+    | "opaque";
 
 /**
  * Surface decoration register — orthogonal to `tier`/`shadow`/`grain`.
@@ -133,7 +141,13 @@ useStalePropWarning("Card");
                 // the existing `p-6` rhythm at zero visual delta; `data-size=sm`
                 // tightens it one step (the shadcn-2025 `data-size` card knob).
                 '[--card-spacing:--spacing(6)] data-[size=sm]:[--card-spacing:--spacing(4)]',
-                `glass-${tier}`,
+                // AX.W54 — `opaque` is the `--glass-level:0` escape, NOT a base
+                // rung: `.glass-opaque` only sets the level scalar, so it must
+                // ride a base tier class to keep the glass edge/rim/under-shadow
+                // (a solid `--card` plate with a glass edge, not a bare div —
+                // see glass.css §opaque-escape). It composes onto the canonical
+                // `resting` rung. Every other tier maps 1:1 to its `glass-${tier}`.
+                tier === 'opaque' ? 'glass-resting glass-opaque' : `glass-${tier}`,
                 // AX.W09 — wire-or-omit. The pointer-anchored moving catch-light
                 // (`glass-specular-track`) is emitted ONLY when `specular` is
                 // opted in on a glass surface; an `off` (default) glass card does

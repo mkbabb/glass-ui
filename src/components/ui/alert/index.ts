@@ -9,21 +9,25 @@ export const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-card text-card-foreground',
+        // AX.W54 — GLASS-FIRST. An Alert is a content panel, so its surface is
+        // the glass WASH tier (`--glass-bg-wash` + `--glass-blur-wash`), not an
+        // opaque `bg-card` plate. The body text stays `--card-foreground` for
+        // legibility; the semantic TONE rides ON the glass.
+        default: 'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
         destructive:
-          'text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
+          'text-destructive bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
         // AW.W25 — semantic-tone parity. The success/warning/info tones read the
-        // canonical `--{success,warning,info}` tokens (a tinted card surface + a
-        // toned glyph/heading), retiring the demo's faked alert variants. The
+        // canonical `--{success,warning,info}` tokens (a toned glyph/heading over
+        // the glass-wash surface), retiring the demo's faked alert variants. The
         // body text stays `--card-foreground` for legibility; the TONE rides the
         // border, glyph, and description softening — content-band, not a loud
         // saturated plate (that is Badge/Toast's register).
         success:
-          'bg-card text-card-foreground border-success/40 [&>svg]:text-success *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-success/40 [&>svg]:text-success *:data-[slot=alert-description]:text-card-foreground/90',
         warning:
-          'bg-card text-card-foreground border-warning/40 [&>svg]:text-warning *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-warning/40 [&>svg]:text-warning *:data-[slot=alert-description]:text-card-foreground/90',
         info:
-          'bg-card text-card-foreground border-info/40 [&>svg]:text-info *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-info/40 [&>svg]:text-info *:data-[slot=alert-description]:text-card-foreground/90',
       },
     },
     defaultVariants: {

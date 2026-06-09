@@ -445,7 +445,10 @@ onBeforeUnmount(() => {
     grid-auto-columns: 1fr;
     padding: var(--bouncy-track-trim);
     border-radius: var(--bouncy-track-radius);
-    background: var(--muted-medium);
+    /* AX.W54 — the track rides the glass wash tier (the flagship surface),
+       not an opaque --muted-medium plate. */
+    background: var(--glass-bg-wash);
+    backdrop-filter: var(--glass-blur-wash);
 }
 
 @media (min-width: 640px) {
@@ -459,7 +462,10 @@ onBeforeUnmount(() => {
 /* ── The shared indicator body ── */
 .segmented-indicator {
     position: absolute;
-    background: var(--background);
+    /* AX.W54 — the active indicator rides the glass quiet tier so it reads
+       FORWARD of the wash track (the keyframes-dock-selected model). */
+    background: var(--glass-bg-quiet);
+    backdrop-filter: var(--glass-blur-quiet);
     z-index: 0;
     inset-block: var(--bouncy-track-trim);
     border-radius: var(--bouncy-slider-radius);
