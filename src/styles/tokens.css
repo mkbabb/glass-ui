@@ -708,7 +708,12 @@
        opacity-only register. */
     --glass-blur-dock-radius:     11px;
 
-    --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
+    /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
+       lockstep with the opacity seam above): level=1 byte-identical; level=0 →
+       blur(0) (the clean solid floor with the opacity); level>1 → more diffusion.
+       The per-rung `saturate()`/`brightness()` companions are UNTOUCHED (the level
+       scales the RADIUS, not the saturation — W52's calm light-concentration). */
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.05);
     /* AV.W15 M1 — the `quiet` rung gained `saturate(1.05) brightness(1.02)`
        so the lower ladder reads with the same saturation life as `resting`+
        (Apple: Liquid Glass concentrates light, it does not desaturate). The
@@ -716,16 +721,16 @@
        between bare `wash` and `resting` without over-brightening the rung.
        The `prefers-reduced-transparency: reduce` bracket at glass.css maps
        `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
-    --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius)) saturate(1.05) brightness(1.02);
-    --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05) brightness(1.02);
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.05);
     /* AX.W52 D19 — the floating/overlay backdrop saturate tamed from 1.4/1.5 to a
        gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; the prior
        1.4–1.5× over-juiced the bleed-through into a garish smear over a colored
        substrate). wash/quiet/resting already sit at 1.05 — untouched. */
-    --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.18);
-    --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.2);
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.18);
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(1.2);
     /* Dock blur composes blur() only — no saturate. */
-    --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
+    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level)));
 
     /* AX.W52 — the GLASS BUTTON blur. The `glass`/`glass-wash` button variants
        compose the `.glass-wash` tier (`--glass-blur-wash` = blur(1px)) — a
@@ -736,7 +741,7 @@
        `saturate(1.05) brightness(1.02)` light-concentration the quiet rung
        carries (NOT a colour-juice). The wash TILE tier (MetricCell et al.) keeps
        its 1px — only the glass BUTTON variants reach for this. */
-    --glass-blur-btn:      blur(var(--glass-blur-quiet-radius)) saturate(1.05) brightness(1.02);
+    --glass-blur-btn:      blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05) brightness(1.02);
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed
@@ -765,14 +770,24 @@
        `glass-bg-medium` (0.65) down to its own 0.32. */
     --glass-opacity-chassis: 0.28;
 
-    /* Composed backgrounds */
-    --glass-bg-wash:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-wash) * 100%), transparent);
-    --glass-bg-quiet:    color-mix(in srgb, var(--card) calc(var(--glass-opacity-quiet) * 100%), transparent);
-    --glass-bg-resting:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-resting) * 100%), transparent);
-    --glass-bg-floating: color-mix(in srgb, var(--card) calc(var(--glass-opacity-floating) * 100%), transparent);
-    --glass-bg-overlay:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-overlay) * 100%), transparent);
-    --glass-bg-dock:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-dock) * 100%), transparent);
-    --glass-bg-chassis:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-chassis) * 100%), transparent);
+    /* Composed backgrounds — AX.W54: the opacity is threaded through the ONE
+       `--glass-level` clarity scalar. Each rung's effective alpha is
+       `1 - (1 - <rung-opacity>) * --glass-level`: at level=1 it collapses to the
+       hand-tuned `<rung-opacity>` (byte-identical); at level=0 it resolves `1`
+       (solid `--card` — the opaque escape); at level>1 it goes clearer. ONE
+       expression, the same seven rungs. */
+    --glass-bg-wash:     color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-wash)) * var(--glass-level)) * 100%), transparent);
+    --glass-bg-quiet:    color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-quiet)) * var(--glass-level)) * 100%), transparent);
+    --glass-bg-resting:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-resting)) * var(--glass-level)) * 100%), transparent);
+    --glass-bg-floating: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-floating)) * var(--glass-level)) * 100%), transparent);
+    --glass-bg-overlay:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-overlay)) * var(--glass-level)) * 100%), transparent);
+    /* The dock bg ALSO rides the oklab tint seam (AX.W54 amendment): the same
+       `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)` wrapper
+       the rungs reach for, ZERO-delta at `--glass-tint-strength: 0%` — so W55's
+       adaptive darken can reach the dock (the G2 over-light surface) without a
+       second hand-rolled recipe. */
+    --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+    --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
 
     /* Composed borders — foreground-tinted */
     --glass-border-wash:     color-mix(in srgb, var(--foreground) 8%, transparent);
@@ -1215,12 +1230,18 @@
     /* AX.W52 — the restrained BUTTON hover lift. `--scale-hover` (1.08) is an
        8% jump — emphatic for a marquee CTA, jarring as the general hover. The
        button family (the audacious CTAs + `btn-interactive`) lifts on the
-       smaller `--scale-hover-btn` (1.035) routed through `--spring-smooth` (the
+       smaller `--scale-hover-btn` routed through `--spring-smooth` (the
        sub-perceptual settle, not the snappy bounce), so the hover reads as ONE
        coherent glide with the surface-leg cross-fade rather than a mechanical
        pop. The dock keeps its proportionally-larger `--scale-hover-dock` (small
-       icon, bigger lift reads smaller). */
-    --scale-hover-btn: 1.035;
+       icon, bigger lift reads smaller).
+       AX.W54 Q3 — lifted 1.035 → 1.05: the 1.035 overshot DOWN (W52 tamed the
+       1.08 snap so hard the lift read as nothing), so the glass hover now reads
+       as THREE legs together on hover — the specular gleam waking, a perceptible
+       scale, and the bg/border cross-fade — distinguishable from rest BEFORE the
+       click. Still sub-perceptual-bounce on `--spring-smooth`; the magnitude
+       moved, the easing register did not. */
+    --scale-hover-btn: 1.05;
     --scale-hover-dock: 1.1;
     --scale-press: 0.96;
 
@@ -1948,6 +1969,26 @@
     syntax: "<number>";
     inherits: false;
     initial-value: 0;
+}
+
+/* AX.W54 — the GLASS-FIRST single knob. `--glass-level` is the ONE clarity
+   scalar threaded through BOTH glass ladders at their single sites (the
+   `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,
+   INHERITING <number> so a host setting it on any ancestor retunes every
+   descendant glass surface (the @container-free cascade path) — and so it
+   animates smoothly rather than snapping. The level acts as a clarity multiplier
+   that PRESERVES level=1 (byte-identical to the hand-tuned ladder):
+     • level 1 — the calibrated glass (today's surfaces, unchanged).
+     • level 0 — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
+                 machinery (the `.glass-opaque` rung + the a11y brackets ride it).
+     • level >1 — clearer (more transparent + more diffuse) in lockstep.
+   Glass is the DEFAULT surface register for EVERY band (USER-DECIDED MAXIMAL);
+   the opaque level-0 rung is the explicit opt-out. W55 carries the over-light
+   legibility on the SEPARATE `--glass-tint-*` axis (level = opacity+blur). */
+@property --glass-level {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
 }
 
 /* ── The specular-intensity magnitude cohort (AX.W09) ──────────────────────

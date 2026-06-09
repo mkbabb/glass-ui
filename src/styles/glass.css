@@ -281,6 +281,19 @@
         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
     }
 
+    /* ── The opaque escape (AX.W54) ───────────────────
+       The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
+       (the opacity seam → 1) with `blur(0)` (the blur seam → 0), routed through
+       the ONE `--glass-level` knob. NOT a parallel solid `background:` recipe:
+       a `.glass-*` surface that ALSO carries `.glass-opaque` keeps its glass edge,
+       rim, and under-shadow (a solid plate with a glass edge, not a bare div), and
+       the @supports fallback + the a11y brackets compose coherently. This is the
+       explicit opt-out from the MAXIMAL glass default (dense data, forced-colors,
+       a consumer that wants a flat surface). */
+    .glass-opaque {
+        --glass-level: 0;
+    }
+
     /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
        Apple raises the under-shadow over text (so the glass reads as
        lifting OFF the text) and drops it over solid light. The modifier
@@ -522,15 +535,21 @@
 
         height: 2.5rem;
         border-radius: var(--radius-pill);
-        /* AW.W13 — the resting field edge reads as an enclosed control at rest.
-           Was `--glass-border-wash` (~8%α), which nearly vanished on cream; the
-           lift to `--surface-tint-15` (15%α — ~2× the prior floor) makes the
-           edge legible without going loud. The `:focus-visible` accent ring +
-           the `:user-invalid`/`[aria-invalid]` destructive ring below still win
-           by order + specificity, so this only raises the resting alpha. */
-        border: 1.5px solid var(--surface-tint-15);
+        /* AW.W13 — the resting field edge reads as an enclosed control at rest
+           (~15%α — ~2× the prior 8% glass-wash floor that vanished on cream). The
+           `:focus-visible` accent ring + the `:user-invalid`/`[aria-invalid]`
+           destructive ring below still win by order + specificity.
+           AX.W54 — moved off the srgb `--surface-tint-15` fork onto the glass
+           border seam (`--glass-border-floating`, the matching 15%α rung) so the
+           pill is ONE glass model with the rest of the ladder, not a divergent
+           tint axis. */
+        border: 1.5px solid var(--glass-border-floating);
         background: var(--glass-bg-quiet);
-        backdrop-filter: var(--glass-blur-wash);
+        /* AX.W54 — the pill reads as REAL glass: the quiet-tier 10px blur (the
+           same `--glass-blur-quiet` its `--glass-bg-quiet` background pairs with),
+           not the sub-perceptual `blur(1px)` wash it carried — and the
+           `--glass-level` knob now clarifies it in lockstep with every surface. */
+        backdrop-filter: var(--glass-blur-quiet);
         padding: 0 1rem;
         font-size: 1rem;
         color: var(--foreground);
@@ -726,33 +745,27 @@
    re-add a squircle rule to the card/button/pill surfaces — they are round by
    policy. */
 
-/* ── Accessibility: reduced transparency ────────── */
+/* ── Accessibility: reduced transparency ──────────
+   AX.W54 — the gestalt collapse: ONE `--glass-level: 0` replaces the ten per-rung
+   opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`
+   through the SAME machinery (the opacity seam → 1, the blur seam → 0), so every
+   glass surface — current and future — flattens with no per-rung enumeration. The
+   grain + highlight kills stay (they sit off the level axis). */
 @media (prefers-reduced-transparency: reduce) {
     :root {
-        --glass-opacity-wash: 1;
-        --glass-opacity-quiet: 1;
-        --glass-opacity-resting: 1;
-        --glass-opacity-floating: 1;
-        --glass-opacity-overlay: 1;
-        --glass-blur-wash: none;
-        --glass-blur-quiet: none;
-        --glass-blur-resting: none;
-        --glass-blur-floating: none;
-        --glass-blur-overlay: none;
-        --glass-blur-dock: none;
+        --glass-level: 0;
         --glass-grain-opacity: 0;
         --glass-highlight: 0 0 0 0 transparent;
     }
 }
 
-/* ── Accessibility: high contrast ───────────────── */
+/* ── Accessibility: high contrast ─────────────────
+   AX.W54 — a single bounded `--glass-level: 0.3` (mostly-solid, not fully flat)
+   replaces the five per-rung opacity clobbers: every rung firms up toward solid
+   for AA while keeping a hint of the glass register. ONE knob, every rung. */
 @media (prefers-contrast: more) {
     :root {
-        --glass-opacity-wash: 0.85;
-        --glass-opacity-quiet: 0.90;
-        --glass-opacity-resting: 0.94;
-        --glass-opacity-floating: 0.98;
-        --glass-opacity-overlay: 1;
+        --glass-level: 0.3;
     }
 }
 
