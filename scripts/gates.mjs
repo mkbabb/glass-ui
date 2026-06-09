@@ -190,6 +190,12 @@ export const GATES = [
         note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)",
     },
     {
+        id: "proof:ay-w0-reground",
+        cmd: "proof:ay-w0-reground",
+        tags: ["local"],
+        note: "AY.W0 — re-ground meta-gate (AUDIT-LEDGER.md RE-GROUNDED to HEAD; 3 landed SHAs 45cfb79/a730782/7952cd1 ancestor-reachable; no bare stale label on a shipped+gated row; every numbered row closed-vocab + evidenced). Bite: re-introduce a bare UNADDRESSED on a row whose evidence still ships → RED naming the row.",
+    },
+    {
         id: "proof:au-w1-design",
         cmd: "proof:au-w1-design",
         tags: ["local", "ci"],
