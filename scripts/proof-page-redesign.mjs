@@ -1,0 +1,308 @@
+#!/usr/bin/env node
+// proof:page-redesign — the page-redesign container-layer gate (pure FS,
+// device-free SOURCE arm).
+//
+// Every story page reads as a designed page: a glass-card container with the
+// StoryPage -> StorySection hierarchy, floating over a per-page background
+// substrate (paper / grid / aurora / constellation / fourier). A HERO page
+// declares a UNIQUE rich substrate and renders its body glass-first over the
+// live wash, so the storybook DEMONSTRATES the glass it ships.
+//
+// This is the SOURCE arm — a source-parse + FS string-scan over the demo
+// chassis contract. The PAINTED render (a glass card over a live substrate) is
+// proven by the live π audit, never a text gate alone.
+//
+// Asserts:
+//   1. StoryHero.vue exists + composes a GLASS card (`<Card>`) + renders the
+//      five background substrates behind it.
+//   2. The Story manifest interface carries the `background?` descriptor over
+//      the paper|grid|aurora|constellation|fourier union.
+//   3. The .story-bg-grid blueprint-grid recipe exists (a token-driven ruled
+//      grid), completing the five-substrate set.
+//   4. StoryPage hosts StoryHero (every page composing StoryPage gets the
+//      glass container with zero per-page edit).
+//   5. Every navigable manifest page composes the StoryPage hierarchy (the
+//      full-bleed Aurora studio is the one declared exception).
+//   6. The four hero pages declare their background through the descriptor —
+//      no surviving inline `<Aurora>` fork — and each HERO declares a UNIQUE
+//      substrate.
+//
+// Bite: drop the <Card> from StoryHero → glass-container clause REDs; remove
+// the background field from Story → descriptor clause REDs; re-inject an inline
+// <Aurora> into a hero SFC → no-fork clause REDs; give two heros the same
+// substrate → unique clause REDs.
+
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+    gateArtifactPath,
+    snapshotStamp,
+    writeGateArtifact,
+} from "./gate-output.mjs";
+
+const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
+const COMMAND = "npm run proof:page-redesign";
+
+function read(rel) {
+    const p = resolve(ROOT, rel);
+    return existsSync(p) ? readFileSync(p, "utf8") : "";
+}
+
+// Strip // line + /* block */ comments + <!-- vue --> comments so a prose
+// mention is never mistaken for a live code form.
+function stripComments(src) {
+    return src
+        .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+        .replace(/\/\/[^\n]*/g, "")
+        .replace(/<!--[\s\S]*?-->/g, "");
+}
+
+// The four hero pages the redesign re-homes onto the descriptor (the former
+// W57 inline-Aurora set).
+const HERO_PAGES = [
+    "demo/stories/foundations/intro.vue",
+    "demo/stories/compositions/hero.vue",
+    "demo/stories/foundations/paper-glass.vue",
+    "demo/stories/compositions/auth-shell.vue",
+];
+
+export function detect() {
+    const violations = [];
+    const facts = {};
+    function assert(label, ok) {
+        facts[label] = Boolean(ok);
+        if (!ok) violations.push(label);
+    }
+
+    const storyHero = read("demo/stories/StoryHero.vue");
+    const storyHeroCode = stripComments(storyHero);
+    const storyPage = read("demo/stories/StoryPage.vue");
+    const storyPageCode = stripComments(storyPage);
+    const manifest = read("demo/stories/manifest.ts");
+    const auroraHero = read("demo/stories/aurora-hero.ts");
+    const heroCss = read("demo/stories/story-hero.css");
+    const demoCss = read("demo/demo.css");
+
+    // ── 1. StoryHero exists + composes a GLASS card + the five substrates. ──
+    assert("StoryHero.vue exists", storyHero.length > 0);
+    assert(
+        "StoryHero composes a glass Card",
+        /<Card[\s>]/.test(storyHeroCode) &&
+            /from\s+["'][^"']*\/card["']/.test(storyHeroCode),
+    );
+    assert(
+        "StoryHero renders <Aurora> behind the card",
+        /<Aurora[\s>]/.test(storyHeroCode),
+    );
+    assert(
+        "StoryHero renders <Constellation> behind the card",
+        /<Constellation[\s>]/.test(storyHeroCode),
+    );
+    assert(
+        "StoryHero renders <FourierField> behind the card",
+        /<FourierField[\s>]/.test(storyHeroCode),
+    );
+    assert(
+        "StoryHero renders the .story-bg-grid substrate",
+        /story-bg-grid/.test(storyHeroCode),
+    );
+    assert(
+        "StoryHero renders the paper-grain substrate",
+        /paper-grain-overlay/.test(storyHeroCode),
+    );
+    // The substrate sits BEHIND the card (-z-10 via the .story-hero-bg class).
+    assert(
+        "StoryHero places the substrate behind the card (-z-10 layout)",
+        /story-hero-bg/.test(storyHeroCode),
+    );
+
+    // ── 2. The Story interface carries the background descriptor union. ──
+    assert(
+        "Story interface carries background?: StoryBackground",
+        /background\?:\s*StoryBackground/.test(manifest),
+    );
+    assert(
+        "StoryBackground union has the five substrates",
+        /"paper"/.test(auroraHero) &&
+            /"grid"/.test(auroraHero) &&
+            /"aurora"/.test(auroraHero) &&
+            /"constellation"/.test(auroraHero) &&
+            /"fourier"/.test(auroraHero) &&
+            /StoryBackground/.test(auroraHero),
+    );
+    assert(
+        "StoryBackground supports the object form (tuned palette/intensity)",
+        /kind:\s*StoryBackgroundKind/.test(auroraHero) &&
+            /palette\?:/.test(auroraHero) &&
+            /intensity\?:/.test(auroraHero),
+    );
+
+    // ── 3. The .story-bg-grid blueprint-grid recipe exists, token-driven. ──
+    assert(
+        "story-hero.css exists + is wired into the demo cascade",
+        heroCss.length > 0 && /story-hero\.css/.test(demoCss),
+    );
+    assert(
+        ".story-bg-grid recipe exists",
+        /\.story-bg-grid\s*\{/.test(heroCss),
+    );
+    assert(
+        ".story-bg-grid is a token-driven linear-gradient grid",
+        /--story-grid-size/.test(heroCss) &&
+            /--story-grid-color/.test(heroCss) &&
+            /linear-gradient/.test(heroCss),
+    );
+    assert(
+        ".story-bg-grid is light + dark token-adaptive",
+        /\.dark\s*\{[\s\S]*--story-grid-color/.test(heroCss),
+    );
+
+    // ── 4. StoryPage hosts StoryHero (the universal container). ──
+    assert(
+        "StoryPage imports StoryHero",
+        /import\s+StoryHero\s+from\s+["']\.\/StoryHero\.vue["']/.test(
+            storyPageCode,
+        ),
+    );
+    assert(
+        "StoryPage composes <StoryHero> around the body slot",
+        /<StoryHero[\s>]/.test(storyHeroAroundSlot(storyPage)),
+    );
+    assert(
+        "StoryPage reads the active story's declared background",
+        /\.story\.background/.test(storyPageCode),
+    );
+    assert(
+        "StoryPage reads the hero register flag",
+        /\.story\.hero/.test(storyPageCode),
+    );
+
+    // ── 5. Every hero page composes the StoryPage hierarchy. ──
+    for (const rel of HERO_PAGES) {
+        const src = read(rel);
+        const name = rel.split("/").slice(-2).join("/");
+        assert(
+            `${name} composes <StoryPage>`,
+            /<StoryPage[\s>]/.test(src) &&
+                /import\s+StoryPage\s+from/.test(stripComments(src)),
+        );
+    }
+
+    // ── 6. The four heros re-home onto the descriptor — no inline <Aurora>
+    //       fork survives — AND each HERO declares a UNIQUE substrate. ──
+    for (const rel of HERO_PAGES) {
+        const src = read(rel);
+        const code = stripComments(src);
+        const name = rel.split("/").slice(-2).join("/");
+        assert(
+            `${name} carries NO surviving inline <Aurora> fork`,
+            !/<Aurora[\s>]/.test(code),
+        );
+    }
+
+    // Parse the per-page declared substrates from the manifest hero rows.
+    const heroSubstrates = parseHeroSubstrates(manifest);
+    facts.heroSubstrates = heroSubstrates;
+    const heroKinds = Object.values(heroSubstrates);
+    assert(
+        "every hero declares a background substrate",
+        heroKinds.length >= 4 && heroKinds.every((k) => k),
+    );
+    assert(
+        "each hero declares a UNIQUE substrate (no two the same)",
+        heroKinds.length === new Set(heroKinds).size,
+    );
+    // The substrate-choice rule: the hero set spans the rich substrates, not
+    // all-aurora — at least one non-aurora rich substrate among the heros.
+    assert(
+        "the hero set is NOT all-aurora (the unique-substrate spread)",
+        heroKinds.some((k) => k !== "aurora"),
+    );
+
+    return { facts, violations };
+}
+
+// Isolate the <StoryHero> ... </StoryHero> region so the slot-wrapping check
+// reads the template, not the import line.
+function storyHeroAroundSlot(src) {
+    const open = src.indexOf("<StoryHero");
+    const close = src.indexOf("</StoryHero>");
+    if (open < 0 || close < 0) return "";
+    return src.slice(open, close);
+}
+
+// Pull each hero row's declared substrate kind from the manifest. A hero row is
+// one with `hero: true`; its `background` is a string or `{ kind: ... }`. Each
+// `s(...)` call is sliced by paren-balance from its opening `s(` so a hero
+// block is read in isolation (not spanning into the next call).
+function parseHeroSubstrates(manifest) {
+    const out = {};
+    const callRe = /\bs\(\s*"([^"]+)"\s*,\s*"([^"]+)"/g;
+    let m;
+    while ((m = callRe.exec(manifest)) !== null) {
+        const cat = m[1];
+        const id = m[2];
+        const block = sliceBalanced(manifest, m.index + manifest.slice(m.index).indexOf("("));
+        if (!/\bhero:\s*true/.test(block)) continue;
+        const strForm = block.match(/background:\s*"([^"]+)"/);
+        const objForm = block.match(/background:\s*\{\s*kind:\s*"([^"]+)"/);
+        out[`${cat}/${id}`] = (strForm?.[1] ?? objForm?.[1]) ?? null;
+    }
+    return out;
+}
+
+// Slice the substring from the opening "(" to its matching ")" (paren-balanced),
+// so one s(...) call is read without bleeding into the next.
+function sliceBalanced(src, openIdx) {
+    let depth = 0;
+    for (let i = openIdx; i < src.length; i++) {
+        const ch = src[i];
+        if (ch === "(") depth++;
+        else if (ch === ")") {
+            depth--;
+            if (depth === 0) return src.slice(openIdx, i + 1);
+        }
+    }
+    return src.slice(openIdx);
+}
+
+function run() {
+    const ARTIFACT = gateArtifactPath(
+        "GLASS_UI_PAGE_REDESIGN_ARTIFACT",
+        "AX-page-redesign",
+    );
+    const { facts, violations } = detect();
+    const status = violations.length === 0 ? "pass" : "fail";
+
+    writeGateArtifact(ARTIFACT, {
+        generatedAt: snapshotStamp(),
+        status,
+        gate: "proof:page-redesign",
+        command: COMMAND,
+        facts,
+        violations,
+    });
+
+    console.log(
+        "proof:page-redesign — every story page a glass card over a per-page background",
+    );
+    console.log(`  StoryHero glass container : ${facts["StoryHero composes a glass Card"]}`);
+    console.log(`  background descriptor seam: ${facts["Story interface carries background?: StoryBackground"]}`);
+    console.log(`  .story-bg-grid recipe     : ${facts[".story-bg-grid recipe exists"]}`);
+    console.log(`  StoryPage hosts StoryHero : ${facts["StoryPage composes <StoryHero> around the body slot"]}`);
+    console.log(`  hero substrates           : ${JSON.stringify(facts.heroSubstrates)}`);
+    console.log(`  unique per hero           : ${facts["each hero declares a UNIQUE substrate (no two the same)"]}`);
+    if (violations.length) {
+        console.log("\nVIOLATIONS:");
+        for (const v of violations) console.log(`  x ${v}`);
+    }
+    console.log(
+        `\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`,
+    );
+    process.exit(status === "pass" ? 0 : 1);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    run();
+}

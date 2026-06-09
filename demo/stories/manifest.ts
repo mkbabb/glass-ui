@@ -13,6 +13,7 @@
  * reference-only Composables shelf collapsed below the fold.
  */
 import type { Component } from "vue";
+import type { StoryBackground } from "./aurora-hero";
 import {
     Compass,
     Droplet,
@@ -34,7 +35,23 @@ export interface Story {
     blurb?: string;
     component: () => Promise<Component>;
     sourceFiles?: string[];
+    /**
+     * The per-page background substrate, painted behind the page's glass
+     * container. A HERO page declares a rich live substrate (aurora /
+     * constellation / fourier); a content page declares a calm paper / grid
+     * wash, or nothing for the quiet default. The page chassis reads it and
+     * renders it once — no page hand-rolls its own backdrop.
+     */
+    background?: StoryBackground;
+    /**
+     * Render the page as a full-bleed glassy HERO over its live substrate (the
+     * front-door demonstration) rather than the contained content register.
+     */
+    hero?: boolean;
 }
+
+/** Re-export the descriptor type so consumers reach it from the manifest. */
+export type { StoryBackground } from "./aurora-hero";
 
 export interface Category {
     id: string;
@@ -60,8 +77,27 @@ function lazy(category: string, id: string): () => Promise<Component> {
     return () => loader().then((m) => m.default);
 }
 
-function s(cat: string, id: string, title: string, blurb?: string): Story {
-    return { id, title, blurb, component: lazy(cat, id) };
+/** Per-page container options — the declared background + the hero register. */
+interface StoryOptions {
+    background?: StoryBackground;
+    hero?: boolean;
+}
+
+function s(
+    cat: string,
+    id: string,
+    title: string,
+    blurb?: string,
+    opts?: StoryOptions,
+): Story {
+    return {
+        id,
+        title,
+        blurb,
+        component: lazy(cat, id),
+        background: opts?.background,
+        hero: opts?.hero,
+    };
 }
 
 export const CATEGORIES: Category[] = [
@@ -70,13 +106,19 @@ export const CATEGORIES: Category[] = [
         title: "Foundations",
         icon: Compass,
         stories: [
-            s("foundations", "intro", "Intro", "What this storybook is."),
+            s("foundations", "intro", "Intro", "What this storybook is.", {
+                background: { kind: "aurora", palette: "rose-indigo-amber" },
+                hero: true,
+            }),
             s("foundations", "colors", "Colors", "Warm cream, 13-stop section palette, viz basis."),
             s("foundations", "typography", "Typography", "Plus Jakarta Sans + Fira Code — golden-ratio scale."),
             s("foundations", "radii", "Radii", "Radius tokens from xs to pill."),
             s("foundations", "shadows", "Shadows", "Cartoon offset, elevated, modal."),
             s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),
-            s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes."),
+            s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes.", {
+                background: "paper",
+                hero: true,
+            }),
             s("foundations", "icons", "Icons", "Lucide, 2px stroke, semantic sizes."),
             s("foundations", "surface-tints", "Surface Tints", "9-rung tint scale + V.W3 tier aliases (quiet / floating / modal)."),
             s("foundations", "overlays-scrims", "Overlays & Scrims", "Three scrim weights + ModalOverlay + motion / lift offsets."),
@@ -179,8 +221,12 @@ export const CATEGORIES: Category[] = [
             s("data", "timeline-continuous", "Timeline (continuous)", "ONE rounded-pill rail substrate with N absolute-positioned region children — same TimelineSegment[] shape as segmented, different geometry (AA.W1 / A4 §S-17)."),
             s("data", "search", "Fuzzy Search"),
             s("data", "scrolling-text", "Scrolling Text", "Overflow-detection-driven horizontal marquee for inline text — IPv6 addresses, org names, entity IDs."),
-            s("data", "metric-cell", "Metric Cell", "Compact metric card — icon + label over value/unit on a wash-tier surface; dashboard / compact / bare registers. Shipped /metric-cell."),
-            s("data", "metric-stack", "Metric Stack", "Subgrid layout shell hosting a column of <MetricRow> children — audacious poster vs compact result registers, per-row phase tint + active aura. Shipped /metric-stack."),
+            s("data", "metric-cell", "Metric Cell", "Compact metric card — icon + label over value/unit on a wash-tier surface; dashboard / compact / bare registers. Shipped /metric-cell.", {
+                background: "grid",
+            }),
+            s("data", "metric-stack", "Metric Stack", "Subgrid layout shell hosting a column of <MetricRow> children — audacious poster vs compact result registers, per-row phase tint + active aura. Shipped /metric-stack.", {
+                background: "grid",
+            }),
         ],
     },
     {
@@ -223,10 +269,20 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            s("compositions", "hero", "Hero"),
-            s("compositions", "math-paper", "Math Paper"),
-            s("compositions", "dashboard", "Dashboard"),
-            s("compositions", "auth-shell", "Auth Shell"),
+            s("compositions", "hero", "Hero", undefined, {
+                background: "constellation",
+                hero: true,
+            }),
+            s("compositions", "math-paper", "Math Paper", undefined, {
+                background: "grid",
+            }),
+            s("compositions", "dashboard", "Dashboard", undefined, {
+                background: "grid",
+            }),
+            s("compositions", "auth-shell", "Auth Shell", undefined, {
+                background: { kind: "fourier" },
+                hero: true,
+            }),
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States"),
             s("compositions", "drawer-live-behind", "Drawer Live-Behind", "Detented non-modal bottom sheet (`mode=\"live-behind\"`) — peek/half/full snap-points over a live, native-size verdict surface."),

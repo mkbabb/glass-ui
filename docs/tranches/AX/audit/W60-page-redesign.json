@@ -1,0 +1,103 @@
+{
+  "wave": "AX.W60",
+  "title": "Page-redesign container layer — every story in a glass card over a per-page background + the StoryHero wrapper + the background descriptor seam",
+  "status": "complete",
+  "baseSha": "3fd1391",
+  "scope": "DEMO-side only — no library src/ edit. Consumes W54 glass-first default, W56 squircle, Aurora/Constellation/FourierField, MetricCell/MetricStack.",
+  "asks": {
+    "Q4": "Pages like /primitives/buttons structured within a GLASS CONTAINER + leverage paper/grid backgrounds.",
+    "Q7": "ALL pages re-designed with proper CONTAINERS + design HIERARCHY (the StoryPage -> StorySection model) — items in GLASS CARDS.",
+    "Q9": "Hero CARD itself GLASSY over the full-page aurora/constellation/fourier background — the page DEMONSTRATES the glass.",
+    "P8": "Reach for the speedtest MetricCell/MetricStack grid on data-dense pages where befitting."
+  },
+  "bornRedWitnesses": [
+    {
+      "id": "no StoryHero wrapper",
+      "headState": "ABSENT — `git cat-file -e HEAD:demo/stories/StoryHero.vue` fatal (path not in HEAD).",
+      "afterState": "demo/stories/StoryHero.vue mints the glass-card-over-background wrapper composing <Card> + the five substrates behind it at -z-10.",
+      "disposition": "GREEN"
+    },
+    {
+      "id": "Story manifest has no background seam",
+      "headState": "ABSENT — `grep -c 'background?: StoryBackground' HEAD:manifest.ts` = 0.",
+      "afterState": "Story interface widened with `background?: StoryBackground` (paper|grid|aurora|constellation|fourier + the object form); s() helper threads it.",
+      "disposition": "GREEN"
+    },
+    {
+      "id": "no grid background substrate",
+      "headState": "ABSENT — `git cat-file -e HEAD:demo/stories/story-hero.css` fatal.",
+      "afterState": "story-hero.css mints the token-driven .story-bg-grid blueprint grid (--story-grid-size/--story-grid-color, light+dark adaptive, PRM-static).",
+      "disposition": "GREEN"
+    },
+    {
+      "id": "inconsistent page hierarchy / no container contract",
+      "headState": "Pages range from the good badge/label StoryPage->StorySection shape to bare flat wells; StoryPage composed NO container + NO background.",
+      "afterState": "StoryPage hosts <StoryHero> reading the active story's background — every StoryPage consumer gains the glass container with zero per-page edit.",
+      "disposition": "GREEN"
+    },
+    {
+      "id": "heros share one substrate + non-glassy hero card",
+      "headState": "The four heros all hand-rolled an inline <Aurora> (one substrate, different palettes); hero content sat in paper-grain/rounded-card, not a glass card.",
+      "afterState": "Each hero re-homed onto the descriptor with a UNIQUE substrate + variant=hero glass card over the live full-bleed substrate.",
+      "disposition": "GREEN"
+    },
+    {
+      "id": "speedtest-grid idiom not reached on data-dense pages",
+      "headState": "Data-dense pages (metric-cell/metric-stack/dashboard) laid metrics in ad-hoc rows, no declared dense-grid backdrop.",
+      "afterState": "The metric-dense pages declare a calm blueprint-grid backdrop inside their glass container; the MetricCell/MetricStack demos already compose the shipped grid primitives.",
+      "disposition": "GREEN (befitting-only; no overfit onto non-dense pages)"
+    }
+  ],
+  "predecessorsSettled": {
+    "W54": "glass-first default — the StoryHero <Card> reads glass-first because W54 flipped the default register.",
+    "W18": "IA category tree — W60 added a `background` FIELD to the settled rows; moved/added/removed no row.",
+    "W40": "nav shell — untouched (demo/layout/**); W60 wraps the page bodies the shell navigates.",
+    "W57": "four hero Aurora adoptions — RE-HOMED onto the descriptor seam (aurora-hero.ts heroAuroraConfig is the one path).",
+    "W58": "meta-language strip — proof:story-language stays GREEN over W60's wrappers (0 hits / 144 SFCs)."
+  },
+  "heroBackgroundMap": {
+    "foundations/intro": "aurora (brand front-door — painterly drift on rose-indigo-amber)",
+    "compositions/hero": "constellation (system/structural lattice)",
+    "foundations/paper-glass": "paper (the paper-vs-glass tour reads over the warm-cream grain it is about)",
+    "compositions/auth-shell": "fourier (the reconstructing elliptic field)"
+  },
+  "contentBackgroundMap": {
+    "compositions/math-paper": "grid",
+    "compositions/dashboard": "grid",
+    "data/metric-cell": "grid",
+    "data/metric-stack": "grid",
+    "default (undeclared pages)": "none — a quiet glass card over the global PaperBackdrop shell"
+  },
+  "gateErected": {
+    "id": "proof:page-redesign",
+    "script": "scripts/proof-page-redesign.mjs",
+    "kind": "device-free SOURCE arm (FS parse + string-scan over the demo chassis contract)",
+    "tags": ["local", "ci"],
+    "greenAtHead": false,
+    "redWitnessProven": true,
+    "redWitnessMethod": "At HEAD 3fd1391 StoryHero.vue + story-hero.css were absent and the Story interface had no background field — the gate's StoryHero/descriptor/grid/StoryPage-hosts clauses all RED. After the wave: PASS (status pass, exit 0).",
+    "greenResult": "StoryHero glass container=true; background descriptor seam=true; .story-bg-grid recipe=true; StoryPage hosts StoryHero=true; hero substrates={intro:aurora, paper-glass:paper, hero:constellation, auth-shell:fourier}; unique per hero=true.",
+    "bite": "Drop <Card> from StoryHero -> glass-container clause REDs; remove the background field from Story -> descriptor clause REDs; re-inject an inline <Aurora> into a hero SFC -> no-fork clause REDs; give two heros the same substrate -> unique clause REDs."
+  },
+  "regressionCanaries": {
+    "proof:story-language": "PASS — 0 meta-language hits / 144 SFCs (W58 intact over W60's wrappers).",
+    "build": "GREEN — vite + vue-tsc dts emit clean.",
+    "typecheck": "GREEN — vue-tsc --noEmit (src/ + demo/) exit 0."
+  },
+  "filesEdited": [
+    "demo/stories/StoryHero.vue (NEW)",
+    "demo/stories/story-hero.css (NEW)",
+    "demo/stories/aurora-hero.ts (StoryBackground/StoryBackgroundKind types)",
+    "demo/stories/manifest.ts (Story.background/hero + s() opts + per-page declarations)",
+    "demo/stories/StoryPage.vue (hosts StoryHero, reads background/hero)",
+    "demo/demo.css (imports story-hero.css)",
+    "demo/stories/foundations/intro.vue (re-homed onto descriptor)",
+    "demo/stories/compositions/hero.vue (re-homed onto descriptor)",
+    "demo/stories/foundations/paper-glass.vue (re-homed onto descriptor)",
+    "demo/stories/compositions/auth-shell.vue (re-homed onto descriptor)",
+    "scripts/proof-page-redesign.mjs (NEW gate)",
+    "docs/tranches/AX/audit/W60-page-redesign.json (this ledger)",
+    "docs/tranches/AX/audit/W60-DELTA.md (the paired-π DELTA stub)"
+  ],
+  "liveAuditPending": "The binding close is the orchestrator's live chrome-devtools-mcp paired-π over /primitives/buttons (glass container + paper/grid), /foundations/intro (glassy hero over aurora), /compositions/hero (constellation hero), /foundations/paper-glass (paper hero), /compositions/auth-shell (fourier hero), /data/metric-cell (grid backdrop) at >=2 viewports x light/dark. A green SOURCE gate over a still-bare live page is NOT done."
+}

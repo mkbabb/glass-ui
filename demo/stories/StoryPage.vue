@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { cn } from "../../src/utils/cn";
 import { TooltipProvider } from "../../src/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import StoryHero from "./StoryHero.vue";
 
 interface StoryPageProps {
     /** Override the max-width on the content section. */
@@ -21,6 +22,13 @@ const eyebrow = computed(() => {
 
 const title = computed(() => current.value?.story.title ?? "");
 const blurb = computed(() => current.value?.story.blurb);
+
+// The page declares its background + register on its manifest row; the chassis
+// reads it once and renders the body inside a glass card over that substrate.
+const background = computed(() => current.value?.story.background);
+const variant = computed<"hero" | "page">(() =>
+    current.value?.story.hero ? "hero" : "page",
+);
 </script>
 
 <template>
@@ -39,16 +47,24 @@ const blurb = computed(() => current.value?.story.blurb);
                 </p>
             </header>
 
-            <section
-                :class="
-                    cn(
-                        'mt-8 flex flex-col gap-10',
-                        props.contentClass,
-                    )
-                "
+            <!-- The body sits in a glass card over the per-page background. The
+                 page's StorySection stack flows inside the card. -->
+            <StoryHero
+                :background="background"
+                :variant="variant"
+                class="mt-8"
             >
-                <slot />
-            </section>
+                <section
+                    :class="
+                        cn(
+                            'flex flex-col gap-10',
+                            props.contentClass,
+                        )
+                    "
+                >
+                    <slot />
+                </section>
+            </StoryHero>
         </article>
     </TooltipProvider>
 </template>

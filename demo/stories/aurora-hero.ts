@@ -53,6 +53,34 @@ const HERO_PALETTES = {
 export type HeroPaletteKey = keyof typeof HERO_PALETTES;
 
 /**
+ * The per-page background descriptor a story row declares. The string shorthand
+ * names one of the five substrates; the object form tunes the Aurora palette or
+ * the recede-behind-content opacity ceiling.
+ *
+ *   "paper"         — a quiet warm-cream grain wash.
+ *   "grid"          — a token-driven blueprint ruled grid.
+ *   "aurora"        — a live painterly drift on the brand hues.
+ *   "constellation" — a drifting proximity-graph lattice.
+ *   "fourier"       — a reconstructing elliptic Fourier curve.
+ */
+export type StoryBackgroundKind =
+    | "paper"
+    | "grid"
+    | "aurora"
+    | "constellation"
+    | "fourier";
+
+export type StoryBackground =
+    | StoryBackgroundKind
+    | {
+          kind: StoryBackgroundKind;
+          /** Aurora palette (the "aurora" kind only). */
+          palette?: HeroPaletteKey;
+          /** Opacity ceiling — how far the live substrate recedes (0..1). */
+          intensity?: number;
+      };
+
+/**
  * Build an `AuroraConfig` for a demo hero from a named brand palette. The
  * nuclei + warp + medium ride the calm `DEFAULT_AURORA_CONFIG` so the drift is
  * a gentle painterly wash (the hero is text-dense — pair with

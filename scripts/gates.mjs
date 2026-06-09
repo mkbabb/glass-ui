@@ -618,6 +618,12 @@ export const GATES = [
         note: "AX.W54 — G-1 of the GOLDEN done-definition: glass cohesion MEASURED, not asserted (the --one-model arm of proof:glass-level). No ui/ chrome-or-content surface paints a solid bg-{card,background,muted,secondary,primary} without the glass tier or the named .glass-opaque escape; the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) is exempt. Bite: re-introduce a solid chrome surface off the allowlist → RED.",
     },
     {
+        id: "proof:page-redesign",
+        cmd: "proof:page-redesign",
+        tags: ["local", "ci"],
+        note: "AX.W60 — G-8 of the GOLDEN done-definition: every page demonstrates glass over a rich background. Device-free SOURCE arm (the PAINTED render is the W00 π live audit): StoryHero.vue composes a glass <Card> + the five substrates behind it (-z-10); the Story manifest carries background?: over the paper|grid|aurora|constellation|fourier union; the .story-bg-grid blueprint recipe (light+dark adaptive); StoryPage hosts StoryHero reading the active story's background; the four heros (intro/hero/paper-glass/auth-shell) carry NO surviving inline <Aurora> fork; each HERO declares a UNIQUE substrate (intro=aurora, hero=constellation, paper-glass=paper, auth-shell=fourier). Bite: drop <Card> from StoryHero → glass-container RED; remove the background field → RED; re-inject an inline <Aurora> into a hero → no-fork RED; two heros same substrate → unique RED.",
+    },
+    {
         id: "proof:adaptive-glass",
         cmd: "proof:adaptive-glass",
         tags: ["local", "ci"],

@@ -1,0 +1,97 @@
+/*
+ * StoryHero — the page-redesign container layout + the blueprint-grid background.
+ *
+ * The page chassis wraps every story body in a glass card floating over a
+ * per-page background. This partial owns the LAYOUT (the relative-isolate
+ * container, the -z-10 substrate placement) + the one background recipe that is
+ * pure CSS (the ruled blueprint grid). The live substrates (aurora /
+ * constellation / fourier) are shipped components; paper is the shipped grain
+ * utility. Every magnitude reads a token — no buried literal.
+ */
+
+:root {
+    /* The blueprint-grid background knobs. */
+    --story-grid-size: 28px;
+    --story-grid-color: color-mix(in srgb, var(--foreground) 7%, transparent);
+    --story-grid-color-strong: color-mix(
+        in srgb,
+        var(--foreground) 12%,
+        transparent
+    );
+}
+
+.dark {
+    --story-grid-color: color-mix(in srgb, var(--foreground) 9%, transparent);
+    --story-grid-color-strong: color-mix(
+        in srgb,
+        var(--foreground) 16%,
+        transparent
+    );
+}
+
+/* The container: an isolating positioning context so the -z-10 substrate sits
+   behind the glass card without escaping to the page. */
+.story-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+}
+
+/* Every background substrate fills the container behind the card. */
+.story-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+}
+
+/* The hero register sits richer + taller so the live substrate reads as a
+   front-door wash; the page register is a quiet contained well. */
+.story-hero[data-variant="hero"] .story-hero-card {
+    --story-hero-pad: clamp(2rem, 4vw, 4rem);
+    padding: var(--story-hero-pad);
+}
+
+.story-hero[data-variant="page"] .story-hero-card {
+    --story-hero-pad: clamp(1.25rem, 2.5vw, 2rem);
+    padding: var(--story-hero-pad);
+}
+
+/* The glass card hosting the body — let the StorySection stack flow inside. */
+.story-hero-card > * {
+    width: 100%;
+}
+
+/* The blueprint ruled grid — two hairline linear-gradients at the cell size,
+   with a stronger line at every 4th cell (the engineering-paper major rule).
+   Static under reduced-motion by construction (a grid does not animate). */
+.story-bg-grid {
+    background-color: var(--background);
+    background-image:
+        linear-gradient(
+            to right,
+            var(--story-grid-color-strong) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            var(--story-grid-color-strong) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to right,
+            var(--story-grid-color) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            var(--story-grid-color) 1px,
+            transparent 1px
+        );
+    background-size:
+        calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),
+        calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),
+        var(--story-grid-size) var(--story-grid-size),
+        var(--story-grid-size) var(--story-grid-size);
+    background-position: center center;
+}

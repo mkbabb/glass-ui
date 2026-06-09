@@ -5,17 +5,13 @@ import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
 import { TypewriterText } from "../../../src/components/custom/typewriter";
-import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
-import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 
-// A live <Aurora> keyed off the page's rose/indigo/amber brand hues.
-// opacityCeiling 0.6 keeps the drift behind the text-dense hero prose;
-// renderMode="auto" falls to the CSS-gradient placeholder under reduced-motion
-// or low-power.
-const heroAurora = heroAuroraConfig("rose-indigo-amber");
+// The hero declares a live constellation lattice on its manifest row; the page
+// chassis renders it behind a glassy hero card, so the headline reads glass-
+// first over the drifting proximity graph.
 
 // ─── Motion gate ─────────────────────────────────────────────────────────
 // Synchronous probe: SSR-safe (returns false if window absent), feeds the
@@ -70,20 +66,9 @@ const claims = [
 
 <template>
     <StoryPage>
-        <div
-            class="hero-frame"
-            :class="cn(
-                'relative isolate overflow-hidden rounded-[var(--radius-dialog)]',
-                'border border-border bg-card shadow-cartoon px-8 py-20 md:px-16 md:py-28',
-            )"
-        >
-            <!-- Live painterly wash, page brand hues. -->
-            <Aurora
-                :config="heroAurora"
-                :opacity-ceiling="0.6"
-                class="absolute inset-0 -z-10"
-                aria-hidden="true"
-            />
+        <!-- The hero copy sits glass-first over the live constellation the
+             chassis renders behind this card. -->
+        <div class="px-2 py-10 md:px-6 md:py-16">
             <div class="relative z-10 flex flex-col gap-8 max-w-4xl">
                 <div class="flex items-center gap-3">
                     <Sparkles class="size-4 text-muted-foreground" aria-hidden="true" />

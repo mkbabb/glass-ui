@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
-import { heroAuroraConfig } from "../aurora-hero";
 
-// The storybook front-door hero carries a live <Aurora> on the brand hues — the
-// brand identity is the warm painterly wash, not a tech lattice. The `--hue-shift`
-// filter rides the live canvas (it sits on the section; the Aurora is a child).
-// opacityCeiling 0.6 keeps the display title legible.
-const introAurora = heroAuroraConfig("rose-indigo-amber");
+// The storybook front-door hero declares a live aurora wash on its manifest row;
+// the page chassis renders it behind a glassy hero card so the title sits glass-
+// first over the brand painterly drift. The body here is just the hero copy + the
+// category index — the substrate comes from the container layer.
 
 // Anchor links to every category — resolved by the router via the manifest.
 const categories: { slug: string; title: string; blurb: string }[] = [
@@ -25,21 +22,9 @@ const categories: { slug: string; title: string; blurb: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Hero wash: live Aurora drift on the brand hues. -->
-        <section
-            :class="
-                cn(
-                    'paper-grain-overlay relative isolate overflow-hidden rounded-card px-8 py-20 md:px-16 md:py-32',
-                )
-            "
-            style="filter: hue-rotate(var(--hue-shift, 0deg));"
-        >
-            <Aurora
-                :config="introAurora"
-                :opacity-ceiling="0.6"
-                class="absolute inset-0 -z-10"
-                aria-hidden="true"
-            />
+        <!-- The hero copy sits glass-first over the live aurora the chassis
+             renders behind this card. -->
+        <section class="px-2 py-12 md:px-6 md:py-20">
             <p class="text-admin-label mb-6 text-muted-foreground">
                 glass-ui · storybook
             </p>

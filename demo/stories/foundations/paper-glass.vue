@@ -2,17 +2,12 @@
 import StoryPage from "../StoryPage.vue";
 import { onMounted, ref } from "vue";
 import { GlassPanel } from "../../../src/components/custom/glass-panel";
-import { Aurora } from "../../../src/components/custom/aurora";
 import { useGlassRenderer, type GlassTier } from "../../../src/composables/glass";
 import { cn } from "../../../src/utils/cn";
-import { heroAuroraConfig } from "../aurora-hero";
 
-// The paper-vs-glass tour backdrop carries a live <Aurora> on the
-// amber/indigo/rose brand hues, giving the tier tiles a live painterly backdrop
-// to read translucent over; opacityCeiling 0.55 keeps the tile labels legible.
-// (Only the page-hero wash uses Aurora; the small sample-tile swatch lower in
-// the page is the subject and stays a plain gradient.)
-const paperGlassAurora = heroAuroraConfig("amber-indigo-rose");
+// The paper-vs-glass tour declares a paper-grain wash on its manifest row; the
+// page chassis renders it behind a glassy hero card, so the tier tiles read
+// translucent over the warm-cream grain the page is about.
 
 interface Tile {
     tier: string;
@@ -140,20 +135,9 @@ onMounted(() => {
 
 <template>
     <StoryPage>
-        <!-- Live Aurora wash backdrop for the four tier tiles. -->
-        <div
-            :class="
-                cn(
-                    'relative isolate overflow-hidden rounded-card p-8 md:p-12',
-                )
-            "
-        >
-            <Aurora
-                :config="paperGlassAurora"
-                :opacity-ceiling="0.55"
-                class="absolute inset-0 -z-10"
-                aria-hidden="true"
-            />
+        <!-- The four glass tier tiles, reading translucent over the paper-grain
+             wash the chassis renders behind this card. -->
+        <div>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <div
                     v-for="t in tiers"
