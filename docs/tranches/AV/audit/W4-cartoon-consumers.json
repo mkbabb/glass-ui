@@ -5,7 +5,7 @@
   "darkArm": "token-adaptive BY CONSTRUCTION — cartoon-surface reads only var(--shadow-cartoon-{md,lg}); those ride color-mix(... var(--shadow-color) ...) and --shadow-color: var(--foreground) flips light→dark, so no hardcoded light literal leaks into the dark arm. Light-arm paint byte-identical to HEAD (no CSS value changed).",
   "consumers": [
     {
-      "path": "demo/stories/primitives/card.vue",
+      "path": "demo/stories/display/card.vue",
       "context": "demo story",
       "evidence": "<Card surface=\"cartoon\"> live showcase + the prose documenting the cartoon-surface decoration"
     },

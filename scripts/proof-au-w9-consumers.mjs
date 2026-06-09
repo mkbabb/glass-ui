@@ -105,6 +105,15 @@ export function detectConsumers(tally, resolves) {
                 continue;
             }
             if (!resolves(c)) {
+                // Registry-default world (inv-θ): an absent CROSS-REPO (absolute)
+                // sibling consumer is a graceful SKIP on a clean CI runner (the
+                // sibling isn't checked out) — verified locally where the sibling
+                // exists, never a violation. An absent IN-REPO (relative) consumer
+                // IS a violation (the demo is always present at HEAD).
+                if (isAbsolute(c)) {
+                    facts.siblingSkipped = (facts.siblingSkipped ?? 0) + 1;
+                    continue;
+                }
                 violations.push(`W9 item '${id}' cites consumer '${c}' that does not resolve at HEAD`);
             }
         }

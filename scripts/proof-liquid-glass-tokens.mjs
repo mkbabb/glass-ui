@@ -32,7 +32,19 @@ function read(rel) {
 
 const tokens = read("src/styles/tokens.css");
 const glass = read("src/styles/glass.css");
-const dock = read("src/styles/dock.css");
+// AX.W06 — dock.css was carved into dock/{shell,morph,density,…}.css; read the
+// FAMILY so the edge-light/tier wiring (now in the partials) is found.
+const dock = [
+    "src/styles/dock.css",
+    "src/styles/dock/shell.css",
+    "src/styles/dock/morph.css",
+    "src/styles/dock/density.css",
+    "src/styles/dock/layers.css",
+    "src/styles/dock/layer-group.css",
+    "src/styles/dock/overflow.css",
+]
+    .map((f) => read(f))
+    .join("\n");
 const specular = read("src/styles/glass-specular-track.css");
 const indexCss = read("src/styles/index.css");
 
