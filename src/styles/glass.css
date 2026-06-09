@@ -46,8 +46,15 @@
 
        The `.glass-dock` SHELL is OUT of this group BY DESIGN — it hand-rolls a
        parallel surface (its own `--glass-*-dock` family + a local rim + an
-       instrument-strip `::before`) the dock arm owns; the dock's catch-light
-       lives on its CONTROL (`.dock-icon-button`, listed below), not the shell.
+       instrument-strip `::before`) the dock arm owns. The COHESION CONSEQUENCE is
+       DELIBERATE: the dock shell carries NO shared edge-gleam / moving-specular
+       `::before` (its only `::before` is the `variant-instrument-strip` engraved
+       bezel, dock/shell.css — a different effect). The dock's catch-light lives on
+       its CONTROLS (`.dock-icon-button` et al., listed below + in the opt-in
+       transition block), which ARE in the material group — NOT on the shell plate.
+       Adding a shell gleam would re-introduce glass-on-glass over the controls, so
+       the shell-without-gleam is a NAMED EXEMPTION, gated as `dock-shell-exempt` in
+       proof:glass-cohesion (the only exemption beside the legibility allowlist).
 
        The selector GROUP is the single source. Adding a surface to the band
        material is one comma-entry here, not a new opt-in class string. */
@@ -146,6 +153,37 @@
            a plain low-alpha warm overlay (the gleam composes normally — no blend, no
            blowout), the no-workaround floor; NOT a `screen` fallback. */
         mix-blend-mode: plus-lighter;
+        /* The moving-specular TRANSITION is NOT declared here. An idle/unwired
+           `::before` is STATIC (no interpolation track), so a bare glass rung / an
+           un-armed Card / a glass Button at rest attaches ZERO animation tracks (the
+           keyframes.js runtime counts 0 idle tracks, not 19). The transition rides
+           ONLY the WIRED + interactive surfaces — the opt-in scoped block below. */
+    }
+
+    /* AY.W-GLASS — the moving-specular transition is OPT-IN (the Card wire-or-omit
+       pattern, generalized). It attaches ONLY to a WIRED surface
+       (`.glass-specular-track` — Card emits it conditionally, the dock controls + the
+       Slider thumb compose it) OR to any glass surface under `:hover`/`:active` (the
+       pointer is present, so the interpolation is legitimately live). An idle/unwired
+       `.glass-floating` / `.glass-wash` / bare-rung `::before` carries NO transition
+       and thus NO keyframes.js track. The §6 register is PRESERVED (still
+       `--ease-standard` on the position-tracked + surface-opacity legs — H-motion §6
+       "position-tracked → --ease-standard"; only the SELECTOR scope changes). The dock
+       controls keep the always-on transition (they are interactive controls; their rest
+       intensity is 0 so they paint nothing at rest, but a control legitimately carries
+       the transition). */
+    .glass-specular-track::before,
+    .glass-material:hover::before,    .glass-material:active::before,
+    .glass-wash:hover::before,        .glass-wash:active::before,
+    .glass-quiet:hover::before,       .glass-quiet:active::before,
+    .glass-resting:hover::before,     .glass-resting:active::before,
+    .glass-floating:hover::before,    .glass-floating:active::before,
+    .glass-overlay:hover::before,     .glass-overlay:active::before,
+    .glass-card:hover::before,        .glass-card:active::before,
+    .dock-icon-button::before,
+    .dock-tab-button::before,
+    .dock-select-trigger::before,
+    .dock-dropdown-trigger::before {
         /* Smooth the position + intensity between pointer samples (the typed
            @property regs make the percentage stops interpolable). */
         transition:
@@ -947,17 +985,20 @@
     .glass-resting,
     .glass-floating,
     .glass-overlay,
-    .glass-card {
+    .glass-card,
+    .glass-drawer {
         border: 1px solid CanvasText;
     }
 
     /* The floating + overlay rungs (Dialog / Sheet / Popover / DropdownMenu /
-       HoverCard compose them) get the canonical `Canvas` fill so the modal reads as
-       a DISTINCT boxed region OVER the page, not a transparent overlap — the
-       hierarchy survives. The `CanvasText` edge above already draws the box; this
-       opaque fill separates the floating layer from the content beneath it. */
+       HoverCard compose them) + the Drawer (the overlay-band sheet, drawer.css)
+       get the canonical `Canvas` fill so the modal reads as a DISTINCT boxed
+       region OVER the page, not a transparent overlap — the hierarchy survives.
+       The `CanvasText` edge above already draws the box; this opaque fill
+       separates the floating layer from the content beneath it. */
     .glass-floating,
-    .glass-overlay {
+    .glass-overlay,
+    .glass-drawer {
         background: Canvas;
     }
 
@@ -972,6 +1013,7 @@
     .glass-floating::before,
     .glass-overlay::before,
     .glass-card::before,
+    .glass-drawer::before,
     .glass-wash::after,
     .glass-quiet::after,
     .glass-resting::after,

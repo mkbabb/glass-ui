@@ -38,8 +38,8 @@
        mints the stacking context once. Longhand maps `translate(x, y)` 1:1. */
     translate: 0;
     transition:
-        translate var(--duration-normal) var(--spring-bouncy),
-        box-shadow var(--duration-normal) var(--ease-apple);
+        translate var(--duration-normal) var(--spring-smooth),
+        box-shadow var(--duration-normal) var(--ease-standard);
 
     &:hover:not(:disabled) {
         translate: var(--lift-sm) var(--lift-sm);

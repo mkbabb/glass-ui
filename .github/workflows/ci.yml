@@ -155,6 +155,8 @@ jobs:
               run: npm run proof:no-test-in-src
             - name: proof:spring-tokens-synced
               run: npm run proof:spring-tokens-synced
+            - name: proof:animation-coherence
+              run: npm run proof:animation-coherence
             - name: proof:offscreen-pause
               run: npm run proof:offscreen-pause
             - name: proof:constellation-substrate-single
@@ -191,8 +193,8 @@ jobs:
               run: npm run proof:carousel-glass-atoms
             - name: proof:glass-level
               run: npm run proof:glass-level
-            - name: proof:glass-one-model
-              run: npm run proof:glass-one-model
+            - name: proof:glass-cohesion
+              run: npm run proof:glass-cohesion
             - name: proof:storybook-complete
               run: npm run proof:storybook-complete
             - name: proof:demo-dock-nav

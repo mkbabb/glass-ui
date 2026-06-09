@@ -160,7 +160,7 @@ const isTouchActive = computed(() => touchGate.isActive.value)
       v-for="(_, key) in modelValue"
       :key="key"
       :aria-label="$attrs['aria-label'] as string ?? undefined"
-      class="slider-thumb"
+      class="slider-thumb glass-specular-track"
     />
   </SliderRoot>
 </template>
@@ -196,8 +196,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
        retints the cylinder via `--slider-range-bg`. The color-mix keeps the
        backdrop bleed reading through the glass (the liquid-glass identity). */
     background: color-mix(in oklab, var(--slider-range-bg, var(--primary)) 88%, transparent);
-    backdrop-filter: var(--slider-range-blur, blur(2px));
-    -webkit-backdrop-filter: var(--slider-range-blur, blur(2px));
+    /* AY.W-GLASS — the range blur routes the `--glass-blur-quiet` rung (the
+       ~2px-equivalent radius that SCALES by `--glass-level`), not a literal
+       `blur(2px)` off the level knob: when a consumer sets `--glass-level: 0`
+       (the opaque escape, prefers-reduced-transparency, or forced-colors) the
+       range flattens to `blur(0)` with the rest of the band. A consumer's
+       explicit `--slider-range-blur` override still wins. */
+    backdrop-filter: var(--slider-range-blur, var(--glass-blur-quiet));
+    -webkit-backdrop-filter: var(--slider-range-blur, var(--glass-blur-quiet));
     /* The unified edge rim (W52) reads the cylinder's curvature; under-shadow
        lays the glass-thickness floor at the leading edge. */
     box-shadow:
@@ -223,26 +229,27 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: 100%;
     border-radius: var(--radius-pill);
     border: none;
-    /* The cap is a brighter lip of the SAME material — a faint top-down
-       specular over the fill tint, reading as the grip on the leading edge. */
-    background:
-        linear-gradient(
-            to bottom,
-            color-mix(in oklab, var(--background) 55%, transparent),
-            color-mix(in oklab, var(--background) 12%, transparent)
-        ),
-        var(--slider-thumb-bg, var(--primary));
+    /* AY.W-GLASS — a flat fill; the grip catch-light is the SHARED opt-in
+       edge-gleam (the `.glass-specular-track` `::before` recipe Card/Button/dock-
+       controls use, composed on the thumb in the template), NOT a hand-rolled
+       static `linear-gradient` lip (the parallel specular idiom the band did not
+       speak). The thumb is the slider's interactive cap, so it is a legitimate
+       opt-in (wire-or-omit: it WIRES); the gleam wakes only on pointer-move, idle
+       at rest. */
+    background: var(--slider-thumb-bg, var(--primary));
     box-shadow: var(--slider-thumb-shadow, none);
-    /* AX.W05 — the in-dock thumb breathes on the DOCK register: a Slider living
-       inside a <GlassDock> shares the dock's morph curve rather than springing
-       on a sibling-snappier curve. The `--slider-thumb-spring` hook defaults to
-       `--spring-dock`; a standalone (non-dock) Slider keeps the dock register
-       too (the felt iOS knob give), and a consumer retunes via the one token. */
+    /* The thumb `transform` carries the press-give (the `:active` `scaleX`
+       squish below) — a TRANSFORM/PRESS leg, so per the §6 easing doctrine it
+       rides `--spring-smooth` (the ONE hover/press register), NOT `--spring-dock`
+       (the dock-box MORPH register, an enter-class size animation, not a press).
+       The reka SliderThumb owns the value-follow POSITION (inline inset, not this
+       CSS transform), so this transition governs only the felt knob give. The
+       `--slider-thumb-spring` hook keeps the per-consumer retune. */
     transition:
         background var(--duration-fast) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard),
         transform var(--duration-fast)
-            var(--slider-thumb-spring, var(--spring-dock));
+            var(--slider-thumb-spring, var(--spring-smooth));
 }
 
 /* Hover/focus lift a light specular halo on the cap — the cylinder's leading

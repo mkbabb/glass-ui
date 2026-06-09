@@ -269,7 +269,19 @@ function togglePlay() {
                 class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
                 data-testid="dock-slider-hold"
             >
-                <GlassDock :collapse-delay="600">
+                <!-- data-testid="dock-capture" is the deterministic AY.W-DOCK1 capture
+                     selector — a plain root-forwarded data attr (NOT the GlassDock
+                     `container-name` prop, which co-applies `container-type: inline-size`
+                     and BREAKS the collapse↔expand morph — the AT.W7 / 3.4.0
+                     dock-collapse-vs-container-type interaction; see W-DOCK1-DELTA.md
+                     §container-type-trap). The items-lag harness holds THIS single
+                     collapsible dock: it morphs RELIABLY (collapsed→expanded ~490px on the
+                     --dock-morph-t spring) and its trailing .dock-layer--full child rides
+                     the deliberate per-child reveal stagger, so it is the faithful surface
+                     for measuring the entering-child onset the chronic owes. The short
+                     :collapse-delay="600" keeps the capture's collapse-baseline fast.
+                     Demo-private test-affordance only; no behavioral change. -->
+                <GlassDock :collapse-delay="600" data-testid="dock-capture">
                     <DockIconButton aria-label="Volume"><Volume2 /></DockIconButton>
                     <div class="flex w-44 items-center px-2">
                         <Slider v-model="volume" :max="100" :step="1" aria-label="Volume" />

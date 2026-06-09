@@ -478,6 +478,13 @@ export const GATES = [
         note: "AV.W14 — the build-pipeline orchestration guarantee: the committed --spring-* block in tokens.css matches the regen-spring-tokens.mjs generator output (the external mutation point is NOT in `build`, so this gate guards the silent-drift gap). Bite: hand-edit one --spring-* value → RED, then run the generator + commit → green",
     },
     {
+        id: "proof:animation-coherence",
+        cmd: "proof:animation-coherence",
+        tags: ["local", "ci", "release"],
+        sibling: true,
+        note: "AY.W-MOTION — the §6 register guard PROMOTED into CI (was excluded + RED). Widened to the full animated-surface file set (the SURFACE_CSS sheets + named SFC anchors + the *.vue <style> catch-all) + a register-assignment assert (surface→bezier, hover/press→smooth/snappy never bouncy, exit→bezier, morph→dock). The constellation census walks ../speedtest (sibling-skip on a clean runner). Bite: re-add a hardcoded-ms/bare-keyword surface transition, or name --spring-bouncy on a press → RED; a speedtest --ease-apple-spring read → RED.",
+    },
+    {
         id: "proof:offscreen-pause",
         cmd: "proof:offscreen-pause",
         tags: ["local", "ci"],
@@ -625,13 +632,13 @@ export const GATES = [
         id: "proof:glass-level",
         cmd: "proof:glass-level",
         tags: ["local", "ci"],
-        note: "AX.W54 — the glass-first ROOT gate (the --glass-level scalar arm + the G-1 cohesion arm). Device-free SOURCE: @property --glass-level threads BOTH ladders (level=1 byte-identical by construction); the opaque escape + the a11y brackets ride the ONE level path; the four divergent recipes (SegmentedTabs track+indicator, ui Tabs indicator, Alert, TagsInput) + the two recipe divergences (.input-pill blur(1px), --glass-bg-dock flat-srgb) are reconciled onto the one model; Button default = glass; Card carries the opaque rung. The PAINTED level=1 byte-identity + the mounted glass backdrop-filter is the W00 π live audit. Bite: detach a rung from the level, restore a solid chrome/content surface off the allowlist → RED.",
+        note: "AX.W54 — the --glass-level SCALAR gate (the level-seam gate). Device-free SOURCE: @property --glass-level threads BOTH ladders at their ONE sites (level=1 byte-identical by construction; the opacity seam → 1, the blur seam → 0 at level:0); the opaque escape (.glass-opaque) + the a11y brackets (prefers-reduced-transparency → 0, prefers-contrast → bounded) ride the ONE level path. The G-1 cohesion arm was folded out into the inventory-complete proof:glass-cohesion (AY.W-GLASS, clean break). Bite: detach a rung from the level seam → RED.",
     },
     {
-        id: "proof:glass-one-model",
-        cmd: "proof:glass-one-model",
+        id: "proof:glass-cohesion",
+        cmd: "proof:glass-cohesion",
         tags: ["local", "ci"],
-        note: "AX.W54 — G-1 of the GOLDEN done-definition: glass cohesion MEASURED, not asserted (the --one-model arm of proof:glass-level). No ui/ chrome-or-content surface paints a solid bg-{card,background,muted,secondary,primary} without the glass tier or the named .glass-opaque escape; the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) is exempt. Bite: re-introduce a solid chrome surface off the allowlist → RED.",
+        note: "AY.W-GLASS — the inventory-complete glass-cohesion gate (SUPERSEDES the 8-file proof:glass-one-model canary, which is REMOVED — clean break). Device-free SOURCE arm: WALKS every component surface that paints a glass plate and asserts each routes a --glass-* tier off the definition-level raw-opaque (background: var(--background|--card)) / literal-blur(<n>px) forbidden set — the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) + the dock-shell edge-gleam exemption are the ONLY exempt entries. The Drawer (re-authored onto glass-overlay + the WHC skin), Slider (range routes --glass-blur-quiet, thumb opts into the shared gleam), Notification (glass-floating + ladder shadow), and the specular-opt-in (the moving transition rides the .glass-specular-track::before / :hover/:active scope, NOT the unconditional ::before group — 0 idle keyframes tracks) arms each born-RED at HEAD → GREEN after E1–E6; a self-proving synthetic .glass-x fixture demonstrates the inventory bite every run. The PAINTED render (Drawer/Slider/Notification each a real backdrop-filter blur over a busy backdrop AND each flattening to opaque --card + blur(0) at --glass-level:0) + the idle-track 19→0 DELTA is the π arm (tests-visual/glass-cohesion.spec.ts + the W-GLASS-DELTA capture), never this gate alone. Bite: re-open the opaque Drawer / the Slider literal blur / the glass-wash Notification / the always-on specular transition → RED.",
     },
     {
         id: "proof:storybook-complete",
@@ -721,7 +728,7 @@ export const GATES = [
         id: "proof:live-verified-ledger",
         cmd: "proof:live-verified-ledger",
         tags: ["local", "ci"],
-        note: "AX.W62 Gate 1 (cardinal forcing function) — a PROGRESS wave-row whose STATUS cell is `live-verified` REDs unless a matching audit/visual/W<NN>-DELTA.md references ≥1 REAL on-disk PNG (the SOURCE arm rejects prose/section-markers); any `(DEVELOPED)` modifier in a status cell REDs (the retired inflation-vehicle vocabulary). Self-proving: a synthetic DELTA-less live-verified row is flagged every run. Also the .githooks/commit-msg local bite. Bite: flip a row to live-verified with no .png → RED; write `(DEVELOPED)` in a status cell → RED.",
+        note: "AX.W62 Gate 1 / AY.W-CARDINAL-INFRA (cardinal forcing function) — a PROGRESS wave-row whose STATUS cell is `live-verified` (or an allowlisted `complete`) REDs unless a matching audit/visual/W<NN>-DELTA.md references ≥1 REAL own-surface PNG (the SOURCE arm rejects prose/section-markers); any `(DEVELOPED)` modifier in a status cell REDs (the retired inflation-vehicle vocabulary). Self-proving: 3 synthetic rows flagged every run. GATES THE ACTIVE TRANCHE (AY — `--tranche=AY` via the bare `proof:live-verified-ledger` script); also the .githooks/commit-msg local bite, same AY arm. The AX 6-row `complete`-allowlist backlog (W05/W08/W15/W16/W17/W23) is born-RED-on-purpose — the W-DELTA0 owed-DELTA TRACKER (`proof:live-verified-ledger:ax`), NON-blocking, NOT a commit/CI gate (defaulting to AX would be the gate-locks-you-out anti-pattern). Bite: flip an AY row to live-verified with no own-surface .png → RED; write `(DEVELOPED)` in a status cell → RED.",
     },
     {
         id: "proof:consumer-staleness",

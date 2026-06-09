@@ -220,7 +220,7 @@ defineExpose({
 
 .aurora-canvas {
     opacity: 0;
-    transition: opacity 600ms ease-out;
+    transition: opacity var(--duration-slow) var(--ease-standard);
 }
 
 .aurora-canvas--armed {

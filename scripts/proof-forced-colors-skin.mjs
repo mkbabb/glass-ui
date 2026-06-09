@@ -82,11 +82,15 @@ add(
     "the five-rung ladder (wash/quiet/resting/floating/overlay) + .glass-card resolve `border: 1px solid CanvasText` under WHC — every tier pane reads as a boxed region (born-RED: border-style none)",
 );
 
-// ── 4. The floating + overlay rungs get a Canvas fill (the boxed-region separation) ─
+// ── 4. The floating + overlay rungs (+ the Drawer, AY.W-GLASS) get a Canvas fill ──
+// The overlay-band Canvas-fill group names `.glass-floating` + `.glass-overlay` + (since
+// AY.W-GLASS) `.glass-drawer` — the Drawer is an overlay-band sheet on the glass-overlay
+// rung, so it joins the boxed-region separation. The check tolerates additional members
+// in the comma group (the selector list is open to future overlay-band surfaces).
 add(
     "floating-canvas-fill",
-    /\.glass-floating\s*,\s*\.glass-overlay\s*\{\s*background:\s*Canvas\b/.test(glassFc),
-    "the floating + overlay rungs resolve `background: Canvas` under WHC — the modal reads as a distinct region over the page, not a transparent overlap",
+    /\.glass-floating\s*,\s*\.glass-overlay\b[\s\S]*?\{\s*background:\s*Canvas\b/.test(glassFc),
+    "the floating + overlay rungs (+ the Drawer) resolve `background: Canvas` under WHC — the modal reads as a distinct region over the page, not a transparent overlap",
 );
 
 // ── 5. The decorative ::before specular + ::after grain YIELD (display: none) ──────

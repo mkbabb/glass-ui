@@ -226,7 +226,7 @@ const rowStyle = computed(() => ({
     font-feature-settings: "ss01", "tnum", "lnum";
     font-variant-numeric: tabular-nums lining-nums;
     color: var(--foreground);
-    transition: color 220ms ease-out;
+    transition: color var(--duration-fast) var(--ease-standard);
     text-align: left;
     min-width: 0;
 }
@@ -243,7 +243,7 @@ const rowStyle = computed(() => ({
     line-height: 1;
     font-weight: 500;
     color: var(--muted-foreground);
-    transition: color 220ms ease-out;
+    transition: color var(--duration-fast) var(--ease-standard);
     white-space: nowrap;
 }
 

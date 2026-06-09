@@ -15,9 +15,11 @@
 // NO FORK OUTSIDE the generator: no second spring/easing authority sits on a
 // dock/aurora/blob/primitive animated property.
 //
-// SIX assertions over the animated-surface file set (AX.W05 widened the gate
-// from three — the apple-spring survivor sweep + the --spring-* consumer-coverage
-// census + the cross-repo constellation census):
+// SEVEN assertions over the animated-surface file set (AX.W05 widened it from
+// three — the apple-spring survivor sweep + the --spring-* consumer-coverage
+// census + the cross-repo constellation census; AY.W-MOTION widened the SURFACE
+// scope to the FULL animated-surface file set + a *.vue `<style>` catch-all and
+// added the SEVENTH assertion, REGISTER-ASSIGNMENT):
 //
 //   ONE-SPRING-SOURCE  — the ONLY `--spring-*` DEFINITIONS in the repo live in
 //                        the regen-generated §2 EASING block in tokens.css. A
@@ -26,21 +28,44 @@
 //
 //   NO-HAND-ROLLED-EASING — no raw `cubic-bezier(` or `linear(`-with-stops spring
 //                        literal sits on a transition/animation declaration in
-//                        the animated-surface CSS (dock.css, dock-controls.css,
-//                        utilities.css, and the aurora/blob SFC `<style>` blocks).
-//                        The springs and core eases are TOKEN DEFINITIONS in
-//                        tokens.css (the single definition home, exempt); a
-//                        surface composes them only via `var(--spring-*)` /
-//                        `var(--ease-*)`. The non-physical motion ALLOW-LIST
-//                        (shimmer / marquee / sparkle-sweep keyframes that are
-//                        intentionally NOT spring-driven) is authored below, not
-//                        discovered ad-hoc (the W31 triumvirate §3a clause).
+//                        the animated-surface CSS (the full SURFACE_CSS set + the
+//                        aurora/blob/component SFC `<style>` blocks + the *.vue
+//                        `<style>` catch-all). The springs and core eases are
+//                        TOKEN DEFINITIONS in tokens.css (the single definition
+//                        home, exempt); a surface composes them only via
+//                        `var(--spring-*)` / `var(--ease-*)`. The non-physical
+//                        motion ALLOW-LIST (shimmer / marquee / sparkle-sweep
+//                        keyframes that are intentionally NOT spring-driven) is
+//                        authored below, not discovered ad-hoc (the W31
+//                        triumvirate §3a clause).
 //
 //   PRESS-FROM-COHORT  — every canonical press surface (`.tap-squish`, the
 //                        button / slider / dock-icon / dock-tab press recipes)
 //                        resolves `scale:` from a `--scale-press*` var, never a
 //                        literal `0.9x`. ONE press vocabulary — no per-atom
 //                        literal scale.
+//
+//   REGISTER-ASSIGNMENT (AY.W-MOTION) — the §6 easing doctrine (tokens.css:162-190)
+//                        is a MACHINE-CHECKED register assignment, not an
+//                        unenforced prose table. Each `transition:` declaration is
+//                        parsed into (property, duration, easing) legs; the easing
+//                        var on each leg is classified against the property's kind:
+//                        a SURFACE leg (bg/border/color/box-shadow/opacity/fill/
+//                        stroke) must NOT name a `--spring-*` (a spring on a colour
+//                        cross-fade reads as a wobble — §6 surface→bezier); a
+//                        TRANSFORM leg (transform/translate/scale/rotate) that names
+//                        a `--spring-*` must name `--spring-smooth`/`--spring-snappy`
+//                        (the hover/press registers), NEVER `--spring-bouncy`/
+//                        `--spring-dock`/`--spring-gentle` (the enter/dock-morph/
+//                        ambient registers). Targets `transition:` declarations
+//                        only — an `animation:` shorthand keeps the spring-enter
+//                        register (enter→spring is correct). The authored
+//                        REGISTER_ASSIGNMENT_ALLOW set carves the deliberate
+//                        exemptions (the Toast surface — reka owns its data-state
+//                        choreography, a documented keep; the `--dock-resize-spring`
+//                        dock-morph token which legitimately rides `--spring-dock`
+//                        because the dock box MORPH is an enter-class size animation,
+//                        not a hover).
 //
 //   APPLE-SPRING-SURVIVOR (AX.W05) — the legacy `--ease-apple-spring` /
 //                        `--motion-ease-apple-spring` cubic-bezier is EXCISED.
@@ -77,7 +102,17 @@ import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
+// Resolve the repo root from this module's URL when invoked as a CLI gate.
+// Under a test runner (vitest) `import.meta.url` may not be a `file:` URL on
+// import, so fall back to the cwd — the pure detectors a test imports never read
+// ROOT, and the run()/census paths only fire from the CLI guard.
+const ROOT = (() => {
+    try {
+        return resolve(fileURLToPath(new URL("../", import.meta.url)));
+    } catch {
+        return process.cwd();
+    }
+})();
 
 // The repo `src/` tree — the survivor sweep + the consumer-coverage census walk
 // it (CSS + SFC + TS). The constellation census walks the sibling consumers'
@@ -95,17 +130,44 @@ const APPLE_SPRING_RE = /--(?:motion-)?ease-apple-spring\b/g;
 // literal. tokens.css is the DEFINITION home (the §2 EASING block + the
 // `--motion-ease-*` cubic-bezier seeds) — it is scanned ONLY for an out-of-block
 // `--spring-*` definition, NOT for the literal-easing clause.
+// AY.W-MOTION widened this from the prior 3-file sample (dock.css /
+// dock-controls.css / utilities.css) to the FULL animated-surface CSS set —
+// every sheet that carries a `transition:`/`animation:` declaration, incl. the
+// AX.W06 dock partials. tokens.css STAYS the definition home (scanned only for
+// an out-of-block `--spring-*` def, below), NOT here.
 const SURFACE_CSS = [
     "src/styles/dock.css",
     "src/styles/dock-controls.css",
     "src/styles/utilities.css",
+    "src/styles/transitions.css",
+    "src/styles/animations.css",
+    "src/styles/cards.css",
+    "src/styles/glass.css",
+    "src/styles/instrument-chassis.css",
+    "src/styles/drawer.css",
+    "src/styles/hover-popover.css",
+    "src/styles/floating-panel.css",
+    "src/styles/scroll-driven.css",
+    "src/styles/view-transition.css",
+    "src/styles/dock/shell.css",
+    "src/styles/dock/morph.css",
+    "src/styles/dock/density.css",
+    "src/styles/dock/layers.css",
+    "src/styles/dock/layer-group.css",
+    "src/styles/dock/overflow.css",
 ];
 
-// The aurora/blob hosts ship no `<style>` transition today, but a future host
-// retune is in scope — scan their SFCs too so the gate stands over the band.
+// The "always-scanned" SFC anchor: the aurora/blob hosts PLUS the component
+// SFCs that carry a `<style>` `transition:` declaration today. The *.vue
+// `<style>` catch-all in detectAll (walkSrc-based) is the drift-proof
+// supplement — this list never has to grow as new SFC transitions land, but the
+// named anchors document the surfaces the band explicitly stands over.
 const SURFACE_SFC = [
     "src/components/custom/aurora/Aurora.vue",
     "src/components/custom/goo-blob/GooBlob.vue",
+    "src/components/custom/metric-stack/MetricRow.vue",
+    "src/components/custom/scrolling-text/ScrollingText.vue",
+    "src/components/ui/slider/Slider.vue",
 ];
 
 const TOKENS_CSS = "src/styles/tokens.css";
@@ -155,6 +217,11 @@ export const NON_PHYSICAL_ALLOW = [
     "sparkle-sweep",
     "marquee",
     "scroll-marquee",
+    // AY.W-MOTION — the ScrollingText overflow-marquee pan: a continuous material
+    // sweep (pause-pan-pause-return), NOT a settling physical morph, so its
+    // `cubic-bezier(0.45, 0, 0.55, 1)` ease-in-out is the correct non-physical
+    // register (ScrollingText.vue, the lifted speedtest marquee).
+    "scrolling-text-pan",
 ];
 
 // Detect a raw `cubic-bezier(` or the `linear(`-with-stops spring function on a
@@ -242,17 +309,287 @@ export function detectEasingForks(file, src) {
     return violations;
 }
 
-// A `scale:` press literal on a surface CSS. Returns file:line witnesses.
+// Whether an offset sits inside an `@keyframes …{ … }` block — a keyframe
+// waypoint (`scale: 0.96` at `from`/`0%`) is the START/END position of an
+// entrance, NOT a press recipe, so the press-cohort rule exempts it (a generic
+// enter keyframe cannot name a `--scale-press*` token). Scans the `@keyframes`
+// block extents in the comment-stripped source.
+function keyframesRanges(stripped) {
+    const ranges = [];
+    const re = /@keyframes\b[^{]*\{/gi;
+    let m;
+    while ((m = re.exec(stripped)) !== null) {
+        // Walk from the opening `{` to its matching `}` (keyframes blocks nest
+        // one level — the `from`/`to`/`%` sub-blocks).
+        let depth = 0;
+        let i = m.index + m[0].length - 1; // at the opening `{`
+        for (; i < stripped.length; i++) {
+            if (stripped[i] === "{") depth++;
+            else if (stripped[i] === "}") {
+                depth--;
+                if (depth === 0) break;
+            }
+        }
+        ranges.push([m.index, i]);
+    }
+    return ranges;
+}
+
+// A `scale:` press literal on a surface CSS. Returns file:line witnesses. EXEMPTS
+// a literal inside an `@keyframes` block (an enter/exit waypoint) and inside a
+// Vue-transition keyframe-state selector (`*-enter-from`/`*-leave-to`/…) — those
+// are entrance/exit START/END positions, not press recipes. The assertion targets
+// a press recipe's literal `scale` (`:active { scale: 0.9 }`) on a canonical
+// press surface, the per-atom literal the --scale-press* cohort replaces.
 export function detectPressForks(file, src) {
     const violations = [];
     const stripped = stripCssComments(src);
+    const kfRanges = keyframesRanges(stripped);
+    const inKeyframes = (off) => kfRanges.some(([a, b]) => off >= a && off <= b);
     let m;
     PRESS_LITERAL_RE.lastIndex = 0;
     while ((m = PRESS_LITERAL_RE.exec(stripped)) !== null) {
+        if (inKeyframes(m.index)) continue; // a keyframe waypoint, not a press
+        const role = selectorRoleAt(stripped, m.index);
+        if (role === "enter" || role === "exit") continue; // a transition waypoint
         const literal = m[1] ?? m[2];
         violations.push(
             `${file}:${lineOf(stripped, m.index)}: a literal press scale '${literal}' on an animated surface — resolve from the --scale-press* cohort, not a per-atom literal`,
         );
+    }
+    return violations;
+}
+
+// ── REGISTER-ASSIGNMENT (AY.W-MOTION) ─────────────────────────────────────────
+// The authored exemption set the §6 register assertion EXEMPTS — mirrors the
+// NON_PHYSICAL_ALLOW discipline (authored, never discovered ad-hoc). Each entry
+// is an easing-var name that a leg MAY name without tripping the register rule,
+// WITH the recorded rationale:
+//   --spring-dock   — the dock-box MORPH register: the dock shell `width`/`height`
+//                     and a DockLayer size FLIP are an ENTER-class size animation
+//                     (the box grows/shrinks like a panel opening), not a
+//                     hover/press. `--dock-resize-spring` (= --spring-dock) and the
+//                     dock-morph transitions ride it by design. A TRANSFORM-on-
+//                     --spring-dock that is a PRESS is still flagged unless its
+//                     property is a size/morph property (width/height/grid-*).
+// The Toast surface keeps the reka `tw-animate-css` data-state choreography (a
+// documented keep, transitions.css §Toast-contract) — but the Toast emits NO
+// `transition:` declaration with a `--spring-*` easing (it uses
+// `transition-[opacity,transform]` for the swipe-drag with the reka-supplied
+// timing), so it never reaches this detector; the keep is recorded in the contract
+// doc + this note, no allow-list entry is needed to silence a phantom.
+export const REGISTER_ASSIGNMENT_ALLOW = {
+    // The dock-morph size register — legitimate on a width/height/morph leg.
+    "--spring-dock": "dock-box MORPH (enter-class size animation, not a hover/press)",
+    "--dock-resize-spring": "the dock-morph FLIP-fallback timing (= --spring-dock)",
+    "--dock-motion-resize": "the dock-box resize transition timing (rides --dock-resize-spring)",
+};
+
+// The SURFACE property kinds (a spring on any of these reads as a wobble — §6).
+const SURFACE_PROPS = new Set([
+    "background",
+    "background-color",
+    "border",
+    "border-color",
+    "border-width",
+    "color",
+    "box-shadow",
+    "opacity",
+    "fill",
+    "stroke",
+    "backdrop-filter",
+    "filter",
+]);
+
+// The TRANSFORM/size property kinds. A `transform`/`translate`/`scale`/`rotate`
+// is a hover/press leg (→ smooth/snappy); a `width`/`height`/`grid-*`/`inset` is a
+// MORPH/size leg (→ --spring-dock is legitimate, the enter-class size register).
+const TRANSFORM_PROPS = new Set(["transform", "translate", "scale", "rotate"]);
+const MORPH_PROPS = new Set([
+    "width",
+    "height",
+    "min-width",
+    "max-width",
+    "min-height",
+    "max-height",
+    "inset",
+    "top",
+    "left",
+    "right",
+    "bottom",
+    "grid-template-columns",
+    "grid-template-rows",
+]);
+
+// The off-doctrine TRANSFORM-leg springs (the enter/morph/ambient registers a
+// hover/press must NOT name).
+const OFF_DOCTRINE_TRANSFORM_SPRING = new Set([
+    "--spring-bouncy",
+    "--spring-dock",
+    "--spring-gentle",
+]);
+
+// Split a `transition:` value into its comma legs, respecting parentheses so a
+// `cubic-bezier(a, b, c, d)` / `linear(…)` / `color-mix(…)` comma is not a leg
+// boundary.
+function splitTransitionLegs(value) {
+    const legs = [];
+    let depth = 0;
+    let cur = "";
+    for (const ch of value) {
+        if (ch === "(") depth++;
+        else if (ch === ")") depth = Math.max(0, depth - 1);
+        if (ch === "," && depth === 0) {
+            legs.push(cur.trim());
+            cur = "";
+        } else {
+            cur += ch;
+        }
+    }
+    if (cur.trim()) legs.push(cur.trim());
+    return legs;
+}
+
+// Parse one transition LEG into { property, vars } — `property` is the leg's
+// FIRST token (the transitioned property), `vars` is every `var(--…)` reference
+// in the leg (duration/delay tokens are unit-bearing, e.g. `var(--duration-fast)`;
+// the easing token names a `--spring-*`/`--ease-*`). The caller classifies the
+// easing off `vars`; a leg with no `var(--…)` easing yields an empty `vars` (a
+// bare-keyword leg is the detectEasingForks/HG4 concern, not this one). Returns
+// null only for an empty leg (no tokens).
+function parseTransitionLeg(leg) {
+    const tokens = leg.split(/\s+/).filter(Boolean);
+    if (!tokens.length) return null;
+    const property = tokens[0].toLowerCase();
+    const vars = [...leg.matchAll(/var\(\s*(--[a-z0-9-]+)/gi)].map((mm) => mm[1]);
+    return { property, vars };
+}
+
+// Classify the ROLE of the selector enclosing a declaration offset, so the
+// register rule fires on the RIGHT register-kind. §6 governs by transition KIND:
+// ENTER (mount/popover/dialog-in) legitimately rides a `--spring-*` enter spring;
+// a HOVER/PRESS transform must be smooth/snappy; an EXIT must be a bezier. The
+// Vue-`<Transition>` class convention (`*-enter-active`/`*-leave-active`) names
+// the role; an interactive pseudo (`:hover`/`:active`/`:focus`) names a press;
+// anything else is a plain state class (state-morph — enter-class). We scan the
+// enclosing rule's selector text (the run from the prior `}` or `{`-opener back
+// to the selector head) for the role marker.
+function selectorRoleAt(stripped, offset) {
+    // Walk back to the `{` that opens this declaration's block, then to the
+    // selector text preceding it (the run after the previous `}`/`{`/`;`).
+    const braceOpen = stripped.lastIndexOf("{", offset);
+    if (braceOpen === -1) return "unknown";
+    let selStart = braceOpen - 1;
+    while (selStart > 0 && !"{};".includes(stripped[selStart])) selStart--;
+    const selector = stripped.slice(selStart + 1, braceOpen).toLowerCase();
+    if (/-enter-active|-enter-from|-enter-to|-appear-active/.test(selector)) return "enter";
+    if (/-leave-active|-leave-from|-leave-to/.test(selector)) return "exit";
+    if (/:hover|:active|:focus|\[data-pressed|\[data-state=/.test(selector)) return "press";
+    return "state"; // a plain class (state-morph) — enter-class, spring legitimate
+}
+
+// Detect a §6 register-assignment violation across every `transition:`
+// declaration in a comment-stripped source. PURE — file is for the witness only.
+export function detectRegisterAssignment(file, src) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    // Match a `transition:` (NOT `transition-property`/`-duration`/`-timing`/
+    // `transition-delay`) declaration through its terminating `;` or block end.
+    const declRe = /\btransition\s*:\s*([^;}]+)[;}]/gi;
+    let m;
+    while ((m = declRe.exec(stripped)) !== null) {
+        const value = m[1];
+        const line = lineOf(stripped, m.index);
+        const role = selectorRoleAt(stripped, m.index);
+        // `transition: none` / a `transition: all …` global — skip the property
+        // classification (no per-property leg to assign a register to).
+        for (const leg of splitTransitionLegs(value)) {
+            const parsed = parseTransitionLeg(leg);
+            if (!parsed) continue;
+            const { property, vars } = parsed;
+            // The easing var is a `--spring-*` or an allow-listed easing alias.
+            const springVar = vars.find((v) => /^--spring-[a-z-]+$/.test(v));
+            const allowVar = vars.find((v) => v in REGISTER_ASSIGNMENT_ALLOW);
+            if (!springVar && !allowVar) continue; // a `--ease-*` leg is fine.
+            const easing = springVar ?? allowVar;
+            const isSurface = SURFACE_PROPS.has(property);
+            const isTransform = TRANSFORM_PROPS.has(property);
+            const isMorph = MORPH_PROPS.has(property);
+            // SURFACE leg → must NOT name a --spring-* (or a spring-backed alias),
+            // in ANY role (a colour/opacity cross-fade reads as a wobble whether
+            // it enters, leaves, or hovers — §6 surface→bezier is role-agnostic).
+            if (isSurface) {
+                // An allow-listed dock-morph alias on a SURFACE leg is still a
+                // wobble — the allow-list exempts MORPH legs, not surface legs.
+                violations.push(
+                    `${file}:${line}: surface prop '${property}' transitions on '${easing}' — a --spring-* on a surface leg reads as a wobble; use --ease-standard (§6)`,
+                );
+                continue;
+            }
+            // TRANSFORM leg → the register depends on the role. An ENTER/STATE
+            // transform legitimately rides the ENTER spring (`--spring-bouncy`/
+            // `-snappy` — §6 enter row, the dialog-scale/pop precedent). Only a
+            // HOVER/PRESS transform must be smooth/snappy, never bouncy/dock/gentle.
+            // An EXIT transform must be a bezier (no spring) — flag ANY spring.
+            if (isTransform && springVar) {
+                if (role === "press" && OFF_DOCTRINE_TRANSFORM_SPRING.has(springVar)) {
+                    violations.push(
+                        `${file}:${line}: transform prop '${property}' presses on '${springVar}' — use --spring-smooth/--spring-snappy for hover/press, never --spring-bouncy/-dock/-gentle (§6)`,
+                    );
+                    continue;
+                }
+                if (role === "exit") {
+                    violations.push(
+                        `${file}:${line}: transform prop '${property}' EXITS on '${springVar}' — an exit must ride a bezier (--ease-out/--ease-standard), never a spring (§6, no overshoot past gone)`,
+                    );
+                    continue;
+                }
+            }
+            // MORPH/size leg on --spring-dock (or a dock-morph alias) is the
+            // legitimate enter-class size register — exempt. An ENTER/STATE
+            // transform spring is the enter register — exempt. Any other property
+            // (a non-surface, non-transform, non-morph leg) naming a --spring-* is
+            // unclassified and not flagged (no register assigned).
+            void isMorph;
+        }
+    }
+    return violations;
+}
+
+// A composite PRESS-spring token DEFINITION (`--*-press-spring: <dur> <easing>`)
+// is consumed as a TRANSFORM/press leg (`scale var(--dock-press-spring)`), so its
+// easing must be a hover/press register (`--spring-smooth`/`--spring-snappy`),
+// NEVER `--spring-bouncy`/`--spring-dock`/`--spring-gentle` (§6 D1). The
+// register-assertion sees the composite at its DEFINITION (tokens.css) — the
+// consumption site only names the opaque composite. EXEMPT: an authored
+// PRESS_SPRING_PENDING entry naming the lander wave (the verify-not-edit bridge
+// per spec §5 — `--dock-press-spring`'s --spring-smooth re-point is owned by
+// W-DOCK2; until it lands, the gate stays GREEN via this noted bridge, and once
+// it lands the value is clean regardless of the exemption).
+const PRESS_SPRING_PENDING = {
+    "--dock-press-spring":
+        "AY.W-DOCK2 is the lander (re-points tokens.css:1771 --spring-bouncy → --spring-smooth, deleting the dock-controls.css shadow re-point). Verify-not-edit bridge (spec §5): GREEN now via this noted exemption, naturally clean once W-DOCK2 lands.",
+};
+
+export function detectPressSpringRegister(file, src) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    // `--<name>-press-spring: … var(--spring-X) …;` — the composite press token.
+    const defRe = /(--[a-z0-9-]*press-spring)\s*:\s*([^;}]+)[;}]/gi;
+    let m;
+    while ((m = defRe.exec(stripped)) !== null) {
+        const name = m[1];
+        const value = m[2];
+        const springs = [...value.matchAll(/var\(\s*(--spring-[a-z-]+)/gi)].map(
+            (mm) => mm[1],
+        );
+        for (const sp of springs) {
+            if (!OFF_DOCTRINE_TRANSFORM_SPRING.has(sp)) continue;
+            if (name in PRESS_SPRING_PENDING) continue; // the noted verify-not-edit bridge.
+            violations.push(
+                `${file}:${lineOf(stripped, m.index)}: the press-spring token '${name}' resolves '${sp}' — a press composite must name --spring-smooth/--spring-snappy, never --spring-bouncy/-dock/-gentle (§6)`,
+            );
+        }
     }
     return violations;
 }
@@ -290,6 +627,34 @@ function stripAllComments(src) {
             return line.slice(0, i);
         })
         .join("\n");
+}
+
+// Extract the `<style>` block content from a `.vue` SFC, blanking everything
+// OUTSIDE the `<style>` blocks to spaces/newlines so the line offsets stay true
+// (the easing/register witness reads the original SFC line). A non-`.vue` source
+// is returned unchanged (a bare `.css` is all-style). This is what the CSS-shaped
+// detectors (detectEasingForks/detectPressForks/detectRegisterAssignment) scan on
+// an SFC — the `<template>`/`<script>` carry no CSS transition.
+function vueStyleOnly(src) {
+    const blockRe = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = blockRe.exec(src)) !== null) {
+        const blockStart = m.index + m[0].indexOf(">") + 1;
+        // Blank the gap before the style content (incl. the opening tag).
+        out += src.slice(last, blockStart).replace(/[^\n]/g, " ");
+        out += m[1]; // the raw style content (offsets preserved)
+        last = blockStart + m[1].length;
+    }
+    out += src.slice(last).replace(/[^\n]/g, " ");
+    return out;
+}
+
+// The CSS the CSS-shaped detectors scan for a file: a `.vue` is reduced to its
+// `<style>` blocks (offset-preserving), a `.css` passes through whole.
+function cssOf(file, src) {
+    return file.endsWith(".vue") ? vueStyleOnly(src) : src;
 }
 
 // APPLE-SPRING-SURVIVOR — zero `--ease-apple-spring`/`--motion-ease-apple-spring`
@@ -405,26 +770,52 @@ export function detectAll(read) {
     facts.springDefCount = springRes.springDefCount;
     violations.push(...springRes.violations);
 
-    // NO-HAND-ROLLED-EASING + PRESS-FROM-COHORT over the surface set.
+    // AX.W05 — walk the whole src tree for the survivor sweep + coverage census.
+    const srcFiles = walkSrc(SRC_DIR).map((p) => p.slice(ROOT.length + 1));
+
+    // NO-HAND-ROLLED-EASING + PRESS-FROM-COHORT + REGISTER-ASSIGNMENT.
+    // The named SURFACE_CSS + SURFACE_SFC are the always-scanned anchors; the
+    // *.vue `<style>` catch-all (every SFC in src/ not already a named anchor) is
+    // the drift-proof supplement so a new SFC transition is never gate-invisible.
     const easingForks = [];
     const pressForks = [];
-    for (const file of SURFACE_CSS) {
-        const src = read(file);
-        easingForks.push(...detectEasingForks(file, src));
-        pressForks.push(...detectPressForks(file, src));
-    }
+    const registerForks = [];
+    const namedSet = new Set([...SURFACE_CSS, ...SURFACE_SFC]);
+    // The named SURFACE_CSS + SURFACE_SFC are the canonical-press anchors — they
+    // get the FULL trio (easing + press-cohort + register). The PRESS-FROM-COHORT
+    // assertion is authored against the canonical press surfaces (the gate
+    // header), so a decorative SFC's subtle `:active` scale in the catch-all does
+    // not draw the cohort rule — the catch-all gets easing + register only (the
+    // off-doctrine-spring + hand-rolled-curve sweep the spec names for the wide set).
+    const scanAnchor = (file, css) => {
+        easingForks.push(...detectEasingForks(file, css));
+        pressForks.push(...detectPressForks(file, css));
+        registerForks.push(...detectRegisterAssignment(file, css));
+    };
+    const scanWide = (file, css) => {
+        easingForks.push(...detectEasingForks(file, css));
+        registerForks.push(...detectRegisterAssignment(file, css));
+    };
+    for (const file of SURFACE_CSS) scanAnchor(file, read(file));
     for (const file of SURFACE_SFC) {
         const src = read(file, true);
         if (src === null) continue; // an absent SFC is not a violation
-        easingForks.push(...detectEasingForks(file, src));
-        pressForks.push(...detectPressForks(file, src));
+        scanAnchor(file, cssOf(file, src));
     }
+    // The *.vue `<style>` catch-all — every SFC under src/ NOT a named anchor.
+    const catchAllVue = srcFiles.filter(
+        (f) => f.endsWith(".vue") && !namedSet.has(f),
+    );
+    facts.surfaceFilesScanned = SURFACE_CSS.length + SURFACE_SFC.length + catchAllVue.length;
+    for (const file of catchAllVue) {
+        scanWide(file, cssOf(file, read(file)));
+    }
+    // REGISTER-ASSIGNMENT on the press-spring composite token DEFINITIONS (D1).
+    registerForks.push(...detectPressSpringRegister(TOKENS_CSS, read(TOKENS_CSS)));
     facts.easingForks = easingForks.length;
     facts.pressForks = pressForks.length;
-    violations.push(...easingForks, ...pressForks);
-
-    // AX.W05 — walk the whole src tree for the survivor sweep + coverage census.
-    const srcFiles = walkSrc(SRC_DIR).map((p) => p.slice(ROOT.length + 1));
+    facts.registerForks = registerForks.length;
+    violations.push(...easingForks, ...pressForks, ...registerForks);
 
     // APPLE-SPRING-SURVIVOR
     const survivors = detectAppleSpringSurvivors(srcFiles, (f) => read(f));
@@ -471,13 +862,16 @@ function run() {
         command: "npm run proof:animation-coherence",
         composesWith: "proof:spring-tokens-synced",
         nonPhysicalAllow: NON_PHYSICAL_ALLOW,
+        registerAssignmentAllow: REGISTER_ASSIGNMENT_ALLOW,
         facts,
         violations,
     });
-    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a + AX.W05)");
+    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a + AX.W05 + AY.W-MOTION)");
     console.log(`  --spring-* definitions     : ${facts.springDefCount}`);
+    console.log(`  animated surfaces scanned  : ${facts.surfaceFilesScanned}`);
     console.log(`  hand-rolled easing forks   : ${facts.easingForks}`);
     console.log(`  literal press-scale forks  : ${facts.pressForks}`);
+    console.log(`  register-assignment forks  : ${facts.registerForks}`);
     console.log(`  apple-spring survivors     : ${facts.appleSpringSurvivors.length}`);
     console.log(
         `  --spring-* coverage        : ${facts.springCoverage.coveredPresets}/${facts.springCoverage.presets.length} presets reached`,

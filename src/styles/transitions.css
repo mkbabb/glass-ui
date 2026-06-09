@@ -184,10 +184,28 @@
      * surface). The grammar is single-event entrance + dwell + exit;
      * the next toast (if any) enters on its own contract.
      *
+     * §6 EASING-DOCTRINE EXEMPTION (AY.W-MOTION — DELIBERATE KEEP).
+     * Every glass-ui-OWNED entrance surface (`dialog-scale`, `pop`,
+     * `dropdown`, `fade-slide`, `dock-in`) rides the house `--spring-*`
+     * enter / `--ease-out`/`--ease-standard` exit vocabulary (the §6
+     * doctrine, tokens.css:162-190). The Toast does NOT — and that is
+     * BY DESIGN, not an unexamined default. The reka-ui `ToastRoot`
+     * primitive OWNS its data-state choreography: the entrance slide
+     * direction tracks the viewport origin AND the swipe-end gesture
+     * (`data-[swipe=end]:slide-out-to-right-full`), so the entrance/exit
+     * are coupled to reka's `tw-animate-css` data-state machinery. The §6
+     * spring vocabulary governs glass-ui-OWNED surfaces; the reka-Toast
+     * entrance is not one — re-authoring it onto a `<Transition>` would
+     * fork the primitive's swipe-coupled contract (and `tw-animate-css`
+     * is the shipped optionalPeer this contract depends on). The gate
+     * (proof:animation-coherence) carries the Toast surface in its
+     * REGISTER_ASSIGNMENT_ALLOW set so this keep reads as a gated,
+     * deliberate exemption.
+     *
      * PRM is honoured at the `@media (prefers-reduced-motion: reduce)`
      * block below — the slide motion retires; the fade-in/out
-     * remains. No source change in W4; this comment block IS the
-     * documentation closure for the W4-M.3 toast contract row.
+     * remains. No source motion change; this comment block IS the
+     * documentation closure for the toast contract row.
      */
 
     /* ── Reduced motion: preserve fades, remove transform/scale motion ── */
