@@ -22,12 +22,18 @@
 //      `.glass-dock.collapsed` each frame is a TRAP — it switches to a DIFFERENT
 //      collapsed dock once dock #1 expands). A real `page.hover` expands it. Then it
 //      rAF-samples, on ONE timeline: the HELD dock-root `getBoundingClientRect().width`,
-//      `getComputedStyle(root).getPropertyValue("--dock-morph-t")`, and a representative
-//      LEAVING child's opacity. ASSERTS: `--dock-morph-t` ramps over ≥5 rising frames
-//      (NOT frozen at 0 — the snap/desync regression), the root box width rises over
-//      ≥5 rising frames (NOT a 1-frame snap), and the width-onset and the morph-t-onset
-//      are within ≤1 frame (the single-clock assert — the box and its driver scalar
-//      move together).
+//      `getComputedStyle(root).getPropertyValue("--dock-morph-t")`, the LEAVING child's
+//      opacity, AND the LAST ENTERING `.dock-layer--full > *` child's opacity.
+//      ASSERTS (AY.W-DOCK2): `--dock-morph-t` ramps over ≥5 rising frames (NOT frozen
+//      at 0 — the snap/desync regression), the root box width rises over ≥5 rising
+//      frames (NOT a 1-frame snap), and — THE BINDING LOCKSTEP WITNESS — the LAST
+//      ENTERING child's opacity onset trails the box-width onset by ≤
+//      LOCKSTEP_BUDGET_MS (the deliberate macOS-dock reveal-stagger ceiling; a
+//      regression PAST the stagger reds). The width-vs-scalar onset Δ is kept as a
+//      STRUCTURAL SANITY fact only (the box rides the scalar by CONSTRUCTION —
+//      `layers.css` makes `inline-size = calc(… × --dock-morph-t)` — so asserting it
+//      is a TAUTOLOGY that can never witness a box-leads-CONTENT desync; AY.W-DOCK2
+//      DEMOTED it from a binding assert to a non-binding fact).
 //   2. The retarget case (velocity-continuity, the one genuine iOS piece W01 keeps):
 //      an interrupt mid-morph must continue the trajectory, not snap to rest — no
 //      inter-frame discontinuity beyond the spring's own natural acceleration.
@@ -62,7 +68,14 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // inside run() — `fileURLToPath(import.meta.url)` throws when this module is
 // IMPORTED by a test runner that serves it over http (vitest/vite), so the
 // pure detectors below must remain import-side-effect-free (AW.W1 unit).
-const DOCK_ROUTE = "/navigation/dock";
+// AY.W-DOCK2 — the REAL collapsible-dock route (the morph IS on `/dock/overview`).
+// The prior `/navigation/dock` resolved to a NON-DOCK page (the `navigation`
+// category has no `dock` story — manifest.ts has tabs/deck-progress/header-ribbon/
+// carousel only), so the entering-child morph was never sampled (D7). The probe
+// targets the plain `data-testid="dock-capture"` (NOT `data-container-name`, which
+// co-applies `container-type: inline-size` and FREEZES the morph — the §F1 trap).
+const DOCK_ROUTE = "/dock/overview";
+const DOCK_CAPTURE_SEL = '.glass-dock[data-testid="dock-capture"]';
 
 // The behavioral bar (the AX.W01 single-scalar numbers). The published
 // `(0.32, 0.7)` spring rings 0→~1.05→1.0 over ~23 rAF frames (device-proven), so a
@@ -75,6 +88,33 @@ const MIN_MORPH_FRAMES = 5; // --dock-morph-t AND the root box width must each r
 // is one frame (16.7ms) + a tiny epsilon.
 const FRAME_MS = 1000 / 60;
 const ONSET_TOLERANCE_MS = FRAME_MS + 1e-3;
+
+// AY.W-DOCK2 HG1/HG2 — the REAL lockstep witness budget: the LAST ENTERING child's
+// opacity onset must trail the box-width onset by ≤ this ceiling. This is the
+// W-DOCK1 captured-ABSENT KEEP-AND-DOCUMENT ceiling, NOT a tighten (there is no
+// clock desync to tighten away — `box↔scalar onset Δ = 0 ms` on all 12 captures).
+// The trail the user reads (36.7–96.2 ms captured) IS the deliberate macOS-dock
+// reveal stagger (`layers.css` `opacity = clamp(0, (expand-t − onset)/window, 1)`,
+// `onset = step × (childIndex−1)` capped at child 6 = `step × 5`).
+//
+// DERIVATION (using the SHIPPED `shell.css` values, NOT the `layers.css:235`
+// `0.55` fallback — the 0.4-vs-0.55 reconciliation, HG2):
+//   --dock-stagger-window-size = 0.4   (shell.css)
+//   --dock-stagger-step        = 0.08  (shell.css)
+//   last-child onset (expand-t) = step × 5 = 0.40
+//   last-child FULL opacity at  = onset + window = 0.40 + 0.40 = 0.80 of the morph
+//   morph duration ≈ 650 ms (the `--spring-dock` ring; we measure it live below and
+//   use the larger of measured/fallback so a fast device cannot tighten the ceiling)
+//   ceiling = 0.80 × 650 ≈ 520 ms + a 1-frame epsilon
+// A regression PAST the deliberate stagger (a re-added per-child SECOND clock, a
+// mis-tuned window) trails the box past this ceiling and REDs. The captured 96.2 ms
+// max comfortably clears 520 ms (the budget is a true ceiling, not the lag itself).
+const STAGGER_WINDOW = 0.4; // shell.css --dock-stagger-window-size (SHIPPED)
+const STAGGER_STEP = 0.08; // shell.css --dock-stagger-step
+const LAST_CHILD_FULL_FRACTION = STAGGER_WINDOW + STAGGER_STEP * 5; // 0.80
+const MORPH_DURATION_FALLBACK_MS = 650; // the `--spring-dock` ring (device-proven)
+const LOCKSTEP_BUDGET_MS =
+    LAST_CHILD_FULL_FRACTION * MORPH_DURATION_FALLBACK_MS + FRAME_MS; // ≈ 537 ms
 
 // ── the in-page probe ────────────────────────────────────────────────────────
 // Serialized into the browser. Tags the FIRST collapsed dock with a data attr so the
@@ -127,16 +167,33 @@ function pageProbe() {
         // `.glass-dock.collapsed` re-query — once dock #1 expands the `.collapsed`
         // selector resolves to a DIFFERENT dock and the timeline would jump). The
         // root box `width` and the `--dock-morph-t` scalar are the single-clock pair;
-        // the leaving pane (`.dock-layer--summary`) opacity is the child witness.
+        // the LAST ENTERING `.dock-layer--full > *` child opacity is the REAL
+        // lockstep witness (AY.W-DOCK2 — the largest-onset child, the `nth-child(n+6)`
+        // cap rung the user watches fade in). The LEAVING `.dock-layer--summary`
+        // opacity is ALSO sampled (the prior best-effort fact, retained).
         const sampleExpand = (dock) => {
             const leaving =
                 dock.querySelector(".dock-layer--summary") ?? dock;
+            // The LAST entering child of the EXPANDED pane — the largest stagger
+            // onset (the items-lag-capture last-child resolver pattern). Resolved
+            // per-frame (the pane only exists/lays-out after the class flip).
+            const fullPane = () => dock.querySelector(".dock-layer--full");
+            const lastEnteringChild = () => {
+                const pane = fullPane();
+                if (!pane) return null;
+                const kids = pane.children;
+                return kids.length ? kids[kids.length - 1] : null;
+            };
             const wOf = () => dock.getBoundingClientRect().width;
             const tOf = () =>
                 parseFloat(
                     getComputedStyle(dock).getPropertyValue("--dock-morph-t"),
                 ) || 0;
             const childOf = () => parseFloat(getComputedStyle(leaving).opacity);
+            const enteringOf = () => {
+                const el = lastEnteringChild();
+                return el ? parseFloat(getComputedStyle(el).opacity) : 0;
+            };
             const W0 = wOf();
             const T0 = tOf();
             const C0 = childOf();
@@ -145,7 +202,9 @@ function pageProbe() {
                 const widths = [];
                 const morphTs = [];
                 const childOpacities = [];
+                const enteringChildOpacities = [];
                 const times = [];
+                let enteringSampled = false;
                 const t0 = performance.now();
                 let stable = 0;
                 let lastW = W0;
@@ -155,6 +214,9 @@ function pageProbe() {
                     widths.push(w);
                     morphTs.push(tOf());
                     childOpacities.push(childOf());
+                    const e = enteringOf();
+                    if (lastEnteringChild()) enteringSampled = true;
+                    enteringChildOpacities.push(e);
                     times.push(t);
                     if (Math.abs(w - lastW) < 0.5) stable++;
                     else stable = 0;
@@ -168,6 +230,8 @@ function pageProbe() {
                             widths,
                             morphTs,
                             childOpacities,
+                            enteringChildOpacities,
+                            enteringChildSampled: enteringSampled,
                             times,
                         });
                     else requestAnimationFrame(f);
@@ -198,13 +262,27 @@ function pageProbe() {
             }
             result.vtForcedOff = !("startViewTransition" in document);
 
-            // Re-mount the dock for a clean collapsed baseline.
-            clickLink("/navigation/tabs");
+            // Re-mount the dock for a clean collapsed baseline (navigate to a
+            // sibling dock route + back; AY.W-DOCK2 — `/dock/overview` is the real
+            // collapsible dock; `/dock/rail` is the away route).
+            clickLink("/dock/rail");
             await sleep(450);
-            clickLink("/navigation/dock");
+            clickLink("/dock/overview");
             await sleep(450);
 
-            const dock = findCollapsedDock();
+            // AY.W-DOCK2 — prefer the deterministic capture target (the plain
+            // `data-testid="dock-capture"` collapsible dock — the slider dock at
+            // /dock/overview that reliably morphs, per W-DOCK1 §F). Fall back to the
+            // first collapsed dock if the testid surface is not present. (The probe
+            // is serialized into the browser, so the selector is inlined — module
+            // consts do NOT cross the page.evaluate boundary.)
+            const capture = document.querySelector(
+                '.glass-dock[data-testid="dock-capture"]',
+            );
+            const dock =
+                capture && capture.classList.contains("collapsed")
+                    ? capture
+                    : findCollapsedDock();
             if (!dock) {
                 result.error = "no collapsed dock after re-mount";
                 resolve(result);
@@ -382,30 +460,58 @@ export function detectAnimation(result) {
         );
     }
 
-    // SINGLE CLOCK: the root box width and the `--dock-morph-t` scalar must ONSET in
-    // the SAME frame (lead/lag ≤ 1 frame) — the box rides the scalar by construction
-    // under the single-scalar morph, so any onset skew is the box-leads-content
-    // desync the wave deletes.
+    // AY.W-DOCK2 — STRUCTURAL SANITY (NOT the lockstep witness). The box rides the
+    // scalar BY CONSTRUCTION: `layers.css` makes `inline-size: calc(from + (to−from)
+    // × var(--dock-morph-t))`, so the box onset co-occurs with the scalar onset
+    // tautologically. Asserting it can NEVER red and can NEVER witness a
+    // box-leads-CONTENT desync (it only re-proves the box can't lead its own driver,
+    // which is structurally impossible). It is kept as a cheap fact — a non-binding
+    // sanity that the scalar drives the box — but the `violations.push` is DROPPED.
+    // The REAL lockstep witness is the entering-child onset assert below.
     const wOnset = onsetTimeMs(flip.widths, flip.times, 0.5);
     const tOnset = onsetTimeMs(flip.morphTs, flip.times, 1e-4);
     const onsetDelta = Math.abs(wOnset - tOnset);
     facts.widthOnsetMs = Math.round(wOnset * 10) / 10;
     facts.morphTOnsetMs = Math.round(tOnset * 10) / 10;
-    facts.onsetDeltaMs = Math.round(onsetDelta * 10) / 10;
-    if (onsetDelta > ONSET_TOLERANCE_MS) {
-        violations.push(
-            `the root box width onset (${facts.widthOnsetMs}ms) and the --dock-morph-t scalar onset (${facts.morphTOnsetMs}ms) are ${facts.onsetDeltaMs}ms apart (> ${Math.round(ONSET_TOLERANCE_MS * 10) / 10}ms = 1 frame) — the box does NOT ride the scalar on one clock (the box-leads-content desync)`,
-        );
-    }
+    facts.onsetDeltaMs = Math.round(onsetDelta * 10) / 10; // structural fact, non-binding
 
     // The leaving child opacity should MOVE over ≥3 frames — a witness that the
     // content stagger co-morphs off the same scalar (the box did not morph alone).
     // Best-effort: under the clip-reveal model the leaving pane may be absent on some
-    // routes, so a still child is NOTED but the load-bearing asserts are the two
-    // rising-frame counts + the single-clock onset above.
+    // routes, so a still child is NOTED but not asserted.
     if (Array.isArray(flip.childOpacities) && flip.childOpacities.length) {
         const cMove = changingFrames(flip.childOpacities, 0.01);
         facts.childOpacityMovingFrames = cMove;
+    }
+
+    // ── THE BINDING LOCKSTEP WITNESS (AY.W-DOCK2 HG1) ──────────────────────────
+    // The LAST ENTERING `.dock-layer--full > *` child opacity onset must trail the
+    // box-width onset by ≤ LOCKSTEP_BUDGET_MS (the W-DOCK1 KEEP-branch deliberate-
+    // stagger ceiling). This is the property the USER perceives lagging — the
+    // staggered controls fading in after the shell. The box-vs-scalar tautology
+    // above is blind to it; THIS assert witnesses the real number.
+    const entering = flip.enteringChildOpacities;
+    if (!Array.isArray(entering) || !entering.length || !flip.enteringChildSampled) {
+        // D1 blind-spot guard: the entering child must be sampled. An empty/never-
+        // resolved series is the exact never-witnessed defect that must NOT recur.
+        violations.push(
+            "the entering `.dock-layer--full > *` child was NEVER sampled (empty/frozen series) — the D1 lockstep blind-spot would recur; the REAL morph surface is missing",
+        );
+    } else {
+        const eRise = changingFrames(entering, 0.01);
+        facts.enteringChildMovingFrames = eRise;
+        facts.enteringChildOpacityMax =
+            Math.round(Math.max(...entering) * 1000) / 1000;
+        const eOnset = onsetTimeMs(entering, flip.times, 0.01);
+        const lastChildVsBoxMs = eOnset - wOnset;
+        facts.enteringChildOnsetMs = Math.round(eOnset * 10) / 10;
+        facts.lastChildVsBoxOnsetDeltaMs = Math.round(lastChildVsBoxMs * 10) / 10;
+        facts.lockstepBudgetMs = Math.round(LOCKSTEP_BUDGET_MS * 10) / 10;
+        if (lastChildVsBoxMs > LOCKSTEP_BUDGET_MS) {
+            violations.push(
+                `the last entering child opacity onset (${facts.enteringChildOnsetMs}ms) trails the box-width onset (${facts.widthOnsetMs}ms) by ${facts.lastChildVsBoxOnsetDeltaMs}ms (> the ${facts.lockstepBudgetMs}ms deliberate-stagger budget) — a regression PAST the macOS-dock reveal stagger (a re-added per-child SECOND clock or a mis-tuned window)`,
+            );
+        }
     }
 
     // (2) Retarget velocity-continuity — no hard snap. A discontinuity would show
@@ -461,6 +567,14 @@ async function run() {
     // AX.W00 — standardize on the demo dev-server origin `npm run dev` actually
     // serves (vite default :5173; the legacy 5175 default was an inconsistency).
     const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    // AY.W-DOCK2 — the born-RED witness override. Set GLASS_UI_DOCK_FIXTURE_URL to a
+    // file:// URL (e.g. the synthetic `tests-visual/fixtures/dock-entering-child-lag.html`)
+    // to run the gate against a fixture instead of the live demo route. The fixture
+    // has no nav links, so the probe's re-mount `clickLink` no-ops (returns false)
+    // and the capture-selector branch finds the fixture dock directly. The gate REDs
+    // on the synthetic per-child second-clock lag.
+    const FIXTURE_URL = process.env.GLASS_UI_DOCK_FIXTURE_URL ?? null;
+    const TARGET_URL = FIXTURE_URL ?? `${BASE_URL}${DOCK_ROUTE}`;
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ANIMATION_LIVE_ARTIFACT",
         "AX-dock-animation-live",
@@ -545,7 +659,7 @@ async function run() {
                 /* non-configurable on this engine */
             }
         });
-        await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "networkidle" });
+        await page.goto(TARGET_URL, { waitUntil: "networkidle" });
         await page.waitForSelector(".glass-dock.collapsed", { timeout: 5000 });
         result = await page.evaluate(pageProbe);
     } catch (e) {
@@ -555,7 +669,7 @@ async function run() {
         // for the genuine no-π-workspace case (the device is not present). The
         // token-peak secondary is folded into the verdict either way.
         if (browser) await browser.close();
-        const reason = `could not reach the demo dock route at ${BASE_URL}${DOCK_ROUTE}: ${e.message}`;
+        const reason = `could not reach the dock route at ${TARGET_URL}: ${e.message}`;
         const failClosed = piPresent;
         const violations = [...tokenPeak.violations];
         if (failClosed)
@@ -572,7 +686,7 @@ async function run() {
             violations,
         });
         console.log(
-            `proof:dock-animation-live — ${failClosed ? "FAIL (π workspace present, demo unreachable — fail-CLOSED)" : "SKIPPED (no π workspace; demo unreachable)"} at ${BASE_URL}${DOCK_ROUTE}.`,
+            `proof:dock-animation-live — ${failClosed ? "FAIL (π workspace present, demo unreachable — fail-CLOSED)" : "SKIPPED (no π workspace; demo unreachable)"} at ${TARGET_URL}.`,
         );
         console.log(`  ${e.message}`);
         if (violations.length) {
@@ -602,6 +716,9 @@ async function run() {
             childOpacities: result.flip?.childOpacities?.map(
                 (o) => Math.round(o * 1000) / 1000,
             ),
+            enteringChildOpacities: result.flip?.enteringChildOpacities?.map(
+                (o) => Math.round(o * 1000) / 1000,
+            ),
         },
     });
 
@@ -613,10 +730,13 @@ async function run() {
         `  root box width rising frames : ${facts.rootWidthRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})  Δ ${facts.widthDelta ?? "n/a"}px`,
     );
     console.log(
-        `  width / scalar onset delta   : ${facts.onsetDeltaMs ?? "n/a"}ms (<= ${Math.round(ONSET_TOLERANCE_MS * 10) / 10}ms = 1 frame)`,
+        `  width / scalar onset delta   : ${facts.onsetDeltaMs ?? "n/a"}ms (structural sanity — non-binding)`,
     );
     console.log(
-        `  leaving child moving frames  : ${facts.childOpacityMovingFrames ?? "n/a"}`,
+        `  entering-child → box onset Δ : ${facts.lastChildVsBoxOnsetDeltaMs ?? "n/a"}ms (<= ${facts.lockstepBudgetMs ?? Math.round(LOCKSTEP_BUDGET_MS * 10) / 10}ms budget — the LOCKSTEP witness)`,
+    );
+    console.log(
+        `  leaving child moving frames  : ${facts.childOpacityMovingFrames ?? "n/a"}   entering moving frames: ${facts.enteringChildMovingFrames ?? "n/a"}`,
     );
     console.log(
         `  retarget max frame jump      : ${facts.retargetMaxFrameJump ?? "n/a"}px`,

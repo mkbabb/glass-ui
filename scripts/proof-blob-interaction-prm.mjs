@@ -47,7 +47,11 @@ function cliPaths() {
         FRAG: resolve(BLOB, "shaders/metaball.frag.ts"),
         POINTER: resolve(BLOB, "composables/useBlobPointer.ts"),
         RENDERER: resolve(BLOB, "composables/useMetaballRenderer.ts"),
-        STORY: resolve(ROOT, "demo/stories/substrates/blob-interaction.vue"),
+        // AY.W-BLOB2 — the AX IA consolidation folded the interaction story into the ONE
+        // `substrates/blob.vue` page (the prior `blob-interaction.vue` is gone — the stale
+        // path REDded this gate). `blob.vue` drives the shipped interaction (the
+        // pointerAttraction/stretch sliders + the click impulse) on its interaction hero.
+        STORY: resolve(ROOT, "demo/stories/substrates/blob.vue"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_INTERACTION_PRM_ARTIFACT",
             "AW-blob-interaction-prm",

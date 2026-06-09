@@ -36,11 +36,12 @@ const dotColors = [
 ];
 
 // ── 2. The interaction hero (one live GL context) ────────────────────────────
+// The cream DEFAULT base + a circular-merge / warpier membrane for the interaction
+// register. The atoms are spread deeply so the overrides land on their cluster.
 const interactionCfg = reactive({
     ...BLOB_CONFIG_DEFAULTS,
-    lit: true,
-    merge: "circular" as const,
-    warpAmp: 0.6,
+    surface: { ...BLOB_CONFIG_DEFAULTS.surface, lit: true },
+    membrane: { ...BLOB_CONFIG_DEFAULTS.membrane, merge: "circular" as const, warpAmp: 0.6 },
 });
 const clickCount = ref(0);
 const interactionBlob = ref<InstanceType<typeof GooBlob> | null>(null);
@@ -74,14 +75,19 @@ const paletteStops = computed(() =>
 
 const moodConfig = reactive({
     ...BLOB_CONFIG_DEFAULTS,
-    lit: true,
-    iridescence: 0.4,
-    sssScale: 0.25,
-    coreGlow: 0.12,
+    surface: {
+        ...BLOB_CONFIG_DEFAULTS.surface,
+        lit: true,
+        iridescence: 0.4,
+        sssScale: 0.25,
+        coreGlow: 0.12,
+    },
 });
+// The mood hero drives `paletteStops` LIVE off the seed/harmony UI (the color atom);
+// the resting/idle state with the seed UI untouched is the cream default.
 const heroConfig = computed(() => ({
     ...moodConfig,
-    paletteStops: paletteStops.value,
+    color: { ...moodConfig.color, paletteStops: paletteStops.value },
 }));
 
 const HARMONIES: ColorHarmony[] = [
@@ -139,7 +145,7 @@ watch([interactionPaused, moodPaused], () => {
                     <GooBlob
                         ref="interactionBlob"
                         v-model:paused="interactionPaused"
-                        color="var(--primary)"
+                        color="var(--card)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="interactionCfg"
                         seed="interaction"
@@ -154,9 +160,9 @@ watch([interactionPaused, moodPaused], () => {
                 </div>
                 <div class="flex w-full max-w-md flex-col gap-3">
                     <label class="flex items-center gap-3 text-sm">
-                        <span class="w-40">stretch: {{ interactionCfg.stretch.toFixed(2) }}</span>
+                        <span class="w-40">stretch: {{ interactionCfg.interaction.stretch.toFixed(2) }}</span>
                         <input
-                            v-model.number="interactionCfg.stretch"
+                            v-model.number="interactionCfg.interaction.stretch"
                             type="range"
                             min="0"
                             max="1.5"
@@ -166,9 +172,9 @@ watch([interactionPaused, moodPaused], () => {
                         />
                     </label>
                     <label class="flex items-center gap-3 text-sm">
-                        <span class="w-40">attraction: {{ interactionCfg.pointerAttraction.toFixed(2) }}</span>
+                        <span class="w-40">attraction: {{ interactionCfg.interaction.pointerAttraction.toFixed(2) }}</span>
                         <input
-                            v-model.number="interactionCfg.pointerAttraction"
+                            v-model.number="interactionCfg.interaction.pointerAttraction"
                             type="range"
                             min="-1"
                             max="1"
@@ -178,9 +184,9 @@ watch([interactionPaused, moodPaused], () => {
                         />
                     </label>
                     <label class="flex items-center gap-3 text-sm">
-                        <span class="w-40">clickImpulse: {{ interactionCfg.clickImpulse.toFixed(2) }}</span>
+                        <span class="w-40">clickImpulse: {{ interactionCfg.interaction.clickImpulse.toFixed(2) }}</span>
                         <input
-                            v-model.number="interactionCfg.clickImpulse"
+                            v-model.number="interactionCfg.interaction.clickImpulse"
                             type="range"
                             min="0"
                             max="1.5"
@@ -206,7 +212,7 @@ watch([interactionPaused, moodPaused], () => {
                     <GooBlob
                         ref="moodBlob"
                         v-model:paused="moodPaused"
-                        color="var(--primary)"
+                        color="var(--card)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="heroConfig"
                         seed="mood"
@@ -255,7 +261,7 @@ watch([interactionPaused, moodPaused], () => {
                 — a pause control any user can reach, not gated behind a motion preference."
         >
             <ShowcaseFrame class="flex flex-wrap items-center gap-4">
-                <span class="flex items-center gap-3 text-sm">
+                <span class="flex items-center gap-3 text-sm" data-testid="blob-pause-toggle">
                     <DockBackgroundToggle v-model:paused="interactionPaused" />
                     <span class="tabular-nums opacity-70">
                         interaction: {{ interactionPaused ? "paused" : "running" }}

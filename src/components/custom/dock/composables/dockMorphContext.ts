@@ -321,6 +321,23 @@ export function useDockMorphOrchestrator(
         //    measurement + arm are gated on THIS target's own `txId`, so a sibling
         //    target swapping in the same tick (a simultaneous collapse + pane-swap)
         //    does NOT clobber this target's deferred measurement.
+        //
+        // BOOKED: AY.W-GOD1 — §F2 first-mount FLIP mis-seat (W-DOCK1-DELTA §F2).
+        // REPRODUCTION: a `#persistent`-slot collapsible dock (overview.vue:89), on a
+        // FRESH, never-interacted session, can first-hover-measure collapsed→collapsed
+        // (10px → 18px, scalar 0) while non-`#persistent` collapsible docks morph
+        // cleanly (35→487px). The `#persistent` slot is shared between the `--summary`
+        // and `--full` panes, so on the FIRST swap the `max-content` measure below can
+        // read the still-collapsed clip width before the persistent slot's layout has
+        // re-settled into the target pane — a measurement-timing edge specific to
+        // first-mount (intermittent / interaction-order-dependent). The FIX (seat
+        // `--dock-morph-from/to` before first paint, or double-rAF the FIRST measure on
+        // a `#persistent` dock) is a GlassDock.vue/orchestrator first-mount-seat change
+        // that rides the W-GOD1 FLIP-engine fold + GlassDock carve (which touch this
+        // same measure code). BOOKED there with this reproduction rather than patched
+        // in this disjoint W-DOCK2 edit. Witnessed by the dock-animation-live π arm on
+        // the deterministic `data-testid="dock-capture"` slider dock (not a #persistent
+        // dock), so the lockstep gate is unaffected by the first-mount edge.
         requestAnimationFrame(() => {
             if (id !== t.txId) return;
             const elNow = t.containerEl.value;

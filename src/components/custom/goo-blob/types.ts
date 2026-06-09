@@ -67,31 +67,42 @@ export interface SatelliteInternal {
     endY: number;
 }
 
-/** Externally tunable blob configuration — all fields concrete, defaults applied via `BLOB_CONFIG_DEFAULTS`. */
-export interface BlobConfig {
-    // Geometry
+// ── The BlobConfig ATOM set (AY.W-BLOB2 — the "simplify the options set to atoms"
+//    discipline, mirroring the aurora seed/harmony/mood/medium/zones/motion door).
+//
+// The flat ~50-knob surface is collapsed to EIGHT top-level atoms: every tunable
+// length/weight/duration lives BEHIND the atom it belongs to (J §6.3 "the variant IS
+// the bundle"), so a consumer reaches for ONE cohesive cluster (`geometry`, `surface`,
+// `membrane`, …) rather than scanning a flat sibling list of ~50 knobs. The three
+// derived-but-unread fields the AX synthesis flagged (`orbitSpeedScale`, `wobbleScale`,
+// `mergeRate`) are DELETED — they were config-level identity no-ops (read only off the
+// mood `MoodParams`, never off the config), so the prune is a clean deletion-proof. The
+// MoodParams interface above and the SatelliteInternal per-satellite state below are
+// INTERNAL derived state, NOT the public atom surface.
+
+/** Body / orbit / satellite geometry — the contained-droplet length cohort (W15). */
+export interface BlobGeometry {
     canvasSize: number;
     bodyRadius: number;
     satelliteCount: number;
     satelliteRadius: number;
     orbitRadius: number;
+    eccentricity: number;
+}
 
-    // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
-    // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length — does
-    // not touch the geometry regime, only the backing-store resolution.
-    quality: BlobQuality;
+/** Satellite merge/absorb/emerge/orbit lifecycle DURATIONS (ms). */
+export interface BlobSatelliteTiming {
+    mergeDuration: number;
+    absorbedDuration: [number, number];
+    emergeDuration: number;
+    orbitDuration: [number, number];
+}
 
-    // Master tempo (W11.c) — ONE scalar multiplying every INTEGRATED dt
-    // (mood.tick, the spring step, orbit/phase advance, noise scroll). `tempo=0`
-    // freezes (the dock pause / PRM set it). Default 1.0 (real-time).
-    tempo: number;
-
-    // Gooey
+/** The living membrane — smin merge + surface noise/warp + pulsation. */
+export interface BlobMembrane {
     smoothK: number;
     /** Smin merge variant — `quadratic` (default) | `circular` (rounder menisci). */
     merge: BlobMerge;
-
-    // Surface noise
     noiseAmp: number;
     noiseFreq: number;
     noiseSpeed: number;
@@ -100,25 +111,40 @@ export interface BlobConfig {
      * pre-warp look; ~0.6 = a marbled organic membrane). Taste-first low default.
      */
     warpAmp: number;
-
-    // Pulsation
     pulseFreq: number;
     pulseAmp: number;
+}
 
-    // Color perturbation
+/** Palette + OKLCh color-perturbation atom. */
+export interface BlobColor {
+    // Multi-stop palette (W11.b) — 2-4 in-family CSS color stops distributed across
+    // body + satellites. The DEFAULT is a light warm-cream OKLCh ramp (AY.W-BLOB2) so a
+    // bare <GooBlob> paints the cream bead. Derive one from a seed via
+    // `deriveBlobPalette` (`/color`).
+    paletteStops: string[];
     hueRange: number;
     satShift: number;
     brightnessShift: number;
     colorNoiseFreq: number;
     colorNoiseSpeed: number;
+}
 
-    // Multi-stop palette (W11.b) — 2-4 in-family CSS color stops distributed across
-    // body + satellites. EMPTY (default) falls back to the single `color` base (zero
-    // regression). Derive one from a seed via `deriveBlobPalette` (`/color`).
-    paletteStops: string[];
-
-    // Iridescence + fake-SSS (W11.a) — translucent-gel read. Taste-first low
-    // defaults (warm-pearl sheen, not garish thin-film).
+/** The lit-glass surface — Blinn-Phong glint + Fresnel rim + iridescence/SSS/core-glow. */
+export interface BlobSurface {
+    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
+    // whole block (default ON).
+    lit: boolean;
+    /** CSS color for the Fresnel rim tint (resolved through the ColorResolver). */
+    rimColor: string;
+    /** Light direction [x, y, z] (normalized in-shader). */
+    lightDir: [number, number, number];
+    specStrength: number;
+    /** Specular exponent (16-64 — a tight glint). */
+    specShininess: number;
+    /** Fresnel/Schlick exponent (~2-3). */
+    rimPower: number;
+    rimStrength: number;
+    // Iridescence + fake-SSS (W11.a) — translucent-gel read. Taste-first low defaults.
     /** Warm-pearl rim sheen weight (0 = off). */
     iridescence: number;
     /** Base hue (degrees) the warm-biased cosine palette centres on. */
@@ -131,215 +157,170 @@ export interface BlobConfig {
     sssPower: number;
     /** Thickness-driven inner-luminosity (core glow) lift. */
     coreGlow: number;
+}
 
-    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
-    // whole block (default OFF = flat fill, zero regression for existing consumers).
-    lit: boolean;
-    /** CSS color for the Fresnel rim tint (resolved through the ColorResolver). */
-    rimColor: string;
-    /** Light direction [x, y, z] (normalized in-shader). */
-    lightDir: [number, number, number];
-    specStrength: number;
-    /** Specular exponent (16-64 — a tight glint). */
-    specShininess: number;
-    /** Fresnel/Schlick exponent (~2-3). */
-    rimPower: number;
-    rimStrength: number;
-
-    // Pointer
+/** Pointer interaction — lean / squash-stretch / click-impulse. */
+export interface BlobInteraction {
     pointerAttraction: number;
     pointerStrength: number;
     /** Velocity-driven volume-preserving squash-and-stretch magnitude (0 = off). */
     stretch: number;
     /** Click spring-impulse amplitude (a one-shot bouncy pulse on the body radius). */
     clickImpulse: number;
+}
 
-    // Satellites
-    eccentricity: number;
-    orbitSpeedScale: number;
-    wobbleScale: number;
-    mergeRate: number;
-    mergeDuration: number;
-    absorbedDuration: [number, number];
-    emergeDuration: number;
-    orbitDuration: [number, number];
+/** Externally tunable blob configuration — EIGHT cohesive atoms, defaults via `BLOB_CONFIG_DEFAULTS`. */
+export interface BlobConfig {
+    geometry: BlobGeometry;
+    satellites: BlobSatelliteTiming;
+    membrane: BlobMembrane;
+    color: BlobColor;
+    surface: BlobSurface;
+    interaction: BlobInteraction;
+
+    // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
+    // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length.
+    quality: BlobQuality;
+
+    // Master tempo (W11.c) — ONE scalar multiplying every INTEGRATED dt (mood.tick, the
+    // spring step, orbit/phase advance, noise scroll). `tempo=0` freezes (the dock pause
+    // / PRM set it). Default 1.0 (real-time).
+    tempo: number;
 }
 
 export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
-    canvasSize: 200,
-    // ── Geometry cohort, re-derived against the CANVAS bound (AX.W15 REDRESS F0) ──
-    //
-    // THE HARD BOUND IS THE CANVAS, not the wrapper. The coordinate chain: the
-    // full-canvas quad makes `uv ∈ [-0.5, 0.5]` across the CANVAS (the canvas-HALF
-    // extent is 0.5 uv — the literal painted edge the gate's edge-ring samples). The
-    // canvas is CSS-sized 160% of the wrapper (GooBlob.vue), so the wrapper edge sits
-    // at `±0.5 × (1/1.6) = ±0.3125` in `uv`. Every length uniform rides
-    // `POS_SCALE = 0.625` (useMetaballRenderer.ts), so a raw config radius `r` paints
-    // at `r × 0.625` uv.
-    //
-    // WHY THE FIRST W15 SOLVE MISPREDICTED (the live four-side clip at worst-edge
-    // 0.521). The prior budget computed the satellite outer reach as `orbit + sat ≈
-    // 0.375` raw and called it 0.75 wrapper-half — but that IGNORED the THREE
-    // Y-inflating terms the satellite system actually applies (useBlobSatellites.ts):
-    //   1. baseR = orbitRadius × (0.8 … 1.2)         — a random radius up to ×1.2
-    //   2. baseRadiusY = baseR × (1 + eccentricity)  — the eccentric LONG axis is Y
-    //   3. + wobble (mood-scaled) + pertYAmp (≤0.08) — additive radial swing
-    // So the REAL worst-case satellite-CENTRE Y at idle was
-    // `0.27×1.2×(1+0.22) + wobble(≈0.12) + 0.08 ≈ 0.59` raw → `×0.625 = 0.371` uv,
-    // and the sat radius + smin band carried the painted edge to `≈0.48` uv = 96% of
-    // the canvas half — touching top/bottom. Left/right cleared because the orbit
-    // ellipse is TALLER than wide (the (1+ecc) Y-long axis vs (1−ecc) X). The body
-    // alone was always fine (0.18 uv = 36% canvas-half); the SATELLITES were the clip.
-    //
-    // THE RE-SOLVE pulls the VERTICAL satellite reach inside the canvas with a real
-    // four-side margin by attacking the Y-inflating terms directly — eccentricity DOWN
-    // (kills the Y-long axis, the dominant term), orbitRadius DOWN, satelliteRadius
-    // DOWN — solved (numerically, against the live orbitPos worst-case, not a
-    // raw-sum) so the worst-case satellite painted reach is:
-    //   idle (wobble≈1.0)   : ≈0.354 uv = 71% canvas-half — a clear top/bottom frame.
-    //   excited (wobble 2.0): ≈0.446 uv = 89% canvas-half — a brief narrow peek, never
-    //                         a hard clip (the intentional orbit excursion).
-    // The BODY stays 0.22 (36% canvas-half = 58% wrapper-half — a generous contained
-    // bead, unchanged: it was never the clip source). This is a SINGLE atomic re-solve
-    // of the Y-reach cohort and KEEPS W08's POS_SCALE regime untouched.
-    bodyRadius: 0.22,
-    satelliteCount: 3,
-    satelliteRadius: 0.082,
-    orbitRadius: 0.17,
+    geometry: {
+        canvasSize: 200,
+        // ── Geometry cohort, re-derived against the CANVAS bound (AX.W15 REDRESS F0) ──
+        //
+        // THE HARD BOUND IS THE CANVAS, not the wrapper. The full-canvas quad makes
+        // `uv ∈ [-0.5, 0.5]` across the CANVAS. The canvas is CSS-sized 160% of the
+        // wrapper, so the wrapper edge sits at `±0.5 × (1/1.6) = ±0.3125` in `uv`. Every
+        // length uniform rides `POS_SCALE = 0.625` (useMetaballRenderer.ts), so a raw
+        // config radius `r` paints at `r × 0.625` uv. The Y-reach cohort
+        // (eccentricity/orbitRadius/satelliteRadius) is solved against the live
+        // orbitPos worst-case so the painted satellite reach clears the canvas
+        // top/bottom with a real four-side margin; the BODY (0.22) was never the clip.
+        bodyRadius: 0.22,
+        satelliteCount: 3,
+        satelliteRadius: 0.082,
+        orbitRadius: 0.17,
+        // Eccentricity is the DOMINANT Y-inflating term (baseRadiusY = baseR × (1 + ecc)),
+        // pulled DOWN in the four-side-containment re-solve so the orbit ellipse is
+        // near-circular and the vertical satellite reach clears the canvas top/bottom.
+        eccentricity: 0.05,
+    },
+
+    satellites: {
+        mergeDuration: 1800,
+        absorbedDuration: [2000, 4000],
+        emergeDuration: 2200,
+        orbitDuration: [8000, 14000],
+    },
+
+    membrane: {
+        // `smoothK` is the smin blend-band in the shader's UV space (half-extent 0.5).
+        // The smin is IQ-normalized (`k *= 4.0`) so the seam dip at a==b is EXACTLY the
+        // uploaded k. The renderer composes the upload as `smoothK × moodMult × POS_SCALE`
+        // — a tight, wet, rounded meniscus.
+        smoothK: 0.05,
+        merge: "quadratic",
+        // ── Living-but-calm membrane (AX.W15 F3) ──────────────────────────────────
+        // The warped-FBM watercolor edge: at idle the shader paints an ~8% organic
+        // wobble — a calm living membrane rather than a dead geometric arc. `warpAmp`
+        // turns ON at a calm 0.35 floor so the domain-warped marbling reads.
+        noiseAmp: 0.038,
+        noiseFreq: 3.5,
+        noiseSpeed: 0.08,
+        warpAmp: 0.35,
+        pulseFreq: 0.3,
+        pulseAmp: 0.008,
+    },
+
+    color: {
+        // ── The light warm-cream DEFAULT palette (AY.W-BLOB2 — the headline) ──────────
+        //
+        // A bare <GooBlob :config="BLOB_CONFIG_DEFAULTS"> (no `color` override) now paints
+        // the warm-cream living bead the docs have always promised — because the body
+        // reads the deepest stop of a LIGHT cream ramp, NOT the empty-palette fallback to
+        // a near-black `color`. The ramp is DERIVED ONCE via the shared `/color` producer
+        // (inv J-10, no parallel ramp):
+        //
+        //   deriveBlobPalette(
+        //     { L: 0.78, C: 0.05, h: 78 },               // a light warm-cream OKLCh anchor
+        //     { stopCount: 3, harmony: "analogous",      //   (the cream/honey arc, same
+        //       lightnessSpread: 0.18, hueSpread: 24,    //    family as the shader's
+        //       chromaBump: 0.03 },                      //    warmCream L0.97 sheen, but
+        //   ).map(oklchStopToHex)                        //    as a BASE body light stop)
+        //
+        // → ["#b5947f", "#d4b27d", "#dad6b1"], the resolved CSS-color form so
+        // BLOB_CONFIG_DEFAULTS stays a plain serializable const (no live producer call
+        // baked in). The ramp mean is OKLCh L≈0.78, the cream body the
+        // proof:blob-warm-default gate reads at ≥ 0.62 in BOTH light+dark (it measured
+        // ≈0.53 charcoal at the old `[]` default; the live readback now reads ~0.87 light
+        // / ~0.83 dark). The anchor was tuned DOWN from 0.86 to keep the cream body a real
+        // FIELD against the light cream backdrop (the blob-render.spec.ts centre-vs-corner
+        // gradient floor — a too-light body reads as a flat slab against the cream field;
+        // the FLOOR stays 0.62, the body is what moved per the named-successor clause). A
+        // consumer passes `color="var(--primary)"` for the explicit dark per-instance
+        // OPT-IN (the colored showcase variants stay as they are).
+        paletteStops: ["#b5947f", "#d4b27d", "#dad6b1"],
+        hueRange: 5,
+        satShift: 0.0,
+        brightnessShift: 0.0,
+        colorNoiseFreq: 2.0,
+        colorNoiseSpeed: 0.05,
+    },
+
+    surface: {
+        // ── Lit warm-cream bead, the thin edge catch-light over the cream base ──────────
+        //
+        // With the cream BASE now carrying the body read (the color atom above), the lit
+        // terms are the thin edge catch-light ON TOP — NOT the whole show. The
+        // energy-conserving Blinn-Phong glint is re-derived as a fraction of the
+        // normalized peak (`specStrength ≈ 0.45 / energyNorm`) so it lands a contained
+        // warm gleam, never a blown hotspot. ONE perceptual cue (the Fresnel rim defines
+        // the silhouette) + a WHISPER of core-glow; iridescence/SSS sit at ≈half their
+        // floors so the sheen is FELT, not seen.
+        lit: true,
+        // ── The rim re-anchored for the LIGHT cream body (AY.W-BLOB2) ──────────────────
+        // `var(--foreground)` (near-black) over the OLD dark default read as the rim; over
+        // the new LIGHT cream body it would ring a hard near-black band (the
+        // body↔foreground L gap ≈0.66 sits OUTSIDE the shader's 0.22 min-contrast guard,
+        // so the guard would NOT soften it). The rim is re-anchored to a warm MID-TONE
+        // OKLCh stop — `#8c694e` = oklch(0.55 0.06 60), a warm amber. On the cream body
+        // (L≈0.86) the rim L=0.55 sits 0.31 away (> the 0.22 guard band), so it stays a
+        // contrasting curve-DEFINER that draws the silhouette curve WITHOUT ringing a dark
+        // band (measured: the rim reads as a soft warm edge, not a hard ring). The
+        // dark-mode min-contrast guard still fires for a `var(--primary)`-OPT-IN dark body.
+        rimColor: "#8c694e",
+        lightDir: [0.4, 0.7, 0.6],
+        specStrength: 0.16,
+        specShininess: 20,
+        rimPower: 2.5,
+        rimStrength: 0.32,
+        iridescence: 0.09,
+        iridHue: 85,
+        iridSpeed: 0.06,
+        sssScale: 0.1,
+        sssPower: 2.0,
+        coreGlow: 0.06,
+    },
+
+    interaction: {
+        // ── Interaction magnitudes, a CALM lean (AX.W46 D5) ───────────────────────────
+        // A gentle "the creature notices you" lean (`pointerStrength` 0.18), the velocity
+        // squash SATURATED in-shader (a lively flick capped at a tasteful ceiling), and a
+        // bouncy click impulse.
+        pointerAttraction: 0.35,
+        pointerStrength: 0.18,
+        stretch: 0.5,
+        clickImpulse: 0.5,
+    },
 
     // AX.W16 — full-resolution by default; weak-GPU consumers opt into `half`.
     quality: "full",
-
     tempo: 1.0,
-
-    // `smoothK` is the smin blend-band in the shader's UV space (half-extent 0.5).
-    // The smin is IQ-normalized (`k *= 4.0`) so the seam dip at a==b is EXACTLY the
-    // uploaded k. The renderer composes the upload as `smoothK × moodMult × POS_SCALE`
-    // (POS_SCALE = 1/1.6 = 0.625 — the smin band rides the same inner-region
-    // compression as every other length-like uniform). At idle (moodMult ≈ 1.0) that
-    // is 0.05 × 1.0 × 0.625 ≈ 0.031 of seam-pull — a tight, wet, rounded meniscus
-    // (matching the pre-AW oracle's 0.034). Higher floods (smaller is crisper): the
-    // 0.864-effective slab the un-normalized 0.12 produced after the `k *= 4.0`
-    // regime change is the AW.W9 over-merge this default re-solves.
-    smoothK: 0.05,
-    merge: "quadratic",
-
-    // ── Living-but-calm membrane (AX.W15 F3) ─────────────────────────────────────
-    //
-    // Once the body is CONTAINED, the warped-FBM watercolor edge resurfaces. The
-    // displacement is tied to the new (smaller) body so the wobble stays
-    // PROPORTIONAL: at idle the shader paints `±0.5 × noiseAmp × (moodNoise/0.025) ×
-    // POS_SCALE ≈ ±0.011 uv` on a `0.1375 uv` body radius — an ~8% organic wobble, a
-    // calm living membrane rather than the dead geometric arc (`warpAmp:0.0` shipped
-    // a clean circle). `warpAmp` turns ON at a calm 0.35 floor so the domain-warped
-    // marbling reads (the FBM lacunarity/persistence is tuned toward the LIQUID band
-    // in watercolor-edges.glsl.ts — ~1.8 / ~0.42, not terrain-grade). `noiseFreq`
-    // stays 3.5 (proportional to the body scale).
-    noiseAmp: 0.038,
-    noiseFreq: 3.5,
-    noiseSpeed: 0.08,
-    warpAmp: 0.35,
-
-    pulseFreq: 0.3,
-    pulseAmp: 0.008,
-
-    hueRange: 5,
-    satShift: 0.0,
-    brightnessShift: 0.0,
-    colorNoiseFreq: 2.0,
-    colorNoiseSpeed: 0.05,
-    paletteStops: [],
-
-    // ── Lit warm-cream bead, the DEFAULT identity (AX.W46 re-tune of AX.W15 F1) ───
-    //
-    // A greenfield product's canonical look IS the SOTA look — the "zero regression"
-    // OFF-by-default flag-gating is DELETED as the legacy/fallback path the §0 mandate
-    // forbids. `lit: true` STAYS (the lit-dome identity is right); the AMOUNT was
-    // wrong. W15 carried the W9.b-era specular/rim magnitudes UNCHANGED when it flipped
-    // `lit: false → true` — they were demo-toggle-only values never re-derived against
-    // the energy-conserving Blinn-Phong, so on the now-default-lit body the glint blew
-    // a hard white spot and FIVE lighting layers (spec glint + Fresnel rim + iridescence
-    // + fast-SSS + Beer-Lambert core-glow) co-added on a ~0.14-uv bead. The live π-lane
-    // measured the resting dome-luma-std running HOT (the skeuomorphic wet-plastic tell).
-    //
-    // THE RE-DERIVATION (D4). The shader's glint is energy-CONSERVING:
-    // `spec = pow(N·H, shininess) · specStrength · energyNorm`, `energyNorm =
-    // (shininess+2)/8`. At shininess 32 that is `34/8 = 4.25`, so `specStrength: 0.9`
-    // gave a `0.9 × 4.25 ≈ 3.83×` over-unity peak — crushed to white by the OETF clamp.
-    // `specStrength` is re-derived as a fraction of the NORMALIZED peak (NOT a raw
-    // weight): at the softer shininess 20 (`energyNorm = 22/8 = 2.75`) a target linear
-    // peak ≈ 0.45 lands `specStrength ≈ 0.45/2.75 ≈ 0.16` — a contained warm gleam, never
-    // a blown hotspot (the shader also CLAMPs the linear highlight below unity as a
-    // belt-and-braces guard). `specShininess` 32 → 20 broadens the lobe (wet plastic =
-    // a tight bright spot; soft glass = a wide gentle gradient, congruent with the
-    // Toksvig fwidth-widen the shader already does).
-    //
-    // ONE perceptual cue, not four. The load-bearing pair is the Fresnel RIM (it reads
-    // the silhouette) + a WHISPER of core-glow; `iridescence` and `sssScale` drop to ≈
-    // half their W15 floors so the sheen is FELT, not seen. `rimStrength` softens 0.5 →
-    // 0.32 (the rim defines the curve without ringing a bright band). The rim already
-    // reads `rimColor: "var(--foreground)"` (token-first, untouched). A consumer wanting
-    // the glossier look passes a higher `specStrength`/`iridescence` (the config seam).
-    iridescence: 0.09,
-    iridHue: 85,
-    iridSpeed: 0.06,
-    sssScale: 0.1,
-    sssPower: 2.0,
-    coreGlow: 0.06,
-
-    lit: true,
-    rimColor: "var(--foreground)",
-    lightDir: [0.4, 0.7, 0.6],
-    specStrength: 0.16,
-    specShininess: 20,
-    rimPower: 2.5,
-    rimStrength: 0.32,
-
-    // ── Interaction magnitudes, re-tuned DOWN to a CALM lean (AX.W46 D5) ──────────
-    //
-    // The W15 REDRESS drove `pointerStrength 0.11 → 0.45` + the falloff `0.4 → 0.65`
-    // to clear the synthetic `centroidShift ≥ 0.012` floor by ≈9× (a MODELED 0.111
-    // shift — "could NOT run a real browser"). That was tuned-to-the-gate, never to the
-    // eye: the live π-lane reads it as a LUNGE — the creature lurches a fraction toward
-    // a body-width on a plain hover, and the mood machine compounds it (a hover
-    // auto-promotes to `curious`, whose arousal multiplier scales `pointerAttraction`
-    // UP). The fix is a magnitude reconciliation, NO new interaction code — the wired
-    // spring/trail/squash/click MACHINERY is sound.
-    //
-    //   • `pointerStrength` 0.45 → 0.18 — a gentle "the creature notices you" lean at
-    //     ≈ 0.2–0.35× the body radius, not the 0.93–1.70× lurch. The lean lives in the
-    //     STRENGTH, not the falloff.
-    //   • the falloff radius narrows 0.65 → 0.5 in metaball.frag.ts main() — the lean
-    //     stays COHERENT across the whole creature (a narrow falloff is what makes the
-    //     body tilt as ONE), but a calm one. (The body at ≈0.2 uv from the pointer is
-    //     still well inside the 0.5 cutoff, so the coherence holds.)
-    //   • `stretch` 0.5 stays, but the shader SATURATES the squash velocity
-    //     (`1 + tanh(speed·k)·stretch` in metaball.frag.ts:206) so the fastest flick is
-    //     a lively bounce capped at a tasteful ceiling, NEVER the 2.25× taffy-pull an
-    //     unbounded `1 + speed·stretch` reached.
-    //   • the `curious`-hover compounding is decoupled in useBlobMood.ts (the arousal
-    //     multiplier on `pointerAttraction` is flattened) so an auto-`curious` hover
-    //     lean stays calm rather than auto-jumping toward the excited regime.
-    // `clickImpulse` a bouncy 0.5 (unchanged — a deliberate click bounce is welcome).
-    // The trail pseudopod radius rides `satelliteRadius` (0.082) in the renderer,
-    // tapering proportionally with no extra knob.
-    pointerAttraction: 0.35,
-    pointerStrength: 0.18,
-    stretch: 0.5,
-    clickImpulse: 0.5,
-
-    // Eccentricity is the DOMINANT Y-inflating term (baseRadiusY = baseR × (1 + ecc)),
-    // pulled DOWN 0.22 → 0.05 in the four-side-containment re-solve so the orbit
-    // ellipse is near-circular and the vertical satellite reach clears the canvas
-    // top/bottom (the prior 0.22 made the orbit ~1.2× taller than wide — the live clip).
-    eccentricity: 0.05,
-    orbitSpeedScale: 1.0,
-    wobbleScale: 1.0,
-    mergeRate: 1.0,
-    mergeDuration: 1800,
-    absorbedDuration: [2000, 4000],
-    emergeDuration: 2200,
-    orbitDuration: [8000, 14000],
 };
 
 // di-default: external-provide key — consumers `provide(BLOB_CONFIG_KEY, cfg)`

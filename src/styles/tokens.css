@@ -1767,8 +1767,18 @@
        flat ease. STRICTLY transform-scoped: it must never touch the surface-tier
        `[data-held]` fades (background/border/box-shadow), which stay on
        `--duration-fast var(--ease-standard)`. The duration pairs with
-       `--duration-fast`; consumers retune the whole feel via this one token. */
-    --dock-press-spring: var(--duration-fast) var(--spring-bouncy);
+       `--duration-fast`; consumers retune the whole feel via this one token.
+
+       AY.W-DOCK2 (D6) — the register is `--spring-smooth`, the §6 easing-doctrine
+       transform-press register (tokens.css §2: transform hover/press/active →
+       `--spring-smooth`/`--spring-snappy`, NEVER `--spring-bouncy`; a press must
+       settle, never overshoot into a visible bounce). The prior `--spring-bouncy`
+       ROOT default was off-doctrine, shadowed for the four named controls by a
+       per-surface re-point in dock-controls.css — the exact per-surface fork the
+       doctrine kills. The re-point is now a DEAD byte-identical redeclaration and is
+       DELETED; the ROOT token IS the doctrine register, so any other consumer of
+       `--dock-press-spring` inherits the correct smooth register. */
+    --dock-press-spring: var(--duration-fast) var(--spring-smooth);
 }
 
 /* AX.W51 D18 — the GLOBAL coarse-pointer comfort amplification. The WHOLE library

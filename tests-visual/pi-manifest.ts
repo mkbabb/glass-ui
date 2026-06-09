@@ -72,10 +72,21 @@ export const PI_TARGETS = {
         return resolveScene("substrates", "aurora");
     },
     get blob(): Scene {
-        return resolveScene("substrates", "goo-blob");
+        // AY.W-BLOB2 — the demo blob story id is `substrates/blob` (the AX IA
+        // consolidation renamed `goo-blob` → `blob` and folded interaction/mood into
+        // ONE page); the prior `goo-blob` resolve was a stale route that REDded every
+        // π-workspace blob gate with "scene not found" (RESEARCH.md §5.1 flagged it for
+        // this wave). The anti-drift resolveScene tracks the manifest source-of-truth.
+        return resolveScene("substrates", "blob");
     },
     get dock(): Scene {
-        return resolveScene("navigation", "dock");
+        // AY.W-DOCK2 (D7) — the REAL collapsible dock is `("dock", "overview")`.
+        // The prior `("navigation", "dock")` resolved to a NON-DOCK page (the
+        // `navigation` category has no `dock` story — tabs/deck-progress/header-
+        // ribbon/carousel only), so `dock-animation-live.spec.ts`'s
+        // `page.goto(PI_TARGETS.dock.path)` landed on a catch-all route and the
+        // entering-child morph was NEVER sampled (the twin of the source-arm route bug).
+        return resolveScene("dock", "overview");
     },
     // AX.W44 — the destructive-Alert route (the "Session expired" ink-role surface).
     // dark-semantic-contrast.spec.ts toggles `.dark`, reads back the AlertTitle's

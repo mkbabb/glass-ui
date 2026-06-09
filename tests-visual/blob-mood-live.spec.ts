@@ -30,8 +30,11 @@ import { PNG } from "pngjs";
 import { resolveScene } from "./pi-manifest.ts";
 
 // The blob-mood demo route (re-sourced from the manifest, never a hand path). The hero
-// is a single interactive <GooBlob> driven by the mood-pill row.
-const MOOD_SCENE = resolveScene("substrates", "blob-mood");
+// is a single interactive <GooBlob> driven by the mood-pill row. AY.W-BLOB2 — the AX IA
+// consolidation folded the mood story into the ONE `substrates/blob` page (the prior
+// `blob-mood` route is gone — the stale id REDded this spec with "scene not found"); the
+// mood-pill row lives on that page.
+const MOOD_SCENE = resolveScene("substrates", "blob");
 
 // ── tunables (live-set against the AFTER mood-delta render) ────────────────────────
 // The mood pill row: idle · happy · curious · sleepy · excited (blob-mood.vue MOODS).
@@ -93,7 +96,12 @@ test.describe("blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)"
         page,
     }) => {
         await page.goto(MOOD_SCENE.path);
-        const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
+        // The consolidated `substrates/blob` page mounts TWO live <GooBlob> contexts:
+        // [0] the interaction hero, [1] the mood hero the pill row drives. The mood pills
+        // call setMood on the MOOD hero, so the mood-derived motion delta is read off the
+        // SECOND canvas (AY.W-BLOB2 — the IA consolidation; the prior dedicated
+        // blob-mood page had ONE blob, so .first() was right then).
+        const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').nth(1);
         await blob.waitFor({ state: "visible", timeout: 20_000 });
         await page.waitForTimeout(900); // let the initial mood + orbit settle
 

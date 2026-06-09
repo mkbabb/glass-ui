@@ -90,16 +90,16 @@ const satelliteSystem = useBlobSatellites(cfg, color + seed);
 // flip (the MutationObserver on `<html>.class`, vueuse-free per the SCC discipline).
 const tokenColors = createTokenColorCache();
 const resolvedColor = ref(color);
-const resolvedRim = ref(cfg!.rimColor);
-const resolvedStops = ref<string[]>([...cfg!.paletteStops]);
+const resolvedRim = ref(cfg!.surface.rimColor);
+const resolvedStops = ref<string[]>([...cfg!.color.paletteStops]);
 
 function refreshResolvedColors(): void {
     const el = wrapperRef.value;
     // The cascade may have flipped (dark-mode) — drop the cache so tokens re-resolve.
     tokenColors.invalidate();
     resolvedColor.value = tokenColors.resolve(color, el);
-    resolvedRim.value = tokenColors.resolve(cfg!.rimColor, el);
-    resolvedStops.value = cfg!.paletteStops.map((s) => tokenColors.resolve(s, el));
+    resolvedRim.value = tokenColors.resolve(cfg!.surface.rimColor, el);
+    resolvedStops.value = cfg!.color.paletteStops.map((s) => tokenColors.resolve(s, el));
 }
 
 // AX.W16 (arm 1) — CAPTURE the renderer return (the prior code DISCARDED it, which is
@@ -170,7 +170,7 @@ function setMood(m: BlobMood) {
 // the `click` event. The impulse rides the renderer's single rAF (no parallel
 // loop); under PRM the substrate freezes the rAF so the bounce is a no-op.
 function pulse() {
-    pointer.click(cfg!.clickImpulse);
+    pointer.click(cfg!.interaction.clickImpulse);
 }
 function onBlobClick() {
     pulse();

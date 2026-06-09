@@ -32,6 +32,19 @@ import { SpringProgress } from "@mkbabb/keyframes.js";
  * LIGHT-surface only: `SpringProgress` owns its own rAF via `.play(onFrame)` and
  * carries no static value.js edge. NEVER import `AnimationGroup` / the `./engine`
  * boundary — that pulls value.js into the dock bundle.
+ *
+ * BOOKED: AY.W-GOD1 — the FLIP-engine FOLD. This standalone engine is a
+ * near-duplicate of the orchestrator's FLIP-pin-measure-arm dance
+ * (`dockMorphContext.ts:onSwap`), which is the SUPERSET (it carries sibling-rebase
+ * this copy lacks). W-DOCK2 found the duplication (H-dock §D3) and BOOKED the fold
+ * to W-GOD1 (the GlassDock.vue carve touches the same FLIP code, so the carve is
+ * cleaner over ONE engine; folding now would also break the `/dock` `useLayerTransition`
+ * public re-export an external consumer reads). Until W-GOD1 lands, `proof:dock-orchestrator-single`'s
+ * FLIP DRIFT-GUARD asserts this engine and the orchestrator stay byte-faithful on
+ * the load-bearing pin-measure-arm markers, so a divergence in the shared dance REDs.
+ * The CANONICAL `DOCK_SPRING` authority is `dockMorphContext.ts` (the orchestrator
+ * drives every shipped dock); `proof:spring-tokens-synced` reads it there, NOT this
+ * copy (D3 — the dead-witness fix).
  */
 const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
 

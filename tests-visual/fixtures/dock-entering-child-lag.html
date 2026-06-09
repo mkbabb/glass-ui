@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AY.W-DOCK2 — synthetic entering-child-lag fixture (born-RED witness)</title>
+<style>
+  /* AY.W-DOCK2 — the SYNTHETIC LAG fixture for the born-RED lockstep witness.
+     A minimal `.glass-dock` whose box rides the `--dock-morph-t` scalar on one
+     clock (faithful to layers.css), but whose entering `.dock-layer--full`
+     children carry an ADDED per-child `transition: opacity 300ms ease 200ms` — a
+     SECOND clock + a 200ms delay on TOP of the scalar ramp. This is the exact
+     regression class the re-authored gate must RED on: the entering-child opacity
+     onset trails the box-width onset PAST the LOCKSTEP_BUDGET_MS budget. The
+     re-authored proof:dock-animation-live gate exits 1 here and exits 0 on the
+     real /dock/overview dock (where the children ride the scalar with NO extra
+     per-child transition). */
+  :root { --dock-morph-t: 0; }
+  body { margin: 0; background: #faf7f2; font-family: system-ui, sans-serif; }
+  .stage { display: flex; min-height: 100vh; align-items: center; justify-content: center; }
+
+  .glass-dock {
+    --dock-morph-from: 56px;
+    --dock-morph-to: 480px;
+    --dock-morph-size: calc(
+      var(--dock-morph-from) +
+        (var(--dock-morph-to) - var(--dock-morph-from)) * var(--dock-morph-t)
+    );
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 56px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    overflow: clip;
+    /* the box width IS a calc() of the scalar — the box rides the scalar on ONE
+       clock, exactly like layers.css. The DESYNC is on the children below. */
+    inline-size: var(--dock-morph-size);
+  }
+
+  .dock-layers { display: grid; min-width: 0; }
+  .dock-layer { display: flex; align-items: center; grid-area: 1 / 1; gap: 8px; padding: 0 16px; white-space: nowrap; height: 56px; }
+  .dock-layer--summary { position: absolute; inset: 0; opacity: calc(1 - var(--dock-morph-t)); }
+  .dock-layer--full { position: relative; opacity: 1; }
+
+  .dock-layer--full > * {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(90, 80, 70, 0.85); flex: 0 0 auto;
+    /* THE SYNTHETIC DEFECT — a per-child SECOND clock: opacity transitions on a
+       fixed curve with a 700ms delay, instead of riding --dock-morph-t. So the
+       entering child opacity onset trails the box-width onset PAST the ~537ms
+       deliberate-stagger budget — the exact regression class a re-added per-child
+       CSS transition produces. The LIVE gate REDs here (entering-child onset >
+       budget) and GREENs on the real /dock/overview dock (children ride the scalar
+       with NO extra per-child transition). */
+    opacity: 0;
+    transition: opacity 300ms ease 700ms;
+  }
+  .glass-dock.expanded .dock-layer--full > * { opacity: 1; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="glass-dock collapsed" data-testid="dock-capture">
+      <div class="dock-layers">
+        <div class="dock-layer dock-layer--summary"><div style="width:40px;height:40px;border-radius:12px;background:rgba(90,80,70,0.85)"></div></div>
+        <div class="dock-layer dock-layer--full">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Emulate the dock morph on hover: arm [data-morphing], swap collapsed→expanded
+    // (so the synthetic per-child opacity transition fires), and ramp --dock-morph-t
+    // 0→1 on a spring-ish curve over ~650ms (the real --spring-dock ring). The box
+    // width follows the scalar on ONE clock; the children lag via their own
+    // transition (the defect).
+    const dock = document.querySelector(".glass-dock");
+    let armed = false;
+    function expand() {
+      if (armed) return;
+      armed = true;
+      dock.setAttribute("data-morphing", "");
+      dock.classList.remove("collapsed");
+      dock.classList.add("expanded");
+      const t0 = performance.now();
+      // A SLOW box morph (1400ms) so the box is still rising when the 700ms-delayed
+      // child finally onsets — the sampler stays alive long enough to capture the
+      // lagged entering-child onset (the lockstep witness fires on the trail, not on
+      // a frozen/never-sampled child).
+      const DURATION = 1400;
+      function frame() {
+        const elapsed = performance.now() - t0;
+        // an ease-out-ish ramp with a small overshoot, like the spring
+        const x = Math.min(elapsed / DURATION, 1);
+        const eased = 1 - Math.pow(1 - x, 3);
+        const overshoot = eased + 0.045 * Math.sin(Math.PI * x) * (x < 1 ? 1 : 0);
+        dock.style.setProperty("--dock-morph-t", String(overshoot));
+        if (x < 1) requestAnimationFrame(frame);
+        else {
+          dock.style.setProperty("--dock-morph-t", "1");
+          dock.removeAttribute("data-morphing");
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    dock.addEventListener("pointerenter", expand);
+    dock.addEventListener("mouseenter", expand);
+  </script>
+</body>
+</html>

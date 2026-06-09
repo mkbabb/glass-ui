@@ -320,8 +320,8 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     const qScale = config.quality === "half" ? 0.5 : 1.0;
                     // Size from the rendered element, not config — the blob fills its
                     // container.
-                    const cssW = canvas.clientWidth || config.canvasSize;
-                    const cssH = canvas.clientHeight || config.canvasSize;
+                    const cssW = canvas.clientWidth || config.geometry.canvasSize;
+                    const cssH = canvas.clientHeight || config.geometry.canvasSize;
                     const w = Math.max(1, Math.round(cssW * dpr * qScale));
                     const h = Math.max(1, Math.round(cssH * dpr * qScale));
                     if (canvas.width !== w || canvas.height !== h) {
@@ -385,6 +385,19 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     const params = mood.params.value;
                     const rgb = resolveColor(color.value);
 
+                    // AY.W-BLOB2 — the BlobConfig atom destructure. The flat ~50-knob
+                    // surface collapsed to eight cohesive atoms (types.ts); the per-frame
+                    // upload reads the same field NAMES off the atom they belong to, so
+                    // the upload math is byte-identical to the flat read (the
+                    // proof:blob-* fleet is the witness).
+                    const {
+                        geometry: cGeo,
+                        membrane: cMem,
+                        color: cCol,
+                        surface: cSurf,
+                        interaction: cInt,
+                    } = config;
+
                     gl.useProgram(prog);
                     gl.bindVertexArray(vao);
 
@@ -420,9 +433,9 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uPointerActive, pointer.active.value ? 1.0 : 0.0);
                     gl.uniform1f(
                         U.uPointerAttraction,
-                        config.pointerAttraction + params.pointerAttraction,
+                        cInt.pointerAttraction + params.pointerAttraction,
                     );
-                    gl.uniform1f(U.uPointerStrength, config.pointerStrength * POS_SCALE);
+                    gl.uniform1f(U.uPointerStrength, cInt.pointerStrength * POS_SCALE);
 
                     // Velocity-driven squash-and-stretch (W10). The spring velocity
                     // (normalized [-1,1]/s) maps into body space like the pointer.
@@ -432,12 +445,12 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                         vel.x * 0.5 * POS_SCALE,
                         vel.y * 0.5 * POS_SCALE,
                     );
-                    gl.uniform1f(U.uStretch, config.stretch);
+                    gl.uniform1f(U.uStretch, cInt.stretch);
 
                     // Pointer trail (W10) — decaying-radius pseudopod. The trail is
                     // in the same normalized [-1,1] space as the pointer, so map it
                     // exactly like uPointer (`* 0.5 * POS_SCALE`).
-                    const trail = pointer.trailSources(config.satelliteRadius * 0.7);
+                    const trail = pointer.trailSources(cGeo.satelliteRadius * 0.7);
                     gl.uniform1i(U.uTrailCount, trail.count);
                     for (let i = 0; i < TRAIL_N; i++) {
                         const posLoc = trailPosLocs[i] ?? null;
@@ -457,30 +470,30 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     }
 
                     // Body — config is the base, mood params modulate.
-                    gl.uniform1f(U.uBodyRadius, config.bodyRadius * POS_SCALE);
+                    gl.uniform1f(U.uBodyRadius, cGeo.bodyRadius * POS_SCALE);
                     gl.uniform1f(
                         U.uPulsePhase,
-                        timeSec * config.pulseFreq * params.pulseFreq * Math.PI * 2,
+                        timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2,
                     );
                     // normalize to idle baseline + the one-shot click impulse (W10).
                     // The pulse rings ± so it transiently fattens/thins the throb
                     // amplitude — the click is FELT through the EXISTING uPulseAmp
                     // channel (no parallel pulse path).
-                    const clickPulse = pointer.pulse.value * config.clickImpulse;
+                    const clickPulse = pointer.pulse.value * cInt.clickImpulse;
                     gl.uniform1f(
                         U.uPulseAmp,
-                        (((config.pulseAmp * params.pulseAmp) / 0.015) + clickPulse) *
+                        (((cMem.pulseAmp * params.pulseAmp) / 0.015) + clickPulse) *
                             POS_SCALE,
                     );
 
                     // Surface noise — config controls shape, mood scales amplitude.
                     gl.uniform1f(
                         U.uNoiseAmp,
-                        ((config.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE,
+                        ((cMem.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE,
                     );
-                    gl.uniform1f(U.uNoiseFreq, config.noiseFreq);
-                    gl.uniform1f(U.uNoiseSpeed, config.noiseSpeed);
-                    gl.uniform1f(U.uWarpAmp, config.warpAmp);
+                    gl.uniform1f(U.uNoiseFreq, cMem.noiseFreq);
+                    gl.uniform1f(U.uNoiseSpeed, cMem.noiseSpeed);
+                    gl.uniform1f(U.uWarpAmp, cMem.warpAmp);
 
                     // Gooey — `uSmoothK` is a TRUE blend-band in the shader's UV
                     // space: the smin is IQ-normalized (`k *= 4.0` in
@@ -496,8 +509,8 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // 1.0-centred MULTIPLIER (idle ≈ 1.0): the config holds the ONE
                     // absolute band, mood scales it — there is no split-length regime,
                     // so no `/DEFAULTS` ratio normalization is needed.
-                    gl.uniform1f(U.uSmoothK, config.smoothK * params.smoothK * POS_SCALE);
-                    gl.uniform1f(U.uMerge, config.merge === "circular" ? 1.0 : 0.0);
+                    gl.uniform1f(U.uSmoothK, cMem.smoothK * params.smoothK * POS_SCALE);
+                    gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
 
                     // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
                     // The fragment early-outs to a transparent write for any pixel
@@ -514,58 +527,58 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // squash stretch. NO length constant is edited (W08/W15 own those);
                     // this is a READ of them.
                     const satWorst =
-                        config.orbitRadius * 1.2 * (1 + config.eccentricity) +
-                        config.satelliteRadius;
+                        cGeo.orbitRadius * 1.2 * (1 + cGeo.eccentricity) +
+                        cGeo.satelliteRadius;
                     const maxReach =
-                        (Math.max(config.bodyRadius, satWorst) +
-                            config.smoothK * params.smoothK +
-                            (config.noiseAmp * params.noiseAmp) / 0.025 +
-                            Math.abs(pointer.pulse.value) * config.clickImpulse) *
+                        (Math.max(cGeo.bodyRadius, satWorst) +
+                            cMem.smoothK * params.smoothK +
+                            (cMem.noiseAmp * params.noiseAmp) / 0.025 +
+                            Math.abs(pointer.pulse.value) * cInt.clickImpulse) *
                             POS_SCALE +
                         0.1;
                     gl.uniform1f(U.uMaxReach, maxReach);
 
                     // Color perturbation
-                    gl.uniform1f(U.uHueRange, config.hueRange + params.hueRange);
-                    gl.uniform1f(U.uSatShift, config.satShift + params.satShift);
+                    gl.uniform1f(U.uHueRange, cCol.hueRange + params.hueRange);
+                    gl.uniform1f(U.uSatShift, cCol.satShift + params.satShift);
                     gl.uniform1f(
                         U.uBrightnessShift,
-                        config.brightnessShift + params.brightnessShift,
+                        cCol.brightnessShift + params.brightnessShift,
                     );
-                    gl.uniform1f(U.uColorNoiseFreq, config.colorNoiseFreq);
-                    gl.uniform1f(U.uColorNoiseSpeed, config.colorNoiseSpeed);
+                    gl.uniform1f(U.uColorNoiseFreq, cCol.colorNoiseFreq);
+                    gl.uniform1f(U.uColorNoiseSpeed, cCol.colorNoiseSpeed);
 
                     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
                     // `uRimColor` arrives ALREADY CONCRETE (the SFC un-wrapped any
                     // var()-token via resolveTokenColor — AX.W16) and parses through the
                     // SAME injected ColorResolver memo as `uBaseColor`, never the DOM.
                     // Gated behind `uLit` (default lit).
-                    gl.uniform1f(U.uLit, config.lit ? 1.0 : 0.0);
+                    gl.uniform1f(U.uLit, cSurf.lit ? 1.0 : 0.0);
                     const rim = resolveColor(rimColor.value);
                     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
                     gl.uniform3f(
                         U.uLightDir,
-                        config.lightDir[0],
-                        config.lightDir[1],
-                        config.lightDir[2],
+                        cSurf.lightDir[0],
+                        cSurf.lightDir[1],
+                        cSurf.lightDir[2],
                     );
-                    gl.uniform1f(U.uSpecStrength, config.specStrength);
-                    gl.uniform1f(U.uSpecShininess, config.specShininess);
-                    gl.uniform1f(U.uRimPower, config.rimPower);
-                    gl.uniform1f(U.uRimStrength, config.rimStrength);
+                    gl.uniform1f(U.uSpecStrength, cSurf.specStrength);
+                    gl.uniform1f(U.uSpecShininess, cSurf.specShininess);
+                    gl.uniform1f(U.uRimPower, cSurf.rimPower);
+                    gl.uniform1f(U.uRimStrength, cSurf.rimStrength);
 
                     // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,
                     // radians in-shader. Mood routes the sheen intensity (excited =
                     // stronger shimmer, sleepy = nearly flat) via params.iridScale.
                     gl.uniform1f(
                         U.uIridescence,
-                        config.iridescence * params.iridScale,
+                        cSurf.iridescence * params.iridScale,
                     );
-                    gl.uniform1f(U.uIridHue, config.iridHue * (Math.PI / 180));
-                    gl.uniform1f(U.uIridSpeed, config.iridSpeed);
-                    gl.uniform1f(U.uSssScale, config.sssScale * params.iridScale);
-                    gl.uniform1f(U.uSssPower, config.sssPower);
-                    gl.uniform1f(U.uCoreGlow, config.coreGlow);
+                    gl.uniform1f(U.uIridHue, cSurf.iridHue * (Math.PI / 180));
+                    gl.uniform1f(U.uIridSpeed, cSurf.iridSpeed);
+                    gl.uniform1f(U.uSssScale, cSurf.sssScale * params.iridScale);
+                    gl.uniform1f(U.uSssPower, cSurf.sssPower);
+                    gl.uniform1f(U.uCoreGlow, cSurf.coreGlow);
 
                     // Satellites
                     const sats = satellites.sources;

@@ -122,6 +122,83 @@ export function detectStructure(sources) {
     return { facts, violations };
 }
 
+// ── AY.W-DOCK2 (D4 / HG4) the FLIP-engine DRIFT-GUARD — BOOKED fold to W-GOD1 ───
+// W-DOCK2 found TWO near-identical FLIP-pin-measure-arm engines: the orchestrator
+// (`dockMorphContext.ts`, the superset — it carries the sibling-rebase the standalone
+// lacks) and the standalone `useLayerTransition.ts` (the only `DockLayerGroup.vue`
+// `else`-branch consumer + the `/dock` re-export). The clean fold is to delete the
+// standalone and route it through a self-rooted orchestrator, but that (a) breaks the
+// `/dock` public re-export of `useLayerTransition` (an external consumer — value.js,
+// "routes to AX.W34"), (b) re-homes the `morphRoot().closest(".glass-dock")` fallback
+// + the `directionTypes` hint, and (c) collides with the W-GOD1 GlassDock.vue carve
+// that touches the same FLIP code. So the fold is BOOKED to W-GOD1 (the carve is
+// cleaner over ONE engine; W-GOD1 absorbs the fold). Until then, this drift-guard
+// asserts the two engines carry IDENTICAL load-bearing FLIP-pin-measure-arm logic, so
+// a divergence in the SHARED dance REDs even while the two copies coexist.
+const BOOKED_FOLD_SUCCESSOR = "AY.W-GOD1";
+// The load-bearing FLIP-pin-measure-arm markers BOTH engines MUST carry verbatim (the
+// "single FLIP dance" the band has). A drift in any of these between the two files is
+// the drift hazard W-DOCK2 books — it REDs here.
+const FLIP_MARKERS = [
+    // the PIN step: from=to=from + scalar 0 + data-morphing armed
+    /setProperty\("--dock-morph-from"/,
+    /setProperty\("--dock-morph-to"/,
+    /setAttribute\("data-morphing"/,
+    // the deferred single MEASURE: force max-content on the morph axis, measure, clear
+    /max-content/,
+    // the re-base/arm on the live spring (the interruptible-physics re-seat)
+    /respectReducedMotion:\s*true/,
+];
+
+export function detectFlipDriftGuard(sources) {
+    const violations = [];
+    const facts = { bookedFoldSuccessor: BOOKED_FOLD_SUCCESSOR };
+
+    const morph = sources.dockMorphContext ?? "";
+    const layer = sources.useLayerTransition ?? "";
+
+    if (!morph) {
+        violations.push("dockMorphContext.ts (the canonical FLIP engine) was not read");
+        return { facts, violations };
+    }
+    if (!layer) {
+        // The standalone copy was DELETED — the clean fold landed. Then there is ONE
+        // engine and the drift-guard is satisfied (single FLIP primitive).
+        facts.standaloneEngineDeleted = true;
+        return { facts, violations };
+    }
+
+    // Both engines must carry EVERY load-bearing FLIP marker — a divergence in the
+    // shared pin-measure-arm dance is the drift the book guards against.
+    const missing = { dockMorphContext: [], useLayerTransition: [] };
+    for (const re of FLIP_MARKERS) {
+        if (!re.test(morph)) missing.dockMorphContext.push(re.source);
+        if (!re.test(layer)) missing.useLayerTransition.push(re.source);
+    }
+    facts.flipMarkerCount = FLIP_MARKERS.length;
+    facts.missing = missing;
+    if (missing.dockMorphContext.length || missing.useLayerTransition.length) {
+        violations.push(
+            `the two FLIP engines DRIFTED on the shared pin-measure-arm dance — missing markers: ` +
+                `dockMorphContext.ts [${missing.dockMorphContext.join(", ") || "none"}], ` +
+                `useLayerTransition.ts [${missing.useLayerTransition.join(", ") || "none"}]. ` +
+                `The fold is BOOKED to ${BOOKED_FOLD_SUCCESSOR}; until it lands, the two copies must stay byte-faithful on the load-bearing dance.`,
+        );
+    }
+
+    // The book must be EXPLICIT — useLayerTransition.ts must carry a BOOKED: marker
+    // naming the successor (so the keep is documented, not silent).
+    const bookMarker = /BOOKED:\s*AY\.W-GOD1/.test(layer);
+    facts.bookMarkerPresent = bookMarker;
+    if (!bookMarker) {
+        violations.push(
+            `useLayerTransition.ts carries no \`BOOKED: ${BOOKED_FOLD_SUCCESSOR}\` marker — the FLIP-engine fold keep is SILENT, not formally booked (HG4 requires an explicit book)`,
+        );
+    }
+
+    return { facts, violations };
+}
+
 // ── (B) the π-lane RUNTIME pure detector (over a captured probe RESULT) ────────
 // `risingFrames` / `onsetTimeMs` mirror proof-dock-animation-live.mjs (a smooth
 // spring shows many rising frames; the single-clock onset is the frame a series
@@ -333,6 +410,13 @@ function readSources(ROOT) {
     return {
         glassDock: read("src/components/custom/dock/GlassDock.vue"),
         dockLayerGroup: read("src/components/custom/dock/DockLayerGroup.vue"),
+        // AY.W-DOCK2 (D4) — the two FLIP engines the drift-guard compares.
+        dockMorphContext: read(
+            "src/components/custom/dock/composables/dockMorphContext.ts",
+        ),
+        useLayerTransition: read(
+            "src/components/custom/dock/composables/useLayerTransition.ts",
+        ),
     };
 }
 
@@ -344,8 +428,16 @@ async function run() {
         "AX-dock-orchestrator-single",
     );
 
-    // (A) STRUCTURE — first + always (device-free).
-    const structure = detectStructure(readSources(ROOT));
+    // (A) STRUCTURE — first + always (device-free). AY.W-DOCK2 (D4) folds the
+    // FLIP-engine DRIFT-GUARD in: the two engines must carry IDENTICAL load-bearing
+    // pin-measure-arm logic while the fold is BOOKED to W-GOD1.
+    const sources = readSources(ROOT);
+    const baseStructure = detectStructure(sources);
+    const driftGuard = detectFlipDriftGuard(sources);
+    const structure = {
+        facts: { ...baseStructure.facts, flipDriftGuard: driftGuard.facts },
+        violations: [...baseStructure.violations, ...driftGuard.violations],
+    };
     const piPresent = piWorkspacePresent(ROOT);
 
     const pw = await loadPlaywright();

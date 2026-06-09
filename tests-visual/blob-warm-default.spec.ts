@@ -164,59 +164,65 @@ function bodyMeanL(png: PNG, bg: [number, number, number]): number | null {
     return sum / n;
 }
 
-test.describe("blob-warm-default (π lane — fail-CLOSED, BORN-RED at HEAD)", () => {
-    test("the DEFAULT <GooBlob> body reads as a WARM-CREAM bead (resting body mean OKLCh-L >= 0.62)", async ({
-        page,
-    }) => {
-        await page.goto(PI_TARGETS.blob.path);
-        // The story mounts SEVERAL <GooBlob> instances; the FIRST is the
-        // BLOB_CONFIG_DEFAULTS render (the bare default — the gate target, same as
-        // blob-render.spec.ts uses .first()).
-        const blobCanvas = page
-            .locator('canvas[data-testid="goo-blob-canvas"]')
-            .first();
-        await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });
-        // Let the demand-driven loop settle into the resting droplet pose.
-        await page.waitForTimeout(600);
+// AY.W-BLOB2 — the cream body is a FIXED light OKLCh base (the `color.paletteStops` ramp),
+// NOT a token that flips with the theme, so it must read LIGHT (body mean OKLCh-L >= 0.62)
+// in BOTH light AND dark mode. The gate runs the SAME readback under each colorScheme.
+const COLOR_SCHEMES = ["light", "dark"] as const;
 
-        // Per run: read N frames, take the median body-L (the droplet breathes; the body
-        // luminance is stable across the breath — the median is the robust resting value).
-        const bodyLs: number[] = [];
-        let brokenReads = 0;
-        for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
-            const frameLs: number[] = [];
-            for (let f = 0; f < BLOB_FRAMES; f++) {
-                const png = await grab(blobCanvas);
-                const bg = modalBackground(png);
-                const L = bodyMeanL(png, bg);
-                if (L === null) brokenReads++;
-                else frameLs.push(L);
-                await page.waitForTimeout(80);
+for (const scheme of COLOR_SCHEMES) {
+    test.describe(`blob-warm-default (π lane — fail-CLOSED, ${scheme})`, () => {
+        test.use({ colorScheme: scheme });
+        test(`the DEFAULT <GooBlob> body reads as a WARM-CREAM bead in ${scheme} mode (resting body mean OKLCh-L >= 0.62)`, async ({
+            page,
+        }) => {
+            await page.goto(PI_TARGETS.blob.path);
+            // The story mounts SEVERAL <GooBlob> instances; the FIRST is the
+            // BLOB_CONFIG_DEFAULTS render (the bare default — the gate target, same as
+            // blob-render.spec.ts uses .first()).
+            const blobCanvas = page
+                .locator('canvas[data-testid="goo-blob-canvas"]')
+                .first();
+            await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });
+            // Let the demand-driven loop settle into the resting droplet pose.
+            await page.waitForTimeout(600);
+
+            // Per run: read N frames, take the median body-L (the droplet breathes; the
+            // body luminance is stable across the breath — the median is the robust value).
+            const bodyLs: number[] = [];
+            let brokenReads = 0;
+            for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
+                const frameLs: number[] = [];
+                for (let f = 0; f < BLOB_FRAMES; f++) {
+                    const png = await grab(blobCanvas);
+                    const bg = modalBackground(png);
+                    const L = bodyMeanL(png, bg);
+                    if (L === null) brokenReads++;
+                    else frameLs.push(L);
+                    await page.waitForTimeout(80);
+                }
+                if (frameLs.length > 0) bodyLs.push(median(frameLs));
             }
-            if (frameLs.length > 0) bodyLs.push(median(frameLs));
-        }
 
-        // The body must paint SOMETHING (the diagnostic-loop trigger — a harness that
-        // cannot read a body cannot bound the tuner; this is a HARNESS bug, not a research
-        // miss, per the named-successor clause).
-        expect(
-            bodyLs.length,
-            `the blob body could not be isolated cleanly — ${brokenReads} broken/blank reads, ${bodyLs.length} clean runs. The modal-bg + interior-inset readback could not separate a body region from the cream field (the blob-render.spec.ts rounded-card clip hazard). Fix the readback BEFORE close — a harness that cannot read the body cannot bound the W-BLOB2 tuner.`,
-        ).toBeGreaterThan(0);
+            // The body must paint SOMETHING (the diagnostic-loop trigger — a harness that
+            // cannot read a body cannot bound the tuner; a HARNESS bug, not a research miss).
+            expect(
+                bodyLs.length,
+                `the blob body could not be isolated cleanly in ${scheme} mode — ${brokenReads} broken/blank reads, ${bodyLs.length} clean runs. The modal-bg + interior-inset readback could not separate a body region from the cream field (the blob-render.spec.ts rounded-card clip hazard). Fix the readback BEFORE close — a harness that cannot read the body cannot bound the W-BLOB2 tuner.`,
+            ).toBeGreaterThan(0);
 
-        const bodyL = median(bodyLs);
+            const bodyL = median(bodyLs);
 
-        // THE BINDING ASSERT — born-RED at HEAD. The resting body mean OKLCh-L must read
-        // as a WARM-CREAM bead. At HEAD the dark coffee-bean default measures well below
-        // the L >= 0.62 warm-cream band (the reference plate ≈ 0.53; the live near-black
-        // var(--primary) body lower) — so this FAILS at HEAD by design. W-BLOB2 ships the
-        // light warm-cream OKLCh default paletteStops base (RESEARCH.md §2.1) to lift the
-        // body-L over the floor and turn this GREEN.
-        expect(
-            bodyL,
-            `the DEFAULT blob body mean OKLCh-L = ${bodyL.toFixed(3)} is below the warm-cream-bead floor ${WARM_BEAD_L_MIN} — a bare <GooBlob :config="BLOB_CONFIG_DEFAULTS"> paints a ${
-                bodyL <= DARK_DEFAULT_L_REF ? "DARK coffee-bean body" : "too-dark body"
-            }, not the "warm-cream living bead" the docs claim. Root: types.ts:251 paletteStops:[] (body falls back to the near-black mounted color) + types.ts:291 rimColor:"var(--foreground)" (near-black ink). FIX: ship the light warm-cream OKLCh default paletteStops base (RESEARCH.md §2.1 / W-BLOB2). This gate is BORN-RED at HEAD by design.`,
-        ).toBeGreaterThanOrEqual(WARM_BEAD_L_MIN);
+            // THE BINDING ASSERT. The resting body mean OKLCh-L must read as a WARM-CREAM
+            // bead in BOTH light AND dark mode. W-BLOB2 ships the light warm-cream OKLCh
+            // default `color.paletteStops` base (a FIXED light OKLCh ramp, not a token that
+            // flips) so the body reads L >= 0.62 either scheme; the old `paletteStops: []`
+            // charcoal default measured ≈ 0.53 (born-RED).
+            expect(
+                bodyL,
+                `the DEFAULT blob body mean OKLCh-L = ${bodyL.toFixed(3)} (${scheme} mode) is below the warm-cream-bead floor ${WARM_BEAD_L_MIN} — a bare <GooBlob :config="BLOB_CONFIG_DEFAULTS"> paints a ${
+                    bodyL <= DARK_DEFAULT_L_REF ? "DARK coffee-bean body" : "too-dark body"
+                }, not the "warm-cream living bead" the docs claim. FIX: ship the light warm-cream OKLCh default color.paletteStops base + the warm mid-tone rimColor (RESEARCH.md §2.1 / W-BLOB2).`,
+            ).toBeGreaterThanOrEqual(WARM_BEAD_L_MIN);
+        });
     });
-});
+}

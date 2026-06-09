@@ -181,6 +181,17 @@ function onRailFocusOut(e: FocusEvent) {
         class="dock-layer-group"
         :class="[axis, `rail-${railPosition}`]"
     >
+        <!-- AY.W-DOCK2 (D5 persistence) — BOOKED: AY.W-GOD1. The switcher rail lives
+             inside the layer-group, which sits in the dock's clipped `--full` pane, so
+             on collapse the rail disappears with the pane (no persistent way to switch
+             layers; H-dock §D7 L3). LANDING a persistent rail (rendered OUTSIDE the
+             clipped pane so it survives collapse) needs a `GlassDock` chrome slot the
+             band does not yet have — and a vertical rail dock has no collapse machinery
+             at all (SidebarDock has no collapse). Both are GlassDock-structural changes
+             that belong with the W-GOD1 GlassDock carve, NOT this disjoint W-DOCK2 edit.
+             So persistence is formally BOOKED to AY.W-GOD1; the single-indicator + the
+             one-clock fixes (the two pixel defects) LAND here. The successor gate is
+             `proof:dock-rail-cohesion` (the persistence clause). -->
         <!-- AU.W8.4 / AX.W45 DK8 — the layer-switcher rail is a reka-ui Tabs
              contract (APG tabs): role=tablist/tab + aria-selected (NOT aria-pressed),
              roving tabindex, Arrow/Home/End. The orientation is now the rail's VISUAL
@@ -199,9 +210,15 @@ function onRailFocusOut(e: FocusEvent) {
             :orientation="railOrientation"
             :as-child="true"
         >
+            <!-- AY.W-DOCK2 (D5 single-indicator) — `:indicator="false"` kills the
+                 phantom default `<TabsIndicator>` TabsList renders (its `bg-[var(--glass-bg-quiet)]`
+                 plate). The rail drives its OWN explicit `.dock-layer-tab-indicator`
+                 (the `--primary 15%` plate) below, so without this the rail painted
+                 TWO indicators (H-dock §D7 L1). -->
             <TabsList
                 class="dock-layer-rail"
                 :class="railPosition"
+                :indicator="false"
                 @focusin="onRailFocusIn"
                 @focusout="onRailFocusOut"
             >

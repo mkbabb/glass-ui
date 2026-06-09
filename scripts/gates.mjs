@@ -583,8 +583,14 @@ export const GATES = [
     {
         id: "proof:dock-animation-live",
         cmd: "proof:dock-animation-live",
-        tags: ["local"],
-        note: "AV.W9.4 + AW.W2; AX.W00 PROMOTED fail-open SKIP → fail-CLOSED. The dock BEHAVIORAL motion gate: deterministic-drive (forced FLIP arm via removed startViewTransition + real page.hover) samples the dock-root box geometry AND a representative child opacity on ONE rAF timeline (lead/lag ≤ 1 frame). PLUS the AX.W00 device-free TOKEN-PEAK secondary (--spring-dock linear() peak ≤ the published (0.32,0.7) ~+4.6% baseline) which reds on EVERY runner. The live-rAF arm lives in the tests-visual π workspace (dock-animation-live.spec.ts); fail-CLOSED when the workspace is present. Bite: retune --spring-dock bouncier → token-peak RED; desync the box/child clock → live RED.",
+        tags: ["local", "ci"],
+        note: "AV.W9.4 + AW.W2; AX.W00 PROMOTED fail-open SKIP → fail-CLOSED; AY.W-DOCK2 RE-AUTHORED the lockstep witness + CI-promoted. The dock BEHAVIORAL motion gate: deterministic-drive (forced FLIP arm via removed startViewTransition + real page.hover on /dock/overview's data-testid=dock-capture dock) samples the dock-root box geometry AND the LAST ENTERING .dock-layer--full child opacity on ONE rAF timeline. THE BINDING LOCKSTEP WITNESS (AY.W-DOCK2): the last entering child opacity onset trails the box-width onset by ≤ LOCKSTEP_BUDGET_MS (the deliberate macOS-dock reveal-stagger ceiling, window 0.4 + step×5); a regression PAST the stagger REDs. The prior box-vs-scalar onset check was a TAUTOLOGY (the box rides the scalar by construction) and is DEMOTED to a non-binding structural fact. PLUS the AX.W00 device-free TOKEN-PEAK secondary (--spring-dock linear() peak ≤ the published (0.32,0.7) ~+4.6% baseline) which reds on EVERY runner. CI inclusion (AY.W-DOCK2 §F5): the device-free token-peak + structure arms run on the clean CI runner (no π workspace → the live arm grace-SKIPs with exit 0); the live-rAF arm lives in the tests-visual π workspace (dock-animation-live.spec.ts), fail-CLOSED when the workspace is present. The device-free born-RED witness is proof:dock-lockstep-bornred (the pure detector over a synthetic-lag timeline). Bite: retune --spring-dock bouncier → token-peak RED; push the entering child past the stagger budget → live RED.",
+    },
+    {
+        id: "proof:dock-rail-cohesion",
+        cmd: "proof:dock-rail-cohesion",
+        tags: ["local", "ci"],
+        note: "AY.W-DOCK2 (D5) — the DockLayerGroup switcher-rail cohesion gate (one-clock + single-indicator + persistence). Device-free SOURCE arm: (a) the rail <TabsList class=\"dock-layer-rail\"> carries :indicator=\"false\" (single-indicator — born-RED on HEAD where the phantom default <TabsIndicator> double-painted, H-dock §D7 L1); (b) .dock-layer-tab-indicator carries NO --dock-motion-resize (one-clock — the DK7-killed fixed-linear SECOND clock re-pointed onto the --spring-snappy discrete-selection register; born-RED on HEAD); (c) persistence LANDED (rail outside the --full clip) or BOOKED (a BOOKED: AY.W-GOD1 marker + successor near the rail block — formal book, the GlassDock-slot carve rides W-GOD1). The π twin (dock-rail-cohesion.spec.ts) asserts exactly ONE [data-slot=tabs-indicator] under .dock-layer-rail. Bite: drop :indicator=\"false\" → RED; re-add --dock-motion-resize on the rail → RED; remove the BOOKED marker → RED.",
     },
     {
         id: "proof:dock-orchestrator-single",
@@ -723,6 +729,24 @@ export const GATES = [
         cmd: "proof:blob-live-truth",
         tags: ["local"],
         note: "AX.W46 — the GooBlob live-truth gate (the blob reads as a contained lit droplet, hover responds, moods resolve — not skeuomorphic/broken). Device-free SOURCE arm + a fail-CLOSED π blob render/mood arm. Bite: regress the mood resolution / the lit-droplet material → RED.",
+    },
+    {
+        id: "proof:blob-config-atoms",
+        cmd: "proof:blob-config-atoms",
+        tags: ["local"],
+        note: "AY.W-BLOB2 — the BlobConfig atom-count CEILING (≤12 top-level atoms). Born-RED at the pre-prune 46 fields; GREEN at the 8-atom bundle. Asserts: the top-level field count ≤ the ceiling, the three deleted derived-but-unread fields (orbitSpeedScale/wobbleScale/mergeRate) are GONE from the CONFIG surface (a deletion-witness — they legitimately survive on MoodParams), and BLOB_CONFIG_DEFAULTS round-trips to a complete BlobConfig (every atom + field has a default, no orphan). Bite: re-add a deleted field → the count exceeds the ceiling OR the deletion-witness REDs.",
+    },
+    {
+        id: "proof:fourier-field-intensity",
+        cmd: "proof:fourier-field-intensity",
+        tags: ["local"],
+        note: "AY.W-FF2 — the W43 SOTA fourier-field intensity model (STATIC source gate). Asserts the flat OUTLINE_PEAK_ALPHA + the age*age quadratic body are GONE, the six per-variant bundle fields (peakAlpha/headGlowAlpha/headGlowBlur/epicycleRatios/trailFadeExp/trailFloor) populate both PRESETS, headGlowAlpha>peakAlpha (head-forward), trailFadeExp∈[1,2)+trailFloor>0 (soft, never quadratic), the render reads a CACHED color triple (zero-alloc hoist), the intensity prop carries a [0,2] clamp, the dark/light blend fork + the amplitude-descending sort, and evalFourier is deleted from index.ts+math.ts. SELF-PROVING: the quadratic-decay synthetic line is flagged every run. Bite: restore the constant/quadratic, drop a bundle field, or un-delete evalFourier → RED.",
+    },
+    {
+        id: "proof:fourier-field-visibility-live",
+        cmd: "proof:fourier-field-visibility-live",
+        tags: ["local"],
+        note: "AY.W-FF2 — the phosphor-comet VISIBILITY device gate (the painted-canvas readback the static gate cannot reach). Mounts the real <FourierField> over a white ground for BOTH presets × BOTH modes under freeze; asserts the `final` preset is NOT a corner stub (bbox spans ≥25% of each axis), the trail body reads (mean painted intensity floor), intensity=0.4 recesses below intensity=1, and hero paints more structure than final (distinct family). Fail-CLOSED when Playwright is present; befitting-silent SKIP only on a zero-dep runner. Bite: a corner-stub render / a no-op intensity → RED.",
     },
     {
         id: "proof:live-verified-ledger",

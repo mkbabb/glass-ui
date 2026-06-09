@@ -126,6 +126,7 @@ const isHero = computed(() => props.variant === "hero");
             variant="hero"
             color="var(--viz-fourier, hsl(358 72% 52%))"
             :color-resolver="defaultBlobColorResolver"
+            :intensity="opacityCeiling"
             seed="glass-ui-hero"
             class="story-hero-bg"
             aria-hidden="true"

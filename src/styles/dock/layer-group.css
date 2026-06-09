@@ -183,7 +183,19 @@
        it at the top tab and it NEVER reached the active tab below (the mis-alignment
        the user screenshotted). The default rule below travels Y; the `.vertical`
        group's ROW rail overrides back to X. The active-tab plate reads the tunable
-       `--dock-layer-rail-active` rung. Both morph on `--dock-motion-resize`. */
+       `--dock-layer-rail-active` rung.
+
+       AY.W-DOCK2 (D5 one-clock) — the rail indicator travel moves OFF the fixed-
+       linear `--dock-motion-resize` SECOND clock (DK7 killed exactly this pattern
+       for the leaving-pane opacity but left it alive on the rail; H-dock §D7 L2) onto
+       the `--spring-snappy` register. DECISION: a rail tab switch is a DISCRETE
+       selection (the user picks a pane), NOT the box collapse↔expand morph — so it
+       does NOT fold onto `--dock-morph-t` (the morph scalar). It uses the iOS
+       segmented-control register (`--spring-snappy`, the SAME curve `SegmentedTabs`'
+       indicator rides — the confirmed discrete-selection register), so the rail
+       indicator glides between tabs on the house spring, never a fixed-linear timer.
+       The binding outcome: NO `--dock-motion-resize` survives on the rail (recorded
+       in W-DOCK2-DELTA.md). */
     .dock-layer-rail .dock-layer-tab-indicator {
         position: absolute;
         left: 0;
@@ -197,9 +209,9 @@
             color-mix(in srgb, var(--primary) 15%, transparent)
         );
         transition:
-            width var(--dock-motion-resize),
-            height var(--dock-motion-resize),
-            transform var(--dock-motion-resize);
+            width var(--duration-fast) var(--spring-snappy),
+            height var(--duration-fast) var(--spring-snappy),
+            transform var(--duration-fast) var(--spring-snappy);
         pointer-events: none;
     }
 

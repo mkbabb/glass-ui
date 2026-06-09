@@ -3,6 +3,7 @@ export { default as Constellation } from "./Constellation.vue";
 export {
     seedField,
     stepField,
+    refitField,
     readPalette,
     drawEdges,
     drawNodes,
@@ -12,6 +13,8 @@ export {
     warpStep,
     warpTo,
     setWarpTarget,
+    warpSettled,
+    pickWanderTarget,
     BASE_WIDTH,
     DEFAULT_PALETTE,
 } from "./constellationField";
@@ -22,5 +25,6 @@ export type {
     ConstellationPalette,
     ConstellationField,
     ConstellationWarp,
+    ConstellationWander,
     ConstellationProps,
 } from "./constellationField";

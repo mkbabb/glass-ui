@@ -7,6 +7,7 @@ import { mulberry32 } from "../../../../src/utils/prng";
 import {
     seedField,
     stepField,
+    refitField,
     drawEdges,
     drawNodes,
     drawPointerWeb,
@@ -15,9 +16,12 @@ import {
     warpStep,
     warpTo,
     setWarpTarget,
+    warpSettled,
+    pickWanderTarget,
     DEFAULT_PALETTE,
     type ConstellationField,
     type ConstellationNode,
+    type ConstellationWander,
 } from "../../../../src/components/custom/constellation/constellationField";
 
 /** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
@@ -233,5 +237,157 @@ describe("constellation focal-node + warp spring (AX.W17)", () => {
         expect(Number.isFinite(field.warp.y)).toBe(true);
         expect(moved).toBeGreaterThan(0);
         expect(moved).toBeLessThan(gap); // lands SHORT of the target, no overshoot
+    });
+});
+
+describe("constellation refit + auto-drift wander (AY.W-CON1)", () => {
+    /** A field seeded at a SMALL extent, ready for a re-fit to a larger box. */
+    function seededField(w: number, h: number): ConstellationField {
+        const field = makeField(seedField(mulberry32(0xa11ce), 24, w, h, 0.16), w, h);
+        // center the warp like the component seeds it on first layout.
+        field.warp.x = w / 2;
+        field.warp.y = h / 2;
+        return field;
+    }
+
+    it("refit-fills-box — proportional rescale doubles every node + the warp", () => {
+        const field = seededField(640, 360);
+        const before = field.nodes.map((p) => ({ x: p.x, y: p.y }));
+        const warpBefore = { x: field.warp.x, y: field.warp.y };
+        // grow the canvas 2× on each axis, then re-fit FROM the prior extent.
+        field.w = 1280;
+        field.h = 720;
+        refitField(field, 640, 360);
+        field.nodes.forEach((p, i) => {
+            expect(p.x).toBeCloseTo(before[i].x * 2, 6);
+            expect(p.y).toBeCloseTo(before[i].y * 2, 6);
+        });
+        expect(field.warp.x).toBeCloseTo(warpBefore.x * 2, 6);
+        expect(field.warp.y).toBeCloseTo(warpBefore.y * 2, 6);
+        // the re-fit lattice spans the new box (every node ≤ the new extent, and
+        // the bbox reaches the far edges — the fills-box coverage the π gate reads).
+        const xs = field.nodes.map((p) => p.x);
+        const ys = field.nodes.map((p) => p.y);
+        const bboxW = Math.max(...xs) - Math.min(...xs);
+        const bboxH = Math.max(...ys) - Math.min(...ys);
+        // the seed laid nodes across the OLD box; doubled, the bbox doubles too.
+        expect(bboxW).toBeGreaterThan(field.w * 0.5);
+        expect(bboxH).toBeGreaterThan(field.h * 0.5);
+    });
+
+    it("refit-conserves-velocity (the cool-down invariant — no heat-up)", () => {
+        const field = seededField(640, 360);
+        const vBefore = field.nodes.map((p) => ({ vx: p.vx, vy: p.vy }));
+        field.w = 1920;
+        field.h = 540; // a NON-uniform resize (sx ≠ sy) — velocities still untouched.
+        refitField(field, 640, 360);
+        field.nodes.forEach((p, i) => {
+            expect(p.vx).toBe(vBefore[i].vx);
+            expect(p.vy).toBe(vBefore[i].vy);
+        });
+    });
+
+    it("refit-noop-first-layout + unchanged-dims leaves positions byte-identical", () => {
+        const field = seededField(640, 360);
+        const snap = field.nodes.map((p) => ({ x: p.x, y: p.y }));
+        const warpSnap = { x: field.warp.x, y: field.warp.y };
+        // first-layout (prev ≤ 0): the seed path owns it → no-op.
+        refitField(field, 0, 0);
+        // unchanged dims (prev === current): no-op.
+        refitField(field, field.w, field.h);
+        field.nodes.forEach((p, i) => {
+            expect(p.x).toBe(snap[i].x);
+            expect(p.y).toBe(snap[i].y);
+        });
+        expect(field.warp.x).toBe(warpSnap.x);
+        expect(field.warp.y).toBe(warpSnap.y);
+    });
+
+    it("wander-arms-then-fires — nextAt arms on the first frame, then re-targets a different node", () => {
+        const field = seededField(800, 600);
+        // a SETTLED spring on node 0 so warpSettled is true (no in-flight warp).
+        setWarpTarget(field, 0);
+        field.warp.x = field.nodes[0].x;
+        field.warp.y = field.nodes[0].y;
+        field.warp.vx = 0;
+        field.warp.vy = 0;
+        const wander: ConstellationWander = { nextAt: -1, minIdle: 100, jitter: 0 };
+        field.wander = wander;
+        // deterministic picker rng (constant 0.5 → a stable eligible pick).
+        const rng = () => 0.5;
+        const focalAtSeed = field.focalIndex;
+        // frame 1 (now = 1000): ARMS nextAt (no jump). minIdle 100, jitter 0 →
+        // nextAt = 1100.
+        stepField(field, 1, 0.16, null, 1 / 60, 1000, rng);
+        expect(wander.nextAt).toBe(1100);
+        expect(field.focalIndex).toBe(focalAtSeed); // no immediate jump on arm
+        // re-settle the spring on its (unchanged) target before the cadence frame.
+        field.warp.x = field.nodes[field.warp.targetIdx].x;
+        field.warp.y = field.nodes[field.warp.targetIdx].y;
+        field.warp.vx = 0;
+        field.warp.vy = 0;
+        // frame 2 (now = 1200 ≥ 1100, settled): FIRES → re-targets a different node.
+        stepField(field, 1, 0.16, null, 1 / 60, 1200, rng);
+        expect(field.focalIndex).not.toBe(focalAtSeed);
+        expect(wander.nextAt).toBeGreaterThan(1200); // cadence re-armed
+    });
+
+    it("wander-yields-to-click — an in-flight warp (NOT settled) blocks the cadence", () => {
+        const field = seededField(800, 600);
+        // an ACTIVE in-flight warp: the focal is FAR from its target → not settled.
+        setWarpTarget(field, 0);
+        field.warp.x = field.nodes[0].x + 300; // 300px from the target → mid-flight
+        field.warp.y = field.nodes[0].y + 300;
+        field.warp.vx = 50;
+        field.warp.vy = 50;
+        expect(warpSettled(field)).toBe(false);
+        const wander: ConstellationWander = { nextAt: 500, minIdle: 100, jitter: 0 };
+        field.wander = wander;
+        const focalBefore = field.focalIndex;
+        // now ≥ nextAt BUT the spring is in flight → the cadence does NOT re-target.
+        stepField(field, 1, 0.16, null, 1 / 60, 1000, () => 0.5);
+        expect(field.focalIndex).toBe(focalBefore); // the click warp wins this frame
+    });
+
+    it("wander-picks-different-node — pickWanderTarget never returns the current focal", () => {
+        const field = seededField(800, 600);
+        // exhaustively sample the picker across the rng span for each focal slot.
+        for (let focal = 0; focal < field.nodes.length; focal++) {
+            field.focalIndex = focal;
+            for (let s = 0; s < 50; s++) {
+                const r = (s + 0.5) / 50; // a spread of rng values in [0,1)
+                const picked = pickWanderTarget(field, () => r);
+                expect(picked).not.toBe(focal);
+                expect(picked).toBeGreaterThanOrEqual(0);
+                expect(picked).toBeLessThan(field.nodes.length);
+            }
+        }
+        // degenerate single-node field → returns the current focal (no crash).
+        const single = makeField([{ x: 1, y: 1, vx: 0, vy: 0, r: 2, dim: false }]);
+        single.focalIndex = 0;
+        expect(pickWanderTarget(single, () => 0.5)).toBe(0);
+    });
+
+    it("default-OFF byte-identity — a wander-absent field steps identically across `now`", () => {
+        // The default-path canary (§5 risk 3): adding the wander seam must not
+        // perturb the existing default render. A field with NO wander produces an
+        // identical node trace whether `now`/`rng` are supplied or omitted.
+        const mk = () => makeField(seedField(mulberry32(7), 16, 800, 600, 0.16), 800, 600);
+        const a = mk();
+        const b = mk();
+        // a: the legacy 5-arg call shape (no now/rng); b: the new 7-arg shape with
+        // a rising `now` + a picker rng — BUT wander is absent, so the cadence
+        // block is skipped and the traces MUST match byte-for-byte.
+        for (let f = 0; f < 30; f++) {
+            stepField(a, 1, 0.16, null, 1 / 60);
+            stepField(b, 1, 0.16, null, 1 / 60, 1000 + f * 16, () => 0.37);
+        }
+        a.nodes.forEach((p, i) => {
+            expect(p.x).toBe(b.nodes[i].x);
+            expect(p.y).toBe(b.nodes[i].y);
+            expect(p.vx).toBe(b.nodes[i].vx);
+            expect(p.vy).toBe(b.nodes[i].vy);
+        });
+        expect(a.focalIndex).toBe(b.focalIndex);
     });
 });

@@ -43,6 +43,7 @@ const {
     colorResolver,
     seed = "",
     freeze = false,
+    intensity = 1,
 } = defineProps<{
     /** Configuration bundle. `hero` = epicycles on, fewer harmonics; `final` = epicycles off, denser. Default `hero`. */
     variant?: "hero" | "final";
@@ -54,7 +55,18 @@ const {
     seed?: string;
     /** When true, paint ONE static deterministic best-frame and never animate (the capture/export lever). Default false. */
     freeze?: boolean;
+    /** Outer loudness envelope (the Aurora `opacityCeiling` shape). Scales the
+     *  resolved `peakAlpha`/`headGlowAlpha` at the PAINT layer (a per-LAYER
+     *  multiply, not a uniform CSS opacity). Default 1 (the bundle's resting
+     *  loudness); clamped [0, 2] — the field's ~2 upper bound lets a hero push
+     *  brighter than the recessed default without runaway. */
+    intensity?: number;
 }>();
+
+// Clamp the loudness envelope. Aurora clamps `opacityCeiling` to [0,1]; the
+// field's loudness is per-LAYER, so the ~2 ceiling lets a hero overdrive the
+// recessed default without an unbounded runaway (W43 §2.3).
+const intensityClamped = Math.max(0, Math.min(2, intensity));
 
 interface VariantPreset {
     /** Higher-order harmonics layered over the dominant counter-rotating pair. */
@@ -73,6 +85,22 @@ interface VariantPreset {
     frozenSeed: string;
     /** The parameter `t` of the static best-frame painted under `freeze`. */
     frozenT: number;
+
+    // ── The intensity BUNDLE (the W43 SOTA paint model; replaces the single
+    // flat peak-alpha constant). Every paint magnitude is a per-variant field
+    // scaled by the ONE outer `intensity` prop — the variant IS the bundle.
+    /** Comet-trail PEAK alpha (the head segment) — the resting brand mark. */
+    peakAlpha: number;
+    /** Head-glow alpha — the STRONGEST layer (head-forward: > peakAlpha). */
+    headGlowAlpha: number;
+    /** Head-glow `shadowBlur` bloom radius, in px. */
+    headGlowBlur: number;
+    /** Epicycle scaffolding alphas ÷ peak (hero only; {0,0} disables the scaffold). */
+    epicycleRatios: { circle: number; arm: number };
+    /** Trail persistence exponent — SOFT (1..2), never the quadratic that kills the body. */
+    trailFadeExp: number;
+    /** Min trail alpha ÷ peak — the body survives, never decays to 0. */
+    trailFloor: number;
 }
 
 const PRESETS: Record<"hero" | "final", VariantPreset> = {
@@ -85,6 +113,12 @@ const PRESETS: Record<"hero" | "final", VariantPreset> = {
         durationMs: 16000,
         frozenSeed: "fourier-field/hero",
         frozenT: 0.18,
+        peakAlpha: 0.55,
+        headGlowAlpha: 0.62,
+        headGlowBlur: 16,
+        epicycleRatios: { circle: 0.18, arm: 0.3 },
+        trailFadeExp: 1.4,
+        trailFloor: 0.1,
     },
     final: {
         harmonics: 9,
@@ -95,12 +129,14 @@ const PRESETS: Record<"hero" | "final", VariantPreset> = {
         durationMs: 21000,
         frozenSeed: "fourier-field/final",
         frozenT: 0.33,
+        peakAlpha: 0.45,
+        headGlowAlpha: 0.5,
+        headGlowBlur: 14,
+        epicycleRatios: { circle: 0, arm: 0 },
+        trailFadeExp: 1.5,
+        trailFloor: 0.08,
     },
 };
-
-// Peak-alpha ceiling for the outline/comet stroke — a background ceiling so the
-// field reads as quiet chrome behind content (NOT a hard 0.42 clamp).
-const OUTLINE_PEAK_ALPHA = 0.24;
 
 const hostRef = useTemplateRef<HTMLElement>("hostRef");
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
@@ -114,6 +150,14 @@ const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 // resolves differently under `.dark`).
 const resolvedColor = ref(color);
 
+// The zero-alloc color hoist (W43 §3). The outline triple + the analogous
+// epicycle second hue resolve ONLY on the two triggers the color/dark watch
+// already fires (`color` change + `isDark` flip), cached as concrete `rgb(...)`
+// strings the per-frame `render()` reads. No `colorResolver`/`cssToOklch`/
+// `oklchToGammaRgb` round-trip 60×/s for a value that changes on a toggle.
+const outlineRgb = ref("rgb(0, 0, 0)");
+const epicycleRgb = ref("rgb(0, 0, 0)");
+
 function resolveColorString(css: string): string {
     if (!css.includes("var(") && !css.includes("light-dark(")) return css;
     const el = hostRef.value;
@@ -125,8 +169,24 @@ function resolveColorString(css: string): string {
     return resolved || css;
 }
 
+// The active preset — resolved once at setup (the bundle the render reads).
+const activePreset = PRESETS[variant];
+
 function refreshResolvedColor(): void {
     resolvedColor.value = resolveColorString(color);
+    // Recompute the cached paint strings on the SAME two triggers (color change
+    // + dark flip) — the zero-alloc hoist out of the rAF body (W43 §2.5).
+    const [or, og, ob] = colorResolver(resolvedColor.value).map((v) =>
+        Math.round(v * 255),
+    );
+    outlineRgb.value = `rgb(${or}, ${og}, ${ob})`;
+    const base = cssToOklch(resolvedColor.value);
+    const [er, eg, eb] = oklchToGammaRgb({
+        L: base.L,
+        C: base.C,
+        h: deriveHue(base.h, "analogous", activePreset.epicycleHueShift, 1),
+    }).map((v) => Math.round(v * 255));
+    epicycleRgb.value = `rgb(${er}, ${eg}, ${eb})`;
 }
 
 // The shared single-source PRNG (AV.W14). Under `freeze` the live seed is a
@@ -153,6 +213,16 @@ onMounted(() => {
 
     const preset = PRESETS[variant];
     const spectrum = buildSpectrum(preset);
+
+    // (R1, the D8 fix) A sorted-for-DRAW copy — largest phasors first, so the
+    // epicycle scaffolding chain reads cleanest (the big slow circles dominate,
+    // the small fast ones add detail). This is a PURE draw-pass refinement: the
+    // inverse-DFT SUM that `positionsAt` reads is ORDER-INDEPENDENT (each term is
+    // added), so reordering does not change the reconstructed curve point — but
+    // the epicycle CHAIN's tip-to-tail geometry IS order-dependent, so the
+    // scaffolding pass reads `drawSpectrum` while the curve-HEAD read stays on
+    // the emission-order `spectrum` (the chain whose tip is the curve point).
+    const drawSpectrum = [...spectrum].sort((a, b) => b.amplitude - a.amplitude);
 
     // Stable view-fit bbox: sample the curve once to size it to the canvas with a
     // margin, so the curve never clips and the scale is fixed across the run.
@@ -206,40 +276,35 @@ onMounted(() => {
                         ? preset.frozenT
                         : (now / preset.durationMs) % 1;
 
-                // Resolve the two colors per frame off the live resolved string:
-                // the outline triple via the injected resolver, and a DISTINCT,
-                // harmonious epicycle hue via an OKLCh hue shift.
-                const [or, og, ob] = colorResolver(resolvedColor.value).map((v) =>
-                    Math.round(v * 255),
-                );
-                const outlineRgb = `rgb(${or}, ${og}, ${ob})`;
-                const base = cssToOklch(resolvedColor.value);
-                const [er, eg, eb] = oklchToGammaRgb({
-                    L: base.L,
-                    C: base.C,
-                    h: deriveHue(base.h, "analogous", preset.epicycleHueShift, 1),
-                }).map((v) => Math.round(v * 255));
-                const epicycleRgb = `rgb(${er}, ${eg}, ${eb})`;
+                // The cached paint colors (the zero-alloc hoist — resolved in the
+                // color/dark watch, NOT per frame). The 3-pass phosphor-comet
+                // recipe reads the bundle scaled by the clamped intensity.
+                const outline = outlineRgb.value;
+                const epicycle = epicycleRgb.value;
+                const peak = preset.peakAlpha * intensityClamped;
+                const headGlow = preset.headGlowAlpha * intensityClamped;
 
                 c.clearRect(0, 0, w, h);
 
-                // ── Layer 2 — the nested epicycle circles + arms (hero only),
-                // in the distinct hue at ~0.6x the outline alpha.
-                if (preset.epicycles) {
-                    const chain = positionsAt(spectrum, t);
+                // ── Pass 0 — the epicycle scaffolding (hero only), in the distinct
+                // hue, faint and BELOW the outline. Drawn off the amplitude-sorted
+                // chain (R1) so the big circles dominate; source-over (scaffolding
+                // does not bloom).
+                if (preset.epicycleRatios.arm > 0) {
+                    const chain = positionsAt(drawSpectrum, t);
                     c.lineWidth = 1;
+                    c.strokeStyle = epicycle;
                     for (let i = 1; i < chain.length; i++) {
                         const [px, py] = toScreen(chain[i - 1][0], chain[i - 1][1]);
                         const [qx, qy] = toScreen(chain[i][0], chain[i][1]);
                         const radius = Math.hypot(qx - px, qy - py);
                         // The orbit circle around the prior tip.
-                        c.strokeStyle = epicycleRgb;
-                        c.globalAlpha = OUTLINE_PEAK_ALPHA * 0.6 * 0.5;
+                        c.globalAlpha = peak * preset.epicycleRatios.circle;
                         c.beginPath();
                         c.arc(px, py, radius, 0, Math.PI * 2);
                         c.stroke();
                         // The arm to the next tip.
-                        c.globalAlpha = OUTLINE_PEAK_ALPHA * 0.6;
+                        c.globalAlpha = peak * preset.epicycleRatios.arm;
                         c.beginPath();
                         c.moveTo(px, py);
                         c.lineTo(qx, qy);
@@ -248,7 +313,9 @@ onMounted(() => {
                     c.globalAlpha = 1;
                 }
 
-                // The curve head this frame (the last epicycle tip).
+                // The curve head this frame — the last tip of the EMISSION-order
+                // chain (the reconstructed curve point; order-independent sum, but
+                // the tip-to-tail geometry rides the unsorted spectrum).
                 const chain = positionsAt(spectrum, t);
                 const [hxModel, hyModel] = chain[chain.length - 1];
                 const head = toScreen(hxModel, hyModel);
@@ -270,28 +337,37 @@ onMounted(() => {
                     while (trail.length > preset.trailLength) trail.shift();
                 }
 
-                // ── Layer 1 + 4 — the comet outline with an age-decayed fade
-                // tail (the oldest segment reaches zero). Peak alpha at the head,
-                // capped at the background ceiling.
-                c.strokeStyle = outlineRgb;
+                // ── Pass 1 — the comet TRAIL body. Additive `lighter` on the dark
+                // ink ground (the phosphor bloom — crossings brighten), plain
+                // `source-over` on cream (additive over cream blows the hue to
+                // white). The 2D-context `lighter` is the device-free-safe op (no
+                // @supports gate, no fallback rung — W43 §2.1). The persistence is
+                // a SOFT `age^trailFadeExp` with a `trailFloor` so the body
+                // SURVIVES (the direct D2 fix — never the quadratic that killed it).
+                c.globalCompositeOperation = isDark.value ? "lighter" : "source-over";
+                c.strokeStyle = outline;
                 c.lineCap = "round";
                 c.lineJoin = "round";
                 c.lineWidth = 1.6;
                 for (let i = 1; i < trail.length; i++) {
                     const age = i / (trail.length - 1); // 0 = oldest, 1 = head
-                    c.globalAlpha = OUTLINE_PEAK_ALPHA * age * age;
+                    let a = peak * Math.pow(age, preset.trailFadeExp);
+                    a = Math.max(a, peak * preset.trailFloor);
+                    c.globalAlpha = a;
                     c.beginPath();
                     c.moveTo(trail[i - 1][0], trail[i - 1][1]);
                     c.lineTo(trail[i][0], trail[i][1]);
                     c.stroke();
                 }
 
-                // ── Layer 3 — the head glow on the youngest segments.
+                // ── Pass 2 — the HEAD GLOW (the STRONGEST layer, head-forward:
+                // headGlow > peak — the D4 fix). A sharp core under a shadow-blur
+                // bloom on the youngest segments.
                 if (trail.length >= 2) {
                     c.save();
-                    c.shadowColor = outlineRgb;
-                    c.shadowBlur = 14;
-                    c.globalAlpha = OUTLINE_PEAK_ALPHA;
+                    c.shadowColor = outline;
+                    c.shadowBlur = preset.headGlowBlur;
+                    c.globalAlpha = headGlow;
                     c.lineWidth = 2;
                     const tail = trail.slice(-4);
                     c.beginPath();
@@ -300,6 +376,10 @@ onMounted(() => {
                     c.stroke();
                     c.restore();
                 }
+
+                // RESET the context state the passes mutated.
+                c.shadowBlur = 0;
+                c.globalCompositeOperation = "source-over";
                 c.globalAlpha = 1;
             },
         }),

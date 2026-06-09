@@ -58,6 +58,9 @@
             "fourier-field": [
                 "dist/fourier-field.d.ts"
             ],
+            "fourier-math": [
+                "dist/fourier-math.d.ts"
+            ],
             "goo-blob": [
                 "dist/goo-blob.d.ts"
             ],
@@ -296,6 +299,10 @@
         "./fourier-field": {
             "types": "./dist/fourier-field.d.ts",
             "import": "./dist/fourier-field.js"
+        },
+        "./fourier-math": {
+            "types": "./dist/fourier-math.d.ts",
+            "import": "./dist/fourier-math.js"
         },
         "./goo-blob": {
             "types": "./dist/goo-blob.d.ts",
@@ -554,6 +561,8 @@
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
         "proof:vt-names": "node scripts/proof-vt-names.mjs",
         "proof:dock-animation-live": "node scripts/proof-dock-animation-live.mjs",
+        "proof:dock-rail-cohesion": "node scripts/proof-dock-rail-cohesion.mjs",
+        "proof:dock-lockstep-bornred": "node scripts/proof-dock-lockstep-bornred.mjs",
         "proof:dock-items-lag-capture": "node scripts/proof-dock-items-lag-capture.mjs",
         "proof:dock-orchestrator-single": "node scripts/proof-dock-orchestrator-single.mjs",
         "proof:dock-clip-reveal": "node scripts/proof-dock-clip-reveal.mjs",
@@ -642,6 +651,9 @@
         "proof:constellation-substrate-single": "node scripts/proof-constellation-substrate-single.mjs",
         "proof:constellation-tokens": "node scripts/proof-constellation-tokens.mjs",
         "proof:constellation-warp-live": "node scripts/proof-constellation-warp-live.mjs",
+        "proof:fourier-field-intensity": "node scripts/proof-fourier-field-intensity.mjs",
+        "proof:fourier-field-visibility-live": "node scripts/proof-fourier-field-visibility-live.mjs",
+        "proof:constellation-refit-live": "node scripts/proof-constellation-refit-live.mjs",
         "proof:canvas2d-substrate": "vitest run tests/composables/glass/canvas2d/useCanvas2D.test.ts",
         "proof:resolve-canvas-color": "vitest run tests/composables/glass/canvas2d/resolveCanvasColor.test.ts",
         "proof:text-highlight": "vitest run tests/composables/motion/text-highlight-home.test.ts tests/composables/motion/useTextHighlight.test.ts",
@@ -665,6 +677,7 @@
         "proof:dark-semantic-contrast": "node scripts/proof-dark-semantic-contrast.mjs",
         "proof:glass-material-demo": "node scripts/proof-glass-material-demo.mjs",
         "proof:blob-live-truth": "node scripts/proof-blob-live-truth.mjs",
+        "proof:blob-config-atoms": "node scripts/proof-blob-config-atoms.mjs",
         "proof:tabs-unified": "node scripts/proof-tabs-unified.mjs",
         "proof:glass-material-sota": "node scripts/proof-glass-material-sota.mjs",
         "proof:primitive-affordance": "node scripts/proof-primitive-affordance.mjs",

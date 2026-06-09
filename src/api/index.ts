@@ -220,6 +220,18 @@ export type {
     ConstellationWarp,
 } from "../components/custom/constellation";
 
+// ── Fourier field ───────────────────────────────────────────────────────────
+// `FourierFieldProps` — the props a consumer forwards when wrapping
+// `<FourierField>` (the seeded inverse-DFT epicycle background; the sibling to
+// Aurora/Constellation, ships via `/fourier-field`). `FourierFieldVariant` is
+// the configuration-bundle axis (`hero` | `final`). The `intensity` knob is the
+// Aurora `opacityCeiling`-shape outer loudness envelope (AY.W-FF2). The pure
+// inverse-DFT/epicycle math leaf ships separately via `/fourier-math`.
+export type {
+    FourierFieldProps,
+    FourierFieldVariant,
+} from "../components/custom/fourier-field";
+
 // ── Metric primitives ───────────────────────────────────────────────────────
 // `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
 // | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps` is the Props

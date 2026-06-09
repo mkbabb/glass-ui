@@ -30,9 +30,9 @@ import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
 </script>
 
 <template>
-  <!-- A calm, lit, ambient brand mark in the primary color -->
+  <!-- A calm, lit, ambient brand mark — the warm-cream living bead the defaults paint -->
   <GooBlob
-    color="var(--primary)"
+    color="var(--card)"
     :color-resolver="defaultBlobColorResolver"
     :config="BLOB_CONFIG_DEFAULTS"
     class="w-28"
@@ -42,7 +42,10 @@ import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
 
 `color` and `colorResolver` are REQUIRED; `config` is required unless an ancestor
 `provide(BLOB_CONFIG_KEY, …)` supplies it (a mount with neither throws — there is no silent
-defaults synthesis). Pass `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet.
+defaults synthesis). Pass `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet — the
+defaults carry a light warm-cream OKLCh `color.paletteStops` ramp, so a bare mount paints the
+cream bead WITHOUT a per-instance `color`; `color` is only the single-stop fallback. Pass an
+explicit `color` (e.g. `var(--primary)`) for the dark per-instance opt-in.
 
 ## Documentation
 
@@ -140,75 +143,84 @@ It is **not** a data visualization and conveys no information — the canvas is 
 
 ### `BlobConfig`
 
-The full tunable surface (`types.ts`). All fields are concrete with defaults via `BLOB_CONFIG_DEFAULTS`.
+The tunable surface (`types.ts`) is EIGHT cohesive atoms — every length/weight/duration lives
+behind the atom it belongs to (the "simplify the options set to atoms" discipline; the variant IS
+the bundle). All fields are concrete with defaults via `BLOB_CONFIG_DEFAULTS`.
 
 ```ts
 interface BlobConfig {
-  // Geometry (the contained, lit droplet — four-side contained at these defaults)
-  canvasSize: number;         // internal canvas px fallback (default 200)
-  bodyRadius: number;         // body radius, UV fraction (default 0.22)
-  satelliteCount: number;     // 0–4 satellites (default 3)
-  satelliteRadius: number;    // satellite radius (default 0.082)
-  orbitRadius: number;        // orbit envelope (default 0.17)
+  // Body / orbit / satellite geometry (the contained, lit droplet)
+  geometry: {
+    canvasSize: number;       // internal canvas px fallback (default 200)
+    bodyRadius: number;       // body radius, UV fraction (default 0.22)
+    satelliteCount: number;   // 0–4 satellites (default 3)
+    satelliteRadius: number;  // satellite radius (default 0.082)
+    orbitRadius: number;      // orbit envelope (default 0.17)
+    eccentricity: number;     // orbit ellipticity (default 0.05)
+  };
+
+  // Satellite merge/absorb/emerge/orbit lifecycle DURATIONS (ms)
+  satellites: {
+    mergeDuration: number;    // ms a merge takes (default 1800)
+    absorbedDuration: [number, number]; // ms range absorbed (default [2000, 4000])
+    emergeDuration: number;   // ms a re-emergence takes (default 2200)
+    orbitDuration: [number, number];    // ms range orbiting (default [8000, 14000])
+  };
+
+  // The living membrane — smin merge + surface noise/warp + pulsation
+  membrane: {
+    smoothK: number;          // smin blend band, UV-space distance (default 0.05)
+    merge: "quadratic" | "circular";  // smin variant (default "quadratic")
+    noiseAmp: number;         // edge displacement amplitude (default 0.038)
+    noiseFreq: number;        // edge noise frequency (default 3.5)
+    noiseSpeed: number;       // edge noise drift speed (default 0.08)
+    warpAmp: number;          // domain-warp strength on the FBM edge (default 0.35)
+    pulseFreq: number;        // breath frequency (default 0.3)
+    pulseAmp: number;         // breath amplitude (default 0.008)
+  };
+
+  // Palette + OKLCh color-perturbation
+  color: {
+    // The light warm-cream DEFAULT ramp — a bare mount paints the cream bead off these
+    // stops (default ["#cbad99","#ebcc99","#f3f1ce"], OKLCh L≈0.77→0.95). Derive your own
+    // via deriveBlobPalette(seed, { harmony }).
+    paletteStops: string[];
+    hueRange: number;         // hue swing in degrees (default 5)
+    satShift: number;         // OKLCh chroma swing (default 0)
+    brightnessShift: number;  // OKLCh lightness bias (default 0)
+    colorNoiseFreq: number;   // color-field frequency (default 2.0)
+    colorNoiseSpeed: number;  // color-field drift (default 0.05)
+  };
+
+  // The lit-glass surface — glint + Fresnel rim + iridescence/SSS/core-glow
+  surface: {
+    lit: boolean;             // (default true)
+    rimColor: string;         // Fresnel rim tint via the ColorResolver — a warm MID-TONE that
+                              // defines the silhouette curve on the light cream body
+                              // (default "#8c694e", oklch(0.55 0.06 60))
+    lightDir: [number, number, number];  // light direction (default [0.4, 0.7, 0.6])
+    specStrength: number;     // energy-conserving glint weight, re-derived sub-unity (default 0.16)
+    specShininess: number;    // specular exponent — a soft broad lobe (default 20)
+    rimPower: number;         // Fresnel/Schlick exponent (default 2.5)
+    rimStrength: number;      // (default 0.32)
+    iridescence: number;      // warm-pearl rim sheen weight (default 0.09)
+    iridHue: number;          // base hue degrees the warm cosine palette centres on (default 85)
+    iridSpeed: number;        // animated-thickness scroll speed (default 0.06)
+    sssScale: number;         // fast-SSS back-light weight (default 0.1)
+    sssPower: number;         // fast-SSS exponent (default 2.0)
+    coreGlow: number;         // thickness-driven inner-luminosity lift (default 0.06)
+  };
+
+  // Pointer interaction (a gentle "the creature notices you" lean, not a lurch)
+  interaction: {
+    pointerAttraction: number;  // deform strength toward (>0) / away (<0) the cursor (default 0.35)
+    pointerStrength: number;    // deform scale — a calm lean (default 0.18)
+    stretch: number;            // velocity squash-and-stretch, tanh-saturated in-shader (default 0.5)
+    clickImpulse: number;       // click spring-impulse amplitude (default 0.5)
+  };
+
   quality: "full" | "half";   // render quality (default "full"); "half" = half-res backing store
-
-  // Master tempo — ONE scalar multiplying every integrated dt (default 1.0; 0 = freeze)
-  tempo: number;
-
-  // Gooey
-  smoothK: number;            // smin blend band, UV-space distance (default 0.05) — higher = gooier, too high floods
-  merge: "quadratic" | "circular";  // smin variant (default "quadratic")
-
-  // Surface noise (the living membrane)
-  noiseAmp: number;           // edge displacement amplitude (default 0.038)
-  noiseFreq: number;          // edge noise frequency (default 3.5)
-  noiseSpeed: number;         // edge noise drift speed (default 0.08)
-  warpAmp: number;            // domain-warp strength on the FBM edge (default 0.35)
-
-  // Pulsation (the breath)
-  pulseFreq: number;          // breath frequency (default 0.3)
-  pulseAmp: number;           // breath amplitude (default 0.008)
-
-  // Color perturbation (OKLCh)
-  hueRange: number;           // hue swing in degrees (default 5)
-  satShift: number;           // OKLCh chroma swing (default 0)
-  brightnessShift: number;    // OKLCh lightness bias (default 0)
-  colorNoiseFreq: number;     // color-field frequency (default 2.0)
-  colorNoiseSpeed: number;    // color-field drift (default 0.05)
-  paletteStops: string[];     // 2–4 in-family CSS color stops (default []); derive via deriveBlobPalette
-
-  // Iridescence + fake-SSS (the translucent-gel read — a felt whisper, not a seen sheen)
-  iridescence: number;        // warm-pearl rim sheen weight (default 0.09)
-  iridHue: number;            // base hue degrees the warm cosine palette centres on (default 85)
-  iridSpeed: number;          // animated-thickness scroll speed (default 0.06)
-  sssScale: number;           // fast-SSS back-light weight (default 0.1)
-  sssPower: number;           // fast-SSS exponent (default 2.0)
-  coreGlow: number;           // thickness-driven inner-luminosity lift (default 0.06)
-
-  // Lit glass surface (default ON — the canonical calm lit warm-cream bead)
-  lit: boolean;               // (default true)
-  rimColor: string;           // Fresnel rim tint, resolved through the ColorResolver (default "var(--foreground)")
-  lightDir: [number, number, number];  // light direction (default [0.4, 0.7, 0.6])
-  specStrength: number;       // energy-conserving glint weight, re-derived sub-unity (default 0.16)
-  specShininess: number;      // specular exponent — a soft broad lobe, not a tight spot (default 20)
-  rimPower: number;           // Fresnel/Schlick exponent (default 2.5)
-  rimStrength: number;        // (default 0.32)
-
-  // Pointer / interaction (a gentle "the creature notices you" lean, not a lurch)
-  pointerAttraction: number;  // deform strength toward (>0) / away (<0) the cursor (default 0.35)
-  pointerStrength: number;    // deform scale — a calm lean (default 0.18)
-  stretch: number;            // velocity squash-and-stretch magnitude, tanh-saturated in-shader (default 0.5)
-  clickImpulse: number;       // click spring-impulse amplitude (default 0.5)
-
-  // Satellites (the orbit/merge lifecycle)
-  eccentricity: number;       // orbit ellipticity (default 0.05)
-  orbitSpeedScale: number;    // orbit speed multiplier (default 1.0)
-  wobbleScale: number;        // orbit wobble multiplier (default 1.0)
-  mergeRate: number;          // merge-frequency multiplier (default 1.0)
-  mergeDuration: number;      // ms a merge takes (default 1800)
-  absorbedDuration: [number, number]; // ms range absorbed (default [2000, 4000])
-  emergeDuration: number;     // ms a re-emergence takes (default 2200)
-  orbitDuration: [number, number];    // ms range orbiting (default [8000, 14000])
+  tempo: number;              // ONE scalar multiplying every integrated dt (default 1.0; 0 = freeze)
 }
 ```
 
@@ -290,7 +302,7 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
   DOM. The un-wrap re-resolves on a dark-mode flip.
 - **`deriveBlobPalette(seed, options)`** (`@mkbabb/glass-ui/color`) — one seed → 2–4 gamut-mapped OKLCh
   stops distributed across the body + satellites, parallel to aurora's `deriveAurora`, sharing one
-  hoisted `ColorHarmony` vocabulary. Feed the stops to `config.paletteStops`.
+  hoisted `ColorHarmony` vocabulary. Feed the stops to `config.color.paletteStops`.
 - **Warm-cream fit** — any highlight, rim, or sheen the blob grows is tinted warm (toward
   `--foreground` / a warm highlight), never clinical white, so it sits in glass-ui's cream-glass system.
 
@@ -351,7 +363,7 @@ const paused = ref(false);
 <template>
   <GooBlob
     v-model:paused="paused"
-    color="var(--primary)"
+    color="var(--card)"
     :color-resolver="defaultBlobColorResolver"
     :config="BLOB_CONFIG_DEFAULTS"
     class="w-80"

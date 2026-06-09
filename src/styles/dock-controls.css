@@ -24,23 +24,21 @@
        toward `--scale-press-dock` settles on a NO-OVERSHOOT spring (Apple,
        "Designing Fluid Interfaces": default 100% damping — no bounce — for a tap;
        reserve bounce for surfaces driven by gesture MOMENTUM). The dock controls
-       are tap surfaces (no momentum), so the press re-binds `--dock-press-spring`
-       from the bouncy preset (`--spring-bouncy`, ~+20% overshoot, defined in
-       tokens.css §-2) to `--spring-smooth` — the critically-damped (ζ≈1, ~0.4%
-       peak) iOS tap curve. Token-routed (an existing spring preset, never a raw
-       cubic-bezier); the `--duration-fast` prefix is kept so the squish-back stays
-       quick. Every dock-control `scale var(--dock-press-spring)` press transition
-       (and the select chevron's `rotate`) inherits this one binding. A future
-       momentum-gated surface (none today) would override this back to a bouncy
-       preset on its own scope. The `:where()` group keeps zero specificity so a
-       consumer override of `--dock-press-spring` still wins. */
+       are tap surfaces (no momentum).
+
+       AY.W-DOCK2 (D6) — the per-surface re-point of `--dock-press-spring` to
+       `--spring-smooth` is DELETED here: the ROOT token (`tokens.css`) IS the §6
+       doctrine register now (`--spring-smooth`), so the re-point was a dead
+       byte-identical redeclaration — the exact per-surface fork the §6 doctrine
+       claims to have killed. The dock controls inherit the correct smooth
+       transform-press register straight from the ROOT token; this `:where()` group
+       keeps ONLY the small-tile specular sizing below. */
     :where(
         .dock-icon-button,
         .dock-tab-button,
         .dock-select-trigger,
         .dock-dropdown-trigger
     ) {
-        --dock-press-spring: var(--duration-fast) var(--spring-smooth);
         /* AX.W45-TUNE C4/C5 — the small-tile specular sizing. The dock controls are
            ~40px tiles, a fraction of a card's plate, so the global 36% specular
            radius blooms a tile-filling disc (the I.W6 finding). The family re-points

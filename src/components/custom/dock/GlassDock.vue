@@ -180,7 +180,23 @@ const props = defineProps<DockProps>();
 /* AT.W7-dock-a — the container-query opt-in is ORTHOGONAL to the overflow
    clip. The prior `overflow: visible` clip-lift here silently coupled the
    container subject to the clip shell; it is folded out. A consumer wanting
-   multi-line content opts into `overflow="wrap"`. */
+   multi-line content opts into `overflow="wrap"`.
+
+   AY.W-DOCK2 (§F1 reconcile) — `containerName` is ALWAYS-EXPANDED-ONLY. It
+   co-applies `container-type: inline-size`, which establishes inline-size
+   containment and CLAMPS the box to its contained intrinsic size — so on a
+   COLLAPSIBLE dock the FLIP measures collapsed→collapsed and the collapse↔expand
+   morph FREEZES (`--dock-morph-t` stuck at 0; W-DOCK1-DELTA §F1 captured exactly
+   this: 10px → 18px, no morph). This is the AT.W7 / 3.4.0 dock-collapse-vs-
+   container-type interaction re-surfacing on the prop (MEMORY: "dock-collapse fix
+   = container-type removal"). DECISION (W-DOCK2): DOCUMENT, not gate — gating the
+   combination would mean inferring "collapsible" at runtime (the discriminated-
+   union default has `startCollapsed: true`, so the inference is not free), and the
+   prop is legitimately used on `always-expanded` / non-dock surfaces where
+   containment is correct. Consumers needing the dock as a container query SUBJECT
+   set `always-expanded`; a collapsible dock that needs deterministic targeting
+   uses a plain `data-testid` (no layout side-effect — the W-DOCK1 capture target).
+   Mirrored in CLAUDE.md (the dock section). */
 const containerStyle = computed<Record<string, string> | undefined>(() => {
     if (!props.containerName) return undefined;
     return {

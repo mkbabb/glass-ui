@@ -35,7 +35,11 @@ function cliPaths() {
         ROOT,
         MOOD: resolve(BLOB, "composables/useBlobMood.ts"),
         SATS: resolve(BLOB, "composables/useBlobSatellites.ts"),
-        STORY: resolve(ROOT, "demo/stories/substrates/blob-mood.vue"),
+        // AY.W-BLOB2 — the AX IA consolidation folded the mood/interaction stories into
+        // ONE `substrates/blob.vue` page (the prior `blob-mood.vue` is gone — the stale
+        // path REDded this gate's sub-check 3). `blob.vue` drives every shipped mood via
+        // its MOODS pills; the gate tracks the consolidated story.
+        STORY: resolve(ROOT, "demo/stories/substrates/blob.vue"),
         MIGRATION: resolve(ROOT, "MIGRATION.md"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_MOOD_RESOLVED_ARTIFACT",

@@ -24,13 +24,19 @@ import {
 } from "./regen-spring-tokens.mjs";
 
 const ROOT_DIR = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const LAYER_TS = resolve(
+// AY.W-DOCK2 (D3) — the CANONICAL DOCK_SPRING authority is `dockMorphContext.ts`
+// (the orchestrator that drives EVERY shipped `<GlassDock>` morph), NOT the
+// vestigial `useLayerTransition.ts` copy the gate read before. A dev retuning the
+// ACTUAL shipped morph at dockMorphContext.ts to a bouncier ζ now REDs here; the
+// prior gate stayed GREEN reading the other, increasingly-vestigial copy (the
+// dead-witness class — the morph's real spring was gated by proxy, never directly).
+const DOCK_MORPH_CONTEXT_TS = resolve(
     ROOT_DIR,
-    "src/components/custom/dock/composables/useLayerTransition.ts",
+    "src/components/custom/dock/composables/dockMorphContext.ts",
 );
 
 // AW.W2 — the dock-spring const the band assert checks. Mirrors DOCK_SPRING in
-// useLayerTransition.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
+// dockMorphContext.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
 const DOCK_RESPONSE = 0.32;
 const DOCK_DAMPING = 0.7;
 
@@ -58,14 +64,16 @@ export function detectBand() {
     const violations = [];
     const facts = {};
 
-    // The const in useLayerTransition.ts.
-    const layerSrc = readFileSync(LAYER_TS, "utf8");
-    const constMatch = layerSrc.match(
+    // AY.W-DOCK2 (D3) — the const in the CANONICAL `dockMorphContext.ts` (the
+    // orchestrator that drives every shipped dock morph), NOT the vestigial
+    // `useLayerTransition.ts` copy.
+    const morphSrc = readFileSync(DOCK_MORPH_CONTEXT_TS, "utf8");
+    const constMatch = morphSrc.match(
         /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
     );
     if (!constMatch) {
         violations.push(
-            "useLayerTransition.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found",
+            "dockMorphContext.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found (the canonical dock-spring authority)",
         );
         return { facts, violations };
     }
@@ -128,10 +136,11 @@ export function detectBand() {
 }
 
 // ── AW.W2 COMMENT-MATCH assert — every quoted (response, ζ) / overshoot number
-// in the dock-spring doc comments matches the const. The 5 sites the AW plan
-// names: useLayerTransition.ts (the DOCK_SPRING jsdoc + the play()-callback note),
-// tokens.css (the §2 EASING dock row + the --dock-resize-spring triple). The
-// born-RED witness on HEAD was the stale `(0.5, 0.5)` / `+18.5%` text.
+// in the dock-spring doc comments matches the const. AY.W-DOCK2 (D3) — the
+// canonical authority moved to dockMorphContext.ts (the orchestrator jsdoc + the
+// DOCK_SPRING const note), with tokens.css (the §2 EASING dock row + the
+// --dock-resize-spring triple). The born-RED witness on HEAD was the stale
+// `(0.5, 0.5)` / `+18.5%` text.
 const STALE_PATTERNS = [
     { re: /response\s+0\.5\b/i, label: "response 0.5 (stale — should be 0.32)" },
     { re: /ζ\s*=?\s*0\.50?\b/, label: "ζ 0.5 (stale — should be 0.7)" },
@@ -153,7 +162,7 @@ export function detectComments() {
     const facts = { staleHits: [] };
 
     const targets = [
-        { path: LAYER_TS, label: "useLayerTransition.ts" },
+        { path: DOCK_MORPH_CONTEXT_TS, label: "dockMorphContext.ts" },
         { path: tokensPath, label: "tokens.css" },
     ];
 

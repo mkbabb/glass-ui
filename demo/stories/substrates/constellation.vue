@@ -90,6 +90,13 @@ const drawWarpFocal = computed(
         },
 );
 
+// ── Re-fit + auto-drift section (AY.W-CON1) ─────────────────────────────────
+// A dedicated <Constellation> whose container the π spec resizes (the re-fit
+// readback) AND a wander-on focal (the auto-drift cadence readback). The overlay
+// reuses the warp focal painter so the wander focal is visible.
+const refitHostRef = useTemplateRef<HTMLElement>("refitHostRef");
+const refitRef = useTemplateRef<InstanceType<typeof Constellation>>("refitRef");
+
 // DEMO-PRIVATE π-lane hook: expose the live warp field + the imperative warpTo
 // on `window` so the W00 visual-runtime lane can read `field.warp`/`field.nodes`
 // per frame and dispatch a synthetic warp (a runtime-observation probe, NOT a
@@ -105,6 +112,27 @@ onMounted(() => {
         (window as unknown as Record<string, unknown>).__constellationWarp = {
             field: inst.field,
             warpTo: inst.warpTo?.bind(inst),
+        };
+    }
+
+    // AY.W-CON1: the refit + auto-drift seam. `field` lets the π spec read the
+    // node bbox + warp + focalIndex per frame; `resizeTo(w, h)` drives a
+    // PROGRAMMATIC RO size-change (it sets the host's inline extent + forces a
+    // layout flush so the substrate's ResizeObserver fires synchronously) so the
+    // spec can assert the post-RO frame WITHOUT racing a real responsive-scale.
+    const refit = refitRef.value as
+        | (InstanceType<typeof Constellation> & { field?: ConstellationField })
+        | null;
+    const refitHost = refitHostRef.value;
+    if (refit && refitHost && typeof window !== "undefined") {
+        (window as unknown as Record<string, unknown>).__constellationRefit = {
+            field: refit.field,
+            resizeTo(w: number, h: number) {
+                refitHost.style.width = `${w}px`;
+                refitHost.style.height = `${h}px`;
+                // force a synchronous layout flush so the ResizeObserver fires.
+                void refitHost.offsetWidth;
+            },
         };
     }
 });
@@ -179,6 +207,31 @@ onMounted(() => {
                 The constellation is a DECORATIVE proximity graph, not a data-graph
                 renderer.
             </p>
+        </StorySection>
+
+        <StorySection
+            label="resize re-fit + auto-drift wander"
+            blurb="The lattice RE-FITS proportionally on a real resize (no drift-out lag — the field fills the new canvas within one frame), and the focal node AUTO-DRIFTS: a periodic auto-pick re-points it to a random node on a jittered cadence — the wander source on the SAME warp spring (no second mechanic). Both are PRM-gated: under reduced-motion the field freezes and the cadence never advances. The π lane resizes this surface programmatically (via __constellationRefit.resizeTo) and reads the node bbox + focalIndex per frame."
+        >
+            <ShowcaseFrame pad="none">
+                <!-- The π spec resizes refitHost via __constellationRefit.resizeTo;
+                     the wander cadence runs short here so the drift is observable. -->
+                <div
+                    ref="refitHostRef"
+                    class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
+                >
+                    <Constellation
+                        ref="refitRef"
+                        seed="refit-demo"
+                        :count="56"
+                        :link="140"
+                        :pointer-reactive="false"
+                        :wander="{ minIdle: 1400, jitter: 600 }"
+                        :draw-overlay="drawWarpFocal"
+                        class="absolute inset-0"
+                    />
+                </div>
+            </ShowcaseFrame>
         </StorySection>
     </StoryPage>
 </template>

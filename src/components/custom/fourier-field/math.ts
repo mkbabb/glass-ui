@@ -32,34 +32,11 @@ export function comp(index: number, re: number, im: number): BasisComponent {
 }
 
 /**
- * Sum `c_k * exp(2*pi*i*k*t)` — the curve point at parameter `t`. `maxTerms`
- * truncates the series (the partial-sum read). Returns the complex value as
- * `[re, im]` (the curve's `[x, y]` before view-fit).
- */
-export function evalFourier(
-    components: BasisComponent[],
-    t: number,
-    maxTerms?: number,
-): [number, number] {
-    let re = 0;
-    let im = 0;
-    const n = maxTerms ?? components.length;
-    for (let i = 0; i < n && i < components.length; i++) {
-        const c = components[i];
-        const angle = 2 * Math.PI * c.index * t;
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        re += c.coefficient[0] * cos - c.coefficient[1] * sin;
-        im += c.coefficient[0] * sin + c.coefficient[1] * cos;
-    }
-    return [re, im];
-}
-
-/**
  * The epicycle chain at parameter `t`: the running tip of each phasor stacked on
  * the last, starting at the origin. `positions[0]` is `[0, 0]`; the final entry
- * is the curve point ({@link evalFourier} at the same `t`). `maxCircles`
- * truncates the chain (draw fewer arms than the spectrum carries).
+ * is the curve point — the inverse-DFT sum `Σ c_k * exp(2*pi*i*k*t)` at the same
+ * `t`. `maxCircles` truncates the chain (draw fewer arms than the spectrum
+ * carries).
  */
 export function positionsAt(
     components: BasisComponent[],

@@ -146,11 +146,11 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     const orbitBlendOrigins: { x: number; y: number; start: number }[] = [];
 
     let lastMergeTime = -Infinity;
-    let lastOrbitRadius = config.orbitRadius;
+    let lastOrbitRadius = config.geometry.orbitRadius;
     const MERGE_STAGGER_MS = 3000;
 
     function syncOrbitRadius() {
-        const cur = config.orbitRadius;
+        const cur = config.geometry.orbitRadius;
         if (cur !== lastOrbitRadius && lastOrbitRadius > 0) {
             const scale = cur / lastOrbitRadius;
             for (const s of internals) {
@@ -162,18 +162,18 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
     }
 
     function syncCount(now: number) {
-        const count = config.satelliteCount;
+        const count = config.geometry.satelliteCount;
         while (internals.length < count) {
             internals.push(
                 createSatellite(
                     rng,
                     internals.length,
-                    config.orbitRadius,
-                    config.eccentricity,
+                    config.geometry.orbitRadius,
+                    config.geometry.eccentricity,
                     now,
                 ),
             );
-            sources.push({ x: 0, y: 0, radius: config.satelliteRadius, opacity: 0 });
+            sources.push({ x: 0, y: 0, radius: config.geometry.satelliteRadius, opacity: 0 });
             orbitBlendOrigins.push({ x: 0, y: 0, start: 0 });
         }
         if (internals.length > count) {
@@ -193,11 +193,11 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
 
         const count = internals.length;
         const mergeRateScale = mood.mergeRate;
-        const satelliteRadius = config.satelliteRadius;
-        const mergeDuration = config.mergeDuration;
-        const emergeDuration = config.emergeDuration;
-        const orbitDuration = config.orbitDuration;
-        const absorbedDuration = config.absorbedDuration;
+        const satelliteRadius = config.geometry.satelliteRadius;
+        const mergeDuration = config.satellites.mergeDuration;
+        const emergeDuration = config.satellites.emergeDuration;
+        const orbitDuration = config.satellites.orbitDuration;
+        const absorbedDuration = config.satellites.absorbedDuration;
 
         for (let i = 0; i < count; i++) {
             const s = internals[i]!;
@@ -238,7 +238,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                 case "absorbed": {
                     if (t >= 1) {
                         // New orbit — emerge toward a point on it
-                        randomizeOrbit(s, rng, config.orbitRadius, config.eccentricity, now);
+                        randomizeOrbit(s, rng, config.geometry.orbitRadius, config.geometry.eccentricity, now);
                         const futurePos = orbitPos(s, now + 3000, mood.orbitSpeedScale, mood.wobbleScale);
                         s.endX = futurePos.x;
                         s.endY = futurePos.y;

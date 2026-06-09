@@ -5,6 +5,7 @@ import { mulberry32, hashString } from "../../../utils/prng";
 import {
     seedField,
     stepField,
+    refitField,
     readPalette,
     drawEdges,
     drawNodes,
@@ -17,6 +18,7 @@ import {
     type ConstellationRipple,
     type ConstellationPointer,
     type ConstellationPalette,
+    type ConstellationWander,
 } from "./constellationField";
 import { cn } from "../../../utils/cn";
 
@@ -50,6 +52,7 @@ const {
     seed,
     pointerReactive = true,
     warpOnClick = false,
+    wander = false,
     class: className,
     drawOverlay,
 } = defineProps<{
@@ -76,6 +79,18 @@ const {
      * method (via `defineExpose`) is the seam this prop sugars.
      */
     warpOnClick?: boolean;
+    /**
+     * Auto-DRIFT (AY.W-CON1). A periodic auto-pick re-points the focal node to a
+     * RANDOM node on a jittered cadence — the wander source on the SAME warp
+     * spring (the 2nd half of the AX.W17 "drift + warp are ONE mechanic" thesis;
+     * no second rAF, no second mechanic). `true` uses the default cadence
+     * (8–16s, the slides rhythm); `{ minIdle?, jitter? }` tunes it (ms). Default
+     * OFF — `wander` absent leaves `field.wander` undefined, byte-identical to
+     * HEAD. PRM-gated by the WARP precedent: the cadence lives inside the
+     * `!reducedMotion` step block, so under reduced-motion it never advances and
+     * the focal mark stays at its seed (NOT fire-but-freeze).
+     */
+    wander?: boolean | { minIdle?: number; jitter?: number };
     class?: HTMLAttributes["class"];
     /**
      * The skin seam. Runs after the neutral passes with the live field, so a
@@ -115,6 +130,21 @@ const field: ConstellationField = {
     focalIndex: -1,
     warp: { x: 0, y: 0, vx: 0, vy: 0, targetIdx: -1 },
 };
+
+// The auto-DRIFT cadence (AY.W-CON1). `wander` absent/false leaves `field.wander`
+// undefined (byte-identical to HEAD — stepField skips the cadence block); `true`
+// uses the default 8–16s rhythm; an object tunes the idle/jitter (ms). `nextAt`
+// arms on the first stepped frame, so there is no immediate jump on mount.
+const wanderState: ConstellationWander | undefined = (() => {
+    if (!wander) return undefined;
+    const cfg = wander === true ? {} : wander;
+    return {
+        nextAt: -1,
+        minIdle: cfg.minIdle ?? 8000,
+        jitter: cfg.jitter ?? 8000,
+    };
+})();
+field.wander = wanderState;
 const pointer: ConstellationPointer = { x: -1, y: -1 };
 const ripples: ConstellationRipple[] = [];
 let palette: ConstellationPalette = { ...DEFAULT_PALETTE };
@@ -147,6 +177,10 @@ onMounted(() => {
                         2,
                     );
                     if (field.w !== w || field.h !== h) {
+                        // Capture the PRIOR extent BEFORE overwrite so the re-fit
+                        // can rescale proportionally (AY.W-CON1).
+                        const prevW = field.w;
+                        const prevH = field.h;
                         field.w = w;
                         field.h = h;
                         field.k = k;
@@ -157,6 +191,13 @@ onMounted(() => {
                             // (AX.W17 — a continuous spring-eased path).
                             field.warp.x = w / 2;
                             field.warp.y = h / 2;
+                        } else {
+                            // RE-FIT the existing lattice to the new dims on the
+                            // SAME frame (AY.W-CON1) — so the first post-resize
+                            // draw already fills the new canvas (no drift-out lag).
+                            // Runs BEFORE the stepField line below, so the re-fit
+                            // lattice is what this frame paints.
+                            refitField(field, prevW, prevH);
                         }
                         palette = readPalette(canvas);
                     }
@@ -168,10 +209,13 @@ onMounted(() => {
                     prevNow = now;
 
                     // Step the field unless the substrate is frozen (reduced-
-                    // motion paints one static frame, no drift, no warp advance).
+                    // motion paints one static frame, no drift, no warp advance,
+                    // and — the WARP precedent — no auto-DRIFT cadence advance:
+                    // `wander.nextAt` stays put and the focal mark holds at its
+                    // seed). `now` + `rng.value` drive the wander cadence (AY.W-CON1).
                     if (!handle.reducedMotion) {
                         const livePointer = pointerReactive ? pointer : null;
-                        stepField(field, k, speed, livePointer, dt);
+                        stepField(field, k, speed, livePointer, dt, now, rng.value);
                     }
 
                     c.clearRect(0, 0, w, h);

@@ -59,16 +59,16 @@ tranche has no past); the table fills as waves close.
 | W-DOCK1 | verify-or-falsify the dock items-lag (live capture) | live-verified — VERDICT: lag captured-ABSENT (box↔scalar onset Δ = 0ms in all 12 captures; the trailing-child trail is the deliberate stagger, not a clock desync); 12 own-surface frame-series PNGs ({light,dark} × {desktop,mobile} × 3 conditions); see [`audit/visual/W-DOCK1-DELTA.md`](./audit/visual/W-DOCK1-DELTA.md) |
 | W-GLASS | re-author .glass-drawer + Slider onto --glass-level; opt-in specular | planned |
 | W-MOTION | re-point off-doctrine motion survivors; widen proof:animation-coherence | dev-complete (source-verified — gate GREEN + CI-promoted + born-RED fixture; no pixels changed, no live DELTA owed; see [`audit/visual/W-MOTION-DELTA.md`](./audit/visual/W-MOTION-DELTA.md)) |
-| W-CON1 | constellation refitField transpose-UP + auto-drift + --constellation-alpha | planned |
+| W-CON1 | constellation refitField transpose-UP + auto-drift + --constellation-alpha | live-verified — refit fills the resized box in ONE frame (covW/H 0.26/0.33 drift-out → 0.92/0.98 refit; binding π); auto-drift fires 3×/5s on the SAME warp spring (PRM-suppressed: 0 re-targets under reduce); field cools (mean node-speed within ±5%); --constellation-alpha both-mode π readback MATCHES (light 0.80 / dark 0.88); 12 own-surface PNGs (refit before/after + auto-drift × {desktop,mobile} × {light,dark}); see [`audit/visual/W-CON1-DELTA.md`](./audit/visual/W-CON1-DELTA.md) |
 | W-CON2 | constellation warp VERIFY + decided-scope eggs | planned |
 | W-CON3 | constellation ?freeze seam + anomaly/resolved props | planned |
 | W-AUR2 | aurora doc reconciliation — derive-color PROP sliver | planned |
 | W-AUR-PAINTERLY | tune painterly mediums to the arresting metric + capture DELTA | planned |
 | W-AUR-WEBGPU-DECIDE | retire the medium-less WGSL twin OR resurrect with a consumer | planned |
-| W-BLOB2 | light OKLCh default base + atom simplification | planned |
+| W-BLOB2 | light OKLCh default base + atom simplification | live-verified — the cream bead the docs promised: resting body mean OKLCh-L 0.814 light / 0.775 dark (≥0.62 floor, was ≈0.53 charcoal); `proof:blob-warm-default` born-RED→GREEN (2/2); the 46-field BlobConfig folded to 8 atoms (`proof:blob-config-atoms` 8≤12 + deletion-witness); the full `proof:blob-*` fleet GREEN (render 3/3, live-truth 4/0, integration 3/3); 9 own-surface PNGs ({light,dark}×{375,1280} + 5 hover frames); see [`audit/visual/W-BLOB2-DELTA.md`](./audit/visual/W-BLOB2-DELTA.md) |
 | W-BLOB3 | blob interaction + frame-budget + consumer-#2 decision | planned |
 | W-FF2 | land the W43 intensity model; intensity prop; 3-substrate parity | planned |
-| W-DOCK2 | real entering-child onset gate + ONE DOCK_SPRING + rail | planned |
+| W-DOCK2 | real entering-child onset gate + ONE DOCK_SPRING + rail | live-pending — device-free gates GREEN (HG1 born-RED witness `proof:dock-lockstep-bornred` RED-on-lag/GREEN-at-HEAD; HG2 stagger KEEP + 0.4-vs-0.55 reconcile + LOCKSTEP_BUDGET_MS≈537ms recorded; HG3 `proof:spring-tokens-synced` re-pointed to the canonical `dockMorphContext.ts` + born-RED-on-retune; HG4 FLIP fold BOOKED→W-GOD1 with `detectFlipDriftGuard`; HG5 `proof:dock-rail-cohesion` single-indicator+one-clock LANDED, persistence BOOKED→W-GOD1; HG6 CI-included + byte-relocked; HG7 §F1 documented + §F2 BOOKED→W-GOD1); own-surface light+dark frame-series capture OWED → [`audit/visual/W-DOCK2-DELTA.md`](./audit/visual/W-DOCK2-DELTA.md) |
 | W-DOCK3 | author the dock-with-slider story; capture the drag | planned |
 | W-SLD1 | reconcile the rounded-knob-vs-cylinder slider contradiction | planned |
 | W-SLD2 | slider consumer-boundary gate clause | planned |

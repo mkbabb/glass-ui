@@ -77,6 +77,27 @@ export interface ConstellationWarp {
 }
 
 /**
+ * The auto-DRIFT target-source (AY.W-CON1 — the 2nd half of the AX.W17 "drift +
+ * warp are ONE mechanic" thesis). The warp re-points its focal node to a
+ * periodically-chosen RANDOM node on a jittered cadence: the SAME warp spring,
+ * a different target-PICKER (a click for warp, this cadence for drift). No new
+ * rAF, no second mechanic — `stepField` steps this cadence inline, re-pointing
+ * `setWarpTarget` to a picked node only when the spring has SETTLED (so a
+ * click-warp in flight always pre-empts the cadence). PRM is enforced by the
+ * CALLER (the component does not advance the cadence under reduced-motion — the
+ * `stepField` call lives inside the `!reducedMotion` block — so the focal mark
+ * stays at its seed: the WARP precedent, NOT fire-but-freeze).
+ */
+export interface ConstellationWander {
+    /** ms timestamp of the next auto re-target; -1 until armed on the first stepped frame. */
+    nextAt: number;
+    /** the minimum idle (ms) between auto re-targets. */
+    minIdle: number;
+    /** the random extra idle (ms) added per cadence (so the rhythm is not metronomic). */
+    jitter: number;
+}
+
+/**
  * The field state the component exposes to its `drawOverlay` consumer so a
  * skin can pin itself to a real field node. `k` is the `width / BASE_WIDTH`
  * scale, `dpr` the device-pixel ratio applied by the substrate.
@@ -104,6 +125,13 @@ export interface ConstellationField {
     focalIndex: number;
     /** The per-axis warp spring the engine steps inside `stepField` (AX.W17). */
     warp: ConstellationWarp;
+    /**
+     * The optional auto-DRIFT cadence (AY.W-CON1). When set, `stepField`
+     * periodically re-points the warp to a random node (the wander source on the
+     * SAME spring). Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
+     * pre-wander HEAD — `stepField` skips the cadence block entirely.
+     */
+    wander?: ConstellationWander;
 }
 
 /**
@@ -129,6 +157,15 @@ export interface ConstellationProps {
      * reduced-motion (the focal mark stays put — the stated PRM policy).
      */
     warpOnClick?: boolean;
+    /**
+     * Auto-DRIFT (AY.W-CON1): a periodic auto-pick re-points the focal node to a
+     * random node on a jittered cadence — the wander source on the SAME warp
+     * spring (no second mechanic). `true` uses the default cadence (8–16s, the
+     * slides rhythm); `{ minIdle, jitter }` tunes it. Default OFF (absent →
+     * byte-identical to HEAD). PRM-gated by the WARP precedent (the cadence never
+     * advances under reduced-motion — the focal stays at its seed).
+     */
+    wander?: boolean | { minIdle?: number; jitter?: number };
     class?: string;
     /** The skin seam — paints the consumer's focal mark on the live field. */
     drawOverlay?: (
@@ -210,6 +247,35 @@ export function seedField(
 }
 
 /**
+ * Re-fit the existing lattice to a NEW canvas size, proportionally, ON the
+ * size-change frame (AY.W-CON1). Without it a field seeded at a transitional
+ * size (the canvas measures mid responsive-scale — the deck slide-enter case)
+ * keeps its small-canvas positions and DRIFTS out to fill the larger box at
+ * `speed` px/frame — the visible "takes a while to expand out" lag the slides
+ * bespoke copy fixed. Scales node + warp positions by the per-axis dimension
+ * ratio; velocities are UNTOUCHED (they are base-width direction vectors
+ * `k`-scaled at step time — scaling them would HEAT the field, breaking the
+ * cool-down invariant). No-op on first layout (`prev ≤ 0`; the seed path owns
+ * it) or unchanged dims.
+ */
+export function refitField(
+    field: ConstellationField,
+    prevW: number,
+    prevH: number,
+): void {
+    if (!(prevW > 0) || !(prevH > 0)) return;
+    if (prevW === field.w && prevH === field.h) return;
+    const sx = field.w / prevW;
+    const sy = field.h / prevH;
+    for (const p of field.nodes) {
+        p.x *= sx;
+        p.y *= sy;
+    }
+    field.warp.x *= sx;
+    field.warp.y *= sy;
+}
+
+/**
  * Advance the field one step: drift + wall-bounce every node, then (if the
  * pointer is live) lean nodes within reach toward the cursor WITHOUT changing
  * their speed (the slow geometric drift is preserved). `k` is the scale factor.
@@ -218,6 +284,12 @@ export function seedField(
  * via `warpStep` INSIDE this single per-frame call (AX.W17) — NO second rAF,
  * NO `useSpring`. The warp rides the substrate's ONE parked rAF; a `dt` of `0`
  * (omitted / first frame) leaves the spring untouched.
+ *
+ * `now` (ms; default `0` — every existing caller stays green) + `rng` (default
+ * `Math.random`) drive the optional auto-DRIFT cadence (AY.W-CON1): AFTER the
+ * warp step, if `field.wander` is set and `now > 0`, the cadence re-points
+ * `setWarpTarget` to a random node when it elapses AND the spring has settled
+ * (a click-warp in flight pre-empts the cadence — `warpSettled` reports false).
  */
 export function stepField(
     field: ConstellationField,
@@ -225,6 +297,8 @@ export function stepField(
     speed: number,
     pointer: ConstellationPointer | null,
     dt = 0,
+    now = 0,
+    rng: () => number = Math.random,
 ): void {
     const { nodes, w, h } = field;
     for (let i = 0; i < nodes.length; i++) {
@@ -269,6 +343,22 @@ export function stepField(
     // spring chases its post-step position (it tracks a moving target, not a
     // frozen snapshot). One rAF, no useSpring.
     warpStep(field, dt);
+
+    // The auto-DRIFT cadence (AY.W-CON1) — the 2nd target-source on the SAME
+    // spring, stepped AFTER warpStep so a click-warp already in flight (NOT
+    // settled) pre-empts the periodic re-target. `now > 0` gates the cadence
+    // (the default `now = 0` callers — the unit warp suite — skip it). The
+    // first stepped frame ARMS `nextAt` (no immediate jump); each subsequent
+    // elapsed-and-settled frame re-points to a fresh random node.
+    if (field.wander && now > 0) {
+        const wd = field.wander;
+        if (wd.nextAt < 0) {
+            wd.nextAt = now + wd.minIdle + rng() * wd.jitter; // armed, no immediate jump
+        } else if (now >= wd.nextAt && warpSettled(field)) {
+            setWarpTarget(field, pickWanderTarget(field, rng));
+            wd.nextAt = now + wd.minIdle + rng() * wd.jitter;
+        }
+    }
 }
 
 // ── Focal node + warp spring (AX.W17) ────────────────────────────────────────
@@ -392,6 +482,59 @@ export function warpTo(field: ConstellationField, px: number, py: number): numbe
     if (idx < 0) return -1;
     setWarpTarget(field, idx);
     return idx;
+}
+
+// ── Auto-drift target-source (AY.W-CON1) ─────────────────────────────────────
+/**
+ * The settle BAND (px) — the warp counts as "arrived" once its gap to the live
+ * target node falls within this distance. This is DELIBERATELY generous (not the
+ * sub-px the warp-spec's `CONVERGE_PX = 6` at-rest tolerance): a critically-damped
+ * spring chasing a CONTINUOUSLY-DRIFTING node holds a small steady-state tracking
+ * lag (≈2ζ/ω · v_target, a few px) FOREVER — it never reaches true zero gap. So a
+ * "wait for |gap| < 1px AND |v| < 1" gate would stall the cadence permanently on a
+ * drifting field. The band cleanly separates the two regimes: a SETTLED-tracking
+ * warp holds ≤ a handful of px; a fresh CLICK-warp starts HUNDREDS of px away and
+ * is plainly in-flight. The cadence advances only once the tracking lag is inside
+ * the band (so a click pre-empts; a drifting-but-arrived warp re-targets).
+ */
+const WARP_SETTLE_BAND = 24;
+
+/**
+ * Is the warp spring ARRIVED on its target (AY.W-CON1)? True when there is no
+ * active target (`targetIdx < 0`) OR the focal's gap to its LIVE target node is
+ * within {@link WARP_SETTLE_BAND}. A click-warp in flight (hundreds of px out)
+ * reports NOT arrived, so a user click always PRE-EMPTS the auto-drift cadence
+ * (the wander only re-targets a spring that has reached its current node). The
+ * gate is POSITION-only by design — a critically-damped spring tracking a drifting
+ * node carries a non-zero steady-state velocity forever, so a velocity term would
+ * never clear on a live field.
+ */
+export function warpSettled(field: ConstellationField): boolean {
+    const { warp, nodes } = field;
+    if (!warp || warp.targetIdx < 0 || warp.targetIdx >= nodes.length) return true;
+    const target = nodes[warp.targetIdx];
+    return Math.hypot(warp.x - target.x, warp.y - target.y) < WARP_SETTLE_BAND;
+}
+
+/**
+ * Pick a random eligible node index for the auto-drift re-target (AY.W-CON1) —
+ * any node EXCEPT the current `focalIndex` (so the focal actually MOVES). `rng`
+ * is the seeded `() => number` in `[0, 1)`. A degenerate field (≤1 node, or only
+ * the current focal) returns the current focal, which `setWarpTarget` no-ops
+ * cleanly (no crash, no jump).
+ */
+export function pickWanderTarget(
+    field: ConstellationField,
+    rng: () => number,
+): number {
+    const n = field.nodes.length;
+    if (n <= 1) return field.focalIndex;
+    const focal = field.focalIndex;
+    // Pick from the n nodes; if we land on the focal, shift to the next index so
+    // the focal always moves (an O(1) bias-free pick over the n-1 eligible set).
+    if (focal < 0 || focal >= n) return Math.floor(rng() * n) % n;
+    const r = Math.floor(rng() * (n - 1)); // [0, n-2]
+    return r < focal ? r : r + 1; // skip the focal slot → an eligible node ≠ focal
 }
 
 /** Pass 1 — hairline edges between any two nodes within `link` px (alpha falls off with distance). */

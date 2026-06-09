@@ -39,7 +39,11 @@ test.setTimeout(180_000);
 const LIBRARY_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
 // The interactive-hero story carries the wired DockBackgroundToggle (the fixture).
-const BLOB_INTERACTION_PATH = "/substrates/blob-interaction";
+// AY.W-BLOB2 — the AX IA consolidation folded the interaction/mood stories into the ONE
+// `substrates/blob` page (the prior dedicated `blob-interaction`/`blob-mood` routes are
+// gone — the stale paths timed this gate out). The interaction hero + its wired
+// DockBackgroundToggle live on that page.
+const BLOB_INTERACTION_PATH = PI_TARGETS.blob.path;
 
 /** Composited element screenshot → decoded RGBA. */
 async function grab(locator: Locator): Promise<PNG> {
@@ -130,11 +134,11 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         // static register to WatercolorDot (zero GL context) and reserves GooBlob for
         // the interactive/lit hero(es), so no single story mounts an unbounded count.
         const CAP = 6; // comfortably under the ~8 Chromium per-page cap
-        for (const path of [
-            PI_TARGETS.blob.path, // /substrates/goo-blob
-            "/substrates/blob-mood",
-            BLOB_INTERACTION_PATH,
-        ]) {
+        // AY.W-BLOB2 — the consolidated `substrates/blob` page is the ONE blob story (the
+        // interaction + mood + static stories folded into it); it mounts exactly TWO live
+        // GL contexts (the interaction + mood heroes), the static register routed to
+        // WatercolorDot (zero GL). The prior three separate routes collapsed onto it.
+        for (const path of [PI_TARGETS.blob.path]) {
             await page.goto(path);
             await page
                 .locator('canvas[data-testid="goo-blob-canvas"]')

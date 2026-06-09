@@ -6,6 +6,12 @@ export type {
     MoodParams,
     MetaballSource,
     BlobConfig,
+    BlobGeometry,
+    BlobSatelliteTiming,
+    BlobMembrane,
+    BlobColor,
+    BlobSurface,
+    BlobInteraction,
     SatellitePhase,
     SatelliteInternal,
 } from "./types";
