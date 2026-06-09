@@ -86,6 +86,9 @@ tranche has no past); the table fills as waves close.
 | W-GOD1 | god-module carve (after W-CON1/W-BLOB2 land) | planned |
 | W-COHERE | the four substrates as ONE set — blob mood-register + ambient shadow, constellation recession envelope, the set-cohesion gate (B2-gestalt; runs LAST in the substrate band) | planned |
 | W-UNDERLINE | GlassUnderline — the sci-report HandUnderline pen draw-on transposed UP as a first-class `/underline` component (two clocks, PRM-fenced, filter-free; slides + sci-report consumers; user-directed 2026-06-09) | planned |
+| W-MOTION2 | the FULL keyframes.js suite + every curve re-exported through /motion + the CSS↔JS curve table + the curve-gallery story (user-directed 2026-06-09) | planned |
+| W-ANIM1 | the first-principles animation audit — the falsifiable rubric, the element×principle conformance matrix, the routed fix list, the extended proof:animation-coherence (user-directed 2026-06-09) | planned |
+| W-LIQUID | the iOS-27 Siri liquid-glass facility — useLiquidFlex amorphous flex+squish shared primitive (blob/dock/tabs-indicator consumers; SOTA research lane in the hand-challenge; extends W52/W53) (user-directed 2026-06-09) | planned |
 | W-LEG1 | legibility reconcile | planned |
 | W-LIVE1 | the local-only live-gate CI decision | planned |
 | W-NDA | NDA / scope-clause reconcile | planned |
