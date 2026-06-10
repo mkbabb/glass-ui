@@ -117,17 +117,20 @@ const measured = computed(
 /** The slotted text's bottom (alphabetic baseline proxy), in client px, or null. */
 function textRangeRect(el: HTMLElement): DOMRect | null {
     if (typeof document === "undefined" || typeof Range === "undefined") return null;
+    // The slotted CONTENT nodes only: skip the overlay <svg> AND the empty text anchors
+    // Vue's compiled slot leaves around the word — `selectNode` REPLACES the selection,
+    // so a loop that selects every non-svg child ends on a trailing empty anchor and
+    // measures a zero rect (baselineFrac stayed null forever; the legacy constant
+    // rendered — the 3.11.0 gate-flip lesson). Anchor the range on the first content
+    // node and extend it over the last: the union is the word.
+    const content = Array.from(el.childNodes).filter((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) return (node as Element).tagName !== "svg";
+        return node.nodeType === Node.TEXT_NODE && (node.textContent ?? "").trim().length > 0;
+    });
+    if (content.length === 0) return null;
     const range = document.createRange();
-    let added = false;
-    for (const node of Array.from(el.childNodes)) {
-        // skip the overlay <svg> (and any element that is not the slotted word)
-        if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === "svg") {
-            continue;
-        }
-        range.selectNode(node);
-        added = true;
-    }
-    if (!added) return null;
+    range.selectNode(content[0]);
+    if (content.length > 1) range.setEndAfter(content[content.length - 1]);
     const r = range.getBoundingClientRect();
     range.detach?.();
     return r.height > 0 ? r : null;
