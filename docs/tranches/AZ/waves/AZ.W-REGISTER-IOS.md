@@ -61,13 +61,24 @@ Specifically:
    `.variant-rail` active-glyph chain no longer falls back to a saturated brand hue (the
    `var(--dock-rail-active-accent, var(--primary))` warm-ink-or-glass fallback survives, but the
    accent BAR demotes to a translucent luminance-lift token, not a solid `--primary`/brand bar);
-   (b) the new `--dock-selected-accent` luminance-lift token exists + is consumed by the rail
-   accent + the selected-glyph register; (c) a `--dock-control-press-bg` darken token exists and
-   the `:active` rule reads it (the iOS darken-plus-shrink); (d) the demo `dock-nav.css` carries
-   NO `--demo-nav-accent: var(--viz-fourier)` mint and NO red glyph/accent re-point (the retire);
-   (e) the surviving-red allowlist holds — `--viz-fourier` is still consumed by the ℱ wordmark
-   mark, the data-viz strokes, and the gold/red CTA, and by NOTHING in an interactive
-   hover/active/selected register.
+   (b) the new `--dock-selected-accent` luminance-lift token exists + is consumed by the rail accent
+   BAR (`dock-controls.css` `::before` `background`), and the active-GLYPH `color` resolves to
+   `--foreground`/warm-ink — never a saturated brand hue (per arm-a the glyph stays `--foreground`;
+   the bar is the ONLY required `--dock-selected-accent` consumer — clause (b) does NOT require the
+   glyph to consume `--dock-selected-accent`, which would contradict arm-a step 3); (c) a
+   `--dock-control-press-bg` darken token exists and the `:active` rule reads it (the iOS
+   darken-plus-shrink); (d) the demo `dock-nav.css` carries NO `--demo-nav-accent: var(--viz-fourier)`
+   mint and NO red glyph/accent re-point (the retire); (e) the surviving-red allowlist holds, stated
+   as a MACHINE-CHECKABLE NEGATIVE PREDICATE (not a prose category list): across `src/styles/**` +
+   `demo/**`, NO rule whose selector carries an interactive state token — the regex set
+   `:hover` · `:active` · `:focus-visible` · `.is-active` · `.active` · `[aria-current` ·
+   `[aria-pressed` · `[aria-selected` · `[data-state="(active|on|checked|open)"` — declares a
+   `color`/`background`/`fill`/`--*-accent`/`--demo-nav-accent` reading `var(--viz-fourier)` (or a
+   `--demo-nav-accent` that resolves to it). The named static surfaces (the ℱ wordmark, the data-viz
+   strokes, the gold/red CTA — §"named surviving-red surfaces") are NOT enumerated as a positive
+   allowlist (63 `--viz-fourier` consumers at HEAD make a positive list brittle); they survive
+   precisely because they sit OUTSIDE the interactive-selector predicate, so the gate is the single
+   negative assertion + a re-introduction guard, not a hand-maintained positive census.
 2. The π DELTA arm (`tests-visual/register-ios.spec.ts`, NEW) — a `getComputedStyle` readback of a
    SELECTED dock control (`/dock/overview` bottom-dock active tab + `/dock/rail` active rail item)
    in BOTH light and dark proves the active glyph `color` resolves to the warm-ink/foreground or
@@ -163,9 +174,11 @@ dislike to "hovered/click state"). Recorded.
 2. Mint `--dock-control-press-bg` in the same token file (a darken-toward-foreground ~7% mix off
    `--glass-bg-resting`) for the iOS press-darken.
 3. In `src/styles/dock-controls.css`, re-point the `.variant-rail` active `::before` bar
-   `background` (`:634`) from `var(--dock-rail-active-accent, var(--primary))` to
-   `var(--dock-selected-accent)`, and demote the rail active-glyph `color` (`:611-615`) so a
-   selected control reads via the glass plate + luminance-lift, NOT a brand stripe/glyph.
+   `background` (`:633`, inside the `::before` block `:623-634` — RE-GREP per §0; the line drifts)
+   from `var(--dock-rail-active-accent, var(--primary))` to `var(--dock-selected-accent)`, and
+   demote the rail active-glyph `color` (`:614`, in the active rule `:611-615`) to
+   `var(--foreground)` so a selected control reads via the glass plate + the bar's luminance-lift,
+   NOT a brand stripe/glyph (the glyph lands on `--foreground`, not `--dock-selected-accent`).
 4. In `src/styles/dock-controls.css`, add a `background: var(--dock-control-press-bg)` (or a
    `color-mix` darken) to the dock control `:active` rule alongside the existing scale-press.
 5. In `demo/layout/dock-nav.css`, DELETE the `--demo-nav-accent: var(--viz-fourier)` mint
@@ -230,7 +243,9 @@ Single unit.
   semantic ink, press-darken) and the demo red overrides are gone, so red survives only as static
   brand ink.
 - **Mechanism:** mint `--dock-selected-accent` + `--dock-control-press-bg`; re-point the rail accent
-  bar + selected-glyph default off `--primary` to the luminance-lift; add the `:active` darken;
+  BAR off `--primary` to `--dock-selected-accent` (the luminance-lift) and demote the selected-GLYPH
+  default off `var(--dock-rail-active-accent, var(--primary))` to `--foreground`/warm-ink (the glyph
+  lands on `--foreground`, NOT `--dock-selected-accent` — per arm-a); add the `:active` darken;
   delete the three `dock-nav.css` red re-points.
 - **Files:** the File Bounds table above.
 - **Sub-gate:** `proof:register-ios` GREEN (source arm a-e) + the π DELTA proving no brand-red on
@@ -239,14 +254,22 @@ Single unit.
 ## §6 Hard Gate
 
 1. **G1 — `npm run proof:register-ios` (born-RED, source arm).** Parses `dock-controls.css` +
-   `offsets-sizing.css` + `dock-nav.css`: (a) the rail active `::before` bar reads
-   `var(--dock-selected-accent)` not a `--primary`/brand solid; (b) `--dock-selected-accent` +
-   `--dock-control-press-bg` are minted + consumed; (c) the dock control `:active` reads the
-   press-darken token; (d) `dock-nav.css` has ZERO `--demo-nav-accent`/`--viz-fourier` in an
-   interactive (`.is-active`/`[aria-current]`/`[aria-pressed]`) register; (e) the allowlist holds —
-   `--viz-fourier` is consumed ONLY by the wordmark/viz/CTA surfaces (a positive grep list), never
-   by a hover/active/selected rule. Born-RED: the gate must FAIL on the pre-edit tree (the red is
-   wired) and pass after.
+   `offsets-sizing.css` + `dock-nav.css` (+ the `src/styles/**` / `demo/**` sweep for clause e):
+   (a) the rail active `::before` bar reads `var(--dock-selected-accent)` not a `--primary`/brand
+   solid; (b) `--dock-selected-accent` + `--dock-control-press-bg` are minted, the BAR consumes
+   `--dock-selected-accent`, and the active-glyph `color` resolves to `--foreground`/warm-ink (NOT
+   a brand hue; the glyph is NOT required to consume `--dock-selected-accent` — arm-a keeps it
+   `--foreground`); (c) the dock control `:active` reads the press-darken token; (d) `dock-nav.css`
+   has ZERO `--demo-nav-accent`/`--viz-fourier` in an interactive
+   (`.is-active`/`[aria-current]`/`[aria-pressed]`) register; (e) the allowlist holds as the
+   MACHINE-CHECKABLE NEGATIVE PREDICATE defined in the Completion criterion clause 1(e) — NO rule
+   across `src/styles/**` + `demo/**` whose selector carries an interactive state token (the regex
+   set `:hover` · `:active` · `:focus-visible` · `.is-active` · `.active` · `[aria-current` ·
+   `[aria-pressed` · `[aria-selected` · `[data-state="(active|on|checked|open)"`) reads
+   `var(--viz-fourier)` (or a `--demo-nav-accent` resolving to it) on `color`/`background`/`fill`/an
+   `--*-accent`; the named static wordmark/viz/CTA surfaces survive by sitting OUTSIDE that predicate
+   (no positive census). Born-RED: clause (d)+(e) must FAIL on the pre-edit tree (the demo wires the
+   red on `.is-active`/`[aria-current]` at `dock-nav.css:58,103-104`) and pass after.
 2. **G2 — `tests-visual/register-ios.spec.ts` (π DELTA).** Live `:5199` readback of selected dock
    controls in light+dark: active glyph `color` ≠ `oklch(0.579 0.201 30.4)`; active plate bg =
    the `--glass-bg-floating` recipe; accent bar (if present) = the translucent luminance-lift.

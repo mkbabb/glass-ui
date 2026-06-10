@@ -1,6 +1,6 @@
 # AY.W-UNDERLINE — HandUnderline transposed UP: the first-class animated draw-on underline
 
-**State:** OPEN · **Repo:** glass-ui · **Band:** A (component perfection — net-new, user-directed 2026-06-09)
+**State:** CLOSED (live-verified — the /underline subpath shipped at the AY close; see AY/PROGRESS.md W-UNDERLINE) · **Repo:** glass-ui · **Band:** A (component perfection — net-new, user-directed 2026-06-09)
 **Provenance:** the user's round-2 refinement directive — "for the underline elements, look to
 our developing project in the sci report repo — abstract this component into a first-class
 glass-ui component from that research and development and have the underlines be animated in."

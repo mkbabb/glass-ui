@@ -41,7 +41,10 @@ compress and line numbers drift across the Batch-4 siblings (W-HIERARCHY shares 
    OWNED by W-REGISTER-IOS.
 6. `grep -n 'background\|cardTier' demo/stories/StoryHero.vue` + parse `demo/stories/manifest.ts` —
    confirm ~104/121 routes declare NO `background` (D4-2) and the grid is suppressed under the 0.65α
-   resting card (D4-3).
+   resting card (D4-3); confirm `data/metric-cell`/`metric-stack` declare `background:'grid'` while
+   `data/table`/`data-table` declare none (D4-4 — the ledger surfaces are the canonical bare grid-fit);
+   `grep -l 'section-label' demo/stories/feedback/alert.vue demo/stories/forms/inputs.vue` returns
+   EMPTY (D4-6 — the section-accent register is unevenly spent, those pages are bare).
 7. RE-CONFIRM the positive idioms stay UNTOUCHED (D3-8): timeline markers, notification tones,
    gate-pattern `text-success`, empty-states/icons chips — these ARE the model. RE-CONFIRM the
    legitimately-monochrome surfaces stay flat (D3-9): the icon GRID, the Section type-ladder, the
@@ -118,11 +121,69 @@ fast.com peg); it is just not WIRED. The uplift (the D2-6 per-surface roadmap):
    option ON it. The substrates pages (0/5, the most VISUAL surfaces) + the dock/navigation chrome
    demos (the front-door facilities) get a hero title (D2-6d/e).
 
+   **NON-COLLISION WITH W-HIERARCHY (binding — the two waves run parallel in Batch 4).** The
+   display-register section head is a SEPARATE display element ABOVE the canonical `<h2>` (a paired
+   eyebrow/display-line, the `.section-label`-mono-smallcaps + display-rung pairing) — it does NOT
+   re-rung the canonical section `<h2>` UP off `--type-subheading` (20.4px). W-HIERARCHY's G2 π
+   readback asserts "every section `<h2>` resolves to `--type-subheading` (20.4px) NOT 25.9px" on the
+   SHARED routes (`/display/card`, `/data/data-table`, `/dock/overview`, `/navigation/tabs`); a D2
+   uplift that lifts the `<h2>` itself would FAIL that readback. The display moment is therefore an
+   ADDITIONAL element, never the `<h2>`'s own rung — `proof:suffuse` G1(b) and the W-HIERARCHY π
+   share the routes, so a collision fails one of them. (If a flat-category page wants its section to
+   READ as a display head rather than carry a separate display line, that is a W-HIERARCHY rung-canon
+   change, not a D2 suffusion — route it through W-HIERARCHY, do not re-rung the `<h2>` here.)
+
+   **The over-spend CEILING for the activation (the Arm-D2 restraint counter).** The audacious-tier
+   activation (item 2) and the display-head option (item 3) carry a FLOOR (≥2 consumers each) AND a
+   CEILING: the mega/audacious tiers land ONLY on the metric/number/hero surfaces (the fast.com-peg
+   natural home) — NOT on body copy, NOT on a section `<h2>`, NOT as a default section-head rung
+   across every flat page. The display-head OPTION is opt-in per enrolled surface (the front-door /
+   most-visual surfaces named in D2-6d/e), not a chassis default that re-rungs all ~110 stories. The
+   gate asserts the mega/audacious tiers resolve ONLY on the enrolled metric/number/hero element set
+   (a tinted body or section-`<h2>` consuming `text-display-mega`/`-audacious` FAILS) — the floor
+   proves the audacity arrived; the ceiling proves it stayed in proportion (the same one-event
+   discipline Arm D3 applies to color, applied to the display register).
+
 ### Arm D3 — the color-pop map under the one-color-event rule
 
 The MODEL is verified (D3-1): `color-mix(in srgb, var(--section-color-N) 25%, transparent)` chip
 backplate + full-chroma glyph, ONE event per surface, chip ≤ icon scale, body ink untinted. The
-increase-within-proportion map:
+reference implementation ships at `demo/stories/foundations/icons.vue:124-164` (recipe + proportion
+blurb) + `compositions/empty-states.vue:130-139` (the size-14 chip applied).
+
+**The one-color-event rule as a MACHINE-CHECKABLE predicate (so the gate bites, not narrates).** "One
+color event per surface" is NOT self-checkable as prose — the gate binds it to THREE concrete asserts
+over the ENROLLED-SURFACE LEDGER (each enrolled surface declares its ONE event in §8's per-surface
+ledger; the gate reads that ledger and verifies each surface against it):
+
+1. **Body ink untinted (the hard, decidable check).** On each enrolled surface, NO body-copy element
+   (`<p>`, value/unit spans, the `text-foreground`/`text-muted-foreground` runs — i.e. anything NOT
+   the declared one-event glyph/chip/marker) carries a `color:`/`text-{section,chart,viz,gold}-*` tint.
+   This is a deterministic source-parse (the inline `:style` color + the tint utility classes are
+   enumerable) — the load-bearing arm of the rule.
+2. **Chip ≤ icon scale (the proportion check).** Where a surface uses the chip recipe, the chip
+   backplate size token ≤ the glyph/icon scale token (the `size-14`-chip-under-the-glyph relationship
+   the reference ships) — a numeric token comparison, not an adjective.
+3. **One declared event per enrolled surface (the count check).** Each enrolled surface's ledger row
+   names EXACTLY ONE event (motion=`--motion-accent` purple, metric-cell=the semantic `--chart-*` glyph
+   tint, settings-eyebrows=ONE section-accent register, the gold-marker surface=`--color-gold`); the
+   gate fails a surface that introduces a SECOND competing tinted event (e.g. a tinted body AND a tinted
+   eyebrow AND a tinted glyph on one card). The count is over the ledger's declared events vs the
+   surface's actual tinted elements. **The "tinted element" channel set is the FULL paint surface, not
+   just text:** a tint counts when the chip/glyph/marker token (`--section-color-N`/`--chart-*`/`--viz-*`/
+   `--motion-accent`/`--color-gold`) appears in ANY of `{color:, background[-color]:, fill:, stroke:}`
+   or their Tailwind arbitrary forms `{text-[…], bg-[…], fill-[…], stroke-[…]}` or an inline
+   `:style`/`backgroundColor`/component-`color`-prop. This is load-bearing because the actual offenders
+   apply their event via FILL/STROKE/BACKGROUND, not `color:` — the motion dots are `bg-[var(--viz-fourier)]`,
+   the curve plots `stroke-[var(--primary)]`, the springs block an inline `backgroundColor` — so a count
+   restricted to the text channel would undercount the events and let a channel-swapped second event
+   evade (the bite-evasion the lane closes).
+
+The decidable arm (1) is the binding floor on EVERY engine; (2)+(3) ride the per-surface ledger. A
+surface with no declared event (the legitimately-monochrome set, D3-9) asserts ZERO tinted elements
+(across the full channel set above, not only text).
+
+The increase-within-proportion map:
 
 1. **The motion-PURPLE identity (D3-3/D3-4/D3-5 — the headline color move).** Mint `--motion-accent:
    var(--viz-legendre)` (the ppmycota-purple library twin, an EXISTING token — NOT ppmycota itself,
@@ -133,17 +194,35 @@ increase-within-proportion map:
    (`typewriter.vue:53` off `--viz-fourier`), the underline tinted example (`underline.vue:99` off
    `--viz-fourier`). The motion family gains ONE coherent purple event anchored in the existing
    `--section-color-7`/`--viz-legendre` family — the keyframes design-language identity R3-11 names.
+   **Springs precision (the re-point is the RESTING hue, not the animated channel).** On `springs.vue`
+   the `--demo-hue` is a SPRING-TWEENED channel — `applySnapshot` (`:79-81`) writes `--demo-hue` from
+   the live snapshot, and the block's whole purpose is to DEMONSTRATE animating a hue value through a
+   spring; the offending orange-red is the resting/fallback value (`hsl(var(--demo-hue, 12) …)`, the
+   `12` static fallback) before the first play. The re-point therefore moves the RESTING/FALLBACK color
+   onto the `--motion-accent` purple register (and the `from`/`to` hue endpoints to the purple band if
+   the demo keeps hue-tweening) — it does NOT delete the hue-channel animation (which IS the spring
+   demonstration). A re-point that hard-codes a static purple and strips the `--demo-hue` tween is a
+   goal-miss (it kills the demo's point); the gate's (c) channel check reads the token, and the §0
+   re-grep must confirm the resting color is off the orange-red band, not that `--demo-hue` is gone.
 2. **The MIS-SPENT dock red (D3-2) — CROSS-REFERENCE, not this wave's edit.** The dock active register
    reads Fourier-red; the retire is W-REGISTER-IOS's ROOT register redefinition (the de-red moves
    hover/active/selected to the iOS luminance-lift). This wave RECORDS D3-2 as the color-map entry but
    does NOT touch `dock-nav.css` (W-REGISTER-IOS owns it — disjoint surface, sequenced Batch 1).
-3. **Flat surfaces that EARN a proportioned event (D3-6/D3-7/D3-10).** The metric-cell leading glyph
-   tints to its semantic `--chart-*` viz color (download/upload/latency/jitter — an icon-glyph tint,
-   body value+unit untinted; needs a small `iconColor`/`accent` prop on MetricCell, which folds onto
-   W-METRIC-UNIFY's shared core); the colored section-marker idiom (`settings.vue` inline
-   `color: var(--section-color-N)`) abstracts into a reusable `.section-label--tinted` variant applied
-   to flat composition pages; the GOLD register (`--color-gold`/`--tier-featured`, under-used) gains a
-   featured/recommended card marker — the natural one-color-event for premium/achievement surfaces.
+3. **Flat surfaces that EARN a proportioned event (D3-6/D3-7/D3-10) + tame the eyebrow noise (D1-8 —
+   INBOUND from W-HIERARCHY).** The metric-cell leading glyph tints to its semantic `--chart-*` viz
+   color (download/upload/latency/jitter — an icon-glyph tint, body value+unit untinted; needs a small
+   `iconColor`/`accent` prop on MetricCell, which folds onto W-METRIC-UNIFY's shared core); the colored
+   section-marker idiom (`settings.vue` inline `color: var(--section-color-N)` at `:78,109,198,237`)
+   abstracts into a reusable `.section-label--tinted` variant. **D1-8 is the SAME four sites:** today
+   each settings eyebrow cycles a DIFFERENT hue (account=indigo / appearance=amber / notifications=red /
+   accessibility=teal) at 10px with no legend, reading as arbitrary noise that competes with the
+   content. Abstracting into a class is NOT a resolution on its own — the D1-8 fix REQUIRES the
+   abstraction to ALSO de-noise: collapse the four-hue cycle to ONE coherent section-accent register
+   (one tint walked at a SINGLE chroma, or the calm `--section-color` ramp at a legible size), so the
+   eyebrows read as an intentional system, not a rainbow. (This is the one-color-event rule applied at
+   the page scope: settings gets ONE eyebrow-accent identity, not four.) The GOLD register
+   (`--color-gold`/`--tier-featured`, under-used) gains a featured/recommended card marker — the natural
+   one-color-event for premium/achievement surfaces.
 4. **The restraint counters (D3-8/D3-9) — DO NOT touch.** The positive idioms (timeline markers,
    notification tones, gate `text-success`, empty-states/icons chips) are the model; the
    legitimately-monochrome surfaces (icon grid, Section type-ladder, curve-gallery TABLE) stay flat —
@@ -171,7 +250,19 @@ lever:
    thin pages: the canonical thin offenders (settings — a page literally ABOUT grain/paper renders
    flat white-on-white — D4-1; the ledger-shaped table/data-table, the most native grid-underlay fit,
    currently bare — D4-4).
-3. **The restraint counter (D4-7 — the binding fence).** Do NOT add live substrates to content pages
+3. **Re-scale the settings slider fill to the calm register (D1-7 — INBOUND from W-HIERARCHY).** On
+   `compositions/settings.vue` the three standard sliders (Base size / Radius / Grain) paint a
+   near-opaque dark `.slider-range` cylinder (oklab ~0.216/0.88, the §B3 "pull-the-track" intent) — on
+   the soft warm-cream settings page these read as the page's darkest, heaviest focal points (the
+   censor/redaction-bar effect), pulling the eye OFF the content. This is a focal-HIERARCHY defect, NOT
+   a render bug. The fix is in-proportion and DEMO-LOCAL and the seam ALREADY EXISTS: the library
+   `.slider-range` reads a `--slider-range-bg` override (`Slider.vue:198,200` — `color-mix(in oklab,
+   var(--slider-range-bg, var(--primary)) 88%, transparent)`), so a settings-scoped `--slider-range-bg`
+   set to a lighter calm-register value (or a `--slider-range-blur` lift) drops the fill weight without
+   touching the library; the slider reads as a control, not a focal block. Do NOT re-tune the LIBRARY
+   `.slider-range` default (the pull-the-track intent is sound elsewhere — presets-in-consumers); the
+   override is settings-local.
+4. **The restraint counter (D4-7 — the binding fence).** Do NOT add live substrates to content pages
    (kills legibility + the one-GL-context-per-route budget). The lever is the CALM grid/paper washes
    lifted to readable strength + the content-level section-accent/math-marginalia idiom — NOT another
    aurora. The gate asserts NO `<Aurora>`/`<Constellation>`/`<FourierField>`/`<GooBlob>` is added to a
@@ -197,8 +288,12 @@ lever:
 | D4-1 (S2) | settings | THIN SURFACE (canonical) — a page literally ABOUT 'Grain'/'Paper underpaint' renders flat off-white nested Cards on flat warm-white; no paper grain, grid, glass-tier read, or section accent. | `ground/d4-thin-settings.png`; `demo/stories/compositions/settings.vue:84,116,205,244`; `manifest.ts` settings row (no background) |
 | D4-2 (S2) | breadth | ~104/121 routes declare NO `background` — a single 0.65α resting card on a flat page; the design language is absent on the bulk of the storybook. | `demo/stories/manifest.ts` (~17 rows carry background); `demo/stories/StoryHero.vue:132-135` (cardTier default resting) |
 | D4-3 (S3) | over-restraint | Even grid/paper-declaring pages read flat — the 7% grid (`story-hero.css:15`) under a 0.65α card is invisible; lift the strength / drop the card to `quiet`/`wash` (the lever StoryHero already applies over LIVE substrates). | `demo/stories/story-hero.css:15`; `demo/stories/StoryHero.vue:132-135`; `ground/d4-suf-metric-stack-grid.png` |
+| D4-4 (S3) | table/data-table | SAME-CATEGORY inconsistency — within Data, metric-cell + metric-stack declare `background:'grid'` but `table` + `data-table` (the LEDGER/engineering-paper-shaped surfaces, the most NATIVE blueprint-grid-underlay fit) declare nothing. The grid suffusion was applied by accident-of-authoring, not content semantics — `table`/`data-table` are the canonical grid-underlay candidates and are bare. (The binding rationale for WHY `table`/`data-table` are the enrolled thin-page surfaces in Scope §7 — not re-derived.) | `demo/stories/data/table.vue` / `demo/stories/data/data-table.vue` (`manifest.ts` rows declare no `background`); `demo/stories/data/metric-cell.vue` / `metric-stack.vue` (`background:'grid'`) |
 | D4-5 (S3) | gold standard | `compositions/math-paper.vue` — the design language done right WITHIN PROPORTION: section-accent rail + mono section-label + italic fourier glyph + fira-code math block on a paper-grain article. The idiom to PROPAGATE (content composition, not a live substrate). | `demo/stories/compositions/math-paper.vue:11-30,73-100`; `ground/d4-suf-math-paper-grid.png` |
+| D4-6 (S3) | section-accent spend | HEADING-REGISTER INCONSISTENCY (the suffusion lever unevenly spent) — the `.section-label`/`--section-color` register is applied per-author: settings + table use the colored mono `.section-label`, but feedback/alert + forms/inputs use plain dark heading text with NO section-accent. A CONSISTENT section-accent register across the enrolled content pages is a cheap in-proportion gain needing no background change. (The binding rationale for "a consistent section-accent register" in Arm D4 §2 — the under-spent `--section-color-0..12` ramp + `.section-label`.) | `src/styles/typography.css:455` (`.section-label`); `src/styles/theme.css:266-278` (`--section-color-0..12`); `demo/stories/compositions/settings.vue` / `table.vue` (applied) vs `demo/stories/feedback/alert.vue` / `forms/inputs.vue` (bare) |
 | D4-7 (S3) | over-spend fence | The over-spend axis is near-empty — do NOT add live substrates to content pages (legibility + one-GL-context budget). The lever is calm grid/paper + content-level accents. | grep `<Aurora\|<Constellation\|<FourierField\|<GooBlob` over `demo/stories/**.vue` (only substrate-demo + chassis files 2+) |
+| D1-7 (S3) ← W-HIERARCHY | settings sliders | INBOUND from W-HIERARCHY's scope fence (focal-hierarchy, NOT a render bug) — the three standard `.slider-range` fills on `settings.vue` (Base size / Radius / Grain) paint near-opaque cylinders (`color-mix(in oklab, var(--slider-range-bg, var(--primary)) 88%, transparent)`, the §B3 pull-the-track intent, thumb width/opacity 0) that become the page's darkest/heaviest focal points on the calm warm-cream page — they read as redaction bars and pull the eye OFF content. The library ALREADY exposes the `--slider-range-bg` override token (`Slider.vue:198,200`), so the fix is a settings-LOCAL `--slider-range-bg` (or `--slider-range-blur`) override to a lighter calm-register value — NO library default re-tune. Owned by Arm D4 §8 scope item. | `src/components/ui/slider/Slider.vue:193-238` (`.slider-range` + `--slider-range-bg` seam + thumb-0); `demo/stories/compositions/settings.vue`; `FLEET-DIGEST.md:632` |
+| D1-8 (S3) ← W-HIERARCHY | settings eyebrows | INBOUND from W-HIERARCHY's scope fence — the four `settings.vue` section eyebrows cycle a DIFFERENT hue each (indigo/amber/red/teal) at 10px with no legend, reading as arbitrary noise that competes with content. The D3-7 `.section-label--tinted` abstraction must ALSO de-noise: collapse to ONE coherent section-accent register (the page-scope one-color-event rule). Owned by Arm D3 §3. | `demo/stories/compositions/settings.vue:78,109,198,237`; `FLEET-DIGEST.md:634` |
 
 ---
 
@@ -220,21 +315,28 @@ lever:
    `--viz-legendre`) and re-point `curve-gallery.vue:152,162`, `foundations/motion.vue:174,220`,
    `springs.vue:158`, `typewriter.vue:53`, `underline.vue:99` onto it — the motion family's ONE
    coherent purple event.
-5. **D3 flat-surface earned events.** Tint the metric-cell leading glyph to its semantic `--chart-*`
-   viz color (the `iconColor`/`accent` prop folds onto W-METRIC-UNIFY's MetricCell core); abstract the
-   colored section-marker into a `.section-label--tinted` variant in `src/styles/typography.css` +
-   apply to enrolled flat composition pages; add the gold featured-marker idiom on a featured/
-   recommended surface.
+5. **D3 flat-surface earned events + the eyebrow de-noise (D1-8 inbound).** Tint the metric-cell
+   leading glyph to its semantic `--chart-*` viz color (the `iconColor`/`accent` prop folds onto
+   W-METRIC-UNIFY's MetricCell core); abstract the colored section-marker into a `.section-label--tinted`
+   variant in `src/styles/typography.css` + apply to enrolled flat composition pages — AND collapse the
+   `settings.vue` four-hue eyebrow cycle (`:78,109,198,237`) to ONE coherent section-accent register
+   (the D1-8 de-noise; the abstraction alone is not the fix); add the gold featured-marker idiom on a
+   featured/recommended surface.
 6. **D4 lift the declared-background strength.** In `demo/stories/StoryHero.vue` (or `story-hero.css`),
    extend the live-substrate card-thinning (`quiet`/`wash`) to grid/paper-declaring pages so the calm
    wash reads (the D4-3 over-restraint fix).
 7. **D4 propagate the math-paper idiom.** Apply the section-accent rail + fira-code math marginalia +
    section-accent register to the enrolled thin pages (settings — its own subject; table/data-table —
    the ledger grid-underlay fit) WITHIN PROPORTION, NO live substrate.
-8. Author `scripts/proof-suffuse.mjs` (the born-RED source gate, G1) + register it in
+8. **D4 re-scale the settings slider fill (D1-7 inbound).** On `settings.vue`, override the
+   already-exposed `--slider-range-bg` (and/or `--slider-range-blur`) settings-LOCAL to drop the fill
+   to the calm composition register — NOT a library default re-tune — so the three Base size / Radius /
+   Grain bars stop reading as the page's darkest focal blocks (the censor-bar effect). Settings-scoped
+   only — the library pull-the-track default is sound elsewhere.
+9. Author `scripts/proof-suffuse.mjs` (the born-RED source gate, G1) + register it in
    `scripts/gates.mjs` (local+ci) + `ci.yml`.
-9. Author `tests-visual/suffuse.spec.ts` (the π DELTA arm, G2).
-10. Update `CLAUDE.md` (the design-language suffusion register — the chassis hero display register,
+10. Author `tests-visual/suffuse.spec.ts` (the π DELTA arm, G2).
+11. Update `CLAUDE.md` (the design-language suffusion register — the chassis hero display register,
     the `--motion-accent` purple identity, the calm content-suffusion idiom + the one-color-event
     proportion rule as the binding constraint).
 
@@ -261,7 +363,7 @@ lever:
 | `demo/stories/data/metric-cell.vue` / `metric-stack.vue` | modify (activate audacious tiers + metric glyph tint) |
 | `demo/stories/foundations/motion.vue` | modify (purple re-point) |
 | `demo/stories/motion/curve-gallery.vue` / `springs.vue` / `typewriter.vue` / `underline.vue` | modify (purple re-point) |
-| `demo/stories/compositions/settings.vue` / `table.vue` / `data-table.vue` | modify (math-paper idiom propagate + tinted section-marker) |
+| `demo/stories/compositions/settings.vue` / `table.vue` / `data-table.vue` | modify (math-paper idiom propagate + tinted section-marker; settings.vue ALSO: D1-8 eyebrow de-noise [D3] + D1-7 slider-fill re-scale [D4] — fold into ONE settings agent unit, §4a) |
 | `demo/` theme layer (the `--motion-accent` demo-local mint) | modify |
 | `src/styles/typography.css` | modify (the `.section-label--tinted` variant) |
 | `src/components/custom/metric-cell/MetricCell.vue` | modify (the `iconColor`/`accent` prop — folds onto W-METRIC-UNIFY) |
@@ -284,7 +386,11 @@ Three natural agent units — D2 (type), D3 (color), D4 (glass/grid/math) — to
 files; the overlaps are sequenced: `StoryPage.vue` is shared between D2 (hero title) and W-HIERARCHY
 (hero chrome-`<h1>`) — W-HIERARCHY lands FIRST (the dependency), then D2's title edit on the surviving
 hero `<h1>`; `StoryHero.vue` is touched by D4 only; `metric-cell.vue`/`MetricCell.vue` is shared by D2
-(activate tiers) + D3 (glyph tint) — fold those two into ONE agent unit, not parallel. Cross-wave:
+(activate tiers) + D3 (glyph tint) — fold those two into ONE agent unit, not parallel. **`settings.vue`
+is NEWLY shared by D3 (the D1-8 eyebrow de-noise — the four-hue cycle to ONE section-accent register)
+AND D4 (the math-paper idiom propagate + the D1-7 slider-fill re-scale)** — these touch the SAME file,
+so fold all settings.vue edits into ONE settings agent unit (D3's eyebrow + D4's idiom/slider land
+together), NOT a parallel D3‖D4 write to settings.vue. Cross-wave:
 shares `ci.yml`/`gates.mjs` with the Batch-4 siblings — sequence the gate-row registrations into the
 Batch-4 re-byte-lock, not a parallel write. The `MetricCell.vue` `iconColor` prop coordinates with
 W-METRIC-UNIFY (it lands on the unified value-display core) — sequence after W-METRIC-UNIFY's core if
@@ -306,34 +412,61 @@ both touch `MetricCell.vue`, or fold the prop into W-METRIC-UNIFY with this wave
 ### AZ.W-SUFFUSE.2 The color-pop map under the one-color-event rule (Arm D3)
 
 - **Goal:** the motion family reads as ONE coherent ppmycota-purple identity, the flat surfaces that
-  earn an event get their proportioned chip/glyph, and the restraint counters hold.
+  earn an event get their proportioned chip/glyph, the settings eyebrows de-noise to ONE section-accent
+  register (D1-8 inbound), and the restraint counters hold.
 - **Mechanism:** mint `--motion-accent: var(--viz-legendre)` + re-point the motion surfaces; the
-  metric glyph tint + `.section-label--tinted` + gold featured-marker; the monochrome surfaces stay flat.
-- **Files:** the D3 subset (motion stories, the demo theme, typography.css, the composition pages).
+  metric glyph tint + `.section-label--tinted` + gold featured-marker; collapse the settings four-hue
+  eyebrow cycle to ONE register (D1-8); the monochrome surfaces stay flat.
+- **Files:** the D3 subset (motion stories, the demo theme, typography.css, the composition pages incl.
+  settings.vue eyebrows — folded with D4's settings.vue edits per §4a).
 - **Sub-gate:** `proof:suffuse` D3 asserts GREEN (no `--viz-fourier`/`--demo-hue` on a motion surface;
-  the proportion rule holds) + the π readback proving a motion plot resolves to `--viz-legendre`.
+  the one-color-event d1/d2/d3 predicates hold; the settings eyebrows resolve to ONE accent register)
+  + the π readback proving a motion plot resolves to `--viz-legendre`.
 
 ### AZ.W-SUFFUSE.3 The glass/grid/math thin spots (Arm D4)
 
 - **Goal:** the thin content pages gain the calm glass-tier/paper-grain/grid/section-accent/math idiom
-  within proportion — each surface its ONE deliberate event, no live substrate.
+  within proportion — each surface its ONE deliberate event, no live substrate; the settings sliders
+  stop reading as censor bars (D1-7 inbound).
 - **Mechanism:** lift the declared-background strength (card-thinning to quiet/wash); propagate the
-  math-paper section-accent + fira-code idiom to settings + table/data-table.
-- **Files:** the D4 subset (StoryHero/story-hero.css, settings/table/data-table).
+  math-paper section-accent + fira-code idiom to settings + table/data-table; re-scale the settings
+  slider `.slider-range` fill DOWN to the calm register settings-LOCAL (D1-7).
+- **Files:** the D4 subset (StoryHero/story-hero.css, settings/table/data-table — settings.vue folded
+  with D3's eyebrow edit per §4a).
 - **Sub-gate:** `proof:suffuse` D4 asserts GREEN (NO live substrate added to a content page; the
-  enrolled thin pages gain the idiom) + the π readback proving the grid/paper underlay is visible.
+  enrolled thin pages gain the idiom) + the π readback proving the grid/paper underlay is visible AND
+  the settings slider fill resolves below the censor-bar darkness (no longer the page's darkest block).
 
 ## §6 Hard Gate
 
 1. **G1 — `npm run proof:suffuse` (born-RED, source arm).** Parses the enrolled demo surfaces +
    tokens: (a) `StoryPage` upgrades the hero title off `text-heading` on `variant="hero"`; (b) the two
-   top audacious tiers have ≥2 live consumers each; (c) `--motion-accent` keyed off `--viz-legendre`
-   exists + the motion surfaces consume it (NO `--viz-fourier`/`--demo-hue`/`--primary` orange-red on
-   a motion plot/dot/sample/typewriter/underline); (d) the one-color-event proportion holds (one event
-   per surface; body ink untinted) + the legitimately-monochrome surfaces stay flat; (e) NO
-   `<Aurora>`/`<Constellation>`/`<FourierField>`/`<GooBlob>` added to a content page (the over-spend
-   fence) + ppmycota purple is NOT in any library token. Born-RED: FAILS on the pre-edit tree (the
-   flat type + the Fourier-red motion + the thin pages) and passes after.
+   top audacious tiers have ≥2 live consumers each AND the activation CEILING holds — `text-display-mega`/
+   `text-display-audacious` resolve ONLY on the enrolled metric/number/hero element set; a section
+   `<h2>` or a body-copy element consuming a mega/audacious tier FAILS (the floor proves audacity
+   arrived; the ceiling proves it stayed in proportion — the Arm-D2 over-spend counter), AND no D2
+   edit re-rungs a section `<h2>` on a W-HIERARCHY-shared route off `--type-subheading` (the
+   non-collision clause — the display head is a SEPARATE element above the `<h2>`, never the `<h2>`'s
+   rung); (c) `--motion-accent` keyed off `--viz-legendre` exists + the motion surfaces consume it (NO
+   `--viz-fourier`/`--demo-hue`/`--primary` orange-red on a motion plot/dot/sample/typewriter/underline
+   — checked across the FILL/STROKE/BACKGROUND channels, not only `color:`/`text-*`: the offenders ship
+   as `bg-[var(--viz-fourier)]`, `stroke-[var(--primary)]`, inline `backgroundColor: hsl(var(--demo-hue)…)`,
+   `text-[var(--viz-fourier)]`, and the `<GlassUnderline color=…>` prop — the parser greps the token
+   name in ANY of `{color:, background[-color]:, fill:, stroke:, text-[…], bg-[…], fill-[…], stroke-[…]}`
+   plus the inline `:style`/`backgroundColor`/component-color-prop sites; a channel-swap evasion
+   — re-spending the red via `bg-` after a `text-` ban — therefore cannot pass); (d) the one-color-event
+   proportion holds, checked by the THREE machine-checkable predicates (§"Arm D3" model): (d1) body ink
+   untinted — NO body-copy element on an enrolled surface carries a `color:`/`text-{section,chart,viz,gold}-*`
+   tint (the decidable source-parse, the binding floor); (d2) chip ≤ icon scale where the chip recipe is
+   used (a numeric token comparison); (d3) ≤1 declared tinted EVENT per enrolled surface vs the §8
+   per-surface ledger — where a "tinted event" is counted across ALL the channels of (c) above
+   (`color:`/`text-*` AND `bg-`/`background`/`fill`/`stroke`/inline `backgroundColor`), NOT only the
+   text/color channel of d1, so a SECOND competing event spent via a non-text channel (a tinted body AND
+   a tinted bg-chip on one card) is COUNTED and FAILS; the legitimately-monochrome surfaces (D3-9) assert
+   ZERO tinted elements across all channels; (e) NO `<Aurora>`/`<Constellation>`/`<FourierField>`/`<GooBlob>`
+   added to a content page (the over-spend fence) + ppmycota purple is NOT in any library token. Born-RED:
+   FAILS on the pre-edit tree (the flat type + the Fourier-red motion + the thin pages + the four-hue
+   settings eyebrows tripping d3) and passes after.
 2. **G2 — `tests-visual/suffuse.spec.ts` (π DELTA).** Live `:5199` readback: a hero title resolves to
    a display-register font-size (≠25.9px); a motion plot/dot resolves to `--viz-legendre`
    (oklch 0.532 0.180 317.5) ≠ `--viz-fourier`; an activated metric number resolves to the
@@ -354,8 +487,23 @@ both touch `MetricCell.vue`, or fold the prop into W-METRIC-UNIFY with this wave
 - `tests-visual/suffuse.spec.ts` paired-π JSON (hero title rung, motion plot color, metric tier,
   thin-page grid visibility) + before/after screenshots of a hero page, a motion page, a thin page,
   saved under `docs/tranches/AZ/audit/visual/W-SUFFUSE-DELTA.md`.
-- The per-surface one-color-event ledger (each enrolled surface + its ONE deliberate event + the
-  restraint counters recorded — the proportion budget as a close artefact).
+- The per-surface one-color-event ledger — NOT merely a close artefact but a REQUIRED gate INPUT
+  (`proof:suffuse` reads it for the d3 count check). Shape: a checked-in manifest (e.g.
+  `docs/tranches/AZ/audit/visual/W-SUFFUSE-LEDGER.md` or a `scripts/`-side data table) mapping each
+  enrolled surface → its ONE declared tinted event (`{surface, event-token, event-element-selector}`)
+  + the legitimately-monochrome surfaces (D3-9) declared with ZERO events. The gate fails on a surface
+  whose actual tinted-element count exceeds its declared event count, or a monochrome surface that
+  gains any tint. The ledger is authored AT THE SAME TIME as the gate (born-RED needs the pre-edit
+  surfaces' declared events to FAIL the four-hue settings eyebrow against its ONE-event row).
+  **The enrolled-surface set is CLOSED, not implementer-chosen (the under-enrollment guard).** The
+  ledger MUST cover the union of: (i) every surface in this wave's defect table that carries a color
+  event (the motion category surfaces, metric-cell, settings eyebrows, the gold-marker surface, the
+  enrolled thin pages) + (ii) the D3-9 legitimately-monochrome surfaces (icon grid, the Section
+  type-ladder, the curve-gallery TABLE) declared with ZERO events. `proof:suffuse` asserts the ledger
+  COVERS this closed set — a defect-table color surface MISSING from the ledger FAILS the gate — so an
+  implementer cannot evade the d3 count by simply omitting an offending surface from the manifest. The
+  closed set is the binding scope of the count check; adding a surface beyond it is allowed, dropping
+  one is a gate failure.
 
 ## §9 Commit Plan
 
@@ -377,6 +525,11 @@ both touch `MetricCell.vue`, or fold the prop into W-METRIC-UNIFY with this wave
   display-register section-head option pairs with). Coordinates with W-METRIC-UNIFY (the MetricCell
   `iconColor` prop lands on the unified value-display core) + W-REGISTER-IOS (the dock-red retire — the
   D3-2 color-map entry — is THAT wave's surface, not this one).
+- **Inbound handoff (this wave OWNS these — enrolled by id above):** D1-7 (the settings censor-bar
+  sliders → Arm D4 §3/§8 scope item) + D1-8 (the four-hue settings eyebrow noise → Arm D3 §3 scope
+  item) are fenced HERE from W-HIERARCHY's scope fence. Both are formally enrolled in this wave's defect
+  table + scope + gate; the receiving-spec-must-cite-by-id discipline (W-HIERARCHY scope fence) is
+  satisfied. Neither is silently dropped.
 - **Blocks:** nothing hard downstream.
 
 ## §11 Archaeology
@@ -389,6 +542,40 @@ wrong hue). The new guardrail is `proof:suffuse` asserting the chassis hero regi
 activation of the audacious tiers + the one-color-event proportion + the over-spend fence — the
 "language-in-tokens / starved-in-render" gap cannot recur because the gate binds the WIRING, not just
 the token presence.
+
+## The motion-suffusion arm (D5-1/D5-2/D5-10 — enrolled-here, gate/bounds expansion is HINGE-CLASS)
+
+The user's 15:38 directive names "animation targets" as a co-equal suffusion axis alongside glass/grid/
+math/type/color, and the fleet's D5 lane flags the storybook-WIDE animation suffusion as the single
+HIGHEST-leverage uplift — but the AZ roster left it OWNERLESS: W-MOTION-SUITE is scoped to the /motion
+SECTION only (`demo/stories/motion/*` + `foundations/motion.vue`), not the global chassis, and this wave's
+D2/D3/D4 arms are type/color/glass, not motion. The three findings (RE-GREP confirmed LIVE at HEAD):
+
+- **D5-1 (S2)** — content-entrance motion is DEAD across EVERY story: `StoryPage.vue` (used by every page)
+  paints its eyebrow/title/blurb + section stack instantly; live probe returns 0 `[data-reveal]` /
+  0 `[data-countup]` / 0 `[data-scroll-reveal]` across foundations/intro, display/card, dock/overview,
+  compositions/settings. The library SHIPS `vReveal` (built for exactly the eyebrow→title→blurb→section
+  cascade) but its own showcase never uses it. One `vReveal` entrance cascade in `StoryPage`/`StorySection`
+  lights up motion on every page. (`demo/stories/StoryPage.vue:33-67`.)
+- **D5-2 (S2)** — the demo shell's `RouterView` has NO page transition: story-to-story is an instant hard
+  cut. `demo/layout/AppShell.vue:129-130` wraps `<component :is>` with no `<Transition>`; the library ships
+  the pane-swap/fade `<Transition>` class-sets (`transitions.css`) + `useViewTransition` for exactly this
+  (the out-in pane-swap register is the natural fit).
+- **D5-10 (S3)** — `demo/stories/motion/reveal.vue`'s scoped consumer-CSS carries NO
+  `@media(prefers-reduced-motion:reduce)` guard despite the `vReveal` docstring stating the consumer owns
+  the PRM discipline — the PRM-teaching exemplar under-teaches the fence it tells consumers to own.
+
+**These are ENROLLED here (this wave is "suffusion" and already edits `StoryPage.vue`), NOT silently
+dropped** — but adding the motion-suffusion arm EXPANDS this wave's `proof:suffuse` gate (a new
+entrance-cascade-present + page-transition-present + reveal-PRM-guard clause) and its File Bounds
+(`demo/stories/StorySection.vue`, `demo/layout/AppShell.vue`, `demo/stories/motion/reveal.vue` — none in
+the current bounds), and `StoryPage.vue` is already a shared-and-sequenced surface with W-HIERARCHY (the
+hero `<h1>` suppression) + this wave's D2 hero-title edit. That gate/bounds/sequence expansion is an
+ORCHESTRATOR scope decision (it is not a free in-place edit) — the orchestrator either rules this arm INTO
+W-SUFFUSE (the recommended home: one shared `StoryPage.vue` touch covers D2 type + D5-1 entrance) or mints
+a thin W-MOTION-SUFFUSE Batch-4 sibling sequenced after W-HIERARCHY on `StoryPage.vue`. Recorded as a HINGE
+in AZ.md so the close gate (`proof:az-final` R3-closure read) does not pass with the highest-leverage
+animation finding ownerless.
 
 ## Successor for any deferral
 

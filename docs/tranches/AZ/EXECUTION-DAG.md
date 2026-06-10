@@ -148,9 +148,20 @@ that `variant="rail"` currently overloads (E3) — building the net-new facility
 freed re-collides the overload. **W-DOCK-RAIL (Batch 1) precedes taxonomy** (E2) because the
 taxonomy rename moves the rail surface — it must rename a CORRECT (hairline-rebuilt) rail, not the
 broken plate. Once taxonomy lands, W-RAIL-EXTEND ‖ W-DOCK-NORMALIZE ‖ W-DOCK-CONTEXT run in
-parallel on disjoint bounds (rail-extend = a new chrome slot; normalize = the census over NAV docks;
-context = the route seam) — with rail-extend ↔ context coordinating on the shared layer registry
-(E6, contract-only, no file overlap).
+parallel — rail-extend = a new chrome slot, normalize = the census over NAV docks (read-only on the
+shell docks), context = the route seam — with rail-extend ↔ context coordinating on the shared layer
+registry (E6, contract-only at the registry level). **The one file-overlap that is NOT disjoint:
+W-RAIL-EXTEND and W-DOCK-CONTEXT BOTH write `demo/layout/SidebarDock.vue` (rail-extend adds the
+beyond-dock facility as consumer #1; context wires the contextual `<DockLayerGroup>` render), and
+W-DOCK-CONTEXT additionally writes `demo/layout/BottomDock.vue`.** Their layer-registry coordination
+is contract-only, but the SHELL-DOCK FILE is shared-write, so the two are NOT line-disjoint on
+`SidebarDock.vue`. RESOLUTION (same as the W-BLOB-PAGE → W-BLOB-STUDIO within-batch sequence): they
+SEQUENCE on `SidebarDock.vue` — W-DOCK-CONTEXT lands the contextual-seam render FIRST (it shifts the
+template lines), then W-RAIL-EXTEND adds its chrome slot against the post-context render — OR they run
+in sibling worktrees with a clean line-region merge the orchestrator integrates (rail-extend's new
+chrome slot vs context's `<DockLayerGroup>` body are non-overlapping ranges). They do NOT both hold
+an uncommitted `SidebarDock.vue` in the same worktree. W-DOCK-NORMALIZE stays read-only on the shell
+docks (no conflict).
 
 ### BATCH 3 — the studios + the shell + motion (parallel; each closes on a captured DELTA)
 
@@ -168,23 +179,49 @@ DEMO-CONSUMPTION not a new-API port), the shell gear (demo-private chrome), the 
 (demo-shell defect). W-BLOB-STUDIO ‖ W-BLOB-PAGE coordinate `types.ts` disjointness. W-SHELL-IDENTITY
 re-grounds against the W-REGISTER-IOS hover register (E9 — a soft cross-batch read, not a hard
 block). The blob studio's configurator hierarchy soft-depends on W-HIERARCHY (E10) — it applies the
-idioms inline if W-HIERARCHY has not landed, and W-HIERARCHY ratifies them at Batch 4.
+idioms inline if W-HIERARCHY has not landed, and W-HIERARCHY ratifies them at Batch 4. **The one
+in-batch file-overlap: W-SHELL-CONFIG and W-SHELL-IDENTITY BOTH write `demo/layout/SidebarDock.vue`**
+— W-SHELL-CONFIG carves the `#collapsed` standalone `DarkModeToggle` (`:27,209`) + the
+reference-shelf branch (`:160-163`) + rehomes the gear; W-SHELL-IDENTITY edits the `#persistent` ℱ
+home region (`:98-148`). The regions are line-disjoint (`:98-148` vs `:160-163`/`:209`), so a clean
+sibling-worktree merge is viable — but it MUST be declared, not assumed: they SEQUENCE (W-SHELL-CONFIG
+lands the deletions first, then W-SHELL-IDENTITY re-grounds the shifted ℱ-region lines) OR run in
+sibling worktrees with the orchestrator merging the two non-overlapping ranges. They do NOT both hold
+an uncommitted `SidebarDock.vue` in one worktree. (W-SHELL-CONFIG ALSO sequences after W-DOCK-CONTEXT
+on this same file — Batch 2 < 3 — so by Batch 3 the contextual render has already landed.)
+W-MOTION-SUITE ‖ W-SHELL-CONFIG ‖ W-SHELL-IDENTITY otherwise stay disjoint (motion = `/motion`
+stories + the `manifest.ts` motion rows, disjoint from W-SHELL-CONFIG's `manifest.ts:328-357`
+composables-block deletion).
 
 ### BATCH 4 — the morph showcase + the design band (parallel)
 
 | node | does | gate | hinge |
 |---|---|---|---|
 | **W-MORPH-SHOWCASE** | the vertical↔horizontal liquid morph showcase — deterministic, keyframes-driven, bidirectional; the metaball-bridge hides the topology jump-cut at the occluded midpoint; W-LIQUID (the Siri amorphous-blob facility) folds in as the substrate | `proof:morph-showcase` (born-RED): the bridge carries the V↔H travel deterministically + bidirectionally; the topology jump-cut is occluded | **[H4]** architecture |
-| **W-HIERARCHY** | the D1 incongruence set (10 findings: no canonical section-heading rung, inverted scales, competing titles); the Configurator controls column gains hierarchy/proportion — the vocabulary the blob/aurora studios inherit | `proof:design-hierarchy` (born-RED): a canonical section-heading rung applied uniformly; the configurator hierarchy lands | — |
+| **W-HIERARCHY** | the D1 incongruence set (10 findings: no canonical section-heading rung, inverted scales, competing titles); the Configurator controls column gains hierarchy/proportion — the vocabulary the blob/aurora studios inherit | `proof:hierarchy` (born-RED — the `AZ.W-HIERARCHY.md` Hard-Gate name; the earlier `proof:design-hierarchy` label here was a DAG-draft cite, reconciled): a canonical section-heading rung applied uniformly + the binding π `getComputedStyle` readback (every section `<h2>` resolves to 20.4px, NOT 14/25.9px); the configurator hierarchy lands | — |
 | **W-SUFFUSE** | the suffusion pass: the audacious-type uplift (D2), the color-pop map under the one-color-event rule (D3 — incl. the motion purple event), the glass/grid/math thin-spots (D4); each surface gets its ONE deliberate event; restraint counters recorded | `proof:suffuse`: each declared surface carries exactly ONE event; the restraint counters hold | — |
-| **W-METRIC-UNIFY** | the Metric* family (Badge/Pill/Cell/Row) converges on ONE value-display core (killing the `amount \|\| placeholder` zero-value bug); ConfiguratorRow vs LabeledField get a shared chassis or a documented divergence | `proof:metric-unify`: ONE value core; the zero-value bug REDs born-RED then GREEN | — |
+| **W-METRIC-UNIFY** | the Metric* family (Badge/Pill/Cell/Row) converges on ONE value-display core (killing the `amount \|\| placeholder` zero-value bug); ConfiguratorRow vs LabeledField get a shared chassis or a documented divergence | `proof:metric-core` (born-RED — the `AZ.W-METRIC-UNIFY.md` Hard-Gate name; the earlier `proof:metric-unify` label here was a DAG-draft cite, reconciled): ONE value core; the zero-value bug REDs born-RED then GREEN | — |
 
 Rationale (E10): W-HIERARCHY produces the configurator-hierarchy vocabulary the Batch-3 studios
 inherit — it runs at Batch 4 (after the studios apply the idioms inline) and RATIFIES them as the
-shared vocabulary, rather than blocking Batch 3 on it. W-SUFFUSE + W-METRIC-UNIFY are independent
-design surfaces. W-MORPH-SHOWCASE depends on W-DOCK-TAXONOMY (E7 — it needs two morphable docks) so
-it sits here, after the taxonomy makes the vertical dock morphable; W-LIQUID folds in as its
-substrate (E11) and the metaball-bridge composes the existing contained-creature goo-blob (E12-adjacent).
+shared vocabulary, rather than blocking Batch 3 on it. W-MORPH-SHOWCASE depends on W-DOCK-TAXONOMY
+(E7 — it needs two morphable docks) so it sits here, after the taxonomy makes the vertical dock
+morphable; W-LIQUID folds in as its substrate (E11) and the metaball-bridge composes the existing
+contained-creature goo-blob (E12-adjacent). **Two in-batch sequences (NOT fully parallel —
+W-SUFFUSE carries both):** (1) **W-HIERARCHY → W-SUFFUSE on `demo/stories/StoryPage.vue`** — both
+write that file (W-HIERARCHY does the D1-4 STRUCTURAL double-`<h1>` suppression; W-SUFFUSE does the
+hero TITLE display-register uplift). W-SUFFUSE's header declares the hard sequence: W-HIERARCHY's
+chrome-`<h1>` edit lands FIRST, then W-SUFFUSE re-grounds the hero title against it. They are
+line-region-adjacent on the SAME hero block, so this is a true sequence, not just a re-byte-lock.
+(2) **W-METRIC-UNIFY ↔ W-SUFFUSE on `src/components/custom/metric-cell/MetricCell.vue`** —
+W-METRIC-UNIFY lands the unified value-display core; W-SUFFUSE adds the `iconColor`/`accent` prop
+ON that core. W-SUFFUSE's File Bounds declares: sequence AFTER W-METRIC-UNIFY's core if both touch
+`MetricCell.vue`, OR fold the prop into W-METRIC-UNIFY with W-SUFFUSE consuming it. So W-SUFFUSE is
+NOT independent of either sibling on the file level — W-MORPH-SHOWCASE is the only freely-parallel
+Batch-4 wave (disjoint dock/blob-mount bounds); W-HIERARCHY ‖ W-METRIC-UNIFY are mutually disjoint
+but each sequences with W-SUFFUSE on a shared file. The orchestrator dispatches W-SUFFUSE LAST in
+Batch 4 (or sibling-worktree-merges its `StoryPage.vue`/`MetricCell.vue` ranges against the
+already-landed W-HIERARCHY/W-METRIC-UNIFY edits).
 
 ### BATCH 5 — cross-repo consumer + the hygiene drain (parallel)
 
@@ -236,10 +273,19 @@ The ONLY reason to hold it to Batch 6: if the user prefers **ONE** slides re-pin
   close.
 
 **The gating fact:** W-ADOPT must re-pin to the AZ cut ONLY IF AZ touches the constellation surface.
-AZ's wave roster does NOT name a constellation edit (the constellation closed live-verified at AY:
-W-CON1/2/3). So absent a scope-reveal that drags a constellation file into an AZ wave, the early-run
+VERIFIED against all 24 specs: NO AZ wave EDITS `src/components/custom/constellation/**` (the dist
+surface) — W-ADOPT's re-pin condition is a SOURCE-EDIT condition on the constellation seam, not on
+any mention. The three non-W-ADOPT/W-DEPLOY constellation mentions are all NON-edits: **W-GATES**
+RE-SHOOTS the `W-CON1` DELTA (`surface-paths constellation*`) — a capture artefact, NOT a source or
+dist change, so it does NOT trigger a re-pin (a re-captured PNG does not alter the published bytes);
+**W-PRUNE2** reads the constellation census READ-ONLY (its E4-3 explicitly leaves the
+`useWebGLCanvas`/`useCanvas2D` substrate untouched); **W-SUFFUSE** only GREPS for `<Constellation>`
+mounts as an over-spend FENCE assertion (no edit). And the early-run pins to the FROZEN published
+3.10.1 dist regardless of what AZ does to the working tree until W-CLOSE cuts 3.11.0. So absent a
+genuine scope-reveal that drags a constellation SOURCE file into an AZ wave's edit-set, the early-run
 is SAFE and the second re-pin is unnecessary — W-ADOPT can run at Batch 0 against 3.10.1, deletion
-proof + frame-budget DELTA captured immediately on greenlight.
+proof + frame-budget DELTA captured immediately on greenlight. (The constellation closed
+live-verified at AY: W-CON1/2/3.)
 
 ---
 
@@ -287,3 +333,18 @@ parameterization + the content-hash freshness model (AZ invariant 4). A green so
 still-broken live render is NOT done — the STOP bar is "all gates green AND every visual-load-bearing
 row has a fresh on-disk PNG DELTA." This is the exact forcing function that BUILT this tranche: AY
 closed four bands `live-verified` that the R3 live audit re-opened in person.
+
+
+## Hand-challenge sequencing rulings (2026-06-10, binding)
+
+- **Batch 3 blob pair is a SEQUENCE, never literal parallel**: W-BLOB-PAGE → W-BLOB-STUDIO (both
+  declare `blob.vue` + `types.ts` shared-write; the page wave lands first — the orchestrator
+  enforces this at dispatch, not the specs).
+- **W-DOCK-CONTEXT's shell layer-group render coordinates with W-SHELL-CONFIG**: CONTEXT mints the
+  seam at Batch 2; the shell-IA render (the DockLayerGroup addition to SidebarDock/BottomDock)
+  lands WITH W-SHELL-CONFIG's Batch-3 shell edits — one coordinated shell change, not two racing
+  writers.
+- **W-GATES (Batch 0) mints `proof:live-verified-ledger:az` + the AZ VISUAL-ALLOWLIST** before any
+  visual wave runs (W-REGISTER-IOS/W-ADAPTIVE-AUTO/W-CLOSE all read the arm).
+- **H4's perf clause is local-only by the W-LIVE1 decision** — no CI arm enforces the morph perf
+  budget; the ledger backstops the recorded artefact.

@@ -65,10 +65,10 @@ roster-named here but un-authored; the authoring phase is INCOMPLETE until each 
 
 | Wave | Band | Grounding (finding ids · R3 item) | Batch | Status |
 |---|---|---|---|---|
-| W-GATES | Z | B5-1 (the malformed `gates.mjs:689-691` crash), F3-4, B5-2/3/4/5 (route/port/shader-split/freshness) | 0 | planned (spec authored) |
+| W-GATES | Z | B5-1 (the malformed `gates.mjs:689-691` crash), F3-4, B5-2/3/4/5 (route/port/shader-split/freshness), D7 (font-cascade-live moved-token-file false RED — AY-§3 residual, not in FLEET) | 0 | planned (spec authored) |
 | W-DOCK-RAIL | D | C1-R3-1-indicator-glass-plate, C1-R3-1-rail-fused-gutter, F2-R3-1, D6-1, A1-1 · R3-1 | 1 | planned (spec authored) |
 | W-DOCK-FLICKER | D | C2-1/C2-2 (mechanism), C2-7, D5-7 (S1), F2-R3-3 (refuted-as-literal) · R3-3 | 1 | planned (spec authored) |
-| W-ADAPTIVE-AUTO | R | C5-2..C5-10, B3-1/B3-2, E3G-4, F2-R3-7 · R3-7 [H3] | 1 | planned (spec authored) |
+| W-ADAPTIVE-AUTO | R | C5-2..C5-10, B3-1/B3-2, E3G-4, F2-R3-7, A5-1 (modal-scrim double-wrap, Arm-3 sweep) · R3-7 [H3] | 1 | planned (spec authored) |
 | W-REGISTER-IOS | R | C4-hover-register, D6-2, D3-2 · R3-6 [H1] | 1 | planned (spec authored) |
 | W-DOCK-TAXONOMY | D | C1-R3-2-taxonomy-overload, E2-3, E3G-2, C1-dock-api-inventory · R3-2 [H2] | 2 | planned (spec authored) |
 | W-RAIL-EXTEND | D | E3G-1 (net-new GAP S1), C1-R3-2-hairline-rail-netnew · R3-2 | 2 | planned (spec authored) |

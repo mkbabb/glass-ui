@@ -32,18 +32,47 @@ ls .changeset/                                        # the AZ changeset staged
    `docs/tranches/AZ/audit/W-CLOSE-overfitting-audit.md` (the `proof:az-final` clause-7 read).
 2. **FINAL.md** — the close report: the per-wave disposition table (every roster wave + its close
    state, the §2-format of the AY FINAL), the R3 closure map (all 15 items → their discharging
-   waves), the hinge-decision record (H1–H5 as answered), the chronic-defer roll-up (zero silent
+   waves — MIRRORED from the machine-read source `docs/tranches/AZ/audit/R3-CLOSURE-MATRIX.md`, the
+   single matrix `proof:az-final` clause (2) reads; FINAL prose must not diverge from the matrix
+   rows), the hinge-decision record (H1–H5 as answered), the chronic-defer roll-up (zero silent
    carries — the disposition register is the proof), greenfield voice.
+   **The disposition-register completeness back-fill (B3-3):** enroll the 6 omitted AX `planned`
+   rows — `W25a`/`W25b`/`W26`/`W27a`/`W27b`/`W33` — into `residual-disposition.json` as ADDRESSED
+   with their discharging AY wave (`W-CSS1`=W25a/W25b, `W-GOD1`=W26, `W-LEG1`=W27a/W27b, all
+   `complete`; `W33`=the AX terminal close folded into the AY close machinery). The register
+   dispositioned only 14 of AX's 20 `planned` rows (W-TRIAGE.md §1 itself miscounts them as
+   "fourteen"); the 6 ride forward UNRECORDED in the very register built so "no residual rides
+   forward as a one-line PROGRESS cell no machine reads," and the phantom-owner gate cannot see them
+   because they were never enrolled as rows. The clause-5 `proof:disposition-live` read (below)
+   asserts the back-fill so the register is genuinely complete across AX→AY→AZ, not just "the AZ
+   books."
 3. **`proof:az-final`** — authored born-RED-able, the clause set:
    (1) per-wave green citations for the full `waves/AZ.W-*.md` roster;
-   (2) the R3 closure map complete (15/15 items name a discharging wave with a green run);
+   (2) the R3 closure map complete — the gate READS `docs/tranches/AZ/audit/R3-CLOSURE-MATRIX.md`
+       (the binding artefact, not FINAL prose) and asserts all 15 R3 items each name a discharging
+       wave AND that wave's BINDING gate ran green, AND — for every item the matrix flags
+       `headless-trap: yes` (a defect whose source/structure clause could pass while the user still
+       sees it) — that the wave's named π/live re-verify clause is the cited green run, never the
+       source arm alone (the matrix's re-verify column is the gate's read; a source-green-only
+       citation for a headless-trap item is the clause-2 RED);
    (3) budget rebaselined + `profile:budget --enforce` green;
    (4) no open `live-pending`/`(DEVELOPED)` token on the AZ PROGRESS board;
    (5) the cardinal arms green — `proof:live-verified-ledger --tranche=AZ` + the AY/AX tracker arms
-       + `proof:disposition-live` (register completeness over the AZ books);
+       + `proof:disposition-live` (register completeness over the AZ books AND the B3-3 back-fill —
+       the 6 omitted AX rows `W25a`/`W25b`/`W26`/`W27a`/`W27b`/`W33` now enrolled ADDRESSED with
+       their AY discharging wave, so the register is complete across AX→AY→AZ, not just the AZ books);
    (6) RUNNER-TRUTH — every AZ-minted gate row carries either a device/sibling skip-by-policy path
-       or a device-free arm (a static grep over the new proof scripts for the skip discipline; the
-       AY lesson made structural);
+       or a device-free arm, **proved by EXECUTION, not a static grep**. The grep-only form is
+       EVADABLE (a comment containing `SKIP-BY-POLICY` with NO `process.exit(0)` branch in the
+       control flow matches the grep while the gate still hard-REDs on a clean runner — the exact
+       "trivial mutation evades the bite" trap, and grep-only is insufficient per the hard-gate
+       doctrine). Clause 6 therefore RUNS each AZ-minted device/sibling-dependent gate in a
+       synthesized device-absent + sibling-absent shell (the env the `proof-component-orphan`
+       `siblingsPresent.length === 0` branch already models) and ASSERTS exit 0 WITH its
+       SKIP-BY-POLICY line printed to stdout (an executed runner-truth, the AY lesson made
+       structural). A device-free gate (no cross-repo/device dependency) is exempt by a one-line
+       manifest tag, not by the grep. The static grep MAY accompany as a fast pre-filter, but the
+       BINDING witness is the executed exit-0-with-skip-line, never the grep alone;
    (7) zero orphans (the audit doc's verdict);
    (8) STAGED-OR-CUT from birth — staged: version `3.10.1` + the AZ changeset present; at-cut:
        version `3.11.x` + changeset consumed + a CHANGELOG `## 3.11.0` entry; anything else (a bump

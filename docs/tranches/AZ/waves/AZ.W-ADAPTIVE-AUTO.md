@@ -59,16 +59,39 @@ DELTA (`proof:live-verified-ledger`). Specifically:
 1. `npm run proof:adaptive-glass-live` (born-RED, NEW — the in-situ arm) — the π readback walks the
    dock routes (`/dock/overview`, `/dock/layers`, `/dock/rail`, `/compositions/settings`,
    `/foundations/colors`, `/data/metric-cell`) + the content-glass routes (`/display/card`,
-   `/foundations/paper-glass`, `/substrates/glass-material`) WITHOUT injecting any ancestor bucket,
-   and asserts every glass surface over a light page clears 4.5:1 body (the `--muted-foreground`
-   tier, not just `--foreground`) AND the surface silhouette ΔL clears a visibility threshold
-   (the plate is distinguishable from the page behind, the G2 surface-silhouette truth — C5-6's
-   ΔL≈0.01 collapse is the RED baseline).
+   `/foundations/paper-glass`, `/substrates/glass-material`) and asserts every glass surface clears
+   4.5:1 body (the `--muted-foreground` tier, not just `--foreground`) over the **worst-case-LIGHT
+   backdrop** AND the surface silhouette ΔL clears a visibility threshold (the plate is
+   distinguishable from the page behind, the G2 surface-silhouette truth — C5-6's ΔL≈0.01 collapse
+   is the RED baseline). **The two test artifices are DISTINCT and only ONE is forbidden:** the
+   C5-4 blind spot is *injecting `--glass-backdrop: light` on a synthetic ANCESTOR* (which makes the
+   ancestor-querying `@container` block falsely self-match in test) — that is BANNED. *Reading the
+   surface over a synthetic-WHITE worst-case backdrop plate* (the existing spec's `injectSurface`
+   `:170-191`) is the LEGITIMATE worst-case control and is RETAINED — it does not touch
+   `--glass-backdrop` at all; the self-engage must fire via the surface's OWN `:where()` rule, which
+   is exactly the behaviour under test. This distinction is load-bearing: the enrolled routes carry
+   HETEROGENEOUS page backdrops (e.g. `/substrates/glass-material`/`/foundations/colors` paint an
+   aurora field that may read DARK, on which "in-situ over whatever-the-page-painted" passes
+   trivially while the dock-over-light defect stays alive). The gate therefore reads each surface
+   over the synthetic-white worst-case plate (NO ancestor bucket), so a route's incidental dark
+   backdrop cannot make the gate pass green over a still-broken-over-light render — the same green-
+   over-broken failure class the C5-4 blind spot named, now closed on the backdrop axis too.
 2. `npm run proof:adaptive-observer` (NEW) — asserts the `useGlassBackdropLuminance` composable
    exists, writes a numeric `--glass-backdrop-luma` (0..1) AND the discrete `--glass-backdrop:
-   light|dark` bucket on its target, is rAF-throttled (≤4Hz) + IntersectionObserver-gated, and has
-   ≥2 consumers (the dock + a content-glass demo mount) OR is demo-private with the booked
-   2nd-consumer trigger — the no-overfitting bar.
+   light|dark` bucket on its target, is rAF-throttled (≤4Hz) + IntersectionObserver-gated, and
+   clears the no-overfitting bar via ONE of two paths — **and the two are NOT interchangeable
+   (the own-story exclusion is binding, reconciled with W-PRUNE2 E4-3):** (path A — PUBLIC barrel
+   export) ≥2 BINARY consumers, where the dock wire-point (arm a, library source) is consumer #1
+   and a SECOND BINARY consumer (another library/internal mount, NOT a demo story) is #2 — a
+   demo mount is NOT binary (the `proof:component-orphan` own-story exclusion W-PRUNE2 E4-3 applies
+   to the sibling `useGlassRenderer` cluster), so the dock + a single content-glass DEMO mount does
+   NOT clear path A; (path B — DEMO-PRIVATE) the composable stays OFF the glass barrel (no public
+   export), wired ON for the dock internally + exercised by the content-glass demo mount, with a
+   `docs/consumer-evidence/use-glass-backdrop-luminance.md` doc naming the booked 2nd-BINARY-consumer
+   trigger (the same evidence-doc discipline E4-3/E4-9 use). The RECOMMENDED path at AZ is B
+   (demo-private with the trigger) — at HEAD the dock is the only binary consumer and a public barrel
+   seat without a 2nd binary consumer is the substrate-without-consumer trap (L invariant 8); path A
+   ships only if a 2nd BINARY consumer materializes this wave. The chosen path is recorded in the close.
 3. `vue-tsc --noEmit` + `npm run build` green; `proof:adaptive-glass` (the existing STRUCTURE arm,
    re-pointed to also assert the new self-engage rule's presence) stays green; `proof:glass-cohesion`
    green (the self-darken is a tint re-point, not a solid surface — no cohesion regression).
@@ -119,6 +142,25 @@ consumer opts out via `--glass-tint-strength: 0%`. FIX the factually-wrong `shel
 MUTED-ink tier (`--muted-foreground`, the common body register — 3.42:1 over the 18% floor today)
 clears 4.5:1, not just `--foreground` (11:1) — bounded ≤24% (the iOS clamp, "let content through").
 
+**The W55 byte-identity canary MUST be amended in the SAME edit (hinge-class — re-grepped at
+HEAD).** The existing `tests-visual/adaptive-glass.spec.ts:327-356` "default (unset) path is
+byte-identical to the dark bucket" canary iterates `KINDS = ["glass-card", "glass-resting",
+"glass-dock"]` (`:242`) and asserts the UNSET `--glass-backdrop` path resolves the EXACT surface
+bg the explicit `dark` bucket does. The `ladder.css:164-168` comment KEEPS that canary green
+PRECISELY BECAUSE the W55 self-engage was scoped to the overlay band ONLY — "NOT
+`.glass-card`/`.glass-resting`/`.glass-dock`". This wave's Scope steps 1-2 add an unconditional
+self-engage on EXACTLY those three kinds, so the unset path is NO LONGER byte-identical to the
+dark bucket on them — the canary FLIPS RED on a CORRECT edit. The amendment: the canary narrows
+to the surfaces that legitimately stay zero-delta (the `.glass-opaque` escape + the un-engaged
+`--glass-backdrop: dark` per-surface override), and the new in-situ G1 readback BECOMES the
+binding default-path truth for the three now-self-engaged kinds (their default path is no longer
+"today's glass over a rich background" — it is "the AA-floor darken over light, the W54
+glass-first MAXIMAL default made legible"). The `ladder.css:164-168` byte-identity-canary
+rationale comment retires in the same edit (it documents the now-superseded overlay-only scoping).
+This canary amendment is added to File Bounds below; an implementer who silently deletes the
+canary to make the gate green — rather than re-pointing it — has evaded the byte-identity contract,
+not satisfied it.
+
 ### Arm 2 — the SAMPLED OBSERVER (the C5-8/C5-9 reserved facility; the iOS-27 dynamic refinement)
 
 `useGlassBackdropLuminance(targetEl)` — a composable that (1) snapshots the region behind the
@@ -129,11 +171,21 @@ animated WebGL/Canvas backdrop case via a downsampled (16×16/32×32) offscreen-
 `--glass-backdrop-luma` (0..1) + derives `--glass-backdrop: light|dark` (threshold ~0.6) on the host;
 (4) rAF-THROTTLED ≤4Hz (250ms) on scroll/resize-settle + IntersectionObserver-gated (visible
 surfaces only) + IDLE between — the offscreen-pause precedent (`useWebGLCanvas`). It COMPOSES the
-existing substrates: `useResizeObserver` + `useIntersectionPause` + `useRAFLoop` + `useResolveTokenColor`.
+existing substrates: `useResizeObserver` + `useIntersectionPause` + `useRAFLoop` + the
+`resolveTokenColor` un-wrap leaf (the `var(--token)`→concrete-rgb function in
+`src/composables/dom/useResolveTokenColor.ts` — a plain leaf, NOT a `use*` composable; it un-wraps
+the page/`--card` background token for the luminance compute, the AX.W16 single-source).
 The declarative bucket + Arm-1 self-engage stay the FLOOR (progressive enhancement over them, the
 `contrast-color()` doctrine). The static surface samples ONCE on mount + layout-settle; the animated
-case (gated behind `data-glass-sample="live"`) periodically re-samples. The `--glass-backdrop-luma`
-empty mint (glass.css:248) becomes its first real consumer — the named spec delta (B3-1/E3G-4).
+case (gated behind `data-glass-sample="live"`) periodically re-samples. **Under
+`prefers-reduced-motion: reduce` the live re-sample loop COLLAPSES to a single mount sample** — the
+`useWebGLCanvas` substrate freezes its backdrop to ONE static frame under PRM (CLAUDE.md "WebGL
+substrate offscreen-pause + reduced-motion"), so a periodic re-sample of a frozen canvas is pure
+waste AND violates the substrate's PRM discipline; the observer mirrors the substrate's live PRM
+`matchMedia('change')` monitor and re-arms the loop only if PRM is lifted. Same park conditions as
+the rAF/IO gating: `document.hidden`, content-hidden, offscreen → no sample. The
+`--glass-backdrop-luma` empty mint (glass.css:248) becomes its first real consumer — the named spec
+delta (B3-1/E3G-4).
 
 ### Arm 3 — the ALL-GLASS-VIEWS READABILITY SWEEP (the binding π gate)
 
@@ -161,6 +213,7 @@ failure on the dock glyph (4.83:1 today).
 | C5-5 (S2) | AA floor | The 18% `--glass-tint-strength-aa` floor is under-calibrated for the muted-ink tier: `--muted-foreground` over the engaged plate = 3.42:1, FAILING 4.5:1. | `ground/C5-readback.json`; `src/styles/tokens/glass.css:250` |
 | C5-7 (S2) | content tiers | `.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash` have NEITHER self-engage NOR an ancestor bucket — paint near-invisible over light on every route. Same root gap as the dock. | `ground/C5-asymmetry.json`; `src/styles/glass/ladder.css:169` |
 | B3-1 / E3G-4 (S1) | observer | The iOS-27 DYNAMIC sampled-luminance observer was NOT shipped by W55 + ships nowhere today. `--glass-backdrop-luma` minted EMPTY, zero consumers, no JS setter. The named spec delta. | `src/styles/tokens/glass.css:226-227,248`; grep `glass-backdrop` in `src/composables/`+`src/components/` = EMPTY |
+| A5-1 (S2) | modal scrim | TOKEN-COLOR DISCIPLINE VIOLATION on the `<dialog>` glass-overlay view (in the "audit ALL glass views for readability" sweep, Arm 3): `dialog.glass-top-layer::backdrop` mixes its dim + `@starting-style` arms with `hsl(var(--background) / α)`, but `--background` is a COMPLETE `hsl()` color (`--background: var(--neutral-0)` = `hsl(48 12% 98%)`), so the expression evaluates to `hsl(hsl(48 12% 98%) / 0.5)` — the invalid double-wrap CLAUDE.md says "never paints." The modal backdrop DIM silently does not render (the `blur()` survives; the dim is dead — the scrim's legibility/separation is lost). RE-GREP confirms live at HEAD. **FIX (house alpha-derivative pattern):** `color-mix(in srgb, var(--background) Npct, transparent)` at the three arms + CORRECT the `scale-paper.css:294-297` "the legitimate single-token alpha case" note (it MISLABELS the double-wrap — the genuine channel form needs `--background` bare, which it never is). This is the `in srgb` alpha-derivative axis, distinct from this wave's `in oklab` glass-tint axis — the two do not collide. | `src/styles/animations.css:358,365,367`; `src/styles/tokens/scale-paper.css:294-297`; `src/styles/tokens/color-radius.css:27,43` |
 
 ---
 
@@ -170,7 +223,19 @@ failure on the dock glyph (4.83:1 today).
    var(--glass-tint-strength-aa); --dock-fg-on-aurora: var(--glass-tint-ink); }` unconditional
    self-engage rule to a dock partial (the ONE reconciled path — the `--dock-fg-on-aurora`
    foreground twin folds in, matching the morph.css `@container` block's reach), mirroring
-   `ladder.css:169-172`.
+   `ladder.css:169-172`. **PRE-EMPT the substitution-vs-inheritance trap (`shell.css:99-111`,
+   `glass.css:137`):** re-pointing the inheriting `--glass-tint-*` tokens on `.glass-dock` reaches
+   ONLY the surfaces that compose `color-mix(in oklab, …, var(--glass-tint-source) var(--glass-tint-
+   strength))` AT THE ELEMENT (the shell/chassis-strip/held/open tiers — exactly the morph.css
+   `@container` block's targets). It does NOT darken any background that reads the PRE-SUBSTITUTED
+   `--glass-bg-dock` token (`morph.css:77`), whose oklab tint mix is baked at the `:root` 0%
+   strength before the self-engage re-points the tokens — the morph-root interp endpoint
+   (`.variant-dock:not(.vertical)`) reads that pre-baked token and stays OUT of bounds (the in-flight
+   morph frames are sub-perceptual; the resting endpoint that carries the adaptive darken is the
+   element-composed shell/chassis tier). So the self-engage rule must re-point the tint on the SAME
+   element-level surfaces the `@container` block already lists, NOT assume `--glass-bg-dock` carries
+   it. (This trap is named in §3a as a diagnostic-loop trigger — pre-empted here so it does not burn
+   three iterations.)
 2. Add the analogous `:where(.glass-card, .glass-resting, .glass-quiet, .glass-wash)` self-engage
    default to `src/styles/glass/ladder.css` (the over-light-common content tiers).
 3. RECALIBRATE `--glass-tint-strength-aa` in `src/styles/tokens/glass.css` so the MUTED-ink tier
@@ -178,16 +243,33 @@ failure on the dock glyph (4.83:1 today).
 4. FIX the factually-wrong `dock/shell.css:67-73` comment to describe the real `:where(.glass-dock)`
    self-engage rule (not the non-existent one).
 5. Author `src/composables/glass/useGlassBackdropLuminance.ts` (Arm 2) — the sampled observer
-   composing `useResizeObserver`/`useIntersectionPause`/`useRAFLoop`/`useResolveTokenColor`; export
-   it from the glass barrel (or keep demo-private with the booked 2nd-consumer trigger, per H3 arm).
-6. Wire the observer ON for the dock (arm a) at the dock root / a dock composable; mount it on a
-   content-glass demo (the 2nd consumer) at `data-glass-sample="live"`.
+   composing `useResizeObserver`/`useIntersectionPause`/`useRAFLoop` + the `resolveTokenColor` leaf
+   (the function export, not a `use*` composable); **keep it DEMO-PRIVATE by default (the recommended
+   path B of Completion criterion clause 2) — a public glass-barrel export requires a 2nd BINARY
+   consumer beyond the dock, which does NOT exist at HEAD (the dock + a demo mount does not clear the
+   public ≥2-binary bar; the W-PRUNE2 E4-3 own-story exclusion is binding). The barrel export ships
+   ONLY if a 2nd binary consumer materializes this wave; otherwise author
+   `docs/consumer-evidence/use-glass-backdrop-luminance.md` naming the booked 2nd-binary-consumer
+   trigger.**
+6. Wire the observer ON for the dock (arm a) at the dock root / a dock composable (consumer #1, the
+   binary dock wire-point); mount it on a content-glass demo at `data-glass-sample="live"` as the
+   DEMO exerciser (NOT a binary consumer — it exercises the composable for the demo-private path B,
+   it does not by itself clear the public ≥2-binary bar).
 7. Author `scripts/proof-adaptive-glass-live.mjs` (G1, born-RED — the in-situ π arm) + register in
    `gates.mjs`/`ci.yml`; author `scripts/proof-adaptive-observer.mjs` (G2).
 8. Extend `tests-visual/adaptive-glass.spec.ts` (or a new `adaptive-glass-live.spec.ts`) to read
    the dock + content tiers IN-SITU (NO injected ancestor bucket — close the C5-4 blind spot).
 9. Update `CLAUDE.md` (the adaptive-glass legibility section — the dock + content-tier self-engage
    default + the shipped observer) + `MIGRATION.md` (the observer opt-out for dark-substrate consumers).
+10. FIX the A5-1 modal-scrim double-wrap (the readability-sweep token-discipline defect): re-express
+    `dialog.glass-top-layer::backdrop`'s three `hsl(var(--background) / α)` arms in `src/styles/animations.css`
+    (`:358/365/367`) as `color-mix(in srgb, var(--background) Npct, transparent)` (the house alpha-derivative
+    pattern — 0% / `var(--top-layer-backdrop-dim,0.5)`→`50%` / 0%), so the modal dim PAINTS. CORRECT the
+    `src/styles/tokens/scale-paper.css:294-297` comment that MISLABELS this "the legitimate single-token alpha
+    case" (the genuine channel form would require `--background` bare, which it never is). Capture a before/after
+    DELTA of the modal scrim (dim absent → dim painted) under the Arm-3 readability artefacts — the scrim is an
+    enrolled glass-overlay view. This touches the `in srgb` axis ONLY; it does NOT alter the `--surface-tint-*`
+    family (the AW.W26 keep — distinct surfaces).
 
 ## §3a Triumvirate Dispatch
 
@@ -216,8 +298,11 @@ failure on the dock glyph (4.83:1 today).
 | `scripts/proof-adaptive-glass-live.mjs` | create |
 | `scripts/proof-adaptive-observer.mjs` | create |
 | `scripts/proof-adaptive-glass.mjs` | modify (re-point to assert the new self-engage rule's presence) |
-| `scripts/gates.mjs` / `ci.yml` | modify (gate rows) |
-| `tests-visual/adaptive-glass.spec.ts` (or new `-live` spec) | modify/create (in-situ readback) |
+| `scripts/gates.mjs` / `ci.yml` + `package.json` | the gate-script-parity TRIO (gate rows): `proof:adaptive-glass-live` → `tags: ["local"]` + add to `HEADER_LIVE_VERIFIED` (in-situ π, loads `:5199` → local-only); `proof:adaptive-observer` → `tags: ["local","ci","release"]` (device-free source/runtime — carries `ci`); the existing `proof:adaptive-glass` keeps its `ci`. `proof:gen-ci-fresh` re-lock `ci.yml`. `proof:gate-script-parity` (every key ↔ script) + `proof:tag-parity` (the live arm detected + header-enumerated, the structure/observer arms carry `ci`) GREEN. |
+| `tests-visual/adaptive-glass.spec.ts` (or new `-live` spec) | modify/create (in-situ readback **+ amend the byte-identity canary `:327-356` / `KINDS` `:242` so the three now-self-engaged kinds are no longer asserted byte-identical to the dark bucket — see Arm 1**) |
+| `src/styles/glass/ladder.css` | modify (the `:164-168` overlay-only byte-identity-canary rationale comment retires alongside the content-tier self-engage — already in bounds above) |
+| `src/styles/animations.css` | modify (A5-1 — the three `dialog.glass-top-layer::backdrop` `hsl(var(--background)/α)` arms → `color-mix(in srgb …)`; the modal-dim double-wrap fix) |
+| `src/styles/tokens/scale-paper.css` | modify (A5-1 — correct the `:294-297` mislabeled "legitimate single-token alpha case" note) |
 | `CLAUDE.md` / `MIGRATION.md` | modify |
 
 **Do NOT touch:** the `in srgb` `--surface-tint-*` family (W55 edits only the `in oklab` glass
@@ -252,22 +337,47 @@ Batch-1 re-byte-lock, not a parallel write.
   `--glass-backdrop-luma` + the bucket on its target, default-on for the dock (arm a).
 - **Mechanism:** `useGlassBackdropLuminance` composing the existing throttle/gate substrates;
   `elementsFromPoint` composite for static pages, downsampled-canvas for the animated-backdrop case.
-- **Files:** the composable, the barrel, the dock wire-point, the 2nd demo consumer.
-- **Sub-gate:** `proof:adaptive-observer` proves the write + the throttle/gate + the ≥2-consumer bar;
-  the observer's `--glass-backdrop-luma` write moves the dock plate over a live-aurora demo (π DELTA).
+- **Files:** the composable, the barrel (ONLY if path A — a 2nd binary consumer lands; else the
+  composable stays demo-private + the evidence doc), the dock wire-point (binary consumer #1), the
+  demo exerciser mount.
+- **Sub-gate:** `proof:adaptive-observer` proves the write + the throttle/gate + the reconciled
+  no-overfitting bar (path A: ≥2 BINARY consumers for a public barrel seat; path B recommended:
+  demo-private + the `use-glass-backdrop-luminance.md` evidence doc naming the 2nd-binary-consumer
+  trigger — a demo mount is NOT binary per W-PRUNE2 E4-3); the observer's `--glass-backdrop-luma`
+  write moves the dock plate over a live-aurora demo (π DELTA).
 
 ## §6 Hard Gate
 
 1. **G1 — `npm run proof:adaptive-glass-live` (born-RED, in-situ π).** The BINDING truth: every
-   enrolled glass surface over a light page clears 4.5:1 body (the `--muted-foreground` tier) AND a
-   ΔL silhouette threshold, read IN-SITU with NO injected ancestor bucket. Born-RED: FAILS on the
-   pre-edit tree (dock ΔL≈0.01, content wash 1.61:1) and passes after Arm 1 + Arm 2.
+   enrolled glass surface clears 4.5:1 body (the `--muted-foreground` tier) AND a ΔL silhouette
+   threshold over the WORST-CASE-LIGHT backdrop (the synthetic-white plate — RETAINED, the
+   legitimate control), with NO injected `--glass-backdrop` ANCESTOR bucket (the banned C5-4 cheat —
+   see the Completion criterion for the two-artifice distinction). Born-RED: FAILS on the pre-edit
+   tree (dock ΔL≈0.01, content wash 1.61:1) and passes after Arm 1 + Arm 2.
 2. **G2 — `npm run proof:adaptive-observer`.** Asserts `useGlassBackdropLuminance` writes a numeric
    `--glass-backdrop-luma` + the discrete bucket, is rAF-throttled ≤4Hz + IntersectionObserver-gated,
-   composes the existing substrates (no new throttle path), and meets the ≥2-consumer bar (or is
-   demo-private with the booked trigger).
+   composes the existing substrates (no new throttle path — it imports `useRAFLoop`/`useIntersectionPause`,
+   not a hand-rolled `requestAnimationFrame`), collapses the live re-sample loop to a single mount
+   sample under `prefers-reduced-motion: reduce` (the substrate-PRM-mirror — a runtime assertion or a
+   source check that the composable reads `matchMedia('(prefers-reduced-motion: reduce)')` and gates
+   the live loop on it), parks on `document.hidden`/offscreen, and meets the no-overfitting bar by the
+   reconciled path-A-or-path-B test of Completion criterion clause 2 — **a demo mount is NOT a binary
+   consumer (the W-PRUNE2 E4-3 own-story exclusion is binding), so a PUBLIC barrel seat requires a 2nd
+   BINARY consumer beyond the dock; the recommended close is path B (demo-private + the
+   `use-glass-backdrop-luminance.md` evidence doc naming the 2nd-binary-consumer trigger).** The gate
+   REDs a public barrel export whose only consumers are the dock + a demo mount (the substrate-without-
+   binary-consumer trap), and PASSES the demo-private path with the evidence doc present.
 3. `proof:adaptive-glass` (existing structure arm, re-pointed to assert the new self-engage rules) +
    `proof:glass-cohesion` + `vue-tsc --noEmit` + `npm run build` green.
+4. **A5-1 modal-scrim source bite (in `proof:adaptive-glass`'s structure arm or a one-line clause in
+   `proof:adaptive-glass-live`).** Asserts `dialog.glass-top-layer::backdrop` (and its `[open]` +
+   `@starting-style` arms) carry NO `hsl(var(--background)` double-wrap — the three arms read
+   `color-mix(in srgb, var(--background) …)`. Born-RED on the pre-edit tree (the `hsl(var(--background)/α)`
+   pattern present at `animations.css:358/365/367`); the bite is EVASION-RESISTANT — a trivial revert to the
+   `hsl()` channel form re-introduces the banned substring and REDs. The G1 readback's modal-scrim DELTA (dim
+   absent → painted) is the live witness; the source bite is the cheap pre-filter.
+
+**Runner-truth disposition (the AY W-LIVE1 lesson, IN the spec — the three-gate split already exists; the TAGS make it runner-truthful).** G1 `proof:adaptive-glass-live` is an IN-SITU π readback that loads `:5199` (it reads PAINTED contrast over the live dock/content) → auto-detected `LIVE_VERIFIED_LOCAL_ONLY`, `tags: ["local"]`, added to the `gates.mjs` `HEADER_LIVE_VERIFIED` enumeration; on CI it grace-SKIPs (the AX.W00 fail-closed playwright-presence probe) and is backstopped by `proof:live-verified-ledger` over the W-ADAPTIVE-AUTO DELTA — it is NEVER re-run server-side (no real-GPU contrast on a headless runner). The EXISTING structure arm `proof:adaptive-glass` (the self-engage rules + the A5-1 modal-scrim source bite) is DEVICE-FREE and carries `ci` (it already does — keep it). G2 `proof:adaptive-observer` is a source/runtime mix; its SOURCE-WITNESS half (the `useRAFLoop`/`useIntersectionPause` compose, the `matchMedia` PRM gate, the no-overfitting barrel bar) is device-free → `tags: ["local","ci","release"]`; its π DELTA (the `--glass-backdrop-luma` write moving the dock plate over a live aurora) is the local-only capture under the ledger. The binding legibility truth is the in-situ G1 π (4.5:1 + ΔL) — the device-free structure arm is the falsifiable-on-every-runner floor, the in-situ π is the binding visual truth (both hold). The §3 trio: the `package.json` keys + the `gates.mjs` rows (`proof:adaptive-glass-live` → `["local"]` + header-enumerated; `proof:adaptive-observer` → `["local","ci","release"]`; `proof:adaptive-glass` keeps its `ci`) + `proof:gate-script-parity`/`proof:tag-parity` GREEN.
 
 ## §7 Format And Lint Cadence
 
@@ -321,3 +431,17 @@ recalibration (Arm 1 step 3) reveals the 24% iOS clamp cannot clear 4.5:1 for th
 breaking the translucent-floor identity, the `contrast-color()` progressive-enhancement refinement is
 NAMED as the binding legibility path on supporting engines, with the declarative floor as the
 all-engine guarantee — recorded, not dropped.
+
+
+## §X — Orchestrator rulings (HC-REGISTER, 2026-06-10)
+
+1. **The "ALL glass views" enrollment is MANIFEST-DERIVED, not a hand list.** R3-7's word is "audit
+   ALL glass views"; the 9-route set is the named MINIMUM. The readability sweep derives its route
+   set from `demo/stories/manifest.ts` (every route whose page composes a glass tier — the
+   derivation recorded in the sweep artefact), so a new glass-bearing route auto-enrolls. The 9
+   hand-named routes are the floor assertion; the derived set is the binding sweep.
+2. **The `--glass-tint-strength-aa` recalibration (18%→~24%) is GLOBAL** — the token is also read
+   by the SHIPPED overlay-band self-engage (`ladder.css:171`). The wave's completion criterion
+   gains the overlay-band re-ratify: the Dialog/Sheet/Popover engaged appearance re-measures ≥ its
+   ratified ~11:1 at the new floor (or the wave scopes a per-tier floor instead of moving the
+   shared token). A silent re-tint of a shipped band is the regression class this clause forbids.

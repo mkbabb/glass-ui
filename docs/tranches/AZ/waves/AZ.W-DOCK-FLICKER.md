@@ -3,7 +3,7 @@
 **Name**: W-DOCK-FLICKER - the morph-flicker root-cause fix
 **Opens after**: AZ Batch 1 (the S1 quartet; runs ‖ W-DOCK-RAIL ‖ W-ADAPTIVE-AUTO ‖ W-REGISTER-IOS — disjoint file bounds)
 **Agents**: 1
-**Hard gate**: `proof:dock-no-scale-pop` (born-RED) — a source witness (the `.collapsed:hover` scale gates on `:not([data-morphing])`, mirroring the existing `--dock-expand-t` precedent) PLUS a frame-sampled live assert: a collapse-onset trace shows ZERO ≥10px right-edge pop (the C2 ±24-34px jump eliminated).
+**Hard gate**: `proof:dock-no-scale-pop` (born-RED) — source witnesses (the `.collapsed:hover` scale gates on `:not([data-morphing])`, mirroring the existing `--dock-expand-t` precedent; a wired hover-hysteresis seam in `useDockState`) PLUS TWO frame-sampled live asserts binding BOTH user phenomena: (W3) a collapse-onset trace shows ZERO ≥10px right-edge pop (the "flashing"; the C2 ±24-34px jump eliminated), AND (W4) a sustained cursor-at-collapsing-edge trace shows ZERO repeated expand↔collapse state flips (the "flickering"; the FLIP enter/leave thrash eliminated). A fix that kills only the scale-pop leaves the flicker alive and does NOT close the wave.
 **Status**: SPEC
 
 ## §0 — RE-GROUND (mandatory step-0; re-grep every cite at HEAD before any edit)
@@ -103,9 +103,11 @@ resolved totally, on the collapsible docks where it lives (`/dock/overview`, `/d
    static cursor cannot re-fire the enter/leave oscillation. The collapseDelay timer is NOT
    the fix (it only masks slow exits); the hysteresis is the structural guard the
    listener-on-morphing-root design lacks.
-4. Author `proof:dock-no-scale-pop` (born-RED): a SOURCE witness (the scale rule is guarded;
-   `useDockState` carries a hysteresis seam) + a FRAME-SAMPLED live witness (a collapse-onset
-   trace over the collapsible dock shows zero ≥10px right-edge pop).
+4. Author `proof:dock-no-scale-pop` (born-RED): SOURCE witnesses (the scale rule is guarded;
+   `useDockState` carries a hysteresis seam REFERENCED on the enter/leave path) + TWO
+   FRAME-SAMPLED live witnesses — W3: a collapse-onset trace shows zero ≥10px right-edge pop
+   (the "flashing"); W4: a sustained cursor-at-collapsing-edge trace shows zero repeated
+   expand↔collapse state flips (the "flickering"). Both phenomena the user named must clear.
 
 ## Triumvirate Dispatch
 
@@ -134,7 +136,7 @@ resolved totally, on the collapsible docks where it lives (`/dock/overview`, `/d
 | `src/components/custom/dock/GlassDock.vue` | modify (only if the hysteresis seam needs a listener-binding change) |
 | `scripts/proof-dock-no-scale-pop.mjs` | create (the born-RED gate; the frame-sampled arm) |
 | `package.json` | modify (register `proof:dock-no-scale-pop` + parity) |
-| `gates.mjs` | modify (register the gate row) |
+| `scripts/gates.mjs` | modify (register the gate row in the gate registry) |
 | `CLAUDE.md` | modify (record the collapse-onset scale-pop fix in the dock contract) |
 
 Do NOT touch: `dock/layer-group.css` / `DockLayerGroup.vue` (W-DOCK-RAIL owns those);
@@ -192,23 +194,41 @@ orchestrator resolves at dispatch (the rules are non-overlapping line-ranges, a 
 1. **W1 — the scale rule is guarded.** The comment-stripped `dock/morph.css` shows
    `.glass-dock.collapsed:hover` scoped with `:not([data-morphing])`. RED at HEAD: the bare
    selector multiplies the transient box.
-2. **W2 — the hysteresis seam exists.** `useDockState.ts` carries an intent-dwell /
-   geometry-recheck distinct from the `collapseDelay` timer. RED at HEAD: pure timer, no
-   `getBoundingClientRect`, no dwell.
-3. **W3 — the frame-sampled no-pop assert (THE binding observable).** A collapse-onset
+2. **W2 — the hysteresis seam exists AND is wired.** `useDockState.ts` carries an
+   intent-dwell / geometry-recheck distinct from the `collapseDelay` timer, AND that seam is
+   ON the enter/leave path — not dead code that satisfies the grep. RED at HEAD: pure timer,
+   no `getBoundingClientRect`, no dwell. **Bite-tightening (anti-evasion)**: the source half
+   asserts the recheck is REFERENCED by `onMouseEnter`/`onMouseLeave` (a `getBoundingClientRect`
+   that never gates the state flip is a no-op decoy that passes a bare grep); W4 below is the
+   binding behavioral proof the seam actually suppresses the re-fire.
+3. **W3 — the frame-sampled no-SCALE-POP assert (the "flashing" observable).** A collapse-onset
    trace over the collapsible dock (`/dock/overview`, hover→collapse), sampling the
    RIGHT-EDGE POSITION (not width — the F2 wrong-observable lesson), shows ZERO ≥10px
    single-frame jump across the collapse-onset window. RED at HEAD: the C2 baseline trace
    carries `right 924.5→948.8 +24.3px` then `→914.7 −34.1px` (the visible flash). The gate
    replays the C2 capture methodology (the trace shape is proven in
    `ground/C2-morph-flicker-trace.json`).
-4. **The π binding DELTA** (cardinal-lesson, own-surface): a captured before/after of the
-   collapse-onset edge trace to `docs/tranches/AZ/audit/visual/W-DOCK-FLICKER-DELTA.md`,
-   the after-trace showing monotone settle (no ≥10px pop), paired against the
-   `ground/C2-collapse-onset-pop.png` baseline.
+4. **W4 — the no-FLIP-THRASH assert (the "flickering" observable — DISTINCT from W3).** The
+   user named TWO phenomena: "flashing AND flickering." W3 binds the scale-pop ("flashing");
+   W4 binds the FLIP enter/leave OSCILLATION ("flickering") the hysteresis fixes. A SUSTAINED
+   cursor-at-collapsing-edge trace (the cursor held at the settling right edge across the
+   collapse window, the case D5-7 describes — the moving box edge re-crossing the static
+   cursor) shows ZERO repeated expand↔collapse state flips (no enter/leave re-fire
+   oscillation: the dock settles to ONE state and stays). A fix that lands ONLY the
+   `:not([data-morphing])` scale-gate (scope 1) and stubs the W2 seam passes W1+W3 while this
+   thrash survives — W4 is the bite that forbids that partial close. RED at HEAD: with the
+   listeners on the morphing root and no hysteresis, the cursor-at-edge case re-fires
+   enter/leave as the edge sweeps past the cursor.
+5. **The π binding DELTA** (cardinal-lesson, own-surface): a captured before/after to
+   `docs/tranches/AZ/audit/visual/W-DOCK-FLICKER-DELTA.md` — the after-trace showing BOTH the
+   collapse-onset monotone settle (no ≥10px pop, W3) AND the sustained cursor-at-edge no-flip
+   record (W4), paired against the `ground/C2-collapse-onset-pop.png` baseline.
 
-W1+W2 are the device-free CI half; W3 + the π DELTA are the binding frame-sampled truth
-(the wrong-observable lesson is encoded — the gate measures edge position, never width).
+W1+W2 are the device-free CI half; W3 + W4 + the π DELTA are the binding frame-sampled truth
+(the wrong-observable lesson is encoded — the gate measures edge position + state-flip count,
+never width). BOTH user phenomena ("flashing" via W3, "flickering" via W4) must clear for the
+clean close; the user-condition live re-verify (the cursor-at-edge replay) is the completion
+criterion, not the source-witness pair alone.
 
 ## Format And Lint Cadence
 
@@ -220,9 +240,11 @@ before close.
 ## Verification Artefacts
 
 - `docs/tranches/AZ/audit/visual/W-DOCK-FLICKER-DELTA.md` — the collapse-onset right-edge
-  trace before/after (monotone settle, no ≥10px pop) + the π readback.
-- The `proof:dock-no-scale-pop` JSON artefact (born-RED + GREEN logs, incl. the frame trace).
-- The frame-trace JSON capture (the after-state, mirroring `C2-morph-flicker-trace.json`).
+  trace before/after (monotone settle, no ≥10px pop, W3) + the sustained cursor-at-edge
+  no-flip record (W4) + the π readback.
+- The `proof:dock-no-scale-pop` JSON artefact (born-RED + GREEN logs, incl. both frame traces).
+- The frame-trace JSON captures (the W3 collapse-onset after-state + the W4 cursor-at-edge
+  sustained trace, mirroring `C2-morph-flicker-trace.json`).
 
 ## Commit Plan
 

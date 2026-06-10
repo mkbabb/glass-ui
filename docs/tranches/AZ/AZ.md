@@ -60,8 +60,10 @@ retire, scoped by hinge H1 below.
 | **H1** | How far does the de-red go? (R3-6 vs the prior warm-red-selected decision) | (a) **Red retires from ALL STATE registers** (hover/active/selected become the iOS luminance-lift glass register); red survives ONLY as brand ink — the ℱ wordmark, data-viz strokes, the gold/red CTA family. (b) Red survives as the selected-GLYPH tint over a glass plate. (c) Full de-red everywhere. | Batch 1 (W-REGISTER-IOS) |
 | **H2** | The dock taxonomy naming (R3-2) | (a) **ONE `GlassDock` with ONE `orientation` axis** — the redundant `variant=rail` expression collapses (rail-ness becomes orientation+density), the "rail" noun is freed for the new beyond-dock facility. (b) A named pair (`DockBar` horizontal / `DockRail` vertical) — two components, shared core. | Batch 2 (W-DOCK-TAXONOMY) |
 | **H3** | The automatic luma observer default (R3-7) | (a) **Default-ON for the dock family** (a downsampled element-under sample, rAF-throttled ≤4Hz, writes `--glass-backdrop-luma`; the declarative bucket stays the floor + the override) — the "just works" iOS-27 behavior the user named. (b) Opt-in prop. | Batch 1 (W-ADAPTIVE-AUTO) |
-| **H4** | The V↔H morph architecture (R3-13; topology change cannot continuously interpolate — AX.W42 fold 7) | (a) **The metaball-bridge**: the dock collapses to the circle, an SVG-goo/metaball teardrop carries the travel + the amorphous squish, the target dock expands from the circle — deterministic, keyframes-driven, bidirectional, GPU-cheap. (b) The full-time SVG-goo overlay on the live dock (riskier perf). (c) View-Transitions crossfade (cheapest, least liquid). | Batch 4 (W-MORPH-SHOWCASE) |
+| **H4** | The V↔H morph architecture (R3-13; topology change cannot continuously interpolate — AX.W42 fold 7) | (a) **The metaball-bridge (the fleet's Arch B — see W-MORPH-SHOWCASE §H4 for the binding mechanism)**: render BOTH a vertical AND a horizontal real DOM dock, drive each on the ONE shared `--dock-morph-t` scalar (vertical height-collapses while horizontal width-grows), and paint an SVG-goo/metaball teardrop bridge BEHIND them that `smin`-merges the two plates and OCCLUDES the column→row reflow at the `t≈0.5` midpoint — deterministic, keyframes-driven, bidirectional. (The "collapses to a circle then expands" is the VISUAL READ; the mechanism is the two-dock-crossfade-under-goo, NOT a single dock literally shrinking to a circle. Determinism requires the bridge's own `uTime`/squish be scalar-bound — W-MORPH-SHOWCASE pins this.) (b) The full-time SVG-goo overlay on the live dock (riskier perf). (c) View-Transitions crossfade (cheapest, least liquid; the budget-miss fallback). | Batch 4 (W-MORPH-SHOWCASE) |
 | **H5** | W-DEPLOY needs `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in the environment at execution | provide at the deploy hinge | Batch 6 |
+| **H6** | The `/underline` disposition (the hand-challenge exposed the prior KEEP as resting on a phantom trigger: slides never re-pointed, 0 external consumers, no AZ wave re-points it) | (a) **FOLD the underline re-point INTO W-ADOPT** — the slides deck swap (`SlideIntro`/`SlideCloser` hand-underline → `@mkbabb/glass-ui/underline`) rides the same adopt lane, making the KEEP true with a real consumer. (b) KEEP with a named future-wave trigger + re-audit date. (c) RETIRE (it churned retire→re-publish within one band with no consumer). | Batch 5 (W-PRUNE2) / Batch 6 (W-ADOPT) |
+| **H7** | The `useGlassRenderer`/`createGlassFilter` cluster (root-barrel-public, zero binary consumers, one demo story) | (a) **Barrel-retire + drop the story** (clean break; a 3.11.0 MIGRATION row — the barrel surface must earn a binary consumer). (b) Demo-evidenced KEEP (the svg-filter→css→fallback detection-cascade probe as a sanctioned demo-only export, evidence doc + trigger). | Batch 5 (W-PRUNE2) |
 
 ## The wave roster (24 waves, 8 bands)
 
@@ -85,7 +87,7 @@ fence, and a named successor for anything deferred.
 | wave | grounding | one line |
 |---|---|---|
 | W-REGISTER-IOS | R3-6; C4, D6-2 | Per H1: the ROOT selected/hover/active register redefined to the iOS luminance-lift glass model (translucent material lift + glyph ink stays semantic, never brand-red); the demo `--demo-nav-accent→--viz-fourier` glyph/edge-bar overrides retire; the library default `--primary` selected tint re-pointed to the glass register. |
-| W-ADAPTIVE-AUTO | R3-7; C5-2/3, F2-R3-7, B3-1, E3G-4 | The self-engage no-op fixed at the mechanism (the bucket moves to the dock's PARENT seam or an unconditional dock-self rule joins the overlay-band precedent) + per H3 the sampled-luminance observer ships writing `--glass-backdrop-luma` (the declarative bucket stays the floor) + the all-glass-views readability sweep with π contrast readbacks as the binding gate. |
+| W-ADAPTIVE-AUTO | R3-7; C5-2/3, F2-R3-7, B3-1, E3G-4, A5-1 | The self-engage no-op fixed at the mechanism — an unconditional `:where(.glass-dock)` dock-self rule joins the overlay-band precedent (`ladder.css:169-172`). NOTE: the "bucket moves to the dock's PARENT seam" alternative is REFUTED, not a co-equal option — the library cannot put `--glass-backdrop: light` on a consumer-owned parent it does not control, and a `@container` ancestor query never self-matches the dock's own declaration (the C5-3 trap); the wave spec specs ONLY the self-rule. + per H3 the sampled-luminance observer ships writing `--glass-backdrop-luma` (the declarative bucket stays the floor) + the all-glass-views readability sweep with π contrast readbacks as the binding gate. The Arm-3 readability sweep ALSO discharges the A5-1 modal-scrim double-wrap (`dialog.glass-top-layer::backdrop` mixes `hsl(var(--background)/α)` — the invalid double-wrap that never paints the modal dim; fixed onto the `in srgb` `color-mix` alpha-derivative + the `scale-paper.css:297` mislabel corrected). |
 
 ### Band B — the blob (2)
 
@@ -113,7 +115,7 @@ fence, and a named successor for anything deferred.
 | wave | grounding | one line |
 |---|---|---|
 | W-HIERARCHY | R3-8; D1 (7 findings), D6-3 | Design-hierarchy structuring: the D1 incongruence set fixed; the Configurator controls column gains hierarchy/proportion (section weight, label registers, control rhythm) — the vocabulary the blob/aurora studios then inherit. |
-| W-SUFFUSE | D2, D3, D4 | The suffusion pass: the audacious-type uplift list (D2), the color-pop map under the one-color-event rule (D3 — including the motion band's purple event), the glass/grid/math thin-spots (D4) — each surface gets its ONE deliberate event; restraint counters recorded. |
+| W-SUFFUSE | D2, D3, D4, D5-1/D5-2/D5-10 | The suffusion pass: the audacious-type uplift list (D2), the color-pop map under the one-color-event rule (D3 — including the motion band's purple event), the glass/grid/math thin-spots (D4) — each surface gets its ONE deliberate event; restraint counters recorded. + the motion-suffusion arm (D5-1 the dead `StoryPage` entrance cascade, D5-2 the `AppShell` page transition, D5-10 the `reveal.vue` PRM exemplar) is ENROLLED here per the "animation targets" suffusion axis (15:38 directive) — but its gate/bounds expansion is HINGE-CLASS (see the wave §"motion-suffusion arm" + the scope-fence note below). |
 | W-METRIC-UNIFY | E2-1, E2-3 | The Metric* family (Badge/Pill/Cell/Row) converges on ONE value-display core (killing the latent `amount \|\| placeholder` zero-value bug); ConfiguratorRow vs LabeledField get a shared chassis or a documented divergence note. |
 
 ### Band X — cross-repo (3)
@@ -128,10 +130,10 @@ fence, and a named successor for anything deferred.
 
 | wave | grounding | one line |
 |---|---|---|
-| W-GATES | B5 (headline: the MALFORMED row gates.mjs:689-691 crashes `proof:all`), F3-4 | The gate-manifest repair: the malformed row fixed + both parity meta-gates gain the cmd-less-row blind-spot assert; the 7 `:5173` script defaults → `:5199`; the dead `/navigation/dock-layers` route re-pointed; the shader-split gate re-points (blob-tempo-suppression / blob-interaction-prm); the content-hash freshness model replaces git-ancestry (kills the treadmill — the 3 graced NOTEs close); the R6 dock-animation-live PASS re-persisted on a quiet server; the W-DELTA0 own-wave-id re-captures paid. |
+| W-GATES | B5 (headline: the MALFORMED row gates.mjs:689-691 crashes `proof:all`), F3-4; D7 (font-cascade-live moved-file false RED — AY-§3 residual) | The gate-manifest repair: the malformed row fixed + both parity meta-gates gain the cmd-less-row blind-spot assert; the 7 `:5173` script defaults → `:5199`; the dead `/navigation/dock-layers` route re-pointed; the shader-split gate re-points (blob-tempo-suppression / blob-interaction-prm); the `proof:font-cascade-live` ci-tagged gate re-pointed off the stale `tokens.css` §0 path onto the carved `tokens/scheme-motion.css` partial (a hard-RED-on-every-runner gate that the FLEET audit missed — surfaced from the AY FINAL §3 owning-wave triage); the content-hash freshness model replaces git-ancestry (kills the treadmill — the 3 graced NOTEs close); the R6 dock-animation-live PASS re-persisted on a quiet server; the W-DELTA0 own-wave-id re-captures paid. |
 | W-CARVE | the chronic central-CSS rows | dock-controls.css (636) + theme.css (530) carve to @import-root partials < 500; the dock-controls-reading gates re-point composed; the two ratchet rows DRAIN (the monotonic close). |
 | W-PRUNE2 | E4 (4 candidates), B1 books | The round-2 prune verdicts executed; the carried books (W-AUR-T5 Kuwahara, W-LIGHTHOUSE) re-dispositioned with explicit triggers or executed; every BOOK marker re-audited. |
-| W-CLOSE | the AY close pattern | The terminal close: overfitting audit, FINAL.md, `proof:az-final` (born-RED, the staged-or-cut machine inherited), budget rebaseline, the full release battery, the 3.11.0 cut [USER-DOMAIN]. |
+| W-CLOSE | the AY close pattern; B3-3 (the 6 omitted AX rows) | The terminal close: overfitting audit, FINAL.md, `proof:az-final` (born-RED, the staged-or-cut machine inherited), budget rebaseline, the full release battery, the 3.11.0 cut [USER-DOMAIN]. + the B3-3 disposition-register back-fill (enroll AX `W25a`/`W25b`/`W26`/`W27a`/`W27b`/`W33` as ADDRESSED with their AY discharging wave, so `proof:disposition-live` is complete across AX→AY→AZ — they currently ride forward unrecorded in the very register built to prevent silent carries). |
 
 ## EXECUTION DAG (post-greenlight)
 
@@ -139,8 +141,25 @@ fence, and a named successor for anything deferred.
 Batch 0  W-GATES                                    (infra first — proof:all is crashable today)
 Batch 1  W-DOCK-RAIL ‖ W-DOCK-FLICKER ‖ W-ADAPTIVE-AUTO [H3] ‖ W-REGISTER-IOS [H1]   (the S1 quartet)
 Batch 2  W-DOCK-TAXONOMY [H2] → W-RAIL-EXTEND ‖ W-DOCK-NORMALIZE ‖ W-DOCK-CONTEXT   (taxonomy renames first)
-Batch 3  W-BLOB-PAGE ‖ W-BLOB-STUDIO ‖ W-MOTION-SUITE ‖ W-SHELL-CONFIG ‖ W-SHELL-IDENTITY
+         (taxonomy is sequenced first via the →; of the parallel trio, W-DOCK-NORMALIZE is read-only on
+          the shell docks, but W-RAIL-EXTEND ‖ W-DOCK-CONTEXT BOTH write demo/layout/SidebarDock.vue
+          (+ context writes BottomDock.vue) — registry coordination is contract-only, but the shell-dock
+          FILE is shared-write, so they sequence (context lands the contextual render first) or
+          sibling-worktree clean-merge. NOT a blind parallel write. See EXECUTION-DAG.md §"BATCH 2".)
+Batch 3  W-BLOB-PAGE → W-BLOB-STUDIO ‖ W-MOTION-SUITE ‖ W-SHELL-CONFIG ‖ W-SHELL-IDENTITY
+         (W-BLOB-PAGE → W-BLOB-STUDIO is a within-batch SEQUENCE, not parallel: both write the
+          single blob.vue GooBlob mount/stageConfig at :178-185/:270-279 — the :296-359 region-split
+          does NOT separate them. W-BLOB-PAGE lands the IA order + orbit override first; W-BLOB-STUDIO
+          then re-sizes the staged bead + threads the Satellites layer. They also sequence on types.ts.
+          W-MOTION-SUITE runs truly parallel; W-SHELL-CONFIG ‖ W-SHELL-IDENTITY co-write
+          demo/layout/SidebarDock.vue (config carves the #collapsed dark-toggle/gear at :160-163/:209,
+          identity edits the #persistent ℱ region at :98-148) — line-disjoint regions, so a sequence or
+          a sibling-worktree clean-merge, NOT a blind parallel write. See EXECUTION-DAG.md §"BATCH 3".)
 Batch 4  W-MORPH-SHOWCASE [H4] ‖ W-HIERARCHY ‖ W-SUFFUSE ‖ W-METRIC-UNIFY
+         (W-MORPH-SHOWCASE runs truly parallel; W-SUFFUSE sequences with TWO siblings on shared files —
+          after W-HIERARCHY on demo/stories/StoryPage.vue (hero <h1>), and after/folded-with
+          W-METRIC-UNIFY on MetricCell.vue (the iconColor prop on the unified value core). Dispatch
+          W-SUFFUSE last or sibling-worktree-merge its ranges. See EXECUTION-DAG.md §"BATCH 4".)
 Batch 5  W-CARVE ‖ W-PRUNE2 ‖ W-KF-CONSUMER
 Batch 6  W-CLOSE → 3.11.0 cut [USER] → W-ADOPT → W-DEPLOY [H5]
          (W-ADOPT may instead run at Batch 0 against the published 3.10.1 — it has no AZ dependency;
@@ -150,9 +169,34 @@ Batch 6  W-CLOSE → 3.11.0 cut [USER] → W-ADOPT → W-DEPLOY [H5]
 ## Scope fences
 
 - NO slides `docs/tranches/M/` edits (foreign session).
-- The GL blob renderer and the aurora painterly pipeline are NOT re-opened (refuted/closed) — only
-  the named surfaces (watercolor swatches, satellites-config, studio chrome) are in scope.
+- The GL blob renderer's RESOLUTION/DPR/pixelation reading is NOT re-opened (refuted/closed per
+  `C6-1`/`F2-R3-9` — the bead is crisp), and the aurora painterly pipeline is NOT re-opened. The
+  named blob surfaces in scope: the watercolor swatches (W-BLOB-PAGE), satellites-config + the
+  page-geometry override (W-BLOB-PAGE/W-BLOB-STUDIO), studio chrome (W-BLOB-STUDIO). The fence is
+  RESOLUTION-SCOPED, NOT a tranche-wide shader closure: W-BLOB-STUDIO IS authorized to edit the
+  metaball shader set (`metaball.frag.ts`/`useMetaballRenderer.ts` for the conditional uBackdrop
+  Snell refraction per `AY.W-BLOB-GLASS.md`; `sdf-body.glsl.ts`/`uploadBlobUniforms.ts` for the
+  smin-band widen) — those are merge/refraction REFINEMENTS under the inherited G-PERF/G-BROWSER
+  gates, NOT a resolution/DPR re-open. W-BLOB-PAGE may not touch any of that set (its fence is
+  resolution-self-scoped — see `AZ.W-BLOB-PAGE.md §4`).
 - The `in srgb` surface-tint family, the cn() deduplicator, and the .focus-ring divergences remain
   deliberate keeps (AW.W26) — no "fixes."
 - ppmycota purple never enters library tokens (E1-7).
 - `:5173` is never a default anywhere after W-GATES.
+
+## ORCHESTRATOR HINGE — the motion-suffusion arm home (resolve before Batch 4)
+
+The 15:38 directive names "animation targets" as a co-equal suffusion axis, and the fleet's D5 lane
+flags the storybook-WIDE animation suffusion as the single HIGHEST-leverage uplift — yet the roster as
+first authored left D5-1 (the dead `StoryPage` `vReveal` entrance cascade), D5-2 (the `AppShell`
+`RouterView` page transition), and D5-10 (the `reveal.vue` PRM exemplar) OWNERLESS: W-MOTION-SUITE is
+scoped to the /motion SECTION only, and W-SUFFUSE's arms are D2/D3/D4 (type/color/glass), not motion.
+The arm is now ENROLLED in `AZ.W-SUFFUSE.md §"motion-suffusion arm"`, but ruling it in EXPANDS that
+wave's `proof:suffuse` gate (an entrance-cascade-present + page-transition-present + reveal-PRM-guard
+clause) and its File Bounds (`demo/stories/StorySection.vue`, `demo/layout/AppShell.vue`,
+`demo/stories/motion/reveal.vue`), and `StoryPage.vue` is already a shared/sequenced surface with
+W-HIERARCHY + the D2 hero-title edit. The orchestrator resolves this before Batch 4: EITHER (a, recommended)
+rule the arm INTO W-SUFFUSE (one shared `StoryPage.vue` touch covers D2 type + D5-1 entrance) and add the
+three findings to `proof:suffuse` + the bounds, OR (b) mint a thin `W-MOTION-SUFFUSE` Batch-4 sibling
+sequenced after W-HIERARCHY on `StoryPage.vue`. D5-9 (the scroll-driven showcase) is already homed in
+W-MOTION-SUITE (its "Scroll & View Transitions" section); only the three chassis-wide findings are open.

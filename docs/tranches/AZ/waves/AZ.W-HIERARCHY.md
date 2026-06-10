@@ -65,16 +65,30 @@ by a captured DELTA (`proof:live-verified-ledger`). Specifically:
    register (or `text-subheading`) is the ONLY section-heading rung in the enrolled story set;
    (b) `StorySection` exposes the canonical heading register (a `text-subheading`-keyed `<h2>` slot
    /register, not only the mono `.section-label` caption); (c) `ConfiguratorLayer` renders its label
-   at a deliberate section register (above `text-small`) + the row rhythm tokens exist.
+   at a deliberate section register (the minted `--configurator-section-size`/`-weight` on a
+   `.configurator-section-label`, not the flat `text-small font-semibold`) + the preset row consumes
+   the minted `--configurator-preset-row-weight` (the three NAMED vocabulary tokens — NOT the
+   already-shipped density ladder, which would pass vacuously).
 2. The π DELTA arm (`tests-visual/hierarchy.spec.ts`, NEW) — a `getComputedStyle` readback across
    the worst-offender routes (`/dock/overview`, `/dock/layers`, `/navigation/tabs`, `/display/card`,
    `/data/data-table`) proves: every section `<h2>` resolves to the SAME canonical font-size
    (`--type-subheading`, 20.4px) NOT 14px and NOT 25.9px; no child `<h3>` resolves LARGER than its
-   parent `<h2>`; and the Configurator section label resolves above the control-row body rung.
+   parent `<h2>`; the Configurator section label resolves above the control-row body rung; AND the
+   Configurator preset row's resolved block-padding resolves ABOVE a body `ConfiguratorRow`'s (the
+   D6-3 "preset row tight" defect-alive guard — the resolved spacing must increase, not just the
+   `--configurator-preset-row-weight` token be present).
 3. `vue-tsc --noEmit` + `npm run build` green; the existing demo render is unbroken (no story errors
    in the live console over the enrolled routes).
 
-The π in-situ readback (G1.2) is the binding hierarchy truth; the source arm ratifies shape only.
+The π in-situ readback (G1.2) is the binding hierarchy truth; the source arm ratifies shape only. This
+split is DELIBERATE and evasion-resistant: the source arm's `text-sm font-semibold text-muted-foreground`
+string-allowlist is a brittle exact-match (an implementer could re-roll a fourth off-canon class —
+`text-[14px] font-medium …` — and green the source arm while the same below-body caption defect lives),
+so the source arm is NOT the truth — it ratifies the `<StorySection>` register exists + the known three
+patterns are gone. The π `getComputedStyle` arm reads the RESOLVED font-size (20.4px NOT 14/25.9), which
+no class re-roll can evade, and it walks EVERY route the Scope migrates (the G2 route list = the demo
+File Bounds set), so a bypass on any migrated page fails π. The implementer must NOT treat a green source
+arm as done; G2 is the binding close.
 
 ---
 
@@ -91,11 +105,19 @@ The π in-situ readback (G1.2) is the binding hierarchy truth; the source arm ra
 | D1-10 (S3) | /navigation/tabs | Default-variant demo wastes horizontal space — the 3-tab tablist floats centered in a full-width gray container ~80% empty; the empty container is heavier than its content (a balance/focal incongruence). | `ground/D1-nav-tabs-full.png` (Default demo full-width gray bar, centered 3-tab group) |
 | D6-3 (S3) | Configurator column | The Configurator controls column lacks hierarchy + proportion — section labels read flat + undifferentiated (Field/Medium/Spread/Bloom/Grain), slider tracks small/cramped, the preset row tight. `ConfiguratorLayer` renders its label at `text-small font-semibold text-foreground` — no register differentiation. | `ground/D6-configurator.png`; `src/components/custom/configurator/ConfiguratorLayer.vue:118` (`text-small font-semibold`) |
 
-**SCOPE FENCE (named to siblings, not this wave):** D1-6 (the switcher-rail inverted hierarchy) →
-W-DOCK-RAIL; D1-7 (the heavy dark slider-range bars) + D1-8 (the per-section eyebrow hue cycle) →
-W-SUFFUSE (the register/color-event suffusion); D2-1 (the timid `text-heading` page title that never
-upgrades on a hero) → W-SUFFUSE (the audacious-type display register). This wave is the STRUCTURAL
-heading-rung canon + the Configurator hierarchy vocabulary ONLY.
+**SCOPE FENCE (named to siblings, not this wave — each names a CLAIMING wave-arm, not a bare
+destination):** D1-6 (the switcher-rail inverted hierarchy) → W-DOCK-RAIL; D1-7 (the heavy dark
+slider-range bars dominating Settings as the page's darkest focal points — a focal-hierarchy defect,
+NOT a render bug) → **W-SUFFUSE Arm D4** (the `settings.vue` calm-composition idiom; the slider fill
+weight is re-scaled DOWN to the calm register there, since settings is the enrolled D4 surface where
+the three censor-bars live); D1-8 (the per-section eyebrow hue cycle reading as arbitrary noise at
+10px with no legend/system) → **W-SUFFUSE Arm D3** (the `.section-label--tinted` abstraction at D3-7
+is the SAME four `settings.vue` eyebrow sites — D3-7 must resolve D1-8's "reads as noise" complaint,
+not merely relocate the multi-hue cycle into a class); D2-1 (the timid `text-heading` page title that
+never upgrades on a hero) → W-SUFFUSE Arm D2 (the audacious-type display register). The receiving wave
+must CITE the inbound id by number — a fence to "W-SUFFUSE" that the destination spec does not enroll
+by id is a handoff hole (the receiving spec's defect table or scope must carry D1-7 / D1-8 explicitly).
+This wave is the STRUCTURAL heading-rung canon + the Configurator hierarchy vocabulary ONLY.
 
 ---
 
@@ -104,20 +126,47 @@ heading-rung canon + the Configurator hierarchy vocabulary ONLY.
 The Configurator is the controls chassis the blob + aurora studios compose; R3-8/R3-10 both demand
 "design-hierarchy structuring" of those studios (C6-10: the blob studio is "a flat undifferentiated
 stack"). The elegant gestalt is to land the hierarchy ONCE in the Configurator primitive so every
-studio inherits it, NOT to hand-tune each studio. The vocabulary is three registers, expressed as
-tokens the studios re-read:
+studio inherits it, NOT to hand-tune each studio. The vocabulary is three registers — stated below as
+the EXACT named tokens/classes the wave MINTS (the studios re-read these by name, and `proof:hierarchy`
+asserts each by name; adjectives alone are not the contract):
 
-1. **Section weight** — `ConfiguratorLayer` gains a section-header register above the row body: the
-   label lifts from `text-small font-semibold` to a deliberate section rung (a `text-subheading`-class
-   or a minted `--configurator-section-*` register) so a section reads as a section, not a row.
-2. **Label register** — a primary/secondary label distinction: the section LABEL (Interaction, Mood)
-   reads heavier than a ROW label (Attraction, Stretch). The token-name sub-label (the mono
-   `--token` reference) stays the tertiary mono-caption rung.
-3. **Control rhythm** — the row gap/padding cadence reads as primary(interaction)→secondary
-   (mood/palette)→tertiary(geometry); the `dividers` prop (already shipped) + the four-rung density
-   cascade (mobile/compact/comfortable/spacious, already shipped) are the levers — this wave WIRES
-   them into a default rhythm + the preset row gains primary-affordance weight (C6-10's "strengthen
-   the preset row as the primary affordance").
+1. **Section weight** — `ConfiguratorLayer` lifts its label off the current flat
+   `text-small font-semibold text-foreground` (`ConfiguratorLayer.vue:118`) onto a NEW
+   `.configurator-section-label` class keyed off a minted `--configurator-section-size`
+   (`= var(--type-subheading)`, the 20.4px section rung) + `--configurator-section-weight` (`600`), so a
+   section reads as a section, not a row. These two tokens are NEW (they do not exist at HEAD — the gate
+   asserts `--configurator-section-size`/`--configurator-section-weight` are declared, NOT the
+   already-shipped `--configurator-row-gap-*` density ladder, which proves nothing because it predates
+   this wave).
+2. **Label register** — a primary/secondary distinction expressed as TWO classes: the section label
+   (`.configurator-section-label`, register 1 above) vs the ROW label (`ConfiguratorRow`'s existing
+   `<Label>`, the secondary rung — left at the shipped body size). The token-name sub-label (the mono
+   `--token` reference, `ConfiguratorRow.vue` monospaced span) stays the tertiary mono-caption rung. The
+   gate asserts the section label's computed size resolves ABOVE the row label's (the π readback), not a
+   string match — so re-rolling a different class name cannot evade it.
+3. **Control rhythm** — the row gap/padding cadence reads primary(interaction)→secondary
+   (mood/palette)→tertiary(geometry). The levers ALREADY SHIP — the `dividers` prop + the
+   `--configurator-row-gap-{mobile,compact,comfortable,spacious}` / `--configurator-row-py-{…}` density
+   ladder (`ConfiguratorRow.vue:122-139`). This wave does NOT re-mint them; it WIRES a DEFAULT rhythm by
+   minting `--configurator-preset-row-weight` (the preset row's primary-affordance lift) so the preset
+   row reads as the primary affordance (C6-10), fixing the D6-3 "the preset row is tight" defect. **The
+   token's binding SEMANTIC is the preset row's SPATIAL rhythm — its block-padding / gap / border
+   emphasis on `.configurator-presets` (`Configurator.vue:215`, the `px-3 py-2 border-b` preset picker
+   row), NOT a font-weight.** D6-3's defect is the preset row being spatially cramped, so a
+   `--configurator-preset-row-weight: 600` consumed as a font-weight would green a token-presence assert
+   while the "tight" defect lives — the token MUST drive the preset row's padding/gap (a heavier spatial
+   cadence than a body `ConfiguratorRow`). The gate asserts `--configurator-preset-row-weight` exists +
+   is consumed by `.configurator-presets`'s padding/gap (NOT a font-weight slot) — NOT "the rhythm
+   tokens exist" (the density ladder already exists and would pass that assertion vacuously) — AND the π
+   readback (G2) proves the preset row's RESOLVED block-padding resolves ABOVE a body `ConfiguratorRow`'s
+   (the defect-alive guard: the resolved spacing must actually increase, not merely the token be present).
+   D6-3's third sub-defect — "slider tracks small/cramped" — is governed by the SAME control-rhythm
+   axis: the `ConfiguratorRow` body cadence (the density-ladder default the studios resolve through),
+   not a separate slider-sizing token. This wave's lever is the row rhythm DEFAULT (the studios pick a
+   non-`compact` density default so the control rows — sliders included — breathe); a dedicated
+   slider-track-size knob, if the row-rhythm default does not relieve the cramping, is NAMED to
+   W-BLOB-STUDIO/the aurora studio's own configurator-refinement scope (R3-10/C6-10), not silently
+   dropped here.
 
 The studios (W-BLOB-STUDIO, the aurora studio) CONSUME this vocabulary — they do not re-author it.
 This wave lands the vocabulary + proves it on the EXISTING aurora-configurator demo specimen; the
@@ -197,7 +246,9 @@ blob studio's adoption is W-BLOB-STUDIO's scope (it cites this wave's vocabulary
 
 **Do NOT touch:** the typography token ladder itself (`src/styles/typography.css` rung VALUES —
 the rungs are correct; this wave WIRES them, it does not re-tune them), the dock switcher-rail
-hierarchy (`D1-6` → W-DOCK-RAIL), the slider-range register (`D1-7` → W-SUFFUSE), the page title
+hierarchy (`D1-6` → W-DOCK-RAIL), the settings slider-range fill (`D1-7` → W-SUFFUSE Arm D4 §8, the
+settings-local `--slider-range-bg` override) + the settings eyebrow hue cycle (`D1-8` → W-SUFFUSE Arm
+D3), the page title
 DISPLAY-register upgrade (`D2-1` text-display-3/4 → W-SUFFUSE; this wave only does the D1-4
 STRUCTURAL double-`<h1>` suppression, not the hero title's audacious-type uplift), the blob studio
 configurator (W-BLOB-STUDIO consumes this wave's vocabulary).
@@ -232,25 +283,40 @@ not license a parallel write to one file).
 
 - **Goal:** the Configurator controls column reads with deliberate hierarchy (section weight, label
   register, control rhythm) so the studios inherit a vocabulary, not a flat stack.
-- **Mechanism:** the `ConfiguratorLayer` section-header register + the `ConfiguratorRow`
-  primary/secondary label register + the rhythm tokens + the preset-row primary-affordance weight;
-  proven on the aurora-configurator specimen.
+- **Mechanism:** mint `--configurator-section-size`/`--configurator-section-weight` (the section
+  register, on `.configurator-section-label`) + the `ConfiguratorRow` primary/secondary label
+  distinction + mint `--configurator-preset-row-weight` (the preset-row primary-affordance lift) —
+  NOT the already-shipped `--configurator-row-gap-*` density ladder; proven on the aurora-configurator
+  specimen.
 - **Files:** the configurator + CSS + specimen subset of the File Bounds table.
-- **Sub-gate:** `proof:hierarchy` Configurator-vocabulary asserts GREEN + the π readback proving the
-  section label resolves above the control-row body rung.
+- **Sub-gate:** `proof:hierarchy` Configurator-vocabulary asserts GREEN (the three named tokens
+  declared + `--configurator-preset-row-weight` on the spatial padding/gap slot, not a font-weight) +
+  the π readback proving the section label resolves above the control-row body rung AND the preset
+  row's resolved block-padding resolves above a body `ConfiguratorRow`'s (the D6-3 cramped-row guard).
 
 ## §6 Hard Gate
 
 1. **G1 — `npm run proof:hierarchy` (born-RED, source arm).** Parses the enrolled demo stories +
    the configurator primitives: (a) NO enrolled story `<section>` carries a `text-sm font-semibold
    text-muted-foreground` or page-title-duplicating `text-heading` section `<h2>`; (b) `StorySection`
-   exposes the canonical `text-subheading`-keyed heading register; (c) `ConfiguratorLayer` renders
-   its section label above `text-small` + the rhythm tokens exist. Born-RED: FAILS on the pre-edit
-   tree (the three patterns are wired) and passes after.
+   exposes the canonical `text-subheading`-keyed heading register; (c) the Configurator vocabulary's
+   THREE NAMED tokens are declared and consumed: `--configurator-section-size` + `--configurator-section-weight`
+   (the section register, on a `.configurator-section-label` the `ConfiguratorLayer` label composes —
+   no longer the flat `text-small font-semibold`) + `--configurator-preset-row-weight` (the preset-row
+   primary-affordance lift, consumed by `.configurator-presets`'s block-padding/gap — the SPATIAL
+   rhythm slot, NOT a font-weight; D6-3's defect is the cramped preset row, so a font-weight
+   consumption would green the assert while the "tight" defect lives). The gate asserts these THREE
+   tokens by name + that `--configurator-preset-row-weight` lands on the padding/gap slot — NOT the
+   already-shipped `--configurator-row-gap-*` density ladder (asserting that would pass
+   vacuously since it predates this wave). Born-RED: FAILS on the pre-edit tree (the three section
+   patterns are wired; the three vocabulary tokens do not exist) and passes after.
 2. **G2 — `tests-visual/hierarchy.spec.ts` (π DELTA).** Live `:5199` readback across the
    worst-offender routes: every section `<h2>` resolves to `--type-subheading` (20.4px) NOT 14px/25.9px;
    no child `<h3>` resolves larger than its parent `<h2>`; the Configurator section label resolves
-   above the control-row body rung. The captured paired-π + screenshots are the close DELTA artefact.
+   above the control-row body rung; AND the Configurator preset row's resolved block-padding resolves
+   above a body `ConfiguratorRow`'s (the D6-3 "preset row tight" defect-alive guard — `--configurator-preset-row-weight`
+   drives the preset row's SPATIAL rhythm, not a font-weight). The captured paired-π + screenshots are
+   the close DELTA artefact.
 3. `vue-tsc --noEmit` + `npm run build` green; the enrolled routes render console-clean (no story
    errors over the load+settle window).
 

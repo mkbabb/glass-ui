@@ -28,8 +28,9 @@ The three stacked root causes (each independently confirmed at HEAD this authori
    [backdrop-filter:var(--glass-blur-quiet)]` as Tailwind utilities ON the element
    (`TabsIndicator.vue:19`). Those utilities WIN over the `@layer components`
    `.dock-layer-rail .dock-layer-tab-indicator { background: var(--dock-layer-rail-active, …) }`
-   rule (layer-group.css:221-238) — `@layer` always loses to an unlayered utility. Live
-   readback: indicator bg = `color(srgb 0.98 0.98 0.98 / 0.5)`, backdrop-filter =
+   rule (layer-group.css:222-242, the `background` arm at :230-234) — `@layer` always loses to an unlayered utility. Live
+   readback: indicator bg = `color(srgb 0.9824 0.98144 0.9776 / 0.5)` (the near-white plate; the
+   gate's positive luminance test, NOT an exact-string `≠`, is the binding form — see Hard Gate W1), backdrop-filter =
    `blur(10px) saturate(1.05) brightness(1.02)` — the near-white plate, NOT
    `--dock-layer-rail-active` (`color-mix(in srgb, --primary 15%, transparent)`).
    The W-DOCK2 `:indicator=false` (DockLayerGroup.vue:230) suppressed the SECOND phantom
@@ -67,11 +68,11 @@ grep -n 'dock-layer-rail' src/styles/tokens/offsets-sizing.css    # the rail tok
 
 | # | finding | file:line | the mechanism |
 |---|---|---|---|
-| 1 | C1-R3-1-indicator-glass-plate [S1] | `src/components/ui/tabs/TabsIndicator.vue:19`; `DockLayerGroup.vue:251`; `dock/layer-group.css:221-238` | reka indicator bakes `bg-(--glass-bg-quiet) [backdrop-filter]` as utilities; the `@layer components` token rule loses the cascade → near-white plate |
-| 2 | C1-R3-1-rail-fused-gutter [S1] | `dock/layer-group.css:97-122`; `tokens/offsets-sizing.css:318`; `tokens/color-radius.css:114` | `--surface-tint-8` filled plate + `--radius-md` + hard `border-right` fuses a ~96px gutter to the pill |
+| 1 | C1-R3-1-indicator-glass-plate [S1] | `src/components/ui/tabs/TabsIndicator.vue:19`; `DockLayerGroup.vue:251`; `dock/layer-group.css:222-242` (the `.dock-layer-tab-indicator` rule; `background: var(--dock-layer-rail-active, …)` at :230-234) | reka indicator bakes `bg-(--glass-bg-quiet) [backdrop-filter]` as utilities; the `@layer components` token rule loses the cascade → near-white plate |
+| 2 | C1-R3-1-rail-fused-gutter [S1] | `dock/layer-group.css:119` (`background: var(--dock-layer-rail-bg, var(--surface-tint-8))`), `:120` (`--radius-md` plate), `:121` (`border-right`); `tokens/offsets-sizing.css:318` (`--dock-layer-rail-bg: var(--surface-tint-8)`); `theme.css:32` (`--radius-md: 6px`) | `--surface-tint-8` filled plate + `--radius-md` + hard `border-right` fuses a ~96px gutter to the pill |
 | 3 | F2-R3-1 the 4px-squish [S1] | `DockLayerGroup.vue:246` (icon `size-4`); `dock/layer-group.css:148-173` (no svg width/shrink rule) | the un-floored SVG collapses to 4px wide inside the column inline-flex |
-| 4 | D6-1 filled-plate corroborate [S1] | `ground/D6-dock-rail-zoom.png`; `tokens/offsets-sizing.css:318`; `dock/layer-group.css:97-120` | second-lane confirmation: a solid grey tint block, plate-on-plate |
-| 5 | A1-1 close-claim void [S1] | `dock/layer-group.css:117-120`; `DockLayerGroup.vue:156-160`; `R3.md:22-23` | the W-DOCK-NAV "rail RESTORED with aligned indicator" does not hold at the live R3 re-audit |
+| 4 | D6-1 filled-plate corroborate [S1] | `ground/D6-dock-rail-zoom.png`; `tokens/offsets-sizing.css:318`; `dock/layer-group.css:97-121` | second-lane confirmation: a solid grey tint block, plate-on-plate |
+| 5 | A1-1 close-claim void [S1] | `dock/layer-group.css:119-121`; `DockLayerGroup.vue:160` (`isComponent` def), `:244` (the render call — the B6 fix landed, icons paint) ; `audit/USER-AUDIT-2026-06-10-R3.md:22` (R3-1) | the W-DOCK-NAV "rail RESTORED with aligned indicator" does not hold at the live R3 re-audit |
 
 ## Goal criterion
 
@@ -131,7 +132,7 @@ on both rail orientations (column on a horizontal dock, row on a vertical dock).
 | `src/styles/tokens/offsets-sizing.css` | modify (the `--dock-layer-rail-*` token ladder re-point) |
 | `scripts/proof-dock-rail-hairline.mjs` | create (the born-RED gate) |
 | `package.json` | modify (register `proof:dock-rail-hairline` + add to `proof:all`/parity) |
-| `gates.mjs` | modify (register the gate row) |
+| `scripts/gates.mjs` | modify (register the gate row in the gate registry) |
 | `CLAUDE.md` | modify (record the hairline-rail register in the dock nav-pattern section) |
 
 Do NOT touch: `src/components/custom/tabs/` (SegmentedTabs — its underline register is a
@@ -205,21 +206,47 @@ falsifiable SOURCE witnesses (the comment-strip + pure-detector house pattern, m
    utilities (either `:surface="false"` is bound, or the dock owns a bare indicator
    element), so the `.dock-layer-tab-indicator` token rule is the sole paint. RED at HEAD:
    `DockLayerGroup.vue:251` renders the plain `<TabsIndicator class="dock-layer-tab-indicator"/>`
-   inheriting `TabsIndicator.vue:19`'s baked plate.
-2. **W2 — the rail is a hairline, not a fused plate.** `--dock-layer-rail-bg` resolves
-   transparent/no-fill (NOT `--surface-tint-8`), and `.dock-layer-rail` carries no
-   `--radius-md` plate background — the `border-right` hairline is the only divider. RED at
-   HEAD: `offsets-sizing.css:318` is `var(--surface-tint-8)`; `layer-group.css:120` paints
-   it + a `--radius-md` background.
+   inheriting `TabsIndicator.vue:19`'s baked plate. **Bite-tightening (anti-evasion)**: the
+   source half asserts the POSITIVE — the rail-indicator render carries no `bg-(--glass-bg-*`
+   / `[backdrop-filter:` token-utility AND the live `--dock-layer-rail-active` rule is the
+   resolved paint; it does NOT merely check for `:surface="false"` as a literal (a `surface`
+   prop renamed/defaulted differently must still drop the baked plate). The π half is a
+   POSITIVE luminance + tint-source test, NOT a brittle `≠ "color(srgb 0.98 0.98 0.98 / 0.5)"`
+   string match: the indicator's resolved bg relative luminance is BELOW a near-white floor
+   (the C1 plate measured L≈0.88) AND its tint reads the `--dock-layer-rail-active`/`--primary`
+   register — closing the value-drift evasion (the true plate is `0.9824 0.98144 0.9776`, not
+   the rounded literal), the format evasion (`rgba()`/`oklch()` serialization), and the
+   opacity-knob evasion (`/0.6` still near-white but `≠ /0.5`). All three pass a `≠`-string
+   check while leaving R3-1 alive; the luminance-floor test catches them.
+2. **W2 — the rail is a hairline, not a fused plate.** `.dock-layer-rail`'s resolved
+   `background` paints NO fill at the resting register — POSITIVELY `transparent`/no-paint,
+   not merely "any token other than `--surface-tint-8`" (a re-point to `--surface-tint-4`/`-6`
+   is a LIGHTER blob, still a plate, and the user's "heavy column" survives as a faint one —
+   the bite must reject ANY opaque/translucent surface fill on the rail box, not just the
+   one named token). `.dock-layer-rail` carries no rounded plate background, AND the divider
+   is a single hairline `border-right` (no fill leaks to a pseudo-element: the gate also
+   asserts no `.dock-layer-rail::before`/`::after` paints a plate fill — the pseudo-element
+   evasion). RED at HEAD: `offsets-sizing.css:318` is `var(--surface-tint-8)`;
+   `layer-group.css:119` paints the fill + `:120` the `--radius-md` background.
 3. **W3 — the glyph is floored, not a sliver.** A `.dock-layer-rail .dock-layer-tab svg`
-   width/`flex-shrink: 0` rule EXISTS in `layer-group.css`. RED at HEAD: `grep svg
-   src/styles/dock/layer-group.css` returns 0 — no rule, the 4px collapse.
+   rule sets BOTH a concrete `width` (≥`0.875rem`/`14px`, NOT `auto`/`100%` — `auto` re-collapses
+   inside the column inline-flex) AND `flex-shrink: 0` (a width without the shrink guard
+   re-squishes), on a selector that MATCHES the rendered rail DOM (not a media-gated or
+   wrong-scope decoy). RED at HEAD: `grep svg src/styles/dock/layer-group.css` returns 0 — no
+   rule, the 4px collapse. The source-existence is NECESSARY but NOT sufficient; the π
+   measure (W4) is the binding floor — a `width: auto` decoy passes the grep but fails the
+   ≥14px live readback.
 4. **The π binding readback** (the cardinal-lesson DELTA, captured own-surface): a live
-   `/dock/layers` capture at `:5199` with a paired π readback proving the indicator bg is
-   NOT the near-white plate, the rail divider is a hairline, and the rail glyph computes
-   ≥14px CSS-wide at ≥4.5:1 contrast against its backdrop. Captured to
-   `docs/tranches/AZ/audit/visual/W-DOCK-RAIL-DELTA.md` with before/after frames against
-   the `ground/C1-switcher-rail-zoom.png` baseline.
+   `/dock/layers` capture at `:5199` with a paired π readback proving (a) the indicator's
+   resolved bg luminance is below the near-white floor AND its tint references the
+   `--dock-layer-rail-active`/`--primary` register (the POSITIVE token test, not a `≠`-string),
+   (b) the rail box paints no surface fill (the hairline divider is the only visible rail
+   edge), and (c) the rail glyph computes ≥14px CSS-wide at ≥4.5:1 contrast against its
+   backdrop. Captured to `docs/tranches/AZ/audit/visual/W-DOCK-RAIL-DELTA.md` with before/after
+   frames against the `ground/C1-switcher-rail-zoom.png` baseline. **The π half is the binding
+   visual truth — if the source half passes but the live `/dock/layers` render still shows
+   a tinted blob column, the wave does NOT close (the A1-1 source-green/visually-broken gap
+   is exactly what re-opened R3-1).**
 
 W1-W3 are the device-free CI half (`proof:dock-rail-hairline`); the π readback is the
 binding visual truth (a source-green/visually-broken gap is the exact AZ failure class).
@@ -230,7 +257,7 @@ Both must hold for a clean close.
 `npm run typecheck` after the TabsIndicator prop + DockLayerGroup render edits;
 `npm run build` to confirm the CSS partial compiles; `node scripts/proof-dock-rail-hairline.mjs`
 born-RED before the source edits (proof it fails at HEAD), GREEN at close;
-`npm run proof:gate-script-parity` after the package.json/gates.mjs registration;
+`npm run proof:gate-script-parity` after the package.json/scripts/gates.mjs registration;
 `git diff --check` before close.
 
 ## Verification Artefacts

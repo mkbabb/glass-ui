@@ -26,8 +26,9 @@ scope-reveal trigger — halt and re-ground):
    (the blind spot: a cmd-LESS row is never matched).
 3. `grep -n 'scriptFor' scripts/proof-tag-parity.mjs` — line 147-148 `scriptFor(g, pkg)` falsy →
    `continue` (the second blind spot).
-4. `grep -rn 'GLASS_UI_DEMO_URL' scripts/*.mjs tests-visual/playwright.config.ts` — the 7 `:5173`
-   defaults (B5-3 enumerated below) + the config root cause at `playwright.config.ts:22`.
+4. `grep -rnE '(GLASS_UI_DEMO_URL|GLASS_UI_DEMO_PORT)\s*\?\?\s*.*5173' scripts/*.mjs tests-visual/playwright.config.ts`
+   — the 4 surviving `:5173` DEFAULTS (B5-3 enumerated below; match the `?? …5173` default site, not the
+   comments) + the config root cause at `playwright.config.ts:22`.
 5. `grep -n 'navigation/dock-layers' scripts/proof-dock-orchestrator-single.mjs scripts/gates.mjs`
    — the dead route at `proof-dock-orchestrator-single.mjs:51,490` + the NOTE at `gates.mjs:665`.
 6. `grep -n 'TRAIL_N\|uTrailPos\|uTrailCount' src/components/custom/goo-blob/shaders/*.ts
@@ -40,6 +41,12 @@ scope-reveal trigger — halt and re-ground):
    src/components/custom/dock/composables/dockMorphContext.ts` — the dock surface last-touch (B5-4
    measured `a8cfd644`, after `83e1e3b2`, so `merge-base --is-ancestor a8cfd644 83e1e3b2` is FALSE
    ⇒ STALE on the git-ancestry model — the treadmill the content-hash model retires).
+9. `grep -n 'tokens.css' scripts/proof-font-cascade-live.mjs` + `grep -n 'font-stack' src/styles/tokens/scheme-motion.css src/styles/tokens.css`
+   — confirm the gate (`:63`) reads `src/styles/tokens.css` while `--font-stack-{display,mono}` now
+   live in the carved `tokens/scheme-motion.css` (`:44,46`) and are ABSENT from `tokens.css` (the
+   D7 moved-file false RED). RE-RUN `npm run proof:font-cascade-live` and confirm it REDs at HEAD
+   (the three STRUCTURE-1 asserts fail on the stale path). If the gate already reads the partial,
+   D7 is discharged — skip its clause.
 
 ---
 
@@ -57,8 +64,8 @@ wave-ids on a quiet server.
 NON-ZERO at this wave's open (the malformed row present ⇒ the parity-hardening clause reds; the
 content-hash freshness model unimplemented ⇒ that clause reds) and exits ZERO only when ALL of:
 the malformed row is gone AND both parity gates flag any future cmd-less/id-less row; `proof:all`
-(`gates.mjs --run local`) runs to completion green; the 7 live-gate scripts + `playwright.config.ts`
-default `:5199`; `proof:dock-orchestrator-single` reaches `/dock/layers`; `proof:blob-interaction-prm`
+(`gates.mjs --run local`) runs to completion green; the 4 surviving `:5173`-default live-gate scripts
++ `playwright.config.ts` default `:5199`; `proof:dock-orchestrator-single` reaches `/dock/layers`; `proof:blob-interaction-prm`
 + `proof:blob-tempo-suppression` are gate rows that read the relocated uniforms; the freshness
 reader hashes declared surface bytes; the 3 AZ DELTA docs carry a fresh `surface-hash` header and a
 re-shot capture on the AZ tree. Born-RED is the correct open signal; the gate greens only at the
@@ -89,21 +96,25 @@ missing `id` or `cmd`. **GREEN after:** both gates gain a STRUCTURAL pre-pass th
 over the manifest array, BEFORE the cmd-literal parse) — born-RED on a synthetic cmd-less fixture
 row, GREEN on the repaired manifest.
 
-### D3 (7 live-gate scripts default to a FOREIGN port) — the `:5173`→`:5199` sweep. [B5-3, F3-M4, S3]
+### D3 (4 live-gate scripts + the config default to a FOREIGN port) — the `:5173`→`:5199` sweep. [B5-3, F3-M4, S3]
 
-Seven `proof-*.mjs` default `GLASS_UI_DEMO_URL` to `:5173` (the foreign-app port; the AY convention
-is `:5199`). Enumerated (re-grep per §0.4):
-`proof-dock-animation-live.mjs:598` (ci row) · `proof-nested-backdrop-budget.mjs:22` (ci row) ·
-`proof-touch-target.mjs:24` (ci row) · `proof-dock-orchestrator-single.mjs:425` (local row) ·
-`proof-tabs-unified.mjs:293` (local row) · `proof-demo-dock-nav-runtime.mjs:176` (helper, not a
-gate row) · `proof-dock-items-lag-capture.mjs:424` (helper, not a gate row). The config root cause
-is `tests-visual/playwright.config.ts:22` (`DEMO_PORT ?? 5173`). Already correct on `:5199`:
-`proof-dock-wrap-content-driven.mjs:396`, `proof-squircle-language.mjs:395`. Harmless in CI (the
-CI-tagged ones grace-SKIP via the playwright-presence probe before reaching the URL); the bite is
-LOCAL — a dev on `:5199` who forgets the env override hits the foreign app on `:5173` → false RED /
-mis-captured surface. AZ scope fence: `:5173` is never a default anywhere after this wave
-(`AZ.md` scope fence). **GREEN after:** all 7 scripts + the config default `:5199`; a grep-clause
-asserts ZERO `5173` literals remain in the live-gate script set + the config.
+Four `proof-*.mjs` still DEFAULT `GLASS_UI_DEMO_URL`/`GLASS_UI_DEMO_PORT` to `:5173` (the foreign-app
+port; the AY convention is `:5199`). Enumerated at HEAD (re-grep per §0.4 — the `?? …5173` DEFAULT
+site, NOT the explanatory comments that also name `:5173`):
+`proof-dock-orchestrator-single.mjs:425` (local row) · `proof-tabs-unified.mjs:293` (local row) ·
+`proof-demo-dock-nav-runtime.mjs:176` (helper, not a gate row) ·
+`proof-dock-items-lag-capture.mjs:424` (helper, not a gate row). The config root cause is
+`tests-visual/playwright.config.ts:22` (`DEMO_PORT ?? 5173`). ALREADY MIGRATED to `:5199` at HEAD
+(the AY sweep reached them — they default correctly, only their comments still mention `:5173`):
+`proof-dock-animation-live.mjs:600`, `proof-nested-backdrop-budget.mjs:23`,
+`proof-touch-target.mjs:26`, `proof-dock-wrap-content-driven.mjs:396`, `proof-squircle-language.mjs:395`.
+Harmless in CI (the CI-tagged ones grace-SKIP via the playwright-presence probe before reaching the
+URL); the bite is LOCAL — a dev on `:5199` who forgets the env override hits the foreign app on
+`:5173` → false RED / mis-captured surface. AZ scope fence: `:5173` is never a DEFAULT anywhere after
+this wave (`AZ.md` scope fence). **GREEN after:** the 4 scripts + the config default `:5199`; a
+grep-clause asserts ZERO `?? …5173` DEFAULT sites remain in the live-gate script set + the config (it
+matches the `?? "…:5173"`/`?? 5173` default form, NOT a `:5173` substring — the surviving
+explanatory comments that name the foreign port stay GREEN).
 
 ### D4 (a gate navigates a DEAD route) — the dock-orchestrator route re-point. [B5-2, S2]
 
@@ -135,6 +146,29 @@ scripts become real gate rows (tagged `local`, the blob render arms are demo-liv
 gate reads BOTH `metaball.frag.ts` (the loop) AND `metaball-uniforms.glsl.ts` (the TRAIL_N define +
 uTrailPos uniform) via a small `readBlobShaders()` concat helper, mirroring the `read-dock-css.mjs`
 authority-reader precedent; the `:213` stale message is corrected to the consolidated path.
+
+### D7 (a ci-tagged gate reads a MOVED token file → false RED on every runner) — the font-cascade-live path re-point. [AY-§3-residual / not-in-FLEET, S2]
+
+NOT in the FLEET findings (the 32-lane audit missed it) — surfaced by the HC-CRITIC sweep of the AY
+FINAL §3 owning-wave dispositions. `proof:font-cascade-live` is a **device-free STRUCTURE arm that
+runs + hard-REDs on EVERY runner** (`gates.mjs:446` note) and is **ci-tagged** (`ci.yml` carries it),
+so its RED is a CI RED, not a sibling/device grace. AY FINAL §3 dispositioned it OWNING-WAVE (stale
+gate) — "asserts `tokens.css` font-stacks that do not match the current token state; owned by the font
+wave" — but NO AZ wave owns the re-point, and it is **STILL RED at HEAD**. ROOT CAUSE (re-grepped):
+the gate reads `src/styles/tokens.css` (`proof-font-cascade-live.mjs:63` `TOKENS: resolve(ROOT,
+"src/styles/tokens.css")`, asserted at `:191-193`), but the `--font-stack-*` declarations MOVED to the
+carved partial `src/styles/tokens/scheme-motion.css` (`:44` `--font-stack-display: var(--font-stack-text)`
+✓ correct; `:46` `--font-stack-mono: "Fira Code"…` ✓ correct). The SOURCE is right; the gate reads the
+stale pre-carve path, so all three STRUCTURE-1 asserts false-RED. This is the SAME stale-gate-path class
+as D4 (the dock route) and D5 (the shader split) — a path re-point, NOT a source fix. **GREEN after:**
+`proof-font-cascade-live.mjs` reads the carved font-token partial (`tokens/scheme-motion.css`, or a
+`readTokenFonts()` concat over the partials that now hold `--font-stack-*`, mirroring the `read-dock-css.mjs`
+authority-reader precedent — robust to a further carve); the three STRUCTURE-1 asserts match the moved
+declarations; the gate runs GREEN on a clean runner. The header comment (`:14-17`) is corrected to name
+the real partial. (Coordinates with W-CARVE, which re-points the typography-bridge gates after ITS
+theme.css carve — W-CARVE re-points the theme.css BRIDGE reads; THIS re-point is the tokens-partial SOURCE
+read, a disjoint edit-site, owned here as a Batch-0 gate-health fix so `proof:all` is genuinely green from
+the start.)
 
 ### D6 (the freshness model is a TREADMILL) — content-hash over git-ancestry. [B5-4, S3 → DESIGN]
 
@@ -235,9 +269,10 @@ a quiet `:5199`. The §4 gate clause reads the persisted PASS.
 | `scripts/gates.mjs` (GATES array) | ADD two gate rows: `proof:blob-interaction-prm` + `proof:blob-tempo-suppression`, `tags:["local"]` (the blob render arms are demo-live; not CI). Each carries a NOTE per the house format (D5). |
 | `scripts/proof-gate-script-parity.mjs` | ADD a STRUCTURAL pre-pass over `gatesFor("local"|"ci"|"release")`: assert every row has a non-empty `id` AND `cmd` (BEFORE the `cmd:"…"` literal parse at `:188`). A row missing either is a violation `"manifest row N has no id/cmd"`. Self-test against a synthetic cmd-less fixture (D2). |
 | `scripts/proof-tag-parity.mjs:145-148` | ADD the same id/cmd presence assertion BEFORE the `scriptFor()` `continue` — a cmd-less/id-less row is a violation, not a silent skip (D2). |
-| `scripts/proof-dock-animation-live.mjs:598`, `proof-nested-backdrop-budget.mjs:22`, `proof-touch-target.mjs:24`, `proof-dock-orchestrator-single.mjs:425`, `proof-tabs-unified.mjs:293`, `proof-demo-dock-nav-runtime.mjs:176`, `proof-dock-items-lag-capture.mjs:424` | `?? "http://localhost:5173"` → `?? "http://localhost:5199"` (D3). |
+| `scripts/proof-dock-orchestrator-single.mjs:425`, `proof-tabs-unified.mjs:293`, `proof-demo-dock-nav-runtime.mjs:176`, `proof-dock-items-lag-capture.mjs:424` | `?? "http://localhost:5173"` → `?? "http://localhost:5199"` (D3 — the 4 surviving `:5173` DEFAULTS; `proof-dock-animation-live.mjs`/`proof-nested-backdrop-budget.mjs`/`proof-touch-target.mjs` already default `:5199` at HEAD, only their comments name `:5173`). |
 | `tests-visual/playwright.config.ts:22` | `DEMO_PORT ?? 5173` → `DEMO_PORT ?? 5199` (D3 root cause). |
 | `scripts/proof-dock-orchestrator-single.mjs:51` | `DOCK_ROUTE = "/navigation/dock-layers"` → `"/dock/layers"` (D4). |
+| `scripts/proof-font-cascade-live.mjs:14-17,63,191-193` | Re-point the `TOKENS` source read (`:63`) from `src/styles/tokens.css` to the carved `src/styles/tokens/scheme-motion.css` (where `--font-stack-{text,display,mono}` now live), or a small `readTokenFonts()` concat over the partials that hold them (the `read-dock-css.mjs` precedent — robust to a further carve); update the STRUCTURE-1 asserts (`:191-193`) to read the moved file; correct the header comment (`:14-17`) to name the real partial (D7). |
 | `scripts/proof-blob-interaction-prm.mjs:47,134-138,213` | Read BOTH `metaball.frag.ts` AND `metaball-uniforms.glsl.ts` (a `readBlobShaders()` concat helper, the `read-dock-css.mjs` precedent): the TRAIL_N define + uTrailPos uniform asserts run over the concat; the loop assert runs over the frag. Correct the `:213` message: `"blob-interaction.vue is absent"` → `"demo/stories/substrates/blob.vue is absent"` (D5). |
 | `scripts/read-blob-shaders.mjs` (**NEW**, optional) | The blob-shader authority reader — concat `metaball.frag.ts` + `metaball-uniforms.glsl.ts` + the other `goo-blob/shaders/*.glsl.ts` in source order, mirroring `read-dock-css.mjs`. Consumed by `proof-blob-interaction-prm.mjs` (and any future blob gate that scans the split). |
 | `scripts/proof-live-verified-ledger.mjs:203-250,385-409` | REPLACE `freshnessVerdict`'s git-ancestry arm with the content-hash model (§2a): parse `surface-hash`, recompute over `surface-paths` bytes, fresh IFF byte-identical. REMOVE the `capture-commit` + `git merge-base` machinery (clean break). Re-examine the `superseded-by` branch under the new model. |
@@ -266,9 +301,10 @@ artefact-verifiable, no grep-only-on-a-comment):
 3. **PROOF-ALL-RUNS.** A subprocess `node scripts/gates.mjs --run local` exits 0 (the local
    aggregate completes — the crash is gone). Bite: any malformed row crashes the run → RED. (This
    is the load-bearing end-to-end check: it actually RUNS `proof:all`.)
-4. **NO-5173.** A grep over the live-gate script set (the 7 of D3) + `tests-visual/playwright.config.ts`
-   finds ZERO `5173` literals; every `GLASS_UI_DEMO_URL`/`DEMO_PORT` default resolves `5199`. Bite:
-   a surviving `:5173` default → RED. (Enforces the AZ scope fence.)
+4. **NO-5173.** A grep over the live-gate script set + `tests-visual/playwright.config.ts` finds ZERO
+   `?? …5173` DEFAULT sites (the `GLASS_UI_DEMO_URL`/`GLASS_UI_DEMO_PORT` `?? "…:5173"`/`?? 5173` form,
+   NOT a bare `5173` substring — the surviving explanatory comments naming the foreign port stay GREEN);
+   every default resolves `5199`. Bite: a surviving `?? …5173` default → RED. (Enforces the AZ scope fence.)
 5. **DOCK-ROUTE-LIVE.** `proof-dock-orchestrator-single.mjs` carries `DOCK_ROUTE = "/dock/layers"`
    (a real route, asserted against `demo/stories/manifest.ts` producing `/dock/layers`) AND the
    `gates.mjs:665` NOTE no longer contains `/navigation/dock-layers`. Bite: the dead route survives
@@ -286,6 +322,11 @@ artefact-verifiable, no grep-only-on-a-comment):
    stale (the surface drifted post-capture without a re-shoot) → RED.
 8. **R6-PERSISTED.** `.cache/gates/AW-dock-animation-live.json` (or the canonical artefact id)
    reads `status:"pass"` from a quiet-server run (§2c). Bite: the artefact absent or `fail` → RED.
+9. **FONT-PATH-LIVE.** A subprocess `npm run proof:font-cascade-live` exits 0 (the gate reads the
+   carved `tokens/scheme-motion.css` font-token partial, not the stale `tokens.css` §0 path — D7).
+   Bite: the gate still reads `src/styles/tokens.css` for `--font-stack-*` (the moved-file false RED)
+   → the subprocess exits 1 → RED. (This is the AY-§3-residual font-gate re-point made
+   machine-checked — a ci-tagged, hard-RED-on-every-runner gate cannot ride into AZ red.)
 
 Plus the clean-tree allowlist guard (the `proof-au-final.mjs` idiom): `git status --porcelain`
 carries only the documented USER-DOMAIN dirt (the `docs/precepts` submodule pointer); any other
@@ -294,6 +335,24 @@ dirty tracked entry means a gate mutated source (inv-θ) → RED.
 **Born-RED at open:** the malformed row exists (clause 1 reds) AND the content-hash model is
 unimplemented (clause 7 reds) — the gate is RED at this wave's open and greens only at the
 discharged terminal state.
+
+**Runner-truth disposition (the AY W-LIVE1 lesson, IN the spec).** `proof:gate-manifest-sound` is a
+pure DEVICE-FREE meta-gate — every clause is a manifest-array structural assertion, a subprocess
+gate run (`gates.mjs --run local`, `proof:gate-script-parity`, `proof:tag-parity`), a grep over the
+live-gate script set, or a READ of a *persisted* `.cache/gates/*.json` artefact (clause 8 reads the
+artefact W-GATES itself re-persists on a quiet server per §2c — it does NOT spawn a browser, so it
+is NOT a `LIVE_VERIFIED_LOCAL_ONLY` Playwright gate). It therefore runs on EVERY runner. It is a
+`local`-only META-gate by the `JUSTIFIED_LOCAL_ONLY` precedent (an active-tranche meta-gate, like
+`proof:ay-w0-reground`/`proof:blob-config`, promoted to `ci` by its own wave at close) — so its
+`gates.mjs` row is `tags: ["local"]` AND it gets a `JUSTIFIED_LOCAL_ONLY` entry in
+`proof-tag-parity.mjs` with the recorded reason ("AZ.W-GATES active-tranche gate-manifest-soundness
+meta-gate; promoted at AZ close"), else `proof:tag-parity` REDs it as a static gate missing `ci`.
+The gate-script-parity trio: the §3 `package.json` key + the `gates.mjs` `["local"]` row + the
+`JUSTIFIED_LOCAL_ONLY` disposition — named at AUTHORING (never an orphan script, the lesson this
+wave itself hardens). The downstream gates this wave WIRES disposition independently: the blob gates
+(`proof:blob-interaction-prm`/`proof:blob-tempo-suppression`) are `tags: ["local"]` render arms
+(demo-live, not CI — §3); the freshness ledger is the CI-side static proof the π verification
+happened.
 
 ---
 
@@ -329,3 +388,18 @@ npm run proof:live-verified-ledger:ay    # content-hash freshness (clause 7)
 - **The full `:5173` config consolidation** beyond the live-gate set — `playwright.config.ts:22` is
   the root cause this wave fixes; any other `5173` reference in non-gate tooling is a follow-up only
   if it surfaces (none found in the B5 inventory).
+
+
+## §X — The AZ cardinal arm + the π-spec enrollment (the close's Batch-0 dependency; HC-GATESPEC/HC-REGISTER rulings)
+
+This wave MINTS the AZ ledger arm at Batch 0 — `proof:live-verified-ledger:az` →
+`node scripts/proof-live-verified-ledger.mjs --tranche=AZ` in package.json (+ the gates.mjs row) and
+`docs/tranches/AZ/VISUAL-ALLOWLIST.json` — so every AZ visual wave closes under the capture
+discipline from its FIRST batch on the content-hash freshness model. W-REGISTER-IOS,
+W-ADAPTIVE-AUTO, and W-CLOSE all read this arm; without it the close gate reads the stale AY
+ledger (the HC-REGISTER finding).
+
+The four NEW π specs the gate waves mint (`tests-visual/{dock-rail-hairline,morph-showcase,
+shell-identity,motion-suite}.spec.ts`-class — re-grep the final names at HEAD) ENROLL in the AZ
+VISUAL-ALLOWLIST at their wave's close so each local-only π half has the CI-side ledger backstop —
+the source-green/visually-broken gap (the A1-1 re-open class) must not recur on AZ-minted gates.

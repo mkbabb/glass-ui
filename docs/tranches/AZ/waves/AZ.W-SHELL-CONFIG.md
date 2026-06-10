@@ -3,7 +3,7 @@
 **Name**: W-SHELL-CONFIG - the gear-hosted demo configurator + the floating-FAB/composables-view removals
 **Opens after**: AZ open (Batch 3; ‖ W-BLOB-PAGE, W-BLOB-STUDIO, W-MOTION-SUITE, W-SHELL-IDENTITY)
 **Track**: Band S (the shell) · **Type**: implementation (demo shell — demo-private chrome) · **Depends on**: W-GATES.
-**Hard gate**: born-RED `proof:shell-config` — the floating PresetEditor FAB is GONE (rehomed onto a dock/options control), the composables manifest category is DELETED, the standalone SidebarDock DarkModeToggle is REMOVED (the configurator Switch is the single chrome home), and the configurator exposes the post-W54 axes (`--glass-level`, a scale axis, an optional PRM control) under the renamed "glass-ui demo Configurator" title; π capture DELTA before/after.
+**Hard gate**: born-RED `proof:shell-config` — the floating PresetEditor FAB is GONE (rehomed onto a dock/options control), the composables manifest category is DELETED, the standalone SidebarDock DarkModeToggle is REMOVED (the configurator Switch is the single chrome home), and the configurator exposes the post-W54 axes (`--glass-level`, the `--ui-scale` global scale axis, an optional PRM control) under the renamed "glass-ui demo Configurator" title; π capture DELTA before/after.
 **Status**: SPEC
 
 ## §0 — RE-GROUND (mandatory step-0 before any edit)
@@ -42,7 +42,7 @@ The demo's gear opens the glass-ui demo CONFIGURATOR — re-framed (renamed from
 1. **Remove the floating FAB, rehome the open (D1/D6 — C3 E2).** DELETE the `fixed bottom-6 right-6 z-dock … rounded-full` FAB SheetTrigger from `PresetEditor.vue`; rehome the open affordance onto a dock/options control — a `#collapsed` or trailing `DockIconButton` (gear glyph) on the `SidebarDock` (or a new options dock control) that dispatches the SAME `glass-ui-demo:toggle-configurator` event. The `,` shortcut + the window event STAY functional (they are NOT the "floating option" — the FAB visual is). This is the `E1-10` dock-as-configurator-chrome idiom (GlassDock + DockIconButton).
 2. **Delete the composables view (D4 — C3 E1).** DELETE the `CATEGORIES['composables']` block from `manifest.ts` (`:329`-region); drop the now-unused `Cog` import (`:30`); the SidebarDock rail reference-shelf branch (`:160-163`) goes empty when `referenceCategories` is empty — remove the branch + its `DockSeparator` if it leaves a dangling divider. The routes derive automatically from `CATEGORIES`, so no router edit beyond the manifest deletion. (Per the no-legacy invariant: clean break, no alias — the composables stories are gone, not hidden.)
 3. **Remove the standalone dark toggle (D5 — C3 E3).** DELETE the standalone `DarkModeToggle` from `SidebarDock.vue` `#collapsed` (`:209`-region) + its import (`:27`); the configurator Switch (`PresetEditor.vue` ~332-341) is the SINGLE chrome home. The composable/display STORY placements (`use-token-color`, `dark-mode-toggle`) are CONTENT, not chrome — KEEP them.
-4. **Re-frame + add the axes (D2/D3 — C3 E4).** Rename "Preset Editor" → the glass-ui demo Configurator (the SheetTitle + the subtitle); ADD a `--glass-level` slider (0..1, the W54 opacity+blur knob — the demo SURFACES the shipped library knob, writing it to `:root` via `css-writers.ts`), a `--dock-scale`/scale axis slider, and an optional `prefers-reduced-motion` control — threading the new fields through `preset-editor/types.ts` `ConfigBaseline` + `defaults.ts` + `css-writers.ts` (the existing write path). The dark Switch stays (the fold from §3.3's removal lands here as the single home).
+4. **Re-frame + add the axes (D2/D3 — C3 E4).** Rename "Preset Editor" → the glass-ui demo Configurator (the SheetTitle + the subtitle); ADD a `--glass-level` slider (0..1, the W54 opacity+blur knob — the demo SURFACES the shipped library knob, writing it to `:root` via `css-writers.ts`), a SCALE axis slider, and an optional `prefers-reduced-motion` control — threading the new fields through `preset-editor/types.ts` `ConfigBaseline` + `defaults.ts` + `css-writers.ts` (the existing write path). **The scale axis writes `--ui-scale` (the GLOBAL root scale knob — `@property --ui-scale` registered at `src/styles/tokens/property-regs.css:133`, the master-comfort-scalar comment at `src/styles/tokens/offsets-sizing.css:82`, default `1` — "re-tints the whole library's comfort from ONE `:root { --ui-scale }`"), NOT `--dock-scale` (which DERIVES as `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))` at `src/styles/tokens/offsets-sizing.css:243` and scales ONLY the dock — RE-GREP both cites, the digest path/line drifted).** A demo configurator teaching a scale axis wants the WHOLE-UI knob the user named in R3-4 ("ui-scale") + AZ.md Band S ("ui-scale"); writing `--ui-scale` also moves `--dock-scale` for free via the derivation, so the dock scales too. The dark Switch stays (the fold from §3.3's removal lands here as the single home).
 5. **The dark-toggle fold consolidation (cross-cut of D5).** Confirm the configurator Switch is the ONLY chrome dark toggle after §3.3; the C3-DARKTOGGLE three-placement audit reduces to ONE chrome placement (the Switch) + the content-story placements (kept).
 6. **The born-RED gate `proof:shell-config`** (§6).
 
@@ -61,12 +61,12 @@ NOTE on R3-5/E5: the `dock/overview.vue:370` bottom-nav-silhouette Home → `#pe
 | `demo/configurator/PresetEditor.vue` | modify-carve (DELETE the FAB; re-frame the title; add the glass-level/dock-scale/PRM controls; keep the Switch — D1/D2/D3/D4) |
 | `demo/configurator/preset-editor/types.ts` | modify (add glassLevel/scale/motion to `ConfigBaseline` — D3) |
 | `demo/configurator/preset-editor/defaults.ts` | modify (the new-field defaults — D3) |
-| `demo/configurator/preset-editor/css-writers.ts` | modify (write `--glass-level`/`--dock-scale`/PRM to `:root` — D3) |
+| `demo/configurator/preset-editor/css-writers.ts` | modify (write `--glass-level`/`--ui-scale` [the global scale knob, NOT `--dock-scale`]/PRM to `:root` — D3) |
 | `demo/stories/manifest.ts` | modify-carve (DELETE the composables category block + the Cog import — D4; disjoint from W-MOTION-SUITE's /motion rows) |
 | `demo/layout/SidebarDock.vue` | modify-carve (DELETE the standalone DarkModeToggle + its import; rehome the configurator-open gear control; remove the empty reference-shelf branch — D1/D4/D5) |
 | `demo/layout/AppShell.vue` | modify (the FAB mount removed at shell root; the `,` shortcut + event STAY — D6) |
 | `scripts/proof-shell-config.mjs` | create (the born-RED gate) |
-| `scripts/gates.mjs` | modify (register the row — coordinate with W-GATES) |
+| `scripts/gates.mjs` + `package.json` | the gate-script-parity TRIO (coordinate with W-GATES): add the `package.json` key; register the device-free `proof:shell-config` (deletion proofs + source-witnesses) as a `tags: ["local","ci","release"]` row (carries `ci` — NOT `JUSTIFIED_LOCAL_ONLY`, NOT a live-detect; the π captures SPLIT into `tests-visual/shell-config.spec.ts`, no manifest row, local-only π harness). `proof:gen-ci-fresh` re-lock `ci.yml`. `proof:gate-script-parity` + `proof:tag-parity` GREEN. |
 
 Do NOT touch: the library `src/` (the `--glass-level` knob already ships — the demo SURFACES it; no library edit). The composable/display dark-toggle STORIES (`use-token-color.vue`, `dark-mode-toggle.vue` — content, kept). The `dock/overview.vue` bottom-nav normalization (W-DOCK-NORMALIZE). The foundations ℱ logo (W-SHELL-IDENTITY). The BottomDock home/nav pattern (W-DOCK-NORMALIZE).
 
@@ -79,7 +79,7 @@ This wave is ONE agent unit (the gear/configurator/removals are a coupled shell-
 ### AZ.W-SHELL-CONFIG.1 the gear-hosted demo configurator + the removals
 
 - **Goal**: the gear opens a re-framed glass-ui demo Configurator exposing the post-W54 axes and owning the single dark toggle; the floating FAB and the composables view are gone.
-- **Mechanism**: DELETE the fixed FAB + rehome the open onto a dock gear control; DELETE the composables manifest category (+ Cog import + the empty rail branch); DELETE the standalone SidebarDock DarkModeToggle; re-frame the title + add `--glass-level`/`--dock-scale`/PRM through `ConfigBaseline`/`defaults.ts`/`css-writers.ts`.
+- **Mechanism**: DELETE the fixed FAB + rehome the open onto a dock gear control; DELETE the composables manifest category (+ Cog import + the empty rail branch); DELETE the standalone SidebarDock DarkModeToggle; re-frame the title + add `--glass-level`/`--ui-scale` (the global scale knob, not `--dock-scale`)/PRM through `ConfigBaseline`/`defaults.ts`/`css-writers.ts`.
 - **Files**: the §4 set.
 - **Sub-gate**: `proof:shell-config` GREEN (the §6 conditions) + the π DELTA pair on disk.
 
@@ -90,9 +90,11 @@ A SPECIFICATION authored as `scripts/proof-shell-config.mjs`, born-RED against H
 1. **FAB-GONE (deletion proof + π).** Assert `PresetEditor.vue` renders NO `fixed bottom-6 right-6 … rounded-full` FAB SheetTrigger; a live π capture of every route shows NO floating gear button hovering over the page. The configurator opens from a DOCK control (a `DockIconButton` gear) + the `,` shortcut (still functional — a runtime check the event still toggles). RED today (`PresetEditor.vue:117`).
 2. **COMPOSABLES-GONE (deletion proof).** Assert `manifest.ts` has NO `id: "composables"` category and NO `Cog` import; the composables routes no longer resolve. RED today (`manifest.ts:329`).
 3. **SINGLE-DARK-HOME (deletion proof + source-witness).** Assert `SidebarDock.vue` imports NO `DarkModeToggle` and renders none in `#collapsed`; the ONLY chrome dark toggle is the configurator Switch. RED today (`SidebarDock.vue:27,209`).
-4. **AXES-PRESENT (source-witness + π).** Assert `ConfigBaseline` carries `glassLevel`/`scale`/`motion` fields, `css-writers.ts` writes `--glass-level`/`--dock-scale`/the PRM signal to `:root`, and the live configurator renders the sliders; a runtime check drives the `--glass-level` slider and reads the changed `:root` value (a real `--glass-level` write, the W54 knob taking effect). RED today (`types.ts:22-32` no such fields).
+4. **AXES-PRESENT (source-witness + π).** Assert `ConfigBaseline` carries the two REQUIRED axes `glassLevel`/`scale` (and `motion` IFF the optional PRM control ships — see below), `css-writers.ts` writes `--glass-level`/`--ui-scale` to `:root` (the scale axis writes `--ui-scale`, the global knob — NOT `--dock-scale`, which derives from it), and the live configurator renders the two required sliders; a runtime check drives BOTH the `--glass-level` slider (reads the changed `:root --glass-level`, the W54 knob taking effect) AND the scale slider (reads the changed `:root --ui-scale` + verifies `--dock-scale` moved via its derivation). RED today (`types.ts:22-32` no such fields). **The PRM control is OPTIONAL (the §3.4 framing): this bite does NOT require the `motion` field unconditionally — but it is CONDITIONALLY binding, so a `motion` field that DOES ship must write a live PRM signal to `:root` (no dead field). The gate must not assert `motion` as mandatory while §3.4 calls it optional — the two-required-axes floor is the hard requirement; PRM-if-present is verified, PRM-absent is allowed.**
 5. **RE-FRAMED (π).** The configurator title reads the glass-ui demo Configurator, not "Preset Editor". RED today (`PresetEditor.vue:133-135`).
 6. **DELTA.** The captured before/after pair (the floating-FAB-gone overview, the configurator open with the new axes, the IA without composables), light+dark, on disk under `ground/W-SHELL-CONFIG-`.
+
+**Runner-truth disposition (the AY W-LIVE1 lesson, IN the spec).** Bites 2 (COMPOSABLES-GONE deletion proof) + 3 (SINGLE-DARK-HOME deletion proof + source-witness) + the SOURCE-WITNESS/deletion halves of 1 (the FAB SheetTrigger absence) + 4 (the `ConfigBaseline`/`css-writers` axis fields) are DEVICE-FREE src-scans — they carry `ci`. Bites 1/4/5's π + RUNTIME halves (the no-floating-gear capture, the live slider→`:root` write readbacks, the `,`-shortcut toggle, the re-framed title render) NEED a live page → LOCAL-ONLY. The house split (the W-REGISTER-IOS precedent): `proof:shell-config` is the device-free `.mjs` (the deletion proofs + source-witnesses + the `ConfigBaseline` axis-field assert, `tags: ["local","ci","release"]`, carries `ci` — `proof:tag-parity` REDs a static gate that omits it); the π captures + the runtime slider/shortcut readbacks move to `tests-visual/shell-config.spec.ts` (auto-detected `LIVE_VERIFIED_LOCAL_ONLY`, `tags: ["local"]`, captured to the DELTA under `proof:live-verified-ledger`). The device-free half is falsifiable on every runner; the π captures are the binding visual/runtime truth backstopped by the ledger — both hold to close. If kept combined, the spec records the deletion proofs then run local-only-only (an honest disposition) — the SPLIT is RECOMMENDED. The §3 trio: the `package.json` key + the `gates.mjs` device-free row `["local","ci","release"]` + `proof:gate-script-parity`/`proof:tag-parity` GREEN.
 
 ## §7 — Format And Lint Cadence
 
@@ -101,20 +103,20 @@ A SPECIFICATION authored as `scripts/proof-shell-config.mjs`, born-RED against H
 ## §8 — Verification Artefacts
 
 - `ground/W-SHELL-CONFIG-floating-fab-{before,after}-{light,dark}.png`
-- `ground/W-SHELL-CONFIG-configurator-axes.png` (the open configurator with --glass-level/--dock-scale/PRM)
+- `ground/W-SHELL-CONFIG-configurator-axes.png` (the open configurator with --glass-level/--ui-scale/PRM)
 - `ground/W-SHELL-CONFIG-ia-no-composables.png`
-- `ground/W-SHELL-CONFIG-glass-level-write.json` (the runtime --glass-level slider→:root readback)
+- `ground/W-SHELL-CONFIG-axes-write.json` (the runtime --glass-level + --ui-scale slider→:root readbacks; --dock-scale verified moved via the derivation)
 - `scripts/proof-shell-config.mjs` (the gate, GREEN)
 - the `proof:shell-config` PASS log
 
 ## §9 — Commit Plan
 
-- one implementation commit: `feat(AZ): gear-hosted demo configurator — remove floating FAB + composables view + standalone dark toggle; add --glass-level/--dock-scale/PRM axes; re-frame title` (body: names the two removals as clean breaks per the no-legacy invariant, the dark-toggle single-home consolidation, the W-DOCK-NORMALIZE deferral for E5).
+- one implementation commit: `feat(AZ): gear-hosted demo configurator — remove floating FAB + composables view + standalone dark toggle; add --glass-level/--ui-scale/PRM axes; re-frame title` (body: names the two removals as clean breaks per the no-legacy invariant, the dark-toggle single-home consolidation, the `--ui-scale`-not-`--dock-scale` global-knob decision, the W-DOCK-NORMALIZE deferral for E5).
 - the gate-registration line + a status commit at close.
 
 ## §10 — Dependencies
 
-- **Depends on**: W-GATES (proof:all crashable).
+- **Depends on**: W-GATES (proof:all crashable) + **W-DOCK-CONTEXT** (Batch 2 — it wires `SidebarDock.vue` to the route→layer contextual seam BEFORE this wave rehomes the gear control / removes the standalone dark toggle on that SAME file; W-DOCK-CONTEXT §Dependencies names this wave as the sequenced successor on `SidebarDock.vue` — the two MUST NOT run parallel on it, and Batch 2 < Batch 3 enforces the order. RE-GROUND `SidebarDock.vue` against the post-W-DOCK-CONTEXT render before the gear/dark-toggle edits — the contextual `<DockLayerGroup>` render shifts the template lines the §3 edit-sites cite).
 - **Blocks**: nothing hard. Reads `manifest.ts` disjoint from W-MOTION-SUITE (sequence the composables deletion first). The dock-normalization edits (R3-5 E5) are deferred to W-DOCK-NORMALIZE (the named successor); the foundations ℱ logo to W-SHELL-IDENTITY.
 
 ## §11 — Archaeology

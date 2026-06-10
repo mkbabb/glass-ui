@@ -61,7 +61,7 @@ The blob studio is a refined instrument: the living bead fills the stage as a LA
 
 | File | Access |
 |---|---|
-| `demo/stories/substrates/blob.vue` | modify (stage sizing, the Satellites layer, the louder-lean knob, the configurator hierarchy — coordinate with W-BLOB-PAGE which owns the page IA/static-row; this wave owns the STUDIO block §296-359) |
+| `demo/stories/substrates/blob.vue` | modify (stage sizing, the Satellites layer, the louder-lean knob, the configurator hierarchy). ⚠ REGION-SPLIT CORRECTION (re-grepped at HEAD): the `§296-359` "studio block" line region does NOT contain the live GooBlob mount — blob.vue has exactly ONE `<GooBlob>` (`:271`, `ref="studioBlob"` `:config="stageConfig"`) inside its `w-64 max-w-[80%]` wrapper (`:270`), BOTH at `:270-279`, OUTSIDE `:296-359`. The studio's OWN stage-fill sizing edit (§3.1, D1) therefore lands at `:270`, which the line-split assigns to W-BLOB-PAGE. So blob.vue is a SHARED-WRITE file with W-BLOB-PAGE, NOT line-disjoint — see §4a: the two blob waves SEQUENCE on blob.vue (they do NOT run parallel on it). This wave owns the studio CONFIGURATOR + the Satellites layer + the GooBlob wrapper sizing (`:270` `w-64`→stage-fill) + the `:config`/`stageConfig` interaction threading; W-BLOB-PAGE owns the static-register section + the page IA ORDER + the GooBlob `:config` orbit-geometry override |
 | `src/components/custom/goo-blob/types.ts` | modify (merge default re-base; coordinate disjointness with W-BLOB-PAGE) |
 | `src/components/custom/goo-blob/shaders/metaball.frag.ts` | modify (the squircle-bevel + Snell offset — §3.7 CONDITIONAL) |
 | `src/components/custom/goo-blob/shaders/sdf-body.glsl.ts` | modify (the smin-band widen — §3.2; the dome-Z profile if §3.7) |
@@ -70,13 +70,13 @@ The blob studio is a refined instrument: the living bead fills the stage as a LA
 | `src/components/custom/goo-blob/GooBlob.vue` | modify (the grounded shadow — §3.4) |
 | `src/styles/` blob-shadow rung (RE-GREP the file) | modify (the grounded contact-shadow token — §3.4) |
 | `scripts/proof-blob-studio.mjs` | create (the born-RED gate, including the folded proof:blob-glass bites) |
-| `scripts/gates.mjs` | modify (register the row — coordinate with W-GATES) |
+| `scripts/gates.mjs` + `package.json` | the gate-script-parity TRIO (coordinate with W-GATES): add the `package.json` key(s); register `proof:blob-studio` as a `tags: ["local"]` row + add it to the `HEADER_LIVE_VERIFIED` enumeration (it captures the live bead → auto-detected Playwright/live → local-only, NOT a `JUSTIFIED_LOCAL_ONLY` static keep); the OPTIONAL split-out `proof:blob-studio-config` (bites 1/3 source-witness halves) registers `tags: ["local","ci","release"]` (device-free config src-scan carries `ci`). `proof:gate-script-parity` + `proof:tag-parity` (the live gate detected + header-enumerated) GREEN; `proof:gen-ci-fresh` re-lock `ci.yml`. |
 
-Do NOT touch: the WatercolorDot component (W-BLOB-PAGE owns its filter). The blob page IA / static swatch row (W-BLOB-PAGE owns the page staging). The aurora pipeline. `demo/stories/substrates/blob.vue` lines OUTSIDE the studio block (the static-register section is W-BLOB-PAGE's).
+Do NOT touch: the WatercolorDot component (W-BLOB-PAGE owns its filter). The static-register SECTION of `blob.vue` (`:37-247` — W-BLOB-PAGE owns it) and the page IA SECTION ORDER (which section leads — W-BLOB-PAGE owns the re-stage). The aurora pipeline. CAVEAT: the GooBlob mount/wrapper at `:270-279` is NOT "outside the studio block" in the disjointness sense — it is the studio's own bead and is SHARED-WRITE with W-BLOB-PAGE's orbit override; the two waves sequence on it (§4a), they do not both write it in parallel.
 
 ### §4a — Disjointness
 
-This wave runs as ONE agent unit — the studio surfaces (stage, configurator, satellite layer, shadow, interaction) plus the conditional refraction are coupled (the refraction displaces the shadow read; the satellite layer makes the orbit a live knob the merge-tune then reads). The `types.ts` and `blob.vue` shared-file risks with W-BLOB-PAGE are sequenced (§3a). `scripts/gates.mjs` is appended after W-GATES (Batch 0). No intra-wave parallel write.
+This wave runs as ONE agent unit — the studio surfaces (stage, configurator, satellite layer, shadow, interaction) plus the conditional refraction are coupled (the refraction displaces the shadow read; the satellite layer makes the orbit a live knob the merge-tune then reads). **`blob.vue` is a SHARED-WRITE file with W-BLOB-PAGE, NOT line-disjoint** — both waves edit the SINGLE GooBlob mount/wrapper at `:270-279` (W-BLOB-PAGE: the `:config` orbit override + the page-IA section order; this wave: the `w-64`→stage-fill wrapper size + the Satellites-layer `:config` threading). The `:296-359` region-split in the original §4 is therefore NOT a valid parallel boundary. RESOLUTION (the orchestrator's): the two blob waves SEQUENCE on `blob.vue` — W-BLOB-PAGE lands FIRST (it sets the page IA order, decides where the hero GooBlob sits, and lands the orbit-geometry `:config` override on that mount), THEN this wave re-bases the SAME mount's wrapper size + threads the Satellites layer over the already-staged hero. They do NOT run parallel on `blob.vue` despite the Batch-3 parallel listing — this is a within-batch sequence constraint the orchestrator enforces (same as the `types.ts` sequence in §3a). `scripts/gates.mjs` is appended after W-GATES (Batch 0). No intra-wave parallel write.
 
 ## §5 — Agent Units
 
@@ -91,7 +91,7 @@ This wave runs as ONE agent unit — the studio surfaces (stage, configurator, s
 
 A SPECIFICATION authored as `scripts/proof-blob-studio.mjs`, born-RED against HEAD. Bites:
 
-1. **SATELLITE-LAYER-LIVE (source-witness + π).** The studio renders a Satellites ConfiguratorLayer with count/orbit-radius/satellite-radius controls bound to the BlobGeometry atoms; a live readback confirms dialing orbit-radius up SEPARATES a satellite (the connected-component/neck-pinch metric from W-BLOB-PAGE §6.2, here driven by the knob). RED today (no geometry controls — `blob.vue:298-359`).
+1. **SATELLITE-LAYER-LIVE (source-witness + π).** The studio renders a Satellites ConfiguratorLayer with ALL FOUR §3.3 controls bound to the BlobGeometry atoms — `satelliteCount` (0–`MAX_SATS`=4), `orbitRadius`, `satelliteRadius`, `eccentricity` (the count/orbit/satellite-radius/eccentricity quartet; `canvasSize`/`bodyRadius` are excluded by design — substrate constant + body, not satellite knobs); a live readback confirms dialing `orbitRadius` up SEPARATES a satellite (the connected-component/neck-pinch metric from W-BLOB-PAGE §6.2, here driven by the knob). RED today (no geometry controls — `blob.vue:298-359`).
 2. **MERGE-BRIDGE-ROUNDER π (born-RED).** With a louder `smoothK`, capture the body→satellite bridge during a metaball-in and assert the bridge band is WIDER than the HEAD baseline (a measured neck-width at the bridge, or the absence of the quadratic seam-crease). RED today (`smoothK=0.05` quadratic creases).
 3. **CONFIGURATOR-HIERARCHY (source-witness + π).** The studio Configurator carries `dividers` enabled, the preset row weighted as primary, and the layer order primary(Interaction)→secondary(Mood/palette)→tertiary(Geometry/Satellites); a π capture shows the differentiated hierarchy (not the flat stack). RED today (`blob.vue:299,321` dividers unset).
 4. **SHADOW-GROUNDED π (born-RED).** The blob shadow reads as a grounded gel-dome (a contact-darkening band at the base + AO under merged satellites) — a π capture DELTA against the single-soft-drop-shadow HEAD state. RED today (`GooBlob.vue` single drop-shadow).
@@ -102,6 +102,8 @@ A SPECIFICATION authored as `scripts/proof-blob-studio.mjs`, born-RED against HE
    - **G-BROWSER**: WebGL2-core-only source-witness (no `getExtension` beyond the shipped set, no float-texture dependency) + the chromium+webkit+firefox capture set on disk; additive-on-detect enamel fallback.
    - **IDENTITY-PRESERVED**: `proof:blob-warm-default` + the blob-render band stay GREEN.
 7. **IDENTITY + DELTA.** `proof:component-orphan` GREEN; the captured before/after DELTA pairs (stage, merge bridge, configurator, shadow, refraction tri-engine), light+dark, on disk under `ground/W-BLOB-STUDIO-`.
+
+**Runner-truth disposition (the AY W-LIVE1 lesson, IN the spec).** `proof:blob-studio` CAPTURES the live /substrates/blob bead (bites 2/4/5 are pure π; 1/3/6 are "source-witness + π") — it spawns a browser, so `proof:tag-parity`'s detector classifies it `LIVE_VERIFIED_LOCAL_ONLY` → `tags: ["local"]` ONLY, added to the `gates.mjs` `HEADER_LIVE_VERIFIED` enumeration (the single-source cross-check). On CI it grace-SKIPs via the AX.W00 fail-closed playwright-presence probe; the CI-side proof is `proof:live-verified-ledger` over the W-BLOB-STUDIO DELTA + the §3.7 G-PERF/G-BROWSER measurement record. The π half is the binding visual truth (the satellite-separation/merge-bridge/shadow/refraction reads), NEVER re-run on a headless CI runner — the AY W-LIVE1 decision (SwiftShader cannot judge the artistic refraction; the 4×-throttle G-PERF number is dev-box truth). The SOURCE-WITNESS halves of bites 1 (the four Satellites controls bound to the BlobGeometry atoms) + 3 (the `dividers`-enabled + layer-order config) ARE device-free src-scans; an implementer MAY split them into a `proof:blob-studio-config` `.mjs` (`tags: ["local","ci","release"]`, carries `ci`) so the config-binding has CI coverage while the captured reads stay local-only — RECOMMENDED (the W-REGISTER-IOS split precedent), but if kept combined the spec records that the source-witnesses then run local-only-only (an honest disposition, not a silent `ci` claim). The §3 trio: the `package.json` key(s) + the `gates.mjs` `["local"]` row + the header enumeration + `proof:gate-script-parity`/`proof:tag-parity` GREEN.
 
 ## §7 — Format And Lint Cadence
 
@@ -129,3 +131,11 @@ A SPECIFICATION authored as `scripts/proof-blob-studio.mjs`, born-RED against HE
 ## §11 — Archaeology
 
 `AY.W-BLOB-GLASS.md` is the prior recorded DECISION (CONDITIONALLY greenlit 2026-06-09); its G-PERF baseline (`§2`, the M5-Max frame table, run 2026-06-09) is the measured floor the refraction starts from. New guardrail: the refraction folds into the studio wave (not a separate green run, per AY FINAL §2: "folded into the blob band — no separate green run owed"), and the §6.6 bites are the inherited gates verbatim — the implementation agent does not re-derive G-PERF/G-BROWSER, it RE-RUNS the recorded protocol. The C6-11 note (no aurora behind the /substrates/blob bead → the one-shot snapshot FBO path, not the aurora handshake) is the relevant source for THIS page.
+
+
+## §X — Orchestrator ruling (HC-SUBSTRATE, 2026-06-10)
+
+The inherited G-PERF numbers are MACHINE-CLASS-PINNED: the perf arm runs on the recorded dev-Mac
+class (the M5-Max baseline machine, 98Hz rAF) — a CONDITIONS-UNMET read on slower silicon is a
+measurement-environment artifact, never a true perf verdict. The artefact records the machine
+class; the ledger backstops (no CI arm enforces the perf number — the AY W-LIVE1 decision).
