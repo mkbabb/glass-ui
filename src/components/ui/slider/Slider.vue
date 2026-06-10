@@ -39,10 +39,10 @@ const delegatedProps = computed(() => {
   const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
   // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
   // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
-  // standard cylinder seats the round knob INSIDE the thick track (a ball-bearing
-  // in the cylinder, protrusion 0), and the spectrum squircle spans the tall
-  // gradient track; neither floats past the capsule. The knob's value-follow
-  // centre is the value point, clamped so the inscribed knob never overhangs.
+  // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
+  // edge IS the handle); the invisible thumb element rides `contain` so its
+  // value-follow centre clamps to the fill edge and never overhangs the capsule. The
+  // spectrum squircle spans the tall gradient track; neither floats past the capsule.
   if (!delegated.thumbAlignment) {
     delegated.thumbAlignment = 'contain'
   }
@@ -216,43 +216,33 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
-/* ── The inscribed round knob (standard) ──
-   The thumb is a FULLY ROUNDED iOS knob — a circle the size of the size token —
-   INSCRIBED inside the thick glass capsule (track height = thumb + 4px, a 2px
-   inset reveal each side), so it is SEATED in the cylinder with zero protrusion:
-   a ball-bearing in the tube, ONE continuous piece, never a floating disc on a
-   wire. The fill flows straight under it (the knob's centre IS the value point).
-   It carries a faint specular grip so the grab affordance reads, and the
-   four-state contract rides the box-shadow halo + the iOS press spring on
-   transform. */
+/* ── The INVISIBLE thumb (standard) — you pull the TRACK itself ──
+   The user's binding bar (USER-AUDIT-2026-06-10 §B3): NO VISIBLE THUMB AT ALL.
+   The standard slider is ONE continuous glass segment — the filled `.slider-range`
+   cylinder's leading EDGE is the only handle, the grab affordance the cursor/touch
+   response. The reka `<SliderThumb>` element STAYS MOUNTED (a11y/keyboard/drag/
+   value-follow all stay native on it) but paints INVISIBLE: zero width, zero
+   opacity, transparent fill — its geometry collapses into the fill edge so there
+   is no distinct disc/cap/ring paint over the continuous cylinder. Keyboard focus
+   does NOT ring the (invisible) thumb — it ribbons the TRACK (the focus-visible
+   block below the track rules), the W-PRIM-POLISH focus register. */
 .slider-thumb {
     display: block;
-    /* A round knob: a square footprint (1:1) at the size token, so the 50%
-       radius paints a true circle. The track is thicker (thumb + 4px) so the
-       knob sits inside the capsule — inscribed, never protruding past it. */
-    width: var(--slider-thumb-size, 1rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
+    /* INVISIBLE: the thumb has no own paint — width collapses to 0 and opacity to
+       0 so nothing renders over the fill edge. The value-follow inset still
+       positions this zero-box at the value point (reka owns the inline inset), so
+       the 44px coarse hit-halo (.touch-hit-area ::before) still centres on the
+       handle for the touch-target floor. The grab IS the track. */
+    width: 0;
+    height: var(--slider-track-height, 0.375rem);
+    opacity: 0;
+    background: transparent;
     border: none;
-    /* AY.W-GLASS — a flat fill; the grip catch-light is the SHARED opt-in
-       edge-gleam (the `.glass-specular-track` `::before` recipe Card/Button/dock-
-       controls use, composed on the thumb in the template), NOT a hand-rolled
-       static `linear-gradient` lip (the parallel specular idiom the band did not
-       speak). The thumb is the slider's interactive knob, so it is a legitimate
-       opt-in (wire-or-omit: it WIRES); the gleam wakes only on pointer-move, idle
-       at rest. */
-    background: var(--slider-thumb-bg, var(--primary));
-    box-shadow: var(--slider-thumb-shadow, none);
-    /* The thumb `transform` carries the press-give (the `:active` uniform
-       `scale()` give below) — a TRANSFORM/PRESS leg, so per the §6 easing doctrine it
-       rides `--spring-smooth` (the ONE hover/press register), NOT `--spring-dock`
-       (the dock-box MORPH register, an enter-class size animation, not a press).
-       The reka SliderThumb owns the value-follow POSITION (inline inset, not this
-       CSS transform), so this transition governs only the felt knob give. The
-       `--slider-thumb-spring` hook keeps the per-consumer retune. */
+    box-shadow: none;
+    /* The press-give still rides the transform channel (the `:active` scale below
+       gives the WHOLE track a felt squish via the focus ring + range, not a visible
+       knob). Per §6 the transform leg rides `--spring-smooth`. */
     transition:
-        background var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard),
         transform var(--duration-fast)
             var(--slider-thumb-spring, var(--spring-smooth));
 }
@@ -270,37 +260,56 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     pointer-events: none;
 }
 
-/* Hover lifts a light specular halo on the knob — the inscribed knob
-   brightens its grip rather than gaining a second detached ring. */
-.glass-slider:hover .slider-thumb {
-    box-shadow: 0 0 0 4px var(--surface-tint-8);
+/* Hover brightens the TRACK FILL (there is no knob to halo) — the continuous
+   glass cylinder lifts its edge rim so the grab affordance reads on the track.
+   Standard-only: the spectrum recipe halos its own VISIBLE thumb (below). */
+.glass-slider:not([data-variant="spectrum"]):hover .slider-range {
+    box-shadow:
+        var(--glass-material-rim),
+        var(--slider-range-shadow, var(--glass-under-shadow-quiet)),
+        0 0 0 1px var(--surface-tint-8);
 }
 
-/* D5 — keyboard focus rises to the ONE button focus register: the warm-ink
-   double ring (`--focus-ring-shadow`, 30% ring + 15% halo) the `.focus-ring`
-   utility keys off, NOT a hand-set 8%-alpha ghost. One focus system, one
-   calibration — the token-first focus axis (CLAUDE.md §".focus-ring utility"). */
-.slider-thumb:focus-visible {
+/* D5 / W-PRIM-POLISH — keyboard focus rings the TRACK, not the invisible thumb.
+   The reka `<SliderRoot>` (the `.glass-slider` root) receives focus-within when
+   its mounted-but-invisible `<SliderThumb>` takes keyboard focus; the ring rises
+   on the .slider-track (the visible surface the user pulls) via the ONE button
+   focus register (`--focus-ring-shadow`, the token-first focus axis). Standard-
+   only: the spectrum recipe focus-rings its own VISIBLE thumb (below). */
+.glass-slider:not([data-variant="spectrum"]):focus-within .slider-track {
     box-shadow: var(--focus-ring-shadow);
 }
 
-/* iOS press spring — the snappy spring ease on the transform channel makes
-   the knob "give" under the pointer (a uniform shrink, the felt press). */
-.glass-slider:active .slider-thumb {
+/* iOS press spring — the snappy spring ease on the transform channel gives the
+   whole continuous track a felt "give" under the pointer (a uniform shrink of the
+   fill, the felt press — there is no visible knob to shrink). */
+.glass-slider:active .slider-range {
     transform: scale(var(--scale-press-btn, 0.97));
+    transform-origin: left center;
+    transition: transform var(--duration-fast)
+        var(--slider-thumb-spring, var(--spring-smooth));
 }
 
-.glass-slider[data-disabled] .slider-thumb {
-    pointer-events: none;
+.glass-slider[data-disabled] .slider-range {
     opacity: var(--opacity-disabled);
 }
 
-/* J.W5.C — held-state halo: when a dock-keep-open token is held by THIS
-   slider's drag (or any sibling drag the dock observes), we lift the
-   thumb halo to a denser tint rung. The substrate response in dock.css
-   intensifies in parallel. Unscoped so it applies to both recipes. */
-.glass-slider[data-held] .slider-thumb {
-    box-shadow: 0 0 0 8px var(--surface-tint-15);
+/* J.W5.C — held-state: when a dock-keep-open token is held by THIS slider's drag
+   (or any sibling drag the dock observes). The STANDARD recipe (no visible thumb)
+   intensifies the TRACK FILL's edge rim; the SPECTRUM recipe (visible thumb)
+   intensifies its thumb halo (its range is transparent, so the held register
+   rides the handle). The substrate response in dock.css intensifies in parallel. */
+.glass-slider:not([data-variant="spectrum"])[data-held] .slider-range {
+    box-shadow:
+        var(--glass-material-rim),
+        var(--slider-range-shadow, var(--glass-under-shadow-quiet)),
+        0 0 0 2px var(--surface-tint-15);
+}
+
+.glass-slider[data-variant="spectrum"][data-held] .slider-thumb {
+    box-shadow:
+        0 0 0 6px var(--surface-tint-15),
+        var(--shadow-sm);
 }
 
 /* ── The gradient-track color slider (spectrum, AX.W59) ──
@@ -322,19 +331,24 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 }
 
 .glass-slider[data-variant="spectrum"] .slider-thumb {
-    /* The squircle thumb spans the FULL track height; a near-square footprint
-       so the superellipse silhouette READS (the corner-shape only paints at a
-       large radius relative to the box). */
-    width: calc(var(--slider-thumb-size, 1rem) * 1.1);
+    /* B14 / USER-AUDIT §B14 — the spectrum thumb is the VISIBLE color-picker
+       handle (unlike the standard slider's invisible thumb): it must paint. It
+       re-establishes the geometry the standard base collapses (opacity:1, an
+       explicit width) and spans the FULL track height — but THINNER, matching the
+       value.js color-picker reference (`w-3` ≈ 0.5× its `h-6` track, a slim
+       vertical bar). 0.6× the thumb-size reads as that thin handle over the tall
+       gradient track, not the prior chunky 1.1× squircle. */
+    width: calc(var(--slider-thumb-size, 1rem) * 0.6);
     height: 100%;
+    opacity: 1;
     background: var(--slider-thumb-bg, transparent);
     border: 2px solid var(--slider-thumb-border-color, var(--background));
-    /* The cross-engine CONTRACT: a GENEROUS radius proportional to the box
-       (0.7× the thumb-size, ≈0.64× the 1.1× box WIDTH) reads squircle-adjacent
-       on Safari/Firefox/old-Chrome — NOT the old bare 10px `--radius-lg` that
-       left a rounded RECT on the ~35% without `corner-shape`. The superellipse
-       is the @supports-gated PE tier that REFINES this curve, never its base. */
-    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.7);
+    /* The cross-engine CONTRACT: a GENEROUS radius proportional to the box reads
+       squircle-adjacent on Safari/Firefox/old-Chrome — NOT a bare `--radius-lg`
+       rounded RECT on the ~35% without `corner-shape`. The superellipse is the
+       @supports-gated PE tier that REFINES this curve, never its base. Scaled to
+       the thinner box so the curve still reads. */
+    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.4);
     box-shadow: var(--slider-thumb-shadow, var(--shadow-sm));
 }
 
