@@ -11,6 +11,8 @@ import {
 } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
+import { GooBlob } from "../../../src/components/custom/goo-blob";
+import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
 import { cn } from "../../../src/utils/cn";
 
 interface EmptyState {
@@ -90,6 +92,31 @@ const states: EmptyState[] = [
 
 <template>
     <StoryPage>
+        <!-- The mascot — a small pointer-leaning GooBlob that follows the cursor.
+             The page over an empty state earns a little companion (E4). The blob
+             leans toward the pointer natively (useBlobPointer); under reduce the
+             substrate freezes to a static droplet. -->
+        <div
+            class="mascot-stage mb-8 flex flex-col items-center gap-3 text-center"
+        >
+            <div
+                class="relative h-40 w-40"
+                aria-hidden="true"
+                data-egg="empty-states-mascot"
+            >
+                <GooBlob
+                    :config="BLOB_CONFIG_DEFAULTS"
+                    color="var(--primary, #1c1714)"
+                    seed="empty-states-mascot"
+                    class="absolute inset-0"
+                />
+            </div>
+            <p class="text-small text-muted-foreground max-w-sm">
+                Nothing here yet — but the blob's keeping you company. Move your
+                cursor and it leans your way.
+            </p>
+        </div>
+
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <Card
                 v-for="state in states"

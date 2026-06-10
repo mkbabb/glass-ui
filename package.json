@@ -91,9 +91,6 @@
             "toggle-chip": [
                 "dist/toggle-chip.d.ts"
             ],
-            "glass-panel": [
-                "dist/glass-panel.d.ts"
-            ],
             "sortable-list": [
                 "dist/sortable-list.d.ts"
             ],
@@ -112,17 +109,11 @@
             "instrument-chassis": [
                 "dist/instrument-chassis.d.ts"
             ],
-            "instrument-rail": [
-                "dist/instrument-rail.d.ts"
-            ],
             "hover-popover": [
                 "dist/hover-popover.d.ts"
             ],
             "configurator": [
                 "dist/configurator.d.ts"
-            ],
-            "header-ribbon": [
-                "dist/header-ribbon.d.ts"
             ],
             "constellation": [
                 "dist/constellation.d.ts"
@@ -319,10 +310,6 @@
             "types": "./dist/configurator.d.ts",
             "import": "./dist/configurator.js"
         },
-        "./header-ribbon": {
-            "types": "./dist/header-ribbon.d.ts",
-            "import": "./dist/header-ribbon.js"
-        },
         "./constellation": {
             "types": "./dist/constellation.d.ts",
             "import": "./dist/constellation.js"
@@ -363,10 +350,6 @@
             "types": "./dist/toggle-chip.d.ts",
             "import": "./dist/toggle-chip.js"
         },
-        "./glass-panel": {
-            "types": "./dist/glass-panel.d.ts",
-            "import": "./dist/glass-panel.js"
-        },
         "./sortable-list": {
             "types": "./dist/sortable-list.d.ts",
             "import": "./dist/sortable-list.js"
@@ -390,10 +373,6 @@
         "./instrument-chassis": {
             "types": "./dist/instrument-chassis.d.ts",
             "import": "./dist/instrument-chassis.js"
-        },
-        "./instrument-rail": {
-            "types": "./dist/instrument-rail.d.ts",
-            "import": "./dist/instrument-rail.js"
         },
         "./hover-popover": {
             "types": "./dist/hover-popover.d.ts",
@@ -686,6 +665,12 @@
         "proof:dropdown-type-scale": "node scripts/proof-dropdown-type-scale.mjs",
         "proof:forced-colors-skin": "node scripts/proof-forced-colors-skin.mjs",
         "proof:glass-cohesion": "node scripts/proof-glass-cohesion.mjs",
+        "proof:component-orphan": "node scripts/proof-component-orphan.mjs",
+        "proof:substrate-staging": "node scripts/proof-substrate-staging.mjs",
+        "proof:easter-eggs": "node scripts/proof-easter-eggs.mjs",
+        "proof:instrument-scope": "node scripts/proof-instrument-scope.mjs",
+        "proof:readme-meta-clean": "node scripts/proof-readme-meta-clean.mjs",
+        "proof:convergence-fit-coherent": "node scripts/proof-convergence-fit-coherent.mjs",
         "proof:adaptive-glass": "node scripts/proof-adaptive-glass.mjs",
         "proof:dark-semantic-contrast": "node scripts/proof-dark-semantic-contrast.mjs",
         "proof:glass-material-demo": "node scripts/proof-glass-material-demo.mjs",

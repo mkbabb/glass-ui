@@ -1,4 +1,4 @@
-// AW.W17 — the Constellation package barrel.
+// The Constellation package barrel.
 export { default as Constellation } from "./Constellation.vue";
 export {
     seedField,

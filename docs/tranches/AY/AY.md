@@ -173,7 +173,7 @@ already-authored briefs (H-research-*); they are CONSUME-and-rank, NOT from-zero
 ### Band D — instrument-chassis scope
 | wave | type | scope | hard gate |
 |---|---|---|---|
-| **W-IC1** | decision | Confirm instrument-chassis scope (slides-side removal vs glass-ui retention, ≥2-consumer bar) — UNDER-EXAMINED (no focused hardening lane challenged it). | decision recorded; consumers reconciled |
+| **W-IC1** | decision | Instrument-chassis family scope settled against the ≥2-consumer bar (`audit/W-IC1-scope-decision.md`): `InstrumentChassis` KEEP (speedtest binary + demo + tests); `InstrumentRail` RETIRE to demo-private (Disposition A — 0 binary, 1 demo, 0 tests); slides premise dismissed as moot (slides imports neither). Machine-locked by `proof:instrument-scope`. | DONE — decision recorded + rail retired from the public surface |
 
 ### Band E — the AX close (the DRAFT folded into named waves)
 | wave | type | scope | hard gate |

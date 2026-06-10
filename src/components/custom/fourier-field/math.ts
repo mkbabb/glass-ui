@@ -59,6 +59,53 @@ export function positionsAt(
     return positions;
 }
 
+/**
+ * The forward DFT — the inverse of {@link positionsAt}. Takes a closed sequence
+ * of `[x, y]` samples around a curve (treated as the complex signal `x + i·y`,
+ * uniformly spaced in the parameter `t ∈ [0, 1)`) and returns the
+ * {@link BasisComponent} spectrum that {@link positionsAt} reconstructs.
+ *
+ * Frequencies run symmetrically around 0 — `0, +1, -1, +2, -2, …` up to the
+ * Nyquist limit — which is the index ordering the epicycle chain wants (the big
+ * low-order phasors first). The DC term (`index 0`) is the curve's centroid; the
+ * caller can subtract it (draw the chain centered) or keep it (draw at the
+ * sampled position).
+ *
+ * General: any point set drives it (a glyph outline, a hand-traced path, a
+ * digitized signature). It is NOT a special case — it is the literal forward
+ * transform whose inverse already ships as `positionsAt`.
+ */
+export function dftFromPoints(points: [number, number][]): BasisComponent[] {
+    const N = points.length;
+    if (N === 0) return [];
+
+    // The signed-frequency order the epicycle chain consumes: 0, +1, -1, +2, …
+    const order: number[] = [0];
+    const half = Math.floor(N / 2);
+    for (let f = 1; f <= half; f++) {
+        order.push(f);
+        if (f !== N - f) order.push(-f); // skip the doubled Nyquist on even N
+    }
+
+    const components: BasisComponent[] = [];
+    for (const k of order) {
+        let re = 0;
+        let im = 0;
+        for (let n = 0; n < N; n++) {
+            const [px, py] = points[n];
+            // c_k = (1/N) Σ_n (x_n + i·y_n) · exp(-2πi·k·n/N)
+            const angle = (-2 * Math.PI * k * n) / N;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            // (px + i·py)(cos + i·sin) = (px·cos − py·sin) + i(px·sin + py·cos)
+            re += px * cos - py * sin;
+            im += px * sin + py * cos;
+        }
+        components.push(comp(k, re / N, im / N));
+    }
+    return components;
+}
+
 /** Tuning for {@link makeEllipticSpectrum}. */
 export interface EllipticSpectrumOptions {
     /**

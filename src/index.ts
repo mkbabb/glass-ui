@@ -49,9 +49,9 @@
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated 5 of the `src/components/custom/`
-// packages (`instrument-chassis`, `instrument-rail`, `hover-popover`,
-// `configurator`, `scrolling-text`). The rest reach consumers ONLY via their
+// This root barrel re-exports a curated 4 of the `src/components/custom/`
+// packages (`instrument-chassis`, `hover-popover`, `configurator`,
+// `scrolling-text`). The rest reach consumers ONLY via their
 // dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
 // Acceptance bar for root-barrel inclusion:
@@ -115,7 +115,6 @@ export * from "./components/ui/tooltip";
 
 // Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
-export * from "./components/custom/instrument-rail";
 export * from "./components/custom/hover-popover";
 
 // Custom composites — configurator primitive

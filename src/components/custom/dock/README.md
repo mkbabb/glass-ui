@@ -34,8 +34,9 @@ overshoot = exp(−ζπ / √(1 − ζ²))      // ζ=1 → 0% (critical), ζ≈
 
 WWDC23 re-parameterized the same ODE as `duration` + `bounce`: `bounce ~0.15`
 small/brisk, `~0.30` noticeably playful, `> 0.40` avoid for UI. The dock spring
-(`DOCK_SPRING` in `composables/useLayerTransition.ts`, mirrored to the
-`--spring-dock` `linear()` token via `scripts/regen-spring-tokens.mjs`) targets
+(`DOCK_SPRING` in `composables/dockMorphContext.ts` — the canonical authority that
+drives every shipped `<GlassDock>` morph; mirrored to the `--spring-dock` `linear()`
+token via `scripts/regen-spring-tokens.mjs`) targets
 the iOS **control band** — `response` in the 0.15–0.35 range with ζ tuned for a
 ~15–20% overshoot. A control that opens and closes constantly should feel
 *instant*, not lush; the response is what makes that felt.
@@ -71,30 +72,31 @@ interruption — so on the JS-driven path the opacity rides the spring's normali
 progress, and the rail indicator shares the spring's curve. Size, fade, and
 indicator settle together by construction.
 
-### One driver per concern, per engine
+### One driver per concern
 
-The size morph has exactly ONE authority on every engine:
+The size morph has exactly ONE authority: a single `--dock-morph-t` spring scalar
+(0 → 1, driven by `SpringProgress`). The container inline-size is a pure `calc()`
+read of that scalar (`inline-size = calc(from + (to − from) × var(--dock-morph-t))`),
+the entering-child reveal stagger rides the SAME scalar, and an interruption
+velocity-retargets the one spring in pixel space. There is no second clock.
 
-- **View-Transitions path** (native `document.startViewTransition`): the browser
-  snapshots the dock + panes (tagged `view-transition-name` / `view-transition-class:
-  gl-dock-layer`) and morphs size + crossfades content as a single browser-owned
-  mutation — zero `getBoundingClientRect`, no inline size, no rAF.
-- **FLIP fallback** (no VT): a single `SpringProgress` writes the container's
-  inline `width`/`height` in pixel space, velocity-retargeted on interruption.
-- **Reduced-motion**: a synchronous state swap — no measure/pin/animate, the
-  state change completes instantly.
+- **The morph**: the `--dock-morph-t` scalar drives container size + child reveal in
+  lockstep; FLIP pins the from/to box, the scalar runs the spring between them.
+- **Reduced-motion**: a synchronous state swap — no measure/pin/animate, the state
+  change completes instantly.
 
-A CSS `interpolate-size`/`calc-size()` second-driver was retired (it raced the
-spring over the same property and froze the dock); it stays rejected until
-cross-engine support lands.
+A CSS `interpolate-size`/`calc-size()` second-driver was retired (it raced the spring
+over the same property and froze the dock). The native View-Transitions size-morph path
+was likewise retired root-and-branch (the `::view-transition-group(.gl-dock-layer)` group
++ its typed-curve fork are deleted, recorded in `view-transition.css`); the dock
+collapse↔expand now morphs off the ONE `--dock-morph-t` spring scalar on every engine.
 
 ### Directional intent
 
-Expand and collapse — and forward/back layer swaps — carry distinct curves via
-typed View-Transitions (`:active-view-transition-type(dock-expand)` vs
-`(dock-collapse)`), so a snappier exit and a softer entry are expressible without
-forking the JS. Feature-detected; engines without VT types degrade to the single
-symmetric spring.
+Expand and collapse carry distinct character through the one spring — the entering-child
+reveal stagger front-loads on expand and reverses on collapse, both phase-shifted on the
+SAME `--dock-morph-t` clock, so a snappier exit and a softer entry read without forking
+the driver.
 
 ### Reduced-motion is binding
 
@@ -109,9 +111,9 @@ scalar, suppressed with the rest of the morph under PRM.)
 
 > Sources: [Motion — layout animations](https://motion.dev/docs/react-layout-animations),
 > [Motion — performance tier list](https://motion.dev/magazine/web-animation-performance-tier-list),
-> [MDN — View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API),
-> [MDN — using view transition types](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API/Using_types),
 > [NN/g — Liquid Glass](https://www.nngroup.com/articles/liquid-glass/) — accessed 2026-06-06.
+> The lane's authoritative research artefact is the dock-facilities corpus
+> (`docs/tranches/AX/research/dock-facilities-corpus.json` + `dock-liquidglass-README.md`).
 
 ---
 
@@ -182,7 +184,8 @@ width morph.
 | `position` | `"fixed" \| "inline" \| "sticky"` | `"inline"` | Page anchoring. |
 | `alwaysExpanded` | `boolean` | `false` | Never collapse (forced for vertical). |
 | `variant` | `"dock" \| "rail" \| "instrument-strip"` | `"dock"` | Surface preset. |
-| `shape` | `"pill" \| "rounded"` | `"pill"` | Corner treatment. |
+| `shape` | `"pill" \| "rounded" \| "card"` | `"pill"` | Corner treatment (`card` is the big-dock squircle, paired with `layout="grid"`). |
+| `layout` | `"linear" \| "grid"` | `"linear"` | Child layout. `layout="grid"` is the big-dock multi-row grid and HARD-CONTRACTS `alwaysExpanded` (a grid dock cannot collapse). |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout axis; horizontal animates `width`, vertical animates `height`. |
 | `density` | `"compact" \| "comfortable" \| "spacious" \| "audacious"` | `"comfortable"` | Padding / gap / control sizing. |
 | `overflow` | `"grow" \| "wrap" \| "scroll"` | `"grow"` | Over-cap strategy — grow visibly, wrap to multiple rows, or become the scroll port. |
@@ -268,9 +271,9 @@ substrate-with-consumer precept).
    auto-running Aurora/GooBlob background carries a `DockBackgroundToggle` (WCAG
    2.2.2 Level-A) — available to ALL users, not gated behind `prefers-reduced-motion`.
 5. **Retune motion via tokens, never by editing source.** The dock spring is the
-   `--spring-dock` token; a retune touches BOTH `DOCK_SPRING` and the
-   `regen-spring-tokens.mjs` PRESETS row, then re-runs the generator
-   (`proof:spring-tokens-synced` enforces no drift).
+   `--spring-dock` token; a retune touches BOTH `DOCK_SPRING` (the canonical
+   `dockMorphContext.ts` const) and the `regen-spring-tokens.mjs` PRESETS row, then
+   re-runs the generator (`proof:spring-tokens-synced` enforces no drift).
 6. **For multi-row controls, use `overflow="wrap"`** — the dock shrink-wraps to
    content and caps its inline size at `max-inline-size: var(--dock-max-inline-size)`,
    and the row reflows to N rows by INTRINSIC flex-wrap on the over-cap crossing (at
@@ -288,12 +291,15 @@ substrate-with-consumer precept).
 
 | Gate | Asserts |
 |---|---|
-| `proof:dock-animation-live` | The width + opacity morph over ≥3 rising frames on both the FLIP and VT paths, co-settle within a frame, and re-seat with velocity (no snap) through an interruption — born-RED on a frozen dock. |
-| `proof:dock-opacity-lockstep` | The CSS fallback opacity + the container morph name one `--dock-motion-resize` token. |
-| `proof:dock-motion-single-source` | The FLIP ref-swap + width-set share one rAF origin. |
-| `proof:dock-motion-parity` | The VT and FLIP paths share one timing source. |
-| `proof:spring-tokens-synced` | `--spring-dock` equals the generator output (the JS driver + the CSS token cannot drift). |
+| `proof:dock-animation-live` | The `--dock-morph-t` scalar + the root box width rise over ≥5 frames and the LAST entering `.dock-layer--full` child opacity onset trails the box-width onset by ≤ the deliberate-stagger budget (the binding lockstep witness — the box-vs-scalar onset is a non-binding structural sanity, since the box is a `calc()` of the scalar by construction). Born-RED on a synthetic per-child second-clock lag fixture. |
+| `proof:dock-lockstep-bornred` | The device-free born-RED twin: the pure detector REDs on a synthetic-lag timeline and GREENs on the HEAD-faithful entering-child onset. |
+| `proof:dock-opacity-lockstep` | The CSS opacity reveal + the container morph ride ONE `--dock-morph-t` scalar (no second clock). |
+| `proof:dock-rail-cohesion` | The switcher rail paints exactly ONE indicator, carries NO `--dock-motion-resize` second clock, and persistence is landed or formally booked. |
+| `proof:dock-orchestrator-single` | One FLIP-pin-measure-arm engine drives both the nested and standalone `DockLayerGroup` (drift-guard over the two copies while the fold is booked). |
+| `proof:spring-tokens-synced` | `--spring-dock` equals the generator output AND `DOCK_SPRING` (read from the canonical `dockMorphContext.ts`) carries an iOS-control `(response, ζ)` — the JS driver + the CSS token cannot drift. |
 | `proof:dock-layering-polish` | Directional expand/collapse asymmetry, a spring-keyed (not fixed-ms) item cascade, and a hover-scale on the dock spring — all PRM-suppressed. |
+| `proof:dock-clip-reveal` · `proof:dock-region-model` · `proof:dock-vocabulary` | The clip-aperture reveal, the region model (home-left nav-pattern + separators), and the dock CSS vocabulary cohesion. |
+| `proof:dock-hold-contract` · `proof:dock-perfection` · `proof:dock-unify` | The dock-held keep-open contract, the W45-TUNE hover/active register, and the one-root nav-pattern unify. |
 | `proof:dock-wrap-content-driven` | `overflow="wrap"` reflows by INTRINSIC content-driven flex-wrap (shrink-wrap + `max-inline-size: var(--dock-max-inline-size)` cap, no viewport `@media`); the multi-row card lifts onto the card-tier `--shadow-dock-wrap` shadow + the `--dock-card-radius` corner, both tracking `--dock-morph-t` in lockstep; horizontal-only; the `--dock-overflow-bp` token is gone. |
 | `proof:dock-a11y-contract` | The switcher-rail roles. |
 | `proof:offscreen-pause` | The dock's motion honors the WebGL-substrate park. |

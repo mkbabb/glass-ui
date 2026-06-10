@@ -181,8 +181,8 @@ interface BlobConfig {
   // Palette + OKLCh color-perturbation
   color: {
     // The light warm-cream DEFAULT ramp — a bare mount paints the cream bead off these
-    // stops (default ["#cbad99","#ebcc99","#f3f1ce"], OKLCh L≈0.77→0.95). Derive your own
-    // via deriveBlobPalette(seed, { harmony }).
+    // stops (default ["#b5947f","#d4b27d","#dad6b1"], OKLCh ramp mean L≈0.78). Derive your
+    // own via deriveBlobPalette(seed, { harmony }).
     paletteStops: string[];
     hueRange: number;         // hue swing in degrees (default 5)
     satShift: number;         // OKLCh chroma swing (default 0)
@@ -404,7 +404,9 @@ shared `useWebGLCanvas` substrate and is DOM-free: the SFC un-wraps every color 
 
 ## References
 
-All accessed 2026-06-08.
+The lane's authoritative research artefact is [`RESEARCH.md`](./RESEARCH.md) (the metaball / SDF
+field survey, the OKLCh palette derivation, and the mood/intent model behind the bead). The primary
+techniques, all accessed 2026-06-08:
 
 - Inigo Quilez — [Smooth Minimum](https://iquilezles.org/articles/smin/), [Distance + Gradient
   functions 2D](https://iquilezles.org/articles/distgradfunctions2d/) (the SDF gradient = free fake

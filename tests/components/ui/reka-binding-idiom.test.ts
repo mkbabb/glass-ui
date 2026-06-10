@@ -27,6 +27,7 @@ import {
     ComboboxAnchor,
     ComboboxInput,
 } from "../../../src/components/ui/combobox/index";
+import { useToast } from "../../../src/components/ui/toast/use-toast";
 
 describe("reka binding-idiom render-effect canary (AW.W26)", () => {
     it("Button: a host-sized icon (`size-9`) survives the base `size-4` (cn() no false-merge)", () => {
@@ -129,6 +130,30 @@ describe("reka binding-idiom render-effect canary (AW.W26)", () => {
         const items = wrapper.findAll("[data-reka-collection-item], [data-slot=tags-input] [role]");
         // At minimum the family root carries the data-slot.
         expect(wrapper.get("[data-slot=tags-input]")).toBeTruthy();
+    });
+
+    it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`) — RA-anim-suite §6 / AY.W-ANIM1 D1", async () => {
+        // The stale-reka-binding class (MEMORY feedback_glass_ui_binding_verification):
+        // reka `ToastRoot` emits `update:open`, so the spread listener key MUST be
+        // `onUpdate:open`. With the React shadcn `onOpenChange` key the close request
+        // (timer/close-X/swipe) never reached the store and the toast could NEVER
+        // leave. This asserts the RENDERED store EFFECT: a fired toast carries an
+        // `onUpdate:open` callback that, when reka calls it with `false`, dismisses.
+        const { toast, toasts } = useToast();
+        const handle = toast({ title: "binding-test" });
+        // The store now holds an open toast.
+        const t = toasts.value.find((x) => x.id === handle.id);
+        expect(t).toBeTruthy();
+        expect(t?.open).toBe(true);
+        // The dismissal listener is the reka Vue key, NOT the React key.
+        expect(typeof (t as Record<string, unknown>)["onUpdate:open"]).toBe("function");
+        expect((t as Record<string, unknown>)["onOpenChange"]).toBeUndefined();
+        // Simulate reka emitting `update:open false` (the close request) — it must
+        // flip the store entry to closed (the dismissal revives).
+        (t as { "onUpdate:open": (o: boolean) => void })["onUpdate:open"](false);
+        await nextTick();
+        const after = toasts.value.find((x) => x.id === handle.id);
+        expect(after?.open).toBe(false);
     });
 
     it("Combobox: the filter term rides `ComboboxInput` v-model (NOT `ComboboxRoot v-model:search-term`)", async () => {

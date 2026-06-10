@@ -140,7 +140,7 @@ it parallelizes cleanly and unblocks correct dispatch of all else.
 | **W-A11Y-PERF** | engage W55 by default (DORMANT); webkit prefix in dist; rAF-coalesce specular; frame-budget gate; glass-aware contrast oracle | π contrast over the ACTUAL shipping glass-over-bright ≥4.5:1 |
 | **W-SB1/2/3** | per-route KEEP/FIX/RETIRE; orphan component-retire (route-prune ≠ component-retire); native-top-layer FOLD; real language gate | extended `proof:no-orphan-demo-route` + orphan-retire proofs |
 | **W-DOC1** | quality-uplift the 4 EXISTING READMEs (NOT a from-zero write); strip provenance meta | each README cites its `RESEARCH.md` |
-| **W-IC1** | the instrument-chassis scope decision (UNDER-EXAMINED) | decision recorded |
+| **W-IC1** | the instrument-chassis scope decision (`audit/W-IC1-scope-decision.md`: chassis KEEP, rail RETIRE-A) | DONE — `proof:instrument-scope` GREEN |
 | **W-CONVERGE** (net-new) | per-major-component glass-ui↔slides FIT audit (feeds L.W-ADOPT inventory) | per-component keep/extend/fix dispositions |
 
 ### BATCH 4 — STRUCTURE + LEGACY + CARRY + OWED-DELTA (pre-publish)

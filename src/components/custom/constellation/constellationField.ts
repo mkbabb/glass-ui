@@ -1,4 +1,4 @@
-// AW.W17 — the constellation field engine: a pure, framework-free proximity
+// The constellation field engine: a pure, framework-free proximity
 // graph. Nodes drift on constant velocities and bounce off the bounds; any two
 // within `link` px are joined by a hairline whose opacity falls off with
 // distance, so the lattice continually re-triangulates. Pointer steering leans

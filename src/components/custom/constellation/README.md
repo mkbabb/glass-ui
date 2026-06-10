@@ -12,17 +12,14 @@ All three compose the same lifecycle/park contract — the constellation over
 [`useCanvas2D`](../../../composables/glass/canvas2d/), the WebGL pair over
 [`useWebGLCanvas`](../../../composables/glass/webgl/).
 
-> Research-backed. This README documents the constellation as it ships. The primitive lands the
-> `useCanvas2D` + `Constellation` design that AV.W8 authored but GATED-NOT-LANDED (it had one
-> consumer then); the slides anomaly-ring deck is consumer #2 that adopts it at AX.W30 (gated on the
-> AX publish). The mechanical engine — drifting nodes, distance-falloff edges, pointer steer, ripples
-> — is lifted from the slides `til-briefing/constellation.ts`; the branded content (the NC State red
-> anomaly ring, the dashed callout) stays a consumer skin, not a library export.
->
-> AX.W17 completes the abstraction: it ships the `--constellation-*` light/dark **legibility token
-> block** as library identity (the hard-won dark-mode-lift / field-yields-to-type intelligence that
-> lived only in slides), and promotes the focal node to a **first-class engine concept** with a
-> **click-to-warp** spring (`warpTo` + `warpOnClick`) — drift and warp unified on ONE seam.
+> **Research-backed.** This README documents the constellation as it ships, with the proximity-graph
+> and Canvas2D-substrate techniques cited under [`## References`](#references) (the Garey–Johnson
+> proximity-graph / particle-network-motif ancestry). The neutral lattice — drifting nodes,
+> distance-falloff edges, pointer steer, ripples — ships in the library; the branded focal content
+> (an anomaly ring, an annotation callout) stays a consumer skin painted through `drawOverlay`, not a
+> library export. The focal node is a first-class engine concept: a **click-to-warp** spring
+> (`warpTo` + `warpOnClick`), an auto-**`wander`** cadence, and a pointer-held **`gravityWell`** all
+> ride the SAME warp seam — drift and warp are ONE mechanic.
 
 ```ts
 import { Constellation } from "@mkbabb/glass-ui/constellation";
@@ -147,6 +144,8 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `seed` | `number \| string` | — | omit → fresh `Math.random` field; supply → reproducible `mulberry32` field (string hashed via `hashString`) |
 | `pointerReactive` | `boolean` | `true` | nodes steer gently toward the cursor + taps drop ripples (disabled under reduced-motion) |
 | `warpOnClick` | `boolean` | `false` | a click warps the focal node to the nearest drifting node + springs it there. **INDEPENDENT** of `pointerReactive` — warp works on a non-ripple lattice (disabled under reduced-motion) |
+| `wander` | `boolean \| { minIdle?, jitter? }` | `false` | auto-DRIFT: a periodic auto-pick re-points the focal node to a random node on a jittered cadence, on the SAME warp spring (no second rAF). `true` uses the 8–16s default cadence; the object tunes `minIdle`/`jitter` (ms). PRM-gated — the cadence lives inside the `!reducedMotion` step block, so under reduced-motion it never advances |
+| `gravityWell` | `boolean \| { holdMs?, gain?, reach?, ramp?, maxSpeed? }` | `false` | pointer-held GRAVITY-WELL: hold the pointer over the lattice and the nodes within reach are PULLED toward it (an inverse-square force on the SAME engine), released back to `speed` on lift. INDEPENDENT of `warpOnClick`/`pointerReactive`. `true` uses the tokenised `--constellation-well-*` defaults; the object overrides the gains. PRM-gated — the held-timer lives inside `!reducedMotion`, and the well STATE resets to neutral on the PRM-true edge |
 | `freeze` | `boolean` | — (auto) | deterministic-capture: a reproducible STATIC frame (no `stepField`, no advance) + a FROZEN `now` to `drawOverlay`. Omit → auto-derives from `?export \| ?print \| ?freeze`; `false` forces live. Set `seed` for cross-run determinism |
 | `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField`. Read `field.warp.{x,y}` for the spring-eased focal position. Under `freeze` it receives a FROZEN `now` |
 | `class` | `string` | — | forwarded to the host (pin/position/z-index live here) |
@@ -394,6 +393,27 @@ Everything except `--constellation-accent` is **universal legibility** (a node c
 dark ground is universal, not deck-identity), so it evolves in the library. Only the brand accent is
 the consumer's preset — the single legitimate preset boundary.
 
+#### The numeric interaction cohort
+
+The warp / well / wander mechanics read a 9-member numeric token cohort (the interaction tuning, NOT
+legibility — these are physics constants, not color). All ship as library defaults; a consumer
+overrides a token to retune the mechanic without touching the engine.
+
+| Token | Default | Role |
+|---|---|---|
+| `--constellation-warp-response` | `0.55` | the warp spring's keyframes.js ANGULAR PERIOD (the ω convention — NOT a settle-duration) |
+| `--constellation-warp-zeta` | `1.0` | critically damped — a focal mark must NOT ring |
+| `--constellation-well-gain` | `14000` | inverse-square force scale (the held-pull gain) |
+| `--constellation-well-reach` | `340` | base-width px — the well's reach (k-scaled at step) |
+| `--constellation-well-ramp` | `4.0` | 1/s arm rate (≈0.25s bloom; release is the fixed brisk field-cools invariant, not consumer-tunable) |
+| `--constellation-well-max-speed` | `4.0` | base-width px/frame cap — the no-slingshot clamp |
+| `--constellation-well-hold-ms` | `140` | ms hold before the well arms |
+| `--constellation-wander-idle` | `8000` | ms — min idle between auto re-targets (the wander cadence) |
+| `--constellation-wander-jitter` | `8000` | ms — random extra idle per cadence (so the rhythm is not metronomic) |
+
+Note the keyframes.js convention: `--constellation-warp-response` is an ANGULAR period (the ω the
+spring runtime consumes), NOT a settle duration — a smaller value is a STIFFER spring.
+
 **Recessive-by-default calibration.** `--constellation-alpha` ships tuned to the legible-but-RECESSIVE
 midpoint, NOT maximum legibility — the lattice must RECEDE behind type while staying visible on both
 grounds. The two arms are per-mode by construction: a LOWER alpha on light (the cream ground already
@@ -479,9 +499,11 @@ src/components/custom/constellation/
 │                            #   runs the four neutral passes + the warp spring,
 │                            #   then drawOverlay; warpOnClick + the warpTo expose
 ├── constellationField.ts    # the pure engine: Node, seedField, stepField, the four
-│                            #   neutral draw passes, AND the focal seam (nearestNode,
+│                            #   neutral draw passes, the focal seam (nearestNode,
 │                            #   warpStep critically-damped integrator, warpTo,
-│                            #   setWarpTarget) — all free functions
+│                            #   setWarpTarget), the gravity-well force (stepWell), the
+│                            #   wander cadence (warpSettled, pickWanderTarget), and the
+│                            #   token readers (readInteractionConfig) — all free functions
 ├── index.ts                 # package barrel
 └── README.md                # this file
 

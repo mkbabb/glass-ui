@@ -1,11 +1,17 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    detectAnimationEnterRegister,
+    detectDurationBand,
+    detectEasingTableBound,
     detectPressForks,
     detectPressSpringRegister,
     detectRegisterAssignment,
+    loadMotionCurveTokens,
     stripCssComments,
 } from "../../scripts/proof-animation-coherence.mjs";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 /**
  * AY.W-MOTION — the pure-detector units for the §6 REGISTER-ASSIGNMENT arm of
@@ -141,5 +147,112 @@ describe("stripCssComments — offset-preserving false-witness strip", () => {
         // The comment spans both lines; everything but `a`, the newline, and `b`
         // blanks to spaces (offsets preserved): `/* x`→4sp, `y */`→4sp.
         expect(out).toBe("a    \n    b");
+    });
+});
+
+// ── AY.W-ANIM1 — the three GATE-EXTENDED arms (born-RED-able fixtures) ─────────
+
+describe("detectEasingTableBound — the §P4 curve-table-bound bite", () => {
+    const ROOT = resolve(import.meta.dirname, "../..");
+    const read = (f: string) => readFileSync(resolve(ROOT, f), "utf8");
+    const curveTokens = loadMotionCurveTokens(read);
+
+    it("loads the real MOTION_CURVES keyset (the charted curve vocabulary)", () => {
+        // The five springs + the bezier cores + the aliases — at least the five
+        // springs and the standard core MUST be present (drift-proof against the
+        // source reader regressing to empty).
+        expect(curveTokens.has("--spring-snappy")).toBe(true);
+        expect(curveTokens.has("--spring-smooth")).toBe(true);
+        expect(curveTokens.has("--motion-ease-standard")).toBe(true);
+        expect(curveTokens.size).toBeGreaterThanOrEqual(10);
+    });
+
+    it("REDs on a leg naming a curve token with NO MOTION_CURVES row (table drift)", () => {
+        const css = `.x { transition: transform var(--duration-fast) var(--spring-fictional); }`;
+        const v = detectEasingTableBound("f.css", css, curveTokens);
+        expect(v).toHaveLength(1);
+        expect(v[0]).toMatch(/'--spring-fictional' which has NO MOTION_CURVES row/);
+    });
+
+    it("GREENs on a leg naming a charted token", () => {
+        const css = `.x { transition: transform var(--duration-fast) var(--spring-snappy); }`;
+        expect(detectEasingTableBound("g.css", css, curveTokens)).toEqual([]);
+    });
+
+    it("does NOT grade a non-curve var (a --duration-*/--scale-* is not a curve token)", () => {
+        const css = `.x { transition: transform var(--duration-fast) var(--spring-smooth); }`;
+        expect(detectEasingTableBound("g.css", css, curveTokens)).toEqual([]);
+    });
+});
+
+describe("detectDurationBand — the §P5 duration-band bite", () => {
+    it("REDs on an orphan literal duration on a transition leg", () => {
+        const css = `.x { transition: color 220ms var(--ease-standard); }`;
+        const v = detectDurationBand("f.css", css);
+        expect(v).toHaveLength(1);
+        expect(v[0]).toMatch(/orphan literal duration '220ms'/);
+    });
+
+    it("GREENs on a composed --duration-* token", () => {
+        const css = `.x { transition: color var(--duration-fast) var(--ease-standard); }`;
+        expect(detectDurationBand("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag a var(--token, FALLBACK) fallback literal (the token IS composed)", () => {
+        const css = `.x { transition: color var(--duration-fast, 150ms) var(--ease-standard, ease-out); }`;
+        expect(detectDurationBand("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag a `0s` transition-off / PRM-collapse value", () => {
+        const css = `.x { transition: color 0s var(--ease-standard); }`;
+        expect(detectDurationBand("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag an @keyframes-driven animation: PERIOD (out of fence — the continuous cadence)", () => {
+        const css = `.x { animation: shimmer 6s linear infinite; }`;
+        expect(detectDurationBand("g.css", css)).toEqual([]);
+    });
+});
+
+describe("detectAnimationEnterRegister — the §P4 blind-spot closure", () => {
+    it("REDs on a one-shot mount enter that hand-rolls a raw bezier", () => {
+        const css = `.x { animation: my-enter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }`;
+        const v = detectAnimationEnterRegister("f.css", css);
+        expect(v).toHaveLength(1);
+        expect(v[0]).toMatch(/names a RAW timing 'cubic-bezier\(/);
+    });
+
+    it("REDs on a one-shot mount enter that hand-rolls `ease`", () => {
+        const css = `.x { animation: my-enter 0.3s ease forwards; }`;
+        const v = detectAnimationEnterRegister("f.css", css);
+        expect(v).toHaveLength(1);
+        expect(v[0]).toMatch(/names a RAW timing 'ease'/);
+    });
+
+    it("GREENs on an enter riding the §6 spring register (var(--spring-*))", () => {
+        const css = `.x { animation: my-enter var(--duration-slow) var(--spring-bouncy) forwards; }`;
+        expect(detectAnimationEnterRegister("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag a tw-animate delegated enter (reka data-state choreography)", () => {
+        const css = `.x { animation: enter 0.3s ease; }`;
+        expect(detectAnimationEnterRegister("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag a CONTINUOUS infinite loop (spinner/shimmer is not an enter)", () => {
+        const css = `.x { animation: spin 1s linear infinite; }`;
+        expect(detectAnimationEnterRegister("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT flag a SCROLL-DRIVEN position-map (`linear` is required on a timeline)", () => {
+        const css = `.x { animation: gl-reveal-in auto linear both; }`;
+        expect(detectAnimationEnterRegister("g.css", css)).toEqual([]);
+    });
+
+    it("does NOT false-fire on a var token NAME's `ease` substring (--motion-ease-standard)", () => {
+        // The `ease` inside `--motion-ease-standard` is a TOKEN name, not a raw
+        // hand-roll — the var-blanking pass must not match it.
+        const css = `.x { animation: pulse var(--motion-duration-x, 220ms) var(--motion-ease-standard, ease-out) 1; }`;
+        expect(detectAnimationEnterRegister("g.css", css)).toEqual([]);
     });
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import {
     Dialog,
@@ -19,12 +19,30 @@ import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { PresetEditor } from "../configurator";
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
+import CommandPalette from "../eggs/CommandPalette.vue";
+import KonamiAurora from "../eggs/KonamiAurora.vue";
+import FRedrawOverlay from "../eggs/FRedrawOverlay.vue";
+import { useKonami } from "../eggs/useKonami";
 import "./dock-nav.css";
 
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 
 const showHelp = ref(false);
 const shortcuts = useRegisteredShortcuts();
+
+// ── Easter eggs (each PRM-fenced; each a composition of shipped machinery) ──
+// E3 — the ⌘K command palette (first-class fuzzy story nav, the shipped Command).
+const showPalette = ref(false);
+// E2 — the konami full-bleed aurora reveal.
+const showKonami = ref(false);
+useKonami(() => {
+    showKonami.value = true;
+});
+// E1 — the ℱ-wordmark Fourier redraw (the wordmark dispatches this event).
+const showFRedraw = ref(false);
+function onFRedraw() {
+    showFRedraw.value = true;
+}
 
 // `<main>` owns route scroll now (the shell itself is a fixed viewport frame),
 // so the router's window-targeted scrollBehavior can't reset it. Reset the
@@ -69,6 +87,24 @@ onMounted(() => {
         label: "Toggle keyboard help",
         group: "UI",
     });
+    // E3 — ⌘K / Ctrl+K opens the command palette (fuzzy story navigation).
+    registerShortcut(
+        "mod+k",
+        () => (showPalette.value = !showPalette.value),
+        {
+            label: "Command palette",
+            group: "Navigation",
+            allowInInput: true,
+            preventDefault: true,
+        },
+    );
+
+    // E1 — the wordmark dispatches this when long-pressed / double-clicked.
+    window.addEventListener("glass-ui-demo:f-redraw", onFRedraw);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("glass-ui-demo:f-redraw", onFRedraw);
 });
 </script>
 
@@ -112,6 +148,11 @@ onMounted(() => {
              bottom inset; not in document flow). -->
         <BottomDock />
     </div>
+
+    <!-- Easter eggs (each PRM-fenced; each composes shipped machinery). -->
+    <CommandPalette v-model:open="showPalette" />
+    <KonamiAurora v-if="showKonami" @done="showKonami = false" />
+    <FRedrawOverlay v-if="showFRedraw" @done="showFRedraw = false" />
 
     <!-- Live token preset editor — opened by FAB or `,` shortcut -->
     <PresetEditor />

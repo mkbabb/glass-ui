@@ -18,6 +18,7 @@ import { mount } from "@vue/test-utils";
 // (the consumer-#1 that clears the subpath's overfitting bar at mint time).
 import * as fourierMath from "@mkbabb/glass-ui/fourier-math";
 import {
+    dftFromPoints,
     makeEllipticSpectrum,
     positionsAt,
 } from "@mkbabb/glass-ui/fourier-math";
@@ -94,5 +95,34 @@ describe("/fourier-math leaf (the published subpath consumer-#1)", () => {
         expect(typeof fourierMath.positionsAt).toBe("function");
         expect(typeof fourierMath.makeEllipticSpectrum).toBe("function");
         expect(typeof fourierMath.comp).toBe("function");
+    });
+
+    it("dftFromPoints is the inverse of positionsAt — a round-trip reconstructs the sampled curve (the ℱ-redraw egg's math)", () => {
+        // Sample a known closed curve (a tilted ellipse): x = 2cos, y = 0.7sin
+        // + a small second-harmonic crinkle. dftFromPoints recovers its spectrum;
+        // positionsAt at the SAME t must land back on the sample.
+        const N = 64;
+        const pts: [number, number][] = [];
+        for (let n = 0; n < N; n++) {
+            const t = (2 * Math.PI * n) / N;
+            pts.push([
+                2 * Math.cos(t) + 0.3 * Math.cos(2 * t),
+                0.7 * Math.sin(t) + 0.2 * Math.sin(2 * t),
+            ]);
+        }
+        const spectrum = dftFromPoints(pts);
+        // The DC term (index 0) + the signed-frequency pairs are present.
+        expect(spectrum.some((c) => c.index === 0)).toBe(true);
+        expect(spectrum.some((c) => c.index === 1)).toBe(true);
+        expect(spectrum.some((c) => c.index === -1)).toBe(true);
+
+        // Round-trip: the full epicycle sum (all phasors, no truncation) at
+        // t = n/N reconstructs sample n to floating-point tolerance.
+        for (const n of [0, 7, 16, 31, 48]) {
+            const chain = positionsAt(spectrum, n / N);
+            const [rx, ry] = chain[chain.length - 1]!;
+            expect(rx).toBeCloseTo(pts[n][0], 6);
+            expect(ry).toBeCloseTo(pts[n][1], 6);
+        }
     });
 });

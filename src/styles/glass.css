@@ -1,22 +1,25 @@
 /* Glass utilities — glassmorphism surface classes referencing --glass-* tokens
  *
- * ── No-glass-on-glass discipline (AV.W15 D5) ───────────────────────────────
- * Apple's Liquid Glass guidance: "glass is best reserved for the navigation
- * layer that floats above the content" — there is no glass-on-glass. glass-ui
- * adopts the same RUNG-PAIRING rule across three layer bands (the existing
- * z-index registry already encodes them, tokens.css §3 `--z-*`):
+ * ── No-PLATE-on-PLATE discipline (re-scoped under the glass-first default) ──
+ * Apple's Liquid Glass guidance reserves glass for the floating layers; glass-ui
+ * adopts the RUNG-PAIRING rule across three layer bands (the z-index registry
+ * already encodes them, tokens.css §3 `--z-*`):
  *
- *   content    (--z-background … --z-content)  — the page substrate; NOT glass.
+ *   content    (--z-background … --z-content)  — the page substrate.
  *   navigation (--z-controls … --z-dock/panel) — the glass band (dock, panels,
  *                                                 floating chrome).
  *   overlay    (--z-overlay … --z-modal)       — the glass band (dialog/sheet
  *                                                 over content).
  *
- * A glass surface nested INSIDE another glass surface is a discipline violation
- * — the inner surface should read as a FLAT tier (a `--card` / `--muted` fill),
- * not a second `.glass-*` plate (the blur stacks muddy, the rim doubles, the
- * read collapses). Reach for glass in the navigation/overlay bands only; inside
- * a glass panel, compose flat tiers.
+ * The discipline bans PLATE-in-PLATE: a second `.glass-*` PANEL nested inside a
+ * glass panel is a violation (the blur stacks muddy, the rim doubles, the read
+ * collapses) — the inner PANEL should read as a flat tier. But CONTROL-on-plate
+ * is SANCTIONED: under the glass-first maximal default, `btn-glass` (a real
+ * backdrop-filter control) inside `.glass-card` inside a glass Dialog is the
+ * COMMON composition. The depth-3 ceiling + `contain: paint` budget that keeps
+ * the nested blur cheap is gated by W-A11Y-PERF (the enforcement half); this
+ * header is the doc half. Bottom line: do not nest a glass PANEL inside a glass
+ * panel; a glass CONTROL on a glass plate is fine and budget-gated.
  *
  * ── iOS-spring-on-controls cross-ref (AV.W15 C/M cross-ref) ────────────────
  * The momentum-gated press squish (the control's "lift up on touch, quiet at

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, watchEffect } from "vue";
+import { computed, ref, useAttrs, watchEffect } from "vue";
 import { useGlobalDark } from "../../../composables/dark";
 import { cn } from "../../../utils/cn";
 
@@ -22,15 +22,76 @@ const props = withDefaults(
          * @default false
          */
         disableTransitions?: boolean;
+        /**
+         * Opt-in slow-ECLIPSE register: a LONG-PRESS (vs the normal click) flips
+         * the mode through an indulgent, stretched sun↔moon cross-fade — the
+         * `--toggle-eclipse-duration` (≈1600ms) over the default 750ms. The bare
+         * `@click` flip is UNCHANGED (the default-path canary). Under
+         * `prefers-reduced-motion: reduce` the long-press flips INSTANTLY (no
+         * eclipse). Default false — the toggle behaves exactly as before.
+         * @default false
+         */
+        eclipse?: boolean;
     }>(),
     {
         passive: false,
         size: "md",
         disableTransitions: false,
+        eclipse: false,
     }
 );
 
 const attrs = useAttrs();
+
+// ── The long-press eclipse register (opt-in via `eclipse`) ───────────────────
+// A pointer held past the threshold flips the mode through the stretched-eclipse
+// transition; a short tap falls through to the normal @click flip. The default
+// (`eclipse:false`) leaves the click path byte-identical.
+const eclipsing = ref(false);
+const prefersReduced =
+    typeof matchMedia !== "undefined" &&
+    matchMedia("(prefers-reduced-motion: reduce)").matches;
+let pressTimer: ReturnType<typeof setTimeout> | null = null;
+let didEclipse = false;
+
+function clearPress(): void {
+    if (pressTimer !== null) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+    }
+}
+
+function onEclipseDown(): void {
+    if (!props.eclipse || props.passive) return;
+    didEclipse = false;
+    clearPress();
+    pressTimer = setTimeout(() => {
+        didEclipse = true;
+        pressTimer = null;
+        // Under reduce, flip instantly (no eclipse register).
+        if (!prefersReduced) {
+            eclipsing.value = true;
+            window.setTimeout(() => (eclipsing.value = false), 1700);
+        }
+        toggleDark();
+    }, 460);
+}
+
+function onEclipseEnd(): void {
+    clearPress();
+}
+
+function onEclipseClick(e: MouseEvent): void {
+    // If the long-press already toggled, swallow the trailing click so it does
+    // not double-toggle back.
+    if (props.eclipse && didEclipse) {
+        e.preventDefault();
+        e.stopPropagation();
+        didEclipse = false;
+        return;
+    }
+    if (!props.passive) toggleDark();
+}
 
 const rootClass = computed(() =>
     cn(
@@ -75,8 +136,13 @@ watchEffect(() => {
         :is="passive ? 'div' : 'button'"
         :class="rootClass"
         :data-size="props.size"
+        :data-eclipsing="eclipse && eclipsing ? 'true' : undefined"
         v-bind="forwardedAttrs"
-        @click="!passive && toggleDark()"
+        @click="onEclipseClick"
+        @pointerdown="onEclipseDown"
+        @pointerup="onEclipseEnd"
+        @pointerleave="onEclipseEnd"
+        @pointercancel="onEclipseEnd"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +170,25 @@ watchEffect(() => {
 .toggle-circle {
     transform: translateX(0%);
     transition: transform 500ms var(--ease-out);
+}
+
+/* The opt-in slow-ECLIPSE register (E5): while a long-press eclipse is in flight
+   the sun↔moon cross-fade stretches to an indulgent ~1.6s — the moon disc slides
+   slowly across, the rays rotate at half speed. The default (no `data-eclipsing`)
+   keeps the 750ms/500ms transitions above byte-identical. */
+.dark-mode-toggle-button[data-eclipsing="true"] .toggle-sun {
+    transition: transform 1600ms var(--ease-standard);
+}
+.dark-mode-toggle-button[data-eclipsing="true"] .toggle-circle {
+    transition: transform 1600ms var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Under reduce the eclipse never animates — the flip is instant. */
+    .dark-mode-toggle-button[data-eclipsing="true"] .toggle-sun,
+    .dark-mode-toggle-button[data-eclipsing="true"] .toggle-circle {
+        transition: none;
+    }
 }
 
 /* Dark mode styles — use :where(.dark) so it doesn't leak to <html> */

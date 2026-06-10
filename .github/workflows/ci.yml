@@ -191,6 +191,14 @@ jobs:
               run: npm run proof:glass-level
             - name: proof:glass-cohesion
               run: npm run proof:glass-cohesion
+            - name: proof:component-orphan
+              run: npm run proof:component-orphan
+            - name: proof:substrate-staging
+              run: npm run proof:substrate-staging
+            - name: proof:easter-eggs
+              run: npm run proof:easter-eggs
+            - name: proof:readme-meta-clean
+              run: npm run proof:readme-meta-clean
             - name: proof:storybook-complete
               run: npm run proof:storybook-complete
             - name: proof:demo-dock-nav

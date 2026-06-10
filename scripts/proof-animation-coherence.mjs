@@ -15,11 +15,42 @@
 // NO FORK OUTSIDE the generator: no second spring/easing authority sits on a
 // dock/aurora/blob/primitive animated property.
 //
-// SEVEN assertions over the animated-surface file set (AX.W05 widened it from
+// SEVEN base assertions over the animated-surface file set (AX.W05 widened it from
 // three — the apple-spring survivor sweep + the --spring-* consumer-coverage
 // census + the cross-repo constellation census; AY.W-MOTION widened the SURFACE
 // scope to the FULL animated-surface file set + a *.vue `<style>` catch-all and
-// added the SEVENTH assertion, REGISTER-ASSIGNMENT):
+// added the SEVENTH assertion, REGISTER-ASSIGNMENT), PLUS the three AY.W-ANIM1
+// GATE-EXTENDED rubric arms (the first-principles audit's machine-checks):
+//
+//   EASING-TABLE-BOUND (AY.W-ANIM1, §P4) — every `--ease-*`/`--spring-*` token
+//                        NAMED on a transition/animation leg MUST exist as a
+//                        MOTION_CURVES row (the W-MOTION2 CSS↔JS table — read
+//                        node-pure from curves.ts + springPresets.ts source). A
+//                        surface composing a curve token with no JS twin REDs — the
+//                        doctrine table is the source of truth, the two halves
+//                        cannot drift. Rides the anchor + the wide catch-all.
+//
+//   DURATION-BAND (AY.W-ANIM1, §P5) — no orphan hand-set ms/s literal duration on a
+//                        `transition:` leg (INTERACTIVE timing composes a
+//                        --duration-*/--motion-duration-* token; the W-MOTION
+//                        220ms→--duration-fast discipline). `transition:` ONLY (an
+//                        `@keyframes`-driven `animation:` PERIOD is the continuous/
+//                        load register's own cadence, out of fence); a `var(--token,
+//                        FALLBACK)` fallback literal is NOT an orphan (the token is
+//                        composed). Anchor-scoped (mirrors PRESS-FROM-COHORT) — the
+//                        decorative catch-all SFCs' orphans route to their owning
+//                        component waves (ANIM-MATRIX §2).
+//
+//   ANIMATION-ENTER-REGISTER (AY.W-ANIM1, §P4 — the blind-spot closure) — the
+//                        `animation:`-shorthand exemption is CLOSED (RA-anim-suite
+//                        §5 route #5): the gate now SEES an `animation:` shorthand
+//                        and grades a TIME-DRIVEN ONE-SHOT MOUNT ENTER (the §6
+//                        register) — a non-`infinite`, non-scroll-driven enter that
+//                        hand-rolls a raw bezier/`ease` instead of a `--spring-*`/
+//                        `--ease-*` token or a documented delegation (tw-animate
+//                        animate-in). CONTINUOUS loops (spinner/shimmer/pulse/
+//                        indeterminate sweep) + SCROLL-DRIVEN position-maps (`linear`
+//                        is required) are out of fence. Anchor-scoped.
 //
 //   ONE-SPRING-SOURCE  — the ONLY `--spring-*` DEFINITIONS in the repo live in
 //                        the regen-generated §2 EASING block in tokens.css. A
@@ -119,6 +150,16 @@ const ROOT = (() => {
 // `src/` (at minimum speedtest) — sibling paths are ROOT-relative `../<name>`.
 const SRC_DIR = resolve(ROOT, "src");
 const CONSTELLATION_SIBLINGS = ["../speedtest"];
+
+// AY.W-ANIM1 — the curve-table source (W-MOTION2's MOTION_CURVES). The
+// EASING-TABLE-BOUND arm grades every `--ease-*`/`--spring-*` token NAMED on an
+// animated leg against this keyset: a surface composing a curve token with no JS
+// twin in MOTION_CURVES REDs (the doctrine table is the source of truth, the
+// two halves cannot drift). Read the SOURCE (every row's `token:` literal + the
+// five programmatic `--spring-${name}` rows) rather than import — node-pure,
+// mirroring proof-motion-suite.mjs's reader.
+const CURVES_TS = "src/composables/motion/curves.ts";
+const SPRING_PRESETS_TS = "src/composables/motion/springPresets.ts";
 
 // The legacy apple-spring authority AX.W05 excises. The survivor sweep reds on
 // ANY definition or consumer of either name in `src/`; the constellation census
@@ -594,6 +635,278 @@ export function detectPressSpringRegister(file, src) {
     return violations;
 }
 
+// ── AY.W-ANIM1: EASING-TABLE-BOUND (P4) ──────────────────────────────────────
+// Build the MOTION_CURVES token keyset from curves.ts + springPresets.ts SOURCE
+// (the same source-witness reader proof-motion-suite.mjs uses — node-pure, no TS
+// import). The five spring rows are built programmatically (`--spring-${name}`),
+// so the preset names are pulled from springPresets.ts.
+export function loadMotionCurveTokens(read) {
+    const tokens = new Set();
+    const curvesSrc = read(CURVES_TS);
+    // Canonical + alias rows: a literal `token: "--x"`.
+    for (const m of curvesSrc.matchAll(/token:\s*["'`](--[a-z-]+)["'`]/g)) {
+        tokens.add(m[1]);
+    }
+    // The five spring rows are built from the preset names — read them off the
+    // SPRING_PRESETS table in springPresets.ts (`name: "smooth"` literals).
+    const presetSrc = read(SPRING_PRESETS_TS);
+    for (const m of presetSrc.matchAll(/name:\s*["'`]([a-z]+)["'`]/g)) {
+        tokens.add(`--spring-${m[1]}`);
+    }
+    return tokens;
+}
+
+// Every `--ease-*`/`--spring-*` token NAMED on a transition/animation leg in a
+// surface MUST exist in MOTION_CURVES. PURE — scans a comment-stripped source for
+// `var(--ease-*)`/`var(--spring-*)` reads on an animated declaration and checks
+// each against `curveTokens`. A read of a curve token with no MOTION_CURVES row
+// is the doctrine-table drift RED. (The `--ease-*` / `--spring-*` namespaces are
+// the curve vocabulary; a `--duration-*`/`--scale-*`/`--dock-*`/`--vt-*` var is
+// NOT a curve token and is not graded here.)
+export function detectEasingTableBound(file, src, curveTokens) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    // Only grade vars on a `transition:`/`animation:` declaration window (an
+    // unrelated `var(--ease-…)` in a comment/doc is stripped; one on a non-animated
+    // property is not a motion leg). Walk each `transition`/`animation` declaration.
+    const declRe = /\b(?:transition|animation)\s*:\s*([^;}]+)[;}]/gi;
+    let m;
+    while ((m = declRe.exec(stripped)) !== null) {
+        const value = m[1];
+        const declStart = m.index;
+        for (const vm of value.matchAll(/var\(\s*(--(?:ease|spring)-[a-z-]+)\b/gi)) {
+            const tok = vm[1];
+            if (!curveTokens.has(tok)) {
+                violations.push(
+                    `${file}:${lineOf(stripped, declStart)}: animated leg names '${tok}' which has NO MOTION_CURVES row — the curve table is the source of truth; add the row or compose a charted token (EASING-TABLE-BOUND, §P4)`,
+                );
+            }
+        }
+    }
+    return violations;
+}
+
+// ── AY.W-ANIM1: DURATION-BAND (P5) ────────────────────────────────────────────
+// No orphan hand-set ms/s literal duration on a `transition:` declaration —
+// INTERACTIVE/surface timing composes a `--duration-*`/`--motion-duration-*`
+// token (the §6 "durations within the token bands; no orphan hand-set ms" clause,
+// the W-MOTION `220ms`→`--duration-fast` discipline). A raw `220ms`/`0.6s` on a
+// transition leg REDs.
+//
+// SCOPE — `transition:` ONLY (NOT `animation:`): an `@keyframes`-driven
+// `animation:` PERIOD is the loop/sweep cadence of a CONTINUOUS or load-indicating
+// animation (a `6s` shimmer, a `4s` indeterminate sweep, a `1.6s` dark-toggle
+// arc), which is inherently a literal period the keyframe author owns — it is NOT
+// an interactive transition duration the token bands govern. The §6/P5 band rule
+// is a TRANSITION-timing rule (the magic-ms on a hover/state cross-fade); the
+// `animation:` period is the non-physical/continuous register's own cadence and is
+// out of fence (the same recorded fence the NON_PHYSICAL_ALLOW carves). `0s`/`0ms`
+// (a transition-off / PRM-collapse value) is not a hand-tuned duration.
+const DURATION_LITERAL_RE = /\b(\d+(?:\.\d+)?)(ms|s)\b/g;
+// A `var(--token, FALLBACK)` window — a literal duration INSIDE the fallback slot
+// is the DEFENSIVE fallback of a properly-composed token (`var(--duration-fast,
+// 150ms)`), NOT an orphan. We blank every `var(--…, …)` fallback region to spaces
+// (offset-preserving) before the literal sweep so a fallback literal is not a
+// false orphan. This catches the BARE literal (`transition: width 340ms ease`)
+// while passing the composed-with-fallback form.
+// Blank the ENTIRE `var(...)` call (token name + fallback) to spaces, offset-
+// preserving — for the raw-timing check, a composed token is never a hand-roll and
+// the token NAME may carry `ease`/`linear` substrings (`--motion-ease-standard`)
+// that a `\bease\b` literal match would false-fire on.
+function blankAllVars(value) {
+    let out = "";
+    let i = 0;
+    const n = value.length;
+    while (i < n) {
+        if (value.startsWith("var(", i)) {
+            let depth = 0;
+            let j = i;
+            for (; j < n; j++) {
+                if (value[j] === "(") depth++;
+                else if (value[j] === ")") {
+                    depth--;
+                    if (depth === 0) break;
+                }
+            }
+            for (let k = i; k <= j && k < n; k++) out += value[k] === "\n" ? "\n" : " ";
+            i = j + 1;
+        } else {
+            out += value[i];
+            i++;
+        }
+    }
+    return out;
+}
+function blankVarFallbacks(value) {
+    let out = "";
+    let i = 0;
+    const n = value.length;
+    while (i < n) {
+        // Match a `var(` start.
+        if (value.startsWith("var(", i)) {
+            // Walk to the matching `)`, tracking nesting; blank everything AFTER
+            // the first top-level comma (the fallback slot) to spaces.
+            let depth = 0;
+            let j = i;
+            let commaAt = -1;
+            for (; j < n; j++) {
+                const ch = value[j];
+                if (ch === "(") depth++;
+                else if (ch === ")") {
+                    depth--;
+                    if (depth === 0) break;
+                } else if (ch === "," && depth === 1 && commaAt === -1) {
+                    commaAt = j;
+                }
+            }
+            // Copy the `var(--token` head (up to the comma or the close), then
+            // blank the fallback slot.
+            const headEnd = commaAt === -1 ? j : commaAt;
+            out += value.slice(i, headEnd + 1);
+            for (let k = headEnd + 1; k <= j; k++) out += value[k] === "\n" ? "\n" : " ";
+            i = j + 1;
+        } else {
+            out += value[i];
+            i++;
+        }
+    }
+    return out;
+}
+export function detectDurationBand(file, src) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    // `transition:` (NOT `transition-duration`/`-property`/`-timing`/`-delay`, and
+    // NOT `animation:`) through its terminating `;`/block-end.
+    const declRe = /(?<!-)\btransition\s*:\s*([^;}]+)[;}]/gi;
+    let m;
+    while ((m = declRe.exec(stripped)) !== null) {
+        const rawValue = m[1];
+        const declStart = m.index;
+        // Blank the `var(--token, FALLBACK)` fallback literals — a composed token's
+        // defensive fallback is NOT an orphan.
+        const value = blankVarFallbacks(rawValue);
+        DURATION_LITERAL_RE.lastIndex = 0;
+        let dm;
+        while ((dm = DURATION_LITERAL_RE.exec(value)) !== null) {
+            const num = parseFloat(dm[1]);
+            // `0s`/`0ms` (transition-off / PRM-collapse) is not a hand-tuned duration.
+            if (num === 0) continue;
+            violations.push(
+                `${file}:${lineOf(stripped, declStart)}: orphan literal duration '${dm[0]}' on a transition leg — compose a --duration-*/--motion-duration-* token, not a hand-set value (DURATION-BAND, §P5)`,
+            );
+        }
+    }
+    return violations;
+}
+
+// ── AY.W-ANIM1: ANIMATION-ENTER-REGISTER (P4 — the blind-spot closure) ─────────
+// The `animation:`-shorthand exemption is CLOSED (RA-anim-suite §5 route #5): the
+// prior gate parsed `transition:` only and explicitly waved `animation:`
+// shorthands through, so it could not SEE whether an `animation:` ENTER rides the
+// §6 spring-enter register or a raw bezier/`ease`. This arm SEES the `animation:`
+// shorthand — but it grades ONLY a TIME-DRIVEN ONE-SHOT MOUNT-ENTER, the register
+// the §6 doctrine governs (mount/popover/dialog-in → spring). Everything else is
+// out of the doctrine's fence and is NOT graded:
+//
+//   · a CONTINUOUS loop (`infinite`) — a spinner/shimmer/pulse/indeterminate
+//     sweep/gold-bg-sweep is a decorative or load-indicating register, never an
+//     "enter"; its `linear`/`ease-in-out` cadence is correct (a loop must not
+//     spring), and the non-physical sweeps are already on NON_PHYSICAL_ALLOW;
+//   · a SCROLL-DRIVEN animation (`animation-timeline`/`scroll()`/`view()`, or the
+//     scroll-range `auto` duration keyword) — `linear` is REQUIRED on a scroll-
+//     linked timeline (the keyframe maps to scroll POSITION; any non-linear easing
+//     distorts the position map — the §6 position-tracked register), so a scroll-
+//     driven `linear` is doctrine-CORRECT, not an off-register enter;
+//   · the tw-animate `animate-in`/`animate-out` utility enters (reka/vaul OWN the
+//     data-state choreography — the documented D4/Toast keep, W-MOTION D4);
+//   · a `var(--ease-*)`/`var(--spring-*)` curve token on the shorthand (the
+//     doctrine-true register).
+//
+// So the arm flags ONLY: a NON-`infinite`, NON-scroll-driven `animation:` MOUNT
+// ENTER that hand-rolls a raw bezier/`ease` instead of a `--spring-*`/`--ease-*`
+// token or a documented delegation. The blind spot is now SEEN — the gate can
+// classify an `animation:` enter the same way it classifies a `transition:` leg.
+// At HEAD there are ZERO such surfaces (every `animation:` enter is a tw-animate
+// delegation, a continuous loop, or a scroll-driven position-map) — the closure is
+// a witness that the off-doctrine enter is now catchable, not a re-author.
+//
+// The tw-animate utility enter/exit names (the reka/vaul data-state delegation).
+const TW_ANIMATE_DELEGATED = ["enter", "exit"];
+// A RAW timing keyword (NOT a curve token) on an animation shorthand. The
+// `cubic-bezier(...)` arm has NO trailing `\b` (its `)` close is not a word char,
+// so a `\b` after `)` never matches); the keyword arms keep the leading + trailing
+// boundary so `ease` does not match inside a longer word.
+const RAW_TIMING_RE = /(?:\b(ease-in-out|ease-in|ease-out|ease)\b)|(cubic-bezier\s*\([^)]*\))/;
+export function detectAnimationEnterRegister(file, src) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    const declRe = /\banimation\s*:\s*([^;}]+)[;}]/gi;
+    let m;
+    while ((m = declRe.exec(stripped)) !== null) {
+        const value = m[1];
+        const declStart = m.index;
+        // Blank the WHOLE `var(...)` (token name AND fallback) for the raw-timing
+        // check — a composed token is never a hand-roll, and the token NAME can
+        // itself contain `ease`/`linear` substrings (`--motion-ease-standard`) that
+        // a `\bease\b` match would false-fire on. The doctrine-true / delegation
+        // checks still read the ORIGINAL `value` (they need the var token text).
+        const valueNoVars = blankAllVars(value);
+        // CONTINUOUS loop — never an enter (the decorative/load register).
+        if (/\binfinite\b/.test(value)) continue;
+        // SCROLL-DRIVEN — `linear` is required on a position-mapped timeline.
+        // Detected by a same-rule `animation-timeline`/`scroll()`/`view()` or the
+        // scroll-range `auto` duration keyword (the scroll-driven `animation:
+        // <name> auto linear` form), or the rule living in scroll-driven.css.
+        if (
+            file.endsWith("scroll-driven.css") ||
+            /\bauto\b/.test(value) ||
+            /scroll\s*\(|view\s*\(|animation-timeline/.test(stripped.slice(Math.max(0, declStart - 200), declStart + value.length + 200))
+        ) {
+            continue;
+        }
+        // The animation-name is the first token that is not a duration/timing
+        // keyword / iteration / fill / direction / a var()/cubic-bezier().
+        const names = value
+            .split(/\s+/)
+            .filter(
+                (t) =>
+                    t &&
+                    !/^\d/.test(t) &&
+                    !/^(ease|ease-in|ease-out|ease-in-out|linear|infinite|alternate|alternate-reverse|forwards|backwards|both|none|reverse|paused|running|normal)$/.test(t) &&
+                    !t.startsWith("var(") &&
+                    !t.startsWith("cubic-bezier"),
+            );
+        const animName = names[0] ?? "";
+        // EXEMPT: tw-animate delegated enters, non-physical sweeps, `var(--…)` token.
+        if (
+            TW_ANIMATE_DELEGATED.includes(animName) ||
+            NON_PHYSICAL_ALLOW.includes(animName) ||
+            animName === "none"
+        ) {
+            continue;
+        }
+        // A `var(--ease-*)`/`var(--spring-*)` curve token on the shorthand is the
+        // doctrine-true register — not flagged.
+        if (/var\(\s*--(?:ease|spring)-/.test(value)) continue;
+        // A `linear` keyword alone (no bezier/ease) on a non-scroll, non-infinite
+        // animation is ambiguous; the doctrine's concern is the bezier/`ease`
+        // hand-roll on an ENTER — flag a RAW bezier/`ease`, not a bare `linear`
+        // (a `linear` here is almost always a one-shot position-map fragment caught
+        // by the scroll-driven exemption above; if it slips through, it is a linear
+        // ramp, not the off-register bezier the doctrine indicts). Match on the
+        // var-blanked value so a token NAME's `ease`/`linear` substring is not a
+        // false witness.
+        const rt = RAW_TIMING_RE.exec(valueNoVars);
+        if (rt) {
+            const raw = (rt[1] ?? rt[2] ?? "").trim();
+            violations.push(
+                `${file}:${lineOf(stripped, declStart)}: animation '${animName || "?"}' names a RAW timing '${raw}' on a one-shot mount enter — ride the §6 spring register (var(--spring-*)) or be a documented delegation (tw-animate animate-in / a charted token). The animation:-shorthand blind spot is now SEEN (ANIMATION-ENTER-REGISTER, §P4)`,
+            );
+        }
+    }
+    return violations;
+}
+
 // ── AX.W05 src-tree walk + a CSS+line-comment strip ──────────────────────────
 // The survivor sweep + the consumer-coverage census walk the whole `src/` tree
 // (CSS tokens + SFC `<style>`/`<script>` + TS), so a witness in any consumer file
@@ -780,6 +1093,11 @@ export function detectAll(read) {
     const easingForks = [];
     const pressForks = [];
     const registerForks = [];
+    // AY.W-ANIM1 — the three GATE-EXTENDED arms (P4/P5/P4-blind-spot).
+    const easingTableForks = [];
+    const durationBandForks = [];
+    const enterRegisterForks = [];
+    const curveTokens = loadMotionCurveTokens((f) => read(f));
     const namedSet = new Set([...SURFACE_CSS, ...SURFACE_SFC]);
     // The named SURFACE_CSS + SURFACE_SFC are the canonical-press anchors — they
     // get the FULL trio (easing + press-cohort + register). The PRESS-FROM-COHORT
@@ -787,14 +1105,38 @@ export function detectAll(read) {
     // header), so a decorative SFC's subtle `:active` scale in the catch-all does
     // not draw the cohort rule — the catch-all gets easing + register only (the
     // off-doctrine-spring + hand-rolled-curve sweep the spec names for the wide set).
+    // AY.W-ANIM1 arm scoping:
+    //   · EASING-TABLE-BOUND is a pure token-EXISTENCE check (a `--ease-*`/
+    //     `--spring-*` read with no MOTION_CURVES row) — drift-proof and cheap, so
+    //     it rides BOTH the anchor and the wide catch-all (a NEW SFC naming a
+    //     fictional curve token is never gate-invisible).
+    //   · DURATION-BAND + ANIMATION-ENTER-REGISTER ride the ANCHOR surfaces only —
+    //     mirroring the PRESS-FROM-COHORT anchor-scoping (the gate header): the band
+    //     authoritatively stands over the canonical animated surfaces. The
+    //     decorative catch-all SFCs' literal-duration orphans (DarkModeToggle's
+    //     eclipse arc, WatercolorDot's border-radius leg, the timeline region
+    //     transitions) are ROUTED as MATRIX DEFECT rows to their owning component
+    //     waves (ANIM-MATRIX §2 F/G) — the audit ships the routed list, the FIXES
+    //     ship in their owning waves (§4 no-ad-hoc-edit fence). Pulling them into a
+    //     hard gate-at-HEAD would force an ad-hoc cross-lane edit inside the audit.
+    const scanTableBound = (file, css) => {
+        easingTableForks.push(...detectEasingTableBound(file, css, curveTokens));
+    };
+    const scanAnimAnchor = (file, css) => {
+        durationBandForks.push(...detectDurationBand(file, css));
+        enterRegisterForks.push(...detectAnimationEnterRegister(file, css));
+    };
     const scanAnchor = (file, css) => {
         easingForks.push(...detectEasingForks(file, css));
         pressForks.push(...detectPressForks(file, css));
         registerForks.push(...detectRegisterAssignment(file, css));
+        scanTableBound(file, css);
+        scanAnimAnchor(file, css);
     };
     const scanWide = (file, css) => {
         easingForks.push(...detectEasingForks(file, css));
         registerForks.push(...detectRegisterAssignment(file, css));
+        scanTableBound(file, css);
     };
     for (const file of SURFACE_CSS) scanAnchor(file, read(file));
     for (const file of SURFACE_SFC) {
@@ -815,7 +1157,19 @@ export function detectAll(read) {
     facts.easingForks = easingForks.length;
     facts.pressForks = pressForks.length;
     facts.registerForks = registerForks.length;
-    violations.push(...easingForks, ...pressForks, ...registerForks);
+    // AY.W-ANIM1 — the three GATE-EXTENDED arm tallies.
+    facts.curveTokenCount = curveTokens.size;
+    facts.easingTableForks = easingTableForks.length;
+    facts.durationBandForks = durationBandForks.length;
+    facts.enterRegisterForks = enterRegisterForks.length;
+    violations.push(
+        ...easingForks,
+        ...pressForks,
+        ...registerForks,
+        ...easingTableForks,
+        ...durationBandForks,
+        ...enterRegisterForks,
+    );
 
     // APPLE-SPRING-SURVIVOR
     const survivors = detectAppleSpringSurvivors(srcFiles, (f) => read(f));
@@ -866,12 +1220,16 @@ function run() {
         facts,
         violations,
     });
-    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a + AX.W05 + AY.W-MOTION)");
+    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a + AX.W05 + AY.W-MOTION + AY.W-ANIM1)");
     console.log(`  --spring-* definitions     : ${facts.springDefCount}`);
     console.log(`  animated surfaces scanned  : ${facts.surfaceFilesScanned}`);
     console.log(`  hand-rolled easing forks   : ${facts.easingForks}`);
     console.log(`  literal press-scale forks  : ${facts.pressForks}`);
     console.log(`  register-assignment forks  : ${facts.registerForks}`);
+    console.log(`  MOTION_CURVES tokens       : ${facts.curveTokenCount}`);
+    console.log(`  easing-table-bound forks   : ${facts.easingTableForks}`);
+    console.log(`  duration-band forks        : ${facts.durationBandForks}`);
+    console.log(`  enter-register forks       : ${facts.enterRegisterForks}`);
     console.log(`  apple-spring survivors     : ${facts.appleSpringSurvivors.length}`);
     console.log(
         `  --spring-* coverage        : ${facts.springCoverage.coveredPresets}/${facts.springCoverage.presets.length} presets reached`,

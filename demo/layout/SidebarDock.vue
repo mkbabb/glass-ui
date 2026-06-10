@@ -24,9 +24,11 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "../../src/components/ui/tooltip";
+import { DarkModeToggle } from "../../src/components/custom/controls";
 import { cn } from "../../src/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useLongPress } from "../eggs/useLongPress";
 
 const props = withDefaults(
     defineProps<{
@@ -59,6 +61,25 @@ function go(categoryId: string): void {
     firstOfCategory(categoryId);
     emit("navigate");
 }
+
+// E1 — the ℱ wordmark redraws itself as a Fourier epicycle curve. A long-press
+// (or dbl-click) fires the redraw; a short tap falls through to the RouterLink
+// home navigation. The overlay lives at the shell root (AppShell listens for the
+// event), so the dispatch is a window CustomEvent.
+function fireRedraw(): void {
+    window.dispatchEvent(new CustomEvent("glass-ui-demo:f-redraw"));
+}
+const { handlers: wordmarkPress, fired: redrawFired } = useLongPress(fireRedraw);
+
+function onWordmarkClick(e: MouseEvent): void {
+    // The long-press already fired the egg — swallow this click so it doesn't
+    // ALSO navigate home. A genuine short tap falls through to navigate.
+    if (redrawFired()) {
+        e.preventDefault();
+        return;
+    }
+    emit("navigate");
+}
 </script>
 
 <template>
@@ -69,13 +90,21 @@ function go(categoryId: string): void {
         aria-label="Category navigation"
     >
         <!-- The brand wordmark is the home-left anchor — it lives in the
-             #persistent region so it stays put as the category set scrolls. -->
+             #persistent region so it stays put as the category set scrolls.
+             Long-press / double-click it to redraw the ℱ as a Fourier epicycle
+             curve (E1). The dark-mode toggle rides beside it (E6) so the whole
+             book's dark register is reachable from the shell chrome. -->
         <template #persistent>
             <RouterLink
                 to="/"
                 class="focus-ring tap-squish flex h-10 w-10 items-center justify-center rounded-full"
                 aria-label="glass-ui home"
-                @click="emit('navigate')"
+                @click="onWordmarkClick"
+                @dblclick="fireRedraw"
+                @pointerdown="wordmarkPress.onpointerdown"
+                @pointerup="wordmarkPress.onpointerup"
+                @pointerleave="wordmarkPress.onpointerleave"
+                @pointercancel="wordmarkPress.onpointercancel"
             >
                 <span
                     aria-hidden="true"
@@ -89,6 +118,12 @@ function go(categoryId: string): void {
                     &#x2131;
                 </span>
             </RouterLink>
+
+            <DarkModeToggle
+                size="dock"
+                eclipse
+                class="demo-sidebar-dark-toggle h-9 w-9"
+            />
         </template>
 
         <TooltipProvider :delay-duration="250">

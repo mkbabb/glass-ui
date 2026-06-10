@@ -111,10 +111,40 @@ exemption, the only one beside the legibility allowlist.
   `@container style()` bright bucket the Drawer now reaches) is the orchestrator's live
   cross-engine pass; the Chromium arm is GREEN.
 
-Verdict: **PASS.** W-GLASS is live-verified — every surface the library calls "glass"
-now reads as the SAME material under ONE discipline (the Drawer is the most-glass
-overlay, the Slider flattens with the band, the Notification rides the floating tier),
+## Capture inventory (honest — what is on disk vs what is π-verified)
+
+The 8 on-disk PNGs are the idle-track headline + the Drawer + the Notification surfaces:
+
+| png | dims (px) | what it shows |
+|---|---|---|
+| `W-GLASS-idle-tracks-before-light.png` / `-dark.png` | 2560×1600 | the BEFORE — glass Button + Card-default + dock-control surfaces, no interaction, the keyframes.js runtime reading **19** active specular tracks |
+| `W-GLASS-idle-tracks-after-light.png` / `-dark.png` | 2560×1600 | the AFTER — same surfaces, no interaction, the runtime reading **0** (the wired controls attach no idle track) |
+| `W-GLASS-drawer-glass-light.png` / `-dark.png` | 2560×1600 | the `.glass-drawer` sheet over the busy backdrop, now a real overlay-tier glass blur |
+| `W-GLASS-notification-floating-light.png` / `-dark.png` | 746×102 | the Notification surface as a real floating glass plate |
+
+**The Slider routing (D2/D3) — level-0 flatten CAPTURED + π-measured.** The prior verdict
+line claimed "8/8 π — Drawer/**Slider**/Notification" by PNG, but no Slider PNG was on disk
+(the overstatement). NOW CAPTURED — `scripts/wf-ay-glass-slider-capture.mjs` lands 4 Slider
+own-surface PNGs + the paired `.slider-range` `backdrop-filter` getComputedStyle readback at
+each `--glass-level`:
+
+| png | dims (px) | `.slider-range` backdrop-filter |
+|---|---|---|
+| `W-GLASS-slider-level1-desktop-light.png` | 2172×42 | `blur(10px) saturate(1.05) brightness(1.02)` (the glass range over the track) |
+| `W-GLASS-slider-level0-desktop-light.png` | 2172×42 | `blur(0px) saturate(1.05) brightness(1.02)` — FLATTENS with the band at `--glass-level: 0` |
+| `W-GLASS-slider-level1-mobile-light.png` | 632×42 | `blur(10px) …` (mobile 390 viewport) |
+| `W-GLASS-slider-level0-mobile-light.png` | 632×42 | `blur(0px) …` — flattens (mobile) |
+
+The MEASURED contract: the range blur is `blur(10px)` at `level:1` and `blur(0px)` at
+`level:0` — the literal `blur(2px)` was OFF the knob; now it routes `--glass-blur-quiet` and
+flattens with every other glass surface. This is the binding level-0-flatten readback (the
+getComputedStyle truth), now paired with the captured frame. `tests-visual/glass-cohesion.spec.ts`
+runs the same readback resident as the fail-CLOSED π gate.
+
+Verdict: **PASS.** W-GLASS is live-verified — every surface the library calls "glass" now
+reads as the SAME material under ONE discipline (the Drawer is the most-glass overlay, the
+Slider flattens with the band per the π readback, the Notification rides the floating tier),
 and the keyframes.js runtime counts **0** idle specular tracks instead of 19.
 `proof:glass-cohesion` (18/18 source) GREEN; `tests-visual/glass-cohesion.spec.ts`
-(8/8 π — Drawer/Slider/Notification × ≥2 viewport × {light,dark}) GREEN;
-`proof:glass-level` (the level-seam scalar arm) un-regressed.
+(the Drawer/Slider/Notification render + level-0-flatten readback × ≥2 viewport × {light,dark})
+GREEN; `proof:glass-level` (the level-seam scalar arm) un-regressed.

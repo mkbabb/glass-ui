@@ -98,6 +98,17 @@ export type { CardTier, CardSurface } from "../components/ui/card";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
+// ── GlassUnderline (the animated draw-on underline, AY.W-UNDERLINE) ──────────
+// The `/underline` subpath's public surface: the two-clock + `active`-overlay
+// prop model, the variant headroom, and the `paths` geometry-escape tuple.
+export type {
+    GlassUnderlineClock,
+    GlassUnderlineVariant,
+    GlassUnderlinePaths,
+    GlassUnderlineProps,
+    GlassUnderlineExpose,
+} from "../components/custom/underline";
+
 // ── CVA variant prop types ─────────────────────────────────────────────────
 // Every CVA-driven component's `VariantProps`-derived type. Consumers wrapping
 // a component (e.g. a domain Button that forwards `variant` + `size`) type

@@ -293,18 +293,30 @@ audited 390-width class), driving the EXPAND morph (collapse-first → re-enter 
 ramp is real). The entering-child opacity onset tracks the shell-width onset frame-by-
 frame, the lockstep the re-authored gate ASSERTS.
 
-**RG1 — own-surface light+dark keyframe stills (8 PNGs, all on disk):**
+**RG1 — own-surface light+dark keyframe stills (8 PNGs, all on disk).** Each is a tight
+DOCK-ELEMENT crop (`.locator(dock).screenshot()`) at the morph midpoint — the captured
+surface is the dock itself, not the page chrome around it, so the PNG dimensions are the
+dock's OWN intrinsic box at that frame (not the viewport). Captured at the desktop
+(1440×900) and mobile (390×844) viewports, dSF=2 (so the px dims are ×2 the CSS box):
 
-| png | what it shows |
-|---|---|
-| `W-DOCK2-lockstep-midmorph-desktop-light.png` | the expanded dock — volume icon + two sliders + separator + settings glyph, the entering controls riding the shell at reveal (light, 1440-wide) |
-| `W-DOCK2-lockstep-midmorph-desktop-dark.png` | same surface, dark token cascade |
-| `W-DOCK2-lockstep-midmorph-mobile-light.png` | the entering controls on the 390-width mobile dock (light) |
-| `W-DOCK2-lockstep-midmorph-mobile-dark.png` | same, dark |
-| `W-DOCK2-collapse-midmorph-desktop-light.png` | the collapse direction — the summary glyph in the tight collapsed pill (the §7 D9/D10 collapse target, light) |
-| `W-DOCK2-collapse-midmorph-desktop-dark.png` | same, dark |
-| `W-DOCK2-collapse-midmorph-mobile-light.png` | the mobile collapsed pill (light) |
-| `W-DOCK2-collapse-midmorph-mobile-dark.png` | same, dark |
+| png | dims (px @ dSF=2) | what it shows |
+|---|---|---|
+| `W-DOCK2-lockstep-midmorph-desktop-light.png` | 976×110 | the expanded dock — volume icon + two sliders + separator + settings glyph, the entering controls riding the shell at reveal (light, desktop viewport) |
+| `W-DOCK2-lockstep-midmorph-desktop-dark.png` | 976×110 | same surface, dark token cascade |
+| `W-DOCK2-lockstep-midmorph-mobile-light.png` | 624×110 | the entering controls mid-reveal on the mobile (390×844) viewport. NOTE: the expanded dock's intrinsic content box is ~312 CSS px (624 @ dSF=2) — WIDER than the 390 viewport, so the expanded dock horizontally overflows a 390-wide phone (a real own-surface finding, NOT a capture bug; routed to the dock-overflow/region model). The crop is the dock element at its real expanded width. |
+| `W-DOCK2-lockstep-midmorph-mobile-dark.png` | 624×110 | same, dark |
+| `W-DOCK2-collapse-midmorph-desktop-light.png` | 76×102 | the collapse direction — the summary glyph in the tight collapsed pill (the §7 D9/D10 collapse target, light) |
+| `W-DOCK2-collapse-midmorph-desktop-dark.png` | 76×102 | same, dark |
+| `W-DOCK2-collapse-midmorph-mobile-light.png` | 76×102 | the mobile collapsed pill (light) — the collapsed dock IS a tight pill (~38 CSS px), so the crop is correctly small |
+| `W-DOCK2-collapse-midmorph-mobile-dark.png` | 76×102 | same, dark |
+
+**Honesty note (the capture-debt reconcile):** the prior DELTA prose said "the 390-width
+mobile dock" — corrected here: the crop is the dock ELEMENT at the mobile VIEWPORT, and the
+expanded dock's own box (~312 CSS px / 624 px @ dSF=2) exceeds the 390 viewport. A
+full-VIEWPORT 390-wide re-capture showing the dock in page context was attempted but the
+`/dock/overview` route's WebGL-heavy surface crashes the headless renderer mid-`evaluate`
+(SwiftShader OOM under headless); the dock-element crops + the persisted GREEN gate run
+(RG2 below, a REAL-device entering-child witness) are the binding own-surface artefacts.
 
 **The captured onset table (the entering-child → box-width onset Δ, the LOCKSTEP
 number the W-DOCK1 instrument first measured, here re-captured on the expand ramp):**

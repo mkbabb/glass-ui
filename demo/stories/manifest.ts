@@ -284,6 +284,7 @@ export const CATEGORIES: Category[] = [
             s("motion", "countup", "Count-up", "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine."),
             s("motion", "reveal", "v-reveal", "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads."),
             s("motion", "typewriter", "Typewriter"),
+            s("motion", "underline", "Underline", "GlassUnderline — the draw-on pen underline (filter-free). Load clock (imperative play() + :active overlay), scroll clock (native view()), static; the --gu-* bold-register override + a color preset."),
             s("motion", "animated-digit", "Animated Digit", "Single-figure smoothed reel over useAnimatedNumber — tweens a metric toward its bound value so it never snaps; null reads the placeholder."),
         ],
     },

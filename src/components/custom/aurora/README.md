@@ -35,10 +35,10 @@ Aurora is a **single-pass WebGL2 fragment shader** assembled from cohesive GLSL 
 (`constants/shaders/`), not a multi-FBO compositor and not an SVG/CSS gradient. Every
 fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
 
-1. **Composition** — a Quilez double-fBm *domain warp* of the UV (`aurora.frag.ts:348`),
+1. **Composition** — a Quilez double-fBm *domain warp* of the UV (`aurora.frag.ts:258` `domainWarp`),
    then a *multi-nuclei softmax field* (2–6 anisotropic-Gaussian color attractors, each
    with elongation + angle) that selects a palette position per pixel, with internal
-   lightness/chroma mottling (`composition.glsl.ts:25`). Palette position never comes from
+   lightness/chroma mottling (`composition.glsl.ts:25` `nucleiField`). Palette position never comes from
    a single focal point, a pure fBm color-id, or a spatial-distance axis — each produces a
    visible artifact (`DESIGN.md §3`).
 2. **Medium** — an optional painterly overlay: `smooth` (no brush), `pastel`, `watercolor`,
@@ -48,7 +48,7 @@ fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
 3. **Post** — saturation trim, the Khronos PBR-Neutral tonemap (the shipped tonemapper;
    the GLSL function keeps the slot-name `aces()` so the single `main()` call-site is
    untouched), paper grain, the mandatory sRGB OETF, and a 1-LSB Interleaved-Gradient-Noise
-   dither to break 8-bit banding (`aurora.frag.ts:372-388`).
+   dither to break 8-bit banding (`aurora.frag.ts:384-403` `main()` post block).
 
 The palette is authored in **OKLCh** (perceptually-uniform color) and baked CPU-side to
 linear sRGB; the shader tonemaps and composites in linear, then closes the seam with the
@@ -574,12 +574,20 @@ named bite-check that re-reds it:
 | `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total + default-preserving AND REACHABLE — the live aurora story routes the atoms-default door (drives the canvas via `resolveAtoms`, not raw config) AND the dead parallel seed+mood door is GONE (grep=0) + ONE `nucleiPrior` + the noise atom fans out + texture is structurally absent on smooth. Bite: re-route the atoms tab to mutate raw config / re-introduce the dead door / drop the noise atom → RED | shipped (AX.W10) |
 | `proof:aurora-atoms-render` | the π-lane PER-ATOM device readback — driving each atom (seed / colorEnergy / zones / noise / medium) in the live config UI visibly changes the canvas centre region above the ambient drift baseline (the atoms are WIRED, not inert). Bite: leave an atom unwired → its delta collapses to the drift floor → RED | shipped (AX.W10) |
 | `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | shipped (AW.W8) |
+| `proof:aurora-fill-resize` | the field fills its host across a resize — no letterbox / fixed-aspect gap. Bite: pin a fixed canvas size → RED | shipped |
+| `proof:aurora-stroke-composite` | the painterly stroke layer composites over the field without a hard seam (the blend is energy-preserving). Bite: hard-`mix()` the stroke → RED | shipped |
+| `proof:aurora-painterly-statistics` | the painterly mediums hit their authored stroke-density / contrast statistics over the re-skinned config driver (the live story exercises each medium through its as-built control). Bite: flatten a medium to `smooth` → RED | shipped |
+| `proof:aurora-arresting-ref` · `proof:aurora-arresting` | the arresting-reference comparison + the live arresting check — the hero register reads as a painterly field, not a flat gradient, against the reference statistics. Bite: collapse to a 2-stop linear gradient → RED | shipped |
+| `proof:aurora-chrome-idiomatic` | the aurora chrome composes the shipped Configurator/Dock idioms (no bespoke control re-roll). Bite: hand-roll a parallel control column → RED | shipped |
+| `proof:aurora-preset-roster` | the preset roster resolves its named presets to in-gamut configs. Bite: add a preset that out-gamuts → RED | shipped |
 
 ---
 
 ## References
 
-The techniques behind aurora and the AW painterly roadmap, with access dates (2026-06-06):
+The lane's authoritative research artefact is [`RESEARCH.md`](./RESEARCH.md) (the SOTA survey behind
+the painterly mediums, the structure-tensor / ETF keystone, the OKLCh palette path, and the
+cursor-as-light model). The primary techniques behind each axis, with access dates (2026-06-06):
 
 ### Noise, warp, and flow
 - Iñigo Quilez — [Domain warping](https://iquilezles.org/articles/warp/),
@@ -634,11 +642,4 @@ The techniques behind aurora and the AW painterly roadmap, with access dates (20
   [Moments in Graphics — free blue-noise textures](https://momentsingraphics.de/BlueNoise.html).
 - Benjamin Wrensch — [Minimal AgX](https://iolite-engine.com/blog_posts/minimal_agx_implementation);
   Khronos — [PBR Neutral tone mapper](https://modelviewer.dev/examples/tone-mapping).
-
-### WebGPU
-- [WebGPU supported in all major browsers, web.dev (2025-11-25)](https://web.dev/blog/webgpu-supported-major-browsers);
-  [WebGPU hits critical mass (WebGPU.com)](https://www.webgpu.com/news/webgpu-hits-critical-mass-all-major-browsers/).
-- [WGSL spec, W3C](https://www.w3.org/TR/WGSL/);
-  [WebGPU Fundamentals](https://webgpufundamentals.org/);
-  Chrome — [From WebGL to WebGPU](https://developer.chrome.com/docs/web-platform/webgpu/from-webgl-to-webgpu).
 - Pavel Dobryakov — [WebGL Fluid Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation) (the stateful pointer-wake splat).

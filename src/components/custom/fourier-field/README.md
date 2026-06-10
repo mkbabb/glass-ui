@@ -68,7 +68,10 @@ The render is a **3-pass phosphor-comet** (the CRT-vector / oscilloscope registe
   phosphor look (crossings brighten); plain `source-over` over the warm cream
   ground keeps the hue legible (additive over cream blows the trail to white). The
   persistence is a SOFT `age^trailFadeExp` floored at `peak·trailFloor` — the body
-  survives, never the quadratic that killed the oldest 80% of the trail.
+  survives, never the quadratic that killed the oldest 80% of the trail. (Caveat:
+  the body-survives floor is fully effective on the DARK ink ground; at the lighter
+  cream floors the effective trail alpha is ~0.036 final / ~0.055 hero on cream — the
+  trail is dimmer over the light backdrop, a deliberate let-the-cream-read tuning.)
 - **Pass 2 — the head glow** (the STRONGEST layer, head-forward: `headGlow >
   peak`). A sharp core under a `shadowBlur` bloom on the youngest segments.
 

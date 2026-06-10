@@ -43,8 +43,14 @@ function buildRoutes(): RouteRecordRaw[] {
         }
     }
 
-    // Catch-all → root redirect
-    routes.push({ path: "/:pathMatch(.*)*", redirect: "/" });
+    // Catch-all → the 404 constellation egg ("lost in the lattice"). A real
+    // route (not a root redirect) so an unknown path paints the lattice rather
+    // than silently bouncing home.
+    routes.push({
+        path: "/:pathMatch(.*)*",
+        name: "not-found",
+        component: () => import("./eggs/NotFound.vue"),
+    });
 
     return routes;
 }

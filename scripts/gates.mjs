@@ -677,6 +677,42 @@ export const GATES = [
         note: "AY.W-GLASS — the inventory-complete glass-cohesion gate (SUPERSEDES the 8-file proof:glass-one-model canary, which is REMOVED — clean break). Device-free SOURCE arm: WALKS every component surface that paints a glass plate and asserts each routes a --glass-* tier off the definition-level raw-opaque (background: var(--background|--card)) / literal-blur(<n>px) forbidden set — the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) + the dock-shell edge-gleam exemption are the ONLY exempt entries. The Drawer (re-authored onto glass-overlay + the WHC skin), Slider (range routes --glass-blur-quiet, thumb opts into the shared gleam), Notification (glass-floating + ladder shadow), and the specular-opt-in (the moving transition rides the .glass-specular-track::before / :hover/:active scope, NOT the unconditional ::before group — 0 idle keyframes tracks) arms each born-RED at HEAD → GREEN after E1–E6; a self-proving synthetic .glass-x fixture demonstrates the inventory bite every run. The PAINTED render (Drawer/Slider/Notification each a real backdrop-filter blur over a busy backdrop AND each flattening to opaque --card + blur(0) at --glass-level:0) + the idle-track 19→0 DELTA is the π arm (tests-visual/glass-cohesion.spec.ts + the W-GLASS-DELTA capture), never this gate alone. Bite: re-open the opaque Drawer / the Slider literal blur / the glass-wash Notification / the always-on specular transition → RED.",
     },
     {
+        id: "proof:component-orphan",
+        cmd: "proof:component-orphan",
+        tags: ["local", "ci"],
+        note: "AY.W-SB1 — the component-orphan institutional gate (route-prune != component-retire): every PUBLISHED custom pkg + flat subpath + root-barrel composable has >=2 non-self consumers OR a docs/consumer-evidence doc. Self-proving. Bite: a 0-consumer publish with no evidence doc -> RED",
+    },
+    {
+        id: "proof:substrate-staging",
+        cmd: "proof:substrate-staging",
+        tags: ["local", "ci"],
+        note: "AY.W-SB-STAGE — the FD occasional-usage map + the StoryHero read-through seam: G-MAP (declared befitting backgrounds + the liveBackdrop/cardTier seam + StoryBackgroundKind blob) + G-RESTRAINT (forms/feedback/containers declare NONE). Bite: un-declare a substrate bg -> G-MAP reds; declare on a forms row -> G-RESTRAINT reds",
+    },
+    {
+        id: "proof:easter-eggs",
+        cmd: "proof:easter-eggs",
+        tags: ["local", "ci"],
+        note: "AY.W-EGG — the six divined eggs source-witness + per-egg PRM fence (dftFromPoints+F-redraw / konami aurora / cmd+K palette / mascot+404 / eclipse / rail toggle — 21 seams). Self-proving. Bite: drop a seam / unbind mod+k / remove a PRM fence -> RED",
+    },
+    {
+        id: "proof:instrument-scope",
+        cmd: "proof:instrument-scope",
+        tags: ["local"],
+        note: "AY.W-IC1 — the instrument-chassis scope decision executed + machine-locked. Bite: a re-expanded scope -> RED",
+    },
+    {
+        id: "proof:readme-meta-clean",
+        cmd: "proof:readme-meta-clean",
+        tags: ["local", "ci"],
+        note: "AY.W-DOC1 — the README currency gate: the reconciled claims hold (tonemap/architecture/mediums/gate tables; provenance meta stripped; the cite re-grep). Bite: a re-introduced stale claim -> RED",
+    },
+    {
+        id: "proof:convergence-fit-coherent",
+        cmd: "proof:convergence-fit-coherent",
+        tags: ["local"],
+        note: "AY.W-CONVERGE — the per-major-component glass-ui<->slides FIT disposition table is complete + coherent (every major component has a keep/extend/fix verdict feeding L.W-ADOPT). Bite: an undisposed component -> RED",
+    },
+    {
         id: "proof:storybook-complete",
         cmd: "proof:storybook-complete",
         tags: ["local", "ci"],
