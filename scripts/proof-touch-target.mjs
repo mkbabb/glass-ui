@@ -19,9 +19,11 @@ import { createRequire } from "node:module";
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const require = createRequire(import.meta.url);
 
-// The demo origin the lane drives. :5173 is the legacy default; the AY lane runs the
-// demo on :5199 — pass GLASS_UI_DEMO_PORT / GLASS_UI_DEMO_URL to override.
-const DEMO_PORT = process.env.GLASS_UI_DEMO_PORT ?? "5173";
+// The demo origin the lane drives. :5199 is the canonical glass-ui demo port
+// (:5173 belongs to a foreign app on this dev box — the legacy default measured
+// THAT app's DOM and read every control as 0x0). Pass GLASS_UI_DEMO_PORT /
+// GLASS_UI_DEMO_URL to override.
+const DEMO_PORT = process.env.GLASS_UI_DEMO_PORT ?? "5199";
 const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://localhost:${DEMO_PORT}`;
 
 function log(msg) {

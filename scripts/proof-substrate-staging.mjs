@@ -47,10 +47,15 @@ const ARTIFACT = gateArtifactPath(
 // The FD §6 self-demonstration map — each row MUST declare this background kind.
 const REQUIRED_BACKDROPS = [
     { cat: "substrates", id: "aurora", kind: "aurora", hero: true },
-    { cat: "substrates", id: "blob", kind: "blob", hero: true },
+    // W-BLOB-REBUILD supersession (the AY close design, manifest.ts comments):
+    // a GooBlob is a CONTAINED creature, never a page-field — both blob rows
+    // present over a calm paper wash; the contained-mascot mount is asserted by
+    // the G-CONTAINED arm below. `background: "blob"` is the category error this
+    // gate now BITES on (the inverted guard).
+    { cat: "substrates", id: "blob", kind: "paper", hero: true },
     { cat: "substrates", id: "constellation", kind: "constellation", hero: true },
     { cat: "substrates", id: "fourier-field", kind: "fourier", hero: true },
-    { cat: "compositions", id: "empty-states", kind: "blob", hero: false },
+    { cat: "compositions", id: "empty-states", kind: "paper", hero: false },
     { cat: "foundations", id: "motion", kind: "constellation", hero: false },
     { cat: "motion", id: "springs", kind: "constellation", hero: false },
     { cat: "navigation", id: "carousel", kind: "aurora", hero: false },
@@ -67,6 +72,17 @@ const QUIET_CATEGORIES = ["forms", "feedback", "containers"];
  */
 export function parseManifestRows(src) {
     const rows = [];
+    // COMMENT-STRIP first (the false-witness discipline): a manifest comment
+    // QUOTING a background value (the W-BLOB-REBUILD rationale cites the prior
+    // `background: "blob"`) must never read as the row's declaration.
+    src = src
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .split("\n")
+        .map((l) => {
+            const i = l.indexOf("//");
+            return i === -1 ? l : l.slice(0, i);
+        })
+        .join("\n");
     // Match each s(...) call up to its closing ")," — rows are single logical
     // calls possibly spanning lines. We split on the `s("` row-starts.
     const RE = /s\(\s*"([a-z-]+)"\s*,\s*"([a-z0-9-]+)"\s*,([\s\S]*?)\)\s*,/g;
@@ -123,19 +139,30 @@ export function detectStaging(input) {
         }
     }
 
-    // G-MAP — the chassis carries the blob seam.
+    // G-NO-BLOB-FIELD (the INVERTED guard — W-BLOB-REBUILD supersession): a
+    // GooBlob is a contained creature, never a page-field. The StoryBackgroundKind
+    // union must NOT carry "blob" and StoryHero must NOT grow a blob branch —
+    // re-introducing either re-lands the category error the rebuild root-caused
+    // (the full-page blob was THE "broken blob" defect).
     const unionHasBlob = /"blob"/.test(kindUnionSrc);
-    if (!unionHasBlob) {
+    if (unionHasBlob) {
         violations.push(
-            `G-MAP: StoryBackgroundKind union must carry "blob" (the empty-state/mood seam)`,
+            `G-NO-BLOB-FIELD: StoryBackgroundKind union carries "blob" — a GooBlob is a contained creature, never a page-field (W-BLOB-REBUILD)`,
         );
     }
     const heroHasBlobBranch = /kind\s*===\s*'blob'|kind === "blob"/.test(
         storyHeroSrc,
     );
-    if (!heroHasBlobBranch) {
+    if (heroHasBlobBranch) {
         violations.push(
-            `G-MAP: StoryHero.vue must have a v-else-if blob branch (mount <GooBlob>)`,
+            `G-NO-BLOB-FIELD: StoryHero.vue carries a blob background branch — the page-field blob is the category error W-BLOB-REBUILD deleted`,
+        );
+    }
+    // G-CONTAINED — the empty-states page mounts its OWN contained GooBlob
+    // mascot (the shipped seam that replaced the background row).
+    if (input.emptyStatesSrc != null && !/GooBlob/.test(input.emptyStatesSrc)) {
+        violations.push(
+            `G-CONTAINED: compositions/empty-states must mount the contained <GooBlob> mascot (the W-BLOB-REBUILD seam that replaced background:"blob")`,
         );
     }
 
@@ -190,12 +217,17 @@ function run() {
         resolve(ROOT, "demo/stories/StoryHero.vue"),
         "utf8",
     );
+    const emptyStatesSrc = readFileSync(
+        resolve(ROOT, "demo/stories/compositions/empty-states.vue"),
+        "utf8",
+    );
 
     const rows = parseManifestRows(manifestSrc);
     const { facts, violations } = detectStaging({
         rows,
         kindUnionSrc,
         storyHeroSrc,
+        emptyStatesSrc,
     });
     const status = violations.length === 0 ? "pass" : "fail";
 

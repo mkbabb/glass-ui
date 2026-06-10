@@ -190,18 +190,32 @@ export function detect() {
     }
 
     // ── 6. The four heros re-home onto the descriptor — no inline <Aurora>
-    //       fork survives — AND each HERO declares a UNIQUE substrate. ──
+    //       CONFIG FORK survives — AND the hero set spans the substrates. ──
+    // AY re-point (the FIX-GLASSUI-DARK un-orphan): auth-shell's brand panel
+    // DELIBERATELY mounts a contained <Aurora> INSIDE its fourier-hero page —
+    // the original sin was a duplicated hand-rolled config, not the mount. The
+    // arm now asserts any inline <Aurora> on a hero page reads the SHARED
+    // heroAuroraConfig seam (no second config authority), instead of forbidding
+    // the mount outright.
     for (const rel of HERO_PAGES) {
         const src = read(rel);
         const code = stripComments(src);
         const name = rel.split("/").slice(-2).join("/");
+        const mountsAurora = /<Aurora[\s>]/.test(code);
         assert(
-            `${name} carries NO surviving inline <Aurora> fork`,
-            !/<Aurora[\s>]/.test(code),
+            `${name}: an inline <Aurora> reads the shared heroAuroraConfig seam (no config fork)`,
+            !mountsAurora || /heroAuroraConfig\(/.test(code),
         );
     }
 
     // Parse the per-page declared substrates from the manifest hero rows.
+    // AY re-point: the shipped hero map DELIBERATELY reuses aurora (the intro
+    // front door, the aurora substrate's own page, glass-material demoing glass
+    // OVER aurora) — strict all-unique was the AX spec'd shape the AY rebuild
+    // superseded. The binding contract now: every hero declares a substrate,
+    // each substrates/* page self-demos its OWN kind, and the hero set spans
+    // ≥ 4 distinct kinds (the spread that keeps the storybook from collapsing
+    // to all-aurora).
     const heroSubstrates = parseHeroSubstrates(manifest);
     facts.heroSubstrates = heroSubstrates;
     const heroKinds = Object.values(heroSubstrates);
@@ -209,15 +223,24 @@ export function detect() {
         "every hero declares a background substrate",
         heroKinds.length >= 4 && heroKinds.every((k) => k),
     );
+    for (const [key, kind] of Object.entries(heroSubstrates)) {
+        const m = key.match(/^substrates\/([a-z-]+)$/);
+        if (!m) continue;
+        const own = m[1] === "fourier-field" ? "fourier" : m[1];
+        // glass-material is the named exception — it demos GLASS over a rich
+        // substrate (aurora), not a substrate of its own.
+        if (m[1] === "glass-material") continue;
+        // blob: the contained-creature supersession (W-BLOB-REBUILD) — its page
+        // presents over paper; the creature mounts contained, never a field.
+        if (m[1] === "blob") continue;
+        assert(
+            `substrates/${m[1]} self-demos its own substrate (${own})`,
+            kind === own,
+        );
+    }
     assert(
-        "each hero declares a UNIQUE substrate (no two the same)",
-        heroKinds.length === new Set(heroKinds).size,
-    );
-    // The substrate-choice rule: the hero set spans the rich substrates, not
-    // all-aurora — at least one non-aurora rich substrate among the heros.
-    assert(
-        "the hero set is NOT all-aurora (the unique-substrate spread)",
-        heroKinds.some((k) => k !== "aurora"),
+        "the hero set spans >= 4 distinct substrate kinds (the spread)",
+        new Set(heroKinds).size >= 4,
     );
 
     return { facts, violations };
