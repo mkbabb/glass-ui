@@ -162,8 +162,21 @@ function checkDir(dirRel) {
 function checkIdiomHome() {
     const violations = [];
     const doc = resolve(ROOT, "docs/precepts/design-idioms.md");
-    const facts = { docExists: existsSync(doc), docBytes: 0, citedByContributing: false, citedByIndexCss: false };
-    if (!facts.docExists) {
+    const facts = { docExists: existsSync(doc), docBytes: 0, citedByContributing: false, citedByIndexCss: false, precepteSubmodulePresent: true };
+    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
+    // the checkout does not initialize it (and cannot — the default token has no
+    // cross-repo grant), so the dir is empty. Absent-submodule → skip-by-policy
+    // (the sibling-gate convention: proof:resolution et al.) — never a hard
+    // failure on a runner that cannot see the doc. Locally the clause BITES.
+    const preceptsDir = resolve(ROOT, "docs/precepts");
+    const submodulePresent =
+        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    facts.precepteSubmodulePresent = submodulePresent;
+    if (!submodulePresent) {
+        console.log(
+            "  idiom-home: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the doc clause bites locally)",
+        );
+    } else if (!facts.docExists) {
         violations.push("docs/precepts/design-idioms.md — the design-idiom home is missing");
     } else {
         facts.docBytes = statSync(doc).size;

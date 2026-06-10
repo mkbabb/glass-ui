@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.10.1
+
+### Patch Changes
+
+-   **The true AY close cut.** The registry `3.10.0` is a stale pre-close artifact published outside the gated release path (it still ships the four pruned subpaths and lacks `/underline` + the close work); it is deprecated on npm with a pointer here. `3.10.1` is the AY close tree — pin this. No code delta beyond `3.10.0`'s intended content; the version line below describes what ships.
+
 ## 3.10.0
 
 ### Minor Changes

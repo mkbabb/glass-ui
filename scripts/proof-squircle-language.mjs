@@ -388,6 +388,23 @@ function piArm(WORKSPACE) {
             note: "π render arm SKIPPED — tests-visual Playwright workspace/spec absent (befitting-silent device absence; the orchestrator drives the chrome-devtools-mcp cornerShape readback per the cardinal lesson)",
         };
     }
+    // A live demo server is the π arm's substrate. A CI runner has the workspace
+    // (repo checkout + npm ci) but NO running demo — that is device absence, not
+    // a wrong cornerShape; skip-by-policy (live-π verification is local-only per
+    // the cardinal-lesson architecture). Locally with the server up, fail-CLOSED.
+    const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
+    const reachable = spawnSync(
+        "curl",
+        ["-s", "-o", "/dev/null", "-m", "3", "-w", "%{http_code}", DEMO_URL],
+        { encoding: "utf8" },
+    );
+    if ((reachable.stdout ?? "").trim() !== "200") {
+        return {
+            ran: false,
+            status: "skip",
+            note: `π render arm SKIPPED — no demo server reachable at ${DEMO_URL} (a headless runner; the live readback is local-only per the cardinal lesson)`,
+        };
+    }
     const res = spawnSync(PW_BIN, ["test", "squircle-language.spec.ts"], {
         cwd: WORKSPACE,
         encoding: "utf8",

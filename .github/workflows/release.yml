@@ -32,6 +32,11 @@ jobs:
             GLASS_UI_BUDGET_SKIP_BUILD: "1"
         steps:
             - uses: actions/checkout@v4
+              with:
+                  # full history — proof:ay-final's cardinal-ledger sub-gates
+                  # resolve capture/surface commits via `git log` (a shallow
+                  # clone reads every DELTA as unresolvable → false RED).
+                  fetch-depth: 0
             - uses: actions/setup-node@v4
               with:
                   node-version: 24

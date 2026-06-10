@@ -296,9 +296,13 @@ export function detectFinal(inputs) {
     // with no CHANGELOG entry, is the silent mid-dev bump this clause forbids.
     facts.changesets = inputs.changesets;
     facts.pkgVersion = inputs.pkgVersion;
+    // The cut version is the 3.10 line: 3.10.1 is the TRUE close cut (the
+    // registry 3.10.0 is a deprecated stale artifact published outside
+    // release.yml at 2026-06-10T14:13Z — pre-prune, pre-close; the deprecation
+    // notice points consumers at 3.10.1).
     const staged = inputs.pkgVersion === "3.9.0" && inputs.changesets.length > 0;
     const cut =
-        inputs.pkgVersion === "3.10.0" &&
+        /^3\.10\.\d+$/.test(inputs.pkgVersion) &&
         inputs.changesets.length === 0 &&
         /^## 3\.10\.0$/m.test(inputs.changelogMd ?? "");
     facts.cutState = cut ? "at-cut" : staged ? "staged" : "invalid";
