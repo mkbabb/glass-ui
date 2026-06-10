@@ -1,5 +1,6 @@
 <!-- capture-commit: a8cfd644548cd524d3713dd9e3063fd7f0445f19 -->
 <!-- surface-paths: src/components/custom/goo-blob/GooBlob.vue, src/composables/color/index.ts, src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationDraw.ts, src/styles/tokens/shadow.css, demo/stories/substrates/blob.vue, demo/stories/StoryHero.vue -->
+<!-- surface-hash: b5f8acbf03bac95f3db38c9da9fdabc376b34a6beebf685b86f3c3846dfbddd0 -->
 
 # AY.W-COHERE — the four live substrates as ONE set · cohesion convergence DELTA
 

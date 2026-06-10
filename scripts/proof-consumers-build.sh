@@ -7,7 +7,13 @@ PARENT="$(dirname "$ROOT")"
 # membership source (scripts/constellation.mjs), never a hardcoded bash array.
 # The build set is the APP consumers (CONSUMERS minus self minus the publishers
 # keyframes/value); each line is `<id>\t<dir>`. Absent siblings skip-by-policy.
-mapfile -t CONSUMER_ROWS < <(node -e '
+# Portable read-loop (NOT `mapfile` — a bash-4 builtin absent on macOS's stock
+# bash 3.2; AZ.W-GATES runner-truth: the gate must run identically on the dev
+# Mac and the CI runner).
+CONSUMER_ROWS=()
+while IFS= read -r __row; do
+    [ -n "$__row" ] && CONSUMER_ROWS+=("$__row")
+done < <(node -e '
 import("'"$ROOT"'/scripts/constellation.mjs").then((m) => {
   const pub = new Set(m.PUBLISHERS.map((p) => p.id));
   for (const c of m.CONSUMERS) {

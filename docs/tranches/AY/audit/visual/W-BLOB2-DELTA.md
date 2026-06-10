@@ -2,6 +2,7 @@
 
 <!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/components/custom/goo-blob/shaders/metaball.frag.ts, src/components/custom/goo-blob/composables/useMetaballRenderer.ts, src/components/custom/goo-blob/GooBlob.vue -->
+<!-- surface-hash: 96b6bd877c1d34d56c9c3f0d2a2dc6191123bab8a095688af893322e1fea3368 -->
 <!-- superseded-by: W-BLOB-REBUILD -->
 <!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 9 own-surface W-BLOB2-*
      PNGs (4 goo-blob default-bead × {desktop,mobile} × {light,dark} + the 5 mood-hover lean
