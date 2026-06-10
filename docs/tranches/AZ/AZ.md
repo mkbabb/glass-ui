@@ -65,6 +65,23 @@ retire, scoped by hinge H1 below.
 | **H6** | The `/underline` disposition (the hand-challenge exposed the prior KEEP as resting on a phantom trigger: slides never re-pointed, 0 external consumers, no AZ wave re-points it) | (a) **FOLD the underline re-point INTO W-ADOPT** — the slides deck swap (`SlideIntro`/`SlideCloser` hand-underline → `@mkbabb/glass-ui/underline`) rides the same adopt lane, making the KEEP true with a real consumer. (b) KEEP with a named future-wave trigger + re-audit date. (c) RETIRE (it churned retire→re-publish within one band with no consumer). | Batch 5 (W-PRUNE2) / Batch 6 (W-ADOPT) |
 | **H7** | The `useGlassRenderer`/`createGlassFilter` cluster (root-barrel-public, zero binary consumers, one demo story) | (a) **Barrel-retire + drop the story** (clean break; a 3.11.0 MIGRATION row — the barrel surface must earn a binary consumer). (b) Demo-evidenced KEEP (the svg-filter→css→fallback detection-cascade probe as a sanctioned demo-only export, evidence doc + trigger). | Batch 5 (W-PRUNE2) |
 
+## The hinge-decision record (greenlight 2026-06-10, the user's continue order)
+
+The user greenlit execution with the standing continue directive post-presentation. The hinge
+answers, recorded with their provenance — H1/H3 are decided by the user's OWN R3 words; the rest
+ride the recommended (a) arms as ORCHESTRATOR DEFAULTS, reversible at any batch boundary on the
+user's word:
+
+| hinge | answer | provenance |
+|---|---|---|
+| H1 | **(a)** — red retires from all STATE registers; survives as brand ink (ℱ, data-viz, gold CTA) | the user's R3-6 verbatim ("I don't like the red… more iOS inspired and glassy — at the root") |
+| H2 | **(a)** — ONE GlassDock, ONE orientation axis | orchestrator default (recommended arm; "have a dock that's horizontal and vertical") |
+| H3 | **(a)** — the luma observer default-ON for the dock family | the user's R3-7 verbatim ("darken DYNAMICALLY like on iOS 27") |
+| H4 | **(a)** — the metaball-bridge; arm (c) stays the mechanical perf-miss fallback | orchestrator default (the topology limit makes it the only faithful path) |
+| H5 | deferred to Batch 6 — the env probe runs at the deploy hinge | pending |
+| H6 | **(a)** — the slides underline re-point folds INTO W-ADOPT | orchestrator default |
+| H7 | **(a)** — barrel-retire + drop the story (clean break, MIGRATION row) | orchestrator default |
+
 ## The wave roster (24 waves, 8 bands)
 
 Specs live at `waves/AZ.W-*.md`; each carries §0 RE-GROUND (the fleet finding ids + re-grep

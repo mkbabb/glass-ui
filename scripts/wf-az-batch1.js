@@ -11,8 +11,8 @@ export const meta = {
 const GU = '/Users/mkbabb/Programming/glass-ui'
 // FILLED BY THE ORCHESTRATOR AT DISPATCH from the user's hinge answers:
 const ANSWERS = {
-  H1: 'UNANSWERED — do not dispatch W-REGISTER-IOS without it',
-  H3: 'UNANSWERED — do not dispatch W-ADAPTIVE-AUTO without it',
+  H1: 'ARM (a) — red retires from ALL STATE registers (hover/active/selected become the iOS luminance-lift glass register); red survives ONLY as brand ink (the F wordmark, data-viz strokes, the gold CTA family). Provenance: the user R3-6 verbatim. Execute the spec H1-arm-(a) fork in full.',
+  H3: 'ARM (a) — the sampled-luminance observer ships DEFAULT-ON for the dock family (rAF-throttled <=4Hz, writes --glass-backdrop-luma; the declarative bucket stays the floor + the override). Provenance: the user R3-7 verbatim ("darken dynamically"). Execute the spec H3-arm-(a) fork in full.',
 }
 
 const SCHEMA = {
