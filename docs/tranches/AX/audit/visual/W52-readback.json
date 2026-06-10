@@ -1,0 +1,12 @@
+{
+  "engine": "chromium 148 (Chrome 148-class)",
+  "surface": ".glass-card, .glass-btn, [data-slot='card'], .glass-material",
+  "rest": {
+    "beforeSpecularOpacity": "0"
+  },
+  "hover": {
+    "beforeSpecularOpacity": "0.1"
+  },
+  "glassSpecularSize": "36%",
+  "note": "the D19 bounded-gleam default-off discipline: the ::before edge specular is dormant at rest (opacity 0) and wakes a whisper on hover (opacity 0.1); --glass-specular-size resolves the BOUNDED circle (36% global, tokens/glass.css:270; the dock control narrows it to 22% via --dock-control-specular-size, dock-controls.css:51) — a bounded `circle var(--glass-specular-size)` gleam, NOT the unbounded full-plate disc. Source-locked by proof:liquid-glass-material (the bounded-circle assert)."
+}

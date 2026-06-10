@@ -221,7 +221,7 @@ function onRailFocusOut(e: FocusEvent) {
             :as-child="true"
         >
             <!-- AY.W-DOCK2 (D5 single-indicator) — `:indicator="false"` kills the
-                 phantom default `<TabsIndicator>` TabsList renders (its `bg-[var(--glass-bg-quiet)]`
+                 phantom default `<TabsIndicator>` TabsList renders (its `bg-(--glass-bg-quiet)`
                  plate). The rail drives its OWN explicit `.dock-layer-tab-indicator`
                  (the `--primary 15%` plate) below, so without this the rail painted
                  TWO indicators (H-dock §D7 L1). -->

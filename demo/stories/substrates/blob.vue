@@ -78,6 +78,18 @@ const HARMONIES: ColorHarmony[] = [
 ];
 const MOODS: BlobMood[] = ["idle", "happy", "curious", "sleepy", "excited"];
 
+// AY.W-COHERE E1 — the warm-register chroma CEILING on the seed→palette
+// derivation. The blob's mood/seed bead caps INTO the band the FourierField comet
+// (--viz-fourier, C≈0.15-0.20) + the constellation focal share, so the four live
+// substrates read as ONE warm-red accent family instead of the blob breaking out
+// to a neon coral ball one section down from the cream default. A vivid seed (the
+// "Excited" preset's oklch(0.62 0.19 25)) is bounded to a saturated-but-non-neon
+// warm bead; the shader's SSS/iridescence amplification then rides ON the capped
+// chroma rather than over-driving an already-vivid stop into neon. This is a CAP,
+// not a hue re-map — a user who seeds a blue blob still gets blue, capped to the
+// non-neon chroma. The cap lands the rendered body mean at C ≈ the comet band.
+const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
+
 // Three preset baselines — the calm cream default, a warm-excited bead, and a cool
 // shy-away creature (the attraction-sign showcase: a NEGATIVE attraction that genuinely
 // shies away now that the D2 sign is fixed).
@@ -103,7 +115,15 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
             clickImpulse: 0.9,
             mood: "excited",
             seed: "oklch(0.62 0.19 25)",
-            harmony: "triad",
+            // AY.W-COHERE E1 — `analogous`, NOT `triad`. The triad scattered the
+            // warm-red seed's satellite stops to green/blue (~145°/265°), so the
+            // mood bead's body mean read GREEN — fracturing the warm-red accent
+            // family the set shares (D4). Analogous keeps the stops in the warm-red
+            // neighbourhood (seed ± the hue spread), so the "warm · leans in" bead
+            // is genuinely warm-red, capped by the chroma ceiling into the comet's
+            // register. The triad showcase moves to the harmony Select (a user can
+            // still pick it; the SHIPPED warm preset stays in-family).
+            harmony: "analogous",
         },
     },
     {
@@ -138,6 +158,9 @@ const paletteStops = computed(() =>
     deriveBlobPalette(studio.config.seed, {
         stopCount: 3,
         harmony: studio.config.harmony,
+        // AY.W-COHERE E1 — cap the derived chroma into the warm register so the
+        // mood/seed bead never amplifies into the neon ball the set red-team flagged.
+        chromaCeiling: BLOB_WARM_REGISTER_CHROMA_CEILING,
     }).map(oklchStopToHex),
 );
 

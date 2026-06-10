@@ -251,18 +251,20 @@ defineExpose({
     contain: layout style;
     content-visibility: auto;
     contain-intrinsic-size: auto none;
-    filter: drop-shadow(
-        5px 5px 2.5px
-            color-mix(in srgb, var(--blob-color, transparent) 20%, var(--foreground))
-    );
+    /* AY.W-COHERE E2 — the gel-bead AMBIENT contact shadow (the tokenised
+       `--blob-shadow`), NOT the hard `5px 5px` near-black cartoon offset-stamp.
+       A lit gel dome sits IN the scene with a soft, near-centered, low-offset,
+       ambient-tinted contact shadow (the same soft-light register the other live
+       substrates speak); the Memphis offset-stamp stays the identity of
+       <Card surface="cartoon"> only. Adaptive-by-construction via the token's
+       `--shadow-color`/`--foreground` base (re-resolves under .dark, no hardcoded
+       .dark block here). */
+    filter: drop-shadow(var(--blob-shadow));
     transition: filter var(--duration-slow, 0.45s) var(--ease-standard, ease);
 }
 
 .goo-blob-wrapper:hover {
-    filter: drop-shadow(
-        7px 7px 3px
-            color-mix(in srgb, var(--blob-color, transparent) 25%, var(--foreground))
-    );
+    filter: drop-shadow(var(--blob-shadow-hover));
 }
 
 /* Canvas is 160% of wrapper — overflows so satellites at wide orbits render
@@ -281,10 +283,10 @@ defineExpose({
 
 @media (prefers-reduced-motion: reduce) {
     .goo-blob-wrapper {
-        filter: drop-shadow(
-            5px 5px 2.5px
-                color-mix(in srgb, var(--blob-color, transparent) 20%, var(--foreground))
-        ) !important;
+        /* AY.W-COHERE E2 — the same ambient contact shadow under PRM (the gel-bead
+           lighting language, never the hard offset-stamp); only the transition is
+           cut. */
+        filter: drop-shadow(var(--blob-shadow)) !important;
         transition: none !important;
     }
 }

@@ -1,0 +1,26 @@
+/* utilities/animate.css
+   The popover/dropdown shared @utility animation pair — popover-animate + slide-in-from-side (the data-state / data-side entry choreography for popover-class containers). FIRST (before the @layer components block, matching source order).
+   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+/* ── Popover/dropdown shared animation ──
+   `@utility` form (V.W3.T8 / A5 §5.9 standardisation): data-state animation
+   pair for popover-class containers (Popover, DropdownMenu, ContextMenu,
+   Tooltip, HoverCard, Select). Composed alongside `.slide-in-from-side`
+   for direction-keyed entries. */
+@utility popover-animate {
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out
+           data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
+           data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+}
+
+/* ── Slide-in entry by side data-attr ──
+   `@utility` form (V.W3.T8). Side-keyed slide entry that pairs with
+   reka-ui's `data-side` (`top|right|bottom|left`). The animation
+   direction inverts each side so panels enter from outside the
+   anchor's edge. */
+@utility slide-in-from-side {
+    @apply data-[side=bottom]:slide-in-from-top-2
+           data-[side=left]:slide-in-from-right-2
+           data-[side=right]:slide-in-from-left-2
+           data-[side=top]:slide-in-from-bottom-2;
+}

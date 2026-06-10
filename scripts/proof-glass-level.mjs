@@ -16,6 +16,10 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — tokens.css/glass.css became thin @import roots over carved
+// partials; readMonolith concatenates the root + partials in cascade order so a
+// source-scan keeps finding every rule (the read-dock-css.mjs precedent).
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:glass-level";
 
@@ -31,9 +35,9 @@ const strip = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const tokens = read("src/styles/tokens.css");
+const tokens = readMonolith(ROOT, "tokens");
 const tokensB = strip(tokens);
-const glass = read("src/styles/glass.css");
+const glass = readMonolith(ROOT, "glass");
 const glassB = strip(glass);
 
 const checks = []; // {arm, id, pass, detail}

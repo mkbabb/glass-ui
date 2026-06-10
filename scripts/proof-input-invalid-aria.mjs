@@ -19,6 +19,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 /** Strip CSS block comments so a clause cannot be satisfied by a comment. */
 function stripComments(src) {
@@ -45,7 +48,7 @@ function run() {
     if (!existsSync(GLASS)) {
         violations.push("src/styles/glass.css is absent");
     } else {
-        const css = stripComments(readFileSync(GLASS, "utf8"));
+        const css = stripComments(readMonolith(ROOT, "glass"));
 
         // Match the base invalid-ring rule: `.input-pill:where(...) { ... }`
         // where the selector group is the validity surface (it carries

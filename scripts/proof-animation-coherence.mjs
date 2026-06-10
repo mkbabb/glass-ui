@@ -132,6 +132,9 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // Resolve the repo root from this module's URL when invoked as a CLI gate.
 // Under a test runner (vitest) `import.meta.url` may not be a `file:` URL on
@@ -1079,7 +1082,7 @@ export function detectAll(read) {
     const facts = {};
 
     // ONE-SPRING-SOURCE
-    const springRes = detectSpringSource(read(TOKENS_CSS));
+    const springRes = detectSpringSource(readMonolith(ROOT, "tokens"));
     facts.springDefCount = springRes.springDefCount;
     violations.push(...springRes.violations);
 
@@ -1153,7 +1156,7 @@ export function detectAll(read) {
         scanWide(file, cssOf(file, read(file)));
     }
     // REGISTER-ASSIGNMENT on the press-spring composite token DEFINITIONS (D1).
-    registerForks.push(...detectPressSpringRegister(TOKENS_CSS, read(TOKENS_CSS)));
+    registerForks.push(...detectPressSpringRegister(TOKENS_CSS, readMonolith(ROOT, "tokens")));
     facts.easingForks = easingForks.length;
     facts.pressForks = pressForks.length;
     facts.registerForks = registerForks.length;
@@ -1181,7 +1184,7 @@ export function detectAll(read) {
     }
 
     // SPRING-CONSUMER-COVERAGE
-    const cov = detectSpringCoverage(read(TOKENS_CSS), srcFiles, (f) => read(f));
+    const cov = detectSpringCoverage(readMonolith(ROOT, "tokens"), srcFiles, (f) => read(f));
     facts.springCoverage = cov.facts;
     violations.push(...cov.violations);
 

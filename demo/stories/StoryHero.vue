@@ -157,6 +157,7 @@ const cardTier = computed<CardTier>(() => {
             seed="glass-ui"
             :count="56"
             :link="140"
+            :opacity-ceiling="opacityCeiling"
             :draw-overlay="drawFocal"
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
         />

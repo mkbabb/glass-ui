@@ -129,7 +129,7 @@ function repaintHighlight(container: HTMLElement | null) {
                 </div>
             </PopoverTrigger>
             <PopoverContent align="start" :side-offset="4" :portal="false"
-                class="w-[var(--reka-popover-trigger-width)] max-h-[50vh] overflow-y-auto overscroll-contain p-1"
+                class="w-(--reka-popover-trigger-width) max-h-[50vh] overflow-y-auto overscroll-contain p-1"
                 @open-auto-focus="(e: Event) => e.preventDefault()">
                 <div ref="inlineListRef">
                     <button v-for="(r, i) in state.results.value" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"

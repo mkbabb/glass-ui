@@ -127,6 +127,12 @@ jobs:
               run: npm run proof:shader-shared-source
             - name: proof:blob-color-equivalence
               run: npm run proof:blob-color-equivalence
+            - name: proof:fail-explicit
+              run: npm run proof:fail-explicit
+            - name: proof:no-god-module
+              run: npm run proof:no-god-module
+            - name: proof:composable-return-types
+              run: npm run proof:composable-return-types
             - name: proof:liquid-glass-tokens
               run: npm run proof:liquid-glass-tokens
             - name: proof:storybook-ia
@@ -175,6 +181,12 @@ jobs:
               run: npm run proof:card-cartoon-consumers
             - name: proof:gate-script-parity
               run: npm run proof:gate-script-parity
+            - name: proof:tag-parity
+              run: npm run proof:tag-parity
+            - name: proof:no-retired-survivor
+              run: npm run proof:no-retired-survivor
+            - name: proof:var-in-arbitrary-guard
+              run: npm run proof:var-in-arbitrary-guard
             - name: proof:liquid-glass-material
               run: npm run proof:liquid-glass-material
             - name: proof:dock-animation-live

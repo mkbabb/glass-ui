@@ -1,0 +1,365 @@
+/* utilities/base.css
+   The @layer components base half — section-description, labeled-field, popover-content, scrollbar, focus-ring, hairline-accent, interactive-item, tap-squish, status-dot, depth-text, preserve-3d, ios input fix, scroll-fade masks, deferred-section, scroll-timeline host, shimmer text, keyboard key.
+   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+@layer components {
+    /* ── Section description (V.W3.T7) ──────────────────────────────
+       Canonical recipe for the `<Section>` primitive's description
+       paragraph. Composes the body type + muted-foreground color in
+       one declaration so consumers don't fight twMerge's
+       typography-class collapse. */
+    .section-description {
+        font-size: var(--type-body);
+        color: var(--muted-foreground);
+        line-height: 1.5;
+        text-wrap: pretty; /* AQ.W3 §W3.3 — prose-register orphan/river fix */
+    }
+
+    /* ── Labeled-field label (V.W3.T5 / A5 §5.5) ────────────────────
+       Canonical recipe for `<LabeledField>`'s tooltip-wrapped label
+       layer. Four sibling wrappers (LabeledInput, LabeledSelect,
+       LabeledSlider, LabeledSwitch) used to repeat this literal across
+       their templates; promoting it to a utility lets the parent SFC
+       own one canonical declaration. */
+    .labeled-field-label {
+        font-family: var(--font-display);
+        font-size: var(--type-body);
+        /* AQ.W4 §W3.1c — the label color reads the group-state variable so the
+           `:has(:user-invalid)` rule below reddens it (one source of the
+           override value, shared with the `.has-error` fallback class). */
+        color: var(--field-label-color, var(--muted-foreground));
+        cursor: help;
+    }
+
+    /* AQ.W4 §W3.1c — LabeledField group error highlight. When any descendant
+       control is `:user-invalid`, the whole field group marks (the label
+       reddens via `--field-label-color`, the error region reveals). Scoped to
+       `.labeled-field` — never `body`, never a bare element. `:has()` Baseline
+       Widely; the `.has-error` / `.has-valid` fallback classes (toggled by the
+       `useUserInvalidAria` fallback path) are the SOLE degradation for engines
+       without `:has()`/`:user-invalid` (not a live+dead alias). */
+    .labeled-field {
+        --field-label-color: var(--muted-foreground);
+    }
+    .labeled-field:has(:user-invalid),
+    .labeled-field.has-error {
+        --field-label-color: var(--destructive);
+    }
+
+    /* The error region: hidden at rest, revealed once a descendant is
+       `:user-invalid` (or the `.has-error` fallback class is set). Non-color
+       reinforcement for the validity tint — the error TEXT is the primary
+       cue, the border/bg shift the supplement (forms guide: never color
+       alone). */
+    .labeled-field-error {
+        display: none;
+        font-size: var(--type-small);
+        color: var(--destructive);
+        margin-block-start: 0.25rem;
+    }
+    .labeled-field:has(:user-invalid) .labeled-field-error,
+    .labeled-field.has-error .labeled-field-error {
+        display: block;
+    }
+    /* Hide the error text once the field reads valid (the user corrected it). */
+    .labeled-field:has(:user-valid) .labeled-field-error,
+    .labeled-field.has-valid .labeled-field-error {
+        display: none;
+    }
+
+    /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────
+       Canonical recipe for floating-tier portal containers
+       (PopoverContent, DropdownMenuContent, SelectContent, etc.).
+       Covers radius + outline + popover-foreground; consumers compose
+       this with `.glass-floating` (bg + blur + border + shadow), with
+       `.popover-animate` (data-state animation), and with the per-host
+       z-rung. The floating-tier shadow comes from
+       `--glass-shadow-floating` via `.glass-floating`, replacing the
+       `shadow-md`/`shadow-lg` literals that bypassed the canonical
+       cascade. */
+    .popover-content {
+        border-radius: var(--radius-panel);
+        color: var(--popover-foreground);
+        outline: none;
+    }
+
+    /* ── Scrollbar ── */
+    .scrollbar-hidden {
+        scrollbar-width: none;
+    }
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* AQ.W3 §W3.4 — tokenized thin scrollbar. Standard `scrollbar-width` +
+       `scrollbar-color` (Baseline Widely, Chromium 121+) is the primary path,
+       reading `--scrollbar-{thumb,track}` (auto-dark via `--muted-foreground`).
+       The legacy `::-webkit-scrollbar` family is the SOLE fallback for older
+       WebKit/Blink, gated on `@supports not (scrollbar-color: auto)` so modern
+       engines never paint it — not a live+dead alias. */
+    .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    }
+    @supports not (scrollbar-color: auto) {
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: var(--radius-pill);
+        }
+    }
+
+    /* ── Focus ring — auto-activates on :focus-visible ── */
+    .focus-ring:focus-visible {
+        outline: none;
+        border-radius: var(--radius-pill);
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
+       Composes the canonical `--border-hairline` token (tokens.css §
+       Glass-decorative). Adopt at any surface that wants the canonical
+       2-stop hairline (dock surfaces, instrument-chassis). Auto-mirrors
+       in dark via the .dark token override. */
+    .hairline-accent {
+        box-shadow: var(--border-hairline);
+    }
+
+    /* ── Interactive item (hover bg + focus ring + active scale) ── */
+    .interactive-item {
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        border-radius: var(--radius-lg);
+        user-select: none;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--ease-standard);
+    }
+    .interactive-item:hover {
+        background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    }
+    .interactive-item:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+    .interactive-item:active {
+        /* AW.W31.a — fold the residual literal press scale onto the canonical
+           `--scale-press*` cohort (the prior `0.98` was the sole per-atom press
+           literal surviving the W2/W3/W25 sweeps). `--scale-press-sm` (0.97) is
+           the soft press rung the button + slider recipes consume — ONE press
+           vocabulary, no per-atom literal. The 0.98→0.97 delta is sub-perceptual. */
+        scale: var(--scale-press-sm);
+    }
+    .interactive-item:disabled,
+    .interactive-item[data-disabled] {
+        pointer-events: none;
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+    }
+
+    /* ── Tap-squish — universal press-state choreography ──
+       AL-W10 SLIM (X6 §M-1 + Y7 §3 + DESIGN.md §L3). I compose this
+       class onto every interactive surface that wants the iOS tap-
+       squish idiom; the press scales to `--scale-press` (0.96, the
+       canonical iOS `.regular` control rung). I keep this as a single
+       canonical rung — NOT a 3-rung ladder. The one outlier I leave
+       alone is the button `0.97` (`--scale-press-btn`), which consumes
+       its own slightly-softer token directly. The dock control now
+       tracks the canonical `--scale-press` (0.96) too (AT.W7-dock-b
+       press canon — the prior deeper `0.92` was retired to ONE source).
+
+       AX.W52 §6 doctrine — the `scale` register is reconciled onto
+       `--spring-smooth` (was `--spring-snappy`), the ONE button/interactive
+       scale register the §6 easing doctrine records and the gate asserts
+       across `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. At
+       ζ=0.86 `--spring-smooth` settles a press crisply with a sub-perceptual
+       (~0.5%) peak — no visible bounce — so press still reads alive while
+       hover reads as a smooth glide on the SAME spring.
+
+       The transition lists the SURFACE legs (bg/border/box-shadow/color/
+       opacity) on the bezier `--ease-standard` alongside the spring `scale`
+       leg — the SAME coherent set `.btn-pill` carries. This is load-bearing:
+       `.tap-squish` and `.btn-pill` are co-composed on the button base and
+       this `transition` shorthand would otherwise CLOBBER `.btn-pill`'s
+       surface legs down to a scale-only animation (the cascade bug that left
+       every button transitioning ONLY `scale` — the live-readback RED). With
+       both classes carrying the full set, whichever wins the surface cross-
+       fade survives. On a non-button press surface the extra legs are inert
+       unless that prop changes, in which case a smooth cross-fade is the
+       desired interactive read anyway.
+
+       Under PRM I retire the press transform entirely and lean on the
+       consumer's own hover/active bg-tint cascade to acknowledge the
+       press. */
+    .tap-squish {
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--spring-smooth);
+        transform-origin: center center;
+    }
+    .tap-squish:active {
+        scale: var(--scale-press);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .tap-squish:active {
+            /* Reset to the longhand identity (not `transform: none`) so the
+               press scale is neutralized under PRM. */
+            scale: 1;
+        }
+    }
+
+    /* ── Status dot indicator ── */
+    .status-dot {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: var(--radius-pill);
+        flex-shrink: 0;
+        transition:
+            color var(--duration-fast) var(--ease-standard),
+            background var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+    /* ── Depth text (layered offset stamp) ──
+       AW.W26 — composes the `--text-shadow-depth` @theme identity token (the
+       hard offset stack + soft ambient tail) instead of a hand-rolled multi-stop
+       literal. The token holds the stack inside the `@theme` defs (gate 4) and
+       re-tints under `.dark` via `--shadow`/`--shadow-color` BY CONSTRUCTION. */
+    .depth-text {
+        --depth-color-primary: var(--primary);
+
+        color: var(--depth-color-primary);
+        text-shadow: var(--text-shadow-depth);
+    }
+
+    /* ── 3D preserve ── */
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    /* ── iOS input font-size fix (prevent auto-zoom) ── */
+    .ios input,
+    .ios select,
+    .ios textarea,
+    .ios [contenteditable] {
+        font-size: max(1rem, 1em);
+    }
+
+    /* ── Scroll fade masks ──
+       Single-source `mask-image` (AV.W16 TW7): the `-webkit-` companion is
+       dropped — Tailwind v4's Lightning CSS build pipeline auto-prefixes per
+       the browserslist targets, mirroring the glass ladder's single-source
+       `backdrop-filter` (glass.css). NOTE: this is the consistency cut; it
+       does NOT conflict with W15's `@supports`-gated older-Safari mask
+       fallback (that fallback is the distinct case where the companion is
+       genuinely needed and W15 gates it). */
+    .scroll-fade-mask {
+        mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
+    }
+
+    .scroll-fade-top {
+        mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width));
+    }
+
+    .scroll-fade-bottom {
+        mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-width)), transparent);
+    }
+
+    .scroll-fade-y {
+        mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
+    }
+
+    /* ── Deferred section — render-skip an offscreen subtree (AQ.W3 §5) ──────
+       `content-visibility: auto` skips layout/paint/style of an offscreen
+       subtree — the INP-under-load lever (fourier γ, muster, speedtest, words).
+       `contain-intrinsic-size: auto <estimate>` is measurement-safe: the `auto`
+       prefix makes the engine REMEMBER the last-rendered size (no scroll-jump on
+       re-entry); plain `<estimate>` freezes the section + thrashes the scrollbar
+       — the trap this closes. Estimate is token-driven (`--deferred-section-
+       size`, default 30rem). `.deferred-section--cached` →
+       `content-visibility: hidden` (always skipped, state CACHED — cheaper to
+       re-show than `display:none`). Baseline Widely; unsupporting engines render
+       normally. JS HOOK: the engine fires `contentvisibilityautostatechange`
+       { skipped } at the render-skip boundary — pair with `useRAFLoop`
+       pause/resume: `el.addEventListener('contentvisibilityautostatechange',
+       e => e.skipped ? loop.pause() : loop.resume())`. */
+    .deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
+    }
+    .deferred-section--cached {
+        content-visibility: hidden;
+        contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
+    }
+
+    /* ── Card scroll-timeline host (AI.W1-α) ───────────────────────────────
+       Canonical scroll-overflow host that emits the `--card-scroll` named
+       scroll-timeline consumed by `<CardHeader shrink>`. Apply to the
+       scroll-overflow ancestor (typically the `<Card>` itself OR a wrapper
+       inside it that carries `overflow-y: auto`).
+
+       `contain: layout style paint` isolates the named timeline so child
+       animations respond to THIS host's scroll only — not to portal-
+       triggered layout shifts in ancestor containers (the load-bearing
+       isolation guarantee the value.js `PaneHeader.vue:18-29` comment
+       called out and the AI.W1 spec §1.2 ratified as canon).
+
+       Disambiguated from `.scroll-fade-*` (mask-image fade gradient at
+       the container's leading/trailing edge) — `.card-scroll-host` does
+       NOT paint any visual; it only emits the timeline. */
+    .card-scroll-host {
+        contain: layout style paint;
+        scroll-timeline: --card-scroll block;
+    }
+
+    /* ── Shimmer text effects ──
+       The text-fill + background-clip composition is load-bearing visual
+       (the gold gradient itself); only the `animation:` line is wrapped in
+       the PRM no-preference bracket so PRM users see the static gradient
+       without the slide animation. */
+    .gold-shimmer {
+        background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
+        background-size: 250% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .gold-shimmer {
+            animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
+        }
+    }
+
+    /* ── Keyboard key ── */
+    .kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 1.5rem;
+        min-width: 1.5rem;
+        padding: 0 0.375rem;
+        font-family: var(--font-mono);
+        font-size: var(--type-micro);
+        background: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        box-shadow: 0 1px 0 1px color-mix(in srgb, var(--border) 30%, transparent);
+        line-height: 1;
+    }
+
+}

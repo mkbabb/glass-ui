@@ -9,7 +9,7 @@ export const badgeVariants = cva(
   // AX.W51 D18 — the un-sized GLYPH reads `--ui-glyph-sm` (the scaled `size-3.5`
   // register — a badge is a smaller control, so the quieter glyph rung), grown on
   // the ONE comfort axis with the size-rung fonts below.
-  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-[var(--ui-glyph-sm)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-(--ui-glyph-sm) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {

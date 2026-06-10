@@ -71,6 +71,18 @@ variants, `cn()` for class composition); token-first styling (every visual behav
 a CSS custom property); a new structural invariant is codified as a proof script, not
 left to review.
 
+**Design idioms — the localized home.** Where each Tailwind-v4 idiom lives
+(`@theme` aliases → `theme.css`; `@utility` recipes → their cohesion-domain file;
+the cohesion-aware `@import`-partial carve rule; the `var-in-arbitrary` syntax)
+is enumerated in `docs/precepts/design-idioms.md`. A new `@theme` alias,
+`@utility`, or scoped component style is placed per that doc, not ad hoc.
+
+**Feature-dir colocation.** A complex component (a god-module candidate) is
+structured into a sub-component dir — components at the package root, composables
+under `composables/`, constants in `constants.ts`, shaders in `shaders/`,
+skeletons in `skeleton/` (each "if needed"), and a `README.md`. Enforced by
+`proof:colocation`; the convention's CSS half is `design-idioms.md` §7.
+
 ## PR flow
 
 1. Branch off `master`.

@@ -3,13 +3,11 @@ export { default as Constellation } from "./Constellation.vue";
 export {
     seedField,
     stepField,
-    stepWell,
     refitField,
-    readPalette,
-    drawEdges,
-    drawNodes,
-    drawPointerWeb,
-    drawRipples,
+    BASE_WIDTH,
+} from "./constellationField";
+export {
+    stepWell,
     nearestNode,
     readInteractionConfig,
     warpStep,
@@ -17,14 +15,20 @@ export {
     setWarpTarget,
     warpSettled,
     pickWanderTarget,
-    BASE_WIDTH,
-    DEFAULT_PALETTE,
     DEFAULT_WELL_CONFIG,
     DEFAULT_WANDER_IDLE,
     DEFAULT_WANDER_JITTER,
     WARP_RESPONSE,
     WARP_ZETA,
-} from "./constellationField";
+} from "./constellationInteraction";
+export {
+    readPalette,
+    drawEdges,
+    drawNodes,
+    drawPointerWeb,
+    drawRipples,
+    DEFAULT_PALETTE,
+} from "./constellationDraw";
 export type {
     ConstellationNode,
     ConstellationRipple,

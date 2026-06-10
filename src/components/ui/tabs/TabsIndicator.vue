@@ -16,7 +16,7 @@ const delegatedProps = computed(() => {
         data-slot="tabs-indicator"
         v-bind="delegatedProps"
         :class="cn(
-            'pointer-events-none absolute left-0 bottom-1 top-1 z-0 w-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position) rounded-pill bg-[var(--glass-bg-quiet)] [backdrop-filter:var(--glass-blur-quiet)] transition-[width,translate] duration-normal ease-spring-snappy',
+            'pointer-events-none absolute left-0 bottom-1 top-1 z-0 w-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position) rounded-pill bg-(--glass-bg-quiet) [backdrop-filter:var(--glass-blur-quiet)] transition-[width,translate] duration-normal ease-spring-snappy',
             props.class,
         )"
     />

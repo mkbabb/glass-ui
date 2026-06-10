@@ -154,7 +154,8 @@ describe("GlassUnderline — color prop (DEC-4 — wins both grounds, no .dark b
         expect(seams.length).toBe(1);
         // And the component accepts + mounts a color prop without error.
         const w = mount(GlassUnderline, { props: { clock: "static", color: "var(--ncsu-red)" } });
-        expect(w.get("span.glass-underline").exists()).toBe(true);
+        // `get()` throws on absence (its return type strips `.exists()`); `find()` carries it.
+        expect(w.find("span.glass-underline").exists()).toBe(true);
     });
 
     it("the package source carries NO `:where(.dark)` / `.dark` stroke block (DEC-4 witness)", () => {

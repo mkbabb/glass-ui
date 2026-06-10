@@ -1,0 +1,140 @@
+/* utilities/a11y-overrides.css
+   The accessibility + capability tail — @media (prefers-reduced-motion: reduce) (+ the .no-transition class), @media (forced-colors: active) focus/silhouette, @media (pointer: coarse) touch-target floor, and the @utility touch-hit-area. LAST in cascade.
+   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+/* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
+@media (prefers-reduced-motion: reduce) {
+    *:not([data-allow-motion]) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+    /* Keep opacity transitions (safe, non-spatial) but shorten */
+    *:not([data-allow-motion]) {
+        transition-duration: 0.1s !important;
+        transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    }
+}
+
+/* ── No-transition class (for theme switches, etc.) ── */
+html.no-transition,
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+    transition-duration: 0s !important;
+}
+
+/* ── Forced-colors focus + silhouette rung (AQ.W2 §5 · generalized AX.W36) ────
+   Windows High Contrast / forced-colors mode STRIPS `box-shadow` — so the
+   glass focus rings (box-shadow + `outline: none`) vanish, leaving keyboard
+   users with no visible focus. Restore a real `outline` keyed to the system
+   `Highlight` color (outline survives forced-colors; box-shadow does not). The
+   box-shadow ring stays the primary in normal mode (it carries the glass
+   aesthetic) — these two are mutually exclusive by media query, NOT a parallel
+   path.
+
+   AX.W36 — the focus-survival selector set is GENERALIZED to the broader
+   interactive surface: the dock CONTROLS (`.dock-icon-button` / `.dock-tab-button`
+   / `.dock-select-trigger` / `.dock-dropdown-trigger`) + the pill button base
+   (`.btn-pill`) all carry a box-shadow focus ring (dock.css / utilities.css) that
+   vanishes under WHC just like the original five. This is the SAME `Highlight`
+   outline rung extended to cover them — ONE block, ONE path (the glass-language
+   structure-survival skin for the tier panes / StatusDot / floating surfaces lives
+   co-located with the ladder it skins, in glass.css).
+
+   `forced-color-adjust: none` is deliberately NOT used — glass-ui's glassmorphic
+   chrome is decorative and yields to the user's forced palette (css forced-colors
+   guidance). Baseline Widely Available; this IS the fallback mechanism (it only
+   activates under forced-colors), so no nested guard. */
+@media (forced-colors: active) {
+    .focus-ring:focus-visible,
+    .glass-btn:focus-visible,
+    .interactive-item:focus-visible,
+    .btn-pill:focus-visible,
+    .dock-icon-button:focus-visible,
+    .dock-tab-button:focus-visible,
+    .dock-select-trigger:focus-visible,
+    .dock-dropdown-trigger:focus-visible,
+    .input-pill:focus,
+    .input-pill:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+    }
+
+    /* Structural edges borne ONLY by box-shadow (the hairline catch-light + the
+       dock SHELL pill edge) also vanish — restore a real border so the silhouette
+       survives. CanvasText is the system text/border color. The `.glass-dock`
+       shell is OUT of the glass-material group BY DESIGN (it hand-rolls a parallel
+       surface — see glass.css), so it keeps its WHC edge HERE; the five-rung ladder
+       + `.glass-card` get their WHC border from the co-located glass-language skin
+       in glass.css (one source per surface family, no double-declaration). */
+    .hairline-accent,
+    .glass-dock {
+        border: 1px solid CanvasText;
+    }
+}
+
+/* ── Coarse-pointer touch-target floor (AQ.W3 §7) ───────────────────────────
+   General-surface companion to the dock-scoped R0G-6 floor (dock.css). On
+   coarse pointers the small icon-button/trigger surfaces OUTSIDE the dock lift
+   to the WCAG 2.5.5 (44px) minimum — ONE amendment retiring the per-consumer
+   `min-h-[44px]` one-liners. Token-driven (`--touch-target`); fine-pointer
+   byte-identical. Targets `Button size="icon"` (via the `data-size="icon"`
+   attr Button.vue reflects), ExpandableContainer + SegmentedTabs (responsive
+   mobile Select) triggers.
+   `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
+@media (pointer: coarse) {
+    [data-size="icon"],
+    .expandable-container__trigger,
+    .segmented-tabs__trigger {
+        min-block-size: var(--touch-target, 2.75rem);
+        min-inline-size: var(--touch-target, 2.75rem);
+    }
+}
+
+/* ── @utility touch-hit-area (AY.W-SCALE2) ──────────────────────────────────
+   The hit-target is DECOUPLED from the visual size: a 16px Checkbox stays
+   16px visually, but on a COARSE pointer it acquires a ≥44px pointer-receptive
+   hit-rect via a centred `::before` overlay (WCAG 2.5.5). The six sub-44 form
+   atoms (Switch / Checkbox / RadioGroupItem / Slider-thumb / TagsInput-delete /
+   MultiSelect-remove-X) compose this ONE shared utility — DRY, one source, ≥2
+   consumers — instead of per-atom `min-h-[44px]` balloons.
+
+   DIVERGENCE-WITH-RATIONALE from the timeline precedent (ContinuousMarkers.vue
+   `.continuous-dot::before`, SegmentedTimeline `.boundary-dot::before`): the
+   timeline uses a FIXED symmetric `inset: calc((--touch-target - dot-size)/-2)`
+   — exact ONLY because its dot is a KNOWN fixed square. Our atoms are NOT square
+   and NOT a known size (a 24×44 Switch, a 16px Checkbox, a ~7px-wide Slider cap),
+   so a single symmetric inset would under/over-shoot one axis. This utility uses
+   the size-AGNOSTIC centred-min-size form: `min-width/min-height: var(--touch-
+   target)` + `top/left:50%` + `translate:-50% -50%` floors BOTH dimensions at
+   44px for ANY visual size, the generalization the timeline's known-square inset
+   cannot do.
+
+   COARSE-ONLY (the fine-pointer-byte-identical invariant, STRICTER than the
+   timeline whose `::before` exists at fine pointer too): the DEFAULT (fine)
+   path declares NO overlay box — `::before` has no `content`, so its min-width/
+   height resolve to `auto`/0 and the composited rect equals the bare visual box
+   (the AX.W51 fine-pointer-identical invariant). Only the nested `@media
+   (pointer: coarse)` block mints the `content:""` + the 44px overlay.
+
+   NO new floor token (D4): the overlay reads `var(--touch-target)`. */
+@utility touch-hit-area {
+    position: relative;
+
+    @media (pointer: coarse) {
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            min-width: var(--touch-target, 2.75rem);
+            min-height: var(--touch-target, 2.75rem);
+            /* Inherit the host's pointer-events so a tap within the halo
+               registers on the atom; the overlay itself is decorative (no
+               paint), so it never occludes the host's own interaction. */
+            pointer-events: auto;
+        }
+    }
+}

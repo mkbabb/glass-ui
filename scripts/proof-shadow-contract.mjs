@@ -40,6 +40,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -221,12 +222,14 @@ export function detectSource(sources) {
 }
 
 function run() {
-    const { ROOT, TOKENS_CSS, THEME_CSS, UTILITIES_CSS, CARDS_CSS, ARTIFACT } =
-        cliPaths();
+    const { ROOT, THEME_CSS, CARDS_CSS, ARTIFACT } = cliPaths();
+    // AY.W-CSS1 — tokens.css/utilities.css became thin @import roots over carved
+    // partials; readMonolith concatenates root + partials in cascade order so the
+    // cartoon-shadow chain scan resolves post-carve (read-dock-css.mjs precedent).
     const { facts, violations } = detectSource({
-        tokensCss: readFileSync(TOKENS_CSS, "utf8"),
+        tokensCss: readMonolith(ROOT, "tokens"),
         themeCss: readFileSync(THEME_CSS, "utf8"),
-        utilitiesCss: readFileSync(UTILITIES_CSS, "utf8"),
+        utilitiesCss: readMonolith(ROOT, "utilities"),
         cardsCss: readFileSync(CARDS_CSS, "utf8"),
     });
     const status = violations.length === 0 ? "pass" : "fail";

@@ -63,6 +63,10 @@ function cliPaths() {
         BRIDGE: resolve(A, "composables/uniformBridge.ts"),
         FRAG: resolve(A, "constants/shaders/aurora.frag.ts"),
         MEDIUMS: resolve(A, "constants/shaders/mediums.glsl.ts"),
+        // The dedicated van-Gogh dab body (mediumVangogh + vangoghDab) is carved
+        // into a co-located sibling that mediums.glsl.ts splices into POST_BRUSH;
+        // read it alongside MEDIUMS so the dab-body assertions follow the chunk.
+        VANGOGH: resolve(A, "constants/shaders/vangogh-medium.glsl.ts"),
         BRUSH: resolve(A, "constants/shaders/brush.glsl.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_AURORA_VANGOGH_PRESET_ARTIFACT", "AX-aurora-vangogh-preset"),
     };
@@ -92,7 +96,7 @@ function vangoghDabSource(src) {
 }
 
 function run() {
-    const { ROOT, PRESETS, BRIDGE, FRAG, MEDIUMS, BRUSH, ARTIFACT } = cliPaths();
+    const { ROOT, PRESETS, BRIDGE, FRAG, MEDIUMS, VANGOGH, BRUSH, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
@@ -100,7 +104,11 @@ function run() {
     const presets = read(PRESETS);
     const bridge = read(BRIDGE);
     const frag = read(FRAG);
-    const mediums = read(MEDIUMS);
+    // The mediums GLSL source the dab-body assertions scan = the mediums root +
+    // the carved van-Gogh sibling (mediumVangogh + vangoghDab live there now).
+    const mediumsRoot = read(MEDIUMS);
+    const vangogh = read(VANGOGH);
+    const mediums = mediumsRoot != null ? mediumsRoot + "\n" + (vangogh ?? "") : null;
     const brush = read(BRUSH);
     if (!presets || !bridge || !frag || !mediums || !brush) {
         violations.push("a required aurora source is absent");

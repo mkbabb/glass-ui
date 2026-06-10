@@ -35,6 +35,13 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const COMMAND = "npm run proof:consumer-staleness";
 const SPEC_PREFIX = "@mkbabb/glass-ui";
+// AY.W-CONSUMER: the {receiver, close-gate} ledger. A DEFERRED row with a NON-EMPTY
+// {receiver-wave, close-gate} terminal downgrades a matching stale-import violation
+// from RED to an ALLOWED-WITH-TERMINAL notice (the deferral path — the clean break
+// is the canon, so glass-ui does NOT re-introduce the deleted symbol; the ledger is
+// the seam recording who discharges each stale import and when). An UN-ledgered
+// violation, or a DEFERRED row with an empty terminal, stays RED (bite preserved).
+const LEDGER = join(ROOT, "docs/tranches/AY/audit/W-CONSUMER-ledger.md");
 const SRC_EXT = /\.(vue|ts|tsx|js|mjs|jsx)$/;
 const SKIP_DIRS = new Set(["node_modules", "dist", ".git", ".cache", ".nuxt", "coverage"]);
 
@@ -62,6 +69,37 @@ for (const [key, val] of Object.entries(exportsMap)) {
 function specifierValid(spec) {
     if (validSpecifiers.has(spec)) return true;
     return wildcardPrefixes.some((p) => spec.startsWith(p));
+}
+
+// ── The {receiver, close-gate} ledger (AY.W-CONSUMER) ─────────────────────────
+// Parse the DEFERRED rows from the W-CONSUMER ledger between the MACHINE markers.
+// Each row: repo | file | symbol | subpath | disposition | receiver-wave | close-gate | landed-SHA.
+// A DEFERRED row with BOTH a non-empty receiver-wave AND close-gate becomes an
+// allowed terminal keyed `${repo}|${file}|${symbol}`. Returns {allowed:Set, malformed:[]}
+// where `malformed` are DEFERRED rows with an empty terminal (the gate refuses them).
+function loadLedgerTerminals() {
+    const allowed = new Set();
+    const malformed = [];
+    if (!existsSync(LEDGER)) return { allowed, malformed };
+    const md = readFileSync(LEDGER, "utf8");
+    const begin = md.indexOf("W-CONSUMER-LEDGER-MACHINE-BEGIN");
+    const end = md.indexOf("W-CONSUMER-LEDGER-MACHINE-END");
+    if (begin === -1 || end === -1) return { allowed, malformed };
+    const block = md.slice(begin, end);
+    for (const ln of block.split("\n")) {
+        if (!ln.trimStart().startsWith("|")) continue;
+        const cells = ln
+            .split("|")
+            .map((c) => c.trim())
+            .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+        if (cells.length < 7) continue;
+        const [repo, file, symbol, , disposition, receiverWave, closeGate] = cells;
+        if (disposition !== "DEFERRED") continue; // header/separator/MIGRATED rows ignored
+        const key = `${repo}|${file}|${symbol}`;
+        if (receiverWave && closeGate) allowed.add(key);
+        else malformed.push({ repo, file, symbol, receiverWave, closeGate });
+    }
+    return { allowed, malformed };
 }
 
 // The dist d.ts is a thin barrel that re-exports via `export * from "./…"`, so
@@ -225,9 +263,21 @@ for (const consumer of CONSUMERS) {
     }
 }
 
-// ── Report ────────────────────────────────────────────────────────────────────
+// ── Ledger-allowlist partition (AY.W-CONSUMER) ────────────────────────────────
+// A stale-import violation whose {repo, file (rel form), symbol} matches a DEFERRED
+// ledger row with a non-empty terminal is downgraded RED → allowed-with-terminal.
 const rel = (p) => p.replace(ROOT + "/", "").replace(/.*\/Programming\//, "../");
-console.log("proof:consumer-staleness — the reverse cross-repo staleness gate (AX.W62)");
+const { allowed: ledgerAllowed, malformed: ledgerMalformed } = loadLedgerTerminals();
+const hardViolations = [];
+const allowedWithTerminal = [];
+for (const v of violations) {
+    const key = `${v.repo}|${rel(v.file)}|${v.name ?? ""}`;
+    if (v.kind === "deleted-symbol" && ledgerAllowed.has(key)) allowedWithTerminal.push(v);
+    else hardViolations.push(v);
+}
+
+// ── Report ────────────────────────────────────────────────────────────────────
+console.log("proof:consumer-staleness — the reverse cross-repo staleness gate (AX.W62 / AY.W-CONSUMER)");
 console.log(`  consumers checked     : ${checkedRepos.join(", ") || "(none present)"}`);
 if (skippedRepos.length)
     console.log(`  siblings skipped      : ${skippedRepos.join(", ")} (registry-default; CI-expected)`);
@@ -236,21 +286,38 @@ if (distMissing)
     console.log(
         "  NOTE: dist d.ts absent — the (B) deleted-symbol arm soft-skipped; run `npm run build` for the full bite (the (A) retired-subpath arm ran).",
     );
-console.log(`  violations            : ${violations.length}`);
+console.log(`  raw stale imports     : ${violations.length}`);
+console.log(`  allowed-with-terminal : ${allowedWithTerminal.length} (DEFERRED ledger rows, W-CONSUMER)`);
+console.log(`  malformed ledger rows : ${ledgerMalformed.length}`);
+console.log(`  violations            : ${hardViolations.length}`);
 
-for (const v of violations) {
+for (const v of allowedWithTerminal) {
+    const where = `${rel(v.file)}:${v.line}`;
+    console.log(`  ALLOWED-WITH-TERMINAL  ${where}  { ${v.name} } from "${v.spec}" — DEFERRED in W-CONSUMER-ledger.md (receiver-wave + close-gate recorded)`);
+}
+for (const m of ledgerMalformed)
+    console.error(`  LEDGER MALFORMED  ${m.repo} ${m.file} { ${m.symbol} } — DEFERRED with an empty {receiver-wave, close-gate} terminal (refused — name the exact consumer-tranche wave + close-gate).`);
+for (const v of hardViolations) {
     const where = `${rel(v.file)}:${v.line}`;
     if (v.kind === "retired-subpath")
         console.error(`  RETIRED SUBPATH  ${where}  imports "${v.spec}" (no such export entry)`);
     else
-        console.error(`  DELETED SYMBOL   ${where}  imports { ${v.name} } from "${v.spec}" (not on the current surface)`);
+        console.error(`  DELETED SYMBOL   ${where}  imports { ${v.name} } from "${v.spec}" (not on the current surface; UN-ledgered — migrate or add a DEFERRED row with a terminal)`);
 }
 
-const pass = violations.length === 0;
+const pass = hardViolations.length === 0 && ledgerMalformed.length === 0;
 const ARTIFACT = gateArtifactPath(
     "GATE_CONSUMER_STALENESS_OUT",
     "AX-consumer-staleness",
 );
+const relViol = (v) => ({
+    repo: v.repo,
+    file: rel(v.file),
+    line: v.line,
+    spec: v.spec,
+    kind: v.kind,
+    name: v.name ?? null,
+});
 writeGateArtifact(ARTIFACT, {
     generatedAt: snapshotStamp(),
     status: pass ? "pass" : "fail",
@@ -260,20 +327,26 @@ writeGateArtifact(ARTIFACT, {
     siblingsSkipped: skippedRepos,
     filesScanned: scannedFiles,
     distMissing,
-    violations: violations.map((v) => ({
-        repo: v.repo,
-        file: rel(v.file),
-        line: v.line,
-        spec: v.spec,
-        kind: v.kind,
-        name: v.name ?? null,
-    })),
+    rawStaleImports: violations.length,
+    allowedWithTerminal: allowedWithTerminal.map(relViol),
+    ledgerMalformed,
+    violations: hardViolations.map(relViol),
 });
 
 if (!pass) {
-    console.error(
-        `\n[proof:consumer-staleness] ${violations.length} stale glass-ui import(s) across the constellation — a consumer is armed to break on bump.`,
-    );
+    if (ledgerMalformed.length)
+        console.error(
+            `\n[proof:consumer-staleness] ${ledgerMalformed.length} DEFERRED ledger row(s) with an empty terminal — a deferral must name an exact consumer-tranche receiver-wave + close-gate, never empty.`,
+        );
+    if (hardViolations.length)
+        console.error(
+            `\n[proof:consumer-staleness] ${hardViolations.length} UN-ledgered stale glass-ui import(s) across the constellation — a consumer is armed to break on bump. Migrate to the current surface or add a DEFERRED row with a {receiver-wave, close-gate} terminal to W-CONSUMER-ledger.md.`,
+        );
     process.exit(1);
 }
-console.log(`\n[proof:consumer-staleness] every present-consumer glass-ui import resolves against the current surface.`);
+if (allowedWithTerminal.length)
+    console.log(
+        `\n[proof:consumer-staleness] every present-consumer glass-ui import either resolves against the current surface OR is a DEFERRED ledger row with a {receiver-wave, close-gate} terminal (${allowedWithTerminal.length} deferred).`,
+    );
+else
+    console.log(`\n[proof:consumer-staleness] every present-consumer glass-ui import resolves against the current surface.`);

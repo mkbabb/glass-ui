@@ -24,6 +24,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:ui-scale";
 
@@ -44,8 +47,8 @@ const stripJs = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/(^|[^:])\/\/[^\n]*/g, (_m, p) => p + " ");
 
-const tokens = stripCss(read("src/styles/tokens.css"));
-const glass = stripCss(read("src/styles/glass.css"));
+const tokens = stripCss(readMonolith(ROOT, "tokens"));
+const glass = stripCss(readMonolith(ROOT, "glass"));
 const typography = stripCss(read("src/styles/typography.css"));
 const dockOverflow = stripCss(read("src/styles/dock/overflow.css"));
 const dockDensity = stripCss(read("src/styles/dock/density.css"));
@@ -117,9 +120,13 @@ const alertCva = stripJs(read("src/components/ui/alert/index.ts"));
 // Button: no raw control-height literal in the size rungs (h-7/h-9/h-10/h-11 as a
 // standalone Tailwind class — the var-class `h-[var(--control-h-*)]` is the form).
 const rawHeightRe = /(?:^|['"\s])h-(?:7|8|9|10|11)(?=['"\s])/;
+// AY.W-CSS1 — accept BOTH the v4 shorthand h-(--control-h-md) and the arbitrary
+// h-[var(--control-h-md)] form (the shorthand is the post-conversion canonical).
+const controlHmd = (s) =>
+    s.includes("h-(--control-h-md)") || s.includes("h-[var(--control-h-md)]");
 add(
     "button-no-raw-height-literal",
-    !rawHeightRe.test(buttonCva) && buttonCva.includes("h-[var(--control-h-md)]"),
+    !rawHeightRe.test(buttonCva) && controlHmd(buttonCva),
     "button CVA size rungs read h-[var(--control-h-*)], no raw h-7/h-9/h-10/h-11 control-height literal",
 );
 add(
@@ -129,32 +136,32 @@ add(
 );
 add(
     "button-glyph-on-ui-glyph",
-    /size-\[var\(--ui-glyph\)\]/.test(buttonCva) &&
+    /size-(?:\[var\(--ui-glyph\)\]|\(--ui-glyph\))/.test(buttonCva) &&
         !/\[&_svg:not\(\[class\*=size-\]\)\]:size-4(?![\d\w])/.test(buttonCva),
     "button un-sized glyph reads size-[var(--ui-glyph)], no raw :size-4 default (host-sized escape intact)",
 );
 add(
     "toggle-no-raw-height-literal",
-    !rawHeightRe.test(toggleCva) && toggleCva.includes("h-[var(--control-h-md)]"),
+    !rawHeightRe.test(toggleCva) && controlHmd(toggleCva),
     "toggle CVA size rungs read h-[var(--control-h-*)], no raw h-N control-height literal",
 );
 add(
     "toggle-font-glyph-on-axis",
     /text-\[length:var\(--control-text\)\]/.test(toggleCva) &&
-        /size-\[var\(--ui-glyph\)\]/.test(toggleCva),
+        /size-(?:\[var\(--ui-glyph\)\]|\(--ui-glyph\))/.test(toggleCva),
     "toggle base font + glyph read --control-text / --ui-glyph",
 );
 add(
     "badge-font-glyph-on-axis",
     /text-\[length:var\(--control-text-sm\)\]/.test(badgeCva) &&
         /text-\[length:var\(--control-text\)\]/.test(badgeCva) &&
-        /size-\[var\(--ui-glyph-sm\)\]/.test(badgeCva),
+        /size-(?:\[var\(--ui-glyph-sm\)\]|\(--ui-glyph-sm\))/.test(badgeCva),
     "badge size-rung fonts read --control-text-sm/--control-text + glyph reads --ui-glyph-sm",
 );
 add(
     "alert-font-glyph-on-axis",
     /text-\[length:var\(--control-text\)\]/.test(alertCva) &&
-        /size-\[var\(--ui-glyph\)\]/.test(alertCva),
+        /size-(?:\[var\(--ui-glyph\)\]|\(--ui-glyph\))/.test(alertCva),
     "alert base font reads --control-text + glyph reads --ui-glyph",
 );
 

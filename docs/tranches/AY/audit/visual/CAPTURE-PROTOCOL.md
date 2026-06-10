@@ -16,6 +16,19 @@ closes on a finished surface MUST leave a captured DELTA here, machine-enforced 
   `W<NN>-<route>-<viewport>-<scheme>.png` — both a `…-light.png` AND a `…-dark.png`
 - for motion waves: ≥5 rAF-sampled timing frames (the live animation gate output)
 - for contrast/legibility waves: the measured WCAG ratio
+- **the FRESHNESS headers (AY.W-LIVE1) — REQUIRED going forward:**
+  - `<!-- capture-commit: <SHA> -->` — the commit the capture was taken against (written at capture time).
+  - `<!-- surface-paths: <glob,glob> -->` — the source files that PAINT the captured surface
+    (e.g. `src/styles/dock, src/components/custom/dock`).
+  These are a STRUCTURED, machine-read contract, not free prose. `proof:live-verified-ledger`'s freshness
+  clause runs `git log -1 --format=%H -- <surface-paths>` and asserts the surface's last-touch commit is an
+  ANCESTOR of the capture-commit (the surface did NOT change after the capture). Under `--strict-freshness`
+  (the `:ax` backlog tracker + the close-verification arm) a DELTA missing these headers, or carrying a
+  capture-commit that PRE-DATES a surface change, REDs (`DELTA stale: …` / `lacks the freshness headers`).
+  A header-LESS own-surface DELTA is GRACED on the bare active arm during the backfill window (a non-fatal
+  NOTE) so the active commit/CI gate is not a freshness lockout — the owed re-captures are the AY.W-DELTA0 /
+  owed-DELTA sweep's job; but a DELTA that DECLARES headers is always held to the ancestry check (a
+  declared-then-stale header is never grandfathered).
 - the verdict (PASS / a tuned-magnitude correction)
 
 ## What the gate enforces (`proof:live-verified-ledger --tranche=AY`)

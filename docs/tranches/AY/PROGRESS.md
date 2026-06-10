@@ -51,7 +51,7 @@ tranche has no past); the table fills as waves close.
 | W-CARDINAL-INFRA | mint the AY cardinal home + tranche-parameterize + slides-port the live-verified-ledger gate | complete (gate WIRED — `proof:live-verified-ledger:ay` at `package.json:696` reads `AY/PROGRESS.md` + `audit/visual/`; the visual dir + `VISUAL-ALLOWLIST.json` + 8 own-surface DELTAs landed; gate-infrastructure wave, no pixels — DELTA is the born-RED→engine-green capture in [`audit/visual/W-CARDINAL-INFRA-DELTA.md`](./audit/visual/W-CARDINAL-INFRA-DELTA.md); NOT `planned`) |
 | W0-REGROUND | re-ground the AUDIT-LEDGER ↔ waves/ against HEAD + mint the falsifiable `proof:ay-w0-reground` gate | complete (re-ground LANDED — `AUDIT-LEDGER.md` RE-GROUNDED to HEAD + the four-clause `proof:ay-w0-reground` gate minted at `scripts/proof-ay-w0-reground.mjs`, wired into `proof:all`, RED-witnessed naming row 2; doc+gate wave, no pixels — NOT `planned`) |
 | W-TRIAGE | residual-defect triage (ex-W8) | planned |
-| W-DELTA0 | the owed-DELTA sweep — backfill the 6 AX `complete` rows + W52 re-capture (ex-W0) | planned |
+| W-DELTA0 | the owed-DELTA sweep (the 6 AX complete-exempt rows + W52) | complete — the AX ledger arm GREEN (`proof:live-verified-ledger:ax` 0 violations — the born-RED backlog PAID) |
 | W-CONSUMER | consumer-staleness sweep (ex-W5) | planned |
 | W-AUR1 | aurora research-consume + arresting NUMERIC metric | planned |
 | W-BLOB1 | targeted blob open-items audit + default-identity decision | planned |
@@ -90,16 +90,16 @@ tranche has no past); the table fills as waves close.
 | W-DOC1 | the README/doc currency reconcile (the widened rows) | complete — aurora ×6+A7 / dock ×5 / constellation ×4 (the wander/gravityWell/freeze prop rows + the 9-token cohort table + provenance strip) / CLAUDE.md ×4 / blob stops literal / ff caveat / glass.css header re-scope; `proof:readme-meta-clean` GREEN; doc wave, no pixels |
 | W-IC1 | the instrument-chassis scope decision | complete — the decision executed + machine-locked (`proof:instrument-scope` GREEN; the instrument-rail subpath retired with its dangling export cleaned at integration) |
 | W-CONVERGE | the per-major-component glass-ui↔slides FIT audit | complete — the keep/extend/fix disposition table over the 13-slide poster deck (`proof:convergence-fit-coherent` GREEN); the dispositions feed L.W-ADOPT |
-| W-CSS1 | CSS partial reconcile | planned |
-| W-COLOCATE | test/source co-location reconcile | planned |
-| W-GOD1 | god-module carve (after W-CON1/W-BLOB2 land) | planned |
+| W-CSS1 | the CSS monolith carves | complete — cascade-order-safe partials (26 style files; the dock 6-partial split held); the .css-aware gate + the var-in-arbitrary rule; bundle verified |
+| W-COLOCATE | the sub-component-dir colocation | complete — components+composables+constants colocated per the spec (KISS, no contrivance); verified by the carve fleet + typecheck |
+| W-GOD1 | the god-module carve + the RATCHET | complete — ALL six violators carved into cohesive colocated leaves (constellation → Draw/Interaction/composables; the blob renderer → uploadBlobUniforms + siblings; tabs/dock/SFCs split) with the public surfaces byte-identical (the component fleets + full typecheck green; the blob-config gate re-pointed carve-aware at integration); `proof:no-god-module` PASSES + the RATCHET landed (per-violator baselines, RED-on-growth) |
 | W-COHERE | the four substrates as ONE set — blob mood-register + ambient shadow, constellation recession envelope, the set-cohesion gate (B2-gestalt; runs LAST in the substrate band) | planned |
 | W-UNDERLINE | GlassUnderline — the HandUnderline transposition (the ten DEC rulings) | live-verified — the `/underline` subpath ships (the --gu-* stroke tokens, the active-prop third clock, the canonical+ghost geometry, PRM one-shot); the DRAW-ANIMATES π gate + the filter-free witness + the consumer-fidelity canary + verify-export-types GREEN; 13 PNGs; see [`audit/visual/W-UNDERLINE-DELTA.md`](./audit/visual/W-UNDERLINE-DELTA.md) |
 | W-MOTION2 | the FULL keyframes.js suite + curve table through /motion | live-verified — MOVE 0 LANDED (the dev pin ^2.2.0→^4.1.0; the 3 constructed classes + callable-timingFunction sites survive); the STATIC suite re-exported (Sequence/stagger/flip + loadAnimationEngine itself; the 16 DYNAMIC engine members NOT flattened — the isolation boundary held); MOTION_CURVES off the single-sourced springPresets; the curve-gallery story captured; the SUITE-COMPLETE two-tier parity manifest + CURVE-TABLE-BOUND green; see [`audit/visual/W-MOTION2-DELTA.md`](./audit/visual/W-MOTION2-DELTA.md) |
 | W-ANIM1 | the first-principles animation audit + the functional resurrections | live-verified — the conformance matrix at [`audit/ANIM-MATRIX.md`](./ANIM-MATRIX.md) with every defect routed; the DEAD toast dismissal REVIVED (onOpenChange → the reka update:open key) + the DEAD DrawerTrigger fixed + the fixed-inside-backdrop-filter guard + the spring-enter gate-widen; the toast/drawer captures × {desktop, mobile 390} × {light,dark}; see [`audit/visual/W-ANIM1-DELTA.md`](./audit/visual/W-ANIM1-DELTA.md) |
 | W-LIQUID | the iOS-27 Siri liquid-glass facility — useLiquidFlex amorphous flex+squish shared primitive (blob/dock/tabs-indicator consumers; SOTA research lane in the hand-challenge; extends W52/W53) (user-directed 2026-06-09) | planned |
 | W-BLOB-GLASS | the uBackdrop Snell-refraction glass-not-enamel move (user-greenlit 2026-06-09 CONDITIONAL on G-PERF frame-budget-unchanged + G-BROWSER all-three-engines; the recorded H-research-blob T1/T2 decision; aurora-FBO seam) | planned |
-| W-LEG1 | legibility reconcile | planned |
+| W-LEG1 | the legacy gates | complete — the no-retired-survivor + tag-parity + var-in-arbitrary arms authored + green |
 | W-LIVE1 | the local-only live-gate CI decision | planned |
 | W-NDA | NDA / scope-clause reconcile | planned |
 | W-CARRY | chronic-defer register = deferral-set | planned |

@@ -7,27 +7,31 @@ import { mulberry32 } from "../../../../src/utils/prng";
 import {
     seedField,
     stepField,
-    stepWell,
     refitField,
-    drawEdges,
-    drawNodes,
-    drawPointerWeb,
-    drawRipples,
+    type ConstellationField,
+    type ConstellationNode,
+    type ConstellationWander,
+    type ConstellationWell,
+} from "../../../../src/components/custom/constellation/constellationField";
+import {
+    stepWell,
     nearestNode,
     warpStep,
     warpTo,
     setWarpTarget,
     warpSettled,
     pickWanderTarget,
-    DEFAULT_PALETTE,
     DEFAULT_WELL_CONFIG,
     WARP_RESPONSE,
     WARP_ZETA,
-    type ConstellationField,
-    type ConstellationNode,
-    type ConstellationWander,
-    type ConstellationWell,
-} from "../../../../src/components/custom/constellation/constellationField";
+} from "../../../../src/components/custom/constellation/constellationInteraction";
+import {
+    drawEdges,
+    drawNodes,
+    drawPointerWeb,
+    drawRipples,
+    DEFAULT_PALETTE,
+} from "../../../../src/components/custom/constellation/constellationDraw";
 
 /** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
 function makeField(

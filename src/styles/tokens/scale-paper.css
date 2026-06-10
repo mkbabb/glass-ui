@@ -1,0 +1,361 @@
+/* tokens/scale-paper.css
+   §11 interactive scales & focus · §12 paper textures · §13 gold · §14 rainbow · §16 timeline · §17 metric · §19 table density · §20 platform motion.
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+:root {
+    /* ═══════════════════════════════════════════════
+       §11 INTERACTIVE SCALES & FOCUS
+       ═══════════════════════════════════════════════ */
+    --scale-hover: 1.08;
+    /* AX.W52 — the restrained BUTTON hover lift. `--scale-hover` (1.08) is an
+       8% jump — emphatic for a marquee CTA, jarring as the general hover. The
+       button family (the audacious CTAs + `btn-interactive`) lifts on the
+       smaller `--scale-hover-btn` routed through `--spring-smooth` (the
+       sub-perceptual settle, not the snappy bounce), so the hover reads as ONE
+       coherent glide with the surface-leg cross-fade rather than a mechanical
+       pop. The dock keeps its proportionally-larger `--scale-hover-dock` (small
+       icon, bigger lift reads smaller).
+       AX.W54 Q3 — lifted 1.035 → 1.05: the 1.035 overshot DOWN (W52 tamed the
+       1.08 snap so hard the lift read as nothing), so the glass hover now reads
+       as THREE legs together on hover — the specular gleam waking, a perceptible
+       scale, and the bg/border cross-fade — distinguishable from rest BEFORE the
+       click. Still sub-perceptual-bounce on `--spring-smooth`; the magnitude
+       moved, the easing register did not. */
+    --scale-hover-btn: 1.05;
+    --scale-hover-dock: 1.1;
+    --scale-press: 0.96;
+
+    /* Press-scale rungs. `--scale-press` (0.96) is the canonical iOS Liquid
+       Glass press value every primitive reaches for unless it has a documented
+       reason (DESIGN.md §L3); `--scale-press-btn` aliases the slightly-softer
+       `--scale-press-sm` (0.97) the button + slider recipes consume.
+
+       AT.W7-dock-b — press canon. `--scale-press-dock` previously hard-coded a
+       deeper 0.92 (a second magic press value with no documented rationale),
+       so a dock control pressed visibly harder than every other primitive. It
+       now references the canonical `--scale-press` (0.96) — ONE source for the
+       press scale across the system. A consumer wanting the dock's old deeper
+       press overrides `--scale-press-dock` on the dock instance. */
+    --scale-press-dock: var(--scale-press);
+    --scale-press-sm: 0.97;
+    --scale-press-btn: var(--scale-press-sm);
+
+    /* AX.W53 — the SegmentedTabs travel-squish cap. The active indicator
+       (segmented/pill slider OR the underline rule) STRETCHES along its travel
+       axis as it glides between tabs, then settles to fit — the Material 3
+       ELASTIC / Apple Liquid-Glass "controls insist on animating themselves"
+       register, kept RESTRAINED. The deform is volume-preserving (stretch X,
+       compress Y in lockstep: `scale: var(--stretch) calc(1 / var(--stretch))`)
+       so it reads as an elastic warp, never a size pump. The cap holds the peak
+       LOW (1.08 ≈ +8%) — iOS 26.2 dialed motion DOWN; a high-frequency control
+       wants a whisper of squish, not a bounce. A consumer dials the elasticity
+       (or to 1 for none) without touching source. */
+    --tab-indicator-max-stretch: 1.08;
+    --opacity-disabled: 0.5;
+    --opacity-icon-muted: 0.8;
+
+    --focus-ring-width: 2px;
+    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--ring) 30%, transparent),
+        0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
+    --focus-ring: var(--focus-ring-shadow);
+
+    /* ═══════════════════════════════════════════════
+       §12 PAPER TEXTURES
+       ═══════════════════════════════════════════════ */
+    /* Canonical subtle paper-texture opacity — restored from fourier-original
+       (`4df1a06:web/src/style.css:53-54`) after A.W3.5.ab confirmed the
+       heretofore `opacity='1'` URI rendered as an overt grain field in every
+       downstream consumer of `.paper-texture`. The SVG `opacity` attribute is
+       baked at parse-time and cannot read a CSS var, so the subtle value must
+       be inlined; if a consumer needs a heavier overlay, they should layer
+       a wrapper element with its own `opacity:`/`mix-blend-mode:` atop. */
+    --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+
+    /* ═══════════════════════════════════════════════
+       §13 GOLD (accent family kept for consumers using it)
+       ═══════════════════════════════════════════════ */
+    --gold: oklch(0.751 0.147 84.2);
+    --gold-light: oklch(0.890 0.183 96.1);
+    --gold-dark: oklch(0.599 0.132 64.2);
+    /* AY.W-PRIM-POLISH D1 — the saturated CTA plate the AW.W13 gold-CTA contract
+       names. A FIXED deep gold (mode-INVARIANT — the gold-CTA hover backplate must
+       be dark in BOTH modes so the white label clears ≥4.5:1; deepening toward the
+       mode-flipping `--foreground` brightened the dark plate to a cream-gold and
+       broke dark). ~`--gold-dark` deepened toward warm-ink → ~rgb(120,87,45),
+       6.5:1 white in light / 5.5:1 in dark. The opaque base of `btn-audacious-gold`
+       :hover. */
+    --gold-deep: oklch(0.487 0.103 63.0);
+
+    --color-gold: var(--gold);
+    --color-gold-light: var(--gold-light);
+    --color-gold-dark: var(--gold-dark);
+    --color-gold-deep: var(--gold-deep);
+
+    /* ═══════════════════════════════════════════════
+       §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
+       mirror; hue preserved from the prior hsl() cadence)
+       ═══════════════════════════════════════════════ */
+    --rainbow-red: oklch(0.636 0.210 25.5);
+    --rainbow-orange: oklch(0.737 0.163 58.9);
+    --rainbow-yellow: oklch(0.900 0.183 103.7);
+    --rainbow-green: oklch(0.772 0.233 144.8);
+    --rainbow-blue: oklch(0.633 0.162 252.1);
+    --rainbow-indigo: oklch(0.566 0.206 294.1);
+    --rainbow-violet: oklch(0.684 0.250 327.9);
+
+    --rainbow-pastel-red: oklch(0.793 0.066 18.7);
+    --rainbow-pastel-orange: oklch(0.823 0.059 57.3);
+    --rainbow-pastel-yellow: oklch(0.889 0.068 98.1);
+    --rainbow-pastel-green: oklch(0.826 0.072 149.5);
+    --rainbow-pastel-blue: oklch(0.783 0.056 264.2);
+    --rainbow-pastel-indigo: oklch(0.772 0.062 300.2);
+    --rainbow-pastel-violet: oklch(0.799 0.070 314.4);
+
+    /* ═══════════════════════════════════════════════
+       §16 TIMELINE
+       Timeline primitive tokens. All three variants (scrubber +
+       segmented + continuous) compose these. Both segmented + continuous
+       arrays carry the same `TimelineSegment[]` data shape; only the
+       rendering geometry differs. See DESIGN.md `## Timeline Primitive`.
+       ═══════════════════════════════════════════════ */
+
+    /* Heights — per-variant rail thickness */
+    --timeline-scrubber-height: 0.5rem;       /*  8px — single-track scrubber */
+    --timeline-segmented-height: 0.625rem;    /* 10px — N adjacent bands */
+    --timeline-continuous-height: 0.75rem;    /* 12px — ONE pill, N regions */
+
+    /* Geometry — shared across all variants */
+    --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter (pointer: fine) */
+    --timeline-dot-size-touch: 1.25rem;       /* 20px — boundary dot diameter (pointer: coarse) */
+    --timeline-touch-target: 44px;            /* AC.W6d F2.I-04 — WCAG 2.5.5 target-size floor.
+                                                 The `::before` halo around each dot extends to
+                                                 this dimension so finger-precision users meet
+                                                 the (target-size: 44×44 minimum) clause without
+                                                 the visible dot growing to that footprint at
+                                                 pointer: fine. */
+    --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
+
+    /* Boundary-dot glass knobs (Q.W4 Lane B — promoted from
+       ContinuousTimeline.vue SFC fallbacks; `3cb70db` minted these as a
+       private dialect). The continuous-variant dot is a GLASS primitive:
+       a translucent tinted fill over a backdrop blur with a hairline
+       ring. These knobs let consumers retune the resting glass + the
+       per-state tints without a `:deep()` reach.
+         fill            — resting translucent fill
+         blur            — backdrop blur tier behind the dot
+         ring            — hairline glass ring (border-color)
+         tint-current    — wash colour for the active-phase dot
+         tint-completed  — wash colour for the completed-phase dot
+         check-color     — completion-tick stroke (defaults to the
+                           completed tint) */
+    --timeline-dot-fill: var(--surface-tint-12);
+    --timeline-dot-blur: var(--glass-blur-quiet);
+    --timeline-dot-ring: var(--glass-border-floating);
+    --timeline-dot-tint-current: var(--accent, var(--foreground));
+    --timeline-dot-tint-completed: var(--success, var(--foreground));
+    --timeline-dot-check-color: var(--timeline-dot-tint-completed);
+
+    /* Continuous-variant specific — seam dividers between regions.
+       Set `--timeline-continuous-seam-opacity: 0` to suppress the
+       inter-region 1px dividers entirely. Default `0.25` reads as a
+       subtle hairline; the `--timeline-continuous-seam-color` knob lets
+       consumers override the seam tint independently of opacity. */
+    --timeline-continuous-seam-opacity: 0.25;
+    --timeline-continuous-seam-color: color-mix(
+        in srgb,
+        var(--foreground) calc(var(--timeline-continuous-seam-opacity) * 100%),
+        transparent
+    );
+
+    /* Per-segment default gradient fallback — applied when a segment
+       omits its `gradient` field. Consumers can override per-phase via
+       the `--timeline-segment-gradient-{key}` knobs below. */
+    --timeline-segment-default-gradient: linear-gradient(
+        90deg,
+        var(--surface-tint-15),
+        var(--surface-tint-25)
+    );
+
+    /* Per-phase gradient defaults — paint the canonical chart palette
+       at the gradient leading edge, fading to a 60%-opacity tail. The
+       speedtest consumer wires these via `gradient: "var(--timeline-segment-gradient-ping)"`
+       per segment; the same names work for any consumer who follows the
+       ping/download/upload/jitter taxonomy. */
+    --timeline-segment-gradient-ping: linear-gradient(
+        90deg,
+        var(--chart-ping),
+        color-mix(in srgb, var(--chart-ping) 60%, transparent)
+    );
+    --timeline-segment-gradient-download: linear-gradient(
+        90deg,
+        var(--chart-download),
+        color-mix(in srgb, var(--chart-download) 60%, transparent)
+    );
+    --timeline-segment-gradient-upload: linear-gradient(
+        90deg,
+        var(--chart-upload),
+        color-mix(in srgb, var(--chart-upload) 60%, transparent)
+    );
+    --timeline-segment-gradient-jitter: linear-gradient(
+        90deg,
+        var(--chart-jitter),
+        color-mix(in srgb, var(--chart-jitter) 60%, transparent)
+    );
+
+    /* ═══════════════════════════════════════════════
+       §17 METRIC
+
+       MetricRow / MetricStack value-clamp dialect. The declared values are the
+       `audacious` poster register — the hero-scale clamp for a single giant
+       number; MetricStack's `[data-register="result"]` selector overrides it
+       locally for the compact multi-row ledger. Three clamp arms each: `min`
+       (floor), `cqi` (the binding container-query middle term), `max`
+       (ceiling); unit carries min/max only (its cqi is a fixed 6cqi).
+       ═══════════════════════════════════════════════ */
+
+    /* Value register — audacious-poster hero clamp */
+    --metric-row-value-clamp-min: 4.5rem;
+    --metric-row-value-clamp-cqi: 34cqi;
+    --metric-row-value-clamp-max: var(--type-display-hero);
+
+    /* Unit register — one tier below the value it qualifies */
+    --metric-row-unit-clamp-min: 1.5rem;
+    --metric-row-unit-clamp-max: 3.25rem;
+
+    /* Label register — uppercase, the binding row-height term in the
+       compact `result` register */
+    --metric-row-label-clamp-min: 1.125rem;
+    --metric-row-label-clamp-cqi: 5cqi;
+    --metric-row-label-clamp-max: 2.75rem;
+
+    /* ═══════════════════════════════════════════════
+       §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM
+
+       The instrument-chassis family owns the under-meter / progress-cluster
+       grammar.
+
+       • `--meter-progress-inset` — the negative-margin inset that pulls the
+         under-meter bar INTO the unpainted ring lane around the dial canvas
+         (~4% of meter-size). Consumed at `.phase-progress` via
+         `margin-block-start: calc(-1 * var(--meter-progress-inset))`. The
+         `--meter-size` reference resolves against the consumer's own
+         declaration; the 200px fallback keeps the calc well-defined.
+       • `--progress-stack-gap` — vertical rhythm between any two stacked
+         progress rails inside one cluster.
+       ═══════════════════════════════════════════════ */
+    --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
+    --progress-stack-gap: clamp(0.1875rem, 0.4cqi, 0.375rem);
+
+    /* ═══════════════════════════════════════════════
+       §2.E CELEBRATION-TIER REGISTER
+
+       Shared peak for any "completion" / "thank-you" surface.
+
+       • `--celebration-row-rhythm` — gap between the cluster's rows (cqi-axis).
+       • `--text-celebration-headline-size` — the single designed peak both
+         celebration surfaces clamp toward (cqi-axis).
+       • `--complete-headline-size` — the per-consumer font-size hook a consumer
+         assigns the canon clamp to so its headline pegs at the shared peak;
+         the default falls back to a smaller hero-rung clamp.
+       ═══════════════════════════════════════════════ */
+    --celebration-row-rhythm: clamp(0.5rem, 1.6cqi, 1rem);
+    --text-celebration-headline-size: clamp(2.5rem, 12cqi, 9rem);
+    --complete-headline-size: clamp(2.25rem, 11cqi, 4rem);
+
+    /* ═══════════════════════════════════════════════
+       §19 TABLE DENSITY
+
+       A single unitless knob `--table-density` scales the cell padding +
+       header row height of the Table / DataTable primitive. Default `1`
+       resolves to 1rem cell padding + 3rem header height; 0.75 is a compact
+       admin table, 1.25 is comfortable/touch-friendly. The derived tokens are
+       read by the `table-cell` / `table-head` utilities; changing the knob
+       cascades instantly via CSS inheritance — no JS prop needed.
+       ═══════════════════════════════════════════════ */
+    --table-density: 1;
+    --table-cell-px: calc(1rem * var(--table-density));
+    --table-cell-py: calc(1rem * var(--table-density));
+    --table-head-h: calc(3rem * var(--table-density));
+    --table-head-px: calc(1rem * var(--table-density));
+
+    /* ═══════════════════════════════════════════════
+       §20 PLATFORM MOTION (AQ.W5)
+
+       The native-platform motion substrate axes. Three families, each read
+       by a `@supports`-gated CSS recipe in `scroll-driven.css`,
+       `animations.css` (§TOP-LAYER), and `view-transition.css` — every visual
+       knob a token so a consumer retunes without editing library source.
+
+       SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback
+       composable defaults (`useScrollProgress` / `useStaggerReveal`) so the
+       native CSS path and the fallback path read identically — no visual seam
+       at the `@supports` boundary.
+
+       TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit
+       grammar for native `<dialog>` / `[popover]` glass surfaces. Backdrop dim
+       uses the `hsl(var(--background) / α)` channel form — the legitimate
+       single-token alpha case (AQ.W2's color-mix migration is orthogonal).
+
+       VIEW-TRANSITION (view-transition.css). The shared `.gl-list-item` group
+       recipe + the `--vt-*` axes the `useViewTransition` substrate consumers
+       (dock layer swap, muster J's verdict re-rank) tune their swap against.
+       ═══════════════════════════════════════════════ */
+    --scroll-progress-scroller: root;
+    --scroll-reveal-rise: 6px;
+    --scroll-reveal-range-end: 60%;
+
+    --top-layer-enter-scale: 0.96;
+    --top-layer-backdrop-blur: 8px;
+    --top-layer-backdrop-dim: 0.5;
+
+    --vt-duration: var(--duration-normal);
+    /* AX.W05 — ONE iOS-spring vocabulary: every spring-flavored transition reads
+       a governed `--spring-*` register. The legacy apple-spring cubic-bezier
+       (+27.5% overshoot) was a SECOND authority beside the regen `--spring-*`
+       cohort; it is EXCISED. Its emphatic-overshoot register maps to the playful
+       `--spring-bouncy` (the closest `linear()` overshoot stop-set), so the VT
+       default + the cards/top-layer transitions share one spring primitive
+       (CPU + GPU sample the same curve). No cubic-bezier fallback seed survives —
+       the `linear()` spring degrades to `ease` where `linear()` is unsupported. */
+    --vt-ease: var(--spring-bouncy);
+    --vt-rise: 8px;
+
+    /* AT.W6-dock-c / AU.W8 — the dock layer-swap morph timing, minted ONCE so
+       both engine paths are timing-IDENTICAL: the FLIP fallback (via
+       `--dock-motion-resize`), the native View-Transition group (its
+       `animation-timing-function`), AND the runtime SpringProgress driver
+       (AU.W8.3) consume this same `(0.32, 0.7)` source curve. Retires the AQ.W6
+       fork where the VT path ran `--vt-ease` (apple-spring, +27.5% overshoot)
+       while the FLIP ran the snappy spring. `--vt-ease` still defaults the
+       other VT recipes (`.gl-list-item`).
+
+       AU.W8 — RETARGET snappy → dock. `--spring-snappy` (ζ=0.65, +6.8%) read as
+       mechanical: a stiff plateau at ~48% with too little overshoot to feel
+       alive ("not iOS-smooth"). AW.W2 then retuned the dock spring to the
+       iOS-control register: `--spring-dock` ((0.32, 0.7), ~+4.6%) settles snappy
+       with a restrained overshoot — the felt iOS dock morph, off the prior
+       playful +18.5% register. The runtime driver's DOCK_SPRING const MIRRORS the
+       (0.32, 0.7) PRESETS row, so the CSS token and the JS-driven morph are
+       bit-identical. */
+    --dock-resize-spring: var(--spring-dock);
+
+    /* AT.W7-dock-b — dock-control press micro-feedback spring. A TRANSFORM-ONLY
+       spring (`scale`/`rotate`) the dock controls apply to their hover/press
+       activation so the squish reads with a touch of spring-back rather than a
+       flat ease. STRICTLY transform-scoped: it must never touch the surface-tier
+       `[data-held]` fades (background/border/box-shadow), which stay on
+       `--duration-fast var(--ease-standard)`. The duration pairs with
+       `--duration-fast`; consumers retune the whole feel via this one token.
+
+       AY.W-DOCK2 (D6) — the register is `--spring-smooth`, the §6 easing-doctrine
+       transform-press register (tokens.css §2: transform hover/press/active →
+       `--spring-smooth`/`--spring-snappy`, NEVER `--spring-bouncy`; a press must
+       settle, never overshoot into a visible bounce). The prior `--spring-bouncy`
+       ROOT default was off-doctrine, shadowed for the four named controls by a
+       per-surface re-point in dock-controls.css — the exact per-surface fork the
+       doctrine kills. The re-point is now a DEAD byte-identical redeclaration and is
+       DELETED; the ROOT token IS the doctrine register, so any other consumer of
+       `--dock-press-spring` inherits the correct smooth register. */
+    --dock-press-spring: var(--duration-fast) var(--spring-smooth);
+}

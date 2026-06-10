@@ -1,0 +1,132 @@
+/* tokens/shadow.css
+   §7 shadows — the cartoon offset-stamp signature + the shadow-color base.
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+:root {
+    /* ═══════════════════════════════════════════════
+       §7  SHADOWS — cartoon offset is the signature
+       ═══════════════════════════════════════════════ */
+    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 10%, transparent);
+    --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-modal:
+        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
+        0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
+
+    --cartoon-shadow:       var(--shadow-cartoon);
+    --cartoon-shadow-hover: var(--shadow-cartoon-hover);
+    --soft-shadow:          var(--shadow-soft);
+    --elevated-shadow:      var(--shadow-elevated);
+    --modal-shadow:         var(--shadow-modal);
+
+    /* Elevation scale */
+    --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
+        0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-sm: 0 2px 8px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-md: 0 4px 16px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-lg: 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
+
+    /* Z.W2.T3a — uniform-cast shadow rung. Offset 0 / 0, no directional
+       Y bias. Use case: dock-hosted icons (e.g. the speedtest settings
+       gear) where the surrounding dock shadow's downward cast reads as
+       a per-icon right-edge halo on the rightmost child (A2 §B7). The
+       uniform variant carries the same color-mix recipe family as the
+       sized rungs (`--shadow-md`, `--shadow-lg`) so the perceived
+       elevation is a peer, not a sibling. Consumers compose via
+       `--shadow-dock-override: var(--shadow-uniform)` per-instance, or
+       attach to per-icon-button stacks where directional cast is wrong-
+       shape. Documented in DESIGN.md token table. */
+    --shadow-uniform: 0 0 12px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+
+    /* Card = soft drop plate by default. The cartoon offset is a brand-flavoured
+       decoration (a sticker look), not the canonical card shape. Consumers
+       wanting the cartoon look pass <Card surface="cartoon">, which composes the
+       `.cartoon-surface` utility (it reads --shadow-cartoon directly). R3-spec
+       §F.1, S.W4; Q.W3 Lane H. */
+    --shadow-card:       var(--shadow-md);
+    --card-shadow:       var(--shadow-card);
+
+    /* AI.W1-α — sticky CardHeader background. Parameterises the
+       `bg-card/60` literal value.js's PaneHeader.vue carried so the
+       glass-ui canon owns the recipe. The scroll-driven `<CardHeader
+       shrink>` choreography reads this token for its sticky-header
+       backdrop tint; consumers retune per-app by overriding the
+       variable at any ancestor. Auto-dark via `--card`. */
+    --card-header-bg:    color-mix(in srgb, var(--card) 60%, transparent);
+
+    /* Dock shadows — a single omnidirectional glow in the
+       `--shadow-md`/`--shadow-lg` family (a directional drop concentrated on
+       the pill's rounded right cap as a right-edge halo; the dock's own
+       border already defines the silhouette). Per-instance directional drop
+       reinstates via `--shadow-dock-override` (consumed by every `.glass-dock`
+       state selector — see dock.css). */
+    --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --dock-shadow:           var(--shadow-dock);
+    --dock-shadow-collapsed: var(--shadow-dock-collapsed);
+
+    /* AX.W04 F1 — the wrap/card-tier dock shadow. A wrapped multi-row dock (and
+       any finite-radius card silhouette) is a THICKER material than a flat thin
+       pill — WWDC25 §219 "material thickens as glass flexes larger". So when the
+       wrap dock expands it lifts its elevation onto the FLOATING-tier shadow
+       stack (the `--glass-shadow-floating` family — `--shadow-xl` + the
+       `--glass-material-rim` hairline + the `--glass-under-shadow-vivid` under-cast)
+       rather than carrying the flat `--shadow-dock` glow of a 40px pill. Composed
+       on `:root` as ONE consumer-overridable token (per the cartoon-shadow
+       override contract — override on the cascade, never a dead local). The dock
+       reads it via `calc()`-on-`--dock-expand-t` so the lift glides in lockstep
+       with the pill→card radius morph (ONE clock, ONE register). */
+    --glass-material-rim:    0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
+    --shadow-dock-wrap:      var(--shadow-xl),
+        var(--glass-material-rim),
+        var(--glass-under-shadow-vivid);
+
+    /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
+    --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
+    --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
+
+    /* Tiered cartoon shadows */
+    --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -4px 4px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --cartoon-shadow-sm: var(--shadow-cartoon-sm);
+    --cartoon-shadow-md: var(--shadow-cartoon-md);
+    --cartoon-shadow-lg: var(--shadow-cartoon-lg);
+
+    /* AY.W-COHERE E2 — the gel-bead ambient contact shadow (the GooBlob lit dome).
+       The metaball bead is NOT a Memphis sticker — it is a lit gel dome sitting IN
+       a scene, so it casts a SOFT, NEAR-CENTERED, low-offset ambient contact
+       shadow (small downward offset, a large soft blur, ambient-tinted), in the
+       same soft-ambient-light register the constellation / fourier / aurora
+       substrates speak — NOT the hard `5px 5px` near-black offset-stamp the
+       cartoon family carries (that stamp stays the identity of
+       <Card surface="cartoon">; it is removed ONLY from the gel bead, a different
+       lighting language). The shadow color is ambient: the bead's own
+       `--blob-color` mixed toward `--shadow-color` at a LOW strength, so the dome
+       casts a faint tinted contact shade. Adaptive-by-construction: `--shadow-color`
+       is `var(--foreground)`, which flips light→dark, so the contact shadow
+       re-resolves under `.dark` with NO hardcoded `.dark` re-declaration (the house
+       cartoon-shadow contract's pattern, applied to the ambient shadow). A consumer
+       retunes the bead's lighting by overriding `--blob-shadow` (or the
+       `--blob-shadow-*` sub-axes) on the cascade. */
+    --blob-shadow-offset: 0 4px;
+    --blob-shadow-blur:   14px;
+    --blob-shadow-color:  color-mix(in srgb,
+        var(--blob-color, var(--shadow-color)) 22%, var(--shadow-color));
+    --blob-shadow-strength: 20%;
+    --blob-shadow: var(--blob-shadow-offset) var(--blob-shadow-blur)
+        color-mix(in srgb, var(--blob-shadow-color) var(--blob-shadow-strength), transparent);
+    /* The hover lift — a touch deeper + softer (the dome rises slightly). */
+    --blob-shadow-hover: 0 6px 20px
+        color-mix(in srgb, var(--blob-shadow-color) 26%, transparent);
+
+}

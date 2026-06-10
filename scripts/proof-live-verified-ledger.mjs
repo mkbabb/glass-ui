@@ -47,6 +47,7 @@
 // Also runnable as the commit-msg hook (.githooks/commit-msg) for the fast local
 // bite; the CI job re-runs it so a `--no-verify` bypass is still caught.
 
+import { execSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
@@ -59,6 +60,25 @@ const TRANCHE = process.argv.find((a) => a.startsWith("--tranche="))?.split("=")
 const PROGRESS = join(ROOT, `docs/tranches/${TRANCHE}/PROGRESS.md`);
 const VISUAL_DIR = join(ROOT, `docs/tranches/${TRANCHE}/audit/visual`);
 const ALLOWLIST_PATH = join(VISUAL_DIR, "VISUAL-ALLOWLIST.json");
+
+// ── AY.W-LIVE1: the FRESHNESS clause (the depth-header — closes the D2 stale-DELTA
+// residual). A present-but-STALE PNG (the surface regressed AFTER the capture) used
+// to ship CI-green; the freshness clause asserts a captured DELTA is NOT stale
+// relative to the source it depicts, via the git-ancestry of the declared headers:
+//   <!-- capture-commit: <SHA> -->     the commit the capture was taken against
+//   <!-- surface-paths: <glob,glob> --> the source files that PAINT the captured surface
+// The gate runs `git log -1 --format=%H -- <surface-paths>` (the surface's last-touch)
+// and asserts it is an ancestor of the capture commit (the surface did not change
+// AFTER the capture). FATAL under --strict-freshness (the :ax backlog tracker + the
+// close-verification arm set it); on the bare active arm it reports the staleness as
+// a non-fatal NOTE during the documented backfill window (the W-CARDINAL-INFRA §4a
+// un-lockout invariant — the active :ay commit/CI gate is NOT a freshness lockout;
+// the owed re-captures are AY.W-DELTA0 / the owed-DELTA sweep's named-successor job).
+// The SELF-TEST exercises a synthetic header-bearing stale row EVERY run (the bite is
+// un-skippable regardless of the flag), and a DELTA that DECLARES headers but is stale
+// REDs even on the bare arm (a declared-then-stale header is never grandfathered —
+// only the header-LESS backfill window is graced).
+const STRICT_FRESHNESS = process.argv.includes("--strict-freshness");
 
 // ── The curated visual allowlist — the `complete` waves that changed pixels ────
 /** @returns {Set<string>} the wave-ids held to the deepened own-surface bar. */
@@ -116,6 +136,68 @@ function isRealPng(p) {
 function baseName(ref) {
     const idx = ref.lastIndexOf("/");
     return idx === -1 ? ref : ref.slice(idx + 1);
+}
+
+// ── AY.W-LIVE1: the freshness verdict (git-ancestry of the declared headers) ────
+/**
+ * Parse the `<!-- capture-commit: -->` + `<!-- surface-paths: -->` headers from a
+ * DELTA doc and assert the surface's last-touch commit is an ancestor of (or equal
+ * to) the capture commit (i.e. the surface did NOT change after the capture).
+ *
+ * @param {string} doc the DELTA markdown
+ * @returns {{state:"fresh"} | {state:"stale", reason:string} | {state:"no-header"}}
+ *   - "fresh"     : headers present, the surface is an ancestor of the capture.
+ *   - "stale"     : headers present, the surface changed AFTER the capture (RED).
+ *   - "no-header" : the headers are absent (the backfill-window grace boundary —
+ *                   RED under --strict-freshness, a non-fatal NOTE on the bare arm).
+ */
+function freshnessVerdict(doc) {
+    const cap = doc.match(/<!--\s*capture-commit:\s*([0-9a-fA-F]{7,40})\s*-->/);
+    const sp = doc.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
+    if (!cap || !sp || !sp[1].trim()) return { state: "no-header" };
+    const captureSha = cap[1].trim();
+    const surfacePaths = sp[1]
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    const git = (cmd) => {
+        try {
+            return execSync(cmd, { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
+                .toString()
+                .trim();
+        } catch {
+            return "";
+        }
+    };
+    // The capture commit must resolve (a real object in this repo).
+    if (!git(`git cat-file -t ${captureSha}`)) {
+        return {
+            state: "stale",
+            reason: `capture-commit ${captureSha} is not a commit in this repo — the freshness header is unverifiable`,
+        };
+    }
+    const surfaceSha = git(
+        `git log -1 --format=%H -- ${surfacePaths.map((p) => `'${p}'`).join(" ")}`,
+    );
+    if (!surfaceSha) {
+        // No commit ever touched the declared surface paths — treat as fresh (the
+        // surface is unchanged relative to any capture; a typo in the paths would
+        // show as a never-touched surface, which the wave author owns).
+        return { state: "fresh" };
+    }
+    // surface is an ancestor of (or ==) capture  ⇒  fresh.
+    try {
+        execSync(`git merge-base --is-ancestor ${surfaceSha} ${captureSha}`, {
+            cwd: ROOT,
+            stdio: "ignore",
+        });
+        return { state: "fresh" };
+    } catch {
+        return {
+            state: "stale",
+            reason: `surface ${surfacePaths.join(",")} changed at ${surfaceSha.slice(0, 12)} after the capture commit ${captureSha.slice(0, 12)} — re-capture`,
+        };
+    }
 }
 
 /**
@@ -177,10 +259,37 @@ function deltaSatisfied(wave, opts = {}) {
     if (!opts.ownSurface) return { ok: true, pngs: realPngs };
 
     // Deepened bar: own-surface (^<wave>-) + the light/dark depth floor.
-    return ownSurfaceVerdict(wave, realPngs.map(baseName));
+    const own = ownSurfaceVerdict(wave, realPngs.map(baseName));
+    if (!own.ok) return own;
+
+    // AY.W-LIVE1 freshness clause (the depth-header). Layered ON the own-surface bar.
+    const fresh = freshnessVerdict(doc);
+    if (fresh.state === "stale")
+        return {
+            ok: false,
+            reason: `${wave}-DELTA stale: ${fresh.reason}`,
+        };
+    if (fresh.state === "no-header") {
+        // The grace boundary: a header-LESS DELTA reds ONLY under --strict-freshness
+        // (the :ax backlog tracker + the close-verification arm). On the bare active
+        // arm it stays GREEN with a NOTE (the W-CARDINAL-INFRA §4a un-lockout — the
+        // owed re-capture is the named-successor AY.W-DELTA0 / owed-DELTA sweep).
+        if (STRICT_FRESHNESS)
+            return {
+                ok: false,
+                reason: `${wave}-DELTA lacks the freshness headers (capture-commit + surface-paths) the protocol mandates — add them or re-capture (AY.W-LIVE1 / W-DELTA0)`,
+            };
+        return { ok: true, pngs: own.pngs, freshnessNote: "no-header" };
+    }
+    return { ok: true, pngs: own.pngs, freshnessState: "fresh" };
 }
 
 // ── Evaluate a single row → a violation string, or null ───────────────────────
+// AY.W-LIVE1: header-LESS own-surface DELTAs that passed the bare-arm grace boundary
+// (the backfill window) — printed as NOTEs, NOT violations; the owed re-captures are
+// the AY.W-DELTA0 / owed-DELTA sweep's named-successor job.
+const freshnessNotes = [];
+
 /**
  * @param {{wave:string,status:string,line:number}} row
  * @param {Set<string>} allowlist the tranche's curated visual `complete` allowlist
@@ -204,6 +313,13 @@ function evaluateRow(row, allowlist = new Set()) {
         const d = deltaSatisfied(row.wave, { ownSurface: true });
         if (!d.ok)
             return `${row.wave} (line ${row.line}): status \`${token}\` AND on the visual allowlist (a pixel-changing wave) but ${d.reason}. An allowlisted close owes an own-surface DELTA at ≥2 viewports × {light,dark} — capture it or remove the wave from VISUAL-ALLOWLIST.json.`;
+        // AY.W-LIVE1: a header-LESS own-surface DELTA passed the bare-arm grace; record
+        // the freshness NOTE (the owed re-capture, named-successor AY.W-DELTA0). Under
+        // --strict-freshness this path is unreachable (d.ok would be false above).
+        if (d.freshnessNote === "no-header")
+            freshnessNotes.push(
+                `${row.wave} (line ${row.line}): own-surface DELTA present but lacks the AY.W-LIVE1 freshness headers (capture-commit + surface-paths) — graced on the bare arm, owed a re-capture (AY.W-DELTA0 / owed-DELTA sweep). RED under --strict-freshness.`,
+            );
         return null;
     }
 
@@ -253,6 +369,36 @@ const selfTests = [
             ? null
             : "flagged",
     },
+    {
+        // AY.W-LIVE1: the freshness self-test — a DELTA carrying freshness headers
+        // whose surface-paths last-touch POST-DATES the capture-commit MUST flag
+        // `state:"stale"`. Deterministic via two known repo objects: capture-commit
+        // = the ROOT commit (always an ancestor of every later touch), surface-paths
+        // = `package.json` (always touched after the root commit). The bite is
+        // un-skippable EVERY run, regardless of --strict-freshness.
+        label: "freshness — DELTA headers declare a capture-commit (root) PRECEDING the surface last-touch (package.json) → stale",
+        flag: (() => {
+            let rootSha = "";
+            try {
+                rootSha = execSync("git rev-list --max-parents=0 HEAD", {
+                    cwd: ROOT,
+                    stdio: ["ignore", "pipe", "ignore"],
+                })
+                    .toString()
+                    .trim()
+                    .split("\n")
+                    .pop()
+                    .trim();
+            } catch {
+                rootSha = "";
+            }
+            // No git / detached snapshot — the self-test cannot run the ancestry probe;
+            // treat as flagged (do not silently pass) so a git-less runner reds loudly.
+            if (!rootSha) return "no-git";
+            const synthetic = `<!-- capture-commit: ${rootSha} -->\n<!-- surface-paths: package.json -->`;
+            return freshnessVerdict(synthetic).state === "stale" ? "flagged" : null;
+        })(),
+    },
 ];
 if (selfTests.some((t) => !t.flag)) {
     const missed = selfTests
@@ -284,7 +430,10 @@ console.log(`  visual allowlist      : ${allowlist.size}${allowlist.size ? " (" 
 console.log(`  wave rows parsed      : ${rows.length}`);
 console.log(`  live-verified rows    : ${liveVerified.length}${liveVerified.length ? " (" + liveVerified.map((r) => r.wave).join(", ") + ")" : ""}`);
 console.log(`  complete-on-allowlist : ${completeOnAllowlist.length}${completeOnAllowlist.length ? " (" + completeOnAllowlist.map((r) => r.wave).join(", ") + ")" : ""}`);
-console.log(`  self-test (bite proof): OK — 3 synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch)`);
+console.log(`  self-test (bite proof): OK — 4 synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch, freshness-stale)`);
+console.log(`  freshness mode        : ${STRICT_FRESHNESS ? "STRICT (header-less own-surface DELTA REDs)" : "bare (header-less graced; staleness NOTEd — AY.W-LIVE1 backfill window)"}`);
+console.log(`  freshness notes       : ${freshnessNotes.length}${freshnessNotes.length ? " (header-less own-surface DELTAs, owed AY.W-DELTA0 re-capture)" : ""}`);
+for (const n of freshnessNotes) console.log(`  NOTE  ${n}`);
 console.log(`  violations            : ${violations.length}`);
 for (const v of violations) console.error(`  ${v}`);
 
@@ -302,6 +451,8 @@ writeGateArtifact(ARTIFACT, {
     waveRows: rows.length,
     liveVerified: liveVerified.map((r) => r.wave),
     completeOnAllowlist: completeOnAllowlist.map((r) => r.wave),
+    strictFreshness: STRICT_FRESHNESS,
+    freshnessNotes,
     violations,
 });
 

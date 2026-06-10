@@ -45,6 +45,7 @@
 //     correct, there is no `--scale-*` bridge utility use case.
 
 import { readdirSync, readFileSync } from "node:fs";
+import { readMonolith } from "./read-css-monoliths.mjs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -349,7 +350,11 @@ function run() {
 
     // (d) @theme completeness — the cleanly-namespaced scales (forward
     // completeness) + the shadow bridge-integrity check (the mixed namespace).
-    const tokensCss = readFileSync(resolve(STYLES, "tokens.css"), "utf8");
+    // AY.W-CSS1 — tokens.css became a thin @import root over carved partials;
+    // readMonolith concatenates root + partials so the bridge-integrity scan
+    // resolves every tokens.css declaration (the --cartoon-shadow-* rungs now
+    // live in tokens/shadow.css).
+    const tokensCss = readMonolith(ROOT, "tokens");
     const themeCss = readFileSync(resolve(STYLES, "theme.css"), "utf8");
     const completeness = detectCompleteness(tokensCss, themeCss);
     const shadow = detectShadowBridgeIntegrity(tokensCss, themeCss);

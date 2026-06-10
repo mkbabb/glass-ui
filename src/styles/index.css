@@ -40,7 +40,20 @@
  * above it via CSS custom properties or selector cascade; reordering breaks
  * fallbacks. Documented at L.W2 Lane B per Rε §B.5.1.
  *
- *   1. tokens.css            — CSS custom properties (color, easing, glass,
+ * WHERE each idiom LIVES (the localized design-idiom home, complementing the
+ * load-ORDER below): see docs/precepts/design-idioms.md — @theme aliases live
+ * in theme.css, @utility recipes in their cohesion-domain file, the
+ * cohesion-aware @import-partial carve rule, and the var-in-arbitrary syntax.
+ * tokens.css / glass.css / utilities.css are thin @import ROOTS over cohesive
+ * tokens/* · glass/* · utilities/* partials (each < 500 lines, in cascade order
+ * — the dock.css precedent, AX.W06; generalized AY.W-CSS1). The carve is
+ * cascade-isomorphic: the partials @import in the recorded cascade order so this
+ * load order is preserved bit-for-bit.
+ *
+ *   1. tokens.css            — thin @import root over tokens/{scheme-motion,
+ *                              color-radius,shadow,glass,offsets-sizing,
+ *                              scale-paper,light-dark,dark-arm,property-regs}.css.
+ *                              CSS custom properties (color, easing, glass,
  *                              paper, shadow, surface-tint rungs). Source-of-
  *                              record for every visual axis.
  *   2. typography.css        — golden-ratio scale (√φ); semantic type classes.
@@ -48,7 +61,9 @@
  *   3. theme.css             — @theme block (Tailwind aliases). Reads tokens
  *                              from (1) so MUST come after them; defines the
  *                              `dark` variant selector consumed by the cascade.
- *   4. glass.css             — .glass-{wash,quiet,resting,floating,overlay}
+ *   4. glass.css             — thin @import root over glass/{material,ladder,
+ *                              surfaces,progress-rail,squircle,a11y-fallback}.css.
+ *                              .glass-{wash,quiet,resting,floating,overlay}
  *                              5-rung ladder + .glass-card / -pill / -btn.
  *                              Consumes tokens (1) + theme aliases (3).
  *  4a. glass-specular-track.css — the pointer-anchored MOVING specular rung
@@ -93,10 +108,12 @@
  *  10b. view-transition.css  — the `.gl-list-item` View-Transitions group
  *                              recipe + `--vt-*` axes (AQ.W5; the
  *                              `useViewTransition` substrate's CSS half).
- *  11. utilities.css         — focus-ring, btn-audacious + btn-interactive
- *                              (press cluster; K W6 + Q.W3 Lane E),
- *                              rainbow-vivid + rainbow-pastel. Consumes earlier
- *                              animations + tokens.
+ *  11. utilities.css         — thin @import root over utilities/{animate,base,
+ *                              components,btn,a11y-overrides}.css. focus-ring,
+ *                              btn-audacious + btn-interactive (press cluster;
+ *                              K W6 + Q.W3 Lane E), rainbow-vivid +
+ *                              rainbow-pastel. Consumes earlier animations +
+ *                              tokens.
  *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
@@ -132,6 +149,7 @@
 @import "./instrument-rail.css";
 @import "./hover-popover.css";
 @import "./drawer.css";
+@import "../components/custom/tabs/segmented-tabs.css";
 
 /* Ensure consumer's Tailwind scans glass-ui components for utility classes
    (e.g. CVA button variants like text-destructive-foreground) */

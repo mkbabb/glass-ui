@@ -77,10 +77,23 @@ export function detect() {
 
     const TABS_DIR = "src/components/custom/tabs";
     const sfc = read(`${TABS_DIR}/SegmentedTabs.vue`);
+    // The track choreography is carved out of the SFC into a co-located partial
+    // (segmented-tabs.css, @import-ed into styles/index.css); the CSS-side
+    // assertions read THAT file, the script/type/aria assertions read the SFC.
+    const css = read(`${TABS_DIR}/segmented-tabs.css`);
     const barrel = read(`${TABS_DIR}/index.ts`);
     const barrelCode = stripComments(barrel);
     const composable = read(`${TABS_DIR}/composables/useTabIndicator.ts`);
-    const tokens = read("src/styles/tokens.css");
+    // tokens.css is a thin @import root over `tokens/*.css` partials; the
+    // `--tab-indicator-max-stretch` token lives in a partial post-carve. Read the
+    // ROOT + every partial so a partial-move never strands the token assertion.
+    let tokens = read("src/styles/tokens.css");
+    const tokensDir = resolve(ROOT, "src/styles/tokens");
+    if (existsSync(tokensDir)) {
+        for (const f of readdirSync(tokensDir)) {
+            if (f.endsWith(".css")) tokens += "\n" + read(`src/styles/tokens/${f}`);
+        }
+    }
     const apiIndex = read("src/api/index.ts");
     const apiCode = stripComments(apiIndex);
     const pkg = JSON.parse(read("package.json") || "{}");
@@ -146,23 +159,23 @@ export function detect() {
         "variant default is segmented",
         /withDefaults\([\s\S]*variant:\s*"segmented"/.test(sfc),
     );
-    // the three chrome rules paint.
+    // the three chrome rules paint (the carved-out segmented-tabs.css).
     assert(
         "segmented/pill/underline variant CSS all present",
-        /\.segmented-tabs--pill\b/.test(sfc) &&
-            /\.segmented-tabs--underline\b/.test(sfc) &&
-            /\.segmented-tabs\b/.test(sfc),
+        /\.segmented-tabs--pill\b/.test(css) &&
+            /\.segmented-tabs--underline\b/.test(css) &&
+            /\.segmented-tabs\b/.test(css),
     );
 
     // ── 4. ONE shared elastic indicator reading --spring-snappy. ──
     // The glide register must be the CONTROL spring (snappy), NOT --spring-bouncy.
     assert(
         "indicator glides on --spring-snappy",
-        /transition:[^;]*var\(--spring-snappy\)/.test(sfc),
+        /transition:[^;]*var\(--spring-snappy\)/.test(css),
     );
     assert(
         "indicator does NOT route travel through --spring-bouncy",
-        !/transition:[^;]*var\(--spring-bouncy\)/.test(sfc),
+        !/transition:[^;]*var\(--spring-bouncy\)/.test(css),
     );
 
     // ── 5. The squish-on-travel atom — the new token + the volume-preserving
@@ -181,7 +194,7 @@ export function detect() {
     assert(
         "indicator squish is volume-preserving (scale X / reciprocal Y)",
         /scale:\s*var\(--stretch\)\s*calc\(\s*1\s*\/\s*var\(--stretch\)\s*\)/.test(
-            sfc,
+            css,
         ),
     );
     assert(

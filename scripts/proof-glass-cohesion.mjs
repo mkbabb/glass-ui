@@ -31,6 +31,10 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — glass.css became a thin @import root over carved partials;
+// readMonolith concatenates root + partials in cascade order (read-dock-css.mjs
+// precedent) so the cohesion scan keeps finding every glass rule + its comments.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:glass-cohesion";
 
@@ -46,7 +50,7 @@ const strip = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const glassRaw = read("src/styles/glass.css");
+const glassRaw = readMonolith(ROOT, "glass");
 const glass = strip(glassRaw);
 const drawer = strip(read("src/styles/drawer.css"));
 const slider = strip(read("src/components/ui/slider/Slider.vue"));

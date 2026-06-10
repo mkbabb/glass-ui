@@ -37,6 +37,9 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const TOKENS = resolve(ROOT, "src/styles/tokens.css");
@@ -200,7 +203,7 @@ export function detect() {
     if (!existsSync(TOKENS)) {
         return { facts, violations: ["src/styles/tokens.css is absent"] };
     }
-    const src = readFileSync(TOKENS, "utf8");
+    const src = readMonolith(ROOT, "tokens");
 
     // ── 1. Resolve the dark --destructive from BOTH arms + assert the §2c lockstep.
     const ldArg = darkArgFromLightDark(src, "destructive");

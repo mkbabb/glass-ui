@@ -13,25 +13,26 @@ import {
     seedField,
     stepField,
     refitField,
-    readPalette,
-    readInteractionConfig,
-    drawEdges,
-    drawNodes,
-    drawPointerWeb,
-    drawRipples,
-    warpTo as warpToField,
     BASE_WIDTH,
-    DEFAULT_PALETTE,
-    DEFAULT_WELL_CONFIG,
-    DEFAULT_WANDER_IDLE,
-    DEFAULT_WANDER_JITTER,
     type ConstellationField,
     type ConstellationRipple,
     type ConstellationPointer,
     type ConstellationPalette,
-    type ConstellationWander,
-    type ConstellationWell,
 } from "./constellationField";
+import {
+    readInteractionConfig,
+    warpTo as warpToField,
+} from "./constellationInteraction";
+import {
+    readPalette,
+    drawEdges,
+    drawNodes,
+    drawPointerWeb,
+    drawRipples,
+    DEFAULT_PALETTE,
+} from "./constellationDraw";
+import { useConstellationPointer } from "./composables/useConstellationPointer";
+import { createConstellationField } from "./composables/createConstellationField";
 import { cn } from "../../../utils/cn";
 
 /**
@@ -66,6 +67,7 @@ const {
     warpOnClick = false,
     wander = false,
     gravityWell = false,
+    opacityCeiling = 1,
     // `freeze` is resolved via the RAW vnode prop (see `rawFreeze` below) — NOT
     // destructured — because Vue casts an absent Boolean prop to `false`, which
     // would erase the omitted-vs-explicit-false distinction the auto-derive needs.
@@ -78,6 +80,18 @@ const {
     link?: number;
     /** Drift speed. Default 0.16. */
     speed?: number;
+    /**
+     * AY.W-COHERE E3 — the per-instance outer-envelope RECESSION knob (the
+     * aurora `opacityCeiling` / fourier `intensity` sibling — the SAME prop NAME
+     * the other live substrates carry, so the four-substrate recession contract is
+     * ONE vocabulary). The painted edge/node/web/ripple alpha scales by this value
+     * OVER the mode-tuned `--constellation-alpha` base, so a constellation hero can
+     * RECEDE behind content (StoryHero sets 0.4–0.6) exactly as its aurora + fourier
+     * siblings do. Default `1` is byte-identical to HEAD (the draw-alpha trace is
+     * unchanged — the default-OFF canary). NOT a second token: `--constellation-alpha`
+     * stays the mode recession base, this is the per-instance loudness envelope.
+     */
+    opacityCeiling?: number;
     /**
      * Seed for a REPRODUCIBLE field. A `number` or `string` (hashed) seeds the
      * shared `mulberry32`; omit for a fresh `Math.random` field each mount.
@@ -211,53 +225,14 @@ const isFrozen = computed<boolean>(() => {
 // generalised (the consumer picks its frozen phase by the constant it reads).
 const FROZEN_NOW = 0;
 
-// Field + per-instance interaction state live in the setup closure. The focal
-// node (AX.W17) is engine-owned: `focalIndex` names the pinned node, `warp` is
-// the per-axis critically-damped spring the engine steps inside `stepField`.
-const field: ConstellationField = {
-    nodes: [],
-    canvas: null,
-    w: 0,
-    h: 0,
-    k: 1,
-    dpr: 1,
-    focalIndex: -1,
-    warp: { x: 0, y: 0, vx: 0, vy: 0, targetIdx: -1 },
-};
-
-// The auto-DRIFT cadence (AY.W-CON1). `wander` absent/false leaves `field.wander`
-// undefined (byte-identical to HEAD — stepField skips the cadence block); `true`
-// uses the default 8–16s rhythm; an object tunes the idle/jitter (ms). `nextAt`
-// arms on the first stepped frame, so there is no immediate jump on mount.
-const wanderOverride = wander && wander !== true ? wander : {};
-const wanderState: ConstellationWander | undefined = wander
-    ? {
-          nextAt: -1,
-          minIdle: wanderOverride.minIdle ?? DEFAULT_WANDER_IDLE,
-          jitter: wanderOverride.jitter ?? DEFAULT_WANDER_JITTER,
-      }
-    : undefined;
-field.wander = wanderState;
-
-// The gravity-well state (AY.W-CON2). `gravityWell` absent/false leaves `field.well`
-// undefined (byte-identical to HEAD — stepField skips the force pass); `true` /
-// an object uses the tokenised `--constellation-well-*` defaults with any prop
-// override layered on. The cfg is seeded from the built-in defaults here; the
-// on-mount token-read (readInteractionConfig) re-points the un-overridden members
-// to the tokenised values, with the PROP override (`wellOverride`) winning over
-// both. `x = -1` (inactive), `strength = target = 0` (cold) until the held-timer
-// arms the well.
-const wellOverride = gravityWell && gravityWell !== true ? gravityWell : {};
-const wellState: ConstellationWell | undefined = gravityWell
-    ? {
-          x: -1,
-          y: -1,
-          strength: 0,
-          target: 0,
-          cfg: { ...DEFAULT_WELL_CONFIG, ...wellOverride },
-      }
-    : undefined;
-field.well = wellState;
+// Field + per-instance interaction state (the focal/warp engine state + the
+// optional wander cadence / gravity-well, seeded cold) — built by the factory
+// (./composables/createConstellationField). `wanderOverride`/`wellOverride` are
+// the prop overrides the render re-layers over the on-mount token read.
+const { field, wanderOverride, wellOverride } = createConstellationField(
+    wander,
+    gravityWell,
+);
 const pointer: ConstellationPointer = { x: -1, y: -1 };
 const ripples: ConstellationRipple[] = [];
 let palette: ConstellationPalette = { ...DEFAULT_PALETTE };
@@ -381,11 +356,15 @@ onMounted(() => {
                     }
 
                     c.clearRect(0, 0, w, h);
-                    drawEdges(c, field, link, palette);
-                    drawNodes(c, field, palette);
+                    // E3 — the per-instance recession envelope. Read LIVE off the
+                    // reactive prop each frame (Vue 3.5 reactive props destructure)
+                    // so a bound `:opacity-ceiling` updates without a remount; at the
+                    // default `1` the scale is a no-op (byte-identical to HEAD).
+                    drawEdges(c, field, link, palette, opacityCeiling);
+                    drawNodes(c, field, palette, opacityCeiling);
                     if (pointerReactive && !isStatic) {
-                        drawPointerWeb(c, field, link, palette, pointer);
-                        drawRipples(c, field, now, ripples, palette);
+                        drawPointerWeb(c, field, link, palette, pointer, opacityCeiling);
+                        drawRipples(c, field, now, ripples, palette, opacityCeiling);
                     }
                     // The consumer skin runs LAST with the live field. Under a
                     // static frame it gets a FROZEN `now` (AY.W-CON3) so a phase-
@@ -398,121 +377,24 @@ onMounted(() => {
         },
     });
 
-    // `toLocal` is HOISTED out of the pointerReactive block (AX.W17) — it is a
-    // pure `getBoundingClientRect` → canvas-local-px mapper with NO
-    // pointerReactive/PRM dependency. BOTH the ripple path AND the warp path read
-    // this ONE mapper, so a click lands in canvas-local px under any CSS
-    // scale/zoom (the deck-scale invariant). Accepts client coords (a
-    // PointerEvent or a bare {clientX, clientY}); returns canvas-local px or null
-    // when the point falls outside the canvas / the canvas has no extent.
-    const host = hostRef.value;
-    const toLocal = (
-        e: { clientX: number; clientY: number },
-    ): ConstellationPointer | null => {
-        const r = canvas.getBoundingClientRect();
-        if (!r.width || !r.height) return null;
-        const nx = (e.clientX - r.left) / r.width;
-        const ny = (e.clientY - r.top) / r.height;
-        if (nx < 0 || ny < 0 || nx > 1 || ny > 1) return null;
-        return { x: nx * field.w, y: ny * field.h };
-    };
-    toLocalRef.value = toLocal;
-
-    // Pointer reactivity — listen on the host (the canvas itself may be behind
-    // type), map to canvas-local px via the hoisted mapper. Disabled under
-    // reduced-motion AND under a deterministic capture (`isFrozen` — a frozen
-    // capture takes no input; the same listener-not-registered policy as PRM,
-    // AY.W-CON3).
-    if (pointerReactive && host && !isFrozen.value && !handle.reducedMotion) {
-        const onMove = (e: PointerEvent) => {
-            const p = toLocal(e);
-            if (p) {
-                pointer.x = p.x;
-                pointer.y = p.y;
-            } else {
-                pointer.x = -1;
-                pointer.y = -1;
-            }
-            handle.wake();
-        };
-        const onLeave = () => {
-            pointer.x = -1;
-            pointer.y = -1;
-        };
-        const onDown = (e: PointerEvent) => {
-            const p = toLocal(e);
-            if (p) ripples.push({ x: p.x, y: p.y, start: -1 });
-            handle.wake();
-        };
-        host.addEventListener("pointermove", onMove);
-        host.addEventListener("pointerleave", onLeave);
-        host.addEventListener("pointerdown", onDown);
-    }
-
-    // Click-to-warp (AX.W17) — its OWN guard, SEPARATE from the ripple block, so
-    // `warpOnClick` and `pointerReactive` are INDEPENDENT axes (warp works on a
-    // non-ripple lattice; ripples work without warp). PRM-gated HERE (the click
-    // does not warp under reduced-motion — the listener is simply not
-    // registered). Resolves toLocal → nearestNode (excluding the focal) → warpTo;
-    // the spring is stepped inside stepField (no second rAF, no useSpring).
-    // Not registered under a deterministic capture (`isFrozen`, AY.W-CON3).
-    if (warpOnClick && host && !isFrozen.value && !handle.reducedMotion) {
-        const onWarp = (e: PointerEvent) => {
-            const p = toLocal(e);
-            if (!p) return;
-            warpToField(field, p.x, p.y);
-            handle.wake();
-        };
-        host.addEventListener("pointerdown", onWarp);
-    }
-
-    // Pointer-held GRAVITY-WELL (AY.W-CON2) — its OWN guard, INDEPENDENT of
-    // warpOnClick + pointerReactive (a consumer can hold-to-pull on a non-ripple,
-    // non-warp lattice). PRM-gated by the WARP precedent: the block is INSIDE
-    // `!reducedMotion`, so under reduce the held-timer is never registered and the
-    // well never arms (the listener-not-ramped precedent). Reuses the SAME `toLocal`
-    // mapper (the deck-scale invariant) and `field.well` state; the well force is
-    // composed inside stepField (no second rAF). The held-timer is the only new
-    // event piece — `onDown` arms the well after `holdMs`, `onMove` tracks it to the
-    // held pointer, and `release` eases it back to 0 (the field then cools).
-    if (gravityWell && host && field.well && !isFrozen.value && !handle.reducedMotion) {
-        const well = field.well;
-        let holdTimer: number | undefined;
-        const onDown = (e: PointerEvent) => {
-            const p = toLocal(e);
-            if (!p) return;
-            well.x = p.x;
-            well.y = p.y;
-            holdTimer = window.setTimeout(() => {
-                well.target = 1;
-                handle.wake();
-            }, well.cfg.holdMs);
-            handle.wake();
-        };
-        const onMove = (e: PointerEvent) => {
-            // track the well to the held pointer once it has armed.
-            if (well.target > 0) {
-                const p = toLocal(e);
-                if (p) {
-                    well.x = p.x;
-                    well.y = p.y;
-                }
-            }
-        };
-        const release = () => {
-            if (holdTimer !== undefined) {
-                clearTimeout(holdTimer);
-                holdTimer = undefined;
-            }
-            well.target = 0; // ease back to 0 → the field cools to `speed`
-            handle.wake();
-        };
-        host.addEventListener("pointerdown", onDown);
-        host.addEventListener("pointermove", onMove);
-        host.addEventListener("pointerup", release);
-        host.addEventListener("pointerleave", release);
-        host.addEventListener("pointercancel", release);
-    }
+    // The pointer wiring — the deck-scale client→canvas-local mapper (sets
+    // `toLocalRef`, the hoisted ONE mapper the exposed `warpTo(clientX,clientY)`
+    // reads) + the three INDEPENDENT listener blocks (ripple steer / click-warp /
+    // held gravity-well), each PRM-gated + capture-gated. Lifted to a
+    // component-internal composable (./composables/useConstellationPointer).
+    useConstellationPointer({
+        host: hostRef.value,
+        canvas,
+        field,
+        pointer,
+        ripples,
+        handle,
+        toLocalRef,
+        pointerReactive,
+        warpOnClick,
+        gravityWell: !!gravityWell,
+        isFrozen: isFrozen.value,
+    });
 });
 
 defineExpose({

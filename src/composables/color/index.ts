@@ -246,6 +246,18 @@ export interface DeriveBlobPaletteOptions {
     hueSpread?: number;
     /** Midpoint chroma-bump (keeps a vivid pair off the grey midpoint). Default ~0.03. */
     chromaBump?: number;
+    /**
+     * AY.W-COHERE E1 — the OKLCh-chroma CEILING on every derived stop (OKLCh C
+     * units). When set, each stop's chroma is clamped to AT MOST this value AFTER
+     * the midpoint bump and BEFORE the gamut-map — so the seed→palette derivation
+     * can never amplify a vivid seed into the neon register the shader's
+     * SSS/iridescence then over-drives. This is a CHROMA CAP, not a hue re-map: a
+     * blue seed stays blue, just bounded to the non-neon chroma. `undefined` (the
+     * default) leaves the derivation byte-identical to HEAD. The blob substrate
+     * caps the MOOD/seed path into the warm-register band the FourierField comet +
+     * the constellation focal share (the set-cohesion accent identity).
+     */
+    chromaCeiling?: number;
 }
 
 /**
@@ -269,6 +281,7 @@ export function deriveBlobPalette(
         lightnessSpread = 0.18,
         hueSpread = 24,
         chromaBump = 0.03,
+        chromaCeiling,
     } = options;
 
     const n = Math.max(2, Math.min(4, Math.round(stopCount)));
@@ -277,7 +290,12 @@ export function deriveBlobPalette(
         const t = n === 1 ? 0 : i / (n - 1); // 0 = deep body, 1 = lighter satellite
         const L = anchor.L - lightnessSpread / 2 + lightnessSpread * t;
         // Midpoint chroma-bump: a bell (peaks at t=0.5) keeps a vivid pair off grey.
-        const C = Math.max(0, anchor.C + chromaBump * Math.sin(Math.PI * t));
+        let C = Math.max(0, anchor.C + chromaBump * Math.sin(Math.PI * t));
+        // AY.W-COHERE E1 — the warm-register chroma cap. Applied AFTER the bump,
+        // BEFORE the gamut-map, so a vivid seed cannot be derived into the neon
+        // band the shader then over-drives. Hue + L are untouched (a cap, not a
+        // re-map). `undefined` → byte-identical to HEAD.
+        if (chromaCeiling !== undefined) C = Math.min(C, chromaCeiling);
         const h = deriveHue(anchor.h, harmony, hueSpread, t);
         stops.push(gamutMapStop({ L: Math.min(0.98, Math.max(0.05, L)), C, h }));
     }

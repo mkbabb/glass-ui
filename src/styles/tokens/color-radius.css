@@ -1,0 +1,250 @@
+/* tokens/color-radius.css
+   §4 radius reference · §5 warm-cream/muted-black palette · §5c constellation · §6 section palette · §6b viz basis.
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+:root {
+    /* §4  BORDER RADIUS — authored ONCE in theme.css's leading plain @theme
+       block (AV.W16 TW1). A plain @theme mints each `--radius-*` as a global
+       :root var, so the `var(--radius-card)` recipe reads across this file
+       resolve from that source. The prior §4 twin here doubled the override
+       surface (the anti-pattern the @theme-inline migration kills) — excised;
+       retune the scale at theme.css. */
+
+    /* ═══════════════════════════════════════════════
+       §5  COLOR PALETTE — Warm cream / muted black
+
+       Neutral scale: perceptually-uniform L* steps at hue 48 (warm paper).
+       Each pair visibly distinct at 20px viewing distance.
+           0 → 1  : 3 L   (page → soft field)
+           1 → 2  : 5 L   (soft field → chip / tab-inactive)
+           2 → 3  : 8 L   (chip → hover / highlight)
+           3 → 4  : 12 L  (highlight → subtle border)
+           4 → 5  : 25 L  (border → muted text, contrast jump)
+           5 → 6  : 10 L  (muted text → strong-muted text, secondary register)
+
+       Semantic aliases re-point into the scale — no back-compat shims.
+       ═══════════════════════════════════════════════ */
+    --neutral-0: hsl(48 12% 98%);   /* L 98 — page surface */
+    --neutral-1: hsl(48 10% 95%);   /* L 95 — soft field bg */
+    --neutral-2: hsl(48  9% 90%);   /* L 90 — chip / tab-inactive bg */
+    --neutral-3: hsl(48  8% 82%);   /* L 82 — hover / highlight bg */
+    --neutral-4: hsl(48  7% 70%);   /* L 70 — subtle border */
+    --neutral-5: hsl(48  6% 40%);   /* L 40 — muted text (WCAG AA: 5.23:1 vs L98 page / 4.91:1 vs L95 muted) */
+    /* W7-α' (AK-FD1) — strong-muted text rung. One principled ladder step
+       (10 L darker, the 5→6 cadence above) past muted text toward
+       --foreground (L10). Sits at the 1/3 point of the L40→L10 muted→primary
+       gap: legible secondary text that reads less-faint than muted but not as
+       assertive as primary. By-COLOUR per the canon (a neutral step, not an
+       alpha mute); hue held at 48, sat nudged 6→7 toward --foreground's 10.
+       WCAG AA: 7.79:1 vs L98 page / 7.31:1 vs L95 muted (cf. neutral-5's
+       5.23:1) — comfortably above the 4.5:1 body floor. */
+    --neutral-6: hsl(48  7% 30%);   /* L 30 — strong-muted text (secondary register) */
+
+    --background: var(--neutral-0);
+    --foreground: hsl(24 10% 10%);
+    --card: var(--neutral-0);
+    --card-foreground: var(--foreground);
+    --popover: var(--neutral-0);
+    --popover-foreground: var(--foreground);
+
+    /* R0G-5 (AO.W4) — warm-neutral public-data panel surface. One warmth step
+       off --card (hue 44 vs 48, +4 sat, −2 L) so a consumer's aurora-OFF
+       /dashboard/* surfaces read with the admin canon's warm-neutral chrome
+       instead of the colder bare card. Opaque surface (the --card family), not
+       a --surface-tint-* overlay. Consumer applies on /dashboard/* only. */
+    --surface-public-data-panel: hsl(44 16% 96%);
+
+    --muted: var(--neutral-1);
+    --muted-foreground: var(--neutral-5);
+    /* W7-α' (AK-FD1) — one rung less-faint than --muted-foreground for
+       secondary text that reads too-faint at the muted rung over resting
+       glass (CardDescription). By-colour neutral step, not alpha. */
+    --muted-foreground-strong: var(--neutral-6);
+    --secondary: var(--neutral-2);
+    --secondary-foreground: var(--foreground);
+    --accent: var(--neutral-3);
+    --accent-foreground: var(--foreground);
+
+    --border: var(--neutral-4);
+    --input: var(--neutral-4);
+
+    --primary: hsl(24 10% 10%);
+    --primary-foreground: var(--neutral-0);
+    --destructive: hsl(0 72% 50%);
+    --destructive-foreground: var(--neutral-0);
+    --ring: hsl(24 10% 10%);
+    --shadow: hsl(24 10% 10%);
+    --shadow-color: var(--foreground);
+
+    /* AQ.W2 §4 — native-control accent. `accent-color` is an inherited
+       built-in <color>, so per the §2b resolve-late discipline it reads a
+       dedicated UNREGISTERED token set per-mode (NOT light-dark()) and is
+       re-specified inside `.dark` — otherwise the accent freezes to the
+       light shade at the cascade root. Light: muted-black checkmarks /
+       sliders on warm cream. Dark arm (`.dark`) reads `--ring` (mid-tone),
+       not the near-white dark `--primary`, so a checkbox's white checkmark
+       keeps contrast headroom (accent-color.md §5). */
+    --accent-color: var(--primary);
+
+    /* Border hairline at whisper alpha — the canonical rung for
+       section-spine / panel-edge hairlines a consumer wants to read as an
+       iOS-26 whisper rather than a hard rule. Consumers compose this named
+       rung instead of hand-mixing `color-mix(... var(--border) ...)`
+       per-site (token-first). 45% is the canonical whisper. Auto-dark via
+       `--border` (which is `var(--neutral-4)`, light-dark()-resolved). */
+    --border-soft: color-mix(in srgb, var(--border) 45%, transparent);
+
+    /* AQ.W3 §W3.4 — tokenized scrollbar thumb + track. Minted in the color
+       block so the `scrollbar-color` / `::-webkit-scrollbar-thumb` rungs read a
+       single source. Auto-dark via `--muted-foreground` (light-dark()-resolved,
+       AQ.W2) — the OS scrollbar chrome also honors `color-scheme: dark`, so the
+       custom thumb tracks the dark surface without an explicit dark mirror. The
+       thumb α (25%) matches the prior inline `.scrollbar-thin` value byte-for-
+       byte; `transparent` track keeps the scroll-pane glass reading through. */
+    --scrollbar-thumb: color-mix(in srgb, var(--muted-foreground) 25%, transparent);
+    --scrollbar-track: transparent;
+
+    /* Foreground-tint rungs — canonical handles for the 36+ raw
+       `color-mix(in srgb, var(--foreground) N%, transparent)` sites surveyed
+       in R5 axis-1. Each rung's α is named in its key (4 → 4%, 22 → 22%).
+       Auto-dark via --foreground; no explicit dark mirrors needed. R5
+       vocab.γ gap row 1. Consumers land in W2.B + W3.C. */
+    --surface-tint-4:  color-mix(in srgb, var(--foreground)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, var(--foreground)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, var(--foreground)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, var(--foreground) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, var(--foreground) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, var(--foreground) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, var(--foreground) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, var(--foreground) 25%, transparent);
+    /* Higher-α rungs added at L.W5 (absorbs K R4 — 4 P1 sites whose
+       literal `color-mix(in srgb, var(--foreground) {35,40,70}%, transparent)`
+       expressions bypassed the canonical token family). See `docs/tranches/L/
+       audit/W5-A-doc-cohort-proof.md`. */
+    --surface-tint-35: color-mix(in srgb, var(--foreground) 35%, transparent);
+    --surface-tint-40: color-mix(in srgb, var(--foreground) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, var(--foreground) 70%, transparent);
+
+    /* Muted-tinted surface rungs — canonical handles for the 9 raw
+       `color-mix(in srgb, var(--muted) N%, transparent)` sites in
+       FuzzySearch / SegmentedTabs / Slider scoped CSS. (AI.W5-δ — the
+       ProgressiveSidebar consumer retired at the wave; the canonical token
+       rung lives on for the remaining consumers.) Auto-dark via --muted.
+       R5 vocab.γ axis-1 row. */
+    --muted-soft:   color-mix(in srgb, var(--muted) 30%, transparent);
+    --muted-medium: color-mix(in srgb, var(--muted) 50%, transparent);
+
+    /* ═══════════════════════════════════════════════
+       §5c CONSTELLATION — Canvas2D proximity-graph lattice (AX.W17)
+
+       The H.W4 legibility intelligence promoted from the slides deck to
+       LIBRARY identity: the node tones, the edge hairline color, the per-mode
+       edge-alpha multipliers, and the field-yields-to-type translucency knob.
+       Only `--constellation-accent` (the anomaly tint) stays a CONSUMER preset
+       (slides aliases it to `--ncsu-red`); the library ships a neutral default.
+
+       PLAIN-hsl LITERALS, per arm — NEVER `light-dark()` and NEVER a
+       `var(--neutral-*)`/`var(--foreground)`/`var(--border)`/`var(--card)`
+       alias. Canvas2D silently REJECTS a `light-dark()` value into
+       `strokeStyle`/`fillStyle` (the W30 86.3%-red-splatter cardinal defect),
+       and the rejection is identical whether the value is a literal
+       `light-dark(…)` OR a `var()` that RESOLVES to one — so the constellation
+       tokens are plain-hsl LEAVES, the `:root` vs `.dark` cascade carrying two
+       literals. `proof:constellation-tokens` clause (c) machine-locks this
+       (the no-`light-dark(`-substring NOR transitive-`var()` static assertion).
+       ═══════════════════════════════════════════════ */
+    /* Node tones — readable on the warm-cream ground. The two-tone split (the
+       `dim` half rides `-node-dim`). Warm-grey ink, NOT a neutral-ladder alias. */
+    --constellation-node:      hsl(36 8% 46%);
+    --constellation-node-dim:  hsl(36 8% 60%);
+    /* Edge hairline stroke — warm near-black on cream (the plain-hsl complement
+       the slides deck reads to fix the `--foreground` light-dark() leak). */
+    --constellation-line:      hsl(24 14% 14%);
+    /* Anomaly tint — NEUTRAL library default (a desaturated warm accent). The
+       consumer overrides this (slides → `--ncsu-red`); the library does NOT
+       bake a brand hue. This is the single consumer-preset boundary. */
+    --constellation-accent:    hsl(18 58% 46%);
+    /* Edge-alpha multipliers — replace the magic `0.17` hairline / pointer-web
+       literals. The cream ground lifts the node tones, so the field can recede;
+       the focus-proximity edge reads a touch stronger. */
+    --constellation-edge-alpha:          0.22;
+    --constellation-edge-focus-alpha:  0.34;
+    /* §7 field-yields-to-type translucency knob — the legible-but-RECESSIVE
+       MIDPOINT, NOT max-legibility. On cream the node tones already read, so the
+       field recedes further: BELOW the slides 0.92 max-legibility reference. */
+    --constellation-alpha:               0.80;
+
+    /* §interaction — the warp spring + the gravity-well tunings (NUMERIC, NOT
+       colors — read ONCE on mount via parseFloat, never reach a Canvas2D
+       fillStyle, so immune to the W30 light-dark()/Canvas2D leak; AY.W-CON2).
+       Mode-INVARIANT, declared ONCE in :root (the .dark arm needs no numeric
+       re-declare — a per-mode value SPLIT is what proof:constellation-tokens
+       clause (c) flags, and these tunings are identical in both modes).
+       `--constellation-warp-response` is the keyframes.js ANGULAR PERIOD (the
+       SwiftUI .spring(response:) axis), NOT a settle-duration — at ζ=1 the 2%
+       settle lands at t₂ ≈ 5.83/ω₀ ≈ 0.93·response (the engine keeps the
+       keyframes.js ω₀ = 2π/response convention, mints no second ω). */
+    --constellation-warp-response:    0.55;   /* s — keyframes.js angular period (NOT a settle) */
+    --constellation-warp-zeta:        1.0;    /* critically damped — a focal mark must NOT ring */
+    --constellation-well-gain:        14000;  /* inverse-square force scale (the held-pull gain) */
+    --constellation-well-reach:       340;    /* base-width px — the well's reach (k-scaled at step) */
+    --constellation-well-ramp:        4.0;    /* 1/s — the ARM rate (≈0.25s bloom; release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant, not consumer-tunable) */
+    --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
+    --constellation-well-hold-ms:     140;    /* ms hold before the well arms */
+    --constellation-wander-idle:      8000;   /* ms — min idle between auto re-targets (the W-CON1 drift cadence) */
+    --constellation-wander-jitter:    8000;   /* ms — random extra idle per cadence (so the rhythm is not metronomic) */
+
+    /* ═══════════════════════════════════════════════
+       §6  SECTION PALETTE — 13-stop jewel tones (light)
+       ═══════════════════════════════════════════════ */
+    /* AV.W16 TW2 — oklch ramp (perceptually-even L; hue preserved from the
+       prior hsl() cadence). Categorical jewel tones — distinct hues, not a
+       monotone scale. Authored as oklch pairs with the .dark mirror. */
+    --section-color-0:  oklch(0.552 0.192 359.8);  /* rose       */
+    --section-color-1:  oklch(0.502 0.165 305.9);  /* purple     */
+    --section-color-2:  oklch(0.484 0.163 265.5);  /* indigo     */
+    --section-color-3:  oklch(0.542 0.089 222.8);  /* teal-cyan  */
+    --section-color-4:  oklch(0.551 0.088 171.1);  /* forest     */
+    --section-color-5:  oklch(0.623 0.124 69.6);   /* amber      */
+    --section-color-6:  oklch(0.579 0.201 30.4);   /* tomato-red */
+    --section-color-7:  oklch(0.532 0.180 317.5);  /* violet     */
+    --section-color-8:  oklch(0.520 0.176 8.4);    /* ruby       */
+    --section-color-9:  oklch(0.492 0.038 239.6);  /* slate-blue */
+    --section-color-10: oklch(0.556 0.103 128.8);  /* olive      */
+    --section-color-11: oklch(0.601 0.092 208.0);  /* ocean      */
+    --section-color-12: oklch(0.513 0.163 291.9);  /* periwinkle */
+
+    /* Accent colors */
+    --accent-pink: oklch(0.613 0.197 353.8);
+    --section-heading: oklch(0.545 0.189 352.8);
+    --accent-red: oklch(0.574 0.216 27.5);
+
+    /* ═══════════════════════════════════════════════
+       §6b VIZ BASIS — core brand hues
+       ═══════════════════════════════════════════════ */
+    --viz-fourier:   oklch(0.579 0.201 30.4);
+    --viz-chebyshev: oklch(0.484 0.163 265.5);
+    --viz-legendre:  oklch(0.532 0.180 317.5);
+    --viz-amber:     var(--section-color-5);
+    --viz-green:     var(--section-color-4);
+
+    /* Semantic UI accents */
+    --tier-featured: oklch(0.841 0.173 84.2);
+    --tier-saved:    oklch(0.676 0.176 252.3);
+    --like:          oklch(0.633 0.200 24.9);
+    --success:       oklch(0.720 0.192 149.5);
+    --warning:       oklch(0.770 0.165 70.6);
+    --info:          oklch(0.626 0.186 259.6);
+    --delete:        oklch(0.597 0.198 25.5);
+
+    /* Semantic foregrounds — text/glyph atop --success/--warning/--info plates.
+       Notification.vue currently hardcodes `text-white`/`text-foreground`
+       inline; W2 migrates consumers to read these tokens. Warning carries a
+       dark glyph because the amber plate is too luminous for white. R5
+       vocab.γ gap row 4. */
+    --success-foreground: var(--neutral-0);
+    --warning-foreground: hsl(24 10% 10%);
+    --info-foreground:    var(--neutral-0);
+
+}

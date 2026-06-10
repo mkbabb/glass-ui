@@ -45,6 +45,8 @@
 //      stay round by policy). A re-added card squircle → RED.
 
 import { existsSync, readFileSync } from "node:fs";
+import { readMonolith } from "./read-css-monoliths.mjs";
+import { readDockCss } from "./read-dock-css.mjs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -358,11 +360,15 @@ function piArm(WORKSPACE) {
 }
 
 function run() {
-    const { ROOT, THEME_CSS, DOCK_CSS, GLASS_CSS, WORKSPACE, ARTIFACT } = cliPaths();
+    const { ROOT, THEME_CSS, WORKSPACE, ARTIFACT } = cliPaths();
+    // AY.W-CSS1 — glass.css became a thin @import root over carved partials (the
+    // squircle @supports arm lives in glass/squircle.css); readMonolith
+    // concatenates root + partials in cascade order. The dock.css squircle content
+    // lives in the AX.W06 dock/* partials; readDockCss concatenates the dock family.
     const { facts, violations } = detectSource({
         themeCss: readFileSync(THEME_CSS, "utf8"),
-        dockCss: readFileSync(DOCK_CSS, "utf8"),
-        glassCss: readFileSync(GLASS_CSS, "utf8"),
+        dockCss: readDockCss(ROOT),
+        glassCss: readMonolith(ROOT, "glass"),
     });
 
     const pi = piArm(WORKSPACE);

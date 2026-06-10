@@ -22,6 +22,11 @@ import {
     SPRING_LINES_RE,
     tokensPath,
 } from "./regen-spring-tokens.mjs";
+// AY.W-CSS1 — tokens.css carved into thin @import root + tokens/* partials. The
+// `--spring-*` regen block lives in tokens/scheme-motion.css (regen `tokensPath`);
+// the dock-spring (0.32, 0.7) prose lives in tokens/scale-paper.css. The
+// comment-scan reads the FULL monolith so both are in scope.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT_DIR = resolve(fileURLToPath(new URL("../", import.meta.url)));
 // AY.W-DOCK2 (D3) — the CANONICAL DOCK_SPRING authority is `dockMorphContext.ts`
@@ -163,13 +168,20 @@ export function detectComments() {
     const violations = [];
     const facts = { staleHits: [] };
 
+    // The tokens target reads the FULL carved monolith (root + partials), not
+    // just the regen partial, so the dock-spring prose in tokens/scale-paper.css
+    // is in scope. `monolith: "tokens"` routes through readMonolith.
     const targets = [
         { path: DOCK_MORPH_CONTEXT_TS, label: "dockMorphContext.ts" },
-        { path: tokensPath, label: "tokens.css" },
+        { monolith: "tokens", label: "tokens.css" },
     ];
 
-    for (const { path, label } of targets) {
-        const src = readFileSync(path, "utf8");
+    const readTarget = (t) =>
+        t.monolith ? readMonolith(ROOT_DIR, t.monolith) : readFileSync(t.path, "utf8");
+
+    for (const t of targets) {
+        const { label } = t;
+        const src = readTarget(t);
         const lines = src.split("\n");
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
@@ -188,8 +200,9 @@ export function detectComments() {
 
     // Positive confirmation: the canonical (0.32, 0.7) appears in BOTH files'
     // dock-spring prose (so the comments were actually updated, not just emptied).
-    for (const { path, label } of targets) {
-        const src = readFileSync(path, "utf8");
+    for (const t of targets) {
+        const { label } = t;
+        const src = readTarget(t);
         if (!/0\.32/.test(src) || !/0\.7\b/.test(src)) {
             violations.push(
                 `${label}: the canonical dock-spring numbers (0.32, 0.7) are not both present — the doc comments were not updated to the landed curve`,

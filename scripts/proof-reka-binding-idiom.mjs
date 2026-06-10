@@ -40,6 +40,9 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const read = (rel) => {
@@ -138,7 +141,7 @@ function run() {
     // Input/Textarea/NumberFieldInput paint via the shared `.input-pill`
     // [aria-invalid] ring (glass.css, W18); SelectTrigger/ComboboxInput via a
     // component `aria-invalid:` class.
-    const glass = stripComments(read("src/styles/glass.css") ?? "");
+    const glass = stripComments(readMonolith(ROOT, "glass") ?? "");
     const pillInvalidRing =
         /\.input-pill:where\([^)]*\[aria-invalid="true"\][^)]*\)\s*\{[^}]*var\(--destructive\)/.test(
             glass,

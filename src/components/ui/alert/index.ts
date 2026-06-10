@@ -8,7 +8,7 @@ export const alertVariants = cva(
   // AX.W51 D18 — the alert's control FONT reads `--control-text` (scaled `text-sm`)
   // and its glyph reads `--ui-glyph` (scaled `size-4`), so both ride the ONE comfort
   // axis. The layout grid + translate are geometry, unchanged.
-  'relative w-full rounded-lg border px-4 py-3 text-[length:var(--control-text)] grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-[var(--ui-glyph)] [&>svg]:translate-y-0.5 [&>svg]:text-current',
+  'relative w-full rounded-lg border px-4 py-3 text-[length:var(--control-text)] grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5 [&>svg]:text-current',
   {
     variants: {
       variant: {
@@ -16,9 +16,9 @@ export const alertVariants = cva(
         // the glass WASH tier (`--glass-bg-wash` + `--glass-blur-wash`), not an
         // opaque `bg-card` plate. The body text stays `--card-foreground` for
         // legibility; the semantic TONE rides ON the glass.
-        default: 'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
+        default: 'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
         destructive:
-          'text-destructive bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
+          'text-destructive bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
         // AW.W25 — semantic-tone parity. The success/warning/info tones read the
         // canonical `--{success,warning,info}` tokens (a toned glyph/heading over
         // the glass-wash surface), retiring the demo's faked alert variants. The
@@ -26,11 +26,11 @@ export const alertVariants = cva(
         // border, glyph, and description softening — content-band, not a loud
         // saturated plate (that is Badge/Toast's register).
         success:
-          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-success/40 [&>svg]:text-success *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-success/40 [&>svg]:text-success *:data-[slot=alert-description]:text-card-foreground/90',
         warning:
-          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-warning/40 [&>svg]:text-warning *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-warning/40 [&>svg]:text-warning *:data-[slot=alert-description]:text-card-foreground/90',
         info:
-          'bg-[var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-info/40 [&>svg]:text-info *:data-[slot=alert-description]:text-card-foreground/90',
+          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-info/40 [&>svg]:text-info *:data-[slot=alert-description]:text-card-foreground/90',
       },
     },
     defaultVariants: {

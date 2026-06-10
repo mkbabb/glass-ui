@@ -21,6 +21,10 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — tokens.css/glass.css became thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order so the
+// adaptive-tint seam scan resolves post-carve (read-dock-css.mjs precedent).
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:adaptive-glass";
 
@@ -34,8 +38,8 @@ const strip = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const tokens = strip(read("src/styles/tokens.css"));
-const glass = strip(read("src/styles/glass.css"));
+const tokens = strip(readMonolith(ROOT, "tokens"));
+const glass = strip(readMonolith(ROOT, "glass"));
 // The dock shell was carved into src/styles/dock/*.css partials (+ dock-controls.css)
 // at the convergence; the adaptive-glass tint seam lives in dock/shell.css + dock/morph.css.
 // Read the whole carved dock family so the seam checks resolve post-carve.

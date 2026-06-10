@@ -39,14 +39,19 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SFC = resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue");
 const SHADER = resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts");
-const RENDERER = resolve(
-    ROOT,
+// The W-GOD1 carve split the renderer: the uniform-upload cluster (incl. the D2
+// reachFactor sign-gate + the trailSources reach) lives in the carved
+// uploadBlobUniforms.ts leaf. The gate reads the COMPOSED pair so the D2/D4
+// witnesses survive the carve (the code moved, the contract did not).
+const RENDERER_FILES = [
     "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
-);
+    "src/components/custom/goo-blob/composables/uploadBlobUniforms.ts",
+].map((f) => resolve(ROOT, f));
 const TYPES = resolve(ROOT, "src/components/custom/goo-blob/types.ts");
 const DEMO = resolve(ROOT, "demo/stories/substrates/blob.vue");
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : "");
+const RENDERER = RENDERER_FILES.map(read).join("\n");
 
 // ── D1: the live-config paletteStops watcher (the dead-feed fix) ────────────────────
 function checkD1(facts, violations) {
@@ -88,7 +93,7 @@ function checkD1(facts, violations) {
 // ── D2: the corrected shader sign + the reach-gated trail ────────────────────────────
 function checkD2(facts, violations) {
     const shader = read(SHADER);
-    const renderer = read(RENDERER);
+    const renderer = RENDERER;
     // The corrected sample-shift sign: uv += normalize(pointerDir + 1e-6) * influence.
     facts.d2ShaderSign = /uv\s*\+=\s*normalize\(\s*pointerDir\s*\+\s*1e-6\s*\)\s*\*\s*influence/.test(
         shader,
@@ -147,7 +152,7 @@ function checkD3(facts, violations) {
 
 // ── D4: the resume dt LOWER clamp (the SEVERE fix) ──────────────────────────────────
 function checkD4(facts, violations) {
-    const renderer = read(RENDERER);
+    const renderer = RENDERER;
     // The dt is clamped to [0, 50]: Math.max(0, Math.min(rawDtMs, 50)).
     facts.d4LowerClamp = /Math\.max\(\s*0\s*,\s*Math\.min\(\s*rawDtMs\s*,\s*50\s*\)\s*\)/.test(
         renderer,

@@ -22,7 +22,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel()
     data-slot="carousel-previous"
     :disabled="!canScrollPrev"
     :class="cn(
-      'absolute h-[var(--carousel-nav-size)] w-[var(--carousel-nav-size)] rounded-pill',
+      'absolute h-(--carousel-nav-size) w-(--carousel-nav-size) rounded-pill',
       orientation === 'horizontal'
         ? 'top-1/2 -translate-y-1/2 left-[calc(-1*var(--carousel-nav-offset))]'
         : 'left-1/2 -translate-x-1/2 rotate-90 top-[calc(-1*var(--carousel-nav-offset))]',

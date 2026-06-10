@@ -360,14 +360,20 @@ export const GATES = [
     {
         id: "proof:fail-explicit",
         cmd: "proof:fail-explicit",
-        tags: ["local"],
-        note: "AV.W12 — no silent error-swallow in src/: every catch re-throws or carries a '// fail-explicit:' sentinel, and no '?? reactive(' masking default-synthesis on a required dependency. Bite: strip a befitting sentinel or re-inject '?? reactive(BLOB_CONFIG_DEFAULTS)' → RED",
+        tags: ["local", "ci", "release"],
+        note: "AV.W12 — no silent error-swallow in src/: every catch re-throws or carries a '// fail-explicit:' sentinel, and no '?? reactive(' masking default-synthesis on a required dependency. Bite: strip a befitting sentinel or re-inject '?? reactive(BLOB_CONFIG_DEFAULTS)' → RED. AY.W-LEG1 — promoted local→ci+release (the third band-dependency static gate; already GREEN, no carve needed) so proof:tag-parity stops flagging it.",
     },
     {
         id: "proof:no-god-module",
         cmd: "proof:no-god-module",
-        tags: ["local"],
-        note: "AV.W13 — no src/ .ts/.vue file > 500 lines (excludes __tests__/); warns at 300. The five named god-modules (aurora.frag, useSortable, Progress.vue, runtime, metaball) split into cohesive sub-modules. Bite: a file grows past 500 → RED. W6 gates-close folds it into the ci aggregate",
+        tags: ["local", "ci"],
+        note: "no src/ .ts/.vue file > 500 lines (excludes __tests__/); warns at 300. THE RATCHET: `RATCHET_BASELINES` grandfathers a known over-bound file at its frozen count (a reported fact, not a violation) so the gate is CI-GREEN before its carve while reddening any GROWTH past the baseline, any NEW file past 500 with no row, AND any stale row (a file that shrank under bound must drop its row — the ratchet only drains). Close state: violations==[] AND baselines drained to ∅. Bite: append a line to a grandfathered file (past its baseline) or push a fresh file past 500 → RED.",
+    },
+    {
+        id: "proof:composable-return-types",
+        cmd: "proof:composable-return-types",
+        tags: ["local", "ci"],
+        note: "the carve-parity gate. Locks named Use<Name>Return interfaces on the carved composables (incl. useMetaballRenderer), the BARREL-PARITY snapshot (the goo-blob/constellation/dock-composables barrels each re-export the exact expected symbol set — a god-module carved into a free-function family has no Use*Return to lock, so the barrel symbol set IS its public shape; a dropped/renamed re-export reddens), the aurora GLSL recompose STRING-PARITY (the composed AURORA_MEDIUMS_{PRE,POST}_BRUSH_GLSL hashes to the carve-commit snapshot — the template join is byte-identical), plus the twin-line @utility DRY + the useTokenColor resolver seam + the DO-NOT-SPLIT rationale on the lone keep-whole surface. Bite: drop a barrel re-export / a Return interface / drift a moved GLSL byte → RED.",
     },
     {
         id: "proof:no-legacy-commentary",
@@ -591,6 +597,24 @@ export const GATES = [
         cmd: "proof:gate-script-parity",
         tags: ["local", "ci"],
         note: "AX.W00 — the proof-script ↔ package.json BIJECTION meta-gate. Asserts (A) no orphan proof-*.mjs (every file is registered, modulo the finite owner-attributed KNOWN_ORPHANS AW baseline), (B) no dangling proof:* reference (every referenced .mjs exists, modulo KNOWN_DANGLING), (C) every gates.mjs row cmd resolves to a real package.json script. Device-free FS/JSON. Bite: drop a proof:* registration whose .mjs exists + is not allowlisted → RED (orphan); add a gates.mjs row with a ghost cmd → RED.",
+    },
+    {
+        id: "proof:tag-parity",
+        cmd: "proof:tag-parity",
+        tags: ["local", "ci"],
+        note: "AY.W-LEG1 (the AX.W27a tag-parity meta-assert, NEVER written) — the manifest tags↔aggregate assertion, SEPARATE from the file↔key bijection (proof:gate-script-parity owns that). Asserts every load-bearing STATIC src-scan gate (cmd → scripts/proof-*.mjs, NOT sibling, does NOT spawn a browser) carries `ci`, UNLESS it is a DETECTED Playwright live-verification gate (local-only by the cardinal-lesson architecture, cross-checked against the gates.mjs:30-44 header) OR in the reasoned JUSTIFIED_LOCAL_ONLY allowlist (active-tranche AY meta-gates + the gen-ci-fresh drift meta-step). Born RED against proof:no-legacy-commentary until W-CSS1 promotes it; proof:fail-explicit promoted HERE, proof:no-god-module already ci. Self-proving: a synthetic static-no-ci flags, a synthetic playwright-no-ci does not. Bite: flip a band-dependency static gate back to local-only, or add a new static src-scan gate without ci → RED.",
+    },
+    {
+        id: "proof:no-retired-survivor",
+        cmd: "proof:no-retired-survivor",
+        tags: ["local", "ci", "release"],
+        note: "AY.W-LEG1 (the AX.W27a/b gate NEVER written; the AX corpus falsely claimed it was 'authored W21 / registered W33') — every MIGRATION.md RETIRED claim resolves to ZERO surviving dir/subpath/export/token. A binding-doc retirement lie (L inv 16) — e.g. the AV.W10 metric-cell/metric-stack 'RETIRED' claim that survives at HEAD (speedtest re-adopted them) — is forbidden. Release-blocking (the migration guide is binding). Self-proving: a synthetic RETIRED claim for the LIVE /dock subpath flags. Bite: re-assert a RETIRED claim for a surviving artefact → RED; add an unanchored RETIRED line → RED.",
+    },
+    {
+        id: "proof:var-in-arbitrary-guard",
+        cmd: "proof:var-in-arbitrary-guard",
+        tags: ["local", "ci"],
+        note: "AY.W-LEG1 (the AX.W27a F7 idiom rule, NEVER written) — no shorthand-eligible bare `prop-[var(--x)]` in a :class/CVA-base string where the v4 `prop-(--x)` shorthand applies. The conversions are W-CSS1's §O6 write scope; W-LEG1 owns ONLY this gate (disjoint files). Born RED-with-named-survivors until W-CSS1 lands the conversions. KEEPS stay GREEN: fallback-bearing [var(--x,…)], type-prefixed [length:var(…)]/[background:var(…)], and var() inside an arbitrary [&…] variant selector. Self-proving: a bare h-[var(--x)] flags while the fallback/type/arbitrary-selector keeps do not. Bite: re-inject a bare shorthand-eligible [var(--x)] → RED; flatten a fallback-bearing [var(--x,fallback)] to flag it → the keep-test RED.",
     },
     {
         id: "proof:substrate-paints-color",

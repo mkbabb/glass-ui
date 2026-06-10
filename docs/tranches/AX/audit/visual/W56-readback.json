@@ -1,0 +1,15 @@
+{
+  "engine": "chromium 148 (Chrome 148-class, corner-shape supported)",
+  "supports": true,
+  "superellipseSurfaces": {
+    "dialog": "squircle",
+    "sheet": "squircle",
+    "bigdock": "squircle"
+  },
+  "roundSurfaces": {
+    "card": "round",
+    "pill": "round",
+    "panel": "round (--corner-shape-panel: round, theme.css)"
+  },
+  "note": "cornerShape resolves superellipse(2) on the W56 overlay-band + big-dock surfaces; round on card/pill/panel (the leak-free policy half)."
+}

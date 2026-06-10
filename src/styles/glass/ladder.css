@@ -1,0 +1,304 @@
+/* glass/ladder.css
+   The five-tier .glass-{wash,quiet,resting,floating,overlay} surface ladder + the W55 adaptive-legibility @container style(--glass-backdrop: light) bucket (co-located with its rung) + the .glass-opaque escape + the content-aware under-shadow.
+   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   order, each in its own @layer components (isomorphic to the monolith).
+   See docs/precepts/design-idioms.md §cohesion-aware partials. */
+@layer components {
+    /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
+       Tier semantics, alpha-monotonic per R3-spec §A:
+         wash      ~0.30α  + light blur      (was `subtle`)
+         quiet     ~0.50α  + medium blur     (the missing rung)
+         resting   ~0.65α  + canonical blur  (was `default`; the speedtest plate)
+         floating  ~0.80α  + heavier blur    (was `elevated`)
+         overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
+
+    /* The five-rung surface ladder declares the unprefixed
+       `backdrop-filter` only IN SOURCE. Authoring both forms manually here
+       caused Lightning CSS in Tailwind v4 to dedup-and-keep-prefixed,
+       which modern Chromium then dropped from the CSSOM (the prefixed
+       alias is parser-rejected post-Chrome 113). AY.W-A11Y-PERF O-2a — the
+       build now OWNS the prefix: `vite.style-assets.ts publishStyleAssets()`
+       injects the `-webkit-backdrop-filter:` pair into the SHIPPED
+       `dist/styles/*.css` as a LAST pass (the source stays unprefixed, so
+       the Lightning dedup never sees both forms; the build emits the pair
+       after the cascade is assembled). This GUARANTEES the prefix reaches
+       dist/ regardless of the consumer's autoprefixer/browserslist — a
+       Safari ≤17 engine (webkit-form-only) paints the blur instead of
+       silently dropping the unprefixed rule. Verified by
+       `proof:webkit-backdrop` (count-parity over the shipped dist). */
+    /* AW.W23 — every rung's background composes the adaptive-tint recipe
+       (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
+       strength))`). With the default `--glass-tint-strength: 0%` the mix is a
+       no-op = byte-identical to the un-tinted rung; a consumer biases the surface
+       toward a sampled backdrop hue by setting `--glass-tint-source` + a
+       strength ≤30%. oklab is the mwg-preferred tint space (NEVER an
+       `oklch(from …)` lightness-shift — browsers don't gamut-map yet). */
+    .glass-wash {
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-wash);
+        border: 1px solid var(--glass-border-wash);
+        box-shadow: var(--glass-material-rim), var(--glass-shadow-wash);
+    }
+
+    /* AL-W10 SLIM under-shadow wiring (tokens.css §AL-W10 SLIM —
+       UNDER-SHADOW recipe rungs). Each tier composes its canonical
+       iOS Liquid Glass under-shadow (a 0.5px dark hairline along the
+       bottom edge reading as glass thickness) as a NON-INSET layer
+       PREPENDED to the existing `--glass-shadow-*` recipe — the under-
+       shadow lays the floor; the existing shadow stack lays the lift.
+         quiet   → `--glass-under-shadow-quiet`   (0 2px 8px -1px α0.04)
+         resting → `--glass-under-shadow-default` (0 4px 16px -2px α0.08)
+         floating→ `--glass-under-shadow-vivid`   (0 8px 32px -4px α0.12)
+       `.glass-wash` is sub-perceptual; `.glass-overlay` is modal-heavy
+       — neither composes an under-shadow rung (Y4/Y6/Y7 SLIM retention).
+       Spine tier wires its own rung at instrument-chassis.css. */
+    .glass-quiet {
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-quiet);
+        border: 1px solid var(--glass-border-quiet);
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-quiet),
+            var(--glass-shadow-quiet);
+    }
+
+    .glass-resting {
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-resting);
+        border: 1px solid var(--glass-border-resting);
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-default),
+            var(--glass-shadow-resting);
+    }
+
+    /* AV.W15 M3 / AW.W22 — the floating tier carries the full-perimeter rim (the
+       catch-light that "defines the silhouette", WWDC25 sess. 219). The rim now
+       comes from the unified `--glass-material-rim` (= `--glass-edge-light`) so
+       it shares ONE source with the rest of the ladder; it rides INSIDE the
+       box-shadow stack so it composes with the under-shadow floor + the lift. */
+    .glass-floating {
+        /* AY.W-A11Y-PERF O-1 — engage the W55 bright-backdrop bucket BY DEFAULT on
+           the overlay band: a floating surface floats over WHATEVER the consumer
+           painted (frequently a light/near-white app surface — the canonical G2
+           case), so the library opts its own overlay-band glass in at its own root
+           via the SELF-CONTAINER reach below (`.glass-floating { --glass-backdrop }`
+           + `:where(.glass-floating) > * `-less: the rung re-points its OWN tint
+           through the companion self-rule, not only the ancestor @container). `dark`
+           (the :root default at tokens.css) stays the explicit per-surface override a
+           dark-substrate consumer dials in on an ancestor. */
+        --glass-backdrop: light;
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-floating);
+        border: 1px solid var(--glass-border-floating);
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-vivid),
+            var(--glass-shadow-floating);
+    }
+
+    .glass-overlay {
+        /* AY.W-A11Y-PERF O-1 — the overlay band engages the W55 bucket by default
+           (see .glass-floating). */
+        --glass-backdrop: light;
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-overlay);
+        border: 1px solid var(--glass-border-overlay);
+        box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
+    }
+
+    /* ── Adaptive legibility: the bright-backdrop bucket (AX.W55 — the iOS-26/27
+       "locally darken the glass over light content" move; G2) ──────────────────
+       When a consumer sets `--glass-backdrop: light` on any ancestor (a near-white
+       card surface, a pale aurora bleed, a bright data grid), the `@container
+       style()` read engages here and LIFTS the tint toward ink: `--glass-tint-
+       strength` climbs from the `0%` rest default to the bounded AA floor
+       (`--glass-tint-strength-aa`, ≤24% — translucent floor preserved) and `--glass-
+       tint-source` re-points from `var(--card)` to the warm-ink `--glass-tint-ink`.
+       Both are INHERITING custom properties the rungs' `background:` composite
+       already reads, so re-pointing them on the material group re-resolves the
+       EXISTING `color-mix(in oklab, <rung bg>, …)` toward ink — ZERO new compositing
+       seam, the literal darken-over-light recipe. The `.glass-*::before` specular
+       `plus-lighter` gleam (W52) is untouched (it composes ON the darkened plate;
+       the darkening is the orthogonal oklab-tint axis). No `@supports` wrapper:
+       style queries introduce no new `container-type` value (every element is a
+       style container by default), so an engine without style-query support parses
+       the unknown at-rule as invalid, drops the block, and keeps the zero-delta
+       glass (the graceful degradation — the surface is today's-glass, the pre-W55
+       state; see utilities.css §density for the same precedent). */
+    @container style(--glass-backdrop: light) {
+        .glass-material,
+        .glass-wash,
+        .glass-quiet,
+        .glass-resting,
+        .glass-floating,
+        .glass-overlay,
+        .glass-card {
+            --glass-tint-source: var(--glass-tint-ink);
+            --glass-tint-strength: var(--glass-tint-strength-aa);
+        }
+    }
+
+    /* AY.W-A11Y-PERF O-1 — SELF-ENGAGE the overlay band by default. The
+       `@container style()` rule above queries an ANCESTOR (CSS style queries never
+       self-match — verified on Chrome 148), so the `.glass-floating { --glass-backdrop:
+       light }` default we set on the rung would NOT darken the rung's OWN surface, only
+       its descendants. AND the `:root` library default is `--glass-backdrop: dark`
+       (tokens.css), so a `@container style(--glass-backdrop: dark)` revert would ALWAYS
+       fire (every element has the dark :root as an ancestor) — it cannot distinguish an
+       explicit consumer `dark` from the default. So the overlay band self-engages
+       UNCONDITIONALLY as the library default: a floating/overlay surface floats over
+       WHATEVER the consumer painted (frequently a light/near-white app surface — the
+       canonical G2 case the user reported), so darkening the translucent plate toward
+       the warm-ink is the correct default. This re-points the tint tokens DIRECTLY on
+       the overlay-band surfaces (`.glass-floating` / `.glass-overlay` — the Dialog/
+       Sheet/Popover/DropdownMenu/HoverCard/Command/Tooltip/Toast/Select-content band),
+       engaging the SAME oklab tint axis (zero new compositing seam). Over a DARK page
+       the darken is sub-perceptual (warm-ink over an already-dark plate is a small
+       shift); a dark-substrate consumer who wants the pristine plate sets
+       `--glass-tint-strength: 0%` on the overlay band or uses `.glass-opaque`. SCOPED
+       to the overlay band ONLY — NOT `.glass-card`/`.glass-resting`/`.glass-dock`, so
+       the W55 default-path byte-identity canary (which tests those KINDS with a bare
+       no-ancestor div) stays GREEN; and the in-srgb `--surface-tint-*` family is never
+       touched (this edits only the in-oklab glass tint axis). */
+    :where(.glass-floating, .glass-overlay) {
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-aa);
+    }
+
+    /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
+       A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
+       ratified): the declarative bucket above already carries AA on ALL engines (it
+       darkens the translucent plate so dark text clears ~11:1 over white at the 18%
+       floor — the live π readback ratifies). On a supporting engine `contrast-color()`
+       REFINES the foreground-ink pick natively, anchored on the LIGHT BACKDROP signal
+       (`--card`, the warm-white surface base the bright bucket implies) — NOT on the
+       ink. `contrast-color(var(--card))` over the light backdrop resolves to the
+       maximally-legible DARK ink (anchoring on the dark ink instead would invert to
+       white, illegible on the still-light translucent plate). The bucket is the floor;
+       this is the native refinement. Scoped to the bright bucket. */
+    @supports (color: contrast-color(white)) {
+        @container style(--glass-backdrop: light) {
+            .glass-material,
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
+            .glass-card {
+                color: contrast-color(var(--card));
+            }
+        }
+        /* AY.W-A11Y-PERF O-1 — the same contrast-color refinement for the
+           SELF-ENGAGED overlay band (the @container block above queries an ancestor;
+           the overlay band engages its own tint unconditionally, so its ink-flip
+           companion mirrors that). Progressive enhancement only — the declarative
+           darken above is the AA floor on all engines. */
+        :where(.glass-floating, .glass-overlay) {
+            color: contrast-color(var(--card));
+        }
+    }
+
+    /* ── The opaque escape (AX.W54) ───────────────────
+       The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
+       (the opacity seam → 1) with `blur(0)` (the blur seam → 0), routed through
+       the ONE `--glass-level` knob. NOT a parallel solid `background:` recipe:
+       a `.glass-*` surface that ALSO carries `.glass-opaque` keeps its glass edge,
+       rim, and under-shadow (a solid plate with a glass edge, not a bare div), and
+       the @supports fallback + the a11y brackets compose coherently. This is the
+       explicit opt-out from the MAXIMAL glass default (dense data, forced-colors,
+       a consumer that wants a flat surface). */
+    .glass-opaque {
+        --glass-level: 0;
+    }
+
+    /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
+       Apple raises the under-shadow over text (so the glass reads as
+       lifting OFF the text) and drops it over solid light. The modifier
+       is ATTRIBUTE-DRIVEN, no JS: a consumer adds `.glass-over-text`
+       (or `[data-over-content="text"]`) to a text-bearing glass surface to
+       swap it ONE under-shadow rung heavier, or `[data-over-content="solid"]`
+       to lighten it one rung over a solid-light backdrop. It reuses the
+       existing `--glass-under-shadow-{quiet,default,vivid}` rungs (no new
+       shadow value — `vivid` is sufficient over text), redefining only the
+       leading under-shadow layer per tier; the lift stack is untouched.
+
+       The selectors are per-tier so the swap is rung-correct
+       (quiet→default, resting→vivid). `.glass-floating` already sits at the
+       `vivid` ceiling over text, so the heavier variant is a no-op there
+       (the rung saturates) — documented, not an error. */
+    .glass-quiet.glass-over-text,
+    .glass-quiet[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-quiet);
+    }
+    .glass-resting.glass-over-text,
+    .glass-resting[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-resting);
+    }
+
+    /* The inverse — over a solid-light backdrop the under-shadow lightens
+       one rung (the glass need not lift as hard off a flat bright field). */
+    .glass-resting[data-over-content="solid"] {
+        box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-resting);
+    }
+    .glass-floating[data-over-content="solid"] {
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-default),
+            var(--glass-shadow-floating);
+    }
+
+    /* Grain noise overlay — reuses paper texture SVG, no extra assets */
+    .glass-wash::after,
+    .glass-quiet::after,
+    .glass-resting::after,
+    .glass-floating::after,
+    .glass-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--paper-clean-texture);
+        background-repeat: repeat;
+        background-size: var(--paper-texture-size);
+        opacity: var(--glass-grain-opacity);
+        pointer-events: none;
+        mix-blend-mode: overlay;
+    }
+
+    /* (b) The unified rim — `--glass-edge-light` full-perimeter inset ring on
+       EVERY material surface (AW.W22). Previously the rim was wired only into
+       the floating/overlay tiers' box-shadow stack; promoting it to the material
+       group makes wash/quiet/resting/card/dock-control all carry the same
+       silhouette catch-light from ONE token. The rim is its OWN `box-shadow`
+       declaration on the material group so it composes uniformly without
+       perturbing each tier's elevation recipe (the floating/overlay tiers drop
+       their now-redundant inline `--glass-edge-light` layer below). The alpha is
+       deliberately low so the rim never eats AA legibility over a busy
+       backdrop. */
+    .glass-material,
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay,
+    .glass-card,
+    .glass-specular-track,
+    .dock-icon-button {
+        --glass-material-rim: var(--glass-edge-light);
+    }
+
+    .dark .glass-wash::after,
+    .dark .glass-quiet::after,
+    .dark .glass-resting::after,
+    .dark .glass-floating::after,
+    .dark .glass-overlay::after {
+        mix-blend-mode: soft-light;
+    }
+
+}

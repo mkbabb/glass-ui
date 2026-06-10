@@ -34,10 +34,17 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const TOKENS = resolve(ROOT, "src/styles/tokens.css");
 const FIELD = resolve(ROOT, "src/components/custom/constellation/constellationField.ts");
+// The W-GOD1 carve moved `readPalette` out of the field engine into the DRAW
+// pass module (constellationDraw.ts). The READPALETTE-FULL-SET clause (b) reads
+// it there; the FIELD path stays the presence canary for the engine module.
+const DRAW = resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts");
 
 /** The 6 canonical legibility tokens readPalette must read (the FULL set). */
 const REQUIRED_TOKENS = [
@@ -145,7 +152,7 @@ function run() {
     let rootDecls = new Map();
     let darkDecls = new Map();
     if (existsSync(TOKENS)) {
-        const css = stripCssComments(readFileSync(TOKENS, "utf8"));
+        const css = stripCssComments(readMonolith(ROOT, "tokens"));
         // ALL `:root` arms (base + @supports light-dark() + @property cohorts).
         const rootBodies = selectorBodies(css, "(?:^|[\\s}])\\:root(?=\\s*\\{|\\s*,)");
         const darkBodies = selectorBodies(css, "(?:^|[\\s}])\\.dark(?=\\s*\\{|\\s*,)");
@@ -197,8 +204,10 @@ function run() {
     }
 
     // ── (b) READPALETTE-FULL-SET ─────────────────────────────────────────────
-    if (existsSync(FIELD)) {
-        const field = stripTsComments(readFileSync(FIELD, "utf8"));
+    // readPalette lives in constellationDraw.ts post-W-GOD1 carve (the palette
+    // read feeds ONLY the draw pass, so it travelled with it).
+    if (existsSync(DRAW)) {
+        const field = stripTsComments(readFileSync(DRAW, "utf8"));
         // The readPalette body — from `export function readPalette` to its close.
         const fnStart = field.indexOf("export function readPalette");
         const fnSrc = fnStart >= 0 ? field.slice(fnStart) : field;

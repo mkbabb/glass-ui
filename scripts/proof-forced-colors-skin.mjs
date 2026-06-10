@@ -24,6 +24,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:forced-colors-skin";
 
@@ -37,8 +40,8 @@ const strip = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const glassRaw = read("src/styles/glass.css");
-const utilRaw = read("src/styles/utilities.css");
+const glassRaw = readMonolith(ROOT, "glass");
+const utilRaw = readMonolith(ROOT, "utilities");
 const glass = strip(glassRaw);
 const util = strip(utilRaw);
 const statusDotVue = read("src/components/custom/status-dot/StatusDot.vue");

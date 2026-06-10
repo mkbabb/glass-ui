@@ -24,6 +24,13 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const COMMAND = "npm run proof:disposition-live";
 const REGISTER = join(ROOT, "docs/tranches/AX/audit/DISPOSITION-REGISTER.json");
+// AY.W-CARRY: the machine-readable BOOK-id manifest (the AT W0-L4 ledger's live set);
+// the register-COMPLETENESS clause asserts every manifest id has a register row.
+const MANIFEST = join(ROOT, "docs/tranches/AY/audit/deferred-ledger-manifest.json");
+// AY.W-TRIAGE: the residual AX `planned`-wave disposition mirror; the phantom-owner
+// clause asserts every ADDRESSED ayWave / DEFERS bookId / RETIRES rationale resolves.
+const RESIDUAL = join(ROOT, "docs/tranches/AY/audit/residual-disposition.json");
+const WAVES_DIR = join(ROOT, "docs/tranches/AY/waves");
 const SRC_EXT = /\.(vue|ts|tsx|js|mjs|jsx|css)$/;
 const SKIP_DIRS = new Set(["node_modules", "dist", ".git", ".cache", "coverage"]);
 
@@ -89,6 +96,95 @@ if (!existsSync(REGISTER)) {
 }
 const reg = JSON.parse(readFileSync(REGISTER, "utf8"));
 
+// ── Register-COMPLETENESS clause (AY.W-CARRY) ───────────────────────────────────
+// The closure mechanism's own closure check: every BOOK id in the deferred-ledger
+// manifest MUST have a register row (book/archived/retired). This is a PURE
+// document cross-check — no siblings, no greps — so it runs BEFORE the sibling-
+// present skip and fails the close on CI even with zero consumers on disk.
+if (!existsSync(MANIFEST)) {
+    console.error(`[proof:disposition-live] ledger manifest not found: ${MANIFEST}`);
+    process.exit(1);
+}
+const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
+const registerIds = new Set((reg.items ?? []).map((i) => i.id));
+const ledgerBookIds = manifest.bookIds ?? [];
+const uncovered = ledgerBookIds.filter((id) => !registerIds.has(id));
+const registerBookRows = (reg.items ?? []).filter(
+    (i) =>
+        i.disposition === "book" ||
+        i.disposition === "archived" ||
+        i.disposition === "retired",
+).length;
+console.log("proof:disposition-live — register-COMPLETENESS clause (AY.W-CARRY)");
+console.log(`  ledger BOOK ids       : ${ledgerBookIds.length}`);
+console.log(`  register book/arch/ret: ${registerBookRows}`);
+console.log(`  uncovered (ledger→reg): ${uncovered.length}`);
+if (uncovered.length > 0) {
+    for (const id of uncovered)
+        console.error(
+            `  UNCOVERED   ${id} — named in the deferred-ledger manifest but absent from the register.`,
+        );
+    console.error(
+        `\n[proof:disposition-live] ${uncovered.length} ledger BOOK id(s) have no register row — the register is not the ledger's mirror; onboard or retire each (AY.W-CARRY).`,
+    );
+    process.exit(1);
+}
+
+// ── Phantom-owner clause (AY.W-TRIAGE) ──────────────────────────────────────────
+// Every residual AX `planned` wave carries a disposition; an ADDRESSED row that
+// names an AY wave with NO spec file (phantom owner), a DEFERS row whose bookId is
+// absent from the register (phantom defer), or a RETIRES row with an empty
+// rationale (silent drop) REDs the close. PURE document cross-check — no siblings —
+// so it runs BEFORE the sibling skip and gates CI with zero consumers.
+let residualRows = 0;
+let phantomCount = 0;
+if (existsSync(RESIDUAL)) {
+    const residual = JSON.parse(readFileSync(RESIDUAL, "utf8"));
+    const specExists = (id) => existsSync(join(WAVES_DIR, `AY.${id}.md`));
+    const phantoms = [];
+    for (const r of residual.residuals ?? []) {
+        if (r.disposition === "addressed") {
+            // L.* rows are cross-repo: checked only when slides is on disk.
+            if (r.repo === "slides" || /^L\./.test(r.ayWave ?? "")) continue;
+            if (!r.ayWave || !specExists(r.ayWave))
+                phantoms.push(
+                    `${r.axWave} → ADDRESSED names ayWave "${r.ayWave}" with no spec in docs/tranches/AY/waves/`,
+                );
+        } else if (r.disposition === "defers") {
+            if (!r.bookId || !registerIds.has(r.bookId))
+                phantoms.push(
+                    `${r.axWave} → DEFERS names bookId "${r.bookId}" absent from DISPOSITION-REGISTER.json`,
+                );
+        } else if (r.disposition === "retires") {
+            if (!r.rationale || !r.rationale.trim())
+                phantoms.push(
+                    `${r.axWave} → RETIRES with empty rationale (a silent drop, not a recorded retirement)`,
+                );
+        } else {
+            phantoms.push(
+                `${r.axWave} → unknown disposition "${r.disposition}" (must be addressed/defers/retires)`,
+            );
+        }
+    }
+    residualRows = (residual.residuals ?? []).length;
+    phantomCount = phantoms.length;
+    console.log("proof:disposition-live — phantom-owner clause (AY.W-TRIAGE)");
+    console.log(`  residual rows         : ${residualRows}`);
+    console.log(`  phantom owners        : ${phantomCount}`);
+    for (const p of phantoms) console.error(`  PHANTOM   ${p}`);
+    if (phantomCount > 0) {
+        console.error(
+            `\n[proof:disposition-live] ${phantomCount} residual disposition(s) name a phantom owner — the AY wave / register row does not exist. Author it or correct the disposition (AY.W-TRIAGE).`,
+        );
+        process.exit(1);
+    }
+} else {
+    console.error(
+        `[proof:disposition-live] residual-disposition manifest not found: ${RESIDUAL}`,
+    );
+    process.exit(1);
+}
+
 // Registry-default world (inv-θ): every trigger re-evaluates via a min-consumers
 // grep over consumer SIBLINGS. A clean CI runner has no consumer sibling checked
 // out, so (a) there is no booked deferral to re-evaluate and (b) the synthetic
@@ -106,6 +202,13 @@ if (!anySiblingPresent) {
         status: "skipped",
         gate: "proof:disposition-live",
         command: COMMAND,
+        // The completeness + phantom-owner clauses ALREADY ran (unconditional) and
+        // passed; the skip is only of the sibling-walked trigger re-evaluation half.
+        ledgerBookCount: ledgerBookIds.length,
+        registerBookRows,
+        uncovered,
+        residualRows,
+        phantomCount,
         reason:
             "no consumer sibling present on this runner (registry-default) — the deferral-trigger re-evaluation walks siblings; nothing to check, and the min-consumers self-test cannot meet without a present consumer.",
     });
@@ -161,6 +264,11 @@ writeGateArtifact(ARTIFACT, {
     command: COMMAND,
     itemCount: (reg.items ?? []).length,
     selfTestFlagged: true,
+    ledgerBookCount: ledgerBookIds.length,
+    registerBookRows,
+    uncovered,
+    residualRows,
+    phantomCount,
     violations,
 });
 

@@ -1,0 +1,399 @@
+/* utilities/btn.css
+   The interactive/button @utility cluster — scale-on-hover, twin-line-divider, transition-control/collapse, sheet-animate, btn-audacious + btn-audacious-gold (+ the btn-gold-bg-sweep keyframes), table-cell/head density, rainbow-vivid/pastel, the text-highlight paint, and btn-interactive.
+   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+/* ── Hover scale (O.W6 Lane C) ──
+   Canonical hover-transform utility consuming the `--scale-hover` token
+   (tokens.css §11). Promoted from consumer-side `hover:scale-105`
+   recipe — 13 sites in keyframes.js demo + 9 sites in words/frontend
+   per O11/d L3 + O11/a I4. Single-token recipe (no ladder); the dual
+   `--scale-press-{xs..lg}` ladder discussion is the press-axis cohort
+   (O-N-7), not hover. Consumers reach the utility via
+   `class="scale-on-hover"`; transition + easing bind to the canonical
+   `--duration-fast` + `--ease-standard` tokens. */
+@utility scale-on-hover {
+    /* Individual-transform identity base (AQ.W3 §W3.2). Transition the `scale`
+       longhand (not `transform`) so the migrated hover scale animates.
+       AX.W52 §6 doctrine — the `scale` transform leg rides `--spring-smooth`
+       (the settle register), NOT the bezier `--ease-standard` (a transform on a
+       bezier reads mechanical; springs read alive on transform). */
+    scale: 1;
+    transition: scale var(--duration-fast) var(--spring-smooth);
+
+    &:hover {
+        scale: var(--scale-hover);
+    }
+}
+
+/* ── Twin-line divider — the chassis catch-light / under-shadow groove ───────
+   AW.W15 DRY extraction. The twin-line idiom (a 1px white catch-light over a
+   1px black under-shadow reading as one engraved hairline groove) is the
+   chassis-divider signature. The exact light/dark α pair was DUPLICATED in
+   `instrument-chassis.css` (`.bezel-line.top`/`.bottom`) and `instrument-rail.css`
+   (the sibling `::before`/`::after`). This utility is the SINGLE source of that
+   α pair: it publishes `--twin-line-catch` (the top catch-light) and
+   `--twin-line-shadow` (the bottom under-shadow) as cascade tokens, dark-adaptive
+   by construction (the `.dark &` arm re-resolves them). Both consumers read the
+   tokens; a retint touches one rule. Real DRY, ≥2 consumers. */
+@utility twin-line-divider {
+    --twin-line-catch: rgb(255 255 255 / 0.10);
+    --twin-line-shadow: rgb(0 0 0 / 0.12);
+
+    :where(.dark) & {
+        --twin-line-catch: rgb(255 255 255 / 0.06);
+        --twin-line-shadow: rgb(0 0 0 / 0.18);
+    }
+}
+
+/* ── Control transition recipe (AU.W8b.4) ───────────────────────────────
+   Shared compound transition for interactive controls that animate their
+   surface (background-color/color/box-shadow/border-color) on the four-state
+   contract. Replaces the per-site
+   `transition-[background-color,color,box-shadow,border-color] duration-[var(--duration-fast)] ease-[var(--ease-standard)]`
+   arbitrary wraps at ≥2 sites (TabsTrigger, SelectTrigger, Toggle `card`
+   variant). Binds the canonical --duration-fast + --ease-standard tokens. */
+@utility transition-control {
+    transition-property: background-color, color, box-shadow, border-color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+}
+
+/* ── Collapse transition recipe (AU.W8b.4) ──────────────────────────────
+   Shared height+opacity transition for reka-ui collapse surfaces (Accordion
+   content, Collapsible content). Replaces the per-site `transition-[height,opacity]`
+   wrap at ≥2 sites. The duration/easing rides the data-state
+   `animate-accordion-*`/`animate-collapsible-*` keyframes (this only declares
+   WHICH properties transition; the keyframes own the timing). */
+@utility transition-collapse {
+    transition-property: height, opacity;
+}
+
+/* ── Sheet/drawer slide-out animation grammar ──
+   Mirror of `.popover-animate` for sheet/drawer panels. Pairs with
+   `slide-in-from-{top,right,bottom,left}-N` to compose side-keyed entries.
+   The open path uses --duration-panel (slow, deliberate); the close path
+   uses --duration-fast so dismiss feels snappy. R5 vocab.γ gap row 6;
+   consumed by W2.A sheet/drawer migration. */
+@utility sheet-animate {
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out
+           data-[state=open]:fade-in data-[state=closed]:fade-out
+           data-[state=open]:duration-[var(--duration-panel)]
+           data-[state=closed]:duration-[var(--duration-fast)];
+}
+
+/* ── Audacious primary CTA recipe ────────────────────────────────────────
+   Composes three at-rest marks (top-highlight via --glass-highlight, bottom
+   under-shadow via --border-hairline, baseline glass) with three disco accents
+   on hover (specular swap via --glass-specular, sparkle sweep via the ::after
+   star, disco-grain via --paper-clean-texture blended with a --primary radial).
+   Disco fires on hover only — at rest the button reads as a restrained glass
+   surface. Pair with `bg-primary text-primary-foreground`; the utility owns
+   the texture/highlight/sparkle composition only. */
+@utility btn-audacious {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--glass-border-quiet);
+    box-shadow:
+        var(--border-hairline),
+        var(--glass-highlight);
+    transition:
+        background var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard),
+        --ripple-radius var(--motion-duration-ripple, 340ms) var(--ease-out-expo);
+
+    /* Hover composition: paper-grain texture overlaid on a soft
+       --primary radial, with the specular catch-light replacing the
+       resting hairline highlight. The radial uses --primary at 18%
+       — same alpha rung the dock primary tier consumes for phase
+       tinting, just bound to the canonical CTA color instead. */
+    &:hover:not(:disabled) {
+        background-image:
+            var(--paper-clean-texture),
+            radial-gradient(
+                ellipse at 30% 30%,
+                color-mix(in srgb, var(--primary) 18%, transparent),
+                transparent 70%
+            );
+        background-blend-mode: overlay, normal;
+        background-size: var(--paper-texture-size), auto;
+        box-shadow:
+            var(--glass-specular),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    /* AI.W4-M.2 (Q5 — G-AI-D27 ratified) — press-ripple via a typed
+       `--ripple-radius` length custom property. The `::before`
+       element paints a radial gradient whose stop radius equals the
+       typed length; the `:active` rule sets the length to the cap
+       (`--ripple-radius-max`, 12rem), and the host's transition
+       (above) interpolates the radius via the @property registration
+       (tokens.css §18). Release returns the length to its 0px initial
+       value and the ripple retires. The ripple paints at z-index 0
+       (above the host's background, below the slot content which sits
+       in the default 0 stacking context but with text inheriting the
+       slot's foreground colour). */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+            circle at center,
+            color-mix(in srgb, var(--primary-foreground, hsl(0 0% 100%)) 35%, transparent) 0,
+            color-mix(in srgb, var(--primary-foreground, hsl(0 0% 100%)) 18%, transparent)
+                calc(var(--ripple-radius, 0px) * 0.55),
+            transparent var(--ripple-radius, 0px)
+        );
+        transition: inherit;
+        will-change: background;
+    }
+
+    &:active:not(:disabled) {
+        --ripple-radius: var(--ripple-radius-max, 12rem);
+    }
+
+    /* Sparkle glyph — hidden at rest, animated on hover. The star
+       sweeps diagonally from top-left to bottom-right per the canonical
+       sparkle-sweep keyframe (animations.css). */
+    &::after {
+        content: "✦";
+        position: absolute;
+        top: 0.25rem;
+        left: 0.5rem;
+        color: hsl(0 0% 100% / 0.7);
+        font-size: 0.75rem;
+        line-height: 1;
+        pointer-events: none;
+        opacity: 0;
+        will-change: transform, opacity;
+        z-index: 1;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover::after {
+            animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
+        }
+    }
+
+    /* PRM bracket — the press-ripple retires; the press still reads
+       via the audacious recipe's transform/scale beat (the ripple is
+       affirmation atop affirmation). */
+    @media (prefers-reduced-motion: reduce) {
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+
+        &:active:not(:disabled) {
+            --ripple-radius: 0px;
+        }
+    }
+}
+
+/* ── Gold CTA shimmer modifier — AN.R0 D9 ───────────────────────────────
+   `btn-audacious-gold` extends `btn-audacious` with a gold sweep shimmer
+   on hover. Pair as `btn-audacious btn-audacious-gold` (or use the Button
+   `variant="gold-audacious"` which composes both). The hover shimmer is a
+   translucent linear-gradient sweep (low alpha — tasteful, not garish)
+   that slides left-to-right via the existing `gold-shimmer-slide` keyframe
+   (animations.css). The gold gradient uses the canonical `--color-gold-*`
+   token triad (tokens.css §13).
+
+   Design register:
+   • PRM no-preference: shimmer sweeps continuously at `--duration-shimmer`
+     rate; the sparkle-sweep (from btn-audacious) coexists on hover.
+   • PRM reduce: static gold tint shows on hover; no animation.
+   • The gold shimmer is a background-image layer ABOVE the existing
+     btn-audacious paper-grain + primary-radial layers, blended with
+     `overlay` so the glass substrate reads through at partial opacity.
+   • The `::before` ripple and `::after` sparkle from btn-audacious are
+     unchanged; this modifier only retunes the hover background layers.
+   • Consumer applies: `<Button variant="gold-audacious">Next →</Button>` */
+@utility btn-audacious-gold {
+    /* At rest: a faint warm gold tint over the glass surface reads as "warm
+       glass" without announcing the hover state prematurely. */
+    background-image:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--color-gold) 8%, transparent),
+            color-mix(in srgb, var(--color-gold-light) 5%, transparent) 50%,
+            color-mix(in srgb, var(--color-gold) 8%, transparent)
+        );
+
+    /* Hover: deepen the plate to a SATURATED gold the white label clears (AW.W13
+       names a "saturated gold backplate"; the D1 fix). The bottom layer is the
+       OPAQUE fixed deep gold (`--color-gold-deep`, mode-INVARIANT) — a solid plate
+       at ~6.5:1 (light) / ~5.5:1 (dark) against white, well below the ~0.18
+       luminance floor white text needs for ≥4.5:1 (was a translucent 22-30% wash
+       over near-cream glass → 1.29:1 white-on-pale-gold). The plate is FIXED-dark
+       in both modes — deepening toward the mode-flipping `--foreground` brightened
+       the dark plate to a cream-gold; `--color-gold-deep` does not flip. The
+       shimmer sweep rides ABOVE as a LOW-alpha gold gradient (normal blend, ≤18% —
+       it textures the plate without brightening it past the floor), and the
+       paper-grain overlays for the disco facet. */
+    &:hover:not(:disabled) {
+        background-image:
+            var(--paper-clean-texture),
+            linear-gradient(
+                90deg,
+                transparent 0%,
+                color-mix(in srgb, var(--color-gold) 14%, transparent) 25%,
+                color-mix(in srgb, var(--color-gold) 18%, transparent) 50%,
+                color-mix(in srgb, var(--color-gold) 14%, transparent) 75%,
+                transparent 100%
+            ),
+            linear-gradient(
+                135deg,
+                var(--color-gold-deep),
+                color-mix(in srgb, var(--color-gold-deep), var(--color-gold-dark) 18%) 50%,
+                var(--color-gold-deep)
+            );
+        background-blend-mode: overlay, normal, normal;
+        background-size: var(--paper-texture-size), 250% 100%, 100% 100%;
+        background-position: 0 0, 100% 0, 0 0;
+        box-shadow:
+            var(--glass-specular),
+            0 0 0 1px color-mix(in srgb, var(--color-gold-dark) 40%, transparent),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover:not(:disabled) {
+            animation: btn-gold-bg-sweep var(--duration-shimmer) linear infinite;
+        }
+    }
+}
+
+/* Background-position sweep for the gold CTA hover shimmer.
+   Distinct from `gold-shimmer-slide` (which animates background-position for
+   a text-clip gradient). This variant sweeps the `background-position` of the
+   250% wide gradient across the button's bounding box. */
+@keyframes btn-gold-bg-sweep {
+    0%   { background-position: 0 0, 100% 0, 0 0; }
+    100% { background-position: 0 0, -100% 0, 0 0; }
+}
+
+/* ── Table density utilities — AN.R0 ─────────────────────────────────────
+   `table-cell` and `table-head` replace the former Tailwind `p-4` / `h-12`
+   literals in TableCell.vue / TableHead.vue. Both read `--table-density`
+   (tokens.css §19) so a single CSS-var assignment on a wrapping element
+   scales all row padding + header height simultaneously. Default density=1
+   resolves to the identical geometry as the previous Tailwind literals. */
+@utility table-cell {
+    padding-inline: var(--table-cell-px, 1rem);
+    padding-block: var(--table-cell-py, 1rem);
+}
+
+@utility table-head {
+    height: var(--table-head-h, 3rem);
+    padding-inline: var(--table-head-px, 1rem);
+}
+
+/* ── Rainbow gradient backgrounds ───────────────────────────────────────
+   `.rainbow-vivid` + `.rainbow-pastel` paint a left-to-right 7-stop spectrum
+   from the canonical `--rainbow-*` / `--rainbow-pastel-*` token families
+   (tokens.css §14). Consumed by keyframes.js's `AnimationMenuBar.vue` round
+   play button — `rainbow-vivid` (playing) / `rainbow-pastel` (idle). */
+@utility rainbow-vivid {
+    background: linear-gradient(
+        to right,
+        var(--rainbow-red),
+        var(--rainbow-orange),
+        var(--rainbow-yellow),
+        var(--rainbow-green),
+        var(--rainbow-blue),
+        var(--rainbow-indigo),
+        var(--rainbow-violet)
+    );
+}
+
+@utility rainbow-pastel {
+    background: linear-gradient(
+        to right,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet)
+    );
+}
+
+/* ── Text-highlight paint (CSS Custom Highlight API) ─────────────────────
+   The default `::highlight()` paint for the `useTextHighlight` composable
+   (composables/motion; the `/motion-core` subpath, AX.W37). A named `Highlight`
+   registered in `CSS.highlights`
+   under one of these keys paints its `Range` set without a `<mark>` wrapper.
+   Token-bridged: the search mark reads the canonical pastel-yellow rainbow
+   token at a soft alpha; the equation/variable mark reads `--primary`. Both
+   axes are overridable via the `--text-highlight-*` custom properties. */
+::highlight(glass-search-mark) {
+    background-color: var(
+        --text-highlight-search-bg,
+        color-mix(in srgb, var(--rainbow-pastel-yellow) 55%, transparent)
+    );
+    color: var(--text-highlight-search-fg, inherit);
+}
+::highlight(glass-mark) {
+    background-color: var(
+        --text-highlight-bg,
+        color-mix(in srgb, var(--primary) 18%, transparent)
+    );
+    color: var(--text-highlight-fg, inherit);
+}
+
+/* ── Interactive-button four-state recipe ────────────────────────────────
+   `.btn-interactive` carries the canonical "Button-with-spring-hover"
+   four-state contract — transition + hover-scale + active-press + disabled-
+   opacity + focus-ring fade-in. The Button primitive's variants emit the four
+   states except `hover:scale-*`; this is the canonical opt-in that adds the
+   spring-hover lift. Consumed by keyframes.js at 7 sites.
+
+   AX.W52 §6 — the hover lift is the restrained `--scale-hover-btn` (1.05, NOT
+   the emphatic 1.08 `--scale-hover`) routed through `--spring-smooth` — the ONE
+   button scale register the §6 doctrine records and the gate asserts across
+   `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. The surface legs
+   stay on the bezier `--ease-standard` (a colour cross-fade reads as a wobble
+   on a spring); only the `scale` transform leg springs. */
+@utility btn-interactive {
+    /* AQ.W3 §W3.2 identity base */
+    scale: 1;
+    transition:
+        background-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        scale var(--duration-fast) var(--spring-smooth),
+        opacity var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+        scale: var(--scale-hover-btn);
+    }
+
+    &:active {
+        scale: var(--scale-press);
+    }
+
+    &:disabled {
+        opacity: var(--opacity-disabled);
+        pointer-events: none;
+    }
+
+    &:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+        /* Fade in; base state has no box-shadow transition → instant
+           removal. The `scale` leg keeps the `--spring-smooth` register. */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--spring-smooth),
+            opacity var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+}

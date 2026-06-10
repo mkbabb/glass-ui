@@ -1,80 +1,14 @@
 import { watch, onUnmounted, type Ref } from "vue";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
-// AV.W14 — the error-checked compile/link is the shared `glass/webgl/compile`
-// leaf; goo-blob keeps its `[GooBlob]` diagnostic label via the `label` arg.
-import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { cssToOklch, oklchToGammaRgb } from "../../../../composables/color";
-import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
-import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
 import type { BlobConfig } from "../types";
 import type { BlobMoodSystem } from "./useBlobMood";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
-
-const MAX_SATS = 4;
-/** Compile-time trail length — mirrors `TRAIL_N` in metaball.frag.ts + useBlobPointer.ts. */
-const TRAIL_N = 15;
-/** Compile-time palette cap — mirrors `MAX_BLOB_STOPS` in metaball.frag.ts. */
-const MAX_BLOB_STOPS = 4;
-
-/** Diagnostic label for the shared compile/link error path (AV.W14). */
-const BLOB_LABEL = "[GooBlob]";
-
-/**
- * Canvas is CSS-sized 1.6x its layout wrapper (see GooBlob.vue). Positions are in
- * [-0.5, 0.5] normalized space mapped to canvas UVs. To make the layout footprint
- * represent the "visible blob region" and have the extra 60% of canvas serve as
- * overflow margin for satellite orbits, scale all length-like uniforms by
- * 1/1.6 = 0.625.
- */
-const POS_SCALE = 1 / 1.6;
-
-const UNIFORM_NAMES = [
-    "uResolution",
-    "uTime",
-    "uBaseColor",
-    "uPointer",
-    "uPointerActive",
-    "uPointerAttraction",
-    "uPointerStrength",
-    "uBodyRadius",
-    "uPulsePhase",
-    "uPulseAmp",
-    "uNoiseAmp",
-    "uNoiseFreq",
-    "uNoiseSpeed",
-    "uWarpAmp",
-    "uSmoothK",
-    "uMerge",
-    "uMaxReach",
-    "uLit",
-    "uRimColor",
-    "uLightDir",
-    "uSpecStrength",
-    "uSpecShininess",
-    "uRimPower",
-    "uRimStrength",
-    "uIridescence",
-    "uIridHue",
-    "uIridSpeed",
-    "uSssScale",
-    "uSssPower",
-    "uCoreGlow",
-    "uHueRange",
-    "uSatShift",
-    "uBrightnessShift",
-    "uColorNoiseFreq",
-    "uColorNoiseSpeed",
-    "uStopCount",
-    "uSatCount",
-    "uTrailCount",
-    "uVelocity",
-    "uStretch",
-] as const;
-
-type UniformName = (typeof UNIFORM_NAMES)[number];
+import { buildMetaballProgram } from "./buildMetaballProgram";
+import { uploadBlobUniforms, type BlobFrameState } from "./uploadBlobUniforms";
 
 export interface UseMetaballRendererOptions {
     canvasRef: Ref<HTMLCanvasElement | null>;
@@ -98,14 +32,21 @@ export interface UseMetaballRendererOptions {
     config: BlobConfig;
 }
 
+/** The renderer's public control surface — pause/resume the demand loop. */
+export interface UseMetaballRendererReturn {
+    pause: () => void;
+    resume: () => void;
+}
+
 /**
  * The GooBlob WebGL renderer — composes the `useWebGLCanvas` substrate (AU.W6).
  *
  * This module owns ONLY the metaball-specific concerns: compiling the shader,
- * building the quad + uniform cache, and uploading the per-frame uniforms derived
- * from the mood / pointer / satellite systems and the resolved base color. The
- * generic WebGL2 lifecycle — context creation, the suspend/resume model, the
- * demand-driven rAF loop, the tab-visibility owner, the ResizeObserver, and the
+ * building the quad + uniform cache (the `buildMetaballProgram` leaf), and
+ * uploading the per-frame uniforms (the `uploadBlobUniforms` leaf) derived from the
+ * mood / pointer / satellite systems and the resolved base color. The generic
+ * WebGL2 lifecycle — context creation, the suspend/resume model, the demand-driven
+ * rAF loop, the tab-visibility owner, the ResizeObserver, and the
  * webglcontextlost/restored robustness — lives in the substrate; this renderer
  * threads its behaviour through the substrate's
  * `setup`/`frame`/`shouldContinue`/`resize`/`teardown` callbacks. It does NOT call
@@ -117,7 +58,9 @@ export interface UseMetaballRendererOptions {
  * a `var(--token)` — the SFC's `resolveTokenColor` leaf does that BEFORE handing
  * concrete strings here (inv-K-3 seam); the value.js 1×1-canvas DOM probe is gone.
  */
-export function useMetaballRenderer(options: UseMetaballRendererOptions) {
+export function useMetaballRenderer(
+    options: UseMetaballRendererOptions,
+): UseMetaballRendererReturn {
     const {
         canvasRef,
         color,
@@ -228,68 +171,9 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
             // Build the program + quad + uniform cache on a fresh context. The
             // substrate calls this on arm() AND on every webglcontextrestored, so a
             // GPU context loss self-heals — the closures below close over the fresh
-            // `gl`/`prog`/`U` each time.
+            // `gl` + the freshly-built program handles each time.
             setup: (gl) => {
-                const vs = compileShader(
-                    gl,
-                    gl.VERTEX_SHADER,
-                    METABALL_VERTEX_SRC,
-                    BLOB_LABEL,
-                );
-                const fs = compileShader(
-                    gl,
-                    gl.FRAGMENT_SHADER,
-                    METABALL_FRAGMENT_SRC,
-                    BLOB_LABEL,
-                );
-                const prog = linkProgram(gl, vs, fs, BLOB_LABEL);
-                gl.useProgram(prog);
-
-                // Full-quad (two triangles) — the source's six-vertex quad.
-                const vao = gl.createVertexArray()!;
-                gl.bindVertexArray(vao);
-                const buf = gl.createBuffer()!;
-                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-                gl.bufferData(
-                    gl.ARRAY_BUFFER,
-                    new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-                    gl.STATIC_DRAW,
-                );
-                const aPos = gl.getAttribLocation(prog, "aPosition");
-                gl.enableVertexAttribArray(aPos);
-                gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-                // Uniform location cache (scalar/vector uniforms).
-                const U = {} as Record<UniformName, WebGLUniformLocation | null>;
-                for (const n of UNIFORM_NAMES) U[n] = gl.getUniformLocation(prog, n);
-
-                // Per-satellite array-element locations.
-                const satPosLocs: (WebGLUniformLocation | null)[] = [];
-                const satRadLocs: (WebGLUniformLocation | null)[] = [];
-                const satOpLocs: (WebGLUniformLocation | null)[] = [];
-                for (let i = 0; i < MAX_SATS; i++) {
-                    satPosLocs.push(gl.getUniformLocation(prog, `uSatPos[${i}]`));
-                    satRadLocs.push(gl.getUniformLocation(prog, `uSatRadius[${i}]`));
-                    satOpLocs.push(gl.getUniformLocation(prog, `uSatOpacity[${i}]`));
-                }
-
-                // Per-trail-element locations (mirrors the satellite plumbing; the
-                // trail is a separate COMPILE-TIME-SIZED uTrail[TRAIL_N] array).
-                const trailPosLocs: (WebGLUniformLocation | null)[] = [];
-                const trailRadLocs: (WebGLUniformLocation | null)[] = [];
-                for (let i = 0; i < TRAIL_N; i++) {
-                    trailPosLocs.push(gl.getUniformLocation(prog, `uTrailPos[${i}]`));
-                    trailRadLocs.push(gl.getUniformLocation(prog, `uTrailRadius[${i}]`));
-                }
-
-                // Per-palette-stop locations (W11.b — uPalette[MAX_BLOB_STOPS]).
-                const paletteLocs: (WebGLUniformLocation | null)[] = [];
-                for (let i = 0; i < MAX_BLOB_STOPS; i++) {
-                    paletteLocs.push(gl.getUniformLocation(prog, `uPalette[${i}]`));
-                }
-
-                gl.enable(gl.BLEND);
-                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+                const { prog, vs, fs, vao, buf, locs } = buildMetaballProgram(gl);
 
                 function resize() {
                     // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
@@ -383,245 +267,20 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     }
                     satellites.tick(simTimeMs, mood.params.value);
 
-                    const params = mood.params.value;
-                    const rgb = resolveColor(color.value);
-
-                    // AY.W-BLOB2 — the BlobConfig atom destructure. The flat ~50-knob
-                    // surface collapsed to eight cohesive atoms (types.ts); the per-frame
-                    // upload reads the same field NAMES off the atom they belong to, so
-                    // the upload math is byte-identical to the flat read (the
-                    // proof:blob-* fleet is the witness).
-                    const {
-                        geometry: cGeo,
-                        membrane: cMem,
-                        color: cCol,
-                        surface: cSurf,
-                        interaction: cInt,
-                    } = config;
-
-                    gl.useProgram(prog);
-                    gl.bindVertexArray(vao);
-
-                    gl.uniform2f(U.uResolution, canvas.width, canvas.height);
-                    // uTime is the tempo-INTEGRATED motion clock (seconds), NOT the
-                    // substrate's absolute clock — so the FBM noise scroll slows with
-                    // tempo and freezes at tempo=0 WITHOUT a discontinuity.
-                    gl.uniform1f(U.uTime, simTimeMs / 1000);
-                    gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
-
-                    // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
-                    // back to uBaseColor (uStopCount <= 1). The stops arrive ALREADY
-                    // CONCRETE (the SFC un-wrapped any var()-token via resolveTokenColor
-                    // — AX.W16); the renderer resolves them through the `resolveColor`
-                    // memo (the `/color` leaf), never the DOM.
-                    const stops = paletteStops.value;
-                    const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
-                    gl.uniform1i(U.uStopCount, stopCount);
-                    for (let i = 0; i < MAX_BLOB_STOPS; i++) {
-                        const loc = paletteLocs[i] ?? null;
-                        const css = stops[i];
-                        if (css) {
-                            const p = resolveColor(css);
-                            gl.uniform3f(loc, p[0], p[1], p[2]);
-                        } else {
-                            gl.uniform3f(loc, rgb[0], rgb[1], rgb[2]);
-                        }
-                    }
-
-                    // Pointer. The NET attraction is the config lean + the mood
-                    // additive; compute it ONCE so the body-lean uniform AND the trail
-                    // pseudopod reach (below) read the SAME signed value.
-                    const ptr = pointer.pointer.value;
-                    const netAttraction = cInt.pointerAttraction + params.pointerAttraction;
-                    gl.uniform2f(U.uPointer, ptr.x * 0.5 * POS_SCALE, ptr.y * 0.5 * POS_SCALE);
-                    gl.uniform1f(U.uPointerActive, pointer.active.value ? 1.0 : 0.0);
-                    gl.uniform1f(U.uPointerAttraction, netAttraction);
-                    gl.uniform1f(U.uPointerStrength, cInt.pointerStrength * POS_SCALE);
-
-                    // AY.W-BLOB-CONFIG D2 — the SIGN of the lean reaches the TRAIL too.
-                    // The body uv-shift (shader, sign-fixed) now leans the BODY the right
-                    // way, but the decaying-radius pseudopod (the trail below) reaches
-                    // toward the cursor on MOVEMENT ALONE, sign-independent — so a
-                    // shy-away (negative) attraction would still extend a pseudopod toward
-                    // the cursor, and that toward-reach keeps the net centroid LEANING IN
-                    // even as the body shies. A shy-away creature RETRACTS its reach: gate
-                    // the pseudopod base radius by the POSITIVE part of the net attraction
-                    // (reach ~1 at the default lean, 0 once the net goes negative), so a
-                    // negative attraction shies the WHOLE creature — body AND pseudopod —
-                    // away as one. The trail count stays; the zero-radius samples paint
-                    // nothing.
-                    const reachFactor = Math.max(0, Math.min(1, netAttraction));
-
-                    // Velocity-driven squash-and-stretch (W10). The spring velocity
-                    // (normalized [-1,1]/s) maps into body space like the pointer.
-                    const vel = pointer.velocity.value;
-                    gl.uniform2f(
-                        U.uVelocity,
-                        vel.x * 0.5 * POS_SCALE,
-                        vel.y * 0.5 * POS_SCALE,
-                    );
-                    gl.uniform1f(U.uStretch, cInt.stretch);
-
-                    // Pointer trail (W10) — decaying-radius pseudopod. The trail is
-                    // in the same normalized [-1,1] space as the pointer, so map it
-                    // exactly like uPointer (`* 0.5 * POS_SCALE`). The base radius rides
-                    // `reachFactor` (D2) so the pseudopod reaches toward the cursor ONLY
-                    // while the net lean is positive.
-                    const trail = pointer.trailSources(
-                        cGeo.satelliteRadius * 0.7 * reachFactor,
-                    );
-                    gl.uniform1i(U.uTrailCount, trail.count);
-                    for (let i = 0; i < TRAIL_N; i++) {
-                        const posLoc = trailPosLocs[i] ?? null;
-                        const radLoc = trailRadLocs[i] ?? null;
-                        const t = trail.sources[i];
-                        if (t) {
-                            gl.uniform2f(
-                                posLoc,
-                                t.x * 0.5 * POS_SCALE,
-                                t.y * 0.5 * POS_SCALE,
-                            );
-                            gl.uniform1f(radLoc, t.radius * POS_SCALE);
-                        } else {
-                            gl.uniform2f(posLoc, 0, 0);
-                            gl.uniform1f(radLoc, 0);
-                        }
-                    }
-
-                    // Body — config is the base, mood params modulate.
-                    gl.uniform1f(U.uBodyRadius, cGeo.bodyRadius * POS_SCALE);
-                    gl.uniform1f(
-                        U.uPulsePhase,
-                        timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2,
-                    );
-                    // normalize to idle baseline + the one-shot click impulse (W10).
-                    // The pulse rings ± so it transiently fattens/thins the throb
-                    // amplitude — the click is FELT through the EXISTING uPulseAmp
-                    // channel (no parallel pulse path).
-                    const clickPulse = pointer.pulse.value * cInt.clickImpulse;
-                    gl.uniform1f(
-                        U.uPulseAmp,
-                        (((cMem.pulseAmp * params.pulseAmp) / 0.015) + clickPulse) *
-                            POS_SCALE,
-                    );
-
-                    // Surface noise — config controls shape, mood scales amplitude.
-                    gl.uniform1f(
-                        U.uNoiseAmp,
-                        ((cMem.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE,
-                    );
-                    gl.uniform1f(U.uNoiseFreq, cMem.noiseFreq);
-                    gl.uniform1f(U.uNoiseSpeed, cMem.noiseSpeed);
-                    gl.uniform1f(U.uWarpAmp, cMem.warpAmp);
-
-                    // Gooey — `uSmoothK` is a TRUE blend-band in the shader's UV
-                    // space: the smin is IQ-normalized (`k *= 4.0` in
-                    // sdf-body.glsl.ts) so the band == k (the seam dip at a==b is
-                    // exactly the uploaded k). The `/0.22` normalizer stayed deleted
-                    // (W9.a — the right deletion), but the smin band RIDES `POS_SCALE`
-                    // like every other length-like uniform (uBodyRadius/satRadius/
-                    // uPointer/noiseAmp all carry the 0.625 inner-region compression):
-                    // the merge inflation is measured in the SAME UV space as the
-                    // radii, so it must carry the same compression or it is 1.6×
-                    // oversized relative to every other length (the second half of
-                    // the AW.W9 flood). The mood `smoothK` is now a unitless,
-                    // 1.0-centred MULTIPLIER (idle ≈ 1.0): the config holds the ONE
-                    // absolute band, mood scales it — there is no split-length regime,
-                    // so no `/DEFAULTS` ratio normalization is needed.
-                    gl.uniform1f(U.uSmoothK, cMem.smoothK * params.smoothK * POS_SCALE);
-                    gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
-
-                    // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
-                    // The fragment early-outs to a transparent write for any pixel
-                    // OUTSIDE this radius BEFORE the two 3-octave FBM calls + the OKLCh
-                    // round-trip — the oversized canvas runs the full ALU on a large
-                    // transparent border otherwise. uMaxReach is the worst-case painted
-                    // reach PADDED so it NEVER clips the wet meniscus (IQ: inflate the
-                    // bounding radius to match any outward-expanding op). It sums every
-                    // outward term — body + the eccentric satellite orbit (the Y-long
-                    // axis, ×1.2 random baseR × (1+ecc)) + the satellite radius + the
-                    // smin blend band + the FBM edge amplitude + the click-pulse — all
-                    // riding POS_SCALE (the same inner-region compression the radii ride),
-                    // plus a 0.10 UV safety pad for the pointer-lean excursion and the
-                    // squash stretch. NO length constant is edited (W08/W15 own those);
-                    // this is a READ of them.
-                    const satWorst =
-                        cGeo.orbitRadius * 1.2 * (1 + cGeo.eccentricity) +
-                        cGeo.satelliteRadius;
-                    const maxReach =
-                        (Math.max(cGeo.bodyRadius, satWorst) +
-                            cMem.smoothK * params.smoothK +
-                            (cMem.noiseAmp * params.noiseAmp) / 0.025 +
-                            Math.abs(pointer.pulse.value) * cInt.clickImpulse) *
-                            POS_SCALE +
-                        0.1;
-                    gl.uniform1f(U.uMaxReach, maxReach);
-
-                    // Color perturbation
-                    gl.uniform1f(U.uHueRange, cCol.hueRange + params.hueRange);
-                    gl.uniform1f(U.uSatShift, cCol.satShift + params.satShift);
-                    gl.uniform1f(
-                        U.uBrightnessShift,
-                        cCol.brightnessShift + params.brightnessShift,
-                    );
-                    gl.uniform1f(U.uColorNoiseFreq, cCol.colorNoiseFreq);
-                    gl.uniform1f(U.uColorNoiseSpeed, cCol.colorNoiseSpeed);
-
-                    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
-                    // `uRimColor` arrives ALREADY CONCRETE (the SFC un-wrapped any
-                    // var()-token via resolveTokenColor — AX.W16) and resolves through
-                    // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
-                    // never the DOM. Gated behind `uLit` (default lit).
-                    gl.uniform1f(U.uLit, cSurf.lit ? 1.0 : 0.0);
-                    const rim = resolveColor(rimColor.value);
-                    gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
-                    gl.uniform3f(
-                        U.uLightDir,
-                        cSurf.lightDir[0],
-                        cSurf.lightDir[1],
-                        cSurf.lightDir[2],
-                    );
-                    gl.uniform1f(U.uSpecStrength, cSurf.specStrength);
-                    gl.uniform1f(U.uSpecShininess, cSurf.specShininess);
-                    gl.uniform1f(U.uRimPower, cSurf.rimPower);
-                    gl.uniform1f(U.uRimStrength, cSurf.rimStrength);
-
-                    // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,
-                    // radians in-shader. Mood routes the sheen intensity (excited =
-                    // stronger shimmer, sleepy = nearly flat) via params.iridScale.
-                    gl.uniform1f(
-                        U.uIridescence,
-                        cSurf.iridescence * params.iridScale,
-                    );
-                    gl.uniform1f(U.uIridHue, cSurf.iridHue * (Math.PI / 180));
-                    gl.uniform1f(U.uIridSpeed, cSurf.iridSpeed);
-                    gl.uniform1f(U.uSssScale, cSurf.sssScale * params.iridScale);
-                    gl.uniform1f(U.uSssPower, cSurf.sssPower);
-                    gl.uniform1f(U.uCoreGlow, cSurf.coreGlow);
-
-                    // Satellites
-                    const sats = satellites.sources;
-                    gl.uniform1i(U.uSatCount, sats.length);
-                    for (let i = 0; i < MAX_SATS; i++) {
-                        const posLoc = satPosLocs[i] ?? null;
-                        const radLoc = satRadLocs[i] ?? null;
-                        const opLoc = satOpLocs[i] ?? null;
-                        const sat = sats[i];
-                        if (sat) {
-                            gl.uniform2f(posLoc, sat.x * POS_SCALE, sat.y * POS_SCALE);
-                            gl.uniform1f(radLoc, sat.radius * POS_SCALE);
-                            gl.uniform1f(opLoc, sat.opacity);
-                        } else {
-                            gl.uniform2f(posLoc, 0, 0);
-                            gl.uniform1f(radLoc, 0);
-                            gl.uniform1f(opLoc, 0);
-                        }
-                    }
-
-                    gl.clearColor(0, 0, 0, 0);
-                    gl.clear(gl.COLOR_BUFFER_BIT);
-                    gl.drawArrays(gl.TRIANGLES, 0, 6);
-                    gl.bindVertexArray(null);
+                    // Resolve the frame state, then hand it to the uniform-upload
+                    // leaf (the byte-identical write + draw). The resolve order —
+                    // advance the systems above, then read their settled values —
+                    // is unchanged; the leaf does ONLY the uniform writes.
+                    const frame: BlobFrameState = {
+                        params: mood.params.value,
+                        rgb: resolveColor(color.value),
+                        simTimeMs,
+                        timeSec,
+                        resolveColor,
+                        rimColor: rimColor.value,
+                        paletteStops: paletteStops.value,
+                    };
+                    uploadBlobUniforms(gl, prog, vao, locs, canvas, config, pointer, satellites, frame);
                 }
 
                 /**
@@ -726,4 +385,3 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         },
     };
 }
-

@@ -797,31 +797,28 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 ---
 
-## `@mkbabb/glass-ui/metric-cell` + `@mkbabb/glass-ui/metric-stack` subpaths RETIRED (AV.W10)
+## `@mkbabb/glass-ui/metric-cell` + `@mkbabb/glass-ui/metric-stack` subpaths — KEPT (speedtest-consumed)
 
-Both subpaths are removed. The `metric-cell/` (`MetricCell`) and
-`metric-stack/` (`MetricStack` + `MetricRow`) component dirs, their
-`src/metric-cell.ts` / `src/metric-stack.ts` barrels, the
-`./metric-cell` / `./metric-stack` `package.json` `exports` entries +
-`typesVersions` rows, and the `@mkbabb/glass-ui/api` re-exports
-(`MetricCellAppearance`, `MetricCellProps`, `MetricStackProps`,
-`MetricRowProps`) are deleted. The orphaned `--metric-row-*` value-clamp
-token family (tokens.css §17, consumed only by `MetricRow`/`MetricStack`)
-is removed with them.
+Both subpaths SHIP. The `metric-cell/` (`MetricCell`) and `metric-stack/`
+(`MetricStack` + `MetricRow`) component dirs, their `src/subpaths/metric-cell.ts`
+/ `src/subpaths/metric-stack.ts` barrels, the `./metric-cell` / `./metric-stack`
+`package.json` `exports` entries + `typesVersions` rows, the
+`@mkbabb/glass-ui/api` re-exports (`MetricCellAppearance`, `MetricCellProps`,
+`MetricStackProps`, `MetricRowProps`), and the `--metric-row-*` value-clamp token
+family (tokens.css §17) are all LIVE.
 
-**0 external consumers** — at HEAD neither package had any `.vue`/`.ts`
-SFC consumer across `src/` or `demo/` (only its own dir + test + the
-subpath barrel + the `/api` re-export). They failed the ≥2-consumer
-substrate bar (J inv 10), so they are retired rather than wired to a
-synthetic second consumer.
+**Speedtest is the binding consumer.** The metric families clear the ≥2-consumer
+substrate bar (J inv 10) through the speedtest dashboard, which composes
+`<MetricCell>`/`<MetricStack>`/`<MetricRow>` over the `/metric-cell` +
+`/metric-stack` subpaths. They are the library's identity surface for compact
+metric cards + vertical metric grouping; no migration action is required.
 
-**No alias** (no-backwards-compat precept). There is no shim. A consumer
-that imported these subpaths fails with Node's standard
-`ERR_PACKAGE_PATH_NOT_EXPORTED`; the migration is to compose
-`<MetricBadge>` (still shipped on the root barrel + `/metric-badge`)
-directly — `MetricStack` was a thin layout grouping over `MetricBadge`
-rows, and `MetricCell` a glass-surface card wrapper, both reproducible in
-consumer composition.
+Import them via their flat subpath:
+
+```ts
+import { MetricCell } from "@mkbabb/glass-ui/metric-cell";
+import { MetricStack, MetricRow } from "@mkbabb/glass-ui/metric-stack";
+```
 
 ---
 

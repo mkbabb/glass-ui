@@ -53,6 +53,9 @@ import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 function stripComments(src) {
     return src
@@ -194,7 +197,7 @@ function run() {
     if (!existsSync(P.GLASS)) {
         violations.push("glass.css is absent");
     } else {
-        const css = stripComments(readFileSync(P.GLASS, "utf8"));
+        const css = stripComments(readMonolith(ROOT, "glass"));
         // The rail is authored as a Tailwind `@utility glass-progress-rail` (AX.W24)
         // so its geometry (the hairline height + zero radius) lands in @layer
         // utilities and out-ranks the variant's `h-4`/`rounded-pill` base utilities

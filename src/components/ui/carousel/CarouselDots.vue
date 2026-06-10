@@ -70,9 +70,9 @@ onMounted(syncIndex);
    Re-authored from first principles against the slides `DeckPager` oracle
    (`~/Programming/slides/src/deck/DeckPager.vue`). The prior recipe painted the
    inactive dot `bg-muted-medium` (a token tuned for an OPAQUE light card) and
-   drove the active emphasis with the dead `scale-[var(--scale-hover)]`
-   arbitrary class (a Tailwind-v4 var-in-arbitrary NON-EMIT — it compiled to
-   nothing, so the active morph was `transform:none`). Both are excised. (AX.W23 F4)
+   drove the active emphasis with the dead `scale-(--scale-hover)` shorthand
+   class (a Tailwind-v4 custom-property ref that no longer mapped to a value, so
+   the active morph was `transform:none`). Both are excised. (AX.W23 F4)
 
    CONTRAST — the inactive dot paints `color-mix(in srgb, var(--foreground) 52%,
    transparent)`. This is the DeckPager oracle value: the house `--surface-tint-*`

@@ -1,0 +1,245 @@
+/* glass/a11y-fallback.css
+   The accessibility + capability overrides — @media (prefers-reduced-transparency) / (prefers-contrast: more) / (forced-colors: active), the non-backdrop-filter @layer components fallback, and the :has()-less @supports fallback. LAST in cascade (they override the base ladder).
+   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   order, each in its own @layer components (isomorphic to the monolith).
+   See docs/precepts/design-idioms.md §cohesion-aware partials. */
+/* ── Accessibility: reduced transparency ──────────
+   AX.W54 — the gestalt collapse: ONE `--glass-level: 0` replaces the ten per-rung
+   opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`
+   through the SAME machinery (the opacity seam → 1, the blur seam → 0), so every
+   glass surface — current and future — flattens with no per-rung enumeration. The
+   grain + highlight kills stay (they sit off the level axis). */
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --glass-level: 0;
+        --glass-grain-opacity: 0;
+        --glass-highlight: 0 0 0 0 transparent;
+    }
+}
+
+/* ── Accessibility: high contrast ─────────────────
+   AX.W54 — a single bounded `--glass-level: 0.3` (mostly-solid, not fully flat)
+   replaces the five per-rung opacity clobbers: every rung firms up toward solid
+   for AA while keeping a hint of the glass register. ONE knob, every rung.
+
+   AX.W55 — the Clear↔Tinted user-escape (Apple's iOS-26.2 analog) COORDINATES the
+   two axes here: the OPACITY axis rides W54's `--glass-level` (firm up toward solid)
+   AND the TINT axis biases toward ink — `--glass-tint-source` → the warm-ink +
+   `--glass-tint-strength` → the AA floor, the same darken the automatic bright
+   bucket applies, now reached by the explicit "more contrast" user request. The two
+   axes stay DISTINCT (level = opacity+blur, tint = darken) but share the bracket so
+   a high-contrast user gets BOTH a firmer plate and the ink-tint legibility lift —
+   one coordinated escape, not two parallel forks. */
+@media (prefers-contrast: more) {
+    :root {
+        --glass-level: 0.3;
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-aa);
+    }
+}
+
+/* ── Accessibility: forced-colors (Windows High Contrast) glass-language skin ──
+   AX.W36 — when the OS forces a palette (Windows High Contrast), the platform
+   strips the whole decorative glass register: `backdrop-filter` is dropped, the
+   `--glass-*` inset/box-shadow rungs vanish, and every meaning-bearing chroma
+   flattens to one system color. A `.glass-floating` Dialog over a `.glass-resting`
+   Card would read as two borderless transparent rectangles with no edge, and a
+   green-vs-red StatusDot would resolve to one indistinguishable dot. This skin
+   restores the STRUCTURE the glass chrome encoded — it does NOT pin glass-ui's
+   brand colours (no `forced-color-adjust: none`); the chrome is decorative and
+   YIELDS to the user's forced palette (css forced-colors guidance). Only the
+   standard WHC system keywords are used (`Canvas`/`CanvasText`/`Highlight`) — no
+   glass-ui token leaks into the WHC arm.
+
+   COORDINATES WITH W54 — the same `--glass-level: 0` opaque escape the reduced-
+   transparency / high-contrast brackets ride. Setting the ONE clarity knob to 0
+   collapses the `--glass-bg-*` opacity recipe to solid `--card` + `blur(0)` through
+   the SAME machinery (no parallel solid recipe), so the platform sees opaque plates
+   it maps to `Canvas`. The grain + highlight kills match the reduce bracket (they
+   sit off the level axis). The W55 tint axis is moot under WHC (the user's palette
+   supersedes the ink-darken) but harmless — the opaque plate is system-painted. */
+@media (forced-colors: active) {
+    :root {
+        --glass-level: 0;
+        --glass-grain-opacity: 0;
+        --glass-highlight: 0 0 0 0 transparent;
+    }
+
+    /* Every glass-material ladder rung relied on `backdrop-filter` + an inset
+       `box-shadow` rim for its silhouette — both gone under WHC. Restore a real
+       `border` keyed to the system text colour so each tier pane reads as a boxed
+       region. The selector group MIRRORS the ladder definition above (one source,
+       not a hand-rolled re-list) so a future rung added to the material group
+       inherits the WHC edge for free — and any `.glass-material` div picks up the
+       edge with no per-component arm. */
+    .glass-material,
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay,
+    .glass-card,
+    .glass-drawer {
+        border: 1px solid CanvasText;
+    }
+
+    /* The floating + overlay rungs (Dialog / Sheet / Popover / DropdownMenu /
+       HoverCard compose them) + the Drawer (the overlay-band sheet, drawer.css)
+       get the canonical `Canvas` fill so the modal reads as a DISTINCT boxed
+       region OVER the page, not a transparent overlap — the hierarchy survives.
+       The `CanvasText` edge above already draws the box; this opaque fill
+       separates the floating layer from the content beneath it. */
+    .glass-floating,
+    .glass-overlay,
+    .glass-drawer {
+        background: Canvas;
+    }
+
+    /* The decorative specular catch-light (`::before`) + grain overlay (`::after`)
+       paint nothing meaningful once chroma collapses — yield them entirely (the
+       same decorative-chrome cede the `--glass-level: 0` opaque escape performs on
+       the body). They are NOT part of the structure the skin restores. */
+    .glass-material::before,
+    .glass-wash::before,
+    .glass-quiet::before,
+    .glass-resting::before,
+    .glass-floating::before,
+    .glass-overlay::before,
+    .glass-card::before,
+    .glass-drawer::before,
+    .glass-wash::after,
+    .glass-quiet::after,
+    .glass-resting::after,
+    .glass-floating::after,
+    .glass-overlay::after {
+        display: none;
+    }
+
+    /* Meaning-bearing hue identity → a bordered glyph that keeps ok/warn/error
+       distinguishable by a WHC-HONORED system color, NOT a glass-ui hue (which WHC
+       strips to one fill). StatusDot reflects its variant onto `data-status`
+       (StatusDot.vue) and the inner dot carries `.status-dot__dot`; the
+       `role="img"` + `aria-label` accessible name already ships, so this is the
+       VISUAL differentiation only. A bare bordered dot + the per-status fill triplet
+       below means a sighted WHC user can still tell the row apart.
+
+       `!important` IS load-bearing here: StatusDot paints the dot fill via an INLINE
+       `:style="dotStyle"` (`background-color`, specificity 1,0,0,0), which outranks
+       any stylesheet selector AND which forced-colors then `forced-color-adjust:
+       auto`-remaps to a single Canvas-white — collapsing the row to one indistinct
+       dot. The WHC arm must override that inline fill, and inline can only be beaten
+       by `!important`; this is the documented forced-colors degradation path (the
+       arm only activates under WHC). The component keeps its inline hue in normal
+       mode untouched. */
+    .status-dot__dot {
+        border: 1px solid CanvasText;
+        /* The bordered ring alone separates a dot from its surround; the per-status
+           fill below adds the WHC-honored distinction. */
+    }
+    /* The inner painted fill (`.status-dot__fill`, `h-full w-full`) + the pulse ring
+       carry the SAME inline glass-ui hue StatusDot paints — under WHC they cover the
+       outer `.status-dot__dot` glyph with a `forced-color-adjust`-remapped Canvas
+       fill (the row collapses to one white dot even with the outer system color set).
+       Yield them so the outer bordered + system-color glyph is the sole visible dot. */
+    .status-dot__fill,
+    .status-dot__pulse {
+        display: none;
+    }
+    /* The ok/warn/error/idle distinction rides the standard WHC keyword palette:
+         active (ok)   → Highlight   (the affirmative system accent)
+         paused (warn) → Mark        (the marked/attention system color)
+         error         → CanvasText  (a solid filled dot — the strongest weight)
+         idle/custom   → Canvas      (a hollow dot — only the CanvasText ring reads)
+       Each stays distinguishable by the system color the user's palette assigns,
+       never glass-ui chroma. The `!important` beats the component's inline fill. */
+    .status-dot__dot[data-status="active"] {
+        background: Highlight !important;
+    }
+    .status-dot__dot[data-status="paused"] {
+        background: Mark !important;
+    }
+    .status-dot__dot[data-status="error"] {
+        background: CanvasText !important;
+    }
+    .status-dot__dot[data-status="idle"],
+    .status-dot__dot[data-status="custom"] {
+        background: Canvas !important;
+    }
+}
+
+/* ── @supports fallbacks for non-backdrop-filter browsers ── */
+@layer components {
+    /* GUARD 1 — the NO-BLUR-AT-ALL engine (supports NEITHER the unprefixed NOR the
+       webkit form): paint an opaque-leaning plate so text stays legible without any
+       blur. AY.W-A11Y-PERF O-2b note: this is the floor for the theoretical
+       neither-supported case. The Safari ≤17 webkit-only trap (supports the `-webkit-`
+       form, so this `@supports not (… or …)` is FALSE and the fallback does NOT fire)
+       is closed at the SOURCE OF THE PREFIX: O-2a's build pass guarantees the shipped
+       dist carries the `-webkit-backdrop-filter:` pair, so a Safari-17 engine renders
+       the BLUR off the prefixed rule (it no longer falls through to a transparent
+       unprefixed-only surface). The trap closes where the prefix is emitted, not here. */
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .glass-wash {
+            background: color-mix(in srgb, var(--card) 80%, transparent);
+        }
+        .glass-quiet {
+            background: color-mix(in srgb, var(--card) 88%, transparent);
+        }
+        .glass-resting {
+            background: color-mix(in srgb, var(--card) 94%, transparent);
+        }
+        .glass-floating {
+            background: color-mix(in srgb, var(--card) 98%, transparent);
+        }
+        .glass-overlay {
+            background: var(--card);
+        }
+        .glass-btn {
+            background: color-mix(in srgb, var(--background) 92%, transparent);
+        }
+    }
+
+    /* GUARD 2 — the WEBKIT-ONLY engine (supports `-webkit-backdrop-filter` but NOT the
+       unprefixed `backdrop-filter` — Safari ≤17). With O-2a's build-emitted prefix the
+       shipped rung carries the `-webkit-backdrop-filter:` pair, so this engine PAINTS
+       the blur off that prefixed declaration. This guard exists to DOCUMENT-and-confirm
+       that path (and would re-assert the translucent glass identity if a future change
+       ever stripped the rung bg under this engine) — it re-states the rungs' translucent
+       glass-mix so a webkit-only engine that DID get the prefix keeps the glass look,
+       never the opaque GUARD-1 plate. The `proof:webkit-backdrop` gate asserts the
+       shipped dist carries BOTH guards. */
+    @supports ((-webkit-backdrop-filter: blur(1px)) and (not (backdrop-filter: blur(1px)))) {
+        .glass-wash {
+            background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-quiet {
+            background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-resting {
+            background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-floating {
+            background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-overlay {
+            background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-btn {
+            background: var(--glass-bg-wash);
+        }
+    }
+}
+
+/* ── :has() focus-elevation fallback (AQ.W3 §W3.1a) ──────────────────────
+   SOLE fallback for engines without `:has()`. `.is-focus-within` is toggled
+   by a ≤6-LOC focusin/focusout guard in `Card.vue` that runs ONLY when
+   `!CSS.supports('selector(:has(*))')` (modern engines run zero JS). The
+   class redefines the SAME `--card-focus-*` rungs as the `:has()` rule, so the
+   override values have one source. NOT a live+dead alias — `:has()` is the
+   enhancement, this the documented degradation path. */
+@supports not selector(:has(*)) {
+    .glass-card.is-focus-within {
+        --card-focus-shadow: var(--shadow-md);
+        --card-focus-border: var(--glass-border-floating);
+    }
+}

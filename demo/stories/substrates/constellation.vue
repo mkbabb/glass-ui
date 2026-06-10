@@ -194,6 +194,14 @@ const drawAnomaly = computed(
         },
 );
 
+// ── Recession-envelope section (AY.W-COHERE E3) ─────────────────────────────
+// Two <Constellation> instances over an IDENTICAL seed/count/link, differing ONLY
+// in `opacityCeiling` (1.0 vs 0.4). The π substrate-cohesion spec screenshots both
+// canvases (located via the wrapper `data-testid`) over the white card and asserts
+// the 0.4 instance paints ~0.4× the ink coverage of the 1.0 — the recession prop
+// BITES (the G-RECESSION π readback), not just declared. A neutral lattice (no
+// focal overlay) so the comparison is the raw edge/node ink, the recession's target.
+
 // ── Supernova section (DEMO-ONLY — NOT an engine prop, AY.W-CON2) ───────────
 // Double-tap pushes a radial OUTWARD impulse onto the live field — implemented
 // ENTIRELY here, calling the public `field` expose (no library code, no engine
@@ -470,6 +478,50 @@ onMounted(() => {
                     </span>
                 </div>
             </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="recession envelope (opacityCeiling)"
+            blurb="The per-instance opacityCeiling recession knob — the aurora/fourier sibling that lets a constellation hero recede behind content. Two identical lattices differ ONLY in opacityCeiling: 1.0 (full) vs 0.4 (recessed). The recessed field paints its edges/nodes/web at ~0.4× the alpha, so it yields to the prose a glass card would float over — the ONE recession contract the four live substrates share. Default 1 is byte-identical to a constellation with no opacityCeiling."
+        >
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div
+                    class="relative h-[300px] w-full overflow-hidden rounded-card bg-card"
+                    data-testid="constellation-recession-full"
+                >
+                    <Constellation
+                        seed="recession-demo"
+                        :count="56"
+                        :link="140"
+                        :pointer-reactive="false"
+                        :opacity-ceiling="1"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        opacityCeiling 1.0 (full)
+                    </span>
+                </div>
+                <div
+                    class="relative h-[300px] w-full overflow-hidden rounded-card bg-card"
+                    data-testid="constellation-recession-dim"
+                >
+                    <Constellation
+                        seed="recession-demo"
+                        :count="56"
+                        :link="140"
+                        :pointer-reactive="false"
+                        :opacity-ceiling="0.4"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        opacityCeiling 0.4 (recessed)
+                    </span>
+                </div>
+            </div>
         </StorySection>
 
         <StorySection

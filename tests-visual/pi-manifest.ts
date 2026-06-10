@@ -88,6 +88,15 @@ export const PI_TARGETS = {
         // entering-child morph was NEVER sampled (the twin of the source-arm route bug).
         return resolveScene("dock", "overview");
     },
+    // AY.W-COHERE — the constellation + fourier substrate routes the set-cohesion
+    // gate samples (the focal ring + the comet head accent marks; the recession
+    // bite). Resolved (not hand-coded) against the manifest source-of-truth.
+    get constellation(): Scene {
+        return resolveScene("substrates", "constellation");
+    },
+    get fourier(): Scene {
+        return resolveScene("substrates", "fourier-field");
+    },
     // AX.W44 — the destructive-Alert route (the "Session expired" ink-role surface).
     // dark-semantic-contrast.spec.ts toggles `.dark`, reads back the AlertTitle's
     // resolved color over the card, and recomputes the WCAG ratio in-test.

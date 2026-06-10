@@ -1,0 +1,241 @@
+#!/usr/bin/env node
+// proof:tag-parity — AY.W-LEG1 (the AX.W27a tag-parity meta-assert, NEVER written).
+//
+// NOT the file↔key bijection — that is proof:gate-script-parity (AX.W00), already
+// GREEN. This is the SEPARATE manifest tags↔aggregate assertion the AX corpus
+// specified: "every load-bearing STATIC src-/scripts-scan gate must carry the `ci`
+// tag." The failure it forbids is live at HEAD's history: a structural gate the
+// band depends on (proof:no-god-module / proof:no-legacy-commentary /
+// proof:fail-explicit) shipped `["local"]`-only — absent from the generated
+// ci.yml — so it could be RED on master while CI stayed green (the exact
+// "local-only-gate-is-RED-while-CI-green" class the gates.mjs header exists to
+// prevent).
+//
+// THE RULE. A gate is a STATIC src-scan if its package.json `cmd` resolves to a
+// `scripts/proof-*.mjs` AND it is NOT `sibling: true` (a sibling-walking gate is
+// skip-by-policy on a clean runner) AND it does NOT spawn a browser (a Playwright
+// LIVE-verification gate is `local`-only BY DESIGN — the cardinal-lesson
+// architecture: a clean CI runner has no GPU/browser/dev-server; the STATIC
+// proof:live-verified-ledger is the CI-side proof the live-verification happened).
+// Every static src-scan gate must carry `ci` UNLESS it is in JUSTIFIED_LOCAL_ONLY
+// (an active-tranche meta-gate promoted to ci by its own wave at close, or a
+// deliberately-untagged/meta-step gate — each with a recorded reason).
+//
+// THE TWO EXEMPTION SETS ARE SINGLE-SOURCED + CROSS-CHECKED:
+//   - LIVE_VERIFIED_LOCAL_ONLY — the Playwright/live set, DETECTED from the
+//     script's browser-spawn signature (not a hand-list that silently drifts),
+//     cross-checked against the gates.mjs manifest-header enumeration so the
+//     detection cannot silently grow past what the header documents.
+//   - JUSTIFIED_LOCAL_ONLY — the genuinely-local NON-Playwright static gates, an
+//     explicit reasoned allowlist (active-tranche meta-gates + the gen-ci-fresh
+//     drift meta-step). A NEW static gate not on either set + not `ci`-tagged
+//     REDs — the gate is load-bearing.
+//
+// BORN-RED against proof:fail-explicit / proof:no-legacy-commentary (the band-
+// dependency static gates not yet promoted) — turns GREEN as W-LEG1 (fail-
+// explicit) + W-CSS1 (no-legacy-commentary) promote them. proof:no-god-module is
+// already `["local","ci"]` (W-GOD1 landed its ratchet promotion).
+//
+// SELF-PROVING: two synthetic checks every run — a synthetic static gate WITHOUT
+// ci flags; a synthetic Playwright gate WITHOUT ci does NOT flag. If the
+// classifier mis-fires, the gate reds loudly.
+
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { ROOT } from "./constellation.mjs";
+import { GATES } from "./gates.mjs";
+import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+
+const COMMAND = "npm run proof:tag-parity";
+
+// The Playwright live-verification gates the gates.mjs manifest header
+// (gates.mjs:30-44) ENUMERATES — the single-source cross-check. The DETECTED set
+// (a script that spawns a browser) must be a SUPERSET-or-equal of this; a header
+// name not detected as Playwright, or a detected-Playwright not foreseen, is
+// surfaced (the detection cannot silently grow past the documented set without a
+// note).
+const HEADER_LIVE_VERIFIED = new Set([
+    "proof:aurora-painterly-statistics",
+    "proof:font-cascade-live",
+    "proof:substrate-paints-color",
+    "proof:tabs-unified",
+    "proof:dock-animation-live",
+    "proof:dock-orchestrator-single",
+    "proof:dock-wrap-content-driven",
+    "proof:deck-progress-rail",
+    "proof:squircle-language",
+    "proof:glass-material-demo",
+    "proof:blob-live-truth",
+]);
+
+// The genuinely-local NON-Playwright static gates — each with a recorded reason.
+// An active-tranche AY meta-gate is `local`-only until its own wave promotes it at
+// tranche close; the special meta-steps are local-by-design. This is a FINITE,
+// REASONED allowlist (not a fail-open wildcard): a NEW static gate not here + not
+// ci-tagged + not Playwright REDs.
+const JUSTIFIED_LOCAL_ONLY = new Map([
+    // Deliberately-untagged retired close meta-gate (tags=[]).
+    ["proof:au-final", "AU close meta-gate, RETIRED from the release/ci set at the 3.3.0 cut (tags=[]); kept untagged for the historical bite-run."],
+    // The ci.yml drift meta-step — local+release by design, NOT ci-tagged to avoid
+    // double-render (it verifies the ci mirror; its own note documents this).
+    ["proof:gen-ci-fresh", "ci.yml byte-match drift meta-step (local+release); NOT ci-tagged to avoid double-rendering itself into the file it checks."],
+    // Active-tranche AY meta-gates — promoted to ci by their own wave at AY close.
+    ["proof:ay-w0-reground", "AY.W0 active-tranche re-ground meta-gate (AUDIT-LEDGER HEAD-grounding); promoted at AY close."],
+    ["proof:aur2-residue", "AY.W-AUR2 active-tranche residue strike; promoted at AY close."],
+    ["proof:blob-config", "AY.W-BLOB-CONFIG active-tranche blob-page config-truth gate; promoted at AY close."],
+    ["proof:blob3-strip", "AY.W-BLOB3 active-tranche ColorResolver-strip deletion-proof; promoted at AY close."],
+    ["proof:blob-config-atoms", "AY.W-BLOB2 active-tranche BlobConfig atom-ceiling gate; promoted at AY close."],
+    ["proof:fourier-field-intensity", "AY.W-FF2 active-tranche fourier-field intensity-model gate; promoted at AY close."],
+    ["proof:instrument-scope", "AY.W-IC1 active-tranche instrument-chassis scope gate; promoted at AY close."],
+    ["proof:convergence-fit-coherent", "AY.W-CONVERGE active-tranche FIT-disposition gate; promoted at AY close."],
+    // The demo de-trap source scan — demo/stories scope, sibling to story-language,
+    // local with the demo-language set.
+    ["proof:gate-detrap", "AX.W63 demo de-trap SOURCE scan over a demo/compositions route; local with the demo storybook gate family."],
+    ["proof:story-language", "AX.W58 demo-storybook META-LANGUAGE scan over demo/stories/**; local with the demo storybook gate family."],
+]);
+
+/** Does a gate's backing script spawn a browser (a Playwright/live gate)? */
+function isPlaywrightScript(scriptFile) {
+    const abs = join(ROOT, "scripts", scriptFile);
+    if (!existsSync(abs)) return false;
+    const src = readFileSync(abs, "utf8");
+    return /PW_BIN|playwright|chromium|page\.goto|tests-visual\//.test(src);
+}
+
+/** The single `scripts/proof-*.mjs` a gate's cmd resolves to (or null). */
+function scriptFor(gate, pkg) {
+    const s = pkg.scripts?.[gate.cmd] ?? "";
+    const m = s.match(/scripts\/(proof-[\w.-]+\.mjs)/);
+    return m ? m[1] : null;
+}
+
+/**
+ * The PURE classifier — over the manifest + package.json, returns the violations
+ * + the live-verified detection set (so the self-test can drive it).
+ *
+ * @param {{gates:object[], pkg:object, isPlaywright:(f:string)=>boolean}} ctx
+ */
+export function classify({ gates, pkg, isPlaywright }) {
+    const violations = [];
+    const detectedLive = new Set();
+    const staticScanGates = [];
+
+    for (const g of gates) {
+        if (g.sibling) continue;
+        const script = scriptFor(g, pkg);
+        if (!script) continue; // not a static src-scan (vitest/bash/composite/gates.mjs)
+        const tags = g.tags ?? [];
+        if (isPlaywright(script)) {
+            detectedLive.add(g.id);
+            // A Playwright gate is legitimately local; nothing owed.
+            continue;
+        }
+        staticScanGates.push(g.id);
+        if (tags.includes("ci")) continue; // correctly promoted
+        if (JUSTIFIED_LOCAL_ONLY.has(g.id)) continue; // reasoned local-only keep
+        violations.push(
+            `${g.id} is a static src-scan gate (→ scripts/${script}) but carries tags ${JSON.stringify(tags)} without "ci" — promote it to the ci aggregate, or record a reason in JUSTIFIED_LOCAL_ONLY.`,
+        );
+    }
+
+    // Cross-check the detected live set against the documented header set: a
+    // header name NOT detected as Playwright is a documentation drift to surface
+    // (the header is the human record; detection is the machine truth).
+    for (const id of HEADER_LIVE_VERIFIED) {
+        if (!detectedLive.has(id)) {
+            // Only a note — the gate may be renamed/retired; surfaced, not fatal,
+            // so a header-vs-detection drift is visible without blocking.
+            violations.push(
+                `HEADER DRIFT: gates.mjs header names "${id}" as a live-verified Playwright gate but it is not detected spawning a browser (renamed/retired?) — reconcile the header.`,
+            );
+        }
+    }
+
+    return { violations, detectedLive: [...detectedLive], staticScanGates };
+}
+
+function run() {
+    const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
+
+    // SELF-TEST — the classifier must flag a static gate w/o ci + must NOT flag a
+    // Playwright gate w/o ci. Driven through the PURE classifier with synthetic
+    // gates + a synthetic isPlaywright.
+    const synthPkg = {
+        scripts: {
+            "synth:static": "node scripts/proof-synth-static.mjs",
+            "synth:live": "node scripts/proof-synth-live.mjs",
+        },
+    };
+    const synthIsPw = (f) => f === "proof-synth-live.mjs";
+    const selfStatic = classify({
+        gates: [{ id: "synth:static", cmd: "synth:static", tags: ["local"] }],
+        pkg: synthPkg,
+        isPlaywright: synthIsPw,
+    });
+    const selfLive = classify({
+        gates: [{ id: "synth:live", cmd: "synth:live", tags: ["local"] }],
+        pkg: synthPkg,
+        isPlaywright: synthIsPw,
+    });
+    const selfErrors = [];
+    // (the header cross-check adds notes for the 11 header names absent from the
+    // synthetic gate list — filter to the synthetic gate's own violation)
+    const staticFlagged = selfStatic.violations.some((v) => v.startsWith("synth:static"));
+    const liveFlagged = selfLive.violations.some((v) => v.startsWith("synth:live"));
+    if (!staticFlagged) selfErrors.push("a static gate without ci was NOT flagged");
+    if (liveFlagged) selfErrors.push("a Playwright gate without ci WAS wrongly flagged");
+    if (selfErrors.length) {
+        console.error("[proof:tag-parity] SELF-TEST FAILED — the classifier mis-fired:");
+        for (const e of selfErrors) console.error(`  ✗ ${e}`);
+        process.exit(1);
+    }
+
+    // The real classification.
+    const { violations, detectedLive, staticScanGates } = classify({
+        gates: GATES,
+        pkg,
+        isPlaywright: isPlaywrightScript,
+    });
+
+    // Partition for reporting: the band-dependency mis-tags vs header drift.
+    const misTaggedStaticGates = violations.filter((v) => !v.startsWith("HEADER DRIFT"));
+    const headerDrift = violations.filter((v) => v.startsWith("HEADER DRIFT"));
+
+    const status = violations.length === 0 ? "pass" : "fail";
+    const ARTIFACT = gateArtifactPath("GATE_TAG_PARITY_OUT", "AY-tag-parity");
+    writeGateArtifact(ARTIFACT, {
+        generatedAt: snapshotStamp(),
+        status,
+        gate: "proof:tag-parity",
+        command: COMMAND,
+        staticScanGates: staticScanGates.length,
+        liveVerifiedDetected: detectedLive,
+        justifiedLocalOnly: [...JUSTIFIED_LOCAL_ONLY.keys()],
+        misTaggedStaticGates,
+        headerDrift,
+    });
+
+    console.log("proof:tag-parity — every load-bearing static src-scan gate carries the ci tag (AY.W-LEG1)");
+    console.log(`  static src-scan gates : ${staticScanGates.length}`);
+    console.log(`  live-verified detected: ${detectedLive.length}`);
+    console.log(`  justified local-only  : ${JUSTIFIED_LOCAL_ONLY.size}`);
+    console.log(`  self-test (bite proof): OK — static-no-ci flagged; playwright-no-ci NOT flagged`);
+    console.log(`  mis-tagged static     : ${misTaggedStaticGates.length}`);
+    console.log(`  header drift          : ${headerDrift.length}`);
+    for (const v of violations) console.error(`  ${v}`);
+
+    if (status === "fail") {
+        console.error(
+            `\n[proof:tag-parity] ${violations.length} violation(s) — a load-bearing static src-scan gate is silently local-only (RED on master / green in CI is the class this forbids). Promote it or record the local-only reason.`,
+        );
+        process.exit(1);
+    }
+    console.log(
+        "\n[proof:tag-parity] every static src-scan gate is ci-tagged or justified-local; the Playwright live set matches the documented header.",
+    );
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    run();
+}

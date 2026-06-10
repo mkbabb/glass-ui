@@ -1,0 +1,306 @@
+/* glass/surfaces.css
+   The convenience-shorthand surfaces — .glass-card / .glass-pill / .glass-btn + the glass pill-input + the chromatic edge-dispersion rim fringe.
+   Carved from the glass.css cascade root; @import-ed by glass.css in cascade
+   order, each in its own @layer components (isomorphic to the monolith).
+   See docs/precepts/design-idioms.md §cohesion-aware partials. */
+@layer components {
+    /* ── Convenience shorthands (tier + shape) ── */
+
+    /* Static surface utility — no hover lift, no transition.
+       Interactive cards live in <Card> (which owns its own hover composition)
+       or in components that explicitly opt into a hover variant. */
+    .glass-card {
+        /* Focus-elevation rungs (AQ.W3 §W3.1a) — identity = at-rest paint; the
+           `:has(:focus-visible)` rule redefines them (one source, shared with
+           the fallback). */
+        --card-focus-shadow: var(--shadow-card);
+        --card-focus-border: var(--glass-border-quiet);
+        position: relative;
+        background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+        backdrop-filter: var(--glass-blur-quiet);
+        border: 1px solid var(--card-focus-border);
+        border-radius: var(--radius-card);
+        box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
+        /* AY.W-A11Y-PERF O-4 — upgrade `layout style` → include `paint` so the
+           maximal-glass nested backdrop-filter sample (a glass Button in this card)
+           does not escape the card box (the standard nested-backdrop-cost mitigation;
+           `contain: paint` clips DESCENDANTS only — the card's own rim/drop-shadow is
+           NOT clipped, device-verified). */
+        contain: layout style paint;
+        transition:
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+
+    /* Elevate one rung on descendant KEYBOARD focus (`:focus-visible`, not
+       pointer). Scoped to `.glass-card`. `:has()` Baseline Widely; the
+       `@supports not selector(:has(*))` class fallback (below) ships anyway
+       (focus-elevation is UX-critical — child-state-styling MANDATORY clause). */
+    .glass-card:has(:focus-visible) {
+        --card-focus-shadow: var(--shadow-md);
+        --card-focus-border: var(--glass-border-floating);
+    }
+
+    /* ── Glassmorphic circular icon button ── */
+
+    .glass-btn {
+        @apply flex items-center justify-center cursor-pointer;
+
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `scale: 1` at rest
+           mints the stacking context once so the hover/press scale below does
+           not flicker it into being (the z-index/anchor hazard). */
+        scale: 1;
+        width: var(--size-icon-btn);
+        height: var(--size-icon-btn);
+        border-radius: var(--radius-pill);
+        border: 1.5px solid var(--glass-border-wash);
+        background: var(--glass-bg-wash);
+        backdrop-filter: var(--glass-blur-wash);
+        /* AY.W-A11Y-PERF O-4 — paint containment so the glass button's own
+           backdrop-filter sample stays inside the box when it nests in a glass card /
+           dialog / dock (the nested-backdrop-cost mitigation; clips descendants only,
+           the button's own rim/shadow is unaffected — device-verified). */
+        contain: paint;
+        color: var(--muted-foreground);
+        /* AX.W52 §6 doctrine — the surface legs ride the bezier `--ease-standard`;
+           the `scale` leg is reconciled onto `--spring-smooth` (was `--spring-snappy`)
+           so the icon-button hover settles on the SAME ONE register as `.btn-pill` /
+           `.tap-squish` / `btn-interactive` (the gate asserts one scale register
+           across all four). The press still reads crisp — `--spring-smooth` ζ=0.86
+           settles fast without a visible bounce. */
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            scale var(--duration-normal) var(--spring-smooth);
+    }
+
+    .glass-btn:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--background) 85%, transparent);
+        border-color: var(--surface-tint-22);
+        color: var(--foreground);
+        scale: var(--scale-hover);
+    }
+
+    .glass-btn:active:not(:disabled) {
+        scale: var(--scale-press);
+    }
+
+    .glass-btn:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .glass-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .glass-btn.is-active,
+    .glass-btn[aria-pressed="true"] {
+        background: var(--surface-tint-10);
+        border-color: var(--surface-tint-25);
+        color: var(--foreground);
+    }
+
+    /* ── Pill button base ─────────────────────────── */
+    .btn-pill {
+        @apply inline-flex items-center justify-center cursor-pointer font-medium border-none;
+
+        /* AX.W52 §6 identity base — `scale: 1` at rest so the hover/press scale
+           below animates the `scale` longhand (not `transform`) coherently and
+           does not flicker the stacking context into being (AQ.W3 §W3.2). */
+        scale: 1;
+        /* AX.W51 D18 — the pill GEOMETRY rides the ONE `--ui-scale` comfort axis.
+           gap / padding scale by the master scalar; the font reads the
+           `--control-text` register (`calc(--type-small * --ui-scale)`, the same
+           `text-sm` register the Button CVA paints), so a bare `.btn-pill` consumer
+           and a `<Button>` agree on the control font, and ONE `--ui-scale` override
+           grows the pill's height (via padding) + gap + font in lockstep. Desktop
+           default is the identity (scale 1 → the prior proportion). */
+        gap: calc(0.375rem * var(--ui-scale));
+        border-radius: var(--radius-pill);
+        padding: calc(0.5rem * var(--ui-scale)) calc(1rem * var(--ui-scale));
+        font-size: var(--control-text);
+        /* AX.W52 — the ONE coherent button transition (RED witness 5/6). The
+           SURFACE legs (bg/border/box-shadow/color/opacity) ride the bezier
+           `--ease-standard` (a colour cross-fade reads as a wobble on a spring);
+           the TRANSFORM leg (`scale`) rides `--spring-smooth` (the sub-perceptual
+           settle), so the hover lift + the surface cross-fade read as ONE glide.
+           The DEAD `transform` leg is retired — the variants animate the `scale`
+           longhand. CRITICAL: `.tap-squish` (composed alongside on the button
+           base, utilities.css) ALSO lists this full coherent set, so neither
+           class's `transition` shorthand can clobber the other down to a
+           scale-only animation — the cascade bug that left every button
+           transitioning ONLY `scale` (the live-readback RED, RED witness 5). The
+           doctrine: surface-props→bezier, transform→spring (tokens.css §2). */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--spring-smooth);
+    }
+
+    .btn-pill > * {
+        @apply flex-shrink-0;
+    }
+
+
+    .btn-pill:disabled {
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    /* ── Glass-button backdrop ─────────────────────────────────────────────
+       AX.W52 — the `glass`/`glass-wash` Button variants compose `.glass-wash`,
+       which resolves `--glass-blur-wash` = `blur(1px)` — a sub-perceptual
+       diffusion authored for a small detail TILE, not a button the user reads
+       as "glass" (the live readback found the glass variants at a negligible
+       1px). A hero control wants a real glass blur. `.btn-glass` re-points the
+       backdrop at `--glass-blur-btn` (the `quiet`-tier 10px radius + the gentle
+       `saturate(1.05) brightness(1.02)` light-concentration), so the glass
+       button variants actually read as liquid glass while the wash TILE tier
+       keeps its 1px untouched. Declares the UNPREFIXED `backdrop-filter` ONLY —
+       Lightning CSS emits the `-webkit-` companion per the single-source
+       authorship discipline above (hand-authoring both forms makes Lightning
+       dedup-and-keep-prefixed, which modern Chromium then drops). */
+    .btn-glass {
+        backdrop-filter: var(--glass-blur-btn);
+    }
+
+    /* ── Pill input ───────────────────────────────── */
+    .input-pill {
+        @apply flex w-full;
+
+        /* AX.W51 D18 — the input pill rides the ONE `--ui-scale` comfort axis: the
+           height reads the `--control-h-md` cohort (`max(calc(2.5rem * --ui-scale),
+           --control-floor)`, the h-10 register with the WCAG-44px coarse clamp), the
+           font reads `--control-text`, the inline padding scales — so ONE override
+           grows the field's height + padding + font in lockstep. Desktop default is
+           the identity. */
+        height: var(--control-h-md);
+        border-radius: var(--radius-pill);
+        /* AW.W13 — the resting field edge reads as an enclosed control at rest
+           (~15%α — ~2× the prior 8% glass-wash floor that vanished on cream). The
+           `:focus-visible` accent ring + the `:user-invalid`/`[aria-invalid]`
+           destructive ring below still win by order + specificity.
+           AX.W54 — moved off the srgb `--surface-tint-15` fork onto the glass
+           border seam (`--glass-border-floating`, the matching 15%α rung) so the
+           pill is ONE glass model with the rest of the ladder, not a divergent
+           tint axis. */
+        border: 1.5px solid var(--glass-border-floating);
+        background: var(--glass-bg-quiet);
+        /* AX.W54 — the pill reads as REAL glass: the quiet-tier 10px blur (the
+           same `--glass-blur-quiet` its `--glass-bg-quiet` background pairs with),
+           not the sub-perceptual `blur(1px)` wash it carried — and the
+           `--glass-level` knob now clarifies it in lockstep with every surface. */
+        backdrop-filter: var(--glass-blur-quiet);
+        padding: 0 calc(1rem * var(--ui-scale));
+        font-size: var(--control-text);
+        color: var(--foreground);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .input-pill::placeholder {
+        color: var(--surface-tint-35);
+    }
+
+    /* AQ.W4 §W4.6 — keyboard-focus ring only. Was bare `:focus` (showed the
+       accent ring on a mouse click); `:focus-visible` matches the
+       `.focus-ring` / `.glass-btn` / dock-control discipline. Ordered BEFORE
+       the `:user-invalid` rungs so an invalid focused field shows destructive,
+       not accent (the `:user-invalid:focus-visible` rule below wins by order +
+       specificity). `:focus-visible` Baseline Widely — no fallback. */
+    .input-pill:focus-visible {
+        outline: none;
+        border-color: var(--color-accent-opaque, var(--ring));
+        box-shadow: 0 0 0 2px var(--color-accent, color-mix(in srgb, var(--ring) 30%, transparent));
+    }
+
+    /* AQ.W4 §W4.1 — validity vocabulary on `.input-pill` (Input + Textarea).
+       The forgiving `:where(:user-invalid, .user-invalid-fallback,
+       [aria-invalid="true"])` group is ONE rule covering THREE trigger surfaces:
+       native constraint-validation (`:user-invalid`), the `useUserInvalidAria`
+       fallback class for engines without `:user-invalid` (css §3.2; NOT a
+       live+dead alias — the class is the SOLE fallback), AND (AW.W18) the
+       imperative `[aria-invalid="true"]` attribute. The `[aria-invalid]` arm
+       serves APP-DRIVEN validity — a custom key match, an async server check —
+       where there is no native constraint to trip `:user-invalid`, so the app
+       sets the ARIA attribute and the library's own ring paints with no
+       `:deep()` re-paint at the consumer. The destructive/success tints reuse
+       the semantic tokens via `color-mix` per the house pattern (W2). Non-color
+       reinforcement is the error TEXT (W4.5 `error` slot) + the `required`
+       asterisk — the border/bg shift is the supplementary cue, never the sole
+       one. `:user-valid` is intentionally subtle (border only, no bg fill) so
+       a long valid form is not a wall of green. */
+    .input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]) {
+        border-color: var(--destructive);
+        background: color-mix(in srgb, var(--destructive) 8%, var(--glass-bg-quiet));
+    }
+    .input-pill:where(:user-valid, .user-valid-fallback) {
+        border-color: var(--success);
+    }
+    /* Invalid + keyboard-focused → destructive ring (overrides the accent
+       `:focus-visible` ring above by order + the extra invalid compound). The
+       `[aria-invalid]` arm rides the same widened group so an app-driven
+       invalid field shows the destructive ring on focus too. */
+    .input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]):focus-visible {
+        border-color: var(--destructive);
+        box-shadow: 0 0 0 var(--focus-ring-width)
+            color-mix(in srgb, var(--destructive) 35%, transparent);
+    }
+
+    /* AQ.W4 §W4.3 — `field-sizing: content` autosize (opt-in via the Textarea
+       `autosize` prop → `[data-autosize]`). The textarea grows vertically with
+       content between a 3-line floor and a token-driven ceiling, then scrolls.
+       `field-sizing` Baseline Newly (Chromium 2024) — on a non-supporting
+       engine the declaration is ignored and the element keeps the
+       `min/max-block-size` bounds + standard scroll (no JS, no `@supports`,
+       no grid-mirror polyfill). The fixed-size path (default, `min-h-20`) is
+       the unchanged no-op fallback. */
+    .input-pill[data-autosize] {
+        field-sizing: content;
+        width: 100%;
+        min-block-size: 3lh;
+        max-block-size: var(--textarea-autosize-max, 12lh);
+        resize: vertical;
+    }
+
+    .input-pill:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* AW.W13 — the Select trigger mirrors the input pill's resting border lift.
+       The reka-ui SelectTrigger renders `role="combobox"` over the `.glass-wash`
+       surface; its 8%α `--glass-border-wash` field edge vanished on cream just
+       like the input pill, so the same `--surface-tint-15` lift makes the
+       trigger read as an enclosed control at rest. Scoped to the combobox role
+       so the lift reaches ONLY the Select trigger, not every `.glass-wash`
+       surface. */
+    .glass-wash[role="combobox"] {
+        border-color: var(--surface-tint-15);
+    }
+
+    /* ── AW.W23 — chromatic edge dispersion (the polished-glass rim fringe) ──
+       An opt-in `.glass-chromatic` composes the warm/cool oklab fringe OVER the
+       W22 uniform rim (it does NOT replace it — the rim still rides each rung's
+       box-shadow). The fringe is a transparency garnish, so it composes ONLY
+       under `prefers-reduced-transparency: no-preference` and drops under
+       `reduce` (handled by the bracket below). The fringe lands as a dedicated
+       inset box-shadow pair on the material surface so it adds onto the rim. */
+    @media (prefers-reduced-transparency: no-preference) {
+        .glass-chromatic {
+            box-shadow: var(--glass-edge-dispersion), var(--glass-material-rim);
+        }
+    }
+}

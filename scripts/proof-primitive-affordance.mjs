@@ -38,6 +38,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const read = (rel) => {
@@ -82,7 +85,10 @@ function run() {
     const buttonPress =
         !!button &&
         button.includes("tap-squish") &&
-        button.includes("active:scale-[var(--scale-press-btn)]");
+        // AY.W-CSS1 — accept BOTH the v4 shorthand active:scale-(--x) and the
+        // arbitrary active:scale-[var(--x)] form (both compile identically).
+        (button.includes("active:scale-(--scale-press-btn)") ||
+            button.includes("active:scale-[var(--scale-press-btn)]"));
     facts.buttonPress = buttonPress;
     if (!buttonPress)
         violations.push(
@@ -98,7 +104,7 @@ function run() {
         );
 
     // PRM reset reachable on `.tap-squish` (utilities.css).
-    const util = read("src/styles/utilities.css");
+    const util = readMonolith(ROOT, "utilities");
     const prmReset =
         !!util &&
         /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.tap-squish:active\s*\{[\s\S]*?scale:\s*1/.test(

@@ -34,6 +34,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const STORIES = resolve(ROOT, "demo/stories");
@@ -247,7 +250,7 @@ function run() {
         allStorySources[rel] = fs.readFileSync(full, "utf8");
     }
 
-    const tokensCss = fs.existsSync(TOKENS) ? fs.readFileSync(TOKENS, "utf8") : "";
+    const tokensCss = fs.existsSync(TOKENS) ? readMonolith(ROOT, "tokens") : "";
     const pulseSrc = fs.existsSync(PULSE) ? fs.readFileSync(PULSE, "utf8") : "";
 
     const { facts, violations } = detect(heroSources, allStorySources, tokensCss, pulseSrc);

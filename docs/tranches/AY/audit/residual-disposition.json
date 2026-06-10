@@ -1,0 +1,21 @@
+{
+    "$schema": "AY.W-TRIAGE — machine-readable disposition for every residual AX `planned` wave. Each row is ADDRESSED (ayWave names an authored docs/tranches/AY/waves/AY.<id>.md spec), DEFERS (bookId names a DISPOSITION-REGISTER.json row), or RETIRES (rationale non-empty). proof:disposition-live's phantom-owner clause cross-checks: an ADDRESSED ayWave with no spec file, or a DEFERS bookId with no register row, or a RETIRES with an empty rationale, REDs the close. L.* / repo:\"slides\" rows are cross-repo and SKIPPED by the glass-ui clause (the slides arm owns them; inv-16).",
+    "source": "docs/tranches/AX/PROGRESS.md (the `planned` rows) + docs/tranches/AY/audit/W-TRIAGE.md §3",
+    "residuals": [
+        { "axWave": "W20", "disposition": "addressed", "ayWave": "W-SB1", "coRoute": ["W-GLASS"] },
+        { "axWave": "W21", "disposition": "addressed", "ayWave": "W-SB2", "coRoute": ["W-GLASS"] },
+        { "axWave": "W28", "disposition": "defers", "bookId": "speedtest-native-first-receive" },
+        { "axWave": "W29", "disposition": "addressed", "ayWave": "W-SB1", "coRoute": ["W-CONSUMER"] },
+        { "axWave": "W30", "disposition": "addressed", "ayWave": "L.W-ADOPT", "repo": "slides" },
+        { "axWave": "W31", "disposition": "addressed", "ayWave": "L.W1", "repo": "slides" },
+        { "axWave": "W32", "disposition": "addressed", "ayWave": "L.W-ADOPT", "coRoute": ["L.W5"], "repo": "slides" },
+        { "axWave": "W34", "disposition": "addressed", "ayWave": "W-CONSUMER" },
+        { "axWave": "W35", "disposition": "defers", "bookId": "keyframes-prune-migration-dag" },
+        { "axWave": "W39", "disposition": "addressed", "ayWave": "W-A11Y-PERF" },
+        { "axWave": "W41", "disposition": "addressed", "ayWave": "W-PUB1" },
+        { "axWave": "W42", "disposition": "addressed", "ayWave": "W-DOCK2", "retiresResidue": "custom-clip-path-shape-morph (web-platform topology limit; AX DOCK-FACILITIES §19.11 honest-narrow)" },
+        { "axWave": "W43", "disposition": "addressed", "ayWave": "W-FF2", "coRoute": ["W-FF1"] },
+        { "axWave": "W49", "disposition": "retires", "rationale": "latex-paper is a slides-editorial composition of the shipped paper-backdrop/paper.css substrate, not a glass-ui primitive; 0 library-side consumers; re-opens iff >=2 repos need a shared latex-paper primitive (booked nowhere — the substrate is sufficient)." },
+        { "axWave": "W-DECK", "disposition": "defers", "bookId": "deck-subpath", "decision": "keep-bespoke", "consumerRepos": 1, "note": "slides/src/deck (15 files) consumed by 1 repo (slides; 3 internal decks til-briefing/feedback-coder/_fixture); does NOT clear the >=2-consumer bar (feedback-coder repo carries no src/deck). Flips to a net-new AY.W-DECK lift wave when a 2nd repo imports a deck primitive." }
+    ]
+}

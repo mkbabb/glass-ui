@@ -1,0 +1,334 @@
+/* tokens/scheme-motion.css
+   §-1 color-scheme · §0 font · §1 duration · §2 easing (spring linear()) · §2.A ambient-motion · §2.B/§2.C · §3 z-index.
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+:root {
+    /* ═══════════════════════════════════════════════
+       §-1  COLOR-SCHEME (AQ.W2 §1)
+
+       Lets native UI (scrollbars, spinbuttons, form-control chrome, the
+       default focus ring) honor the OS preference when the consumer has
+       NOT pinned a `.dark` class. glass-ui's dark mode is class-driven
+       (`.dark`, theme.css `@variant dark`), so `.dark` overrides to a hard
+       `dark` regardless of OS — but absent the class, native chrome should
+       still track `prefers-color-scheme`. `light dark` (not `only light`)
+       on `:root` delivers that; `.dark` hard-pins `dark`.
+
+       Baseline Widely Available → adopt natively, no `@supports` guard
+       (older engines ignore the property and keep default-light chrome).
+       `accent-color` (AQ.W2 §4) is the companion native-control brand;
+       both are inherited built-in <color>/keyword properties re-specified
+       inside `.dark`. The `--accent-color` token is defined in the §5
+       color block below (custom properties resolve order-independently).
+       ═══════════════════════════════════════════════ */
+    color-scheme: light dark;
+    accent-color: var(--accent-color);
+
+    /* ═══════════════════════════════════════════════
+       §0  FONT TOKEN SOURCE-OF-TRUTH
+
+       The single authoritative declaration of the library's font register.
+       theme.css bridges each --font-stack-* to its Tailwind --font-* namespace
+       var; typography.css consumes the bridged --font-* names. The public
+       runtime knobs remain --font-*, --leading-*, --tracking-*.
+
+       ONE brand register: Plus Jakarta Sans (text + display) + Fira Code (mono).
+       --font-stack-text drives the body/heading/prose/display register — the
+       library DEFAULT is the register every live surface paints (the demo +
+       speedtest render Plus Jakarta everywhere). The calibrated "Plus Jakarta
+       Sans Fallback" / "Fira Code Fallback" faces (declared in typography.css)
+       wrap the system stacks with Capsize metric overrides so the swap window
+       is geometry-neutral (zero CLS). --font-stack-display aliases the text
+       register: there is no separate display-serif voice. */
+    --font-stack-text: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+    --font-stack-display: var(--font-stack-text);
+    --font-stack-sans: var(--font-stack-text);
+    --font-stack-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
+
+    --type-leading-micro: 1.2;
+    --type-leading-caption: 1.3;
+    --type-leading-small: 1.4;
+    --type-leading-body: 1.5;
+    --type-leading-prose: 1.618;
+    --type-leading-heading: 1.2;
+    --type-leading-display: 1.1;
+
+    --type-tracking-tight: -0.025em;
+    --type-tracking-snug: -0.01em;
+    --type-tracking-normal: 0;
+    --type-tracking-wide: 0.025em;
+    --type-tracking-wider: 0.05em;
+    --type-tracking-caps: 0.1em;
+
+    /* ═══════════════════════════════════════════════
+       §1  DURATION
+       ═══════════════════════════════════════════════ */
+    --duration-instant: 0.1s;
+    --duration-fast: 0.2s;
+    --duration-normal: 0.3s;
+    --duration-slow: 0.45s;
+    --duration-panel: 0.55s;
+    --duration-xl: 1s;
+    --duration-xxl: 1.5s;
+    --duration-shimmer-fast: 3s;
+    --duration-shimmer: 5s;
+    /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep, success
+       affirmations. R5 vocab.γ gap row 3 (single-site at dock.css:735 today,
+       reserved for J.W2.7 §17 audacious-CTA buildout). */
+    --duration-sparkle: 600ms;
+
+    /* AH.W5-e (FA-8 §4d) — motion-duration + staged-reveal canon.
+
+       Six duration tokens + three delay tokens promoted from raw literals
+       at speedtest's celebratory-reveal SFCs (SpeedtestResults, ThankYou,
+       ResultStack, CompleteBadge). Unified under the `--motion-*`
+       namespace (parallel to `--motion-ease-*`) so all motion tokens
+       cluster at one canon — duration + easing arm together. */
+
+    /* Staged-entrance pairing — opacity + transform Vue <Transition> arms
+       in the celebratory headline + result-row reveals. Partners with
+       `--motion-ease-staged-entrance` / `--motion-ease-overshoot`. */
+    --motion-duration-staged: 320ms;
+
+    /* One-shot celebratory shimmer — gold-headline shimmer animation
+       duration + staging delay. Shared canon so the speedtest results
+       headline and the thank-you headline stay in lockstep. */
+    --motion-duration-complete-shimmer: 2.4s;
+    --motion-delay-complete-shimmer: 220ms;
+    /* The gold-headline shimmer reads these two tokens under a one-shot
+       animation: at 2.4s + 220ms delay the bright band traverses the headline
+       glyphs cleanly. Load-bearing — zeroing either collapses the shimmer to
+       an imperceptible blow-through. */
+
+    /* CompleteBadge staged-reveal cluster — the disc / ring / check curve
+       fires at three asymmetric durations + delays per the A4-AF staged-
+       variety design intent. Promoting the magic numbers makes the
+       staged-variety visible at the canon. */
+    --motion-duration-badge-disc: 420ms;
+    --motion-duration-badge-ring: 560ms;
+    --motion-duration-badge-check: 380ms;
+    --motion-delay-badge-disc: 80ms;
+    --motion-delay-badge-ring: 220ms;
+    --motion-delay-badge-check: 460ms;
+
+    /* Staggered-reveal increment canon — three perceptually-distinct tiers for
+       per-row/per-cell/per-bar cascades:
+         • tight (40ms) — dense row cascades, sub-perceptual gap
+         • default (80ms) — the canonical row-stagger rhythm (matches
+           `useStagger`'s built-in fallback)
+         • relaxed (120ms) — wider cascades where each reveal carries its own
+           attention budget
+       Adjacent tiers keep cross-beats quiet (80 is the LCM of 40 and 2/3 of
+       120). Consumers read these via inline-style calc() or `getComputedStyle`
+       at runtime. */
+    --motion-stagger-tight: 40ms;
+    --motion-stagger-default: 80ms;
+    --motion-stagger-relaxed: 120ms;
+
+    /* ═══════════════════════════════════════════════
+       §2  EASING — Spring curves via linear()
+
+       Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
+       To tune a spring: edit the PRESETS table in the script and re-run
+       `node scripts/regen-spring-tokens.mjs`. The script invokes
+       `springLinearStops()` from `@mkbabb/keyframes.js` which solves the
+       analytic second-order damped harmonic oscillator and emits CSS
+       `linear()` stops; this is the single source of truth tying each
+       (response, ζ) pair to its serialized curve.
+
+       iOS-canonical (response, dampingFraction) per AL-X4 §3:
+         smooth: (0.50s, ζ=0.86)  — gentle settle, sub-perceptual overshoot ~0.5%
+         snappy: (0.35s, ζ=0.65)  — quick crisp, overshoot ~+6.8%
+         bouncy: (0.50s, ζ=0.45)  — emphatic overshoot ~+20.5%
+         gentle: (0.70s, ζ=1.00)  — patient critically-damped
+         dock:   (0.32s, ζ=0.70)  — dock expand/collapse morph, overshoot ~+4.6%
+
+       Note on `smooth`: at ζ=0.86 the analytic solver produces a peak
+       of 1.00498 (+0.5%) at the 24% slot — mathematically present but
+       sub-perceptual. I keep ζ=0.86 rather than promoting to ζ=1.0
+       because true critical damping is `gentle`'s register, and
+       `smooth` wants a slightly faster visual settle than `gentle`'s
+       patient curve. The 0.5% peak does not read as overshoot to the
+       eye but does narrowly distinguish `smooth` from `gentle`.
+
+       ── EASING DOCTRINE (AX.W52 §6 — which easing fits which job) ──
+       ONE recorded rule so the animation easing stops forking live. This
+       FORMALIZES the already-correct `transitions.css` idiom (enter=spring,
+       exit=bezier) as the house rule every recipe reaches for:
+
+         | Transition kind                                  | Easing                              |
+         |--------------------------------------------------|-------------------------------------|
+         | Surface props (bg, border, color, box-shadow,    | `--ease-standard` (bezier — a       |
+         |   opacity)                                       |   colour cross-fade reads as a      |
+         |                                                  |   wobble on a spring)               |
+         | Transform — hover/press/active (scale, translate,| `--spring-smooth` (the ONE button/  |
+         |   rotate)                                         |   interactive scale register) or    |
+         |                                                  |   `--spring-snappy` (crisp press)   |
+         | Enter (mount, popover open, dialog in)           | `--spring-bouncy` / `--spring-snappy`|
+         | Exit (unmount, close)                            | `--ease-out` / `--ease-standard`    |
+         |                                                  |   (bezier, NO overshoot — an exit   |
+         |                                                  |   must never overshoot past gone)   |
+         | Position-tracked (specular pointer follow)       | `--ease-standard`                   |
+
+       The BUTTON family (`.btn-pill` / `.tap-squish` / `.glass-btn` /
+       `btn-interactive`) UNIFIES its `scale` transform leg onto ONE register —
+       `--spring-smooth` — so hover + press read as one motion language (the
+       hover lift is the restrained `--scale-hover-btn` = 1.05, not the 1.08
+       `--scale-hover`). Springs read alive on TRANSFORM and ENTER (overshoot =
+       physicality); a spring on a COLOR or an EXIT reads as a wobble/hesitation.
+       `--ease-apple` is the ambient-only register (consumed solely by the Pulse
+       aura `--animate-ambient-pulse-easing` — NOT a second smooth-ease authority
+       for interactive transforms; those use `--spring-smooth`).
+       ═══════════════════════════════════════════════ */
+    --spring-smooth: linear(0, 0.09804 2.041%, 0.29288 4.082%, 0.49447 6.122%, 0.66436 8.163%, 0.79208 10.204%, 0.88050 12.245%, 0.93754 14.286%, 0.97182 16.327%, 0.99083 18.367%, 1.00027 20.408%, 1.00413 22.449%, 1.00502 24.490%, 1.00453 26.531%, 1.00355 28.571%, 1.00254 30.612%, 1.00169 32.653%, 1.00105 34.694%, 1.00060 36.735%, 1.00031 38.776%, 1.00014 40.816%, 1.00005 42.857%, 1.00000 44.898%, 1.00000 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+    --spring-snappy: linear(0, 0.10438 2.041%, 0.32622 4.082%, 0.56668 6.122%, 0.77153 8.163%, 0.91961 10.204%, 1.01073 12.245%, 1.05549 14.286%, 1.06804 16.327%, 1.06171 18.367%, 1.04686 20.408%, 1.03044 22.449%, 1.01629 24.490%, 1.00596 26.531%, 0.99954 28.571%, 0.99633 30.612%, 0.99537 32.653%, 0.99575 34.694%, 0.99674 36.735%, 0.99786 38.776%, 0.99884 40.816%, 0.99956 42.857%, 1.00001 44.898%, 1.00024 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+    --spring-bouncy: linear(0, 0.11105 2.041%, 0.36430 4.082%, 0.65496 6.122%, 0.90929 8.163%, 1.08828 10.204%, 1.18289 12.245%, 1.20482 14.286%, 1.17641 16.327%, 1.12214 18.367%, 1.06276 20.408%, 1.01239 22.449%, 0.97809 24.490%, 0.96099 26.531%, 0.95826 28.571%, 0.96514 30.612%, 0.97666 32.653%, 0.98873 34.694%, 0.99867 36.735%, 1.00520 38.776%, 1.00825 40.816%, 1.00847 42.857%, 1.00686 44.898%, 1.00443 46.939%, 1.00199 48.980%, 1.00004 51.020%, 0.99880 53.061%, 0.99827 55.102%, 0.99829 57.143%, 0.99866 59.184%, 0.99916 61.224%, 0.99966 63.265%, 1.00004 65.306%, 1.00027 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+    --spring-gentle: linear(0, 0.09415 2.041%, 0.27374 4.082%, 0.45506 6.122%, 0.60779 8.163%, 0.72570 10.204%, 0.81213 12.245%, 0.87336 14.286%, 0.91570 16.327%, 0.94445 18.367%, 0.96371 20.408%, 0.97645 22.449%, 0.98481 24.490%, 0.99025 26.531%, 0.99377 28.571%, 0.99604 30.612%, 0.99749 32.653%, 0.99841 34.694%, 0.99900 36.735%, 0.99937 38.776%, 0.99961 40.816%, 0.99975 42.857%, 0.99985 44.898%, 1.00000 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+    --spring-dock: linear(0, 0.10282 2.041%, 0.31773 4.082%, 0.54783 6.122%, 0.74309 8.163%, 0.88550 10.204%, 0.97598 12.245%, 1.02452 14.286%, 1.04368 16.327%, 1.04501 18.367%, 1.03739 20.408%, 1.02681 22.449%, 1.01672 24.490%, 1.00873 26.531%, 1.00323 28.571%, 0.99996 30.612%, 0.99837 32.653%, 0.99789 34.694%, 0.99805 36.735%, 0.99848 38.776%, 0.99897 40.816%, 0.99940 42.857%, 0.99972 44.898%, 0.99993 46.939%, 1.00004 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+
+    /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
+    --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --ease-standard: var(--motion-ease-standard);
+    --ease-out: var(--motion-ease-out);
+    --ease-in: var(--motion-ease-in);
+    --ease-out-expo: var(--motion-ease-out-expo);
+
+    /* Apple-inspired — micro-interactions, switches, dock hover */
+    --motion-ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    --ease-apple: var(--motion-ease-apple);
+    --ease-spring: var(--spring-snappy);
+    --ease-decelerate: var(--ease-out);
+    --ease-accelerate: var(--ease-in);
+
+    /* ═══════════════════════════════════════════════
+       §2.A AMBIENT MOTION — Pulse aura tokens
+
+       Breathing rhythm for `<Pulse variant="aura">`. The 6s duration is the
+       canon ambient-pulse rate; scale 1.0 ↔ 1.15 reads as a quiet halo at
+       intensity="normal" (Pulse remaps min/max from its `intensity` prop).
+       Reduced motion: Pulse.vue parks at the min stop, breath cycle disabled.
+
+       AX.W57 (P6) — the aura re-baselined from a glowing DISC to an AMBIENT
+       halo. The egregiousness was doubly-stacked: a 0.55-density currentColor
+       radial multiplied by an element opacity the `ambient-pulse` keyframe
+       drove up to 0.95 mid-breath (so a saturated viz hue read as a near-
+       opaque throbbing blob). The fix is two decoupled, single-source knobs:
+         · `--pulse-aura-strength` (0..1) — the ONE gradient-density scalar
+           both color-mix stops derive via calc() (replaces the
+           `--pulse-aura-opacity-pct` / `-pct-num` twin desync trap — the
+           percent and the raw number had to be hand-kept in sync).
+         · `--pulse-aura-breath-{min,max}` — the aura's OWN element-opacity
+           range, decoupled from the shared `--pulse-aura-opacity-*` shimmer
+           tokens (those stay 0.55/0.95 for the neutral skeleton-breath, where
+           a grey shimmer at that range is the correct soft swell).
+       The loud old read is the explicit `intensity="vivid"` opt-in. */
+    --animate-ambient-pulse-duration: 6s;
+    --animate-ambient-pulse-scale-min: 1.0;
+    --animate-ambient-pulse-scale-max: 1.15;
+    --animate-ambient-pulse-easing: var(--ease-apple);
+
+    /* Aura gradient density — ONE scalar (0..1). The center stop paints at
+       `strength`, the mid stop at `strength * 0.35` (both via calc() in
+       Pulse.vue). 0.22 reads as an ambient wash, not a glowing disc. */
+    --pulse-aura-strength: 0.22;
+
+    /* Aura element-opacity breath range (the `ambient-pulse` keyframe stops).
+       Quiet: the halo stays a wash at every phase of the 6s cycle. */
+    --pulse-aura-breath-min: 0.28;
+    --pulse-aura-breath-max: 0.42;
+
+    /* Skeleton-breath shimmer range — the SHARED neutral-shimmer stops
+       (`.skeleton-breath` reads these; a grey shimmer at 0.55↔0.95 is the
+       correct soft swell, distinct from the aura's calmer breath above). */
+    --pulse-aura-opacity-min: 0.55;
+    --pulse-aura-opacity-max: 0.95;
+
+    /* ═══════════════════════════════════════════════
+       §2.B SECTIONED PROGRESS — phase-bus rail (AB.W3.T2)
+
+       The sectioned `<Progress variant="sectioned">` exposes one
+       height knob + one track tint knob. Defaults size the rail at
+       0.875rem (14px) — the W3 spec minimum (≥ 14px mobile, ≥ 18px
+       desktop). Consumers override the height per breakpoint via the
+       same token name on the consumer-side surface.
+
+       The bar reads as a recessed glass channel: inner top
+       catch-light + lower inner shadow + small outer drop. The
+       depth lives entirely in the Progress.vue scoped block; this
+       token only parameterises the rail BACKGROUND and HEIGHT —
+       depth shadows compose from the existing --shadow-color rung.
+       ═══════════════════════════════════════════════ */
+    --progress-sectioned-height: 0.875rem;
+    --progress-sectioned-track: var(--secondary);
+
+    /* ═══════════════════════════════════════════════
+       §2.C ANIMATION EXPRESSIVENESS
+
+       Three idiom families:
+       • Progress lifecycle — the progress bar rides an intake pulse on
+         rising-edge, a crescendo brightening at ≥85%, and a one-shot discharge
+         flash at 100% (the crescendo is the typed `@property --progress-crescendo`).
+       • Chassis phase-tint companion — `@property --phase-tint-amount` so the
+         chassis backdrop warms toward the active phase, interpolating with
+         `--phase-color` across the consumer's phase-handoff window (600ms default).
+       • Audacious button press-ripple — `btn-audacious` gains a typed
+         `@property --ripple-radius` ramping 0 → max over the ripple duration.
+       ═══════════════════════════════════════════════ */
+
+    /* Progress lifecycle — typed crescendo + segment-local durations */
+    --motion-duration-progress-intake: 220ms;       /* rising-edge pulse */
+    --motion-duration-progress-crescendo: 240ms;    /* leading-edge brighten */
+    --motion-duration-progress-indeterminate: 4s;   /* indeterminate sweep period */
+
+    /* Chassis depth-of-tint peak — the amount `--phase-tint-amount`
+       interpolates toward when a phase is active. Subtle by intent;
+       a 6% color-mix reads as "warmth toward the phase" without
+       overwhelming the chassis chrome's resting register. */
+    --phase-tint-peak: 6%;
+
+    /* Audacious button press-ripple — geometry + duration. The ripple
+       radius caps at 12rem so an oversized button doesn't paint a
+       transparent halo beyond its bounds (the parent's `overflow:
+       hidden` clips the visible region; the cap keeps the gradient
+       falloff well-defined). */
+    --ripple-radius-max: 12rem;
+    --motion-duration-ripple: 340ms;
+
+    /* Skeleton breath variant — the M.3 "known-imminent" loading
+       register. 6s cycle (the canon ambient rate) so a known-imminent
+       skeleton breathes in lockstep with the dial and the Pulse aura.
+       Coexists with the 1.5s shimmer (sliding gradient) and the
+       Tailwind animate-pulse (2s, short-wait) variants — distinct
+       temporal registers per use-case. */
+    --skeleton-breath-duration: 6s;
+
+    /* ═══════════════════════════════════════════════
+       §3  Z-INDEX SCALE
+       ═══════════════════════════════════════════════ */
+    /* V.W2 T12 — Aurora background tier (sits behind --z-background).
+       Consumed by `<Aurora>` in speedtest's App.vue (`-z-10` literal today). */
+    --z-behind: -10;
+    --z-background: 0;
+    --z-content: 10;
+    --z-controls: 20;
+    --z-bar: 30;
+    --z-header: 35;
+    --z-dock: 40;
+    --z-panel: 45;
+    --z-overlay: 50;
+    --z-hovercard: 120;
+    --z-tooltip: 120;
+    --z-popover: 130;
+    --z-modal: 140;
+    --z-fullscreen: 150;
+    --z-toast: 160;
+    --z-toggle: 999;
+    --z-max: 9999;
+    --z-debug: 99999;
+
+}

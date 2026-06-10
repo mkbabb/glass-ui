@@ -39,6 +39,11 @@ close-gate that lands last can only post-hoc discover the inflation it was built
 prevent). Then the GOLDEN §C batches drive one at a time. The table is wave-numbered for
 reference; the Status column reflects each wave's reconciled state.
 
+> Residual `planned` waves (W20/W21/W28-W32/W35/W39/W41-W43/W49) dispositioned at AY.W-TRIAGE —
+> see [docs/tranches/AY/audit/W-TRIAGE.md](../AY/audit/W-TRIAGE.md) (the machine mirror
+> `AY/audit/residual-disposition.json` is cross-checked by `proof:disposition-live`'s
+> phantom-owner clause). The rows stay `planned` here (AX is a closed historical record).
+
 | Wave | Title | Status |
 |---|---|---|
 | W00 | visual-runtime (π) lane | complete |
@@ -50,7 +55,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W06 | dock storybook honest rail + css split | live-verified — dock.css carved into dock/{shell,morph,density,layers,layer-group,overflow}.css partials (<500 each); proof:dock-css-carve green; DELTA audit/visual/W06-DELTA.md |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
-| W09 | specular tune to subtle | live-pending — D11 radials absorbed by W52 (cardinal re-open) |
+| W09 | specular tune to subtle | live-verified — D11 absorbed by W52; see W52-DELTA (the bounded-gleam default-off readback IS the proof the D11 full-plate radials are gone) |
 | W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
@@ -60,7 +65,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
 | W18 | storybook IA reinvention | live-verified — storybook IA reinvention (12-category) + Q2 aurora black-bar fix + Q5 motion-union; proof:storybook-ia/aurora-fill-resize green; DELTA audit/visual/W18-DELTA.md |
-| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | dev-landed · live-pending (DELTA owed) |
+| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | live-verified — primitives GONE from public surface + dist (deletion-proof); header-ribbon root-retire routed to W-SB1 G3; DELTA audit/visual/W19-DELTA.md |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
 | W21 | primitive recategorize — ledger/barrel coherence + metric reconcile | planned |
 | W22 | font register reconciliation | complete |
@@ -100,7 +105,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | live-verified — ONE SegmentedTabs family (segmented/pill/underline/vertical) on one spring engine, squish intact (π glided+squished); proof:tabs-unified green; DELTA audit/visual/W53-DELTA.md (shared W54-tabs captures) |
 | W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | live-verified — the scalar threads both ladders (level=1 byte-identical); Button/Card/Dialog/SegmentedTabs/Alert/TagsInput defaults flipped to glass; the 4 divergent recipes + 2 recipe divergences reconciled (proof:glass-level + proof:glass-one-model 14/14); W56(R1) squircle on dialog/sheet coupled; 16-png DELTA captured (desktop+mobile × light+dark), backdrop-filter + translucent --glass-bg-* readback confirms glass paints. See audit/visual/W54-DELTA.md |
 | W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | live-verified — the --glass-tint-* adaptive axis darkens glass over a light substrate so the MAXIMAL glass default stays legible (the G2 over-light surface incl. the dock); proof:adaptive-glass green; DELTA audit/visual/W55-DELTA.md (bucket on/off pngs) |
-| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | dev-landed · live-pending (DELTA owed) |
+| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified — squircle corner-shape token axis (G3) live on dialog/sheet/big-dock; cornerShape readback superellipse(2); DELTA audit/visual/W56-DELTA.md |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified — pulse-aura calm (≤0.25 strength), hero radials → Aurora; proof:demo-radial-calm green; DELTA audit/visual/W57-DELTA.md |
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | live-verified — STANDARD = continuous integrated cylinder (thumb=fill cap, no demarcation), SPECTRUM = gradient track + track-height squircle thumb; proof:slider-two-only green; DELTA audit/visual/W59-DELTA.md |

@@ -42,10 +42,10 @@
 // are named + owed, never silently swept.
 const KNOWN_ORPHANS = new Map([
     ["proof-affordance-contrast.mjs", "AW.W13 — owner-wave registers/removes"],
-    ["proof-composable-return-types.mjs", "AW.W15 — owner-wave registers/removes"],
+    // proof-composable-return-types.mjs REGISTERED + ci-tagged at AY.W-GOD1 (the
+    // carve-parity gate — its owner wave landed it), so it leaves the allowlist.
     ["proof-datatable-split.mjs", "AW.W14 — owner-wave registers/removes"],
     ["proof-dock-big-dock.mjs", "AW.W3b — owner-wave registers/removes"],
-    ["proof-glass-panel-tiers.mjs", "AW.W12 — owner-wave registers/removes"],
 ]);
 
 // THE STANDING KNOWN-DANGLING baseline. Two proof:* package.json scripts were

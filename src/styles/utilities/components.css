@@ -1,0 +1,317 @@
+/* utilities/components.css
+   The @layer components component half — metric-badge pill + label-bearing variants, the glassmorphic input-bar, hover-lift levels, cartoon shadows, divider utilities.
+   Carved from the utilities.css cascade root; @import-ed by utilities.css in
+   cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+@layer components {
+    /* ── Metric badge pill — compact glass label for numeric telemetry ── */
+    .metric-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        gap: var(--metric-badge-gap, 0.125rem);
+        max-width: var(--metric-badge-max-width, 8rem);
+        min-height: var(--metric-badge-min-height, 1.5rem);
+        padding:
+            var(--metric-badge-padding-block, 0.125rem)
+            var(--metric-badge-padding-inline, 0.5rem);
+        overflow: hidden;
+        flex-shrink: 0;
+        line-height: 1;
+        /* Canonical 5-tier glass surface: the `quiet` rung paints the badge
+           plate at the `--glass-bg-quiet` α (0.50) with `--glass-blur-quiet`.
+           Reduced-transparency / no-backdrop-filter fallbacks propagate
+           through the lazy custom-property resolution that `glass.css`
+           sets up — the badge no longer bypasses the canon.
+           (Per audit U.W0.C-c §7.2.) */
+        border: 1px solid var(--metric-badge-border, var(--glass-border-quiet));
+        border-radius: var(--metric-badge-radius, var(--radius-badge, var(--radius-pill)));
+        background: var(--metric-badge-bg, var(--glass-bg-quiet));
+        backdrop-filter: var(--metric-badge-blur, var(--glass-blur-quiet));
+        box-shadow: var(--metric-badge-shadow, 0 1px 6px color-mix(in srgb, var(--shadow-color) 8%, transparent), var(--glass-highlight));
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--ease-standard);
+    }
+
+    .metric-badge > span {
+        line-height: 1;
+        /* AW.W26 — `wrap-anywhere` (overflow-wrap: anywhere) on the value slot:
+           a long metric value breaks WITHIN the badge rather than being clipped
+           by the host `overflow: hidden`. v4.1 `wrap-anywhere` / mwg css §7.
+           Scoped to the value span, NOT a universal selector (mwg perf caveat). */
+        overflow-wrap: anywhere;
+    }
+
+    .metric-badge:hover {
+        /* Hover lifts to the `resting` rung — one step up the canonical
+           ladder (audit U.W0.C-c §7.2). */
+        border-color: var(--metric-badge-hover-border, var(--glass-border-resting));
+        background: var(--metric-badge-hover-bg, var(--glass-bg-resting));
+        box-shadow: var(--metric-badge-hover-shadow, 0 2px 10px color-mix(in srgb, var(--shadow-color) 12%, transparent), var(--glass-highlight));
+        scale: var(--metric-badge-hover-scale, 1.02);
+    }
+
+    .metric-badge:active {
+        scale: var(--metric-badge-press-scale, 0.96);
+    }
+
+    .metric-badge:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    /* Phase-finish catch-light — the quieter cousin of --glass-specular.
+       Speedtest toggles `data-just-resolved="true"` on a metric pill once
+       its phase completes; the badge briefly carries a 1px catch-light
+       streak at the top edge. Reads as the pill catching club lighting at
+       the moment its result resolves. */
+    .metric-badge[data-just-resolved="true"] {
+        box-shadow:
+            inset 0 1px 0 0 rgb(255 255 255 / 0.18),
+            var(--metric-badge-shadow,
+                0 1px 6px color-mix(in srgb, var(--shadow-color) 8%, transparent),
+                var(--glass-highlight));
+    }
+
+    /* ── Label-bearing variants ───────────────────────────────────────────
+       When the badge carries a `labelPosition`, the prose-style annotation
+       slot precedes the amount. Inline keeps the row baseline-aligned;
+       stacked breaks to a column with items flush-left. The label slot
+       carries its own tracked uppercase rules; the badge's max-width
+       relaxes so the wider register fits. */
+    .metric-badge--label-inline {
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: flex-start;
+        gap: var(--metric-badge-label-gap, 0.375rem);
+        max-width: var(--metric-badge-label-max-width, none);
+        text-align: left;
+    }
+
+    .metric-badge--label-stacked {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: var(--metric-badge-label-gap-stacked, 0.0625rem);
+        max-width: var(--metric-badge-label-max-width, none);
+        text-align: left;
+        min-height: var(--metric-badge-min-height-stacked, 2.625rem);
+        padding-block: var(--metric-badge-padding-block-stacked, 0.375rem);
+    }
+
+    /* T.W2.T2 — stacked variant pairs amount + unit on a single row (row 2)
+       below the label (row 1). The `.metric-badge__row` wrapper baseline-
+       aligns the value and unit so the quantity reads as one phrase, not as
+       three siblings split across three rows (the pre-T behaviour the
+       audit B-spec §2.1 flagged). */
+    .metric-badge--label-stacked .metric-badge__row {
+        display: inline-flex;
+        align-items: baseline;
+        gap: var(--metric-badge-row-gap-stacked, 0.25rem);
+    }
+
+    /* T.W2.T3 — MetricPill density modifiers. The pill is a thin composition
+       over MetricBadge with `labelPosition="stacked"` defaults; the density
+       knob adjusts block padding + horizontal padding so the pill reads at
+       the right register for its dock host. `spacious` is the default
+       (chassis-strip rhythm), `comfortable` keeps the tighter compact
+       register for densely-packed dock clusters. The selectors compose with
+       `.metric-badge--label-stacked` so the inline ladder remains untouched
+       — these are stacked-only refinements. */
+    .metric-pill[data-density="spacious"].metric-badge--label-stacked {
+        --metric-badge-padding-block-stacked: 0.5rem;
+        --metric-badge-padding-inline: 0.75rem;
+    }
+
+    .metric-pill[data-density="comfortable"].metric-badge--label-stacked {
+        --metric-badge-padding-block-stacked: 0.25rem;
+        --metric-badge-padding-inline: 0.5rem;
+    }
+
+    /* AS.W4 — @container style(--density) companion. A pill nested under a host
+       that sets `--density: comfortable | spacious` on a wrapping element picks
+       up the matching padding register with no `data-density` markup contract;
+       the attribute rules above stay the SOLE fallback (inv 47).
+       The inner `.metric-pill.metric-badge--label-stacked` selector (0,2,0) sits
+       just BELOW the `.metric-pill[data-density]…` attribute rules (0,3,0) — so a
+       pill carrying BOTH the attribute and a `--density` ancestor lands on the
+       attribute rule (same tokens, identical paint), while a pill with only the
+       ancestor token still resolves the right register (no competing rule sets
+       these padding custom props at higher weight in that case).
+
+       No `@supports` wrapper: unlike the sibling scroll-state recipe (which
+       probes `@supports (container-type: scroll-state)` — a probeable
+       container-type VALUE), style queries introduce no new `container-type`
+       value (every element is a style container by default), so there is no
+       clean declaration test for style-query support. This relies on
+       `@container style()`'s own graceful degradation: an engine without
+       style-query support parses the unknown at-rule as invalid, drops the
+       block, and keeps the `[data-density]` attribute base. (The earlier
+       `@supports (container-type: inline-size)` wrapper was wrong — it probed
+       SIZE-query support, a distinct feature with a distinct support timeline.) */
+    @container style(--density: spacious) {
+        .metric-pill.metric-badge--label-stacked {
+            --metric-badge-padding-block-stacked: 0.5rem;
+            --metric-badge-padding-inline: 0.75rem;
+        }
+    }
+    @container style(--density: comfortable) {
+        .metric-pill.metric-badge--label-stacked {
+            --metric-badge-padding-block-stacked: 0.25rem;
+            --metric-badge-padding-inline: 0.5rem;
+        }
+    }
+
+    .metric-badge__label {
+        letter-spacing: 0.18em;
+        line-height: 1;
+    }
+
+    /* Dual-slot default visibility (R2-spec):
+       The library renders both `--full` and `--abbr` siblings whenever both
+       props are passed. Default identity is the full label; the abbreviation
+       sits hidden until consumer container-query CSS flips it. The adjacent-
+       sibling selector preserves single-slot back-compat: when a consumer
+       passes only `abbreviation` (no `--full` sibling rendered), the abbr
+       reads at default visibility. */
+    .metric-badge__label--full + .metric-badge__label--abbr {
+        display: none;
+    }
+
+    /* sm-tier label tracking — tighter than the md/lg/xl 0.18em rung so the
+       compact register reads as a tighter annotation against the smaller
+       glyph rise. R2-spec D-Rec-2 (audit-D). */
+    .metric-badge[data-size="sm"] .metric-badge__label {
+        letter-spacing: 0.1em;
+    }
+
+    /* Q.W3 Lane A — the `.glass-dock[data-density="…"]` density rungs that
+       set `--dock-tab-h` + `--dock-label-size` were consolidated into
+       `dock.css` (their canonical dock-styles home). They formerly lived
+       here and resolved only by the index.css import order (utilities.css
+       after dock.css); the cascade-order dependency is now gone. */
+
+    /* ── Input bar — glassmorphic inline input container ──
+       Composes the canonical `floating` glass rung (--glass-bg-floating
+       ≈ 80% α, --glass-blur-floating ≈ 24px) — same surface read as the
+       prior raw composition but routed through the canonical 5-tier
+       ladder so PRT / no-backdrop-filter fallbacks propagate cleanly.
+       (Per audit U.W0.C-c §7.2.) */
+    .input-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-2xl);
+        border: 1px solid var(--glass-border-floating);
+        background: var(--glass-bg-floating);
+        backdrop-filter: var(--glass-blur-floating);
+
+        padding: 0 0.75rem;
+        height: 2.25rem;
+        max-width: var(--max-width-input);
+        width: 100%;
+        transition:
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+    .input-bar:focus-within {
+        box-shadow: var(--focus-ring-shadow);
+        border-color: var(--border);
+    }
+
+    .input-bar-field {
+        font-family: var(--font-mono, monospace);
+        font-size: var(--type-small);
+        background: transparent;
+        border: none;
+        outline: none;
+        flex: 1;
+        min-width: 0;
+    }
+    .input-bar-field::placeholder {
+        color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
+    }
+
+    /* ── Hover lift — translate-y + shadow on hover (3 levels) ──
+       The shared transition is expressed once over the family; the three
+       :hover rules carry the per-level translate + shadow. */
+    :where(.hover-lift, .hover-lift-md, .hover-lift-lg) {
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `translate: 0` at
+           rest mints the stacking context once so the hover lift does not
+           flicker it into being. */
+        translate: 0;
+        transition-property: translate, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-standard);
+    }
+    .hover-lift:hover:not(:disabled):not([aria-disabled='true']) {
+        translate: 0 var(--lift-sm);
+        box-shadow: var(--shadow-md);
+    }
+    .hover-lift-md:hover:not(:disabled):not([aria-disabled='true']) {
+        translate: 0 var(--lift-md);
+        box-shadow: var(--shadow-md);
+    }
+    .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
+        translate: 0 var(--lift-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* ── Cartoon shadows — token-driven box-shadow + bezel border + lift ──
+       The box-shadow stack reads from the canonical
+       `--shadow-cartoon-{sm,md,lg}` rungs declared at tokens.css:304-312.
+       Those rungs use `color-mix(in srgb, var(--shadow-color) N%, transparent)`
+       so dark-mode flips the cast through `--shadow-color` automatically.
+       The 2px bezel border + translateY are the cartoon-stamp geometry
+       atop the canonical depth — kept here so a single class delivers
+       the whole cartoon read.
+       (Per audit U.W0.C-c §1.3 / Union 1 — collapses the dual-system
+       drift onto the token-driven shadow.) */
+    :where(.shadow-cartoon-sm, .shadow-cartoon-md, .shadow-cartoon-lg) {
+        border: 2px solid var(--border);
+    }
+    /* Static cartoon-stamp lift (AQ.W3 §W3.2). NOT state-driven, so the
+       identity base is not strictly required, but the `translate:` longhand
+       keeps the family uniform with the state-driven sites above. */
+    .shadow-cartoon-sm {
+        box-shadow: var(--shadow-cartoon-sm);
+        translate: 0 -1px;
+    }
+    .shadow-cartoon-md {
+        box-shadow: var(--shadow-cartoon-md);
+        translate: 0 -1px;
+    }
+    .shadow-cartoon-lg {
+        box-shadow: var(--shadow-cartoon-lg);
+        translate: 0 -2px;
+    }
+
+    /* ── Divider utilities ── */
+    .divider-h {
+        height: 2px;
+        background: linear-gradient(
+            to right,
+            transparent 1%,
+            var(--border) 8%,
+            var(--border) 92%,
+            transparent 99%
+        );
+    }
+
+    .divider-h-tapered {
+        height: 2px;
+        background: linear-gradient(
+            to right,
+            transparent 3%,
+            var(--border) 15%,
+            var(--border) 85%,
+            transparent 97%
+        );
+    }
+
+}

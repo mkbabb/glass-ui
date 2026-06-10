@@ -10,7 +10,7 @@ export const buttonVariants = cva(
   // AW.W25 — `.tap-squish` carries the press scale onto the canonical spring
   // channel (`transition: scale … var(--spring-snappy)`), so the button springs
   // like the slider rather than snapping on `--ease-standard`. The button keeps
-  // its own slightly-softer `active:scale-[var(--scale-press-btn)]` (0.97) — the
+  // its own slightly-softer `active:scale-(--scale-press-btn)` (0.97) — the
   // utility-layer scale value wins over `.tap-squish`'s default `--scale-press`
   // (0.96); only the spring TRANSITION channel is shared. ONE press source.
   //
@@ -24,7 +24,7 @@ export const buttonVariants = cva(
   // the base font reads `--control-text` (the scaled `text-sm` register — RED 3,
   // "font too small"), the un-sized glyph reads `--ui-glyph` (the scaled `size-4`
   // register — RED 4, glyph grows WITH the box), keeping the host-sized-icon escape.
-  'btn-pill tap-squish focus-ring whitespace-nowrap text-[length:var(--control-text)] font-medium cursor-pointer active:scale-[var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-[var(--ui-glyph)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  'btn-pill tap-squish focus-ring whitespace-nowrap text-[length:var(--control-text)] font-medium cursor-pointer active:scale-(--scale-press-btn) disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -32,7 +32,7 @@ export const buttonVariants = cva(
         // liquid glass (resolves the same recipe as the `glass` variant below).
         // The opaque primary-fill is no longer the default — reach for `solid`.
         default:
-          'glass-wash btn-glass text-foreground hover:bg-[var(--glass-bg-resting)] hover:border-[var(--glass-border-resting)] active:bg-[var(--glass-bg-floating)] active:border-[var(--glass-border-floating)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
         // AX.W54 — `solid` is the opaque escape: the previous default's primary-fill
         // recipe, named so consumers can still get the solid bg-primary look.
         solid:
@@ -42,14 +42,14 @@ export const buttonVariants = cva(
         // via the `.btn-pill` base scale transition, the lift reads as ONE coherent
         // glide with the surface cross-fade rather than a mechanical pop.
         'primary-audacious':
-          'btn-audacious bg-primary text-primary-foreground hover:scale-[var(--scale-hover-btn)] aria-pressed:scale-[var(--scale-press-btn)]',
+          'btn-audacious bg-primary text-primary-foreground hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         // AW.W13 — rest text is the warm-ink `--foreground`, NOT `text-white`:
         // the `btn-audacious-gold` REST substrate is an 8%-gold-tint over glass
         // (near-cream in light mode), so white-on-cream was sub-legible. Light
         // text is reserved for hover/active, where the gold sweep darkens the
         // backplate enough to clear contrast.
         'gold-audacious':
-          'btn-audacious btn-audacious-gold text-foreground hover:text-white active:text-white aria-pressed:text-white hover:scale-[var(--scale-hover-btn)] aria-pressed:scale-[var(--scale-press-btn)]',
+          'btn-audacious btn-audacious-gold text-foreground hover:text-white active:text-white aria-pressed:text-white hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
         outline:
@@ -71,9 +71,9 @@ export const buttonVariants = cva(
         // glass button variants actually READ as liquid glass (live readback found
         // them at a negligible blur(1px)). The wash TILE tier keeps its 1px.
         glass:
-          'glass-wash btn-glass text-foreground hover:bg-[var(--glass-bg-resting)] hover:border-[var(--glass-border-resting)] active:bg-[var(--glass-bg-floating)] active:border-[var(--glass-border-floating)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
         'glass-wash':
-          'glass-wash btn-glass text-foreground/70 hover:bg-foreground/[0.04] hover:border-[var(--surface-tint-22)] hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
+          'glass-wash btn-glass text-foreground/70 hover:bg-foreground/[0.04] hover:border-(--surface-tint-22) hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
       },
@@ -86,12 +86,12 @@ export const buttonVariants = cva(
         // with the WCAG-44px coarse clamp) instead of the raw `h-N` literal, so the
         // height grows on the ONE comfort axis. The `xs` rung's quieter font reads
         // `--control-text-sm` (the scaled `text-xs` register).
-        default: 'h-[var(--control-h-md)] px-4 py-2 has-[>svg]:px-3',
-        xs: 'h-[var(--control-h-xs)] rounded-pill px-2 text-[length:var(--control-text-sm)]',
-        sm: 'h-[var(--control-h-sm)] rounded-pill px-3',
-        lg: 'h-[var(--control-h-lg)] rounded-pill px-8 has-[>svg]:px-5',
-        icon: 'h-[var(--control-h-md)] w-[var(--control-h-md)] p-0',
-        'icon-sm': 'h-[var(--control-h-xs)] w-[var(--control-h-xs)] p-0',
+        default: 'h-(--control-h-md) px-4 py-2 has-[>svg]:px-3',
+        xs: 'h-(--control-h-xs) rounded-pill px-2 text-[length:var(--control-text-sm)]',
+        sm: 'h-(--control-h-sm) rounded-pill px-3',
+        lg: 'h-(--control-h-lg) rounded-pill px-8 has-[>svg]:px-5',
+        icon: 'h-(--control-h-md) w-(--control-h-md) p-0',
+        'icon-sm': 'h-(--control-h-xs) w-(--control-h-xs) p-0',
       },
     },
     defaultVariants: {

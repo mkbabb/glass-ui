@@ -18,6 +18,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const ARTIFACT = gateArtifactPath(
@@ -30,8 +33,8 @@ function read(rel) {
     return existsSync(p) ? readFileSync(p, "utf8") : "";
 }
 
-const tokens = read("src/styles/tokens.css");
-const glass = read("src/styles/glass.css");
+const tokens = readMonolith(ROOT, "tokens");
+const glass = readMonolith(ROOT, "glass");
 // AX.W06 — dock.css was carved into dock/{shell,morph,density,…}.css; read the
 // FAMILY so the edge-light/tier wiring (now in the partials) is found.
 const dock = [
@@ -51,7 +54,7 @@ const dock = [
 // feDisplacementMap refraction garnish lives in its own glass-refract.css. Read
 // the family so every specular/refraction assertion finds the recipe at its home.
 const specular =
-    read("src/styles/glass.css") +
+    readMonolith(ROOT, "glass") +
     "\n" +
     read("src/styles/glass-specular-track.css") +
     "\n" +

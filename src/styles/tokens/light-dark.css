@@ -1,0 +1,158 @@
+/* tokens/light-dark.css
+   §-1a coarse-pointer comfort + §-1b light-dark() color architecture — the @media (pointer:coarse) / @media (min-resolution) / @supports (light-dark()) overrides. After the master token partials (overrides them).
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+
+/* AX.W51 D18 — the GLOBAL coarse-pointer comfort amplification. The WHOLE library
+   — buttons, inputs, badges, toggles, the dock (a specialization that reads
+   `--ui-scale`) — grows ~1.5× on touch from this ONE place, the W45 dock-only 1.5×
+   lifted to the master scalar so the touch scale is CONSISTENT across the library
+   (at HEAD the dock grew but the buttons did not — the three-scale split). The
+   WCAG-2.5.5 44px touch floor is enforced HERE too: `--control-floor` lifts to
+   `--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at
+   ≥ 44px regardless of the scalar (a consumer dialing `--ui-scale` below 1 still
+   cannot drop a control under the target). Fine-pointer is byte-identical
+   (`--ui-scale` stays 1). `--ui-coarse-scale` is the public default a consumer
+   retunes. */
+@media (pointer: coarse) {
+    :root {
+        --ui-scale: var(--ui-coarse-scale, 1.5);
+        --control-floor: var(--touch-target, 2.75rem);
+    }
+}
+
+/* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
+   richer 24px overlay wash is amortised by the extra device pixels (the blur
+   samples a denser backing store), so the design ceiling is restored where it
+   is affordable. Standard-density displays keep the 15px budget radius set in
+   §-1a `:root`. Token-only override — every overlay surface that reads
+   `--glass-blur-overlay-radius` inherits the restored value automatically. */
+@media (min-resolution: 2dppx) {
+    :root {
+        --glass-blur-overlay-radius: 24px;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   §-1b  LIGHT-DARK() COLOR ARCHITECTURE (AQ.W2 §2)
+
+   Every PAIRED color token (a token whose `:root` and `.dark` values are
+   BOTH a <color> and differ) folds onto one `light-dark(light, dark)`
+   declaration, keyed off the element's `color-scheme` (§-1). This is the
+   single-source-of-truth collapse of the `.dark` mirror AND the dynamism
+   win: an unregistered custom property holding a `light-dark()` expression
+   re-resolves under a descendant `color-scheme` override (a `.dark`
+   code-block embedded in a light page, or vice-versa).
+
+   DISCIPLINE (§2b — BINDING): these tokens MUST stay UNREGISTERED (no
+   `@property … syntax:"<color>"`). A registered <color> would resolve ONCE
+   at the declaring element and inherit the RESOLVED color, freezing the
+   descendant re-resolution. glass-ui's only `@property` registrations (§18)
+   are non-color (percentage/length), so the discipline holds — W2 adds NO
+   color `@property`.
+
+   The semantic `var()`-aliases (`--background`, `--muted`, `--border`,
+   `--secondary`, `--accent`, `--card-foreground`, …) do NOT appear here:
+   they point at the SAME source name in both modes and auto-track once the
+   `--neutral-*` ladder + `--foreground` resolve via `light-dark()`. Their
+   redundant `.dark` re-declarations DELETE below.
+
+   FALLBACK (§2c): this whole block is `@supports`-gated, so an engine
+   WITHOUT `light-dark()` skips it and the retained `.dark` class block (the
+   SOLE fallback floor) drives dark exactly as at HEAD. `light-dark()` is the
+   enhancement OVER the class — not a parallel alias. Baseline Newly
+   Available; the fallback floor is the pre-existing class block (net-zero
+   new fallback LOC).
+   ═══════════════════════════════════════════════ */
+@supports (color: light-dark(white, black)) {
+    :root {
+        /* Neutral ladder — the source the var()-aliases track */
+        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 8% 6%));
+        --neutral-1: light-dark(hsl(48 10% 95%), hsl(24 6% 11%));
+        --neutral-2: light-dark(hsl(48  9% 90%), hsl(24 5% 16%));
+        --neutral-3: light-dark(hsl(48  8% 82%), hsl(24 5% 22%));
+        --neutral-4: light-dark(hsl(48  7% 70%), hsl(24 5% 34%));
+        --neutral-5: light-dark(hsl(48  6% 40%), hsl(48 5% 62%));
+        --neutral-6: light-dark(hsl(48  7% 30%), hsl(48 6% 72%));
+
+        /* Core surfaces + ink */
+        --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        --card:                       light-dark(var(--neutral-0), hsl(24 8% 10%));
+        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 10%));
+        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 12%));
+
+        --primary:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
+        /* AX.W44 — dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
+           (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
+           Alert destructive variant — 1.75:1 over card (illegible) / 1.91:1 vs the
+           page. Lifted to `hsl(0 80% 60%)`: 4.60:1 as text over `--card` (clears the
+           4.5 body floor) AND 5.03:1 as a plate vs the dark page (clears the 3.0
+           graphic floor). The light arm is UNCHANGED (already 4.70:1). Lockstep with
+           the `.dark` fallback floor below (§2c). */
+        --destructive:             light-dark(hsl(0 72% 50%), hsl(0 80% 60%));
+        --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
+        --ring:                    light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
+        --shadow:                  light-dark(hsl(24 10% 10%), hsl(0 0% 5%));
+
+        /* §4 native-control accent — the per-mode arms (dark reads the
+           mid-tone ring for checkmark-glyph contrast headroom, NOT the
+           near-white dark primary). Joins the light-dark() collapse; still
+           re-specified as `accent-color` inside `.dark` per §2b. */
+        --accent-color:            light-dark(var(--primary), var(--ring));
+
+        /* Section palette — jewel tones brightened L for dark (oklch pairs;
+           AV.W16 TW2 — hue preserved, L evened) */
+        --section-color-0:   light-dark(oklch(0.552 0.192 359.8), oklch(0.721 0.145 354.0));
+        --section-color-1:   light-dark(oklch(0.502 0.165 305.9), oklch(0.733 0.113 308.2));
+        --section-color-2:   light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
+        --section-color-3:   light-dark(oklch(0.542 0.089 222.8), oklch(0.767 0.091 219.9));
+        --section-color-4:   light-dark(oklch(0.551 0.088 171.1), oklch(0.776 0.105 172.6));
+        --section-color-5:   light-dark(oklch(0.623 0.124 69.6),  oklch(0.813 0.109 78.2));
+        --section-color-6:   light-dark(oklch(0.579 0.201 30.4),  oklch(0.693 0.151 28.1));
+        --section-color-7:   light-dark(oklch(0.532 0.180 317.5), oklch(0.739 0.134 318.1));
+        --section-color-8:   light-dark(oklch(0.520 0.176 8.4),   oklch(0.709 0.142 2.3));
+        --section-color-9:   light-dark(oklch(0.492 0.038 239.6), oklch(0.763 0.032 239.0));
+        --section-color-10:  light-dark(oklch(0.556 0.103 128.8), oklch(0.794 0.116 127.9));
+        --section-color-11:  light-dark(oklch(0.601 0.092 208.0), oklch(0.805 0.095 206.7));
+        --section-color-12:  light-dark(oklch(0.513 0.163 291.9), oklch(0.719 0.115 295.6));
+
+        --accent-pink:     light-dark(oklch(0.613 0.197 353.8), oklch(0.683 0.131 354.7));
+        --section-heading: light-dark(oklch(0.545 0.189 352.8), oklch(0.711 0.123 349.3));
+        --accent-red:      light-dark(oklch(0.574 0.216 27.5),  oklch(0.644 0.165 22.9));
+
+        /* Viz basis (amber/green stay var()-aliases → auto-track) */
+        --viz-fourier:   light-dark(oklch(0.579 0.201 30.4),  oklch(0.693 0.151 28.1));
+        --viz-chebyshev: light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
+        --viz-legendre:  light-dark(oklch(0.532 0.180 317.5), oklch(0.739 0.134 318.1));
+
+        /* WCAG companion chart labels */
+        --chart-ping-label:     light-dark(oklch(0.40 0.18 230), oklch(0.85 0.12 230));
+        --chart-download-label: light-dark(oklch(0.40 0.20 22),  oklch(0.85 0.14 22));
+        --chart-upload-label:   light-dark(oklch(0.40 0.16 55),  oklch(0.85 0.12 55));
+        --chart-jitter-label:   light-dark(oklch(0.40 0.20 305), oklch(0.85 0.14 305));
+
+        /* Semantic UI accents */
+        --tier-featured: light-dark(oklch(0.841 0.173 84.2),  oklch(0.867 0.165 88.7));
+        --tier-saved:    light-dark(oklch(0.676 0.176 252.3), oklch(0.748 0.135 250.1));
+        --like:          light-dark(oklch(0.633 0.200 24.9),  oklch(0.690 0.162 22.2));
+        --success:       light-dark(oklch(0.720 0.192 149.5), oklch(0.805 0.186 151.6));
+        --warning:       light-dark(oklch(0.770 0.165 70.6),  oklch(0.809 0.150 76.6));
+        --info:          light-dark(oklch(0.626 0.186 259.6), oklch(0.713 0.138 259.5));
+        --delete:        light-dark(oklch(0.597 0.198 25.5),  oklch(0.644 0.170 23.1));
+
+        /* Semantic foregrounds (warning-foreground is identical both modes
+           → stays a single light-mode declaration, no light-dark() needed) */
+        --success-foreground: light-dark(var(--neutral-0), hsl(48 10% 96%));
+        --info-foreground:    light-dark(var(--neutral-0), hsl(48 10% 96%));
+
+        /* Cartoon-shadow color primitives (§2d — plain colors, convert) */
+        --shadow-cartoon-color:      light-dark(rgb(0 0 0 / 0.12), rgb(255 255 255 / 0.07));
+        --shadow-cartoon-color-soft: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.03));
+
+        /* Gold family */
+        --gold:       light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));
+        --gold-light: light-dark(oklch(0.890 0.183 96.1), oklch(0.898 0.182 97.4));
+        --gold-dark:  light-dark(oklch(0.599 0.132 64.2), oklch(0.678 0.150 63.8));
+    }
+}

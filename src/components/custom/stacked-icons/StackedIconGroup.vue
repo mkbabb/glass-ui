@@ -84,15 +84,15 @@ const sizeClass = computed(() => {
 const overlapClass = computed(() => {
     if (props.direction === 'vertical') {
         switch (props.size) {
-            case 'sm': return '-mt-[var(--stack-overlap-sm)]';
-            case 'md': return '-mt-[var(--stack-overlap-md)]';
-            case 'lg': return '-mt-[var(--stack-overlap-lg)]';
+            case 'sm': return '-mt-(--stack-overlap-sm)';
+            case 'md': return '-mt-(--stack-overlap-md)';
+            case 'lg': return '-mt-(--stack-overlap-lg)';
         }
     }
     switch (props.size) {
-        case 'sm': return '-ml-[var(--stack-overlap-sm)]';
-        case 'md': return '-ml-[var(--stack-overlap-md)]';
-        case 'lg': return '-ml-[var(--stack-overlap-lg)]';
+        case 'sm': return '-ml-(--stack-overlap-sm)';
+        case 'md': return '-ml-(--stack-overlap-md)';
+        case 'lg': return '-ml-(--stack-overlap-lg)';
     }
 });
 

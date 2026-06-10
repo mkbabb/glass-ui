@@ -31,7 +31,7 @@ const delegatedProps = computed(() => {
     data-slot="tabs-list"
     v-bind="delegatedProps"
     :class="cn(
-      'relative inline-flex h-[var(--control-h-md)] items-center justify-center rounded-input p-1 text-muted-foreground',
+      'relative inline-flex h-(--control-h-md) items-center justify-center rounded-input p-1 text-muted-foreground',
       props.class,
     )"
   >

@@ -31,7 +31,7 @@ export const toggleVariants = cva(
   // AX.W51 D18 — the control FONT reads `--control-text` (scaled `text-sm`), the
   // un-sized GLYPH reads `--ui-glyph` (scaled `size-4`), so both grow on the ONE
   // comfort axis with the height.
-  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-[length:var(--control-text)] font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-[var(--ui-glyph)] [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-[length:var(--control-text)] font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -43,9 +43,9 @@ export const toggleVariants = cva(
       },
       size: {
         // AX.W51 D18 — the height rungs read the `--control-h-*` comfort cohort.
-        default: 'h-[var(--control-h-md)] px-3',
-        sm: 'h-[var(--control-h-sm)] px-2.5',
-        lg: 'h-[var(--control-h-lg)] px-5',
+        default: 'h-(--control-h-md) px-3',
+        sm: 'h-(--control-h-sm) px-2.5',
+        lg: 'h-(--control-h-lg) px-5',
       },
     },
     compoundVariants: [

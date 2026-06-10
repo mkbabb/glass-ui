@@ -23,6 +23,9 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:dropdown-type-scale";
 
@@ -35,7 +38,7 @@ const stripCss = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const tokens = stripCss(read("src/styles/tokens.css"));
+const tokens = stripCss(readMonolith(ROOT, "tokens"));
 const theme = stripCss(read("src/styles/theme.css"));
 
 const checks = [];
@@ -161,7 +164,9 @@ const stripVueComments = (s) =>
     s.replace(/<!--[\s\S]*?-->/g, "").replace(/\/\/[^\n]*/g, "");
 const comboInput = read("src/components/ui/combobox/ComboboxInput.vue");
 const cmdInput = read("src/components/ui/command/CommandInput.vue");
-const inputHeightRe = /h-\[var\(--dropdown-input-height\)\]/;
+// AY.W-CSS1 — accept BOTH the v4 shorthand h-(--x) and the arbitrary h-[var(--x)]
+// form (the shorthand is the post-conversion canonical; both compile identically).
+const inputHeightRe = /h-(?:\[var\(--dropdown-input-height\)\]|\(--dropdown-input-height\))/;
 add(
     "filter-inputs-share-height",
     inputHeightRe.test(comboInput) &&

@@ -21,6 +21,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 function stripComments(src) {
     return src
@@ -170,7 +173,7 @@ function run() {
 
     // ── 3. Squircle PE gated with a round fallback.
     if (existsSync(GLASS)) {
-        const css = stripComments(readFileSync(GLASS, "utf8"));
+        const css = stripComments(readMonolith(ROOT, "glass"));
         const squircleBody = balancedBlock(
             css,
             /@supports\s*\(corner-shape:\s*squircle\)\s*\{/,
@@ -215,7 +218,7 @@ function run() {
 
     // ── 5. Adaptive tint defaults to zero delta + no oklch lightness-shift.
     if (existsSync(TOKENS)) {
-        const tok = stripComments(readFileSync(TOKENS, "utf8"));
+        const tok = stripComments(readMonolith(ROOT, "tokens"));
         facts.tintSourceDefined = /--glass-tint-source:/.test(tok);
         // The default strength must be 0% (zero delta) at the root.
         const strengthMatch = tok.match(/--glass-tint-strength:\s*([^;]+);/);
@@ -251,7 +254,7 @@ function run() {
 
     // The oklab-tint recipe is used in glass.css; NO oklch(from … l …) lightness-shift.
     if (existsSync(GLASS)) {
-        const css = stripComments(readFileSync(GLASS, "utf8"));
+        const css = stripComments(readMonolith(ROOT, "glass"));
         facts.usesOklabTint = /color-mix\(in oklab,[\s\S]*?--glass-tint-source/.test(css);
         const lightnessShift = /oklch\(\s*from[^)]*\sl\s/.test(css);
         facts.oklchLightnessShift = lightnessShift;

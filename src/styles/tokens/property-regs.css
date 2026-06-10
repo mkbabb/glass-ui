@@ -1,0 +1,169 @@
+/* tokens/property-regs.css
+   §18 Houdini @property registrations (progress/phase/ripple/specular/glass-level/ui-scale) + §11b the pointer-anchored moving-specular :root/.dark magnitude cohort. LAST — registrations + the magnitude cohort that reads them.
+   Carved from the tokens.css cascade root; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+/* ═══════════════════════════════════════════════
+   §18 TYPED CSS PROPERTIES — Houdini @property registrations
+   (AI.W4 grammar — adjacent to §2.C tokens above)
+
+   Three typed custom properties register with the CSS Houdini @property
+   API so transitions interpolate VALUES (percentage / length) rather
+   than the textual representation. Unregistered fallback is safe — the
+   `initial-value` provides a sensible default for any consumer that
+   imports this stylesheet on a browser that doesn't yet support the
+   typed @property registration (the cross-fade collapses to the
+   initial value, then re-paints at the new state).
+
+   Browser support: Chromium 85+, Safari 16.4+, Firefox 128+. The
+   speedtest deployment target sits well within the floor.
+
+   • --progress-crescendo (percentage) — the leading-edge brightness
+     ramp on `<Progress variant="gradient">` past 85% modelValue.
+     `inherits: false` because the value is consumed at one
+     declaration only (the gradient stop calculation); inheriting
+     would let an unrelated ancestor accidentally drive a sibling
+     progress bar.
+
+   • --phase-tint-amount (percentage) — the chassis depth-of-tint
+     companion to `--phase-color`. `inherits: true` because the
+     value cascades from the chassis root through every region
+     wrapper that reads it for a sympathetic tint (matches the
+     `--phase-color` inheritance pattern).
+
+   • --ripple-radius (length) — the `btn-audacious` press ripple
+     radial. `inherits: false` because each button owns its own
+     ripple state (a hovered parent must not push a ripple-radius
+     onto a non-pressed child).
+   ═══════════════════════════════════════════════ */
+
+@property --progress-crescendo {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
+@property --phase-tint-amount {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}
+
+@property --ripple-radius {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+
+/* ═══════════════════════════════════════════════
+   §11b  POINTER-ANCHORED MOVING SPECULAR (AV.W15)
+
+   The iOS-26 Liquid Glass "light travels around the material /
+   illuminate under your fingertip" behaviour. A masked radial-gradient
+   catch-light rides the surface at (--specular-x, --specular-y), driven
+   by the consumer's pointer-tracked --mouse-x/--mouse-y write. Registered
+   as typed custom properties so the position INTERPOLATES smoothly between
+   pointer samples (a bare unregistered var() snaps; the @property reg lets
+   the engine animate the percentage stop).
+
+   • --specular-x / --specular-y (percentage) — the catch-light centre.
+     `inherits: false` because each glass surface owns its own pointer
+     position (a hovered parent must not push its specular onto a child —
+     the no-glass-on-glass discipline made mechanical).
+
+   • --specular-intensity (number) — the catch-light alpha multiplier.
+     `inherits: false` for the same per-surface-ownership reason; rises on
+     hover/active, settles to its rest floor on leave.
+
+   @property crosses Baseline 2024-07-09. The consumption (the masked
+   radial + the reduced-motion static bracket + the var() fallback) lives
+   in glass-specular-track.css; the registrations live here alongside the
+   other three regs so the typed-property tier has one home.
+   ═══════════════════════════════════════════════ */
+
+@property --specular-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
+@property --specular-y {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
+@property --specular-intensity {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+/* AX.W54 — the GLASS-FIRST single knob. `--glass-level` is the ONE clarity
+   scalar threaded through BOTH glass ladders at their single sites (the
+   `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,
+   INHERITING <number> so a host setting it on any ancestor retunes every
+   descendant glass surface (the @container-free cascade path) — and so it
+   animates smoothly rather than snapping. The level acts as a clarity multiplier
+   that PRESERVES level=1 (byte-identical to the hand-tuned ladder):
+     • level 1 — the calibrated glass (today's surfaces, unchanged).
+     • level 0 — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
+                 machinery (the `.glass-opaque` rung + the a11y brackets ride it).
+     • level >1 — clearer (more transparent + more diffuse) in lockstep.
+   Glass is the DEFAULT surface register for EVERY band (USER-DECIDED MAXIMAL);
+   the opaque level-0 rung is the explicit opt-out. W55 carries the over-light
+   legibility on the SEPARATE `--glass-tint-*` axis (the `--glass-backdrop` probe
+   lifts the tint toward ink — level = opacity+blur, tint = darken-over-light, the
+   two axes coordinate but never collapse: the a11y Clear↔Tinted escape rides
+   level-up here AND tint-toward-ink under `prefers-contrast: more`). */
+@property --glass-level {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
+/* AX.W51 D18 — the master comfortable-sizing scalar registered typed. The
+   `<number>` syntax guarantees `calc(<base> * var(--ui-scale))` is always valid (a
+   malformed override CLAMPS to the initial value 1, not an invalidated calc — the
+   fail-safe); `inherits: true` (unlike the per-element specular @property cohort)
+   so a SCOPED override (a dense data-table region) cascades to every descendant
+   control without a per-element set; the type makes it animatable (a density
+   toggle COULD spring it). Mirrors the `--glass-level` registration above (the
+   cascading-scalar idiom), distinct from the per-element specular @property cohort
+   (those are `inherits: false`). */
+@property --ui-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
+/* ── The specular-intensity magnitude cohort (AX.W09) ──────────────────────
+   The catch-light alpha multiplier at each interaction state, as a SINGLE
+   overridable token cohort (was three buried literals across glass.css —
+   `0.35` rest floor / `0.6` hover / `0.85` active — and the `.dark` arm's
+   `0.22`). `glass.css`'s `.glass-material::before` rest/hover/active rules READ
+   these, so the subtle-vs-extreme magnitude is a knob a consumer (or the dark
+   arm) retunes ON THE CASCADE — never a re-buried literal. Override on `:root`
+   to retune library-wide; the cartoon-shadow override contract is the precedent.
+
+   Re-baselined AGAIN at AX.W52 D19 — with the central screen-disc replaced by a
+   BOUNDED plus-lighter edge gleam (glass.css), the gleam is a whisper at every
+   rung, so the cohort drops further (the W09 0.22/0.32 ceiling still lifted the
+   whole-tile disc on hover):
+     • rest   0    — static, unwired surfaces are CLEAN; the gleam wakes only on
+                     hover/active or on a pointer-wired surface. Aligns the painted
+                     rest with the @property `--specular-intensity { initial-value:
+                     0 }` dormancy.
+     • hover  0.10 — a whisper edge gleam, not a bloom.
+     • active 0.16 — the press whisper. */
+:root {
+    --glass-specular-intensity-rest: 0;
+    --glass-specular-intensity-hover: 0.1;
+    --glass-specular-intensity-active: 0.16;
+}
+
+/* Over the deep canvas `plus-lighter` still lifts, so the dark arm runs a touch
+   softer on the interaction rungs (rest already 0). */
+.dark {
+    --glass-specular-intensity-hover: 0.08;
+    --glass-specular-intensity-active: 0.12;
+}

@@ -41,6 +41,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 function stripComments(src) {
     return src
@@ -113,7 +116,7 @@ function run() {
     if (!existsSync(UTILITIES)) {
         violations.push("utilities.css is absent");
     } else {
-        const src = stripComments(readFileSync(UTILITIES, "utf8"));
+        const src = stripComments(readMonolith(ROOT, "utilities"));
         const goldUtil = src.match(/@utility\s+btn-audacious-gold\s*\{([\s\S]*?)\n\}/);
         const utilBody = goldUtil ? goldUtil[1] : "";
         const hoverBlock = utilBody.match(/&:hover:not\(:disabled\)\s*\{([\s\S]*?)\n\s{4}\}/);
@@ -146,7 +149,7 @@ function run() {
     if (!existsSync(GLASS)) {
         violations.push("glass.css is absent");
     } else {
-        glassSrc = stripComments(readFileSync(GLASS, "utf8"));
+        glassSrc = stripComments(readMonolith(ROOT, "glass"));
         const inputRule = glassSrc.match(/\.input-pill\s*\{([^}]*)\}/);
         const inputBlock = inputRule ? inputRule[1] : "";
         const borderDecl = inputBlock.match(/border:\s*[\d.]+px\s+solid\s+var\((--[a-z0-9-]+)\)/);

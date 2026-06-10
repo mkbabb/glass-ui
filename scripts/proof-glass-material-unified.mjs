@@ -23,6 +23,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AY.W-CSS1 — the central stylesheets are thin @import roots over carved
+// partials; readMonolith concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 /** Strip line + block comments so a clause cannot be satisfied by a comment. */
 function stripComments(src) {
@@ -91,7 +94,7 @@ function run() {
     if (!existsSync(GLASS)) {
         violations.push("glass.css is absent");
     } else {
-        const css = stripComments(readFileSync(GLASS, "utf8"));
+        const css = stripComments(readMonolith(ROOT, "glass"));
 
         // ── 1. The unified specular `::before` group reaches every band surface.
         // The group is the rule whose body carries the masked radial-gradient
@@ -229,7 +232,7 @@ function run() {
     if (!existsSync(TOKENS)) {
         violations.push("tokens.css is absent");
     } else {
-        const tok = stripComments(readFileSync(TOKENS, "utf8"));
+        const tok = stripComments(readMonolith(ROOT, "tokens"));
         for (const rung of ["rest", "hover", "active"]) {
             const minted = new RegExp(
                 `--glass-specular-intensity-${rung}\\s*:`,
