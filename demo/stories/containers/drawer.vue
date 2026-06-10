@@ -21,7 +21,7 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Snap points</h2>
+                <h2 class="text-subheading">Snap points</h2>
                 <p class="text-sm text-muted-foreground">
                     Four snap positions: 25%, 40%, 70%, 100%. Current snap —
                     <code class="font-mono text-xs">{{ String(snap) }}</code>.
@@ -62,7 +62,7 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Fixed height</h2>
+                <h2 class="text-subheading">Fixed height</h2>
                 <p class="text-sm text-muted-foreground">
                     Omit <code class="font-mono text-xs">snapPoints</code> for a
                     single resting position sized by content.

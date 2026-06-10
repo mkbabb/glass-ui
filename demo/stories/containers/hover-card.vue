@@ -15,7 +15,7 @@ import { Info, CircleHelp, Sparkles } from "@lucide/vue";
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Profile preview</h2>
+                <h2 class="text-subheading">Profile preview</h2>
                 <p class="text-sm text-muted-foreground">
                     Hover the underlined trigger.
                 </p>
@@ -56,7 +56,7 @@ import { Info, CircleHelp, Sparkles } from "@lucide/vue";
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Icon tooltips</h2>
+                <h2 class="text-subheading">Icon tooltips</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">IconTooltip</code> is a
                     preset of the tooltip primitive — Plus Jakarta Sans body text,

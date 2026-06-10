@@ -17,7 +17,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Form pod</h2>
+                <h2 class="text-subheading">Form pod</h2>
                 <p class="text-sm text-muted-foreground">
                     A typical two-field editor anchored to a button.
                 </p>
@@ -45,7 +45,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Placement</h2>
+                <h2 class="text-subheading">Placement</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">side</code> controls the
                     preferred edge; Floating UI flips if there's not enough room.

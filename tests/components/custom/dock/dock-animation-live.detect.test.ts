@@ -41,6 +41,12 @@ const HEALTHY_FLIP = {
     widths: [58, 80, 120, 165, 198, 211, 209, 211, 211],
     morphTs: [0, 0.18, 0.45, 0.72, 0.95, 1.05, 1.01, 1.0, 1.0],
     childOpacities: [1, 0.78, 0.42, 0.15, 0.03, 0, 0, 0, 0],
+    // The ENTERING `.dock-layer--full > *` child series — the W-DOCK2 D1 lockstep
+    // witness samples it, and its blind-spot guard REDs an empty/unsampled series
+    // (a healthy fixture without it models a surface the gate now refuses). The
+    // entering child fades in tracking the shell inside the lockstep budget.
+    enteringChildOpacities: [0, 0.12, 0.38, 0.67, 0.9, 1, 1, 1, 1],
+    enteringChildSampled: true,
     times: [0, 16.7, 33.4, 50.1, 66.8, 83.5, 100.2, 116.9, 133.6],
 };
 

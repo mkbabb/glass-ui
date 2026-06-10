@@ -38,10 +38,10 @@ const variant = computed<"hero" | "page">(() =>
                 <p v-if="eyebrow" class="text-admin-label text-muted-foreground">
                     {{ eyebrow }}
                 </p>
-                <h1 v-if="title" class="text-title">{{ title }}</h1>
+                <h1 v-if="title" class="text-heading">{{ title }}</h1>
                 <p
                     v-if="blurb"
-                    class="text-prose max-w-prose text-muted-foreground"
+                    class="text-small max-w-prose text-muted-foreground"
                 >
                     {{ blurb }}
                 </p>

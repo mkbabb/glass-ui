@@ -35,7 +35,7 @@ const faq = [
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Single</h2>
+                <h2 class="text-subheading">Single</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">type="single"</code> with
                     <code class="font-mono text-xs">collapsible</code> allows
@@ -54,7 +54,7 @@ const faq = [
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Multiple</h2>
+                <h2 class="text-subheading">Multiple</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">type="multiple"</code> — any
                     subset open simultaneously.

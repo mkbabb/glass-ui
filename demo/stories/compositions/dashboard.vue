@@ -122,8 +122,14 @@ const trendClasses: Record<Trend, string> = {
                                 {{ metric.label }}
                             </CardTitle>
                         </CardHeader>
-                        <CardContent class="flex flex-wrap items-end justify-between gap-2 pt-0">
-                            <span class="text-display font-display tabular-nums min-w-0 break-all">
+                        <!-- W-SB-REVERIFY B17 — the value gets its OWN row at full
+                             card width so a `128ms` / `1.2k` figure stays WHOLE
+                             (no `break-all` mid-digit squish), and the trend badge
+                             sits below it. The number rides the `text-title` √φ
+                             rung (fits the narrow 2-col card) + `whitespace-nowrap`
+                             so it never wraps. -->
+                        <CardContent class="flex flex-col items-start gap-1.5 pt-0">
+                            <span class="text-title font-display tabular-nums whitespace-nowrap leading-none">
                                 {{ metric.value }}
                             </span>
                             <Badge

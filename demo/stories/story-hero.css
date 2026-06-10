@@ -44,11 +44,77 @@
     border-radius: var(--radius-card);
 }
 
+/* Full-bleed hero (W-SB-REVERIFY — B16/B22): the substrate is the PAGE
+   background, so the container must NOT isolate or clip — the fixed substrate
+   has to reach a page-level negative z behind the StoryPage header (its sibling)
+   and the rounded box must not clip a viewport-filling field. */
+.story-hero[data-full-bleed="true"] {
+    isolation: auto;
+    overflow: visible;
+    border-radius: 0;
+}
+
 /* Every background substrate fills the container behind the card. */
 .story-hero-bg {
     position: absolute;
     inset: 0;
     z-index: -10;
+}
+
+/* The full-bleed substrate escapes to the viewport — the live field IS the page
+   background (the KonamiAurora idiom), pinned BEHIND the page content but ABOVE
+   the AppShell PaperBackdrop (`fixed inset-0 -z-10`), so the painterly drift
+   shows on the whole page rather than a boxed card well. `pointer-events: none`
+   keeps the content interactive; the substrates are `aria-hidden`. */
+.story-hero-bg--bleed {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
+}
+
+/* B16 — the constellation hero reads STRONGER over the full-bleed background.
+   The library defaults tune the lattice to RECEDE behind card content (the §7
+   field-yields-to-type midpoint); on the front-door hero where the field IS the
+   page background it should READ, so this demo override (the consumer-token
+   pattern — NO library edit) lifts the node/line contrast + the edge/field
+   alpha. The dark arm needs less lift (light dots already read on dark). */
+.constellation.story-hero-bg--bleed {
+    --constellation-node: hsl(30 10% 34%);
+    --constellation-node-dim: hsl(30 9% 46%);
+    --constellation-line: hsl(24 16% 18%);
+    --constellation-edge-alpha: 0.34;
+    --constellation-edge-focus-alpha: 0.46;
+    --constellation-alpha: 0.95;
+}
+.dark .constellation.story-hero-bg--bleed {
+    --constellation-node: hsl(42 12% 80%);
+    --constellation-node-dim: hsl(42 9% 62%);
+    --constellation-line: hsl(45 14% 80%);
+    --constellation-edge-alpha: 0.3;
+    --constellation-edge-focus-alpha: 0.44;
+    --constellation-alpha: 0.95;
+}
+
+/* The full-bleed hero content floats DIRECTLY over the live field — a generous
+   pad + a thin local readability scrim (a soft radial fade keyed off the page
+   background) under the prose so the headline stays legible over the bright
+   drift WITHOUT a hard card box. The scrim is sub-perceptual at the edges (the
+   field reads) and lifts toward the text. */
+.story-hero-bleed-content {
+    position: relative;
+    z-index: 1;
+    padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 3vw, 3rem);
+    border-radius: var(--radius-card);
+    background: radial-gradient(
+        ellipse 120% 100% at 30% 35%,
+        color-mix(in srgb, var(--background) 58%, transparent) 0%,
+        color-mix(in srgb, var(--background) 30%, transparent) 45%,
+        transparent 78%
+    );
+}
+.story-hero-bleed-content > * {
+    width: 100%;
 }
 
 /* The hero register sits richer + taller so the live substrate reads as a

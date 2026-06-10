@@ -334,11 +334,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     /* B14 / USER-AUDIT §B14 — the spectrum thumb is the VISIBLE color-picker
        handle (unlike the standard slider's invisible thumb): it must paint. It
        re-establishes the geometry the standard base collapses (opacity:1, an
-       explicit width) and spans the FULL track height — but THINNER, matching the
-       value.js color-picker reference (`w-3` ≈ 0.5× its `h-6` track, a slim
-       vertical bar). 0.6× the thumb-size reads as that thin handle over the tall
-       gradient track, not the prior chunky 1.1× squircle. */
-    width: calc(var(--slider-thumb-size, 1rem) * 0.6);
+       explicit width) and spans the FULL track height — but THIN, matching the
+       value.js color-picker reference EXACTLY: there the thumb is `w-3` (12px)
+       over an `h-6` (24px) track — a slim vertical bar HALF the track height in
+       width. The spectrum track here is `--slider-thumb-size * 1.5`, so a width
+       of `--slider-thumb-size * 0.75` lands the same 0.5×-track ratio (the
+       value.js bar, not the prior chunky 1.1× squircle nor the slightly-too-thin
+       0.6× pass). The width is the ONE geometry leg the user named. */
+    width: calc(var(--slider-thumb-size, 1rem) * 0.75);
     height: 100%;
     opacity: 1;
     background: var(--slider-thumb-bg, transparent);

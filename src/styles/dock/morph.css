@@ -123,14 +123,16 @@
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
 
-    /* AX.W45-TUNE Q1 — the collapsed summary floors on BOTH axes off the SAME
-       `--dock-collapsed-summary-min-size` token (now MINTED in tokens.css §10 as a
-       tight ≈0.7× of the full control height). The prior rule floored ONLY
-       `min-width` and let the token fall to `--dock-layer-height` (the full control
-       height) — so the collapsed pill read as a full-row stub, not a proportioned
-       squircle. Adding the symmetric `min-block-size` makes the collapsed pill a
-       tight square-ish dot the consumer's glyph sits centred in (the proportioned-
-       pill target the user's Q1 named). */
+    /* AY.W-DOCK-NAV B4 — the collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
+       base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:
+       var(--dock-layer-height)` (40px) on EVERY layer including the summary; against
+       the 0.85× `--dock-collapsed-summary-min-size` min-width that made the pane
+       40h × 30w — an oval (the user's "circle, not oval"). This rule (1) LIFTS the
+       height-lock so the summary block-sizes to the SAME token its width floors at,
+       and (2) floors both axes to that ONE token, so the collapsed pane is a square
+       and the root's symmetric collapsed padding keeps the pill a circle. The glyph
+       sits centred on both axes. The `aspect-ratio: 1` belt-and-braces guarantees
+       1:1 even if a consumer's collapsed-slot content is wider than the floor. */
     .glass-dock.collapsed .dock-layer--summary {
         min-width: var(
             --dock-collapsed-summary-min-size,
@@ -140,6 +142,15 @@
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
         );
+        block-size: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        height: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        aspect-ratio: 1;
         justify-content: center;
     }
 
@@ -157,6 +168,35 @@
        reveal is decoupled onto the incoming scalar. */
     .glass-dock[data-morphing] .dock-layer--summary {
         --dock-expand-t: var(--dock-morph-t);
+    }
+
+    /* AY.W-DOCK-NAV B15 — the EMPTY-collapsed-summary trap. A dock with a
+       `#persistent` control but NO `#collapsed` slot (the overview first-section
+       dock) still renders a `.dock-layer--summary` pane that floors to the circle
+       min-width — so collapsed it read as a WIDE pill: the persistent Home glyph on
+       the LEFT + an empty circle of dead space on the RIGHT (the measured 84×50
+       oval). Expanding then grew the content INTO that right-side void, so the
+       morph read "from the right" not center-out (the user's B15). When the summary
+       slot is EMPTY (`:not(:has(*))`), collapse it to zero width + no floor so the
+       persistent control stands alone as the collapsed circle, and the morph grows
+       symmetrically about the persistent. An empty Vue `#collapsed` slot renders
+       ZERO child nodes (no whitespace text node either), so `:empty` matches it
+       exactly — and a flat `:empty` avoids the nested-`:has()` form Lightning CSS
+       drops. An authored `#collapsed` slot (non-empty summary) keeps its circle
+       pill. */
+    .glass-dock.collapsed .dock-layer--summary:empty {
+        min-width: 0;
+        inline-size: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+
+    /* The persistent control IS the collapsed pill in the empty-summary case — drop
+       the inter-region gap so the collapsed circle is exactly the persistent box. */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent
+        + .dock-layers {
+        margin-inline-start: 0;
     }
 
     /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.

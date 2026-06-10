@@ -104,13 +104,6 @@ function drawFocal(
 
 const isHero = computed(() => props.variant === "hero");
 
-// ── The read-through seam (W-SB-STAGE §2.1a) ─────────────────────────────────
-// Over a LIVE substrate (aurora / constellation / fourier / blob), the card
-// drops to a THINNER glass rung so the substrate reads THROUGH it (the 0.8α
-// `floating` plate annihilated line-work). Over grid / paper / none the tier is
-// BYTE-IDENTICAL to HEAD (`floating` hero / `resting` page) — the default-path
-// canary. The thinner rung is `quiet` (0.5α) on a hero, `wash` (0.3α) on a page:
-// enough plate for the prose to sit on, thin enough to let the field through.
 const liveBackdrop = computed(() =>
     kind.value === "aurora" ||
     kind.value === "constellation" ||
@@ -118,6 +111,22 @@ const liveBackdrop = computed(() =>
     kind.value === "blob",
 );
 
+// ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
+// A HERO page over a LIVE substrate paints the field FULL-BLEED behind the WHOLE
+// page (the substrate IS the page background — the user's bar: "no sub-container
+// on pages like this"). The boxed-card model trapped the substrate inside a glass
+// plate that double-washed it to invisible; here the substrate escapes to
+// `position: fixed; inset: 0` (the KonamiAurora full-bleed idiom) so it fills the
+// viewport behind the page header AND the content, and the content sits DIRECTLY
+// over the live field on a thin readability plate — no boxing, no wash-out.
+const fullBleed = computed(() => isHero.value && liveBackdrop.value);
+
+// ── The read-through seam (W-SB-STAGE §2.1a) ─────────────────────────────────
+// Over a LIVE substrate the card drops to a THINNER glass rung so the field reads
+// THROUGH it. Over grid / paper / none the tier is BYTE-IDENTICAL to HEAD
+// (`floating` hero / `resting` page) — the default-path canary. A full-bleed hero
+// has no card box (the content floats free over the field); a contained page over
+// a live field takes the `wash` (0.3α) thin plate.
 const cardTier = computed<CardTier>(() => {
     if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
     return isHero.value ? "floating" : "resting";
@@ -128,13 +137,20 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
 </script>
 
 <template>
-    <div class="story-hero" :data-variant="variant">
-        <!-- Per-page background substrate, painted BEHIND the glass card. -->
+    <div
+        class="story-hero"
+        :data-variant="variant"
+        :data-full-bleed="fullBleed ? 'true' : null"
+    >
+        <!-- Per-page background substrate. A full-bleed hero pins it
+             `position: fixed; inset: 0` (the `.story-hero-bg--bleed` modifier) so
+             the live field IS the page background behind the header AND content;
+             a contained page keeps it boxed behind the card (`-z-10` inset). -->
         <Aurora
             v-if="kind === 'aurora'"
             :config="auroraConfig"
             :opacity-ceiling="opacityCeiling"
-            class="story-hero-bg"
+            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
         />
         <Constellation
@@ -143,7 +159,7 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
             :count="56"
             :link="140"
             :draw-overlay="drawFocal"
-            class="story-hero-bg"
+            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
         />
         <FourierField
             v-else-if="kind === 'fourier'"
@@ -152,7 +168,7 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
             :color-resolver="defaultBlobColorResolver"
             :intensity="opacityCeiling"
             seed="glass-ui-hero"
-            class="story-hero-bg"
+            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
         />
         <GooBlob
@@ -160,7 +176,7 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
             :config="blobConfig"
             color="var(--primary, #1c1714)"
             seed="glass-ui-hero"
-            class="story-hero-bg"
+            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
         />
         <div
@@ -174,12 +190,23 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
             aria-hidden="true"
         />
 
-        <!-- The glass card the body sits inside. Glass-first by default; the
-             body slot carries the page's StorySection hierarchy. Over a LIVE
-             substrate the card takes a THINNER rung (so the field reads through)
-             AND sets the W55 `--glass-backdrop: light` bucket so the thinned
-             plate darkens its tint toward ink and the prose stays AA. -->
+        <!-- Full-bleed hero — the content floats DIRECTLY over the live field on a
+             thin readability plate (no card box, no double-wash). The W55
+             `--glass-backdrop: light` bucket keeps the prose AA over the bright
+             drift. -->
+        <div
+            v-if="fullBleed"
+            :style="{ '--glass-backdrop': 'light' }"
+            :class="cn('story-hero-bleed-content', cardClass)"
+        >
+            <slot />
+        </div>
+
+        <!-- Contained page / non-live hero — the body sits inside a glass card.
+             Glass-first by default; over a LIVE substrate the card takes a THINNER
+             rung + the W55 bucket so the field reads through and prose stays AA. -->
         <Card
+            v-else
             :tier="cardTier"
             :style="liveBackdrop ? { '--glass-backdrop': 'light' } : undefined"
             :class="

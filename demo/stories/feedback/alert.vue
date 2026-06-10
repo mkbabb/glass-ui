@@ -14,7 +14,7 @@ import {
     <StoryPage>
         <div class="grid gap-8">
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Default</h2>
+                <h2 class="text-subheading">Default</h2>
                 <Alert>
                     <Sparkles />
                     <AlertTitle>New workspace created</AlertTitle>
@@ -26,7 +26,7 @@ import {
             </div>
 
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Destructive</h2>
+                <h2 class="text-subheading">Destructive</h2>
                 <Alert variant="destructive">
                     <CircleAlert />
                     <AlertTitle>Session expired</AlertTitle>
@@ -41,7 +41,7 @@ import {
                  (success/warning/info), resolving the
                  `--{success,warning,info}` tokens. -->
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Warning</h2>
+                <h2 class="text-subheading">Warning</h2>
                 <Alert variant="warning">
                     <TriangleAlert />
                     <AlertTitle>Approaching rate limit</AlertTitle>
@@ -53,7 +53,7 @@ import {
             </div>
 
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Info</h2>
+                <h2 class="text-subheading">Info</h2>
                 <Alert variant="info">
                     <Info />
                     <AlertTitle>Live preview is read-only</AlertTitle>
@@ -65,7 +65,7 @@ import {
             </div>
 
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Success</h2>
+                <h2 class="text-subheading">Success</h2>
                 <Alert variant="success">
                     <CircleCheck />
                     <AlertTitle>Deployed to production</AlertTitle>
@@ -77,7 +77,7 @@ import {
             </div>
 
             <div class="grid gap-3">
-                <h2 class="font-display text-xl">Without icon</h2>
+                <h2 class="text-subheading">Without icon</h2>
                 <p class="text-sm text-muted-foreground">
                     Omit the SVG — the CVA grid collapses the icon column.
                 </p>

@@ -23,7 +23,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Four sides</h2>
+                <h2 class="text-subheading">Four sides</h2>
                 <p class="text-sm text-muted-foreground">
                     Each trigger opens its own sheet — identical body, different
                     <code class="font-mono text-xs">side</code> prop.
@@ -73,7 +73,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">When to use</h2>
+                <h2 class="text-subheading">When to use</h2>
                 <ul class="list-disc pl-6 text-sm text-muted-foreground grid gap-1">
                     <li>
                         Detail / inspector panels that reveal alongside the primary

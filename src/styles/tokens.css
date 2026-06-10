@@ -1347,7 +1347,17 @@
        glyph. The summary carries a SYMMETRIC `min-block-size` (dock.css) keyed to the
        same token so the pill floors on BOTH axes — a squircle, not a stub. Consumers
        retune the pill geometry per-instance via these two handles. */
-    --dock-collapsed-summary-min-size: calc(var(--dock-layer-height, 2.5rem) * 0.7);
+    /* AY.W-DOCK-NAV B4 — the collapsed pill is a PERFECT CIRCLE (the user's
+       "circle, not oval" bar). The diameter is the collapsed-summary min-size on
+       BOTH axes; the morph.css `.collapsed .dock-layer--summary` rule LIFTS the
+       `.dock-layer` height-lock (`height: var(--dock-layer-height)`) for the
+       collapsed summary so the pane is square at this token (the prior oval —
+       38×50, aspect 0.76 — was the locked 40px height against a 28px min-width).
+       The 0.85× value is a TIGHT proportioned circle a step below the full control
+       (so the collapsed dot reads smaller than an expanded control row) while
+       staying large enough that the centred glyph is not cramped. A consumer
+       retunes the circle diameter via this one handle. */
+    --dock-collapsed-summary-min-size: calc(var(--dock-layer-height, 2.5rem) * 0.85);
     /* AX.W61 — the collapsed padding now threads the ONE `--dock-scale` coarse-pointer
        multiplier DIRECTLY (at HEAD it was a flat 0.25rem off the scale, so the
        collapsed pad alone stayed desktop-sized at the 1.5x mobile scale while the
@@ -1394,6 +1404,14 @@
     --dock-layer-rail-bg: var(--surface-tint-8);
     --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 40%, transparent);
     --dock-layer-rail-active: color-mix(in srgb, var(--primary) 15%, transparent);
+    /* AY.W-DOCK-NAV B6 — the switcher-rail TAB is a COMPACT square, distinct from
+       the 40px dock CONTROL. The prior fallback chain (`var(--dock-control-size,
+       1.75rem)`) resolved to the full 40px control, so a 3-tab column rail stood
+       ~140px tall — a giant pill of dead space. A dedicated tighter tab size
+       (1.75rem = 28px, density-scaled) keeps the rail a compact icon column the
+       indicator travels cleanly, and the dock grows only as tall as the rail needs.
+       Consumers retune the rail-tab size via this one handle. */
+    --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
     /* Dock active-state ladder (O.W6 Lane B)
        Token-overridable active paint for `.dock-icon-button`. Promoted

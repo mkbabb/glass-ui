@@ -149,8 +149,18 @@ provideDockLayerGroupContext({
     leavingLayerId: leavingLayer,
 });
 
+/* AY.W-DOCK-NAV B6 — a Vue component icon can be an OBJECT (an options/SFC
+   component) OR a FUNCTION (a functional component — `@lucide/vue` v1 ships its
+   icons as functional render components). The prior `typeof icon === "object"`
+   guard rejected the function form, so every lucide icon fell through to the
+   first-letter fallback (the "A/L/L" rail glyphs the user saw instead of the
+   Package/Layers/Library icons). Accepting both the object and function forms (a
+   non-empty string is the explicit text-glyph case, handled separately) restores
+   the icon render. */
 function isComponent(icon: unknown): icon is Component {
-    return typeof icon === "object" && icon !== null;
+    return (
+        (typeof icon === "object" && icon !== null) || typeof icon === "function"
+    );
 }
 
 /* AU.W8.4 — keep the dock open while a rail tab holds focus, so keyboard

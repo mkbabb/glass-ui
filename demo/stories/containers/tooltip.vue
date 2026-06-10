@@ -18,7 +18,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
         <TooltipProvider :delay-duration="150">
             <div class="grid gap-12">
                 <div class="grid gap-4">
-                    <h2 class="font-display text-xl">Icon toolbar</h2>
+                    <h2 class="text-subheading">Icon toolbar</h2>
                     <p class="text-sm text-muted-foreground">
                         Canonical use case — every icon gets a label.
                     </p>
@@ -53,7 +53,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </div>
 
                 <div class="grid gap-4">
-                    <h2 class="font-display text-xl">Button annotations</h2>
+                    <h2 class="text-subheading">Button annotations</h2>
                     <p class="text-sm text-muted-foreground">
                         Use sparingly for labeled buttons — only when the tooltip
                         carries non-redundant info.
@@ -83,7 +83,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </div>
 
                 <div class="grid gap-4">
-                    <h2 class="font-display text-xl">Placement</h2>
+                    <h2 class="text-subheading">Placement</h2>
                     <p class="text-sm text-muted-foreground">
                         <code class="font-mono text-xs">side</code> preference —
                         Floating UI flips on collision.

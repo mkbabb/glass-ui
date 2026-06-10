@@ -16,7 +16,7 @@ const open = ref(true);
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Basic</h2>
+                <h2 class="text-subheading">Basic</h2>
                 <p class="text-sm text-muted-foreground">
                     Open — <code class="font-mono text-xs">{{ open }}</code>.
                 </p>
@@ -62,7 +62,7 @@ const open = ref(true);
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Inline "show more"</h2>
+                <h2 class="text-subheading">Inline "show more"</h2>
                 <p class="text-sm text-muted-foreground">
                     Wrap an overflow paragraph in
                     <code class="font-mono text-xs">CollapsibleContent</code>;

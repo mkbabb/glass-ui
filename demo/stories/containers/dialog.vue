@@ -42,7 +42,7 @@ const supportsCommand =
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Standard dialog</h2>
+                <h2 class="text-subheading">Standard dialog</h2>
                 <p class="text-sm text-muted-foreground">
                     Glass variant with a form body and a cancel/submit footer.
                 </p>
@@ -97,7 +97,7 @@ const supportsCommand =
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Confirm dialog</h2>
+                <h2 class="text-subheading">Confirm dialog</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">ConfirmDialog</code> — destructive
                     flag, async loading state, emits <code class="font-mono text-xs">@confirm</code>.
@@ -106,7 +106,7 @@ const supportsCommand =
                 <div class="relative isolate rounded-2xl border border-border bg-card p-6">
                     <div class="flex items-center justify-between gap-4">
                         <div>
-                            <p class="font-display text-lg">Delete workspace</p>
+                            <p class="text-subheading">Delete workspace</p>
                             <p class="text-sm text-muted-foreground">
                                 Anchored absolutely inside this card surface.
                             </p>
@@ -131,7 +131,7 @@ const supportsCommand =
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Native top-layer</h2>
+                <h2 class="text-subheading">Native top-layer</h2>
                 <p class="text-sm text-muted-foreground">
                     A real native dialog element on the top layer. Its entry and
                     exit are pure CSS — the glass-top-layer starting-style grammar
@@ -160,7 +160,7 @@ const supportsCommand =
                 >
                     <template #default="{ close }">
                         <div class="grid gap-4">
-                            <h3 id="settings-dlg-title" class="font-display text-lg">
+                            <h3 id="settings-dlg-title" class="text-subheading">
                                 Settings
                             </h3>
                             <p class="text-sm text-muted-foreground">

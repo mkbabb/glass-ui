@@ -131,13 +131,19 @@ const hasNext = computed(() =>
             </template>
 
             <TooltipProvider :delay-duration="250">
-                <!-- Prev / next within the category. -->
-                <Tooltip>
+                <!-- A divider after the home-left category trigger, before the
+                     in-category nav group (B9 — a divider separating the persistent
+                     control from the nav run). -->
+                <DockSeparator />
+
+                <!-- Prev within the category — ADAPTIVE: rendered only when there IS
+                     a previous story (B9 — no greyed-out dead chrome; the control is
+                     absent when nothing's there, not a disabled stub). -->
+                <Tooltip v-if="hasPrev">
                     <TooltipTrigger as-child>
                         <DockIconButton
                             type="button"
                             class="tap-squish"
-                            v-bind="{ disabled: !hasPrev }"
                             aria-label="Previous story"
                             @click="prev()"
                         >
@@ -162,12 +168,13 @@ const hasNext = computed(() =>
                     </DockTabButton>
                 </div>
 
-                <Tooltip>
+                <!-- Next within the category — ADAPTIVE (B9): absent at the last
+                     story, never a greyed forward arrow. -->
+                <Tooltip v-if="hasNext">
                     <TooltipTrigger as-child>
                         <DockIconButton
                             type="button"
                             class="tap-squish"
-                            v-bind="{ disabled: !hasNext }"
                             aria-label="Next story"
                             @click="next()"
                         >
@@ -179,9 +186,16 @@ const hasNext = computed(() =>
                     </TooltipContent>
                 </Tooltip>
 
+                <!-- A divider before the trailing category-jump group (B9 — a
+                     dividing line before the right item). The category arrows WRAP
+                     across categories, so they are always live (never dead chrome) —
+                     they stay as the persistent trailing group, visually distinct
+                     from the in-category story arrows by the chevrons-DOUBLE glyph
+                     (B8 — the two arrow pairs are differentiated: single = story,
+                     double = category). -->
                 <DockSeparator />
 
-                <!-- Prev / next category (wraps). -->
+                <!-- Prev / next category (wraps — always live). -->
                 <Tooltip>
                     <TooltipTrigger as-child>
                         <DockIconButton

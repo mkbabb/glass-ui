@@ -47,7 +47,10 @@ const gapClass = computed(() => {
     <section :class="cn('flex flex-col', gapClass, props.class)">
         <slot v-if="$slots.label" name="label" />
         <p v-else-if="label" class="section-label">{{ label }}</p>
-        <p v-if="blurb" class="text-prose text-muted-foreground max-w-prose">
+        <!-- The blurb is SUPPORTING demo chrome, not long-form prose — the
+             `text-small` workhorse rung (W-SB-TYPE: bias the story chrome DOWN to
+             the documented ladder; `text-prose` read WAY too large for a caption). -->
+        <p v-if="blurb" class="text-small text-muted-foreground max-w-prose">
             {{ blurb }}
         </p>
         <slot />

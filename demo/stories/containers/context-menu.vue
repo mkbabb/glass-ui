@@ -22,7 +22,7 @@ const showGrid = ref(true);
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Right-click surface</h2>
+                <h2 class="text-subheading">Right-click surface</h2>
                 <p class="text-sm text-muted-foreground">
                     Right-click the paper below.
                 </p>
@@ -31,7 +31,7 @@ const showGrid = ref(true);
                         class="grid h-72 place-items-center rounded-2xl border border-dashed border-border bg-card/50 text-muted-foreground transition-colors hover:bg-card/70"
                     >
                         <div class="grid gap-2 text-center">
-                            <p class="font-display text-xl">Right-click here</p>
+                            <p class="text-subheading">Right-click here</p>
                             <p class="font-mono text-xs">
                                 tone = {{ tone }} · grid = {{ showGrid }}
                             </p>

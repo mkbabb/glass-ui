@@ -196,9 +196,19 @@
        block-axis morph reveals a column) is NOT forced onto one nowrap row — the
        vertical group's active host block-sizes to `height: max-content` below
        (the AP.W3 column treatment, KEPT). */
+    /* AY.W-DOCK-NAV B6 — the height is a FLOOR (`min-height`), not a fixed lock. A
+       single-row content pane's intrinsic height already equals
+       `--dock-layer-height` (the controls + line-height sum to it), so `min-height`
+       is byte-identical for the common case. But a horizontal dock hosting a COLUMN
+       switcher-rail (`<DockLayerGroup>` with `show-rail`) lays the rail out as a
+       stack of tabs taller than one row — the prior fixed `height` clipped the
+       rail's lower tabs + the active indicator BELOW the dock floor (the B6 "no rail
+       line / broken" read, measured: 2 of 3 tabs clipped). The floor lets the pane
+       block-size to the rail's natural column height so the dock grows to contain
+       the whole rail. The cross axis keeps `nowrap`. */
     .glass-dock:not(.vertical) .dock-layer {
         white-space: nowrap;
-        height: var(--dock-layer-height, 2.5rem);
+        min-height: var(--dock-layer-height, 2.5rem);
     }
 
     .dock-layer.is-active {

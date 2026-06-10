@@ -27,7 +27,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Composed menu</h2>
+                <h2 class="text-subheading">Composed menu</h2>
                 <p class="text-sm text-muted-foreground">
                     One trigger, every subcomponent.
                 </p>

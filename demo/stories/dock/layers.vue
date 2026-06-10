@@ -7,7 +7,14 @@ import { cn } from "../../../src/utils/cn";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
 
+// The drill-in group OWNS the `root` pane + three drill-in panes — it opens on
+// `root`. The switcher-rail group has NO `root` pane (it shows the three layers
+// directly), so it MUST init to a layer that EXISTS in its set — `assets` — or no
+// pane matches `active` and the dock collapses to an empty stub (the B6 break: the
+// shared `root` ref left the rail group with no active pane). Each group gets its
+// own ref scoped to its own pane set.
 const activeLayer = ref<LayerId>("root");
+const switcherLayer = ref<Exclude<LayerId, "root">>("assets");
 const railLayer = ref<LayerId>("assets");
 
 /* The collapsible nested showcase: a layer group inside a collapsible (not
@@ -112,7 +119,7 @@ function back() {
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock always-expanded fit-content>
                     <DockLayerGroup
-                        v-model:active="activeLayer"
+                        v-model:active="switcherLayer"
                         data-testid="dock-layer-rail-group"
                     >
                         <DockLayer

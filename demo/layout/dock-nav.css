@@ -85,27 +85,24 @@
     gap: 0.25rem;
 }
 
-/* ── Active-story affordance — the NCSU-red underline/pill ──────────────────
+/* ── Active-story affordance — the GLASS-FIRST selected register (AY.W-DOCK-NAV
+   B2) ───────────────────────────────────────────────────────────────────────
    DockTabButton auto-activates its `.is-active` state when the rendered
-   RouterLink carries aria-current="page". Restyle that state to the accent. */
+   RouterLink carries aria-current="page". The prior treatment stacked THREE
+   marks on the active tab — the glass active fill (from the shipped
+   `.dock-tab-button` base rule = `--dock-control-active-bg`, a `--glass-bg-floating`
+   tier), PLUS a NCSU-red `::after` underline, PLUS red text — the "underline +
+   darkness is awful" the user condemned (B2, 00.23.00). The AX.W61 canon is ONE
+   register: the selected control reads as a GLASS tier (the keyframes-dock model),
+   NOT a heavy underline + dark fill. So the bespoke red underline + red text are
+   RETIRED; the active tab carries the shipped glass pill alone. The brand accent
+   survives as a restrained GLYPH tint only (the foreground reads warm-ink at rest
+   and lifts to the accent when selected — a colour cue, not a second plate). */
 .demo-bottom-dock__tab.is-active,
 .demo-bottom-dock__tab[aria-current="page"] {
     --dock-active-color: var(--demo-nav-accent);
     color: var(--demo-nav-accent);
-}
-.demo-bottom-dock__tab {
-    position: relative;
-}
-.demo-bottom-dock__tab.is-active::after,
-.demo-bottom-dock__tab[aria-current="page"]::after {
-    content: "";
-    position: absolute;
-    inset-inline: 18%;
-    inset-block-end: 0.15rem;
-    height: 2px;
-    border-radius: var(--radius-pill);
-    background: var(--demo-nav-accent);
-    transition: opacity var(--duration-fast, 150ms) var(--spring-snappy, ease);
+    font-weight: 600;
 }
 
 /* ── Responsive: mobile off-canvas, bottom bar primary ─────────────────────

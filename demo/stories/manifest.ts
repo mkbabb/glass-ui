@@ -153,7 +153,10 @@ export const CATEGORIES: Category[] = [
                 background: "fourier",
                 hero: true,
             }),
-            s("substrates", "glass-material", "Glass Material", "The unified glass-material grammar (moving-specular + edge-rim from one mixin) plus four progressively-enhanced SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback."),
+            s("substrates", "glass-material", "Glass Material", "The unified glass-material grammar (moving-specular + edge-rim from one mixin) plus four progressively-enhanced SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback.", {
+                background: "aurora",
+                hero: true,
+            }),
         ],
     },
     {
@@ -315,7 +318,6 @@ export const CATEGORIES: Category[] = [
             s("compositions", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer."),
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host."),
             s("compositions", "instrument-rail", "Instrument Rail", "A cockpit-ratio rail (1/φ²) with engraved bezel hairlines and a twin-line divider rule — the sidekick column of a cockpit composition."),
-            s("compositions", "dock-with-slider", "Dock with Slider", "The cross-substrate keepDockOpen proof — a Slider inside a GlassDock holds the dock open through a pointer drag (idle-collapse suppressed) and the dock's shared data-held edge intensifies the thumb halo + tier-shades the substrate."),
             s("compositions", "form-validation", "Form Validation", "The user-invalid / user-valid rungs, the aria-invalid bridge, a required asterisk, an error slot, and Textarea autosize."),
             s("compositions", "gate-pattern", "Gate Pattern", "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component."),
             s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),

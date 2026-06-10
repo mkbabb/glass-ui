@@ -29,7 +29,7 @@ const name = ref("");
     <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Validity vocabulary</h2>
+                <h2 class="text-subheading">Validity vocabulary</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">:user-invalid</code> paints
                     the field on field-exit (blur), never on mount;
@@ -87,7 +87,7 @@ const name = ref("");
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">LabeledInput — required + error slot</h2>
+                <h2 class="text-subheading">LabeledInput — required + error slot</h2>
                 <p class="text-sm text-muted-foreground">
                     The <code class="font-mono text-xs">required</code> prop threads
                     the asterisk onto the label and the native attribute onto the
@@ -107,7 +107,7 @@ const name = ref("");
             </div>
 
             <div class="grid gap-4">
-                <h2 class="font-display text-xl">Native customizable &lt;select&gt;</h2>
+                <h2 class="text-subheading">Native customizable &lt;select&gt;</h2>
                 <p class="text-sm text-muted-foreground">
                     The customizable native <code class="font-mono text-xs">&lt;select&gt;</code>
                     (<code class="font-mono text-xs">appearance: base-select</code>) is

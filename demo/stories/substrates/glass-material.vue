@@ -18,7 +18,6 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { useSpecularTracking, Button } from "../../../src/index";
-import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/subpaths/aurora";
 
 // The named band surfaces — the five ladder rungs + the card register. Each is
 // a bare `.glass-<rung>` plate (the mixin supplies the `::before` specular + the
@@ -48,12 +47,10 @@ const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
 
 <template>
     <StoryPage>
-        <!-- The shipped Aurora substrate behind the whole matrix. -->
-        <Aurora
-            :config="DEFAULT_AURORA_CONFIG"
-            class="pointer-events-none fixed inset-0 -z-10"
-        />
-
+        <!-- The Aurora substrate is staged FULL-BLEED by the page chassis (the
+             `background: aurora` + `hero: true` manifest row → StoryHero's
+             full-bleed mode), so every glass plate below reads against a live
+             bright painterly field — the whole point of this page (B13). -->
         <StorySection
             label="unified material — moving specular + rim across the band"
             blurb="Hover any plate: every rung + card reads the SAME pointer-anchored catch-light (::before) from ONE useSpecularTracking seam + the --glass-edge-light rim from ONE .glass-material mixin — no per-component opt-in. The gleam follows the cursor and settles back on leave."

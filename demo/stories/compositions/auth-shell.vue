@@ -64,7 +64,7 @@ const trustBadges = [
                         }"
                         aria-hidden="true"
                     >f</span>
-                    <span class="font-display text-xl tracking-tight">glass-ui</span>
+                    <span class="text-subheading tracking-tight">glass-ui</span>
                 </div>
 
                 <div class="flex max-w-md flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
