@@ -14,6 +14,12 @@
   its `gates.mjs`/`ci.yml` gate-rows fold into ONE re-byte-lock with the sibling gates.
 - **Hardening inputs:** `docs/tranches/AY/audit/hardening/H-a11y-perf.md` (H-1…H-6),
   `docs/tranches/AY/audit/hardening/H-glass-cohesion.md` (F1 cross-ref), `docs/tranches/AY/audit/hardening/H-touch-scale.md` (gate-harness precedent)
+- **Measured-perf inputs (AY design batch, 2026-06-09):**
+  `docs/tranches/AY/audit/design/PERF-runtime-substrates.md` (the live-substrate
+  frame-time audit — the measured G3/G4 before-numbers + the substrate baselines, folded
+  into §"Measured runtime baselines" below). The Lighthouse findings
+  (`PERF-lighthouse-demo.md` / `PERF-lighthouse-slides.md`) route to the sibling
+  **W-LIGHTHOUSE** (score-floor + LCP-preload class), NOT this wave.
 - **Sibling waves:** W-GLASS (the `--glass-level` flatten + specular opt-in — F1/F3 land THERE; this wave touches the W55 tint axis + the prefix + the JS write seam + the oracle; shares the SAME `glass.css` + `gates.mjs`/`ci.yml` files — disjoint REGIONS, coordinated by sequencing, see the overlap caution under the edit-sites table), W-CARDINAL-INFRA (`proof:live-verified-ledger` — this wave names it as the close-DELTA gate)
 
 ---
@@ -440,6 +446,90 @@ structure arms) stay green (O-1 lifts the tint on the library surfaces but the
 preserved for the dark-substrate path).
 
 ---
+
+## Measured runtime baselines (the gate before-numbers — `PERF-runtime-substrates`)
+
+> Authored from the live-substrate frame-time audit
+> (`docs/tranches/AY/audit/design/PERF-runtime-substrates.md`, run 2026-06-09). These
+> are the **measured-against-known** baselines the O-3/G3 (specular rAF-coalesce) and
+> O-4/G4 (nested-backdrop budget + `contain: paint`) arms gate against — they are NOT
+> vibes, they are the recorded substrate frame profile that defines "the per-frame
+> headroom the new work has to spend." Conditions are recorded with every number; a
+> green G3/G4 re-runs THIS protocol and shows the after-number sits inside the
+> measured baseline.
+
+### Conditions (record honestly — carried from the audit lane)
+
+| Axis | Value |
+|---|---|
+| Machine | Apple **M5 Max**, macOS 26.4.1 (build 25E253), Metal 4 — top-tier Apple silicon |
+| Server | `http://localhost:5199` — **Vite DEV server** (NOT a `vite preview` production build). Dev is the conservative direction for JS-thread cost; the substrates are GPU/canvas-bound so the dev↔prod per-frame-paint delta is small. The G4 frame-budget arm SHOULD re-measure against the production preview protocol the Lighthouse lanes establish (see W-LIGHTHOUSE §preview-protocol) and record BOTH if they diverge. |
+| Browser | Playwright-driven Chromium (Chrome-for-Testing 1223), **headed** (`headless:false`, `--use-angle=metal`). Headed was REQUIRED — the headless ANGLE path crashed the GL context. |
+| rAF cadence cap | this headed Chrome caps rAF at **~98 Hz (~10.2ms)**, NOT 120 Hz — verified against a static zero-animation page (identical p50=10.20ms / 98.0fps). So **every substrate reading ~10.2ms p50 is running at the host vsync floor with full headroom** — the 10.2ms is the cap, not substrate cost. |
+| Budget | the canonical **60fps / 16.7ms** target; "over budget" = a frame > 16.7ms. There is **no shipped runtime per-frame budget gate** in the repo today (the `proof:blob-*` arms are static/shader-equivalence; `proof:offscreen-pause` asserts park-machinery exists; `proof:dock-animation-live` enforces a LOCKSTEP onset budget ≈537ms + a one-frame onset tolerance, NOT a per-frame render ceiling). G4 mints the FIRST per-frame ceiling. |
+| Method | in-page rAF inter-frame-delta sampler, ≥5s/state (~540 frames), first 2 dropped as warm-up; percentiles over sorted deltas; dropped-frame % at >16.7ms / >25ms / >33ms; each state captured at full speed AND **4× CPU throttle** (`Emulation.setCPUThrottlingRate: 4`, the mid-tier-CPU proxy). |
+
+### The healthy baselines (the headroom the new work spends INTO)
+
+These are the surfaces that **hold the cap at 0% dropped, full speed AND 4× throttled** —
+the measured floor every G4 after-number must stay inside:
+
+| Surface | p50 | p95 | >16.7ms | Note |
+|---|---|---|---|---|
+| **blob** rest/hover/click | 10.2ms | ~12.1ms | **0%** | TWO live GL contexts; 587-frame sample = 541 at cap, 46 in 12-16.7ms, **0 over 16.7ms** |
+| **constellation** rest/warp/well | 10.2ms | ~12.1ms | **0%** | SIX live Canvas2D contexts; O(n²) link pass holds |
+| **fourier-field** (hero+final page) | 10.2ms | ~12.1ms | **0%** | FOUR live canvases; whole-page cadence |
+| **dock morph** (expand/collapse) | 10.2ms | ~12.0ms | **0%** | one spring on a transform/size FLIP; compositor-cheap |
+| aurora wispy / watercolor (smooth mediums) | 10.2ms | ~11.6ms | **0%** | the NON-painterly mediums hold the cap |
+
+The painterly aurora mediums (oil-pastel **p50 51ms / 20.6fps / 100% over 16.7ms**,
+van-Gogh **p50 30.6ms / 78.7% over 25ms**) blow the budget 2-3× and are **GPU-bound**
+(4× CPU throttle barely moves them). Those are W-AUR-PAINTERLY's surface, not this
+wave's — recorded here only so the G4 nested-backdrop budget arm does NOT measure over
+a painterly-aurora page (it would conflate the shader cost with the backdrop-stack
+cost); G4 mounts its glass-Button-in-Card-in-Dialog stack over a **smooth/wispy aurora
+or a flat substrate** so the measured number isolates the `backdrop-filter` nesting.
+
+### How the baselines bind the gates
+
+- **G3 (specular rAF-coalesce) before-number.** The runtime lane did NOT directly
+  instrument `useSpecularTracking`'s forced-layout count (it measured whole-surface
+  frame deltas, which sit at the 10.2ms cap because a single hover does not saturate
+  the rAF at the audit's sample cadence). So G3's before-number is the **static-source
+  fact + the synthetic-sweep measurement the spec already defines**: at HEAD a 200-event
+  `pointermove` sweep drives **~200 `getBoundingClientRect` reads + ~200 `matchMedia`
+  mints** (one per event, `useSpecularTracking.ts:42,54`), the born-RED count G3 asserts
+  down to **≤ frames+1 rect reads + exactly 1 matchMedia**. The measured-baseline
+  framing is: the surfaces these reads sit ON (`.glass-card`, `.glass-dock`) hold the
+  16.7ms budget at REST (the table above), so the coalesce is a **defence of that
+  headroom under a high-Hz pointer sweep**, not a fix for an already-dropped frame —
+  the W54 maximal-glass multiplier (every blurred surface repaints on each write) is
+  what makes the unbounded write a latent regression on a weaker device. G3 measures
+  the call-count delta (the binding artefact); the frame baseline is the context that
+  says WHY the unbounded count matters.
+- **G4 (nested-backdrop budget) before-number.** The baseline is the **contained
+  single-surface cap** (10.2ms p50 / 0% over 16.7ms, the table above). G4's born-RED
+  arm mounts the glass-Button-in-glass-Card-in-glass-Dialog stack **without** `contain:
+  paint` (today only `.glass-card` carries `contain: layout style` at `glass.css:523`,
+  which OMITS `paint` — the backdrop sample escapes the box, so a 3-4 layer nest
+  re-samples the already-blurred buffer at each level) and records its p50/p95 +
+  nested-depth. The **after** number (post-`contain: paint`, O-4) is asserted to sit
+  at-or-under the measured contained baseline + a recorded tolerance band. The DELTA
+  artefact carries BOTH numbers (the uncontained-nested p50/p95 AND the contained
+  p50/p95) so the gate is measured-against-known, not a guessed constant. **Record the
+  ceiling as a NUMBER on the green run** (per the spec's G4 clause 2) — pin it so a
+  future regression that drops a `contain: paint` reds against the recorded baseline.
+
+### The flagged gap (recorded, NOT in-scope to mint here beyond G4)
+
+The audit lane flagged that **no per-frame budget gate exists in CI** — the painterly-medium
+regression would not trip any `proof:*`. G4 (`proof:nested-backdrop-budget`) is the FIRST
+runtime per-frame ceiling this tranche mints, scoped to the nested-backdrop stack. A
+BROADER π raf-delta gate asserting EACH substrate state clears a p95 ceiling THROTTLED
+(the audit's `trace.mjs` prototype) is the general form — it is **routed to W-LIGHTHOUSE
+§proof:lighthouse-runtime OR a named `AY.W-PERF2`** (see W-LIGHTHOUSE), not folded into
+this wave's five-gate scope. This wave owns the nested-backdrop slice; the general
+per-substrate frame-budget gate is the named residual.
 
 ## Non-goals / boundaries
 

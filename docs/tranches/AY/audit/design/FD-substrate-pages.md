@@ -4,7 +4,7 @@
 **Surfaces:** `/substrates/aurora` · `/substrates/blob` · `/substrates/constellation` · `/substrates/fourier-field`, judged as PAGES (staging, composition, hierarchy) — substrate render quality belongs to the reality audit.
 **Verdict: DESIGN-DEFECTS.** Not one of the four pages stages its own substrate. Three are walls of boxed canvases on flat cream; one (aurora) is a good studio wearing no page at all. The library's most arresting pixels are framed like fixtures in a QA bench. Several concrete page-level defects ride along (native range inputs on the blob page, near-empty first-paint wells on fourier, illegible dark dock labels over the bright aurora stage, no header on aurora).
 
-**Captures:** 27 PNGs in this directory, `FD-substrate-*.png` (fold = 1440×900 viewport; full = stitched full-height; scrollN = honest mid-scroll stops on the unmodified page). Light + dark for every page, plus `FD-substrate-REF-staged-hero-*` — the `compositions/hero` staged-model reference.
+**Captures:** 27 PNGs in this directory, `FD-substrate-*.png` (fold = 1440×900 viewport; full = stitched full-height; scrollN = honest mid-scroll stops on the unmodified page). Light + dark for every page, plus `FD-substrate-REF-staged-hero-*` — the `compositions/hero` staged-model reference. RE-VERIFIED 2026-06-09 (second independent pass): all 27 captures regenerated against the live demo (port 5199) and every §1–§5 claim re-confirmed against both the fresh pixels and the page sources (`manifest.ts` rows 138–141 carry no `background`/`hero`; `aurora.vue` has no StoryPage/h1; `blob.vue` 164/176/188 native ranges; `constellation.vue` π-prose blurbs at 406/431; `story-hero.css` 61–62 full-width card).
 
 ---
 
@@ -42,8 +42,8 @@ The mood section is the page's delight peak (`FD-substrate-blob-scroll2-light.pn
 
 Page defects:
 
-- **The first note is a black ink splat.** Section 1's swatch row leads with `var(--primary)` — which in this system is near-black warm ink — so the page's first visual is a heavy BLACK blob (light fold capture), under a blurb that says "pastel swatch." Wrong first note for a page about a luminous droplet; the black dot reads like a rendering error, not a register.
-- **The heroes are stamps in empty frames.** Both GL heroes are `w-56` (224px) squares centered in full-width cream cards — at 1440px that's ~80% dead cream per hero card (full-light capture). The negative space reads as unfinished, not intentional; the lit cream droplet on a cream card is additionally near-invisible at rest (scroll1).
+- **The first note is a black ink splat.** Section 1's swatch row leads with `var(--primary)` — which in this system is near-black warm ink — so the page's first visual is a heavy BLACK blob (light fold capture), under a blurb that says "pastel swatch." Wrong first note for a page about a luminous droplet; the black dot reads like a rendering error, not a register. The whole row (black/red/blue/green) reads as saturated RGB stickers — the blurb's own word "pastel" describes none of it.
+- **The heroes are stamps in empty frames.** Both GL heroes are `w-56` (224px) squares centered in full-width cream cards — at 1440px that's ~80% dead cream per hero card (full-light capture). The negative space reads as unfinished, not intentional; the lit peach/tan droplet on a cream card is additionally low-contrast at rest (scroll1 — present but whispering).
 - **Native `<input type="range">` on the design system's own showcase** (blob.vue ~162–195; scroll1 capture shows the raw browser gray tracks). The library ships `Slider`/`LabeledSlider`; its flagship interactive page tunes its hero with unstyled OS controls. Pure dogfooding miss, instantly visible.
 - **Test-harness furniture in the prose register:** "clicks: 0" tabular counter, "Poke (impulse)" as a bare pill, a `data-testid` pause strip as the page's closing section. The page ends on the QA seam, not on the substrate.
 

@@ -1,8 +1,8 @@
 # FD-storybook — the storybook pages as designed artifacts
 
-Lane: FD-storybook · AY design audit · 2026-06-09
-Surface: the demo shell at `http://localhost:5199` (1440×900 + 390×844, light + dark), driven live via Playwright (system Chrome headless — the bundled headless-shell SwiftShader renderer hard-wedges on the aurora WebGL page; first finding before the first capture).
-Captures: `docs/tranches/AY/audit/design/FD-storybook/*.png` (36 files).
+Lane: FD-storybook · AY design audit · 2026-06-09 · TWO independent passes, converged
+Surface: the demo shell at `http://localhost:5199` (1440×900 + 390×844, light + dark), driven live via Playwright (system Chrome headless — the bundled headless-shell SwiftShader renderer hard-wedges on the aurora WebGL page; first finding before the first capture. Pass 2 reproduced it independently and confirmed the cure: `--headless=new --use-gl=angle --use-angle=metal`, the π config's real-GPU path).
+Captures: `docs/tranches/AY/audit/design/FD-storybook/*.png` (36 files, pass 1) + `docs/tranches/AY/audit/design/captures/FD-storybook/*.png` (44 files, pass 2 — adds tall full-page pairs at 1440×2400, element crops of both shell docks, and the dark/mobile/interaction set). §§1–8 are pass 1; §9 is the pass-2 addendum (independent drive, new probes — every shared finding below was re-derived independently before the two passes were merged, so the converged diagnoses are corroborated, not copied).
 
 **Verdict: DESIGN-DEFECTS** — strong bones (the chassis architecture, the chrome, the typography register are genuinely distinctive), but the headline design promise of the page redesign — glass cards over live substrates — visually fails on four of the five substrate kinds, the front door ships a fully dead category index, and one declared substrate is outright broken at the CSS layer. The standard ("contained in a glass-card, occasional usage of aurora/constellation/fourier/blob, divined easter eggs, proper hierarchy and affordance") is MET on containment and hierarchy, MISSED on substrate usage and easter eggs.
 
@@ -120,3 +120,34 @@ Pre-requisite for all rows: the §2 read-through fix (card tier/inset/alpha) —
 ## 8. Calibration — what is exceptional
 
 Named as readily as the defects: the typography page; the display/card and glass-material backdrop strips; the dashboard composition; the two-dock chrome with its keyboard layer and PresetEditor; the table fixtures; the composables reference pages; the mobile aurora hero. The system's point of view (warm cream + mono eyebrows + cartoon shadows + the ℱ) is real and distinctive — nothing here is AI-slop sameness. The gap is not taste; it is that the storybook's most ambitious layer (live substrates under glass) is wired but not lit.
+
+---
+
+## 9. Pass-2 addendum — independent drive: quantification + new findings
+
+A second independent drive of the same surface (44 captures in `captures/FD-storybook/`, a 104-route DOM sweep, targeted computed-style/pixel probes). It re-derived §2's diagnoses from scratch — the constellation `position: relative` specificity win → `1152×0` host → 300×150 canvas, the fourier canvas live-but-erased (1152×822, 360 non-blank samples behind the `oklab(…/0.8)` + `blur(16px)` plate), the glass-on-white variant collapse, the model-page status of display/card — so those stand corroborated. New material:
+
+### 9.1 The sweep numbers (104 routes driven programmatically)
+
+| measure | count |
+|---|---|
+| Pages in the glass-card chassis (`.story-hero-card` present) | **103/104** (the escape: `/substrates/aurora`, the full-bleed studio) |
+| Pages declaring a background substrate | **9/104** |
+| Declared substrates that visibly read | **1/9** (intro's aurora) |
+| Exposed substrate margin around the glass card | **0×0 px on every page** — `.story-hero-card` fills `.story-hero` exactly |
+
+The last row hardens §2's geometry note into an invariant: on no page does the substrate show AROUND the plate. "A glass card floating over a substrate" (the chassis's own header comment) never floats — there is no bleed, no offset, no negative space at full substrate strength. One spatial decision (an exposed gutter of even 1.5–2rem, or an asymmetric card offset on hero pages) is the prerequisite that makes every §6 placement readable.
+
+### 9.2 New defects (extend the §7 ledger)
+
+9. **Konami code: verified dead at runtime** (extends §5's grep). The full sequence dispatched live against the shell — zero DOM reaction (element count 298 → 298, no class change). The §5 inventory's "no hidden interactions" is now a runtime fact, not a static read.
+10. **The `purple-tomato` hero palette is an orphan.** `demo/stories/aurora-hero.ts` mints it, documented as "auth-shell.vue brand panel" — grep confirms zero consumers. The auth-shell brand panel that was DESIGNED to carry a purple→tomato aurora ships white-on-white (its manifest row declares the invisible fourier instead). Un-orphaning it is §6's auth-shell row, pre-authored.
+11. **Sub-AA prose on `substrates/glass-material`** — the intro section's 18px prose paints `color: rgb(108,106,96)` (muted-foreground) directly over the saturated cyan demo gradient, roughly 2.5–3:1. The W55 G2 class (content over a VERY LIGHT/busy backdrop), live on the very page that demonstrates adaptive tint. The page demonstrating the cure exhibits the disease.
+12. **No dark-mode toggle in the shell chrome.** `DarkModeToggle` exists only on its own story page (`display/dark-mode-toggle`) — flipping the whole book dark requires knowing that page exists. The rail's `#persistent` region has room beside ℱ; a design system whose dark register is a selling point hides the switch.
+13. **Intro hero dead space** (tall capture `T-01-intro-full.png`) — the category grid ends ≈55% down the hero card, leaving ~580px of empty aurora wash before the card bottom. Compounds §7.1: the front door's one interactive moment is dead AND the space below it is a void. The 4×2 category grid is also the book's one cookie-cutter moment — eight identical white boxes, no hierarchy among them.
+14. **Aurora studio configurator runs under the BottomDock** (capture `06-substrate-aurora.png`) — the controls column's lower rows are occluded by the floating story dock; the studio (already the lone no-chassis, no-h1 page) also lacks the bottom-inset clearance `<main>` gives every chassis page.
+15. **Hero pages double-header** — the chassis eyebrow/h1/blurb ("Intro / What this storybook is.") stacks directly above the hero card's own eyebrow/wordmark/headline: two headers saying the same thing within 100px on intro, hero, and auth-shell.
+
+### 9.3 Convergent priority order (feeds W-SB1 / W-COHERE)
+
+**§7.2 constellation fix → 9.1 exposed margin (unlocks grid/paper/fourier read-through) → §7.1 intro index → display/card's wallpaper well behind every glass specimen (buttons, paper-glass, glass-panel, dock ×3) → 9.2.11 over-light prose → 9.2.12 shell dark toggle → eggs (§5.1 ℱ-fourier redraw + §5.2 konami aurora — both pure shipped machinery).** The first two are small CSS/markup changes with outsized effect: they make already-declared design intent visible. The wallpaper well is the move that takes the book from competent component docs to the material demonstrating itself.

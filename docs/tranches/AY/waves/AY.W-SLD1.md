@@ -174,3 +174,75 @@ The gate name is **`proof:live-verified-ledger:ay`** (the cardinal-lesson forcin
 ## 11. Archaeology
 
 The slider design intent churned across four prior attempts: P.W3 (`df0e7e7` GlassScrubber), AV.W11 (unification to one component), AX.W23 (re-register), AX.W59 (`a730782` design-reconcile to the integrated cylinder + `proof:slider-two-only` gate-lock). Each tranche re-stated the user's "FULLY ROUNDED iOS knob" in its corpus but never reconciled it against the shipped cap — the chronic this wave closes. New guardrail: the resolution is anchored by a USER-JUDGED captured DELTA enforced by `proof:live-verified-ledger:ay`, so the design cannot drift back to a prose-only mismatch; the AX.W59 owed-DELTA (`c72d2ac`/`4f18551`) is superseded by this user-judged capture (the AY re-opening of the design invalidated that earlier capture).
+
+---
+
+## §RE-GROUND 2 — the clarified standard (2026-06-09; BINDING; supersedes the (b) reading)
+
+### The user's words ARE the binding geometry (verbatim, USER-DECISIONS-2026-06-09 addendum)
+
+> "our slider should be of two forms — a continuous rounded cylinder (thumb integrated into a
+> thick track that appears as one continuous piece) and our spectrum slider, as seen in value.js"
+
+This supersedes ALL prior slider design statements, including the PROMPT-CORPUS:51 reading that
+W-SLD1 resolved as (b) revert-to-knob. The standard form is the **CONTINUOUS ROUNDED CYLINDER**:
+a THICK track with the thumb INTEGRATED so the whole reads as ONE continuous piece. "Fully
+rounded" and "continuous" are a CONJUNCTION — a round knob that bulges past a thin track
+satisfies only the first half and inverts the second.
+
+### The live verdict (FD-slider-design lane, captured at `/forms/slider`, light+dark)
+
+**The as-built W-SLD1 standard thumb reads as a DETACHED FLOATING KNOB — the (b) revert
+OVER-SHOT.** Measured live (chromium π readback, both schemes): md track 6px / thumb 16×16
+circle → the knob protrudes 5px past the track per side, **2.67× the track height** (sm 3.0×,
+lg 2.0×). That is the canonical Material/shadcn knob-on-a-wire register, the opposite pole of
+"one continuous piece." The same-ink thumb/fill color (both `--primary`) merges them into one
+dark mass at the value point but cannot rescue the geometric discontinuity. The thin 6px track
+ALSO fails the "thick track" half outright AND renders the W52 liquid-glass range fill (blur +
+rim + under-shadow, all live in the computed style) sub-perceptual — real glass machinery
+painting at a scale no eye can read.
+
+**The spectrum form is ON-REGISTER vs value.js** (`ComponentSliders.vue`: 24px gradient
+`rounded-full` capsule + full-height transparent bordered window thumb): glass-ui ships the
+same register at 17.6×24 with zero protrusion; the squircle-vs-slim-pill silhouette delta is a
+deliberate iOS-color-picker refinement, no delta owed. Note the spectrum thumb ALREADY obeys
+the containment law the standard is missing (thumb inscribed in the track, protrusion 0).
+
+Evidence: `docs/tranches/AY/audit/design/FD-slider-design.md` + its 8 captures
+(`FD-slider-{asbuilt-full,standard-zoom,standard-hover,spectrum-zoom}-{light,dark}.png`).
+
+### The precise delta the BUILD phase owes (standard form only; implementation halted this lane)
+
+1. **Thicken the track to the cylinder register** — `--slider-track-height` ≈ the control
+   height (md ≈ 16–24px; the spectrum's `1.5 × thumb-size` register is the natural sibling).
+2. **Inscribe the knob** — thumb diameter ≡ track height (or track − 2×inset, inset ≤ 2px for
+   the iOS reveal): `aspect-ratio: 1` + `border-radius: 50%` retained, protrusion = 0. The
+   ball-bearing-inside-the-cylinder reading.
+3. **`thumbAlignment: 'contain'`** on the standard form once inscribed (the spectrum already
+   sets it) so the knob never overhangs the capsule's rounded ends.
+4. **Re-token the size rungs** to `--slider-thumb-size ≤ --slider-track-height` at every rung
+   (currently inverted: 12/4, 16/6, 24/12).
+5. **Affordance moves in-surface** — press-scale + specular gleam stay; hover reads as the
+   knob/fill brightening, not an outer satellite ring (focus-visible halo may stay for a11y).
+6. **Prose currency** — story subtitle ("continuous rounded iOS knob"), `Slider.vue` comment
+   blocks, `index.ts` JSDoc, PROMPT-CORPUS:51 phrasing, and the gate clause all restate the
+   integrated-continuous geometry; the W-SLD1 DELTA gains a successor capture of the inscribed
+   form (the user judges the cylinder, per the cardinal lesson).
+
+### The isCircle clause — THIRD restatement (lock integrated-continuous geometry, NOT a bare circle test)
+
+History: restatement 1 (AX.W59) REDDENED the circle to lock the cap; restatement 2 (W-SLD1 (b))
+INVERTED it to REQUIRE the circle. Both are bare-shape tests and both under-specify: the bare
+`isCircle = radius === "50%"` (`proof-slider-two-only.mjs:308`) passes a 16px ball on a 6px
+wire — gate-green, standard-violating. The third restatement locks the CONJUNCTION:
+
+- **ROUND-ENDED**: `border-radius: 50%` + `aspect-ratio: 1` stay REQUIRED (the circle is
+  mandatory — restatement 2's inversion holds);
+- **TRACK-HEIGHT-MATCHED**: the thumb box resolves to the track height — token-level,
+  `--slider-thumb-size` ≡ `--slider-track-height` − 2×inset (inset ≤ 2px), per size rung;
+- **ZERO-DETACHMENT**: NO size rung where thumb-size > track-height — the knob never paints
+  outside the capsule (protrusion ≤ 0); the wire-and-ball geometry REDS.
+
+The clause asserts all three or it asserts nothing: circle ∧ inscribed ∧ thick-track. A future
+re-litigation of the slider shape re-reads THIS block first — the user's verbatim words above
+are the standard the geometry serves.

@@ -1,7 +1,8 @@
 # `@mkbabb/glass-ui/dock` + the Liquid Morph facility — research-backed README
 
-The dock is glass-ui's headline Liquid-Glass surface, and `useLiquidMorph` (AX.W42) is the substrate the
-dock is the FIRST consumer of. This README is the research-grounded reference for both — the iOS-26
+The dock is glass-ui's headline Liquid-Glass surface, and `useLiquidMorph` (AX.W42 — SPEC ONLY, un-landed:
+`AX/PROGRESS.md:88` holds W42 at `planned`; no such composable exists in `src/` — see AY.W-LIQUID §3.0 for
+the name-resolution fold) is the substrate the dock WOULD be the first consumer of. This README is the research-grounded reference for both — the iOS-26
 fidelity bar, the spring vocabulary, the morph axes, the recipes, and the scar list. It is sourced from the
 32-facet liquid-glass corpus (`docs/tranches/AX/research/liquidglass-research-corpus.json`) and the
 synthesis (`liquidglass-synthesis.md`); facet citations are inline as `(facet N)`.

@@ -74,7 +74,8 @@ tranche has no past); the table fills as waves close.
 | W-SLD2 | slider consumer-boundary gate clause | dev-complete — clause (5) CONSUMER-BOUNDARY wired into the EXISTING `proof:slider-two-only` (the constellation.mjs CONSUMERS/resolveSibling/skipSibling walk; new facts consumerVariantHits/consumerUncheckableBinds); `scanSliderVariants` exported + the born-RED→GREEN device-free detector canary (`tests/scripts/proof-slider-two-only.detect.test.ts`, 9 cases) + the end-to-end planted-`variant="rounded"` bite; closes the AX.W59 silent-no-op binding hole (MEMORY `feedback_glass_ui_binding_verification`); source/gate wave, no pixels; gate-output DELTA at [`audit/visual/W-SLD2-DELTA.md`](./audit/visual/W-SLD2-DELTA.md) |
 | W-SCALE1 | extend --ui-scale to form-atom hit-area | planned |
 | W-SCALE2 | desktop-fluid scale ladder | planned |
-| W-A11Y-PERF | engage W55 by default; webkit prefix; rAF-coalesce specular; contrast oracle | planned |
+| W-A11Y-PERF | engage W55 by default; webkit prefix; rAF-coalesce specular; contrast oracle | planned (spec authored — augmented with the measured runtime substrate baselines as the G3/G4 before-numbers, `audit/design/PERF-runtime-substrates.md`) |
+| W-LIGHTHOUSE | mint `proof:lighthouse` score-floor gate + the production preview protocol; split the render-blocking CSS + defer value.js; aurora-dock a11y; slides LCP-asset arm routes to L (minted from the AY Lighthouse design lanes 2026-06-09) | planned (spec authored) |
 | W-SB1 | storybook per-route KEEP/FIX/RETIRE | planned |
 | W-SB2 | storybook orphan component-retire | planned |
 | W-SB3 | storybook native-top-layer FOLD + language gate | planned |
