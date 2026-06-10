@@ -573,4 +573,61 @@ verify GREEN with both DELTAs on disk.
   (`proof:live-verified-ledger`); the keyframes.js `(response, dampingFraction)` spring model
   (`scripts/regen-spring-tokens.mjs`, `node_modules/@mkbabb/keyframes.js/dist/keyframes.d.ts:860-882`) — the
   ω-derivation reconcile keeps THIS model, mints no second spring.
+
+---
+
+## §8 — W-CON-FIX (the hc2 re-ground residue arm; from `audit/hardening/hc2/HC-con.md`)
+
+The W-CON2 well physics + the W-CON3 freeze engine VERIFY as as-built (gates re-run GREEN — `proof:constellation-field` 25/25, `proof:constellation-tokens` PASS, `proof:constellation-substrate-single` PASS, HC-con §5), but the re-ground caught FOUR gate-passing-vs-perfected residues. This section OWNS the two genuinely-W-CON2 ones (the cool-tolerance honesty + the asymmetric-ramp spec-amendment) and CROSS-ROUTES the two freeze ones to W-CON3 (the serial owner of the `freeze` render-loop fold — §5 risk-9 holds: W-CON1 → W-CON2 → W-CON3, the freeze items land in W-CON3's pass, NOT a parallel write). NO source edit re-opens the warp/well engine — these are honesty/park/spec residues, not a re-design.
+
+### F8.1 (W-CON2, HIGH — the cool tolerance was widened past its OWN spec; mobile cooling is UNGATED) — RESTATE HONESTLY: re-tune to ±5% OR amend the spec to ±6% WITH the physics rationale + a mobile arm. NEVER silent.
+
+`HC-con.md` §1 F1.4, file:line:
+- The wave spec §6 clause 2 + E5 prescribe "within **±5%** of the pre-hold mean" (`AY.W-CON2.md` — this very doc, §6 clause 2 / E5 well-perturbs-then-cools).
+- The unit oracle asserts `0.05` (`tests/components/custom/constellation/constellationField.test.ts:551`) — passes on its 800×600 fixture.
+- The π gate ships `COOL_TOL = 0.06` (`tests-visual/constellation-egg-live.spec.ts:39`) while the SAME file's header comment (`:18`) STILL says "±5%" — the file disagrees with itself.
+- The binding run read **5.2%** (`W-CON2-DELTA.md §2`) — it would FAIL the spec'd ±5%; the tolerance was silently widened to 6% so it passes, and neither this spec nor the in-file comment was synced.
+- The DELTA's own capture table reads cool-err **6.6%/6.7% desktop and 13.1%/13.1% mobile** — the mobile error is **>2× the spec tolerance**, hand-waved as "a slightly tighter window" with NO longer-window re-measure, and the π spec runs at the single Playwright default viewport (`grep -c setViewportSize constellation-egg-live.spec.ts` → 0), so MOBILE COOLING HAS ZERO GATE COVERAGE despite the narrow canvas being the WORST case the DELTA itself measured (perturb 1.72× vs 1.32×).
+
+**The fix (decide ONE, record either way — the silent-widening is the defect, not the number):**
+- **(a) RE-TUNE to genuinely meet ±5%** — raise `WELL_COOL_RELEASED` (`constellationField.ts:541`, currently 7.0/s) so the released-node ease-back pulls |v| back to `speed` faster, OR lengthen the cool sample window in the π spec + unit oracle so the slower asymptote lands inside ±5% at the measured frame. Then `COOL_TOL` returns to `0.05` and the `:18` comment is TRUE.
+- **(b) AMEND the spec to the honest ±6% WITH the physics rationale** — record in §6 clause 2 + E5 + this section WHY the cool asymptote sits at ~5.2% desktop / ~13.1% mobile at the sampled frame (the released-node ease-back is a first-order exponential toward `speed`; at `WELL_COOL_RELEASED = 7/s` and the 30-frame/0.5s sample the residual is ~e^(−7·0.5) of the perturbation, larger on the narrow mobile canvas where the perturb peak is 1.72× — the sample frame catches it pre-asymptote). AND add a MOBILE-VIEWPORT arm to the π spec (`page.setViewportSize({width:390,…})` + a longer cool window) so the 13.1% worst-case is GATED, not measured-and-hidden. Fix the `:18` comment to ±6% either way.
+
+The honesty bar (MEMORY `feedback_no_backwards_compat` / the cardinal-lesson roll-up): the spec, the unit oracle, the π `COOL_TOL`, and the in-file comment MUST tell ONE story. Today four of them disagree. The default recommendation is **(b) amend + add the mobile arm** — the asymmetric ease-back is a deliberate physics shape (F8.2), and re-tuning it FASTER to meet ±5% risks a visible snap; the honest amendment + the mobile gate is the lower-risk close. Whichever lands, NO silent tolerance widening survives.
+
+### F8.2 (W-CON2, MEDIUM — the asymmetric `WELL_RELEASE_RAMP` fix is HAND-SET in source + DELTA but the WAVE SPEC was NEVER amended; three magic consts, none tokenised, the keep-as-const decision recorded nowhere binding) — AMEND §3 E1c + RECORD the const decision.
+
+`HC-con.md` §1 F1.1 + F1.2 + F1.3, file:line:
+- The as-built fix is THREE non-token module consts: `WELL_RELEASE_RAMP = 22.0` (`constellationField.ts:555`), `WELL_COOL_HELD = 1.5` (`:540`), `WELL_COOL_RELEASED = 7.0` (`:541`) — none in the `--constellation-*` numeric cohort (`tokens.css:521-530`).
+- `grep -n 'RELEASE_RAMP|asymmetric|COOL_HELD|COOL_RELEASED' AY.W-CON2.md` → **0 hits**: this spec STILL prescribes the SYMMETRIC single-`cfg.ramp` shape (§3 E1c pseudocode) and declares "Shape (i) is preferred" (route through the steer renorm) when the as-built took shape (ii) PLUS an invented asymmetric release ramp. The Class-G as-built/spec divergence the re-grounds exist to catch.
+- F1.2 (the consumer trap): `--constellation-well-ramp` comment LIES on BOTH sites — `tokens.css:528` and `constellationField.ts:675` both say "the hold/release ramp rate (≈0.25s to full)" but at HEAD the token governs the ARM only; release is PINNED at the non-token 22/s (`:585` `well.target > 0 ? cfg.ramp : WELL_RELEASE_RAMP`). A consumer tuning the token for a slow syrupy release gets nothing.
+
+**The amendment (spec + comment, NO engine change — the fix LANDED, only the spec is stale):**
+- AMEND §3 E1c to record shape-(ii)-with-asymmetric-ramps as the LANDED design + WHY: the live `k`-scale divergence made the symmetric single-ramp leave the field warm; the brisk fixed release (`WELL_RELEASE_RAMP = 22/s`) guarantees the field-cools invariant (a consumer slowing the release would break the §6 clause-2 cool gate). Strike the "Shape (i) is preferred" line.
+- RECORD the THREE consts as DELIBERATE non-tokens (invariant machinery, not feel knobs — a consumer must NOT be able to slow the release past the cool gate). This is the tokenise-or-record-as-const decision: **record-as-const** (they guard the invariant), stated HERE + in the source doc-comments.
+- FIX the two `--constellation-well-ramp` comments (`tokens.css:528`, `constellationField.ts:675`) to "ARM rate (release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant, not consumer-tunable)".
+- (LOW, F1.3) ADD the `22.0` derivation to its doc-comment (`:542-554`): tie it to `WELL_EPS` + the ≥30-frame sample (`n ≈ ln(1/EPS)/ln(1/(1−min(rate/60,1)))` vs the gate window — strength falls below 1e-3 in ~15 frames at 60fps, ~half the gate window) so the next tuner does not treat 22 as free.
+
+### F8.3 (W-CON3-EXECUTED, HIGH — the freeze gate's overlay-phase leg is a TAUTOLOGY; a regression of the load-bearing D1.2 frozen-`now` fix keeps the gate GREEN) — CROSS-ROUTED to W-CON3 (the freeze owner), spec'd here per the augment.
+
+`HC-con.md` §3 F3.1, file:line: `demo/stories/substrates/constellation.vue:274-277` — `overlayPulseRadius()` RECOMPUTES the expected constant (`const phase = (0 % 2600)/2600; return (12 + phase*24) * freezeField.k`); it never observes the `now` the engine hands `drawOverlay`. The π spec reads exactly this (`tests-visual/constellation-freeze-live.spec.ts:95` `pulseRadius: round(f.overlayPulseRadius())`), so the frame-stillness assert "pulse(f1) === pulse(f40)" and the cross-run "pulse(A) === pulse(B)" can only fail if `field.k` changes — they assert NOTHING about the frozen-`now` contract. **A regression of the load-bearing D1.2 fix (`Constellation.vue:395` handing the live `now` under freeze) keeps `proof:constellation-freeze-live` GREEN.** The node-position half of the digest IS genuine (every `field.nodes` position quantised to 0.01px + the warp focal, across two mounts + 36 rAF); only the overlay-phase clause is decorative.
+
+**The fix (~8 lines, demo-side only — W-CON3's pass):** `let lastPaintedNow = -1` captured by the `drawAnomaly` closure, STAMPED inside the painter with the `now` the engine actually hands it, exposed on `__constellationFreeze`; the spec asserts `lastPaintedNow === 0` (the frozen-`now` truth) AND stable across the 36-rAF window — OR pixel-hash the canvas via `toDataURL` so the overlay-phase observable is the PAINTED radius, not the recomputed constant. Until then the overlay-phase clause of the gate cannot fail. (Owner: W-CON3 finisher; this section RECORDS it so the W-CON3 row carries the fix + the born-RED witness — a regression of the frozen-`now` handoff must RED the gate.)
+
+### F8.4 (W-CON3-EXECUTED, MEDIUM — freeze does NOT park: the frozen canvas repaints identical frames at full rAF forever) — CROSS-ROUTED to W-CON3.
+
+`HC-con.md` §3 F3.2, file:line: `useCanvas2D` parks on PRM (one static frame then park, `useCanvas2D.ts:143-152`), offscreen, and tab-hidden — but `freeze` is component-level and never touches the suspend set, so an on-screen frozen instance runs `clearRect + drawEdges + drawNodes + drawOverlay` at ~60fps for a STATIC image. The bespoke slides engine this seam transposes was explicitly "seeded PRNG, **no live RAF**" (quoted at `AY.W-CON3.md §1 D1`); the spec's "unifies with the reduced-motion one-static-frame path" landed HALF-unified (predicate folded for stepping/listeners/overlay-`now`, NOT for the park). A pptx/`?export` page with several frozen constellations burns continuous paint work during exactly the capture that wants determinism + quiet. The substrate already owns the machinery (a suspend reason + `paintStatic`, which also covers the post-resize repaint).
+
+**The fix (W-CON3's pass):** add a `freeze` suspend reason to `useCanvas2D` (paint ONE static frame via `paintStatic` then PARK), folding `freeze` onto the same suspend path PRM uses. **CAVEAT (HC-con §3 F3.2):** the current repaint loop is what makes the stillness assert observable — land F8.3 (record-at-paint) WITH this park so the protocol stays honest (paint-once → `lastPaintedNow` still stamps; the spec asserts it stays stamped at 0 across the window even though no new frame paints). Owner: W-CON3 finisher; recorded here so the W-CON3 row carries the park residue.
+
+### §8 disposition + gate addendum
+
+| residue | severity | owner | gate addendum |
+|---|---|---|---|
+| F8.1 cool tolerance widened past spec (6% vs 5%) + self-contradicting file + mobile 13.1% ungated | HIGH | **W-CON2** (this wave) | §6 clause 2 re-tuned to ±5% OR amended to ±6% WITH the physics rationale + a MOBILE viewport arm in `constellation-egg-live.spec.ts`; the `:18` comment synced; born-RED on the silent-6% state |
+| F8.2 asymmetric-ramp fix unamended in spec + stale token comments ×2 + 22.0 derivation unstated | MEDIUM | **W-CON2** (this wave) | §3 E1c amended to shape-(ii)-asymmetric; the three consts recorded as deliberate non-tokens; the two `--constellation-well-ramp` comments fixed (a doc-reconciliation artefact) |
+| F8.3 overlay-phase readback tautological (gate cannot catch a live-`now` regression) | HIGH | **W-CON3** (cross-routed) | the ~8-line `lastPaintedNow` record-at-paint OR a `toDataURL` pixel-hash; born-RED on a reverted frozen-`now` handoff |
+| F8.4 freeze repaints at 60fps (no park; bespoke was "no live RAF") | MEDIUM | **W-CON3** (cross-routed) | a `freeze` suspend reason + `paintStatic`; landed WITH F8.3 so the stillness assert stays observable |
+
+The F8.1/F8.2 amendments are this wave's (W-CON2) close addendum — they re-open NO engine code, only the spec honesty + the cool gate's tolerance/mobile coverage + the const comments. F8.3/F8.4 are RECORDED here for routing completeness but EXECUTED in W-CON3's serial pass (the freeze render-loop fold owner — §5 risk-9). Cross-reference: `docs/tranches/AY/audit/hardening/hc2/HC-con.md` (§1 F1.1-F1.5, §3 F3.1-F3.2, §6 disposition table).
 ```

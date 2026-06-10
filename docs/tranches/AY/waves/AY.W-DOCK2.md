@@ -556,3 +556,33 @@ each, the rail is cohesive, and the route is correct — all on captured artefac
   (the default `indicator: true`).
 - `src/styles/tokens.css:1771` + `src/styles/dock-controls.css:43` (the `--dock-press-spring`
   off-doctrine root + the shadow re-point).
+
+---
+
+## §7 — COLLAPSE-DIRECTION augment (the RealityB collapse defects W-DOCK1 was structurally BLIND to; from `audit/reality/RA-dock-anim.md` §B + §A)
+
+W-DOCK1's instrument verdict (lag captured-ABSENT) is HONEST exactly as far as it looked — the human eye AGREES on the EXPAND direction (RA-dock-anim §A: 120Hz-smooth, real spring, items riding the shell edge in lockstep; the captured-ABSENT stands there). But RealityB caught the instrument's blind spot: W-DOCK1's own onset table marks the collapse-direction child column "N/A (clip)" — and that N/A is PRECISELY where TWO visible collapse defects live (RA-dock-anim §G). These are NEW findings, NOT covered by this wave's entering-child-onset gate (which is expand-direction), the layer-switch (§C → already routed in §1/§3), or the rail (§D → §1/§3). They route HERE (the dock-morph owner) as a collapse-direction arm. The fix is in the SAME ring-scalar + clip-aperture machinery this wave already owns — NO new substrate.
+
+### D9 (HIGH — the one-frame HARD CUT-OUT of all content at collapse onset)
+
+`RA-dock-anim.md` §B.1 (`RA-dock-anim-collapse-onset-hardcut.png`, frames 742→811ms): Frame N — full content (two sliders, icons, separator) in a 487px shell. Frame N+1 — shell STILL ~487px, content GONE ENTIRELY. The summary glyph then fades in centered while the husk shrinks around it. W-DOCK1 §A recorded the trailing child as "N/A (clip) — opacity held at 1, concealed by the clip" — but that is NOT what paints: the content VANISHES BEFORE the aperture moves, a HARD CUT, not a progressive clip-conceal. One to two frames of full-width EMPTY shell are visible at 60Hz. The shrink itself (487→39px in ~190ms with the glyph riding centered) reads fine — the defect is the onset hard-cut. **Fix:** the collapse must CONCEAL content by the clip aperture progressively (the content opacity/clip rides the SAME `--dock-morph-t` scalar DOWN), NOT cut it in one frame at the class flip — the inverse of the expand's lockstep (which W-DOCK1 proved correct). Re-grep the collapse-direction content-conceal path in `dock/layers.css` + `dockMorphContext.ts` (the clip aperture vs the content opacity onset on collapse).
+
+### D10 (HIGH — the −53% pill-width UNDERSHOOT squash; the symmetric ring extrapolates cartoonishly onto the 38px collapse target)
+
+`RA-dock-anim.md` §B.2 (`RA-dock-anim-collapse-strip.png`): the same ±4.5% scalar ring that gives the EXPAND its classy +21px overshoot EXTRAPOLATES on collapse to `488 − 449×1.046 = 17.3px` — the 38px resting pill squashes to LESS THAN HALF its width and re-inflates over ~170ms (captured: 39→17.3→19→30→34→38, the glyph itself visibly squeezed). SYMMETRIC in PIXELS, wildly ASYMMETRIC in PROPORTION: the expand ring is sub-perceptual polish (+4.4% on a ~488px target), the collapse ring is a cartoonish squeeze-pop (−53% on a 38px target). A SOTA morph DAMPS or CLAMPS the collapse-side extrapolation. **Fix:** clamp the ring's undershoot on the collapse direction (a floor on `--dock-morph-t`'s collapse endpoint so the pill cannot squash below its resting width, OR a proportion-aware ring that scales the overshoot scalar by the TARGET size, not a fixed ±4.5% pixel ring). This is the SAME ring this wave's `DOCK_SPRING` authority owns — the fix is a collapse-endpoint clamp on the existing scalar, NOT a new spring. Re-grep the ring/overshoot scalar in `dockMorphContext.ts` (the `--dock-morph-t` peak 1.045 / the ±4.5% ring).
+
+### D11 (MINOR-blemishes — the summary-glyph SNAP + the first-expand stall + the intermittent parked-pointer collapse) — BOOK with reproduction or a named successor
+
+`RA-dock-anim.md` §A + §F:
+- **The summary glyph does not CROSSFADE** — it SNAPS to the first entering child between two frames (opacity 1→0 in one frame at the class flip, BOTH directions; §A blemish). At 45ms into a 150ms fast-arm it reads as a quick swap, not a defect — but Apple would crossfade the glyph. BOOK a glyph crossfade (the collapsed-summary ↔ first-child opacity crossfade on the morph clock) OR a named successor.
+- **The first-expand-only stall** (§A "First-expand-only stall"): the session's FIRST expand froze ~157ms mid-morph at morphT≈0.82 (a lazy-mount/first-style cost of the entering pane; never recurs on later cycles). A real first-impression blemish on a cold page, invisible to every repeat-cycle gate. BOOK the lazy-mount warm OR a named successor (this rides the §F2 first-mount FLIP audit this wave already carries from W-DOCK1).
+- **The intermittent parked-pointer collapse** (§F, observed once, unreproduced): in ONE 4-cycle session, 3 of 4 expands auto-collapsed ~644ms after the hover with the pointer parked INSIDE the dock (a real-but-rare interaction-order mis-seat, same family as the §F2 mis-seat). Worth a state-machine audit, NOT a red gate on this evidence — BOOK into the §F2 audit (this wave already carries §F2 from W-DOCK1).
+
+### §7 gate addendum
+
+The collapse-direction defects extend this wave's morph gate (the `proof:dock-lockstep` family) with a COLLAPSE arm — the same capture harness (`proof:dock-items-lag-capture.mjs`, the `/dock/overview` + `data-testid="dock-capture"` selector W-DOCK1 built) drives the COLLAPSE direction and asserts:
+- **D9 born-RED:** the LAST `.dock-layer--full` child opacity at collapse onset does NOT hard-cut (opacity must RIDE the `--dock-morph-t` scalar down, not 1→0 in one frame BEFORE the aperture moves) — born-RED on the HEAD hard-cut.
+- **D10 born-RED:** the pill WIDTH on collapse does NOT undershoot below its resting width (a floor — no `width < restingWidth × (1 − ε)` frame) — born-RED on the HEAD 17.3px-on-a-38px-target squash.
+- **D11:** the glyph-snap / first-expand-stall / parked-pointer-collapse are BOOKED (a marker + named successor) or LANDED, per the §F2 audit this wave carries.
+
+The collapse-arm capture lands in `W-DOCK2-DELTA.md` (the OWED RG1 own-surface light+dark series this wave already owes — HC-sld-dock §3) as a COLLAPSE frame-series alongside the expand series, so the RG1 capture covers BOTH directions and the §B defects are gated, not eye-only. Cross-reference: `docs/tranches/AY/audit/reality/RA-dock-anim.md` §A (expand confirmed) + §B (the two collapse defects) + §F (the blemishes) + §G (the instrument's collapse blind spot).

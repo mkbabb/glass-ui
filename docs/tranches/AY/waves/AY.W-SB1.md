@@ -34,7 +34,9 @@ impossible to relapse.
 
 ## Completion criterion
 
-The five hard-gate clauses below all verify (the §4 checklist): (G1) `proof:no-orphan-demo-route` (already
+The six hard-gate clauses below all verify (the §4 checklist; G1–G5 the prune/IA half, G6 the §1.5 per-route
+DESIGN-defect cohort — the broken front door, the constellation zero-paint SOURCE fix, the voice scrub, the
+typewriter wrap): (G1) `proof:no-orphan-demo-route` (already
 CI-wired) stays GREEN after the route deletions and the native fold — no orphan file, no dangling row; (G2) the
 NEW `proof:component-orphan` gate is born-RED at the pre-edit HEAD (header-ribbon + glass-panel present with 0
 non-self consumers and no evidence doc) and GREEN after the retire — every `custom/` component package + every
@@ -45,8 +47,11 @@ self-proving with a synthetic always-orphan probe; (G3) deletion-proofs for `hea
 `npm run verify-export-types` GREEN with the two subpaths absent (the dts publication probe passes the smaller
 surface); (G5) `useTokenColor` is KEPT with `docs/consumer-evidence/use-token-color.md` authored and the
 `consumer-evidence/README.md` table row added, and the native-top-layer fold is verified by the manifest row
-absent + the Dialog/HoverPopover stories carrying the native section. Both goal AND completion must hold for a
-clean close.
+absent + the Dialog/HoverPopover stories carrying the native section; (G6) the §1.5 design defects fixed,
+RUNTIME-witnessed and born-RED at HEAD — G6a front door NAVIGATES (probed `pathChanged:false` today), G6b the
+constellation hero PAINTS (0px host / 300×150 canvas today — the SOURCE fix), G6c no voice leakage (the
+meta-language GREEN pass), G6d the headline does not wrap mid-word ("f / or" today). Both goal AND completion must
+hold for a clean close.
 
 ---
 
@@ -116,6 +121,163 @@ named (§1 row F: "each tranche says 'IA done' and the specific routes survive")
 gate (G2) whose green requires the orphan to be RETIRED or EVIDENCED, not merely de-routed.
 
 ---
+
+## 1.5 AUGMENTATION — the per-route DESIGN defects (the front door + voice + a SOURCE bug)
+
+The W-SB1 prune above is the COMPONENT-orphan + IA-coherence half. The AY design + reality audits
+(`audit/design/FD-storybook.md`, `audit/reality/RA-flow-fields.md`) surfaced a second cohort of per-route
+defects on the EXACT routes this wave already touches — the front-door page, the hero composition, the
+substrate prose. They route here because they are page-local FIXES (markup/scoped-CSS/copy on a single SFC),
+not the systemic STAGING work (which is `AY.W-SB-STAGE`) nor the substrate-cohesion convergence (`AY.W-COHERE`).
+Each carries file:line from the cited audit — none is re-derived here.
+
+### 1.5.1 The BROKEN front door — 8 dead hash-hrefs + a stale, off-register category index (FD-storybook §7.1, §3 intro row, §9.2.13)
+
+`demo/stories/foundations/intro.vue:55-71` — the "Categories" section renders one `<a :href="`#/${cat.slug}`">`
+per category on a `createWebHistory` router. **Probed live (FD-storybook §7.1): click → URL becomes
+`/foundations/intro#/primitives`, `pathChanged: false` — zero navigation.** The hash-href is wrong for a
+web-history router (the router routes on the PATH, not the fragment); the cards are dead at the front door's
+ONE interactive moment. THREE compounding defects on the same block:
+
+- **Dead links (the headline).** All 8 `:href="`#/${cat.slug}`"` hrefs no-op. The fix is a `<RouterLink :to>`
+  (or a `router.push` `@click`) onto the real path — the same nav the SidebarDock rail already drives
+  (`SidebarDock.vue` `go(category.id)`). The `categories` array this block iterates is the audit's
+  "stale IA" surface (next bullet) — reconcile it to the live manifest categories in the SAME edit.
+- **Stale IA.** The index names a `Primitives` category that does NOT exist and omits the as-shipped
+  `Substrates / Forms / Display / Dock / Data` categories (FD-storybook §7.1 defect 2). Re-derive the
+  `categories` list from the live `manifest.ts` category set (the single source the rail + bottom dock read)
+  so the front door names the real IA, not a stale hand-list. The grid is ALSO the book's one cookie-cutter
+  moment — eight identical opaque boxes, no hierarchy (FD-storybook §9.2.13); the re-derive is the natural
+  point to give the set a lead/rest rhythm, but the BINDING fix is live navigation + real category names.
+- **Off-register opaque slabs in the glass hero (FD-storybook §3 intro row, §9.2.13).** The cards are
+  `bg-card` opaque slabs (`intro.vue:62` `bg-card`) punching holes in the aurora-backed glass hero — the one
+  page where the aurora actually reads, defeated by opaque category cards over it. RE-EXPRESS the category
+  cards onto the glass register (a `.glass-*` rung or `<Card tier="resting/wash">` so the aurora reads
+  THROUGH them — the glass-first canon the rest of the book teaches). NOTE the geometry compounds this: the
+  grid ends ≈55% down the hero card leaving ~580px of empty aurora (FD-storybook §9.2.13) — that vertical
+  void is the STAGING wave's concern (`W-SB-STAGE` owns the hero-card read-through + the intro page shape);
+  W-SB1 fixes the LINKS + the IA + the card glass-register only. Record the hand-off so the two waves do not
+  both re-flow the same grid.
+
+### 1.5.2 Constellation zero-paint on the hero — a SOURCE defect (FD-storybook §2/§7.2, RA-flow-fields §4)
+
+This is NOT a demo-only fix — it is a SCOPED-CSS specificity bug in the SHIPPED `Constellation.vue`, and it
+makes the declared `compositions/hero` constellation backdrop paint **zero pixels** (RA-flow-fields §4:
+"DEAD — renders 0 px… canvas backing stuck at the 300×150 default").
+
+**Mechanism (read, not patched — implementation halted), with file:line:**
+
+- `src/components/custom/constellation/Constellation.vue:581-588` — the scoped root rule
+  `.constellation { position: relative; inline-size: 100%; block-size: 100% }`. Because Vue's scoped compiler
+  attaches the `[data-v-…]` attribute, the rendered selector is `.constellation[data-v-…]` → specificity
+  **(0,2,0)**.
+- `demo/stories/story-hero.css:67-70` — `.story-hero-bg { position: absolute; inset: 0; z-index: -10 }` →
+  specificity **(0,1,0)**. The chassis INTENDS to absolutely-place the substrate to fill the
+  `.story-hero` container.
+- The scoped `.constellation` (0,2,0) BEATS `.story-hero-bg` (0,1,0) on the `position` property → the host
+  stays `position: relative; block-size: 100%`, in-flow, percentage-height against the `auto`-height
+  `.story-hero` → collapses to **h=0**; the canvas never sizes past its 300×150 default
+  (RA-flow-fields §4 computed-style readback: `height: 0px` inside a 943px `.story-hero`). FourierField
+  "works" in the same chassis only because ITS scoped root happens to be `position: absolute; inset: 0`
+  (RA-flow-fields §4 mechanism note) — the two "sibling" substrates have INCONSISTENT root-positioning
+  contracts and the shared `.story-hero-bg` chassis silently depends on the difference.
+
+**The fix is a SOURCE fix on `Constellation.vue`, made precisely (a scoped rule must not dictate host
+placement).** The component's root must not impose `position: relative` + `block-size: 100%` that defeat a
+consumer's `position: absolute; inset: 0` placement. Options, in preference order:
+
+1. **Make the root layout consumer-overridable.** Drop `position: relative` + `inline-size/block-size: 100%`
+   from the scoped `.constellation` root rule (lines 582-584) and let the host SIZE the component (the
+   canvas already self-fills its parent via `.constellation-canvas { position: absolute; inset: 0 }` at
+   `:590-595`). A `position: relative` IS needed to be the canvas's offset parent — so keep `position:
+   relative` ONLY when the consumer has not set a position, or scope it so a `.story-hero-bg`-class consumer's
+   `position: absolute` wins. The cleanest expression: the component root declares `position: relative` via an
+   ELEMENT-level fallback the consumer's class can override (raise `.story-hero-bg`'s specificity to win, OR
+   move the root positioning off the scoped rule onto a `:where()`-wrapped low-specificity rule so the
+   consumer always wins). Pick ONE and record the choice in PROGRESS; the binding outcome is the π readback
+   (below), not the mechanism.
+2. The sibling parity: FourierField's scoped root is `position: absolute; inset: 0` — bringing Constellation's
+   contract into agreement (a substrate that fills its placed parent rather than dictating its own flow) is
+   the cohesion move. Confirm the FF root contract at `FourierField.vue` before mirroring it (re-grep — the
+   W-GOD1 carve may have moved it).
+
+**Coordination — this overlaps W-COHERE's E3 edit-site (`Constellation.vue`).** W-COHERE adds the
+`opacityCeiling` recession PROP to `Constellation.vue` (its D3); W-SB1 fixes the scoped-CSS ROOT POSITIONING
+bug. These are disjoint edits (props block vs `<style scoped>`), but BOTH touch the same SFC and BOTH run
+after W-GOD1 carves it. Serialize: the positioning fix is a hard PRE-REQUISITE for W-COHERE's G-RECESSION π
+readback over a constellation HERO (a 0px-tall host cannot demonstrate recession), and for W-SB-STAGE's
+constellation-page staging. The recommended order is **W-SB1 (this positioning fix) → W-COHERE (recession
+prop) → W-SB-STAGE (page staging)**; if W-COHERE lands first, it must NOT re-introduce the host-dictating
+`position: relative` + `block-size: 100%` (the recession prop is a draw-layer alpha scale, orthogonal to the
+root layout). The executing agent re-greps `Constellation.vue:581-588` against the carved tree (the
+stale-worktree-trap step-0) before editing.
+
+> **Why W-SB1 owns the SOURCE fix and not W-COHERE.** W-COHERE is the substrate-set COHESION convergence
+> (accent/recession/shadow as ONE set) — its constellation edit is the recession prop, a feature add. The
+> zero-paint is a SHIPPED-COMPONENT BUG that breaks one declared demo backdrop; it is a per-route FIX on the
+> hero composition (the route this wave already verdicts), so it routes here. W-SB-STAGE then CONSUMES the
+> now-painting constellation (it can't stage a backdrop that renders 0px). The three waves form a chain:
+> W-SB1 makes it paint → W-COHERE makes it recede → W-SB-STAGE places it.
+
+### 1.5.3 The two leaking voices — markdown literals + spec-speak in user-facing prose (FD-storybook §4, §7.7; RA-flow-fields §3-leak)
+
+A storybook is prose + specimens; two registers leak into the USER-facing layer and cheapen it
+(MEMORY `feedback_writing_style` — no spec-speak, maintain levity). Both are page-local copy fixes:
+
+- **Markdown renders literally in manifest blurbs (FD-storybook §4.1, §7.7).** Blurbs render as plain
+  interpolated text, so backticks and angle-bracket component names print VERBATIM. Confirmed sites:
+  `demo/stories/manifest.ts` — the `dock/rail` blurb (`"The vertical \`GlassDock variant="rail"\`…"`,
+  FD-storybook §3 dock/rail row), the `metric-cell` blurb (backticks leak into body prose, §3 metric-cell
+  row), `native-top-layer` (folds away in §2.4 — its blurb retires with the row). FIX: strip the markdown
+  syntax from the affected blurbs (they are plain-text strings; write the component name as prose, not
+  fenced) — the simplest correct move since the blurb pipeline does NOT render markdown. (Rendering markdown
+  in blurbs is a larger pipeline change deferred — strip-not-render is the W-SB1 scope.)
+- **Spec-speak / π-lane runbook in PAGE prose (FD-storybook §4.2; RA-flow-fields §3-leak).** All-caps mono
+  contract lines, lowercase worklog paragraphs, and tranche citations leak into user-facing copy:
+  - `demo/stories/display/buttons.vue` — all-caps mono spec-speak (`"REST TEXT: VAR(--FOREGROUND)…"`,
+    FD-storybook §3 buttons row).
+  - `demo/stories/substrates/fourier-field.vue` — lowercase internal-notes register (`"variant is a
+    configuration BUNDLE, not a recolour of one curve"`, FD-storybook §3 fourier row).
+  - `demo/stories/substrates/constellation.vue` — the π-lane RUNBOOK leaks into section blurbs:
+    `"The π lane resizes this surface programmatically (via __constellationRefit.resizeTo) and reads the node
+    bbox + focalIndex per frame"`, `"the π egg-live spec drives it via the exposed holdWellAt/releaseWell"`
+    (RA-flow-fields §3-leak; the W-CON meta-language scrub "stopped at dock.vue" — this page needs the same
+    GREEN pass). The supernova egg is OUTED by its own caption (`"(DEMO-ONLY — not an engine prop)"`) —
+    playfulness, not a spec annotation.
+  - Tranche citations in blurbs (`"AQ.W4"`, `"(AK-W2-α)"`, `"Z.W2 / A2 §B5"`) — internal IDs in
+    user-facing copy (FD-storybook §4.2).
+  FIX: rewrite each cited prose block in the story register (the dock pages prove the team can write it —
+  FD-storybook §4.2 — it just isn't applied evenly). Scrub the π-lane mechanics out of `constellation.vue`'s
+  blurbs (the harness reads the exposed seams; the USER does not need the seam names). Drop the supernova
+  spoiler label (the egg stays discoverable, un-narrated). This is the SAME meta-language-scrub the AX
+  dock.vue pass did, extended to the constellation + fourier + buttons pages.
+
+  > **Scope coordination with W-SB-STAGE / W-COHERE.** The constellation `substrates/constellation.vue` page
+  > is ALSO restaged by W-SB-STAGE (the page-staging) and its substrate converged by W-COHERE. W-SB1 owns
+  > ONLY the PROSE scrub on that page (the blurb copy); it does not restage the panels or touch the engine.
+  > If W-SB-STAGE rewrites the page shell, it inherits the scrubbed copy (serialize W-SB1's prose scrub before
+  > W-SB-STAGE's restage, or W-SB-STAGE carries the scrub forward — record which in PROGRESS).
+
+### 1.5.4 The hero headline mid-word wrap — "f / or" (FD-storybook §3 comp/hero row, §7.5)
+
+`demo/stories/compositions/hero.vue:91-122` — the typewriter headline is built as THREE inline siblings:
+`<TypewriterText :text="headlineSeg1='A design system '">` (`:93-102`) + `<span class="fourier-f">f</span>`
+(`:103-110`) + `<TypewriterText :text="headlineSeg2='or mathematicians, writers & makers.'">` (`:111-122`).
+The italic ℱ-glyph `<span>` and the typed `"or…"` are SEPARATE inline elements with a wrap-opportunity between
+them, so when the line wraps the break can fall AFTER the `f` span and BEFORE seg2 → **"A design system f /
+or mathematician…"** wraps mid-word (FD-storybook captured `comp-hero-constellation.png`). The static fallback
+(`:124-134`) renders `>f</span>or` adjacent (no wrap site mid-word there) — the defect is the ANIMATED arm
+only, where seg2 begins with `"or"` as its own element.
+
+**FIX (no-wrap the f↔or join).** Bind the `f` span and seg2's leading `"or"` into one un-breakable unit. The
+clean expression: wrap the `<span class="fourier-f">f</span>` + seg2 in a `white-space: nowrap` inline group
+that holds the `f` and at least the `"or"` together (an inline `<span class="whitespace-nowrap">` around the
+ℱ-glyph + the seg2 TypewriterText), OR split seg2 so its first token `"or"` is part of the same nowrap unit as
+the glyph and the REST of seg2 ("mathematicians, writers & makers.") flows normally (preferred — a full
+`nowrap` on the long seg2 would prevent any wrap and overflow narrow viewports). Verify the static fallback
+arm (`:124-134`) still reads correctly after the change (it already renders `f` + `or` adjacent; do not break
+it). The binding outcome is the π readback: at the wrap-forcing width, NO line break falls between the ℱ-glyph
+and `"or"` in EITHER the animated or static arm.
 
 ## 2. Objective (the verdict + the retire, gestalt — root-not-consumer, clean break)
 
@@ -245,6 +407,17 @@ retire.
   NOT this prune (H-storybook F7 — do not conflate).
 - The full BOOK-backlog onboarding into `DISPOSITION-REGISTER.json` → **AY.W-CARRY** (H-chronic-defer §6); W-SB1
   adds only the `useTokenColor` keep-evidence, not the register reconcile.
+- The systemic substrate STAGING (which pages get aurora/constellation/fourier/blob backdrops, the hero-card
+  read-through / inset / lower-opacity tier, the paper-glass rebuild over a real backdrop, the dock/overview +
+  rail empty-cream frames staged, the intro hero vertical void) → **AY.W-SB-STAGE** (FD-storybook §2/§6/§9.1,
+  FD-substrate-pages). W-SB1 owns the front-door LINKS + IA + the category-card glass-register only; the page
+  SHAPE / backdrop placement is W-SB-STAGE.
+- The substrate-SET cohesion (blob mood-register/shadow, constellation recession PROP, the set-level accent +
+  recession + shadow gate) → **AY.W-COHERE**. W-SB1's constellation edit is the scoped-CSS ZERO-PAINT fix
+  (§1.5.2), disjoint from W-COHERE's recession prop — the two serialize on `Constellation.vue` (W-SB1 first).
+- The divined EASTER EGGS (the ℱ-redraw, konami aurora, cmd+K palette, GooBlob empty-state, constellation 404,
+  long-press eclipse) → **AY.W-EGG** (FD-storybook §5). The cmd+K half is an affordance gap, specced first-class
+  there. W-SB1 retires/folds routes; it adds NO eggs.
 
 ---
 
@@ -271,6 +444,14 @@ retire.
 | `scripts/gates.mjs` | ADD the `proof:component-orphan` row (local + ci registry) |
 | `.github/workflows/ci.yml` | ADD a `proof:component-orphan` step (the no-orphan-composable block is the model) |
 | `docs/tranches/AY/PROGRESS.md` | record the close + the per-route disposition table (§1.3) |
+| **— §1.5 design-defect edit-sites —** | |
+| `demo/stories/foundations/intro.vue` | FIX `:55-71` dead category index: `:href="`#/…`"` → `<RouterLink :to>`/`router.push` real-path nav; re-derive the `categories` list from the live `manifest.ts` category set (kill stale `Primitives`, add Substrates/Forms/Display/Dock/Data); RE-EXPRESS the `bg-card` opaque cards (`:62`) onto a `.glass-*`/`<Card tier>` register so the aurora reads through (§1.5.1). Vertical-void/hero-shape → W-SB-STAGE |
+| `src/components/custom/constellation/Constellation.vue` | FIX `:581-588` scoped-CSS host-positioning bug: the root must NOT dictate `position: relative` + `block-size: 100%` that defeat a `.story-hero-bg` `position: absolute; inset: 0` consumer; make root layout consumer-overridable (drop/`:where()`-lower the root positioning, keep the canvas offset-parent) so the host can size it → constellation hero paints (§1.5.2). DISJOINT from W-COHERE's `opacityCeiling` prop; W-SB1 runs FIRST |
+| `demo/stories/manifest.ts` | STRIP literal markdown from blurbs (`dock/rail` GlassDock backticks, `metric-cell` backticks, tranche-ID citations) — plain-text prose, not fenced (§1.5.3) |
+| `demo/stories/display/buttons.vue` | REWRITE the all-caps mono spec-speak prose (`"REST TEXT: VAR(--FOREGROUND)…"`) into the story register (§1.5.3) |
+| `demo/stories/substrates/fourier-field.vue` | REWRITE the lowercase worklog prose (`"variant is a configuration BUNDLE…"`) into the story register (§1.5.3) |
+| `demo/stories/substrates/constellation.vue` | SCRUB the π-lane runbook from section blurbs (`__constellationRefit.resizeTo`, `holdWellAt/releaseWell`); DROP the supernova spoiler label (`"(DEMO-ONLY — not an engine prop)"`); story-register prose only — the AX dock.vue meta-scrub extended here (§1.5.3). PROSE only — page-restage is W-SB-STAGE |
+| `demo/stories/compositions/hero.vue` | FIX `:91-122` the typewriter mid-word wrap: bind the `<span class="fourier-f">f</span>` (`:103-110`) + seg2's leading `"or"` (`:111-122`) into a `white-space: nowrap` inline unit so no break falls between the ℱ-glyph and `"or"`; preserve the static fallback arm (`:124-134`) (§1.5.4) |
 
 ---
 
@@ -335,11 +516,55 @@ the surface and the probe must pass the smaller set (a dangling `package.json` e
   primitives they augment — no demo capability lost). `proof:no-orphan-demo-route` (G1) independently asserts no
   orphan SFC remains, so the deleted `native-top-layer.vue` cannot linger as a routeless file.
 
+### Clause G6 — the §1.5 design defects fixed, RUNTIME-witnessed (born-RED at HEAD)
+
+A grep that the markup CHANGED is insufficient (TRANCHE-AND-WAVE-SPEC §"Hard gate" — runtime features need a
+runtime witness). G6 is four sub-arms, each born-RED against the current live state. The π readbacks run on the
+live demo (`:5199`, Metal-backed channel per the FD-storybook capture note — the SwiftShader headless renderer
+wedges on the aurora page) and land in `audit/visual/W-SB1-DELTA.md`.
+
+- **G6a — front door NAVIGATES (born-RED: `pathChanged: false`).** A live click on each `intro.vue` category
+  card asserts `router.currentRoute.path` CHANGED to the card's real path (born-RED at HEAD — FD-storybook §7.1
+  probed `pathChanged: false` on all 8). A source-witness asserts the `categories` list matches the live
+  `manifest.ts` category set (no `Primitives`, all of Substrates/Forms/Display/Dock/Data present) and the card
+  class carries a `.glass-*`/`tier` register (no bare `bg-card` opaque slab). Captured: an `intro` light frame
+  with the aurora reading THROUGH the now-glass cards.
+- **G6b — constellation hero PAINTS (born-RED: 0px host / 300×150 canvas).** A live computed-style + canvas
+  readback on `/compositions/hero` asserts the `.story-hero-bg` constellation host has non-zero `block-size`
+  (the 943px container's height, not 0) AND the canvas backing is sized to the host (NOT the 300×150 default),
+  AND a `getImageData` sample finds painted lattice pixels behind the card. **Born-RED at HEAD:** RA-flow-fields
+  §4 readback is `height: 0px`, canvas 300×150, 0px painted. Bite-check: re-impose `position: relative` +
+  `block-size: 100%` on the scoped `.constellation` root → the host collapses to 0 again. (The READ-THROUGH —
+  whether the painted lattice is VISIBLE past the 0.8α card — is W-SB-STAGE's concern; G6b binds only that the
+  substrate is SIZED + PAINTING, the source bug this wave owns.)
+- **G6c — no voice leakage (the meta-language GREEN pass).** A source-witness (the AX dock.vue meta-scrub shape)
+  asserts: no literal backtick in the cited `manifest.ts` blurbs; no `__constellationRefit`/`holdWellAt`/
+  `releaseWell`/π-lane runbook string in `substrates/constellation.vue` user-facing blurbs; no all-caps
+  `VAR(--…)` spec-line in `display/buttons.vue` prose; no tranche-ID citation (`AQ.W4`/`AK-W2-α`/`Z.W2`) in
+  user-facing copy. **Born-RED at HEAD:** each leak string is present (FD-storybook §4, RA-flow-fields §3-leak).
+  This extends the existing dock.vue meta-language gate (story-language GREEN) to the constellation/fourier/
+  buttons pages.
+- **G6d — the headline does NOT wrap mid-word (born-RED: "f / or").** A live π readback on `/compositions/hero`
+  at a wrap-forcing width asserts NO line break falls between the ℱ-glyph `<span>` and the `"or"` token in
+  EITHER the animated typewriter arm OR the static fallback (the bounding-box of the `f` glyph and the first
+  `"or"` characters share a line — same `getBoundingClientRect().top`). **Born-RED at HEAD:** FD-storybook
+  captured `comp-hero-constellation.png` "A design system f / or mathematician". Bite-check: remove the nowrap
+  binding → the break re-appears at the narrow width.
+
+All four sub-arms GREEN (with the born-RED witness recorded for each) closes G6. The DELTA captures
+(`W-SB1-*.png`, light+dark where a theme axis applies) land in `audit/visual/W-SB1-DELTA.md` per the
+cardinal-lesson contract — W-SB1 changes pixels on the front door, the hero, and the substrate prose pages, so
+its wave-id is allowlisted in `audit/visual/VISUAL-ALLOWLIST.json` and held to the own-surface DELTA bar.
+
 ---
 
 ## 5. Convergence + named successors
 
-W-SB1 converges when G1–G5 all verify. The remaining open §B11 items are named successors:
+W-SB1 converges when G1–G6 all verify (G1–G5 the prune/IA half, G6 the §1.5 per-route design defects). The
+systemic STAGING work (page backdrops, hero-card read-through, the paper-glass/dock/intro page shapes) is
+**AY.W-SB-STAGE**; the substrate-SET cohesion is **AY.W-COHERE**; the easter eggs are **AY.W-EGG** — W-SB1's
+constellation source-fix (G6b) is the PRE-REQUISITE that lets all three consume a painting constellation. The
+remaining open §B11 items are named successors:
 **AY.W-SB2** (scattered-dock triage + metric-badge/pill co-location + carousel/deck-progress disambiguation),
 **AY.W-SB3** (the cross-component language gate + the live-DELTA mandate for FIX/VERIFY routes), **AY.W-FF2**
 (the `evalFourier` delete + the FourierField land — a survey-set member of this wave's G2 gate), **AY.W-CARRY**
