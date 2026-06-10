@@ -10,7 +10,9 @@
 -   **Structure** — every god-module carved into cohesive colocated sub-modules (`proof:no-god-module` + a per-violator growth RATCHET); the feature-dir colocation convention (components at root, `composables/`, `constants.ts`, shaders, skeletons, README) enforced by `proof:colocation`; the style monolith carved into cascade-order-safe partials; the design-idiom home at `docs/precepts/design-idioms.md`.
 -   **The ruthless prune** — `./deck-progress`, `./header-ribbon`, `./glass-panel`, `./instrument-rail` subpaths RETIRED (zero consumers each; clean break, no aliases); the dashboard filler story + `evalFourier` deleted; `watercolor-dot` KEEP-EVIDENCED.
 -   **NEW `@mkbabb/glass-ui/underline`** — `<GlassUnderline>`, the hand-drawn SVG draw-on underline transposed from the sci-report R&D: three clocks (`load`/`scroll`/`static`), a declarative `active` edge, PRM set-not-drawn parity, filter-free, no `.dark` block (the `color` prop wins both grounds).
--   **The close is a gate** — `proof:ay-final` aggregates the 8 close clauses (the cardinal arms, the disposition register, the budget, the orphan scan, staged-not-published, clean-tree) so "is AY done?" is one born-RED→GREEN command.
+-   **The squircle family decided once (W56b)** — `--corner-shape-{dialog,sheet,panel,hero}` all resolve `superellipse(var(--corner-k-squircle))` inside the `@supports (corner-shape: superellipse(2))` PE gate over the un-gated `border-radius` round fallback; cards/pills/buttons stay round by policy (`proof:squircle-language` reconciled).
+-   **Slider + drawer + the studio chrome** — the two-variant slider held (standard glass scrubber + spectrum, thumb-invisible per the user mandate); the aurora + blob configurators on the library `Configurator` with atoms as the single door.
+-   **The close is a gate** — `proof:ay-final` aggregates the 8 close clauses (the cardinal arms, the disposition register, the budget, the orphan scan, staged-or-cut, clean-tree) so "is AY done?" is one born-RED→GREEN command.
 
 ## 3.9.0
 

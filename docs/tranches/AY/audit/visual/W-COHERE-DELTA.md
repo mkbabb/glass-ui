@@ -1,4 +1,4 @@
-<!-- capture-commit: 875c271a7849ad62a627a0749e3f44d447e149b0 -->
+<!-- capture-commit: a8cfd644548cd524d3713dd9e3063fd7f0445f19 -->
 <!-- surface-paths: src/components/custom/goo-blob/GooBlob.vue, src/composables/color/index.ts, src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationDraw.ts, src/styles/tokens/shadow.css, demo/stories/substrates/blob.vue, demo/stories/StoryHero.vue -->
 
 # AY.W-COHERE — the four live substrates as ONE set · cohesion convergence DELTA
@@ -70,10 +70,10 @@ crops:
 
 ### Blob — the warm-cream gel bead + the soft ambient contact shadow
 
-- `W-COHERE-blob-desktop1280-light.png` (256×257)
-- `W-COHERE-blob-desktop1280-dark.png` (256×257)
-- `W-COHERE-blob-mobile390-light.png` (192×193)
-- `W-COHERE-blob-mobile390-dark.png` (192×193)
+- `W-COHERE-blob-desktop1280-light.png` (410×411)
+- `W-COHERE-blob-desktop1280-dark.png` (410×411)
+- `W-COHERE-blob-mobile390-light.png` (308×308)
+- `W-COHERE-blob-mobile390-dark.png` (308×308)
 
 The bead is a lit cream dome sitting IN the scene with a soft near-centered ambient
 halo — NOT the hard down-right Memphis stamp. Under `.dark` the same `--blob-shadow`
@@ -93,10 +93,10 @@ This IS the convergent-optimum reference the other three are measured against.
 
 ### Fourier — the warm-red comet, legible on cream AND ink (W-FF2 RG3 MET)
 
-- `W-COHERE-fourier-desktop1280-light.png` (1134×1852)
-- `W-COHERE-fourier-desktop1280-dark.png` (1134×1852)
-- `W-COHERE-fourier-mobile390-light.png` (358×1520)
-- `W-COHERE-fourier-mobile390-dark.png` (358×1520)
+- `W-COHERE-fourier-desktop1280-light.png` (1280×800)
+- `W-COHERE-fourier-desktop1280-dark.png` (1280×800)
+- `W-COHERE-fourier-mobile390-light.png` (390×844)
+- `W-COHERE-fourier-mobile390-dark.png` (390×844)
 
 The phosphor comet (head + glowing trail) traverses the full frame — NO corner stub.
 On cream the `source-over` blend keeps the warm-red beam legible (the W-FF2 light-mode

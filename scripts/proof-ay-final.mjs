@@ -288,12 +288,24 @@ export function detectFinal(inputs) {
         if (!zero) violations.push("W-CLOSE1-overfitting-audit.md does not record a ZERO-ORPHANS verdict (library-orphan=0 + delete-unused=0 + 'Zero orphans')");
     }
 
-    // (8) STAGED-NOT-PUBLISHED.
+    // (8) STAGED-OR-CUT — a two-state machine. PRE-CUT (readiness): version is
+    // still 3.9.0 AND the 3.10.0 changeset is staged. AT-CUT (W-PUB1 in flight,
+    // user-authorized): version is 3.10.0, the changeset is CONSUMED, and the
+    // CHANGELOG carries the 3.10.0 entry — the recorded cut, not a silent bump.
+    // The bite survives: a bumped manifest with the changeset STILL staged, or
+    // with no CHANGELOG entry, is the silent mid-dev bump this clause forbids.
     facts.changesets = inputs.changesets;
     facts.pkgVersion = inputs.pkgVersion;
-    if (!inputs.changesets.length) violations.push("no .changeset/*.md is staged (the 3.10.0 changeset must be staged — publish is USER-DOMAIN)");
-    if (inputs.pkgVersion !== "3.9.0")
-        violations.push(`package.json version is '${inputs.pkgVersion}', expected '3.9.0' — the v3.10.0 cut is W-PUB1/USER-DOMAIN. A bumped manifest means the cut already ran`);
+    const staged = inputs.pkgVersion === "3.9.0" && inputs.changesets.length > 0;
+    const cut =
+        inputs.pkgVersion === "3.10.0" &&
+        inputs.changesets.length === 0 &&
+        /^## 3\.10\.0$/m.test(inputs.changelogMd ?? "");
+    facts.cutState = cut ? "at-cut" : staged ? "staged" : "invalid";
+    if (!staged && !cut)
+        violations.push(
+            `the cut state is neither STAGED (version 3.9.0 + a .changeset/*.md) nor AT-CUT (version 3.10.0 + changeset consumed + a CHANGELOG '## 3.10.0' entry) — version '${inputs.pkgVersion}', ${inputs.changesets.length} changeset(s). A half-run cut / silent bump.`,
+        );
 
     // CLEAN-TREE guard (minus the documented user-domain allowlist).
     facts.unallowedDirt = inputs.dirt;
@@ -332,6 +344,9 @@ function run() {
         squircleGateSrc: existsSync(P.SQUIRCLE_GATE) ? readFileSync(P.SQUIRCLE_GATE, "utf8") : "",
         changesets: changesetFiles(P.CHANGESET_DIR),
         pkgVersion: JSON.parse(readFileSync(P.PKG, "utf8")).version,
+        changelogMd: existsSync(resolve(P.ROOT, "CHANGELOG.md"))
+            ? readFileSync(resolve(P.ROOT, "CHANGELOG.md"), "utf8")
+            : null,
     };
     const { facts, violations } = detectFinal(inputs);
     const status = violations.length === 0 ? "pass" : "fail";
