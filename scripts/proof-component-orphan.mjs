@@ -351,6 +351,22 @@ function gather() {
         ...apiSrc.matchAll(/from\s+["']\.\.\/components\/custom\/([^"'/]+)/g),
     ].map((m) => m[1]);
 
+    // SIBLING-ABSENCE skip-by-policy (the recurring CI monorepo-layout class):
+    // the census is meaningful only when the cross-repo consumer roots are
+    // present. A clean CI runner checks out glass-ui ALONE — every sibling root
+    // is absent, every count collapses to the in-repo floor, and the gate would
+    // emit false orphans for genuinely cross-repo-consumed packages. When ZERO
+    // sibling roots resolve, the gate skips (exit 0, loudly) — locally, where
+    // the constellation is checked out, the census binds in full.
+    const siblingRoots = CONSUMER_ROOTS.filter((r) => r.startsWith("../"));
+    const siblingsPresent = siblingRoots.filter((r) => existsSync(resolve(ROOT, r)));
+    if (siblingsPresent.length === 0) {
+        console.log(
+            "proof:component-orphan — SKIP-BY-POLICY: no sibling consumer repo is present on this runner (the cross-repo census cannot bind; it runs in full on the local constellation).",
+        );
+        process.exit(0);
+    }
+
     // Consumer files: all code files under the present consumer roots, with their
     // body cached for the import-substring check.
     const consumerFiles = [];

@@ -47,3 +47,11 @@ icons, animation targets); glass-ui idioms to adopt/refine/abstract; gaps; prune
   `/dock/layers`; blob-tempo-suppression/blob-interaction-prm shader-split re-points), the live-gate
   `:5173` default → `:5199` convention sweep, and the W-DELTA0 own-wave-id re-captures
   (W-DOCK1/W-CON1/W-DOCK2 freshness NOTEs).
+
+## Post-banking census facts (orchestrator, for the named waves)
+
+- **status-dot dropped to 1 non-self consumer** (slides `SlideXray.vue` + its own demo story; the
+  prior second consumer left a sibling tree) — `proof:component-orphan` flags it locally. The
+  keep-evidenced/retire verdict belongs to AZ.W-PRUNE2.
+- `proof:component-orphan` gained the sibling-absence skip-by-policy (a clean CI runner has no
+  constellation; the census binds locally only) — the recurring monorepo-layout class.
