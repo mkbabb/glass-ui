@@ -40,6 +40,21 @@ export const toggleVariants = cva(
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
         card:
           'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
+        // AX.W… (E21/E23 — d-glassui M2) — the CONTROL-GLASS chip register. The
+        // most-numerous control class (filter year-pills, Net-flow / Region /
+        // Per-capita toggles) was a FLAT `color-mix` fill; `glass` moves it onto
+        // the glass tier WITHOUT each call-site opting into the heavyweight `card`
+        // surface. It composes the unified `.glass-wash` material (the quiet rim +
+        // the wake-on-interaction moving specular `::before`) so the chip is one
+        // rung QUIETER than the panel/drawer hull it sits in (the proportion law —
+        // a control never out-frosts its host). REST = wash (the page reads through
+        // the empty chip); HOVER = the specular wakes + a quiet fill rises; SELECT
+        // (`data-[state=on]`) = the chip settles ONE rung up to `glass-quiet` with
+        // the ink foreground and a quiet rim — a deliberate, calm "on", not the
+        // hard `bg-accent` slab. The `bg-accent` from the base string is overridden
+        // here (variant classes append after the base in the cva merge).
+        glass:
+          'glass-wash text-muted-foreground transition-[background-color,border-color,box-shadow,color] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground data-[state=on]:bg-glass-quiet data-[state=on]:border-glass-border-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet data-[state=on]:font-medium',
       },
       size: {
         // AX.W51 D18 — the height rungs read the `--control-h-*` comfort cohort.

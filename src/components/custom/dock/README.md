@@ -180,7 +180,7 @@ width morph.
 | `startCollapsed` | `boolean` | `true` | Mount collapsed (summary shown). |
 | `fitContent` | `boolean` | `false` | Size to content rather than the cap. |
 | `position` | `"fixed" \| "inline" \| "sticky"` | `"inline"` | Page anchoring. |
-| `alwaysExpanded` | `boolean` | `false` | Never collapse (forced for vertical). |
+| `alwaysExpanded` | `boolean` | `false` (vertical: `true`) | Never collapse. A vertical dock/rail DEFAULTS always-expanded but may OPT IN to the collapse machine via `:always-expanded="false"` (E2 — the crest-only collapsible rail; the `#collapsed` slot becomes the collapsed summary). `layout="grid"` always forces it. |
 | `variant` | `"dock" \| "rail" \| "instrument-strip"` | `"dock"` | Surface preset. |
 | `shape` | `"pill" \| "rounded"` | `"pill"` | Corner treatment. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout axis; horizontal animates `width`, vertical animates `height`. |
@@ -278,9 +278,13 @@ substrate-with-consumer precept).
    the card/floating shadow
    tier as the dock expands (the radius + shadow ride the dock morph scalar in
    lockstep). Horizontal-only.
-7. **Vertical docks are tool palettes** — they are `alwaysExpanded`, render a single
-   slot (no summary), and animate `height`. Set `orientation="vertical"`; no other
-   consumer change is required.
+7. **Vertical docks are tool palettes** — they DEFAULT to `alwaysExpanded`, render a
+   single slot (no summary), and animate `height`. Set `orientation="vertical"`; no
+   other consumer change is required. **A crest-only COLLAPSIBLE rail (E2):** opt in
+   with `:always-expanded="false"`. The `#collapsed` slot then becomes the collapsed
+   summary (the crest); the rail rests collapsed and reveals its full column on
+   hover/focus/click via the same `collapsed | hover | pinned` machine the horizontal
+   dock uses. Without the prop, the vertical dock stays always-expanded (back-compat).
 
 ---
 

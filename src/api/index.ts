@@ -60,6 +60,8 @@ export type {
 
 export {
     DEFAULT_AURORA_CONFIG,
+    // E22 / d-paper-aurora M4 — the recessive paper-ground crayon calibration.
+    PAPER_WASH_GROUND,
     MAX_NUCLEI,
     MAX_STOPS,
 } from "../components/custom/aurora";

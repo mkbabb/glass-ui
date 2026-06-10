@@ -56,6 +56,24 @@ describe("D6.a brush — the flat continuum", () => {
         expect(mid.passes).toBeGreaterThanOrEqual(1);
     });
 
+    it("RING is the thin editorial margin mark — a whisper, not the crayon SLAB (E7a)", () => {
+        const ring = BRUSHES.ring;
+        const crayon = BRUSHES.crayon;
+        // the positioned-circle stroke budget: thin weight, SINGLE pass, lower alpha.
+        expect(ring.weight).toBeGreaterThanOrEqual(4);
+        expect(ring.weight).toBeLessThanOrEqual(5);
+        expect(ring.passes).toBe(1); // not the crayon's 2-pass overdrawn slab
+        expect(ring.opacity).toBeCloseTo(0.55, 2);
+        // strictly lighter than the underline-tuned crayon on every loudness axis.
+        expect(ring.weight).toBeLessThan(crayon.weight); // 5 ≪ 16
+        expect(ring.passes).toBeLessThan(crayon.passes); // 1 < 2
+        expect(ring.opacity).toBeLessThan(crayon.opacity); // 0.55 < 0.8
+        // but it KEEPS the hand-crayon GRAIN character (it is a hand, not a clean ring).
+        expect(ring.ribbon).toBe("stroke");
+        expect(hasGrain(ring)).toBe(true);
+        expect(grainFilter("hm-x", ring, 1)).toContain("<filter");
+    });
+
     it("highlighter is the spanning-set stress test — the one field that earns its place (blend)", () => {
         expect(BRUSHES.highlighter.blend).toBe("multiply");
         // no OTHER built-in needs multiply — proves blend is a real axis, not bloat

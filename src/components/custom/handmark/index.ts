@@ -33,6 +33,7 @@ export {
     boilLines,
     VB_W,
     VB_H,
+    UNDERLINE_GAP,
     type ShapeGeom,
 } from "./geometry";
 
@@ -55,6 +56,7 @@ export {
     normalizeProps,
     type UseHandMarkInput,
     type HandMarkCore,
+    type BoilClock,
 } from "./useHandMark";
 
 // ── the public API surface (SPEC §6) ──

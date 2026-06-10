@@ -80,6 +80,11 @@
     --duration-xxl: 1.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
+    /* The gold ONE-SHOT seal envelope (E7c) — a PRESSED seal is a quick gesture
+       (in + hold + out), ≈1.5s end-to-end, NOT the 5s infinite-loop `--duration-
+       shimmer`. `.text-gilt` reads THIS so "catches the light once and recedes"
+       reads as a gesture, never a marquee that then hard-cuts. */
+    --duration-seal: 1.5s;
     /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep.
        @deprecated 3.10 — the disco-star is EXCISED (D6.b); the `sparkle-sweep`
        keyframe is tombstoned (animations.css) and no live recipe consumes this

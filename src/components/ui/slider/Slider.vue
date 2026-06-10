@@ -168,6 +168,18 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 
 <style scoped>
 /* ── Shared geometry — size axis lifts via CSS vars set by sliderVariants ── */
+/* AX.W… (E23 / d-glassui M3) — the FROSTED TRACK. The standard track is the
+   recessive glass CHANNEL the range cylinder rides in, not a flat opaque fill: it
+   carries the QUIET blur rung (one rung below the range's `--glass-blur-quiet`,
+   `--glass-blur-wash` — a control is at most one rung quieter than the host it sits
+   in, the control-glass proportion law) so the page reads THROUGH the empty channel.
+   The blur routes `--glass-blur-wash` via the `--glass-level` cascade, so a
+   `--glass-level:0` consumer (the opaque escape / prefers-reduced-transparency /
+   forced-colors) collapses the channel to a flat fill with the rest of the band; a
+   consumer's explicit `--slider-track-blur` override still wins. The unified edge
+   rim (W52) reads the channel's curvature so the frosted groove has a glass lip.
+   The fill (`.slider-range`) still carries its own brighter `--glass-blur-quiet`
+   over this channel — the cylinder reads ON the frosted track, not as the track. */
 .slider-track {
     position: relative;
     width: 100%;
@@ -176,8 +188,12 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     border-radius: var(--radius-pill);
     height: var(--slider-track-height, 0.375rem);
     background: var(--slider-track-bg, var(--muted-medium));
+    backdrop-filter: var(--slider-track-blur, var(--glass-blur-wash));
+    -webkit-backdrop-filter: var(--slider-track-blur, var(--glass-blur-wash));
+    box-shadow: var(--slider-track-rim, var(--glass-material-rim));
     transition:
         background var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard),
         border-color var(--duration-fast) var(--ease-standard);
 }
 
@@ -299,6 +315,12 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 .glass-slider[data-variant="spectrum"] .slider-track {
     height: calc(var(--slider-thumb-size, 1rem) * 1.5);
     background: var(--slider-track-bg, var(--secondary));
+    /* The spectrum track IS the value.js gradient (the color-picker channel) — it
+       is OPAQUE by identity; the standard frost would mud the hue ramp. Clear the
+       channel blur + rim the standard track carries. */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
 }
 
 .glass-slider[data-variant="spectrum"] .slider-range {

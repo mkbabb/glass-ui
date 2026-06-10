@@ -164,6 +164,35 @@ export const BRUSHES = {
         segments: 13,
         cap: "round",
     },
+    // ── RING — the editorial RED-PENCIL margin mark: a THIN, single-pass,
+    //    lower-alpha crayon for the POSITIONED circle (the hand-circled datum).
+    //    The crayon GRAIN/wobble character is kept (it is a hand, not a machine
+    //    ellipse — the ellipsePoints overshoot rides on top), but the weight drops
+    //    from the underline-tuned 16 to ~5, passes 2→1, opacity 0.8→0.55: a
+    //    SUGGESTION pointing at the datum, never a saturated slab competing with it
+    //    (E7a — the band reads ≤ a perceptual-floor whisper on every route, AND the
+    //    rendered stroke is aspect-stable via the SFC's `vector-effect:non-scaling-
+    //    stroke`, so the `preserveAspectRatio:none` stretch scales the PATH, never
+    //    the rendered stroke band). ONE brush row re-tones every positioned ring. ──
+    ring: {
+        weight: 5,
+        weightJitter: 0.6,
+        thinning: 0.3,
+        taper: { start: 8, end: 12, ease: "out-cubic" },
+        ribbon: "stroke",
+        opacity: 0.55,
+        blend: "source-over",
+        passes: 1,
+        passOpacity: 0,
+        grain: 0.7,
+        grainFreq: 0.18,
+        grainScale: 1.8,
+        octaves: 4,
+        roughness: 1.4,
+        wobble: 2.6,
+        segments: 13,
+        cap: "round",
+    },
     // ── MARKER — fat, juicy, near-solid, only the edges fray. (green ref) ──
     marker: {
         weight: 12,

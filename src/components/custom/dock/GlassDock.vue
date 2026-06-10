@@ -4,7 +4,7 @@
 // transition, and the pointer/focus hold machinery are one tightly-coupled dock
 // concern (the transition composables already factor the FLIP logic out). W14
 // split the ONE over-threshold god-module (DataTable); this stays whole by design.
-import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, getCurrentInstance, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 import DockSeparator from "./DockSeparator.vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
@@ -16,18 +16,24 @@ import {
 
 type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
 
-/* AX.W06 F2 — the HONEST rail surface. The prop contract is a DISCRIMINATED
-   UNION on `variant`: the horizontal `dock` variant carries the collapse↔expand
-   surface (`collapseDelay`/`startCollapsed`/`layout="grid"`); the vertical
-   `rail` / `instrument-strip` variants are vertical-ALWAYS-EXPANDED by contract
-   and DO NOT accept that surface (a compile error, not a silent no-op). This
-   removes the dead half-inapplicable prop surface from the type (the one-path
-   precept), so the rail's vertical-always-expanded contract is the SINGLE
-   documented shape. (The `#collapsed` slot is NOT the horizontal collapse-summary
-   pane on a vertical rail — there is no collapse↔expand morph to summarise. Per
-   the W45-TUNE C7 vertical three-region body it renders as an OPTIONAL trailing
-   section below a `<DockSeparator>`; a rail that authors no `#collapsed` slot is a
-   single always-expanded column.) */
+/* AX.W06 F2 + E2 — the HONEST rail surface. The prop contract is a DISCRIMINATED
+   UNION on `variant`: the horizontal `dock` variant carries the dock-only
+   collapse SURFACE (`collapseDelay`/`startCollapsed`/`layout="grid"`); the
+   vertical `rail` / `instrument-strip` variants do NOT accept that surface (a
+   compile error, not a silent no-op) — this removes the dead half-inapplicable
+   prop surface from the type (the one-path precept).
+
+   E2 — but a vertical rail is no longer HARD-WIRED always-expanded. `alwaysExpanded`
+   lives on the SHARED `DockCommonProps`, so a rail may OPT IN to the existing
+   `collapsed | hover | pinned` machine via `:always-expanded="false"`. DEFAULT
+   (unset): a vertical dock stays always-expanded (back-compat — a single column,
+   no collapse). OPTED-IN: the `#collapsed` slot becomes the COLLAPSED SUMMARY (the
+   crest-only rail E2 asks for); the default slot is the expanded column. (When a
+   rail stays always-expanded AND authors a `#collapsed` slot, that slot renders as
+   the W45-TUNE C7 OPTIONAL trailing section below a `<DockSeparator>` — the prior
+   tool-palette shape, unchanged.) The dock-only `startCollapsed`/`collapseDelay`
+   knobs stay off the rail type; a collapsible rail starts collapsed by construction
+   and uses the default `collapseDelay`. */
 interface DockCommonProps {
     fitContent?: boolean;
     position?: "fixed" | "inline" | "sticky";
@@ -219,6 +225,16 @@ function dockBranch(p: DockProps): p is DockVariantProps {
 const collapseDelay = computed(() =>
     dockBranch(props) ? props.collapseDelay ?? 2000 : 2000,
 );
+/* The horizontal collapse resting state (default true). Read ONLY by the
+   horizontal mount-expand branch (a vertical collapsible rail starts collapsed by
+   construction — the onMounted gates it before reaching here). The vertical / rail
+   branches have no `startCollapsed` prop on their discriminated-union type, so the
+   value is inert there. NOTE: Vue's pure-`defineProps` boolean cast resolves an
+   ABSENT `startCollapsed` to `false` (not `undefined`), so `?? true` cannot
+   re-default it; the canonical collapsible-dock resting state is therefore set by
+   the consumer passing `:start-collapsed` explicitly OR by `<GlassDock>`'s own
+   default-collapsed machine init in `useDockState` — the mount-expand here only
+   FORCES OPEN when `startCollapsed` is explicitly false. */
 const startCollapsed = computed(() =>
     dockBranch(props) ? props.startCollapsed ?? true : false,
 );
@@ -246,15 +262,40 @@ const scrollClass = computed<string | null>(() => {
     if (props.overflow !== "scroll") return null;
     return orientation.value === "vertical" ? "dock-scroll-y" : "dock-scroll-x";
 });
-/* AW.W3b — a `layout="grid"` dock is `alwaysExpanded` BY CONTRACT. A 2D tile
-   panel does not read as a collapsible pill, and `alwaysExpanded` means no width
-   morph → no per-frame grid-column reflow (the apple-motion reflow-during-morph
-   anti-pattern is structurally avoided). Vertical rails are also always-expanded
-   (they render a single slot). */
+/* E2 — was `always-expanded` EXPLICITLY passed? Vue's pure-`defineProps` boolean
+   cast resolves an ABSENT boolean prop to `false` (not `undefined`), so
+   `props.alwaysExpanded ?? default` can never reach its fallback — `false ?? X`
+   is always `false`. To honor BOTH the vertical default (absent ⇒ true) AND the
+   explicit opt-in (`:always-expanded="false"` ⇒ collapsible) we read the RAW vnode
+   props (which preserve the originally-passed attribute keys, kebab or camel) to
+   distinguish "explicitly set" from "absent". This is the canonical Vue seam for a
+   Boolean prop that must default to `true` while still accepting an explicit
+   `false`, without `withDefaults` (which would erase the discriminated-union
+   narrow — the AX.W06 honest-rail contract). */
+const instance = getCurrentInstance();
+const alwaysExpandedExplicit = computed<boolean | undefined>(() => {
+    const raw = instance?.vnode.props;
+    if (!raw) return undefined;
+    if (!("alwaysExpanded" in raw) && !("always-expanded" in raw)) return undefined;
+    // The reactive prop carries the resolved (cast) boolean value.
+    return props.alwaysExpanded;
+});
+
+/* AW.W3b + E2 — the rail collapse OPT-IN. A `layout="grid"` dock is
+   `alwaysExpanded` BY CONTRACT (a 2D tile panel does not read as a collapsible
+   pill, and `alwaysExpanded` means no width morph → no per-frame grid-column
+   reflow). A vertical dock DEFAULTS to always-expanded (the tool-palette resting
+   contract — back-compat: a vertical dock with NO `always-expanded` attribute
+   stays a single always-expanded column), but it may now OPT IN to the existing
+   `collapsed | hover | pinned` machine via `:always-expanded="false"`. The
+   relaxation is `<explicit> ?? (orientation === 'vertical')`: an EXPLICIT boolean
+   (true OR false) wins; an UNSET prop falls back to the vertical default.
+   `layout="grid"` still hard-forces (the grid contract is non-negotiable, so it
+   OR-s on top of the resolved vertical default). The crest-only collapsed rail
+   (E2) renders its summary in the `#collapsed` slot the vertical branch authors. */
 const alwaysExpanded = computed(
     () =>
-        props.alwaysExpanded ||
-        orientation.value === "vertical" ||
+        (alwaysExpandedExplicit.value ?? orientation.value === "vertical") ||
         layoutValue.value === "grid",
 );
 const fitContent = computed(() =>
@@ -447,7 +488,19 @@ function onDockTransitionDone(event: TransitionEvent): void {
 }
 
 onMounted(() => {
-    if (props.alwaysExpanded || !startCollapsed.value) {
+    // Expand on mount when the dock is always-expanded (the machine pins it
+    // there). Otherwise the dock is COLLAPSIBLE:
+    //   • A collapsible VERTICAL rail (E2: `:always-expanded="false"`) STARTS
+    //     COLLAPSED by construction — the crest-only resting state is its whole
+    //     contract, so it never auto-expands on mount.
+    //   • A collapsible HORIZONTAL dock honors `startCollapsed` (default true): it
+    //     expands on mount ONLY when the consumer explicitly opted OUT of the
+    //     collapsed resting state via `:start-collapsed="false"`.
+    if (alwaysExpanded.value) {
+        expand();
+        return;
+    }
+    if (orientation.value === "horizontal" && !startCollapsed.value) {
         expand();
     }
 });
@@ -610,15 +663,53 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
                  wrapper, same column flow).
         -->
         <template v-else>
-            <div class="dock-layers dock-layer--vertical-body">
-                <slot />
-                <template v-if="$slots.collapsed">
-                    <DockSeparator />
-                    <div class="dock-layer--vertical-section">
+            <!--
+                E2 — the vertical body has TWO shapes, chosen by whether the rail
+                opted into the collapse machine (`alwaysExpanded` resolved false via
+                `:always-expanded="false"`):
+
+                (a) ALWAYS-EXPANDED (the default, back-compat): the three-region
+                    tool-palette body — the default content stack, with the
+                    `#collapsed` slot rendered as an OPTIONAL TRAILING section below
+                    a structural `<DockSeparator>`. A vertical dock with no
+                    `always-expanded` prop is byte-identical to before.
+
+                (b) COLLAPSIBLE (the crest-only rail): the `#collapsed` slot is the
+                    COLLAPSED SUMMARY (the crest), the default slot is the expanded
+                    column — a vertical analogue of the horizontal full/summary
+                    pair. Collapsed shows the crest alone; hover/focus/click engages
+                    the existing `collapsed | hover | pinned` machine to reveal the
+                    full column. The collapsed layer carries `@click="onClickCollapsed"`
+                    (pin-on-click) exactly as the horizontal summary does.
+            -->
+            <template v-if="alwaysExpanded">
+                <div class="dock-layers dock-layer--vertical-body">
+                    <slot />
+                    <template v-if="$slots.collapsed">
+                        <DockSeparator />
+                        <div class="dock-layer--vertical-section">
+                            <slot name="collapsed" />
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template v-else>
+                <div class="dock-layers dock-layer--vertical-body">
+                    <div
+                        :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
+                        :inert="!expanded || undefined"
+                    >
+                        <slot />
+                    </div>
+                    <div
+                        :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
+                        :inert="expanded || undefined"
+                        @click="onClickCollapsed"
+                    >
                         <slot name="collapsed" />
                     </div>
-                </template>
-            </div>
+                </div>
+            </template>
         </template>
     </div>
 </template>

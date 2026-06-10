@@ -20,6 +20,30 @@
 import { computed, ref, type Ref } from "vue";
 import { useLineBoil } from "@mkbabb/pencil-boil";
 import { resolveBrush, type Brush, type BrushName } from "./brush";
+
+/**
+ * The boil clock surface the SFC binds — the `useLineBoil` return shape, declared
+ * structurally over glass-ui's OWN `Ref` (pencil-boil ships a nested `@vue`, so its
+ * `Ref` symbol differs; the no-op stub is built with this `ref`, hence the surface
+ * is named here rather than `ReturnType<typeof useLineBoil>`).
+ */
+export interface BoilClock {
+    currentFrame: Ref<number>;
+    start: () => void;
+    stop: () => void;
+}
+
+/**
+ * The zero-cost boil stub a NON-boiling mark gets instead of a real `useLineBoil`.
+ * `start`/`stop` are no-ops and `currentFrame` is a frozen `0` — the mark never
+ * subscribes to the singleton RAF scheduler (it never even constructs the clock).
+ * A static mark reads as static BY CONSTRUCTION, not merely scheduled-away.
+ */
+const NOOP_BOIL: BoilClock = {
+    currentFrame: ref(0),
+    start: () => {},
+    stop: () => {},
+};
 import { boilLines, serialize, shapeGeom, type ShapeGeom } from "./geometry";
 import { ink, type SVGFragment } from "./ink";
 import { hasGrain } from "./texture";
@@ -40,12 +64,24 @@ export interface UseHandMarkInput {
     box: MarkBox | null;
     path: string | null;
     filterId: string;
+    /**
+     * The MEASURED text baseline as a fraction of the `.hm` box height (text-mode
+     * underline anchor). `null` until the SFC measures it (ResizeObserver +
+     * `document.fonts.ready`) — geometry falls back to the legacy constant for that
+     * one pre-measure frame. Ignored in positioned (`box`) mode.
+     */
+    baselineFrac: number | null;
 }
 
-/** Normalise raw HandMarkProps (with their defaults applied) into the core input. */
+/**
+ * Normalise raw HandMarkProps (with their defaults applied) into the core input.
+ * `baselineFrac` is the SFC's MEASURED text baseline (text-mode underline anchor) —
+ * passed in (not a prop) because it is a runtime measurement, `null` until measured.
+ */
 export function normalizeProps(
     props: HandMarkProps,
     filterId: string,
+    baselineFrac: number | null = null,
 ): UseHandMarkInput {
     return {
         brush: props.brush ?? "pen",
@@ -62,6 +98,7 @@ export function normalizeProps(
         box: props.box ?? null,
         path: props.path ?? null,
         filterId,
+        baselineFrac,
     };
 }
 
@@ -82,8 +119,8 @@ export interface HandMarkCore {
     draws: Ref<boolean>;
     /** does this animation boil? */
     boils: Ref<boolean>;
-    /** the lazy boil clock (subscribes to the singleton RAF). */
-    boil: ReturnType<typeof useLineBoil>;
+    /** the boil clock (a real `useLineBoil` only when the mark boils; else a no-op stub). */
+    boil: BoilClock;
     /** arm/disarm boil (draw-then-boil holds it until the draw finishes). */
     boilArmed: Ref<boolean>;
 }
@@ -98,7 +135,8 @@ export function useHandMark(input: Ref<UseHandMarkInput>): HandMarkCore {
 
     const grained = computed(() => hasGrain(brush.value));
 
-    // base centerlines — recomputed only when geometry inputs change.
+    // base centerlines — recomputed only when geometry inputs change (incl. the
+    // measured baselineFrac: the underline re-anchors the instant the measure lands).
     const baseGeom = computed<ShapeGeom>(() =>
         shapeGeom(
             input.value.shape,
@@ -109,6 +147,7 @@ export function useHandMark(input: Ref<UseHandMarkInput>): HandMarkCore {
                 jagged: input.value.jagged,
             },
             input.value.box,
+            input.value.baselineFrac,
         ),
     );
 
@@ -130,13 +169,26 @@ export function useHandMark(input: Ref<UseHandMarkInput>): HandMarkCore {
     );
 
     const boilArmed = ref(false);
-    // Lazy boil: the frame count gates to 1 until armed, so even though the
-    // singleton RAF auto-subscribes on mount, an un-boiling mark stays on frame 0
-    // (zero visible work) until `animation` arms it (SPEC §8 lazy-boil).
-    const boil = useLineBoil(
-        () => (boils.value && boilArmed.value ? input.value.boilFrames : 1),
-        () => Math.max(16, 1000 / input.value.boilFps),
-    );
+    // NO BOIL FOR NON-BOIL MARKS (E4's second arm, the structural defense): the
+    // `useLineBoil` composable is CONSTRUCTED only when the resolved animation
+    // actually boils. A `draw-on`/`none`/static mark never instantiates it at all —
+    // so it never holds a scheduler subscriber, never runs a `watchEffect`, costs
+    // zero. (Composes with the pencil-boil §1 frameCount<=1 guard: defense at both
+    // grains.) `animation` is fixed at construction; the prop-flip watch in the SFC
+    // is a reset of draw/boil STATE, not a medium swap, so reading it once is sound.
+    const canBoil =
+        input.value.animation === "boil" ||
+        input.value.animation === "draw-then-boil";
+    const boil: BoilClock = canBoil
+        ? // Lazy boil: the frame count gates to 1 until ARMED (draw-then-boil holds
+          // the draw first), so the scheduler subscribes only once the mark genuinely
+          // cycles frames — the pencil-boil guard does the rest. (cast: pencil-boil's
+          // nested `@vue` `Ref` symbol differs from ours; the surface is identical.)
+          (useLineBoil(
+              () => (boils.value && boilArmed.value ? input.value.boilFrames : 1),
+              () => Math.max(16, 1000 / input.value.boilFps),
+          ) as unknown as BoilClock)
+        : NOOP_BOIL;
 
     const pathD = computed(() => {
         if (input.value.path) return input.value.path;

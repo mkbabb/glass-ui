@@ -141,6 +141,46 @@
     100% { background-position: -200% 0; }
 }
 
+/* ── Gold ONE-SHOT round-trip: the pressed seal (E7c — the to-AND-fro) ──────────
+ *
+ * A seal is PRESSED, catches the light ONCE, and RECEDES — a full ease-IN-AND-OUT
+ * envelope, not a fire-and-yank. The defect this replaces: `.text-gilt` used the
+ * infinite `gold-shimmer-slide` (`1 forwards`), which HELD its gilt terminal frame
+ * forever, and the consumer ripped the class off on a `setTimeout` — but the gold
+ * gradient lives in `background-image`, which no transition covers, so it SNAPPED
+ * off in one frame.
+ *
+ * This keyframe owns the WHOLE envelope and RESOLVES TO THE RESTING INK — there is
+ * nothing left to yank when it ends:
+ *   - `-webkit-text-fill-color` (and `color`) ride from the figure's OWN ink
+ *     (`currentColor` — the consumer's data-pole green/red) → `transparent` (the
+ *     gilt gradient shows through `background-clip:text`) → back to `currentColor`.
+ *     So the gilt FADES UP and FADES DOWN; at 0% and 100% the figure paints its own
+ *     ink and the gradient is occluded — the resting state, by construction.
+ *   - `background-position` slides the gradient across through the same window.
+ * No `forwards` is needed (the final keyframe IS rest), so on completion the class
+ * may simply stop mattering — the snap is structurally impossible. */
+@keyframes gold-shimmer-pulse {
+    0% {
+        background-position: 150% 0;
+        color: currentColor;
+        -webkit-text-fill-color: currentColor;
+    }
+    25% {
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+    75% {
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+    100% {
+        background-position: -150% 0;
+        color: currentColor;
+        -webkit-text-fill-color: currentColor;
+    }
+}
+
 /* ── Crayon-wipe: the scroll-scrubbed draw-on (D6.c M1) ──────────────────────
  *
  * The bidirectional, scroll-scrubbed DRAW-ON of a hand-mark (the crayon/pen

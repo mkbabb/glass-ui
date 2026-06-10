@@ -12,7 +12,11 @@
 // (#22); useGlobalDark gains a one-shot initialValue seed (#21). Both home here
 // beside installDarkModeSync (the dark-mode-sync family).
 export { useGlobalDark } from "./useGlobalDark";
-export type { UseGlobalDarkOptions } from "./useGlobalDark";
+export type {
+    UseGlobalDarkOptions,
+    UseGlobalDarkReturn,
+    DarkFlipSettledCallback,
+} from "./useGlobalDark";
 export { installDarkModeSync } from "./installDarkModeSync";
 export { darkModeSyncScript, DARK_MODE_STORAGE_KEY } from "./darkModeSyncScript";
 export type { DarkModeSyncScriptOptions } from "./darkModeSyncScript";

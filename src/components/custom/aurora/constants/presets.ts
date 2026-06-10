@@ -1,14 +1,19 @@
 /**
  * Aurora v4.1 — library config shape.
  *
- * Authored presets (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto,
+ * Authored THEMED presets (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto,
  * Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean)
  * live in the consumer — see demo/stories/aurora/presets.ts.
  *
- * Per memory rule "Presets in consumers": named themed presets belong in
- * each consumer project, not in the library. The library exports only the
- * shape + a minimum-viable DEFAULT_AURORA_CONFIG for the component's own
- * type-check ergonomics.
+ * Per memory rule "Presets in consumers": named THEMED presets belong in each
+ * consumer project, not in the library. The library exports only the shape, a
+ * minimum-viable DEFAULT_AURORA_CONFIG, and — the one deliberate exception
+ * (E22 / d-paper-aurora M4) — the `PAPER_WASH_GROUND` CALIBRATION partial: a
+ * recessive-ground crayon TUNING (not a themed palette) whose deft tooth dials
+ * are LIBRARY CANON so a data-ground aurora reads as paper-on-tooth without each
+ * consumer dial-tuning the same recessive calibration by hand (the
+ * `proof:aurora-paper-ground` gate locks it). It carries NO palette/nuclei — the
+ * consumer spreads it over its own pole-derived pigment (page-glow IS data-glow).
  */
 
 // ── Types ───────────────────────────────────────────────────────────────
@@ -165,7 +170,15 @@ export interface AuroraConfig {
     granulation: number; // 0..1
     impasto: number; // 0..1 (scales internal amp)
     brokenColor: number; // 0..1
-    canvasGrain: number; // 0..0.1
+    /**
+     * The medium's own paper-tooth multiplier (`uCanvasGrain` — `mediums.glsl.ts`
+     * `result *= 1 + tooth*toothAmp*uCanvasGrain`). The themed mediums ride the
+     * sub-0.1 band; the RECESSIVE-ground `crayon` preset (PAPER_WASH_GROUND) rides
+     * a higher tooth multiplier (~0.5) so the dry tooth is FELT at the clamped
+     * ground ceiling where a hue-tint dies — texture is cheap to the eye, flat hue
+     * is expensive (the d-paper-aurora load-bearing physics).
+     */
+    canvasGrain: number; // themed: 0..0.1; recessive ground: up to ~0.5
     /**
      * AW.W4.2 — the impasto relight direction (the movable directional source the
      * accumulated paint-height field catches). Optional; omitted = upper-left
@@ -281,3 +294,58 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     paperGrain: 0.008,
     alpha: 1.0,
 };
+
+// ── The recessive paper-ground CALIBRATION (E22 / d-paper-aurora M4) ─────────
+
+/**
+ * `PAPER_WASH_GROUND` — the library-canon recessive-ground crayon calibration.
+ *
+ * The deft tooth dials the paper-aurora hybrid needs, pinned ONCE at the library
+ * level so a data-ground aurora reads as pigment-on-paper-tooth — NOT a dead hue
+ * tint, NOT a screen-like gradient — without each consumer hand-tuning the same
+ * recessive calibration (the root-repo law: the calibration lives in the library;
+ * the consumer never dial-tunes it). It is a PARTIAL: it carries NO palette /
+ * nuclei / motion — the consumer SPREADS it over its own pole-derived pigment so
+ * the page-glow stays the data-glow (the keystone the smooth-medium swap preserves
+ * verbatim; only the DEPOSITION changes from a gradient to a dry-tooth multiply).
+ *
+ * The pinned dials (the named stopping rules, d-paper-aurora M1):
+ *   - `medium: "crayon"`        — the DRY tooth-multiply (a TEXTURE, not strokes;
+ *                                 admissible behind data where the four
+ *                                 stroke-deposition mediums are forbidden).
+ *   - `granulation: 0.30`       — pigment settles in the paper tooth (felt-at-rest).
+ *   - `canvasGrain: 0.5`        — the medium's tooth multiplier, lifted so the dry
+ *                                 tooth survives the clamped ground ceiling.
+ *   - `strokeAmount: 0.35`      — the crayon PRESSURE (how hard the tooth bites);
+ *                                 LOW (recessive — the tooth is felt, never a slab).
+ *   - `strokeAnisotropy: 0.5`   — moderate directional squash; never high enough to
+ *                                 read as STROKES (crumb-texture, not brushwork).
+ * Plus the recessive guards: `saturation < 1` (the ground spends NO chroma budget —
+ * the pops live in the icons), no impasto/sheen (`impasto: 0`, single layer), and a
+ * felt `paperGrain` floor.
+ *
+ * Spread it: `const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }` — the
+ * calibration wins the deposition dials, the consumer keeps the pigment + nuclei.
+ */
+export const PAPER_WASH_GROUND = {
+    medium: "crayon",
+    // The structure-tensor edge-tangent deposition (crayon forces tensor in the
+    // bridge anyway); named so the recessive flow is explicit, not lucky.
+    strokeOrient: "tensor",
+    // The deft tooth dials — the named stopping rules (d-paper-aurora M1).
+    granulation: 0.3,
+    canvasGrain: 0.5,
+    strokeAmount: 0.35,
+    strokeAnisotropy: 0.5,
+    // Recessive guards: single dry layer, NO impasto / sheen / broken-color flecks
+    // loud enough to name. The tooth is paper, never a picture.
+    strokeLayers: 1,
+    impasto: 0,
+    brokenColor: 0,
+    wetEdge: 0,
+    // The ground spends NO chroma budget — pull saturation BELOW unity so the
+    // pigment is a whisper of the data hue on tooth, not a colored field.
+    saturation: 0.92,
+    // A felt paper-tooth floor that co-tunes with the page's bare-paper grain.
+    paperGrain: 0.008,
+} as const satisfies Partial<AuroraConfig>;

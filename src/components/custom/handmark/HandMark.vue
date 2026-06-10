@@ -51,7 +51,15 @@ const props = withDefaults(defineProps<HandMarkProps>(), {
 // Per-instance namespaced filter id — the WatercolorDot idiom, sanitised for url(#…).
 const uid = `hm-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 
-const input = computed(() => normalizeProps(props, uid));
+// ── the MEASURED text baseline (the E1 underline anchor; SPEC §6.2) ───────────
+// The text-mode underline anchors to the slotted word's REAL baseline, not a
+// constant 80% of the line-box (which strikethroughs tight-leading display type).
+// `baselineFrac` is the alphabetic baseline as a fraction of the `.hm` box height,
+// measured once after layout + `document.fonts.ready`, and re-measured on resize.
+// `null` until measured (the pre-measure / jsdom / SSR frame falls back in geometry).
+const baselineFrac = ref<number | null>(null);
+
+const input = computed(() => normalizeProps(props, uid, baselineFrac.value));
 const core = useHandMark(input);
 
 const { brush, fragment, grained, drawKind, draws, boils, boil, boilArmed } = core;
@@ -97,9 +105,67 @@ function onDrawEnd(): void {
 
 defineExpose({ play });
 
+// ── baseline measurement (the E1 underline anchor; SPEC §6.2) ─────────────────
+// Text mode only (the underline/strikethrough): positioned (`box`) marks carry
+// their own datum geometry. We range the slotted text (the non-svg children) to
+// find the alphabetic baseline ≈ the glyph BOTTOM, and express it as a fraction of
+// the `.hm` box so it survives the viewBox x-stretch (width-invariant by construction).
+const measured = computed(
+    () => props.box == null && (props.shape === "underline" || props.shape === "strikethrough"),
+);
+
+/** The slotted text's bottom (alphabetic baseline proxy), in client px, or null. */
+function textRangeRect(el: HTMLElement): DOMRect | null {
+    if (typeof document === "undefined" || typeof Range === "undefined") return null;
+    const range = document.createRange();
+    let added = false;
+    for (const node of Array.from(el.childNodes)) {
+        // skip the overlay <svg> (and any element that is not the slotted word)
+        if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === "svg") {
+            continue;
+        }
+        range.selectNode(node);
+        added = true;
+    }
+    if (!added) return null;
+    const r = range.getBoundingClientRect();
+    range.detach?.();
+    return r.height > 0 ? r : null;
+}
+
+function measure(): void {
+    if (!measured.value) return;
+    const el = root.value;
+    if (!el) return;
+    const tr = textRangeRect(el);
+    if (!tr) return;
+    const host = el.getBoundingClientRect();
+    if (host.height <= 0) return;
+    // the glyph bottom as a fraction of the `.hm` box (the measured baseline).
+    const frac = (tr.bottom - host.top) / host.height;
+    // clamp to the box so a degenerate measure never throws the line off-canvas.
+    baselineFrac.value = Math.min(1, Math.max(0, frac));
+}
+
+let ro: ResizeObserver | null = null;
+
+function startMeasuring(): void {
+    if (!measured.value || !root.value) return;
+    measure();
+    // re-measure after the font swap (the alphabetic baseline shifts with the face).
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+        void document.fonts.ready.then(() => measure());
+    }
+    if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(() => measure());
+        ro.observe(root.value);
+    }
+}
+
 let io: IntersectionObserver | null = null;
 
 onMounted(() => {
+    startMeasuring(); // measure the baseline before/independent of the draw clock
     if (props.animation === "boil") armBoil(); // pure boil: no draw gate
     if (props.appear === "mount") play();
     else if (props.appear === "visible" && typeof IntersectionObserver !== "undefined") {
@@ -121,6 +187,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     io?.disconnect();
+    ro?.disconnect();
     boil.stop();
 });
 
@@ -197,8 +264,11 @@ function pathStyle(blend: BlendMode): CSSProperties {
 }
 .hm__svg {
     position: absolute;
-    left: -6%;
-    width: 112%;
+    /* The word-hugging underline overshoots ~2% each side — a hand mark hugs the
+       word, it does not bleed 6% into the neighbour (the E1 collision root). The
+       box-mode circle/box/bracket keep their wider hand character below. */
+    left: -2%;
+    width: 104%;
     top: 0;
     height: 100%;
     overflow: visible; /* round caps + wobble overshoot spill past the box */

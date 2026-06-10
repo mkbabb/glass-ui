@@ -90,6 +90,33 @@ describe("D6.a HandMark — the medium renders", () => {
         expect(w.find("span.hm").attributes("data-shape")).toBe("circle");
         w.unmount();
     });
+
+    it("RING brush ring is ASPECT-STABLE: thin weight + non-scaling-stroke (E7a)", () => {
+        // the positioned circle in the toned `ring` brush: a single thin pass whose
+        // rendered stroke band is INVARIANT to the figure's aspect ratio — the
+        // `preserveAspectRatio="none"` stretch scales the PATH, never the stroke
+        // band, because the SFC stamps `vector-effect="non-scaling-stroke"`.
+        const w = mount(HandMark, {
+            props: {
+                brush: "ring",
+                shape: "circle",
+                color: "#cc0000",
+                box: { x: 20, y: 8, w: 60, h: 24 },
+                seed: 11,
+            },
+        });
+        const paths = w.findAll("path.hm__path");
+        // single pass (the whisper), not the crayon's 2-pass slab.
+        expect(paths).toHaveLength(1);
+        const path = paths[0];
+        // the rendered stroke band is the thin ring weight (5), aspect-stable …
+        expect(path.attributes("stroke-width")).toBe("5");
+        // … because the stroke is non-scaling (immune to the non-uniform x-stretch).
+        expect(path.attributes("vector-effect")).toBe("non-scaling-stroke");
+        // the hand-circle overshoot character is KEPT (the closed ellipsePoints ring).
+        expect(path.attributes("d")?.length ?? 0).toBeGreaterThan(10);
+        w.unmount();
+    });
 });
 
 describe("D6.a HandMark — the draw-on mechanism per medium (the Δ4 gate)", () => {

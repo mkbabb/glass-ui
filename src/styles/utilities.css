@@ -9,6 +9,27 @@
     @apply data-[state=open]:animate-in data-[state=closed]:animate-out
            data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
            data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+
+    /* ── 3.11 §2i-bis — the popover rides the SPRING grammar, not the generic
+       tw-animate tween. Per the tokens.css EASING DOCTRINE: enter = spring
+       (`--spring-snappy`, the crisp floating-surface entry), exit = bezier
+       (`--ease-out`, an exit must never overshoot past gone). The four custom
+       properties are the consumer seam — override per host, never fork the
+       utility. PRM snaps both directions to a single frame. */
+    &[data-state="open"] {
+        animation-duration: var(--popover-enter-duration, 200ms);
+        animation-timing-function: var(--popover-enter-ease, var(--spring-snappy));
+    }
+    &[data-state="closed"] {
+        animation-duration: var(--popover-exit-duration, 100ms);
+        animation-timing-function: var(--popover-exit-ease, var(--ease-out));
+    }
+    @media (prefers-reduced-motion: reduce) {
+        &[data-state="open"],
+        &[data-state="closed"] {
+            animation-duration: 1ms;
+        }
+    }
 }
 
 /* ── Slide-in entry by side data-attr ──
@@ -380,27 +401,37 @@
         }
     }
 
-    /* D6.b — `.text-gilt`: the brand-polish ONE-SHOT shimmer. Same gold-clip
-       gradient pass as `.gold-shimmer`, but the gold passes ONCE then SETS — a
-       seal being pressed, not a marquee looping forever. This is the lawful home
-       for the chassis "Complete!" celebration the disco-star used to carry: the
-       gold sweeps once over the completion label on resolve, then holds the
-       static gold gradient.
+    /* E7c — `.text-gilt`: the brand-polish ONE-SHOT seal, a FULL to-AND-fro round
+       trip. The gold gradient sweeps across ONCE (the press), catches the light,
+       and RECEDES to the figure's own resting ink — a pressed seal, not a marquee.
 
-       `animation-iteration-count: 1` + `animation-fill-mode: forwards` so the
-       slide runs exactly one pass and the final keyframe (background-position
-       -200%) sticks — no per-frame repaint after settle. PRM users get the
-       static gradient, no pass (the gold is still present, just unanimated). */
+       The defect this corrects: `.text-gilt` formerly set `color: transparent`
+       PERMANENTLY and ran the infinite `gold-shimmer-slide` `1 forwards`, so it
+       held its gilt terminal frame forever; the consumer then RIPPED the class off
+       on a `setTimeout`. But the gold gradient lives in `background-image`, which no
+       transition covers — so the gilt SNAPPED off in one frame (the broken to-and-fro
+       the user named). The recede was never authored at the library; it lived as a
+       JS class-yank in the consumer.
+
+       The fix is library-rooted: the RESTING state is the figure's OWN ink — `.text-gilt`
+       does NOT permanently null the color; only the `gold-shimmer-pulse` animation
+       drives `color`/`-webkit-text-fill-color` transparent (revealing the gradient
+       through `background-clip:text`) and BACK, over its own `--duration-seal`
+       (≈1.5s, NOT the 5s loop token), `ease-in-out`. The final keyframe IS rest, so
+       NO `forwards` and NO class-yank: the animation owns the whole envelope and the
+       gradient never snaps in a single frame. PRM users see no pass — the figure
+       just keeps its resting ink (no gilt sweep). */
     .text-gilt {
         background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
         background-size: 250% 100%;
         background-clip: text;
         -webkit-background-clip: text;
-        color: transparent;
+        /* resting = the figure's own ink (currentColor); the animation, not this
+           rule, nulls it to reveal the gradient — so there is nothing to yank. */
     }
     @media (prefers-reduced-motion: no-preference) {
         .text-gilt {
-            animation: gold-shimmer-slide var(--duration-shimmer) var(--ease-out-expo) 1 forwards;
+            animation: gold-shimmer-pulse var(--duration-seal) var(--ease-standard) 1;
         }
     }
 

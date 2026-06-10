@@ -29,23 +29,50 @@ import type { HandShape, MarkBox } from "./types";
 export const VB_W = 100;
 export const VB_H = 40;
 
+/**
+ * The hairline gap, as a fraction of the `.hm` box, between the MEASURED text
+ * baseline and the underline centerline. The underline rides just under the real
+ * glyph bottoms — a hand mark sits a few % of cap-height below the baseline, never
+ * through it (the E1 occlusion root: a constant `y=32` strikethroughs tight-leading
+ * display type because 80% of a `line-height:1.02` box IS the baseline).
+ */
+export const UNDERLINE_GAP = 0.06;
+
 /** A shape maps to one or more centerlines (open polylines) or one closed ring. */
 export interface ShapeGeom {
     lines: [number, number][][];
     closed: boolean;
 }
 
-/** Semantic shape → { lines, closed } in the marking space (or a positioned box). */
+/**
+ * Semantic shape → { lines, closed } in the marking space (or a positioned box).
+ *
+ * The text-mode underline anchors to a MEASURED baseline: `baselineFrac` is the
+ * slotted word's alphabetic baseline as a fraction of the `.hm` box height (the SFC
+ * measures it via ResizeObserver + `document.fonts.ready`). The underline y is then
+ * `VB_H × (baselineFrac + UNDERLINE_GAP)` — never the old hardcoded `32` (80% of the
+ * box), which struck through tight-leading headings. `null` ⇒ not yet measured: fall
+ * back to the legacy `VB_H − 8` constant so first paint (and jsdom/SSR) still renders
+ * a line, replaced the instant the measure lands.
+ */
 export function shapeGeom(
     shape: HandShape,
     opts: WobbleOptions,
     box: MarkBox | null = null,
+    baselineFrac: number | null = null,
 ): ShapeGeom {
     const pad = 4;
     const x1 = box ? box.x : pad;
     const x2 = box ? box.x + box.w : VB_W - pad;
     const cy = box ? box.y + box.h / 2 : VB_H / 2;
-    const yBase = box ? box.y + box.h * 0.92 : VB_H - 8;
+    // text-mode underline y: the MEASURED baseline + a hairline gap (the E1 root fix).
+    // box-mode keeps its hand character (0.92 of the datum box). The legacy `VB_H − 8`
+    // constant is the pre-measure fallback ONLY (null baselineFrac).
+    const yBase = box
+        ? box.y + box.h * 0.92
+        : baselineFrac != null
+          ? VB_H * (baselineFrac + UNDERLINE_GAP)
+          : VB_H - 8;
     const seed = opts.seed ?? 1;
 
     const L = (a: number, b: number, c: number, d: number, ds = 0): [number, number][] =>

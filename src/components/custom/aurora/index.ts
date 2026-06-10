@@ -10,6 +10,10 @@ export { createAurora } from "./composables/runtime";
 export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runtime";
 export {
     DEFAULT_AURORA_CONFIG,
+    // E22 / d-paper-aurora M4 — the library-canon recessive paper-ground crayon
+    // calibration (the deft tooth dials pinned ONCE; consumers spread it over
+    // their own pole-derived pigment). Locked by `proof:aurora-paper-ground`.
+    PAPER_WASH_GROUND,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
