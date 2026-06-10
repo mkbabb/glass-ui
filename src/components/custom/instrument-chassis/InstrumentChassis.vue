@@ -41,8 +41,8 @@ export type InstrumentChassisVariant = "glass" | "spine";
  * the `<ChassisDivider>` adjacent to each — emit markup only when bound.
  * I gate `<header>`, `<footer>`, and the two dividers on `$slots.strip` /
  * `$slots.control` presence, so empty-slot consumers don't have to suppress
- * the markup with `display: none` overrides. Mirrors the `v-if="$slots.status"`
- * idiom InstrumentRail established.
+ * the markup with `display: none` overrides — the `v-if="$slots.status"`
+ * slot-gating idiom.
  *
  * The chassis owns the `--phase-color` cascade via `data-phase`; phase label,
  * hero number, and phase progress fill all read it through one CSS custom

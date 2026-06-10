@@ -1,27 +1,27 @@
 #!/usr/bin/env node
 // AX.W38 (Arm 2) — proof:aurora-chrome-idiomatic.
+// Re-pointed at AY.W-AUR-CONFIG-REBUILD (B21): the studio controls column was
+// rebuilt as ONE progressive-disclosure stack of grouped sections (Color /
+// Composition / Motion / Warp&noise / Flow / Texture / Nuclei), retiring the
+// prior "Atoms ↔ Advanced" pill split (the janky-two-face surface the user
+// named). The dead-select/native-control idiom checks still bind — they now
+// read the NEW section SFCs.
 //
-// The aurora studio's INNER controls (the DEFAULT-visible AuroraAtomsPanel.vue + the
-// config/*Layer.vue enum pickers + the AuroraConfigDock Advanced disclosure) must read
-// as the SAME idiomatic glass-ui the chrome is around — dogfooding the library's own
-// LabeledSelect / LabeledSlider / ConfiguratorLayer family, not raw UA-styled native
-// controls or a mis-hosted DockLayerGroup.
+// The aurora studio's INNER controls must read as the SAME idiomatic glass-ui
+// the chrome is around — dogfooding the library's own LabeledSelect /
+// LabeledSlider / ConfiguratorLayer family, not raw UA-styled native controls
+// or a mis-hosted DockLayerGroup. The 7-way medium enum renders ONE way (a
+// single LabeledSelect in the Composition section — the prior dual native-
+// <select>/SegmentedTabs-pill double-rendering is structurally gone with the
+// retired faces).
 //
-// Re-grounded to the post-W53 reality (the Hardening amendment): BouncyTabs is GONE
-// (W53 unified it into SegmentedTabs, which resolves role=group + aria-pressed — the
-// correct ToggleGroup-shaped surface, so the a11y "category error" is already closed).
-// The live defect is VISUAL/cross-surface: the 7-way medium enum rendered as a cramped
-// 7-segment pill in Advanced AND a native <select> in Atoms (two renderings of one
-// enum). Both surfaces now render `medium` via LabeledSelect (ONE rendering); the short
-// stroke/noise/flow/warp enums stay segmented (the correct short-toggle idiom).
+// A source-structure parse (the SFC structure IS the artefact); the binding
+// π-lane computed-style + live-interaction read is captured in
+// docs/tranches/AY/audit/visual/W-AUR-CONFIG-DELTA.md.
 //
-// A source-structure parse (the SFC structure IS the artefact); the binding π-lane
-// computed-style + live-interaction read is captured in
-// docs/tranches/AX/audit/W38-aurora-chrome-idiomatic.json.
-//
-// bite-check: re-add a native <select>/<input type=range> to the atoms panel → RED;
-// render medium as SegmentedTabs in MediumLayer → RED; re-host the Advanced disclosure
-// in a DockLayerGroup → RED.
+// bite-check: re-add a native <select>/<input type=range> to a section panel →
+// RED; render medium as SegmentedTabs → RED; host the section stack in a
+// DockLayerGroup → RED; mint a ColorSwatch library primitive → RED.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -30,11 +30,13 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const AURORA = resolve(ROOT, "demo/stories/aurora");
-const ATOMS = resolve(AURORA, "AuroraAtomsPanel.vue");
 const DOCK = resolve(AURORA, "AuroraConfigDock.vue");
-const MEDIUM = resolve(AURORA, "config/MediumLayer.vue");
+const SECTIONS = resolve(AURORA, "sections");
+const COLOR = resolve(SECTIONS, "AuroraColorSection.vue");
+const COMPOSITION_SECTION = resolve(SECTIONS, "AuroraCompositionSection.vue");
+const MOTION_SECTION = resolve(SECTIONS, "AuroraMotionSection.vue");
 const FLOW = resolve(AURORA, "config/FlowLayer.vue");
-const COMPOSITION = resolve(AURORA, "config/CompositionLayer.vue");
+const WARP = resolve(AURORA, "config/CompositionLayer.vue");
 const ARTIFACT = gateArtifactPath(
     "GLASS_UI_AURORA_CHROME_IDIOMATIC_ARTIFACT",
     "AX-W38-aurora-chrome-idiomatic",
@@ -68,12 +70,13 @@ function main() {
     const violations = [];
     const facts = {};
 
-    const atoms = read(ATOMS);
     const dock = read(DOCK);
-    const medium = read(MEDIUM);
+    const color = read(COLOR);
+    const compositionSection = read(COMPOSITION_SECTION);
+    const motionSection = read(MOTION_SECTION);
     const flow = read(FLOW);
-    const composition = read(COMPOSITION);
-    if (!atoms || !dock || !medium || !flow || !composition) {
+    const warp = read(WARP);
+    if (!dock || !color || !compositionSection || !motionSection || !flow || !warp) {
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "fail",
@@ -85,57 +88,70 @@ function main() {
         process.exit(1);
     }
 
-    // (1) No native <select> / <input type="range"> in the DEFAULT atoms panel.
-    const nativeSelects = countMatches(atoms, /<select[\s>]/g);
-    const nativeRanges = countMatches(atoms, /type="range"/g);
+    // The atom controls span the Color + Composition + Motion section SFCs —
+    // the studio's default-visible knobs. Concatenate for the native-control +
+    // primitive-composition checks.
+    const atomSurface = [color, compositionSection, motionSection].join("\n");
+
+    // (1) No native <select> / <input type="range"> in any atom-section panel.
+    const nativeSelects = countMatches(atomSurface, /<select[\s>]/g);
+    const nativeRanges = countMatches(atomSurface, /type="range"/g);
     facts.atomsNativeSelects = nativeSelects;
     facts.atomsNativeRanges = nativeRanges;
     if (nativeSelects > 0)
-        violations.push(`(1) AuroraAtomsPanel.vue carries ${nativeSelects} native <select> — reauthor onto LabeledSelect`);
+        violations.push(`(1) an aurora atom section carries ${nativeSelects} native <select> — reauthor onto LabeledSelect`);
     if (nativeRanges > 0)
-        violations.push(`(1) AuroraAtomsPanel.vue carries ${nativeRanges} native <input type="range"> — reauthor onto LabeledSlider`);
+        violations.push(`(1) an aurora atom section carries ${nativeRanges} native <input type="range"> — reauthor onto LabeledSlider`);
 
-    // The atoms panel composes the library form primitives.
-    facts.atomsUsesLabeledSelect = /LabeledSelect/.test(atoms);
-    facts.atomsUsesLabeledSlider = /LabeledSlider/.test(atoms);
+    // The atom sections compose the library form primitives.
+    facts.atomsUsesLabeledSelect = /LabeledSelect/.test(atomSurface);
+    facts.atomsUsesLabeledSlider = /LabeledSlider/.test(atomSurface);
     if (!facts.atomsUsesLabeledSelect)
-        violations.push("(1) AuroraAtomsPanel.vue does not compose LabeledSelect");
+        violations.push("(1) the aurora atom sections do not compose LabeledSelect");
     if (!facts.atomsUsesLabeledSlider)
-        violations.push("(1) AuroraAtomsPanel.vue does not compose LabeledSlider");
+        violations.push("(1) the aurora atom sections do not compose LabeledSlider");
 
-    // (2) The 7-way medium enum renders via LabeledSelect (NOT a cramped SegmentedTabs
-    //     pill) in MediumLayer — matching the atoms panel (one enum, one rendering).
-    facts.mediumLayerUsesLabeledSelect =
-        /LabeledSelect/.test(medium) && /:items="mediumLabels"/.test(medium) && /@update:model-value="setMedium"/.test(medium);
-    if (!facts.mediumLayerUsesLabeledSelect)
-        violations.push("(2) MediumLayer.vue does not render the medium enum via LabeledSelect (the cramped 7-segment pill defect)");
-    // medium must NOT be bound to a SegmentedTabs in MediumLayer (the setMedium handler
-    // must route through a LabeledSelect, never @update:model-value on a SegmentedTabs).
+    // (2) The 7-way medium enum renders via LabeledSelect (NOT a cramped
+    //     SegmentedTabs pill) in the Composition section.
+    facts.mediumUsesLabeledSelect =
+        /LabeledSelect/.test(compositionSection) &&
+        /:items="mediaItems"/.test(compositionSection) &&
+        /@update:model-value="setMedium"/.test(compositionSection);
+    if (!facts.mediumUsesLabeledSelect)
+        violations.push("(2) AuroraCompositionSection.vue does not render the medium enum via LabeledSelect (the cramped 7-segment pill defect)");
+    // medium must NOT be bound to a SegmentedTabs (a setMedium handler routing
+    // through a SegmentedTabs would be the dual-rendering regression).
     facts.mediumNotSegmented = !/<SegmentedTabs[\s\S]{0,200}@update:model-value="setMedium"/.test(
-        medium,
+        compositionSection,
     );
     if (!facts.mediumNotSegmented)
-        violations.push("(2) MediumLayer.vue still binds `medium` to a SegmentedTabs pill");
+        violations.push("(2) AuroraCompositionSection.vue binds `medium` to a SegmentedTabs pill");
 
-    // (3) The Advanced disclosure composes ConfiguratorLayer, NOT DockLayerGroup.
+    // (3) The section stack composes ConfiguratorLayer, NOT a DockLayerGroup.
     facts.dockUsesConfiguratorLayer = /ConfiguratorLayer/.test(dock);
     facts.dockNoDockLayerGroup = !/DockLayerGroup/.test(dock) && !/<DockLayer\b/.test(dock);
     if (!facts.dockUsesConfiguratorLayer)
-        violations.push("(3) AuroraConfigDock.vue does not compose ConfiguratorLayer for the Advanced disclosure");
+        violations.push("(3) AuroraConfigDock.vue does not compose ConfiguratorLayer for the section stack");
     if (!facts.dockNoDockLayerGroup)
-        violations.push("(3) AuroraConfigDock.vue still mis-hosts the Advanced disclosure in a DockLayerGroup/DockLayer");
+        violations.push("(3) AuroraConfigDock.vue mis-hosts the section stack in a DockLayerGroup/DockLayer");
 
-    // (4) `medium` renders ONE way across both surfaces — LabeledSelect in Atoms AND
-    //     Advanced (cross-surface consistency).
-    facts.mediumOneWay = facts.atomsUsesLabeledSelect && facts.mediumLayerUsesLabeledSelect;
+    // (4) `medium` renders ONE way — the rebuild has a SINGLE medium LabeledSelect
+    //     (the Composition section); the prior second rendering (the retired
+    //     MediumLayer pill) is structurally gone. Assert exactly one medium
+    //     LabeledSelect across the studio SFCs.
+    const mediumSelectSites = [dock, color, compositionSection, motionSection, flow, warp]
+        .map((s) => countMatches(s, /data-atom="medium"/g))
+        .reduce((a, b) => a + b, 0);
+    facts.mediumSelectSites = mediumSelectSites;
+    facts.mediumOneWay = mediumSelectSites === 1;
     if (!facts.mediumOneWay)
-        violations.push("(4) the `medium` enum does not render the SAME way (LabeledSelect) in Atoms + Advanced");
+        violations.push(`(4) the \`medium\` enum renders ${mediumSelectSites} times (expected exactly 1 — one rendering, one place)`);
 
     // (5) Color-swatch RATIFY = Option B (keep native + LabeledField wrap) — NO new
     //     src/components/ color primitive minted; the seed swatch stays a native
     //     <input type=color> wrapped in LabeledField.
     facts.seedIsNativeColorInLabeledField = /LabeledField[\s\S]{0,400}type="color"|type="color"[\s\S]{0,400}LabeledField/.test(
-        atoms,
+        color,
     );
     facts.noColorSwatchPrimitive = !existsSync(
         resolve(ROOT, "src/components/custom/color-swatch"),
@@ -143,22 +159,25 @@ function main() {
     if (!facts.seedIsNativeColorInLabeledField)
         violations.push("(5) the seed swatch is not a native <input type=color> wrapped in LabeledField (the Option-B ratify)");
     if (!facts.noColorSwatchPrimitive)
-        violations.push("(5) a ColorSwatch library primitive was minted — Option A is a dedicated sub-wave, NOT W38 (compose-only)");
+        violations.push("(5) a ColorSwatch library primitive was minted — Option A is a dedicated sub-wave (compose-only)");
 
-    // (6) The 2 LEGITIMATE panel-nav SegmentedTabs in AuroraConfigDock (Atoms↔Advanced +
-    //     — the advanced layer-switch was RETIRED with the DockLayerGroup, so only the
-    //     top-level Atoms↔Advanced tab remains) are preserved.
-    facts.topLevelTabsPreserved = /SegmentedTabs/.test(dock) && /TOP_TABS/.test(dock);
-    if (!facts.topLevelTabsPreserved)
-        violations.push("(6) the top-level Atoms↔Advanced panel-nav SegmentedTabs was mis-retired (it is a real tablist — preserve it)");
+    // (6) The studio is ONE progressive-disclosure column — the prior top-level
+    //     "Atoms ↔ Advanced" SegmentedTabs split was DELIBERATELY retired (B21:
+    //     the janky-two-face surface the user named). Assert the dock carries NO
+    //     SegmentedTabs face-toggle (the section stack IS the navigation). The
+    //     short oil/noise enum SegmentedTabs live INSIDE the Texture section, not
+    //     in the dock root.
+    facts.dockNoFaceToggle = !/SegmentedTabs/.test(dock);
+    if (!facts.dockNoFaceToggle)
+        violations.push("(6) AuroraConfigDock.vue still carries a SegmentedTabs face-toggle — the rebuild is one progressive-disclosure column, not an Atoms↔Advanced split");
 
-    // (7) No new token / variant / primitive in the atoms panel — composes-only. The
-    //     panel imports ONLY from the library form-primitive family + aurora types.
+    // (7) Composes-only — the atom sections compose ONLY the library form-primitive
+    //     family + aurora types; no new variant/primitive crept in.
     facts.composesOnly =
-        /labeled-field/.test(atoms) &&
-        !/defineCustomElement|cva\(|class-variance-authority/.test(atoms);
+        /labeled-field/.test(atomSurface) &&
+        !/defineCustomElement|cva\(|class-variance-authority/.test(atomSurface);
     if (!facts.composesOnly)
-        violations.push("(7) AuroraAtomsPanel.vue is not composes-only (a new variant/primitive crept in)");
+        violations.push("(7) an aurora atom section is not composes-only (a new variant/primitive crept in)");
 
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
@@ -173,7 +192,7 @@ function main() {
         console.error("[proof:aurora-chrome-idiomatic] FAIL\n  - " + violations.join("\n  - "));
         process.exit(1);
     }
-    console.log("[proof:aurora-chrome-idiomatic] PASS — atoms panel + medium enum on the library form primitives, Advanced on ConfiguratorLayer, medium renders one way, Option-B native swatch, composes-only");
+    console.log("[proof:aurora-chrome-idiomatic] PASS — atom sections on the library form primitives, medium enum renders once via LabeledSelect, section stack on ConfiguratorLayer, Option-B native swatch, one progressive-disclosure column, composes-only");
 }
 
 main();

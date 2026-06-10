@@ -17,8 +17,6 @@ import { Card, type CardTier } from "../../src/components/ui/card";
 import { Aurora } from "../../src/components/custom/aurora";
 import { Constellation } from "../../src/components/custom/constellation";
 import { FourierField } from "../../src/components/custom/fourier-field";
-import { GooBlob } from "../../src/components/custom/goo-blob";
-import { BLOB_CONFIG_DEFAULTS } from "../../src/components/custom/goo-blob/types";
 import { defaultBlobColorResolver } from "../../src/composables/color";
 import { useTokenColor } from "../../src/composables/dom/useTokenColor";
 import { cn } from "../../src/utils/cn";
@@ -104,11 +102,15 @@ function drawFocal(
 
 const isHero = computed(() => props.variant === "hero");
 
+// A GooBlob is a CONTAINED creature (aspect-ratio:1), NOT a full-bleed page-field
+// like the aurora/constellation/fourier drift surfaces — so it is NOT a story
+// background kind (W-BLOB-REBUILD: the prior `blob` page-background was a category
+// error that blew the contained creature out to the full article width and buried
+// the page). The blob's home is its contained studio + the empty-states mascot.
 const liveBackdrop = computed(() =>
     kind.value === "aurora" ||
     kind.value === "constellation" ||
-    kind.value === "fourier" ||
-    kind.value === "blob",
+    kind.value === "fourier",
 );
 
 // ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
@@ -131,9 +133,6 @@ const cardTier = computed<CardTier>(() => {
     if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
     return isHero.value ? "floating" : "resting";
 });
-
-// The blob config the hero-backdrop GooBlob paints (the stock soft droplet).
-const blobConfig = BLOB_CONFIG_DEFAULTS;
 </script>
 
 <template>
@@ -167,14 +166,6 @@ const blobConfig = BLOB_CONFIG_DEFAULTS;
             color="var(--viz-fourier, hsl(358 72% 52%))"
             :color-resolver="defaultBlobColorResolver"
             :intensity="opacityCeiling"
-            seed="glass-ui-hero"
-            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
-            aria-hidden="true"
-        />
-        <GooBlob
-            v-else-if="kind === 'blob'"
-            :config="blobConfig"
-            color="var(--primary, #1c1714)"
             seed="glass-ui-hero"
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"

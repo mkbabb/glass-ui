@@ -89,7 +89,14 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                 :key="key"
                 type="button"
                 :class="cn(
-                    'group relative flex-shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card text-left',
+                    // `flex flex-col` (NOT a bare block) so the thumbnail well is a
+                    // flex item flush to the card's top inner edge. A block-level card
+                    // gives its first child a ~5px line-box strut from the caption's
+                    // line-height — that strut painted a band of bg-card ABOVE the
+                    // image (a near-black bar in dark mode: the B19 defect). A flex
+                    // column has no baseline strut, so the image meets the rounded
+                    // crown with zero bg-card leak.
+                    'group relative flex flex-shrink-0 flex-col snap-start overflow-hidden rounded-card border border-border bg-card text-left',
                     'shadow-cartoon transition-[transform,box-shadow] duration-fast ease-out',
                     'hover:-translate-x-px hover:-translate-y-px hover:shadow-cartoon-hover',
                     'focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_var(--ring)]',

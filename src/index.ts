@@ -123,11 +123,6 @@ export * from "./components/custom/configurator";
 // Custom composites — overflow-marquee primitive
 export * from "./components/custom/scrolling-text";
 
-// Custom composites — deck-position rail (AW.W16; a one-prop :value styling
-// wrapper over the shipped <Progress>; ships on the root barrel, NOT a subpath —
-// the /deck name is reserved for the slides deck-engine lift).
-export * from "./components/custom/deck-progress";
-
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
 // from the root barrel — they are vueuse-bearing SCC-trap leaves.

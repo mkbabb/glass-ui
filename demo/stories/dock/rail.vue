@@ -185,11 +185,6 @@ const activeVertical = ref<string>("primitives");
                     (the inapplicable collapse surface is type-narrowed away — the honest rail contract).
                 </li>
                 <li>
-                    <strong>Instrument Rail</strong> — the
-                    <code class="rounded bg-muted px-1">&lt;InstrumentRail&gt;</code> cockpit-ratio chassis column
-                    (Compositions). Architecturally unrelated; shares only the noun.
-                </li>
-                <li>
                     <strong>Layer-switcher rail</strong> — the
                     <code class="rounded bg-muted px-1">.dock-layer-rail</code> inside a
                     <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> (Dock Layers). A tab strip,

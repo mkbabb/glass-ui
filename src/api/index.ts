@@ -163,9 +163,6 @@ export type {
 // enum above.
 export type { ToastType } from "../components/ui/toast";
 
-// AW.W16 — DeckProgress, the deck-position rail wrapper (root barrel, no subpath).
-export type { DeckProgressProps } from "../components/custom/deck-progress";
-
 // ── Clipboard ──────────────────────────────────────────────────────────────
 // `UseClipboardReturn` — canonical composable-return shape paralleling
 // `ConfiguratorState` / `SidebarState` / `FuzzySearchState`. Consumers

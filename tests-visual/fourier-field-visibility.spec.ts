@@ -28,8 +28,18 @@
 //   (1) NOT a corner stub — the painted bounding box spans ≥25% of width AND
 //       ≥25% of height. A trail-only curve that filled a corner failed this; the
 //       landed render traverses the frame. The direct D2 binding truth.
-//   (2) the trail body READS — the mean painted intensity over the canvas clears
-//       a perceptibility floor (the peak*trailFloor survival).
+//   (1b) [W-FF3] the comet is a SUBSTANTIAL ARC — the painted bbox DIAGONAL spans
+//       ≥0.6 (normalized). The W-FF2 RG2 named the 25%-span floor a weak proxy a
+//       thin arc clears; the diagonal floor binds the rebuilt register's "comet
+//       body toward ~1/3 period" sweep (the rebuilt presets traverse diag≥1.0;
+//       the faint W-FF2 stub measured diag≈0.3). The arc-length metric the RG2
+//       called for — beyond the bbox-span proxy.
+//   (2) the trail body READS BOLD — the mean painted intensity over the canvas
+//       clears a perceptibility floor. [W-FF3] the floor is RAISED from 0.08 to
+//       1.5: the W-FF2 faint hairline measured ~0.35 (clearing 0.08 trivially —
+//       the "far too faint" the user flagged); the rebuilt bold ≈3px/≈0.9-peak
+//       register measures ≥4.2 light (≥12 dark). The 1.5 floor binds the BOLD
+//       register and REDs the faint one — not a non-emptiness rubber-stamp.
 //   (3) BOTH modes — every assert runs for isDark=false AND isDark=true.
 //   (5) the two presets are a DISTINCT family — `hero` (epicycles ON,
 //       scaffolding) paints measurably more structure than `final` (trail-only)
@@ -48,10 +58,15 @@ const FOURIER = resolveScene("substrates", "fourier-field");
 const PAINT_THRESHOLD = 24;
 // the non-corner-stub floor: the painted bbox must span ≥ this fraction per axis.
 const BBOX_SPAN_MIN = 0.25;
-// the trail-body perceptibility floor (the mean painted intensity over the whole
-// canvas). The landed render reads ~0.35 (final) / ~0.52 (hero) light, lifted
-// under the dark additive fork; the floor sits well below the lowest measured.
-const BODY_MEAN_MIN = 0.08;
+// [W-FF3] the arc-length floor (the RG2 metric beyond bbox-span): the painted
+// bbox DIAGONAL, normalized. The rebuilt comet sweeps diag≥1.0; a thin corner
+// stub measures ≈0.3. 0.6 binds the substantial-arc register, REDs a stub.
+const ARC_DIAG_MIN = 0.6;
+// [W-FF3] the BOLD trail-body floor (the mean painted intensity over the whole
+// canvas). RAISED from the W-FF2 0.08 non-emptiness rubber-stamp: the faint
+// hairline measured ~0.35; the rebuilt bold register reads ≥4.2 light / ≥12 dark.
+// 1.5 binds the bold register and REDs the faint one (the user's "far too faint").
+const BODY_MEAN_MIN = 1.5;
 // the canvas indices in the story's "Two presets" section: 0 = hero, 1 = final.
 const HERO_IDX = 0;
 const FINAL_IDX = 1;
@@ -62,6 +77,7 @@ interface FieldReadback {
     painted: number;
     spanW: number;
     spanH: number;
+    diag: number;
     bodyMean: number;
 }
 
@@ -100,8 +116,11 @@ function analyze(png: PNG): FieldReadback {
     }
     const spanW = maxX >= minX ? (maxX - minX + 1) / w : 0;
     const spanH = maxY >= minY ? (maxY - minY + 1) / h : 0;
+    // the normalized bbox diagonal — the arc-length proxy (the RG2 metric): a
+    // comet that sweeps the frame reads ≈1.0..1.41; a corner stub reads ≈0.3.
+    const diag = Math.sqrt(spanW * spanW + spanH * spanH);
     const bodyMean = sum / (w * h);
-    return { painted, spanW, spanH, bodyMean };
+    return { painted, spanW, spanH, diag, bodyMean };
 }
 
 /** Scroll a canvas into view (un-park the substrate), settle, screenshot, read. */
@@ -142,14 +161,27 @@ for (const dark of [false, true]) {
                 `final preset paints a corner stub: bbox spans only ${(fin.spanH * 100).toFixed(0)}% height (< ${BBOX_SPAN_MIN * 100}%) — ${dark ? "dark" : "light"}`,
             ).toBeGreaterThanOrEqual(BBOX_SPAN_MIN);
 
-            // (2) the trail body reads — the survival floor (both presets paint).
+            // (1b) [W-FF3] the comet is a SUBSTANTIAL ARC — the bbox DIAGONAL (the
+            // RG2 arc-length metric) clears 0.6 for BOTH presets. A thin arc that
+            // cleared the bbox-span proxy but only nicked a corner fails here.
+            expect(
+                fin.diag,
+                `final preset comet is a stub, not a substantial arc: bbox diagonal ${fin.diag.toFixed(3)} (< ${ARC_DIAG_MIN}) — the comet must sweep ~1/3 the period (${dark ? "dark" : "light"})`,
+            ).toBeGreaterThanOrEqual(ARC_DIAG_MIN);
+            expect(
+                hero.diag,
+                `hero preset comet is a stub: bbox diagonal ${hero.diag.toFixed(3)} (< ${ARC_DIAG_MIN}) — ${dark ? "dark" : "light"}`,
+            ).toBeGreaterThanOrEqual(ARC_DIAG_MIN);
+
+            // (2) the trail body reads BOLD — the RAISED survival floor (both
+            // presets paint a bold, present stroke, not a faint hairline).
             expect(
                 fin.bodyMean,
-                `final preset trail body is sub-perceptible: mean painted intensity ${fin.bodyMean.toFixed(3)} (< ${BODY_MEAN_MIN}) — the body died to the floor (${dark ? "dark" : "light"})`,
+                `final preset trail body is faint: mean painted intensity ${fin.bodyMean.toFixed(3)} (< ${BODY_MEAN_MIN}) — the bold register is absent, the field reads "far too faint" (${dark ? "dark" : "light"})`,
             ).toBeGreaterThanOrEqual(BODY_MEAN_MIN);
             expect(
                 hero.bodyMean,
-                `hero preset trail body is sub-perceptible: mean ${hero.bodyMean.toFixed(3)} (< ${BODY_MEAN_MIN}) — ${dark ? "dark" : "light"}`,
+                `hero preset trail body is faint: mean ${hero.bodyMean.toFixed(3)} (< ${BODY_MEAN_MIN}) — ${dark ? "dark" : "light"}`,
             ).toBeGreaterThanOrEqual(BODY_MEAN_MIN);
 
             // (5) hero (epicycles ON — scaffolding) paints measurably more

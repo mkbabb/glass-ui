@@ -1,0 +1,265 @@
+<script setup lang="ts">
+import { computed, ref, toRef } from "vue";
+import { Plus, Sparkles } from "@lucide/vue";
+import { Button } from "../../../../src/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "../../../../src/components/ui/toggle-group";
+import {
+    LabeledField,
+    LabeledSelect,
+    LabeledSlider,
+} from "../../../../src/components/custom/labeled-field";
+import { SortableList, SortableItem } from "../../../../src/components/custom/sortable-list";
+import type {
+    AuroraAtoms,
+    AuroraConfig,
+    AuroraHarmony,
+} from "../../../../src/components/custom/aurora";
+import {
+    MAX_STOPS,
+    deriveAurora,
+    oklchStopToHex,
+} from "../../../../src/components/custom/aurora";
+import OklchStopRow from "../OklchStopRow.vue";
+import { usePaletteStops } from "../config/usePaletteStops";
+
+/**
+ * The Color section — the seed/harmony/energy ATOMS (the few intuitive knobs,
+ * driving the canvas via resolveAtoms over the preset baseline) PLUS the
+ * per-stop OKLCh palette editor (the deep refine surface: derive-from-color +
+ * sortable per-stop L/C/h rows). The atom controls carry the `data-atom`
+ * anchors the studio gates route on (`seed`, `harmony`, `colorEnergy`).
+ */
+const props = defineProps<{
+    atoms: AuroraAtoms;
+    config: AuroraConfig;
+}>();
+
+// ── Atom controls (seed / harmony / energy) ──
+const HARMONIES_ATOM: Record<string, AuroraHarmony> = {
+    Analogous: "analogous",
+    Complementary: "complementary",
+    "Split complementary": "split-complementary",
+    Triad: "triad",
+    Tetradic: "tetradic",
+    Monochrome: "monochrome",
+};
+const harmonyItems = Object.keys(HARMONIES_ATOM);
+
+function labelFor<T extends string>(map: Record<string, T>, value: T): string {
+    return Object.keys(map).find((k) => map[k] === value) ?? Object.keys(map)[0]!;
+}
+const harmonyLabel = computed(() =>
+    labelFor(HARMONIES_ATOM, props.atoms.harmony ?? "analogous"),
+);
+const seedHexAtom = computed(() =>
+    typeof props.atoms.seed === "string" ? props.atoms.seed : "#3a7bd5",
+);
+
+// reka's CONTROLLED `:open` prop must round-trip via `v-model:is-open` (a
+// literal `:is-open="false"` keeps the select controlled-shut forever).
+const harmonyOpen = ref(false);
+
+function setHarmony(label: string) {
+    props.atoms.harmony = HARMONIES_ATOM[label]!;
+}
+function setColorEnergy(v: number) {
+    props.atoms.colorEnergy = v;
+}
+function setSeed(value: string) {
+    props.atoms.seed = value;
+}
+
+// ── Deep palette editor (derive + per-stop OKLCh rows) ──
+const config = toRef(props, "config");
+const {
+    canAddStop,
+    stopsWithIds,
+    stopRefId,
+    updateStop,
+    removeStop,
+    addStop,
+    onPaletteReorder,
+} = usePaletteStops(config);
+
+const DERIVE_HARMONIES: { value: AuroraHarmony; label: string }[] = [
+    { value: "analogous", label: "Analogous" },
+    { value: "complementary", label: "Complement" },
+    { value: "triad", label: "Triad" },
+    { value: "monochrome", label: "Mono" },
+];
+const deriveSeedHex = ref(
+    props.config.palette[0] ? oklchStopToHex(props.config.palette[0]) : "#6b8fd4",
+);
+const deriveHarmony = ref<AuroraHarmony>("analogous");
+const stopCount = ref(Math.min(Math.max(props.config.palette.length, 2), MAX_STOPS));
+const canStepDown = computed(() => stopCount.value > 2);
+const canStepUp = computed(() => stopCount.value < MAX_STOPS);
+
+function stepCount(delta: number) {
+    stopCount.value = Math.min(Math.max(stopCount.value + delta, 2), MAX_STOPS);
+}
+function onDeriveSeed(e: Event) {
+    deriveSeedHex.value = (e.target as HTMLInputElement).value;
+}
+function onDeriveHarmony(next: string) {
+    deriveHarmony.value = (next as AuroraHarmony) || "analogous";
+}
+function derive() {
+    config.value.palette = deriveAurora(deriveSeedHex.value, {
+        stopCount: stopCount.value,
+        harmony: deriveHarmony.value || "analogous",
+    });
+}
+</script>
+
+<template>
+    <div class="flex flex-col gap-3">
+        <!-- ── Atom controls ── -->
+        <LabeledField
+            label="Seed"
+            tooltip="Base color the harmony derives from"
+            data-atom="seed"
+        >
+            <input
+                :value="seedHexAtom"
+                type="color"
+                class="h-8 w-full cursor-pointer appearance-none rounded-control border border-border/40 bg-card/40 p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-control [&::-webkit-color-swatch]:border-none"
+                @input="setSeed(($event.target as HTMLInputElement).value)"
+            />
+        </LabeledField>
+
+        <LabeledSelect
+            label="Harmony"
+            tooltip="Color relationship the palette is built from"
+            :items="harmonyItems"
+            :is-open="harmonyOpen"
+            :model-value="harmonyLabel"
+            data-atom="harmony"
+            @update:model-value="setHarmony"
+            @update:open="(v: boolean) => (harmonyOpen = v)"
+        />
+
+        <LabeledSlider
+            label="Energy"
+            tooltip="0..1 · chroma/contrast of the palette"
+            :model-value="atoms.colorEnergy ?? 0.5"
+            :min="0"
+            :max="1"
+            :step="0.05"
+            data-atom="colorEnergy"
+            @update:model-value="setColorEnergy"
+        />
+
+        <!-- ── Deep palette editor ── -->
+        <div class="mt-1 flex flex-col gap-2 rounded-panel border border-border/40 bg-card/40 p-2.5">
+            <div class="flex items-center gap-2">
+                <Sparkles :size="13" class="text-muted-foreground" />
+                <p class="text-admin-label text-muted-foreground">Derive from color</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <input
+                    type="color"
+                    :value="deriveSeedHex"
+                    class="h-8 w-9 cursor-pointer appearance-none rounded border border-border/40 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
+                    aria-label="Derive seed color"
+                    @input="onDeriveSeed"
+                />
+                <ToggleGroup
+                    :model-value="deriveHarmony"
+                    type="single"
+                    variant="outline"
+                    class="flex-1"
+                    @update:model-value="(v) => onDeriveHarmony(v as string)"
+                >
+                    <ToggleGroupItem
+                        v-for="h in DERIVE_HARMONIES"
+                        :key="h.value"
+                        :value="h.value"
+                        :aria-label="h.label"
+                        class="h-8 flex-1 px-1.5 text-mono-caption"
+                    >
+                        {{ h.label }}
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </div>
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-mono-caption text-muted-foreground">Stops</span>
+                    <div class="flex items-center gap-1.5">
+                        <Button
+                            variant="glass"
+                            size="icon"
+                            class="h-6 w-6"
+                            :disabled="!canStepDown"
+                            aria-label="Fewer stops"
+                            @click="stepCount(-1)"
+                        >
+                            <span class="text-sm leading-none">−</span>
+                        </Button>
+                        <span
+                            class="text-mono-caption w-4 text-center tabular-nums text-foreground"
+                        >
+                            {{ stopCount }}
+                        </span>
+                        <Button
+                            variant="glass"
+                            size="icon"
+                            class="h-6 w-6"
+                            :disabled="!canStepUp"
+                            aria-label="More stops"
+                            @click="stepCount(1)"
+                        >
+                            <Plus :size="12" />
+                        </Button>
+                    </div>
+                </div>
+                <Button
+                    variant="primary-audacious"
+                    size="sm"
+                    class="h-7 gap-1.5 px-3 text-caption"
+                    @click="derive"
+                >
+                    <Sparkles :size="12" />
+                    Derive
+                </Button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <p class="text-admin-label text-muted-foreground">
+                Stops ({{ config.palette.length }}/{{ MAX_STOPS }})
+            </p>
+            <Button
+                variant="glass"
+                size="sm"
+                class="h-7 gap-1.5 px-2 text-caption"
+                :disabled="!canAddStop"
+                @click="addStop"
+            >
+                <Plus :size="12" />
+                Stop
+            </Button>
+        </div>
+        <SortableList
+            :items="stopsWithIds"
+            :get-id="stopRefId"
+            class="flex flex-col gap-2"
+            @reorder="onPaletteReorder"
+        >
+            <SortableItem
+                v-for="(item, i) in stopsWithIds"
+                :key="item.sid"
+                :id="item.sid"
+                as="div"
+            >
+                <OklchStopRow
+                    :stop="item.stop"
+                    :index="i"
+                    :removable="config.palette.length > 2"
+                    @update="(next) => updateStop(i, next)"
+                    @remove="removeStop(i)"
+                />
+            </SortableItem>
+        </SortableList>
+    </div>
+</template>

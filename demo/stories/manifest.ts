@@ -142,7 +142,10 @@ export const CATEGORIES: Category[] = [
                 hero: true,
             }),
             s("substrates", "blob", "GooBlob", "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /goo-blob + /watercolor-dot.", {
-                background: "blob",
+                // A GooBlob is a CONTAINED creature, not a page-field — the page
+                // presents its studio over a calm paper wash (W-BLOB-REBUILD; the
+                // prior `background: "blob"` blew the creature to full-page width).
+                background: "paper",
                 hero: true,
             }),
             s("substrates", "constellation", "Constellation", "A drifting proximity-graph lattice on the Canvas2D substrate (park/freeze/dispose). The neutral lattice ships; the --primary focal node is a consumer drawOverlay pass. Shipped /constellation.", {
@@ -221,7 +224,6 @@ export const CATEGORIES: Category[] = [
         icon: Navigation,
         stories: [
             s("navigation", "tabs", "Tabs", "reka Tabs (default · pill · underline · vertical) + the unified SegmentedTabs spring-slider (segmented · pill · underline variants, multi-select, responsive collapse)."),
-            s("navigation", "deck-progress", "Deck Progress", "A thin deck-position rail — DeckProgress over the glass progress-rail recipe. The library owns the look; the consumer owns the position math and the pinned chrome."),
             s("navigation", "carousel", "Carousel", undefined, {
                 background: "aurora",
             }),
@@ -303,21 +305,20 @@ export const CATEGORIES: Category[] = [
             s("compositions", "math-paper", "Math Paper", undefined, {
                 background: "grid",
             }),
-            s("compositions", "dashboard", "Dashboard", undefined, {
-                background: "grid",
-            }),
             s("compositions", "auth-shell", "Auth Shell", undefined, {
                 background: { kind: "fourier" },
                 hero: true,
             }),
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States", undefined, {
-                background: "blob",
+                // The empty-states page carries its OWN contained GooBlob mascot
+                // (a small pointer-leaning companion); it does not need — and a
+                // GooBlob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
+                background: "paper",
             }),
             s("compositions", "drawer-live-behind", "Drawer Live-Behind", "A detented non-modal bottom sheet — peek / half / full snap-points over a live, still-interactive surface behind it."),
             s("compositions", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer."),
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host."),
-            s("compositions", "instrument-rail", "Instrument Rail", "A cockpit-ratio rail (1/φ²) with engraved bezel hairlines and a twin-line divider rule — the sidekick column of a cockpit composition."),
             s("compositions", "form-validation", "Form Validation", "The user-invalid / user-valid rungs, the aria-invalid bridge, a required asterisk, an error slot, and Textarea autosize."),
             s("compositions", "gate-pattern", "Gate Pattern", "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component."),
             s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),

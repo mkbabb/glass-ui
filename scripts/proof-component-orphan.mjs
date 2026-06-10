@@ -18,12 +18,22 @@
 //   2. Every flat subpath in `src/subpaths/*.ts` resolves to a survey-set unit
 //      (no dangling subpath — a subpath whose target dir does not exist REDs).
 //
-// CONSUMER COUNT: a "consumer" is a source file (across src/, demo/, and the
-// declared consumer repos) that IMPORTS from the package's dir-path or its flat
-// subpath, EXCLUDING the package's OWN dir + its OWN demo story (the non-self
-// rule). A demo story is NOT a binary consumer — it is the demonstration, not a
-// load-bearing use — so a component whose ONLY consumer is its own story is an
-// orphan unless evidenced.
+// CONSUMER COUNT (HONEST — real call-sites, not substring hits): a "consumer" is
+// a SOURCE file (under src/ of the library + demo/ + the SRC dir of each declared
+// consumer repo) that IMPORTS from the package's dir-path or its flat subpath.
+// EXCLUDED from the count:
+//   - the package's OWN dir + its OWN demo story (the non-self rule — a story is
+//     the demonstration, not a binary consumer);
+//   - the library's OWN publication machinery (src/index.ts, src/api/index.ts,
+//     the component barrels, src/subpaths/*) — they re-export EVERY package by
+//     construction, so counting them credits each package with N phantom self-
+//     references;
+//   - build/cache/doc/worktree dirs (dist/, docs/, .claude/worktrees/, build/, …)
+//     — these are NOT call-sites. The pre-fix census walked a bare consumer-repo
+//     ROOT (e.g. `../words/frontend`), which dragged in a NESTED glass-ui checkout
+//     under `.claude/worktrees/` and every `docs/**.md`, inflating `aurora` to 987
+//     "consumers". The honest census walks `<repo>/src` only.
+// A component whose ONLY consumer is its own story is an orphan unless evidenced.
 //
 // ALLOWLIST = the `docs/consumer-evidence/` dir CONTENTS (drift-proof — a kept
 // export earns its keep by HAVING a doc, the keep-current mechanism), NOT a
@@ -60,21 +70,41 @@ const ARTIFACT = gateArtifactPath(
     "AY-component-orphan",
 );
 
-// The repos a published component's consumers are counted across (the
-// consumer-evidence's declared consumer set). Only the present ones are walked.
+// The HONEST census walks SOURCE dirs only — `src/` of the library and of each
+// declared consumer repo — never a repo root (a bare `../words/frontend` root
+// dragged in a NESTED glass-ui checkout under `.claude/worktrees/`, inflating
+// `aurora` to 987 "consumers" that were the library's own vendored copy). Only
+// the present roots are walked.
 const CONSUMER_ROOTS = [
     "src",
     "demo",
     "../slides/src",
     "../speedtest/src",
     "../fourier-analysis/web/src",
-    "../words/frontend",
-    "../bbnf-lang/playground",
+    "../words/frontend/src",
+    "../sci-report/src",
+    "../bbnf-lang/playground/src",
 ];
 
 const CODE_EXT = new Set([".ts", ".tsx", ".vue", ".js", ".mjs", ".cjs"]);
 
-/** Recursively collect code files under a dir (skips node_modules/.git/dist). */
+// Dirs that are NEVER real call-sites — build/cache artifacts, doc trees, and the
+// agent-worktree clones (each a full vendored glass-ui checkout). Excluding them
+// is what turns the substring census into a real-call-site census.
+const SKIP_DIRS = new Set([
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache",
+    ".claude",
+    "docs",
+    "build",
+    ".next",
+    "coverage",
+    ".vite",
+]);
+
+/** Recursively collect code files under a dir (skips build/cache/doc/worktree dirs). */
 function collectCodeFiles(dir, out = []) {
     let entries;
     try {
@@ -83,12 +113,7 @@ function collectCodeFiles(dir, out = []) {
         return out;
     }
     for (const e of entries) {
-        if (
-            e.name === "node_modules" ||
-            e.name === ".git" ||
-            e.name === "dist" ||
-            e.name === ".cache"
-        ) {
+        if (SKIP_DIRS.has(e.name)) {
             continue;
         }
         const full = join(dir, e.name);
@@ -161,10 +186,28 @@ export function detectComponentOrphans(input) {
     const violations = [];
     const surveyed = [];
 
+    // The library's OWN publication machinery — the barrels + subpath mirrors +
+    // api seats that re-export EVERY package by construction. They reference a
+    // package as PUBLICATION wiring, not as a load-bearing consumer, so counting
+    // them double-counts the publish surface as N "consumers" (the api/index.ts +
+    // subpaths/<pkg>.ts pair every package was crediting itself with). Excluded.
+    function isPublicationMachinery(rel) {
+        return (
+            rel === "src/index.ts" ||
+            rel === "src/api/index.ts" ||
+            rel === "src/components/index.ts" ||
+            rel === "src/components/custom/index.ts" ||
+            rel === "src/components/ui/index.ts" ||
+            rel.startsWith("src/subpaths/")
+        );
+    }
+
     // A small helper: count non-self, non-own-story consumers of a custom pkg.
     // A "consumer" imports the dir-path `components/custom/<pkg>` or the flat
     // subpath `@mkbabb/glass-ui/<pkg>`. Self = files under the pkg's own dir;
-    // own-story = `demo/stories/**/<pkg>.vue` (excluded — a story is not binary).
+    // own-story = `demo/stories/**/<pkg>.vue` (excluded — a story is not binary);
+    // publication machinery = the library's barrels/subpaths/api (excluded — they
+    // are the publish surface, not a real call-site).
     function countConsumers(pkg) {
         const dirNeedle = `components/custom/${pkg}`;
         const subpathNeedle = `@mkbabb/glass-ui/${pkg}`;
@@ -174,6 +217,8 @@ export function detectComponentOrphans(input) {
         for (const { rel, body } of consumerFiles) {
             // Skip the package's own files (self).
             if (rel.includes(ownDirFrag)) continue;
+            // Skip the library's own publication machinery (not a real call-site).
+            if (isPublicationMachinery(rel)) continue;
             // Skip the package's own demo story (a story is the demonstration,
             // not a binary consumer).
             if (

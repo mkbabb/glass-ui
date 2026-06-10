@@ -405,21 +405,31 @@ const SPEEDTEST = cfg({
         { L: 0.84, C: 0.18, h: 85 },  // --aurora-5 amber (#fbbf24)
         { L: 0.70, C: 0.18, h: 285 }, // --aurora-6 violet (#a78bfa)
     ],
+    // B21 — broader cloud orbits: the driftRadius is bumped so each mass
+    // visibly MIGRATES over the cycle (the "actually change over time" read),
+    // riding the elevated nucleiDrift speed below.
     nuclei: [
-        { x: 0.18, y: 0.22, radius: 0.55, paletteBias: 0.0, valueBias:  0.04, driftRadius: 0.020, driftPhase: 0.3 },
-        { x: 0.80, y: 0.30, radius: 0.52, paletteBias: 0.2, valueBias:  0.00, driftRadius: 0.020, driftPhase: 1.7 },
-        { x: 0.50, y: 0.18, radius: 0.48, paletteBias: 0.4, valueBias:  0.02, driftRadius: 0.020, driftPhase: 3.4 },
-        { x: 0.72, y: 0.78, radius: 0.55, paletteBias: 0.6, valueBias: -0.02, driftRadius: 0.018, driftPhase: 0.9 },
-        { x: 0.22, y: 0.82, radius: 0.50, paletteBias: 0.8, valueBias:  0.02, driftRadius: 0.022, driftPhase: 2.1 },
-        { x: 0.55, y: 0.58, radius: 0.58, paletteBias: 1.0, valueBias:  0.00, driftRadius: 0.015, driftPhase: 4.6 },
+        { x: 0.18, y: 0.22, radius: 0.55, paletteBias: 0.0, valueBias:  0.04, driftRadius: 0.038, driftPhase: 0.3 },
+        { x: 0.80, y: 0.30, radius: 0.52, paletteBias: 0.2, valueBias:  0.00, driftRadius: 0.034, driftPhase: 1.7 },
+        { x: 0.50, y: 0.18, radius: 0.48, paletteBias: 0.4, valueBias:  0.02, driftRadius: 0.040, driftPhase: 3.4 },
+        { x: 0.72, y: 0.78, radius: 0.55, paletteBias: 0.6, valueBias: -0.02, driftRadius: 0.032, driftPhase: 0.9 },
+        { x: 0.22, y: 0.82, radius: 0.50, paletteBias: 0.8, valueBias:  0.02, driftRadius: 0.042, driftPhase: 2.1 },
+        { x: 0.55, y: 0.58, radius: 0.58, paletteBias: 1.0, valueBias:  0.00, driftRadius: 0.030, driftPhase: 4.6 },
     ],
-    softmaxBeta: 3.2,
-    valueVariance: 0.08,
-    warpAmount: 0.38,
-    warpScale: 1.6,
-    warpDrift: 0.02,
+    // B21 — speedtest "more cloud-like + actually change over time". CLOUDIER:
+    // a softer nucleus blend (lower softmaxBeta — masses merge like cumulus,
+    // not hard cells), MORE billowy organic warp (warpAmount up, warpScale down
+    // for broader puffs, +1 noise octave for wispy edge detail). EVOLVING: the
+    // whole field SLOWLY drifts — nucleiDrift/paletteDrift/warpDrift all up so
+    // the clouds visibly migrate + recolor over ~tens of seconds, and a deeper,
+    // slower breath (depth up, period up) gives the gentle billow-and-settle.
+    softmaxBeta: 2.4,
+    valueVariance: 0.10,
+    warpAmount: 0.52,
+    warpScale: 1.25,
+    warpDrift: 0.03,
     warpMode: "fbm",
-    noiseOctaves: 4,
+    noiseOctaves: 5,
     medium: "smooth",
     flow: { pattern: "none", focalX: 0.5, focalY: 0.5, angle: 0, curl: 0 },
     strokeAmount: 0,
@@ -431,11 +441,11 @@ const SPEEDTEST = cfg({
     impasto: 0,
     brokenColor: 0,
     canvasGrain: 0,
-    nucleiDrift: 0.04,
-    paletteDrift: 0.02,
-    breathDepth: 0.08,
-    breathPeriod: 42,
-    saturation: 0.85,
+    nucleiDrift: 0.055,
+    paletteDrift: 0.035,
+    breathDepth: 0.11,
+    breathPeriod: 58,
+    saturation: 0.82,
     paperGrain: 0,
     alpha: 0.26,
 });
@@ -508,18 +518,24 @@ const CRAYON = cfg({
     noiseOctaves: 4,
     medium: "crayon",
     flow: { pattern: "diagonal", focalX: 0.5, focalY: 0.5, angle: -18, curl: 0.14 },
-    strokeAmount: 0.60,
-    strokeScale: 140,
-    strokeAnisotropy: 0.82,
+    // B21 — crayon "a bit too oily": dry it out. A lighter waxy STAMP (lower
+    // strokeAmount), no sheen (impasto 0 + wetEdge 0), MORE dry paper tooth
+    // (canvasGrain + paperGrain up), less creamy color-mixing (brokenColor
+    // down), and a MATTE saturation (down off 1.04) so it reads dry-tooth
+    // crayon, not a creamy oil-pastel.
+    strokeAmount: 0.48,
+    strokeScale: 132,
+    strokeAnisotropy: 0.78,
     strokeLayers: 2,
     strokeOrient: "tensor",
     impasto: 0.0,
-    brokenColor: 0.35,
-    canvasGrain: 0.07,
+    wetEdge: 0,
+    brokenColor: 0.28,
+    canvasGrain: 0.09,
     breathDepth: 0.03,
     breathPeriod: 56,
-    saturation: 1.04,
-    paperGrain: 0.018,
+    saturation: 0.97,
+    paperGrain: 0.024,
 });
 
 export const PRESETS = {

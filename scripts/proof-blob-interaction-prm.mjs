@@ -109,15 +109,19 @@ function run() {
         );
 
     // Runtime frame-rate independence: the SpringProgress settle matches across
-    // 60/120 Hz dt (the seam the pointer machine consumes).
+    // 60/120 Hz dt (the seam the pointer machine consumes). The seam is
+    // `tickDt(dtMs)` in MILLISECONDS — the EXACT method + unit `useBlobPointer`
+    // drives per-frame (W-BLOB-REBUILD: the prior `tick(1/120)` named a renamed
+    // method + the wrong unit after the keyframes-3 peer bump). Both integrate the
+    // SAME 1000ms wall-clock window, just at different frame cadences.
     {
         const opts = { from: 0, to: 0, response: 0.18, dampingFraction: 1.0 };
         const a = new SpringProgress(opts);
         const b = new SpringProgress(opts);
         a.target = 1;
         b.target = 1;
-        for (let i = 0; i < 120; i++) a.tick(1 / 120);
-        for (let i = 0; i < 60; i++) b.tick(1 / 60);
+        for (let i = 0; i < 120; i++) a.tickDt(1000 / 120);
+        for (let i = 0; i < 60; i++) b.tickDt(1000 / 60);
         const delta = Math.abs(a.value - b.value);
         facts.framerateDelta = Number(delta.toExponential(3));
         if (delta > 1e-3)

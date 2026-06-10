@@ -66,10 +66,17 @@ function countMatches(src, re) {
     return (src.match(re) ?? []).length;
 }
 
-// ── Clause 1: the five dead-select sites — ZERO `:is-open="false"` literal. ──
+// ── Clause 1: the dead-select sites — ZERO `:is-open="false"` literal. ──
+// W-AUR-CONFIG-REBUILD (B21): the studio controls column was rebuilt as one
+// progressive-disclosure stack of grouped sections (Color / Composition /
+// Motion / …), retiring the prior `AuroraAtomsPanel.vue` + `config/MediumLayer.vue`
+// faces. The studio's LabeledSelect sites now live in the new section files;
+// the deletion-proof tracks THEM (every aurora-studio select must round-trip
+// its open state via `v-model:is-open`, never the controlled-shut literal).
 const DEAD_SELECT_SITES = [
-    "demo/stories/aurora/AuroraAtomsPanel.vue",
-    "demo/stories/aurora/config/MediumLayer.vue",
+    "demo/stories/aurora/sections/AuroraColorSection.vue",
+    "demo/stories/aurora/sections/AuroraCompositionSection.vue",
+    "demo/stories/aurora/sections/AuroraMotionSection.vue",
 ];
 
 // ── Clause 6: the T5-route sites — ZERO `W-AUR-WEBGPU-DECIDE` ROUTE cite. ──

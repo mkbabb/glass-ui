@@ -271,8 +271,15 @@ for (const vp of VIEWPORTS) {
                     ).toBeGreaterThanOrEqual(0.012);
                     expect(
                         shift,
-                        `rest→lean centroid shift=${shift.toFixed(4)} must stay inside the calm-lean ceiling (≤0.07, no lunge)`,
-                    ).toBeLessThanOrEqual(0.07);
+                        // W-BLOB-REBUILD — 0.07 → 0.10, in lockstep with blob-render.spec.ts's
+                        // CENTROID_SHIFT_MAX re-point. The corrected-sign calm lean is ≈0.075,
+                        // and the whole-canvas centroid this rides INCLUDES the orbiting
+                        // satellite, whose eccentric sweep adds ±~0.015 phase-dependent noise —
+                        // so the calm lean PEAKS ≈0.091 when a satellite sits on the leaned side
+                        // at flick-time (the stale 0.07 ceiling flaked on the calm lean itself).
+                        // 0.10 admits the noise-inflated calm peak, still reds the ≈0.11 lunge.
+                        `rest→lean centroid shift=${shift.toFixed(4)} must stay inside the calm-lean ceiling (≤0.10, no lunge)`,
+                    ).toBeLessThanOrEqual(0.1);
                 }
             });
         });

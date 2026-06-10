@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // ToneSwatch — semantic-tone swatch reading from --info / --success /
 // --warning / --destructive (and their -foreground rungs). Replaces raw
-// Tailwind palette literals (bg-emerald-50/90, etc.) across ~25 sites in
-// feedback/{notification, toast}, containers/alert, compositions/dashboard.
+// Tailwind palette literals (bg-emerald-50/90, etc.) across the
+// feedback/{notification, toast} + containers/alert sites.
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../src/utils/cn";
 

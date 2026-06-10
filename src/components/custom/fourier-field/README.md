@@ -42,38 +42,56 @@ centre-marker — a frequency-0 term would render a figure-sized stationary disc
 the field is **DC-suppression-free by construction** — a deliberate
 generative-model property, not a missing guard.
 
-## The intensity model (the W43 SOTA render)
+## The render model (the fourier-analysis renderer's procedural sibling)
 
 `variant` is a configuration **BUNDLE**, not a recolour of one curve. Each preset
-carries a six-field intensity bundle the render reads, scaled by the ONE outer
-`intensity` prop:
+carries a render bundle the passes read, scaled by the ONE outer `intensity` prop.
+The register is the **fourier-analysis web renderer's procedural sibling** (W-FF3):
+a PRESENT stroke weight, a real phosphor glow with a glowing comet head, the comet
+body toward ~1/3–1/2 of the period — legible in BOTH modes (the prior register read
+"far too faint": a 1.6px hairline at ~0.45 peak floored at ~0.036 effective alpha on
+cream, a sub-perceptible whisper).
 
 | Field | Role | hero | final |
 |-------|------|------|-------|
-| `peakAlpha` | comet-trail peak (head segment) | 0.55 | 0.45 |
-| `headGlowAlpha` | head-glow alpha — the STRONGEST layer (> peakAlpha) | 0.62 | 0.50 |
-| `headGlowBlur` | head-glow `shadowBlur` radius (px) | 16 | 14 |
-| `epicycleRatios` | scaffolding alpha ÷ peak (hero only) | `{circle: 0.18, arm: 0.30}` | `{0, 0}` |
-| `trailFadeExp` | trail persistence exponent — SOFT, never quadratic | 1.4 | 1.5 |
-| `trailFloor` | min trail alpha ÷ peak — the body survives | 0.10 | 0.08 |
+| `peakAlpha` | comet-trail peak (head segment) — near-opaque, not a hairline | 0.92 | 0.88 |
+| `trailWidth` | trail stroke weight (px) — the reference's bold ≈3px, not 1.6 | 3 | 3.2 |
+| `headGlowAlpha` | head-glow alpha — the STRONGEST layer (> peakAlpha) | 0.95 | 0.92 |
+| `headGlowBlur` | head-glow `shadowBlur` radius (px) | 18 | 16 |
+| `headDotRadius` | the glowing comet HEAD dot radius (px) — the leading mark | 5 | 4.5 |
+| `epicycleRatios` | scaffolding alpha ÷ peak (hero only) — PRESENT, not a ghost | `{circle: 0.5, arm: 0.72}` | `{0, 0}` |
+| `epicycleWidths` | circle/arm stroke weights (px) — a bold beaded chain | `{2.4, 2}` | `{0, 0}` |
+| `epicycleRainbow` | paint the chain as a rainbow across the spectrum (hero only) | `true` | `false` |
+| `trailFadeExp` | trail persistence exponent — SOFT, never quadratic | 1.35 | 1.45 |
+| `trailFloor` | min trail alpha ÷ peak — the body survives BOLD (≈0.35, not 0.08) | 0.34 | 0.36 |
 
-The render is a **3-pass phosphor-comet** (the CRT-vector / oscilloscope register):
+The render is a **4-pass phosphor-comet** (the fourier-analysis / oscilloscope register):
 
-- **Pass 0 — epicycle scaffolding** (hero only). The rotating circles draw faint,
-  BELOW the outline, off an amplitude-descending sorted spectrum (the largest
-  circles first, so the chain reads cleanest). `source-over` — scaffolding does
-  not bloom.
-- **Pass 1 — the comet trail body.** `globalCompositeOperation = isDark ?
-  "lighter" : "source-over"`. Additive `lighter` over the dark ink ground is the
-  phosphor look (crossings brighten); plain `source-over` over the warm cream
-  ground keeps the hue legible (additive over cream blows the trail to white). The
-  persistence is a SOFT `age^trailFadeExp` floored at `peak·trailFloor` — the body
-  survives, never the quadratic that killed the oldest 80% of the trail. (Caveat:
-  the body-survives floor is fully effective on the DARK ink ground; at the lighter
-  cream floors the effective trail alpha is ~0.036 final / ~0.055 hero on cream — the
-  trail is dimmer over the light backdrop, a deliberate let-the-cream-read tuning.)
-- **Pass 2 — the head glow** (the STRONGEST layer, head-forward: `headGlow >
-  peak`). A sharp core under a `shadowBlur` bloom on the youngest segments.
+- **Pass 0 — the epicycle scaffolding** (hero only). The rotating circles + arms +
+  filled joint dots draw BELOW the comet off an amplitude-descending sorted
+  spectrum (the largest circles first). Each phasor takes its own hue from a rainbow
+  swept ±150° around the consumer's base hue (the fourier-analysis chained-rainbow
+  signature, kept harmonious), at a PRESENT ≈0.5/0.72-of-peak weight — not the prior
+  0.18 ghost. `source-over` — scaffolding is structure, not bloom.
+- **Pass 1 — the comet trail body.** A bold ≈3px `source-over` stroke in BOTH modes
+  (the reference register), saturated at the consumer's hue — the prior additive
+  `lighter` BODY washed every crossing toward white at the bold peak. The trail is
+  REBUILT each frame by sampling the curve BACK along the period over a fixed arc
+  (≈0.43 hero / 0.6 final), so the comet length is constant on any framerate (not a
+  frame ring-buffer that fills at 60fps and reads short on a fresh mount). The
+  persistence is a SOFT `age^trailFadeExp` floored HIGH at `peak·trailFloor` (≈0.35)
+  — the body has real presence in BOTH modes (the light-mode floor fork).
+- **Pass 1b — the dark-mode phosphor sheen.** On the dark ink ground a SUBTLE
+  additive `lighter` overlay (bounded ≈0.18 alpha) on the youngest third of the
+  trail brightens the comet's leading edge (the oscilloscope glow) WITHOUT washing
+  the saturated body to white. Dark-only (`globalCompositeOperation = isDark ?
+  "lighter" : "source-over"`) — the additive op blows the hue out on cream.
+- **Pass 2 — the head glow** (head-forward: `headGlow > peak`). A bold core under a
+  `shadowBlur` bloom on the youngest segments. `source-over` — the head stays the
+  saturated hue.
+- **Pass 3 — the comet HEAD DOT** (the fourier-analysis glowing tip): a soft halo
+  ring, a saturated core, a white specular highlight. The mark the eye locks onto —
+  the curve has a definite leading point, not a fade-to-nothing.
 
 The `lighter` op is the Canvas2D **2D-context** compositing op — universally
 supported, no Safari quirk, no `@supports` gate, no fallback rung. This is
@@ -91,14 +109,22 @@ the bundle's resting loudness; a hero recesses behind a glass card at `≈0.7`, 
 the `~2` ceiling lets a feature hero overdrive without runaway. A consumer/deck
 tunes loudness from ONE prop — never a magic-number patch in the component.
 
-## Divergence from the fourier-analysis teaching figure
+## Relation to the fourier-analysis teaching figure
 
-The sibling's foreground figure colours each phasor on a rainbow
-(`hsl((1−t^0.6)·300, …)`) and overlays a grey source-contour ghost path. The
-fourier-field deliberately diverges: it is **recessive brand-keyed chrome**, not a
-foreground teaching figure. It keys off ONE brand hue (the consumer's `color`) + an
-analogous scaffold hue-shift, with no per-phasor rainbow and no source-contour
-ghost (the spectrum IS the curve — there is no source to overlay).
+The fourier-field is the fourier-analysis web renderer's **procedural sibling** —
+it adopts that renderer's visual authority (the bold stroke, the rainbow epicycle
+chain, the glowing comet head) while staying recessive brand-keyed chrome rather
+than a foreground teaching figure. Two deliberate alignments + two divergences:
+
+- **Adopted (W-FF3):** the `hero` epicycle chain is a per-phasor RAINBOW — swept
+  ±150° around the consumer's base hue (the reference sweeps `hsl((1−t^0.6)·300)`),
+  so the chain reads colorful and present while staying harmonious with the brand
+  hue. The comet trail rides the consumer's ONE hue (the curve is the brand mark);
+  the rainbow is the scaffold.
+- **Diverged:** no grey source-contour ghost path (the spectrum IS the curve — there
+  is no source to overlay), and the field recedes behind content via `intensity`
+  (the reference figure is foreground). The `final` preset is monochromatic
+  trail-only — the deliberate quiet contrast to the `hero` rainbow.
 
 ## Props
 

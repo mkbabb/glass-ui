@@ -37,8 +37,9 @@ import {
 // ── 1. The static register (WatercolorDot, zero GL) ──────────────────────────
 // The lit-droplet look without a WebGL context — a deterministic seeded
 // border-radius morph with an internalized turbulence filter. The deliberate
-// sibling for ambient/decorative thumbnails: route the static register here so
-// a grid never exhausts the per-page WebGL context cap.
+// sibling for ambient/decorative thumbnails: route the static register here so the
+// page holds exactly ONE live GooBlob context (the interactive studio below) and a
+// grid never exhausts the per-page WebGL context cap.
 const dotColors = [
     "var(--primary)",
     "oklch(0.62 0.19 25)",
@@ -143,20 +144,18 @@ const paletteStops = computed(() =>
 // The live BlobConfig the stage GooBlob paints — the studio axes mapped onto the atom
 // surface. A reactive object whose `interaction`/`color` atoms track the studio config,
 // so every Configurator edit reaches the live hero (the D1/D2 fixes carry it through).
+//
+// The RESTING studio IS the canonical BLOB_CONFIG_DEFAULTS lit cream bead (the
+// warm-cream living droplet the docs promise + the π-render gate target — the single
+// GL blob on the page is the bare default, which the Configurator then tunes). The
+// surface/membrane are the stock lit defaults (W-BLOB-REBUILD: the prior studio
+// over-tuned the resting surface — circular merge + iridescence 0.4 — off the
+// canonical default the gate calibrates against). Only the interaction lean +
+// seed-palette are studio-driven (the Configurator's purpose).
 const stageConfig = reactive<BlobConfig>({
     ...BLOB_CONFIG_DEFAULTS,
-    surface: {
-        ...BLOB_CONFIG_DEFAULTS.surface,
-        lit: true,
-        iridescence: 0.4,
-        sssScale: 0.25,
-        coreGlow: 0.12,
-    },
-    membrane: {
-        ...BLOB_CONFIG_DEFAULTS.membrane,
-        merge: "circular" as const,
-        warpAmp: 0.6,
-    },
+    surface: { ...BLOB_CONFIG_DEFAULTS.surface },
+    membrane: { ...BLOB_CONFIG_DEFAULTS.membrane },
     interaction: { ...BLOB_CONFIG_DEFAULTS.interaction },
     color: { ...BLOB_CONFIG_DEFAULTS.color },
 });

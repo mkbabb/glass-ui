@@ -57,7 +57,17 @@ const DARK_DEFAULT_L_REF = 0.55; // the born-RED reference: HEAD's brown/charcoa
 
 // ── readback tunables (the blob-render.spec.ts clip-robust precedent) ──────────────
 const INTERIOR_INSET = 0.12; // exclude the outer rounded-corner band from the body region
-const COLOR_DIFF_THRESHOLD = 40; // |dR|+|dG|+|dB| over the modal bg = "painted" (a body pixel)
+// W-BLOB-REBUILD — 40 → 110. The body OKLCh-L is the mean over "painted" (differ-from-bg)
+// pixels; at 40 the long tail of FAINT anti-aliased EDGE pixels (the cream body's
+// low-alpha rim composited over the DARK dark-mode backdrop reads as a dim cream-grey) was
+// counted as "body" and dragged the mean DOWN — a contained blob over dark has a large
+// edge-to-area ratio, so on the smaller mobile canvas the fringe DOMINATED the mean (live
+// readback: threshold 40 → meanL 0.537, but the OPAQUE body is 0.813; thresholds 110-160
+// all read the body at ~0.81). 110 isolates the OPAQUE body (the AA fringe over dark is
+// diff ≲100; the solid cream body is diff ≫300) so the mean is the BODY's color, not the
+// fringe's. This is a STRICTER "is this an opaque body pixel" test — the 0.62 cream FLOOR
+// is unchanged; the readback just stops counting the AA halo as body.
+const COLOR_DIFF_THRESHOLD = 110; // |dR|+|dG|+|dB| over the modal bg = an OPAQUE body pixel
 const BLOB_FRAMES = 6; // read back N frames; the verdict is the median body-L
 const ANTI_FLAKE_RUNS = 3; // 3-run median verdict (anti-flake)
 

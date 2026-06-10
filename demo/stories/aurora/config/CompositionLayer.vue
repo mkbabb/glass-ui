@@ -78,41 +78,7 @@ function setWarpMode(v: string | string[]) {
             :step="0.01"
             @update:model-value="(v: number) => (config.valueVariance = v)"
         />
-        <LabeledSlider
-            :model-value="config.nucleiDrift"
-            label="Nuclei drift"
-            tooltip="0..0.05 · nucleus orbit speed"
-            :min="0"
-            :max="0.05"
-            :step="0.001"
-            @update:model-value="(v: number) => (config.nucleiDrift = v)"
-        />
-        <LabeledSlider
-            :model-value="config.paletteDrift"
-            label="Palette drift"
-            tooltip="0..0.04 · palette-id phase"
-            :min="0"
-            :max="0.04"
-            :step="0.001"
-            @update:model-value="(v: number) => (config.paletteDrift = v)"
-        />
-        <LabeledSlider
-            :model-value="config.breathDepth"
-            label="Breath depth"
-            tooltip="0..0.15 · luminance wobble amplitude"
-            :min="0"
-            :max="0.15"
-            :step="0.005"
-            @update:model-value="(v: number) => (config.breathDepth = v)"
-        />
-        <LabeledSlider
-            :model-value="config.breathPeriod"
-            label="Breath period"
-            tooltip="10..90s · breath cycle"
-            :min="10"
-            :max="90"
-            :step="1"
-            @update:model-value="(v: number) => (config.breathPeriod = v)"
-        />
+        <!-- The nuclei/palette drift + breath sliders moved to the Motion
+             section (one motion home); this section is warp + noise only. -->
     </div>
 </template>

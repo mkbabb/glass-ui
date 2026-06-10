@@ -340,7 +340,6 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     const rawDtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
                     lastTimeSec = timeSec;
                     const dtMs = Math.max(0, Math.min(rawDtMs, 50));
-                    if (rawDtMs < 0) console.warn(`[DIAG-NEGDT] rawDtMs=${rawDtMs.toFixed(0)} timeSec=${timeSec.toFixed(2)}`);
 
                     // ── The ONE master tempo scalar (W11.c) ──────────────────────
                     //
