@@ -67,6 +67,15 @@ if (!cfg) {
     );
 }
 
+// AY.W-BLOB-CONFIG D1 — the LIVE config. `cfg` above is the mount-time snapshot the
+// renderer + satellite system close over (their atoms are static for the lifetime). But
+// the `config` PROP is reactive (a consumer that drives a seed/harmony UI feeds a fresh
+// config object — the demo's `heroConfig` computed re-emits `color.paletteStops` from
+// the seed), and the palette must reach the LIVE hero. `liveConfig()` re-reads the
+// reactive prop (falling back to the injected config) so the paletteStops watcher below
+// always resolves the CURRENT stops, not the stale snapshot.
+const liveConfig = (): BlobConfig => config ?? injectedConfig ?? cfg!;
+
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
 
@@ -92,11 +101,12 @@ const resolvedStops = ref<string[]>([...cfg!.color.paletteStops]);
 
 function refreshResolvedColors(): void {
     const el = wrapperRef.value;
+    const live = liveConfig();
     // The cascade may have flipped (dark-mode) — drop the cache so tokens re-resolve.
     tokenColors.invalidate();
     resolvedColor.value = tokenColors.resolve(color, el);
-    resolvedRim.value = tokenColors.resolve(cfg!.surface.rimColor, el);
-    resolvedStops.value = cfg!.color.paletteStops.map((s) => tokenColors.resolve(s, el));
+    resolvedRim.value = tokenColors.resolve(live.surface.rimColor, el);
+    resolvedStops.value = live.color.paletteStops.map((s) => tokenColors.resolve(s, el));
 }
 
 // AX.W16 (arm 1) — CAPTURE the renderer return (the prior code DISCARDED it, which is
@@ -134,6 +144,25 @@ watch(colorRef, (c) => {
     refreshResolvedColors();
     satelliteSystem.reseed(c + seed);
 });
+
+// AY.W-BLOB-CONFIG D1 — the dead hero color-feed fix. The renderer reads the
+// `resolvedStops` Ref every frame, but the Ref was resolved ONCE at mount and only
+// re-resolved on a `color`-prop / dark-mode flip — never on a `paletteStops` change. So
+// a consumer driving a seed/harmony UI (the demo's `deriveBlobPalette(seed) →
+// config.color.paletteStops` feed) updated the CONFIG but the hero body stayed
+// byte-identical. This watcher closes the config→Ref wire: a post-mount paletteStops (or
+// rimColor) change in the LIVE config re-resolves into the Ref the renderer paints from.
+// `deep` because the stops array mutates in place when a consumer mutates the same
+// reactive config object; the live-config getter also catches a whole-object swap (the
+// demo's `heroConfig` computed re-emits a fresh object). The wake repaints under park.
+watch(
+    () => {
+        const c = liveConfig();
+        return [c.color.paletteStops.join("|"), c.surface.rimColor];
+    },
+    () => refreshResolvedColors(),
+    { deep: true },
+);
 
 // Drive the substrate pause/resume from the declarative `paused` prop. `immediate`
 // so a blob mounted already-`paused` parks from the first frame (the renderer's local

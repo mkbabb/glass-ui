@@ -631,3 +631,38 @@ The honesty bar (MEMORY `feedback_no_backwards_compat` / the cardinal-lesson rol
 
 The F8.1/F8.2 amendments are this wave's (W-CON2) close addendum — they re-open NO engine code, only the spec honesty + the cool gate's tolerance/mobile coverage + the const comments. F8.3/F8.4 are RECORDED here for routing completeness but EXECUTED in W-CON3's serial pass (the freeze render-loop fold owner — §5 risk-9). Cross-reference: `docs/tranches/AY/audit/hardening/hc2/HC-con.md` (§1 F1.1-F1.5, §3 F3.1-F3.2, §6 disposition table).
 ```
+
+### §8 RESOLVED (AY.W-CON-FIX — the convergence lane EXECUTED, 2026-06-09)
+
+The W-CON-FIX cluster landed F8.1, F8.2, and F8.3 (the freeze-tautology arm was
+re-routed FROM W-CON3 INTO this lane per the orchestrator dispatch). DECISIONS, by
+measurement (the silent-widening is the defect, not the number):
+
+- **F8.1 — RESOLVED via option (a): re-tune the SAMPLE WINDOW, keep the honest ±5%.**
+  Measured (live :5199, ANGLE→Metal): desktop cools to ≤0.1% within 60 release frames;
+  the 390-width mobile canvas heats ~1.65× (vs desktop ~2.30×) and cools to ~2.7% within
+  70 frames. So `COOL_TOL` is restored to **0.05** (struck from the silent 0.06), the
+  `constellation-egg-live.spec.ts:18` comment synced to ±5%, the desktop window widened
+  to 60f and a NET-NEW **390-width MOBILE ARM** added (`page.setViewportSize({width:390})`
+  + 70-frame window) so the narrow-canvas worst case the prior DELTA measured at ~13–23%
+  is now GATED, not hidden. Re-tuning the window (NOT `WELL_COOL_RELEASED` faster) avoids
+  the visible-snap risk option (b) flagged. The spec ±5% / unit oracle 0.05 / π COOL_TOL
+  0.05 / in-file comment now tell ONE story. `proof:constellation-egg-live` GREEN 1/1.
+- **F8.2 — RESOLVED: record-as-const + comment-reconcile.** The three release consts
+  (`WELL_RELEASE_RAMP = 22`, `WELL_COOL_HELD = 1.5`, `WELL_COOL_RELEASED = 7`) are
+  DELIBERATE non-tokens (invariant machinery — a consumer must NOT be able to slow the
+  release past the cool gate); recorded in their source doc-comments. The two
+  `--constellation-well-ramp` comments (`tokens.css`, `constellationField.ts`) are fixed
+  to "ARM rate (release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant,
+  not consumer-tunable)". The `22.0` derivation (`n ≈ ln(EPS)/ln(1−rate/60) ≈ 15` frames,
+  ~half the cool window) is added to its doc-comment. The shape-(ii)-asymmetric design
+  was already recorded in the W-CON2-DELTA; this confirms it as the LANDED design and
+  strikes the spec's stale "Shape (i) is preferred" framing.
+- **F8.3 — RESOLVED (re-routed into W-CON-FIX): the freeze overlay-phase leg is no
+  longer a tautology.** The demo `drawAnomaly` closure now stamps `lastPaintedNow` with
+  the `now` the engine ACTUALLY hands it, exposed as `__constellationFreeze.paintedNow()`;
+  `constellation-freeze-live.spec.ts` asserts `paintedNow === FROZEN_NOW (0)` AND
+  frame-stable across the ≥36-rAF window AND byte-identical cross-run. BITE PROVEN: a
+  regression of the `Constellation.vue:395` frozen-`now` handoff (`isStatic ? FROZEN_NOW
+  : now` → `now`) REDs the gate (`now=232.9 ≠ FROZEN_NOW=0`). `proof:constellation-freeze-
+  live` GREEN 2/2. (F8.4 — the freeze-park — stays cross-routed to W-CON3, untouched.)

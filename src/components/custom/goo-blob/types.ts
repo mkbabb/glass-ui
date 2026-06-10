@@ -163,7 +163,20 @@ export interface BlobSurface {
 export interface BlobInteraction {
     pointerAttraction: number;
     pointerStrength: number;
-    /** Velocity-driven volume-preserving squash-and-stretch magnitude (0 = off). */
+    /**
+     * Velocity-driven volume-preserving squash-and-stretch magnitude (0 = off).
+     *
+     * AY.W-BLOB-CONFIG D3 — a SWAMPED fine-detail axis. The squash rides the smoothed
+     * spring velocity (`useBlobPointer`'s critically-damped `response: 0.18` follow),
+     * which is heavily damped and down-scaled into body space — so the tanh-saturated
+     * elongation reads at the noise floor (a live readback measured 0% body-aspect change
+     * between `stretch=0` and `stretch=1.5`). It is NOT a primary axis: it adds a subtle
+     * elongation on a FAST flick over the much louder lean/follow/pseudopod channel that
+     * dominates the deformation. Kept (the volume-preserving map is correct and lands a
+     * whisper on the fastest flicks) but DEMOTED — the demo no longer surfaces it as a
+     * top-level slider (the flick blurb is honest-down to match). A consumer that wants a
+     * pronounced taffy-pull raises this AND uncouples the velocity from the spring smooth.
+     */
     stretch: number;
     /** Click spring-impulse amplitude (a one-shot bouncy pulse on the body radius). */
     clickImpulse: number;
@@ -308,12 +321,19 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     },
 
     interaction: {
-        // ── Interaction magnitudes, a CALM lean (AX.W46 D5) ───────────────────────────
-        // A gentle "the creature notices you" lean (`pointerStrength` 0.18), the velocity
-        // squash SATURATED in-shader (a lively flick capped at a tasteful ceiling), and a
-        // bouncy click impulse.
+        // ── Interaction magnitudes, a CALM lean (AX.W46 D5; AY.W-BLOB-CONFIG D2) ───────
+        // A gentle "the creature notices you" lean, the velocity squash SATURATED
+        // in-shader (a lively flick capped at a tasteful ceiling), and a bouncy click
+        // impulse. AY.W-BLOB-CONFIG D2 — the shader's lean SIGN was inverted at HEAD, so
+        // the prior `pointerStrength` 0.18 was calibrated against a body-lean that
+        // SUBTRACTED from the trail baseline (the net read calm only by cancellation).
+        // With the sign corrected the body lean now ADDS to the trail-pseudopod reach
+        // (the dominant lean channel) instead of subtracting from it, so the strength
+        // drops 0.18 → 0.10 to keep the default a CALM coherent lean while the negative
+        // half now genuinely shies away (the body shifts away AND the pseudopod
+        // retracts, reachFactor 0).
         pointerAttraction: 0.35,
-        pointerStrength: 0.18,
+        pointerStrength: 0.1,
         stretch: 0.5,
         clickImpulse: 0.5,
     },

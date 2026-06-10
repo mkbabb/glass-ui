@@ -37,12 +37,13 @@ const keepDockOpen = computed(() => props.keepDockOpen)
 
 const delegatedProps = computed(() => {
   const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
-  // The spectrum squircle thumb is contained within the capsule so it never
-  // overshoots the tall gradient track; reka-ui's `contain` alignment matches
-  // that intent. The standard round knob keeps the default `overflow` alignment
-  // so the knob centres on the value edge-to-edge (the iOS continuous feel — the
-  // knob rides the fill's leading edge, its centre IS the value point).
-  if (v.value === 'spectrum' && !delegated.thumbAlignment) {
+  // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
+  // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
+  // standard cylinder seats the round knob INSIDE the thick track (a ball-bearing
+  // in the cylinder, protrusion 0), and the spectrum squircle spans the tall
+  // gradient track; neither floats past the capsule. The knob's value-follow
+  // centre is the value point, clamped so the inscribed knob never overhangs.
+  if (!delegated.thumbAlignment) {
     delegated.thumbAlignment = 'contain'
   }
   return delegated
@@ -181,13 +182,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 }
 
 /* ── The continuous GLASS fill (standard) ──
-   The fill is ONE continuous glass rounded-pill pulled left/right; the round
-   knob rides ON it so the fill flows straight under the knob's centre (the
-   value point) — continuous with the track, not a detached disc on a bar. The
-   range carries the W52 liquid-glass material (backdrop blur + the unified edge
-   rim) tinted to `--primary`, so the filled portion is a glass cylinder over
-   the muted track, not a flat bar. The reka SliderThumb is styled below as the
-   round knob (a11y/keyboard/focus stay native on it). */
+   The fill is ONE continuous glass rounded-pill spanning the FULL thick-track
+   height, pulled left/right; the inscribed round knob is seated INSIDE it so the
+   fill flows straight under the knob (the value point) — ONE continuous cylinder,
+   not a detached disc on a bar. The range carries the W52 liquid-glass material
+   (backdrop blur + the unified edge rim) tinted to `--primary`, so the filled
+   portion is a glass cylinder over the muted track, not a flat bar. The reka
+   SliderThumb is styled below as the inscribed knob (a11y/keyboard/focus stay
+   native on it). */
 .slider-range {
     position: absolute;
     height: 100%;
@@ -214,18 +216,20 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
-/* ── The round knob (standard) ──
-   The thumb is a FULLY ROUNDED iOS knob — a circle the size of the size token,
-   centred on the fill's leading edge so it sits CONTINUOUS with the track (the
-   knob's centre IS the value point, the fill flows straight under it). It is
-   not a detached floating disc and not a slim offset cap: a 1:1 round knob
-   flush on the continuous glass fill. It carries a faint specular grip so the
-   grab affordance reads, and the four-state contract rides the box-shadow halo
-   + the iOS press spring on transform. */
+/* ── The inscribed round knob (standard) ──
+   The thumb is a FULLY ROUNDED iOS knob — a circle the size of the size token —
+   INSCRIBED inside the thick glass capsule (track height = thumb + 4px, a 2px
+   inset reveal each side), so it is SEATED in the cylinder with zero protrusion:
+   a ball-bearing in the tube, ONE continuous piece, never a floating disc on a
+   wire. The fill flows straight under it (the knob's centre IS the value point).
+   It carries a faint specular grip so the grab affordance reads, and the
+   four-state contract rides the box-shadow halo + the iOS press spring on
+   transform. */
 .slider-thumb {
     display: block;
-    /* A round knob: a square footprint (1:1) at the full size token, so the
-       50% radius paints a true circle continuous with the fill it rides. */
+    /* A round knob: a square footprint (1:1) at the size token, so the 50%
+       radius paints a true circle. The track is thicker (thumb + 4px) so the
+       knob sits inside the capsule — inscribed, never protruding past it. */
     width: var(--slider-thumb-size, 1rem);
     aspect-ratio: 1;
     border-radius: 50%;
@@ -239,8 +243,8 @@ const isTouchActive = computed(() => touchGate.isActive.value)
        at rest. */
     background: var(--slider-thumb-bg, var(--primary));
     box-shadow: var(--slider-thumb-shadow, none);
-    /* The thumb `transform` carries the press-give (the `:active` `scaleX`
-       squish below) — a TRANSFORM/PRESS leg, so per the §6 easing doctrine it
+    /* The thumb `transform` carries the press-give (the `:active` uniform
+       `scale()` give below) — a TRANSFORM/PRESS leg, so per the §6 easing doctrine it
        rides `--spring-smooth` (the ONE hover/press register), NOT `--spring-dock`
        (the dock-box MORPH register, an enter-class size animation, not a press).
        The reka SliderThumb owns the value-follow POSITION (inline inset, not this
@@ -253,11 +257,18 @@ const isTouchActive = computed(() => touchGate.isActive.value)
             var(--slider-thumb-spring, var(--spring-smooth));
 }
 
-/* Hover/focus lift a light specular halo on the knob — the round knob
+/* Hover lifts a light specular halo on the knob — the inscribed knob
    brightens its grip rather than gaining a second detached ring. */
-.glass-slider:hover .slider-thumb,
-.slider-thumb:focus-visible {
+.glass-slider:hover .slider-thumb {
     box-shadow: 0 0 0 4px var(--surface-tint-8);
+}
+
+/* D5 — keyboard focus rises to the ONE button focus register: the warm-ink
+   double ring (`--focus-ring-shadow`, 30% ring + 15% halo) the `.focus-ring`
+   utility keys off, NOT a hand-set 8%-alpha ghost. One focus system, one
+   calibration — the token-first focus axis (CLAUDE.md §".focus-ring utility"). */
+.slider-thumb:focus-visible {
+    box-shadow: var(--focus-ring-shadow);
 }
 
 /* iOS press spring — the snappy spring ease on the transform channel makes
@@ -325,10 +336,17 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     }
 }
 
-.glass-slider[data-variant="spectrum"]:hover .slider-thumb,
-.glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+.glass-slider[data-variant="spectrum"]:hover .slider-thumb {
     box-shadow:
         0 0 0 4px var(--surface-tint-8),
+        var(--shadow-sm);
+}
+
+/* D5 — the spectrum thumb keyboard focus rides the SAME button focus register
+   (`--focus-ring-shadow`) as the standard knob, over the squircle's drop-shadow. */
+.glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+    box-shadow:
+        var(--focus-ring-shadow),
         var(--shadow-sm);
 }
 </style>

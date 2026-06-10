@@ -33,6 +33,7 @@ export {
 // (the empty set) resolves to the wispy-sky default.
 export {
     resolveAtoms,
+    configToAtoms,
     nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,

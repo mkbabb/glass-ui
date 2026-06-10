@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import {
     LabeledField,
     LabeledSelect,
@@ -104,6 +104,14 @@ const seedHex = computed(() =>
     typeof props.atoms.seed === "string" ? props.atoms.seed : "#3a7bd5",
 );
 
+// Each LabeledSelect binds reka's CONTROLLED `:open` prop, so it must round-trip
+// its own open state via `v-model:is-open` (a literal `:is-open="false"` keeps it
+// controlled-shut forever — the dead-select footgun every working consumer avoids).
+const harmonyOpen = ref(false);
+const arrangementOpen = ref(false);
+const mediumOpen = ref(false);
+const motionOpen = ref(false);
+
 function setHarmony(label: string) {
     patch((a) => (a.harmony = HARMONIES[label]!));
 }
@@ -162,10 +170,11 @@ function setNoise(v: number) {
             label="Harmony"
             tooltip="Color relationship the palette is built from"
             :items="harmonyItems"
-            :is-open="false"
+            :is-open="harmonyOpen"
             :model-value="harmonyLabel"
             data-atom="harmony"
             @update:model-value="setHarmony"
+            @update:open="(v: boolean) => (harmonyOpen = v)"
         />
 
         <LabeledSlider
@@ -196,10 +205,11 @@ function setNoise(v: number) {
             label="Arrangement"
             tooltip="How the zones are placed across the field"
             :items="arrangementItems"
-            :is-open="false"
+            :is-open="arrangementOpen"
             :model-value="arrangementLabel"
             data-atom="zones-arrangement"
             @update:model-value="setArrangement"
+            @update:open="(v: boolean) => (arrangementOpen = v)"
         />
 
         <!-- ── NOISE ──────────────────────────────────────────────────────── -->
@@ -221,10 +231,11 @@ function setNoise(v: number) {
             label="Medium"
             tooltip="Painterly body the field is rendered with"
             :items="mediaItems"
-            :is-open="false"
+            :is-open="mediumOpen"
             :model-value="mediumLabel"
             data-atom="medium"
             @update:model-value="setMedium"
+            @update:open="(v: boolean) => (mediumOpen = v)"
         />
 
         <!-- texture amount is STRUCTURALLY ABSENT on smooth (no dead slider). -->
@@ -246,10 +257,11 @@ function setNoise(v: number) {
             label="Motion"
             tooltip="How the field animates over time"
             :items="motionItems"
-            :is-open="false"
+            :is-open="motionOpen"
             :model-value="motionLabel"
             data-atom="motion"
             @update:model-value="setMotion"
+            @update:open="(v: boolean) => (motionOpen = v)"
         />
     </div>
 </template>

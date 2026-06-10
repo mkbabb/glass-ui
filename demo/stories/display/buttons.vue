@@ -96,7 +96,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
             </p>
             <div class="flex flex-wrap items-center gap-3">
                 <Button>Rest</Button>
-                <Button class="bg-primary/90">Hover (sim.)</Button>
+                <Button class="bg-[var(--glass-bg-resting)] border-[var(--glass-border-resting)]">Hover (sim.)</Button>
                 <Button class="scale-[0.97]">Active (sim.)</Button>
                 <Button disabled>Disabled</Button>
                 <Button

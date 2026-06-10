@@ -9,7 +9,7 @@
 // structure-tensor anisotropy, §4.3 −5/3 power-spectrum slope); all three mediums clear the
 // colourfulness band; oil clears the slope band; the four AX not-flat floors STAY satisfied.
 // The oil/oil-pastel §4.2 anisotropy + oil-pastel §4.3 slope residual is RECORDED (printed),
-// NOT asserted — the named T5 anisotropic-Kuwahara successor (AY.W-AUR-WEBGPU-DECIDE). The
+// NOT asserted — the named T5 anisotropic-Kuwahara successor (AY.W-AUR-T5). The
 // band is NEVER lowered; a regression below the asserted bands REDs.
 //
 // FAIL-CLOSED CONTRACT (the cardinal AX precept, H-convergence F4). When the π workspace IS
@@ -174,7 +174,7 @@ function run() {
                 anisotropy: [0.732, 0.932],
                 slope: [-1.85, -1.45],
             },
-            note: "van-Gogh HERO lands all three bands; all mediums clear colourfulness; oil clears the slope band; the four not-flat floors hold. The oil/oil-pastel anisotropy + oil-pastel slope residual is the named T5 anisotropic-Kuwahara successor (AY.W-AUR-WEBGPU-DECIDE) — recorded in W-AUR-PAINTERLY-DELTA.md, band NOT lowered.",
+            note: "van-Gogh HERO lands all three bands; all mediums clear colourfulness; oil clears the slope band; the four not-flat floors hold. The oil/oil-pastel anisotropy + oil-pastel slope residual is the named T5 anisotropic-Kuwahara successor (AY.W-AUR-T5 — re-routed off the terminally-retired W-AUR-WEBGPU-DECIDE by W-AUR-STUDIO §6) — recorded in W-AUR-PAINTERLY-DELTA.md, band NOT lowered.",
         },
         violations,
     });

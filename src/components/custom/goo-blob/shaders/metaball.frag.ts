@@ -319,6 +319,18 @@ void main() {
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
     // signed influence flows straight into the UV shift (no hardcoded repulsion).
     //
+    // AY.W-BLOB-CONFIG D2 — the SIGN was INVERTED in the rendered result. The
+    // sample-shift sign here was uv -= dir*influence; the live readback (an attraction
+    // sweep over a HELD pointer) measured the body shifting MORE toward the cursor as
+    // attraction went MORE NEGATIVE (a=-1 -> +0.081, a=0 -> +0.063, a=+1 -> +0.042) —
+    // exactly inverted: a shy-away -1 LUNGED at the cursor, a lean-in +1 pulled back.
+    // pointerDir = uPointer - uv is the toward-pointer direction in SAMPLE space; to
+    // MOVE the rendered body TOWARD the pointer the sample must shift ALONG pointerDir
+    // (sample the field from where the pointer is), so the sign is uv += dir*influence.
+    // A positive attraction now shifts the body toward the cursor (leans in), a negative
+    // shifts it away (shies) — the sign the comment + the demo slider always promised,
+    // now true in the render.
+    //
     // AX.W46 D5 — the falloff radius NARROWS 0.65 → 0.5 (the calm-lean reconciliation).
     // The W15 REDRESS widened it to 0.65 to clear a synthetic floor; the live π-lane
     // read the result as a LUNGE. The drama lives in the STRENGTH (pointerStrength,
@@ -331,7 +343,7 @@ void main() {
         vec2 pointerDir = uPointer - uv;
         float pointerDist = length(pointerDir);
         float influence = smoothstep(0.5, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
-        uv -= normalize(pointerDir + 1e-6) * influence;
+        uv += normalize(pointerDir + 1e-6) * influence;
     }
 
     // The de-synced pulsing body radius — also reused below for the inner-glow scale.

@@ -36,7 +36,7 @@ import {
     type OklchStop,
     type WarpMode,
 } from "../constants/presets";
-import { deriveAurora, type AuroraHarmony } from "./color";
+import { deriveAurora, oklchStopToHex, type AuroraHarmony } from "./color";
 
 /** The motion atom — the three motion registers. */
 export type AuroraMotionAtom = "still" | "breathing" | "drifting";
@@ -296,18 +296,29 @@ function applyTexture(
 
 /**
  * Expand the ≤7 Tier-1 atoms into a full, valid, in-range `AuroraConfig`. A PURE,
- * TOTAL function: clones the wispy-sky default and applies ONLY the present atoms as
- * clamped overrides, so the empty atom set resolves to exactly `DEFAULT_AURORA_CONFIG`
- * and every atom combination yields a config respecting every `budget.ts` cap.
+ * TOTAL function: clones the BASE config and applies ONLY the present atoms as clamped
+ * overrides, so the empty atom set resolves to exactly the base and every atom
+ * combination yields a config respecting every `budget.ts` cap.
+ *
+ * `base` defaults to the wispy-sky `DEFAULT_AURORA_CONFIG` (so `resolveAtoms(DEFAULT_ATOMS)`
+ * deep-equals it — the machine-asserted default-preserving contract). A consumer that
+ * REFINES a richer config (the live atoms studio seeding FROM the active preset) passes the
+ * preset config as `base`, so the ~21 non-atom fields the ≤7-knob projection does NOT carry
+ * (the hero's stroke params, the per-preset palette specifics beyond the seed) SURVIVE the
+ * atom touch — the first atom edit refines the preset rather than clobbering it to the
+ * wispy-sky default (the W-AUR-STUDIO D4 atoms-trap fix).
  */
-export function resolveAtoms(atoms: AuroraAtoms = DEFAULT_ATOMS): AuroraConfig {
-    // Deep-clone the default so the returned config is independent (no shared nuclei
-    // array / palette / flow references the consumer could mutate into the default).
+export function resolveAtoms(
+    atoms: AuroraAtoms = DEFAULT_ATOMS,
+    base: AuroraConfig = DEFAULT_AURORA_CONFIG,
+): AuroraConfig {
+    // Deep-clone the base so the returned config is independent (no shared nuclei
+    // array / palette / flow references the consumer could mutate into the base).
     const cfg: AuroraConfig = {
-        ...DEFAULT_AURORA_CONFIG,
-        palette: DEFAULT_AURORA_CONFIG.palette.map((s) => ({ ...s })),
-        nuclei: DEFAULT_AURORA_CONFIG.nuclei.map((n) => ({ ...n })),
-        flow: { ...DEFAULT_AURORA_CONFIG.flow },
+        ...base,
+        palette: base.palette.map((s) => ({ ...s })),
+        nuclei: base.nuclei.map((n) => ({ ...n })),
+        flow: { ...base.flow },
     };
 
     // ── COLOR: seed + harmony + colorEnergy → the derived palette + the co-varying
@@ -395,4 +406,86 @@ export function resolveAtoms(atoms: AuroraAtoms = DEFAULT_ATOMS): AuroraConfig {
     }
 
     return cfg;
+}
+
+// ── The inverse projection: config → atoms (the seed-from-preset door) ──────────
+//
+// `resolveAtoms` is a ~28-field expansion of ≤7 atoms; `configToAtoms` is the LOSSY
+// inverse — it reads back the SHIPPED atoms (seed/colorEnergy/zones-count/noise/medium
+// /motion) that the live preset config implies, so the atoms surface seeds FROM the
+// active preset instead of a fixed wispy-sky default. A preset's first atom touch then
+// REFINES the preset rather than clobbering it to the atoms default.
+//
+// It is lossy BY DESIGN: `harmony` and `zones.arrangement` are NOT recoverable from a
+// resolved palette/nuclei array (the harmony is baked into the derived palette; the
+// arrangement is baked into the nuclei coordinates), so they take their door defaults —
+// the projection is a ≤7-knob shadow of the config, not a round-trip identity. Nudging
+// an unrecoverable axis (harmony) re-derives from the recovered seed, which is the
+// intended "refine from here" behaviour.
+
+/** Invert a clamped lerp(calm, vivid, t) back to t∈[0,1] (the energy/noise inverses). */
+function unlerp(value: number, lo: number, hi: number): number {
+    if (hi === lo) return 0;
+    return clampBudget((value - lo) / (hi - lo), 0, 1);
+}
+
+/** Classify the motion atom from the config's drift fields (the resolveAtoms forward map). */
+function motionFor(cfg: AuroraConfig): AuroraMotionAtom {
+    const drifts = cfg.nucleiDrift + cfg.paletteDrift + cfg.warpDrift;
+    if (drifts > 0.001) return "drifting"; // any sustained drift ⇒ drifting
+    if (cfg.breathDepth > 0.001) return "breathing"; // breath only ⇒ breathing
+    return "still";
+}
+
+/** Read back the textured medium's dominant texture amount (the applyTexture inverse). */
+function textureAmountFor(cfg: AuroraConfig, kind: Exclude<AuroraMedium, "smooth">): number {
+    switch (kind) {
+        case "watercolor":
+            return clampBudget(cfg.wetEdge, 0, 1);
+        case "oil":
+        case "vangogh":
+        case "pastel":
+        case "oil-pastel":
+        case "crayon":
+            // strokeAmount is the shared signature knob for every stroke medium.
+            return clampBudget(cfg.strokeAmount, 0, 1);
+    }
+}
+
+/**
+ * Project a full `AuroraConfig` back onto the ≤7 Tier-1 atoms. The minimal recovered
+ * set is seed / colorEnergy / zones-count / noise / medium(+amount) / motion; `harmony`
+ * and `zones.arrangement` take their door defaults (not recoverable — lossy by design).
+ * `configToAtoms(resolveAtoms(a))` recovers the energy/noise/medium/motion/zone-count
+ * axes of `a` within the projection's resolution (the round-trip the seed-from-preset
+ * fix needs + the gate asserts).
+ */
+export function configToAtoms(cfg: AuroraConfig): AuroraAtoms {
+    const kind = cfg.medium;
+    const medium: AuroraMediumAtom =
+        kind === "smooth"
+            ? { kind }
+            : { kind, amount: textureAmountFor(cfg, kind) };
+
+    return {
+        // COLOR — seed off palette[0]; harmony is baked into the palette (door default).
+        seed: cfg.palette.length > 0 ? oklchStopToHex(cfg.palette[0]!) : "#3a7bd5",
+        harmony: "analogous",
+        // colorEnergy inverts off saturation (the most stable energy axis — the
+        // valueVariance/breathDepth axes co-move but saturation has the widest range).
+        colorEnergy: unlerp(
+            cfg.saturation,
+            COLOR_ENERGY.saturation.calm,
+            COLOR_ENERGY.saturation.vivid,
+        ),
+        // ZONES — count off the nuclei array length; arrangement is baked in (door default).
+        zones: {
+            count: Math.max(1, Math.min(MAX_NUCLEI, cfg.nuclei.length)),
+            arrangement: "composed",
+        },
+        // NOISE inverts off warpAmount (the applyNoise primary axis: lerp(0.2, 0.6, t)).
+        noise: unlerp(cfg.warpAmount, 0.2, 0.6),
+        medium,
+        motion: motionFor(cfg),
+    };
 }

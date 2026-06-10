@@ -1,118 +1,131 @@
-# W-SLD1 — Slider standard-thumb design resolution + spectrum round-fallback fidelity — DELTA
+# W-SLD1 — Slider standard-thumb CONTINUOUS-ROUNDED-CYLINDER + spectrum round-fallback fidelity — DELTA
 
-**Wave:** AY.W-SLD1 · **Status:** live-verified · **Verdict:** PASS.
+**Wave:** AY.W-SLD1 (+ §RE-GROUND-2 cylinder correction, BUILD phase) · **Status:** live-verified (gate-green; the inscribed-cylinder form awaits the user's one-line ratification — RG3-B rider) · **Verdict:** PASS (gate) / judgment-pending (user-hinge).
 
-**Resolution: (b) REVERT+INVERT-GATE — user-directed per PROMPT-CORPUS:51 standing
-preference.** The standard slider thumb is the FULLY ROUNDED iOS knob the user has
-re-stated across four tranches ("a FULLY ROUNDED iOS knob continuous with the track,
-not pill/offset", PROMPT-CORPUS:51, verbatim and verbatim-restated each tranche). The
-AX.W59 integrated-cylinder slim leading CAP — and the `proof:slider-two-only` clause
-that gate-locked it by REDDENING a circle — was the two-tranche-old contradiction this
-wave closes. The design decision was already MADE by the user (the standing preference);
-this wave IMPLEMENTS it and backs it with the live capture.
+**Resolution: the CONTINUOUS ROUNDED CYLINDER (the user's verbatim 2026-06-09 standard).**
+The standard form is a round knob INSCRIBED into a thick glass capsule so the whole reads
+as ONE continuous piece — a ball-bearing seated in the cylinder, never a knob on a wire.
+This supersedes the prior (b)-revert reading: that revert OVER-SHOT to a DETACHED FLOATING
+KNOB (the §RE-GROUND-2 live measurement: a 16px knob on a 6px track protruded ~2.67× the
+track height — the Material/shadcn knob-on-a-wire register, the opposite pole of "one
+continuous piece"). The user's verbatim words bind the geometry:
 
-**Route:** `/forms/slider` (`resolveScene("forms", "slider")`) — the live demo slider
-storybook page.
-**Surface:** the standard `.slider-thumb` (the round knob) + the spectrum
-`.slider-thumb` (the gradient-track squircle).
+> "our slider should be of two forms — a continuous rounded cylinder (thumb integrated
+> into a thick track that appears as one continuous piece) and our spectrum slider, as
+> seen in value.js"
+
+"Fully rounded" AND "continuous" are a CONJUNCTION — a round knob that bulges past a thin
+track satisfies only the first half and inverts the second. The cylinder correction
+satisfies both.
+
+**Route:** `/forms/slider` (`resolveScene("forms", "slider")`).
+**Surface:** the standard `.slider-thumb` (the inscribed round knob in the thick cylinder)
++ the spectrum `.slider-thumb` (the gradient-track squircle).
 **Viewports:** 1280×800 · **Schemes:** {light, dark}.
-**Device:** Chrome-headless-new, ANGLE→Metal (the real dev-box GPU path), via
-`tests-visual/slider-spectrum-fallback.spec.ts` (the single-engine engine-aware π arm,
-the `squircle-language.spec.ts` pattern).
+**Device:** Chrome-headless-new, ANGLE→Metal, via `tests-visual/slider-spectrum-fallback.spec.ts`.
 
 ---
 
-## What changed (the SFC + gate edits)
+## What changed (the cylinder correction)
 
-- **`Slider.vue` standard `.slider-thumb`** (`:225-254`) — REVERTED to a round knob:
-  `width: var(--slider-thumb-size)` + `aspect-ratio: 1` (a square footprint) +
-  `border-radius: 50%` (a TRUE CIRCLE), replacing the prior slim cap (`width:
-  calc(--slider-thumb-size * 0.46)` / `height: 100%` / `border-radius: var(--radius-pill)`).
-  The W-GLASS `--glass-level` legs (the `--glass-blur-quiet`-routed range backdrop, the
-  flat `--primary` fill, the `--spring-smooth` press transition) are PRESERVED — the
-  geometry edit is surgical over the landed glass-level routing. The knob rides ON the
-  continuous `.slider-range` glass fill so the fill flows straight under the knob's
-  centre (the value point) — continuous with the track, not a detached floating disc.
-  The press squish is now a uniform `scale()` (was `scaleX`).
-- **`proof-slider-two-only.mjs` clause (3)** — INVERTED from CYLINDER-CAP to ROUND-KNOB:
-  the `isCircle` test (`radius === "50%"`) now REQUIRES the circle (was: reddened it);
-  the prior `height: 100%` track-height assertion is replaced by an `aspect-ratio: 1`
-  square-footprint assertion (so the 50% paints a circle, not an ellipse); the borderless
-  + `.slider-range` backdrop-filter checks are retained. The KEYSET, ORPHAN-SCAN, and
-  SQUIRCLE-SPECTRUM clauses are untouched (the two-only cardinality is settled).
-- **`Slider.vue` spectrum round-fallback** (`:313`, D2 fix) — lifted off the bare
-  `border-radius: var(--radius-lg)` (a hard 10px = a rounded RECT on a ~17.6×24 box) to
-  `border-radius: calc(var(--slider-thumb-size, 1rem) * 0.7)` — a generous radius
-  proportional to the box (11.2px on md = ~0.64× the box WIDTH), so the fallback reads
-  squircle-adjacent on the ~35% of engines without `corner-shape`. The `@supports
-  (corner-shape: superellipse(2))` PE tier (`:322-326`) stays the superset that REFINES
-  the curve, never the base.
+- **`src/components/ui/slider/index.ts` size rungs** — the track THICKENS to inscribe the
+  knob: `--slider-track-height` = `--slider-thumb-size + 4px` (a 2px inset reveal each
+  side). Rungs: `sm 12px/8px`, `md 20px/16px`, `lg 28px/24px` — thumb ≤ track at EVERY
+  rung (was inverted: 4/12, 6/16, 12/24, the knob protruding far past a thin wire).
+- **`src/components/ui/slider/Slider.vue` standard `.slider-thumb`** — the round knob
+  (`border-radius: 50%` + `aspect-ratio: 1`) is unchanged in shape but now SEATED inside
+  the thick track (protrusion 0). `thumbAlignment: 'contain'` is applied to BOTH recipes
+  (was spectrum-only) so the inscribed knob never overhangs the capsule's rounded ends.
+  The W-GLASS `--glass-level` legs (the `--glass-blur-quiet` range backdrop, the
+  `--spring-smooth` press transition) are PRESERVED — the geometry edit is surgical over
+  the landed glass-level routing. The `.slider-range` glass fill spans the full thick-track
+  height (one continuous cylinder). The stale `scaleX` comment is fixed to "uniform
+  `scale()` press-give" (RG3-D).
+- **`scripts/proof-slider-two-only.mjs` clause (3)** — the THIRD isCircle restatement
+  (§RE-GROUND-2): the clause now locks the CONJUNCTION, not a bare shape test —
+  **round-ended** (`border-radius: 50%` + `aspect-ratio: 1` + no border paint) ∧
+  **track-height-matched ∧ zero-detachment** (a NEW per-rung parse: at every size rung
+  `--slider-thumb-size` ≤ `--slider-track-height`, the knob inscribed) ∧ the
+  `.slider-range` `backdrop-filter` (the continuous glass cylinder). The header prose +
+  console banner are de-narrated off the abrogated AX.W59 cylinder cap (RG3-C).
+- **`Slider.vue` spectrum round-fallback** — already lifted off bare `--radius-lg` by
+  W-GLASS to `calc(var(--slider-thumb-size, 1rem) * 0.7)` (11.2px on md = ~0.64× the box
+  width) — the D2 fidelity hole is closed; this wave verifies it via the π readback.
 
 ---
 
-## Captured own-surface PNGs (real on-disk, ≥1024 B, `\x89PNG`)
+## Captured own-surface PNGs (real on-disk, ≥1024 B, `\x89PNG`) — RG3-A padded recapture
 
 | capture | light | dark |
 |---|---|---|
-| standard ROUND KNOB (the resolution) | `W-SLD1-standard-resolved-light.png` | `W-SLD1-standard-resolved-dark.png` |
+| standard INSCRIBED CYLINDER (the resolution) | `W-SLD1-standard-resolved-light.png` | `W-SLD1-standard-resolved-dark.png` |
 | spectrum squircle (D2 fidelity) | `W-SLD1-spectrum-light.png` | `W-SLD1-spectrum-dark.png` |
 
-The own-surface set carries the `W-SLD1-standard-resolved-light.png` AND
-`W-SLD1-standard-resolved-dark.png` pair the `proof:live-verified-ledger:ay` own-surface
-+ {light,dark} floor requires.
-
-The standard PNGs show the circular knob sitting on the continuous fill at the value
-edge (the iOS continuous feel). The spectrum PNGs show the rounded-square superellipse
-silhouette over the LCH/hue gradient (the iOS color-picker idiom).
+RG3-A: the recapture uses a PADDED clip off `boundingBox()` (the prior leaf-section
+screenshot AMPUTATED the lower third of the floating knob). The standard PNGs now show the
+FULL silhouette: the round knob seated INSIDE the thick continuous capsule, the fill
+flowing under it at the value point — ONE continuous piece, zero protrusion. The spectrum
+PNGs show the rounded-square superellipse window thumb over the LCH/hue gradient (the
+value.js color-picker idiom).
 
 ---
 
 ## Paired-π readback (the binding numbers, NOT a grep)
 
-Read live off the computed style on the chromium engine (single-engine, engine-aware —
-the `border-radius` value is the cross-engine fallback truth even on a supporting
-engine; the round `border-radius` is the BASE the `@supports` block only refines):
+| scheme | corner-shape supported | STD knob box | STD `border-radius` | STD inscribed (rungs, thumb ≤ track) | SPECTRUM box | SPECTRUM `border-radius` (vs 0.55× floor) | SPECTRUM `corner-shape` |
+|---|---|---|---|---|---|---|---|
+| light | true | 16×16 (1:1) | `50%` → 8px circle | sm 8≤12 · md 16≤20 · lg 24≤28 ✓ | 17.6×24.0 | `11.2px` ≥ floor 9.7px | `squircle` |
+| dark  | true | 16×16 (1:1) | `50%` → 8px circle | sm 8≤12 · md 16≤20 · lg 24≤28 ✓ | 17.6×24.0 | `11.2px` ≥ floor 9.7px | `squircle` |
 
-| scheme | engine `corner-shape` supported | STD knob box | STD knob `border-radius` (effective) | SPECTRUM box | SPECTRUM `border-radius` (effective vs 0.55× floor) | SPECTRUM `corner-shape` |
-|---|---|---|---|---|---|---|
-| light | true | 16×16 (1:1) | `50%` → 8px ≥ 7.2px (circle) | 17.6×24.0 | `11.2px` ≥ floor 9.7px | `squircle` |
-| dark  | true | 16×16 (1:1) | `50%` → 8px ≥ 7.2px (circle) | 17.6×24.0 | `11.2px` ≥ floor 9.7px | `squircle` |
-
-- **Standard knob**: `border-radius: 50%` over a square 16×16 footprint → a TRUE CIRCLE
-  (the resolution (b) round iOS knob). The effective 8px radius ≥ the 45%-of-box circle
-  floor (7.2px).
-- **Spectrum**: on the supporting chromium engine the PE tier paints `corner-shape:
-  squircle` (= `superellipse(2)`); the round fallback `border-radius: 11.2px` is the
-  cross-engine truth, ≥ the 0.55×-box-width squircle-adjacent floor (9.7px) AND
-  materially above the old 10px `--radius-lg` rounded-rect — the D2 hole is closed.
+- **Standard**: a TRUE CIRCLE knob inscribed in the thick capsule (thumb ≤ track at every
+  rung → protrusion 0, the continuous cylinder). The OLD geometry (md 16px knob on a 6px
+  track = 2.67× protrusion) is gate-forbidden.
+- **Spectrum**: `corner-shape: squircle` on the supporting engine; the round fallback
+  `11.2px` is the cross-engine truth, ≥ the 0.55× squircle-adjacent floor.
 
 ---
 
 ## Corpus ↔ SFC ↔ gate alignment (the one-story line, §6 condition 5)
 
-PROMPT-CORPUS:51 ("a FULLY ROUNDED iOS knob continuous with the track, not pill/offset"),
-`Slider.vue`'s standard `.slider-thumb` (`border-radius: 50%` over `aspect-ratio: 1`,
-riding the continuous glass `.slider-range` fill), and `proof:slider-two-only`'s
-ROUND-KNOB clause (REQUIRES `border-radius: 50%` + a square footprint) now name the SAME
-shape — the fully-rounded continuous iOS knob. AUDIT-LEDGER row 9 reads DONE with the
-resolution branch (b) recorded. No "integrated cylinder cap" survives anywhere alongside
-the reverted knob.
+PROMPT-CORPUS:51 (now "a CONTINUOUS ROUNDED CYLINDER — thumb integrated into a thick
+track"), `Slider.vue`'s standard `.slider-thumb` (the inscribed knob in the thick track),
+the index.ts size rungs (thumb ≤ track), and `proof:slider-two-only`'s clause-3 CONJUNCTION
+(round-ended ∧ inscribed ∧ thick-track) now name the SAME shape — the inscribed continuous
+cylinder. AUDIT-LEDGER row 9 reads DONE with the cylinder correction recorded. No "floating
+knob" and no "integrated cylinder CAP" survive anywhere.
+
+---
+
+## RG3-E — the allowlist claim, corrected
+
+The prior DELTA CLAIMED a `"W-SLD1"` `VISUAL-ALLOWLIST.json` entry that was NOT present
+(the cardinal-lesson micro-inflation: a false artifact claim). The engine does NOT require
+the allowlist entry for a `live-verified` row (only `complete`-status rows are
+allowlist-deepened — `proof-live-verified-ledger.mjs`). The append is RECOMMENDED (it makes
+the claim true and deepens the row to own-surface depth) and is REPORTED as a shared-file
+delta for the orchestrator (VISUAL-ALLOWLIST.json is a co-write-merged shared file).
+
+## RG3-B — the user-hinge rider
+
+The §RE-GROUND-2 cylinder correction implements the user's VERBATIM standing words — the
+defensible branch. Per §6 condition 1, the JUDGED half wants the user's eye on the
+CYLINDER-CORRECTED capture (the prior (b) self-served verdict ruled on a form that
+over-shot). The row carries the gate-green / judgment-pending rider until the user ratifies
+the inscribed cylinder against `W-SLD1-standard-resolved-{light,dark}.png` (one line, not a
+third engineering iteration).
 
 ---
 
 ## Gate evidence
 
-- `proof:slider-two-only` — **PASS** (the inverted ROUND-KNOB clause requires the 50%
-  circle; KEYSET + ORPHAN-SCAN + SQUIRCLE-SPECTRUM green). Output: `std knob radius: 50%
-  (aspect-ratio 1, circle true)`.
-- `tests-visual/slider-spectrum-fallback.spec.ts` — **PASS** (2/2 on
-  `chromium-headless-new`; both schemes assert the TRUE-CIRCLE standard knob AND the
-  engine-aware spectrum squircle/round-fallback ≥ 0.55× floor).
-- `npx vue-tsc --noEmit` — clean over the slider surface (the 2 unrelated in-flight
-  `goo-blob` errors are a sibling lane's, out of this wave's scope).
-- `proof:live-verified-ledger:ay` — GREEN with the `W-SLD1` row backed by this DELTA →
-  the own-surface light+dark PNGs + the `"W-SLD1"` allowlist entry.
+- `proof:slider-two-only` — **PASS** (clause-3 conjunction: round-ended + per-rung
+  inscribed + continuous-glass; KEYSET + ORPHAN-SCAN + SQUIRCLE-SPECTRUM green). Output:
+  `knob inscribed (rungs): sm 0.5rem≤0.75rem, md 1rem≤1.25rem, lg 1.5rem≤1.75rem`.
+- `tests-visual/slider-spectrum-fallback.spec.ts` — **PASS** (2/2 on `chromium-headless-new`).
+- `npx vue-tsc --noEmit` — exit 0.
+- `proof:live-verified-ledger:ay` — GREEN with the `W-SLD1` row backed by this DELTA → the
+  own-surface light+dark PNGs.
 
-**Verdict: PASS.** The slider standard-thumb design intent is RESOLVED on the record by
-resolution (b) revert+invert-gate, user-directed per PROMPT-CORPUS:51, anchored by the
-live capture. The corpus, ledger, gate, and SFC tell ONE story.
+**Verdict: PASS (gate).** The slider standard form is the continuous rounded cylinder — the
+user's verbatim standard — anchored by the live recapture; the user-hinge ratification of
+the inscribed form is the named rider (RG3-B).

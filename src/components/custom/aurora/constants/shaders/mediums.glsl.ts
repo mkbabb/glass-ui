@@ -382,6 +382,13 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   // Scales & multipliers from uniforms (mode-invariant cascade structure).
   float baseScale = max(uStrokeScale * 0.006, 0.008);
   // Three primary layers: big gestural, medium body, small dabs.
+  // W-AUR-STUDIO D5 — the −5/3 radii respacing was MEASURED + REVERTED (recorded, not
+  // silently struck). The φ-adjacent geometric candidate (2.4 / 1.45 / 0.87, a fixed
+  // ≈1.66× step) moved oil-pastel β −2.534 → −2.413 — TOWARD the −5/3 band but NOT into
+  // it (floor −1.85), so the keep-iff-into-band gate failed. The single-pass WebGL2 path
+  // is the true limiter (HC-aurora §5): the oil-pastel β + the oil/oil-pastel anisotropy
+  // residual is the named AY.W-AUR-T5 multi-pass anisotropic-Kuwahara candidate. The
+  // hand-set 2.4 / 1.1 / 0.45 stays — it is van-Gogh's landed-band spacing.
   float sBig = baseScale * 2.4;
   float sMed = baseScale * 1.1;
   float sSml = baseScale * 0.45;

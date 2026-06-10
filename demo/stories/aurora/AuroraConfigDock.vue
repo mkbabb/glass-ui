@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { nextTick, reactive, watch } from "vue";
 import { RefreshCw } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { ConfiguratorLayer } from "../../../src/components/custom/configurator";
 import {
     resolveAtoms,
+    configToAtoms,
     type AuroraConfig,
     type AuroraAtoms,
 } from "../../../src/components/custom/aurora";
@@ -40,6 +41,13 @@ const props = defineProps<{
     activeLayer?: string;
     /** "atoms" (default) | "advanced" — which top-level surface is shown. */
     tab: string;
+    /**
+     * The active preset key. A change ⇒ a genuine preset SWITCH (not an atom edit):
+     * the atoms surface re-seeds FROM the new preset's config via `configToAtoms`, so
+     * the atoms read the live preset and the first atom touch REFINES rather than
+     * clobbering to the wispy-sky default (the W-AUR-STUDIO D4 atoms-trap fix).
+     */
+    presetKey?: string;
 }>();
 
 const emit = defineEmits<{
@@ -48,26 +56,75 @@ const emit = defineEmits<{
     (e: "reset"): void;
 }>();
 
-// The Atoms surface state — the ≤7 control elements. The default atoms resolve to
-// the wispy-sky default; editing one writes the resolved config onto props.config.
-const atoms = reactive<AuroraAtoms>({
-    seed: "#3a7bd5",
-    harmony: "analogous",
-    colorEnergy: 0.5,
-    zones: { count: 2, arrangement: "composed" },
-    noise: 0.5,
-    medium: { kind: "smooth" },
-    motion: "drifting",
-});
+// The Atoms surface state — the ≤7 control elements. SEEDED FROM the active preset's
+// config (`configToAtoms`), so the atoms read the live preset on mount + every switch;
+// editing one writes the resolved config back onto props.config (refines, not clobbers).
+const atoms = reactive<AuroraAtoms>(configToAtoms(props.config));
 
-/** Copy a resolved config onto the live reactive in place (preserve proxy identity). */
+/** A stable deep snapshot of the preset BASELINE (taken on seed). The atoms resolve OVER
+ *  this, so the ~21 non-atom fields the ≤7-knob projection does not carry (the hero's
+ *  stroke params, the hand-authored palette) SURVIVE every atom touch — the first edit
+ *  REFINES the preset rather than clobbering it to the wispy-sky default. */
+function snapshot(c: AuroraConfig): AuroraConfig {
+    return JSON.parse(JSON.stringify(c)) as AuroraConfig;
+}
+let presetBaseline: AuroraConfig = snapshot(props.config);
+// The seeded seed/harmony at baseline. The seed atom RE-DERIVES the palette (its purpose),
+// so over a preset baseline we only re-derive when the user actually MOVES a color-source
+// atom (seed/harmony) — an UNTOUCHED seed keeps the preset's hand-authored palette intact.
+let seededSeed = atoms.seed;
+let seededHarmony = atoms.harmony;
+
+/** Resolve the atoms OVER the preset baseline + copy onto the live reactive in place
+ *  (preserve proxy identity so the canvas/Advanced layers keep their reactivity). */
 function applyAtoms() {
-    const resolved = resolveAtoms({ ...atoms, zones: { ...atoms.zones! }, medium: { ...atoms.medium! } });
+    const colorSourceMoved =
+        atoms.seed !== seededSeed || atoms.harmony !== seededHarmony;
+    // Strip the palette-re-derive trigger (seed/harmony) unless the user moved it, so an
+    // energy/zone/noise/medium/motion refinement keeps the preset's authored palette; the
+    // energy's saturation/value/breath legs still apply over the base.
+    const next: AuroraAtoms = {
+        ...atoms,
+        zones: { ...atoms.zones! },
+        medium: { ...atoms.medium! },
+        ...(colorSourceMoved ? {} : { seed: undefined, harmony: undefined }),
+    };
+    const resolved = resolveAtoms(next, presetBaseline);
     Object.assign(props.config, resolved);
 }
 
 // Drive the canvas whenever any atom changes (deep — the zones/medium nested objects).
-watch(atoms, applyAtoms, { deep: true });
+// Suppressed while re-seeding FROM a preset switch (the seed is a config→atoms read, not
+// an atoms→config write — otherwise the lossy seed would clobber the full preset config).
+let seeding = false;
+watch(atoms, () => {
+    if (seeding) return;
+    applyAtoms();
+}, { deep: true });
+
+/** Re-seed the atoms surface from the live config (on a genuine preset switch). The new
+ *  config becomes the baseline the subsequent atom edits refine OVER. */
+function reseedFromConfig() {
+    seeding = true;
+    presetBaseline = snapshot(props.config);
+    Object.assign(atoms, configToAtoms(props.config));
+    seededSeed = atoms.seed;
+    seededHarmony = atoms.harmony;
+    // Release the guard AFTER the deep watcher's flush so the seed's own mutation does
+    // not write the lossy projection back over the preset's full-fidelity config.
+    void Promise.resolve().then(() => {
+        seeding = false;
+    });
+}
+
+// A preset-key change is a genuine SWITCH — re-seed the atoms from the new preset's
+// config so the atoms surface is a TRUE projection of the live preset (the D4 fix).
+watch(
+    () => props.presetKey,
+    (next, prev) => {
+        if (next !== undefined && next !== prev) reseedFromConfig();
+    },
+);
 
 const TOP_TABS = [
     { label: "Atoms", value: "atoms" },
@@ -76,6 +133,14 @@ const TOP_TABS = [
 
 function setTab(next: string | string[]) {
     emit("update:tab", String(next));
+}
+
+// Reset restores the preset baseline onto props.config in the host; re-seed the atoms
+// from the reverted config so the atoms surface stays a true projection (same D4 fix as
+// a preset switch). nextTick lets the host's resetCurrent mutation flush first.
+function onReset() {
+    emit("reset");
+    void nextTick(reseedFromConfig);
 }
 </script>
 
@@ -89,7 +154,7 @@ function setTab(next: string | string[]) {
                 size="sm"
                 class="h-7 gap-1.5 px-2 text-caption"
                 :aria-label="'Reset current preset'"
-                @click="emit('reset')"
+                @click="onReset"
             >
                 <RefreshCw :size="12" />
                 Reset

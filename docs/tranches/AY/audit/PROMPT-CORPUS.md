@@ -48,12 +48,19 @@ the ROOT (glass-ui where the component is shared; slides only for slide-specific
    seamless glass-ui integration; performance-first. A research-backed README.
 8. **Fourier-field**: the foundational SOTA workflow/wave set (AX W43) — fold its research
    into the path forward; ensure it's a perfected, abstracted glass-ui element.
-9. **Sliders**: collapse the slider zoo → `glass-scrubber` (standard, a FULLY ROUNDED iOS
-   knob continuous with the track, not pill/offset) + `spectrum`; migrate ALL consumers.
-   RESOLVED (AY.W-SLD1, resolution (b) revert+invert-gate): the standard thumb IS the
-   fully-rounded iOS knob — `Slider.vue` paints `border-radius: 50%` over a square
-   `aspect-ratio: 1` footprint, riding the continuous glass fill; `proof:slider-two-only`
-   now REQUIRES the 50% circle. The user's words above match the shipped shape.
+9. **Sliders**: collapse the slider zoo → two forms — a CONTINUOUS ROUNDED CYLINDER
+   (standard: the round knob INSCRIBED into a thick track so the whole reads as ONE
+   continuous piece — a ball-bearing seated in the cylinder, not a knob on a wire) +
+   `spectrum` (the value.js gradient-track color slider); migrate ALL consumers.
+   RESOLVED (AY.W-SLD1 + the §RE-GROUND-2 cylinder correction): the standard form is the
+   inscribed cylinder — `Slider.vue` thickens the track to `thumb + 4px` (a 2px inset
+   reveal each side) so the `border-radius: 50%` / `aspect-ratio: 1` knob seats INSIDE
+   the capsule with zero protrusion, riding the continuous glass fill. The spectrum
+   already obeyed the containment law (thumb inscribed, protrusion 0).
+   `proof:slider-two-only`'s clause 3 locks the CONJUNCTION (round-ended ∧
+   track-height-matched ∧ zero-detachment). The user's verbatim 2026-06-09 words ("a
+   continuous rounded cylinder — thumb integrated into a thick track that appears as one
+   continuous piece") match the shipped shape.
 10. **Slider keep-dock-open / dock-with-slider**: fix the broken integration.
 11. **Storybook prune + restructure** (the "wtf is X" list): remove header-ribbon route;
     fix/remove native-top-layer; remove glyph-face, disco-glyph; reconcile metric-badge vs

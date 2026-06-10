@@ -17,6 +17,11 @@
 //       AND a WITHOUT-refit control (seeded-once at the large extent then NOT yet
 //       drifted... captured by sampling the field's bbox coverage BEFORE the
 //       refit lattice has relaxed — the drift-out lag) covers < 60% on frame 1.
+//  (1b) REFIT-SHEAR (RG3) — a NON-UNIFORM portrait→landscape transpose (360×720 →
+//       1280×360, sx ≫ 1 / sy < 1) STILL fills both axes ≥ 90% on frame 1. The
+//       uniform-grow arm (1) is invariant under a uniform scale (coverage is
+//       structurally pinned); the shear arm binds the ACTUAL slide-enter transpose
+//       the wave exists to fix — the case (1) cannot distort.
 //   (2) AUTO-DRIFT-CADENCE — a wander-on focal re-targets to a DIFFERENT node ≥ 2
 //       times on the cadence with NO click; each transition is spring-EASED
 //       (≥ 5 closing frames, not a snap).
@@ -197,6 +202,108 @@ test.describe("constellation-refit-live (π lane — fail-CLOSED, AY.W-CON1)", (
             Math.abs(speedRatio - 1),
             `the field HEATED after the refit: mean |v| ${refit.meanSpeedBefore.toFixed(4)} → ${refit.meanSpeedAfter.toFixed(4)} (ratio ${speedRatio.toFixed(3)}, > ±5%) — refitField must scale positions only, not velocities`,
         ).toBeLessThan(0.05);
+
+        // ── (1b) REFIT-SHEAR — the portrait→landscape transpose (RG3) ────────────
+        // The uniform-grow arm above (360×240→1280×720, sx≈3.55/sy≈3.0) is INVARIANT
+        // under a uniform scale — bbox-coverage is structurally pinned (the seed's
+        // intrinsic coverage of any box), so it cannot distort. The case that BINDS
+        // the aesthetic claim is a NON-UNIFORM (sheared) refit: the actual deck
+        // slide-enter scenario is a portrait→landscape TRANSPOSE where `sx ≠ sy`
+        // STRONGLY. Drive 360×720 (tall) → 1280×360 (wide) — sx≈3.56, sy≈0.5, an
+        // axis swap — and assert the sheared lattice STILL covers BOTH axes ≥ 90% on
+        // the first post-resize frame (the field fills the transposed box, not just
+        // grows uniformly). This is the arm RG3 added to bind the transpose claim the
+        // whole wave exists to fix.
+        const shear: {
+            handlePresent: boolean;
+            coverageW: number;
+            coverageH: number;
+            sx: number;
+            sy: number;
+            w: number;
+            h: number;
+        } = await page.evaluate(async () => {
+            const r = (window as unknown as Record<string, unknown>)
+                .__constellationRefit as
+                | {
+                      field?: {
+                          nodes: { x: number; y: number }[];
+                          w: number;
+                          h: number;
+                      };
+                      resizeTo?: (w: number, h: number) => void;
+                  }
+                | undefined;
+            if (!r || !r.field || !r.resizeTo) {
+                return {
+                    handlePresent: false,
+                    coverageW: 0,
+                    coverageH: 0,
+                    sx: 0,
+                    sy: 0,
+                    w: 0,
+                    h: 0,
+                };
+            }
+            const field = r.field;
+            const nextFrame = () =>
+                new Promise<void>((res) => requestAnimationFrame(() => res()));
+            const bboxCoverage = (w: number, h: number) => {
+                const xs = field.nodes.map((n) => n.x);
+                const ys = field.nodes.map((n) => n.y);
+                return {
+                    cw: (Math.max(...xs) - Math.min(...xs)) / w,
+                    ch: (Math.max(...ys) - Math.min(...ys)) / h,
+                };
+            };
+            // SETTLE to a tall PORTRAIT extent first (the slide-enter pre-state).
+            const TALL_W = 360;
+            const TALL_H = 720;
+            r.resizeTo(TALL_W, TALL_H);
+            for (let i = 0; i < 8; i++) await nextFrame();
+            // TRANSPOSE to a wide LANDSCAPE extent — sx ≫ 1, sy < 1 (the shear).
+            const WIDE_W = 1280;
+            const WIDE_H = 360;
+            const sx = WIDE_W / TALL_W;
+            const sy = WIDE_H / TALL_H;
+            r.resizeTo(WIDE_W, WIDE_H);
+            await nextFrame(); // the FIRST post-transpose frame — refit already applied
+            const cov = bboxCoverage(field.w, field.h);
+            return {
+                handlePresent: true,
+                coverageW: cov.cw,
+                coverageH: cov.ch,
+                sx,
+                sy,
+                w: field.w,
+                h: field.h,
+            };
+        });
+
+        expect(
+            shear.handlePresent,
+            "the refit handle vanished before the shear arm",
+        ).toBe(true);
+        // the shear is real (sx ≫ 1, sy < 1 — a portrait→landscape transpose, NOT a
+        // uniform grow): a sanity guard that the arm actually exercised a non-uniform
+        // refit (the case the uniform-grow arm structurally cannot).
+        expect(
+            shear.sx,
+            `the shear arm did not stretch the x-axis (sx ${shear.sx.toFixed(2)}) — the transpose was not non-uniform`,
+        ).toBeGreaterThan(2);
+        expect(
+            shear.sy,
+            `the shear arm did not compress the y-axis (sy ${shear.sy.toFixed(2)}) — the transpose was not a portrait→landscape shear`,
+        ).toBeLessThan(1);
+        // the sheared lattice STILL fills both axes ≥ 90% on the first frame.
+        expect(
+            shear.coverageW,
+            `the sheared lattice did NOT fill the transposed canvas width on frame 1: coverage ${(shear.coverageW * 100).toFixed(0)}% (< ${COVERAGE_PASS * 100}%) — the per-axis refit did not span the wide box`,
+        ).toBeGreaterThanOrEqual(COVERAGE_PASS);
+        expect(
+            shear.coverageH,
+            `the sheared lattice did NOT fill the transposed canvas height on frame 1: coverage ${(shear.coverageH * 100).toFixed(0)}% (< ${COVERAGE_PASS * 100}%) — the per-axis refit did not span the wide box`,
+        ).toBeGreaterThanOrEqual(COVERAGE_PASS);
 
         // ── (2) AUTO-DRIFT-CADENCE ──────────────────────────────────────────────
         const wander: WanderSample = await page.evaluate(

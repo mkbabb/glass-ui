@@ -84,6 +84,16 @@ const ALLOWLIST = new Set([
     "table",
     "data-table",
     "badge",
+    // AY.W-PRIM-POLISH D7 ARM B — Checkbox/Radio are 16px selection atoms, below
+    // the size where glass reads as glass over a flat substrate (the blur is
+    // sub-perceptual at that scale — ARM A would ship machinery that paints
+    // opaque anyway, the speculative-substrate overfit). Their checked/unchecked
+    // STATE wants MAXIMAL contrast — the same legibility argument the allowlist
+    // already makes for `badge`'s loud pill — so their opacity is RATIFIED here,
+    // not unconverted. The Switch TRACK (24×44px) earns glass and took ARM A
+    // (the `.glass-wash` tier + specular in Switch.vue) — it is NOT on this list.
+    "checkbox",
+    "radio-group",
 ]);
 
 function walk(dir, out) {

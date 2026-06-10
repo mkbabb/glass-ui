@@ -35,6 +35,7 @@ import { test, expect } from "@playwright/test";
 import type { Locator, Page } from "@playwright/test";
 import { PNG } from "pngjs";
 import { PI_TARGETS } from "./pi-manifest.ts";
+import { assertServedDemoAurora } from "./served-app-sentinel.ts";
 
 const INTERIOR_INSET = 0.2; // sample the central 60% box (avoid the edge fade)
 const SETTLE_MS = 800; // procedural loop → a settled frame before each read
@@ -118,9 +119,23 @@ function interiorStats(png: PNG, inset: number) {
     };
 }
 
+// W-AUR-STUDIO re-skin: the prior driver drove a native `[data-atom="medium"] select`
+// the LabeledSelect re-skin removed (the gate's RED-at-HEAD selectOption timeout). The
+// four atomicity/variance/chroma/distinctness floors each need the medium's FULL hero
+// config (the van-Gogh gap-fraction comes from the preset's sparse densityFill, NOT a
+// bare medium swap over a smooth preset), so this drives the medium via its hero PRESET
+// button — the same robust path the arresting spec uses (one click sets palette + nuclei
+// + medium). Each of the four media has a preset that pins it (presets.ts PRESET_META).
+const MEDIUM_PRESET_LABEL: Record<string, string> = {
+    vangogh: "Van Gogh",
+    "oil-pastel": "Oil Pastel Sunset",
+    crayon: "Crayon",
+    oil: "Oil Impasto",
+};
+
 async function selectMedium(page: Page, medium: string): Promise<void> {
-    const mediumSelect = page.locator(`[data-atom="medium"] select`);
-    await mediumSelect.selectOption(medium);
+    const label = MEDIUM_PRESET_LABEL[medium] ?? medium;
+    await page.locator(`button[aria-pressed]`, { hasText: label }).first().click();
     await page.waitForTimeout(SETTLE_MS);
 }
 
@@ -133,6 +148,11 @@ test.describe("aurora-painterly-statistics (π lane — the operationalized 'stu
         }) => {
             await page.setViewportSize({ width: vp.width, height: vp.height });
             await page.goto(PI_TARGETS.aurora.path);
+
+            // SERVED-APP SENTINEL (D7 / HC-aurora §2a): fail-CLOSED if a FOREIGN app holds
+            // the port — the canvas-presence-only liveness clobbered status:pass →
+            // status:skipped when the wrong app was served.
+            await assertServedDemoAurora(page);
 
             const canvas = page.locator("canvas.aurora-canvas").first();
             await canvas.waitFor({ state: "visible", timeout: 20_000 });

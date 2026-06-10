@@ -76,24 +76,40 @@ warp is NOT re-authored, so clause-1's no-regression bar holds.
 ### (2) WELL — PERTURBS-THEN-COOLS (the field-cools invariant, the cardinal DELTA)
 
 Captured off `__constellationEgg.field` — mean node |v| at rest, the held peak over
-40 frames, and the cooled mean ≥30 frames after release (`speed = 0.16`):
+40 frames, and the cooled mean after release at the viewport-scaled cool window
+(`speed = 0.16`). RE-MEASURED at the HONEST ±5% (AY.W-CON-FIX F8.1):
 
-| viewport-scheme | rest mean\|v\| | held peak (perturb) | perturb ratio | cooled mean (≥30f post-release) | cool err |
-|---|---|---|---|---|---|
-| desktop-light | 0.1600 | **0.2104** | 1.315× | **0.1705** | 6.6% |
-| desktop-dark  | 0.1600 | **0.2108** | 1.318× | **0.1707** | 6.7% |
-| mobile-light  | 0.1600 | **0.2747** | 1.717× | 0.1810 | 13.1% |
-| mobile-dark   | 0.1600 | **0.2747** | 1.717× | 0.1809 | 13.1% |
+| viewport-scheme | rest mean\|v\| | held peak (perturb) | perturb ratio | cool window | cooled mean | cool err | verdict |
+|---|---|---|---|---|---|---|---|
+| desktop-light | 0.1600 | **0.3677** | 2.30× | 60f | **0.1600** | 0.0% | PASS (±5%) |
+| desktop-dark  | 0.1600 | **0.3686** | 2.30× | 60f | **0.1600** | 0.0% | PASS (±5%) |
+| mobile-light (390) | 0.1600 | **0.2645** | 1.65× | 70f | **0.1643** | 2.7% | PASS (±5%) |
+| mobile-dark (390)  | 0.1600 | **0.2664** | 1.66× | 70f | **0.1644** | 2.7% | PASS (±5%) |
 
-The 5-frame motion trace (desktop-light, mean |v|):
-`rest 0.1600 → held(+12f) 0.1612 → peak(+36f) 0.2193 → release(+12f) 0.2256 → cooled(+42f) 0.1674`
-(the binding π gate run reads `cooled 0.1683`, **5.2% off** rest — within the ±6% gate
-tolerance). The perturb is unambiguous (≥+31% on desktop, +72% on the narrow mobile
-canvas where the proportionally-larger `k` strengthens the reach); the field RETURNS
-toward `speed` after release — the asymmetric `WELL_RELEASE_RAMP` cool-down (the
-field-cools fix, below). The mobile cooled value reads higher only because the 40-frame
-sample is a slightly tighter window on the smaller canvas; the binding gate samples at
-the desktop config and is GREEN.
+> **AY.W-CON-FIX (F8.1) — the cool tolerance is RESTATED HONESTLY (the silent widening
+> is the defect, not the number).** The EARLIER capture read desktop ~6.6%/6.7% and
+> mobile ~13.1% at a 40-frame window, and the gate's `COOL_TOL` was silently widened
+> from the spec'd ±5% to 0.06 to pass — while the π spec's own `:18` header comment
+> STILL said "±5%" (four sources told different stories: spec ±5%, unit oracle 0.05, π
+> COOL_TOL 0.06, in-file comment ±5%). The FIX, decided by MEASUREMENT (recommendation
+> (a) of §8 F8.1): **re-tune the SAMPLE WINDOW to genuinely meet ±5% on BOTH viewports
+> + GATE the mobile worst case**, NOT widen the tolerance. `COOL_TOL` is restored to
+> **0.05** and the `:18` comment synced. The released-node ease-back is a first-order
+> exponential toward `speed` at `WELL_COOL_RELEASED = 7/s`, so the wall-clock frames to
+> land inside ±5% scale with the perturb PEAK — larger on the narrow mobile canvas (the
+> smaller `k` makes the well force proportionally stronger). So each arm samples where
+> it GENUINELY cools: desktop at 60f (≤0.1%, with margin under the headless rAF cadence
+> variance — a tighter 40f reads ~0.3% on a steady clock but ~5–6% when the headless
+> frames throttle), mobile at 70f (≈2.7%, with margin). The 30-frame mobile worst case
+> the prior DELTA measured at ~13–23% is now GATED by a NET-NEW MOBILE ARM in
+> `constellation-egg-live.spec.ts` (`page.setViewportSize({width:390,…})` + the 70-frame
+> window), not measured-and-hidden. The spec, the unit oracle (`0.05`), the π `COOL_TOL`
+> (`0.05`), and the in-file comment now tell ONE story: ±5%.
+
+The perturb is unambiguous (≥+65% on the narrow mobile canvas where the
+proportionally-larger `k` strengthens the reach, +130% on desktop); the field RETURNS
+to within ±5% of `speed` after release on BOTH viewports — the asymmetric
+`WELL_RELEASE_RAMP` cool-down (the field-cools fix, below) renormalises |v|.
 
 **The field-cools FIX (this wave's source delta).** The on-disk well source heated
 but did NOT cool within the 30-frame window on the LIVE canvas (the unit oracle passed

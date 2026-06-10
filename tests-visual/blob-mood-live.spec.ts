@@ -86,9 +86,22 @@ async function motionRate(page: Page, blob: Locator): Promise<number> {
     return sum / (frames.length - 1);
 }
 
-/** Click a mood pill (a labeled <button> in the demo mood row) — a MANUAL setMood. */
+// AY.W-BLOB-CONFIG — the IA folded the interaction + mood heroes into ONE
+// Configurator-driven studio (the inv-16 dog-food). The mood is now driven through the
+// studio's preset tab-row (the Configurator's PresetPickerRow — a `role="tablist"`),
+// each preset carrying a baseline mood: "Excited" → excited (fast orbit), "Shy" →
+// sleepy (slow orbit). Selecting a preset writes `studio.config.mood`, which the demo's
+// `watch(() => studio.config.mood)` drives onto the hero via the MANUAL `setMood` expose
+// — the exact manual-mood path this spec exercises for the persistence verdict.
+const MOOD_PRESET: Record<string, string> = {
+    excited: "Excited",
+    sleepy: "Shy",
+    curious: "Calm",
+};
+/** Select the studio preset whose baseline mood is `mood` — a MANUAL setMood. */
 async function clickMood(page: Page, mood: string): Promise<void> {
-    await page.getByRole("button", { name: mood, exact: true }).first().click();
+    const presetLabel = MOOD_PRESET[mood] ?? mood;
+    await page.getByRole("tab", { name: presetLabel }).first().click();
 }
 
 test.describe("blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)", () => {
@@ -96,12 +109,11 @@ test.describe("blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)"
         page,
     }) => {
         await page.goto(MOOD_SCENE.path);
-        // The consolidated `substrates/blob` page mounts TWO live <GooBlob> contexts:
-        // [0] the interaction hero, [1] the mood hero the pill row drives. The mood pills
-        // call setMood on the MOOD hero, so the mood-derived motion delta is read off the
-        // SECOND canvas (AY.W-BLOB2 — the IA consolidation; the prior dedicated
-        // blob-mood page had ONE blob, so .first() was right then).
-        const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').nth(1);
+        // AY.W-BLOB-CONFIG — the Configurator adoption folded the interaction + mood
+        // heroes into ONE Configurator-driven studio stage (the inv-16 dog-food), so the
+        // page now mounts ONE live <GooBlob> context (the studio hero) — the mood Select
+        // drives setMood on it. The prior two-blob IA (.nth(1)) collapsed to .first().
+        const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
         await blob.waitFor({ state: "visible", timeout: 20_000 });
         await page.waitForTimeout(900); // let the initial mood + orbit settle
 

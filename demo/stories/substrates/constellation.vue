@@ -117,9 +117,20 @@ const ANOMALY_LABEL = "anomaly";
 const ANOMALY_RESOLVED = false;
 const freezeRef = useTemplateRef<InstanceType<typeof Constellation>>("freezeRef");
 
+// AY.W-CON-FIX (F8.3) — the OBSERVED `now` the engine actually hands `drawAnomaly`,
+// stamped inside the painter below. The freeze-gate's overlay-phase leg reads THIS
+// (not the recomputed constant), so a regression of the frozen-`now` handoff
+// (Constellation.vue handing a LIVE `now` under freeze) REDs the gate — the leg is
+// no longer a tautology. -1 until the first paint stamps it.
+let lastPaintedNow = -1;
+
 const drawAnomaly = computed(
     () =>
         (ctx: CanvasRenderingContext2D, field: ConstellationField, now: number) => {
+            // Record the `now` the engine handed this painter (F8.3). Under freeze
+            // the engine clamps it to FROZEN_NOW (0); a live-`now` leak shows up
+            // here as a non-zero, advancing value.
+            lastPaintedNow = now;
             // Pin to the engine-owned focal (the W-CON1 auto-drift focal under
             // `warpOnClick`/`wander`); before the first warp it rides field-center.
             const x = field.warp.x;
@@ -274,6 +285,15 @@ onMounted(() => {
             overlayPulseRadius(): number {
                 const phase = (0 % 2600) / 2600; // FROZEN_NOW = 0
                 return (12 + phase * 24) * freezeField.k;
+            },
+            // AY.W-CON-FIX (F8.3) — the `now` the engine ACTUALLY handed the
+            // painter on its last paint (stamped inside `drawAnomaly`). Under
+            // freeze this is FROZEN_NOW (0); a live-`now` leak (a regression of
+            // the Constellation.vue frozen-`now` handoff) shows up as a non-zero,
+            // advancing value, so the freeze gate's overlay-phase leg is REAL (it
+            // observes the frozen-`now` contract, not a recomputed constant).
+            paintedNow(): number {
+                return lastPaintedNow;
             },
         };
     }

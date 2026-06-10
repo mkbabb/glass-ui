@@ -16,6 +16,7 @@
 import { describe, expect, it } from "vitest";
 import {
     resolveAtoms,
+    configToAtoms,
     nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,
@@ -290,5 +291,76 @@ describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
 
     it("the interactivity flag defaults OFF (the wispy-sky default stays non-interactive)", () => {
         expect(resolveAtoms(DEFAULT_ATOMS).interactivity).toBeUndefined();
+    });
+});
+
+// ── AY.W-AUR-STUDIO — the configToAtoms inverse (the seed-from-preset projection). ──
+describe("AY.W-AUR-STUDIO — configToAtoms projects a config back onto the ≤7 atoms", () => {
+    it("recovers the medium (the headline atom — the dock seeds the live preset's medium)", () => {
+        for (const kind of [
+            "smooth",
+            "oil",
+            "vangogh",
+            "oil-pastel",
+            "crayon",
+            "watercolor",
+            "pastel",
+        ] as AuroraMedium[]) {
+            const cfg: AuroraConfig = { ...DEFAULT_AURORA_CONFIG, medium: kind };
+            expect(configToAtoms(cfg).medium?.kind).toBe(kind);
+        }
+    });
+
+    it("recovers the energy/noise/zone-count/motion axes within the projection's resolution", () => {
+        // Build a config FROM a known atom set, then project it back — the recoverable axes
+        // round-trip (harmony/arrangement are baked away by design, so they are NOT asserted).
+        const source: AuroraAtoms = {
+            seed: "#3a7bd5",
+            harmony: "analogous",
+            colorEnergy: 0.8,
+            zones: { count: 5, arrangement: "composed" },
+            noise: 0.3,
+            medium: { kind: "vangogh", amount: 0.7 },
+            motion: "drifting",
+        };
+        const cfg = resolveAtoms(source);
+        const back = configToAtoms(cfg);
+        expect(back.medium?.kind).toBe("vangogh");
+        expect(back.zones?.count).toBe(5);
+        expect(back.motion).toBe("drifting");
+        // energy/noise invert off saturation/warpAmount — within a lerp-inverse tolerance.
+        expect(back.colorEnergy).toBeCloseTo(0.8, 1);
+        expect(back.noise).toBeCloseTo(0.3, 1);
+    });
+
+    it("classifies the motion atom off the drift fields (still/breathing/drifting)", () => {
+        const still: AuroraConfig = {
+            ...DEFAULT_AURORA_CONFIG,
+            nucleiDrift: 0,
+            paletteDrift: 0,
+            warpDrift: 0,
+            breathDepth: 0,
+        };
+        expect(configToAtoms(still).motion).toBe("still");
+        const breathing: AuroraConfig = { ...still, breathDepth: 0.05 };
+        expect(configToAtoms(breathing).motion).toBe("breathing");
+        const drifting: AuroraConfig = { ...still, nucleiDrift: 0.015, breathDepth: 0.05 };
+        expect(configToAtoms(drifting).motion).toBe("drifting");
+    });
+
+    it("a smooth medium projects to { kind: 'smooth' } with no texture amount", () => {
+        const cfg: AuroraConfig = { ...DEFAULT_AURORA_CONFIG, medium: "smooth" };
+        const m = configToAtoms(cfg).medium;
+        expect(m?.kind).toBe("smooth");
+        expect((m as { amount?: number }).amount).toBeUndefined();
+    });
+
+    it("resolveAtoms refines OVER a base config (the non-atom fields survive the touch)", () => {
+        // The base carries a hand-set non-atom field (strokeScale) the ≤7-knob projection
+        // does NOT carry; resolving an atom subset over it must PRESERVE that field.
+        const base: AuroraConfig = { ...DEFAULT_AURORA_CONFIG, strokeScale: 222 };
+        const refined = resolveAtoms({ noise: 0.9 }, base);
+        expect(refined.strokeScale).toBe(222); // the non-atom field survived
+        expect(refined.warpAmount).not.toBe(base.warpAmount); // the noise atom DID apply
     });
 });

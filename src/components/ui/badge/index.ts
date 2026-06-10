@@ -17,8 +17,17 @@ export const badgeVariants = cva(
           'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
         secondary:
           'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        // AY.W-PRIM-POLISH D4 — the dark destructive plate is DEEPENED at the
+        // badge so the 14px/600 light-ink label clears AA. The shared dark
+        // `--destructive` (hsl(0 80% 60%) = rgb(235,71,71)) painted only 3.07:1
+        // under `--destructive-foreground` text — a contrast miss the loud-pill
+        // allowlist does NOT excuse. The `dark:` plate drops to hsl(0 70% 45%)
+        // (rgb(195,34,34) → 4.75:1 over the rgb(232,231,227) text), preserving
+        // the saturated-red loud register. Light passes (4.7), so only the dark
+        // arm is re-pointed; the shared `--destructive` token is UNTOUCHED (other
+        // destructive consumers — Button, input invalid-ring — keep their value).
         destructive:
-          'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+          'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-[hsl(0_70%_45%)] dark:hover:bg-[hsl(0_70%_45%)]/85',
         outline: 'text-foreground',
         // Status-tier variants — consume the canonical `--success / --warning
         // / --info` plate + `--{success,warning,info}-foreground` glyph

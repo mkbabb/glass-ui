@@ -141,7 +141,10 @@ forward pass cannot resolve, and a monochrome-palette field (the oil hero) has n
 luminance gradient for the tensor to read regardless of stroke density. The named operator
 that resolves it is **T5 — the anisotropic-Kuwahara multi-pass soft-blend** (RESEARCH.md §3
 T5; the "make a gradient read as oil paint" finish, the multi-pass operator), explicitly
-GATED on `AY.W-AUR-WEBGPU-DECIDE`. If a hero route binds the painterly Kuwahara finish, that
-is the named consumer the WebGPU resurrect-branch demands — NOT a single-pass patch this wave
-forces. The van-Gogh medium (the wave's headline "arresting" claim) lands the full bar on the
-single-pass path today; the oil/oil-pastel coherence ceiling is the routed successor.
+owned by `AY.W-AUR-T5` (the LIVE successor minted by W-AUR-STUDIO §6 — the terminally-retired
+`W-AUR-WEBGPU-DECIDE` could not receive this residual, which materialized after its close).
+`AY.W-AUR-T5` is a greenfield WebGL2-or-FBO multi-pass wave (the WebGPU-resurrect path is
+explicitly DEAD), gated on the USER-HINGE: accept the single-pass A/β ceiling as the permanent
+register, OR spend the multi-pass FBO + Kuwahara cost. The van-Gogh medium (the wave's
+headline "arresting" claim) lands the full bar on the single-pass path today; the oil/oil-pastel
+coherence ceiling is the routed successor.

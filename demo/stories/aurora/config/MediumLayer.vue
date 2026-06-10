@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { SegmentedTabs } from "../../../../src/components/custom/tabs";
 import { LabeledSelect } from "../../../../src/components/custom/labeled-field";
 import type {
@@ -33,6 +33,10 @@ const mediumLabelByValue = Object.fromEntries(
 ) as Record<AuroraMedium, string>;
 const mediumLabel = computed(() => mediumLabelByValue[props.config.medium]);
 
+// reka's controlled `:open` prop must round-trip via `v-model:is-open` (a literal
+// `:is-open="false"` keeps the select controlled-shut — the dead-select footgun).
+const mediumOpen = ref(false);
+
 function setMedium(label: string) {
     props.config.medium = mediumByLabel[label]!;
 }
@@ -59,9 +63,10 @@ function setNoiseOctaves(v: string | string[]) {
             label="Medium"
             tooltip="Painterly body the field is rendered with"
             :items="mediumLabels"
-            :is-open="false"
+            :is-open="mediumOpen"
             :model-value="mediumLabel"
             @update:model-value="setMedium"
+            @update:open="(v: boolean) => (mediumOpen = v)"
         />
         <div v-if="showStrokeMode" class="flex flex-col gap-1">
             <p class="text-admin-label text-muted-foreground">Stroke mode</p>

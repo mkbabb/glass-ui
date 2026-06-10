@@ -27,6 +27,7 @@ import { test, expect } from "@playwright/test";
 import type { Locator, Page } from "@playwright/test";
 import { PNG } from "pngjs";
 import { PI_TARGETS } from "./pi-manifest.ts";
+import { assertServedDemoAurora } from "./served-app-sentinel.ts";
 
 const INTERIOR_INSET = 0.2; // sample the central 60% box (avoid edge fade)
 const SETTLE_MS = 700; // procedural loop → a settled frame before each read
@@ -76,6 +77,12 @@ test.describe("aurora-atoms-render (π lane — per-atom visible change, fail-CL
     }) => {
         await page.goto(PI_TARGETS.aurora.path);
 
+        // SERVED-APP SENTINEL (D7 / HC-aurora §2a): fail-CLOSED if a FOREIGN app holds the
+        // port — the canvas-presence-only liveness clobbered status:pass → status:skipped
+        // when the wrong app was served. The genuine GPU-less case still reads as a SKIP
+        // (the demo IS served — the sentinel passes — but the canvas never paints).
+        await assertServedDemoAurora(page);
+
         const canvas = page.locator("canvas.aurora-canvas").first();
         await canvas.waitFor({ state: "visible", timeout: 20_000 });
 
@@ -96,14 +103,47 @@ test.describe("aurora-atoms-render (π lane — per-atom visible change, fail-CL
 
         // Each atom drive: read BEFORE, set the control, read AFTER, the delta must clear
         // the drift baseline + the floor. Controls are the `data-atom`-tagged inputs.
+        //
+        // W-AUR-STUDIO re-skin: the atoms panel is the library's own LabeledSlider (reka
+        // SliderRoot — a `role="slider"` thumb, NOT a native `<input type=range>`) and
+        // LabeledSelect (reka Select — a `role="combobox"` trigger that opens a
+        // `role="listbox"` of `role="option"`s, NOT a native `<select>`). The drivers
+        // route onto that DOM. The `data-atom` anchors survive the re-skin.
+        //
+        // The reka slider thumb is keyboard-driven: Home → min, End → max (the spec only
+        // drives the band edges 0/1 and the max-count, so the edge keys are total).
         async function setRange(atom: string, value: number) {
-            const input = page.locator(`[data-atom="${atom}"] input[type="range"]`);
-            await input.fill(String(value));
-            await input.dispatchEvent("input");
+            const thumb = page.locator(`[data-atom="${atom}"] [role="slider"]`).first();
+            await thumb.scrollIntoViewIfNeeded();
+            await thumb.focus();
+            const min = Number(await thumb.getAttribute("aria-valuemin"));
+            const max = Number(await thumb.getAttribute("aria-valuemax"));
+            // Map the requested value to a band edge (the spec only asks for min/max).
+            await page.keyboard.press(value <= min ? "Home" : value >= max ? "End" : "End");
+            await page.waitForTimeout(120);
         }
+        // The medium select drives by VALUE ("oil"/"smooth"/…); the option text is the
+        // Title-Case LABEL — map value → label, open the trigger, click the option.
+        const MEDIUM_LABEL: Record<string, string> = {
+            smooth: "Smooth",
+            pastel: "Pastel",
+            watercolor: "Watercolor",
+            oil: "Oil",
+            crayon: "Crayon",
+            vangogh: "Van Gogh",
+            "oil-pastel": "Oil Pastel",
+        };
         async function setSelect(atom: string, value: string) {
-            const select = page.locator(`[data-atom="${atom}"] select`);
-            await select.selectOption(value);
+            const label = MEDIUM_LABEL[value] ?? value;
+            const trigger = page.locator(`[data-atom="${atom}"] [role="combobox"]`).first();
+            await trigger.scrollIntoViewIfNeeded();
+            await trigger.click();
+            await page
+                .locator('[role="option"]')
+                .filter({ hasText: new RegExp(`^\\s*${label}\\s*$`) })
+                .first()
+                .click();
+            await page.waitForTimeout(120);
         }
         async function setColor(atom: string, value: string) {
             const input = page.locator(`[data-atom="${atom}"] input[type="color"]`);

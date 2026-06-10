@@ -321,9 +321,26 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // (after an offscreen/hidden/PRM re-arm) — CLAMP it to ~50ms on
                     // EVERY integrated axis so the tempo/rest-pose composition never
                     // jumps (the W11 extension of the W10 spring-only clamp).
+                    // Raw per-frame delta CLAMPED to [0, 50]ms (AY.W-BLOB-CONFIG D4).
+                    // The first post-resume frame is the divergence hazard: a `manual`
+                    // resume rebases the substrate clock (`startTime = now - 1000`), so
+                    // `timeSec` snaps back to ~1.0 while `lastTimeSec` still holds the
+                    // pre-pause elapsed (often tens of seconds). The raw delta is then
+                    // strongly NEGATIVE (`-1178`, `-2017`ms measured), and a negative dt
+                    // run BACKWARD through the symplectic click-pulse integrator
+                    // (`pulseVel += accel·dt; pulse += pulseVel·dt`) flips its sign and
+                    // diverges — the strobe-to-charcoal-slab wreck the page's own pause
+                    // control produced (RA-blob §C.1). `Math.min(raw, 50)` clamped only
+                    // the UPPER bound (the offscreen/PRM seconds-long re-arm), letting the
+                    // negative half through. The lower clamp (`Math.max(.., 0)`) makes a
+                    // resume rebase a no-op step (dt 0 → simTime/springs/pulse advance
+                    // zero this frame, then resume normally next frame) so the simulation
+                    // CANNOT run backward. The clean off-screen-park path hits the SAME
+                    // rebase, so this also hardens that resume.
                     const rawDtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
                     lastTimeSec = timeSec;
-                    const dtMs = Math.min(rawDtMs, 50);
+                    const dtMs = Math.max(0, Math.min(rawDtMs, 50));
+                    if (rawDtMs < 0) console.warn(`[DIAG-NEGDT] rawDtMs=${rawDtMs.toFixed(0)} timeSec=${timeSec.toFixed(2)}`);
 
                     // ── The ONE master tempo scalar (W11.c) ──────────────────────
                     //
@@ -412,15 +429,29 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                         }
                     }
 
-                    // Pointer
+                    // Pointer. The NET attraction is the config lean + the mood
+                    // additive; compute it ONCE so the body-lean uniform AND the trail
+                    // pseudopod reach (below) read the SAME signed value.
                     const ptr = pointer.pointer.value;
+                    const netAttraction = cInt.pointerAttraction + params.pointerAttraction;
                     gl.uniform2f(U.uPointer, ptr.x * 0.5 * POS_SCALE, ptr.y * 0.5 * POS_SCALE);
                     gl.uniform1f(U.uPointerActive, pointer.active.value ? 1.0 : 0.0);
-                    gl.uniform1f(
-                        U.uPointerAttraction,
-                        cInt.pointerAttraction + params.pointerAttraction,
-                    );
+                    gl.uniform1f(U.uPointerAttraction, netAttraction);
                     gl.uniform1f(U.uPointerStrength, cInt.pointerStrength * POS_SCALE);
+
+                    // AY.W-BLOB-CONFIG D2 — the SIGN of the lean reaches the TRAIL too.
+                    // The body uv-shift (shader, sign-fixed) now leans the BODY the right
+                    // way, but the decaying-radius pseudopod (the trail below) reaches
+                    // toward the cursor on MOVEMENT ALONE, sign-independent — so a
+                    // shy-away (negative) attraction would still extend a pseudopod toward
+                    // the cursor, and that toward-reach keeps the net centroid LEANING IN
+                    // even as the body shies. A shy-away creature RETRACTS its reach: gate
+                    // the pseudopod base radius by the POSITIVE part of the net attraction
+                    // (reach ~1 at the default lean, 0 once the net goes negative), so a
+                    // negative attraction shies the WHOLE creature — body AND pseudopod —
+                    // away as one. The trail count stays; the zero-radius samples paint
+                    // nothing.
+                    const reachFactor = Math.max(0, Math.min(1, netAttraction));
 
                     // Velocity-driven squash-and-stretch (W10). The spring velocity
                     // (normalized [-1,1]/s) maps into body space like the pointer.
@@ -434,8 +465,12 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
 
                     // Pointer trail (W10) — decaying-radius pseudopod. The trail is
                     // in the same normalized [-1,1] space as the pointer, so map it
-                    // exactly like uPointer (`* 0.5 * POS_SCALE`).
-                    const trail = pointer.trailSources(cGeo.satelliteRadius * 0.7);
+                    // exactly like uPointer (`* 0.5 * POS_SCALE`). The base radius rides
+                    // `reachFactor` (D2) so the pseudopod reaches toward the cursor ONLY
+                    // while the net lean is positive.
+                    const trail = pointer.trailSources(
+                        cGeo.satelliteRadius * 0.7 * reachFactor,
+                    );
                     gl.uniform1i(U.uTrailCount, trail.count);
                     for (let i = 0; i < TRAIL_N; i++) {
                         const posLoc = trailPosLocs[i] ?? null;
@@ -669,8 +704,11 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     );
 
     // Repaint on a color change while parked (reduced-motion / paused) so the new
-    // color lands without the perpetual loop.
+    // color lands without the perpetual loop. AY.W-BLOB-CONFIG D1 — the palette stops
+    // wake the loop too, so a seed/harmony-driven `paletteStops` change repaints the
+    // hero body even when the demand loop has parked at rest.
     watch(color, () => canvasHandle?.wake());
+    watch(paletteStops, () => canvasHandle?.wake(), { deep: true });
 
     onUnmounted(() => {
         clearWakeTimer();

@@ -525,7 +525,7 @@
     --constellation-warp-zeta:        1.0;    /* critically damped — a focal mark must NOT ring */
     --constellation-well-gain:        14000;  /* inverse-square force scale (the held-pull gain) */
     --constellation-well-reach:       340;    /* base-width px — the well's reach (k-scaled at step) */
-    --constellation-well-ramp:        4.0;    /* 1/s — the hold/release ramp rate (≈0.25s to full) */
+    --constellation-well-ramp:        4.0;    /* 1/s — the ARM rate (≈0.25s bloom; release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant, not consumer-tunable) */
     --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
     --constellation-well-hold-ms:     140;    /* ms hold before the well arms */
     --constellation-wander-idle:      8000;   /* ms — min idle between auto re-targets (the W-CON1 drift cadence) */
@@ -1072,13 +1072,22 @@
 
     /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.
        Three weights cover the deployed range: dialog-scroll (subtle),
-       canonical modal (default), drawer/full-cover (strong). Currently
-       5 raw `bg-black/{40,50,80}` sites across Dialog/Sheet/Drawer/
-       ConfirmDialog hardcode the value; W2.A migrates consumers.
-       R5 vocab.γ gap row 2. */
-    --overlay-scrim:         color-mix(in srgb, var(--shadow-color) 50%, transparent);
-    --overlay-scrim-strong:  color-mix(in srgb, var(--shadow-color) 80%, transparent);
-    --overlay-scrim-subtle:  color-mix(in srgb, var(--shadow-color) 40%, transparent);
+       canonical modal (default), drawer/full-cover (strong).
+
+       AY.W-PRIM-POLISH D3 — the scrim is its OWN identity token, NOT derived
+       from `--shadow-color`. A scrim's role is to RECEDE: it must pin to INK in
+       BOTH modes. The cartoon-shadow family rides `--shadow-color: var(--foreground)`
+       (correct — a shadow re-tints under `.dark` by construction), but a scrim
+       that does the same FLOODS the dark room with a cream fog (the old dark
+       overlay painted `srgb(0.91… / 0.5)`, a near-white wash that BRIGHTENED the
+       page at the modal moment). `--overlay-scrim-ink` is a fixed warm near-black
+       (the light-mode `--foreground` value), re-resolved verbatim in `.dark` so
+       the scrim recedes in both modes. Clean break, no alias (no-backwards-compat).
+       The `--shadow-color` / `--shadow-cartoon-*` family is UNTOUCHED. */
+    --overlay-scrim-ink:     hsl(24 10% 10%);
+    --overlay-scrim:         color-mix(in srgb, var(--overlay-scrim-ink) 50%, transparent);
+    --overlay-scrim-strong:  color-mix(in srgb, var(--overlay-scrim-ink) 80%, transparent);
+    --overlay-scrim-subtle:  color-mix(in srgb, var(--overlay-scrim-ink) 40%, transparent);
 
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
@@ -1528,10 +1537,19 @@
     --gold: oklch(0.751 0.147 84.2);
     --gold-light: oklch(0.890 0.183 96.1);
     --gold-dark: oklch(0.599 0.132 64.2);
+    /* AY.W-PRIM-POLISH D1 — the saturated CTA plate the AW.W13 gold-CTA contract
+       names. A FIXED deep gold (mode-INVARIANT — the gold-CTA hover backplate must
+       be dark in BOTH modes so the white label clears ≥4.5:1; deepening toward the
+       mode-flipping `--foreground` brightened the dark plate to a cream-gold and
+       broke dark). ~`--gold-dark` deepened toward warm-ink → ~rgb(120,87,45),
+       6.5:1 white in light / 5.5:1 in dark. The opaque base of `btn-audacious-gold`
+       :hover. */
+    --gold-deep: oklch(0.487 0.103 63.0);
 
     --color-gold: var(--gold);
     --color-gold-light: var(--gold-light);
     --color-gold-dark: var(--gold-dark);
+    --color-gold-deep: var(--gold-deep);
 
     /* ═══════════════════════════════════════════════
        §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark

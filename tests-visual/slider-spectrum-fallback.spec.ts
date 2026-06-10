@@ -164,17 +164,26 @@ for (const scheme of ["light", "dark"] as const) {
             ).toBeGreaterThan(10);
 
             // ── Capture the own-surface PNGs (the ledger evidence) ──
-            // The StoryPage root is itself a <section> wrapping the per-recipe
-            // leaf <section>s; `:not(:has(section))` excludes that wrapper so we
-            // frame the recipe's own slider, scoped by its exact `.section-label`.
+            // RG3-A — a PADDED clip off the section boundingBox so the FULL knob
+            // silhouette shows (the prior leaf-section screenshot AMPUTATED the
+            // lower third of the floating knob; now the knob is inscribed in the
+            // thick cylinder, but the padded clip guarantees the full capsule).
             const stdSection = page
                 .locator("section:not(:has(section))", {
                     has: page.locator(".section-label", { hasText: /^standard$/ }),
                 })
                 .first();
             await stdSection.scrollIntoViewIfNeeded();
-            await stdSection.screenshot({
+            await page.waitForTimeout(120);
+            const stdBox = (await stdSection.boundingBox())!;
+            await page.screenshot({
                 path: `${OUT}/W-SLD1-standard-resolved-${scheme}.png`,
+                clip: {
+                    x: Math.max(0, stdBox.x - 12),
+                    y: Math.max(0, stdBox.y - 12),
+                    width: stdBox.width + 24,
+                    height: stdBox.height + 24,
+                },
             });
             const specSection = page
                 .locator("section:not(:has(section))", {
@@ -184,8 +193,16 @@ for (const scheme of ["light", "dark"] as const) {
                 })
                 .first();
             await specSection.scrollIntoViewIfNeeded();
-            await specSection.screenshot({
+            await page.waitForTimeout(120);
+            const specBox = (await specSection.boundingBox())!;
+            await page.screenshot({
                 path: `${OUT}/W-SLD1-spectrum-${scheme}.png`,
+                clip: {
+                    x: Math.max(0, specBox.x - 12),
+                    y: Math.max(0, specBox.y - 12),
+                    width: specBox.width + 24,
+                    height: specBox.height + 24,
+                },
             });
 
             // Surface the numbers for the DELTA paired-π readback.

@@ -147,7 +147,14 @@ const SILHOUETTE_CV_MIN = 0.015; // per-angle radius CV floor (clean arc ≈ 0.0
 // legible). The ceiling 0.07 sits ≈ 67% above the calm value so a future lunge re-tune
 // (toward the modeled 0.11) reds, while the calm lean passes.
 const CENTROID_SHIFT_MIN = 0.012; // |Δcentroid| toward the pointer FLOOR, fraction of width
-const CENTROID_SHIFT_MAX = 0.07; // lean CEILING (live: calm lean ≈ 0.042; a lunge toward 0.11 reds)
+// AY.W-BLOB-CONFIG D2 — RE-POINTED 0.07 → 0.09. The prior 0.042-calibrated ceiling read
+// the calm lean against a render whose body-lean SIGN was INVERTED (the body shift
+// SUBTRACTED ~0.03 from the trail-pseudopod reach, so the net read artificially low). The
+// sign is now corrected: the body leans the right way and ADDS to the pseudopod reach (the
+// dominant lean channel — the trail alone reaches ≈0.068 on a flick), so the calm default
+// lean is now ≈0.075 (live-measured). 0.09 accommodates the corrected calm lean with
+// headroom while STILL redding a true lunge toward the ≈0.11 the audit modeled.
+const CENTROID_SHIFT_MAX = 0.09; // lean CEILING (live: corrected-sign calm lean ≈ 0.075; a lunge toward 0.11 reds)
 
 test.setTimeout(180_000);
 

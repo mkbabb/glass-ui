@@ -527,6 +527,24 @@ export const GATES = [
         note: "AY.W-AUR-PAINTERLY — the reference-anchored painterly bar on REAL GPU: the van-Gogh hero lands ALL THREE bands (C in [55.67,95.67], A in-band, beta in [-1.85,-1.45] vs the starry-night triple C=70.67/A=0.832/beta=-1.672); oil + oil-pastel hard-assert their ACHIEVED bars with the residual recorded (the T5 anisotropic-Kuwahara successor owns the misses; the bands are never lowered). Bite: a washed-out/garish medium or an off-band slope -> RED; SwiftShader -> SKIP-fail-closed",
     },
     {
+        id: "proof:aurora-atoms-render",
+        cmd: "proof:aurora-atoms-render",
+        tags: ["local"],
+        note: "AX.W10 / AY.W-AUR-STUDIO re-skin — the per-atom visible-change device gate over the reka LabeledSelect/LabeledSlider DOM (role=combobox/option + role=slider; the native select/range markup is gone). Bite: a dead/unwired atom measures delta<=floor -> RED; device-absent SKIP",
+    },
+    {
+        id: "proof:aurora-studio",
+        cmd: "proof:aurora-studio",
+        tags: ["local"],
+        note: "AY.W-AUR-STUDIO — the studio-repair composite: dead-select deletion-proof (0x :is-open=false x5) + selects-open pi (medium opens, textured pick reveals the Texture slider) + the 2 re-skinned ledgers flipped fail->pass + atoms-seed-from-preset round-trip (clobber 255.7->41.4) + the served-app sentinel (fail-not-skip on a foreign app). Bite: a re-introduced dead select / re-stale selector / re-clobbering watcher -> RED",
+    },
+    {
+        id: "proof:blob-config",
+        cmd: "proof:blob-config",
+        tags: ["local"],
+        note: "AY.W-BLOB-CONFIG — the blob page config truth: the Configurator adoption (no hand-rolled range strip), the pointerAttraction sign (-1 repels), the stretch axis bites, the live seed/harmony->paletteStops feed, the pause->resume render survives (no strobe-to-charcoal). Bite: a re-dropped sign / a dead feed / a resume wreck -> RED",
+    },
+    {
         id: "proof:blob3-strip",
         cmd: "proof:blob3-strip",
         tags: ["local"],

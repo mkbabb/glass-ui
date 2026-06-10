@@ -138,7 +138,13 @@ export interface ConstellationWellConfig {
     gain: number;
     /** the reach (base-width px) — nodes beyond it are untouched (the O(within-reach) cost floor). */
     reach: number;
-    /** the hold/release ramp rate (1/s) — `strength` eases toward `target` at this rate. */
+    /**
+     * the ARM ramp rate (1/s) — `strength` eases toward `target = 1` at this rate
+     * while HELD (the gentle bloom the token tunes). The RELEASE is NOT this rate:
+     * it is the fixed brisk {@link WELL_RELEASE_RAMP} (the field-cools invariant —
+     * not consumer-tunable, F8.2). A consumer slowing this token slows the ARM
+     * bloom only; the release stays brisk so the cool gate holds.
+     */
     ramp: number;
     /** the per-node speed cap (base-width px/frame) — the no-slingshot clamp. */
     maxSpeed: number;
@@ -551,6 +557,18 @@ const WELL_COOL_RELEASED = 7.0;
  * pull too slowly — the force keeps heating the field past the 30-frame sample,
  * so the field reads HOT at any canvas where the held equilibrium |v| sits above
  * the tolerance (the live-vs-unit `k`-scale divergence the π gate caught).
+ *
+ * THE 22.0 DERIVATION (F8.2 F1.3 — so the next tuner does not treat it as free):
+ * `strength` decays as `(1 − min(rate/60, 1))^n` per frame at 60 fps. At
+ * `rate = 22/s` the per-frame factor is `(1 − 22/60) ≈ 0.633`, so `strength`
+ * falls below {@link WELL_EPS} (1e-3) in `n ≈ ln(1e-3)/ln(0.633) ≈ 15` frames —
+ * about HALF the ≥30-frame cool sample. That leaves the remaining ~15+ frames for
+ * the {@link WELL_COOL_RELEASED} `|v|→speed` ease to renorm the lattice inside the
+ * window. A slower rate (e.g. the 4/s ARM token → ~110 frames to clear EPS) keeps
+ * the force injecting velocity well past the sample → the field reads HOT. This is
+ * why the release ramp is a FIXED const (F8.2), NOT the consumer `cfg.ramp` token:
+ * it guards the cool invariant, so a consumer must NOT be able to slow it past the
+ * §6-clause-2 cool gate.
  */
 const WELL_RELEASE_RAMP = 22.0;
 
@@ -672,7 +690,7 @@ const WARP_DT_CLAMP = 0.05; // ≈50ms; a clamped dt resolves the park-mid-warp 
 export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
     gain: 14000, // inverse-square force scale — a clear pull over the reach
     reach: 340, // base-width px — the well's influence radius (k-scaled at step)
-    ramp: 4.0, // 1/s — the hold/release ramp rate (≈0.25s to full)
+    ramp: 4.0, // 1/s — the ARM rate (≈0.25s bloom; release is the fixed brisk WELL_RELEASE_RAMP, F8.2)
     maxSpeed: 4.0, // base-width px/frame cap — the no-slingshot clamp
     soften: 8, // px — the singularity floor (a node AT the cursor → bounded pull)
     holdMs: 140, // ms hold before the well arms

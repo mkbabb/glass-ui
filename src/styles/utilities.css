@@ -920,27 +920,40 @@
             color-mix(in srgb, var(--color-gold) 8%, transparent)
         );
 
-    /* Hover: replace the audacious primary-radial with a gold sweep shimmer.
-       The shimmer gradient rides above the paper-grain texture; the `overlay`
-       blend-mode concentrates the gold on bright grain facets and recedes on
-       dark ones — the same lens metaphor as the btn-audacious primary radial. */
+    /* Hover: deepen the plate to a SATURATED gold the white label clears (AW.W13
+       names a "saturated gold backplate"; the D1 fix). The bottom layer is the
+       OPAQUE fixed deep gold (`--color-gold-deep`, mode-INVARIANT) — a solid plate
+       at ~6.5:1 (light) / ~5.5:1 (dark) against white, well below the ~0.18
+       luminance floor white text needs for ≥4.5:1 (was a translucent 22-30% wash
+       over near-cream glass → 1.29:1 white-on-pale-gold). The plate is FIXED-dark
+       in both modes — deepening toward the mode-flipping `--foreground` brightened
+       the dark plate to a cream-gold; `--color-gold-deep` does not flip. The
+       shimmer sweep rides ABOVE as a LOW-alpha gold gradient (normal blend, ≤18% —
+       it textures the plate without brightening it past the floor), and the
+       paper-grain overlays for the disco facet. */
     &:hover:not(:disabled) {
         background-image:
             var(--paper-clean-texture),
             linear-gradient(
                 90deg,
                 transparent 0%,
-                color-mix(in srgb, var(--color-gold-dark) 22%, transparent) 25%,
-                color-mix(in srgb, var(--color-gold-light) 30%, transparent) 50%,
-                color-mix(in srgb, var(--color-gold-dark) 22%, transparent) 75%,
+                color-mix(in srgb, var(--color-gold) 14%, transparent) 25%,
+                color-mix(in srgb, var(--color-gold) 18%, transparent) 50%,
+                color-mix(in srgb, var(--color-gold) 14%, transparent) 75%,
                 transparent 100%
+            ),
+            linear-gradient(
+                135deg,
+                var(--color-gold-deep),
+                color-mix(in srgb, var(--color-gold-deep), var(--color-gold-dark) 18%) 50%,
+                var(--color-gold-deep)
             );
-        background-blend-mode: overlay, normal;
-        background-size: var(--paper-texture-size), 250% 100%;
-        background-position: 0 0, 100% 0;
+        background-blend-mode: overlay, normal, normal;
+        background-size: var(--paper-texture-size), 250% 100%, 100% 100%;
+        background-position: 0 0, 100% 0, 0 0;
         box-shadow:
             var(--glass-specular),
-            0 0 0 1px color-mix(in srgb, var(--color-gold) 30%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--color-gold-dark) 40%, transparent),
             0 0.5px 0 0 rgb(0 0 0 / 0.06);
     }
 
@@ -956,8 +969,8 @@
    a text-clip gradient). This variant sweeps the `background-position` of the
    250% wide gradient across the button's bounding box. */
 @keyframes btn-gold-bg-sweep {
-    0%   { background-position: 0 0, 100% 0; }
-    100% { background-position: 0 0, -100% 0; }
+    0%   { background-position: 0 0, 100% 0, 0 0; }
+    100% { background-position: 0 0, -100% 0, 0 0; }
 }
 
 /* ── Table density utilities — AN.R0 ─────────────────────────────────────

@@ -25,10 +25,11 @@
 //   • oil-pastel — C in-band.
 // The §4.2 anisotropy A on oil / oil-pastel and the §4.3 slope on oil-pastel sit OUTSIDE
 // the band — the structure-tensor coherence the single-pass path cannot fully reach. That
-// residual is the NAMED SUCCESSOR: the T5 anisotropic-Kuwahara multi-pass soft-blend, gated
-// on AY.W-AUR-WEBGPU-DECIDE (RESEARCH.md §3 T5; the wave's Named-successor clause). This
-// spec HARD-ASSERTS the achieved bar (any slip REDs — fail-closed) and RECORDS the residual
-// metrics (printed, not asserted) so the DELTA carries the honest number, not a lowered band.
+// residual is the NAMED SUCCESSOR: the T5 anisotropic-Kuwahara multi-pass soft-blend,
+// owned by AY.W-AUR-T5 (the live successor minted by W-AUR-STUDIO §6 — the terminally-
+// retired W-AUR-WEBGPU-DECIDE could not receive it; RESEARCH.md §3 T5). This spec HARD-
+// ASSERTS the achieved bar (any slip REDs — fail-closed) and RECORDS the residual metrics
+// (printed, not asserted) so the DELTA carries the honest number, not a lowered band.
 //
 // READBACK MECHANISM (AX.W00 precedent): a composited canvas screenshot decoded with pngjs.
 // Real GPU (darwin→Metal) paints; a GPU-less runner SwiftShader-degrades + the spec SKIPs
@@ -39,6 +40,7 @@ import { test, expect } from "@playwright/test";
 import type { Locator, Page } from "@playwright/test";
 import { PNG } from "pngjs";
 import { PI_TARGETS } from "./pi-manifest.ts";
+import { assertServedDemoAurora } from "./served-app-sentinel.ts";
 import {
     colorfulness,
     structureTensorAnisotropy,
@@ -131,6 +133,12 @@ test.describe("aurora-arresting (π lane — the live-GPU arresting bar)", () =>
         await page.setViewportSize({ width: 1440, height: 900 });
         await page.goto(PI_TARGETS.aurora.path);
 
+        // SERVED-APP SENTINEL (D7 / HC-aurora §2a): fail-CLOSED if a FOREIGN app holds the
+        // port (the canvas-presence-only skip clobbered status:pass → status:skipped). The
+        // device-absence skip below stays ONLY for the demo BEING served but the heavy
+        // shader not painting under SwiftShader.
+        await assertServedDemoAurora(page);
+
         const canvas = page.locator("canvas.aurora-canvas").first();
         // Device-absence SKIP (befitting-silent on a GPU-less runner): the canvas never
         // paints under SwiftShader for these heavy shaders → skip, do NOT fail.
@@ -201,12 +209,12 @@ test.describe("aurora-arresting (π lane — the live-GPU arresting bar)", () =>
         // ── The DOCUMENTED RESIDUAL (recorded, NOT asserted — the named T5 successor). ──
         // oil / oil-pastel §4.2 anisotropy + oil-pastel §4.3 slope sit outside the band; the
         // single-pass path cannot reach the structure-tensor coherence without the multi-pass
-        // anisotropic-Kuwahara soft-blend (AY.W-AUR-WEBGPU-DECIDE). Printed so the DELTA
-        // carries the honest number, the band is NOT lowered, and a REGRESSION below the
-        // current residual is visible in the gate log.
+        // anisotropic-Kuwahara soft-blend (AY.W-AUR-T5). Printed so the DELTA carries the
+        // honest number, the band is NOT lowered, and a REGRESSION below the current
+        // residual is visible in the gate log.
         // eslint-disable-next-line no-console
         console.log(
-            `ARRESTING-RESIDUAL:: oil-pastel A=${op.A.toFixed(4)} (band [${A_LO},${A_HI}]) beta=${op.beta.toFixed(4)} (band [${BETA_LO},${BETA_HI}]); oil A=${oil.A.toFixed(4)} (band [${A_LO},${A_HI}]) — residual routed to T5 Kuwahara / W-AUR-WEBGPU-DECIDE`,
+            `ARRESTING-RESIDUAL:: oil-pastel A=${op.A.toFixed(4)} (band [${A_LO},${A_HI}]) beta=${op.beta.toFixed(4)} (band [${BETA_LO},${BETA_HI}]); oil A=${oil.A.toFixed(4)} (band [${A_LO},${A_HI}]) — residual routed to T5 Kuwahara / AY.W-AUR-T5`,
         );
     });
 });

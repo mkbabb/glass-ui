@@ -23,11 +23,18 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
+  <!-- AY.W-PRIM-POLISH D7 ARM A — the Switch TRACK is the one checks-atom large
+       enough (24×44px) to read GLASS: it composes the `.glass-wash` tier + the
+       `.glass-specular-track` top-edge gleam so the unchecked register is a
+       translucent wash plate (the glass-first canon, AX.W54), not an opaque
+       `--input` mix. The checked ON-state stays `--primary` (the warm-ink
+       signature, UNCHANGED). Checkbox/Radio (16px) take ARM B (allowlist) —
+       below the size where glass reads as glass over a flat substrate. -->
   <SwitchRoot
     data-slot="switch"
     v-bind="forwarded"
     :class="cn(
-      'focus-ring peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-pill border-2 border-transparent transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-primary data-[state=unchecked]:bg-[color-mix(in_srgb,var(--input)_80%,var(--glass-bg-quiet))]',
+      'glass-wash glass-specular-track focus-ring peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-pill border-2 border-transparent transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-primary data-[state=unchecked]:bg-[var(--glass-bg-wash)]',
       props.class,
     )"
   >

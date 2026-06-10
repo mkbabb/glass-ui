@@ -157,6 +157,7 @@ void currentMeta;
                                     :config="studio.config"
                                     :active-layer="activeLayer"
                                     :tab="dockTab"
+                                    :preset-key="currentKey"
                                     @update:active-layer="(v: string) => (activeLayer = v)"
                                     @update:tab="(v: string) => (dockTab = v)"
                                     @reset="studio.resetCurrent"

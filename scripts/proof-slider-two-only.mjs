@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// AV.W11 (AX.W59 design reconcile) — the slider-two-only cardinality +
-// design gate (proof:slider-two-only).
+// AV.W11 — the slider-two-only cardinality + design gate (proof:slider-two-only).
 //
 // The reka-backed `<Slider>` ships EXACTLY two recipes — `standard` (the
-// INTEGRATED-CYLINDER glass slider) and `spectrum` (the value.js
-// gradient-track color slider with the track-height SQUIRCLE thumb). This
-// gate freezes that cardinality AND the AX.W59 design contract, and polices the
+// CONTINUOUS ROUNDED CYLINDER: a round knob INSCRIBED inside a thick glass
+// capsule, ONE continuous piece) and `spectrum` (the value.js gradient-track
+// color slider with the track-height SQUIRCLE thumb). This gate freezes that
+// cardinality AND the integrated-continuous design contract, and polices the
 // keyset at BOTH boundaries — the library cardinality AND the consumer
 // call-site. Five clauses:
 //
@@ -13,13 +13,19 @@
 //       ['standard','spectrum'].
 //   (2) ORPHAN-SCAN — Slider.vue scoped CSS carries no `[data-variant="X"]`
 //       selector for X ∉ keyset (no orphan removed-variant block).
-//   (3) ROUND-KNOB — the standard thumb is the FULLY ROUNDED iOS knob: the base
-//       `.slider-thumb` resolves a `border-radius: 50%` (the true circle — the
-//       user's standing intent, PROMPT-CORPUS:51), a SQUARE footprint
-//       (`aspect-ratio: 1`, so the 50% paints a circle not an ellipse), and
-//       declares no `border:` paint (a flush knob, no detached ring); AND the
-//       `.slider-range` fill carries a `backdrop-filter` (the continuous glass
-//       fill the knob rides — continuous with the track, not an offset disc).
+//   (3) CYLINDER-KNOB — the standard thumb is the INTEGRATED-CONTINUOUS knob,
+//       a CONJUNCTION (the §RE-GROUND-2 third isCircle restatement — a bare
+//       shape test under-specifies; a 16px ball on a 6px wire passes a naked
+//       `radius === "50%"` yet violates the standard). Three legs, all required:
+//         • ROUND-ENDED   — base `.slider-thumb` resolves `border-radius: 50%`
+//           + `aspect-ratio: 1` (the true circle, not a pill cap, not an
+//           ellipse) + no `border:` paint (a flush knob, no detached ring);
+//         • TRACK-HEIGHT-MATCHED ∧ ZERO-DETACHMENT — at EVERY size rung in
+//           index.ts the knob is INSCRIBED: `--slider-thumb-size` ≤
+//           `--slider-track-height` (the knob seats inside the thick capsule,
+//           protrusion ≤ 0 — never the wire-and-ball discontinuity);
+//         • the `.slider-range` fill carries a `backdrop-filter` (the
+//           continuous glass cylinder the knob rides, NOT an offset disc).
 //   (4) SQUIRCLE-SPECTRUM — the spectrum thumb is the track-height SQUIRCLE:
 //       a `corner-shape: var(--corner-shape-thumb)` decl sits ONLY inside an
 //       `@supports (corner-shape: superellipse(2))` gate (the Chrome-139 PE
@@ -45,10 +51,12 @@
 //
 // inv ε / bite-check: re-adding a removed variant key reddens (1); restoring a
 // removed scoped block reddens (2); flattening the standard knob to a pill cap
-// (a non-50% radius) / stripping the fill `backdrop-filter` reddens (3);
-// dropping the spectrum `corner-shape` decl, leaking it outside the `@supports`
-// gate, or floating the squircle thumb off the track height reddens (4); a
-// consumer on the current build binding `<Slider variant="rounded">` reddens (5).
+// (a non-50% radius), stripping the fill `backdrop-filter`, OR a size rung where
+// the knob protrudes past the track (thumb-size > track-height — the floating
+// wire-and-ball geometry) reddens (3); dropping the spectrum `corner-shape` decl,
+// leaking it outside the `@supports` gate, or floating the squircle thumb off the
+// track height reddens (4); a consumer on the current build binding `<Slider
+// variant="rounded">` reddens (5).
 
 import { existsSync, readFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
@@ -84,6 +92,34 @@ function cliPaths() {
 // can spoof a clause.
 function stripComments(src) {
     return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+}
+
+// Resolve a CSS length literal (`1.25rem` / `20px` / `0`) to px (16px/rem).
+function lenToPx(v) {
+    if (v == null) return null;
+    const m = String(v).trim().match(/^([\d.]+)(rem|px)?$/);
+    if (!m) return null;
+    const n = Number(m[1]);
+    return m[2] === "rem" || !m[2] ? (m[2] === "px" ? n : n * 16) : n;
+}
+
+// Parse the per-rung `--slider-track-height` / `--slider-thumb-size` CSS vars out
+// of the index.ts size axis (the Tailwind arbitrary `[--slider-track-height:1.25rem]`
+// classes). Returns { sm: {track, thumb}, md: …, lg: … } in px.
+function parseSizeRungs(indexSrc) {
+    const code = stripComments(indexSrc);
+    const m = code.match(/size\s*:\s*\{([\s\S]*?)\}\s*,/);
+    if (!m) return null;
+    const rungs = {};
+    const rowRe = /(sm|md|lg)\s*:\s*'([^']*)'/g;
+    let r;
+    while ((r = rowRe.exec(m[1]))) {
+        const cls = r[2];
+        const track = (cls.match(/--slider-track-height\s*:\s*([^\]]+)\]/) || [])[1];
+        const thumb = (cls.match(/--slider-thumb-size\s*:\s*([^\]]+)\]/) || [])[1];
+        rungs[r[1]] = { track: lenToPx(track), thumb: lenToPx(thumb), trackRaw: track, thumbRaw: thumb };
+    }
+    return rungs;
 }
 
 // Parse the CVA `variant: { … }` keyset out of index.ts.
@@ -303,11 +339,12 @@ function run() {
         const body = thumbMatch[2];
         const radius = (body.match(/border-radius\s*:\s*([^;]+);/) || [])[1]?.trim();
         facts.thumbBorderRadius = radius ?? null;
-        // The round knob is a true CIRCLE (border-radius: 50%), NEVER a pill cap
-        // (the slim-offset tell the AY.W-SLD1 user-judged revert abrogates).
+        // ROUND-ENDED — the knob is a true CIRCLE (border-radius: 50%), one leg
+        // of the integrated-continuous conjunction (NOT a pill cap, NOT an
+        // ellipse). Track-height-match + zero-detachment are checked below.
         const isCircle = radius === "50%";
         facts.thumbIsCircle = isCircle;
-        if (!isCircle) violations.push(`standard .slider-thumb border-radius is "${radius ?? "(none)"}" — must be 50% (the FULLY ROUNDED iOS knob; PROMPT-CORPUS:51), NOT a pill cap`);
+        if (!isCircle) violations.push(`standard .slider-thumb border-radius is "${radius ?? "(none)"}" — must be 50% (the round-ended knob of the inscribed cylinder; PROMPT-CORPUS:51), NOT a pill cap`);
 
         // The 50% radius only paints a true circle over a SQUARE footprint — the
         // knob declares `aspect-ratio: 1` (not a track-height ellipse).
@@ -325,6 +362,27 @@ function run() {
         }
         facts.thumbHasBorderPaint = hasBorderPaint;
         if (hasBorderPaint) violations.push("standard .slider-thumb declares a `border:` paint — the borderless round knob must not ring");
+    }
+
+    // (3) TRACK-HEIGHT-MATCHED ∧ ZERO-DETACHMENT — the §RE-GROUND-2 third
+    //     restatement: at EVERY size rung the knob is INSCRIBED inside the thick
+    //     capsule (`--slider-thumb-size` ≤ `--slider-track-height`). A rung where
+    //     the thumb protrudes past the track is the floating wire-and-ball
+    //     discontinuity the bare-circle test let through — it REDS.
+    const rungs = parseSizeRungs(indexSrc);
+    facts.sizeRungs = rungs
+        ? Object.fromEntries(Object.entries(rungs).map(([k, v]) => [k, { track: v.trackRaw, thumb: v.thumbRaw }]))
+        : null;
+    if (!rungs) {
+        violations.push("could not parse the `size: { … }` rungs in index.ts (the inscription check needs --slider-track-height / --slider-thumb-size per rung)");
+    } else {
+        for (const [rung, { track, thumb }] of Object.entries(rungs)) {
+            if (track == null || thumb == null) {
+                violations.push(`size rung "${rung}" is missing --slider-track-height or --slider-thumb-size — cannot verify the knob is inscribed`);
+            } else if (thumb > track) {
+                violations.push(`size rung "${rung}" thumb-size (${thumb}px) PROTRUDES past track-height (${track}px) — the inscribed cylinder requires thumb ≤ track (zero detachment; the floating wire-and-ball geometry is forbidden, §RE-GROUND-2)`);
+            }
+        }
     }
 
     // The continuous glass fill: the `.slider-range` carries the W52 material blur
@@ -432,10 +490,11 @@ function run() {
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, { generatedAt: snapshotStamp(), status, gate: "proof:slider-two-only", expectedKeys: EXPECTED_KEYS, facts, violations });
 
-    console.log("proof:slider-two-only — exactly two slider recipes ship + the AX.W59 design contract");
+    console.log("proof:slider-two-only — exactly two slider recipes ship + the integrated-continuous design contract");
     console.log(`  variant keys       : ${keys ? keys.join(", ") : "(unparsed)"}`);
     console.log(`  orphan selectors   : ${facts.orphanVariantSelectors.length ? facts.orphanVariantSelectors.join(", ") : "(none)"}`);
     console.log(`  std knob radius     : ${facts.thumbBorderRadius ?? "(none)"} (aspect-ratio ${facts.thumbAspectRatio ?? "?"}, circle ${facts.thumbIsCircle ?? "?"})`);
+    console.log(`  knob inscribed (rungs): ${facts.sizeRungs ? Object.entries(facts.sizeRungs).map(([k, v]) => `${k} ${v.thumb}≤${v.track}`).join(", ") : "(unparsed)"}`);
     console.log(`  std knob border paint: ${facts.thumbHasBorderPaint ?? "(n/a)"}`);
     console.log(`  range glass blur    : ${facts.rangeHasBackdropFilter}`);
     console.log(`  spectrum squircle   : ${facts.supportsGatePresent ? "@supports-gated" : "(missing)"} (height ${facts.spectrumThumbHeight ?? "?"})`);

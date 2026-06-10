@@ -41,6 +41,15 @@ interface FreezeSample {
     nodeHash: string;
     /** the recipe's frozen-phase pulse-ring radius (the overlay-phase observable). */
     pulseRadius: number;
+    /**
+     * the `now` the engine ACTUALLY handed the overlay painter on its last paint
+     * (F8.3 — the frozen-`now` truth, stamped inside `drawAnomaly`). Under freeze
+     * this MUST read FROZEN_NOW (0); a live-`now` leak (a regression of the
+     * Constellation.vue frozen-`now` handoff) reads a non-zero, advancing value.
+     * This makes the overlay-phase leg a REAL observation, not a recomputed
+     * constant (the F8.3 de-tautology fix).
+     */
+    paintedNow: number;
     /** node count (so a zero-node mount is caught explicitly). */
     nodeCount: number;
 }
@@ -70,13 +79,15 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
                               warp: { x: number; y: number };
                           };
                           overlayPulseRadius?: () => number;
+                          paintedNow?: () => number;
                       }
                     | undefined;
-                if (!f || !f.field || !f.overlayPulseRadius) {
+                if (!f || !f.field || !f.overlayPulseRadius || !f.paintedNow) {
                     return {
                         handlePresent: false,
                         nodeHash: "",
                         pulseRadius: -1,
+                        paintedNow: -1,
                         nodeCount: 0,
                     };
                 }
@@ -93,6 +104,7 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
                     handlePresent: true,
                     nodeHash: parts.join("|"),
                     pulseRadius: round(f.overlayPulseRadius()),
+                    paintedNow: f.paintedNow(),
                     nodeCount: field.nodes.length,
                 };
             });
@@ -150,6 +162,22 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
             "the frozen field has zero nodes — the static-frame layout did not run",
         ).toBeGreaterThan(0);
 
+        // (F8.3) FROZEN-`now` HANDOFF — the OBSERVED `now` the engine handed the
+        // overlay painter MUST be FROZEN_NOW (0) under freeze. This is the leg that
+        // was a tautology (the prior `overlayPulseRadius()` recomputed the constant
+        // and could never catch a live-`now` leak); reading the painter's STAMPED
+        // `now` makes a regression of the Constellation.vue frozen-`now` handoff RED
+        // the gate. Asserted on BOTH mounts.
+        const FROZEN_NOW = 0;
+        expect(
+            run1.paintedNow,
+            `the overlay painter was handed now=${run1.paintedNow} under freeze (expected FROZEN_NOW=${FROZEN_NOW}) — a LIVE \`now\` leaked into drawOverlay (the frozen-\`now\` handoff regressed)`,
+        ).toBe(FROZEN_NOW);
+        expect(
+            run2.paintedNow,
+            `the overlay painter (run 2) was handed now=${run2.paintedNow} under freeze (expected FROZEN_NOW=${FROZEN_NOW}) — a LIVE \`now\` leaked into drawOverlay`,
+        ).toBe(FROZEN_NOW);
+
         // (1) CROSS-RUN-DETERMINISM — two seeded mounts are BYTE-IDENTICAL.
         expect(
             run2.nodeHash,
@@ -159,6 +187,12 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
             run2.pulseRadius,
             `cross-run overlay pulse radius DIFFERS (${run1.pulseRadius} vs ${run2.pulseRadius}) — a live \`now\` reached drawOverlay (the phase did not clamp under freeze)`,
         ).toBe(run1.pulseRadius);
+        // (F8.3) the STAMPED handed-`now` is byte-identical across mounts (both
+        // FROZEN_NOW) — the frozen-`now` handoff is deterministic, not run-dependent.
+        expect(
+            run2.paintedNow,
+            `cross-run overlay handed-\`now\` DIFFERS (${run1.paintedNow} vs ${run2.paintedNow}) — the frozen-\`now\` handoff is not deterministic`,
+        ).toBe(run1.paintedNow);
 
         // (2) FRAME-STILLNESS — the same instance does NOT advance.
         expect(
@@ -169,6 +203,14 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
             run1later.pulseRadius,
             `the overlay pulse radius ADVANCED within one run (${run1.pulseRadius} → ${run1later.pulseRadius}) — a live \`now\` was handed to drawOverlay under freeze`,
         ).toBe(run1.pulseRadius);
+        // (F8.3) the STAMPED `now` stays FROZEN_NOW across the ≥36-rAF window — the
+        // engine keeps handing the painter the frozen sentinel frame-over-frame.
+        // (Distinct from `pulseRadius`, which is recomputed off the constant — THIS
+        // is the value the painter actually received, so it cannot be a tautology.)
+        expect(
+            run1later.paintedNow,
+            `the overlay painter's handed \`now\` ADVANCED within one run (${run1.paintedNow} → ${run1later.paintedNow}) — a live \`now\` was handed to drawOverlay under freeze (the frozen-\`now\` handoff regressed)`,
+        ).toBe(run1.paintedNow);
     });
 
     // ── (3) URL-AUTO-DERIVE ──────────────────────────────────────────────────

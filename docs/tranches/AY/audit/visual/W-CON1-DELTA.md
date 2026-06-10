@@ -4,11 +4,21 @@
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified
 the shipped 0.80 / 0.88).
 
+**RG2 RE-CAPTURE (AY.W-CON-FIX, 2026-06-09):** the four `W-CON1-*-mobile-*.png` were
+1280×721 DESKTOP screenshots showing a sparse left column with no focal ring — the
+DELTA-honesty defect B2-con1 F2 named. They are NOW re-captured at a REAL 390-width
+viewport (the proven W-CON2 mobile protocol — the section card renders 314px wide
+inside the 390px viewport), showing a FILLED box + the accent focal ring. The
+fabricated "mobile 375×667" protocol line is struck (the true capture viewport is
+390-width; the section card content is 314×421). The four refit-BEFORE 360×241 PNGs
+are unchanged (the before-number 0.259 coverage is the real π readback; the small
+lattice in a small box is a legitimate "before").
+
 **Route:** `/substrates/constellation` (the storybook substrate scene — `resolveScene("substrates", "constellation")`).
 **Surface:** the third `<Constellation>` (the "resize re-fit + auto-drift wander"
 section) — exposed to the π lane via the DEMO-PRIVATE `window.__constellationRefit`
 seam (`field` + a programmatic `resizeTo(w, h)` RO-driver).
-**Viewports:** desktop 1280×800 + mobile 375×667 · **Schemes:** {light, dark}.
+**Viewports:** desktop 1280×800 + REAL mobile 390-width (section card 314×421) · **Schemes:** {light, dark}.
 **Device:** Chrome-headless-new, ANGLE→Metal (the real dev-box GPU path).
 
 The two transposed-UP behaviours (the slides bespoke `constellation.ts` re-fit +
@@ -57,6 +67,28 @@ seed-once / no-refit field would still show on the next frame), then grown to
 - AFTER (the fix): ≥ 92% on EACH axis on the FIRST post-resize frame — `refitField`
   proportionally rescaled the lattice on the size-change frame, BEFORE the first
   post-resize `stepField`. PASS (≥ 90% both axes).
+
+### (1b) REFIT-SHEAR — the portrait→landscape transpose (RG3, AY.W-CON-FIX)
+
+The uniform-grow arm above is INVARIANT under a uniform scale — bbox-coverage is
+structurally pinned (`bbox_new/canvas_new = bbox_old/canvas_old`), so it cannot
+distort and the 0.92 "after" is trivially-green for any box. The case that BINDS the
+aesthetic claim is a NON-UNIFORM (sheared) refit — the actual deck slide-enter
+TRANSPOSE the whole wave exists to fix. RG3 adds a shear arm to
+`constellation-refit-live.spec.ts`: a portrait→landscape `resizeTo(360×720) →
+resizeTo(1280×360)` drive (`sx ≠ sy` strongly), with the post-transpose coverage read
+off the live engine:
+
+| arm | sx | sy | covW (frame 1) | covH (frame 1) | verdict |
+|---|---|---|---|---|---|
+| portrait→landscape transpose | 3.56 | 0.50 | **92%** | **97%** | PASS (≥ 90% both axes) |
+
+The sheared lattice STILL fills both axes ≥ 90% on the first post-transpose frame —
+`refitField` rescales per-axis (`sx = w/prevW`, `sy = h/prevH`), so the wide box is
+spanned on both axes even when the transpose swaps the aspect. Captured:
+`W-CON-FIX-shear-transpose-desktop-light.png` (the transposed 1280×360 field). The
+shear arm is the one that binds the transpose claim; the uniform-grow arm stays as the
+cool-down/coverage-tautology check.
 
 ### (4) FIELD-COOLS-AFTER-REFIT — the heat-up invariant
 
@@ -110,13 +142,13 @@ ratified the shipped value (the binding truth, not a hand-set number).
 
 - `proof:constellation-refit-live` (the NET-NEW π gate, `scripts/proof-constellation-refit-live.mjs`
   + `tests-visual/constellation-refit-live.spec.ts`) — **PASS** (1/1 spec; all five
-  assert groups green on the real device).
-- `proof:constellation-field` (the CPU-oracle floor) — **PASS** (18/18; +6 net-new:
-  refit-fills-box, refit-conserves-velocity, refit-noop-first-layout,
+  assert groups green on the real device, + the RG3 SHEAR arm — the portrait→landscape
+  transpose, AY.W-CON-FIX).
+- `proof:constellation-field` (the CPU-oracle floor) — **PASS** (25/25 at HEAD; +6
+  net-new from W-CON1: refit-fills-box, refit-conserves-velocity, refit-noop-first-layout,
   wander-arms-then-fires, wander-yields-to-click, wander-picks-different-node, +
   the default-OFF byte-identity canary).
-- `npx vue-tsc --noEmit` — clean over the constellation surface (the unrelated
-  in-flight `fourier-field` worktree errors are out of this wave's scope).
+- `npx vue-tsc --noEmit` — **EXIT 0** (clean over the whole surface).
 
 **Verdict: PASS.** The re-fit + auto-drift behaviours are transposed UP into the
 shared engine; deleting the slides bespoke copy and consuming

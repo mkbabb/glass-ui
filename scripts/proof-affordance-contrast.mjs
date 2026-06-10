@@ -26,8 +26,16 @@
 // orchestrator's. This gate locks the SOURCE invariants: the four token swaps
 // landed AND no NEW token / variant / resolver API was minted.
 //
+// AY.W-PRIM-POLISH D1 — clause 1b EXTENDS this gate with the gold-CTA hover-plate
+// arm: the `btn-audacious-gold` :hover backplate must carry a near-opaque (≥80%α)
+// saturated-gold base layer so the white label clears ≥4.5:1 in LIGHT mode (was a
+// 22-30% pale wash → 1.29:1 white-on-pale-gold). This SOURCE arm locks the recipe
+// shape; the PAINTED-PIXEL ratio is the binding truth in the π twin
+// `tests-visual/affordance-contrast-gold.spec.ts` (born-RED on the 1.29:1 state).
+//
 // bite-check: revert any one token swap → its clause reddens; re-introduce a
-// bare `var(--` into the goo-blob resolver call path → clause 4 reddens.
+// bare `var(--` into the goo-blob resolver call path → clause 4 reddens; revert
+// the gold hover plate to the pale ≤30% wash → clause 1b reddens.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -47,6 +55,7 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         BUTTON: resolve(ROOT, "src/components/ui/button/index.ts"),
+        UTILITIES: resolve(ROOT, "src/styles/utilities.css"),
         GLASS: resolve(ROOT, "src/styles/glass.css"),
         SLIDER: resolve(ROOT, "src/components/ui/slider/Slider.vue"),
         GOOBLOB: resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue"),
@@ -60,7 +69,7 @@ function cliPaths() {
 }
 
 function run() {
-    const { ROOT, BUTTON, GLASS, SLIDER, GOOBLOB, ARTIFACT } = cliPaths();
+    const { ROOT, BUTTON, UTILITIES, GLASS, SLIDER, GOOBLOB, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
@@ -88,6 +97,47 @@ function run() {
         facts.noNewVariantKey = !/'gold-audacious-[a-z]+':/.test(src);
         if (!facts.noNewVariantKey) {
             violations.push("a new gold-audacious-* CVA variant key was minted (forbidden — token swap only)");
+        }
+    }
+
+    // ── 1b. AY.W-PRIM-POLISH D1 — the gold CTA HOVER backplate is DEEPENED to a
+    //   SATURATED gold so the white label clears ≥4.5:1 in LIGHT mode (was a
+    //   translucent 22-30% gold wash over near-cream glass → 1.29:1, the white
+    //   label vanishing at click intent). The painted-pixel ratio is the BINDING
+    //   truth — verified by the π twin `tests-visual/affordance-contrast-gold.spec.ts`
+    //   (which drives the live render, hovers the gold CTA, samples the rendered
+    //   label + backplate, asserts ≥4.5:1, and is born-RED on the 1.29:1 state).
+    //   This SOURCE arm locks the recipe shape so a revert to the pale wash REDs
+    //   here too: the `btn-audacious-gold` hover MUST carry a near-opaque (≥80%
+    //   alpha) saturated-gold base layer (the deepened plate the contract names).
+    if (!existsSync(UTILITIES)) {
+        violations.push("utilities.css is absent");
+    } else {
+        const src = stripComments(readFileSync(UTILITIES, "utf8"));
+        const goldUtil = src.match(/@utility\s+btn-audacious-gold\s*\{([\s\S]*?)\n\}/);
+        const utilBody = goldUtil ? goldUtil[1] : "";
+        const hoverBlock = utilBody.match(/&:hover:not\(:disabled\)\s*\{([\s\S]*?)\n\s{4}\}/);
+        const hoverBody = hoverBlock ? hoverBlock[1] : "";
+        // The deepened plate is the OPAQUE FIXED deep-gold base: a bare
+        // `var(--color-gold-deep)` fill (the mode-invariant saturated CTA plate,
+        // ~6.5:1 white in light / ~5.5:1 in dark) — NOT a translucent wash (the old
+        // pale recipe mixed every gold layer `… N%, transparent` at N ≤ 30, so the
+        // composite stayed near-cream → 1.29:1). The opaque deep-gold base is the
+        // ≥4.5:1 plate; a translucent-only recipe (every gold mix ends in
+        // `transparent`) is the regressed pale wash and REDS.
+        const opaqueDeepGoldBase = /var\(--color-gold-deep\)/.test(hoverBody);
+        // The translucent gold WASHES that still exist must be the SHIMMER only
+        // (low-alpha ≤ 30%) — the legibility floor is the opaque base, not these.
+        const goldWashAlphas = [...hoverBody.matchAll(/var\(--color-gold[a-z-]*\)\s+(\d+)%,\s*transparent/g)].map((m) => Number(m[1]));
+        facts.goldHoverShimmerAlphas = goldWashAlphas;
+        facts.goldHoverPlateDeepened = opaqueDeepGoldBase;
+        // Report the dominant plate signal for the console: 100 when the opaque
+        // base is present, else the max translucent wash (the pale-wash tell).
+        facts.goldHoverMaxAlpha = opaqueDeepGoldBase ? 100 : (goldWashAlphas.length ? Math.max(...goldWashAlphas) : 0);
+        if (!facts.goldHoverPlateDeepened) {
+            violations.push(
+                `the btn-audacious-gold :hover backplate carries no OPAQUE deep-gold base (a color-mix(in srgb, var(--color-gold-dark), var(--foreground) …) plate) — the translucent pale-gold wash (max ${facts.goldHoverMaxAlpha}%) leaves white text at 1.29:1 in light mode (D1; the painted ratio is the π-twin's binding truth)`,
+            );
         }
     }
 
@@ -136,7 +186,13 @@ function run() {
         const src = stripComments(readFileSync(SLIDER, "utf8"));
         const rangeRule = src.match(/\.slider-range\s*\{([^}]*)\}/);
         const rangeBlock = rangeRule ? rangeRule[1] : "";
-        const bg = rangeBlock.match(/background:\s*var\(--slider-range-bg,\s*var\((--[a-z0-9-]+)\)\)/);
+        // W-GLASS landed the liquid-glass fill — the range bg is now
+        // `color-mix(in oklab, var(--slider-range-bg, var(--primary)) 88%, transparent)`
+        // (the glass cylinder tint), not the bare `var(--slider-range-bg, var(…))`
+        // the AW.W13 form asserted. The intent is unchanged: the fill's FALLBACK
+        // rung must be perceptible, NOT the sub-visible `--surface-tint-25`.
+        // Extract the inner fallback token from either form.
+        const bg = rangeBlock.match(/--slider-range-bg,\s*var\((--[a-z0-9-]+)\)/);
         facts.sliderRangeFallback = bg ? bg[1] : null;
         // The fill must NOT be the sub-visible --surface-tint-25 over the muted track.
         facts.sliderRangeLifted = !!bg && bg[1] !== "--surface-tint-25";
@@ -160,12 +216,15 @@ function run() {
         violations.push("GooBlob.vue is absent");
     } else {
         const src = stripComments(readFileSync(GOOBLOB, "utf8"));
-        // The component resolves a var() color via computed style BEFORE the
-        // renderer/resolver sees it (the `getComputedStyle(...).color` read).
+        // The component resolves a var() color to a concrete value BEFORE the
+        // renderer/resolver sees it. The `getComputedStyle` cascade-read moved
+        // into the shared `useTokenColor` composable (it now appears EXACTLY ONCE
+        // in the codebase) — GooBlob consumes it as `tokenColors.resolve(color, el)`
+        // into `resolvedColor`. The intent (no raw var() reaches value.js) is
+        // unchanged; the read is via the composable seam, not a local literal.
         facts.resolvesViaComputedStyle =
-            /getComputedStyle\([^)]*\)\.color/.test(src) &&
-            /var\(/.test(src) &&
-            /resolvedColor/.test(src);
+            /tokenColors\.resolve\(/.test(src) &&
+            /resolvedColor\.value\s*=\s*tokenColors\.resolve\(/.test(src);
         if (!facts.resolvesViaComputedStyle) {
             violations.push(
                 "GooBlob.vue does not resolve a var() color to a concrete value via computed style — the per-frame value.js throw is not killed",
@@ -190,9 +249,10 @@ function run() {
     });
 
     console.log(
-        "proof:affordance-contrast — the three cream affordances read at rest + the goo-blob var() throw is killed (AW.W13)",
+        "proof:affordance-contrast — the cream affordances read at rest + the gold CTA hover plate is deepened + the goo-blob var() throw is killed (AW.W13 + AY.W-PRIM-POLISH D1)",
     );
     console.log(`  gold-audacious rest=foreground  : ${facts.goldRestForeground ? "yes ✓" : "NO ✗"}`);
+    console.log(`  gold CTA hover plate deepened   : ${facts.goldHoverPlateDeepened ? `yes ✓ (${facts.goldHoverMaxAlpha}%)` : `NO ✗ (${facts.goldHoverMaxAlpha}% — pale wash)`}`);
     console.log(`  input/select border lifted      : ${facts.inputBorderLifted && facts.selectTriggerLifted ? "yes ✓" : "NO ✗"}   (${facts.inputBorderToken})`);
     console.log(`  standard slider fill lifted      : ${facts.sliderRangeLifted ? "yes ✓" : "NO ✗"}   (${facts.sliderRangeFallback})`);
     console.log(`  goo-blob var() resolved pre-vjs : ${facts.resolvesViaComputedStyle && facts.feedsResolvedColor ? "yes ✓" : "NO ✗"}`);
