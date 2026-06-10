@@ -40,7 +40,33 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
 
-const DOCK_ROUTE = "/navigation/dock";
+// AY.W-CLOSE1 — the wrap-overflow demo dock lives in the `dock/overview` story
+// (`demo/stories/dock/overview.vue` — the `always-expanded overflow="wrap"`
+// `--dock-max-inline-size: 28rem` 14-control dock that wraps on-screen at desktop).
+// The demo router (`createWebHistory`, route `/${category}/${story}`) serves it at
+// `/dock/overview`. The prior `/navigation/dock` route does not exist (the IA moved
+// the dock walkthrough out of `navigation` into its own `dock` category).
+const DOCK_ROUTE = "/dock/overview";
+
+// The `dock/overview` route bears two live contained `<Aurora>` WebGL surfaces (the
+// background-pause-toggle showcase). Under headless chromium the aurora's per-frame
+// ReadPixels on the SwiftShader path can stall a long `page.evaluate`, so we PARK the
+// renderer before probing: report `document.hidden = true` and fire `visibilitychange`
+// so `useWebGLCanvas` parks its rAF loop (the documented offscreen/hidden park seam).
+// A geometry probe needs no live aurora frame — the layout the wrap dock computes is
+// CSS-only — so parking the WebGL loop is safe and makes the live arm deterministic.
+const AURORA_PARK_PREAMBLE = () => {
+    try {
+        Object.defineProperty(document, "hidden", { configurable: true, get: () => true });
+        Object.defineProperty(document, "visibilityState", {
+            configurable: true,
+            get: () => "hidden",
+        });
+        document.dispatchEvent(new Event("visibilitychange"));
+    } catch {
+        /* best-effort park — the geometry probe does not depend on it */
+    }
+};
 
 // ── (A) the device-free SOURCE arm — pure detectors over the source files ─────
 // Each returns nothing; it pushes to `violations`. Inputs are the raw file strings
@@ -363,11 +389,11 @@ function piWorkspacePresent(ROOT) {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    // Default to 127.0.0.1 (NOT `localhost`) to match the canonical demo spawn
-    // (`npm run dev -- --host 127.0.0.1 --port 5173`) and the π playwright config.
-    // `localhost` can resolve to IPv6 `::1` on macOS, which vite does not bind, so
-    // the page loads degraded and the wrap-dock selector times out (a false RED).
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://127.0.0.1:5173";
+    // AY.W-CLOSE1 — the canonical glass-ui demo runs at `http://localhost:5199`
+    // (the AY tranche capture convention — `npm run dev -- --port 5199`). NEVER
+    // :5173, which belongs to a FOREIGN app on this machine. `GLASS_UI_DEMO_URL`
+    // overrides for a CI runner that serves the demo on a different host/port.
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_WRAP_ARTIFACT",
         "AX-dock-wrap-content-driven",
@@ -376,7 +402,7 @@ async function run() {
     // (A) The DEVICE-FREE SOURCE arm — runs FIRST + ALWAYS, hard-RED on EVERY runner.
     const src = {
         dockCss: readDockCss(ROOT),
-        tokensCss: readFileSync(resolve(ROOT, "src/styles/tokens.css"), "utf8"),
+        tokensCss: readFileSync(resolve(ROOT, "src/styles/tokens/shadow.css"), "utf8"),
         glassDockVue: readFileSync(
             resolve(ROOT, "src/components/custom/dock/GlassDock.vue"),
             "utf8",
@@ -414,7 +440,14 @@ async function run() {
         browser = await pw.chromium.launch();
         // ≥640px viewport — the exact width the magic-640 chain false-passed at.
         const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+        // Park the aurora WebGL loop BEFORE navigation settles (the hidden-doc seam),
+        // so the route's two contained `<Aurora>` surfaces never spin the SwiftShader
+        // ReadPixels path that can stall the long geometry `evaluate`.
+        await page.addInitScript(AURORA_PARK_PREAMBLE);
         await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "networkidle" });
+        // Re-assert the park post-navigation (defensive — the SPA route mount fires
+        // after `addInitScript` ran on the document) then settle layout.
+        await page.evaluate(AURORA_PARK_PREAMBLE);
         await page.waitForSelector(".glass-dock.dock-overflow-wrap", { timeout: 5000 });
         // Let layout settle (fonts + the morph rest).
         await page.waitForTimeout(400);

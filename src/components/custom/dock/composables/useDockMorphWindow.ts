@@ -8,6 +8,7 @@
 // edits — the bodies are the byte-for-byte lift of the prior inline timing cluster.
 
 import { onBeforeUnmount, type Ref } from "vue";
+import { RESIZE_MORPH_PROPS } from "../constants";
 
 function parseTimeMs(value: string): number {
     const trimmed = value.trim();
@@ -43,12 +44,11 @@ function morphWindowMs(el: HTMLElement): number {
     return Math.max(normal > 0 ? normal * 2 : 0, 600);
 }
 
-/* The properties whose transitions ARE the resize morph (driven by
-   `--dock-motion-resize`). The flag resolves on one of THESE finishing — never
-   on a shorter `--dock-motion-standard` property (box-shadow/background/
-   border-color), which would skip-fast-forward `isTransitioning` to false while
-   the morph is still in flight. */
-const RESIZE_MORPH_PROPS = new Set(["width", "height", "padding", "transform"]);
+/* The properties whose transitions ARE the resize morph (`RESIZE_MORPH_PROPS`,
+   driven by `--dock-motion-resize`) live in `../constants`. The flag resolves on
+   one of THESE finishing — never on a shorter `--dock-motion-standard` property
+   (box-shadow/background/border-color), which would skip-fast-forward
+   `isTransitioning` to false while the morph is still in flight. */
 
 /** The morph-window handlers the GlassDock SFC wires. */
 export interface DockMorphWindow {

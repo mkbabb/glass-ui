@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ref } from "vue";
+import { ref, watch, useTemplateRef } from "vue";
 import {
     Home, Search, Bell, Settings, Plus, Share2, Download,
     ChevronDown, Play, Pause, SkipBack, SkipForward,
@@ -34,7 +34,16 @@ import { Aurora } from "../../../src/components/custom/aurora";
 import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 
 const playing = ref(false);
+
+// The background-toggle section wires the toggle to a real contained Aurora so
+// pausing genuinely parks the renderer (not a text readout). `bgAuroraRef` is the
+// Aurora instance; the watch drives its exposed pause()/resume().
 const bgPaused = ref(false);
+const bgAuroraRef = useTemplateRef<{ pause: () => void; resume: () => void }>("bgAuroraRef");
+watch(bgPaused, (paused) => {
+    if (paused) bgAuroraRef.value?.pause();
+    else bgAuroraRef.value?.resume();
+});
 const volume = ref<number[]>([42]);
 const mix = ref<number[]>([55]);
 const track = ref("The Garden");
@@ -439,15 +448,32 @@ function togglePlay() {
                 >. It reflects state via <code class="rounded bg-muted px-1">aria-pressed</code>
                 and a Pause↔Play glyph swap, available to all users.
             </p>
-            <div class="flex justify-center py-6">
-                <GlassDock>
+            <!-- The toggle controls a real contained Aurora: pausing genuinely parks
+                 the renderer's rAF. The dock is collapsible — the collapsed slot shows
+                 the live Pause/Play glyph so the control reads in both states
+                 (expanded row + the collapsed circle). -->
+            <div class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8">
+                <Aurora
+                    ref="bgAuroraRef"
+                    :config="DEFAULT_AURORA_CONFIG"
+                    :opacity-ceiling="0.4"
+                    class="absolute inset-0"
+                    aria-hidden="true"
+                />
+                <GlassDock class="relative z-10">
                     <DockBackgroundToggle v-model:paused="bgPaused" />
                     <DockIconButton aria-label="Home"><Home /></DockIconButton>
                     <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <!-- The collapsed pill mirrors the toggle's live state — Play when
+                         paused (the action it offers), Pause when running. -->
+                    <template #collapsed>
+                        <Play v-if="bgPaused" class="h-4 w-4" aria-hidden="true" />
+                        <Pause v-else class="h-4 w-4" aria-hidden="true" />
+                    </template>
                 </GlassDock>
             </div>
             <p class="text-center text-xs text-muted-foreground">
-                background: <code class="rounded bg-muted px-1">{{ bgPaused ? "paused" : "running" }}</code>
+                background: <code class="rounded bg-muted px-1">{{ bgPaused ? "paused (rAF parked)" : "running" }}</code>
             </p>
         </section>
 

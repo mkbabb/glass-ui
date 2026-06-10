@@ -67,6 +67,8 @@ jobs:
               run: npm run proof:dock-css-split
             - name: proof:design-idiom-localization
               run: npm run proof:design-idiom-localization
+            - name: proof:colocation
+              run: npm run proof:colocation
             - name: proof:tailwind-v4-idiom
               run: npm run proof:tailwind-v4-idiom
             - name: proof:au-w9-consumers
@@ -95,8 +97,6 @@ jobs:
               run: npm run proof:webgl-substrate-single
             - name: proof:blob-value-free
               run: npm run proof:blob-value-free
-            - name: proof:no-value-default
-              run: npm run proof:no-value-default
             - name: proof:motion-composables-consumer
               run: npm run proof:motion-composables-consumer
             - name: proof:motion-value-free

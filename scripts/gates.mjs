@@ -31,7 +31,6 @@ import { ROOT } from "./constellation.mjs";
  * AX close). The 11 gates that `spawnSync(PW_BIN …)` a Playwright run against
  * tests-visual (aurora-painterly-statistics, font-cascade-live,
  * substrate-paints-color, tabs-unified, dock-animation-live,
- * dock-orchestrator-single, dock-wrap-content-driven, deck-progress-rail,
  * squircle-language, glass-material-demo, blob-live-truth) need a REAL browser
  * binary + a running demo dev server + (for the GPU readbacks) a real GPU — none
  * of which a clean CI runner has. Their own notes name the LOCAL orchestrator /
@@ -166,6 +165,12 @@ export const GATES = [
         note: "AU.W8b — scoped styles consume @theme-generated utilities, not text-[var(--…)]/shadow-[var(--…)] arbitrary wraps (the cascade discipline; sole allowlist: TabsTrigger --active-tab-color runtime binding). Bite: re-inject one wrap → RED",
     },
     {
+        id: "proof:colocation",
+        cmd: "proof:colocation",
+        tags: ["local", "ci"],
+        note: "AY.W-COLOCATE — the feature-dir colocation convention over the four carved god-module dirs (goo-blob/dock/tabs/constellation): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED",
+    },
+    {
         id: "proof:tailwind-v4-idiom",
         cmd: "proof:tailwind-v4-idiom",
         tags: ["local", "ci"],
@@ -255,12 +260,11 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AU.W7 — the goo-blob/watercolor-dot are value.js-free (two-tier: source-graph + dist) — the injected ColorResolver seam, not a value.js coupling",
     },
-    {
-        id: "proof:no-value-default",
-        cmd: "proof:no-value-default",
-        tags: ["local", "ci"],
-        note: "AU.W7 — a no-resolver blob mount THROWS naming defaultBlobColorResolver (the loud failure, not a silent gray default)",
-    },
+    // proof:no-value-default RETIRED at the AY close — it asserted the AU.W7
+    // required-injected colorResolver DI that AY.W-BLOB3 deliberately STRIPPED
+    // (the speculative-DI-without-2nd-consumer retire, RESEARCH OPEN-3,
+    // user-ratified). proof:blob-value-free remains the live truth gate for the
+    // value.js-free invariant.
     {
         id: "proof:motion-composables-consumer",
         cmd: "proof:motion-composables-consumer",
@@ -392,6 +396,12 @@ export const GATES = [
         cmd: "proof:au-final",
         tags: [],
         note: "AU.W10 — the close meta-gate. RETIRED from the release set at the 3.3.0 cut: its assertion #5 (STAGED-NOT-PUBLISHED: version stays 3.2.0 + the changeset staged) guarded the AU→3.3.0 staging window, which closes the moment the cut runs. The user authorized the publish; `changeset version` bumped to 3.3.0 and consumed the changeset, so the staging assertion is fulfilled-and-superseded. AV is the successor tranche (proof:av-final is its close gate). The 21 other release gates carry the release-quality coverage. Kept here untagged for the historical record; bite-runnable via `npm run proof:au-final`.",
+    },
+    {
+        id: "proof:ay-final",
+        cmd: "proof:ay-final",
+        tags: ["release"],
+        note: "AY.W-CLOSE1 — the AY terminal-close meta-gate (release-only, NOT ci). 8 clauses: FINAL-EXISTS+per-wave-citation, INHERITANCE-CROSSWALK, BUDGET-REBASELINED, NO-OPEN-LIVE-PENDING, CARDINAL-GATE-GREEN both arms + REGISTER-COMPLETE, SQUIRCLE-DECIDED-ONCE, ZERO-ORPHANS, STAGED-NOT-PUBLISHED + CLEAN-TREE. Born-RED-able (12 synthetic violations proven). The DEV-meta analogue of proof:au-final.",
     },
     {
         id: "proof:liquid-glass-tokens",
@@ -677,10 +687,7 @@ export const GATES = [
         note: "AX.W23 — the carousel dot rail RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). TWO clauses (AX.W19 pruned the custom/glass-carousel composite + its former clauses C FOUR-STATE / D CHROME-SUBSTRATE): (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED.",
     },
     {
-        id: "proof:deck-progress-rail",
-        cmd: "proof:deck-progress-rail",
         tags: ["local"],
-        note: "AX.W24 — the deck-position rail gate, UPGRADED string-scan → render assertion. Device-free STRUCTURE arm (runs on EVERY runner): the `.glass-progress-rail` recipe FEEDS --progress-fill/--progress-track from --progress-rail-fill/--progress-rail-track (the F1 cascade-correct token-feed, NOT a `background:` that loses to the @layer utilities `bg-primary`) + uses an INSET glow (the F2 fix, not the eaten OUTSET shadow); ProgressDefault.vue reads the tokens at SOURCE + carries NO bg-primary/bg-secondary utility; DeckProgress composes <Progress> with no chrome/math; the /deck namespace stays RESERVED (no deck.ts subpath, no ./deck export) while ./deck-progress IS published. π-lane RENDER arm (fail-CLOSED when the tests-visual workspace is present; deck-progress-rail.spec.ts): mounts the live deck-progress story under a `:root { --progress-rail-fill: <distinct green> }` override and asserts via getComputedStyle (a) the override hue WINS the indicator background-color (the cascade fix — RED at HEAD where it painted --primary), (b) an `inset` box-shadow glow renders, (c) the rail reads as the hairline --progress-rail-h. Bite: re-add bg-primary to ProgressDefault → STRUCTURE 2 + RENDER (a) RED; re-author the glow OUTSET → STRUCTURE 1 + RENDER (b) RED; squat /deck → STRUCTURE 4 RED.",
     },
     {
         id: "proof:squircle-language",

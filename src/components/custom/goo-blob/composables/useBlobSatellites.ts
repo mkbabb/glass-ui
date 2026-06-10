@@ -1,4 +1,5 @@
 import { mulberry32, hashString } from "../../../../utils/prng";
+import { BASE_OPACITY, MERGE_STAGGER_MS, ORBIT_BLEND_MS } from "../constants";
 import { easeIn, easeOut } from "./easing";
 import type {
     BlobConfig,
@@ -128,10 +129,6 @@ function randomizeOrbit(
     s.pertYPhase = rng() * Math.PI * 2;
 }
 
-const BASE_OPACITY = 0.75;
-/** Duration (ms) to blend from emerge endpoint into live orbit — eliminates snap. */
-const ORBIT_BLEND_MS = 2000;
-
 /**
  * The satellite system — a small pool of orbiting metaball sources that
  * periodically merge into the body, get absorbed, then re-emerge on a fresh
@@ -147,7 +144,6 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
 
     let lastMergeTime = -Infinity;
     let lastOrbitRadius = config.geometry.orbitRadius;
-    const MERGE_STAGGER_MS = 3000;
 
     function syncOrbitRadius() {
         const cur = config.geometry.orbitRadius;

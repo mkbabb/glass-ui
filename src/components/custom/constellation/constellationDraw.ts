@@ -19,17 +19,11 @@ import type {
     ConstellationPointer,
     ConstellationRipple,
 } from "./constellationField";
+import { DEFAULT_PALETTE } from "./constants";
 
-export const DEFAULT_PALETTE: ConstellationPalette = {
-    node: "#b4afa3",
-    nodeDim: "#cdc8bd",
-    line: "#1c1714",
-    // The fallbacks mirror the §5c light-arm token defaults so an SSR / no-token
-    // mount still reads recessive-but-legible (the H.W4 floor fix).
-    edgeAlpha: 0.22,
-    edgeFocusAlpha: 0.34,
-    alpha: 0.8,
-};
+// The neutral palette fallback lives in the feature-dir constants home; re-exported
+// here for the package barrel path.
+export { DEFAULT_PALETTE };
 
 /**
  * Resolve the FULL neutral palette + legibility weights off a canvas's resolved

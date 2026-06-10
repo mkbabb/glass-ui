@@ -63,7 +63,11 @@ const HEADER_LIVE_VERIFIED = new Set([
     "proof:dock-animation-live",
     "proof:dock-orchestrator-single",
     "proof:dock-wrap-content-driven",
-    "proof:deck-progress-rail",
+    // proof:deck-progress-rail RECONCILED OUT (AY.W-CLOSE1): the DeckProgress WRAPPER
+    // was retired (PRUNE-LEDGER R2), so this gate lost its π render arm and is now a
+    // STATIC src-scan lock over the kept .glass-progress-rail recipe + the /deck
+    // reserved guard. It is no longer a live-verified Playwright gate — it lives in
+    // JUSTIFIED_LOCAL_ONLY (the static local-only set) below, not here.
     "proof:squircle-language",
     "proof:glass-material-demo",
     "proof:blob-live-truth",
@@ -77,6 +81,11 @@ const HEADER_LIVE_VERIFIED = new Set([
 const JUSTIFIED_LOCAL_ONLY = new Map([
     // Deliberately-untagged retired close meta-gate (tags=[]).
     ["proof:au-final", "AU close meta-gate, RETIRED from the release/ci set at the 3.3.0 cut (tags=[]); kept untagged for the historical bite-run."],
+    // AY terminal-close meta-gate — RELEASE-only by design (tags=["release"]). Its
+    // STAGED-NOT-PUBLISHED + CLEAN-TREE clauses are release-context truths that
+    // cannot pass mid-development in CI (a dirty working tree is the CI norm), so it
+    // is deliberately NOT ci-tagged. The release arm is its enforcement home.
+    ["proof:ay-final", "AY.W-CLOSE1 terminal-close meta-gate, RELEASE-only by design (STAGED-NOT-PUBLISHED + CLEAN-TREE are release-context, cannot pass in mid-dev CI); the release arm enforces it."],
     // The ci.yml drift meta-step — local+release by design, NOT ci-tagged to avoid
     // double-render (it verifies the ci mirror; its own note documents this).
     ["proof:gen-ci-fresh", "ci.yml byte-match drift meta-step (local+release); NOT ci-tagged to avoid double-rendering itself into the file it checks."],

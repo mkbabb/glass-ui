@@ -242,8 +242,15 @@ onMounted(() => {
         (window as unknown as Record<string, unknown>).__constellationRefit = {
             field: refit.field,
             resizeTo(w: number, h: number) {
-                refitHost.style.width = `${w}px`;
-                refitHost.style.height = `${h}px`;
+                // The refit host sits in a flex parent (ShowcaseFrame's `flex` body),
+                // which stretches it so a plain inline `width` no longer shrinks the
+                // box. Force the box with `important` priority + `flex: none` so the
+                // host actually takes the driven extent
+                // and the substrate's ResizeObserver re-fits the field to it. Test-only
+                // seam (never shipped — demo-private π-lane hook).
+                refitHost.style.setProperty("width", `${w}px`, "important");
+                refitHost.style.setProperty("height", `${h}px`, "important");
+                refitHost.style.setProperty("flex", "none", "important");
                 // force a synchronous layout flush so the ResizeObserver fires.
                 void refitHost.offsetWidth;
             },
@@ -400,6 +407,7 @@ onMounted(() => {
         >
             <ShowcaseFrame pad="none">
                 <div
+                    data-testid="constellation-warp-host"
                     class="relative h-[420px] w-full cursor-pointer overflow-hidden rounded-card bg-card"
                 >
                     <Constellation
@@ -434,9 +442,14 @@ onMounted(() => {
             blurb="The lattice re-fits proportionally on a real resize — the field fills the new canvas within a frame, with no drift-out lag — and the focal node wanders: a periodic auto-pick re-points it to a random node on a jittered cadence, riding the same spring as the click warp. Both are reduced-motion-gated: under reduce the field freezes and the cadence never advances."
         >
             <ShowcaseFrame pad="none">
-                <!-- The wander cadence runs short here so the drift is observable. -->
+                <!-- The wander cadence runs short here so the drift is observable.
+                     `data-testid` lets the π refit-live spec target THIS host
+                     deterministically — the StoryHero now mounts a constellation
+                     background canvas at index 0 for this hero route, so the prior
+                     `.constellation-canvas` nth() index is fragile (AY.W-DOCK-CHROME §4). -->
                 <div
                     ref="refitHostRef"
+                    data-testid="constellation-refit-host"
                     class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
                 >
                     <Constellation
@@ -459,6 +472,7 @@ onMounted(() => {
         >
             <ShowcaseFrame pad="none">
                 <div
+                    data-testid="constellation-well-host"
                     class="relative h-[420px] w-full cursor-grab overflow-hidden rounded-card bg-card active:cursor-grabbing"
                 >
                     <Constellation
@@ -531,6 +545,7 @@ onMounted(() => {
             <ShowcaseFrame pad="none">
                 <div
                     ref="novaHostRef"
+                    data-testid="constellation-nova-host"
                     class="relative h-[420px] w-full cursor-pointer overflow-hidden rounded-card bg-card"
                 >
                     <Constellation
@@ -557,6 +572,7 @@ onMounted(() => {
         >
             <ShowcaseFrame pad="none">
                 <div
+                    data-testid="constellation-freeze-host"
                     class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
                 >
                     <Constellation

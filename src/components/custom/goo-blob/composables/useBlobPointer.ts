@@ -1,6 +1,6 @@
 import { ref, watch, onUnmounted, readonly, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
-import { TRAIL_N } from "../constants";
+import { PULSE_OMEGA, PULSE_ZETA, REST_EPS, TRAIL_N } from "../constants";
 
 /** Compile-time trail length — re-exported from the co-located shape budget (`../constants`). */
 export { TRAIL_N };
@@ -67,9 +67,7 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
     // velocity; the spring rings back to 0.
     let pulse = 0;
     let pulseVel = 0;
-    // Underdamped: omega sets the ring frequency, zeta < 1 the bounce.
-    const PULSE_OMEGA = 18; // rad/s
-    const PULSE_ZETA = 0.35; // underdamped
+    // Underdamped spring constants (PULSE_OMEGA/PULSE_ZETA) live in ../constants.
 
     function onPointerMove(e: PointerEvent) {
         const target = el.value;
@@ -231,7 +229,6 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
      * the click pulse is zero. An ACTIVE pointer is never at rest (the spring is
      * following the cursor), so a held hover keeps the loop alive — no false-park.
      */
-    const REST_EPS = 1e-3;
     function isAtRest(): boolean {
         if (active.value) return false;
         const speed = Math.hypot(springX.velocity, springY.velocity);

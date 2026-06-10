@@ -225,7 +225,22 @@
             [data-size="control"]
         ) {
         --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
-        --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
+        /* AY.W-DOCK-CHROME §2 — the in-dock toggle GLYPH insets to the nav-glyph
+           register. The toggle SVG carries `h-full w-full` (the utility layer, which
+           BEATS the component-layer `> svg { width: --dock-control-glyph-size }` rule
+           below), so the glyph fills whatever the PADDED box leaves. Prior the in-dock
+           padding fell to `var(--dock-icon-padding, 0)` (the token is never defined →
+           0 pad → the glyph filled the whole 40px box edge-to-edge, ~2.5× the 16-20px
+           nav glyphs — the user's "too large" read). Pad the box by HALF the box↔glyph
+           difference so the `h-full` SVG lands at exactly `--dock-icon-glyph` (the
+           `--dock-scale`-keyed size the nav icons paint) — optically UNIFORM with the
+           nav glyphs through the utility-win path, not fighting it. */
+        --dark-mode-toggle-padding: calc(
+            (
+                    var(--dock-control-size, var(--size-icon-btn)) -
+                        var(--dock-icon-glyph, 1.25rem)
+                ) / 2
+        );
     }
 
     /* AX.W06 USF-2 — the dock-control optical-size contract. The

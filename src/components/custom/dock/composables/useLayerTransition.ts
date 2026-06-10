@@ -1,6 +1,7 @@
 import { computed, ref, watch, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
+import { DOCK_SPRING } from "../constants";
 
 /**
  * AX.W01 — the dock single-scalar morph: ONE spring, ONE clock, the whole box.
@@ -42,11 +43,10 @@ import { SpringProgress } from "@mkbabb/keyframes.js";
  * public re-export an external consumer reads). Until W-GOD1 lands, `proof:dock-orchestrator-single`'s
  * FLIP DRIFT-GUARD asserts this engine and the orchestrator stay byte-faithful on
  * the load-bearing pin-measure-arm markers, so a divergence in the shared dance REDs.
- * The CANONICAL `DOCK_SPRING` authority is `dockMorphContext.ts` (the orchestrator
- * drives every shipped dock); `proof:spring-tokens-synced` reads it there, NOT this
- * copy (D3 — the dead-witness fix).
+ * The CANONICAL `DOCK_SPRING` authority is `dock/constants.ts` (the colocation home
+ * BOTH this engine and the orchestrator import); `proof:spring-tokens-synced` reads
+ * it there, NOT a per-composable copy (W-COLOCATE — the dead-witness fix, continued).
  */
-const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
 
 export interface UseLayerTransitionOptions {
     /** The container element that owns the stacked layer panes. */

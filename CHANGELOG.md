@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.10.0
+
+### Minor Changes
+
+-   **AY — the corrective close: every visual band LIVE-VERIFIED, the substrates rebuilt where the user's live audit said they were broken, and the codebase carved + colocated.** AX landed headless-green but visually broken; AY re-grounded to HEAD and drove every band to a captured-DELTA close under the cardinal gate (`proof:live-verified-ledger` — a "live-verified" claim owes an on-disk `.png` + a π readback, with freshness headers, IHDR dimension asserts, and a GREEN-on-real-surface clause).
+-   **The substrate rebuilds (the user-audit fixes, root-caused)** — the blob's "broken" state was ONE category error (a page-background mount of a contained droplet) — fixed at the mount, the cream bead restored with a warm-red mood band the constellation focal + fourier comet share (`proof:substrate-cohesion`); the van-Gogh aurora's marble root-caused to the shared oil cascade and rebuilt as analytic crescent-comma dabs (live GPU π readback, 35× faster); the aurora + blob configurators rebuilt on the library `Configurator`; the fourier field's render register rebuilt to the fourier-analysis reference; the constellation gains `opacityCeiling` recession + a deterministic `?freeze` frame.
+-   **The dock, finished** — the collapsed pill a perfect circle (the height-lock × width-floor oval root-caused); the morph layout-isolated so expand/collapse never reflows the surrounding container; the nav-pattern (home-left, utility controls at the trailing end behind a `DockSeparator`, the dark-mode toggle sized to the icon register at the bottom of the rail); `DockBackgroundToggle` actually parks the background in both dock states.
+-   **Structure** — every god-module carved into cohesive colocated sub-modules (`proof:no-god-module` + a per-violator growth RATCHET); the feature-dir colocation convention (components at root, `composables/`, `constants.ts`, shaders, skeletons, README) enforced by `proof:colocation`; the style monolith carved into cascade-order-safe partials; the design-idiom home at `docs/precepts/design-idioms.md`.
+-   **The ruthless prune** — `./deck-progress`, `./header-ribbon`, `./glass-panel`, `./instrument-rail` subpaths RETIRED (zero consumers each; clean break, no aliases); the dashboard filler story + `evalFourier` deleted; `watercolor-dot` KEEP-EVIDENCED.
+-   **NEW `@mkbabb/glass-ui/underline`** — `<GlassUnderline>`, the hand-drawn SVG draw-on underline transposed from the sci-report R&D: three clocks (`load`/`scroll`/`static`), a declarative `active` edge, PRM set-not-drawn parity, filter-free, no `.dark` block (the `color` prop wins both grounds).
+-   **The close is a gate** — `proof:ay-final` aggregates the 8 close clauses (the cardinal arms, the disposition register, the budget, the orphan scan, staged-not-published, clean-tree) so "is AY done?" is one born-RED→GREEN command.
+
 ## 3.9.0
 
 ### Minor Changes

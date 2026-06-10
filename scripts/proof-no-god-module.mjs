@@ -52,7 +52,12 @@ const RATCHET_BASELINES = {
     // OUT of W-CSS1's carve scope — grandfathered at their frozen counts until a
     // later central-CSS carve drains the rows (the same cohesion-aware @import
     // partial precedent applies; see docs/precepts/design-idioms.md).
-    "styles/dock-controls.css": 621,
+    // 621→636 (AY close): the user-audit dock-chrome fix (the in-dock dark-mode
+    // toggle glyph inset to the nav-glyph register) — a deliberate, reviewed
+    // growth on the sheet awaiting its carve, re-frozen here per the FINAL.md §3
+    // triage. The carve target is unchanged: the @import-root partial split
+    // drains this row (and re-points the dock-controls-reading gates composed).
+    "styles/dock-controls.css": 636,
     "styles/theme.css": 530,
 };
 

@@ -22,8 +22,9 @@ import {
     pickWanderTarget,
 } from "./constellationInteraction";
 
-/** Reference width the `k` scale factor is keyed to (CSS px). */
-export const BASE_WIDTH = 1280;
+// The reference width the `k` scale factor is keyed to (CSS px) lives in the
+// feature-dir constants home; re-exported here for the package barrel path.
+export { BASE_WIDTH } from "./constants";
 
 export interface ConstellationNode {
     x: number;

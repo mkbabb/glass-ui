@@ -88,10 +88,15 @@ test.describe("constellation-egg-live (π lane — fail-CLOSED, AY.W-CON2)", () 
         page,
     }) => {
         await page.goto(CONSTELLATION.path);
-        // The gravity-well section's canvas (the FOURTH <Constellation> — gravityWell:
-        // proximity-graph[0], warp[1], refit/wander[2], well[3]). The demo exposes the
-        // live field + holdWellAt/releaseWell on window.__constellationEgg.
-        const wellCanvas = page.locator("canvas.constellation-canvas").nth(3);
+        // The gravity-well section's canvas — targeted via the host `data-testid`
+        // (AY.W-DOCK-CHROME §4): the StoryHero mounts a constellation BACKGROUND canvas
+        // at index 0 for this hero route, so the prior `nth(3)` index pointed at the
+        // WRONG canvas → the well section never scrolled into view, its field never
+        // seeded (the "well did not perturb" + waitForFunction timeout). The demo
+        // exposes the live field + holdWellAt/releaseWell on window.__constellationEgg.
+        const wellCanvas = page
+            .locator('[data-testid="constellation-well-host"] canvas.constellation-canvas')
+            .first();
         await wellCanvas.waitFor({ state: "visible", timeout: 20_000 });
         await wellCanvas.scrollIntoViewIfNeeded();
         await page.waitForFunction(
@@ -308,7 +313,9 @@ test.describe("constellation-egg-live (π lane — fail-CLOSED, AY.W-CON2)", () 
         await page.setViewportSize({ width: 390, height: 844 });
         await page.reload({ waitUntil: "domcontentloaded" });
         await page.waitForLoadState("networkidle");
-        const mobileCanvas = page.locator("canvas.constellation-canvas").nth(3);
+        const mobileCanvas = page
+            .locator('[data-testid="constellation-well-host"] canvas.constellation-canvas')
+            .first();
         await mobileCanvas.waitFor({ state: "visible", timeout: 20_000 });
         await mobileCanvas.scrollIntoViewIfNeeded();
         await page.waitForFunction(

@@ -91,18 +91,40 @@
     /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
        wrap variant's own padding rules (W04 territory — `.dock-overflow-wrap` +
        its `@media` snap-back) are NOT clobbered by this higher-specificity longhand.
-       Padding interpolates linearly between the collapsed floor and the expanded
-       block/inline padding on the same `--dock-expand-t` scalar. */
+
+       AY.W-DOCK-CHROME §1 — the LAYOUT-ISOLATION fix: the collapse↔expand morph is
+       an INLINE-WIDTH aperture by contract ("horizontal docks animate width"), so
+       the BLOCK axis MUST be invariant across the morph — otherwise the dock's
+       outer height shrinks ~4px on collapse (the collapsed-pad 0.25rem vs the
+       expanded pad-block 0.375rem, ×2) and, because a free-floating / inline dock
+       sits in normal flow (`display:inline-flex`), that height delta REFLOWS its
+       siblings — the page content jumped as the dock animated (the user's 13:27
+       audit item 1). The fix holds `padding-block` PINNED at the expanded value in
+       BOTH states (no `--dock-expand-t` interpolation on the block axis) so the
+       outer block-size is constant; ONLY `padding-inline` morphs to tighten the
+       collapsed pill inline. The collapsed circle is unaffected — its diameter is
+       owned by the summary pane's own symmetric `block-size` + `aspect-ratio:1`
+       (the `.collapsed .dock-layer--summary` rule below), CENTRED on the dock's
+       stable-height plate by the root `align-items:center`, not by the root pad. So
+       the morph reflows NOTHING vertically: 0px container-height delta. */
     .glass-dock.variant-dock:not(.vertical):not(.dock-overflow-wrap) {
-        --dock-pad-collapsed: var(
-            --dock-collapsed-padding,
-            var(--dock-padding-block, 0.375rem)
+        /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
+           consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
+           pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
+           axis is pinned to the expanded pad (below), so matching the inline collapsed
+           endpoint to it keeps the box square (the B4 "symmetric collapsed padding
+           keeps the pill a circle" intent, preserved through the §1 height-pin). The
+           `max()` lets a consumer set `--dock-collapsed-padding` LARGER for a looser
+           pill but never SMALLER than the block pad (which would re-introduce the
+           narrower-than-tall oval the height-pin would otherwise leave). */
+        --dock-pad-collapsed: max(
+            var(--dock-padding-block, 0.375rem),
+            var(--dock-collapsed-padding, 0px)
         );
-        padding-block: calc(
-            var(--dock-pad-collapsed) +
-                (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
-                var(--dock-expand-t, 1)
-        );
+        /* block padding is INVARIANT — the expanded value, both states (the
+           layout-isolation contract above): the inline aperture morphs, the block
+           axis is pinned so the outer height never changes → 0px container reflow. */
+        padding-block: var(--dock-padding-block, 0.375rem);
         padding-inline: calc(
             var(--dock-pad-collapsed) +
                 (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
@@ -122,6 +144,7 @@
         justify-content: center;
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
+
 
     /* AY.W-DOCK-NAV B4 — the collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
        base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:

@@ -1,5 +1,6 @@
 import { ref, type Ref, readonly } from "vue";
 import type { BlobMood, MoodParams } from "../types";
+import { IDLE_SLEEP_MS, MOOD_TARGETS, TRANSITION_MS } from "../constants";
 import { easeInOut } from "./easing";
 
 // W11.c — the mood model reframed on a 2-axis {valence, arousal} core (the
@@ -21,87 +22,6 @@ import { easeInOut } from "./easing";
 // clobbered back to idle within ~16ms (the shipped expose silently no-op'd — the
 // binding-verification class).
 
-interface AffectPoint {
-    /** Pleasantness, -1 (unpleasant) .. +1 (pleasant). */
-    valence: number;
-    /** Activation, 0 (calm/sleepy) .. 1 (energized/excited). */
-    arousal: number;
-}
-
-const MOOD_AVA: Record<BlobMood, AffectPoint> = {
-    idle: { valence: 0.0, arousal: 0.35 },
-    happy: { valence: 0.8, arousal: 0.6 },
-    curious: { valence: 0.3, arousal: 0.5 },
-    sleepy: { valence: -0.1, arousal: 0.1 },
-    excited: { valence: 0.7, arousal: 1.0 },
-};
-
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-/**
- * Derive the full MoodParams from a {valence, arousal} point. Arousal drives the
- * motion energy (orbit speed, wobble, pulse rate/amp, noise, the iridescence/SSS
- * sheen); valence warms the palette (hue range, chroma, brightness) and the
- * pointer lean. ONE principled surface — the five named moods are samples of it.
- */
-function paramsFor({ valence, arousal }: AffectPoint): MoodParams {
-    return {
-        orbitSpeedScale: lerp(0.4, 2.2, arousal),
-        wobbleScale: lerp(0.5, 2.0, arousal),
-        pulseFreq: lerp(0.15, 1.5, arousal),
-        pulseAmp: lerp(0.008, 0.05, arousal),
-        noiseAmp: lerp(0.015, 0.045, arousal),
-        hueRange: lerp(3, 25, arousal * 0.6 + (valence * 0.5 + 0.5) * 0.4),
-        satShift: lerp(-0.05, 0.1, valence * 0.5 + 0.5),
-        brightnessShift: lerp(-0.03, 0.08, valence * 0.5 + 0.5),
-        // `smoothK` is a unitless, 1.0-CENTRED MULTIPLIER on the config's absolute
-        // smin band (NOT an absolute distance) — the config holds the one length
-        // authority (`BLOB_CONFIG_DEFAULTS.smoothK`, POS_SCALE'd in the renderer),
-        // mood only scales it. Excited (high arousal) merges gooier, sleepy (low
-        // arousal) crisper; idle sits ≈ 1.0 (arousal 0.35 → ~1.03). The range is the
-        // prior absolute 0.16–0.32 lerp re-expressed around 1.0 (~5× down) so the smin
-        // band stays inside the contained-droplet seam-pull at BOTH arousal extremes.
-        smoothK: lerp(0.85, 1.35, arousal),
-        // Pleasant + activated leans IN; unpleasant shies AWAY.
-        //
-        // AX.W46 D5 — the arousal multiplier is FLATTENED (`0.4 + 0.6·arousal` →
-        // `0.7 + 0.15·arousal`). The old multiplier reached 1.0 at full arousal, so a
-        // plain hover (which auto-promotes to `curious`, arousal 0.5) scaled the pointer
-        // attraction UP and COMPOUNDED with the config `pointerStrength` into the lunge
-        // the live π-lane flagged. The flattened band (0.775 at curious, 0.85 at
-        // excited) keeps the auto-`curious` hover lean CALM — the mood still warms the
-        // attraction with arousal, but it no longer auto-jumps a hover toward the
-        // excited-regime lean. The lean magnitude now lives in `config.pointerStrength`
-        // (0.18), not a mood-compounded multiplier.
-        pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.7 + 0.15 * arousal),
-        // Energized = faster merge cycling (lower stagger scale).
-        mergeRate: lerp(2.0, 0.3, arousal),
-        // The iridescence/SSS sheen intensity (excited shimmers, sleepy is calm —
-        // NOT flat: sleepy stays ALIVE at ~0.55, an `arousal=0` blob reads asleep,
-        // not dead). AX.W15: with lit/iridescence/SSS now DEFAULT-ON, this multiplier
-        // is load-bearing for the FIRST time — the excited CEILING drops 1.8 → 1.35
-        // so the excited extreme stays a WARM wet bead, never an over-saturated neon
-        // thin-film on the now-default-lit warm body.
-        iridScale: lerp(0.55, 1.35, arousal),
-    };
-}
-
-const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
-    idle: paramsFor(MOOD_AVA.idle),
-    happy: paramsFor(MOOD_AVA.happy),
-    curious: paramsFor(MOOD_AVA.curious),
-    sleepy: paramsFor(MOOD_AVA.sleepy),
-    excited: paramsFor(MOOD_AVA.excited),
-};
-
-const TRANSITION_MS: Record<BlobMood, number> = {
-    idle: 1500,
-    happy: 1200,
-    curious: 800,
-    sleepy: 2500,
-    excited: 600,
-};
-
 function lerpParams(a: MoodParams, b: MoodParams, t: number): MoodParams {
     const mix = (x: number, y: number) => x + (y - x) * t;
     return {
@@ -119,9 +39,6 @@ function lerpParams(a: MoodParams, b: MoodParams, t: number): MoodParams {
         iridScale: mix(a.iridScale, b.iridScale),
     };
 }
-
-/** Idle timeout (ms of no pointer) after which the blob drifts to `sleepy`. */
-const IDLE_SLEEP_MS = 6000;
 
 /** The interaction signals `update` reads to drive the auto-mood arc. */
 export interface MoodInteraction {

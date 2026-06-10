@@ -1,5 +1,6 @@
 import type { ComputedRef } from "vue";
 import { createStrictContext } from "../../../../composables/context";
+import { DOCK_CONTEXT_LABEL } from "../constants";
 
 export type DockOrientation = "horizontal" | "vertical";
 export type DockLayout = "linear" | "grid";
@@ -47,11 +48,11 @@ export interface DockContext {
 // use strict; a `<Slider>` that may sit outside a dock reads via the optional
 // shape over the same key.
 const ctx = createStrictContext<DockContext>(
-    "glass-ui:dock-context",
+    DOCK_CONTEXT_LABEL,
     "[glass-ui:dock] useDockContext() called outside <GlassDock>; use useOptionalDockContext() if the primitive may render outside a dock.",
 );
 
-export const DOCK_CONTEXT_KEY = ctx.KEY;
+export const { KEY: DOCK_CONTEXT_KEY } = ctx;
 
 export function provideDockContext(context: DockContext): void {
     ctx.provide(context);

@@ -29,19 +29,20 @@ import {
 import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT_DIR = resolve(fileURLToPath(new URL("../", import.meta.url)));
-// AY.W-DOCK2 (D3) — the CANONICAL DOCK_SPRING authority is `dockMorphContext.ts`
-// (the orchestrator that drives EVERY shipped `<GlassDock>` morph), NOT the
-// vestigial `useLayerTransition.ts` copy the gate read before. A dev retuning the
-// ACTUAL shipped morph at dockMorphContext.ts to a bouncier ζ now REDs here; the
-// prior gate stayed GREEN reading the other, increasingly-vestigial copy (the
-// dead-witness class — the morph's real spring was gated by proxy, never directly).
+// AY.W-COLOCATE (D3 cont.) — the CANONICAL DOCK_SPRING authority moved to the dock
+// feature-dir constants home, `dock/constants.ts` (the colocation convention: the
+// magic-number config lives in `constants.ts`, imported by BOTH the orchestrator
+// `dockMorphContext.ts` AND the `useLayerTransition.ts` engine — no per-composable
+// copy). The gate reads it THERE: a dev retuning the shipped morph spring touches
+// ONE file, and the gate witnesses the real authority (not a vestigial proxy — the
+// dead-witness class this lane closed first at useLayerTransition.ts, then here).
 const DOCK_MORPH_CONTEXT_TS = resolve(
     ROOT_DIR,
-    "src/components/custom/dock/composables/dockMorphContext.ts",
+    "src/components/custom/dock/constants.ts",
 );
 
 // AW.W2 — the dock-spring const the band assert checks. Mirrors DOCK_SPRING in
-// dockMorphContext.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
+// dock/constants.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
 const DOCK_RESPONSE = 0.32;
 const DOCK_DAMPING = 0.7;
 
@@ -69,16 +70,16 @@ export function detectBand() {
     const violations = [];
     const facts = {};
 
-    // AY.W-DOCK2 (D3) — the const in the CANONICAL `dockMorphContext.ts` (the
-    // orchestrator that drives every shipped dock morph), NOT the vestigial
-    // `useLayerTransition.ts` copy.
+    // AY.W-COLOCATE (D3 cont.) — the const in the CANONICAL `dock/constants.ts` (the
+    // colocation home both the orchestrator AND `useLayerTransition.ts` import), NOT
+    // a per-composable copy.
     const morphSrc = readFileSync(DOCK_MORPH_CONTEXT_TS, "utf8");
     const constMatch = morphSrc.match(
         /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
     );
     if (!constMatch) {
         violations.push(
-            "dockMorphContext.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found (the canonical dock-spring authority)",
+            "dock/constants.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found (the canonical dock-spring authority)",
         );
         return { facts, violations };
     }
@@ -172,7 +173,7 @@ export function detectComments() {
     // just the regen partial, so the dock-spring prose in tokens/scale-paper.css
     // is in scope. `monolith: "tokens"` routes through readMonolith.
     const targets = [
-        { path: DOCK_MORPH_CONTEXT_TS, label: "dockMorphContext.ts" },
+        { path: DOCK_MORPH_CONTEXT_TS, label: "dock/constants.ts" },
         { monolith: "tokens", label: "tokens.css" },
     ];
 

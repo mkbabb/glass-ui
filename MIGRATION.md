@@ -1,5 +1,13 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **v3.10.0 (AY)**—four zero-consumer subpaths RETIRED outright (no aliases,
+> per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress`,
+> `/header-ribbon`, `/glass-panel`, `/instrument-rail` — each had 0 production
+> consumers at the prune census (`docs/tranches/AY/audit/PRUNE-LEDGER.md`).
+> A consumer that referenced one composes the equivalent from the surviving
+> primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
+> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
+
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the
 > AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**

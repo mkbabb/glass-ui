@@ -12,16 +12,20 @@ import type {
     ConstellationWarpConfig,
     ConstellationWellConfig,
 } from "./constellationField";
+import {
+    DEFAULT_WANDER_IDLE,
+    DEFAULT_WANDER_JITTER,
+    DEFAULT_WELL_CONFIG,
+    WARP_RESPONSE,
+    WARP_ZETA,
+} from "./constants";
 
-/**
- * Auto-DRIFT cadence DEFAULTS (AY.W-CON1 source; tokenised in AY.W-CON2). The
- * `--constellation-wander-idle`/`-wander-jitter` tokens override these on mount via
- * `readInteractionConfig` (the SAME numeric `--constellation-*` cohort as the warp
- * spring + the well gains); a prop `{ minIdle, jitter }` still wins over the token.
- * The 8s/8s default rhythm re-targets the focal mark every 8–16s (the slides cadence).
- */
-export const DEFAULT_WANDER_IDLE = 8000; // ms — min idle between auto re-targets
-export const DEFAULT_WANDER_JITTER = 8000; // ms — random extra idle per cadence
+// The CONFIG-DEFAULT constants (the warp spring + gravity-well + wander cadence
+// defaults the `--constellation-*` tokens override) live in the feature-dir constants
+// home; re-exported here for the package barrel path. The algorithm-LOCAL physics
+// tuning below (the well cool/ramp rates, the dt-clamp, the settle band) stays
+// INTERNAL — it travels with the algorithm, not the package config surface.
+export { DEFAULT_WANDER_IDLE, DEFAULT_WANDER_JITTER, DEFAULT_WELL_CONFIG, WARP_RESPONSE, WARP_ZETA };
 
 /**
  * Read the NUMERIC interaction-tuning tokens (the warp spring + the gravity-well
@@ -191,41 +195,20 @@ export function stepWell(
 // the substrate's ONE rAF. The keyframes.js `(response, dampingFraction)` PARAM
 // model is reused (ω₀ = 2π/response, ζ = dampingFraction) but NOT its rAF.
 
-/**
- * Warp spring tuning DEFAULTS — gentle critically-damped (no overshoot on a focal
- * mark). The `--constellation-warp-response`/`-zeta` tokens override these on mount
- * via `field.warpCfg` (AY.W-CON2); these stay the byte-identical fallback.
- *
- * `WARP_RESPONSE` is the keyframes.js `(response, dampingFraction)` model's ANGULAR
- * PERIOD (the SwiftUI `.spring(response:)` axis), `ω₀ = 2π/response` — NOT a
- * settle-duration. At ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
- * (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope); the shipped 0.55 settles
- * at ≈0.51s. This is the AY.W-CON2 ω-reconcile: the engine keeps the keyframes.js
- * `ω₀ = 2π/response` convention (the shared house model — `regen-spring-tokens.mjs`,
- * `keyframes.d.ts:860-882`) and mints NO second ω formula; the SEMANTIC honesty
- * (period, not settle) lives in this doc + the token comment + the settle-time unit
- * assertion, so a consumer setting the token gets the documented behaviour at ANY ζ.
- */
-export const WARP_RESPONSE = 0.55; // s — keyframes.js angular period (NOT a settle-duration)
-export const WARP_ZETA = 1.0; // critically damped — a focal mark must NOT ring/overshoot
+// The warp-spring DEFAULTS (`WARP_RESPONSE`/`WARP_ZETA`) live in `./constants`.
+//
+// `WARP_RESPONSE` is the keyframes.js `(response, dampingFraction)` model's ANGULAR
+// PERIOD (the SwiftUI `.spring(response:)` axis), `ω₀ = 2π/response` — NOT a
+// settle-duration. At ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
+// (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope); the shipped 0.55 settles
+// at ≈0.51s. This is the AY.W-CON2 ω-reconcile: the engine keeps the keyframes.js
+// `ω₀ = 2π/response` convention (the shared house model — `regen-spring-tokens.mjs`,
+// `keyframes.d.ts:860-882`) and mints NO second ω formula; the SEMANTIC honesty
+// (period, not settle) lives in this doc + the token comment + the settle-time unit
+// assertion, so a consumer setting the token gets the documented behaviour at ANY ζ.
+
 /** dt clamp (s) — guards a tab-throttle / offscreen-park-resume gap from teleporting. */
 const WARP_DT_CLAMP = 0.05; // ≈50ms; a clamped dt resolves the park-mid-warp teleport for free.
-
-/**
- * Gravity-well tuning DEFAULTS (AY.W-CON2). The `--constellation-well-*` tokens
- * override these on mount via `field.well.cfg`; these stay the fallback. SET by the
- * §6 egg-live π readback (the field-perturbs-then-cools capture is the binding
- * truth) — a moderate gain over a generous reach, a brisk ramp, a tight no-slingshot
- * speed cap, and the singularity-soften floor.
- */
-export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
-    gain: 14000, // inverse-square force scale — a clear pull over the reach
-    reach: 340, // base-width px — the well's influence radius (k-scaled at step)
-    ramp: 4.0, // 1/s — the ARM rate (≈0.25s bloom; release is the fixed brisk WELL_RELEASE_RAMP, F8.2)
-    maxSpeed: 4.0, // base-width px/frame cap — the no-slingshot clamp
-    soften: 8, // px — the singularity floor (a node AT the cursor → bounded pull)
-    holdMs: 140, // ms hold before the well arms
-};
 
 /**
  * The nearest DRIFTING node to `(px, py)` in canvas-local px — a linear O(count)

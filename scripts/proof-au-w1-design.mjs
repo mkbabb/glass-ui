@@ -36,7 +36,8 @@ const FLEET = [
     "proof:frostShader-deleted",
     "proof:webgl-golden",
     "proof:blob-value-free",
-    "proof:no-value-default",
+    // proof:no-value-default RETIRED at the AY close (W-BLOB3 stripped the DI
+    // contract it asserted); its W1c registry row stands as history.
     "proof:blob-color-equivalence",
     "proof:blob-space-gamma",
     "proof:dock-a11y-contract",

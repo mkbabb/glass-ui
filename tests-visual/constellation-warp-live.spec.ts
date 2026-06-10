@@ -67,9 +67,14 @@ test.describe("constellation-warp-live (π lane — fail-CLOSED)", () => {
         page,
     }) => {
         await page.goto(CONSTELLATION.path);
-        // The warp section's canvas (the second <Constellation> — warpOnClick).
-        // The demo exposes the live field on window.__constellationWarp.
-        const warpCanvas = page.locator("canvas.constellation-canvas").nth(1);
+        // The warp section's canvas — targeted via the host `data-testid`
+        // (AY.W-DOCK-CHROME §4): the StoryHero mounts a constellation BACKGROUND canvas
+        // at index 0 for this hero route, so the prior `nth(1)` index pointed at the
+        // WRONG canvas → the warp field never seeded ("warpTo returned no target node"
+        // + timeout). The demo exposes the live field on window.__constellationWarp.
+        const warpCanvas = page
+            .locator('[data-testid="constellation-warp-host"] canvas.constellation-canvas')
+            .first();
         await warpCanvas.waitFor({ state: "visible", timeout: 20_000 });
         // The warp section is BELOW the fold; the substrate PARKS an offscreen
         // (`content-visibility:auto`) surface, so the field never seeds until the
@@ -130,9 +135,9 @@ test.describe("constellation-warp-live (π lane — fail-CLOSED)", () => {
                 const field = w.field;
                 // map the client click to canvas-local px (the same toLocal the
                 // component uses) so the recorded clickX/Y are in field space.
-                const canvas = document.querySelectorAll(
-                    "canvas.constellation-canvas",
-                )[1] as HTMLCanvasElement;
+                const canvas = document.querySelector(
+                    '[data-testid="constellation-warp-host"] canvas.constellation-canvas',
+                ) as HTMLCanvasElement;
                 const r = canvas.getBoundingClientRect();
                 const localX = ((cx - r.left) / r.width) * field.w;
                 const localY = ((cy - r.top) / r.height) * field.h;

@@ -120,19 +120,66 @@ close — recorded, not silently carried).
 
 ## §3 — The release battery (the close ceremony runs)
 
+The core publish battery is GREEN. The full local proof suite is NOT yet wholly green — a residual set
+of gates reds at this HEAD; each is enumerated honestly below with its disposition (no prose-claimed
+close — the cardinal lesson). The reds split into ENVIRONMENT (this dev box / sibling-state),
+ORCHESTRATOR-COMMIT (the close runs on the post-commit clean tree), and OWNING-WAVE (stale-gate vs an
+AY deliberate rebuild — the reconcile belongs to the named wave, not W-CLOSE1).
+
 | gate | result |
 |---|---|
-| `npm run typecheck` | green (vue-tsc --noEmit + tsconfig.test.json) |
-| `npm run build` | green (vite JS bundle + per-subpath chunks + 69 flat `.d.ts`) |
-| `npm run verify-export-types` | green (the subpath dts publication probe over the full build) |
-| `npm run proof:gen-ci-fresh` | green (ci.yml byte-identical to `gates.mjs --emit-ci`) |
-| `npm run profile:budget` | green (`--enforce` against the rebaselined AY reference: glass-ui.js 37.5 KB raw / 10.0 KB gzip 29.8% of ceiling; index.css 277.9 KB / 66.2 KB; aurora.js 114.5 KB / 38.6 KB) |
-| `npm run proof:squircle-language` | green (the corner-shape policy over the decided panel-membership) |
-| `npm run proof:live-verified-ledger:ay` | green (31 live-verified rows, each own-surface DELTA-backed) |
-| `npm run proof:live-verified-ledger:ax` | green (the W-DELTA0 backlog tracker — the discharge proof) |
-| `npm run proof:disposition-live` | green (register-completeness: 31 BOOK ids covered) |
-| `node scripts/gates.mjs --run local` | green (the full local proof suite; the stale AX.W12 aurora-extraction test re-baselined to the W-AUR-PAINTERLY rebuilt shader) |
-| `npm run proof:ay-final` | GREEN — all 8 close clauses satisfied; `.cache/gates/AY-final.json` `status:pass`. |
+| `npm run typecheck` | GREEN (vue-tsc --noEmit + tsconfig.test.json) |
+| `npm run build` | GREEN (vite JS bundle + per-subpath chunks + 59 flat subpath `.d.ts`, ≈0.7 s vite + dts arm) |
+| `npm run verify-export-types` | GREEN (the subpath dts publication probe over the full build) |
+| `npm run proof:gen-ci-fresh` | GREEN (ci.yml byte-identical to `gates.mjs --emit-ci`) |
+| `npm run profile:budget` | GREEN (`--enforce` against the rebaselined AY reference, drift +0.0% across all chunks: glass-ui.js 37.5 KB raw / 10.06 KB gzip 29.8% of ceiling; index.css 278 KB / 66.2 KB 47.3%; aurora.js 114.5 KB / 38.6 KB gzip 96.5%) |
+| `npm run proof:squircle-language` | GREEN (the corner-shape policy over the decided panel-membership) |
+| `npm run proof:live-verified-ledger:ay` | GREEN (the AY-active cardinal gate, every visual wave own-surface DELTA-backed) |
+| `npm run proof:live-verified-ledger:ax` | GREEN (the W-DELTA0 backlog tracker — the discharge proof) |
+| `npm run proof:disposition-live` | GREEN (register-completeness: the BOOK ledger ids covered) |
+| `npm run proof:ay-final` (clauses 1–7) | GREEN — the 7 substantive close clauses satisfied (FINAL, crosswalk, budget, no-open-live-pending, both cardinal arms + register, squircle-once, zero-orphans, staged-not-published); clause 8 CLEAN-TREE reds until the orchestrator commits (the agent-git clause forbids the agent committing). `.cache/gates/AY-final.json` carries the single clean-tree violation. |
+| `node scripts/gates.mjs --run local` (142 gates) | NOT wholly green at HEAD — 113 PASS / 19 FAIL / 1 env-blocked (`proof:consumers:build` requires bash ≥4; this dev box ships Apple bash 3.2 — the gate's logic PASSES under a bash-4 shim, GREEN in CI on Ubuntu). The 19 reds, triaged: |
+
+**The 19 `--run local` reds (honest triage):**
+
+| gate | class | disposition |
+|---|---|---|
+| `proof:resolution` | ENV / sibling-state | DOCUMENTED-EXPECTED — a `bbnf-lang/playground` consumer hard-alias; the gate text states "RED for them is expected" pending AG-GU0/GU2/GU4. glass-ui-side clean. |
+| `proof:phantom-classes` | ENV / consumer-handoff | DOCUMENTED-PENDING — a `fourier-analysis` un-applied migration patch; the gate text states "honest, not a gate bug" (glass-ui src/+demo clean; `PROOF_PHANTOM_ALLOW_PENDING=1` greens the glass-ui side). |
+| `proof:no-god-module` | ORCHESTRATOR-COMMIT | `dock-controls.css` is 636 (> ratchet 621) from an UNCOMMITTED prior-lane edit in the working tree; reconciles when the orchestrator commits + re-baselines the ratchet. |
+| `proof:story-language` | ORCHESTRATOR-COMMIT | UNCOMMITTED prior-lane edits to `dock/overview.vue` + `substrates/constellation.vue` added WCAG/proof-gate meta-language; reconciles on commit + meta-scrub. |
+| `proof:gate-script-parity` | OWNING-WAVE | two orphan scripts unregistered: `proof:ay-final` (THIS wave — register `release`-only) + `proof:colocation` (W-COLOCATE specced it `local`+`ci` but never registered it — a W-COLOCATE miss). Both registrations are reported in this lane's sharedFileDeltas. |
+| `proof:tag-parity` | OWNING-WAVE | the `gates.mjs` header still names the RETIRED `proof:deck-progress-rail` as a live Playwright gate (W-PRUNE retired deck-progress but left the header) — the header reconcile is W-PRUNE/W-LEG1's. |
+| `proof:no-legacy-commentary` | OWNING-WAVE | `src/api/index.ts` + `src/index.ts` barrels carry tranche-letter archaeology (AW.W17/AX.W17/AX.W37) — the barrel meta-scrub (AV.W12 contract) is owed by the colocation/legacy wave. |
+| `proof:no-value-default` | OWNING-WAVE (stale gate) | asserts the blob `colorResolver` DI + `defaultBlobColorResolver` throw that **W-BLOB3 deliberately STRIPPED** (RESEARCH.md OPEN-3, the speculative-DI-without-2nd-consumer retire). The gate must be RETIRED/updated by the blob wave; it now tests a removed contract. |
+| `proof:aurora-atoms-roundtrip` | OWNING-WAVE (stale gate) | asserts the AuroraConfigDock atoms-tab-default the aurora REBUILD (W-AUR-VANGOGH-REBUILD / W-AUR-STUDIO) restructured; the reconcile is the aurora wave's. |
+| `proof:substrate-staging` | OWNING-WAVE (stale gate) | asserts a StoryHero `blob` v-else-if branch + `StoryBackgroundKind` "blob" member the substrate-staging rebuild did not land as specced; owned by W-SB-STAGE. |
+| `proof:page-redesign` | OWNING-WAVE (stale gate) | asserts a surviving inline `<Aurora>` fork in `auth-shell.vue` + unique-substrate-per-hero; the page-redesign hero map changed under AY; owned by the page-redesign wave. |
+| `proof:font-cascade-live` (source arm) | OWNING-WAVE (stale gate) | asserts `tokens.css` font-stacks (Plus Jakarta / Fira Code chains) that do not match the current token state; owned by the font wave. |
+| `proof:substrate-paints-color` | LIVE-π | aurora readPixels π spec reds on the running `:5173` server (a non-default-interior assertion on the rebuilt aurora); a live capture against the `:5199` rebuilt surface is owed by the aurora wave. |
+| `proof:tabs-unified` (π live arm) | LIVE-π | the source arm is GREEN (glide token + squish ≤1.10 + 0 survivors); only the π live arm reds (indicator glide/squish not observed on the test server) — a live-server capture. |
+| `proof:touch-target` | LIVE-π | a coarse-pointer composited hit-rect π spec reds (Checkbox/atom < 44px under coarse) — a live-π WCAG-2.5.5 readback owed by the prim-polish/scale wave. |
+| `proof:nested-backdrop-budget` | LIVE-π | the `.glass-btn` `contain` lacks `paint` in the nested-stack π spec — a live-π depth-budget readback owed by the a11y-perf wave. |
+| `proof:dock-animation-live` | LIVE-π | the demo dock route is unreachable on `:5173` (the π server) — a live capture against the `:5199` demo. |
+| `proof:dock-orchestrator-single` | LIVE-π | `:5173/navigation/dock-layers` selector timeout — a live capture against the running demo. |
+| `proof:dock-wrap-content-driven` | LIVE-π + token | the `--shadow-dock-wrap` `:root` token is missing (a source-arm token gap) AND the `:5173` wrap-dock route is connection-refused; the token mint is owed by the dock wave. |
+
+**Net:** the publish-readiness battery (typecheck/build/verify-export-types/gen-ci-fresh/budget/squircle/the three cardinal arms + the 7 substantive `proof:ay-final` clauses) is GREEN. The single `proof:ay-final` clean-tree clause greens on the orchestrator's post-commit tree. The 19 `--run local` reds are NOT W-CLOSE1 deliverables: they are documented-expected sibling/consumer state, orchestrator-commit reconciles, and stale-gate-vs-AY-rebuild reconciles owed by the named owning waves (blob/aurora/substrate/font/page/dock/legacy). They are recorded here so the close does not lie about a green suite — the honest terminal state for the orchestrator + W-PUB1 to drive to zero before the `v3.10.0` cut.
+
+**Close-out (the orchestrator's pre-cut sweep, 2026-06-10):** the triage was driven to zero before the
+`v3.10.0` tag. The full ci-tagged battery (114 gates) runs green locally save the two documented-expected
+sibling reds (`proof:resolution` — the bbnf-lang hard alias; `proof:phantom-classes` — the fourier-analysis
+pending patch), both of which skip-pass on the clean CI runner where no sibling is checked out. The
+specific reconciles: `proof:colocation` registered + green (the four carved packages gained/centralized
+their `constants.ts`); `proof:tag-parity` + `proof:gate-script-parity` reconciled (the release-only
+`proof:ay-final` disposition + the retired header line); `proof:dock-wrap-content-driven` re-pointed to
+the IA-moved `/dock/overview` route (live arm green); `proof:no-god-module` re-frozen at 636 for the
+user-audit dock-chrome growth (the carve stays booked); `proof:story-language` meta-scrubbed;
+`proof:no-retired-survivor` extended with the v3.10.0 prune claims (machine-checked); `proof:no-value-default`
+RETIRED (it asserted the colorResolver DI W-BLOB3 deliberately stripped; `proof:blob-value-free` is the
+live truth gate); `proof:aurora-atoms-roundtrip` re-pointed to the rebuilt Configurator chrome (the atoms
+door is now the ONLY door — the stronger shape asserted directly, the no-second-door bite preserved);
+`proof:dock-animation-live` PASS persisted against the real `/dock/overview` surface.
 
 ---
 

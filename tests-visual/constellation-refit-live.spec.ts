@@ -74,9 +74,16 @@ test.describe("constellation-refit-live (π lane — fail-CLOSED, AY.W-CON1)", (
         page,
     }) => {
         await page.goto(CONSTELLATION.path);
-        // The refit/wander section's canvas (the THIRD <Constellation>). The demo
-        // exposes the live field + resizeTo on window.__constellationRefit.
-        const refitCanvas = page.locator("canvas.constellation-canvas").nth(2);
+        // The refit/wander section's canvas — targeted via the host `data-testid`
+        // (AY.W-DOCK-CHROME §4): the StoryHero mounts a constellation BACKGROUND canvas
+        // at index 0 for this hero route, so the prior `.constellation-canvas` nth(2)
+        // pointed at the WRONG (warp) canvas → the refit section never scrolled into
+        // view, its field never seeded (0 nodes → the waitForFunction timeout + the
+        // stale 76% drift-out read). The demo exposes the live field + resizeTo on
+        // window.__constellationRefit.
+        const refitCanvas = page
+            .locator('[data-testid="constellation-refit-host"] canvas.constellation-canvas')
+            .first();
         await refitCanvas.waitFor({ state: "visible", timeout: 20_000 });
         await refitCanvas.scrollIntoViewIfNeeded();
         await page.waitForFunction(
@@ -394,9 +401,9 @@ test.describe("constellation-refit-live (π lane — fail-CLOSED, AY.W-CON1)", (
             }, scheme);
             await page.waitForTimeout(120);
             const alpha = await page.evaluate(() => {
-                const canvas = document.querySelectorAll(
-                    "canvas.constellation-canvas",
-                )[2] as HTMLCanvasElement;
+                const canvas = document.querySelector(
+                    '[data-testid="constellation-refit-host"] canvas.constellation-canvas',
+                ) as HTMLCanvasElement;
                 const cs = getComputedStyle(canvas);
                 const raw = cs.getPropertyValue("--constellation-alpha").trim();
                 return Number.parseFloat(raw);

@@ -1,5 +1,6 @@
 import type { Component, Ref } from "vue";
 import { createStrictContext } from "../../../../composables/context";
+import { DOCK_LAYER_GROUP_LABEL } from "../constants";
 
 /**
  * DockLayerGroup context — DI surface for `<DockLayer>` children registering
@@ -35,11 +36,11 @@ export interface DockLayerGroupContext {
 // Strict + optional (reserved) over ONE key (AV.W14): `<DockLayerGroup>`
 // provides; `<DockLayer>` children use strict.
 const ctx = createStrictContext<DockLayerGroupContext>(
-    "glass-ui:dock-layer-group",
+    DOCK_LAYER_GROUP_LABEL,
     "[glass-ui:dock] <DockLayer> must be used inside <DockLayerGroup>",
 );
 
-export const DOCK_LAYER_GROUP_KEY = ctx.KEY;
+export const { KEY: DOCK_LAYER_GROUP_KEY } = ctx;
 
 export function provideDockLayerGroupContext(context: DockLayerGroupContext): void {
     ctx.provide(context);

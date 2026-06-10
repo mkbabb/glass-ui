@@ -92,8 +92,9 @@ function onWordmarkClick(e: MouseEvent): void {
         <!-- The brand wordmark is the home-left anchor — it lives in the
              #persistent region so it stays put as the category set scrolls.
              Long-press / double-click it to redraw the ℱ as a Fourier epicycle
-             curve (E1). The dark-mode toggle rides beside it (E6) so the whole
-             book's dark register is reachable from the shell chrome. -->
+             curve (E1). The dark-mode toggle is NOT here — per the dock nav-pattern
+             (home-top, utility controls at the trailing END behind a divider) it
+             rides the #collapsed trailing section at the BOTTOM of the rail (below). -->
         <template #persistent>
             <RouterLink
                 to="/"
@@ -118,12 +119,6 @@ function onWordmarkClick(e: MouseEvent): void {
                     &#x2131;
                 </span>
             </RouterLink>
-
-            <DarkModeToggle
-                size="dock"
-                eclipse
-                class="demo-sidebar-dark-toggle h-9 w-9"
-            />
         </template>
 
         <TooltipProvider :delay-duration="250">
@@ -204,5 +199,18 @@ function onWordmarkClick(e: MouseEvent): void {
                 </Tooltip>
             </template>
         </TooltipProvider>
+
+        <!-- The dark-mode toggle is the trailing UTILITY control: it rides the
+             #collapsed slot, which the vertical GlassDock renders as a bottom section
+             below an automatic <DockSeparator> (the home-top / utility-at-the-end
+             nav-pattern). Sized to the standard dock-icon-button register (size="dock"
+             insets the glyph to the nav register — no h-9/w-9 override). -->
+        <template #collapsed>
+            <DarkModeToggle
+                size="dock"
+                eclipse
+                class="demo-sidebar-dark-toggle"
+            />
+        </template>
     </GlassDock>
 </template>

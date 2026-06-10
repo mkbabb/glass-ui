@@ -8,6 +8,7 @@ import {
     type ComputedRef,
 } from "vue";
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
+import { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_MS } from "../constants";
 // `import type` keeps this type-only reference out of the runtime graph, so the
 // SFC ↔ composable edge never forms a runtime require cycle.
 
@@ -180,7 +181,7 @@ export function useTabIndicator(
         // tiny hop stays near 1.
         const cs = getComputedStyle(el);
         const capRaw = cs.getPropertyValue("--tab-indicator-max-stretch").trim();
-        const cap = Number(capRaw) || 1.08;
+        const cap = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
         const stretch = 1 + frac * (cap - 1);
 
         if (releaseTimer) clearTimeout(releaseTimer);
@@ -191,7 +192,7 @@ export function useTabIndicator(
         releaseTimer = setTimeout(() => {
             el.style.setProperty("--stretch", "1");
             releaseTimer = null;
-        }, 60);
+        }, INDICATOR_RELEASE_MS);
     }
 
     // ── Watchers (JS slider path only) ──

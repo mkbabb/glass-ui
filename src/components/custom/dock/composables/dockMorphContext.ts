@@ -2,6 +2,7 @@ import { onUnmounted, readonly, ref, watch } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { createOptionalContext } from "../../../../composables/context";
+import { DOCK_MORPH_LABEL, DOCK_SPRING } from "../constants";
 
 /**
  * AX.W02 — ONE morph orchestrator per dock. The dock is a single morph stack
@@ -35,8 +36,10 @@ import { createOptionalContext } from "../../../../composables/context";
  * LIGHT-surface only: `SpringProgress` owns its own rAF via `.play(onFrame)` and
  * carries no static value.js edge — never import `AnimationGroup` / `./engine`
  * (that pulls value.js into the dock bundle).
+ *
+ * The `DOCK_SPRING` tuning this orchestrator drives is the ONE authority shared with
+ * `useLayerTransition` — it lives in `../constants` (the feature-dir constants home).
  */
-const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
 
 export interface DockMorphGroupRegistration {
     /** The container element owning this group's grid-stacked panes. */
@@ -81,9 +84,9 @@ interface MorphTarget {
     stop: () => void;
 }
 
-const ctx = createOptionalContext<DockMorphContext>("glass-ui:dock-morph-context");
+const ctx = createOptionalContext<DockMorphContext>(DOCK_MORPH_LABEL);
 
-export const DOCK_MORPH_KEY = ctx.KEY;
+export const { KEY: DOCK_MORPH_KEY } = ctx;
 
 export function provideDockMorphContext(context: DockMorphContext): void {
     ctx.provide(context);

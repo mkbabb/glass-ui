@@ -35,7 +35,7 @@
 // re-introduce deriveScene → (c) REDs; drop the noise atom → (d) REDs.
 
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -114,22 +114,39 @@ function run() {
             "the aurora story is NOT routed in demo/stories/manifest.ts — the atoms door is unreachable (RED witness 1)",
         );
     }
+    // AY re-point (W-AUR-STUDIO/W-AUR-CONFIG rebuilt the chrome on the library
+    // Configurator): the monolithic AuroraAtomsPanel carved into the sections/
+    // family, and the atoms door is no longer a DEFAULT TAB — it is the ONLY
+    // door (the dock's single live state IS the atoms object, seeded from the
+    // preset via configToAtoms; every section mutates atoms; resolveAtoms over
+    // the preset baseline drives the canvas). The two witnesses below assert
+    // that stronger shape directly.
     const dock = readRel(ROOT, "demo/stories/aurora/AuroraConfigDock.vue");
     const dockDrivesAtoms =
-        /resolveAtoms\s*\(/.test(dock) && /AuroraAtomsPanel/.test(dock);
+        /resolveAtoms\s*\(/.test(dock) &&
+        /reactive<AuroraAtoms>\(\s*configToAtoms\(/.test(dock);
     facts.dockDrivesViaResolveAtoms = dockDrivesAtoms;
     if (!dockDrivesAtoms) {
         violations.push(
-            "AuroraConfigDock does NOT drive the canvas through resolveAtoms + the atoms panel — the live UI bypasses the simplified door (RED witness 1)",
+            "AuroraConfigDock does NOT drive the canvas through resolveAtoms over an atoms-shaped live state (reactive<AuroraAtoms>(configToAtoms(…))) — the live UI bypasses the simplified door (RED witness 1)",
         );
     }
-    // the atoms tab must be the DEFAULT surface (the story opens on "atoms").
-    const story = readRel(ROOT, "demo/stories/substrates/aurora.vue");
-    const atomsDefault = /dockTab\s*=\s*ref<string>\(\s*"atoms"\s*\)/.test(story);
-    facts.atomsTabIsDefault = atomsDefault;
-    if (!atomsDefault) {
+    // The atoms door is the ONLY surface: no dock section mutates the raw
+    // config directly (a `props.config.<field> =` write would be a second door
+    // around resolveAtoms — the bypass this clause exists to forbid).
+    const sectionsDir = resolve(ROOT, "demo/stories/aurora/sections");
+    const sectionWrites = [];
+    if (existsSync(sectionsDir)) {
+        for (const f of readdirSync(sectionsDir)) {
+            if (!f.endsWith(".vue")) continue;
+            const src = readFileSync(resolve(sectionsDir, f), "utf8");
+            if (/props\.config\.\w+\s*=/.test(src)) sectionWrites.push(f);
+        }
+    }
+    facts.atomsTabIsDefault = sectionWrites.length === 0;
+    if (sectionWrites.length > 0) {
         violations.push(
-            'the aurora story does NOT default the dock to the "atoms" tab — the simplified door is not the default surface',
+            `a dock section writes props.config directly (a second door around resolveAtoms): ${sectionWrites.join(", ")}`,
         );
     }
 

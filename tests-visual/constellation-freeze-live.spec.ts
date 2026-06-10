@@ -111,7 +111,11 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
 
         // RUN 1 — first mount.
         await page.goto(CONSTELLATION.path);
-        const freezeCanvas = page.locator("canvas.constellation-canvas").last();
+        // Target via the host `data-testid` (AY.W-DOCK-CHROME §4) — the StoryHero's
+        // index-0 background canvas makes a bare nth()/last() index fragile.
+        const freezeCanvas = page
+            .locator('[data-testid="constellation-freeze-host"] canvas.constellation-canvas')
+            .first();
         await freezeCanvas.waitFor({ state: "visible", timeout: 20_000 });
         await freezeCanvas.scrollIntoViewIfNeeded();
         await page.waitForFunction(
@@ -281,7 +285,9 @@ test.describe("constellation-freeze-live (π lane — fail-CLOSED, AY.W-CON3)", 
 
         // (3a) under ?freeze — the field is STATIC (the URL hook fires).
         await page.goto(`${CONSTELLATION.path}?freeze`);
-        const refitCanvas = page.locator("canvas.constellation-canvas").nth(2);
+        const refitCanvas = page
+            .locator('[data-testid="constellation-refit-host"] canvas.constellation-canvas')
+            .first();
         await refitCanvas.waitFor({ state: "visible", timeout: 20_000 });
         await refitCanvas.scrollIntoViewIfNeeded();
         await waitRefit();
