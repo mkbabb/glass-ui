@@ -92,8 +92,12 @@ const createGlobalDark = createGlobalState(() => {
     function toggleDark() {
         if (disableTransitions.value) {
             document.documentElement.classList.add("no-transition");
-            // Force reflow so the class takes effect before the toggle
-            void document.documentElement.offsetHeight;
+            // NO forced reflow (the E9b.1 profile caught it at ~40ms on a dense page —
+            // a synchronous whole-document style+layout flush). None is needed: the
+            // class and the scheme toggle land in the SAME style recalc, so the
+            // after-change computed style already carries `transition: none` and no
+            // transition can start (CSS Transitions §starting — transitions fire off
+            // the after-change style's transition-property, not the before-change).
         }
 
         _toggle();
