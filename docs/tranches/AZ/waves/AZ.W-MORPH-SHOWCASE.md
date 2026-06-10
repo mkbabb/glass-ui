@@ -1,0 +1,147 @@
+# AZ.W-MORPH-SHOWCASE — the vertical↔horizontal liquid-glass dock morph showcase: deterministic, keyframes-driven, bidirectional, the metaball-bridge over the topology-jump-cut
+
+**Tranche** AZ (glass-ui) · **Batch** 4 [H4 fork — the metaball-bridge specced fully; SVG-goo + VT-crossfade recorded as alternatives] · **Type** net-new morph showcase + the W-LIQUID substrate fold · **Status** SPEC · **Depends** W-DOCK-TAXONOMY (the vertical dock now carries collapse/morph machinery — the showcase morphs BETWEEN two real docks) · **Repo** glass-ui · **Base** tranche/AY @ v3.10.1 · **HEAD** tranche/AZ
+
+This wave builds the showcase R3-13 names: *"a button demonstrating a beautiful complex morph — the VERTICAL dock transitions/morphs, with the liquid-glass primitives, totally smooth, keyframes-driven, amorphous metaball-teardrop-like, to a HORIZONTAL dock; fully bidirectional, deterministic."* The fleet's binding constraint (C8, the morph-architecture lane): a vertical→horizontal dock morph is a TOPOLOGY change (flex column→row + a simultaneous two-axis size change), and AX.W42 fold 7 records the honest web-platform answer — a CSS engine CANNOT continuously interpolate mismatched-topology silhouettes (arbitrary shape-to-shape morphs jump-cut). The current dock morph engine is single-size-axis only. The fleet drafted three architectures and RECOMMENDED the metaball-bridge (Arch B); B1-W-LIQUID (the Siri amorphous-blob facility, planned-not-landed at AY) folds in as the substrate. This wave specs the bridge fully and records the other two as alternatives.
+
+It does NOT re-open the GL blob renderer or the dock single-scalar engine. It composes the EXISTING metaball substrate (the contained-creature goo-blob) as a DECORATIVE bridge behind two real DOM docks, hiding the topology jump-cut inside the goo merge at the visually-occluded midpoint.
+
+---
+
+## §0 — RE-GROUND (step-0 re-grep mandate)
+
+Before any edit, re-grep EVERY cite at HEAD and confirm it reads as recorded — the morph engine + the metaball shader are load-bearing; a moved line or a changed uniform invalidates the architecture. Grounding finding ids: **C8-R3-13-engine** (FLEET-DIGEST.md:603), **C8-R3-13-goo** (FLEET-DIGEST.md:605), **C8-R3-13-w42** (FLEET-DIGEST.md:607), **C8-R3-13-archA/B/C** (FLEET-DIGEST.md:609/611/613 — the three architectures, B recommended), **C1-R3-13-axis-morph-absent** (FLEET-DIGEST.md:438), **E3G-3** (FLEET-DIGEST.md:806-807 — useLiquidFlex grep EMPTY). User item: **R3-13** (USER-AUDIT-2026-06-10-R3.md:34). The AY booking: **W-LIQUID** (planned, FINAL.md:106; PROGRESS.md:101 — the Siri amorphous flex+squish primitive).
+
+Re-grounded at authoring:
+
+- **The morph engine is single-size-axis only (the constraint).** `src/components/custom/dock/composables/dockMorphContext.ts:155-159` — `dimOf(axis)` maps `vertical→height`, `horizontal→width`; the ONE `--dock-morph-t` scalar (`:224-226`) drives whichever ONE axis a target's `from`/`to` span describes (`:251-268`). It has NO machinery to (a) flip orientation, (b) flip flex-direction column↔row, or (c) animate BOTH dimensions simultaneously. `GlassDock.vue:109` — `outerLayerAxis` is hardcoded `() => "horizontal"`. A vertical→horizontal morph must shrink height WHILE growing width AND re-flow children — the engine cannot.
+- **AX.W42 fold 7 is the binding platform limit.** `docs/tranches/AX/DOCK-FACILITIES.md:32` (§19.11) — the web platform "can't continuously morph mismatched-topology clip-paths"; the HONEST NARROW is "superellipse-k family (continuous) + discrete custom presets (snap)." A V↔H orientation flip is a topology + two-axis change — the explicit NO-GO for a CONTINUOUS clip-path morph. This is the design CONSTRAINT, not a surprise.
+- **The metaball substrate exists, contained, decorative.** `src/components/custom/goo-blob/shaders/metaball.frag.ts` — a WebGL2 SDF metaball droplet on the shared `useWebGLCanvas` substrate; the gooey merge is shader-only via signed-distance `smin` (IQ normalized quadratic, config-gated on `uMerge`); up-to-4 satellites smin-merged with FBM-displaced watercolor edges. It ALREADY ships volume-preserving anisotropic squish (re-grep the `sa = 1+tanh(speed*…)*uStretch`, exactly `1/sa` perpendicular, the AX.W16 squish block ~`:194-215`) and signed pointer-lean flex. CRITICAL CONSTRAINT (C8-R3-13-goo): the goo-blob is a CONTAINED creature painted on its OWN oversized canvas (1.6× the wrapper — re-grep `metaball.frag.ts:~213`, the `uMaxReach` early-out), NOT a layout substrate — it CANNOT host dock children or BE the dock's actual box. It can only be a DECORATIVE bridge painted BEHIND/AROUND a real morphing DOM dock.
+- **No CSS SVG goo filter exists.** C8-R3-13-goo: there is NO `feGaussianBlur`+`feColorMatrix` threshold filter anywhere in `src/styles` (the only SVG filters are paper-grain `feTurbulence`); the gooeyness is shader-only. The classic CSS gooey trick would be net-new.
+- **`useLiquidFlex` (the W-LIQUID substrate) does not exist.** `grep -rn useLiquidFlex src/` returns EMPTY (E3G-3, FLEET-DIGEST.md:806). W-LIQUID is "planned," ~85% divinable from shipped code (the squish math in `useTabIndicator`, the `--dock-morph-t` clock, the metaball SDF); the genuine research residue is only Siri-orb reference bands. This wave FOLDS W-LIQUID in as the substrate name (the shared amorphous flex+squish primitive the bridge consumes).
+- **The single-scalar driver + the spring constant.** `dockMorphContext.ts:5` imports `DOCK_SPRING` from `../constants`; `constants.ts:14` — `DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 }`. One `SpringProgress` per dock, deterministic + interruptible (re-bases from current velocity). The bridge rides ONE shared `--dock-morph-t` scalar BOTH directions — the determinism + bidirectionality come for free from the existing one-scalar clock.
+
+If any cite has shifted, STOP and reconcile §3 — do not re-derive the architecture (invariant 3); the topology limit is binding, not re-negotiable.
+
+---
+
+## §H4 — THE HINGE FORK (the bridge specced fully; the others recorded)
+
+R3-13's morph has three architectures the fleet drafted. This wave SPECS the metaball-bridge (Arch B) in full and RECORDS the other two as alternatives the orchestrator may select at the H4 hinge. All three respect the topology limit — none attempts a continuous clip-path morph of mismatched topology.
+
+### Arm (a) — the metaball-bridge crossfade (RECOMMENDED; the fleet's Arch B — specced fully below)
+
+Render BOTH a vertical AND a horizontal real DOM dock. During the morph, drive the existing one-axis `--dock-morph-t` spring on EACH — the vertical collapses its HEIGHT 0 while the horizontal grows its WIDTH 0→full, both off the ONE shared scalar (determinism). Paint a goo-blob / SVG-goo metaball bridge BEHIND them that `smin`-merges the two shrinking/growing plates into one amorphous TEARDROP that flows from vertical to horizontal. The DOM docks CROSSFADE (opacity off the same scalar) UNDER the goo veneer, so the topology jump-cut (column→row reflow) happens at the visually-HIDDEN midpoint where the goo blob fully occludes it. The faithful liquid-glass metaball-teardrop the user named — it sidesteps the topology-morph limit by HIDING the reflow inside the goo merge.
+
+- **Determinism + bidirectionality:** ONE `--dock-morph-t` scalar (the existing `SpringProgress`, `DOCK_SPRING` response 0.32 / ζ 0.7) drives both directions; the interruptible re-base (`dockMorphContext.ts:238-243`) means a mid-flight toggle stays continuous. The `t=0` end is the vertical dock; `t=1` is the horizontal dock; the teardrop is the `t≈0.5` occluding midpoint.
+- **The metaball bridge:** the goo-blob renders its teardrop silhouette behind the two docks, its aspect/orientation interpolated by the morph scalar (tall capsule → wide capsule through an amorphous teardrop midpoint — the SDF is continuous, no topology jump). It is DECORATIVE only (the contained-creature constraint — it does not host the dock children).
+- **Perf:** one spring + one WebGL2 metaball pass (already offscreen-pause + PRM-aware via `useWebGLCanvas`), OR a cheaper CSS SVG-goo filter on Chromium. Bidirectional + deterministic because it is one 0→1 scalar both ways.
+- **The W-LIQUID fold:** the shared amorphous flex+squish primitive `useLiquidFlex({ from, to, axis })` is BORN here (the substrate the bridge consumes) — the squish math already lives in `useTabIndicator` (`scale: var(--stretch)` reciprocal) and the metaball shader; `useLiquidFlex` reconciles them into the named primitive the dock/blob/tabs-indicator share. A `useDockOrientationMorph` layered on `--dock-morph-t` drives the two-dock crossfade + the teardrop aspect.
+- **The net-new piece:** the goo bridge needs EITHER the existing goo-blob mounted behind the docks (its SDF aspect bound to the scalar) OR a net-new CSS SVG-goo filter (`feGaussianBlur` + `feColorMatrix` threshold — the classic gooey-CSS trick, absent today). The fleet notes both paths; the implementation picks per perf/browser.
+
+### Arm (b) — the full-time SVG-goo overlay on the live dock (riskier perf; the fleet's recorded alt)
+
+A `feGaussianBlur`+`feColorMatrix` threshold filter applied to a live DOM dock continuously during the morph (not just at the midpoint). Higher fidelity (the goo is always-on, not a bridge), but the filter runs every frame on the live dock chrome — perf-risky, and the dock loses its `backdrop-filter` under the SVG filter (the glass-first canon). RECORDED, not specced — reach for the bridge.
+
+### Arm (c) — the View-Transitions crossfade (cheapest, least liquid; the fleet's recorded alt)
+
+`useViewTransition` (the AQ.W5 substrate, already shipped) crossfades the vertical dock out and the horizontal dock in via `startViewTransition`. Cheapest (no WebGL, no SVG filter), deterministic, but the LEAST liquid — a clean crossfade, not an amorphous teardrop. RECORDED as the fallback if the bridge perf does not clear the budget. The user named "amorphous metaball-teardrop-like," so the VT crossfade is the floor, not the target.
+
+**(Arch C — the pure-WebGL2 metaball dock — is REJECTED, recorded in C8-R3-13-archC: it violates the contained-creature constraint (goo-blob can't host children) + the glass-first canon (loses real DOM glass + backdrop-filter + plate a11y), over-engineered for a showcase. Not an arm.)**
+
+---
+
+## Goal criterion
+
+A consumer presses a button and watches the vertical dock flow — totally smooth, keyframes-driven, as an amorphous metaball teardrop — into the horizontal dock, fully bidirectional and deterministic, with the topology reflow invisible (hidden inside the goo merge at the occluded midpoint). The showcase proves the dock's liquid-glass facilities; the topology-interpolation limit is RESPECTED (no clip-path jump-cut visible at any frame), not fought.
+
+## Completion criterion
+
+The hard-gate set (§4) verifies on captured artefacts: **HG1** — the V↔H morph runs bidirectionally on ONE `--dock-morph-t` scalar (the determinism), captured as a frame-series (t=0/.25/.5/.75/1, both directions) showing every intermediate frame is a coherent amorphous silhouette — NO visible clip-path snap, NO column→row reflow jump-cut (it is occluded by the goo at the midpoint). **HG2** — `useLiquidFlex` (the W-LIQUID substrate primitive) is born and shared by ≥2 consumers (the dock-orientation-morph + the existing tabs-indicator/blob squish reconcile). **HG3** — the metaball bridge is offscreen-pause + PRM-aware (it composes `useWebGLCanvas` — under PRM the morph snaps to the target dock with zero motion frames; offscreen it parks). **HG4** — `proof:morph-showcase` (born-RED) asserts the ONE-scalar drive (no second clock), the topology-limit respect (the reflow is occluded, not a visible continuous clip-path morph), and the bidirectionality.
+
+---
+
+## §1 — The verified defects / gaps (file:line, source-grounded)
+
+**G1 — the V↔H axis-crossing morph substrate does not exist.** C1-R3-13-axis-morph-absent (FLEET-DIGEST.md:438) + C8-R3-13-engine (FLEET-DIGEST.md:603): `dockMorphContext.ts` owns the collapse/expand + pane-swap on ONE size axis; `outerLayerAxis` is hardcoded `"horizontal"` (`GlassDock.vue:109`); orientation is a static prop, never animated between values. The engine has NO orientation-flip, NO flex-direction flip, NO two-axis simultaneous interpolation. The amorphous metaball-teardrop bidirectional axis morph is net-new.
+
+**G2 — `useLiquidFlex` (the W-LIQUID substrate) is absent.** E3G-3 (FLEET-DIGEST.md:806): `grep -rn useLiquidFlex src/` returns EMPTY. The shared amorphous flex+squish primitive named as R3-13's substrate does not exist. The squish math lives scattered (`useTabIndicator` reciprocal scale, the metaball shader `sa`/`1/sa`); W-LIQUID reconciles them.
+
+**G3 — no CSS SVG goo filter exists.** C8-R3-13-goo (FLEET-DIGEST.md:605): there is NO `feGaussianBlur`+`feColorMatrix` threshold filter in `src/styles` (only paper-grain `feTurbulence`). The bridge's goo veneer needs EITHER the existing goo-blob mounted behind OR a net-new CSS SVG-goo filter — both are work, neither ships.
+
+**The constraint (not a defect — the design boundary):** the topology limit (AX.W42 fold 7, `DOCK-FACILITIES.md:32`) is binding. A V↔H orientation flip CANNOT be a continuous clip-path morph. The bridge architecture exists precisely to hide the unavoidable jump-cut inside the goo merge. Any implementation that attempts a continuous mismatched-topology clip-path morph is WRONG by the platform limit.
+
+---
+
+## §2 — Objective
+
+Build the V↔H morph showcase on the metaball-bridge (arm a), respecting the topology limit. Six moves:
+
+1. **Born the `useLiquidFlex` substrate primitive (W-LIQUID fold — G2).** `useLiquidFlex({ from, to, axis })` — the shared amorphous flex+squish primitive driven by a single normalized scalar. It reconciles the existing squish math (`useTabIndicator`'s reciprocal `scale: var(--stretch)`, the metaball shader's `sa`/`1/sa`) into ONE named primitive the dock/blob/tabs-indicator share (the W-LIQUID 3-name reconcile). ≥2 consumers (the dock-orientation-morph + the tabs-indicator OR blob squish — the ≥2-consumer bar).
+
+2. **Build `useDockOrientationMorph` on `--dock-morph-t` (G1).** Layered on the EXISTING one-scalar clock (`dockMorphContext.ts` `SpringProgress`, `DOCK_SPRING`): render two real DOM docks (vertical + horizontal); drive the vertical's HEIGHT 0 + the horizontal's WIDTH 0→full off the ONE shared scalar; crossfade their opacity off the same scalar. The topology reflow (column→row) happens at the occluded midpoint. Deterministic + interruptible (the existing re-base).
+
+3. **Paint the metaball bridge (G3).** EITHER mount the existing goo-blob behind the two docks (its SDF aspect bound to the scalar — tall→wide capsule through the teardrop midpoint, the existing `smin`/squish) OR author the net-new CSS SVG-goo filter (`feGaussianBlur` + `feColorMatrix` threshold). The bridge fully occludes the docks at `t≈0.5` so the reflow is invisible. The pick is per perf/browser, recorded in the DELTA.
+
+4. **The showcase button + the demo story.** A `demo/stories/dock/morph-showcase.vue` (the R3-13 named showcase) with a button that toggles V↔H, demonstrating the bidirectional deterministic morph. (Borderline on the ≥2-consumer bar — justified as the R3-13 NAMED showcase per E3G-3; if a second consumer is needed, the shell `SidebarDock`↔`BottomDock` transition could adopt it, but the showcase story is the primary.)
+
+5. **PRM + offscreen-pause (the substrate inheritance).** The metaball bridge composes `useWebGLCanvas` (offscreen-pause + live PRM-monitor — `useWebGLCanvas` parks offscreen + paints one static frame under PRM). Under PRM the morph SNAPS to the target dock with zero motion frames (the `SpringProgress` `respectReducedMotion` jumps the scalar 0→1 in one frame — `dockMorphContext.ts:206-207`). HG3.
+
+6. **Author `proof:morph-showcase` (the born-RED gate).** Assert (a) the morph is driven by ONE `--dock-morph-t` scalar (no second clock re-added), (b) the topology limit is respected (the reflow is occluded by the bridge, NOT a visible continuous clip-path morph — assert no `clip-path` interpolation on a mismatched-topology silhouette), (c) bidirectionality (the same scalar drives both directions), (d) `useLiquidFlex` has ≥2 consumers.
+
+This honors gestalt (composes the EXISTING one-scalar clock + the EXISTING metaball substrate; does not re-roll a second morph engine — the gestalt failure the lane catches), the topology limit (the bridge hides the jump-cut rather than fighting the platform), no-workaround (the W-LIQUID reconcile of the scattered squish math, not a parallel squish), the ≥2-consumer bar (`useLiquidFlex` shared), and the cardinal DELTA (a captured bidirectional frame-series, not a claim).
+
+---
+
+## §3 — Files + exact edit-sites (re-grep at HEAD before editing)
+
+| file | edit |
+|---|---|
+| NEW `src/composables/motion/useLiquidFlex.ts` (or `glass/`) | the W-LIQUID substrate (G2 / move 1): `useLiquidFlex({ from, to, axis })` — the shared amorphous flex+squish primitive on a single normalized scalar; reconciles `useTabIndicator`'s reciprocal scale + the metaball `sa`/`1/sa` squish into one named primitive. Return shape named (`UseLiquidFlexReturn`) per the `proof:composable-return-types` discipline. |
+| `src/composables/motion/useTabIndicator.ts` (or the blob squish site) | consumer #2 of `useLiquidFlex` — re-point the existing reciprocal-scale squish onto the shared primitive (the ≥2-consumer bar; re-grep the current squish site). NO behavior change — the byte-identical reconcile. |
+| NEW `src/components/custom/dock/composables/useDockOrientationMorph.ts` | the V↔H morph (G1 / move 2): layered on the existing `dockMorphContext.ts` `--dock-morph-t` scalar; drives two real DOM docks (vertical height-collapse + horizontal width-grow) + their crossfade off the ONE scalar. Deterministic + interruptible (consumes the existing re-base). |
+| NEW `src/components/custom/dock/DockMorphShowcase.vue` (or a demo-only composition) | the two-dock + bridge host: renders the vertical + horizontal docks + the metaball bridge behind them, wires the button toggle to the scalar. (Library vs demo-only home decided by the ≥2-consumer count — re-ground; if showcase-only, it lives in `demo/`.) |
+| `src/components/custom/goo-blob/GooBlob.vue` (bridge mount) OR NEW `src/styles/svg-goo.css` | the metaball bridge (G3 / move 3): EITHER mount the existing goo-blob behind the docks with its SDF aspect bound to the scalar (re-grep the `metaball.frag.ts` squish/aspect uniforms), OR the net-new CSS SVG-goo filter (`feGaussianBlur` + `feColorMatrix` threshold). The pick recorded in the DELTA. The GL renderer is NOT re-opened — only its mount/aspect binding. |
+| NEW `demo/stories/dock/morph-showcase.vue` | the R3-13 showcase story (move 4): the button toggling V↔H, the bidirectional deterministic morph demonstrated, the t=0/.25/.5/.75/1 capture points. Registered in `demo/stories/manifest.ts` under the `dock` category. |
+| `demo/stories/manifest.ts` | add the `dock/morph-showcase` story row (re-grep the `dock` category block ~`:219`). |
+| NEW `scripts/proof-morph-showcase.mjs` | the born-RED gate (move 6): clause M1 — the morph is driven by ONE `--dock-morph-t` scalar (no second clock token on the morph path); M2 — the topology limit is respected (no `clip-path` interpolation on a mismatched-topology silhouette; the reflow is occluded by the bridge); M3 — bidirectionality (the same scalar drives both directions); M4 — `useLiquidFlex` has ≥2 consumers. |
+| `package.json` | add `"proof:morph-showcase": "node scripts/proof-morph-showcase.mjs"`; `proof:gen-ci-fresh` re-lock if it joins CI. |
+| `CLAUDE.md` (dock + motion sections) | document the V↔H morph showcase + `useLiquidFlex` + the metaball-bridge architecture + the topology-limit note (AX.W42 fold 7 — the reflow is occluded, not continuously interpolated). |
+| NEW `docs/tranches/AZ/audit/visual/W-MORPH-SHOWCASE-DELTA.md` | the write-up: the chosen H4 arm + rationale, the bidirectional V↔H frame-series (t=0/.25/.5/.75/1, both directions — HG1), the `useLiquidFlex` ≥2-consumer proof (HG2), the PRM-snap + offscreen-park capture (HG3), the `proof:morph-showcase` born-RED/GREEN stdout, the bridge-path pick (goo-blob mount vs CSS SVG-goo). |
+
+---
+
+## §4 — HARD GATE (evidence-backed, born-RED)
+
+The named born-RED gate is **`proof:morph-showcase`**. A SET of structural + captured conditions backed by artefacts — the runtime morph claim is backed by a CAPTURED bidirectional frame-series (the cardinal lesson), never a grep-only check.
+
+**HG1 — the V↔H morph runs bidirectionally on ONE scalar, with the topology reflow OCCLUDED (no visible jump-cut).** A captured frame-series: t=0 (vertical dock), t=0.25, t=0.5 (the amorphous teardrop midpoint, both docks occluded by the goo), t=0.75, t=1 (horizontal dock) — in BOTH directions. Every intermediate frame is a coherent amorphous silhouette; NO column→row reflow jump-cut is visible (it is occluded at the midpoint). Born-RED side: `proof:morph-showcase` REDs if a second clock drives the morph (the M1 one-scalar assert) or if a `clip-path` continuously interpolates a mismatched-topology silhouette (the M2 topology-limit assert — the WRONG architecture). Captured: the light+dark bidirectional frame-series in the DELTA.
+
+**HG2 — `useLiquidFlex` is born with ≥2 consumers.** The W-LIQUID substrate primitive exists; the dock-orientation-morph + the tabs-indicator (or blob) squish both consume it (the reconcile of the scattered squish math). Born-RED: with <2 consumers the M4 clause exits 1. Captured: the consumer census + the byte-identical reconcile proof (the tabs-indicator squish unchanged in behavior) in the DELTA.
+
+**HG3 — the bridge is PRM-aware + offscreen-pause.** Under `prefers-reduced-motion: reduce` the morph SNAPS to the target dock with zero motion frames (the `SpringProgress` `respectReducedMotion` jump — `dockMorphContext.ts:206-207`, the scalar 0→1 in one frame); offscreen, the metaball bridge parks (it composes `useWebGLCanvas`'s offscreen-pause). Captured: the PRM-snap before/after (the morph reduced to a single target-state frame) + the offscreen-park note in the DELTA.
+
+**HG4 — the topology limit + determinism are structurally asserted.** `proof:morph-showcase` clauses M1 (one scalar), M2 (topology-limit respect — the reflow occluded, no continuous mismatched-topology clip-path morph), M3 (bidirectionality) GREEN. Born-RED: a hand-add of a second morph clock OR a `clip-path` interpolation across the orientation flip REDs the gate. Captured: the born-RED diff + the GREEN stdout.
+
+**The single binding condition:** the V↔H morph is bidirectional + deterministic on ONE `--dock-morph-t` scalar (HG1, captured frame-series), `useLiquidFlex` is born with ≥2 consumers (HG2), the bridge is PRM + offscreen-aware (HG3), and the topology limit is respected — the reflow is occluded by the goo bridge, never a visible continuous clip-path morph (HG4). `proof:morph-showcase` REDs on a second clock, a topology-violating clip-path morph, or a broken direction.
+
+---
+
+## §5 — Scope fence
+
+- ONLY the V↔H morph showcase + the `useLiquidFlex` substrate + the metaball bridge mount/aspect binding + its gate. The GL blob RENDERER is NOT re-opened (refuted-crisp / AZ.md scope fence — only the bridge mount + aspect-uniform binding, not the shader internals). The dock single-scalar engine is NOT re-architected (KEPT — the showcase composes it).
+- The topology limit (AX.W42 fold 7) is binding — NO continuous clip-path morph of mismatched topology is attempted. The bridge hides the jump-cut; it does not "fix" the platform limit.
+- Arch C (pure-WebGL2 metaball dock) is REJECTED (the contained-creature + glass-first violations) — not an arm.
+- ppmycota purple stays demo-local if the showcase uses an accent (presets-in-consumers — E1-7); it does NOT enter library tokens.
+
+## §6 — Coordination
+
+- **W-DOCK-TAXONOMY (predecessor).** The vertical dock now carries the collapse/morph machinery (the taxonomy wave removed the always-expanded force-pin). The showcase morphs BETWEEN two real docks — the vertical one must be able to height-collapse, which W-DOCK-TAXONOMY landed. Re-ground confirms the vertical-collapse machinery is present before building the orientation morph.
+- **W-LIQUID (folded in).** This wave is the substrate wave for W-LIQUID — `useLiquidFlex` is born here. The AY booking (PROGRESS.md:101) is DISCHARGED by this wave's HG2. The Siri-orb reference research residue (the genuine unknown per C8-R3-13-w42) is the design-reference for the teardrop aesthetic, not a blocking dependency.
+- **W-MOTION-SUITE (Batch 4 sibling).** The motion demo expands the curve canon; the morph showcase is a MOTION facility demo. Coordinate: the showcase's spring (the `DOCK_SPRING` register) is one of the springs the motion playground exposes — no duplication, the showcase consumes the canonical spring.
+- **W-BLOB-STUDIO (Batch 3 sibling).** Both touch the goo-blob mount. The studio refines the blob's interaction/satellites; this wave mounts the blob as a decorative bridge. Disjoint mounts on the same renderer — the bridge does NOT alter the studio's blob config.
+
+## §7 — Named successors (for any deferral)
+
+- If the metaball-bridge perf does not clear the frame budget on the live dock (the always-on WebGL pass during the morph is too costly), the architecture FALLS BACK to H4 arm (c) — the View-Transitions crossfade (`useViewTransition`, already shipped) — and the metaball teardrop fidelity BOOKS to a successor with the perf trace recorded; the showcase still ships (bidirectional + deterministic on the VT crossfade), but HG1 then carries the arm-c marker + the deferred-teardrop note.
+- If `useLiquidFlex` cannot reconcile the tabs-indicator squish cleanly within bounds (the reciprocal-scale site has a load-bearing local detail), the second consumer is the blob squish instead; if NEITHER reconciles cleanly, `useLiquidFlex` is born with the dock-orientation-morph as its sole consumer and the reconcile BOOKS to W-MOTION-SUITE — but the BOOK is explicit, and the ≥2-consumer bar holds the reconcile as a blocker on `useLiquidFlex` shipping as a library primitive (it stays dock-internal until the second consumer lands).

@@ -1,0 +1,128 @@
+# AZ.W-MOTION-SUITE - the robust motion demo: the full curve canon, the spring playground, the scroll facilities, and the springs.vue fork kill
+
+**Name**: W-MOTION-SUITE - the robust motion demo + the local-spring fork kill
+**Opens after**: AZ open (Batch 3; ‖ W-BLOB-PAGE, W-BLOB-STUDIO, W-SHELL-CONFIG, W-SHELL-IDENTITY)
+**Track**: Band M (motion) · **Type**: implementation (demo buildout — the substrate is READY) · **Depends on**: W-GATES.
+**Hard gate**: born-RED `proof:motion-demo` — the curve gallery plots ALL families (the value.js ~18 named easings + the keyframes Back/Bounce/Steps + an editable bezier) each driven by its REAL JS twin; `springs.vue` no longer defines a local `damped()` and drives off `SPRING_PRESETS`/`springPreset()`; a live spring playground (response/ζ → `springTimingFunction` → `linear()` readout) ships; the scroll-driven + view-transition facilities have a /motion demo; `foundations/motion.vue` is de-duplicated onto the gallery; the motion family reads ONE coherent `--viz-legendre` purple event (ppmycota stays DEMO-LOCAL, never a library token).
+**Status**: SPEC
+
+## §0 — RE-GROUND (mandatory step-0 before any edit)
+
+RE-GREP every cite at HEAD; the digest compresses line numbers. The headline grounding: the glass-ui motion SUBSTRATE is READY (`C7-10`/`B4-2`/`B4-4`) — `curves.ts` already re-exports the value.js ease* family + `CSSCubicBezier` + `SPRING_PRESETS`, and `suite.ts` re-exports the full keyframes static barrel. **R3-11 is a DEMO-CONSUMPTION buildout, NOT a new-API port.** The demo plots only 10 of the ~33 curves and FORKS the spring solver. The BINDING constraint `E1-7`/`C7-5`: ppmycota purple (`hsl(248 88% 71%)`) is the keyframes CONSUMER brand color — it does NOT enter glass-ui library tokens (presets-in-consumers rule). The motion family's purple anchor is the EXISTING `--viz-legendre` (`--section-color-7` = `oklch(0.532 0.180 317.5)`, the violet twin); ppmycota may be referenced as a DEMO-LOCAL accent only.
+
+The fleet finding ids this wave executes (re-grep each):
+
+| finding | verdict | what it means for this wave |
+|---|---|---|
+| `B4-1`/`B4-2`/`E1-5` | VERIFIED/GAP S2 | the port source is value.js `easing.ts` (the ~18 named ease* + bezierPresets + steps) + the keyframes `easingGroups.ts` (10 families, 33 items); glass-ui's `curves.ts:190-214` already re-exports them — the gap is the DEMO TABLE row-set, not new code. |
+| `B4-3` | GAP S2 | the keyframes suite (Sequence/Timeline/ScrollTimeline/flip/ElementMorph/drag/decay/stagger/MotionPath/DrawSVG) has no /motion demo; the scroll-facilities map to scroll-driven.css + useViewTransition + supportsCssTimeline (shipped). |
+| `B4-4` | VERIFIED | the keyframes demo CHASSIS to transpose: `~/Programming/keyframes.js/demo/@/components/custom/animation-controls/` + the EasingEditor (curve dropdown + editable bezier canvas + readout/copy on a glass Card) — port tailwind-first per the rule. ppmycota = `hsl(248 88% 71%)` (DEMO-LOCAL). |
+| `C7-2`/`C7-3`/`D5-4` | OPEN-DEFECT S2 | the live Curve Gallery plots ONLY 10 canonical MOTION_CURVES (5 springs + 5 beziers) — no Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/editable-bezier. The binding "expand to ALL curves" gap. |
+| `C7-4`/`D5-3` | OPEN-DEFECT S2 | `springs.vue:23-65` is a LOCAL `damped(stiffness,damping)` closed-form FORK with arbitrary pairs (40/12, 120/18, 90/8, 20/10) that reaches neither `SPRING_PRESETS` nor `MOTION_CURVES` — the exact drift the AY.W-MOTION2 single-source was built to kill; AND it MISLABELS 'smooth' as critically-damped (smooth is ζ=0.86 SETTLE; critical is gentle). |
+| `C7-5`/`D5-5`/`D3-3`/`D3-4`/`D3-5` | OPEN-DEFECT/IDIOM S2-S3 | the motion family reads warm-RED (the R3-6 dislike): `springs.vue:158` paints `hsl(var(--demo-hue,12) 70% 52%)`, the curve-gallery/foundations dots are warm-ink/red. Mint `--motion-accent: var(--viz-legendre)` (the glass-ui purple twin) and re-point the dots/plots; ppmycota stays demo-local. |
+| `C7-7`/`D5-6` | DESIGN-FINDING/PRUNE S3 | `foundations/motion.vue` duplicates the SAME 10 curves with FAKE hint-SVGs (a hardcoded quarter-ellipse path, not a real plot) + warm-red dots — fold its curve table INTO the gallery; let foundations/motion focus on the `<Transition>` grammar tour only. |
+| `C7-8`/`C7-9` | GAP S2 | no /motion demo for useViewTransition / supportsCssTimeline / scroll-driven.css recipes; no spring PLAYGROUND (live response/ζ → linear() readout); no keyframes animation showcase. |
+| `C7-11`/`F3-M1` | DESIGN-FINDING/GAP S2 | the IA DRAFT (7 sections) + F3-M1 names the UNOWNED keyframes demo UI port as THIS wave's to own — read `~/Programming/keyframes.js/demo` for the configurator/playground chassis and transpose tailwind-first. |
+
+## §1 — Verified defect table (file:line at HEAD — RE-GREP)
+
+| # | defect | evidence (file:line) | capture |
+|---|---|---|---|
+| D1 | the curve gallery plots ONLY the 10 canonical MOTION_CURVES (5 springs + 5 beziers) in a 2-col grid — no value.js Sine/Quad/Cubic/Expo/Circ/Back/Bounce, no keyframes Steps or editable-bezier; the "ALL of our curves plus all keyframes timing curves" expansion is unmet | `demo/stories/motion/curve-gallery.vue:20-34` (10 MOTION_CURVES tokens plotted) | `ground/C7-curve-gallery.png` |
+| D2 | `springs.vue` is a LOCAL spring FORK: `function damped(stiffness, damping)` closed-form with arbitrary pairs (40/12, 120/18, 90/8, 20/10), reaching neither `SPRING_PRESETS` nor `MOTION_CURVES`; and it MISLABELS 'smooth' (`damped(40,12)` blurbed "Critically damped — no overshoot") when canonical smooth is ζ=0.86 SETTLE | `demo/stories/motion/springs.vue:3-4` (the `damped()` fn), `:28-29` (the mislabel + `damped(40,12)`), `:34/:39/:44` (the arbitrary pairs) vs `src/composables/motion/springPresets.ts:17` (the canonical names) `:50-62` (smooth ζ0.86, snappy, bouncy) | `ground/C7-springs.png` |
+| D3 | the substrate IS ready (not a gap to fill): `curves.ts` re-exports value.js `easeOut*`/`CSSCubicBezier` + `SPRING_PRESETS`/`springPreset` — the work is consuming it in the demo | `src/composables/motion/curves.ts:22-29` (CSSCubicBezier + ease* + SPRING_PRESETS import), `:32` (CurveFn) | — |
+| D4 | the motion family reads warm-RED (R3-6): the springs animated block paints `hsl(var(--demo-hue,12) 70% 52%)`; the curve-gallery/foundations plots+dots are warm-ink/red; ZERO ppmycota/viz-legendre purple | `demo/stories/motion/springs.vue:158` (backgroundColor red); `demo/stories/foundations/motion.vue` (red play-dots — RE-GREP the line) | `ground/C7-springs.png`, `ground/C7-foundations-motion.png`, `ground/D3-misspent-motion-red-light.png` |
+| D5 | `foundations/motion.vue` duplicates the SAME 10 curves with FAKE hint-SVGs (a hardcoded quarter-ellipse `d="M 0 18 C 8 18…"`, explicitly "a visual hint, not a precise plot") + warm-red dots — redundant with curve-gallery's real JS-twin plot | `demo/stories/foundations/motion.vue:21-33,142-166` (curves array of 10 + fake path) | `ground/C7-foundations-motion.png` |
+| D6 | scroll/VT facilities have NO /motion demo: `useViewTransition`, `supportsCssTimeline`, the scroll-driven.css recipes (`.scroll-progress` `scroll()`, `[data-scroll-reveal]` `view()`) ship but the only scroll story is `useScrollProgress` under composables; no spring PLAYGROUND; no keyframes animation showcase | `src/composables/motion/useViewTransition.ts`, `src/composables/motion/supportsCssTimeline.ts`, `src/styles/scroll-driven.css:32-72` (the recipes, no /motion story) | — |
+| D7 | the port source is enumerated but UNOWNED (F3-M1): `~/Programming/keyframes.js/demo/@/components/custom/animation-controls/` (AnimationControlsGroup/TransportDock/timeline + the EasingEditor) is the configurator/playground chassis to transpose tailwind-first; E1 covered DATA adoption only, not the UI port | `~/Programming/keyframes.js/demo/@/components/custom/animation-controls/` (dir), `~/Programming/keyframes.js/demo/easing/easingGroups.ts:28` (EASING_GROUPS 10 families) | — |
+
+## §2 — Goal criterion
+
+The /motion section is a robust demonstration of the FULL motion design language: the curve gallery groups ALL the curves by family (the glass-ui canonical springs/beziers + the value.js Sine/Quad/Cubic/Expo/Circ/Bounce + the keyframes Back/Steps + an editable cubic-bezier), each polyline driven by its REAL JS twin (no fake hint-SVGs); a live spring playground lets the user drag response/ζ and read the resulting `linear()` stops; the scroll-driven and view-transition facilities have working demos; the motion family carries ONE coherent purple identity (`--viz-legendre`, the glass-ui twin of ppmycota); and the `springs.vue` local-spring FORK is DEAD — the orchestrator drives off `SPRING_PRESETS`/`springPreset()`, killing the drift the single-source was built to prevent. A visitor sees the keyframes design language expressed in glass-ui's surfaces, not a thin warm-red subset.
+
+## §3 — Scope
+
+1. **Expand the curve gallery to ALL families (D1/D3).** Group the curve gallery by family (SegmentedTabs family headers per the C7-11 IA): glass-ui canonical springs + beziers, the full value.js ease* set (Sine/Quad/Cubic/Expo/Circ via the `curves.ts` re-export), the keyframes Back/Bounce, and Steps — each row driven by its REAL JS twin (the `CurveFn`/`CSSCubicBezier`/`springPreset` from `curves.ts`/`springPresets.ts`, NEVER a hand-rolled sampler). Consume the value.js `easing.ts` family taxonomy + `timingFunctionDescriptions` for the row metadata (`E1-5`/`E1-6`). The data extension (surfacing the full value.js catalogue into `MOTION_CURVES`) lands in `curves.ts` if the gallery needs a curated table; else the gallery imports the ease* fns directly.
+2. **Kill the springs.vue fork (D2 — the headline).** DELETE the local `damped(stiffness, damping)` closed-form and the arbitrary 40/12·120/18·90/8·20/10 pairs; drive the Spring Orchestrator off `MOTION_CURVES['--spring-*'].js` / `springPreset()` so the showcase teaches the SHIPPED curves. Correct the mislabel: 'smooth' is ζ=0.86 SETTLE (overshoots ~0.5%), 'gentle' is critically-damped — match the `springPresets.ts` register docs. This is the exact no-fork the curves.ts/springPresets.ts single-source canon was built to prevent (`C7-4`/`D5-3`).
+3. **The spring playground (D6 + C7-9).** Add a live Spring Playground: response/ζ `LabeledSlider`s → `springTimingFunction` (from the keyframes suite via `suite.ts`) → a live `linear()` readout with copy, presets seeded from `SPRING_PRESETS`, on a glass `Configurator` chassis. This kills the springs.vue fork's reason-to-exist (the user can now author a spring live).
+4. **The bezier editor (D7 + C7-9).** Port the keyframes `EasingEditor` (the curve dropdown + the editable cubic-bezier canvas + the `cubic-bezier(…)` readout/copy on a glass Card) TAILWIND-FIRST per the rule — re-express the keyframes standalone CSS via `@theme`/`@utility`, never paste raw. Source: `~/Programming/keyframes.js/demo/@/components/custom/animation-controls/` + the easing chassis.
+5. **The scroll + view-transition demos (D6 + C7-8).** Add a "Scroll & View Transitions" section: the scroll-driven.css recipes (`.scroll-progress` + `[data-scroll-reveal]`), the `useViewTransition` `.gl-list-item` reorder, and a `supportsCssTimeline` gate badge. These consume the SHIPPED facilities — no new substrate.
+6. **De-duplicate foundations/motion (D5 + C7-7/D5-6).** Fold the `foundations/motion.vue` curve table (the fake-hint-SVG duplicate) INTO the curve gallery's richer JS-twin presentation; re-focus `foundations/motion.vue` on the `<Transition>` grammar tour + the §6 easing-doctrine legend only (the CSS-half WAAPI tour). DELETE the fake quarter-ellipse hint paths.
+7. **The purple identity (D4 + D3-3/D3-4/D3-5).** Mint `--motion-accent: var(--viz-legendre)` (the EXISTING glass-ui purple twin) and re-point the curve plots + driven dots + the springs animated block onto it — ONE coherent purple event for the whole motion family under the one-color-event rule (NOT a rainbow of per-curve hues). Retire the warm-red `hsl(var(--demo-hue,12)…)` block (the R3-6 register). **ppmycota purple (`hsl(248 88% 71%)`) may appear as a DEMO-LOCAL accent reference ONLY (a demo `:root` token if the keyframes-identity nod is wanted) — it NEVER enters `src/styles/` library tokens** (`E1-7` BINDING; presets-in-consumers). The `--motion-accent` token lives in the demo, not the library (it is a demo-page accent, not a library identity token — unless the implementation agent finds a ≥2-consumer library case, which it will not here).
+8. **The animation showcase (C7-9, optional-within-budget — NOT "if time allows", a named deferral target).** A Sequence/stagger + ElementMorph/FLIP storyboard via `loadAnimationEngine` (the R3-13 metaball-teardrop morph substrate) IF the curve gallery + playground + scroll + de-dup land clean; else this defers to W-MORPH-SHOWCASE (Batch 4, the named successor) which owns the morph storyboard.
+9. **The born-RED gate `proof:motion-demo`** (§6).
+
+### §3a — Triumvirate Dispatch
+
+- **File-bounds expansion**: if the bezier-editor port (§3.4) cannot be expressed tailwind-first without pasting raw keyframes CSS (violating the tailwind-first rule), the scope-reveal trigger fires — triumvirate (the `@theme`/`@utility` re-expression is the research lane).
+- **Hard-gate failure**: if the springs.vue fork-kill (§3.2) re-introduces a visual desync (the orchestrator block no longer settles like the canonical preset), the diagnostic-loop trigger fires on the third tuning iteration — triumvirate (the `springTimingFunction`/`linear()` mapping is the research lane).
+- **Disjointness**: this wave owns the /motion + /foundations/motion demo surfaces and (conditionally) the `curves.ts` data extension. It must NOT touch the `springPresets.ts` SINGLE-SOURCE values (those are the canonical registers; changing them would re-introduce drift). The §3.8 morph showcase sequences with W-MORPH-SHOWCASE (Batch 4) — do not parallel-build the morph storyboard.
+
+## §4 — File Bounds
+
+| File | Access |
+|---|---|
+| `demo/stories/motion/curve-gallery.vue` | modify (the all-families expansion + the purple plots — D1/D7) |
+| `demo/stories/motion/springs.vue` | modify-carve (DELETE the local `damped()`; drive off SPRING_PRESETS; add/host the spring playground — D2/D3) |
+| `demo/stories/foundations/motion.vue` | modify-carve (fold the curve table out; re-focus on Transition grammar; DELETE fake hint-SVGs — D5/D6) |
+| `demo/stories/motion/` (new playground + bezier-editor + scroll-vt stories) | create (the spring playground, the bezier editor, the scroll/VT section — D3/D4/D6) |
+| `demo/stories/manifest.ts` | modify (register the new /motion stories; re-point the motion IA — coordinate read-only with W-SHELL-CONFIG which DELETES the composables category; the motion rows do not overlap the composables block) |
+| `demo/` motion-accent token site (demo `:root` / demo style.css) | modify (mint `--motion-accent: var(--viz-legendre)`; the optional demo-local ppmycota nod — D7) |
+| `src/composables/motion/curves.ts` | modify (the value.js full-catalogue MOTION_CURVES extension — ONLY if the gallery needs the curated table; the ease* fns are already re-exported, so this may be a no-op — D1/E1-5) |
+| `scripts/proof-motion-demo.mjs` | create (the born-RED gate) |
+| `scripts/gates.mjs` | modify (register the row — coordinate with W-GATES) |
+
+Do NOT touch: `src/composables/motion/springPresets.ts` VALUES (the single-source registers — read-only; this wave CONSUMES them, never re-tunes them). The library `src/styles/` token cascade (the `--motion-accent` is DEMO-LOCAL; ppmycota never enters library tokens — `E1-7`). `suite.ts`/`useViewTransition.ts`/`supportsCssTimeline.ts`/`scroll-driven.css` (the facilities are READY — the demo CONSUMES them, it does not edit the substrate). `scripts/proof-motion-suite.mjs` (the EXISTING AY.W-MOTION2 substrate parity gate — a distinct gate from this wave's `proof:motion-demo`; it stays GREEN, never edited — §6.7).
+
+### §4a — Disjointness
+
+This wave is ONE agent unit (the /motion demo surfaces are a coupled IA — the gallery, playground, bezier editor, scroll/VT section, and foundations de-dup are one motion-section redesign). The `manifest.ts` and `curves.ts` shared-file risks are read-mostly: W-SHELL-CONFIG also edits `manifest.ts` (DELETING the composables category at lines 328-357) — the motion rows do NOT overlap that block, so the two waves' `manifest.ts` edits are disjoint by line region; if they collide at integration, sequence W-SHELL-CONFIG's deletion first. `scripts/gates.mjs` appended after W-GATES.
+
+## §5 — Agent Units
+
+### AZ.W-MOTION-SUITE.1 the robust motion demo + the fork kill
+
+- **Goal**: /motion plots all curve families on real JS twins, ships a live spring playground + bezier editor + scroll/VT demos, reads ONE coherent purple, and carries no local-spring fork.
+- **Mechanism**: family-grouped curve gallery driven by `curves.ts`/`springPreset`; the springs.vue `damped()` fork DELETED onto `SPRING_PRESETS`; a `springTimingFunction`→`linear()` playground; the keyframes EasingEditor ported tailwind-first; the scroll-driven.css/useViewTransition/supportsCssTimeline demos; foundations/motion de-duplicated to the Transition tour; `--motion-accent: var(--viz-legendre)` re-pointing (ppmycota demo-local).
+- **Files**: the §4 set.
+- **Sub-gate**: `proof:motion-demo` GREEN (the §6 conditions) + the π DELTA pair on disk.
+
+## §6 — Hard Gate (born-RED `proof:motion-demo`)
+
+A SPECIFICATION authored as `scripts/proof-motion-demo.mjs`, born-RED against HEAD. Bites:
+
+1. **FORK-DEAD (deletion proof + source-witness).** Assert `demo/stories/motion/springs.vue` defines NO local `damped(`/closed-form spring solver and IMPORTS `SPRING_PRESETS`/`springPreset`/`MOTION_CURVES` from the canonical source. RED today (`springs.vue:3-4` the `damped()` fn). The mislabel is gone (no "Critically damped" blurb on the smooth register).
+2. **CURVE-FAMILIES-ALL (source-witness + π).** The live curve gallery renders ≥ N curve families (Standard/Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/Custom — the keyframes 10-family taxonomy) each driven by a REAL JS twin (no fake hint-SVG `path d` constants); a π capture confirms the expanded grid. RED today (10 MOTION_CURVES, 2-col grid — `curve-gallery.vue:20-34`).
+3. **SPRING-PLAYGROUND-LIVE (π).** A live response/ζ → `linear()` readout demo exists and updates on slider drag (a runtime observation: drive the slider, read the changed `linear()` stops). RED today (no playground).
+4. **SCROLL-VT-DEMO (source-witness + π).** A /motion story consumes the scroll-driven.css recipes + `useViewTransition` + a `supportsCssTimeline` badge. RED today (only useScrollProgress under composables).
+5. **FOUNDATIONS-DEDUP (deletion proof).** `foundations/motion.vue` no longer renders the 10-curve fake-hint-SVG table; the fake quarter-ellipse `path` constants are DELETED; it focuses on the Transition grammar. RED today (`foundations/motion.vue:21-33,142-166`).
+6. **PURPLE-IDENTITY π (born-RED).** The motion family reads `--motion-accent: var(--viz-legendre)` on the plots/dots/animated block — a π color-readback asserts the dominant motion accent is the violet `oklch(0.532 0.180 317.5)` family, NOT warm-red. RED today (`springs.vue:158` red block). Source-witness: ppmycota purple does NOT appear in `src/styles/` (a grep asserting `ppmycota` is demo-local only — `E1-7`).
+7. **PARITY-PRESERVED.** The EXISTING `proof:motion-suite` substrate parity gate (AY.W-MOTION2 — `scripts/proof-motion-suite.mjs`, the keyframes/value.js distribution-seam SUITE-COMPLETE + CURVE-TABLE-BOUND + NO-FORK + VERSION-STAMP gate) stays GREEN — this DEMO-consumption wave must not break the substrate seam. The two gates are DISTINCT: `proof:motion-suite` guards the library distribution seam; `proof:motion-demo` (this wave's) guards the demo presentation. Do NOT touch `scripts/proof-motion-suite.mjs`.
+8. **DELTA.** The captured before/after pair (curve gallery, springs, foundations, purple readback), light+dark, on disk under `ground/W-MOTION-SUITE-`.
+
+## §7 — Format And Lint Cadence
+
+`npm run typecheck` after each demo edit and at close; `git diff --check` before close. The tailwind-first re-expression (the bezier editor) is checked by a grep-witness in §6 (no raw pasted keyframes CSS — the `@theme`/`@utility` form). Gate defaults `:5199`.
+
+## §8 — Verification Artefacts
+
+- `ground/W-MOTION-SUITE-curve-gallery-{before,after}-{light,dark}.png`
+- `ground/W-MOTION-SUITE-springs-{before,after}.png`
+- `ground/W-MOTION-SUITE-spring-playground.png`, `ground/W-MOTION-SUITE-bezier-editor.png`, `ground/W-MOTION-SUITE-scroll-vt.png`
+- `ground/W-MOTION-SUITE-purple-readback.json`
+- `scripts/proof-motion-demo.mjs` (the gate, GREEN)
+- the `proof:motion-demo` PASS log
+
+## §9 — Commit Plan
+
+- one implementation commit: `feat(AZ): motion-suite — all-families curve gallery + spring playground + bezier editor + scroll/VT demos + foundations de-dup + --motion-accent purple; kill the springs.vue local-spring fork` (body: names the fork kill as the headline single-source restoration, the ppmycota-demo-local discipline, the named §3.8 deferral to W-MORPH-SHOWCASE).
+- the gate-registration line + a status commit at close.
+
+## §10 — Dependencies
+
+- **Depends on**: W-GATES.
+- **Blocks**: nothing hard; the §3.8 animation showcase coordinates with W-MORPH-SHOWCASE (Batch 4 — the named successor for the morph storyboard). Reads `manifest.ts` disjoint from W-SHELL-CONFIG.
+
+## §11 — Archaeology
+
+Prior attempt: AY.W-MOTION2 landed the single-source (`springPresets.ts`, `curves.ts`, `suite.ts`) explicitly to KILL spring-vocabulary drift — but `springs.vue:23-65` still forks it (the drift survived in the DEMO, the substrate it was built to protect). New guardrail: the §6.1 FORK-DEAD bite is a deletion-proof + import-witness, not a "uses the right values" check — the only durable kill is the absence of the local `damped()`. The `countup.vue` hand-rolled `easeOutBack` (`D5-3` notes it) is a secondary fork in the same class; fold it into the same single-source consumption if it surfaces during the gallery work (else note it for W-METRIC-UNIFY/a hygiene successor).
