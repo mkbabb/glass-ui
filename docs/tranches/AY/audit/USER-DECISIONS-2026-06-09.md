@@ -15,3 +15,23 @@ render oil/van-Gogh brush strokes generatively, procedurally, truly SOTA? what o
 fields? the blob hover effects? glass as the DEFAULT for ALL components (button, card, …)? the
 typography? the dock animations? the animation suite? → the `wf-ay-reality-audit` fleet (live
 demo inspection, honest judgment against the claim — not gate-green, not spec-said-so).
+
+---
+
+## Addendum (same day, later message) — the SLIDER design standard, CLARIFIED (BINDING)
+
+The user's verbatim words supersede ALL prior slider design statements (incl. the
+PROMPT-CORPUS:51 reading W-SLD1 resolved as (b) fully-rounded-knob):
+
+> "our slider should be of two forms — a continuous rounded cylinder (thumb integrated into a
+> thick track that appears as one continuous piece) and our spectrum slider, as seen in value.js"
+
+Reading: the STANDARD form is the CONTINUOUS ROUNDED CYLINDER — a thick track with the thumb
+INTEGRATED so the whole reads as ONE continuous piece (closer to the original AX.W59 integrated
+register than to a detached floating circle; the W-SLD1 (b) knob revert may OVER-shoot if its
+knob reads detached). The SPECTRUM form's reference implementation is the value.js demo
+color-picker (`value.js/demo/@/components/custom/color-picker/ColorPicker.vue` +
+`ConfigSliderPane.vue`). DISPOSITION: the FD-slider-design lane (fable) views the as-built W-SLD1
+live + the value.js reference and produces the design verdict + the W-SLD1 spec amendment; any
+source change is a build-phase item (implementation halted). The isCircle gate clause may need a
+THIRD restatement (lock the integrated-continuous geometry, not a bare circle test).
