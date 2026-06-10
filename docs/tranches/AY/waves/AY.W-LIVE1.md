@@ -1,7 +1,18 @@
 # AY.W-LIVE1 — the live-gate CI decision + the cardinal-gate complete-coverage / freshness finalization
 
-**Tranche** AY (glass-ui) · **Batch** 4 (AX-close arm) · **State** OPEN · **Repo** glass-ui ·
+**Tranche** AY (glass-ui) · **Batch** 4 (AX-close arm) · **State** LANDED · **Repo** glass-ui ·
 **Type** decision-doc + gate-script (NO src/ risk) · **HEAD** `at-dock-convergence`
+
+> **Landed (verified 2026-06-10, W-CARRY-LIVE1-FINISH):** the DECISION is recorded —
+> `audit/W-LIVE1-decision.md` picks **Branch A** (keep local-hook + static ledger, freshness-deepened; no
+> headless-GPU CI lane at AY) with the defended rationale + the re-openable Branch-B successor. The freshness
+> clause (`capture-commit` + `surface-paths` git-ancestry depth-header), the R1 IHDR fabricated-viewport
+> assert, and the R6 GREEN-on-real-surface clause are ALL landed in `proof-live-verified-ledger.mjs`; the
+> self-test flags 6 synthetic rows every run. The 4 allowlist DELTAs (W-DOCK1/W-CON1/W-BLOB2/W-DOCK2) carry
+> their honest `capture-commit` + `surface-paths` + `superseded-by` headers. `CAPTURE-PROTOCOL.md` mandates
+> the two headers going forward. Gate state: bare `:ay` arm GREEN (`violations: 0`; 4 stale-superseded +
+> 2 R6 NOTEs graced — the W-CARDINAL-INFRA §4a un-lockout); `--strict-freshness` RED with 4 stale-superseded
+> violations (the CORRECT born-RED close-state — the staleness is machine-visible, owed to AY.W-DELTA0).
 
 This wave answers the one open architectural question the cardinal-lesson infrastructure left:
 **should CI re-run the 11 π/Playwright live gates server-side, or stay local-hook + static-ledger?**

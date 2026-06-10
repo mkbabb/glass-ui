@@ -172,10 +172,27 @@ const trustBadges = [
    dark ink over the always-bright backdrop — the W55 "light-locked panel needs
    light-locked ink" register, expressed as a local token pin (the panel is not a
    glass rung, so the `--glass-backdrop: light` bucket cannot reach its direct
-   text). The section-color trust chips are already light-locked-correct. */
+   text). The section-color trust chips are already light-locked-correct.
+
+   The token pin alone is NOT enough for the HEADING: `color` is an INHERITED
+   property and `body { color: var(--foreground) }` already resolves it to cream
+   ABOVE the panel, so the `<h2>` inherits that computed cream — re-pointing the
+   token here does not re-resolve a `color` that was locked upstream. The body
+   `<p>` survives because `text-muted-foreground` emits its own `color:
+   var(--muted-foreground)` at the element (which DOES re-resolve the pin). So the
+   panel must ALSO re-declare `color: var(--foreground)` to re-bind the inherited
+   `color` against the pinned dark ink — that single re-declaration carries the
+   heading + any un-utility'd text. */
 .auth-brand-panel {
     --foreground: hsl(24 10% 10%);
-    --muted-foreground: hsl(24 6% 38%);
+    /* The muted body copy is darkened from the light-mode `38%` lightness: over
+       the BRIGHTEST purple→tomato aurora region (a coral ~rgb(194,154,158)), the
+       light-mode muted ink only clears ~2.5:1 — below AA. `20%` lightness lands
+       the muted ink at ~5:1 over that brightest sample (π-measured) while staying
+       clearly LIGHTER than the `10%` heading ink, so the muted/heading hierarchy
+       reads. */
+    --muted-foreground: hsl(24 9% 20%);
     --card-foreground: hsl(24 10% 10%);
+    color: var(--foreground);
 }
 </style>

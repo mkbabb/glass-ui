@@ -1,7 +1,17 @@
 # AY.W-TRIAGE — the residual-planned umbrella (the folded DRAFT-W8) + the W-DECK deck-chassis lift decision
 
-**State:** OPEN · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
+**State:** LANDED · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
 **Type:** triage · **Track:** content (a disposition table + a machine-readable register + one gate-script extension; near-zero source-feature risk).
+
+> **Landed (verified 2026-06-10, W-CARRY-LIVE1-FINISH):** the disposition table (`audit/W-TRIAGE.md §3`) +
+> its machine mirror (`audit/residual-disposition.json`, 15 rows) disposition every residual AX `planned`
+> wave (W20/W21/W28-32/W35/W39/W41-43/W49) + W-DECK — ADDRESSED (10) / DEFERS (2) / RETIRES (2 + the
+> W42-residue). The W-DECK decision is recorded KEEP-BESPOKE under the ≥2-consumer bar (1 repo-consumer,
+> `deck-subpath` register row widened). The 2 DEFERS book rows (`speedtest-native-first-receive`,
+> `keyframes-prune-migration-dag`) are minted in the register + appended to the manifest. The phantom-owner
+> clause is landed in `proof-disposition-live.mjs` (UNCONDITIONAL). Gate GREEN: `residual rows: 15`,
+> `phantom owners: 0`. Born-RED witness confirmed (flip an ADDRESSED `ayWave` to a fake id → `phantom
+> owners: 1` + the PHANTOM line, non-zero exit; reverted clean).
 **Depends on:** none for the table authoring (parallel slack). The disposition CELLS that route a residual to an AY wave become TRUE only when that AY wave lands, so the **completeness re-read** is a W-CLOSE1 input (the AY-disposition column is verified against the live wave-set + register at the close, not at dispatch).
 **Unblocks:** **AY.W-CLOSE1** — the FINAL's "every AX `planned` wave is dispositioned, none silently carried" (P-inv-28 / GOLDEN G-3, the zero-deferral discipline) is **gate-true** only if W-TRIAGE's register is GREEN under the completeness clause first.
 

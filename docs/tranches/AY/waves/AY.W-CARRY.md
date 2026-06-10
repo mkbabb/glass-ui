@@ -1,7 +1,16 @@
 # AY.W-CARRY — Carry-closure register completeness (the register covers 3 of ~25 booked items; G-4/5/6 encoded)
 
-**State:** OPEN · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
+**State:** LANDED · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
 **Depends on:** none (pure documentation + gate-script work — no source risk; can land early, in parallel with the impl bands).
+
+> **Landed (verified 2026-06-10, W-CARRY-LIVE1-FINISH):** the register is the ledger's machine mirror —
+> `DISPOSITION-REGISTER.json` carries 31 rows (the 3 founding + the full AT W0-L4 BOOK backlog + G-4/5/6 +
+> the 2 W-TRIAGE residual-defers); `deferred-ledger-manifest.json` carries the 31 bookIds; the
+> register-COMPLETENESS clause is landed in `proof-disposition-live.mjs` (runs UNCONDITIONALLY before the
+> sibling skip). G-4/G-5/G-6 are encoded as `directional-view-transition` / `drawer-content-spring` /
+> `cartoon-quiet-preset` book-with-trigger rows. Gate GREEN: `uncovered (ledger→reg): 0`, `register
+> book/arch/ret: 31`, `live violations: 0`, self-test bites. Born-RED witness confirmed (drop any covered id
+> → `uncovered: 1`; the synthetic always-MET self-test row still flags).
 **Unblocks:** AY.W-CLOSE1 (the terminal close) — W-CARRY MUST land BEFORE W-CLOSE1 so the FINAL's "zero chronic-defer carry" (GOLDEN G-3) is **gate-true, not prose-true**. Folds the slides-side gate obligation into **L.W7** (the slides arm authors its own `proof:disposition-live` equivalent; this wave authors that spec copy-in-ready).
 
 ---

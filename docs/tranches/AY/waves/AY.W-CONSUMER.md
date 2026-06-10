@@ -1,6 +1,16 @@
 # AY.W-CONSUMER — Consumer-staleness ledger (the {receiver, close-gate} cross-walk)
 
-> **Tranche** AY (glass-ui) · **Band** E (the AX close) · **Track** cross-repo · **Type** content + consumer-migration · **Mode** tranche-development until greenlit.
+> **Tranche** AY (glass-ui) · **Band** E (the AX close) · **Track** cross-repo · **Type** content + consumer-migration · **Mode** tranche-development until greenlit. · **State** LANDED.
+
+> **Landed (verified 2026-06-10, W-CARRY-LIVE1-FINISH):** the `{receiver, close-gate}` ledger
+> (`audit/W-CONSUMER-ledger.md`) holds all 5 stale imports (3 fourier-analysis/web `UnderlineTabs` +
+> 2 words/frontend `BouncyToggle`), each DEFERRED with a non-empty `{receiver-wave, close-gate}` terminal
+> (the consumer-OWN-tranche migration waves). The coordination doc
+> (`coordination/from-AY-W-CONSUMER-tabs-migration.md`) hands the drop-in mapping. The ledger-allowlist
+> clause is landed in `proof-consumer-staleness.mjs`. Gate GREEN with the (B) deleted-symbol arm armed:
+> `npm run emit-types && npm run proof:consumer-staleness` → `violations: 0`, `allowed-with-terminal: 5`,
+> `malformed ledger rows: 0`. Bite preserved (an un-ledgered stale import or an empty-terminal DEFERRED row
+> stays RED — confirmed). No glass-ui re-export alias (the no-backwards-compat invariant; the fix is MIGRATE).
 > **Depends** — none on the glass-ui side (the surface the consumers must resolve against is HEAD, already cut). Hard INPUT to **W-CLOSE1** (`proof:ay-final`'s carry-closure clause cites this ledger) and to **W-CARRY** (the register-completeness sweep reads the consumer-side receivers).
 > **Folds** the dropped DRAFT wave **AY-DRAFT.md W5** (`§2:248-262`, "Consumer-adoption ledger (W34 port)") back into the named `W-*` system. Originally AX.W34's `{receiver, close-gate}` cross-walk; pulled forward because its carry-closure feed is load-bearing for the terminal close.
 

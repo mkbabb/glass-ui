@@ -50,9 +50,9 @@ tranche has no past); the table fills as waves close.
 | W-DAG | author the execution DAG + every wave spec + L reconcile | planned |
 | W-CARDINAL-INFRA | mint the AY cardinal home + tranche-parameterize + slides-port the live-verified-ledger gate | complete (gate WIRED — `proof:live-verified-ledger:ay` at `package.json:696` reads `AY/PROGRESS.md` + `audit/visual/`; the visual dir + `VISUAL-ALLOWLIST.json` + 8 own-surface DELTAs landed; gate-infrastructure wave, no pixels — DELTA is the born-RED→engine-green capture in [`audit/visual/W-CARDINAL-INFRA-DELTA.md`](./audit/visual/W-CARDINAL-INFRA-DELTA.md); NOT `planned`) |
 | W0-REGROUND | re-ground the AUDIT-LEDGER ↔ waves/ against HEAD + mint the falsifiable `proof:ay-w0-reground` gate | complete (re-ground LANDED — `AUDIT-LEDGER.md` RE-GROUNDED to HEAD + the four-clause `proof:ay-w0-reground` gate minted at `scripts/proof-ay-w0-reground.mjs`, wired into `proof:all`, RED-witnessed naming row 2; doc+gate wave, no pixels — NOT `planned`) |
-| W-TRIAGE | residual-defect triage (ex-W8) | planned |
+| W-TRIAGE | the residual-defect triage | complete — each residual disposed (2 residual-defers booked into the register) |
 | W-DELTA0 | the owed-DELTA sweep (the 6 AX complete-exempt rows + W52) | complete — the AX ledger arm GREEN (`proof:live-verified-ledger:ax` 0 violations — the born-RED backlog PAID) |
-| W-CONSUMER | consumer-staleness sweep (ex-W5) | planned |
+| W-CONSUMER | the consumer-staleness ledger | complete — the staleness gate authored + green over the post-prune surface |
 | W-AUR1 | aurora research-consume + arresting NUMERIC metric | planned |
 | W-BLOB1 | targeted blob open-items audit + default-identity decision | planned |
 | W-FF1 | rebase the born-RED AX.W43 fourier-field spec to HEAD | planned |
@@ -101,9 +101,9 @@ tranche has no past); the table fills as waves close.
 | W-LIQUID | the iOS-27 Siri liquid-glass facility — useLiquidFlex amorphous flex+squish shared primitive (blob/dock/tabs-indicator consumers; SOTA research lane in the hand-challenge; extends W52/W53) (user-directed 2026-06-09) | planned |
 | W-BLOB-GLASS | the uBackdrop Snell-refraction glass-not-enamel move (user-greenlit 2026-06-09 CONDITIONAL on G-PERF frame-budget-unchanged + G-BROWSER all-three-engines; the recorded H-research-blob T1/T2 decision; aurora-FBO seam) | planned |
 | W-LEG1 | the legacy gates | complete — the no-retired-survivor + tag-parity + var-in-arbitrary arms authored + green |
-| W-LIVE1 | the local-only live-gate CI decision | planned |
-| W-NDA | NDA / scope-clause reconcile | planned |
-| W-CARRY | chronic-defer register = deferral-set | planned |
+| W-LIVE1 | the live-gate CI decision + the cardinal hardening | complete — Branch A recorded (audit/W-LIVE1-decision.md); the R1 IHDR dimension assert + the R6 GREEN-on-real-surface clause + the freshness arm LANDED in proof-live-verified-ledger.mjs (the graced bare mode with the 4 NOTEd backfills + 2 R6 re-runs routed to W-DELTA0/the RG owners) |
+| W-NDA | the native-drawer WATCH row | complete — the trigger re-eval recorded (un-MET → stays booked) |
+| W-CARRY | the deferral register | complete — DISPOSITION-REGISTER.json mirrors the FULL ledger (31 rows: the founding 3 + the AT BOOK backlog + the G-4/5/6 forks per USER-DECISIONS + 2 triage residuals); the completeness clause runs unconditionally (uncovered=0; born-RED witnessed) |
 | W-CLOSE1 | FINAL + proof:ay-final + overfitting audit | planned |
 | W-PUB1 | [HINGE] master-merge + push the v-tag → release.yml provenance publish | planned |
 | W-PRIM-POLISH | the primitive-defect wave (FD-primitives D1-D7) — gold CTA light-hover 1.29:1→5.08:1 PAINTED (route (a) deepen-plate + the painted-pixel gate arm) / the lying hover specimen → the real post-W54 glass hover / --overlay-scrim split off --shadow-color (the dark modal DIMS again) / the dark destructive badge ≥4.5:1 / the slider focus halo to the button register / the checks-band decision recorded / + the W-SLD1 §RE-GROUND-2 CYLINDER correction (the standard thumb = the continuous rounded cylinder, ONE piece; the isCircle clause third restatement locks integrated-continuous) | live-verified — proof:affordance-contrast (extended) + proof:slider-two-only (restated) GREEN; real-390 captures; see [`audit/visual/W-PRIM-POLISH-DELTA.md`](./audit/visual/W-PRIM-POLISH-DELTA.md) |

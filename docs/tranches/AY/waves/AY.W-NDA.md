@@ -1,7 +1,17 @@
 # AY.W-NDA — native-drawer-as-asChild WATCH row (the founding chronic, carried with its trigger)
 
-**State:** OPEN · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
+**State:** LANDED · **Repo:** glass-ui (`/Users/mkbabb/Programming/glass-ui`) · **Band:** E (the AX close)
 **Depends on:** none (pure documentation + gate-run work — no source risk; lands in the carry-closure band alongside AY.W-CARRY).
+
+> **Landed (verified 2026-06-10, W-CARRY-LIVE1-FINISH):** the founding chronic `native-drawer-as-asChild`
+> is carried HONESTLY — a `book` WATCH row, `resolved: false`, with the live `min-consumers` `n:2` /
+> `grep:"dialog-native|GlassDialogNative"` trigger (note widened by W-CARRY to cite AT ledger #8 + the
+> #34 relationship; the disposition + trigger are unchanged, as W-NDA requires). The two ARCHIVED siblings
+> (`panel-host-primitive`, `interruptible-reorder`) stay archived, untouched. Gate GREEN:
+> `register items: 31`, `self-test (bite proof): OK`, `live violations: 0` — the native-drawer row is NOT
+> in violations (trigger UN-MET). Leg 2 constellation walk corroborates: 0 present consumers match
+> `dialog-native|GlassDialogNative` (fourier-analysis/web, words/frontend, bbnf-lang/playground, bbnf-buddy,
+> speedtest, value.js, keyframes.js all → 0 match-files). The UN-MET is the live grep truth, not a stale flag.
 **Unblocks:** AY.W-CLOSE1 (the terminal close) — the FINAL's "zero chronic-defer carry" (GOLDEN G-3) is gate-true only when the founding chronic (the native-drawer trigger that was MET at AT and rode BOOK'd five tranches) re-evaluates UN-MET against the present constellation and stays booked, with the gate as the artefact.
 
 ---
