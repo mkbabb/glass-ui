@@ -1,16 +1,25 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
-<!-- capture-commit: b8c6b34b -->
+<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts, src/components/custom/constellation/Constellation.vue -->
 <!-- superseded-by: W-SB-REVERIFY -->
-<!-- AY.W-LIVE1 freshness headers: the four mobile PNGs were RE-CAPTURED at the real
-     390-viewport (314×421) at this commit (the B2-con1 F2 fabrication fix). The
-     constellation engine was later carved (W-GOD1: constellationField → Draw/Interaction
-     leaves) and the hero constellation re-verified by W-SB-REVERIFY (B16), so these stills
-     are STALE relative to HEAD; the FRESH own-surface constellation evidence is
-     W-SB-REVERIFY's. The carve was render-neutral (public surface byte-identical) but the
-     freshness clause is git-ancestry, not render-equivalence — an own-wave-id re-capture is
-     AY.W-DELTA0's. -->
+<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface W-CON1-*
+     stills (refit-before / refit-after / autodrift × {desktop,mobile} × {light,dark}) were
+     RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-con1.mjs` against
+     the live /substrates/constellation route on :5199 — the SAME scenes, the refit-before at
+     the small 360×240 box (the drift-out baseline) and the after at the grown 1280×720
+     desktop / natural 314-card mobile, the lattice re-fit to fill each. The capture-commit
+     is now HEAD (a descendant of the surface's last-touch 875c271a), so the freshness clause
+     reads FRESH. The constellation renders on Canvas2D (no Aurora ReadPixels stall). The carve
+     (W-GOD1: constellationField → Draw/Interaction) was render-neutral, so the re-shot frames
+     match the prior pixels. CAPTURE-HARNESS note: the `__constellationRefit.resizeTo` seam now
+     sets the host's PLAIN inline width, which a flex parent introduced by the later layout
+     reverify stretches (so the plain seam no longer shrinks the box on the live demo — the
+     same regression `proof:constellation-refit-live` surfaces); the re-capture harness forces
+     the host box at CAPTURE TIME (`setProperty(…, "important")` + `flex:none`) to reproduce
+     the small-box drift-out faithfully. The numeric refit verdict (the ≥90% one-frame coverage
+     fill) is the binding evidence in `proof:constellation-refit-live` — see §"Gate evidence"
+     successor note. -->
 
 **Wave:** AY.W-CON1 · **Status:** live-verified · **Verdict:** PASS (the recessive
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified

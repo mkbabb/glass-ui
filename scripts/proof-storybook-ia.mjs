@@ -74,9 +74,11 @@ export const EXPECTED_TREE = [
         "collapsible", "hover-popover", "expandable-container", "command",
     ]],
     // `header-ribbon` retired at AY.W-SB1 (a published component with 0 non-self
-    // consumers — the route prune was finally made component-deep).
+    // consumers — the route prune was finally made component-deep). `deck-progress`
+    // retired at AY.W-PRUNE (the declined BOOK — slides ships its own deck-local
+    // progress bar; 0 real consumers, RETIRE-FULL public-surface delete).
     ["navigation", [
-        "tabs", "carousel", "deck-progress",
+        "tabs", "carousel",
     ]],
     // The headline primitive's own first-class category.
     ["dock", ["overview", "layers", "rail"]],
@@ -90,15 +92,20 @@ export const EXPECTED_TREE = [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
         "confirm-dialog",
     ]],
+    // `underline` (the GlassUnderline draw-on pen) joined motion at AY.W-UNDERLINE
+    // (finished-and-published — the `/underline` subpath ships with its consumer).
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
-        "curve-gallery",
+        "curve-gallery", "underline",
     ]],
+    // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
+    // composed has its own story + real consumers). `instrument-rail` +
+    // `dock-with-slider` retired with the instrument-rail RETIRE-FULL (the
+    // never-published cockpit-rail sibling; instrument-chassis is the shipped chassis).
     ["compositions", [
-        "hero", "math-paper", "dashboard", "auth-shell", "settings",
+        "hero", "math-paper", "auth-shell", "settings",
         "empty-states", "drawer-live-behind",
-        "configurator", "instrument-chassis", "instrument-rail",
-        "dock-with-slider",
+        "configurator", "instrument-chassis",
         "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
     ]],
     ["composables", [

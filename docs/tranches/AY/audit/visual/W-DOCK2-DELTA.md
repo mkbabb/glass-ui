@@ -1,16 +1,21 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
-<!-- capture-commit: c90f4aee -->
+<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/styles/dock/morph.css, src/components/custom/dock/DockLayerGroup.vue -->
 <!-- superseded-by: W-DOCK-NAV -->
-<!-- AY.W-LIVE1 freshness headers: the own-surface mid-morph stills were captured against
-     c90f4aee (the W-DOCK2 PNG commit). The dock painting surface (layers.css / shell.css /
-     morph.css) was later re-rendered by W-DOCK-NAV (the collapse-circle + rail rebuild),
-     so these stills are STALE relative to HEAD; the FRESH own-surface dock evidence is
-     W-DOCK-NAV's. The R6 cited gate `AX-dock-animation-live.json` persists status:"fail" at
-     HEAD (the demo-server / probe-stability harness brittleness, not a surface regression —
-     the device-free token-peak secondary is GREEN); the green-on-real re-run is W-DOCK2's RG2
-     (the named successor). An own-wave-id re-capture is AY.W-DELTA0's. -->
+<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture + R6 re-run-on-real (2026-06-10): the 8
+     own-surface W-DOCK2-{lockstep,collapse}-midmorph-{desktop,mobile}-{light,dark} mid-morph
+     stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-dock2.mjs`
+     against the REAL /dock/overview dock on :5199 — the SAME scenes, real dock-element crops
+     at the desktop (1440×900) + mobile (390×844) viewports. The capture-commit is now HEAD (a
+     descendant of the surface's last-touch 875c271a), so the freshness clause reads FRESH.
+     The R6 cited gate `AX-dock-animation-live.json` now persists status:"pass" — RE-RUN ON
+     REAL and GREEN. The prior status:"fail" was NOT a surface regression: the §"Honesty note"
+     crash (the /dock/overview live Aurora WebGL ReadPixels hangs headless Chromium mid-probe)
+     is now fixed in `proof-dock-animation-live.mjs` (it parks the WebGL substrate via the
+     SHIPPED offscreen-pause seam — document.hidden — for the rAF-heavy probe while the dock
+     morph SpringProgress, its own visibility-independent rAF, rings unchanged). The captured
+     onset table re-confirmed: child→box Δ 3.8–28.7 ms, all inside budget. -->
 
 This wave discharges the IMPL half of the dock-lockstep chronic (PROMPT-CORPUS #5 /
 AUDIT-LEDGER #5). W-DOCK1's capture VERDICT was **lag captured-ABSENT** (`box↔scalar
@@ -324,11 +329,15 @@ dock's OWN intrinsic box at that frame (not the viewport). Captured at the deskt
 
 **Honesty note (the capture-debt reconcile):** the prior DELTA prose said "the 390-width
 mobile dock" — corrected here: the crop is the dock ELEMENT at the mobile VIEWPORT, and the
-expanded dock's own box (~312 CSS px / 624 px @ dSF=2) exceeds the 390 viewport. A
-full-VIEWPORT 390-wide re-capture showing the dock in page context was attempted but the
-`/dock/overview` route's WebGL-heavy surface crashes the headless renderer mid-`evaluate`
-(SwiftShader OOM under headless); the dock-element crops + the persisted GREEN gate run
-(RG2 below, a REAL-device entering-child witness) are the binding own-surface artefacts.
+expanded dock's own box (~312 CSS px / 624 px @ dSF=2) exceeds the 390 viewport. The earlier
+DELTA noted a full-VIEWPORT 390-wide re-capture "crashed the headless renderer mid-`evaluate`"
+— that crash is now ROOT-CAUSED + FIXED (AY.W-LIVE1, 2026-06-10): the `/dock/overview` live
+Aurora WebGL's per-frame ReadPixels hung headless Chromium under a long rAF probe, NOT a dock
+regression. The capture harnesses now park the WebGL substrate via the SHIPPED offscreen-pause
+seam (`document.hidden`) for the duration of the rAF-heavy probe — the dock morph
+`SpringProgress` (its own visibility-independent rAF) rings unchanged — so the dock-element
+crops re-shoot cleanly on the current tree. The dock-element crops + the persisted GREEN gate
+run (RG2 below, a REAL-device entering-child witness) are the binding own-surface artefacts.
 
 **The captured onset table (the entering-child → box-width onset Δ, the LOCKSTEP
 number the W-DOCK1 instrument first measured, here re-captured on the expand ramp):**

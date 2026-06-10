@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 // AW.W16 · AX.W24 — the deck-position rail gate (proof:deck-progress-rail).
+// Reconciled at AY.W-CLOSE1: the `DeckProgress.vue` WRAPPER + the `./deck-progress`
+// subpath + the api seat + the demo story were RETIRED (PRUNE-LEDGER R2 — 0 real
+// consumers; slides ships its own deck-local progress bar). The KEPT surface is the
+// CSS-only `.glass-progress-rail` `@utility` restyle over the shipped `<Progress>`
+// + the `ProgressDefault.vue` token-read (the cascade-correct rail look stays in the
+// Progress family). This gate is reconciled to lock the KEPT recipe + the /deck
+// reserved guard ONLY; the retired-wrapper / published-subpath / RENDER-story arms
+// are removed (a gate must not assert a retired component exists).
 //
 // glass-ui ships a position-progress RAIL: a `.glass-progress-rail` CSS recipe
 // that restyles the shipped `<Progress variant="default">` for the thin
-// bottom-of-deck look, plus a `DeckProgress.vue` thin `:value`-only wrapper that
-// renders `<Progress :model-value="value" class="glass-progress-rail">` — and
-// NOTHING ELSE. NO second progress component that forks the fill, NO
+// bottom-of-deck look. NO second progress component that forks the fill, NO
 // `deckProgress(index, total)` math leaf, NO `/deck` subpath (the math + the
 // pinned chrome stay consumer-side; the `/deck` name is reserved for the slides
 // deck-engine lift).
@@ -49,7 +55,6 @@
 // the glow as the OUTSET shadow → the RENDER glow-inside assertion reds.
 
 import { existsSync, readFileSync } from "node:fs";
-import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -72,119 +77,14 @@ function cliPaths() {
         GLASS: resolve(ROOT, "src/styles/glass.css"),
         PROGRESS_DEFAULT: resolve(ROOT, "src/components/ui/progress/ProgressDefault.vue"),
         WRAPPER: resolve(ROOT, "src/components/custom/deck-progress/DeckProgress.vue"),
-        BARREL: resolve(ROOT, "src/components/custom/deck-progress/index.ts"),
-        ROOT_BARREL: resolve(ROOT, "src/index.ts"),
         DECK_SUBPATH: resolve(ROOT, "src/subpaths/deck.ts"),
         PKG: resolve(ROOT, "package.json"),
-        WORKSPACE: resolve(ROOT, "tests-visual"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_DECK_PROGRESS_RAIL_ARTIFACT",
             "AX-deck-progress-rail",
         ),
     };
     return _cliPaths;
-}
-
-// ── The RENDER arm — invoke the π-lane spec (fail-CLOSED when present). ─────────
-// npm workspaces HOIST @playwright/test to the ROOT node_modules; resolve the
-// runner across BOTH the workspace-local AND the hoisted-root layout (else a
-// hoisted install false-SKIPs the fail-CLOSED arm — AX.W00 orchestrator fix).
-function pwBin(P) {
-    return (
-        [
-            resolve(P.WORKSPACE, "node_modules/.bin/playwright"),
-            resolve(P.ROOT, "node_modules/.bin/playwright"),
-        ].find(existsSync) ?? null
-    );
-}
-function pwPkg(P) {
-    return (
-        [
-            resolve(P.WORKSPACE, "node_modules/@playwright/test/package.json"),
-            resolve(P.ROOT, "node_modules/@playwright/test/package.json"),
-        ].find(existsSync) ?? null
-    );
-}
-
-function parseReport(path) {
-    const json = JSON.parse(readFileSync(path, "utf8"));
-    const failures = [];
-    let passed = 0;
-    let failed = 0;
-    const walk = (suite) => {
-        for (const spec of suite.specs ?? []) {
-            for (const t of spec.tests ?? []) {
-                const ok = t.results?.every((r) => r.status === "passed");
-                if (ok) passed++;
-                else {
-                    failed++;
-                    const msg = t.results
-                        ?.flatMap((r) => r.errors ?? [])
-                        .map((e) => (e.message ?? "").split("\n")[0])
-                        .join(" | ");
-                    failures.push(`${spec.title}: ${msg}`);
-                }
-            }
-        }
-        for (const child of suite.suites ?? []) walk(child);
-    };
-    for (const suite of json.suites ?? []) walk(suite);
-    return { passed, failed, failures };
-}
-
-/**
- * Run the render spec. Returns { ran, status: 'pass'|'fail'|'skipped', facts,
- * violations }. SKIPPED only when the π workspace device is genuinely absent.
- */
-function renderArm(P) {
-    const BIN = pwBin(P);
-    const PKG = pwPkg(P);
-    if (BIN === null || PKG === null) {
-        return {
-            ran: false,
-            status: "skipped",
-            facts: { workspacePresent: false },
-            violations: [],
-        };
-    }
-    const REPORT = resolve(P.WORKSPACE, ".cache/deck-progress-rail-report.json");
-    const res = spawnSync(
-        BIN,
-        ["test", "deck-progress-rail.spec.ts", "--reporter=list,json"],
-        {
-            cwd: P.WORKSPACE,
-            stdio: ["ignore", "pipe", "inherit"],
-            encoding: "utf8",
-            env: { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: REPORT },
-        },
-    );
-    let report = null;
-    if (existsSync(REPORT)) {
-        try {
-            report = parseReport(REPORT);
-        } catch {
-            /* fall through */
-        }
-    }
-    const violations = [];
-    if (res.status !== 0) {
-        if (report?.failures?.length) violations.push(...report.failures);
-        else
-            violations.push(
-                `the deck-progress-rail render spec exited ${res.status} with no parseable report — the computed-style readback did not run cleanly (a broken harness or a failed assertion)`,
-            );
-    }
-    return {
-        ran: true,
-        status: violations.length === 0 && res.status === 0 ? "pass" : "fail",
-        facts: {
-            workspacePresent: true,
-            specsPassed: report?.passed ?? null,
-            specsFailed: report?.failed ?? null,
-            playwrightExit: res.status,
-        },
-        violations,
-    };
 }
 
 function run() {
@@ -285,51 +185,15 @@ function run() {
             );
     }
 
-    // ── STRUCTURE 3: the thin :value wrapper (no fork, no chrome, no math leaf).
-    if (!existsSync(P.WRAPPER)) {
-        violations.push("DeckProgress.vue is absent");
-    } else {
-        const wrapper = stripComments(readFileSync(P.WRAPPER, "utf8"));
-        facts.composesProgress =
-            /<Progress\b/.test(wrapper) && /import.*Progress.*from/.test(wrapper);
-        facts.appliesRailClass = /glass-progress-rail/.test(wrapper);
-        facts.noChrome =
-            !/position:\s*fixed/.test(wrapper) &&
-            !/z-index:/.test(wrapper) &&
-            !/env\(safe-area/.test(wrapper);
-        facts.noMathLeaf =
-            !/deckProgress/.test(wrapper) &&
-            !/:index\b/.test(wrapper) &&
-            !/:total\b/.test(wrapper);
-        if (!facts.composesProgress)
-            violations.push(
-                "DeckProgress.vue does not compose the shipped <Progress> (it must restyle, not fork)",
-            );
-        if (!facts.appliesRailClass)
-            violations.push("DeckProgress.vue does not apply the glass-progress-rail class");
-        if (!facts.noChrome)
-            violations.push(
-                "DeckProgress.vue declares viewport-pinned chrome (position/z-index/env(safe-area)) — that is consumer-supplied",
-            );
-        if (!facts.noMathLeaf)
-            violations.push(
-                "DeckProgress.vue carries a math leaf / :index|:total path — the position math stays consumer-side",
-            );
-    }
+    // ── STRUCTURE 3 (RETIRED): the DeckProgress.vue wrapper / barrel / root-barrel /
+    //    ./deck-progress published-subpath / RENDER-story assertions are GONE — the
+    //    wrapper + subpath + api seat + demo story were RETIRED (PRUNE-LEDGER R2).
+    //    Asserting the retired component MUST NOT exist would be a backwards-compat
+    //    anti-assertion; the gate locks the KEPT recipe + the /deck reserved guard.
+    facts.deckProgressWrapperRetired = !existsSync(P.WRAPPER);
 
-    // ── barrel + root-barrel (the additive subpath did NOT demote the root export).
-    facts.barrelExists = existsSync(P.BARREL);
-    if (!facts.barrelExists) violations.push("deck-progress/index.ts barrel is absent");
-    if (existsSync(P.ROOT_BARREL)) {
-        const rb = stripComments(readFileSync(P.ROOT_BARREL, "utf8"));
-        facts.onRootBarrel = /deck-progress/.test(rb);
-        if (!facts.onRootBarrel)
-            violations.push(
-                "DeckProgress is not re-exported on the root barrel (src/index.ts)",
-            );
-    }
-
-    // ── STRUCTURE 4: the /deck RESERVED guard (deck-progress is added, deck is NOT).
+    // ── STRUCTURE 4: the /deck RESERVED guard (the reserved deck-engine namespace
+    //    must NOT be squatted — the surviving namespace contract).
     facts.noDeckSubpathFile = !existsSync(P.DECK_SUBPATH);
     if (!facts.noDeckSubpathFile)
         violations.push(
@@ -337,26 +201,12 @@ function run() {
         );
     if (existsSync(P.PKG)) {
         const pkg = readFileSync(P.PKG, "utf8");
-        // The reserved guard must match `./deck` EXACTLY, not the legitimate
-        // `./deck-progress` subpath this wave adds.
+        // The reserved guard matches `./deck` EXACTLY.
         facts.noDeckExport = !/"\.\/deck"\s*:/.test(pkg);
         if (!facts.noDeckExport)
             violations.push(
                 'package.json exports a "./deck" entry — the reserved /deck namespace must NOT be consumed',
             );
-        // Positive: the deck-progress subpath IS published (the F0 enablement).
-        facts.deckProgressExport = /"\.\/deck-progress"\s*:/.test(pkg);
-        if (!facts.deckProgressExport)
-            violations.push(
-                'package.json has no "./deck-progress" exports entry — the minimal-payload subpath must be published',
-            );
-    }
-
-    // ── The RENDER arm (fail-CLOSED when the π workspace is installed).
-    const render = renderArm(P);
-    facts.render = render.facts;
-    if (render.ran && render.status === "fail") {
-        violations.push(...render.violations.map((v) => `[render] ${v}`));
     }
 
     const status = violations.length === 0 ? "pass" : "fail";
@@ -369,7 +219,7 @@ function run() {
     });
 
     console.log(
-        "proof:deck-progress-rail — .glass-progress-rail recipe (cascade-correct token-feed + inset glow) over <Progress>, thin DeckProgress wrapper, /deck reserved, + the π-lane computed-style render readback (AX.W24)",
+        "proof:deck-progress-rail — the KEPT .glass-progress-rail recipe (cascade-correct token-feed + inset glow) over <Progress> + ProgressDefault token-read + the /deck reserved guard (the DeckProgress wrapper/subpath RETIRED, PRUNE-LEDGER R2)",
     );
     console.log(
         `  recipe feeds --progress-fill/track + inset glow : ${facts.feedsFillToken && facts.feedsTrackToken && facts.glowIsInset ? "yes ✓" : "NO ✗"}`,
@@ -378,28 +228,14 @@ function run() {
         `  ProgressDefault token-read (no bg-primary util)  : ${facts.defaultReadsFillToken && facts.defaultNoUtilityColor ? "yes ✓" : "NO ✗"}`,
     );
     console.log(
-        `  DeckProgress composes <Progress>, no chrome/math : ${facts.composesProgress && facts.noChrome && facts.noMathLeaf ? "yes ✓" : "NO ✗"}`,
+        `  DeckProgress wrapper RETIRED (R2)                : ${facts.deckProgressWrapperRetired ? "yes ✓" : "NO ✗ (still present)"}`,
     );
     console.log(
-        `  deck-progress published, /deck reserved          : ${facts.deckProgressExport && facts.noDeckSubpathFile && facts.noDeckExport ? "yes ✓" : "NO ✗"}`,
-    );
-    console.log(
-        `  π render arm                                     : ${
-            render.ran
-                ? render.status === "pass"
-                    ? "pass ✓"
-                    : "FAIL ✗"
-                : "skipped (device absent)"
-        }`,
+        `  /deck namespace reserved (no squat)              : ${facts.noDeckSubpathFile && facts.noDeckExport ? "yes ✓" : "NO ✗"}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);
-    }
-    if (!render.ran) {
-        console.log(
-            "\n  NOTE: the π render arm SKIPPED (the tests-visual workspace has no installed @playwright/test). The override-wins + inset-glow computed-style readback is asserted on the real device — install the workspace + a live demo dev server to run it here.",
-        );
     }
     console.log(
         `\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`,

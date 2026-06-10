@@ -51,7 +51,17 @@ NEITHER family member — the one slides hit is an audit doc
 The real ≥2-consumer question is `InstrumentRail` (the speedtest-deleted member), not the
 slides angle.
 
-## Disposition A — RETIRE `InstrumentRail` to demo-private (the default, chosen)
+> **⊕ W-CLOSE1 RECONCILE (2026-06-10) — Disposition A → A-FULL (RETIRE-FULL).** The
+> later USER-AUDIT-2026-06-10 C4 "ruthless/leaner" directive (`PRUNE-LEDGER.md` R5)
+> SUPERSEDED the demo-private keep below: the rail had 0 binary consumers + 1 filler
+> demo + no evidence doc, so the WHOLE surface was deleted — the component dir
+> (`src/components/custom/instrument-rail/`) AND the demo composition
+> (`demo/stories/compositions/instrument-rail.vue`), not just the public re-export.
+> `proof:instrument-scope` clause 2 is reconciled to this executed RETIRE-FULL reality
+> (the component dir + demo composition must be ABSENT). The Disposition-A text below
+> is preserved for the decision trail; the EXECUTED disposition is A-FULL.
+
+## Disposition A — RETIRE `InstrumentRail` to demo-private (the default, chosen → superseded by A-FULL)
 
 No binary consumer + one demo + no evidence doc → retire from the PUBLIC surface, clean break
 (no alias, no shim — slides/speedtest never imported the rail subpath, so there is no consumer

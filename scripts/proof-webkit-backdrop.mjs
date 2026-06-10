@@ -91,10 +91,24 @@ for (const file of cssFiles) {
     }
 }
 
-// @supports-trap: glass.css must carry BOTH guards.
-const glassCss = existsSync(resolve(DIST_STYLES, "glass.css"))
-    ? readFileSync(resolve(DIST_STYLES, "glass.css"), "utf-8")
-    : "";
+// @supports-trap: glass.css must carry BOTH guards. AY.W-CSS1 carved glass.css
+// into a thin @import root over dist/styles/glass/*.css partials, so the a11y
+// `@supports` guards live in the partials (glass/a11y-fallback.css) — concatenate
+// the root + every @import'ed partial before the guard scan.
+function readDistGlassMonolith() {
+    const rootPath = resolve(DIST_STYLES, "glass.css");
+    if (!existsSync(rootPath)) return "";
+    const root = readFileSync(rootPath, "utf-8");
+    let acc = root;
+    const importRe = /@import\s+["'](\.\/glass\/[a-z0-9_-]+\.css)["']\s*;/gi;
+    let im;
+    while ((im = importRe.exec(root)) !== null) {
+        const partialPath = resolve(DIST_STYLES, im[1]);
+        if (existsSync(partialPath)) acc += "\n" + readFileSync(partialPath, "utf-8");
+    }
+    return acc;
+}
+const glassCss = readDistGlassMonolith();
 const hasNoBlurGuard =
     /@supports\s+not\s*\(\(\s*backdrop-filter\s*:\s*blur\(1px\)\s*\)\s+or\s+\(\s*-webkit-backdrop-filter\s*:\s*blur\(1px\)\s*\)\)/.test(
         glassCss,

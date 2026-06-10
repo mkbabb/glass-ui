@@ -465,7 +465,8 @@ async function run() {
                 });
                 const page = await ctx.newPage();
                 // Force the readable spring path (remove startViewTransition before boot —
-                // the proof-dock-animation-live.mjs init-script idiom).
+                // the proof-dock-animation-live.mjs init-script idiom) AND park the live
+                // WebGL substrate FROM BOOT (AY.W-LIVE1 re-run-on-real fix).
                 await page.addInitScript(() => {
                     try {
                         if (
@@ -491,6 +492,33 @@ async function run() {
                     } catch {
                         /* non-configurable on this engine */
                     }
+                    // AY.W-LIVE1 — PARK the live Aurora/GooBlob WebGL substrate from BOOT.
+                    // `/dock/overview` mounts a live `<Aurora>` whose per-frame GPU work
+                    // (the macOS GL "GPU stall due to ReadPixels") keeps the page
+                    // perpetually repainting — at the 390px mobile viewport that makes the
+                    // capture dock flicker in/out of Playwright's `visible` check so
+                    // `waitForSelector` times out, and a long rAF loop hangs the headless
+                    // renderer. Reporting `document.hidden = true` at boot makes the
+                    // SHIPPED offscreen-pause seam (`createCanvasLifecycle` reads
+                    // `document.hidden` at mount, line ~169) start the WebGL loop
+                    // SUSPENDED. The dock morph is a SEPARATE `SpringProgress` rAF
+                    // (`dockMorphContext.ts`) that does NOT key off page visibility (only
+                    // `respectReducedMotion`), so the collapse↔expand spring this harness
+                    // captures rings unchanged while the aurora parks. NOT a PRM emulation
+                    // (PRM would snap the morph and break the real-spring assert) —
+                    // visibility-park only.
+                    try {
+                        Object.defineProperty(document, "hidden", {
+                            configurable: true,
+                            get: () => true,
+                        });
+                        Object.defineProperty(document, "visibilityState", {
+                            configurable: true,
+                            get: () => "hidden",
+                        });
+                    } catch {
+                        /* non-configurable on some engines — best-effort */
+                    }
                 });
                 // `domcontentloaded`, NOT `networkidle`: `/dock/overview` carries the
                 // live aurora/blob WebGL substrate whose continuous rAF + asset
@@ -505,10 +533,21 @@ async function run() {
                 } else {
                     await page.evaluate(() => document.documentElement.classList.remove("dark"));
                 }
+                // AY.W-LIVE1 — re-fire `visibilitychange` post-boot so the substrate
+                // suspends even if it mounted before reading the boot-time `document.hidden`
+                // (the init-script defines the getter, this dispatch nudges the listener).
+                await page.evaluate(() => {
+                    try {
+                        document.dispatchEvent(new Event("visibilitychange"));
+                    } catch {
+                        /* best-effort */
+                    }
+                });
                 await page.waitForSelector(DOCK_SELECTOR, { timeout: 8000 });
                 // Bring the capture dock into the viewport — an off-fold dock's FLIP
                 // measurement + spring can mis-seat (the AY.W-DOCK1 capture must hold a
-                // VISIBLE, laid-out dock).
+                // VISIBLE, laid-out dock). With the aurora parked from boot the layout is
+                // stable, so `scrollIntoViewIfNeeded` settles instead of timing out.
                 await page.locator(DOCK_SELECTOR).scrollIntoViewIfNeeded();
                 await page.waitForTimeout(400);
 

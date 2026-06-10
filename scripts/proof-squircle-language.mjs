@@ -6,10 +6,12 @@
 // `corner-shape` only changes the CURVE within the `border-radius` box. AX.W56
 // mints `--corner-k-{squircle,soft,sharp}` (the superellipse-k primitives; MDN:
 // `superellipse(K)` paints |x|^(2K)+|y|^(2K)=1, so `squircle == superellipse(2)
-// == n=4`) + the semantic `--corner-shape-{card,pill,panel,bigdock}` POLICY
-// aliases, and RE-HOMES the shipped AW.W23 keyword: cards/pills/panels stay round,
-// the big-dock card shell is the ONE squircle surface (the large 24px radius is
-// where the superellipse reads). The native `corner-shape` is Chrome-139+ only
+// == n=4`) + the semantic `--corner-shape-{card,pill,panel,bigdock,dialog,sheet,
+// hero}` POLICY aliases, and RE-HOMES the shipped AW.W23 keyword: cards/pills stay
+// round, the LARGE-RADIUS GLASS FAMILY (big-dock, dialog, sheet, panel, hero) is
+// the squircle set (the large 12-24px radius is where the superellipse reads —
+// W56b extended off big-dock-only per USER-DECISION R1). The native `corner-shape`
+// is Chrome-139+ only
 // (~65% global May 2026) → it ships ONLY inside `@supports (corner-shape:
 // superellipse(2))`; the un-gated `border-radius` round is the cross-engine
 // CONTRACT (Safari/Firefox have no positive signal through 2026). The clip-path
@@ -29,9 +31,11 @@
 // THE SOURCE ASSERTS (device-free, run + hard-RED on every runner):
 //   1. TOKEN-AXIS-EXISTS — theme.css mints the k-primitives
 //      (--corner-k-squircle:2 + --corner-k-soft + --corner-k-sharp) AND the
-//      semantic --corner-shape-{card,pill,panel,bigdock} aliases.
-//   2. POLICY-CARD-ROUND — --corner-shape-card / -pill / -panel resolve `round`;
-//      --corner-shape-bigdock resolves a `superellipse(...)` (NOT round). The
+//      semantic --corner-shape-{card,pill,panel,bigdock,dialog,sheet,hero} aliases.
+//   2. POLICY (W56b — the radius-threshold map) — the ROUND set is card/pill ONLY
+//      (they resolve `round`); the SQUIRCLE set is
+//      bigdock/dialog/sheet/panel/hero (each resolves a `superellipse(...)` riding
+//      var(--corner-k-squircle), NOT round, NOT an inline literal). The
 //      rounded-vs-squircle map is encoded in the tokens.
 //   3. BIGDOCK-READS-TOKEN (the bite) — dock.css's big-dock site reads
 //      `corner-shape: var(--corner-shape-bigdock)` (NOT a bare `squircle` keyword)
@@ -153,49 +157,67 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     const shapePill = tokenValue(themeCss, "--corner-shape-pill");
     const shapePanel = tokenValue(themeCss, "--corner-shape-panel");
     const shapeBigdock = tokenValue(themeCss, "--corner-shape-bigdock");
+    const shapeHero = tokenValue(themeCss, "--corner-shape-hero");
     facts.shapeCard = shapeCard;
     facts.shapePill = shapePill;
     facts.shapePanel = shapePanel;
     facts.shapeBigdock = shapeBigdock;
+    facts.shapeHero = shapeHero;
     for (const [name, v] of [
         ["--corner-shape-card", shapeCard],
         ["--corner-shape-pill", shapePill],
         ["--corner-shape-panel", shapePanel],
         ["--corner-shape-bigdock", shapeBigdock],
+        ["--corner-shape-hero", shapeHero],
     ]) {
         if (v === null)
             violations.push(`theme.css: ${name} semantic shape alias is not minted`);
     }
 
-    // ── 2. POLICY-CARD-ROUND ─────────────────────────────────────────────
-    // Cards/pills/panels stay round; the big-dock is a superellipse.
+    // ── 2. POLICY (W56b — the radius-threshold map) ──────────────────────
+    // The ROUND set is card/pill ONLY (the small surfaces); the SQUIRCLE set is
+    // the LARGE-RADIUS GLASS FAMILY bigdock/dialog/sheet/panel/hero — each must
+    // resolve a `superellipse(...)` riding var(--corner-k-squircle).
     if (shapeCard !== null && shapeCard !== "round")
         violations.push(
-            `policy: --corner-shape-card must be \`round\` (cards stay round per the user); got ${shapeCard}`,
+            `policy: --corner-shape-card must be \`round\` (data cards stay round per the radius-threshold policy); got ${shapeCard}`,
         );
     if (shapePill !== null && shapePill !== "round")
         violations.push(
             `policy: --corner-shape-pill must be \`round\` (pills/buttons stay round); got ${shapePill}`,
         );
-    if (shapePanel !== null && shapePanel !== "round")
-        violations.push(
-            `policy: --corner-shape-panel must be \`round\` (panels stay round); got ${shapePanel}`,
-        );
-    const bigdockIsSuperellipse =
-        shapeBigdock !== null && /superellipse\s*\(/.test(shapeBigdock);
+    // The SQUIRCLE set (W56b): each large-radius glass surface resolves a
+    // superellipse riding the ONE --corner-k-squircle vocabulary (no inline literal).
+    const shapeDialogTok = tokenValue(themeCss, "--corner-shape-dialog");
+    const shapeSheetTok = tokenValue(themeCss, "--corner-shape-sheet");
+    const SQUIRCLE_SET = [
+        ["--corner-shape-bigdock", shapeBigdock],
+        ["--corner-shape-dialog", shapeDialogTok],
+        ["--corner-shape-sheet", shapeSheetTok],
+        ["--corner-shape-panel", shapePanel],
+        ["--corner-shape-hero", shapeHero],
+    ];
+    let bigdockIsSuperellipse = false;
+    for (const [name, v] of SQUIRCLE_SET) {
+        const isSuperellipse = v !== null && /superellipse\s*\(/.test(v);
+        if (name === "--corner-shape-bigdock") bigdockIsSuperellipse = isSuperellipse;
+        if (!isSuperellipse) {
+            violations.push(
+                `policy: ${name} must resolve a \`superellipse(...)\` (the large-radius glass family squircles — W56b); got ${v ?? "(missing)"}`,
+            );
+            continue;
+        }
+        // rides the k token (one vocabulary; no inline literal).
+        if (!/var\(\s*--corner-k-squircle\s*\)/.test(v))
+            violations.push(
+                `policy: ${name} should ride var(--corner-k-squircle) (the ONE k vocabulary), not an inline literal; got ${v}`,
+            );
+    }
     facts.bigdockIsSuperellipse = bigdockIsSuperellipse;
-    if (!bigdockIsSuperellipse)
-        violations.push(
-            `policy: --corner-shape-bigdock must resolve a \`superellipse(...)\` (the big-dock is the squircle surface); got ${shapeBigdock ?? "(missing)"}`,
-        );
-    // The bigdock superellipse rides the k token (one vocabulary; no inline literal).
-    if (
-        bigdockIsSuperellipse &&
-        !/var\(\s*--corner-k-squircle\s*\)/.test(shapeBigdock)
-    )
-        violations.push(
-            `policy: --corner-shape-bigdock should ride var(--corner-k-squircle) (the ONE k vocabulary W42 reads), not an inline literal; got ${shapeBigdock}`,
-        );
+    facts.panelIsSuperellipse =
+        shapePanel !== null && /superellipse\s*\(/.test(shapePanel);
+    facts.heroIsSuperellipse =
+        shapeHero !== null && /superellipse\s*\(/.test(shapeHero);
 
     // ── 3 + 4. BIGDOCK-READS-TOKEN + SUPPORTS-GATE-INTACT ────────────────
     const supports = matchAtSupportsBody(
@@ -246,12 +268,12 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             "dock.css: the big-dock `.shape-card` has no un-gated `border-radius` fallback — the cross-engine round contract is missing",
         );
 
-    // ── 5. CARD-REHOMED + W56(R1) dialog/sheet squircle ──────────────────
+    // ── 5. CARD-REHOMED + W56(R1)+W56b large-radius-glass squircle ───────
     // glass.css carries NO `corner-shape` on .glass-card/.glass-btn/.btn-pill
-    // (round by policy), AND any corner-shape it DOES carry (the W56 R1
-    // dialog/sheet glass surfaces) sits ONLY inside `@supports (corner-shape:
-    // superellipse(2))` reading the `var(--corner-shape-{dialog,sheet})` token
-    // over the un-gated `border-radius` round fallback.
+    // (round by policy), AND any corner-shape it DOES carry (the large-radius
+    // glass FAMILY — dialog/sheet/panel/hero) sits ONLY inside `@supports
+    // (corner-shape: superellipse(2))` reading the `var(--corner-shape-<surface>)`
+    // token over the un-gated `border-radius` round fallback.
     const glassSupports = matchAtSupportsBody(
         glassCss,
         /@supports\s*\(\s*corner-shape\s*:\s*superellipse\(\s*2\s*\)\s*\)/,
@@ -285,8 +307,16 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
         const readsSheet = /corner-shape\s*:\s*var\(\s*--corner-shape-sheet\s*\)/.test(
             glassSupports.body,
         );
+        const readsPanel = /corner-shape\s*:\s*var\(\s*--corner-shape-panel\s*\)/.test(
+            glassSupports.body,
+        );
+        const readsHero = /corner-shape\s*:\s*var\(\s*--corner-shape-hero\s*\)/.test(
+            glassSupports.body,
+        );
         facts.dialogReadsShapeToken = readsDialog;
         facts.sheetReadsShapeToken = readsSheet;
+        facts.panelReadsShapeToken = readsPanel;
+        facts.heroReadsShapeToken = readsHero;
         if (!readsDialog)
             violations.push(
                 "glass.css: the dialog glass surface must read `corner-shape: var(--corner-shape-dialog)` inside @supports (W56 R1 — dialogs get the squircle)",
@@ -295,8 +325,16 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             violations.push(
                 "glass.css: the sheet glass surface must read `corner-shape: var(--corner-shape-sheet)` inside @supports (W56 R1 — sheets get the squircle)",
             );
+        if (!readsPanel)
+            violations.push(
+                "glass.css: the panel glass surface (.configurator/.floating-panel) must read `corner-shape: var(--corner-shape-panel)` inside @supports (W56b — panels join the squircle family)",
+            );
+        if (!readsHero)
+            violations.push(
+                "glass.css: the hero glass surface (.glass-hero) must read `corner-shape: var(--corner-shape-hero)` inside @supports (W56b — the glass hero overlay squircles)",
+            );
     }
-    // (d) the dialog/sheet shape tokens resolve a superellipse(...) in theme.css.
+    // (d) the dialog/sheet/panel/hero shape tokens resolve a superellipse(...) in theme.css.
     const shapeDialog = tokenValue(themeCss, "--corner-shape-dialog");
     const shapeSheet = tokenValue(themeCss, "--corner-shape-sheet");
     facts.shapeDialog = shapeDialog;
@@ -308,6 +346,14 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     if (!shapeSheet || !/superellipse\(/.test(shapeSheet))
         violations.push(
             `theme.css: --corner-shape-sheet must resolve a superellipse(...) (W56 R1); got ${shapeSheet ?? "(missing)"}`,
+        );
+    if (!facts.panelIsSuperellipse)
+        violations.push(
+            `theme.css: --corner-shape-panel must resolve a superellipse(...) (W56b — panel joined the squircle family); got ${shapePanel ?? "(missing)"}`,
+        );
+    if (!facts.heroIsSuperellipse)
+        violations.push(
+            `theme.css: --corner-shape-hero must resolve a superellipse(...) (W56b — the glass hero overlay squircles); got ${shapeHero ?? "(missing)"}`,
         );
 
     facts.sourceClean = violations.length === 0;
@@ -392,16 +438,17 @@ function run() {
     );
     console.log(`  --corner-k-squircle (=2)  : ${facts.kSquircle ?? "(missing)"}`);
     console.log(
-        `  card/pill/panel = round   : ${
-            facts.shapeCard === "round" &&
-            facts.shapePill === "round" &&
-            facts.shapePanel === "round"
-                ? "YES"
-                : "NO"
+        `  card/pill = round         : ${
+            facts.shapeCard === "round" && facts.shapePill === "round" ? "YES" : "NO"
         }`,
     );
     console.log(
         `  bigdock = superellipse    : ${facts.bigdockIsSuperellipse ? "YES" : "NO"}`,
+    );
+    console.log(
+        `  panel/hero = superellipse : ${
+            facts.panelIsSuperellipse && facts.heroIsSuperellipse ? "YES" : "NO"
+        }`,
     );
     console.log(
         `  bigdock reads token (bite): ${facts.bigdockReadsToken ? "YES" : "NO"}`,

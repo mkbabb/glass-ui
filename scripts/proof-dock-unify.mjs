@@ -45,6 +45,9 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
+// AY.W-CSS1: tokens.css is a thin @import root over tokens/*.css partials; the token
+// DEFINITIONS live in the partials, so read the concatenated monolith, not the root.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // The W61-owned docks the gate asserts STRICTLY (must be GREEN at this wave's
 // close). dock.vue + rail.vue are nav-pattern rails -> require a home-left
@@ -384,7 +387,7 @@ function run() {
     } = cliPaths();
 
     const { facts, violations } = detectSource({
-        tokensCss: readFileSync(TOKENS_CSS, "utf8"),
+        tokensCss: readMonolith(ROOT, "tokens"),
         dockCss: readDockCss(ROOT),
         claudeMd: safeRead(CLAUDE_MD),
         showcaseDocks: showcase.map((d) => ({

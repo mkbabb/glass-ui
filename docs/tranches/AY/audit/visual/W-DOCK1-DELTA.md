@@ -1,15 +1,20 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
-<!-- capture-commit: 6c8a019f -->
+<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/components/custom/dock/composables/dockMorphContext.ts -->
 <!-- superseded-by: W-DOCK-NAV -->
-<!-- AY.W-LIVE1 freshness headers: the capture was taken against 6c8a019f (the W-DOCK1
-     Batch-3 commit). The dock painting surface (layers.css / shell.css) was later
-     re-rendered by W-DOCK-NAV (the dock collapse-circle + rail rebuild), so these
-     frame-series stills are STALE relative to HEAD; the FRESH own-surface dock evidence
-     is W-DOCK-NAV's. The lockstep VERDICT (box↔scalar Δ=0ms) is unchanged-by-construction
-     (layers.css makes inline-size = calc(… × --dock-morph-t)); an own-wave-id re-capture
-     is AY.W-DELTA0's. -->
+<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface
+     W-DOCK1-dock-overview-* stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via
+     `npm run proof:dock-items-lag-capture` against the REAL /dock/overview dock on :5199 —
+     the SAME 3 conditions × 2 viewports × {light,dark} scenes, real dock-element crops.
+     The capture-commit is now HEAD (a descendant of the surface's last-touch 0947c740), so
+     the freshness clause reads FRESH. The R6 cited gate AY-dock-items-lag-capture.json now
+     persists status:"pass" (re-run-on-real discharged). Root-cause of the prior stall: the
+     /dock/overview live Aurora WebGL ReadPixels hung headless Chromium's renderer mid-probe;
+     the harness now parks the WebGL substrate via the SHIPPED offscreen-pause seam
+     (document.hidden) for the rAF-heavy capture while the dock morph SpringProgress (its own
+     rAF, visibility-independent) rings unchanged. The lockstep VERDICT (box↔scalar Δ=0ms)
+     re-confirmed on the fresh captures. -->
 
 This wave discharges the SIGNATURE recurring complaint (PROMPT-CORPUS #5 / AUDIT-LEDGER
 #5, marked CHRONIC across keyframes.js → AX → AY): *"the dock will shrink first, and

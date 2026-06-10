@@ -87,16 +87,12 @@ src/
 │   │   │   ├── DockDropdownTrigger.vue
 │   │   │   ├── composables/        # useDockState, useLayerTransition (axis-aware—see dock orientation)
 │   │   │   └── index.ts
-│   │   ├── dialog-native/          # GlassDialogNative — native <dialog> wrapper
 │   │   ├── expandable-container/   # ExpandableContainer
-│   │   ├── glass-panel/            # GlassPanel substrate wrapper
 │   │   ├── goo-blob/               # GooBlob WebGL2 metaball on the useWebGLCanvas substrate—injected ColorResolver (AU.W7; subpath /goo-blob)
-│   │   ├── header-ribbon/          # HeaderRibbon—hover-tracking ribbon (O.W6 Lane A; subpath /header-ribbon)
 │   │   ├── hover-popover/          # HoverPopover with hoverOpenDelay prop (renamed from openDelay—K W1)
 │   │   ├── icon-tooltip/           # IconTooltip
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
 │   │   ├── instrument-chassis/     # InstrumentChassis + RegionDivider
-│   │   ├── instrument-rail/        # InstrumentRail cockpit-ratio rail (AK-W2-α)
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
 │   │   ├── metric-badge/           # MetricBadge primitive
 │   │   ├── metric-cell/            # MetricCell compact metric card (subpath /metric-cell; speedtest consumer)
@@ -213,7 +209,7 @@ There is **no web API that reads the pixels painted BEHIND a `backdrop-filter` e
 
 ## Entry point
 
-`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 5 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; the `custom/sidebar/` component dir was retired (AI.W5-δ; zero external SFC consumers) and its types relocated to `src/composables/sidebar/types.ts`. The `Sidebar` surface now reaches consumers via the `/sidebar` subpath (`src/sidebar.ts` → the composables barrel).
+`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 4 cherry-picked `custom/` packages (`instrument-chassis`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; the `custom/sidebar/` component dir was retired (AI.W5-δ; zero external SFC consumers) and its types relocated to `src/composables/sidebar/types.ts`. The `Sidebar` surface now reaches consumers via the `/sidebar` subpath (`src/sidebar.ts` → the composables barrel).
 
 ## Dependencies
 
@@ -282,7 +278,7 @@ import {
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { Sidebar } from "@mkbabb/glass-ui/sidebar";
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
-//   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
+//   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip,
 //   sortable-list, timeline, labeled-field, expandable-container,
 //   icon-tooltip, instrument-chassis, scrolling-text
 ```

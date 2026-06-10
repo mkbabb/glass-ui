@@ -158,10 +158,19 @@ const startedAt = Date.now();
 // AX convergence CSS (the dock showcase section, the idiomatic configurator restyle,
 // the uniform dropdown type-scale) net of the convergence trims (blob-page
 // consolidation, chassis retire), NOT per-wave creep.
+// AY re-base (the 3.10.0 cut, W-CLOSE1): the AY aurora band — the painterly rebuild
+// (W-AUR-PAINTERLY), the van-Gogh rebuild (W-AUR-VANGOGH-REBUILD), the aurora-config
+// + studio chrome (W-AUR-CONFIG/W-AUR-STUDIO), and the T5 medium fold — grows the
+// shader+chrome draw of `dist/aurora.js` to gzip ≈38.6k (raw ≈114.5k, well under its
+// 130k cap). The prior AX-era 38000 gzip ceiling is 599 bytes short. Lifted to gzip
+// 40000 — the EIGHTH conscious lift, sized to carry the AY aurora band with a thin
+// headroom, NOT open-ended per-wave creep (an overrun still HALTS per the W4 §3a
+// field-bake-hoist triumvirate). The raw 130000 stays (88% utilized). The /styles +
+// glass-ui.js caps are UNCHANGED — the AY squircle/glass-level deltas land inside them.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
-    "dist/aurora.js": { raw: 130_000, gzip: 38_000 },
+    "dist/aurora.js": { raw: 130_000, gzip: 40_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

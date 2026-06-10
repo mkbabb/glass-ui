@@ -47,6 +47,9 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
+// AY.W-CSS1: tokens.css + glass.css are thin @import roots over carved partials; the
+// DEFINITIONS live in the partials, so read the concatenated monoliths, not the roots.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -449,10 +452,10 @@ function run() {
     }));
 
     const { facts, violations } = detectSource({
-        tokensCss: readFileSync(TOKENS_CSS, "utf8"),
+        tokensCss: readMonolith(ROOT, "tokens"),
         dockCss: readDockCss(ROOT),
         dockControlsCss: readFileSync(DOCK_CONTROLS_CSS, "utf8"),
-        glassCss: readFileSync(GLASS_CSS, "utf8"),
+        glassCss: readMonolith(ROOT, "glass"),
         glassDockVue: readFileSync(GLASS_DOCK_VUE, "utf8"),
         demoDocks,
     });

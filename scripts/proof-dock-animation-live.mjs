@@ -704,6 +704,39 @@ async function run() {
         // satisfies `"visible"` — the probe samples the `data-testid="dock-capture"`
         // collapsible dock (DOCK_CAPTURE_SEL), not the first match. Gate on presence.
         await page.waitForSelector(".glass-dock", { state: "attached", timeout: 5000 });
+        // AY.W-LIVE1 re-run-on-real fix — PARK the live Aurora/GooBlob WebGL substrate
+        // for the duration of the rAF-heavy morph probe. `/dock/overview` mounts a live
+        // `<Aurora>` whose per-frame GPU work (the OKLCh/structure-tensor draw, the
+        // driver-level "GPU stall due to ReadPixels" the macOS GL backend reports)
+        // progressively HANGS headless Chromium's renderer — a long-running
+        // `page.evaluate` rAF loop on this route deadlocks and the page closes
+        // ("Target page, context or browser has been closed"), with NO dock regression
+        // involved. This drives the SHIPPED offscreen-pause seam (`useWebGLCanvas` /
+        // `createCanvasLifecycle` suspend on `document.hidden`, the `proof:offscreen-pause`
+        // park path): report the document as hidden + fire `visibilitychange`, which
+        // suspends the WebGL rAF and relieves the GPU stall. The dock morph is a
+        // SEPARATE `SpringProgress` rAF in `dockMorphContext.ts` that does NOT key off
+        // page visibility (only `respectReducedMotion`), so the collapse↔expand spring
+        // we measure rings unchanged (verified: 14 rising frames, scalar peak 1.046,
+        // 37→486px) while the aurora parks. NOT a PRM emulation (PRM would snap the morph
+        // 0→1 in one frame and falsely RED the spring) — visibility-park only.
+        await page.evaluate(() => {
+            try {
+                Object.defineProperty(document, "hidden", {
+                    configurable: true,
+                    get: () => true,
+                });
+                Object.defineProperty(document, "visibilityState", {
+                    configurable: true,
+                    get: () => "hidden",
+                });
+                document.dispatchEvent(new Event("visibilitychange"));
+            } catch {
+                /* the property may be non-configurable on some engines — best-effort */
+            }
+        });
+        // a beat for the substrate's visibilitychange handler to suspend its loop
+        await page.waitForTimeout(600);
         result = await page.evaluate(pageProbe);
     } catch (e) {
         // AX.W00 fail-CLOSED PROMOTION: when the π workspace is PRESENT (the

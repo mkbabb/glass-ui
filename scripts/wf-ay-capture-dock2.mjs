@@ -101,7 +101,8 @@ async function run() {
                     colorScheme: theme === "dark" ? "dark" : "light",
                 });
                 const page = await ctx.newPage();
-                // Force the readable spring path (delete startViewTransition pre-boot).
+                // Force the readable spring path (delete startViewTransition pre-boot)
+                // AND park the live Aurora/GooBlob WebGL substrate from BOOT (AY.W-LIVE1).
                 await page.addInitScript(() => {
                     try {
                         let p = document;
@@ -115,8 +116,45 @@ async function run() {
                     } catch {
                         /* non-configurable */
                     }
+                    // AY.W-LIVE1 — PARK the live Aurora WebGL substrate from boot.
+                    // `/dock/overview` mounts a live `<Aurora>` whose per-frame GPU work
+                    // (the macOS GL "GPU stall due to ReadPixels") progressively HANGS
+                    // headless Chromium's renderer through the 90-frame rAF probe below
+                    // (the W-DOCK2-DELTA §"Honesty note" crash). Reporting `document.hidden
+                    // = true` at boot makes the SHIPPED offscreen-pause seam
+                    // (`createCanvasLifecycle` reads `document.hidden` at mount) start the
+                    // WebGL loop SUSPENDED. The dock morph is a SEPARATE `SpringProgress`
+                    // rAF (`dockMorphContext.ts`) that does NOT key off page visibility
+                    // (only `respectReducedMotion`), so the collapse↔expand spring this
+                    // harness captures rings unchanged. NOT a PRM emulation (PRM would snap
+                    // the morph) — visibility-park only.
+                    try {
+                        Object.defineProperty(document, "hidden", {
+                            configurable: true,
+                            get: () => true,
+                        });
+                        Object.defineProperty(document, "visibilityState", {
+                            configurable: true,
+                            get: () => "hidden",
+                        });
+                    } catch {
+                        /* non-configurable — best-effort */
+                    }
                 });
-                await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "networkidle" });
+                // `domcontentloaded`, NOT `networkidle`: `/dock/overview` carries the live
+                // WebGL substrate whose continuous rAF + asset streaming keeps the network
+                // from ever idling, so `networkidle` stalls the navigation. The dock
+                // selector wait below is the real readiness gate.
+                await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "domcontentloaded" });
+                // re-fire visibilitychange post-boot so the substrate suspends even if it
+                // mounted before reading the boot-time `document.hidden`.
+                await page.evaluate(() => {
+                    try {
+                        document.dispatchEvent(new Event("visibilitychange"));
+                    } catch {
+                        /* best-effort */
+                    }
+                });
                 if (theme === "dark")
                     await page.evaluate(() => document.documentElement.classList.add("dark"));
                 else

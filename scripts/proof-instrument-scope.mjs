@@ -1,8 +1,14 @@
-// proof-instrument-scope.mjs — AY.W-IC1
+// proof-instrument-scope.mjs — AY.W-IC1 · reconciled at AY.W-CLOSE1
 //
 // Machine-locks the instrument-chassis FAMILY scope: `InstrumentChassis` RETAINED
-// on binary-consumer evidence; `InstrumentRail` RETIRED to demo-private (Disposition
-// A). Pure-given-source: parse + fs + the shipped constellation.mjs consumer-walk
+// on binary-consumer evidence; `InstrumentRail` RETIRED-FULL (component dir + demo
+// composition deleted). W-IC1's Disposition A retired the rail to demo-private (keep
+// the component file + the demo story); the later USER-AUDIT-2026-06-10 C4
+// "ruthless/leaner" directive (PRUNE-LEDGER R5) SUPERSEDED that to RETIRE-FULL — the
+// rail had 0 binary consumers + 1 filler demo + no evidence doc, so the whole surface
+// (dir + demo + subpath + public re-export) is gone. This gate is reconciled to the
+// executed RETIRE-FULL reality (Arm A-FULL): the rail must be ABSENT everywhere.
+// Pure-given-source: parse + fs + the shipped constellation.mjs consumer-walk
 // (CONSUMERS / resolveSibling / skipSibling) — NO new scan harness.
 
 import { readFileSync, existsSync } from "node:fs";
@@ -64,27 +70,30 @@ function run() {
     }
     facts.chassisBinaryConsumers = chassisBinaryConsumers;
 
-    // ── Clause 2 — RAIL-DISPOSITION (Arm A — retired to demo-private) ────────
-    // The binding public-surface signal: the SOURCE surface (root barrel + subpath
-    // mirror) must NOT carry InstrumentRail.
+    // ── Clause 2 — RAIL-DISPOSITION (Arm A-FULL — RETIRE-FULL) ───────────────
+    // The leaner directive (PRUNE-LEDGER R5) deleted the WHOLE rail surface. The
+    // binding signal: InstrumentRail must be ABSENT everywhere — no public
+    // re-export, no subpath mirror, no component dir, no demo composition.
     const rootBarrel = read("src/index.ts") ?? "";
     if (/instrument-rail/.test(rootBarrel))
         violations.push(
-            "InstrumentRail re-exported on the public surface (src/index.ts) with no consumer-evidence doc and <2 consumers"
+            "InstrumentRail re-exported on the public surface (src/index.ts) — the rail is RETIRE-FULL (PRUNE-LEDGER R5)"
         );
     if (existsSync(resolve(ROOT, "src/subpaths/instrument-rail.ts")))
         violations.push("src/subpaths/instrument-rail.ts still exists (the retired subpath mirror barrel)");
-    if (existsSync(resolve(ROOT, "docs/consumer-evidence/instrument-rail.md")))
-        facts.evidenceDocPresent = true; // would flip to Arm B; not the chosen path
 
-    // The demo-private consumer must survive (deleting it orphans the component).
-    if (!existsSync(resolve(ROOT, "demo/stories/compositions/instrument-rail.vue")))
+    // RETIRE-FULL: the component dir must be GONE (the leaner directive, not the
+    // earlier demo-private keep). A surviving dir is an incomplete retire.
+    if (existsSync(resolve(ROOT, "src/components/custom/instrument-rail/index.ts")))
         violations.push(
-            "demo/stories/compositions/instrument-rail.vue is gone — the demo-private consumer was deleted, orphaning the component below the substrate floor"
+            "src/components/custom/instrument-rail/ still exists — the rail is RETIRE-FULL (PRUNE-LEDGER R5 superseded W-IC1's demo-private keep)"
         );
-    // The component file itself stays (demo-private primitive).
-    if (!existsSync(resolve(ROOT, "src/components/custom/instrument-rail/index.ts")))
-        violations.push("src/components/custom/instrument-rail/ component was deleted — Arm A keeps the demo-private primitive");
+    // RETIRE-FULL: the filler demo composition must be GONE too (no orphaned
+    // demo-private consumer — the component it mounted is deleted).
+    if (existsSync(resolve(ROOT, "demo/stories/compositions/instrument-rail.vue")))
+        violations.push(
+            "demo/stories/compositions/instrument-rail.vue still exists — its mounted component is RETIRE-FULL deleted; the filler story goes with it"
+        );
 
     // package.json exports block: the orchestrator-owned shared-file delta. Record
     // (don't fail) whether it still carries the ./instrument-rail block — a
@@ -107,16 +116,17 @@ function run() {
         generatedAt: snapshotStamp(),
         status,
         gate: "proof:instrument-scope",
-        chosenArm: "A (retire InstrumentRail to demo-private)",
+        chosenArm: "A-FULL (RETIRE-FULL InstrumentRail — PRUNE-LEDGER R5)",
         facts,
         violations,
     });
 
-    console.log("proof:instrument-scope — the instrument-chassis family scope (CHASSIS keep · RAIL retire-A)");
+    console.log("proof:instrument-scope — the instrument-chassis family scope (CHASSIS keep · RAIL retire-FULL)");
     console.log(`  chassis binary consumers : ${facts.chassisBinaryConsumers}${facts.skips.includes("speedtest") ? " (speedtest skipped)" : ""}`);
     console.log(`  rail on public surface   : ${/instrument-rail/.test(rootBarrel) ? "YES (violation)" : "no (retired)"}`);
     console.log(`  rail subpath file        : ${existsSync(resolve(ROOT, "src/subpaths/instrument-rail.ts")) ? "present (violation)" : "deleted"}`);
-    console.log(`  demo-private consumer    : ${existsSync(resolve(ROOT, "demo/stories/compositions/instrument-rail.vue")) ? "survives" : "GONE (violation)"}`);
+    console.log(`  rail component dir        : ${existsSync(resolve(ROOT, "src/components/custom/instrument-rail/index.ts")) ? "present (violation)" : "deleted (RETIRE-FULL)"}`);
+    console.log(`  rail demo composition     : ${existsSync(resolve(ROOT, "demo/stories/compositions/instrument-rail.vue")) ? "present (violation)" : "deleted (RETIRE-FULL)"}`);
     console.log(`  pkg ./instrument-rail    : ${facts.packageJsonRailBlockPending ? "pending shared-delta" : "removed"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

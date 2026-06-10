@@ -1,16 +1,22 @@
 # AY.W-BLOB2 — the light warm-cream default base + config-atom simplification · live DELTA
 
-<!-- capture-commit: 1151899a -->
+<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/components/custom/goo-blob/shaders/metaball.frag.ts, src/components/custom/goo-blob/composables/useMetaballRenderer.ts, src/components/custom/goo-blob/GooBlob.vue -->
 <!-- superseded-by: W-BLOB-REBUILD -->
-<!-- AY.W-LIVE1 freshness headers: the 9 own-surface PNGs (incl. the RG-noted static
-     mood-hover series) were captured against 1151899a (the W-BLOB2 Batch-2 commit). The
-     blob renderer + shader were later rebuilt first-principles by W-BLOB-REBUILD (B10+B18 —
-     the blob-as-background category error fix + the canonical cream-bead resting state) and
-     re-carved by W-GOD1, so these stills are STALE relative to HEAD; the FRESH own-surface
-     blob evidence (incl. a demonstrative hover-lean series) is W-BLOB-REBUILD's. The W-BLOB2
-     RG2/RG3 owed re-captures fold into that fresher set; an own-wave-id re-capture is
-     AY.W-DELTA0's. -->
+<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 9 own-surface W-BLOB2-*
+     PNGs (4 goo-blob default-bead × {desktop,mobile} × {light,dark} + the 5 mood-hover lean
+     frames) were RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-blob2.mjs`
+     against the live /substrates/blob route on :5199. The capture-commit is now HEAD (a
+     descendant of the surface's last-touch 875c271a), so the freshness clause reads FRESH.
+     SUPERSEDED-SURFACE note: the blob was rebuilt first-principles by W-BLOB-REBUILD (B10+B18 —
+     the blob-as-background category error fix), so the bare standalone `<GooBlob>` the original
+     default-identity frames shot is now the STUDIO STAGE blob (the ONE live GL context the
+     rebuilt page holds); the re-capture shoots that CURRENT surface at its default cream
+     (curious) preset — the warm-cream lit gel bead the DELTA's body-L readback (0.814 light /
+     0.775 dark) describes. The dims reflect the current studio stage (820×822 desktop /
+     616×616 mobile), not the old bare-default box (the surface rebuild). The blob route carries
+     NO Aurora and the GooBlob WebGL2 metaball does not stall headless Chromium (verified), so a
+     normal capture runs clean. -->
 
 This wave closes the chronic README↔reality lie (CHRONIC across AX.W15 + AX.W46): a bare
 `<GooBlob :config="BLOB_CONFIG_DEFAULTS">` rendered a **dark coffee-bean**, not the

@@ -125,6 +125,40 @@ function registeredProps(css) {
 }
 
 /**
+ * Every prop a token RUNG defines — INCLUDING its carved partials (AY.W-CSS1: a
+ * rung is now a thin `@import "./<dir>/<partial>.css";` root over a partial
+ * cascade, so the token DEFINITIONS live in the partials, not the root file).
+ * Follows the `@import "./<dir>/<partial>.css";` statements ONE level (the carve
+ * is a single dir of leaf partials — no nested re-imports) and unions the
+ * declared + registered props from the root + every partial. A missing partial
+ * is not silently skipped — it is a build-emit gap the caller fails on.
+ *
+ * @param {string} rungPath absolute path to the rung file under dist/styles/
+ * @returns {{props:Set<string>, missing:string[]}}
+ */
+function rungPropsWithPartials(rungPath) {
+    const props = new Set();
+    const missing = [];
+    const root = stripComments(readFileSync(rungPath, "utf-8"));
+    for (const p of declaredProps(root)) props.add(p);
+    for (const p of registeredProps(root)) props.add(p);
+    // `@import "./<dir>/<partial>.css";` — the carved-partial cascade.
+    const importRe = /@import\s+["'](\.\/[a-z0-9/_-]+\.css)["']\s*;/gi;
+    let m;
+    while ((m = importRe.exec(root))) {
+        const partialPath = resolve(DIST_STYLES, m[1]);
+        if (!existsSync(partialPath)) {
+            missing.push(m[1]);
+            continue;
+        }
+        const partial = stripComments(readFileSync(partialPath, "utf-8"));
+        for (const p of declaredProps(partial)) props.add(p);
+        for (const p of registeredProps(partial)) props.add(p);
+    }
+    return { props, missing };
+}
+
+/**
  * BARE `var(--X)` references — a `var(--X)` immediately closed by `)` with no
  * fallback. A `var(--X, …)` carries a fallback (CSS uses it when `--X` is
  * unset), so it can never silently no-op and is not a self-sufficiency concern.
@@ -186,9 +220,18 @@ function run() {
                     "`npm run build` first.",
             );
         }
-        for (const p of declaredProps(stripComments(readFileSync(path, "utf-8")))) {
-            allowed.add(p);
+        // AY.W-CSS1: a rung is a thin @import root over carved partials; follow
+        // the @import partial cascade so the token DEFINITIONS in the partials
+        // (color-radius.css/light-dark.css/dark-arm.css/…) count as defined.
+        const { props, missing } = rungPropsWithPartials(path);
+        if (missing.length > 0) {
+            fail(
+                `glass-ui token rung dist/styles/${rung} @imports a partial that ` +
+                    `is absent from dist (${missing.join(", ")}) — the build emit ` +
+                    "dropped a carved token partial. Run `npm run build`.",
+            );
         }
+        for (const p of props) allowed.add(p);
     }
 
     const undefinedRefs = [...bareReferences(css)]

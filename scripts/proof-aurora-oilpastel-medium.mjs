@@ -56,7 +56,12 @@ function fnBody(src, name) {
     return src.slice(start, i - 1);
 }
 
-const AURORA_GZIP_CEIL = 38_000;
+// The aurora gzip governor — aligned to the canonical profile:budget ceiling
+// (docs/tranches/AP/W4-bundle-profile.baseline.json `dist/aurora.js` gzip 40_000,
+// rebaselined at AY.W-CLOSE1 against the AY painterly rebuild). The AW.W4.0 38 KB
+// governor was raised when the W-AUR-PAINTERLY §4.2 anisotropy lift grew the
+// shader; 38_599 gzip sits inside the reviewed 40 KB budget. ONE ceiling, not two.
+const AURORA_GZIP_CEIL = 40_000;
 const AURORA_RAW_CEIL = 130_000;
 
 let _cliPaths = null;

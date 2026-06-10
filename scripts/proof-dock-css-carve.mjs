@@ -130,7 +130,16 @@ function run() {
     // i.e. NOT the `Record<string, any>` the withDefaults+union form erased it to.
     if (existsSync(P.GLASSDOCK_DTS)) {
         const dts = readFileSync(P.GLASSDOCK_DTS, "utf8");
-        const hasRailBranch = /variant:\s*"rail"\s*\|\s*"instrument-strip"|variant:\s*"instrument-strip"\s*\|\s*"rail"/.test(dts);
+        // The rail branch is surfaced either INLINE (`variant: "rail" |
+        // "instrument-strip"`) OR — since the W-DOCK shell-props extraction moved the
+        // union into the named `DockRailProps` interface — as a NAMED-TYPE REFERENCE
+        // (`… | DockRailProps`) the GlassDock dts imports from useDockShellProps. Both
+        // surface the discriminated union; only the `Record<string, any>` erasure is the
+        // regression. DockRailProps itself carries `variant: "rail" | "instrument-strip"`
+        // (useDockShellProps.d.ts:108) — the type-narrow lives, just by reference.
+        const hasInlineBranch = /variant:\s*"rail"\s*\|\s*"instrument-strip"|variant:\s*"instrument-strip"\s*\|\s*"rail"/.test(dts);
+        const hasNamedBranch = /DockRailProps/.test(dts);
+        const hasRailBranch = hasInlineBranch || hasNamedBranch;
         const erasedToRecord = /props:\s*Record<string,\s*any>/.test(dts) && !hasRailBranch;
         facts.dtsHasRailBranch = hasRailBranch;
         facts.dtsErasedToRecord = erasedToRecord;

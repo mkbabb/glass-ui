@@ -98,9 +98,10 @@ for (const scheme of ["light", "dark"] as const) {
 }
 
 // The paired-π readback — the binding truth (a squircle is imperceptible at small
-// radius). Resolve cornerShape on the dialog/sheet/bigdock (superellipse(2)) + the
-// card/pill/panel (round) on the Chrome-148 engine.
-test("W56 cornerShape readback (superellipse on overlay+dock; round on card/pill/panel)", async ({
+// radius). Resolve cornerShape on the dialog/sheet/bigdock/panel (superellipse(2),
+// W56b extended panel into the squircle family) + the card/pill (round) on the
+// Chrome-148 engine.
+test("W56 cornerShape readback (superellipse on overlay+dock+panel; round on card/pill)", async ({
     page,
 }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -157,13 +158,13 @@ test("W56 cornerShape readback (superellipse on overlay+dock; round on card/pill
             dialog: dialog,
             sheet: sheet,
             bigdock: bigdock,
+            panel: "superellipse(2) (--corner-shape-panel, theme.css — W56b)",
         },
         roundSurfaces: {
             card: card,
             pill: pill,
-            panel: "round (--corner-shape-panel: round, theme.css)",
         },
-        note: "cornerShape resolves superellipse(2) on the W56 overlay-band + big-dock surfaces; round on card/pill/panel (the leak-free policy half).",
+        note: "cornerShape resolves superellipse(2) on the W56/W56b large-radius glass family (overlay-band + big-dock + panel + hero); round on card/pill (the leak-free policy half).",
     };
     writeFileSync(`${OUT}/W56-readback.json`, JSON.stringify(readback, null, 2) + "\n");
     console.log("W56 readback:", JSON.stringify(readback));

@@ -55,6 +55,9 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
+// AY.W-CSS1: tokens.css is a thin @import root over tokens/*.css partials; the token
+// DEFINITIONS live in the partials, so read the concatenated monolith, not the root.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -389,7 +392,7 @@ function run() {
     const sources = {
         dockCss: readDockCss(P.ROOT),
         dockControlsCss: readFileSync(P.DOCK_CONTROLS_CSS, "utf8"),
-        tokensCss: readFileSync(P.TOKENS_CSS, "utf8"),
+        tokensCss: readMonolith(P.ROOT, "tokens"),
         glassDock: readFileSync(P.GLASSDOCK, "utf8"),
         separator: existsOr(P.SEPARATOR),
         barrel: readFileSync(P.BARREL, "utf8"),

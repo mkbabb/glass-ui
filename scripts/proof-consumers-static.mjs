@@ -161,12 +161,12 @@ for (const name of ["startViewTransition", "supportsViewTransitions", "ViewTrans
 // root barrel from `./composables/motion/vReveal`, per the useViewTransition
 // precedent. A single-symbol re-export the whole-file contract cannot express.
 rootAllowed.add("vReveal");
-// AW.W16 — DeckProgress + DeckProgressProps are the deck-position rail wrapper
-// (a thin :value-only <Progress> restyle), targeted-re-exported to the root
-// barrel (no subpath; the /deck namespace is reserved). Single-symbol re-exports
-// the whole-file contract cannot express, same as vReveal/useViewTransition.
-rootAllowed.add("DeckProgress");
-rootAllowed.add("DeckProgressProps");
+// AY.W-CLOSE1 — DeckProgress + DeckProgressProps were RETIRED (PRUNE-LEDGER R2;
+// the deck-position rail wrapper had 0 real consumers — slides ships its own
+// deck-local progress bar over <Progress variant="gradient">). The component dir,
+// the ./deck-progress export, the api seat, and the root-barrel re-export are all
+// gone; this gate no longer asserts the retired symbols on the root surface
+// (a stale `rootAllowed.add` would FALSE-RED as "missing core export").
 // AX.W37 — useTextHighlight + its types are the named CSS Custom Highlight
 // composable, re-homed from /dom to /motion-core and targeted-re-exported to the
 // root barrel (keyframes-FREE + vueuse-FREE, per the vReveal precedent). It WAS
