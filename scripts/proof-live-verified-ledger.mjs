@@ -132,6 +132,55 @@ function isRealPng(p) {
     }
 }
 
+// ── AY.W-LIVE1 (R1): the IHDR dimension read — the FABRICATED-VIEWPORT assert ───
+// The cardinal lesson at one further remove (HC-cardinal §1a): a desktop-viewport
+// screenshot RENAMED `-mobile-` passes the magic-byte + size floor untouched (the four
+// 1280×721 W-CON1 "mobile" fakes shipped green). The PNG IHDR chunk carries the true
+// width/height (a big-endian uint32 pair at byte offsets 16/20, immediately after the
+// 8-byte signature + the 4-byte length + the "IHDR" type). Reading it lets the gate
+// reconcile the filename's viewport TOKEN against the actual pixels — a fabrication
+// the magic-byte check can never catch.
+// @returns {{w:number, h:number} | null} the IHDR dimensions, or null if unreadable.
+function pngDimensions(p) {
+    try {
+        const fd = readFileSync(p);
+        // signature(8) + length(4) + "IHDR"(4) then width(4) + height(4).
+        if (fd.length < 24 || fd.subarray(12, 16).toString("ascii") !== "IHDR") return null;
+        return { w: fd.readUInt32BE(16), h: fd.readUInt32BE(20) };
+    } catch {
+        return null;
+    }
+}
+
+// The desktop-class width floor: a real desktop full-viewport capture is ≥1280px
+// (the CAPTURE-PROTOCOL desktop floor). The largest LEGITIMATE mobile capture in the
+// tranche is 390×844@2× = 780px wide; an element crop is far smaller. So a `-mobile-`
+// basename whose IHDR width is ≥ this bound is a desktop screenshot mislabeled mobile
+// (the fabrication class) — 1000 sits cleanly ABOVE the max real mobile (780) and
+// BELOW the min desktop full-viewport (1280), so it false-flags neither.
+const FABRICATED_MOBILE_WIDTH = 1000;
+
+/**
+ * The R1 fabricated-viewport verdict over a single own-surface PNG path. A basename
+ * carrying the `-mobile-` viewport token must NOT have a desktop-class IHDR width
+ * (≥ FABRICATED_MOBILE_WIDTH). PURE over a {basename, dims} pair so the self-test can
+ * exercise it deterministically with no on-disk fixture.
+ *
+ * @param {string} basename
+ * @param {{w:number, h:number} | null} dims
+ * @returns {{ok:true} | {ok:false, reason:string}}
+ */
+function viewportFidelityVerdict(basename, dims) {
+    if (!/-mobile-/.test(basename)) return { ok: true };
+    if (!dims) return { ok: true }; // unreadable IHDR ≠ fabrication; the real-PNG bar already held
+    if (dims.w >= FABRICATED_MOBILE_WIDTH)
+        return {
+            ok: false,
+            reason: `${basename} carries the -mobile- viewport token but its IHDR is ${dims.w}×${dims.h} — a desktop-class width (≥${FABRICATED_MOBILE_WIDTH}px) RENAMED mobile (the fabricated-viewport class, HC-cardinal §1a) — re-capture at a real mobile viewport`,
+        };
+    return { ok: true };
+}
+
 /** The basename of a referenced path (drop any dir segments). */
 function baseName(ref) {
     const idx = ref.lastIndexOf("/");
@@ -200,6 +249,49 @@ function freshnessVerdict(doc) {
     }
 }
 
+// ── AY.W-LIVE1 (R6): the GREEN-on-real-surface verdict ──────────────────────────
+const GATES_DIR = join(ROOT, ".cache/gates");
+
+/**
+ * Resolve every `.cache/gates/<id>.json` artefact a DELTA CITES and assert each reads
+ * `status === "pass"`. A DELTA citing a gate artefact is asserting that gate passed on
+ * the real surface; if the on-disk artefact reads `fail` (or is absent), the prose
+ * GREEN claim is contradicted by the persisted RED (the HC-cardinal §3a class). PURE
+ * over the doc text (reads only the cited artefact files) so the self-test can plant a
+ * synthetic citation.
+ *
+ * @param {string} doc the DELTA markdown
+ * @returns {{state:"green"} | {state:"red", reason:string} | {state:"no-citation"}}
+ */
+function gateStatusVerdict(doc) {
+    // Cited artefacts: `.cache/gates/<ID>.json` paths anywhere in the DELTA prose.
+    const cited = [
+        ...new Set([...doc.matchAll(/\.cache\/gates\/([A-Za-z0-9_-]+)\.json/g)].map((m) => m[1])),
+    ];
+    if (!cited.length) return { state: "no-citation" };
+    const bad = [];
+    for (const id of cited) {
+        const p = join(GATES_DIR, `${id}.json`);
+        if (!existsSync(p)) {
+            bad.push(`${id}.json cited but absent on disk`);
+            continue;
+        }
+        try {
+            const a = JSON.parse(readFileSync(p, "utf8"));
+            if (a.status !== "pass")
+                bad.push(`${id}.json persists status:"${a.status}" (the cited gate is NOT green on the real surface)`);
+        } catch {
+            bad.push(`${id}.json cited but is not parseable JSON`);
+        }
+    }
+    if (bad.length)
+        return {
+            state: "red",
+            reason: `${bad.join("; ")} — the DELTA's prose GREEN claim is contradicted by the persisted artefact (HC-cardinal §3a; re-run the gate on the real surface + persist the PASS — the wave's RG job)`,
+        };
+    return { state: "green" };
+}
+
 /**
  * The deepened own-surface verdict — PURE over a wave-id + a list of real-PNG
  * basenames (so the self-test can exercise the filename-mismatch + light/dark
@@ -262,13 +354,59 @@ function deltaSatisfied(wave, opts = {}) {
     const own = ownSurfaceVerdict(wave, realPngs.map(baseName));
     if (!own.ok) return own;
 
+    // AY.W-LIVE1 (R1): the IHDR fabricated-viewport assert. Layered ON the own-surface
+    // bar. A HARD bar (a fabricated viewport is fraud, never graced): an own-surface
+    // PNG carrying the -mobile- token must NOT have a desktop-class IHDR width.
+    for (const r of realPngs) {
+        const abs = r.startsWith("/") ? r : resolve(VISUAL_DIR, r);
+        const bn = baseName(r);
+        if (!new RegExp(`^${wave}-`).test(bn)) continue; // own-surface PNGs only
+        const fid = viewportFidelityVerdict(bn, pngDimensions(abs));
+        if (!fid.ok) return { ok: false, reason: fid.reason };
+    }
+
+    // AY.W-LIVE1 (R6): the GREEN-on-real-surface clause. A DELTA that CITES a gate
+    // artefact (`.cache/gates/<id>.json`) is asserting that gate passed on the real
+    // surface — but nothing read the cited artefact's STATUS, so a DELTA could (and
+    // W-DOCK2 does, HC-cardinal §3a.2 / HC-mechanisms §7) claim GREEN in prose while
+    // the persisted artefact reads `status:"fail"`. The clause resolves the cited
+    // artefacts and asserts each `status === "pass"`. Same grace discipline as the
+    // freshness clause: a failing/missing cited artefact NOTEs on the bare active arm
+    // (owed to the named successor — the wave's own RG re-run, e.g. W-DOCK2 RG2) and
+    // REDs under --strict-freshness. A born-RED witness made MACHINE-VISIBLE, never a
+    // silent ride.
+    const gateVerdict = gateStatusVerdict(doc);
+    if (gateVerdict.state === "red") {
+        if (STRICT_FRESHNESS)
+            return { ok: false, reason: `${wave}-DELTA cites a non-GREEN gate: ${gateVerdict.reason}` };
+        // bare arm: NOTE, do not block — recorded below by the caller.
+    }
+
     // AY.W-LIVE1 freshness clause (the depth-header). Layered ON the own-surface bar.
     const fresh = freshnessVerdict(doc);
-    if (fresh.state === "stale")
+    if (fresh.state === "stale") {
+        // A stale DELTA whose surface was RE-CAPTURED by a later own-surface
+        // live-verified wave is graced on the bare arm: the FRESH evidence exists, just
+        // under the named successor wave (declared by `<!-- superseded-by: <wave> -->`).
+        // This is the documented backfill window (W-LIVE1 decision §"Residual") — the
+        // honest capture-commit + the genuine staleness is RECORDED, the fresher pixels
+        // are named, the re-capture-under-this-wave-id is W-DELTA0's. RED under
+        // --strict-freshness (the close-verification arm sees every stale capture).
+        const sup = doc.match(/<!--\s*superseded-by:\s*([\w-]+)\s*-->/);
+        if (sup && !STRICT_FRESHNESS)
+            return {
+                ok: true,
+                pngs: own.pngs,
+                freshnessNote: "stale-superseded",
+                supersededBy: sup[1],
+                staleReason: fresh.reason,
+                gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null,
+            };
         return {
             ok: false,
-            reason: `${wave}-DELTA stale: ${fresh.reason}`,
+            reason: `${wave}-DELTA stale: ${fresh.reason}${sup ? ` (superseded-by ${sup[1]}; RED under --strict-freshness, owed an own-wave-id re-capture — AY.W-DELTA0)` : ""}`,
         };
+    }
     if (fresh.state === "no-header") {
         // The grace boundary: a header-LESS DELTA reds ONLY under --strict-freshness
         // (the :ax backlog tracker + the close-verification arm). On the bare active
@@ -279,9 +417,9 @@ function deltaSatisfied(wave, opts = {}) {
                 ok: false,
                 reason: `${wave}-DELTA lacks the freshness headers (capture-commit + surface-paths) the protocol mandates — add them or re-capture (AY.W-LIVE1 / W-DELTA0)`,
             };
-        return { ok: true, pngs: own.pngs, freshnessNote: "no-header" };
+        return { ok: true, pngs: own.pngs, freshnessNote: "no-header", gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null };
     }
-    return { ok: true, pngs: own.pngs, freshnessState: "fresh" };
+    return { ok: true, pngs: own.pngs, freshnessState: "fresh", gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null };
 }
 
 // ── Evaluate a single row → a violation string, or null ───────────────────────
@@ -289,6 +427,10 @@ function deltaSatisfied(wave, opts = {}) {
 // (the backfill window) — printed as NOTEs, NOT violations; the owed re-captures are
 // the AY.W-DELTA0 / owed-DELTA sweep's named-successor job.
 const freshnessNotes = [];
+// AY.W-LIVE1 (R6): allowlisted DELTAs citing a non-GREEN gate artefact that passed the
+// bare-arm grace — printed as NOTEs, NOT violations (RED under --strict-freshness). The
+// owed re-run is the wave's own RG job (e.g. W-DOCK2 RG2 — green-on-real dock-animation).
+const gateNotes = [];
 
 /**
  * @param {{wave:string,status:string,line:number}} row
@@ -319,6 +461,17 @@ function evaluateRow(row, allowlist = new Set()) {
         if (d.freshnessNote === "no-header")
             freshnessNotes.push(
                 `${row.wave} (line ${row.line}): own-surface DELTA present but lacks the AY.W-LIVE1 freshness headers (capture-commit + surface-paths) — graced on the bare arm, owed a re-capture (AY.W-DELTA0 / owed-DELTA sweep). RED under --strict-freshness.`,
+            );
+        if (d.freshnessNote === "stale-superseded")
+            freshnessNotes.push(
+                `${row.wave} (line ${row.line}): own-surface DELTA stale (${d.staleReason}) but RE-CAPTURED by ${d.supersededBy} (the fresh own-surface evidence; declared superseded-by) — graced on the bare arm, owed an own-wave-id re-capture (AY.W-DELTA0). RED under --strict-freshness.`,
+            );
+        // AY.W-LIVE1 (R6): the DELTA cites a gate artefact that persists non-GREEN —
+        // graced on the bare arm, RED under --strict-freshness (where d.ok is already
+        // false above). Recorded as a NOTE so the persisted RED is MACHINE-VISIBLE.
+        if (d.gateNote)
+            gateNotes.push(
+                `${row.wave} (line ${row.line}): ${d.gateNote} — graced on the bare arm, owed the wave's RG re-run-on-real. RED under --strict-freshness.`,
             );
         return null;
     }
@@ -399,6 +552,28 @@ const selfTests = [
             return freshnessVerdict(synthetic).state === "stale" ? "flagged" : null;
         })(),
     },
+    {
+        // AY.W-LIVE1 (R1): the IHDR fabricated-viewport self-test — a `-mobile-`
+        // basename carrying a desktop-class IHDR width (1280) MUST flag. Exercises the
+        // PURE viewport-fidelity verdict deterministically, no on-disk fixture.
+        label: "R1 viewport-fidelity — a -mobile- PNG with a 1280px (desktop-class) IHDR width is the fabricated-viewport class",
+        flag: viewportFidelityVerdict("W99-foo-mobile-light.png", { w: 1280, h: 721 }).ok
+            ? null
+            : "flagged",
+    },
+    {
+        // AY.W-LIVE1 (R6): the GREEN-on-real-surface self-test — a DELTA citing a gate
+        // artefact whose persisted status is NOT "pass" MUST flag `state:"red"`. The
+        // synthetic doc cites a non-existent artefact id (absent on disk → red), so the
+        // bite is deterministic and needs no fixture.
+        label: "R6 gate-status — a DELTA citing a gate artefact that is absent/non-pass is contradicted by the persisted RED",
+        flag:
+            gateStatusVerdict(
+                "see `.cache/gates/W99-SELFTEST-NONEXISTENT-ARTEFACT.json` status pass",
+            ).state === "red"
+                ? "flagged"
+                : null,
+    },
 ];
 if (selfTests.some((t) => !t.flag)) {
     const missed = selfTests
@@ -430,10 +605,12 @@ console.log(`  visual allowlist      : ${allowlist.size}${allowlist.size ? " (" 
 console.log(`  wave rows parsed      : ${rows.length}`);
 console.log(`  live-verified rows    : ${liveVerified.length}${liveVerified.length ? " (" + liveVerified.map((r) => r.wave).join(", ") + ")" : ""}`);
 console.log(`  complete-on-allowlist : ${completeOnAllowlist.length}${completeOnAllowlist.length ? " (" + completeOnAllowlist.map((r) => r.wave).join(", ") + ")" : ""}`);
-console.log(`  self-test (bite proof): OK — 4 synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch, freshness-stale)`);
-console.log(`  freshness mode        : ${STRICT_FRESHNESS ? "STRICT (header-less own-surface DELTA REDs)" : "bare (header-less graced; staleness NOTEd — AY.W-LIVE1 backfill window)"}`);
+console.log(`  self-test (bite proof): OK — ${selfTests.length} synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch, freshness-stale, R1-viewport-fidelity, R6-gate-status)`);
+console.log(`  freshness mode        : ${STRICT_FRESHNESS ? "STRICT (header-less own-surface DELTA + non-GREEN-cited-gate REDs)" : "bare (header-less + non-GREEN-cited-gate graced; NOTEd — AY.W-LIVE1 backfill window)"}`);
 console.log(`  freshness notes       : ${freshnessNotes.length}${freshnessNotes.length ? " (header-less own-surface DELTAs, owed AY.W-DELTA0 re-capture)" : ""}`);
 for (const n of freshnessNotes) console.log(`  NOTE  ${n}`);
+console.log(`  gate-status notes (R6): ${gateNotes.length}${gateNotes.length ? " (allowlisted DELTAs citing a non-GREEN gate artefact, owed the wave's RG re-run-on-real)" : ""}`);
+for (const n of gateNotes) console.log(`  NOTE  ${n}`);
 console.log(`  violations            : ${violations.length}`);
 for (const v of violations) console.error(`  ${v}`);
 
@@ -453,6 +630,7 @@ writeGateArtifact(ARTIFACT, {
     completeOnAllowlist: completeOnAllowlist.map((r) => r.wave),
     strictFreshness: STRICT_FRESHNESS,
     freshnessNotes,
+    gateNotes,
     violations,
 });
 

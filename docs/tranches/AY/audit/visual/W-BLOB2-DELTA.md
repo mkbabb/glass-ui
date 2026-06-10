@@ -1,5 +1,17 @@
 # AY.W-BLOB2 — the light warm-cream default base + config-atom simplification · live DELTA
 
+<!-- capture-commit: 1151899a -->
+<!-- surface-paths: src/components/custom/goo-blob/shaders/metaball.frag.ts, src/components/custom/goo-blob/composables/useMetaballRenderer.ts, src/components/custom/goo-blob/GooBlob.vue -->
+<!-- superseded-by: W-BLOB-REBUILD -->
+<!-- AY.W-LIVE1 freshness headers: the 9 own-surface PNGs (incl. the RG-noted static
+     mood-hover series) were captured against 1151899a (the W-BLOB2 Batch-2 commit). The
+     blob renderer + shader were later rebuilt first-principles by W-BLOB-REBUILD (B10+B18 —
+     the blob-as-background category error fix + the canonical cream-bead resting state) and
+     re-carved by W-GOD1, so these stills are STALE relative to HEAD; the FRESH own-surface
+     blob evidence (incl. a demonstrative hover-lean series) is W-BLOB-REBUILD's. The W-BLOB2
+     RG2/RG3 owed re-captures fold into that fresher set; an own-wave-id re-capture is
+     AY.W-DELTA0's. -->
+
 This wave closes the chronic README↔reality lie (CHRONIC across AX.W15 + AX.W46): a bare
 `<GooBlob :config="BLOB_CONFIG_DEFAULTS">` rendered a **dark coffee-bean**, not the
 "warm-cream living bead" every doc claimed. The default composed two near-black tokens —

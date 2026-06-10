@@ -2,6 +2,7 @@ import { mount } from "@vue/test-utils";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 
 import { InstrumentChassis, type InstrumentChassisPhase } from "../../../../src/components/custom/instrument-chassis/index";
 
@@ -24,10 +25,9 @@ const cssSource = readFileSync(
     resolve(__dirname, "../../../../src/styles/instrument-chassis.css"),
     "utf8",
 );
-const tokensSource = readFileSync(
-    resolve(__dirname, "../../../../src/styles/tokens.css"),
-    "utf8",
-);
+// AY.W-CSS1 — tokens.css is a thin @import root; read the carved partials as the
+// concatenated cascade so the `--chart-*` canon scan keeps finding the declarations.
+const tokensSource = readMonolith(resolve(__dirname, "../../../../"), "tokens");
 
 /** Canon mapping at tokens.css:626–629. Single source of truth. */
 const PHASE_CANON: Record<Exclude<InstrumentChassisPhase, "ready" | "complete">, string> = {

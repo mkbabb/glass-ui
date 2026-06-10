@@ -9,67 +9,15 @@
 import type { BlobConfig, MoodParams } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
+import { MAX_SATS, TRAIL_N, MAX_BLOB_STOPS, POS_SCALE, UNIFORM_NAMES } from "../constants";
+import type { UniformName } from "../constants";
 
-/** Compile-time satellite cap — mirrors `MAX_SATS` in the renderer + `uSat*[N]` in metaball.frag.ts. */
-export const MAX_SATS = 4;
-/** Compile-time trail length — mirrors `TRAIL_N` in metaball.frag.ts + useBlobPointer.ts. */
-export const TRAIL_N = 15;
-/** Compile-time palette cap — mirrors `MAX_BLOB_STOPS` in metaball.frag.ts. */
-export const MAX_BLOB_STOPS = 4;
-
-/**
- * Canvas is CSS-sized 1.6x its layout wrapper (see GooBlob.vue). Positions are in
- * [-0.5, 0.5] normalized space mapped to canvas UVs. To make the layout footprint
- * represent the "visible blob region" and have the extra 60% of canvas serve as
- * overflow margin for satellite orbits, scale all length-like uniforms by
- * 1/1.6 = 0.625.
- */
-export const POS_SCALE = 1 / 1.6;
-
-export const UNIFORM_NAMES = [
-    "uResolution",
-    "uTime",
-    "uBaseColor",
-    "uPointer",
-    "uPointerActive",
-    "uPointerAttraction",
-    "uPointerStrength",
-    "uBodyRadius",
-    "uPulsePhase",
-    "uPulseAmp",
-    "uNoiseAmp",
-    "uNoiseFreq",
-    "uNoiseSpeed",
-    "uWarpAmp",
-    "uSmoothK",
-    "uMerge",
-    "uMaxReach",
-    "uLit",
-    "uRimColor",
-    "uLightDir",
-    "uSpecStrength",
-    "uSpecShininess",
-    "uRimPower",
-    "uRimStrength",
-    "uIridescence",
-    "uIridHue",
-    "uIridSpeed",
-    "uSssScale",
-    "uSssPower",
-    "uCoreGlow",
-    "uHueRange",
-    "uSatShift",
-    "uBrightnessShift",
-    "uColorNoiseFreq",
-    "uColorNoiseSpeed",
-    "uStopCount",
-    "uSatCount",
-    "uTrailCount",
-    "uVelocity",
-    "uStretch",
-] as const;
-
-export type UniformName = (typeof UNIFORM_NAMES)[number];
+// The compile-time shape budget (MAX_SATS / TRAIL_N / MAX_BLOB_STOPS / POS_SCALE /
+// UNIFORM_NAMES + the UniformName type) lives in `../constants` — the single source
+// the builder, the pointer trail, and the GLSL shader all read. Re-exported here so
+// the prior `./uploadBlobUniforms` import sites resolve unchanged.
+export { MAX_SATS, TRAIL_N, MAX_BLOB_STOPS, POS_SCALE, UNIFORM_NAMES };
+export type { UniformName };
 
 /** The cached uniform-location set the GL setup builds once per context. */
 export interface MetaballUniformLocations {

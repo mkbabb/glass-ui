@@ -701,6 +701,12 @@ export const GATES = [
         note: "AY.W-GLASS — the inventory-complete glass-cohesion gate (SUPERSEDES the 8-file proof:glass-one-model canary, which is REMOVED — clean break). Device-free SOURCE arm: WALKS every component surface that paints a glass plate and asserts each routes a --glass-* tier off the definition-level raw-opaque (background: var(--background|--card)) / literal-blur(<n>px) forbidden set — the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) + the dock-shell edge-gleam exemption are the ONLY exempt entries. The Drawer (re-authored onto glass-overlay + the WHC skin), Slider (range routes --glass-blur-quiet, thumb opts into the shared gleam), Notification (glass-floating + ladder shadow), and the specular-opt-in (the moving transition rides the .glass-specular-track::before / :hover/:active scope, NOT the unconditional ::before group — 0 idle keyframes tracks) arms each born-RED at HEAD → GREEN after E1–E6; a self-proving synthetic .glass-x fixture demonstrates the inventory bite every run. The PAINTED render (Drawer/Slider/Notification each a real backdrop-filter blur over a busy backdrop AND each flattening to opaque --card + blur(0) at --glass-level:0) + the idle-track 19→0 DELTA is the π arm (tests-visual/glass-cohesion.spec.ts + the W-GLASS-DELTA capture), never this gate alone. Bite: re-open the opaque Drawer / the Slider literal blur / the glass-wash Notification / the always-on specular transition → RED.",
     },
     {
+        id: "proof:substrate-cohesion",
+        cmd: "proof:substrate-cohesion",
+        tags: ["local", "ci"],
+        note: "AY.W-COHERE — the SET-LEVEL substrate cohesion gate (the four live substrates AS A SET): G-ACCENT (the blob mood bead C=0.136 inside the comet-anchored warm-red band via the deriveBlobPalette chromaCeiling), G-RECESSION (all FOUR expose the outer-envelope knob; the constellation opacityCeiling BITES — 0.4 ceiling paints 25% ink), G-SHADOW (no 5px-5px stamp; the adaptive --blob-shadow ambient — darkest-cast L 0.780 >= the 0.58 floor). Self-proving. Bite: re-add the stamp / drop the prop / remove the ceiling -> RED",
+    },
+    {
         id: "proof:component-orphan",
         cmd: "proof:component-orphan",
         tags: ["local", "ci"],

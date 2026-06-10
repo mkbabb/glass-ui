@@ -1,5 +1,17 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
+<!-- capture-commit: c90f4aee -->
+<!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/styles/dock/morph.css, src/components/custom/dock/DockLayerGroup.vue -->
+<!-- superseded-by: W-DOCK-NAV -->
+<!-- AY.W-LIVE1 freshness headers: the own-surface mid-morph stills were captured against
+     c90f4aee (the W-DOCK2 PNG commit). The dock painting surface (layers.css / shell.css /
+     morph.css) was later re-rendered by W-DOCK-NAV (the collapse-circle + rail rebuild),
+     so these stills are STALE relative to HEAD; the FRESH own-surface dock evidence is
+     W-DOCK-NAV's. The R6 cited gate `AX-dock-animation-live.json` persists status:"fail" at
+     HEAD (the demo-server / probe-stability harness brittleness, not a surface regression —
+     the device-free token-peak secondary is GREEN); the green-on-real re-run is W-DOCK2's RG2
+     (the named successor). An own-wave-id re-capture is AY.W-DELTA0's. -->
+
 This wave discharges the IMPL half of the dock-lockstep chronic (PROMPT-CORPUS #5 /
 AUDIT-LEDGER #5). W-DOCK1's capture VERDICT was **lag captured-ABSENT** (`box↔scalar
 onset Δ = 0 ms` on all 12 captures; the 36.7–96.2 ms trailing-child trail IS the

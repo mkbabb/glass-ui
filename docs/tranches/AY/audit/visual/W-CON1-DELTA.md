@@ -1,5 +1,17 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
+<!-- capture-commit: b8c6b34b -->
+<!-- surface-paths: src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts, src/components/custom/constellation/Constellation.vue -->
+<!-- superseded-by: W-SB-REVERIFY -->
+<!-- AY.W-LIVE1 freshness headers: the four mobile PNGs were RE-CAPTURED at the real
+     390-viewport (314×421) at this commit (the B2-con1 F2 fabrication fix). The
+     constellation engine was later carved (W-GOD1: constellationField → Draw/Interaction
+     leaves) and the hero constellation re-verified by W-SB-REVERIFY (B16), so these stills
+     are STALE relative to HEAD; the FRESH own-surface constellation evidence is
+     W-SB-REVERIFY's. The carve was render-neutral (public surface byte-identical) but the
+     freshness clause is git-ancestry, not render-equivalence — an own-wave-id re-capture is
+     AY.W-DELTA0's. -->
+
 **Wave:** AY.W-CON1 · **Status:** live-verified · **Verdict:** PASS (the recessive
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified
 the shipped 0.80 / 0.88).

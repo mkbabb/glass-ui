@@ -20,6 +20,7 @@ describe("Button", () => {
         expect(button.text()).toBe("Save");
         expect(button.classes()).toContain("bg-secondary");
         // AX.W51 — the size rungs read the `--control-h-*` comfort cohort, not raw h-N.
-        expect(button.classes()).toContain("h-[var(--control-h-sm)]");
+        // AY.W-CSS1 — the var-in-arbitrary shorthand: `h-(--control-h-sm)`, not `h-[var(--control-h-sm)]`.
+        expect(button.classes()).toContain("h-(--control-h-sm)");
     });
 });

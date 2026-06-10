@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import { readMonolith } from "../scripts/read-css-monoliths.mjs";
 import * as Api from "../src/api";
 import * as Aurora from "../src/subpaths/aurora";
 import * as CarouselSurface from "../src/carousel";
@@ -326,8 +327,23 @@ const retiredRootUtilities = [
     ".shimmer-text",
 ] as const;
 
+// AY.W-CSS1 — tokens/glass/utilities.css are now thin @import roots over
+// cohesion-carved partials. Read them as the concatenated cascade (the same
+// `readMonolith` reader the W-CSS1 gates repointed to) so a declaration-scan
+// keeps finding the rule it found in the pre-carve monolith. Non-carved files
+// (theme.css, SFCs) fall through to a plain read.
+const CARVED_MONOLITHS: Record<string, string> = {
+    "src/styles/tokens.css": "tokens",
+    "src/styles/glass.css": "glass",
+    "src/styles/utilities.css": "utilities",
+};
+function readStyle(file: string): string {
+    const carved = CARVED_MONOLITHS[file];
+    return carved ? readMonolith(process.cwd(), carved) : readFileSync(file, "utf8");
+}
+
 function readTokenNumber(name: string): number {
-    const source = readFileSync("src/styles/tokens.css", "utf8");
+    const source = readStyle("src/styles/tokens.css");
     const match = source.match(new RegExp(`${name}:\\s*(\\d+);`));
     if (!match) throw new Error(`Missing ${name}`);
     return Number(match[1]);
@@ -363,15 +379,15 @@ describe("public type surface", () => {
 
 describe("root style surface", () => {
     it.each(rootStyleChecks)("keeps %s exporting %s", (file, selector) => {
-        expect(readFileSync(file, "utf8")).toContain(selector);
+        expect(readStyle(file)).toContain(selector);
     });
 
     it.each(retiredRootUtilities)("does not re-export retired utility %s", (selector) => {
-        expect(readFileSync("src/styles/utilities.css", "utf8")).not.toContain(selector);
+        expect(readStyle("src/styles/utilities.css")).not.toContain(selector);
     });
 
     it("keeps utility shimmer/progress aliases off undefined local tokens", () => {
-        const utilities = readFileSync("src/styles/utilities.css", "utf8");
+        const utilities = readStyle("src/styles/utilities.css");
 
         expect(utilities).not.toContain("--shimmer-blue-");
         expect(utilities).not.toContain("--shimmer-duration");
@@ -379,7 +395,7 @@ describe("root style surface", () => {
     });
 
     it("keeps glass primitives on explicit tokenized transitions", () => {
-        const glass = readFileSync("src/styles/glass.css", "utf8");
+        const glass = readStyle("src/styles/glass.css");
 
         expect(glass).not.toMatch(/transition:\s*all\b/);
         expect(glass).not.toMatch(/var\(--duration-fast\)\s+ease\b/);

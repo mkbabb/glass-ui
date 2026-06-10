@@ -393,6 +393,26 @@ export function maxInterFrameJump(series) {
 // is exp(-ζπ/√(1-ζ²)) ≈ 0.046, so the ceil is 1.046 + a 0.005 parse/round margin.
 const SPRING_DOCK_PEAK_CEIL = 1.046 + 0.005;
 
+/**
+ * Read the token cascade body. `src/styles/tokens.css` is a thin `@import` ROOT
+ * (the W-CSS1 monolith carve) — the `--spring-dock` declaration moved into a partial
+ * (`tokens/scheme-motion.css`). A naive `readFileSync(tokens.css)` reads only the
+ * import lines and the parse REDs falsely ("the dock-spring token shape moved").
+ * Resolve the cascade: read the root, splice in every `@import`-ed partial so the
+ * token parse finds `--spring-dock` wherever the carve placed it.
+ */
+export function readTokenCascade(root) {
+    const tokensPath = resolve(root, "src/styles/tokens.css");
+    let css = existsSync(tokensPath) ? readFileSync(tokensPath, "utf8") : "";
+    const stylesDir = resolve(root, "src/styles");
+    for (const m of css.matchAll(/@import\s+["']([^"']+)["']\s*;/g)) {
+        const rel = m[1];
+        const partial = resolve(stylesDir, rel);
+        if (existsSync(partial)) css += "\n" + readFileSync(partial, "utf8");
+    }
+    return css;
+}
+
 /** Parse the max numeric stop from the `--spring-dock: linear(…)` declaration. */
 export function parseSpringDockPeak(tokensCss) {
     const m = tokensCss.match(/--spring-dock:\s*linear\(([^;]*)\)\s*;/);
@@ -593,7 +613,7 @@ async function run() {
     // device-free). It is the cheap structure-tier check the zero-dep CI runner
     // keeps; a --spring-dock retune to a bouncier register reds here with no
     // browser. A token-peak violation is a HARD RED on every runner.
-    const tokensCss = readFileSync(resolve(ROOT, "src/styles/tokens.css"), "utf8");
+    const tokensCss = readTokenCascade(ROOT);
     const tokenPeak = detectTokenPeak(tokensCss);
     const piPresent = piWorkspacePresent(ROOT);
 
@@ -668,12 +688,22 @@ async function run() {
                 /* non-configurable on this engine */
             }
         });
-        await page.goto(TARGET_URL, { waitUntil: "networkidle" });
+        // `domcontentloaded`, NOT `networkidle`: `/dock/overview` carries the live
+        // aurora/blob WebGL substrate whose continuous rAF + asset streaming keeps the
+        // network from ever idling, so `networkidle` stalls the navigation. The SPA
+        // mounts the dock client-side moments after DOMContentLoaded — wait on the dock
+        // selector (below) for readiness, not on a network-quiescence that never comes.
+        await page.goto(TARGET_URL, { waitUntil: "domcontentloaded" });
         // Wait for ANY dock to be present (the capture dock mounts EXPANDED — the
         // probe drives it to the collapsed baseline itself before sampling the expand
         // morph; gating on `.collapsed` here would hang on a fresh-mount demo where no
         // dock idle-collapses without a prior hover).
-        await page.waitForSelector(".glass-dock", { timeout: 5000 });
+        // `state:"attached"` (present in the DOM), NOT the default `"visible"`: the
+        // FIRST `.glass-dock` match on the demo shell is the pinned demo-sidebar rail,
+        // which can be off-canvas / 0-width at the headless default viewport and never
+        // satisfies `"visible"` — the probe samples the `data-testid="dock-capture"`
+        // collapsible dock (DOCK_CAPTURE_SEL), not the first match. Gate on presence.
+        await page.waitForSelector(".glass-dock", { state: "attached", timeout: 5000 });
         result = await page.evaluate(pageProbe);
     } catch (e) {
         // AX.W00 fail-CLOSED PROMOTION: when the π workspace is PRESENT (the

@@ -43,7 +43,7 @@ function cliPaths() {
         SUBSTRATE: resolve(ROOT, "src/composables/glass/canvas2d/useCanvas2D.ts"),
         SUBSTRATE_BARREL: resolve(ROOT, "src/composables/glass/canvas2d/index.ts"),
         COMPONENT: resolve(ROOT, "src/components/custom/constellation/Constellation.vue"),
-        FIELD: resolve(ROOT, "src/components/custom/constellation/constellationField.ts"),
+        FIELD: resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts"),
         DIR: resolve(ROOT, "src/components/custom/constellation"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_CONSTELLATION_ARTIFACT",

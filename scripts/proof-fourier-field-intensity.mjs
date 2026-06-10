@@ -29,7 +29,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const FIELD = resolve(ROOT, "src/components/custom/fourier-field/FourierField.vue");
+// The W-GOD1 carve moved VariantPreset/PRESETS into presets.ts; the render/clamp/fork
+// asserts still read the SFC. The gate reads the COMPOSED pair (the carve moved code,
+// not the contract).
+const FIELD_FILES = [
+    "src/components/custom/fourier-field/FourierField.vue",
+    "src/components/custom/fourier-field/presets.ts",
+].map((f) => resolve(ROOT, f));
+const FIELD = FIELD_FILES[0];
 const MATH = resolve(ROOT, "src/components/custom/fourier-field/math.ts");
 const INDEX = resolve(ROOT, "src/components/custom/fourier-field/index.ts");
 
@@ -131,7 +138,7 @@ function run() {
         if (!existsSync(p)) violations.push(`${label} is absent`);
     }
 
-    const field = existsSync(FIELD) ? readFileSync(FIELD, "utf8") : "";
+    const field = FIELD_FILES.map((f) => (existsSync(f) ? readFileSync(f, "utf8") : "")).join("\n");
     const math = existsSync(MATH) ? readFileSync(MATH, "utf8") : "";
     const index = existsSync(INDEX) ? readFileSync(INDEX, "utf8") : "";
 

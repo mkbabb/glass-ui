@@ -1,8 +1,9 @@
 import { ref, watch, onUnmounted, readonly, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
+import { TRAIL_N } from "../constants";
 
-/** Compile-time trail length — mirrors `TRAIL_N` in metaball.frag.ts. */
-export const TRAIL_N = 15;
+/** Compile-time trail length — re-exported from the co-located shape budget (`../constants`). */
+export { TRAIL_N };
 
 /** A single trail sample — a decaying-radius metaball source the shader smin-merges. */
 export interface TrailSample {

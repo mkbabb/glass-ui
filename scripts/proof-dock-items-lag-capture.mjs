@@ -492,7 +492,12 @@ async function run() {
                         /* non-configurable on this engine */
                     }
                 });
-                await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "networkidle" });
+                // `domcontentloaded`, NOT `networkidle`: `/dock/overview` carries the
+                // live aurora/blob WebGL substrate whose continuous rAF + asset
+                // streaming keeps the network from ever idling, so `networkidle` stalls
+                // the navigation. The capture dock selector wait (below) is the real
+                // readiness gate.
+                await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "domcontentloaded" });
                 // The .dark class is the library's dark switch (colorScheme alone does
                 // not flip the token cascade — the @variant dark keys off .dark).
                 if (theme === "dark") {

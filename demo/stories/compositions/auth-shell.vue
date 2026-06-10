@@ -44,7 +44,7 @@ const trustBadges = [
             )"
         >
             <div
-                class="relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
+                class="auth-brand-panel relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
                 <!-- The brand panel paints the purple→tomato aurora (the palette
                      FD designed for this panel) behind its translucent content,
@@ -161,3 +161,21 @@ const trustBadges = [
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+/* The brand panel ALWAYS paints the bright purple→tomato aurora (the panel is
+   light-locked by construction — the aurora reads bright in both themes). So its
+   ink must be light-locked DARK too: in dark mode the inherited `--foreground`
+   flips to cream (hsl 48 10% 90%) and `--muted-foreground` to a light gray, which
+   sink into the bright coral (the FD-R2 #1 defect). Pin the two ink tokens to
+   their light-mode values on the panel so the heading + body copy stay legible
+   dark ink over the always-bright backdrop — the W55 "light-locked panel needs
+   light-locked ink" register, expressed as a local token pin (the panel is not a
+   glass rung, so the `--glass-backdrop: light` bucket cannot reach its direct
+   text). The section-color trust chips are already light-locked-correct. */
+.auth-brand-panel {
+    --foreground: hsl(24 10% 10%);
+    --muted-foreground: hsl(24 6% 38%);
+    --card-foreground: hsl(24 10% 10%);
+}
+</style>

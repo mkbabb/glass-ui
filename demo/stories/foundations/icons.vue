@@ -62,6 +62,29 @@ const sizes: { label: string; px: number }[] = [
 ];
 
 const strokes: number[] = [1, 1.5, 2];
+
+// The pops register — the shipped empty-states chip recipe (a 25% color-mix
+// circle backplate + a full-chroma glyph) walked across the 13-stop
+// `--section-color-*` ramp. ONE chip per stop, 1:1 onto the section ramp, the
+// same recipe the auth-shell trust badges + the empty-states cards already use
+// (FD-R2 §2 — the single highest-leverage pops edit). The proportion rule rides
+// in the section blurb below: one color event per surface, chips never exceed
+// icon scale, body ink stays untinted.
+const pops: { icon: Component; section: number }[] = [
+    { icon: Compass, section: 0 },
+    { icon: Shapes, section: 1 },
+    { icon: Waves, section: 2 },
+    { icon: Star, section: 3 },
+    { icon: Zap, section: 4 },
+    { icon: Wand2, section: 5 },
+    { icon: Palette, section: 6 },
+    { icon: Command, section: 7 },
+    { icon: Search, section: 8 },
+    { icon: Layers, section: 9 },
+    { icon: Library, section: 10 },
+    { icon: Package, section: 11 },
+    { icon: BookOpen, section: 12 },
+];
 </script>
 
 <template>
@@ -94,6 +117,48 @@ const strokes: number[] = [1, 1.5, 2];
                     <span class="text-mono-caption text-center text-muted-foreground">{{
                         icon.name
                     }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pops — the section-color chip recipe across the 13-stop ramp -->
+        <div>
+            <p class="text-admin-label mb-1 text-muted-foreground">Pops</p>
+            <p class="text-small mb-4 max-w-2xl text-muted-foreground">
+                The icon chip is the brand's color event: a
+                <span class="font-mono text-xs">color-mix(… 25%, transparent)</span>
+                backplate under a full-chroma glyph, walked across the 13-stop
+                <span class="font-mono text-xs">--section-color-*</span> ramp.
+                <span class="text-foreground">The proportion rule:</span> a surface
+                gets ONE color event — either a field behind glass or a chip
+                cluster like this, never both at full volume; a chip never exceeds
+                icon scale, and body ink is never tinted.
+            </p>
+            <div
+                class="grid grid-cols-5 gap-3 sm:grid-cols-7 md:grid-cols-13"
+            >
+                <div
+                    v-for="pop in pops"
+                    :key="pop.section"
+                    class="flex flex-col items-center gap-2"
+                >
+                    <span
+                        class="flex size-12 items-center justify-center rounded-full"
+                        :style="{
+                            backgroundColor: `color-mix(in srgb, var(--section-color-${pop.section}) 25%, transparent)`,
+                            color: `var(--section-color-${pop.section})`,
+                        }"
+                    >
+                        <component
+                            :is="pop.icon"
+                            :size="22"
+                            :stroke-width="1.75"
+                            aria-hidden="true"
+                        />
+                    </span>
+                    <span class="text-mono-caption text-muted-foreground"
+                        >{{ pop.section }}</span
+                    >
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ import {
   DropdownMenuSubContent,
   type DropdownMenuSubContentEmits,
   type DropdownMenuSubContentProps,
+  DropdownMenuPortal,
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
@@ -21,10 +22,18 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
-  <DropdownMenuSubContent
-    v-bind="forwarded"
-    :class="cn('dropdown-sub-content z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground popover-animate slide-in-from-side', props.class)"
-  >
-    <slot />
-  </DropdownMenuSubContent>
+  <!-- The SubContent MUST portal (the same DropdownMenuPortal wrapper Content
+       uses). DropdownMenuContent carries `max-h-[60vh] overflow-y-auto`; an
+       un-portaled submenu paints INSIDE that scroll container and is clipped
+       invisible — ARIA-expanded but pointer-unreachable. Portaling teleports the
+       submenu to the body so it escapes the parent's scroll clip, matching how
+       Content portals. -->
+  <DropdownMenuPortal>
+    <DropdownMenuSubContent
+      v-bind="forwarded"
+      :class="cn('dropdown-sub-content z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground popover-animate slide-in-from-side', props.class)"
+    >
+      <slot />
+    </DropdownMenuSubContent>
+  </DropdownMenuPortal>
 </template>

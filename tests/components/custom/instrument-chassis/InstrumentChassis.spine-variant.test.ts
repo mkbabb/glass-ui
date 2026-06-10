@@ -2,6 +2,7 @@ import { mount } from "@vue/test-utils";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 
 import {
     InstrumentChassis,
@@ -35,10 +36,9 @@ const cssSource = readFileSync(
     resolve(__dirname, "../../../../src/styles/instrument-chassis.css"),
     "utf8",
 );
-const tokensSource = readFileSync(
-    resolve(__dirname, "../../../../src/styles/tokens.css"),
-    "utf8",
-);
+// AY.W-CSS1 — tokens.css is a thin @import root; read the carved partials as the
+// concatenated cascade so the token-publish scan keeps finding the declarations.
+const tokensSource = readMonolith(resolve(__dirname, "../../../../"), "tokens");
 
 describe("InstrumentChassis spine variant canon", () => {
     it("exports `glass` and `spine` in the `InstrumentChassisVariant` union", () => {

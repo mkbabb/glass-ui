@@ -33,21 +33,27 @@ const mediums = ["aurora", "ink", "gouache"] as const;
 
 // Each medium tilts the specimen's hue triad — the stage reads the medium
 // as a distinct palette so the Select is visibly load-bearing, not decorative.
+// The triad reads INDIRECT `--bloom-*` tokens (defined on `.configurator-specimen`)
+// so the SAME geometry paints the pale pastels over the light cream stage and
+// the SATURATED rainbow hues over the dark stage — a low-chroma pastel mixed
+// toward transparent over a near-black field reads as desaturated mud (the
+// FD-R2 #3 dark defect), so dark mode swaps to the full-chroma ramp + a deep
+// base, recovering the chromatic bloom.
 const MEDIUM_HUES: Record<string, readonly [string, string, string]> = {
     aurora: [
-        "var(--rainbow-pastel-blue)",
-        "var(--rainbow-pastel-indigo)",
-        "var(--rainbow-pastel-violet)",
+        "var(--bloom-blue)",
+        "var(--bloom-indigo)",
+        "var(--bloom-violet)",
     ],
     ink: [
-        "var(--rainbow-pastel-indigo)",
-        "var(--rainbow-pastel-blue)",
-        "var(--rainbow-pastel-green)",
+        "var(--bloom-indigo)",
+        "var(--bloom-blue)",
+        "var(--bloom-green)",
     ],
     gouache: [
-        "var(--rainbow-pastel-orange)",
-        "var(--rainbow-pastel-red)",
-        "var(--rainbow-pastel-yellow)",
+        "var(--bloom-orange)",
+        "var(--bloom-red)",
+        "var(--bloom-yellow)",
     ],
 };
 
@@ -233,3 +239,34 @@ cfg.cyclePreset()</code></pre>
         </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+/* The bloom hue triad reads INDIRECT tokens so the SAME stage geometry paints
+   correctly in both modes. In light, the pale pastels over the cream stage are
+   the lavender bloom. In dark the stage well goes near-black and a high-L
+   low-chroma pastel mixed toward transparent reads as desaturated mud (FD-R2 #3)
+   — so dark swaps to the FULL-CHROMA `--rainbow-*` ramp and lays a deep base
+   tint behind the bloom so the chroma has a field to assert against. */
+.configurator-specimen {
+    --bloom-blue: var(--rainbow-pastel-blue);
+    --bloom-indigo: var(--rainbow-pastel-indigo);
+    --bloom-violet: var(--rainbow-pastel-violet);
+    --bloom-green: var(--rainbow-pastel-green);
+    --bloom-orange: var(--rainbow-pastel-orange);
+    --bloom-red: var(--rainbow-pastel-red);
+    --bloom-yellow: var(--rainbow-pastel-yellow);
+}
+
+:global(.dark) .configurator-specimen {
+    --bloom-blue: var(--rainbow-blue);
+    --bloom-indigo: var(--rainbow-indigo);
+    --bloom-violet: var(--rainbow-violet);
+    --bloom-green: var(--rainbow-green);
+    --bloom-orange: var(--rainbow-orange);
+    --bloom-red: var(--rainbow-red);
+    --bloom-yellow: var(--rainbow-yellow);
+    /* A deep ink base so the saturated bloom reads as a chromatic field, not a
+       set of dim spots over near-black. The warm-ink `--card` deepened a touch. */
+    background-color: color-mix(in oklab, var(--card) 88%, black);
+}
+</style>

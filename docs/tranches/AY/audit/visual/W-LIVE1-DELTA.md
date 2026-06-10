@@ -66,32 +66,66 @@ verdict: FRESH (no false-RED — surface is an ancestor of the capture commit)
 The freshness clause discriminates correctly: stale → RED, fresh → GREEN, header-less → graced-on-bare-arm /
 RED-under-`--strict-freshness`.
 
-## The active-arm un-lockout (W-CARDINAL-INFRA §4a preserved)
+## R1 — the IHDR fabricated-viewport assert (AY.W-LIVE1-FINISH · landed 2026-06-10)
 
-The bare active `:ay` commit/CI gate stays GREEN (EXIT 0) — the 4 AY allowlist DELTAs (W-DOCK1/W-CON1/W-BLOB2/
-W-DOCK2) lack the freshness headers (they predate the header mandate) and are GRACED on the bare arm with a NOTE,
-not a violation:
+`isRealPng` checked only the PNG magic + a >1024B floor — a desktop screenshot RENAMED `-mobile-` passed
+(the four 1280×721 W-CON1 fakes; HC-cardinal §1a). LANDED: `pngDimensions()` reads the IHDR width/height
+(big-endian uint32 at byte 16/20); `viewportFidelityVerdict()` REDs a `-mobile-` basename whose IHDR width
+is desktop-class (≥1000px). The self-test (a synthetic 1280×721 `-mobile-` row) flags every run:
 
 ```
-freshness mode        : bare (header-less graced; staleness NOTEd — AY.W-LIVE1 backfill window)
-freshness notes       : 4 (header-less own-surface DELTAs, owed AY.W-DELTA0 re-capture)
+self-test (bite proof): OK — 6 synthetic rows flagged (… R1-viewport-fidelity, R6-gate-status)
+```
+
+R1 finds **0 fabrications at HEAD** — the four W-CON1 mobile PNGs were already re-captured to 314×421
+(W-CON-FIX); the live IHDR sweep confirms every `-mobile-` PNG is < 1000px (W-CON1 314, W-BLOB2 450,
+W-DOCK1 780 = 390@2×, W-DOCK2 76/624). No false-RED on the legitimate 780px @2× mobile.
+
+## R6 — the GREEN-on-real-surface clause (AY.W-LIVE1-FINISH · landed 2026-06-10)
+
+`gateStatusVerdict()` resolves every `.cache/gates/<id>.json` a DELTA CITES and asserts `status === "pass"`.
+The two HC-cardinal §3a/§7 instances are now MACHINE-VISIBLE (bare-arm NOTEs):
+
+```
+gate-status notes (R6): 2 (allowlisted DELTAs citing a non-GREEN gate artefact, owed the wave's RG re-run-on-real)
+NOTE  W-DOCK1: AY-dock-items-lag-capture.json persists status:"fail" …
+NOTE  W-DOCK2: AX-dock-animation-live.json persists status:"fail" …
+```
+
+Both `fail` traces to demo-server/probe brittleness, not a surface regression. A companion robustness fix
+moved the dock gates forward: `readTokenCascade()` in `proof-dock-animation-live.mjs` now splices the
+`tokens.css` `@import` partials (the W-CSS1 carve moved `--spring-dock` into `tokens/scheme-motion.css`, so
+the device-free token-peak parse REDded falsely "the dock-spring token shape moved") — the secondary now
+parses GREEN (`spring-dock found: true, peak: 1.04501, 0 violations`); and both dock gates switched
+`networkidle` → `domcontentloaded` (the live WebGL substrate never lets the network idle). The green-on-real
+dock-animation re-run (probe stability vs the continuously-animated live dock) stays W-DOCK2's RG2 job.
+
+## The active-arm un-lockout (W-CARDINAL-INFRA §4a preserved) + the backfilled headers
+
+The bare active `:ay` commit/CI gate stays GREEN (EXIT 0). The 4 AY allowlist DELTAs (W-DOCK1/W-CON1/W-BLOB2/
+W-DOCK2) gained their `capture-commit` + `surface-paths` + `superseded-by` freshness headers with their HONEST
+original-capture commits. All four surfaces were re-rendered AFTER the captures (the W-DOCK-NAV dock rebuild,
+the W-BLOB-REBUILD blob rebuild, the W-GOD1 carve + W-SB-REVERIFY constellation re-verify) → genuinely STALE —
+but each was RE-CAPTURED by a later own-surface live-verified wave (declared `superseded-by`), so the bare arm
+grades them `stale-superseded` (graced + NOTEd), not a violation:
+
+```
+freshness notes       : 4 (own-surface DELTA stale … but RE-CAPTURED by <wave>; superseded-by; owed AY.W-DELTA0)
+gate-status notes (R6): 2
 violations            : 0
 ay EXIT=0
 ```
 
-Under `--strict-freshness` (the `:ax` backlog tracker + the close-verification arm) those 4 RED — the born-RED
-backfill set the AY.W-DELTA0 / owed-DELTA sweep re-captures with the freshness headers (the W-CARDINAL-INFRA 6-row
-born-RED precedent). The active arm is NOT a freshness lockout; the bite lives in the self-test (always) + the
-strict tracker.
+Under `--strict-freshness` (the `:ax` backlog tracker + the close-verification arm) all 4 RED (the stale
+surface + the R6 cited-gate-fail) — `strict EXIT=1`. The active arm is NOT a freshness lockout; the bite lives
+in the self-test (always, 6 rows) + the strict tracker. The own-wave-id re-capture is AY.W-DELTA0's
+named-successor job. This is the correct born-RED close-state for W-LIVE1 (§5: "Born-RED is the correct signal").
 
-## Backfill grace boundary (recorded — the AY.W-DELTA0 set)
+## Slides-port twin (the named successor)
 
-Those 4 AY allowlist DELTAs are GENUINELY stale (their painting surfaces were re-touched by later impl commits
-after the captures — `src/styles/dock` at `0947c740` post-dates W-DOCK1/W-DOCK2's captures; `goo-blob` at
-`077fe58f` post-dates W-BLOB2's). The freshness clause makes that machine-visible; the re-capture (own-surface +
-the freshness headers) is AY.W-DELTA0 / the owed-DELTA sweep's named-successor job. This is the correct born-RED
-close-state for W-LIVE1 (W-LIVE1 §5: "Born-RED is the correct signal for the freshness clause at this wave's
-close").
+`slides/scripts/proof-live-verified-ledger.mjs` carries the same magic-byte-only `isRealPng` + no gate-status
+clause — the R1 + R6 twins are owed there (HC-mechanisms §2/§5/§7). Per inv-16, the slides port inherits these
+when **L.W4** re-syncs the engine — recorded as the cross-repo successor, not landed in this glass-ui lane.
 
 ## Verdict
 

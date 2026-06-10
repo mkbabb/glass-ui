@@ -27,8 +27,23 @@ closes on a finished surface MUST leave a captured DELTA here, machine-enforced 
   capture-commit that PRE-DATES a surface change, REDs (`DELTA stale: …` / `lacks the freshness headers`).
   A header-LESS own-surface DELTA is GRACED on the bare active arm during the backfill window (a non-fatal
   NOTE) so the active commit/CI gate is not a freshness lockout — the owed re-captures are the AY.W-DELTA0 /
-  owed-DELTA sweep's job; but a DELTA that DECLARES headers is always held to the ancestry check (a
-  declared-then-stale header is never grandfathered).
+  owed-DELTA sweep's job; but a DELTA that DECLARES headers is held to the ancestry check.
+  - **The `superseded-by` grace (AY.W-LIVE1):** a capture that is genuinely STALE (its painting surface was
+    re-rendered after the capture) but whose surface was RE-CAPTURED by a LATER own-surface live-verified
+    wave declares `<!-- superseded-by: <wave> -->` — the FRESH evidence exists under the named successor
+    wave-id. Such a row is graced on the bare arm (a NOTE recording the staleness + the superseding wave),
+    RED under `--strict-freshness` (the close-verification arm sees every stale capture; the own-wave-id
+    re-capture is AY.W-DELTA0's). A stale DELTA with NO `superseded-by` REDs on every arm.
+- **the R1 IHDR fabricated-viewport assert (AY.W-LIVE1).** The gate reads each own-surface PNG's IHDR
+  dimensions: a basename carrying the `-mobile-` viewport token must NOT have a desktop-class width
+  (≥1000px) — a desktop screenshot RENAMED `-mobile-` (the HC-cardinal §1a fabrication class) REDs. The
+  1000px bound sits above the largest real mobile capture (390×844@2× = 780) and below the desktop
+  full-viewport floor (1280), so it false-flags neither.
+- **the R6 GREEN-on-real-surface clause (AY.W-LIVE1).** A DELTA that CITES a gate artefact
+  (`.cache/gates/<id>.json`) is asserting that gate passed on the real surface. The gate resolves each cited
+  artefact and asserts `status === "pass"`; a cited artefact that persists `fail`/is absent contradicts the
+  prose GREEN claim (the HC-cardinal §3a class). Graced on the bare arm (a NOTE — the green-on-real re-run is
+  the wave's own RG job), RED under `--strict-freshness`.
 - the verdict (PASS / a tuned-magnitude correction)
 
 ## What the gate enforces (`proof:live-verified-ledger --tranche=AY`)

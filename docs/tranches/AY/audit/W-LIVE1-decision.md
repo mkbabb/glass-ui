@@ -81,4 +81,49 @@ The freshness clause (the depth-header) is LANDED in `scripts/proof-live-verifie
   active `:ay` commit/CI arm graces header-less DELTAs (the W-CARDINAL-INFRA §4a un-lockout invariant — the
   active gate is not a freshness lockout) and NOTEs the staleness for the AY.W-DELTA0 backfill.
 
+## The R1 + R6 depth-clauses (AY.W-LIVE1-FINISH — landed beside the freshness clause)
+
+The HC-cardinal §5 mechanism residue named two more UNBUILT stopping mechanisms at the same insertion site;
+both are now LANDED in `scripts/proof-live-verified-ledger.mjs`:
+
+- **R1 — the IHDR fabricated-viewport assert.** `isRealPng` checked only the PNG magic + a >1024B floor — a
+  1280×721 desktop screenshot RENAMED `-mobile-` passed untouched (the four W-CON1 fakes; HC-cardinal §1a).
+  `pngDimensions()` reads the IHDR width/height (the big-endian uint32 pair at byte 16/20) and
+  `viewportFidelityVerdict()` REDs a `-mobile-` basename whose IHDR width is desktop-class (≥1000px). The
+  bound sits above the max real mobile (780 = 390@2×) and below the desktop floor (1280) — no false-flag. The
+  four W-CON1 mobile PNGs were already re-captured to 314×421 (W-CON-FIX), so R1 finds 0 fabrications at HEAD;
+  the self-test (a synthetic 1280×721 `-mobile-` row) proves the detector still bites.
+- **R6 — the GREEN-on-real-surface clause.** `gateStatusVerdict()` resolves every `.cache/gates/<id>.json` a
+  DELTA CITES and asserts each `status === "pass"`. A DELTA claiming GREEN in prose while the persisted
+  artefact reads `fail` (the HC-cardinal §3a class — W-DOCK1 cites `AY-dock-items-lag-capture.json`, W-DOCK2
+  cites `AX-dock-animation-live.json`, both `fail` at HEAD on demo-server/probe-stability harness brittleness)
+  is now MACHINE-VISIBLE: a NOTE on the bare arm (graced — the green-on-real re-run is the wave's own RG job,
+  the named successor), RED under `--strict-freshness`. Same grace discipline as the freshness clause.
+
+Both carry a self-test synthetic row (`proof:live-verified-ledger` now flags 6 synthetic rows every run). A
+companion robustness fix on the two dock live-gates removed false-failure modes the R6 NOTEs surfaced: the
+`--spring-dock` token-peak parse in `proof-dock-animation-live.mjs` read the thin `tokens.css` `@import` root
+(the W-CSS1 carve moved the token into `tokens/scheme-motion.css`) — a `readTokenCascade()` resolver now
+splices the imported partials so the device-free secondary parses again; and both dock gates switched
+`networkidle` → `domcontentloaded` (the live aurora/blob WebGL substrate never lets the network idle). The
+green-on-real dock-animation re-run (the probe-stability against the continuously-animated live dock) remains
+W-DOCK2's RG2 job (HC-mechanisms §7 landing site #2).
+
+### The 4 allowlist DELTA freshness headers (backfilled)
+
+The four allowlisted own-surface DELTAs (W-DOCK1 / W-CON1 / W-BLOB2 / W-DOCK2) gained the
+`capture-commit` + `surface-paths` + `superseded-by` headers with their HONEST original-capture commits.
+All four surfaces were re-rendered AFTER the captures (the W-DOCK-NAV dock rebuild, the W-BLOB-REBUILD blob
+rebuild, the W-GOD1 carve + W-SB-REVERIFY constellation re-verify), so the captures are genuinely STALE — but
+each is RE-CAPTURED by a later own-surface live-verified wave (W-DOCK1/W-DOCK2 → W-DOCK-NAV; W-CON1 →
+W-SB-REVERIFY; W-BLOB2 → W-BLOB-REBUILD), declared via `superseded-by`. So the bare arm grades them
+`stale-superseded` (graced + NOTEd), RED under `--strict-freshness`; the own-wave-id re-capture is AY.W-DELTA0's.
+
+### Slides-port twin (the named successor)
+
+The slides `slides/scripts/proof-live-verified-ledger.mjs` carries the SAME magic-byte-only `isRealPng` and
+no gate-status clause — the R1 + R6 twins are owed there too (HC-mechanisms §2/§5/§7 riders). Per inv-16
+(glass-ui writes glass-ui), the slides port inherits these clauses when **L.W4** re-syncs the engine — recorded
+here as the cross-repo successor, not landed in this lane.
+
 Branch B (§3.3 — the `gates-pi` CI job + the `ci-pi` re-tag + the `ci.yml` regen) is NOT executed.
