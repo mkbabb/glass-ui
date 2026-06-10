@@ -64,6 +64,18 @@
            stacking-context guarantee). Covers every dock scale site. */
         scale: 1;
         position: relative;
+        /* AY.W-A11Y-PERF O-1 — engage the W55 bright-backdrop bucket BY DEFAULT on
+           the dock (the surface the user reported unreadable over light content). The
+           SELF-engage rule in dock/morph.css darkens the dock's OWN plate toward ink
+           unconditionally (a dock floats over arbitrary — frequently light — page
+           content). `dark` (the :root default) stays the inherited value a consumer
+           re-reads; the descendant/nested-glass reach uses the @container block. */
+        --glass-backdrop: light;
+        /* AY.W-A11Y-PERF O-4 — paint containment so the maximal-glass nested
+           backdrop-filter sample does not escape the dock box (the standard nested-
+           backdrop-cost mitigation; the Button-in-glass-in-dock stack re-samples the
+           already-blurred buffer at each level without it). */
+        contain: paint;
         display: inline-flex;
         align-items: center;
         /* AW.W1 — the dock does NOT establish a default inline-size container.

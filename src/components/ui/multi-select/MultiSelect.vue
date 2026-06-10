@@ -136,7 +136,7 @@ function removeOption(value: string) {
       v-for="option in selectedOptions"
       :key="option.value"
       variant="secondary"
-      class="text-xs px-2 py-1"
+      class="text-[length:var(--control-text-sm)] px-2 py-1"
     >
       <span v-if="isTextIcon(option.icon)" class="mr-1">{{ option.icon }}</span>
       <component
@@ -149,7 +149,7 @@ function removeOption(value: string) {
       <Button
         variant="ghost"
         size="sm"
-        class="ml-1 h-3 w-3 p-0 hover:bg-destructive hover:text-destructive-foreground"
+        class="relative touch-hit-area ml-1 h-3 w-3 p-0 hover:bg-destructive hover:text-destructive-foreground"
         @click.stop="removeOption(option.value)"
       >
         <X class="h-2 w-2" />

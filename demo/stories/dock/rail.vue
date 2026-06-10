@@ -18,6 +18,8 @@ import {
     GlassDock,
 } from "../../../src/components/custom/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../src/components/ui/tooltip";
+import { Aurora } from "../../../src/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 
 interface Entry {
     id: string;
@@ -52,8 +54,18 @@ const activeVertical = ref<string>("primitives");
                 between groups. The selected item reads as a glass tier over the dock substrate via
                 <code class="rounded bg-muted px-1">aria-pressed</code> — no hand-rolled active class.
             </p>
-            <div class="flex justify-start">
-                <GlassDock variant="rail" aria-label="Example dock rail">
+            <!-- The rail is glass — stage a low-intensity contained Aurora wash
+                 behind the specimen so the rail reads as glass against a backdrop
+                 (W-SB-STAGE §2.2; the empty-cream frame defeated the headline
+                 primitive). ONE Aurora context per page — within the WebGL budget. -->
+            <div class="relative flex justify-start overflow-hidden rounded-[var(--radius-card)] p-6">
+                <Aurora
+                    :config="DEFAULT_AURORA_CONFIG"
+                    :opacity-ceiling="0.4"
+                    class="absolute inset-0"
+                    aria-hidden="true"
+                />
+                <GlassDock variant="rail" class="relative z-10" aria-label="Example dock rail">
                     <!-- Home is the persistent leading anchor (home-left), the same
                          #persistent slot the showcase dock uses. -->
                     <template #persistent>

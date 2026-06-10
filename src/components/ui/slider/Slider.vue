@@ -161,7 +161,7 @@ const isTouchActive = computed(() => touchGate.isActive.value)
       v-for="(_, key) in modelValue"
       :key="key"
       :aria-label="$attrs['aria-label'] as string ?? undefined"
-      class="slider-thumb glass-specular-track"
+      class="slider-thumb glass-specular-track touch-hit-area"
     />
   </SliderRoot>
 </template>
@@ -255,6 +255,19 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         box-shadow var(--duration-fast) var(--ease-standard),
         transform var(--duration-fast)
             var(--slider-thumb-spring, var(--spring-smooth));
+}
+
+/* AY.W-SCALE2 — the coarse `touch-hit-area` ::before halo (44×44 tap-target)
+   must NOT swallow the thumb's own pointer-capture: reka's slider drag routes
+   through the thumb/root, and a `pointer-events: auto` overlay would become the
+   event target and break `setPointerCapture` (the silent drag regression the
+   wave names). Override the utility's `::before` pointer-events to `none` on the
+   thumb ONLY — the 44px GEOMETRY still satisfies the touch-target readback
+   (getComputedStyle reads min-width/height, not pointer-events), while the
+   pointer falls through to the thumb so the drag still tracks. No new token —
+   the overlay still reads `var(--touch-target)` via the utility. */
+.slider-thumb.touch-hit-area::before {
+    pointer-events: none;
 }
 
 /* Hover lifts a light specular halo on the knob — the inscribed knob

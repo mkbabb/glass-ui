@@ -11,11 +11,12 @@ subpaths, retired style paths, and `glass-ui/src` source-relative imports across
 | Artefact | Doc | Current Consumer | Added in Tranche |
 |---|---|---|---|
 | `ExpandableContainer` | [expandable-container.md](expandable-container.md) | speedtest Charts/Map views | D |
-| `createGlassFilter` | [create-glass-filter.md](create-glass-filter.md) | glass-ui source GlassPanel | D |
-| `destroyGlassFilter` | [destroy-glass-filter.md](destroy-glass-filter.md) | glass-ui source GlassPanel | D |
-| `GlassFilterState` | [glass-filter-state.md](glass-filter-state.md) | glass-ui source GlassPanel | D |
-| `GlassTier` | [glass-tier.md](glass-tier.md) | glass-ui source GlassPanel | D |
-| `useGlassRenderer` | [use-glass-renderer.md](use-glass-renderer.md) | glass-ui source GlassPanel | D |
+| `createGlassFilter` | [create-glass-filter.md](create-glass-filter.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
+| `destroyGlassFilter` | [destroy-glass-filter.md](destroy-glass-filter.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
+| `GlassFilterState` | [glass-filter-state.md](glass-filter-state.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
+| `GlassTier` | [glass-tier.md](glass-tier.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
+| `useGlassRenderer` | [use-glass-renderer.md](use-glass-renderer.md) | demo use-glass-renderer story | D · re-pointed AY (GlassPanel retired) |
+| `useTokenColor` | [use-token-color.md](use-token-color.md) | speedtest meter token colors + demo constellation/hero | AY |
 | `useScrollProgress` | [use-scroll-progress.md](use-scroll-progress.md) | demo motion scroll story | D |
 | `SpringSnapshot` | [spring-snapshot.md](spring-snapshot.md) | demo motion springs story | D |
 | `useStaggerReveal` | [use-stagger-reveal.md](use-stagger-reveal.md) | demo motion stagger story | D |

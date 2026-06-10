@@ -127,17 +127,10 @@ void currentMeta;
               swapping from a constrained `min(78vh,720px)` to `h-full`.
             -->
             <div class="relative overflow-clip">
-                <!-- Pastel wash behind the inline frame. `overflow-clip` on the
-                     host keeps the bloom decorative without leaking horizontal
-                     overflow at narrow viewports. -->
-                <div
-                    aria-hidden="true"
-                    class="absolute -inset-6 -z-10 rounded-card opacity-60 blur-2xl"
-                    :style="{
-                        background:
-                            'radial-gradient(ellipse 70% 55% at 20% 20%, color-mix(in srgb, var(--rainbow-pastel-red) 35%, transparent), transparent 60%), radial-gradient(ellipse 65% 50% at 80% 30%, color-mix(in srgb, var(--rainbow-pastel-blue) 30%, transparent), transparent 55%), radial-gradient(ellipse 70% 55% at 50% 90%, color-mix(in srgb, var(--rainbow-pastel-yellow) 25%, transparent), transparent 60%)',
-                    }"
-                />
+                <!-- The page declares its own live Aurora hero backdrop on its
+                     manifest row (W-SB-STAGE) — the page's OWN substrate is the
+                     bleed, so the prior hand-rolled pastel-radial wash behind the
+                     studio frame retired (FD-substrate-pages §1). -->
                 <ExpandableContainer button-position="left">
                     <template #default="{ fullscreen }">
                         <Configurator

@@ -15,6 +15,7 @@ import { Button } from "../../../src/components/ui/button";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
+import { GlassDialogNative } from "../../../src/components/custom/dialog-native";
 
 const confirmOpen = ref(false);
 const confirming = ref(false);
@@ -27,6 +28,14 @@ function onConfirm() {
         confirmed.value += 1;
     }, 700);
 }
+
+// The native top-layer opt-in: a real <dialog> on the .glass-top-layer entry
+// grammar, opened declaratively via commandfor where the browser supports it,
+// else the JS showModal() fallback.
+const settingsDlg = ref<InstanceType<typeof GlassDialogNative> | null>(null);
+const supportsCommand =
+    typeof HTMLButtonElement !== "undefined" &&
+    "command" in HTMLButtonElement.prototype;
 </script>
 
 <template>
@@ -119,6 +128,50 @@ function onConfirm() {
                         @confirm="onConfirm"
                     />
                 </div>
+            </div>
+
+            <div class="grid gap-4">
+                <h2 class="font-display text-xl">Native top-layer</h2>
+                <p class="text-sm text-muted-foreground">
+                    A real native dialog element on the top layer. Its entry and
+                    exit are pure CSS — the glass-top-layer starting-style grammar
+                    — and a backdrop click or Esc dismisses it. The trigger opens
+                    it declaratively with commandfor where the browser supports
+                    invoker commands, and falls back to a scripted open otherwise.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button
+                        v-if="supportsCommand"
+                        commandfor="settings-dlg"
+                        command="show-modal"
+                        class="glass-btn"
+                    >
+                        Open settings
+                    </button>
+                    <Button v-else @click="settingsDlg?.showModal()">
+                        Open settings
+                    </Button>
+                </div>
+
+                <GlassDialogNative
+                    id="settings-dlg"
+                    ref="settingsDlg"
+                    labelledby="settings-dlg-title"
+                >
+                    <template #default="{ close }">
+                        <div class="grid gap-4">
+                            <h3 id="settings-dlg-title" class="font-display text-lg">
+                                Settings
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Click the backdrop or press Esc to dismiss.
+                            </p>
+                            <div class="flex justify-end">
+                                <Button variant="outline" @click="close()">Close</Button>
+                            </div>
+                        </div>
+                    </template>
+                </GlassDialogNative>
             </div>
         </div>
     </StoryPage>

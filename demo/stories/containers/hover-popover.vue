@@ -88,5 +88,24 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
                 the longer wait avoids accidental fire on transit.
             </p>
         </section>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">native interestfor opt-in</p>
+            <div class="flex flex-wrap gap-6">
+                <HoverPopover :native="true" content="Native interestfor tooltip">
+                    <Button variant="outline">Native hover</Button>
+                </HoverPopover>
+                <HoverPopover content="reka-ui HoverCard (default)">
+                    <Button variant="outline">Default hover</Button>
+                </HoverPopover>
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                <code class="rounded bg-muted px-1">:native</code> renders the
+                trigger with the native interestfor attribute and a hint popover
+                where the browser supports interest invokers; otherwise it falls
+                straight through to the reka-ui HoverCard default — no behaviour
+                change.
+            </p>
+        </section>
     </StoryPage>
 </template>

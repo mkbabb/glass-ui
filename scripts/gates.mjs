@@ -719,6 +719,24 @@ export const GATES = [
         note: "AX.W51 — the comfortable library-wide --ui-scale axis (the D18 umbrella; W45/W50 specialize): --ui-scale minted + threaded so components size comfortably; --dock-scale reconciled onto the one --ui-scale axis. SEPARATE from --glass-level (opacity+blur) + --glass-tint-* (legibility). Bite: a component sizing off a hardcoded literal instead of --ui-scale → RED.",
     },
     {
+        id: "proof:touch-target",
+        cmd: "proof:touch-target",
+        tags: ["local", "ci"],
+        note: "AY.W-SCALE2 — the REAL touch-target runtime gate (the phantom made real): every sub-44 form atom (Switch/Checkbox/Radio/Slider-thumb/TagsInput-delete/MultiSelect-X) paints a composited hit-rect >=44x44 under pointer:coarse via the ONE touch-hit-area utility; fine-pointer non-regression. Fail-CLOSED with device; befitting-SKIP zero-device. Bite: revert a compose -> 16x16 REDs",
+    },
+    {
+        id: "proof:webkit-backdrop",
+        cmd: "proof:webkit-backdrop",
+        tags: ["local", "ci", "release"],
+        note: "AY.W-A11Y-PERF O-2 — the build-DIFF gate over the SHIPPED dist (AFTER npm run build): every unprefixed backdrop-filter is webkit-paired same-value (count parity 16/16) + glass.css carries both @supports guards (no-blur fallback + the Safari-17 webkit-only trap). Bite: remove the vite.style-assets injection -> parity breaks",
+    },
+    {
+        id: "proof:nested-backdrop-budget",
+        cmd: "proof:nested-backdrop-budget",
+        tags: ["local", "ci"],
+        note: "AY.W-A11Y-PERF G4 — the first per-frame ceiling gate: the glass-Button-in-Card-in-Dialog stack asserts nested backdrop-filter depth <=4 + contain:paint present + median frame <=16.7ms (measured p50 8.3ms). Bite: revert a contain:paint -> RED",
+    },
+    {
         id: "proof:dropdown-type-scale",
         cmd: "proof:dropdown-type-scale",
         tags: ["local", "ci"],

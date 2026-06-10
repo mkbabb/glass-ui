@@ -82,17 +82,19 @@ export function detectBand() {
     facts.constResponse = constResponse;
     facts.constDamping = constDamping;
 
-    // The `dock` PRESETS row in regen-spring-tokens.mjs.
-    const regenSrc = readFileSync(
-        resolve(ROOT_DIR, "scripts/regen-spring-tokens.mjs"),
+    // AY.W-MOTION2 — the `dock` SPRING_PRESETS row now lives in the SINGLE-SOURCE
+    // module `src/composables/motion/springPresets.ts` (both the regen script AND
+    // the MOTION_CURVES JS twins import it). The gate reads it there.
+    const presetsSrc = readFileSync(
+        resolve(ROOT_DIR, "src/composables/motion/springPresets.ts"),
         "utf8",
     );
-    const presetMatch = regenSrc.match(
+    const presetMatch = presetsSrc.match(
         /name:\s*"dock",\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
     );
     if (!presetMatch) {
         violations.push(
-            "regen-spring-tokens.mjs: the `dock` PRESETS row (response, dampingFraction) was not found",
+            "springPresets.ts: the `dock` SPRING_PRESETS row (response, dampingFraction) was not found",
         );
         return { facts, violations };
     }

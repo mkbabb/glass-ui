@@ -7,9 +7,9 @@
 ## Current consumer proof
 
 **Project**: `glass-ui`
-**Source path**: `src/components/custom/glass-panel/GlassPanel.vue:8`, `src/components/custom/glass-panel/GlassPanel.vue:59`
-**Use case**: `GlassPanel` stores the current SVG filter allocation as `GlassFilterState | null` so it can safely destroy and recreate renderer state.
-**Proof**: `rg -n '\bGlassFilterState\b' src/components/custom/glass-panel/GlassPanel.vue`
+**Source path**: `src/composables/glass/useGlassRenderer.ts:127`, re-exported via `src/composables/glass/index.ts`
+**Use case**: `useGlassRenderer` stores the current SVG filter allocation as `GlassFilterState | null` so it can safely destroy and recreate renderer state. (Re-pointed AY — the GlassPanel component retired; `useGlassRenderer` is the surviving composer.)
+**Proof**: `rg -n '\bGlassFilterState\b' src/composables/glass/useGlassRenderer.ts`
 
 ## Keep rationale
 

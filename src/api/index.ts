@@ -91,12 +91,10 @@ export type {
 
 // ── Surface enums ──────────────────────────────────────────────────────────
 // Semantic enums that recur across consumer code paths (typed prop values,
-// switch dispatch, preset descriptors). `GlassPanelVariant` is the 5-rung
-// glass-ladder surface vocabulary (wash/quiet/resting/floating/overlay)
-// parallel to `CardTier` — distinct because GlassPanel paints the glass
-// substrate directly while Card composes the same ladder via the `tier` prop.
+// switch dispatch, preset descriptors). `CardTier` is the 5-rung glass-ladder
+// surface vocabulary (wash/quiet/resting/floating/overlay) a consumer types its
+// `tier` prop against.
 export type { CardTier, CardSurface } from "../components/ui/card";
-export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
@@ -147,15 +145,11 @@ export type {
     UseFuzzySearchOptions,
 } from "../components/custom/search";
 
-// ── Props triad ────────────────────────────────────────────────────────────
-// `GlassPanelProps` — the props shape sibling of the already-promoted
-// `GlassPanelVariant`; consumers wrapping `<GlassPanel>` (chrome composers,
-// preset panels) type their forwarded prop bag against this. `ToastType`
-// is the canonical toast row shape (aliased from `Toast` on the toast
-// barrel — `Toast` itself is the SFC default-export, so the row shape
+// ── Toast row shape ──────────────────────────────────────────────────────────
+// `ToastType` is the canonical toast row shape (aliased from `Toast` on the
+// toast barrel — `Toast` itself is the SFC default-export, so the row shape
 // flows as `ToastType` per shadcn-vue parity); paired with the `ToastVariant`
 // enum above.
-export type { GlassPanelProps } from "../components/custom/glass-panel";
 export type { ToastType } from "../components/ui/toast";
 
 // AW.W16 — DeckProgress, the deck-position rail wrapper (root barrel, no subpath).
@@ -197,14 +191,27 @@ export type { ViewTransitionResult } from "../composables/motion/useViewTransiti
 // ships ONLY on `@mkbabb/glass-ui/motion`, not the root barrel.
 export type { Countup, UseCountupOptions } from "../composables/motion/useCountup";
 
-// ── HeaderRibbon ───────────────────────────────────────────────────────────
-// `HeaderRibbonProps` — props shape consumers forward when wrapping
-// `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`
-// is the alignment enum (`'left' | 'right'`).
+// ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
+// `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
+// (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,
+// loadAnimationEngine itself) — re-exported verbatim; the DYNAMIC engine surface
+// stays behind `loadAnimationEngine()`. The complete curve library + the CSS↔JS
+// `MOTION_CURVES` table ship on the value.js-bearing flat sibling `/motion-curves`
+// (the §2.2 carve — value.js is a ~124 KB peer kept OFF /motion's eager graph).
+// The shared (response, ζ) `SPRING_PRESETS` table is value.js-free pure data on both.
+//
+// `Easing`/`TimingFunction` — the keyframes.js callable-easing shapes a consumer
+// passes to a `NumericAnimation`/`SpringProgress`. `MotionCurve` — one row of the
+// CSS↔JS table (`{ token, kind, js, canonical?, note }`). `SpringPresetRow`/
+// `SpringPresetName` — the shared spring-preset table types.
+export type { Easing, TimingFunction } from "../composables/motion/suite";
 export type {
-    HeaderRibbonPosition,
-    HeaderRibbonProps,
-} from "../components/custom/header-ribbon";
+    MotionCurve,
+    MotionCurveKind,
+    CurveFn,
+    SpringPresetRow,
+    SpringPresetName,
+} from "../composables/motion/curves";
 
 // ── Constellation ───────────────────────────────────────────────────────────
 // `ConstellationProps` — the props a consumer forwards when wrapping
@@ -234,7 +241,7 @@ export type {
 
 // ── Metric primitives ───────────────────────────────────────────────────────
 // `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
-// | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps` is the Props
+// | "bare"`) parallel to `CardTier`; `MetricCellProps` is the Props
 // shape consumers forward when wrapping `<MetricCell>`. `MetricStackProps` +
 // `MetricRowProps` cover the layout shell + row pair. Both metric families ship
 // via their `/metric-cell` + `/metric-stack` subpaths (speedtest consumes them).

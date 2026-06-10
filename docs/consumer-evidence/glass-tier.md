@@ -7,9 +7,9 @@
 ## Current consumer proof
 
 **Project**: `glass-ui`
-**Source path**: `src/components/custom/glass-panel/GlassPanel.vue:7`, `demo/stories/foundations/paper-glass.vue:5`
-**Use case**: `GlassPanel` and the paper/glass story use `GlassTier` to distinguish SVG-filter, CSS, and fallback renderer paths.
-**Proof**: `rg -n '\bGlassTier\b' src/components/custom/glass-panel/GlassPanel.vue demo/stories/foundations/paper-glass.vue`
+**Source path**: `src/composables/glass/useGlassRenderer.ts:3` (declared + returned as the `tier` ref), consumed by `demo/stories/composables/use-glass-renderer.vue`
+**Use case**: `useGlassRenderer` returns the active `GlassTier` and the use-glass-renderer story reads it to distinguish SVG-filter, CSS, and fallback renderer paths. (Re-pointed AY — the GlassPanel component retired; `useGlassRenderer` is the surviving composer.)
+**Proof**: `rg -n '\bGlassTier\b' src/composables/glass/useGlassRenderer.ts; rg -n '\buseGlassRenderer\b' demo/stories/composables/use-glass-renderer.vue`
 
 ## Keep rationale
 

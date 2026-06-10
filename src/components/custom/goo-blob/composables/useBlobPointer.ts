@@ -17,7 +17,7 @@ export interface TrailSample {
  * FRAME-RATE-INDEPENDENT critically-damped spring fed the renderer's per-frame
  * `dtMs` (NOT a fixed-α lerp — the prior `SMOOTH_FACTOR = 0.12` was framerate
  * dependent). The spring is `@mkbabb/keyframes.js` `SpringProgress` driven through
- * its `tick(dt)` seam by the SUBSTRATE's single rAF — it does NOT call
+ * its `tickDt(dtMs)` seam by the SUBSTRATE's single rAF — it does NOT call
  * `SpringProgress.play()` (that would start a parallel rAF, the
  * single-substrate-loop violation `proof:blob-interaction-prm` forbids).
  *
@@ -114,7 +114,8 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
      * relaxes home).
      */
     function tick(dtMs = 16) {
-        const dt = Math.min(dtMs, 50) / 1000; // seconds, first-dt clamped
+        const dtClampedMs = Math.min(dtMs, 50); // first-dt clamped, milliseconds
+        const dt = dtClampedMs / 1000; // seconds — the symplectic-Euler pulse integrator math
 
         // Idle timer for the mood arc — reset on activity, accumulate otherwise.
         if (active.value) idleMs = 0;
@@ -125,8 +126,11 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         const ty = active.value ? rawY : 0;
         springX.target = tx;
         springY.target = ty;
-        springX.tick(dt);
-        springY.tick(dt);
+        // keyframes.js 4.x: `tickDt(dt)` advances by MILLISECONDS (the canonical
+        // Tickable step the shared RAFPlayback loop drives) — the 2.x `tick(seconds)`
+        // seam was renamed + re-based to ms. Pass the ms-clamped delta directly.
+        springX.tickDt(dtClampedMs);
+        springY.tickDt(dtClampedMs);
 
         pointer.value = { x: springX.value, y: springY.value };
         velocity.value = { x: springX.velocity, y: springY.velocity };

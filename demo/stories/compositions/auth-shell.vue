@@ -7,9 +7,17 @@ import { Checkbox } from "../../../src/components/ui/checkbox";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { Separator } from "../../../src/components/ui/separator";
+import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
+import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
+
+// The brand panel paints the purple→tomato aurora palette — the section-ramp hue
+// pair (purple section-1, tomato section-6) FD §9.2.10 designed for exactly this
+// panel and that shipped unused until now (the un-orphan). A contained Aurora
+// behind the translucent panel, distinct from the page's fourier chassis hero.
+const brandAurora = heroAuroraConfig("purple-tomato");
 
 // The split-auth shell declares a reconstructing Fourier field on its manifest
 // row; the page chassis renders it behind a glassy hero card. The brand panel
@@ -38,8 +46,15 @@ const trustBadges = [
             <div
                 class="relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
-                <!-- The brand panel reads translucent so the Fourier field the
-                     chassis renders behind this card shows through. -->
+                <!-- The brand panel paints the purple→tomato aurora (the palette
+                     FD designed for this panel) behind its translucent content,
+                     so the brand side reads as glass-over-painterly. -->
+                <Aurora
+                    :config="brandAurora"
+                    :opacity-ceiling="0.55"
+                    class="absolute inset-0 -z-10"
+                    aria-hidden="true"
+                />
                 <div class="relative z-10 flex items-center gap-3">
                     <span
                         class="fourier-f font-display italic text-4xl leading-none"

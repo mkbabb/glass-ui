@@ -18,6 +18,12 @@
         var(--foreground) 12%,
         transparent
     );
+
+    /* The exposed-substrate margin (W-SB-STAGE §2.1b). Over a LIVE substrate the
+       glass card no longer fills the container EXACTLY — an inset gutter lets the
+       field RIM the card so "a glass card floating over a substrate" literally
+       floats. Off a live substrate the gutter is 0 (the default-path canary). */
+    --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .dark {
@@ -60,6 +66,22 @@
 /* The glass card hosting the body — let the StorySection stack flow inside. */
 .story-hero-card > * {
     width: 100%;
+}
+
+/* The exposed-substrate margin over a LIVE backdrop. The card no longer fills
+   `.story-hero` exactly — the inset gutter shows the substrate AROUND the plate.
+   A page-variant card takes a symmetric small gutter; a hero card takes an
+   asymmetric offset (a touch more breathing room at the top, the composition
+   gesture). The `> * { width: 100% }` rule above governs the card's CHILDREN,
+   not the card's own fill, so the inset is purely the card box's margin. */
+.story-hero-card--live {
+    margin: var(--story-hero-inset);
+}
+
+.story-hero[data-variant="hero"] .story-hero-card--live {
+    /* Asymmetric — the substrate bleeds a little wider at the top + leading edge. */
+    margin: calc(var(--story-hero-inset) * 1.5) var(--story-hero-inset)
+        var(--story-hero-inset) calc(var(--story-hero-inset) * 1.25);
 }
 
 /* The blueprint ruled grid — two hairline linear-gradients at the cell size,

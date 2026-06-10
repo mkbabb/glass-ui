@@ -79,6 +79,28 @@ export default defineConfig({
                 },
             },
         },
+        {
+            // AY.W-SCALE2 — the coarse/touch project: hasTouch + isMobile so
+            // `@media (pointer: coarse)` MATCHES (the touch-hit-area ::before
+            // overlay emits its 44px geometry here, NOT at fine pointer). An
+            // iPhone-class 390×844 viewport, the SAME ANGLE launch args.
+            name: "coarse-touch",
+            use: {
+                ...devices["Desktop Chrome"],
+                channel: undefined,
+                hasTouch: true,
+                isMobile: true,
+                viewport: { width: 390, height: 844 },
+                launchOptions: {
+                    args: [
+                        "--headless=new",
+                        ...ANGLE_ARGS,
+                        "--enable-unsafe-webgpu",
+                        "--ignore-gpu-blocklist",
+                    ],
+                },
+            },
+        },
     ],
     // Drive the demo vite dev server. `reuseExistingServer` lets the orchestrator
     // pre-start `npm run dev` (the recon's canonical spawn) and have the lane attach.

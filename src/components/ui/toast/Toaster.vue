@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ToastProvider, ToastViewport } from 'reka-ui'
+import { ToastPortal, ToastProvider, ToastViewport } from 'reka-ui'
 import Toast from './Toast.vue'
 import ToastClose from './ToastClose.vue'
 import ToastTitle from './ToastTitle.vue'
@@ -68,6 +68,19 @@ const viewportClass = computed(() => {
       </div>
       <ToastClose />
     </Toast>
-    <ToastViewport :class="viewportClass" />
+    <!--
+      AY.W-ANIM1 (W-ANIM-FIX) — the glass-first × position:fixed trap guard.
+      A `fixed` ToastViewport mounted inside a glass surface re-anchors to that
+      surface's box: any ancestor with `backdrop-filter` (or `filter`/`transform`/
+      `will-change`) establishes a CONTAINING BLOCK for fixed descendants, so the
+      viewport's `bottom-0`/`right-0` resolve against the glass card, not the
+      viewport — the toasts paint glued to the card. With W54 making
+      backdrop-filter ubiquitous this bites ANY fixed overlay inside glass.
+      ToastPortal teleports the viewport to <body>, escaping every glass
+      containing block so `fixed` anchors to the viewport as intended.
+    -->
+    <ToastPortal>
+      <ToastViewport :class="viewportClass" />
+    </ToastPortal>
   </ToastProvider>
 </template>

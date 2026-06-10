@@ -72,9 +72,9 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 <Button variant="gold-audacious">Submit</Button>
                 <Button variant="gold-audacious" disabled>Disabled</Button>
             </div>
-            <p class="fira-code text-mono-caption text-muted-foreground">
-                rest text: var(--foreground) (warm ink) · hover/active: white over
-                the saturated gold backplate.
+            <p class="text-mono-caption text-muted-foreground">
+                At rest the label is warm ink, legible over the soft gold tint; on
+                hover and press it flips to white as the gold backplate saturates.
             </p>
         </section>
 

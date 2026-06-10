@@ -96,12 +96,24 @@
        references `"Fira Code"` first then the fallback chain. */
 
     /* Scale tokens */
-    --type-admin-label: 0.625rem;  /* 10px */
-    --type-micro:       0.6875rem; /* 11px */
-    --type-caption:     0.75rem;   /* 12px */
-    --type-small:       0.875rem;  /* 14px */
-    --type-body:        1rem;      /* 16px */
-    --type-prose:       1.125rem;  /* 18px */
+    --type-admin-label: 0.625rem;  /* 10px — fixed sub-control micro (NOT fluid) */
+    --type-micro:       0.6875rem; /* 11px — fixed sub-control micro (NOT fluid) */
+    /* BODY/CONTROL register (AY.W-SCALE1 — the desktop-fluid half of corpus #4):
+       a GENTLE clamp() viewport base so the control/body register grows ~1-2 steps
+       on a wide display (the 27" "font too small" the user flagged) WITHOUT a
+       media-query staircase. The <min> of every clamp is the rung's prior fixed rem
+       — byte-identical at narrow/mobile (no shipped-narrow reflow; the coarse 1.5×
+       --ui-scale still lifts the comfort axis ON TOP). The vw slope is the body
+       register's GENTLE slope (not the φ-display ladder's aggressive vw) — the
+       "non-contrived" bar. The vw fluid term lives HERE (the typographic base),
+       exactly ONCE; the --ui-scale comfort scalar multiplies it exactly ONCE LATER
+       (tokens.css --control-text/-sm) — NO double-vw under coarse. The φ-identity
+       rungs below (--type-subheading/-heading/-title + the --type-display-* ladder)
+       are EXCLUDED — a hero/title is a typographic identity, not a control. */
+    --type-caption:     clamp(0.75rem,  0.71rem + 0.21vw, 1rem);     /* 12px floor — --control-text-sm source */
+    --type-small:       clamp(0.875rem, 0.8rem  + 0.25vw, 1.25rem);  /* 14px floor — --control-text source (the workhorse) */
+    --type-body:        clamp(1rem,     0.92rem + 0.27vw, 1.375rem); /* 16px floor — global body cascade */
+    --type-prose:       clamp(1.125rem, 1.04rem + 0.28vw, 1.5rem);   /* 18px floor — long-form prose */
     --type-subheading:  1.272rem;  /* 20.4px — √φ */
     --type-heading:     1.618rem;  /* 25.9px — φ */
     --type-title:       2.058rem;  /* 32.9px — φ^(3/2) */

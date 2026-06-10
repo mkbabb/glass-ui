@@ -62,13 +62,15 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  *   "aurora"        — a live painterly drift on the brand hues.
  *   "constellation" — a drifting proximity-graph lattice.
  *   "fourier"       — a reconstructing elliptic Fourier curve.
+ *   "blob"          — a soft live GooBlob wash (the mood/empty-state seam).
  */
 export type StoryBackgroundKind =
     | "paper"
     | "grid"
     | "aurora"
     | "constellation"
-    | "fourier";
+    | "fourier"
+    | "blob";
 
 export type StoryBackground =
     | StoryBackgroundKind

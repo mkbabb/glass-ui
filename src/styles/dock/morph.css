@@ -61,9 +61,22 @@
        authority, and at rest `--dock-expand-t` resolves to the class endpoint (0
        collapsed / 1 expanded) so the resting look is exact. */
     .glass-dock.variant-dock:not(.vertical) {
+        /* AY.W-A11Y-PERF O-1 — the resting-endpoint dock bg composes the W55 oklab
+           adaptive tint so the bright bucket (engaged when a consumer/page marks
+           `--glass-backdrop: light` on the dock's ancestor — the @container block
+           below + the page-redesign W60 wiring) reaches the LIVE `.variant-dock`
+           surface (this 0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the
+           tint must be applied HERE too). The srgb transition mix is preserved between
+           the two color endpoints; the adaptive darken rides the resting endpoint
+           (`--glass-bg-dock` wrapped in the oklab tint) — at the `0%` rest default the
+           inner oklab mix is a no-op so this is byte-identical to today. */
         background: color-mix(
             in srgb,
-            var(--glass-bg-dock, var(--glass-bg-resting))
+            color-mix(
+                in oklab,
+                var(--glass-bg-dock, var(--glass-bg-resting)),
+                var(--glass-tint-source) var(--glass-tint-strength)
+            )
                 calc(var(--dock-expand-t, 1) * 100%),
             var(--glass-bg-wash)
         );

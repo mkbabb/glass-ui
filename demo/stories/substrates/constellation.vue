@@ -423,11 +423,10 @@ onMounted(() => {
 
         <StorySection
             label="resize re-fit + auto-drift wander"
-            blurb="The lattice RE-FITS proportionally on a real resize (no drift-out lag — the field fills the new canvas within one frame), and the focal node AUTO-DRIFTS: a periodic auto-pick re-points it to a random node on a jittered cadence — the wander source on the SAME warp spring (no second mechanic). Both are PRM-gated: under reduced-motion the field freezes and the cadence never advances. The π lane resizes this surface programmatically (via __constellationRefit.resizeTo) and reads the node bbox + focalIndex per frame."
+            blurb="The lattice re-fits proportionally on a real resize — the field fills the new canvas within a frame, with no drift-out lag — and the focal node wanders: a periodic auto-pick re-points it to a random node on a jittered cadence, riding the same spring as the click warp. Both are reduced-motion-gated: under reduce the field freezes and the cadence never advances."
         >
             <ShowcaseFrame pad="none">
-                <!-- The π spec resizes refitHost via __constellationRefit.resizeTo;
-                     the wander cadence runs short here so the drift is observable. -->
+                <!-- The wander cadence runs short here so the drift is observable. -->
                 <div
                     ref="refitHostRef"
                     class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
@@ -448,7 +447,7 @@ onMounted(() => {
 
         <StorySection
             label="pointer-held gravity-well"
-            blurb="HOLD the pointer over the lattice — the nodes within reach are PULLED toward it (an inverse-square force on the SAME engine, no second rAF); release and the field cools back to its drift speed. The well is the ONE engine egg (gravityWell prop): it reuses the pointer the engine already tracks (no new listener class), it has real safety floors (a no-singularity max(d,soften) floor + a no-slingshot maxSpeed clamp), and it has a real second consumer (any background decoration wants pointer-pulls-the-field-in). PRM-gated by the WARP precedent: under reduced-motion the held-timer never arms and the well STATE resets on the PRM-true edge. The π egg-live spec drives it via the exposed holdWellAt/releaseWell and reads back mean |v| per frame (perturb-then-cool)."
+            blurb="Hold the pointer over the lattice and the nodes within reach are pulled toward it — an inverse-square force on the same engine; release and the field cools back to its drift speed. The well reuses the pointer the engine already tracks, with a no-singularity softening floor and a no-slingshot speed clamp. Reduced-motion-gated: under reduce the held timer never arms."
         >
             <ShowcaseFrame pad="none">
                 <div
@@ -474,8 +473,8 @@ onMounted(() => {
         </StorySection>
 
         <StorySection
-            label="double-tap supernova (DEMO-ONLY — not an engine prop)"
-            blurb="Double-tap the field — a radial OUTWARD impulse scatters the nodes, then the existing drift renormalises |v| back to speed. This is implemented ENTIRELY in the demo, calling the public `field` expose — NO library code, NO engine prop. It proves the public field seam carries arbitrary consumer content (the W-DOC1 README example). The pointer-held well SHIPS as an engine prop (a real second consumer); this double-tap stays a demo flourish (one slide is not a ≥2-consumer engine prop); the keyboard-egg boids idea is CUT (no second consumer, the least field-coherent)."
+            label="double-tap supernova"
+            blurb="Double-tap the field for a radial outward impulse that scatters the nodes, then the drift settles their speed back to rest. It is built entirely from the public field seam — a consumer's flourish over the same engine, no library code."
         >
             <ShowcaseFrame pad="none">
                 <div

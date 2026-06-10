@@ -9,7 +9,7 @@ and a noise field, over glass-ui's warm-cream-glass identity.
 
 Aurora is *not a mesh gradient*. The Stripe / OpenAI / Linear "ethereal glow" backdrops
 are layered noise + a UV warp over a few color points; aurora's multi-nuclei softmax
-field + Quilez double domain-warp + ACES tonemap + OKLCh-authored palette already exceeds
+field + Quilez double domain-warp + Khronos PBR-Neutral tonemap + OKLCh-authored palette already exceeds
 that substrate on richness, and the painterly mediums take it somewhere no mesh-gradient
 tool ships — visible, hand-painted brushwork. It is the WebGL sibling of the
 [`GooBlob`](../goo-blob/): both compose the shared `useWebGLCanvas` substrate and resolve
@@ -21,19 +21,11 @@ import { Aurora } from "@mkbabb/glass-ui/aurora";
 ```
 
 > **Research-backed.** This README documents aurora as it ships, with the SOTA technique
-> behind each axis cited with access dates (2026-06-06). `DESIGN.md` is the authoritative
-> architecture spec (the invariants, the cursor model, the load-bearing implementation
-> notes); this README is the consumer-facing guide. The aurora perfection arc landed across
-> five waves, each gated: **W4 — painterly** (the structure-tensor / ETF keystone + real
-> height-field impasto + the van-Gogh atomic-stroke medium + genuine oil-pastel deposition;
-> gated by `proof:aurora-tensor-field` · `proof:aurora-impasto-relight` ·
-> `proof:aurora-vangogh-preset` · `proof:aurora-oilpastel-medium`), **W5 — color**
-> (in-shader OKLCh interpolation + hue-path + the `deriveAurora` palette front door; gated by
-> `proof:aurora-oklch-interp` · `proof:aurora-derive-gamut`), **W6 — options** (the ≤7-atom
-> `resolveAtoms` door — AX.W10 converged it to the ONE consumer surface + retired the parallel
-> seed+mood door; gated by `proof:aurora-atoms-roundtrip`), and
-> **W8 — interactive** (cursor-as-light + velocity-reactive flow; gated by
-> `proof:aurora-interaction-prm`).
+> behind each axis cited with access dates (2026-06-06). The lane's authoritative research
+> artefact — the SOTA survey behind the painterly mediums, the structure-tensor / ETF
+> keystone, the OKLCh palette path, and the cursor-as-light model — is [`RESEARCH.md`](./RESEARCH.md).
+> `DESIGN.md` is the authoritative architecture spec (the invariants, the cursor model, the
+> load-bearing implementation notes); this README is the consumer-facing guide.
 
 ---
 
@@ -53,9 +45,10 @@ fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
    or `oil` (with the `oil` / `knife` / `chunky` stroke sub-modes), plus `crayon` as a peer
    medium (`mediums.glsl.ts`). Medium is orthogonal to composition — the same nuclei/warp
    field underlies every medium.
-3. **Post** — saturation trim, ACES tonemap, paper grain, the mandatory sRGB OETF, and a
-   1-LSB Interleaved-Gradient-Noise dither to break 8-bit banding
-   (`aurora.frag.ts:372-388`).
+3. **Post** — saturation trim, the Khronos PBR-Neutral tonemap (the shipped tonemapper;
+   the GLSL function keeps the slot-name `aces()` so the single `main()` call-site is
+   untouched), paper grain, the mandatory sRGB OETF, and a 1-LSB Interleaved-Gradient-Noise
+   dither to break 8-bit banding (`aurora.frag.ts:372-388`).
 
 The palette is authored in **OKLCh** (perceptually-uniform color) and baked CPU-side to
 linear sRGB; the shader tonemaps and composites in linear, then closes the seam with the
@@ -124,12 +117,15 @@ the composable that watches config deeply and pushes uniform updates.
 The `medium` axis spans the two stylistic poles — atmospheric and painterly — continuously.
 Medium is orthogonal to composition: the same nuclei/warp field underlies every medium.
 
-| `medium`     | Look | Notes |
-|--------------|------|-------|
-| `smooth`     | Blurred colored-gas / wet-on-wet flood. No visible brush. | The OpenAI/DALL-E hero pole; the wispy-sky default. |
-| `pastel`     | Anisotropic fBm stroke + fine paper tooth. | Soft directional chalk grain. |
-| `watercolor` | Wet-edge cauliflowers (luma-gradient mask) + granulation + wash banding. | Soak-stain / bokashi. |
-| `oil`        | Visible curved brushstrokes, impasto rim-light, broken color. | Routed by `strokeMode`. |
+| `medium`      | Look | Notes |
+|---------------|------|-------|
+| `smooth`      | Blurred colored-gas / wet-on-wet flood. No visible brush. | The OpenAI/DALL-E hero pole; the wispy-sky default. |
+| `pastel`      | Anisotropic fBm stroke + fine paper tooth. | Soft directional chalk grain. |
+| `watercolor`  | Wet-edge cauliflowers (luma-gradient mask) + granulation + wash banding. | Soak-stain / bokashi. |
+| `oil`         | Visible curved brushstrokes, impasto rim-light, broken color. | Routed by `strokeMode`. |
+| `vangogh`     | Atomic comma/crescent dabs along the structure-tensor field — the starry-night hero. | First-class `medium:"vangogh"` (`uMedium`); the painterly hero register. |
+| `oil-pastel`  | Stroke deposition with paper-through-scumble. | First-class `medium:"oil-pastel"`; the reworked oil-pastel bake. |
+| `crayon`      | DRY wax-pigment tooth multiply. | First-class `medium:"crayon"` (`uMedium==4`); the legacy `oil`+`strokeMode:"crayon"` peer-route is removed (clean break). |
 
 Under `medium: "oil"`, `strokeMode` selects the brush behavior:
 
@@ -139,7 +135,7 @@ Under `medium: "oil"`, `strokeMode` selects the brush behavior:
 | `knife`  | Palette-knife impasto: razor edges, flat, heavy catch-light. |
 | `chunky` | Thick gestural bristle brush. |
 
-`strokeMode` is oil sub-modes ONLY. AX.W13 made `crayon` a first-class `medium:"crayon"`
+`strokeMode` is oil sub-modes ONLY. `crayon` is a first-class `medium:"crayon"`
 (the DRY wax-pigment tooth multiply, `uMedium==4`) — the legacy `oil` + `strokeMode:"crayon"`
 peer-route is REMOVED (clean break, no alias). A crayon surface selects `medium:"crayon"`;
 van-Gogh selects `medium:"vangogh"` (atomic comma/crescent dabs) and oil-pastel selects
@@ -170,7 +166,7 @@ gated by `proof:aurora-tensor-field` · `proof:aurora-impasto-relight` ·
   *(Kyprianidis & Kang CGF 2009; Kang/Lee/Chui ETF NPAR 2007; Heckel 2024.)*
 - **Real height-field impasto.** No faked fixed-RGB edge rim — an accumulated per-pixel
   paint *height* across the four stroke layers → a `dFdx`/`dFdy` surface normal → diffuse +
-  Blinn specular from a movable `uLightDir`, all in linear light before the ACES tonemap.
+  Blinn specular from a movable `uLightDir`, all in linear light before the PBR-Neutral tonemap.
   Thick impasto catches a raking light; the light direction doubles as the interactive
   cursor-as-light axis (W8). *(IMPaSTo, Baxter/Wendt/Lin NPAR 2004.)*
 - **The van-Gogh atomic-stroke medium.** A first-class `medium:"vangogh"`: ETF-oriented
@@ -192,7 +188,7 @@ operator — an 8-sector elliptical kernel squeezed along the tensor) and the sm
 multi-tap tensor are inherently multi-pass — a form a single-pass fragment shader cannot
 express. The aurora ships the single-pass ETF half (stroke orientation) and the impasto /
 deposition material truth on WebGL2; the multi-pass Kuwahara/LIC half was investigated and
-excised as substrate-without-consumer (AX.W14), so no multi-pass finish ships. Note the
+excised as substrate-without-consumer, so no multi-pass finish ships. Note the
 research lineage names ETF *+ LIC* (line-integral convolution) as the full Van-Gogh
 mechanism.
 
@@ -261,7 +257,7 @@ interface AuroraInstance {
 
 ### The atoms door — the consumer surface
 
-`resolveAtoms(atoms) → AuroraConfig` is THE consumer-facing door (AX.W10). The ≤7
+`resolveAtoms(atoms) → AuroraConfig` is THE consumer-facing door. The ≤7
 intuitive **atoms** are the user's named control elements — **COLOR** (seed · harmony ·
 colorEnergy), **ZONES** (count · arrangement), **NOISE** (one organic-boundary knob),
 **MEDIUM** (+ texture, textured mediums only), **MOTION**:
@@ -322,9 +318,9 @@ Ottosson core (`gamutMapStop`, `color.ts:250`).
 **bell** chroma curve — peak in the mids, desaturated extremes — is the default), and
 warm-light/cool-shadow `temperatureShift` coupling (the single most-cited painting rule, the
 fold that makes the oil/oil-pastel mediums read as *mixed paint* rather than stamped hue —
-`temperatureShift` interpolates the hue toward named warm/cool OKLCh poles, AX.W10). The
+`temperatureShift` interpolates the hue toward named warm/cool OKLCh poles). The
 whole-scene derive from one seed lives in the **atoms door** (`resolveAtoms` above — the ONE
-consumer surface; AX.W10 retired the prior parallel seed+mood door). Landed, gated by
+consumer surface; the prior parallel seed+mood door is retired). Landed, gated by
 `proof:aurora-derive-gamut`. *(meodai pro-color-harmonies; Adobe Leonardo / OKLCh ramp
 tooling; Baudisch / Gamblin warm-cool temperature.)*
 
@@ -333,12 +329,12 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
 ## Color notes
 
 - **The palette is baked to LINEAR sRGB**, not gamma sRGB. The whole shader pipeline
-  (palette interp, nuclei field, mediums, ACES tonemap, grain) runs in linear, and the
+  (palette interp, nuclei field, mediums, PBR-Neutral tonemap, grain) runs in linear, and the
   **mandatory `linearToSrgb()` OETF closes the seam** as the final step before `fragColor`
   (`aurora.frag.ts:384`). Without it the field ships ~2.2× too dark (linear 0.5 → display
   ~0.215 instead of ~0.735). This is machine-locked by `proof:aurora-space-gamma`. The OETF
   + the rotated-octave FBM constant are spliced from the shared `procedural-color.glsl`
-  chunk so they can never diverge from the goo-blob's copy (the AV.W1 divergence root cause).
+  chunk so they can never diverge from the goo-blob's copy (the divergence root cause a shared chunk forecloses).
 - **Palette interpolation runs in OKLCh, not linear-sRGB.** The stop-to-stop blend in
   `samplePalette` (`composition.glsl.ts:15`) routes through the shared `samplePaletteRamp`
   (`procedural-color.glsl.ts:147`, `PALETTE_RAMP_GLSL`): a smoothstep ease then an
@@ -389,7 +385,7 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
 
 ### Substrate
 
-Aurora renders on a single-pass WebGL2 fragment shader. WebGPU was investigated (AX.W14) and
+Aurora renders on a single-pass WebGL2 fragment shader. WebGPU was investigated and
 the multi-pass painterly half (the Gaussian-smoothed structure tensor + anisotropic Kuwahara
 finish a single-pass shader cannot express) was excised as substrate-without-consumer — the
 WebGL2 fragment path is the sole renderer.
@@ -537,12 +533,17 @@ src/components/custom/aurora/
 │       ├── flow.glsl.ts          # the directional flow field
 │       ├── brush.glsl.ts         # the curved swept-stroke SDF + bestOil placement + impasto
 │       ├── mediums.glsl.ts       # the four peer mediums + the sampleBase edge recompute
-│       └── tonemap.glsl.ts       # the LOCKED linear→ACES→OETF→dither pipeline
+│       └── tonemap.glsl.ts       # the LOCKED linear→PBR-Neutral→OETF→dither pipeline (the GLSL fn keeps the slot-name `aces()`)
 └── composables/
+    ├── atoms.ts                  # the ≤7-atom resolveAtoms door (THE consumer surface) + configToAtoms inverse
     ├── color.ts                  # OKLCh math + deriveAurora + oklchToLinear + flattenPalette
+    ├── configSource.ts           # useConfiguratorState<AuroraConfig> source threading (per-preset clones)
+    ├── cursorModel.ts            # the cursor-as-light state model (velocity-reactive flow)
+    ├── frameLoop.ts              # the rAF loop + the offscreen-park / PRM-freeze hooks
+    ├── glSetup.ts                # GL context + program + uniform-location setup
     ├── runtime.ts                # createAurora — live/capture WebGL lifecycle + cursor easing
-    ├── useAurora.ts              # the Vue wrapper: onMounted/watch/onBeforeUnmount
     ├── uniformBridge.ts          # config → GL uniform threading
+    ├── useAurora.ts              # the Vue wrapper: onMounted/watch/onBeforeUnmount
     └── useCursorInteraction.ts   # the pointer layer
 ```
 

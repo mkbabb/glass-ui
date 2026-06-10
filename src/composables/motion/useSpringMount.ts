@@ -28,20 +28,23 @@ import {
 } from "vue";
 import { useSpring, type SpringRef } from "./useSpring";
 
-/** Named iOS spring presets (mirrors X1 §2.3 / tokens.css §2). */
+import { springPreset } from "./springPresets";
+
+/** Named iOS spring presets the mount register exposes (the dock register is not a mount enter). */
 export type SpringPreset = "smooth" | "snappy" | "bouncy" | "gentle";
 
-// MUST stay in lockstep with the PRESETS table in
-// `scripts/regen-spring-tokens.mjs` (the CSS `--spring-*` tokens) — both
-// encode the same iOS-canonical (response, ζ) pairs. Retuned in AM-W2-α
-// (Path A): snappy ζ 0.85→0.65 (overshoot ~+6.8%), bouncy ζ 0.65→0.45
-// (overshoot ~+20.5%); smooth + gentle unchanged.
-const SPRING_PRESETS: Record<SpringPreset, { response: number; dampingFraction: number }> = {
-    smooth: { response: 0.5, dampingFraction: 0.86 },
-    snappy: { response: 0.35, dampingFraction: 0.65 },
-    bouncy: { response: 0.5, dampingFraction: 0.45 },
-    gentle: { response: 0.7, dampingFraction: 1.0 },
-};
+// AY.W-MOTION2 — the (response, ζ) pairs are SINGLE-SOURCED in `springPresets.ts`
+// (the SAME table `scripts/regen-spring-tokens.mjs` solves the CSS `--spring-*`
+// `linear()` strings from). This local table is the mount-relevant projection of
+// the shared rows — drift-proof by construction (no hand-kept second copy).
+const MOUNT_PRESETS: readonly SpringPreset[] = ["smooth", "snappy", "bouncy", "gentle"];
+const SPRING_PRESETS: Record<SpringPreset, { response: number; dampingFraction: number }> =
+    Object.fromEntries(
+        MOUNT_PRESETS.map((name) => {
+            const { response, dampingFraction } = springPreset(name);
+            return [name, { response, dampingFraction }];
+        }),
+    ) as Record<SpringPreset, { response: number; dampingFraction: number }>;
 
 export interface UseSpringMountOptions {
     /**

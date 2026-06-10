@@ -177,7 +177,7 @@ const studioBlob = ref<InstanceType<typeof GooBlob> | null>(null);
 const studioPaused = ref(false);
 const clickCount = ref(0);
 
-// The mood is a MANUAL pin (the auto-arc respects it — AX.W46 D7). Drive it from the
+// The mood is a MANUAL pin (the auto-arc respects it). Drive it from the
 // studio mood select; re-pin whenever the preset / select changes it.
 watch(
     () => studio.config.mood,

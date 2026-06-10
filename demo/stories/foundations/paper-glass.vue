@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { onMounted, ref } from "vue";
-import { GlassPanel } from "../../../src/components/custom/glass-panel";
-import { useGlassRenderer, type GlassTier } from "../../../src/composables/glass";
 import { cn } from "../../../src/utils/cn";
 
 // The paper-vs-glass tour declares a paper-grain wash on its manifest row; the
@@ -17,24 +15,14 @@ interface Tile {
     role: string;
 }
 
-// v0.8 5-rung surface ladder. The retired v0.7 vocabulary
-// (`default | medium | elevated`) was excised in v0.8.6.
-type GlassPanelVariant =
-    | "wash"
-    | "quiet"
-    | "resting"
-    | "floating"
-    | "overlay";
-
-interface PanelExample {
+// Each rung-over-colour plate carries its own paper-grain so the same five tiers
+// read as five distinct translucent surfaces over a vivid field rather than five
+// identical white rectangles.
+interface PaperGlassPlate {
     id: string;
     title: string;
-    tier: GlassTier;
-    variant: GlassPanelVariant;
-    rendering: string;
-    blur: number;
-    refraction: number;
-    chromaticAberration: boolean;
+    cls: string;
+    role: string;
     accent: string;
 }
 
@@ -76,43 +64,29 @@ const tiers: Tile[] = [
     },
 ];
 
-const panelExamples: PanelExample[] = [
+const paperGlassPlates: PaperGlassPlate[] = [
     {
-        id: "css-resting",
-        title: "CSS frost layer",
-        tier: "css",
-        variant: "resting",
-        rendering: "backdrop-filter blur + tokenized resting glass",
-        blur: 14,
-        refraction: 0.18,
-        chromaticAberration: false,
+        id: "wash",
+        title: "Ambient wash",
+        cls: "glass-wash",
+        role: "the thinnest rung — the field reads almost clean through it",
         accent: "var(--viz-fourier)",
     },
     {
-        id: "svg-floating",
-        title: "Refractive lens",
-        tier: "svg-filter",
-        variant: "floating",
-        rendering: "SVG displacement map + floating glass shell",
-        blur: 18,
-        refraction: 0.42,
-        chromaticAberration: true,
+        id: "resting",
+        title: "Resting card",
+        cls: "glass-resting",
+        role: "the everyday card surface — a translucent plate over the colour",
         accent: "var(--viz-fourier)",
     },
     {
-        id: "fallback-quiet",
-        title: "Fallback plate",
-        tier: "fallback",
-        variant: "quiet",
-        rendering: "opaque token surface for unsupported backdrop filters",
-        blur: 8,
-        refraction: 0,
-        chromaticAberration: false,
+        id: "floating",
+        title: "Floating dialog",
+        cls: "glass-floating",
+        role: "the firmest rung — the field softens to a colour cast behind it",
         accent: "var(--viz-chebyshev)",
     },
 ];
-
-const { tier: detectedGlassTier } = useGlassRenderer();
 
 // Live token values are read on mount and exposed for display.
 const values = ref<Record<string, string>>({});
@@ -162,24 +136,18 @@ onMounted(() => {
             </div>
         </div>
 
-        <!-- GlassPanel substrate: component-level renderer tiers. -->
-        <section data-testid="glass-panel-section" class="flex flex-col gap-4">
+        <!-- The tier ladder over a vivid in-region colour field, so each rung
+             reads as a distinct translucent plate rather than a white box. -->
+        <section data-testid="paper-glass-section" class="flex flex-col gap-4">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <p class="text-admin-label text-muted-foreground">
-                        GlassPanel · renderer substrate
+                        Glass tiers over colour
                     </p>
                     <h2 class="text-subheading text-foreground">
-                        Tiered glass panels
+                        The ladder, against something
                     </h2>
                 </div>
-                <p
-                    data-testid="glass-renderer-readout"
-                    class="text-small rounded-panel border border-border/60 bg-card/60 px-3 py-2 text-muted-foreground"
-                >
-                    detected tier ·
-                    <code class="fira-code text-foreground">{{ detectedGlassTier }}</code>
-                </p>
             </div>
 
             <div
@@ -197,55 +165,38 @@ onMounted(() => {
                 />
 
                 <div class="relative grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <GlassPanel
-                        v-for="panel in panelExamples"
-                        :key="panel.id"
-                        data-testid="glass-panel-card"
-                        :tier="panel.tier"
-                        :variant="panel.variant"
-                        :blur="panel.blur"
-                        :refraction="panel.refraction"
-                        :chromatic-aberration="panel.chromaticAberration"
+                    <div
+                        v-for="plate in paperGlassPlates"
+                        :key="plate.id"
+                        data-testid="paper-glass-card"
                         :class="
                             cn(
+                                plate.cls,
                                 'paper-grain-overlay min-h-56 rounded-card p-5',
-                                'flex flex-col justify-between overflow-hidden',
+                                'flex flex-col justify-between overflow-hidden border border-[var(--glass-border-quiet)]',
                             )
                         "
                     >
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-admin-label text-muted-foreground">
-                                    {{ panel.variant }} variant
+                                    {{ plate.id }} tier
                                 </p>
                                 <p class="text-subheading text-foreground">
-                                    {{ panel.title }}
+                                    {{ plate.title }}
                                 </p>
                             </div>
                             <span
                                 class="h-3 w-3 shrink-0 rounded-full shadow-cartoon-sm"
-                                :style="{ backgroundColor: panel.accent }"
+                                :style="{ backgroundColor: plate.accent }"
                                 aria-hidden="true"
                             />
                         </div>
 
-                        <div class="grid grid-cols-1 gap-2 text-small">
-                            <p class="text-muted-foreground">
-                                tier ·
-                                <code class="fira-code text-foreground">{{ panel.tier }}</code>
-                            </p>
-                            <p class="text-muted-foreground">
-                                rendering ·
-                                <span class="text-foreground">{{ panel.rendering }}</span>
-                            </p>
-                            <p class="text-muted-foreground">
-                                blur/refraction ·
-                                <code class="fira-code text-foreground">
-                                    {{ panel.blur }}px / {{ panel.refraction }}
-                                </code>
-                            </p>
-                        </div>
-                    </GlassPanel>
+                        <p class="text-small text-muted-foreground">
+                            {{ plate.role }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

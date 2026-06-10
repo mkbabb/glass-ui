@@ -1181,3 +1181,50 @@ html.no-transition *::after {
         min-inline-size: var(--touch-target, 2.75rem);
     }
 }
+
+/* ── @utility touch-hit-area (AY.W-SCALE2) ──────────────────────────────────
+   The hit-target is DECOUPLED from the visual size: a 16px Checkbox stays
+   16px visually, but on a COARSE pointer it acquires a ≥44px pointer-receptive
+   hit-rect via a centred `::before` overlay (WCAG 2.5.5). The six sub-44 form
+   atoms (Switch / Checkbox / RadioGroupItem / Slider-thumb / TagsInput-delete /
+   MultiSelect-remove-X) compose this ONE shared utility — DRY, one source, ≥2
+   consumers — instead of per-atom `min-h-[44px]` balloons.
+
+   DIVERGENCE-WITH-RATIONALE from the timeline precedent (ContinuousMarkers.vue
+   `.continuous-dot::before`, SegmentedTimeline `.boundary-dot::before`): the
+   timeline uses a FIXED symmetric `inset: calc((--touch-target - dot-size)/-2)`
+   — exact ONLY because its dot is a KNOWN fixed square. Our atoms are NOT square
+   and NOT a known size (a 24×44 Switch, a 16px Checkbox, a ~7px-wide Slider cap),
+   so a single symmetric inset would under/over-shoot one axis. This utility uses
+   the size-AGNOSTIC centred-min-size form: `min-width/min-height: var(--touch-
+   target)` + `top/left:50%` + `translate:-50% -50%` floors BOTH dimensions at
+   44px for ANY visual size, the generalization the timeline's known-square inset
+   cannot do.
+
+   COARSE-ONLY (the fine-pointer-byte-identical invariant, STRICTER than the
+   timeline whose `::before` exists at fine pointer too): the DEFAULT (fine)
+   path declares NO overlay box — `::before` has no `content`, so its min-width/
+   height resolve to `auto`/0 and the composited rect equals the bare visual box
+   (the AX.W51 fine-pointer-identical invariant). Only the nested `@media
+   (pointer: coarse)` block mints the `content:""` + the 44px overlay.
+
+   NO new floor token (D4): the overlay reads `var(--touch-target)`. */
+@utility touch-hit-area {
+    position: relative;
+
+    @media (pointer: coarse) {
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            min-width: var(--touch-target, 2.75rem);
+            min-height: var(--touch-target, 2.75rem);
+            /* Inherit the host's pointer-events so a tap within the halo
+               registers on the atom; the overlay itself is decorative (no
+               paint), so it never occludes the host's own interaction. */
+            pointer-events: auto;
+        }
+    }
+}

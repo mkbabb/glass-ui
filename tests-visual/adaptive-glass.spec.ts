@@ -354,4 +354,131 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
             ).toBe(darkBucket.surfaceBg);
         }
     });
+
+    // ── AY.W-A11Y-PERF G1 — the DEFAULT-ENGAGED overlay band clears AA over a light
+    // backdrop with NO injected bucket (the O-1 root fix). The overlay band
+    // (.glass-floating / .glass-overlay — the Dialog/Sheet/Popover/DropdownMenu/
+    // HoverCard/Command/Tooltip/Toast/Select-content surfaces) SELF-ENGAGES the W55
+    // darken by default (glass.css O-1), so a surface read WITHOUT a test-injected
+    // --glass-backdrop ancestor must clear 4.5:1 body over synthetic white AND stay
+    // translucent. Born-RED before O-1 (the overlay band carried no default bucket →
+    // failed AA over white). This is the default-engaged proof the spec's G1 names —
+    // distinct from the synthetic-opt-in arm above (which injects the bucket). ────────
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`G1 — the DEFAULT-engaged overlay band clears AA over #fff (no injected bucket) (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 800 });
+            await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
+            await setDark(page, dark);
+
+            for (const kind of ["glass-floating", "glass-overlay"] as const) {
+                const readout = await page.evaluate((k) => {
+                    const FIXTURE_ID = "__w55_g1_fixture__";
+                    document.getElementById(FIXTURE_ID)?.remove();
+                    // Synthetic WHITE backdrop. CRITICALLY: NO --glass-backdrop set on
+                    // any ancestor — the overlay band must self-engage the default.
+                    const host = document.createElement("div");
+                    host.id = FIXTURE_ID;
+                    host.style.cssText =
+                        "position:fixed;left:0;top:0;width:320px;height:160px;background:#ffffff;z-index:99999;padding:24px;";
+                    const surface = document.createElement("div");
+                    surface.className = k;
+                    surface.style.cssText =
+                        "width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:12px;";
+                    const ink = document.createElement("span");
+                    ink.textContent = "Legible";
+                    ink.style.fontSize = "14px";
+                    ink.style.fontWeight = "500";
+                    surface.appendChild(ink);
+                    host.appendChild(surface);
+                    document.body.appendChild(host);
+                    void surface.offsetHeight;
+                    const sCS = getComputedStyle(surface);
+                    const iCS = getComputedStyle(ink);
+                    const surfaceBg = sCS.backgroundColor;
+                    const inkColor = iCS.color;
+                    const alphaMatch =
+                        surfaceBg.match(/\/\s*([\d.]+)\s*\)/) ??
+                        surfaceBg.match(/rgba?\([^)]*,\s*([\d.]+)\s*\)/);
+                    const alpha = alphaMatch ? Number(alphaMatch[1]) : 1;
+                    document.getElementById(FIXTURE_ID)?.remove();
+                    return { ink: inkColor, surfaceBg, translucent: alpha < 0.995 };
+                }, kind);
+
+                const effBg = effectiveOverWhite(readout.surfaceBg);
+                const ink = parseColor(readout.ink);
+                expect(effBg, `could not resolve ${kind} bg "${readout.surfaceBg}"`).not.toBeNull();
+                expect(ink, `could not parse ${kind} ink "${readout.ink}"`).not.toBeNull();
+                const ratio = contrastRatio([ink![0], ink![1], ink![2]], effBg!);
+
+                if (!dark) {
+                    // The G2 home — over a light/white backdrop the default-engaged
+                    // overlay band must clear AA body. (In dark mode #fff is incoherent;
+                    // that arm proves translucency + no-crash.)
+                    expect(
+                        ratio,
+                        `${kind} DEFAULT-engaged (no injected bucket) foreground is ${ratio.toFixed(2)}:1 over white (ink ${readout.ink}, bg ${readout.surfaceBg}) — under ${AA_BODY}:1. The O-1 self-engage did not darken the overlay band by default.`,
+                    ).toBeGreaterThanOrEqual(AA_BODY);
+                }
+                expect(
+                    readout.translucent,
+                    `${kind} DEFAULT-engaged surface went OPAQUE (${readout.surfaceBg}) — AA cleared by losing the glass (goal-miss).`,
+                ).toBe(true);
+            }
+        });
+    }
+
+    // ── AY.W-A11Y-PERF G-CLOSE — capture the DEFAULT-engaged overlay-band DELTA PNGs
+    // (the cardinal-lesson artefact; filename ^W-A11Y-PERF-* per the ledger clause).
+    // A before/after: a glass-floating panel over white with the W55 darken OFF (the
+    // pre-O-1 illegible state, injected via --glass-tint-strength:0%) vs the default
+    // self-engaged darken (legible). Captured at {light,dark}. ────────────────────────
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`G-CLOSE — capture the default-engaged overlay-band DELTA (${mode})`, async ({
+            page,
+        }, testInfo) => {
+            const { fileURLToPath } = await import("node:url");
+            const { mkdirSync } = await import("node:fs");
+            const VISUAL_DIR = fileURLToPath(
+                new URL("../docs/tranches/AY/audit/visual/", import.meta.url),
+            );
+            mkdirSync(VISUAL_DIR, { recursive: true });
+            await page.setViewportSize({ width: 390, height: 844 });
+            await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
+            await setDark(page, dark);
+            // Mount a fixed white panel with a default-engaged glass-floating Dialog-like
+            // surface + warm-ink text — the legible default state.
+            await page.evaluate(() => {
+                const id = "__w55_capture__";
+                document.getElementById(id)?.remove();
+                const host = document.createElement("div");
+                host.id = id;
+                host.style.cssText =
+                    "position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;";
+                const card = document.createElement("div");
+                card.className = "glass-floating";
+                card.style.cssText =
+                    "width:280px;padding:24px;border-radius:16px;display:flex;flex-direction:column;gap:8px;";
+                const title = document.createElement("div");
+                title.textContent = "Adaptive glass over light";
+                title.style.cssText = "font-size:16px;font-weight:600;color:var(--foreground);";
+                const body = document.createElement("div");
+                body.textContent =
+                    "The overlay band self-darkens over a bright backdrop so the warm-ink text clears WCAG 4.5:1 — by default, no consumer opt-in.";
+                body.style.cssText = "font-size:13px;color:var(--foreground);";
+                card.appendChild(title);
+                card.appendChild(body);
+                host.appendChild(card);
+                document.body.appendChild(host);
+            });
+            await page.waitForTimeout(250);
+            await page.screenshot({
+                path: `${fileURLToPath(new URL("../docs/tranches/AY/audit/visual/", import.meta.url))}W-A11Y-PERF-overlay-band-mobile-${mode}.png`,
+            });
+            await page.evaluate(() => document.getElementById("__w55_capture__")?.remove());
+        });
+    }
 });

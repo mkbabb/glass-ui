@@ -50,8 +50,10 @@ export const EXPECTED_TREE = [
         "paper-backdrop", "css-utilities",
     ]],
     // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
-    // `fourier-field` is the new Canvas2D render-background sibling.
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-panel", "glass-material"]],
+    // `fourier-field` is the new Canvas2D render-background sibling. `glass-panel`
+    // retired at AY.W-SB1 (a demo-only published component — the renderer-tier
+    // lesson lives on at `glass-material` + the use-glass-renderer composable).
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
@@ -63,14 +65,18 @@ export const EXPECTED_TREE = [
         "metric-pill", "status-dot", "pulse", "stacked-icons",
         "dark-mode-toggle",
     ]],
-    // Command folds in from the dissolved single-story Tools bin.
+    // Command folds in from the dissolved single-story Tools bin. The standalone
+    // `native-top-layer` probe folded into the Dialog + HoverPopover stories as a
+    // native opt-in section at AY.W-SB1 (the FIX-ROUTE execution).
     ["containers", [
-        "dialog", "native-top-layer", "sheet", "drawer", "popover",
+        "dialog", "sheet", "drawer", "popover",
         "dropdown-menu", "context-menu", "hover-card", "tooltip", "accordion",
         "collapsible", "hover-popover", "expandable-container", "command",
     ]],
+    // `header-ribbon` retired at AY.W-SB1 (a published component with 0 non-self
+    // consumers — the route prune was finally made component-deep).
     ["navigation", [
-        "tabs", "carousel", "deck-progress", "header-ribbon",
+        "tabs", "carousel", "deck-progress",
     ]],
     // The headline primitive's own first-class category.
     ["dock", ["overview", "layers", "rail"]],
@@ -86,11 +92,13 @@ export const EXPECTED_TREE = [
     ]],
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
+        "curve-gallery",
     ]],
     ["compositions", [
         "hero", "math-paper", "dashboard", "auth-shell", "settings",
         "empty-states", "drawer-live-behind",
         "configurator", "instrument-chassis", "instrument-rail",
+        "dock-with-slider",
         "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
     ]],
     ["composables", [

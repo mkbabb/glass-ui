@@ -154,6 +154,9 @@
             "motion-core": [
                 "dist/motion-core.d.ts"
             ],
+            "motion-curves": [
+                "dist/motion-curves.d.ts"
+            ],
             "button": [
                 "dist/button.d.ts"
             ],
@@ -428,6 +431,10 @@
             "types": "./dist/motion-core.d.ts",
             "import": "./dist/motion-core.js"
         },
+        "./motion-curves": {
+            "types": "./dist/motion-curves.d.ts",
+            "import": "./dist/motion-curves.js"
+        },
         "./button": {
             "types": "./dist/button.d.ts",
             "import": "./dist/button.js"
@@ -609,6 +616,7 @@
         "proof:blob-value-free": "node scripts/proof-blob-value-free.mjs",
         "proof:motion-composables-consumer": "node scripts/proof-motion-composables-consumer.mjs",
         "proof:motion-value-free": "node scripts/proof-motion-value-free.mjs",
+        "proof:motion-suite": "node scripts/proof-motion-suite.mjs",
         "proof:no-value-default": "node scripts/proof-no-value-default.mjs",
         "proof:blob-space-gamma": "node scripts/proof-blob-space-gamma.mjs",
         "proof:blob-smin-normalized": "node scripts/proof-blob-smin-normalized.mjs",
@@ -672,6 +680,9 @@
         "proof:aurora-chrome-idiomatic": "node scripts/proof-aurora-chrome-idiomatic.mjs",
         "proof:aurora-preset-roster": "node scripts/proof-aurora-preset-roster.mjs",
         "proof:ui-scale": "node scripts/proof-ui-scale.mjs",
+        "proof:touch-target": "node scripts/proof-touch-target.mjs",
+        "proof:webkit-backdrop": "node scripts/proof-webkit-backdrop.mjs",
+        "proof:nested-backdrop-budget": "node scripts/proof-nested-backdrop-budget.mjs",
         "proof:dropdown-type-scale": "node scripts/proof-dropdown-type-scale.mjs",
         "proof:forced-colors-skin": "node scripts/proof-forced-colors-skin.mjs",
         "proof:glass-cohesion": "node scripts/proof-glass-cohesion.mjs",

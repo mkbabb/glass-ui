@@ -375,6 +375,74 @@ export function publishStyleAssets(): Plugin {
                 });
                 if (touched) writeFileSync(path, rewritten, "utf-8");
             }
+
+            // AY.W-A11Y-PERF O-2a — inject the `-webkit-backdrop-filter` prefix into
+            // the SHIPPED dist CSS. The source authors the UNPREFIXED form only (the
+            // single-source-of-truth discipline + the Lightning-CSS dedup concern the
+            // glass.css policy comment records), so without this pass the shipped
+            // `dist/styles/*.css` carries the unprefixed `backdrop-filter` only and a
+            // Safari ≤17 engine (which supports ONLY the `-webkit-` form) paints NO
+            // blur AND the `@supports not` opaque fallback does NOT fire (Safari 17
+            // supports the webkit form, so `@supports not ((backdrop-filter) or
+            // (-webkit-backdrop-filter))` is FALSE) — a transparent glass surface with
+            // floating text, strictly worse than no-glass. The LIBRARY owns its shipped
+            // artefact: this pass emits the prefixed pair at BUILD (the source stays
+            // unprefixed; the build adds the pair LAST, so the Lightning dedup never
+            // sees both forms in source). For every `backdrop-filter: <v>;` declaration
+            // NOT already immediately preceded by a `-webkit-backdrop-filter:`, prepend
+            // the prefixed pair with the SAME value. Runs AFTER the cpSync + SFC-fold +
+            // component-utility emit + font-inline so it covers the complete shipped
+            // cascade. Idempotent (skips a decl already webkit-paired).
+            const distCssFiles = readdirSync(distStyles).filter((f) =>
+                f.endsWith(".css"),
+            );
+            // Match an unprefixed `backdrop-filter: <value>;` DECLARATION (a property
+            // line in a rule body), NOT a `@supports`/`@container` query condition
+            // (those live inside `( … )` preludes — `(backdrop-filter: blur(1px))` — and
+            // carry NO trailing `;`, so injecting there would CORRUPT the at-rule query).
+            // The match requires:
+            //   - the property name immediately preceded by a `{`, `;`, or newline+ws
+            //     (a declaration boundary) AND not part of `-webkit-backdrop-filter`
+            //     (the `[^-]` guard), and
+            //   - a trailing `;` (a real declaration terminator).
+            // The value `[^;{})]+` excludes `)` so a greedy match cannot spill across an
+            // `@supports` prelude's `) or (` operators (the corruption class). A value
+            // with a `var(...)`/`blur(Npx)` contains balanced parens, so to allow those
+            // we match a value with NESTED single-level parens explicitly:
+            // `(?:[^;{}()]|\([^)]*\))+` — runs of non-paren text OR one balanced paren
+            // group — terminated by `;`. This admits `var(--glass-blur-wash)` and
+            // `blur(10px)` but still STOPS at the `;` before any query operator.
+            const bdfDeclRe =
+                /([{};]|\n)(\s*)backdrop-filter\s*:\s*((?:[^;{}()]|\([^()]*\))+);/g;
+            for (const file of distCssFiles) {
+                const path = resolve(distStyles, file);
+                const src = readFileSync(path, "utf-8");
+                let changed = false;
+                const out = src.replace(
+                    bdfDeclRe,
+                    (
+                        match,
+                        boundary: string,
+                        indent: string,
+                        value: string,
+                        offset: number,
+                    ) => {
+                        // Exclude the `-webkit-backdrop-filter` property (the boundary
+                        // char before would be `-`, which is not in our boundary class,
+                        // so this is belt-and-suspenders) and skip a decl ALREADY
+                        // webkit-paired (the hand-authored pair — Slider/ContinuousRail/
+                        // useGlassRenderer/Drawer): never double-inject.
+                        const lookbackStart = Math.max(0, offset - 120);
+                        const lookback = src.slice(lookbackStart, offset + 1);
+                        if (/-webkit-backdrop-filter\s*:[^;{}]*;\s*$/.test(lookback)) {
+                            return match;
+                        }
+                        changed = true;
+                        return `${boundary}${indent}-webkit-backdrop-filter: ${value.trim()};\n${indent}backdrop-filter: ${value.trim()};`;
+                    },
+                );
+                if (changed) writeFileSync(path, out, "utf-8");
+            }
         },
     };
 }

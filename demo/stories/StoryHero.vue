@@ -13,10 +13,12 @@
 //   - variant="hero"           — a full-bleed glassy hero card floating over the
 //     live substrate; the front-door demonstration.
 import { computed } from "vue";
-import { Card } from "../../src/components/ui/card";
+import { Card, type CardTier } from "../../src/components/ui/card";
 import { Aurora } from "../../src/components/custom/aurora";
 import { Constellation } from "../../src/components/custom/constellation";
 import { FourierField } from "../../src/components/custom/fourier-field";
+import { GooBlob } from "../../src/components/custom/goo-blob";
+import { BLOB_CONFIG_DEFAULTS } from "../../src/components/custom/goo-blob/types";
 import { defaultBlobColorResolver } from "../../src/composables/color";
 import { useTokenColor } from "../../src/composables/dom/useTokenColor";
 import { cn } from "../../src/utils/cn";
@@ -101,6 +103,28 @@ function drawFocal(
 }
 
 const isHero = computed(() => props.variant === "hero");
+
+// ── The read-through seam (W-SB-STAGE §2.1a) ─────────────────────────────────
+// Over a LIVE substrate (aurora / constellation / fourier / blob), the card
+// drops to a THINNER glass rung so the substrate reads THROUGH it (the 0.8α
+// `floating` plate annihilated line-work). Over grid / paper / none the tier is
+// BYTE-IDENTICAL to HEAD (`floating` hero / `resting` page) — the default-path
+// canary. The thinner rung is `quiet` (0.5α) on a hero, `wash` (0.3α) on a page:
+// enough plate for the prose to sit on, thin enough to let the field through.
+const liveBackdrop = computed(() =>
+    kind.value === "aurora" ||
+    kind.value === "constellation" ||
+    kind.value === "fourier" ||
+    kind.value === "blob",
+);
+
+const cardTier = computed<CardTier>(() => {
+    if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
+    return isHero.value ? "floating" : "resting";
+});
+
+// The blob config the hero-backdrop GooBlob paints (the stock soft droplet).
+const blobConfig = BLOB_CONFIG_DEFAULTS;
 </script>
 
 <template>
@@ -131,6 +155,14 @@ const isHero = computed(() => props.variant === "hero");
             class="story-hero-bg"
             aria-hidden="true"
         />
+        <GooBlob
+            v-else-if="kind === 'blob'"
+            :config="blobConfig"
+            color="var(--primary, #1c1714)"
+            seed="glass-ui-hero"
+            class="story-hero-bg"
+            aria-hidden="true"
+        />
         <div
             v-else-if="kind === 'grid'"
             class="story-hero-bg story-bg-grid"
@@ -143,13 +175,18 @@ const isHero = computed(() => props.variant === "hero");
         />
 
         <!-- The glass card the body sits inside. Glass-first by default; the
-             body slot carries the page's StorySection hierarchy. -->
+             body slot carries the page's StorySection hierarchy. Over a LIVE
+             substrate the card takes a THINNER rung (so the field reads through)
+             AND sets the W55 `--glass-backdrop: light` bucket so the thinned
+             plate darkens its tint toward ink and the prose stays AA. -->
         <Card
-            :tier="isHero ? 'floating' : 'resting'"
+            :tier="cardTier"
+            :style="liveBackdrop ? { '--glass-backdrop': 'light' } : undefined"
             :class="
                 cn(
                     'story-hero-card',
                     isHero ? 'story-hero-card--hero' : 'story-hero-card--page',
+                    liveBackdrop && 'story-hero-card--live',
                     cardClass,
                 )
             "

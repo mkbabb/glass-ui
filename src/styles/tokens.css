@@ -1222,7 +1222,16 @@
        touch). `--control-text` is the workhorse (the `text-sm` register the
        buttons/inputs/triggers carried); `--control-text-sm` is the quieter rung
        (the `text-xs` badge/caption register). W50's `--dropdown-text` IS the
-       picker-family specialization of this register. */
+       picker-family specialization of this register.
+
+       AY.W-SCALE1 — the no-double-vw reconcile: the desktop-fluid viewport base
+       lives ONCE in `--type-small` / `--type-caption` (typography.css §scale — a
+       gentle `clamp(…vw…)` so the control font grows on a wide display); the
+       `--ui-scale` comfort scalar multiplies that FLUID base exactly ONCE HERE. The
+       vw term is applied once (in the rung), the comfort factor once (here) — under
+       the coarse 1.5× the font grows by the comfort factor ONCE, NOT vw×1.5
+       over-scaled. Do NOT inline a second clamp() here, and do NOT multiply the rung
+       by --ui-scale at the rung. */
     --control-text:    calc(var(--type-small) * var(--ui-scale));
     --control-text-sm: calc(var(--type-caption) * var(--ui-scale));
     /* The control-GLYPH cohort (RED 4 — the glyph grows WITH the box). The

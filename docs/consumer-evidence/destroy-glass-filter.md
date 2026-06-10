@@ -7,13 +7,13 @@
 ## Current consumer proof
 
 **Project**: `glass-ui`
-**Source path**: `src/components/custom/glass-panel/GlassPanel.vue:6`, `src/components/custom/glass-panel/GlassPanel.vue:73`
-**Use case**: `GlassPanel` tears down SVG filter state through `destroyGlassFilter` when renderer state changes or the component unmounts.
-**Proof**: `rg -n '\bdestroyGlassFilter\b' src/components/custom/glass-panel/GlassPanel.vue`
+**Source path**: `src/composables/glass/useGlassRenderer.ts:235`, re-exported via `src/composables/glass/index.ts`
+**Use case**: `useGlassRenderer` tears down SVG filter state through `destroyGlassFilter` when renderer state changes or its effect scope disposes. (Re-pointed AY — the GlassPanel component retired; `useGlassRenderer` is the surviving composer.)
+**Proof**: `rg -n '\bdestroyGlassFilter\b' src/composables/glass/useGlassRenderer.ts`
 
 ## Keep rationale
 
-The helper prevents `GlassPanel` from leaking implementation details about filter DOM cleanup. It is semantically paired with `createGlassFilter`, so keeping both preserves a coherent lifecycle surface.
+The helper keeps filter DOM cleanup behind the renderer boundary instead of in consumer code. It is semantically paired with `createGlassFilter`, so keeping both preserves a coherent lifecycle surface.
 
 ## Re-audit proof
 

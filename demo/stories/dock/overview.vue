@@ -30,6 +30,8 @@ import {
     SelectItem,
     SelectValue,
 } from "../../../src/components/ui/select";
+import { Aurora } from "../../../src/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 
 const playing = ref(false);
 const bgPaused = ref(false);
@@ -85,8 +87,19 @@ function togglePlay() {
                 <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the scale and stagger snap;
                 the state still toggles.
             </p>
-            <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
-                <GlassDock>
+            <!-- The dock IS the headline glass primitive — stage a low-intensity
+                 contained Aurora wash INSIDE the specimen frame (the display/card
+                 MODEL pattern) so the glass dock has something to be glass against
+                 (W-SB-STAGE §2.2, FD §6 the #1 placement). ONE Aurora context per
+                 page — within the WebGL budget. -->
+            <div class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8">
+                <Aurora
+                    :config="DEFAULT_AURORA_CONFIG"
+                    :opacity-ceiling="0.4"
+                    class="absolute inset-0"
+                    aria-hidden="true"
+                />
+                <GlassDock class="relative z-10">
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
@@ -272,9 +285,8 @@ function togglePlay() {
                 <!-- data-testid="dock-capture" is the deterministic AY.W-DOCK1 capture
                      selector — a plain root-forwarded data attr (NOT the GlassDock
                      `container-name` prop, which co-applies `container-type: inline-size`
-                     and BREAKS the collapse↔expand morph — the AT.W7 / 3.4.0
-                     dock-collapse-vs-container-type interaction; see W-DOCK1-DELTA.md
-                     §container-type-trap). The items-lag harness holds THIS single
+                     and breaks the collapse↔expand morph — the
+                     dock-collapse-vs-container-type interaction). The items-lag harness holds THIS single
                      collapsible dock: it morphs RELIABLY (collapsed→expanded ~490px on the
                      --dock-morph-t spring) and its trailing .dock-layer--full child rides
                      the deliberate per-child reveal stagger, so it is the faithful surface

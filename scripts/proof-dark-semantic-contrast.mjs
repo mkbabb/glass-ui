@@ -95,6 +95,35 @@ function hslStrToRgb(str) {
     return hsl ? hslToRgb(hsl[0], hsl[1], hsl[2]) : null;
 }
 
+/**
+ * AY.W-A11Y-PERF O-5 — alpha-composite a translucent `over` plate (opaque rgb + an
+ * alpha) onto an opaque `base` (the source-over rule). After AX.W54 the Alert/Toast
+ * surface is a TRANSLUCENT glass plate (`--glass-bg-*` at the rung opacity), so the
+ * REAL background the destructive ink reads against is the page BLEEDING THROUGH the
+ * plate at `1 - rungAlpha`, NOT the solid `--card`. This composites the plate (the
+ * card color at `rungAlpha`) over the page to form the EFFECTIVE backdrop.
+ *
+ * @param {number[]} plateRgb the plate's opaque base color (the card)
+ * @param {number} rungAlpha the rung opacity (e.g. 0.30 for glass-bg-wash at level 1)
+ * @param {number[]} pageRgb the page color bleeding through
+ */
+function compositeTranslucent(plateRgb, rungAlpha, pageRgb) {
+    return [
+        Math.round(plateRgb[0] * rungAlpha + pageRgb[0] * (1 - rungAlpha)),
+        Math.round(plateRgb[1] * rungAlpha + pageRgb[1] * (1 - rungAlpha)),
+        Math.round(plateRgb[2] * rungAlpha + pageRgb[2] * (1 - rungAlpha)),
+    ];
+}
+
+/** Resolve a `--glass-opacity-<rung>: N;` numeric from tokens.css (the rung alpha at
+ *  --glass-level: 1, the default). Returns null if absent. */
+function resolveRungOpacity(src, rung) {
+    const m = src.match(
+        new RegExp(`--glass-opacity-${rung}\\s*:\\s*([\\d.]+)\\s*;`),
+    );
+    return m ? Number(m[1]) : null;
+}
+
 // ── tokens.css resolvers ──────────────────────────────────────────────────────
 
 /**
@@ -241,12 +270,34 @@ export function detect() {
     const plateRgb = plateVal ? hslStrToRgb(plateVal) : null;
 
     if (inkRgb && cardRgb) {
-        const r = contrastRatio(inkRgb, cardRgb);
-        facts.inkOverCard = Number(r.toFixed(2));
+        // AY.W-A11Y-PERF O-5 — the EFFECTIVE backdrop the destructive ink reads against
+        // is NOT the solid --card. The Alert/Toast destructive surface is a TRANSLUCENT
+        // glass-wash plate (`--glass-bg-wash`, opacity 0.30 at --glass-level: 1), so the
+        // dark page bleeds through at 1 - 0.30 = 0.70. Composite the dark page through
+        // the wash plate to form the effective background, then compute the ink contrast
+        // against THAT — the rendered truth, not the solid-card upper bound. (The wash
+        // rung is the Alert destructive surface; Toast uses glass-floating but the worst
+        // case — the most translucent, lowest-contrast — is the wash plate the oracle
+        // gates on. A consumer with --glass-level: 0 / .glass-opaque gets the solid card,
+        // a strictly-higher contrast the floor below already covers.)
+        const washAlpha = resolveRungOpacity(src, "wash");
+        facts.washAlpha = washAlpha;
+        let effectiveBg = cardRgb;
+        let backdropDesc = "--card (solid; wash opacity unresolved)";
+        if (washAlpha != null && pageRgb) {
+            effectiveBg = compositeTranslucent(cardRgb, washAlpha, pageRgb);
+            backdropDesc = `the translucent glass-wash plate (card @ ${washAlpha} over the dark page bleed)`;
+        }
+        const r = contrastRatio(inkRgb, effectiveBg);
+        // Keep the solid-card number too — it is the optimistic upper bound (the
+        // .glass-opaque / --glass-level:0 path), recorded for the DELTA comparison.
+        facts.inkOverSolidCard = Number(contrastRatio(inkRgb, cardRgb).toFixed(2));
+        facts.inkOverEffectiveBg = Number(r.toFixed(2));
+        facts.inkEffectiveBackdrop = backdropDesc;
         facts.inkToken = twoToken ? "--destructive-text" : "--destructive";
         if (r < INK_FLOOR) {
             violations.push(
-                `the dark ${facts.inkToken} (ink role) is ${r.toFixed(2)}:1 over --card — under the ${INK_FLOOR}:1 body floor (the illegible "Session expired" Alert title; lift the dark red)`,
+                `the dark ${facts.inkToken} (ink role) is ${r.toFixed(2)}:1 over ${backdropDesc} — under the ${INK_FLOOR}:1 body floor. The W54 translucent plate lets the dark page bleed through (the solid-card upper bound was ${facts.inkOverSolidCard}:1 — the false-assurance number); lift the dark red OR firm the wash opacity.`,
             );
         }
     } else if (inkVal) {
@@ -330,7 +381,10 @@ function run() {
     console.log(`  §2c lockstep          : ${facts.lockstep ? "yes ✓" : "NO ✗"}`);
     console.log(`  two-token split       : ${facts.twoTokenSplit ? "yes" : "no (single-token path)"}`);
     console.log(
-        `  ${facts.inkToken ?? "--destructive"} over --card : ${facts.inkOverCard}:1 (floor ${INK_FLOOR})`,
+        `  ${facts.inkToken ?? "--destructive"} over ${facts.inkEffectiveBackdrop ?? "--card"} : ${facts.inkOverEffectiveBg}:1 (floor ${INK_FLOOR}) [wash α=${facts.washAlpha ?? "?"}]`,
+    );
+    console.log(
+        `    (solid-card upper bound, the .glass-opaque/level:0 path: ${facts.inkOverSolidCard}:1 — the optimistic number the stale oracle asserted)`,
     );
     console.log(`  --destructive vs page : ${facts.plateVsPage}:1 (floor ${PLATE_FLOOR})`);
     for (const [t, e] of Object.entries(facts.siblings ?? {})) {

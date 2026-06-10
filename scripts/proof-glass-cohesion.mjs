@@ -214,7 +214,12 @@ add(
 add(
     "slider",
     "slider-thumb-opts-in-gleam",
-    /class="slider-thumb glass-specular-track"/.test(slider),
+    // The SliderThumb composes `slider-thumb glass-specular-track` (the shared opt-in
+    // edge-gleam). Match the two classes as a substring of the class attr so a
+    // legitimate trailing utility (the W-SLD1/W-PRIM-POLISH `touch-hit-area` hit-floor)
+    // does NOT false-RED the gate — what is load-bearing is that the thumb opts in to
+    // the gleam, not that the class attr is exactly those two tokens.
+    /class="[^"]*\bslider-thumb glass-specular-track\b[^"]*"/.test(slider),
     "the SliderThumb composes glass-specular-track (the shared opt-in edge-gleam, not a hand-rolled lip)",
 );
 add(

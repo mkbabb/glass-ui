@@ -8,8 +8,8 @@ TAUTOLOGICAL gate REAL, DOCUMENTS the stagger (the FORCED keep branch), folds th
 motion authorities, lands/books the rail, and reconciles the two §F morph breaks.
 
 **Landed on `at-dock-convergence` (3.9.0 ancestor).** Device-free gates GREEN; the
-own-surface live frame-series DELTA (HG6) is owed (orchestrator-captured — this row
-is `live-pending` until the PNGs land).
+own-surface live frame-series DELTA (HG6) is now CAPTURED (RG1/RG2 discharged — see
+§"Live frame-series DELTA" below; this row flips `live-pending` → `live-verified`).
 
 ---
 
@@ -229,9 +229,10 @@ proof:dock-rail-cohesion — the DockLayerGroup rail one-clock + single-indicato
   cardinal-lesson architecture), and the NEW `proof:dock-rail-cohesion` `local, ci`.
   `npm run gates:emit-ci` re-emitted `.github/workflows/ci.yml`; `proof:gen-ci-fresh`
   GREEN (byte-identical). Both appear at ci.yml:188-191.
-- **The own-surface frame-series DELTA is OWED** (orchestrator-captured): `^W-DOCK2-.*-light.png`
-  AND `^W-DOCK2-.*-dark.png` at ≥2 viewports. The PROGRESS row is `live-pending` + on
-  `VISUAL-ALLOWLIST.json` until the capture lands and flips it to `live-verified`.
+- **The own-surface frame-series DELTA is CAPTURED** (RG1/RG2 discharged) — see
+  §"Live frame-series DELTA" below: own-surface `W-DOCK2-` light AND dark PNGs at
+  desktop (1440×900) + mobile (390×844). The PROGRESS row flips `live-pending` →
+  `live-verified`.
 
 ---
 
@@ -283,8 +284,66 @@ proof:dock-rail-cohesion — the DockLayerGroup rail one-clock + single-indicato
 | `scripts/gates.mjs` + `.github/workflows/ci.yml` | CI inclusion (both gates) + byte-relock |
 | `CLAUDE.md` | the `containerName` always-expanded-only dock note (§F1) |
 
-## Live frame-series DELTA (OWED — orchestrator-captured)
+## Live frame-series DELTA (CAPTURED — RG1/RG2 discharged)
 
-The own-surface light+dark frame-series (the entering-child onset NOW within budget on
-the live `/dock/overview` dock) at ≥2 viewports — captured by the orchestrator, then
-this row flips `live-pending` → `live-verified`.
+The own-surface light+dark frame-series on the REAL `/dock/overview` collapsible dock
+(`data-testid="dock-capture"`, the plain testid — NOT `data-container-name`, which
+freezes the morph per §F1), captured at desktop (1440×900) and mobile (390×844, the
+audited 390-width class), driving the EXPAND morph (collapse-first → re-enter so the
+ramp is real). The entering-child opacity onset tracks the shell-width onset frame-by-
+frame, the lockstep the re-authored gate ASSERTS.
+
+**RG1 — own-surface light+dark keyframe stills (8 PNGs, all on disk):**
+
+| png | what it shows |
+|---|---|
+| `W-DOCK2-lockstep-midmorph-desktop-light.png` | the expanded dock — volume icon + two sliders + separator + settings glyph, the entering controls riding the shell at reveal (light, 1440-wide) |
+| `W-DOCK2-lockstep-midmorph-desktop-dark.png` | same surface, dark token cascade |
+| `W-DOCK2-lockstep-midmorph-mobile-light.png` | the entering controls on the 390-width mobile dock (light) |
+| `W-DOCK2-lockstep-midmorph-mobile-dark.png` | same, dark |
+| `W-DOCK2-collapse-midmorph-desktop-light.png` | the collapse direction — the summary glyph in the tight collapsed pill (the §7 D9/D10 collapse target, light) |
+| `W-DOCK2-collapse-midmorph-desktop-dark.png` | same, dark |
+| `W-DOCK2-collapse-midmorph-mobile-light.png` | the mobile collapsed pill (light) |
+| `W-DOCK2-collapse-midmorph-mobile-dark.png` | same, dark |
+
+**The captured onset table (the entering-child → box-width onset Δ, the LOCKSTEP
+number the W-DOCK1 instrument first measured, here re-captured on the expand ramp):**
+
+| viewport × theme | box onset (ms) | entering-child onset (ms) | child → box Δ (ms) | peak --dock-morph-t |
+|---|---:|---:|---:|---:|
+| desktop · light | 47.7 | 51.9 | **4.2** | 1.045 |
+| desktop · dark  | 14.5 | 34.3 | **19.8** | 1.045 |
+| mobile · light  | 13.7 | 22.4 | **8.7** | 1.046 |
+| mobile · dark   | 9.4  | 18.2 | **8.8** | 1.046 |
+
+Every Δ (4.2–19.8 ms) sits INSIDE the W-DOCK1 captured 36.7–96.2 ms deliberate-stagger
+range AND far under the 537 ms `LOCKSTEP_BUDGET_MS` ceiling — the entering child fades
+in tracking the shell, the lockstep the user asked for. The peak `--dock-morph-t` 1.045
+is the deliberate ±4.5% overshoot ring (the classy expand polish).
+
+**RG2 — persisted GREEN run of `proof:dock-animation-live` on the REAL dock (NOT the
+synthetic timeline / not the `--head` fixture arm):**
+
+```
+proof:dock-animation-live — the dock single-scalar BEHAVIORAL motion gate
+  --dock-morph-t rising frames : 12 (>= 5)  peak 1.045
+  root box width rising frames : 12 (>= 5)  Δ 69.73px
+  width / scalar onset delta   : 20.2ms (structural sanity — non-binding)
+  entering-child → box onset Δ : 20.2ms (<= 536.7ms budget — the LOCKSTEP witness)
+  leaving child moving frames  : 0   entering moving frames: 5
+  retarget max frame jump      : 0px
+  --spring-dock token peak     : 1.04501 (<= 1.051)
+  status: PASS   artefact: .cache/gates/AX-dock-animation-live.json
+```
+
+The gate exercised GREEN against the live collapsible dock (`.cache/gates/AX-dock-animation-live.json`
+status `pass`, exit 0). The `waitForSelector(".glass-dock.collapsed")` outer wait + the
+probe's collapse-first step were reconciled to the demo's fresh-mount-EXPANDED reality:
+the capture dock idle-collapses only after a hover ends (the `:collapse-delay="600"`
+contract), so the probe now drives a LEAVE + waits the collapse delay to reach the
+collapsed baseline before sampling the expand morph — the same collapse-first idiom the
+W-DOCK1 capture harness uses. This is the RG2 "no persisted GREEN run against the real
+dock" debt discharged: the GREEN side no longer rests on the synthetic `--head` timeline.
+
+Capture harness: `scripts/wf-ay-capture-dock2.mjs` (own-surface stills + the onset
+series, modeled on the W-DOCK1 `proof-dock-items-lag-capture.mjs`).

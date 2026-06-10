@@ -7,13 +7,13 @@
 ## Current consumer proof
 
 **Project**: `glass-ui`
-**Source path**: `src/components/custom/glass-panel/GlassPanel.vue:4`, `demo/stories/foundations/paper-glass.vue:5`
-**Use case**: `GlassPanel` asks `useGlassRenderer` for the active renderer tier, and the paper/glass story exposes the same detection readout.
-**Proof**: `rg -n '\buseGlassRenderer\b' src/components/custom/glass-panel/GlassPanel.vue demo/stories/foundations/paper-glass.vue`
+**Source path**: `demo/stories/composables/use-glass-renderer.vue:4` (the detection-readout story)
+**Use case**: The use-glass-renderer story asks `useGlassRenderer` for the active renderer tier and exposes the detection readout. (Re-pointed AY — the GlassPanel component retired; its renderer-tier lesson lives on in the composable's own story.)
+**Proof**: `rg -n '\buseGlassRenderer\b' demo/stories/composables/use-glass-renderer.vue`
 
 ## Keep rationale
 
-The composable is the public capability-detection surface for glass rendering. It is shared by the component and its story, which keeps renderer fallback behavior observable instead of hidden in component-local state.
+The composable is the public capability-detection surface for glass rendering — the detection cascade SVG-filter → CSS backdrop-filter → fallback. Its story keeps renderer fallback behavior observable instead of hidden in component-local state.
 
 ## Re-audit proof
 

@@ -35,7 +35,14 @@ type ToasterToast = Toast & {
   description?: string
   action?: Component | VNode
   open?: boolean
-  onOpenChange?: (open: boolean) => void
+  // AY.W-ANIM1 (W-ANIM-FIX) — the close-request listener key. reka-ui's
+  // `ToastRoot` emits `update:open` (a Vue event), so the spread-as-prop key
+  // MUST be `onUpdate:open` — NOT the React shadcn `onOpenChange`, which reka
+  // silently ignores (the stale-reka-binding no-op class: timer/close-X/swipe
+  // all fire `update:open` but the request never reached the store while the
+  // spread `open: true` kept the root controlled-open). One key revives the
+  // whole dismissal surface (auto-dismiss + close-X + swipe).
+  'onUpdate:open'?: (open: boolean) => void
 }
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
@@ -135,7 +142,10 @@ function toast(props: ToastOptions) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open: boolean) => {
+      // The reka `update:open` listener — when reka requests close (auto-dismiss
+      // timer, close-X, swipe-end) it emits `update:open false`, which lands here
+      // and dismisses the store entry, closing the controlled root.
+      'onUpdate:open': (open: boolean) => {
         if (!open) dismiss()
       },
     },

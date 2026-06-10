@@ -269,13 +269,19 @@
          overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
 
     /* The five-rung surface ladder declares the unprefixed
-       `backdrop-filter` only. Lightning CSS / autoprefixer in the
-       consumer's pipeline emits the `-webkit-` legacy form when
-       browserslist targets demand it. Authoring both forms manually
+       `backdrop-filter` only IN SOURCE. Authoring both forms manually here
        caused Lightning CSS in Tailwind v4 to dedup-and-keep-prefixed,
        which modern Chromium then dropped from the CSSOM (the prefixed
-       alias is parser-rejected post-Chrome 113). Single-source-of-truth
-       authorship lets the build pipeline deliver the right matrix. */
+       alias is parser-rejected post-Chrome 113). AY.W-A11Y-PERF O-2a — the
+       build now OWNS the prefix: `vite.style-assets.ts publishStyleAssets()`
+       injects the `-webkit-backdrop-filter:` pair into the SHIPPED
+       `dist/styles/*.css` as a LAST pass (the source stays unprefixed, so
+       the Lightning dedup never sees both forms; the build emits the pair
+       after the cascade is assembled). This GUARANTEES the prefix reaches
+       dist/ regardless of the consumer's autoprefixer/browserslist — a
+       Safari ≤17 engine (webkit-form-only) paints the blur instead of
+       silently dropping the unprefixed rule. Verified by
+       `proof:webkit-backdrop` (count-parity over the shipped dist). */
     /* AW.W23 — every rung's background composes the adaptive-tint recipe
        (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
        strength))`). With the default `--glass-tint-strength: 0%` the mix is a
@@ -331,6 +337,16 @@
        it shares ONE source with the rest of the ladder; it rides INSIDE the
        box-shadow stack so it composes with the under-shadow floor + the lift. */
     .glass-floating {
+        /* AY.W-A11Y-PERF O-1 — engage the W55 bright-backdrop bucket BY DEFAULT on
+           the overlay band: a floating surface floats over WHATEVER the consumer
+           painted (frequently a light/near-white app surface — the canonical G2
+           case), so the library opts its own overlay-band glass in at its own root
+           via the SELF-CONTAINER reach below (`.glass-floating { --glass-backdrop }`
+           + `:where(.glass-floating) > * `-less: the rung re-points its OWN tint
+           through the companion self-rule, not only the ancestor @container). `dark`
+           (the :root default at tokens.css) stays the explicit per-surface override a
+           dark-substrate consumer dials in on an ancestor. */
+        --glass-backdrop: light;
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-floating);
@@ -342,6 +358,9 @@
     }
 
     .glass-overlay {
+        /* AY.W-A11Y-PERF O-1 — the overlay band engages the W55 bucket by default
+           (see .glass-floating). */
+        --glass-backdrop: light;
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-overlay);
@@ -381,6 +400,33 @@
         }
     }
 
+    /* AY.W-A11Y-PERF O-1 — SELF-ENGAGE the overlay band by default. The
+       `@container style()` rule above queries an ANCESTOR (CSS style queries never
+       self-match — verified on Chrome 148), so the `.glass-floating { --glass-backdrop:
+       light }` default we set on the rung would NOT darken the rung's OWN surface, only
+       its descendants. AND the `:root` library default is `--glass-backdrop: dark`
+       (tokens.css), so a `@container style(--glass-backdrop: dark)` revert would ALWAYS
+       fire (every element has the dark :root as an ancestor) — it cannot distinguish an
+       explicit consumer `dark` from the default. So the overlay band self-engages
+       UNCONDITIONALLY as the library default: a floating/overlay surface floats over
+       WHATEVER the consumer painted (frequently a light/near-white app surface — the
+       canonical G2 case the user reported), so darkening the translucent plate toward
+       the warm-ink is the correct default. This re-points the tint tokens DIRECTLY on
+       the overlay-band surfaces (`.glass-floating` / `.glass-overlay` — the Dialog/
+       Sheet/Popover/DropdownMenu/HoverCard/Command/Tooltip/Toast/Select-content band),
+       engaging the SAME oklab tint axis (zero new compositing seam). Over a DARK page
+       the darken is sub-perceptual (warm-ink over an already-dark plate is a small
+       shift); a dark-substrate consumer who wants the pristine plate sets
+       `--glass-tint-strength: 0%` on the overlay band or uses `.glass-opaque`. SCOPED
+       to the overlay band ONLY — NOT `.glass-card`/`.glass-resting`/`.glass-dock`, so
+       the W55 default-path byte-identity canary (which tests those KINDS with a bare
+       no-ancestor div) stays GREEN; and the in-srgb `--surface-tint-*` family is never
+       touched (this edits only the in-oklab glass tint axis). */
+    :where(.glass-floating, .glass-overlay) {
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-aa);
+    }
+
     /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
        A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
        ratified): the declarative bucket above already carries AA on ALL engines (it
@@ -403,6 +449,14 @@
             .glass-card {
                 color: contrast-color(var(--card));
             }
+        }
+        /* AY.W-A11Y-PERF O-1 — the same contrast-color refinement for the
+           SELF-ENGAGED overlay band (the @container block above queries an ancestor;
+           the overlay band engages its own tint unconditionally, so its ink-flip
+           companion mirrors that). Progressive enhancement only — the declarative
+           darken above is the AA floor on all engines. */
+        :where(.glass-floating, .glass-overlay) {
+            color: contrast-color(var(--card));
         }
     }
 
@@ -520,7 +574,12 @@
         border: 1px solid var(--card-focus-border);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
-        contain: layout style;
+        /* AY.W-A11Y-PERF O-4 — upgrade `layout style` → include `paint` so the
+           maximal-glass nested backdrop-filter sample (a glass Button in this card)
+           does not escape the card box (the standard nested-backdrop-cost mitigation;
+           `contain: paint` clips DESCENDANTS only — the card's own rim/drop-shadow is
+           NOT clipped, device-verified). */
+        contain: layout style paint;
         transition:
             box-shadow var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);
@@ -550,6 +609,11 @@
         border: 1.5px solid var(--glass-border-wash);
         background: var(--glass-bg-wash);
         backdrop-filter: var(--glass-blur-wash);
+        /* AY.W-A11Y-PERF O-4 — paint containment so the glass button's own
+           backdrop-filter sample stays inside the box when it nests in a glass card /
+           dialog / dock (the nested-backdrop-cost mitigation; clips descendants only,
+           the button's own rim/shadow is unaffected — device-verified). */
+        contain: paint;
         color: var(--muted-foreground);
         /* AX.W52 §6 doctrine — the surface legs ride the bezier `--ease-standard`;
            the `scale` leg is reconciled onto `--spring-smooth` (was `--spring-snappy`)
@@ -977,8 +1041,8 @@
        `border` keyed to the system text colour so each tier pane reads as a boxed
        region. The selector group MIRRORS the ladder definition above (one source,
        not a hand-rolled re-list) so a future rung added to the material group
-       inherits the WHC edge for free — and a `.glass-material` div that became one
-       via the GlassPanel retire gets the edge with no per-component arm. */
+       inherits the WHC edge for free — and any `.glass-material` div picks up the
+       edge with no per-component arm. */
     .glass-material,
     .glass-wash,
     .glass-quiet,
@@ -1076,6 +1140,15 @@
 
 /* ── @supports fallbacks for non-backdrop-filter browsers ── */
 @layer components {
+    /* GUARD 1 — the NO-BLUR-AT-ALL engine (supports NEITHER the unprefixed NOR the
+       webkit form): paint an opaque-leaning plate so text stays legible without any
+       blur. AY.W-A11Y-PERF O-2b note: this is the floor for the theoretical
+       neither-supported case. The Safari ≤17 webkit-only trap (supports the `-webkit-`
+       form, so this `@supports not (… or …)` is FALSE and the fallback does NOT fire)
+       is closed at the SOURCE OF THE PREFIX: O-2a's build pass guarantees the shipped
+       dist carries the `-webkit-backdrop-filter:` pair, so a Safari-17 engine renders
+       the BLUR off the prefixed rule (it no longer falls through to a transparent
+       unprefixed-only surface). The trap closes where the prefix is emitted, not here. */
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
         .glass-wash {
             background: color-mix(in srgb, var(--card) 80%, transparent);
@@ -1094,6 +1167,36 @@
         }
         .glass-btn {
             background: color-mix(in srgb, var(--background) 92%, transparent);
+        }
+    }
+
+    /* GUARD 2 — the WEBKIT-ONLY engine (supports `-webkit-backdrop-filter` but NOT the
+       unprefixed `backdrop-filter` — Safari ≤17). With O-2a's build-emitted prefix the
+       shipped rung carries the `-webkit-backdrop-filter:` pair, so this engine PAINTS
+       the blur off that prefixed declaration. This guard exists to DOCUMENT-and-confirm
+       that path (and would re-assert the translucent glass identity if a future change
+       ever stripped the rung bg under this engine) — it re-states the rungs' translucent
+       glass-mix so a webkit-only engine that DID get the prefix keeps the glass look,
+       never the opaque GUARD-1 plate. The `proof:webkit-backdrop` gate asserts the
+       shipped dist carries BOTH guards. */
+    @supports ((-webkit-backdrop-filter: blur(1px)) and (not (backdrop-filter: blur(1px)))) {
+        .glass-wash {
+            background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-quiet {
+            background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-resting {
+            background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-floating {
+            background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-overlay {
+            background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
+        }
+        .glass-btn {
+            background: var(--glass-bg-wash);
         }
     }
 }

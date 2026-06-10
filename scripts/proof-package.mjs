@@ -235,7 +235,6 @@ import { StatusDot } from "@mkbabb/glass-ui/status-dot";
 import { Pulse } from "@mkbabb/glass-ui/pulse";
 import { PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
 import { ToggleChip } from "@mkbabb/glass-ui/toggle-chip";
-import { GlassPanel } from "@mkbabb/glass-ui/glass-panel";
 import { SortableList } from "@mkbabb/glass-ui/sortable-list";
 import { GlassTimeline } from "@mkbabb/glass-ui/timeline";
 import { LabeledInput } from "@mkbabb/glass-ui/labeled-field";
@@ -249,11 +248,11 @@ const runtimeSymbols = [
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
   TypewriterText, useTypewriter, StackedIconGroup,
   Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
-  GlassPanel, SortableList, GlassTimeline, LabeledInput,
+  SortableList, GlassTimeline, LabeledInput,
   ExpandableContainer, IconTooltip,
 ];
 
-if (runtimeSymbols.length < 35) throw new Error("packed fixture did not load expected symbols");
+if (runtimeSymbols.length < 34) throw new Error("packed fixture did not load expected symbols");
 `,
     );
 

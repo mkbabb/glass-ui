@@ -26,12 +26,12 @@ describe("proof:storybook-complete detect()", () => {
     it("violates on a component export with zero demonstration", () => {
         const comps = new Map([
             ["Button", "/src/components/ui/button/Button.vue"],
-            ["HeaderRibbon", "/src/components/custom/header-ribbon/HeaderRibbon.vue"],
+            ["UndemonstratedWidget", "/src/components/custom/undemonstrated-widget/UndemonstratedWidget.vue"],
         ]);
         const demonstrated = new Set(["Button"]);
         const { facts, violations } = detect(comps, demonstrated, {});
-        expect(facts.undemonstrated).toEqual(["HeaderRibbon"]);
-        expect(violations.some((v) => v.includes("HeaderRibbon"))).toBe(true);
+        expect(facts.undemonstrated).toEqual(["UndemonstratedWidget"]);
+        expect(violations.some((v) => v.includes("UndemonstratedWidget"))).toBe(true);
     });
 
     it("accepts a composed-by sub-component when its parent is demonstrated", () => {

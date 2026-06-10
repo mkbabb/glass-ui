@@ -1,0 +1,72 @@
+// AY.W-SCALE2 — proof:touch-target — the REAL touch-target runtime gate driver.
+//
+// The plan named `proof:touch-target` for waves but never possessed it (a phantom
+// gate per H-overfitting Finding 5). This makes it a REAL artefact: it runs the
+// tests-visual π workspace spec `touch-target.spec.ts` at the `coarse-touch` project
+// (so `@media (pointer: coarse)` matches), which reads back the COMPOSITED hit-rect of
+// the seven sub-44 form atoms and asserts ≥44×44 (WCAG 2.5.5).
+//
+// House style mirrors proof-dock-animation-live.mjs / proof-adaptive-glass.mjs: ESM
+// .mjs, FAIL-CLOSED when the π workspace + a live demo are present, befitting-SKIP
+// (exit 0, logged) only on a zero-device runner (no playwright / no demo). The
+// binding behavioral truth lives in the spec; this driver wires it into the gate set.
+
+import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
+const require = createRequire(import.meta.url);
+
+// The demo origin the lane drives. :5173 is the legacy default; the AY lane runs the
+// demo on :5199 — pass GLASS_UI_DEMO_PORT / GLASS_UI_DEMO_URL to override.
+const DEMO_PORT = process.env.GLASS_UI_DEMO_PORT ?? "5173";
+const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://localhost:${DEMO_PORT}`;
+
+function log(msg) {
+    console.log(`[proof:touch-target] ${msg}`);
+}
+
+// ── Device-presence probe — is the π workspace device backend installed? ──────────
+let playwrightPresent = false;
+try {
+    require.resolve("@playwright/test");
+    playwrightPresent = true;
+} catch {
+    playwrightPresent = false;
+}
+
+const specPath = `${ROOT}tests-visual/touch-target.spec.ts`;
+if (!playwrightPresent || !existsSync(specPath)) {
+    // Genuine device/workspace absence on a zero-dep runner → befitting-silent SKIP.
+    log(
+        `befitting-SKIP — the π workspace device backend is absent (playwright:${playwrightPresent}, spec:${existsSync(specPath)}). The binding readback runs where the workspace is installed.`,
+    );
+    process.exit(0);
+}
+
+// ── Run the workspace spec at the coarse-touch project (fail-CLOSED) ──────────────
+log(`running touch-target.spec.ts @ coarse-touch against ${DEMO_URL}`);
+const res = spawnSync(
+    "npm",
+    ["run", "test:touch", "--prefix", "tests-visual"],
+    {
+        cwd: ROOT,
+        stdio: "inherit",
+        env: {
+            ...process.env,
+            GLASS_UI_DEMO_PORT: DEMO_PORT,
+            GLASS_UI_DEMO_URL: DEMO_URL,
+        },
+    },
+);
+
+if (res.status !== 0) {
+    log(
+        `RED — a form atom's composited hit-rect is < 44×44 under coarse pointer (WCAG 2.5.5), or the spec failed. See the per-atom readback above + .cache/touch-target.json.`,
+    );
+    process.exit(1);
+}
+log("GREEN — every form atom paints a ≥44×44 coarse hit-rect (the touch-hit-area floor holds).");
+process.exit(0);

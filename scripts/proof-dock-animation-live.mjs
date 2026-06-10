@@ -272,19 +272,28 @@ function pageProbe() {
 
             // AY.W-DOCK2 — prefer the deterministic capture target (the plain
             // `data-testid="dock-capture"` collapsible dock — the slider dock at
-            // /dock/overview that reliably morphs, per W-DOCK1 §F). Fall back to the
-            // first collapsed dock if the testid surface is not present. (The probe
+            // /dock/overview that reliably morphs, per W-DOCK1 §F). (The probe
             // is serialized into the browser, so the selector is inlined — module
             // consts do NOT cross the page.evaluate boundary.)
             const capture = document.querySelector(
                 '.glass-dock[data-testid="dock-capture"]',
             );
+            // The capture dock mounts EXPANDED (its `:collapse-delay="600"` idle-
+            // collapses only AFTER a hover ends — a fresh mount stays open). Drive it
+            // to the collapsed baseline first: fire LEAVE, then wait out the collapse
+            // delay so the `.collapsed` class settles, making the subsequent expand a
+            // REAL morph (not a no-op on an already-expanded dock). This is the same
+            // collapse-first idiom W-DOCK1's capture harness uses.
+            if (capture && !capture.classList.contains("collapsed")) {
+                fire(LEAVE, capture);
+                await sleep(900);
+            }
             const dock =
                 capture && capture.classList.contains("collapsed")
                     ? capture
                     : findCollapsedDock();
             if (!dock) {
-                result.error = "no collapsed dock after re-mount";
+                result.error = "no collapsed dock after re-mount + collapse-settle";
                 resolve(result);
                 return;
             }
@@ -660,7 +669,11 @@ async function run() {
             }
         });
         await page.goto(TARGET_URL, { waitUntil: "networkidle" });
-        await page.waitForSelector(".glass-dock.collapsed", { timeout: 5000 });
+        // Wait for ANY dock to be present (the capture dock mounts EXPANDED — the
+        // probe drives it to the collapsed baseline itself before sampling the expand
+        // morph; gating on `.collapsed` here would hang on a fresh-mount demo where no
+        // dock idle-collapses without a prior hover).
+        await page.waitForSelector(".glass-dock", { timeout: 5000 });
         result = await page.evaluate(pageProbe);
     } catch (e) {
         // AX.W00 fail-CLOSED PROMOTION: when the π workspace is PRESENT (the

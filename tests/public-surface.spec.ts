@@ -14,7 +14,6 @@ import * as Dock from "../src/subpaths/dock";
 import * as DropdownMenuSurface from "../src/subpaths/dropdown-menu";
 import * as ExpandableContainerSurface from "../src/subpaths/expandable-container";
 import * as Forms from "../src/forms";
-import * as GlassPanelSurface from "../src/subpaths/glass-panel";
 import * as IconTooltipSurface from "../src/subpaths/icon-tooltip";
 import * as InfiniteScrollSurface from "../src/infinite-scroll";
 import * as Keyboard from "../src/keyboard";
@@ -136,7 +135,6 @@ const subpathRuntimeExports = [
     { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "toggle-chip", surface: ToggleChipSurface, name: "ToggleChip" },
-    { subpath: "glass-panel", surface: GlassPanelSurface, name: "GlassPanel" },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
@@ -225,7 +223,6 @@ const nonCoreRootRetirements = [
     "StackedIconGroup",
     "ToggleChip",
     "Aurora",
-    "GlassPanel",
     "SortableList",
     "GlassTimeline",
     "LabeledInput",

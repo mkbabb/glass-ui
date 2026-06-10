@@ -28,10 +28,10 @@ const colorPresets = [
     <StoryPage>
         <StorySection
             label="Two presets — one engine"
-            blurb="variant is a configuration BUNDLE, not a recolour of one curve. hero draws a
-                few big phasors with the nested epicycle circles ON and a warm trail feel; final
-                draws a denser elliptic spectrum with the epicycles OFF. The hue always comes
-                from the consumer's color."
+            blurb="The two variants are whole configurations, not recolours of one curve. The hero
+                preset draws a few big phasors with the nested epicycle circles showing and a warm
+                trail; the final preset draws a denser elliptic spectrum with the epicycles hidden.
+                The hue always comes from the consumer's colour."
         >
             <ShowcaseFrame pad="none" class="grid gap-4 sm:grid-cols-2">
                 <figure class="flex flex-col gap-2">

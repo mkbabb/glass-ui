@@ -41,9 +41,14 @@ const animateHeadline = !prefersReducedMotion;
 // tail end of typing). Once segment 2 completes, the cursor blinks
 // briefly then stops.
 const headlineSeg1 = "A design system ";
-const headlineSeg2 = "or mathematicians, writers & makers.";
+// The italic ℱ-glyph and the leading "or" must never break across a line ("f /
+// or…"), so the "or" rides a nowrap unit WITH the glyph; the rest of seg2 flows
+// normally (a full nowrap on the long tail would overflow a narrow viewport).
+const headlineSeg2Lead = "or";
+const headlineSeg2Rest = " mathematicians, writers & makers.";
 
 const seg1Done = ref(false);
+const seg2LeadDone = ref(false);
 
 const claims = [
     {
@@ -100,22 +105,35 @@ const claims = [
                             :interactive="false"
                             @complete="seg1Done = true"
                         />
-                        <span
-                            class="fourier-f font-display italic"
-                            :style="{
-                                color: 'var(--viz-fourier, hsl(358 72% 52%))',
-                                fontSize: '1.1em',
-                                fontVariationSettings: wonkSettings,
-                            }"
-                        >f</span>
+                        <!-- The ℱ-glyph + the leading "or" are ONE nowrap unit so
+                             the line never breaks mid-word ("f / or…"). -->
+                        <span class="whitespace-nowrap">
+                            <span
+                                class="fourier-f font-display italic"
+                                :style="{
+                                    color: 'var(--viz-fourier, hsl(358 72% 52%))',
+                                    fontSize: '1.1em',
+                                    fontVariationSettings: wonkSettings,
+                                }"
+                            >f</span><TypewriterText
+                                v-if="seg1Done"
+                                :text="headlineSeg2Lead"
+                                :base-speed="55"
+                                :variance="0.35"
+                                :error-rate="0.008"
+                                :first-animation-speed-factor="0.7"
+                                :start-delay="220"
+                                :cursor-visible="false"
+                                :interactive="false"
+                                @complete="seg2LeadDone = true"
+                            /></span>
                         <TypewriterText
-                            v-if="seg1Done"
-                            :text="headlineSeg2"
+                            v-if="seg2LeadDone"
+                            :text="headlineSeg2Rest"
                             :base-speed="55"
                             :variance="0.35"
                             :error-rate="0.008"
                             :first-animation-speed-factor="0.7"
-                            :start-delay="220"
                             :cursor-visible="true"
                             :cursor-blink="true"
                             :interactive="false"
@@ -123,14 +141,14 @@ const claims = [
                     </template>
                     <template v-else>
                         A design system
-                        <span
+                        <span class="whitespace-nowrap"><span
                             class="fourier-f font-display italic"
                             :style="{
                                 color: 'var(--viz-fourier, hsl(358 72% 52%))',
                                 fontSize: '1.1em',
                                 fontVariationSettings: wonkSettings,
                             }"
-                        >f</span>or
+                        >f</span>or</span>
                         mathematicians, writers &amp; makers.
                     </template>
                 </h2>
