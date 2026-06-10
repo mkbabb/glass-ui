@@ -269,7 +269,23 @@ function run() {
         facts.piSpecsPassed = piReport?.passed ?? null;
         facts.piSpecsFailed = piReport?.failed ?? null;
         facts.piExit = piExit;
-        if (piExit !== 0) {
+        // BROWSER-BINARY ABSENCE is device absence, not a failing readback: a CI
+        // runner ships the playwright PACKAGE (npm ci) but never the installed
+        // browsers (`playwright install` does not run there), so every launch
+        // errors "Executable doesn't exist". The cardinal architecture keeps the
+        // live readback local-only; the source-witness arms above still gate.
+        const browserAbsent =
+            piExit !== 0 &&
+            (piReport?.failures ?? []).every((f) => /Executable doesn't exist/.test(f)) &&
+            (piReport?.failures?.length
+                ? true
+                : /Executable doesn't exist/.test(res.stdout ?? ""));
+        if (piExit !== 0 && browserAbsent) {
+            facts.piBrowserAbsent = true;
+            console.log(
+                "proof:substrate-cohesion — π browsers not installed on this runner (device absence); the SOURCE-WITNESS arms ran, the live readback is local-only.",
+            );
+        } else if (piExit !== 0) {
             if (piReport?.failures?.length) violations.push(...piReport.failures);
             else
                 violations.push(
