@@ -48,7 +48,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-const DOCK_ROUTE = "/navigation/dock-layers";
+const DOCK_ROUTE = "/dock/layers";
 const FRAME_MS = 1000 / 60;
 const ONSET_TOLERANCE_MS = FRAME_MS + 1e-3;
 const MIN_MORPH_FRAMES = 5;
@@ -422,7 +422,7 @@ function readSources(ROOT) {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ORCHESTRATOR_SINGLE_ARTIFACT",
         "AX-dock-orchestrator-single",

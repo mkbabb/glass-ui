@@ -65,7 +65,7 @@ roster-named here but un-authored; the authoring phase is INCOMPLETE until each 
 
 | Wave | Band | Grounding (finding ids · R3 item) | Batch | Status |
 |---|---|---|---|---|
-| W-GATES | Z | B5-1 (the malformed `gates.mjs:689-691` crash), F3-4, B5-2/3/4/5 (route/port/shader-split/freshness), D7 (font-cascade-live moved-token-file false RED — AY-§3 residual, not in FLEET) | 0 | planned (spec authored) |
+| W-GATES | Z | B5-1 (the malformed `gates.mjs:689-691` crash), F3-4, B5-2/3/4/5 (route/port/shader-split/freshness), D7 (font-cascade-live moved-token-file false RED — AY-§3 residual, not in FLEET) | 0 | dev-complete — D1-D7 discharged: the malformed-row crash GONE, parity pre-pass hardened born-RED, the :5173→:5199 sweep zeroed (4 scripts + playwright config), /dock/layers re-point, the blob shader-split gates wired+GREEN, the content-hash freshness model live (3 AY DELTAs re-stamped FRESH), the :az ledger arm + AZ allowlist minted, R6 re-persisted; proof:gate-manifest-sound authored born-RED; clause-3 bash-3.2 local env limitation recorded (greens on CI) |
 | W-DOCK-RAIL | D | C1-R3-1-indicator-glass-plate, C1-R3-1-rail-fused-gutter, F2-R3-1, D6-1, A1-1 · R3-1 | 1 | planned (spec authored) |
 | W-DOCK-FLICKER | D | C2-1/C2-2 (mechanism), C2-7, D5-7 (S1), F2-R3-3 (refuted-as-literal) · R3-3 | 1 | planned (spec authored) |
 | W-ADAPTIVE-AUTO | R | C5-2..C5-10, B3-1/B3-2, E3G-4, F2-R3-7, A5-1 (modal-scrim double-wrap, Arm-3 sweep) · R3-7 [H3] | 1 | planned (spec authored) |

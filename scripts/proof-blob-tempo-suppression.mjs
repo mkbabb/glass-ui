@@ -41,6 +41,11 @@ function cliPaths() {
         ROOT,
         BLOB,
         RENDERER: resolve(BLOB, "composables/useMetaballRenderer.ts"),
+        // AZ.W-GATES (D5-class) — the uTime UPLOAD write (`gl.uniform1f(U.uTime,
+        // simTimeMs / 1000)`) carved out of the renderer into the uniform-upload
+        // leaf; the uTimeFromSim assert reads this file (the renderer kept the
+        // tempo-scaled STEP integration, the leaf does the uTime write).
+        UPLOAD: resolve(BLOB, "composables/uploadBlobUniforms.ts"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_TEMPO_SUPPRESSION_ARTIFACT",
             "AW-blob-tempo-suppression",
@@ -60,9 +65,14 @@ function walk(dir, acc = []) {
 }
 
 function run() {
-    const { ROOT, BLOB, RENDERER, ARTIFACT } = cliPaths();
+    const { ROOT, BLOB, RENDERER, UPLOAD, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
+
+    // AZ.W-GATES (D5-class): the uTime upload write relocated to the uniform-upload
+    // leaf; read it for the uTime asserts. The renderer kept the tempo-scaled STEP
+    // integration (stepMs / simTimeMs accum).
+    const uploadSrc = existsSync(UPLOAD) ? stripComments(readFileSync(UPLOAD, "utf8")) : "";
 
     if (!existsSync(RENDERER)) {
         violations.push("useMetaballRenderer.ts is absent");
@@ -70,10 +80,11 @@ function run() {
         const raw = readFileSync(RENDERER, "utf8");
         const src = stripComments(raw);
 
-        // 1 + 2: tempo scales the STEP; uTime reads the tempo-integrated clock.
+        // 1 + 2: tempo scales the STEP (renderer); uTime reads the tempo-integrated
+        // clock (the upload leaf, post-carve).
         const tempoStep = /const\s+stepMs\s*=\s*tempo\s*\*\s*dtMs/.test(src);
         const simAccum = /simTimeMs\s*\+=\s*stepMs/.test(src);
-        const uTimeFromSim = /U\.uTime\s*,\s*simTimeMs\s*\/\s*1000/.test(src);
+        const uTimeFromSim = /U\.uTime\s*,\s*simTimeMs\s*\/\s*1000/.test(uploadSrc);
         facts.tempoScalesStep = tempoStep;
         facts.simAccumulates = simAccum;
         facts.uTimeFromSim = uTimeFromSim;
@@ -87,11 +98,12 @@ function run() {
             );
         if (!uTimeFromSim)
             violations.push(
-                "uTime is NOT uploaded from the tempo-integrated `simTimeMs` — uploading the substrate's absolute clock makes the FBM JUMP on a tempo change",
+                "uTime is NOT uploaded from the tempo-integrated `simTimeMs` (composables/uploadBlobUniforms.ts) — uploading the substrate's absolute clock makes the FBM JUMP on a tempo change",
             );
 
-        // The bite: uTime must NOT be `tempo * timeSec` (clock scaling).
-        const clockScaled = /U\.uTime\s*,\s*tempo\s*\*/.test(src) || /U\.uTime\s*,\s*timeSec\s*\*\s*tempo/.test(src);
+        // The bite: uTime must NOT be `tempo * timeSec` (clock scaling) — read the
+        // upload leaf where the uTime write now lives.
+        const clockScaled = /U\.uTime\s*,\s*tempo\s*\*/.test(uploadSrc) || /U\.uTime\s*,\s*timeSec\s*\*\s*tempo/.test(uploadSrc);
         facts.clockScaled = clockScaled;
         if (clockScaled)
             violations.push(

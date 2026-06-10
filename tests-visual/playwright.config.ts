@@ -19,7 +19,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 // The demo origin the whole lane drives. `npm run dev` (bare `vite`) serves it.
-const DEMO_PORT = Number(process.env.GLASS_UI_DEMO_PORT ?? 5173);
+const DEMO_PORT = Number(process.env.GLASS_UI_DEMO_PORT ?? 5199);
 const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://127.0.0.1:${DEMO_PORT}`;
 
 // The library workspace root (one dir up — the `npm run dev` cwd).

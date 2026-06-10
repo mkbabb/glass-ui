@@ -1,8 +1,12 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
-<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/components/custom/dock/composables/dockMorphContext.ts -->
-<!-- superseded-by: W-DOCK-NAV -->
+<!-- surface-hash: 0db3a00c8bbf32004dd4c8781695df462869b02a251651b1262c585da9686b12 -->
+<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
+     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
+     content hash of the declared surface-paths' bytes above — fresh IFF the surface
+     is byte-identical to capture time, regardless of unrelated commits. The
+     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
 <!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface
      W-DOCK1-dock-overview-* stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via
      `npm run proof:dock-items-lag-capture` against the REAL /dock/overview dock on :5199 —

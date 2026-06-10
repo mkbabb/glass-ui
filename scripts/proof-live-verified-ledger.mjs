@@ -47,7 +47,7 @@
 // Also runnable as the commit-msg hook (.githooks/commit-msg) for the fast local
 // bite; the CI job re-runs it so a `--no-verify` bypass is still caught.
 
-import { execSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
@@ -61,23 +61,25 @@ const PROGRESS = join(ROOT, `docs/tranches/${TRANCHE}/PROGRESS.md`);
 const VISUAL_DIR = join(ROOT, `docs/tranches/${TRANCHE}/audit/visual`);
 const ALLOWLIST_PATH = join(VISUAL_DIR, "VISUAL-ALLOWLIST.json");
 
-// ── AY.W-LIVE1: the FRESHNESS clause (the depth-header — closes the D2 stale-DELTA
-// residual). A present-but-STALE PNG (the surface regressed AFTER the capture) used
-// to ship CI-green; the freshness clause asserts a captured DELTA is NOT stale
-// relative to the source it depicts, via the git-ancestry of the declared headers:
-//   <!-- capture-commit: <SHA> -->     the commit the capture was taken against
-//   <!-- surface-paths: <glob,glob> --> the source files that PAINT the captured surface
-// The gate runs `git log -1 --format=%H -- <surface-paths>` (the surface's last-touch)
-// and asserts it is an ancestor of the capture commit (the surface did not change
-// AFTER the capture). FATAL under --strict-freshness (the :ax backlog tracker + the
-// close-verification arm set it); on the bare active arm it reports the staleness as
-// a non-fatal NOTE during the documented backfill window (the W-CARDINAL-INFRA §4a
-// un-lockout invariant — the active :ay commit/CI gate is NOT a freshness lockout;
-// the owed re-captures are AY.W-DELTA0 / the owed-DELTA sweep's named-successor job).
-// The SELF-TEST exercises a synthetic header-bearing stale row EVERY run (the bite is
-// un-skippable regardless of the flag), and a DELTA that DECLARES headers but is stale
-// REDs even on the bare arm (a declared-then-stale header is never grandfathered —
-// only the header-LESS backfill window is graced).
+// ── The FRESHNESS clause (the depth-header — closes the stale-DELTA residual). A
+// present-but-STALE PNG (the surface regressed AFTER the capture) used to ship
+// CI-green; the freshness clause asserts a captured DELTA is NOT stale relative to
+// the source it depicts. AZ.W-GATES (D6) migrated the model OFF the git-ancestry
+// TREADMILL (a frozen capture-commit vs the surface's moving last-touch — every
+// unrelated commit re-staled it) ONTO a CONTENT HASH of the declared surface bytes:
+//   <!-- surface-paths: <path,path> --> the source files that PAINT the captured surface
+//   <!-- surface-hash: <sha256 hex> --> the hash of those files' bytes AT capture time
+// The gate recomputes the hash of the CURRENT surface-paths bytes and asserts it is
+// byte-identical to the declared value (the relevant pixels are unchanged since
+// capture) — fresh IFF byte-identical, regardless of how many unrelated commits
+// touched the file. FATAL under --strict-freshness (the close-verification arm sets
+// it); on the bare active arm staleness is a non-fatal NOTE during the documented
+// backfill window (the un-lockout invariant — the owed re-captures are the
+// owned-wave DELTA / W-DELTA0 named-successor job). The SELF-TEST exercises a
+// synthetic header-bearing stale row EVERY run (the bite is un-skippable regardless
+// of the flag), and a DELTA that DECLARES headers but is stale REDs even on the bare
+// arm (a declared-then-stale header is never grandfathered — only the header-LESS
+// backfill window is graced).
 const STRICT_FRESHNESS = process.argv.includes("--strict-freshness");
 
 // ── The curated visual allowlist — the `complete` waves that changed pixels ────
@@ -187,66 +189,76 @@ function baseName(ref) {
     return idx === -1 ? ref : ref.slice(idx + 1);
 }
 
-// ── AY.W-LIVE1: the freshness verdict (git-ancestry of the declared headers) ────
+// ── AZ.W-GATES (D6): the freshness verdict — CONTENT-HASH, not git-ancestry ──────
+// The git-ancestry model (a FROZEN capture-commit SHA compared to the surface's
+// MOVING last-touch via `git merge-base --is-ancestor`) was a TREADMILL: the
+// capture-commit never advances on its own, so EVERY unrelated commit touching any
+// declared surface-path re-staled the DELTA — it tracked commit-churn, not pixels.
+// The content-hash model binds freshness to the CONTENT of the declared surface
+// files: fresh IFF the declared surface bytes are byte-identical to capture time,
+// regardless of how many unrelated commits touched the file. NO git involved.
+//
+// The header (computed ONCE at capture time, the read-blob-shaders/read-dock-css
+// concat idiom):
+//   <!-- surface-paths: <comma-separated repo-relative paths> -->
+//   <!-- surface-hash: <sha256 hex of the concatenated surface-paths' bytes> -->
+
 /**
- * Parse the `<!-- capture-commit: -->` + `<!-- surface-paths: -->` headers from a
- * DELTA doc and assert the surface's last-touch commit is an ancestor of (or equal
- * to) the capture commit (i.e. the surface did NOT change after the capture).
+ * The PURE surface-hash: read each path's bytes in the declared order, join with a
+ * single "\n" separator (the read-dock-css.mjs concat idiom), sha256 the buffer,
+ * return the hex. Exported for the W-DELTA0 capture step that stamps the header.
+ *
+ * @param {string} root the repo root
+ * @param {string[]} surfacePaths repo-relative paths in declared order
+ * @returns {string} the sha256 hex (or "" if any path is unreadable)
+ */
+export function surfaceHash(root, surfacePaths) {
+    const bufs = [];
+    for (const p of surfacePaths) {
+        const abs = join(root, p);
+        if (!existsSync(abs)) return "";
+        bufs.push(readFileSync(abs));
+    }
+    return createHash("sha256").update(bufs.join("\n")).digest("hex");
+}
+
+/**
+ * Parse the `<!-- surface-paths: -->` + `<!-- surface-hash: -->` headers from a
+ * DELTA doc and assert the CURRENT surface bytes hash to the declared value (the
+ * relevant pixels are byte-identical to capture time). PURE over the doc + a root.
  *
  * @param {string} doc the DELTA markdown
+ * @param {string} root the repo root
  * @returns {{state:"fresh"} | {state:"stale", reason:string} | {state:"no-header"}}
- *   - "fresh"     : headers present, the surface is an ancestor of the capture.
- *   - "stale"     : headers present, the surface changed AFTER the capture (RED).
+ *   - "fresh"     : headers present, the surface hashes to the declared value.
+ *   - "stale"     : headers present, a declared surface drifted since capture (RED).
  *   - "no-header" : the headers are absent (the backfill-window grace boundary —
  *                   RED under --strict-freshness, a non-fatal NOTE on the bare arm).
  */
-function freshnessVerdict(doc) {
-    const cap = doc.match(/<!--\s*capture-commit:\s*([0-9a-fA-F]{7,40})\s*-->/);
+function freshnessVerdict(doc, root = ROOT) {
     const sp = doc.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
-    if (!cap || !sp || !sp[1].trim()) return { state: "no-header" };
-    const captureSha = cap[1].trim();
+    const sh = doc.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
+    if (!sp || !sp[1].trim() || !sh) return { state: "no-header" };
     const surfacePaths = sp[1]
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean);
-    const git = (cmd) => {
-        try {
-            return execSync(cmd, { cwd: ROOT, stdio: ["ignore", "pipe", "ignore"] })
-                .toString()
-                .trim();
-        } catch {
-            return "";
-        }
+    const declared = sh[1].trim().toLowerCase();
+    // A declared path that no longer exists is a real drift (the surface moved/
+    // deleted since capture) → stale, re-capture.
+    for (const p of surfacePaths) {
+        if (!existsSync(join(root, p)))
+            return {
+                state: "stale",
+                reason: `surface path ${p} no longer exists — the captured surface moved/deleted since capture; re-capture`,
+            };
+    }
+    const current = surfaceHash(root, surfacePaths);
+    if (current === declared) return { state: "fresh" };
+    return {
+        state: "stale",
+        reason: `surface ${surfacePaths.join(",")} changed since capture (hash ${declared.slice(0, 12)} → ${current.slice(0, 12)}) — re-capture`,
     };
-    // The capture commit must resolve (a real object in this repo).
-    if (!git(`git cat-file -t ${captureSha}`)) {
-        return {
-            state: "stale",
-            reason: `capture-commit ${captureSha} is not a commit in this repo — the freshness header is unverifiable`,
-        };
-    }
-    const surfaceSha = git(
-        `git log -1 --format=%H -- ${surfacePaths.map((p) => `'${p}'`).join(" ")}`,
-    );
-    if (!surfaceSha) {
-        // No commit ever touched the declared surface paths — treat as fresh (the
-        // surface is unchanged relative to any capture; a typo in the paths would
-        // show as a never-touched surface, which the wave author owns).
-        return { state: "fresh" };
-    }
-    // surface is an ancestor of (or ==) capture  ⇒  fresh.
-    try {
-        execSync(`git merge-base --is-ancestor ${surfaceSha} ${captureSha}`, {
-            cwd: ROOT,
-            stdio: "ignore",
-        });
-        return { state: "fresh" };
-    } catch {
-        return {
-            state: "stale",
-            reason: `surface ${surfacePaths.join(",")} changed at ${surfaceSha.slice(0, 12)} after the capture commit ${captureSha.slice(0, 12)} — re-capture`,
-        };
-    }
 }
 
 // ── AY.W-LIVE1 (R6): the GREEN-on-real-surface verdict ──────────────────────────
@@ -382,40 +394,36 @@ function deltaSatisfied(wave, opts = {}) {
         // bare arm: NOTE, do not block — recorded below by the caller.
     }
 
-    // AY.W-LIVE1 freshness clause (the depth-header). Layered ON the own-surface bar.
+    // The freshness clause (the content-hash depth-header). Layered ON the
+    // own-surface bar. AZ.W-GATES (D6): the `superseded-by` grace is RETIRED with the
+    // git-ancestry model — under the content hash a DELTA whose surface is
+    // byte-identical to capture is already `fresh` (no marker needed), and a DELTA
+    // whose surface DRIFTED is `stale` (the marker no longer hides a real change; the
+    // superseded successor wave re-captures under its OWN id with its own fresh hash).
     const fresh = freshnessVerdict(doc);
     if (fresh.state === "stale") {
-        // A stale DELTA whose surface was RE-CAPTURED by a later own-surface
-        // live-verified wave is graced on the bare arm: the FRESH evidence exists, just
-        // under the named successor wave (declared by `<!-- superseded-by: <wave> -->`).
-        // This is the documented backfill window (W-LIVE1 decision §"Residual") — the
-        // honest capture-commit + the genuine staleness is RECORDED, the fresher pixels
-        // are named, the re-capture-under-this-wave-id is W-DELTA0's. RED under
-        // --strict-freshness (the close-verification arm sees every stale capture).
-        const sup = doc.match(/<!--\s*superseded-by:\s*([\w-]+)\s*-->/);
-        if (sup && !STRICT_FRESHNESS)
-            return {
-                ok: true,
-                pngs: own.pngs,
-                freshnessNote: "stale-superseded",
-                supersededBy: sup[1],
-                staleReason: fresh.reason,
-                gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null,
-            };
+        // A real content drift since capture. Graced on the bare arm as a NOTE (the
+        // owed re-capture is the owning-wave DELTA / W-DELTA0 named-successor job);
+        // RED under --strict-freshness (the close-verification arm).
+        if (STRICT_FRESHNESS)
+            return { ok: false, reason: `${wave}-DELTA stale: ${fresh.reason}` };
         return {
-            ok: false,
-            reason: `${wave}-DELTA stale: ${fresh.reason}${sup ? ` (superseded-by ${sup[1]}; RED under --strict-freshness, owed an own-wave-id re-capture — AY.W-DELTA0)` : ""}`,
+            ok: true,
+            pngs: own.pngs,
+            freshnessNote: "stale",
+            staleReason: fresh.reason,
+            gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null,
         };
     }
     if (fresh.state === "no-header") {
         // The grace boundary: a header-LESS DELTA reds ONLY under --strict-freshness
-        // (the :ax backlog tracker + the close-verification arm). On the bare active
-        // arm it stays GREEN with a NOTE (the W-CARDINAL-INFRA §4a un-lockout — the
-        // owed re-capture is the named-successor AY.W-DELTA0 / owed-DELTA sweep).
+        // (the close-verification arm). On the bare active arm it stays GREEN with a
+        // NOTE (the un-lockout — the owed re-capture is the named-successor W-DELTA0 /
+        // owed-DELTA sweep).
         if (STRICT_FRESHNESS)
             return {
                 ok: false,
-                reason: `${wave}-DELTA lacks the freshness headers (capture-commit + surface-paths) the protocol mandates — add them or re-capture (AY.W-LIVE1 / W-DELTA0)`,
+                reason: `${wave}-DELTA lacks the freshness headers (surface-paths + surface-hash) the protocol mandates — add them or re-capture (AZ.W-GATES D6 / W-DELTA0)`,
             };
         return { ok: true, pngs: own.pngs, freshnessNote: "no-header", gateNote: gateVerdict.state === "red" ? gateVerdict.reason : null };
     }
@@ -455,16 +463,19 @@ function evaluateRow(row, allowlist = new Set()) {
         const d = deltaSatisfied(row.wave, { ownSurface: true });
         if (!d.ok)
             return `${row.wave} (line ${row.line}): status \`${token}\` AND on the visual allowlist (a pixel-changing wave) but ${d.reason}. An allowlisted close owes an own-surface DELTA at ≥2 viewports × {light,dark} — capture it or remove the wave from VISUAL-ALLOWLIST.json.`;
-        // AY.W-LIVE1: a header-LESS own-surface DELTA passed the bare-arm grace; record
-        // the freshness NOTE (the owed re-capture, named-successor AY.W-DELTA0). Under
+        // A header-LESS own-surface DELTA passed the bare-arm grace; record the
+        // freshness NOTE (the owed re-capture, named-successor W-DELTA0). Under
         // --strict-freshness this path is unreachable (d.ok would be false above).
         if (d.freshnessNote === "no-header")
             freshnessNotes.push(
-                `${row.wave} (line ${row.line}): own-surface DELTA present but lacks the AY.W-LIVE1 freshness headers (capture-commit + surface-paths) — graced on the bare arm, owed a re-capture (AY.W-DELTA0 / owed-DELTA sweep). RED under --strict-freshness.`,
+                `${row.wave} (line ${row.line}): own-surface DELTA present but lacks the AZ.W-GATES freshness headers (surface-paths + surface-hash) — graced on the bare arm, owed a re-capture (W-DELTA0 / owed-DELTA sweep). RED under --strict-freshness.`,
             );
-        if (d.freshnessNote === "stale-superseded")
+        // AZ.W-GATES (D6): the content-hash recomputed STALE — a declared surface
+        // drifted since capture. Graced on the bare arm as a NOTE (owed an own-wave-id
+        // re-capture that re-stamps the surface-hash); RED under --strict-freshness.
+        if (d.freshnessNote === "stale")
             freshnessNotes.push(
-                `${row.wave} (line ${row.line}): own-surface DELTA stale (${d.staleReason}) but RE-CAPTURED by ${d.supersededBy} (the fresh own-surface evidence; declared superseded-by) — graced on the bare arm, owed an own-wave-id re-capture (AY.W-DELTA0). RED under --strict-freshness.`,
+                `${row.wave} (line ${row.line}): own-surface DELTA STALE — ${d.staleReason} — graced on the bare arm, owed an own-wave-id re-capture that re-stamps the surface-hash (W-DELTA0). RED under --strict-freshness.`,
             );
         // AY.W-LIVE1 (R6): the DELTA cites a gate artefact that persists non-GREEN —
         // graced on the bare arm, RED under --strict-freshness (where d.ok is already
@@ -523,34 +534,18 @@ const selfTests = [
             : "flagged",
     },
     {
-        // AY.W-LIVE1: the freshness self-test — a DELTA carrying freshness headers
-        // whose surface-paths last-touch POST-DATES the capture-commit MUST flag
-        // `state:"stale"`. Deterministic via two known repo objects: capture-commit
-        // = the ROOT commit (always an ancestor of every later touch), surface-paths
-        // = `package.json` (always touched after the root commit). The bite is
-        // un-skippable EVERY run, regardless of --strict-freshness.
-        label: "freshness — DELTA headers declare a capture-commit (root) PRECEDING the surface last-touch (package.json) → stale",
-        flag: (() => {
-            let rootSha = "";
-            try {
-                rootSha = execSync("git rev-list --max-parents=0 HEAD", {
-                    cwd: ROOT,
-                    stdio: ["ignore", "pipe", "ignore"],
-                })
-                    .toString()
-                    .trim()
-                    .split("\n")
-                    .pop()
-                    .trim();
-            } catch {
-                rootSha = "";
-            }
-            // No git / detached snapshot — the self-test cannot run the ancestry probe;
-            // treat as flagged (do not silently pass) so a git-less runner reds loudly.
-            if (!rootSha) return "no-git";
-            const synthetic = `<!-- capture-commit: ${rootSha} -->\n<!-- surface-paths: package.json -->`;
-            return freshnessVerdict(synthetic).state === "stale" ? "flagged" : null;
-        })(),
+        // AZ.W-GATES (D6): the content-hash freshness self-test — a DELTA declaring
+        // freshness headers whose surface-hash does NOT match the CURRENT surface
+        // bytes MUST flag `state:"stale"`. Deterministic: surface-paths = a real
+        // repo file (package.json), surface-hash = an all-zero hex that can never
+        // equal a real content hash. The bite is un-skippable EVERY run, no git.
+        label: "freshness — DELTA declares surface-paths (package.json) with a WRONG surface-hash (all-zero) → stale",
+        flag:
+            freshnessVerdict(
+                `<!-- surface-paths: package.json -->\n<!-- surface-hash: ${"0".repeat(64)} -->`,
+            ).state === "stale"
+                ? "flagged"
+                : null,
     },
     {
         // AY.W-LIVE1 (R1): the IHDR fabricated-viewport self-test — a `-mobile-`

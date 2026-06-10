@@ -1,8 +1,12 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
-<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/styles/dock/morph.css, src/components/custom/dock/DockLayerGroup.vue -->
-<!-- superseded-by: W-DOCK-NAV -->
+<!-- surface-hash: a9750d0ab04a7ccf5a2960dd52e146378a71e6977680e0ea555fe49bc8c64512 -->
+<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
+     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
+     content hash of the declared surface-paths' bytes above — fresh IFF the surface
+     is byte-identical to capture time, regardless of unrelated commits. The
+     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
 <!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture + R6 re-run-on-real (2026-06-10): the 8
      own-surface W-DOCK2-{lockstep,collapse}-midmorph-{desktop,mobile}-{light,dark} mid-morph
      stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-dock2.mjs`

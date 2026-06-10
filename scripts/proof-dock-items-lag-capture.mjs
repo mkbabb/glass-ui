@@ -421,7 +421,7 @@ function piWorkspacePresent(ROOT) {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const VISUAL_DIR = resolve(ROOT, "docs/tranches/AY/audit/visual");
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ITEMS_LAG_CAPTURE_ARTIFACT",

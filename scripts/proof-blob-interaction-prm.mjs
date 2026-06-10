@@ -28,6 +28,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { SpringProgress } from "@mkbabb/keyframes.js";
+import { readBlobShaders } from "./read-blob-shaders.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 function stripComments(src) {
@@ -77,6 +78,12 @@ function run() {
     const facts = {};
 
     const frag = existsSync(FRAG) ? readFileSync(FRAG, "utf8") : "";
+    // AZ.W-GATES (D5): the shader-split authority — the #define TRAIL_N + the
+    // uniform vec2 uTrailPos[TRAIL_N] declarations relocated to
+    // shaders/metaball-uniforms.glsl.ts while the loop BODY stayed in the frag.
+    // The trail-define + uTrailPos uniform asserts read this concat; the loop
+    // assert (the dynamic break) stays on `frag` (the body never moved).
+    const shaders = readBlobShaders(ROOT);
     const blobFiles = existsSync(BLOB) ? walk(BLOB) : [];
 
     // ── Sub-check 1: VOLUME-PRESERVE (static) ────────────────────────────────
@@ -131,11 +138,14 @@ function run() {
     }
 
     // ── Sub-check 3: TRAIL-FIXED-ARRAY (static) ─────────────────────────────
-    const trailDefine = /#define TRAIL_N \d+/.test(frag);
-    const trailArray = /uniform vec2 uTrailPos\[TRAIL_N\]/.test(frag);
+    // The define + the uTrailPos uniform read the shader-split AUTHORITY concat
+    // (they live in metaball-uniforms.glsl.ts post-carve); the dynamic-break loop
+    // reads the frag (the body stayed there).
+    const trailDefine = /#define TRAIL_N \d+/.test(shaders);
+    const trailArray = /uniform vec2 uTrailPos\[TRAIL_N\]/.test(shaders);
     const trailDynBreak =
         /for \(int i = 0; i < TRAIL_N; i\+\+\) \{\s*if \(i >= uTrailCount\) break;/.test(frag);
-    const trailIsUniform = /uniform\s+int\s+TRAIL_N/.test(frag);
+    const trailIsUniform = /uniform\s+int\s+TRAIL_N/.test(shaders);
     facts.trail = { trailDefine, trailArray, trailDynBreak, trailIsUniform };
     if (!trailDefine || !trailArray)
         violations.push(
@@ -210,7 +220,7 @@ function run() {
                 "the demo story does not drive the shipped interaction (pointerAttraction + stretch + the click impulse) — no orphaned substrate",
             );
     } else {
-        violations.push("the demo story demo/stories/substrates/blob-interaction.vue is absent");
+        violations.push("the demo story demo/stories/substrates/blob.vue is absent");
     }
 
     const status = violations.length === 0 ? "pass" : "fail";

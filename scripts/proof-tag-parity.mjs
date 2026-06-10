@@ -114,6 +114,18 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // staged as a shared-file delta (W-CLOSE1 reported it; package.json/gates.mjs are
     // orchestrator-owned in this lane).
     ["proof:no-legacy-commentary", "AV.W12 — the api/root-barrel no-legacy-commentary src-scan; ci-promotion is the orchestrator-owned gates.mjs delta (reported by W-CLOSE1); local-justified until staged."],
+    // AZ.W-GATES — the two blob render arms wired into the manifest at Batch 0
+    // (they were dangling-by-disuse keys in NO aggregate). Their source-scan halves
+    // read the goo-blob shader/renderer/upload tree, but they are demo-LIVE blob
+    // arms (the binding close is the live blob render on a real GPU, like
+    // proof:blob-live-truth) — local-only by design, not CI. Recorded here so the
+    // static-gate classifier does not RED them as silently-local.
+    ["proof:blob-interaction-prm", "AW.W10 blob interaction PRM/frame-rate/no-orphan arm wired at AZ.W-GATES; demo-live blob arm (the binding close is the live GPU render, like proof:blob-live-truth) — local by design, not CI."],
+    ["proof:blob-tempo-suppression", "AW.W11.c blob master-tempo arm wired at AZ.W-GATES; demo-live blob arm (the binding close is the live GPU render) — local by design, not CI."],
+    // AZ.W-GATES active-tranche gate-manifest-soundness meta-gate; promoted to ci by
+    // its own wave at AZ close (the JUSTIFIED_LOCAL_ONLY precedent for an
+    // active-tranche meta-gate, like proof:ay-w0-reground / proof:blob-config).
+    ["proof:gate-manifest-sound", "AZ.W-GATES active-tranche gate-manifest-soundness meta-gate; promoted at AZ close."],
 ]);
 
 /** Does a gate's backing script spawn a browser (a Playwright/live gate)? */
@@ -143,6 +155,18 @@ export function classify({ gates, pkg, isPlaywright }) {
     const staticScanGates = [];
 
     for (const g of gates) {
+        // AZ.W-GATES (D2) — the WELL-FORMED presence assert, BEFORE the scriptFor()
+        // continue. A row with no id/cmd (the D1 malformed-row class) would fall
+        // through scriptFor() as a silent `continue`; this surfaces it as a
+        // violation so the parity meta-gate can no longer be blind to it.
+        const hasId = typeof g.id === "string" && g.id.trim().length > 0;
+        const hasCmd = typeof g.cmd === "string" && g.cmd.trim().length > 0;
+        if (!hasId || !hasCmd) {
+            violations.push(
+                `manifest row has no ${!hasId ? "id" : ""}${!hasId && !hasCmd ? "/" : ""}${!hasCmd ? "cmd" : ""} (${JSON.stringify(g)}) — every gates.mjs row must carry a non-empty id AND cmd (a cmd-less row crashes \`proof:all\`)`,
+            );
+            continue;
+        }
         if (g.sibling) continue;
         const script = scriptFor(g, pkg);
         if (!script) continue; // not a static src-scan (vitest/bash/composite/gates.mjs)
@@ -199,13 +223,24 @@ function run() {
         pkg: synthPkg,
         isPlaywright: synthIsPw,
     });
+    // AZ.W-GATES (D2) — the cmd-less row self-test: a malformed { tags } row with
+    // no id/cmd MUST flag (the D1 crash class can no longer be silently skipped).
+    const selfMalformed = classify({
+        gates: [{ tags: ["local"] }],
+        pkg: synthPkg,
+        isPlaywright: synthIsPw,
+    });
     const selfErrors = [];
     // (the header cross-check adds notes for the 11 header names absent from the
     // synthetic gate list — filter to the synthetic gate's own violation)
     const staticFlagged = selfStatic.violations.some((v) => v.startsWith("synth:static"));
     const liveFlagged = selfLive.violations.some((v) => v.startsWith("synth:live"));
+    const malformedFlagged = selfMalformed.violations.some((v) =>
+        v.startsWith("manifest row has no"),
+    );
     if (!staticFlagged) selfErrors.push("a static gate without ci was NOT flagged");
     if (liveFlagged) selfErrors.push("a Playwright gate without ci WAS wrongly flagged");
+    if (!malformedFlagged) selfErrors.push("a cmd-less manifest row was NOT flagged");
     if (selfErrors.length) {
         console.error("[proof:tag-parity] SELF-TEST FAILED — the classifier mis-fired:");
         for (const e of selfErrors) console.error(`  ✗ ${e}`);

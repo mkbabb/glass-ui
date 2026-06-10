@@ -75,7 +75,29 @@ const KNOWN_DANGLING = new Map([]);
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { GATES, gatesFor } from "./gates.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+
+// AZ.W-GATES (D2) — the STRUCTURAL well-formed pre-pass. The cmd-LITERAL parse
+// below (assert C) can only SEE a row that carries a `cmd: "…"` literal; a row
+// with NO id and NO cmd (the AZ.W-GATES D1 malformed-row class — it crashed
+// `proof:all` because `npm run undefined` exits 1) produces no literal, so the
+// parse reports "0 ghost cmds" while the malformed row sits in the manifest. This
+// pre-pass closes that blind spot: every row in the union of the three aggregate
+// sets must carry a non-empty `id` AND a non-empty `cmd`. PURE over a gates array
+// so the self-test can drive it with a synthetic cmd-less fixture row.
+export function wellFormedViolations(gates) {
+    const out = [];
+    gates.forEach((g, i) => {
+        const hasId = typeof g.id === "string" && g.id.trim().length > 0;
+        const hasCmd = typeof g.cmd === "string" && g.cmd.trim().length > 0;
+        if (!hasId || !hasCmd)
+            out.push(
+                `manifest row ${i} has no ${!hasId ? "id" : ""}${!hasId && !hasCmd ? "/" : ""}${!hasCmd ? "cmd" : ""} — every gatesFor() row must carry a non-empty id AND cmd (a cmd-less row makes \`npm run undefined\` crash \`proof:all\`)`,
+            );
+    });
+    return out;
+}
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SCRIPTS_DIR = resolve(ROOT, "scripts");
@@ -112,6 +134,25 @@ export function detect() {
     const scripts = proofScripts(pkg);
     facts.proofScriptFiles = files.length;
     facts.proofScriptKeys = scripts.length;
+
+    // ── 0. MANIFEST-WELL-FORMED — every row in the union of the three aggregate
+    // sets carries a non-empty id AND cmd (D2: closes the cmd-less-row blind spot
+    // BEFORE the cmd-literal parse). A Set over the rows dedupes a row in >1 set.
+    const aggregateRows = new Set([
+        ...gatesFor("local"),
+        ...gatesFor("ci"),
+        ...gatesFor("release"),
+    ]);
+    const wellFormed = wellFormedViolations([...aggregateRows]);
+    facts.malformedManifestRows = wellFormed.length;
+    // Self-test: a synthetic cmd-less fixture row MUST be flagged (the blind-spot
+    // bite — un-skippable every run). If the detector mis-fires, red loudly.
+    const synthFlag = wellFormedViolations([{ tags: ["local"] }]);
+    if (synthFlag.length === 0)
+        violations.push(
+            "SELF-TEST FAILED: a synthetic cmd-less manifest row was NOT flagged by wellFormedViolations — the D2 structural pre-pass is not load-bearing",
+        );
+    for (const v of wellFormed) violations.push(v);
 
     // The set of proof-*.mjs files referenced by ANY proof:* cmd.
     const referenced = new Set();
@@ -216,6 +257,7 @@ function run() {
     });
 
     console.log("proof:gate-script-parity — the proof-script ↔ package.json bijection meta-gate (AX.W00)");
+    console.log(`  malformed manifest rows: ${facts.malformedManifestRows} (D2 well-formed pre-pass)`);
     console.log(`  proof-*.mjs files     : ${facts.proofScriptFiles}`);
     console.log(`  proof:* script keys   : ${facts.proofScriptKeys}`);
     console.log(`  NEW orphan scripts    : ${facts.orphanScripts.length}`);

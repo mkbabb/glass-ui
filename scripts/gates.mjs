@@ -660,7 +660,7 @@ export const GATES = [
         id: "proof:dock-orchestrator-single",
         cmd: "proof:dock-orchestrator-single",
         tags: ["local"],
-        note: "AX.W02 — ONE morph engine per dock. Device-free STRUCTURE arm: GlassDock builds exactly 1 useDockMorphOrchestrator + provides the morph context, DockLayerGroup injects the OPTIONAL context and defers (registerGroup) with its SINGLE useLayerTransition gated standalone-only. π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-orchestrator-single.spec.ts): a simultaneous collapse + pane-swap on the /navigation/dock-layers nested showcase samples the dock-root box AND the nested pane-stack on ONE --dock-morph-t timeline (both onset ≤ 1 frame from the scalar; engineCount == 1). Bite: re-add an unconditional useLayerTransition to the nested path → STRUCTURE RED; drive the stack on a second clock → RUNTIME RED.",
+        note: "AX.W02 — ONE morph engine per dock. Device-free STRUCTURE arm: GlassDock builds exactly 1 useDockMorphOrchestrator + provides the morph context, DockLayerGroup injects the OPTIONAL context and defers (registerGroup) with its SINGLE useLayerTransition gated standalone-only. π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-orchestrator-single.spec.ts): a simultaneous collapse + pane-swap on the /dock/layers nested showcase samples the dock-root box AND the nested pane-stack on ONE --dock-morph-t timeline (both onset ≤ 1 frame from the scalar; engineCount == 1). Bite: re-add an unconditional useLayerTransition to the nested path → STRUCTURE RED; drive the stack on a second clock → RUNTIME RED.",
     },
     {
         id: "proof:dock-hold-contract",
@@ -686,9 +686,9 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AX.W23 — the carousel dot rail RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). TWO clauses (AX.W19 pruned the custom/glass-carousel composite + its former clauses C FOUR-STATE / D CHROME-SUBSTRATE): (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED.",
     },
-    {
-        tags: ["local"],
-    },
+    // The malformed cmd-less row that crashed `proof:all` was DELETED here at
+    // AZ.W-GATES (D1); both parity meta-gates now pre-pass on well-formed
+    // id/cmd so a row like it can never land silently again.
     {
         id: "proof:squircle-language",
         cmd: "proof:squircle-language",
@@ -852,6 +852,18 @@ export const GATES = [
         note: "AX.W46 — the GooBlob live-truth gate (the blob reads as a contained lit droplet, hover responds, moods resolve — not skeuomorphic/broken). Device-free SOURCE arm + a fail-CLOSED π blob render/mood arm. Bite: regress the mood resolution / the lit-droplet material → RED.",
     },
     {
+        id: "proof:blob-interaction-prm",
+        cmd: "proof:blob-interaction-prm",
+        tags: ["local"],
+        note: "AW.W10 — wired at AZ.W-GATES (the row had never been registered): the blob pointer-interaction PRM contract, reading the post-AY-shader-split authority via scripts/read-blob-shaders.mjs (metaball-uniforms.glsl.ts carries the relocated uTime/pointer patterns). Bite: drop the PRM freeze from the pointer path → RED.",
+    },
+    {
+        id: "proof:blob-tempo-suppression",
+        cmd: "proof:blob-tempo-suppression",
+        tags: ["local"],
+        note: "AW.W11.c — wired at AZ.W-GATES: the blob tempo-suppression contract, re-pointed to uploadBlobUniforms.ts (the AY carve relocated the uTime upload). Bite: re-inject an unsuppressed tempo channel → RED.",
+    },
+    {
         id: "proof:blob-config-atoms",
         cmd: "proof:blob-config-atoms",
         tags: ["local"],
@@ -894,6 +906,12 @@ export const GATES = [
         cmd: "proof:gen-ci-fresh",
         tags: ["local", "release"],
         note: "AX.W62 Gate 4 (ci.yml drift kill) — asserts .github/workflows/ci.yml is byte-identical to `gates.mjs --emit-ci` (the ci-tagged set is the single source; ci.yml is a GENERATED artefact). A ci.yml meta-step (not ci-tagged here, to avoid double-render); in the RELEASE set so a drifted ci.yml refuses to publish. Bite: hand-edit ci.yml or add a ci gate without re-emitting → RED.",
+    },
+    {
+        id: "proof:gate-manifest-sound",
+        cmd: "proof:gate-manifest-sound",
+        tags: ["local"],
+        note: "AZ.W-GATES — the gate-manifest soundness meta-gate (9 clauses + clean-tree): well-formed id/cmd rows, the parity pre-pass, the :5199 default sweep, the content-hash freshness model, the :az ledger arm. Device-free; promoted to ci at the AZ close. Bite: re-add a cmd-less row or a :5173 default → RED.",
     },
     {
         id: "gates:verify-ci",

@@ -11,10 +11,14 @@
 // TWO arms (the precept-valid HardGate shape; the AX.W24 sibling pattern):
 //
 //   STRUCTURE (device-free, in-repo — runs + hard-REDs on EVERY runner):
-//     1. tokens.css §0 declares --font-stack-text as the Plus Jakarta calibrated
+//     1. the token cascade declares --font-stack-text as the Plus Jakarta calibrated
 //        chain (the single-source register), --font-stack-display ALIASES it
 //        (var(--font-stack-text)), --font-stack-mono is the Fira Code chain, and
-//        the misnamed --font-stack-serif token is GONE.
+//        the misnamed --font-stack-serif token is GONE. The --font-stack-* register
+//        now lives in the carved partial src/styles/tokens/scheme-motion.css (the
+//        AZ.W-GATES D7 re-point — the pre-carve tokens.css path false-REDded these
+//        three asserts); readTokenFonts() reads the partial(s) that hold them, the
+//        read-dock-css.mjs authority-reader precedent (robust to a further carve).
 //     2. theme.css bridges --font-text from --font-stack-text; --font-serif is a
 //        bridge alias resolving to --font-stack-text (no display-serif voice).
 //     3. typography.css body{} reads var(--font-text) (NOT a --font-serif that
@@ -42,11 +46,35 @@
 // data-typography-preset attr → STRUCTURE 4 RED; re-add the Fraunces dir/@font-face →
 // STRUCTURE 5 RED. On the live arm: a serif-first computed body family → RENDER RED.
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+
+// AZ.W-GATES (D7) — the font-token AUTHORITY reader. The --font-stack-* register
+// carved out of the tokens.css monolith into src/styles/tokens/ partials (today:
+// scheme-motion.css). This concats the tokens.css core + every tokens/*.css
+// partial that declares a --font-stack-* token, in alpha order, mirroring the
+// read-dock-css.mjs authority-reader precedent — so the STRUCTURE-1 asserts (and
+// the --font-stack-serif GONE check) read the whole register, robust to a further
+// carve. Returns the comment-STRIPPED concat (the asserts test live declarations).
+function readTokenFonts(root, strip) {
+    const core = resolve(root, "src/styles/tokens.css");
+    const dir = resolve(root, "src/styles/tokens");
+    const parts = [];
+    if (existsSync(core)) parts.push(readFileSync(core, "utf8"));
+    if (existsSync(dir)) {
+        const partials = readdirSync(dir)
+            .filter((f) => f.endsWith(".css"))
+            .sort();
+        for (const f of partials) {
+            const src = readFileSync(resolve(dir, f), "utf8");
+            if (/--font-stack-/.test(src)) parts.push(src);
+        }
+    }
+    return strip(parts.join("\n"));
+}
 
 function stripComments(src) {
     return src
@@ -181,14 +209,19 @@ function run() {
     const violations = [];
     const facts = {};
 
-    const tokens = existsSync(P.TOKENS) ? stripComments(readFileSync(P.TOKENS, "utf8")) : "";
+    // AZ.W-GATES (D7): read the font-token AUTHORITY — the tokens.css core + every
+    // tokens/*.css partial that holds --font-stack-* (the carve moved them to
+    // tokens/scheme-motion.css). The pre-carve P.TOKENS-only read false-REDded the
+    // three STRUCTURE-1 asserts.
+    const tokens = readTokenFonts(P.ROOT, stripComments);
     const theme = existsSync(P.THEME) ? stripComments(readFileSync(P.THEME, "utf8")) : "";
     const typography = existsSync(P.TYPOGRAPHY)
         ? stripComments(readFileSync(P.TYPOGRAPHY, "utf8"))
         : "";
     const fonts = existsSync(P.FONTS) ? readFileSync(P.FONTS, "utf8") : "";
 
-    // ── STRUCTURE 1: tokens.css single-source register.
+    // ── STRUCTURE 1: the token-cascade single-source register (the --font-stack-*
+    // authority — tokens/scheme-motion.css after the AZ.W-GATES D7 carve re-point).
     facts.declaresTextStack =
         /--font-stack-text\s*:\s*"Plus Jakarta Sans"/.test(tokens);
     facts.displayAliasesText =

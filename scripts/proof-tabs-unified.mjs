@@ -290,7 +290,7 @@ export function detect() {
 // the rest value mid-travel (squish). When the Playwright workspace IS present
 // the demo MUST be reachable + the indicator MUST animate — else a hard RED.
 async function liveArm() {
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const ROUTE = "/navigation/tabs";
 
     // Detect the π workspace (hoisted OR local). Absent → befitting-silent SKIP.

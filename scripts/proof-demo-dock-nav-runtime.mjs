@@ -173,7 +173,7 @@ function skip(ARTIFACT, reason) {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const SHOT_DIR = resolve(ROOT, "docs/tranches/AW/audit");
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DEMO_DOCK_NAV_RUNTIME_ARTIFACT",

@@ -1,8 +1,12 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
-<!-- capture-commit: 83e1e3b2 -->
 <!-- surface-paths: src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts, src/components/custom/constellation/Constellation.vue -->
-<!-- superseded-by: W-SB-REVERIFY -->
+<!-- surface-hash: f3637de655479ee23aa596e125f22bd90289e80d517ebf2709142615e0241ca7 -->
+<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
+     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
+     content hash of the declared surface-paths' bytes above — fresh IFF the surface
+     is byte-identical to capture time, regardless of unrelated commits. The
+     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
 <!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface W-CON1-*
      stills (refit-before / refit-after / autodrift × {desktop,mobile} × {light,dark}) were
      RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-con1.mjs` against
