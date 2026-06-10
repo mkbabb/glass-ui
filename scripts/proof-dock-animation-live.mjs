@@ -594,8 +594,10 @@ function piWorkspacePresent(ROOT) {
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     // AX.W00 — standardize on the demo dev-server origin `npm run dev` actually
-    // serves (vite default :5173; the legacy 5175 default was an inconsistency).
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    // serves (:5199, the canonical glass-ui demo port — :5173 belongs to a
+    // foreign app on this dev box; the prior :5173 default was the stale-port
+    // inconsistency the AY close swept).
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     // AY.W-DOCK2 — the born-RED witness override. Set GLASS_UI_DOCK_FIXTURE_URL to a
     // file:// URL (e.g. the synthetic `tests-visual/fixtures/dock-entering-child-lag.html`)
     // to run the gate against a fixture instead of the live demo route. The fixture
@@ -744,9 +746,14 @@ async function run() {
         // break — exit NON-ZERO, never SKIP-with-EXIT=0. The SKIP path stays ONLY
         // for the genuine no-π-workspace case (the device is not present). The
         // token-peak secondary is folded into the verdict either way.
+        // AY close amendment: a headless CI runner ships the π workspace in the
+        // repo checkout but can never have a live demo server — that is DEVICE
+        // ABSENCE, not a wiring break (the gates.mjs note already declares the
+        // live arm local-only; the device-free token-peak arm still binds here).
+        // Locally (no CI env) the fail-CLOSED promotion holds in full.
         if (browser) await browser.close();
         const reason = `could not reach the dock route at ${TARGET_URL}: ${e.message}`;
-        const failClosed = piPresent;
+        const failClosed = piPresent && !process.env.CI;
         const violations = [...tokenPeak.violations];
         if (failClosed)
             violations.push(
