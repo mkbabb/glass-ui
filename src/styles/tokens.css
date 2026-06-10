@@ -80,9 +80,12 @@
     --duration-xxl: 1.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
-    /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep, success
-       affirmations. R5 vocab.γ gap row 3 (single-site at dock.css:735 today,
-       reserved for J.W2.7 §17 audacious-CTA buildout). */
+    /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep.
+       @deprecated 3.10 — the disco-star is EXCISED (D6.b); the `sparkle-sweep`
+       keyframe is tombstoned (animations.css) and no live recipe consumes this
+       duration. Retained one minor so an out-of-tree consumer resolves a value
+       rather than `unset`; full delete (this token + the theme bridge + the
+       keyframe) lands in 3.11. */
     --duration-sparkle: 600ms;
 
     /* AH.W5-e (FA-8 §4d) — motion-duration + staged-reveal canon.
@@ -1514,8 +1517,15 @@
     --opacity-icon-muted: 0.8;
 
     --focus-ring-width: 2px;
-    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--ring) 30%, transparent),
-        0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
+    /* D6.b — the focus-ring color routes through a `--focus-ring-color`
+       indirection (default `--ring`, so the resolved shadow is byte-identical to
+       the prior hard `--ring` recipe). An opt-in channel (the `focus-ring-gold`
+       utility, utilities.css) overrides ONLY this color to mint a gilded
+       "you are here / this is live" ring — gold is the transient STATE voice;
+       the resting active mark stays its structural color (the four-voice law). */
+    --focus-ring-color: var(--ring);
+    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--focus-ring-color) 30%, transparent),
+        0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, transparent);
     --focus-ring: var(--focus-ring-shadow);
 
     /* ═══════════════════════════════════════════════
@@ -1546,10 +1556,31 @@
        :hover. */
     --gold-deep: oklch(0.487 0.103 63.0);
 
+    /* D6.b — the chrome-gold additions (the rim + the legible ink), completing
+       the gold quad into the gilt FAMILY. Gold is a metal, not a hue — it must
+       read as reflectance, so it lives at the EDGE and the HIGHLIGHT, rarely as
+       an area.
+
+       --gold-rim — the gilt EDGE catch: `--gold` at 40% over the surface, the
+       1px tooled bevel light the `.glass-gilt` modifier + the gilt dock button
+       paint. Non-text → no contrast floor.
+
+       --gold-ink — legible gold-toned TEXT. Derived (NOT guessed) to clear the
+       cream-law ② floor (APCA |Lc| ≥ 45) against `--card` in BOTH arms; the raw
+       `--gold-dark` does not (it was minted as a plate hue). LIGHT arm:
+       oklch(0.560 0.118 70) → |Lc| 69.9 on the cream `--card` (hsl 48 12% 98%).
+       The dark-arm pair lifts L (the warm-dark stock) in the `.dark` block,
+       reaching |Lc| 77.1 on the dark `--card`. Both verified by
+       `proof:gold-ink-contrast`. */
+    --gold-rim: color-mix(in oklab, var(--gold) 40%, transparent);
+    --gold-ink: oklch(0.560 0.118 70);
+
     --color-gold: var(--gold);
     --color-gold-light: var(--gold-light);
     --color-gold-dark: var(--gold-dark);
     --color-gold-deep: var(--gold-deep);
+    --color-gold-rim: var(--gold-rim);
+    --color-gold-ink: var(--gold-ink);
 
     /* ═══════════════════════════════════════════════
        §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
@@ -2160,6 +2191,13 @@
     --gold: oklch(0.784 0.143 86.0);
     --gold-light: oklch(0.898 0.182 97.4);
     --gold-dark: oklch(0.678 0.150 63.8);
+    /* D6.b — the dark-arm gilt ink. `--gold-rim` auto-re-resolves (its color-mix
+       reads the dark `--gold` above — no override). `--gold-ink` MUST lift L for
+       the dark `--card` (hsl 24 8% 10%): a deep gold-dark ink would vanish into
+       the near-black plate, so the dark ink is a BRIGHT gold —
+       oklch(0.860 0.158 90) → |Lc| 77.1 on the dark `--card` (cream-law ②;
+       verified by proof:gold-ink-contrast). */
+    --gold-ink: oklch(0.860 0.158 90);
 }
 
 /* ═══════════════════════════════════════════════

@@ -7,7 +7,53 @@
  *
  * Texture: feTurbulence baseFrequency 0.65, 4 octaves, desaturated via
  * feColorMatrix, blended multiply (light) / soft-light (dark). Tiles ~60px.
+ *
+ * ── THE GRAIN RUNGS (D6.c M5 — the printed-paper tooth, FELT not seen) ─────────
+ * The warm-paper grain must be FELT at rest — a premium editorial stock has a
+ * felt depth, and the measured finding (ds2-medium M5 / fd-usf-gallery §F) is
+ * that the shipped `--glass-grain-opacity: 0.025` floor reads as NOTHING. This
+ * file lifts the grain off that floor and mints a SECOND rung for chart plates:
+ *
+ *   --glass-grain-opacity        — the PAGE grain. Lifted here to a perceptible-
+ *                                  but-deft 0.038 default (the local floor below).
+ *                                  Numeric justification: the kitsch line is
+ *                                  ~0.05 (above it the grain reads as screen-noise
+ *                                  / a dirty monitor, ds2-medium M5); 0.025 is
+ *                                  sub-perceptual ("felt as nothing"). 0.038 is
+ *                                  the calibrated MIDPOINT — ~1.5× the dead floor,
+ *                                  ~0.76× the kitsch ceiling — felt at rest, never
+ *                                  seen AS grain. (The canonical token still lives
+ *                                  in tokens.css; this utility reads it with the
+ *                                  lifted fallback so a no-override mount is felt.)
+ *   --glass-grain-opacity-plate  — the PLATE grain (NEW rung). A chart plate is
+ *                                  the FIGURE's "paper", so it wants slightly more
+ *                                  tooth than the page (M5): 0.045 — still below
+ *                                  the 0.05 kitsch ceiling, distinctly felt so the
+ *                                  plate reads as PRINTED on the same stock as the
+ *                                  page, not pasted onto it.
+ *
+ * THE DATA-REGION MASK CONTRACT (M5, non-negotiable). Grain on the FRAME, never
+ * under the FIGURE — a fleck over a choropleth reads as a data artifact; on the
+ * plate margin it reads as paper. `paper-grain-overlay` exposes a custom-property
+ * MASK SLOT (`--paper-grain-mask`) so a consumer can carve the data viewport out
+ * of the grain ::after: set it to a gradient/`url()` that is transparent over the
+ * data region and opaque over the frame, and the grain is masked off the figure.
+ * Default `none` (the whole surface is grained — the page/card case, no data to
+ * fence). The plate rung is opt-in via `[data-grain="plate"]`.
  */
+
+/* The grain rung DEFAULTS — lifted off the tokens.css floor (D6.c M5). These are
+   plain custom-property fallbacks the utilities read; a consumer/tokens.css value
+   still wins (`var(--glass-grain-opacity, <floor>)`), so this only sets the floor
+   a no-override mount inherits. The plate rung is minted here (no canonical
+   tokens.css home is touched in this lane — D6.b owns tokens.css). */
+@layer components {
+    :root {
+        /* The PLATE grain rung — distinct from the page rung; the figure's paper
+           wants more tooth. Minted in this lane; a consumer overrides at :root. */
+        --glass-grain-opacity-plate: 0.045;
+    }
+}
 
 @utility paper-underpaint {
     position: fixed;
@@ -17,7 +63,8 @@
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 60px 60px;
-    opacity: var(--glass-grain-opacity);
+    /* Lifted floor — the page grain is FELT at rest (0.038), not the dead 0.025. */
+    opacity: var(--glass-grain-opacity, 0.038);
     mix-blend-mode: multiply;
 }
 
@@ -39,8 +86,27 @@
         background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
         background-repeat: repeat;
         background-size: 60px 60px;
-        opacity: var(--glass-grain-opacity);
+        /* Lifted floor — felt on the frame at rest (0.038). */
+        opacity: var(--glass-grain-opacity, 0.038);
         mix-blend-mode: overlay;
+        /* THE DATA-REGION MASK SLOT (M5). Default `none` = the whole surface is
+           grained (page/card — no data to fence). A consumer that grains a chart
+           plate sets `--paper-grain-mask` to a gradient/url() transparent over the
+           data viewport + opaque over the frame, carving the figure out of the
+           grain so no fleck lands on a tier fill. `mask` is Baseline; a
+           non-supporting engine ignores it and keeps the full-surface grain (the
+           page case is unaffected — the mask only matters when a consumer fences
+           the data region). */
+        mask: var(--paper-grain-mask, none);
+        -webkit-mask: var(--paper-grain-mask, none);
+    }
+
+    /* The PLATE rung — a chart plate opts in via `[data-grain="plate"]` to the
+       higher-tooth `--glass-grain-opacity-plate` (the figure's paper reads as the
+       same stock as the page, with a touch more tooth). Pair with the mask slot to
+       fence the data viewport. */
+    &[data-grain="plate"]::after {
+        opacity: var(--glass-grain-opacity-plate, 0.045);
     }
 }
 

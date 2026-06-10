@@ -4,7 +4,7 @@ A primitive design system for glassmorphic Vue 3 interfaces. Token-driven, compo
 
 ## Philosophy
 
-Four principles govern the library.
+Five principles govern the library.
 
 **Token-first.** Every visual behavior is a CSS custom property. Consumers override via a preset CSS file imported after the library. No consumer edits library source for styling. Visual parity between consumers is a side effect of token discipline.
 
@@ -13,6 +13,8 @@ Four principles govern the library.
 **Four-state interactive contract.** Every interactive element implements rest, hover, active, and disabled states. Focus-visible adds a ring. `aria-pressed` / `.is-active` adds semantic toggling. Scale, color, and opacity compose—never hardcoded transforms scattered across components.
 
 **Orthogonal variants.** Surface tier (opacity + blur + border + shadow) is independent of semantic variant (intent) is independent of structural variant (shape geometry). A ghost Button sits flat on any Card variant. These axes never collapse into one vocabulary.
+
+**Skeuomorphism is spent once—on the dock, and nowhere else.** Instrument skeuomorphism (the engraved bezel, the twin-line grooves, the rivets, the specular catch-rim, the disco-grain) is the dock's alone—the one floating instrument, the brass sextant on the atlas plate (`instrument-chassis.css`'s binding *"Idle is purely Vignelli; disco accents fire on hover/phase-finish only"*). **Every other surface is a glass TIER without instrument chrome.** A drawer is a lens, not an instrument—it inherits the frost *tier* vocabulary (the `.glass-floating`/`.glass-overlay` ladder), never the dock's instrument *chrome*. Legends, toggles, plates, cards are flat editorial print: hairline ink on paper, never a beveled chip. The single motion-skeu permitted off the dock is the hover/phase-finish disco accent the chassis already gates to a *state transition* (a control's one commit shimmer, never an idle bevel). This is the "moderate and proportioned skeuomorphism" law as a *placement* rule: a future primitive does not sprout an engraved bezel, a specular rim, or rivets—if it is not the dock, it is a glass tier. (The liquid moving-specular `::before` is a *tier* property, not instrument chrome—it composes on any glass surface; the gilt edge `.glass-gilt` is an edge treatment, not a bezel. Neither breaches this law.)
 
 ---
 

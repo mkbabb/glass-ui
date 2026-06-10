@@ -60,5 +60,56 @@
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 
+/* ── gl-shared-element — the named-pair MORPH group (D6.c M6) ──────────────────
+ * Distinct from `.gl-list-item` (a cross-fade of MANY members in a re-rank): a
+ * shared-element morph is ONE element that exists in BOTH the old and new states
+ * under the SAME `view-transition-name`, so the browser MORPHS it in place — the
+ * group interpolates its size+position (transform) while old/new cross-fade. The
+ * editorial case: the gallery card's title IS the dashboard masthead's title, so
+ * the name you clicked GROWS into the name you read (the card → masthead route
+ * morph). The consumer adds `view-transition-class: gl-shared-element` plus a
+ * MATCHED `view-transition-name: <id>` on BOTH the source and destination element
+ * (the MANDATORY runtime rule — ≤1 element per name per state, else the morph is
+ * skipped silently), and wraps the navigation in `useRouteTransition` /
+ * `startViewTransition`.
+ *
+ * The morph rides the SMOOTH register (the 700ms-class spring, C-ANIM-VIZ-MAP T1
+ * §7) — a longer, gentler curve than the list-item cross-fade, because a morph
+ * that travels across the viewport wants room to read. The old/new cross-fade is
+ * softened so the morphing GROUP is the figure and the rest recedes. */
+::view-transition-group(.gl-shared-element) {
+    animation-duration: var(--vt-morph-duration, var(--duration-slow, 500ms));
+    animation-timing-function: var(--vt-morph-ease, var(--spring-smooth, ease-in-out));
+}
+::view-transition-old(.gl-shared-element),
+::view-transition-new(.gl-shared-element) {
+    /* The image pair cross-fades UNDER the group's size/position morph — softer
+       than the group curve so the morph (the size/position travel) is the figure
+       and the pixel cross-fade is the recessive fill. */
+    animation-duration: var(--vt-morph-duration, var(--duration-slow, 500ms));
+    animation-timing-function: var(--vt-ease, var(--spring-smooth, ease-in-out));
+}
+
+/* ── gl-expand — the plate → fullscreen MORPH recipe (D6.c M7) ─────────────────
+ * The expand verb (a plate growing to fullscreen) is a SHARED-ELEMENT morph, not
+ * an opacity jump-cut: the plate IS the fullscreen surface, growing. It is a
+ * specialization of `gl-shared-element` — the SAME named-pair morph, with the
+ * expand register (a touch snappier than a route morph, because the surface stays
+ * in place and only the rect grows, so it wants less travel-room). `ExpandableContainer`
+ * wires the `view-transition-name` plumbing on its plate↔fullscreen surfaces (an
+ * opt-in `viewTransitionName` prop), so a consumer opts in and the open/close
+ * mutation — wrapped in `startViewTransition` — morphs the plate's rect to the
+ * fullscreen rect and back. The named pair is the SAME element across states
+ * (the slot content), so the browser captures one group and grows it. */
+::view-transition-group(.gl-expand) {
+    animation-duration: var(--vt-expand-duration, var(--duration-normal, 240ms));
+    animation-timing-function: var(--vt-expand-ease, var(--spring-bouncy, ease-out));
+}
+::view-transition-old(.gl-expand),
+::view-transition-new(.gl-expand) {
+    animation-duration: var(--vt-expand-duration, var(--duration-normal, 240ms));
+    animation-timing-function: var(--vt-ease, var(--spring-bouncy, ease-out));
+}
+
 /* Keep the non-transitioned UI interactive while the snapshot animates. */
 ::view-transition { pointer-events: none; }

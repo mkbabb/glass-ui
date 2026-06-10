@@ -5,6 +5,7 @@ import { cn } from '../../../utils'
 
 type MetricBadgeSize = 'sm' | 'md' | 'lg' | 'xl'
 type MetricBadgeLabelPosition = 'inline' | 'stacked'
+type MetricBadgeVariant = 'default' | 'record'
 
 const props = withDefaults(
   defineProps<{
@@ -35,11 +36,18 @@ const props = withDefaults(
      *  rung (`text-mono-prose` amount, `text-prose` unit) for hero
      *  placements that need to read at chassis distance. */
     size?: MetricBadgeSize
+    /** Surface register. `default` is the canonical 5-tier glass pill;
+     *  `record` is the GILT pill (D6.b) — a 1px `--gold-rim` tooled edge +
+     *  `--gold-ink` amount + a faint ≤8% gold wash (never opaque). Gold marks
+     *  the SUPERLATIVE, exactly one per view: the all-time-high / peak figure.
+     *  The medal reads as earned, not as a fourth data color. */
+    variant?: MetricBadgeVariant
     class?: HTMLAttributes['class']
   }>(),
   {
     placeholder: '—', // em dash
     size: 'md',
+    variant: 'default',
   },
 )
 
@@ -102,9 +110,11 @@ const showLabel = computed(() =>
       'metric-badge cursor-pointer',
       'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
       labelPosition && `metric-badge--label-${labelPosition}`,
+      variant === 'record' && 'metric-badge--record',
       $props.class,
     )"
     :data-size="size"
+    :data-variant="variant"
   >
     <template v-if="showLabel">
       <span

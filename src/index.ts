@@ -162,6 +162,20 @@ export {
     type ViewTransitionResult,
 } from "./composables/motion/useViewTransition";
 
+// The ROUTE/navigation View-Transitions helper (D6.c M6). Dependency-free (no
+// `vue`, no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is root-barrel safe
+// per the `useViewTransition` precedent; also reachable via the
+// `@mkbabb/glass-ui/motion-core` subpath. Wraps a navigation callback in
+// `document.startViewTransition` so a matched `gl-shared-element` pair morphs
+// across the route change (PRM + unsupported instant fallbacks).
+export {
+    useRouteTransition,
+    supportsRouteTransitions,
+    type RouteTransitionOptions,
+    type RouteTransitionResult,
+    type UseRouteTransitionReturn,
+} from "./composables/motion/useRouteTransition";
+
 // The v-reveal entrance directive. Dependency-free (`vue` type-only — no
 // keyframes, no vueuse), so it is root-barrel safe per the `useViewTransition`
 // precedent; also reachable via `@mkbabb/glass-ui/motion-core`.

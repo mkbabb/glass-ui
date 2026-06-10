@@ -300,11 +300,23 @@ export const DEFAULT_PALETTE: ConstellationPalette = {
     node: "#b4afa3",
     nodeDim: "#cdc8bd",
     line: "#1c1714",
-    // The fallbacks mirror the §5c light-arm token defaults so an SSR / no-token
-    // mount still reads recessive-but-legible (the H.W4 floor fix).
+    // The fallbacks mirror the §5c token defaults so an SSR / no-token mount
+    // still reads recessive-but-legible (the H.W4 floor fix).
     edgeAlpha: 0.22,
     edgeFocusAlpha: 0.34,
-    alpha: 0.8,
+    // D6.c M10 — the field-dimmer FALLBACK lifted off the light-only 0.80 to the
+    // felt-but-quiet floor 0.84. The canonical token ships per-mode (tokens.css
+    // §7: light 0.80, dark 0.88 — both the recessive midpoint, BELOW the
+    // max-legibility reference). This SSR/no-token fallback formerly carried the
+    // LIGHT arm only (0.80), so a no-token mount on the WARM (dark/ink) stock
+    // landed below the dark arm's 0.88 and read sub-perceptual — "a void" on warm
+    // grounds (the measured ds2-motion-field M10 finding). 0.84 is the geometric
+    // floor between the two token arms ((0.80+0.88)/2 = 0.84): a no-token mount is
+    // now FELT on BOTH stocks, never the warm-stock void, while staying recessive
+    // (still ≤ the dark arm, well below the slides 0.92/1.0 max-legibility ceiling
+    // a token-loaded consumer overrides toward). A consumer that loads tokens.css
+    // gets the per-mode arms; only a tokenless mount reads this floor.
+    alpha: 0.84,
 };
 
 /**

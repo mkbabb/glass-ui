@@ -16,9 +16,10 @@ import { cn } from "../../../utils";
  *
  * K.W6 Lane B — when the consumer attaches `data-tier="primary"`, the
  * button composes the canonical `btn-audacious` utility (the lifted
- * disco-grain + sparkle-sweep + specular-highlight recipe at
- * `utilities.css`). `dock.css` retains the dock-local phase-tinting +
- * structural shell on top of the canonical recipe.
+ * disco-grain + specular-highlight recipe at `utilities.css`; the
+ * sparkle-sweep star was excised at D6 — the gold identity now rides the
+ * `--gold-rim` gilt edge). `dock.css` retains the dock-local
+ * phase-tinting + structural shell on top of the canonical recipe.
  */
 const props = withDefaults(
     defineProps<{

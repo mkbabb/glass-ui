@@ -141,31 +141,87 @@
     100% { background-position: -200% 0; }
 }
 
-/* ── Sparkle sweep: four-point star traverses a surface diagonally ──
+/* ── Crayon-wipe: the scroll-scrubbed draw-on (D6.c M1) ──────────────────────
  *
- * Reserved for the chassis primary-action hover (dock-tab-button[data-tier="primary"])
- * and the `Complete!` shimmer cycle. Single keyframe, ~600ms per pass; the
- * consumer rule sets the duration and easing. Reduced-motion guard at the
- * consumer site (per surface — not all sparkle uses share the same gate).
+ * The bidirectional, scroll-scrubbed DRAW-ON of a hand-mark (the crayon/pen
+ * underline, a drawn rule). The wipe is a `clip-path: inset()` of the LEFT edge
+ * only — the mark draws from inset(0 100% 0 0) (fully clipped from the right, so
+ * NOTHING shows) to inset(0) (fully revealed) — so the underline DRAWS as the
+ * figure scrolls into view and UN-DRAWS as it scrolls back up. `clip-path` is the
+ * compositor-eligible, FILTER-STABLE wipe (the medium's grain `feTurbulence`
+ * rasters ONCE and is untouched by the clip — the cardinal "no per-frame raster"
+ * discipline ds2-motion-field M1 names): clip-path animates on the compositor and
+ * never re-runs the static filter, unlike a `stroke-dashoffset` draw under the
+ * grain filter (which re-rasters per frame). The grammar mirrors scroll-driven.css
+ * (the `view()`/`scroll()` timeline home): the keyframe lives here (the shared
+ * @keyframes register); a consumer binds it to a NAMED `view-timeline` so the
+ * draw-on SCRUBS bidirectionally with scroll (forward → draws, back → un-draws),
+ * never a one-shot. The `.crayon-wipe` utility below is the binding.
+ *
+ * The keyframe itself is timeline-agnostic — it is equally a load-clock draw-on
+ * (bound to a keyframes.js Sequence) or a scroll scrub (bound to a view-timeline).
+ * The DEFAULT consumer is the scroll scrub (the figure-item underline drawing into
+ * the lower third), hence the utility's `view()` binding.
+ *
+ * Reduced-motion: the utility (NOT the keyframe) gates — under PRM the mark is SET
+ * to inset(0) (fully drawn, never animated), the correct degrade for a permanent
+ * structural draw (information parity: the underline is present, just not drawn).
  */
-@keyframes sparkle-sweep {
-    0% {
-        transform: translate(-30%, -30%) scale(0.5);
-        opacity: 0;
+@keyframes crayon-wipe {
+    from {
+        /* clipped from the RIGHT by 100% → the mark is fully hidden (nothing
+           drawn yet); the left edge is the pen-tip about to move right. */
+        clip-path: inset(0 100% 0 0);
     }
-    25% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(180%, 180%) scale(1.2);
-        opacity: 0;
+    to {
+        /* fully revealed — the mark is wholly drawn. */
+        clip-path: inset(0 0 0 0);
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    @keyframes sparkle-sweep {
-        0%, 100% { opacity: 0; transform: none; }
+/* ── .crayon-wipe — bind the wipe to a scroll view-timeline (D6.c M1) ──────────
+ * The scroll-scrubbed draw-on utility. A consumer puts `.crayon-wipe` on a
+ * hand-mark surface (the underline span, a drawn rule) and the mark draws/un-draws
+ * as it scrolls through its OWN `view()` timeline — a bidirectional scrub, free,
+ * off the main thread. The animation is `paused` with `animation-timeline: view()`
+ * so the scroll position IS the playhead (the native scroll-driven model — the
+ * timeline drives the frame, time does not). The named timeline is overridable
+ * (`--crayon-wipe-timeline`, default the element's own `view()`) so a consumer can
+ * scrub off a SHARED beat timeline (the §--beat-tl the atlas scroll-driven.css
+ * names) instead of the per-element view — that is the "named view-timeline so a
+ * consumer scrubs a draw-on bidirectionally" contract.
+ *
+ * @supports-gated + PRM-OUTER-gated, mirroring scroll-driven.css exactly: the
+ * whole binding sits under `prefers-reduced-motion: no-preference`, so under PRM
+ * the animation never attaches and the mark renders in its terminal `inset(0)`
+ * (fully-drawn) state — the static-draw degrade. The draw range is `entry`-keyed
+ * (the mark draws as it ENTERS the lower viewport), tunable via
+ * `--crayon-wipe-range-{start,end}`. */
+@media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        .crayon-wipe {
+            animation: crayon-wipe auto linear both;
+            animation-timeline: var(--crayon-wipe-timeline, view(block));
+            animation-range: var(--crayon-wipe-range-start, entry 0%)
+                var(--crayon-wipe-range-end, cover 35%);
+        }
     }
+}
+
+/* ── Sparkle sweep: TOMBSTONE (D6.b — the disco-star excision) ──
+ *
+ * @deprecated 3.10 — DELETE in 3.11. The four-point `✦` star sweep was the one
+ * garish gesture in the library; the user named it for removal ("remove the disco
+ * star from all glass-ui elements"). Every in-tree consumer is re-homed: the
+ * `btn-audacious` hover affirmation now rides the specular catch-light alone; the
+ * gold-CTA rides the `btn-gold-bg-sweep` metal-catch; the chassis `complete`
+ * celebration re-homes to the `.text-gilt` one-shot (utilities.css). The keyframe
+ * body is EMPTIED rather than deleted for ONE minor so any out-of-tree consumer
+ * (the slides decks) fails SOFT — a no-op animation, not an unknown-animation
+ * error. The `--duration-sparkle` token is `@deprecated` alongside (tokens.css).
+ * Full delete (this block + the token + the theme bridge) lands in 3.11. */
+@keyframes sparkle-sweep {
+    /* intentionally empty — tombstoned, see deprecation note above */
 }
 
 /* ── Pulse dot bounce: dots variant of <Pulse> ──

@@ -143,6 +143,20 @@
         box-shadow: var(--focus-ring-shadow);
     }
 
+    /* D6.b — `focus-ring-gold`: the opt-in gilded focus ring. Overrides ONLY
+       `--focus-ring-color` (tokens.css) → the shared `--focus-ring-shadow`
+       re-resolves to gold for THIS element; the default ring elsewhere is
+       unchanged. Gold-as-state is the "you are here / this is live" mark — a
+       transient highlight (appears on focus-visible, gone on blur), so gold is
+       lawful here where a permanent gold furniture would not be. Mirror of the
+       `focus-ring` custom-property pattern: a consumer composes
+       `class="focus-ring focus-ring-gold"` to gild the ring on the active rung;
+       the resting mark keeps its structural color (the four-voice law: red is
+       identity, gold is distinction). */
+    .focus-ring-gold {
+        --focus-ring-color: var(--gold);
+    }
+
     /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
        Composes the canonical `--border-hairline` token (tokens.css §
        Glass-decorative). Adopt at any surface that wants the canonical
@@ -366,6 +380,30 @@
         }
     }
 
+    /* D6.b — `.text-gilt`: the brand-polish ONE-SHOT shimmer. Same gold-clip
+       gradient pass as `.gold-shimmer`, but the gold passes ONCE then SETS — a
+       seal being pressed, not a marquee looping forever. This is the lawful home
+       for the chassis "Complete!" celebration the disco-star used to carry: the
+       gold sweeps once over the completion label on resolve, then holds the
+       static gold gradient.
+
+       `animation-iteration-count: 1` + `animation-fill-mode: forwards` so the
+       slide runs exactly one pass and the final keyframe (background-position
+       -200%) sticks — no per-frame repaint after settle. PRM users get the
+       static gradient, no pass (the gold is still present, just unanimated). */
+    .text-gilt {
+        background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
+        background-size: 250% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .text-gilt {
+            animation: gold-shimmer-slide var(--duration-shimmer) var(--ease-out-expo) 1 forwards;
+        }
+    }
+
     /* ── Keyboard key ── */
     .kbd {
         display: inline-flex;
@@ -568,6 +606,56 @@
        glyph rise. R2-spec D-Rec-2 (audit-D). */
     .metric-badge[data-size="sm"] .metric-badge__label {
         letter-spacing: 0.1em;
+    }
+
+    /* D6.b — `MetricBadge variant="record"`: the gilded record/peak value.
+       The highest-leverage gold moment on a DATA atlas — a tiny gilt pill on the
+       single record / peak / featured figure (the all-time-high, the top
+       district). Gold marks the SUPERLATIVE, exactly one per view: a gilt pill on
+       a single figure reads as a medal — civic and earned, not decorative.
+
+       The recipe composes ON the base `.metric-badge` glass plate (it is a
+       MODIFIER, never a replacement): a 1px `--gold-rim` tooled edge + `--gold-ink`
+       text + a FAINT gold wash (≤8% alpha — never an opaque gold fill, which would
+       read as a fourth DATA category and break one-color-one-meaning). The wash
+       sits over the badge's own `--glass-bg-quiet` plate via `color-mix`, so the
+       cream glass still reads through; the gold is the leaf, not the area.
+
+       `--gold-ink` clears cream-law ② (APCA |Lc| ≥ 45) on `--card` in both arms
+       (proof:gold-ink-contrast), and the faint wash only lightens the plate it
+       sits on, so the ink stays legible. */
+    .metric-badge--record {
+        border-color: var(--gold-rim);
+        background:
+            linear-gradient(
+                0deg,
+                color-mix(in oklab, var(--gold) 8%, transparent),
+                color-mix(in oklab, var(--gold) 8%, transparent)
+            ),
+            var(--metric-badge-bg, var(--glass-bg-quiet));
+        box-shadow:
+            inset 0 0 0 1px var(--gold-rim),
+            inset 0 0.5px 0 0
+                color-mix(in oklab, var(--gold-light) 30%, transparent),
+            0 1px 6px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    }
+
+    /* The record value reads in legible gold ink (the medal numeral). Scoped to
+       the amount slot so the unit/label keep their muted register — the gold is
+       on the figure, not the furniture. */
+    .metric-badge--record .metric-badge__amount {
+        color: var(--gold-ink);
+    }
+
+    .metric-badge--record:hover {
+        /* Hover deepens the rim to full `--gold` and lifts the wash one rung —
+           the gilt edge catches a touch more light, never a fill. */
+        border-color: var(--gold);
+        box-shadow:
+            inset 0 0 0 1px var(--gold),
+            inset 0 0.5px 0 0
+                color-mix(in oklab, var(--gold-light) 40%, transparent),
+            0 2px 10px color-mix(in srgb, var(--shadow-color) 12%, transparent);
     }
 
     /* Q.W3 Lane A — the `.glass-dock[data-density="…"]` density rungs that
@@ -851,28 +939,17 @@
         --ripple-radius: var(--ripple-radius-max, 12rem);
     }
 
-    /* Sparkle glyph — hidden at rest, animated on hover. The star
-       sweeps diagonally from top-left to bottom-right per the canonical
-       sparkle-sweep keyframe (animations.css). */
-    &::after {
-        content: "✦";
-        position: absolute;
-        top: 0.25rem;
-        left: 0.5rem;
-        color: hsl(0 0% 100% / 0.7);
-        font-size: 0.75rem;
-        line-height: 1;
-        pointer-events: none;
-        opacity: 0;
-        will-change: transform, opacity;
-        z-index: 1;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-        &:hover::after {
-            animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
-        }
-    }
+    /* D6.b — the disco-star EXCISED. The `::after { content:"✦" }` glyph and
+       its `&:hover::after { animation: sparkle-sweep … }` trigger are gone (the
+       user's named removal: "remove the disco star from all glass-ui elements").
+       A primary action now announces itself by SETTLING into a richer surface,
+       not by emitting a sparkle: the whole hover affirmation rides the existing
+       `&:hover` specular catch-light box-shadow (`--glass-specular`, above) —
+       honest physics, not casino-skeuomorphism. Gold CTAs add the
+       `btn-gold-bg-sweep` metal-catch (a metal catching light is honest; a star
+       is not). One garish gesture out, zero garish gestures in. The
+       `sparkle-sweep` keyframe is TOMBSTONED in animations.css (empty body,
+       full delete in 3.11); `--duration-sparkle` is `@deprecated` in tokens.css. */
 
     /* PRM bracket — the press-ripple retires; the press still reads
        via the audacious recipe's transform/scale beat (the ripple is
@@ -900,14 +977,14 @@
    token triad (tokens.css §13).
 
    Design register:
-   • PRM no-preference: shimmer sweeps continuously at `--duration-shimmer`
-     rate; the sparkle-sweep (from btn-audacious) coexists on hover.
+   • PRM no-preference: the gold sweep IS the gold-CTA affirmation — a metal
+     catching light is honest physics (the disco-star is gone, D6.b).
    • PRM reduce: static gold tint shows on hover; no animation.
    • The gold shimmer is a background-image layer ABOVE the existing
      btn-audacious paper-grain + primary-radial layers, blended with
      `overlay` so the glass substrate reads through at partial opacity.
-   • The `::before` ripple and `::after` sparkle from btn-audacious are
-     unchanged; this modifier only retunes the hover background layers.
+   • The `::before` ripple from btn-audacious is unchanged; the `::after`
+     sparkle is EXCISED (D6.b) — this modifier only retunes the hover layers.
    • Consumer applies: `<Button variant="gold-audacious">Next →</Button>` */
 @utility btn-audacious-gold {
     /* At rest: a faint warm gold tint over the glass surface reads as "warm

@@ -327,27 +327,45 @@
     /* Tier — primary ────────────────────────────────────────────
      *
      * Per W2.7 §9, §12, §13, §17. The primary tier composes three at-rest
-     * marks (top-highlight, bottom under-shadow, baseline glass) with three
-     * disco accents on hover (specular swap, sparkle sweep, disco-grain).
+     * marks (top-highlight, bottom under-shadow, baseline glass) with two
+     * disco accents on hover (specular swap, disco-grain).
+     *
+     * D6.b — the disco-STAR is GONE (the sparkle-sweep sweep is excised from the
+     * underlying `btn-audacious`, utilities.css). The primary dock button's gold
+     * identity — the "golden dock button" the user likes — is RE-EXPRESSED sans
+     * star: a tooled `--gold-rim` gilt edge (the brushed-brass-under-glass read)
+     * plus the surviving specular catch-light + disco-grain on hover. Three quiet
+     * golds replacing one loud star.
      *
      * Reservation: disco fires on hover only. At rest the button reads as
-     * a Vignelli-restrained composed glass surface. The `--phase-color`
-     * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
-     * the disco-grain radial only on hover; idle is neutral.
+     * a Vignelli-restrained composed glass surface with a hairline gilt edge.
+     * The `--phase-color` cascade (provided by `<InstrumentChassis>` via
+     * `data-phase`) tints the disco-grain radial only on hover; idle is neutral.
      *
-     * K.W6 Lane B — the canonical disco-grain + sparkle-sweep + specular
-     * recipe lifted to `@utility btn-audacious` (utilities.css). The Vue
-     * <DockTabButton> attaches `btn-audacious` automatically when the
-     * consumer passes `data-tier="primary"`. The dock-local rules below
-     * are STRICTLY the dock extension: structural shell (padding, base
-     * surface tint, min-height) + phase-tint extensions (hover radial
-     * uses `--phase-color`, plus the `[data-phase]` `::before` halo).
+     * K.W6 Lane B — the canonical disco-grain + specular recipe lifted to
+     * `@utility btn-audacious` (utilities.css). The Vue <DockTabButton> attaches
+     * `btn-audacious` automatically when the consumer passes `data-tier="primary"`.
+     * The dock-local rules below are STRICTLY the dock extension: structural shell
+     * (padding, base surface tint, min-height) + the gilt-edge gold identity +
+     * phase-tint extensions (hover radial uses `--phase-color`, plus the
+     * `[data-phase]` `::before` halo).
      */
     .dock-tab-button[data-tier="primary"] {
         --dock-tab-min-height: 4rem;
         padding-inline: 1.5rem;
         background: color-mix(in srgb, var(--card) 60%, transparent);
         color: var(--foreground);
+
+        /* D6.b — the gilt edge: a 1px inner `--gold-rim` ring + a faint gold
+           top-catch, the tooled-brass identity that replaces the excised star.
+           A box-shadow (no layout, no paint cost), composing UNDER the hover
+           specular/grain. The gold reads as a bevel light at the edge, never a
+           fill — the surface still reads as composed glass. Idiom mirrors the
+           `.glass-gilt` modifier (glass.css region) at the dock-button scale. */
+        box-shadow:
+            inset 0 0 0 1px var(--gold-rim),
+            inset 0 0.5px 0 0
+                color-mix(in oklab, var(--gold-light) 30%, transparent);
 
         /* Phase-tint hover override — same disco-grain composition as
          * `btn-audacious`, but the radial uses `--phase-color` (instrument-

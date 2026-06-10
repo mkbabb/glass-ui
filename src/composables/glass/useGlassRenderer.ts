@@ -199,17 +199,31 @@ export function createGlassFilter(
 
     document.body.appendChild(svg);
 
-    // Apply the filter + additional CSS frost
-    el.style.backdropFilter = `url(#${id}) blur(${blur * 0.15}px) saturate(1.6) brightness(1.05)`;
+    // Apply the filter + the glass frost — written through the TOKEN LADDER, NOT
+    // hardcoded `rgba()` (D6.c M11). The prior path hand-wrote `1px solid
+    // rgba(255,255,255,.25)` + an `rgba` box-shadow + a literal `saturate(1.6)`,
+    // bypassing the `--glass-*` cohort the unified `.glass-material` recipe
+    // (glass.css) reads — so a consumer dark-flip / preset override could not
+    // reach this imperative surface and it drifted off the rest of the ladder. The
+    // SVG displacement filter (the Snell's-law refraction this composable's reason
+    // to exist) stays; only the frost decorations are re-pointed at the tokens:
+    //   • the backdrop saturate reads an OVERRIDABLE `--glass-saturate` hook
+    //     (the literal floor `1.6` preserves the prior render; a consumer `:root`
+    //     can now retune the concentration the `--glass-blur-*` tiers bake in),
+    //   • the border reads `--glass-border-floating` (the tier's rim opacity),
+    //   • the box-shadow reads `--glass-material-rim` (the unified silhouette
+    //     catch-light) + `--glass-shadow-floating` (the tier's lift) — the SAME
+    //     two layers `.glass-floating` composes, so the SVG-filter tier and the
+    //     CSS tier land the same frost. A consumer `:root` override now reaches
+    //     this surface like every other rung.
+    const saturate = "var(--glass-saturate, 1.6)";
+    el.style.backdropFilter = `url(#${id}) blur(${blur * 0.15}px) saturate(${saturate}) brightness(1.05)`;
     el.style.setProperty("-webkit-backdrop-filter", el.style.backdropFilter);
 
-    // Add visible glass border
-    el.style.border = "1px solid rgba(255,255,255,0.25)";
-    el.style.boxShadow = `
-        inset 0 0.5px 0 0 rgba(255,255,255,0.3),
-        inset 0 -0.5px 0 0 rgba(0,0,0,0.05),
-        0 4px 16px rgba(0,0,0,0.08)
-    `;
+    // The glass edge + lift — the tier's own tokens (matches `.glass-floating`).
+    el.style.border = "1px solid var(--glass-border-floating)";
+    el.style.boxShadow =
+        "var(--glass-material-rim), var(--glass-shadow-floating)";
 
     // Resize handler
     const observer = new ResizeObserver(() => {

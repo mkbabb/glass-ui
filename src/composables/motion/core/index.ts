@@ -39,6 +39,14 @@ export * from "../usePrioritizedTask";
 // `/motion-core` surface — and, being heavy-peer-free, it is also root-barrel
 // safe (re-exported from the root barrel below for broad reach).
 export * from "../useViewTransition";
+// D6.c M6 — the ROUTE/navigation View-Transitions helper. Pure-native +
+// dependency-free (no `vue`, no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it
+// ships on the engine-free `/motion-core` surface alongside `useViewTransition`
+// (and, heavy-peer-free, it is root-barrel safe — re-exported from the root
+// barrel below). It wraps a navigation callback in `document.startViewTransition`
+// so a matched `gl-shared-element` pair MORPHS across the route change, with the
+// PRM + unsupported instant fallbacks.
+export * from "../useRouteTransition";
 // AV.W3 — the v-reveal entrance directive. Dependency-free (`vue` type-only —
 // no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
 // `/motion-core` surface AND is re-exported from the root barrel below.

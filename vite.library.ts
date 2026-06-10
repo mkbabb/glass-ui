@@ -63,6 +63,10 @@ export const libraryExternal = [
     "@vueuse/core",
     "@mkbabb/keyframes.js",
     "@mkbabb/value.js",
+    // `./handmark` imports pencil-boil's L1 geometry as an OPTIONAL PEER (the
+    // singleton-rAF `useLineBoil` must resolve to ONE copy in the consuming app —
+    // SPEC §1.1). Externalised so it is never inlined into the handmark chunk.
+    "@mkbabb/pencil-boil",
     "class-variance-authority",
     "clsx",
     "embla-carousel-vue",

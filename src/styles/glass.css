@@ -260,6 +260,97 @@
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 
+    /* ── LIQUID by tier — the moving-specular hover catch-light is the
+       FLOATING / OVERLAY tier's PROPERTY, not a per-surface wire (D6.c M10) ──────
+       The shared `:hover::before` rule above already lifts `--specular-intensity`
+       to the hover rung on EVERY material surface, so the catch-light wakes on
+       hover library-wide. What this block promotes is the FLOATING / OVERLAY
+       tier's identity: a navigation/overlay-band surface (a Dialog, a Sheet, a
+       Popover, the dock crest's `.glass-floating`) reads as LIQUID OUT OF THE BOX
+       — the catch-light is a tier guarantee, documented here so a consumer reaches
+       for `variant="floating"` and inherits the lens without a `useSpecularTracking`
+       wire. The pointer-anchored TRACKING still rides `useSpecularTracking` (a
+       host can sharpen the lens to the cursor); un-wired, the catch-light sits at
+       the centred `50%` fallback and breathes on hover — felt, not garish.
+
+       The magnitude rides the SAME `--glass-specular-intensity-hover` cohort the
+       aurora-calibrated π-ledger judges (tokens.css §specular-intensity), so the
+       liquid tier never out-shouts a number — it is the SAME gleam, named as a
+       tier default. The OPT-OUT survives: `.glass-no-liquid` on a floating/overlay
+       surface pins the rest rung (a flat tier for dense data, the deft escape). */
+    .glass-floating:not(.glass-no-liquid),
+    .glass-overlay:not(.glass-no-liquid) {
+        --glass-liquid: 1; /* the tier carries the liquid identity (informational marker) */
+    }
+    .glass-floating.glass-no-liquid:hover::before,
+    .glass-overlay.glass-no-liquid:hover::before,
+    .glass-floating.glass-no-liquid:active::before,
+    .glass-overlay.glass-no-liquid:active::before {
+        /* The deft escape — a dense-data floating surface that wants a FLAT tier
+           pins the catch-light at the clean rest rung even on hover/active. */
+        --specular-intensity: var(--glass-specular-intensity-rest, 0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        /* PRM fence — the liquid tier degrades to the static centred gleam. The
+           `useSpecularTracking` write is already PRM-gated (it skips the pointer
+           write under reduce); this pins the CSS half (`--specular-x/y: 50%`
+           centred) AND kills the position-track `transition` so an un-wired liquid
+           tile does NOT animate a travelling catch-light on hover under PRM. The
+           gleam may still LIFT on hover (a discrete opacity step, no interpolation
+           track) — the correct PRM degrade: no MOTION, the surface still responds.
+           This mirrors the shared moving-specular PRM bracket (one static-pin
+           convention across the specular cohort). */
+        .glass-floating::before,
+        .glass-overlay::before {
+            --specular-x: 50%;
+            --specular-y: 50%;
+            transition: none;
+        }
+    }
+
+    /* ── The GILT EDGE — `.glass-gilt`, the gilt-tooled glass modifier (D6.c M3/M12) ──
+       A fine book's cover is gold-tooled at the EDGE — never a gold fill. The
+       modifier composes on ANY tier (the tier is the FROST; the gilt is the
+       hairline gold catch on its rim) so a featured card OR the dock crest wears
+       the same recipe over its own backdrop. Two box-shadow layers ride INSIDE
+       the tier (they do not perturb the tier's own elevation stack — they are
+       additive inset rings):
+         (1) a 1px inset ring on `--gold-rim` — the tooled gold edge (D6.b lands
+             `--gold-rim` = `--gold` at ~40%α over the surface; referenced by name,
+             so the gilt resolves the moment the token cohort is minted), and
+         (2) a 0.5px gold top-catch highlight — the bevel light reading off the
+             upper edge, `--gold-light` at low α so it is a catch, not a band.
+       The surface still reads as cream-glass; the gold is the bevel light, the
+       SCARCE flourish (the consumption budget — at most one gilt surface per
+       route — is the atlas's D7 rule, not enforced here). */
+    .glass-gilt {
+        box-shadow:
+            inset 0 0 0 1px var(--gold-rim, color-mix(in oklab, var(--gold) 40%, transparent)),
+            inset 0 0.5px 0 0 color-mix(in oklab, var(--gold-light) 35%, transparent),
+            var(--glass-material-rim),
+            var(--glass-shadow-floating);
+    }
+
+    /* The liquid-metal CATCH-LIGHT (D6.c M12) — `.glass-gilt` overrides the
+       moving-specular `::before` sweep COLOR from warm-cream to GOLD, so the light
+       travelling across the gilt edge is golden the way gold leaf catches a warm
+       highlight. This is the single richest moment in the platform — gold + liquid
+       + specular — and therefore the most scarce (ONE surface ever, the title-page
+       flourish; the budget lives in D7). The geometry (bounded circle, the
+       `--glass-specular-size` falloff, the `plus-lighter` blend, the mask) is
+       INHERITED verbatim from the shared `::before`; only the gradient color stops
+       shift to the warm-gold mix. The intensity still rides the `--specular-intensity`
+       opacity multiplier (0 at rest), so a resting gilt surface paints NO gold sweep
+       — it wakes on hover like every liquid tier. */
+    .glass-gilt::before {
+        background: radial-gradient(
+            circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+            color-mix(in oklab, var(--gold-light) 60%, hsl(40 35% 92%)) 0%,
+            hsl(40 35% 92% / 0) 70%,
+            transparent 100%
+        );
+    }
+
     /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
        Tier semantics, alpha-monotonic per R3-spec §A:
          wash      ~0.30α  + light blur      (was `subtle`)
@@ -468,7 +559,10 @@
         background: var(--paper-clean-texture);
         background-repeat: repeat;
         background-size: var(--paper-texture-size);
-        opacity: var(--glass-grain-opacity);
+        /* D6.c M5 — the grain rung lifted off the dead 0.025 floor to a felt-but-
+           deft 0.038 (the page rung; the kitsch ceiling is ~0.05). The canonical
+           token still wins; this is the felt floor a no-override mount inherits. */
+        opacity: var(--glass-grain-opacity, 0.038);
         pointer-events: none;
         mix-blend-mode: overlay;
     }
