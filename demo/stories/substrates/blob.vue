@@ -66,7 +66,7 @@ interface BlobStudioCfg {
     /**
      * AZ.W-BLOB-STUDIO D5 — the LOUDER-LEAN register (the studio-only "responsiveness"
      * knob). The SHIPPED calm default (pointerStrength 0.10 + stretch 0.5) stays the
-     * page/library default (AX.W46 calibrated-calm); the studio surfaces this axis so a
+     * page/library default (the calibrated-calm register); the studio surfaces this axis so a
      * tuning session can dial the bead LOUD — a fast flick reads a visible taffy-pull.
      * `responsiveness` is a single 0..1 axis that scales BOTH the pointer-lean strength
      * (`interaction.pointerStrength`) and the velocity-squash magnitude
@@ -133,7 +133,7 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // the user dials live). The merge bridge: the studio seeds a modestly LOUDER smoothK
 // (0.06) than the lean-safe library default (0.05) — a PAGE-LOCAL override (like
 // W-BLOB-PAGE's orbit override) so the STUDIO bead shows a WIDER gooey bridge (the §6
-// MERGE-BRIDGE-ROUNDER read) while staying under the proof:blob-render calm-lean ceiling
+// merge-bridge-rounder read) while staying under the gated calm-lean ceiling
 // (the studio bead IS the gated page bead — one GL context — so the studio smoothK is
 // bounded by the same lean-centroid ceiling the library default is; 0.06 + circular
 // measures lean ≈ 0.099, clear of the 0.10 ceiling, while 0.08 over-inflated it). The
@@ -249,7 +249,7 @@ const paletteStops = computed(() =>
 // stretch 2.0 gives up to ~3× elongation on a fast flick where 0.5 reads at the noise
 // floor). The CALM preset (responsiveness 0) is byte-identical to the library default;
 // the louder register is reached ONLY by dialing the knob (NOT a default re-base — the
-// shipped page/library default stays the AX.W46 calibrated-calm). Restraint counter:
+// shipped page/library default stays the calibrated-calm register). Restraint counter:
 // ONE surfaced axis, no parallel uncoupling path (the existing stretch axis is the
 // velocity-squash channel — this just gives the studio a louder ceiling to reach it).
 const CALM_POINTER_STRENGTH = BLOB_CONFIG_DEFAULTS.interaction.pointerStrength; // 0.10
@@ -273,7 +273,7 @@ const stageConfig = reactive<BlobConfig>({
     // edit onto these atoms. Surface/color start at the canonical lit-cream defaults; the
     // membrane smoothK/merge start at the new 0.09/circular library default the studio
     // knobs then retune. The four-side containment HOLDS at the seed geometry (the same
-    // proof:blob-render corner-empty/side-margin witnesses W-BLOB-PAGE measured GREEN).
+    // corner-empty/side-margin witnesses the page bead measured green).
     geometry: {
         ...BLOB_CONFIG_DEFAULTS.geometry,
         orbitRadius: studio.config.orbitRadius,
@@ -443,7 +443,7 @@ watch(studioPaused, () => {
                               cap (211px) clamped BELOW the 225px height — the box went
                               NON-square and the 1.6×-overflow canvas clipped tight to the
                               wrapper, pushing the orbiting satellites onto the frame edge
-                              (the proof:blob-render four-side containment RED at 0.97). Now
+                              (the four-side containment check read 0.97 — red). Now
                               the box wants full width but is capped at `max-w`/`max-h` (78%
                               of each axis, ≤30rem), and `aspect-square` resolves it to the
                               LARGEST square fitting both caps = min(78% w, 78% h) — so the

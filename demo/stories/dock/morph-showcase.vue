@@ -11,7 +11,7 @@
 // (measured median p50 ~13.7-15.1ms, never 0% over the 16.7ms cap — the trace is in
 // ground/W-MORPH-SHOWCASE-gperf-{v2h,h2v}.json). So per §H4/§7 the NUMBER falls to
 // arm (c): the SHIPPED DEFAULT is the View-Transitions crossfade (startViewTransition —
-// the AQ.W5 substrate, a compositor-snapshot crossfade that clears the budget,
+// the library view-transition substrate, a compositor-snapshot crossfade that clears the budget,
 // deterministic + bidirectional). The amorphous metaball-teardrop fidelity is BOOKED
 // to a successor and demonstrable here as the perf-gated "Liquid teardrop (preview)"
 // mode — the deterministic scalar-driven two-dock morph + the goo bridge.
@@ -142,7 +142,7 @@ onMounted(() => {
                 crossfades the two dock states, so it stays smooth and stable under load (it
                 clears the 60fps frame budget under a 4× CPU throttle). The topology reflow
                 (column → row) is hidden inside the crossfade — the platform cannot continuously
-                interpolate a mismatched-topology silhouette (AX.W42 fold 7); the showcase
+                interpolate a mismatched-topology silhouette (a binding platform limit); the showcase
                 respects that limit rather than fighting it.
             </p>
             <p class="text-small text-muted-foreground">
@@ -345,7 +345,7 @@ onMounted(() => {
             var(--card)
         );
     /* The arm-c crossfade names the two dock states so the View-Transition group
-       crossfades them (the AQ.W5 view-transition substrate's CSS half). */
+       crossfades them (the view-transition substrate's CSS half). */
     view-transition-name: dock-morph-stage;
 }
 
