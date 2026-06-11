@@ -28,6 +28,18 @@ const setMode = async (page, mode) => {
     }, mode);
 };
 
+// the aurora-park trick: the GooBlob rAF never lets the page settle, so a
+// full-page screenshot waits forever. Cap every screenshot at 8s and let the
+// timeout-or-shot proceed (a single animating frame is fine for an audit shot).
+const shot = async (page, path, opts = {}) => {
+    try {
+        await page.screenshot({ path, timeout: 8000, animations: "disabled", ...opts });
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
 const browser = await chromium.launch();
 try {
     for (const vp of VIEWPORTS) {
@@ -38,27 +50,23 @@ try {
                 colorScheme: mode,
             });
             const page = await ctx.newPage();
-            await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "networkidle" });
+            await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "domcontentloaded" });
             await setMode(page, mode);
             await page.waitForTimeout(1600);
 
             // full page (scroll the main content region into a tall screenshot)
             const top = `${OUT}/blob-r2-${vp.name}-${mode}-top.png`;
-            await page.screenshot({ path: top, fullPage: false });
+            await shot(page, top);
             report.captures.push(top);
 
             // scroll main to frame the studio stage + configurator
-            await page.evaluate(() => {
-                const main = document.querySelector("main");
-                if (main) main.scrollTop = vp_scroll;
-            }).catch(() => {});
             await page.evaluate((s) => {
                 const main = document.querySelector("main");
                 if (main) main.scrollTop = s;
             }, vp.name === "mobile" ? 520 : 360);
             await page.waitForTimeout(800);
             const studio = `${OUT}/blob-r2-${vp.name}-${mode}-studio.png`;
-            await page.screenshot({ path: studio, fullPage: false });
+            await shot(page, studio);
             report.captures.push(studio);
 
             await ctx.close();
@@ -73,7 +81,7 @@ try {
             colorScheme: "light",
         });
         const page = await ctx.newPage();
-        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "networkidle" });
+        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "domcontentloaded" });
         await setMode(page, "light");
         await page.waitForTimeout(1600);
         await page.evaluate(() => {
@@ -85,8 +93,7 @@ try {
         for (let i = 0; i < 4; i++) {
             await page.waitForTimeout(700);
             const f = `${OUT}/blob-r2-satellite-frame-${i}.png`;
-            if (canvas) await canvas.screenshot({ path: f });
-            else await page.screenshot({ path: f });
+            if (canvas) { try { await canvas.screenshot({ path: f, timeout: 8000 }); } catch(e) { await shot(page, f); } } else await shot(page, f);
             report.captures.push(f);
         }
         await ctx.close();
@@ -100,7 +107,7 @@ try {
             colorScheme: "light",
         });
         const page = await ctx.newPage();
-        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "networkidle" });
+        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "domcontentloaded" });
         await setMode(page, "light");
         await page.waitForTimeout(1500);
 
@@ -151,7 +158,7 @@ try {
             isMobile: true,
         });
         const page = await ctx.newPage();
-        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "networkidle" });
+        await page.goto(`${BASE}/#/substrates/blob`, { waitUntil: "domcontentloaded" });
         await setMode(page, "light");
         await page.waitForTimeout(1600);
         const mob = await page.evaluate(() => {
@@ -178,7 +185,7 @@ try {
         });
         await page.waitForTimeout(600);
         const mstage = `${OUT}/blob-r2-mobile-stage-light.png`;
-        await page.screenshot({ path: mstage });
+        await shot(page, mstage);
         report.captures.push(mstage);
         await ctx.close();
     }
