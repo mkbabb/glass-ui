@@ -53,10 +53,9 @@ export const EXPECTED_TREE = [
     ]],
     // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
     // `fourier-field` is the new Canvas2D render-background sibling. `glass-panel`
-    // retired at AY.W-SB1 (a demo-only published component); its renderer-tier
-    // lesson lives on at `glass-material` (the `useGlassRenderer` detection
-    // cluster + its story retired at AZ.W-PRUNE2 E4-3).
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material"]],
+    // RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js binary consumer —
+    // the published subpath ships again WITH its story).
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
@@ -76,15 +75,18 @@ export const EXPECTED_TREE = [
         "dropdown-menu", "context-menu", "hover-card", "tooltip", "accordion",
         "collapsible", "hover-popover", "expandable-container", "command",
     ]],
-    // `header-ribbon` retired at AY.W-SB1 (a published component with 0 non-self
-    // consumers — the route prune was finally made component-deep). `deck-progress`
-    // retired at AY.W-PRUNE (the declined BOOK — slides ships its own deck-local
+    // `header-ribbon` RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js
+    // binary consumer — the published subpath ships again WITH its story).
+    // `deck-progress` stays retired (AY.W-PRUNE — slides ships its own deck-local
     // progress bar; 0 real consumers, RETIRE-FULL public-surface delete).
     ["navigation", [
-        "tabs", "carousel",
+        "tabs", "carousel", "header-ribbon",
     ]],
     // The headline primitive's own first-class category.
-    ["dock", ["overview", "layers", "rail"]],
+    // `morph-showcase` joined at AZ.W-MORPH-SHOWCASE (the V<->H orientation morph
+    // on the one --dock-morph-t scalar; the VT-crossfade default + the perf-gated
+    // teardrop preview).
+    ["dock", ["overview", "layers", "rail", "morph-showcase"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
@@ -97,9 +99,11 @@ export const EXPECTED_TREE = [
     ]],
     // `underline` (the GlassUnderline draw-on pen) joined motion at AY.W-UNDERLINE
     // (finished-and-published — the `/underline` subpath ships with its consumer).
+    // `scroll-vt` joined at AZ.W-MOTION-SUITE (the native scroll-driven +
+    // View-Transitions facilities demo).
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
-        "curve-gallery", "underline",
+        "curve-gallery", "underline", "scroll-vt",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +
