@@ -524,6 +524,12 @@ export const GATES = [
         note: "AU.W10 — the close meta-gate. RETIRED from the release set at the 3.3.0 cut: its assertion #5 (STAGED-NOT-PUBLISHED: version stays 3.2.0 + the changeset staged) guarded the AU→3.3.0 staging window, which closes the moment the cut runs. The user authorized the publish; `changeset version` bumped to 3.3.0 and consumed the changeset, so the staging assertion is fulfilled-and-superseded. AV is the successor tranche (proof:av-final is its close gate). The 21 other release gates carry the release-quality coverage. Kept here untagged for the historical record; bite-runnable via `npm run proof:au-final`.",
     },
     {
+        id: "proof:az-reflect",
+        cmd: "proof:az-reflect",
+        tags: ["release"],
+        note: "AZ.W-CLOSE clause 10 — THE REFLECTION BAR (the user edict 2026-06-11: the tranche is complete only when every surface holds a reflection-audit PASS). Reads the operative (LAST) verdict of each docs/tranches/AZ/audit/reflect/<surface>.md record across the 9-surface roster + asserts >=1 cited capture on disk + the roster census closure (an off-roster record REDs). A FAIL record = mid-triumvirate = the close cannot start. Born-RED witnessed on the post-redress pre-re-stamp tree (4 FAILs flagged); self-test: synthetic FAIL + capture-less PASS + re-stamp-supersedes all behave. Release-only (the close witness, not a per-push gate).",
+    },
+    {
         id: "proof:ay-final",
         cmd: "proof:ay-final",
         tags: ["release"],
