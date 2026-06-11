@@ -176,6 +176,16 @@ rootAllowed.add("vReveal");
 rootAllowed.add("useTextHighlight");
 rootAllowed.add("HighlightMatcher");
 rootAllowed.add("UseTextHighlightControls");
+// AZ.W-MORPH-SHOWCASE (the W-LIQUID fold) — useLiquidFlex is the shared amorphous
+// flex+squish primitive (a PURE projection of a caller-driven scalar; engine-FREE +
+// vueuse-FREE), targeted-re-exported to the root barrel from
+// ./composables/motion/useLiquidFlex per the vReveal/useViewTransition precedent
+// (on /motion-core + the root; ≥2 consumers: useDockOrientationMorph + the
+// tabs-indicator squish).
+rootAllowed.add("useLiquidFlex");
+rootAllowed.add("LiquidFlexAxis");
+rootAllowed.add("UseLiquidFlexParams");
+rootAllowed.add("UseLiquidFlexReturn");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`
