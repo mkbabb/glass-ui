@@ -305,33 +305,34 @@ function openConfigurator(): void {
             </DockLayerGroup>
         </template>
 
-        <!-- AZ.W-SHELL-CONFIG — the trailing UTILITY control is now the gear that
-             opens the glass-ui demo Configurator (the dark-mode toggle's chrome home
-             moved INTO that configurator as its single dark Switch; the standalone
-             rail toggle is removed). The gear rides the #collapsed slot, which the
-             vertical GlassDock renders as a bottom section below an automatic
-             <DockSeparator> (the home-top / utility-at-the-end nav-pattern). It
-             dispatches the SAME `glass-ui-demo:toggle-configurator` event the `,`
-             shortcut does — one event path. -->
-        <template #collapsed>
-            <TooltipProvider :delay-duration="250">
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            class="demo-sidebar-gear tap-squish"
-                            aria-label="Open the glass-ui demo configurator"
-                            @click="openConfigurator"
-                        >
-                            <Settings2 class="h-4 w-4" aria-hidden="true" />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent v-if="showTooltips" side="right" :side-offset="10">
-                        Configurator
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-        </template>
+        <!-- AZ.W-SHELL-CONFIG — the trailing UTILITY control is the gear that opens
+             the glass-ui demo Configurator (the dark-mode toggle's chrome home moved
+             INTO that configurator as its single dark Switch; the standalone rail
+             toggle is removed). It rides the END of the default (#full) slot, behind a
+             <DockSeparator> — the home-top / utility-at-the-end nav-pattern. (NOT the
+             #collapsed slot: an `always-expanded` dock NEVER collapses, so its summary
+             pane — which hosts #collapsed — stays opacity:0/visibility:hidden; the
+             utility belongs in the always-visible full pane's tail.) It dispatches the
+             SAME `glass-ui-demo:toggle-configurator` event the `,` shortcut does — one
+             event path. -->
+        <DockSeparator />
+        <TooltipProvider :delay-duration="250">
+            <Tooltip>
+                <TooltipTrigger as-child>
+                    <DockIconButton
+                        type="button"
+                        class="demo-sidebar-gear tap-squish"
+                        aria-label="Open the glass-ui demo configurator"
+                        @click="openConfigurator"
+                    >
+                        <Settings2 class="h-4 w-4" aria-hidden="true" />
+                    </DockIconButton>
+                </TooltipTrigger>
+                <TooltipContent v-if="showTooltips" side="right" :side-offset="10">
+                    Configurator
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
 
         <!-- The hairline rail (AZ.W-RAIL-EXTEND) — a context control beyond the rail's
              bottom edge. Its end-icon advances the active category (the SAME navigation

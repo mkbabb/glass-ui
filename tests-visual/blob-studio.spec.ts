@@ -43,17 +43,19 @@ const STAGE_FILL_FLOOR = 0.55;
 // left by the controls aside). |cx_bead − cx_stage| / stageW ≤ this.
 const CENTER_OFFSET_MAX = 0.14;
 // SATELLITE-SEPARATION: with orbitRadius dialed UP (past the body radius), the painted
-// silhouette must break into ≥2 connected components at the peak-coverage frame (a
-// detached orbiting droplet) over a sampled cycle. The baseline (orbit inside body) is
-// a single component every frame.
+// silhouette must break into ≥2 SATELLITE-SIZED connected components at the peak-coverage
+// frame (a detached orbiting droplet) over a sampled cycle. The baseline (orbit inside
+// body) is a single component every frame. The component count uses a SATELLITE-SIZED
+// floor (`COMPONENT_MIN_CELLS`) so AA specks + the watercolor-edge fringe (sizes ≤ ~60
+// cells at step-4 downsample) are NOT counted — a satellite at radius 0.10 in a ~696px
+// canvas paints ~100+ cells, well above the floor.
 const SEPARATION_COMPONENTS_MIN = 2;
 // The non-bg foreground threshold (sum |Δ| from the modal bg) for the silhouette mask.
 const FG_DIFF_T = 44;
+// A real body/satellite component is ≥ this many downsampled (step-4) cells; below it is
+// an AA speck or a watercolor-edge fleck (NOT a separated droplet).
+const COMPONENT_MIN_CELLS = 90;
 const SAT_FRAMES = 40;
-
-function luma(d: Buffer, i: number): number {
-    return 0.299 * d[i]! + 0.587 * d[i + 1]! + 0.114 * d[i + 2]!;
-}
 
 async function grab(locator: Locator): Promise<PNG> {
     return PNG.sync.read(await locator.screenshot());
@@ -160,20 +162,23 @@ function foregroundBBox(png: PNG, bg: [number, number, number]) {
     return { x0, y0, x1, y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: x1 - x0, h: y1 - y0 };
 }
 
-async function setOrbit(page: Page, value: number) {
-    // Drive the orbitRadius slider via the studio config (the reactive hook). The
-    // LabeledSlider proxies a reka-ui slider; the most robust write is via the page's
-    // exposed config. The blob.vue studio config is local — drive the slider DOM input.
-    // Fall back: find the slider by its accessible label.
-    const slider = page.getByRole("slider", { name: /orbitRadius|orbit radius/i }).first();
-    if ((await slider.count()) > 0) {
-        await slider.focus();
-        // page Home then arrow to value — the slider step is 0.01, range 0.1..0.42.
-        // Press End to max then back down is fiddly; instead set via keyboard to a high value.
-        await page.keyboard.press("End"); // jump to max (0.42)
-        await page.waitForTimeout(50);
-    }
-    void value;
+async function dialOrbitToMax(page: Page): Promise<boolean> {
+    // The LabeledSlider proxies a reka-ui slider; its aria-labelledby linkage does not
+    // resolve a stable accessible name in this harness, so target the orbit slider by its
+    // UNIQUE aria-valuemax (0.42 — the orbitRadius range; no other studio slider shares
+    // it). Focus it and press End to jump to the max (0.42 > body radius 0.22, well past
+    // the separation threshold), so the satellites detach into orbiting droplets.
+    const handle = await page.evaluateHandle(() => {
+        const sliders = [...document.querySelectorAll('[role="slider"]')];
+        return sliders.find((s) => s.getAttribute("aria-valuemax") === "0.42") ?? null;
+    });
+    const el = handle.asElement();
+    if (!el) return false;
+    await el.focus();
+    await page.keyboard.press("End");
+    await page.waitForTimeout(80);
+    const v = await el.evaluate((s) => (s as Element).getAttribute("aria-valuenow"));
+    return v === "0.42";
 }
 
 mkdirSync(VISUAL_DIR, { recursive: true });
@@ -194,12 +199,20 @@ for (const scheme of SCHEMES) {
             await canvas.waitFor({ state: "visible", timeout: 20_000 });
             await page.waitForTimeout(900); // settle into the resting droplet pose
 
-            // ── §3.1 STAGE-FILL — the bead bounding box vs the stage height ──
-            const stage = page.locator('[data-slot="configurator"]').first();
+            // ── §3.1 STAGE-FILL — the bead bounding box vs the STAGE COLUMN ──
+            // The stage is the `.configurator-stage` panel (the live-specimen viewport),
+            // NOT the whole configurator (which includes the controls aside — measuring
+            // the bead centre against the full configurator midpoint would read the aside
+            // offset as a bead off-center, which is wrong: the bead is centered WITHIN its
+            // stage column, the aside sits beside it).
+            const configurator = page.locator('[data-slot="configurator"]').first();
+            const stage = page.locator(".configurator-stage").first();
             const stageBox = await stage.boundingBox();
             const canvasBox = await canvas.boundingBox();
-            expect(stageBox, "stage box").toBeTruthy();
+            const configBox = await configurator.boundingBox();
+            expect(stageBox, "stage column box").toBeTruthy();
             expect(canvasBox, "canvas box").toBeTruthy();
+            expect(configBox, "configurator box").toBeTruthy();
             const png = await grab(canvas);
             const bg = modalBackground(png);
             const bbox = foregroundBBox(png, bg);
@@ -209,7 +222,7 @@ for (const scheme of SCHEMES) {
             const pngToCss = canvasBox!.height / png.height;
             const beadCssH = bbox!.h * pngToCss;
             const stageFillRatio = beadCssH / stageBox!.height;
-            // centre offset: the bead centroid x in CSS vs the stage centre x.
+            // centre offset: the bead centroid x in CSS vs the STAGE COLUMN centre x.
             const beadCssCx = canvasBox!.x + bbox!.cx * pngToCss;
             const stageCx = stageBox!.x + stageBox!.width / 2;
             const centerOffset = Math.abs(beadCssCx - stageCx) / stageBox!.width;
@@ -220,19 +233,20 @@ for (const scheme of SCHEMES) {
             });
             // The configurator full-frame (the hierarchy: weighted preset row + dividers +
             // the layer order) — the §3.6 DELTA frame.
-            await stage.screenshot({
+            await configurator.screenshot({
                 path: resolve(VISUAL_DIR, `W-BLOB-STUDIO-configurator-${scheme}.png`),
             });
 
             // ── §3.3 SATELLITE-SEPARATION — dial orbitRadius to MAX, sample a cycle ──
-            await setOrbit(page, 0.42);
+            const dialed = await dialOrbitToMax(page);
+            expect(dialed, "the orbitRadius slider dialed to its 0.42 max (the live knob)").toBe(true);
             await page.waitForTimeout(600);
             let peakComponents = 1;
             for (let f = 0; f < SAT_FRAMES; f++) {
                 const fp = await grab(canvas);
                 const fbg = modalBackground(fp);
                 const { mask, mw, mh } = foregroundMask(fp, fbg, 4);
-                const comps = connectedComponents(mask, mw, mh, 6);
+                const comps = connectedComponents(mask, mw, mh, COMPONENT_MIN_CELLS);
                 if (comps > peakComponents) peakComponents = comps;
                 await page.waitForTimeout(180);
             }

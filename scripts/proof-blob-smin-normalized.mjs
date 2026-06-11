@@ -54,10 +54,12 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        RENDERER: resolve(
-            ROOT,
+        // AZ re-point (the AY carve relocated the uniform uploads to
+        // uploadBlobUniforms.ts) — the composed pair, the carve-aware read.
+        RENDERER_FILES: [
             "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
-        ),
+            "src/components/custom/goo-blob/composables/uploadBlobUniforms.ts",
+        ].map((r) => resolve(ROOT, r)),
         SDF: resolve(ROOT, "src/components/custom/goo-blob/shaders/sdf-body.glsl.ts"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_SMIN_NORMALIZED_ARTIFACT",
@@ -89,15 +91,15 @@ function measureSeamDepth(k) {
 }
 
 function run() {
-    const { ROOT, RENDERER, SDF, ARTIFACT } = cliPaths();
+    const { ROOT, RENDERER_FILES, SDF, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
     // ── Clause 1: NORMALIZED-BAND (static) ────────────────────────────────────
-    if (!existsSync(RENDERER)) {
+    if (!RENDERER_FILES.every(existsSync)) {
         violations.push("useMetaballRenderer.ts is absent");
     } else {
-        const raw = readFileSync(RENDERER, "utf8");
+        const raw = RENDERER_FILES.map((f) => readFileSync(f, "utf8")).join("\n");
         const src = stripComments(raw);
         // Isolate the uSmoothK upload statement.
         const m = src.match(/U\.uSmoothK\s*,([\s\S]*?)\)\s*;/);

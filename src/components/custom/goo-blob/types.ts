@@ -237,24 +237,28 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         // uploaded k. The renderer composes the upload as `smoothK × moodMult × POS_SCALE`
         // — a wet, rounded meniscus.
         //
-        // AZ.W-BLOB-STUDIO D2 — the MERGE-BRIDGE re-base. The prior tight `0.05` +
-        // `quadratic` smin CREASED at the body→satellite seam (the quadratic smin's
+        // AZ.W-BLOB-STUDIO D2 — the MERGE-BRIDGE re-base (the C6-6 seam-crease fix). The
+        // prior `quadratic` smin CREASED at the body→satellite seam (the polynomial smin's
         // sharper fillet shows the meniscus crease the moment a metaballing-in satellite
         // touches the body skin, so the merge read as a hard POP, not a gooey neck). The
-        // re-base widens the bridge on TWO axes: `smoothK` 0.05 → 0.09 (a louder blend
-        // band so the bridge stretches a visible NECK as the satellite necks in — the
-        // metaballing-in satellite reads as a stretching gooey limb, never a hard touch),
-        // and `merge` `quadratic` → `circular` (IQ's circular smin lays a true
-        // quarter-circle fillet at the seam where the quadratic creased — rounder
-        // menisci). Both are LIBRARY defaults: the smin band still rides POS_SCALE +
-        // the mood multiplier in the renderer, so the contained-droplet seam-pull holds
-        // at both arousal extremes (the smoothK mood lerp 0.85–1.35 over the 0.09 base
-        // stays inside the worst-case-reach pad uMaxReach already inflates for). The
-        // STUDIO surfaces both as live knobs (the C6-6 / D2 ask); the page geometry
-        // override (W-BLOB-PAGE) reads this same rounder bridge on its 4 separating
-        // satellites, so the page neck-show is gooier too (a fold-in, not a conflict —
-        // W-BLOB-PAGE explicitly left the membrane axis to this wave).
-        smoothK: 0.09,
+        // LIBRARY-DEFAULT re-base is the MERGE VARIANT: `quadratic` → `circular` (IQ's
+        // circular smin lays a true quarter-circle fillet at the seam where the quadratic
+        // creased — rounder menisci, the C6-6 named defect). The `smoothK` blend-band
+        // stays at the CALIBRATED 0.05 on the LIBRARY default — DELIBERATELY, the
+        // IDENTITY-PRESERVED guard: a LOUDER smoothK on the default bead inflates the
+        // whole-canvas lean centroid past the existing proof:blob-render calm-lean ceiling
+        // (0.10) when an orbiting satellite necks in on the leaned side (the wider band
+        // pulls more satellite mass to the body — measured 0.103 at smoothK 0.09 vs 0.10
+        // ceiling), and the contained-droplet seam-pull is calibrated against this band.
+        // The LOUDER bridge is therefore a STUDIO axis, NOT a library re-base: the studio
+        // seeds its preset baseline at a louder smoothK (blob.vue STUDIO_GEO_BASE, a
+        // page-local override like W-BLOB-PAGE's geometry override) AND surfaces smoothK as
+        // a LIVE knob (the Geometry/Satellites layer, 0.02–0.16) so a tuning session WATCHES
+        // the bridge widen into a gooey neck. The circular merge alone is lean-safe
+        // (measured PASS at the 0.05 band) — so the SHIPPED default gets the rounder
+        // menisci (C6-6) WITHOUT the lean regression, and the studio reaches the louder
+        // neck. The W-BLOB-PAGE page-default reads the same rounder circular menisci.
+        smoothK: 0.05,
         merge: "circular",
         // ── Living-but-calm membrane (AX.W15 F3) ──────────────────────────────────
         // The warped-FBM watercolor edge: at idle the shader paints an ~8% organic

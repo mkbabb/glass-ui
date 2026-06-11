@@ -1,0 +1,35 @@
+{
+  "machine": "Apple M-class dev box (M5-Max class per §X machine-class-pinned)",
+  "server": "http://localhost:5199 (vite dev)",
+  "browser": "Playwright Chromium headed, --use-angle=metal",
+  "throttle": "4x CPU",
+  "budget_ms": 16.7,
+  "refraction": "ENAMEL (uBackdrop Snell refraction NOT shipped — §3.7 CONDITIONS-UNMET)",
+  "note": "Baseline (enamel) profile. The §3.7 refraction did not ship (CONDITIONS-UNMET — no high-contrast backdrop source on /substrates/blob; see the DELTA), so this is the unchanged shipped profile, recorded as the G-PERF floor that holds.",
+  "states": {
+    "rest": {
+      "label": "rest",
+      "n": 720,
+      "p50": 8.3,
+      "p95": 9.9,
+      "p99": 10.2,
+      "over167": 0
+    },
+    "hover": {
+      "label": "hover",
+      "n": 722,
+      "p50": 8.3,
+      "p95": 9.9,
+      "p99": 10.2,
+      "over167": 0
+    },
+    "click": {
+      "label": "click",
+      "n": 721,
+      "p50": 8.3,
+      "p95": 10,
+      "p99": 10.2,
+      "over167": 0.14
+    }
+  }
+}

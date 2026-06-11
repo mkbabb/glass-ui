@@ -130,13 +130,23 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // separation geometry (orbit 0.30 > body 0.22, 4 satellites, radius 0.10, near-circular
 // ecc) that makes the metaball orbit→merge→absorb→emerge show read on the LARGE hero
 // (the same separation W-BLOB-PAGE lands on the page default, here a per-preset baseline
-// the user dials live). The merge bridge rides the new 0.09 / circular library default.
+// the user dials live). The merge bridge: the studio seeds a modestly LOUDER smoothK
+// (0.06) than the lean-safe library default (0.05) — a PAGE-LOCAL override (like
+// W-BLOB-PAGE's orbit override) so the STUDIO bead shows a WIDER gooey bridge (the §6
+// MERGE-BRIDGE-ROUNDER read) while staying under the proof:blob-render calm-lean ceiling
+// (the studio bead IS the gated page bead — one GL context — so the studio smoothK is
+// bounded by the same lean-centroid ceiling the library default is; 0.06 + circular
+// measures lean ≈ 0.099, clear of the 0.10 ceiling, while 0.08 over-inflated it). The
+// LIVE smoothK knob (0.02–0.16) lets a tuning session dial the bridge much WIDER to WATCH
+// the neck — the gate only bounds the RESTING/auto-flick default, not the user's dial.
+// The `circular` merge variant is the library default (the C6-6 rounder-menisci re-base,
+// lean-safe); the studio inherits it.
 const STUDIO_GEO_BASE = {
     satelliteCount: 4,
     orbitRadius: 0.3,
     satelliteRadius: 0.1,
     eccentricity: 0.04,
-    smoothK: BLOB_CONFIG_DEFAULTS.membrane.smoothK,
+    smoothK: 0.06,
     merge: BLOB_CONFIG_DEFAULTS.membrane.merge,
 } as const;
 

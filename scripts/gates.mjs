@@ -177,6 +177,48 @@ export const GATES = [
         note: "AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam (E3G-7 / R3-14). Device-free static src-scan: the CONTEXT_LAYER_MAP route-keyed manifest (>=3 IA contexts), useContextualDockLayers reads route.meta.categoryId (a general indexed read, no if-chain), BOTH shell docks RENDER the seam through DockLayerGroup (not import-only). The live per-route swap is the local-only π half, ledger-backstopped. Bite: hardcode a 2-route special case / drop a shell render → RED.",
     },
     {
+        id: "proof:blob-page",
+        cmd: "proof:blob-page",
+        tags: ["local"],
+        note: "AZ.W-BLOB-PAGE — the TRUE blob-page live π gate (3 bites): SWATCH-EDGE-CRISP (the device-px linearRGB/6-octave/stitch filter — black-swatch fling-specks <=3; the old filter read 7-21), SATELLITES-SEPARATE (silhouette CV >=0.04 over an orbit cycle + containment + orbitRadius>bodyRadius), HERO-FIRST IA. The GL renderer is REFUTED-CLOSED (C6-1/F2-R3-9). Loads :5199 — local-only, ledger-backstopped. Bite: revert the filter / the orbit / the IA order → RED.",
+    },
+    {
+        id: "proof:blob-page-fence",
+        cmd: "proof:blob-page-fence",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-BLOB-PAGE §X (the HC-GATESPEC MANDATORY split) — the device-free GL-fence diff-witness: the refuted-closed GL renderer file set is UNTOUCHED by the blob-page wave's own commit (git-scoped to the feat(AZ): blob-page subject; W-BLOB-STUDIO's authorized shader edits ride a distinct commit). Bite: a shader edit in the blob-page commit → RED.",
+    },
+    {
+        id: "proof:motion-demo",
+        cmd: "proof:motion-demo",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-MOTION-SUITE — the robust /motion demo source arm: the FULL curve canon enumerated (the value.js ease family + the keyframes curves + steps + the editable bezier), the springs page on SPRING_PRESETS (zero local closed-form spring forks — the drift kill), the scroll/VT facilities demoed, ppmycota purple DEMO-LOCAL only (never a library token). The π half rides tests-visual/motion-demo.spec.ts (local-only). Bite: re-fork a spring / drop a canon family / mint the purple into src → RED.",
+    },
+    {
+        id: "proof:shell-identity",
+        cmd: "proof:shell-identity",
+        tags: ["local", "ci"],
+        note: "AZ.W-SHELL-IDENTITY — the demo-shell home region: the F wordmark IS the Foundations entry (the Compass dup dropped), demarcated by DockSeparator, 2rem, optically centered by the MEASURED ink-lean nudge (the +-0.5px acceptance band re-probed live — never a hardcoded value alone), the proper glass hover register. Bite: re-add the Compass dup / drop the separator / break the band → RED.",
+    },
+    {
+        id: "proof:blob-studio",
+        cmd: "proof:blob-studio",
+        tags: ["local"],
+        note: "AZ.W-BLOB-STUDIO — the studio live π: stage-fill (pi>=0.55 of the stage, centered), the circular merge-bridge menisci, the geometry/satellites live knobs (orbit→max separates 5-7 components), the two-rung gel-dome shadow (ambient+contact, token-first, dark re-resolution). The uBackdrop refraction closed CONDITIONS-UNMET (the enamel stands; the user conditional honored). Local-only, ledger-backstopped.",
+    },
+    {
+        id: "proof:blob-studio-config",
+        cmd: "proof:blob-studio-config",
+        tags: ["local", "ci"],
+        note: "AZ.W-BLOB-STUDIO — the studio configurator source arm: the design-hierarchy grouped sections, smoothK surfaced 0.02-0.16, the studio seeds 0.06 over the library default 0.05 (the IDENTITY-PRESERVED guard — the louder default pushed the lean-centroid past the 0.10 ceiling). Bite: flatten the hierarchy / drop a knob → RED.",
+    },
+    {
+        id: "proof:shell-config",
+        cmd: "proof:shell-config",
+        tags: ["local", "ci"],
+        note: "AZ.W-SHELL-CONFIG — the gear configurator source arm: the FAB SheetTrigger DELETED, the gear opens the re-framed glass-ui demo Configurator (the PresetEditor surface), the Appearance section LEADS with the dark Switch at TOP (R4-3), the --glass-level/--ui-scale/PRM axes thread types→defaults→css-writers→store (the scale axis writes GLOBAL --ui-scale; --dock-scale derives). Bite: resurrect the FAB / sink the dark switch / write --dock-scale directly → RED.",
+    },
+    {
         id: "proof:adaptive-glass-live",
         cmd: "proof:adaptive-glass-live",
         tags: ["local"],

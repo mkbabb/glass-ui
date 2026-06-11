@@ -11,7 +11,9 @@
 // Navigation. This gate FREEZES the NEW tree so it cannot silently drift:
 //
 //   (1) CATEGORY ORDER — the manifest's category id sequence matches the
-//       12-category fixture below EXACTLY (order is load-bearing).
+//       11-category fixture below EXACTLY (order is load-bearing). (The
+//       reference-only `composables` category was deleted at AZ.W-SHELL-CONFIG —
+//       12 → 11; the count is auto-derived from EXPECTED_TREE.length.)
 //   (2) STORY SET — each category's story id SET matches the fixture EXACTLY
 //       (no missing/extra/recategorized row).
 //   (3) NO MISSING-STORY — every `<category>/<id>` row resolves to an existing
@@ -33,7 +35,7 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-// ── The frozen AX-reinvented 12-category IA fixture ──────────────────────────
+// ── The frozen AX-reinvented IA fixture (11 categories post-AZ.W-SHELL-CONFIG) ──
 // Category order is asserted as a sequence; each category's story ids are
 // asserted as a SET (intra-category order is presentational). This SUPERSEDES
 // the AV.W10 11-category snapshot (the blob trio folded to one, fourier-field
@@ -108,16 +110,9 @@ export const EXPECTED_TREE = [
         "configurator", "instrument-chassis",
         "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
     ]],
-    ["composables", [
-        "use-token-color",
-        "use-global-dark", "use-keyboard-shortcuts", "use-resize-observer",
-        "use-glass-renderer", "use-animated-number", "use-dark-mode-sync",
-        "use-intersection-pause", "use-raf-loop", "use-scroll-progress",
-        "use-spring-orchestrator", "use-stagger-reveal", "use-sortable",
-        "use-scroll-tracker", "use-sidebar-follow", "use-sidebar-state",
-        "use-tree-index", "use-touch-gate", "use-timer", "use-interval",
-        "use-infinite-scroll", "use-clipboard",
-    ]],
+    // The reference-only `composables` category was DELETED at AZ.W-SHELL-CONFIG
+    // (the demo IA no longer carries the 22-story reference shelf — clean break, no
+    // alias). The category count drops 12 → 11 (auto-derived from EXPECTED_TREE.length).
 ];
 
 // The category count asserted in the human summary header (truthful to the

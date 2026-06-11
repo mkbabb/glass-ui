@@ -88,3 +88,16 @@ event), verified off the painted DOM by `tests-visual/motion-demo.spec.ts`.
 - The adjacent fleet (`proof:motion-suite` / `proof:motion-value-free` /
   `proof:motion-composables-consumer`) stays GREEN; `npm run typecheck` GREEN;
   `git diff --check` clean.
+
+
+## The captured frames (literal filenames, audit/visual/)
+
+- `W-MOTION-SUITE-curve-gallery-after-light.png`
+- `W-MOTION-SUITE-curve-gallery-after-dark.png`
+- `W-MOTION-SUITE-bezier-editor-light.png`
+- `W-MOTION-SUITE-bezier-editor-dark.png`
+- `W-MOTION-SUITE-springs-after-light.png`
+- `W-MOTION-SUITE-springs-after-dark.png`
+- `W-MOTION-SUITE-scroll-vt-light.png`
+- `W-MOTION-SUITE-scroll-vt-dark.png`
+- `W-MOTION-SUITE-purple-readback.json` (the ppmycota demo-local π readback)

@@ -15,7 +15,12 @@
 //   E3 cmd+K        — the shell mounts the shipped CommandDialog, ⌘K-bound.
 //   E4 mascot + 404 — the empty-states GooBlob mascot + the 404 constellation.
 //   E5 eclipse      — the DarkModeToggle long-press slow-eclipse register (opt-in).
-//   E6 shell toggle — the DarkModeToggle in the rail #persistent region.
+//   E6 eclipse seam — the DarkModeToggle eclipse register (the affordance E5 hangs
+//                     off) survives in the component. AZ.W-SHELL-CONFIG removed the
+//                     STANDALONE shell-rail DarkModeToggle (the dark control's single
+//                     chrome home is now the configurator Switch), so E6 no longer
+//                     anchors on the rail mount — it anchors on the component's
+//                     `eclipse` register, the source-of-truth home of the affordance.
 //
 // House style mirrors proof-substrate-staging.mjs: a pure exported detector, a
 // byte-stable JSON artefact via gate-output, a human summary, process.exit(1).
@@ -175,12 +180,15 @@ export function detectEggs(src) {
     // E5 default-path canary — the eclipse is opt-in; default false.
     assert("E5", "default-off", /eclipse:\s*false/.test(src.darkToggle ?? ""));
 
-    // ── E6 — the shell dark toggle (the affordance E5 hangs off) ────────────
+    // ── E6 — the eclipse register (the affordance E5 hangs off) ─────────────
+    // AZ.W-SHELL-CONFIG removed the STANDALONE shell-rail DarkModeToggle (the dark
+    // control's single chrome home is now the glass-ui demo Configurator's Switch).
+    // E6 therefore anchors on the COMPONENT's `eclipse` register — the source-of-truth
+    // home of the long-press slow-eclipse affordance — not the (removed) rail mount.
     assert(
         "E6",
-        "shell-dark-toggle",
-        /DarkModeToggle/.test(src.rail ?? "") &&
-            /eclipse/.test(src.rail ?? ""),
+        "eclipse-register",
+        /eclipse/.test(src.darkToggle ?? ""),
     );
 
     const seamCount = Object.keys(seams).length;

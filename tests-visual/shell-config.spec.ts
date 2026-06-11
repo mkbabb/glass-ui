@@ -147,13 +147,22 @@ test.describe("shell-config (π lane — the gear-hosted configurator render + r
 
         const readRoot = () =>
             page.evaluate(() => {
-                const cs = getComputedStyle(document.documentElement);
                 const inline = document.documentElement.style;
+                // --dock-scale = calc(--ui-scale * --dock-local-scale); it is not a
+                // registered @property, so getComputedStyle returns the unresolved
+                // calc() string. RESOLVE it numerically via a probe element whose
+                // width consumes the token (offsetWidth gives the px-resolved value).
+                const probe = document.createElement("div");
+                probe.style.position = "absolute";
+                probe.style.visibility = "hidden";
+                probe.style.width = "calc(var(--dock-scale) * 1000px)";
+                document.body.appendChild(probe);
+                const dockScale = probe.offsetWidth / 1000;
+                probe.remove();
                 return {
                     glassLevel: inline.getPropertyValue("--glass-level").trim(),
                     uiScale: inline.getPropertyValue("--ui-scale").trim(),
-                    // --dock-scale derives from --ui-scale; read the COMPUTED value.
-                    dockScale: cs.getPropertyValue("--dock-scale").trim(),
+                    dockScale,
                 };
             });
 
