@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { computed } from "vue";
 import MetricBadge from "../../custom/metric-badge/MetricBadge.vue";
-import { cn } from "../../../utils";
+import { cn, type MetricValue } from "../../../utils";
 
 /**
  * MetricPill — the speedtest stacked-pill default, composed over `<MetricBadge>`.
@@ -26,13 +26,16 @@ type MetricPillDensity = "comfortable" | "spacious";
 
 const props = withDefaults(
     defineProps<{
-        amount: string | number | null | undefined;
+        /** The primary metric. A valid `0` renders `"0"`, never the placeholder. */
+        value: MetricValue;
         unit?: string;
         label?: string;
         abbreviation?: string;
         color?: string;
+        /** Substitute glyph when value is empty; forwarded to `<MetricBadge>`,
+         *  which owns the shared `coalesceMetric` default. */
         placeholder?: string;
-        /** Defaults to `lg` — the 14px amount / prose-unit ladder rung. */
+        /** Defaults to `lg` — the 14px value / prose-unit ladder rung. */
         size?: MetricPillSize;
         /** Defaults to `stacked` — the 2-row label-above-value reading. */
         labelPosition?: MetricPillLabelPosition;
@@ -44,7 +47,6 @@ const props = withDefaults(
         size: "lg",
         labelPosition: "stacked",
         density: "spacious",
-        placeholder: "—",
     },
 );
 
@@ -53,7 +55,7 @@ const composedClass = computed(() => cn("metric-pill", props.class));
 
 <template>
     <MetricBadge data-slot="metric-pill"
-        :amount="amount"
+        :value="value"
         :unit="unit"
         :label="label"
         :abbreviation="abbreviation"

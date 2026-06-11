@@ -70,7 +70,10 @@ const claims = [
 </script>
 
 <template>
-    <StoryPage>
+    <!-- :hero-title="false" — this front-door hero hand-authors its own
+         display-register headline (the typewriter composition below), promoted
+         to the document <h1>, so the chassis does not double it (W-SUFFUSE D2-1). -->
+    <StoryPage :hero-title="false">
         <!-- The hero copy sits glass-first over the live constellation the
              chassis renders behind this card. -->
         <div class="px-2 py-10 md:px-6 md:py-16">
@@ -93,7 +96,7 @@ const claims = [
                     is shown on segment 2 only and blinks once typing
                     settles. Reduced-motion → static h2 (no animation).
                 -->
-                <h2 class="text-display-4 tracking-tight">
+                <h1 class="text-display-4 tracking-tight">
                     <template v-if="animateHeadline">
                         <TypewriterText
                             :text="headlineSeg1"
@@ -115,7 +118,8 @@ const claims = [
                                     fontSize: '1.1em',
                                     fontVariationSettings: wonkSettings,
                                 }"
-                            >f</span><TypewriterText
+                                >f</span
+                            ><TypewriterText
                                 v-if="seg1Done"
                                 :text="headlineSeg2Lead"
                                 :base-speed="55"
@@ -126,7 +130,7 @@ const claims = [
                                 :cursor-visible="false"
                                 :interactive="false"
                                 @complete="seg2LeadDone = true"
-                            /></span>
+                        /></span>
                         <TypewriterText
                             v-if="seg2LeadDone"
                             :text="headlineSeg2Rest"
@@ -141,22 +145,26 @@ const claims = [
                     </template>
                     <template v-else>
                         A design system
-                        <span class="whitespace-nowrap"><span
-                            class="fourier-f font-display italic"
-                            :style="{
-                                color: 'var(--viz-fourier, hsl(358 72% 52%))',
-                                fontSize: '1.1em',
-                                fontVariationSettings: wonkSettings,
-                            }"
-                        >f</span>or</span>
+                        <span class="whitespace-nowrap"
+                            ><span
+                                class="fourier-f font-display italic"
+                                :style="{
+                                    color: 'var(--viz-fourier, hsl(358 72% 52%))',
+                                    fontSize: '1.1em',
+                                    fontVariationSettings: wonkSettings,
+                                }"
+                                >f</span
+                            >or</span
+                        >
                         mathematicians, writers &amp; makers.
                     </template>
-                </h2>
+                </h1>
 
                 <p class="text-prose max-w-2xl">
-                    Glass-UI pairs Vue 3.5 primitives with a warm-cream, paper-textured visual
-                    identity. Every surface composes translucent glass over a grain underpaint; every
-                    heading is set in Plus Jakarta Sans display; every card carries a cartoon shadow by default.
+                    Glass-UI pairs Vue 3.5 primitives with a warm-cream, paper-textured
+                    visual identity. Every surface composes translucent glass over a
+                    grain underpaint; every heading is set in Plus Jakarta Sans display;
+                    every card carries a cartoon shadow by default.
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3 pt-2">
@@ -176,11 +184,15 @@ const claims = [
                 <div
                     v-for="(claim, idx) in claims"
                     :key="claim.title"
-                    :class="cn(
-                        'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(2rem_+_var(--density-pad,0rem))]',
-                        idx < claims.length - 1 && 'md:border-r md:border-border/40',
-                        idx < claims.length - 1 && 'border-b border-border/40 md:border-b-0',
-                    )"
+                    :class="
+                        cn(
+                            'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(2rem_+_var(--density-pad,0rem))]',
+                            idx < claims.length - 1 &&
+                                'md:border-r md:border-border/40',
+                            idx < claims.length - 1 &&
+                                'border-b border-border/40 md:border-b-0',
+                        )
+                    "
                 >
                     <span
                         class="text-admin-label section-label font-mono"

@@ -1,0 +1,123 @@
+/* dock/morph-bridge.css — the AZ.W-MORPH-SHOWCASE metaball-teardrop bridge (H4 arm a).
+ *
+ * The net-new CSS SVG-goo filter that hides the V↔H dock topology jump-cut. The
+ * fleet's Arch B picks "the existing goo-blob mounted behind the docks OR a net-new
+ * CSS SVG-goo filter … the implementation picks per perf/browser." This wave picks the
+ * CSS SVG-goo filter — the M5-DETERMINISTIC choice: the bridge has NO free-running
+ * `uTime` (the goo-blob's three wall-clock channels would RED the M5 scalar-binding
+ * clause), NO WebGL pass at all (so the HG5 frame budget clears trivially — zero shader
+ * frames), and its teardrop aspect is a PURE function of `--dock-morph-t`. The classic
+ * gooey-CSS trick: blur two plates so their alpha bleeds together, then threshold the
+ * blurred alpha back to a sharp edge (feColorMatrix on the A channel) so the merge
+ * reads as one amorphous metaball silhouette.
+ *
+ * The bridge is DECORATIVE only (the contained-creature constraint — it hosts no dock
+ * children; the real DOM docks crossfade UNDER it). It paints BEHIND the two docks and
+ * fully occludes the reflow at the `t≈0.5` midpoint where both plates are at their
+ * dimmest.
+ *
+ * Determinism (HG4/M5): every animated axis below is `f(var(--dock-morph-t))` (the ONE
+ * inheriting scalar the morph spring writes) or `f(var(--stretch))` (the scalar's
+ * DERIVATIVE the liquid-flex squish writes) — NEVER a CSS animation/transition with its
+ * own clock. A frame captured at a given `--dock-morph-t` is byte-reproducible. */
+
+@layer components {
+    /* The bridge host — sits absolutely behind the two docks, isolation-safe so the
+       goo filter does not leak onto siblings. The two plates inside it are merged by
+       the SVG goo filter referenced via `filter: url(#…)`. */
+    .dock-morph-bridge {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        z-index: 0;
+        /* The goo: blur-then-threshold the child plates' alpha. The filter id is
+           authored once in the showcase SFC (a hidden <svg><filter>); the consumer
+           binds it here. `isolation: isolate` keeps the blur/threshold scoped to the
+           plates, not the page behind. */
+        isolation: isolate;
+        /* Under reduced motion the bridge is hidden — the morph snaps (no teardrop). */
+        opacity: var(--dock-bridge-opacity, 1);
+    }
+
+    /* The goo container the filter applies to — only the plates inside it merge.
+       SCOPED to a TIGHT centered box just larger than the max plate footprint (NOT
+       inset:0 over the whole stage) so the per-frame `feGaussianBlur` repaint covers
+       a small region, not the full stage — the morph frame budget (HG5) clears. The
+       box is sized off the morph spans (the consumer passes --dock-bridge-h-w /
+       --dock-bridge-v-h); `contain: paint` clips the filter work to it. */
+    .dock-morph-bridge-goo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: calc(var(--dock-bridge-h-w, 18rem) + 2.5rem);
+        height: calc(var(--dock-bridge-v-h, 16rem) + 2.5rem);
+        display: grid;
+        place-items: center;
+        contain: layout paint;
+        filter: var(--dock-bridge-goo-filter, none);
+    }
+
+    /* A bridge plate — a warm-glass capsule. TWO plates: one tracks the vertical dock
+       footprint (tall capsule), one the horizontal (wide capsule); both shrink toward
+       the shared center as the morph crosses the midpoint so the blur fuses them into
+       ONE teardrop. The size + corner radius are `f(--dock-morph-t)`; the
+       volume-preserving squish reads `--stretch` (the scalar derivative). */
+    .dock-morph-bridge-plate {
+        position: absolute;
+        /* The warm-cream gel body — the metaball-teardrop fill (a soft radial so the
+           blur threshold reads a domed droplet, not a flat slab). */
+        background: radial-gradient(
+            120% 120% at 50% 38%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 62%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        border-radius: 999px;
+        /* The volume-preserving teardrop squish — stretch along the travel axis,
+           compress reciprocally. Reads `--stretch` (the liquid-flex derivative). The
+           vertical plate squishes on Y, the horizontal on X (set per-plate below). */
+        will-change: width, height, transform;
+    }
+
+    /* The VERTICAL plate — a tall capsule (the t=0 silhouette). It collapses its height
+       toward the center as t: 0 → 0.5, where it has merged into the teardrop. Width is
+       the dock's inline footprint; height interpolates full → a thin neck. */
+    .dock-morph-bridge-plate--vertical {
+        width: var(--dock-bridge-v-w, 3.25rem);
+        /* full height at t=0, necking to ~the width (a circle) by t=0.5, gone by t=1 */
+        height: calc(
+            var(--dock-bridge-v-h, 16rem) *
+                (1 - clamp(0, var(--dock-morph-t, 0), 1)) +
+                var(--dock-bridge-v-w, 3.25rem) * clamp(0, var(--dock-morph-t, 0), 1)
+        );
+        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.5) * 2), 1));
+        /* squish Y on travel (the tall plate stretches along its collapse axis) */
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+
+    /* The HORIZONTAL plate — a wide capsule (the t=1 silhouette). It grows its width
+       from the center as t: 0.5 → 1. Height is the dock's block footprint; width
+       interpolates a thin neck → full. */
+    .dock-morph-bridge-plate--horizontal {
+        height: var(--dock-bridge-h-h, 3.25rem);
+        width: calc(
+            var(--dock-bridge-h-h, 3.25rem) * (1 - clamp(0, var(--dock-morph-t, 0), 1)) +
+                var(--dock-bridge-h-w, 18rem) * clamp(0, var(--dock-morph-t, 0), 1)
+        );
+        opacity: clamp(0, calc(var(--dock-morph-t, 0) * 2), 1);
+        /* squish X on travel (the wide plate stretches along its growth axis) */
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+
+    /* PRM — the bridge is removed; the morph snaps to the target dock (the spring's
+       respectReducedMotion jumps the scalar 0→1 in one frame, the docks land at their
+       endpoints, the goo teardrop never paints). */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-morph-bridge {
+            --dock-bridge-opacity: 0;
+        }
+    }
+}

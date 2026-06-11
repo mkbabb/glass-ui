@@ -299,7 +299,12 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
 </script>
 
 <template>
-    <!--
+    <div
+        class="glass-dock-frame"
+        :class="orientation"
+        :data-has-rail="hasRail || undefined"
+    >
+<!--
         AZ.W-RAIL-EXTEND (R4-1) — the dock is ALWAYS wrapped in a thin shell, but the
         shell is `display: contents` (layout-transparent, byte-identical) UNTIL a
         `#rail` is authored, at which point it becomes a NON-clipping positioning
@@ -312,11 +317,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         `display:contents` shell does not interpose a box on the no-rail path. Rail
         consumers are inline vertical docks (SidebarDock, the dock/rail story).
     -->
-    <div
-        class="glass-dock-frame"
-        :class="orientation"
-        :data-has-rail="hasRail || undefined"
-    >
+
     <div
         ref="dockEl"
         v-bind="$attrs"

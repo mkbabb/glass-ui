@@ -21,6 +21,8 @@ import {
     setWarpTarget,
     warpSettled,
     pickWanderTarget,
+    stepPinnedDrift,
+    makePinnedDrift,
     DEFAULT_WELL_CONFIG,
     WARP_RESPONSE,
     WARP_ZETA,
@@ -48,6 +50,7 @@ function makeField(
         dpr: 1,
         focalIndex: -1,
         warp: { x: 0, y: 0, vx: 0, vy: 0, targetIdx: -1 },
+        pinnedIndex: -1,
     };
 }
 
@@ -616,5 +619,176 @@ describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
             expect(p.vx).toBe(before[i].vx);
             expect(p.vy).toBe(before[i].vy);
         });
+    });
+});
+
+// ── AZ.W-CON-GEN — the six-item generalization (R5-6) ───────────────────────
+describe("constellation generalization (AZ.W-CON-GEN)", () => {
+    it("G1 — a PINNED node is HELD: stepField does not drift/bounce it while others move", () => {
+        const nodes = seedField(mulberry32(0xa11), 20, 800, 600, 0.16);
+        const field = makeField(nodes, 800, 600);
+        field.pinnedIndex = 0;
+        const pinX = field.nodes[0].x;
+        const pinY = field.nodes[0].y;
+        const otherX = field.nodes[1].x;
+        for (let f = 0; f < 30; f++) stepField(field, 1, 0.16, null, 1 / 60);
+        // the pinned node held its seeded position EXACTLY (no drift, no bounce).
+        expect(field.nodes[0].x).toBe(pinX);
+        expect(field.nodes[0].y).toBe(pinY);
+        // a non-pinned node moved (the field is alive around the pin).
+        expect(field.nodes[1].x).not.toBe(otherX);
+    });
+
+    it("G1 — the gravity-well + pointer-steer leave the pinned node alone", () => {
+        const nodes = seedField(mulberry32(0xb22), 16, 800, 600, 0.16);
+        const field = makeField(nodes, 800, 600);
+        field.pinnedIndex = 0;
+        field.well = {
+            x: field.nodes[0].x,
+            y: field.nodes[0].y,
+            strength: 1,
+            target: 1,
+            cfg: { ...DEFAULT_WELL_CONFIG },
+        };
+        const pinX = field.nodes[0].x;
+        const pinY = field.nodes[0].y;
+        // a held well right ON the pin would slingshot a non-pinned node — the pin holds.
+        for (let f = 0; f < 20; f++)
+            stepField(field, 1, 0.16, { x: pinX, y: pinY }, 1 / 60);
+        expect(field.nodes[0].x).toBe(pinX);
+        expect(field.nodes[0].y).toBe(pinY);
+    });
+
+    it("G1 — pinnedIndex -1 (default) is byte-identical to a no-pin field", () => {
+        const mk = () => makeField(seedField(mulberry32(0xc33), 24, 800, 600, 0.16), 800, 600);
+        const a = mk(); // pinnedIndex -1 (default)
+        const b = mk();
+        b.pinnedIndex = -1;
+        for (let f = 0; f < 30; f++) {
+            stepField(a, 1, 0.16, null, 1 / 60);
+            stepField(b, 1, 0.16, null, 1 / 60);
+        }
+        a.nodes.forEach((p, i) => {
+            expect(p.x).toBe(b.nodes[i].x);
+            expect(p.y).toBe(b.nodes[i].y);
+        });
+    });
+
+    it("G2 — drawEdges paints the accent register for edges incident on the accentIndex node", () => {
+        // two nodes within link range, one is the accent — the incident edge strokes accent.
+        const nodes: ConstellationNode[] = [
+            { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 140, y: 120, vx: 0, vy: 0, r: 2, dim: false },
+        ];
+        const field = makeField(nodes, 800, 600);
+        const palette = { ...DEFAULT_PALETTE, line: "#111111", accent: "#ff0000" };
+        const strokes: string[] = [];
+        const ctx = makeCtx();
+        Object.defineProperty(ctx, "strokeStyle", {
+            get() {
+                return this._s ?? "";
+            },
+            set(v: string) {
+                this._s = v;
+                strokes.push(v);
+            },
+        });
+        drawEdges(ctx, field, 132, palette, 1, 0 /* accentIndex */);
+        // the single incident edge strokes the accent tint, not the neutral line.
+        expect(strokes).toContain("#ff0000");
+        expect(strokes).not.toContain("#111111");
+    });
+
+    it("G2/G3 — accentIndex -1 (default) keeps the neutral single-color pass (edgeFloor lifts it)", () => {
+        const nodes: ConstellationNode[] = [
+            { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 140, y: 120, vx: 0, vy: 0, r: 2, dim: false },
+        ];
+        const field = makeField(nodes, 800, 600);
+        // edgeFloor lifts a faded hairline above the perceptual floor.
+        const palette = { ...DEFAULT_PALETTE, edgeFloor: 0.06 };
+        let maxAlpha = 0;
+        const ctx = makeCtx();
+        Object.defineProperty(ctx, "globalAlpha", {
+            get() {
+                return this._a ?? 1;
+            },
+            set(v: number) {
+                this._a = v;
+                if (v > 0 && v < 1) maxAlpha = Math.max(maxAlpha, v);
+            },
+        });
+        drawEdges(ctx, field, 132, palette, 1 /* default accentIndex -1 */);
+        // a near-edge with edgeFloor 0.06 strokes ABOVE the bare edgeAlpha*t (floor lifted).
+        expect(maxAlpha).toBeGreaterThan(0.06 * palette.alpha);
+    });
+
+    it("G3 — DEFAULT_PALETTE carries accent/edgeFloor/edgeAccentAlpha (the SSR fallback)", () => {
+        expect(typeof DEFAULT_PALETTE.accent).toBe("string");
+        expect(DEFAULT_PALETTE.edgeFloor).toBe(0); // byte-identity default
+        expect(DEFAULT_PALETTE.edgeAccentAlpha).toBeGreaterThan(0);
+    });
+
+    it("G5 — stepPinnedDrift eases the pinned node around its anchor and stays within wanderFrac", () => {
+        const nodes = seedField(mulberry32(0xd44), 12, 800, 600, 0.16);
+        const field = makeField(nodes, 800, 600);
+        field.pinnedIndex = 0;
+        field.nodes[0].x = 400; // a known anchor
+        field.nodes[0].y = 300;
+        field.nodes[0].vx = 0;
+        field.nodes[0].vy = 0;
+        const pd = makePinnedDrift({ wanderFrac: 0.14, durMs: 1000, minIdle: 100, jitter: 0 });
+        field.pinnedDrift = pd;
+        const rng = mulberry32(0x99);
+        let now = 1;
+        // step through several full legs; the pinned node must move but stay near anchor.
+        let moved = false;
+        for (let f = 0; f < 600; f++) {
+            now += 16;
+            stepPinnedDrift(field, now, rng);
+            const dx = Math.abs(field.nodes[0].x - 400);
+            const dy = Math.abs(field.nodes[0].y - 300);
+            if (dx > 1 || dy > 1) moved = true;
+            // never leaves the ±wanderFrac*w neighbourhood of the anchor.
+            expect(dx).toBeLessThanOrEqual(0.14 * 800 + 1);
+            expect(dy).toBeLessThanOrEqual(0.14 * 600 + 1);
+        }
+        expect(moved).toBe(true); // the drift is observable
+    });
+
+    it("G5 — stepPinnedDrift is a no-op without pinnedDrift / without a pin / at now<=0", () => {
+        const field = makeField(seedField(mulberry32(7), 8, 400, 300, 0.16), 400, 300);
+        field.pinnedIndex = 0;
+        const x = field.nodes[0].x;
+        stepPinnedDrift(field, 1000, Math.random); // no field.pinnedDrift → no-op
+        expect(field.nodes[0].x).toBe(x);
+        field.pinnedDrift = makePinnedDrift();
+        field.pinnedIndex = -1; // no pin → no-op
+        stepPinnedDrift(field, 1000, Math.random);
+        expect(field.nodes[0].x).toBe(x);
+    });
+
+    it("G6 — warpAutoRelease clears targetIdx once the spring settles (the identity-ride)", () => {
+        const nodes = seedField(mulberry32(0xe55), 10, 800, 600, 0.16);
+        const field = makeField(nodes, 800, 600);
+        field.warpAutoRelease = true;
+        // seed the warp ON node 3 so it is already within the settle band → settles fast.
+        field.warp.x = field.nodes[3].x;
+        field.warp.y = field.nodes[3].y;
+        setWarpTarget(field, 3);
+        expect(field.warp.targetIdx).toBe(3);
+        // step a few frames — the spring settles, auto-release clears the target.
+        for (let f = 0; f < 10; f++) stepField(field, 1, 0.16, null, 1 / 60);
+        expect(field.warp.targetIdx).toBe(-1);
+    });
+
+    it("G6 — without warpAutoRelease the warp HOLDS its target (the default)", () => {
+        const nodes = seedField(mulberry32(0xf66), 10, 800, 600, 0.16);
+        const field = makeField(nodes, 800, 600);
+        field.warp.x = field.nodes[3].x;
+        field.warp.y = field.nodes[3].y;
+        setWarpTarget(field, 3);
+        for (let f = 0; f < 10; f++) stepField(field, 1, 0.16, null, 1 / 60);
+        expect(field.warp.targetIdx).toBe(3); // held forever (byte-identical to HEAD)
     });
 });

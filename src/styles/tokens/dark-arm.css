@@ -147,6 +147,12 @@
        the dark alpha is modestly HIGHER than the light arm — but still BELOW the
        slides 1.0 max-legibility reference (the recessive midpoint, not 1.0). */
     --constellation-alpha:               0.88;
+    /* ACCENT-edge skin — dark arm (AZ.W-CON-GEN G3). The floor stays 0 (the dark
+       ground already lifts the hairlines, so no perceptual-floor lift is needed); the
+       accent-incident multiplier runs a touch louder on the deeper ground so the
+       flagged-node tether reads (the 0.34 dark reference). */
+    --constellation-edge-floor:          0;
+    --constellation-edge-accent-alpha:   0.34;
 
     /* Glass opacity + grain for dark — five-tier ladder, alpha-monotonic.
        Each rung lifts ~0.08 from its light counterpart so the dark surfaces

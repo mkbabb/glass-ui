@@ -20,6 +20,7 @@ import {
     warpSettled,
     setWarpTarget,
     pickWanderTarget,
+    stepPinnedDrift,
 } from "./constellationInteraction";
 
 // The reference width the `k` scale factor is keyed to (CSS px) lives in the
@@ -64,6 +65,27 @@ export interface ConstellationPalette {
     edgeFocusAlpha: number;
     /** The field-yields-to-type translucency knob (the global field dimmer). */
     alpha: number;
+    /**
+     * The ACCENT-edge skin tint (AZ.W-CON-GEN G3) — the flagged-node EDGE color the
+     * optional `drawEdges(…, accentIndex)` pass strokes for edges incident on the
+     * accented node. Reads `--constellation-accent` (the consumer-preset boundary —
+     * the library ships a neutral default; a consumer aliases it to its brand hue).
+     */
+    accent: string;
+    /**
+     * The neutral-edge alpha FLOOR (AZ.W-CON-GEN G3) — added to a distance-faded
+     * neutral hairline's alpha so it clears the perceptual/sampling floor across its
+     * full length on a bright ground (the "web doesn't read in light mode" fix).
+     * Default `0` is byte-identical (no floor). Reads `--constellation-edge-floor`.
+     */
+    edgeFloor: number;
+    /**
+     * The ACCENT-incident edge alpha multiplier (AZ.W-CON-GEN G3) — the per-mode
+     * weight for an edge touching the accented node. Reads
+     * `--constellation-edge-accent-alpha`; the accented edges read a touch louder
+     * than the neutral lattice (the flagged-node tether).
+     */
+    edgeAccentAlpha: number;
 }
 
 /**
@@ -100,6 +122,39 @@ export interface ConstellationWander {
     /** the minimum idle (ms) between auto re-targets. */
     minIdle: number;
     /** the random extra idle (ms) added per cadence (so the rhythm is not metronomic). */
+    jitter: number;
+}
+
+/**
+ * The autonomous PINNED-ANCHOR drift state (AZ.W-CON-GEN G5) — the gentle wander of
+ * the PINNED node (`field.pinnedIndex`) around its seeded ANCHOR. DISTINCT from
+ * `wander` (which re-targets the WARP spring among random nodes): this eases ONE
+ * designated node a small fraction around its rest position on a jittered cadence,
+ * so a flagged point breathes its neighborhood without leaving the dead-space it was
+ * anchored in. Stepped inside `stepField` (no second rAF) via a closed-form
+ * easeInOutQuad over `now` — no integrator. Absent (`undefined`) → `stepField` skips
+ * the block (byte-identical to HEAD).
+ */
+export interface ConstellationPinnedDrift {
+    /** The anchor (the pinned node's rest position) the drift eases around (px). */
+    anchorX: number;
+    anchorY: number;
+    /** ms timestamp of the next leg; -1 until armed on the first stepped frame. */
+    nextAt: number;
+    /** ms timestamp the current leg started; -1 between legs (resting at the anchor). */
+    legStart: number;
+    /** the current leg's from/to (px) — the eased segment endpoints. */
+    fromX: number;
+    fromY: number;
+    toX: number;
+    toY: number;
+    /** the ± fraction of the canvas the drift wanders around the anchor. */
+    wanderFrac: number;
+    /** the per-leg easeInOutQuad duration (ms). */
+    durMs: number;
+    /** the minimum rest (ms) between legs. */
+    minIdle: number;
+    /** the random extra rest (ms) per leg (so the rhythm is not metronomic). */
     jitter: number;
 }
 
@@ -219,6 +274,30 @@ export interface ConstellationField {
      * pre-well HEAD — `stepField` skips the force pass entirely.
      */
     well?: ConstellationWell;
+    /**
+     * The PINNED node designation (AZ.W-CON-GEN G1) — the index of a node `stepField`
+     * does NOT drift/bounce/steer/pull, so it HOLDS its seeded position (the flagged
+     * flagged node the consumer pins). `-1` (the default) = no pin → every node drifts
+     * (byte-identical to HEAD). A designation, NOT a new node — node count is
+     * conserved. The optional `pinnedDrift` gently wanders it around its anchor; the
+     * optional `drawEdges(…, accentIndex)` tints its incident edges.
+     */
+    pinnedIndex: number;
+    /**
+     * The optional autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5). When set AND a
+     * node is pinned, `stepField` gently eases the pinned node around its anchor on a
+     * jittered cadence (a closed-form easeInOutQuad — no second rAF). Absent
+     * (`undefined`) → the pinned node holds dead-still at its anchor (byte-identical).
+     */
+    pinnedDrift?: ConstellationPinnedDrift;
+    /**
+     * Warp AUTO-RELEASE (AZ.W-CON-GEN G6). When `true`, `stepField` clears the warp's
+     * `targetIdx` (→ -1) once the spring has SETTLED on its target — the focal node
+     * releases the spring and rides its node's RAW drift (the identity-ride), freeing
+     * the spring for the next warp. Default `false`/undefined keeps the held-target
+     * behaviour (the warp chases its node forever — byte-identical to HEAD).
+     */
+    warpAutoRelease?: boolean;
 }
 
 /**
@@ -281,6 +360,32 @@ export interface ConstellationProps {
               maxSpeed?: number;
               soften?: number;
           };
+    /**
+     * PINNED node designation (AZ.W-CON-GEN G1): a node held by every step pass (it
+     * does not drift / bounce / steer / feel the well). `false`/absent → no pin;
+     * `true` → node 0; a number → that index. The flagged-node pin the consumer holds.
+     */
+    pinned?: boolean | number;
+    /**
+     * ACCENT-edge skin (AZ.W-CON-GEN G2): edges incident on the pinned (else focal)
+     * node stroke the `--constellation-accent` tint — the flagged-node tether. Default
+     * OFF (the neutral single-color pass).
+     */
+    accentEdges?: boolean;
+    /**
+     * Autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5): the pinned node gently wanders
+     * its seeded anchor on a jittered cadence (DISTINCT from `wander`, which re-targets
+     * the warp). Default OFF (the pin holds dead-still). PRM-gated.
+     */
+    pinnedDrift?:
+        | boolean
+        | { wanderFrac?: number; durMs?: number; minIdle?: number; jitter?: number };
+    /**
+     * Warp AUTO-RELEASE (AZ.W-CON-GEN G6): a settled warp clears its target so the
+     * focal rides its node's raw drift (the identity-ride). Default OFF (the warp holds
+     * its target forever). Read the settled signal via the `warpSettled()` expose.
+     */
+    warpAutoRelease?: boolean;
     /**
      * Deterministic-capture freeze (AY.W-CON3): when `true`, lays out ONE
      * reproducible STATIC frame (no `stepField`, no ripple / warp / wander / well
@@ -386,7 +491,13 @@ export function stepField(
     rng: () => number = Math.random,
 ): void {
     const { nodes, w, h } = field;
+    // The PINNED node (AZ.W-CON-GEN G1) is held by every step pass — its drift,
+    // wall-bounce, pointer-steer, and gravity-well are all skipped so it stays at its
+    // seeded anchor (the gentle `pinnedDrift` mode is the ONLY thing that moves it).
+    // `pinnedIndex === -1` (the default) skips no node → byte-identical to HEAD.
+    const pinned = field.pinnedIndex;
     for (let i = 0; i < nodes.length; i++) {
+        if (i === pinned) continue;
         const p = nodes[i];
         p.x += p.vx * k;
         p.y += p.vy * k;
@@ -408,6 +519,7 @@ export function stepField(
     if (pointer && pointer.x >= 0) {
         const infl = 180 * k;
         for (let i = 0; i < nodes.length; i++) {
+            if (i === pinned) continue;
             const p = nodes[i];
             const dx = pointer.x - p.x;
             const dy = pointer.y - p.y;
@@ -433,11 +545,28 @@ export function stepField(
     // default render is BYTE-IDENTICAL to the pre-well HEAD.
     stepWell(field, k, speed, dt);
 
+    // The autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5) — gently ease the pinned
+    // node around its seeded anchor on a jittered cadence (a closed-form easeInOutQuad
+    // over `now`; no integrator, no second rAF). DISTINCT from `wander` (which
+    // re-targets the warp among random nodes). Absent (`field.pinnedDrift` undefined)
+    // OR no pinned node → no-op → byte-identical to HEAD. Runs BEFORE warpStep so a
+    // warp chasing the pinned node tracks its drifted position this frame.
+    stepPinnedDrift(field, now, rng);
+
     // Advance the focal-node warp spring on the SAME frame (AX.W17). The drift
     // happened above, so the LIVE target node has already moved this frame — the
     // spring chases its post-step position (it tracks a moving target, not a
     // frozen snapshot). One rAF, no useSpring.
     warpStep(field, dt);
+
+    // Warp AUTO-RELEASE (AZ.W-CON-GEN G6) — once the spring has SETTLED on its target
+    // (the `warpSettled` band), clear `targetIdx` so the focal node releases the
+    // spring and rides its node's raw drift (the identity-ride), freeing the spring
+    // for the next warp. Gated by the opt-in `warpAutoRelease` flag; default OFF keeps
+    // the held-target behaviour (the warp chases its node forever — byte-identical).
+    if (field.warpAutoRelease && field.warp.targetIdx >= 0 && warpSettled(field)) {
+        field.warp.targetIdx = -1;
+    }
 
     // The auto-DRIFT cadence (AY.W-CON1) — the 2nd target-source on the SAME
     // spring, stepped AFTER warpStep so a click-warp already in flight (NOT

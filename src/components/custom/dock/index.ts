@@ -59,3 +59,13 @@ export {
     type DockOrientation,
     type DockLayout,
 } from "./composables/dockContext";
+
+// AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (the metaball-bridge, H4
+// arm a; consumer #1 of `useLiquidFlex`). Published so a consumer can compose the
+// two-dock morph showcase against its own docks.
+export {
+    useDockOrientationMorph,
+    type DockMorphOrientation,
+    type UseDockOrientationMorphOptions,
+    type UseDockOrientationMorphReturn,
+} from "./composables/useDockOrientationMorph";

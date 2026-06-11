@@ -1,0 +1,42 @@
+/* configurator.css — the Configurator HIERARCHY VOCABULARY (AZ.W-HIERARCHY, D6-3).
+ *
+ * The Configurator is the controls chassis the blob + aurora studios compose;
+ * this partial lands the three NAMED hierarchy registers ONCE so every studio
+ * INHERITS a vocabulary (section weight / label register / control rhythm)
+ * rather than a flat undifferentiated stack. The token definitions live in
+ * tokens/offsets-sizing.css (`--configurator-section-*`, `--configurator-preset-row-*`);
+ * this file is where the classes that CONSUME them paint.
+ *
+ * Cascade rung: imported AFTER utilities.css so the `.configurator-section-label`
+ * size/weight overrides the prior flat `text-small font-semibold` register, and
+ * the `.configurator-presets` block-padding override wins over the `py-2`
+ * Tailwind utility on the preset-row wrapper.
+ */
+
+/* 1. Section register — the <ConfiguratorLayer> header label reads as a SECTION
+ *    (√φ subheading, 20.4px / 600), NOT a row. Replaces the flat
+ *    `text-small font-semibold text-foreground` span (D6-3: "section labels read
+ *    flat + undifferentiated"). The two tokens are retunable on the cascade so a
+ *    host can scale the whole section register from one override. */
+.configurator-section-label {
+    font-family: var(--font-text);
+    font-size: var(--configurator-section-size);
+    line-height: var(--type-leading-body);
+    font-weight: var(--configurator-section-weight);
+    letter-spacing: var(--type-tracking-tight);
+    color: var(--foreground);
+}
+
+/* 2. Preset-row PRIMARY-AFFORDANCE lift — the preset picker is the primary
+ *    interaction, so its row breathes ABOVE a body ConfiguratorRow. The token
+ *    drives the SPATIAL rhythm (block-padding + the chip gap), NOT a font-weight
+ *    (D6-3: "the preset row is tight"). `.configurator-presets` ships
+ *    `px-3 py-2` from Tailwind; this rule lifts the block padding to the
+ *    `--configurator-preset-row-weight` floor (10px > the 8px body py) and sets
+ *    the inner chip-list gap to `--configurator-preset-row-gap`. */
+.configurator-presets {
+    padding-block: var(--configurator-preset-row-weight);
+}
+.configurator-presets [role="tablist"] {
+    gap: var(--configurator-preset-row-gap);
+}

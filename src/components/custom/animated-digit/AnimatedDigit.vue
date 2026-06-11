@@ -27,6 +27,14 @@ import { useAnimatedNumber } from "../../../composables/motion/useAnimatedNumber
  *    it from the formatted string length.
  *  - `mode`: `"absolute"` (default) or `"progress"` — passes through to
  *    `useAnimatedNumber`.
+ *
+ * AZ.W-METRIC-UNIFY — AnimatedDigit keeps its OWN local `placeholder: "—"`
+ * default (NOT the shared `coalesceMetric` leaf). It is a distinct animated
+ * single-glyph reel, not a static value-display card: it damps the FORMATTED
+ * number toward its target and its empty-check fires only on `null`/`undefined`
+ * (its `value` is `number | null | undefined` — there is no `""` empty string to
+ * coalesce). Folding it onto the value-card core would conflate two different
+ * surfaces. The keep is deliberate.
  */
 
 export type AnimatedDigitMode = "absolute" | "progress";

@@ -20,6 +20,13 @@ export const BASE_WIDTH = 1280;
  * The neutral palette FALLBACK the draw passes read when the `--constellation-*`
  * color/alpha tokens are absent (SSR / no-token mount). The fallbacks mirror the §5c
  * light-arm token defaults so a no-token mount still reads recessive-but-legible.
+ *
+ * `accent`/`edgeFloor`/`edgeAccentAlpha` (AZ.W-CON-GEN G3) are the ACCENT-edge skin
+ * weights the optional `drawEdges(…, accentIndex)` pass reads — the flagged-node EDGE
+ * tint. `accent` mirrors the `--constellation-accent` neutral library default;
+ * `edgeFloor: 0` is the byte-identity (no floor by default — a consumer lifts it so a
+ * distance-faded hairline clears the perceptual floor on a bright ground);
+ * `edgeAccentAlpha: 0.30` is the accent-incident edge multiplier.
  */
 export const DEFAULT_PALETTE: ConstellationPalette = {
     node: "#b4afa3",
@@ -28,6 +35,9 @@ export const DEFAULT_PALETTE: ConstellationPalette = {
     edgeAlpha: 0.22,
     edgeFocusAlpha: 0.34,
     alpha: 0.8,
+    accent: "#b35030", // mirrors the --constellation-accent neutral light default
+    edgeFloor: 0, // no floor by default → byte-identical drawEdges
+    edgeAccentAlpha: 0.3, // the accent-incident edge multiplier
 };
 
 /**
@@ -62,3 +72,18 @@ export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
  */
 export const DEFAULT_WANDER_IDLE = 8000; // ms — min idle between auto re-targets
 export const DEFAULT_WANDER_JITTER = 8000; // ms — random extra idle per cadence
+
+/**
+ * Autonomous PINNED-ANCHOR drift cadence DEFAULTS (AZ.W-CON-GEN G5). DISTINCT from
+ * `wander` (which re-targets the WARP spring among random nodes): this gently eases
+ * the PINNED node (`field.pinnedIndex`) around its seeded ANCHOR on a jittered
+ * cadence — the flagged point breathes its neighborhood without leaving it. The
+ * `--constellation-pinned-drift-*` tokens override these on mount; a prop still wins.
+ * `wanderFrac` (±0.14 of the canvas) keeps the pinned node clear of the hero type
+ * even as it drifts; `durMs` is the per-leg easeInOutQuad duration; the idle/jitter
+ * is the rest between legs (a long, calm rhythm, NOT a metronome).
+ */
+export const DEFAULT_PINNED_DRIFT_FRAC = 0.14; // ± fraction of the canvas around the anchor
+export const DEFAULT_PINNED_DRIFT_DUR = 2600; // ms — per-leg easeInOutQuad duration
+export const DEFAULT_PINNED_DRIFT_IDLE = 6000; // ms — min rest between legs
+export const DEFAULT_PINNED_DRIFT_JITTER = 8000; // ms — random extra rest per leg

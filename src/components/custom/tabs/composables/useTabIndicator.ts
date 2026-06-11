@@ -9,6 +9,13 @@ import {
 } from "vue";
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 import { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_MS } from "../constants";
+// AZ.W-MORPH-SHOWCASE (W-LIQUID fold) — the indicator squish is the SECOND consumer
+// of the shared `useLiquidFlex` primitive. The reciprocal-stretch cap-clamp + the
+// `--stretch` value computation are the SHARED reconcile; the geometry-relative
+// travel FRACTION (the load-bearing local detail) is fed via `squish(frac)` under
+// the `"linear"` law so the write is byte-identical to the prior local
+// `1 + frac·(cap−1)`. The composable owns no size span here (squish-only consumer).
+import { useLiquidFlex } from "../../../../composables/motion/useLiquidFlex";
 // `import type` keeps this type-only reference out of the runtime graph, so the
 // SFC ↔ composable edge never forms a runtime require cycle.
 
@@ -143,6 +150,23 @@ export function useTabIndicator(
     let lastIdx = -1;
     let releaseTimer: ReturnType<typeof setTimeout> | null = null;
 
+    // The shared liquid-flex squish (W-LIQUID consumer #2). Squish-only (no size
+    // span — the indicator travels via CSS `inset`/`transform`, not this primitive):
+    // the indicator feeds its geometry-relative travel FRACTION via `squish(frac)`
+    // under the `"linear"` law. The cap is read LIVE from the cascade (the consumer's
+    // `--tab-indicator-max-stretch` override) via the `capForSquish` getter, so the
+    // primitive owns the cap-clamp + the reciprocal `--stretch` value while the
+    // travel-fraction stays the indicator's load-bearing local detail. The resulting
+    // `--stretch` write is byte-identical to the prior local `1 + frac·(cap−1)`.
+    let capForSquish = DEFAULT_INDICATOR_MAX_STRETCH;
+    const liquidSquish = useLiquidFlex({
+        from: 0,
+        to: 0,
+        axis: "width",
+        squishLaw: "linear",
+        maxStretch: () => capForSquish,
+    });
+
     function prefersReducedMotion() {
         return (
             typeof window !== "undefined" &&
@@ -176,21 +200,25 @@ export function useTabIndicator(
         const travel = Math.abs(toBtn.offsetLeft - fromBtn.offsetLeft);
         const frac = containerW > 0 ? Math.min(travel / containerW, 1) : 0;
 
-        // Resolve the cap from the cascade (default 1.08 if unset). `--stretch`
-        // is 1 + frac · (cap − 1), so a full-width jump reaches the cap and a
-        // tiny hop stays near 1.
+        // Resolve the cap from the cascade (default 1.08 if unset) into the shared
+        // primitive's live-cap getter, then feed the travel FRACTION to the squish.
+        // `useLiquidFlex` (linear law) computes `--stretch` = 1 + frac·(cap − 1),
+        // capped — byte-identical to the prior local write — so a full-width jump
+        // reaches the cap and a tiny hop stays near 1.
         const cs = getComputedStyle(el);
         const capRaw = cs.getPropertyValue("--tab-indicator-max-stretch").trim();
-        const cap = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
-        const stretch = 1 + frac * (cap - 1);
+        capForSquish = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
+        liquidSquish.squish(frac);
 
         if (releaseTimer) clearTimeout(releaseTimer);
         // Open the stretch synchronously with the glide…
-        el.style.setProperty("--stretch", String(stretch));
+        el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
         // …and release it so the indicator shrinks back to fit (the Material
-        // "grow then shrink" close). The release rides the same glide clock.
+        // "grow then shrink" close). The release rides the same glide clock — a
+        // `squish(0)` on the shared primitive (the release input, not a free timer).
         releaseTimer = setTimeout(() => {
-            el.style.setProperty("--stretch", "1");
+            liquidSquish.squish(0);
+            el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
             releaseTimer = null;
         }, INDICATOR_RELEASE_MS);
     }

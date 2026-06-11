@@ -183,6 +183,12 @@ export const GATES = [
         note: "AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam (E3G-7 / R3-14). Device-free static src-scan: the CONTEXT_LAYER_MAP route-keyed manifest (>=3 IA contexts), useContextualDockLayers reads route.meta.categoryId (a general indexed read, no if-chain), BOTH shell docks RENDER the seam through DockLayerGroup (not import-only). The live per-route swap is the local-only π half, ledger-backstopped. Bite: hardcode a 2-route special case / drop a shell render → RED.",
     },
     {
+        id: "proof:morph-showcase",
+        cmd: "proof:morph-showcase",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-MORPH-SHOWCASE (H4) — the V↔H liquid dock morph. Device-free M1-M5: useLiquidFlex (the W-LIQUID substrate, scalar→size+volume-preserving squish, 2 consumers: the dock orientation morph + the tab indicator byte-identical), useDockOrientationMorph on ONE SpringProgress(DOCK_SPRING) writing --dock-morph-t (deterministic, interruptible, PRM pin()), the CSS SVG-goo bridge scalar-bound (M5 — REDs on a free-running mount). HG5 DECIDED MECHANICALLY: arm-a missed the 4×-throttle budget (p50 13.7-15.1ms) → arm-c View-Transitions crossfade SHIPPED (p50 7.7-8.1ms); the teardrop is the perf-gated preview, BOOKED. Bite: free-run the bridge clock / fork a second morph engine → RED.",
+    },
+    {
         id: "proof:blob-page",
         cmd: "proof:blob-page",
         tags: ["local"],
@@ -259,6 +265,18 @@ export const GATES = [
         cmd: "proof:design-idiom-localization",
         tags: ["local", "ci"],
         note: "AU.W8b — scoped styles consume @theme-generated utilities, not text-[var(--…)]/shadow-[var(--…)] arbitrary wraps (the cascade discipline; sole allowlist: TabsTrigger --active-tab-color runtime binding). Bite: re-inject one wrap → RED",
+    },
+    {
+        id: "proof:hierarchy",
+        cmd: "proof:hierarchy",
+        tags: ["local", "ci"],
+        note: "AZ.W-HIERARCHY — the canonical section-heading rung + the Configurator hierarchy vocabulary: (a) no enrolled story h2 off-canon, (b) StorySection exposes the text-subheading h2 register, (c) the THREE Configurator tokens (--configurator-section-size/-weight on the section label; --configurator-preset-row-weight as SPATIAL padding/gap, never a font-weight). The π readback (local-only) binds the resolved 20.4px + no child>parent. Bite: re-roll an off-canon caption / drop a token / consume the preset token as font-weight → RED.",
+    },
+    {
+        id: "proof:suffuse",
+        cmd: "proof:suffuse",
+        tags: ["local", "ci"],
+        note: "AZ.W-SUFFUSE — the design-language suffusion source gate: the D2 hero display-h1 on the starved substrate pages (StoryHero heroTitle), the D3 one-color-event map (--motion-accent on the motion band; the last two --viz-fourier strays re-pointed), the D4 thin-spot underlays, the motion-suffusion reveal discipline (PRM-guarded). Each suffusion item carries its restraint counter. Bite: a second color event on a one-event surface / a PRM-unguarded cascade → RED.",
     },
     {
         id: "proof:colocation",
@@ -621,6 +639,12 @@ export const GATES = [
         note: "AW.W17 — the pure field engine: seedField lays out `count` nodes within bounds (reproducible under a seed), stepField bounces a node off a wall (velocity sign flips) + preserves speed under pointer steering, the four neutral passes paint without throwing",
     },
     {
+        id: "proof:constellation-gen",
+        cmd: "proof:constellation-gen",
+        tags: ["local", "ci"],
+        note: "AZ.W-CON-GEN (R5-6) — the constellation generalization, ADDITIVE on the protected quintet: pinnedIndex (stepField/stepWell hold the pin), drawEdges accentIndex, ConstellationPalette accent/edgeFloor/edgeAccentAlpha (+2 tokens both CSS arms), stepPinnedDrift (the autonomous wander inside the single rAF), warpAutoRelease + warpSettled()/pinNode exposes. All default-OFF, byte-compatible. G4 (overlay labels) SPEC'D-NOT-BUILT (the honest book — no second consumer). Bite: flip a default ON / break the quintet → RED.",
+    },
+    {
         id: "proof:constellation-egg-live",
         cmd: "proof:constellation-egg-live",
         tags: ["local"],
@@ -709,6 +733,12 @@ export const GATES = [
         cmd: "proof:card-veil",
         tags: ["local", "ci"],
         note: "AZ.R5-7 — the Card surface=veil text-plate gate. (A) SOURCE: @utility veil-surface is BORDERLESS + RIMLESS + FILL-ON-THE-LADDER (color-mix over --glass-bg-quiet through the W55 tint axis — a sanctioned glass register) + the optional --veil-feather mask axis; born-RED via the synthetic boxed fixture. (B) the >=2-consumer muster (the cartoon-consumers mirror). The painted darken rides the adaptive-tint axis. Bite: add a border/shadow to the veil or drop a consumer → RED.",
+    },
+    {
+        id: "proof:metric-core",
+        cmd: "proof:metric-core",
+        tags: ["local", "ci"],
+        note: "AZ.W-METRIC-UNIFY — the ONE Metric value core: coalesceMetric(value, placeholder) (only null/undefined/empty coalesce — a valid 0 renders 0, the zero-value bug killed), all four Metric* SFCs consume it (no per-SFC placeholder redeclaration), the amount→value rename clean-break. Bite: re-inline an amount||placeholder truthy check → RED.",
     },
     {
         id: "proof:gate-script-parity",

@@ -116,7 +116,7 @@ describe("component smoke coverage", () => {
 
     it("renders MetricBadge amount and unit", () => {
         const wrapper = mount(MetricBadge, {
-            props: { amount: 42, unit: "ms", color: "red" },
+            props: { value: 42, unit: "ms", color: "red" },
         });
         expect(wrapper.text()).toContain("42");
         expect(wrapper.text()).toContain("ms");
@@ -124,7 +124,7 @@ describe("component smoke coverage", () => {
     });
 
     it("renders MetricBadge placeholder for empty amount", () => {
-        const wrapper = mount(MetricBadge, { props: { amount: null, placeholder: "n/a" } });
+        const wrapper = mount(MetricBadge, { props: { value: null, placeholder: "n/a" } });
         expect(wrapper.text()).toBe("n/a");
     });
 
@@ -133,7 +133,7 @@ describe("component smoke coverage", () => {
             props: {
                 label: "DOWNLOAD",
                 labelPosition: "stacked",
-                amount: 730,
+                value: 730,
                 unit: "Mbps",
                 size: "lg",
             },
@@ -156,7 +156,7 @@ describe("component smoke coverage", () => {
         const wrapper = mount(MetricPill, {
             props: {
                 label: "DOWNLOAD",
-                amount: 730,
+                value: 730,
                 unit: "Mbps",
                 color: "var(--viz-fourier)",
             },
@@ -179,7 +179,7 @@ describe("component smoke coverage", () => {
         const wrapper = mount(MetricPill, {
             props: {
                 label: "LATENCY",
-                amount: 36,
+                value: 36,
                 unit: "ms",
                 density: "comfortable",
             },
@@ -195,7 +195,7 @@ describe("component smoke coverage", () => {
             props: {
                 label: "Latency",
                 labelPosition: "inline",
-                amount: 36,
+                value: 36,
                 unit: "ms",
                 size: "lg",
             },
@@ -265,7 +265,7 @@ describe("component smoke coverage", () => {
 
         // MetricPill — default is "spacious"; passing "comfortable" sets the attr on root
         const pill = mount(MetricPill, {
-            props: { label: "PING", amount: 12, unit: "ms", density: "comfortable" },
+            props: { label: "PING", value: 12, unit: "ms", density: "comfortable" },
         });
         expect(pill.find(".metric-badge").attributes("data-density")).toBe("comfortable");
     });
@@ -283,7 +283,10 @@ describe("component smoke coverage", () => {
         const wrapper = mount(GlassDock, {
             props: { orientation: "vertical", shape: "rounded" },
         });
-        expect(wrapper.classes()).toContain("shape-rounded");
+        // The SFC root is the structural `.glass-dock-frame` (the R4-1 rail escape
+        // shell); the shape/orientation contract lives on `.glass-dock` — the
+        // surface every CSS rule + consumer selector keys off.
+        expect(wrapper.get(".glass-dock").classes()).toContain("shape-rounded");
     });
 
     it("emits container-query host attributes when GlassDock has containerName", () => {

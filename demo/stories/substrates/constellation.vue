@@ -3,7 +3,7 @@
 // node. The overlay paints a glass-ui-toned (`--primary`) pulse ring; the
 // `drawOverlay` seam carries arbitrary consumer content, so a branded skin stays
 // a consumer concern.
-import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -202,6 +202,74 @@ const drawAnomaly = computed(
 // BITES (the G-RECESSION π readback), not just declared. A neutral lattice (no
 // focal overlay) so the comparison is the raw edge/node ink, the recession's target.
 
+// ── Pinned anomaly (generalized) section (AZ.W-CON-GEN G1/G2/G5/G6) ─────────
+// The six-item generalization made first-class: a PINNED node the engine HOLDS
+// (G1), its incident edges tinted accent (G2 accentEdges), the autonomous gentle
+// anchor-drift (G5 pinnedDrift), and the exposed warpSettled() signal (G6). The
+// drawOverlay is the SAME neutralized anomaly recipe (drawAnomaly above) — but now
+// pinned to field.nodes[field.pinnedIndex] (the engine-held pin), NOT a hand-frozen
+// node. This is the slides anomaly skin re-expressed over library surface: ≈30 lines
+// of consumer recipe over the engine, not a ≈250-line bespoke class.
+const genRef = useTemplateRef<InstanceType<typeof Constellation>>("genRef");
+const genSettled = ref(true);
+let genSettledTimer = 0;
+onUnmounted(() => {
+    if (genSettledTimer) window.clearInterval(genSettledTimer);
+});
+
+const drawPinnedAnomaly = computed(
+    () =>
+        (ctx: CanvasRenderingContext2D, field: ConstellationField, now: number) => {
+            // Pin to the ENGINE-HELD pinned node (G1) — its position is owned by the
+            // engine (held still, or gently drifting under pinnedDrift), so the mark
+            // travels with the pin without a hand-rolled freeze.
+            const idx = field.pinnedIndex;
+            const an = idx >= 0 ? field.nodes[idx] : undefined;
+            if (!an) return;
+            const k = field.k;
+            const phase = (now % 2600) / 2600;
+            // outer pulse ring
+            ctx.strokeStyle = accent.value;
+            ctx.globalAlpha = (1 - phase) * 0.55;
+            ctx.lineWidth = 1.6 * k;
+            ctx.beginPath();
+            ctx.arc(an.x, an.y, (12 + phase * 24) * k, 0, Math.PI * 2);
+            ctx.stroke();
+            // inner steady ring
+            ctx.globalAlpha = 0.85;
+            ctx.lineWidth = 1.4 * k;
+            ctx.beginPath();
+            ctx.arc(an.x, an.y, 14 * k, 0, Math.PI * 2);
+            ctx.stroke();
+            // soft halo + core
+            ctx.globalAlpha = 0.18;
+            ctx.beginPath();
+            ctx.arc(an.x, an.y, 26 * k, 0, Math.PI * 2);
+            ctx.fillStyle = accent.value;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = accent.value;
+            ctx.beginPath();
+            ctx.arc(an.x, an.y, 5 * k, 0, Math.PI * 2);
+            ctx.fill();
+            // dashed monospace callout (consumer state — NOT a lib prop; the G4 book)
+            const lx = an.x + 30 * k;
+            const ly = an.y - 18 * k;
+            ctx.globalAlpha = 0.5;
+            ctx.setLineDash([3 * k, 3 * k]);
+            ctx.beginPath();
+            ctx.moveTo(an.x + 8 * k, an.y - 6 * k);
+            ctx.lineTo(lx - 4 * k, ly + 4 * k);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.globalAlpha = 0.9;
+            ctx.fillStyle = accent.value;
+            ctx.font = `${11 * k}px ui-monospace, monospace`;
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText("anomaly", lx, ly);
+        },
+);
+
 // ── Supernova section (DEMO-ONLY — NOT an engine prop, AY.W-CON2) ───────────
 // Double-tap pushes a radial OUTWARD impulse onto the live field — implemented
 // ENTIRELY here, calling the public `field` expose (no library code, no engine
@@ -311,6 +379,31 @@ onMounted(() => {
                 return lastPaintedNow;
             },
         };
+    }
+
+    // AZ.W-CON-GEN — the generalization egg seam. `field` lets a π/proof spec read
+    // the pinned node's bbox + the warp-settled signal per frame; the imperative
+    // `pinNode`/`warpSettled` are the test hooks on the public expose. A live poll of
+    // `warpSettled()` drives the on-screen `settled` badge (the G6 isSettled read).
+    const genInst = genRef.value as
+        | (InstanceType<typeof Constellation> & {
+              field?: ConstellationField;
+              warpSettled?: () => boolean;
+              pinNode?: (idx: number) => void;
+          })
+        | null;
+    if (genInst && typeof window !== "undefined") {
+        (window as unknown as Record<string, unknown>).__constellationGen = {
+            field: genInst.field,
+            warpSettled: genInst.warpSettled?.bind(genInst),
+            pinNode: genInst.pinNode?.bind(genInst),
+        };
+        // Poll the exposed settled signal for the badge (the G6 read a consumer drives
+        // its own UI off). A light interval — the badge is a demo affordance, not hot.
+        // Cleared in onUnmounted (genSettledTimer above).
+        genSettledTimer = window.setInterval(() => {
+            genSettled.value = genInst.warpSettled?.() ?? true;
+        }, 250);
     }
 
     // AY.W-CON2 — the DEMO-ONLY supernova. A double-tap (two pointerdowns within
@@ -536,6 +629,58 @@ onMounted(() => {
                     </span>
                 </div>
             </div>
+        </StorySection>
+
+        <StorySection
+            label="pinned anomaly (generalized)"
+            blurb="The R5-6 six-item generalization made first-class: a PINNED node the engine HOLDS while the field drifts around it (pinned), its incident edges tinted accent (accentEdges), the autonomous gentle anchor-drift that breathes it around its rest distinct from the click-warp (pinnedDrift), and the exposed warpSettled() signal a consumer reads to drive its own UI (the settled badge). The drawOverlay is the SAME anomaly recipe (a pulse ring + halo + core + dashed callout + monospace label) — now pinned to the engine-held node, NOT a hand-frozen vx=vy=0 node + an i=1 skip loop the consumer maintains. The label stays consumer drawOverlay content (the zero-deck-domain canon — no label prop)."
+        >
+            <ShowcaseFrame pad="none">
+                <div
+                    data-testid="constellation-gen-host"
+                    class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
+                >
+                    <Constellation
+                        ref="genRef"
+                        seed="con-gen"
+                        :count="60"
+                        :link="148"
+                        :pointer-reactive="false"
+                        pinned
+                        accent-edges
+                        :pinned-drift="{ wanderFrac: 0.16, durMs: 2400, minIdle: 1200, jitter: 800 }"
+                        warp-on-click
+                        warp-auto-release
+                        :draw-overlay="drawPinnedAnomaly"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        pinned anomaly — accent edges + autonomous drift
+                    </span>
+                    <span
+                        class="pointer-events-none absolute right-3 top-3 rounded-pill bg-card/80 px-2.5 py-1 font-mono text-xs"
+                        :class="genSettled ? 'text-muted-foreground' : 'text-primary'"
+                    >
+                        {{ genSettled ? "settled" : "warping…" }}
+                    </span>
+                </div>
+            </ShowcaseFrame>
+
+            <p class="text-sm text-muted-foreground">
+                The pinned node holds its position while the rest of the field drifts;
+                its incident edges read in the
+                <code class="font-mono text-xs">--constellation-accent</code> tint;
+                and the autonomous
+                <code class="font-mono text-xs">pinnedDrift</code> gently breathes it
+                around its anchor (distinct from the click-warp re-target). Click to
+                warp the focal node — the
+                <code class="font-mono text-xs">settled</code> badge flips while the
+                spring is in flight, then
+                <code class="font-mono text-xs">warpAutoRelease</code> frees it on
+                arrival (the identity-ride).
+            </p>
         </StorySection>
 
         <StorySection

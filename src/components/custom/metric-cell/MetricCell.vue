@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Component, FunctionalComponent, HTMLAttributes } from "vue";
 import { computed } from "vue";
-import { cn } from "../../../utils";
+import { cn, coalesceMetric, type MetricValue } from "../../../utils";
 
 /**
  * Permissive icon type — Vue's `Component` type ships across multiple
@@ -61,13 +61,24 @@ export interface MetricCellProps {
     iconStrokeWidth?: number;
     /** Icon pixel size — defaults to 14 (matches `text-micro` cap height). */
     iconSize?: number;
+    /**
+     * Optional accent colour for the LEADING GLYPH ONLY (e.g. a semantic
+     * `var(--chart-download)` viz colour). Tints the icon — the one
+     * deliberate colour event for the cell — while the label, value, and unit
+     * stay neutral ink (the one-color-event proportion rule, AZ.W-SUFFUSE D3).
+     * Unset (default) keeps the glyph the neutral `--muted-foreground` of the
+     * label row.
+     */
+    iconColor?: string;
     /** Label text — reads through the `label` slot when set. */
     label?: string;
-    /** Value — primary metric. Reads through the `value` slot when set. */
-    value?: string | number | null | undefined;
+    /** Value — primary metric. Reads through the `value` slot when set. A valid
+     *  `0` renders `"0"`, never the placeholder. */
+    value?: MetricValue;
     /** Unit suffix appended after the value (e.g. "Mbps", "ms"). */
     unit?: string;
-    /** Placeholder glyph when value is empty/null. Defaults to em-dash. */
+    /** Placeholder glyph when value is empty/null. Defaults to em-dash (the
+     *  shared `coalesceMetric` default). */
     placeholder?: string;
     /**
      * Visual register.
@@ -82,7 +93,6 @@ export interface MetricCellProps {
 }
 
 const props = withDefaults(defineProps<MetricCellProps>(), {
-    placeholder: "—",
     iconSize: 14,
     iconStrokeWidth: 2,
     appearance: "dashboard",
@@ -108,11 +118,11 @@ const valueClass = computed(() => {
     }
 });
 
-const displayValue = computed(() => {
-    const v = props.value;
-    if (v === null || v === undefined || v === "") return props.placeholder;
-    return String(v);
-});
+// AZ.W-METRIC-UNIFY — the shared value core (the ONE empty-check + the "—"
+// default). A valid `0` renders "0", never the placeholder.
+const displayValue = computed(
+    () => coalesceMetric(props.value, props.placeholder).display,
+);
 </script>
 
 <template>
@@ -120,13 +130,16 @@ const displayValue = computed(() => {
         :class="cn('metric-cell', rootClass, $props.class)"
         :data-appearance="appearance"
     >
-        <div class="metric-cell__label text-micro text-muted-foreground flex items-center gap-1.5">
+        <div
+            class="metric-cell__label text-micro text-muted-foreground flex items-center gap-1.5"
+        >
             <slot name="icon">
                 <component
                     :is="icon"
                     v-if="icon"
                     :size="iconSize"
                     :stroke-width="iconStrokeWidth"
+                    :style="iconColor ? { color: iconColor } : undefined"
                     aria-hidden="true"
                 />
             </slot>

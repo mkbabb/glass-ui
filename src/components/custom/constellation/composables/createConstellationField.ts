@@ -9,6 +9,7 @@ import {
     DEFAULT_WELL_CONFIG,
     DEFAULT_WANDER_IDLE,
     DEFAULT_WANDER_JITTER,
+    makePinnedDrift,
 } from "../constellationInteraction";
 import type {
     ConstellationField,
@@ -27,6 +28,9 @@ type GravityWellProp =
           maxSpeed?: number;
           soften?: number;
       };
+type PinnedDriftProp =
+    | boolean
+    | { wanderFrac?: number; durMs?: number; minIdle?: number; jitter?: number };
 
 export interface ConstellationFieldState {
     field: ConstellationField;
@@ -49,7 +53,17 @@ export interface ConstellationFieldState {
 export function createConstellationField(
     wander: WanderProp,
     gravityWell: GravityWellProp,
+    pinned: boolean | number = false,
+    pinnedDrift: PinnedDriftProp = false,
+    warpAutoRelease = false,
 ): ConstellationFieldState {
+    // The PINNED node designation (AZ.W-CON-GEN G1) — `false`/absent → -1 (no pin,
+    // byte-identical); `true` → index 0 (the canonical flagged node); a number → that
+    // index. The pinned node is seeded like any other (it consumes the rng stream),
+    // then HELD by every step pass.
+    const pinnedIndex =
+        pinned === false ? -1 : pinned === true ? 0 : Math.max(0, Math.trunc(pinned));
+
     const field: ConstellationField = {
         nodes: [],
         canvas: null,
@@ -59,7 +73,18 @@ export function createConstellationField(
         dpr: 1,
         focalIndex: -1,
         warp: { x: 0, y: 0, vx: 0, vy: 0, targetIdx: -1 },
+        pinnedIndex,
+        warpAutoRelease: !!warpAutoRelease,
     };
+
+    // The autonomous pinned-anchor drift (AZ.W-CON-GEN G5). Absent/false leaves
+    // `field.pinnedDrift` undefined (the pinned node holds dead-still — byte-identical);
+    // `true`/an object seeds the cold cadence state (the anchor is captured on the first
+    // armed frame off the pinned node's seeded position). The on-mount token read
+    // re-points the un-overridden cadence members.
+    field.pinnedDrift = pinnedDrift
+        ? makePinnedDrift(pinnedDrift === true ? {} : pinnedDrift)
+        : undefined;
 
     // The auto-DRIFT cadence (AY.W-CON1). `nextAt` arms on the first stepped frame,
     // so there is no immediate jump on mount.

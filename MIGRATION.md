@@ -36,6 +36,13 @@
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
 > NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
+> BREAKING (3.12.0 staged): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
+> `value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
+> Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
+> surfaces unchanged).
+> ADDITIVE (3.12.0 staged): the `/constellation` subpath gains optional default-OFF generalization
+> props/exports (pinnedIndex/pinNode, accentEdges, the palette accent/edgeFloor/edgeAccentAlpha,
+> stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
 > ADDITIVE (3.12.0 staged): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
 

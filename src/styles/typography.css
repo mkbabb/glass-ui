@@ -36,8 +36,9 @@
    neutral (no CLS). */
 @font-face {
     font-family: "Plus Jakarta Sans Fallback";
-    src: local("System Font"), local(".SFNS-Regular"), local(".SFNSText-Regular"),
-         local("-apple-system");
+    src:
+        local("System Font"), local(".SFNS-Regular"), local(".SFNSText-Regular"),
+        local("-apple-system");
     ascent-override: 92.3784%;
     descent-override: 19.7572%;
     size-adjust: 112.3639%;
@@ -77,8 +78,9 @@
    size-adjust ≈ 1.0 makes the swap geometrically transparent. */
 @font-face {
     font-family: "Fira Code Fallback";
-    src: local("SF Mono"), local("SFMono-Regular"), local("Menlo"),
-         local("Consolas"), local("Courier New"), local("Roboto Mono Regular");
+    src:
+        local("SF Mono"), local("SFMono-Regular"), local("Menlo"), local("Consolas"),
+        local("Courier New"), local("Roboto Mono Regular");
     ascent-override: 99.0161%;
     descent-override: 32.2052%;
     size-adjust: 99.9837%;
@@ -96,8 +98,8 @@
        references `"Fira Code"` first then the fallback chain. */
 
     /* Scale tokens */
-    --type-admin-label: 0.625rem;  /* 10px — fixed sub-control micro (NOT fluid) */
-    --type-micro:       0.6875rem; /* 11px — fixed sub-control micro (NOT fluid) */
+    --type-admin-label: 0.625rem; /* 10px — fixed sub-control micro (NOT fluid) */
+    --type-micro: 0.6875rem; /* 11px — fixed sub-control micro (NOT fluid) */
     /* BODY/CONTROL register (AY.W-SCALE1 — the desktop-fluid half of corpus #4):
        a GENTLE clamp() viewport base so the control/body register grows ~1-2 steps
        on a wide display (the 27" "font too small" the user flagged) WITHOUT a
@@ -110,25 +112,53 @@
        (tokens.css --control-text/-sm) — NO double-vw under coarse. The φ-identity
        rungs below (--type-subheading/-heading/-title + the --type-display-* ladder)
        are EXCLUDED — a hero/title is a typographic identity, not a control. */
-    --type-caption:     clamp(0.75rem,  0.71rem + 0.21vw, 1rem);     /* 12px floor — --control-text-sm source */
-    --type-small:       clamp(0.875rem, 0.8rem  + 0.25vw, 1.25rem);  /* 14px floor — --control-text source (the workhorse) */
-    --type-body:        clamp(1rem,     0.92rem + 0.27vw, 1.375rem); /* 16px floor — global body cascade */
-    --type-prose:       clamp(1.125rem, 1.04rem + 0.28vw, 1.5rem);   /* 18px floor — long-form prose */
-    --type-subheading:  1.272rem;  /* 20.4px — √φ */
-    --type-heading:     1.618rem;  /* 25.9px — φ */
-    --type-title:       2.058rem;  /* 32.9px — φ^(3/2) */
-    --type-display-1:   clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
-    --type-display-2:   clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem);  /* φ^(5/2) */
-    --type-display-3:   clamp(2.618rem, 2rem + 3vw, 4.236rem);     /* φ^3 */
-    --type-display-4:   clamp(3.33rem, 2.5rem + 4vw, 5.382rem);    /* φ^(7/2) */
-    --type-display-5:   clamp(4.236rem, 3.5rem + 6vw, 6.854rem);   /* φ^4 */
+    --type-caption: clamp(
+        0.75rem,
+        0.71rem + 0.21vw,
+        1rem
+    ); /* 12px floor — --control-text-sm source */
+    --type-small: clamp(
+        0.875rem,
+        0.8rem + 0.25vw,
+        1.25rem
+    ); /* 14px floor — --control-text source (the workhorse) */
+    --type-body: clamp(
+        1rem,
+        0.92rem + 0.27vw,
+        1.375rem
+    ); /* 16px floor — global body cascade */
+    --type-prose: clamp(
+        1.125rem,
+        1.04rem + 0.28vw,
+        1.5rem
+    ); /* 18px floor — long-form prose */
+    --type-subheading: 1.272rem; /* 20.4px — √φ */
+    --type-heading: 1.618rem; /* 25.9px — φ */
+    --type-title: 2.058rem; /* 32.9px — φ^(3/2) */
+    --type-display-1: clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
+    --type-display-2: clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem); /* φ^(5/2) */
+    --type-display-3: clamp(2.618rem, 2rem + 3vw, 4.236rem); /* φ^3 */
+    --type-display-4: clamp(3.33rem, 2.5rem + 4vw, 5.382rem); /* φ^(7/2) */
+    --type-display-5: clamp(4.236rem, 3.5rem + 6vw, 6.854rem); /* φ^4 */
     /* Audacious display tier (v1.0.3). Extends the φ-ladder three rungs
        beyond display-5 for poster-type consumers (speedtest hero,
        dashboard pane titles when the consumer wants the number to win).
        Same vw-axis as display-1..5 — consumer-agnostic. */
-    --type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem);   /* φ^(9/2) — peak 177px */
-    --type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem); /* φ^5    — peak 287px */
-    --type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem);      /* φ^(11/2) — peak 352px (fast.com peg) */
+    --type-display-mega: clamp(
+        5.382rem,
+        4rem + 9vw,
+        11.089rem
+    ); /* φ^(9/2) — peak 177px */
+    --type-display-hero: clamp(
+        6.854rem,
+        4.5rem + 12vw,
+        17.942rem
+    ); /* φ^5    — peak 287px */
+    --type-display-audacious: clamp(
+        8.728rem,
+        5rem + 16vw,
+        22rem
+    ); /* φ^(11/2) — peak 352px (fast.com peg) */
 
     /* Line heights & letter spacing live at tokens.css §0 as the canonical
        --type-leading-* / --type-tracking-* rungs. theme.css bridges them
@@ -458,6 +488,18 @@ body {
         color: var(--muted-foreground);
         text-transform: uppercase;
         letter-spacing: var(--type-tracking-caps);
+    }
+
+    /* Section-accent eyebrow (AZ.W-SUFFUSE D3-7 / D1-8). ONE coherent
+       section-accent register — the colored mono eyebrow reads as an
+       intentional system, not a four-hue rainbow. The accent reads a single
+       `--section-label-accent` knob (default `--section-color-7`, the violet
+       brand anchor) so a page tints its whole eyebrow column at ONE chroma
+       from one override, NOT a different hue per section. This is the
+       one-color-event rule at PAGE scope: the eyebrow is the page's ONE
+       accent identity. The label/value/body ink below stays neutral. */
+    .section-label--tinted {
+        color: var(--section-label-accent, var(--section-color-7));
     }
 
     /* Font-feature helpers */

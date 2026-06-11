@@ -92,7 +92,12 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
     <!-- No per-section radius: rounding is owned at the container root clip (Configurator.vue rounded-panel + overflow-hidden); flush sections keep straight border-b dividers — a per-section radius only deforms the hairline on a transparent border-only element. -->
     <div
         data-slot="configurator-layer"
-        :class="cn('configurator-layer border-b border-border/40 last:border-b-0', props.class)"
+        :class="
+            cn(
+                'configurator-layer border-b border-border/40 last:border-b-0',
+                props.class,
+            )
+        "
         :data-state="stateAttr"
     >
         <button
@@ -115,7 +120,11 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             @click="onToggle"
         >
             <div class="flex min-w-0 items-baseline gap-2">
-                <span class="text-small font-semibold text-foreground">{{ label }}</span>
+                <!-- The SECTION register (AZ.W-HIERARCHY D6-3): the label reads as a
+                     section (√φ subheading / 600 via .configurator-section-label),
+                     NOT a row — lifting off the prior flat `text-small font-semibold`.
+                     The class consumes the minted --configurator-section-{size,weight}. -->
+                <span class="configurator-section-label truncate">{{ label }}</span>
                 <span
                     v-if="sub"
                     class="truncate text-micro font-mono text-muted-foreground/70"

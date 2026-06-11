@@ -8,9 +8,18 @@ import StoryHero from "./StoryHero.vue";
 interface StoryPageProps {
     /** Override the max-width on the content section. */
     contentClass?: string;
+    /**
+     * Whether the chassis renders the display-register hero <h1> on a hero page
+     * (AZ.W-SUFFUSE D2-1). Default `true`. A bespoke front-door composition
+     * (intro / hero / auth-shell) that hand-authors its own hero <h1> sets
+     * `:hero-title="false"` so the chassis does not double the title.
+     */
+    heroTitle?: boolean;
 }
 
-const props = defineProps<StoryPageProps>();
+const props = withDefaults(defineProps<StoryPageProps>(), {
+    heroTitle: true,
+});
 
 const { current } = useStoryNavigation();
 
@@ -38,11 +47,16 @@ const variant = computed<"hero" | "page">(() =>
                 <p v-if="eyebrow" class="text-admin-label text-muted-foreground">
                     {{ eyebrow }}
                 </p>
-                <h1 v-if="title" class="text-heading">{{ title }}</h1>
-                <p
-                    v-if="blurb"
-                    class="text-small max-w-prose text-muted-foreground"
-                >
+                <!-- D1-4 (AZ.W-HIERARCHY): the chrome <h1> renders on a CONTENT
+                     page (variant="page") only. On a HERO page the hero card owns
+                     the document <h1> (its display-register title), so a chrome
+                     <h1> here would be a duplicate top-level heading in the outline.
+                     This is the STRUCTURAL double-<h1> suppression; the hero title's
+                     audacious DISPLAY-register upgrade is W-SUFFUSE's D2-1. -->
+                <h1 v-if="title && variant === 'page'" class="text-heading">
+                    {{ title }}
+                </h1>
+                <p v-if="blurb" class="text-small max-w-prose text-muted-foreground">
                     {{ blurb }}
                 </p>
             </header>
@@ -52,16 +66,11 @@ const variant = computed<"hero" | "page">(() =>
             <StoryHero
                 :background="background"
                 :variant="variant"
+                :title="title"
+                :hero-title="props.heroTitle"
                 class="mt-8"
             >
-                <section
-                    :class="
-                        cn(
-                            'flex flex-col gap-10',
-                            props.contentClass,
-                        )
-                    "
-                >
+                <section :class="cn('flex flex-col gap-10', props.contentClass)">
                     <slot />
                 </section>
             </StoryHero>

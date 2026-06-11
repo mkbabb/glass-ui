@@ -56,6 +56,22 @@ import { cn } from "../../../utils";
  * default slot's `errorId` slot-prop so the slotted control can bind
  * `aria-errormessage="errorId"` (the four wrappers auto-wire it; a raw
  * `<LabeledField>` slot binds it manually).
+ *
+ * # LabeledField vs ConfiguratorRow — recorded divergence (AZ.W-METRIC-UNIFY §B)
+ *
+ * Both are "label (+ meta) above/beside a slotted control", but they are NOT
+ * interchangeable — they emphasize DIFFERENT features:
+ *  - LabeledField (this) — for FORM fields. Carries the `for`/`id` label↔control
+ *    a11y wiring (`controlId`/`labelId`/`errorId`), the `tooltip`, the `required`
+ *    asterisk, and the `aria-live` `error` region.
+ *  - ConfiguratorRow — for TOKEN / PRESET controls. Carries the token-`name`
+ *    reference, the opt-in `reset` affordance (`canReset`), and the four-rung
+ *    `density` axis. No a11y for/id wiring.
+ *
+ * Reach for LabeledField for accessible form inputs; reach for ConfiguratorRow
+ * inside a `<Configurator>` for token sliders/selects. The divergence is recorded
+ * (NOT a forced merge — no ≥2-consumer shared-chassis need surfaced) in
+ * `docs/precepts/design-idioms.md §9`, alongside the `cn`/`focus-ring` keeps.
  */
 defineProps<{
     label: string;

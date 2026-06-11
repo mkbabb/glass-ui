@@ -96,13 +96,13 @@ const veilFeather = ref(false);
         <!-- Five-rung tier ladder. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">tiers — wash → overlay</p>
+                <h2 class="text-subheading">tiers — wash → overlay</h2>
                 <p class="text-sm text-muted-foreground">
                     The R3-spec ladder. Each rung names a class on the
-                    <code class="font-mono text-xs">.glass-{tier}</code> surface
-                    family; the Card primitive maps the
-                    <code class="font-mono text-xs">tier</code> prop straight
-                    through to the class. Default is
+                    <code class="font-mono text-xs">.glass-{tier}</code> surface family;
+                    the Card primitive maps the
+                    <code class="font-mono text-xs">tier</code> prop straight through to
+                    the class. Default is
                     <code class="font-mono text-xs">resting</code>.
                 </p>
             </header>
@@ -133,13 +133,14 @@ const veilFeather = ref(false);
                         :grain="showGrain"
                     >
                         <CardHeader>
-                            <CardTitle class="text-lg">{{ t.title }}</CardTitle>
+                            <CardTitle class="text-lg font-semibold">{{
+                                t.title
+                            }}</CardTitle>
                             <CardDescription>{{ t.blurb }}</CardDescription>
                         </CardHeader>
                         <CardContent class="text-sm text-muted-foreground">
-                            Surface alpha {{ t.alpha }}. The tier prop is the only
-                            knob the consumer touches; the class merge happens at
-                            the single
+                            Surface alpha {{ t.alpha }}. The tier prop is the only knob
+                            the consumer touches; the class merge happens at the single
                             <code class="font-mono text-xs"
                                 >cn(`glass-{{ "${tier}" }}`, props.class)</code
                             >
@@ -153,31 +154,30 @@ const veilFeather = ref(false);
         <!-- Polymorphic root. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">polymorphic root via reka-ui Primitive</p>
+                <h2 class="text-subheading">polymorphic root via reka-ui Primitive</h2>
                 <p class="text-sm text-muted-foreground">
                     The <code class="font-mono text-xs">as</code> prop swaps the
-                    rendered tag without losing the surface composition. Useful
-                    when semantic HTML matters — a results card is a
-                    <code class="font-mono text-xs">&lt;section&gt;</code>, a
-                    feed item is an
-                    <code class="font-mono text-xs">&lt;article&gt;</code>.
+                    rendered tag without losing the surface composition. Useful when
+                    semantic HTML matters — a results card is a
+                    <code class="font-mono text-xs">&lt;section&gt;</code>, a feed item
+                    is an <code class="font-mono text-xs">&lt;article&gt;</code>.
                 </p>
             </header>
 
             <Card as="article" tier="resting">
                 <CardHeader>
-                    <CardTitle class="text-lg">
+                    <CardTitle class="text-lg font-semibold">
                         Card rendered as &lt;article&gt;
                     </CardTitle>
                     <CardDescription>
                         Inspect the DOM — the root tag is
-                        <code class="font-mono text-xs">article</code>, not the
-                        default <code class="font-mono text-xs">div</code>.
+                        <code class="font-mono text-xs">article</code>, not the default
+                        <code class="font-mono text-xs">div</code>.
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="text-sm text-muted-foreground">
-                    Reka-ui's Primitive forwards every attribute, so semantic
-                    HTML composition stays elegant.
+                    Reka-ui's Primitive forwards every attribute, so semantic HTML
+                    composition stays elegant.
                 </CardContent>
                 <CardFooter class="justify-end gap-2">
                     <Button variant="ghost" size="sm">Dismiss</Button>
@@ -189,32 +189,30 @@ const veilFeather = ref(false);
         <!-- Nested-card pattern (shadow off on the inner card). -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">nested cards — shadow toggle</p>
+                <h2 class="text-subheading">nested cards — shadow toggle</h2>
                 <p class="text-sm text-muted-foreground">
-                    Pass <code class="font-mono text-xs">:shadow="false"</code>
-                    on a nested card to drop the second drop-shadow stacking
-                    on the parent's. The grain overlay can also be silenced
-                    with <code class="font-mono text-xs">:grain="false"</code>.
+                    Pass <code class="font-mono text-xs">:shadow="false"</code> on a
+                    nested card to drop the second drop-shadow stacking on the parent's.
+                    The grain overlay can also be silenced with
+                    <code class="font-mono text-xs">:grain="false"</code>.
                 </p>
             </header>
 
             <Card tier="resting">
                 <CardHeader>
-                    <CardTitle class="text-lg">Outer plate</CardTitle>
+                    <CardTitle class="text-lg font-semibold">Outer plate</CardTitle>
                     <CardDescription>
                         Parent at the resting tier with its full shadow.
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="grid gap-4">
                     <Card tier="wash" :shadow="false" class="p-4 text-sm">
-                        <span
-                            class="font-mono text-xs text-muted-foreground"
-                        >
+                        <span class="font-mono text-xs text-muted-foreground">
                             inner: tier=wash, shadow=false
                         </span>
                         <p class="mt-2 text-muted-foreground">
-                            No second drop-shadow stacking; reads as a quiet
-                            inset rather than a floating element.
+                            No second drop-shadow stacking; reads as a quiet inset
+                            rather than a floating element.
                         </p>
                     </Card>
                 </CardContent>
@@ -224,16 +222,15 @@ const veilFeather = ref(false);
         <!-- Cartoon surface — orthogonal `surface` decoration. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">surface — the cartoon decoration</p>
+                <h2 class="text-subheading">surface — the cartoon decoration</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">surface="cartoon"</code> is
-                    orthogonal to <code class="font-mono text-xs">tier</code> —
-                    exactly like <code class="font-mono text-xs">shadow</code>
-                    and <code class="font-mono text-xs">grain</code>. It layers
-                    the <code class="font-mono text-xs">cartoon-surface</code>
-                    decoration utility (2px border, offset-stamp shadow,
-                    hover-lift) on top of whatever tier resolved. It replaces
-                    the retired standalone
+                    orthogonal to <code class="font-mono text-xs">tier</code> — exactly
+                    like <code class="font-mono text-xs">shadow</code> and
+                    <code class="font-mono text-xs">grain</code>. It layers the
+                    <code class="font-mono text-xs">cartoon-surface</code>
+                    decoration utility (2px border, offset-stamp shadow, hover-lift) on
+                    top of whatever tier resolved. It replaces the retired standalone
                     <code class="font-mono text-xs">&lt;CartoonCard&gt;</code>.
                 </p>
             </header>
@@ -259,13 +256,12 @@ const veilFeather = ref(false);
 
             <Card surface="cartoon" class="flex flex-col gap-4 p-6">
                 <CardHeader class="p-0">
-                    <CardTitle class="text-lg">Set a target</CardTitle>
+                    <CardTitle class="text-lg font-semibold">Set a target</CardTitle>
                     <CardDescription>
-                        Default tier (<code class="font-mono text-xs"
-                            >resting</code
-                        >) with the cartoon decoration — proof that
-                        <code class="font-mono text-xs">surface</code> composes
-                        onto any tier, not just <code class="font-mono text-xs">quiet</code>.
+                        Default tier (<code class="font-mono text-xs">resting</code>)
+                        with the cartoon decoration — proof that
+                        <code class="font-mono text-xs">surface</code> composes onto any
+                        tier, not just <code class="font-mono text-xs">quiet</code>.
                     </CardDescription>
                 </CardHeader>
                 <div class="flex flex-wrap gap-3">
@@ -278,19 +274,17 @@ const veilFeather = ref(false);
         <!-- Veil surface — the borderless/rimless text-legibility plate. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">surface — the veil text plate</p>
+                <h2 class="text-subheading">surface — the veil text plate</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">surface="veil"</code> is the
-                    text-legibility PLATE register — the wash/quiet glass fill +
-                    blur with the
-                    <code class="font-mono text-xs">border</code> AND
-                    rim/highlight STRIPPED (the boxed look reads as a "dividing
-                    line" on a text plate). Conceptually the W55 adaptive-tint
-                    applied as a LOCAL plate: it darkens content-on-glass over a
-                    busy/bright backdrop so text clears AA, without the box. The
-                    optional
-                    <code class="font-mono text-xs">--veil-feather</code> radial
-                    fades the plate edges into the page.
+                    text-legibility PLATE register — the wash/quiet glass fill + blur
+                    with the <code class="font-mono text-xs">border</code> AND
+                    rim/highlight STRIPPED (the boxed look reads as a "dividing line" on
+                    a text plate). Conceptually the W55 adaptive-tint applied as a LOCAL
+                    plate: it darkens content-on-glass over a busy/bright backdrop so
+                    text clears AA, without the box. The optional
+                    <code class="font-mono text-xs">--veil-feather</code> radial fades
+                    the plate edges into the page.
                 </p>
             </header>
 
@@ -324,11 +318,11 @@ const veilFeather = ref(false);
                             Legible over anything.
                         </h2>
                         <p class="mt-3 text-base text-muted-foreground">
-                            A veil plate is the local-legibility move: the glass
-                            darkens toward ink over the bright aurora behind it so
-                            this standfirst clears contrast, but no border or rim
-                            boxes the text in. Toggle the feather to fade the plate
-                            into the field.
+                            A veil plate is the local-legibility move: the glass darkens
+                            toward ink over the bright aurora behind it so this
+                            standfirst clears contrast, but no border or rim boxes the
+                            text in. Toggle the feather to fade the plate into the
+                            field.
                         </p>
                     </Card>
 
@@ -345,13 +339,11 @@ const veilFeather = ref(false);
                                 : undefined
                         "
                     >
-                        <p class="text-lg font-medium">
-                            One knob over the page.
-                        </p>
+                        <p class="text-lg font-medium">One knob over the page.</p>
                         <p class="mt-2 text-sm text-muted-foreground">
-                            The wash rung reads even quieter — a whisper-plate for
-                            a closing lede that must stay readable without pulling
-                            focus from the backdrop.
+                            The wash rung reads even quieter — a whisper-plate for a
+                            closing lede that must stay readable without pulling focus
+                            from the backdrop.
                         </p>
                     </Card>
                 </div>
@@ -361,22 +353,21 @@ const veilFeather = ref(false);
         <!-- Scroll-pane recipe — wash tier + grain off + overflow + tabindex. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">recipe — scroll-pane surface</p>
+                <h2 class="text-subheading">recipe — scroll-pane surface</h2>
                 <p class="text-sm text-muted-foreground">
-                    The retired <code class="font-mono text-xs"
-                        >&lt;ScrollPane&gt;</code
-                    >
+                    The retired
+                    <code class="font-mono text-xs">&lt;ScrollPane&gt;</code>
                     was field-for-field
                     <code class="font-mono text-xs"
                         >&lt;Card tier="wash" :grain="false"&gt;</code
                     >
-                    plus <code class="font-mono text-xs">overflow-auto</code>.
-                    No new component — it is a Card configuration. Card already
-                    emits <code class="font-mono text-xs">scrollbar-hidden</code>;
+                    plus <code class="font-mono text-xs">overflow-auto</code>. No new
+                    component — it is a Card configuration. Card already emits
+                    <code class="font-mono text-xs">scrollbar-hidden</code>;
                     <code class="font-mono text-xs">tabindex="0"</code> makes the
                     hidden-scrollbar region keyboard-scrollable (the standalone
-                    component shipped without it — a latent a11y regression this
-                    recipe fixes).
+                    component shipped without it — a latent a11y regression this recipe
+                    fixes).
                 </p>
             </header>
 
@@ -405,10 +396,12 @@ const veilFeather = ref(false);
 
             <Card tier="resting">
                 <CardHeader>
-                    <CardTitle class="text-lg">Nested scroll region</CardTitle>
+                    <CardTitle class="text-lg font-semibold"
+                        >Nested scroll region</CardTitle
+                    >
                     <CardDescription>
-                        A scroll-pane recipe inside a host card drops its own
-                        shadow with
+                        A scroll-pane recipe inside a host card drops its own shadow
+                        with
                         <code class="font-mono text-xs">:shadow="false"</code>.
                     </CardDescription>
                 </CardHeader>
@@ -440,10 +433,10 @@ const veilFeather = ref(false);
         <!-- CardAction — the shadcn-2025 top-right header action slot. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">
-                <p class="section-label">CardAction — header action slot</p>
+                <h2 class="text-subheading">CardAction — header action slot</h2>
                 <p class="text-sm text-muted-foreground">
-                    A <code class="font-mono text-xs">&lt;CardAction&gt;</code>
-                    inside a <code class="font-mono text-xs">&lt;CardHeader&gt;</code>
+                    A <code class="font-mono text-xs">&lt;CardAction&gt;</code> inside a
+                    <code class="font-mono text-xs">&lt;CardHeader&gt;</code>
                     reflows the header to a two-column grid (title/description +
                     action), self-aligned to the header's top-right via the
                     <code class="font-mono text-xs">has-data-[slot=card-action]</code>
@@ -453,7 +446,7 @@ const veilFeather = ref(false);
 
             <Card tier="resting">
                 <CardHeader>
-                    <CardTitle class="text-lg">Monthly report</CardTitle>
+                    <CardTitle class="text-lg font-semibold">Monthly report</CardTitle>
                     <CardDescription>
                         Throughput, latency, and loss for the trailing 30 days.
                     </CardDescription>
@@ -462,8 +455,8 @@ const veilFeather = ref(false);
                     </CardAction>
                 </CardHeader>
                 <CardContent class="text-sm text-muted-foreground">
-                    The action column self-aligns to the start of the header's
-                    first two rows, justified to the end — no manual grid markup.
+                    The action column self-aligns to the start of the header's first two
+                    rows, justified to the end — no manual grid markup.
                 </CardContent>
             </Card>
         </section>

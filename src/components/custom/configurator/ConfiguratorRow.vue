@@ -3,10 +3,7 @@ import { computed, type HTMLAttributes } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { Label } from "../../ui/label";
 import { cn } from "../../../utils/cn";
-import {
-    useOptionalConfiguratorDensity,
-    type ConfiguratorDensity,
-} from "./density";
+import { useOptionalConfiguratorDensity, type ConfiguratorDensity } from "./density";
 
 /**
  * <ConfiguratorRow> — labeled control row for a single field inside a
@@ -33,6 +30,22 @@ import {
  * and the token-driven CSS rule overrides the Tailwind gap. The
  * `"comfortable"` rung is functionally identical to the no-density
  * fallback; it exists so consumers can be explicit.
+ *
+ * # ConfiguratorRow vs LabeledField — recorded divergence (AZ.W-METRIC-UNIFY §B)
+ *
+ * Both are "label (+ meta) above/beside a slotted control", but they are NOT
+ * interchangeable — they emphasize DIFFERENT features:
+ *  - **ConfiguratorRow** (this) — for TOKEN / PRESET controls. Carries the
+ *    token-`name` reference, the opt-in `reset` affordance (`canReset`), and the
+ *    four-rung `density` axis (local-prop-over-inject). No a11y for/id wiring.
+ *  - **LabeledField** — for FORM fields. Carries the `for`/`id` label↔control
+ *    a11y wiring (`controlId`/`labelId`/`errorId`), the `tooltip`, the `required`
+ *    asterisk, and the `aria-live` `error` region.
+ *
+ * Reach for ConfiguratorRow inside a `<Configurator>` for token sliders/selects;
+ * reach for LabeledField for accessible form inputs. The divergence is recorded
+ * (NOT a forced merge — no ≥2-consumer shared-chassis need surfaced) in
+ * `docs/precepts/design-idioms.md §9`, alongside the `cn`/`focus-ring` keeps.
  */
 const props = defineProps<{
     /** Display label (top-left, primary). */
@@ -76,6 +89,13 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
     >
         <div class="flex items-baseline justify-between gap-3">
             <div class="flex min-w-0 items-baseline gap-2">
+                <!-- SECONDARY label register (AZ.W-HIERARCHY D6-3): the row label
+                     is the SECONDARY rung — the body size (text-small / 500),
+                     deliberately BELOW the .configurator-section-label section
+                     register on the parent <ConfiguratorLayer>. The token-name
+                     sub-label below (the mono `name` span) is the tertiary
+                     mono-caption rung — the three-rung label hierarchy reads
+                     section → row → token. -->
                 <Label class="truncate text-small font-medium text-foreground">
                     {{ label }}
                 </Label>
@@ -100,10 +120,7 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
         <div class="flex items-center">
             <slot />
         </div>
-        <p
-            v-if="description"
-            class="text-micro leading-snug text-muted-foreground/80"
-        >
+        <p v-if="description" class="text-micro leading-snug text-muted-foreground/80">
             {{ description }}
         </p>
     </div>

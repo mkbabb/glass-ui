@@ -146,6 +146,10 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `warpOnClick` | `boolean` | `false` | a click warps the focal node to the nearest drifting node + springs it there. **INDEPENDENT** of `pointerReactive` — warp works on a non-ripple lattice (disabled under reduced-motion) |
 | `wander` | `boolean \| { minIdle?, jitter? }` | `false` | auto-DRIFT: a periodic auto-pick re-points the focal node to a random node on a jittered cadence, on the SAME warp spring (no second rAF). `true` uses the 8–16s default cadence; the object tunes `minIdle`/`jitter` (ms). PRM-gated — the cadence lives inside the `!reducedMotion` step block, so under reduced-motion it never advances |
 | `gravityWell` | `boolean \| { holdMs?, gain?, reach?, ramp?, maxSpeed? }` | `false` | pointer-held GRAVITY-WELL: hold the pointer over the lattice and the nodes within reach are PULLED toward it (an inverse-square force on the SAME engine), released back to `speed` on lift. INDEPENDENT of `warpOnClick`/`pointerReactive`. `true` uses the tokenised `--constellation-well-*` defaults; the object overrides the gains. PRM-gated — the held-timer lives inside `!reducedMotion`, and the well STATE resets to neutral on the PRM-true edge |
+| `pinned` | `boolean \| number` | `false` | PINNED node (AZ.W-CON-GEN G1): a node HELD by every step pass — it does not drift, bounce, steer toward the cursor, or feel the gravity-well, so it holds its seeded position (the flagged node a consumer pins). `false` → no pin; `true` → node 0; a number → that index |
+| `accentEdges` | `boolean` | `false` | ACCENT-edge skin (G2): edges incident on the pinned (else focal) node stroke the `--constellation-accent` tint at the `--constellation-edge-accent-alpha` weight — the flagged-node tether. Default OFF (the neutral single-color pass) |
+| `pinnedDrift` | `boolean \| { wanderFrac?, durMs?, minIdle?, jitter? }` | `false` | autonomous PINNED-ANCHOR drift (G5): the pinned node gently wanders its seeded anchor (default ±0.14 of the canvas) on a jittered cadence — DISTINCT from `wander` (which re-targets the warp). A closed-form easeInOutQuad stepped inside the single rAF; PRM-gated |
+| `warpAutoRelease` | `boolean` | `false` | warp AUTO-RELEASE (G6): a settled warp clears its target so the focal rides its node's raw drift (the identity-ride), freeing the spring. Default OFF (the warp holds its target forever). Read the settled signal via the `warpSettled()` expose |
 | `freeze` | `boolean` | — (auto) | deterministic-capture: a reproducible STATIC frame (no `stepField`, no advance) + a FROZEN `now` to `drawOverlay`. Omit → auto-derives from `?export \| ?print \| ?freeze`; `false` forces live. Set `seed` for cross-run determinism |
 | `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField`. Read `field.warp.{x,y}` for the spring-eased focal position. Under `freeze` it receives a FROZEN `now` |
 | `class` | `string` | — | forwarded to the host (pin/position/z-index live here) |
@@ -157,6 +161,9 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `field` | `ConstellationField` | the live field (the low-level imperative seam for a custom overlay) |
 | `warpTo` | `warpTo(localPoint: {x,y}): number` | warp to the nearest node to an **already-canvas-local** px point (the lower primitive) |
 | `warpTo` | `warpTo(clientX, clientY): number` | warp to the nearest node to a **client** point, mapped through the deck-scale `toLocal` (the sugar `warpOnClick` calls). Returns the chosen node index, or `-1` on a degenerate no-op |
+| `warpSettled` | `warpSettled(): boolean` | the settled signal (AZ.W-CON-GEN G6) — `true` when the warp spring has ARRIVED on its target (or no warp is active). The `isSettled` read a consumer polls to drive its own UI (a "warping…" indicator) |
+| `pinNode` | `pinNode(idx: number): void` | imperatively re-point the pinned node (G1) — `idx` is HELD by every step pass; `idx < 0` clears the pin. Re-anchors the `pinnedDrift` on its next leg |
+| `holdWellAt` / `releaseWell` | `(x, y) => boolean` / `() => void` | imperatively arm/release the gravity-well at a canvas-local point (the test/debug seam; no-op when `gravityWell` is off) |
 
 ### `ConstellationField`
 
@@ -169,10 +176,17 @@ The live field handed to `drawOverlay` — read-only, the consumer paints agains
 | `w` / `h` | `number` | canvas CSS px |
 | `k` | `number` | the width/base scale (`w / 1280`) — multiply px constants by `k` so a skin scales with the field |
 | `dpr` | `number` | the device-pixel ratio the context is transformed by (clamped ≤ 2) |
-| `focalIndex` | `number` | the designated focal node's INDEX, or `-1` when none is pinned (re-points on each `warpTo`; node count is conserved) |
+| `focalIndex` | `number` | the designated focal node's INDEX, or `-1` when none is focal (re-points on each `warpTo`; node count is conserved) |
 | `warp` | `ConstellationWarp` | the engine-owned warp spring: `{ x, y, vx, vy, targetIdx }`. A `drawOverlay` paints the focal mark at `warp.{x,y}` (the spring-eased position) |
+| `pinnedIndex` | `number` | the PINNED node's INDEX (AZ.W-CON-GEN G1), or `-1` when none is pinned — the node every step pass HOLDS. A `drawOverlay` reads `field.nodes[field.pinnedIndex]` to pin a flagged mark on it |
+| `pinnedDrift?` | `ConstellationPinnedDrift` | the autonomous pinned-anchor drift state (G5), present when `pinnedDrift` is on (absent → the pin holds dead-still) |
+| `warpAutoRelease?` | `boolean` | the warp auto-release flag (G6) — a settled warp clears its target (the identity-ride) |
 
-The library exports `ConstellationProps` + `ConstellationField` + `ConstellationWarp` on `@mkbabb/glass-ui/api`.
+The library exports `ConstellationProps` + `ConstellationField` + `ConstellationWarp` on `@mkbabb/glass-ui/api` (the curated discovery layer); the full type set including `ConstellationPinnedDrift` + the engine fns `stepPinnedDrift` / `makePinnedDrift` / `warpSettled` ship on `@mkbabb/glass-ui/constellation`.
+
+### The label / callout is `drawOverlay` content (the zero-deck-domain canon — AZ.W-CON-GEN G4)
+
+A flagged-node **label/callout** (a dashed tether + a monospace caption) is the consumer's `drawOverlay`, **NOT a library prop**. There is no `label`/`anomaly`/`resolved` prop — the branded focal content stays the consumer's (the README §"Non-goal" canon). The recipe is ≈30 lines pinned to `field.nodes[field.pinnedIndex]`: a pulse ring + halo + core + an optional checkmark + a `ctx.fillText` caption. The W-CON-GEN generalization promotes the *mechanism* (a pinned node the engine holds, its incident edges tinted accent, the autonomous drift) to first-class surface, but the *branded skin* (the wording, the brand hue) stays the consumer's drawOverlay — machine-locked by `proof:constellation-substrate-single` (ANOMALY-IS-SKIN — no deck-domain literal in the library source).
 
 ---
 

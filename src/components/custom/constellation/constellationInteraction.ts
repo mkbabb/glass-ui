@@ -9,6 +9,7 @@
 
 import type {
     ConstellationField,
+    ConstellationPinnedDrift,
     ConstellationWarpConfig,
     ConstellationWellConfig,
 } from "./constellationField";
@@ -18,6 +19,10 @@ import {
     DEFAULT_WELL_CONFIG,
     WARP_RESPONSE,
     WARP_ZETA,
+    DEFAULT_PINNED_DRIFT_FRAC,
+    DEFAULT_PINNED_DRIFT_DUR,
+    DEFAULT_PINNED_DRIFT_IDLE,
+    DEFAULT_PINNED_DRIFT_JITTER,
 } from "./constants";
 
 // The CONFIG-DEFAULT constants (the warp spring + gravity-well + wander cadence
@@ -26,6 +31,12 @@ import {
 // tuning below (the well cool/ramp rates, the dt-clamp, the settle band) stays
 // INTERNAL — it travels with the algorithm, not the package config surface.
 export { DEFAULT_WANDER_IDLE, DEFAULT_WANDER_JITTER, DEFAULT_WELL_CONFIG, WARP_RESPONSE, WARP_ZETA };
+export {
+    DEFAULT_PINNED_DRIFT_FRAC,
+    DEFAULT_PINNED_DRIFT_DUR,
+    DEFAULT_PINNED_DRIFT_IDLE,
+    DEFAULT_PINNED_DRIFT_JITTER,
+};
 
 /**
  * Read the NUMERIC interaction-tuning tokens (the warp spring + the gravity-well
@@ -150,7 +161,11 @@ export function stepWell(
     const coolRate = well.target > 0 ? WELL_COOL_HELD : WELL_COOL_RELEASED;
     const cool = Math.min(coolRate * h, 1);
     const active = well.strength > WELL_EPS && well.x >= 0;
+    // The PINNED node (AZ.W-CON-GEN G1) is exempt from the well pull AND the |v|→speed
+    // ease-back — it holds its anchor (the gentle `pinnedDrift` is the only mover).
+    const pinned = field.pinnedIndex;
     for (let i = 0; i < nodes.length; i++) {
+        if (i === pinned) continue;
         const p = nodes[i];
         if (active) {
             const dx = well.x - p.x;
@@ -373,4 +388,101 @@ export function pickWanderTarget(
     if (focal < 0 || focal >= n) return Math.floor(rng() * n) % n;
     const r = Math.floor(rng() * (n - 1)); // [0, n-2]
     return r < focal ? r : r + 1; // skip the focal slot → an eligible node ≠ focal
+}
+
+// ── Autonomous pinned-anchor drift (AZ.W-CON-GEN G5) ─────────────────────────
+/**
+ * Build the cold `ConstellationPinnedDrift` state (AZ.W-CON-GEN G5) the field carries
+ * when `pinnedDrift` is on. The anchor is seeded LATER (on the first sized frame, off
+ * the pinned node's layout position) — here it is `(0,0)` until `stepPinnedDrift`
+ * stamps it on the first armed leg. The token-read re-points the un-overridden
+ * cadence members on mount (the same prop-over-token layering as the well/wander).
+ */
+export function makePinnedDrift(
+    override: {
+        wanderFrac?: number;
+        durMs?: number;
+        minIdle?: number;
+        jitter?: number;
+    } = {},
+): ConstellationPinnedDrift {
+    return {
+        anchorX: 0,
+        anchorY: 0,
+        nextAt: -1,
+        legStart: -1,
+        fromX: 0,
+        fromY: 0,
+        toX: 0,
+        toY: 0,
+        wanderFrac: override.wanderFrac ?? DEFAULT_PINNED_DRIFT_FRAC,
+        durMs: override.durMs ?? DEFAULT_PINNED_DRIFT_DUR,
+        minIdle: override.minIdle ?? DEFAULT_PINNED_DRIFT_IDLE,
+        jitter: override.jitter ?? DEFAULT_PINNED_DRIFT_JITTER,
+    };
+}
+
+/** easeInOutQuad — the gentle, symmetric ease the pinned-anchor leg rides. */
+function easeInOutQuad(p: number): number {
+    return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+}
+
+/**
+ * Advance the autonomous PINNED-ANCHOR drift one frame (AZ.W-CON-GEN G5). DISTINCT
+ * from `wander` (warp re-target): this gently eases the PINNED node around its seeded
+ * ANCHOR within `wanderFrac` of the canvas, on a jittered cadence, via a closed-form
+ * easeInOutQuad over `now` (no integrator, no second rAF — it rides `stepField`'s ONE
+ * per-frame call). No-ops (skipped) when there is no `field.pinnedDrift`, no pinned
+ * node, or `now <= 0` (the default unit callers stay green) — so an absent
+ * `pinnedDrift` is byte-identical to HEAD.
+ *
+ * The anchor is captured ON the first armed frame off the pinned node's CURRENT
+ * position (its seeded rest), so a consumer that re-anchors the pin (a resize re-fit)
+ * gets a fresh anchor on the next leg. Each leg eases from the node's current point to
+ * a fresh point within `wanderFrac` of the anchor over `durMs`; between legs the node
+ * rests at the leg's end, the next leg arming after `minIdle + rng()*jitter`.
+ */
+export function stepPinnedDrift(
+    field: ConstellationField,
+    now: number,
+    rng: () => number,
+): void {
+    const pd = field.pinnedDrift;
+    if (!pd || field.pinnedIndex < 0 || field.pinnedIndex >= field.nodes.length) return;
+    if (!(now > 0)) return;
+    const an = field.nodes[field.pinnedIndex];
+
+    // ARM the cadence on the first stepped frame — capture the anchor off the pinned
+    // node's current (seeded) position and schedule the first leg. No immediate jump.
+    if (pd.nextAt < 0) {
+        pd.anchorX = an.x;
+        pd.anchorY = an.y;
+        pd.nextAt = now + pd.minIdle + rng() * pd.jitter;
+        return;
+    }
+
+    // RESTING between legs — start a new leg when the rest elapses. The target is a
+    // fresh point within ±wanderFrac of the anchor, clamped to the canvas with a small
+    // inset so the pin never drifts off-screen.
+    if (pd.legStart < 0) {
+        if (now < pd.nextAt) return;
+        pd.fromX = an.x;
+        pd.fromY = an.y;
+        const f = pd.wanderFrac;
+        const tx = pd.anchorX + (rng() * 2 - 1) * f * field.w;
+        const ty = pd.anchorY + (rng() * 2 - 1) * f * field.h;
+        pd.toX = Math.max(0.04 * field.w, Math.min(0.96 * field.w, tx));
+        pd.toY = Math.max(0.04 * field.h, Math.min(0.96 * field.h, ty));
+        pd.legStart = now;
+    }
+
+    // EASING a leg — interpolate the pinned node from→to over durMs (easeInOutQuad).
+    const p = Math.min((now - pd.legStart) / pd.durMs, 1);
+    const e = easeInOutQuad(p);
+    an.x = pd.fromX + (pd.toX - pd.fromX) * e;
+    an.y = pd.fromY + (pd.toY - pd.fromY) * e;
+    if (p >= 1) {
+        pd.legStart = -1;
+        pd.nextAt = now + pd.minIdle + rng() * pd.jitter;
+    }
 }

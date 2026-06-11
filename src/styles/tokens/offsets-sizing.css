@@ -465,6 +465,27 @@
     --configurator-row-py-comfortable: 0.5rem;     /*  8px — pre-N.W2 default */
     --configurator-row-py-spacious: 0.875rem;      /* 14px — generous */
 
+    /* Configurator HIERARCHY VOCABULARY (AZ.W-HIERARCHY — D6-3). The three
+       NAMED registers the studios (blob, aurora) inherit instead of a flat
+       undifferentiated stack. DISTINCT from the density ladder above (which is
+       the per-row CADENCE, not the section/label/preset register).
+
+       1. Section register — the <ConfiguratorLayer> label reads as a SECTION,
+          not a row: the √φ subheading rung at weight 600, lifting off the prior
+          flat `text-small font-semibold`. */
+    --configurator-section-size: var(--type-subheading);  /* 20.4px — √φ section rung */
+    --configurator-section-weight: 600;                   /* the heading weight */
+
+    /* 2. Preset-row PRIMARY-AFFORDANCE lift. The preset picker is the primary
+          interaction (C6-10); D6-3's defect is the preset row being spatially
+          CRAMPED. This token's binding SEMANTIC is the preset row's SPATIAL
+          rhythm — its block-padding / gap, NOT a font-weight — so the preset
+          row breathes ABOVE a body ConfiguratorRow. (The `-weight` name follows
+          the vocabulary's "register weight" framing; it lands on the padding/gap
+          slot of `.configurator-presets`, the heavier spatial cadence.) */
+    --configurator-preset-row-weight: 0.625rem;           /* 10px — > a body row's 8px py-comfortable */
+    --configurator-preset-row-gap: 0.5rem;                /*  8px — generous chip gap */
+
     /* Component font override (consumers override locally) */
     --select-font: inherit;
 

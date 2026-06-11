@@ -22,6 +22,7 @@ import {
 import {
     readInteractionConfig,
     warpTo as warpToField,
+    warpSettled as warpSettledField,
 } from "./constellationInteraction";
 import {
     readPalette,
@@ -68,6 +69,10 @@ const {
     wander = false,
     gravityWell = false,
     opacityCeiling = 1,
+    pinned = false,
+    accentEdges = false,
+    pinnedDrift = false,
+    warpAutoRelease = false,
     // `freeze` is resolved via the RAW vnode prop (see `rawFreeze` below) — NOT
     // destructured — because Vue casts an absent Boolean prop to `false`, which
     // would erase the omitted-vs-explicit-false distinction the auto-derive needs.
@@ -144,6 +149,46 @@ const {
               maxSpeed?: number;
               soften?: number;
           };
+    /**
+     * PINNED node designation (AZ.W-CON-GEN G1). A pinned node is HELD by every step
+     * pass — it does NOT drift, bounce, steer toward the cursor, or feel the
+     * gravity-well, so it stays at its seeded position (the flagged node a
+     * consumer pins). `false`/absent → no pin (every node drifts, byte-identical to
+     * HEAD); `true` → node 0 (the canonical flagged node); a number → that index. The
+     * `accentEdges` prop tints its incident edges; the `pinnedDrift` prop gently
+     * wanders it around its anchor. The `pinNode(idx)` expose re-points it imperatively.
+     */
+    pinned?: boolean | number;
+    /**
+     * ACCENT-edge skin (AZ.W-CON-GEN G2). When `true`, edges incident on the PINNED
+     * (else the FOCAL) node stroke the `--constellation-accent` tint at the
+     * `--constellation-edge-accent-alpha` weight — the flagged-node tether — while
+     * every other edge keeps the neutral register. Default OFF (the single-color
+     * neutral pass, byte-identical to HEAD). Reads the accent off the resolved palette.
+     */
+    accentEdges?: boolean;
+    /**
+     * Autonomous PINNED-ANCHOR drift (AZ.W-CON-GEN G5). When set AND a node is pinned,
+     * the pinned node gently eases around its seeded anchor within `wanderFrac`
+     * (default ±0.14 of the canvas) on a jittered cadence (a closed-form easeInOutQuad
+     * stepped inside the substrate's single rAF — no second rAF). DISTINCT from
+     * `wander` (which re-targets the warp among random nodes): this breathes the ONE
+     * pinned node around its rest. `true` uses the default cadence; an object tunes it.
+     * Default OFF — the pinned node holds dead-still (byte-identical). PRM-gated by the
+     * WARP precedent (the drift lives inside `!isStatic`; under reduce the pin holds).
+     */
+    pinnedDrift?:
+        | boolean
+        | { wanderFrac?: number; durMs?: number; minIdle?: number; jitter?: number };
+    /**
+     * Warp AUTO-RELEASE (AZ.W-CON-GEN G6). When `true`, a warp that has SETTLED on its
+     * target clears its `targetIdx` — the focal node releases the spring and rides its
+     * node's RAW drift (the identity-ride), freeing the spring for the next warp.
+     * Default `false` keeps the held-target behaviour (the warp chases its node
+     * forever — byte-identical to HEAD). Read the settled signal via the
+     * `warpSettled()` expose.
+     */
+    warpAutoRelease?: boolean;
     /**
      * Deterministic-capture freeze (AY.W-CON3). When `true`, the lattice lays
      * out ONE reproducible STATIC frame and does NOT advance — seeded layout
@@ -232,6 +277,9 @@ const FROZEN_NOW = 0;
 const { field, wanderOverride, wellOverride } = createConstellationField(
     wander,
     gravityWell,
+    pinned,
+    pinnedDrift,
+    warpAutoRelease,
 );
 const pointer: ConstellationPointer = { x: -1, y: -1 };
 const ripples: ConstellationRipple[] = [];
@@ -356,11 +404,20 @@ onMounted(() => {
                     }
 
                     c.clearRect(0, 0, w, h);
+                    // The ACCENT-edge skin index (AZ.W-CON-GEN G2). When `accentEdges`
+                    // is on, the PINNED node (else the FOCAL node) gets its incident
+                    // edges tinted accent; OFF (default) passes -1 → the single-color
+                    // neutral pass (byte-identical to HEAD).
+                    const accentIndex = accentEdges
+                        ? field.pinnedIndex >= 0
+                            ? field.pinnedIndex
+                            : field.focalIndex
+                        : -1;
                     // E3 — the per-instance recession envelope. Read LIVE off the
                     // reactive prop each frame (Vue 3.5 reactive props destructure)
                     // so a bound `:opacity-ceiling` updates without a remount; at the
                     // default `1` the scale is a no-op (byte-identical to HEAD).
-                    drawEdges(c, field, link, palette, opacityCeiling);
+                    drawEdges(c, field, link, palette, opacityCeiling, accentIndex);
                     drawNodes(c, field, palette, opacityCeiling);
                     if (pointerReactive && !isStatic) {
                         drawPointerWeb(c, field, link, palette, pointer, opacityCeiling);
@@ -446,6 +503,28 @@ defineExpose({
     releaseWell(): void {
         if (!field.well) return;
         field.well.target = 0;
+    },
+    /**
+     * The warp settled signal (AZ.W-CON-GEN G6) — `true` when the warp spring has
+     * ARRIVED on its target (no active warp, OR the focal's gap to its live target is
+     * within the settle band). A consumer polls this to know if a click-warp / wander
+     * re-target is still in flight (the `isSettled` read). A read-only seam over the
+     * engine `warpSettled`.
+     */
+    warpSettled(): boolean {
+        return warpSettledField(field);
+    },
+    /**
+     * Imperatively PIN a node (AZ.W-CON-GEN G1) — re-points `field.pinnedIndex` to
+     * `idx` so that node is HELD by every step pass (it stops drifting and holds its
+     * current position). `idx < 0` clears the pin (every node drifts again). The
+     * pinned node's incident edges tint accent under `accentEdges`; it wanders its
+     * anchor under `pinnedDrift` (the cadence re-anchors on its next armed leg).
+     */
+    pinNode(idx: number): void {
+        field.pinnedIndex = idx;
+        // Re-anchor the drift on the next leg off the new pin's current position.
+        if (field.pinnedDrift) field.pinnedDrift.nextAt = -1;
     },
 });
 </script>

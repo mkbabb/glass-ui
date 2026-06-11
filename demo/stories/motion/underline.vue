@@ -90,13 +90,19 @@ function toggleActive() {
             </p>
         </StorySection>
 
-        <!-- A consumer color prop (the NCSU-red preset — presets-in-consumers). -->
+        <!-- A consumer color prop — the motion family's ONE coherent purple
+             event (--motion-accent, the --viz-legendre violet twin; W-SUFFUSE
+             D3). Presets-in-consumers: the demo-local accent, never a lib token. -->
         <StorySection
-            label="color prop · consumer preset"
-            blurb="The default stroke is var(--primary) (re-resolves under .dark via the cascade — no .dark block). An explicit color prop wins both grounds."
+            label="color prop · the motion accent"
+            blurb="The default stroke is var(--primary) (re-resolves under .dark via the cascade — no .dark block). An explicit color prop wins both grounds — here the motion family's --motion-accent purple."
         >
             <p class="text-display-3 font-display leading-tight text-foreground">
-                A <GlassUnderline clock="static" color="var(--viz-fourier)">tinted</GlassUnderline> stroke
+                A
+                <GlassUnderline clock="static" color="var(--motion-accent)"
+                    >tinted</GlassUnderline
+                >
+                stroke
             </p>
         </StorySection>
     </StoryPage>

@@ -32,13 +32,37 @@ interface StoryHeroProps {
     /** "page" (default) contains the body in a glass card over a calm wash;
      *  "hero" goes full-bleed over the live substrate (the front-door read). */
     variant?: "hero" | "page";
+    /** The page title. On a HERO page the chassis renders it as the document
+     *  <h1> at the DISPLAY register (AZ.W-SUFFUSE D2-1) — the audacious moment
+     *  is a chassis affordance, not per-page bespoke craft. On a page-variant
+     *  the chrome <h1> is StoryPage's job (this prop is ignored). */
+    title?: string;
+    /**
+     * Whether the chassis renders the display-register hero <h1> (AZ.W-SUFFUSE
+     * D2-1). Default `true` — the thin substrate hero pages (aurora /
+     * constellation / fourier-field / glass-material / paper-glass) that
+     * hand-author NO title gain the audacious chassis <h1>. A bespoke
+     * front-door composition (intro / hero / auth-shell) that owns its own
+     * hero <h1> sets `:hero-title="false"` so the chassis does not double it.
+     */
+    heroTitle?: boolean;
     /** Forwarded class string for the glass card surface. */
     cardClass?: string;
 }
 
 const props = withDefaults(defineProps<StoryHeroProps>(), {
     variant: "page",
+    heroTitle: true,
 });
+
+// The chassis hero <h1> renders at the DISPLAY register on a hero page that has
+// not opted out (the bespoke front-door heroes own their own title). The
+// front-door rows (the foundations/compositions heroes) ride text-display-4; the
+// substrate hero pages ride text-display-3 — both are the audacious moment the
+// flat type ladder starved (D2-1/D2-4).
+const showHeroTitle = computed(
+    () => isHero.value && props.heroTitle && Boolean(props.title),
+);
 
 // Normalize the string-shorthand and the object form to one shape.
 const descriptor = computed(() => {
@@ -107,10 +131,11 @@ const isHero = computed(() => props.variant === "hero");
 // background kind (W-BLOB-REBUILD: the prior `blob` page-background was a category
 // error that blew the contained creature out to the full article width and buried
 // the page). The blob's home is its contained studio + the empty-states mascot.
-const liveBackdrop = computed(() =>
-    kind.value === "aurora" ||
-    kind.value === "constellation" ||
-    kind.value === "fourier",
+const liveBackdrop = computed(
+    () =>
+        kind.value === "aurora" ||
+        kind.value === "constellation" ||
+        kind.value === "fourier",
 );
 
 // ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
@@ -123,14 +148,22 @@ const liveBackdrop = computed(() =>
 // over the live field on a thin readability plate — no boxing, no wash-out.
 const fullBleed = computed(() => isHero.value && liveBackdrop.value);
 
-// ── The read-through seam (W-SB-STAGE §2.1a) ─────────────────────────────────
+// A STATIC declared backdrop — the calm blueprint-grid / paper-grain wash. Not a
+// live GL field, but a real declared background the card must let read THROUGH.
+const staticBackdrop = computed(() => kind.value === "grid" || kind.value === "paper");
+
+// ── The read-through seam (W-SB-STAGE §2.1a / AZ.W-SUFFUSE D4-3) ──────────────
 // Over a LIVE substrate the card drops to a THINNER glass rung so the field reads
-// THROUGH it. Over grid / paper / none the tier is BYTE-IDENTICAL to HEAD
-// (`floating` hero / `resting` page) — the default-path canary. A full-bleed hero
-// has no card box (the content floats free over the field); a contained page over
-// a live field takes the `wash` (0.3α) thin plate.
+// THROUGH it. AZ.W-SUFFUSE D4-3 extends the SAME lever to the declared STATIC
+// backdrops (grid / paper): the 7%-grid / paper-grain under a 0.65α `resting`
+// card is invisible (the over-restraint defect), so a grid/paper page also drops
+// to the calm `wash` (page) / `quiet` (hero) tier and the underlay reads. Over
+// NO declared background the tier is BYTE-IDENTICAL to HEAD (`floating` hero /
+// `resting` page) — the default-path canary. A full-bleed hero has no card box
+// (the content floats free over the field).
 const cardTier = computed<CardTier>(() => {
-    if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
+    if (liveBackdrop.value || staticBackdrop.value)
+        return isHero.value ? "quiet" : "wash";
     return isHero.value ? "floating" : "resting";
 });
 </script>
@@ -191,6 +224,10 @@ const cardTier = computed<CardTier>(() => {
             :style="{ '--glass-backdrop': 'light' }"
             :class="cn('story-hero-bleed-content', cardClass)"
         >
+            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). -->
+            <h1 v-if="showHeroTitle" class="story-hero-title text-display-3">
+                {{ title }}
+            </h1>
             <slot />
         </div>
 
@@ -210,6 +247,10 @@ const cardTier = computed<CardTier>(() => {
                 )
             "
         >
+            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). -->
+            <h1 v-if="showHeroTitle" class="story-hero-title text-display-3">
+                {{ title }}
+            </h1>
             <slot />
         </Card>
     </div>

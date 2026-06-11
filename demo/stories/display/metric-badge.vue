@@ -9,10 +9,10 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
         <section class="flex flex-col gap-3">
             <p class="section-label">amount · unit</p>
             <div class="flex flex-wrap items-center gap-6">
-                <MetricBadge :amount="128" unit="ms" />
-                <MetricBadge :amount="'42.0'" unit="fps" />
-                <MetricBadge :amount="1_204" unit="req/s" />
-                <MetricBadge :amount="'99.95'" unit="%" />
+                <MetricBadge :value="128" unit="ms" />
+                <MetricBadge :value="'42.0'" unit="fps" />
+                <MetricBadge :value="1_204" unit="req/s" />
+                <MetricBadge :value="'99.95'" unit="%" />
             </div>
         </section>
 
@@ -21,17 +21,17 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
             <p class="section-label">viz-colored amounts</p>
             <div class="flex flex-wrap items-center gap-6">
                 <MetricBadge
-                    :amount="12"
+                    :value="12"
                     unit="harmonics"
                     color="var(--viz-fourier)"
                 />
                 <MetricBadge
-                    :amount="8"
+                    :value="8"
                     unit="nodes"
                     color="var(--viz-chebyshev)"
                 />
                 <MetricBadge
-                    :amount="5"
+                    :value="5"
                     unit="degree"
                     color="var(--viz-legendre)"
                 />
@@ -42,9 +42,9 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
         <section class="flex flex-col gap-3">
             <p class="section-label">empty states</p>
             <div class="flex flex-wrap items-center gap-6">
-                <MetricBadge :amount="null" unit="ms" />
-                <MetricBadge :amount="undefined" unit="%" placeholder="n/a" />
-                <MetricBadge :amount="''" unit="qps" placeholder="…" />
+                <MetricBadge :value="null" unit="ms" />
+                <MetricBadge :value="undefined" unit="%" placeholder="n/a" />
+                <MetricBadge :value="''" unit="qps" placeholder="…" />
             </div>
             <p class="text-mono-caption text-muted-foreground">
                 Empty amounts render the placeholder glyph — default em dash.
@@ -59,27 +59,27 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
             >
                 <div class="flex flex-col items-start gap-2">
                     <span class="text-admin-label text-muted-foreground">sm</span>
-                    <MetricBadge size="sm" :amount="null" unit="ms" />
-                    <MetricBadge size="sm" :amount="128" unit="ms" />
-                    <MetricBadge size="sm" :amount="'…'" unit="ms" placeholder="…" />
+                    <MetricBadge size="sm" :value="null" unit="ms" />
+                    <MetricBadge size="sm" :value="128" unit="ms" />
+                    <MetricBadge size="sm" :value="'…'" unit="ms" placeholder="…" />
                 </div>
                 <div class="flex flex-col items-start gap-2">
                     <span class="text-admin-label text-muted-foreground">md</span>
-                    <MetricBadge size="md" :amount="null" unit="ms" />
-                    <MetricBadge size="md" :amount="128" unit="ms" />
-                    <MetricBadge size="md" :amount="'…'" unit="ms" placeholder="…" />
+                    <MetricBadge size="md" :value="null" unit="ms" />
+                    <MetricBadge size="md" :value="128" unit="ms" />
+                    <MetricBadge size="md" :value="'…'" unit="ms" placeholder="…" />
                 </div>
                 <div class="flex flex-col items-start gap-2">
                     <span class="text-admin-label text-muted-foreground">lg</span>
-                    <MetricBadge size="lg" :amount="null" unit="ms" />
-                    <MetricBadge size="lg" :amount="128" unit="ms" />
-                    <MetricBadge size="lg" :amount="'…'" unit="ms" placeholder="…" />
+                    <MetricBadge size="lg" :value="null" unit="ms" />
+                    <MetricBadge size="lg" :value="128" unit="ms" />
+                    <MetricBadge size="lg" :value="'…'" unit="ms" placeholder="…" />
                 </div>
                 <div class="flex flex-col items-start gap-2">
                     <span class="text-admin-label text-muted-foreground">xl</span>
-                    <MetricBadge size="xl" :amount="null" unit="ms" />
-                    <MetricBadge size="xl" :amount="128" unit="ms" />
-                    <MetricBadge size="xl" :amount="'…'" unit="ms" placeholder="…" />
+                    <MetricBadge size="xl" :value="null" unit="ms" />
+                    <MetricBadge size="xl" :value="128" unit="ms" />
+                    <MetricBadge size="xl" :value="'…'" unit="ms" placeholder="…" />
                 </div>
             </div>
             <p class="text-mono-caption text-muted-foreground">
@@ -95,11 +95,11 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
             <p class="section-label">inline in prose</p>
             <p class="text-prose max-w-2xl text-foreground">
                 The layout shipped in
-                <MetricBadge :amount="320" unit="kb" color="var(--viz-fourier)" />,
+                <MetricBadge :value="320" unit="kb" color="var(--viz-fourier)" />,
                 rendered at
-                <MetricBadge :amount="60" unit="fps" color="var(--viz-chebyshev)" />,
+                <MetricBadge :value="60" unit="fps" color="var(--viz-chebyshev)" />,
                 and responded in
-                <MetricBadge :amount="'12.4'" unit="ms" color="var(--viz-legendre)" />.
+                <MetricBadge :value="'12.4'" unit="ms" color="var(--viz-legendre)" />.
             </p>
         </section>
 
@@ -110,7 +110,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="Latency"
                     labelPosition="inline"
-                    :amount="36"
+                    :value="36"
                     unit="ms"
                     size="lg"
                     color="var(--viz-fourier)"
@@ -118,7 +118,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="Jitter"
                     labelPosition="inline"
-                    :amount="1"
+                    :value="1"
                     unit="ms"
                     size="lg"
                     color="var(--viz-chebyshev)"
@@ -126,7 +126,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="Download"
                     labelPosition="inline"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="lg"
                     color="var(--viz-legendre)"
@@ -134,7 +134,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="Upload"
                     labelPosition="inline"
-                    :amount="130"
+                    :value="130"
                     unit="Mbps"
                     size="lg"
                 />
@@ -152,7 +152,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     abbreviation="LAT"
                     labelPosition="inline"
-                    :amount="36"
+                    :value="36"
                     unit="ms"
                     size="sm"
                     color="var(--viz-fourier)"
@@ -160,7 +160,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     abbreviation="JIT"
                     labelPosition="inline"
-                    :amount="1"
+                    :value="1"
                     unit="ms"
                     size="sm"
                     color="var(--viz-chebyshev)"
@@ -168,7 +168,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     abbreviation="DL"
                     labelPosition="inline"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="sm"
                     color="var(--viz-legendre)"
@@ -176,7 +176,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     abbreviation="UL"
                     labelPosition="inline"
-                    :amount="130"
+                    :value="130"
                     unit="Mbps"
                     size="sm"
                 />
@@ -201,7 +201,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                     label="LATENCY"
                     abbreviation="LAT"
                     labelPosition="inline"
-                    :amount="36"
+                    :value="36"
                     unit="ms"
                     size="lg"
                     color="var(--viz-fourier)"
@@ -210,7 +210,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                     label="JITTER"
                     abbreviation="JIT"
                     labelPosition="inline"
-                    :amount="1"
+                    :value="1"
                     unit="ms"
                     size="lg"
                     color="var(--viz-chebyshev)"
@@ -219,7 +219,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                     label="DOWNLOAD"
                     abbreviation="DL"
                     labelPosition="inline"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="lg"
                     color="var(--viz-legendre)"
@@ -228,7 +228,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                     label="UPLOAD"
                     abbreviation="UL"
                     labelPosition="inline"
-                    :amount="130"
+                    :value="130"
                     unit="Mbps"
                     size="lg"
                 />
@@ -254,14 +254,14 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="p50"
                     labelPosition="stacked"
-                    :amount="18"
+                    :value="18"
                     unit="ms"
                     size="lg"
                 />
                 <MetricBadge
                     label="p95"
                     labelPosition="stacked"
-                    :amount="42"
+                    :value="42"
                     unit="ms"
                     size="lg"
                     color="var(--viz-fourier)"
@@ -269,7 +269,7 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
                 <MetricBadge
                     label="p99"
                     labelPosition="stacked"
-                    :amount="71"
+                    :value="71"
                     unit="ms"
                     size="lg"
                     color="var(--viz-chebyshev)"
@@ -285,19 +285,19 @@ import { MetricBadge } from "../../../src/components/custom/metric-badge";
             >
                 <div class="flex flex-col gap-1">
                     <span class="text-admin-label text-muted-foreground">p50</span>
-                    <MetricBadge :amount="18" unit="ms" />
+                    <MetricBadge :value="18" unit="ms" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <span class="text-admin-label text-muted-foreground">p95</span>
-                    <MetricBadge :amount="42" unit="ms" color="var(--viz-fourier)" />
+                    <MetricBadge :value="42" unit="ms" color="var(--viz-fourier)" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <span class="text-admin-label text-muted-foreground">errors</span>
-                    <MetricBadge :amount="0" unit="/min" />
+                    <MetricBadge :value="0" unit="/min" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <span class="text-admin-label text-muted-foreground">rps</span>
-                    <MetricBadge :amount="1_820" unit="req/s" color="var(--viz-chebyshev)" />
+                    <MetricBadge :value="1_820" unit="req/s" color="var(--viz-chebyshev)" />
                 </div>
             </div>
         </section>

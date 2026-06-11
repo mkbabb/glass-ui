@@ -36,12 +36,17 @@ const trustBadges = [
 </script>
 
 <template>
-    <StoryPage>
+    <!-- :hero-title="false" — this auth composition hand-authors its own
+         display-register brand headline (the split-panel <h1> below), so the
+         chassis does not double the page title (AZ.W-SUFFUSE D2-1). -->
+    <StoryPage :hero-title="false">
         <div
-            :class="cn(
-                'overflow-hidden rounded-[var(--radius-dialog)] border-2 border-foreground/10',
-                'grid min-h-[32rem] shadow-[var(--shadow-card)] lg:grid-cols-2',
-            )"
+            :class="
+                cn(
+                    'overflow-hidden rounded-[var(--radius-dialog)] border-2 border-foreground/10',
+                    'grid min-h-[32rem] shadow-[var(--shadow-card)] lg:grid-cols-2',
+                )
+            "
         >
             <div
                 class="auth-brand-panel relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
@@ -63,18 +68,22 @@ const trustBadges = [
                             fontVariationSettings: wonkSettings,
                         }"
                         aria-hidden="true"
-                    >f</span>
+                        >f</span
+                    >
                     <span class="text-subheading tracking-tight">glass-ui</span>
                 </div>
 
-                <div class="flex max-w-md flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
+                <div
+                    class="flex max-w-md flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]"
+                >
                     <Sparkles class="size-5 text-muted-foreground" aria-hidden="true" />
-                    <h2 class="text-display tracking-tight">
+                    <h1 class="text-display tracking-tight">
                         Build warm, audacious interfaces. Skip the cold gradient canvas.
-                    </h2>
+                    </h1>
                     <p class="text-prose text-muted-foreground">
-                        Paper textures, cartoon shadows, Plus Jakarta Sans display + body. A
-                        design system that looks like someone actually cared — because someone did.
+                        Paper textures, cartoon shadows, Plus Jakarta Sans display +
+                        body. A design system that looks like someone actually cared —
+                        because someone did.
                     </p>
                 </div>
 
@@ -91,14 +100,20 @@ const trustBadges = [
                                 color: `var(--section-color-${badge.section}, var(--muted-foreground))`,
                             }"
                         >
-                            <component :is="badge.icon" class="size-4" aria-hidden="true" />
+                            <component
+                                :is="badge.icon"
+                                class="size-4"
+                                aria-hidden="true"
+                            />
                         </span>
                         <span class="text-small">{{ badge.text }}</span>
                     </li>
                 </ul>
             </div>
 
-            <div class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(2.5rem_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]">
+            <div
+                class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(2.5rem_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
+            >
                 <div class="flex flex-col gap-2">
                     <span class="text-admin-label section-label">Sign in</span>
                     <h3 class="text-heading">Welcome back</h3>
@@ -107,11 +122,15 @@ const trustBadges = [
                         <a
                             href="#"
                             class="font-medium text-foreground underline underline-offset-4 hover:opacity-80"
-                        >Create an account</a>.
+                            >Create an account</a
+                        >.
                     </p>
                 </div>
 
-                <form class="flex flex-col gap-[calc(1.25rem_+_var(--density-gap,0rem))]" @submit.prevent>
+                <form
+                    class="flex flex-col gap-[calc(1.25rem_+_var(--density-gap,0rem))]"
+                    @submit.prevent
+                >
                     <div class="flex flex-col gap-2">
                         <Label for="auth-email">Email</Label>
                         <Input
@@ -129,7 +148,8 @@ const trustBadges = [
                             <a
                                 href="#"
                                 class="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                            >Forgot?</a>
+                                >Forgot?</a
+                            >
                         </div>
                         <Input
                             id="auth-password"
@@ -141,7 +161,13 @@ const trustBadges = [
                     </div>
 
                     <label class="flex items-center gap-3 cursor-pointer select-none">
-                        <Checkbox :model-value="remember" @update:model-value="(v: boolean | 'indeterminate') => (remember = v === true)" />
+                        <Checkbox
+                            :model-value="remember"
+                            @update:model-value="
+                                (v: boolean | 'indeterminate') =>
+                                    (remember = v === true)
+                            "
+                        />
                         <span class="text-small">Remember me for 30 days</span>
                     </label>
 

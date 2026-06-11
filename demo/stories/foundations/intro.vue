@@ -40,7 +40,10 @@ const categories = computed(() =>
 </script>
 
 <template>
-    <StoryPage>
+    <!-- :hero-title="false" — this front-door hero hand-authors its own
+         display-register <h1> (the wordmark + tagline composition), so the
+         chassis does not render a duplicate hero title (AZ.W-SUFFUSE D2-1). -->
+    <StoryPage :hero-title="false">
         <!-- The hero copy sits glass-first over the live aurora the chassis
              renders behind this card. -->
         <section class="px-2 py-12 md:px-6 md:py-20">
@@ -60,8 +63,8 @@ const categories = computed(() =>
             </h1>
 
             <p class="text-prose max-w-2xl text-foreground/80">
-                A design system built around warm cream, cartoon offset shadows, and
-                the published Plus Jakarta Sans brand face for prose and ornament.
+                A design system built around warm cream, cartoon offset shadows, and the
+                published Plus Jakarta Sans brand face for prose and ornament.
                 Tailwind-native, Vue 3.5, reka-ui primitives under the hood. Every token
                 reachable as a utility; every component honest about its four states.
             </p>
@@ -72,7 +75,9 @@ const categories = computed(() =>
              glass rung so the aurora the chassis paints reads THROUGH them. -->
         <section class="mt-16">
             <p class="text-admin-label mb-4 text-muted-foreground">Categories</p>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div
+                class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            >
                 <RouterLink
                     v-for="cat in categories"
                     :key="cat.slug"
@@ -85,7 +90,12 @@ const categories = computed(() =>
                             cat.lead && 'sm:col-span-2',
                         )
                     "
-                    style="--story-card-shadow-hover: var(--shadow-card-hover, var(--shadow-cartoon-hover));"
+                    style="
+                        --story-card-shadow-hover: var(
+                            --shadow-card-hover,
+                            var(--shadow-cartoon-hover)
+                        );
+                    "
                 >
                     <span
                         :class="
@@ -96,7 +106,9 @@ const categories = computed(() =>
                         "
                         >{{ cat.title }}</span
                     >
-                    <span class="text-small text-muted-foreground">{{ cat.blurb }}</span>
+                    <span class="text-small text-muted-foreground">{{
+                        cat.blurb
+                    }}</span>
                 </RouterLink>
             </div>
         </section>

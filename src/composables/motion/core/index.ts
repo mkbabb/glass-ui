@@ -51,3 +51,10 @@ export * from "../vReveal";
 // imports `vue` `getCurrentScope`/`onScopeDispose` only — engine-free +
 // vueuse-free, so it ships here. CLEAN MOVE (no `/dom` re-export survives).
 export * from "../useTextHighlight";
+// AZ.W-MORPH-SHOWCASE (W-LIQUID fold) — the shared amorphous flex+squish primitive.
+// PURE projection of a caller-driven normalized scalar onto a size span + a
+// volume-preserving squish (the reconcile of the tabs-indicator reciprocal-stretch +
+// the metaball `sa`/`1/sa` squash). Owns no spring/rAF/element — imports `vue` only,
+// so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
+// root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
+export * from "../useLiquidFlex";

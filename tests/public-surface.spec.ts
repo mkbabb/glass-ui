@@ -282,11 +282,16 @@ const exactSubpathRuntimeSurfaces = [
             "DockIconButton",
             "DockLayer",
             "DockLayerGroup",
+            // AZ.W-RAIL-EXTEND — the hairline context-rail chrome primitive.
+            "DockRail",
             "DockSelectTrigger",
             // AX.W45 D13-c — the orientation+layout-aware divider primitive.
             "DockSeparator",
             "DockTabButton",
             "GlassDock",
+            // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (consumer #1
+            // of useLiquidFlex; the metaball-bridge / arm-c crossfade showcase).
+            "useDockOrientationMorph",
             "provideDockContext",
             "useDockContext",
             "useLayerTransition",

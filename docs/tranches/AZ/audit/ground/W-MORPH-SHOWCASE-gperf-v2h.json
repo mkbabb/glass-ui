@@ -1,0 +1,17 @@
+{
+  "gate": "W-MORPH-SHOWCASE-gperf",
+  "direction": "v2h",
+  "throttleRate": 4,
+  "config": "SHIPPED arm-c — View-Transitions crossfade (startViewTransition; the budget-clearing default)",
+  "protocol": "AY.W-BLOB-GLASS §2 — 4× CPU-throttle over the crossfade window",
+  "renderPath": "chromium ANGLE/Metal (local dev-box GPU)",
+  "frameCount": 158,
+  "p50_ms": 7.7,
+  "max_ms": 37.5,
+  "framesOver16_7ms": 6,
+  "fractionOver16_7ms": 0.038,
+  "budgetP50": 12,
+  "budgetOverFrac": 0,
+  "clears": false,
+  "note": "arm-c (the shipped View-Transitions crossfade) is the budget-clearing default. The arm-a metaball-bridge (the perf-gated 'Liquid teardrop' preview) does NOT clear the strict 0%-over-16.7ms cap under 4× throttle (measured median p50 ~13.7-15.1ms with the goo blur; even the bare two-dock layout morph spiked 2-3 frames over) — the per-frame feGaussianBlur repaint + the live dock-resize layout are the cost. Per §H4/§7 the NUMBER fell to arm-c; the amorphous metaball-teardrop fidelity is BOOKED to a successor. The showcase is bidirectional + deterministic on the ONE scalar in BOTH modes (HG1, arm-c marker)."
+}

@@ -173,5 +173,17 @@ export {
     type UseTextHighlightControls,
 } from "./composables/motion/useTextHighlight";
 
+// AZ.W-MORPH-SHOWCASE (W-LIQUID fold) — the shared amorphous flex+squish primitive.
+// A PURE projection of a caller-driven normalized scalar onto a size span + a
+// volume-preserving squish (no spring/rAF/element — imports `vue` only), so it is
+// engine-FREE + vueuse-FREE and root-barrel safe per the `useViewTransition`
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+export {
+    useLiquidFlex,
+    type LiquidFlexAxis,
+    type UseLiquidFlexParams,
+    type UseLiquidFlexReturn,
+} from "./composables/motion/useLiquidFlex";
+
 // Core utilities
 export * from "./utils";

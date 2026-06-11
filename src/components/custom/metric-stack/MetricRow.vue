@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes, Component } from "vue";
 import { computed } from "vue";
-import { cn } from "../../../utils";
+import { cn, coalesceMetric, type MetricValue } from "../../../utils";
 
 /**
  * MetricRow — a single row inside <MetricStack>.
@@ -44,11 +44,13 @@ export interface MetricRowProps {
     iconSize?: number;
     /** Label text — reads through the label slot when set. */
     label?: string;
-    /** Value text (the audacious-poster hero number). */
-    value?: string | number | null | undefined;
+    /** Value text (the audacious-poster hero number). A valid `0` renders
+     *  `"0"`, never the placeholder. */
+    value?: MetricValue;
     /** Unit suffix — reads through the unit slot when set. */
     unit?: string;
-    /** Placeholder glyph when value is empty/null. Defaults to "—". */
+    /** Placeholder glyph when value is empty/null. Defaults to "—" (the shared
+     *  `coalesceMetric` default). */
     placeholder?: string;
     /**
      * Per-row phase colour. Sets `--phase-color` inline so descendant
@@ -78,13 +80,18 @@ export interface MetricRowProps {
 }
 
 const props = withDefaults(defineProps<MetricRowProps>(), {
-    placeholder: "—",
     iconSize: 16,
     iconStrokeWidth: 2,
     digitCount: 3,
     colorTinted: false,
     active: false,
 });
+
+// AZ.W-METRIC-UNIFY — the shared value core (the ONE empty-check + the "—"
+// default). A valid `0` renders "0", never the placeholder.
+const displayValue = computed(
+    () => coalesceMetric(props.value, props.placeholder).display,
+);
 
 const rowStyle = computed(() => ({
     ...(props.phaseColor ? { "--phase-color": props.phaseColor } : {}),
@@ -116,11 +123,7 @@ const rowStyle = computed(() => ({
         <span class="metric-row__value result-value tabular-nums">
             <slot name="aura" />
             <span class="metric-row__value-text relative">
-                <slot name="value">{{
-                    value === null || value === undefined || value === ""
-                        ? placeholder
-                        : value
-                }}</slot>
+                <slot name="value">{{ displayValue }}</slot>
             </span>
             <slot name="unit">
                 <span

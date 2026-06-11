@@ -40,49 +40,50 @@ const reducedMotion = ref(false);
 interface Group {
     label: string;
     blurb: string;
-    section: number;
 }
 
+// AZ.W-SUFFUSE D1-8 — the section eyebrows read ONE coherent section-accent
+// register (`.section-label--tinted`), NOT a four-hue rainbow (the prior
+// per-group `section: 2/5/8/11` indigo/amber/red/teal cycle that read as
+// arbitrary noise). The page-scope one-color-event rule: settings gets ONE
+// eyebrow-accent identity.
 const groups: Record<string, Group> = {
     account: {
         label: "Account",
         blurb: "Identity, contact, and sign-in preferences.",
-        section: 2,
     },
     appearance: {
         label: "Appearance",
         blurb: "Theme, type, and density controls affecting every surface.",
-        section: 5,
     },
     notifications: {
         label: "Notifications",
         blurb: "Where, when, and how often we reach out.",
-        section: 8,
     },
     accessibility: {
         label: "Accessibility",
         blurb: "Motion, contrast, and ornamentation toggles.",
-        section: 11,
     },
 };
 </script>
 
 <template>
     <StoryPage>
-        <div class="flex flex-col gap-10 max-w-3xl">
+        <div class="settings-page flex flex-col gap-10 max-w-3xl">
             <!-- Account -->
             <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{ color: `var(--section-color-${groups.account.section}, inherit)` }"
-                    >
+                <div class="settings-group flex flex-col gap-1">
+                    <span class="section-label section-label--tinted text-admin-label">
                         {{ groups.account.label }}
                     </span>
-                    <p class="text-small text-muted-foreground">{{ groups.account.blurb }}</p>
+                    <p class="text-small text-muted-foreground">
+                        {{ groups.account.blurb }}
+                    </p>
                 </div>
                 <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                    <CardContent
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                    >
                         <LabeledInput
                             v-model="displayName"
                             label="Display name"
@@ -102,23 +103,22 @@ const groups: Record<string, Group> = {
 
             <!-- Appearance -->
             <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.appearance.section}, inherit)`,
-                        }"
-                    >
+                <div class="settings-group flex flex-col gap-1">
+                    <span class="section-label section-label--tinted text-admin-label">
                         {{ groups.appearance.label }}
                     </span>
-                    <p class="text-small text-muted-foreground">{{ groups.appearance.blurb }}</p>
+                    <p class="text-small text-muted-foreground">
+                        {{ groups.appearance.blurb }}
+                    </p>
                 </div>
                 <Card class="border-2 border-foreground/10">
                     <CardContent
-                        :class="cn(
-                            'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
-                            'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
-                        )"
+                        :class="
+                            cn(
+                                'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
+                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
+                            )
+                        "
                     >
                         <LabeledSelect
                             :model-value="theme"
@@ -126,7 +126,10 @@ const groups: Record<string, Group> = {
                             :items="themeOptions"
                             label="Theme"
                             tooltip="Controls the overall colour and contrast."
-                            @update:model-value="(v: string) => (theme = v as typeof themeOptions[number])"
+                            @update:model-value="
+                                (v: string) =>
+                                    (theme = v as (typeof themeOptions)[number])
+                            "
                             @update:open="(v: boolean) => (themeOpen = v)"
                         />
                         <LabeledSelect
@@ -135,7 +138,10 @@ const groups: Record<string, Group> = {
                             :items="fontOptions"
                             label="Body font"
                             tooltip="Typeface used for long-form reading."
-                            @update:model-value="(v: string) => (bodyFont = v as typeof fontOptions[number])"
+                            @update:model-value="
+                                (v: string) =>
+                                    (bodyFont = v as (typeof fontOptions)[number])
+                            "
                             @update:open="(v: boolean) => (bodyFontOpen = v)"
                         />
                         <LabeledSelect
@@ -144,7 +150,10 @@ const groups: Record<string, Group> = {
                             :items="densityOptions"
                             label="Density"
                             tooltip="Padding scale for every container."
-                            @update:model-value="(v: string) => (density = v as typeof densityOptions[number])"
+                            @update:model-value="
+                                (v: string) =>
+                                    (density = v as (typeof densityOptions)[number])
+                            "
                             @update:open="(v: boolean) => (densityOpen = v)"
                         />
                         <LabeledSlider
@@ -191,19 +200,18 @@ const groups: Record<string, Group> = {
 
             <!-- Notifications -->
             <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.notifications.section}, inherit)`,
-                        }"
-                    >
+                <div class="settings-group flex flex-col gap-1">
+                    <span class="section-label section-label--tinted text-admin-label">
                         {{ groups.notifications.label }}
                     </span>
-                    <p class="text-small text-muted-foreground">{{ groups.notifications.blurb }}</p>
+                    <p class="text-small text-muted-foreground">
+                        {{ groups.notifications.blurb }}
+                    </p>
                 </div>
                 <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                    <CardContent
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                    >
                         <LabeledSwitch
                             :checked="emailAlerts"
                             label="Email alerts"
@@ -230,19 +238,18 @@ const groups: Record<string, Group> = {
 
             <!-- Accessibility -->
             <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.accessibility.section}, inherit)`,
-                        }"
-                    >
+                <div class="settings-group flex flex-col gap-1">
+                    <span class="section-label section-label--tinted text-admin-label">
                         {{ groups.accessibility.label }}
                     </span>
-                    <p class="text-small text-muted-foreground">{{ groups.accessibility.blurb }}</p>
+                    <p class="text-small text-muted-foreground">
+                        {{ groups.accessibility.blurb }}
+                    </p>
                 </div>
                 <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                    <CardContent
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                    >
                         <LabeledSwitch
                             :checked="reducedMotion"
                             label="Reduce motion"
@@ -255,3 +262,41 @@ const groups: Record<string, Group> = {
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+/* AZ.W-SUFFUSE Arm D4 — the calm content-suffusion idiom on the settings page
+   (a page literally ABOUT grain / paper / type rendered flat white-on-white —
+   the canonical thin offender, D4-1). NO live substrate (the over-spend fence);
+   the suffusion lives in CONTENT COMPOSITION (the math-paper.vue gold-standard
+   idiom — D4-5): the section-accent rail + the ONE coherent eyebrow accent. The
+   page declares `background: "grid"` on its manifest row (the blueprint-grid
+   underlay); StoryHero drops the card to the calm `wash` tier so the grid reads. */
+
+/* D1-8 — ONE coherent section-accent register for the whole page (the violet
+   brand anchor, --section-color-7) so the four eyebrows read as one system, not
+   the prior four-hue rainbow. */
+.settings-group {
+    --section-label-accent: var(--section-color-7);
+    /* The math-paper section-accent rail (the D4-5 gold-standard idiom): a thin
+       left rail keyed off the page's ONE accent. The eyebrow + blurb indent off
+       the rail so the section reads as an intentional, organized block. */
+    border-inline-start: 3px solid
+        color-mix(in srgb, var(--section-color-7) 55%, transparent);
+    padding-inline-start: 1rem;
+}
+
+/* D1-7 — the censor-bar slider fix. The three Base size / Radius / Grain
+   sliders paint a near-opaque dark `.slider-range` cylinder (the §B3
+   pull-the-track default reading `--primary` near-black warm ink) that reads as
+   the page's darkest, heaviest focal block on the calm warm-cream settings page
+   (the redaction-bar effect that pulls the eye OFF content). The library
+   ALREADY exposes the `--slider-range-bg` override seam (Slider.vue) — a
+   settings-LOCAL re-point to the page's ONE calm accent register drops the fill
+   off the page-darkest-block so the slider reads as a control, not a focal
+   block. NOT a library default re-tune (the pull-the-track intent is sound
+   elsewhere — presets-in-consumers). Scoped to the whole settings page so it
+   reaches the sliders inside the Card (siblings of the eyebrow group). */
+.settings-page {
+    --slider-range-bg: var(--section-color-7);
+}
+</style>

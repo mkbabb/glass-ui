@@ -13,11 +13,7 @@
     /* The blueprint-grid background knobs. */
     --story-grid-size: 28px;
     --story-grid-color: color-mix(in srgb, var(--foreground) 7%, transparent);
-    --story-grid-color-strong: color-mix(
-        in srgb,
-        var(--foreground) 12%,
-        transparent
-    );
+    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 12%, transparent);
 
     /* The exposed-substrate margin (W-SB-STAGE §2.1b). Over a LIVE substrate the
        glass card no longer fills the container EXACTLY — an inset gutter lets the
@@ -28,11 +24,7 @@
 
 .dark {
     --story-grid-color: color-mix(in srgb, var(--foreground) 9%, transparent);
-    --story-grid-color-strong: color-mix(
-        in srgb,
-        var(--foreground) 16%,
-        transparent
-    );
+    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 16%, transparent);
 }
 
 /* The container: an isolating positioning context so the -z-10 substrate sits
@@ -134,6 +126,16 @@
     width: 100%;
 }
 
+/* The audacious chassis hero <h1> (AZ.W-SUFFUSE D2-1). The display register is
+   the chassis affordance — the thin substrate hero pages that hand-author no
+   title gain the audacious moment the flat type ladder starved. The bottom
+   margin sets it off from the body section stack below. */
+.story-hero-title {
+    margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--foreground);
+    max-inline-size: 18ch;
+}
+
 /* The exposed-substrate margin over a LIVE backdrop. The card no longer fills
    `.story-hero` exactly — the inset gutter shows the substrate AROUND the plate.
    A page-variant card takes a symmetric small gutter; a hero card takes an
@@ -156,26 +158,10 @@
 .story-bg-grid {
     background-color: var(--background);
     background-image:
-        linear-gradient(
-            to right,
-            var(--story-grid-color-strong) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            to bottom,
-            var(--story-grid-color-strong) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            to right,
-            var(--story-grid-color) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            to bottom,
-            var(--story-grid-color) 1px,
-            transparent 1px
-        );
+        linear-gradient(to right, var(--story-grid-color-strong) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--story-grid-color-strong) 1px, transparent 1px),
+        linear-gradient(to right, var(--story-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--story-grid-color) 1px, transparent 1px);
     background-size:
         calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),
         calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),

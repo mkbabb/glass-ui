@@ -112,6 +112,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the containerName container-query host — the dock is the container-type SUBJECT for a MetricPill cluster, not a nav bar",
     },
+    {
+        path: "demo/stories/dock/morph-showcase.vue",
+        facility:
+            "the AZ.W-MORPH-SHOWCASE vertical↔horizontal liquid-glass morph facility — the docks are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop preview, both bidirectional on the ONE --dock-morph-t scalar), not a nav rail; a home control would pollute the morph teaching surface",
+    },
 ];
 
 let _cliPaths = null;

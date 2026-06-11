@@ -50,7 +50,7 @@ function restart(): void {
         >
             <p class="font-display text-display-3 leading-tight text-foreground">
                 Built on
-                <span class="text-[var(--viz-fourier)]">
+                <span class="text-[var(--motion-accent)]">
                     <TypewriterText
                         :key="remountKey"
                         :words="phrases"
@@ -69,7 +69,9 @@ function restart(): void {
 
         <!-- Secondary: single-line, monospace, for code-style typing. -->
         <section class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Single-line, monospace</span>
+            <span class="text-admin-label text-muted-foreground"
+                >Single-line, monospace</span
+            >
             <div
                 :class="
                     cn(
@@ -108,7 +110,13 @@ function restart(): void {
                         {{ speedMs }}ms
                     </span>
                 </div>
-                <Slider id="tw-speed" v-model="baseSpeed" :min="30" :max="300" :step="10" />
+                <Slider
+                    id="tw-speed"
+                    v-model="baseSpeed"
+                    :min="30"
+                    :max="300"
+                    :step="10"
+                />
             </div>
 
             <div class="flex flex-col gap-3">

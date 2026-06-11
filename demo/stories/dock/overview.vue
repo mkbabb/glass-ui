@@ -2,9 +2,20 @@
 import StoryPage from "../StoryPage.vue";
 import { ref, watch, useTemplateRef } from "vue";
 import {
-    Home, Search, Bell, Settings, Plus, Share2, Download,
-    ChevronDown, Play, Pause, SkipBack, SkipForward,
-    Volume2, SlidersHorizontal,
+    Home,
+    Search,
+    Bell,
+    Settings,
+    Plus,
+    Share2,
+    Download,
+    ChevronDown,
+    Play,
+    Pause,
+    SkipBack,
+    SkipForward,
+    Volume2,
+    SlidersHorizontal,
 } from "@lucide/vue";
 import {
     GlassDock,
@@ -39,7 +50,9 @@ const playing = ref(false);
 // pausing genuinely parks the renderer (not a text readout). `bgAuroraRef` is the
 // Aurora instance; the watch drives its exposed pause()/resume().
 const bgPaused = ref(false);
-const bgAuroraRef = useTemplateRef<{ pause: () => void; resume: () => void }>("bgAuroraRef");
+const bgAuroraRef = useTemplateRef<{ pause: () => void; resume: () => void }>(
+    "bgAuroraRef",
+);
 watch(bgPaused, (paused) => {
     if (paused) bgAuroraRef.value?.pause();
     else bgAuroraRef.value?.resume();
@@ -87,21 +100,23 @@ function togglePlay() {
 <template>
     <StoryPage>
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">Collapsible (hover to expand)</h2>
+            <h2 class="text-subheading">Collapsible (hover to expand)</h2>
             <p class="text-sm text-muted-foreground">
                 The collapsed pill scales up on hover on the same
-                <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the expand morph uses, so
-                hover-to-expand reads as one continuous spring. The controls cascade in outer-to-inward,
-                reversed on collapse. Under
-                <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the scale and stagger snap;
-                the state still toggles.
+                <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the
+                expand morph uses, so hover-to-expand reads as one continuous spring.
+                The controls cascade in outer-to-inward, reversed on collapse. Under
+                <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the
+                scale and stagger snap; the state still toggles.
             </p>
             <!-- The dock IS the headline glass primitive — stage a low-intensity
                  contained Aurora wash INSIDE the specimen frame (the display/card
                  MODEL pattern) so the glass dock has something to be glass against
                  (W-SB-STAGE §2.2, FD §6 the #1 placement). ONE Aurora context per
                  page — within the WebGL budget. -->
-            <div class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8">
+            <div
+                class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8"
+            >
                 <Aurora
                     :config="DEFAULT_AURORA_CONFIG"
                     :opacity-ceiling="0.4"
@@ -123,8 +138,10 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">Always expanded — media transport</h2>
-            <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
+            <h2 class="text-subheading">Always expanded — media transport</h2>
+            <div
+                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+            >
                 <GlassDock always-expanded>
                     <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
                     <DockIconButton
@@ -137,7 +154,9 @@ function togglePlay() {
                     </DockIconButton>
                     <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
                     <DockSeparator />
-                    <span class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate">
+                    <span
+                        class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate"
+                    >
                         {{ track }}
                     </span>
                 </GlassDock>
@@ -145,8 +164,10 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3" data-testid="dock-trigger-story">
-            <h2 class="text-sm font-semibold text-muted-foreground">Select and dropdown triggers</h2>
-            <div class="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
+            <h2 class="text-subheading">Select and dropdown triggers</h2>
+            <div
+                class="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+            >
                 <!-- import { DockSelectTrigger, DockDropdownTrigger } from "../../../src/components/custom/dock"; -->
                 <GlassDock always-expanded fit-content>
                     <Select v-model="dockView">
@@ -176,7 +197,9 @@ function togglePlay() {
                             data-testid="dock-dropdown-trigger"
                         >
                             <Settings class="h-4 w-4" />
-                            <span class="text-xs">{{ dockCommandLabels[dockCommand] }}</span>
+                            <span class="text-xs">{{
+                                dockCommandLabels[dockCommand]
+                            }}</span>
                             <ChevronDown class="h-3 w-3 opacity-60" />
                         </DockDropdownTrigger>
                         <DropdownMenuContent align="center" class="w-52">
@@ -195,25 +218,36 @@ function togglePlay() {
                     </DropdownMenu>
                 </GlassDock>
 
-                <div class="grid gap-1 rounded-lg border border-border/50 bg-background/60 px-3 py-2 text-xs text-muted-foreground sm:grid-cols-2">
+                <div
+                    class="grid gap-1 rounded-lg border border-border/50 bg-background/60 px-3 py-2 text-xs text-muted-foreground sm:grid-cols-2"
+                >
                     <p data-testid="dock-select-readout">
-                        select = <span class="font-medium text-foreground">{{ dockViewLabels[dockView] }}</span>
+                        select =
+                        <span class="font-medium text-foreground">{{
+                            dockViewLabels[dockView]
+                        }}</span>
                     </p>
                     <p data-testid="dock-dropdown-readout">
-                        dropdown = <span class="font-medium text-foreground">{{ dockCommandLabels[dockCommand] }}</span>
+                        dropdown =
+                        <span class="font-medium text-foreground">{{
+                            dockCommandLabels[dockCommand]
+                        }}</span>
                     </p>
                 </div>
             </div>
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">With popover triggers</h2>
+            <h2 class="text-subheading">With popover triggers</h2>
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code> pins the parent
-                dock open while the popover is visible. reka-ui's HoverCard primitives handle
-                hover-trigger, defer-on-leave, and adaptive side/align collision avoidance.
+                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
+                pins the parent dock open while the popover is visible. reka-ui's
+                HoverCard primitives handle hover-trigger, defer-on-leave, and adaptive
+                side/align collision avoidance.
             </p>
-            <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
+            <div
+                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+            >
                 <GlassDock always-expanded>
                     <DockIconButton aria-label="New"><Plus /></DockIconButton>
 
@@ -225,10 +259,26 @@ function togglePlay() {
                         </template>
                         <template #content>
                             <div class="flex min-w-44 flex-col gap-1 p-1">
-                                <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Share</p>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Copy link</button>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Email</button>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Embed</button>
+                                <p
+                                    class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
+                                >
+                                    Share
+                                </p>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    Copy link
+                                </button>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    Email
+                                </button>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    Embed
+                                </button>
                             </div>
                         </template>
                     </HoverPopover>
@@ -241,10 +291,26 @@ function togglePlay() {
                         </template>
                         <template #content>
                             <div class="flex min-w-44 flex-col gap-1 p-1">
-                                <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Export</p>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PNG</button>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">SVG</button>
-                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PDF</button>
+                                <p
+                                    class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
+                                >
+                                    Export
+                                </p>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    PNG
+                                </button>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    SVG
+                                </button>
+                                <button
+                                    class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                                >
+                                    PDF
+                                </button>
                             </div>
                         </template>
                     </HoverPopover>
@@ -265,7 +331,10 @@ function togglePlay() {
                                 <button
                                     v-for="t in tracks"
                                     :key="t"
-                                    :class="['rounded px-2 py-1.5 text-left text-sm hover:bg-muted', track === t && 'bg-muted font-medium']"
+                                    :class="[
+                                        'rounded px-2 py-1.5 text-left text-sm hover:bg-muted',
+                                        track === t && 'bg-muted font-medium',
+                                    ]"
                                     @click="track = t"
                                 >
                                     {{ t }}
@@ -278,14 +347,17 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3" data-testid="dock-slider-section">
-            <h2 class="text-sm font-semibold text-muted-foreground">Slider in dock — the keep-dock-open hold</h2>
+            <h2 class="text-subheading">Slider in dock — the keep-dock-open hold</h2>
             <p class="text-sm text-muted-foreground">
-                A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant of a dock holds the
-                dock open while the user drags (the <code class="rounded bg-muted px-1">dockKeepOpen</code>
+                A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant
+                of a dock holds the dock open while the user drags (the
+                <code class="rounded bg-muted px-1">dockKeepOpen</code>
                 token), and reflects the dock's held state via
-                <code class="rounded bg-muted px-1">data-held</code> on its root. Drag a knob: the thumb halo
-                intensifies and the dock substrate tier-shades up while held; release returns both to default.
-                The contract is bidirectional and pointer-anchored — it lives on the API surface, not the recipe.
+                <code class="rounded bg-muted px-1">data-held</code> on its root. Drag a
+                knob: the thumb halo intensifies and the dock substrate tier-shades up
+                while held; release returns both to default. The contract is
+                bidirectional and pointer-anchored — it lives on the API surface, not
+                the recipe.
             </p>
             <div
                 class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
@@ -305,10 +377,17 @@ function togglePlay() {
                 <GlassDock :collapse-delay="600" data-testid="dock-capture">
                     <DockIconButton aria-label="Volume"><Volume2 /></DockIconButton>
                     <div class="flex w-44 items-center px-2">
-                        <Slider v-model="volume" :max="100" :step="1" aria-label="Volume" />
+                        <Slider
+                            v-model="volume"
+                            :max="100"
+                            :step="1"
+                            aria-label="Volume"
+                        />
                     </div>
                     <DockSeparator />
-                    <DockIconButton aria-label="Mix"><SlidersHorizontal /></DockIconButton>
+                    <DockIconButton aria-label="Mix"
+                        ><SlidersHorizontal
+                    /></DockIconButton>
                     <div class="flex w-44 items-center px-2">
                         <Slider v-model="mix" :max="100" :step="1" aria-label="Mix" />
                     </div>
@@ -318,22 +397,23 @@ function togglePlay() {
                 </GlassDock>
             </div>
             <p class="text-xs text-muted-foreground">
-                Hover to expand, then press-and-hold a thumb and move the pointer OFF the dock: the dock stays
-                open through the held drag and re-collapses only after release. Either drag holds the dock open,
-                and both halos intensify when either is dragged since both read the dock's shared held state.
+                Hover to expand, then press-and-hold a thumb and move the pointer OFF
+                the dock: the dock stays open through the held drag and re-collapses
+                only after release. Either drag holds the dock open, and both halos
+                intensify when either is dragged since both read the dock's shared held
+                state.
             </p>
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">
-                Tap and click land where you aimed
-            </h2>
+            <h2 class="text-subheading">Tap and click land where you aimed</h2>
             <p class="text-sm text-muted-foreground">
-                A tap on the collapsed pill, or a click during the hover-expand morph, must land on the
-                control it was AIMED at — never on whatever the layer swap moves under the pointer. The
-                summary control here is a Settings gear; on expand a different control occupies its old
-                coordinate. The dock scopes the pass-through to the pressed element's identity, so the gear
-                tap can never activate the swapped-in control under the same point.
+                A tap on the collapsed pill, or a click during the hover-expand morph,
+                must land on the control it was AIMED at — never on whatever the layer
+                swap moves under the pointer. The summary control here is a Settings
+                gear; on expand a different control occupies its old coordinate. The
+                dock scopes the pass-through to the pressed element's identity, so the
+                gear tap can never activate the swapped-in control under the same point.
             </p>
             <div
                 class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
@@ -351,60 +431,72 @@ function togglePlay() {
                      collapse baseline fast. No behavioral change. -->
                 <GlassDock :collapse-delay="600" data-testid="dock-tap-capture">
                     <DockIconButton aria-label="Skip back"><SkipBack /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><ChevronDown /></DockIconButton>
+                    <DockIconButton aria-label="Previous"
+                        ><ChevronDown
+                    /></DockIconButton>
                     <DockIconButton aria-label="Play"><Play /></DockIconButton>
-                    <DockIconButton aria-label="Skip forward"><SkipForward /></DockIconButton>
+                    <DockIconButton aria-label="Skip forward"
+                        ><SkipForward
+                    /></DockIconButton>
                     <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
                     <template #collapsed>
-                        <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                        <DockIconButton aria-label="Settings"
+                            ><Settings
+                        /></DockIconButton>
                     </template>
                 </GlassDock>
             </div>
             <p class="text-xs text-muted-foreground">
-                The settled click (after the morph) reaches the control normally — only the racing,
-                identity-mismatched click is swallowed.
+                The settled click (after the morph) reaches the control normally — only
+                the racing, identity-mismatched click is swallowed.
             </p>
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">
-                Menus inside a dock teleport out
-            </h2>
+            <h2 class="text-subheading">Menus inside a dock teleport out</h2>
             <p class="text-sm text-muted-foreground">
                 A dropdown or menu mounted inside a dock MUST be wired into the dock's
                 <code class="rounded bg-muted px-1">keepOpen</code> +
-                <code class="rounded bg-muted px-1">data-glass-dock-portal</code> teleport contract — the
-                same contract the
+                <code class="rounded bg-muted px-1">data-glass-dock-portal</code>
+                teleport contract — the same contract the
                 <code class="rounded bg-muted px-1">DockSelectTrigger</code> /
                 <code class="rounded bg-muted px-1">DockDropdownTrigger</code> /
-                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code> sections above already
-                ride. This is Apple's navigation-layer / no-glass-on-glass rule made structural: glass floats
-                only in the navigation/overlay band and never nests in glass (stacked blur muddies, the rim
-                doubles), so a dock-hosted menu TELEPORTS OUT to its own sampling region rather than painting a
-                second glass plate inside the dock's.
+                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
+                sections above already ride. This is Apple's navigation-layer /
+                no-glass-on-glass rule made structural: glass floats only in the
+                navigation/overlay band and never nests in glass (stacked blur muddies,
+                the rim doubles), so a dock-hosted menu TELEPORTS OUT to its own
+                sampling region rather than painting a second glass plate inside the
+                dock's.
             </p>
             <p class="text-xs text-muted-foreground">
-                The canonical mis-wire (the keyframes D9 break): a dropdown mounted OUTSIDE the
-                <code class="rounded bg-muted px-1">keepOpen</code>+portal contract drops out of the dock the
-                instant the trigger fires — it paints its own glass plate stacked over the dock's and the dock
-                idle-collapses out from under it. Reach for the dock-native trigger primitives (which bundle
-                the contract), not a raw
+                The canonical mis-wire (the keyframes D9 break): a dropdown mounted
+                OUTSIDE the
+                <code class="rounded bg-muted px-1">keepOpen</code>+portal contract
+                drops out of the dock the instant the trigger fires — it paints its own
+                glass plate stacked over the dock's and the dock idle-collapses out from
+                under it. Reach for the dock-native trigger primitives (which bundle the
+                contract), not a raw
                 <code class="rounded bg-muted px-1">&lt;DropdownMenu&gt;</code> child.
             </p>
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">
+            <h2 class="text-subheading">
                 Overflow wrap — content reflows to multiple rows
             </h2>
             <p class="text-xs text-muted-foreground">
-                <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the row to
-                multiple rows by INTRINSIC flex-wrap whenever the content's natural width exceeds
-                the dock's inline cap (the dock shrink-wraps to content and
-                <code class="rounded bg-muted px-1">max-inline-size: var(--dock-max-inline-size)</code>
-                caps it) — at ANY viewport width, no breakpoint. The wrapped
-                multi-row silhouette lifts onto the card/floating shadow tier and a finite
-                <code class="rounded bg-muted px-1">--dock-card-radius</code> corner as it expands.
+                <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the
+                row to multiple rows by INTRINSIC flex-wrap whenever the content's
+                natural width exceeds the dock's inline cap (the dock shrink-wraps to
+                content and
+                <code class="rounded bg-muted px-1"
+                    >max-inline-size: var(--dock-max-inline-size)</code
+                >
+                caps it) — at ANY viewport width, no breakpoint. The wrapped multi-row
+                silhouette lifts onto the card/floating shadow tier and a finite
+                <code class="rounded bg-muted px-1">--dock-card-radius</code> corner as
+                it expands.
             </p>
             <!-- Host caps --dock-max-inline-size at 28rem so the 14-control row overflows the cap
                  and wraps ON-SCREEN at desktop (the consumer-override the cap token exposes). -->
@@ -427,14 +519,17 @@ function togglePlay() {
                     <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
                     <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
                     <DockIconButton aria-label="Add (2)"><Plus /></DockIconButton>
-                    <DockIconButton aria-label="Settings (2)"><Settings /></DockIconButton>
+                    <DockIconButton aria-label="Settings (2)"
+                        ><Settings
+                    /></DockIconButton>
                 </GlassDock>
             </div>
             <p class="text-xs text-muted-foreground">
-                Collapsible wrap dock — hover to expand. Collapsed it is a single-row stadium pill
-                (flat <code class="rounded bg-muted px-1">--shadow-dock</code> glow); expanded it
-                wraps to rows AND morphs corner + elevation onto the card tier in lockstep on the
-                one dock spring (no jump-cut).
+                Collapsible wrap dock — hover to expand. Collapsed it is a single-row
+                stadium pill (flat
+                <code class="rounded bg-muted px-1">--shadow-dock</code> glow); expanded
+                it wraps to rows AND morphs corner + elevation onto the card tier in
+                lockstep on the one dock spring (no jump-cut).
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
@@ -455,12 +550,16 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">Big dock — card shell + tile grid</h2>
+            <h2 class="text-subheading">Big dock — card shell + tile grid</h2>
             <p class="text-xs text-muted-foreground">
-                <code class="rounded bg-muted px-1">shape="card"</code> gives a finite concentric
-                card radius (not a stadium pill); <code class="rounded bg-muted px-1">layout="grid"</code>
-                lays children out as a self-wrapping 2D tile grid for large multi-row docks
-                (<code class="rounded bg-muted px-1">alwaysExpanded</code> by contract — no width morph).
+                <code class="rounded bg-muted px-1">shape="card"</code> gives a finite
+                concentric card radius (not a stadium pill);
+                <code class="rounded bg-muted px-1">layout="grid"</code> lays children
+                out as a self-wrapping 2D tile grid for large multi-row docks (<code
+                    class="rounded bg-muted px-1"
+                    >alwaysExpanded</code
+                >
+                by contract — no width morph).
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock shape="card" layout="grid" class="w-80">
@@ -478,23 +577,24 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">
-                Background pause/play toggle
-            </h2>
+            <h2 class="text-subheading">Background pause/play toggle</h2>
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
                 lets the user pause a running Aurora/GooBlob background — wire it to the
                 renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
                     class="rounded bg-muted px-1"
                     >resume()</code
-                >. It reflects state via <code class="rounded bg-muted px-1">aria-pressed</code>
+                >. It reflects state via
+                <code class="rounded bg-muted px-1">aria-pressed</code>
                 and a Pause↔Play glyph swap, available to all users.
             </p>
             <!-- The toggle controls a real contained Aurora: pausing genuinely parks
                  the renderer's rAF. The dock is collapsible — the collapsed slot shows
                  the live Pause/Play glyph so the control reads in both states
                  (expanded row + the collapsed circle). -->
-            <div class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8">
+            <div
+                class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8"
+            >
                 <Aurora
                     ref="bgAuroraRef"
                     :config="DEFAULT_AURORA_CONFIG"
@@ -515,16 +615,28 @@ function togglePlay() {
                 </GlassDock>
             </div>
             <p class="text-center text-xs text-muted-foreground">
-                background: <code class="rounded bg-muted px-1">{{ bgPaused ? "paused (rAF parked)" : "running" }}</code>
+                background:
+                <code class="rounded bg-muted px-1">{{
+                    bgPaused ? "paused (rAF parked)" : "running"
+                }}</code>
             </p>
         </section>
 
         <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-sm font-semibold text-foreground">Notes</h2>
+            <h2 class="text-subheading">Notes</h2>
             <ul class="list-disc pl-5 space-y-1">
-                <li>The dock stays open while a popover or held control inside it is active.</li>
-                <li>Pass a <code class="rounded bg-muted px-1">#collapsed</code> slot to choose what the collapsed pill shows.</li>
-                <li>Use <code class="rounded bg-muted px-1">DockIconButton</code> for buttons that fit the dock flush.</li>
+                <li>
+                    The dock stays open while a popover or held control inside it is
+                    active.
+                </li>
+                <li>
+                    Pass a <code class="rounded bg-muted px-1">#collapsed</code> slot to
+                    choose what the collapsed pill shows.
+                </li>
+                <li>
+                    Use <code class="rounded bg-muted px-1">DockIconButton</code> for
+                    buttons that fit the dock flush.
+                </li>
             </ul>
         </section>
     </StoryPage>

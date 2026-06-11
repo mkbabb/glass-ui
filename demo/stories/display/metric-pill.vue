@@ -12,28 +12,28 @@ import { GlassDock } from "../../../src/components/custom/dock";
             <div class="flex flex-wrap items-end gap-4">
                 <MetricPill
                     label="DOWNLOAD"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="sm"
                     color="var(--viz-fourier)"
                 />
                 <MetricPill
                     label="DOWNLOAD"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="md"
                     color="var(--viz-fourier)"
                 />
                 <MetricPill
                     label="DOWNLOAD"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="lg"
                     color="var(--viz-fourier)"
                 />
                 <MetricPill
                     label="DOWNLOAD"
-                    :amount="730"
+                    :value="730"
                     unit="Mbps"
                     size="xl"
                     color="var(--viz-fourier)"
@@ -55,7 +55,7 @@ import { GlassDock } from "../../../src/components/custom/dock";
                     <span class="text-admin-label text-muted-foreground">spacious (default)</span>
                     <MetricPill
                         label="LATENCY"
-                        :amount="36"
+                        :value="36"
                         unit="ms"
                         density="spacious"
                         color="var(--viz-fourier)"
@@ -65,7 +65,7 @@ import { GlassDock } from "../../../src/components/custom/dock";
                     <span class="text-admin-label text-muted-foreground">comfortable</span>
                     <MetricPill
                         label="LATENCY"
-                        :amount="36"
+                        :value="36"
                         unit="ms"
                         density="comfortable"
                         color="var(--viz-fourier)"
@@ -89,28 +89,28 @@ import { GlassDock } from "../../../src/components/custom/dock";
                     <MetricPill
                         label="LATENCY"
                         abbreviation="LAT"
-                        :amount="36"
+                        :value="36"
                         unit="ms"
                         color="var(--viz-fourier)"
                     />
                     <MetricPill
                         label="JITTER"
                         abbreviation="JIT"
-                        :amount="1"
+                        :value="1"
                         unit="ms"
                         color="var(--viz-chebyshev)"
                     />
                     <MetricPill
                         label="DOWNLOAD"
                         abbreviation="DL"
-                        :amount="730"
+                        :value="730"
                         unit="Mbps"
                         color="var(--viz-legendre)"
                     />
                     <MetricPill
                         label="UPLOAD"
                         abbreviation="UL"
-                        :amount="130"
+                        :value="130"
                         unit="Mbps"
                     />
                 </div>
@@ -131,8 +131,8 @@ import { GlassDock } from "../../../src/components/custom/dock";
         <section class="flex flex-col gap-3">
             <p class="section-label">empty states</p>
             <div class="flex flex-wrap items-end gap-4">
-                <MetricPill label="LATENCY" :amount="null" unit="ms" />
-                <MetricPill label="DOWNLOAD" :amount="undefined" unit="Mbps" placeholder="…" />
+                <MetricPill label="LATENCY" :value="null" unit="ms" />
+                <MetricPill label="DOWNLOAD" :value="undefined" unit="Mbps" placeholder="…" />
             </div>
         </section>
     </StoryPage>

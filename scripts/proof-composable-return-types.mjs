@@ -285,6 +285,9 @@ function run() {
                 "useOptionalDockMorphContext", "DOCK_MORPH_KEY", "DockMorphContext",
                 "DockMorphGroupRegistration", "DockMorphGroupHandle",
                 "UseDockMorphOrchestratorOptions", "UseDockMorphOrchestratorReturn",
+                // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver.
+                "useDockOrientationMorph", "DockMorphOrientation",
+                "UseDockOrientationMorphOptions", "UseDockOrientationMorphReturn",
             ],
         },
     };

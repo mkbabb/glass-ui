@@ -163,7 +163,7 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                                 {{ pill.label }}
                             </span>
                             <MetricBadge
-                                :amount="pill.amount"
+                                :value="pill.amount"
                                 :unit="pill.unit"
                                 :color="pill.cssVar"
                             />

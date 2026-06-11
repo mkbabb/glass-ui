@@ -252,8 +252,17 @@ export type {
 // `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
 // | "bare"`) parallel to `CardTier`; `MetricCellProps` is the Props
 // shape consumers forward when wrapping `<MetricCell>`. `MetricStackProps` +
-// `MetricRowProps` cover the layout shell + row pair. Both metric families ship
-// via their `/metric-cell` + `/metric-stack` subpaths (speedtest consumes them).
+// `MetricRowProps` cover the layout shell + row pair. `MetricBadgeProps` is the
+// inline/stacked badge-pill shape (the unified `value` field per
+// AZ.W-METRIC-UNIFY). All metric families share the `coalesceMetric` value core
+// (the single empty-check + the "—" placeholder default). The cell/stack
+// families ship via their `/metric-cell` + `/metric-stack` subpaths (speedtest
+// consumes them).
+export type {
+    MetricBadgeProps,
+    MetricBadgeSize,
+    MetricBadgeLabelPosition,
+} from "../components/custom/metric-badge";
 export type {
     MetricCellAppearance,
     MetricCellProps,

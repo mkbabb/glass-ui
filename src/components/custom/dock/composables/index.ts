@@ -35,3 +35,13 @@ export {
     type UseDockMorphOrchestratorOptions,
     type UseDockMorphOrchestratorReturn,
 } from "./dockMorphContext";
+
+// AZ.W-MORPH-SHOWCASE — the vertical↔horizontal liquid-glass morph driver (the
+// metaball-bridge, H4 arm a). Layered on the ONE `--dock-morph-t` scalar; consumer #1
+// of `useLiquidFlex` (the W-LIQUID substrate).
+export {
+    useDockOrientationMorph,
+    type DockMorphOrientation,
+    type UseDockOrientationMorphOptions,
+    type UseDockOrientationMorphReturn,
+} from "./useDockOrientationMorph";

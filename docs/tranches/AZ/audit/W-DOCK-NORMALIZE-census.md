@@ -139,16 +139,24 @@ A home anchor would pollute the sizing-host teaching surface. EXEMPT, recorded p
 
 A home anchor would pollute the container-query host teaching surface. EXEMPT, recorded positively.
 
+### File: `demo/stories/dock/morph-showcase.vue` — FEATURE_EXEMPT (AZ.W-MORPH-SHOWCASE)
+
+| dock @line | class | home-status | verdict |
+|---|---|---|---|
+| the V↔H morph docks (the arm-c VT crossfade pair + the liquid-preview two-dock pair) | FEATURE | none | EXEMPT (the docks are the MORPH SUBJECT of the vertical↔horizontal liquid-glass morph facility — both modes bidirectional on the ONE `--dock-morph-t` scalar; a home control would pollute the morph teaching surface) |
+
+A home anchor would pollute the morph-facility teaching surface. EXEMPT, recorded positively.
+
 ## Census closure (W5 — the anti-gameability floor)
 
-The 7 dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock
+The 8 dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock
 file:
 
 - **SHOWCASE_DOCKS** (3): `overview.vue`, `rail.vue`, `layers.vue`
 - **SHELL_DOCKS** (2, promoted to strict): `BottomDock.vue`, `SidebarDock.vue`
-- **FEATURE_EXEMPT_DOCKS** (2): `dark-mode-toggle.vue`, `metric-pill.vue`
+- **FEATURE_EXEMPT_DOCKS** (3): `dark-mode-toggle.vue`, `metric-pill.vue`, `morph-showcase.vue`
 
-3 + 2 + 2 = **7** = the HEAD enumeration. The gate ENUMERATES `demo/**/*.vue` (HTML-comment-stripped)
+3 + 2 + 3 = **8** = the HEAD enumeration. The gate ENUMERATES `demo/**/*.vue` (HTML-comment-stripped)
 filtered to files containing `<GlassDock` and asserts each appears on exactly one list. A future
 agent adding a new nav dock to a NEW story file (hand-rolled home chrome, no `#persistent`) would
 land OFF all three lists → the closure RED-flags the unaccounted file, forcing it onto a list

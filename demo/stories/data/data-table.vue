@@ -2,7 +2,10 @@
 import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
 import { DataTable } from "../../../src/components/ui/data-table";
-import type { DataTableColumn, DataTableSort } from "../../../src/components/ui/data-table";
+import type {
+    DataTableColumn,
+    DataTableSort,
+} from "../../../src/components/ui/data-table";
 import { Input } from "../../../src/components/ui/input";
 import { cn } from "../../../src/utils/cn";
 
@@ -16,14 +19,70 @@ interface Repo {
 }
 
 const rows: Repo[] = [
-    { _id: "1", name: "glass-ui", language: "Vue", stars: 1284, issues: 12, updated: "2026-04-20" },
-    { _id: "2", name: "keyframes.js", language: "TypeScript", stars: 842, issues: 4, updated: "2026-04-18" },
-    { _id: "3", name: "fourier-analysis", language: "Vue", stars: 2103, issues: 34, updated: "2026-04-22" },
-    { _id: "4", name: "bbnf-lang", language: "Rust", stars: 517, issues: 8, updated: "2026-04-15" },
-    { _id: "5", name: "paper-grain", language: "CSS", stars: 94, issues: 1, updated: "2026-04-10" },
-    { _id: "6", name: "cm-fonts", language: "TypeScript", stars: 312, issues: 3, updated: "2026-04-19" },
-    { _id: "7", name: "reka-helpers", language: "TypeScript", stars: 221, issues: 5, updated: "2026-04-12" },
-    { _id: "8", name: "aurora-shader", language: "GLSL", stars: 638, issues: 2, updated: "2026-04-21" },
+    {
+        _id: "1",
+        name: "glass-ui",
+        language: "Vue",
+        stars: 1284,
+        issues: 12,
+        updated: "2026-04-20",
+    },
+    {
+        _id: "2",
+        name: "keyframes.js",
+        language: "TypeScript",
+        stars: 842,
+        issues: 4,
+        updated: "2026-04-18",
+    },
+    {
+        _id: "3",
+        name: "fourier-analysis",
+        language: "Vue",
+        stars: 2103,
+        issues: 34,
+        updated: "2026-04-22",
+    },
+    {
+        _id: "4",
+        name: "bbnf-lang",
+        language: "Rust",
+        stars: 517,
+        issues: 8,
+        updated: "2026-04-15",
+    },
+    {
+        _id: "5",
+        name: "paper-grain",
+        language: "CSS",
+        stars: 94,
+        issues: 1,
+        updated: "2026-04-10",
+    },
+    {
+        _id: "6",
+        name: "cm-fonts",
+        language: "TypeScript",
+        stars: 312,
+        issues: 3,
+        updated: "2026-04-19",
+    },
+    {
+        _id: "7",
+        name: "reka-helpers",
+        language: "TypeScript",
+        stars: 221,
+        issues: 5,
+        updated: "2026-04-12",
+    },
+    {
+        _id: "8",
+        name: "aurora-shader",
+        language: "GLSL",
+        stars: 638,
+        issues: 2,
+        updated: "2026-04-21",
+    },
 ];
 
 const filter = ref("");
@@ -33,19 +92,40 @@ const sort = ref<DataTableSort | undefined>({ key: "stars", direction: "desc" })
 
 const columns: DataTableColumn<Repo>[] = [
     { key: "name", label: "Repository", sortable: true, class: "font-medium" },
-    { key: "language", label: "Language", sortable: true, class: "text-muted-foreground" },
-    { key: "stars", label: "Stars", sortable: true, align: "right", class: "fira-code" },
-    { key: "issues", label: "Issues", sortable: true, align: "right", class: "fira-code" },
-    { key: "updated", label: "Updated", sortable: true, align: "right", class: "text-mono-caption text-muted-foreground" },
+    {
+        key: "language",
+        label: "Language",
+        sortable: true,
+        class: "text-muted-foreground",
+    },
+    {
+        key: "stars",
+        label: "Stars",
+        sortable: true,
+        align: "right",
+        class: "fira-code",
+    },
+    {
+        key: "issues",
+        label: "Issues",
+        sortable: true,
+        align: "right",
+        class: "fira-code",
+    },
+    {
+        key: "updated",
+        label: "Updated",
+        sortable: true,
+        align: "right",
+        class: "text-mono-caption text-muted-foreground",
+    },
 ];
 
 const filtered = computed(() => {
     const q = filter.value.trim().toLowerCase();
     if (!q) return rows;
     return rows.filter(
-        (r) =>
-            r.name.toLowerCase().includes(q) ||
-            r.language.toLowerCase().includes(q),
+        (r) => r.name.toLowerCase().includes(q) || r.language.toLowerCase().includes(q),
     );
 });
 
@@ -71,8 +151,12 @@ const paged = computed(() => {
     <StoryPage>
         <div class="flex items-end justify-between gap-4">
             <div>
-                <p class="text-admin-label text-muted-foreground">Data table</p>
-                <h2 class="text-heading">Repositories</h2>
+                <!-- D1-5 (AZ.W-HIERARCHY): the in-card eyebrow 'Data table' was a
+                     DUP of the page-chrome eyebrow ('DATA · DATA TABLE'); dropped.
+                     The card heading 'Repositories' demotes OFF the page-<h1>'s
+                     text-heading (25.9px/700) onto the canonical text-subheading
+                     section rung — one clear primary, no two equal-weight titles. -->
+                <h2 class="text-subheading">Repositories</h2>
             </div>
             <Input
                 v-model="filter"
