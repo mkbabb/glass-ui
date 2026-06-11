@@ -187,6 +187,18 @@ async function largestSwatch(page: import("@playwright/test").Page): Promise<Loc
     return best;
 }
 
+/** Mask the viewport-fixed shell-dock chrome before a pixel measurement. The
+ *  W-RAIL3 floating facet carousel rides the sidebar dock's midline OVER page
+ *  content (the ratified floating-overlay paradigm — content scrolls behind), so
+ *  an element-screenshot of content near the viewport's mid-left band captures a
+ *  chip's dark glyph pixels as false "specks". The probe's subject is the BLOB
+ *  surface, never the shell chrome; masking it is honest, hiding the page is not. */
+async function maskShellChrome(page: import("@playwright/test").Page): Promise<void> {
+    await page.addStyleTag({
+        content: ".dock-hairline-slot, .glass-dock-frame { display: none !important; }",
+    });
+}
+
 test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", () => {
     // The static WatercolorDot swatch edge renders a clean DEVICE-PX contour with no
     // coarse flung speckle, measured at MAX CONTRAST (the largest swatch forced black).
@@ -194,6 +206,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
         test.use({ deviceScaleFactor: 3 });
         test("SWATCH-EDGE-CRISP — no coarse flung speckle on the device-px swatch edge", async ({ page }) => {
             await page.goto(PI_TARGETS.blob.path);
+            await maskShellChrome(page);
             const sw = await largestSwatch(page);
             // Force the shipped swatch to pure black (the FILTER unchanged) — the max-
             // contrast case the D1 coarse displacement flung specks into.
@@ -216,6 +229,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
         test.use({ deviceScaleFactor: 2 });
         test("SATELLITES-SEPARATE — the orbit show reads on the page-default bead (CV ≫ baseline OR a separated component), contained", async ({ page }) => {
             await page.goto(PI_TARGETS.blob.path);
+            await maskShellChrome(page);
             const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
             await blob.waitFor({ state: "visible", timeout: 20_000 });
             await page.waitForTimeout(600);
@@ -269,6 +283,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
     // row is DEMOTED below it (a DOM-order assertion).
     test("HERO-FIRST IA — the first interactive blob surface in DOM order is the GL hero, not the static swatch row", async ({ page }) => {
         await page.goto(PI_TARGETS.blob.path);
+        await maskShellChrome(page);
         await page.locator('canvas[data-testid="goo-blob-canvas"]').first().waitFor({ state: "visible", timeout: 20_000 });
         await page.locator('[data-testid="watercolor-swatch"]').first().waitFor({ state: "attached", timeout: 20_000 });
         // The DOCUMENT order of the first GL canvas vs the first static swatch. The GL
