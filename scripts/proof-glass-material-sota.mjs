@@ -174,26 +174,30 @@ function run() {
     // ── 3. Squircle PE gated with a round fallback.
     if (existsSync(GLASS)) {
         const css = stripComments(readMonolith(ROOT, "glass"));
+        // AX.W56 ships the SPEC keyword form: the @supports condition tests the
+        // LITERAL superellipse(2) (a var() is not evaluable in @supports), and the
+        // gated decls read the tokenized var(--corner-shape-<surface>) axis. The
+        // deprecated corner-shape:squircle keyword is gone — a clean break.
         const squircleBody = balancedBlock(
             css,
-            /@supports\s*\(corner-shape:\s*squircle\)\s*\{/,
+            /@supports\s*\(corner-shape:\s*superellipse\(\d+\)\)\s*\{/,
         );
-        // Count DECLARATIONS only (trailing `;`) so the `@supports (corner-shape:
-        // squircle)` HEADER token is not miscounted as a leaked declaration.
-        const allCornerShape = (css.match(/corner-shape:\s*squircle\s*;/g) || []).length;
+        // Count DECLARATIONS only (trailing `;`) so the `@supports` HEADER token
+        // is not miscounted as a leaked declaration.
+        const allCornerShape = (css.match(/corner-shape:\s*(?:var\(--corner-shape-[\w-]+\)|superellipse\([^)]*\))\s*;/g) || []).length;
         const gatedCornerShape = squircleBody
-            ? (squircleBody.match(/corner-shape:\s*squircle\s*;/g) || []).length
+            ? (squircleBody.match(/corner-shape:\s*(?:var\(--corner-shape-[\w-]+\)|superellipse\([^)]*\))\s*;/g) || []).length
             : 0;
         facts.squircleGated = Boolean(squircleBody) && gatedCornerShape > 0;
         facts.squircleLeak = allCornerShape > gatedCornerShape;
         if (!facts.squircleGated) {
             violations.push(
-                "no @supports(corner-shape:squircle) block carrying a corner-shape:squircle decl — the squircle PE is absent",
+                "no @supports(corner-shape:superellipse(k)) block carrying a corner-shape decl — the squircle PE is absent",
             );
         }
         if (facts.squircleLeak) {
             violations.push(
-                "a corner-shape:squircle decl sits OUTSIDE the @supports block — the round border-radius fallback would break on a partial-support engine",
+                "a corner-shape decl sits OUTSIDE the @supports(corner-shape:superellipse) block — the round border-radius fallback would break on a partial-support engine",
             );
         }
 

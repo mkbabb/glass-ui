@@ -88,3 +88,25 @@ The ONLY first-time-auditor "wtf" is **NOT visual** — it is the **gate ledger*
 ## 5 — VERDICT
 
 **FAIL** — but a NARROW, gate-integrity FAIL. The glass-register SURFACE is in excellent, finished shape: every user mandate (R3-6 de-red, R3-7 auto-darken, R5-7 veil) is live-verified at ≥2 viewports × both modes with numeric π backing, the glass-first default + squircle policy + srgb fence all hold, AA legibility is clean everywhere walked, and the four CI-locked register gates (`adaptive-glass`, `register-ios`, `card-veil`, `glass-level`) + the binding `adaptive-glass-live` (36/0) are GREEN. The FAIL is the THREE stale gates — chiefly G1 (`proof:glass-cohesion`, CI-locked, RED since the AY-Batch-4 carve, contradicting the DELTAs' GREEN claim) — which are read-path/string drift against correctly-shipped source, redressable by a one-to-three-line gate update with NO source/paint change. Re-reflect after the triumvirate widens the gate read-paths.
+
+---
+
+## 6 — REDRESS ADDENDUM (orchestrator, post-record)
+
+All three misses were GATE-INTEGRITY (read-path/string drift against correctly-shipped source),
+discharged directly as orchestrator-owned gate mechanics — no source/paint change:
+
+- **G1** `proof:glass-cohesion` — the exemption prose IS composed via `readMonolith` (the W-CARVE
+  read was already in place); the true miss was the regex demanding a single space in
+  "NO shared edge-gleam" where the carve's re-wrap put a newline. The clause now binds the named
+  consequence whitespace-tolerantly. **GREEN** (43 surfaces, all arms).
+- **G2** `proof:glass-material-unified` — the substrate-staging clause now accepts EITHER the
+  literal in-story `<Aurora>`/`<PaperBackdrop>` mount OR the W60 page-chassis manifest row
+  (`background:"aurora"` + `hero:true` on the glass-material entry). **GREEN.**
+- **G3** `proof:glass-material-sota` — the squircle arm re-pointed from the deprecated
+  `corner-shape: squircle` keyword to the shipped spec form (`@supports (corner-shape:
+  superellipse(k))` + the tokenized `var(--corner-shape-<surface>)` decls), leak-check preserved.
+  **GREEN.**
+
+The surface verdict stands as the auditor wrote it; the FAIL's misses are now discharged.
+Re-reflection owed at W-CLOSE (the verdict matrix re-stamp).

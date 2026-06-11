@@ -292,7 +292,10 @@ add(
     "dock-shell-exempt",
     "exemption-recorded",
     /glass-dock`?\s*SHELL is OUT of this group BY DESIGN/.test(glassRaw) &&
-        /NO shared edge-gleam\s*\/\s*moving-specular/i.test(glassRaw),
+        // \s+ between every word: the prose re-wraps at the carve's indentation
+        // (W-CARVE relocated it into glass/material.css), and the clause binds
+        // the named consequence, not its line-wrapping.
+        /NO shared\s+edge-gleam\s*\/\s*moving-specular/i.test(glassRaw),
     "the dock-shell edge-gleam exemption is RECORDED in glass.css (named consequence: the shell carries no moving-specular; the catch-light lives on its CONTROLS)",
 );
 

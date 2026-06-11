@@ -420,9 +420,20 @@ function run() {
         );
     } else {
         const story = readFileSync(STORY, "utf8");
-        const importsSubstrate =
+        // Two sanctioned staging forms: the literal in-story <Aurora>/<PaperBackdrop>
+        // mount, OR the W60 page-chassis manifest row (background:"aurora" + hero on
+        // the glass-material entry -> StoryHero injects the full-bleed substrate).
+        const literalMount =
             /from\s+["'][^"']*\/(?:aurora|paper-backdrop)["']/.test(story) &&
             /<Aurora|<PaperBackdrop/.test(story);
+        const manifestPath = resolve(ROOT, "demo/stories/manifest.ts");
+        const manifest = existsSync(manifestPath)
+            ? readFileSync(manifestPath, "utf8")
+            : "";
+        const manifestRow = manifest.match(
+            /"glass-material"[\s\S]{0,500}?background:\s*"(?:aurora|paper)"[\s\S]{0,200}?hero:\s*true/,
+        );
+        const importsSubstrate = literalMount || Boolean(manifestRow);
         const handRolled =
             /style="background:\s*radial-gradient|style="background:\s*linear-gradient/.test(
                 story,
