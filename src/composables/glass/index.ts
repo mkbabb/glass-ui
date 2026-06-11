@@ -1,12 +1,14 @@
-// AZ.W-PRUNE2 (E4-3) — the `useGlassRenderer` / `createGlassFilter` /
-// `destroyGlassFilter` detection-cascade cluster RETIRED. Its binary consumer
-// (GlassPanel) retired at the AY prune; the only remaining exerciser was a
-// demo-private story (NOT a binary consumer per the proof:component-orphan
-// own-story exclusion), so the barrel seat could not earn its weight. A named
-// carve (not the whole `export *` subtree) — `useSpecularTracking` + the
+// AZ.W-PRUNE2 (E4-3 + the RESTORE ruling) — the `useGlassRenderer` /
+// `createGlassFilter` / `destroyGlassFilter` detection-cascade cluster keeps its
+// BARREL seat retired (it is NOT re-exported through this `export *`), but its
+// SOURCE (`./useGlassRenderer.ts`) is RESTORED as a COMPONENT-LOCAL dependency of
+// GlassPanel. The AY/AZ prune census wrongly counted GlassPanel as retired — it
+// is a live published surface (keyframes.js binds `@mkbabb/glass-ui/glass-panel`),
+// so the cluster has a real binary consumer again. The E4-3 verdict ("the barrel
+// seat could not earn its weight") still holds for the BARREL — GlassPanel imports
+// the cluster directly via relative path, the tier-detection stays component-local.
+// A named carve (not the whole `export *` subtree) — `useSpecularTracking` + the
 // `useCanvas2D` lifecycle below stay live (aurora/blob/constellation/fourier).
-// The runtime tier-detection is now component-local where needed. Clean break,
-// no alias (MIGRATION.md notes the barrel-export removal).
 
 // AX.W09 — the DRY pointer-anchored moving-specular write seam (lifted from the
 // verbatim Card.vue + DockIconButton.vue copies; PRM-aware; the `.glass-material`

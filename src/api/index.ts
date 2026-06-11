@@ -96,6 +96,12 @@ export type {
 // `tier` prop against; `CardSurface` is the orthogonal decoration register
 // (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
+// `GlassPanelVariant` is the 5-rung glass-ladder surface vocabulary
+// (wash/quiet/resting/floating/overlay) parallel to `CardTier` — distinct because
+// GlassPanel paints the glass substrate directly while Card composes the same
+// ladder via the `tier` prop. (AZ.W-PRUNE2 RESTORE — keyframes.js binds
+// `@mkbabb/glass-ui/glass-panel`, so the surface + its api seat are live again.)
+export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
@@ -156,6 +162,13 @@ export type {
     SearchResult,
     UseFuzzySearchOptions,
 } from "../components/custom/search";
+
+// ── Props triad ────────────────────────────────────────────────────────────
+// `GlassPanelProps` — the props shape sibling of the already-promoted
+// `GlassPanelVariant`; consumers wrapping `<GlassPanel>` (chrome composers,
+// preset panels) type their forwarded prop bag against this. (AZ.W-PRUNE2
+// RESTORE — re-published with the GlassPanel surface for the keyframes consumer.)
+export type { GlassPanelProps } from "../components/custom/glass-panel";
 
 // ── Toast row shape ──────────────────────────────────────────────────────────
 // `ToastType` is the canonical toast row shape (aliased from `Toast` on the
@@ -221,6 +234,17 @@ export type {
     SpringPresetRow,
     SpringPresetName,
 } from "../composables/motion/curves";
+
+// ── HeaderRibbon ───────────────────────────────────────────────────────────
+// `HeaderRibbonProps` — props shape consumers forward when wrapping
+// `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`
+// is the alignment enum (`'left' | 'right'`). (AZ.W-PRUNE2 RESTORE — keyframes.js
+// binds `@mkbabb/glass-ui/header-ribbon` in EditorShell, so the surface + its api
+// seats are live again.)
+export type {
+    HeaderRibbonPosition,
+    HeaderRibbonProps,
+} from "../components/custom/header-ribbon";
 
 // ── Constellation ───────────────────────────────────────────────────────────
 // `ConstellationProps` — the props a consumer forwards when wrapping

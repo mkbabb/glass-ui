@@ -55,6 +55,10 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AZ.W-CARVE — theme.css drained into theme/*.css partials (the --corner-shape-*
+// squircle axis lives in theme/radius.css); readMonolith concatenates the thin
+// root + partials in cascade order so the panel-shape witness reads composed.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // The 5 inherited AX close items + the discharging-token regex each must sit within 200
 // chars of (clause 2). The AX close ran these; AY's terminal close owns the cross-walk.
@@ -343,7 +347,7 @@ function run() {
         dispositionGreen: npmGreen(P.ROOT, "proof:disposition-live"),
         squircleGreen: npmGreen(P.ROOT, "proof:squircle-language"),
         panelShape: existsSync(P.THEME_CSS)
-            ? tokenValueOf(readFileSync(P.THEME_CSS, "utf8"), "--corner-shape-panel")
+            ? tokenValueOf(readMonolith(P.ROOT, "theme"), "--corner-shape-panel")
             : null,
         squircleGateSrc: existsSync(P.SQUIRCLE_GATE) ? readFileSync(P.SQUIRCLE_GATE, "utf8") : "",
         changesets: changesetFiles(P.CHANGESET_DIR),

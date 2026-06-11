@@ -735,6 +735,12 @@ export const GATES = [
         note: "AZ.R5-7 — the Card surface=veil text-plate gate. (A) SOURCE: @utility veil-surface is BORDERLESS + RIMLESS + FILL-ON-THE-LADDER (color-mix over --glass-bg-quiet through the W55 tint axis — a sanctioned glass register) + the optional --veil-feather mask axis; born-RED via the synthetic boxed fixture. (B) the >=2-consumer muster (the cartoon-consumers mirror). The painted darken rides the adaptive-tint axis. Bite: add a border/shadow to the veil or drop a consumer → RED.",
     },
     {
+        id: "proof:glass-panel-tiers",
+        cmd: "proof:glass-panel-tiers",
+        tags: ["local", "ci"],
+        note: "RESTORED at AZ.W-PRUNE2 (the header-ribbon/glass-panel un-prune — the AY census missed the live keyframes consumer): the GlassPanel 5-rung tier contract (svg + fallback arms, both story backdrops). The STORY_CARD path re-pointed to the current IA (display/card.vue). Bite: drop a rung or the fallback arm → RED.",
+    },
+    {
         id: "proof:metric-core",
         cmd: "proof:metric-core",
         tags: ["local", "ci"],

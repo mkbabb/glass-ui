@@ -48,7 +48,7 @@
 //      .glass-card/.glass-btn/.btn-pill (the AW.W23 inversion is re-homed; cards
 //      stay round by policy). A re-added card squircle → RED.
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { readMonolith } from "./read-css-monoliths.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
 import { spawnSync } from "node:child_process";
@@ -425,13 +425,17 @@ function piArm(WORKSPACE) {
 }
 
 function run() {
-    const { ROOT, THEME_CSS, WORKSPACE, ARTIFACT } = cliPaths();
+    const { ROOT, WORKSPACE, ARTIFACT } = cliPaths();
     // AY.W-CSS1 — glass.css became a thin @import root over carved partials (the
     // squircle @supports arm lives in glass/squircle.css); readMonolith
     // concatenates root + partials in cascade order. The dock.css squircle content
     // lives in the AX.W06 dock/* partials; readDockCss concatenates the dock family.
+    // AZ.W-CARVE — theme.css ALSO drained into theme/*.css partials; the radius
+    // primitives + the --corner-k-*/--corner-shape-* squircle axis live in
+    // theme/radius.css, so the theme arm reads composed too (else the k-primitive
+    // + shape-alias witnesses mis-assert against the thin @import root).
     const { facts, violations } = detectSource({
-        themeCss: readFileSync(THEME_CSS, "utf8"),
+        themeCss: readMonolith(ROOT, "theme"),
         dockCss: readDockCss(ROOT),
         glassCss: readMonolith(ROOT, "glass"),
     });

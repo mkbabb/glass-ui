@@ -236,6 +236,12 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            s(
+                "substrates",
+                "glass-panel",
+                "Glass Panel",
+                "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive. Shipped /glass-panel.",
+            ),
         ],
     },
     {
@@ -363,6 +369,12 @@ export const CATEGORIES: Category[] = [
             s("navigation", "carousel", "Carousel", undefined, {
                 background: "aurora",
             }),
+            s(
+                "navigation",
+                "header-ribbon",
+                "Header Ribbon",
+                "Hover-tracking ribbon — an anchor button reveals a control row, then auto-collapses; the anchor slot exposes pinned / toggled state. Shipped /header-ribbon.",
+            ),
         ],
     },
     {

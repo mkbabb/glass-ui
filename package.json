@@ -1,7 +1,7 @@
 {
     "name": "@mkbabb/glass-ui",
     "version": "3.10.1",
-    "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
+    "description": "Glassmorphic design system \u2014 Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -120,6 +120,12 @@
             ],
             "underline": [
                 "dist/underline.d.ts"
+            ],
+            "glass-panel": [
+                "dist/glass-panel.d.ts"
+            ],
+            "header-ribbon": [
+                "dist/header-ribbon.d.ts"
             ],
             "forms": [
                 "dist/forms.d.ts"
@@ -382,6 +388,14 @@
             "types": "./dist/underline.d.ts",
             "import": "./dist/underline.js"
         },
+        "./glass-panel": {
+            "types": "./dist/glass-panel.d.ts",
+            "import": "./dist/glass-panel.js"
+        },
+        "./header-ribbon": {
+            "types": "./dist/header-ribbon.d.ts",
+            "import": "./dist/header-ribbon.js"
+        },
         "./forms": {
             "types": "./dist/forms.d.ts",
             "import": "./dist/forms.js"
@@ -590,6 +604,7 @@
         "proof:squircle-language": "node scripts/proof-squircle-language.mjs",
         "proof:card-cartoon-consumers": "node scripts/proof-card-cartoon-consumers.mjs",
         "proof:card-veil": "node scripts/proof-card-veil.mjs",
+        "proof:glass-panel-tiers": "node scripts/proof-glass-panel-tiers.mjs",
         "proof:metric-core": "node scripts/proof-metric-core.mjs",
         "proof:doc-consistency": "node scripts/proof-doc-consistency.mjs",
         "proof:au-w0-reground": "node scripts/proof-au-w0-reground.mjs",

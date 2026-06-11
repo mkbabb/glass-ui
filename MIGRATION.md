@@ -29,10 +29,12 @@
 > is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
 > `SurveyResultDock` cockpit re-pins on the 3.11.0 adopt.
 
-> **v3.10.0 (AY)**—four zero-consumer subpaths RETIRED outright (no aliases,
-> per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress`,
-> `/header-ribbon`, `/glass-panel`, `/instrument-rail` — each had 0 production
-> consumers at the prune census (`docs/tranches/AY/audit/PRUNE-LEDGER.md`).
+> **v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
+> aliases, per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress` +
+> `/instrument-rail` (0 production consumers at the census,
+> `docs/tranches/AY/audit/PRUNE-LEDGER.md`). `/header-ribbon` + `/glass-panel` were retired
+> by the same census and RESTORED at AZ.W-PRUNE2 — the census missed their live keyframes.js
+> binary consumer (`docs/consumer-evidence/{header-ribbon,glass-panel}.md`); both ship again.
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
 > NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).

@@ -179,7 +179,11 @@ function run() {
     }
 
     // ── 4. text-shadow token bridge ────────────────────────────────────
-    const theme = read("src/styles/theme.css") ?? "";
+    // AZ.W-CARVE — theme.css drained into theme/*.css partials; the
+    // --text-shadow-* trailing-plain-@theme literals live in theme/literals.css,
+    // so the bridge witness reads composed (else it mis-asserts against the thin
+    // @import root).
+    const theme = readMonolith(ROOT, "theme") ?? "";
     const rungs = ["2xs", "xs", "sm", "md", "lg"];
     facts.textShadowRungs = {};
     for (const r of rungs) {

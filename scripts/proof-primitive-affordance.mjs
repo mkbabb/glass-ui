@@ -167,7 +167,11 @@ function run() {
         );
 
     // ── 5. Form-radius canon ───────────────────────────────────────────
-    const theme = read("src/styles/theme.css") ?? "";
+    // AZ.W-CARVE — theme.css drained into theme/*.css partials; the
+    // --radius-field/--radius-control semantic radius aliases live in
+    // theme/radius.css, so the form-radius witness reads composed (else it
+    // mis-asserts against the thin @import root).
+    const theme = readMonolith(ROOT, "theme") ?? "";
     const hasRadiusField = /--radius-field:\s*var\(/.test(theme);
     const hasRadiusControl = /--radius-control:\s*var\(/.test(theme);
     facts.radiusFieldMinted = hasRadiusField;

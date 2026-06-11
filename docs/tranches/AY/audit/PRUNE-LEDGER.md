@@ -32,6 +32,25 @@ conflict.
 **`proof:component-orphan` `CONSUMER_ROOTS` re-audited against this table** — `../sci-report/src`
 dropped (the dead Python root). The gate's census-as-of header records the same commit.
 
+**RESTORE — `header-ribbon` + `glass-panel` un-prune (AZ.W-PRUNE2 RESTORE ruling).** The same
+census-root gap the keyframes row above flags (its consumers live under `keyframes.js/demo/`, but
+the census root was `keyframes.js/src` only) caused TWO surfaces to be wrongly pruned at the AY
+prune (`c90f4aee`): `@mkbabb/glass-ui/header-ribbon` (keyframes `EditorShell.vue` header chrome) and
+`@mkbabb/glass-ui/glass-panel` (keyframes `EasingCurveCanvas.vue` canvas wrapper). The AY/AZ census
+counted both as 0-consumer orphans because the `keyframes.js/demo/` tree was off the census roots.
+Consumer-truth wins — BOTH RESTORED this wave (component dirs + flat subpaths + api seats + demo
+stories + the `proof:glass-panel-tiers` gate + the GlassPanel test, recovered from `c90f4aee~1`;
+GlassPanel's `useGlassRenderer` renderer cluster restored as a component-local dep — off the root
+barrel, the E4-3 barrel-seat retire intact). Evidence docs:
+`docs/consumer-evidence/{header-ribbon,glass-panel}.md` name the keyframes binary consumer at the
+**committed keyframes HEAD** (the durable record). NOTE the in-flight reconcile: an UNCOMMITTED
+keyframes working-tree migration re-expresses both as local chrome (`EditorHeader.vue` + a
+`glass-wash` class) — when THAT migration COMMITS with no 2nd external consumer, the two surfaces
+re-grade to a clean honest re-prune (the evidence-doc re-audit triggers fire; re-audit date
+2026-09-01). The MIGRATION.md v3.10.0 four-subpath retire claim narrows to `deck-progress` +
+`instrument-rail`; the `proof:no-retired-survivor` RETIRED_CLAIMS drop `header-ribbon` + `glass-panel`
+from the v3.10.0 subpaths/dirs lists (orchestrator-owned edits — see the wave close sharedFileDeltas).
+
 **Corrected counts (E4-8 — facts, no retires):** `stacked-icons = 2 ext` (the AY row read `0 ext`;
 words/frontend composes `StackedIcons` at TWO sites —
 `components/custom/definition/components/WordHeader.vue` +

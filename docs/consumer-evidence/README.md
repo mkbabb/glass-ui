@@ -14,6 +14,9 @@ subpaths, retired style paths, and `glass-ui/src` source-relative imports across
 | `Constellation` | [constellation.md](constellation.md) | demo StoryHero + 404 egg; slides adoption in-flight (W-ADOPT) | AZ · ≥2-consumer trigger = W-ADOPT |
 | `SortableList` | [sortable-list.md](sortable-list.md) | demo aurora PaletteLayer + AuroraColorSection reorder | AZ · cleared on re-ground (2 consumers) |
 | `StatusDot` | [status-dot.md](status-dot.md) | slides til-briefing SlideXray live-pulse dot | AZ · 1 ext consumer booked |
+| `GlassUnderline` | [underline.md](underline.md) | demo motion story; slides SlideIntro/SlideCloser re-point named (rides the slides re-pin cut) | AY · user-directed wave, named re-point trigger |
+| `GlassPanel` | [glass-panel.md](glass-panel.md) | keyframes.js EasingCurveCanvas (binary, committed HEAD) | AZ · W-PRUNE2 RESTORE — un-pruned on consumer-truth |
+| `HeaderRibbon` | [header-ribbon.md](header-ribbon.md) | keyframes.js EditorShell header chrome (binary, committed HEAD) | AZ · W-PRUNE2 RESTORE — un-pruned on consumer-truth |
 | `useGlassBackdropLuminance` | [use-glass-backdrop-luminance.md](use-glass-backdrop-luminance.md) | glass-ui source GlassDock (binary #1) + demo glass-material exerciser | AZ · path-B booked 2nd-binary trigger |
 | `useTokenColor` | [use-token-color.md](use-token-color.md) | speedtest meter token colors + demo constellation/hero | AY |
 | `useScrollProgress` | [use-scroll-progress.md](use-scroll-progress.md) | demo motion scroll story | D |

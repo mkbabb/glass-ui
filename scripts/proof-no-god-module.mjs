@@ -46,19 +46,26 @@ const WARN_LIMIT = 300;
  * `// BOOK(<wave-id>):` marker (asserted below).
  */
 const RATCHET_BASELINES = {
-    // BOOK(AY.W-CSS1): the `.css` collector arm (O1). W-CSS1 carves the three
-    // biggest stylesheets (tokens/glass/utilities) into < 500 partials;
-    // dock-controls.css + theme.css are the remaining over-bound CENTRAL sheets,
-    // OUT of W-CSS1's carve scope — grandfathered at their frozen counts until a
-    // later central-CSS carve drains the rows (the same cohesion-aware @import
-    // partial precedent applies; see docs/precepts/design-idioms.md).
-    // 621→636 (AY close): the user-audit dock-chrome fix (the in-dock dark-mode
-    // toggle glyph inset to the nav-glyph register) — a deliberate, reviewed
-    // growth on the sheet awaiting its carve, re-frozen here per the FINAL.md §3
-    // triage. The carve target is unchanged: the @import-root partial split
-    // drains this row (and re-points the dock-controls-reading gates composed).
-    "styles/dock-controls.css": 636,
-    "styles/theme.css": 530,
+    // AZ.W-CARVE — DRAINED to ∅. The two surviving over-bound CENTRAL stylesheets
+    // (`styles/dock-controls.css` @636 + `styles/theme.css` @530, the BOOK(AY.W-CSS1)
+    // rows) carved into thin `@import` roots over cohesive partials, each < 500:
+    //   dock-controls.css → dock-controls/{icon-button,dark-mode-toggle,tab-button,
+    //                       triggers,touch-floor}.css
+    //   theme.css         → theme/{radius,bridges,literals,dark}.css
+    // The carve moves rules across files in the SAME cascade position (the dist CSS
+    // is byte-isomorphic; the generated rounded-*/text-shadow-*/cartoon utility sets
+    // are byte-identical). BOTH dock-controls-reading (~8) and theme-reading (~15)
+    // gate sets re-point to the composed `readMonolith(ROOT, <name>)` read. The
+    // ratchet is now at its CLOSE state for the styles arm — `RATCHET_BASELINES == {}`.
+    // The MONOTONIC rule holds: a future over-bound src/ file books a row WITH a
+    // `// BOOK(<wave>):` marker; an empty map is the drained terminus.
+    // BOOK(AZ.W-REFLECT): the Batch-3/4 waves grew three files past the bound
+    // (W-SUFFUSE/W-HIERARCHY on typography; W-CON-GEN on the constellation pair).
+    // Frozen at their landed counts; the carve verdicts ride the REFLECT band's
+    // triumvirate (a cohesion-aware split or a justified keep, per surface).
+    "styles/typography.css": 530,
+    "components/custom/constellation/constellationField.ts": 586,
+    "components/custom/constellation/Constellation.vue": 577,
 };
 
 let _cliPaths = null;
