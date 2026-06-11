@@ -219,7 +219,7 @@ async function copy(): Promise<void> {
                 <code class="min-w-0 flex-1 truncate text-xs text-foreground" :title="readout">{{ readout }}</code>
                 <button
                     type="button"
-                    class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
+                    class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-8)] hover:text-foreground"
                     :aria-label="copied ? 'Copied' : 'Copy curve literal'"
                     @click="copy"
                 >

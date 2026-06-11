@@ -207,6 +207,12 @@ export const GATES = [
         note: "AZ.W-MOTION-SUITE — the robust /motion demo source arm: the FULL curve canon enumerated (the value.js ease family + the keyframes curves + steps + the editable bezier), the springs page on SPRING_PRESETS (zero local closed-form spring forks — the drift kill), the scroll/VT facilities demoed, ppmycota purple DEMO-LOCAL only (never a library token). The π half rides tests-visual/motion-demo.spec.ts (local-only). Bite: re-fork a spring / drop a canon family / mint the purple into src → RED.",
     },
     {
+        id: "proof:motion2",
+        cmd: "proof:motion2",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-MOTION2 (R7) — the curve gallery REDRESS source arm: the THICK non-scaling stroke, the dead --surface-tint-1/-2 BUG killed (negative-predicate), the underline panel-nav picker, the 1:1 keyframes isomorphism census (vs the LIVE EASING_GROUPS authority: CSS keywords + smooth-step-3 + linear() + springs-own-family + hyphen names), the calm-substrate + muted-lift witnesses. The π half rides tests-visual/motion2.spec.ts (local-only). Bite: re-introduce a dead tint / thin the stroke / pill the picker / drop a canon item / un-mint the purple → RED.",
+    },
+    {
         id: "proof:shell-identity",
         cmd: "proof:shell-identity",
         tags: ["local", "ci"],

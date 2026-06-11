@@ -505,7 +505,14 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "curve-gallery",
                 "Curve Gallery",
-                "The FULL curve canon live, grouped by the 10-family taxonomy (Standard/Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/Custom) — every plot driven by its REAL JS twin, plus a live editable cubic-bezier in the Custom family.",
+                "The FULL curve canon live, 1:1 isomorphic to the keyframes easing inventory (Standard/Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/Linear()/Springs/Custom) — every plot driven by its REAL JS twin, plus a live editable cubic-bezier in the Custom family.",
+                {
+                    // R7 D2 — the calm rich substrate so the glass POPs (the
+                    // grey-on-grey kill). A blueprint `grid` wash, NOT another GL
+                    // context (the one-GL-per-route fence — springs spends the
+                    // constellation budget in this band).
+                    background: "grid",
+                },
             ),
             s(
                 "motion",
