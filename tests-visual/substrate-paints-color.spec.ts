@@ -140,10 +140,12 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         const auroraCanvas = page.locator("canvas.aurora-canvas").first();
         await auroraCanvas.waitFor({ state: "visible", timeout: 20_000 });
 
-        // Re-source the 12 keys (anti-drift manifest check) — the SCENES/preset list
-        // is the source-of-truth manifest, never a hand list.
+        // Re-source the 13 keys (anti-drift manifest check) — the SCENES/preset list
+        // is the source-of-truth manifest, never a hand list. (12→13 at the AY
+        // aurora reconcile: SPEEDTEST joined the kept roster; the walk below
+        // covers every sourced key, so the pin is only the staleness witness.)
         const presetKeys = sourcePresetKeys();
-        expect(presetKeys.length).toBe(12);
+        expect(presetKeys.length).toBe(13);
 
         const results: Record<string, number> = {};
         async function settleAndRead(label: string) {
