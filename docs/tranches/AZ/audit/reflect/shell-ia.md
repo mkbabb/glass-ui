@@ -85,3 +85,23 @@ Walked all 11 demo categories at desktop + mobile, both modes, as a first-time a
 ## 5. VERDICT
 
 **FAIL** — on the single S2 first-time-auditor miss (SHELL-IA-M1, the facet-chip-over-`<h1>` collision), which is owned by the in-flight W-RAIL3 redress and not yet covered by its gates. The IA's substance is sound and PASSES live: the gear=Configurator flow (dark-at-top, glassy rows, verified live-apply, re-framed, FAB-gone, composables-gone, single-dark-home), the ℱ Foundations identity (dedup + separator + optical nudge + larger glyph), the route-driven facet MAPPING (general + per-section sensible), the hierarchy rung (one canonical 20.4px section register), the suffusion outcomes (display heroes, motion-purple, untinted-body restraint), the scroll-spy stability (no route-write on scroll — NOTE-1 is not a miss here), and the mobile IA. Re-reflect after W-RAIL3 lands the content-collision fix; that is the only item gating this lane's flip to PASS.
+
+---
+
+## REDRESS ADDENDUM (orchestrator, post-record)
+
+**SHELL-IA-M1 — DISCHARGED** by the W-RAIL3 orchestrator refinement (commit `83ea0ef9`): the
+vertical facet strip re-seated from the top-anchored offset to the dock's vertical MIDLINE
+(`inset-block-start: 50%` + `translate: 0 -50%`, `src/styles/dock/rail-extend.css`) — stable
+across viewport heights and clear of the H1/breadcrumb band. Live π re-readback on the record's
+own evidence routes: `/display/buttons` h1 y∈[58,89] vs strip y∈[289,351] → `h1Overlap: false`;
+`/motion/springs` h1 y∈[58,89] vs strip y∈[273,367] → `h1Overlap: false`. Mid-body chip overlap
+remains by design — the floating-overlay paradigm (content scrolls behind), per the R6
+"floating carousel" redirect. `proof:rail3` + the π spec re-ran GREEN at the new seat;
+the rail3/ captures + surface-hash re-stamped.
+
+**SHELL-IA-M2 (S3) — accepted as recorded:** the ±0.5px ink-mass band reads off the
+`tests-visual/shell-identity.spec.ts` π arm at the close, not this record. No remediation owed.
+
+The surface verdict stands as the auditor wrote it; the close-gating miss is now discharged.
+Re-stamp owed at W-CLOSE (the verdict matrix).
