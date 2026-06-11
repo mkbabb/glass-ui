@@ -200,6 +200,13 @@ Batch 6  W-CLOSE → 3.11.0 cut [USER] → W-ADOPT → W-DEPLOY [H5]
   deliberate keeps (AW.W26) — no "fixes."
 - ppmycota purple never enters library tokens (E1-7).
 - `:5173` is never a default anywhere after W-GATES.
+- **PROTECTED binary-consumer contracts (slides, in production since 2026-06-11)**: the
+  `/constellation` exports `seedField`/`readPalette`/`BASE_WIDTH`/`warpTo`/`warpStep`, and
+  GlassDock's exposed `expanded` ref (the slides interim guard reads it; the guard retires on
+  R5-TAP's fix, the ref stays). No rename/removal without cross-repo coordination.
+- The R5-6 constellation generalization list (pinned node, accent edges, edgeFloor/anomaly-alpha,
+  overlay labels, autonomous drift, warp auto-release + isSettled) routes to the Batch-4 add-on
+  wave AZ.W-CON-GEN.
 
 ## ORCHESTRATOR HINGE — the motion-suffusion arm home (resolve before Batch 4)
 

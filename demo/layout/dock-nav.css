@@ -63,6 +63,37 @@
     --dock-rail-accent-width: var(--demo-nav-rail-accent-w);
 }
 
+/* ── The home control — the ℱ Foundations entry (AZ.W-SHELL-IDENTITY) ─────────
+   The ℱ wordmark now renders AS a <DockIconButton> (as-child onto the RouterLink),
+   so it inherits the first-class dock-control glass hover register WHOLESALE — the
+   bg → --dock-control-hover-bg glass tier, the travelling specular ::before gleam,
+   the --scale-hover-dock lift (R3-6 / W-REGISTER-IOS, R3-15 / D3). The demo adds
+   ONLY two demo-private axes the library box cannot know:
+     1. The ℱ glyph sits SLIGHTLY LARGER than the 16px category glyphs (the brand
+        wordmark reads as the home anchor, D1).
+     2. The italic script-ℱ ink-mass is OPTICALLY centered (D2). At the 2rem brand
+        size the glyph's painted ink leans DOWN-RIGHT of the box center (the WONK-1
+        italic slant + the script-F intrinsic asymmetry) — a LIVE red-ink scan over
+        the 40×40 home rect at dpr=4 (the C8 probe scale) measured the UN-transformed
+        ink-mass at dx=+2.63px / dy=+3.75px of the geometric center. The optical
+        translate cancels that lean (UP-LEFT) so the ink re-seats ON center (the
+        re-measured offset lands at ≈dx=-0.13 / dy=0, inside the ±0.5px band). This is
+        keyed to the MEASURED offset (re-run docs/tranches/AZ/audit/ground/
+        C8-fourier-f-livescan.mjs after any glyph/size edit — note the C8 probe HOVERS
+        before clip; the binding band is the REST measurement, since the hover register
+        scales the box 1.1× and perturbs a pre-hover clip) — the acceptance is the
+        ±0.5px band, not this literal seed. Geometric flex-centering (already present
+        on the box) structurally cannot reach an ink-asymmetry; only this nudge can. */
+.demo-sidebar-home > span {
+    /* Slightly larger than the 1rem (h-4) category glyphs — the brand anchor. */
+    font-size: 2rem;
+    /* Optical center: cancel the measured down-right ink lean (dx+2.63 / dy+3.75) by
+       nudging the glyph up-left onto the box center. Re-derived from the live ink-scan;
+       the ±0.5px band (proof:shell-identity S5 / shell-identity.spec.ts) is the gate,
+       not this literal pair. */
+    transform: translate(-2.63px, -3.75px);
+}
+
 /* ── Bottom-bar viewport anchoring ─────────────────────────────────────────
    The bottom dock floats over the <main> scroll-region's bottom inset — it is
    NOT in document flow, so route scroll never displaces it. */

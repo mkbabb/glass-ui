@@ -87,6 +87,22 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/*
+ * AZ.W-MOTION-SUITE — the /motion family's ONE coherent purple identity, expressed
+ * as a DEMO-LOCAL token (never a library token — presets-in-consumers). The accent
+ * is the EXISTING glass-ui `--viz-legendre` violet (the page-local twin of the
+ * keyframes ppmycota brand color), so the motion plots / driven dots / spring block
+ * read one violet event, not warm-red, with zero library-token edit.
+ *
+ * `--ppmycota` is a DEMO-LOCAL keyframes-identity nod ONLY — it is referenced here
+ * for documentation parity with the keyframes demo and never enters `src/styles/`.
+ */
+:root {
+    --motion-accent: var(--viz-legendre);
+    /* the keyframes consumer brand color — demo-local reference, never a lib token */
+    --ppmycota: hsl(248 88% 71%);
+}
+
 html {
     background: var(--background);
 }

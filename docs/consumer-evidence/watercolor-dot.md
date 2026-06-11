@@ -34,8 +34,9 @@ goo-blob (the two share ONE stage; ambient/decorative thumbnails route to Waterc
 interactive/lit hero to GooBlob):
 
 ```bash
-grep -rn '<WatercolorDot' demo/   # → demo/stories/substrates/blob.vue:215 (static register)
-#                                      demo/stories/substrates/blob.vue:326 (ambient thumbnail)
+grep -rn '<WatercolorDot' demo/   # → demo/stories/substrates/blob.vue:392 (the static-register swatch row,
+#                                      demoted below the GL hero per AZ.W-BLOB-PAGE D4 — the supporting zero-GL register)
+#                                      demo/stories/substrates/blob.vue:366 (the ambient palette-stops thumbnails in the studio)
 ```
 
 The blob story is a live, user-iterated showcase (the W-BLOB-REBUILD lane); WatercolorDot is its

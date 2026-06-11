@@ -70,6 +70,7 @@ const activeBorderRadius = computed(() => {
     <component
         :is="tag"
         :class="['watercolor-swatch', animate && 'watercolor-animated']"
+        data-testid="watercolor-swatch"
         :style="{
             backgroundColor: color,
             borderRadius: activeBorderRadius,
@@ -86,25 +87,44 @@ const activeBorderRadius = computed(() => {
         -->
         <svg class="watercolor-filter-host" aria-hidden="true" focusable="false">
             <defs>
+                <!--
+                  Device-px-resolved wet edge (AZ.W-BLOB-PAGE D1). The prior
+                  sRGB / 4-octave / scale-1.5 / non-stitched turbulence flung
+                  isolated dark specks into the light margin at high DPR (a coarse
+                  low-res-reading contour on the large swatch). The fix keeps the
+                  hand-painted wet displacement but renders it crisp:
+                  • linearRGB filter math → smoother edge antialiasing (no banded
+                    sRGB quantization on the displaced contour),
+                  • 6 octaves at a slightly higher base frequency → FINER noise, so
+                    the displacement perturbs in small smooth steps rather than a
+                    few large flung chunks,
+                  • stitchTiles="stitch" → seamless tiled noise (no per-tile
+                    discontinuity flecks at the filter-region boundary),
+                  • scale 1.3 keeps the wet amplitude (was 1.5) but the finer noise
+                    spreads it smoothly.
+                  The widened −15%/130% region holds the wet bleed clear of the
+                  filter edge. Border-radius seeded-prng identity is untouched.
+                -->
                 <filter
                     :id="filterId"
-                    x="-10%"
-                    y="-10%"
-                    width="120%"
-                    height="120%"
-                    color-interpolation-filters="sRGB"
+                    x="-15%"
+                    y="-15%"
+                    width="130%"
+                    height="130%"
+                    color-interpolation-filters="linearRGB"
                 >
                     <feTurbulence
                         type="fractalNoise"
-                        baseFrequency="0.04"
-                        numOctaves="4"
+                        baseFrequency="0.05"
+                        numOctaves="6"
                         seed="2"
+                        stitchTiles="stitch"
                         result="noise"
                     />
                     <feDisplacementMap
                         in="SourceGraphic"
                         in2="noise"
-                        scale="1.5"
+                        scale="1.3"
                         xChannelSelector="R"
                         yChannelSelector="G"
                     />

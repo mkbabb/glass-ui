@@ -1,4 +1,4 @@
-# AZ.W-CLOSE — the terminal close: the audit, the FINAL, proof:az-final, the 3.11.0 cut
+# AZ.W-CLOSE — the terminal close: the audit, the FINAL, proof:az-final, the 3.12.0 cut
 
 **Track:** Z (close) · **Type:** close ceremony · **Repo:** glass-ui
 **Depends on:** every other AZ wave (Batch 6 — the terminal node; nothing follows it but the cut).
@@ -75,7 +75,7 @@ ls .changeset/                                        # the AZ changeset staged
        BINDING witness is the executed exit-0-with-skip-line, never the grep alone;
    (7) zero orphans (the audit doc's verdict);
    (8) STAGED-OR-CUT from birth — staged: version `3.10.1` + the AZ changeset present; at-cut:
-       version `3.11.x` + changeset consumed + a CHANGELOG `## 3.11.0` entry; anything else (a bump
+       version `3.12.x` + changeset consumed + a CHANGELOG `## 3.12.0` entry; anything else (a bump
        with the changeset still staged, a cut with no CHANGELOG) is the silent-bump RED;
    (9) CLEAN-TREE (allowlisted) on the close commit.
    Self-proving: a synthetic violation per clause REDs (the born-RED witness recorded in the gate
@@ -86,7 +86,7 @@ ls .changeset/                                        # the AZ changeset staged
 5. **The release battery** — typecheck · build · verify-export-types · gen-ci-fresh ·
    `gates.mjs --run local` with every red either fixed or dispositioned IN FINAL §3 with its owner
    (the honest-triage format) · the full unit suite.
-6. **The 3.11.0 cut [USER-DOMAIN]** — master merge + the `v3.11.0` tag → release.yml provenance
+6. **The 3.11.0 cut [USER-DOMAIN]** — master merge + the `v3.12.0` tag → release.yml provenance
    publish (the 3.9.0/3.10.1 precedent); MIGRATION.md carries the AZ breaking set (the dock
    taxonomy rename table from W-DOCK-TAXONOMY + any W-PRUNE2 retires), each claim joining
    `proof:no-retired-survivor`'s `RETIRED_CLAIMS` (machine-checked).
@@ -117,3 +117,15 @@ version bump, tag push, and publish run only on the user's explicit word.
 
 The post-cut consumer re-pins (slides→3.11.0 if W-ADOPT ran early against 3.10.1; keyframes per
 W-KF-CONSUMER) are the next tranche's W0 re-ground — recorded here, not silently carried.
+
+
+## §X — Release coupling + the moved cut number (orchestrator, 2026-06-11)
+
+- **The cut is `3.12.0`** — `3.11.0/.1/.2` were published OUT-OF-BAND by the slides-M session
+  (2026-06-10 20:58–22:41Z, the deck-ship support releases; registry latest `3.11.2`). The
+  staged-or-cut clause reads staged: `3.10.1` (the repo manifest, unchanged) OR at-cut: `3.12.x`.
+- **The slides coupling (R5)**: slides carries ANNOTATED interim arms for R5-1..R5-4 that RETIRE on
+  the first release carrying the root fixes. AT THE CUT: flag the slides session/user — slides bumps
+  its lockfile (`^3.9.0` admits it) and deletes the arms the same day.
+- **HOLD the cut until after the 2026-06-11 morning til-briefing session** (the user's timing
+  constraint via the slides session) unless urgent.

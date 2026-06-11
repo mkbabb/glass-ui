@@ -285,7 +285,8 @@ export const CATEGORIES: Category[] = [
             s("motion", "springs", "Spring Orchestrator", undefined, {
                 background: "constellation",
             }),
-            s("motion", "curve-gallery", "Curve Gallery", "The CSS↔JS curve table live — every MOTION_CURVES row drives a dot off its JS twin, token name + JS name side by side, with the §6 easing-doctrine legend."),
+            s("motion", "curve-gallery", "Curve Gallery", "The FULL curve canon live, grouped by the 10-family taxonomy (Standard/Sine/Quad/Cubic/Expo/Circ/Back/Bounce/Steps/Custom) — every plot driven by its REAL JS twin, plus a live editable cubic-bezier in the Custom family."),
+            s("motion", "scroll-vt", "Scroll & View Transitions", "The native scroll-driven facilities — .scroll-progress (scroll() timeline), [data-scroll-reveal] (view() timeline), the .gl-list-item View-Transitions reorder, and a capability badge."),
             s("motion", "countup", "Count-up", "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine."),
             s("motion", "reveal", "v-reveal", "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads."),
             s("motion", "typewriter", "Typewriter"),

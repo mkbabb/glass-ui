@@ -1,13 +1,14 @@
 <script setup lang="ts">
-// GooBlob — one coherent page for the WebGL2 metaball droplet. Three sections walk
-// the whole surface: the lit contained droplet (a CSS/SVG static register, zero GL),
-// the Configurator-driven blob STUDIO (the interaction + mood + seed-palette hero on
-// the library's own Configurator chrome — the inv-16 dog-food, mirroring Aurora), and
-// the pause seam any user can reach.
+// GooBlob — one coherent page for the WebGL2 metaball droplet. The page LEADS with
+// the LIVING lit GL bead (the Configurator-driven blob STUDIO — the interaction + mood
+// + seed-palette hero on the library's own Configurator chrome, the inv-16 dog-food
+// mirroring Aurora, satellites visibly cycling on mount), then DEMOTES the static
+// zero-GL WatercolorDot register below it as the supporting companion, then the pause
+// seam any user can reach (AZ.W-BLOB-PAGE D4 hero-first IA).
 //
-// WebGL budget: at most TWO live GooBlob contexts at once (the studio hero + the mood
-// hero share ONE stage). Every ambient/static swatch routes to WatercolorDot (no GL
-// context) so the page never approaches the browser's per-page WebGL cap.
+// WebGL budget: at most TWO live GooBlob contexts at once (the studio hero is the ONE
+// stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
+// page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -34,12 +35,12 @@ import {
     type ColorHarmony,
 } from "../../../src/composables/color";
 
-// ── 1. The static register (WatercolorDot, zero GL) ──────────────────────────
+// ── The static zero-GL register (WatercolorDot) — DEMOTED below the hero ──────
 // The lit-droplet look without a WebGL context — a deterministic seeded
-// border-radius morph with an internalized turbulence filter. The deliberate
-// sibling for ambient/decorative thumbnails: route the static register here so the
-// page holds exactly ONE live GooBlob context (the interactive studio below) and a
-// grid never exhausts the per-page WebGL context cap.
+// border-radius morph with an internalized DEVICE-PX turbulence filter (D1). The
+// deliberate sibling for ambient/decorative thumbnails: route the static register
+// here so the page holds exactly ONE live GooBlob context (the interactive studio
+// hero, the lead section) and a grid never exhausts the per-page WebGL context cap.
 const dotColors = [
     "var(--primary)",
     "oklch(0.62 0.19 25)",
@@ -47,10 +48,11 @@ const dotColors = [
     "oklch(0.78 0.16 150)",
 ];
 
-// ── 2. The Configurator-driven blob studio (the inv-16 dog-food) ─────────────
-// The blob showcase now USES the library Configurator (preset row + grouped
+// ── The Configurator-driven blob studio (the inv-16 dog-food) — THE LEAD HERO ─
+// The blob showcase USES the library Configurator (preset row + grouped
 // ConfiguratorLayer/ConfiguratorRow + a live stage) — the same chrome Aurora's
-// page composes — instead of a hand-rolled strip of raw <input type=range>.
+// page composes — instead of a hand-rolled strip of raw <input type=range>. This
+// is the page's LEAD section (D4): the living lit GL bead, satellites cycling.
 //
 // The studio's live shape: the pointer-lean axes (attraction / clickImpulse), the
 // mood, and the seed/harmony palette. The `stretch` axis is DEMOTED (AY.W-BLOB-CONFIG
@@ -177,6 +179,29 @@ const paletteStops = computed(() =>
 // seed-palette are studio-driven (the Configurator's purpose).
 const stageConfig = reactive<BlobConfig>({
     ...BLOB_CONFIG_DEFAULTS,
+    // AZ.W-BLOB-PAGE D2 — the page-local satellite-SEPARATION override. The shipped
+    // default orbitRadius (0.17) sits INSIDE bodyRadius (0.22), so the 3 satellites
+    // orbit UNDER the body skin and merge entirely — the "orbiting droplets" show is
+    // never visible (the silhouette only pinches at the perimeter; π baseline silhouette
+    // CV ≈ 0.026, single connected component every frame). Lifting the orbit OUTSIDE the
+    // body skin (0.30 vs body 0.22) with FOUR satellites (radius 0.10) makes the
+    // orbit→merge→absorb→emerge cycle read on mount: the satellites swing out past the
+    // skin and metaball back in as visible stretching pseudopod NECKS. Measured live (π
+    // blob-page): peak silhouette CV ≈ 0.057 over a full orbit cycle (≈2.2× the 0.026
+    // perimeter-only baseline — the strong neck-pinch the floor 0.04 binds), with
+    // intermittent full separation (a detached satellite droplet) when the cream-on-light
+    // contrast permits. The orbit is held MODERATE (0.30, not wider) so the satellites
+    // still NECK the body on the peak-coverage frame — a wider orbit (≥0.36) detaches
+    // them so far the peak-coverage frame reads a clean body and the EXISTING
+    // proof:blob-render silhouette/field witnesses regress (the IDENTITY-PRESERVED bite).
+    // Eccentricity stays near-circular (0.04) so the vertical reach clears the
+    // 1.6×-oversized canvas top/bottom — the AX.W15 four-side containment HOLDS (live
+    // worst-edge paint fraction within the satellite-overflow budget; proof:blob-render
+    // corner-empty + side-margin stay GREEN). This is a PAGE-LOCAL override on the stage
+    // bead (NOT a types.ts default re-tune — the shipped default stays calm/contained).
+    // The merge BRIDGE (membrane.smoothK) is W-BLOB-STUDIO's axis, left at the default;
+    // this wave moves only the GEOMETRY (orbit/count/satellite-radius/ecc).
+    geometry: { ...BLOB_CONFIG_DEFAULTS.geometry, orbitRadius: 0.30, satelliteCount: 4, satelliteRadius: 0.10, eccentricity: 0.04 },
     surface: { ...BLOB_CONFIG_DEFAULTS.surface },
     membrane: { ...BLOB_CONFIG_DEFAULTS.membrane },
     interaction: { ...BLOB_CONFIG_DEFAULTS.interaction },
@@ -226,26 +251,18 @@ watch(studioPaused, () => {
 
 <template>
     <StoryPage>
-        <StorySection
-            label="The lit contained droplet"
-            blurb="The droplet look in the static register — a CSS/SVG pastel swatch with no
-                WebGL context. A deterministic seeded border-radius morph with an internalized
-                turbulence filter (per-instance, zero-wiring). Reserve the live GL blob for the
-                interactive/lit studio below; route ambient/decorative thumbnails to WatercolorDot
-                so a grid never exhausts the per-page WebGL context cap."
-        >
-            <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <WatercolorDot
-                    v-for="c in dotColors"
-                    :key="c"
-                    :color="c"
-                    :seed="c"
-                    animate
-                    class="aspect-square w-full"
-                />
-            </ShowcaseFrame>
-        </StorySection>
-
+        <!--
+          AZ.W-BLOB-PAGE D4 — HERO-FIRST IA. The page now LEADS with the LIVING lit
+          GL bead (the studio's metaball hero, satellites visibly cycling on mount) so
+          a fresh viewer reads the living creature first — not a row of static swatches
+          they mistake for "the blobs" and find flat/satellite-less. The static
+          WatercolorDot swatch register is DEMOTED to the supporting section below (it
+          is NOT retired — it is the zero-GL companion register, and BOTH WatercolorDot
+          mounts are preserved: the swatch row here-below + the ambient palette dots in
+          the studio's Stops row, satisfying the WatercolorDot ≥2-demo-mount keep
+          evidence). The studio stage bead's wrapper SIZE is W-BLOB-STUDIO's axis; this
+          wave sets the IA POSITION (hero first) + the satellite-orbit geometry.
+        -->
         <StorySection
             label="Blob studio — preset · interaction · mood · seed-palette"
             blurb="The blob showcase on the library's own Configurator chrome (the same studio
@@ -363,6 +380,27 @@ watch(studioPaused, () => {
         </StorySection>
 
         <StorySection
+            label="The static zero-GL register — WatercolorDot"
+            blurb="The droplet look WITHOUT a WebGL context — a CSS/SVG pastel swatch: a
+                deterministic seeded border-radius morph with an internalized device-px
+                turbulence filter (per-instance, zero-wiring). This is the SUPPORTING register
+                below the living hero above: route ambient/decorative thumbnails here so a grid
+                never exhausts the per-page WebGL context cap (the live GL bead is reserved for
+                the interactive studio hero)."
+        >
+            <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <WatercolorDot
+                    v-for="c in dotColors"
+                    :key="c"
+                    :color="c"
+                    :seed="c"
+                    animate
+                    class="aspect-square w-full"
+                />
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
             label="Pause seam"
             blurb="A DockBackgroundToggle wired to the studio hero via v-model:paused parks the
                 render loop (the membrane stops warping, the satellites stop orbiting) and resumes
@@ -380,3 +418,19 @@ watch(studioPaused, () => {
         </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+/*
+  AZ.W-BLOB-PAGE D4 — scroll-into-view clearance for the hero canvas. With the studio
+  promoted to the LEAD section, the stage canvas sits near the document top; a
+  scroll-into-view (the π readback's element-screenshot scroll) would otherwise land the
+  canvas BOTTOM at the viewport bottom, UNDER the demo's viewport-anchored BottomDock —
+  occluding the bead's lower third and corrupting any canvas-screenshot containment
+  readback. The scroll-margin keeps the bead clear of the fixed dock (bottom) + the
+  page header (top) when scrolled into view, so the canvas screenshot is the bead alone.
+*/
+:deep(.goo-blob-canvas) {
+    scroll-margin-top: 5rem;
+    scroll-margin-bottom: 9rem;
+}
+</style>

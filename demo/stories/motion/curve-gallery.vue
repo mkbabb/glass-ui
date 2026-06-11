@@ -1,58 +1,53 @@
 <script setup lang="ts">
-// Curve Gallery (AY.W-MOTION2) — the CSS↔JS curve TABLE rendered live. Every
-// `MOTION_CURVES` row drives a dot AND plots its curve, with the CSS token name
-// and the JS twin name side by side — the two halves of ONE motion system. The
-// §6 easing-doctrine "which easing for which job" table is the story's legend.
+// Curve Gallery (AZ.W-MOTION-SUITE) — the FULL motion curve canon rendered live,
+// grouped by the keyframes 10-family taxonomy (Standard / Sine / Quad / Cubic /
+// Expo / Circ / Back / Bounce / Steps / Custom). Every row plots its REAL JS twin
+// (NO fake hint-SVG, NO hand-rolled sampler): the glass-ui canonical springs +
+// bezier cores via MOTION_CURVES, the analytic ease* set via curves.ts, Back via
+// value.js bezierPresets → CSSCubicBezier, Bounce via the value.js bounce*Ease
+// siblings, Steps via the value.js step generators. The Custom family is the live
+// editable cubic-bezier (the bezier-editor port).
 //
-// The dots are driven by the JS twin (the `MOTION_CURVES[token].js` callable),
-// NOT a CSS easing string — this is the JS-half witness (the foundations/motion
-// page is the CSS-half tour). Spring rows sample the keyframes.js `Easing.fn`;
-// bezier rows the value.js `TimingFunction` directly.
+// The plots + driven dots read ONE coherent purple — `--motion-accent` (the
+// glass-ui `--viz-legendre` violet twin), the motion family's single color event.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { onUnmounted, ref } from "vue";
-import {
-    MOTION_CURVES_CANONICAL,
-    type MotionCurve,
-} from "../../../src/composables/motion/curves";
+import { computed, onUnmounted, ref } from "vue";
+import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { cn } from "../../../src/utils/cn";
+import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
+import BezierEditor from "./BezierEditor.vue";
 
-// The JS name for a curve (the doctrine table's right column made concrete).
-const JS_NAME: Record<string, string> = {
-    "--spring-smooth": "springTimingFunction(0.5, 0.86)",
-    "--spring-snappy": "springTimingFunction(0.35, 0.65)",
-    "--spring-bouncy": "springTimingFunction(0.5, 0.45)",
-    "--spring-gentle": "springTimingFunction(0.7, 1.0)",
-    "--spring-dock": "springTimingFunction(0.32, 0.7)",
-    "--motion-ease-standard": "CSSCubicBezier(.4,0,.2,1)",
-    "--motion-ease-out": "CSSCubicBezier(0,0,.2,1)",
-    "--motion-ease-in": "CSSCubicBezier(.4,0,1,1)",
-    "--motion-ease-out-expo": "easeOutExpo",
-    "--motion-ease-apple": "CSSCubicBezier(.25,.1,.25,1)",
-};
+const FAMILY_TABS = [
+    ...CURVE_FAMILIES.map((f) => ({ value: f.family, label: f.family })),
+    { value: "Custom", label: "Custom" },
+];
 
-const curves = MOTION_CURVES_CANONICAL;
+const activeFamily = ref<string>(CURVE_FAMILIES[0]!.family);
+
+const activeRows = computed<readonly CurveRow[]>(
+    () => CURVE_FAMILIES.find((f) => f.family === activeFamily.value)?.rows ?? [],
+);
+const activeBlurb = computed(
+    () => CURVE_FAMILIES.find((f) => f.family === activeFamily.value)?.blurb ?? "",
+);
+
 const TRAVEL = 280; // px
 const DUR = 1100; // ms
 
-// Sample a row's JS twin at progress t∈[0,1] (spring → Easing.fn; bezier → fn).
-function sample(curve: MotionCurve, t: number): number {
-    const js = curve.js as { fn?: (t: number) => number } | ((t: number) => number);
-    return typeof js === "function" ? js(t) : (js.fn?.(t) ?? t);
-}
-
-// Pre-compute each curve's plot polyline (the small-multiple plot) from the twin.
-function plotPoints(curve: MotionCurve): string {
-    const W = 120;
-    const H = 56;
+// Pre-compute a row's plot polyline from its REAL twin. The viewBox allows
+// overshoot (springs, back-curves dip below 0 / past 1).
+const PLOT_W = 120;
+const PLOT_H = 64;
+function plotPoints(row: CurveRow): string {
     const N = 48;
     const pts: string[] = [];
     for (let i = 0; i <= N; i++) {
         const t = i / N;
-        const y = sample(curve, t); // value (may overshoot >1 for springs)
-        // map y∈[~0, ~1.2] into the box, inverted (SVG y grows down), padded.
-        const py = H - 6 - y * (H - 12);
-        pts.push(`${(t * W).toFixed(1)},${py.toFixed(1)}`);
+        const y = row.fn(t); // may overshoot <0 or >1
+        // y=0 → bottom track (PLOT_H-8), y=1 → top track (12); clamp overshoot range.
+        const py = (PLOT_H - 8) - y * (PLOT_H - 20);
+        pts.push(`${(t * PLOT_W).toFixed(1)},${py.toFixed(1)}`);
     }
     return pts.join(" ");
 }
@@ -60,39 +55,44 @@ function plotPoints(curve: MotionCurve): string {
 const dotRefs = ref<Record<string, HTMLElement | null>>({});
 const raf = ref<Record<string, number>>({});
 
-function setDotRef(token: string, el: Element | null): void {
-    dotRefs.value[token] = el as HTMLElement | null;
+function setDotRef(name: string, el: Element | null): void {
+    dotRefs.value[name] = el as HTMLElement | null;
 }
 
-// Drive a dot by sampling the JS twin per rAF — the JS-half is the source of the
-// motion (not a CSS easing). Spring overshoot is visible (the dot travels past
-// TRAVEL then settles).
-function play(curve: MotionCurve): void {
-    const el = dotRefs.value[curve.token];
+// Drive a dot by sampling the REAL JS twin per rAF — the JS-half is the motion
+// source (not a CSS easing string). Spring/back overshoot is visible.
+function play(row: CurveRow): void {
+    const el = dotRefs.value[row.name];
     if (!el) return;
-    if (raf.value[curve.token]) cancelAnimationFrame(raf.value[curve.token]);
+    if (raf.value[row.name]) cancelAnimationFrame(raf.value[row.name]);
     const start = performance.now();
     const step = (now: number) => {
         const t = Math.min(1, (now - start) / DUR);
-        const y = sample(curve, t);
+        const y = row.fn(t);
         el.style.transform = `translateX(${(y * TRAVEL).toFixed(2)}px)`;
         if (t < 1) {
-            raf.value[curve.token] = requestAnimationFrame(step);
+            raf.value[row.name] = requestAnimationFrame(step);
         } else {
-            // settle exactly at the end value.
-            el.style.transform = `translateX(${(sample(curve, 1) * TRAVEL).toFixed(2)}px)`;
+            el.style.transform = `translateX(${(row.fn(1) * TRAVEL).toFixed(2)}px)`;
         }
     };
-    raf.value[curve.token] = requestAnimationFrame(step);
+    raf.value[row.name] = requestAnimationFrame(step);
 }
 
 function playAll(): void {
-    for (const c of curves) play(c);
+    for (const r of activeRows.value) play(r);
 }
 
 onUnmounted(() => {
     for (const id of Object.values(raf.value)) cancelAnimationFrame(id);
 });
+
+const KIND_TINT: Record<CurveRow["kind"], string> = {
+    spring: "bg-[var(--surface-tint-2)] text-foreground",
+    bezier: "bg-[var(--surface-tint-1)] text-muted-foreground",
+    analytic: "bg-[var(--surface-tint-1)] text-muted-foreground",
+    step: "bg-[var(--surface-tint-2)] text-foreground",
+};
 
 // The §6 easing-doctrine legend — which easing fits which job.
 const doctrine: { kind: string; easing: string }[] = [
@@ -107,64 +107,78 @@ const doctrine: { kind: string; easing: string }[] = [
 <template>
     <StoryPage>
         <StorySection
-            label="The curve set"
-            blurb="The CSS↔JS curve table, live — every MOTION_CURVES row drives a dot off its JS twin (springs sample the keyframes.js Easing, beziers the value.js callable). Press Play to fire the whole grid; spring rows overshoot past the track then settle."
+            label="The curve canon"
+            blurb="The FULL motion taxonomy — the glass-ui canonical springs + bezier cores, the value.js analytic ease* set (Sine/Quad/Cubic/Expo/Circ), the Back overshoot curves, the Bounce family, and the Steps generators — each plot driven by its REAL JS twin. Pick a family; press a card to fire its dot off the twin (springs and back-curves overshoot past the track then settle)."
         >
             <div class="mb-4">
-                <button
-                    type="button"
-                    class="btn-pill glass-btn rounded-pill px-4 py-2 text-sm font-medium"
-                    @click="playAll"
-                >
-                    ▶ Play all
-                </button>
+                <SegmentedTabs
+                    :options="FAMILY_TABS"
+                    :model-value="activeFamily"
+                    variant="pill"
+                    @update:model-value="(v: string | string[]) => (activeFamily = Array.isArray(v) ? v[0]! : v)"
+                />
             </div>
 
-            <div class="grid gap-3 sm:grid-cols-2">
-                <button
-                    v-for="curve in curves"
-                    :key="curve.token"
-                    type="button"
-                    class="glass-card rounded-card p-4 text-left transition-transform hover:scale-[1.01]"
-                    @click="play(curve)"
-                >
-                    <div class="mb-2 flex items-baseline justify-between gap-2">
-                        <code class="text-sm font-semibold text-foreground">{{ curve.token }}</code>
-                        <span
-                            :class="cn(
-                                'rounded-pill px-2 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide',
-                                curve.kind === 'spring'
-                                    ? 'bg-[var(--surface-tint-2)] text-foreground'
-                                    : 'bg-[var(--surface-tint-1)] text-muted-foreground',
-                            )"
-                        >{{ curve.kind }}</span>
-                    </div>
-                    <code class="mb-2 block text-xs text-muted-foreground">{{ JS_NAME[curve.token] ?? "—" }}</code>
-                    <p class="mb-3 text-xs text-muted-foreground">{{ curve.note }}</p>
+            <p class="mb-4 text-small text-muted-foreground">{{ activeBlurb }}</p>
 
-                    <!-- the plot (the curve shape from the JS twin) -->
-                    <svg viewBox="0 0 120 56" class="mb-3 h-14 w-full">
-                        <line x1="0" y1="50" x2="120" y2="50" class="stroke-border" stroke-width="0.5" />
-                        <line x1="0" y1="12" x2="120" y2="12" class="stroke-border/40" stroke-width="0.5" stroke-dasharray="2 2" />
-                        <polyline
-                            :points="plotPoints(curve)"
-                            fill="none"
-                            class="stroke-[var(--primary)]"
-                            stroke-width="1.5"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
+            <!-- Custom family → the live editable bezier editor -->
+            <BezierEditor v-if="activeFamily === 'Custom'" />
 
-                    <!-- the driven dot (the JS twin animates translateX) -->
-                    <div class="relative h-3 w-full overflow-visible rounded-pill bg-[var(--surface-tint-1)]">
-                        <div
-                            :ref="(el) => setDotRef(curve.token, el as Element | null)"
-                            class="absolute left-0 top-1/2 size-3 -translate-y-1/2 rounded-pill bg-[var(--primary)]"
-                            style="will-change: transform"
-                        />
-                    </div>
-                </button>
-            </div>
+            <template v-else>
+                <div class="mb-4">
+                    <button
+                        type="button"
+                        class="btn-pill glass-btn rounded-pill px-4 py-2 text-sm font-medium"
+                        @click="playAll"
+                    >
+                        ▶ Play family
+                    </button>
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-2">
+                    <button
+                        v-for="row in activeRows"
+                        :key="row.name"
+                        type="button"
+                        class="glass-card rounded-card p-4 text-left transition-transform hover:scale-[1.01]"
+                        @click="play(row)"
+                    >
+                        <div class="mb-2 flex items-baseline justify-between gap-2">
+                            <code class="text-sm font-semibold text-foreground">{{ row.name }}</code>
+                            <span
+                                :class="cn(
+                                    'rounded-pill px-2 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide',
+                                    KIND_TINT[row.kind],
+                                )"
+                            >{{ row.kind }}</span>
+                        </div>
+                        <code class="mb-2 block truncate text-xs text-muted-foreground">{{ row.jsName }}</code>
+                        <p class="mb-3 text-xs text-muted-foreground">{{ row.note }}</p>
+
+                        <!-- the plot (the curve shape from the REAL JS twin) -->
+                        <svg :viewBox="`0 0 ${PLOT_W} ${PLOT_H}`" class="mb-3 h-16 w-full">
+                            <line x1="0" :y1="PLOT_H - 8" :x2="PLOT_W" :y2="PLOT_H - 8" class="stroke-border" stroke-width="0.5" />
+                            <line x1="0" y1="12" :x2="PLOT_W" y2="12" class="stroke-border/40" stroke-width="0.5" stroke-dasharray="2 2" />
+                            <polyline
+                                :points="plotPoints(row)"
+                                fill="none"
+                                class="stroke-[var(--motion-accent)]"
+                                stroke-width="1.75"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+
+                        <!-- the driven dot (the REAL twin animates translateX) -->
+                        <div class="relative h-3 w-full overflow-visible rounded-pill bg-[var(--surface-tint-1)]">
+                            <div
+                                :ref="(el) => setDotRef(row.name, el as Element | null)"
+                                class="absolute left-0 top-1/2 size-3 -translate-y-1/2 rounded-pill bg-[var(--motion-accent)]"
+                                style="will-change: transform"
+                            />
+                        </div>
+                    </button>
+                </div>
+            </template>
         </StorySection>
 
         <StorySection
@@ -180,9 +194,9 @@ const doctrine: { kind: string; easing: string }[] = [
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="row in doctrine" :key="row.kind" class="border-t border-border/40">
-                            <td class="px-4 py-2 text-foreground">{{ row.kind }}</td>
-                            <td class="px-4 py-2"><code class="text-xs text-muted-foreground">{{ row.easing }}</code></td>
+                        <tr v-for="rowd in doctrine" :key="rowd.kind" class="border-t border-border/40">
+                            <td class="px-4 py-2 text-foreground">{{ rowd.kind }}</td>
+                            <td class="px-4 py-2"><code class="text-xs text-muted-foreground">{{ rowd.easing }}</code></td>
                         </tr>
                     </tbody>
                 </table>

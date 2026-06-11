@@ -60,7 +60,17 @@ const activeCategoryId = computed<string | null>(() => {
 
 // The primary categories ride the top of the rail; the reference-only shelf
 // (Composables) sits below a divider, collapsed below the fold.
-const primaryCategories = computed(() => CATEGORIES.filter((c) => !c.reference));
+//
+// AZ.W-SHELL-IDENTITY (D1) — Foundations is EXCLUDED from the DockIconButton nav
+// loop: the ℱ wordmark home control (#persistent slot, RouterLink to="/" →
+// firstStoryPath() = /foundations/intro) IS the single Foundations affordance.
+// The prior render stacked TWO Foundations entries — the ℱ AND the Foundations
+// category's Compass DockIconButton — with no divider (the user's "duplicated
+// compass," R3-12). The ℱ-as-Foundations is the dedup; a <DockSeparator>
+// demarcates it below the home control.
+const primaryCategories = computed(() =>
+    CATEGORIES.filter((c) => !c.reference && c.id !== "foundations"),
+);
 const referenceCategories = computed(() => CATEGORIES.filter((c) => c.reference));
 
 function go(categoryId: string): void {
@@ -84,7 +94,13 @@ const railContext = computed<string | undefined>({
         if (id) go(id);
     },
 });
-const railContextIds = computed(() => primaryCategories.value.map((c) => c.id));
+// The rail cycle spans EVERY non-reference category — Foundations included. The
+// ℱ home control is Foundations' rail entry (it is dropped from the visible
+// DockIconButton nav loop per W-SHELL-IDENTITY D1, but the rail end-icon still
+// advances through it so the category cycle stays complete).
+const railContextIds = computed(() =>
+    CATEGORIES.filter((c) => !c.reference).map((c) => c.id),
+);
 
 // AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam. The rail
 // surfaces the active SECTION's contextual facets as a secondary `<DockLayerGroup>`
@@ -145,31 +161,49 @@ function onWordmarkClick(e: MouseEvent): void {
              Long-press / double-click it to redraw the ℱ as a Fourier epicycle
              curve (E1). The dark-mode toggle is NOT here — per the dock nav-pattern
              (home-top, utility controls at the trailing END behind a divider) it
-             rides the #collapsed trailing section at the BOTTOM of the rail (below). -->
+             rides the #collapsed trailing section at the BOTTOM of the rail (below).
+
+             AZ.W-SHELL-IDENTITY — the ℱ IS the single Foundations affordance (the
+             Compass category-nav dup is dropped). It renders AS a DockIconButton
+             (as-child onto the RouterLink) so it carries the SAME first-class
+             dock-control glass hover register the category controls do (the bg →
+             --dock-control-hover-bg glass tier + the travelling specular gleam +
+             --scale-hover-dock lift, R3-6 / W-REGISTER-IOS) — NOT a bare transparent
+             circle (R3-15 / D3). A <DockSeparator> demarcates it below (D1). The
+             optical-center transform (.demo-sidebar-home > span in dock-nav.css)
+             re-seats the italic script-ℱ ink-mass on the box center (D2). -->
         <template #persistent>
-            <RouterLink
-                to="/"
-                class="focus-ring tap-squish flex h-10 w-10 items-center justify-center rounded-full"
+            <DockIconButton
+                as-child
+                class="demo-sidebar-home"
                 aria-label="glass-ui home"
-                @click="onWordmarkClick"
-                @dblclick="fireRedraw"
-                @pointerdown="wordmarkPress.onpointerdown"
-                @pointerup="wordmarkPress.onpointerup"
-                @pointerleave="wordmarkPress.onpointerleave"
-                @pointercancel="wordmarkPress.onpointercancel"
             >
-                <span
-                    aria-hidden="true"
-                    class="font-display italic leading-none text-viz-fourier select-none"
-                    style="
-                        font-size: 1.875rem;
-                        font-variation-settings: 'WONK' 1, 'SOFT' 0;
-                        font-optical-sizing: auto;
-                    "
+                <RouterLink
+                    to="/"
+                    class="focus-ring tap-squish"
+                    @click="onWordmarkClick"
+                    @dblclick="fireRedraw"
+                    @pointerdown="wordmarkPress.onpointerdown"
+                    @pointerup="wordmarkPress.onpointerup"
+                    @pointerleave="wordmarkPress.onpointerleave"
+                    @pointercancel="wordmarkPress.onpointercancel"
                 >
-                    &#x2131;
-                </span>
-            </RouterLink>
+                    <span
+                        aria-hidden="true"
+                        class="font-display italic leading-none text-viz-fourier select-none"
+                        style="
+                            font-variation-settings: 'WONK' 1, 'SOFT' 0;
+                            font-optical-sizing: auto;
+                        "
+                    >
+                        &#x2131;
+                    </span>
+                </RouterLink>
+            </DockIconButton>
+            <!-- Demarcate the home control from the category nav below (D1) — the
+                 home-top nav-pattern divider, the same idiom as the reference-shelf
+                 separator. -->
+            <DockSeparator />
         </template>
 
         <TooltipProvider :delay-duration="250">
