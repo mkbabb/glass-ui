@@ -434,17 +434,23 @@ watch(studioPaused, () => {
                             class="relative flex h-full w-full items-center justify-center overflow-hidden"
                         >
                             <!--
-                              AZ.W-BLOB-STUDIO §3.1 (D1) — the LARGE centered hero. The bead
-                              was a fixed w-64 (256px) swatch sitting small/left in an
-                              h-[min(70vh,560px)] stage (~30% of stage height, off-center).
-                              Re-based onto a STAGE-PROPORTIONAL square: the bead fills the
-                              available stage height (the canvas overflows 1.6× so a margin
-                              floor of the stage min-dimension keeps the necking satellites
-                              inside the frame), centered against the controls aside, capped
-                              so a very wide stage doesn't blow it past the width.
+                              AZ.W-BLOB-STUDIO §3.1 (D1) + AZ.W-BLOB-REDRESS — the LARGE
+                              centered hero, sized off the SMALLER stage axis so it stays a
+                              true SQUARE with margin on BOTH axes regardless of the stage's
+                              aspect. The prior `h-[min(78%,30rem)] max-w-[88%]` drove the
+                              square off HEIGHT alone, so on a PORTRAIT stage (the mobile
+                              single-column band, stage 240w × 288h) the `max-w-[88%]` width
+                              cap (211px) clamped BELOW the 225px height — the box went
+                              NON-square and the 1.6×-overflow canvas clipped tight to the
+                              wrapper, pushing the orbiting satellites onto the frame edge
+                              (the proof:blob-render four-side containment RED at 0.97). Now
+                              the box wants full width but is capped at `max-w`/`max-h` (78%
+                              of each axis, ≤30rem), and `aspect-square` resolves it to the
+                              LARGEST square fitting both caps = min(78% w, 78% h) — so the
+                              necking satellites keep their margin on every viewport.
                             -->
                             <div
-                                class="relative aspect-square h-[min(78%,30rem)] max-w-[88%]"
+                                class="relative aspect-square w-full max-h-[78%] max-w-[min(78%,30rem)]"
                             >
                                 <GooBlob
                                     ref="studioBlob"

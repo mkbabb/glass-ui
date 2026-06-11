@@ -133,6 +133,15 @@ const containerClass = computed(() =>
         // (defaults 280px/360px), retunable via the `asideWidth` prop or the
         // cascade — muster's CLS-fence carrier + value.js's dual-pane axis.
         "grid grid-cols-1",
+        // AZ.W-BLOB-REDRESS — the single-column band sets EXPLICIT rows so the
+        // stage row is a DEFINITE track (a `--configurator-stage-min` floor),
+        // not a content-auto row that collapses to 0 when its child sizes off a
+        // percentage/`h-full` height (the mobile 0×0 live-specimen collapse —
+        // a GooBlob hero painting nothing on a phone). The aside row takes the
+        // remainder (`minmax(0,1fr)`) and scrolls its controls internally. At
+        // `lg`+ the two-COLUMN layout owns the geometry, so the explicit rows
+        // reset to `none` (one auto row stretched to the taller column).
+        "grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)] lg:grid-rows-none",
         "lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,280px),var(--configurator-aside-max,360px))]",
         "min-h-0",
         props.class,

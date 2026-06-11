@@ -476,6 +476,17 @@
     --configurator-section-size: var(--type-subheading);  /* 20.4px — √φ section rung */
     --configurator-section-weight: 600;                   /* the heading weight */
 
+    /* AZ.W-BLOB-REDRESS — the SINGLE-COLUMN stage-row FLOOR. Below `lg` the
+       Configurator stacks stage-over-aside as two implicit grid rows. The
+       stage's content sizes off `h-full` / a percentage height, which against
+       an INDEFINITE auto-row resolves to 0 — so the auto-row collapses to 0px
+       and the live stage specimen (the GooBlob hero) paints 0×0 on a phone.
+       The single-column band sets an EXPLICIT `grid-template-rows` whose stage
+       row is a DEFINITE `minmax(--configurator-stage-min, …)` floor, so the
+       percentage stage height resolves against a real track and the specimen
+       paints. The aside row takes the remainder and scrolls internally. */
+    --configurator-stage-min: 18rem;                      /* 288px — the mobile live-specimen stage floor */
+
     /* 2. Preset-row PRIMARY-AFFORDANCE lift. The preset picker is the primary
           interaction (C6-10); D6-3's defect is the preset row being spatially
           CRAMPED. This token's binding SEMANTIC is the preset row's SPATIAL
