@@ -84,7 +84,14 @@ MOTION2 triumvirate (R7), each with its own banked `USER-AUDIT-*.md` + dischargi
    glass-ui src/+demo/ and every other consumer are CLEAN. The sweep runs with the gate's own
    documented `PROOF_PHANTOM_ALLOW_PENDING=1` escape (never wired into CI); the gate goes
    genuinely green when the fourier session lands the patch.
-2. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
+2. **`proof:resolution` — the value.js SELF-alias, documented-pending; owner: the value.js
+   session.** Their open tranche-N (live WIP at this close) repointed the value.js demo's own
+   `@mkbabb/value.js` import to `dist/` via a hard alias — a deliberate, commented N.W1.C
+   mechanism choice in their repo. A self-alias cannot break the cross-repo
+   glass-ui→sibling path this gate guards; the gate now logs it loudly as `[pending]`
+   (the phantom-classes precedent) and the entry is removed when their tranche reconciles
+   alias-vs-exports-map.
+3. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
    the `consumers:static` root-surface enrollment of the deliberate `useLiquidFlex` re-export;
    the `dock-tap-integrity` born-RED witness pinned to the recorded pre-fix commit `e5bb8166`
    (the moving-HEAD anchor self-destructed once the guard merged); the `proof:runtime` default
