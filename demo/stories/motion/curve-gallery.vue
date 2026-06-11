@@ -29,7 +29,7 @@ import { computed, onUnmounted, ref } from "vue";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { cn } from "../../../src/utils/cn";
 import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
-import BezierEditor from "./BezierEditor.vue";
+import BezierEditor from "./curve-gallery/BezierEditor.vue";
 
 const CUSTOM_FAMILY = "Custom";
 const FAMILY_TABS = [

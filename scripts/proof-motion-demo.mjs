@@ -63,7 +63,7 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 const SPRINGS = "demo/stories/motion/springs.vue";
 const GALLERY = "demo/stories/motion/curve-gallery.vue";
 const FAMILIES = "demo/stories/motion/curve-families.ts";
-const BEZIER = "demo/stories/motion/BezierEditor.vue";
+const BEZIER = "demo/stories/motion/curve-gallery/BezierEditor.vue";
 const SCROLL_VT = "demo/stories/motion/scroll-vt.vue";
 const FOUNDATIONS = "demo/stories/foundations/motion.vue";
 const DEMO_CSS = "demo/demo.css";

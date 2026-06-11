@@ -293,7 +293,7 @@ const MOTION_SURFACES = [
     "demo/stories/motion/typewriter.vue",
     "demo/stories/motion/underline.vue",
     "demo/stories/motion/scroll-vt.vue",
-    "demo/stories/motion/BezierEditor.vue",
+    "demo/stories/motion/curve-gallery/BezierEditor.vue",
     "demo/stories/foundations/motion.vue",
 ];
 // The banned orange-red tokens (the Fourier-red family + the spring orange-red

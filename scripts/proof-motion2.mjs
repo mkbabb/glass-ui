@@ -65,7 +65,7 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 
 const GALLERY = "demo/stories/motion/curve-gallery.vue";
 const FAMILIES = "demo/stories/motion/curve-families.ts";
-const BEZIER = "demo/stories/motion/BezierEditor.vue";
+const BEZIER = "demo/stories/motion/curve-gallery/BezierEditor.vue";
 const MANIFEST = "demo/stories/manifest.ts";
 const DEMO_CSS = "demo/demo.css";
 
