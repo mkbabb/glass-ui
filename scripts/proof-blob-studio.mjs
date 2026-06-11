@@ -60,6 +60,10 @@ const COMMAND = "npm run proof:blob-studio";
 const METABALL_FRAG = resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts");
 
 function workspacePresent() {
+    // The synthesized device-absent shell (proof:az-final clause 6 RUNNER-TRUTH):
+    // the close gate re-runs this gate with the env knob set and asserts the
+    // executed exit-0-with-SKIP-line — the skip path proved by EXECUTION, not grep.
+    if (process.env.GLASS_UI_SYNTH_DEVICE_ABSENT === "1") return false;
     return PW_PKG !== null && PW_BIN !== null;
 }
 

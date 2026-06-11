@@ -93,6 +93,7 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // red every push during the redress window. The release arm (proof:az-final
     // clause 10) is its enforcement home — the ay-final precedent.
     ["proof:az-reflect", "AZ.W-CLOSE clause-10 reflection bar, RELEASE-only by design (FAIL records are the normal mid-triumvirate state; ci would red every redress-window push); proof:az-final clause 10 enforces it at the close."],
+    ["proof:az-final", "AZ.W-CLOSE terminal-close meta-gate, RELEASE-only by design (STAGED-OR-CUT + CLEAN-TREE are release-context truths that cannot pass in mid-dev CI); the release arm enforces it — the ay-final precedent."],
     // The ci.yml drift meta-step — local+release by design, NOT ci-tagged to avoid
     // double-render (it verifies the ci mirror; its own note documents this).
     ["proof:gen-ci-fresh", "ci.yml byte-match drift meta-step (local+release); NOT ci-tagged to avoid double-rendering itself into the file it checks."],

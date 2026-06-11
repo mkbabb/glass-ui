@@ -530,6 +530,12 @@ export const GATES = [
         note: "AZ.W-CLOSE clause 10 — THE REFLECTION BAR (the user edict 2026-06-11: the tranche is complete only when every surface holds a reflection-audit PASS). Reads the operative (LAST) verdict of each docs/tranches/AZ/audit/reflect/<surface>.md record across the 9-surface roster + asserts >=1 cited capture on disk + the roster census closure (an off-roster record REDs). A FAIL record = mid-triumvirate = the close cannot start. Born-RED witnessed on the post-redress pre-re-stamp tree (4 FAILs flagged); self-test: synthetic FAIL + capture-less PASS + re-stamp-supersedes all behave. Release-only (the close witness, not a per-push gate).",
     },
     {
+        id: "proof:az-final",
+        cmd: "proof:az-final",
+        tags: ["release"],
+        note: "AZ.W-CLOSE — the AZ terminal-close meta-gate (release-only, NOT ci). 10 clauses: FINAL-EXISTS+per-wave-citation, R3-CLOSURE (the 15-item matrix read with the headless-trap pi-backed-status arm), BUDGET-REBASELINED, NO-OPEN-LIVE-PENDING, CARDINAL (az/ay/ax ledgers + disposition register), RUNNER-TRUTH-BY-EXECUTION (the runtime gates re-run under GLASS_UI_SYNTH_DEVICE_ABSENT=1 and must exit 0 WITH a printed skip line — never grep), ZERO-ORPHANS, STAGED-OR-CUT (3.10.1+changeset | 3.13.x+CHANGELOG), CLEAN-TREE, THE-REFLECTION-BAR (proof:az-reflect). Born-RED witnessed on the authoring tree (FINAL absent + 4 mid-triumvirate reflections).",
+    },
+    {
         id: "proof:ay-final",
         cmd: "proof:ay-final",
         tags: ["release"],
