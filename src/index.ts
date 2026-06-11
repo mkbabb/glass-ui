@@ -161,7 +161,7 @@ export {
 // precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
 export { vReveal } from "./composables/motion/vReveal";
 
-// The named CSS Custom Highlight composable (AX.W37 — re-homed from `/dom` to
+// The named CSS Custom Highlight composable (re-homed from `/dom` to
 // `/motion-core`). Imports `vue` `getCurrentScope`/`onScopeDispose` only —
 // keyframes-FREE + vueuse-FREE, so it is root-barrel safe per the `vReveal`
 // precedent; also reachable via `@mkbabb/glass-ui/motion-core`. A TARGETED

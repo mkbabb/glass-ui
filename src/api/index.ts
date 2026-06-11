@@ -250,10 +250,10 @@ export type {
 // `ConstellationProps` — the props a consumer forwards when wrapping
 // `<Constellation>` (the proximity-graph lattice; ships via `/constellation`).
 // `ConstellationField` — the live field handed to the `drawOverlay` skin seam,
-// so a consumer types its overlay against the node set + scale (AW.W17).
+// so a consumer types its overlay against the node set + scale.
 // `ConstellationWarp` — the engine-owned focal-warp spring state (`field.warp`),
 // so a consumer types its focal-mark overlay against the spring-eased position
-// (AX.W17 — the click-to-warp seam).
+// (the click-to-warp seam).
 export type {
     ConstellationProps,
     ConstellationField,
@@ -353,7 +353,7 @@ export type {
     UseGlobalDarkOptions,
 } from "../composables/dark";
 
-// ── Canvas2D lifecycle substrate (AX.W37) ────────────────────────────────────
+// ── Canvas2D lifecycle substrate ─────────────────────────────────────────────
 // The Canvas2D park/freeze/dispose substrate now ships on the `/canvas` subpath
 // (`useCanvas2D`/`useCanvasLifecycle` + `resolveCanvasColor`). Its public option
 // + handle + frame shapes ride the discovery layer so a consumer composing the
@@ -367,7 +367,7 @@ export type {
     Canvas2DSuspendReason,
 } from "../composables/glass/canvas2d";
 
-// ── Text-highlight controls (AX.W37) ─────────────────────────────────────────
+// ── Text-highlight controls ──────────────────────────────────────────────────
 // `useTextHighlight` (the named CSS Custom Highlight composable) re-homed to
 // `/motion-core`. `UseTextHighlightControls` is its imperative-handle return
 // shape and `HighlightMatcher` the per-node match callback; consumers wiring a
