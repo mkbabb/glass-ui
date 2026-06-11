@@ -106,12 +106,9 @@ const {
     pointerReactive?: boolean;
     /**
      * Click-to-warp (AX.W17). A click warps the focal node to the nearest
-     * drifting node and SPRINGS it there (a critically-damped path, chasing a
-     * LIVE drifting target). INDEPENDENT of `pointerReactive` — warp works on a
-     * static (non-ripple) lattice, and ripples work without warp. Default false;
-     * auto-off under reduced-motion (the click does NOT warp — the focal mark
-     * stays put; the stated PRM policy). The low-level `warpTo(...)` imperative
-     * method (via `defineExpose`) is the seam this prop sugars.
+     * drifting node and SPRINGS it there (critically damped, chasing the LIVE
+     * target). INDEPENDENT of `pointerReactive`. Default false; auto-off under
+     * reduced-motion (the focal mark stays put). Sugars the exposed `warpTo(...)`.
      */
     warpOnClick?: boolean;
     /**
@@ -311,13 +308,7 @@ onMounted(() => {
                     const h = canvas.clientHeight || canvas.offsetHeight || 720;
                     const k = w / BASE_WIDTH;
                     field.canvas = canvas;
-                    // R5-8 — the per-instance visual-size floor knob. Read every
-                    // frame-sized pass (cheap: one var read) so a live token
-                    // retune reaches the draw scale; NaN/absent keeps the
-                    // DEFAULT_K_FLOOR the draw passes fall back to.
-                    const kFloorRaw = parseFloat(
-                        getComputedStyle(canvas).getPropertyValue("--constellation-k-floor"),
-                    );
+                    const kFloorRaw = parseFloat(getComputedStyle(canvas).getPropertyValue("--constellation-k-floor")); // R5-8 size-floor knob
                     field.kFloor = Number.isFinite(kFloorRaw) ? kFloorRaw : undefined;
                     field.dpr = Math.min(
                         (typeof window !== "undefined" && window.devicePixelRatio) || 1,

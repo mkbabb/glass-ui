@@ -5,14 +5,12 @@
 // the cursor; taps drop expanding ripples.
 //
 // This module owns the SHARED TYPES + the engine core: `seedField`/`refitField`/
-// `stepField`. The pointer-INTERACTION machinery (the gravity-well force, the
-// focal-node warp spring, the auto-drift cadence + their tuning configs) lives in
+// `stepField`. The pointer-INTERACTION machinery lives in
 // `./constellationInteraction`; the FOUR NEUTRAL draw passes + the palette read
-// live in `./constellationDraw`. `stepField` imports the interaction steppers as
-// DIRECT calls; both sibling modules import only the TYPES from here (`import
-// type` — no runtime cycle). There is NO branded skin pass: a focal mark / callout
-// is a consumer-supplied `drawOverlay` that runs AFTER the neutral passes. Zero
-// deck-domain content lives here.
+// live in `./constellationDraw` (both import only TYPES from here — no runtime
+// cycle). There is NO branded skin pass: a focal mark / callout is a
+// consumer-supplied `drawOverlay` after the neutral passes; zero deck-domain
+// content lives here.
 
 import {
     stepWell,
@@ -244,16 +242,7 @@ export interface ConstellationField {
     h: number;
     k: number;
     dpr: number;
-    /**
-     * The visual-size draw-scale FLOOR (R5-8, the slides-consumer mobile fix).
-     * `k = width/BASE_WIDTH` crushes dot radii / line widths sub-pixel on a
-     * narrow canvas (390px → k≈0.30 draws 1.6–3.2 base-px dots at ~0.5–1px);
-     * the draw passes floor their SIZE scale at `kVis = max(k, kFloor)` while
-     * TRUE `k` keeps positions and reach — byte-identical at/above
-     * `kFloor·BASE_WIDTH` (≈922px at the 0.72 default) by construction.
-     * Optional; absent reads `DEFAULT_K_FLOOR`. Tokenable per-instance via
-     * `--constellation-k-floor` (read on mount by `<Constellation>`).
-     */
+    /** R5-8 — SIZES draw at `kVisOf(field)`; TRUE `k` keeps positions/reach. */
     kFloor?: number;
     /**
      * The designated focal node's INDEX, or `-1` when none is pinned. Re-points
@@ -425,18 +414,6 @@ export interface ConstellationProps {
  * but the underlying node still drifts (warp re-points an EXISTING node, never
  * adds one, so node count is conserved).
  */
-/** The shipped visual-size floor (R5-8): kVis === k for every canvas wider than
- *  ~0.72·BASE_WIDTH ≈ 922px (incl. the 1280 export frame), so desktop and export
- *  stay byte-identical; below it the dots/edges/marks stop crushing sub-pixel. */
-export const DEFAULT_K_FLOOR = 0.72;
-
-/** The visual-size draw scale — `max(k, kFloor)`. SIZES read this; positions and
- *  reach stay on TRUE `field.k`. Exported so a `drawOverlay` skin can floor its
- *  own marks/labels on the same axis. */
-export function kVisOf(field: ConstellationField): number {
-    return Math.max(field.k, field.kFloor ?? DEFAULT_K_FLOOR);
-}
-
 export function seedField(
     rng: () => number,
     count: number,

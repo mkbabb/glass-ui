@@ -796,11 +796,9 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
 // R5-8 (the slides-consumer kVis floor) — the two-axis split: SIZES floor at
 // kVis = max(k, kFloor) while TRUE k keeps positions/reach. Byte-identical
 // at/above kFloor·BASE_WIDTH by construction (kVis === k there).
-import {
-    DEFAULT_K_FLOOR,
-    kVisOf,
-    BASE_WIDTH,
-} from "../../../../src/components/custom/constellation/constellationField";
+import { BASE_WIDTH } from "../../../../src/components/custom/constellation/constellationField";
+import { DEFAULT_K_FLOOR } from "../../../../src/components/custom/constellation/constants";
+import { kVisOf } from "../../../../src/components/custom/constellation/constellationDraw";
 
 describe("constellation kVis floor (R5-8)", () => {
     const fieldAt = (k: number, kFloor?: number) =>

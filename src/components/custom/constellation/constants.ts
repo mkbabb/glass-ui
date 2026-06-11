@@ -87,3 +87,8 @@ export const DEFAULT_PINNED_DRIFT_FRAC = 0.14; // ± fraction of the canvas arou
 export const DEFAULT_PINNED_DRIFT_DUR = 2600; // ms — per-leg easeInOutQuad duration
 export const DEFAULT_PINNED_DRIFT_IDLE = 6000; // ms — min rest between legs
 export const DEFAULT_PINNED_DRIFT_JITTER = 8000; // ms — random extra rest per leg
+
+/** R5-8 — the shipped visual-size floor: `kVisOf` === `k` for every canvas
+ *  ≥ ~0.72·BASE_WIDTH ≈ 922px (incl. the 1280 export frame — byte-identical
+ *  there by construction); below it the marks stop crushing sub-pixel. */
+export const DEFAULT_K_FLOOR = 0.72;

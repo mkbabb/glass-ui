@@ -19,8 +19,14 @@ import type {
     ConstellationPointer,
     ConstellationRipple,
 } from "./constellationField";
-import { kVisOf } from "./constellationField";
-import { DEFAULT_PALETTE } from "./constants";
+import { DEFAULT_PALETTE, DEFAULT_K_FLOOR } from "./constants";
+
+/** R5-8 — the visual-SIZE draw scale: `max(k, kFloor)`. The four neutral passes
+ *  size on this; positions/reach stay on TRUE `field.k`. Exported so a
+ *  `drawOverlay` skin floors its own marks/labels on the same axis. */
+export function kVisOf(field: ConstellationField): number {
+    return Math.max(field.k, field.kFloor ?? DEFAULT_K_FLOOR);
+}
 
 // The neutral palette fallback lives in the feature-dir constants home; re-exported
 // here for the package barrel path.

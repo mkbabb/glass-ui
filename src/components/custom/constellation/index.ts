@@ -5,9 +5,8 @@ export {
     stepField,
     refitField,
     BASE_WIDTH,
-    DEFAULT_K_FLOOR,
-    kVisOf,
 } from "./constellationField";
+export { DEFAULT_K_FLOOR } from "./constants";
 export {
     stepWell,
     nearestNode,
@@ -30,6 +29,7 @@ export {
     WARP_ZETA,
 } from "./constellationInteraction";
 export {
+    kVisOf,
     readPalette,
     drawEdges,
     drawNodes,
