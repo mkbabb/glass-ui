@@ -336,11 +336,14 @@ const retiredRootUtilities = [
 // cohesion-carved partials. Read them as the concatenated cascade (the same
 // `readMonolith` reader the W-CSS1 gates repointed to) so a declaration-scan
 // keeps finding the rule it found in the pre-carve monolith. Non-carved files
-// (theme.css, SFCs) fall through to a plain read.
+// (SFCs) fall through to a plain read. AZ.W-CARVE extended the carve to
+// theme.css + dock-controls.css — both join the composed read.
 const CARVED_MONOLITHS: Record<string, string> = {
     "src/styles/tokens.css": "tokens",
     "src/styles/glass.css": "glass",
     "src/styles/utilities.css": "utilities",
+    "src/styles/theme.css": "theme",
+    "src/styles/dock-controls.css": "dock-controls",
 };
 function readStyle(file: string): string {
     const carved = CARVED_MONOLITHS[file];
@@ -427,7 +430,7 @@ describe("root style surface", () => {
     });
 
     it("maps floating z-index utilities through root tokens", () => {
-        const theme = readFileSync("src/styles/theme.css", "utf8");
+        const theme = readStyle("src/styles/theme.css");
 
         expect(theme).toContain("--z-index-hovercard: var(--z-hovercard);");
         expect(theme).toContain("--z-index-tooltip: var(--z-tooltip);");
