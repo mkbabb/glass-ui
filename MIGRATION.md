@@ -36,6 +36,8 @@
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
 > NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
+> ADDITIVE (3.12.0 staged): the Card `surface` union gains `"veil"` — the borderless/rimless
+> wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
 
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the

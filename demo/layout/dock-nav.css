@@ -50,6 +50,20 @@
     margin: 0;
 }
 
+/* R4-2 — the contextual facet pane's clean name (the per-story icon column was
+   removed; the active facet shows its name beside the facet switcher rail). A
+   compact vertical-reading label so the narrow rail stays an icon column. */
+.demo-sidebar-context-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: var(--text-mono-caption, 0.7rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--muted-foreground);
+    padding-block: 0.25rem;
+    white-space: nowrap;
+}
+
 /* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
    shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
    The active-item register + the leading-edge accent rule are SHIPPED by the

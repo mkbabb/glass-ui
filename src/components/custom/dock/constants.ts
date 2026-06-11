@@ -37,3 +37,15 @@ export const DOCK_MORPH_LABEL = "glass-ui:dock-morph-context";
  *  edge sweeping past the cursor, not a real exit. */
 export const HOVER_INTENT_MS = 60;
 export const EDGE_BAND_PX = 24;
+
+/* R5-TAP (R5-3) — the MORPH-SETTLE window for the click-integrity guard
+ * (`useDockClickIntegrity`). After the dock flips collapsed→expanded (a tap or a
+ * hover-approach click that initiated the expand), the layer swap shifts every
+ * control's coordinates as the box morphs. A click that arrives within this window
+ * AND lands on a DIFFERENT element than the one under the pointer at pointerdown is
+ * the post-swap-coordinate hit (a Home link under a gear tap, Next under a gear
+ * click) — it is swallowed. The window is the `--spring-dock` settle ENVELOPE; it is
+ * a floor backstop only — the live `[data-morphing]` attribute is the primary
+ * settle signal, this caps the window so a never-settling morph can't trap clicks
+ * forever. Mirrors the slides interim 320ms guard (now retired by this root fix). */
+export const MORPH_SETTLE_MS = 320;

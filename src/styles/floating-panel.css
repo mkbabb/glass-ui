@@ -10,6 +10,10 @@
         backdrop-filter: var(--glass-blur-resting);
         color: var(--popover-foreground);
         box-shadow: var(--glass-shadow-resting);
+        /* AZ.R5-4 — the comfortable panel inner-pad rung (consumer-verified the
+           tight default). Token-first: a consumer retunes every floating panel +
+           dropdown surface from `--panel-padding`. */
+        padding: var(--panel-padding);
         pointer-events: auto;
         /* V.W3.T9 — animation grammar routes through the canonical
            Tailwind `animate-floating-panel-in` utility (defined in
@@ -31,4 +35,15 @@
 .dropdown-menu-content,
 .dropdown-sub-content {
     font-family: var(--dropdown-menu-font, inherit);
+}
+
+/* AZ.R5-4 — the comfortable menu inner-pad rung. The dropdown content family
+   reads the shared `--panel-padding` token (the prior hand-set `p-1` was the
+   tight floor the user flagged on the slides deck). Token-first: one override
+   retunes every teleported menu surface. Unlayered like the font rule above —
+   the `p-1`/literal Tailwind pad was removed from the SFC `cn()` chains so this
+   is the sole padding authority. */
+.dropdown-menu-content,
+.dropdown-sub-content {
+    padding: var(--panel-padding);
 }

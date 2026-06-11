@@ -193,9 +193,59 @@
        the floor so the cascade re-resolves at touch scale. */
     @media (pointer: coarse) {
         .glass-dock[data-density] {
-            --dock-local-scale: var(--dock-mobile-scale, 1);
+            /* R5-2 — the coarse-register DEFAULT lives in the FALLBACK, NOT a
+               hard-pin. The coarse dock painted ~22% too big (the global
+               --ui-coarse-scale 1.5 → an ~80px collapsed pill). The dock-layer
+               comfort floors at a TIGHTER coarse register than the global --ui-scale
+               (the dock is a dense chrome strip, not a body control): --dock-local-scale
+               falls back to --dock-coarse-scale (≈0.78; × the 1.5 global = ~1.17
+               effective → a ~60px collapsed pill). The consumer knob --dock-mobile-scale
+               WINS the fallback when set on ANY ancestor (inherited in, no specificity
+               war against this block — the dead-knob trap a hard `--dock-mobile-scale:
+               0.78` here would re-create), so a consumer who wants the dock to MATCH
+               the global comfort sets --dock-mobile-scale: 1; one who wants it larger
+               sets >1. The touch floor stays held by the `max(…, --dock-control-floor)`
+               clamp in every scaled control-size (the lift just below). */
+            --dock-local-scale: var(--dock-mobile-scale, var(--dock-coarse-scale, 0.78));
+            /* R5-1 — RE-DECLARE --dock-scale HERE so the consumer knob reaches the
+               geometry cascade. The :root definition (offsets-sizing.css) computes
+               `calc(var(--ui-scale) * var(--dock-local-scale, 1))` AT :root, where
+               --dock-local-scale is the frozen identity 1 — custom-property
+               SUBSTITUTION resolves --dock-scale once at its declaring element, so
+               the descendant --dock-local-scale lift on THIS block never re-flowed
+               into it (the AX.W55 substitution-vs-inheritance trap, 3rd recurrence).
+               Re-declaring --dock-scale on the SAME element that lifts
+               --dock-local-scale makes the var() resolve against the lifted value, so
+               the --dock-mobile-scale / --dock-coarse-scale knobs reach every
+               `calc(<base> * --dock-scale)` geometry leg. Identical to the :root
+               formula by construction. */
+            --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1));
             --dock-control-floor: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
+            /* R5-1 SWEEP — the OTHER :root tokens that derive from --dock-scale freeze
+               it at the :root value (where --dock-local-scale is the identity 1), so the
+               R5-2 dock-local 0.78 register never reaches them: the SAME
+               substitution-vs-inheritance trap, one level out. With --dock-scale now
+               re-declared ABOVE, RE-RESOLVE each derived token on THIS element so it
+               reads the dock-local --dock-scale (else --dock-icon-glyph /
+               --dock-collapsed-padding / --dock-layer-tab-size paint at the global 1.5×
+               while the density box paints at 1.17× — a desync the R5-2 register would
+               introduce). The formulas are IDENTICAL to their :root definitions; only
+               the resolution element moves so the lifted --dock-scale flows in. */
+            --dock-icon-glyph: calc(1.25rem * var(--dock-scale));
+            --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
+            --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
+            /* --dock-collapsed-summary-min-size derives from --dock-layer-height (the
+               density-resolved control height on .glass-dock[data-density]) — but its
+               :root definition reads --dock-layer-height at :root, where density.css
+               never sets it, so it froze at the inline 2.5rem fallback × 0.85 = 34px
+               (the pre-existing freeze, independent of R5-2). Re-resolving it HERE reads
+               the density-painted --dock-layer-height so the collapsed circle FLOOR
+               tracks the dock scale (the "perfect circle" the user named scales on touch
+               with the box, not a frozen 34px floor). */
+            --dock-collapsed-summary-min-size: calc(
+                var(--dock-layer-height, 2.5rem) * 0.85
+            );
         }
     }
 }

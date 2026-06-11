@@ -205,13 +205,37 @@ add(
     "the dock density geometry cascade still reads var(--dock-scale) (the reconcile cascades through it for free)",
 );
 // The dock coarse block honors the GLOBAL axis — it sets --dock-local-scale (the
-// stack-extra), NOT a parallel hardcoded --dock-scale: 1.5.
+// stack-extra) falling back to the compact coarse register (--dock-coarse-scale),
+// NOT a parallel hardcoded --dock-scale: 1.5. (R5-2 — the fallback carries the
+// dock-layer compact default so the coarse pill is ~60px, not the ~80px the bare
+// global --ui-coarse-scale 1.5 painted; the --dock-mobile-scale knob wins it.)
 add(
     "dock-coarse-honors-global",
-    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-density\]\s*\{[\s\S]*?--dock-local-scale:\s*var\(--dock-mobile-scale,\s*1\)/s.test(
+    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-density\]\s*\{[\s\S]*?--dock-local-scale:\s*var\(\s*--dock-mobile-scale,\s*var\(--dock-coarse-scale,/s.test(
         dockOverflow,
     ) && !/--dock-scale:\s*var\(--dock-mobile-scale/.test(dockOverflow),
-    "the dock coarse block sets --dock-local-scale (the stack-extra), NOT a parallel --dock-scale: 1.5 (no double-scale)",
+    "the dock coarse block sets --dock-local-scale: var(--dock-mobile-scale, var(--dock-coarse-scale, …)) (the knob over the compact coarse default), NOT a parallel --dock-scale: 1.5 (no double-scale)",
+);
+// R5-1 — THE KNOB-REACHES-GEOMETRY WITNESS (born-RED on the pre-fix tree). The
+// coarse block must RE-DECLARE --dock-scale on the SAME .glass-dock[data-density]
+// element that lifts --dock-local-scale, so the descendant --dock-local-scale lift
+// re-flows into --dock-scale (custom-property substitution resolves --dock-scale at
+// its declaring element — the :root definition froze --dock-local-scale at 1, so the
+// --dock-mobile-scale consumer knob never reached the geometry cascade: the AX.W55
+// substitution-vs-inheritance trap, 3rd recurrence). The re-declared formula is
+// IDENTICAL to the :root one by construction.
+add(
+    "dock-coarse-redeclares-scale",
+    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-density\]\s*\{[\s\S]*?--dock-scale:\s*calc\(\s*var\(--ui-scale\)\s*\*\s*var\(--dock-local-scale,\s*1\)\)/s.test(
+        dockOverflow,
+    ),
+    "the coarse block RE-DECLARES --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1)) on .glass-dock[data-density] so the --dock-mobile-scale knob reaches the geometry cascade (R5-1 — the substitution-vs-inheritance re-declare; the live π readback ratifies the painted size delta)",
+);
+// R5-2 — the dock-layer compact coarse register is MINTED at :root (overridable).
+add(
+    "dock-coarse-scale-minted",
+    /--dock-coarse-scale:\s*0?\.78\s*;/.test(tokens),
+    "--dock-coarse-scale: 0.78 minted (the dock-layer compact coarse default — a tighter register than the global --ui-coarse-scale 1.5; ~60px collapsed pill, the WCAG-44px floor held by the control-size clamp)",
 );
 
 // ── 6. The coarse-pointer amplification is GLOBAL (RED 5 — ONE touch scale) ──────

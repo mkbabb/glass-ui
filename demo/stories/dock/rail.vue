@@ -257,25 +257,5 @@ const railLayerIds = railLayers.map((l) => l.id);
                 </GlassDock>
             </div>
         </section>
-
-        <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-subheading text-foreground">One dock taxonomy</h2>
-            <p>
-                A dock is HORIZONTAL or VERTICAL — one
-                <code class="rounded bg-muted px-1">orientation</code> axis, no second way to express
-                "vertical." Both orientations carry the layering system AND the collapse / morph /
-                shrink machinery (a vertical dock morphs its
-                <code class="rounded bg-muted px-1">height</code>, a horizontal dock its
-                <code class="rounded bg-muted px-1">width</code>); a vertical nav column that wants the
-                static always-expanded look passes
-                <code class="rounded bg-muted px-1">always-expanded</code>.
-            </p>
-            <p>
-                The ONLY "rail" left in the dock band is the
-                <code class="rounded bg-muted px-1">.dock-layer-rail</code> switcher inside a
-                <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> (Dock Layers) — a tab strip,
-                not a nav column. The noun is otherwise free.
-            </p>
-        </section>
     </StoryPage>
 </template>

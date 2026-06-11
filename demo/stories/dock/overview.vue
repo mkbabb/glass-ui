@@ -326,7 +326,49 @@ function togglePlay() {
 
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-foreground">
-                Dock as a portal host — the navigation-layer / no-glass-on-glass contract
+                Tap and click land where you aimed
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                A tap on the collapsed pill, or a click during the hover-expand morph, must land on the
+                control it was AIMED at — never on whatever the layer swap moves under the pointer. The
+                summary control here is a Settings gear; on expand a different control occupies its old
+                coordinate. The dock scopes the pass-through to the pressed element's identity, so the gear
+                tap can never activate the swapped-in control under the same point.
+            </p>
+            <div
+                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                data-testid="dock-tap-capture-frame"
+            >
+                <!-- data-testid="dock-tap-capture" — the deterministic R5-TAP (R5-3)
+                     click-integrity capture surface (a demo-private test affordance,
+                     same pattern as dock-capture; a plain root data attr, NOT the
+                     container-name prop). It mirrors the slides deck's nav-pattern: a
+                     collapsed gear-SUMMARY control whose post-expand coordinate hosts a
+                     DIFFERENT activatable control (Skip), so the identity-scoped
+                     pass-through is genuinely exercised — a tap/click that races the
+                     morph and lands on the swapped-in control by coordinate is the
+                     defect the guard catches. The short :collapse-delay keeps the
+                     collapse baseline fast. No behavioral change. -->
+                <GlassDock :collapse-delay="600" data-testid="dock-tap-capture">
+                    <DockIconButton aria-label="Skip back"><SkipBack /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><ChevronDown /></DockIconButton>
+                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
+                    <DockIconButton aria-label="Skip forward"><SkipForward /></DockIconButton>
+                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
+                    <template #collapsed>
+                        <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    </template>
+                </GlassDock>
+            </div>
+            <p class="text-xs text-muted-foreground">
+                The settled click (after the morph) reaches the control normally — only the racing,
+                identity-mismatched click is swallowed.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-foreground">
+                Menus inside a dock teleport out
             </h2>
             <p class="text-sm text-muted-foreground">
                 A dropdown or menu mounted inside a dock MUST be wired into the dock's
@@ -353,7 +395,7 @@ function togglePlay() {
 
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-foreground">
-                Overflow wrap — content-driven multi-row reflow (W04)
+                Overflow wrap — content reflows to multiple rows
             </h2>
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the row to
@@ -413,7 +455,7 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-foreground">Big dock — card shell + tile grid (W3b)</h2>
+            <h2 class="text-sm font-semibold text-foreground">Big dock — card shell + tile grid</h2>
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">shape="card"</code> gives a finite concentric
                 card radius (not a stadium pill); <code class="rounded bg-muted px-1">layout="grid"</code>

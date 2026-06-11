@@ -5,7 +5,7 @@
 // isTransitioning flag lifecycle) lives in ./composables/useDockMorphWindow. This
 // SFC composes the dual-layer grid, the axis-aware expand/collapse transition, and
 // the pointer/focus hold machinery.
-import { computed, onMounted, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, onMounted, ref, useId, useSlots, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
@@ -24,6 +24,16 @@ import {
 } from "./composables/dockMorphContext";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockMorphWindow } from "./composables/useDockMorphWindow";
+import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
+
+/* AZ R4-RAIL attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
+   (the rail's non-clipping positioning context), never the consumer's surface.
+   Fall-through attrs (class, data-testid, aria-*, the container styles every
+   gate + consumer targets via `.glass-dock[...]`) belong on the `.glass-dock`
+   root exactly as before the frame existed — `inheritAttrs: false` + an explicit
+   `v-bind="$attrs"` on the inner dock div keep the frame byte-transparent to
+   every existing selector contract. */
+defineOptions({ inheritAttrs: false });
 
 /* AZ.W-DOCK-TAXONOMY (arm a) — the prop contract is ONE shape (DockProps, in
    useDockShellProps). The `variant` discriminant is gone: there is no
@@ -111,6 +121,23 @@ provideDockContext({
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
+/* AZ.W-RAIL-EXTEND (R4-1) — the `#rail` chrome PERSISTENCE shell.
+   The `.glass-dock` root carries `contain: paint` + `backdrop-filter` + (on a
+   vertical always-expanded rail) `overflow-y: auto` — ALL THREE hard-clip every
+   descendant to the dock's border box, so an absolutely-positioned `#rail` slot
+   rendered as a dock CHILD can NEVER paint beyond the edge (it gets swallowed at the
+   bottom — the R4-1 "black blob clipped at the dock edge"). The only correct escape
+   is to render the rail as a SIBLING of `.glass-dock`, anchored to a thin
+   non-clipping positioning wrapper (`.glass-dock-frame`). The wrapper is present
+   ONLY when a `#rail` is authored, so a dock with no rail is byte-identical to
+   before (no extra DOM). When wrapped, the dock's flow/position-mode lives on the
+   shell (the dock shrink-wraps inside it); the `.glass-dock` keeps its own
+   fixed/sticky behaviour for the no-rail path. Rail consumers are inline vertical
+   docks (SidebarDock, the dock/rail story), so the shell stays `inline-flex`/inline
+   flow. */
+const slots = useSlots();
+const hasRail = computed(() => !!slots.rail);
+
 /* AX.W02 — ONE morph orchestrator per dock. W01 established the single-scalar
    `--dock-morph-t` spring; W02 folds the outer collapse↔expand pair AND every
    nested `<DockLayerGroup>` pane-swap onto ONE engine. The dock is modelled as a
@@ -181,6 +208,20 @@ const { markTransitioning, onDockTransitionDone } = useDockMorphWindow(
     isTransitioning,
 );
 
+/* R5-TAP (R5-3) — the CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
+   approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
+   so a mid-morph layer swap can never activate a DIFFERENT control under the
+   stationary pointer (the deck's Home-under-gear-tap + gear-click-advances-slide
+   defects). The handlers ride the dock root in the CAPTURE phase; `markExpandFlip`
+   opens the morph-settle window on every collapsed→expanded flip. This retires the
+   consumer-side interim guards (slides' `@touchend.prevent` + 320ms capture-phase
+   click guard) — the `expanded` ref STAYS exposed (a protected binary-consumer
+   surface), the consumer just no longer needs a guard keyed off it. */
+const { onPointerDownCapture, onClickCapture, markExpandFlip } = useDockClickIntegrity({
+    rootEl: dockEl,
+    visualExpanded,
+});
+
 onMounted(() => {
     if (props.alwaysExpanded || !startCollapsed.value) {
         expand();
@@ -244,7 +285,12 @@ watch(touchGate.isActive, (isActive) => {
 
 watch(visualExpanded, (isExpanded) => {
     markTransitioning();
-    if (!isExpanded) {
+    if (isExpanded) {
+        // R5-TAP (R5-3) — a collapsed→expanded flip (tap-to-expand or hover/focus
+        // approach) opens the morph-settle window; a click that races the FLIP and
+        // lands on a swapped-in control is swallowed by the integrity guard.
+        markExpandFlip();
+    } else {
         touchGate.deactivate();
     }
 });
@@ -253,8 +299,27 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
 </script>
 
 <template>
+    <!--
+        AZ.W-RAIL-EXTEND (R4-1) — the dock is ALWAYS wrapped in a thin shell, but the
+        shell is `display: contents` (layout-transparent, byte-identical) UNTIL a
+        `#rail` is authored, at which point it becomes a NON-clipping positioning
+        context (`data-has-rail`). The `<DockRail>` then renders as a SIBLING of
+        `.glass-dock` (NOT a descendant), anchored to this shell, so it escapes the
+        dock's `contain: paint` + `backdrop-filter` + `overflow` clip and its hairline
+        VISIBLY overruns the dock edge (the R4-1 fix — a dock CHILD can never paint past
+        the containment box, the cause of the clipped "black blob"). The dock's own
+        position-mode (`fixed`/`sticky`/`inline`) stays on `.glass-dock`; the
+        `display:contents` shell does not interpose a box on the no-rail path. Rail
+        consumers are inline vertical docks (SidebarDock, the dock/rail story).
+    -->
+    <div
+        class="glass-dock-frame"
+        :class="orientation"
+        :data-has-rail="hasRail || undefined"
+    >
     <div
         ref="dockEl"
+        v-bind="$attrs"
         class="glass-dock"
         :class="[
             orientation,
@@ -277,6 +342,8 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         @touchstart="onTouchStart"
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
+        @pointerdown.capture="onPointerDownCapture"
+        @click.capture="onClickCapture"
         @transitionend="onDockTransitionDone"
         @transitioncancel="onDockTransitionDone"
     >
@@ -331,18 +398,19 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             </div>
         </div>
 
-        <!--
-            AZ.W-RAIL-EXTEND — the `#rail` CHROME slot (the W-GOD1-booked carve, landed
-            here). It is a root sibling of `.dock-layers`, rendered OUTSIDE the clipped
-            morph aperture: the `.dock-hairline-slot` wrapper is `position: absolute`
-            relative to the dock root, so the root's morph-axis `overflow: clip` never
-            reaches it and its content (a `<DockRail>` hairline + context end-icon)
-            PERSISTS when the dock collapses (G2 — the persistence the in-pane switcher
-            rail lacks). Rendered only when authored ($slots.rail), so a dock with no
-            rail is byte-identical to before.
-        -->
-        <div v-if="$slots.rail" class="dock-hairline-slot">
-            <slot name="rail" />
-        </div>
+    </div>
+
+    <!--
+        AZ.W-RAIL-EXTEND (R4-1) — the `#rail` CHROME slot, rendered as a SIBLING of
+        `.glass-dock` inside the `.glass-dock-frame` (NOT a dock descendant). The
+        `.dock-hairline-slot` is `position: absolute` relative to the shell, so the
+        dock's `contain: paint` + `backdrop-filter` + `overflow` clip never reaches it
+        and the `<DockRail>` hairline VISIBLY overruns the dock edge + its context
+        end-icon PERSISTS when the dock collapses (G2 — the persistence the in-pane
+        switcher rail lacks; the R4-1 escape the dock-child render could not achieve).
+    -->
+    <div v-if="hasRail" class="dock-hairline-slot" :class="orientation">
+        <slot name="rail" />
+    </div>
     </div>
 </template>

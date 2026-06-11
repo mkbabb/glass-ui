@@ -93,7 +93,8 @@ export type {
 // Semantic enums that recur across consumer code paths (typed prop values,
 // switch dispatch, preset descriptors). `CardTier` is the 5-rung glass-ladder
 // surface vocabulary (wash/quiet/resting/floating/overlay) a consumer types its
-// `tier` prop against.
+// `tier` prop against; `CardSurface` is the orthogonal decoration register
+// (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";

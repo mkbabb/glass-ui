@@ -32,8 +32,17 @@ export type CardTier =
  *   cartoon  — the Memphis-sticker decoration layered on top of the resolved
  *              tier: 2px border, offset-stamp shadow, hover-lift. Composes onto
  *              ANY tier; the retired `<CartoonCard>` was `tier="quiet" surface="cartoon"`.
+ *   veil     — the text-legibility PLATE (R5-7). The wash/quiet glass fill +
+ *              blur with the border AND rim/highlight STRIPPED (border:none,
+ *              box-shadow:none — the boxed look reads as a "dividing line" on a
+ *              text plate). An optional radial feather axis (`--veil-feather`,
+ *              default none) fades the plate edges into the backdrop. Conceptually
+ *              the W55 adaptive-legibility tint applied as a LOCAL plate over a
+ *              busy/bright backdrop. Token-first (`--veil-*` rungs). It routes the
+ *              glass material through the `--glass-*` ladder, so `--glass-level` /
+ *              the W55 bright-bucket retune it in lockstep with every glass surface.
  */
-export type CardSurface = "glass" | "cartoon";
+export type CardSurface = "glass" | "cartoon" | "veil";
 
 /**
  * Specular catch-light register (AX.W09) — the pointer-anchored moving lens on a
@@ -56,8 +65,11 @@ interface Props extends PrimitiveProps {
     tier?: CardTier;
     /** Surface decoration register. `glass` (default) renders the tier's glass
      *  rung; `cartoon` overlays the `cartoon-surface` decoration utility (2px
-     *  border, offset-stamp shadow, hover-lift). Orthogonal to `tier`/`shadow`/
-     *  `grain` — exactly like `shadow` and `grain`; NOT a `tier` rung. */
+     *  border, offset-stamp shadow, hover-lift); `veil` overlays the borderless,
+     *  rimless `veil-surface` text-legibility plate (the wash/quiet glass fill +
+     *  blur with the boxed border + rim STRIPPED, an optional `--veil-feather`
+     *  radial edge fade). Orthogonal to `tier`/`shadow`/`grain` — exactly like
+     *  `shadow` and `grain`; NOT a `tier` rung. */
     surface?: CardSurface;
     /** Surface drop shadow via `--shadow-card`. Off for cards nested inside cards. */
     shadow?: boolean;
@@ -156,6 +168,15 @@ useStalePropWarning("Card");
                 // not a sticker).
                 specularArmed && 'glass-specular-track',
                 surface === 'cartoon' && 'cartoon-surface',
+                // R5-7 — the veil text-plate. Composes the borderless/rimless
+                // `veil-surface` decoration ON TOP of the resolved tier (the
+                // `@utility` wins by layer order, so its `border:none`/
+                // `box-shadow:none`/`background:var(--veil-bg)` strip the rung's
+                // boxed look). It routes the glass material through the
+                // `--glass-*` ladder (cohesion-sanctioned); the `shadow` prop is a
+                // no-op here (veil's rim is stripped by design — the box-shadow:
+                // none clause below covers it).
+                surface === 'veil' && 'veil-surface',
                 shadow && surface === 'glass' && 'shadow-card',
                 !grain && '[&::after]:hidden',
                 props.class,

@@ -1,20 +1,28 @@
-/* AZ.W-RAIL-EXTEND — the net-new hairline-rail facility's beyond-edge geometry.
+/* AZ.W-RAIL-EXTEND (+ R4-1) — the net-new hairline-rail facility's beyond-edge geometry.
  *
- * `<DockRail>` renders in GlassDock's `#rail` chrome slot OUTSIDE the clipped morph
- * aperture (the `.dock-hairline-slot` wrapper is `position: absolute` relative to the
- * dock root, so the root's morph-axis `overflow: clip` never clips it — it PERSISTS
- * when the dock collapses, the whole point of the facility, G2).
+ * THE R4-1 ARCHITECTURE FIX. The `.glass-dock` root carries `contain: paint` +
+ * `backdrop-filter` + (on a vertical always-expanded rail) `overflow-y: auto` — ALL
+ * THREE hard-clip every descendant to the dock's border box. An absolutely-positioned
+ * `#rail` rendered as a dock CHILD could NEVER paint past that box: it was swallowed at
+ * the bottom edge (the R4-1 "black blob clipped at the dock edge" the user audited — the
+ * dock-icon-button is transparent-at-rest by design, so the clipped half-circle read as
+ * a dark blob). The escape: GlassDock now renders `<DockRail>` as a SIBLING of
+ * `.glass-dock` inside a `.glass-dock-frame` (a `display:contents` shell that becomes
+ * a NON-clipping positioning context only when `data-has-rail`). The `.dock-hairline-slot`
+ * is `position: absolute` relative to THAT shell — outside the dock's containment — so the
+ * hairline VISIBLY overruns the dock edge and the context end-icon PERSISTS on collapse
+ * (G2). No `contain`, no `backdrop-filter`, no `overflow` on the shell → nothing clips it.
  *
  * The hairline is composed from the `--border-hairline` token PAIR (the 0.5px
  * catch-light + under-shadow the dock + instrument-chassis already speak) via
  * `box-shadow` — a whisper, NEVER a hard `1px solid` rule (R1). The hairline OVERRUNS
  * the dock content box by `--dock-rail-extend-length` (R3 — the beyond-edge extent),
- * a dock-scoped geometry knob a consumer overrides. The paint is PERPENDICULAR to the
- * dock layout axis (the `<DockSeparator>` idiom extended past the edge):
- *   - row dock (horizontal)  → the rail is a horizontal run; the hairline overruns
- *                              past the block edge
- *   - column dock (vertical) → the rail is a vertical run; the hairline overruns past
- *                              the block edge
+ * a dock-scoped geometry knob a consumer overrides.
+ *
+ * Because the rail is dock CHROME floating OUTSIDE the dock substrate, its end-icon
+ * carries its OWN glass-floating register (the dock-surface blur + the floating-tier
+ * fill + the edge-light rim) — it cannot borrow the dock's plate the way an in-dock
+ * `.dock-icon-button` does (that one is transparent-at-rest, reading the dock beneath).
  *
  * @import-ed by dock.css into the SAME `@layer components` as the other partials.
  */
@@ -27,15 +35,35 @@
         --dock-rail-extend-length: calc(2.5rem * var(--dock-scale, 1));
     }
 
-    /* The chrome-slot wrapper — rendered by GlassDock OUTSIDE the `.dock-layers` clip
-       aperture (a flex sibling of `.dock-persistent`), then lifted out of flow so the
-       morph clip never reaches it. Anchored to the dock's `position` edge. */
+    /* The dock-frame wrapper. DEFAULT (`display: contents`) is layout-transparent
+       — the dock behaves as if the wrapper is not there (byte-identical no-rail path,
+       no positioning context interposed, the dock keeps its own fixed/sticky/inline
+       mode). When a `#rail` is authored it lifts to a real NON-clipping positioning
+       context so the abs-positioned rail slot anchors to the dock box yet escapes the
+       dock's `contain: paint` / `backdrop-filter` / `overflow` clip. */
+    .glass-dock-frame {
+        display: contents;
+    }
+    .glass-dock-frame[data-has-rail] {
+        display: inline-flex;
+        position: relative;
+        /* No containment, no overflow, no blur — the WHOLE point: the rail must paint
+           beyond the dock box. The wrapper shrink-wraps the dock (inline-flex) so its
+           box == the dock box and the rail anchors to the true edge. */
+    }
+    .glass-dock-frame[data-has-rail].vertical {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* The chrome-slot wrapper — a `position: absolute` sibling of `.glass-dock`,
+       anchored to the dock-frame (NOT the dock box), so the dock's clip never reaches it.
+       It paints nothing itself; `<DockRail>` owns the hairline + icon. */
     .dock-hairline-slot {
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* The slot itself paints nothing — `<DockRail>` owns the hairline + icon. */
         pointer-events: none;
         z-index: 1;
     }
@@ -44,26 +72,26 @@
         pointer-events: auto;
     }
 
-    /* Horizontal (row) dock — the rail runs along the block (bottom/top) edge; the
-       hairline overruns the inline extent past the dock content box. */
-    .glass-dock:not(.vertical) .dock-hairline-slot {
-        inset-inline: calc(-1 * var(--dock-rail-extend-length)) auto;
-        inset-block-end: calc(-1 * var(--dock-rail-extend-length));
-    }
-    .glass-dock:not(.vertical) .dock-hairline-slot.at-end {
-        inset-inline: auto calc(-1 * var(--dock-rail-extend-length));
+    /* Vertical (column) dock — the rail hangs BELOW the dock's block (bottom) edge,
+       centered on the dock's inline axis: a short hairline continuing the rail's line
+       DOWNWARD past the edge, terminating in the context end-icon. The slot's top sits
+       AT the dock's bottom edge (`inset-block-start: 100%`) and extends down by the
+       overrun length, so the hairline + icon live wholly BELOW the dock. */
+    .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
+        inset-block-start: 100%;
+        inset-inline: 0;
+        flex-direction: column;
+        /* a small breath between the dock edge and the hairline start */
+        padding-block-start: 0.375rem;
     }
 
-    /* Vertical (column) dock — the rail runs along the block (bottom) edge; the
-       hairline overruns the block extent past the dock content box. */
-    .glass-dock.vertical .dock-hairline-slot {
-        inset-block-end: calc(-1 * var(--dock-rail-extend-length));
+    /* Horizontal (row) dock — the rail runs along the dock's block (bottom) edge and
+       overruns INLINE past the dock's trailing edge; the icon sits at the overrun end. */
+    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
+        inset-block-start: 100%;
         inset-inline-start: 0;
-        inset-inline-end: 0;
-    }
-    .glass-dock.vertical .dock-hairline-slot.at-start {
-        inset-block: calc(-1 * var(--dock-rail-extend-length)) auto;
-        inset-block-end: auto;
+        flex-direction: row;
+        padding-block-start: 0.375rem;
     }
 
     /* The hairline element itself — a flex row/column carrying the overrunning
@@ -73,50 +101,90 @@
         position: relative;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: var(--dock-layer-gap, 0.375rem);
     }
 
-    /* Row dock → the rail is a horizontal run; the hairline is a horizontal line that
+    /* Column (vertical) dock → the rail is a VERTICAL run hanging below the dock; the
+       hairline is a vertical line that overruns the block axis by
+       `--dock-rail-extend-length`, then the end-icon caps it. */
+    .dock-hairline-extend.vertical {
+        flex-direction: column;
+    }
+    .dock-hairline-extend.vertical::before {
+        content: "";
+        inline-size: 1px;
+        /* R3 — the beyond-edge overrun: the painted hairline length IS the extend
+           overrun, so the line visibly runs past the dock edge down to the icon. */
+        block-size: var(--dock-rail-extend-length);
+        flex: 0 0 auto;
+        /* R1 — the `--border-hairline` token pair (catch-light + under-shadow), NOT a
+           hard `border: 1px solid`. */
+        box-shadow: var(--border-hairline);
+    }
+
+    /* Row dock → the rail is a HORIZONTAL run; the hairline is a horizontal line that
        overruns inline by `--dock-rail-extend-length`. */
     .dock-hairline-extend.horizontal {
         flex-direction: row;
     }
     .dock-hairline-extend.horizontal::before {
         content: "";
-        flex: 1 1 auto;
         block-size: 1px;
-        /* R3 — the beyond-edge overrun: the hairline's painted length includes the
-           extend overrun past the dock content box. */
         min-inline-size: var(--dock-rail-extend-length);
-        /* R1 — the `--border-hairline` token pair (catch-light + under-shadow), NOT a
-           hard `border: 1px solid`. */
-        box-shadow: var(--border-hairline);
-    }
-
-    /* Column (vertical) dock → the rail is a vertical run; the hairline is a vertical
-       line that overruns the block axis by `--dock-rail-extend-length`. */
-    .dock-hairline-extend.vertical {
-        flex-direction: column;
-    }
-    .dock-hairline-extend.vertical::before {
-        content: "";
         flex: 1 1 auto;
-        inline-size: 1px;
-        min-block-size: var(--dock-rail-extend-length);
         box-shadow: var(--border-hairline);
     }
 
     /* `extent="inset"` keeps the hairline flush at the edge (no overrun) — the
        successor-deferral / separator-like length. */
+    .dock-hairline-extend.extent-inset.vertical::before {
+        block-size: 0;
+    }
     .dock-hairline-extend.extent-inset.horizontal::before {
         min-inline-size: 0;
     }
-    .dock-hairline-extend.extent-inset.vertical::before {
-        min-block-size: 0;
-    }
 
-    /* The end-icon control sits at the overrun end — a compact dock control. */
+    /* The end-icon control — a real FLOATING glass register (R4-1). It is chrome
+       OUTSIDE the dock substrate, so it carries its OWN glass plate (the dock-surface
+       blur + the floating-tier fill + the edge-light rim + a soft drop) rather than
+       borrowing the transparent in-dock `.dock-icon-button` recipe (which would read
+       as a bare dark glyph — the R4-1 blob). It reads the SAME `--dock-control-*` /
+       glass tokens the dock speaks, so it re-tints with the dock under `.dark` + the
+       adaptive bucket for free. */
     .dock-hairline-extend-icon {
         flex-shrink: 0;
+        background: var(--dock-control-active-bg, var(--glass-bg-floating)) !important;
+        /* §6 EASING DOCTRINE — the surface channel (bg/border/color/box-shadow) cross-
+           fades on `--ease-standard` (a bezier, NO overshoot), NEVER a spring. The
+           inherited dock-control recipe leaked `--spring-smooth` onto `background-color`
+           here (a surface prop wobbling on a spring — the R4-1 "janky" hover); pin the
+           coherent surface set to the standard ease, the scale/transform stay on the
+           dock-control spring untouched. */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard);
+        /* The floating-tier blur read from the ROOT token (the icon is OUTSIDE the
+           dock, so it cannot inherit the dock-local `--dock-surface-blur`). */
+        backdrop-filter: var(--glass-blur-floating);
+        -webkit-backdrop-filter: var(--glass-blur-floating);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+        border-radius: var(--radius-pill);
+    }
+    .dark .dock-hairline-extend-icon {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
+    }
+    /* The hover lift — the dock-control register: the floating plate firms, the glyph
+       wakes. Rides the surface easing doctrine (§6: bg/box-shadow → --ease-standard). */
+    .dock-hairline-extend-icon:hover {
+        background: var(--dock-control-active-bg, var(--glass-bg-floating)) !important;
     }
 }

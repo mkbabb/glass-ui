@@ -46,3 +46,56 @@
         box-shadow: var(--shadow-cartoon-lg);
     }
 }
+
+/* ── Veil surface decoration (R5-7) ──────────────────────────────
+   The text-legibility PLATE register, ratified by three slides sites (the
+   deck cover subtitle / standfirst / closer lede). Conceptually the W55
+   adaptive-legibility tint applied as a LOCAL plate: a translucent glass
+   fill + blur that darkens content-on-glass over a busy/bright backdrop so
+   text clears AA, but with the BOXED look STRIPPED — no border, no rim, no
+   highlight (the user's read: the border+rim "reads as a dividing line on a
+   text plate"). It is the `surface` sibling of `cartoon` — a decoration-only
+   utility, NOT a tier of its own.
+
+   It routes the glass MATERIAL through the `--glass-*` ladder (`--veil-bg`
+   defaults to the `quiet` rung's adaptive-tint mix, `--veil-blur` to the
+   quiet blur), so the glass-cohesion model sees a sanctioned glass register
+   (the level knob scales the blur; the W55 bright-bucket darkens the fill via
+   the same inheriting tint axis the rung already reads). What it carries on TOP
+   of a bare rung is the THREE veil deltas, each a `--veil-*` knob a consumer
+   retunes:
+
+     border  : none            (--veil-border, the dividing-line strip)
+     shadow  : none            (--veil-shadow, the rim/highlight strip)
+     feather : none (default)  (--veil-feather — an OPTIONAL radial mask that
+               fades the plate edges into the backdrop; off by default so the
+               plate is a clean rectangle, on when a consumer wants the
+               soft-edged "bleed into the page" text-plate look)
+
+   <Card surface="veil"> selects it; `--veil-bg`/`--veil-blur` ride the same
+   `--glass-*` rungs as the ladder, so one `--glass-level` / `--glass-backdrop`
+   override retunes it in lockstep with every other glass surface. */
+@utility veil-surface {
+    /* The glass material — routed through the `--glass-*` ladder so the
+       cohesion model reads a sanctioned glass register, and the W55 adaptive
+       darken (the inheriting `--glass-tint-*` axis) + the `--glass-level` clarity
+       knob reach the plate with NO veil-local recipe. Defaults to the `quiet`
+       rung; a consumer re-points `--veil-bg`/`--veil-blur` to any other rung. */
+    --veil-bg: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+    --veil-blur: var(--glass-blur-quiet);
+    /* The three veil deltas over a bare rung — each overridable. */
+    --veil-border: none;
+    --veil-shadow: none;
+    --veil-feather: none;
+
+    background: var(--veil-bg);
+    backdrop-filter: var(--veil-blur);
+    border: var(--veil-border);
+    box-shadow: var(--veil-shadow);
+    /* The optional radial feather — a `mask-image` only painted when
+       `--veil-feather` is set to a gradient (default `none` = no mask = a clean
+       rectangle). `mask-image: none` is the identity, so the default plate is
+       unmasked. `mask-image` Baseline 2023-12 — a non-supporting engine ignores
+       it and keeps the clean rectangle. */
+    mask-image: var(--veil-feather);
+}

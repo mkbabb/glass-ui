@@ -180,7 +180,7 @@ function back() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Collapse-while-switching (one orchestrator)</h2>
+            <h2 class="text-subheading">Collapse while switching layers</h2>
             <p class="text-small text-muted-foreground">
                 A layer group inside a <strong>collapsible</strong> dock. Hover to expand;
                 switch panes via the rail. The dock box and the nested pane stack morph on
@@ -215,12 +215,11 @@ function back() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Vertical overflow (re-adoption proof)</h2>
+            <h2 class="text-subheading">Vertical overflow — a tall pane scrolls cleanly</h2>
             <p class="text-small text-muted-foreground">
                 A vertical <code class="rounded bg-muted px-1">DockLayerGroup</code> whose active
-                pane carries more rows than the resting height — it reflows cleanly without
-                fighting <code class="rounded bg-muted px-1">max-height</code> (the bbnf-buddy case
-                the inner grid chain used to lose).
+                pane carries more rows than the resting height — it scrolls its own block axis
+                cleanly without fighting <code class="rounded bg-muted px-1">max-height</code>.
             </p>
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock

@@ -1,0 +1,18 @@
+{
+  "wave": "AZ.R5-7",
+  "gate": "proof:card-veil",
+  "path": "Card surface=\"veil\" → .veil-surface decoration utility (borderless/rimless text-legibility plate)",
+  "darkArm": "token-adaptive BY CONSTRUCTION — veil-surface routes its material through the --glass-* ladder (--veil-bg defaults to the quiet rung's adaptive-tint mix, --veil-blur to --glass-blur-quiet). The W55 self-engage rules (glass/ladder.css :where(.glass-quiet, …)) lift --glass-tint-* + --muted-foreground over a bright backdrop, and --foreground flips light↔dark, so the plate darkens toward the legible ink in both modes with NO veil-local recipe and no hardcoded light literal.",
+  "consumers": [
+    {
+      "path": "demo/stories/display/card.vue",
+      "context": "demo story (the truth surface — staged over a busy Aurora backdrop)",
+      "evidence": "two <Card surface=\"veil\"> sites over the shared Aurora field: the hero text plate (tier=quiet) + the closer lede plate (tier=wash), plus the --veil-feather radial toggle and the prose documenting the borderless/rimless plate"
+    },
+    {
+      "path": "tests/components/ui/card/Card.test.ts",
+      "context": "unit test (veil-surface composition + orthogonality + specular-not-armed)",
+      "evidence": "surface=\"veil\" applies veil-surface + data-surface=veil; quiet+veil compose (glass-quiet rung still resolves); a veil surface never arms glass-specular-track even with an explicit specular opt-in"
+    }
+  ]
+}

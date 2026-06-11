@@ -173,6 +173,8 @@ jobs:
               run: npm run proof:no-nested-import
             - name: proof:no-test-in-src
               run: npm run proof:no-test-in-src
+            - name: proof:no-scoped-global
+              run: npm run proof:no-scoped-global
             - name: proof:spring-tokens-synced
               run: npm run proof:spring-tokens-synced
             - name: proof:animation-coherence
@@ -201,6 +203,8 @@ jobs:
               run: npm run proof:shadow-contract
             - name: proof:card-cartoon-consumers
               run: npm run proof:card-cartoon-consumers
+            - name: proof:card-veil
+              run: npm run proof:card-veil
             - name: proof:gate-script-parity
               run: npm run proof:gate-script-parity
             - name: proof:tag-parity

@@ -260,6 +260,22 @@
        strengthening, not a silent re-tint below AA). The live π readback ratifies. */
     --glass-tint-strength-aa:   20%;
 
+    /* R5-7 — the VEIL text-plate feather. The `veil-surface` decoration
+       (cards.css) paints a borderless/rimless translucent glass plate as a LOCAL
+       text-legibility surface over a busy backdrop; its `--veil-feather` axis is
+       an OPTIONAL `mask-image` that fades the plate edges into the page (the
+       soft-edged "bleed" the slides deck text plates use). The default is `none`
+       (a clean rectangle); a consumer opts into the feather by pointing
+       `--veil-feather` at this ready-made radial, or any `mask-image` value.
+       The 70%→100% falloff feathers the outer ~30% of the plate; override the
+       token to retune the fade radius library-wide. */
+    --veil-feather-radial: radial-gradient(
+        ellipse 100% 100% at 50% 50%,
+        black 0%,
+        black 70%,
+        transparent 100%
+    );
+
     /* AW.W23 — chromatic edge dispersion (the "polished glass" rim fringe Apple
        shows). A warm fringe on one edge + a cool fringe on the other, low-alpha,
        biased warm-cream/NCSU-red (NOT iOS-blue). Composed OVER the W22 uniform

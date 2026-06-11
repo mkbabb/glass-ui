@@ -143,6 +143,46 @@ describe("Card", () => {
         expect(root.attributes("data-surface")).toBe("cartoon");
         wrapper.unmount();
     });
+
+    // R5-7 — the veil text-plate surface (consumer context #2 for the
+    // proof:card-veil ≥2-consumer muster). `surface="veil"` overlays the
+    // borderless/rimless `veil-surface` decoration onto the resolved tier.
+    it("applies the veil-surface decoration when surface=veil", () => {
+        const wrapper = mount({
+            components: { Card },
+            template: `<Card surface="veil" class="veil">content</Card>`,
+        });
+
+        const root = wrapper.get(".veil");
+        expect(root.classes()).toContain("veil-surface");
+        expect(root.attributes("data-surface")).toBe("veil");
+    });
+
+    it("composes the veil surface onto any tier — orthogonal to tier", () => {
+        const wrapper = mount({
+            components: { Card },
+            template: `<Card tier="quiet" surface="veil" class="v2">x</Card>`,
+        });
+
+        const classes = wrapper.get(".v2").classes();
+        // The tier rung still resolves (the cohesion-sanctioned glass marker);
+        // the veil decoration layers on top and strips the border/rim by CSS.
+        expect(classes).toContain("glass-quiet");
+        expect(classes).toContain("veil-surface");
+    });
+
+    it("does not arm the moving-specular on a veil surface (rim is stripped by design)", () => {
+        const wrapper = mount({
+            components: { Card },
+            template: `<Card surface="veil" specular="subtle" class="v3">x</Card>`,
+        });
+
+        // The specular track is glass-surface-only; veil strips the rim, so it
+        // never wires the catch-light even with an explicit specular opt-in.
+        expect(wrapper.get(".v3").classes()).not.toContain(
+            "glass-specular-track",
+        );
+    });
 });
 
 // AI.W1-α — additive `shrink` modifier on <CardHeader> binds the 3-lane

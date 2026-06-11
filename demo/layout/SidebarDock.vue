@@ -34,6 +34,7 @@ import { cn } from "../../src/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";
+import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
 import { useLongPress } from "../eggs/useLongPress";
 
 const props = withDefaults(
@@ -51,7 +52,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ navigate: [] }>();
 
-const { current, firstOfCategory, goTo } = useStoryNavigation();
+const { current, firstOfCategory } = useStoryNavigation();
 
 const activeCategoryId = computed<string | null>(() => {
     const loc = current.value;
@@ -76,11 +77,6 @@ const primaryCategories = computed(() =>
 
 function go(categoryId: string): void {
     firstOfCategory(categoryId);
-    emit("navigate");
-}
-
-function goStory(categoryId: string, storyId: string): void {
-    goTo(categoryId, storyId);
     emit("navigate");
 }
 
@@ -153,6 +149,15 @@ function onWordmarkClick(e: MouseEvent): void {
 // dock-as-configurator-chrome idiom — GlassDock + DockIconButton). It dispatches
 // the SAME `glass-ui-demo:toggle-configurator` window event the `,` shortcut does
 // (PresetEditor.vue listens for it) — one event path, no parallel open machinery.
+//
+// AZ.R4-SHELL — the gear is the INTERACTIVE trigger, so it carries
+// `aria-expanded` reflecting the shared configurator open ref (the a11y contract —
+// the GlassDock root is presentational and must NOT carry aria-expanded; see the
+// CLAUDE.md GlassDock aria contract). `configOpen` is the SAME singleton the
+// PresetEditor binds its Sheet to, so the gear's announced state stays honest
+// whether the panel opened via the gear, the `,` shortcut, or the window event.
+const { open: configOpen } = useConfiguratorOpen();
+
 function openConfigurator(): void {
     window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-configurator"));
 }
@@ -248,12 +253,17 @@ function openConfigurator(): void {
             </Tooltip>
         </TooltipProvider>
 
-        <!-- AZ.W-DOCK-CONTEXT — the page-driven contextual facet group. A vertical
-             <DockLayerGroup> whose layer SET is the active section's facets
-             (route-keyed via useContextualDockLayers). Navigating between sections
+        <!-- AZ.W-DOCK-CONTEXT (+ R4-2) — the page-driven contextual FACET rail. A
+             vertical <DockLayerGroup> whose layer SET is the active section's facets
+             (route-keyed via useContextualDockLayers): navigating between sections
              swaps which facets the dock surfaces — the route→layer determinism, over
-             the EXISTING layer registry. Rendered only when the section carries >1
-             facet, behind a divider from the primary category nav above. -->
+             the EXISTING layer registry. R4-2: the prior per-entry icon column painted
+             EVERY story of a facet with the SAME facet glyph (an indistinguishable
+             stack — the "wtf are these options" noise). The labeled per-story
+             navigation already lives in the BottomDock; here the rail surfaces only the
+             facet switcher (distinct facet icons) with a single clean facet name in the
+             active pane. Rendered only when the section carries >1 facet, behind a
+             divider from the primary category nav above. -->
         <template v-if="showContextGroup">
             <DockSeparator />
             <DockLayerGroup
@@ -270,37 +280,7 @@ function openConfigurator(): void {
                     :label="layer.label"
                     :icon="layer.icon"
                 >
-                    <TooltipProvider :delay-duration="250">
-                        <Tooltip
-                            v-for="entry in layer.entries"
-                            :key="entry.storyId"
-                        >
-                            <TooltipTrigger as-child>
-                                <DockIconButton
-                                    type="button"
-                                    class="demo-sidebar-context-item tap-squish"
-                                    :aria-label="entry.label"
-                                    @click="
-                                        activeCategoryId &&
-                                        goStory(activeCategoryId, entry.storyId)
-                                    "
-                                >
-                                    <component
-                                        :is="layer.icon"
-                                        class="h-4 w-4 opacity-70"
-                                        aria-hidden="true"
-                                    />
-                                </DockIconButton>
-                            </TooltipTrigger>
-                            <TooltipContent
-                                v-if="showTooltips"
-                                side="right"
-                                :side-offset="10"
-                            >
-                                {{ entry.label }}
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <span class="demo-sidebar-context-label">{{ layer.label }}</span>
                 </DockLayer>
             </DockLayerGroup>
         </template>
@@ -323,6 +303,7 @@ function openConfigurator(): void {
                         type="button"
                         class="demo-sidebar-gear tap-squish"
                         aria-label="Open the glass-ui demo configurator"
+                        :aria-expanded="configOpen"
                         @click="openConfigurator"
                     >
                         <Settings2 class="h-4 w-4" aria-hidden="true" />

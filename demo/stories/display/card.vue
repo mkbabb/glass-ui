@@ -84,6 +84,11 @@ const cartoonAccents = [
     { id: "amber", label: "Amber §5", color: "var(--section-color-5)" },
     { id: "teal", label: "Teal §3", color: "var(--section-color-3)" },
 ];
+
+// R5-7 — the veil text plate. `surface="veil"` paints a borderless/rimless
+// translucent glass plate over a busy backdrop as a LOCAL text-legibility
+// surface. The `--veil-feather` toggle opts the soft radial edge fade in.
+const veilFeather = ref(false);
 </script>
 
 <template>
@@ -268,6 +273,89 @@ const cartoonAccents = [
                     <Button variant="outline">Discard</Button>
                 </div>
             </Card>
+        </section>
+
+        <!-- Veil surface — the borderless/rimless text-legibility plate. -->
+        <section class="flex flex-col gap-4">
+            <header class="flex flex-col gap-1">
+                <p class="section-label">surface — the veil text plate</p>
+                <p class="text-sm text-muted-foreground">
+                    <code class="font-mono text-xs">surface="veil"</code> is the
+                    text-legibility PLATE register — the wash/quiet glass fill +
+                    blur with the
+                    <code class="font-mono text-xs">border</code> AND
+                    rim/highlight STRIPPED (the boxed look reads as a "dividing
+                    line" on a text plate). Conceptually the W55 adaptive-tint
+                    applied as a LOCAL plate: it darkens content-on-glass over a
+                    busy/bright backdrop so text clears AA, without the box. The
+                    optional
+                    <code class="font-mono text-xs">--veil-feather</code> radial
+                    fades the plate edges into the page.
+                </p>
+            </header>
+
+            <div class="flex flex-wrap items-center gap-6">
+                <Label class="flex items-center gap-2">
+                    <Switch v-model="veilFeather" />
+                    <span class="text-sm">--veil-feather (radial edge fade)</span>
+                </Label>
+            </div>
+
+            <!-- Both veil consumers stage over the same busy Aurora backdrop —
+                 the canonical case the plate exists for: legible text over a
+                 high-frequency color field, no box. -->
+            <div class="relative overflow-hidden rounded-card">
+                <Aurora :config="DEFAULT_AURORA_CONFIG" class="absolute inset-0" />
+                <div class="relative z-10 flex flex-col gap-6 p-10 sm:p-16">
+                    <!-- Site 1 — the HERO text plate over the busy substrate. -->
+                    <Card
+                        surface="veil"
+                        tier="quiet"
+                        :grain="false"
+                        class="max-w-2xl p-8"
+                        :style="
+                            veilFeather
+                                ? { '--veil-feather': 'var(--veil-feather-radial)' }
+                                : undefined
+                        "
+                    >
+                        <p class="section-label">hero plate</p>
+                        <h2 class="mt-2 text-3xl font-semibold tracking-tight">
+                            Legible over anything.
+                        </h2>
+                        <p class="mt-3 text-base text-muted-foreground">
+                            A veil plate is the local-legibility move: the glass
+                            darkens toward ink over the bright aurora behind it so
+                            this standfirst clears contrast, but no border or rim
+                            boxes the text in. Toggle the feather to fade the plate
+                            into the field.
+                        </p>
+                    </Card>
+
+                    <!-- Site 2 — a befitting closer lede plate (a second
+                         consumer context — the deck's closer lede shape). -->
+                    <Card
+                        surface="veil"
+                        tier="wash"
+                        :grain="false"
+                        class="max-w-md self-end p-6 text-right"
+                        :style="
+                            veilFeather
+                                ? { '--veil-feather': 'var(--veil-feather-radial)' }
+                                : undefined
+                        "
+                    >
+                        <p class="text-lg font-medium">
+                            One knob over the page.
+                        </p>
+                        <p class="mt-2 text-sm text-muted-foreground">
+                            The wash rung reads even quieter — a whisper-plate for
+                            a closing lede that must stay readable without pulling
+                            focus from the backdrop.
+                        </p>
+                    </Card>
+                </div>
+            </div>
         </section>
 
         <!-- Scroll-pane recipe — wash tier + grain off + overflow + tabindex. -->

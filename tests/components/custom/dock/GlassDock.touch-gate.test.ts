@@ -168,6 +168,14 @@ describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
         expect(root.classList.contains("collapsed")).toBe(true);
 
         // ONE tap on the collapsed control — the gate resolves it as a real tap.
+        // THE FROZEN-CLOCK INVOKER TRAP (R5-TAP discovery): Vue's event invokers
+        // skip an event whose `_vts` stamp is <= their attach time. Under fake
+        // timers the clock is FROZEN, so when an ANCESTOR Vue listener (the R5-TAP
+        // @click.capture guard on the dock root) stamps the event at the same
+        // frozen tick this button's invoker attached, the button's handler is
+        // silently skipped — a test-harness artifact, impossible under real clocks
+        // (timestamps strictly increase). One tick separates attach from dispatch.
+        vi.advanceTimersByTime(1);
         const tap = dispatchTap(play, 0);
         vi.runAllTimers();
         await wrapper.vm.$nextTick();

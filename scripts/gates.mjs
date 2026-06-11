@@ -159,6 +159,12 @@ export const GATES = [
         note: "AZ.W-DOCK-FLICKER — the collapse-onset scale-pop + FLIP-thrash gate. W1 scale-guard source witness (.collapsed:hover scale scoped :not([data-morphing])), W2 wired-hysteresis source witness (useDockState getBoundingClientRect recheck + intent dwell referenced on enter/leave), W3 live real-mouse collapse-onset SCALE-pop assert on the still-wide box, W4 live cursor-at-edge no-flip assert, + the C2 baseline self-test bite. LIVE arm (real cursor for CSS :hover + the aurora visibility-park) → local-only like the other dock-animation-live gates; born-RED on both source and live at HEAD.",
     },
     {
+        id: "proof:dock-tap-integrity",
+        cmd: "proof:dock-tap-integrity",
+        tags: ["local"],
+        note: "R5-TAP (R5-3) — the collapsed-tap + hover-approach MORPH-RACE click-integrity gate. W1 source (useDockClickIntegrity identity scope + morph-settle window + the no-witnessed-press AT pass-through, wired @pointerdown.capture + @click.capture on the GlassDock root), W2 born-RED via git-show, W3 LIVE real-input replay on /dock/overview (touch tap activates no full-layer control; approach-click mid-morph activates none; the settled click reaches the control) + the R5-tap-race-baseline self-test. Local-only (real cursor + CDP touch); retires the slides interim arms; the expanded ref stays exposed.",
+    },
+    {
         id: "proof:dock-taxonomy",
         cmd: "proof:dock-taxonomy",
         tags: ["local", "ci", "release"],
@@ -560,6 +566,12 @@ export const GATES = [
         note: "AV.W14 — zero *.{test,spec,test-d} files + zero __tests__/ dirs under src/; all tests live in the top-level tests/ tree mirroring src/ (the glsl-port fixture rides with its tests). Bite: drop a *.test.ts back under src/ → RED",
     },
     {
+        id: "proof:no-scoped-global",
+        cmd: "proof:no-scoped-global",
+        tags: ["local", "ci"],
+        note: "AZ.R5-5 — zero ':global(' inside any <style scoped> block across src/ + demo/ (the recurring Vue scoped-:global() DROP trap, CSSOM-verified — the rule silently never emits; 3rd production recurrence). The working idiom is the plain-ancestor '.dark .x' form (design-idioms §8). Allowlist EMPTY at birth. Bite: drop a ':global(.dark) .x' into any scoped block → RED.",
+    },
+    {
         id: "proof:spring-tokens-synced",
         cmd: "proof:spring-tokens-synced",
         tags: ["local", "ci", "release"],
@@ -691,6 +703,12 @@ export const GATES = [
         cmd: "proof:card-cartoon-consumers",
         tags: ["local", "ci"],
         note: "AV.W4.C — the Card surface=\"cartoon\" ≥2-consumer muster (J inv 10). The cartoon dark arm is token-adaptive BY CONSTRUCTION (cartoon-surface reads only var(--shadow-cartoon-{md,lg}) which ride color-mix(... var(--shadow-color)); no light literal leaks). The gate locks ≥2 DISTINCT resolving consumer contexts (demo story + unit test) so the decoration is not substrate-without-consumer. Bite: drop a consumer to <2 → RED; cite a path that does not resolve at HEAD → RED",
+    },
+    {
+        id: "proof:card-veil",
+        cmd: "proof:card-veil",
+        tags: ["local", "ci"],
+        note: "AZ.R5-7 — the Card surface=veil text-plate gate. (A) SOURCE: @utility veil-surface is BORDERLESS + RIMLESS + FILL-ON-THE-LADDER (color-mix over --glass-bg-quiet through the W55 tint axis — a sanctioned glass register) + the optional --veil-feather mask axis; born-RED via the synthetic boxed fixture. (B) the >=2-consumer muster (the cartoon-consumers mirror). The painted darken rides the adaptive-tint axis. Bite: add a border/shadow to the veil or drop a consumer → RED.",
     },
     {
         id: "proof:gate-script-parity",

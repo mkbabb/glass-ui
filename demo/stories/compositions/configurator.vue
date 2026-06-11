@@ -257,7 +257,7 @@ cfg.cyclePreset()</code></pre>
     --bloom-yellow: var(--rainbow-pastel-yellow);
 }
 
-:global(.dark) .configurator-specimen {
+.dark .configurator-specimen {
     --bloom-blue: var(--rainbow-blue);
     --bloom-indigo: var(--rainbow-indigo);
     --bloom-violet: var(--rainbow-violet);

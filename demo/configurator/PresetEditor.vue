@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted } from "vue";
 import {
     Sheet,
     SheetContent,
@@ -16,10 +16,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../src/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "../../src/components/ui/radio-group";
 import { Label } from "../../src/components/ui/label";
 import { Button } from "../../src/components/ui/button";
-import { cn } from "../../src/utils/cn";
+import {
+    SegmentedTabs,
+    type SegmentedTabOption,
+} from "../../src/components/custom/tabs";
 import { PRESETS } from "../presets/manifest";
 import {
     FONT_OPTIONS,
@@ -27,17 +29,20 @@ import {
     type Density,
     type FontSlots,
 } from "./usePresetEditor";
+import { useConfiguratorOpen } from "./useConfiguratorOpen";
 import PresetEditorField from "./PresetEditorField.vue";
 
 const CONFIG_EVENT = "glass-ui-demo:toggle-configurator";
 
 const cfg = usePresetEditor();
-const open = ref(false);
+// The SHARED open singleton (AZ.R4-SHELL) — the gear control reflects this same
+// ref via aria-expanded. The Sheet binds it directly.
+const { open, toggle } = useConfiguratorOpen();
 
 // ─── External event wiring ────────────────────────────────────────────────
 
 function onToggleEvent(): void {
-    open.value = !open.value;
+    toggle();
 }
 
 onMounted(() => {
@@ -94,16 +99,40 @@ const motionModel = computed<boolean>({
     set: (v) => cfg.setField("motion", v),
 });
 
-const presetModel = computed({
+// ─── Preset — a short enum (default · neutral · custom) → the segmented register
+// (R4-4: glassy pill tabs, not bare radios). The active preset's prose rides a
+// description line BELOW the strip so the choice keeps its rationale. ──────────
+
+const PRESET_OPTIONS = computed<SegmentedTabOption[]>(() => [
+    ...PRESETS.map((p) => ({ label: p.label, value: p.id })),
+    { label: "Custom", value: "custom" },
+]);
+
+const presetModel = computed<string>({
     get: () => cfg.effective("preset"),
-    set: (v: string | null) => {
+    set: (v) => {
         if (v) cfg.setPreset(v as "default" | "neutral" | "custom");
     },
 });
 
-function onDensity(v: Density): void {
-    cfg.setField("density", v);
-}
+const presetDescription = computed<string>(() => {
+    const id = cfg.effective("preset");
+    if (id === "custom") {
+        return `Based on ${presetLabel("default")} with local overrides — any field you touch flips here.`;
+    }
+    return PRESETS.find((p) => p.id === id)?.description ?? "";
+});
+
+// ─── Density — a three-rung enum → the segmented register (R4-4). ─────────────
+
+const DENSITY_OPTIONS: SegmentedTabOption[] = (
+    ["cozy", "comfortable", "compact"] as const
+).map((d) => ({ label: d[0].toUpperCase() + d.slice(1), value: d }));
+
+const densityModel = computed<string>({
+    get: () => cfg.effective("density"),
+    set: (v) => cfg.setField("density", v as Density),
+});
 
 function onFontChange(slot: keyof FontSlots, stack: string): void {
     cfg.setFont(slot, stack);
@@ -202,42 +231,21 @@ function effectiveFont(slot: keyof FontSlots): string {
                         </PresetEditorField>
                     </section>
 
-                    <!-- Preset -->
+                    <!-- Preset — the segmented register (R4-4: glassy pill tabs,
+                         not bare radios). The active preset's prose rides below. -->
                     <section class="space-y-2">
                         <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
                             Preset
                         </h3>
-                        <RadioGroup v-model="presetModel" class="grid gap-2">
-                            <label
-                                v-for="p in PRESETS"
-                                :key="p.id"
-                                class="flex items-start gap-3 rounded-lg border border-border/40 bg-card/40 p-3 cursor-pointer transition-colors hover:bg-card/60 has-[[data-state=checked]]:border-foreground/40"
-                            >
-                                <RadioGroupItem :value="p.id" class="mt-0.5" />
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium">{{ p.label }}</div>
-                                    <div class="text-micro text-muted-foreground mt-0.5">
-                                        {{ p.description }}
-                                    </div>
-                                </div>
-                            </label>
-                            <label
-                                class="flex items-start gap-3 rounded-lg border border-border/40 bg-card/40 p-3 cursor-pointer transition-colors hover:bg-card/60 has-[[data-state=checked]]:border-foreground/40"
-                            >
-                                <RadioGroupItem value="custom" class="mt-0.5" />
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium">Custom</div>
-                                    <div class="text-micro text-muted-foreground mt-0.5">
-                                        Any field you touch flips the preset to custom.
-                                    </div>
-                                </div>
-                            </label>
-                        </RadioGroup>
-                        <p
-                            v-if="cfg.effective('preset') === 'custom'"
-                            class="text-micro text-muted-foreground/80 italic"
-                        >
-                            Based on {{ presetLabel("default") }} with local overrides.
+                        <SegmentedTabs
+                            v-model="presetModel"
+                            variant="segmented"
+                            :options="PRESET_OPTIONS"
+                            class="w-full"
+                            aria-label="Design preset"
+                        />
+                        <p class="text-micro leading-snug text-muted-foreground/80">
+                            {{ presetDescription }}
                         </p>
                     </section>
 
@@ -339,24 +347,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                             can-reset
                             @reset="() => cfg.clearField('density')"
                         >
-                            <div class="flex w-full gap-1">
-                                <button
-                                    v-for="d in (['cozy', 'comfortable', 'compact'] as const)"
-                                    :key="d"
-                                    type="button"
-                                    :class="
-                                        cn(
-                                            'flex-1 h-9 rounded-md text-xs font-medium border border-border/40 transition-colors',
-                                            cfg.effective('density') === d
-                                                ? 'bg-foreground text-background'
-                                                : 'bg-card/40 text-foreground hover:bg-card/70',
-                                        )
-                                    "
-                                    @click="onDensity(d)"
-                                >
-                                    {{ d }}
-                                </button>
-                            </div>
+                            <SegmentedTabs
+                                v-model="densityModel"
+                                variant="segmented"
+                                :options="DENSITY_OPTIONS"
+                                class="w-full"
+                                aria-label="Layout density"
+                            />
                         </PresetEditorField>
 
                         <PresetEditorField

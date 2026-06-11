@@ -26,15 +26,23 @@
 //   R3 — `extent="beyond"` overruns the dock content box: the `--dock-rail-extend-length`
 //        rule is present (the geometry knob) AND the hairline's painted length composes
 //        it (the `min-inline-size`/`min-block-size` overrun).
-//   R4 — the facility renders OUTSIDE the clip aperture: GlassDock carries a `#rail`
-//        chrome slot rendered as a sibling of `.dock-layers` (NOT inside it), and the
-//        `.dock-hairline-slot` wrapper escapes the morph clip (`position: absolute`).
+//   R4 — the facility renders OUTSIDE the dock's CONTAINMENT box (R4-1): GlassDock
+//        carries a `#rail` chrome slot rendered as a SIBLING of `.glass-dock` inside a
+//        `.glass-dock-frame` (a `display:contents` shell that lifts to a
+//        non-clipping positioning context when `data-has-rail`), and the
+//        `.dock-hairline-slot` wrapper is `position: absolute`. A dock CHILD is
+//        hard-clipped by `contain: paint` + `backdrop-filter` (+ overflow) regardless of
+//        overflow — the cause of the R4-1 "black blob clipped at the dock edge".
 //   R5 (consumers) — ≥2 LIVE `<DockRail>` mounts in demo/ (born-RED if <2).
+//   R6 (shell witness) — the demo SHELL dock (SidebarDock.vue, the user's truth surface)
+//        mounts a LIVE <DockRail> (the R4-1 re-open: a story-only census masked the
+//        broken shell rail).
 //
 // Bite-check: swap the hairline `box-shadow: var(--border-hairline)` for
 // `border: 1px solid` → R1 RED; add an internal `ref()` active shadow to DockRail.vue
-// → R2 RED; delete the `--dock-rail-extend-length` rule → R3 RED; move the `#rail` slot
-// inside `.dock-layers` → R4 RED; remove a demo mount → R5 RED.
+// → R2 RED; delete the `--dock-rail-extend-length` rule → R3 RED; remove the
+// `.glass-dock-frame` escape context → R4 RED; remove a demo mount → R5 RED; drop the
+// rail from SidebarDock.vue → R6 RED.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, relative, join } from "node:path";
@@ -170,40 +178,58 @@ export function detectRailExtend(fs) {
         );
     }
 
-    // ── R4 — the `#rail` chrome slot renders OUTSIDE the clip aperture ──
-    // GlassDock must carry a `name="rail"` slot AND it must sit OUTSIDE `.dock-layers`
-    // (a sibling, not a descendant). We assert: a `$slots.rail`-guarded `.dock-hairline-slot`
-    // wrapper exists, and it is NOT nested inside the `.dock-layers` element (it follows
-    // the `.dock-layers` closing). And the `.dock-hairline-slot` wrapper escapes the clip via
-    // `position: absolute` in the CSS.
-    const hasRailSlot = /\$slots\.rail/.test(gd) && /name="rail"/.test(gd);
+    // ── R4 — the `#rail` chrome slot renders OUTSIDE the dock's CONTAINMENT box ──
+    // R4-1 ARCHITECTURE: the `.glass-dock` root carries `contain: paint` +
+    // `backdrop-filter` (+ a vertical always-expanded rail's `overflow-y: auto`) — all
+    // three HARD-CLIP descendants to the dock box, so a `#rail` rendered as a dock CHILD
+    // can NEVER paint past the edge (it was swallowed at the bottom — the "black blob").
+    // The escape: GlassDock renders the `#rail` slot as a SIBLING of `.glass-dock` inside
+    // a `.glass-dock-frame` (a `display:contents` shell that lifts to a NON-clipping
+    // positioning context when `data-has-rail`). So R4 now asserts: GlassDock carries a
+    // `name="rail"` slot guarded by `hasRail` (the `useSlots().rail` computed) + the
+    // `.dock-hairline-slot` wrapper; the slot is a SIBLING of `.glass-dock` (NOT inside
+    // it); the railshell escape-context exists; and the slot is `position: absolute`.
+    const hasRailSlot =
+        (/hasRail/.test(gd) || /\$slots\.rail/.test(gd)) && /name="rail"/.test(gd);
     const hasRailSlotWrapper = /class="dock-hairline-slot"/.test(gd);
-    // Sibling-of-dock-layers: the `dock-hairline-slot` markup appears AFTER the `dock-layers`
-    // opening div's matching close. Cheap structural proxy: the `dock-hairline-slot` string
-    // index is AFTER the LAST occurrence of `class="dock-layer dock-layer--summary"`
-    // (the last child inside `.dock-layers`), i.e. the slot is not interleaved among the
-    // layer panes.
+    // The railshell escape context — the `.glass-dock-frame` wrapper that becomes a
+    // non-clipping positioning context, so the abs slot anchors to the dock box yet
+    // escapes the dock's containment.
+    const hasRailshell =
+        /class="glass-dock-frame"/.test(gd) &&
+        /\.glass-dock-frame\[data-has-rail\]/.test(css);
+    // Sibling-of-the-dock: the `dock-hairline-slot` markup appears AFTER the `dock-layers`
+    // block (the last layer pane is `dock-layer--summary`), i.e. it is NOT interleaved
+    // among the layer panes inside `.glass-dock`. With the railshell architecture the
+    // slot is a sibling of `.glass-dock` itself (an even stronger escape), still after the
+    // summary pane.
     const slotIdx = gd.indexOf("dock-hairline-slot");
     const lastLayerIdx = gd.lastIndexOf("dock-layer--summary");
     const slotIsSibling = slotIdx > -1 && lastLayerIdx > -1 && slotIdx > lastLayerIdx;
     const slotEscapesClip = /\.dock-hairline-slot\s*\{[^}]*position:\s*absolute/.test(css);
     facts.r4HasRailSlot = hasRailSlot;
     facts.r4HasRailSlotWrapper = hasRailSlotWrapper;
+    facts.r4HasRailshell = hasRailshell;
     facts.r4SlotIsSibling = slotIsSibling;
     facts.r4SlotEscapesClip = slotEscapesClip;
     if (!hasRailSlot || !hasRailSlotWrapper) {
         violations.push(
-            "R4: GlassDock.vue lacks the `#rail` chrome slot (`$slots.rail` + `name=\"rail\"` + `.dock-hairline-slot` wrapper) — the persistence-on-collapse facility needs a slot rendered outside the morph aperture",
+            "R4: GlassDock.vue lacks the `#rail` chrome slot (`hasRail`/`$slots.rail` guard + `name=\"rail\"` + `.dock-hairline-slot` wrapper) — the persistence-on-collapse facility needs a slot rendered outside the dock containment box",
+        );
+    }
+    if (!hasRailshell) {
+        violations.push(
+            "R4: the `.glass-dock-frame` escape context is absent (the wrapper + the `[data-has-rail]` non-clipping rule) — without it the rail is a dock child clipped by `contain: paint`/`backdrop-filter`/`overflow` (the R4-1 black-blob)",
         );
     }
     if (!slotIsSibling) {
         violations.push(
-            "R4: the `.dock-hairline-slot` is NOT a sibling of `.dock-layers` (it sits inside the clip aperture) — it would vanish on collapse; render it OUTSIDE `.dock-layers`",
+            "R4: the `.dock-hairline-slot` is NOT a sibling of the dock content (it sits inside the clip aperture) — it would vanish on collapse / clip at the edge; render it OUTSIDE `.glass-dock` in the railshell",
         );
     }
     if (!slotEscapesClip) {
         violations.push(
-            "R4: `.dock-hairline-slot` does not escape the morph clip via `position: absolute` in rail-extend.css — the chrome slot must not be clipped by the dock's morph-axis `overflow: clip`",
+            "R4: `.dock-hairline-slot` does not escape via `position: absolute` in rail-extend.css — the chrome slot must anchor to the railshell, not be clipped by the dock's containment",
         );
     }
 
@@ -222,6 +248,23 @@ export function detectRailExtend(fs) {
     if (consumerFiles < 2) {
         violations.push(
             `R5 (consumers): only ${consumerFiles} LIVE <DockRail> consumer file(s) in demo/ (${facts.r5ConsumerFiles.join(", ") || "none"}) — the ≥2-consumer bar is binding on a primitive birth; a single-consumer primitive is substrate-without-consumer and is NOT born`,
+        );
+    }
+
+    // ── R6 (shell witness) — the SHELL dock mounts the rail (R4-1) ──
+    // The user audits the demo SHELL, not the story mounts. The W-RAIL-EXTEND row
+    // RE-OPENED because the shell rail was broken (the black-blob clip) while a story
+    // mount "passed". So R6 binds the rail to the SHELL surface: `demo/layout/SidebarDock.vue`
+    // (the vertical category rail) MUST carry a LIVE `<DockRail>` mount. A story-only
+    // census can no longer mask a broken shell rail.
+    const SHELL_PATH = "demo/layout/SidebarDock.vue";
+    const shellMounts = mounts.find((m) => m.path === SHELL_PATH);
+    const shellWitness = !!shellMounts && shellMounts.count > 0;
+    facts.r6ShellWitness = shellWitness;
+    facts.r6ShellPath = SHELL_PATH;
+    if (!shellWitness) {
+        violations.push(
+            `R6 (shell witness): the demo SHELL dock \`${SHELL_PATH}\` does NOT mount a live <DockRail> — the user audits the shell, not the story mounts; the rail must be present on the truth surface (the R4-1 re-open: a story-only census masked the broken shell rail)`,
         );
     }
 
@@ -267,10 +310,13 @@ function run() {
         `  R3 beyond-edge overrun          : token=${facts.r3DefinesExtendToken} overrun=${facts.r3OverrunUsesToken} default=${facts.r3RailDefaultsBeyond} ${facts.r3DefinesExtendToken && facts.r3OverrunUsesToken && facts.r3RailDefaultsBeyond ? "OK" : "RED"}`,
     );
     console.log(
-        `  R4 chrome slot outside clip     : slot=${facts.r4HasRailSlot} sibling=${facts.r4SlotIsSibling} escapes=${facts.r4SlotEscapesClip} ${facts.r4HasRailSlot && facts.r4SlotIsSibling && facts.r4SlotEscapesClip ? "OK" : "RED"}`,
+        `  R4 slot escapes containment     : slot=${facts.r4HasRailSlot} railshell=${facts.r4HasRailshell} sibling=${facts.r4SlotIsSibling} escapes=${facts.r4SlotEscapesClip} ${facts.r4HasRailSlot && facts.r4HasRailshell && facts.r4SlotIsSibling && facts.r4SlotEscapesClip ? "OK" : "RED"}`,
     );
     console.log(
         `  R5 ≥2 live consumers            : files=[${facts.r5ConsumerFiles.join(", ")}] mounts=${facts.r5TotalMounts} ${facts.r5ConsumerFiles.length >= 2 ? "OK" : "RED"}`,
+    );
+    console.log(
+        `  R6 shell-mount witness          : shell=${facts.r6ShellPath} mounted=${facts.r6ShellWitness} ${facts.r6ShellWitness ? "OK" : "RED"}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
