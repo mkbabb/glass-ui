@@ -2,7 +2,7 @@
 // The unified SegmentedTabs — ONE component, a three-value `variant` axis
 // (segmented / pill / underline), ONE shared elastic indicator (the former
 // BouncyToggle/BouncyTabs/UnderlineTabs trio unified). The track choreography
-// lives in the co-located segmented-tabs.css (@import-ed into styles/index.css);
+// lives in styles/segmented-tabs.css (@import-ed into styles/index.css);
 // this SFC owns the toggle markup + the anchor/JS indicator-position seam.
 import {
     ref,

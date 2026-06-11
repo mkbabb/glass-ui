@@ -3,8 +3,7 @@
    (segmented / pill / underline), gliding on the CONTROL register
    (`--spring-snappy`) with the volume-preserving travel-squish.
 
-   Carved out of the SFC `<style scoped>` into a co-located partial (the
-   drawer.css precedent), `@import`-ed into styles/index.css in cascade order.
+   Carved out of the SFC `<style scoped>` into a styles/ partial (the drawer.css precedent), `@import`-ed into styles/index.css in cascade order.
    Every selector is class/attribute-based (no Vue `data-v-*` scope hash), so the
    rules paint un-scoped — the `.segmented-tabs`-family classes the template emits
    carry them.
