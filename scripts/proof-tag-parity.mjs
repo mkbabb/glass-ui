@@ -87,6 +87,12 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // cannot pass mid-development in CI (a dirty working tree is the CI norm), so it
     // is deliberately NOT ci-tagged. The release arm is its enforcement home.
     ["proof:ay-final", "AY.W-CLOSE1 terminal-close meta-gate, RELEASE-only by design (STAGED-NOT-PUBLISHED + CLEAN-TREE are release-context, cannot pass in mid-dev CI); the release arm enforces it."],
+    // proof:az-reflect — the AZ.W-CLOSE clause-10 reflection bar. RELEASE-only by
+    // design: it REDs by construction while any surface is mid-triumvirate (the
+    // FAIL->redress->re-stamp loop is the NORMAL mid-dev state), so a ci tag would
+    // red every push during the redress window. The release arm (proof:az-final
+    // clause 10) is its enforcement home — the ay-final precedent.
+    ["proof:az-reflect", "AZ.W-CLOSE clause-10 reflection bar, RELEASE-only by design (FAIL records are the normal mid-triumvirate state; ci would red every redress-window push); proof:az-final clause 10 enforces it at the close."],
     // The ci.yml drift meta-step — local+release by design, NOT ci-tagged to avoid
     // double-render (it verifies the ci mirror; its own note documents this).
     ["proof:gen-ci-fresh", "ci.yml byte-match drift meta-step (local+release); NOT ci-tagged to avoid double-rendering itself into the file it checks."],
