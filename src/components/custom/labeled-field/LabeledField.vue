@@ -1,6 +1,6 @@
 <template>
     <div class="labeled-field">
-        <IconTooltip v-if="tooltip" :text="tooltip">
+        <IconTooltip v-if="tooltip && !hideLabel" :text="tooltip">
             <label :id="labelId" :for="controlId" :class="cn('labeled-field-label', labelClass)"
                 >{{ label
                 }}<span v-if="required" class="text-destructive" aria-hidden="true">
@@ -8,7 +8,11 @@
                 ></label
             >
         </IconTooltip>
-        <label v-else :id="labelId" :for="controlId" :class="cn('labeled-field-label', labelClass)"
+        <label
+            v-else
+            :id="labelId"
+            :for="controlId"
+            :class="cn(hideLabel ? 'sr-only' : 'labeled-field-label', labelClass)"
             >{{ label
             }}<span v-if="required" class="text-destructive" aria-hidden="true">
                 *</span
@@ -48,6 +52,19 @@ import { cn } from "../../../utils";
  * cursor-help). The previous mixed `text-base` / `text-lg` literals
  * harmonise on a single body-size token.
  *
+ * AZ.W-BLOB-REDRESS — `hideLabel` VISUALLY hides the field's own label (it
+ * renders `sr-only` instead of `.labeled-field-label`) while KEEPING it in the
+ * DOM, so the `for`/`id`/`aria-labelledby` control↔label association — the
+ * Slider thumb's `aria-labelledby`, the Select trigger's `for` — stays intact
+ * and the control is still accessibly named. The visible human label is then
+ * supplied by an enclosing chrome row (a `<ConfiguratorRow label>`). This is
+ * the canonical fix for the double-label leak: a `<ConfiguratorRow label="X">`
+ * wrapping a `<LabeledSlider label="x">` rendered BOTH labels (the human one +
+ * the raw config key); the inner control passes `hide-label` so ONE visible
+ * human label remains, the raw key demotes to the row's mono `name` token, and
+ * a11y is preserved. The tooltip is suppressed when hidden (the row owns the
+ * affordance). NO effect on `LabeledField` used standalone (default `false`).
+ *
  * AQ.W4 §W4.5 — `required` threads a `aria-hidden` asterisk onto the label
  * (the `required` attr on the slotted control is the semantic carrier). The
  * `error` slot renders an error-message region that the W3.1c
@@ -78,6 +95,14 @@ defineProps<{
     tooltip?: string;
     labelClass?: HTMLAttributes["class"];
     required?: boolean;
+    /**
+     * AZ.W-BLOB-REDRESS — render the field's own label `sr-only` (kept in the
+     * DOM for the control↔label a11y association) instead of visibly. Use when
+     * an enclosing chrome row already supplies the visible human label (a
+     * `<ConfiguratorRow label>`), so the inner control does not leak a second
+     * (often raw-config-key) label. Default `false` (standalone behavior).
+     */
+    hideLabel?: boolean;
 }>();
 
 const errorId = useId();

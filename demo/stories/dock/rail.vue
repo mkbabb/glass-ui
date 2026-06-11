@@ -43,18 +43,18 @@ const entries: Entry[] = [
 
 const active = ref<string>("primitives");
 
-// The hairline-rail facility (AZ.W-RAIL-EXTEND) — a `<DockRail>` whose end-icon
-// advances the dock's active LAYER. The `railLayer` ref is bound to BOTH the
-// `<DockLayerGroup v-model:active>` AND `<DockRail v-model:context>` (ONE registry —
-// the rail writes the same ref the layer group reads; no parallel state). The icon
-// cycles through `railLayerIds`.
+// The floating-carousel rail facility (AZ.W-RAIL-EXTEND → W-RAIL3) — a `<DockRail>`
+// whose chip strip rides the visible hairline OUTSIDE the dock box. Each chip is a
+// dock layer; clicking it switches the dock's active LAYER. The `railLayer` ref is
+// bound to BOTH the `<DockLayerGroup v-model:active>` AND `<DockRail v-model:context>`
+// (ONE registry — the rail writes the same ref the layer group reads; no parallel
+// state). The chips ARE `railLayers` (id + label + icon).
 const railLayer = ref<string>("assets");
 const railLayers = [
     { id: "assets", label: "Assets", icon: Shapes },
     { id: "layers", label: "Layers", icon: Boxes },
     { id: "libraries", label: "Libraries", icon: Database },
 ];
-const railLayerIds = railLayers.map((l) => l.id);
 </script>
 
 <template>
@@ -192,20 +192,20 @@ const railLayerIds = railLayers.map((l) => l.id);
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Hairline rail — a context control beyond the dock edge</h2>
+            <h2 class="text-subheading">Hairline rail — a floating carousel beyond the dock edge</h2>
             <p class="text-small text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;DockRail&gt;</code> is a hairline that
-                runs BEYOND the dock edge (the
-                <code class="rounded bg-muted px-1">--border-hairline</code> whisper, not a hard rule),
-                carrying a leading/trailing end-icon that switches the dock's layer context. It is
-                dock CHROME — rendered in the
+                <code class="rounded bg-muted px-1">&lt;DockRail&gt;</code> is a floating
+                CAROUSEL of glass chips riding a visible hairline that runs BEYOND the dock edge
+                (the <code class="rounded bg-muted px-1">--border-hairline</code> whisper, not a
+                hard rule). Each chip switches the dock's layer context. It is dock CHROME —
+                rendered in the
                 <code class="rounded bg-muted px-1">#rail</code> slot OUTSIDE the clipped morph
-                aperture — so it PERSISTS when the dock collapses (the in-pane switcher rail does
-                not). The end-icon writes the SAME
+                aperture — so it NEVER changes the dock's width/height (the box is INVIOLATE) and
+                it PERSISTS when the dock collapses (the in-pane switcher rail does not). The chips
+                write the SAME
                 <code class="rounded bg-muted px-1">railLayer</code> ref the
                 <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> reads (one
-                registry, no parallel state). Hover to expand; collapse and the hairline + its
-                end-icon stay put.
+                registry, no parallel state). Hover to expand; collapse and the strip stays put.
             </p>
             <p class="text-mono-caption text-muted-foreground" data-testid="dock-rail-readout">
                 active layer = {{ railLayer }}
@@ -244,13 +244,14 @@ const railLayerIds = railLayers.map((l) => l.id);
                             <component :is="NavigationIcon" />
                         </DockIconButton>
                     </template>
-                    <!-- The hairline rail — beyond the dock's block edge, the end-icon
-                         advances the active layer. Persists on collapse (it is chrome). -->
+                    <!-- The floating-carousel rail — chips ride the hairline beyond the
+                         dock's block edge; clicking one switches the active layer.
+                         Persists on collapse (it is chrome), the box stays INVIOLATE. -->
                     <template #rail>
                         <DockRail
                             v-model:context="railLayer"
-                            :entries="railLayerIds"
-                            icon-label="Next dock layer"
+                            :items="railLayers"
+                            icon-label="Dock layers"
                             data-testid="dock-rail-control"
                         />
                     </template>

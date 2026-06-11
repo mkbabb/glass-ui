@@ -72,102 +72,175 @@
         pointer-events: auto;
     }
 
-    /* Vertical (column) dock — the rail hangs BELOW the dock's block (bottom) edge,
-       centered on the dock's inline axis: a short hairline continuing the rail's line
-       DOWNWARD past the edge, terminating in the context end-icon. The slot's top sits
-       AT the dock's bottom edge (`inset-block-start: 100%`) and extends down by the
-       overrun length, so the hairline + icon live wholly BELOW the dock. */
+    /* AZ.W-RAIL3 — the slot hangs the floating carousel BELOW the dock's bottom edge
+       for BOTH orientations. The slot's top sits AT the dock's bottom edge
+       (`inset-block-start: 100%`) and the strip (a horizontal chip carousel) lives
+       wholly BELOW the dock. The slot anchors at the dock's LEADING (inline-start)
+       edge but is NOT clamped to the dock's width (`inset-inline-end: auto`), so a
+       carousel WIDER than a narrow vertical column overflows past the dock's inline
+       extent — the "floating carousel" that overflows OUTSIDE the dock (the box stays
+       INVIOLATE because the slot is `position: absolute`, never feeding the dock's
+       intrinsic size). The connective hairline (`.dock-hairline-extend::before`) is
+       center-aligned over the strip so it reads as a connector from the dock edge. */
     .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-        inset-block-start: 100%;
-        inset-inline: 0;
-        flex-direction: column;
-        /* a small breath between the dock edge and the hairline start */
-        padding-block-start: 0.375rem;
-    }
-
-    /* Horizontal (row) dock — the rail runs along the dock's block (bottom) edge and
-       overruns INLINE past the dock's trailing edge; the icon sits at the overrun end. */
-    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
-        inset-block-start: 100%;
-        inset-inline-start: 0;
+        inset-inline-start: 100%;
+        /* seat the carousel CENTERED beside the dock column. A top-anchored seat
+           collides with the page H1/breadcrumb band at scroll-top (any fixed offset
+           from the dock top lands in it at some viewport); the vertical center is
+           stable across viewport heights and reads as the carousel riding the dock's
+           midline, clear of the title band. */
+        inset-block-start: 50%;
+        inset-block-end: auto;
+        translate: 0 -50%;
         flex-direction: row;
-        padding-block-start: 0.375rem;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
+        inset-block-end: 100%;
+        inset-inline-start: 0;
+        inset-inline-end: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
     }
 
-    /* The hairline element itself — a flex row/column carrying the overrunning
-       hairline + the end-icon control. The hairline is a `::before` pseudo painted
-       with the `--border-hairline` box-shadow (R1 — the token pair, no hard rule). */
+    /* AZ.W-RAIL3 — the FLOATING CAROUSEL strip. The hairline element is the wrapper
+       that carries (a) a VISIBLE connective hairline running from the dock edge down
+       to the strip (the user's "the hairline must visibly connect") and (b) the
+       `.dock-hairline-strip` — a flex row of detached glass chips, the floating
+       carousel that overflows OUTSIDE the dock box (the third-rail redirect: the
+       contextual facets are no longer in-dock layers; they are the rail's content). */
     .dock-hairline-extend {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--dock-layer-gap, 0.375rem);
+        gap: 0;
     }
-
-    /* Column (vertical) dock → the rail is a VERTICAL run hanging below the dock; the
-       hairline is a vertical line that overruns the block axis by
-       `--dock-rail-extend-length`, then the end-icon caps it. */
+    /* Vertical dock — connector (a horizontal line) then the chip COLUMN, left-to-right
+       (the carousel rides BESIDE the dock in its trailing gutter). */
     .dock-hairline-extend.vertical {
-        flex-direction: column;
-    }
-    .dock-hairline-extend.vertical::before {
-        content: "";
-        inline-size: 1px;
-        /* R3 — the beyond-edge overrun: the painted hairline length IS the extend
-           overrun, so the line visibly runs past the dock edge down to the icon. */
-        block-size: var(--dock-rail-extend-length);
-        flex: 0 0 auto;
-        /* R1 — the `--border-hairline` token pair (catch-light + under-shadow), NOT a
-           hard `border: 1px solid`. */
-        box-shadow: var(--border-hairline);
-    }
-
-    /* Row dock → the rail is a HORIZONTAL run; the hairline is a horizontal line that
-       overruns inline by `--dock-rail-extend-length`. */
-    .dock-hairline-extend.horizontal {
         flex-direction: row;
+        align-items: flex-start;
     }
-    .dock-hairline-extend.horizontal::before {
-        content: "";
-        block-size: 1px;
-        min-inline-size: var(--dock-rail-extend-length);
-        flex: 1 1 auto;
-        box-shadow: var(--border-hairline);
+    /* Horizontal dock — the strip sits ABOVE: stack the chip-row then the connector
+       bottom-up (column-reverse puts the first child, the connector, at the BOTTOM,
+       nearest the dock's top edge — so a viewport-bottom-anchored dock keeps its
+       carousel ON-SCREEN above it). */
+    .dock-hairline-extend.horizontal {
+        flex-direction: column-reverse;
+        align-items: flex-start;
     }
 
-    /* `extent="inset"` keeps the hairline flush at the edge (no overrun) — the
-       successor-deferral / separator-like length. */
-    .dock-hairline-extend.extent-inset.vertical::before {
-        block-size: 0;
+    /* R3 — the VISIBLE connective hairline. R1 — the `--border-hairline` token pair
+       (catch-light + under-shadow) + a faint background fallback so the whisper reads
+       even over a busy backdrop (the user audited "NO VISIBLE HAIRLINE"). The line
+       overruns by `--dock-rail-extend-length` (the beyond-edge extent); the
+       `min-{inline,block}-size` floor is the proof:rail-extend R3 overrun witness. */
+    .dock-hairline-extend::before {
+        content: "";
+        flex: 0 0 auto;
+        box-shadow: var(--border-hairline);
+        background: var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 45%, transparent));
     }
-    .dock-hairline-extend.extent-inset.horizontal::before {
+    /* Vertical dock connector — a HORIZONTAL line running right from the dock's
+       trailing edge to the chip column, seated near the dock's vertical center. */
+    .dock-hairline-extend.vertical::before {
+        block-size: 1px;
+        inline-size: var(--dock-rail-extend-length);
+        min-inline-size: var(--dock-rail-extend-length);
+        align-self: center;
+        margin-inline-end: 0.25rem;
+    }
+    /* Horizontal dock connector — a VERTICAL line running up from the dock's top
+       edge to the chip row, seated near the dock's leading control center. */
+    .dock-hairline-extend.horizontal::before {
+        inline-size: 1px;
+        block-size: var(--dock-rail-extend-length);
+        min-block-size: var(--dock-rail-extend-length);
+        margin-inline-start: calc(var(--dock-control-size, 1.75rem) * 0.5);
+        margin-block-start: 0.25rem;
+    }
+
+    /* `extent="inset"` keeps the connector flush at the edge (no overrun). */
+    .dock-hairline-extend.extent-inset.vertical::before {
+        inline-size: 0;
         min-inline-size: 0;
     }
+    .dock-hairline-extend.extent-inset.horizontal::before {
+        block-size: 0;
+        min-block-size: 0;
+    }
 
-    /* The end-icon control — a real FLOATING glass register (R4-1). It is chrome
-       OUTSIDE the dock substrate, so it carries its OWN glass plate (the dock-surface
-       blur + the floating-tier fill + the edge-light rim + a soft drop) rather than
-       borrowing the transparent in-dock `.dock-icon-button` recipe (which would read
-       as a bare dark glyph — the R4-1 blob). It reads the SAME `--dock-control-*` /
-       glass tokens the dock speaks, so it re-tints with the dock under `.dark` + the
-       adaptive bucket for free. */
-    .dock-hairline-extend-icon {
+    /* The carousel strip — a flex run of chips that SCROLLS when the chips exceed the
+       budget (the common 2-4-facet case fits with no scroll; a larger set cycles).
+       `scroll-snap` gives the carousel detent feel. The strip paints OUTSIDE the dock
+       box (it is in the `.dock-hairline-slot`, a `.glass-dock-frame` sibling — R4). */
+    .dock-hairline-strip {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--dock-rail-strip-gap, 0.375rem);
+        scrollbar-width: none;
+        padding: 0.125rem;
+    }
+    .dock-hairline-strip::-webkit-scrollbar {
+        display: none;
+    }
+    /* Vertical dock → a COLUMN carousel beside the dock, scrolls on the block axis. */
+    .dock-hairline-extend.vertical .dock-hairline-strip {
+        flex-direction: column;
+        max-block-size: var(--dock-rail-strip-max, 60vh);
+        overflow-y: auto;
+        overflow-x: visible;
+        scroll-snap-type: y proximity;
+    }
+    /* Horizontal dock → a ROW carousel above the dock, scrolls on the inline axis. */
+    .dock-hairline-extend.horizontal .dock-hairline-strip {
+        flex-direction: row;
+        align-items: center;
+        max-inline-size: var(--dock-rail-strip-max, 60vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x proximity;
+    }
+    .dock-hairline-strip > * {
+        scroll-snap-align: start;
+    }
+
+    /* Each chip — a detached FLOATING glass pill (R4-1's register, now a label-bearing
+       carousel chip, auto-width). It is chrome OUTSIDE the dock substrate, so it
+       carries its OWN glass plate (the floating-tier fill + edge-light rim + soft
+       drop) rather than borrowing the transparent in-dock `.dock-icon-button` recipe
+       (which would read as a bare dark glyph — the R4-1 blob). Reads the SAME
+       `--dock-control-*` / glass tokens the dock speaks, so it re-tints under `.dark`
+       + the adaptive bucket for free.
+
+       SPECIFICITY: the chip composes the `.dock-icon-button` base (the specular-track
+       + glass register), which sets a FIXED square `width`/`padding` in
+       dock-controls.css — loaded AFTER this partial, so a bare `.dock-hairline-extend-
+       chip` (equal specificity) loses the source-order tie. Scoping the sizing/surface
+       overrides under `.dock-hairline-strip` (0,2,0) beats the base `.dock-icon-button`
+       (0,1,0) without `!important` on the geometry. */
+    .dock-hairline-strip .dock-hairline-extend-chip {
         flex-shrink: 0;
-        background: var(--dock-control-active-bg, var(--glass-bg-floating)) !important;
+        /* override the fixed dock-icon-button square → an auto-width label pill */
+        inline-size: auto;
+        width: auto;
+        min-inline-size: 0;
+        block-size: auto;
+        height: auto;
+        gap: 0.375rem;
+        padding-inline: 0.625rem;
+        padding-block: 0.3125rem;
+        background: var(--glass-bg-floating);
         /* §6 EASING DOCTRINE — the surface channel (bg/border/color/box-shadow) cross-
-           fades on `--ease-standard` (a bezier, NO overshoot), NEVER a spring. The
-           inherited dock-control recipe leaked `--spring-smooth` onto `background-color`
-           here (a surface prop wobbling on a spring — the R4-1 "janky" hover); pin the
-           coherent surface set to the standard ease, the scale/transform stay on the
-           dock-control spring untouched. */
+           fades on `--ease-standard` (a bezier, NO overshoot), NEVER a spring (a
+           surface prop wobbling on a spring is the §6 violation). The scale/transform
+           stay on the dock-control spring untouched. */
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard);
-        /* The floating-tier blur read from the ROOT token (the icon is OUTSIDE the
-           dock, so it cannot inherit the dock-local `--dock-surface-blur`). */
         backdrop-filter: var(--glass-blur-floating);
         -webkit-backdrop-filter: var(--glass-blur-floating);
         box-shadow:
@@ -175,16 +248,53 @@
             var(--glass-specular),
             0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
         border-radius: var(--radius-pill);
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) 82%, transparent);
+        white-space: nowrap;
     }
-    .dark .dock-hairline-extend-icon {
+    .dark .dock-hairline-strip .dock-hairline-extend-chip {
         box-shadow:
             var(--glass-edge-light-dark),
             var(--glass-specular-dark),
             0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
     }
+    /* Floor the glyph at the chip's icon scale — the `.dock-icon-button` glyph rule
+       (a fixed `--dock-icon-glyph`) would over-size it inside the label pill. */
+    .dock-hairline-strip .dock-hairline-extend-chip svg {
+        inline-size: 0.875rem;
+        width: 0.875rem;
+        block-size: 0.875rem;
+        height: 0.875rem;
+        flex-shrink: 0;
+    }
+    .dock-hairline-extend-chip-label {
+        line-height: 1;
+    }
     /* The hover lift — the dock-control register: the floating plate firms, the glyph
-       wakes. Rides the surface easing doctrine (§6: bg/box-shadow → --ease-standard). */
-    .dock-hairline-extend-icon:hover {
-        background: var(--dock-control-active-bg, var(--glass-bg-floating)) !important;
+       wakes. Rides the surface easing doctrine (§6). */
+    .dock-hairline-strip .dock-hairline-extend-chip:hover {
+        background: var(--dock-control-hover-bg, var(--glass-bg-resting));
+        color: var(--dock-fg-on-aurora, var(--foreground));
+    }
+    /* The ACTIVE chip — the selected facet reads as a glass tier ABOVE the rest fill
+       (the "selected reads as glass" register, the SAME tier `--dock-control-active-bg`
+       uses — NOT a saturated brand hue, per W-REGISTER-IOS). The glyph + label firm to
+       the full warm-ink. */
+    .dock-hairline-strip .dock-hairline-extend-chip.is-active {
+        background: var(--dock-control-active-bg, var(--glass-bg-floating));
+        color: var(--dock-fg-on-aurora, var(--foreground));
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 0 0 1px color-mix(in srgb, var(--foreground) 12%, transparent),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 28%, transparent);
+    }
+    .dark .dock-hairline-strip .dock-hairline-extend-chip.is-active {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 36%, transparent);
     }
 }

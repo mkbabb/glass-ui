@@ -46,6 +46,10 @@ const RAIL_ALLOWLIST = [
     "dock-layer-rail", // the in-DockLayerGroup switcher tab strip (CSS class + its component home)
     "DockLayerRail", // the test/component name for the .dock-layer-rail surface
     "DockRail", // the W-RAIL-EXTEND beyond-dock facility — the freed noun, RESERVED here
+    // AZ.W-RAIL3 — the chip descriptor type for the DockRail floating-carousel strip's
+    // `items` prop. NOT a new "rail" CONSTRUCT — it is a member TYPE of the sanctioned
+    // DockRail noun (the `DockRail`'s item shape), so it rides the same reservation.
+    "DockRailItem",
 ];
 
 // The retired `variant` discriminant values that must NOT survive as a LIVE binding.

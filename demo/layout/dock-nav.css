@@ -50,19 +50,11 @@
     margin: 0;
 }
 
-/* R4-2 — the contextual facet pane's clean name (the per-story icon column was
-   removed; the active facet shows its name beside the facet switcher rail). A
-   compact vertical-reading label so the narrow rail stays an icon column. */
-.demo-sidebar-context-label {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-size: var(--text-mono-caption, 0.7rem);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--muted-foreground);
-    padding-block: 0.25rem;
-    white-space: nowrap;
-}
+/* AZ.W-RAIL3 — the in-dock contextual facet group (the vertical <DockLayerGroup>
+   that carried the `.demo-sidebar-context-label` rotated label) is DELETED from the
+   shell docks: the facets re-home on the rail's floating carousel strip OUTSIDE the
+   dock box. The `writing-mode: vertical-rl` clipped "Eng…" label corpse is buried
+   with it (G4) — its CSS rule is gone (no dead orphan). */
 
 /* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
    shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
@@ -128,30 +120,10 @@
     max-width: min(100%, 64rem);
 }
 
-.demo-bottom-dock__tabs {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-/* ── Active-story affordance — the GLASS-FIRST selected register (AY.W-DOCK-NAV
-   B2) ───────────────────────────────────────────────────────────────────────
-   DockTabButton auto-activates its `.is-active` state when the rendered
-   RouterLink carries aria-current="page". The prior treatment stacked THREE
-   marks on the active tab — the glass active fill (from the shipped
-   `.dock-tab-button` base rule = `--dock-control-active-bg`, a `--glass-bg-floating`
-   tier), PLUS a NCSU-red `::after` underline, PLUS red text — the "underline +
-   darkness is awful" the user condemned (B2, 00.23.00). The AX.W61 canon is ONE
-   register: the selected control reads as a GLASS tier (the keyframes-dock model),
-   NOT a heavy underline + dark fill. AZ.W-REGISTER-IOS completes the de-red: the
-   residual red GLYPH tint is RETIRED too (R3-6 — no brand hue on an interactive
-   state, at the root). The active tab reads as the shipped glass material-lift pill
-   alone; the selected GLYPH stays warm-ink `--foreground` (the root register), and
-   a non-color WEIGHT cue marks selection (a colour-independent selected affordance). */
-.demo-bottom-dock__tab.is-active,
-.demo-bottom-dock__tab[aria-current="page"] {
-    font-weight: 600;
-}
+/* AZ.W-RAIL3 — the in-dock `.demo-bottom-dock__tabs` story-tab run (the per-facet
+   DockTabButton column inside the deleted in-dock <DockLayerGroup>) is GONE: the
+   in-category facets re-home on the rail's floating carousel strip. The active-story
+   weight cue rode that tab run, so its rule is buried with it (no dead orphan). */
 
 /* ── Responsive: mobile off-canvas, bottom bar primary ─────────────────────
    The category trigger is now the home-left #persistent anchor on the bottom

@@ -187,24 +187,40 @@ export function detectContextual(fs) {
         const live = stripComments(text, "vue");
         // (a) imports/consumes the seam
         const importsSeam = /useContextualDockLayers/.test(live);
-        // (b) binds its return to a RENDERED <DockLayerGroup> with <DockLayer>
-        //     children driven by the contextual layer set (a v-for over the
-        //     contextual layers, not a hardcoded static layer list).
+        // (b) binds its return to a RENDERED contextual target driven by the layer
+        //     set — NOT an import-only no-op decoy. AZ.W-RAIL3 MOVED the render target
+        //     OUT of the dock body: the in-dock <DockLayerGroup> (which inflated the
+        //     dock box ~2×, the R6 third-rail defect) is DELETED, and the contextual
+        //     facets re-home on the floating-carousel <DockRail> strip OUTSIDE the dock
+        //     box. So a shell dock CONSUMES + RENDERS the seam via EITHER target:
+        //       (i) the legacy in-dock <DockLayerGroup>/<DockLayer v-for in contextLayers>
+        //           (preserved for any future in-dock consumer), OR
+        //       (ii) the W-RAIL3 rail strip: a <DockRail :items="…"> whose items are a
+        //            computed mapped OVER the contextLayers (`contextLayers.value.map`)
+        //            bound to a `railItems` descriptor — the box-INVIOLATE render target.
+        //     The anti-decoy intent is preserved: the contextual layer set must reach a
+        //     rendered surface (group OR rail strip), never an unbound import.
         const rendersGroup =
             /<DockLayerGroup\b/.test(live) &&
             /<DockLayer\b[\s\S]*?v-for\s*=\s*["'][^"']*\bin\s+(contextLayers|layers)\b/.test(
                 live,
             );
+        const rendersRailStrip =
+            /<DockRail\b[\s\S]*?:items\s*=/.test(live) &&
+            /contextLayers(?:\.value)?\s*\.map\b/.test(live);
+        const rendersContextual = rendersGroup || rendersRailStrip;
         facts[`${key}ImportsSeam`] = importsSeam;
         facts[`${key}RendersGroup`] = rendersGroup;
+        facts[`${key}RendersRailStrip`] = rendersRailStrip;
+        facts[`${key}RendersContextual`] = rendersContextual;
         if (!importsSeam) {
             violations.push(
                 `W2: \`${name}\` does not consume \`useContextualDockLayers\` — the shell dock is still route-blind (the HEAD gap: no route context)`,
             );
         }
-        if (!rendersGroup) {
+        if (!rendersContextual) {
             violations.push(
-                `W2: \`${name}\` imports the seam but does NOT render a <DockLayerGroup>/<DockLayer> set driven by the contextual layers — an unrendered import is a no-op decoy (bind the return in the template)`,
+                `W2: \`${name}\` imports the seam but does NOT render the contextual layer set — neither an in-dock <DockLayerGroup>/<DockLayer v-for in contextLayers> NOR a W-RAIL3 <DockRail :items> strip mapped over contextLayers. An unrendered import is a no-op decoy (bind the return in the template)`,
             );
         }
     }
@@ -245,7 +261,7 @@ function run() {
         `  W1 seam route-keyed + ≥${MIN_CONTEXTS} contexts : composable=${facts.composablePresent} reads-key=${facts.composableReadsRouteKey ?? false} indexes-map=${facts.composableIndexesMapByKey ?? false} no-hardcode=${!facts.composableHasHardcodedRouteBranch} contexts=${facts.contextMapKeyCount ?? 0} distinct-ids=${facts.distinctLayerIdCount ?? 0}`,
     );
     console.log(
-        `  W2 shell docks consume + render             : sidebar(import=${facts.sidebarImportsSeam ?? false} render=${facts.sidebarRendersGroup ?? false}) bottom(import=${facts.bottomImportsSeam ?? false} render=${facts.bottomRendersGroup ?? false})`,
+        `  W2 shell docks consume + render             : sidebar(import=${facts.sidebarImportsSeam ?? false} render=${facts.sidebarRendersContextual ?? false} [group=${facts.sidebarRendersGroup ?? false} railStrip=${facts.sidebarRendersRailStrip ?? false}]) bottom(import=${facts.bottomImportsSeam ?? false} render=${facts.bottomRendersContextual ?? false} [group=${facts.bottomRendersGroup ?? false} railStrip=${facts.bottomRendersRailStrip ?? false}])`,
     );
     console.log(
         "  W3 live per-route layer swap                : LOCAL-ONLY (π DELTA — W-DOCK-CONTEXT-DELTA.md + proof:live-verified-ledger)",

@@ -484,44 +484,48 @@ watch(studioPaused, () => {
                     -->
                     <template #controls>
                         <ConfiguratorLayer label="Interaction" sub="--interaction-*" dividers>
-                            <ConfiguratorRow label="Attraction">
+                            <ConfiguratorRow label="Attraction" name="attraction">
                                 <LabeledSlider
                                     v-model="studio.config.attraction"
                                     :min="-1"
                                     :max="1"
                                     :step="0.05"
-                                    label="attraction"
+                                    label="Attraction"
+                                    hide-label
                                     tooltip="Pointer lean — +1 leans IN toward the cursor, -1 shies AWAY."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Click impulse">
+                            <ConfiguratorRow label="Click impulse" name="clickImpulse">
                                 <LabeledSlider
                                     v-model="studio.config.clickImpulse"
                                     :min="0"
                                     :max="1.5"
                                     :step="0.05"
-                                    label="clickImpulse"
+                                    label="Click impulse"
+                                    hide-label
                                     tooltip="The one-shot bouncy spring impulse fired on a click."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Responsiveness">
+                            <ConfiguratorRow label="Responsiveness" name="responsiveness">
                                 <LabeledSlider
                                     v-model="studio.config.responsiveness"
                                     :min="0"
                                     :max="1"
                                     :step="0.05"
-                                    label="responsiveness"
+                                    label="Responsiveness"
+                                    hide-label
                                     tooltip="The LOUDER-lean register — scales the pointer-lean strength + the velocity squash-stretch UP from the calm default. At 1 a fast flick reads a visible taffy-pull; 0 is the shipped calm bead."
                                 />
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                         <ConfiguratorLayer label="Mood + palette" sub="--color-*" dividers>
-                            <ConfiguratorRow label="Mood">
+                            <ConfiguratorRow label="Mood" name="mood">
                                 <LabeledSelect
                                     v-model="studio.config.mood"
                                     v-model:is-open="moodOpen"
                                     :items="MOODS as unknown as readonly string[]"
-                                    label="mood"
+                                    label="Mood"
+                                    hide-label
                                     tooltip="The named mood — drives the {valence, arousal} affect model (orbit speed, wobble, sheen)."
                                 />
                             </ConfiguratorRow>
@@ -532,12 +536,13 @@ watch(studioPaused, () => {
                                     aria-label="Palette seed color"
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Harmony">
+                            <ConfiguratorRow label="Harmony" name="harmony">
                                 <LabeledSelect
                                     v-model="studio.config.harmony"
                                     v-model:is-open="harmonyOpen"
                                     :items="HARMONIES as unknown as readonly string[]"
-                                    label="harmony"
+                                    label="Harmony"
+                                    hide-label
                                     tooltip="The color harmony the seed ramps through (deriveBlobPalette)."
                                 />
                             </ConfiguratorRow>
@@ -566,62 +571,68 @@ watch(studioPaused, () => {
                           metaballs in (circular merge rounds the seam crease).
                         -->
                         <ConfiguratorLayer label="Geometry / Satellites" sub="--geometry-* · --membrane-*" dividers>
-                            <ConfiguratorRow label="Satellites">
+                            <ConfiguratorRow label="Satellites" name="satelliteCount">
                                 <LabeledSlider
                                     v-model="studio.config.satelliteCount"
                                     :min="0"
                                     :max="MAX_SATS"
                                     :step="1"
-                                    label="satelliteCount"
+                                    label="Satellites"
+                                    hide-label
                                     tooltip="How many satellites orbit the body (0–4)."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Orbit radius">
+                            <ConfiguratorRow label="Orbit radius" name="orbitRadius">
                                 <LabeledSlider
                                     v-model="studio.config.orbitRadius"
                                     :min="0.1"
                                     :max="0.42"
                                     :step="0.01"
-                                    label="orbitRadius"
+                                    label="Orbit radius"
+                                    hide-label
                                     tooltip="The orbit radius. Body radius is ~0.22 — dial PAST it to separate the satellites into orbiting droplets and WATCH the metaballing."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Satellite radius">
+                            <ConfiguratorRow label="Satellite radius" name="satelliteRadius">
                                 <LabeledSlider
                                     v-model="studio.config.satelliteRadius"
                                     :min="0.04"
                                     :max="0.16"
                                     :step="0.005"
-                                    label="satelliteRadius"
+                                    label="Satellite radius"
+                                    hide-label
                                     tooltip="Each satellite's radius."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Eccentricity">
+                            <ConfiguratorRow label="Eccentricity" name="eccentricity">
                                 <LabeledSlider
                                     v-model="studio.config.eccentricity"
                                     :min="0"
                                     :max="0.3"
                                     :step="0.01"
-                                    label="eccentricity"
+                                    label="Eccentricity"
+                                    hide-label
                                     tooltip="The orbit-ellipse Y-inflation — 0 is a circular orbit, higher stretches it vertically."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Merge bridge">
+                            <ConfiguratorRow label="Merge bridge" name="smoothK">
                                 <LabeledSlider
                                     v-model="studio.config.smoothK"
                                     :min="0.02"
                                     :max="0.16"
                                     :step="0.005"
-                                    label="smoothK"
+                                    label="Merge bridge"
+                                    hide-label
                                     tooltip="The smin blend-band — wider stretches a gooier body→satellite NECK as a satellite metaballs in (vs a hard pop)."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Merge variant">
+                            <ConfiguratorRow label="Merge variant" name="merge">
                                 <LabeledSelect
                                     v-model="studio.config.merge"
                                     v-model:is-open="mergeOpen"
                                     :items="MERGES as unknown as readonly string[]"
-                                    label="merge"
+                                    label="Merge variant"
+                                    hide-label
                                     tooltip="quadratic = cheap, slightly creased; circular = a true quarter-circle fillet at the seam (rounder menisci)."
                                 />
                             </ConfiguratorRow>

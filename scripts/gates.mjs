@@ -213,6 +213,12 @@ export const GATES = [
         note: "AZ.W-MOTION2 (R7) — the curve gallery REDRESS source arm: the THICK non-scaling stroke, the dead --surface-tint-1/-2 BUG killed (negative-predicate), the underline panel-nav picker, the 1:1 keyframes isomorphism census (vs the LIVE EASING_GROUPS authority: CSS keywords + smooth-step-3 + linear() + springs-own-family + hyphen names), the calm-substrate + muted-lift witnesses. The π half rides tests-visual/motion2.spec.ts (local-only). Bite: re-introduce a dead tint / thin the stroke / pill the picker / drop a canon item / un-mint the purple → RED.",
     },
     {
+        id: "proof:rail3",
+        cmd: "proof:rail3",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-RAIL3 — the floating-carousel rail (facets OUT of the dock, box INVIOLATE). Device-free static src-scan: R1 the in-dock contextual <DockLayerGroup> GONE from BOTH shell docks (the de-inflation source), R2 the strip writes the consumer v-model:context (no internal ref-shadow), R3 the connective hairline composes box-shadow: var(--border-hairline) (no hard 1px solid) + the --dock-rail-extend-length overrun, R4 the #rail strip renders OUTSIDE the dock containment via the .glass-dock-frame escape (the box-INVIOLATE witness), R5 the strip is a flex carousel of v-for chips with overflow+scroll-snap (not a lone end-icon), R6 the >=2-SHELL-consumer census (SidebarDock+BottomDock). Born-RED on all six. The runtime truths (box-equality G1 <=1px + outside-paint G2 + cycle G3 + no-corpse G4) are the local-only π half in W-RAIL3-DELTA.md (tests-visual/rail3.spec.ts), ledger-backstopped. Bite: restore the in-dock group / shadow the seam / hard-rule the hairline / drop the extent token / collapse to a lone icon / drop a shell consumer → RED.",
+    },
+    {
         id: "proof:shell-identity",
         cmd: "proof:shell-identity",
         tags: ["local", "ci"],

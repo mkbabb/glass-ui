@@ -13,15 +13,14 @@
 // genuine NEW deliverable is the active-category restyle: the affordance moves
 // from the bare `.is-active` colour shift onto the NCSU-red accent + a
 // left-edge accent rule + W25 `tap-squish` press feedback.
-import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import {
     DockIconButton,
-    DockLayer,
-    DockLayerGroup,
     DockRail,
     DockSeparator,
     GlassDock,
+    type DockRailItem,
 } from "../../src/components/custom/dock";
 import {
     Tooltip,
@@ -80,50 +79,55 @@ function go(categoryId: string): void {
     emit("navigate");
 }
 
-// The hairline-rail context model (AZ.W-RAIL-EXTEND). The `<DockRail>`'s end-icon
-// writes this — a writable computed mirroring `activeCategoryId` whose setter
-// navigates the rail to that category. ONE registry: the rail and the category nav
-// read/write the SAME navigation state (no parallel store). `railContextIds` is the
-// ordered primary-category set the end-icon advances through.
-const railContext = computed<string | undefined>({
-    get: () => activeCategoryId.value ?? undefined,
-    set: (id) => {
-        if (id) go(id);
-    },
-});
-// The rail cycle spans EVERY non-reference category — Foundations included. The
-// ℱ home control is Foundations' rail entry (it is dropped from the visible
-// DockIconButton nav loop per W-SHELL-IDENTITY D1, but the rail end-icon still
-// advances through it so the category cycle stays complete).
-const railContextIds = computed(() =>
-    CATEGORIES.filter((c) => !c.reference).map((c) => c.id),
-);
-
-// AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam. The rail
-// surfaces the active SECTION's contextual facets as a secondary `<DockLayerGroup>`
-// (Substrates → Fields/Creatures, Forms → Text/Selection/Toggles, …). The layer SET
-// is route-keyed: `useContextualDockLayers(route)` maps the active category to its
-// facet layers, so the SAME dock renders a DIFFERENT layer set purely because the
-// route changed — the route→layer determinism R3-14 names, over the EXISTING layer
-// registry (no new layer machinery).
+// AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The third-rail redirect (USER-AUDIT R6):
+// the contextual facets MOVE OUT of the dock body (where the in-dock <DockLayerGroup>
+// inflated the dock box ~2×) and re-home as the rail's content — a floating, cyclable
+// strip of detached glass chips on the visible hairline OUTSIDE the dock box. The dock
+// returns to its tight icon pill (the box is INVIOLATE). The route→facet RESOLVER
+// (`useContextualDockLayers`) is KEPT — the correct route-keyed seam — only its RENDER
+// TARGET moves (the in-dock layer group → the rail strip).
 const route = useRoute();
+const router = useRouter();
 const { layers: contextLayers } = useContextualDockLayers(route);
 
-// The active facet — defaults to the first layer of the current route-context, and
-// resets when the route-context (and thus the layer set) changes.
-const activeContextLayer = ref<string>(contextLayers.value[0]?.id ?? "");
-watch(
-    contextLayers,
-    (next) => {
-        if (!next.some((l) => l.id === activeContextLayer.value)) {
-            activeContextLayer.value = next[0]?.id ?? "";
+// The chips ARE the route facets (Substrates → Fields/Creatures, Forms →
+// Text/Selection/Toggles, …). Each chip's id is the facet id; its label + glyph are
+// the facet descriptor. The strip renders only when the section carries >1 facet (a
+// single-facet or unmapped section shows the bare icon pill — no carousel clutter).
+const railItems = computed<DockRailItem[]>(() =>
+    contextLayers.value.length > 1
+        ? contextLayers.value.map((l) => ({
+              id: l.id,
+              label: l.label,
+              icon: typeof l.icon === "string" ? undefined : l.icon,
+          }))
+        : [],
+);
+
+// The active facet — the one whose entries contain the current story (so the carousel
+// highlight tracks where you are). Selecting a chip navigates to that facet's first
+// story. ONE registry: the rail writes the SAME navigation state the category nav does
+// (a writable computed over the router), no parallel store.
+const activeStoryId = computed<string | undefined>(
+    () => route.meta.storyId as string | undefined,
+);
+const railContext = computed<string | undefined>({
+    get: () => {
+        const here = contextLayers.value.find((l) =>
+            l.entries.some((e) => e.storyId === activeStoryId.value),
+        );
+        return (here ?? contextLayers.value[0])?.id;
+    },
+    set: (id) => {
+        const facet = contextLayers.value.find((l) => l.id === id);
+        const first = facet?.entries[0];
+        const categoryId = route.meta.categoryId as string | undefined;
+        if (first && categoryId) {
+            void router.push(`/${categoryId}/${first.storyId}`);
+            emit("navigate");
         }
     },
-    { immediate: true },
-);
-// The contextual facet group only renders when the section has >1 facet (a
-// single-facet or unmapped section shows the primary nav alone — no clutter).
-const showContextGroup = computed(() => contextLayers.value.length > 1);
+});
 
 // E1 — the ℱ wordmark redraws itself as a Fourier epicycle curve. A long-press
 // (or dbl-click) fires the redraw; a short tap falls through to the RouterLink
@@ -253,37 +257,11 @@ function openConfigurator(): void {
             </Tooltip>
         </TooltipProvider>
 
-        <!-- AZ.W-DOCK-CONTEXT (+ R4-2) — the page-driven contextual FACET rail. A
-             vertical <DockLayerGroup> whose layer SET is the active section's facets
-             (route-keyed via useContextualDockLayers): navigating between sections
-             swaps which facets the dock surfaces — the route→layer determinism, over
-             the EXISTING layer registry. R4-2: the prior per-entry icon column painted
-             EVERY story of a facet with the SAME facet glyph (an indistinguishable
-             stack — the "wtf are these options" noise). The labeled per-story
-             navigation already lives in the BottomDock; here the rail surfaces only the
-             facet switcher (distinct facet icons) with a single clean facet name in the
-             active pane. Rendered only when the section carries >1 facet, behind a
-             divider from the primary category nav above. -->
-        <template v-if="showContextGroup">
-            <DockSeparator />
-            <DockLayerGroup
-                v-model:active="activeContextLayer"
-                orientation="vertical"
-                rail-position="start"
-                class="demo-sidebar-context"
-                data-testid="sidebar-dock-context-group"
-            >
-                <DockLayer
-                    v-for="layer in contextLayers"
-                    :key="layer.id"
-                    :id="layer.id"
-                    :label="layer.label"
-                    :icon="layer.icon"
-                >
-                    <span class="demo-sidebar-context-label">{{ layer.label }}</span>
-                </DockLayer>
-            </DockLayerGroup>
-        </template>
+        <!-- AZ.W-RAIL3 — the page-driven contextual FACET set NO LONGER mounts inside
+             the dock body (the prior in-dock <DockLayerGroup> inflated the dock box ~2×
+             — R6-2 "FAR TOO WIDE"). The facets re-home as the rail's floating carousel
+             strip OUTSIDE the dock box (the `#rail` slot below). The dock body is
+             icons-only → it shrink-wraps to the tight pill (G1 — box INVIOLATE). -->
 
         <!-- AZ.W-SHELL-CONFIG — the trailing UTILITY control is the gear that opens
              the glass-ui demo Configurator (the dark-mode toggle's chrome home moved
@@ -315,15 +293,20 @@ function openConfigurator(): void {
             </Tooltip>
         </TooltipProvider>
 
-        <!-- The hairline rail (AZ.W-RAIL-EXTEND) — a context control beyond the rail's
-             bottom edge. Its end-icon advances the active category (the SAME navigation
-             state the nav items drive — one registry). It is dock chrome, so it sits
-             outside the morph aperture and reads as a finished iOS-26 whisper hairline. -->
+        <!-- AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The active section's contextual
+             facets ride OUTSIDE the dock box as a strip of detached glass chips on the
+             visible connective hairline (the user's "floating carousel almost"). The
+             active facet (the one containing the current story) is highlighted;
+             selecting a chip navigates to that facet's first story — the SAME
+             navigation state the nav items drive (one registry, no parallel store). It
+             is dock chrome, so it sits outside the morph aperture and NEVER changes the
+             dock's width/height. Rendered only when the section carries >1 facet. -->
         <template #rail>
             <DockRail
+                v-if="railItems.length"
                 v-model:context="railContext"
-                :entries="railContextIds"
-                icon-label="Next category"
+                :items="railItems"
+                icon-label="Section facets"
                 data-testid="sidebar-dock-rail"
             />
         </template>

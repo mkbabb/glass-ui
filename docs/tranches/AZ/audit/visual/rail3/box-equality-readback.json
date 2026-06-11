@@ -1,0 +1,10 @@
+{
+  "note": "AZ.W-RAIL3 G1 box-INVIOLATE readback — the dock getBoundingClientRect with the rail strip mounted vs the slot removed. Captured on :5199 /forms/inputs at 1280x860, the truth-surface SHELL docks.",
+  "captured": "2026-06-11",
+  "route": "/forms/inputs",
+  "viewport": "1280x860",
+  "sidebar": { "withStrip": {"w":59,"h":609}, "withoutStrip": {"w":59,"h":609}, "deltaW":0, "deltaH":0 },
+  "bottom":  { "withStrip": {"w":235,"h":55}, "withoutStrip": {"w":235,"h":55}, "deltaW":0, "deltaH":0 },
+  "preFixBaseline": { "sidebar_w": 115, "bottom_hw": "578x111", "note": "the in-dock DockLayerGroup inflated the box ~2x (R6-1/R6-2)" },
+  "verdict": "PASS — both shell docks byte-identical (deltaW=deltaH=0) with the rail+carousel mounted vs absent. The box did NOT grow."
+}

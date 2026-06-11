@@ -4,6 +4,7 @@
         :tooltip="tooltip"
         :label-class="labelClass"
         :required="required"
+        :hide-label="hideLabel"
         v-slot="{ controlId }"
     >
         <div class="flex items-center">
@@ -27,6 +28,12 @@ defineProps<{
     labelClass?: string;
     /** AQ.W4 §W4.5 — thread the required-field asterisk onto the label. */
     required?: boolean;
+    /**
+     * AZ.W-BLOB-REDRESS — render the label `sr-only` (kept for a11y, hidden
+     * visually) when an enclosing chrome row (a `<ConfiguratorRow>`) already
+     * supplies the visible human label. Avoids the double-label leak.
+     */
+    hideLabel?: boolean;
 }>();
 
 const emit = defineEmits<{

@@ -177,39 +177,43 @@ const density = computed(() => (isNarrow.value ? "mobile" : "comfortable"));
                     </template>
                     <template #controls>
                         <ConfiguratorLayer label="Field" sub="--field-*">
-                            <ConfiguratorRow label="Medium">
+                            <ConfiguratorRow label="Medium" name="medium">
                                 <LabeledSelect
                                     v-model="cfg.config.medium"
                                     v-model:is-open="mediumOpen"
                                     :items="mediums as unknown as readonly string[]"
-                                    label="medium"
+                                    label="Medium"
+                                    hide-label
                                     tooltip="Painterly medium — tilts the field's hue triad."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Spread">
+                            <ConfiguratorRow label="Spread" name="spread">
                                 <LabeledSlider
                                     v-model="cfg.config.spread"
                                     :min="0"
                                     :max="100"
                                     :step="1"
-                                    label="spread"
+                                    label="Spread"
+                                    hide-label
                                     tooltip="Fans the nuclei apart, 0-100."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Bloom">
+                            <ConfiguratorRow label="Bloom" name="bloom">
                                 <LabeledSlider
                                     v-model="cfg.config.bloom"
                                     :min="0"
                                     :max="100"
                                     :step="1"
-                                    label="bloom"
+                                    label="Bloom"
+                                    hide-label
                                     tooltip="Diffusion radius — feathers each blob."
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Grain">
+                            <ConfiguratorRow label="Grain" name="grain">
                                 <LabeledSwitch
                                     v-model:checked="cfg.config.grain"
-                                    label="grain"
+                                    label="Grain"
+                                    hide-label
                                     tooltip="Layer the paper grain overlay."
                                 />
                             </ConfiguratorRow>

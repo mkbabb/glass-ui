@@ -21,6 +21,10 @@ export { default as DockSeparator } from "./DockSeparator.vue";
 // (no hard rule) + binds the consumer-owned context model (one registry, not a
 // parallel state path).
 export { default as DockRail } from "./DockRail.vue";
+// AZ.W-RAIL3 — the chip descriptor for the `<DockRail>` floating carousel strip
+// (`items` prop). Lives in `constants.ts` because a `<script setup>` SFC cannot
+// re-export a named type through the default barrel.
+export type { DockRailItem } from "./constants";
 
 // O.W4 Lane B — Fix 1 (Rγ L1): re-export composable types so consumers can
 // type wrappers around the published surface. Previously `UseDockStateOptions`

@@ -25,24 +25,24 @@ async function goto(page: Page, route: string) {
 
 /** Read the contextual DockLayer set the SHELL dock renders for the active route. */
 async function readContextLayers(page: Page, testid: string) {
+    // AZ.W-RAIL3 — the contextual facets moved OUT of the in-dock <DockLayerGroup>
+    // (deleted, box-inflating) onto the rail's floating-carousel strip. The route→layer
+    // swap now reads off the rail strip chips (the facet set per route), not the retired
+    // in-dock switcher rail. The `testid` is the SHELL dock testid (sidebar-dock-rail /
+    // bottom-dock-rail).
     return page.evaluate((id) => {
-        const group = document.querySelector(`[data-testid="${id}"]`);
-        if (!group) return { present: false, railTabs: [], facetEntries: [] };
-        // The switcher rail tabs (one per facet layer) — their aria-labels.
+        const rail = document.querySelector(`[data-testid="${id}"]`);
+        if (!rail) return { present: false, railTabs: [], facetEntries: [] };
+        // The carousel chips (one per facet) — their labels ARE the facet set.
         const railTabs = Array.from(
-            group.querySelectorAll(".dock-layer-rail .dock-layer-tab"),
+            rail.querySelectorAll(".dock-hairline-extend-chip"),
         ).map((t) => (t.getAttribute("aria-label") ?? t.textContent ?? "").trim());
-        // The ACTIVE facet pane's quick-jump entries (the visible, non-inert layer).
-        const activePane = group.querySelector(
-            ".dock-layer-item-host.is-active, .dock-layer-item-host:not([inert])",
-        );
-        const facetEntries = activePane
-            ? Array.from(activePane.querySelectorAll("[aria-label], a"))
-                  .map((e) =>
-                      (e.getAttribute("aria-label") ?? e.textContent ?? "").trim(),
-                  )
-                  .filter(Boolean)
-            : [];
+        // The active facet chip (the highlight tracks the route).
+        const facetEntries = Array.from(
+            rail.querySelectorAll(".dock-hairline-extend-chip.is-active"),
+        )
+            .map((e) => (e.getAttribute("aria-label") ?? e.textContent ?? "").trim())
+            .filter(Boolean);
         return { present: true, railTabs, facetEntries };
     }, testid);
 }
@@ -58,8 +58,8 @@ test("AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks", asy
     // {Tables, Lists, Series} on the other.
     // ── Route-context A: Forms ──
     await goto(page, "/forms/inputs");
-    const bottomA = await readContextLayers(page, "bottom-dock-context-group");
-    const sidebarA = await readContextLayers(page, "sidebar-dock-context-group");
+    const bottomA = await readContextLayers(page, "bottom-dock-rail");
+    const sidebarA = await readContextLayers(page, "sidebar-dock-rail");
     await page.screenshot({
         path: `${OUT}/W-DOCK-CONTEXT-shell-forms.png`,
         clip: { x: 0, y: 540, width: 1280, height: 260 },
@@ -67,8 +67,8 @@ test("AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks", asy
 
     // ── Route-context B: Data (BY ROUTE ALONE — no other interaction) ──
     await goto(page, "/data/table");
-    const bottomB = await readContextLayers(page, "bottom-dock-context-group");
-    const sidebarB = await readContextLayers(page, "sidebar-dock-context-group");
+    const bottomB = await readContextLayers(page, "bottom-dock-rail");
+    const sidebarB = await readContextLayers(page, "sidebar-dock-rail");
     await page.screenshot({
         path: `${OUT}/W-DOCK-CONTEXT-shell-data.png`,
         clip: { x: 0, y: 540, width: 1280, height: 260 },

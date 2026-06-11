@@ -1,5 +1,16 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **AZ.W-RAIL3 — `<DockRail>` evolved from a single end-icon into the floating-carousel
+> chip STRIP.** The new `items?: readonly DockRailItem[]` prop (`DockRailItem = { id,
+> label, icon? }`, exported from `@mkbabb/glass-ui/dock`) drives the visible facet chips
+> riding the connective hairline OUTSIDE the dock box (the dock box is INVIOLATE — the
+> strip renders via the `.glass-dock-frame` escape and never changes the dock's
+> width/height). The prior `entries?: readonly string[]` prop is **REMOVED** (clean
+> break, no alias — zero consumers passed it at the cut; every consumer passes `items`).
+> `v-model:context` + `@advance` are unchanged; `icon` is now the fallback chevron for
+> chips without their own glyph. The facets-as-in-dock-`<DockLayerGroup>` pattern on the
+> demo shell docks is replaced by the rail strip (demo-only; no library API there).
+
 > **AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
 > luminance-lift.** No consumer API rename — this is a TOKEN-knob + demo-preset
 > change. The dock SELECTED/hover/active/pressed register at the library ROOT is

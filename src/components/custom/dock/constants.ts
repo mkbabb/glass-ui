@@ -4,6 +4,24 @@
 // DI context modules (`composables/*Context.ts`) import their `Symbol(label)`
 // strings from here so a label is never re-typed at two call sites.
 
+import type { Component } from "vue";
+
+/**
+ * AZ.W-RAIL3 — one `<DockRail>` chip descriptor: the visible facet the floating
+ * carousel strip renders (id + label + glyph). A `<script setup>` SFC cannot
+ * re-export a named type through the `export { default }` barrel, so the chip
+ * descriptor lives here (the colocated types home) and the SFC imports it; the
+ * barrel re-exports it for consumers typing their `items` array.
+ */
+export interface DockRailItem {
+    /** The context id this chip selects (written to `v-model:context`). */
+    id: string;
+    /** The chip label. */
+    label: string;
+    /** The chip glyph (a `@lucide/vue` icon or any component). */
+    icon?: Component;
+}
+
 /**
  * The ONE dock-morph spring authority — the iOS-26 interruptible-physics tuning the
  * dock's single `SpringProgress` orchestrator (`dockMorphContext.ts`) AND the
