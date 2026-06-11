@@ -28,3 +28,12 @@ export const DOCK_LAYER_GROUP_LABEL = "glass-ui:dock-layer-group";
 
 /** `Symbol()` label for the `DockMorphContext` injection key (`dockMorphContext.ts`). */
 export const DOCK_MORPH_LABEL = "glass-ui:dock-morph-context";
+
+/** AZ.W-DOCK-FLICKER — the hover-hysteresis tuning pair (useDockState).
+ *  HOVER_INTENT_MS: the intent-dwell before a collapsed→hover expand commits
+ *  (a sweeping-edge enter is canceled by the chasing leave inside this window).
+ *  EDGE_BAND_PX: the morphing-edge-sweep recheck band — a mid-morph leave with
+ *  the pointer still inside (within this band of the moving edge) is the box
+ *  edge sweeping past the cursor, not a real exit. */
+export const HOVER_INTENT_MS = 60;
+export const EDGE_BAND_PX = 24;

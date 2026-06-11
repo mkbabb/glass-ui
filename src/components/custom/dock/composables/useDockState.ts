@@ -1,6 +1,7 @@
 import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
+import { HOVER_INTENT_MS, EDGE_BAND_PX } from "../constants";
 
 export interface UseDockStateOptions {
     /** Delay before auto-collapse after mouse leaves (ms) */
@@ -116,7 +117,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
            it does not schedule collapse. Only a pointer truly OUTSIDE the box rect
            collapses. This is the recheck REFERENCED by `onMouseLeave` (the gate's W2
            wired-seam assert; not dead code that satisfies a grep). */
-    const HOVER_INTENT_MS = 60;
     let hoverIntentTimer: ReturnType<typeof setTimeout> | null = null;
 
     function clearHoverIntent() {
@@ -139,7 +139,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         morph) every leave is genuine and this returns false — the steady-state
         collapse path is untouched. The recheck targets ONLY the FLIP-thrash window
         (the moving edge re-crossing the static cursor, D5-7). */
-    const EDGE_BAND_PX = 24;
     function isMorphingEdgeSweep(e?: MouseEvent): boolean {
         if (!e) return false;
         const el = rootEl.value;
