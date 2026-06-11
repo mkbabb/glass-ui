@@ -20,11 +20,11 @@
        and a Sheet all read as the SAME material without per-component wiring.
 
        The `.glass-dock` SHELL is OUT of this group BY DESIGN — it hand-rolls a
-       parallel surface (its own `--glass-*-dock` family + a local rim + an
-       instrument-strip `::before`) the dock arm owns. The COHESION CONSEQUENCE is
-       DELIBERATE: the dock shell carries NO shared edge-gleam / moving-specular
-       `::before` (its only `::before` is the `variant-instrument-strip` engraved
-       bezel, dock/shell.css — a different effect). The dock's catch-light lives on
+       parallel surface (its own `--glass-*-dock` family + a local rim) the dock arm
+       owns. The COHESION CONSEQUENCE is DELIBERATE: the dock shell carries NO shared
+       edge-gleam / moving-specular `::before` (AZ.W-DOCK-TAXONOMY retired the
+       `instrument-strip` engraved-bezel `::before` — the dock shell now has none).
+       The dock's catch-light lives on
        its CONTROLS (`.dock-icon-button` et al., listed below + in the opt-in
        transition block), which ARE in the material group — NOT on the shell plate.
        Adding a shell gleam would re-introduce glass-on-glass over the controls, so

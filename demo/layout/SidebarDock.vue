@@ -1,10 +1,11 @@
 <script setup lang="ts">
 // SidebarDock — the demo's fixed vertical category-rail dock (AW.W28.b).
 //
-// A `variant="rail"` GlassDock (the rail variant forces vertical — no
-// `orientation` prop). It is a FIXED, always-expanded icon+label rail: the
-// shipped GlassDock has NO collapse machinery for a vertical rail, so there is
-// no collapse↔expand affordance here. The only "expand" is the mobile
+// A vertical, always-expanded GlassDock (AZ.W-DOCK-TAXONOMY — `orientation="vertical"`
+// + `always-expanded`; the prior `variant="rail"` discriminant is retired, "rail-ness"
+// is now orientation + the vertical-dock surface). It is a FIXED icon+label nav rail:
+// it opts OUT of the (now orientation-agnostic) collapse machinery via `always-expanded`,
+// so there is no collapse↔expand affordance here. The only "expand" is the mobile
 // off-canvas Sheet host the BottomDock owns; this component is the rail body it
 // reuses for both the desktop fixed column and the mobile drawer.
 //
@@ -84,7 +85,8 @@ function onWordmarkClick(e: MouseEvent): void {
 
 <template>
     <GlassDock
-        variant="rail"
+        orientation="vertical"
+        always-expanded
         overflow="scroll"
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"

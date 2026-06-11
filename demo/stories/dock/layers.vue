@@ -141,12 +141,13 @@ function back() {
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Rail-hosted layer stack</h2>
             <p class="text-small text-muted-foreground">
-                A layer group inside <code class="rounded bg-muted px-1">GlassDock variant="rail"</code>
+                A layer group inside a <code class="rounded bg-muted px-1">GlassDock orientation="vertical"</code>
                 inherits the dock's vertical orientation without a duplicate prop.
             </p>
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock
-                    variant="rail"
+                    orientation="vertical"
+                    always-expanded
                     shape="rounded"
                     aria-label="Rail layer dock"
                     data-testid="dock-rail-layer-host"
@@ -223,7 +224,8 @@ function back() {
             </p>
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock
-                    variant="rail"
+                    orientation="vertical"
+                    always-expanded
                     shape="rounded"
                     aria-label="Vertical overflow dock"
                     data-testid="dock-vertical-overflow-host"

@@ -90,22 +90,22 @@ function tokenSurvives(token, stylesSrc) {
 // (the common shape) only asserts the RETIRED side.
 const RETIRED_CLAIMS = [
     {
-        label: "v3.10.0 AY-prune subpaths deck-progress/header-ribbon/glass-panel/instrument-rail (MIGRATION.md:3)",
+        label: "v3.10.0 AY-prune subpaths deck-progress/header-ribbon/glass-panel/instrument-rail (MIGRATION.md:10)",
         mustCarry: "RETIRED",
-        line: 3,
+        line: 10,
         subpaths: ["deck-progress", "header-ribbon", "glass-panel", "instrument-rail"],
         dirs: ["deck-progress", "header-ribbon", "glass-panel", "instrument-rail"],
     },
     {
-        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:41)",
+        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:48)",
         mustCarry: "RETIRED",
-        line: 41,
+        line: 48,
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths (MIGRATION.md:46)",
+        label: "pagination/virtual composables + subpaths (MIGRATION.md:53)",
         mustCarry: "RETIRED",
-        line: 46,
+        line: 53,
         subpaths: ["pagination", "virtual"],
         exports: [
             "useOffsetPagination",
@@ -115,9 +115,9 @@ const RETIRED_CLAIMS = [
         ],
     },
     {
-        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:49)",
+        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:56)",
         mustCarry: "RETIRED",
-        line: 49,
+        line: 56,
         exports: ["DockShowcaseFrame"],
     },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
@@ -223,8 +223,8 @@ function run() {
     // flagged so the declared claim list cannot silently fall behind the doc.
     const declaredLines = new Set(RETIRED_CLAIMS.map((c) => c.line));
     // Back-reference / cross-link lines that point at an ALREADY-declared claim
-    // (not a new retirement assertion): MIGRATION.md:147 ("…is RETIRED—see §2").
-    const BACKREF_LINES = new Set([147]);
+    // (not a new retirement assertion): MIGRATION.md:154 ("…is RETIRED—see §2").
+    const BACKREF_LINES = new Set([154]);
     mdLines.forEach((ln, i) => {
         const n = i + 1;
         if (!/RETIRED/.test(ln)) return;

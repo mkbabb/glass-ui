@@ -10,9 +10,12 @@
  * `.dock-layer-item-host` pane.
  *
  * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
- * `<DockLayerGroup>` — distinct from the `GlassDock variant="rail"` navigation
- * column (dock/shell.css + dock-controls.css) and the `<InstrumentRail>` cockpit
- * chassis (instrument-rail). The three share the noun, not the architecture.
+ * `<DockLayerGroup>` — the in-dock switcher tab strip. AZ.W-DOCK-TAXONOMY
+ * de-overloaded the "rail" noun: the `GlassDock variant="rail"` vertical-nav
+ * variant is GONE (a vertical nav column is now `orientation="vertical"`), and
+ * `<InstrumentRail>` retired at AY W-IC1. `.dock-layer-rail` is the ONLY surviving
+ * "rail" in the dock band; the noun is otherwise free (reserved for the
+ * W-RAIL-EXTEND beyond-dock facility).
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */

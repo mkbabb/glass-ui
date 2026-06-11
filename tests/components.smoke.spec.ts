@@ -270,19 +270,18 @@ describe("component smoke coverage", () => {
         expect(pill.find(".metric-badge").attributes("data-density")).toBe("comfortable");
     });
 
-    it("renders the GlassDock rail variant", () => {
+    it("renders a vertical GlassDock", () => {
         const wrapper = mount(GlassDock, {
-            props: { variant: "rail" },
+            props: { orientation: "vertical" },
             slots: { default: "<button>Tool</button>" },
         });
         expect(wrapper.text()).toContain("Tool");
-        expect(wrapper.classes()).toContain("variant-rail");
         expect(wrapper.classes()).toContain("vertical");
     });
 
-    it("renders rounded GlassDock rail shape", () => {
+    it("renders rounded vertical GlassDock shape", () => {
         const wrapper = mount(GlassDock, {
-            props: { variant: "rail", shape: "rounded" },
+            props: { orientation: "vertical", shape: "rounded" },
         });
         expect(wrapper.classes()).toContain("shape-rounded");
     });
@@ -315,7 +314,7 @@ describe("component smoke coverage", () => {
         expect(style).not.toContain("container-type");
     });
 
-    it("lets DockLayerGroup inherit vertical rail orientation", async () => {
+    it("lets DockLayerGroup inherit vertical dock orientation", async () => {
         const wrapper = mount({
             components: { DockLayer, DockLayerGroup, GlassDock },
             setup() {
@@ -323,7 +322,7 @@ describe("component smoke coverage", () => {
                 return { active };
             },
             template: `
-                <GlassDock variant="rail">
+                <GlassDock orientation="vertical">
                     <DockLayerGroup v-model:active="active">
                         <DockLayer id="one" label="One">One</DockLayer>
                         <DockLayer id="two" label="Two">Two</DockLayer>

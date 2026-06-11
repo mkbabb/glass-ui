@@ -6,7 +6,6 @@
 // SFC composes the dual-layer grid, the axis-aware expand/collapse transition, and
 // the pointer/focus hold machinery.
 import { computed, onMounted, ref, useId, useTemplateRef, watch } from "vue";
-import DockSeparator from "./DockSeparator.vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
@@ -26,28 +25,26 @@ import {
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockMorphWindow } from "./composables/useDockMorphWindow";
 
-/* The prop contract is a DISCRIMINATED UNION on `variant` (DockProps, in
-   useDockShellProps): the horizontal `dock` variant carries the collapse↔expand
-   surface (`collapseDelay`/`startCollapsed`/`layout="grid"`); the vertical `rail`
-   / `instrument-strip` variants are vertical-ALWAYS-EXPANDED by contract and DO
-   NOT accept that surface (a compile error, not a silent no-op). Pure
-   `defineProps<DockProps>()` (NOT `withDefaults`): `withDefaults` over a union
-   props type degrades the runtime inference to `Record<string, any>` and ERASES
-   the narrow. The defaults the prior `withDefaults` object held are applied at
-   each read site in `useDockShellProps` via `?? default`. */
+/* AZ.W-DOCK-TAXONOMY (arm a) — the prop contract is ONE shape (DockProps, in
+   useDockShellProps). The `variant` discriminant is gone: there is no
+   `variant="rail" | "instrument-strip"` second-way to express "vertical" — that is
+   `orientation="vertical"` alone — and the collapse↔expand surface
+   (`collapseDelay`/`startCollapsed`/`layout`) applies on BOTH orientations (a
+   vertical dock morphs its `height`, a horizontal dock its `width`; the single
+   opt-out is `alwaysExpanded`, default false). Defaults are applied at each read
+   site in `useDockShellProps` via `?? default`. */
 const props = defineProps<DockProps>();
 
-/* The resolved shell-prop computeds — variant/shape/orientation/density, the
-   collapse surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the
-   scroll-overflow class, `alwaysExpanded`/`fitContent`, and the container-query
-   `containerStyle`. (See useDockShellProps for the full `containerName`
-   always-expanded-only rationale — AY.W-DOCK2 §F1.) */
+/* The resolved shell-prop computeds — shape/orientation/density, the collapse
+   surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the scroll-overflow
+   class, `alwaysExpanded`/`fitContent`, and the container-query `containerStyle`.
+   (See useDockShellProps for the full `containerName` always-expanded-only
+   rationale — AY.W-DOCK2 §F1.) */
 const {
     containerStyle,
     collapseDelay,
     startCollapsed,
     layoutValue,
-    variant,
     shape,
     orientation,
     density,
@@ -127,7 +124,12 @@ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 const outerActiveLayer = computed<string>(() =>
     visualExpanded.value ? "full" : "summary",
 );
-const outerLayerAxis = computed<"horizontal" | "vertical">(() => "horizontal");
+/* AZ.W-DOCK-TAXONOMY (move 2) — the outer collapse pair morphs the LAYOUT axis,
+   not a hardcoded inline axis. A horizontal dock morphs `width`; a vertical dock
+   morphs `height` (`dockMorphContext.dimOf` already maps the axis). This is the
+   wiring that lets a collapsible vertical dock shrink — the machinery the old
+   `variant="rail"` force-pin denied. */
+const outerLayerAxis = computed<"horizontal" | "vertical">(() => orientation.value);
 /* AX.W01 redress (KEPT) — the OUTER collapse is a CLIP-APERTURE morph. Both panes
    (`--full` + `--summary`) are grid-stacked behind the root clip; the ACTIVE pane
    is in-flow (`position:relative; width:max-content`) and the INACTIVE one is
@@ -185,8 +187,12 @@ onMounted(() => {
     }
 });
 
+/* AZ.W-DOCK-TAXONOMY — the touch gate (tap-to-expand on a collapsed floating pill)
+   applies to ANY collapsible dock, not just the horizontal one. A vertical dock now
+   collapses too, so the gate must distinguish a tap from a vertical scroll on its
+   pill as well. */
 function shouldGateTouch(): boolean {
-    return orientation.value === "horizontal" && !alwaysExpanded.value;
+    return !alwaysExpanded.value;
 }
 
 /* AT.W6-dock-b — shape B′ touch-gate. The gate's job is to DISTINGUISH a tap
@@ -252,7 +258,6 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         class="glass-dock"
         :class="[
             orientation,
-            `variant-${variant}`,
             `shape-${shape}`,
             `layout-${layout}`,
             scrollClass,
@@ -293,63 +298,37 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         </div>
 
         <!--
-            Horizontal docks use the built-in two-layer pattern (full +
-            collapsed summary) with CSS-grid stacking and FLIP-driven
-            width crossfade transitions.
+            AZ.W-DOCK-TAXONOMY (move 2) — the built-in two-layer morph pattern (full +
+            collapsed summary) is now ORIENTATION-AGNOSTIC. Both orientations stack
+            the full/summary panes on a 1/1 CSS grid and crossfade with the
+            FLIP-driven aperture morph: a horizontal dock morphs `width`, a vertical
+            dock morphs `height` (the morph orchestrator keys its axis off the
+            resolved `orientation` via `outerLayerAxis`). The prior split — a
+            horizontal full/summary FLIP pair vs. a static vertical single-body —
+            denied the vertical dock the collapse/shrink machinery; unifying the
+            structure gives a collapsible vertical dock the height morph the
+            mandate names. An `always-expanded` dock renders the `full` pane in-flow
+            and the `summary` pane out-of-flow (no morph fires), so a vertical nav
+            column that opts out of collapse reads exactly as before.
         -->
-        <template v-if="orientation === 'horizontal'">
+        <div
+            ref="layersEl"
+            class="dock-layers"
+            @transitionend="onLayersTransitionEnd"
+        >
             <div
-                ref="layersEl"
-                class="dock-layers"
-                @transitionend="onLayersTransitionEnd"
+                :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
+                :inert="!expanded || undefined"
             >
-                <div
-                    :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
-                    :inert="!expanded || undefined"
-                >
-                    <slot />
-                </div>
-                <div
-                    :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
-                    :inert="expanded || undefined"
-                    @click="onClickCollapsed"
-                >
-                    <slot name="collapsed" />
-                </div>
-            </div>
-        </template>
-        <!--
-            AX.W45-TUNE C7 — the vertical three-region BODY (structural parity with
-            the horizontal template, not CSS-only). A vertical dock is an always-
-            expanded tool palette: it has no collapse↔expand width morph, so the
-            body is NOT the horizontal full/summary FLIP pair. But the three-region
-            STRUCTURE is now real:
-              1. `#persistent` — the stable rail (already the root flex SIBLING above,
-                 shared by both orientations).
-              2. the DEFAULT content stack — wrapped in `.dock-layers` (mirroring the
-                 horizontal morph-region container) so the column reads as a
-                 structured body, not a bare slot dump; consumers demarcate item
-                 GROUPS with `<DockSeparator>` (the built-in section rhythm — transport
-                 | nav | settings), the same primitive the horizontal dock uses.
-              3. `#collapsed` — an OPTIONAL trailing section (the vertical analogue of
-                 the horizontal summary pane). On a non-collapsing rail it renders as a
-                 persistent secondary group below a structural section divider, so a
-                 consumer authoring a `#collapsed` slot gets a real bottom region with
-                 the dock's gap rhythm rather than a no-op. Rendered only when authored
-                 ($slots.collapsed), so a vertical dock with no collapsed slot is
-                 byte-identical to the prior bare-slot body (one `.dock-layers`
-                 wrapper, same column flow).
-        -->
-        <template v-else>
-            <div class="dock-layers dock-layer--vertical-body">
                 <slot />
-                <template v-if="$slots.collapsed">
-                    <DockSeparator />
-                    <div class="dock-layer--vertical-section">
-                        <slot name="collapsed" />
-                    </div>
-                </template>
             </div>
-        </template>
+            <div
+                :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
+                :inert="expanded || undefined"
+                @click="onClickCollapsed"
+            >
+                <slot name="collapsed" />
+            </div>
+        </div>
     </div>
 </template>

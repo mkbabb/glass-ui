@@ -332,28 +332,25 @@ export function detectDockPerfection(sources) {
         );
     }
 
-    // ── C7 — the vertical body is the three-region structure, NOT a bare <slot/> ──
-    // Isolate the v-else (vertical) branch of GlassDock.vue.
-    const veIdx = glassDockVue.indexOf("<template v-else>");
-    let c7Structural = false;
-    let c7VerticalBranch = "";
-    if (veIdx !== -1) {
-        const endIdx = glassDockVue.indexOf("</template>", veIdx);
-        c7VerticalBranch = glassDockVue.slice(
-            veIdx,
-            endIdx === -1 ? glassDockVue.length : endIdx,
-        );
-        // Bare slot: the branch contains ONLY `<slot />` (whitespace aside) with no
-        // structural wrapper. Structural: it carries a `.dock-layers` content stack
-        // (the vertical-body wrapper) — parity with the horizontal morph-region.
-        const hasStructuralWrapper = /class="[^"]*dock-layer--vertical-body/.test(
-            c7VerticalBranch,
-        );
-        c7Structural = hasStructuralWrapper;
-    }
+    // ── C7 — the dock body is the UNIFIED full/summary morph region (both orientations) ──
+    // AZ.W-DOCK-TAXONOMY (move 2) — the prior horizontal-`.dock-layers`-pair vs. static
+    // vertical-`.dock-layer--vertical-body` split is GONE: both orientations now share
+    // ONE `.dock-layers` morph region with the `.dock-layer--full` / `.dock-layer--summary`
+    // collapse pair (a vertical dock collapses its block axis too). The structural parity
+    // C7 demanded is now total — there is no orientation-split bare-slot branch. Assert the
+    // single unified morph region exists and there is NO retired `v-else` vertical-body
+    // bare-slot branch.
+    const hasUnifiedLayers =
+        /class="dock-layers"/.test(glassDockVue) &&
+        /dock-layer--full/.test(glassDockVue) &&
+        /dock-layer--summary/.test(glassDockVue);
+    const hasRetiredVerticalBody =
+        /dock-layer--vertical-body/.test(glassDockVue) ||
+        glassDockVue.includes("<template v-else>");
+    const c7Structural = hasUnifiedLayers && !hasRetiredVerticalBody;
     if (!c7Structural) {
         violations.push(
-            "C7: the GlassDock vertical (v-else) branch is a bare <slot/> with no structural three-region body (it must wrap the default slot in a .dock-layer--vertical-body content stack — parity with the horizontal template).",
+            "C7: the GlassDock body must be the UNIFIED `.dock-layers` full/summary morph region for BOTH orientations (AZ.W-DOCK-TAXONOMY) — no orientation-split `<template v-else>` vertical-body bare slot.",
         );
     }
 

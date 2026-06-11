@@ -22,6 +22,13 @@
 > Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
 > re-introduction on any interactive selector).
 
+> **v3.11.0 (AZ, staged)** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
+> `<GlassDock variant="rail">` → `<GlassDock orientation="vertical">` (the `variant`
+> discriminant is removed; a vertical dock is now COLLAPSIBLE by default — it morphs its
+> `height`; a static nav column adds `always-expanded`). `<GlassDock variant="instrument-strip">`
+> is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
+> `SurveyResultDock` cockpit re-pins on the 3.11.0 adopt.
+
 > **v3.10.0 (AY)**—four zero-consumer subpaths RETIRED outright (no aliases,
 > per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress`,
 > `/header-ribbon`, `/glass-panel`, `/instrument-rail` — each had 0 production

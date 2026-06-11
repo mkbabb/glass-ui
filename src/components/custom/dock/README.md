@@ -179,14 +179,13 @@ width morph.
 | Prop | Type | Default | Role |
 |---|---|---|---|
 | `collapseDelay` | `number` | `2000` | Idle ms before auto-collapse. |
-| `startCollapsed` | `boolean` | `true` | Mount collapsed (summary shown). |
+| `startCollapsed` | `boolean` | `true` | Mount collapsed (summary shown). Applies on BOTH orientations. |
 | `fitContent` | `boolean` | `false` | Size to content rather than the cap. |
 | `position` | `"fixed" \| "inline" \| "sticky"` | `"inline"` | Page anchoring. |
-| `alwaysExpanded` | `boolean` | `false` | Never collapse (forced for vertical). |
-| `variant` | `"dock" \| "rail" \| "instrument-strip"` | `"dock"` | Surface preset. |
-| `shape` | `"pill" \| "rounded" \| "card"` | `"pill"` | Corner treatment (`card` is the big-dock squircle, paired with `layout="grid"`). |
+| `alwaysExpanded` | `boolean` | `false` | Never collapse — the single opt-out of the collapse machinery (no longer forced for vertical; a vertical dock collapses its `height` by default). |
+| `shape` | `"pill" \| "rounded" \| "card"` | `"pill"` | Corner treatment (`card` is the big-dock squircle, paired with `layout="grid"`). Paints on both orientations. |
 | `layout` | `"linear" \| "grid"` | `"linear"` | Child layout. `layout="grid"` is the big-dock multi-row grid and HARD-CONTRACTS `alwaysExpanded` (a grid dock cannot collapse). |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout axis; horizontal animates `width`, vertical animates `height`. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | The SINGLE layout axis; horizontal animates `width`, vertical animates `height`. AZ.W-DOCK-TAXONOMY retired the `variant` discriminant — "vertical" is `orientation="vertical"`, the only way to express it. |
 | `density` | `"compact" \| "comfortable" \| "spacious" \| "audacious"` | `"comfortable"` | Padding / gap / control sizing. |
 | `overflow` | `"grow" \| "wrap" \| "scroll"` | `"grow"` | Over-cap strategy — grow visibly, wrap to multiple rows, or become the scroll port. |
 | `containerName` | `string` | — | Establish a named inline-size container-query subject (orthogonal to `overflow`). |

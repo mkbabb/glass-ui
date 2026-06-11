@@ -78,16 +78,16 @@ add(
 );
 
 // ── (a) — the rail ::before BAR reads --dock-selected-accent, not a brand solid ──
-// The active ::before bar block: scoped to .variant-rail …::before, background reads
+// The active ::before bar block: scoped to .glass-dock.vertical …::before, background reads
 // the luminance-lift token.
 const railBeforeBlock = dockControls.match(
-    /\.glass-dock\.variant-rail[\s\S]*?:is\([^)]*\)::before\s*\{([\s\S]*?)\}/,
+    /\.glass-dock\.vertical[\s\S]*?:is\([^)]*\)::before\s*\{([\s\S]*?)\}/,
 );
 const railBeforeBody = railBeforeBlock ? railBeforeBlock[1] : "";
 add(
     "rail-bar-reads-selected-accent",
     /background:\s*var\(--dock-selected-accent\)/.test(railBeforeBody),
-    "the .variant-rail active ::before bar background reads var(--dock-selected-accent) (the luminance-lift)",
+    "the .glass-dock.vertical active ::before bar background reads var(--dock-selected-accent) (the luminance-lift)",
 );
 add(
     "rail-bar-not-brand-solid",
@@ -96,21 +96,21 @@ add(
             railBeforeBody,
         ) &&
         !/background:[^;]*var\(--primary\)/.test(railBeforeBody),
-    "the .variant-rail active ::before bar no longer falls back to a --primary/brand solid stripe",
+    "the .glass-dock.vertical active ::before bar no longer falls back to a --primary/brand solid stripe",
 );
 
 // ── (a) — the active GLYPH color resolves to --foreground/warm-ink ──────────────
 // The active rule (NOT the ::before) re-points the glyph color. Match the
-// .variant-rail …:is(.is-active, …) { … } block that is NOT the ::before.
+// .glass-dock.vertical …:is(.is-active, …) { … } block that is NOT the ::before.
 const railGlyphBlock = dockControls.match(
-    /\.glass-dock\.variant-rail\s*\.dock-icon-button:is\([^)]*\)\s*\{([\s\S]*?)\}/,
+    /\.glass-dock\.vertical\s*\.dock-icon-button:is\([^)]*\)\s*\{([\s\S]*?)\}/,
 );
 const railGlyphBody = railGlyphBlock ? railGlyphBlock[1] : "";
 add(
     "rail-glyph-warm-ink",
     /color:\s*var\(--foreground\)/.test(railGlyphBody) &&
         /--dock-active-color:\s*var\(--foreground\)/.test(railGlyphBody),
-    "the .variant-rail active glyph color + --dock-active-color resolve to var(--foreground) warm-ink (NOT a brand hue)",
+    "the .glass-dock.vertical active glyph color + --dock-active-color resolve to var(--foreground) warm-ink (NOT a brand hue)",
 );
 add(
     "rail-glyph-not-brand",
@@ -119,7 +119,7 @@ add(
             railGlyphBody,
         ) &&
         !/color:[^;]*var\(--primary\)/.test(railGlyphBody),
-    "the .variant-rail active glyph color no longer falls back to a --primary/brand hue",
+    "the .glass-dock.vertical active glyph color no longer falls back to a --primary/brand hue",
 );
 
 // ── (c) — the dock control :active reads the press-darken token ─────────────────

@@ -236,7 +236,7 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("dock", "overview", "Overview", "The GlassDock walkthrough — the collapse↔expand morph on one spring, always-expanded media transport, select / dropdown / popover triggers, the slider keep-open hold, content-driven overflow wrap, the big-dock card + tile grid, and the background pause toggle."),
             s("dock", "layers", "Dock Layers", "DockLayerGroup drill-in — named panes with an optional switcher rail, crossfade + size FLIP between layers, collapse-while-switching, and the vertical-overflow case."),
-            s("dock", "rail", "Dock Rail", "The vertical GlassDock rail navigation column — an active-item accent, tap-squish press, and anchored tooltips. The Dock Rail is distinct from the Instrument Rail (the cockpit-ratio chassis column under Compositions) and from the layer-switcher rail inside a DockLayerGroup."),
+            s("dock", "rail", "Vertical Dock", "The vertical GlassDock navigation column — an active-item accent, tap-squish press, and anchored tooltips. ONE orientation axis (no variant): a vertical dock is orientation=\"vertical\", and it carries the same collapse/morph/shrink machinery a horizontal dock does. The only \"rail\" left in the dock band is the layer-switcher rail inside a DockLayerGroup."),
         ],
     },
     {

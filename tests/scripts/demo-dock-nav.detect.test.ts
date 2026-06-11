@@ -24,7 +24,7 @@ const SIDEBAR_OK = `
 import { GlassDock } from "../../src/components/custom/dock";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 const { firstOfCategory } = useStoryNavigation();
-<template><GlassDock variant="rail" /></template>
+<template><GlassDock orientation="vertical" /></template>
 `;
 const BOTTOM_OK = `
 import { GlassDock } from "../../src/components/custom/dock";

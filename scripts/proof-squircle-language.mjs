@@ -258,8 +258,10 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             "dock.css: a `corner-shape` declaration sits OUTSIDE the @supports block (a partial-support engine would apply it and break the round fallback)",
         );
     // The un-gated `border-radius` round fallback is present on the big-dock site.
+    // AZ.W-DOCK-TAXONOMY — the `variant-dock` class is retired; the horizontal big-dock
+    // is `.glass-dock:not(.vertical).shape-card` now (no `variant` second-way).
     const bigdockRoundFallback =
-        /\.glass-dock\.variant-dock:not\(\.vertical\)\.shape-card\s*\{[^}]*border-radius\s*:/.test(
+        /\.glass-dock:not\(\.vertical\)\.shape-card\s*\{[^}]*border-radius\s*:/.test(
             dockCss,
         );
     facts.bigdockRoundFallback = bigdockRoundFallback;

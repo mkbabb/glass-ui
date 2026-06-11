@@ -301,11 +301,11 @@ async function dockAssertions(client, route) {
     if (route.path === "/navigation/rail") {
         assertions.push({
             name: "rail route renders a blurred vertical GlassDock",
+            // AZ.W-DOCK-TAXONOMY — the `variant-rail` class is retired; a vertical nav
+            // dock is `orientation="vertical"` (emits `.vertical`), no `variant` class.
             pass: dockState.docks.some(
                 (dock) =>
-                    dock.className.includes("variant-rail") &&
-                    dock.className.includes("vertical") &&
-                    dock.hasBlur,
+                    dock.className.includes("vertical") && dock.hasBlur,
             ),
             details: dockState.docks,
         });

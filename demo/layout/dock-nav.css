@@ -3,8 +3,9 @@
  * (AW.W28.b). It does NOT touch src/styles/.
  *
  * Two docks compose the demo's core navigation:
- *   - SidebarDock — a FIXED vertical `variant="rail"` GlassDock (the left
- *     column on wide viewports; off-canvas behind a <Sheet> on narrow ones).
+ *   - SidebarDock — a FIXED vertical `always-expanded` GlassDock
+ *     (`orientation="vertical"`; the left column on wide viewports; off-canvas
+ *     behind a <Sheet> on narrow ones).
  *   - BottomDock — a horizontal `always-expanded` GlassDock viewport-anchored
  *     to the bottom inset, floating over the <main> scroll-region.
  *
@@ -52,7 +53,7 @@
 /* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
    shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
    The active-item register + the leading-edge accent rule are SHIPPED by the
-   `GlassDock variant="rail"` variant CSS (`src/styles/dock-controls.css`): the
+   vertical-dock CSS (`.glass-dock.vertical`, `src/styles/dock-controls.css`): the
    selected control reads as the glass material-lift plate + the translucent
    `--dock-selected-accent` luminance bar — the iOS register. The demo NO LONGER
    re-tints the accent to NCSU-red (R3-6 retired the brand-red interactive

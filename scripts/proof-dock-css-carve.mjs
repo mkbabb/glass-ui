@@ -20,12 +20,11 @@
 // (2) DELETION — the renamed token-ladder debris (foundations/dock-active-tokens)
 //     + the relocated keepDockOpen proof (compositions/dock-with-slider) are GONE
 //     (files absent + 0 manifest refs).
-// (3) TYPE-NARROW — the honest rail surface ships: the generated GlassDock dts
-//     surfaces the DISCRIMINATED union (`variant: "rail" | "instrument-strip"`
-//     WITHOUT `collapseDelay`), NOT the `Record<string, any>` the withDefaults
-//     form erased it to — the proof the inapplicable collapse surface is narrowed
-//     away at compile time. (The falsifiable consumer-probe compile failure is the
-//     companion HardGate item; this asserts the dts-level surfacing structurally.)
+// (3) SINGLE-SHAPE — the ONE DockProps surface ships (AZ.W-DOCK-TAXONOMY arm a): the
+//     generated GlassDock dts carries the typed props (orientation is the single
+//     layout axis), NOT erased to `Record<string, any>`, AND no retired `variant`
+//     discriminant survives — the clean break from the prior `DockVariantProps |
+//     DockRailProps` discriminated union.
 //
 // House style mirrors proof-dock-controls-split.mjs: ESM .mjs, a byte-stable JSON
 // artefact via gate-output, a human summary, process.exit(1) on any violation.
@@ -124,30 +123,29 @@ function run() {
         violations.push(`manifest.ts still references the debris route(s) ${manifestRefs}× (dock-active-tokens / dock-with-slider) — drop the row(s)`);
     }
 
-    // ── (3) TYPE-NARROW — the dts surfaces the discriminated union ───────────
-    // The honest rail ships when the GlassDock dts carries the rail branch
-    // (`variant: "rail" | "instrument-strip"`) WITHOUT a `collapseDelay` member,
-    // i.e. NOT the `Record<string, any>` the withDefaults+union form erased it to.
+    // ── (3) SINGLE-SHAPE — the dts surfaces the ONE DockProps shape, no `variant` ──
+    // AZ.W-DOCK-TAXONOMY (arm a) — the discriminated union `DockVariantProps |
+    // DockRailProps` is RETIRED; GlassDock takes ONE `DockProps` interface (orientation
+    // is the single layout axis, the collapse surface applies on both). The honest
+    // surface ships when the GlassDock dts carries the typed props (e.g. `orientation`)
+    // NOT erased to `Record<string, any>`, AND no retired `variant: "rail" |
+    // "instrument-strip"` discriminant survives (the clean break).
     if (existsSync(P.GLASSDOCK_DTS)) {
         const dts = readFileSync(P.GLASSDOCK_DTS, "utf8");
-        // The rail branch is surfaced either INLINE (`variant: "rail" |
-        // "instrument-strip"`) OR — since the W-DOCK shell-props extraction moved the
-        // union into the named `DockRailProps` interface — as a NAMED-TYPE REFERENCE
-        // (`… | DockRailProps`) the GlassDock dts imports from useDockShellProps. Both
-        // surface the discriminated union; only the `Record<string, any>` erasure is the
-        // regression. DockRailProps itself carries `variant: "rail" | "instrument-strip"`
-        // (useDockShellProps.d.ts:108) — the type-narrow lives, just by reference.
-        const hasInlineBranch = /variant:\s*"rail"\s*\|\s*"instrument-strip"|variant:\s*"instrument-strip"\s*\|\s*"rail"/.test(dts);
-        const hasNamedBranch = /DockRailProps/.test(dts);
-        const hasRailBranch = hasInlineBranch || hasNamedBranch;
-        const erasedToRecord = /props:\s*Record<string,\s*any>/.test(dts) && !hasRailBranch;
-        facts.dtsHasRailBranch = hasRailBranch;
+        const hasTypedProps = /orientation\??:\s*"horizontal"\s*\|\s*"vertical"|DockProps/.test(dts);
+        const erasedToRecord = /props:\s*Record<string,\s*any>/.test(dts) && !hasTypedProps;
+        const retiredVariant = /variant\??:\s*"(rail|instrument-strip|dock)"/.test(dts);
+        facts.dtsHasTypedProps = hasTypedProps;
         facts.dtsErasedToRecord = erasedToRecord;
-        if (!hasRailBranch) {
-            violations.push("GlassDock dts does not surface the rail discriminated-union branch — the type-narrow erased (rebuild dist, or the union regressed to Record<string, any>)");
+        facts.dtsRetiredVariant = retiredVariant;
+        if (erasedToRecord) {
+            violations.push("GlassDock dts erased to Record<string, any> — the single DockProps shape regressed (rebuild dist, or the prop types were lost)");
+        }
+        if (retiredVariant) {
+            violations.push("GlassDock dts still surfaces the retired `variant` discriminant (AZ.W-DOCK-TAXONOMY removed it — the clean break)");
         }
     } else {
-        facts.dtsHasRailBranch = "skipped (dist not built)";
+        facts.dtsHasTypedProps = "skipped (dist not built)";
     }
 
     const status = violations.length === 0 ? "pass" : "fail";

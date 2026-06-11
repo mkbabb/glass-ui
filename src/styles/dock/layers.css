@@ -60,6 +60,18 @@
         inline-size: var(--dock-morph-size);
     }
 
+    /* AZ.W-DOCK-TAXONOMY (move 2) — a VERTICAL dock's outer `.dock-layers` morphs the
+       BLOCK axis (its collapse↔expand shrinks `height`, not `width`). The orchestrator
+       measures/writes the same `--dock-morph-from/to` span on the block axis
+       (`outerLayerAxis` is now the resolved orientation; `morphAxisProp` maps
+       vertical→`block-size`), so the CSS lands the scalar on `block-size` and lets the
+       inline axis stay intrinsic. This is the wiring that gives a collapsible vertical
+       dock the height-morph the mandate names. */
+    .glass-dock.vertical[data-morphing] .dock-layers {
+        inline-size: auto;
+        block-size: var(--dock-morph-size);
+    }
+
     /* A vertical inner group morphs the BLOCK axis — the same span lands on
        block-size, and the inline axis stays intrinsic. */
     .glass-dock[data-morphing] .dock-layer-group.vertical .dock-layer-stack {

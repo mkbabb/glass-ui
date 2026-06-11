@@ -54,18 +54,21 @@
 
     /* The morphing root chrome — background / border-color interpolate between the
        collapsed and expanded endpoints on the ONE `--dock-expand-t` scalar. Scoped
-       to the horizontal `variant-dock` (the rail / instrument-strip variants own
-       their own surface vocabulary and do not collapse↔expand). The two color axes
-       blend in srgb (the house mix the token ladder speaks). The `.collapsed`
-       discrete bg/border declarations are RETIRED — this block is the single
-       authority, and at rest `--dock-expand-t` resolves to the class endpoint (0
-       collapsed / 1 expanded) so the resting look is exact. */
-    .glass-dock.variant-dock:not(.vertical) {
+       to the horizontal dock (`:not(.vertical)`) — the inline-axis aperture morph;
+       a vertical dock collapses its BLOCK axis (the summary/full FLIP from the
+       orchestrator) and reads its own surface plate (shell.css `.glass-dock.vertical`).
+       The two color axes blend in srgb (the house mix the token ladder speaks). The
+       `.collapsed` discrete bg/border declarations are RETIRED — this block is the
+       single authority, and at rest `--dock-expand-t` resolves to the class endpoint
+       (0 collapsed / 1 expanded) so the resting look is exact.
+       AZ.W-DOCK-TAXONOMY — the `variant-dock` class is gone; `.glass-dock:not(.vertical)`
+       IS the horizontal dock now (no second-way to express orientation). */
+    .glass-dock:not(.vertical) {
         /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — BOTH morph endpoints compose
            the W55 oklab adaptive tint so the self-engage darken (the unconditional
            `:where(.glass-dock)` rule below re-points the element-level
            `--glass-tint-source`/`--glass-tint-strength`) reaches the LIVE
-           `.variant-dock` surface in BOTH the expanded AND the COLLAPSED look (this
+           horizontal dock surface in BOTH the expanded AND the COLLAPSED look (this
            0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the tint must be
            applied HERE — and the COLLAPSED endpoint `--glass-bg-wash` must carry it too,
            else a collapsed dock over light paints the un-darkened wash and the plate
@@ -114,7 +117,7 @@
        (the `.collapsed .dock-layer--summary` rule below), CENTRED on the dock's
        stable-height plate by the root `align-items:center`, not by the root pad. So
        the morph reflows NOTHING vertically: 0px container-height delta. */
-    .glass-dock.variant-dock:not(.vertical):not(.dock-overflow-wrap) {
+    .glass-dock:not(.vertical):not(.dock-overflow-wrap) {
         /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
            consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
            pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
@@ -316,7 +319,7 @@
        warm-ink here too — ONE reconciled path, the foreground twin folded in (it
        reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
        sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
-       0%` on the dock root. The morph-root interp (`.variant-dock:not(.vertical)`
+       0%` on the dock root. The morph-root interp (`.glass-dock:not(.vertical)`
        above) stays `color-mix(in srgb …)` for the transition — the adaptive darken
        rides its RESTING endpoint (`--glass-bg-dock`), the in-flight morph frames are
        sub-perceptual (the ratified resting-endpoint-only default). The muted body

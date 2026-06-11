@@ -149,15 +149,18 @@ add(
     "--glass-bg-dock rides color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)",
 );
 const dockFlat = dock.replace(/\s+/g, " ");
-// The bg token carries a nested var() fallback (`var(--glass-bg-chassis,
-// var(--glass-bg-wash))`), so the source-arg match must allow the nested parens
-// (`[^;]*?` up to the `, var(--glass-tint-source) …` tail).
+// AZ.W-DOCK-TAXONOMY — the `instrument-strip` chassis-strip surface RETIRED (the
+// ≥2-consumer bar; no live consumer). The VERTICAL dock surface (the prior
+// `.variant-rail` plate, now `.glass-dock.vertical`) threads the SAME element-level
+// oklab tint wrapper so the self-engage darken reaches its plate. The bg token
+// carries a nested var() fallback (`var(--glass-bg-dock, var(--glass-bg-wash))`),
+// so the source-arg match allows the nested parens up to the tint tail.
 add(
-    "dock-chassis-on-oklab-seam",
-    /color-mix\(\s*in oklab,\s*var\(--glass-bg-chassis[^;]*?,\s*var\(--glass-tint-source\)\s*var\(--glass-tint-strength\)/.test(
+    "dock-vertical-on-oklab-seam",
+    /\.glass-dock\.vertical\s*\{[^}]*color-mix\(\s*in oklab,\s*var\(--glass-bg-dock[^;]*?,\s*var\(--glass-tint-source\)\s*var\(--glass-tint-strength\)/.test(
         dockFlat,
     ),
-    "the chassis-strip threads color-mix(in oklab, var(--glass-bg-chassis), --glass-tint-source --glass-tint-strength)",
+    "the vertical dock plate threads color-mix(in oklab, var(--glass-bg-dock), --glass-tint-source --glass-tint-strength)",
 );
 // The held + open floating tiers thread the wrapper too (two oklab wraps over --glass-bg-floating).
 const dockFloatingWraps = (
@@ -192,7 +195,7 @@ add(
 // adaptive darken rides --glass-bg-dock at the rest endpoint, the morph interp untouched).
 add(
     "morph-interp-stays-srgb",
-    /\.glass-dock\.variant-dock:not\(\.vertical\)\s*\{\s*background:\s*color-mix\(\s*in srgb/.test(
+    /\.glass-dock:not\(\.vertical\)\s*\{\s*background:\s*color-mix\(\s*in srgb/.test(
         dock,
     ),
     "the morph-root interp stays color-mix(in srgb …) (resting-endpoint-only — the morph frames untouched)",
