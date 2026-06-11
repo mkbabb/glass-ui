@@ -509,7 +509,10 @@ async function checkRoute(route) {
 }
 
 function startServerIfNeeded() {
-    return spawn("npm", ["run", "dev", "--", "--host", "127.0.0.1", "--port", "5173"], {
+    // The port derives from baseUrl — a hardcoded port here silently spawns a
+    // server the waitForHttp below never probes (the wrong-port hang).
+    const port = new URL(baseUrl).port || "5199";
+    return spawn("npm", ["run", "dev", "--", "--host", "127.0.0.1", "--port", port], {
         cwd: root,
         stdio: "ignore",
         env: { ...process.env, BROWSER: "none" },
