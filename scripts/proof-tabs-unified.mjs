@@ -77,10 +77,12 @@ export function detect() {
 
     const TABS_DIR = "src/components/custom/tabs";
     const sfc = read(`${TABS_DIR}/SegmentedTabs.vue`);
-    // The track choreography is carved out of the SFC into a co-located partial
-    // (segmented-tabs.css, @import-ed into styles/index.css); the CSS-side
-    // assertions read THAT file, the script/type/aria assertions read the SFC.
-    const css = read(`${TABS_DIR}/segmented-tabs.css`);
+    // The track choreography is carved out of the SFC into a partial
+    // (segmented-tabs.css, @import-ed into styles/index.css). Its home moved
+    // from the component dir to src/styles/ — read BOTH candidates so a
+    // colocate/carve relocation never strands the CSS assertions.
+    const css =
+        read("src/styles/segmented-tabs.css") || read(`${TABS_DIR}/segmented-tabs.css`);
     const barrel = read(`${TABS_DIR}/index.ts`);
     const barrelCode = stripComments(barrel);
     const composable = read(`${TABS_DIR}/composables/useTabIndicator.ts`);
