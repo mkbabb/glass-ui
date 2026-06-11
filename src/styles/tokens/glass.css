@@ -247,7 +247,18 @@
     --glass-backdrop:           dark;
     --glass-backdrop-luma:      ;
     --glass-tint-ink:           var(--foreground);
-    --glass-tint-strength-aa:   18%;
+    /* AZ.W-ADAPTIVE-AUTO Arm 1 — recalibrated 18% → 20%. The bump strengthens the
+       G2 surface-SILHOUETTE darken (ΔL ≈ 0.40 over synthetic white, the plate is
+       distinguishable from a bright page behind) while staying bounded ≤ 24% (the
+       iOS clamp — the surface STAYS translucent, "let content through"). The body
+       register over the engaged plate is the full warm-ink `--foreground` (~10.6:1
+       over white at 20%) — the muted L40 tier is lifted to the full ink by the
+       self-engage rules (it cannot clear 4.5:1 on a translucent darkened plate;
+       darkening moves the plate toward muted's own luminance). The shipped overlay-
+       band engaged appearance re-ratifies at the new floor: `--foreground` reads
+       ~10.6–10.9:1 (within the ~11:1 ratified register — the bump is a silhouette
+       strengthening, not a silent re-tint below AA). The live π readback ratifies. */
+    --glass-tint-strength-aa:   20%;
 
     /* AW.W23 — chromatic edge dispersion (the "polished glass" rim fringe Apple
        shows). A warm fringe on one edge + a cool fringe on the other, low-alpha,

@@ -115,6 +115,28 @@ add(
     rungsCovered,
     "the bright-bucket block names all five rungs + .glass-material + .glass-card",
 );
+// AZ.W-ADAPTIVE-AUTO Arm 1 — the content tiers UNCONDITIONALLY self-engage (no
+// ancestor bucket). The `:where(.glass-floating, .glass-overlay, .glass-card,
+// .glass-resting, .glass-quiet, .glass-wash)` rule re-points the tint tokens DIRECTLY
+// on the surfaces, closing the C5-7 content-tier asymmetry (they painted near-
+// invisible over light). The over-light-common content tiers are NAMED in the rule.
+const ladderSelfEngage = glass.match(
+    /:where\(\s*\.glass-floating,\s*\.glass-overlay,\s*\.glass-card,\s*\.glass-resting,\s*\.glass-quiet,\s*\.glass-wash\s*\)\s*\{([\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-aa\)[\s\S]*?)\}/,
+);
+add(
+    "content-tiers-self-engage",
+    Boolean(ladderSelfEngage),
+    ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash, …) self-engages the bright-bucket darken unconditionally (the C5-7 content-tier asymmetry fix)",
+);
+// The muted body register lifts to the full warm-ink on the self-engaged surfaces
+// (the muted L40 tier cannot clear 4.5:1 on a translucent darkened plate).
+add(
+    "content-tiers-muted-lift",
+    ladderSelfEngage
+        ? /--muted-foreground:\s*var\(--foreground\)/.test(ladderSelfEngage[1])
+        : false,
+    "the content-tier self-engage lifts --muted-foreground → --foreground (the muted register cannot clear 4.5:1 on a translucent darkened plate)",
+);
 
 // ── 3. The dock is ON the seam (witness 2 — the literal G2 surface) ─────────────
 // The dock shell rides --glass-bg-dock which carries the oklab tint at tokens.css
@@ -155,6 +177,16 @@ add(
         dock,
     ),
     "dock.css @container style(--glass-backdrop: light) .glass-dock re-points the tint toward ink",
+);
+// AZ.W-ADAPTIVE-AUTO Arm 1 — the dock UNCONDITIONAL self-engage rule (the C5-2/C5-3
+// no-op fix: the @container block above queries an ancestor and NEVER self-matches;
+// the `:where(.glass-dock)` rule is the genuine self-darken, mirroring ladder.css).
+add(
+    "dock-self-engage-rule",
+    /:where\(\.glass-dock\)\s*\{[\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-aa\)[\s\S]*?--dock-fg-on-aurora:\s*var\(--glass-tint-ink\)/.test(
+        dock,
+    ),
+    ":where(.glass-dock) unconditionally self-engages the bright-bucket darken (the C5-2 self-engage no-op fix)",
 );
 // The morph-root interp STAYS in srgb (resting-endpoint-only ratified default — the
 // adaptive darken rides --glass-bg-dock at the rest endpoint, the morph interp untouched).
@@ -234,6 +266,34 @@ add(
     "w52-plus-lighter-intact",
     /mix-blend-mode:\s*plus-lighter/.test(glass),
     "the W52 plus-lighter specular blend is INTACT (W55 composes on it, the darkening is the orthogonal oklab axis)",
+);
+
+// ── 5b. The A5-1 modal-scrim double-wrap bite (readability-sweep token discipline) ──
+// `dialog.glass-top-layer::backdrop` (+ its [open] + @starting-style arms) must read
+// the house `color-mix(in srgb, var(--background) …)` alpha-derivative, NOT the invalid
+// `hsl(var(--background) / α)` double-wrap (`--background` is a complete hsl() color, so
+// the double-wrap evaluates to nothing — the modal dim silently does not paint). The bite
+// is EVASION-RESISTANT: a revert to the hsl() channel form re-introduces the banned
+// substring and REDs.
+const animations = strip(read("src/styles/animations.css"));
+// Isolate the dialog.glass-top-layer::backdrop region (the scrim arms).
+const scrimRegion =
+    animations.match(
+        /dialog\.glass-top-layer::backdrop[\s\S]*?dialog\.glass-top-layer\[open\]::backdrop[\s\S]*?@starting-style[\s\S]*?\}\s*\}/,
+    )?.[0] ?? "";
+add(
+    "modal-scrim-no-double-wrap",
+    scrimRegion.length > 0 && !/hsl\(\s*var\(--background\)/.test(scrimRegion),
+    "dialog.glass-top-layer::backdrop carries NO hsl(var(--background) / α) double-wrap (the invalid pattern that never painted)",
+);
+// The three arms (rest 0%, [open] dim, @starting-style 0%) read color-mix(in srgb).
+const scrimColorMixCount = (
+    scrimRegion.match(/color-mix\(\s*in srgb,\s*var\(--background\)/g) ?? []
+).length;
+add(
+    "modal-scrim-color-mix-arms",
+    scrimColorMixCount >= 3,
+    `the three ::backdrop arms read color-mix(in srgb, var(--background) …) (${scrimColorMixCount} found, need ≥3 — the dim PAINTS)`,
 );
 
 // ── 6. The π readback spec is wired (witness 6) ────────────────────────────────

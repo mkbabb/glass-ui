@@ -87,13 +87,15 @@
         flex-direction: column-reverse;
     }
 
-    /* AX.W45 DK8 — the rail gets its OWN surface plate. Previously the rail was a
-       bare bordered gutter (a hairline `border-right`, no background), so its
-       `--primary 15%` indicator + `--accent 40%` hover were tuned against an absent
-       plate (the "bg's not right"). The `--dock-layer-rail-bg` rung (a quiet
-       `--surface-tint-8` default, consumer-overridable) gives the rail a finished
-       glass-quiet surface; the hover/active affordance reads the `--dock-layer-rail-
-       {hover,active}` tokens, so the whole rail ladder is tunable from §10. */
+    /* AZ.W-DOCK-RAIL — the rail is a HAIRLINE register, not a fused plate. The
+       AX.W45 `--surface-tint-8` filled plate + `--radius-md` rounded background
+       (the "heavy dark blob column" R3-1) are RETIRED: the rail box paints NO fill
+       (`--dock-layer-rail-bg` defaults transparent at §sizing) and carries no
+       rounded plate background. The single `border-right` hairline — re-keyed to
+       the tunable `--dock-layer-rail-divider` token — is the only visible rail
+       edge: a thin rule between the switcher column and the dock body. The
+       hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
+       tints, so the whole rail ladder is tunable from §sizing. */
     .dock-layer-rail {
         display: flex;
         flex-direction: column;
@@ -116,25 +118,28 @@
         min-height: max-content;
         gap: var(--dock-layer-rail-gap, 0.125rem);
         padding: var(--dock-layer-rail-padding, 0.125rem);
-        background: var(--dock-layer-rail-bg, var(--surface-tint-8));
-        border-radius: var(--dock-layer-rail-radius, var(--radius-md));
-        border-right: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+        background: var(--dock-layer-rail-bg, transparent);
+        border-right: 1px solid
+            var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 40%, transparent));
     }
 
     .dock-layer-group.vertical .dock-layer-rail {
         flex-direction: row;
         border-right: none;
-        border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+        border-bottom: 1px solid
+            var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 40%, transparent));
     }
 
     .dock-layer-group.horizontal.rail-end .dock-layer-rail {
         border-right: none;
-        border-left: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+        border-left: 1px solid
+            var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 40%, transparent));
     }
 
     .dock-layer-group.vertical.rail-end .dock-layer-rail {
         border-bottom: none;
-        border-top: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+        border-top: 1px solid
+            var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 40%, transparent));
     }
 
     /* AU.W8.4 — the rail is a reka-ui Tabs contract. The travelling
@@ -161,7 +166,16 @@
         border: 0;
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
         background: transparent;
-        color: var(--muted-foreground);
+        /* AZ.W-DOCK-RAIL — the rest glyph lifts OFF the low-contrast
+           `--muted-foreground` (which read sub-AA over the now-hairline transparent
+           backdrop) to the nav-glyph contrast register: a strong warm-ink tint of
+           the dock foreground (`--dock-fg-on-aurora` → `--foreground`), tempered to
+           ~78% for the unselected read while staying ≥4.5:1 over the dock substrate.
+           The selected tab flips to the full register below. */
+        color: var(
+            --dock-layer-rail-glyph,
+            color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) 78%, transparent)
+        );
         cursor: pointer;
         font: inherit;
         font-size: 0.75rem;
@@ -172,19 +186,34 @@
             color var(--dock-motion-fast);
     }
 
+    /* AZ.W-DOCK-RAIL — floor the rail glyph. The `size-4` (16px) icon class on the
+       lucide component does not survive the column inline-flex: with no concrete
+       `width`/`flex-shrink`, the un-floored SVG collapsed to a 4px sliver
+       (F2-R3-1). This rule floors BOTH axes to 1rem (16px) and pins
+       `flex-shrink: 0` so the glyph never re-squishes inside the flex tab. */
+    .dock-layer-rail .dock-layer-tab svg {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+    }
+
     .dock-layer-rail .dock-layer-tab:hover {
         background: var(
             --dock-layer-rail-hover,
-            color-mix(in srgb, var(--accent) 40%, transparent)
+            color-mix(in srgb, var(--accent) 30%, transparent)
         );
-        color: var(--foreground);
+        color: var(--dock-fg-on-aurora, var(--foreground));
     }
 
     /* AU.W8.4 — KEEP the active glyph tint on the selected tab (reka emits
        `data-state="active"` + `aria-selected="true"`); the per-button active
-       BACKGROUND is RETIRED — the travelling indicator carries that affordance. */
+       BACKGROUND is RETIRED — the travelling indicator carries that affordance.
+       AZ.W-DOCK-RAIL — the selected glyph reads the full warm-ink register (the
+       nav-glyph contrast canon), deferring the exact accent to W-REGISTER-IOS's
+       root via `--dock-rail-active-accent` (defaults to the dock foreground, NOT
+       a saturated brand `--primary`). */
     .dock-layer-rail .dock-layer-tab[data-state="active"] {
-        color: var(--primary);
+        color: var(--dock-rail-active-accent, var(--dock-fg-on-aurora, var(--foreground)));
     }
 
     /* AU.W8.4 — the dock control focus-ring contract does not cover
@@ -226,10 +255,14 @@
         height: var(--reka-tabs-indicator-size);
         transform: translateY(var(--reka-tabs-indicator-position));
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
-        background: var(
-            --dock-layer-rail-active,
-            color-mix(in srgb, var(--primary) 15%, transparent)
-        );
+        /* AZ.W-DOCK-RAIL — the travelling indicator paints the glass-register
+           `--dock-layer-rail-active` (defaults to `--glass-bg-floating`, the
+           "selected reads as glass" register). The inline fallback is the SAME
+           glass tier — NOT the saturated `--primary 15%` warm-red mix the prior
+           register baked. The baked-plate utilities the reka `<TabsIndicator>`
+           wrapper used to render are suppressed via `:surface="false"` in
+           DockLayerGroup.vue, so THIS token rule is the sole paint. */
+        background: var(--dock-layer-rail-active, var(--glass-bg-floating));
         transition:
             width var(--duration-fast) var(--spring-snappy),
             height var(--duration-fast) var(--spring-snappy),

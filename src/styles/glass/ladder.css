@@ -161,14 +161,38 @@
        engaging the SAME oklab tint axis (zero new compositing seam). Over a DARK page
        the darken is sub-perceptual (warm-ink over an already-dark plate is a small
        shift); a dark-substrate consumer who wants the pristine plate sets
-       `--glass-tint-strength: 0%` on the overlay band or uses `.glass-opaque`. SCOPED
-       to the overlay band ONLY — NOT `.glass-card`/`.glass-resting`/`.glass-dock`, so
-       the W55 default-path byte-identity canary (which tests those KINDS with a bare
-       no-ancestor div) stays GREEN; and the in-srgb `--surface-tint-*` family is never
-       touched (this edits only the in-oklab glass tint axis). */
-    :where(.glass-floating, .glass-overlay) {
+       `--glass-tint-strength: 0%` on the band or uses `.glass-opaque`. The in-srgb
+       `--surface-tint-*` family is never touched (this edits only the in-oklab glass
+       tint axis).
+
+       AZ.W-ADAPTIVE-AUTO Arm 1 — the self-engage now EXTENDS to the plain CONTENT
+       tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`), not just
+       the overlay band. The W54 glass-first MAXIMAL default makes content-on-glass-
+       over-a-bright-backdrop the common case, so every content tier self-darkens over
+       light WITHOUT consumer opt-in — closing the C5-7 asymmetry (the content tiers
+       painted near-invisible over light on every route). The prior W55 overlay-only
+       scoping (which kept the default-path byte-identity canary green by testing
+       `.glass-card`/`.glass-resting` with a bare no-ancestor div) is SUPERSEDED: the
+       three now-self-engaged kinds are no longer byte-identical to the dark bucket
+       (the canary narrows to the legitimately-zero-delta surfaces — the `.glass-opaque`
+       escape + an explicit per-surface `--glass-backdrop: dark` override — and the new
+       in-situ G1 π readback becomes the binding default-path truth). The muted body
+       register lifts to the full warm-ink under the engaged plate: the muted L40 tier
+       cannot clear 4.5:1 on a translucent darkened plate (darkening moves the plate
+       TOWARD muted's own luminance), so the low-contrast muted register resolves to
+       the legible dark ink (clears ~10:1) — a token re-point on the same inheriting
+       axis as the tint. */
+    :where(
+            .glass-floating,
+            .glass-overlay,
+            .glass-card,
+            .glass-resting,
+            .glass-quiet,
+            .glass-wash
+        ) {
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-aa);
+        --muted-foreground: var(--foreground);
     }
 
     /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
@@ -194,13 +218,22 @@
                 color: contrast-color(var(--card));
             }
         }
-        /* AY.W-A11Y-PERF O-1 — the same contrast-color refinement for the
-           SELF-ENGAGED overlay band (the @container block above queries an ancestor;
-           the overlay band engages its own tint unconditionally, so its ink-flip
-           companion mirrors that). Progressive enhancement only — the declarative
-           darken above is the AA floor on all engines. */
-        :where(.glass-floating, .glass-overlay) {
+        /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — the same contrast-color
+           refinement for the SELF-ENGAGED band + content tiers (the @container block
+           above queries an ancestor; these surfaces engage their own tint
+           unconditionally, so their ink-flip companion mirrors that). The muted
+           register flips to the same anchored dark ink. Progressive enhancement only
+           — the declarative darken above is the AA floor on all engines. */
+        :where(
+                .glass-floating,
+                .glass-overlay,
+                .glass-card,
+                .glass-resting,
+                .glass-quiet,
+                .glass-wash
+            ) {
             color: contrast-color(var(--card));
+            --muted-foreground: contrast-color(var(--card));
         }
     }
 

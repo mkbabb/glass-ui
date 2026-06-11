@@ -8,6 +8,15 @@
 import { computed, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 import DockSeparator from "./DockSeparator.vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
+// AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
+// DEFAULT for the dock (the surface the user reported unreadable over light, and the
+// one most often over a live/bright backdrop). It REFINES the W55 declarative bucket +
+// the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via
+// `--glass-tint-strength: 0%` on the dock or `:auto-luminance="false"`. Imported
+// directly (NOT via the glass barrel) — the composable is demo-private (path B): the
+// dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
+// (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
+import { useGlassBackdropLuminance } from "../../../composables/glass/useGlassBackdropLuminance";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import {
@@ -50,6 +59,18 @@ const layout = layoutValue;
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
+
+/* AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — wire the sampled-luminance observer ON for
+   the dock by default. It writes `--glass-backdrop-luma` + derives the
+   `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the
+   painted backdrop (a live aurora bleed) the static bucket is too coarse for. The
+   Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES. Opt out
+   with `:auto-luminance="false"`. */
+if (props.autoLuminance !== false) {
+    useGlassBackdropLuminance(dockEl, {
+        backgroundCanvas: props.backgroundCanvas ?? null,
+    });
+}
 
 const isTransitioning = ref(false);
 const touchGate = useTouchGate(collapseDelay.value);

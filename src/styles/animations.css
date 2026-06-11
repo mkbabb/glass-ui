@@ -355,16 +355,27 @@
      * exists for `showModal()` dialogs, NOT `[popover]` (popovers are
      * non-modal — correct, no scrim). */
     dialog.glass-top-layer::backdrop {
-        background-color: hsl(var(--background) / 0);
+        /* AZ.W-ADAPTIVE-AUTO A5-1 — the modal-scrim dim is the house alpha-derivative
+           `color-mix(in srgb, var(--background) Npct, transparent)`, NOT the invalid
+           `hsl(var(--background) / α)` double-wrap (`--background` is a complete
+           `hsl()` color = `hsl(48 12% 98%)`, so `hsl(hsl(…)/α)` evaluates to nothing
+           and the dim silently did not paint). The `in srgb` axis only — the
+           `--surface-tint-*` house family + the `in oklab` glass tint axis are
+           untouched. */
+        background-color: color-mix(in srgb, var(--background) 0%, transparent);
         backdrop-filter: blur(var(--top-layer-backdrop-blur, 8px));
         transition: display var(--duration-normal) allow-discrete,
                     overlay var(--duration-normal) allow-discrete,
                     background-color var(--duration-normal) var(--ease-standard);
     }
     dialog.glass-top-layer[open]::backdrop {
-        background-color: hsl(var(--background) / var(--top-layer-backdrop-dim, 0.5));
+        background-color: color-mix(
+            in srgb,
+            var(--background) calc(var(--top-layer-backdrop-dim, 0.5) * 100%),
+            transparent
+        );
         @starting-style {
-            background-color: hsl(var(--background) / 0);
+            background-color: color-mix(in srgb, var(--background) 0%, transparent);
         }
     }
 }

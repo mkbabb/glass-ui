@@ -248,7 +248,15 @@ function onRailFocusOut(e: FocusEvent) {
                     <span v-else-if="typeof layer.icon === 'string'">{{ layer.icon }}</span>
                     <span v-else>{{ (layer.label ?? layer.id).charAt(0) }}</span>
                 </TabsTrigger>
-                <TabsIndicator class="dock-layer-tab-indicator" />
+                <!-- AZ.W-DOCK-RAIL — `:surface="false"` drops the baked
+                     `bg-(--glass-bg-quiet) [backdrop-filter:…]` plate the reka
+                     `<TabsIndicator>` wrapper renders unconditionally. That baked
+                     utility (unlayered) beat the `@layer components`
+                     `.dock-layer-tab-indicator` token rule, so the rail indicator
+                     painted the near-white glass plate instead of the intended
+                     `--dock-layer-rail-active` register. With the plate suppressed
+                     the token rule is the SOLE paint. -->
+                <TabsIndicator class="dock-layer-tab-indicator" :surface="false" />
             </TabsList>
         </Tabs>
         <div

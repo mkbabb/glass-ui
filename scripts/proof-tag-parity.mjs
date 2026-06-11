@@ -71,6 +71,7 @@ const HEADER_LIVE_VERIFIED = new Set([
     "proof:squircle-language",
     "proof:glass-material-demo",
     "proof:blob-live-truth",
+    "proof:adaptive-glass-live",
 ]);
 
 // The genuinely-local NON-Playwright static gates — each with a recorded reason.

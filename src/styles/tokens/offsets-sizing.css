@@ -311,13 +311,22 @@
        via the family-scoped override below; the global card/panel size is untouched. */
     --dock-control-specular-size: 22%;
 
-    /* AX.W45 DK8 — the layer-switcher rail surface ladder. The rail
-       (`.dock-layer-rail` inside a `<DockLayerGroup>`) gets its own quiet plate +
-       a tunable hover/active affordance, replacing the raw `--primary 15%` /
-       `--accent 40%` mixes the indicator/tab used against an absent plate. */
-    --dock-layer-rail-bg: var(--surface-tint-8);
-    --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 40%, transparent);
-    --dock-layer-rail-active: color-mix(in srgb, var(--primary) 15%, transparent);
+    /* AZ.W-DOCK-RAIL — the layer-switcher rail is a HAIRLINE register, not a
+       fused tinted gutter. The `--surface-tint-8` filled plate (the "heavy dark
+       blob column" R3-1) is RETIRED: `--dock-layer-rail-bg` defaults TRANSPARENT
+       so the rail box paints no fill, and the single `--dock-layer-rail-divider`
+       hairline becomes the only visible rail edge — a thin rule between the
+       switcher column and the dock body (the iOS-grade hairline switcher).
+       The hover/active affordance stays a translucent GLASS tint: the active
+       indicator reads `--dock-layer-rail-active`, defaulting to the glass-floating
+       tier (the keyframes-dock "selected reads as glass" register), NOT a
+       saturated `--primary 15%` warm-red mix — the exact accent defers to
+       W-REGISTER-IOS's root register (the rail keeps a glass tint here, never
+       bakes a brand-red the de-red wave has to undo). */
+    --dock-layer-rail-bg: transparent;
+    --dock-layer-rail-divider: color-mix(in srgb, var(--border) 40%, transparent);
+    --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 30%, transparent);
+    --dock-layer-rail-active: var(--glass-bg-floating);
     /* AY.W-DOCK-NAV B6 — the switcher-rail TAB is a COMPACT square, distinct from
        the 40px dock CONTROL. The prior fallback chain (`var(--dock-control-size,
        1.75rem)`) resolved to the full 40px control, so a 3-tab column rail stood
@@ -349,6 +358,36 @@
     --dock-active-scale: 1;
     --dock-active-border: none;
     --dock-active-shadow: none;
+
+    /* AZ.W-REGISTER-IOS — the iOS-26/27 SELECTED register, at the ROOT.
+       R3-6 retired the brand-red (`--viz-fourier`) interactive register
+       (hover/active/selected/pressed) in favour of the iOS-glassy luminance-lift:
+       a translucent material-lift plate (`--dock-control-active-bg`, already the
+       `--glass-bg-floating` tier — C4-INV-1, UNCHANGED) + a brighter-material
+       accent that lifts LUMINANCE, never a saturated brand hue.
+
+       `--dock-selected-accent` is the SINGLE retint knob for the selected
+       affordance: it defaults to a translucent foreground-over-transparent
+       "brighter material" lift, so it auto-FLIPS with `--foreground` (dark mode
+       resolves a light luminance-lift over the dark plate — the iOS read). The
+       rail leading-edge accent BAR (`dock-controls.css` `::before`) consumes it;
+       the selected GLYPH stays `--foreground` warm-ink (arm-a — the glyph never
+       carries the accent token, only the bar does). A consumer retints the whole
+       selected affordance through this ONE token (token-first); red survives only
+       as static brand INK (the ℱ wordmark / data-viz strokes / the gold-CTA
+       family), never as an interactive register. */
+    --dock-selected-accent: color-mix(in oklab, var(--foreground) 14%, transparent);
+
+    /* AZ.W-REGISTER-IOS — the iOS press-DARKEN. Press today scales only
+       (`--scale-press-dock`, C4-INV-4); iOS lands "darken + shrink". This token
+       is a tier BELOW resting — `--glass-bg-resting` mixed ~7% toward `--foreground`
+       — read on the dock control `:active` alongside the scale-press so a press
+       lands the brief glass-darken. Auto-flips with `--foreground`/`--glass-bg-resting`. */
+    --dock-control-press-bg: color-mix(
+        in oklab,
+        var(--glass-bg-resting),
+        var(--foreground) 7%
+    );
 
     /* Q.W3 Lane G (Q-cos-13) — the O.W6 Lane D `--icon-tooltip-hit-area`
        token retired here. IconTooltip no longer owns a wrap-span; the

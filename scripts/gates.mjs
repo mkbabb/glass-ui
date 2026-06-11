@@ -147,6 +147,36 @@ export const GATES = [
         note: "AX.W61 — the unified dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root) + the Q1 collapsed-floor --dock-scale thread + the glass-first selected control. Device-free SOURCE arm: F1 --dock-collapsed-padding threads --dock-scale + both floor tokens below the expanded values; F2 the symmetric collapsed-summary min-block-size; F3 --dock-control-active-bg is a --glass-bg-* tier (NOT --surface-tint-N) AND active != hover; F4 the W61-owned showcase docks compose <GlassDock>+<DockSeparator> with zero raw-class separators + home-left #persistent (shell docks tracked pendingW40); F5 CLAUDE.md records the contract. The W00 π live arm (W61-DELTA.md) is the binding close. Bite: re-point active to surface-tint-12 → F3 RED; flat padding literal → F1 RED; a raw-class separator → F4 RED.",
     },
     {
+        id: "proof:dock-rail-hairline",
+        cmd: "proof:dock-rail-hairline",
+        tags: ["local", "ci"],
+        note: "AZ.W-DOCK-RAIL — the in-dock switcher-rail hairline register. Device-free SOURCE arm (the π /dock/layers readback is the binding visual truth, W-DOCK-RAIL-DELTA.md): W1 the rail TabsIndicator render does NOT inherit the baked bg-(--glass-bg-quiet) [backdrop-filter] plate (TabsIndicator.vue gates it behind surface?:boolean; the rail binds :surface=false) AND .dock-layer-tab-indicator reads --dock-layer-rail-active (the glass-floating register, never --glass-bg-quiet); W2 --dock-layer-rail-bg resolves transparent (no --surface-tint plate), no rounded-plate background, the single border-right hairline on --dock-layer-rail-divider, no rail pseudo-element plate fill; W3 a .dock-layer-rail .dock-layer-tab svg rule floors width >=14px AND flex-shrink:0 (the 4px-sliver kill). Bite: re-bake the plate → W1 RED; re-point rail-bg to a surface-tint → W2 RED; drop the svg floor → W3 RED.",
+    },
+    {
+        id: "proof:dock-no-scale-pop",
+        cmd: "proof:dock-no-scale-pop",
+        tags: ["local"],
+        note: "AZ.W-DOCK-FLICKER — the collapse-onset scale-pop + FLIP-thrash gate. W1 scale-guard source witness (.collapsed:hover scale scoped :not([data-morphing])), W2 wired-hysteresis source witness (useDockState getBoundingClientRect recheck + intent dwell referenced on enter/leave), W3 live real-mouse collapse-onset SCALE-pop assert on the still-wide box, W4 live cursor-at-edge no-flip assert, + the C2 baseline self-test bite. LIVE arm (real cursor for CSS :hover + the aurora visibility-park) → local-only like the other dock-animation-live gates; born-RED on both source and live at HEAD.",
+    },
+    {
+        id: "proof:adaptive-glass-live",
+        cmd: "proof:adaptive-glass-live",
+        tags: ["local"],
+        note: "AZ.W-ADAPTIVE-AUTO G1 — the BINDING in-situ 4.5:1 + ΔL-silhouette π readback over the enrolled dock + content-glass routes, NO injected ancestor bucket (closes the C5-4 blind spot). Loads :5199 → LIVE_VERIFIED_LOCAL_ONLY; CI grace-skips, backstopped by proof:live-verified-ledger over the W-ADAPTIVE-AUTO DELTA. Bite: revert the self-engage → ΔL<0.08 RED.",
+    },
+    {
+        id: "proof:adaptive-observer",
+        cmd: "proof:adaptive-observer",
+        tags: ["local", "ci", "release"],
+        note: "AZ.W-ADAPTIVE-AUTO G2 — the useGlassBackdropLuminance sampled observer: writes --glass-backdrop-luma + the bucket, rAF-throttled ≤4Hz on the composed substrates (useRAFLoop/useIntersectionPause/useResizeObserver + resolveTokenColor, no hand-rolled rAF), PRM-collapses the live loop, demo-private path-B no-overfitting bar (the dock binary consumer #1 + the evidence-doc trigger).",
+    },
+    {
+        id: "proof:register-ios",
+        cmd: "proof:register-ios",
+        tags: ["local", "ci"],
+        note: "AZ.W-REGISTER-IOS — the de-red'd iOS-glassy interactive register (born-RED, H1 arm-a). Device-free SOURCE arm: the rail active bar reads --dock-selected-accent (a translucent foreground luminance-lift, never --primary/brand solid), the active glyph stays --foreground warm-ink, the dock-control :active reads --dock-control-press-bg, and the surviving-red allowlist is a MACHINE-CHECKABLE NEGATIVE PREDICATE (no interactive-state rule across src/styles/** + demo/** reads var(--viz-fourier)/--demo-nav-accent). The PAINTED truth is the π arm (tests-visual/register-ios.spec.ts). Bite: re-introduce a brand-red on any interactive register → RED.",
+    },
+    {
         id: "proof:dock-css-carve",
         cmd: "proof:dock-css-carve",
         tags: ["local", "ci"],

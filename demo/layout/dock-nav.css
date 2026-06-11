@@ -15,11 +15,15 @@
  */
 
 :root {
-    /* The NCSU-red active accent. `--viz-fourier` is the warm-red library token
-       the brand wordmark already rides; the demo nav binds its active-state
-       affordance to it so the accent re-resolves under .dark by construction. */
-    --demo-nav-accent: var(--viz-fourier);
-    /* The left-edge accent rule on the active sidebar category. */
+    /* AZ.W-REGISTER-IOS — the demo's NCSU-red active accent (`--demo-nav-accent:
+       var(--viz-fourier)`) is RETIRED. R3-6 de-red'd the interactive register AT
+       THE ROOT: the dock selected/hover/active/pressed register is now the iOS
+       luminance-lift glass register the library ships by default
+       (`--dock-selected-accent` + the glass material-lift plate), so the demo
+       consumes the neutral root register and no longer re-tints it to red. The
+       brand red survives only as static ink (the ℱ wordmark / data-viz strokes /
+       the gold-CTA family), never on an interactive state. */
+    /* The left-edge accent rule width on the active sidebar category. */
     --demo-nav-rail-accent-w: 3px;
     /* Bottom-dock viewport inset (adds the iOS safe-area gutter). */
     --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
@@ -45,17 +49,16 @@
     margin: 0;
 }
 
-/* ── Active-category restyle — the demo's NCSU-red preset over the SHIPPED rail
-   polish (AX.W06 demo == shipped) ───────────────────────────────────────────
-   The active-item accent + the leading-edge accent rule are now SHIPPED by the
-   `GlassDock variant="rail"` variant CSS (`src/styles/dock-controls.css`,
-   tokenized via `--dock-rail-active-accent` + `--dock-rail-accent-*`). The demo
-   no longer hand-rolls its own `::before` — it RETINTS the shipped accent to the
-   NCSU-red brand preset by overriding the one token on the cascade (presets live
-   in the consumer; the library's default is `--primary`). `tap-squish` press
-   feedback stays composed in markup. */
+/* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
+   shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
+   The active-item register + the leading-edge accent rule are SHIPPED by the
+   `GlassDock variant="rail"` variant CSS (`src/styles/dock-controls.css`): the
+   selected control reads as the glass material-lift plate + the translucent
+   `--dock-selected-accent` luminance bar — the iOS register. The demo NO LONGER
+   re-tints the accent to NCSU-red (R3-6 retired the brand-red interactive
+   register at the root); it consumes the neutral default and only widens the
+   accent BAR geometry. `tap-squish` press feedback stays composed in markup. */
 .demo-sidebar-item.is-active {
-    --dock-rail-active-accent: var(--demo-nav-accent);
     --dock-rail-accent-width: var(--demo-nav-rail-accent-w);
 }
 
@@ -94,14 +97,13 @@
    tier), PLUS a NCSU-red `::after` underline, PLUS red text — the "underline +
    darkness is awful" the user condemned (B2, 00.23.00). The AX.W61 canon is ONE
    register: the selected control reads as a GLASS tier (the keyframes-dock model),
-   NOT a heavy underline + dark fill. So the bespoke red underline + red text are
-   RETIRED; the active tab carries the shipped glass pill alone. The brand accent
-   survives as a restrained GLYPH tint only (the foreground reads warm-ink at rest
-   and lifts to the accent when selected — a colour cue, not a second plate). */
+   NOT a heavy underline + dark fill. AZ.W-REGISTER-IOS completes the de-red: the
+   residual red GLYPH tint is RETIRED too (R3-6 — no brand hue on an interactive
+   state, at the root). The active tab reads as the shipped glass material-lift pill
+   alone; the selected GLYPH stays warm-ink `--foreground` (the root register), and
+   a non-color WEIGHT cue marks selection (a colour-independent selected affordance). */
 .demo-bottom-dock__tab.is-active,
 .demo-bottom-dock__tab[aria-current="page"] {
-    --dock-active-color: var(--demo-nav-accent);
-    color: var(--demo-nav-accent);
     font-weight: 600;
 }
 

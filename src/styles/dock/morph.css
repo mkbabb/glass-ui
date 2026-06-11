@@ -61,15 +61,18 @@
        authority, and at rest `--dock-expand-t` resolves to the class endpoint (0
        collapsed / 1 expanded) so the resting look is exact. */
     .glass-dock.variant-dock:not(.vertical) {
-        /* AY.W-A11Y-PERF O-1 — the resting-endpoint dock bg composes the W55 oklab
-           adaptive tint so the bright bucket (engaged when a consumer/page marks
-           `--glass-backdrop: light` on the dock's ancestor — the @container block
-           below + the page-redesign W60 wiring) reaches the LIVE `.variant-dock`
-           surface (this 0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the
-           tint must be applied HERE too). The srgb transition mix is preserved between
-           the two color endpoints; the adaptive darken rides the resting endpoint
-           (`--glass-bg-dock` wrapped in the oklab tint) — at the `0%` rest default the
-           inner oklab mix is a no-op so this is byte-identical to today. */
+        /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — BOTH morph endpoints compose
+           the W55 oklab adaptive tint so the self-engage darken (the unconditional
+           `:where(.glass-dock)` rule below re-points the element-level
+           `--glass-tint-source`/`--glass-tint-strength`) reaches the LIVE
+           `.variant-dock` surface in BOTH the expanded AND the COLLAPSED look (this
+           0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the tint must be
+           applied HERE — and the COLLAPSED endpoint `--glass-bg-wash` must carry it too,
+           else a collapsed dock over light paints the un-darkened wash and the plate
+           vanishes — the C5-2 ΔL≈0.01 collapse, re-surfaced on the collapsed endpoint).
+           The srgb transition mix between the two TINTED endpoints is preserved (the
+           in-flight morph frames are sub-perceptual); at the `0%` rest default both
+           inner oklab mixes are no-ops so this is byte-identical to today. */
         background: color-mix(
             in srgb,
             color-mix(
@@ -78,7 +81,11 @@
                 var(--glass-tint-source) var(--glass-tint-strength)
             )
                 calc(var(--dock-expand-t, 1) * 100%),
-            var(--glass-bg-wash)
+            color-mix(
+                in oklab,
+                var(--glass-bg-wash),
+                var(--glass-tint-source) var(--glass-tint-strength)
+            )
         );
         border-color: color-mix(
             in srgb,
@@ -228,11 +235,27 @@
        the expand morph uses — a collapsed→hover→expand gesture is one continuous
        spring, not a `scale`-ease handed off to the width-spring. The hover scale
        and the press squish (`--scale-press-dock`) are now one register on the dock
-       surface. */
+       surface.
+
+       AZ.W-DOCK-FLICKER — the `scale` arm is GATED on `:not([data-morphing])` (the
+       collapse-onset scale-pop fix, C2-2). `.collapsed` flips on SYNCHRONOUSLY when
+       a hovered dock begins collapsing, but the box is still painted at EXPANDED
+       width for the morph's leading frames (the `onSwap` pin + 1-rAF measure-defer
+       in dockMorphContext.ts). The bare `.collapsed:hover { scale: 1.1 }` multiplied
+       that transient ~535px box, painting a ±24-34px right-edge pop (the user's
+       "flashing"). Scoping the SCALE to `:not([data-morphing])` makes the +1.1 lift
+       apply ONLY at rest (the box is the 54px circle then) — during `[data-morphing]`
+       the hover scale is inert, mirroring the shipped `--dock-expand-t`
+       `[data-morphing]` precedent above (morph.css:46-53). The surface arms
+       (background/border/shadow) stay on the bare `:hover` (they don't multiply
+       geometry, so a hovered collapse keeps its hover read without the pop). */
     .glass-dock.collapsed:hover {
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+    }
+
+    .glass-dock.collapsed:hover:not([data-morphing]) {
         scale: var(--dock-collapsed-hover-scale);
     }
 
@@ -276,22 +299,44 @@
         border-color: var(--glass-border-floating, var(--glass-border-resting));
     }
 
-    /* ── Adaptive legibility: the dock over a light backdrop (AX.W55 — the literal
-       G2 surface; "Glass dock over VERY LIGHT materials is unreadable") ──────────
-       The dock is the surface the user reported unreadable over light content. Its
-       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers all now read the
-       SAME oklab tint seam the five rungs use, so this ONE bucket block — set when a
-       consumer marks `--glass-backdrop: light` on the dock's ancestor — lifts every
-       dock surface toward ink in lockstep. The tint tokens are INHERITING, so
-       re-pointing them on the `.glass-dock` root re-resolves every nested surface +
-       cascades to the dock CONTROLS (which read `--dock-fg-on-aurora` for their
-       foreground); `--dock-fg-on-aurora` re-points to the warm-ink here so the
-       control glyphs/labels clear AA over the now-darkened plate — ONE reconciled
-       path, the foreground twin folded INTO the probe, not a third fork. The
-       morph-root interp (`.variant-dock:not(.vertical)` above) stays `color-mix(in
-       srgb …)` for the transition; the adaptive darken rides its RESTING endpoint
-       (`--glass-bg-dock`, which carries the tint) — the in-flight morph frames are
-       sub-perceptual (the ratified resting-endpoint-only default). */
+    /* ── Adaptive legibility: SELF-ENGAGE the dock over a light backdrop by default
+       (AZ.W-ADAPTIVE-AUTO Arm 1 — the literal G2 surface; "Glass dock over VERY
+       LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
+       The dock floats over WHATEVER the consumer painted — frequently a light/near-
+       white app surface (the canonical G2 case the user reported). AY.W-A11Y-PERF
+       O-1 set `--glass-backdrop: light` on the dock's OWN root (shell.css) intending
+       a self-darken, but CSS style queries NEVER self-match (the `@container
+       style()` block below reads an ANCESTOR — verified on Chrome 148), so the
+       self-declaration was a NO-OP. This `:where(.glass-dock)` rule is the genuine
+       UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
+       re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
+       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers (which compose
+       the oklab tint AT THE ELEMENT — the substitution-vs-inheritance-safe targets)
+       darken toward warm-ink in lockstep. `--dock-fg-on-aurora` re-points to the
+       warm-ink here too — ONE reconciled path, the foreground twin folded in (it
+       reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
+       sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
+       0%` on the dock root. The morph-root interp (`.variant-dock:not(.vertical)`
+       above) stays `color-mix(in srgb …)` for the transition — the adaptive darken
+       rides its RESTING endpoint (`--glass-bg-dock`), the in-flight morph frames are
+       sub-perceptual (the ratified resting-endpoint-only default). The muted body
+       register lifts to the full warm-ink under the engaged plate (the muted L40
+       tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
+       plate TOWARD muted's own luminance; the low-contrast muted register is
+       inappropriate over a busy glass plate, so it resolves to the legible dark
+       ink, which clears ~10:1). */
+    :where(.glass-dock) {
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-aa);
+        --dock-fg-on-aurora: var(--glass-tint-ink);
+        --muted-foreground: var(--foreground);
+    }
+
+    /* The ancestor-querying `@container` block KEPT — it reaches the DESCENDANT
+       nested-glass surfaces inside a dock when a consumer marks `--glass-backdrop:
+       light` on the dock's ancestor (the self-engage above re-points only the dock
+       root's own inheriting tokens; a consumer's explicit ancestor bucket still
+       cascades to nested glass through this block). */
     @container style(--glass-backdrop: light) {
         .glass-dock {
             --glass-tint-source: var(--glass-tint-ink);
@@ -311,6 +356,12 @@
        still-light dock plate), so the anchor is the light surface, matching the rung
        refinement in glass.css. The bucket is the floor; this is the native pick. */
     @supports (color: contrast-color(white)) {
+        /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
+           progressive enhancement only — the declarative darken is the AA floor. */
+        :where(.glass-dock) {
+            --dock-fg-on-aurora: contrast-color(var(--card));
+            --muted-foreground: contrast-color(var(--card));
+        }
         @container style(--glass-backdrop: light) {
             .glass-dock {
                 --dock-fg-on-aurora: contrast-color(var(--card));

@@ -178,9 +178,15 @@ async function readSurface(
     page: Page,
     kind: "glass-card" | "glass-resting" | "glass-dock",
     backdrop: "dark" | "light",
+    // AZ.W-ADAPTIVE-AUTO Arm 1 — the three KINDS now self-engage the darken UNCONDITIONALLY
+    // (no longer scoped to the overlay band), so an ancestor `dark` bucket no longer yields
+    // the un-engaged baseline. Pass `optOut: true` to read the genuinely-un-engaged plate
+    // (`--glass-tint-strength: 0%` on the surface, the documented dark-substrate opt-out) —
+    // the pre-darken baseline the adaptive-darken delta is measured against.
+    optOut = false,
 ): Promise<SurfaceReadout> {
     return page.evaluate(
-        ({ kind, backdrop }) => {
+        ({ kind, backdrop, optOut }) => {
             const FIXTURE_ID = "__w55_fixture__";
             document.getElementById(FIXTURE_ID)?.remove();
 
@@ -196,6 +202,8 @@ async function readSurface(
             surface.className = kind;
             surface.style.cssText =
                 "width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:12px;";
+            // The opt-out baseline: suppress the self-engage darken (the pristine plate).
+            if (optOut) surface.style.setProperty("--glass-tint-strength", "0%");
             // The dock control foreground rides --dock-fg-on-aurora; card/rung ride color.
             const ink = document.createElement("span");
             ink.textContent = "Legible";
@@ -228,7 +236,7 @@ async function readSurface(
             document.getElementById(FIXTURE_ID)?.remove();
             return { ink: inkColor, surfaceBg, translucent };
         },
-        { kind, backdrop },
+        { kind, backdrop, optOut },
     );
 }
 
@@ -255,8 +263,10 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
                 await setDark(page, dark);
 
                 for (const kind of KINDS) {
-                    // ── WITHOUT the bucket — the zero-delta baseline ────────────────
-                    const before = await readSurface(page, kind, "dark");
+                    // ── WITHOUT the darken — the un-engaged baseline (the AZ Arm-1
+                    // opt-out: the three KINDS self-engage unconditionally now, so the
+                    // pre-darken plate is read via --glass-tint-strength: 0%). ──────────
+                    const before = await readSurface(page, kind, "dark", true);
                     const beforeBg = effectiveOverWhite(before.surfaceBg);
                     expect(
                         beforeBg,
@@ -324,34 +334,84 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
         }
     }
 
-    // ── The default-path byte-identity canary (HardGate: "the default path is
-    // byte-identical") — an UNSET --glass-backdrop must resolve the EXACT surface bg
-    // the explicit `dark` bucket does (today's zero-delta glass). W55 only activates
-    // under the explicit `light` bucket; it must not regress the canonical glass over
-    // a rich background the rest of the tranche tunes. ──────────────────────────────
-    test("the default (unset) path is byte-identical to the dark bucket", async ({
+    // ── The byte-identity canary, AMENDED at AZ.W-ADAPTIVE-AUTO Arm 1 ────────────────
+    // W55 scoped the self-engage to the overlay band ONLY, so the default (unset) path
+    // on glass-card/glass-resting/glass-dock stayed byte-identical to the dark bucket.
+    // AZ Arm 1 adds an UNCONDITIONAL self-engage on EXACTLY those kinds (the dock +
+    // content tiers self-darken over light by default — the W54 glass-first MAXIMAL
+    // default made legible), so their unset path is NO LONGER byte-identical to the dark
+    // bucket — the canary FLIPS RED on a CORRECT edit. The amendment narrows the byte-
+    // identity contract to the surfaces that LEGITIMATELY stay zero-delta:
+    //   (a) the `.glass-opaque` escape (the W54 level-0 endpoint — a solid `--card`
+    //       plate, bucket-invariant by construction); and
+    //   (b) the self-engaged kinds with an EXPLICIT `--glass-tint-strength: 0%`
+    //       per-surface override (the documented dark-substrate opt-out — it returns the
+    //       surface to the un-tinted glass, the pristine plate).
+    // The new in-situ G1 readback (adaptive-glass-live.spec.ts) is the binding default-
+    // path truth for the three now-self-engaged kinds (their default path is no longer
+    // "today's glass over a rich background" — it is "the AA-floor darken over light").
+    test("the .glass-opaque escape is bucket-invariant (the zero-delta byte-identity)", async ({
         page,
     }) => {
         await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
         for (const kind of KINDS) {
-            const unset = await page.evaluate((k) => {
-                const host = document.createElement("div");
-                host.style.cssText = "position:fixed;left:0;top:0;width:320px;height:160px;background:#fff;padding:24px;";
-                // NO --glass-backdrop set — the unset default.
-                const s = document.createElement("div");
-                s.className = k;
-                host.appendChild(s);
-                document.body.appendChild(host);
-                void s.offsetHeight;
-                const bg = getComputedStyle(s).backgroundColor;
-                host.remove();
-                return bg;
+            // The `.glass-opaque` escape is the level-0 solid plate — the same bg under
+            // BOTH the unset default AND the explicit `light` bucket (the W54 opt-out is
+            // bucket-invariant; the adaptive darken cannot move a solid plate).
+            const [unsetOpaque, lightOpaque] = await page.evaluate((k) => {
+                function read(backdrop: string | null): string {
+                    const host = document.createElement("div");
+                    host.style.cssText =
+                        "position:fixed;left:0;top:0;width:320px;height:160px;background:#fff;padding:24px;";
+                    if (backdrop) host.style.setProperty("--glass-backdrop", backdrop);
+                    const s = document.createElement("div");
+                    s.className = `${k} glass-opaque`;
+                    host.appendChild(s);
+                    document.body.appendChild(host);
+                    void s.offsetHeight;
+                    const bg = getComputedStyle(s).backgroundColor;
+                    host.remove();
+                    return bg;
+                }
+                return [read(null), read("light")];
             }, kind);
-            const darkBucket = await readSurface(page, kind, "dark");
             expect(
-                unset,
-                `${kind}: the unset --glass-backdrop path (${unset}) is NOT byte-identical to the explicit dark bucket (${darkBucket.surfaceBg}) — W55 regressed the zero-delta rest state`,
-            ).toBe(darkBucket.surfaceBg);
+                unsetOpaque,
+                `${kind}.glass-opaque: the unset path (${unsetOpaque}) is NOT byte-identical to the explicit light bucket (${lightOpaque}) — the opaque escape must be bucket-invariant (the adaptive darken cannot move a solid plate)`,
+            ).toBe(lightOpaque);
+        }
+    });
+
+    test("the explicit --glass-tint-strength:0% opt-out returns the pristine glass", async ({
+        page,
+    }) => {
+        await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
+        for (const kind of KINDS) {
+            // The self-engaged kind with an explicit `--glass-tint-strength: 0%` override
+            // returns to the un-tinted glass — byte-identical to the same surface with
+            // the dark bucket AND strength 0% (the documented dark-substrate opt-out).
+            const [optOut, darkRef] = await page.evaluate((k) => {
+                function read(backdrop: string): string {
+                    const host = document.createElement("div");
+                    host.style.cssText =
+                        "position:fixed;left:0;top:0;width:320px;height:160px;background:#fff;padding:24px;";
+                    host.style.setProperty("--glass-backdrop", backdrop);
+                    const s = document.createElement("div");
+                    s.className = k;
+                    s.style.setProperty("--glass-tint-strength", "0%");
+                    host.appendChild(s);
+                    document.body.appendChild(host);
+                    void s.offsetHeight;
+                    const bg = getComputedStyle(s).backgroundColor;
+                    host.remove();
+                    return bg;
+                }
+                return [read("light"), read("dark")];
+            }, kind);
+            expect(
+                optOut,
+                `${kind}: the --glass-tint-strength:0% opt-out under the light bucket (${optOut}) is NOT byte-identical to the dark-bucket pristine glass (${darkRef}) — the documented opt-out must return the un-tinted plate`,
+            ).toBe(darkRef);
         }
     });
 

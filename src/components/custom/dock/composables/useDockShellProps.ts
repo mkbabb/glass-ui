@@ -93,6 +93,28 @@ export interface DockCommonProps {
      * size the dock relies on.
      */
     containerName?: string;
+    /**
+     * AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer that
+     * DYNAMICALLY refines the W55 declarative bright-bucket darken (the iOS-27
+     * "darken dynamically" register). Default `true` (default-ON for the dock — the
+     * surface most often over a live/bright backdrop). It REFINES the floor (the
+     * unconditional self-engage + the declarative bucket stay the guarantee); a
+     * dark-substrate consumer opts out with `:auto-luminance="false"` (or
+     * `--glass-tint-strength: 0%` on the dock). The observer is rAF-throttled ≤ 4 Hz,
+     * IntersectionObserver-gated, and parks under `prefers-reduced-motion: reduce`.
+     */
+    autoLuminance?: boolean;
+    /**
+     * The KNOWN background-layer canvas the dock floats over (an aurora/blob
+     * `<canvas>`) — an element, a getter, or a CSS selector. When present, the
+     * observer downsamples it under the dock's box each settle (the ANIMATED-backdrop
+     * case); absent, it stack-walks the painted page background (the static case).
+     */
+    backgroundCanvas?:
+        | HTMLCanvasElement
+        | (() => HTMLCanvasElement | null)
+        | string
+        | null;
 }
 
 /* The horizontal `dock` variant — the ONLY variant that collapses↔expands, so

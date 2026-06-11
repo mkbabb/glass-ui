@@ -293,9 +293,14 @@
        at the `@supports` boundary.
 
        TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit
-       grammar for native `<dialog>` / `[popover]` glass surfaces. Backdrop dim
-       uses the `hsl(var(--background) / α)` channel form — the legitimate
-       single-token alpha case (AQ.W2's color-mix migration is orthogonal).
+       grammar for native `<dialog>` / `[popover]` glass surfaces. The backdrop dim
+       uses the house alpha-derivative `color-mix(in srgb, var(--background) Npct,
+       transparent)` (AZ.W-ADAPTIVE-AUTO A5-1). It is NOT the `hsl(var(--background)
+       / α)` channel form: `--background` is a COMPLETE `hsl()` color
+       (`= hsl(48 12% 98%)`), so `hsl(var(--background) / α)` double-wraps to
+       `hsl(hsl(…) / α)` — invalid, never paints (the modal dim was silently dead).
+       The genuine channel form would require `--background` declared as a bare
+       `H S% L%` triple, which it never is — hence the alpha-derivative mix.
 
        VIEW-TRANSITION (view-transition.css). The shared `.gl-list-item` group
        recipe + the `--vt-*` axes the `useViewTransition` substrate consumers

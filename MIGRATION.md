@@ -1,5 +1,27 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
+> luminance-lift.** No consumer API rename — this is a TOKEN-knob + demo-preset
+> change. The dock SELECTED/hover/active/pressed register at the library ROOT is
+> now the iOS-26/27 glass luminance-lift, not a brand-red accent (R3-6). Two NEW
+> retint knobs for downstream retinters: `--dock-selected-accent` (the SINGLE knob
+> for the selected affordance — defaults to `color-mix(in oklab, var(--foreground)
+> 14%, transparent)`, a translucent foreground luminance-lift that auto-flips with
+> `--foreground`; consumed by the rail leading-edge accent BAR), and
+> `--dock-control-press-bg` (the iOS press-darken — `--glass-bg-resting` mixed ~7%
+> toward `--foreground`, read on every dock control `:active`). The rail active
+> GLYPH + BAR no longer fall back to `var(--dock-rail-active-accent, var(--primary))`;
+> the glyph stays warm-ink `--foreground`, the bar paints `--dock-selected-accent`.
+> A consumer that previously re-tinted the selected register to a brand hue via
+> `--dock-rail-active-accent` should instead set `--dock-selected-accent` (the
+> luminance-lift knob) — `--dock-rail-active-accent` is no longer read on the rail
+> glyph/bar default. The demo's `--demo-nav-accent: var(--viz-fourier)` NCSU-red
+> preset is RETIRED (the demo consumes the neutral root register; presets live in
+> the consumer, the library's default is the de-red'd iOS register). Brand red
+> survives only as static ink (the ℱ wordmark / data-viz strokes / gold-CTA family).
+> Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
+> re-introduction on any interactive selector).
+
 > **v3.10.0 (AY)**—four zero-consumer subpaths RETIRED outright (no aliases,
 > per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress`,
 > `/header-ribbon`, `/glass-panel`, `/instrument-rail` — each had 0 production
@@ -848,6 +870,32 @@ Speedtest's re-link did NOT make this best-practice rewrite (it kept
 root-barrel imports for non-vueuse-bearing symbols) and still saw the
 -32.5 KB entry-chunk gz drop. Per-package subpath imports are an
 incremental polish above that baseline.
+
+### Adaptive glass over light — the self-engage default + the sampled observer (AZ.W-ADAPTIVE-AUTO)
+
+Glass surfaces (the dock + the `.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`
+content tiers + the overlay band) now **self-darken over light backdrops by default** —
+the W54 glass-first MAXIMAL register made legible over the common bright-content case, no
+consumer opt-in. The dock additionally wires the iOS-27 **sampled-luminance observer** ON
+by default (`useGlassBackdropLuminance`), which dynamically tracks a live/animated backdrop
+and writes `--glass-backdrop-luma` + the `--glass-backdrop` bucket on the dock root.
+
+This is additive (no break). A **dark-substrate consumer** whose backdrop is already dark
+(so the warm-ink darken is unwanted) opts out per-surface:
+
+```css
+/* The pristine un-tinted plate on a known-dark surface (the documented opt-out). */
+.my-dark-surface .glass-card { --glass-tint-strength: 0%; }
+```
+
+```vue
+<!-- The dock over a known-dark substrate — disable the sampled observer + the darken. -->
+<GlassDock :auto-luminance="false" style="--glass-tint-strength: 0%" />
+```
+
+The observer is DEMO-PRIVATE (not on the public glass barrel) — it is wired internally for
+the dock; a downstream surface that needs the same dynamic sampling triggers the public
+barrel promotion (`docs/consumer-evidence/use-glass-backdrop-luminance.md`).
 
 ---
 

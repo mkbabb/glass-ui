@@ -13,11 +13,20 @@
 // the `color-mix(in oklab, …)` actually bites, the squircle reads on the
 // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
 // rim is shown against an on/off contrast device.
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { useSpecularTracking, Button } from "../../../src/index";
+// AZ.W-ADAPTIVE-AUTO Arm 2 — the DEMO exerciser for the sampled-luminance observer
+// (path B: demo-private — the composable is OFF the public glass barrel, imported
+// directly here as the content-glass DEMO mount that exercises the live sampling path;
+// the binary consumer is the dock). It writes `--glass-backdrop-luma` + the bucket on a
+// glass-card over the page's live Aurora substrate so the dynamic darken TRACKS the
+// painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
+// W-PRUNE2 E4-3 own-story exclusion) — it exercises the composable, it does not by
+// itself clear the public ≥2-binary bar.
+import { useGlassBackdropLuminance } from "../../../src/composables/glass/useGlassBackdropLuminance";
 
 // The named band surfaces — the five ladder rungs + the card register. Each is
 // a bare `.glass-<rung>` plate (the mixin supplies the `::before` specular + the
@@ -43,6 +52,18 @@ const tintSamples = [
     { label: "aurora teal", source: "oklch(0.72 0.1 200)", strength: "22%" },
 ] as const;
 const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
+
+// AZ.W-ADAPTIVE-AUTO Arm 2 — the live observer exerciser. A glass-card over the page's
+// Aurora substrate samples the painted backdrop on the throttled (≤ 4 Hz) loop and
+// writes `--glass-backdrop-luma` + the bucket on itself. `backgroundCanvas: ".aurora
+// canvas"` points it at the StoryHero aurora `<canvas>` (the ANIMATED case); absent a
+// canvas it falls back to the static stack-walk. The reactive `luma`/`bucket` refs are
+// surfaced as a readout so the dynamic signal is visible.
+const liveCardEl = useTemplateRef<HTMLElement>("liveCardEl");
+const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance(
+    liveCardEl,
+    { live: true, backgroundCanvas: () => document.querySelector("canvas") },
+);
 </script>
 
 <template>
@@ -75,6 +96,27 @@ const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
                         @pointermove="onPointerMove"
                     >
                         glass-card
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="dynamic backdrop luminance — the iOS-27 sampled observer (AZ Arm 2)"
+            blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. PRM-gated: under reduce the loop collapses to one mount sample."
+        >
+            <ShowcaseFrame pad="lg">
+                <div class="flex flex-wrap items-center gap-6">
+                    <div
+                        ref="liveCardEl"
+                        data-glass-sample="live"
+                        class="glass-card flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                    >
+                        <span>glass-card · live sample</span>
+                        <span class="text-mono-caption text-muted-foreground">
+                            luma {{ backdropLuma === null ? "—" : backdropLuma.toFixed(3) }}
+                            · {{ backdropBucket ?? "—" }}
+                        </span>
                     </div>
                 </div>
             </ShowcaseFrame>

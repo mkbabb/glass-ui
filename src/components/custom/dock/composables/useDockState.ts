@@ -95,6 +95,73 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     let installClickAwayFrame: number | null = null;
     let isCollapsing = false;
 
+    /* AZ.W-DOCK-FLICKER — the hover HYSTERESIS (the FLIP-thrash structural guard,
+       C2-7 C + D5-7). The `@mouseenter`/`@mouseleave` listeners sit on the MORPHING
+       `.glass-dock` root (GlassDock.vue), so the hover BOUNDARY moves WITH the box.
+       When a hovered collapsing dock's right edge sweeps inward past a STATIONARY
+       cursor (then the spring overshoot sweeps it back), the moving edge re-crosses
+       the static pointer and re-fires enter→leave→enter — the FLIP oscillation the
+       user reads as "flickering". The pure `collapseDelay` timer does NOT guard this
+       (it only buffers a slow exit); the structural guard is an INTENT-DWELL on
+       enter PLUS a `getBoundingClientRect` geometry recheck on leave:
+
+         • Intent-dwell (HOVER_INTENT_MS): a collapsed→hover expand from `onMouseEnter`
+           is DEFERRED a few ms; a spurious enter from a sweeping edge is canceled by
+           the immediately-following leave (which clears the pending dwell) before it
+           commits. A genuine human hover dwells past the window and expands. The dwell
+           is bypassed for focus parity (`onFocusIn` stays instant — a keyboard focus
+           is never a sweeping-edge artefact).
+         • Geometry recheck: a `mouseleave` whose pointer is STILL geometrically inside
+           the settled box (the box edge moved, not the cursor) is NOT a real exit —
+           it does not schedule collapse. Only a pointer truly OUTSIDE the box rect
+           collapses. This is the recheck REFERENCED by `onMouseLeave` (the gate's W2
+           wired-seam assert; not dead code that satisfies a grep). */
+    const HOVER_INTENT_MS = 60;
+    let hoverIntentTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function clearHoverIntent() {
+        if (hoverIntentTimer) {
+            clearTimeout(hoverIntentTimer);
+            hoverIntentTimer = null;
+        }
+    }
+
+    /** The MORPHING-EDGE-SWEEP recheck: is this leave a false exit caused by the box
+        edge moving past a stationary cursor (NOT the cursor leaving the box)? True
+        ONLY when ALL hold: (a) a morph is in flight (`[data-morphing]` armed — the box
+        is moving), (b) the pointer is geometrically still inside the box rect, AND
+        (c) the pointer sits within a thin band of a box EDGE (not deep in the
+        interior). The edge band is the signature of the sweep: a real `mouseleave`
+        crosses a boundary, so a genuine exit's pointer is essentially AT an edge —
+        and the collapse-onset sweep re-crosses the cursor at that same edge. A leave
+        whose pointer is deep in the interior is NOT an edge-sweep (it cannot
+        physically be a real boundary-cross), so it proceeds to collapse. At REST (no
+        morph) every leave is genuine and this returns false — the steady-state
+        collapse path is untouched. The recheck targets ONLY the FLIP-thrash window
+        (the moving edge re-crossing the static cursor, D5-7). */
+    const EDGE_BAND_PX = 24;
+    function isMorphingEdgeSweep(e?: MouseEvent): boolean {
+        if (!e) return false;
+        const el = rootEl.value;
+        if (!el || typeof el.getBoundingClientRect !== "function") return false;
+        // Only guard while the morph is in flight — at rest a leave is genuine.
+        if (!el.hasAttribute("data-morphing")) return false;
+        const r = el.getBoundingClientRect();
+        const inside =
+            e.clientX >= r.left &&
+            e.clientX <= r.right &&
+            e.clientY >= r.top &&
+            e.clientY <= r.bottom;
+        if (!inside) return false;
+        // Within a thin band of any box edge — the boundary-cross signature.
+        const nearEdge =
+            e.clientX - r.left <= EDGE_BAND_PX ||
+            r.right - e.clientX <= EDGE_BAND_PX ||
+            e.clientY - r.top <= EDGE_BAND_PX ||
+            r.bottom - e.clientY <= EDGE_BAND_PX;
+        return nearEdge;
+    }
+
     let prevState: DockState = state.value;
     function syncDerived() {
         if (getAlwaysExpanded()) {
@@ -156,6 +223,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (isCollapsing) return;
         isCollapsing = true;
         clearTimer();
+        clearHoverIntent();
         dismissOpenOverlays();
         state.value = "collapsed";
         syncDerived();
@@ -169,6 +237,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             return;
         }
         clearTimer();
+        clearHoverIntent();
         state.value = "hover";
         syncDerived();
     }
@@ -179,14 +248,31 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (getAlwaysExpanded()) return;
         clearTimer();
         if (state.value === "collapsed") {
-            state.value = "hover";
-            syncDerived();
+            // AZ.W-DOCK-FLICKER — DEFER the collapsed→hover expand by the intent
+            // dwell. A spurious enter from the morphing edge sweeping back over a
+            // stationary cursor is canceled by the immediately-following leave
+            // (`onMouseLeave` clears the pending dwell) before the expand commits,
+            // breaking the enter↔leave oscillation. A genuine human hover dwells
+            // past the window. The dwell re-checks `state === "collapsed"` at fire
+            // time so a pin/expand mid-dwell is honoured.
+            clearHoverIntent();
+            hoverIntentTimer = setTimeout(() => {
+                hoverIntentTimer = null;
+                if (getAlwaysExpanded()) return;
+                if (state.value === "collapsed") {
+                    state.value = "hover";
+                    syncDerived();
+                }
+            }, HOVER_INTENT_MS);
         }
         // If pinned, no-op (stays pinned)
     }
 
     function onMouseLeave(e?: MouseEvent) {
         if (getAlwaysExpanded()) return;
+        // AZ.W-DOCK-FLICKER — a leave cancels any pending hover-intent dwell: a
+        // sweeping-edge enter immediately chased by a leave never commits the expand.
+        clearHoverIntent();
         if (state.value === "hover") {
             // Something is explicitly holding the dock open (dropdown, edit, etc.)
             if (keepOpenCount.value > 0) return;
@@ -200,6 +286,16 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                 )
                     return;
                 if (isTeleportedTarget(e.relatedTarget, dockId)) return;
+                // AZ.W-DOCK-FLICKER — the GEOMETRY RECHECK (the wired hysteresis
+                // seam). When the collapsing box's edge sweeps inward past a
+                // STATIONARY cursor mid-morph, the browser fires `mouseleave` even
+                // though the pointer did not move. If a morph is in flight AND the
+                // pointer is STILL inside the box rect, this is the edge moving, not
+                // a real exit — do NOT schedule collapse (which would re-thrash with
+                // the next enter as the spring overshoot sweeps the edge back). At
+                // rest (no morph) a leave is genuine and proceeds. Only a pointer
+                // truly outside the box (or a steady-state leave) collapses.
+                if (isMorphingEdgeSweep(e)) return;
             }
             scheduleCollapse();
         }
@@ -237,6 +333,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             return;
         }
         clearTimer();
+        clearHoverIntent();
         state.value = "pinned";
         syncDerived();
     }
@@ -332,6 +429,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // Cleanup
     onUnmounted(() => {
         clearTimer();
+        clearHoverIntent();
         removeClickAwayListener();
     });
 
