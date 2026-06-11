@@ -52,6 +52,12 @@ retire, scoped by hinge H1 below.
    MIGRATION.md carries the rename table; consumers re-pin.
 6. Model discipline: fable orchestrates/designs/synthesizes; opus/sonnet carry workflow fanout.
 7. The slides repo `docs/tranches/M/` is foreign to this tranche (another session owns it).
+8. **THE COMPLETION BAR (USER EDICT 2026-06-11)** — the tranche is complete ONLY when every named
+   surface (dock, blob, aurora, constellation, fourier, motion, glass+registers, shell, cross-repo)
+   holds a PASS in the per-surface REFLECTION process (`AZ.W-REFLECT` — recapitulate → re-verify
+   live → the perfection question → verdict). A FAIL deploys the mid-tranche TRIUMVIRATE
+   (research → ad-hoc wave-write → redress) and loops until perfection. `proof:az-final` clause
+   (10) binds it.
 
 ## USER HINGES — decisions that gate batches (answer before or at the named batch)
 
@@ -178,7 +184,8 @@ Batch 4  W-MORPH-SHOWCASE [H4] ‖ W-HIERARCHY ‖ W-SUFFUSE ‖ W-METRIC-UNIFY
           W-METRIC-UNIFY on MetricCell.vue (the iconColor prop on the unified value core). Dispatch
           W-SUFFUSE last or sibling-worktree-merge its ranges. See EXECUTION-DAG.md §"BATCH 4".)
 Batch 5  W-CARVE ‖ W-PRUNE2 ‖ W-KF-CONSUMER
-Batch 6  W-CLOSE → 3.11.0 cut [USER] → W-ADOPT → W-DEPLOY [H5]
+Batch 6  W-REFLECT (the per-surface reflection band + the triumvirate redress loops, no iteration cap)
+Batch 7  W-CLOSE → the 3.12.0 cut [USER; HOLDS until after the 06-11 morning session] → W-ADOPT → W-DEPLOY [H5]
          (W-ADOPT may instead run at Batch 0 against the published 3.10.1 — it has no AZ dependency;
           it waits only if the user prefers one slides re-pin instead of two.)
 ```

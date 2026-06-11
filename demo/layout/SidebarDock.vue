@@ -29,7 +29,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "../../src/components/ui/tooltip";
-import { DarkModeToggle } from "../../src/components/custom/controls";
+import { Settings2 } from "@lucide/vue";
 import { cn } from "../../src/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
@@ -58,8 +58,10 @@ const activeCategoryId = computed<string | null>(() => {
     return loc ? loc.category.id : null;
 });
 
-// The primary categories ride the top of the rail; the reference-only shelf
-// (Composables) sits below a divider, collapsed below the fold.
+// The primary categories ride the top of the rail. (The reference-only
+// Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo IA no longer
+// carries a reference category; the `!c.reference` guard stays as a harmless
+// forward filter, but no category sets it today.)
 //
 // AZ.W-SHELL-IDENTITY (D1) — Foundations is EXCLUDED from the DockIconButton nav
 // loop: the ℱ wordmark home control (#persistent slot, RouterLink to="/" →
@@ -71,7 +73,6 @@ const activeCategoryId = computed<string | null>(() => {
 const primaryCategories = computed(() =>
     CATEGORIES.filter((c) => !c.reference && c.id !== "foundations"),
 );
-const referenceCategories = computed(() => CATEGORIES.filter((c) => c.reference));
 
 function go(categoryId: string): void {
     firstOfCategory(categoryId);
@@ -145,6 +146,15 @@ function onWordmarkClick(e: MouseEvent): void {
         return;
     }
     emit("navigate");
+}
+
+// AZ.W-SHELL-CONFIG — the gear-hosted demo configurator open control. The
+// floating FAB is GONE; the open is rehomed onto this trailing dock gear (the
+// dock-as-configurator-chrome idiom — GlassDock + DockIconButton). It dispatches
+// the SAME `glass-ui-demo:toggle-configurator` window event the `,` shortcut does
+// (PresetEditor.vue listens for it) — one event path, no parallel open machinery.
+function openConfigurator(): void {
+    window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-configurator"));
 }
 </script>
 
@@ -236,53 +246,6 @@ function onWordmarkClick(e: MouseEvent): void {
                     {{ category.title }}
                 </TooltipContent>
             </Tooltip>
-
-            <!--
-              Reference-only shelf (Composables). Visually separated from the
-              component categories by a divider so the distinction reads at
-              a glance — these are reference docs, not surfaces.
-            -->
-            <template v-if="referenceCategories.length > 0">
-                <DockSeparator />
-                <Tooltip
-                    v-for="category in referenceCategories"
-                    :key="category.id"
-                >
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            :aria-current="
-                                category.id === activeCategoryId
-                                    ? 'page'
-                                    : undefined
-                            "
-                            :aria-label="`${category.title} (reference)`"
-                            :class="
-                                cn(
-                                    'demo-sidebar-item tap-squish',
-                                    category.id === activeCategoryId
-                                        ? 'is-active'
-                                        : 'text-muted-foreground',
-                                )
-                            "
-                            @click="go(category.id)"
-                        >
-                            <component
-                                :is="category.icon"
-                                class="h-4 w-4"
-                                aria-hidden="true"
-                            />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent
-                        v-if="showTooltips"
-                        side="right"
-                        :side-offset="10"
-                    >
-                        {{ category.title }} · reference
-                    </TooltipContent>
-                </Tooltip>
-            </template>
         </TooltipProvider>
 
         <!-- AZ.W-DOCK-CONTEXT — the page-driven contextual facet group. A vertical
@@ -342,17 +305,32 @@ function onWordmarkClick(e: MouseEvent): void {
             </DockLayerGroup>
         </template>
 
-        <!-- The dark-mode toggle is the trailing UTILITY control: it rides the
-             #collapsed slot, which the vertical GlassDock renders as a bottom section
-             below an automatic <DockSeparator> (the home-top / utility-at-the-end
-             nav-pattern). Sized to the standard dock-icon-button register (size="dock"
-             insets the glyph to the nav register — no h-9/w-9 override). -->
+        <!-- AZ.W-SHELL-CONFIG — the trailing UTILITY control is now the gear that
+             opens the glass-ui demo Configurator (the dark-mode toggle's chrome home
+             moved INTO that configurator as its single dark Switch; the standalone
+             rail toggle is removed). The gear rides the #collapsed slot, which the
+             vertical GlassDock renders as a bottom section below an automatic
+             <DockSeparator> (the home-top / utility-at-the-end nav-pattern). It
+             dispatches the SAME `glass-ui-demo:toggle-configurator` event the `,`
+             shortcut does — one event path. -->
         <template #collapsed>
-            <DarkModeToggle
-                size="dock"
-                eclipse
-                class="demo-sidebar-dark-toggle"
-            />
+            <TooltipProvider :delay-duration="250">
+                <Tooltip>
+                    <TooltipTrigger as-child>
+                        <DockIconButton
+                            type="button"
+                            class="demo-sidebar-gear tap-squish"
+                            aria-label="Open the glass-ui demo configurator"
+                            @click="openConfigurator"
+                        >
+                            <Settings2 class="h-4 w-4" aria-hidden="true" />
+                        </DockIconButton>
+                    </TooltipTrigger>
+                    <TooltipContent v-if="showTooltips" side="right" :side-offset="10">
+                        Configurator
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
         </template>
 
         <!-- The hairline rail (AZ.W-RAIL-EXTEND) — a context control beyond the rail's

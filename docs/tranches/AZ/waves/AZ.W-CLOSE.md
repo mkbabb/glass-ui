@@ -77,7 +77,10 @@ ls .changeset/                                        # the AZ changeset staged
    (8) STAGED-OR-CUT from birth — staged: version `3.10.1` + the AZ changeset present; at-cut:
        version `3.12.x` + changeset consumed + a CHANGELOG `## 3.12.0` entry; anything else (a bump
        with the changeset still staged, a cut with no CHANGELOG) is the silent-bump RED;
-   (9) CLEAN-TREE (allowlisted) on the close commit.
+   (9) CLEAN-TREE (allowlisted) on the close commit;
+   (10) THE REFLECTION BAR (the user edict 2026-06-11) — `proof:az-reflect` GREEN: every
+        AZ.W-REFLECT roster surface holds a PASS reflection record with fresh captures; zero open
+        FAIL records. The close CANNOT start while any surface is mid-triumvirate.
    Self-proving: a synthetic violation per clause REDs (the born-RED witness recorded in the gate
    header).
 4. **The budget rebaseline** — `profile:budget` re-baselined post-AZ (the motion demo + the morph

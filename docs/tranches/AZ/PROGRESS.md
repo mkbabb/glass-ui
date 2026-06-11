@@ -86,6 +86,7 @@ roster-named here but un-authored; the authoring phase is INCOMPLETE until each 
 | W-CARVE | Z | the chronic central-CSS rows (dock-controls.css 636, theme.css 530; the 2 ratchet rows) | 5 | planned |
 | W-PRUNE2 | Z | E4 (4 candidates incl. status-dot 1-consumer), B1 books (W-AUR-T5 Kuwahara, W-LIGHTHOUSE) | 5 | planned |
 | W-KF-CONSUMER | X | B4-5 (S1 — the phantom `/header-ribbon` + `/glass-panel` subpaths), B4-7 (pin census) | 5 | planned (spec authored) |
+| W-REFLECT | Z | the USER EDICT 2026-06-11 (the per-surface reflection completion bar + the mid-tranche triumvirate redress loop) | 6 | planned (spec authored) |
 | W-CLOSE | Z | the AY close pattern (overfitting audit, FINAL.md, `proof:az-final`, budget rebaseline) | 6 | planned |
 | W-ADOPT | X | A4L-11 (un-started S1), A4L-13 (the exact enumeration), B4-7 (pin → 3.10.1) | 6 (or 0) | planned (spec authored) |
 | W-DEPLOY | X | the standing slides.friday.institute requirement; A4L-2/A4L-12 (8 served slides) · H5 | 6 | planned (spec authored) |

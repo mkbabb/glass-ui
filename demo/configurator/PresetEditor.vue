@@ -392,16 +392,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 <Switch v-model="cartoonModel" />
                             </div>
                         </PresetEditorField>
-                        <PresetEditorField
-                            label="Dark mode"
-                            description="Mirrors the global dark toggle."
-                            can-reset
-                            @reset="() => cfg.clearField('dark')"
-                        >
-                            <div class="flex w-full items-center justify-end">
-                                <Switch v-model="darkModel" />
-                            </div>
-                        </PresetEditorField>
                     </section>
                 </div>
 

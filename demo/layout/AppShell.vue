@@ -154,7 +154,11 @@ onBeforeUnmount(() => {
     <KonamiAurora v-if="showKonami" @done="showKonami = false" />
     <FRedrawOverlay v-if="showFRedraw" @done="showFRedraw = false" />
 
-    <!-- Live token preset editor — opened by FAB or `,` shortcut -->
+    <!-- The glass-ui demo Configurator — a right-side Sheet, opened by the
+         SidebarDock gear control or the `,` shortcut (AZ.W-SHELL-CONFIG: the
+         floating FAB is gone; the open is rehomed onto the dock gear + the
+         keyboard/event path). It mounts at the shell root so the Sheet portals
+         correctly regardless of the active route. -->
     <PresetEditor />
 
     <!-- Keyboard shortcut help dialog -->

@@ -10,8 +10,9 @@
  *
  * The IA is a coherent category tree — Foundations, Substrates (render
  * backgrounds), Forms, Display, Containers, Navigation, Dock (the headline
- * primitive's own section), Data, Feedback, Motion, Compositions, and a
- * reference-only Composables shelf collapsed below the fold.
+ * primitive's own section), Data, Feedback, Motion, and Compositions. (The
+ * reference-only Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo
+ * IA no longer carries the 22-story reference category; clean break, no alias.)
  */
 import type { Component } from "vue";
 import type { StoryBackground } from "./aurora-hero";
@@ -27,7 +28,6 @@ import {
     Bell,
     Sparkles,
     LayoutDashboard,
-    Cog,
     type LucideIcon,
 } from "@lucide/vue";
 
@@ -324,36 +324,6 @@ export const CATEGORIES: Category[] = [
             s("compositions", "gate-pattern", "Gate Pattern", "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component."),
             s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
             s("compositions", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
-        ],
-    },
-    {
-        id: "composables",
-        title: "Composables",
-        icon: Cog,
-        reference: true,
-        stories: [
-            s("composables", "use-token-color", "useTokenColor", "Reactive read of a CSS custom property — re-resolves on dark-mode transitions."),
-            s("composables", "use-global-dark", "useGlobalDark", "Singleton dark-mode store (createGlobalState wrapper)."),
-            s("composables", "use-keyboard-shortcuts", "useKeyboardShortcuts", "registerShortcut + useRegisteredShortcuts pair for scope-aware keybindings."),
-            s("composables", "use-resize-observer", "useResizeObserver", "Threshold + rafBatch options for sub-pixel resize storms."),
-            s("composables", "use-glass-renderer", "useGlassRenderer", "Detection cascade: SVG-filter → CSS backdrop-filter → fallback."),
-            s("composables", "use-animated-number", "useAnimatedNumber", "Single-ref smoothed numeric tracker (absolute / progress modes)."),
-            s("composables", "use-dark-mode-sync", "installDarkModeSync", "Re-runs onSync on dark-mode transitions; canonical glue for token-reading compositions."),
-            s("composables", "use-intersection-pause", "useIntersectionPause", "Pause a runtime when target scrolls offscreen or document.hidden flips."),
-            s("composables", "use-raf-loop", "useRAFLoop", "Scope-aware rAF loop with start/stop/pause/resume/dispose."),
-            s("composables", "use-scroll-progress", "useScrollProgress", "Map a target's scroll position in the viewport to [0, 1]."),
-            s("composables", "use-spring-orchestrator", "useNumericTransition", "Numeric transition between two named snapshots over a duration."),
-            s("composables", "use-stagger-reveal", "useStaggerReveal", "IntersectionObserver-gated entrance cascade."),
-            s("composables", "use-sortable", "useSortable", "Pointer-capture drag-reorder with optional cross-list group drops."),
-            s("composables", "use-scroll-tracker", "useScrollTracker", "Active-section tracking as host scrolls."),
-            s("composables", "use-sidebar-follow", "useSidebarFollow", "Sticky / follow-cursor sidebar behaviour."),
-            s("composables", "use-sidebar-state", "useSidebarState", "Orchestrator combining tracker + follow + tree-index."),
-            s("composables", "use-tree-index", "useTreeIndex", "Memoised flat-index of a hierarchical tree."),
-            s("composables", "use-touch-gate", "useTouchGate", "Touch-vs-pointer disambiguation with a deactivation timer."),
-            s("composables", "use-timer", "useTimer", "Scope-aware setTimeout — auto-cleans on dispose."),
-            s("composables", "use-interval", "useInterval", "Scope-aware setInterval — companion of useTimer."),
-            s("composables", "use-infinite-scroll", "useInfiniteScroll", "Scroll-driven incremental load engine under the InfiniteScroll primitive."),
-            s("composables", "use-clipboard", "useClipboard", "Reactive clipboard copy with an auto-resetting copied flag and an execCommand fallback."),
         ],
     },
 ];

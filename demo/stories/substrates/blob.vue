@@ -109,6 +109,7 @@ const HARMONIES: ColorHarmony[] = [
     "monochrome",
 ];
 const MOODS: BlobMood[] = ["idle", "happy", "curious", "sleepy", "excited"];
+const MERGES: BlobMerge[] = ["quadratic", "circular"];
 
 // AY.W-COHERE E1 — the warm-register chroma CEILING on the seed→palette
 // derivation. The blob's mood/seed bead caps INTO the band the FourierField comet
@@ -125,6 +126,20 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // Three preset baselines — the calm cream default, a warm-excited bead, and a cool
 // shy-away creature (the attraction-sign showcase: a NEGATIVE attraction that genuinely
 // shies away now that the D2 sign is fixed).
+// The shared GEOMETRY baseline the studio presets seed from — the orbit-OUTSIDE-body
+// separation geometry (orbit 0.30 > body 0.22, 4 satellites, radius 0.10, near-circular
+// ecc) that makes the metaball orbit→merge→absorb→emerge show read on the LARGE hero
+// (the same separation W-BLOB-PAGE lands on the page default, here a per-preset baseline
+// the user dials live). The merge bridge rides the new 0.09 / circular library default.
+const STUDIO_GEO_BASE = {
+    satelliteCount: 4,
+    orbitRadius: 0.3,
+    satelliteRadius: 0.1,
+    eccentricity: 0.04,
+    smoothK: BLOB_CONFIG_DEFAULTS.membrane.smoothK,
+    merge: BLOB_CONFIG_DEFAULTS.membrane.merge,
+} as const;
+
 const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
     {
         key: "calm",
@@ -133,9 +148,11 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
         config: {
             attraction: 0.35,
             clickImpulse: 0.5,
+            responsiveness: 0,
             mood: "curious",
             seed: "oklch(0.78 0.05 78)",
             harmony: "analogous",
+            ...STUDIO_GEO_BASE,
         },
     },
     {
@@ -145,6 +162,9 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
         config: {
             attraction: 0.8,
             clickImpulse: 0.9,
+            // The excited preset reaches the louder lean register — a lively bead that
+            // leans HARD and taffy-pulls on a flick (the D5 surfaced register in use).
+            responsiveness: 0.7,
             mood: "excited",
             seed: "oklch(0.62 0.19 25)",
             // AY.W-COHERE E1 — `analogous`, NOT `triad`. The triad scattered the
@@ -156,6 +176,7 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
             // register. The triad showcase moves to the harmony Select (a user can
             // still pick it; the SHIPPED warm preset stays in-family).
             harmony: "analogous",
+            ...STUDIO_GEO_BASE,
         },
     },
     {
@@ -165,9 +186,11 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
         config: {
             attraction: -0.8,
             clickImpulse: 0.3,
+            responsiveness: 0.2,
             mood: "sleepy",
             seed: "oklch(0.6 0.2 250)",
             harmony: "complementary",
+            ...STUDIO_GEO_BASE,
         },
     },
 ];
@@ -183,6 +206,7 @@ const studio = useConfiguratorState<BlobStudioCfg>({
 
 const moodOpen = ref(false);
 const harmonyOpen = ref(false);
+const mergeOpen = ref(false);
 
 // The live palette stops, derived from the studio seed/harmony (the D1 hero color-feed
 // — now LIVE: a post-mount stops change re-paints the hero body).
@@ -207,44 +231,90 @@ const paletteStops = computed(() =>
 // over-tuned the resting surface — circular merge + iridescence 0.4 — off the
 // canonical default the gate calibrates against). Only the interaction lean +
 // seed-palette are studio-driven (the Configurator's purpose).
+// AZ.W-BLOB-STUDIO §3.5 — the louder-lean register mapping. `responsiveness` (0..1) is
+// the studio-only knob; it scales the SHIPPED calm interaction defaults UP toward a
+// pronounced register. pointerStrength rides 0.10 (calm default) → 0.45 (a loud lean the
+// whole creature follows); stretch rides 0.5 (the swamped-whisper default) → 2.0 (a
+// visible taffy-pull — the shader's tanh saturation caps the elongation at 1+stretch, so
+// stretch 2.0 gives up to ~3× elongation on a fast flick where 0.5 reads at the noise
+// floor). The CALM preset (responsiveness 0) is byte-identical to the library default;
+// the louder register is reached ONLY by dialing the knob (NOT a default re-base — the
+// shipped page/library default stays the AX.W46 calibrated-calm). Restraint counter:
+// ONE surfaced axis, no parallel uncoupling path (the existing stretch axis is the
+// velocity-squash channel — this just gives the studio a louder ceiling to reach it).
+const CALM_POINTER_STRENGTH = BLOB_CONFIG_DEFAULTS.interaction.pointerStrength; // 0.10
+const CALM_STRETCH = BLOB_CONFIG_DEFAULTS.interaction.stretch; // 0.5
+function leanStrength(r: number): number {
+    return CALM_POINTER_STRENGTH + r * (0.45 - CALM_POINTER_STRENGTH);
+}
+function leanStretch(r: number): number {
+    return CALM_STRETCH + r * (2.0 - CALM_STRETCH);
+}
+
 const stageConfig = reactive<BlobConfig>({
     ...BLOB_CONFIG_DEFAULTS,
-    // AZ.W-BLOB-PAGE D2 — the page-local satellite-SEPARATION override. The shipped
-    // default orbitRadius (0.17) sits INSIDE bodyRadius (0.22), so the 3 satellites
-    // orbit UNDER the body skin and merge entirely — the "orbiting droplets" show is
-    // never visible (the silhouette only pinches at the perimeter; π baseline silhouette
-    // CV ≈ 0.026, single connected component every frame). Lifting the orbit OUTSIDE the
-    // body skin (0.30 vs body 0.22) with FOUR satellites (radius 0.10) makes the
-    // orbit→merge→absorb→emerge cycle read on mount: the satellites swing out past the
-    // skin and metaball back in as visible stretching pseudopod NECKS. Measured live (π
-    // blob-page): peak silhouette CV ≈ 0.057 over a full orbit cycle (≈2.2× the 0.026
-    // perimeter-only baseline — the strong neck-pinch the floor 0.04 binds), with
-    // intermittent full separation (a detached satellite droplet) when the cream-on-light
-    // contrast permits. The orbit is held MODERATE (0.30, not wider) so the satellites
-    // still NECK the body on the peak-coverage frame — a wider orbit (≥0.36) detaches
-    // them so far the peak-coverage frame reads a clean body and the EXISTING
-    // proof:blob-render silhouette/field witnesses regress (the IDENTITY-PRESERVED bite).
-    // Eccentricity stays near-circular (0.04) so the vertical reach clears the
-    // 1.6×-oversized canvas top/bottom — the AX.W15 four-side containment HOLDS (live
-    // worst-edge paint fraction within the satellite-overflow budget; proof:blob-render
-    // corner-empty + side-margin stay GREEN). This is a PAGE-LOCAL override on the stage
-    // bead (NOT a types.ts default re-tune — the shipped default stays calm/contained).
-    // The merge BRIDGE (membrane.smoothK) is W-BLOB-STUDIO's axis, left at the default;
-    // this wave moves only the GEOMETRY (orbit/count/satellite-radius/ecc).
-    geometry: { ...BLOB_CONFIG_DEFAULTS.geometry, orbitRadius: 0.30, satelliteCount: 4, satelliteRadius: 0.10, eccentricity: 0.04 },
+    // The stage bead's geometry/membrane/interaction are STUDIO-DRIVEN (the live knobs
+    // below). Seed the reactive atoms from the initial (calm) preset's values so the
+    // mount paints the studio's separation geometry (orbit 0.30 OUTSIDE body 0.22, 4
+    // satellites) reading the metaball orbit→merge→absorb→emerge show on the LARGE hero
+    // — the SAME separation W-BLOB-PAGE lands on the page default (W-BLOB-PAGE owns the
+    // page-IA position + the page-default orbit; this wave owns the studio's live
+    // geometry knobs that drive THIS hero mount). The watch below threads every studio
+    // edit onto these atoms. Surface/color start at the canonical lit-cream defaults; the
+    // membrane smoothK/merge start at the new 0.09/circular library default the studio
+    // knobs then retune. The four-side containment HOLDS at the seed geometry (the same
+    // proof:blob-render corner-empty/side-margin witnesses W-BLOB-PAGE measured GREEN).
+    geometry: {
+        ...BLOB_CONFIG_DEFAULTS.geometry,
+        orbitRadius: studio.config.orbitRadius,
+        satelliteCount: studio.config.satelliteCount,
+        satelliteRadius: studio.config.satelliteRadius,
+        eccentricity: studio.config.eccentricity,
+    },
     surface: { ...BLOB_CONFIG_DEFAULTS.surface },
-    membrane: { ...BLOB_CONFIG_DEFAULTS.membrane },
-    interaction: { ...BLOB_CONFIG_DEFAULTS.interaction },
+    membrane: {
+        ...BLOB_CONFIG_DEFAULTS.membrane,
+        smoothK: studio.config.smoothK,
+        merge: studio.config.merge,
+    },
+    interaction: {
+        ...BLOB_CONFIG_DEFAULTS.interaction,
+        pointerStrength: leanStrength(studio.config.responsiveness),
+        stretch: leanStretch(studio.config.responsiveness),
+    },
     color: { ...BLOB_CONFIG_DEFAULTS.color },
 });
 
-// Thread the studio config → the reactive stage config (interaction lean/impulse + the
-// live palette stops). The GooBlob's D1/D2 watchers re-resolve on these writes.
+// Thread the studio config → the reactive stage config. Every studio axis writes the
+// corresponding atom so each Configurator edit reaches the live hero (the D1/D2 watchers
+// re-resolve on these writes). Interaction lean/impulse + the louder-lean register, the
+// live geometry (count/orbit/satellite-radius/ecc — the C6-7 cause→effect knobs), the
+// merge bridge (smoothK/merge), and the live palette stops.
 watch(
-    () => [studio.config.attraction, studio.config.clickImpulse, paletteStops.value] as const,
-    ([attraction, clickImpulse, stops]) => {
+    () =>
+        [
+            studio.config.attraction,
+            studio.config.clickImpulse,
+            studio.config.responsiveness,
+            studio.config.satelliteCount,
+            studio.config.orbitRadius,
+            studio.config.satelliteRadius,
+            studio.config.eccentricity,
+            studio.config.smoothK,
+            studio.config.merge,
+            paletteStops.value,
+        ] as const,
+    ([attraction, clickImpulse, responsiveness, satCount, orbit, satRadius, ecc, smoothK, merge, stops]) => {
         stageConfig.interaction.pointerAttraction = attraction;
         stageConfig.interaction.clickImpulse = clickImpulse;
+        stageConfig.interaction.pointerStrength = leanStrength(responsiveness);
+        stageConfig.interaction.stretch = leanStretch(responsiveness);
+        stageConfig.geometry.satelliteCount = satCount;
+        stageConfig.geometry.orbitRadius = orbit;
+        stageConfig.geometry.satelliteRadius = satRadius;
+        stageConfig.geometry.eccentricity = ecc;
+        stageConfig.membrane.smoothK = smoothK;
+        stageConfig.membrane.merge = merge;
         stageConfig.color.paletteStops = [...stops];
     },
     { immediate: true, deep: true },
@@ -310,11 +380,62 @@ watch(studioPaused, () => {
                     @select-preset="studio.selectPreset"
                     @reset="studio.resetCurrent"
                 >
+                    <!--
+                      AZ.W-BLOB-STUDIO §3.6 — the PRIMARY preset affordance (the weighted
+                      preset row). The default Configurator preset row is plain `text-xs
+                      font-medium` chips; the studio overrides the `#presets` slot to make
+                      the preset row read as the TOP of the hierarchy: a larger weighted
+                      label + the preset's `sub` descriptor visible inline, the active chip
+                      a glass-tier pill (the glass-first selected register) — the preset is
+                      the first thing the eye lands on, then the layered sliders below.
+                    -->
+                    <template #presets="{ presets: ps, activePreset }">
+                        <div
+                            class="flex gap-2 overflow-x-auto scroll-fade-mask scrollbar-hidden"
+                            role="tablist"
+                            aria-label="Blob presets"
+                        >
+                            <button
+                                v-for="p in ps"
+                                :key="p.key"
+                                type="button"
+                                role="tab"
+                                :aria-selected="p.key === activePreset"
+                                :data-active="p.key === activePreset || undefined"
+                                :class="[
+                                    'tap-squish focus-ring transition-control flex shrink-0 flex-col items-start gap-0.5 rounded-panel border px-3.5 py-2 text-left',
+                                    p.key === activePreset
+                                        ? 'glass-quiet border-border/60 text-foreground'
+                                        : 'border-border/40 bg-card/40 text-foreground hover:bg-card/70',
+                                ]"
+                                @click="studio.selectPreset(p.key)"
+                            >
+                                <span class="text-small font-semibold leading-tight">{{ p.label }}</span>
+                                <span
+                                    v-if="p.sub"
+                                    class="text-micro font-mono leading-tight text-muted-foreground"
+                                    >{{ p.sub }}</span
+                                >
+                            </button>
+                        </div>
+                    </template>
                     <template #stage>
                         <div
                             class="relative flex h-full w-full items-center justify-center overflow-hidden"
                         >
-                            <div class="relative aspect-square w-64 max-w-[80%]">
+                            <!--
+                              AZ.W-BLOB-STUDIO §3.1 (D1) — the LARGE centered hero. The bead
+                              was a fixed w-64 (256px) swatch sitting small/left in an
+                              h-[min(70vh,560px)] stage (~30% of stage height, off-center).
+                              Re-based onto a STAGE-PROPORTIONAL square: the bead fills the
+                              available stage height (the canvas overflows 1.6× so a margin
+                              floor of the stage min-dimension keeps the necking satellites
+                              inside the frame), centered against the controls aside, capped
+                              so a very wide stage doesn't blow it past the width.
+                            -->
+                            <div
+                                class="relative aspect-square h-[min(78%,30rem)] max-w-[88%]"
+                            >
                                 <GooBlob
                                     ref="studioBlob"
                                     v-model:paused="studioPaused"
@@ -342,8 +463,17 @@ watch(studioPaused, () => {
                             </button>
                         </div>
                     </template>
+                    <!--
+                      AZ.W-BLOB-STUDIO §3.6 — the primary→secondary→tertiary hierarchy.
+                      `dividers` enabled on every layer (the per-section hairline), and
+                      the layer ORDER reads top-down by importance: PRIMARY Interaction
+                      (how the creature responds to YOU — the first axis a tuning session
+                      reaches), SECONDARY Mood + palette (its affect + color identity),
+                      TERTIARY Geometry / Satellites (the structural geometry the user
+                      dials to WATCH the metaballing — the deepest knob).
+                    -->
                     <template #controls>
-                        <ConfiguratorLayer label="Interaction" sub="--interaction-*">
+                        <ConfiguratorLayer label="Interaction" sub="--interaction-*" dividers>
                             <ConfiguratorRow label="Attraction">
                                 <LabeledSlider
                                     v-model="studio.config.attraction"
@@ -364,8 +494,18 @@ watch(studioPaused, () => {
                                     tooltip="The one-shot bouncy spring impulse fired on a click."
                                 />
                             </ConfiguratorRow>
+                            <ConfiguratorRow label="Responsiveness">
+                                <LabeledSlider
+                                    v-model="studio.config.responsiveness"
+                                    :min="0"
+                                    :max="1"
+                                    :step="0.05"
+                                    label="responsiveness"
+                                    tooltip="The LOUDER-lean register — scales the pointer-lean strength + the velocity squash-stretch UP from the calm default. At 1 a fast flick reads a visible taffy-pull; 0 is the shipped calm bead."
+                                />
+                            </ConfiguratorRow>
                         </ConfiguratorLayer>
-                        <ConfiguratorLayer label="Mood + palette" sub="--color-*">
+                        <ConfiguratorLayer label="Mood + palette" sub="--color-*" dividers>
                             <ConfiguratorRow label="Mood">
                                 <LabeledSelect
                                     v-model="studio.config.mood"
@@ -402,6 +542,78 @@ watch(studioPaused, () => {
                                         class="h-10 w-10"
                                     />
                                 </div>
+                            </ConfiguratorRow>
+                        </ConfiguratorLayer>
+                        <!--
+                          AZ.W-BLOB-STUDIO §3.3 + §3.2 — the TERTIARY Geometry / Satellites
+                          layer. The C6-7 GAP: the satellite/orbit geometry was unsurfaced,
+                          so the user could never dial the orbit out and WATCH the
+                          metaballing. These four geometry knobs + the two merge-bridge
+                          knobs make the orbit→merge→absorb→emerge cause→effect a LIVE
+                          tuning experience: raise Orbit past the body radius (0.22) and the
+                          satellites separate into orbiting droplets; widen smoothK and the
+                          body→satellite bridge stretches a gooey NECK as a satellite
+                          metaballs in (circular merge rounds the seam crease).
+                        -->
+                        <ConfiguratorLayer label="Geometry / Satellites" sub="--geometry-* · --membrane-*" dividers>
+                            <ConfiguratorRow label="Satellites">
+                                <LabeledSlider
+                                    v-model="studio.config.satelliteCount"
+                                    :min="0"
+                                    :max="MAX_SATS"
+                                    :step="1"
+                                    label="satelliteCount"
+                                    tooltip="How many satellites orbit the body (0–4)."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Orbit radius">
+                                <LabeledSlider
+                                    v-model="studio.config.orbitRadius"
+                                    :min="0.1"
+                                    :max="0.42"
+                                    :step="0.01"
+                                    label="orbitRadius"
+                                    tooltip="The orbit radius. Body radius is ~0.22 — dial PAST it to separate the satellites into orbiting droplets and WATCH the metaballing."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Satellite radius">
+                                <LabeledSlider
+                                    v-model="studio.config.satelliteRadius"
+                                    :min="0.04"
+                                    :max="0.16"
+                                    :step="0.005"
+                                    label="satelliteRadius"
+                                    tooltip="Each satellite's radius."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Eccentricity">
+                                <LabeledSlider
+                                    v-model="studio.config.eccentricity"
+                                    :min="0"
+                                    :max="0.3"
+                                    :step="0.01"
+                                    label="eccentricity"
+                                    tooltip="The orbit-ellipse Y-inflation — 0 is a circular orbit, higher stretches it vertically."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Merge bridge">
+                                <LabeledSlider
+                                    v-model="studio.config.smoothK"
+                                    :min="0.02"
+                                    :max="0.16"
+                                    :step="0.005"
+                                    label="smoothK"
+                                    tooltip="The smin blend-band — wider stretches a gooier body→satellite NECK as a satellite metaballs in (vs a hard pop)."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Merge variant">
+                                <LabeledSelect
+                                    v-model="studio.config.merge"
+                                    v-model:is-open="mergeOpen"
+                                    :items="MERGES as unknown as readonly string[]"
+                                    label="merge"
+                                    tooltip="quadratic = cheap, slightly creased; circular = a true quarter-circle fillet at the seam (rounder menisci)."
+                                />
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                     </template>
