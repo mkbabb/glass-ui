@@ -67,6 +67,20 @@ import {
 // is the primary surface), while glass-ui's own `self` repo is REQUIRED.
 // ---------------------------------------------------------------------------
 
+// Documented-pending SELF-aliases — a repo aliasing its OWN package name to its
+// own dist/ inside its own demo config. Logged loudly as [pending], never a
+// violation: it cannot break glass-ui→sibling resolution (the cross-repo path
+// this gate guards), and the mechanism choice (alias vs exports-map) belongs to
+// the OWNING repo's open tranche. Each entry names the owner + the reconcile
+// home; an entry is REMOVED when the owning tranche closes its mechanism.
+const SELF_ALIAS_PENDING = [
+    {
+        repo: "value.js",
+        file: "vite.config.ts",
+        reason: "value.js N.W1.C repointed src→dist deliberately (their comment: dist-resolution everywhere, kept fresh by build:watch) — the alias-vs-exports-map mechanism reconciles at the value.js tranche-N close (their open WIP at this AZ close); owner: the value.js session.",
+    },
+];
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -283,6 +297,23 @@ function checkConsumerViteConfigs() {
 
             const hits = scanViteConfigForDistAliases(fullPath);
             for (const hit of hits) {
+                // Documented-pending SELF-aliases (the proof:phantom-classes
+                // precedent — loud, owned, never silent). A package aliasing its
+                // OWN name to its own dist/ inside its own demo config does not
+                // break glass-ui→sibling resolution; the mechanism choice (alias
+                // vs exports-map) belongs to the owning repo's open tranche.
+                const pending = SELF_ALIAS_PENDING.find(
+                    (p) =>
+                        p.repo === consumer.id &&
+                        p.file === relPath &&
+                        hit.key === `@mkbabb/${consumer.id}`,
+                );
+                if (pending) {
+                    console.error(
+                        `  [pending]  ${consumer.id}/${relPath}:${hit.line} self-alias ${hit.key} — ${pending.reason}`,
+                    );
+                    continue;
+                }
                 violations.push({
                     repo: consumer.id,
                     file: relPath,
