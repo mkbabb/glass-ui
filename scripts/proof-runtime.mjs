@@ -17,7 +17,10 @@ const screenshotDir = resolve(
     process.env.GLASS_UI_RUNTIME_SCREENSHOT_DIR ??
         "docs/tranches/F/audit/screenshots/W1/runtime",
 );
-const baseUrl = process.env.GLASS_UI_RUNTIME_BASE_URL ?? "http://127.0.0.1:5173";
+// :5199 is the gate-demo convention (AZ.W-GATES — :5173 is NEVER a default: it is
+// a foreign server on this machine, and a 200 from it sails past waitForHttp then
+// times out waiting for the glass-ui app shell).
+const baseUrl = process.env.GLASS_UI_RUNTIME_BASE_URL ?? "http://127.0.0.1:5199";
 const debugPort = Number(process.env.GLASS_UI_CHROME_DEBUG_PORT ?? 9337);
 const chromePath =
     process.env.CHROME_PATH ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";

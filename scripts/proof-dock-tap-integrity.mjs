@@ -448,14 +448,21 @@ function baselineSelfTest(ROOT) {
     };
 }
 
-// ── the HEAD reconstruction (git-show, the W2 born-RED witness) ────────────────
+// ── the pre-fix reconstruction (git-show, the W2 born-RED witness) ──────────────
+// PINNED to the recorded pre-fix tree (e5bb8166 — the parent of the R5-TAP
+// corrective 84def5f4 that landed the guard). The original `HEAD:` anchor was
+// correct only at authoring time: once the fix MERGED, HEAD contained the guard
+// and the witness inverted into a permanent false-RED (the moving-anchor trap).
+// Pinning keeps the born-RED proof EXECUTABLE forever against the true pre-fix
+// tree instead of demoting it to a header comment.
+const PRE_FIX_COMMIT = "e5bb8166";
 async function reconstructHeadState(ROOT) {
     const { execFileSync } = await import("node:child_process");
     const show = (path) => {
         try {
-            return execFileSync("git", ["show", `HEAD:${path}`], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
+            return execFileSync("git", ["show", `${PRE_FIX_COMMIT}:${path}`], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
         } catch {
-            return null; // absent at HEAD
+            return null; // absent at the pre-fix tree
         }
     };
     const composable = show("src/components/custom/dock/composables/useDockClickIntegrity.ts");

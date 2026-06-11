@@ -1,121 +1,127 @@
-# AZ.W-REFLECT — blob surface reflection record
+# AZ.W-REFLECT — blob surface RE-REFLECTION (pass 2)
 
-**Surface:** blob (`/substrates/blob` — the page hero + the studio + the static WatercolorDot register + the conditional uBackdrop refraction + the cream-bead identity)
-**Auditor lane:** blob · **Date:** 2026-06-11 · **Branch:** tranche/AY @ `58c4265a` (AZ Batch 0–5 + R4/R5 corrective landed)
-**Verdict:** **FAIL** (two real misses — one S2 mobile-stage collapse, one S2 configurator raw-key leak; both first-time-auditor "wtf"-class, both route to the triumvirate)
+**Surface:** blob (`/substrates/blob` — the GooBlob studio hero + the cream-bead identity + the
+static WatercolorDot zero-GL register + the conditional uBackdrop refraction + the configurator
+hierarchy)
+**Auditor lane:** blob (re-reflection, second pass — judged AFRESH as a first-time auditor) ·
+**Date:** 2026-06-11 · **Branch:** tranche/AY @ `d95b5d33` (W-CLOSE; the W-BLOB-REDRESS redress
+`90bf11e5` is IN this HEAD)
+**Verdict:** **PASS**
+
+> This is the SECOND reflection pass. Pass 1 (now git history of this file) returned **FAIL** on two
+> S2 first-time-auditor misses; both were redressed at the ROOT (commit `90bf11e5`) and are
+> re-verified CLOSED live below with fresh captures + π readbacks + GREEN gates. No new miss rises to
+> S1/S2. The surface is FINISHED.
+
+---
+
+## 0 — PASS-1 MISSES × REDRESS × RE-VERIFIED-AFRESH (the headline of this pass)
+
+| pass-1 miss | sev | the defect | redress (commit `90bf11e5`) | RE-VERIFIED LIVE THIS PASS |
+|---|---|---|---|---|
+| **M1** | S2 | The studio hero bead collapsed to a **0×0** canvas on the 390px coarse viewport — the creature was invisible on a phone; `proof:blob-render` + `proof:blob-warm-default` RED on the coarse-touch arm. | Root-fixed in `Configurator.vue`: the single-column band sets an EXPLICIT `grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]` (reset `lg:grid-rows-none` so desktop is byte-unchanged) + a new `--configurator-stage-min: 18rem` token; the bead wrapper re-based to a true square `aspect-square w-full max-h-[78%] max-w-[min(78%,30rem)]`. | **CLOSED.** Live π (390×844, dpr 3): `goo-blob-canvas` **300×300 CSS / 600×600 backing** (was 0×0), `visibility:visible`, `grid-template-rows: 288px 270px` (the 18rem=288px stage track resolved), canvas at x45 (centered with margin). Capture `rr-blob-mobile-studio-dark.png` shows the cream bead PAINTING on the phone. Both gates GREEN on the coarse-touch arm (below). |
+| **M2** | S2 | Every configurator slider/select row leaked its **raw camelCase config key** as a visible label (`clickImpulse`, `satelliteCount`, `orbitRadius`, `smoothK`, `eccentricity`, `responsiveness`…) — a first-time auditor reads leaked dev strings; undercut the R3-10 "configurator refinement" mandate. | The house `hideLabel` seam wired on BOTH leaking consumers: `blob.vue` (11 rows) + `compositions/configurator.vue` (4 rows). The inner `Labeled*` gets a HUMAN `label` + `hide-label` (label kept in DOM `sr-only` for the `for`/`id` a11y association); the raw key moves to the `ConfiguratorRow` `name` mono token-caption slot. Aurora studio was already correct (untouched). | **CLOSED.** Live DOM audit: **24 `<label>` total → 13 VISIBLE, all human-readable** ("Attraction", "Click impulse", "Responsiveness", "Mood", "Seed", "Harmony", "Stops", "Satellites", "Orbit radius", "Satellite radius", "Eccentricity", "Merge bridge", "Merge variant") with **ZERO camelCase leaks among visible labels**; **11 sr-only twins** carry the `for` attr (e.g. "Attraction"→`for=v-19`) so axe `label` still passes. Raw keys render only in the small mono `name` caption (`attraction`, `clickImpulse`, `satelliteCount`, `orbitRadius`, `smoothK`). Captures `rr-blob-bead-desktop-light.png` + `rr-blob-static-register-light.png` show the clean human-label-primary / mono-key-tertiary hierarchy across Interaction + Mood + Geometry sections. Source: 11 `hide-label` in `blob.vue`, 4 in `compositions/configurator.vue`. |
+
+**Gate re-run at HEAD (the two pass-1 RED coarse arms + the source witness):**
+
+| gate | pass-1 | THIS PASS (live at HEAD) |
+|---|---|---|
+| `proof:blob-render` | desktop 3/3 PASS, **coarse-touch FAIL (timeout on 0×0)** | **PASS — 6/6** (desktop + coarse-touch both green) |
+| `proof:blob-warm-default` | desktop 2/2 PASS, **coarse-touch FAIL (timeout)** | **PASS — 4/4** (both arms) |
+| `proof:blob-studio-config` | PASS | **PASS** (SATELLITE-LAYER-BOUND + CONFIGURATOR-HIERARCHY + MERGE-DEFAULT-REBASE + LOUDER-LEAN-SURFACED + GROUNDED-SHADOW-TOKEN) |
 
 ---
 
 ## 1 — RECAPITULATION (every blob audit item × discharging evidence × re-verified state)
 
-| id | source | the user's words / mandate (condensed) | discharging wave + DELTA claim | RE-VERIFIED state (this audit) |
+| id | source | the user's words / mandate (condensed) | discharging wave | RE-VERIFIED state (this pass) |
 |---|---|---|---|---|
-| R3-9 | USER-AUDIT R3 | "/substrates/blob still quite awful: the main blobs at the top are pixelated and low res with no satellite blobs morphing/metaballing in and out." | W-BLOB-PAGE: GL refuted-crisp; (D1) WatercolorDot device-px edge, (D2) orbitRadius 0.17→0.30 past bodyRadius 0.22, (D4) hero-first IA | **DESKTOP: HELD.** Bead is crisp warm-cream, satellites genuinely neck/orbit/separate (frame-0/1/2 + bead shots). Hero leads; static register demoted. **MOBILE: BROKEN** — stage canvas 0×0, bead invisible (Miss M1). |
-| R3-10 | USER-AUDIT R3 | "blob studio good, but needs refinement: better interaction, metaballing, satellite options, shadowing; configurator design-hierarchy structuring." | W-BLOB-STUDIO: satellite layer, circular-merge default, grounded 2-rung shadow, louder-lean knob, primary→secondary→tertiary hierarchy | **PARTIAL.** Stage-fill hero, grounded shadow, satellite geometry layer, weighted preset row, dividers, layer order ALL present. BUT every slider row leaks the raw camelCase config key as a visible label (Miss M2). |
-| B10 | AY USER-AUDIT | "/substrates/blob LARGELY BROKEN — pixelated, NO goo/satellite effects… the Configurator showcase section does not render. REBUILD FROM FIRST PRINCIPLES." | W-BLOB-PAGE + W-BLOB-STUDIO | **DESKTOP: HELD** — goo + satellites render, configurator renders, non-pixelated. **MOBILE: stage absent.** |
-| B18 | AY USER-AUDIT | "/compositions/empty-states giant blob not deftly integrated… this blob reads better than the others. Redesign + the goo/satellites." | W-BLOB-PAGE (one blob identity; mascot scales from rebuilt hero) | Not re-walked this lane (empty-states is the shell lane's surface); the blob IDENTITY it inherits is confirmed crisp+warm here. |
-| C6-1 / F2-R3-9-pixelation | FLEET | GL bead pixelation reading | **REFUTED S3** — GL crisp (backing-store 820×820 for 410px CSS box) | **REFUTATION HOLDS VISUALLY.** Bead element shots (light+dark) show a clean lit gradient, no pixelation at the silhouette or the necks. `proof:blob-page-fence` binds the renderer untouched. |
-| C6-2 | FLEET | the "pixelation" IS the section-1 WatercolorDot SVG CSS-px feTurbulence edge | OPEN-DEFECT S2 → W-BLOB-PAGE D1 | **HELD** — swatch edges read smooth (4 swatches, `blob-static-register-light.png`); no coarse speckle. |
-| C6-3 / C6-7 | FLEET | satellites orbit INSIDE body (orbitRadius<bodyRadius); studio exposes no geometry controls | OPEN-DEFECT/GAP S2 → page-local orbit 0.30 + studio Satellites layer | **HELD** — satellites separate on desktop; the Satellites layer exposes count/orbit/satellite-radius/eccentricity (label dump confirms). |
-| C6-6 | FLEET | metaball merge creases at seam (smoothK 0.05 quadratic) | DESIGN S3 → circular-merge library default + studio smoothK knob (0.06 seed, 0.02–0.16 live) | **HELD** — bridge reads as a rounded gooey neck, not a hard pop (frame shots). |
-| C6-8 | FLEET | shadow flat/ungrounded (single drop-shadow) | DESIGN S3 → 2-rung gel-dome (ambient + contact) | **HELD** — bead reads grounded; 2 drop-shadow rungs (π: rungs=2 both modes). |
-| C6-9 / D5 | FLEET | interaction near-static at rest | DESIGN S3 → studio-only `responsiveness` knob (lean 0.10→0.45, stretch 0.5→2.0) | **HELD** — surfaced as a knob; calm default preserved. Not stress-driven live this lane (the knob is source-witnessed by `proof:blob-studio-config`). |
-| C6-10 / F3-M11 | FLEET | configurator flat, no hierarchy | DESIGN S2 → dividers + weighted preset row + layer order | **PARTIAL** — hierarchy structure present, but the raw-key label leak (M2) undercuts the "refined" bar. |
-| C6-11 / B1-W-BLOB-GLASS | FLEET / AY booked | uBackdrop Snell refraction (CONDITIONAL on G-PERF + G-BROWSER) | W-BLOB-STUDIO §3.7 closed **CONDITIONS-UNMET** — enamel stands (no high-contrast backdrop on the flat cream surface; no aurora behind; no DOM-pixel-read API; 2nd pipeline fenced) | **DISPOSITION HONEST + CORRECT.** The page bead sits over flat `bg-card/40` cream → a Snell refraction of a uniform field is ZERO displacement by physics. The CONDITIONS-UNMET close is the right call per the user's explicit conditional ("never a degraded ship"). Enamel-state shader byte-unchanged. |
-| C6-12 | FLEET | live page console-clean, one GL context | VERIFIED S3 | **HELD** — direct probe: 0 console errors, 1 GL context, status 200. |
-| A1-2 | FLEET | the AY close marked blob "live-verified"; R3-9 contradicted it | OPEN-DEFECT S1 → re-opened, re-built | The desktop re-build holds; this reflection re-opens the MOBILE arm (M1) the AY close again did not catch. |
-
-**Gate roster (re-run live this audit, reusing :5199):**
-
-| gate | desktop (chromium-headless-new) | coarse-touch (mobile 390px) | note |
-|---|---|---|---|
-| `proof:blob-page` | PASS (3/3) | — (device-free + desktop π) | swatch-crisp + satellites-separate + hero-first IA |
-| `proof:blob-page-fence` | PASS | PASS | GL renderer untouched (pending-commit witness) |
-| `proof:blob-studio-config` | PASS | PASS | device-free source-witness (satellite layer bound, hierarchy, merge rebase, louder-lean, shadow token) |
-| `proof:blob-render` | **PASS (3/3, 9.7s)** | **FAIL (timeout)** | desktop binding truth GREEN; coarse-touch times out on a 0×0 hero canvas |
-| `proof:blob-warm-default` | **PASS (2/2)** | **FAIL (timeout)** | desktop warm-cream identity GREEN; coarse-touch times out on the same 0×0 hero canvas |
+| R3-9 | USER-AUDIT R3 | "/substrates/blob still quite awful: the main blobs at the top are pixelated and low res with no satellite blobs morphing/metaballing in and out." | W-BLOB-PAGE | **HELD desktop + mobile.** Bead crisp warm-cream (768×768 CSS / 1536 backing desktop; 300/600 mobile), no pixelation at silhouette or necks. Satellites genuinely orbit/neck/SEPARATE — `rr-blob-static-register-light.png` shows a fully-detached lower droplet with a gooey bridge; `rr-blob-bead-desktop-light.png` shows a necking satellite at lower-left. rAF live (20 frames/500ms → animating). |
+| R3-10 | USER-AUDIT R3 | "blob studio good, but needs refinement: better interaction, metaballing, satellite options, shadowing; configurator design-hierarchy structuring." | W-BLOB-STUDIO + W-BLOB-REDRESS | **HELD.** Stage-fill hero, 2-rung gel shadow (π rungs=2 on `goo-blob-wrapper`), Satellites geometry layer (count/orbit/sat-radius/eccentricity rows live), weighted preset row (Calm/Excited/Shy), per-section dividers, primary→secondary→tertiary layer order (Interaction → Mood+palette → Geometry/Satellites). The M2 raw-key leak that undercut "refined" in pass-1 is now GONE. |
+| B10 | AY USER-AUDIT | "/substrates/blob LARGELY BROKEN — pixelated, NO goo/satellite effects… Configurator showcase does not render. REBUILD." | W-BLOB-PAGE + W-BLOB-STUDIO | **HELD both viewports** — goo + satellites render, configurator renders + reads clean, non-pixelated, on desktop AND phone. |
+| C6-1 / F2-R3-9 | FLEET | GL bead pixelation reading | **REFUTED-crisp** — GL backing 1536px for a 768px CSS box (2× DSF) | **REFUTATION HOLDS VISUALLY** — bead element shots (light+dark) show a clean lit cream gradient, no pixel-grid speckle. `proof:blob-page-fence` binds the renderer untouched. Do NOT touch the shader. |
+| C6-2 | FLEET | the "pixelation" IS the section-1 WatercolorDot SVG feTurbulence edge | OPEN→W-BLOB-PAGE D1 | **HELD** — `rr-blob-static-register-light.png`: 40×40 swatches + a 245px feature dot read smooth, no coarse speckle. |
+| C6-3 / C6-7 | FLEET | satellites orbit INSIDE body; studio exposes no geometry controls | page orbit 0.30 + studio Satellites layer | **HELD** — satellites separate OUTSIDE the body live; the Satellites layer exposes count/orbit/satellite-radius/eccentricity (DOM label audit confirms all four rows). |
+| C6-6 | FLEET | metaball merge creases at seam | circular-merge library default + studio smoothK knob | **HELD** — bridge reads as a rounded gooey neck, not a hard pop (bead + static-register shots). |
+| C6-8 | FLEET | shadow flat/ungrounded | 2-rung gel-dome (ambient + contact) | **HELD** — π: 2 drop-shadow rungs on `goo-blob-wrapper`; bead reads grounded over the stage. |
+| C6-9 / D5 | FLEET | interaction near-static at rest | studio `responsiveness` knob (louder-lean) | **HELD** — surfaced as a knob (Interaction → Responsiveness row live); calm default preserved; `proof:blob-studio-config` LOUDER-LEAN-SURFACED bite green. |
+| C6-10 / F3-M11 | FLEET | configurator flat, no hierarchy | dividers + weighted preset row + layer order + W-BLOB-REDRESS label fix | **HELD** — hierarchy structure present AND the raw-key leak (the pass-1 undercut) is closed. `proof:hierarchy` 6/6 in the redress run. |
+| C6-11 / B1-W-BLOB-GLASS | FLEET / AY | uBackdrop Snell refraction (CONDITIONAL on G-PERF + G-BROWSER) | W-BLOB-STUDIO §3.7 CONDITIONS-UNMET (enamel stands) | **DISPOSITION HONEST + CORRECT.** The page bead sits over a flat cream stage → a Snell refraction of a uniform field is ZERO displacement by physics; no aurora behind; no DOM-pixel-read API; 2nd-pipeline fenced. The CONDITIONS-UNMET close is the right call per the user's explicit "never a degraded ship." Enamel shader byte-unchanged. Do NOT re-open. |
+| C6-12 | FLEET | live page console-clean, one GL context | VERIFIED | **HELD** — live: **0 console errors**, **1 GL context** (one-GL-budget per route held). |
+| A1-2 | FLEET | AY close marked blob "live-verified"; R3-9 contradicted it; pass-1 re-opened the MOBILE arm | re-opened → W-BLOB-REDRESS | **CLOSED** — the live-verified-but-mobile-broken class is now gate-covered on the coarse-touch arm (both gates 6/6 + 4/4); the phone bead PAINTS. |
 
 ---
 
 ## 2 — RE-VERIFY LIVE (fresh captures, ≥2 viewports × both modes + π readbacks)
 
-All captured live on `:5199` this audit (SwiftShader/ANGLE, DSF 2–3). Stored beside this record.
+All captured live on `:5199` this pass (isolated context `blob-rr`, page 17; SwiftShader/ANGLE).
+The studio stage carries a DELIBERATE dark plate in BOTH modes (it is a stage to make the cream bead
+pop, not page chrome) — verified `.dark` genuinely toggled off (`darkClass:false`) yet the stage
+stays dark by design.
 
-**Capture list (literal filenames):**
-- `blob-desktop-light-full.png` / `blob-desktop-dark-full.png` (1280×800, page hero IA)
-- `blob-mobile-light-full.png` / `blob-mobile-dark-full.png` (390×844, page top)
-- `blob-bead-light.png` / `blob-bead-dark.png` (element shot of the studio hero bead — cream identity + necking satellites + grounded shadow)
-- `blob-studio-stage-light.png` / `blob-studio-stage-dark.png` (the stage + the configurator column)
-- `blob-config-rows-light.png` (the ZOOM that proves the raw-key label leak — "Attraction" over "attraction")
-- `blob-config-zoom-light.png` (configurator/breadcrumb context)
-- `blob-static-register-light.png` (the demoted static WatercolorDot register — 4 clean swatches)
-- `blob-page-bottom-light.png` / `blob-page-bottom2-light.png` (the bottom IA: static register + pause seam)
-- `blob-swatch-black-edge-3x.png` (3× device-px swatch edge — no coarse speckle)
-- `blob-satellite-frame-0.png` / `-1.png` / `-2.png` (timed frames — satellites neck/orbit/separate)
-- `blob-mobile-stage-light.png` (the MISS evidence — the mobile studio with NO visible bead)
+**Capture list (literal filenames, stored beside this record):**
+- `rr-blob-desktop-light-full.png` — 1280×900 light, the GooBlob hero IA + studio + configurator top
+- `rr-blob-desktop-light-studio.png` — 1280 light, the studio band (Interaction section, M2-clean)
+- `rr-blob-bead-desktop-light.png` — 1280 light, the bead element shot (cream creature + necking satellite + 2-rung shadow; Interaction→Mood configurator)
+- `rr-blob-bead-desktop-dark.png` — 1280 dark, the bead in dark mode (cream identity mode-invariant; Geometry/Satellites section)
+- `rr-blob-static-register-light.png` — 1280 light, a SEPARATED satellite droplet + the static WatercolorDot register heading + Stops swatches
+- `rr-blob-mobile-studio-dark.png` — **390×844 mobile, the M1 PROOF — the cream bead PAINTS on the phone** (was 0×0 in pass-1)
 
-**π readbacks (measured live this audit):**
-- Studio hero canvas bbox (desktop, both modes): **696.375 × 696.375 px** (the 1.6× overflow square for the necking satellites; stage-fill HELD; matches the DELTA's 1.246 stage-fill ratio).
-- Centre offset: bead centered in the stage column (visual + DELTA 0.023 ≤ 0.14 floor).
-- Console: **0 errors**, **1 GL context**, status 200 (C6-12 HELD).
-- Grounded-shadow rungs: **2** (gel-dome composite HELD).
-- Configurator label dump (DOM `<label>` text, in order): `Attraction, attraction, Click impulse, clickImpulse, Responsiveness, responsiveness, Mood, mood, Seed, Harmony, harmony, Stops, Satellites, satelliteCount, Orbit radius, orbitRadius, Satellite radius, satelliteRadius, Eccentricity, eccentricity, Merge bridge, smoothK, Merge variant, merge` — **every interactive row carries a duplicate raw camelCase key as a visible label** (Miss M2).
-- Mobile (390px) studio hero canvas: **rect 0 × 0** at x195/y389 after scrollIntoView — `visibility:visible` but zero layout size → Playwright reads it hidden, the user sees nothing (Miss M1).
-
-**The GL-crispness refutation (REFUTED-crisp) — re-verified VISUALLY:** the bead element shots (`blob-bead-{light,dark}.png`) show a clean lit cream gradient with smooth silhouette + smooth necks at the satellite bridges; no pixel-grid speckle, no low-res banding at any zoom. The refutation HOLDS — anyone "fixing pixelation" in the shader would be fixing nothing. `proof:blob-page-fence` machine-binds the renderer untouched.
+**π readbacks (measured live this pass):**
+- Desktop studio `goo-blob-canvas`: **768×768 CSS / 1536×1536 backing** (stage-fill, centered x118/y40).
+- Mobile (390px) studio canvas: **300×300 CSS / 600×600 backing**, visible, `grid-template-rows: 288px 270px` (M1 fix; was 0×0).
+- `--configurator-stage-min`: **18rem** (the new definite-track floor).
+- Grounded-shadow rungs: **2** (gel-dome on `goo-blob-wrapper`).
+- GL contexts: **1**; console errors: **0**; rAF: **20 frames/500ms (animating)**.
+- Configurator labels: **13 visible, all human-readable, 0 camelCase leaks; 11 sr-only twins carry `for=` association**; raw keys only in the mono `name` caption.
 
 ---
 
-## 3 — THE PERFECTION QUESTION (first-time-auditor walk)
+## 3 — THE PERFECTION QUESTION (first-time-auditor walk, fresh eyes)
 
-Walking `/substrates/blob` cold:
+Walking `/substrates/blob` cold, on BOTH a desktop and a phone:
 
-- **Desktop** reads FINISHED: a large living cream creature leads, its satellites visibly orbit-neck-merge, a grounded gel shadow sits it on the stage, a structured configurator (weighted presets → Interaction → Mood → Geometry/Satellites) sits beside it, the static WatercolorDot register is honestly demoted below with clean swatch edges, and the pause-seam closes the page. The uBackdrop CONDITIONS-UNMET disposition is recorded honestly and is physically correct. **This half is a PASS.**
-- **TWO things draw an immediate "wtf":**
-  1. **On a phone, there is no bead.** The hero — the entire point of the page — collapses to a 0×0 canvas; the mobile user scrolls past a configurator that controls an invisible creature. This is the AY "live-verified" trap recurring on the mobile arm (A1-2 again): desktop green, mobile broken.
-  2. **The configurator shows raw code identifiers.** Under every proper label sits the internal property name in a LARGER/heavier weight — `clickImpulse`, `satelliteCount`, `orbitRadius`, `smoothK`, `eccentricity`, `responsiveness`. A first-time auditor reads these as leaked developer strings. This directly undercuts the R3-10/C6-10 "configurator needs refinement + design-hierarchy structuring" mandate the wave was built to satisfy.
+- **Desktop** reads FINISHED: a large living cream creature leads, its satellite visibly orbit-necks
+  and fully separates with a gooey bridge, a grounded 2-rung gel shadow sits it on the stage, a
+  cleanly-structured configurator (weighted presets → Interaction → Mood+palette → Geometry/Satellites,
+  each row ONE human label + a small mono token caption) sits beside it, the static WatercolorDot
+  register is honestly demoted below with clean swatch edges, and the page is console-clean on one GL
+  context.
+- **The phone** — the pass-1 "wtf" — now reads FINISHED too: the cream bead PAINTS at 300×300 in a
+  definite stage track, centered with margin, and the configurator below it controls a VISIBLE
+  creature.
+- **The configurator** — the pass-1 second "wtf" — no longer shows leaked code identifiers; every row
+  reads one human label with the raw key tucked into the tertiary mono caption (the `icons.vue`-style
+  proportion).
+- **uBackdrop** CONDITIONS-UNMET is recorded honestly and is physically correct (a flat cream backdrop
+  cannot Snell-displace).
 
-Per the protocol's bar (a "wtf" is a FAIL even if every ledger row is green), the surface FAILs.
+Nothing on this surface draws a "wtf" this pass. Both pass-1 misses are gone; no new miss appears.
 
 ---
 
-## 4 — MISSES (severity-graded, evidence-anchored → the triumvirate)
+## 4 — MISSES (this pass)
 
-### M1 — [S2] The studio hero bead collapses to 0×0 on the mobile/coarse-touch viewport — the creature is invisible on a phone
+**None at S1/S2.** Both pass-1 S2 misses (M1 mobile 0×0 stage, M2 raw-key label leak) are CLOSED at
+the root and re-verified live with fresh captures, π readbacks, and GREEN gates (`proof:blob-render`
+6/6, `proof:blob-warm-default` 4/4, `proof:blob-studio-config` PASS). No NEW first-time-auditor
+"wtf" rises on the surface.
 
-- **What:** On the 390px (coarse-touch) layout the studio stage canvas `goo-blob-canvas` resolves to a `0×0` rect (`visibility:visible` but zero layout size). The hero bead — the page's entire purpose — does not paint. The mobile user sees the configurator controlling nothing.
-- **Evidence:** `blob-mobile-stage-light.png` (configurator visible, no bead); live π — canvas rect `{rectW:0, rectH:0, x:195, y:389}` after scrollIntoView on a 390×844 context; `proof:blob-render` **coarse-touch FAILS** (`TimeoutError: locator … to be visible — 43× resolved to hidden <canvas …>`) while **chromium-headless-new PASSES (3/3)**; `proof:blob-warm-default` identical split (desktop 2/2 PASS, coarse-touch timeout). Root cause: the stage uses `h-full` on `#stage` and the bead wrapper is `aspect-square h-[min(78%,30rem)]` (`blob.vue:434,447`); when the Configurator layout stacks vertically on a narrow viewport the stage slot gets no resolved height → `h-full` → 0.
-- **Why it matters:** This is the A1-2 "live-verified-but-broken" class re-occurring — the AY close marked blob live-verified, R3-9 re-opened it, and the rebuilt page STILL ships a viewport where the hero is absent. The user audits on mobile-class viewports (the R5 slides-consumer findings are phone-driven). Two roster gates RED on it.
-- **Triumvirate hand-off:** RESEARCH the stage-height collapse (the `#stage` slot must assert a min-height / aspect-driven height that survives the stacked mobile layout, not inherit `h-full` from a zero-height parent); PLAN a `blob.vue` stage-sizing wave (demo-local; possibly a `min-h-[...]` floor on the stage or an aspect-ratio box); REDRESS + re-run the coarse-touch arms of `proof:blob-render` + `proof:blob-warm-default` to GREEN.
-
-### M2 — [S2] Every configurator slider/select row leaks its raw camelCase config key as a visible label
-
-- **What:** Each `<ConfiguratorRow label="Attraction">` wraps a `<LabeledSlider … label="attraction">`, so BOTH render: the human label ("Attraction", secondary weight) AND the raw key ("attraction", larger/heavier — it reads as the primary line). Affected rows: `attraction`, `clickImpulse`, `responsiveness`, `mood`, `harmony`, `satelliteCount`, `orbitRadius`, `satelliteRadius`, `eccentricity`, `smoothK`, `merge`.
-- **Evidence:** `blob-config-rows-light.png` (the zoom — "Attraction" above the heavier "attraction" above the slider track); DOM label dump (§2) listing every label twice (human + raw key); source `demo/stories/substrates/blob.vue:487–516` (the `ConfiguratorRow label="Attraction"` → `LabeledSlider label="attraction"` double-label pattern, repeated for every row).
-- **Why it matters:** R3-10 + C6-10 + R3-8 explicitly demanded the configurator be REFINED with design-hierarchy structuring; the wave delivered the structure (dividers, weighted presets, layer order) but ships internal property identifiers as visible chrome. A first-time auditor reads `clickImpulse`/`satelliteCount`/`smoothK` as leaked code. The `proof:blob-studio-config` source-witness passed because it checks the human ConfiguratorRow labels + binding, not that the inner LabeledSlider label is human-readable — the gate has a blind spot here.
-- **Triumvirate hand-off:** RESEARCH the intended LabeledSlider label semantics (is the inner `label` meant to be a value readout, a units hint, or removed when the ConfiguratorRow already labels the row?); PLAN the fix (either drop the redundant inner `label`, or make it a human descriptor/value, or have LabeledSlider suppress its label inside a labeled ConfiguratorRow); REDRESS `blob.vue` (and audit the aurora studio + any other ConfiguratorRow+LabeledSlider site for the same leak — likely shared); add a gate bite that asserts no raw camelCase identifier renders as visible configurator text.
-
-### Non-misses confirmed (recorded so the triumvirate does NOT re-touch them)
-
-- **GL crispness** — REFUTED-crisp HOLDS visually; do NOT touch the renderer.
-- **uBackdrop refraction** — CONDITIONS-UNMET is correct (flat cream backdrop → zero Snell displacement by physics; no aurora behind; no DOM-pixel-read API). Enamel stands. Do NOT re-open.
-- **Cream-bead identity** — HELD in both modes (desktop `proof:blob-warm-default` + `proof:blob-render` green; bead shots warm-cream).
-- **Satellite metaballing, grounded shadow, hero-first IA, static-register demotion + clean swatch edges, circular merge bridge** — all HELD on desktop.
+**Non-misses re-confirmed (recorded so no future lane re-touches them):**
+- **GL crispness** — REFUTED-crisp HOLDS; do NOT touch the renderer (`proof:blob-page-fence`).
+- **uBackdrop refraction** — CONDITIONS-UNMET is correct (flat cream → zero Snell displacement); enamel stands; do NOT re-open.
+- **Cream-bead identity** — HELD, mode-invariant (warm-cream creature in light AND dark; correct — it is not a token-tinted surface).
+- **Satellite metaballing, 2-rung grounded shadow, hero-first IA, static-register demotion + clean swatch edges, circular merge bridge, one-GL-context budget** — all HELD on desktop AND mobile.
 
 ---
 
 ## 5 — VERDICT
 
-**FAIL.** The desktop blob is finished and beautiful — the cream creature, the necking satellites, the gel shadow, the structured studio, the honest uBackdrop disposition, the refuted-crisp GL all hold. But two S2 first-time-auditor "wtf" misses block the PASS: (M1) the hero bead is invisible on a phone — the live-verified-but-mobile-broken class recurring, with two roster gates RED on the coarse-touch arm; and (M2) the configurator the user demanded be refined leaks raw camelCase property names as visible labels on every row. Both route to the triumvirate (research → plan → redress → re-reflect). The surface re-reflects from protocol step 2 once both land.
-
----
-
-## 6 — REDRESS ADDENDUM (AZ.W-BLOB-REDRESS — 2026-06-11; the auditor's verdict above is NOT rewritten)
-
-Both S2 misses discharged at the ROOT; the desktop half (untouched) still holds. DELTA: `docs/tranches/AZ/audit/visual/W-BLOB-REDRESS-DELTA.md` (+ `W-BLOB-REDRESS-mobile-{light,dark}.png`).
-
-**M1 — the mobile 0×0 stage collapse → CLOSED.** Root cause confirmed live: the `<Configurator>` root is `grid-cols-1` below `lg` with a FIXED root height and IMPLICIT auto-rows; the stage's `h-full`/percentage child resolved against the indefinite auto-row → 0, so the stage row collapsed (`grid-template-rows: 0px 558px`) and the `goo-blob-canvas` painted 0×0. Fixed at the root: the single-column band sets an EXPLICIT `grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]` (reset to `lg:grid-rows-none` so the desktop 2-column layout is byte-unchanged) + a new `--configurator-stage-min` (18rem) token — the stage row is now a DEFINITE track. Live π (390px): `grid-template-rows 288px 270px`, stage 288px, canvas 300×300 CSS / 600×600 backing (was 0×0). A second-order containment RED the fix exposed (the bead wrapper went NON-square on the portrait stage because the prior `max-w-[88%]` clamped below the height-driven `aspect-square`, pushing satellites to the edge at 0.97) is fixed by re-basing the wrapper to `aspect-square w-full max-h-[78%] max-w-[min(78%,30rem)]` (a true square = min(78% w, 78% h), margin on both axes). `proof:blob-render` + `proof:blob-warm-default` coarse-touch BOTH GREEN (3/3 + 2/2); desktop unchanged (3/3, canvas 696). The A1-2 live-verified-but-mobile-broken class is now gate-covered on the coarse-touch arm.
-
-**M2 — the configurator raw-key double-label leak → CLOSED.** Root cause: a `<ConfiguratorRow label="Attraction">` wrapped a `<LabeledSlider label="attraction">` and BOTH labels rendered (the inner one the raw key). Fixed with the AURORA idiom's intent (ONE human label per row) via a house seam: `LabeledField` gains `hideLabel` (renders its own label `sr-only` — kept in the DOM so the `for`/`id`/`aria-labelledby` a11y association survives — and drops its tooltip), threaded through `LabeledSlider`/`LabeledSelect`/`LabeledSwitch`. Both Configurator consumers — `blob.vue` (11 rows) AND `compositions/configurator.vue` (4 rows, the same leak) — now carry the raw config key in the `ConfiguratorRow` `name` prop (the EXISTING mono token-caption slot) + a HUMAN `label` on the inner `Labeled*` with `hide-label`. The aurora studio was already correct (direct `LabeledSlider`, no ConfiguratorRow wrap) — untouched. Live π: 13 blob rows, 0 visible raw-camelCase leaks; each row = visible human label + sr-only a11y twin + mono token name.
-
-**Verification:** `vue-tsc --noEmit` exit 0; `proof:blob-studio-config` PASS; `proof:hierarchy` 6/6 PASS; the four coarse-touch/desktop blob-render arms GREEN; 0 console errors on the mobile route. **Disposition: the two cited misses are discharged; the surface is ready for the re-reflect from protocol step 2.**
+**PASS.** The blob surface is finished on every axis the audit touches. The two S2 misses that failed
+pass 1 are root-fixed in HEAD (commit `90bf11e5`) and re-verified AFRESH live: (M1) the studio hero
+bead now PAINTS on the 390px phone (300×300 canvas in a definite 18rem stage track, both coarse gates
+green); (M2) the configurator reads ONE human label per row with the raw key demoted to a mono
+caption, a11y association intact, zero camelCase leaks across all sections. Every R3-9/R3-10/B10/C6-*
+item closes, the GL-crispness refutation and the uBackdrop CONDITIONS-UNMET disposition hold honestly,
+the cream-bead identity is mode-invariant, the satellites genuinely metaball, and a first-time auditor
+finds no "wtf" on either viewport. The roster row flips to PASS.
