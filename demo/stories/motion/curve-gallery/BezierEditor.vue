@@ -10,16 +10,16 @@
 // `cubic-bezier(x1, y1, x2, y2)` literal with copy. The curve reads `--motion-accent`
 // (the glass-ui violet twin of ppmycota), the motion family's single color event.
 import { computed, ref, useTemplateRef } from "vue";
-import { CSSCubicBezier } from "../../../src/composables/motion/curves";
+import { CSSCubicBezier } from "../../../../src/composables/motion/curves";
 import { bezierPresets } from "@mkbabb/value.js";
-import { Button } from "../../../src/components/ui/button";
+import { Button } from "../../../../src/components/ui/button";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "../../../src/components/ui/select";
+} from "../../../../src/components/ui/select";
 import { Check, Copy } from "@lucide/vue";
 
 // The named presets the dropdown offers (the value.js bezier catalogue).
