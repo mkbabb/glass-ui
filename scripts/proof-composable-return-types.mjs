@@ -49,7 +49,6 @@ function cliPaths() {
         ANIMATED: resolve(ROOT, "src/composables/motion/useAnimatedNumber.ts"),
         NUMERIC: resolve(ROOT, "src/composables/motion/useNumericTransition.ts"),
         DARK: resolve(ROOT, "src/composables/dark/useGlobalDark.ts"),
-        RENDERER: resolve(ROOT, "src/composables/glass/useGlassRenderer.ts"),
         RENDERER_BLOB: resolve(
             ROOT,
             "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
@@ -62,7 +61,6 @@ function cliPaths() {
         UTILITIES_DIR: resolve(ROOT, "src/styles/utilities"),
         UTILITIES_ROOT: resolve(ROOT, "src/styles/utilities.css"),
         CHASSIS: resolve(ROOT, "src/styles/instrument-chassis.css"),
-        RAIL: resolve(ROOT, "src/styles/instrument-rail.css"),
         MARKERS: resolve(ROOT, "src/components/custom/timeline/ContinuousMarkers.vue"),
         DENSITY: resolve(ROOT, "src/components/custom/configurator/density.ts"),
         BARREL_BLOB: resolve(ROOT, "src/components/custom/goo-blob/index.ts"),
@@ -140,7 +138,6 @@ function run() {
         ["useAnimatedNumber", P.ANIMATED, "UseAnimatedNumberReturn", "AnimatedNumber"],
         ["useNumericTransition", P.NUMERIC, "UseNumericTransitionReturn", null],
         ["useGlobalDark", P.DARK, "UseGlobalDarkReturn", null],
-        ["useGlassRenderer", P.RENDERER, "UseGlassRendererReturn", null],
         ["useMetaballRenderer", P.RENDERER_BLOB, "UseMetaballRendererReturn", null],
     ];
     facts.returnTypes = {};
@@ -175,28 +172,21 @@ function run() {
             `the @utility twin-line-divider definition count is ${utilDefCount} (expected exactly 1 across the utilities/* tree)`,
         );
     }
+    // AZ.W-PRUNE2 (E4-1) — instrument-rail.css retired with its component; the
+    // chassis is now the SOLE twin-line-divider consumer (the α pair stays
+    // canonicalised in the @utility, a single retint site).
     const chassis = stripComments(readIf(P.CHASSIS));
-    const rail = stripComments(readIf(P.RAIL));
     facts.chassisConsumes =
         /twin-line-divider/.test(chassis) && /var\(--twin-line-(catch|shadow)\)/.test(chassis);
-    facts.railConsumes =
-        /twin-line-divider/.test(rail) && /var\(--twin-line-(catch|shadow)\)/.test(rail);
     if (!facts.chassisConsumes) {
         violations.push("instrument-chassis.css does not consume the twin-line-divider utility");
     }
-    if (!facts.railConsumes) {
-        violations.push("instrument-rail.css does not consume the twin-line-divider utility");
-    }
-    // The inline duplicated α pair must be GONE from both (no surviving
-    // hardcoded `rgb(255 255 255 / 0.10)` / `rgb(0 0 0 / 0.12)` divider literal).
+    // The inline duplicated α pair must be GONE (no surviving hardcoded
+    // `rgb(255 255 255 / 0.10)` / `rgb(0 0 0 / 0.12)` divider literal).
     const inlineLiteralRe = /rgb\(255 255 255 \/ 0\.10\)|rgb\(0 0 0 \/ 0\.12\)/;
     facts.chassisInlineRemoved = !inlineLiteralRe.test(chassis);
-    facts.railInlineRemoved = !inlineLiteralRe.test(rail);
     if (!facts.chassisInlineRemoved) {
         violations.push("instrument-chassis.css still carries the inline twin-line α literal (not collapsed onto the utility)");
-    }
-    if (!facts.railInlineRemoved) {
-        violations.push("instrument-rail.css still carries the inline twin-line α literal (not collapsed onto the utility)");
     }
 
     // ── 3. useTokenColor injection seam.

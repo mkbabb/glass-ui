@@ -391,7 +391,11 @@ function run() {
     const P = cliPaths();
     const sources = {
         dockCss: readDockCss(P.ROOT),
-        dockControlsCss: readFileSync(P.DOCK_CONTROLS_CSS, "utf8"),
+        // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css
+        // partials; readMonolith concatenates root + the five family partials in
+        // cascade order (the glyph-ownership + touch-floor witnesses resolve
+        // against the carved content).
+        dockControlsCss: readMonolith(P.ROOT, "dock-controls"),
         tokensCss: readMonolith(P.ROOT, "tokens"),
         glassDock: readFileSync(P.GLASSDOCK, "utf8"),
         separator: existsOr(P.SEPARATOR),

@@ -168,13 +168,7 @@ export const CATEGORIES: Category[] = [
                 "foundations",
                 "paper-backdrop-texture-system",
                 "Paper Backdrop Texture System",
-                "The PaperBackdrop frequency register (clean / aged) and the cascade-overridable paper tokens.",
-            ),
-            s(
-                "foundations",
-                "paper-backdrop",
-                "Paper Backdrop",
-                "Paper-grain texture substrate, two frequencies (clean / aged) + opacity knob.",
+                "The PaperBackdrop frequency register (clean / aged), the cascade-overridable paper tokens, the per-instance opacity knob, and the layered composition recipe.",
             ),
             s(
                 "foundations",

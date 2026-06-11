@@ -29,6 +29,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials; the
+// LANDED-clause base rules now live in the partials. readMonolith concatenates
+// the thin root + the five family partials in cascade order so the LANDED proof
+// resolves against the carved content (the MOVED proof still reads dock.css raw).
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // The five control families. `base` is the bare base-rule selector each MUST
 // carry in dock-controls.css and must NOT carry as a top-level block in dock.css.
@@ -185,7 +190,7 @@ function run() {
     const controlsExists = existsSync(DOCK_CONTROLS_CSS);
     const { facts, violations } = detectSource({
         dockCss: readFileSync(DOCK_CSS, "utf8"),
-        controlsCss: controlsExists ? readFileSync(DOCK_CONTROLS_CSS, "utf8") : "",
+        controlsCss: controlsExists ? readMonolith(ROOT, "dock-controls") : "",
         indexCss: readFileSync(INDEX_CSS, "utf8"),
         controlsExists,
     });

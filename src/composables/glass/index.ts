@@ -1,11 +1,12 @@
-export {
-    useGlassRenderer,
-    createGlassFilter,
-    destroyGlassFilter,
-    type GlassTier,
-    type GlassFilterState,
-    type UseGlassRendererReturn,
-} from "./useGlassRenderer";
+// AZ.W-PRUNE2 (E4-3) — the `useGlassRenderer` / `createGlassFilter` /
+// `destroyGlassFilter` detection-cascade cluster RETIRED. Its binary consumer
+// (GlassPanel) retired at the AY prune; the only remaining exerciser was a
+// demo-private story (NOT a binary consumer per the proof:component-orphan
+// own-story exclusion), so the barrel seat could not earn its weight. A named
+// carve (not the whole `export *` subtree) — `useSpecularTracking` + the
+// `useCanvas2D` lifecycle below stay live (aurora/blob/constellation/fourier).
+// The runtime tier-detection is now component-local where needed. Clean break,
+// no alias (MIGRATION.md notes the barrel-export removal).
 
 // AX.W09 — the DRY pointer-anchored moving-specular write seam (lifted from the
 // verbatim Card.vue + DockIconButton.vue copies; PRM-aware; the `.glass-material`

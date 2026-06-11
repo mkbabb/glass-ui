@@ -100,7 +100,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             icon: Square as LucideIcon,
             entries: [
                 { storyId: "paper-glass", label: "Paper & Glass" },
-                { storyId: "paper-backdrop", label: "Paper Backdrop" },
+                { storyId: "paper-backdrop-texture-system", label: "Paper Backdrop" },
                 { storyId: "overlays-scrims", label: "Overlays & Scrims" },
             ],
         },

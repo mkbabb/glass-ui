@@ -1,11 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import {
-    createGlassFilter,
-    destroyGlassFilter,
-    useGlassRenderer,
-    useSortable,
-} from "../src/index";
+import { useSortable } from "../src/index";
 // AI.W3 R3 — motion composables moved off the root barrel into the /motion
 // flat subpath (keyframes.js SCC trap closure). Smoke test reaches the new
 // subpath directly via `src/motion` (mirrors the `src/keyboard` shape below).
@@ -139,24 +134,6 @@ describe("sidebar tree helpers", () => {
 });
 
 describe("browser-backed composables", () => {
-    it("uses the preferred glass renderer tier", () => {
-        const mounted = mountComposable(() => useGlassRenderer({ preferredTier: "fallback" }));
-        expect(mounted.result.tier.value).toBe("fallback");
-        mounted.unmount();
-    });
-
-    it("creates and destroys glass filter DOM", () => {
-        const el = document.createElement("div");
-        Object.defineProperty(el, "getBoundingClientRect", {
-            value: () => ({ width: 100, height: 80, top: 0, left: 0, bottom: 80, right: 100 }),
-        });
-        document.body.appendChild(el);
-        const state = createGlassFilter(el);
-        expect(document.body.contains(state.svgEl)).toBe(true);
-        destroyGlassFilter(state);
-        expect(document.body.contains(state.svgEl)).toBe(false);
-    });
-
     it("checks infinite-scroll loading manually", () => {
         const onLoadMore = vi.fn();
         const mounted = mountComposable(() =>

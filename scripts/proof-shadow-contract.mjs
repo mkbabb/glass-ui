@@ -222,13 +222,16 @@ export function detectSource(sources) {
 }
 
 function run() {
-    const { ROOT, THEME_CSS, CARDS_CSS, ARTIFACT } = cliPaths();
+    const { ROOT, CARDS_CSS, ARTIFACT } = cliPaths();
     // AY.W-CSS1 — tokens.css/utilities.css became thin @import roots over carved
     // partials; readMonolith concatenates root + partials in cascade order so the
     // cartoon-shadow chain scan resolves post-carve (read-dock-css.mjs precedent).
+    // AZ.W-CARVE — theme.css ALSO drained into theme/*.css partials; the
+    // `--shadow-cartoon-lg: var(--cartoon-shadow-lg)` @theme-inline bridge now
+    // lives in theme/bridges.css, so it reads composed too (chain link 2).
     const { facts, violations } = detectSource({
         tokensCss: readMonolith(ROOT, "tokens"),
-        themeCss: readFileSync(THEME_CSS, "utf8"),
+        themeCss: readMonolith(ROOT, "theme"),
         utilitiesCss: readMonolith(ROOT, "utilities"),
         cardsCss: readFileSync(CARDS_CSS, "utf8"),
     });

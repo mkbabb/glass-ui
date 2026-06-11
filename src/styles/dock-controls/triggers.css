@@ -1,0 +1,128 @@
+/* dock-controls/triggers.css — the `.dock-select-trigger` /
+   `.dock-dropdown-trigger` picker family (AZ.W-CARVE partial 4 of 5; carved out
+   of dock-controls.css).
+
+   The shared base rule, the glass-translucent hover (AX.W45 DK2 — the pickers
+   off the opaque `--muted` flat plate onto the FAMILY hover token, with the
+   `--scale-hover-dock` lift unified into the shared hover group), the iOS press
+   darken (AZ.W-REGISTER-IOS), the focus + open/active fill (hover ≠ open), and
+   the `__chevron` open-flip. Opens its OWN `@layer components`; @import-ed after
+   tab-button.css. */
+
+@layer components {
+    .dock-select-trigger,
+    .dock-dropdown-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        gap: var(--dock-trigger-gap, 0.25rem);
+        min-height: var(--dock-trigger-min-height, auto);
+        padding: var(--dock-trigger-padding-block, 0.25rem)
+            var(--dock-trigger-padding-inline, 0.5rem);
+        white-space: nowrap;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Shares the dock-icon-button legibility base (`--dock-fg-on-aurora`). */
+        color: color-mix(
+            in srgb,
+            var(--dock-fg-on-aurora, var(--foreground))
+                calc(var(--opacity-icon-muted) * 100%),
+            transparent
+        );
+        outline: none;
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */ scale
+                var(--dock-press-spring),
+            opacity var(--dock-motion-fast);
+    }
+
+    /* AX.W45 DK2 — the pickers move OFF the opaque `--muted` flat plate onto the
+       glass-translucent FAMILY hover token (the dock substrate shows through, not a
+       solid cream rectangle over the glass — the loudest "not right" tell). hover ≠
+       open now: the active/open rule below reads `--dock-control-active-bg` (a tint
+       LADDER step above hover), so an OPEN dropdown reads distinctly from a merely-
+       hovered one (paired with the chevron flip). ONE source per state, glass-aware
+       across the whole dock-control family. */
+    /* AX.W45-TUNE Q3/C3 — the picker hover lift is now in the SHARED group: the
+       `--scale-hover-dock` scale fires on BOTH select + dropdown (it used to fire on
+       the dropdown ONLY — the split-brain hover the DK2 fix left). All four dock
+       control members (icon/tab/select/dropdown) now lift on hover as one register,
+       mirroring the unified glass-tier `--dock-control-hover-bg` cross-fade. The
+       lone `.dock-dropdown-trigger:hover` scale rule is RETIRED into this group. */
+    .dock-select-trigger:hover:not(:disabled),
+    .dock-dropdown-trigger:hover:not(:disabled) {
+        background: var(--dock-control-hover-bg);
+        color: var(--btn-hover-color, var(--foreground));
+        scale: var(--scale-hover-dock);
+    }
+
+    /* AZ.W-REGISTER-IOS — the iOS press darken-plus-shrink (see the icon-button). */
+    .dock-select-trigger:active:not(:disabled),
+    .dock-dropdown-trigger:active:not(:disabled) {
+        background: var(--dock-control-press-bg);
+        scale: var(--scale-press-dock);
+    }
+
+    .dock-select-trigger:focus:not(:focus-visible),
+    .dock-dropdown-trigger:focus:not(:focus-visible) {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group in dock.css; this rule adds only the box-shadow fade transition.
+       `scale` keeps the AT.W7-dock-b press micro-feedback spring. */
+    .dock-select-trigger:focus-visible,
+    .dock-dropdown-trigger:focus-visible {
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            scale var(--dock-press-spring),
+            opacity var(--dock-motion-fast),
+            box-shadow var(--dock-motion-fast);
+    }
+
+    .dock-select-trigger:is(
+        .is-active,
+        .active,
+        [aria-expanded="true"],
+        [aria-pressed="true"]
+    ),
+    .dock-dropdown-trigger:is(
+        .is-active,
+        .active,
+        [aria-expanded="true"],
+        [aria-pressed="true"]
+    ) {
+        /* AX.W45 DK2 — the OPEN affordance: a translucent active fill a ladder step
+           above hover (NOT the opaque `--muted`, NOT byte-identical to hover). OPEN =
+           (chevron up + this active fill); HOVER = (the lighter hover fill, chevron
+           down) — the smooth glass-aware four-state read the picker lacked. */
+        background: var(--dock-control-active-bg);
+        color: var(--foreground);
+    }
+
+    .dock-select-trigger__chevron {
+        width: var(--dock-trigger-icon-size, 0.75rem);
+        height: var(--dock-trigger-icon-size, 0.75rem);
+        flex-shrink: 0;
+        opacity: 0.5;
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `rotate:` longhand
+           for family consistency (not a stacking-context hazard: child glyph).
+           AT.W7-dock-b — the open/close flip carries the press micro-feedback
+           spring (transform-scoped). */
+        rotate: 0deg;
+        transition: rotate var(--dock-press-spring);
+    }
+
+    .dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {
+        rotate: 180deg;
+    }
+}

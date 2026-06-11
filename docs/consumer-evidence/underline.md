@@ -29,21 +29,22 @@ lane's `package.json` export delta was never applied. W-PRUNE applied it:
 `npm run verify-export-types` + `npm run build` confirm `dist/underline.js` + `dist/underline.d.ts`
 publish cleanly.
 
-## Consumer proof (re-runnable)
+## Consumer proof (re-runnable, re-grounded AZ.W-PRUNE2 2026-06-11)
 
-**External consumers — 0 (the wave's consumers land post-publish).** The roadmap:
+**External consumers — 0 at HEAD.** The re-ground (AZ.W-PRUNE2 E4-4):
 
 ```bash
-# slides — re-points its s1-draw / cta-draw hand-underline to @mkbabb/glass-ui/underline
-#          post-3.10.0 (once the export ships):
-grep -rln 'GlassUnderline|glass-ui/underline' ~/Programming/slides/src   # → NONE yet
-# sci-report — adopts in its own tranche (the HandUnderline source this transposes):
-grep -rln 'GlassUnderline|glass-ui/underline' ~/Programming/sci-report/src   # → NONE yet
+# slides STILL ships its OWN local hand-underline (re-grep at AZ HEAD → ZERO):
+grep -rln 'GlassUnderline|glass-ui/underline' ~/Programming/slides/src   # → NONE
+# the local hand-underline still lives in the til-briefing cover + bookend:
+grep -rn 'underline' ~/Programming/slides/src/decks/til-briefing/slides/SlideIntro.vue   # → red pen-underline on "errors"
+grep -rn 'underline' ~/Programming/slides/src/decks/til-briefing/slides/SlideCloser.vue  # → red cta-draw underline on "proven team"
+# sci-report is now a Python project (E4-7) — it owns the HandUnderline source but adopts on its own cadence.
 ```
 
-slides today ships its OWN local hand-underline (`s1-draw` / `cta-draw`); the named adoption is the
-re-point to the published library surface once 3.10.0 lands. sci-report owns the `HandUnderline`
-this component transposes and adopts on its own tranche cadence.
+slides today ships its OWN local hand-underline (the til-briefing `SlideIntro` red pen-underline on
+"errors", the `SlideCloser` red cta-draw underline on "proven team"). The named adoption is the
+re-point of THOSE two glyphs to `@mkbabb/glass-ui/underline`.
 
 **Internal consumers — 1 demo (the showcase story).** The ONLY `<GlassUnderline>` mounts in the
 repo are the story that demonstrates the three clocks + the override:
@@ -53,21 +54,36 @@ grep -rn '<GlassUnderline' demo/   # → demo/stories/motion/underline.vue (load
 #                                       static / bold-register / tinted)
 ```
 
-## The named ≥2-consumer TRIGGER
+## The named ≥2-consumer TRIGGER (re-grounded — the phantom "W-ADOPT" trigger is killed)
 
-The export is now LIVE; the binding close-criterion is the FIRST real adoption: slides re-points
-its `s1-draw` / `cta-draw` underline to `@mkbabb/glass-ui/underline` after 3.10.0 publishes, and
-sci-report adopts in its tranche. When the second real consumer ships, update this doc to record
-the call-sites; the component then clears the ≥2-consumer bar on its own and the evidence-doc
-escape is no longer load-bearing.
+AZ.W-ADOPT is the slides CONSTELLATION re-architecture (it migrates the `data-constellation`
+canvases onto `@mkbabb/glass-ui/constellation`); it NEVER touches the hand-underline
+(`grep -in underline AZ.W-ADOPT.md` → 0). So W-ADOPT is NOT the underline trigger.
 
-## Re-audit proof
+The REAL deliverable that clears this artefact: a slides-side adoption that swaps the
+`SlideIntro` / `SlideCloser` LOCAL hand-underline → `@mkbabb/glass-ui/underline`, riding the SAME
+slides re-pin cut as the W-ADOPT constellation adoption (the slides `@mkbabb/glass-ui` pin moves to
+the AZ close cut once; both the constellation swap AND the underline swap land on that pin). The
+binding close-criterion is the FIRST real adoption: when slides re-points its
+`SlideIntro` / `SlideCloser` underline to `@mkbabb/glass-ui/underline`, update this doc to record
+the call-sites; the component then clears the ≥2-consumer bar (slides ×2 markup sites) on its own
+and this evidence-doc escape is no longer load-bearing. sci-report adopts the `HandUnderline` source
+on its own (now-Python) cadence; it is not the binding trigger.
+
+## Re-audit proof + the hard date
 
 This document satisfies the overfitting-audit / `proof:component-orphan` `keep-current` verdict for
 `GlassUnderline` while the external-consumer greps stay empty AND the demo mount stays present. The
-gate accepts `underline` on THIS evidence doc (a user-directed wave with a named consumer roadmap),
+gate accepts `underline` on THIS evidence doc (a user-directed wave with a NAMED, non-phantom
+re-point deliverable — the slides `SlideIntro`/`SlideCloser` swap riding the slides re-pin cut),
 NOT a false `keep`. If the demo mount is removed with no external consumer arriving, the verdict
 returns to `library-orphan` (formally retire the subpath + export).
+
+**Re-audit date: 2026-09-01.** By then either (a) slides has re-pointed
+`SlideIntro`/`SlideCloser` → `@mkbabb/glass-ui/underline` (record the call-sites here; the
+≥2-consumer bar clears) OR (b) the swap has not landed → re-grade: RETIRE the `/underline` subpath +
+export per FLEET E4-4 (a one-band churn-out-and-back-in with no real consumer does not earn the
+public surface). The next prune re-runs the slides re-grep at that date.
 
 ## Cross-references
 

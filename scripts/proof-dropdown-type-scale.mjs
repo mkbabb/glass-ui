@@ -39,7 +39,10 @@ const stripCss = (s) =>
         .replace(/\/\/[^\n]*/g, "");
 
 const tokens = stripCss(readMonolith(ROOT, "tokens"));
-const theme = stripCss(read("src/styles/theme.css"));
+// AZ.W-CARVE — theme.css drained into theme/*.css partials; the
+// --text-dropdown / --text-dropdown-secondary @theme-inline bridges live in
+// theme/bridges.css, so read composed (root + partials in cascade order).
+const theme = stripCss(readMonolith(ROOT, "theme"));
 
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });

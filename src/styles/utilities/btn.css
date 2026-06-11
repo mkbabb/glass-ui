@@ -28,13 +28,13 @@
 /* ── Twin-line divider — the chassis catch-light / under-shadow groove ───────
    AW.W15 DRY extraction. The twin-line idiom (a 1px white catch-light over a
    1px black under-shadow reading as one engraved hairline groove) is the
-   chassis-divider signature. The exact light/dark α pair was DUPLICATED in
-   `instrument-chassis.css` (`.bezel-line.top`/`.bottom`) and `instrument-rail.css`
-   (the sibling `::before`/`::after`). This utility is the SINGLE source of that
+   chassis-divider signature. This utility is the SINGLE source of that
    α pair: it publishes `--twin-line-catch` (the top catch-light) and
    `--twin-line-shadow` (the bottom under-shadow) as cascade tokens, dark-adaptive
-   by construction (the `.dark &` arm re-resolves them). Both consumers read the
-   tokens; a retint touches one rule. Real DRY, ≥2 consumers. */
+   by construction (the `.dark &` arm re-resolves them). `instrument-chassis.css`
+   (`.bezel-line.top`/`.bottom`) `@apply`s it and reads the tokens; a retint
+   touches one rule. (The prior `instrument-rail.css` co-consumer retired at
+   AZ.W-PRUNE2 with its component — the α pair stays canonicalised here.) */
 @utility twin-line-divider {
     --twin-line-catch: rgb(255 255 255 / 0.10);
     --twin-line-shadow: rgb(0 0 0 / 0.12);
@@ -298,8 +298,10 @@
 /* ── Rainbow gradient backgrounds ───────────────────────────────────────
    `.rainbow-vivid` + `.rainbow-pastel` paint a left-to-right 7-stop spectrum
    from the canonical `--rainbow-*` / `--rainbow-pastel-*` token families
-   (tokens.css §14). Consumed by keyframes.js's `AnimationMenuBar.vue` round
-   play button — `rainbow-vivid` (playing) / `rainbow-pastel` (idle). */
+   (tokens.css §14). Consumed by keyframes.js's demo transport chrome —
+   `TransportDock.vue` / `RibbonBar.vue` bind `rainbow-vivid` (playing/active)
+   vs `rainbow-pastel` (idle) on the play + Apply buttons (re-confirmed live at
+   AZ.W-PRUNE2 E4-2). */
 @utility rainbow-vivid {
     background: linear-gradient(
         to right,

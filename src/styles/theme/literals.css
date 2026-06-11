@@ -1,0 +1,94 @@
+/* theme/literals.css — the trailing plain @theme: directly-authored LITERALS
+   (AZ.W-CARVE partial 3 of 4).
+
+   The override surface here is the namespaced var itself, not a tokens.css
+   bridge, so these mint their global variable. The --animate-* composites
+   (literal keyframe name + var() timing — no tokens.css twin to double), the
+   opacity rungs, and the text-shadow family.
+
+   Cascade: this partial MUST @import AFTER theme/bridges.css and BEFORE
+   theme/dark.css. */
+
+@theme {
+    /* ═══════════════════════════════════════════════
+       Animation → animate-* utilities
+       ═══════════════════════════════════════════════ */
+    --animate-floating-panel-in: floating-panel-in var(--duration-fast) var(--ease-out);
+    --animate-tooltip-in: tooltip-in var(--duration-fast) var(--ease-out);
+    --animate-fade-in: fade-in var(--duration-normal) var(--spring-smooth);
+    --animate-scale-in: scale-in var(--duration-normal) var(--spring-smooth);
+    --animate-slide-up: slide-up var(--duration-normal) var(--spring-smooth);
+    --animate-dock-in: dock-in var(--duration-panel) var(--spring-snappy) both;
+    /* ── Shimmer family: documented duration offset ──────────────────────────
+       The shimmer ladder is intentionally non-paired-by-name:
+       - `--animate-shimmer` reads `--duration-shimmer-fast` (3s) — fast loop
+         tempo for the band-pass shimmer pattern (skeleton, marketing).
+       - `--animate-shimmer-sweep` and `--animate-gold-shimmer` both read the
+         unsuffixed `--duration-shimmer` (5s) — slower one-pass sweep for
+         brand-polish moments (Complete! gold-shimmer headline, hero lifts).
+       The fast/canonical split exists because the two shimmer modes (looping
+       band-pass vs one-pass sweep) want different tempos. The pre-V audit
+       (C-c §5.3) flagged this as a "naming inversion"; it is intentional —
+       documented here so the offset is searchable. The orphan
+       `--duration-shimmer-slow` (8s) was excised in V.W2 T5. */
+    --animate-shimmer: shimmer var(--duration-shimmer-fast) linear infinite;
+    --animate-shimmer-sweep: shimmer-sweep var(--duration-shimmer) ease-in-out infinite;
+    --animate-gold-shimmer: gold-shimmer-slide var(--duration-shimmer) linear infinite;
+    --animate-shake: shake 0.5s ease-in-out;
+
+    /* ═══════════════════════════════════════════════
+       Opacity → opacity-* utilities
+
+       Bridges the canonical `--opacity-disabled` (0.5) and
+       `--opacity-icon-muted` (0.8) rungs from tokens.css §11. Tailwind
+       v4 generates `opacity-disabled` / `opacity-icon-muted` utilities
+       (and the `disabled:opacity-disabled` modifier form) from these
+       @theme declarations; the values match tokens.css line 550-551.
+
+       Consumers replace 18+ hardcoded `disabled:opacity-50` literals
+       across the primitive slice with `disabled:opacity-disabled`.
+       (Per audit U.W0.C-a §1.2 / §gap.4 — U12.)
+       ═══════════════════════════════════════════════ */
+    --opacity-disabled:   0.5;
+    --opacity-icon-muted: 0.8;
+
+    /* ═══════════════════════════════════════════════
+       text-shadow → text-shadow-* utilities (AW.W26)
+
+       text-shadow is the lone shadow family that shipped no `@theme` bridge
+       (Tailwind v4.1 minted the `text-shadow-{2xs,xs,sm,md,lg}` utilities). The
+       rungs are warm-`--shadow-color`-derived via `color-mix` per the box-shadow
+       ladder (tokens.css §7) + the cartoon-shadow precept's one-source chain, so
+       they re-tint under `.dark` BY CONSTRUCTION — `--shadow-color: var(--foreground)`
+       flips light→dark with no hardcoded `.dark` re-declaration. The hand-rolled
+       multi-stop `text-shadow:` literals in `.depth-text` (utilities.css) +
+       `.text-engraved` (typography.css) now compose these tokens. */
+    --text-shadow-2xs: 0 1px 0 color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --text-shadow-xs:  0 1px 1px color-mix(in srgb, var(--shadow-color) 16%, transparent);
+    --text-shadow-sm:  0 1px 0 color-mix(in srgb, var(--shadow-color) 14%, transparent),
+                       0 2px 3px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+    --text-shadow-md:  0 1px 0 color-mix(in srgb, var(--shadow-color) 16%, transparent),
+                       0 2px 4px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+                       0 4px 8px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --text-shadow-lg:  0 1px 0 color-mix(in srgb, var(--shadow-color) 18%, transparent),
+                       0 2px 4px color-mix(in srgb, var(--shadow-color) 22%, transparent),
+                       0 6px 12px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+
+    /* Two IDENTITY text-shadow tokens — the hard offset STAMP (`.depth-text`)
+       + the two-stop EMBOSS (`.text-engraved`). These hold the multi-stop
+       literals INSIDE the `@theme` defs so the utilities compose `var(--text-shadow-*)`
+       and no raw `text-shadow:` literal survives in `utilities.css`/`typography.css`
+       (AW.W26 gate 4). Both are `--shadow-color`/surface-tint-derived, so they
+       re-tint under `.dark` BY CONSTRUCTION. */
+    --text-shadow-depth: 1px 1px 0 var(--shadow),
+                         2px 2px 0 var(--shadow),
+                         3px 3px 0 var(--shadow),
+                         4px 4px 0 var(--shadow),
+                         5px 5px 0 var(--shadow),
+                         5px 5px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                         2px 2px 2px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+                         4px 4px 5px color-mix(in srgb, var(--shadow-color) 25%, transparent),
+                         6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+    --text-shadow-engraved: 0 1px 0 color-mix(in srgb, var(--background) 30%, transparent),
+                            0 -1px 0 var(--surface-tint-8);
+}

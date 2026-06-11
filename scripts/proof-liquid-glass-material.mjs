@@ -328,8 +328,12 @@ function run() {
     }
 
     // ── 3. The dock corner radials demoted off the hard corner.
+    // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
+    // readMonolith concatenates root + the five family partials so the
+    // hard-corner-radial deletion-proof covers the carved content (the primary
+    // tier hover radial lives in dock-controls/tab-button.css).
     if (existsSync(DOCK_CONTROLS)) {
-        const dock = stripComments(readFileSync(DOCK_CONTROLS, "utf8"));
+        const dock = stripComments(readMonolith(ROOT, "dock-controls"));
         // The `ellipse at 30% 30%` hard top-left corner radials (the dock primary
         // hover + the rest phase-halo) are GONE.
         facts.dockHardCornerRadialPresent = /ellipse\s+at\s+30%\s+30%/.test(dock);

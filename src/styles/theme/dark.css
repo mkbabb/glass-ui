@@ -1,0 +1,7 @@
+/* theme/dark.css — the class-based dark-mode variant (AZ.W-CARVE partial 4 of 4).
+
+   Cascade: this partial MUST @import LAST (after radius/bridges/literals) — it
+   declares the `dark:` variant the rest of the cascade keys off. */
+
+/* Class-based dark mode */
+@variant dark (&:where(.dark, .dark *));

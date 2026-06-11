@@ -51,6 +51,10 @@ import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AZ.W-CARVE — theme.css became a thin @import root over theme/*.css partials;
+// readMonolith concatenates root + partials in cascade order so the --font-text
+// / --font-serif @theme-inline bridges (now in theme/bridges.css) resolve.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // AZ.W-GATES (D7) — the font-token AUTHORITY reader. The --font-stack-* register
 // carved out of the tokens.css monolith into src/styles/tokens/ partials (today:
@@ -214,7 +218,9 @@ function run() {
     // tokens/scheme-motion.css). The pre-carve P.TOKENS-only read false-REDded the
     // three STRUCTURE-1 asserts.
     const tokens = readTokenFonts(P.ROOT, stripComments);
-    const theme = existsSync(P.THEME) ? stripComments(readFileSync(P.THEME, "utf8")) : "";
+    // AZ.W-CARVE — the composed read of the thin theme.css root + the four
+    // theme/*.css partials so the STRUCTURE-2 font-bridge asserts resolve.
+    const theme = existsSync(P.THEME) ? stripComments(readMonolith(P.ROOT, "theme")) : "";
     const typography = existsSync(P.TYPOGRAPHY)
         ? stripComments(readFileSync(P.TYPOGRAPHY, "utf8"))
         : "";

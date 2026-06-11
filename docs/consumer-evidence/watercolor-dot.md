@@ -12,10 +12,10 @@ trigger. `WatercolorDot` is the CSS/SVG-blob companion to the WebGL `GooBlob`: a
 per-instance filter + seeded PRNG (the shared `src/utils/prng.ts` leaf), the zero-GL ambient/static
 register of the blob substrate.
 
-## Consumer proof (re-runnable)
+## Consumer proof (re-runnable; re-tested AZ.W-PRUNE2 2026-06-11 — HOLDS)
 
 **External consumers — 0.** WatercolorDot has the same demo-only profile as its WebGL sibling — no
-sibling repo composes it:
+sibling repo composes it (the four greps below re-run clean at the AZ HEAD re-test):
 
 ```bash
 # value.js — color/value/math lib, no decorative blob:

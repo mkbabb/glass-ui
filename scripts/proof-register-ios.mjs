@@ -55,7 +55,11 @@ const strip = (s) =>
 
 // The carved tokens monolith carries offsets-sizing.css (the dock token home).
 const tokens = strip(readMonolith(ROOT, "tokens"));
-const dockControls = strip(read("src/styles/dock-controls.css"));
+// AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
+// readMonolith concatenates root + the five family partials so the iOS
+// press-darken witnesses (`--dock-control-press-bg` on the icon/tab/picker
+// :active rules) resolve against the carved content.
+const dockControls = strip(readMonolith(ROOT, "dock-controls"));
 const dockNav = strip(read("demo/layout/dock-nav.css"));
 
 const checks = []; // {id, pass, detail}

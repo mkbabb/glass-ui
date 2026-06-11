@@ -355,7 +355,12 @@ function run() {
     // resolves every tokens.css declaration (the --cartoon-shadow-* rungs now
     // live in tokens/shadow.css).
     const tokensCss = readMonolith(ROOT, "tokens");
-    const themeCss = readFileSync(resolve(STYLES, "theme.css"), "utf8");
+    // AZ.W-CARVE — theme.css became a thin @import root over theme/*.css
+    // partials (radius/bridges/literals/dark); readMonolith concatenates root +
+    // partials in cascade order so the @theme-completeness + shadow-bridge scan
+    // resolves every @theme/@theme-inline declaration (the bridges now live in
+    // theme/bridges.css, the radius primitives in theme/radius.css).
+    const themeCss = readMonolith(ROOT, "theme");
     const completeness = detectCompleteness(tokensCss, themeCss);
     const shadow = detectShadowBridgeIntegrity(tokensCss, themeCss);
     completeness.familyFacts.push(shadow.familyFact);

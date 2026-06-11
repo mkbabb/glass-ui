@@ -1,0 +1,202 @@
+/* dock-controls/tab-button.css — the `.dock-tab-button` control family
+   (AZ.W-CARVE partial 3 of 5; carved out of dock-controls.css).
+
+   The base rule (density-keyed height knob, padding, glass hover/active/press
+   cohort), the PRIMARY tier (the dock extension over `@utility btn-audacious` —
+   structural shell + the `--phase-color` disco-grain hover radial + the
+   `[data-phase]` backplate halo), and the SECONDARY tier (the quieter
+   edge-light/edge-shadow cross-control comma-group over tab + icon button).
+   Opens its OWN `@layer components`; @import-ed after dark-mode-toggle.css. */
+
+@layer components {
+    .dock-tab-button {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        /* P.W4 Lane B inline-absorb: the `--dock-tab-h` density-keyed height
+           knob (parallel to DockIconButton's --dock-control-size) merged
+           here from the prior DockTabButton.vue scoped style block. The
+           density rungs that set `--dock-tab-h` per tier live in dock.css
+           (the `.glass-dock[data-density="…"]` blocks) — Q.W3
+           Lane A consolidated them out of utilities.css, closing the
+           cascade-order split-brain. When a parent <GlassDock density="…">
+           sets `--dock-tab-h`, the tab-button reserves that row even when
+           the glyph + padding sum would ride lower. Falls through to
+           `--dock-tab-min-height` (kept for audacious-tier callers) and
+           finally to `auto`. R3-spec / audit-E P0-3. */
+        min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
+        padding-inline: var(--dock-tab-padding-inline, 0.75rem);
+        padding-block: var(--dock-tab-padding-block, 0.375rem);
+        border: none;
+        background: transparent;
+        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Default font-size carries through to text-only tab content; consumers
+           wrapping content in an explicit type utility (e.g. `text-hero`,
+           `text-display`) on an inner <span> win because Tailwind v4 ships
+           @utility blocks in @layer utilities, which ranks above @layer
+           components — so this declaration is a fallback, not a ceiling. */
+        font-size: var(--type-small);
+        line-height: 1;
+        color: var(--muted-foreground);
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+        outline: none;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */ scale
+                var(--dock-press-spring);
+
+        /* AX.W45 DK2 — converged onto the FAMILY hover/active token pair (the
+           surface-tint-8/10 ladder it spoke is ≈ the same intent — glass-translucent
+           foreground-over-transparent). ONE grammar across icon/tab/picker.
+           AX.W45-TUNE Q3/C3 — the hover MOTION channel is now UNIFIED: the
+           `--scale-hover-dock` lift fires here (it used to fire on only icon +
+           dropdown), so all four control members lift on hover as ONE register —
+           the bg cross-fade (glass-tier), the scale, and the specular gleam read
+           together BEFORE click. The transform rides `--dock-press-spring`
+           (`--spring-smooth`) per the W52 easing doctrine. */
+        &:hover:not(:disabled) {
+            background: var(--dock-control-hover-bg);
+            color: var(--foreground);
+            scale: var(--scale-hover-dock);
+        }
+
+        /* AZ.W-REGISTER-IOS — the iOS press darken-plus-shrink (see the icon-button). */
+        &:active:not(:disabled) {
+            background: var(--dock-control-press-bg);
+            scale: var(--scale-press-dock);
+        }
+
+        &:focus:not(:focus-visible) {
+            box-shadow: none;
+        }
+
+        /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+           group in dock.css. */
+
+        &:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"]) {
+            background: var(--dock-control-active-bg);
+            color: var(--foreground);
+        }
+    }
+
+    /* Tier — primary ────────────────────────────────────────────
+     *
+     * Per W2.7 §9, §12, §13, §17. The primary tier composes three at-rest
+     * marks (top-highlight, bottom under-shadow, baseline glass) with three
+     * disco accents on hover (specular swap, sparkle sweep, disco-grain).
+     *
+     * Reservation: disco fires on hover only. At rest the button reads as
+     * a Vignelli-restrained composed glass surface. The `--phase-color`
+     * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
+     * the disco-grain radial only on hover; idle is neutral.
+     *
+     * K.W6 Lane B — the canonical disco-grain + sparkle-sweep + specular
+     * recipe lifted to `@utility btn-audacious` (utilities.css). The Vue
+     * <DockTabButton> attaches `btn-audacious` automatically when the
+     * consumer passes `data-tier="primary"`. The dock-local rules below
+     * are STRICTLY the dock extension: structural shell (padding, base
+     * surface tint, min-height) + phase-tint extensions (hover radial
+     * uses `--phase-color`, plus the `[data-phase]` `::before` halo).
+     */
+    .dock-tab-button[data-tier="primary"] {
+        --dock-tab-min-height: 4rem;
+        padding-inline: 1.5rem;
+        background: color-mix(in srgb, var(--card) 60%, transparent);
+        color: var(--foreground);
+
+        /* Phase-tint hover override — same disco-grain composition as
+         * `btn-audacious`, but the radial uses `--phase-color` (instrument-
+         * cluster axis) instead of the canonical `--primary`. The `--paper-
+         * clean-texture` overlay and `--glass-specular` shadow stack are
+         * inherited from the underlying `btn-audacious` utility. */
+        /* AX.W52 D19 — the phase-tint hover radial DEMOTED: the prior
+         * `ellipse at 30% 30%` at 18% was a loud top-LEFT corner hotspot. Toned to
+         * 8% and the anchor shifted off the hard corner toward a softer top-biased
+         * ellipse (`40% 25%`) with a tighter `transparent 55%` falloff, so it reads
+         * as a surface lift rather than a corner glow — the disco hover identity
+         * survives, the egregious corner bloom does not. */
+        &:hover:not(:disabled) {
+            --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
+            background-image:
+                var(--paper-clean-texture),
+                radial-gradient(
+                    ellipse at 40% 25%,
+                    color-mix(
+                        in srgb,
+                        var(--phase-color, var(--foreground)) 8%,
+                        transparent
+                    ),
+                    transparent 55%
+                );
+            background-blend-mode: overlay, normal;
+            background-size: var(--paper-texture-size), auto;
+        }
+
+        /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
+         *
+         * An inner glyph wrapper's own halo would be clipped by the pill's
+         * `overflow: hidden` and never escape the glyph box. This `::before`
+         * lifts the phase-tint to the pill itself so the glow composes with the
+         * whole CTA. Scoped to active phases — at idle / ready the pill stays
+         * neutral and inherits the W2.7 reservation ("disco fires on hover
+         * only"). */
+        /* AX.W52 D19 — the REST phase-halo `::before` (fires during a speedtest run
+         * on the most prominent dock control) DEMOTED on the same axis as the hover
+         * radial: 18%→8%, the hard `30% 30%` corner shifted to a softer `40% 25%`
+         * top-biased ellipse with a tighter `transparent 55%` falloff, and the
+         * `opacity: 1` dropped to 0.5 so the persistent run-time halo is a subtle
+         * surface lift, not a corner bloom that washes the pill for the whole run. */
+        &[data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                ellipse at 40% 25%,
+                color-mix(
+                        in srgb,
+                        var(--phase-color, var(--foreground)) 8%,
+                        transparent
+                    )
+                    0%,
+                transparent 55%
+            );
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+            transition: opacity var(--duration-fast) var(--ease-standard);
+        }
+    }
+
+    /* Tier — secondary ──────────────────────────────────────────
+     *
+     * Companion to `data-tier="primary"`. Carries the same edge-light +
+     * edge-shadow skeu vocabulary at quieter weight: no disco accent, no
+     * sparkle, no curvature radial. Composes for icon-button consumers
+     * (chassis ActionCluster, SettingsCog) where the surface needs a
+     * glass-tier read but not the audacious primary punch. Per P.W1.B
+     * audit-C §3 — closes the four bare `<DockIconButton>` consumer sites
+     * (cog + back + retake + stop) without redefining the family. The
+     * secondary tier is a cross-control comma-group (tab + icon button), so it
+     * stays flat — nesting under one control would change coverage.
+     */
+    .dock-tab-button[data-tier="secondary"],
+    .dock-icon-button[data-tier="secondary"] {
+        background: color-mix(in srgb, var(--card) 50%, transparent);
+        border: 1px solid var(--glass-border-quiet);
+        box-shadow: var(--border-hairline), var(--glass-highlight);
+    }
+
+    .dock-tab-button[data-tier="secondary"]:hover:not(:disabled),
+    .dock-icon-button[data-tier="secondary"]:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--card) 65%, transparent);
+        box-shadow:
+            var(--glass-specular),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+}

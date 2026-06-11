@@ -174,7 +174,7 @@ src/
 │   ├── animations.css              # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer, sparkle-sweep; §TOP-LAYER @starting-style entry/exit grammar (AQ.W5—.glass-top-layer)
 │   ├── scroll-driven.css           # AQ.W5—native scroll-driven recipes (.scroll-progress scroll(), [data-scroll-reveal] view()); @supports-gated primary over the JS-composable fallback
 │   ├── view-transition.css         # AQ.W5—.gl-list-item View-Transitions group recipe + --vt-* axes (the useViewTransition substrate's CSS half)
-│   └── utilities.css               # focus-ring, btn-press, btn-audacious (K W6), btn-audacious-gold (AN.R0—the gold CTA), btn-interactive, btn-glass (AX.W52—real glass blur for the glass button variants), rainbow-text, touch-gate, etc.
+│   └── utilities.css               # focus-ring, btn-press, btn-audacious (K W6), btn-audacious-gold (AN.R0—the gold CTA), btn-interactive, btn-glass (AX.W52—real glass blur for the glass button variants), touch-gate, etc.
 └── utils/
     ├── cn.ts                       # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
     └── prng.ts                     # shared seeded PRNG leaf—mulberry32 + hashString single-source (AV.W14; watercolor-dot + goo-blob import it; watercolor keeps its border-radius helpers local)

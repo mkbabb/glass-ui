@@ -43,6 +43,9 @@ const glass = strip(readMonolith(ROOT, "glass"));
 // The dock shell was carved into src/styles/dock/*.css partials (+ dock-controls.css)
 // at the convergence; the adaptive-glass tint seam lives in dock/shell.css + dock/morph.css.
 // Read the whole carved dock family so the seam checks resolve post-carve.
+// AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
+// readMonolith concatenates the thin root + the five family partials in cascade
+// order so the seam checks resolve post-carve.
 const dock = [
     "src/styles/dock.css",
     "src/styles/dock/shell.css",
@@ -51,9 +54,9 @@ const dock = [
     "src/styles/dock/layer-group.css",
     "src/styles/dock/layers.css",
     "src/styles/dock/overflow.css",
-    "src/styles/dock-controls.css",
 ]
     .map((p) => strip(read(p)))
+    .concat(strip(readMonolith(ROOT, "dock-controls")))
     .join("\n");
 
 const checks = []; // {id, pass, detail}

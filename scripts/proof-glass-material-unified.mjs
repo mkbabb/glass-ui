@@ -289,9 +289,13 @@ function run() {
     // ── 5e. ONE dock catch-light owner. The dock control's SECOND specular (the
     // `:hover:not(:focus-visible)` `--glass-highlight` box-shadow) is RETIRED —
     // a deletion-proof over dock-controls.css.
+    // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
+    // readMonolith concatenates root + the five family partials so the
+    // second-specular deletion-proof covers the carved content (a re-introduced
+    // `--glass-highlight` hover box-shadow in any partial still reds).
     const DOCK_CONTROLS = resolve(ROOT, "src/styles/dock-controls.css");
     if (existsSync(DOCK_CONTROLS)) {
-        const dock = stripComments(readFileSync(DOCK_CONTROLS, "utf8"));
+        const dock = stripComments(readMonolith(ROOT, "dock-controls"));
         const dockSecondSpecular =
             /:hover[^{]*:not\(:focus-visible\)[^{]*\{[^}]*box-shadow:[^}]*--glass-highlight/.test(
                 dock,

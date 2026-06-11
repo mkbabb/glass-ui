@@ -72,6 +72,40 @@ export const CSS_MONOLITHS = {
             "a11y-overrides.css",
         ],
     },
+    // AZ.W-CARVE — the two surviving over-bound CENTRAL stylesheets drained
+    // their no-god-module ratchet rows into cohesive partials, same precedent.
+    "dock-controls": {
+        root: "src/styles/dock-controls.css",
+        dir: "src/styles/dock-controls",
+        // The FIVE control families in cascade order; the shared cross-family
+        // `:where()` specular-sizing group stays at the thin root. The tail
+        // overrides (touch-floor + the vertical-rail selected register) MUST
+        // @import last (they override the base families).
+        order: [
+            "icon-button.css",
+            "dark-mode-toggle.css",
+            "tab-button.css",
+            "triggers.css",
+            "touch-floor.css",
+        ],
+    },
+    theme: {
+        root: "src/styles/theme.css",
+        dir: "src/styles/theme",
+        // Cascade-binding: the LEADING plain @theme (radius primitives +
+        // aliases) FIRST so the inline bridges can reference them, then the
+        // @theme inline (the tokens.css var() bridges), then the trailing plain
+        // @theme (the --animate-*/opacity/text-shadow literals), then the
+        // @variant dark LAST. A re-ordered split drops a value-identical
+        // rounded-* utility (the radius header collision) — import-order is the
+        // load-bearing witness.
+        order: [
+            "radius.css",
+            "bridges.css",
+            "literals.css",
+            "dark.css",
+        ],
+    },
 };
 
 /**

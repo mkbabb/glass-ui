@@ -90,9 +90,9 @@ const composableRuntimeExports = [
     "useTouchGate",
     "useTimer",
     "useInterval",
-    "useGlassRenderer",
-    "createGlassFilter",
-    "destroyGlassFilter",
+    // AZ.W-PRUNE2 (E4-3) — useGlassRenderer/createGlassFilter/destroyGlassFilter
+    // retired off the root barrel (the detection-cascade cluster; its binary
+    // consumer GlassPanel retired at the AY prune, no second consumer).
     "useSortable",
     // O.W6 Lane A — useClipboard composable promotion.
     // P.W5 Lane A.1 — copyToClipboard bare co-export (Path B). Both must
@@ -301,8 +301,8 @@ const exactSubpathRuntimeSurfaces = [
 ] as const;
 
 const typeSurfaceChecks = [
-    ["src/composables/glass/useGlassRenderer.ts", "GlassFilterState"],
-    ["src/composables/glass/useGlassRenderer.ts", "GlassTier"],
+    // AZ.W-PRUNE2 (E4-3) — the useGlassRenderer cluster (GlassTier/GlassFilterState)
+    // retired; the source file is deleted, so no type-surface row anchors it.
     ["src/composables/motion/useAnimatedNumber.ts", "AnimatedNumber"],
     ["src/composables/motion/useAnimatedNumber.ts", "UseAnimatedNumberOptions"],
     ["src/composables/motion/useNumericTransition.ts", "SpringSnapshot"],

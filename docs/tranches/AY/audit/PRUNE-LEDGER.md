@@ -7,6 +7,42 @@ Audit for usage across our constellation of repos."*
 
 ---
 
+## §0.AMEND — census-as-of + the consumer-roots model (AZ.W-PRUNE2 E4-7)
+
+**census-as-of: HEAD `91623925` · re-grounded 2026-06-11 (AZ.W-PRUNE2).** The AY body census
+below was taken at the AY HEAD; the constellation has MOVED under it. This block is the dated,
+repo-scoped census model the next prune starts from — the AY rows are NOT rewritten (a dated
+snapshot stays a dated snapshot), they are SUPERSEDED by this consumer-roots table where they
+conflict.
+
+**Which repos COUNT (a TS/Vue surface that can import the library):**
+
+| repo | counts? | why |
+|---|---|---|
+| glass-ui (`src`, `demo`) | YES (self) | the library + its own stories |
+| `slides/src` | YES | Vue deck; consumes dock/controls/status-dot/constellation (W-ADOPT in-flight) |
+| `speedtest/src` | YES | Vue app; the heaviest cross-repo consumer (dock/aurora/metric-*) |
+| `fourier-analysis/web/src` | YES | Vue app; consumes dock/tabs/metric-badge |
+| `words/frontend/src` | YES | Vue app; consumes isMac/useWindowedStore/stacked-icons |
+| `bbnf-lang/playground/src` | YES | Vue playground |
+| `keyframes.js` (demo) | YES | binds `rainbow-vivid`/`rainbow-pastel` (E4-2 re-confirm) — note its census root is `keyframes.js/src` in `constellation.mjs`; the rainbow class consumers live under `keyframes.js/demo/` |
+| **`sci-report`** | **NO (was a heavy cite in the AY body)** | now a **Python project** (`pyproject.toml` + `uv.lock`); `../sci-report/src` carries ZERO `.ts/.vue/.tsx` files → it can never import the lib's TS surface. **Every `sci-report` consumer cite in the AY rows below is STALE** (dock/controls/aurora/expandable-container/paper-backdrop/constellation/goo-blob/timeline all list sci-report — discount it). REMOVED from `proof:component-orphan`'s `CONSUMER_ROOTS`. |
+| `value.js` | declares-but-never-imports | declares the peer but no live call-site at HEAD; not a counted root |
+
+**`proof:component-orphan` `CONSUMER_ROOTS` re-audited against this table** — `../sci-report/src`
+dropped (the dead Python root). The gate's census-as-of header records the same commit.
+
+**Corrected counts (E4-8 — facts, no retires):** `stacked-icons = 2 ext` (the AY row read `0 ext`;
+words/frontend composes `StackedIcons` at TWO sites —
+`components/custom/definition/components/WordHeader.vue` +
+`.../metadata/ProviderIcons.vue` — so it clears the ≥2-consumer bar on words alone, plus the demo
+avatar pattern). The
+sci-report-discounted packages still clear the bar on their OTHER real consumers (dock=31 even
+without sci-report; aurora via speedtest/value-decl; expandable-container via speedtest;
+timeline via speedtest). No package retires FROM the recount — it CLEARS candidates.
+
+---
+
 ## §0 — Method + the honesty caveat on the green gate
 
 `npm run proof:component-orphan` is **GREEN** (31 published packages, all clearing the

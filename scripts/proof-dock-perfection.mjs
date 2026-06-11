@@ -451,7 +451,11 @@ function run() {
     const { facts, violations } = detectSource({
         tokensCss: readMonolith(ROOT, "tokens"),
         dockCss: readDockCss(ROOT),
-        dockControlsCss: readFileSync(DOCK_CONTROLS_CSS, "utf8"),
+        // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css
+        // partials; readMonolith concatenates root + the five family partials in
+        // cascade order so the `.dock-icon-button { … }` / `&:hover` witnesses
+        // resolve against the carved content.
+        dockControlsCss: readMonolith(ROOT, "dock-controls"),
         glassCss: readMonolith(ROOT, "glass"),
         glassDockVue: readFileSync(GLASS_DOCK_VUE, "utf8"),
         demoDocks,

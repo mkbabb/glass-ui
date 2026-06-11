@@ -199,6 +199,14 @@ const SURFACE_CSS = [
     "src/styles/dock/layers.css",
     "src/styles/dock/layer-group.css",
     "src/styles/dock/overflow.css",
+    // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
+    // the thin root above carries the shared `:where()` group, the five family
+    // partials carry the transition/press witnesses.
+    "src/styles/dock-controls/icon-button.css",
+    "src/styles/dock-controls/dark-mode-toggle.css",
+    "src/styles/dock-controls/tab-button.css",
+    "src/styles/dock-controls/triggers.css",
+    "src/styles/dock-controls/touch-floor.css",
 ];
 
 // The "always-scanned" SFC anchor: the aurora/blob hosts PLUS the component

@@ -49,12 +49,13 @@ export const EXPECTED_TREE = [
         "intro", "colors", "typography", "radii", "shadows", "motion",
         "paper-glass", "icons", "surface-tints", "overlays-scrims",
         "chart-chassis-palette", "paper-backdrop-texture-system",
-        "paper-backdrop", "css-utilities",
+        "css-utilities",
     ]],
     // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
     // `fourier-field` is the new Canvas2D render-background sibling. `glass-panel`
-    // retired at AY.W-SB1 (a demo-only published component — the renderer-tier
-    // lesson lives on at `glass-material` + the use-glass-renderer composable).
+    // retired at AY.W-SB1 (a demo-only published component); its renderer-tier
+    // lesson lives on at `glass-material` (the `useGlassRenderer` detection
+    // cluster + its story retired at AZ.W-PRUNE2 E4-3).
     ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material"]],
     // The Primitives bin split: form-controls.
     ["forms", [

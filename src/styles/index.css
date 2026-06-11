@@ -117,15 +117,11 @@
  *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
- *  13. instrument-rail.css   — AK-W2-α cockpit-ratio rail (flex-basis 1/φ²
- *                              binding + bezel hairlines + sibling divider
- *                              rule). Composes alongside instrument-chassis;
- *                              shares the bezel-line twin-pixel idiom.
- *  14. hover-popover.css     — V.W3 popover-animation grammar.
- *  15. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
+ *  13. hover-popover.css     — V.W3 popover-animation grammar.
+ *  14. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
  *
- * Per-package component CSS lives at (12)-(15) (loaded after utilities so
+ * Per-package component CSS lives at (12)-(14) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
  * to that tail.
  */
@@ -147,7 +143,6 @@
 @import "./utilities.css";
 @import "./configurator.css";
 @import "./instrument-chassis.css";
-@import "./instrument-rail.css";
 @import "./hover-popover.css";
 @import "./drawer.css";
 @import "../components/custom/tabs/segmented-tabs.css";

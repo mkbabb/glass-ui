@@ -11,11 +11,10 @@ subpaths, retired style paths, and `glass-ui/src` source-relative imports across
 | Artefact | Doc | Current Consumer | Added in Tranche |
 |---|---|---|---|
 | `ExpandableContainer` | [expandable-container.md](expandable-container.md) | speedtest Charts/Map views | D |
-| `createGlassFilter` | [create-glass-filter.md](create-glass-filter.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
-| `destroyGlassFilter` | [destroy-glass-filter.md](destroy-glass-filter.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
-| `GlassFilterState` | [glass-filter-state.md](glass-filter-state.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
-| `GlassTier` | [glass-tier.md](glass-tier.md) | glass-ui source useGlassRenderer | D · re-pointed AY (GlassPanel retired) |
-| `useGlassRenderer` | [use-glass-renderer.md](use-glass-renderer.md) | demo use-glass-renderer story | D · re-pointed AY (GlassPanel retired) |
+| `Constellation` | [constellation.md](constellation.md) | demo StoryHero + 404 egg; slides adoption in-flight (W-ADOPT) | AZ · ≥2-consumer trigger = W-ADOPT |
+| `SortableList` | [sortable-list.md](sortable-list.md) | demo aurora PaletteLayer + AuroraColorSection reorder | AZ · cleared on re-ground (2 consumers) |
+| `StatusDot` | [status-dot.md](status-dot.md) | slides til-briefing SlideXray live-pulse dot | AZ · 1 ext consumer booked |
+| `useGlassBackdropLuminance` | [use-glass-backdrop-luminance.md](use-glass-backdrop-luminance.md) | glass-ui source GlassDock (binary #1) + demo glass-material exerciser | AZ · path-B booked 2nd-binary trigger |
 | `useTokenColor` | [use-token-color.md](use-token-color.md) | speedtest meter token colors + demo constellation/hero | AY |
 | `useScrollProgress` | [use-scroll-progress.md](use-scroll-progress.md) | demo motion scroll story | D |
 | `SpringSnapshot` | [spring-snapshot.md](spring-snapshot.md) | demo motion springs story | D |

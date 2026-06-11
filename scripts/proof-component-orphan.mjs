@@ -75,6 +75,14 @@ const ARTIFACT = gateArtifactPath(
 // dragged in a NESTED glass-ui checkout under `.claude/worktrees/`, inflating
 // `aurora` to 987 "consumers" that were the library's own vendored copy). Only
 // the present roots are walked.
+//
+// census-as-of: HEAD 91623925 (AZ.W-PRUNE2, 2026-06-11). The consumer-roots set
+// names which repos COUNT — a TS/Vue surface that can import the library. The
+// `../sci-report/src` root was REMOVED here (E4-7): sci-report is now a Python
+// project (`pyproject.toml` + `uv.lock`) and `../sci-report/src` carries ZERO
+// `.ts/.vue/.tsx` files, so it can never consume the library's TS surface — a
+// dead root that only misleads the census. The matching consumer-roots table +
+// the census-as-of header live in docs/tranches/AY/audit/PRUNE-LEDGER.md.
 const CONSUMER_ROOTS = [
     "src",
     "demo",
@@ -82,7 +90,6 @@ const CONSUMER_ROOTS = [
     "../speedtest/src",
     "../fourier-analysis/web/src",
     "../words/frontend/src",
-    "../sci-report/src",
     "../bbnf-lang/playground/src",
 ];
 
@@ -149,8 +156,8 @@ function evidenceDocSet() {
 
 /**
  * Candidate evidence-doc basenames for a package id. The doc dir uses kebab-case
- * per-artefact notes (e.g. `glass-panel` → `glass-panel.md`, `useGlassRenderer`
- * → `use-glass-renderer.md`). A package is evidenced if the package id OR any of
+ * per-artefact notes (e.g. `watercolor-dot` → `watercolor-dot.md`, `useSortable`
+ * → `use-sortable.md`). A package is evidenced if the package id OR any of
  * its kebab variants has a doc.
  */
 function isEvidenced(pkgId, docs) {

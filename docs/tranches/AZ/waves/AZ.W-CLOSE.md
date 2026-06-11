@@ -1,4 +1,4 @@
-# AZ.W-CLOSE — the terminal close: the audit, the FINAL, proof:az-final, the 3.12.0 cut
+# AZ.W-CLOSE — the terminal close: the audit, the FINAL, proof:az-final, the 3.13.0 cut
 
 **Track:** Z (close) · **Type:** close ceremony · **Repo:** glass-ui
 **Depends on:** every other AZ wave (Batch 6 — the terminal node; nothing follows it but the cut).
@@ -75,7 +75,7 @@ ls .changeset/                                        # the AZ changeset staged
        BINDING witness is the executed exit-0-with-skip-line, never the grep alone;
    (7) zero orphans (the audit doc's verdict);
    (8) STAGED-OR-CUT from birth — staged: version `3.10.1` + the AZ changeset present; at-cut:
-       version `3.12.x` + changeset consumed + a CHANGELOG `## 3.12.0` entry; anything else (a bump
+       version `3.13.x` + changeset consumed + a CHANGELOG `## 3.13.0` entry; anything else (a bump
        with the changeset still staged, a cut with no CHANGELOG) is the silent-bump RED;
    (9) CLEAN-TREE (allowlisted) on the close commit;
    (10) THE REFLECTION BAR (the user edict 2026-06-11) — `proof:az-reflect` GREEN: every
@@ -89,7 +89,7 @@ ls .changeset/                                        # the AZ changeset staged
 5. **The release battery** — typecheck · build · verify-export-types · gen-ci-fresh ·
    `gates.mjs --run local` with every red either fixed or dispositioned IN FINAL §3 with its owner
    (the honest-triage format) · the full unit suite.
-6. **The 3.11.0 cut [USER-DOMAIN]** — master merge + the `v3.12.0` tag → release.yml provenance
+6. **The 3.11.0 cut [USER-DOMAIN]** — master merge + the `v3.13.0` tag → release.yml provenance
    publish (the 3.9.0/3.10.1 precedent); MIGRATION.md carries the AZ breaking set (the dock
    taxonomy rename table from W-DOCK-TAXONOMY + any W-PRUNE2 retires), each claim joining
    `proof:no-retired-survivor`'s `RETIRED_CLAIMS` (machine-checked).
@@ -132,3 +132,15 @@ W-KF-CONSUMER) are the next tranche's W0 re-ground — recorded here, not silent
   its lockfile (`^3.9.0` admits it) and deletes the arms the same day.
 - **HOLD the cut until after the 2026-06-11 morning til-briefing session** (the user's timing
   constraint via the slides session) unless urgent.
+
+
+## §X.2 — The registry lineage divergence (orchestrator, 2026-06-11 midday)
+
+The registry's `3.11.0/.1/.2` AND `3.12.0` (latest) were published OUT-OF-BAND from a PRE-PRUNE
+lineage (the `3.12.0` tarball carries all four pruned subpaths and LACKS `/underline` — it is not
+master). The cut moves to **`3.13.0`**. AT THE CUT the user is flagged with the full lineage map:
+`3.10.1` (the true AY close) → `3.11.x/3.12.0` (stale-lineage, deprecate-or-supersede is the user's
+call) → `3.13.0` (the true AZ close). The header-ribbon/glass-panel RESTORE (W-PRUNE2 ruling — the
+prune census missed the live keyframes consumer) shrinks the consumer-facing delta: a `^3.11`
+consumer bumping to `3.13.0` keeps those imports working. `deck-progress`/`instrument-rail` STAY
+pruned (zero consumers — the stale tarball carrying them is lineage noise the cut supersedes).

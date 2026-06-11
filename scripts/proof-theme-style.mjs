@@ -11,6 +11,10 @@ import {
 import { join, resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// AZ.W-CARVE — theme.css became a thin @import root over theme/*.css partials
+// (radius/bridges/literals/dark); readMonolith concatenates root + partials in
+// cascade order so the @theme/@theme-inline idiom witnesses resolve post-carve.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const root = ROOT;
 // Default → byte-stable `.cache/gates/W4-tailwind-theme-proof.json`; a deliberate
@@ -127,7 +131,9 @@ function collectFiles(dir) {
 }
 
 function readTheme() {
-    return readFileSync(resolve(root, "src/styles/theme.css"), "utf8");
+    // AZ.W-CARVE — the composed read of the thin root + the four theme/*.css
+    // partials (radius/bridges/literals/dark) in cascade order.
+    return readMonolith(root, "theme");
 }
 
 function staticChecks() {
