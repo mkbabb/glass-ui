@@ -60,8 +60,10 @@ export function gatePatternBlurb(manifestSrc) {
     // Match the s(...) row for the gate-pattern id and capture the 4th-arg string.
     // The blurb is a double-quoted literal that may contain escaped backtick-wrapped
     // code spans; it runs to the closing quote before `)`.
+    // The optional trailing comma: prettier formats the multi-line s(...) call
+    // with one, and the blurb's identity is unchanged by it.
     const re =
-        /s\(\s*"compositions"\s*,\s*"gate-pattern"\s*,\s*"[^"]*"\s*,\s*"((?:[^"\\]|\\.)*)"\s*\)/;
+        /s\(\s*"compositions"\s*,\s*"gate-pattern"\s*,\s*"[^"]*"\s*,\s*"((?:[^"\\]|\\.)*)"\s*,?\s*\)/;
     const m = manifestSrc.match(re);
     return m ? m[1] : null;
 }
