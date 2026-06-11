@@ -60,6 +60,9 @@ function applyDelta(delta: ConfigDelta, written: Set<string>): void {
         "density",
         "radius",
         "cartoonShadow",
+        "glassLevel",
+        "scale",
+        "motion",
     ] as const) {
         if (delta[field] !== undefined) {
             writeField(root, field, delta[field]);

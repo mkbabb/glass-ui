@@ -123,10 +123,44 @@
     --blob-shadow-color:  color-mix(in srgb,
         var(--blob-color, var(--shadow-color)) 22%, var(--shadow-color));
     --blob-shadow-strength: 20%;
-    --blob-shadow: var(--blob-shadow-offset) var(--blob-shadow-blur)
+    /* The AMBIENT cast (the soft diffuse drop) — the dome floats a little above its
+       surface. This is the first drop-shadow rung. */
+    --blob-shadow-ambient: var(--blob-shadow-offset) var(--blob-shadow-blur)
         color-mix(in srgb, var(--blob-shadow-color) var(--blob-shadow-strength), transparent);
-    /* The hover lift — a touch deeper + softer (the dome rises slightly). */
+
+    /* AZ.W-BLOB-STUDIO D4 — the GROUNDED gel-dome read. A single soft ambient cast
+       reads as a swatch FLOATING — there is no contact, no AO, nothing that says the
+       dome SITS on a surface. The grounded read is a TWO-RUNG drop-shadow composite
+       (drop-shadow filters chain, and EACH follows the irregular metaball silhouette —
+       a box-shadow would stamp a rectangle, missing the necking satellites): the soft
+       AMBIENT cast above PLUS a TIGHT, LOW-OFFSET, DARKER CONTACT band hugging the dome
+       base. The contact rung is the gravity cue — a near-zero blur, a small downward
+       offset, and ~2× the ambient strength, so the silhouette base READS pressed against
+       the surface (the contact-darkening AO the satellites pick up where they merge into
+       the body, since the drop-shadow hugs the WHOLE necked silhouette including the
+       satellite bulges). Both rungs ride the SAME `--blob-shadow-color` (the ambient
+       `--shadow-color`/`--foreground` base), so the grounded read re-resolves under
+       `.dark` with no hardcoded dark block (the house cartoon-shadow adaptive pattern).
+       A consumer retunes grounding by overriding `--blob-shadow-contact-*` or the whole
+       `--blob-shadow` composite on the cascade. */
+    --blob-shadow-contact-offset: 0 1px;
+    --blob-shadow-contact-blur:   3px;
+    --blob-shadow-contact-strength: 38%;
+    --blob-shadow-contact: var(--blob-shadow-contact-offset) var(--blob-shadow-contact-blur)
+        color-mix(in srgb, var(--blob-shadow-color) var(--blob-shadow-contact-strength), transparent);
+
+    /* The grounded composite is consumed by GooBlob.vue as TWO chained drop-shadow()
+       filters: drop-shadow(ambient) drop-shadow(contact). `--blob-shadow` keeps the
+       single-rung ambient value (back-compat: a consumer reading the old token still
+       gets the soft cast); the grounded read is the explicit two-rung pair. */
+    --blob-shadow: var(--blob-shadow-ambient);
+
+    /* The hover lift — the ambient cast deepens + softens (the dome rises) AND the
+       contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken
+       as the dome presses on its surface on the rise). */
     --blob-shadow-hover: 0 6px 20px
         color-mix(in srgb, var(--blob-shadow-color) 26%, transparent);
+    --blob-shadow-contact-hover: 0 1px 4px
+        color-mix(in srgb, var(--blob-shadow-color) 44%, transparent);
 
 }

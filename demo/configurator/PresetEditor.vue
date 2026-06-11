@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import { Settings2 } from "@lucide/vue";
 import {
     Sheet,
     SheetContent,
     SheetDescription,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
 } from "../../src/components/ui/sheet";
 import { Slider } from "../../src/components/ui/slider";
 import { Switch } from "../../src/components/ui/switch";
@@ -74,6 +72,15 @@ const radiusModel = computed<number[]>({
     set: (v) => cfg.setField("radius", num(v, cfg.defaults.radius)),
 });
 
+const glassLevelModel = computed<number[]>({
+    get: () => [cfg.effective("glassLevel")],
+    set: (v) => cfg.setField("glassLevel", num(v, cfg.defaults.glassLevel)),
+});
+const scaleModel = computed<number[]>({
+    get: () => [cfg.effective("scale")],
+    set: (v) => cfg.setField("scale", num(v, cfg.defaults.scale)),
+});
+
 const cartoonModel = computed<boolean>({
     get: () => cfg.effective("cartoonShadow"),
     set: (v) => cfg.setField("cartoonShadow", v),
@@ -81,6 +88,10 @@ const cartoonModel = computed<boolean>({
 const darkModel = computed<boolean>({
     get: () => cfg.effective("dark"),
     set: (v) => cfg.setField("dark", v),
+});
+const motionModel = computed<boolean>({
+    get: () => cfg.effective("motion"),
+    set: (v) => cfg.setField("motion", v),
 });
 
 const presetModel = computed({
@@ -108,22 +119,12 @@ function effectiveFont(slot: keyof FontSlots): string {
 </script>
 
 <template>
+    <!-- AZ.W-SHELL-CONFIG — the gear-hosted demo configurator. The floating FAB
+         is GONE (the open is rehomed onto the SidebarDock gear DockIconButton);
+         the Sheet is open-controlled by `open` (driven by the `,` shortcut + the
+         `glass-ui-demo:toggle-configurator` window event — both still functional)
+         + the dock gear, so there is no in-component SheetTrigger. -->
     <Sheet v-model:open="open">
-        <SheetTrigger as-child>
-            <button
-                type="button"
-                :class="
-                    cn(
-                        'glass-btn focus-ring fixed bottom-6 right-6 z-dock inline-flex h-12 w-12 items-center justify-center rounded-full text-foreground shadow-lg transition-transform',
-                        'hover:scale-[var(--scale-hover)] active:scale-[var(--scale-press-btn)]',
-                    )
-                "
-                aria-label="Open configurator"
-            >
-                <Settings2 class="h-5 w-5" aria-hidden="true" />
-            </button>
-        </SheetTrigger>
-
         <SheetContent
             side="right"
             class="glass-resting w-full sm:max-w-md overflow-y-auto p-0"
@@ -131,14 +132,76 @@ function effectiveFont(slot: keyof FontSlots): string {
             <div class="flex h-full flex-col">
                 <SheetHeader class="px-6 pt-6 pb-4 border-b border-border/40">
                     <SheetTitle class="font-display text-2xl">
-                        Preset Editor
+                        glass-ui demo Configurator
                     </SheetTitle>
                     <SheetDescription class="text-prose text-sm">
-                        Live-edit glass-ui tokens. Changes persist locally.
+                        Live-tune the post-W54 design axes — glass, scale, motion,
+                        and the token presets. Changes persist locally.
                     </SheetDescription>
                 </SheetHeader>
 
                 <div class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+                    <!-- Appearance — the dark toggle leads (R4-3: dark-mode at the
+                         TOP of the gear view), then the post-W54 design axes:
+                         --glass-level (the maximal-glass knob), --ui-scale (the
+                         global comfort scalar), and the reduced-motion override. -->
+                    <section class="space-y-1">
+                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                            Appearance
+                        </h3>
+                        <PresetEditorField
+                            label="Dark mode"
+                            description="Mirrors the global dark toggle — the single chrome dark control."
+                            can-reset
+                            @reset="() => cfg.clearField('dark')"
+                        >
+                            <div class="flex w-full items-center justify-end">
+                                <Switch v-model="darkModel" />
+                            </div>
+                        </PresetEditorField>
+                        <PresetEditorField
+                            label="Glass level"
+                            name="--glass-level"
+                            :description="`${cfg.effective('glassLevel').toFixed(2)} — 0 opaque · 1 calibrated · >1 clearer`"
+                            can-reset
+                            @reset="() => cfg.clearField('glassLevel')"
+                        >
+                            <Slider
+                                v-model="glassLevelModel"
+                                :min="0"
+                                :max="1.5"
+                                :step="0.05"
+                                class="w-full"
+                            />
+                        </PresetEditorField>
+                        <PresetEditorField
+                            label="UI scale"
+                            name="--ui-scale"
+                            :description="`${cfg.effective('scale').toFixed(2)}× — the global comfort scalar (the dock derives from it)`"
+                            can-reset
+                            @reset="() => cfg.clearField('scale')"
+                        >
+                            <Slider
+                                v-model="scaleModel"
+                                :min="0.85"
+                                :max="1.5"
+                                :step="0.05"
+                                class="w-full"
+                            />
+                        </PresetEditorField>
+                        <PresetEditorField
+                            label="Reduce motion"
+                            name="--demo-reduce-motion"
+                            description="Force-reduce spatial animation this session (overrides the system preference)."
+                            can-reset
+                            @reset="() => cfg.clearField('motion')"
+                        >
+                            <div class="flex w-full items-center justify-end">
+                                <Switch v-model="motionModel" />
+                            </div>
+                        </PresetEditorField>
+                    </section>
+
                     <!-- Preset -->
                     <section class="space-y-2">
                         <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">

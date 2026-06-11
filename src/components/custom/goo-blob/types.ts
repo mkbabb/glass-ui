@@ -235,9 +235,27 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         // `smoothK` is the smin blend-band in the shader's UV space (half-extent 0.5).
         // The smin is IQ-normalized (`k *= 4.0`) so the seam dip at a==b is EXACTLY the
         // uploaded k. The renderer composes the upload as `smoothK × moodMult × POS_SCALE`
-        // — a tight, wet, rounded meniscus.
-        smoothK: 0.05,
-        merge: "quadratic",
+        // — a wet, rounded meniscus.
+        //
+        // AZ.W-BLOB-STUDIO D2 — the MERGE-BRIDGE re-base. The prior tight `0.05` +
+        // `quadratic` smin CREASED at the body→satellite seam (the quadratic smin's
+        // sharper fillet shows the meniscus crease the moment a metaballing-in satellite
+        // touches the body skin, so the merge read as a hard POP, not a gooey neck). The
+        // re-base widens the bridge on TWO axes: `smoothK` 0.05 → 0.09 (a louder blend
+        // band so the bridge stretches a visible NECK as the satellite necks in — the
+        // metaballing-in satellite reads as a stretching gooey limb, never a hard touch),
+        // and `merge` `quadratic` → `circular` (IQ's circular smin lays a true
+        // quarter-circle fillet at the seam where the quadratic creased — rounder
+        // menisci). Both are LIBRARY defaults: the smin band still rides POS_SCALE +
+        // the mood multiplier in the renderer, so the contained-droplet seam-pull holds
+        // at both arousal extremes (the smoothK mood lerp 0.85–1.35 over the 0.09 base
+        // stays inside the worst-case-reach pad uMaxReach already inflates for). The
+        // STUDIO surfaces both as live knobs (the C6-6 / D2 ask); the page geometry
+        // override (W-BLOB-PAGE) reads this same rounder bridge on its 4 separating
+        // satellites, so the page neck-show is gooier too (a fold-in, not a conflict —
+        // W-BLOB-PAGE explicitly left the membrane axis to this wave).
+        smoothK: 0.09,
+        merge: "circular",
         // ── Living-but-calm membrane (AX.W15 F3) ──────────────────────────────────
         // The warped-FBM watercolor edge: at idle the shader paints an ~8% organic
         // wobble — a calm living membrane rather than a dead geometric arc. `warpAmp`

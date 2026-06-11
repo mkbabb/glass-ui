@@ -29,6 +29,25 @@ export interface ConfigBaseline {
     radius: number;
     cartoonShadow: boolean;
     dark: boolean;
+    /**
+     * The W54 maximal-glass clarity knob — writes `--glass-level` to `:root`.
+     * 1 = the calibrated glass (default); 0 = the opaque escape (solid card +
+     * blur(0)); >1 = clearer. The library knob already ships; the demo SURFACES it.
+     */
+    glassLevel: number;
+    /**
+     * The global comfortable-sizing scalar — writes `--ui-scale` to `:root` (NOT
+     * `--dock-scale`, which DERIVES from it). 1 = the desktop identity; >1 grows the
+     * whole library's control height/padding/gap/font in lockstep (the dock moves
+     * for free via its `calc(var(--ui-scale) * var(--dock-local-scale))` derivation).
+     */
+    scale: number;
+    /**
+     * The optional reduced-motion override — writes a live `--demo-reduce-motion`
+     * signal to `:root` (consumed by the demo-local reduce bracket in demo.css).
+     * false = honour the system `prefers-reduced-motion`; true = force-reduce.
+     */
+    motion: boolean;
 }
 
 /**
@@ -46,6 +65,9 @@ export interface ConfigDelta {
     radius?: number;
     cartoonShadow?: boolean;
     dark?: boolean;
+    glassLevel?: number;
+    scale?: number;
+    motion?: boolean;
 }
 
 export interface FontOption {
@@ -58,7 +80,10 @@ export type DeltaKey = keyof ConfigDelta;
 
 /**
  * The subset of `ConfigBaseline` keys backed by a CSS-variable writer in
- * `css-writers.ts` (everything except `preset`, `font`, and `dark`).
+ * `css-writers.ts` (everything except `preset`, `font`, and `dark`). The three
+ * post-W54 axes (`glassLevel` → `--glass-level`, `scale` → `--ui-scale`,
+ * `motion` → `--demo-reduce-motion`) each write a `:root` custom property, so
+ * they ride the same writable-field path as the token controls.
  */
 export type WritableField =
     | "scaleBase"
@@ -66,7 +91,10 @@ export type WritableField =
     | "grain"
     | "density"
     | "radius"
-    | "cartoonShadow";
+    | "cartoonShadow"
+    | "glassLevel"
+    | "scale"
+    | "motion";
 
 export interface PresetEditor {
     /** Sparse reactive delta — only fields the user has touched. */

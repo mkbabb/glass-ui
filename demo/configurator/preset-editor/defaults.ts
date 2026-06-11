@@ -51,6 +51,10 @@ export const DEFAULT_CONFIG: ConfigBaseline = {
     radius: 10,
     cartoonShadow: true,
     dark: false,
+    // The post-W54 axes — each at its library identity (zero-delta when untouched).
+    glassLevel: 1, // --glass-level identity (the calibrated glass; 0 = opaque)
+    scale: 1, // --ui-scale identity (the desktop comfort scalar)
+    motion: false, // honour the system prefers-reduced-motion (no override)
 };
 
 // Story surfaces keep their authored comfortable spacing as CSS fallbacks.
@@ -76,4 +80,10 @@ export const FIELD_CSS_VARS = {
     density: ["--density-pad", "--density-gap"],
     radius: ["--radius"],
     cartoonShadow: ["--shadow-card", "--shadow-card-hover"],
+    // The post-W54 axes — the demo SURFACES the shipped library knobs. `scale`
+    // writes the GLOBAL `--ui-scale` (the dock's `--dock-scale` derives from it),
+    // NOT `--dock-scale` directly; `motion` writes the demo-local PRM signal.
+    glassLevel: ["--glass-level"],
+    scale: ["--ui-scale"],
+    motion: ["--demo-reduce-motion"],
 } as const satisfies Record<WritableField, readonly string[]>;

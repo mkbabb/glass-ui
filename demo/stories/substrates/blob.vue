@@ -14,8 +14,9 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { GooBlob } from "../../../src/components/custom/goo-blob";
-import type { BlobConfig, BlobMood } from "../../../src/components/custom/goo-blob";
+import type { BlobConfig, BlobMood, BlobMerge } from "../../../src/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
+import { MAX_SATS } from "../../../src/components/custom/goo-blob/constants";
 import { WatercolorDot } from "../../../src/components/custom/watercolor-dot";
 import { DockBackgroundToggle } from "../../../src/components/custom/dock";
 import {
@@ -62,12 +63,41 @@ interface BlobStudioCfg {
     attraction: number;
     /** Click spring-impulse amplitude (a one-shot bouncy pulse). */
     clickImpulse: number;
+    /**
+     * AZ.W-BLOB-STUDIO D5 — the LOUDER-LEAN register (the studio-only "responsiveness"
+     * knob). The SHIPPED calm default (pointerStrength 0.10 + stretch 0.5) stays the
+     * page/library default (AX.W46 calibrated-calm); the studio surfaces this axis so a
+     * tuning session can dial the bead LOUD — a fast flick reads a visible taffy-pull.
+     * `responsiveness` is a single 0..1 axis that scales BOTH the pointer-lean strength
+     * (`interaction.pointerStrength`) and the velocity-squash magnitude
+     * (`interaction.stretch`) UP from their calm defaults toward a pronounced register.
+     * It is a SURFACED knob, NOT a default re-base (restraint counter recorded).
+     */
+    responsiveness: number;
     /** The named mood (drives the {valence, arousal} affect model). */
     mood: BlobMood;
     /** The palette seed color (an OKLCh anchor `deriveBlobPalette` ramps from). */
     seed: string;
     /** The color-harmony the seed ramps through. */
     harmony: ColorHarmony;
+    // ── AZ.W-BLOB-STUDIO §3.3 — the Satellite GEOMETRY atoms, surfaced as LIVE knobs.
+    //    These map straight onto the BlobGeometry atom set so the user can dial the
+    //    orbit OUT past the body radius and WATCH the metaballing (the C6-7 GAP / the
+    //    cause→effect the user asked for). count 0–MAX_SATS, orbit/satellite radii in
+    //    config-UV, eccentricity the orbit-ellipse Y-inflation.
+    /** Live satellite count (0–MAX_SATS=4). */
+    satelliteCount: number;
+    /** Orbit radius (config-UV) — dial PAST bodyRadius (0.22) to separate the satellites. */
+    orbitRadius: number;
+    /** Per-satellite radius (config-UV). */
+    satelliteRadius: number;
+    /** Orbit-ellipse eccentricity (the Y-inflation of the orbit path). */
+    eccentricity: number;
+    // ── AZ.W-BLOB-STUDIO §3.2 — the MERGE-BRIDGE atoms, surfaced as LIVE knobs.
+    /** smin blend-band — louder widens the gooey body→satellite bridge (the neck). */
+    smoothK: number;
+    /** Merge variant — `quadratic` (creased) | `circular` (rounder menisci). */
+    merge: BlobMerge;
 }
 
 const HARMONIES: ColorHarmony[] = [

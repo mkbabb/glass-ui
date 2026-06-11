@@ -251,20 +251,23 @@ defineExpose({
     contain: layout style;
     content-visibility: auto;
     contain-intrinsic-size: auto none;
-    /* AY.W-COHERE E2 — the gel-bead AMBIENT contact shadow (the tokenised
-       `--blob-shadow`), NOT the hard `5px 5px` near-black cartoon offset-stamp.
-       A lit gel dome sits IN the scene with a soft, near-centered, low-offset,
-       ambient-tinted contact shadow (the same soft-light register the other live
-       substrates speak); the Memphis offset-stamp stays the identity of
+    /* AY.W-COHERE E2 / AZ.W-BLOB-STUDIO D4 — the GROUNDED gel-dome shadow, NOT the
+       hard `5px 5px` near-black cartoon offset-stamp. A lit gel dome SITS on its
+       surface: a soft AMBIENT cast (the dome floats a little above) PLUS a tight,
+       low-offset, darker CONTACT band hugging the silhouette base (the gravity cue
+       that grounds the dome + the AO the necking satellites pick up where they merge).
+       Two CHAINED drop-shadow() filters — each follows the irregular metaball
+       silhouette (a box-shadow would stamp a rectangle, missing the necking
+       satellites). The Memphis offset-stamp stays the identity of
        <Card surface="cartoon"> only. Adaptive-by-construction via the token's
        `--shadow-color`/`--foreground` base (re-resolves under .dark, no hardcoded
        .dark block here). */
-    filter: drop-shadow(var(--blob-shadow));
+    filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact));
     transition: filter var(--duration-slow, 0.45s) var(--ease-standard, ease);
 }
 
 .goo-blob-wrapper:hover {
-    filter: drop-shadow(var(--blob-shadow-hover));
+    filter: drop-shadow(var(--blob-shadow-hover)) drop-shadow(var(--blob-shadow-contact-hover));
 }
 
 /* Canvas is 160% of wrapper — overflows so satellites at wide orbits render
@@ -283,10 +286,10 @@ defineExpose({
 
 @media (prefers-reduced-motion: reduce) {
     .goo-blob-wrapper {
-        /* AY.W-COHERE E2 — the same ambient contact shadow under PRM (the gel-bead
-           lighting language, never the hard offset-stamp); only the transition is
-           cut. */
-        filter: drop-shadow(var(--blob-shadow)) !important;
+        /* AY.W-COHERE E2 / AZ.W-BLOB-STUDIO D4 — the same grounded gel-dome shadow
+           under PRM (the gel-bead lighting language, never the hard offset-stamp);
+           only the filter TRANSITION is cut. The two-rung grounded composite stays. */
+        filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important;
         transition: none !important;
     }
 }

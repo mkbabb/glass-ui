@@ -106,3 +106,25 @@
 html {
     background: var(--background);
 }
+
+/*
+ * AZ.W-SHELL-CONFIG — the demo configurator's reduced-motion override consume
+ * rule. The configurator's `motion` axis writes `--demo-reduce-motion: reduce`
+ * to `:root` (css-writers.ts); this `@container style()` bucket reads that signal
+ * and suppresses spatial animation — the SHIPPED `@container style()` mechanism
+ * (the `--glass-backdrop` / `--density` bucket precedent), NOT a media-query
+ * override (a media query cannot be forced from `:root`). Style queries match an
+ * ANCESTOR, so this reaches every descendant of `<html>` (the page content), while
+ * preserving opacity/colour transitions — the same nuanced reduce shape the library
+ * applies under `@media (prefers-reduced-motion: reduce)`. Strip the signal (the
+ * default, or `motion: false`) and the system `prefers-reduced-motion` governs alone.
+ */
+@container style(--demo-reduce-motion: reduce) {
+    *:not([data-allow-motion]) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.1s !important;
+        transition-property:
+            opacity, color, background-color, border-color, box-shadow !important;
+    }
+}
