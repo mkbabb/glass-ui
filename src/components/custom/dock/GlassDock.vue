@@ -330,5 +330,19 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
                 <slot name="collapsed" />
             </div>
         </div>
+
+        <!--
+            AZ.W-RAIL-EXTEND — the `#rail` CHROME slot (the W-GOD1-booked carve, landed
+            here). It is a root sibling of `.dock-layers`, rendered OUTSIDE the clipped
+            morph aperture: the `.dock-hairline-slot` wrapper is `position: absolute`
+            relative to the dock root, so the root's morph-axis `overflow: clip` never
+            reaches it and its content (a `<DockRail>` hairline + context end-icon)
+            PERSISTS when the dock collapses (G2 — the persistence the in-pane switcher
+            rail lacks). Rendered only when authored ($slots.rail), so a dock with no
+            rail is byte-identical to before.
+        -->
+        <div v-if="$slots.rail" class="dock-hairline-slot">
+            <slot name="rail" />
+        </div>
     </div>
 </template>

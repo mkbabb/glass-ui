@@ -1,0 +1,65 @@
+{
+  "wave": "AZ.W-DOCK-CONTEXT",
+  "clause": "W3 — live per-route DockLayer swap on the shell docks",
+  "base": "http://localhost:5199",
+  "routeA": {
+    "route": "/forms/inputs",
+    "bottom": {
+      "present": true,
+      "railTabs": [
+        "Toggles",
+        "Selection",
+        "Text"
+      ],
+      "facetEntries": [
+        "Inputs",
+        "Textarea",
+        "Number Field"
+      ]
+    },
+    "sidebar": {
+      "present": true,
+      "railTabs": [
+        "Text",
+        "Selection",
+        "Toggles"
+      ],
+      "facetEntries": [
+        "Inputs",
+        "Textarea",
+        "Number Field"
+      ]
+    }
+  },
+  "routeB": {
+    "route": "/data/table",
+    "bottom": {
+      "present": true,
+      "railTabs": [
+        "Series",
+        "Lists",
+        "Tables"
+      ],
+      "facetEntries": [
+        "Table",
+        "Data Table",
+        "Tags Input"
+      ]
+    },
+    "sidebar": {
+      "present": true,
+      "railTabs": [
+        "Tables",
+        "Lists",
+        "Series"
+      ],
+      "facetEntries": [
+        "Table",
+        "Data Table",
+        "Tags Input"
+      ]
+    }
+  },
+  "bottomRailDiffers": true,
+  "sidebarRailDiffers": true
+}

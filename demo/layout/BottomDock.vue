@@ -12,7 +12,8 @@
 // press; DockTabButton auto-activates its `.is-active` state when the rendered
 // RouterLink carries aria-current="page". Dogfoods the dock + glass atoms +
 // iOS-26 across the 3 viewports.
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import {
     ChevronLeft,
     ChevronRight,
@@ -22,6 +23,8 @@ import {
 } from "@lucide/vue";
 import {
     DockIconButton,
+    DockLayer,
+    DockLayerGroup,
     DockSeparator,
     DockTabButton,
     GlassDock,
@@ -42,29 +45,37 @@ import {
 } from "../../src/components/ui/tooltip";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useContextualDockLayers } from "../composables/useContextualDockLayers";
 
 const { current, next, prev, nextCategory, prevCategory } =
     useStoryNavigation();
 
+// AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam. The dock's
+// in-category nav is now a `<DockLayerGroup>` whose layer SET is route-keyed:
+// `useContextualDockLayers(route)` maps the active category to its facet layers
+// (Substrates → Fields/Creatures, Motion → Engines/Text FX/Entrance, …). The SAME
+// dock renders a DIFFERENT layer set purely because the route changed — the
+// route→layer determinism R3-14 names, over the EXISTING layer registry.
+const route = useRoute();
+const { layers: contextLayers } = useContextualDockLayers(route);
+
+// The active contextual facet — defaults to the first layer of the current
+// route-context, and resets when the route-context (and thus the layer set)
+// changes, so a section switch lands on that section's first facet.
+const activeContextLayer = ref<string>(contextLayers.value[0]?.id ?? "");
+watch(
+    contextLayers,
+    (next) => {
+        if (!next.some((l) => l.id === activeContextLayer.value)) {
+            activeContextLayer.value = next[0]?.id ?? "";
+        }
+    },
+    { immediate: true },
+);
+
 const sheetOpen = ref(false);
 
 const loc = computed(() => current.value);
-
-interface PagerEntry {
-    id: string;
-    title: string;
-    to: string;
-}
-
-const entries = computed<PagerEntry[]>(() =>
-    loc.value
-        ? loc.value.category.stories.map((s) => ({
-              id: s.id,
-              title: s.title,
-              to: `/${loc.value!.category.id}/${s.id}`,
-          }))
-        : [],
-);
 
 const categoryTitle = computed(() => loc.value?.category.title ?? "Stories");
 
@@ -156,17 +167,44 @@ const hasNext = computed(() =>
                     </TooltipContent>
                 </Tooltip>
 
-                <!-- In-category story tabs. -->
-                <div class="demo-bottom-dock__tabs">
-                    <DockTabButton
-                        v-for="entry in entries"
-                        :key="entry.id"
-                        as-child
-                        class="demo-bottom-dock__tab tap-squish"
+                <!-- AZ.W-DOCK-CONTEXT — the in-category nav is a route-driven
+                     <DockLayerGroup>: the layer SET is the current section's
+                     contextual facets (route→layer determinism). The switcher rail
+                     drills between facets; each facet pane holds its quick-jump
+                     story links. The layer set CHANGES on navigation between
+                     sections — the page-aware contextual facility (the prior flat
+                     story-tab list was route-blind). -->
+                <DockLayerGroup
+                    v-model:active="activeContextLayer"
+                    orientation="horizontal"
+                    :show-rail="contextLayers.length > 1"
+                    rail-position="start"
+                    class="demo-bottom-dock__context"
+                    data-testid="bottom-dock-context-group"
+                >
+                    <DockLayer
+                        v-for="layer in contextLayers"
+                        :key="layer.id"
+                        :id="layer.id"
+                        :label="layer.label"
+                        :icon="layer.icon"
                     >
-                        <RouterLink :to="entry.to">{{ entry.title }}</RouterLink>
-                    </DockTabButton>
-                </div>
+                        <div class="demo-bottom-dock__tabs">
+                            <DockTabButton
+                                v-for="entry in layer.entries"
+                                :key="entry.storyId"
+                                as-child
+                                class="demo-bottom-dock__tab tap-squish"
+                            >
+                                <RouterLink
+                                    :to="`/${current?.category.id}/${entry.storyId}`"
+                                >
+                                    {{ entry.label }}
+                                </RouterLink>
+                            </DockTabButton>
+                        </div>
+                    </DockLayer>
+                </DockLayerGroup>
 
                 <!-- Next within the category — ADAPTIVE (B9): absent at the last
                      story, never a greyed forward arrow. -->

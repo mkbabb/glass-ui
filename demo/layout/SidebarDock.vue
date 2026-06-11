@@ -13,9 +13,13 @@
 // genuine NEW deliverable is the active-category restyle: the affordance moves
 // from the bare `.is-active` colour shift onto the NCSU-red accent + a
 // left-edge accent rule + W25 `tap-squish` press feedback.
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import {
     DockIconButton,
+    DockLayer,
+    DockLayerGroup,
+    DockRail,
     DockSeparator,
     GlassDock,
 } from "../../src/components/custom/dock";
@@ -29,6 +33,7 @@ import { DarkModeToggle } from "../../src/components/custom/controls";
 import { cn } from "../../src/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useContextualDockLayers } from "../composables/useContextualDockLayers";
 import { useLongPress } from "../eggs/useLongPress";
 
 const props = withDefaults(
@@ -46,7 +51,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ navigate: [] }>();
 
-const { current, firstOfCategory } = useStoryNavigation();
+const { current, firstOfCategory, goTo } = useStoryNavigation();
 
 const activeCategoryId = computed<string | null>(() => {
     const loc = current.value;
@@ -62,6 +67,50 @@ function go(categoryId: string): void {
     firstOfCategory(categoryId);
     emit("navigate");
 }
+
+function goStory(categoryId: string, storyId: string): void {
+    goTo(categoryId, storyId);
+    emit("navigate");
+}
+
+// The hairline-rail context model (AZ.W-RAIL-EXTEND). The `<DockRail>`'s end-icon
+// writes this — a writable computed mirroring `activeCategoryId` whose setter
+// navigates the rail to that category. ONE registry: the rail and the category nav
+// read/write the SAME navigation state (no parallel store). `railContextIds` is the
+// ordered primary-category set the end-icon advances through.
+const railContext = computed<string | undefined>({
+    get: () => activeCategoryId.value ?? undefined,
+    set: (id) => {
+        if (id) go(id);
+    },
+});
+const railContextIds = computed(() => primaryCategories.value.map((c) => c.id));
+
+// AZ.W-DOCK-CONTEXT — the page-driven contextual dock-layer seam. The rail
+// surfaces the active SECTION's contextual facets as a secondary `<DockLayerGroup>`
+// (Substrates → Fields/Creatures, Forms → Text/Selection/Toggles, …). The layer SET
+// is route-keyed: `useContextualDockLayers(route)` maps the active category to its
+// facet layers, so the SAME dock renders a DIFFERENT layer set purely because the
+// route changed — the route→layer determinism R3-14 names, over the EXISTING layer
+// registry (no new layer machinery).
+const route = useRoute();
+const { layers: contextLayers } = useContextualDockLayers(route);
+
+// The active facet — defaults to the first layer of the current route-context, and
+// resets when the route-context (and thus the layer set) changes.
+const activeContextLayer = ref<string>(contextLayers.value[0]?.id ?? "");
+watch(
+    contextLayers,
+    (next) => {
+        if (!next.some((l) => l.id === activeContextLayer.value)) {
+            activeContextLayer.value = next[0]?.id ?? "";
+        }
+    },
+    { immediate: true },
+);
+// The contextual facet group only renders when the section has >1 facet (a
+// single-facet or unmapped section shows the primary nav alone — no clutter).
+const showContextGroup = computed(() => contextLayers.value.length > 1);
 
 // E1 — the ℱ wordmark redraws itself as a Fourier epicycle curve. A long-press
 // (or dbl-click) fires the redraw; a short tap falls through to the RouterLink
@@ -202,6 +251,63 @@ function onWordmarkClick(e: MouseEvent): void {
             </template>
         </TooltipProvider>
 
+        <!-- AZ.W-DOCK-CONTEXT — the page-driven contextual facet group. A vertical
+             <DockLayerGroup> whose layer SET is the active section's facets
+             (route-keyed via useContextualDockLayers). Navigating between sections
+             swaps which facets the dock surfaces — the route→layer determinism, over
+             the EXISTING layer registry. Rendered only when the section carries >1
+             facet, behind a divider from the primary category nav above. -->
+        <template v-if="showContextGroup">
+            <DockSeparator />
+            <DockLayerGroup
+                v-model:active="activeContextLayer"
+                orientation="vertical"
+                rail-position="start"
+                class="demo-sidebar-context"
+                data-testid="sidebar-dock-context-group"
+            >
+                <DockLayer
+                    v-for="layer in contextLayers"
+                    :key="layer.id"
+                    :id="layer.id"
+                    :label="layer.label"
+                    :icon="layer.icon"
+                >
+                    <TooltipProvider :delay-duration="250">
+                        <Tooltip
+                            v-for="entry in layer.entries"
+                            :key="entry.storyId"
+                        >
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="demo-sidebar-context-item tap-squish"
+                                    :aria-label="entry.label"
+                                    @click="
+                                        activeCategoryId &&
+                                        goStory(activeCategoryId, entry.storyId)
+                                    "
+                                >
+                                    <component
+                                        :is="layer.icon"
+                                        class="h-4 w-4 opacity-70"
+                                        aria-hidden="true"
+                                    />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                v-if="showTooltips"
+                                side="right"
+                                :side-offset="10"
+                            >
+                                {{ entry.label }}
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </DockLayer>
+            </DockLayerGroup>
+        </template>
+
         <!-- The dark-mode toggle is the trailing UTILITY control: it rides the
              #collapsed slot, which the vertical GlassDock renders as a bottom section
              below an automatic <DockSeparator> (the home-top / utility-at-the-end
@@ -212,6 +318,19 @@ function onWordmarkClick(e: MouseEvent): void {
                 size="dock"
                 eclipse
                 class="demo-sidebar-dark-toggle"
+            />
+        </template>
+
+        <!-- The hairline rail (AZ.W-RAIL-EXTEND) — a context control beyond the rail's
+             bottom edge. Its end-icon advances the active category (the SAME navigation
+             state the nav items drive — one registry). It is dock chrome, so it sits
+             outside the morph aperture and reads as a finished iOS-26 whisper hairline. -->
+        <template #rail>
+            <DockRail
+                v-model:context="railContext"
+                :entries="railContextIds"
+                icon-label="Next category"
+                data-testid="sidebar-dock-rail"
             />
         </template>
     </GlassDock>

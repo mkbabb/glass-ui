@@ -1,0 +1,122 @@
+/* AZ.W-RAIL-EXTEND — the net-new hairline-rail facility's beyond-edge geometry.
+ *
+ * `<DockRail>` renders in GlassDock's `#rail` chrome slot OUTSIDE the clipped morph
+ * aperture (the `.dock-hairline-slot` wrapper is `position: absolute` relative to the
+ * dock root, so the root's morph-axis `overflow: clip` never clips it — it PERSISTS
+ * when the dock collapses, the whole point of the facility, G2).
+ *
+ * The hairline is composed from the `--border-hairline` token PAIR (the 0.5px
+ * catch-light + under-shadow the dock + instrument-chassis already speak) via
+ * `box-shadow` — a whisper, NEVER a hard `1px solid` rule (R1). The hairline OVERRUNS
+ * the dock content box by `--dock-rail-extend-length` (R3 — the beyond-edge extent),
+ * a dock-scoped geometry knob a consumer overrides. The paint is PERPENDICULAR to the
+ * dock layout axis (the `<DockSeparator>` idiom extended past the edge):
+ *   - row dock (horizontal)  → the rail is a horizontal run; the hairline overruns
+ *                              past the block edge
+ *   - column dock (vertical) → the rail is a vertical run; the hairline overruns past
+ *                              the block edge
+ *
+ * @import-ed by dock.css into the SAME `@layer components` as the other partials.
+ */
+@layer components {
+    :root {
+        /* The beyond-edge overrun length — how far the hairline runs PAST the dock
+           content box. A proportioned default (a touch more than a dock control); a
+           consumer retunes per-instance. Rides `--dock-scale` so it tracks the
+           coarse-pointer density thread the rest of the dock floor speaks. */
+        --dock-rail-extend-length: calc(2.5rem * var(--dock-scale, 1));
+    }
+
+    /* The chrome-slot wrapper — rendered by GlassDock OUTSIDE the `.dock-layers` clip
+       aperture (a flex sibling of `.dock-persistent`), then lifted out of flow so the
+       morph clip never reaches it. Anchored to the dock's `position` edge. */
+    .dock-hairline-slot {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* The slot itself paints nothing — `<DockRail>` owns the hairline + icon. */
+        pointer-events: none;
+        z-index: 1;
+    }
+    /* The end-icon control re-arms pointer events (the slot is pass-through). */
+    .dock-hairline-slot > * {
+        pointer-events: auto;
+    }
+
+    /* Horizontal (row) dock — the rail runs along the block (bottom/top) edge; the
+       hairline overruns the inline extent past the dock content box. */
+    .glass-dock:not(.vertical) .dock-hairline-slot {
+        inset-inline: calc(-1 * var(--dock-rail-extend-length)) auto;
+        inset-block-end: calc(-1 * var(--dock-rail-extend-length));
+    }
+    .glass-dock:not(.vertical) .dock-hairline-slot.at-end {
+        inset-inline: auto calc(-1 * var(--dock-rail-extend-length));
+    }
+
+    /* Vertical (column) dock — the rail runs along the block (bottom) edge; the
+       hairline overruns the block extent past the dock content box. */
+    .glass-dock.vertical .dock-hairline-slot {
+        inset-block-end: calc(-1 * var(--dock-rail-extend-length));
+        inset-inline-start: 0;
+        inset-inline-end: 0;
+    }
+    .glass-dock.vertical .dock-hairline-slot.at-start {
+        inset-block: calc(-1 * var(--dock-rail-extend-length)) auto;
+        inset-block-end: auto;
+    }
+
+    /* The hairline element itself — a flex row/column carrying the overrunning
+       hairline + the end-icon control. The hairline is a `::before` pseudo painted
+       with the `--border-hairline` box-shadow (R1 — the token pair, no hard rule). */
+    .dock-hairline-extend {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--dock-layer-gap, 0.375rem);
+    }
+
+    /* Row dock → the rail is a horizontal run; the hairline is a horizontal line that
+       overruns inline by `--dock-rail-extend-length`. */
+    .dock-hairline-extend.horizontal {
+        flex-direction: row;
+    }
+    .dock-hairline-extend.horizontal::before {
+        content: "";
+        flex: 1 1 auto;
+        block-size: 1px;
+        /* R3 — the beyond-edge overrun: the hairline's painted length includes the
+           extend overrun past the dock content box. */
+        min-inline-size: var(--dock-rail-extend-length);
+        /* R1 — the `--border-hairline` token pair (catch-light + under-shadow), NOT a
+           hard `border: 1px solid`. */
+        box-shadow: var(--border-hairline);
+    }
+
+    /* Column (vertical) dock → the rail is a vertical run; the hairline is a vertical
+       line that overruns the block axis by `--dock-rail-extend-length`. */
+    .dock-hairline-extend.vertical {
+        flex-direction: column;
+    }
+    .dock-hairline-extend.vertical::before {
+        content: "";
+        flex: 1 1 auto;
+        inline-size: 1px;
+        min-block-size: var(--dock-rail-extend-length);
+        box-shadow: var(--border-hairline);
+    }
+
+    /* `extent="inset"` keeps the hairline flush at the edge (no overrun) — the
+       successor-deferral / separator-like length. */
+    .dock-hairline-extend.extent-inset.horizontal::before {
+        min-inline-size: 0;
+    }
+    .dock-hairline-extend.extent-inset.vertical::before {
+        min-block-size: 0;
+    }
+
+    /* The end-icon control sits at the overrun end — a compact dock control. */
+    .dock-hairline-extend-icon {
+        flex-shrink: 0;
+    }
+}

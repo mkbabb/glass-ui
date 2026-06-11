@@ -14,6 +14,9 @@ import {
 } from "@lucide/vue";
 import {
     DockIconButton,
+    DockLayer,
+    DockLayerGroup,
+    DockRail,
     DockSeparator,
     GlassDock,
 } from "../../../src/components/custom/dock";
@@ -39,6 +42,19 @@ const entries: Entry[] = [
 ];
 
 const active = ref<string>("primitives");
+
+// The hairline-rail facility (AZ.W-RAIL-EXTEND) — a `<DockRail>` whose end-icon
+// advances the dock's active LAYER. The `railLayer` ref is bound to BOTH the
+// `<DockLayerGroup v-model:active>` AND `<DockRail v-model:context>` (ONE registry —
+// the rail writes the same ref the layer group reads; no parallel state). The icon
+// cycles through `railLayerIds`.
+const railLayer = ref<string>("assets");
+const railLayers = [
+    { id: "assets", label: "Assets", icon: Shapes },
+    { id: "layers", label: "Layers", icon: Boxes },
+    { id: "libraries", label: "Libraries", icon: Database },
+];
+const railLayerIds = railLayers.map((l) => l.id);
 </script>
 
 <template>
@@ -170,6 +186,73 @@ const active = ref<string>("primitives");
                         <DockIconButton type="button" aria-label="Open navigation">
                             <component :is="NavigationIcon" />
                         </DockIconButton>
+                    </template>
+                </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Hairline rail — a context control beyond the dock edge</h2>
+            <p class="text-small text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;DockRail&gt;</code> is a hairline that
+                runs BEYOND the dock edge (the
+                <code class="rounded bg-muted px-1">--border-hairline</code> whisper, not a hard rule),
+                carrying a leading/trailing end-icon that switches the dock's layer context. It is
+                dock CHROME — rendered in the
+                <code class="rounded bg-muted px-1">#rail</code> slot OUTSIDE the clipped morph
+                aperture — so it PERSISTS when the dock collapses (the in-pane switcher rail does
+                not). The end-icon writes the SAME
+                <code class="rounded bg-muted px-1">railLayer</code> ref the
+                <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> reads (one
+                registry, no parallel state). Hover to expand; collapse and the hairline + its
+                end-icon stay put.
+            </p>
+            <p class="text-mono-caption text-muted-foreground" data-testid="dock-rail-readout">
+                active layer = {{ railLayer }}
+            </p>
+            <div class="flex min-h-[20rem] items-start justify-start p-10">
+                <GlassDock
+                    orientation="vertical"
+                    :start-collapsed="true"
+                    aria-label="Dock with a hairline context rail"
+                    data-testid="dock-with-rail"
+                >
+                    <template #persistent>
+                        <DockIconButton type="button" aria-label="Home">
+                            <Home />
+                        </DockIconButton>
+                    </template>
+                    <DockSeparator />
+                    <DockLayerGroup
+                        v-model:active="railLayer"
+                        :show-rail="false"
+                        data-testid="dock-with-rail-group"
+                    >
+                        <DockLayer
+                            v-for="l in railLayers"
+                            :key="l.id"
+                            :id="l.id"
+                            :label="l.label"
+                            :icon="l.icon"
+                        >
+                            <component :is="l.icon" class="h-4 w-4" />
+                            <span class="px-1 text-sm font-medium">{{ l.label }}</span>
+                        </DockLayer>
+                    </DockLayerGroup>
+                    <template #collapsed>
+                        <DockIconButton type="button" aria-label="Open navigation">
+                            <component :is="NavigationIcon" />
+                        </DockIconButton>
+                    </template>
+                    <!-- The hairline rail — beyond the dock's block edge, the end-icon
+                         advances the active layer. Persists on collapse (it is chrome). -->
+                    <template #rail>
+                        <DockRail
+                            v-model:context="railLayer"
+                            :entries="railLayerIds"
+                            icon-label="Next dock layer"
+                            data-testid="dock-rail-control"
+                        />
                     </template>
                 </GlassDock>
             </div>

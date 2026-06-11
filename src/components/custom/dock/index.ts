@@ -14,6 +14,13 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 // layout axis (vertical hairline in a row dock, horizontal rule in a column dock,
 // full-row section break in a grid dock).
 export { default as DockSeparator } from "./DockSeparator.vue";
+// AZ.W-RAIL-EXTEND — the net-new hairline-rail facility: a divider that runs BEYOND
+// the dock edge with a leading/trailing end-icon switching the dock's layer context,
+// rendered as a GlassDock `#rail` chrome slot so it survives collapse (the in-dock
+// switcher rail vanishes on collapse; this one persists). Composes --border-hairline
+// (no hard rule) + binds the consumer-owned context model (one registry, not a
+// parallel state path).
+export { default as DockRail } from "./DockRail.vue";
 
 // O.W4 Lane B — Fix 1 (Rγ L1): re-export composable types so consumers can
 // type wrappers around the published surface. Previously `UseDockStateOptions`

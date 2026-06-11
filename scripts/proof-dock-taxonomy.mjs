@@ -41,6 +41,8 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // The closed set of LEGITIMATE "rail"-named dock constructs for arm (a). T2 REDs any
 // `*Rail*`/`*rail*` dock construct OUTSIDE this set.
 const RAIL_ALLOWLIST = [
+    // W-RAIL-EXTEND (the sibling Batch-2 wave): the DockRail chrome-slot class.
+    "dock-rail-slot",
     "dock-layer-rail", // the in-DockLayerGroup switcher tab strip (CSS class + its component home)
     "DockLayerRail", // the test/component name for the .dock-layer-rail surface
     "DockRail", // the W-RAIL-EXTEND beyond-dock facility — the freed noun, RESERVED here
