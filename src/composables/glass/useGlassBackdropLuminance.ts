@@ -264,8 +264,10 @@ export function useGlassBackdropLuminance(
             }
             return n > 0 ? sum / n : null;
         } catch {
-            // A tainted/cross-origin canvas throws on getImageData — fall back to the
-            // static stack-walk (the declarative bucket is the floor regardless).
+            // fail-explicit: befitting — a tainted/cross-origin canvas throws on
+            // getImageData; the null return SURFACES the miss to the caller, which
+            // falls back to the static stack-walk (the declarative bucket stays the
+            // legibility floor regardless — never a silent wrong answer).
             return null;
         }
     }
