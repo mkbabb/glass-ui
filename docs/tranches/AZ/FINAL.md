@@ -52,8 +52,10 @@ every DELTA hash-fresh).
 | W-DEPLOY | post-cut | runs after W-ADOPT: the slides.friday.institute deploy via deploy.sh (H5: CF creds probed at the hinge — `wrangler whoami` first); the live-capture verification closes it |
 
 Ad-hoc corrective rows carried on the board with their own DELTAs: R5-TAP, R4-SHELL, R5-SCOPED,
-R4-RAIL, R5-TOKENS, R5-VEIL (the R4/R5 corrective batch) and W-BLOB-REDRESS (the reflect-loop
-blob M1/M2 discharge) — all live-verified on the cardinal ledger.
+R4-RAIL, R5-TOKENS, R5-VEIL (the R4/R5 corrective batch), W-BLOB-REDRESS (the reflect-loop
+blob M1/M2 discharge), and R5-8 (the round-13 slides-bank constellation kVis floor — the
+two-axis SIZES/positions split, byte-identical at/above 922px; the slides deck-side arm
+retires on the 3.13.0 bump) — all green on the cardinal ledger.
 
 ## §2 — The R3 closure
 
@@ -135,3 +137,15 @@ retire on the 3.13.0 bump — the R5 bank coordination), then W-ADOPT → W-DEPL
 - **The AY W-DELTA0 stale-hash re-captures** — five AY DELTAs drifted hash-stale under AZ's
   edits (graced on the bare arm; RED under `--strict-freshness`); the next tranche's Batch-0
   owes the re-capture sweep.
+- **R5-9 — the deck PAGE-TURN primitive** (the slides bank, round 13): lift WHOLESALE on wave
+  cadence — the `[data-state]{active|prev|next}` contract + the `--turn-*` token surface + the
+  mode-adaptive cast-shadow gutter + the suppression contract; the reference rides slides
+  `src/styles/deck.css`. BINDING discipline on arrival: composed tokens (gradients, color-mix
+  inks) declare ON THE ELEMENT from plain-value inputs — a `:root`-composed token freezes dark
+  flips (the substitution trap, bitten twice in slides).
+- **R5-10 — glass MENU-ROW + PANEL-SECTION recipes** (round 13): the `.glass-menu-row` CVA for
+  DropdownMenuItem/ContextMenuItem + the `.glass-menu-section` mono-caption/hairline recipe +
+  the roomier panel padding rung; slides `DeckSettings.vue` is the reference + first consumer.
+- **The portal-capture discipline** (round 13, precept-status candidate): captures of teleported
+  portals must drive the app's `?dark`/`?light` param, never a class toggle — the portal does
+  not repaint reliably under a class flip.

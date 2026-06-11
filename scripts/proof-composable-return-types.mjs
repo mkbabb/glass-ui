@@ -264,6 +264,10 @@ function run() {
                 "stepPinnedDrift", "makePinnedDrift", "DEFAULT_PINNED_DRIFT_FRAC",
                 "DEFAULT_PINNED_DRIFT_DUR", "DEFAULT_PINNED_DRIFT_IDLE",
                 "DEFAULT_PINNED_DRIFT_JITTER", "ConstellationPinnedDrift",
+                // R5-8 (the slides-consumer kVis floor) — the visual-size draw
+                // scale: SIZES floor at max(k, kFloor); positions/reach stay on
+                // true k; byte-identical at/above ~922px by construction.
+                "DEFAULT_K_FLOOR", "kVisOf",
             ],
         },
         "dock/composables/index.ts": {

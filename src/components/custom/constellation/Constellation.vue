@@ -311,6 +311,14 @@ onMounted(() => {
                     const h = canvas.clientHeight || canvas.offsetHeight || 720;
                     const k = w / BASE_WIDTH;
                     field.canvas = canvas;
+                    // R5-8 — the per-instance visual-size floor knob. Read every
+                    // frame-sized pass (cheap: one var read) so a live token
+                    // retune reaches the draw scale; NaN/absent keeps the
+                    // DEFAULT_K_FLOOR the draw passes fall back to.
+                    const kFloorRaw = parseFloat(
+                        getComputedStyle(canvas).getPropertyValue("--constellation-k-floor"),
+                    );
+                    field.kFloor = Number.isFinite(kFloorRaw) ? kFloorRaw : undefined;
                     field.dpr = Math.min(
                         (typeof window !== "undefined" && window.devicePixelRatio) || 1,
                         2,

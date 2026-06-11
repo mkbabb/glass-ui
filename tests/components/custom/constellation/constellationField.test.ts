@@ -792,3 +792,37 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
         expect(field.warp.targetIdx).toBe(3); // held forever (byte-identical to HEAD)
     });
 });
+
+// R5-8 (the slides-consumer kVis floor) — the two-axis split: SIZES floor at
+// kVis = max(k, kFloor) while TRUE k keeps positions/reach. Byte-identical
+// at/above kFloor·BASE_WIDTH by construction (kVis === k there).
+import {
+    DEFAULT_K_FLOOR,
+    kVisOf,
+    BASE_WIDTH,
+} from "../../../../src/components/custom/constellation/constellationField";
+
+describe("constellation kVis floor (R5-8)", () => {
+    const fieldAt = (k: number, kFloor?: number) =>
+        ({ k, kFloor }) as Parameters<typeof kVisOf>[0];
+
+    it("floors the visual scale on a narrow canvas (390px → k≈0.30 reads 0.72)", () => {
+        const k = 390 / BASE_WIDTH;
+        expect(k).toBeLessThan(DEFAULT_K_FLOOR);
+        expect(kVisOf(fieldAt(k))).toBe(DEFAULT_K_FLOOR);
+    });
+
+    it("is the IDENTITY at/above the floor width — desktop + the 1280 export byte-stable", () => {
+        for (const w of [DEFAULT_K_FLOOR * BASE_WIDTH, 1280, 1440, 1920]) {
+            const k = w / BASE_WIDTH;
+            expect(kVisOf(fieldAt(k))).toBe(k);
+        }
+    });
+
+    it("honors a per-instance kFloor override (the --constellation-k-floor knob)", () => {
+        expect(kVisOf(fieldAt(0.3, 0.5))).toBe(0.5);
+        expect(kVisOf(fieldAt(0.6, 0.5))).toBe(0.6);
+        // absent → the shipped default
+        expect(kVisOf(fieldAt(0.3, undefined))).toBe(DEFAULT_K_FLOOR);
+    });
+});

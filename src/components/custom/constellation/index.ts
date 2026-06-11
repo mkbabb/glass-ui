@@ -5,6 +5,8 @@ export {
     stepField,
     refitField,
     BASE_WIDTH,
+    DEFAULT_K_FLOOR,
+    kVisOf,
 } from "./constellationField";
 export {
     stepWell,

@@ -19,6 +19,7 @@ import type {
     ConstellationPointer,
     ConstellationRipple,
 } from "./constellationField";
+import { kVisOf } from "./constellationField";
 import { DEFAULT_PALETTE } from "./constants";
 
 // The neutral palette fallback lives in the feature-dir constants home; re-exported
@@ -93,6 +94,8 @@ export function drawEdges(
     accentIndex = -1,
 ): void {
     const { nodes, k } = field;
+    // R5-8 — SIZES floor at kVis; REACH stays on true k (geometry, not size).
+    const kVis = kVisOf(field);
     const reach = link * k;
     const reach2 = reach * reach;
     // The neutral hairline edge alpha = the per-mode `--constellation-edge-alpha`
@@ -117,11 +120,11 @@ export function drawEdges(
             const accent = accentIndex >= 0 && (i === accentIndex || j === accentIndex);
             if (accent) {
                 ctx.strokeStyle = palette.accent;
-                ctx.lineWidth = 1.1 * k;
+                ctx.lineWidth = 1.1 * kVis;
                 ctx.globalAlpha = accentWeight * t;
             } else {
                 ctx.strokeStyle = palette.line;
-                ctx.lineWidth = 1.0 * k;
+                ctx.lineWidth = 1.0 * kVis;
                 ctx.globalAlpha = (palette.edgeAlpha * t + palette.edgeFloor) * dim;
             }
             ctx.beginPath();
@@ -140,7 +143,9 @@ export function drawNodes(
     palette: ConstellationPalette,
     opacityCeiling = 1,
 ): void {
-    const { nodes, k } = field;
+    const { nodes } = field;
+    // R5-8 — the dot radius floors at kVis (sub-pixel crush on narrow canvases).
+    const kVis = kVisOf(field);
     // E3 — the recession envelope. At `opacityCeiling=1` this is `globalAlpha=1`,
     // byte-identical to the prior implicit full-alpha node fill; a recessed hero
     // dims the dots in lockstep with the edges/web.
@@ -149,7 +154,7 @@ export function drawNodes(
         const p = nodes[m];
         ctx.fillStyle = p.dim ? palette.nodeDim : palette.node;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * k, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r * kVis, 0, Math.PI * 2);
         ctx.fill();
     }
     ctx.globalAlpha = 1;
@@ -166,6 +171,8 @@ export function drawPointerWeb(
 ): void {
     if (!pointer || pointer.x < 0) return;
     const { nodes, k } = field;
+    // R5-8 — SIZES floor at kVis; REACH stays on true k.
+    const kVis = kVisOf(field);
     const reach = link * k;
     const reach2 = reach * reach;
     // The cursor-web links read a touch stronger than the ambient edges (the
@@ -174,7 +181,7 @@ export function drawPointerWeb(
     // the per-instance `opacityCeiling` recession envelope (E3).
     const web = palette.edgeFocusAlpha * palette.alpha * opacityCeiling;
     ctx.strokeStyle = palette.line;
-    ctx.lineWidth = 1.0 * k;
+    ctx.lineWidth = 1.0 * kVis;
     for (const p of nodes) {
         const dx = p.x - pointer.x;
         const dy = p.y - pointer.y;
@@ -189,7 +196,7 @@ export function drawPointerWeb(
     ctx.globalAlpha = 0.55 * opacityCeiling;
     ctx.fillStyle = palette.node;
     ctx.beginPath();
-    ctx.arc(pointer.x, pointer.y, 2.6 * k, 0, Math.PI * 2);
+    ctx.arc(pointer.x, pointer.y, 2.6 * kVis, 0, Math.PI * 2);
     ctx.fill();
     ctx.globalAlpha = 1;
 }
@@ -203,7 +210,9 @@ export function drawRipples(
     palette: ConstellationPalette,
     opacityCeiling = 1,
 ): void {
-    const { k } = field;
+    // R5-8 — the ripple ring width AND its expansion are effect SIZES (the ring
+    // centres on the tap; flooring its extent does not move geometry).
+    const kVis = kVisOf(field);
     ctx.strokeStyle = palette.line;
     for (let i = ripples.length - 1; i >= 0; i--) {
         const rp = ripples[i];
@@ -215,9 +224,9 @@ export function drawRipples(
         }
         // E3 — the recession envelope rides the ripple fade too.
         ctx.globalAlpha = (1 - t) * 0.5 * opacityCeiling;
-        ctx.lineWidth = 1.4 * k;
+        ctx.lineWidth = 1.4 * kVis;
         ctx.beginPath();
-        ctx.arc(rp.x, rp.y, (8 + t * 130) * k, 0, Math.PI * 2);
+        ctx.arc(rp.x, rp.y, (8 + t * 130) * kVis, 0, Math.PI * 2);
         ctx.stroke();
     }
     ctx.globalAlpha = 1;

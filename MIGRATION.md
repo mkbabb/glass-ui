@@ -1080,3 +1080,15 @@ reka usage. Sweep on every reka major bump.
   (HEADLINE rationale).
 - **Speedtest re-link diff**: speedtest commit `98f88325`
   (`feat(deps): adopt glass-ui v1.0`).
+
+## 3.13.0 — the constellation kVis floor (R5-8, additive)
+
+The constellation gains a visual-size draw-scale FLOOR: `kVis = max(k, kFloor)` applied by
+`drawNodes`/`drawEdges`/`drawPointerWeb`/`drawRipples` to SIZES (dot radii, line widths, the
+cursor dot, the ripple ring) while TRUE `k` keeps positions and reach. On a 390px canvas
+(k≈0.30) the dots stop crushing sub-pixel; at/above `0.72·BASE_WIDTH ≈ 922px` (including the
+1280 export frame) `kVis === k` exactly — byte-identical by construction. New exports on
+`/constellation`: `DEFAULT_K_FLOOR` (0.72) + `kVisOf(field)` (for `drawOverlay` skins to floor
+their own marks); new optional `ConstellationField.kFloor` member, tokenable per instance via
+`--constellation-k-floor` (read by `<Constellation>` from the canvas). No API changes to the
+existing exports; the slides deck-side `K_VIS_FLOOR` interim arm retires on this release.
