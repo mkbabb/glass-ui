@@ -90,22 +90,33 @@ function tokenSurvives(token, stylesSrc) {
 // (the common shape) only asserts the RETIRED side.
 const RETIRED_CLAIMS = [
     {
-        label: "v3.10.0 AY-prune subpaths deck-progress/header-ribbon/glass-panel/instrument-rail (MIGRATION.md:10)",
+        // The demo warm-red interactive preset (--demo-nav-accent → --viz-fourier)
+        // retired at AZ.W-REGISTER-IOS. The artefact is DEMO-side CSS, outside this
+        // gate's src probes — the BINDING machine check is proof:register-ios's
+        // negative predicate (no interactive-state rule reads --viz-fourier /
+        // --demo-nav-accent across src/styles/** + demo/**). Anchored here so the
+        // coverage guard knows the claim is owned.
+        label: "the demo nav-accent red interactive preset (MIGRATION.md:19; machine-locked by proof:register-ios)",
         mustCarry: "RETIRED",
-        line: 10,
+        line: 19,
+    },
+    {
+        label: "v3.10.0 AY-prune subpaths deck-progress/header-ribbon/glass-panel/instrument-rail (MIGRATION.md:32)",
+        mustCarry: "RETIRED",
+        line: 32,
         subpaths: ["deck-progress", "header-ribbon", "glass-panel", "instrument-rail"],
         dirs: ["deck-progress", "header-ribbon", "glass-panel", "instrument-rail"],
     },
     {
-        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:48)",
+        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:70)",
         mustCarry: "RETIRED",
-        line: 48,
+        line: 70,
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths (MIGRATION.md:53)",
+        label: "pagination/virtual composables + subpaths (MIGRATION.md:75)",
         mustCarry: "RETIRED",
-        line: 53,
+        line: 75,
         subpaths: ["pagination", "virtual"],
         exports: [
             "useOffsetPagination",
@@ -115,9 +126,9 @@ const RETIRED_CLAIMS = [
         ],
     },
     {
-        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:56)",
+        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:78)",
         mustCarry: "RETIRED",
-        line: 56,
+        line: 78,
         exports: ["DockShowcaseFrame"],
     },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
@@ -223,8 +234,8 @@ function run() {
     // flagged so the declared claim list cannot silently fall behind the doc.
     const declaredLines = new Set(RETIRED_CLAIMS.map((c) => c.line));
     // Back-reference / cross-link lines that point at an ALREADY-declared claim
-    // (not a new retirement assertion): MIGRATION.md:154 ("…is RETIRED—see §2").
-    const BACKREF_LINES = new Set([154]);
+    // (not a new retirement assertion): MIGRATION.md:176 ("…is RETIRED—see §2").
+    const BACKREF_LINES = new Set([176]);
     mdLines.forEach((ln, i) => {
         const n = i + 1;
         if (!/RETIRED/.test(ln)) return;
