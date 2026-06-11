@@ -258,6 +258,12 @@ function run() {
                 "ConstellationPalette", "ConstellationField", "ConstellationWarp",
                 "ConstellationWarpConfig", "ConstellationWander", "ConstellationWell",
                 "ConstellationWellConfig", "ConstellationProps",
+                // AZ.W-CON-GEN (R5-6) — the pinned-drift facility, ADDITIVE default-OFF
+                // on the protected quintet's barrel (proof:constellation-gen G5 locks
+                // the behavior; this snapshot enrolls the deliberate surface growth).
+                "stepPinnedDrift", "makePinnedDrift", "DEFAULT_PINNED_DRIFT_FRAC",
+                "DEFAULT_PINNED_DRIFT_DUR", "DEFAULT_PINNED_DRIFT_IDLE",
+                "DEFAULT_PINNED_DRIFT_JITTER", "ConstellationPinnedDrift",
             ],
         },
         "dock/composables/index.ts": {
