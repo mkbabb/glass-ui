@@ -3,7 +3,7 @@
 **Name**: W-GOO-REDRESS - the satellite-bridge envelope + the pointer wake seam
 **Opens after**: Batch 1 (W-DARK-MATERIAL holds its live verdict — BA inv-5) · runs ‖ W-CONFIG-CHASSIS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL (Batch 2; disjoint file bounds per the EXECUTION-DAG §3 table)
 **Agents**: 1
-**Hard gate**: `proof:goo-redress` (born-RED) — two falsifiable SOURCE witnesses (the smin band scales with the WORST-CASE orbit excursion not the nominal; a `watch(pointer.active) → renderer.wake()` wire EXISTS in GooBlob.vue) + the π live readback DELTA (the bridge neck paints across the full random×ecc×wobble envelope; first-hover-after-park repaints same-frame with no accumulated-delta lurch) + the W-REFLECT2 gestalt verdict on the configurators+goo surface (BA inv-4).
+**Hard gate**: `proof:goo-redress` (born-RED) — two falsifiable SOURCE witnesses (the smin band scales with the WORST-CASE orbit excursion not the nominal; a `watch(pointer.active) → renderer.wake()` wire EXISTS in GooBlob.vue) + a CONDITIONAL third (BA-VJS-5 / valuejs-fold C-1 per-satellite color, asserted ONLY if the wave lead takes arm A — the GL-fence-widen; else C-1 books to 4.x) + the π live readback DELTA (the bridge neck paints across the full random×ecc×wobble envelope; first-hover-after-park repaints same-frame with no accumulated-delta lurch; the distinct-satellite-shade + no-fillet-seam if arm A) + the W-REFLECT2 gestalt verdict on the configurators+goo surface (BA inv-4).
 **Status**: SPEC
 
 ## §0 — RE-GROUND (mandatory step-0; re-grep every cite at HEAD before any edit)
@@ -164,6 +164,10 @@ hover follows instantly, in BOTH modes.
    `satelliteCount`-aware spread — record it in the DELTA if folded, leave it flagged
    otherwise (it is not the R8-7 defect).
 
+6. **Per-satellite derived-shade color (BA-VJS-5 / valuejs-fold C-1) — the SEAM DECISION, both arms recorded.** The C-1 ask (satellites render as slightly-different in-family shades, like `deriveAurora`) needs the FRAG's per-source COLOR seam, which is FENCE-LOCKED beyond this wave's named smin/orbit-envelope seam (BA inv-9). The wave lead picks ONE arm at dispatch and records the choice in the DELTA + PROGRESS:
+   - **Arm A — WIDEN this wave's named seam to include the satellite color routing.** Extend the fence-open from the `uSmoothK`/orbit envelope (`uploadBlobUniforms.ts:214` + `useBlobSatellites.ts` atoms) to ALSO cover the satellite color seam in the SAME uniforms module + upload path. The ready spec (from the value.js fleet): (1) `uSatColor[MAX_SATS]` vec3 → `metaball-uniforms.glsl.ts` + `UNIFORM_NAMES` (`constants.ts:151`) + the program-builder location cache; (2) in `metaball.frag.ts` the satellite samples its OWN color with a per-source weighted blend so the smin neck CROSS-FADES sat→body (no hard seam at the fillet); (3) `uploadBlobUniforms.ts` assigns satellite `i ← paletteStops[(i % (stopCount-1))+1]` (the lighter derived in-family shades — `frame.paletteStops` already plumbed, `:48/:100`); (4) optional `config.color.satelliteShadeSpread` knob. **This widens the GL fence to the satellite COLOR uniform path — a triumvirate scope-reveal, not unilateral** (the §Triumvirate fence-breach trigger: the frag color routing is beyond the smin/orbit seam this wave's fence opened; the lead must research+plan-augment the bound before crossing). Companion (small, same surface): a `bodyLightness`/`lightnessFloor` option on `deriveBlobPalette` (`color/index.ts:291`) so a near-white seed still yields a perceptible body (the U3 "colors FAR TOO WHITE" base case — a value.js-side near-white SEED, root-caused; the deriver gives no floor to stand on).
+   - **Arm B (the conservative DEFAULT) — BOOK to a 4.x point release.** C-1 is the ONE blob ask BA may leave open; if the lead does NOT widen the GL fence, BA-VJS-5 RE-STAMPS as a named successor (§Named successors) booked to a 4.x point release with the ready spec recorded, and value.js holds (it cannot derive satellite colors until the seam lands). This is NOT a scope failure — it is the recorded honest fence-respect (the AZ §7 / W-BLOB-STUDIO CONDITIONS-UNMET close-path shape applied to a GL-fence decision).
+
 ## Coordination (the R8-7 "jittery" split — declared, not raced)
 
 R8-7's "far too quick and jittery" is split by MECHANISM across two waves (EXECUTION-DAG §3
@@ -212,6 +216,10 @@ R8-7's "far too quick and jittery" is split by MECHANISM across two waves (EXECU
 | `src/components/custom/goo-blob/GooBlob.vue` | modify (the `watch(pointer.active) → renderer.wake()` wire) |
 | `src/components/custom/goo-blob/composables/useBlobPointer.ts` | modify (the optional trail-pseudopod rate-limit — scope 4, gated) |
 | `demo/stories/substrates/blob.vue` | modify (`STUDIO_GEO_BASE` only, IF scope 1 picks direction (i) and re-centers the studio default) |
+| `src/components/custom/goo-blob/shaders/metaball-uniforms.glsl.ts` | modify (CONDITIONAL — scope 6 arm A ONLY: add `uSatColor[MAX_SATS]`; the §Triumvirate GL-fence-widen scope-reveal applies — NOT default) |
+| `src/components/custom/goo-blob/shaders/metaball.frag.ts` | modify (CONDITIONAL — scope 6 arm A ONLY: the satellite per-source color sample + smin-neck cross-fade; the §Triumvirate fence-breach trigger applies — NOT default) |
+| `src/components/custom/goo-blob/constants.ts` | modify (CONDITIONAL — scope 6 arm A ONLY: `uSatColor` in `UNIFORM_NAMES`; NOT default) |
+| `src/composables/color/index.ts` | modify (CONDITIONAL — scope 6 arm A companion ONLY: the `deriveBlobPalette` `lightnessFloor` option; NOT default) |
 | `scripts/proof-goo-redress.mjs` | create (the born-RED gate) |
 | `package.json` | modify (register `proof:goo-redress` in scripts) |
 | `scripts/gates.mjs` | modify (register the `proof:goo-redress` registry row) |
@@ -225,7 +233,13 @@ Do NOT touch:
   seam (the `uSmoothK` UNIFORM UPLOAD in `uploadBlobUniforms.ts` + the JS-side orbit atoms in
   `useBlobSatellites.ts`) — the in-shader smin formula stays fence-locked (BA inv-9 / scope
   fences: "the GL renderer fence (blob/aurora shader internals) is untouched except where a
-  wave names it" — this wave names ONLY the upload+envelope seam, NOT the shader).
+  wave names it" — this wave names ONLY the upload+envelope seam, NOT the shader). **The ONE
+  CONDITIONAL carve-exception is scope 6 arm A** (BA-VJS-5 / C-1): IF the wave lead widens the
+  fence to the satellite COLOR seam (`uSatColor` in `metaball-uniforms.glsl.ts` +
+  `metaball.frag.ts` per-source sample + `uploadBlobUniforms.ts` assignment + `constants.ts`
+  `UNIFORM_NAMES`), that crossing is a §Triumvirate scope-reveal (research+plan-augment the
+  bound FIRST), NOT unilateral; the DEFAULT (arm B) leaves the frag color fence-locked and
+  books C-1 to 4.x.
 - **`src/components/custom/configurator/ConfiguratorRow.vue`** + the LabeledField family — the
   0px-slider headline (goo-studio §(a)) is **W-CONFIG-CHASSIS**'s bound (Batch 2 sibling).
   This wave is the renderer half ONLY.
@@ -338,14 +352,15 @@ witnesses (the comment-strip + pure-detector house pattern, mirroring
    passes but the live `/substrates/blob` render still shows a detaching satellite or a
    lurching hover, the wave does NOT close (the source-green/visually-broken gap is exactly
    the P-1 close class BA inv-4 forbids).**
-4. **The gestalt verdict (BA inv-4, binding at W-REFLECT2).** Per-mechanism greens (W1-W3)
+4. **W4 (CONDITIONAL — only if arm A of scope 6 is taken) — per-satellite derived color (BA-VJS-5 / C-1).** IF the wave lead WIDENED the GL fence (arm A) to land the satellite color seam, the gate asserts: `uSatColor[MAX_SATS]` EXISTS in `metaball-uniforms.glsl.ts` + `UNIFORM_NAMES` + the location cache (source), AND the π readback shows the satellite contribution samples a DISTINCT in-family shade with the smin neck cross-fading sat-color → body-color with no hard seam at the fillet (**Acceptance: distinct satellite shade, no fillet seam**). IF arm B (book to 4.x) was taken, this clause is OMITTED and BA-VJS-5 carries to §Named successors (the gate does not red on a recorded fence-respect book — the arm choice is a wave-lead decision recorded in PROGRESS, not a gate failure).
+5. **The gestalt verdict (BA inv-4, binding at W-REFLECT2).** Per-mechanism greens (W1-W3, + W4 if arm A)
    alone do NOT close this visual wave. The configurators+goo surface in the
    `proof:ba-gestalt` roster (`docs/tranches/BA/audit/reflect/ba-gestalt-roster.md`) is owed
    a whole-page capture in BOTH modes over its real backdrop + an explicit gestalt verdict —
    AND that goo verdict checks BOTH this wave's renderer half AND W-GLASS-CAL's chip-easing
    half landed (the EXECUTION-DAG §3 reconciliation). This wave records its π DELTA at Batch
    2; the joint goo gestalt verdict flips at W-REFLECT2 once both halves hold. The wave
-   closes `complete` at Batch 2 on W1-W3 + its own π DELTA; the gestalt-PASS is the tranche's
+   closes `complete` at Batch 2 on W1-W3 (+ W4 if arm A) + its own π DELTA; the gestalt-PASS is the tranche's
    W-REFLECT2 close condition, not this wave's local close.
 
 W1-W2 are the device-free CI half (`proof:goo-redress`); the π readback is the binding
@@ -391,6 +406,19 @@ registration; `git diff --check` before close.
 - **Blocks**: W-REFLECT2 (Batch 7) — the configurators+goo gestalt verdict checks this wave's
   renderer half landed (alongside W-CONFIG-CHASSIS's 0px-slider fix + W-GLASS-CAL's chip
   easing). No structural successor wave consumes this wave's seam.
+
+## Named successors
+
+- **BA-VJS-5 / C-1 per-satellite color, IF arm B (book to 4.x) is taken** — the satellite
+  derived-shade color BOOKS to a 4.x point release with the ready spec recorded (the
+  `uSatColor[MAX_SATS]` uniform + the `metaball.frag.ts` per-source sample with a smin-neck
+  cross-fade + the `uploadBlobUniforms.ts` `paletteStops[(i % (stopCount-1))+1]` assignment +
+  the optional `satelliteShadeSpread` knob + the `deriveBlobPalette` `lightnessFloor`
+  companion). The destination is named: a 4.x point release after BA; value.js holds (it
+  cannot derive satellite colors until the seam lands — the cross-repo block is recorded in
+  the W-CLOSE value.js adopt section). The arm choice (A widen-now vs B book-to-4.x) is the
+  wave lead's call at dispatch, recorded in PROGRESS + the DELTA; neither arm is a gate
+  failure (the fence-respect book is the honest CONDITIONS-UNMET close-path shape).
 
 ## Archaeology
 

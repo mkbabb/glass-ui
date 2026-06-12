@@ -1,7 +1,7 @@
 # BA tranche — PROGRESS
 
-The dark-register-rebuilt tranche: 29 waves over 8 batches (4 floor, 1 dark-material,
-4 S1-redress, 2 dock, 5 glass-grammar, 1 promotion, 5 demo-staging, 2 close), grounded
+The dark-register-rebuilt tranche: 30 waves over 8 batches (4 floor, 2 register-substrate,
+6 S1-redress+emission, 2 dock, 6 glass-grammar, 3 promotion, 5 demo-staging, 2 close), grounded
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
 harvested + committed). Base **master @ v3.13.0** (the AZ close cut, published with
@@ -41,13 +41,14 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 0 | W-GESTALT-GATE | **complete** (1c03a2d9) | proof:ba-gestalt BORN-RED 8/8 FAIL + the roster ledger + anti-evasion; the :5175×3 + :5173×2 ports → :5199; clause 4 widened to generic NON-:5199 (+ the latent comment-strip http:// bug fixed); one triumvirate trigger resolved in-wave (the 9337 service-port shape-allowlist) |
 | 0 | W-HYGIENE | **complete** (d853bd0f) | all 10 scopes: MIGRATION 3.13.0-true · CLAUDE.md 36→33 + structure-sync gate born-RED→GREEN (P-4 png arm) · colocation DERIVED (README-marker; aurora/fourier-field/underline covered, self-test bitten) · 5 AY DELTAs RETIRED-SUPERSEDED + the Clause-7 banner exemption · AX rows retired · png ledger executed (16 commit/10 delete) · deck-progress-rail RE-WIRED · precepts submodule ff+commit+pointer (0c03de8, N-W10/O-W10 archive-tagged, I34 flagged) |
 | 0 | W-CARVE2 | **complete** (continuation — predecessor partial completed + verified) | typography.css → typography/{scale,semantic,utilities}.css thin @import root (each <500); constellationField types → constellationTypes.ts (CARVE); Constellation.vue orchestrator → composables/useConstellation.ts (CARVE, no §5-keep). proof:no-god-module GREEN at its DECLARED CLOSE (ratchetBaselineCount 0, ratchetDrained true, violations []). W1-W4 GREEN. Typography dist byte-isomorphic A/B: HEAD-monolith build == carved build == dist/glass-ui.css 916c5ea5. typecheck 0 · build 0 · verify-export-types 0 · barrel export-set unchanged (17 syms) · constellation 38/38 · the 5 readers re-pointed via readMonolith all GREEN; proof:storybook-ia + proof:components-css NO-OP-correct (drift — not src readers). OWED to orchestrator: CLAUDE.md constellation §Structure line +constellationTypes.ts (deferred to W-HYGIENE's enumeration diff); the orphan proof-claude-structure-sync.mjs parity FAIL is sibling-owned |
-| 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix + the R9 over-light self-engage recalibration (scope 7) [H1] |
+| 1 | W-DARK-MATERIAL | **live-verified** (all 7 scopes, H1a) | page L6→L4 · card L10→L16 (relL 7.12×, band span 2.69×) · transmissive saturate/brightness dark arm + edge α 0.22 · the dark tint LIFT 12% (same seam) · --primary legendre-violet oklch(0.739 0.134 318.1) fg 7.15:1 · surface-tint light-ink 2.9× · contrast-color lockstep 2/2 · the calm-light floor 4% w/ AA bright bucket; proof:dark-material 20/20 · π 12/12 · adaptive-glass REBASELINED 26/26 + live 18/18 · 956/956 · the gestalt verdict staged for W-REFLECT2 |
 | 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
 | 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
 | 2 | W-GOO-REDRESS | planned (spec authored) | satellite smin reach + the pointer wake seam |
 | 2 | W-DOCK-GEOMETRY | planned (spec authored) | the control-plate clipping cluster + overflow-engage-on-real-overflow |
 | 2 | W-FADING-SCROLL | planned (spec authored) | the library FadingScroll primitive (h+v, scroll-state-driven) + static-utility retirement |
 | 2 | W-ATLAS-RECONCILE | planned (spec authored) | the atlas A/B fold: the settle seam + reflow deletion + the suppression carve + test port + PAPER_WASH_GROUND + async-VT need + the silver conditional |
+| 2 | W-EMISSION | planned (spec authored) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
 | 3 | W-DOCK-SECTIONS | planned (spec authored) | the 4th-rail-attempt RE-CONCEPTION: tripartite sections + divider-seam rail seat + fan-out/retract [H3] |
 | 3 | W-DOCK-MORPH-INSITU | planned (spec authored) | V↔H morph + layering demos in the shell docks |
 | 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
@@ -179,3 +180,43 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   C-3 EasingPicker folds into W-FOURIER-STUDIO (the StepsEditor generalizes;
   value.js's 3 forks = consumer #2) + C-2 ghost variant rides W-EMISSION.
   The spec amendments + the W-EMISSION authoring ride the Batch-1 window.
+- 2026-06-12 (the value.js N2 fold EXECUTED — docs-only, NO impl) — the six riders
+  surgically amended into the authored specs + the W-EMISSION spec authored
+  (`waves/BA.W-EMISSION.md`, 190 lines): (a) **A-1 → W-DOCK-MORPH-INSITU** — BA-VJS-1
+  the nested-`DockLayerGroup` measure-ordering defect (the `to:0` FLIP at
+  `dockMorphContext.ts:344-360` + `DockLayerGroup.vue:92-93`): §0 RE-GROUND + defect
+  row 5 + scope 6 (compose the inner target's `max-content` into the outer measure) +
+  gate M5 + the π four-cycle `from:40→to:≈261` clause + `dockMorphContext.ts:344-360`
+  modify-carve bound; THE SPRING FENCE recorded (`DOCK_SPRING`/`constants.ts`
+  byte-untouched, NOT a re-tune — the letter forbids it); the §F2 booking re-scoped
+  first-mount-intermittent → deterministic-for-nested. (b) **A-4 → W-STAGE** — BA-VJS-2
+  the aurora `breathing` register dead (`atoms.ts:166` all-drift-zero → DEAD): §0
+  grounding + defect row 8 + scope 12 (non-zero `nucleiDrift`/`paletteDrift`, the JS
+  motion TABLE — `aurora.frag` untouched, the fence holds) + gate W4 + the π
+  perceptible-drift clause + `atoms.ts` modify-carve on A1's bound. (c) **A-5 → W-TABS**
+  — BA-VJS-3 the pill indicator mis-centered (`useTabIndicator.ts:102/120` translateX-only):
+  an ACCEPTANCE ROW (W5, indicator center == label center, both axes, both materials),
+  NO new scope/bound (the letter is explicit). (d) **WO-3 → W-MENU-GLASS** — BA-VJS-4
+  the menu size→font-rung prop (the `--dropdown-text` lever exists): §0 + defect row 5 +
+  scope 6 (extend `SelectTrigger`'s `size` into a font-rung writing `--dropdown-text`) +
+  gate W4 + `SelectTrigger.vue` bound + the W-EMISSION disjointness note. (e) **C-1 →
+  W-GOO-REDRESS** — BA-VJS-5 per-satellite derived color (`uSatColor=0` at
+  `metaball-uniforms.glsl.ts:84-86`): the seam note recorded BOTH arms (arm A widen the
+  GL fence to the `uSatColor` seam via §Triumvirate, arm B book to 4.x; default arm B) +
+  defect row 5 + scope 6 + conditional gate W4 + conditional arm-A bounds + the
+  §Named-successors 4.x book. (f) **C-3 → W-FOURIER-STUDIO** — BA-VJS-6 the StepsEditor
+  GENERALIZES to a published `<EasingPicker>` primitive (value.js's 3 forks = consumer
+  #2; the kf donor coordination NOTED, not executed — inv-10): §0 + defect row 8 + scope
+  7 rewritten (arm A publish-now via §Triumvirate, arm B demo-only-interim + book
+  W-EASING-PRIMITIVE) + Unit C re-shaped + gate W6 arm + the §Named-successors book +
+  the FLAGGED `curve-gallery.vue` coordination conflict (W-DEMO-AFFORDANCES is the owner;
+  literal-diff-block or sequence). (g) **E → W-CLOSE** — BA-VJS-E the value.js adopt
+  section beside slides + atlas: §0 + scope 13 (the cut-notes BY NAME — tabs/Dialog/menu/
+  Select/Slider; the interim-arm retirements; the C-1 4.x block) + `valuejs-adopt-book.md`
+  bound + the value.js-tree foreign fence + the scope-4 MIGRATION by-name rows.
+  W-EMISSION = Batch 2 (6th parallel wave; bounds disjoint vs the 5 landed/authored
+  Batch-2 specs — `index.css`/`SelectContent`/`ui/slider`/`watercolor-dot` touched by no
+  Batch-2 sibling; `ui/slider/*` explicitly fenced OUT of W-CONFIG-CHASSIS per its line
+  119). ROSTER 29→30; the three count sites updated (BA.md header + Batch-2 header +
+  row · EXECUTION-DAG numbering + §3 header/table + §8 order + §9.9 fold seams ·
+  PROGRESS header + wave-table row + this event). NO source edited; docs-only.
