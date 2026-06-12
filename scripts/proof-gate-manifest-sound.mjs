@@ -244,7 +244,7 @@ function detectSound() {
     const deltaFresh = checkDeltaHashes();
     facts.azDeltaFreshness = deltaFresh.map((d) => ({ wave: d.wave, state: d.state }));
     for (const d of deltaFresh)
-        if (d.state !== "fresh")
+        if (d.state !== "fresh" && d.state !== "retired")
             violations.push(`[FRESHNESS-CONTENT-HASH] ${d.wave}-DELTA.md ${d.reason}`);
 
     // ── Clause 8: R6-PERSISTED ──────────────────────────────────────────────
@@ -289,6 +289,14 @@ function checkDeltaHashes() {
             continue;
         }
         const doc = readFileSync(abs, "utf8");
+        // BA.W-HYGIENE DC-REC-9: a RETIRED-SUPERSEDED DELTA legitimately carries NO
+        // freshness header (the captured AY-form surface no longer exists; the banner
+        // names the superseding AZ wave). The exemption requires the banner, not mere
+        // header absence — a header-less doc WITHOUT the banner still reds.
+        if (/RETIRED-SUPERSEDED/.test(doc)) {
+            out.push({ wave, state: "retired", reason: "RETIRED-SUPERSEDED banner present — freshness exempt (DC-REC-9)" });
+            continue;
+        }
         const sp = doc.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
         const sh = doc.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
         if (!sp || !sh) {

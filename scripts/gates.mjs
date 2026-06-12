@@ -300,7 +300,19 @@ export const GATES = [
         id: "proof:colocation",
         cmd: "proof:colocation",
         tags: ["local", "ci"],
-        note: "AY.W-COLOCATE — the feature-dir colocation convention over the four carved god-module dirs (goo-blob/dock/tabs/constellation): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED",
+        note: "AY.W-COLOCATE — the feature-dir colocation convention over every README-bearing complex feature-dir (DERIVED, currently aurora/constellation/dock/fourier-field/goo-blob/tabs/underline): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED",
+    },
+    {
+        id: "proof:claude-structure-sync",
+        cmd: "proof:claude-structure-sync",
+        tags: ["local"],
+        note: "BA.W-HYGIENE (P-5) — the CLAUDE.md §Structure custom/ enumeration ≡ disk drift gate: the dir-named lines under the custom/ header equal `ls src/components/custom/` (set-equality both directions, minus index.ts/non-dirs) AND the declared count equals the disk count (DERIVED, not a literal). Folds the P-4 on-disk-but-untracked visual-png integrity assert (every un-ignored docs/tranches/*/audit/visual png is git-tracked). Bite: add/remove a custom/ dir without re-syncing the doc + count, or leave an un-ignored visual png untracked -> RED.",
+    },
+    {
+        id: "proof:deck-progress-rail",
+        cmd: "proof:deck-progress-rail",
+        tags: ["local"],
+        note: "AX.W24 (re-wired BA.W-HYGIENE scope 10) — the KEPT .glass-progress-rail recipe (cascade-correct --progress-fill/track token-feed + inset glow) over <Progress> + ProgressDefault token-read + the /deck reserved guard (the DeckProgress wrapper/subpath RETIRED, PRUNE-LEDGER R2). The recipe SURVIVES on master with the slides consumer; re-wired into the local set off its orphaned (script-present, gates-row-absent) state. Bite: drop the recipe's token-feed, repaint a bg-primary util, un-retire the wrapper, or squat the /deck namespace -> RED.",
     },
     {
         id: "proof:tailwind-v4-idiom",

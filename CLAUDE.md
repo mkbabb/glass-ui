@@ -13,6 +13,13 @@ npm run verify-export-types # subpath dts publication probe (L W0 Lane III relea
 
 The `build` script runs two sequential arms — `vite build` emits the JS bundle + per-subpath chunks + the `/styles` CSS, then `emit-types` (`vue-tsc --project tsconfig.build.json`) emits the flat per-entry `.d.ts` set into `dist/` out-of-band. Declarations are NOT emitted by an in-Vite plugin: `tsconfig.build.json` runs the repo-native `vue-tsc` in `emitDeclarationOnly` mode against `src/`, which decouples the dts emit from any plugin-bundled TypeScript pin. The full build is ≈6.9 s (the vite arm ~0.8 s over 2415 modules; the vue-tsc dts arm ~6 s) and peaks at ≈769 MB RSS — comfortably under Node's default heap, so `build` runs green with no `NODE_OPTIONS` heap prefix. CI and `release.sh` invoke `npm run build` directly; both inherit the default-heap profile.
 
+### Gate hygiene — the gestalt acceptance bar + the live-gate :5199 default (BA.W-GESTALT-GATE)
+
+Two gate-register facts close the BA seed's structural root causes:
+
+- **`proof:ba-gestalt` — the holistic per-surface acceptance gate (the P-1 close-class fix).** AZ closed `complete` on a 9-surface per-mechanism PASS matrix the user re-opened the SAME DAY (R8) on ≥7 surfaces — the 6th consecutive re-opening round (R3→R8). A per-mechanism π verifies the LOCAL mechanism (a pixel ΔL, an `h1Overlap:false`) but cannot verify the GESTALT the user reads ("totally mis-aligned" is a placement judgement, not a contrast delta). `proof:ba-gestalt` (`scripts/proof-ba-gestalt.mjs`) is the structural answer: a roster of the 8 named acceptance surfaces (dock · configurators-goo · aurora · glass-feedback · shell · motion-fourier · dark-register · cross-repo) at `docs/tranches/BA/audit/reflect/ba-gestalt-roster.md`, each owed a whole-page capture in BOTH modes over its real backdrop + a recorded gestalt VERDICT — operative-PASS IFF every verdict is PASS AND every declared capture path RESOLVES ON DISK (the anti-evasion floor — a PASS with a missing capture is the close-class lie, forbidden). It is born-RED (every verdict FAIL, anchored to an R8 ground capture) and tagged `["local"]` so it does NOT block ci/release mid-tranche; **W-REFLECT2 (Batch 7) is the single authorized verdict-flipper** + the wave that PROMOTES it to the operative close set when the verdicts flip GREEN (the gestalt OR becomes the `complete` vs `complete_with_misses` decision). EVERY visual wave closes against this gate's verdict requirement, not the per-mechanism π alone.
+- **The live-gate fleet defaults `:5199` + the recurrence-proofed clause.** Every live-gate + profile default resolves the demo vite server `:5199` (the `GLASS_UI_DEMO_URL`/`GLASS_UI_AURORA_BASE_URL`/`GLASS_UI_RUNTIME_BASE_URL ?? "http://…:5199"` form; the env override is preserved). `proof:gate-manifest-sound`'s clause 4 — formerly a `:5173`-only `DEFAULT_5173` regex that let the THREE `:5175` dock-gate defaults sail past (CHR-1, the chronic) — is WIDENED to flag ANY non-:5199 port in a live-demo-URL `??`-default (catching `:5175`/`:5173`/any stray). The detector is scoped to the URL-STRING default form: the W-GESTALT-GATE census found a LEGITIMATE non-:5199 bare-port default in the set (`proof-runtime.mjs` `GLASS_UI_CHROME_DEBUG_PORT ?? 9337`, a Chrome DevTools remote-debug port, not a live-demo target) and proved EVERY live-demo default is the URL-string form, so the URL-scoping catches the entire chronic while leaving the correct-by-design service port GREEN. The inherited clause's naive `//`-line-comment strip ATE the URL's `://` (a latent no-op on URL-form defaults); the URL-safe `(^|[^:])//` strip (the clause-7 house idiom) restores the detection.
+
 ## Structure
 
 ```
@@ -69,11 +76,12 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 36 custom package dirs (every dir has a package barrel). FEATURE-DIR COLOCATION (AY.W-COLOCATE): a complex component is a sub-component dir — components at root, composables under `composables/`, constants in `constants.ts`, shaders in `shaders/`, skeletons in `skeleton/` (each "if needed"), + a `README.md`. Enforced by `proof:colocation`; the idiom home + the CSS half are docs/precepts/design-idioms.md.
+│   ├── custom/                     # 33 custom package dirs (every dir has a package barrel). FEATURE-DIR COLOCATION (AY.W-COLOCATE): a complex component is a sub-component dir — components at root, composables under `composables/`, constants in `constants.ts`, shaders in `shaders/`, skeletons in `skeleton/` (each "if needed"), + a `README.md`. Enforced by `proof:colocation`; the dir-set ≡ disk is enforced by `proof:claude-structure-sync` (BA.W-HYGIENE — the enumeration below cannot drift from `ls src/components/custom/` again); the idiom home + the CSS half are docs/precepts/design-idioms.md.
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset'—see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
 │   │   ├── confirm-dialog/         # ConfirmDialog
+│   │   ├── constellation/          # Constellation.vue + constellationField/Draw/Interaction carve + composables/ + constants.ts (subpath /constellation; the generalization props default-OFF — AZ.W-CON-GEN)
 │   │   ├── controls/
 │   │   │   └── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
 │   │   ├── dock/
@@ -88,7 +96,10 @@ src/
 │   │   │   ├── composables/        # useDockState, useLayerTransition (axis-aware—see dock orientation)
 │   │   │   └── index.ts
 │   │   ├── expandable-container/   # ExpandableContainer
+│   │   ├── fourier-field/          # FourierField.vue + math.ts + presets.ts (the epicycle field demo surface; subpath /fourier-field)
+│   │   ├── glass-panel/            # GlassPanel rimless glass-tier surface (subpath /glass-panel; restored at AZ.W-PRUNE2 — live keyframes.js consumer)
 │   │   ├── goo-blob/               # GooBlob WebGL2 metaball on the useWebGLCanvas substrate—injected ColorResolver (AU.W7; subpath /goo-blob)
+│   │   ├── header-ribbon/          # HeaderRibbon banner surface (subpath /header-ribbon; restored at AZ.W-PRUNE2 — live keyframes.js consumer)
 │   │   ├── hover-popover/          # HoverPopover with hoverOpenDelay prop (renamed from openDelay—K W1)
 │   │   ├── icon-tooltip/           # IconTooltip
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
@@ -108,6 +119,7 @@ src/
 │   │   ├── timeline/               # GlassTimeline + Continuous{Timeline,Rail,Markers} (AU.W10 split the 901-line orchestrator)
 │   │   ├── toggle-chip/            # segmented chip/cell toggle
 │   │   ├── typewriter/             # TypewriterText
+│   │   ├── underline/              # GlassUnderline animated underline (subpath /underline; minted AZ — slated for retirement by BA.W-HANDMARK Batch 5)
 │   │   ├── watercolor-dot/         # WatercolorDot CSS/SVG blob—internalized per-instance filter + seeded prng (AU.W7; subpath /watercolor-dot)
 │   │   └── index.ts
 │   └── index.ts                    # barrel: ui/ + custom/

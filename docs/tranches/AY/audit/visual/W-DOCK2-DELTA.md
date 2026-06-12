@@ -1,25 +1,14 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
-<!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/styles/dock/morph.css, src/components/custom/dock/DockLayerGroup.vue -->
-<!-- surface-hash: a9750d0ab04a7ccf5a2960dd52e146378a71e6977680e0ea555fe49bc8c64512 -->
-<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
-     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
-     content hash of the declared surface-paths' bytes above — fresh IFF the surface
-     is byte-identical to capture time, regardless of unrelated commits. The
-     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
-<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture + R6 re-run-on-real (2026-06-10): the 8
-     own-surface W-DOCK2-{lockstep,collapse}-midmorph-{desktop,mobile}-{light,dark} mid-morph
-     stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-dock2.mjs`
-     against the REAL /dock/overview dock on :5199 — the SAME scenes, real dock-element crops
-     at the desktop (1440×900) + mobile (390×844) viewports. The capture-commit is now HEAD (a
-     descendant of the surface's last-touch 875c271a), so the freshness clause reads FRESH.
-     The R6 cited gate `AX-dock-animation-live.json` now persists status:"pass" — RE-RUN ON
-     REAL and GREEN. The prior status:"fail" was NOT a surface regression: the §"Honesty note"
-     crash (the /dock/overview live Aurora WebGL ReadPixels hangs headless Chromium mid-probe)
-     is now fixed in `proof-dock-animation-live.mjs` (it parks the WebGL substrate via the
-     SHIPPED offscreen-pause seam — document.hidden — for the rAF-heavy probe while the dock
-     morph SpringProgress, its own visibility-independent rAF, rings unchanged). The captured
-     onset table re-confirmed: child→box Δ 3.8–28.7 ms, all inside budget. -->
+<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form dock-morph + rail surface
+     drifted — the AZ rail re-architecture (AZ.W-RAIL3's floating-carousel chip strip + W-DOCK-RAIL's
+     hairline-rail register + W-RAIL-EXTEND) re-shot the equivalent rail/dock surface under their OWN
+     wave ids, so the AY surface-hash no longer matches the live dock bytes (stamped a9750d0a…; the
+     `DockLayerGroup` rail it captured is no longer the live rail surface). This is RETIRE-with-rationale
+     over re-shoot: a re-capture would shoot the AZ rail3 surface, not the AY DockLayerGroup rail. The
+     AY freshness headers (surface-paths / surface-hash) are removed rather than re-stamped; the
+     entering-child lockstep verdict (child→box Δ within budget) below is preserved as the historical
+     record, no longer a freshness-bearing live DELTA. -->
 
 This wave discharges the IMPL half of the dock-lockstep chronic (PROMPT-CORPUS #5 /
 AUDIT-LEDGER #5). W-DOCK1's capture VERDICT was **lag captured-ABSENT** (`box↔scalar

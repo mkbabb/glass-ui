@@ -33,12 +33,22 @@
 > Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
 > re-introduction on any interactive selector).
 
-> **v3.11.0 (AZ, staged)** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
+> **The published cut is v3.13.0 — there is no 3.11/3.12 entry on the registry.** The
+> AZ tranche's breaks (the dock taxonomy + the metric `amount`→`value` rename + the
+> constellation generalization + the Card `veil` addition) ALL ship together in the
+> published **3.13.0**. The interim `3.11.0/.1/.2 + 3.12.0` registry publishes were
+> STALE-LINEAGE out-of-band publishes from a pre-prune tree (they carry the four
+> since-retired subpaths and lack `/underline`); the AZ cut SKIPPED them and published
+> 3.13.0 from master via release.yml provenance so `latest` resolves the true close (AZ
+> FINAL §5). A consumer pins **3.13.0** and reads every break below as landing on that one
+> release — the number-skip is intentional, the 3.11/3.12 lineage is not the close.
+>
+> **v3.13.0** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
 > `<GlassDock variant="rail">` → `<GlassDock orientation="vertical">` (the `variant`
 > discriminant is removed; a vertical dock is now COLLAPSIBLE by default — it morphs its
 > `height`; a static nav column adds `always-expanded`). `<GlassDock variant="instrument-strip">`
 > is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
-> `SurveyResultDock` cockpit re-pins on the 3.11.0 adopt.
+> `SurveyResultDock` cockpit re-pins on the 3.13.0 adopt.
 
 > **v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
 > aliases, per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress` +
@@ -49,14 +59,14 @@
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
 > NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
-> BREAKING (3.12.0 staged): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
+> BREAKING (3.13.0): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
 > `value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
 > Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
 > surfaces unchanged).
-> ADDITIVE (3.12.0 staged): the `/constellation` subpath gains optional default-OFF generalization
+> ADDITIVE (3.13.0): the `/constellation` subpath gains optional default-OFF generalization
 > props/exports (pinnedIndex/pinNode, accentEdges, the palette accent/edgeFloor/edgeAccentAlpha,
 > stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
-> ADDITIVE (3.12.0 staged): the Card `surface` union gains `"veil"` — the borderless/rimless
+> ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
 
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
