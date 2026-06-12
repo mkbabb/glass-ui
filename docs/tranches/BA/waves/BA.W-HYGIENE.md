@@ -177,11 +177,15 @@ rows are RETIRED-with-rationale, not carried a fourth tranche.
    the new coverage: a probe that a composable-at-package-root in `aurora/` REDs the gate
    (which it does not at HEAD because aurora/ is off the target list).
 
-6. **Commit the precepts submodule + advance the pointer (P-3).** Inside `docs/precepts`:
+6. **Commit the precepts submodule + advance the pointer (P-3) + the submodule BRANCH fold
+   (the branch-recon find).** Inside `docs/precepts`:
    commit the three UNTRACKED files (`canonical-readme-shape.md`, `cross-repo-dev-iteration.md`,
    `design-idioms.md`) + the two MODIFIED files (`cross-repo-dev-resolution.md`,
-   `instructions/LESSONS-LEARNED.md`); advance the superrepo submodule pointer to the new
-   submodule HEAD. Add the close-lane assertion (coordinate with the BA `ι` integrity sweep
+   `instructions/LESSONS-LEARNED.md`); the submodule is also DETACHED BEHIND `origin/main`
+   with TWO unmerged remote branches (the N-W10 + O-W10 precepts-hardening lines —
+   `branch-recon-crossrepo.md` §7): reconcile (fast-forward onto main + fold-or-retire the
+   two branches with their owning sessions' rationale) so the submodule ends the tranche on
+   ONE line; then advance the superrepo submodule pointer to the new submodule HEAD. Add the close-lane assertion (coordinate with the BA `ι` integrity sweep
    — see Dependencies): `git -C docs/precepts status --porcelain` MUST be empty at every
    tranche close, so the prose-only walk that missed this through two closes cannot miss it
    again. (Agents NEVER git in the superrepo per the hardened agent clause — the SUBMODULE
@@ -207,6 +211,31 @@ rows are RETIRED-with-rationale, not carried a fourth tranche.
    #139/#140 superseded in the same note (they sit pending in the task ledger; this is a
    doc-only supersede record, no new work — the substantive carves already landed). This is
    the RETIRE-absorbed disposition, not a fold.
+
+9. **THE BRANCH-CLOSE PROTOCOL (the branch-reconciliation register executed —
+   `audit/fleet/branch-recon-{named,worktree-heavy,worktree-singles,crossrepo}.md`).**
+   The exhaustive census verified EVERY ahead>0 branch symbol-level vs master: ZERO
+   AT-RISK beyond the d6 fork (reconciled via W-ATLAS-RECONCILE/W-HANDMARK; its close
+   protocol is W-CLOSE's), one STALE-RETIRE (the W24 deck-progress branch — the
+   `/deck-progress` subpath was RETIRE-FULL'd by AY W-PRUNE `077fe58f`), everything
+   else SUPERSEDED with citations. The disposition (ORCHESTRATOR-owned git, the agent
+   produces nothing here — this scope is a literal orchestrator instruction):
+   (a) archive-tag the ~12 named ahead>0 branch tips (`recon-archive/<branch>`)
+   then `branch -D` them + the ahead-0 corpses (`af-w1-glass-ui`, `v.w234`,
+   `w.w2.1`) + push-delete the two remote-only corpses (`release/0.7.x`, `v0.9.2`);
+   (b) the worktree prune: unlock the 46 locked, `git worktree remove --force` +
+   `branch -D` the 60 ahead-0-and-clean agent worktrees; archive-tag the 39 ahead>0
+   worktree tips before delete (the integration-superseded scratch — verified, none
+   carry uncommitted at-risk work, the 5 dirtiest sampled trace to CLOSED tranches);
+   (c) the `feat/d6-library-3.10` branch is EXEMPT here (W-CLOSE's protocol owns it).
+   END STATE: `git branch` lists master only; `git worktree list` lists the main tree
+   (+ any live session worktrees); the register is the auditable record.
+10. **Retire the orphan gate `proof:deck-progress-rail` (the branch-recon master-hygiene
+    find).** It lingers at `package.json:737` with its script present but wired into
+    ZERO gates rows — either re-wire it (the `.glass-progress-rail` recipe it guards
+    SURVIVES on master with the slides consumer) or retire script+row with the
+    rationale; the agent re-greps and records which arm holds (the recipe-survives
+    truth suggests RE-WIRE into the local set).
 
 ## Triumvirate Dispatch
 

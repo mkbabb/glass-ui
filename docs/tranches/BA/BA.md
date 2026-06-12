@@ -1,6 +1,17 @@
 # BA — the dark register rebuilt, the glass grammar unified, the dock re-conceived, and the demo staged to demonstrate
 
-**Repo** glass-ui (+ a slides adopt/deploy book at close) · **Base** master @ v3.13.0 (the AZ close cut, published with provenance) · **Status** AUTHORED — awaiting user greenlight; NO implementation has begun (R8 directive 5: "This is NOT an implementation phase. Tranche development only.").
+**Repo** glass-ui (+ a slides adopt/deploy book at close) · **Base** master @ v3.13.0 (the AZ close cut, published with provenance) · **Status** GREENLIT 2026-06-12 (the user's standing continue order post-presentation — the AZ-precedent greenlight form); execution opens at Batch 0 per the EXECUTION-DAG.
+
+## The hinge-decision record (greenlight 2026-06-12, the user's continue order)
+
+The hinge answers ride the recommended arms as ORCHESTRATOR DEFAULTS, reversible at
+any batch boundary on the user's word (the AZ precedent): **H1 → (a)** the
+luminous-dark transmissive material (the user's own R8-11/15/19 + R10-5 "no gray"
+words support the full rebuild); **H2 → (a)** gold survives CALM (the disco
+retirement is the user's verbatim mandate; the hinge was only gold's static
+survival); **H3 → (a)** the rail persists re-seated at the divider seam (the user's
+own R8-1/R8-6 language); **H4 → 4.0.0** (already settled by the atlas letter's
+register D, two independent grounds); **H5** creds provided at the close hinge.
 
 BA is grounded in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`,
 19 grounded reads + 7 standing directives) and the 32-lane deep audit

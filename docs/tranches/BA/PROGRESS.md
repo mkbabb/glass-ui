@@ -5,8 +5,10 @@ The dark-register-rebuilt tranche: 29 waves over 8 batches (4 floor, 1 dark-mate
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
 harvested + committed). Base **master @ v3.13.0** (the AZ close cut, published with
-provenance). **NO implementation has begun — this tranche is in the AUTHORING phase;
-the wave specs are the deliverable until the user greenlights (BA invariant 2).**
+provenance). **GREENLIT 2026-06-12 (the user's standing continue order
+post-presentation, the AZ-precedent form; the hinge-decision record rides BA.md —
+H1a/H2a/H3a as orchestrator defaults, H4=4.0.0, H5 at close) — execution opens at
+Batch 0 per the EXECUTION-DAG.**
 
 The cardinal-lesson forcing function is inherited (`proof:live-verified-ledger` reads
 this PROGRESS home; content-hash freshness; operative-verdict reads). NEW at BA: the
@@ -129,3 +131,19 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   invariant 11 minted (no out-of-band lineage publish + the registry-consumer
   prune probe), and the W-CLOSE atlas close set (the cut-notes BY-NAME tables,
   the fork-close protocol, the atlas adopt section). Awaiting greenlight.
+- 2026-06-12 (the BRANCH-RECONCILIATION census, "Ensure") — the user asked what other
+  branches need reconciling; the 4-lane symbol-level verification (wf_6c178942-f35,
+  `audit/fleet/branch-recon-{named,worktree-heavy,worktree-singles,crossrepo}.md`)
+  walked EVERY ahead>0 branch (~54 across the named/release/worktree sets), every
+  capability grep-verified on master with citations. VERDICT: **the d6 fork was the
+  ONLY branch that ever carried glass-ui-unique at-risk work** (already reconciled);
+  everything else SUPERSEDED (the AW/AX hand-integration era re-landed all of it
+  under fresh SHAs — incl. the four "wip orchestrator-preserved" branches) or
+  STALE-RETIRE (one: the W24 deck-progress branch, obsoleted by the AY RETIRE-FULL
+  `077fe58f`). Zero AT-RISK-UNCOMMITTED across the 105 worktrees (the 5 dirtiest
+  sampled — all closed-tranche scratch). Siblings: not glass-ui items (value.js
+  tranche-f-handoff +58 is their session's; slides main-dirty = task #148; fourier's
+  stale Q.W1 stash superseded by contract-v2). FOLDED: W-HYGIENE scope 9 (the
+  branch-close protocol — archive-tag + delete per the register, the 105-worktree
+  prune) + scope 10 (the orphan proof:deck-progress-rail re-wire-or-retire) + the
+  scope-6 submodule branch fold (the precepts N-W10/O-W10 unmerged lines).
