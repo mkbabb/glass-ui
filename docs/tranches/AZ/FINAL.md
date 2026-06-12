@@ -93,7 +93,14 @@ MOTION2 triumvirate (R7), each with its own banked `USER-AUDIT-*.md` + dischargi
    glass-ui→sibling path this gate guards; the gate now logs it loudly as `[pending]`
    (the phantom-classes precedent) and the entry is removed when their tranche reconciles
    alias-vs-exports-map.
-3. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
+3. **`proof:dock-orchestrator-single` — the live arm demoted to a LOUD skip-by-policy; the
+   structure arms stay binding.** The demo no longer presents a collapsed-at-rest dock on a
+   light page (the layers/overview showcases mount expanded by story design; `/dock/rail`
+   keeps stable collapsed pills but saturates headless SwiftShader — visibility polls ran
+   ~60s). The live morph-ownership truth is carried at HEAD by the newer `proof:rail3` π
+   (the live collapse/expand cycle, today green) + `proof:dock-tap-integrity`'s live replay.
+   Successor: re-host the live probe on a dedicated light fixture route.
+4. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
    the `consumers:static` root-surface enrollment of the deliberate `useLiquidFlex` re-export;
    the `dock-tap-integrity` born-RED witness pinned to the recorded pre-fix commit `e5bb8166`
    (the moving-HEAD anchor self-destructed once the guard merged); the `proof:runtime` default
