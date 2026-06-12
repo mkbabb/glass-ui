@@ -9,7 +9,8 @@ the AUTHORING phase — NO implementation runs until the user greenlights (BA in
 `latest` on npm). slides exact-pins 3.13.0 (commit a171266, deployed). The BA branch is
 `tranche/BA` off master.
 
-**Numbering:** the `W-*` named system from `BA.md`'s 24-wave roster. The five user-domain
+**Numbering:** the `W-*` named system from `BA.md`'s 27-wave roster (24 at first
+authoring + the R9/R10 pre-greenlight amendments: W-NO-GRAY, W-TABS, W-PAGER). The five user-domain
 hinges (H1 dark-material direction, H2 gold-CTA post-disco form, H3 rail disposition,
 H4 version, H5 publish/deploy creds) gate the named batches.
 
@@ -78,6 +79,16 @@ The contrast-color() inversion fix rides here (not in a demo wave) because it is
 library-seam defect (the adaptive refinement layer) with systemic reach — every
 muted/active pairing inside a glass card inverts today.
 
+## §2a — Batch 1b: W-NO-GRAY (sequenced after W-DARK-MATERIAL)
+
+The R10-5 "No gray" bar made mechanical: the warm-48 neutral ladder RESOLVES
+achromatic (the census's one systemic root — C 0.002–0.016 below the ~0.020 floor).
+It is Batch 1b for the same reason W-DARK-MATERIAL is Batch 1a: the token ladder is
+the substrate every later capture composites over, and both waves write the token
+files — SEQUENCED, never parallel (dark register first, then the light register's
+chroma floor + glass-plate warm bias + border re-anchor on the rebuilt base). Batch 2
+opens only after 1b's live verdict.
+
 ## §3 — Batch 2: the S1 redress band (4 parallel waves)
 
 | wave | write bound (primary) |
@@ -129,10 +140,27 @@ a license to fork a second axis.
 W-GLASS-CAL must land BEFORE Batch 6 captures (the blur dial-back changes every glass
 surface's render — captures taken pre-cal would all stale at the cal).
 
+### §5a — the Batch-4 intra-batch edge: W-GLASS-CAL.3 → W-TABS
+
+W-TABS (the R10-2 overhaul) joins Batch 4 with ONE declared edge: its indicator clock
+consumes the `--spring-<name>-duration` vocabulary that W-GLASS-CAL's unit 3 (the
+spring clock — the R10 [S1] springLinearStops-discards-response fold) mints. W-GLASS-CAL
+sequences unit 3 FIRST within its wave; W-TABS opens after that unit's commit lands.
+All other Batch-4 disjointness holds (W-TABS owns `custom/tabs/*` + `ui/tabs/*` +
+`segmented-tabs.css` + the tabs story — no sibling writes them). Two further W-TABS
+consume-seams, both cross-batch and ordered by construction: `.paper-ink-mark`
+(minted by W-SURFACE-AXIS scope 8, same batch — the underline register consumes it,
+a shape gap triumvirates at the minting wave) and `<FadingScroll>` (Batch 2, landed).
+
 ## §6 — Batches 5–6: promotions, then the demo staged
 
 W-ICON-CHIP (Batch 5) precedes W-SUFFUSE2 (Batch 6) because the pop map's vehicle is
-the chip primitive. Batch 6's five waves are demo-side and parallel:
+the chip primitive. W-PAGER (Batch 5, ‖ W-ICON-CHIP — disjoint bounds) carries the
+R10-1 ring + the R10-3 deck-dots fold; it sits in Batch 5 because the ring is
+glass-floating over the Batch-1 rebuilt registers and its `.glass-pager-ring` write
+to `glass/surfaces.css` must precede W-DEMO-AFFORDANCES's Batch-6 negative-predicate
+edit to the same file (sequenced by batch order — recorded in §9). Batch 6's five
+waves are demo-side and parallel:
 
 | wave | write bound (primary) |
 |---|---|
@@ -162,11 +190,12 @@ historical retirement rides W-CLOSE.
 
 ```
 Batch 0:  W-SHELL-HOLD ‖ W-GESTALT-GATE ‖ W-HYGIENE ‖ W-CARVE2
-Batch 1:  W-DARK-MATERIAL                                   [H1]
+Batch 1:  W-DARK-MATERIAL → W-NO-GRAY                       [H1]
 Batch 2:  W-CONFIG-CHASSIS ‖ W-GOO-REDRESS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL
 Batch 3:  W-DOCK-SECTIONS → W-DOCK-MORPH-INSITU             [H3]
-Batch 4:  W-SURFACE-AXIS ‖ W-FEEDBACK-TONE ‖ W-MENU-GLASS ‖ W-GLASS-CAL ‖ W-PROGRESS-GRADIENT   [H2]
-Batch 5:  W-ICON-CHIP
+Batch 4:  W-SURFACE-AXIS ‖ W-FEEDBACK-TONE ‖ W-MENU-GLASS ‖ W-GLASS-CAL ‖ W-PROGRESS-GRADIENT ‖ W-TABS   [H2]
+          (intra-batch edge §5a: W-GLASS-CAL.3 spring-clock → W-TABS)
+Batch 5:  W-ICON-CHIP ‖ W-PAGER
 Batch 6:  W-STAGE ‖ W-DEMO-AFFORDANCES ‖ W-FOURIER-STUDIO ‖ W-SUFFUSE2 ‖ W-ANIMATE
 Batch 7:  W-REFLECT2 → W-CLOSE                              [H4][H5]
 ```
@@ -213,3 +242,18 @@ folded back here as BINDING refinements (each is also recorded in the owning spe
    fan is 13 SFCs at HEAD (not the lane's 9); the CLAUDE.md custom/ enumeration omits
    FIVE dirs (underline/ included); `Constellation.vue` is 576 lines on disk vs the
    577 ratchet baseline (mechanical drift, resolved by the carve).
+8. **The R9/R10 amendment seams** (the pre-greenlight folds): (a) `glass/surfaces.css`
+   is written by W-PAGER (Batch 5, the `.glass-pager-ring` recipe) and then by
+   W-DEMO-AFFORDANCES (Batch 6, the stack negative-predicate anchor only) — sequenced
+   by batch order, no parallel write; (b) W-TABS's three consume-seams (the
+   `--spring-snappy-duration` clock ← W-GLASS-CAL.3 same-batch §5a edge;
+   `.paper-ink-mark` ← W-SURFACE-AXIS scope 8; `<FadingScroll>` ← Batch 2) — shape
+   gaps triumvirate at the MINTING wave; (c) the `ui/Tabs` public-surface retirement
+   re-greps the dock-rail internal consumer (`DockLayerGroup.vue:217`, Batch-3-landed
+   surface) and records internal-keep vs delete — a structural DockLayerGroup edit is
+   a scope-reveal, never unilateral; (d) W-DARK-MATERIAL's scope-7 self-engage
+   recalibration REBASELINES `proof:adaptive-glass` + `adaptive-glass-live` (their
+   structural witnesses assert the current unconditional shape — the red is the
+   rebaseline signal, not a regression to revert); (e) W-NO-GRAY (Batch 1b) appends
+   to `tokens/glass.css` AFTER W-DARK-MATERIAL's seam edits land (sequenced within
+   Batch 1, same nothing-races-the-substrate rationale).

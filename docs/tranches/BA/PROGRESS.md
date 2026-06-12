@@ -1,6 +1,6 @@
 # BA tranche — PROGRESS
 
-The dark-register-rebuilt tranche: 24 waves over 8 batches (4 floor, 1 dark-material,
+The dark-register-rebuilt tranche: 27 waves over 8 batches (4 floor, 1 dark-material,
 4 S1-redress, 2 dock, 5 glass-grammar, 1 promotion, 5 demo-staging, 2 close), grounded
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
@@ -39,7 +39,8 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 0 | W-GESTALT-GATE | planned (spec authored) | proof:ba-gestalt born-RED vs the R8 captures + the :5175/:5173 gate-default hygiene |
 | 0 | W-HYGIENE | planned (spec authored) | MIGRATION re-anchor · CLAUDE.md custom/ sync · colocation derive · precepts submodule · AX/AY debt retirements |
 | 0 | W-CARVE2 | planned (spec authored) | typography.css + constellationField/Constellation carve-or-justified-keep |
-| 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix [H1] |
+| 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix + the R9 over-light self-engage recalibration (scope 7) [H1] |
+| 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
 | 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
 | 2 | W-GOO-REDRESS | planned (spec authored) | satellite smin reach + the pointer wake seam |
 | 2 | W-DOCK-GEOMETRY | planned (spec authored) | the control-plate clipping cluster + overflow-engage-on-real-overflow |
@@ -51,7 +52,9 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 4 | W-MENU-GLASS | planned (spec authored) | the R5-10 fold: .glass-menu-row + .glass-menu-section on menuItemVariants |
 | 4 | W-GLASS-CAL | planned (spec authored) | the blur dial-back (six primitives) + the disco retirement + hover smoothing [H2] |
 | 4 | W-PROGRESS-GRADIENT | planned (spec authored) | the sectioned Progress single-gradient rebuild + the glass meter register |
+| 4 | W-TABS | planned (spec authored) | the R10-2 overhaul: ONE engine, pill-glass + underline-paper, axis-derived orientation, release-at-arrival on the calibrated spring clock; segmented/overflow/multi-select/ui-Tabs-public retire |
 | 5 | W-ICON-CHIP | planned (spec authored) | the IconChip pop primitive (duotone/bloom/reveal axes) |
+| 5 | W-PAGER | planned (spec authored) | PagerDots + the glass pager ring (R10-1 + the R10-3 deck-dots fold; the counter off bg-card) |
 | 6 | W-STAGE | planned (spec authored) | the per-category background map + glassiness-over-aurora stagings + token-tour contrast chassis |
 | 6 | W-DEMO-AFFORDANCES | planned (spec authored) | the play register + trigger convention + the curve-picker chip rack + padding rhythm |
 | 6 | W-FOURIER-STUDIO | planned (spec authored) | the foreground fourier studio: partial-sum N axis + orthogonal registers + trace-a-shape + the clock |
@@ -74,3 +77,38 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   24 wave specs under `waves/` (opus fanout, run wf_aabe690a-133; every agent cross-
   checked its bounds against the DAG — the flagged seams are folded into
   `EXECUTION-DAG.md §9`). Presented for the user's greenlight; NO implementation.
+- 2026-06-12 (R9, pre-greenlight) — the slides gray-glass read banked + PROVEN live
+  (`audit/USER-AUDIT-2026-06-12-R9.md`): the AZ unconditional self-engage grays every
+  consumer content-glass card over a calm light page (the intervention probe is the
+  proof — 20% → gray, 0% → warm cream restored; zero slides-local compounding); the
+  fleet had RATIFIED the light self-engage (WVR-7), so it was unowned → FOLDED as
+  W-DARK-MATERIAL scope 7 + the double-ended W7 gate witness + the
+  adaptive-glass gate REBASELINE bounds. The slides-fold accounting recorded (R5-10
+  folded, R5-4 landed, R5-9/deck external-gated, the M-close arms verified retired);
+  the W-CLOSE pins landed (deck-subpath↔directional-VT cross-link, the slides
+  `DeckGate.vue:70` primary-audacious break pinned). Commit cf8d92bd.
+- 2026-06-12 (R10, pre-greenlight) — the tabs/carousel/deck/design re-audit banked
+  (`audit/USER-AUDIT-2026-06-12-R10.md`): the tabs overhaul mandate (pill good,
+  underline re-cut for paper, superfluous types retire, springs re-timed — the
+  underline indicator paints an oval BLOB at HEAD), the carousel dots owe the
+  counter's ring, first-class deck dots within reason (partially revises the R9
+  deck gating), the design re-audit as a DELTA, and NO GRAY as the register-wide
+  bar. The 6-lane opus analysis dispatched (run wf_fcf2ce2b-ea7: tabs-overhaul ·
+  carousel-pager · deck-boundary · fd-delta · suffusion-pops-delta ·
+  glass-no-gray); Fable synthesizes the designs + the BA amendments on harvest.
+  Dev servers live for the user's audit: glass-ui :5210 · slides :5273.
+- 2026-06-12 (R10 harvest + synthesis) — all 6 lanes returned + reports committed
+  under `audit/fleet/r10-*.md`. Headline mechanics: the tabs oval-blob is `ui/Tabs`'s
+  default-ON TabsIndicator plate (NOT SegmentedTabs — whose underline is correct);
+  the "springs too slow" root is ARCHITECTURAL — `springLinearStops` discards each
+  spring's response so every CSS consumer rides a generic `--duration-*` clock
+  ([S1]); the carousel dots + slides DeckPager are already one implementation pair
+  (the dots oracle), so the ring register meets ≥2 consumers by construction; the
+  no-gray census found ONE systemic root (the warm-48 ladder resolves achromatic,
+  C 0.002–0.016 < the 0.020 floor). FABLE SYNTHESIS → three new waves authored
+  (W-NO-GRAY Batch 1b · W-TABS Batch 4 · W-PAGER Batch 5; roster 24→27) + four
+  spec amendments (W-GLASS-CAL gains the spring-clock unit 3; W-SURFACE-AXIS gains
+  the control REST tier + `.paper-ink-mark`; W-SUFFUSE2 gains the event-family
+  escalation + the canonical section rhythm SM-1 + the graded title ladder SM-2;
+  W-DOCK-SECTIONS gains the NF-5 double-render corroboration) + the DAG §2a/§5a/§9.8
+  edges. Awaiting greenlight; NO implementation.

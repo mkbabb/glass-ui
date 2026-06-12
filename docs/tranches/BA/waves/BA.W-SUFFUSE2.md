@@ -189,6 +189,34 @@ the choice is recorded in the DELTA + the gate map and is the BINDING per-page i
    the d2 chip≤glyph proportion is structural (enforced in `<IconChip>` per W-ICON-CHIP); the d3
    one-event count holds against the closed ledger. `proof:suffuse` stays GREEN post-spread.
 
+7. **The EVENT-FAMILY escalation (R10-4 "how might we increase this… within a sense of
+   proportion" — `r10-suffusion-pops-delta.md` §2).** The d3 counting UNIT graduates from the
+   single chip to the EVENT FAMILY: a chip + its matching section-accent rail + the tinted
+   eyebrow, ALL keyed to the same ONE `--section-color-N`, count as ONE event (≈doubles the
+   painted color area at zero rainbow cost — the hue stays singular per surface). The ledger
+   schema gains the family form (`{event-token, element-selectors[]}`); the anti-rainbow guard
+   is unchanged and BINDING: ONE hue per surface, body-ink-untinted, chip≤glyph. Spread the
+   full-chroma register to two NEW vehicle classes within the family rule: the ACTIVE-nav glyph
+   (route-hue on the demo shell nav — DEMO-ONLY, never a library interactive register; the
+   `proof:register-ios` clause-e brand-hue fence is the hard floor) and the viz-LEGEND swatches
+   (`--chart-*`/`--viz-*` already semantically named, today dead on the legend surfaces).
+8. **The canonical section rhythm (R10 fd-delta SM-1 — the KEYSTONE; chassis half via W-STAGE
+   literal-diff).** The storybook's section-heading register is FRACTURED into two populations —
+   `<h2 text-subheading>` pages vs `.section-label`-eyebrow-ONLY pages (zero `<h2>`), plus a
+   surviving rogue `<h3 text-small font-semibold>` (16.4px, below body — the gated anti-pattern,
+   alive in the tabs Vertical demo, NF-3). The canon: eyebrow + `<h2>` are a PAIR, not
+   alternatives — `<StorySection>` renders BOTH (the mono eyebrow caption above the
+   `text-subheading` h2) and every enrolled story sections through it (the chassis edit is a
+   literal-diff block W-STAGE applies; THIS wave owns the story sweeps + the gate). WIDEN
+   `proof:hierarchy`'s enrollment to the FULL story set (the B-population blind spot dies);
+   the rogue-`<h3>` negative predicate goes repo-wide.
+9. **The graded page-title ladder (R10 fd-delta SM-2).** The measured 86→26→86px title cliff
+   grades onto a page-ROLE ladder: front-door (display) · category-landing (a mid display rung)
+   · content page (the HS-2 one-above-section rung scope 5 already lands). Declared as tokens
+   keyed off the page role (the StoryPage `variant` axis), applied via the same W-STAGE
+   literal-diff route; the π asserts the three-rung monotone ladder across a
+   front-door/landing/content walk.
+
 ## Triumvirate Dispatch
 
 - **File-bounds expansion that invalidates the wave**: if a category's natural color axis cannot
