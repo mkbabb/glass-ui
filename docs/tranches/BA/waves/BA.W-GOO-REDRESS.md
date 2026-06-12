@@ -19,7 +19,10 @@ wave — this wave is the renderer half only (the satellite bridge + the pointer
 Grounding findings (`audit/fleet/goo-studio.md` + `audit/fleet/disco-hover.md`):
 **BA-goo-2** [the detached satellite, goo-studio §(b)], **BA-goo-3** [the hover jitter,
 goo-studio §(c)], **BA-disco-04** [disco-hover B2 — the renderer-half coordination note
-that splits R8-7's "jittery" by mechanism].
+that splits R8-7's "jittery" by mechanism]. Plus the cross-repo fold
+**BA-VJS-5** [valuejs-fold C-1, `audit/fleet/valuejs-fold.md:247-278` + the value.js
+letter §C-1] — per-satellite derived-shade color: the satellites should render as
+slightly-different in-family shades (like `deriveAurora`), not the body color.
 Captures: `docs/tranches/BA/audit/fleet/{goo-studio-blob-live-dark.png` (the working-neck
 frame), `goo-studio-remedy-validated.png}`; ground `docs/tranches/BA/audit/ground/R8-07-goo-configurator-broken.png`
 (the detached disc above a two-lobe body — the BA-goo-2 fail state).
@@ -67,6 +70,24 @@ The two renderer root causes (each independently confirmed at HEAD this authorin
    is critically-damped and frame-rate-independent — NOT the jitter source; the park/wake
    seam is.
 
+**BA-VJS-5 — per-satellite derived-shade color (the C-1 seam note; CONFIRMED at HEAD).**
+The satellite uniform block carries ONLY `uSatPos`/`uSatRadius`/`uSatOpacity`
+(`metaball-uniforms.glsl.ts:84-86`); `grep uSatColor` returns 0. `constants.ts:13`
+`MAX_SATS=4`; `UNIFORM_NAMES` (`:151`) lists `uSatShift`/`uSatCount` but no `uSatColor`.
+The `deriveBlobPalette` docstring already PROMISES "satellites take the lighter in-family
+stops" (`src/composables/color/index.ts:267,290`) — the renderer never honors it
+per-source, so satellites render from the SAME palette field as the body and read as the
+body color. value.js chartered this at `N.md §8` (V4); it is the ONE blob ask BA leaves
+open, and value.js cannot derive satellite colors until it lands. **THE SEAM DECISION (both
+arms recorded — see §Scope item 6):** the C-1 fix needs the FRAG's per-source COLOR seam
+(`metaball.frag.ts` samples the satellite's own color + a smin-neck cross-fade), which is
+FENCE-LOCKED under BA inv-9 — this wave's named seam is the `uSmoothK`/orbit ENVELOPE
+(`uploadBlobUniforms.ts:214` + `useBlobSatellites.ts` atoms), NOT the frag color. So C-1 is
+EITHER (arm A) a NAMED-SEAM-WIDEN — extend this wave's fence-open to include the satellite
+color routing (same uniforms module + `uploadBlobUniforms.ts`, the natural rider) OR (arm B)
+a 4.x POINT RELEASE after BA. Both arms are recorded; the wave lead picks at dispatch (the
+default below is the conservative arm B — book to 4.x — unless the lead widens the fence).
+
 RE-GROUND command set (run all; confirm each mechanism):
 
 ```
@@ -87,6 +108,7 @@ sed -n '144,151p' demo/stories/substrates/blob.vue                              
 | 2 | BA-goo-2 latent /4 phase over-fit [S3] | `useBlobSatellites.ts:35` (`baseAngle = (index/4)*2π`) | the `/4` hardcode clusters a non-4 `satelliteCount` unevenly — flagged, fixed only if the envelope work touches the spread |
 | 3 | BA-goo-3 / BA-disco-04 hover lurch [S2] | `GooBlob.vue` (no `watch(pointer.active, …)`); `useBlobPointer.ts:78` (`active.value = true`, no renderer reach); `useMetaballRenderer.ts:368-369` (wake watches `color`/`paletteStops` only) | the parked loop has no pointer wake → first hover repaints up to an orbit horizon late, then the spring lurches one 50ms-clamped step |
 | 4 | the working-neck baseline [S2] | `ground/R8-07-goo-configurator-broken.png` (detached); `fleet/goo-studio-blob-live-dark.png` (working neck) | the merge is intermittent — a coherent teardrop one frame, a detached disc the next; "broken" = the detach window |
+| 5 | BA-VJS-5 per-satellite color [valuejs-fold C-1, HIGH] | `metaball-uniforms.glsl.ts:84-86` (`uSatPos`/`uSatRadius`/`uSatOpacity` only, `uSatColor`=0); `constants.ts:13,151` (`MAX_SATS=4`, no `uSatColor` in `UNIFORM_NAMES`); `color/index.ts:267,290` (`deriveBlobPalette` promises lighter in-family stops, unhonored per-source) | satellites render from the SAME palette field as the body → read as the body color; needs the frag's per-source COLOR seam (fence-locked) — arm A widen the named seam OR arm B 4.x. The ONE blob ask BA may leave open |
 
 ## Goal criterion
 

@@ -67,8 +67,11 @@ does it and bring that mechanism."
 **WO-1 (U8 root → U23 downstream): the collision bound is authored but never emits.**
 `SelectContent.vue:47` carries `[max-height:var(--reka-popper-available-height,60dvh)]
 overflow-y-auto` — correct. But `glass-ui/dist/styles/index.css:160` declares
-`@source "../components"`, which resolves to **`dist/components/` — a directory that does
-not exist** (the compiled components are flat `dist/*.js`). The arbitrary-bracket class is
+`@source "../components"`, which resolves to **`dist/components/` — a tree holding only
+`.vue.d.ts` type declarations (no scannable class strings)**; the compiled JS carrying the
+utility strings sits flat at `dist/*.js`, unscanned (verified at HEAD post-W-CARVE2 rebuild:
+`reka-popper-available-height` appears only in `dist/SelectScrollDownButton-*.js`; zero
+backing rules in any dist stylesheet). The arbitrary-bracket class is
 never extracted → never compiled → dead in EVERY consumer. Live proof on value.js: reka
 computes `--reka-popper-available-height: 608.6px` correctly, yet
 `getComputedStyle(content).maxHeight === "none"`; the 16-item color-space dropdown renders
@@ -105,7 +108,7 @@ be a first-class prop: extend `SelectTrigger`'s `size` prop (today height-only,
 This also serves U30a (the audacious color-space dropdown) at the consume edge.
 - **BA coverage**: W-MENU-GLASS owns the ITEM register (the glass-quiet hover-lift plate on
   `menuItemVariants`) — it does not name the content bound, the collision contract, or the
-  font-rung prop. The X-GU grep across all 30 BA waves returns ZERO for
+  font-rung prop. The X-GU grep across all 29 BA waves returns ZERO for
   collision/bound-on-page/scroll-within. **WO-1/WO-2 are a net-new roster item (or a
   W-MENU-GLASS scope extension); WO-3 is a small W-MENU-GLASS-adjacent rider.** The
   open-jerk's spring half: confirm the Select/DropdownMenu open transition is in
@@ -183,7 +186,8 @@ This also serves U30a (the audacious color-space dropdown) at the consume edge.
 A-2/WO-1 (the Select bound) and A-3 (the Slider size axis) are two live instances of ONE
 mechanism: **glass-ui authors Tailwind arbitrary-property/bracket utilities in source it
 ships only as compiled JS, and its own `@source "../components"`
-(`dist/styles/index.css:160`) points at a directory that does not exist in the dist — so
+(`dist/styles/index.css:160`) points at a dist tree that holds only `.vue.d.ts` declarations
+(no class strings — the compiled JS sits flat at `dist/*.js`, unscanned) — so
 every glass-ui-internal arbitrary utility silently dies in every consumer.** This is the
 constellation grand-audit's P9 ("rounded-panel utility silently no-ops in consumers —
 Tailwind-v4 dep-utility-scan gap"), now with two structural-severity instances reproduced on
@@ -279,7 +283,8 @@ a live registry consumer.
   note W-DEMO-AFFORDANCES' curve-picker chip rack is explicitly DEMO-LOCAL by BA's own fence
   — the published primitive is a different artifact, not a duplication of it. Three
   consumers re-point on their own schedules: the kf easing rail (their L tranche), the
-  glass-ui curve-gallery story, the value.js gradient pane (N.W6.C, upgraded to consume).
+  glass-ui curve-gallery story, the value.js gradient pane (N.W16.B restyles in place as the interim; N.W18.B consumes the
+published primitive — N.W6 is SUPERSEDED by value.js `WAVES-2.md`).
 - **Boundary law** (kf L-SEED, already drawn): curve MATH = value.js; playback/spring = kf;
   the editor COMPONENT = glass-ui. Neither kf's K nor BA schedules this publish — it is the
   one U-finding that crosses both siblings and is authored by neither. Net-new roster item.
@@ -315,6 +320,78 @@ a live registry consumer.
   Slider surface renames out of registers A/B above. Same discipline as the atlas letter's
   register D: by name in the cut notes, never silently.
 
+## Addendum (2026-06-12, the value.js S2 critic fold — same sanctioned grant, same letter)
+
+The second fleet's cross-repo critic (lane K3) found the registers above complete for the
+NAMED mechanisms but a coverage hole for the lanes2 PERF producer cluster and the standing
+`N.md §8` carries — all mandated as glass-ui asks by their lanes, none filed. They are filed
+here, same bar (live-traced, mechanism-grade), so they cannot silently drop at the cut.
+**Context correction**: BA is **GREENLIT 2026-06-12 and EXECUTING** (Batch 0 underway:
+W-SHELL-HOLD, W-GESTALT-GATE complete) — these asks carry hard fold-by-batch deadlines (§ table
+below); a late fold forces 4.x point releases of items that could ride their natural waves.
+
+### Register A′ — the perf producer cluster (live-traced on the value.js demo; L-PERF1–3)
+
+- **A′-1 (LP2-2) — GooBlob emits a zombie second canvas · P1.** One mount → two `<canvas>`
+  under `.goo-blob-wrapper`: the live 358×358 AND a 400×400 whose CSS box is 0×0 — never laid
+  out, never painting, yet holding a live WebGL2 context + (near-certainly) its own RAF loop
+  (`value.js/docs/tranches/N/audit/lanes2/L-PERF2.md §5`, rows at `:208-214`). ~1 of the demo's
+  ~4 idle RAF loops. **Acceptance**: one GooBlob mount → exactly one canvas; no GL context
+  without a laid-out box.
+- **A′-2 (LP3-1b) — GooBlob has no visibility/PRM gate · P0.** Dist grep = zero
+  `IntersectionObserver` / `visibilityState` / `prefers-reduced-motion`; an offscreen blob
+  keeps a live render loop (`L-PERF3.md:54-70`). **Acceptance**: the loop pauses when
+  off-viewport and on `document.hidden`, and honors PRM. (Closes the producer half of
+  value.js `inv-N-9`/`inv-N-12`.)
+- **A′-3 (LP3-3a) — the `card-*-shrink` keyframes animate layout properties · P0.**
+  `card-header-shrink` animates `padding`, `card-title-shrink` `font-size`,
+  `card-desc-shrink` `grid-template-rows` (`glass-ui.css`): 374 non-composited-animation
+  flags, trace CLS **1.03** (worst cluster 1.0274; `L-PERF3.md:93-111`). Re-author
+  compositor-safe (`transform: scale/translateY` + opacity). **Acceptance**: scroll-trace
+  CLS ≤ 0.1; zero non-composited flags from the card-shrink family.
+- **A′-4 (LP2-4/5) — the `--dock-morph-t` write restyles a 10-selector inheriting `calc()`
+  group · P1.** Each per-frame write recomputes the cascade across `dock.css:63` +
+  `dock/{layers,morph,morph-bridge}.css` → the morph renders ~13 fps over ~900 ms; plus the
+  layer swap forces a 40 ms reka floating-ui reflow synchronously inside the Vue flush
+  (`L-PERF2.md §4`). `DOCK_SPRING` is CORRECT — do not retune. Narrow the `@property`
+  inheritance scope / add containment; defer the Popper measure off the morph flush.
+  **Acceptance**: dock morph ≥ 50 fps on the value.js nested dock.
+- **A′-5 (LP1) — aurora DPR cap in `useAurora` · P2.** The atmosphere canvas backs at
+  2880×1800 (DPR×2 full-viewport, ~21.8 MB native heap) for a heavily blurred decorative
+  wash (`L-PERF1.md §3`); a 1–1.5× backing is visually indistinguishable and quarters GPU
+  memory + per-composite raster. (value.js keeps its demo-side defer-arm half.)
+- **A′-6 (D5-1 companion) — `--dock-icon-glyph` does not ride the density cascade · P2.**
+  `offsets-sizing.css:276`: the glyph token is constant across densities, so
+  `density="spacious"` grows the shelf but not the glyphs (`D5.md §7`). Per-density glyph
+  ratio (or document the consumer override as the contract).
+
+### Register F — the standing value.js `N.md §8` carries (chartered 2026-06-11; filed here)
+
+- **F-1 — C-DTS: the dts-emitting `build:watch`.** The dts-less dist flap broke this audit's
+  visual lanes twice (value.js R1 §6) and is the named precondition of value.js's W18
+  abrogation sweep ("against a dts-complete dist"). Make the watch emit declarations always.
+- **F-2 — the value.js version ranges.** devDep `@mkbabb/value.js ^0.10.0`
+  (`package.json:799`) is two majors stale → `^0.12.0`; and the **peer range
+  `^0.10.0 || ^0.11.0` (`package.json:768`) does NOT admit 0.12.0** (published 2026-06-12)
+  — widen at the cut or every registry consumer on 0.12.x gets a peer warning.
+- **F-3 — an `AuroraConfig` slider-section descriptor** (the BlobPane/AuroraPane re-author
+  substrate value.js consumes for its admin tuning panes).
+- **F-4 — `.retired-classes.txt` currency at every cut + changelog every subpath/symbol
+  rename** — the manifest value.js's inv-N-10 abrogation sweep reads. If W-CLOSE's
+  MIGRATION.md by-name tables are the intended substitute, RECORD the substitution in the
+  cut notes (the sweep must know which file is authoritative; an assumed substitution is a
+  silent break).
+
+### Fold-by-batch deadlines (BA dispatches incrementally; late folds force 4.x point releases)
+
+| Asks | Owning BA surface | Fold by |
+|---|---|---|
+| C-1 · A′-1 · A′-2 | W-GOO-REDRESS (seam/rider) | **before Batch 2** |
+| A-1 · A′-4 | W-DOCK-GEOMETRY / W-DOCK-MORPH-INSITU | **before Batch 2/3** |
+| A-2 + Register B · A-5 · A-3 · A′-6 | W-MENU-GLASS / W-TABS / W-GLASS-CAL / W-HYGIENE | **before Batch 4** |
+| A-4 · A′-5 | W-STAGE neighborhood (motion table / useAurora) | **before Batch 6** |
+| A′-3 · C-2 · C-3 · F-1..F-4 · D · E | card keyframes owner / net-new / W-CLOSE | **by the 4.0.0 cut** |
+
 ## Routing
 
 The asks fold smallest-first: A-1/A-4/A-5/D are riders on existing waves (defect-table +
@@ -322,6 +399,7 @@ acceptance-row additions, the BA inv-3 RE-GROUND idiom); A-2 + Register B are on
 robustness item (a W-MENU-GLASS/W-HYGIENE extension or a net-new roster wave — the
 emission gate is the load-bearing half); C-1 rides W-GOO-REDRESS's seam or a 4.x; C-2 is a
 small net-new register; C-3 is the one genuinely new primitive (cross-repo, co-scheduled
-with A-2's donor study). Authored by the value.js N2 fleet under its sanctioned docs-only
+with A-2's donor study); the addendum's A′ cluster rides the same waves as its A siblings
+(deadline table above) and F-1..F-4 are cut-ceremony one-liners. Authored by the value.js N2 fleet under its sanctioned docs-only
 grant; value.js writes no glass-ui code (inv-16/inv-10 — the foreign-repo fence); the BA
 lead reviews, amends, and owns the fold. Tranche development only — NO implementation.
