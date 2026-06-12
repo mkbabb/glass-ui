@@ -196,8 +196,15 @@ function run() {
     // No raw multi-stop `text-shadow:` literal in utilities.css / typography.css
     // (a literal with a comma is multi-stop; the utilities must compose
     // `var(--text-shadow-*)`).
-    for (const file of ["src/styles/utilities.css", "src/styles/typography.css"]) {
-        const css = stripComments(read(file) ?? "");
+    // BA.W-CARVE2 — typography.css carved into typography/*.css partials (the
+    // .text-engraved text-shadow lives in utilities.css); readMonolith
+    // concatenates root + partials so the literal-scan still reaches it.
+    const textShadowSources = [
+        ["src/styles/utilities.css", read("src/styles/utilities.css")],
+        ["src/styles/typography.css", readMonolith(ROOT, "typography")],
+    ];
+    for (const [file, raw] of textShadowSources) {
+        const css = stripComments(raw ?? "");
         // any `text-shadow:` declaration whose RHS is NOT a single var() reference
         const decls = [...css.matchAll(/text-shadow:\s*([^;]+);/g)];
         for (const m of decls) {

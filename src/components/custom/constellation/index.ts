@@ -50,4 +50,4 @@ export type {
     ConstellationWellConfig,
     ConstellationPinnedDrift,
     ConstellationProps,
-} from "./constellationField";
+} from "./constellationTypes";

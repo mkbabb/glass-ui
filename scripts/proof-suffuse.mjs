@@ -48,6 +48,10 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BA.W-CARVE2 — typography.css carved into typography/*.css partials (the
+// .section-label--tinted variant lives in utilities.css); readMonolith
+// concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:suffuse";
 
@@ -457,7 +461,7 @@ add(
 );
 
 // ── (f) The thin pages gain the calm idiom (the section-label--tinted variant) ─
-const typographyCss = strip(read("src/styles/typography.css"));
+const typographyCss = strip(readMonolith(ROOT, "typography"));
 const tintedVariantExists =
     /\.section-label--tinted\s*\{[\s\S]*?--section-label-accent/.test(typographyCss);
 const settingsConsumesTinted = /section-label--tinted/.test(

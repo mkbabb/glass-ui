@@ -106,6 +106,23 @@ export const CSS_MONOLITHS = {
             "dark.css",
         ],
     },
+    // BA.W-CARVE2 — typography.css drained its no-god-module ratchet row into
+    // cohesive partials, the same precedent.
+    typography: {
+        root: "src/styles/typography.css",
+        dir: "src/styles/typography",
+        // Cascade-binding: the OFL fallback @font-face declarations + the :root
+        // √φ --type-* scale tokens FIRST (the semantic classes read them), the
+        // body{} cascade + the DISPLAY/HEADING/BODY/MICRO/ADMIN-LABEL semantic
+        // @utility classes SECOND, the MATH/MONO/FONT-FAMILY/ORNAMENTAL @utility
+        // set + the @layer components AUX hooks LAST. The carve moves rules in
+        // the SAME source position → byte-isomorphic dist.
+        order: [
+            "scale.css",
+            "semantic.css",
+            "utilities.css",
+        ],
+    },
 };
 
 /**

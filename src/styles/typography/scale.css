@@ -1,0 +1,153 @@
+/* typography/scale.css — the OFL face FILES + the :root --type-* SCALE tokens.
+ *
+ * Carved from typography.css (BA.W-CARVE2) — the FACE declarations (the
+ * calibrated `local()` fallback faces for Plus Jakarta Sans + Fira Code) and
+ * the √φ scale-number :root block. @import-ed FIRST by the typography.css thin
+ * root (the faces + scale numbers must precede the semantic classes that read
+ * them). The carve moves rules in the SAME cascade position → byte-isomorphic
+ * dist (the no-god-module import-order gate is the witness). */
+
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Plus Jakarta Sans (brand display)
+   ═══════════════════════════════════════════════ */
+
+/* The payload-bearing "Plus Jakarta Sans" faces live in `fonts.css`
+   (`@mkbabb/glass-ui/styles/fonts`), split off the critical entry path so
+   `./styles` does not carry the ~99 KB-gzipped font binary. The calibrated
+   `local()` fallback face below carries NO payload, stays on the critical
+   path, and paints during the `font-display: optional` window. Its metric
+   overrides (per system face) were derived via @capsizecss/core's
+   `createFontStack` against the bundled latin woff2 — the swap is metrically
+   neutral (no CLS). */
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src:
+        local("System Font"), local(".SFNS-Regular"), local(".SFNSText-Regular"),
+        local("-apple-system");
+    ascent-override: 92.3784%;
+    descent-override: 19.7572%;
+    size-adjust: 112.3639%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Segoe UI"), local("SegoeUI");
+    ascent-override: 98.3348%;
+    descent-override: 21.0311%;
+    size-adjust: 105.5577%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Roboto Regular"), local("Roboto-Regular");
+    ascent-override: 98.6597%;
+    descent-override: 21.1006%;
+    size-adjust: 105.2101%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Arial"), local("ArialMT");
+    ascent-override: 98.8763%;
+    descent-override: 21.147%;
+    line-gap-override: 0%;
+    size-adjust: 104.9796%;
+}
+
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Fira Code (canonical mono)
+   ═══════════════════════════════════════════════ */
+
+/* The payload-bearing "Fira Code" faces live in `fonts.css`
+   (`@mkbabb/glass-ui/styles/fonts`), split off the critical entry path. The
+   calibrated `local()` fallback face below carries NO payload, stays on the
+   critical path, and covers the `font-display: swap` window. Its metric
+   overrides reference Roboto Mono (the platform monos cluster within ~2%);
+   size-adjust ≈ 1.0 makes the swap geometrically transparent. */
+@font-face {
+    font-family: "Fira Code Fallback";
+    src:
+        local("SF Mono"), local("SFMono-Regular"), local("Menlo"), local("Consolas"),
+        local("Courier New"), local("Roboto Mono Regular");
+    ascent-override: 99.0161%;
+    descent-override: 32.2052%;
+    size-adjust: 99.9837%;
+}
+
+:root {
+    /* Font family tokens. `--font-text` / `--font-display` / `--font-serif` /
+       `--font-mono` are NOT declared here — their source-of-truth lives in
+       tokens.css §0 (`--font-stack-*`), bridged to Tailwind via theme.css's
+       `@theme` block; declaring `:root` literals here would shadow consumer
+       `@theme` overrides (un-layered `:root` wins over `@layer theme`). The
+       self-hosted faces above expose `"Plus Jakarta Sans"` + `"Fira Code"`,
+       each pairing with a calibrated `"... Fallback"`. The brand text register
+       (Plus Jakarta Sans) engages by default for every consumer; --font-mono
+       references `"Fira Code"` first then the fallback chain. */
+
+    /* Scale tokens */
+    --type-admin-label: 0.625rem; /* 10px — fixed sub-control micro (NOT fluid) */
+    --type-micro: 0.6875rem; /* 11px — fixed sub-control micro (NOT fluid) */
+    /* BODY/CONTROL register (AY.W-SCALE1 — the desktop-fluid half of corpus #4):
+       a GENTLE clamp() viewport base so the control/body register grows ~1-2 steps
+       on a wide display (the 27" "font too small" the user flagged) WITHOUT a
+       media-query staircase. The <min> of every clamp is the rung's prior fixed rem
+       — byte-identical at narrow/mobile (no shipped-narrow reflow; the coarse 1.5×
+       --ui-scale still lifts the comfort axis ON TOP). The vw slope is the body
+       register's GENTLE slope (not the φ-display ladder's aggressive vw) — the
+       "non-contrived" bar. The vw fluid term lives HERE (the typographic base),
+       exactly ONCE; the --ui-scale comfort scalar multiplies it exactly ONCE LATER
+       (tokens.css --control-text/-sm) — NO double-vw under coarse. The φ-identity
+       rungs below (--type-subheading/-heading/-title + the --type-display-* ladder)
+       are EXCLUDED — a hero/title is a typographic identity, not a control. */
+    --type-caption: clamp(
+        0.75rem,
+        0.71rem + 0.21vw,
+        1rem
+    ); /* 12px floor — --control-text-sm source */
+    --type-small: clamp(
+        0.875rem,
+        0.8rem + 0.25vw,
+        1.25rem
+    ); /* 14px floor — --control-text source (the workhorse) */
+    --type-body: clamp(
+        1rem,
+        0.92rem + 0.27vw,
+        1.375rem
+    ); /* 16px floor — global body cascade */
+    --type-prose: clamp(
+        1.125rem,
+        1.04rem + 0.28vw,
+        1.5rem
+    ); /* 18px floor — long-form prose */
+    --type-subheading: 1.272rem; /* 20.4px — √φ */
+    --type-heading: 1.618rem; /* 25.9px — φ */
+    --type-title: 2.058rem; /* 32.9px — φ^(3/2) */
+    --type-display-1: clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
+    --type-display-2: clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem); /* φ^(5/2) */
+    --type-display-3: clamp(2.618rem, 2rem + 3vw, 4.236rem); /* φ^3 */
+    --type-display-4: clamp(3.33rem, 2.5rem + 4vw, 5.382rem); /* φ^(7/2) */
+    --type-display-5: clamp(4.236rem, 3.5rem + 6vw, 6.854rem); /* φ^4 */
+    /* Audacious display tier (v1.0.3). Extends the φ-ladder three rungs
+       beyond display-5 for poster-type consumers (speedtest hero,
+       dashboard pane titles when the consumer wants the number to win).
+       Same vw-axis as display-1..5 — consumer-agnostic. */
+    --type-display-mega: clamp(
+        5.382rem,
+        4rem + 9vw,
+        11.089rem
+    ); /* φ^(9/2) — peak 177px */
+    --type-display-hero: clamp(
+        6.854rem,
+        4.5rem + 12vw,
+        17.942rem
+    ); /* φ^5    — peak 287px */
+    --type-display-audacious: clamp(
+        8.728rem,
+        5rem + 16vw,
+        22rem
+    ); /* φ^(11/2) — peak 352px (fast.com peg) */
+
+    /* Line heights & letter spacing live at tokens.css §0 as the canonical
+       --type-leading-* / --type-tracking-* rungs. theme.css bridges them
+       to Tailwind's `leading-*` / `tracking-*` utilities. The duplicate
+       --leading-* / --tracking-* declarations that previously sat here
+       were retired in v0.8.6 (audit U.W0.C-c §1.1 / Union 2). */
+}
