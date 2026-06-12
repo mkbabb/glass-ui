@@ -350,14 +350,25 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
     // The new in-situ G1 readback (adaptive-glass-live.spec.ts) is the binding default-
     // path truth for the three now-self-engaged kinds (their default path is no longer
     // "today's glass over a rich background" — it is "the AA-floor darken over light").
+    //
+    // BA.W-DARK-MATERIAL scope 7 — the CONTENT-tier opaque-invariance is preserved by
+    // `.glass-opaque { --glass-tint-strength: 0% }` (the opaque escape suppresses the TINT
+    // axis too, not just the level/opacity — a solid plate has no backdrop to darken-over).
+    // The DOCK is EXCLUDED from this canary: its tint axis rides the dock-band's OWN
+    // `.glass-dock` @container rules (dock/morph.css — a HIGHER-specificity class path the
+    // library `.glass-opaque` escape cannot override), so the dock's opaque+tint interaction
+    // is a DOCK-BAND contract, not a content-tier one (the dock's in-situ legibility is the
+    // binding G1 readback, not this byte-identity canary). The content tiers
+    // (glass-card/glass-resting) are the surfaces scope 7 governs.
+    const OPAQUE_INVARIANT_KINDS = KINDS.filter((k) => k !== "glass-dock");
     test("the .glass-opaque escape is bucket-invariant (the zero-delta byte-identity)", async ({
         page,
     }) => {
         await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
-        for (const kind of KINDS) {
-            // The `.glass-opaque` escape is the level-0 solid plate — the same bg under
-            // BOTH the unset default AND the explicit `light` bucket (the W54 opt-out is
-            // bucket-invariant; the adaptive darken cannot move a solid plate).
+        for (const kind of OPAQUE_INVARIANT_KINDS) {
+            // The `.glass-opaque` escape is the level-0 solid plate with the tint axis zeroed
+            // — the same bg under BOTH the unset default AND the explicit `light` bucket (the
+            // W54 opt-out is bucket-invariant; the adaptive darken cannot move a solid plate).
             const [unsetOpaque, lightOpaque] = await page.evaluate((k) => {
                 function read(backdrop: string | null): string {
                     const host = document.createElement("div");

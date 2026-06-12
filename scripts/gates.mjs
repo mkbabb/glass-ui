@@ -1021,7 +1021,13 @@ export const GATES = [
         id: "proof:adaptive-glass",
         cmd: "proof:adaptive-glass",
         tags: ["local", "ci"],
-        note: "AX.W55 — the adaptive-over-light glass legibility gate (the SEPARATE --glass-tint-* axis paired with W54's --glass-level). Asserts the over-light tint hook lifts --glass-tint-strength adaptively so the MAXIMAL glass default reads legible over a light substrate (the G2 over-light surface, incl. the dock); zero new compositing seam. Bite: detach the adaptive tint hook / drop the over-light darken → RED.",
+        note: "AX.W55 — the adaptive-over-light glass legibility gate (the SEPARATE --glass-tint-* axis paired with W54's --glass-level). Asserts the over-light tint hook lifts --glass-tint-strength adaptively so the MAXIMAL glass default reads legible over a light substrate (the G2 over-light surface, incl. the dock); zero new compositing seam. REBASELINED at BA.W-DARK-MATERIAL scope 7: the content-tier self-engage witnesses now assert the recalibrated shape (the unconditional content tiers read --glass-tint-strength-floor, the muted lift gates on the bright bucket — the calm-light gray-slab fix), NOT the prior unconditional full-AA darken. Bite: detach the adaptive tint hook / drop the over-light darken / re-introduce the unconditional full-AA content-tier darken → RED.",
+    },
+    {
+        id: "proof:dark-material",
+        cmd: "proof:dark-material",
+        tags: ["local", "ci"],
+        note: "BA.W-DARK-MATERIAL — the luminous-dark transmissive-material gate (born-RED, H1 arm-a). Device-free SOURCE arm (the PAINTED DARK truth is the π arm tests-visual/dark-material.spec.ts): the dark elevation ladder widened in LOCKSTEP (dark-arm.css + light-dark.css — the page↔card gap card/page relL ≥ 3.5× off the HEAD 4-L collapse, the composited wash→overlay band spans ≥ 1.8×); the dark glass is TRANSMISSIVE (the backdrop-filter saturate/brightness luminosity lift + the dark edge α ≥ 0.16 silhouette, radius UNTOUCHED — W-GLASS-CAL owns it); the dark --glass-tint-* seam LIFTS (a gentle bounded dark-arm strength, the SAME seam — no third fork, the --surface-tint-* in-srgb fence held); dark --primary is CHROMATIC (the legendre-violet house hue, oklab chroma 0.134, --primary-foreground clears 4.5:1); the --surface-tint-* dark arm reads on the deep floor (mixes toward a light ink); the contrast-color() selection inversion is FIXED at the library seam (every --muted-foreground→white lift paired with a --foreground lift — selected ≥ unselected); and the calm-light self-engage is RECALIBRATED (the content tiers read --glass-tint-strength-floor, the full AA gates on the bright bucket — the R9-1 slides gray-slab fix). Bite: revert any dark value / drop the transmissive lift / un-pair the contrast-color lift / restore the unconditional full-AA content-tier darken → RED.",
     },
     {
         id: "proof:dark-semantic-contrast",

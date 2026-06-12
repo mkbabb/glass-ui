@@ -118,27 +118,42 @@ add(
     rungsCovered,
     "the bright-bucket block names all five rungs + .glass-material + .glass-card",
 );
-// AZ.W-ADAPTIVE-AUTO Arm 1 — the content tiers UNCONDITIONALLY self-engage (no
-// ancestor bucket). The `:where(.glass-floating, .glass-overlay, .glass-card,
-// .glass-resting, .glass-quiet, .glass-wash)` rule re-points the tint tokens DIRECTLY
-// on the surfaces, closing the C5-7 content-tier asymmetry (they painted near-
-// invisible over light). The over-light-common content tiers are NAMED in the rule.
+// BA.W-DARK-MATERIAL scope 7 — REBASELINED. The AZ.W-ADAPTIVE-AUTO Arm 1 shape
+// applied the FULL AA darken + the muted lift to the content tiers UNCONDITIONALLY,
+// mode- and backdrop-agnostically — over a plain LIGHT page the 20% warm-ink darken +
+// the muted→ink lift composited the translucent cream card into a flat GRAY SLAB (the
+// R9-1 slides presenter defect). The recalibration splits the content-tier self-engage
+// off the overlay band: the content tiers (.glass-card/.glass-resting/.glass-quiet/
+// .glass-wash) self-engage only the SUB-PERCEPTUAL FLOOR (--glass-tint-strength-floor —
+// a silhouette whisper that keeps a calm-light card warm; the dark arm re-tunes the
+// floor to the luminous-dark lift). The FULL AA darken + the muted lift move INTO the
+// declared/sampled BRIGHT condition (the @container --glass-backdrop:light bucket). The
+// busy-bright G2 floor still clears 4.5:1 (the live π adaptive-glass-live spec, bright
+// signal engaged). So this witness now asserts the CONTENT-TIER FLOOR shape (the
+// unconditional self-engage reads the floor token), NOT the old unconditional full AA.
 const ladderSelfEngage = glass.match(
-    /:where\(\s*\.glass-floating,\s*\.glass-overlay,\s*\.glass-card,\s*\.glass-resting,\s*\.glass-quiet,\s*\.glass-wash\s*\)\s*\{([\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-aa\)[\s\S]*?)\}/,
+    /:where\(\s*\.glass-card,\s*\.glass-resting,\s*\.glass-quiet,\s*\.glass-wash\s*\)\s*\{([\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-floor\)[\s\S]*?)\}/,
 );
 add(
     "content-tiers-self-engage",
     Boolean(ladderSelfEngage),
-    ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash, …) self-engages the bright-bucket darken unconditionally (the C5-7 content-tier asymmetry fix)",
+    ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) self-engages the SUB-PERCEPTUAL --glass-tint-strength-floor unconditionally (BA scope-7 recalibration — the calm-light card stays warm, the slides gray-slab fixed; the FULL AA darken gates on the bright bucket)",
 );
-// The muted body register lifts to the full warm-ink on the self-engaged surfaces
-// (the muted L40 tier cannot clear 4.5:1 on a translucent darkened plate).
+// The muted body register lift MOVED into the bright-bucket condition (where the plate
+// actually darkens to the full AA). On the calm-light content-tier floor the caption
+// keeps the muted register (the slides read) — so the muted lift must NOT fire on the
+// unconditional content-tier floor, and MUST fire in the @container bright-bucket block.
+const brightBucketMutedLift =
+    /@container\s+style\(\s*--glass-backdrop:\s*light\s*\)\s*\{[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-aa\)[\s\S]*?--muted-foreground:\s*var\(--foreground\)/.test(
+        glass,
+    );
+const floorNoMutedLift = ladderSelfEngage
+    ? !/--muted-foreground:\s*var\(--foreground\)/.test(ladderSelfEngage[1])
+    : false;
 add(
     "content-tiers-muted-lift",
-    ladderSelfEngage
-        ? /--muted-foreground:\s*var\(--foreground\)/.test(ladderSelfEngage[1])
-        : false,
-    "the content-tier self-engage lifts --muted-foreground → --foreground (the muted register cannot clear 4.5:1 on a translucent darkened plate)",
+    brightBucketMutedLift && floorNoMutedLift,
+    "the --muted-foreground → --foreground lift fires in the BRIGHT-bucket condition (where the plate darkens to the full AA — the muted L40 tier cannot clear 4.5:1 there) and NOT on the calm-light content-tier floor (the caption keeps the muted register — the R9-1 lockstep)",
 );
 
 // ── 3. The dock is ON the seam (witness 2 — the literal G2 surface) ─────────────

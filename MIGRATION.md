@@ -938,6 +938,48 @@ barrel promotion (`docs/consumer-evidence/use-glass-backdrop-luminance.md`).
 
 ---
 
+### The luminous-dark transmissive material + the calm-light recalibration (BA.W-DARK-MATERIAL)
+
+The DARK register was rebuilt as a luminous transmissive material, and the LIGHT
+content-tier self-engage was recalibrated. Both are **token-identity evolutions, NOT
+breaking aliases** (the lib's own default tokens evolve as the lib's identity changes —
+presets-in-consumers; no clean-break migration, no codemod).
+
+**1 — The calm-light recalibration (the slides gray-slab fix).** The content tiers
+(`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`) no longer apply the full 20%
+AA darken UNCONDITIONALLY — over a plain LIGHT page they self-engage only a sub-perceptual
+`--glass-tint-strength-floor` (4%), so a calm-light card stays a translucent WARM cream
+(was: a flat gray slab). The FULL AA darken on a content tier now engages only under the
+declared/sampled BRIGHT signal (`--glass-backdrop: light` / the observer). A consumer whose
+light-page card was relying on the unconditional 20% darken (rare) declares the bright
+signal on an ancestor; a consumer who wants a content card flat opts out as before:
+
+```css
+/* A calm light page where the card should stay warm needs NOTHING (the new default).
+   To FORCE the full darken on a content card over a known-bright surface: */
+.my-bright-region { --glass-backdrop: light; }
+
+/* The pristine un-tinted plate (unchanged opt-out). */
+.my-surface .glass-card { --glass-tint-strength: 0%; }
+```
+
+**2 — Dark `--primary` is now chromatic.** The dark-mode `--primary` evolved off the
+achromatic cream `hsl(48 10% 90%)` onto the brand legendre-violet `oklch(0.739 0.134 318.1)`
+(a library-identity hue). Every filled/active/selected control reading `--primary` in dark
+(Slider range, Badge `default`, Switch checked, Checkbox accent) now carries the brand
+chroma instead of a flat pale-grey slab. The dark `--primary-foreground` is unchanged
+(`hsl(24 10% 10%)`, clears 7.15:1 over the new accent). A consumer who OVERRODE the dark
+`--primary` (presets-in-consumers) re-pins their own value in `:root`/`.dark` — no action
+otherwise.
+
+**3 — The `--surface-tint-*` family gained a dark arm.** In dark the family now mixes
+toward a light ink (`hsl(48 12% 96%)`) so chip backplates / hairlines / the dock-rail
+divider / the timeline dot read against the near-black card (was: invisible — collapsed
+into the plate). The light arm + the in-srgb interpolation are UNCHANGED (the AW.W26
+fence). Every `--surface-tint-*` consumer re-resolves automatically — no per-site edit.
+
+---
+
 ## Cohabitation note—v0.9.4 stays supported
 
 v0.9.4 remains available indefinitely as a v0.9.x patch-stream tag.

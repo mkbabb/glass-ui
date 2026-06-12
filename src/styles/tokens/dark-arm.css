@@ -29,7 +29,12 @@
        FLOOR — kept verbatim for non-light-dark() engines (§2c); on a
        supporting engine `color-scheme: dark` (above) drives the §-1b
        light-dark() arms and these agree. */
-    --neutral-0: hsl(24 8% 6%);    /* L 6  — page surface (dark) */
+    /* BA.W-DARK-MATERIAL scope 1 — the luminous-dark elevation widen. The page floor
+       deepens (L6→L4, +1 warmth-sat) and the --card plate LIFTS (L10→L16, below) so the
+       page↔card gap goes from the HEAD 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+       band) to a real iOS/Material dark elevation step (card/page relL ≈ 5×, the five glass
+       rungs composite into a perceptible ladder). LOCKSTEP with light-dark.css:70/80. */
+    --neutral-0: hsl(24 9% 4%);    /* L 4  — page surface (dark, deepened) */
     --neutral-1: hsl(24 6% 11%);   /* L 11 — soft field */
     --neutral-2: hsl(24 5% 16%);   /* L 16 — chip / tab-inactive */
     --neutral-3: hsl(24 5% 22%);   /* L 22 — hover / highlight */
@@ -48,15 +53,28 @@
        DELETED here (AQ.W2 §2a): they auto-track the --neutral-* ladder +
        --foreground above. Re-declaring them would be redundant. */
     --foreground: hsl(48 10% 90%);
-    --card: hsl(24 8% 10%);
-    --popover: hsl(24 8% 10%);
+    /* BA.W-DARK-MATERIAL scope 1 — the --card plate LIFTS L10→L16 (a warm-dark elevated
+       surface, macOS-window territory) so it sits ~5× the deepened L4 page relL — a
+       clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css:80. */
+    --card: hsl(24 8% 16%);
+    --popover: hsl(24 8% 16%);
 
     /* R0G-5 (AO.W4) — dark mirror of the warm-neutral public-data panel.
-       --card's dark hsl(24 8% 10%) nudged one warmth step toward amber
-       (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page. */
-    --surface-public-data-panel: hsl(36 9% 12%);
+       --card's dark hsl(24 8% 16%) nudged one warmth step toward amber
+       (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page.
+       BA.W-DARK-MATERIAL — re-anchored L12→L18 to stay ABOVE the lifted L16 card
+       (LOCKSTEP light-dark.css:82). */
+    --surface-public-data-panel: hsl(36 9% 18%);
 
-    --primary: hsl(48 10% 90%);
+    /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary. HEAD was an achromatic
+       cream hsl(48 10% 90%) (oklab chroma ≈ 0.005 — every filled/active/selected control
+       painted a flat pale-grey slab). Re-anchored onto the legendre-violet house identity
+       hue (--section-color-7 / --viz-legendre's oklch register — a LIBRARY-identity chroma,
+       NOT a ppmycota/demo preset), oklab chroma 0.134. The dark ink --primary-foreground
+       stays hsl(24 10% 10%): 7.15:1 over the violet (clears the 4.5 text + 3.0 graphic
+       floors). Critical now the disco/audacious texture retires (R8-18) — the accent's
+       COLOR carries the identity. LOCKSTEP light-dark.css:84. */
+    --primary: oklch(0.739 0.134 318.1);
     --primary-foreground: hsl(24 10% 10%);
     /* AX.W44 — the `.dark` class fallback floor, in LOCKSTEP with the light-dark()
        enhancement arm above (§2c). Same lifted `hsl(0 80% 60%)` so a
@@ -165,6 +183,69 @@
     --glass-opacity-chassis:  0.36;
     --glass-grain-opacity: 0.045;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
+
+    /* BA.W-DARK-MATERIAL scope 2 — dark glass is TRANSMISSIVE. The dark rung
+       backdrop-filter carries a saturate/brightness LUMINOSITY LIFT (the iOS-dark
+       "dark glass glows where light passes" model) so a backdrop GLOWS through the
+       plate instead of dying behind it. The light arm sits at saturate(1.05) — over a
+       near-black canvas that reads as no transmission; the dark arm lifts it so the
+       aurora/page behind reads with chroma + a glow. The blur() RADIUS is the
+       light-arm primitive UNTOUCHED (W-GLASS-CAL owns the radius dial-back) — only the
+       saturate/brightness COMPANIONS lift here. The lower rungs lift more (they're
+       thinner, the backdrop carries the read); the heavy overlay lifts least. */
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.35) brightness(1.18);
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.35) brightness(1.16);
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.30) brightness(1.14);
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.28) brightness(1.10);
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(1.22) brightness(1.06);
+    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(1.30) brightness(1.12);
+
+    /* BA.W-DARK-MATERIAL scope 3 — the dark arm of the adaptive --glass-tint-* seam (the
+       SAME seam, NO third fork). The W55 self-engage block (glass/ladder.css) re-points
+       --glass-tint-source → --glass-tint-ink at --glass-tint-strength-aa. In LIGHT that is
+       a darken-over-bright; in DARK --glass-tint-ink resolves the light-cream --foreground,
+       so the SAME re-point becomes a gentle LIFT toward a luminous translucent dark (the
+       MIRROR of the light darken — the plate lifts OFF the deep page rather than dying into
+       it). HEAD applied the light 20% strength in dark too (the wrong-direction over-wash —
+       it flattened the silhouette toward cream). The dark arm re-declares the BOUNDED
+       strength to a gentle luminous-dark lift (12%) — over-light's 20% is a light-mode
+       concern (the bright bucket never engages in dark — there is no white backdrop). The
+       --glass-tint-ink token stays var(--foreground) (the light cream is the correct LIFT
+       ink in dark); only the STRENGTH re-tunes. The unconditional content-tier floor
+       (--glass-tint-strength-floor, light-mode-calm) is NOT re-declared here — in dark the
+       self-engage uses the AA arm directly (the luminous-dark lift is the desired default,
+       not a sub-perceptual silhouette). */
+    --glass-tint-strength-aa: 12%;
+    /* The unconditional content-tier self-engage (glass/ladder.css) reads
+       --glass-tint-strength-floor. In LIGHT that is the 4% sub-perceptual silhouette (the
+       calm-light card stays warm); in DARK the content tiers WANT the full luminous-dark
+       lift as the default (the plate lifts off the deep page — the desired register, not a
+       sub-perceptual edge), so the floor re-resolves to the AA lift here. ONE token, two
+       mode arms — the content-tier self-engage needs no mode branch. */
+    --glass-tint-strength-floor: 12%;
+
+    /* BA.W-DARK-MATERIAL scope 5 — the --surface-tint-* dark arm. The light family is
+       color-mix(in srgb, var(--foreground) N%, transparent) — over a near-black dark card
+       a LIGHT-ink (dark --foreground IS light cream) tint composites to near-black: the
+       9-rung chip/hairline/divider scale is INVISIBLE in dark. The dark arm KEEPS the
+       in-srgb space (the AW.W26 fence — NEVER oklab) but re-anchors the mix ink to a
+       BRIGHTER warm off-white so a chip/hairline LIFTS off the deep card (the inverse
+       intent of light's dark-ink tint). This re-resolves every --surface-tint-* consumer
+       (chip backplates, the dock-rail divider, the spine, the timeline dot) in lockstep,
+       zero per-site edit. The brighter ink is a near-white warm (hsl(48 12% 96%)) so the
+       higher rungs read as genuine hairlines on the L16 card. */
+    --surface-tint-4:  color-mix(in srgb, hsl(48 12% 96%)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, hsl(48 12% 96%)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, hsl(48 12% 96%)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, hsl(48 12% 96%) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, hsl(48 12% 96%) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, hsl(48 12% 96%) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, hsl(48 12% 96%) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, hsl(48 12% 96%) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, hsl(48 12% 96%) 25%, transparent);
+    --surface-tint-35: color-mix(in srgb, hsl(48 12% 96%) 35%, transparent);
+    --surface-tint-40: color-mix(in srgb, hsl(48 12% 96%) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, hsl(48 12% 96%) 70%, transparent);
 
     /* Hairline-accent dark mirror — see light counterpart at line ~404. */
     --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);

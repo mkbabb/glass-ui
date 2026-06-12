@@ -141,6 +141,13 @@
         .glass-card {
             --glass-tint-source: var(--glass-tint-ink);
             --glass-tint-strength: var(--glass-tint-strength-aa);
+            /* BA.W-DARK-MATERIAL scope 7 — the --muted-foreground lift moves HERE, into the
+               declared/sampled BRIGHT condition. The muted L40 tier cannot clear 4.5:1 on a
+               translucent FULL-AA-darkened plate (darkening moves the plate toward muted's
+               own luminance), so it lifts to the full ink ONLY where the plate actually
+               darkens — NOT on the calm-light unconditional floor (where it stays the muted
+               register, the slides caption read). */
+            --muted-foreground: var(--foreground);
         }
     }
 
@@ -182,17 +189,33 @@
        TOWARD muted's own luminance), so the low-contrast muted register resolves to
        the legible dark ink (clears ~10:1) — a token re-point on the same inheriting
        axis as the tint. */
-    :where(
-            .glass-floating,
-            .glass-overlay,
-            .glass-card,
-            .glass-resting,
-            .glass-quiet,
-            .glass-wash
-        ) {
+    /* The OVERLAY band (.glass-floating/.glass-overlay — Dialog/Sheet/Popover/DropdownMenu/
+       HoverCard/Command/Tooltip/Toast/Select-content) keeps the FULL unconditional AA darken
+       + the muted lift: it floats over WHATEVER the consumer painted (frequently a light/
+       near-white app surface — the canonical G2 case), so darkening toward the warm-ink is
+       the correct DEFAULT over an UNKNOWN surface. Over a DARK page this becomes the
+       luminous-dark LIFT (the dark-arm re-tunes --glass-tint-strength-aa to 12% — the plate
+       lifts off the deep page). A dark-substrate consumer who wants the pristine plate sets
+       `--glass-tint-strength: 0%`. */
+    :where(.glass-floating, .glass-overlay) {
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-aa);
         --muted-foreground: var(--foreground);
+    }
+
+    /* BA.W-DARK-MATERIAL scope 7 — the plain CONTENT tiers self-engage the SUB-PERCEPTUAL
+       FLOOR unconditionally, NOT the full AA darken (the R9-1 slides gray-slab fix). Over a
+       calm LIGHT page the floor (--glass-tint-strength-floor: 4%) is a silhouette whisper —
+       the translucent cream card stays warm (L ≈ 0.94), no gray slab. Over a DARK page the
+       floor re-resolves to the luminous-dark lift (12% in the dark arm — the plate lifts off
+       the deep page, the desired register). The FULL AA darken engages on these tiers ONLY
+       under the declared/sampled BRIGHT signal (the @container --glass-backdrop:light bucket
+       above — where the muted lift also lives now). NO unconditional --muted-foreground lift
+       here: on the calm-light floor the caption keeps the muted register (the slides read).
+       A consumer opts a light-page card out via `--glass-tint-strength: 0%` on an ancestor. */
+    :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-floor);
     }
 
     /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
@@ -207,6 +230,20 @@
        white, illegible on the still-light translucent plate). The bucket is the floor;
        this is the native refinement. Scoped to the bright bucket. */
     @supports (color: contrast-color(white)) {
+        /* The bright-bucket ink flip — the content tiers + overlay band over a DECLARED/
+           sampled bright backdrop. BA.W-DARK-MATERIAL scope 6 — the SYSTEMIC contrast-color()
+           selection-inversion fix (approach A, lockstep-lift). At HEAD this block lifted only
+           --muted-foreground (and the surface `color`) to contrast-color(--card) (white over
+           a light plate, L100), but the ACTIVE control register (a SegmentedTabs active tab,
+           the curve-picker selected label) reads var(--foreground) DIRECTLY (L90, un-lifted) —
+           a control sets its OWN `color: var(--foreground)` which wins over the inherited
+           surface `color`, so the inactive (muted→white) read BRIGHTER than the active
+           (--foreground), inverting selection. The fix lifts --foreground ITSELF in lockstep
+           with --muted-foreground: now an active register reading --foreground resolves the
+           SAME anchored contrast-color ink as the lifted inactive, so selected ≥ unselected
+           everywhere (the inversion gone for ANY --muted-foreground/--foreground selection
+           pairing inside a glass card — the SYSTEMIC library-seam fix, not a curve-picker
+           one-off). Progressive enhancement only — the declarative darken is the AA floor. */
         @container style(--glass-backdrop: light) {
             .glass-material,
             .glass-wash,
@@ -216,25 +253,26 @@
             .glass-overlay,
             .glass-card {
                 color: contrast-color(var(--card));
+                --foreground: contrast-color(var(--card));
+                --muted-foreground: contrast-color(var(--card));
             }
         }
-        /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — the same contrast-color
-           refinement for the SELF-ENGAGED band + content tiers (the @container block
-           above queries an ancestor; these surfaces engage their own tint
-           unconditionally, so their ink-flip companion mirrors that). The muted
-           register flips to the same anchored dark ink. Progressive enhancement only
-           — the declarative darken above is the AA floor on all engines. */
-        :where(
-                .glass-floating,
-                .glass-overlay,
-                .glass-card,
-                .glass-resting,
-                .glass-quiet,
-                .glass-wash
-            ) {
+        /* The OVERLAY band self-engages the darken UNCONDITIONALLY (it floats over an
+           UNKNOWN consumer surface), so its ink-flip companion mirrors that — UNCONDITIONAL.
+           --foreground lifts in lockstep with --muted-foreground (the scope-6 lockstep). */
+        :where(.glass-floating, .glass-overlay) {
             color: contrast-color(var(--card));
+            --foreground: contrast-color(var(--card));
             --muted-foreground: contrast-color(var(--card));
         }
+        /* BA.W-DARK-MATERIAL scope 7 — the content-tier ink flip is GATED on the bright
+           signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
+           LIGHT page the content tiers only carry the 4% silhouette floor (still a warm cream
+           plate), so flipping the ink to the contrast-color DARK ink there is correct only
+           where the plate ACTUALLY darkens to the bright-bucket AA — the unconditional flip
+           would force a white-on-cream / dark-on-darkened mismatch on the calm card. The
+           content tiers therefore take NO unconditional contrast-color flip; their flip lives
+           in the @container bucket with the rest of the bright-condition darken. */
     }
 
     /* ── The opaque escape (AX.W54) ───────────────────
@@ -248,6 +286,14 @@
        a consumer that wants a flat surface). */
     .glass-opaque {
         --glass-level: 0;
+        /* BA.W-DARK-MATERIAL scope 7 — the opaque escape suppresses the adaptive TINT axis
+           too (not just the opacity/blur level). A solid opaque plate has no translucent
+           backdrop to darken-over, so the self-engage tint is meaningless on it; zeroing the
+           strength keeps the opaque escape bucket-INVARIANT (the unset floor and the bright
+           bucket resolve the SAME solid plate — the byte-identity canary). Without this, the
+           scope-7 unconditional content-tier floor (4%) tinted even the solid plate, breaking
+           the opt-out's "flat surface" contract. */
+        --glass-tint-strength: 0%;
     }
 
     /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────

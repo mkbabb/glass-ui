@@ -185,7 +185,13 @@
        on text. The `-dark` companion is overridden inside `.dark` mirroring
        the `--glass-specular-dark` precedent. */
     --glass-edge-light:      inset 0 0 0 0.75px hsl(0 0% 100% / 0.18);
-    --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.10);
+    /* BA.W-DARK-MATERIAL scope 2 — the dark edge/rim is the PRIMARY silhouette device in
+       dark. The light register's fill+shadow carry the plate; in dark the fill barely
+       separates (the deep page is near-black), so the EDGE + the transmitted glow carry the
+       silhouette — two registers, one design language. HEAD α 0.10 sits below the reading
+       threshold over the deep canvas; lifted to 0.22 so the rim DEFINES the plate (the
+       WWDC25 "rim that defines the silhouette" device, dialed up for the dark substrate). */
+    --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.22);
 
     /* AW.W23 — content-aware adaptive tint (the Baseline-2025 "tint informed by
        surrounding content" axis, WWDC25 sess. 219). A surface can tint toward a
@@ -259,6 +265,23 @@
        ~10.6–10.9:1 (within the ~11:1 ratified register — the bump is a silhouette
        strengthening, not a silent re-tint below AA). The live π readback ratifies. */
     --glass-tint-strength-aa:   20%;
+
+    /* BA.W-DARK-MATERIAL scope 7 — the calm-light recalibration (R9-1; the slides gray-slab
+       fix). The AZ unconditional content-tier self-engage applied the full 20% AA darken to
+       EVERY .glass-card/.glass-resting/.glass-quiet/.glass-wash mode- and backdrop-agnostically
+       — over a plain LIGHT page (not a bright/busy backdrop) the 20% warm-ink darken + the
+       muted→ink lift composited the translucent cream card into a flat gray slab (the slides
+       presenter card: 20% → oklab(0.785) gray). The recalibration: the FULL AA darken is now
+       gated on the declared/sampled bright signal (the @container --glass-backdrop:light bucket /
+       the observer); the UNCONDITIONAL content-tier floor drops to this sub-perceptual SILHOUETTE
+       tint — just enough edge over a busy backdrop without graying a calm-light card (the
+       calm-light plate stays warm, L ≈ 0.94 at the slides-equivalent fixture). The overlay band
+       (.glass-floating/.glass-overlay) keeps the FULL unconditional darken (floating over an
+       UNKNOWN consumer surface, darkening is the correct default). A consumer opts out on a
+       light-page ancestor via --glass-tint-strength: 0%. Bounded > 0%, ≤ 10%. The DARK arm
+       re-tunes --glass-tint-strength-aa directly (dark-arm.css scope 3) — the luminous-dark lift
+       is the desired default there, NOT a sub-perceptual floor, so the floor is a light-mode knob. */
+    --glass-tint-strength-floor: 4%;
 
     /* R5-7 — the VEIL text-plate feather. The `veil-surface` decoration
        (cards.css) paints a borderless/rimless translucent glass plate as a LOCAL

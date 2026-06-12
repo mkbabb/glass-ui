@@ -66,8 +66,10 @@
    ═══════════════════════════════════════════════ */
 @supports (color: light-dark(white, black)) {
     :root {
-        /* Neutral ladder — the source the var()-aliases track */
-        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 8% 6%));
+        /* Neutral ladder — the source the var()-aliases track. BA.W-DARK-MATERIAL scope 1:
+           the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css:32) so the
+           lifted L16 --card sits ~5× its relL — a real dark elevation step. */
+        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 9% 4%));
         --neutral-1: light-dark(hsl(48 10% 95%), hsl(24 6% 11%));
         --neutral-2: light-dark(hsl(48  9% 90%), hsl(24 5% 16%));
         --neutral-3: light-dark(hsl(48  8% 82%), hsl(24 5% 22%));
@@ -77,11 +79,15 @@
 
         /* Core surfaces + ink */
         --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
-        --card:                       light-dark(var(--neutral-0), hsl(24 8% 10%));
-        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 10%));
-        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 12%));
+        /* BA.W-DARK-MATERIAL scope 1 — the dark --card plate LIFTS L10→L16 (LOCKSTEP
+           dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it. */
+        --card:                       light-dark(var(--neutral-0), hsl(24 8% 16%));
+        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 16%));
+        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
 
-        --primary:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary (legendre-violet house
+           hue, oklab chroma 0.134; off the HEAD achromatic cream). LOCKSTEP dark-arm.css:59. */
+        --primary:                 light-dark(hsl(24 10% 10%), oklch(0.739 0.134 318.1));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
         /* AX.W44 — dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
            (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
