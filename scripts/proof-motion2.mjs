@@ -246,15 +246,26 @@ if (keyframesReadable) {
         return !re.test(familiesSrc);
     });
 }
-add(
-    "canon-keyframes-census",
-    keyframesReadable && censusMissing.length === 0,
-    !keyframesReadable
-        ? "RED: the keyframes EASING_GROUPS authority is unreadable (the isomorphism cannot be checked against the live source)"
-        : censusMissing.length === 0
-          ? `the gallery carries every keyframes canon item (census vs ${keyframesItems.length} EASING_GROUPS items, 1:1)`
-          : `RED: the gallery is missing keyframes canon items: ${censusMissing.join(", ")}`,
-);
+// SKIP-BY-POLICY (the sibling-absence pattern): the census authority is the
+// SIBLING keyframes.js checkout — absent on a clean CI runner. There the arm
+// skips LOUDLY and the isomorphism binds where the sibling exists (the dev
+// machine + the local release battery); the gallery-side witnesses (4a-4d
+// below) stay binding everywhere.
+if (!existsSync(KEYFRAMES_GROUPS)) {
+    console.log(
+        "  SKIP-BY-POLICY: canon-keyframes-census — the sibling keyframes.js checkout is absent on this runner; the isomorphism census binds where the authority exists (the gallery-side canon witnesses stay binding).",
+    );
+} else {
+    add(
+        "canon-keyframes-census",
+        keyframesReadable && censusMissing.length === 0,
+        !keyframesReadable
+            ? "RED: the keyframes EASING_GROUPS authority exists but is unreadable/empty (the isomorphism cannot be checked against the live source)"
+            : censusMissing.length === 0
+              ? `the gallery carries every keyframes canon item (census vs ${keyframesItems.length} EASING_GROUPS items, 1:1)`
+              : `RED: the gallery is missing keyframes canon items: ${censusMissing.join(", ")}`,
+    );
+}
 
 // ── (5) MUTED-LIFTED (source-witness) ─────────────────────────────────────────────
 // The load-bearing per-row metadata (jsName/note/kind-pill text) + the doctrine
