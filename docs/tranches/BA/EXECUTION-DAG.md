@@ -9,7 +9,7 @@ the AUTHORING phase — NO implementation runs until the user greenlights (BA in
 `latest` on npm). slides exact-pins 3.13.0 (commit a171266, deployed). The BA branch is
 `tranche/BA` off master.
 
-**Numbering:** the `W-*` named system from `BA.md`'s 23-wave roster. The five user-domain
+**Numbering:** the `W-*` named system from `BA.md`'s 24-wave roster. The five user-domain
 hinges (H1 dark-material direction, H2 gold-CTA post-disco form, H3 rail disposition,
 H4 version, H5 publish/deploy creds) gate the named batches.
 
@@ -174,3 +174,42 @@ Batch 7:  W-REFLECT2 → W-CLOSE                              [H4][H5]
 Close criteria: `BA.md §Completion criterion` — the gestalt roster operative-PASS, the
 S1 redresses held, the battery green on a clean runner, the cut published, FINAL with
 zero unnamed deferrals.
+
+---
+
+## §9 — post-authoring bound sharpenings (from the wave-spec fleet's DAG cross-checks)
+
+Every spec-authoring agent cross-checked its bounds against §3–§7; the flagged seams,
+folded back here as BINDING refinements (each is also recorded in the owning spec):
+
+1. **The gate-registry surfaces (`package.json` + `scripts/gates.mjs`) are shared
+   append-only registers.** Multiple waves register gates; each appends its OWN
+   row/script key and the orchestrator sequences the registration commits (or lands
+   them on clean shared main per WAVE_SPEC §4b). No two waves write the same row.
+   `proof:ba-gestalt` ownership chain: W-GESTALT-GATE mints it `["local"]`-tagged
+   born-RED → W-REFLECT2 flips verdicts + promotes the tag to the operative close set
+   → W-CLOSE consumes via `proof:ba-final`, never re-writing a verdict.
+2. **Batch 2 `blob.vue` region split** (the one seam §3 missed): W-GOO-REDRESS owns
+   the `STUDIO_GEO_BASE` renderer-geometry constants; W-FADING-SCROLL needs the
+   mood-row preset-strip template (`blob.vue:404`). Region-disjoint; the orchestrator
+   sequences the two hunks (or hands the one-line mood-row wrap to W-GOO-REDRESS's
+   commit per the W-FADING-SCROLL spec's declared options).
+3. **W-CONFIG-CHASSIS bound sharpenings**: + `demo/stories/aurora/usePresetThumbnails.ts`
+   (the preview alpha-clamp lands at the `freezeCfg` bake seam, the cleaner root than
+   `presets.ts:450`), + `src/api/index.ts` and `src/subpaths/` (the new swatch-register
+   package registration).
+4. **W-DOCK-GEOMETRY** adds `src/styles/dock/density.css` under the "geometry only"
+   umbrella (the `--dock-control-safe-inset` mint lives in the density cascade) — a
+   within-bound expansion, no sibling writes any dock path in Batch 2.
+5. **W-FOURIER-STUDIO's one `manifest.ts` route row** is an orchestrator-applied
+   literal-diff insertion (W-STAGE owns `manifest.ts`; the regions are disjoint but
+   single-writer holds).
+6. **W-GLASS-CAL × `AuroraColorSection.vue`**: the file is W-CONFIG-CHASSIS's Batch-2
+   bound; Batch 4 touches it ONLY-IF-forced (the calm-CTA re-point keeps the variant
+   keys so demo call sites inherit with zero rename).
+7. **Brief-vs-reality reconciliations recorded by the specs** (disk truth wins): the
+   IconChip paste sites are icons/empty-states/`auth-shell.vue:99-100` (settings.vue
+   composes the eyebrow register — W-SUFFUSE2's bound); the menuItemVariants consumer
+   fan is 13 SFCs at HEAD (not the lane's 9); the CLAUDE.md custom/ enumeration omits
+   FIVE dirs (underline/ included); `Constellation.vue` is 576 lines on disk vs the
+   577 ratchet baseline (mechanical drift, resolved by the carve).

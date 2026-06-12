@@ -1,6 +1,6 @@
 # BA tranche — PROGRESS
 
-The dark-register-rebuilt tranche: 23 waves over 8 batches (4 floor, 1 dark-material,
+The dark-register-rebuilt tranche: 24 waves over 8 batches (4 floor, 1 dark-material,
 4 S1-redress, 2 dock, 5 glass-grammar, 1 promotion, 5 demo-staging, 2 close), grounded
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
@@ -71,4 +71,6 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   sliders), the contrast-color() selection inversion (systemic), the dark 4-L-point
   page↔card gap, the railContext route auto-push (S1), the W-RAIL3 midline workaround.
 - 2026-06-12 — the BA tranche AUTHORED: BA.md + EXECUTION-DAG.md + this PROGRESS + the
-  23 wave specs under `waves/`. Presented for the user's greenlight; NO implementation.
+  24 wave specs under `waves/` (opus fanout, run wf_aabe690a-133; every agent cross-
+  checked its bounds against the DAG — the flagged seams are folded into
+  `EXECUTION-DAG.md §9`). Presented for the user's greenlight; NO implementation.

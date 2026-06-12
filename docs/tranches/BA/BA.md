@@ -110,7 +110,7 @@ dock-like glass chip rack ("perhaps another dock" — R8-16; curve-picker lane
 recommendation (a)); the disco retires everywhere (R8-18 verbatim); the blur ladder
 dials back globally ~15–20% as ONE knob-family edit (R8-19).
 
-## The wave roster — 23 waves over 8 batches
+## The wave roster — 24 waves over 8 batches
 
 Full per-wave specs live at `waves/BA.W-*.md`; the EXECUTION-DAG carries the dependency
 rationale. Grounding ids cite `audit/fleet/<lane>.md`.

@@ -1,0 +1,207 @@
+# BA.W-STAGE — the demo backdrop system: every route staged, glass over the live field, the dark washes recalibrated
+
+**Name**: W-STAGE - the per-category background map + the field-backed showcase chassis + the dock-stage chassis
+**Opens after**: Batch 1 (W-DARK-MATERIAL must hold its live verdict — BA invariant 5; runs ‖ W-DEMO-AFFORDANCES ‖ W-FOURIER-STUDIO ‖ W-SUFFUSE2 ‖ W-ANIMATE per EXECUTION-DAG §8 Batch 6 — disjoint file bounds; this wave is the SINGLE writer of the story chassis files)
+**Agents**: 3 parallel (A1 the manifest map + dark-wash recalibration · A2 the ShowcaseFrame field-backed chassis + token-tour contrast fields · A3 the dock-stage chassis) — disjoint file bounds, see §4a
+**Hard gate**: `proof:stage` (born-RED) — three falsifiable SOURCE witnesses (zero keyless routes in the manifest, ShowcaseFrame carries a `field`/transparent mode with NO `bg-card` baked when engaged, the dock-stage chassis exists + is offscreen-paused) + the binding π readback (the four owned surfaces captured whole-page in BOTH modes over their real backdrop — the dark grid/paper VISIBLE through the card, glass plates over aurora with no opaque frame between, the dock demos over a live field) + the `proof:ba-gestalt` verdict requirement (BA invariant 4 — per-mechanism greens alone do not close a visual wave).
+**Status**: SPEC
+
+## Goal criterion
+
+The storybook stops being an 80%-blank near-black void: every route declares or inherits a category background (aurora/constellation/fourier/grid/paper) with a REAL dark arm that reads, glassiness demos float DIRECTLY over the live substrate (no opaque `bg-card` plate occluding the field), token tours show translucency against a contrast reference field, and every dock demo sits over one offscreen-paused procedural backdrop — so the demo IS the proof the system is beautiful in BOTH modes, judged as a gestalt.
+
+## §0 — RE-GROUND (mandatory step-0; re-grep every cite at HEAD before any edit)
+
+This wave starts from the fleet's grounded root causes, NOT a blind re-diagnose (BA invariant 3 — re-opened ≠ rebuilt-blind). Before touching a byte, each impl agent re-greps the anchors below at HEAD and confirms the mechanism still holds; if any cite has drifted (a manifest row gained a `background:`, a chassis line moved, the dark-arm alpha already lifted by W-DARK-MATERIAL), the agent records the drift in PROGRESS and re-locates the mechanism — it does NOT re-invent the diagnosis. **W-DARK-MATERIAL (Batch 1) has already landed** — the dark `--card`/`--background` page↔plate ΔL is widened and the glass rungs separate; the §C grid/paper recalibration here RE-GREPS the dark-arm alphas at HEAD and tunes the static-wash arm ON TOP of the new substrate ladder (it does NOT re-tune the token pair W-DARK-MATERIAL owns).
+
+Grounding findings (cite the finding id + the EXACT file:line in PROGRESS):
+
+- **BG-1 / BG-5 / R8-15 [S2] (page-backgrounds.md:13-49)** — the census: walked `demo/stories/manifest.ts`, **101 stories; 20 carry `background:`, 81 carry NONE.** The 81 keyless rows fall through to `AppShell.vue:112` (`<PaperBackdrop class="fixed inset-0 -z-10 bg-background">`), a flat near-black void in DARK (`--background = hsl(24 8% 6%)`). The per-category assignment map (page-backgrounds.md:131-155, §4) is the remedy.
+- **BG-2 / R8-11 / FD-FS-2 [S1] (page-backgrounds.md:52-68, fd-foundations-substrates.md:164-170)** — the black-plate kill: `/substrates/glass-material` declares `background: "aurora"` but `glass-material.vue:79` wraps the rungs in `<ShowcaseFrame pad="lg">` whose default tier `resting` paints `bg-card border-border` (`ShowcaseFrame.vue:51-55`, the `tierClass` computed) — in DARK an opaque near-black plate that OCCLUDES the page aurora from the glass it exists to demonstrate. The binding rule: a glassiness demo places its glass surfaces over the live substrate with NO opaque card between (page-backgrounds.md:179-182).
+- **BG-3 / DARK-4 / HS-3 [S2] (page-backgrounds.md:71-87, hierarchy-suffusion.md:96-118)** — the static washes are INVISIBLE in DARK: `/data/metric-cell` declares `grid` but the grid lines (`story-hero.css:26-27`, the `.dark` arm at 9%/16% of a LIGHT ink over near-black) vanish behind the `wash`-tier StoryHero card (`StoryHero.vue:164-168`). The `.dark` grid/paper arm (`story-hero.css:25-28`) was tuned light-first; the dark arm is too faint to clear the card.
+- **BG-4 [S2] (page-backgrounds.md:88-99)** — the contained live substrate is too DIM in DARK: `/navigation/carousel` (aurora, page-variant) + `/motion/springs` (constellation, page-variant) read as a dull brown-grey wash because the field is boxed behind the `wash` card at `opacityCeiling 0.4` (`StoryHero.vue:88-94`) un-compensated for dark.
+- **FD-FS-1 / FD-FS-3 [S2] (fd-foundations-substrates.md:30-48, 102-126, 181-202)** — the token tours demonstrate ZERO of the visual the token names: surface-tints renders each rung as a 2px `border-[var(--surface-tint-N)]` over a same-tone `bg-card` fill (`surface-tints.vue:35,49`, `sample-class="…border-2 bg-card"`) — a translucent hairline over a same-tone plate is imperceptible; overlays-scrims/shadows/paper-backdrop fail the same way. The fix direction: a CONTRASTING reference field (checkerboard for translucency, a vivid gradient) behind every swatch + the dense-grid layout that kills the one-rung-per-full-width-row dead-space.
+- **FD-DOCK-1 [S2] (fd-nav-dock-data.md:37-83, 159-166)** — the flagship dock demos sit on FLAT `bg-card/40 p-8` panels (`dock/overview.vue:143,169`; `dock/layers.vue:66,119`; `dock/morph-showcase.vue` no page backdrop) — glass over a flat substrate is invisible glass. ONLY the first overview demo is staged over `<Aurora>` (`overview.vue:117-126`). The lift: a demo-private **dock-stage chassis** (one shared, offscreen-paused procedural backdrop behind the dock demos) — NOT per-demo aurora (budget) and NOT a component change (the docks are fine).
+- **FDX-1 [S2]** — the staging-disjoint the user named across R8-11/R8-15: glass with no rich substrate is invisible glass; the per-category map + the field-backed chassis jointly close it.
+- **HS-2 [S1] (hierarchy-suffusion.md:64-93)** — the content-page `<h1>` is `text-heading` (26px, `StoryPage.vue:56`), only 6px above the section `<h2>` `text-subheading` (20px) — the title does not dominate. W-SUFFUSE2 owns the rung decision; this wave APPLIES its literal-diff block on `StoryPage.vue` (the single-writer coordination, §4 / §5.A2).
+
+Captures (the binding RED evidence — re-confirm present at HEAD): `docs/tranches/BA/audit/fleet/bg-glass-material-dark.png` (R8-11 live, the black plate), `bg-alert-dark.png` (R8-15 blank), `bg-metric-cell-grid-dark.png` (grid invisible), `bg-carousel-aurora-dark.png` (contained aurora dim), `bg-springs-constellation-dark.png` (contained constellation dim), `evidence-fd-foundations/surface-tints-dark.png` (the empty bordered boxes), `fd-dock-ov-demos-dark.png` / `fd-dock-layers-dark.png` / `fd-dock-morph-dark.png` (the flat dock panels), plus the 19 R8 ground captures under `docs/tranches/BA/audit/ground/`.
+
+RE-GROUND command set (run all; confirm each mechanism):
+
+```
+grep -c "s(" demo/stories/manifest.ts                                   # the row count baseline
+grep -n "background:" demo/stories/manifest.ts | wc -l                  # the declared-background count (~20-38 — must be < the row count)
+sed -n '51,55p'  demo/stories/ShowcaseFrame.vue                         # the tierClass bg-card / bg-card/40 (BG-2 root)
+sed -n '160,170p' demo/stories/StoryHero.vue                            # the cardTier read-through seam (BG-3/BG-4)
+sed -n '25,28p'  demo/stories/story-hero.css                            # the .dark grid/paper arm (BG-3/DARK-4 root)
+sed -n '56,56p'  demo/stories/StoryPage.vue                             # the content h1 text-heading rung (HS-2; W-SUFFUSE2 diff target)
+sed -n '35,55p'  demo/stories/foundations/surface-tints.vue            # the border-2 bg-card swatch (FD-FS-1 root)
+grep -n "bg-card/40" demo/stories/dock/overview.vue demo/stories/dock/layers.vue   # the flat dock panels (FD-DOCK-1 root)
+grep -rn "stage" package.json scripts/                                  # MUST be empty pre-wave (proof:stage does not yet exist)
+```
+
+## Defect table (file:line — RE-GREP at HEAD)
+
+| # | finding | file:line | the mechanism |
+|---|---|---|---|
+| 1 | BG-1/BG-5/R8-15 the blank-void census [S2] | `demo/stories/manifest.ts` (the `s()` rows; `:47` `background?` field); `demo/layout/AppShell.vue:112` (the flat `bg-background` fallback) | ~80% of routes carry no `background:` → fall to the AppShell near-black base in DARK |
+| 2 | BG-2/R8-11/FD-FS-2 the black-plate kill [S1] | `demo/stories/ShowcaseFrame.vue:51-55` (`tierClass` → `bg-card`/`bg-card/40`); `demo/stories/substrates/glass-material.vue:79` (`<ShowcaseFrame pad="lg">`) | the opaque ShowcaseFrame plate occludes the page aurora from the glass rungs it demos |
+| 3 | BG-3/DARK-4/HS-3 the invisible dark wash [S2] | `demo/stories/story-hero.css:25-28` (the `.dark` grid/paper arm 9%/16%); `demo/stories/StoryHero.vue:164-168` (the `wash`-tier card occlusion) | the light-tuned `.dark` static-wash alpha vanishes behind the half-opaque card over near-black |
+| 4 | BG-4 the dim contained substrate [S2] | `demo/stories/StoryHero.vue:88-94` (page-variant `opacityCeiling 0.4`) + `:164-168` (`wash`/`resting` occlusion) | a contained aurora/constellation washes to brown-grey in DARK, un-compensated |
+| 5 | FD-FS-1/FD-FS-3 the signal-free token tour [S2] | `demo/stories/foundations/surface-tints.vue:35,49` (`border-2 bg-card` swatch); `overlays-scrims.vue`, `shadows.vue`, `paper-backdrop-texture-system.vue` (same class) | a translucent token over a same-tone/opaque plate is imperceptible; the swatch→label dead-space is wasteful |
+| 6 | FD-DOCK-1 the flat dock staging [S2] | `demo/stories/dock/overview.vue:143,169` + `layers.vue:66,119` (`bg-card/40 p-8` panels); `morph-showcase.vue` (no page backdrop) | glass over a flat panel is invisible glass; only the first overview demo is aurora-staged |
+| 7 | HS-2 the thin title rung [S1] | `demo/stories/StoryPage.vue:56` (`<h1 class="text-heading">`) | the content page title (26px) does not dominate the section `<h2>` (20px) — W-SUFFUSE2's diff target |
+
+## Scope (numbered concrete changes — no "if time allows")
+
+### The per-category background map + the substrate read-through (A1)
+
+1. Author the **per-category background assignment map** in `demo/stories/manifest.ts` so EVERY story row declares (or inherits a category default) one of `aurora`/`constellation`/`fourier`/`grid`/`paper`, honoring one-GL-per-route (live GL clustered on Substrates/Dock/Nav/Motion; the dense Forms/Display/Data/Feedback bands ride the calm static washes). The map per page-backgrounds.md:131-155 §4, applied as `opts.background` on the `s()` factory rows: Foundations → `paper` (token/type pages) + keep the 2 live heroes; Substrates → each its own live field + glass-panel gains `aurora`; Forms → `grid`; Display → `paper`; Containers → `grid`; Navigation → `aurora`; Dock → `aurora` (the dock-stage chassis, A3, is the in-page lever); Data → `grid`; Feedback → `paper`; Motion → `constellation` + curve-gallery keeps `grid`; Compositions → per-scene. **NET: zero keyless rows** — the gate's W1 witness.
+2. Stage the card/variant/veil glassiness demos over a live field (page-backgrounds.md:159-177 §5): `/display/card` over `aurora` HERO with the five tiers floating DIRECTLY over the field (NOT in a `bg-card` ShowcaseFrame — consumes the A2 `field` mode); `/substrates/glass-panel` gains `aurora`; the veil register surfaces on the card page or a substrates page over a live field. These are manifest `background:` declarations + (where the demo content composes ShowcaseFrame) the `field` mode A2 mints — A1 declares the route's background, A2 owns the chassis prop; no shared file.
+3. Recalibrate the contained-live-substrate dark register (BG-4): lift the page-variant `opacityCeiling` for live substrates in DARK (or drop the card to a thinner rung over them) in `StoryHero.vue:88-94` so a contained aurora/constellation READS rather than washing to brown-grey. This is a chassis-computed adjustment keyed off the dark register (a `.dark`-conditional ceiling or a thinner `cardTier` over a live backdrop in dark) — the substrate must read against the W-DARK-MATERIAL-widened ladder, not the old flat field.
+
+### The dark static-wash recalibration (A1, the shared chassis CSS)
+
+4. Recalibrate the `.dark` grid/paper static-wash arm (`story-hero.css:25-28`) so grid/paper survive the `wash`/`quiet` card occlusion in DARK (BG-3/DARK-4). The light-tuned 9%/16% arm lifts to a dark-arm alpha that reads THROUGH the half-opaque card on the W-DARK-MATERIAL substrate — RE-GREP the dark-arm `--card`/`--background` at HEAD first; the grid is a hairline the card halves, so the dark `--story-grid-color`/`-strong` need a stronger ink alpha (direction, not a literal — measure against the post-W-DARK-MATERIAL ladder). The paper-grain dark arm lifts the same way. This is ONE token-block edit, zero per-page change.
+
+### The field-backed ShowcaseFrame + the token-tour contrast chassis (A2)
+
+5. **OWN ShowcaseFrame** (this wave is its single writer, EXECUTION-DAG §6): add a `field`/transparent surface mode to `ShowcaseFrame.vue` so a glassiness demo's frame carries NO opaque `bg-card` plate between the glass and the page field. The `tier` axis gains a `field` value (or a `transparent` boolean) whose `tierClass` resolves to `border-transparent bg-transparent` (no plate) — the glass rungs the frame hosts float over whatever backdrop the page declares. The existing `resting`/`quiet` tiers stay BYTE-IDENTICAL (the opaque-atom-specimen host for badges/tables — correct on the W54 legibility allowlist); `field` is the additive glass-demo host. `glass-material.vue` + the card-tier demos re-point to `<ShowcaseFrame tier="field">` (the BG-2 fix at the chassis, not per-consumer).
+6. Add the **captioned-frame footer band** to `ShowcaseFrame.vue` (the chassis footer that owns the canvas→caption→edge bottom-padding rhythm off ONE token — the PAD-1/PAD-2 rhythm W-DEMO-AFFORDANCES CONSUMES but does not edit). A `caption?` prop / `#caption` slot renders a footer band below the frame body separated by the rhythm token (`--showcase-caption-gap`, a new demo-local token); the band reads the mono-caption register. W-DEMO-AFFORDANCES wires its curve-picker + demo-container consumers to this band — it never edits ShowcaseFrame (EXECUTION-DAG §6 coordination).
+7. Give the **token tours a contrast chassis** (FD-FS-1/FD-FS-3): mint a demo-private translucency-reference field (a checkerboard or a vivid-gradient backing) behind the `surface-tints`/`overlays-scrims` swatches so a translucent `color-mix(…transparent)` rung reads its gradation against a contrasting field, NOT a same-tone `bg-card` plate. Re-point `surface-tints.vue:35,49` (the `border-2 bg-card` swatch) + `overlays-scrims.vue` onto the reference field + a dense grid layout (kill the one-rung-per-full-width-row dead-space via `TokenLadder layout` or a denser `sample-class`). The shadows/paper-backdrop token tours gain a contrasting "stage" tile in dark (the page-backgrounds §3.3 / fd-foundations §1 direction) — within A2's token-tour file bound.
+
+### The dock-stage chassis (A3)
+
+8. Create the **dock-stage chassis** `demo/stories/dock/DockStage.vue` (a demo-private staging primitive): ONE shared procedural backdrop (aurora/constellation/grid — the page declares `background: "aurora"` per A1's Dock-band default; the chassis renders the shared field ONCE behind the scroll column) that every flagship dock demo sits over, replacing the flat `bg-card/40 p-8` panels (`overview.vue:143,169`; `layers.vue:66,119`; `morph-showcase.vue`). The backdrop is **offscreen-paused** by construction (it composes the `useWebGLCanvas` substrate's offscreen-pause + `useIntersectionPause` seam the library already ships, OR a single shared `<Aurora>` context behind the column — NOT N auroras, honoring the one-GL-per-route budget). The dock COMPONENTS do not change; their STAGE does.
+9. Re-point `dock/overview.vue` + `dock/layers.vue` + `dock/morph-showcase.vue` demo wrappers from the `bg-card/40 p-8` flat panels to `<DockStage>` (or a `.dock-stage` wrapper composing the shared backdrop). The morph-showcase MOST needs the rich stage (the teardrop-of-glass-morphing-over-a-live-aurora money-shot, fd-nav-dock-data.md:64-74) — its goo-bridge threshold already occludes the topology reflow, so a moving backdrop only helps. `dock/rail.vue` is ALREADY staged right (`rail.vue:79` wraps the vertical dock in `<Aurora>`) — it is the reference; do not regress it.
+
+### The W-SUFFUSE2 + W-ANIMATE chassis literal-diff application (A1/A2, on their behalf)
+
+10. Apply **W-SUFFUSE2's h1-rung literal-diff block** on `StoryPage.vue:56` (the content-page `<h1>` lifts one rung off the section register per HS-2 — `text-heading` → `text-title`/`text-display-1`, the exact rung W-SUFFUSE2's spec names in its literal-markdown block). This is W-SUFFUSE2's decision; W-STAGE owns the file and lands the diff verbatim (the AZ literal-markdown-block triumvirate idiom, EXECUTION-DAG §6). If the W-SUFFUSE2 spec is not yet authored at dispatch, the diff block is a named successor (§Named successors) — W-STAGE lands the manifest map + chassis regardless.
+11. Apply **W-ANIMATE's chassis-entrance-hook literal-diff blocks** on `StoryHero.vue`/`StorySection.vue` (the `[data-scroll-reveal]` section-stagger attribute + the fade-rise body hook W-ANIMATE wires from `AppShell.vue` — W-ANIMATE owns the AppShell Transition wrapper + the data-attribute WIRING, W-STAGE lands the chassis-side attribute hooks W-ANIMATE's spec names in its literal block). Same single-writer coordination — W-ANIMATE never edits the chassis files; it declares the diff, W-STAGE applies it.
+
+## Triumvirate Dispatch
+
+- **File-bounds expansion that invalidates the wave**: if the per-category map (scope 1) cannot assign a background to a route within the one-GL-per-route budget (a category whose pages genuinely need two competing live fields, or a route whose existing hand-rolled backdrop conflicts with the declared map) — that is a scope-reveal; triumvirate (research the per-route GL budget census + plan-augment the map's exceptions + redress), do NOT silently leave a route keyless or stack a second GL context. The one-GL fence (BA invariant 9) is binding.
+- **Hard-gate failures not local-edit-recoverable**: if the dark grid/paper wash (scope 4) cannot be made to read THROUGH the card AND keep the prose AA over the lifted wash after the recalibration — the wash too faint to read OR too strong to keep contrast — that is a register-design miss; triumvirate, do not loop on alpha values. Same for the contained-substrate dark ceiling (scope 3): if no `opacityCeiling`/`cardTier` value reads the field without washing the prose, halt and triumvirate (the read-through seam may need W-DARK-MATERIAL coordination, NOT a demo tweak).
+- **Diagnostic loop halt**: if the ShowcaseFrame `field` mode (scope 5) still shows an opaque plate after the `tierClass` re-point and three iterations have not isolated which utility wins (a `cn()` merge collision, an `@layer` precedence, a stacked `glass-material.vue` ancestor card re-occluding) — halt and triumvirate (the stacked-frame occlusion is the suspect; BG-2's root was TWO stacked opaque layers, page-backgrounds.md:60-68).
+- **The W-SUFFUSE2/W-ANIMATE diff conflict**: if either sibling's literal-diff block, applied to the chassis file, conflicts with this wave's own chassis edits (a line both want to rewrite) — that is a coordination scope-reveal; triumvirate to reconcile the two diffs into one, do NOT drop a sibling's block or fork the chassis file.
+
+## File Bounds
+
+| File | Access |
+|---|---|
+| `demo/stories/manifest.ts` | modify (the per-category background map — A1) |
+| `demo/stories/StoryHero.vue` | modify (the contained-substrate dark ceiling + the W-ANIMATE entrance-hook diff — A1) |
+| `demo/stories/story-hero.css` | modify (the `.dark` grid/paper wash recalibration — A1) |
+| `demo/stories/StoryPage.vue` | modify (the W-SUFFUSE2 h1-rung literal diff, on its behalf — A1) |
+| `demo/stories/ShowcaseFrame.vue` | modify (the `field`/transparent mode + the captioned-frame footer band — A2) |
+| `demo/stories/StorySection.vue` | modify (the W-ANIMATE `[data-scroll-reveal]` section-stagger hook, on its behalf — A2) |
+| `demo/stories/foundations/surface-tints.vue` | modify (re-point the swatch onto the contrast reference field + dense layout — A2) |
+| `demo/stories/foundations/overlays-scrims.vue` | modify (same contrast-field re-point — A2) |
+| `demo/stories/foundations/shadows.vue` | modify (the dark "stage" tile for the cast-shadow swatches — A2) |
+| `demo/stories/foundations/paper-backdrop-texture-system.vue` | modify (the contrast-field re-point for the texture panels — A2) |
+| `demo/stories/substrates/glass-material.vue` | modify (re-point `<ShowcaseFrame>` → `tier="field"` — A2; the BG-2 fix) |
+| `demo/stories/dock/DockStage.vue` | create (the dock-stage chassis — A3) |
+| `demo/stories/dock/overview.vue` | modify (re-point the `bg-card/40` panels → `<DockStage>` — A3) |
+| `demo/stories/dock/layers.vue` | modify (same — A3) |
+| `demo/stories/dock/morph-showcase.vue` | modify (same — A3) |
+| `scripts/proof-stage.mjs` | create (the born-RED gate — A1 authors, all agents' witnesses) |
+| `package.json` | modify (register `proof:stage` in scripts) |
+| `scripts/gates.mjs` | modify (register the `proof:stage` registry row) |
+| `tests-visual/stage.spec.ts` | create (the π whole-page readback — the binding visual truth) |
+| `CLAUDE.md` | modify (record the per-category map + the field-backed chassis + the dock-stage chassis in the demo-storybook section) |
+
+Do NOT touch:
+- **The story `/display/card` veil-staging CONTENT** beyond its manifest row + ShowcaseFrame re-point — the W-SURFACE-AXIS veil register (Batch 4, already landed) owns the veil component; A1/A2 only STAGE it over a field, never re-author the veil surface.
+- **`demo/layout/AppShell.vue` + `demo/layout/{BottomDock,SidebarDock}.vue`** — W-ANIMATE owns the AppShell Transition wrapper + the scroll-progress bar; W-SHELL-HOLD (Batch 0, landed) + W-DOCK-SECTIONS (Batch 3, landed) own the shell docks. W-STAGE's dock-stage chassis is for the dock STORY demos (`demo/stories/dock/*`), never the shell docks. EXECUTION-DAG §6 coordination seam.
+- **`demo/stories/motion/curve-gallery.vue` + `demo/stories/feedback/toaster.vue` + the hand-rolled-plate stories** — W-DEMO-AFFORDANCES (parallel sibling) owns the curve-picker re-conception + the demo-trigger/play register + the demo-container vocabulary collapse. W-STAGE assigns curve-gallery's `background: "grid"` (A1, manifest row only) and mints the captioned-frame band W-DEMO-AFFORDANCES consumes — it never edits curve-gallery's body or the play control.
+- **`demo/stories/substrates/fourier-field.vue` + `src/components/custom/fourier-field/*`** — W-FOURIER-STUDIO (parallel sibling) owns the fourier studio + clock seam + partial-sum axis. W-STAGE assigns fourier-field's manifest `background:` only.
+- **`src/styles/tokens/{dark-arm,light-dark,glass}.css` + `src/styles/glass/ladder.css`** — W-DARK-MATERIAL (Batch 1, landed) owns the dark substrate ladder + the dark glass tint seam + the `--card`/`--background` pair. W-STAGE's dark recalibration is SCOPED to the DEMO `story-hero.css` `.dark` grid/paper wash arm — it reads the library dark tokens but re-tunes ONLY the demo-side static-wash alpha.
+- **Standing fences**: the GL shader internals (`aurora.frag`, `metaball.frag`) — fence-locked (the dock-stage chassis COMPOSES the shipped Aurora/Constellation components, never their shaders); ppmycota purple never enters library tokens (the motion-band `constellation` map is demo-local, no purple token mint); the slides `docs/tranches/M/` docs are foreign.
+
+### Disjointness
+
+Three parallel agents; NO two share a `modify`/`create` path:
+- **A1** writes `manifest.ts`, `StoryHero.vue`, `story-hero.css`, `StoryPage.vue`, `scripts/proof-stage.mjs`, `package.json`, `gates.mjs`, `tests-visual/stage.spec.ts`, `CLAUDE.md`.
+- **A2** writes `ShowcaseFrame.vue`, `StorySection.vue`, the four token-tour stories (`surface-tints`/`overlays-scrims`/`shadows`/`paper-backdrop-texture-system`), `glass-material.vue`.
+- **A3** writes `dock/DockStage.vue` (create), `dock/overview.vue`, `dock/layers.vue`, `dock/morph-showcase.vue`.
+
+The chassis-file split is clean: A1 owns the FOUR chassis files that carry the manifest-map / dark-wash / h1-rung / contained-substrate logic (`StoryHero`/`StoryPage`/`story-hero.css` + `manifest`); A2 owns `ShowcaseFrame` + `StorySection` (the field-mode + section-stagger). No chassis file has two writers. The gate-registration surfaces (`package.json` + `gates.mjs`) are A1-only (the single gate `proof:stage`). Across Batch 6: W-DEMO-AFFORDANCES, W-FOURIER-STUDIO write the story-body files named in the Do-NOT-touch list (disjoint); W-SUFFUSE2 + W-ANIMATE declare their chassis needs as literal-diff blocks A1/A2 apply (no parallel write to the chassis files — the single-writer rule, EXECUTION-DAG §6).
+
+### Worktree Plan
+
+| Agent unit | Sibling worktree absolute path | (no Cargo — JS repo) |
+|---|---|---|
+| BA.W-STAGE.A1 | `/Users/mkbabb/Programming/glass-ui-ba-stage-a1` | — |
+| BA.W-STAGE.A2 | `/Users/mkbabb/Programming/glass-ui-ba-stage-a2` | — |
+| BA.W-STAGE.A3 | `/Users/mkbabb/Programming/glass-ui-ba-stage-a3` | — |
+
+The orchestrator runs `git worktree add` per agent before dispatch (or commits each agent serially on clean `tranche/BA` if worktrees are not used). `proof-stage.mjs` + `package.json`/`gates.mjs` are A1-only, so the registration commit does not race A2/A3.
+
+## Agent Units
+
+### BA.W-STAGE.A1 the per-category map + the dark-wash recalibration + the gate
+
+- Goal: every manifest row declares a background (zero keyless), the dark grid/paper wash reads through the card, the contained live substrate reads in dark, and `proof:stage` is born-RED → GREEN.
+- Mechanism: (1) apply the page-backgrounds.md §4 per-category map to the `s()` rows in `manifest.ts` via `opts.background` (zero keyless — the W1 witness); (2) recalibrate the `.dark` grid/paper arm in `story-hero.css:25-28` to a dark-arm alpha that reads through the `wash`-tier card on the W-DARK-MATERIAL substrate (RE-GREP the dark `--card`/`--background` first); (3) lift the contained-live `opacityCeiling`/`cardTier` in `StoryHero.vue:88-94`/`164-168` for the dark register; (4) apply W-SUFFUSE2's h1-rung diff on `StoryPage.vue:56`; (5) author `scripts/proof-stage.mjs` (the born-RED gate) + the π `tests-visual/stage.spec.ts` + register in `package.json`/`gates.mjs`; (6) record the map in `CLAUDE.md`.
+- Files: `manifest.ts`, `story-hero.css`, `StoryHero.vue`, `StoryPage.vue`, `scripts/proof-stage.mjs`, `tests-visual/stage.spec.ts`, `package.json`, `gates.mjs`, `CLAUDE.md`.
+- Sub-gate: the gate's W1 (`grep "background:" manifest.ts` count == the `s(` row count — zero keyless) + the π readback's grid/paper-VISIBLE-in-dark + contained-substrate-reads-in-dark assertions; `proof:gate-script-parity` GREEN after registration.
+
+### BA.W-STAGE.A2 the field-backed ShowcaseFrame + the token-tour contrast chassis
+
+- Goal: a glassiness demo's frame carries NO opaque plate between the glass and the page field, the captioned-frame footer band exists for W-DEMO-AFFORDANCES, and the token tours read against a contrast reference field.
+- Mechanism: (1) add the `field`/transparent surface mode to `ShowcaseFrame.vue` (the `tierClass` resolves to no-plate when engaged; `resting`/`quiet` stay byte-identical); (2) add the captioned-frame footer band (`caption?`/`#caption` slot + the `--showcase-caption-gap` rhythm token); (3) re-point `glass-material.vue` → `<ShowcaseFrame tier="field">` (the BG-2 fix); (4) mint the translucency-reference field behind the `surface-tints`/`overlays-scrims` swatches + the dense layout, the dark "stage" tile for `shadows`/`paper-backdrop`; (5) apply W-ANIMATE's `[data-scroll-reveal]` section-stagger hook on `StorySection.vue`.
+- Files: `ShowcaseFrame.vue`, `StorySection.vue`, `surface-tints.vue`, `overlays-scrims.vue`, `shadows.vue`, `paper-backdrop-texture-system.vue`, `glass-material.vue`.
+- Sub-gate: the gate's W2 (`ShowcaseFrame` `field` mode carries no `bg-card` in its `tierClass` when engaged — source assert) + the π readback's glass-rungs-over-aurora-no-opaque-frame assertion on `/substrates/glass-material` + the surface-tints-swatch-reads-gradation assertion.
+
+### BA.W-STAGE.A3 the dock-stage chassis
+
+- Goal: every flagship dock demo sits over ONE shared, offscreen-paused procedural backdrop — the dock's glass reads as liquid glass, not a gray pill on charcoal.
+- Mechanism: create `dock/DockStage.vue` composing ONE shared `<Aurora>` (or constellation/grid) backdrop behind the dock-demo scroll column, offscreen-paused via the shipped `useWebGLCanvas`/`useIntersectionPause` seam; re-point `overview.vue:143,169` + `layers.vue:66,119` + `morph-showcase.vue` from the `bg-card/40 p-8` panels to `<DockStage>`. The `rail.vue` reference staging stays untouched (the GOOD pattern). One GL context for the dock page (budget).
+- Files: `dock/DockStage.vue` (create), `dock/overview.vue`, `dock/layers.vue`, `dock/morph-showcase.vue`.
+- Sub-gate: the gate's W3 (`DockStage.vue` exists + composes the offscreen-pause seam + the dock demos reference it, the flat `bg-card/40` panels GONE from the three stories — source assert) + the π readback's dock-over-live-field assertion (the dock pills paint over a non-flat backdrop in both modes).
+
+## Hard Gate
+
+`proof:stage` (born-RED at HEAD, driven GREEN by the wave) — three falsifiable SOURCE witnesses (the comment-strip + pure-detector house pattern, mirroring `proof-suffuse.mjs`/`proof-dock-unify.mjs`), each red at HEAD pre-wave, PLUS the binding π readback PLUS the `proof:ba-gestalt` verdict requirement:
+
+1. **W1 — every route declares a background (zero keyless).** The detector parses `demo/stories/manifest.ts` and asserts EVERY `s()` story row resolves a `background:` (declared on the row OR inherited from a per-category default the map declares) — the count of background-bearing rows EQUALS the count of `s()` rows. **Anti-evasion**: the assert is POSITIVE (every row has a NON-EMPTY background kind ∈ {aurora, constellation, fourier, grid, paper}), NOT merely "the declared count rose" (a partial map that leaves 30 rows keyless passes a "count rose" check while the void survives) — a single keyless row reds the gate. RED at HEAD: ~80 rows carry no `background:` (page-backgrounds.md:13 — 81/101 keyless).
+2. **W2 — ShowcaseFrame stages glass over the field, not an opaque plate.** The detector asserts `ShowcaseFrame.vue` carries a `field`/transparent surface mode whose `tierClass` resolves to NO `bg-card`/opaque plate when engaged (the source assert: the `field` branch carries `bg-transparent`/no-fill, and `glass-material.vue` references `tier="field"`, NOT the default `resting`). **Anti-evasion**: the assert is the POSITIVE field-branch-no-plate + the consumer re-point, NOT a literal `tier="field"` string-grep alone (a renamed prop must still drop the opaque plate); the `resting`/`quiet` tiers must STILL carry `bg-card` (the opaque-atom host stays — a blanket transparent-everywhere is a regression). RED at HEAD: `ShowcaseFrame.vue:51-55` `tierClass` is `bg-card`/`bg-card/40` only; `glass-material.vue:79` uses the opaque default.
+3. **W3 — the dock-stage chassis exists + is offscreen-paused + consumed.** The detector asserts `dock/DockStage.vue` EXISTS, composes the offscreen-pause seam (the `useWebGLCanvas`/`useIntersectionPause` reference or a single shared `<Aurora>` context), and the three dock stories (`overview`/`layers`/`morph-showcase`) reference it with the flat `bg-card/40 p-8` panels GONE. **Anti-evasion**: the assert is the POSITIVE consumed-by-three + the flat-panel-absence, NOT merely "the file exists" (a created-but-unconsumed chassis is substrate-without-consumer); `grep "bg-card/40" dock/{overview,layers}.vue` must return 0 post-wave. RED at HEAD: no `DockStage.vue`; `grep "bg-card/40" dock/overview.vue dock/layers.vue` hits.
+4. **The π binding readback** (the cardinal-lesson DELTA, captured own-surface — `tests-visual/stage.spec.ts`): live whole-page captures in BOTH modes over the real backdrop with paired π getComputedStyle/pixel readback proving (a) a keyless-today route (e.g. `/feedback/alert`, `/display/buttons`) now paints its declared background (a non-`--background`-flat field — the void killed); (b) `/data/metric-cell` (grid) + a paper route show the static wash VISIBLE through the card in DARK (the grid lines' resolved alpha clears the read-through threshold, not the 9%/16% vanish); (c) `/substrates/glass-material` shows the five glass rungs floating over the aurora with NO opaque frame between (the rung backdrop is the aurora, not `--card` near-black — the BG-2 kill); (d) the dock demos (`/dock/overview`, `/dock/morph-showcase`) paint over a live field (a non-flat backdrop behind the pills). Captured to `docs/tranches/BA/audit/visual/W-STAGE-DELTA.md` with before/after frames against the `fleet/bg-*-dark.png` + `fd-dock-*-dark.png` baselines. **The π half is the binding visual truth — if the source half passes but a live route still renders a flat near-black void or a black-plate-occluded glass demo, the wave does NOT close (the BG-1/BG-2 source-green/visually-broken gap is exactly the P-1 close-class failure).**
+5. **The `proof:ba-gestalt` verdict (BA invariant 4 — the GESTALT bar).** This is a VISUAL wave; per-mechanism W1-W3 greens + the π readback ALONE do not close it. The owned surfaces (the staged demo as a whole — the backgrounds-everywhere read, the glass-over-field demos, the dock band, the token tours) are captured whole-page in BOTH modes over their real backdrop and recorded on the `ba-gestalt` roster with an explicit gestalt verdict ("does the storybook read as a designed whole, no flat voids, glass transmits?"). W-REFLECT2 (Batch 7) flips the roster verdict; this wave's close FEEDS that roster (the captures + the W-STAGE-DELTA), and a per-mechanism-green / gestalt-FAIL state closes `complete_with_misses`, not `complete`.
+
+W1-W3 are the device-free CI half (`proof:stage`, `["local"]`-tagged until W-REFLECT2 if it reds mid-flight); the π readback + the `proof:ba-gestalt` verdict are the binding visual truth. All must hold for a clean close.
+
+## Format And Lint Cadence
+
+`npm run typecheck` after the `ShowcaseFrame` prop + `manifest.ts` + chassis edits; `npm run build` to confirm the demo + `story-hero.css` compile; `node scripts/proof-stage.mjs` born-RED before the source edits (proof it fails at HEAD), GREEN at close; `npm run proof:gate-script-parity` after the `package.json`/`gates.mjs` registration; the π `tests-visual/stage.spec.ts` run against `:5199` (the W-GESTALT-GATE-swept default) for the DELTA capture; `git diff --check` before close.
+
+## Verification Artefacts
+
+- `docs/tranches/BA/audit/visual/W-STAGE-DELTA.md` — before/after whole-page frames (both modes) for the four owned surfaces: a formerly-keyless route now backgrounded, the grid/paper VISIBLE-in-dark, the glass-material rungs over aurora with no opaque frame, the dock demos over a live field. Paired π readback (the declared-background paint, the grid-line resolved alpha, the rung backdrop color, the dock-stage backdrop).
+- The `proof:stage` JSON artefact (born-RED log: ~80 keyless + opaque ShowcaseFrame + no DockStage; GREEN-at-close log).
+- The `proof:gate-script-parity` output post-registration.
+- The `ba-gestalt` roster rows for the staged-demo surfaces (captures fed to W-REFLECT2).
+
+## Commit Plan
+
+- impl commit (A1): `feat(demo): per-category background map — zero keyless routes + dark grid/paper wash recalibration + contained-substrate dark ceiling (BA.W-STAGE)` — names the map + the BG-3/BG-4 recalibration in the body.
+- impl commit (A2): `feat(demo): ShowcaseFrame field-backed mode + captioned-frame band + token-tour contrast chassis (BA.W-STAGE)` — names the BG-2 black-plate fix + the FD-FS-1 token-tour re-point in the body.
+- impl commit (A3): `feat(demo): dock-stage chassis — flagship dock demos over one offscreen-paused backdrop (BA.W-STAGE / FD-DOCK-1)` — names the flat-panel retirement in the body.
+- coordination commit: the W-SUFFUSE2 h1-rung + W-ANIMATE entrance-hook literal diffs applied on the chassis files (named as applied-on-behalf in the body).
+- gate commit: `test(demo): proof:stage born-RED→GREEN + π stage.spec + parity registration`.
+- doc/status commit: the CLAUDE.md per-category-map + field-chassis + dock-stage record + the DELTA doc + the PROGRESS row.
+
+## Dependencies
+
+- **Depends on**: **W-DARK-MATERIAL** (Batch 1, landed — BA invariant 5 sequencing) — the dark substrate ladder + the dark glass tint seam must hold before this wave stages over it; the §C dark-wash recalibration tunes ON TOP of the W-DARK-MATERIAL ladder, RE-GREPPING the dark `--card`/`--background` at HEAD. **W-GLASS-CAL** (Batch 4, landed — EXECUTION-DAG §5) — the ~15-20% blur dial-back changes every glass render; captures taken pre-cal stale, so the π DELTA is captured POST-cal. **W-DEMO-AFFORDANCES** (parallel sibling) consumes ShowcaseFrame's captioned-frame band (scope 6) — W-STAGE mints the band; W-DEMO-AFFORDANCES wires its consumers (sequenced: the band lands here, the consumers there). **W-SUFFUSE2** + **W-ANIMATE** (parallel siblings) declare the chassis literal-diff blocks W-STAGE applies on their behalf (scope 10/11).
+- **Blocks**: **W-REFLECT2** (Batch 7) — the staged-demo gestalt surfaces (backgrounds-everywhere, glass-over-field, dock band, token tours) are re-walked live and the `ba-gestalt` roster flipped FAIL→PASS against the W-STAGE captures. W-DEMO-AFFORDANCES's captioned-frame consumers + W-FOURIER-STUDIO's fourier-field staging inherit the manifest backgrounds this wave declares.
+
+## Named successors (foreseeable misses)
+
+- **The W-SUFFUSE2 / W-ANIMATE diff-block dispatch order**: if W-SUFFUSE2 or W-ANIMATE is not yet authored when W-STAGE's A1/A2 dispatch, the h1-rung (scope 10) + entrance-hook (scope 11) diffs are BOOKED as a follow-on chassis commit W-STAGE applies once the sibling spec lands its literal block — the manifest map + the field-chassis + the dock-stage close regardless; the chassis-hook application is the named carry.
+- **The token-tour contrast field as a library primitive**: the FD-FS-1 fleet seeds a generalized "dark-legible material-demo chassis" (fd-foundations-substrates.md:181-187 — one primitive backing every token/material swatch with a contrasting reference field). W-STAGE mints the contrast field DEMO-PRIVATE for the four token tours; the library-primitive promotion (if the checkerboard/vivid-field register earns ≥2 consumers beyond the token tours) is a named successor, not folded here (the ≥2-consumer bar, L invariant 8).
+- **The embla-on-overflow momentum for the dock-stage scroll column**: if the dock-stage demo column overflows on a small viewport, the booked embla momentum fold (W-DOCK-SECTIONS's vocabulary) is the successor — W-STAGE ships the shared backdrop; the scroll-momentum refinement is carried.

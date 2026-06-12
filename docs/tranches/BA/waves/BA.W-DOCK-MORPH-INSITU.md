@@ -1,0 +1,174 @@
+# BA.W-DOCK-MORPH-INSITU — the dock's liquid-glass morph + layering facilities demonstrated IN the shell docks
+
+**Name**: W-DOCK-MORPH-INSITU - the V↔H orientation morph + the layering/contextual system, in-situ
+**Opens after**: W-DOCK-SECTIONS (Batch 3, sequenced — same shell-dock files; the rebuilt section chassis is this wave's mount surface). No parallel siblings in Batch 3 (the two waves run serial per the EXECUTION-DAG §4).
+**Agents**: 2 serial (one unit re-bases on the other's landed morph state — see §Disjointness)
+**Hard gate**: `proof:dock-morph-insitu` (born-RED) — the shell docks demonstrate the V↔H orientation morph on the ONE `--dock-morph-t` scalar (a control flips SidebarDock⟷BottomDock orientation, the showcase's deterministic driver consumed in-situ, NOT a second morph engine) AND the layering/contextual-switching system is exercised in-situ; backed by the BINDING π readback DELTA + the `proof:ba-gestalt` verdict (BA inv-4 — per-mechanism greens alone do not close a visual wave).
+**Status**: SPEC
+
+## §0 — RE-GROUND (mandatory step-0; re-grep every cite at HEAD before any edit)
+
+This wave is the in-situ ADOPTION of an already-shipped AZ facility, not a rebuild. The R8-2 directive is a COVERAGE gap — the V↔H morph HOLDS on the showcase story (WVR-9), the user wants it IN the shell docks. Before touching a byte, the impl agent re-greps each anchor at HEAD, confirms the AZ morph substrate still reads as recorded (the topology limit is binding, not re-negotiable — BA inv-3 re-opened ≠ rebuilt-blind), AND confirms W-DOCK-SECTIONS has LANDED its shell-dock section/rail rebuild (this wave mounts on that chassis). If any cite has drifted — or the section chassis is not yet at HEAD — the agent records the drift in PROGRESS and reconciles before proceeding; it does NOT re-invent the morph architecture.
+
+Grounding finding ids (cite these in the PROGRESS RE-GROUND step):
+
+- **BA-DSM-3** [fd-nav-dock-data] — the V↔H morph is staged on a FLAT plate, not in the shell. `docs/tranches/BA/audit/fleet/fd-nav-dock-data.md:64-74` (the `/dock/morph-showcase` verdict: "the headline feature is staged on a flat plate … the morphing dock sits on a flat dark stage … the single most impressive dock capability has no rich substrate to read against"). Capture: `fd-dock-morph-dark.png`.
+- **BA-DSM-4** [fd-nav-dock-data] — the layering/contextual-switching system demos well on the `/dock/layers` STORY but is absent in-situ on the shell docks (W-RAIL3 deleted the in-dock `<DockLayerGroup>` from both shell docks). `fd-nav-dock-data.md:54-62` (the `/dock/layers` verdict: "the layering system demos well; ZERO rich staging") + `:85-92` (the shell-dock R8-1/R8-9 defects live).
+- **WVR-9** [waves-vs-reality] — the R8-2 coverage gap, root-caused. `docs/tranches/BA/audit/fleet/waves-vs-reality.md:25` + `:97-98`: "W-MORPH-SHOWCASE: the V↔H morph is intact on its showcase story … the user wants it IN the shell docks (unmet directive, not erosion)" — **HOLDS** on the showcase, **coverage gap** in the shell.
+- **DC-REC-4** [deferred-census] — the metaball-teardrop V↔H morph (perf-gated preview), re-opened by R8-2. `docs/tranches/BA/audit/fleet/deferred-census.md:73-84`: the AZ §7 mechanical fall stands (the teardrop missed the 4×-throttle budget p50 13.7-15.1ms vs the 16.7ms cap), the VT crossfade ships, R8-2 re-opens it as a USER defect with two sub-asks: "(a) demonstrate the existing crossfade morph in the shell docks (R8-2's primary), (b) advance the teardrop fidelity toward always-on — but the §7 mechanical-fall discipline holds (the NUMBER decides; a successor that cannot clear the budget stays a preview, no triumvirate)."
+- **R8-2** [USER-AUDIT] — the user verbatim. `docs/tranches/BA/audit/USER-AUDIT-2026-06-11-R8.md:14`: "What of our dock morphing into vertical/horizontal views — we should have a facility to demonstrate the robust dock liquid glass facilities, which would smoothly interpolate and animate a vertical dock to be horizontal and vice versa — too, we should have a robust set of facilities to demo our dock layering and contextual switching system within these demo docks."
+
+The AZ substrate this wave CONSUMES (re-grep before mounting; do NOT re-roll):
+
+1. **`useDockOrientationMorph`** — `src/components/custom/dock/composables/useDockOrientationMorph.ts:82-255`. The V↔H driver, ONE `SpringProgress` (the `DOCK_SPRING` register, `constants.ts`) writing the single `--dock-morph-t` scalar (`:117`), consumer #1 of `useLiquidFlex`. Exposes `orientation`/`t`/`morphing`/`verticalStyle`/`horizontalStyle`/`verticalOpacity`/`horizontalOpacity`/`stretch` + `morphTo`/`toggle`/`pin` (`:51-80`). Interruptible velocity-continuity re-base (`:147-175`); PRM snaps the scalar 0→1 in one frame (`:127-144`, `runTo` → `pin` under reduce). Exported from the dock subpath barrel (`composables/index.ts:42-47`).
+2. **The shipped morph register** — the showcase story `demo/stories/dock/morph-showcase.vue:60-92`. The §7 mechanical fall LANDED: the SHIPPED DEFAULT is the View-Transitions crossfade (arm c, `startViewTransition`, `:87-91`), the liquid-teardrop is the perf-gated preview (`liquidPreview` toggle, `:68`). The arm-a metaball bridge is the SVG-goo filter (`:233-252`), NOT a `<GooBlob>` mount (the M5 scalar-binding choice).
+3. **The morph-bridge CSS** — `src/styles/dock/morph-bridge.css:1-26` (the deterministic CSS SVG-goo teardrop, every axis `f(--dock-morph-t)`/`f(--stretch)`, no free-running clock; HG4/M5).
+4. **The shell docks** — `demo/layout/SidebarDock.vue` (the vertical dock, `orientation="vertical" always-expanded`, `:171-177`) + `demo/layout/BottomDock.vue` (the horizontal dock, `orientation="horizontal" always-expanded fit-content`, `:114-120`), composed side-by-side in `demo/layout/AppShell.vue:119,149`. The route→facet RESOLVER (`useContextualDockLayers`) + the `railContext` writable-computed (`SidebarDock.vue:114-130`, `BottomDock.vue:79-94`) are the one-registry seam W-SHELL-HOLD (Batch 0) guards and W-DOCK-SECTIONS (predecessor) re-seats.
+
+RE-GROUND command set (run all; confirm each):
+
+```
+sed -n '82,200p'  src/components/custom/dock/composables/useDockOrientationMorph.ts   # the driver API
+sed -n '60,131p'  demo/stories/dock/morph-showcase.vue                                # the arm-c default + preview
+sed -n '1,30p'    src/styles/dock/morph-bridge.css                                    # the deterministic goo bridge
+grep -n 'orientation\|always-expanded' demo/layout/SidebarDock.vue demo/layout/BottomDock.vue   # the shell-dock orientations
+grep -n 'DockLayerGroup\|railContext\|useContextualDockLayers' demo/layout/SidebarDock.vue demo/layout/BottomDock.vue   # the in-situ layering seam
+git log --oneline -1 -- demo/layout/SidebarDock.vue demo/layout/BottomDock.vue        # confirm W-DOCK-SECTIONS landed first
+```
+
+## Defect table (file:line — RE-GREP at HEAD)
+
+| # | finding | file:line | the gap |
+|---|---|---|---|
+| 1 | BA-DSM-3 morph-not-in-shell | `demo/stories/dock/morph-showcase.vue` (the morph lives ONLY here); `demo/layout/{SidebarDock,BottomDock}.vue` (no morph control); `fd-nav-dock-data.md:64-74` | the V↔H morph exists on the isolated showcase; the shell docks — the user's flagship surface, visible on every route — never demonstrate it |
+| 2 | BA-DSM-4 layering-not-in-shell | `SidebarDock.vue:260-264` + `BottomDock.vue:190-196` (the in-dock `<DockLayerGroup>` DELETED by W-RAIL3); `fd-nav-dock-data.md:54-62` | the layering/contextual-switching system demos on `/dock/layers` but is absent IN the shell docks; R8-2 asks it exercised in-situ |
+| 3 | WVR-9 coverage-gap | `waves-vs-reality.md:25,97-98`; `useDockOrientationMorph.ts:82` (the driver, single-consumer) | the driver is sound + the showcase HOLDS; the directive is unmet COVERAGE — the shell is the missing consumer |
+| 4 | DC-REC-4 teardrop-perf-book | `deferred-census.md:73-84`; `W-MORPH-SHOWCASE-DELTA.md:18-44` (the §7 fall trace) | R8-2 (b) re-opens the teardrop fidelity advance; the §7 mechanical-fall discipline holds — the NUMBER decides, a miss stays a preview with no triumvirate |
+
+## Goal criterion
+
+A user on any demo route can flip the shell dock's orientation — the SidebarDock (vertical) flows into the BottomDock (horizontal) and back, totally smooth + bidirectional + deterministic on the ONE `--dock-morph-t` scalar, the showcase's liquid-glass driver consumed IN the shell (not a second engine) — AND the shell docks exercise the layering/contextual-switching system in-situ (the contextual facets switch live on the dock). The teardrop fidelity advance is attempted under the SAME §7 mechanical-fall discipline as AZ: the 16.7ms 4×-throttle budget decides; if it clears, the always-on teardrop ships in-situ; if it misses, the VT crossfade remains the shipped floor and the teardrop stays the perf-gated preview (no triumvirate — the number decides).
+
+## Completion criterion
+
+`proof:dock-morph-insitu` (born-RED) GREEN on its device-free clauses (the morph control is wired to `useDockOrientationMorph` writing the ONE `--dock-morph-t` scalar — no second clock; the same scalar drives both directions; the layering/contextual switch is exercised in-situ; the teardrop-vs-crossfade ship decision rides the recorded perf number, not a vibe) AND the BINDING π readback DELTA holds (a live in-situ V↔H morph frame-series on the shell + the in-situ layering switch capture, BOTH modes, over the real shell backdrop) AND the `proof:ba-gestalt` verdict for the dock surface is operative-PASS (BA inv-4 — the whole shell-dock band judged as a designed gestalt, both modes; per-mechanism greens alone do not close this visual wave). A structurally-green-but-visually-jump-cut close is the AZ failure class and closes `complete_with_misses`, not `complete`.
+
+## Scope
+
+1. **Mint the in-situ orientation-morph control on the shell docks.** A morph affordance (a `<DockIconButton>` carrying an `ArrowLeftRight`/orientation glyph, in the SidebarDock's trailing utility group + the BottomDock's trailing group — the EXISTING `#persistent`/utility nav-pattern seam W-DOCK-SECTIONS re-seats) flips the shell dock orientation. It binds `useDockOrientationMorph` (the AZ driver, consumer #2 — the shell is the second binary consumer beyond the showcase) writing the ONE `--dock-morph-t` scalar; the SidebarDock vertical state morphs to the BottomDock horizontal state and back. NO second morph engine, NO parallel clock, NO orientation `ref` shadow of the driver's `orientation`.
+
+2. **Wire the shell orientation morph to the shipped §7 register.** The morph DEFAULTS to the budget-clearing View-Transitions crossfade (arm c, the shipped floor — `startViewTransition` wrapping the shell-dock orientation swap, the SAME register the showcase ships); the liquid-teardrop is reachable as the perf-gated in-situ register IF the §7 budget clears in-situ (scope item 5). The orientation state is consumer-owned (the demo's shell-dock orientation), the driver owns the scalar — one registry, the W-SHELL-HOLD guard discipline holds (the morph flip is a genuine user activation, never a mount/normalization write).
+
+3. **Exercise the layering/contextual-switching system in-situ.** The shell docks demonstrate the layering/contextual switch ON the dock (R8-2's second ask). This CONSUMES W-DOCK-SECTIONS's rebuilt section chassis: the contextual facets (the `useContextualDockLayers` route→facet resolver, the one-registry `railContext`) are exercised as a live in-situ switch — the facet context changes the dock's active section/layer live, demonstrated on the shell, not only on the `/dock/layers` story. This wave WIRES the demonstration onto the section chassis W-DOCK-SECTIONS builds; it does NOT re-author the section/rail structure (the disjointness fence — see §Disjointness).
+
+4. **Stage the in-situ morph over the real shell backdrop (BA-DSM-3 fix).** The shell-dock morph is captured over the shell's real backdrop (the W-STAGE dock-stage chassis lands in Batch 6 — at THIS wave's HEAD the shell renders over the route page; the π capture is over the live shell, not a flat plate). The morph control + the goo bridge mount (if the teardrop register clears §7) read against the real surface, NOT the showcase's static wash plate. The bridge mount in-situ is the EXISTING `src/styles/dock/morph-bridge.css` SVG-goo (the M5-deterministic choice), the demo wires it behind the morphing shell docks — NO GL renderer touch, NO new bridge CSS register.
+
+5. **The teardrop fidelity advance under the §7 mechanical-fall discipline.** Re-run the AZ G-PERF protocol (the M5-Max 4× CPU-throttle, the SHIPPED blob frame budget: p50 ≤ ~12ms / 0% of morph frames over the 16.7ms 60fps cap) over the in-situ shell V↔H morph window, BOTH directions, with the always-on teardrop bridge. If the throttled budget clears in-situ, the always-on teardrop SHIPS as the shell morph register; a miss FALLS to arm (c) (the VT crossfade stays the shipped in-situ floor) and the teardrop stays the perf-gated preview, with the perf trace recorded in the DELTA. The fall is mechanical (the number decides), NOT a judgement call — it inherits the AZ §7 / W-BLOB-STUDIO CONDITIONS-UNMET close path (record the measurement, stand the VT arm, no triumvirate).
+
+6. **Author `proof:dock-morph-insitu` (the born-RED gate) + register it.** The device-free static src-scan half: the shell morph control binds `useDockOrientationMorph` (the ONE `--dock-morph-t` scalar, no second clock token on the shell morph path); the same scalar drives both directions; the layering/contextual switch is exercised in-situ (the shell docks consume the section/layer switch, not only the story); the ship decision (teardrop-vs-crossfade) rides the recorded perf number. The π half — the in-situ frame-series + the in-situ layering switch + the perf re-run — is the LOCAL-ONLY captured truth (real-GPU/Metal dev-box, the AY W-LIVE1 split), backstopped on CI by `proof:live-verified-ledger`, never re-run server-side.
+
+## Triumvirate Dispatch
+
+- **File-bounds expansion that invalidates the wave**: if mounting the orientation morph on the shell docks cannot be done WITHOUT re-authoring W-DOCK-SECTIONS's section/rail structure (the predecessor's owned surface) — i.e. the morph control requires a structural change to the rebuilt section chassis rather than a leaf-level affordance + a state wire — that is a scope-reveal; triumvirate (research the chassis seam + plan-augment the bound + redress), do NOT widen into the predecessor's structural CSS unilaterally.
+- **The morph driver cannot drive a REAL shell dock (not the showcase's two synthetic docks)**: the showcase renders two purpose-built docks under one stage root; the shell is ONE dock per orientation (SidebarDock vertical, BottomDock horizontal) composed in `AppShell`. If `useDockOrientationMorph`'s two-real-DOM-docks contract cannot map onto the shell's actual one-dock-per-orientation topology without a driver change (a driver edit is a cross-wave surface — the AZ-shipped library composable), that is a scope-reveal; triumvirate (the driver contract vs the shell topology), do NOT fork a shell-local morph engine (the BA inv "no second morph engine" floor).
+- **Hard-gate failures not local-edit-recoverable**: if the in-situ π readback shows the shell morph jump-cuts (a visible topology snap, the column→row reflow NOT occluded) OR the `proof:ba-gestalt` dock verdict FAILs after the wire — that is a register/staging miss, triumvirate (do not loop on token/timing values).
+- **Diagnostic loop halt**: if the in-situ morph still does not read as the showcase's smooth V↔H after the wire and three iterations have not isolated the cause (the scalar not inheriting to the real dock, the crossfade not occluding the reflow, the shell layout fighting the morph spans), halt and triumvirate.
+- **The §7 perf fall is NOT a triumvirate trigger.** A teardrop-budget miss is the mechanical fall (record the number, stand the VT crossfade, book the teardrop) — it inherits the AZ §7 CONDITIONS-UNMET close path, never a triumvirate.
+
+## File Bounds
+
+| File | Access |
+|---|---|
+| `demo/layout/SidebarDock.vue` | modify (the in-situ orientation-morph control + the layering switch wire — trailing utility group; serial after W-DOCK-SECTIONS) |
+| `demo/layout/BottomDock.vue` | modify (the in-situ orientation-morph control + the layering switch wire — trailing group; serial after W-DOCK-SECTIONS) |
+| `demo/layout/AppShell.vue` | modify (host the shell orientation-morph state + the morph-bridge mount behind the two shell docks; the VT crossfade wrap of the orientation swap) |
+| `scripts/proof-dock-morph-insitu.mjs` | create (the born-RED gate — device-free clauses) |
+| `tests-visual/dock-morph-insitu.spec.ts` | create (the π in-situ frame-series + the in-situ layering switch + the perf re-run capture) |
+| `package.json` | modify (register `proof:dock-morph-insitu` + add to `proof:all`/parity; `tags: ["local","ci","release"]` — device-free static src-scan) |
+| `scripts/gates.mjs` | modify (register the gate row in the gate registry) |
+| `docs/tranches/BA/audit/visual/W-DOCK-MORPH-INSITU-DELTA.md` | create (the BINDING π readback + the §7 perf trace + the `proof:ba-gestalt` verdict) |
+| `CLAUDE.md` | modify (record the in-situ shell morph + the in-situ layering demonstration in the dock nav-pattern / morph-showcase section) |
+
+Do NOT touch:
+
+- **W-DOCK-SECTIONS's owned structural surface** (the predecessor, same Batch 3) — the section/rail STRUCTURE: `src/styles/dock/rail-extend.css` (the re-seated rail geometry), the `<DockSeparator>`/section-descriptor chassis, the rail re-seat / fan-out / both-side-overrun contract, the in-dock `<DockLayerGroup>`/`DockSection` re-introduction. This wave CONSUMES the rebuilt chassis (mounts the morph control on its trailing seam + wires the layering switch onto its section model); it does NOT re-author the structure. If the morph control needs a chassis change, that fires the §Triumvirate scope-reveal — coordinate, do not widen.
+- **The AZ morph library substrate** — `src/components/custom/dock/composables/useDockOrientationMorph.ts`, `src/composables/motion/useLiquidFlex.ts`, `src/styles/dock/morph-bridge.css`. These are CONSUMED as-shipped (the shell is the new binary consumer); a driver/substrate edit is a cross-wave library surface (the §Triumvirate driver-topology trigger). The bridge CSS is MOUNTED in-situ, not re-authored.
+- **The showcase story** — `demo/stories/dock/morph-showcase.vue` stays (the isolated showcase is a distinct surface; this wave adds the IN-SHELL demonstration, it does not retire or migrate the story — clean addition, no alias).
+- **W-DOCK-GEOMETRY's clipping fix** (Batch 2, landed) — `src/styles/dock/{shell,overflow}.css`, the `--dock-control-safe-inset`/`contain:paint` audit. The in-situ morph reads the geometry-fixed dock; it does not re-touch the clipping seam.
+- **W-SHELL-HOLD's railContext guard** (Batch 0, landed) — the `railContext` writable-computed guard. The morph flip is a genuine user activation; it must NOT re-introduce a mount/normalization write (the W-SHELL-HOLD discipline holds).
+- The standing fences: **the GL shader internals** (aurora.frag, metaball.frag — fence-locked; the bridge is the CSS SVG-goo, not the GL blob), **ppmycota purple** (stays demo-local; the morph control uses no library-token accent), **the slides M docs** (foreign — `docs/tranches/M/`).
+
+### Disjointness
+
+Two agent units, SERIAL (no shared modify path between concurrent units): the agents do not run in parallel, so the shell-dock files are written by one unit at a time.
+
+- **W-DOCK-MORPH-INSITU.1** (the orientation morph) writes `SidebarDock.vue` + `BottomDock.vue` (the morph control) + `AppShell.vue` (the morph state host + bridge mount + VT wrap) + the gate/π/parity files.
+- **W-DOCK-MORPH-INSITU.2** (the in-situ layering demonstration) writes `SidebarDock.vue` + `BottomDock.vue` (the layering switch wire onto the section chassis) — SERIAL AFTER unit 1 lands the morph control (it re-bases on unit 1's shell-dock edits + the landed morph state). The two units share the shell-dock files BY DESIGN, so they are sequenced, NOT parallelized (WAVE_SPEC §4a — units sharing a modify path are sequenced across sub-waves, never run in parallel).
+
+Across Batch 3: W-DOCK-SECTIONS is the SEQUENCED PREDECESSOR (opens-after), not a parallel sibling — it has fully LANDED its shell-dock section/rail rebuild before this wave's §0 RE-GROUND confirms the chassis at HEAD. There is no concurrent writer of the shell-dock files; the predecessor's structural surface is this wave's READ-ONLY mount.
+
+### Worktree Plan
+
+The two units are serial on the same shell-dock files, so they share clean HEAD (no sibling worktree contention): unit 1 commits before unit 2 re-bases. If the orchestrator parallelizes against a different wave, this wave's bound is the shell-dock trio + its own gate/π files — disjoint from every other Batch-3 surface (W-DOCK-SECTIONS already landed).
+
+| Agent unit | Sibling worktree absolute path | CARGO_TARGET_DIR |
+|---|---|---|
+| BA.W-DOCK-MORPH-INSITU.1 | (serial — shares clean `tranche/BA` HEAD post-W-DOCK-SECTIONS) | n/a (JS repo; no Cargo) |
+| BA.W-DOCK-MORPH-INSITU.2 | (serial — re-bases on unit 1's commit) | n/a |
+
+## Agent Units
+
+### BA.W-DOCK-MORPH-INSITU.1 the in-situ orientation morph
+
+- Goal: a control on the shell docks flips SidebarDock⟷BottomDock orientation, totally smooth + bidirectional + deterministic on the ONE `--dock-morph-t` scalar — the showcase's `useDockOrientationMorph` consumed in-situ (the shell is binary consumer #2), the §7-shipped VT crossfade the default, the teardrop the perf-gated register.
+- Mechanism: mount a `<DockIconButton>` orientation-morph affordance in the shell docks' trailing utility group (the W-DOCK-SECTIONS-rebuilt `#persistent`/utility seam). `AppShell` hosts the shell orientation state + binds `useDockOrientationMorph({ rootEl: <the shell-dock stage root>, verticalSize, horizontalSize })`; the control's click drives `morph.toggle()`. The DEFAULT register is the VT crossfade (`startViewTransition` wrapping the orientation swap — the §7 shipped floor); the teardrop bridge (`morph-bridge.css` SVG-goo, mounted behind the two shell docks) is the perf-gated register gated by unit-shared scope item 5. The orientation state is consumer-owned (one registry); the driver owns the scalar. NO second morph engine, NO parallel clock, NO orientation `ref` shadow.
+- Files: `SidebarDock.vue`, `BottomDock.vue`, `AppShell.vue`, `scripts/proof-dock-morph-insitu.mjs` (the morph clauses), `tests-visual/dock-morph-insitu.spec.ts` (the in-situ frame-series), `package.json`, `scripts/gates.mjs`.
+- Sub-gate: the gate's morph clauses GREEN — the shell morph control's handler calls `useDockOrientationMorph`'s `toggle`/`morphTo` (the ONE `--dock-morph-t` scalar, no second clock token on the shell morph path; source-asserted, not a literal string match) AND the same scalar drives both directions; AND the π in-situ frame-series (t=0/.25/.5/.75/1, both directions, captured on the live shell) shows every intermediate frame is a coherent silhouette with NO visible column→row reflow jump-cut (occluded by the crossfade/bridge at the midpoint).
+
+### BA.W-DOCK-MORPH-INSITU.2 the in-situ layering/contextual switch demonstration
+
+- Goal: the shell docks exercise the layering/contextual-switching system in-situ (R8-2's second ask) — the contextual facets switch live ON the shell dock, demonstrated on the shell, not only the `/dock/layers` story.
+- Mechanism: wire the layering/contextual switch onto W-DOCK-SECTIONS's rebuilt section chassis — the `useContextualDockLayers` route→facet resolver + the one-registry `railContext` are exercised as a live in-situ switch (the facet context changes the dock's active section/layer live). This unit re-bases on unit 1's landed morph control (SERIAL); it WIRES the demonstration onto the section model the predecessor built, it does NOT re-author the section/rail structure (the disjointness fence). The W-SHELL-HOLD guard holds — the switch fires on a genuine user activation, never on mount/normalization.
+- Files: `SidebarDock.vue`, `BottomDock.vue` (the layering switch wire), the gate (`scripts/proof-dock-morph-insitu.mjs`, the layering clause), the π spec (`tests-visual/dock-morph-insitu.spec.ts`, the layering-switch capture).
+- Sub-gate: the gate's layering clause GREEN — the shell docks consume the layering/contextual switch in-situ (the section/layer switch is reachable + wired on the shell, source-asserted against the W-DOCK-SECTIONS section chassis, not only the story) AND the π readback captures a live in-situ facet switch (the dock's active section/layer changes on the shell when the contextual switch fires) over the real shell backdrop, both modes.
+
+## Hard Gate
+
+`proof:dock-morph-insitu` (born-RED at HEAD, driven GREEN by the wave) — a SET of device-free static src-scan clauses (the comment-strip + pure-detector house pattern, mirroring `proof-morph-showcase.mjs`) PLUS the BINDING π readback DELTA + the `proof:ba-gestalt` verdict (BA inv-4). Each device-free clause RED at HEAD pre-wave (the shell has no morph control + no in-situ layering switch today):
+
+1. **M1 — the shell morph is driven by the ONE `--dock-morph-t` scalar (no second clock).** The shell-dock orientation-morph control's handler binds `useDockOrientationMorph` (the AZ driver) — the morph writes ONLY `--dock-morph-t`, no second clock token on the shell morph path, no shell-local morph engine. RED at HEAD: the shell docks carry NO morph control (`grep -n 'useDockOrientationMorph\|--dock-morph-t' demo/layout/{SidebarDock,BottomDock,AppShell}.vue` returns 0). **Bite-tightening (anti-evasion)**: the source asserts the POSITIVE — the shell morph handler reaches `useDockOrientationMorph`'s `toggle`/`morphTo`/`pin` (the driver is the morph engine), AND no second `SpringProgress`/`requestAnimationFrame`/`setInterval` morph clock is introduced on the shell morph path (the no-second-engine floor); it does NOT merely check for a literal `useDockOrientationMorph` import (a shadow engine that imports-then-ignores the driver must still fail).
+2. **M2 — the same scalar drives both directions.** The shell morph is bidirectional on the ONE scalar (the driver's `toggle` re-targets 0↔1; no separate forward/back paths, no `clip-path` interpolation across the orientation flip — the AX.W42 fold-7 topology NO-GO). RED at HEAD: no morph path exists. Source assert: no `clip-path` transition/animation on a mismatched-topology shell-dock silhouette.
+3. **M3 — the layering/contextual switch is exercised in-situ.** The shell docks consume the layering/contextual switch (the `useContextualDockLayers` resolver + the section/layer switch wired ON the shell against W-DOCK-SECTIONS's section chassis), not only on the `/dock/layers` story. RED at HEAD: the shell docks carry the rail facets but the in-dock layering switch was DELETED by W-RAIL3 (`SidebarDock.vue:260-264` deletion comment); the section/layer switch is absent in-situ. Source assert: the shell docks reach the section/layer switch (the in-situ layering demonstration), not a story-only consumer.
+4. **M4 — the teardrop-vs-crossfade ship decision rides the recorded perf number.** The gate asserts the in-situ morph register decision is BOUND to the recorded §7 perf trace (the DELTA carries the in-situ 4×-throttle p50 + the over-16.7ms frame fraction; the shipped register is the VT crossfade UNLESS the teardrop clears the budget in-situ). RED at HEAD: no in-situ morph, no trace. This is the mechanical-fall discipline as a gate clause — the NUMBER decides, not a vibe.
+5. **The π BINDING readback** (the cardinal-lesson DELTA, captured own-surface, the AY W-LIVE1 LOCAL-ONLY π half): a live shell capture (`/`-route or a multi-facet route on the live shell, both modes) with paired π readbacks proving — (a) the in-situ V↔H morph frame-series (t=0/.25/.5/.75/1, both directions) shows every intermediate frame is a coherent silhouette with NO visible column→row reflow jump-cut (occluded at the midpoint), driven on the ONE scalar; (b) the in-situ layering/contextual switch changes the dock's active section/layer live on the shell; (c) the §7 perf re-run over the in-situ morph window (4× throttle, both directions) records the p50 + over-16.7ms fraction and the consequent shipped register (crossfade floor vs teardrop). Captured to `docs/tranches/BA/audit/visual/W-DOCK-MORPH-INSITU-DELTA.md` against the `fd-dock-morph-dark.png` flat-stage baseline (the BA-DSM-3 before).
+6. **The `proof:ba-gestalt` dock verdict (BA inv-4 — the GESTALT BAR, the P-1 close-class fix).** The whole shell-dock band is captured whole-page, BOTH modes, over its real backdrop, and judged as a designed gestalt ("does the shell dock — with the in-situ morph control + the in-situ layering switch — look right as a page?"), recorded with the capture in the DELTA. Per-mechanism π greens (M1-M4 + the frame-series) do NOT close this visual wave alone — the gestalt verdict must be operative-PASS. A gestalt FAIL deploys the research→wave-spec→redress triumvirate (BA inv-4); it does NOT close `complete`.
+
+M1-M4 are the device-free CI half (`proof:dock-morph-insitu`, `tags: ["local","ci","release"]` — static src-scan, no browser spawn, carries `ci` so `proof:tag-parity` stays green); the π readback (clause 5) + the gestalt verdict (clause 6) are the binding visual truth (LOCAL-ONLY, real-GPU dev-box; the captured frame-series + the 4×-throttle perf number are dev-box truth, the AY W-LIVE1 split), backstopped on CI by `proof:live-verified-ledger`, never re-run server-side. Both halves must hold for a clean close (a source-green/visually-jump-cut close is the exact AZ failure class — WVR-9's whole point).
+
+## Format And Lint Cadence
+
+`npm run typecheck` after the shell-dock control + AppShell morph-state edits; `npm run build` to confirm the demo compiles + the morph-bridge mount resolves; `node scripts/proof-dock-morph-insitu.mjs` born-RED before the source edits (proof it fails at HEAD — no shell morph control), GREEN at close; `npm run proof:gate-script-parity` + `npm run proof:tag-parity` after the package.json/scripts/gates.mjs registration; `git diff --check` before close. Docs-only sections (DELTA, CLAUDE.md) run `git diff --check`.
+
+## Verification Artefacts
+
+- `docs/tranches/BA/audit/visual/W-DOCK-MORPH-INSITU-DELTA.md` — the in-situ V↔H morph frame-series (t=0/.25/.5/.75/1, both directions, both modes, on the live shell), the in-situ layering-switch capture, the §7 perf re-run (`ground/W-DOCK-MORPH-INSITU-gperf-{v2h,h2v}.json`, 4× throttle — the teardrop-vs-crossfade NUMBER), the `proof:ba-gestalt` dock verdict, the before/after against `fd-dock-morph-dark.png`.
+- The `proof:dock-morph-insitu` JSON artefact (born-RED log + GREEN-at-close log).
+- The gate-script-parity + tag-parity output post-registration.
+
+## Commit Plan
+
+- impl commit (unit 1): `feat(demo): in-situ shell-dock V↔H orientation morph — useDockOrientationMorph consumed in the shell, VT crossfade floor + perf-gated teardrop (BA.W-DOCK-MORPH-INSITU)` — names the one-scalar consume + the §7 register in the body.
+- impl commit (unit 2): `feat(demo): in-situ dock layering/contextual switch demonstrated on the shell docks (BA.W-DOCK-MORPH-INSITU)`.
+- gate commit: `test(dock): proof:dock-morph-insitu born-RED→GREEN + parity registration`.
+- doc/status commit: the CLAUDE.md in-situ-morph record + the DELTA (with the §7 perf trace + the gestalt verdict) + the PROGRESS row.
+
+## Dependencies
+
+- **Depends on**: **W-DOCK-SECTIONS** (Batch 3 predecessor, sequenced) — the rebuilt shell-dock section/rail chassis is this wave's mount surface; the morph control seats on its trailing utility group and the layering switch wires onto its section model. The §0 RE-GROUND confirms the section chassis at HEAD before any edit. **W-SHELL-HOLD** (Batch 0, landed) — the railContext guard the in-situ switch must not violate. **W-DOCK-GEOMETRY** (Batch 2, landed) — the clipping-fixed dock the morph reads. The AZ-shipped `useDockOrientationMorph` + `useLiquidFlex` + `morph-bridge.css` substrate (consumed as-is).
+- **Blocks**: **W-REFLECT2** (Batch 7) — the gestalt reflection re-walks the dock surface live; the in-situ morph + layering demonstration is one of the named surfaces. **W-STAGE** (Batch 6) — the dock-stage chassis stages the dock band over a procedural backdrop; the in-situ morph reads richer once W-STAGE lands (the BA-DSM-3 staging is fully closed at W-STAGE; this wave closes the COVERAGE — the morph is IN the shell — over the real shell backdrop at its own HEAD).
+
+## Named successors (for any foreseeable miss)
+
+- **If the in-situ teardrop perf misses the §7 budget** — the NUMBER: in-situ 4×-throttle p50 > ~12ms OR any in-situ morph frame over the 16.7ms cap, measured over the full shell V↔H window — the in-situ shell morph SHIPS on arm (c) (the VT crossfade, the budget-clearing floor) and the always-on in-situ teardrop fidelity BOOKS to a successor with the `gperf-{v2h,h2v}.json` trace recorded (the AZ DC-REC-4 teardrop book extended in-situ). The fall is mechanical (the number decides, no triumvirate) — it inherits the AZ §7 / W-BLOB-STUDIO CONDITIONS-UNMET close path. The shell morph still ships (bidirectional + deterministic on the VT crossfade); the gate's M4 clause carries the arm-c marker + the deferred-in-situ-teardrop note.
+- **If the shell's one-dock-per-orientation topology cannot host the driver's two-real-DOM-docks contract** without a driver edit — the morph driver is the AZ library substrate (a cross-wave surface); the reconcile BOOKS to a driver-generalization successor (the driver gains a single-dock-orientation-flip mode) and the in-situ demonstration falls to the showcase's two-synthetic-dock pattern transplanted into the shell stage, with the BOOK explicit. The §Triumvirate driver-topology trigger fires before this BOOK is taken — it is the foreseeable miss the triumvirate, not the impl agent, resolves.
+- **If `useGlassBackdropLuminance` trips its 2nd-binary-consumer trigger** because the in-situ morphing shell dock over the real backdrop adopts the dynamic darken (DC-REC-5) — that promotion is W-SURFACE-AXIS / the glass-variant-census wave's call (booked-trigger, not forced here); this wave records the trip if it occurs, it does not promote the observer.
