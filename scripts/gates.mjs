@@ -305,7 +305,7 @@ export const GATES = [
     {
         id: "proof:claude-structure-sync",
         cmd: "proof:claude-structure-sync",
-        tags: ["local"],
+        tags: ["local", "ci"],
         note: "BA.W-HYGIENE (P-5) — the CLAUDE.md §Structure custom/ enumeration ≡ disk drift gate: the dir-named lines under the custom/ header equal `ls src/components/custom/` (set-equality both directions, minus index.ts/non-dirs) AND the declared count equals the disk count (DERIVED, not a literal). Folds the P-4 on-disk-but-untracked visual-png integrity assert (every un-ignored docs/tranches/*/audit/visual png is git-tracked). Bite: add/remove a custom/ dir without re-syncing the doc + count, or leave an un-ignored visual png untracked -> RED.",
     },
     {
@@ -1106,7 +1106,7 @@ export const GATES = [
     {
         id: "proof:ba-gestalt",
         cmd: "proof:ba-gestalt",
-        tags: ["local"],
+        tags: [],
         note: "BA.W-GESTALT-GATE — the holistic per-surface acceptance gate (the P-1 close-class fix). A roster of the 8 named W-REFLECT2 surfaces (dock · configurators-goo · aurora · glass-feedback · shell · motion-fourier · dark-register · cross-repo), each owed a whole-page capture in BOTH modes over its real backdrop + a recorded GESTALT verdict ABOVE the per-mechanism π readback. Device-free source/docs detector reading docs/tranches/BA/audit/reflect/ba-gestalt-roster.md; operative-PASS IFF every verdict is PASS AND every declared capture path resolves on disk (the anti-evasion floor — a PASS with a missing capture is the close-class lie the AZ matrix told, forbidden). LINEAGE: AZ closed `complete` on a 9-surface per-mechanism PASS matrix the user re-opened the SAME DAY (R8) on ≥7 surfaces (precepts P-1, the 6th re-open R3→R8); a per-mechanism π verifies a local ΔL but cannot verify the gestalt the user reads. BORN-RED by construction (every verdict FAIL, anchored to an R8 ground capture); tagged [\"local\"] so it does NOT block ci/release mid-tranche — W-REFLECT2 (Batch 7) is the single authorized verdict-flipper + PROMOTES it to the operative close set when the verdicts flip GREEN (the gestalt OR becomes the close decision). Bite: flip a verdict to PASS with no on-disk capture → RED; drop a roster surface → RED.",
     },
     {

@@ -39,8 +39,8 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 |---|---|---|---|
 | 0 | W-SHELL-HOLD | **complete** (b2ad0ebe) | the set guard landed BOTH docks; S1 born-RED→GREEN + P1 live π 2/2. §0 HONEST FINDING: the diagnosed v-model mount-echo does NOT reproduce at HEAD (instrumented; the guard is the correctness floor W-DOCK-SECTIONS inherits) |
 | 0 | W-GESTALT-GATE | **complete** (1c03a2d9) | proof:ba-gestalt BORN-RED 8/8 FAIL + the roster ledger + anti-evasion; the :5175×3 + :5173×2 ports → :5199; clause 4 widened to generic NON-:5199 (+ the latent comment-strip http:// bug fixed); one triumvirate trigger resolved in-wave (the 9337 service-port shape-allowlist) |
-| 0 | W-HYGIENE | in-progress (continuation — session-wall interrupted, partial verified in tree) | MIGRATION re-anchor · CLAUDE.md custom/ sync · colocation derive · precepts submodule · AX/AY debt retirements |
-| 0 | W-CARVE2 | in-progress (continuation — ratchet already drained to ∅; byte-isomorphism verification owed) | typography.css + constellationField/Constellation carve-or-justified-keep |
+| 0 | W-HYGIENE | **complete** (d853bd0f) | all 10 scopes: MIGRATION 3.13.0-true · CLAUDE.md 36→33 + structure-sync gate born-RED→GREEN (P-4 png arm) · colocation DERIVED (README-marker; aurora/fourier-field/underline covered, self-test bitten) · 5 AY DELTAs RETIRED-SUPERSEDED + the Clause-7 banner exemption · AX rows retired · png ledger executed (16 commit/10 delete) · deck-progress-rail RE-WIRED · precepts submodule ff+commit+pointer (0c03de8, N-W10/O-W10 archive-tagged, I34 flagged) |
+| 0 | W-CARVE2 | **complete** (continuation — predecessor partial completed + verified) | typography.css → typography/{scale,semantic,utilities}.css thin @import root (each <500); constellationField types → constellationTypes.ts (CARVE); Constellation.vue orchestrator → composables/useConstellation.ts (CARVE, no §5-keep). proof:no-god-module GREEN at its DECLARED CLOSE (ratchetBaselineCount 0, ratchetDrained true, violations []). W1-W4 GREEN. Typography dist byte-isomorphic A/B: HEAD-monolith build == carved build == dist/glass-ui.css 916c5ea5. typecheck 0 · build 0 · verify-export-types 0 · barrel export-set unchanged (17 syms) · constellation 38/38 · the 5 readers re-pointed via readMonolith all GREEN; proof:storybook-ia + proof:components-css NO-OP-correct (drift — not src readers). OWED to orchestrator: CLAUDE.md constellation §Structure line +constellationTypes.ts (deferred to W-HYGIENE's enumeration diff); the orphan proof-claude-structure-sync.mjs parity FAIL is sibling-owned |
 | 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix + the R9 over-light self-engage recalibration (scope 7) [H1] |
 | 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
 | 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
@@ -159,3 +159,23 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   P0 mechanisms BA never witnessed, headline: the nested-DockLayerGroup FLIP
   measures to:0px — deterministic, the spring constants explicitly FINE); the fold
   analysis rides the same workflow.
+- 2026-06-12 (Batch 0 CLOSED) — the continuation lanes landed: W-CARVE2 complete
+  (2c713253 — dist BYTE-IDENTICAL 916c5ea5… both arms, ratchet ∅, 38/38) +
+  W-HYGIENE complete (d853bd0f — all 10 scopes; the orchestrator executed the
+  registry rows, the png disposition, the precepts submodule sequence). The
+  GATE-DEBT RECONCILE rode the harvest: gate-manifest-sound Clause 5 un-staled
+  (the route parses from the gate, whitespace-tolerant manifest match — the
+  /dock/layers literal + the prettier-broken regex both fixed), Clause 3 re-cut to
+  its stated crash-class purpose (an honest named-gate red is a FACT not a
+  violation — born-RED gates are the house discipline; full-green lives at the
+  W-CLOSE battery; current first-red: proof:phantom-classes, the known DC-EXT-2
+  external row), proof:ba-gestalt → untagged (the au-final precedent; aggregates
+  complete while the bar stays visible; W-REFLECT2 promotes), structure-sync →
+  +ci. tag-parity GREEN, manifest-sound GREEN-at-commit. The value.js N2 fold
+  analysis harvested (fleet/valuejs-fold.md): ONE new wave recommended
+  (W-EMISSION — the dead-@source emission class + the dead Select/Slider props)
+  + 6 riders (A-1→W-DOCK-MORPH-INSITU w/ the no-spring-retune fence,
+  A-4→W-STAGE, A-5→W-TABS, WO-3→W-MENU-GLASS, C-1→W-GOO-REDRESS, E→W-CLOSE) +
+  C-3 EasingPicker folds into W-FOURIER-STUDIO (the StepsEditor generalizes;
+  value.js's 3 forks = consumer #2) + C-2 ghost variant rides W-EMISSION.
+  The spec amendments + the W-EMISSION authoring ride the Batch-1 window.

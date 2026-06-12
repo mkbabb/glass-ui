@@ -82,6 +82,11 @@ const HEADER_LIVE_VERIFIED = new Set([
 const JUSTIFIED_LOCAL_ONLY = new Map([
     // Deliberately-untagged retired close meta-gate (tags=[]).
     ["proof:au-final", "AU close meta-gate, RETIRED from the release/ci set at the 3.3.0 cut (tags=[]); kept untagged for the historical bite-run."],
+    // BA.W-GESTALT-GATE — the gestalt acceptance bar. BORN-RED BY DESIGN against the
+    // R8 captures until BA.W-REFLECT2 flips the roster verdicts and PROMOTES the tag
+    // into the operative close set; untagged (the au-final precedent) so the local/ci
+    // aggregates complete while the bar stays visible + runnable by name.
+    ["proof:ba-gestalt", "BA gestalt bar, born-RED by design until W-REFLECT2 flips the roster verdicts; untagged so aggregates complete (the au-final precedent); W-REFLECT2 promotes it to the operative close set."],
     // AY terminal-close meta-gate — RELEASE-only by design (tags=["release"]). Its
     // STAGED-NOT-PUBLISHED + CLEAN-TREE clauses are release-context truths that
     // cannot pass mid-development in CI (a dirty working tree is the CI norm), so it

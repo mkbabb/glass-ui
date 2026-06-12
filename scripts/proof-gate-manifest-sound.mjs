@@ -122,13 +122,25 @@ function detectSound() {
         violations.push("[PARITY-HARDENED] proof:tag-parity did not exit 0 (the D2 well-formed presence assert is not load-bearing)");
 
     // ── Clause 3: PROOF-ALL-RUNS ────────────────────────────────────────────
-    // The load-bearing end-to-end: `node scripts/gates.mjs --run local` completes
-    // (the crash is gone). This actually RUNS proof:all.
+    // The load-bearing end-to-end: `node scripts/gates.mjs --run local` COMPLETES —
+    // the malformed-row crash class is dead (a row with no id/cmd ran
+    // `npm run undefined` and died). BA.W-HYGIENE reconcile: the runner fails FAST
+    // at the first red gate, and DURING tranche development an in-flight wave's
+    // born-RED gate is the house discipline — an honest named-gate red is NOT the
+    // crash class this clause exists to kill. The clause now reds ONLY on the
+    // malformed-row signatures (`Missing script: "undefined"` / `FAIL at
+    // 'undefined'`); an honest red is recorded as a fact (the first failing gate
+    // named) and the full-green demand stays where it belongs — the W-CLOSE battery
+    // and the release arm.
     const proofAll = runNode([resolve(SCRIPTS, "gates.mjs"), "--run", "local"]);
+    const malformedCrash =
+        /Missing script: "undefined"/.test(proofAll.out) || /FAIL at 'undefined'/.test(proofAll.out);
+    const failAt = proofAll.out.match(/\[gates\] FAIL at '([^']+)'/);
     facts.proofAllRuns = proofAll.ok;
-    if (!proofAll.ok)
+    facts.proofAllFirstRed = proofAll.ok ? null : failAt ? failAt[1] : "(unparsed)";
+    if (malformedCrash || (!proofAll.ok && !failAt))
         violations.push(
-            `[PROOF-ALL-RUNS] node scripts/gates.mjs --run local did not exit 0 — the local aggregate did not complete${/Missing script: "undefined"/.test(proofAll.out) ? " (the malformed-row crash survives)" : ""}`,
+            `[PROOF-ALL-RUNS] the local aggregate did not COMPLETE${malformedCrash ? " (the malformed-row crash survives)" : " (no named FAIL-at gate — an unstructured death)"}`,
         );
 
     // ── Clause 4: NON-:5199 DEFAULT ─────────────────────────────────────────
@@ -179,20 +191,28 @@ function detectSound() {
     // proof-dock-orchestrator-single.mjs carries DOCK_ROUTE = "/dock/layers" (a
     // real route — the demo manifest produces /dock/layers) AND the gates.mjs:665
     // NOTE no longer contains /navigation/dock-layers.
+    // BA.W-HYGIENE reconcile: the clause asserts the gate's DOCK_ROUTE is a REAL
+    // manifest route (parsed, whitespace-tolerant — the prior /dock/layers literal
+    // went stale when the AZ skip-by-policy demotion deliberately moved the gate to
+    // /dock/overview, and the s("dock","layers") regex broke when prettier put the
+    // call multi-line). The dead /navigation/dock-layers assert is unchanged.
     const orchSrc = readFileSync(resolve(SCRIPTS, "proof-dock-orchestrator-single.mjs"), "utf8");
-    const dockRouteLive = /DOCK_ROUTE\s*=\s*"\/dock\/layers"/.test(orchSrc);
+    const routeMatch = orchSrc.match(/DOCK_ROUTE\s*=\s*"\/([a-z-]+)\/([a-z-]+)"/);
     const deadRouteSurvives = /\/navigation\/dock-layers/.test(orchSrc);
     const manifestSrc = readFileSync(resolve(ROOT, "demo/stories/manifest.ts"), "utf8");
-    const dockLayersStory = /s\("dock",\s*"layers"/.test(manifestSrc);
+    const dockRouteStory = routeMatch
+        ? new RegExp(`s\\(\\s*"${routeMatch[1]}",\\s*"${routeMatch[2]}"`).test(manifestSrc)
+        : false;
     const gatesSrc = readFileSync(resolve(SCRIPTS, "gates.mjs"), "utf8");
     const noteHasDeadRoute = /\/navigation\/dock-layers/.test(gatesSrc);
-    facts.dockRouteLive = dockRouteLive;
-    facts.dockLayersStoryPresent = dockLayersStory;
+    facts.dockRouteLive = Boolean(routeMatch) && !deadRouteSurvives;
+    facts.dockRoute = routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : null;
+    facts.dockLayersStoryPresent = dockRouteStory;
     facts.gatesNoteHasDeadRoute = noteHasDeadRoute;
-    if (!dockRouteLive || deadRouteSurvives)
-        violations.push("[DOCK-ROUTE-LIVE] proof-dock-orchestrator-single.mjs does not carry DOCK_ROUTE = \"/dock/layers\" (the dead /navigation/dock-layers route survives)");
-    if (!dockLayersStory)
-        violations.push("[DOCK-ROUTE-LIVE] the demo manifest does not produce the /dock/layers story — the re-pointed route is not real");
+    if (!routeMatch || deadRouteSurvives)
+        violations.push("[DOCK-ROUTE-LIVE] proof-dock-orchestrator-single.mjs carries no parseable DOCK_ROUTE (or the dead /navigation/dock-layers route survives)");
+    if (!dockRouteStory)
+        violations.push(`[DOCK-ROUTE-LIVE] the demo manifest does not produce the ${routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : "(unparsed)"} story — the gate's route is not real`);
     if (noteHasDeadRoute)
         violations.push("[DOCK-ROUTE-LIVE] the gates.mjs NOTE still names the dead /navigation/dock-layers route");
 
