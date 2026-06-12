@@ -538,7 +538,11 @@ export const GATES = [
     {
         id: "proof:ay-final",
         cmd: "proof:ay-final",
-        tags: ["release"],
+        // RETIRED from the release set at the 3.13.0 cut (the au-final precedent):
+        // its clause-8 STAGED-OR-CUT guarded the AY->3.10.x staging window, which
+        // closed when 3.10.1 published; the AZ close gate (proof:az-final) carries
+        // the release-coherence coverage. Kept untagged for the historical record.
+        tags: [],
         note: "AY.W-CLOSE1 — the AY terminal-close meta-gate (release-only, NOT ci). 8 clauses: FINAL-EXISTS+per-wave-citation, INHERITANCE-CROSSWALK, BUDGET-REBASELINED, NO-OPEN-LIVE-PENDING, CARDINAL-GATE-GREEN both arms + REGISTER-COMPLETE, SQUIRCLE-DECIDED-ONCE, ZERO-ORPHANS, STAGED-NOT-PUBLISHED + CLEAN-TREE. Born-RED-able (12 synthetic violations proven). The DEV-meta analogue of proof:au-final.",
     },
     {
