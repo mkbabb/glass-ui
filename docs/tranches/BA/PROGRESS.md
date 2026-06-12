@@ -37,10 +37,10 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 
 | batch | wave | status | notes |
 |---|---|---|---|
-| 0 | W-SHELL-HOLD | planned (spec authored) | the railContext route-push guard — lands first; every live pass depends on it |
-| 0 | W-GESTALT-GATE | planned (spec authored) | proof:ba-gestalt born-RED vs the R8 captures + the :5175/:5173 gate-default hygiene |
-| 0 | W-HYGIENE | planned (spec authored) | MIGRATION re-anchor · CLAUDE.md custom/ sync · colocation derive · precepts submodule · AX/AY debt retirements |
-| 0 | W-CARVE2 | planned (spec authored) | typography.css + constellationField/Constellation carve-or-justified-keep |
+| 0 | W-SHELL-HOLD | **complete** (b2ad0ebe) | the set guard landed BOTH docks; S1 born-RED→GREEN + P1 live π 2/2. §0 HONEST FINDING: the diagnosed v-model mount-echo does NOT reproduce at HEAD (instrumented; the guard is the correctness floor W-DOCK-SECTIONS inherits) |
+| 0 | W-GESTALT-GATE | **complete** (1c03a2d9) | proof:ba-gestalt BORN-RED 8/8 FAIL + the roster ledger + anti-evasion; the :5175×3 + :5173×2 ports → :5199; clause 4 widened to generic NON-:5199 (+ the latent comment-strip http:// bug fixed); one triumvirate trigger resolved in-wave (the 9337 service-port shape-allowlist) |
+| 0 | W-HYGIENE | in-progress (continuation — session-wall interrupted, partial verified in tree) | MIGRATION re-anchor · CLAUDE.md custom/ sync · colocation derive · precepts submodule · AX/AY debt retirements |
+| 0 | W-CARVE2 | in-progress (continuation — ratchet already drained to ∅; byte-isomorphism verification owed) | typography.css + constellationField/Constellation carve-or-justified-keep |
 | 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix + the R9 over-light self-engage recalibration (scope 7) [H1] |
 | 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
 | 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
@@ -147,3 +147,15 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   branch-close protocol — archive-tag + delete per the register, the 105-worktree
   prune) + scope 10 (the orphan proof:deck-progress-rail re-wire-or-retire) + the
   scope-6 submodule branch fold (the precepts N-W10/O-W10 unmerged lines).
+- 2026-06-12 (Batch 0 EXECUTION, first harvest) — the 4-lane opus batch ran
+  (wf_6d8afbc9-fa6): W-SHELL-HOLD COMPLETE (b2ad0ebe) + W-GESTALT-GATE COMPLETE
+  (1c03a2d9 — the registry single-owner protocol held; the shell-hold rows rode the
+  gestalt commit); W-CARVE2 + W-HYGIENE hit the session wall MID-FLIGHT with
+  substantial partials in-tree (the carve ratchet already drained to ∅) — the
+  completion lanes redispatched on the user's reset edict (wf_33885df7-3df) with
+  per-scope verify-then-complete discipline. ALSO ARRIVED: the value.js N2 letter
+  (coordination/VALUEJS-N2-ASKS-2026-06-12.md — the same user's value.js audit; ~16
+  of 33 U-findings collapse to "consume the BA cut"; register A carries reproduced
+  P0 mechanisms BA never witnessed, headline: the nested-DockLayerGroup FLIP
+  measures to:0px — deterministic, the spring constants explicitly FINE); the fold
+  analysis rides the same workflow.
