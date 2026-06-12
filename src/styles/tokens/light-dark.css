@@ -68,21 +68,31 @@
     :root {
         /* Neutral ladder — the source the var()-aliases track. BA.W-DARK-MATERIAL scope 1:
            the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css:32) so the
-           lifted L16 --card sits ~5× its relL — a real dark elevation step. */
-        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 9% 4%));
-        --neutral-1: light-dark(hsl(48 10% 95%), hsl(24 6% 11%));
-        --neutral-2: light-dark(hsl(48  9% 90%), hsl(24 5% 16%));
-        --neutral-3: light-dark(hsl(48  8% 82%), hsl(24 5% 22%));
-        --neutral-4: light-dark(hsl(48  7% 70%), hsl(24 5% 34%));
-        --neutral-5: light-dark(hsl(48  6% 40%), hsl(48 5% 62%));
-        --neutral-6: light-dark(hsl(48  7% 30%), hsl(48 6% 72%));
+           lifted L16 --card sits ~5× its relL — a real dark elevation step.
+           BA.W-NO-GRAY — THE WARM-CHROMA FLOOR, BOTH ARMS in lockstep. The LIGHT arm warms
+           off the achromatic hsl-48 yellow-green onto the warm identity (hsl 28-40, OKLab
+           H 62-85°, C off the gray floor; LOCKSTEP color-radius.css). The DARK arm warms in
+           lockstep on the W-DARK-MATERIAL base (hsl 28-36, the dark neutrals carry chroma on
+           the NEW dark page/card — secondary→border C 0.0138-0.0286, muted-fg C 0.0255). The
+           dark page --neutral-0 hsl(24 9% 4%) is W-DARK-MATERIAL's (KEEP — its luminance floor).
+           Chroma-only at constant L — every L within ±0.01 of HEAD, the AA contract preserved. */
+        --neutral-0: light-dark(hsl(40 30% 98%), hsl(24 9% 4%));
+        --neutral-1: light-dark(hsl(38 26% 95%), hsl(28 12% 11%));
+        --neutral-2: light-dark(hsl(34 28% 90%), hsl(28 14% 16%));
+        --neutral-3: light-dark(hsl(33 30% 82%), hsl(30 18% 22%));
+        --neutral-4: light-dark(hsl(32 26% 70%), hsl(30 16% 34%));
+        --neutral-5: light-dark(hsl(30 22% 40%), hsl(34 14% 62%));
+        --neutral-6: light-dark(hsl(28 24% 30%), hsl(36 14% 72%));
 
         /* Core surfaces + ink */
         --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
         /* BA.W-DARK-MATERIAL scope 1 — the dark --card plate LIFTS L10→L16 (LOCKSTEP
-           dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it. */
-        --card:                       light-dark(var(--neutral-0), hsl(24 8% 16%));
-        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 16%));
+           dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it.
+           BA.W-NO-GRAY L1 — the LIGHT arm DECOUPLES off the near-achromatic page onto the
+           warm-cream plate hsl(36 48% 97%) (LOCKSTEP color-radius.css --card) so the light
+           glass plate reads warm-not-gray; the dark arm is UNCHANGED (W-DARK-MATERIAL's). */
+        --card:                       light-dark(hsl(36 48% 97%), hsl(24 8% 16%));
+        --popover:                    light-dark(hsl(36 48% 97%), hsl(24 8% 16%));
         --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
 
         /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary (legendre-violet house

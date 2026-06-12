@@ -137,13 +137,21 @@
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
 
-    /* Composed borders — foreground-tinted */
-    --glass-border-wash:     color-mix(in srgb, var(--foreground) 8%, transparent);
-    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 10%, transparent);
-    --glass-border-resting:  color-mix(in srgb, var(--foreground) 12%, transparent);
-    --glass-border-floating: color-mix(in srgb, var(--foreground) 15%, transparent);
-    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 18%, transparent);
-    --glass-border-dock:     color-mix(in srgb, var(--foreground) 11%, transparent);
+    /* Composed borders — foreground-tinted. BA.W-NO-GRAY L3 — the warm RIM
+       re-anchor (G9). The rim IS warm (it rides --foreground, hsl-24 warm ink),
+       but at 8-12% α over a near-white plate it was a near-invisible hairline —
+       the plate had no carved silhouette, reading as a borderless gray rectangle
+       (the user's "no gray ... for cards"). The α lifts a few points per rung so
+       the warm hairline CARVES the silhouette (the WWDC25 "rim that defines the
+       silhouette" device, on the warm-ink register). Still bounded low — the rim
+       is a whisper that defines the edge, never a hard rule. The source stays
+       --foreground (the warm-ink tint, NOT a new color); only the presence lifts. */
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 11%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 13%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 16%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 19%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 22%, transparent);
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 14%, transparent);
     --glass-border:          var(--glass-border-quiet);
     --glass-border-strong:   var(--glass-border-floating);
 

@@ -978,6 +978,44 @@ divider / the timeline dot read against the near-black card (was: invisible — 
 into the plate). The light arm + the in-srgb interpolation are UNCHANGED (the AW.W26
 fence). Every `--surface-tint-*` consumer re-resolves automatically — no per-site edit.
 
+### The warm-chroma floor — the neutral ladder + glass plate off gray (BA.W-NO-GRAY)
+
+The `--neutral-*` ladder + the `--card` glass plate were re-saturated onto the warm
+identity (R10-5 "No gray."). This is a **token-identity evolution, NOT a breaking alias**
+(the lib's own default tokens evolve as its identity changes — presets-in-consumers; no
+clean-break migration, no codemod). The ladder was SPECIFIED warm (hue 48) but RESOLVED
+achromatic — at the library's low saturation it painted a yellow-green gray (OKLab hue ~95°,
+chroma below the perceptual floor). The values evolve, both modes in lockstep:
+
+| token | was (hsl) | now (hsl) |
+|---|---|---|
+| `--neutral-0` (page) | `48 12% 98%` / dark `24 9% 4%` | `40 30% 98%` / dark `24 9% 4%` (KEEP) |
+| `--neutral-1` | `48 10% 95%` / dark `24 6% 11%` | `38 26% 95%` / dark `28 12% 11%` |
+| `--neutral-2`/`--secondary` | `48 9% 90%` / dark `24 5% 16%` | `34 28% 90%` / dark `28 14% 16%` |
+| `--neutral-3`/`--accent` | `48 8% 82%` / dark `24 5% 22%` | `33 30% 82%` / dark `30 18% 22%` |
+| `--neutral-4`/`--border`/`--input` | `48 7% 70%` / dark `24 5% 34%` | `32 26% 70%` / dark `30 16% 34%` |
+| `--neutral-5`/`--muted-foreground` | `48 6% 40%` / dark `48 5% 62%` | `30 22% 40%` / dark `34 14% 62%` |
+| `--neutral-6` (strong-muted) | `48 7% 30%` / dark `48 6% 72%` | `28 24% 30%` / dark `36 14% 72%` |
+| `--card` (glass plate) | `var(--neutral-0)` / dark `24 8% 16%` | `36 48% 97%` / dark `24 8% 16%` (KEEP) |
+| `--glass-border-*` rim α | wash 8% → overlay 18% | wash 11% → overlay 22% (warmer rim) |
+
+The moves are **chroma-only at constant L** — the L (and therefore every AA contrast ratio)
+is preserved to within ±0.005 of HEAD (the gate re-ratifies). **`--card` now decouples from
+`--neutral-0`** (a glass plate reads warm-cream over a flat backdrop, the page stays calm
+surface). A consumer who OVERRODE any `--neutral-*` rung or `--card` (presets-in-consumers)
+RE-PINS their own value in `:root`/`.dark` — those overrides win as before; no action
+otherwise (every semantic alias `--secondary`/`--accent`/`--border`/`--muted-foreground`
+still tracks the ladder, so a consumer reading those gets the warm value automatically). The
+`--surface-tint-*` in-srgb family + the KEEP-NEUTRAL registers (`--warning-foreground`,
+`--overlay-scrim-ink`, the shadow ink) are UNCHANGED.
+
+```css
+/* A consumer who hand-tuned a neutral re-pins their value (it still wins): */
+:root { --neutral-4: hsl(30 6% 72%); }   /* your border override, unchanged behaviour */
+/* A consumer who wants the prior achromatic plate re-pins --card: */
+:root { --card: var(--neutral-0); }       /* opt back to the page-tracking plate */
+```
+
 ---
 
 ## Cohabitation note—v0.9.4 stays supported

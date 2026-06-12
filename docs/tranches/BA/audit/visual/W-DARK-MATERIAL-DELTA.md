@@ -1,7 +1,8 @@
 # BA.W-DARK-MATERIAL — the dark register rebuilt as a luminous transmissive material · DELTA
 
 <!-- surface-paths: src/styles/tokens/dark-arm.css, src/styles/tokens/light-dark.css, src/styles/tokens/glass.css, src/styles/glass/ladder.css, scripts/proof-dark-material.mjs, tests-visual/dark-material.spec.ts -->
-<!-- surface-hash: 89936015be5ababfd2e4cd67f50090c7571a871a6a4b6a9a15d073fd55c85684 -->
+<!-- surface-hash: cf025ea699eeeb0dd6f44b1a9c6153ecb89b0c25165a642c39255d9092fb30aa -->
+<!-- re-stamped post-BA.W-NO-GRAY: the Batch-1b chroma arms touched dark-arm/light-dark/glass (shared surface-paths); the after-frames re-captured in the same pass — the W7 calm-light + ladder asserts re-verified at the new bytes. -->
 <!-- AZ.W-GATES content-hash freshness model: fresh IFF the six surface-paths' bytes are
      byte-identical to capture time (sha256 of the concatenated bytes, "\n"-joined,
      surfaceHash convention). Stamped at the own-surface DARK capture against the live demo
