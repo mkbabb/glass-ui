@@ -11,6 +11,11 @@ dist/
 # proof:live-verified-ledger gate asserts these on-disk pngs exist on a fresh CI
 # checkout, so they are version-controlled evidence, not scratch).
 !docs/tranches/*/audit/visual/*.png
+# The AZ reflection records' captures (proof:az-reflect asserts the cited pngs
+# exist on a fresh CI runner — the same cardinal-lesson class as the visual dir).
+!docs/tranches/*/audit/visual/*/*.png
+!docs/tranches/*/audit/reflect/*.png
+!docs/tranches/*/audit/reflect/*/*.png
 .playwright-mcp/
 demo/dist/
 demo/.qa/
