@@ -84,6 +84,18 @@ const railContext = computed<string | undefined>({
         return (here ?? contextLayers.value[0])?.id;
     },
     set: (id) => {
+        // BA.W-SHELL-HOLD (FD-FS-4) — the page must HOLD. The `set` navigates ONLY on
+        // a genuine user chip activation, NEVER from a non-interactive v-model echo of
+        // the `get` fallback. The equality short-circuit IS the user-activation
+        // discriminator: a real chip click on a facet writes an id DIFFERENT from the
+        // one `get` already resolved (so it falls through and navigates), while any
+        // echo re-writes the value `get` just returned (id === railContext.value →
+        // short-circuit, no `router.push`). A chip click on the already-active facet
+        // is a legitimate no-op (you are already there) — the only suppressed real
+        // click, and it would navigate to the page you are on.
+        if (id === undefined || id === railContext.value) {
+            return;
+        }
         const facet = contextLayers.value.find((l) => l.id === id);
         const first = facet?.entries[0];
         const categoryId = route.meta.categoryId as string | undefined;
