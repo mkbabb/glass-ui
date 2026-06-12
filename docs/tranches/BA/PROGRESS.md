@@ -1,6 +1,6 @@
 # BA tranche — PROGRESS
 
-The dark-register-rebuilt tranche: 27 waves over 8 batches (4 floor, 1 dark-material,
+The dark-register-rebuilt tranche: 29 waves over 8 batches (4 floor, 1 dark-material,
 4 S1-redress, 2 dock, 5 glass-grammar, 1 promotion, 5 demo-staging, 2 close), grounded
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
@@ -45,6 +45,7 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 2 | W-GOO-REDRESS | planned (spec authored) | satellite smin reach + the pointer wake seam |
 | 2 | W-DOCK-GEOMETRY | planned (spec authored) | the control-plate clipping cluster + overflow-engage-on-real-overflow |
 | 2 | W-FADING-SCROLL | planned (spec authored) | the library FadingScroll primitive (h+v, scroll-state-driven) + static-utility retirement |
+| 2 | W-ATLAS-RECONCILE | planned (spec authored) | the atlas A/B fold: the settle seam + reflow deletion + the suppression carve + test port + PAPER_WASH_GROUND + async-VT need + the silver conditional |
 | 3 | W-DOCK-SECTIONS | planned (spec authored) | the 4th-rail-attempt RE-CONCEPTION: tripartite sections + divider-seam rail seat + fan-out/retract [H3] |
 | 3 | W-DOCK-MORPH-INSITU | planned (spec authored) | V↔H morph + layering demos in the shell docks |
 | 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
@@ -55,6 +56,7 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 4 | W-TABS | planned (spec authored) | the R10-2 overhaul: ONE engine, pill-glass + underline-paper, axis-derived orientation, release-at-arrival on the calibrated spring clock; segmented/overflow/multi-select/ui-Tabs-public retire |
 | 5 | W-ICON-CHIP | planned (spec authored) | the IconChip pop primitive (duotone/bloom/reveal axes) |
 | 5 | W-PAGER | planned (spec authored) | PagerDots + the glass pager ring (R10-1 + the R10-3 deck-dots fold; the counter off bg-card) |
+| 5 | W-HANDMARK | planned (spec authored) | the hand-voice family: /handmark port + the /underline DEC-8 fold + the highlighter engaged + the seeded pencil-boil morphology |
 | 6 | W-STAGE | planned (spec authored) | the per-category background map + glassiness-over-aurora stagings + token-tour contrast chassis |
 | 6 | W-DEMO-AFFORDANCES | planned (spec authored) | the play register + trigger convention + the curve-picker chip rack + padding rhythm |
 | 6 | W-FOURIER-STUDIO | planned (spec authored) | the foreground fourier studio: partial-sum N axis + orthogonal registers + trace-a-shape + the clock |
@@ -112,3 +114,18 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   escalation + the canonical section rhythm SM-1 + the graded title ladder SM-2;
   W-DOCK-SECTIONS gains the NF-5 double-render corroboration) + the DAG §2a/§5a/§9.8
   edges. Awaiting greenlight; NO implementation.
+- 2026-06-12 (the ATLAS LETTER, pre-greenlight) — the Connectivity Atlas's
+  cross-repo letter banked (`coordination/ATLAS-LETTER-2026-06-12.md`) + the 3-lane
+  opus analysis harvested (`audit/fleet/atlas-{ab-census,c-cargo,lineage-cut}.md`).
+  THE LINEAGE TRUTH: the registry 3.11.x/3.12.0 the atlas consumes are the local
+  fork `feat/d6-library-3.10` (9 commits, tip 2755ebbd); mainline has ZERO of the
+  A-list (the AZ "stale-lineage" ruling read mainline-only consumer truth — the
+  fork had a live registry consumer). FABLE SYNTHESIS → two new waves
+  (W-ATLAS-RECONCILE Batch 2 — settle seam + reflow + carve/test-port + ground +
+  async-VT + silver conditional; W-HANDMARK Batch 5 — the family port + the
+  /underline DEC-8 fold + the highlighter's five deltas + the seeded morphology;
+  roster 27→29), the THREE-UNDERLINE fence (DAG §9.8a — straight .paper-ink-mark ·
+  hand-voice HandMark · one pencil-boil engine), H4 SETTLED → 4.0.0 (two grounds),
+  invariant 11 minted (no out-of-band lineage publish + the registry-consumer
+  prune probe), and the W-CLOSE atlas close set (the cut-notes BY-NAME tables,
+  the fork-close protocol, the atlas adopt section). Awaiting greenlight.

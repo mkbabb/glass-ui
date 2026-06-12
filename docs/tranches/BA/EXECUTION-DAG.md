@@ -9,8 +9,9 @@ the AUTHORING phase — NO implementation runs until the user greenlights (BA in
 `latest` on npm). slides exact-pins 3.13.0 (commit a171266, deployed). The BA branch is
 `tranche/BA` off master.
 
-**Numbering:** the `W-*` named system from `BA.md`'s 27-wave roster (24 at first
-authoring + the R9/R10 pre-greenlight amendments: W-NO-GRAY, W-TABS, W-PAGER). The five user-domain
+**Numbering:** the `W-*` named system from `BA.md`'s 29-wave roster (24 at first
+authoring + the R9/R10 pre-greenlight amendments W-NO-GRAY/W-TABS/W-PAGER + the
+atlas-letter folds W-ATLAS-RECONCILE/W-HANDMARK). The five user-domain
 hinges (H1 dark-material direction, H2 gold-CTA post-disco form, H3 rail disposition,
 H4 version, H5 publish/deploy creds) gate the named batches.
 
@@ -97,6 +98,7 @@ opens only after 1b's live verdict.
 | W-GOO-REDRESS | src/components/custom/goo-blob/* (the wake seam + satellite envelope), demo/stories/substrates/blob.vue (STUDIO_GEO_BASE) |
 | W-DOCK-GEOMETRY | src/styles/dock/{shell,overflow}.css, src/styles/dock-controls/* (geometry only), demo/layout/{BottomDock,SidebarDock}.vue (the overflow prop only) |
 | W-FADING-SCROLL | src/components/custom/fading-scroll/* (create), src/styles/utilities/base.css (the .scroll-fade-* retirement), demo/stories/aurora/PresetPickerRow.vue, src/styles/segmented-tabs.css (the overflow mask re-point) |
+| W-ATLAS-RECONCILE | src/composables/dark/* (the settle seam + reflow deletion), src/components/custom/controls/DarkModeToggle.vue + src/styles/utilities/a11y-overrides.css (the carve), src/composables/motion/useViewTransition.ts, src/components/custom/aurora/constants/presets.ts (PAPER_WASH_GROUND), the silver/chassis conditional pair |
 
 Coordination seams (declared, not raced):
 - **Configurator.vue's `.scroll-fade-y`**: W-FADING-SCROLL mints the primitive and
@@ -191,13 +193,13 @@ historical retirement rides W-CLOSE.
 ```
 Batch 0:  W-SHELL-HOLD ‖ W-GESTALT-GATE ‖ W-HYGIENE ‖ W-CARVE2
 Batch 1:  W-DARK-MATERIAL → W-NO-GRAY                       [H1]
-Batch 2:  W-CONFIG-CHASSIS ‖ W-GOO-REDRESS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL
+Batch 2:  W-CONFIG-CHASSIS ‖ W-GOO-REDRESS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL ‖ W-ATLAS-RECONCILE
 Batch 3:  W-DOCK-SECTIONS → W-DOCK-MORPH-INSITU             [H3]
 Batch 4:  W-SURFACE-AXIS ‖ W-FEEDBACK-TONE ‖ W-MENU-GLASS ‖ W-GLASS-CAL ‖ W-PROGRESS-GRADIENT ‖ W-TABS   [H2]
           (intra-batch edge §5a: W-GLASS-CAL.3 spring-clock → W-TABS)
-Batch 5:  W-ICON-CHIP ‖ W-PAGER
+Batch 5:  W-ICON-CHIP ‖ W-PAGER ‖ W-HANDMARK
 Batch 6:  W-STAGE ‖ W-DEMO-AFFORDANCES ‖ W-FOURIER-STUDIO ‖ W-SUFFUSE2 ‖ W-ANIMATE
-Batch 7:  W-REFLECT2 → W-CLOSE                              [H4][H5]
+Batch 7:  W-REFLECT2 → W-CLOSE                              [H4 DECIDED 4.0.0][H5]
 ```
 
 Close criteria: `BA.md §Completion criterion` — the gestalt roster operative-PASS, the
@@ -242,6 +244,21 @@ folded back here as BINDING refinements (each is also recorded in the owning spe
    fan is 13 SFCs at HEAD (not the lane's 9); the CLAUDE.md custom/ enumeration omits
    FIVE dirs (underline/ included); `Constellation.vue` is 576 lines on disk vs the
    577 ratchet baseline (mechanical drift, resolved by the carve).
+8a. **The atlas-fold seams** (the letter's reconciliation): (i) THE THREE-UNDERLINE
+   FENCE — `.paper-ink-mark` (W-SURFACE-AXIS mints, W-TABS consumes) is the STRAIGHT
+   structural hairline and is NEVER wobbled; `HandMark shape="underline"`
+   (W-HANDMARK) is the hand-voice wobble and ABSORBS GlassUnderline (`/underline`
+   retires, DEC-8 outcome 1); every wobble derives from the ONE seeded pencil-boil
+   engine — three registers, two materials, one engine, no forks. (ii) the
+   useGlobalDark seam: W-ATLAS-RECONCILE (Batch 2) rewrites the LIBRARY flip path
+   (settle seam + reflow + carve) while W-CONFIG-CHASSIS (same batch) binds the
+   DEMO gear row to `useGlobalDark` — different trees (`src/composables/dark` vs
+   `demo/configurator`), the binding survives by construction. (iii) the silver
+   quad's cool-neutral stops are W-NO-GRAY's ONE named identity exception
+   (coordinated, Batch 1b lands first). (iv) the fork `feat/d6-library-3.10` is
+   READ-ONLY for every wave (`git show`); the fork-close protocol (archive-tag
+   `d6-lineage-archive` @2755ebbd → branch delete → npm deprecate 3.11.0–3.12.0 →
+   the cut-notes retirement line) is W-CLOSE's, orchestrator-owned.
 8. **The R9/R10 amendment seams** (the pre-greenlight folds): (a) `glass/surfaces.css`
    is written by W-PAGER (Batch 5, the `.glass-pager-ring` recipe) and then by
    W-DEMO-AFFORDANCES (Batch 6, the stack negative-predicate anchor only) — sequenced
