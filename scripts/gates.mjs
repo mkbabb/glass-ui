@@ -219,6 +219,12 @@ export const GATES = [
         note: "AZ.W-RAIL3 — the floating-carousel rail (facets OUT of the dock, box INVIOLATE). Device-free static src-scan: R1 the in-dock contextual <DockLayerGroup> GONE from BOTH shell docks (the de-inflation source), R2 the strip writes the consumer v-model:context (no internal ref-shadow), R3 the connective hairline composes box-shadow: var(--border-hairline) (no hard 1px solid) + the --dock-rail-extend-length overrun, R4 the #rail strip renders OUTSIDE the dock containment via the .glass-dock-frame escape (the box-INVIOLATE witness), R5 the strip is a flex carousel of v-for chips with overflow+scroll-snap (not a lone end-icon), R6 the >=2-SHELL-consumer census (SidebarDock+BottomDock). Born-RED on all six. The runtime truths (box-equality G1 <=1px + outside-paint G2 + cycle G3 + no-corpse G4) are the local-only π half in W-RAIL3-DELTA.md (tests-visual/rail3.spec.ts), ledger-backstopped. Bite: restore the in-dock group / shadow the seam / hard-rule the hairline / drop the extent token / collapse to a lone icon / drop a shell consumer → RED.",
     },
     {
+        id: "proof:shell-hold",
+        cmd: "proof:shell-hold",
+        tags: ["local", "ci", "release"],
+        note: "BA.W-SHELL-HOLD (FD-FS-4) — the demo shell HOLDS the page. Device-free source witness (S1): the railContext `set` on BOTH shell docks (SidebarDock.vue + BottomDock.vue) gates its router.push behind a user-activation guard (an equality short-circuit against the get-resolved value, or an @advance latch) — no longer the unconditional v-model-echo push. The detector asserts the POSITIVE (the set body references the guard AND every router.push is reachable only through it) and reds a push placed BEFORE the guard (a smuggle). The binding live truth (P1 — every drift route holds >=3s with no input + a scripted chip click still navigates) rides tests-visual/shell-hold.spec.ts (local-only). NOTE: the diagnosed v-model echo does NOT reproduce at HEAD (the `set` is never invoked on mount/reconcile in Vue 3.5 — instrumented); the guard lands as the correctness floor W-DOCK-SECTIONS inherits. Bite: revert either set to the unconditional push, or add a push before the guard -> RED.",
+    },
+    {
         id: "proof:shell-identity",
         cmd: "proof:shell-identity",
         tags: ["local", "ci"],
@@ -1083,7 +1089,13 @@ export const GATES = [
         id: "proof:gate-manifest-sound",
         cmd: "proof:gate-manifest-sound",
         tags: ["local"],
-        note: "AZ.W-GATES — the gate-manifest soundness meta-gate (9 clauses + clean-tree): well-formed id/cmd rows, the parity pre-pass, the :5199 default sweep, the content-hash freshness model, the :az ledger arm. Device-free; promoted to ci at the AZ close. Bite: re-add a cmd-less row or a :5173 default → RED.",
+        note: "AZ.W-GATES — the gate-manifest soundness meta-gate (9 clauses + clean-tree): well-formed id/cmd rows, the parity pre-pass, the NON-:5199 live-demo-URL default sweep (BA.W-GESTALT-GATE WIDENED clause 4 off the :5173-only regex to flag ANY non-:5199 live-demo-URL default — the three :5175 dock-gate defaults the AZ sweep missed, CHR-1), the content-hash freshness model, the :az ledger arm. Device-free; promoted to ci at the AZ close. Bite: re-add a cmd-less row or any non-:5199 live-demo-URL default → RED.",
+    },
+    {
+        id: "proof:ba-gestalt",
+        cmd: "proof:ba-gestalt",
+        tags: ["local"],
+        note: "BA.W-GESTALT-GATE — the holistic per-surface acceptance gate (the P-1 close-class fix). A roster of the 8 named W-REFLECT2 surfaces (dock · configurators-goo · aurora · glass-feedback · shell · motion-fourier · dark-register · cross-repo), each owed a whole-page capture in BOTH modes over its real backdrop + a recorded GESTALT verdict ABOVE the per-mechanism π readback. Device-free source/docs detector reading docs/tranches/BA/audit/reflect/ba-gestalt-roster.md; operative-PASS IFF every verdict is PASS AND every declared capture path resolves on disk (the anti-evasion floor — a PASS with a missing capture is the close-class lie the AZ matrix told, forbidden). LINEAGE: AZ closed `complete` on a 9-surface per-mechanism PASS matrix the user re-opened the SAME DAY (R8) on ≥7 surfaces (precepts P-1, the 6th re-open R3→R8); a per-mechanism π verifies a local ΔL but cannot verify the gestalt the user reads. BORN-RED by construction (every verdict FAIL, anchored to an R8 ground capture); tagged [\"local\"] so it does NOT block ci/release mid-tranche — W-REFLECT2 (Batch 7) is the single authorized verdict-flipper + PROMOTES it to the operative close set when the verdicts flip GREEN (the gestalt OR becomes the close decision). Bite: flip a verdict to PASS with no on-disk capture → RED; drop a roster surface → RED.",
     },
     {
         id: "gates:verify-ci",

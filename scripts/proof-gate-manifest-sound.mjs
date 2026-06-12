@@ -21,6 +21,14 @@
 // BORN-RED at open: the malformed row exists (clause 1) AND the content-hash
 // freshness model is unimplemented (clause 7). GREEN only at the discharged
 // terminal state.
+//
+// BA.W-GESTALT-GATE — clause 4 WIDENED off the `:5173`-only `DEFAULT_5173` regex
+// to a GENERIC NON-:5199 default detector. The AZ sweep + the original regex
+// missed the THREE surviving `:5175` dock-gate defaults (CHR-1, the chronic): the
+// clause already walked the full live-gate set, only the regex matched `:5173`
+// alone. The clause now extracts the port from any `??`-nullish default and flags
+// it unless it is :5199 — catching `:5175`, `:5173`, and any future stray, the
+// recurrence-proofing the chronic demands.
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -123,26 +131,49 @@ function detectSound() {
             `[PROOF-ALL-RUNS] node scripts/gates.mjs --run local did not exit 0 — the local aggregate did not complete${/Missing script: "undefined"/.test(proofAll.out) ? " (the malformed-row crash survives)" : ""}`,
         );
 
-    // ── Clause 4: NO-5173 ───────────────────────────────────────────────────
-    // ZERO nullish-default sites resolving the foreign-app port in the live-gate
-    // script set + the config (the GLASS_UI_DEMO_URL/PORT nullish-coalescing DEFAULT
-    // form, NOT a bare port substring — the surviving explanatory comments naming
-    // the foreign port stay GREEN). Strip line comments first so a comment that
-    // names the foreign port cannot trip the assert.
-    const DEFAULT_5173 = /\?\?\s*(["']https?:\/\/[^"']*:5173["']|5173\b)/;
-    const offenders5173 = [];
+    // ── Clause 4: NON-:5199 DEFAULT ─────────────────────────────────────────
+    // ZERO live-demo-URL nullish-default sites resolving a port OTHER than :5199 in
+    // the live-gate script set + the config. The chronic the AZ sweep + the original
+    // `DEFAULT_5173` regex missed (CHR-1): the THREE `:5175` dock-gate defaults sailed
+    // past a regex that matched `:5173` alone. BA.W-GESTALT-GATE widens the detector to
+    // flag ANY non-:5199 port in a live-demo-URL `??`-default — catching `:5175`,
+    // `:5173`, and any future stray — the recurrence-proofing the chronic demands.
+    //
+    // SCOPE — the detector matches the live-demo-URL DEFAULT form `?? "scheme://host:<port>…"`
+    // ONLY, never a bare-port `?? <number>`. The W-GESTALT-GATE census surfaced a
+    // LEGITIMATE non-:5199 bare-port default in the set — `proof-runtime.mjs:24`
+    // `GLASS_UI_CHROME_DEBUG_PORT ?? 9337` (a Chrome DevTools remote-debug port, NOT a
+    // live-demo target; `profile-aurora.mjs`'s `?? 9347` twin is outside the proof-*.mjs
+    // glob). The census proved EVERY live-demo default in the set is the URL-STRING form
+    // (`GLASS_UI_DEMO_URL`/`GLASS_UI_*_BASE_URL ?? "http://…:5199"`) and NO demo target is
+    // ever a bare-port `??` — so scoping the detector to the URL-string form catches the
+    // entire chronic (the `:5175`/`:5173` residue was always the URL form) while leaving
+    // the correct-by-design service-port default GREEN (it is NOT unilaterally :5199-
+    // stamping a correct port). The env-var OVERRIDE (the `??` LHS) is never matched; the
+    // surviving comments naming a foreign port stay GREEN (line comments stripped first).
+    const CANONICAL_LIVE_PORT = "5199";
+    // Capture the port from a live-demo-URL nullish-default `?? "scheme://host:<port>…"`.
+    const NULLISH_DEFAULT_PORT = /\?\?\s*["']https?:\/\/[^"']*:(\d{4,5})["']/g;
+    const nonCanonicalDefaults = [];
     for (const f of liveGateScripts()) {
         if (!existsSync(f)) continue;
         const src = readFileSync(f, "utf8");
         src.split("\n").forEach((line, i) => {
-            const code = line.replace(/\/\/.*$/, ""); // drop the trailing line comment
-            if (DEFAULT_5173.test(code))
-                offenders5173.push(`${relative(ROOT, f)}:${i + 1}`);
+            // Drop the trailing line comment, but NOT the `//` in a `scheme://` URL
+            // (the `(^|[^:])` guard preserves `://` — the clause-7 house idiom). The
+            // inherited naive `/\/\/.*$/` strip ATE the URL's `//`, so the AZ NO-5173
+            // URL-arm was a latent no-op; this URL-safe strip restores the detection.
+            const code = line.replace(/(^|[^:])\/\/.*$/, "$1");
+            for (const m of code.matchAll(NULLISH_DEFAULT_PORT)) {
+                const port = m[1];
+                if (port && port !== CANONICAL_LIVE_PORT)
+                    nonCanonicalDefaults.push(`${relative(ROOT, f)}:${i + 1} (:${port})`);
+            }
         });
     }
-    facts.port5173Defaults = offenders5173;
-    for (const o of offenders5173)
-        violations.push(`[NO-5173] a foreign-app :5173 DEFAULT survives at ${o} — the AZ scope fence forbids it (default :5199)`);
+    facts.nonCanonicalPortDefaults = nonCanonicalDefaults;
+    for (const o of nonCanonicalDefaults)
+        violations.push(`[NON-:5199 DEFAULT] a non-:5199 live-demo-URL DEFAULT survives at ${o} — the BA.W-GESTALT-GATE scope fence forbids any live-demo default but :5199`);
 
     // ── Clause 5: DOCK-ROUTE-LIVE ───────────────────────────────────────────
     // proof-dock-orchestrator-single.mjs carries DOCK_ROUTE = "/dock/layers" (a
@@ -341,7 +372,7 @@ function run() {
     console.log(`  1 MANIFEST-WELL-FORMED : ${facts.malformedRows === 0 ? "OK" : facts.malformedRows + " malformed"}`);
     console.log(`  2 PARITY-HARDENED      : gate-script-parity ${facts.gateScriptParity ? "✓" : "✗"} | tag-parity ${facts.tagParity ? "✓" : "✗"}`);
     console.log(`  3 PROOF-ALL-RUNS       : ${facts.proofAllRuns ? "✓ (local aggregate completes)" : "✗ (did not complete)"}`);
-    console.log(`  4 NO-5173              : ${facts.port5173Defaults.length === 0 ? "OK (zero :5173 defaults)" : facts.port5173Defaults.join(", ")}`);
+    console.log(`  4 NON-:5199 DEFAULT     : ${facts.nonCanonicalPortDefaults.length === 0 ? "OK (zero non-:5199 defaults)" : facts.nonCanonicalPortDefaults.join(", ")}`);
     console.log(`  5 DOCK-ROUTE-LIVE      : route ${facts.dockRouteLive ? "✓" : "✗"} | manifest-story ${facts.dockLayersStoryPresent ? "✓" : "✗"} | note-clean ${!facts.gatesNoteHasDeadRoute ? "✓" : "✗"}`);
     console.log(`  6 BLOB-GATES-WIRED     : interaction ${facts.blobInteractionWired ? "✓" : "✗"} | tempo ${facts.blobTempoWired ? "✓" : "✗"} | reads-uniforms ${facts.blobInteractionReadsUniforms ? "✓" : "✗"} | msg ${facts.blobMessageFixed ? "✓" : "✗"}`);
     console.log(`  7 FRESHNESS-HASH       : content-hash ${facts.ledgerContentHash ? "✓" : "✗"} | git-arm-gone ${!facts.ledgerGitAncestryArmSurvives ? "✓" : "✗"} | AZ deltas ${facts.azDeltaFreshness.map((d) => `${d.wave}:${d.state}`).join(" ")}`);

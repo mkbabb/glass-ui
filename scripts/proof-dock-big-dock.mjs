@@ -301,7 +301,7 @@ async function loadPlaywright() {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5175";
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5199";
     const ARTIFACT = gateArtifactPath("GLASS_UI_DOCK_BIG_DOCK_ARTIFACT", "AW-dock-big-dock");
 
     const pw = await loadPlaywright();
