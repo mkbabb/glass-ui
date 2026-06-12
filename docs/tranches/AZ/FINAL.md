@@ -100,7 +100,15 @@ MOTION2 triumvirate (R7), each with its own banked `USER-AUDIT-*.md` + dischargi
    ~60s). The live morph-ownership truth is carried at HEAD by the newer `proof:rail3` π
    (the live collapse/expand cycle, today green) + `proof:dock-tap-integrity`'s live replay.
    Successor: re-host the live probe on a dedicated light fixture route.
-4. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
+4. **The single-process local mega-sweep — environment-contention class, dispositioned.**
+   Twenty-five sequential fail-fast attempts burned down TWENTY substantive latent defects
+   (each fixed + committed; the full list rides the close commits) and three documented
+   dispositions. The residual sweep REDs reproduce only under the day's accumulated local
+   load (dev-server deaths under fleet pressure ×6, headless-SwiftShader saturation,
+   playwright protocol races) — every flagged gate re-verified GREEN standalone, most twice.
+   The per-gate clean-runner arbiter is master CI (the 134-gate ci set), which gates the
+   release.yml provenance publish at the cut.
+5. **Battery fixes landed during the close run** (each a gate/spec defect, zero paint change):
    the `consumers:static` root-surface enrollment of the deliberate `useLiquidFlex` re-export;
    the `dock-tap-integrity` born-RED witness pinned to the recorded pre-fix commit `e5bb8166`
    (the moving-HEAD anchor self-destructed once the guard merged); the `proof:runtime` default
