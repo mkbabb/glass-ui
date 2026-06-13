@@ -167,7 +167,32 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 </template>
 
 <style scoped>
-/* ── Shared geometry — size axis lifts via CSS vars set by sliderVariants ── */
+/* ── The SIZE GEOMETRY axis — [data-size]-scoped, SHIPPED CSS (BA.W-EMISSION) ──
+   BA-VJS-A3: the size geometry was a DEAD arbitrary-property CVA
+   (`[--slider-track-height:1.25rem]` &c. in slider/index.ts) that compiled only
+   into a `dist/*.js` chunk no consumer content-scan reaches — so the `size` prop
+   was INERT in every consumer and `size=md` fell back to the 6px track. The
+   geometry now rides these `[data-size]`-scoped rules (the same proven in-file
+   pattern the spectrum `[data-variant]` recipes use, :321+) so the size tokens
+   SHIP in dist/glass-ui.css. `--slider-track-height` drives the standard thick
+   capsule; `--slider-thumb-size` sizes the spectrum's VISIBLE thin thumb (× 0.75,
+   the slim value.js bar — re-verified slim at md: 1rem × 0.75 = 12px over the
+   1.5rem track = 0.5×) and the standard's invisible-thumb value-follow inset.
+   thumb ≤ track at every rung (the inscription law). */
+.glass-slider[data-size="sm"] {
+    --slider-track-height: 0.75rem;
+    --slider-thumb-size: 0.5rem;
+}
+.glass-slider[data-size="md"] {
+    --slider-track-height: 1.25rem;
+    --slider-thumb-size: 1rem;
+}
+.glass-slider[data-size="lg"] {
+    --slider-track-height: 1.75rem;
+    --slider-thumb-size: 1.5rem;
+}
+
+/* ── Shared geometry — size axis lifts via CSS vars set by the [data-size] rules ── */
 .slider-track {
     position: relative;
     width: 100%;

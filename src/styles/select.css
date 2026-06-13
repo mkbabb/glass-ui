@@ -1,0 +1,50 @@
+/*
+ * select.css — the Select content collision-bound, pre-compiled (BA.W-EMISSION).
+ *
+ * THE DEFECT (BA-VJS-A2-WO1 / valuejs-fold A-2): SelectContent.vue authored its
+ * collision-bound as a Tailwind ARBITRARY-BRACKET utility
+ *   [max-height:var(--reka-popper-available-height,60dvh)]
+ * which is correct in SOURCE but compiles ONLY into a `dist/*.js` render-function
+ * chunk no consumer content-scan reaches (and the P9 emitComponentUtilities
+ * safelist rejects fully-arbitrary bracket tokens by construction). So in every
+ * consumer the bound NEVER painted — `getComputedStyle(content).maxHeight === "none"`
+ * — and a 16-item dropdown rendered 745px tall, overflowing a 900px viewport by
+ * 125px (the value.js U-DROPDOWN capture, the binding RED evidence).
+ *
+ * THE FIX: move the bound to a PRECOMPILED rule that ships in `dist/glass-ui.css`
+ * regardless of consumer JIT reach — it is a plain attribute-selector rule, not a
+ * Tailwind utility, so it always emits. The cap is the kf donor's default
+ * `min(24rem, 60dvh)` (kf design-idioms.css `--easing-dropdown-max-h`; the U8
+ * bounded-scroll reference), TIGHTENED by reka's measured
+ * `--reka-popper-available-height` on a short viewport via the inner `min()`.
+ * `overflow-y: auto` (already on the content via the CVA base) gives the inner
+ * scroll. The behaviour is identical to the authored class — it now SHIPS.
+ *
+ * --select-content-max-h is the ONE retint knob (a consumer widens/narrows the cap
+ * by overriding it on any ancestor). The default folds reka's available-height in:
+ * when reka reports a height (popper measured), the bound is the MIN of that and
+ * the 24rem/60dvh ceiling, so the panel never exceeds the viewport AND never grows
+ * past the comfortable ceiling.
+ */
+
+:root {
+    /* The comfortable ceiling — the kf donor default. */
+    --select-content-max-h: min(24rem, 60dvh);
+}
+
+[data-slot="select-content"] {
+    /* The collision-bound: the comfortable ceiling, tightened by reka's measured
+       available height on a short viewport. `--reka-popper-available-height` is
+       written by reka-ui's popper-positioner; on a tall viewport it exceeds the
+       ceiling (so the ceiling wins) and on a short one it clamps the panel to the
+       space below the trigger (so the panel bottoms inside the viewport). When reka
+       has not yet measured, the fallback is the ceiling alone. */
+    max-height: min(
+        var(--select-content-max-h),
+        var(--reka-popper-available-height, var(--select-content-max-h))
+    );
+    /* The inner-scroll affordance ships with the bound (the CVA base also sets
+       overflow-y-auto; restated here so the bound + scroll travel together as one
+       precompiled contract). */
+    overflow-y: auto;
+}

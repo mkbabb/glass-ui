@@ -120,8 +120,15 @@
  *  13. hover-popover.css     — V.W3 popover-animation grammar.
  *  14. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
+ *  15. segmented-tabs.css    — AX.W53 SegmentedTabs overflow/indicator grammar.
+ *  16. select.css            — BA.W-EMISSION the PRECOMPILED Select content
+ *                             collision-bound (the `[data-slot="select-content"]`
+ *                             max-height rule) — moved off the dead arbitrary-
+ *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
+ *                             regardless of consumer JIT reach. A structural utility
+ *                             never depends on a content-scan; locked by proof:emission.
  *
- * Per-package component CSS lives at (12)-(14) (loaded after utilities so
+ * Per-package component CSS lives at (12)-(16) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
  * to that tail.
  */
@@ -146,7 +153,36 @@
 @import "./hover-popover.css";
 @import "./drawer.css";
 @import "./segmented-tabs.css";
+@import "./select.css";
 
-/* Ensure consumer's Tailwind scans glass-ui components for utility classes
-   (e.g. CVA button variants like text-destructive-foreground) */
-@source "../components";
+/* Ensure Tailwind scans glass-ui's compiled component templates for the utility
+   classes they emit (CVA variant classes like text-destructive-foreground,
+   layout utilities like h-full/shrink-0).
+
+   BA.W-EMISSION — re-pointed from the DEAD components-mirror glob (the prior
+   `../components` target). That glob resolved correctly in glass-ui's OWN build
+   (`src/styles/index.css` → `src/components` carries the real `.vue` source), but the
+   SHIPPED dist copy of this file (`dist/styles/index.css`) resolved `../components` to
+   `dist/components/` — a
+   directory that carries ONLY `.d.ts` mirror files (zero `.js`, zero `.vue`). The
+   compiled render-functions live FLAT at `dist/*.js`. So in every consumer that
+   re-imported this `@source` line, Tailwind scanned an empty dir and glass-ui's own
+   arbitrary utilities silently died (the P9 / valuejs-fold register-B class).
+
+   `../*.js` reaches the compiled render-functions PRECISELY in the SHIPPED context:
+   in dist it is `dist/*.js` (the 150+ flat compiled chunks that carry glass-ui's
+   utility class strings — the surface the dead `../components` mirror NEVER held).
+   In glass-ui's OWN source build it is `src/*.js` (empty — glass-ui's own components
+   compile their CSS through vite, not this `@source`), so the directive is a no-op
+   in the own-build and never scans the `src/` shader/`.ts` tree (a bare `../` glob
+   tripped Tailwind's dev candidate-extractor on the shader template strings —
+   `Missing opening (`). This directive is a BACKSTOP for a consumer that imports
+   this exact cascade file — the PRIMARY self-emission path is
+   `vite.style-assets.ts emitComponentUtilities` (P9), which ships glass-ui's
+   component-utility RULES build-independently into `dist/styles/components.css`.
+   Fully-arbitrary BRACKET utilities (`[max-height:…]`, `[--slider-track-height:…]`)
+   are rejected by that path's `classish` token filter AND are not reliably reachable
+   by a JIT scan, so every STRUCTURAL bracket utility (geometry/bounds/sizing) is
+   pre-compiled into shipped CSS instead — never load-bearing on any consumer's
+   content-scan reach. Locked by proof:emission. */
+@source "../*.js";
