@@ -16,7 +16,7 @@
 // Importing this module is side-effect-free; call `usePresetEditor()` to get
 // (or create) the global singleton.
 
-import { reactive, watch } from "vue";
+import { reactive } from "vue";
 import { useGlobalDark } from "../../../src/composables/dark";
 import type { PresetId } from "../../presets/manifest";
 import { writeField, writeFontSlot } from "./css-writers";
@@ -85,20 +85,21 @@ function removeWritten(written: Set<string>): void {
 export function usePresetEditor(): PresetEditor {
     if (singleton) return singleton;
 
-    const { isDark, toggleDark } = useGlobalDark();
+    // BA.W-CONFIG-CHASSIS.3 (BA-DARK-F1+F2) — the parallel config-store `dark`
+    // field is GONE. Dark mode is owned SOLELY by the global `useGlobalDark`
+    // composable (the canonical single source of truth); the gear's Appearance
+    // row renders the live `<DarkModeToggle>` bound to it directly. The prior
+    // `delta.dark` shadow desynced (it returned `DEFAULT_CONFIG.dark` (false) not
+    // `isDark.value`, so the boot mismatch made the toggle a NO-OP both
+    // directions). `isDark` is still exposed for the `reset()` sync-to-default;
+    // `toggleDark` is no longer called from this store (the toggle owns it).
+    const { isDark } = useGlobalDark();
     const written = new Set<string>();
     const delta = reactive<ConfigDelta>(loadPersisted());
 
     // Apply whatever was persisted. If delta is empty, this is a no-op and
     // `:root` carries zero configurator-origin inline styles.
     applyDelta(delta, written);
-
-    // Dark is controlled by the global dark composable, not a CSS variable.
-    // If persisted delta demands a value different from the current global,
-    // flip it once at boot.
-    if (delta.dark !== undefined && delta.dark !== isDark.value) {
-        toggleDark();
-    }
 
     // ─ Helpers ────────────────────────────────────────────────────────────
 
@@ -165,13 +166,9 @@ export function usePresetEditor(): PresetEditor {
             return;
         }
 
-        if (key === "dark") {
-            const v = value as boolean;
-            delta.dark = v;
-            if (v !== isDark.value) toggleDark();
-            persist(delta);
-            return;
-        }
+        // BA.W-CONFIG-CHASSIS.3 — the `key === "dark"` toggle/short-circuit branch
+        // is GONE with the field. Dark mode is the live `useGlobalDark` (the gear's
+        // <DarkModeToggle> owns it); there is no store delta to write.
 
         if (key === "font") {
             // Full-font assignment: replace entirely. Use the per-slot setter
@@ -267,25 +264,18 @@ export function usePresetEditor(): PresetEditor {
         for (const key of Object.keys(delta) as DeltaKey[]) {
             delete delta[key];
         }
-        // Sync dark back to its library/system default.
-        if (isDark.value !== DEFAULT_CONFIG.dark) toggleDark();
+        // BA.W-CONFIG-CHASSIS.3 — "Reset all" resets the configurator's TOKEN
+        // deltas; it no longer flips the user's dark-mode preference (dark is
+        // owned by `useGlobalDark`, not a config delta — the `toggleDark`
+        // sync-to-default is GONE with the field). The user's chosen mode
+        // survives a token reset.
         persist(delta);
     }
 
-    // Mirror library-level dark toggles (from elsewhere) back into the
-    // delta as an explicit "user touched" signal — but only if the new
-    // value diverges from the library default.
-    watch(isDark, (v) => {
-        if (v === DEFAULT_CONFIG.dark) {
-            if (delta.dark !== undefined) {
-                delete delta.dark;
-                persist(delta);
-            }
-        } else if (delta.dark !== v) {
-            delta.dark = v;
-            persist(delta);
-        }
-    });
+    // BA.W-CONFIG-CHASSIS.3 — the `watch(isDark)` mirror is GONE with the field.
+    // It existed only to shadow library-level dark toggles into `delta.dark`;
+    // with no delta to mirror, the live `useGlobalDark` is the sole source of
+    // truth (the gear's <DarkModeToggle> reads + writes it directly).
 
     singleton = {
         delta,

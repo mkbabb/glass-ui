@@ -24,6 +24,19 @@ function freezeCfg(src: AuroraConfig): AuroraConfig {
         paletteDrift: 0,
         warpDrift: 0,
         breathDepth: 0,
+        // BA.W-CONFIG-CHASSIS.3 (PPD-1) — the capture-canonicalization ALSO clamps
+        // alpha to 1. `alpha` is a LIVE-SUBSTRATE runtime axis (the aurora fragment
+        // multiplies output-alpha by uAlpha; the Speedtest preset ships alpha: 0.26
+        // so the deployed canvas reads at the speedtest backdrop tone). But a preset
+        // PREVIEW swatch has no live substrate: the thumbnail bakes onto a transparent
+        // clear (clearColor 0,0,0,0), so a sub-1 alpha rides into the webp and
+        // composites over the opaque dark `bg-card` (0.26×aurora + 0.74×near-black) →
+        // the lone DIM Speedtest swatch (every other preset preview mean-alpha 1.000,
+        // Speedtest's 0.259). A preview shows the preset's COLOR, not its deployment-
+        // time translucency, so alpha belongs in the SAME canonicalization the drift
+        // channels already get. The `presets.ts` `alpha: 0.26` runtime baseline is
+        // UNTOUCHED (the legitimate live-substrate value for the speedtest consumer).
+        alpha: 1,
     };
 }
 

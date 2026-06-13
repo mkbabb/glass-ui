@@ -50,7 +50,9 @@ export const DEFAULT_CONFIG: ConfigBaseline = {
     density: "comfortable",
     radius: 10,
     cartoonShadow: true,
-    dark: false,
+    // BA.W-CONFIG-CHASSIS.3 — the `dark` baseline is GONE; dark mode is owned by
+    // `useGlobalDark`, not a config baseline (the field DIED with the desynced
+    // store machinery + the gear's NO-OP Switch).
     // The post-W54 axes — each at its library identity (zero-delta when untouched).
     glassLevel: 1, // --glass-level identity (the calibrated glass; 0 = opaque)
     scale: 1, // --ui-scale identity (the desktop comfort scalar)

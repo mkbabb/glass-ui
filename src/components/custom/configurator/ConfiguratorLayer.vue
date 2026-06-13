@@ -90,11 +90,16 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 
 <template>
     <!-- No per-section radius: rounding is owned at the container root clip (Configurator.vue rounded-panel + overflow-hidden); flush sections keep straight border-b dividers — a per-section radius only deforms the hairline on a transparent border-only element. -->
+    <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the SECTION divider reads the dark-adaptive
+         --configurator-divider-section token (off the inline `border-border/40`
+         alpha that vanished on the dark glass plate). The `border-b` width stays
+         Tailwind; the COLOR comes from the scoped `.configurator-layer` rule below
+         (which also paints the faint section tonal step). -->
     <div
         data-slot="configurator-layer"
         :class="
             cn(
-                'configurator-layer border-b border-border/40 last:border-b-0',
+                'configurator-layer border-b last:border-b-0',
                 props.class,
             )
         "
@@ -158,12 +163,17 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             :style="{ gridTemplateRows: open ? '1fr' : '0fr' }"
         >
             <div class="min-h-0 overflow-hidden">
+                <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the inter-row divider reads the
+                     dark-adaptive --configurator-divider token (off the inline
+                     `border-border/30` alpha). The `border-t`/`pt-2` arbitrary
+                     variants stay (the WIDTH + spacing); `data-dividers` keys the
+                     scoped COLOR rule below. -->
                 <div
+                    :data-dividers="props.dividers || undefined"
                     :class="
                         cn(
                             'configurator-layer-body px-3 py-2 space-y-2',
-                            props.dividers &&
-                                '[&>*+*]:border-t [&>*+*]:border-border/30 [&>*+*]:pt-2',
+                            props.dividers && '[&>*+*]:border-t [&>*+*]:pt-2',
                             props.bodyClass,
                         )
                     "

@@ -9,6 +9,7 @@ import {
     LabeledSlider,
 } from "../../../../src/components/custom/labeled-field";
 import { SortableList, SortableItem } from "../../../../src/components/custom/sortable-list";
+import { ColorSwatch } from "../../../../src/components/custom/color-swatch";
 import type {
     AuroraAtoms,
     AuroraConfig,
@@ -98,8 +99,8 @@ const canStepUp = computed(() => stopCount.value < MAX_STOPS);
 function stepCount(delta: number) {
     stopCount.value = Math.min(Math.max(stopCount.value + delta, 2), MAX_STOPS);
 }
-function onDeriveSeed(e: Event) {
-    deriveSeedHex.value = (e.target as HTMLInputElement).value;
+function onDeriveSeed(value: string) {
+    deriveSeedHex.value = value;
 }
 function onDeriveHarmony(next: string) {
     deriveHarmony.value = (next as AuroraHarmony) || "analogous";
@@ -115,16 +116,20 @@ function derive() {
 <template>
     <div class="flex flex-col gap-3">
         <!-- ── Atom controls ── -->
+        <!-- BA.W-CONFIG-CHASSIS.2 (CFG-3) — the Seed is the library <ColorSwatch>
+             register (a proportioned chip + hex affordance), OFF the raw full-width
+             `<input type=color>` slab that carried one swatch's information at the
+             visual weight of a full slider. -->
         <LabeledField
             label="Seed"
             tooltip="Base color the harmony derives from"
             data-atom="seed"
         >
-            <input
-                :value="seedHexAtom"
-                type="color"
-                class="h-8 w-full cursor-pointer appearance-none rounded-control border border-border/40 bg-card/40 p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-control [&::-webkit-color-swatch]:border-none"
-                @input="setSeed(($event.target as HTMLInputElement).value)"
+            <ColorSwatch
+                :model-value="seedHexAtom"
+                show-hex
+                aria-label="Seed color"
+                @update:model-value="setSeed"
             />
         </LabeledField>
 
@@ -156,19 +161,23 @@ function derive() {
                 <Sparkles :size="13" class="text-muted-foreground" />
                 <p class="text-admin-label text-muted-foreground">Derive from color</p>
             </div>
+            <!-- BA.W-CONFIG-CHASSIS.2 — the DERIVE seed is the <ColorSwatch> register
+                 (off the raw `h-8 w-9` color slab); the 4-harmony chip group WRAPS to a
+                 second line (CFG-2 overflow contract) so MONO is never sliced off the
+                 ~360px aside — the items can't shrink below their uppercase min-content,
+                 so `flex-wrap` (the natural fit for the 4-chip row) replaces the
+                 hard-clipped single-line `flex-1` group that overflowed the aside. -->
             <div class="flex items-center gap-2">
-                <input
-                    type="color"
-                    :value="deriveSeedHex"
-                    class="h-8 w-9 cursor-pointer appearance-none rounded border border-border/40 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
+                <ColorSwatch
+                    :model-value="deriveSeedHex"
                     aria-label="Derive seed color"
-                    @input="onDeriveSeed"
+                    @update:model-value="onDeriveSeed"
                 />
                 <ToggleGroup
                     :model-value="deriveHarmony"
                     type="single"
                     variant="outline"
-                    class="flex-1"
+                    class="flex flex-1 flex-wrap gap-1"
                     @update:model-value="(v) => onDeriveHarmony(v as string)"
                 >
                     <ToggleGroupItem
@@ -176,7 +185,7 @@ function derive() {
                         :key="h.value"
                         :value="h.value"
                         :aria-label="h.label"
-                        class="h-8 flex-1 px-1.5 text-mono-caption"
+                        class="h-8 flex-1 basis-[calc(50%-0.25rem)] px-1.5 text-mono-caption"
                     >
                         {{ h.label }}
                     </ToggleGroupItem>
