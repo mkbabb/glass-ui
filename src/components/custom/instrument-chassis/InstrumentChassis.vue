@@ -29,8 +29,19 @@ export type InstrumentChassisPhase =
  *   architectural underclaim. Consumed at quiet-content App-level
  *   mounts (the inner card paints its own glass tier — the spine is
  *   the housing that frames it).
+ *
+ * - `"structure"` (BA.W-ATLAS-RECONCILE C-3) — the SILVER structure-metal
+ *   register. A cool polished-steel milled-panel read: the engraved bezel +
+ *   the structural grooves re-point to the `--silver` quad (the gold quad's
+ *   cool mirror) instead of the warm-cream `--surface-tint-*` default, so the
+ *   chassis reads as an INDUSTRIAL precision-instrument housing — the cool-metal
+ *   twin of the gold "complete"-phase affirmation. The phase cascade stays
+ *   orthogonal (a `structure` chassis still retints on `data-phase`); only the
+ *   structure-metal recipe forks. The silver is the W-NO-GRAY named cool-neutral
+ *   exception. Consumer #2 of the silver quad (the atlas's structure surface is
+ *   consumer #1).
  */
-export type InstrumentChassisVariant = "glass" | "spine";
+export type InstrumentChassisVariant = "glass" | "spine" | "structure";
 
 /**
  * <InstrumentChassis> — single glass surface composing strip / dial / control
@@ -70,7 +81,9 @@ const props = withDefaults(
          * Surface register. Defaults to `"glass"` (the canonical chassis
          * plate). Pass `"spine"` at App-level mount paths to get the
          * housing register (polished sleeve, no backdrop-filter, interior
-         * vignette + hairline outer stroke).
+         * vignette + hairline outer stroke). Pass `"structure"` for the
+         * silver milled-panel register (cool polished-steel bezel + grooves;
+         * BA.W-ATLAS-RECONCILE C-3).
          */
         variant?: InstrumentChassisVariant;
         class?: HTMLAttributes["class"];

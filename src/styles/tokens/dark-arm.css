@@ -113,6 +113,19 @@
     --viz-fourier:   oklch(0.693 0.151 28.1);
     --viz-chebyshev: oklch(0.718 0.107 268.4);
     --viz-legendre:  oklch(0.739 0.134 318.1);
+
+    /* BA.W-CONFIG-CHASSIS.1 (CFG-4) — the `.dark` class fallback floor for the
+       configurator divider register, in LOCKSTEP with the `light-dark()`
+       enhancement arm minted in offsets-sizing.css (the dark halves). A
+       @supports-split engine (no `light-dark()`) and a class-toggle engine paint
+       the SAME lifted divider: off the L34 `--border` (too close to the L16
+       glass plate) toward the L90 `--foreground` warm-ink so a visible luminance
+       step survives the dark glass-floating surface. The SECTION divider runs
+       heavier than the inter-row hairline; the faint section tonal step is the
+       3% foreground wash. */
+    --configurator-divider: color-mix(in srgb, var(--foreground) 22%, transparent);
+    --configurator-divider-section: color-mix(in srgb, var(--foreground) 30%, transparent);
+    --configurator-section-tint: color-mix(in srgb, var(--foreground) 3%, transparent);
     /* --viz-amber / --viz-green / --meter-track-stroke are pure var()-aliases
        (→ --section-color-5/-4 / --foreground) — DELETED (§2a); they auto-track
        their sources, which convert via §-1b. */
@@ -282,5 +295,14 @@
     --gold: oklch(0.784 0.143 86.0);
     --gold-light: oklch(0.898 0.182 97.4);
     --gold-dark: oklch(0.678 0.150 63.8);
+
+    /* Silver — lifted for dark (BA.W-ATLAS-RECONCILE C-3; mirrors gold's dark
+       arm: the polished metal lifts ~+0.03 L so the structure register reads on
+       the deep canvas. `--silver-deep` is mode-invariant — NOT re-declared here,
+       exactly as `--gold-deep` is omitted from this dark block). The cool hue
+       holds; the chroma stays near-achromatic. */
+    --silver: oklch(0.792 0.012 255);
+    --silver-light: oklch(0.912 0.010 255);
+    --silver-dark: oklch(0.648 0.014 255);
 }
 

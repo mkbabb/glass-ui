@@ -23,9 +23,16 @@ import { createGlobalState, useDark, useToggle } from "@vueuse/core";
 import { ref, watch, type Ref, type WritableComputedRef } from "vue";
 
 /**
+ * A post-flip settle callback. Receives the dark-mode flag's NEW value. Runs in
+ * the single coalesced post-flip task (see `onFlipSettled`).
+ */
+export type DarkFlipSettledCallback = (isDark: boolean) => void;
+
+/**
  * The `useGlobalDark` return shape (AW.W15 — named `Use<Name>Return`). The
  * single shared dark-mode instance: the reactive `isDark` flag, a `toggleDark`
- * that optionally suppresses transitions, and the transition-suppression switch.
+ * that optionally suppresses transitions, the transition-suppression switch, and
+ * the post-flip settle hook (BA.W-ATLAS-RECONCILE A-1 — d6 9467bd16 adopt).
  */
 export interface UseGlobalDarkReturn {
     /** Reactive dark-mode flag (vueuse `useDark` ref — writable). */
@@ -36,6 +43,22 @@ export interface UseGlobalDarkReturn {
     disableTransitions: Ref<boolean>;
     /** Configure transition suppression during the dark-mode toggle. */
     setDisableTransitions: (value: boolean) => void;
+    /**
+     * BA.W-ATLAS-RECONCILE A-1 — the post-flip SETTLE hook. Register a callback
+     * that runs in ONE coalesced task AFTER each dark↔light flip's instant chrome
+     * paint, so consumers BATCH N expensive re-theme operations (e.g. the atlas's
+     * palette memo + N-chart `merge-setOption` palette tween + aurora
+     * re-derivation) into a single beat instead of N watchers firing in N
+     * sequential storms on the critical frame. The class toggle is synchronous
+     * (chrome flips instantly); the batch drains one frame later via a single
+     * `requestAnimationFrame` (an SSR/no-rAF env falls back to a macrotask).
+     * EVERY registered callback shares that ONE task — no per-subscriber
+     * scheduling. No View Transition is involved anywhere in this path (PRM-safe
+     * by construction — a flip is a CSS-class swap, not a DOM mutation to
+     * snapshot). Returns an unsubscribe function. Idempotent re-registration of
+     * the same callback is a no-op.
+     */
+    onFlipSettled: (callback: DarkFlipSettledCallback) => () => void;
 }
 
 export interface UseGlobalDarkOptions {
@@ -71,8 +94,14 @@ const createGlobalDark = createGlobalState(() => {
     function toggleDark() {
         if (disableTransitions.value) {
             document.documentElement.classList.add("no-transition");
-            // Force reflow so the class takes effect before the toggle
-            void document.documentElement.offsetHeight;
+            // BA.W-ATLAS-RECONCILE B-2 (d6 fee5e3cd re-land) — NO forced reflow.
+            // The E9b.1 profile caught the removed `void offsetHeight` read at
+            // ~40ms/flip on a dense page (a synchronous whole-document
+            // style+layout flush). None is needed: the `.no-transition` class and
+            // the scheme toggle land in the SAME style recalc, so the after-change
+            // computed style already carries `transition: none` and no transition
+            // can start (CSS Transitions §starting — transitions fire off the
+            // after-change style's transition-property, not the before-change).
         }
 
         _toggle();
@@ -89,6 +118,51 @@ const createGlobalDark = createGlobalState(() => {
         disableTransitions.value = value;
     }
 
+    // ── BA.W-ATLAS-RECONCILE A-1 — the post-flip settle batch ────────────────
+    // One shared subscriber set, drained in ONE coalesced task per flip. The
+    // class toggle is already synchronous (the chrome flips instantly); this
+    // schedules the consumers' expensive re-theme work AFTER that paint, batched.
+    const flipSettledCallbacks = new Set<DarkFlipSettledCallback>();
+    let settleScheduled = false;
+    let pendingSettleValue = false;
+
+    /** Drain all settle subscribers ONCE, in a single post-flip task. */
+    function scheduleFlipSettle(nextDark: boolean) {
+        if (flipSettledCallbacks.size === 0) return;
+        // Coalesce a burst of flips (e.g. double-toggle) into the LAST one's
+        // single drain — the latest value is the one the charts must settle to.
+        pendingSettleValue = nextDark;
+        if (settleScheduled) return;
+        settleScheduled = true;
+
+        const drain = () => {
+            settleScheduled = false;
+            const value = pendingSettleValue;
+            // Snapshot so a callback that (un)subscribes mid-drain can't mutate
+            // the live iteration.
+            for (const cb of [...flipSettledCallbacks]) {
+                cb(value);
+            }
+        };
+
+        // `requestAnimationFrame` runs AFTER the synchronous class flip's style
+        // recalc/paint — the "instant chrome flip, then the batched re-theme"
+        // ordering. No rAF (SSR / headless) → a macrotask. No View Transition.
+        if (typeof requestAnimationFrame === "function") {
+            requestAnimationFrame(drain);
+        } else {
+            setTimeout(drain, 0);
+        }
+    }
+
+    /** Register a post-flip settle callback. Returns an unsubscribe fn. */
+    function onFlipSettled(callback: DarkFlipSettledCallback): () => void {
+        flipSettledCallbacks.add(callback);
+        return () => {
+            flipSettledCallbacks.delete(callback);
+        };
+    }
+
     // Safari: force style recalculation after .dark class toggle.
     // WebKit doesn't always invalidate CSS custom properties when an ancestor
     // class changes. Mirroring color-scheme as an inline style on <html> forces
@@ -101,7 +175,21 @@ const createGlobalDark = createGlobalState(() => {
         { immediate: true },
     );
 
-    return { isDark, toggleDark, disableTransitions, setDisableTransitions };
+    // BA.W-ATLAS-RECONCILE A-1 — the FLIP watch (non-immediate: the initial seed
+    // is not a flip). On a genuine dark↔light change, schedule the ONE coalesced
+    // post-flip settle task. Separate from the Safari color-scheme watch so the
+    // settle fires ONLY on a real flip, never on construction.
+    watch(isDark, (dark) => {
+        scheduleFlipSettle(dark);
+    });
+
+    return {
+        isDark,
+        toggleDark,
+        disableTransitions,
+        setDisableTransitions,
+        onFlipSettled,
+    };
 });
 
 /**

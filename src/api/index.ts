@@ -60,6 +60,10 @@ export type {
 
 export {
     DEFAULT_AURORA_CONFIG,
+    // BA.W-ATLAS-RECONCILE A-4a (d6 9467bd16 adopt) — the library-canon
+    // recessive-ground crayon calibration partial (spread over a consumer's
+    // pole-derived pigment for a paper-on-tooth data-ground aurora).
+    PAPER_WASH_GROUND,
     MAX_NUCLEI,
     MAX_STOPS,
 } from "../components/custom/aurora";
@@ -204,7 +208,15 @@ export type {
 // `startViewTransition` resolves. The `startViewTransition` +
 // `supportsViewTransitions` runtime helpers ship on the root barrel +
 // `@mkbabb/glass-ui/motion-core` (dependency-free).
-export type { ViewTransitionResult } from "../composables/motion/useViewTransition";
+// BA.W-ATLAS-RECONCILE A-4b — `ViewTransitionOptions` gains
+// `instantUnderReducedMotion` (the JS-level reduced-motion instant-path) and an
+// async-capable update; `NavigateOptions` is the route/navigation convenience's
+// option shape (the `navigate(fn)` helper over the ONE VT substrate).
+export type {
+    ViewTransitionResult,
+    ViewTransitionOptions,
+    NavigateOptions,
+} from "../composables/motion/useViewTransition";
 
 // ── Count-up animator ────────────────────────────────────────────────────────
 // `Countup` — the `{ runActive, settle, cancel }` control shape `useCountup`
@@ -348,9 +360,15 @@ export type {
 // fallback → classList("dark") + style.colorScheme). Both runtime values
 // live on the flat `/dark` subpath (vueuse-bearing surface discipline);
 // only the types ride the discovery layer.
+// `DarkFlipSettledCallback` / `UseGlobalDarkReturn` — BA.W-ATLAS-RECONCILE A-1
+// (d6 9467bd16 adopt): the post-flip SETTLE seam shape. A consumer subscribes
+// ONE post-flip post-paint moment via `useGlobalDark().onFlipSettled(cb)` (the
+// atlas's palette-memo/chart-retint/aurora-rederivation batch). `(isDark) => void`.
 export type {
+    DarkFlipSettledCallback,
     DarkModeSyncScriptOptions,
     UseGlobalDarkOptions,
+    UseGlobalDarkReturn,
 } from "../composables/dark";
 
 // ── Canvas2D lifecycle substrate ─────────────────────────────────────────────

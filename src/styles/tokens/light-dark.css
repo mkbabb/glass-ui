@@ -170,5 +170,14 @@
         --gold:       light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));
         --gold-light: light-dark(oklch(0.890 0.183 96.1), oklch(0.898 0.182 97.4));
         --gold-dark:  light-dark(oklch(0.599 0.132 64.2), oklch(0.678 0.150 63.8));
+
+        /* Silver family (BA.W-ATLAS-RECONCILE C-3) — the `light-dark()` arm
+           mirroring gold's exact shape: light value, dark-lifted value. The cool
+           near-achromatic structure metal (the W-NO-GRAY named exception).
+           `--silver-deep` is mode-invariant — not a `light-dark()` pair, exactly as
+           `--gold-deep` is omitted from this block. */
+        --silver:       light-dark(oklch(0.760 0.012 255), oklch(0.792 0.012 255));
+        --silver-light: light-dark(oklch(0.902 0.010 255), oklch(0.912 0.010 255));
+        --silver-dark:  light-dark(oklch(0.582 0.014 255), oklch(0.648 0.014 255));
     }
 }

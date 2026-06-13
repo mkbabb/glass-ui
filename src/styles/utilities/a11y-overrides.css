@@ -14,13 +14,42 @@
         transition-duration: 0.1s !important;
         transition-property: opacity, color, background-color, border-color, box-shadow !important;
     }
+
+    /* BA.W-ATLAS-RECONCILE A-3 (d6 2755ebbd re-land) — Reduced-motion OVERRIDES
+       the `data-allow-motion` theme-flip carve. That carve (the `.no-transition`
+       block below) lets a control keep its OWN authored spatial animation through
+       the flip storm — but a user who asks for reduced motion outranks any
+       per-element motion-allow. So motion-allowed elements ALSO snap their spatial
+       (transform) transition + any animation here; accessibility is absolute. (The
+       DarkModeToggle icon animates through a flip under full motion, and SNAPS
+       under PRM — both arms gated by the ported icon-morph test.) */
+    [data-allow-motion] {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
-/* ── No-transition class (for theme switches, etc.) ── */
+/* ── No-transition class (for theme switches, etc.) ──────────────────────────
+   The theme-flip transition-suppression storm: `useGlobalDark.toggleDark()` adds
+   `.no-transition` to `<html>` for the flip's single style recalc so the page's
+   incidental transitions (colour cross-fades, glass surfaces) don't jank, then
+   rAF-removes it. The kill is BLANKET by design — every descendant snaps.
+
+   BA.W-ATLAS-RECONCILE A-3 (d6 2755ebbd re-land) — THE CARVE
+   (`*:not([data-allow-motion])`): an element may declare `data-allow-motion` to
+   keep its OWN authored transition through the flip — the suppression is for
+   INCIDENTAL motion, never a control whose whole purpose IS an animation (the
+   DarkModeToggle's half-turn icon spring). This reuses the SAME carve attribute
+   the reduced-motion block reads, generalized into a single
+   "motion-allowed-during-suppression" capability (any element may opt in; no
+   toggle-special-case, no `!important` re-enable arms race). Reduced-motion still
+   OVERRIDES this carve — see the PRM block above: `[data-allow-motion]` spatial
+   transitions snap under `prefers-reduced-motion` (accessibility is absolute). */
 html.no-transition,
-html.no-transition *,
-html.no-transition *::before,
-html.no-transition *::after {
+html.no-transition *:not([data-allow-motion]),
+html.no-transition *:not([data-allow-motion])::before,
+html.no-transition *:not([data-allow-motion])::after {
     transition-duration: 0s !important;
 }
 

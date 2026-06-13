@@ -93,6 +93,36 @@
     --color-gold-deep: var(--gold-deep);
 
     /* ═══════════════════════════════════════════════
+       §13b SILVER (the structure metal — BA.W-ATLAS-RECONCILE C-3, d6 register C)
+       ═══════════════════════════════════════════════ */
+    /* The cool polished-steel STRUCTURE quad — gold's mirror for the industrial
+       housing register (the InstrumentChassis `variant="structure"` consumer #2).
+       Gold ships; the structure metal never did. The cascade EXACTLY mirrors gold's
+       (scale-paper raw → bridges `--color-silver*` alias → both dark arms).
+
+       BA.W-NO-GRAY NAMED EXCEPTION (the ONE sanctioned cool-neutral). W-NO-GRAY
+       moved the library's NEUTRAL ladder to a warm OKLab H~70° register (no gray).
+       Silver is DELIBERATELY COOL near-achromatic (hue ~255, the blue-steel of a
+       milled panel) — it is NOT a neutral, it is a brand METAL identity (like gold).
+       Calibrated AGAINST the new warm floor: the very-low chroma (C ≤ 0.016) reads
+       as polished metal, not a tinted cast, and the cool hue distinguishes it from
+       the warm-cream glass plate so the structure register reads as a DIFFERENT
+       material, not a desaturated default. Recorded as the warm-floor exception in
+       the W-ATLAS-RECONCILE DELTA. */
+    --silver: oklch(0.760 0.012 255);
+    --silver-light: oklch(0.902 0.010 255);
+    --silver-dark: oklch(0.582 0.014 255);
+    /* The mode-INVARIANT deep structure plate (mirrors `--gold-deep`'s contract —
+       a fixed dark cool-steel so a white label clears ≥4.5:1 in BOTH modes; it does
+       NOT flip with `--foreground`). The would-be saturated CTA twin of the metal. */
+    --silver-deep: oklch(0.462 0.016 258);
+
+    --color-silver: var(--silver);
+    --color-silver-light: var(--silver-light);
+    --color-silver-dark: var(--silver-dark);
+    --color-silver-deep: var(--silver-deep);
+
+    /* ═══════════════════════════════════════════════
        §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
        mirror; hue preserved from the prior hsl() cadence)
        ═══════════════════════════════════════════════ */
