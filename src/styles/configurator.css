@@ -40,3 +40,38 @@
 .configurator-presets [role="tablist"] {
     gap: var(--configurator-preset-row-gap);
 }
+
+/* 3. The DIVIDER register — dark-adaptive (BA.W-CONFIG-CHASSIS.1, CFG-4). The
+ *    section + inter-row dividers were inline `border-border/40` / `/30` Tailwind
+ *    alphas that VANISHED over the W-DARK-MATERIAL dark glass-floating plate
+ *    ("the sections run together"). They now read the ONE dark-adaptive
+ *    --configurator-divider{,-section} token (minted in tokens/offsets-sizing.css
+ *    with a light-dark() arm + the dark-arm.css `.dark` floor) so a visible
+ *    luminance step survives BOTH plates. These rules paint only the COLOR; the
+ *    `border-b`/`border-t` WIDTH stays on the Tailwind utilities in the SFCs.
+ *
+ *    Cascade: configurator.css imports after utilities.css, and these element-
+ *    targeting selectors override the Tailwind `border-color` default the dropped
+ *    `border-border/N` utilities used to set (the utilities are GONE from the SFC
+ *    class lists, so there is no competing utility to lose to). The faint section
+ *    tonal step (--configurator-section-tint, default transparent on light) reads
+ *    behind a <ConfiguratorLayer> so a section reads as a section without a second
+ *    heading rung. */
+.configurator-layer {
+    border-color: var(--configurator-divider-section);
+    background-color: var(--configurator-section-tint);
+}
+.configurator-layer-body[data-dividers] > * + * {
+    border-color: var(--configurator-divider);
+}
+
+/* The Configurator.vue chrome dividers (the aside top rule, the preset-row +
+ * footer separators) read the inter-row divider token — the SAME dark-adaptive
+ * register, so the whole instrument's hairline grammar lifts in lockstep. The
+ * SFC drops the inline `border-border/40` from these elements; this rule paints
+ * the color. */
+.configurator-aside,
+.configurator-presets,
+.configurator-footer {
+    border-color: var(--configurator-divider);
+}

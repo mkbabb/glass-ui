@@ -20,4 +20,9 @@ export {
     darkModeSyncScript,
     DARK_MODE_STORAGE_KEY,
 } from "./composables/dark";
-export type { UseGlobalDarkOptions, DarkModeSyncScriptOptions } from "./composables/dark";
+export type {
+    UseGlobalDarkOptions,
+    UseGlobalDarkReturn,
+    DarkFlipSettledCallback,
+    DarkModeSyncScriptOptions,
+} from "./composables/dark";

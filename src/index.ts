@@ -153,7 +153,13 @@ export * from "./composables/sortable";
 export {
     startViewTransition,
     supportsViewTransitions,
+    // BA.W-ATLAS-RECONCILE A-4b — the route/navigation convenience over the ONE
+    // VT substrate (async update + reduced-motion instant-path). NO parallel
+    // useRouteTransition wrapper.
+    navigate,
+    supportsRouteTransitions,
     type ViewTransitionResult,
+    type NavigateOptions,
 } from "./composables/motion/useViewTransition";
 
 // The v-reveal entrance directive. Dependency-free (`vue` type-only — no

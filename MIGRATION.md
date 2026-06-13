@@ -69,6 +69,27 @@
 > ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
 
+> **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
+> now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
+> structural utilities ship as precompiled CSS instead of dead arbitrary-bracket classes a
+> consumer's content-scan never reached). Three rendered changes a consumer SEES on the bump:
+> (1) `<SelectContent>` now BOUNDS its content to `min(24rem, 60dvh)` tightened by
+> `--reka-popper-available-height` with inner `overflow-y: auto` — a tall (16-item-class)
+> dropdown that previously overflowed the viewport now bottoms INSIDE it and scrolls within
+> (override the cap via `--select-content-max-h` on any ancestor). (2) `<Slider size="md">`
+> (and `sm`/`lg`) now renders its REAL track geometry (`md` ≈ 20px / 1.25rem) — the `size`
+> prop was previously INERT in consumers (fell back to the 6px track); a consumer relying on
+> that broken 6px-regardless behaviour will now see the correct sized track. (3) glass-ui's
+> own `@source` directive (for a consumer re-importing the `/styles` cascade) re-points
+> `"../components"` → `"../*.js"` so it reaches the compiled `dist/*.js` chunks — a consumer
+> that copied glass-ui's `@source` line verbatim should ensure THEIR `@source` points at the
+> installed `dist` (per the consumer-wiring section), unchanged guidance.
+
+> ADDITIVE (next cut, BA.W-EMISSION): `<WatercolorDot>` gains a `variant?: "solid" | "ghost"`
+> prop (default `"solid"`, byte-compatible). `variant="ghost"` renders the SAME seeded blob
+> silhouette as a STROKE (a `color` border over a low-alpha fill) — the empty-palette-slot
+> affordance, NOT a CSS dashed rectangle. No break.
+
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the
 > AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**
@@ -1018,6 +1039,49 @@ still tracks the ladder, so a consumer reading those gets the warm value automat
 
 ---
 
+### The scroll-state edge fade — `.scroll-fade-*` → `<FadingScroll>` + `--mask-fade-width` → `--fade-scroll-width` (BA.W-FADING-SCROLL)
+
+The scroll-BLIND static `.scroll-fade-mask` / `.scroll-fade-y` / `.scroll-fade-top` /
+`.scroll-fade-bottom` mask utilities are SUPERSEDED by the scroll-state-driven
+`<FadingScroll>` primitive (`@mkbabb/glass-ui/fading-scroll`, axis `x`|`y`). The static
+masks feathered BOTH edges unconditionally with no scroll knowledge — so the first card's
+chrome was half-erased at `scroll = 0` (the R8-08 "Shy" defect). `<FadingScroll>` feathers
+the start edge ONLY past `scroll > 0` and the end edge ONLY while trailing overflow remains.
+This is a **CLEAN BREAK — no alias** (the static utilities + the `--mask-fade-width` token
+retire in a coordinated orchestrator commit once every consumer migrates).
+
+| was | now |
+|---|---|
+| `<div class="… overflow-x-auto scroll-fade-mask">` | `<FadingScroll axis="x" class="…">` (root is the scroll port) |
+| `<div class="… overflow-y-auto scroll-fade-y">` | `<FadingScroll axis="y" class="…">` |
+| `.scroll-fade-top` / `.scroll-fade-bottom` (one-sided V) | `<FadingScroll axis="y" :fade-start="false">` / `:fade-end="false"` |
+| `--mask-fade-width: 1rem` (token) | `--fade-scroll-width: 1rem` (token — same default, inheriting) |
+
+```vue
+<!-- before -->
+<div class="flex gap-2 overflow-x-auto scroll-fade-mask scrollbar-hidden">…</div>
+<!-- after -->
+<FadingScroll axis="x" class="flex gap-2 scrollbar-hidden">…</FadingScroll>
+```
+
+When wrapping the scroll port in a `<FadingScroll>` node would re-parent a load-bearing
+anchor (e.g. a `position-anchor` indicator on the scroll container root), call the composable
+form on the existing element instead — no extra DOM node:
+
+```ts
+import { useFadingScroll } from "@mkbabb/glass-ui/fading-scroll";
+useFadingScroll(containerRef, { axis: "x" });   // writes --fade-start/--fade-end on the root
+// + the container carries `fading-scroll fading-scroll--x` + the data-fade-* attrs
+```
+
+A consumer who overrode `--mask-fade-width` (`:root { --mask-fade-width: 0.5rem }`) re-pins
+`--fade-scroll-width` instead. The native `scroll(self)` timeline is the primary path
+(zero JS on a supporting engine); the `useFadingScroll` JS fallback covers older engines
+automatically. The fade does NOT vanish under `prefers-reduced-motion: reduce` (it is a
+legibility cue, not motion — it stops interpolating, the discrete edge presence stays).
+
+---
+
 ## Cohabitation note—v0.9.4 stays supported
 
 v0.9.4 remains available indefinitely as a v0.9.x patch-stream tag.
@@ -1182,3 +1246,56 @@ cursor dot, the ripple ring) while TRUE `k` keeps positions and reach. On a 390p
 their own marks); new optional `ConstellationField.kFloor` member, tokenable per instance via
 `--constellation-k-floor` (read by `<Constellation>` from the canvas). No API changes to the
 existing exports; the slides deck-side `K_VIS_FLOOR` interim arm retires on this release.
+
+## BA — the d6-lineage A/B reconciliation (the Connectivity Atlas fold)
+
+The Connectivity Atlas consumed the d6 fork lineage (the registry 3.11.x/3.12.0 publishes)
+and moves to mainline. BA.W-ATLAS-RECONCILE folds the d6 A/B registers need-shaped. Per the
+atlas letter: zero legacy shims, zero compat re-exports — where an idiom was superseded, the
+new shape is below and the consumer migrates. The full old→new table is in
+`docs/tranches/BA/audit/W-ATLAS-RECONCILE-cut-notes.md`.
+
+### A-1 — the post-flip settle seam (ADDITIVE, no migration)
+
+`useGlobalDark().onFlipSettled(cb)` returns to mainline ADOPTED VERBATIM from the d6 fork —
+register ONE post-flip post-paint callback (`(isDark: boolean) => void`) that batches N
+expensive re-theme ops (palette memo + chart retint + aurora re-derivation) into a single
+coalesced `requestAnimationFrame` beat per flip. On `/dark` + `/api`
+(`DarkFlipSettledCallback`). No call-site change vs the fork — byte-identical seam.
+
+### A-4a — `PAPER_WASH_GROUND` (ADDITIVE, no migration)
+
+The library-canon recessive-ground crayon calibration partial returns ADOPTED VERBATIM. On
+the `/aurora` barrel + `/api`. Spread it over a consumer's pole-derived pigment:
+`const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }`.
+
+### A-4b — the route transition: `navigate` over the ONE VT substrate (ONE-LINE RENAME)
+
+The d6 `useRouteTransition()` standalone wrapper is SUPERSEDED — there is NO parallel route
+wrapper. `navigate` is a thin convenience over the ONE `useViewTransition` substrate
+(`startViewTransition` gained an async update + a JS-level reduced-motion instant-path).
+
+```ts
+// OLD (d6 fork)
+const { navigate } = useRouteTransition();
+await navigate(() => router.push(`/${slug}`));
+
+// NEW (mainline) — `navigate` is a DIRECT named import (root barrel or /motion-core)
+import { navigate } from "@mkbabb/glass-ui";
+await navigate(() => router.push(`/${slug}`), { types: ["forward"] }).finished;
+```
+
+`supportsRouteTransitions()` mirrors `supportsViewTransitions()`. Under reduced motion (or an
+unsupported engine) the navigation runs instantly, unanimated — information parity absolute.
+
+### C-3 — the silver structure quad + `variant="structure"` (NEW, additive)
+
+The silver structure metal (`--silver`/`-light`/`-dark`/`-deep` + `--color-silver*` aliases,
+gold's cool mirror) + the `<InstrumentChassis variant="structure">` register (the cool
+milled-metal housing). The atlas's structure surface adopts `variant="structure"` (or reads
+the `--color-silver*` tokens) for the precision-instrument register.
+
+### A-5 — `MetricBadge` `amount`→`value` (ONE-LINE RENAME; already shipped at AZ)
+
+`<MetricBadge :amount="…">` → `<MetricBadge :value="…">`. The atlas acknowledged this is
+intentional; see the AZ.W-METRIC-UNIFY row above (`MIGRATION.md` §3.x amount→value).

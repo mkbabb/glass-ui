@@ -243,6 +243,37 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                 radial-gradient curvature overlay all read at rest with no slot content.
             </p>
         </section>
+
+        <!-- Silver structure variant — BA.W-ATLAS-RECONCILE C-3. The cool
+             milled-metal register: bezel + grooves re-point to the silver quad. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">structure variant (silver milled-metal)</p>
+            <InstrumentChassis
+                phase="ready"
+                variant="structure"
+                class="instrument-chassis-demo instrument-chassis-demo--mini"
+            >
+                <template #strip>
+                    <span class="text-mono-caption text-muted-foreground">
+                        polished-steel bezel + silver twin-line grooves
+                    </span>
+                </template>
+                <template #dial>
+                    <ChassisDivider orientation="vertical" class="dial-divider" />
+                    <span class="text-mono-caption text-muted-foreground">dial</span>
+                </template>
+                <template #control>
+                    <span class="text-mono-caption text-muted-foreground">control</span>
+                </template>
+            </InstrumentChassis>
+            <p class="text-mono-caption text-muted-foreground">
+                The `variant="structure"` register re-points the engraved bezel + the
+                structural grooves onto the cool `--silver` quad — an industrial
+                precision-instrument housing, the cool-metal twin of the warm-gold
+                COMPLETE affirmation. The phase cascade stays orthogonal (a structure
+                chassis still retints on `data-phase`). Consumer #2 of the silver quad.
+            </p>
+        </section>
     </StoryPage>
 </template>
 

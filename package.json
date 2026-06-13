@@ -31,6 +31,9 @@
             "controls": [
                 "dist/controls.d.ts"
             ],
+            "color-swatch": [
+                "dist/color-swatch.d.ts"
+            ],
             "confirm-dialog": [
                 "dist/confirm-dialog.d.ts"
             ],
@@ -54,6 +57,9 @@
             ],
             "color": [
                 "dist/color.d.ts"
+            ],
+            "fading-scroll": [
+                "dist/fading-scroll.d.ts"
             ],
             "fourier-field": [
                 "dist/fourier-field.d.ts"
@@ -264,6 +270,10 @@
             "types": "./dist/controls.d.ts",
             "import": "./dist/controls.js"
         },
+        "./color-swatch": {
+            "types": "./dist/color-swatch.d.ts",
+            "import": "./dist/color-swatch.js"
+        },
         "./confirm-dialog": {
             "types": "./dist/confirm-dialog.d.ts",
             "import": "./dist/confirm-dialog.js"
@@ -295,6 +305,10 @@
         "./color": {
             "types": "./dist/color.d.ts",
             "import": "./dist/color.js"
+        },
+        "./fading-scroll": {
+            "types": "./dist/fading-scroll.d.ts",
+            "import": "./dist/fading-scroll.js"
         },
         "./fourier-field": {
             "types": "./dist/fourier-field.d.ts",
@@ -724,6 +738,12 @@
         "proof:adaptive-glass": "node scripts/proof-adaptive-glass.mjs",
         "proof:dark-material": "node scripts/proof-dark-material.mjs",
         "proof:no-gray": "node scripts/proof-no-gray.mjs",
+        "proof:fading-scroll": "node scripts/proof-fading-scroll.mjs",
+        "proof:emission": "node scripts/proof-emission.mjs",
+        "proof:goo-redress": "node scripts/proof-goo-redress.mjs",
+        "proof:dock-plate-clearance": "node scripts/proof-dock-plate-clearance.mjs",
+        "proof:atlas-ab": "node scripts/proof-atlas-ab.mjs",
+        "proof:config-chassis": "node scripts/proof-config-chassis.mjs",
         "proof:dark-semantic-contrast": "node scripts/proof-dark-semantic-contrast.mjs",
         "proof:glass-material-demo": "node scripts/proof-glass-material-demo.mjs",
         "proof:blob-live-truth": "node scripts/proof-blob-live-truth.mjs",

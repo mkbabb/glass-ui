@@ -10,6 +10,7 @@ export { createAurora } from "./composables/runtime";
 export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runtime";
 export {
     DEFAULT_AURORA_CONFIG,
+    PAPER_WASH_GROUND,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
