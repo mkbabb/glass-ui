@@ -28,10 +28,13 @@
  */
 @layer components {
     :root {
-        /* The beyond-edge overrun length — how far the hairline runs PAST the dock
-           content box. A proportioned default (a touch more than a dock control); a
-           consumer retunes per-instance. Rides `--dock-scale` so it tracks the
-           coarse-pointer density thread the rest of the dock floor speaks. */
+        /* BA.W-DOCK-SECTIONS RE-SEMANTIC — the SYMMETRIC dual-side overrun length. The
+           seam line crosses THROUGH the dock and protrudes past BOTH edges by this
+           amount each side (the line's cross-extent = dock extent + 2× this knob,
+           centered on the seam). Was a one-way connector length pre-wave; now the
+           per-side overrun of the dual-side seam line. A proportioned default (a touch
+           more than a dock control); rides `--dock-scale` so it tracks the coarse-pointer
+           density thread the rest of the dock floor speaks. */
         --dock-rail-extend-length: calc(2.5rem * var(--dock-scale, 1));
     }
 
@@ -72,128 +75,198 @@
         pointer-events: auto;
     }
 
-    /* AZ.W-RAIL3 — the slot hangs the floating carousel BELOW the dock's bottom edge
-       for BOTH orientations. The slot's top sits AT the dock's bottom edge
-       (`inset-block-start: 100%`) and the strip (a horizontal chip carousel) lives
-       wholly BELOW the dock. The slot anchors at the dock's LEADING (inline-start)
-       edge but is NOT clamped to the dock's width (`inset-inline-end: auto`), so a
-       carousel WIDER than a narrow vertical column overflows past the dock's inline
-       extent — the "floating carousel" that overflows OUTSIDE the dock (the box stays
-       INVIOLATE because the slot is `position: absolute`, never feeding the dock's
-       intrinsic size). The connective hairline (`.dock-hairline-extend::before`) is
-       center-aligned over the strip so it reads as a connector from the dock edge. */
+    /* BA.W-DOCK-SECTIONS — THE DIVIDER-SEAM RE-SEAT (the 4th-rail re-conception; the
+       midline/edge seat workaround #4 is DELETED, inv-6). The rail line co-locates with
+       a NAMED `<DockSeparator anchor>` seam: GlassDock measures that separator's offset
+       within the frame and writes `--dock-rail-seam-offset` (the cross-axis center of the
+       divider). The slot anchors AT the seam — NOT `50%` (the vertical midline workaround
+       the H1 band motivated), NOT the dock edge — and the line OVERRUNS BOTH dock edges
+       by `--dock-rail-extend-length` each side (a SYMMETRIC dual-side overrun, replacing
+       the one-way connector). The chips fan FLUSH alongside the line. Because the slot is
+       `position: absolute` on the non-clipping frame, the dock box stays INVIOLATE (it
+       feeds NO size into the dock's intrinsic box — proof:rail-extend box-equality holds).
+
+       FALLBACK: when no anchored separator is present `--dock-rail-seam-offset` is unset;
+       the `var(…, 50%)`-FREE fallback seats the line at the dock's near edge via the
+       extent default (never the midline seat). */
+
+    /* VERTICAL (column) dock — the rail is a HORIZONTAL line. It anchors on the BLOCK
+       axis at the ℱ-separator's Y (the seam offset) and overruns on the INLINE axis past
+       BOTH the leading and trailing edges: the slot starts `--dock-rail-extend-length`
+       LEFT of the dock and its inline extent is the dock width + 2× the overrun, so the
+       line protrudes symmetrically each side. The chips fan FLUSH in the trailing gutter
+       (translated past the dock's trailing edge). */
     .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-        inset-inline-start: 100%;
-        /* seat the carousel CENTERED beside the dock column. A top-anchored seat
-           collides with the page H1/breadcrumb band at scroll-top (any fixed offset
-           from the dock top lands in it at some viewport); the vertical center is
-           stable across viewport heights and reads as the carousel riding the dock's
-           midline, clear of the title band. */
-        inset-block-start: 50%;
+        inset-block-start: var(--dock-rail-seam-offset, 0px);
         inset-block-end: auto;
+        inset-inline-start: calc(-1 * var(--dock-rail-extend-length));
+        inset-inline-end: auto;
+        /* the line's inline extent = dock width + 2× overrun (symmetric, centered). */
+        inline-size: calc(100% + 2 * var(--dock-rail-extend-length));
         translate: 0 -50%;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-start;
     }
+    /* HORIZONTAL (row) dock — the rail is a VERTICAL line. It anchors on the INLINE axis
+       at the nav-separator's X (the seam offset) and overruns on the BLOCK axis past BOTH
+       the top and bottom edges: the slot starts `--dock-rail-extend-length` ABOVE the
+       dock and its block extent is the dock height + 2× the overrun. The chips fan FLUSH
+       above the line (translated above the dock's top edge so they stay ON-SCREEN for a
+       viewport-bottom-anchored dock). */
     .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
-        inset-block-end: 100%;
-        inset-inline-start: 0;
+        inset-inline-start: var(--dock-rail-seam-offset, 0px);
         inset-inline-end: auto;
+        inset-block-start: calc(-1 * var(--dock-rail-extend-length));
+        inset-block-end: auto;
+        /* the line's block extent = dock height + 2× overrun (symmetric, centered). */
+        block-size: calc(100% + 2 * var(--dock-rail-extend-length));
+        translate: -50% 0;
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-end;
+        align-items: center;
+        justify-content: flex-start;
     }
 
-    /* AZ.W-RAIL3 — the FLOATING CAROUSEL strip. The hairline element is the wrapper
-       that carries (a) a VISIBLE connective hairline running from the dock edge down
-       to the strip (the user's "the hairline must visibly connect") and (b) the
-       `.dock-hairline-strip` — a flex row of detached glass chips, the floating
-       carousel that overflows OUTSIDE the dock box (the third-rail redirect: the
-       contextual facets are no longer in-dock layers; they are the rail's content). */
+    /* BA.W-DOCK-SECTIONS — the seam wrapper. It FILLS the slot (which is already the
+       dock + 2× overrun, centered on the seam) and carries (a) the `::before` seam line
+       running the full extent and (b) the `.dock-hairline-strip` — the flush fan of
+       glass chips butted to the line (the macOS fan-out, rectilinear; NOT a 40px-adrift
+       carousel). The chips paint OUTSIDE the dock box (the slot is a `.glass-dock-frame`
+       sibling — R4 / box INVIOLATE). */
     .dock-hairline-extend {
         position: relative;
         display: flex;
         gap: 0;
+        inline-size: 100%;
+        block-size: 100%;
     }
-    /* Vertical dock — connector (a horizontal line) then the chip COLUMN, left-to-right
-       (the carousel rides BESIDE the dock in its trailing gutter). */
+    /* Vertical dock — the seam is a horizontal line at the slot's block center; the chip
+       ROW fans FLUSH just past the dock's trailing edge, butted to the line. */
     .dock-hairline-extend.vertical {
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: flex-end;
     }
-    /* Horizontal dock — the strip sits ABOVE: stack the chip-row then the connector
-       bottom-up (column-reverse puts the first child, the connector, at the BOTTOM,
-       nearest the dock's top edge — so a viewport-bottom-anchored dock keeps its
-       carousel ON-SCREEN above it). */
+    /* Horizontal dock — the seam is a vertical line at the slot's inline center; the chip
+       COLUMN/ROW fans FLUSH above the line (the viewport-bottom dock keeps it on-screen). */
     .dock-hairline-extend.horizontal {
-        flex-direction: column-reverse;
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    /* BA.W-DOCK-SECTIONS — the chips fan FLUSH at the DOCK's near edge, butted to the
+       seam line where it crosses the dock boundary (NOT at the slot's far overrun end,
+       which would re-float them adrift). The positioning rides the `<FadingScroll>`
+       WRAPPER (`.dock-hairline-fade`), NOT the strip itself — the strip stays the
+       in-flow scroll content of FadingScroll (an absolutely-positioned strip would
+       escape FadingScroll's flow → its scroll-port collapses to 0 + the mask hides the
+       chips). A vertical dock's fade rides the dock's TRAILING (inline-end) edge in its
+       gutter; a horizontal dock's fade rides the dock's TOP (block-start) edge. The seam
+       line still protrudes past BOTH edges (the `::before` spans the full slot); only the
+       CHIP fade butts the dock so it reads as a fan growing FROM the divider. */
+    .dock-hairline-fade {
+        max-inline-size: var(--dock-rail-strip-max, 60vw);
+    }
+    .dock-hairline-extend.vertical .dock-hairline-fade {
+        position: absolute;
+        inset-inline-start: calc(100% - var(--dock-rail-extend-length));
+        inset-block-start: 50%;
+        translate: 0 -50%;
+    }
+    .dock-hairline-extend.horizontal .dock-hairline-fade {
+        position: absolute;
+        inset-block-end: calc(100% - var(--dock-rail-extend-length));
+        inset-inline-start: 50%;
+        translate: -50% 0;
     }
 
-    /* R3 — the VISIBLE connective hairline. R1 — the `--border-hairline` token pair
-       (catch-light + under-shadow) + a faint background fallback so the whisper reads
-       even over a busy backdrop (the user audited "NO VISIBLE HAIRLINE"). The line
-       overruns by `--dock-rail-extend-length` (the beyond-edge extent); the
-       `min-{inline,block}-size` floor is the proof:rail-extend R3 overrun witness. */
+    /* R3 — the VISIBLE seam line (no longer a one-way connector tether). R1 — the
+       `--border-hairline` token pair (catch-light + under-shadow) + a faint background
+       fallback so the whisper reads even over a busy backdrop. BA.W-DOCK-SECTIONS: the
+       line now RUNS THE FULL SLOT EXTENT (the slot is already dock + 2× overrun,
+       centered on the seam), so it crosses THROUGH the dock and protrudes past BOTH
+       edges — ONE continuous line, NOT a 40px tether to a detached carousel. The
+       `min-{inline,block}-size: var(--dock-rail-extend-length)` floor stays as the
+       proof:rail-extend / proof:rail3 R3 overrun witness (the line is always ≥ the
+       overrun length); the `100%` width/height makes it the full symmetric seam. The
+       tether `margin` is GONE — the chips fan FLUSH against the line (S3). */
     .dock-hairline-extend::before {
         content: "";
         flex: 0 0 auto;
+        position: absolute;
         box-shadow: var(--border-hairline);
         background: var(--dock-layer-rail-divider, color-mix(in srgb, var(--border) 45%, transparent));
     }
-    /* Vertical dock connector — a HORIZONTAL line running right from the dock's
-       trailing edge to the chip column, seated near the dock's vertical center. */
+    /* Vertical dock — a HORIZONTAL line spanning the FULL slot inline extent (dock +
+       2× overrun), seated on the seam Y; the chips fan flush in the trailing gutter. */
     .dock-hairline-extend.vertical::before {
         block-size: 1px;
-        inline-size: var(--dock-rail-extend-length);
+        inline-size: 100%;
         min-inline-size: var(--dock-rail-extend-length);
-        align-self: center;
-        margin-inline-end: 0.25rem;
+        inset-block-start: 50%;
+        inset-inline-start: 0;
+        translate: 0 -50%;
     }
-    /* Horizontal dock connector — a VERTICAL line running up from the dock's top
-       edge to the chip row, seated near the dock's leading control center. */
+    /* Horizontal dock — a VERTICAL line spanning the FULL slot block extent (dock +
+       2× overrun), seated on the seam X; the chips fan flush above the line. */
     .dock-hairline-extend.horizontal::before {
         inline-size: 1px;
-        block-size: var(--dock-rail-extend-length);
+        block-size: 100%;
         min-block-size: var(--dock-rail-extend-length);
-        margin-inline-start: calc(var(--dock-control-size, 1.75rem) * 0.5);
-        margin-block-start: 0.25rem;
+        inset-inline-start: 50%;
+        inset-block-start: 0;
+        translate: -50% 0;
     }
 
-    /* `extent="inset"` keeps the connector flush at the edge (no overrun). */
+    /* `extent="inset"` zeroes the overrun (the line stays flush within the dock edges —
+       the slot's `inline-size`/`block-size` collapse to the dock box, no protrusion). */
     .dock-hairline-extend.extent-inset.vertical::before {
-        inline-size: 0;
         min-inline-size: 0;
     }
     .dock-hairline-extend.extent-inset.horizontal::before {
-        block-size: 0;
         min-block-size: 0;
     }
+    .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot:has(.extent-inset) {
+        inset-inline-start: 0;
+        inline-size: 100%;
+    }
+    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot:has(.extent-inset) {
+        inset-block-start: 0;
+        block-size: 100%;
+    }
 
-    /* The carousel strip — a flex run of chips that SCROLLS when the chips exceed the
-       budget (the common 2-4-facet case fits with no scroll; a larger set cycles).
-       `scroll-snap` gives the carousel detent feel. The strip paints OUTSIDE the dock
-       box (it is in the `.dock-hairline-slot`, a `.glass-dock-frame` sibling — R4). */
+    /* BA.W-DOCK-SECTIONS — the FLUSH chip fan. The chips butt the seam line (NO adrift
+       tether — the strip's positioning context is the seam wrapper, not a 40px offset).
+       The strip keeps `scroll-snap` (the carousel detent) + a single `overflow` axis as
+       the proof:rail3 R5 cyclable witness, but the PRIMARY scroll-fade port is the
+       `<FadingScroll>` wrapper DockRail composes (S5 — the bespoke overflow strip is the
+       inert inner fallback; FadingScroll owns the edge fade, no duplicate mask here). */
     .dock-hairline-strip {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: var(--dock-rail-strip-gap, 0.375rem);
         scrollbar-width: none;
         padding: 0.125rem;
+        /* the collapse-retract origin: the chips translate/fade INTO the rail toward the
+           seam on collapse, leaving the stub protrusion. The rest state is full-out. */
+        transition:
+            opacity var(--duration-normal) var(--ease-standard),
+            translate var(--duration-normal) var(--dock-resize-spring, var(--ease-standard));
     }
     .dock-hairline-strip::-webkit-scrollbar {
         display: none;
     }
-    /* Vertical dock → a COLUMN carousel beside the dock, scrolls on the block axis. */
+    /* Vertical dock → a ROW of chips beside the dock, flush to the horizontal seam;
+       scrolls on the inline axis when they exceed the budget. */
     .dock-hairline-extend.vertical .dock-hairline-strip {
-        flex-direction: column;
-        max-block-size: var(--dock-rail-strip-max, 60vh);
-        overflow-y: auto;
-        overflow-x: visible;
-        scroll-snap-type: y proximity;
+        flex-direction: row;
+        max-inline-size: var(--dock-rail-strip-max, 60vw);
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x proximity;
     }
-    /* Horizontal dock → a ROW carousel above the dock, scrolls on the inline axis. */
+    /* Horizontal dock → a ROW of chips above the dock, flush to the vertical seam;
+       scrolls on the inline axis when they exceed the budget. */
     .dock-hairline-extend.horizontal .dock-hairline-strip {
         flex-direction: row;
         align-items: center;
@@ -204,6 +277,30 @@
     }
     .dock-hairline-strip > * {
         scroll-snap-align: start;
+    }
+
+    /* BA.W-DOCK-SECTIONS — THE COLLAPSE-RETRACT (the macOS fan-out retraction; the brief
+       + R8-6 fan-out half). When the dock collapses the chips fold back behind a slight
+       protruding stub at the dock edge: they translate along the seam axis INTO the rail
+       and fade, the seam line keeping a SLIGHT protrusion (the rail never detaches — it
+       retracts along the seam axis). The stub fraction is `--dock-rail-retract-stub`. */
+    .glass-dock.collapsed ~ .dock-hairline-slot .dock-hairline-strip,
+    .glass-dock-frame:has(.glass-dock.collapsed) .dock-hairline-strip {
+        opacity: 0;
+        translate: calc(var(--dock-rail-extend-length) * (1 - var(--dock-rail-retract-stub, 0.35)))
+            0;
+    }
+    .glass-dock.collapsed ~ .dock-hairline-slot .dock-hairline-extend.horizontal .dock-hairline-strip,
+    .glass-dock-frame:has(.glass-dock.collapsed) .dock-hairline-extend.horizontal .dock-hairline-strip {
+        translate: 0
+            calc(-1 * var(--dock-rail-extend-length) * (1 - var(--dock-rail-retract-stub, 0.35)));
+    }
+    /* PRM — snap to the retracted state, no travel (the retract must not animate under
+       reduced motion; only the discrete opacity/position endpoints apply). */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-hairline-strip {
+            transition: none;
+        }
     }
 
     /* Each chip — a detached FLOATING glass pill (R4-1's register, now a label-bearing

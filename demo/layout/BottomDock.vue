@@ -15,6 +15,7 @@
 import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
+    ArrowLeftRight,
     ChevronLeft,
     ChevronRight,
     ChevronsLeft,
@@ -24,9 +25,11 @@ import {
 import {
     DockIconButton,
     DockRail,
+    DockSection,
     DockSeparator,
     GlassDock,
     type DockRailItem,
+    type DockSectionDescriptor,
 } from "../../src/components/custom/dock";
 import {
     Sheet,
@@ -73,6 +76,18 @@ const railItems = computed<DockRailItem[]>(() =>
           }))
         : [],
 );
+
+// BA.W-DOCK-SECTIONS — the declarative tripartite descriptor. The deleted section
+// model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow controls —
+// the in-category story nav (`section` zone) + the trailing category-jump group (`nav`
+// zone) — and adds only the <DockSeparator> seam between them (display:contents — the
+// dock body stays a single row, box INVIOLATE). The `nav` descriptor's leading separator
+// is the rail's anchor seam (the nav-separator on the bottom dock, the spec's named
+// anchor). The facets (`layers`) ride the seam rail OUTSIDE the dock box.
+const sections = computed<DockSectionDescriptor[]>(() => [
+    { kind: "section", id: "story-nav", label: "Story navigation", layers: railItems.value },
+    { kind: "nav", id: "category-jump", label: "Category navigation" },
+]);
 const activeStoryId = computed<string | undefined>(
     () => route.meta.storyId as string | undefined,
 );
@@ -119,6 +134,15 @@ const hasNext = computed(() =>
         ? loc.value.storyIndex < loc.value.category.stories.length - 1
         : false,
 );
+
+// BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph control. It opens the
+// shell's focused morph stage (AppShell hosts the state + the useDockOrientationMorph
+// driver — the shell is the AZ driver's binary consumer #2). It dispatches the SAME
+// `glass-ui-demo:toggle-dock-morph` window event the SidebarDock control fires — ONE
+// event path, no parallel open machinery, no second morph engine.
+function openDockMorph(): void {
+    window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
+}
 </script>
 
 <template>
@@ -172,100 +196,120 @@ const hasNext = computed(() =>
                 </Sheet>
             </template>
 
-            <TooltipProvider :delay-duration="250">
-                <!-- A divider after the home-left category trigger, before the
-                     in-category nav group (B9 — a divider separating the persistent
-                     control from the nav run). -->
-                <DockSeparator />
+            <!-- A divider after the home-left category trigger, before the in-category
+                 nav group (B9 — separating the persistent control from the nav run). -->
+            <DockSeparator />
 
-                <!-- Prev within the category — ADAPTIVE: rendered only when there IS
-                     a previous story (B9 — no greyed-out dead chrome; the control is
-                     absent when nothing's there, not a disabled stub). -->
-                <Tooltip v-if="hasPrev">
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            class="tap-squish"
-                            aria-label="Previous story"
-                            @click="prev()"
-                        >
-                            <ChevronLeft class="h-4 w-4" aria-hidden="true" />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" :side-offset="10">
-                        Previous story ·
-                        <kbd class="font-mono text-[0.7em]">[</kbd>
-                    </TooltipContent>
-                </Tooltip>
+            <!-- BA.W-DOCK-SECTIONS — the tripartite section model RETURNS to the shell
+                 WITHOUT inflation (R8-9 "the docks COMPLETELY lack sections"). <DockSection>
+                 GROUPS the EXISTING in-flow controls — the in-category story nav (`section`
+                 zone) + the trailing category-jump group (`nav` zone) — and adds only the
+                 <DockSeparator> seam between them (display:contents — the dock body stays a
+                 single row, box INVIOLATE; the W-RAIL3 deletion REVERSED as a grouping, not
+                 a re-mounted layer group that inflated it to ~3 rows). The contextual facets
+                 (`section` `layers`) ride the seam rail OUTSIDE the dock box (`#rail` below).
+                 The `nav` zone's leading seam is the rail's ANCHOR (the nav-separator). -->
+            <DockSection :sections="sections" aria-label="Story dock sections">
+                <template #story-nav>
+                    <TooltipProvider :delay-duration="250">
+                        <!-- Prev within the category — ADAPTIVE (B9): rendered only when
+                             there IS a previous story (no greyed-out dead chrome). -->
+                        <Tooltip v-if="hasPrev">
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="tap-squish"
+                                    aria-label="Previous story"
+                                    @click="prev()"
+                                >
+                                    <ChevronLeft class="h-4 w-4" aria-hidden="true" />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Previous story ·
+                                <kbd class="font-mono text-[0.7em]">[</kbd>
+                            </TooltipContent>
+                        </Tooltip>
 
-                <!-- AZ.W-RAIL3 — the in-category contextual FACET set NO LONGER mounts
-                     inside the dock body (the prior in-dock <DockLayerGroup>'s column
-                     switcher rail inflated the horizontal dock to ~3 rows — R6-1). The
-                     facets re-home as the rail's floating carousel strip OUTSIDE the
-                     dock box (the `#rail` slot below). The dock body keeps the
-                     prev/next + category arrows ONLY → it returns to a single row
-                     (G1 — box INVIOLATE). -->
+                        <!-- Next within the category — ADAPTIVE (B9): absent at the last
+                             story, never a greyed forward arrow. -->
+                        <Tooltip v-if="hasNext">
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="tap-squish"
+                                    aria-label="Next story"
+                                    @click="next()"
+                                >
+                                    <ChevronRight class="h-4 w-4" aria-hidden="true" />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Next story · <kbd class="font-mono text-[0.7em]">]</kbd>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </template>
 
-                <!-- Next within the category — ADAPTIVE (B9): absent at the last
-                     story, never a greyed forward arrow. -->
-                <Tooltip v-if="hasNext">
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            class="tap-squish"
-                            aria-label="Next story"
-                            @click="next()"
-                        >
-                            <ChevronRight class="h-4 w-4" aria-hidden="true" />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" :side-offset="10">
-                        Next story · <kbd class="font-mono text-[0.7em]">]</kbd>
-                    </TooltipContent>
-                </Tooltip>
-
-                <!-- A divider before the trailing category-jump group (B9 — a
-                     dividing line before the right item). The category arrows WRAP
-                     across categories, so they are always live (never dead chrome) —
-                     they stay as the persistent trailing group, visually distinct
-                     from the in-category story arrows by the chevrons-DOUBLE glyph
-                     (B8 — the two arrow pairs are differentiated: single = story,
-                     double = category). -->
-                <DockSeparator />
-
-                <!-- Prev / next category (wraps — always live). -->
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            class="tap-squish"
-                            :aria-label="`Previous category (current: ${categoryTitle})`"
-                            @click="prevCategory()"
-                        >
-                            <ChevronsLeft class="h-4 w-4" aria-hidden="true" />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" :side-offset="10">
-                        Previous category ·
-                        <kbd class="font-mono text-[0.7em]">{</kbd>
-                    </TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                        <DockIconButton
-                            type="button"
-                            class="tap-squish"
-                            :aria-label="`Next category (current: ${categoryTitle})`"
-                            @click="nextCategory()"
-                        >
-                            <ChevronsRight class="h-4 w-4" aria-hidden="true" />
-                        </DockIconButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" :side-offset="10">
-                        Next category · <kbd class="font-mono text-[0.7em]">}</kbd>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+                <!-- The trailing category-jump group rides the `nav` zone. The category
+                     arrows WRAP across categories so they are always live (never dead
+                     chrome), visually distinct from the in-category story arrows by the
+                     chevrons-DOUBLE glyph (B8 — single = story, double = category). -->
+                <template #category-jump>
+                    <TooltipProvider :delay-duration="250">
+                        <Tooltip>
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="tap-squish"
+                                    :aria-label="`Previous category (current: ${categoryTitle})`"
+                                    @click="prevCategory()"
+                                >
+                                    <ChevronsLeft class="h-4 w-4" aria-hidden="true" />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Previous category ·
+                                <kbd class="font-mono text-[0.7em]">{</kbd>
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="tap-squish"
+                                    :aria-label="`Next category (current: ${categoryTitle})`"
+                                    @click="nextCategory()"
+                                >
+                                    <ChevronsRight class="h-4 w-4" aria-hidden="true" />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Next category · <kbd class="font-mono text-[0.7em]">}</kbd>
+                            </TooltipContent>
+                        </Tooltip>
+                        <!-- BA.W-DOCK-MORPH-INSITU — the V↔H orientation-morph control.
+                             It opens the shell's focused morph demonstration (the dock
+                             flows vertical↔horizontal on the ONE --dock-morph-t scalar —
+                             the AZ driver consumed in-situ, the shell is consumer #2). -->
+                        <Tooltip>
+                            <TooltipTrigger as-child>
+                                <DockIconButton
+                                    type="button"
+                                    class="demo-bottom-dock__morph tap-squish"
+                                    aria-label="Demonstrate the vertical-horizontal dock morph"
+                                    @click="openDockMorph"
+                                >
+                                    <ArrowLeftRight class="h-4 w-4" aria-hidden="true" />
+                                </DockIconButton>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Dock morph (V ↔ H)
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </template>
+            </DockSection>
 
             <!-- AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The in-category contextual
                  facets ride OUTSIDE the dock box as a strip of detached glass chips on

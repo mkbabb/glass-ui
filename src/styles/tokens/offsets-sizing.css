@@ -373,6 +373,18 @@
        Consumers retune the rail-tab size via this one handle. */
     --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
+    /* BA.W-DOCK-SECTIONS — the divider-seam rail knobs.
+       `--dock-rail-extend-length` (declared in rail-extend.css) was RE-SEMANTICIZED:
+       it is no longer a one-way connector length but the SYMMETRIC per-side overrun of
+       the seam line (the line's cross-extent = dock extent + 2× the knob, centered on
+       the seam). `--dock-rail-retract-stub` is the residual protrusion FRACTION the
+       chips leave past the dock edge on collapse (the macOS fan-out "retract INTO the
+       rail leaving a slight protrusion"; 0 = fully retracted, 1 = no retract). The
+       `--dock-section-zone-gap` is the inter-control rhythm inside a <DockSection> zone
+       (defaults to the dock's own `--dock-gap`, so the section grouping adds no box). */
+    --dock-rail-retract-stub: 0.35;
+    --dock-section-zone-gap: var(--dock-gap, 0.25rem);
+
     /* Dock active-state ladder (O.W6 Lane B)
        Token-overridable active paint for `.dock-icon-button`. Promoted
        from hardcoded `background: var(--muted); color: var(--foreground)`

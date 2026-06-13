@@ -25,6 +25,14 @@ export { default as DockRail } from "./DockRail.vue";
 // (`items` prop). Lives in `constants.ts` because a `<script setup>` SFC cannot
 // re-export a named type through the default barrel.
 export type { DockRailItem } from "./constants";
+// BA.W-DOCK-SECTIONS — the declarative tripartite section chassis (R8-9 / IG-A3 — the
+// reusable layering abstraction): a consumer passes `sections: DockSectionDescriptor[]`
+// and the dock body renders rail-core | divided sections | nav by composing the
+// existing <DockSeparator> over the in-flow controls (no box-inflation). The descriptor
+// types live in `constants.ts` (the SFC-cannot-re-export-a-type colocated home, beside
+// DockRailItem); a separator flagged `anchor` is the rail's seam-locator (direction b).
+export { default as DockSection } from "./DockSection.vue";
+export type { DockSectionDescriptor, DockSectionKind } from "./constants";
 
 // O.W4 Lane B — Fix 1 (Rγ L1): re-export composable types so consumers can
 // type wrappers around the published surface. Previously `UseDockStateOptions`
