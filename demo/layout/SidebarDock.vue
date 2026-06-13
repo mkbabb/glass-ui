@@ -183,7 +183,6 @@ function openConfigurator(): void {
     <GlassDock
         orientation="vertical"
         always-expanded
-        overflow="scroll"
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"
     >

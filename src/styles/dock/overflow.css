@@ -33,6 +33,15 @@
     .glass-dock.dock-scroll-x .dock-layer--full {
         min-width: 0;
         overflow-x: auto;
+        /* BA.W-DOCK-GEOMETRY (DC-1) — PIN the CROSS (block) axis explicitly
+           `visible`. A single-axis `overflow-x: auto` makes the OTHER axis compute
+           from `visible` to `auto` (the MDN single-axis-clip-degrades caveat), so
+           the 40px-tall block axis would clip the 1.1× hover / full active control
+           circle top+bottom — the lozenge. Pinning `overflow-y: visible` keeps the
+           block axis genuinely un-clipped so a control's inset plate paints past the
+           track; the inline scroll port (the real over-cap content axis) is
+           untouched. */
+        overflow-y: visible;
         scrollbar-width: none;
         /* Trap the inline-scroll momentum at the dock's own boundary so a
            wheel/trackpad gesture that bottoms out the pill does NOT chain into
@@ -52,6 +61,12 @@
        source order. */
     .glass-dock.vertical.dock-scroll-y {
         overflow-y: auto;
+        /* BA.W-DOCK-GEOMETRY (DC-1) — PIN the CROSS (inline) axis explicitly
+           `visible` (the vertical-dock twin of the horizontal pin above). A
+           single-axis `overflow-y: auto` would compute the inline axis from
+           `visible` to `auto`, clipping a vertical control's inset plate left+right.
+           The block scroll port (the real over-cap axis) is untouched. */
+        overflow-x: visible;
         scrollbar-width: none;
         /* Same momentum-trap as the inline port — a rail that bottoms out must
            not chain its remaining wheel delta into the page scroller behind it. */

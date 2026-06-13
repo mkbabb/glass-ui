@@ -39,6 +39,19 @@
             calc(var(--dock-density-compact-layer-height, 2rem) * var(--dock-scale)),
             var(--dock-control-floor, 0px)
         );
+        /* BA.W-DOCK-GEOMETRY — the control-plate clearance inset (DC-2). The
+           painted control plate floors a notch BELOW its track cell so the maximal
+           hover (×--scale-hover-dock 1.1) / active silhouette stays inside the
+           cross-axis clip box with ≥1px margin (the lozenge dies at the plate
+           diameter, not at the clip edge). The inset is a per-SIDE fraction of the
+           control size (0.1 → an 80%-of-cell painted plate, the iOS-26 inset
+           register), so it scales with EVERY density rung in lockstep AND rides the
+           `--dock-scale` coarse multiplier transitively through --dock-control-size.
+           The control families route it through `padding` + `background-clip:
+           content-box`, so the HIT BOX stays the full --dock-control-size (the WCAG
+           2.5.5 44px floor stays on the CELL, never the inset plate) while the
+           PAINTED plate insets within it. */
+        --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-compact-gap, 0.25rem) * var(--dock-scale)
         );
@@ -87,6 +100,8 @@
             ),
             var(--dock-control-floor, 0px)
         );
+        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-comfortable-gap, 0.375rem) * var(--dock-scale)
         );
@@ -131,6 +146,8 @@
             ),
             var(--dock-control-floor, 0px)
         );
+        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-spacious-gap, 0.5rem) * var(--dock-scale)
         );
@@ -174,6 +191,8 @@
             calc(var(--dock-density-audacious-layer-height, 4rem) * var(--dock-scale)),
             var(--dock-control-floor, 0px)
         );
+        /* BA.W-DOCK-GEOMETRY — see the compact rung. */
+        --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
         --dock-layer-gap: calc(
             var(--dock-density-audacious-gap, 0.875rem) * var(--dock-scale)
         );

@@ -127,7 +127,6 @@ const hasNext = computed(() =>
             orientation="horizontal"
             always-expanded
             fit-content
-            overflow="scroll"
             class="demo-bottom-dock__shell"
         >
             <!-- The category trigger is the home-left anchor — it lives in the

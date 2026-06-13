@@ -80,6 +80,19 @@
            backdrop-filter sample does not escape the dock box (the standard nested-
            backdrop-cost mitigation; the Button-in-glass-in-dock stack re-samples the
            already-blurred buffer at each level without it). */
+        /* BA.W-DOCK-GEOMETRY contain:paint AUDIT verdict (a) — the control-plate
+           clearance fix (the `--dock-control-safe-inset` painted-plate inset, scope
+           1) + the scroll-port cross-axis un-clip (scope 2) keep the maximal
+           hover/active control plate INSIDE the dock padding box: the inset plate is
+           centered in its cell (≥1px slack/side at hover), the cell sits flush at the
+           dock content edge, and the `--dock-padding-block` (≈6px) padding holds the
+           plate ≥7px clear of the `contain: paint` border-box edge on the block axis.
+           So `contain: paint` is the NON-proximate second clip box (the lane's
+           `probe-bottomdock-nocontain.png` forced-root probe proved the inner
+           scroll-port box was proximate, not this) and it is UNEDITED here — the
+           inset + freed cross axis suffice, no containment lift on the control-plate
+           band. The π readback (W-DOCK-GEOMETRY-DELTA.md) records the live
+           plate-inside-padding margin number that binds this verdict. */
         contain: paint;
         display: inline-flex;
         align-items: center;
@@ -184,17 +197,33 @@
        scrolls — the scroll port only engages on real over-cap content. The
        block-axis morph clip stays `data-morphing`-gated above; this is the
        AT-REST port only. Consumers set `--dock-max-block-size` per-instance to
-       anchor the column to the viewport without re-deriving the scroll plumbing. */
-    .glass-dock.vertical.always-expanded:not([data-morphing]),
-    .glass-dock.vertical.expanded:not([data-morphing]) {
+       anchor the column to the viewport without re-deriving the scroll plumbing.
+
+       BA.W-DOCK-GEOMETRY (DC-1) — the port is now GATED behind the `dock-scroll-y`
+       opt-in (`overflow="scroll"`), NOT unconditional on every `.vertical.
+       always-expanded`. THE ROOT: `overflow-y: auto` is a scroll value, and CSS
+       Overflow §3 FORCES the sibling `overflow-x: visible` to COMPUTE to `auto` —
+       so the F6 pin never survived, and EVERY at-rest vertical dock (even a
+       fit-content shell that never scrolls) paid the cross-axis inline clip,
+       slicing a control's inset plate left/right (the live π readback measured
+       `overflow-x: auto` on the grow-to-fit SidebarDock). A vertical dock that
+       genuinely needs the cap+scroll opts IN via `overflow="scroll"` (the
+       `.dock-scroll-y` port in overflow.css, the SAME plumbing the F6 comment names);
+       a grow-to-fit vertical shell stays `overflow: visible` (line 186) on BOTH axes
+       so its inset control plate paints past the track. The fit-content shell pays
+       NO cross-axis clip for zero scroll benefit — the goal criterion's "the
+       scroll-port cross-axis clip no longer fires on a fit-content shell that never
+       scrolls", honored at the geometry root. */
+    .glass-dock.vertical.dock-scroll-y.always-expanded:not([data-morphing]),
+    .glass-dock.vertical.dock-scroll-y.expanded:not([data-morphing]) {
         overflow-x: visible;
         overflow-y: auto;
         scrollbar-width: none;
         overscroll-behavior-y: contain;
     }
 
-    .glass-dock.vertical.always-expanded:not([data-morphing])::-webkit-scrollbar,
-    .glass-dock.vertical.expanded:not([data-morphing])::-webkit-scrollbar {
+    .glass-dock.vertical.dock-scroll-y.always-expanded:not([data-morphing])::-webkit-scrollbar,
+    .glass-dock.vertical.dock-scroll-y.expanded:not([data-morphing])::-webkit-scrollbar {
         display: none;
     }
 
