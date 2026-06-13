@@ -32,10 +32,20 @@ export interface UseMetaballRendererOptions {
     config: BlobConfig;
 }
 
-/** The renderer's public control surface — pause/resume the demand loop. */
+/** The renderer's public control surface — pause/resume + wake the demand loop. */
 export interface UseMetaballRendererReturn {
     pause: () => void;
     resume: () => void;
+    /**
+     * BA.W-GOO-REDRESS — re-arm the demand-parked loop on demand (the public twin
+     * of the internal `color`/`paletteStops` wake watchers). The SFC's pointer-wake
+     * wire calls this so a first hover over a fully-parked blob (all satellites
+     * orbiting → the AX.W16 quiescence gate has parked the rAF) repaints on the
+     * SAME frame instead of waiting up to an orbit horizon for the next scheduled
+     * satellite wake (root cause 2 / BA-goo-3). It is the EXISTING substrate wake
+     * handle — NO new rAF, NO second wake path (the single-substrate-loop invariant).
+     */
+    wake: () => void;
 }
 
 /**
@@ -383,5 +393,11 @@ export function useMetaballRenderer(
             paused = false;
             canvasHandle?.resume("manual");
         },
+        // BA.W-GOO-REDRESS — the public wake handle (the SFC's pointer-wake wire).
+        // Re-arms the demand-parked loop via the SAME substrate `wake()` the
+        // color/paletteStops watchers above call (no parallel rAF). A wake on an
+        // already-running loop is a no-op; a wake on a parked-at-rest loop re-arms
+        // it so the first hover repaints same-frame.
+        wake: () => canvasHandle?.wake(),
     };
 }

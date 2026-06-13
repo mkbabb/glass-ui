@@ -139,7 +139,36 @@ export const REST_EPS = 1e-3;
 
 // ── satellite system (consumed by composables/useBlobSatellites.ts) ───────────
 
-/** Base satellite opacity. */
+// BA.W-GOO-REDRESS (root cause 1 / BA-goo-2, direction i — composed with the
+// uploadBlobUniforms.ts band widen, direction ii) — the ORBIT ENVELOPE bounds.
+// The prior per-satellite orbit random (×0.8..1.2) + wobble amplitudes (≤0.08)
+// pushed the worst-case satellite near-edge a GAP beyond the body edge that the
+// widened smin band still cannot bridge (the gap reaches ~0.13 UV with wobble at
+// the studio orbit 0.30; the band ceiling is ~0.06). Direction ii alone
+// over-inflates past the lean ceiling before it can close that gap, so the
+// envelope is TIGHTENED here (the spec's compose-(i)+(ii) path): the random
+// multiplier is RE-CENTERED on the nominal and CAPPED (×0.85..1.05) and the
+// wobble amplitudes are calmed, so the worst-case near-edge stays within the
+// widened band's reach across the WHOLE orbit. The orbit→merge→absorb→emerge
+// show survives — the satellites still visibly sweep OUT to ~1.05× the nominal
+// orbit and back; the envelope is bounded, NOT collapsed (the §Triumvirate
+// register-design constraint: tighten without killing the show). ONE source the
+// create + re-randomize sites both read (no per-site drift).
+export const ORBIT_RANDOM_BASE = 0.85; // the low end of the per-satellite orbit multiplier
+export const ORBIT_RANDOM_SPAN = 0.2; // → ×0.85..1.05 (was ×0.8..1.2; capped high end)
+export const SAT_WOBBLE1_BASE = 0.015;
+export const SAT_WOBBLE1_SPAN = 0.02; // → 0.015..0.035 (was 0.02..0.08)
+export const SAT_WOBBLE2_BASE = 0.01;
+export const SAT_WOBBLE2_SPAN = 0.015; // → 0.01..0.025 (was 0.015..0.055)
+
+// BA.W-GOO-REDRESS note — the orbiting satellite opacity drives the smin BRIDGE
+// through the shader's opacity→distance inflation: metaball.frag.ts inflates a
+// satellite's SDF by `(1 - uSatOpacity) * 0.3`, so a lower-opacity satellite reads
+// as FURTHER for the merge. The bridge-hold is carried by the capped orbit
+// envelope (useBlobSatellites.ts) + the worst-case band widen
+// (uploadBlobUniforms.ts), so BASE_OPACITY stays at the calibrated 0.75 — lifting
+// it (e.g. 0.95) over-inflated the merged footprint past the four-side containment
+// ceiling proof:blob-page bounds (the creature clipped every canvas edge).
 export const BASE_OPACITY = 0.75;
 
 /** Duration (ms) to blend from emerge endpoint into live orbit — eliminates snap. */
