@@ -27,6 +27,14 @@ import {
     SelectValue,
 } from "../../ui/select";
 import { useTabIndicator } from "./composables/useTabIndicator";
+// BA.W-FADING-SCROLL — the `overflow="scroll"` underline strip's edge fade is the
+// scroll-STATE-driven `<FadingScroll>` primitive. The composable form (not the
+// component wrapper) is load-bearing here: the scroll port IS `containerRef`, the
+// shared spring-indicator anchor (`position-anchor`/`inset`) anchors on it, so
+// wrapping it in a `<FadingScroll>` node would re-parent the indicator and break
+// the underline register. `useFadingScroll(containerRef)` writes the per-edge
+// customs on the existing root with no extra DOM node (the spec's named escape).
+import { useFadingScroll } from "../fading-scroll/composables/useFadingScroll";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -199,6 +207,12 @@ const showMobileSelect = computed(
 const indicatorModel = computed<string | string[] | undefined>(
     () => stripValue.value,
 );
+// BA.W-FADING-SCROLL — drive the scroll-state edge fade on the container root
+// (the JS fallback; native scroll(self) timeline owns it where supported). The
+// `.fading-scroll--x` recipe class + the data-fade attrs ride the container's
+// :class below; this writes the per-edge customs off the live scroll state.
+useFadingScroll(containerRef, { axis: "x", fadeStart: isScroll.value, fadeEnd: isScroll.value });
+
 const { singleSliderStyle, multiSliderStyles, squishOnTravel } = useTabIndicator({
     containerRef,
     indicatorRef,
@@ -338,10 +352,12 @@ onBeforeUnmount(() => {
         v-else
         ref="containerRef"
         :role="isUnderline ? 'tablist' : 'group'"
+        :data-fade-start="isScroll ? '' : undefined"
+        :data-fade-end="isScroll ? '' : undefined"
         :class="cn(
             'segmented-tabs',
             `segmented-tabs--${variant}`,
-            isScroll && 'segmented-tabs--scroll scroll-fade-mask scrollbar-hidden',
+            isScroll && 'segmented-tabs--scroll fading-scroll fading-scroll--x scrollbar-hidden',
             isAuto && 'segmented-tabs--auto scrollbar-hidden',
             props.class,
         )"

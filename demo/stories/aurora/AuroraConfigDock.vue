@@ -3,6 +3,7 @@ import { nextTick, reactive, watch } from "vue";
 import { RefreshCw } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { ConfiguratorLayer } from "../../../src/components/custom/configurator";
+import { FadingScroll } from "../../../src/components/custom/fading-scroll";
 import {
     resolveAtoms,
     configToAtoms,
@@ -225,8 +226,21 @@ function onReset() {
           it); the `data-atom` anchors ride the atom controls inside the
           sections.
         -->
-        <div
-            class="flex-1 min-h-0 overflow-y-auto overflow-x-clip scroll-fade-y scrollbar-thin"
+        <!-- BA.W-FADING-SCROLL — the vertical controls column is the scroll-STATE
+             driven `<FadingScroll axis="y">`: the top edge feathers only past
+             `scrollTop > 0` (sharp at rest), the bottom edge only while the
+             section list overflows. The root IS the scroll port (FadingScroll--y
+             sets `overflow-y: auto`); the `data-aurora-atoms-surface` sentinel +
+             the layout/scrollbar utilities ride it. -->
+        <!-- BA.W-CONFIG-CHASSIS.2 (CFG-2) — the `overflow-x-clip` is now a general
+             cross-axis guard on the vertical scroll port, NOT the MONO-clip mechanism:
+             the DERIVE chip group (AuroraColorSection) WRAPS rather than overflowing,
+             so no chip is sliced. The clip stays as a defensive guard against any
+             stray horizontal overflow on a vertical scroll column (no content
+             depends on it to hide a clipped chip). -->
+        <FadingScroll
+            axis="y"
+            class="flex-1 min-h-0 overflow-x-clip scrollbar-thin"
             data-aurora-atoms-surface
         >
             <ConfiguratorLayer label="Color" sub="seed · harmony · palette">
@@ -259,6 +273,6 @@ function onReset() {
             <ConfiguratorLayer label="Nuclei" sub="per-zone editor" :default-open="false">
                 <NucleiLayer :config="config" />
             </ConfiguratorLayer>
-        </div>
+        </FadingScroll>
     </div>
 </template>

@@ -265,7 +265,11 @@
 }
 
 .segmented-tabs--scroll {
-    --mask-fade-width: 0.5rem;
-    padding-inline-end: calc(0.125rem + var(--mask-fade-width));
-    scroll-padding-inline: var(--mask-fade-width);
+    /* BA.W-FADING-SCROLL — re-pointed onto `<FadingScroll>`'s public knob
+       (`--fade-scroll-width`, superseding the retired `--mask-fade-width`). The
+       0.5rem local override keeps the underline picker's edge ramp tight; the
+       `.fading-scroll--x` recipe (driven by the scroll-state customs) reads it. */
+    --fade-scroll-width: 0.5rem;
+    padding-inline-end: calc(0.125rem + var(--fade-scroll-width));
+    scroll-padding-inline: var(--fade-scroll-width);
 }

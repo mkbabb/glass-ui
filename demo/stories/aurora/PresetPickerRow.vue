@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from "vue";
 import { cn } from "../../../src/utils/cn";
 import { Skeleton } from "../../../src/components/ui/skeleton";
+import { FadingScroll } from "../../../src/components/custom/fading-scroll";
 import { PRESET_KEYS, PRESET_META, type PresetKey } from "./presets";
 
 defineProps<{
@@ -13,39 +13,13 @@ const emit = defineEmits<{
     (e: "select", key: PresetKey): void;
 }>();
 
-// Scroll-state-aware edge fades. The left ramp is only feathered once the row
-// has actually scrolled past the start — otherwise the mask half-erases the
-// first card's chrome (its cartoon shadow + border) at rest. The right ramp
-// feathers only while there is trailing overflow still to reveal — when the row
-// fits with no overflow, neither edge fades.
-const rowEl = ref<HTMLElement | null>(null);
-const fadeLeft = ref(false);
-const fadeRight = ref(false);
-
-function measure() {
-    const el = rowEl.value;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    // Tolerance absorbs scroll-snap jitter (snap-mandatory parks the active
-    // card a few px off the true start) so the left edge reads as sharp until
-    // the user genuinely scrolls past the first card.
-    const SNAP_TOLERANCE = 12;
-    fadeLeft.value = el.scrollLeft > SNAP_TOLERANCE;
-    fadeRight.value = el.scrollLeft < max - SNAP_TOLERANCE;
-}
-
-let ro: ResizeObserver | null = null;
-
-onMounted(() => {
-    measure();
-    ro = new ResizeObserver(measure);
-    if (rowEl.value) ro.observe(rowEl.value);
-});
-
-onBeforeUnmount(() => {
-    ro?.disconnect();
-    ro = null;
-});
+// BA.W-FADING-SCROLL — the bespoke scroll-state measure loop (the prototype this
+// wave's `<FadingScroll>` primitive was extracted from) is GONE; the row is now
+// `<FadingScroll axis="x">`. The left edge feathers only past `scroll > 0`
+// (sharp at rest — the first card's chrome stays intact), the right edge only
+// while trailing overflow remains, on the native scroll(self) timeline with the
+// `useFadingScroll` JS fallback. The 12px snap tolerance the bespoke loop carried
+// lives in the composable now.
 
 function onPick(key: PresetKey) {
     emit("select", key);
@@ -70,19 +44,14 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
           (overflow-hidden) so the thumbnail meets the rounded crown directly
           with no bg-card band leaking at the top. The horizontal padding gives
           the 3px cartoon drop-shadow room so the scroll axis does not clip it.
-          The edge fades are scroll-state-aware (--mask-l/--mask-r) so the first
-          card's chrome stays sharp at rest and only feathers once scrolled.
+          The edge fades are the scroll-STATE-driven `<FadingScroll axis="x">`
+          (BA.W-FADING-SCROLL): the first card's chrome stays sharp at rest and
+          the left edge feathers only once scrolled, the right only while
+          trailing overflow remains.
         -->
-        <div
-            ref="rowEl"
-            class="flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 py-2 scrollbar-thin [-webkit-mask-image:var(--edge-mask)] [mask-image:var(--edge-mask)]"
-            :style="{
-                '--mask-l': fadeLeft ? 'var(--mask-fade-width)' : '0px',
-                '--mask-r': fadeRight ? 'var(--mask-fade-width)' : '0px',
-                '--edge-mask':
-                    'linear-gradient(to right, transparent, black var(--mask-l), black calc(100% - var(--mask-r)), transparent)',
-            }"
-            @scroll="measure"
+        <FadingScroll
+            axis="x"
+            class="flex snap-x snap-mandatory gap-3 px-1 py-2 scrollbar-thin"
         >
             <button
                 v-for="key in PRESET_KEYS"
@@ -138,6 +107,6 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                     </span>
                 </div>
             </button>
-        </div>
+        </FadingScroll>
     </div>
 </template>
