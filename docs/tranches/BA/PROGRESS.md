@@ -43,12 +43,12 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 0 | W-CARVE2 | **complete** (continuation — predecessor partial completed + verified) | typography.css → typography/{scale,semantic,utilities}.css thin @import root (each <500); constellationField types → constellationTypes.ts (CARVE); Constellation.vue orchestrator → composables/useConstellation.ts (CARVE, no §5-keep). proof:no-god-module GREEN at its DECLARED CLOSE (ratchetBaselineCount 0, ratchetDrained true, violations []). W1-W4 GREEN. Typography dist byte-isomorphic A/B: HEAD-monolith build == carved build == dist/glass-ui.css 916c5ea5. typecheck 0 · build 0 · verify-export-types 0 · barrel export-set unchanged (17 syms) · constellation 38/38 · the 5 readers re-pointed via readMonolith all GREEN; proof:storybook-ia + proof:components-css NO-OP-correct (drift — not src readers). OWED to orchestrator: CLAUDE.md constellation §Structure line +constellationTypes.ts (deferred to W-HYGIENE's enumeration diff); the orphan proof-claude-structure-sync.mjs parity FAIL is sibling-owned |
 | 1 | W-DARK-MATERIAL | **live-verified** (all 7 scopes, H1a) | page L6→L4 · card L10→L16 (relL 7.12×, band span 2.69×) · transmissive saturate/brightness dark arm + edge α 0.22 · the dark tint LIFT 12% (same seam) · --primary legendre-violet oklch(0.739 0.134 318.1) fg 7.15:1 · surface-tint light-ink 2.9× · contrast-color lockstep 2/2 · the calm-light floor 4% w/ AA bright bucket; proof:dark-material 20/20 · π 12/12 · adaptive-glass REBASELINED 26/26 + live 18/18 · 956/956 · the gestalt verdict staged for W-REFLECT2 |
 | 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
-| 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
-| 2 | W-GOO-REDRESS | planned (spec authored) | satellite smin reach + the pointer wake seam |
-| 2 | W-DOCK-GEOMETRY | planned (spec authored) | the control-plate clipping cluster + overflow-engage-on-real-overflow |
-| 2 | W-FADING-SCROLL | planned (spec authored) | the library FadingScroll primitive (h+v, scroll-state-driven) + static-utility retirement |
-| 2 | W-ATLAS-RECONCILE | planned (spec authored) | the atlas A/B fold: the settle seam + reflow deletion + the suppression carve + test port + PAPER_WASH_GROUND + async-VT need + the silver conditional |
-| 2 | W-EMISSION | planned (spec authored) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
+| 2 | W-CONFIG-CHASSIS | **live-verified** (4e70a83a) | the width contract S1 dead at the chassis · dividers dark-adaptive · ColorSwatch + /color-swatch · DERIVE wraps · the gear on the chassis (PresetEditorField deleted; DarkModeToggle on live useGlobalDark) · alpha clamp; π 8/8 |
+| 2 | W-GOO-REDRESS | **live-verified** (b0060bdf) | the bridge rides the WORST-CASE orbit (1.25x clamp; smin-normalized stays green) + the wake seam (lurchRatio 0.21-0.29); BA-VJS-5 arm B BOOKED |
+| 2 | W-DOCK-GEOMETRY | **live-verified** (757c28da) | --dock-control-safe-inset per rung (plate 80% of cell, hit box full) · cross-axis pinned visible · shell docks off overflow=scroll · contain:paint verdict (a) |
+| 2 | W-FADING-SCROLL | **live-verified** (3e823cba) | native scroll(self)-driven edge fades + JS fallback; 4 consumers migrated (PresetPickerRow prototype deleted); 9/9 + π 11/12; static-utility retire pends the C2/C3 allowlist |
+| 2 | W-ATLAS-RECONCILE | **live-verified** (51c2d9fe) | onFlipSettled + the reflow deletion + the carve (the ported test 6/6 — the morph runs, the storm dies) + PAPER_WASH_GROUND + async-VT/navigate + THE SILVER QUAD SHIPPED (chassis variant=structure consumer #2) + the cut-notes staged |
+| 2 | W-EMISSION | **live-verified** (db1e5688) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
 | 3 | W-DOCK-SECTIONS | planned (spec authored) | the 4th-rail-attempt RE-CONCEPTION: tripartite sections + divider-seam rail seat + fan-out/retract [H3] |
 | 3 | W-DOCK-MORPH-INSITU | planned (spec authored) | V↔H morph + layering demos in the shell docks |
 | 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
@@ -220,3 +220,12 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   119). ROSTER 29→30; the three count sites updated (BA.md header + Batch-2 header +
   row · EXECUTION-DAG numbering + §3 header/table + §8 order + §9.9 fold seams ·
   PROGRESS header + wave-table row + this event). NO source edited; docs-only.
+- 2026-06-12 (Batch 2 CLOSED) — all six waves landed in two staged groups
+  (wf_3323fc5d-ff4; commits 3e823cba..65717916): the R8 S1 pair redressed (the 0px
+  sliders dead at the chassis; the goo bridge worst-case-coupled + the wake seam),
+  the dock clipping cluster killed, <FadingScroll> shipped with 4 consumers, the
+  atlas A/B folded (the silver quad SHIPPED on the chassis structure variant —
+  the design-fit held), the emission class fixed at the @source root (glass-ui's
+  utilities reach consumers again). The blob mood-row literal-diff seam + the
+  four emitted registry rows applied at harvest; parity + all six gates + the
+  Batch-1 no-regress pair + build + typecheck GREEN. Batch 3 opens.
