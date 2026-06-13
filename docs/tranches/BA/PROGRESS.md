@@ -49,8 +49,8 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 2 | W-FADING-SCROLL | **live-verified** (3e823cba) | native scroll(self)-driven edge fades + JS fallback; 4 consumers migrated (PresetPickerRow prototype deleted); 9/9 + π 11/12; static-utility retire pends the C2/C3 allowlist |
 | 2 | W-ATLAS-RECONCILE | **live-verified** (51c2d9fe) | onFlipSettled + the reflow deletion + the carve (the ported test 6/6 — the morph runs, the storm dies) + PAPER_WASH_GROUND + async-VT/navigate + THE SILVER QUAD SHIPPED (chassis variant=structure consumer #2) + the cut-notes staged |
 | 2 | W-EMISSION | **live-verified** (db1e5688) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
-| 3 | W-DOCK-SECTIONS | planned (spec authored) | the 4th-rail-attempt RE-CONCEPTION: tripartite sections + divider-seam rail seat + fan-out/retract [H3] |
-| 3 | W-DOCK-MORPH-INSITU | planned (spec authored) | V↔H morph + layering demos in the shell docks |
+| 3 | W-DOCK-SECTIONS | **live-verified** | direction (b) HELD — the separator IS the rail (seam-derived anchor, dual ±40 overrun, flush fan, retract stub, box Δ0); the tripartite <DockSection> model in BOTH shells; S1-S5 + π 4/4; the breadcrumb-overlap tension recorded |
+| 3 | W-DOCK-MORPH-INSITU | **live-verified** | the in-situ morph stage (VT shipped, teardrop perf-gated — the §7 conservative fall) + live layering switch + THE BA-VJS-1 FIX (from:40→to:242 four-cycle; DOCK_SPRING byte-untouched); M1-M5 + π 4/4 |
 | 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
 | 4 | W-FEEDBACK-TONE | planned (spec authored) | tone-on-glass: ONE recipe for Toast/Notification/Alert + cohesion-gate teeth |
 | 4 | W-MENU-GLASS | planned (spec authored) | the R5-10 fold: .glass-menu-row + .glass-menu-section on menuItemVariants |
@@ -229,3 +229,8 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   utilities reach consumers again). The blob mood-row literal-diff seam + the
   four emitted registry rows applied at harvest; parity + all six gates + the
   Batch-1 no-regress pair + build + typecheck GREEN. Batch 3 opens.
+- 2026-06-12 (Batch 3 CLOSED) — the dock re-conceived (wf_fa01f6cb-403, sequenced):
+  W-DOCK-SECTIONS held the BINDING anchor law (no workaround #5 — the topology was
+  realizable as specced, zero triumvirates) and W-DOCK-MORPH-INSITU landed the
+  in-situ morph + the value.js to:0px fix under the absolute spring fence. Batch 4
+  opens (the §5a edge: W-GLASS-CAL.3 first → W-TABS).
