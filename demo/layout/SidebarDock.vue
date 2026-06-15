@@ -110,9 +110,18 @@ const railItems = computed<DockRailItem[]>(() =>
 // section model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow
 // nav controls (categories) + the trailing utility (gear) into a rail-core | section |
 // nav silhouette demarcated by <DockSeparator>, adding only the divider seams (the
-// chassis is display:contents — the dock box shrink-wraps as before). The `nav`
-// descriptor's leading separator is the rail's anchor seam (the gear-divider on the
-// sidebar; the ℱ-home separator in #persistent is the alternate seam, anchored there).
+// chassis is display:contents — the dock box shrink-wraps as before).
+//
+// BA.W-SHELL-RAIL-RESEAT — the rail's anchor seam is the trailing UTILITY (`nav`)
+// separator, NOT the top ℱ-home divider (direction (a), the below-title gutter seat).
+// The W-REFLECT2 whole-page render found the top-seated rail (the ℱ-home seam at
+// y≈62) fans its facet chips RIGHT into <main>'s title band, occluding the page <h1>
+// on every desktop StoryPage route. Re-pointing the anchor DOWN the column to the
+// `utility` zone's leading separator (measured at y≈529 within the rail) seats the
+// chip carousel in the rail's trailing gutter, far below the title band — the seam
+// stays a REAL measured `--dock-rail-seam-offset`, never the forbidden midline
+// workaround #4. (`anchor-id="utility"` is the DockSection default's `nav`-first
+// resolution made explicit.)
 const sections = computed<DockSectionDescriptor[]>(() => [
     { kind: "section", id: "categories", label: "Categories", layers: railItems.value },
     { kind: "nav", id: "utility", label: "Utilities" },
@@ -255,11 +264,17 @@ function openDockMorph(): void {
             </DockIconButton>
             <!-- Demarcate the home control from the category nav below (D1) — the
                  home-top nav-pattern divider, the same idiom as the reference-shelf
-                 separator. BA.W-DOCK-SECTIONS — this ℱ-home separator is the rail's
-                 ANCHOR seam (direction b): the facet rail co-locates with THIS divider
-                 (the TOP divider the spec names), so the floating chips ride the
-                 ℱ-home seam, not the dock midline. -->
-            <DockSeparator anchor />
+                 separator. BA.W-SHELL-RAIL-RESEAT — this ℱ-home separator is NO LONGER
+                 the rail's anchor seam. The W-REFLECT2 whole-page render found the
+                 top-seated rail fans its facet chips RIGHT into <main>'s title band
+                 (the seam at y≈62 sits beside the page <h1> at y≈58, so the chips
+                 occlude the title on every desktop StoryPage route). The anchor moves
+                 DOWN the column to the trailing utility (`nav`) separator — direction
+                 (a), the below-title gutter seat — so the chips fan clear of the title
+                 (the seam relocates to a REAL measured separator offset, NEVER the
+                 forbidden `inset-block-start: 50%` midline workaround #4). This divider
+                 stays a plain group demarcator. -->
+            <DockSeparator />
         </template>
 
         <!-- BA.W-DOCK-SECTIONS — the tripartite section model RETURNS to the shell
@@ -273,7 +288,7 @@ function openDockMorph(): void {
              W-RAIL3 deletion REVERSED as a grouping, not a re-mounted layer group). -->
         <DockSection
             :sections="sections"
-            anchor-id="categories"
+            anchor-id="utility"
             aria-label="Sidebar sections"
         >
             <template #categories>
@@ -375,7 +390,13 @@ function openDockMorph(): void {
              selecting a chip navigates to that facet's first story — the SAME
              navigation state the nav items drive (one registry, no parallel store). It
              is dock chrome, so it sits outside the morph aperture and NEVER changes the
-             dock's width/height. Rendered only when the section carries >1 facet. -->
+             dock's width/height. Rendered only when the section carries >1 facet.
+
+             BA.W-SHELL-RAIL-RESEAT — the strip co-locates with the trailing `utility`
+             (`nav`) separator seam (the DockSection `anchor-id="utility"`), so it fans
+             in the rail's lower gutter clear of <main>'s page-title band (the prior
+             ℱ-home top seam collided with the page <h1> on every desktop StoryPage
+             route). -->
         <template #rail>
             <DockRail
                 v-if="railItems.length"

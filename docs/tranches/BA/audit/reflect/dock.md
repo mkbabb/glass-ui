@@ -1,5 +1,5 @@
 <!-- surface-paths: demo/layout/SidebarDock.vue,demo/layout/BottomDock.vue,demo/layout/dock-nav.css,src/components/custom/dock/DockRail.vue,src/styles/dock/rail-extend.css -->
-<!-- surface-hash: 4e162838a4c67caec41796b34d59747a47cdbe2e456ec431f85c55fe45f611a0 -->
+<!-- surface-hash: d3fd8f92aca685c4eb3472ce4216de1ba86e02d2a2ef93803fc52726213b88d9 -->
 
 # BA.W-REFLECT2 — dock surface reflection record
 
@@ -42,3 +42,18 @@ Walking `/dock/overview` desktop fresh: the dock demos themselves read finished 
 - **Named successor:** `BA.W-SHELL-RAIL-RESEAT` (the SAME triumvirate as the shell surface — ONE shared root, ONE successor, not two). Must keep `proof:dock-sections`/`proof:rail3`/`proof:rail-extend` GREEN.
 
 **VERDICT: FAIL.** The dock does NOT read as one finished designed dock on the primary `/dock/overview` desktop route: the SidebarDock floating facet chips occlude the page title. Routed to the triumvirate (`BA.W-SHELL-RAIL-RESEAT`, shared with the shell surface). `proof:ba-gestalt` stays RED on this surface until the successor lands and this record gains a RE-REFLECTION verdict that supersedes this FAIL.
+
+## 5 — RE-REFLECTION (BA.W-SHELL-RAIL-RESEAT landed; the superseding pass)
+
+**Date:** 2026-06-15 · **Branch:** tranche/BA @ HEAD (post-reseat) · **Auditor:** W-SHELL-RAIL-RESEAT triumvirate-redress (re-reflection)
+
+**The redress (direction (a) — the below-title trailing-gutter seat).** The SidebarDock rail's anchor seam moved OFF the top ℱ-home separator (measured y≈62, in the title band) DOWN to the trailing `utility` (`nav`) separator (measured y≈529, the rail's lower gutter). The `<DockSeparator anchor>` flag is removed from the ℱ-home divider in `#persistent` and `<DockSection anchor-id="utility">` makes the `nav`-zone leading separator the rail's anchor (the section model's natural `nav`-first default, made explicit). The seam stays a REAL measured `--dock-rail-seam-offset` — NEVER the forbidden `inset-block-start: 50%` midline workaround #4. The dock box is UNCHANGED (the chips ride the `.glass-dock-frame` escape OUTSIDE the box). Single demo-file change in `demo/layout/SidebarDock.vue`; no library CSS touched.
+
+**RE-VERIFY LIVE (fresh whole-page captures, both modes × 2 viewports, post-reseat):**
+- `dock-light-desktop-full.png` / `dock-dark-desktop-full.png` (1440×900) — the page `<h1>` "Overview" + the "DOCK · OVERVIEW" breadcrumb read FULLY CLEAR; the "Shell"/"Panes" facet chips sit in the rail's lower-left gutter, fanning over the page's left margin (clear of content here).
+- `dock-light-mobile-full.png` / `dock-dark-mobile-full.png` (390×844) — the BottomDock carries the facets above it; unchanged, clean.
+
+π readback (live `:5199`, measured this pass — the binding truth):
+- The SidebarDock seam offset moved **62px → 529px**; the slot anchors at y=545; the facet chips fan at **y=[532,558]** (was y=[65,91]). The page `<h1>` "Overview" sits at y=[58,98]. **overlapH1: false** (was `true`) on all three named desktop StoryPage routes (`/forms/inputs`, `/feedback/notification`, `/dock/overview`) — the title-band collision is GONE, measured.
+
+**VERDICT: PASS.** The dock reads as one finished designed dock on the primary `/dock/overview` desktop route — the SidebarDock floating facet carousel is re-seated in the rail's lower gutter, clear of the page title; the section model + in-situ morph + de-red iOS glass register all hold. The W-REFLECT2 desktop title-collision miss is discharged. `proof:dock-sections` / `proof:rail3` / `proof:rail-extend` stay GREEN; the box stays INVIOLATE. This RE-REFLECTION verdict supersedes the §4 FAIL.

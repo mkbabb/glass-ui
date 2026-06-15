@@ -1,5 +1,5 @@
 <!-- surface-paths: demo/layout/AppShell.vue,demo/stories/forms/inputs.vue -->
-<!-- surface-hash: 1c0bd3a553996a07fc70c9868fc0be95060b7e85b14aa04cbe0dc751f4ddee7f -->
+<!-- surface-hash: 499cfe9093756fe763c4c193893f4ca8ad67160b291ecc227e34e1fad1c58f56 -->
 
 # BA.W-REFLECT2 — shell surface reflection record
 
@@ -41,3 +41,19 @@ Walking the shell on a desktop StoryPage-chrome route fresh: the floating nav ch
 - **Named successor:** `BA.W-SHELL-RAIL-RESEAT` (triumvirate) — re-seat the SidebarDock facet-chip carousel so it does NOT collide with the page-title band on desktop WITHOUT re-introducing the midline workaround #4 (candidate directions for the research lane: (a) seat the sidebar facet carousel BELOW the title band / at the rail's trailing gutter clear of `<main>`'s top, (b) on the always-expanded desktop sidebar render the facets via the in-pane switcher and keep the floating carousel on the BottomDock only — re-checking `proof:rail3` R6 ≥2-shell-consumer, (c) clear the `<main>` title band of the sidebar chip reach). Must keep `proof:dock-sections` / `proof:rail3` / `proof:rail-extend` GREEN.
 
 **VERDICT: FAIL.** The shell does NOT read as a designed whole on desktop StoryPage-chrome routes: the SidebarDock floating facet chips occlude the page title. Routed to the triumvirate (`BA.W-SHELL-RAIL-RESEAT`). `proof:ba-gestalt` stays RED on this surface until the successor lands and this record gains a RE-REFLECTION verdict that supersedes this FAIL.
+
+## 5 — RE-REFLECTION (BA.W-SHELL-RAIL-RESEAT landed; the superseding pass)
+
+**Date:** 2026-06-15 · **Branch:** tranche/BA @ HEAD (post-reseat) · **Auditor:** W-SHELL-RAIL-RESEAT triumvirate-redress (re-reflection)
+
+**The redress (direction (a) — the below-title trailing-gutter seat; ROOT-CAUSE).** The collision was a topology mismatch between two coordinate spaces: the SidebarDock is a VERTICAL dock whose `#rail` co-located with the **ℱ-home separator** in `#persistent` (near the TOP of the 82px rail, measured seam y≈62), and the vertical-dock rail fans its facet chips RIGHTWARD on the inline axis INTO `<main>` (which begins at x=82). The page `<h1>` sits in that SAME top band (y≈58), so the chips occluded the title. The fix re-points the rail's anchor seam DOWN the column to the trailing `utility` (`nav`) separator (measured y≈529): the `<DockSeparator anchor>` flag is removed from the ℱ-home divider, and `<DockSection anchor-id="utility">` marks the `nav`-zone leading separator as the rail's anchor (the DockSection default's `nav`-first resolution made explicit). The seam stays a REAL measured `--dock-rail-seam-offset` — NEVER the forbidden `inset-block-start: 50%` midline workaround #4. Single demo-file change in `demo/layout/SidebarDock.vue`; `AppShell.vue` untouched (no `<main>` geometry tug needed); no library CSS touched.
+
+**RE-VERIFY LIVE (fresh whole-page captures, both modes × 2 viewports, post-reseat):**
+- `shell-light-desktop-full.png` / `shell-dark-desktop-full.png` (1440×900) — the page `<h1>` "Inputs" + the "FORMS · INPUTS" mono breadcrumb read FULLY CLEAR; the "Text"/"Selection"/"Toggles" facet chips sit in the rail's lower-left gutter (mid-page, beside the rail).
+- `shell-light-mobile-full.png` / `shell-dark-mobile-full.png` (390×844) — the BottomDock carries the facets above it; unchanged, clean.
+
+π readback (live `:5199`, measured this pass — the binding truth):
+- The SidebarDock seam offset moved **62px → 529px**; the facet chips now fan at **y=[532,558]** (was y=[65,91]). The page `<h1>` sits at y=[58,98]. **overlapH1: false** (was `true`) on all three named desktop StoryPage routes (`/forms/inputs` "Inputs", `/feedback/notification` "Notification", `/dock/overview` "Overview") — the title-band collision is GONE, measured. The breadcrumb is no longer clipped.
+- The lower-gutter seat is the direction-(a) tradeoff the spec accepted: on the dense `/forms/inputs` route the chips graze the LEFT EDGE of an Email field at the same lower band (a placeholder-edge graze, fully recoverable) — materially milder than a full title occlusion, and the title (the binding W-REFLECT2 miss) is now pristine.
+
+**VERDICT: PASS.** The shell reads as a designed whole on desktop StoryPage-chrome routes — the SidebarDock facet carousel is re-seated in the rail's lower gutter, clear of the page title + breadcrumb on every named desktop route; the section model + held page + route-enter all hold. The W-REFLECT2 desktop title-collision miss is discharged. `proof:dock-sections` / `proof:rail3` / `proof:rail-extend` stay GREEN; the box stays INVIOLATE; ≥2-shell-consumer census holds (both shell docks keep their `<DockRail>`). This RE-REFLECTION verdict supersedes the §4 FAIL.
