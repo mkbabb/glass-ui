@@ -57,9 +57,9 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 4 | W-GLASS-CAL | **live-verified** (364e3d94) | the spring-clock vocabulary (unit 3 first) + blur ~15-20% + the DISCO retirement (H2a, gold survives calm); affordance+animation gates rebaselined; π 8/8 |
 | 4 | W-PROGRESS-GRADIENT | **live-verified** (573c9898) | single-fill linear-gradient (hard+soft stops); the cell stack + screen-blend seam + dead notch DELETED; pending ghost; π 10/10 |
 | 4 | W-TABS | **live-verified** (6cf5c318) | ONE engine, pill-glass + underline-paper on .paper-ink-mark, axis-derived orientation, release-at-arrival clock, BA-VJS-3 centering; segmented/overflow/multi-select/ui-Tabs-public RETIRED; tabs-unified→tabs-std; π 12/12 |
-| 5 | W-ICON-CHIP | planned (spec authored) | the IconChip pop primitive (duotone/bloom/reveal axes) |
-| 5 | W-PAGER | planned (spec authored) | PagerDots + the glass pager ring (R10-1 + the R10-3 deck-dots fold; the counter off bg-card) |
-| 5 | W-HANDMARK | planned (spec authored) | the hand-voice family: /handmark port + the /underline DEC-8 fold + the highlighter engaged + the seeded pencil-boil morphology |
+| 5 | W-ICON-CHIP | **live-verified** (62dc5c20) | <IconChip> primitive; 4 paste sites collapsed (icons/empty-states/auth-shell/MetricCell); proof:suffuse d2 carved; π 12/12 |
+| 5 | W-PAGER | **live-verified** (7f46736e) | <PagerDots> + .glass-pager-ring; the counter off bg-card (dark slab dead); CarouselDots retired; π 9/9; the slide chassis stays slides-local |
+| 5 | W-HANDMARK | **live-verified** (26a81929) | the d6 family ported (B-1 anchors); /underline DEC-8 fold (the phantom slides break struck); the highlighter 5 deltas engaged (multiply reaches the page); the seeded morphology; π 10/10 |
 | 6 | W-STAGE | planned (spec authored) | the per-category background map + glassiness-over-aurora stagings + token-tour contrast chassis |
 | 6 | W-DEMO-AFFORDANCES | planned (spec authored) | the play register + trigger convention + the curve-picker chip rack + padding rhythm |
 | 6 | W-FOURIER-STUDIO | planned (spec authored) | the foreground fourier studio: partial-sum N axis + orthogonal registers + trace-a-shape + the clock |
@@ -244,3 +244,14 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   (the phantom /underline break STRUCK from W-CLOSE + W-HANDMARK; the slides 4.0.0
   break narrowed to DeckGate.vue + the gray-arm; the deploy-down heads-up). Batch 5
   opens (W-ICON-CHIP ‖ W-PAGER ‖ W-HANDMARK).
+- 2026-06-15 (Batch 5 CLOSED) — the promotions: W-PAGER complete (first run), then
+  W-ICON-CHIP + W-HANDMARK rate-limited TWICE on the concurrent-opus-spawn burst
+  (transient server 429, not usage) — re-deployed SERIALLY (wf_8f004268-3d5, one
+  agent at a time) and both completed against their substantial in-tree partials.
+  The IconChip pop primitive (4 pastes collapsed), the unified PagerDots glass ring
+  (the carousel counter off bg-card), the d6 hand-voice family (the /underline DEC-8
+  fold + the highlighter engaged + the seeded morphology). + the proof:colocation
+  debt closed (fading-scroll constants.ts — W-HYGIENE's TARGET_DIRS widening had
+  exposed it since Batch 2). The full battery: three wave gates + colocation +
+  the no-regress set + build + typecheck GREEN; parity GREEN; /underline retired.
+  Batch 6 opens (the demo staged to demonstrate).
