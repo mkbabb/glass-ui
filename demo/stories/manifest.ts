@@ -535,9 +535,9 @@ export const CATEGORIES: Category[] = [
             s("motion", "typewriter", "Typewriter"),
             s(
                 "motion",
-                "underline",
-                "Underline",
-                "GlassUnderline — the draw-on pen underline (filter-free). Load clock (imperative play() + :active overlay), scroll clock (native view()), static; the --gu-* bold-register override + a color preset.",
+                "handmark",
+                "Hand Mark",
+                "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register. GlassUnderline RETIRED onto HandMark shape='underline' (DEC-8).",
             ),
             s(
                 "motion",

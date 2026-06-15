@@ -19,7 +19,7 @@
 import { onBeforeUnmount, onMounted, ref, unref } from "vue";
 import type { MaybeRef, Ref } from "vue";
 import { useResizeObserver } from "../../../../composables/dom/useResizeObserver";
-import { supportsScrollTimeline } from "../../../../composables/motion/supportsCssTimeline";
+import { NATIVE_SCROLL_TIMELINE, SNAP_TOLERANCE } from "../constants";
 
 export interface UseFadingScrollOptions {
     /** Scroll axis. `"x"` reads scrollLeft/Width; `"y"` reads scrollTop/Height. Default `"x"`. */
@@ -38,22 +38,6 @@ export interface UseFadingScrollControls {
     /** Detach all listeners/observers. Auto-called on unmount in a component scope. */
     stop: () => void;
 }
-
-/**
- * True when the engine genuinely supports a `scroll()` timeline — the CSS recipe
- * in `utilities/base.css` then owns the visual axis on the compositor and this
- * composable becomes the inert (non-attaching) path. Module-level so the gate is
- * computed once. (Mirrors `useScrollProgress.NATIVE_SCROLL_TIMELINE`.)
- */
-const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline();
-
-/**
- * Tolerance (CSS px) absorbing scroll-snap jitter — `snap-mandatory` parks the
- * active card a few px off the true start, so the start edge reads as sharp
- * until the user genuinely scrolls past the first child. Promoted verbatim from
- * the bespoke `PresetPickerRow` SNAP_TOLERANCE.
- */
-const SNAP_TOLERANCE = 12;
 
 /**
  * Drive the per-edge `--fade-start` / `--fade-end` mask-width customs off an
