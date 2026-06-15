@@ -94,6 +94,15 @@
  *                              cascades into these control rules.
  *   7. cards.css             — .cartoon-surface, .paper-texture.
  *                              Component utility layer.
+ *  7a. feedback-tone.css     — the ONE shared tinted-glass tone register
+ *                              (BA.W-FEEDBACK-TONE): `.feedback-tone` +
+ *                              `.feedback-tone-{success,warning,info,destructive}`
+ *                              tint a glass rung a bounded % toward a house tone
+ *                              token on the EXISTING color-mix(in oklab, …) seam.
+ *                              Toast / Notification / Alert consume it (the three
+ *                              tone maps collapse). Loads after cards.css (it reads
+ *                              the same `--glass-bg-*` rung tokens cards.css/the
+ *                              ladder mint) and before floating-panel.css.
  *   8. floating-panel.css    — .floating-panel + .floating-panel-item.
  *                              Component utility layer.
  *   9. transitions.css       — Vue <Transition> classes (fade, fade-slide,
@@ -114,6 +123,11 @@
  *                              K W6 + Q.W3 Lane E), rainbow-vivid +
  *                              rainbow-pastel. Consumes earlier animations +
  *                              tokens.
+ *  11a. menu.css             — BA.W-MENU-GLASS the glass MENU-ROW + MENU-SECTION
+ *                              register. AFTER utilities.css so `.glass-menu-row`'s
+ *                              `@layer components` hover/highlight rules source-
+ *                              order-win over `.interactive-item:hover` (same layer
+ *                              + specificity) — the cascade-trap-safe placement.
  *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
@@ -142,12 +156,20 @@
 @import "./dock.css";
 @import "./dock-controls.css";
 @import "./cards.css";
+@import "./feedback-tone.css";
 @import "./floating-panel.css";
 @import "./transitions.css";
 @import "./animations.css";
 @import "./scroll-driven.css";
 @import "./view-transition.css";
 @import "./utilities.css";
+/* BA.W-MENU-GLASS — the glass menu-row + menu-section register. @import-ed AFTER
+   utilities.css (NOT the floating/transitions band the spec hinted) so the
+   `.glass-menu-row` `@layer components` hover/highlight rules source-order-WIN
+   over `.interactive-item:hover` (utilities/base.css, same layer + specificity) —
+   the cascade-trap-safe placement, mirroring glass/surface-axis.css's "import
+   AFTER ladder.css" discipline. */
+@import "./menu.css";
 @import "./configurator.css";
 @import "./instrument-chassis.css";
 @import "./hover-popover.css";

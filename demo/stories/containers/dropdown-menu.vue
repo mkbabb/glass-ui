@@ -58,8 +58,17 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                             </DropdownMenuSub>
                         </DropdownMenuGroup>
 
-                        <DropdownMenuSeparator />
-                        <DropdownMenuLabel>Layout</DropdownMenuLabel>
+                        <!-- BA.W-MENU-GLASS — the in-repo 2nd consumer of the
+                             `.glass-menu-section` recipe (the library menu defaults
+                             are consumer #1; the slides DeckSettings is the named
+                             foreign downstream consumer). The section caption reads
+                             the mono small-caps register; the hairline divides the
+                             row group above. -->
+                        <DropdownMenuLabel
+                            class="glass-menu-section glass-menu-section-label"
+                        >
+                            Layout
+                        </DropdownMenuLabel>
                         <DropdownMenuRadioGroup v-model="panelLayout">
                             <DropdownMenuRadioItem value="grid">
                                 Grid

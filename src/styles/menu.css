@@ -1,0 +1,127 @@
+/* menu.css — the glass MENU-ROW + MENU-SECTION register (BA.W-MENU-GLASS).
+
+   The shared `menuItemVariants` CVA's `surface=glass` arm (the DEFAULT, glass-
+   first canon AX.W54) composes `.glass-menu-row`; all 13 menu/picker-family SFCs
+   inherit the glassy hover-lift register in ONE edit (no per-SFC menu-row CSS).
+
+   ── The cascade-trap pre-empt (the AZ dock-rail `@layer`-loses-to-utility trap) ──
+   `.interactive-item:hover` (utilities/base.css, `@layer components`) paints a flat
+   `color-mix(--accent 50%)` hover background. An UNLAYERED Tailwind `hover:bg-accent`
+   utility would win over BOTH (the trap). The CVA's glass arm therefore DROPS the
+   flat-accent utilities entirely — so the only background-painters on a glass row are
+   the `@layer components` `.interactive-item:hover` rule and these `.glass-menu-row`
+   rules. This file is `@import`-ed AFTER `utilities.css` in `index.css`, so at equal
+   specificity (0-1-1 for the `:hover`/`[data-highlighted]` selectors) and equal layer
+   (`components`) the recipe wins by SOURCE ORDER over `.interactive-item:hover` —
+   exactly the discipline `glass/surface-axis.css` uses ("@import-ed AFTER ladder.css
+   so the attr rules win by source order"). NEVER re-add an unlayered flat-accent
+   utility to the glass arm — it would re-introduce the trap.
+
+   ── The element-level tint discipline (substitution-vs-inheritance) ──
+   The row reads the ELEMENT-LEVEL glass-quiet oklab tint
+   `color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength))`
+   — the SAME seam `glass/ladder.css:58` / `glass/surfaces.css:19` compose — NOT the
+   pre-baked `--glass-bg-quiet` raw token. So the row darkens-over-light (W55 bright
+   bucket / `--glass-tint-strength` lift) AND lifts-over-dark per W-DARK-MATERIAL's
+   tint arm, in lockstep with every other glass surface. */
+@layer components {
+    /* ── .glass-menu-row — the glassy hover-lift menu/picker item ──────────────
+       Every visual axis reads a `--menu-row-*` knob so a consumer retunes via a
+       `:root` override. The REST state is transparent (the row sits on the
+       container's own `glass-floating` plate — DropdownMenuContent /
+       ContextMenuContent are already `glass-floating rounded-panel`); the glass
+       PLATE materializes on hover/focus/highlight. */
+    .glass-menu-row {
+        /* The glass-quiet plate the row paints AT THE ELEMENT on hover/highlight
+           (the element-level oklab tint — see header). Overridable. */
+        --menu-row-bg: color-mix(
+            in oklab,
+            var(--glass-bg-quiet),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+        /* The PRM-gated hover-lift travel (zeroed under reduce, below). */
+        --menu-row-lift: -1px;
+        /* The 44px WCAG-2.5.5 touch floor (the row never reflows below it). The
+           base is the CVA's own py rhythm; the clamp guarantees the floor. Reads
+           `--touch-target` (the 44px token declared UNCONDITIONALLY at :root —
+           offsets-sizing.css), NOT `--control-floor` (which is declared ONLY inside
+           the `@media (pointer: coarse)` block, so on a FINE pointer `var(--control-
+           floor)` resolves to the guaranteed-invalid initial value → 0px in the
+           max(), and the floor silently vanished — the live π caught the 36px row).
+           The `2.75rem` literal fallback covers a consumer who unsets the token. */
+        min-block-size: max(2rem, var(--touch-target, 2.75rem));
+
+        /* The lift transform rides the §6 spring register (`--spring-smooth`); the
+           surface props (background) ride the bezier `--ease-standard` via the
+           `.interactive-item` base transition (already declared there). The
+           explicit transform leg here pairs the spring with the lift. */
+        transition: translate var(--duration-fast) var(--spring-smooth);
+        translate: 0 0;
+    }
+
+    /* Hover / keyboard-focus / reka internal-highlight / sub-trigger-open all
+       reach the SAME glass register (Combobox/Command/Select parity — the CVA
+       routes all three input modes through `data-[highlighted]`). */
+    .glass-menu-row:hover:not([data-disabled]),
+    .glass-menu-row:focus:not([data-disabled]),
+    .glass-menu-row[data-highlighted]:not([data-disabled]),
+    .glass-menu-row[data-state="open"]:not([data-disabled]) {
+        background: var(--menu-row-bg);
+        color: var(--accent-foreground);
+        translate: 0 var(--menu-row-lift);
+    }
+
+    /* ── .glass-menu-section — the mono section-label + hairline row-group ──────
+       The "section caption + hairline over a row group" recipe (the slides gear
+       hand-built ~120 lines of). Folds onto `typography.css` `.section-label` (the
+       mono / √φ-caption / small-caps register) for the caption and `--border-
+       hairline` for the divider. Tokenized on `--menu-section-*` so a consumer
+       retunes via a `:root` override. ≥2 consumers: the library menu defaults
+       (the section caption a DropdownMenuLabel composes) + the in-repo demo menu
+       story (Unit 2 adoption); the slides DeckSettings is the named foreign
+       downstream consumer. */
+    .glass-menu-section {
+        /* The caption register (mono / small-caps / quiet ink) — the same
+           vocabulary `.section-label` carries, exposed as overridable knobs. */
+        --menu-section-font: var(--font-mono);
+        --menu-section-size: var(--type-caption);
+        --menu-section-color: var(--muted-foreground);
+        --menu-section-tracking: var(--type-tracking-caps);
+        /* The hairline divider over the group (the catch-light + under-shadow
+           pair). Default-off feather; the rule below paints it. */
+        --menu-section-hairline: var(--border-hairline);
+        /* The block rhythm above the group (a section is a deliberate break). */
+        --menu-section-gap: 0.375rem;
+
+        display: block;
+        margin-block-start: var(--menu-section-gap);
+        padding-block-start: var(--menu-section-gap);
+        /* The hairline reads as a top divider over the group via box-shadow (the
+           house hairline pattern — a whisper, not a hard 1px rule). */
+        box-shadow: var(--menu-section-hairline);
+    }
+
+    /* The section CAPTION — a mono small-caps label. Composes onto the label
+       element the section recipe wraps (or a nested `.glass-menu-section-label`);
+       the demo + library menu labels read this caption register. */
+    .glass-menu-section-label,
+    .glass-menu-section > [data-menu-section-label] {
+        font-family: var(--menu-section-font);
+        font-size: var(--menu-section-size);
+        color: var(--menu-section-color);
+        text-transform: uppercase;
+        letter-spacing: var(--menu-section-tracking);
+    }
+}
+
+/* ── PRM gate — no deform/lift under reduce ───────────────────────────────────
+   The hover-lift `translate` is the only motion the row introduces; under
+   `prefers-reduced-motion: reduce` it collapses to the identity (0) and the
+   transition is removed (the surface bg cross-fade is not motion). The glass
+   plate still materializes on hover — only the geometric lift is suppressed. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-menu-row {
+        --menu-row-lift: 0px;
+        transition: none;
+    }
+}
