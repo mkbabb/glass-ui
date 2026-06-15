@@ -259,22 +259,54 @@ onBeforeUnmount(() => {
                  viewport-anchored BottomDock that floats over this region. -->
             <main
                 ref="mainEl"
-                class="relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
+                class="demo-main-scroller relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
+                <!-- BA.W-ANIMATE Tier B — the compositor scroll-progress bar.
+                     A native `scroll()`-timeline 0..1 scaleX rail pinned to the
+                     top edge of the route scroller. `<main>` declares
+                     `scroll-timeline-name: --demo-main-progress` (dock-nav.css)
+                     and the bar's `--scroll-progress-scroller` resolves to it, so
+                     the bar tracks the ROUTE scroller (the route owns scroll, not
+                     `root`). Off-main-thread + PRM-safe by construction (the
+                     scroll-driven.css recipe's outer @media gate). The
+                     `useScrollProgress` JS fallback never attaches when the native
+                     timeline is present (the dual-path-single-writer rule). -->
+                <div
+                    class="scroll-progress demo-scroll-progress"
+                    aria-hidden="true"
+                    data-testid="demo-scroll-progress"
+                ></div>
+
+                <!-- BA.W-ANIMATE Tier A — the route page-enter. The
+                     `<RouterView>` mount is wrapped in a <Transition> keyed on the
+                     route so each navigation fires ONE coherent page-enter: the
+                     `fade-slide` recipe (transitions.css), opacity on `--ease-out`
+                     + transform on `--spring-smooth` (the SETTLE/body register),
+                     exit on `--ease-in` (no overshoot past gone). DEFAULT mode (no
+                     out-in) so the entrance does not race the scroll-to-top reset
+                     watcher; ONE event per route, not a per-element cascade. The
+                     recipe's @media (prefers-reduced-motion: reduce) block keeps
+                     only the opacity leg under PRM (transform removed). -->
                 <RouterView v-slot="{ Component }">
-                    <component :is="Component" v-if="Component" />
-                    <div
-                        v-else
-                        class="mx-auto max-w-xl rounded-[var(--radius)] border border-border/60 bg-background/40 p-8 text-center"
-                    >
-                        <p class="font-display text-2xl text-foreground">
-                            Pick a story
-                        </p>
-                        <p class="mt-2 text-sm text-muted-foreground">
-                            Choose a category from the rail on the left, then
-                            a story from the bar below.
-                        </p>
-                    </div>
+                    <Transition name="fade-slide">
+                        <component
+                            :is="Component"
+                            v-if="Component"
+                            :key="route.fullPath"
+                        />
+                        <div
+                            v-else
+                            class="mx-auto max-w-xl rounded-[var(--radius)] border border-border/60 bg-background/40 p-8 text-center"
+                        >
+                            <p class="font-display text-2xl text-foreground">
+                                Pick a story
+                            </p>
+                            <p class="mt-2 text-sm text-muted-foreground">
+                                Choose a category from the rail on the left, then
+                                a story from the bar below.
+                            </p>
+                        </div>
+                    </Transition>
                 </RouterView>
             </main>
         </div>
