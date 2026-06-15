@@ -51,12 +51,12 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 2 | W-EMISSION | **live-verified** (db1e5688) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
 | 3 | W-DOCK-SECTIONS | **live-verified** | direction (b) HELD — the separator IS the rail (seam-derived anchor, dual ±40 overrun, flush fan, retract stub, box Δ0); the tripartite <DockSection> model in BOTH shells; S1-S5 + π 4/4; the breadcrumb-overlap tension recorded |
 | 3 | W-DOCK-MORPH-INSITU | **live-verified** | the in-situ morph stage (VT shipped, teardrop perf-gated — the §7 conservative fall) + live layering switch + THE BA-VJS-1 FIX (from:40→to:242 four-cycle; DOCK_SPRING byte-untouched); M1-M5 + π 4/4 |
-| 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
-| 4 | W-FEEDBACK-TONE | planned (spec authored) | tone-on-glass: ONE recipe for Toast/Notification/Alert + cohesion-gate teeth |
-| 4 | W-MENU-GLASS | planned (spec authored) | the R5-10 fold: .glass-menu-row + .glass-menu-section on menuItemVariants |
-| 4 | W-GLASS-CAL | planned (spec authored) | the blur dial-back (six primitives) + the disco retirement + hover smoothing [H2] |
-| 4 | W-PROGRESS-GRADIENT | planned (spec authored) | the sectioned Progress single-gradient rebuild + the glass meter register |
-| 4 | W-TABS | planned (spec authored) | the R10-2 overhaul: ONE engine, pill-glass + underline-paper, axis-derived orientation, release-at-arrival on the calibrated spring clock; segmented/overflow/multi-select/ui-Tabs-public retire |
+| 4 | W-SURFACE-AXIS | **live-verified** (79863371) | the ONE axis minted (surface-axis.css + useSurfaceAxis); 9 surfaces + the control REST tier + .paper-ink-mark; Dialog clean break; π 13/13 (substitution-trap fixed) |
+| 4 | W-FEEDBACK-TONE | **live-verified** (6f77ab12) | ONE .feedback-tone color-mix recipe; the 3 opaque-slab maps collapsed; cohesion-gate variant-arm teeth; π 4/4 (α<0.92 both modes) |
+| 4 | W-MENU-GLASS | **live-verified** (19fa2ac2) | .glass-menu-row on the CVA (13 SFCs inherit) + .glass-menu-section + the SelectTrigger font-rung; π 30 passed |
+| 4 | W-GLASS-CAL | **live-verified** (364e3d94) | the spring-clock vocabulary (unit 3 first) + blur ~15-20% + the DISCO retirement (H2a, gold survives calm); affordance+animation gates rebaselined; π 8/8 |
+| 4 | W-PROGRESS-GRADIENT | **live-verified** (573c9898) | single-fill linear-gradient (hard+soft stops); the cell stack + screen-blend seam + dead notch DELETED; pending ghost; π 10/10 |
+| 4 | W-TABS | **live-verified** (6cf5c318) | ONE engine, pill-glass + underline-paper on .paper-ink-mark, axis-derived orientation, release-at-arrival clock, BA-VJS-3 centering; segmented/overflow/multi-select/ui-Tabs-public RETIRED; tabs-unified→tabs-std; π 12/12 |
 | 5 | W-ICON-CHIP | planned (spec authored) | the IconChip pop primitive (duotone/bloom/reveal axes) |
 | 5 | W-PAGER | planned (spec authored) | PagerDots + the glass pager ring (R10-1 + the R10-3 deck-dots fold; the counter off bg-card) |
 | 5 | W-HANDMARK | planned (spec authored) | the hand-voice family: /handmark port + the /underline DEC-8 fold + the highlighter engaged + the seeded pencil-boil morphology |
@@ -234,3 +234,13 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   realizable as specced, zero triumvirates) and W-DOCK-MORPH-INSITU landed the
   in-situ morph + the value.js to:0px fix under the absolute spring fence. Batch 4
   opens (the §5a edge: W-GLASS-CAL.3 first → W-TABS).
+- 2026-06-15 (Batch 4 CLOSED) — the glass grammar, six waves in two staged groups
+  (wf_978747d4-29a; commits 364e3d94..a1249309): the spring-clock vocabulary + blur
+  dial-back + the DISCO retirement (gold survives calm, H2a); the shared surface
+  axis (9 surfaces + control tier + paper-ink-mark); tone-on-glass (the 3 slab maps
+  collapsed); the tabs overhaul (ONE engine, pill+underline, the oval-blob dead);
+  the menu-glass register (13 SFCs); the Progress single-gradient. Integrated tree:
+  14 gates + build + typecheck GREEN; parity GREEN. THE SLIDES GROUND-TRUTH folded
+  (the phantom /underline break STRUCK from W-CLOSE + W-HANDMARK; the slides 4.0.0
+  break narrowed to DeckGate.vue + the gray-arm; the deploy-down heads-up). Batch 5
+  opens (W-ICON-CHIP ‖ W-PAGER ‖ W-HANDMARK).
