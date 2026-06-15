@@ -67,6 +67,7 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 6 | W-ANIMATE | **live-verified** (111a5208) | AppShell route page-enter Transition + compositor scroll-progress bar + metric count-up (SETTLE, intersection-gated) + hero fade-rise; proof:ba-animate W1-W4 + π, all via shipped engines, PRM-clean |
 | 7 | W-REFLECT2 | **complete** | the gestalt reflection: 8 surfaces re-walked LIVE both modes whole-page; 6/8 flipped FAIL→PASS, 2/8 (dock+shell) → the named successor W-SHELL-RAIL-RESEAT; proof:ba-gestalt promoted to the operative close set |
 | 7 | W-SHELL-RAIL-RESEAT | **complete** | the dock+shell FAIL redress (the SidebarDock facet carousel re-seated below the title band; overlapH1:false on every named desktop route both modes); the dock+shell reflection records RE-REFLECTED PASS → proof:ba-gestalt 8/8 |
+| 7 | W-SHELL-RAIL-RESEAT | **complete** (36e7640c) | the triumvirate redress of W-REFLECT2's title-collision FAIL — the SidebarDock rail re-anchored ℱ-home→trailing-utility seam (chips clear of the <h1>, no workaround #4); proof:ba-gestalt 6/8→8/8 |
 | 7 | W-CLOSE | **complete** (this close) | proof:ba-final minted born-RED→GREEN (the 9-clause gate, the gestalt-bar clause replacing the reflection-matrix); proof:az-final retired from the release set; MIGRATION appended (the BA clean breaks onto 3.13.0); disposition re-stamped un-MET (31 BOOK ids); ORPHANS:0; FINAL.md (zero unnamed deferrals); the 3 adopt books; the changeset staged (4.0.0); invariant 11 in CLAUDE.md |
 
 ## Events
@@ -349,3 +350,16 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   in-flight close edits) — GREEN at the orchestrator's close commit. THE CUT (orchestrator/user
   git steps, the hardened agent clause): `changeset version` → `git push --tags` (release.yml
   provenance publish) → the d6 fork-close protocol + the npm deprecate.
+- 2026-06-15 (Batch 7 CLOSED — THE TRANCHE COMPLETE) — W-REFLECT2 → W-SHELL-RAIL-RESEAT
+  → W-CLOSE. The gestalt bar PROVED OUT: the reflection caught a real whole-page
+  title-collision (SidebarDock chips over the <h1>) that EVERY per-mechanism gate was
+  green on — the exact AZ P-1 close-class failure, caught BEFORE the cut; the
+  triumvirate re-seated the rail (topology-honest, no workaround #4); proof:ba-gestalt
+  6/8→8/8. W-CLOSE staged the 4.0.0 cut: proof:ba-final GREEN (the gestalt-bar clause
+  replacing the per-mechanism matrix — the P-1 fix made the close gate), proof:az-final
+  retired, MIGRATION BA→4.0.0, the disposition re-stamp, FINAL.md (zero unnamed
+  deferrals), the slides/atlas/value.js adopt books, the d6 fork-close protocol,
+  invariant 11. The version is 4.0.0 (aaa1e973). HELD for the user greenlight: the
+  v4.0.0 tag-push + the npm-provenance publish + the d6 fork-close + the slides redeploy
+  (round-15 + the BA adopt together — the site is down). All 32 BA waves landed +
+  gate-green + pushed on tranche/BA.
