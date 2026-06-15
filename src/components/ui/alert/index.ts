@@ -17,20 +17,25 @@ export const alertVariants = cva(
         // opaque `bg-card` plate. The body text stays `--card-foreground` for
         // legibility; the semantic TONE rides ON the glass.
         default: 'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
+        // BA.W-FEEDBACK-TONE — the tone SOURCE unifies onto the shared `--feedback-
+        // tone-*` family. Alert is already the CORRECT SHAPE (glass plate + tone on
+        // rim/glyph, never an opaque fill — the convergence model the wave names), but
+        // it HARDCODED its `border-<tone>/40` rim per variant (three calibration sites
+        // across the feedback band). Each toned variant now composes
+        // `feedback-tone feedback-tone-<name>` and RE-POINTS the tone rung to the wash
+        // tier (`--feedback-tone-rung: var(--glass-bg-wash)`), so a tone recalibration
+        // is ONE edit (the F-4 "no single knob" fixed). The wash RUNG is RETAINED — a
+        // content panel rides wash, not floating; only the tone SOURCE unifies. The
+        // tinted-glass wash is the same content-band whisper (the bounded mix %), never
+        // a loud saturated plate (Badge/Toast's register).
         destructive:
-          'text-destructive bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
-        // AW.W25 — semantic-tone parity. The success/warning/info tones read the
-        // canonical `--{success,warning,info}` tokens (a toned glyph/heading over
-        // the glass-wash surface), retiring the demo's faked alert variants. The
-        // body text stays `--card-foreground` for legibility; the TONE rides the
-        // border, glyph, and description softening — content-band, not a loud
-        // saturated plate (that is Badge/Toast's register).
+          'feedback-tone feedback-tone-destructive [--feedback-tone-rung:var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground [&>svg]:text-(--tone) *:data-[slot=alert-description]:text-card-foreground/90',
         success:
-          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-success/40 [&>svg]:text-success *:data-[slot=alert-description]:text-card-foreground/90',
+          'feedback-tone feedback-tone-success [--feedback-tone-rung:var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground [&>svg]:text-(--tone) *:data-[slot=alert-description]:text-card-foreground/90',
         warning:
-          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-warning/40 [&>svg]:text-warning *:data-[slot=alert-description]:text-card-foreground/90',
+          'feedback-tone feedback-tone-warning [--feedback-tone-rung:var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground [&>svg]:text-(--tone) *:data-[slot=alert-description]:text-card-foreground/90',
         info:
-          'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground border-info/40 [&>svg]:text-info *:data-[slot=alert-description]:text-card-foreground/90',
+          'feedback-tone feedback-tone-info [--feedback-tone-rung:var(--glass-bg-wash)] [backdrop-filter:var(--glass-blur-wash)] text-card-foreground [&>svg]:text-(--tone) *:data-[slot=alert-description]:text-card-foreground/90',
       },
     },
     defaultVariants: {

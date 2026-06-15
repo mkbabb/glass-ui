@@ -9,10 +9,14 @@ import {
 import { cn } from '../../../utils'
 import type { ToastVariant } from './use-toast'
 
-// AW.W25 — semantic-tone parity. The Toast `variant` resolves the
-// `success`/`warning`/`info` tones from the existing `--{success,warning,info}`
-// + `-foreground` tokens (Badge already ships them), retiring the demo fakes.
-// The `ToastVariant` union is sourced once from `use-toast.ts`.
+// BA.W-FEEDBACK-TONE — tone rides ON glass. The Toast `variant` no longer paints a
+// SOLID `bg-<tone>` token plate over the `glass-floating` base (the AW.W25 opaque-slab
+// map that occluded the backdrop — R8-12). It now composes the ONE shared tinted-glass
+// tone register (`feedback-tone.css`): `.feedback-tone .feedback-tone-<name>` tints the
+// floating rung a BOUNDED % toward the house `--{success,warning,info,destructive}`
+// token (the backdrop shows through — colored GLASS, not a colored slab) + a tone-keyed
+// rim + a full-chroma glyph; the body text stays `--foreground` for legibility (the
+// Alert discipline). The `ToastVariant` union is sourced once from `use-toast.ts`.
 
 interface ToastProps extends ToastRootProps {
   class?: HTMLAttributes['class']
@@ -53,12 +57,17 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         // Popover / DropdownMenu / Combobox) already uses, retiring the flat
         // `bg-background`/`shadow-modal`.
         'glass-floating group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel p-6 pr-8 transition-[opacity,transform] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+        // The body text stays --foreground (legibility); the tinted-glass wash + the
+        // tone-keyed rim + the full-chroma glyph carry the semantic. Toggling on the
+        // tone register only for a NON-default variant keeps `default` the un-toned
+        // floating glass.
+        'text-foreground',
         {
-          'text-foreground': variant === 'default',
-          'bg-destructive text-destructive-foreground border-destructive': variant === 'destructive',
-          'bg-success text-success-foreground border-success': variant === 'success',
-          'bg-warning text-warning-foreground border-warning': variant === 'warning',
-          'bg-info text-info-foreground border-info': variant === 'info',
+          'feedback-tone [&_svg]:text-(--tone)': variant !== 'default',
+          'feedback-tone-destructive': variant === 'destructive',
+          'feedback-tone-success': variant === 'success',
+          'feedback-tone-warning': variant === 'warning',
+          'feedback-tone-info': variant === 'info',
         },
         props.class,
       )

@@ -45,11 +45,16 @@ const samples: { type: Item["type"]; label: string; message: string }[] = [
     { type: "error", label: "Error", message: "Couldn't reach the analysis service." },
 ];
 
+// BA.W-FEEDBACK-TONE — the demo teaches the HOUSE tone vocabulary, not a raw-Tailwind
+// off-token one. The prior `bg-blue-500`/`bg-emerald-500`/`bg-amber-500`/`bg-red-500`
+// swatches (FD-NOTIF-OFFMODEL — the THIRD tone map) re-point to the house
+// `.feedback-tone-<name>` register, so each dot reads `var(--tone)` (the same
+// `--{info,success,warning,destructive}` tokens the Notification surface tints with).
 const swatch: Record<Item["type"], string> = {
-    info: "bg-blue-500",
-    success: "bg-emerald-500",
-    warning: "bg-amber-500",
-    error: "bg-red-500",
+    info: "feedback-tone-info bg-(--tone)",
+    success: "feedback-tone-success bg-(--tone)",
+    warning: "feedback-tone-warning bg-(--tone)",
+    error: "feedback-tone-destructive bg-(--tone)",
 };
 </script>
 

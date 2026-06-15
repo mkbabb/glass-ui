@@ -332,6 +332,101 @@ add(
     "the synthetic `.glass-x` fixture (a glass surface carrying background: var(--background)) is FLAGGED by the inventory rule — the bite has teeth",
 );
 
+// ── ARM: feedback-tone — the variant-arm tone-clobber teeth (BA.W-FEEDBACK-TONE) ──
+// The GVC-4 gate hole: proof:glass-cohesion enumerated Toast + Notification (both match
+// GLASS_MARKER via `glass-floating`) and verified the BASE routes glass — but it never
+// detected a variant ARM clobbering that base with an OPAQUE `bg-<tone>` plate, and the
+// class-variant exemption (the legitimate-translucent `bg-card/40` door) let an opaque
+// tone slab ride through. The Toast variant map (`bg-success` etc.) + the Notification
+// type map (`bg-success/90`) shipped a colored SLAB under a green "parity" claim (the
+// AW.W25 close). This arm gives the tone clobber teeth.
+//
+// `OPAQUE_TONE_UTIL` matches an opaque `bg-<tone>` / `bg-<tone>/N` (N≥90) Tailwind
+// utility on the four house tones — the SLAB pattern. A translucent escape
+// (`bg-card/40`, `bg-success/20`) is NOT matched (the door is NARROWED to translucent,
+// not removed): N is captured and only N≥90 (or no alpha at all) reds.
+const toast = strip(read("src/components/ui/toast/Toast.vue"));
+const alert = strip(read("src/components/ui/alert/index.ts"));
+const feedbackTone = strip(read("src/styles/feedback-tone.css"));
+
+// bg-<tone> with NO alpha (opaque) OR bg-<tone>/N with N≥90 (near-opaque slab). The
+// alternation: (a) `bg-<tone>` not followed by `/` (opaque); (b) `bg-<tone>/<N>` N≥90.
+const OPAQUE_TONE_UTIL =
+    /\bbg-(?:success|warning|info|destructive)(?:\/(9[0-9]|100))?(?![\w/.-])/;
+// Detect the same SLAB if a future consumer renames the tone to a raw-Tailwind escape
+// (`bg-emerald-500`/`bg-red-500`/…) — the anti-evasion bite (a renamed opaque utility
+// must STILL fail; the W1 bite-tightening).
+const RAW_TAILWIND_TONE_SLAB =
+    /\bbg-(?:emerald|green|red|rose|amber|yellow|orange|blue|sky|indigo)-[0-9]{3}\b/;
+
+const toastSlab = OPAQUE_TONE_UTIL.test(toast) || RAW_TAILWIND_TONE_SLAB.test(toast);
+const notifSlab =
+    OPAQUE_TONE_UTIL.test(notification) || RAW_TAILWIND_TONE_SLAB.test(notification);
+add(
+    "feedback-tone",
+    "toast-no-opaque-tone-plate",
+    !toastSlab,
+    toastSlab
+        ? "Toast.vue carries an OPAQUE bg-<tone>/bg-<tone>/N≥90 (or a raw-Tailwind bg-emerald-500-style) tone SLAB over its glass base — the F-1/GVC-1 clobber (born-RED at HEAD)"
+        : "Toast.vue carries NO opaque tone plate — the variant map routes the tinted-glass register, not a slab",
+);
+add(
+    "feedback-tone",
+    "notification-no-opaque-tone-plate",
+    !notifSlab,
+    notifSlab
+        ? "Notification.vue carries an OPAQUE/near-opaque bg-<tone>/N≥90 (or raw-Tailwind) tone SLAB over its glass base — the F-3/GVC-2 clobber (born-RED at HEAD)"
+        : "Notification.vue carries NO opaque tone plate — the type map routes the tinted-glass register, not a slab",
+);
+
+// The three-map collapse, source-asserted (POSITIVE): all three surfaces reference the
+// shared `feedback-tone` register, and the recipe resolves the SAME color-mix(in oklab,
+// <glass rung bg>, var(--tone) …) seam (NOT a parallel bg-<tone> map).
+const TONE_REGISTER = /\bfeedback-tone(?:-(?:success|warning|info|destructive|glyph))?\b/;
+const toastOnRegister = TONE_REGISTER.test(toast);
+const notifOnRegister = TONE_REGISTER.test(notification);
+const alertOnRegister = TONE_REGISTER.test(alert);
+add(
+    "feedback-tone",
+    "three-maps-collapse-onto-shared-register",
+    toastOnRegister && notifOnRegister && alertOnRegister,
+    toastOnRegister && notifOnRegister && alertOnRegister
+        ? "Toast + Notification + Alert ALL reference the shared .feedback-tone-* register (the three independent tone maps collapsed onto ONE source)"
+        : `the three-map collapse is INCOMPLETE — on-register: Toast=${toastOnRegister}, Notification=${notifOnRegister}, Alert=${alertOnRegister} (each must consume the shared --feedback-tone-* family)`,
+);
+
+// The recipe is the EXISTING tint seam (color-mix(in oklab, <rung>, var(--tone) …)) —
+// ZERO new compositing path; a parallel bg-<tone> opaque map in the recipe file fails.
+const recipeOnSeam =
+    /\.feedback-tone\b[\s\S]*?background:\s*color-mix\(\s*in oklab,\s*var\(--feedback-tone-rung\)[\s\S]*?var\(--tone\)\s*var\(--feedback-tone-strength\)/.test(
+        feedbackTone,
+    );
+const recipeNoOpaqueMap = !OPAQUE_TONE_UTIL.test(feedbackTone);
+add(
+    "feedback-tone",
+    "recipe-on-the-tint-seam",
+    recipeOnSeam && recipeNoOpaqueMap,
+    recipeOnSeam && recipeNoOpaqueMap
+        ? "feedback-tone.css mints the tinted-glass register on the EXISTING color-mix(in oklab, <rung>, var(--tone) <strength>) seam (zero new compositing path), with NO parallel opaque bg-<tone> map"
+        : `the recipe is NOT on the tint seam — on-seam=${recipeOnSeam}, no-opaque-map=${recipeNoOpaqueMap} (the toast-glass "zero new compositing path" floor)`,
+);
+
+// Self-proof: the bite distinguishes an OPAQUE tone from a TRANSLUCENT escape — the
+// narrowed exemption (W3). The opaque/near-opaque slabs MUST flag; the legitimate
+// translucent escape MUST NOT (the door is narrowed, not removed).
+const TONE_BITES =
+    OPAQUE_TONE_UTIL.test("glass-floating bg-success border-success") && // opaque → flags
+    OPAQUE_TONE_UTIL.test("glass-floating bg-destructive/90") && // /90 near-opaque → flags
+    OPAQUE_TONE_UTIL.test("glass-floating bg-info/95") && // /95 near-opaque → flags
+    !OPAQUE_TONE_UTIL.test("glass-floating bg-card/40") && // translucent escape → exempt
+    !OPAQUE_TONE_UTIL.test("glass-floating bg-success/20"); // translucent tone wash → exempt
+add(
+    "feedback-tone",
+    "tone-bite-distinguishes-opaque-from-translucent",
+    TONE_BITES,
+    "the OPAQUE_TONE_UTIL bite flags bg-success / bg-destructive/90 / bg-info/95 (opaque slabs) AND exempts bg-card/40 + bg-success/20 (the narrowed translucent-only door) — the bite distinguishes opaque-tone from translucent-escape",
+);
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const failed = checks.filter((c) => !c.pass);
 const arms = [...new Set(checks.map((c) => c.arm))];
