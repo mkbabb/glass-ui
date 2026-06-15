@@ -106,7 +106,13 @@ export * from "./components/ui/skeleton";
 export * from "./components/ui/slider";
 export * from "./components/ui/switch";
 export * from "./components/ui/table";
-export * from "./components/ui/tabs";
+// BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public surface (the
+// "too many types" cut: two parallel tab families, the always-ON baked-plate
+// indicator default that painted the R10-2 oval blob). The standardized tab family
+// is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials). The reka substrate
+// files (`components/ui/tabs/*`) remain INTERNAL solely for the dock-rail consumer
+// (`DockLayerGroup.vue` + `<TabsIndicator :surface="false">`, the AZ hairline);
+// they are NOT re-exported from any public barrel.
 export * from "./components/ui/tags-input";
 export * from "./components/ui/toast";
 export * from "./components/ui/toggle";

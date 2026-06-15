@@ -59,7 +59,7 @@ const HEADER_LIVE_VERIFIED = new Set([
     "proof:aurora-painterly-statistics",
     "proof:font-cascade-live",
     "proof:substrate-paints-color",
-    "proof:tabs-unified",
+    "proof:tabs-std",
     "proof:dock-animation-live",
     "proof:dock-orchestrator-single",
     "proof:dock-wrap-content-driven",

@@ -32,7 +32,9 @@ export * from "./skeleton";
 export * from "./slider";
 export * from "./switch";
 export * from "./table";
-export * from "./tabs";
+// BA.W-TABS — `ui/Tabs` retired from the public barrel (the standardized family is
+// `SegmentedTabs`). The reka substrate stays INTERNAL for the dock-rail consumer
+// only (`DockLayerGroup.vue`); see src/index.ts for the full rationale.
 export * from "./tags-input";
 export * from "./textarea";
 export * from "./toast";

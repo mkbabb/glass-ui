@@ -1,9 +1,14 @@
 <script setup lang="ts">
-// The unified SegmentedTabs — ONE component, a three-value `variant` axis
-// (segmented / pill / underline), ONE shared elastic indicator (the former
-// BouncyToggle/BouncyTabs/UnderlineTabs trio unified). The track choreography
-// lives in styles/segmented-tabs.css (@import-ed into styles/index.css);
-// this SFC owns the toggle markup + the anchor/JS indicator-position seam.
+// The standardized SegmentedTabs (BA.W-TABS) — ONE component, TWO materials, ONE
+// orientation axis, ONE indicator engine. The `variant` axis is `pill` (DEFAULT,
+// the GLASS material — absorbs the retired `segmented` value) + `underline` (the
+// PAPER material — the ink hairline on the shared `.paper-ink-mark` register).
+// `orientation` is first-class (`horizontal` default · `vertical`); the indicator
+// transform path is axis-derived (the dock-morph `dim` idiom). The track
+// choreography lives in styles/segmented-tabs.css (@import-ed into
+// styles/index.css); this SFC owns the toggle markup + the anchor/JS indicator-
+// position seam. The `overflow` axis (→ <FadingScroll>) and the `:multi-select`
+// prop (→ ToggleGroup) RETIRED — clean break, no alias (see MIGRATION.md).
 import {
     ref,
     computed,
@@ -27,14 +32,6 @@ import {
     SelectValue,
 } from "../../ui/select";
 import { useTabIndicator } from "./composables/useTabIndicator";
-// BA.W-FADING-SCROLL — the `overflow="scroll"` underline strip's edge fade is the
-// scroll-STATE-driven `<FadingScroll>` primitive. The composable form (not the
-// component wrapper) is load-bearing here: the scroll port IS `containerRef`, the
-// shared spring-indicator anchor (`position-anchor`/`inset`) anchors on it, so
-// wrapping it in a `<FadingScroll>` node would re-parent the indicator and break
-// the underline register. `useFadingScroll(containerRef)` writes the per-edge
-// customs on the existing root with no extra DOM node (the spec's named escape).
-import { useFadingScroll } from "../fading-scroll/composables/useFadingScroll";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -46,7 +43,7 @@ function readToken(name: string, fallback: string): string {
     );
 }
 
-/** The canonical tab/option shape — one descriptor across all three variants. */
+/** The canonical tab/option shape — one descriptor across both materials. */
 export interface SegmentedTabOption {
     label: string;
     value: string;
@@ -55,9 +52,14 @@ export interface SegmentedTabOption {
     tooltip?: string;
 }
 
-/** The three indicator chromes. `segmented` (default) = the muted pill-slider;
- *  `pill` = the solid `--foreground` pill; `underline` = the hairline rule. */
-export type SegmentedTabsVariant = "segmented" | "pill" | "underline";
+/** The two materials. `pill` (DEFAULT) = the glass-track slider (absorbs the
+ *  retired `segmented`); `underline` = the paper ink-hairline rule. */
+export type SegmentedTabsVariant = "pill" | "underline";
+
+/** The orientation axis — `horizontal` (default) lays children in a row + tracks
+ *  the indicator on the inline axis; `vertical` stacks a column + tracks the
+ *  block axis (the vertical underline is the leading-edge ink rail). */
+export type SegmentedTabsOrientation = "horizontal" | "vertical";
 
 export interface SegmentedTabsResponsive {
     /**
@@ -80,53 +82,40 @@ export interface SegmentedTabsResponsive {
 export interface SegmentedTabsProps {
     options: SegmentedTabOption[];
     /**
-     * Indicator chrome — `segmented` (DEFAULT, the pill-slider over a muted
-     * track), `pill` (solid foreground pill), `underline` (the hairline rule).
+     * The material — `pill` (DEFAULT, the glass-track slider) or `underline`
+     * (the paper ink-hairline rule).
      */
     variant?: SegmentedTabsVariant;
     /**
-     * Multi-select — when true the surface mutates as a ToggleGroup (N
-     * simultaneous pressed buttons, `role="group"`). Only valid on the
-     * `segmented`/`pill` variants; `underline` is panel-nav (single-select).
+     * Orientation — `horizontal` (default) or `vertical`. Axis-derived on the
+     * one indicator engine.
      */
-    multiSelect?: boolean;
+    orientation?: SegmentedTabsOrientation;
     /**
-     * Tab-row overflow handling.
-     * - `"none"` (default) — inline-grid; tabs share width and clip.
-     * - `"scroll"` — flex row with intrinsic widths + edge fades; never clips.
-     * - `"auto"` — flex row with intrinsic widths + plain horizontal scroll.
-     */
-    overflow?: "none" | "scroll" | "auto";
-    /**
-     * Responsive collapse — below the breakpoint the strip becomes a `<Select>`
-     * (subsumes the former standalone ResponsiveTabs). `true` uses defaults;
-     * an object tunes the breakpoint / desktop subset / accessible name.
+     * Responsive collapse — below the breakpoint the strip becomes a `<Select>`.
+     * `true` uses defaults; an object tunes the breakpoint / desktop subset /
+     * accessible name.
      */
     responsive?: boolean | SegmentedTabsResponsive;
     class?: HTMLAttributes["class"];
 }
 
 const props = withDefaults(defineProps<SegmentedTabsProps>(), {
-    variant: "segmented",
-    multiSelect: false,
-    overflow: "none",
+    variant: "pill",
+    orientation: "horizontal",
     responsive: false,
 });
 
-// Vue 3.5 defineModel — single (`string`) and multi (`string[]`) share the one
-// model, keyed off `multiSelect`. The underline variant + responsive collapse
-// are always single-select.
-const model = defineModel<string | string[]>({ required: true });
+// Vue 3.5 defineModel — single-select string. (The multi-select array model
+// retired with the `:multi-select` prop; a multi-pressed strip is a ToggleGroup.)
+const model = defineModel<string>({ required: true });
 
 const containerRef = ref<HTMLElement | null>(null);
 const indicatorRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
 
-// CSS anchor positioning is single-target, so the MULTI-select path (N
-// simultaneous indicators) keeps the JS measure path; a non-anchor engine falls
-// back to the JS single writer. So the JS path runs only on the multi-select OR
-// `@supports not (anchor)` branch — never double-running alongside the CSS
-// anchor on the same element.
+// CSS anchor positioning owns the single-select slider position where supported;
+// a non-anchor engine falls back to the JS single writer.
 const ANCHOR_SUPPORTED =
     typeof CSS !== "undefined" &&
     typeof CSS.supports === "function" &&
@@ -135,35 +124,20 @@ const ANCHOR_SUPPORTED =
 // ── Computed state ──
 
 const isUnderline = computed(() => props.variant === "underline");
-const isPill = computed(() => props.variant === "pill");
-const isSegmented = computed(() => props.variant === "segmented");
-const isScroll = computed(() => props.overflow === "scroll");
-const isAuto = computed(() => props.overflow === "auto");
+const isVertical = computed(() => props.orientation === "vertical");
 
-// underline is panel-nav (single-select); only segmented/pill may multi-select.
-const isMulti = computed(() => props.multiSelect && !isUnderline.value);
-
-const activeValues = computed<string[]>(() => {
-    const value = model.value;
-    if (isMulti.value) {
-        return Array.isArray(value) ? value : value != null ? [value] : [];
-    }
-    return value != null ? [value as string] : [];
-});
+const activeValues = computed<string[]>(() =>
+    model.value != null ? [model.value] : [],
+);
 
 const isActive = (value: string) => activeValues.value.includes(value);
 
-// True when ANY JS slider writer is live (so the RO/watchers attach at all).
-// Underline runs the CSS anchor rule (its `::before`), so it is never a JS
-// writer — only segmented/pill on a non-anchor engine, or multi-select, are.
-const jsSliderActive = computed(
-    () => (isMulti.value || !ANCHOR_SUPPORTED) && !isUnderline.value,
-);
-const jsSingleSlider = computed(
-    () => !isMulti.value && !ANCHOR_SUPPORTED && !isUnderline.value,
-);
+// The JS slider writer is live only on the underline-EXCLUDED pill variant when
+// the engine lacks anchor support (underline runs the CSS anchor `::before`).
+const jsSliderActive = computed(() => !ANCHOR_SUPPORTED && !isUnderline.value);
+const jsSingleSlider = jsSliderActive;
 
-// ── Responsive collapse (subsumes ResponsiveTabs) ──
+// ── Responsive collapse ──
 
 const responsiveCfg = computed<SegmentedTabsResponsive | null>(() => {
     if (props.responsive === false) return null;
@@ -187,7 +161,7 @@ const stripValue = computed(() => {
     if (!responsiveCfg.value) return model.value;
     const opts = desktopOptions.value;
     if (opts.some((o) => o.value === model.value)) return model.value;
-    return (opts[0]?.value ?? model.value) as string | string[];
+    return (opts[0]?.value ?? model.value) as string;
 });
 const stripOptions = computed(() =>
     responsiveCfg.value ? desktopOptions.value : props.options,
@@ -204,31 +178,24 @@ const showMobileSelect = computed(
 
 // ── JS-measured indicator + travel-squish (package-private composable) ──
 
-const indicatorModel = computed<string | string[] | undefined>(
-    () => stripValue.value,
-);
-// BA.W-FADING-SCROLL — drive the scroll-state edge fade on the container root
-// (the JS fallback; native scroll(self) timeline owns it where supported). The
-// `.fading-scroll--x` recipe class + the data-fade attrs ride the container's
-// :class below; this writes the per-edge customs off the live scroll state.
-useFadingScroll(containerRef, { axis: "x", fadeStart: isScroll.value, fadeEnd: isScroll.value });
+const indicatorModel = computed<string | undefined>(() => stripValue.value);
 
-const { singleSliderStyle, multiSliderStyles, squishOnTravel } = useTabIndicator({
+const { singleSliderStyle, squishOnTravel } = useTabIndicator({
     containerRef,
     indicatorRef,
     buttonRefs,
     options: stripOptions,
     model: indicatorModel,
-    multiSelect: isMulti,
     anchorSupported: ANCHOR_SUPPORTED,
     jsSliderActive,
     activeValues,
+    vertical: isVertical,
 });
 
 // ── Button press animation (Web Animations API) ──
 // AX.W53 — the press rides the CONTROL register (`--spring-snappy`), one
-// settle-into squish (no double-spring overshoot past the rest scale — the
-// former --spring-bouncy 1.08 keyframe is retired). Honors reduced-motion.
+// settle-into squish (no double-spring overshoot past the rest scale). Honors
+// reduced-motion.
 
 function animatePress(btn: HTMLElement) {
     if (
@@ -250,22 +217,6 @@ function animatePress(btn: HTMLElement) {
     );
 }
 
-// ── Scroll-active-into-view (overflow scroller only) ──
-
-function scrollButtonIntoView(idx: number) {
-    if (!isScroll.value && !isAuto.value) return;
-    const btn = buttonRefs.value[idx];
-    if (!btn) return;
-    const reduceMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    btn.scrollIntoView({
-        inline: "nearest",
-        block: "nearest",
-        behavior: reduceMotion ? "auto" : "smooth",
-    });
-}
-
 // ── Selection handler ──
 
 function select(value: string, idx: number) {
@@ -275,24 +226,12 @@ function select(value: string, idx: number) {
     const btn = buttonRefs.value[idx];
     if (btn) animatePress(btn);
 
-    // The elastic travel-squish fires on EVERY selection (anchor + JS engines).
+    // The elastic travel-squish fires on EVERY selection (anchor + JS engines);
+    // the underline SLIDES (no squish — a hairline does not deform), gated inside
+    // the composable by the underline early-return.
     squishOnTravel(idx);
 
-    if (isMulti.value) {
-        const current = [...activeValues.value];
-        const existingIdx = current.indexOf(value);
-        if (existingIdx > -1) {
-            // Don't deselect the last remaining value.
-            if (current.length > 1) current.splice(existingIdx, 1);
-        } else {
-            current.push(value);
-        }
-        model.value = current;
-    } else {
-        model.value = value;
-    }
-
-    scrollButtonIntoView(idx);
+    model.value = value;
 }
 
 // The mobile Select speaks the single-string model.
@@ -308,10 +247,6 @@ onMounted(() => {
         isDesktop.value = mql.matches;
         mql.addEventListener("change", onMql);
     }
-    nextTick(() => {
-        const activeIdx = stripOptions.value.findIndex((o) => isActive(o.value));
-        if (activeIdx >= 0) scrollButtonIntoView(activeIdx);
-    });
 });
 
 onBeforeUnmount(() => {
@@ -326,7 +261,7 @@ onBeforeUnmount(() => {
         v-if="showMobileSelect"
         :class="cn('segmented-tabs__mobile w-fit', props.class)"
     >
-        <Select :model-value="(model as string)" @update:model-value="onMobileUpdate">
+        <Select :model-value="model" @update:model-value="onMobileUpdate">
             <SelectTrigger
                 :aria-label="mobileAriaLabel"
                 :class="cn('segmented-tabs__trigger text-small w-auto min-w-input-sm', responsiveCfg?.triggerClass)"
@@ -346,29 +281,27 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- The tab strip. ARIA-role-per-variant: `underline` is panel-nav
-         (`role=tablist`/`tab` + `aria-selected`); `segmented`/`pill` are the
-         ToggleGroup-shaped surface (`role=group` + `aria-pressed`). -->
+         (`role=tablist`/`tab` + `aria-selected`); `pill` is the ToggleGroup-shaped
+         surface (`role=group` + `aria-pressed`). -->
     <div
         v-else
         ref="containerRef"
         :role="isUnderline ? 'tablist' : 'group'"
-        :data-fade-start="isScroll ? '' : undefined"
-        :data-fade-end="isScroll ? '' : undefined"
+        :aria-orientation="isVertical ? 'vertical' : 'horizontal'"
         :class="cn(
             'segmented-tabs',
             `segmented-tabs--${variant}`,
-            isScroll && 'segmented-tabs--scroll fading-scroll fading-scroll--x scrollbar-hidden',
-            isAuto && 'segmented-tabs--auto scrollbar-hidden',
+            isVertical && 'segmented-tabs--vertical',
             props.class,
         )"
     >
-        <!-- The single shared indicator (segmented/pill slider). On the anchor
-             path no inline `:style` (CSS `position-anchor` + `inset` govern it);
-             on the JS fallback the measured `singleSliderStyle`. The underline
-             variant paints its indicator as the container `::before` pseudo, so
-             no element node here. -->
+        <!-- The single shared indicator (pill slider). On the anchor path no
+             inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
+             fallback the measured `singleSliderStyle`. The underline variant paints
+             its indicator as the container `::before` pseudo, so no element node
+             here. -->
         <div
-            v-if="!isUnderline && !isMulti"
+            v-if="!isUnderline"
             ref="indicatorRef"
             :class="[
                 'segmented-indicator',
@@ -376,16 +309,6 @@ onBeforeUnmount(() => {
             ]"
             :style="jsSingleSlider ? singleSliderStyle : undefined"
         />
-
-        <!-- Multi-select indicators (one per active value). -->
-        <template v-if="!isUnderline && isMulti">
-            <div
-                v-for="value in activeValues"
-                :key="'indicator-' + value"
-                class="segmented-indicator segmented-indicator--js"
-                :style="multiSliderStyles[value] ?? { opacity: '0' }"
-            />
-        </template>
 
         <!-- Buttons. -->
         <template v-for="(option, idx) in stripOptions" :key="option.value">

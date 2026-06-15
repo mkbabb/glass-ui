@@ -11,7 +11,13 @@
 export const DEFAULT_INDICATOR_MAX_STRETCH = 1.08;
 
 /**
- * ms after the stretch opens before it releases back to fit (`--stretch → 1`) — the
- * Material "grow then shrink" close. Rides the same snappy glide clock as the travel.
+ * The travel-progress fraction at which the squish RELEASES — the Material
+ * "grow then shrink" close, keyed to ARRIVAL (BA.W-TABS). The squish opens with
+ * the glide and releases when the indicator is within this fraction of its target
+ * (release-at-arrival), retiring the fixed mid-glide `INDICATOR_RELEASE_MS` timer
+ * (which fired at 60ms — BEFORE the ~100ms 90%-travel point, mid-glide). The
+ * release schedules off the calibrated clock (`--spring-snappy-duration`) scaled
+ * by this fraction, so the stretch peaks during travel and shrinks to fit AT
+ * arrival, never before.
  */
-export const INDICATOR_RELEASE_MS = 60;
+export const INDICATOR_RELEASE_AT_ARRIVAL = 0.82;

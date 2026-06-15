@@ -1,62 +1,20 @@
 <script setup lang="ts">
+// BA.W-TABS — the /navigation/tabs story rebuilt on the standardized family.
+// ONE component (`SegmentedTabs`), TWO materials (pill-glass + underline-paper),
+// ONE orientation axis (horizontal · vertical). The four hand-rolled `ui/Tabs`
+// recipes (the NF-1 full-width track / NF-3 rogue h3 / NF-7 four-radii incoherence)
+// and the multi-select section (re-homed to ToggleGroup) are GONE — each material
+// is shown over its PROPER substrate (pill over a glass backdrop, underline over a
+// paper/grain card). The constellation may freely change (R10, verbatim).
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
-import {
-    Tabs,
-    TabsList,
-    TabsTrigger,
-    TabsContent,
-} from "../../../src/components/ui/tabs";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "../../../src/components/custom/tabs";
-import { cn } from "../../../src/utils/cn";
 
-const defaultTab = ref("overview");
-const pillTab = ref("daily");
-const underlineTab = ref("notes");
-const verticalTab = ref("profile");
-
-const sections = [
-    {
-        id: "overview",
-        label: "Overview",
-        blurb: "Glanceable summary of everything that matters.",
-    },
-    {
-        id: "activity",
-        label: "Activity",
-        blurb: "Recent events in reverse-chronological order.",
-    },
-    {
-        id: "settings",
-        label: "Settings",
-        blurb: "Per-space preferences — sync, notifications, theme.",
-    },
-];
-
-const cadences = [
-    { id: "daily", label: "Daily" },
-    { id: "weekly", label: "Weekly" },
-    { id: "monthly", label: "Monthly" },
-];
-
-const docs = [
-    { id: "notes", label: "Notes" },
-    { id: "specs", label: "Specs" },
-    { id: "logs", label: "Logs" },
-];
-
-const profile = [
-    { id: "profile", label: "Profile" },
-    { id: "billing", label: "Billing" },
-    { id: "team", label: "Team" },
-    { id: "keys", label: "API Keys" },
-];
-
-// Segmented (default) — the <SegmentedTabs> spring-slider over a muted track;
-// the elastic indicator glides and squishes on --spring-snappy.
+// ── Pill (glass) — horizontal ──
 const viewMode = ref("grid");
 const viewOptions: SegmentedTabOption[] = [
     { label: "Grid", value: "grid" },
@@ -65,7 +23,6 @@ const viewOptions: SegmentedTabOption[] = [
     { label: "Timeline", value: "timeline" },
 ];
 
-// Pill variant — the solid --foreground pill.
 const priority = ref("normal");
 const priorityOptions: SegmentedTabOption[] = [
     { label: "Low", value: "low" },
@@ -74,25 +31,33 @@ const priorityOptions: SegmentedTabOption[] = [
     { label: "Urgent", value: "urgent" },
 ];
 
-// Underline variant — the panel-nav (role=tablist) hairline rule.
-const docTab = ref("notes");
-const docTabs: SegmentedTabOption[] = docs.map((d) => ({
-    label: d.label,
-    value: d.id,
-}));
-
-// Multi-select — the ToggleGroup-shaped surface (role=group, aria-pressed) over
-// the same engine; N simultaneous pressed segments.
-const facets = ref<string[]>(["pdf"]);
-const facetOptions: SegmentedTabOption[] = [
-    { label: "PDF", value: "pdf" },
-    { label: "Docs", value: "docs" },
-    { label: "Slides", value: "slides" },
-    { label: "Sheets", value: "sheets" },
+// ── Pill (glass) — vertical ──
+const account = ref("profile");
+const accountOptions: SegmentedTabOption[] = [
+    { label: "Profile", value: "profile" },
+    { label: "Billing", value: "billing" },
+    { label: "Team", value: "team" },
+    { label: "API Keys", value: "keys" },
 ];
 
-// Responsive — the strip collapses to a <Select> below the breakpoint
-// (subsumes the former standalone ResponsiveTabs).
+// ── Underline (paper) — horizontal ──
+const docTab = ref("notes");
+const docTabs: SegmentedTabOption[] = [
+    { label: "Notes", value: "notes" },
+    { label: "Specs", value: "specs" },
+    { label: "Logs", value: "logs" },
+];
+
+// ── Underline (paper) — vertical (the leading-edge ink rail) ──
+const chapterTab = ref("intro");
+const chapterTabs: SegmentedTabOption[] = [
+    { label: "Introduction", value: "intro" },
+    { label: "Derivation", value: "derive" },
+    { label: "Convergence", value: "converge" },
+    { label: "Appendix", value: "appendix" },
+];
+
+// ── Responsive — the strip collapses to a <Select> below the breakpoint ──
 const respView = ref("overview");
 const respOptions: SegmentedTabOption[] = [
     { label: "Overview", value: "overview" },
@@ -100,243 +65,108 @@ const respOptions: SegmentedTabOption[] = [
     { label: "Members", value: "members" },
     { label: "Settings", value: "settings" },
 ];
+
+const chapterBody: Record<string, string> = {
+    intro: "The setup: a periodic signal decomposed onto an orthonormal basis.",
+    derive: "Project onto each basis function; the coefficients fall out by inner product.",
+    converge: "Partial sums approach the signal in the mean-square sense.",
+    appendix: "Edge cases, the Gibbs phenomenon, and the discrete transform.",
+};
 </script>
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Default</h2>
-            <Tabs v-model="defaultTab" class="flex flex-col gap-3">
-                <!-- D1-10 (AZ.W-HIERARCHY): `w-fit` keeps the inline-flex TabsList
-                     shrink-wrapped to its 3 tabs (left-aligned) inside the stretch
-                     flex column, so the gray track no longer spans full width with
-                     the group adrift in an ~80%-empty bar (the balance/focal
-                     incongruence). The TabsContent panels below stay full-width. -->
-                <TabsList class="w-fit bg-muted/50">
-                    <TabsTrigger
-                        v-for="s in sections"
-                        :key="s.id"
-                        :value="s.id"
-                        :class="
-                            cn(
-                                'data-[state=active]:bg-background data-[state=active]:shadow-sm',
-                            )
-                        "
+        <!-- ════ The PILL material (glass) ════ -->
+        <StorySection
+            heading="Pill — the glass material (default)"
+            blurb="The default register. A glass-quiet track with a hairline edge; the selected indicator is the selected-reads-as-glass plate (glass-floating, forward of the track). It glides AND squishes on the calibrated snappy clock. Shown over a live glass backdrop where the material reads."
+        >
+            <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
+                <div class="flex flex-wrap items-center gap-3">
+                    <SegmentedTabs v-model="viewMode" :options="viewOptions" />
+                    <span class="text-xs text-muted-foreground"
+                        >selected: {{ viewMode }}</span
                     >
-                        {{ s.label }}
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent
-                    v-for="s in sections"
-                    :key="s.id"
-                    :value="s.id"
-                    class="rounded-[var(--radius-card)] border border-border/40 bg-card/50 p-4 text-sm"
-                >
-                    {{ s.blurb }}
-                </TabsContent>
-            </Tabs>
-        </section>
-
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Pill (inline highlight)</h2>
-            <Tabs v-model="pillTab" class="flex flex-col gap-3">
-                <TabsList class="rounded-full bg-foreground/5 p-1 gap-1">
-                    <TabsTrigger
-                        v-for="c in cadences"
-                        :key="c.id"
-                        :value="c.id"
-                        :class="
-                            cn(
-                                'rounded-full px-4 data-[state=active]:bg-foreground data-[state=active]:text-background',
-                            )
-                        "
-                    >
-                        {{ c.label }}
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent
-                    v-for="c in cadences"
-                    :key="c.id"
-                    :value="c.id"
-                    class="text-sm text-muted-foreground"
-                >
-                    Showing {{ c.label.toLowerCase() }} metrics. Drag the range to
-                    adjust the window.
-                </TabsContent>
-            </Tabs>
-        </section>
-
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Underline</h2>
-            <Tabs v-model="underlineTab" class="flex flex-col gap-3">
-                <TabsList
-                    class="rounded-none border-b border-border/40 bg-transparent p-0 gap-6"
-                >
-                    <TabsTrigger
-                        v-for="d in docs"
-                        :key="d.id"
-                        :value="d.id"
-                        :class="
-                            cn(
-                                'rounded-none border-b-2 border-transparent px-0 pb-2 data-[state=active]:border-foreground',
-                            )
-                        "
-                    >
-                        {{ d.label }}
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent
-                    v-for="d in docs"
-                    :key="d.id"
-                    :value="d.id"
-                    class="text-sm text-muted-foreground"
-                >
-                    {{ d.label }} live here. Press
-                    <kbd class="rounded border px-1">/</kbd> to search.
-                </TabsContent>
-            </Tabs>
-        </section>
-
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Vertical</h2>
-            <Tabs
-                v-model="verticalTab"
-                orientation="vertical"
-                class="flex gap-6 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-3"
-            >
-                <TabsList
-                    class="flex h-auto flex-col items-stretch gap-1 bg-transparent p-0 w-40"
-                >
-                    <TabsTrigger
-                        v-for="p in profile"
-                        :key="p.id"
-                        :value="p.id"
-                        :class="
-                            cn('justify-start rounded-md data-[state=active]:bg-muted')
-                        "
-                    >
-                        {{ p.label }}
-                    </TabsTrigger>
-                </TabsList>
-                <div class="flex-1 min-h-32">
-                    <TabsContent
-                        v-for="p in profile"
-                        :key="p.id"
-                        :value="p.id"
-                        class="mt-0 text-sm text-muted-foreground"
-                    >
-                        <!-- D1-2 (AZ.W-HIERARCHY): the demo-panel <h3> reads SMALLER
-                             than its parent section <h2> (text-subheading, 20.4px).
-                             Re-rung from text-base/500 (16px) down to text-small/600
-                             (14px) so the child never outweighs the parent heading. -->
-                        <h3 class="mb-1 text-small font-semibold text-foreground">
-                            {{ p.label }}
-                        </h3>
-                        Configure your {{ p.label.toLowerCase() }} here.
-                    </TabsContent>
                 </div>
-            </Tabs>
-        </section>
-
-        <!-- SegmentedTabs (DEFAULT) — the unified spring-slider with the
-             elastic glide+squish indicator on --spring-snappy. -->
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Segmented (default spring-slider variant)</h2>
-            <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;SegmentedTabs&gt;</code> — the
-                default pill-slider over a muted track. The indicator glides AND
-                squishes (volume-preserving stretch capped at
-                <code class="rounded bg-muted px-1">--tab-indicator-max-stretch</code>)
-                on <code class="rounded bg-muted px-1">--spring-snappy</code>.
-            </p>
-            <div
-                class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4"
-            >
-                <SegmentedTabs v-model="viewMode" :options="viewOptions" />
-                <span class="text-xs text-muted-foreground"
-                    >selected: {{ viewMode }}</span
-                >
+                <div class="flex flex-wrap items-center gap-3">
+                    <SegmentedTabs v-model="priority" :options="priorityOptions" />
+                    <span class="text-xs text-muted-foreground"
+                        >selected: {{ priority }}</span
+                    >
+                </div>
             </div>
-        </section>
+        </StorySection>
 
-        <!-- Pill variant — the solid --foreground pill. -->
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Pill (variant="pill")</h2>
-            <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">variant="pill"</code> — the solid
-                foreground pill chrome over the same elastic indicator.
-            </p>
+        <!-- ════ The PILL material — vertical ════ -->
+        <StorySection
+            heading="Pill — vertical"
+            blurb="The same engine, the block axis. The indicator tracks the column (axis-derived — no horizontal-only slab); the squish deforms on the block axis."
+        >
             <div
-                class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4"
+                class="glass-card flex gap-5 rounded-[var(--radius-card)] p-5"
             >
                 <SegmentedTabs
-                    v-model="priority"
-                    :options="priorityOptions"
-                    variant="pill"
+                    v-model="account"
+                    :options="accountOptions"
+                    orientation="vertical"
+                    class="shrink-0"
                 />
-                <span class="text-xs text-muted-foreground"
-                    >selected: {{ priority }}</span
-                >
+                <div class="min-h-32 flex-1 text-small text-muted-foreground">
+                    Configure your
+                    {{ accountOptions.find((o) => o.value === account)?.label.toLowerCase() }}
+                    here.
+                </div>
             </div>
-        </section>
+        </StorySection>
 
-        <!-- Underline variant — the panel-nav (role=tablist) hairline rule. -->
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Underline (variant="underline")</h2>
-            <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">variant="underline"</code> — the
-                panel-nav <code class="rounded bg-muted px-1">role="tablist"</code>
-                hairline rule, sharing the same glide+squish indicator grammar.
-            </p>
+        <!-- ════ The UNDERLINE material (paper) — horizontal ════ -->
+        <StorySection
+            heading="Underline — the paper material"
+            blurb="For paper/editorial scenarios. NO plate, NO blur, NO track — just the 2px foreground ink hairline (the shared paper-ink-mark register). It SLIDES (a hairline does not squish). Shown over a paper-grain card, panel-nav role=tablist."
+        >
             <div
-                class="rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4"
+                class="paper-grain-overlay rounded-[var(--radius-card)] border border-border/40 p-5"
             >
                 <SegmentedTabs
                     v-model="docTab"
                     :options="docTabs"
                     variant="underline"
                 />
-                <p class="mt-3 text-xs text-muted-foreground">selected: {{ docTab }}</p>
+                <p class="mt-4 text-small text-muted-foreground">
+                    {{ docTab }} live here. Press
+                    <kbd class="rounded border px-1">/</kbd> to search.
+                </p>
             </div>
-        </section>
+        </StorySection>
 
-        <!-- Multi-select — the ToggleGroup-shaped surface over the same engine. -->
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Multi-select (:multi-select="true")</h2>
-            <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">:multi-select="true"</code> — the
-                ToggleGroup-shaped surface (<code class="rounded bg-muted px-1"
-                    >role="group"</code
-                >, <code class="rounded bg-muted px-1">aria-pressed</code>); N
-                simultaneous pressed segments over the shared slider engine.
-            </p>
+        <!-- ════ The UNDERLINE material — vertical (the leading-edge ink rail) ════ -->
+        <StorySection
+            heading="Underline — vertical (the leading-edge ink rail)"
+            blurb="The vertical underline is the math-paper border-l read: a 2px ink rail on the active item's leading edge, running its full block extent."
+        >
             <div
-                class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4"
+                class="paper-grain-overlay flex gap-6 rounded-[var(--radius-card)] border border-border/40 p-5"
             >
                 <SegmentedTabs
-                    v-model="facets"
-                    :options="facetOptions"
-                    :multi-select="true"
+                    v-model="chapterTab"
+                    :options="chapterTabs"
+                    variant="underline"
+                    orientation="vertical"
+                    class="shrink-0"
                 />
-                <span class="text-xs text-muted-foreground"
-                    >selected: {{ facets.join(", ") }}</span
-                >
+                <p class="min-h-24 flex-1 text-small text-muted-foreground">
+                    {{ chapterBody[chapterTab] }}
+                </p>
             </div>
-        </section>
+        </StorySection>
 
-        <!-- Responsive — strip collapses to a <Select> below the breakpoint. -->
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">
-                Responsive (:responsive — subsumes ResponsiveTabs)
-            </h2>
-            <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">:responsive="true"</code> — below
-                the breakpoint the strip collapses to a
-                <code class="rounded bg-muted px-1">&lt;Select&gt;</code>, both driven
-                by one v-model. Narrow the viewport past 640px to see the swap.
-            </p>
+        <!-- ════ Responsive collapse ════ -->
+        <StorySection
+            heading="Responsive — collapses to a Select"
+            blurb="Below the breakpoint the strip becomes a <Select>, both driven by one v-model. Narrow the viewport past 640px to see the swap."
+        >
             <div
-                class="max-w-md rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4"
+                class="glass-card max-w-md rounded-[var(--radius-card)] p-5"
             >
                 <SegmentedTabs
                     v-model="respView"
@@ -344,10 +174,16 @@ const respOptions: SegmentedTabOption[] = [
                     variant="underline"
                     :responsive="{ ariaLabel: 'Project view' }"
                 />
-                <p class="mt-3 text-xs text-muted-foreground">
+                <p class="mt-4 text-xs text-muted-foreground">
                     active view: {{ respView }}
                 </p>
             </div>
-        </section>
+        </StorySection>
+
+        <!-- ════ The retirement note ════ -->
+        <StorySection
+            heading="Retired axes"
+            blurb="No legacy code. variant=segmented FOLDED into pill (one register). The overflow axis retired — overflow is FadingScroll's job. A multi-pressed strip is a ToggleGroup (role=group, N independent toggles), not a tab family member. ui/Tabs left the public surface — the dock-rail keeps the reka substrate internally. See MIGRATION.md."
+        />
     </StoryPage>
 </template>
