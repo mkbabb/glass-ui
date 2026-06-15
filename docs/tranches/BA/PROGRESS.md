@@ -65,8 +65,9 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 6 | W-FOURIER-STUDIO | **live-verified** (f220a497) | the partial-sum studio (orthogonal N/epicycle/color axes + assembling curve) + trace-a-shape DFT + the clock + the StepsEditor (ARM B) + R5-11 warm-hero rider; proof:fourier-studio 6/6 + π |
 | 6 | W-SUFFUSE2 | **live-verified** (13110a50; session-wall continuation wizmuotnw) | per-category eyebrow+rail+chip identity + the event-family escalation + the motion violet + SM-1/SM-2; the SYSTEMIC accent-on-renderless-root render fix (the π caught it — 6/18→18/18); proof:suffuse2 7/7 + suffuse 17/17 + hierarchy 6/6 |
 | 6 | W-ANIMATE | **live-verified** (111a5208) | AppShell route page-enter Transition + compositor scroll-progress bar + metric count-up (SETTLE, intersection-gated) + hero fade-rise; proof:ba-animate W1-W4 + π, all via shipped engines, PRM-clean |
-| 7 | W-REFLECT2 | planned (spec authored) | the gestalt reflection — triumvirate-looped until operative-PASS |
-| 7 | W-CLOSE | planned (spec authored) | battery · MIGRATION · version [H4] · publish [H5] · disposition re-stamps · FINAL · the slides book |
+| 7 | W-REFLECT2 | **complete** | the gestalt reflection: 8 surfaces re-walked LIVE both modes whole-page; 6/8 flipped FAIL→PASS, 2/8 (dock+shell) → the named successor W-SHELL-RAIL-RESEAT; proof:ba-gestalt promoted to the operative close set |
+| 7 | W-SHELL-RAIL-RESEAT | **complete** | the dock+shell FAIL redress (the SidebarDock facet carousel re-seated below the title band; overlapH1:false on every named desktop route both modes); the dock+shell reflection records RE-REFLECTED PASS → proof:ba-gestalt 8/8 |
+| 7 | W-CLOSE | **complete** (this close) | proof:ba-final minted born-RED→GREEN (the 9-clause gate, the gestalt-bar clause replacing the reflection-matrix); proof:az-final retired from the release set; MIGRATION appended (the BA clean breaks onto 3.13.0); disposition re-stamped un-MET (31 BOOK ids); ORPHANS:0; FINAL.md (zero unnamed deferrals); the 3 adopt books; the changeset staged (4.0.0); invariant 11 in CLAUDE.md |
 
 ## Events
 
@@ -274,11 +275,11 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 
 | surface | light | dark | operative | redressed-in-wave? | structural-FAIL + successor |
 |---|---|---|---|---|---|
-| dock | clipped title (desktop) | clipped title (desktop) | **FAIL** | no (structural) | **BA.W-SHELL-RAIL-RESEAT** — SidebarDock floating chips occlude the page `<h1>` on desktop StoryPage routes |
+| dock | PASS | PASS | **PASS** | **W-SHELL-RAIL-RESEAT** | RE-REFLECTED PASS — the rail re-seated to the trailing-gutter seam, overlapH1:false on all 3 named routes |
 | configurators-goo | PASS | PASS | **PASS** | — | — |
 | aurora | PASS | PASS | **PASS** | — | — |
-| glass-feedback | PASS | PASS | **PASS** | — | — (the captured-route title-clip is the shell's FAIL, not glass-feedback's own) |
-| shell | clipped title (desktop) | clipped title (desktop) | **FAIL** | no (structural) | **BA.W-SHELL-RAIL-RESEAT** (shared root with dock) |
+| glass-feedback | PASS | PASS | **PASS** | — | — (the captured-route title-clip was the shell's FAIL, now redressed) |
+| shell | PASS | PASS | **PASS** | **W-SHELL-RAIL-RESEAT** | RE-REFLECTED PASS — the SidebarDock facet carousel re-seated below the title band, the page `<h1>` + breadcrumb clear on every named desktop route |
 | motion-fourier | PASS | PASS | **PASS** | — | — |
 | dark-register | PASS | PASS | **PASS** | — | — (the binding R8-11 flip: dark glass TRANSMITS the live field) |
 | cross-repo | PASS | PASS | **PASS** | — | — (library-adoptability; the actual adopt/deploy is W-CLOSE's hinge) |
@@ -311,3 +312,40 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   `complete_with_misses` discipline). proof:gate-script-parity GREEN post-promotion; the
   8 reflect-record surface-hashes all FRESH. The AZ-era scratch tests-visual/reflect-*.spec.ts
   are superseded by wf-ba-reflect.js.
+- 2026-06-15 (W-SHELL-RAIL-RESEAT — the dock+shell FAIL redress) — the SidebarDock
+  floating-carousel facet chips re-seated below the title band; overlapH1:false measured
+  on every named desktop route both modes; the dock+shell reflection records RE-REFLECTED
+  PASS → `proof:ba-gestalt` 8/8 operative-PASS. The headline proof the gestalt bar works:
+  the per-mechanism dock gates all greened while the whole-page render showed a full title
+  occlusion — the bar caught it, the named successor closed it.
+- 2026-06-15 (W-CLOSE — the BA terminal close + the 4.0.0 cut staged) — the LAST wave.
+  THE BATTERY: typecheck 0 · build 0 · verify-export-types 0 · budget REBASELINED (+the 5
+  new BA subpaths handmark/pager-dots/color-swatch/fading-scroll/icon-chip) + --enforce 0 ·
+  the full unit suite 984/984 after 5 stale-companion test re-points (the latent-defect class
+  the AZ close named: InstrumentChassis dock-blur 11px→9px [W-GLASS-CAL B1], menuItemVariants
+  flat-fill→glass-menu-row [W-MENU-GLASS], public-surface Tabs-off-barrel + DockSection-added
+  [W-TABS/W-DOCK-SECTIONS], ConfiguratorLayer divider-token [W-CONFIG-CHASSIS], Progress
+  cell-stack→single-flow [W-PROGRESS-GRADIENT] — each the wave's already-gate-verified change,
+  zero paint). proof:gate-script-parity + proof:tag-parity + proof:claude-structure-sync
+  (pager-dots §Structure line added) all GREEN. MINTED proof:ba-final born-RED→GREEN (the
+  9-clause gate; C2 THE-GESTALT-BAR replaces the AZ reflection-matrix clause — the P-1
+  structural fix made the close gate; born-RED at HEAD on FINAL-absent + no-changeset, GREEN
+  at the close commit on clean-tree). RETIRED proof:az-final from the release set (tags=[] +
+  the historical note; the au-final/ay-final precedent; the tag-parity untagged map updated).
+  MIGRATION.md appended (every BA clean break onto the W-HYGIENE 3.13.0 base — `grep staged`
+  stays 0; value.js rows flagged by name). DISPOSITION re-stamped via proof:disposition-live
+  (31 BOOK ids, every ≥2-consumer trigger re-evaluated un-MET; the EXT re-flags DC-EXT-1/2/3/4;
+  R5-9 deck-page-turn re-grepped un-MET → BOOK'd cross-linked to directional-view-transition;
+  css-relative-color + button-icon-sm/select-size opportunistic folds re-evaluated un-MET).
+  ORPHANS:0 (the overfitting audit — every new component exported/≥2-consumer/demo-private).
+  FINAL.md authored (§4 THE GESTALT VERDICT MATRIX 8/8 + §6 zero unnamed deferrals). The 3
+  adopt books: slides (the EXACT-TWO breaks DeckGate.vue:70 + the gray-arm auto-retirement;
+  the phantom /underline struck; the deploy-DOWN heads-up), value.js (the cut-notes by name +
+  the interim-arm retirements + the C-1 4.x block), atlas (the adopt section + the fork-close
+  protocol command sequence). The .changeset/ba-tranche-close.md STAGED (4.0.0 major, two
+  grounds, the by-name break list). Invariant 11 (no out-of-band lineage publish + the
+  registry-consumer prune probe) landed in CLAUDE.md §Design-Axes-9 (the precepts authoring is
+  the orchestrator submodule write). proof:ba-final RED at HEAD only on C9 clean-tree (the 18
+  in-flight close edits) — GREEN at the orchestrator's close commit. THE CUT (orchestrator/user
+  git steps, the hardened agent clause): `changeset version` → `git push --tags` (release.yml
+  provenance publish) → the d6 fork-close protocol + the npm deprecate.

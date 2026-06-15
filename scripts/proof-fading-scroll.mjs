@@ -55,6 +55,15 @@ const sfc = strip(read("src/components/custom/fading-scroll/FadingScroll.vue"));
 const composable = strip(
     read("src/components/custom/fading-scroll/composables/useFadingScroll.ts"),
 );
+// BA.W-CLOSE — the colocation carve moved the `NATIVE_SCROLL_TIMELINE =
+// supportsScrollTimeline()` feature-detect constant to the co-located `constants.ts`
+// (the proof:colocation TARGET_DIRS widening). The composable IMPORTS it and uses
+// `ref(!NATIVE_SCROLL_TIMELINE)` + `if (!active.value) return`. The W4 single-writer
+// scan reads the concatenated pair so it follows the constant to its colocation home
+// (the gate-vs-source drift the carve introduced; the source behaviour is unchanged).
+const featureDetect = `${composable}\n${strip(
+    read("src/components/custom/fading-scroll/constants.ts"),
+)}`;
 const barrel = read("src/components/custom/fading-scroll/index.ts");
 const subpath = read("src/subpaths/fading-scroll.ts");
 const segTabsVue = strip(read("src/components/custom/tabs/SegmentedTabs.vue"));
@@ -122,9 +131,9 @@ add(
 // ── W4 — single-writer dual-path ────────────────────────────────────────────────────
 // The JS fallback is feature-detect-gated OFF when scroll() is supported, and it
 // writes the SAME customs the CSS writes.
-const importsDetect = /supportsScrollTimeline/.test(composable);
+const importsDetect = /supportsScrollTimeline/.test(featureDetect);
 const gatedOff =
-    /NATIVE_SCROLL_TIMELINE\s*=\s*supportsScrollTimeline\(\)/.test(composable) &&
+    /NATIVE_SCROLL_TIMELINE\s*=\s*supportsScrollTimeline\(\)/.test(featureDetect) &&
     /active\s*=\s*ref\(!NATIVE_SCROLL_TIMELINE\)/.test(composable) &&
     /if\s*\(!active\.value\)\s*return/.test(composable);
 const writesSameCustoms =

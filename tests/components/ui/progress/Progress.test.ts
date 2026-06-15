@@ -128,7 +128,13 @@ describe("Progress", () => {
             { key: "b", color: "var(--chart-download)", state: "active" as const },
         ];
 
-        it("renders one cell per segment", () => {
+        it("paints ONE single-fill flow over the frosted rail (no per-cell stack)", () => {
+            // BA.W-PROGRESS-GRADIENT clean break (RC-1/RC-4): the per-cell capped
+            // `.progress-sectioned-cell` stack is DELETED for ONE `.progress-sectioned-flow`
+            // element spanning the cumulative filled extent (the single front pill cap; the
+            // segment hues blend in ONE linear-gradient, no per-cell rectangles). The track
+            // is the frosted `.progress-sectioned-rail` register. proof:progress-gradient owns
+            // the gradient-model assertion; this companion re-points off the retired cell stack.
             const wrapper = mount(Progress, {
                 props: {
                     variant: "sectioned",
@@ -138,7 +144,9 @@ describe("Progress", () => {
                 },
             });
             expect(wrapper.find('[role="progressbar"]').exists()).toBe(true);
-            expect(wrapper.findAll(".progress-sectioned-cell").length).toBe(2);
+            expect(wrapper.findAll(".progress-sectioned-cell").length).toBe(0);
+            expect(wrapper.findAll(".progress-sectioned-flow").length).toBe(1);
+            expect(wrapper.find(".progress-sectioned-rail").exists()).toBe(true);
         });
 
         it("does NOT emit the gradient lifecycle attribute", () => {

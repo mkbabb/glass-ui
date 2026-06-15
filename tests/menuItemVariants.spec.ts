@@ -15,16 +15,20 @@ import { menuItemVariants } from "../src/components/ui/_shared/menuItemVariants"
  * 5. exposes the indicator-slot variant for radio-dot / check / inset gutter.
  */
 describe("menuItemVariants", () => {
-    it("base recipe composes interactive-item + four-state paint", () => {
+    it("base recipe composes interactive-item + the glass-menu-row register + four-state disabled paint", () => {
+        // BA.W-MENU-GLASS clean break: the base flat-fill `hover/focus/data-highlighted/
+        // data-[state=open]:bg-accent` recipe DROPPED for the `.glass-menu-row` register
+        // (element-level oklab-tint hover/highlight; `accent` is the explicit opt-out escape,
+        // not the base). proof:menu-glass owns the register assertion; this companion re-points
+        // off the retired flat-fill literals. The four disabled-state legs are byte-untouched.
         const c = menuItemVariants();
         expect(c).toContain("interactive-item");
-        expect(c).toContain("hover:bg-accent");
-        expect(c).toContain("focus:bg-accent");
-        expect(c).toContain("data-[highlighted]:bg-accent");
+        expect(c).toContain("glass-menu-row");
+        expect(c).not.toContain("hover:bg-accent");
+        expect(c).not.toContain("data-[highlighted]:bg-accent");
         expect(c).toContain("data-[disabled]:pointer-events-none");
         expect(c).toContain("data-[disabled]:opacity-disabled");
         expect(c).toContain("data-[disabled]:cursor-not-allowed");
-        expect(c).toContain("data-[state=open]:bg-accent");
     });
 
     it("indicator='none' (default) paints px-2 only", () => {

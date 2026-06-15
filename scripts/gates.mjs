@@ -568,8 +568,20 @@ export const GATES = [
     {
         id: "proof:az-final",
         cmd: "proof:az-final",
-        tags: ["release"],
+        // RETIRED from the release set at the BA cut (the au-final/ay-final precedent):
+        // its STAGED-OR-CUT clause guarded the AZ->3.13.0 staging window, fulfilled-and-
+        // superseded the moment the cut ran; BA is the successor tranche
+        // (proof:ba-final is its close gate). The other release gates carry the
+        // release-quality coverage. Kept here untagged for the historical record;
+        // bite-runnable via `npm run proof:az-final`.
+        tags: [],
         note: "AZ.W-CLOSE — the AZ terminal-close meta-gate (release-only, NOT ci). 10 clauses: FINAL-EXISTS+per-wave-citation, R3-CLOSURE (the 15-item matrix read with the headless-trap pi-backed-status arm), BUDGET-REBASELINED, NO-OPEN-LIVE-PENDING, CARDINAL (az/ay/ax ledgers + disposition register), RUNNER-TRUTH-BY-EXECUTION (the runtime gates re-run under GLASS_UI_SYNTH_DEVICE_ABSENT=1 and must exit 0 WITH a printed skip line — never grep), ZERO-ORPHANS, STAGED-OR-CUT (3.10.1+changeset | 3.13.x+CHANGELOG), CLEAN-TREE, THE-REFLECTION-BAR (proof:az-reflect). Born-RED witnessed on the authoring tree (FINAL absent + 4 mid-triumvirate reflections).",
+    },
+    {
+        id: "proof:ba-final",
+        cmd: "proof:ba-final",
+        tags: ["release"],
+        note: "BA.W-CLOSE — the BA terminal-close meta-gate (release-only, NOT ci; the proof:az-final successor). 9 clauses: C1 FINAL-EXISTS+per-wave-citation, C2 THE-GESTALT-BAR (proof:ba-gestalt operative-PASS — the P-1 structural fix made the close gate; REPLACES the AZ per-mechanism proof:az-reflect reflection-matrix clause, BA inv-4: the close CANNOT assert a surface PASS the gestalt gate marks FAIL), C3 BUDGET-REBASELINED, C4 NO-OPEN-LIVE-PENDING (`(DEVELOPED)` stays RETIRED), C5 CARDINAL (ba/az/ay/ax ledgers + disposition register completeness + BOOK-trigger re-eval), C6 RUNNER-TRUTH-BY-EXECUTION (the BA runtime gates re-run under GLASS_UI_SYNTH_DEVICE_ABSENT=1, exit 0 WITH a printed skip line — never grep; the BA waves are overwhelmingly device-free comment-strip detectors, the painted truth read via C2's gestalt verdict), C7 ZERO-ORPHANS, C8 STAGED-OR-CUT (3.13.0+changeset | 4.0.0+changeset-consumed+CHANGELOG '## 4.0.0' — the H4 4.0.0, atlas register-D two grounds; the silent-bump RED), C9 CLEAN-TREE (docs/precepts allowlist). Born-RED witnessed on the authoring tree (C1 RED: FINAL absent; C8 RED: no changeset staged). The pure-detector-with-injected-IO architecture (each clause unit-falsifiable).",
     },
     {
         id: "proof:ay-final",

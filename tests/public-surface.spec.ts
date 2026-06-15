@@ -67,7 +67,10 @@ const uiRuntimeExports = [
     "Slider",
     "Switch",
     "Table",
-    "Tabs",
+    // BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public root barrel
+    // (the canonical panel-nav surface is now `<SegmentedTabs variant="underline">`
+    // on `@mkbabb/glass-ui/tabs`; the reka substrate stays INTERNAL for the dock-rail
+    // consumer only). The retirement is asserted in nonCoreRootRetirements below.
     "TagsInput",
     "Toast",
     "Toggle",
@@ -220,6 +223,9 @@ const nonCoreRootRetirements = [
     "Pulse",
     "PaperBackdrop",
     "SegmentedTabs",
+    // BA.W-TABS — the reka `ui/Tabs` wrapper family is OFF the root barrel (clean break,
+    // no alias; `SegmentedTabs` via `/tabs` is the canonical surface).
+    "Tabs",
     "TypewriterText",
     "StackedIconGroup",
     "ToggleChip",
@@ -284,6 +290,10 @@ const exactSubpathRuntimeSurfaces = [
             "DockLayerGroup",
             // AZ.W-RAIL-EXTEND — the hairline context-rail chrome primitive.
             "DockRail",
+            // BA.W-DOCK-SECTIONS — the declarative tripartite section dock chassis
+            // (the descriptor-driven <DockSection> the shell docks compose; the
+            // W-SHELL-RAIL-RESEAT re-seat consumer). Runtime SFC default-export.
+            "DockSection",
             "DockSelectTrigger",
             // AX.W45 D13-c — the orientation+layout-aware divider primitive.
             "DockSeparator",

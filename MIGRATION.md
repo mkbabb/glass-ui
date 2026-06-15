@@ -1480,3 +1480,146 @@ the `--color-silver*` tokens) for the precision-instrument register.
 
 `<MetricBadge :amount="…">` → `<MetricBadge :value="…">`. The atlas acknowledged this is
 intentional; see the AZ.W-METRIC-UNIFY row above (`MIGRATION.md` §3.x amount→value).
+
+## BA → 4.0.0 — the dark-register-rebuilt cut (the clean breaks)
+
+The 4.0.0 major collects the BA tranche's clean breaks (no aliases, no compat shims — the
+no-backwards-compat house rule: a clean break IS a major). H4 SETTLED to **4.0.0** on the
+atlas register-D two grounds (§the d6 reconciliation above): the A-list is a
+removal+re-add for a live 3.12.0 fork consumer, AND BA carries its own breaks below. Each row
+names the wave, the break, and the consumer re-pin action. **The value.js-impacting rows
+(tabs, Dialog, menu-row, Select, Slider) are flagged `[value.js]` by name** — value.js is the
+live 3.13.0 registry consumer owed the named cut-notes (the atlas register-D discipline — by
+name, never silently; the full value.js adopt is `docs/tranches/BA/audit/valuejs-adopt-book.md`).
+
+### The disco retirement (W-GLASS-CAL / H2a) — gold survives CALM
+
+The audacious disco-grain recipe family RETIRES (clean break, no alias): the `@utility
+btn-audacious` / `btn-audacious-gold` recipes, the `@keyframes sparkle-sweep` /
+`btn-gold-bg-sweep`, and the disco-grain knobs (`--duration-sparkle`,
+`--glass-grain-opacity-disco`) are GONE. Gold survives in the CALM register per H2a arm (a):
+the static `.gold-shimmer` text gradient + the `--glass-specular` edge catch-light registers
+STAY (the FENCE held — only the ANIMATED sweeps die). The dock-tab primary tier collapses onto
+the plain glass hover register (no grain / `--phase-color` radial halo). **Consumer re-pin:**
+drop any `<Button variant="primary-audacious">` / `gold-audacious` binding (the variant rides
+the retired recipe) or accept the calm register — the slides `DeckGate.vue:70`
+`variant="primary-audacious"` is the named live break site (see the slides adopt book).
+
+### The tone-on-glass recompose (W-FEEDBACK-TONE)
+
+Toast / Notification / Alert tone variants render TINTED-GLASS over the floating rung (ONE
+`.feedback-tone` `color-mix` recipe, α < 0.92 both modes), NOT an opaque saturated slab. The
+three independent tone maps collapsed onto the ONE recipe. **Consumer re-pin:** a consumer that
+hardcoded a tone-slab color re-points to the house tone token; the slab look is gone.
+
+### The static scroll-fade retirement (W-FADING-SCROLL)
+
+The static `.scroll-fade-*` utilities RETIRE (clean break). **Consumer re-pin:** migrate to the
+`<FadingScroll>` primitive (`@mkbabb/glass-ui/fading-scroll`) — a native `scroll(self)`-driven
+edge-fade with a JS fallback. A consumer's local FadingScroll prototype (slides had one) deletes
+on the bump.
+
+### PresetEditorField retires onto the Configurator chassis (W-CONFIG-CHASSIS)
+
+The gear PresetEditor recomposes on the Configurator chassis; `PresetEditorField` is REMOVED
+(clean break). **Consumer re-pin:** the migration is the `<ConfiguratorRow>` composition shape
+(label + control row; `DarkModeToggle` on the live `useGlobalDark` seam). The section divider
+COLOR moved off the inline `border-border/30` alpha to the dark-adaptive
+`--configurator-divider` token, keyed by the `data-dividers` attribute (the `border-t` WIDTH
+arm stays).
+
+### The shared `surface` axis (W-SURFACE-AXIS) — incl. the Dialog break `[value.js]`
+
+The shared `{glass · veil · opaque}` `surface` axis is adopted across
+Card / GlassPanel / Dialog / Sheet / Drawer / Popover / Command / ExpandableContainer / Skeleton
+(`surface-axis.css` + `useSurfaceAxis`). It is ADDITIVE where it extends a union, but two breaks
+a consumer re-pins:
+- **The Dialog `variant`→`surface` move `[value.js]`** — Dialog's prior `variant` discriminant
+  is the `surface` axis now. A consumer setting `<Dialog variant="…">` re-points to `surface="…"`.
+  (value.js DeckGate sets no `variant` on its Dialog → a NO-OP for slides specifically; the
+  value.js consumer of `/dialog` re-pins.)
+- **The GlassPanel↔Card axis reconciliation** — the two surfaces share the ONE `surface` axis;
+  a consumer relying on the prior divergent prop shape re-pins to the unified `surface` prop.
+- **`<Skeleton surface="glass">`** is the named downstream register for value.js's bespoke
+  `PaletteCardSkeleton.vue` (`bg-foreground/[0.04]` over `bg-card` — the "too black" composite)
+  re-author at the pin.
+
+### The tabs taxonomy cut (W-TABS) `[value.js]`
+
+ONE tab engine: `<SegmentedTabs>` (`@mkbabb/glass-ui/tabs`, pill-glass + underline-paper on
+`.paper-ink-mark`). The clean breaks (no alias):
+- **`ui/Tabs` LEFT the public root barrel** — the reka `Tabs`/`TabsList`/`TabsTrigger`/
+  `TabsContent` wrapper family is OFF `@mkbabb/glass-ui` (the reka substrate stays INTERNAL
+  solely for the dock-rail consumer). Canonical panel-nav is `<SegmentedTabs variant="underline">`.
+- **`segmented`→`pill` `[value.js]`** — the SegmentedTabs `segmented` variant folds onto `pill`;
+  value.js's `PaneSegmentedControl.vue` (consumes `@mkbabb/glass-ui/tabs`) re-points the variant.
+- **`multi-select` → `<ToggleGroup>`** — the multi-select tabs arm retires onto ToggleGroup
+  (the independent-toggles surface; Tabs is panel-nav only).
+- **`overflow` responsive-collapse** retired (the prior `:responsive` collapse arm).
+The indicator paints ONE elastic register (the oval-blob default-ON `TabsIndicator` plate is dead).
+`proof:tabs-unified` re-pointed to `proof:tabs-std`.
+
+### The menu-row glass default flip (W-MENU-GLASS) `[value.js]`
+
+The `.glass-menu-row` register is minted on the shared `menuItemVariants` CVA — DropdownMenuItem /
+ContextMenuItem / Select / Combobox / Command items inherit the element-level oklab-tint hover/
+highlight by DEFAULT. The base flat-fill (`hover:bg-accent` / `focus:bg-accent` /
+`data-[highlighted]:bg-accent` / `data-[state=open]:bg-accent`) is DROPPED — `accent` is now the
+explicit opt-out ESCAPE, not the base. **Consumer re-pin:** a consumer relying on the flat
+`bg-accent` highlight re-points; the `.glass-menu-section` mono-caption/hairline recipe is the
+section register. `[value.js]` — the dropdown/context-menu glass register.
+
+### The `/underline`→`/handmark` DEC-8 fold (W-HANDMARK)
+
+The d6 hand-voice family RE-LANDS on `@mkbabb/glass-ui/handmark` (`HandMark`/`InkMark`/`BRUSHES`).
+The prior `GlassUnderline` + `custom/underline/` + the `/underline` subpath RETIRE (clean break,
+grep-negative survivor). **Consumer re-pin:** a consumer importing `@mkbabb/glass-ui/underline` /
+`GlassUnderline` re-points to `/handmark` (`<HandMark>`). (slides imports ZERO `/underline` — the
+red pen-underlines on its intro/closer slides are deck-LOCAL CSS/SVG glyphs, never the library
+component; a NO-OP for slides — see the slides adopt book.)
+
+### The `CarouselDots`→`PagerDots` retirement (W-PAGER)
+
+`CarouselDots` RETIRES onto the unified `<PagerDots>` + `.glass-pager-ring` register
+(`@mkbabb/glass-ui/pager`) — the carousel counter off the dark `bg-card` slab. The dots and the
+slides `DeckPager` were ALREADY one recipe (≥2 consumers by construction). **Consumer re-pin:**
+a `CarouselDots` consumer re-points to `<PagerDots>`.
+
+### Dark-material token-identity NOTEs (W-DARK-MATERIAL — token re-points, not API breaks)
+
+The dark register is rebuilt on the EXISTING `--glass-tint-*` seam (no new compositing seam):
+the page→card L-point split (page L6→L4, card L10→L16), the transmissive dark `saturate`/
+`brightness` arm + edge α 0.22, the dark tint LIFT 12%, and the `--primary` →
+legendre-violet (`oklch(0.739 0.134 318.1)`, fg 7.15:1). These are TOKEN re-resolutions on the
+inheriting axis — a consumer overriding a `--glass-*` / `--primary` token re-checks its value
+against the rebuilt register, but there is no API/prop break (the W-DARK-MATERIAL scope-7
+self-engage conditionalization REMOVES the gray-slab self-engage a calm-light content card
+composited — a consumer's content card un-grays at the bump with ZERO consumer edit).
+
+### Warm-chroma-floor NOTEs (W-NO-GRAY — token re-saturation, not API breaks)
+
+The neutral ladder + light glass plates + borders are re-saturated onto the warm identity (the
+achromatic-48 ladder lifted above the C 0.020 chroma floor). TOKEN re-resolution; no API break.
+A consumer overriding a neutral token re-checks its chroma.
+
+### The `--glass-blur-*` dial-back (W-GLASS-CAL B1 — token re-point, not API break)
+
+The six `--glass-blur-*-radius` primitives dialed back ~15-20% within the 8-15px band
+(`10/12/16/15/11` → `8/10/13/13/9`; wash unchanged at 1px; the dock radius 11px→9px). TOKEN
+re-resolution; no API break. The per-spring `--spring-<name>-duration` vocabulary is MINTED (the
+analytic 2%-band settle envelope, GENERATED from `SPRING_PRESETS`) — a consumer that rode a
+`--spring-*` easing on a generic `--duration-*` clock gains the matched per-spring duration.
+
+### The `@source` re-point (W-EMISSION — consumer-wiring fix, not an API break)
+
+The dead `@source` in `index.css` re-points to the real `dist/` surface so glass-ui's compiled
+utilities reach a consumer's Tailwind content-scan again. The Select collision-bound + inner-
+scroll ship as PRECOMPILED CSS; the Slider `size` axis now renders REAL track geometry in every
+consumer (no rename, but the rendered behaviour changes — a consumer relying on the silently-6px
+track now gets the real `size` track) `[value.js — the A-3 Slider size axis]`. The
+`SelectTrigger` `size` gained a font-rung prop writing `--dropdown-text` `[value.js — WO-3]`.
+
+### `MetricBadge` `amount`→`value` (already shipped at AZ; re-flagged here for the BA consumer set)
+
+Carried verbatim from AZ.W-METRIC-UNIFY (above) — a ONE-LINE `amount=`→`value=` rename per call
+site. Named here so a consumer adopting the 4.0.0 cut sees it in the BA break list.

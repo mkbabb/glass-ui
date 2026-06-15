@@ -53,3 +53,46 @@ This wave's own additions (`onFlipSettled`, `PAPER_WASH_GROUND`, `navigate`,
 deletion + the carve are behaviour fixes, not API breaks. After the cut the d6
 lineage retires and the fork closes (the W-CLOSE / orchestrator-owned fork-close
 protocol); the lineage map from `636adeae` ships in the notes.
+
+---
+
+## The atlas adopt section (W-CLOSE scope 12d — beside the slides + value.js books)
+
+The Connectivity Atlas holds `^3.12.0` (the d6 fork lineage) until this cut. On the 4.0.0 publish:
+
+1. **Re-pin EXACT to `4.0.0`** (not `^` — the d6-bifurcation trap is the reason the pin is exact;
+   `npm install`).
+2. **The G2b ~30-call-site migration consumes the A-list table** (above): `onFlipSettled` /
+   `PAPER_WASH_GROUND` / `data-allow-motion` are no-call-site-change (byte-identical capability);
+   `navigate` is a one-line rename (drop the `useRouteTransition()` destructure); `MetricBadge`
+   `amount`→`value` is a one-line rename; the `/handmark` family adopts per W-HANDMARK's notes; the
+   silver `variant="structure"` is a NEW additive adopt where the atlas wants the milled-metal register.
+3. **The atlas's R-LETTER G2a closes on our publish** — the atlas was the live consumer the AZ
+   "stale-lineage" prune read mainline-only (the fork had a live registry consumer); 4.0.0 is the
+   reconciliation that returns the A-list by new shape.
+
+## THE FORK-CLOSE PROTOCOL (orchestrator-owned — agents NEVER git; emit the EXACT sequence, do NOT run)
+
+After the 4.0.0 fold commits land + push, the orchestrator runs (the d6 retirement, BA invariant 11):
+
+```sh
+# 1. ARCHIVE-TAG the fork lineage BEFORE the branch retires (the 9-commit lineage + its
+#    registry-publish correspondence survives as a permanent annotated ref).
+git tag -a d6-lineage-archive 2755ebbd \
+  -m "d6 fork lineage (feat/d6-library-3.10, 9 commits, 3.11.0-3.12.0); capabilities folded at 4.0.0 by new shape (see CHANGELOG 4.0.0 + W-ATLAS-RECONCILE-cut-notes.md). Archived before branch deletion."
+git push origin d6-lineage-archive
+
+# 2. DELETE the branch ref (local + remote) once the archive tag lands + the fold commits are pushed.
+git branch -D feat/d6-library-3.10
+git push origin --delete feat/d6-library-3.10
+# (+ remove the worktree if one exists: `git worktree remove <path>/glass-ui-d6`)
+
+# 3. DEPRECATE the dead-end fork versions on npm (mirrors the existing 3.10.0 deprecation;
+#    closes the silent-cross-the-bifurcation `npm update` trap).
+npm deprecate "@mkbabb/glass-ui@>=3.11.0 <=3.12.0" \
+  "d6 fork lineage; superseded by 4.0.0 which folds these capabilities by new shape — see CHANGELOG 4.0.0 + the A-list migration table"
+```
+
+The cut notes NAME the retirement: "the d6 lineage (`feat/d6-library-3.10`, archived as
+`d6-lineage-archive`) retires; its capabilities return at 4.0.0 by new shape (see the A-list
+table); the 3.11.x/3.12.0 registry publishes stay live but are deprecated — pin 4.0.0."
