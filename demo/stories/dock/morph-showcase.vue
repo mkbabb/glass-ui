@@ -32,6 +32,7 @@ import { startViewTransition } from "../../../src/composables/motion/useViewTran
 import { Button } from "../../../src/components/ui/button";
 import { Switch } from "../../../src/components/ui/switch";
 import { Label } from "../../../src/components/ui/label";
+import DockStage from "./DockStage.vue";
 
 const entries = [
     { id: "foundations", label: "Foundations", icon: Compass },
@@ -133,6 +134,12 @@ onMounted(() => {
 
 <template>
     <StoryPage>
+        <!-- BA.W-STAGE scope 9 (FD-DOCK-1) — the morph showcase is the money-shot:
+             the teardrop of glass morphing over a LIVE aurora. The stage sits over
+             the shared, offscreen-paused DockStage field (replacing the prior static
+             gradient wash); the goo-bridge threshold already occludes the topology
+             reflow, so a moving backdrop only helps. ONE GL context for the route. -->
+        <DockStage>
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Vertical ↔ horizontal liquid-glass morph</h2>
             <p class="text-small text-muted-foreground">
@@ -319,31 +326,18 @@ onMounted(() => {
                 </template>
             </div>
         </section>
+        </DockStage>
     </StoryPage>
 </template>
 
 <style scoped>
-/* The stage backdrop — a static themed wash (a warm aurora-bleed gradient) so the
-   glass docks + the goo teardrop read against a non-flat surface. Static (no WebGL,
-   no animation) — capture-stable and the morph is the message. Adaptive under .dark
-   via the token gradient stops. */
+/* BA.W-STAGE scope 9 — the stage is now TRANSPARENT: the live DockStage aurora
+   field IS the backdrop (the teardrop-of-glass-morphing-over-a-live-aurora
+   money-shot), replacing the prior static themed wash. The glass docks + the goo
+   teardrop read against the moving painterly field. The view-transition-name is
+   PRESERVED (load-bearing for the arm-c crossfade — the VT substrate's CSS half). */
 .dock-morph-stage {
-    background:
-        radial-gradient(
-            70% 55% at 28% 22%,
-            color-mix(in oklab, var(--primary), transparent 82%),
-            transparent 70%
-        ),
-        radial-gradient(
-            60% 60% at 78% 80%,
-            color-mix(in oklab, var(--accent, var(--primary)), transparent 84%),
-            transparent 72%
-        ),
-        linear-gradient(
-            140deg,
-            color-mix(in oklab, var(--card), var(--foreground) 4%),
-            var(--card)
-        );
+    background: transparent;
     /* The arm-c crossfade names the two dock states so the View-Transition group
        crossfades them (the view-transition substrate's CSS half). */
     view-transition-name: dock-morph-stage;

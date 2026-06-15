@@ -163,7 +163,16 @@ interface MotionFields {
 }
 const MOTION_FIELDS: Record<AuroraMotionAtom, MotionFields> = {
     still: { nucleiDrift: 0, paletteDrift: 0, warpDrift: 0, breathDepth: 0 },
-    breathing: { nucleiDrift: 0, paletteDrift: 0, warpDrift: 0, breathDepth: 0.05 },
+    // BA.W-STAGE scope 12 (BA-VJS-2, valuejs-fold A-4) — `breathing` made HONEST.
+    // HEAD shipped all three spatial/chromatic drift terms ZERO, so the frag's
+    // surviving `col *= 1 + 0.05·breath·0.5` was a ±2.5% global luminance pulse
+    // only (gl.readPixels ±1–2/255, SUB-perceptible — the register read DEAD on
+    // any calm seed for every consumer). The terms gain SMALL non-zero life — ~1/3
+    // of `drifting`'s drift + a touch more breath amplitude — so a calm-seed aurora
+    // reads as small-but-perceptible ATMOSPHERIC drift while `breathing` STAYS the
+    // CALMEST non-dead register (still < breathing < drifting, the ordering held).
+    // The JS motion TABLE only — aurora.frag is UNTOUCHED (the GL fence holds).
+    breathing: { nucleiDrift: 0.005, paletteDrift: 0.006, warpDrift: 0.003, breathDepth: 0.06 },
     drifting: { nucleiDrift: 0.015, paletteDrift: 0.015, warpDrift: 0.008, breathDepth: 0.05 },
 };
 

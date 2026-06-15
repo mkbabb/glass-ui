@@ -43,6 +43,7 @@ import {
 } from "../../../src/components/ui/select";
 import { Aurora } from "../../../src/components/custom/aurora";
 import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+import DockStage from "./DockStage.vue";
 
 const playing = ref(false);
 
@@ -99,6 +100,14 @@ function togglePlay() {
 
 <template>
     <StoryPage>
+        <!-- BA.W-STAGE scope 8/9 (FD-DOCK-1) — the flagship dock demos sit over ONE
+             shared, offscreen-paused aurora field (DockStage), replacing the flat
+             bg-card/40 panels. Each demo is a transparent `.dock-stage-tile` framed
+             slot so the dock floats DIRECTLY over the live field (the BG-2 lesson).
+             ONE GL context for the band's decorative staging — the prior per-demo
+             collapsible aurora folds INTO the shared field (the pause-toggle keeps
+             its OWN functional aurora below, which the toggle genuinely controls). -->
+        <DockStage>
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Collapsible (hover to expand)</h2>
             <p class="text-sm text-muted-foreground">
@@ -109,20 +118,9 @@ function togglePlay() {
                 <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the
                 scale and stagger snap; the state still toggles.
             </p>
-            <!-- The dock IS the headline glass primitive — stage a low-intensity
-                 contained Aurora wash INSIDE the specimen frame (the display/card
-                 MODEL pattern) so the glass dock has something to be glass against
-                 (W-SB-STAGE §2.2, FD §6 the #1 placement). ONE Aurora context per
-                 page — within the WebGL budget. -->
             <div
-                class="relative flex justify-center overflow-hidden rounded-[var(--radius-card)] border border-border/40 p-8"
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <Aurora
-                    :config="DEFAULT_AURORA_CONFIG"
-                    :opacity-ceiling="0.4"
-                    class="absolute inset-0"
-                    aria-hidden="true"
-                />
                 <GlassDock class="relative z-10">
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
@@ -140,7 +138,7 @@ function togglePlay() {
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Always expanded — media transport</h2>
             <div
-                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <GlassDock always-expanded>
                     <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
@@ -166,7 +164,7 @@ function togglePlay() {
         <section class="flex flex-col gap-3" data-testid="dock-trigger-story">
             <h2 class="text-subheading">Select and dropdown triggers</h2>
             <div
-                class="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <!-- import { DockSelectTrigger, DockDropdownTrigger } from "../../../src/components/custom/dock"; -->
                 <GlassDock always-expanded fit-content>
@@ -246,7 +244,7 @@ function togglePlay() {
                 side/align collision avoidance.
             </p>
             <div
-                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <GlassDock always-expanded>
                     <DockIconButton aria-label="New"><Plus /></DockIconButton>
@@ -360,7 +358,7 @@ function togglePlay() {
                 the recipe.
             </p>
             <div
-                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 data-testid="dock-slider-hold"
             >
                 <!-- data-testid="dock-capture" is the deterministic AY.W-DOCK1 capture
@@ -416,7 +414,7 @@ function togglePlay() {
                 gear tap can never activate the swapped-in control under the same point.
             </p>
             <div
-                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 data-testid="dock-tap-capture-frame"
             >
                 <!-- data-testid="dock-tap-capture" — the deterministic R5-TAP (R5-3)
@@ -639,5 +637,15 @@ function togglePlay() {
                 </li>
             </ul>
         </section>
+        </DockStage>
     </StoryPage>
 </template>
+
+<style scoped>
+/* BA.W-STAGE scope 9 — the transparent demo tile. NO opaque bg-card plate; the
+   dock floats DIRECTLY over the shared DockStage aurora field (the BG-2 lesson),
+   framed by a faint hairline only. */
+.dock-stage-tile {
+    background: transparent;
+}
+</style>
