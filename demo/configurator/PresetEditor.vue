@@ -245,7 +245,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                         <div class="space-y-2">
                             <SegmentedTabs
                                 v-model="presetModel"
-                                variant="segmented"
                                 :options="PRESET_OPTIONS"
                                 class="w-full"
                                 aria-label="Design preset"
@@ -344,7 +343,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                         >
                             <SegmentedTabs
                                 v-model="densityModel"
-                                variant="segmented"
                                 :options="DENSITY_OPTIONS"
                                 class="w-full"
                                 aria-label="Layout density"

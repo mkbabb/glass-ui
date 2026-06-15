@@ -75,8 +75,13 @@ binding spec here.
    (pencil-boil + perfect-freehand) with the budget note. The B-1 anchors inherited.
 2. **Execute DEC-8 outcome (1)**: `GlassUnderline`/`/underline` RETIRES onto
    `HandMark shape="underline"` (clean break — subpath + barrel rows + the demo
-   story re-point; MIGRATION row; the slides consumer (`SlideIntro`/`SlideCloser`
-   per the AZ H6 fold) is a named break row in the adopt book).
+   story re-point; MIGRATION row). **NO slides break (the 2026-06-15 slides
+   ground-truth, BINDING):** slides imports ZERO `@mkbabb/glass-ui/underline` /
+   `GlassUnderline` — the `SlideIntro`/`SlideCloser` red pen-underlines are
+   deck-LOCAL CSS/SVG `::after` glyphs, never the library component. The phantom
+   "slides adopt-book break row" is STRUCK (it was the AZ-H6-fold assumption the
+   slides session disproved at HEAD `c943a49`); the MIGRATION row stands for any
+   FUTURE external `/underline` consumer, not slides.
 3. **Engage the highlighter** (the five deltas): geometry seats LOW; `ribbon:"hull"`
    engaged; non-zero taper default; `cap:"square"` plumbed through `ink.ts` AND the
    hardcoded `linecap:round` removed; the isolation wrapper re-cut so `multiply`

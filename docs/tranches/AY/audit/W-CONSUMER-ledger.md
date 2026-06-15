@@ -39,6 +39,11 @@ non-empty receiver-wave AND close-gate or the gate refuses it (stays RED).
 | fourier-analysis/web | ../fourier-analysis/web/src/components/visualization/VisualizationView.vue | UnderlineTabs | /tabs | DEFERRED | fourier-analysis/web I.W-TABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
 | words/frontend | ../words/frontend/src/components/custom/search/components/controls/LookupControlsPanel.vue | BouncyToggle | /tabs | DEFERRED | words/frontend A.W-TABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
 | words/frontend | ../words/frontend/src/components/custom/search/components/controls/WordlistControlsPanel.vue | BouncyToggle | /tabs | DEFERRED | words/frontend A.W-TABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
+| words/frontend | ../words/frontend/src/components/custom/definition/components/ProviderViewTabs.vue | Tabs | root | DEFERRED | words/frontend A.W-UITABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
+| words/frontend | ../words/frontend/src/components/custom/definition/components/ProviderViewTabs.vue | TabsContent | root | DEFERRED | words/frontend A.W-UITABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
+| words/frontend | ../words/frontend/src/components/custom/search/components/controls/SearchControls.vue | Tabs | root | DEFERRED | words/frontend A.W-UITABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
+| words/frontend | ../words/frontend/src/components/custom/search/components/controls/SearchControls.vue | TabsList | root | DEFERRED | words/frontend A.W-UITABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
+| words/frontend | ../words/frontend/src/components/custom/search/components/controls/SearchControls.vue | TabsTrigger | root | DEFERRED | words/frontend A.W-UITABS-MIGRATE | proof:consumer-staleness GREEN over this site | |
 
 <!-- W-CONSUMER-LEDGER-MACHINE-END -->
 
@@ -56,7 +61,19 @@ glass-ui does NOT re-introduce the deleted family.
   drop-in `<SegmentedTabs variant="underline">` swap + the e2e render-verify (the binding-verification memory).
 - **words/frontend** — 2 `BouncyToggle` sites (`…/controls/LookupControlsPanel.vue:119`,
   `…/controls/WordlistControlsPanel.vue:156`). Receiver-wave: `words/frontend A.W-TABS-MIGRATE`. The migration is
-  the drop-in `<SegmentedTabs>` (segmented default) swap + the e2e render-verify.
+  the drop-in `<SegmentedTabs>` (the default register) swap + the e2e render-verify.
+
+**BA.W-TABS addendum — the `ui/Tabs` public-surface retirement fallout (5 NEW DEFERRED rows).** BA.W-TABS
+removed the `ui/Tabs` (reka) family from the public barrel (the standardized family is `SegmentedTabs`; the reka
+substrate stays INTERNAL for the dock-rail only). This made two `words/frontend` sites stale (they import
+`ui/Tabs` from the ROOT barrel `@mkbabb/glass-ui`):
+- `definition/components/ProviderViewTabs.vue:63` — `{ Tabs, TabsContent }`.
+- `search/components/controls/SearchControls.vue:102` — `{ Tabs, TabsList, TabsTrigger }`.
+Receiver-wave: `words/frontend A.W-UITABS-MIGRATE` (the consumer's own tranche). The migration is the drop-in
+`<Tabs>`/`<TabsTrigger>` panel-nav recipe → `<SegmentedTabs variant="underline">` (or `variant="pill"` for a
+non-panel toggle strip), + the e2e render-verify. Same DEFERRED rationale as above — glass-ui's surface is FIXED
+(the clean break is canon; glass-ui does NOT re-introduce `ui/Tabs` on the public barrel), the consumer SOURCE
+edit + its binding-e2e-verify is the consumer-tranche wave's job.
 
 Why DEFERRED, not MIGRATED-in-this-wave: glass-ui's surface is FIXED (`SegmentedTabs` is the canonical receiver
 at `d4c2910`); the consumer SOURCE edit + its binding-e2e-verify is the consumer-tranche wave's job (a glass-ui

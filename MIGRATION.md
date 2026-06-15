@@ -1,5 +1,47 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
+> break, no alias ("No legacy code").** `SegmentedTabs` is now ONE engine with TWO
+> MATERIALS (`variant: "pill" | "underline"`) and ONE orientation axis
+> (`orientation: "horizontal" | "vertical"`). Four retirements:
+>
+> 1. **`variant="segmented"` → `variant="pill"` (the DEFAULT now).** Segmented and
+>    pill were one register; the user kept "pill" by name. `pill` is the glass
+>    material — a glass-quiet track + the selected-reads-as-glass (`--glass-bg-floating`)
+>    indicator, no gray. MIGRATE: drop the `variant="segmented"` prop (it re-defaults
+>    to `pill`) or rename it to `variant="pill"`. A `<SegmentedTabs>` with no `variant`
+>    now paints the glass pill.
+> 2. **`overflow="scroll" / "auto"` axis RETIRED.** Overflow is `<FadingScroll>`'s job
+>    (`@mkbabb/glass-ui/fading-scroll`) at the consumer's own level, not an in-tabs
+>    scroller. MIGRATE: wrap the strip in `<FadingScroll>` or apply `useFadingScroll`
+>    where a genuinely-overflowing tab row needs an edge fade (the common ≤4-tab case
+>    needs none).
+> 3. **`:multi-select` RE-HOMED to `<ToggleGroup>`.** A multi-pressed strip (N
+>    independent toggles on one surface, `role="group"`) IS a ToggleGroup, not a tab
+>    family member. MIGRATE: `<SegmentedTabs :multi-select>` →
+>    `<ToggleGroup type="multiple">` (the IG-B2 glass-track register). The single-select
+>    string model replaces the prior `string | string[]` union.
+> 4. **`ui/Tabs` (the reka wrapper family: `Tabs`/`TabsList`/`TabsTrigger`/`TabsContent`/`TabsIndicator`)
+>    LEFT the public surface.** It is no longer re-exported from `@mkbabb/glass-ui` or
+>    `@mkbabb/glass-ui/<ui-tabs>`. The standardized family is `SegmentedTabs`
+>    (`@mkbabb/glass-ui/tabs`). MIGRATE a hand-rolled `ui/Tabs` recipe to the matching
+>    `<SegmentedTabs variant="…">` material. (The reka substrate files remain INTERNAL
+>    solely for the dock-rail consumer `DockLayerGroup` — they are not a consumer
+>    surface.) The `indicator`/`surface` default-ON baked-plate that painted the R10-2
+>    oval blob dies with the public surface.
+>
+> **External migration re-issue (the AY W-CONSUMER ledger, re-stamped at this SHA).**
+> The 5 DEFERRED external rows (fourier-analysis/web 3× `UnderlineTabs`, words/frontend
+> 2× `BouncyToggle`) re-target the standardized API: `UnderlineTabs` →
+> `<SegmentedTabs variant="underline">` (the paper material, panel-nav `role="tablist"`);
+> `BouncyToggle` → `<SegmentedTabs>` (the default pill material — the named-good glass
+> register). The receiver contract is PRESERVED — `:options` / `:model-value` /
+> `@update:model-value` + `variant` are unchanged across the standardization, so the
+> drop-in swap the ledger promises still holds; the `proof:consumer-staleness` allowlist
+> re-stamps (those rows carry their `{receiver-wave, close-gate}` terminals in the
+> consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
+> `proof:tabs-std`.
+
 > **AZ.W-RAIL3 — `<DockRail>` evolved from a single end-icon into the floating-carousel
 > chip STRIP.** The new `items?: readonly DockRailItem[]` prop (`DockRailItem = { id,
 > label, icon? }`, exported from `@mkbabb/glass-ui/dock`) drives the visible facet chips
@@ -68,6 +110,24 @@
 > stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
 > ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
+
+> **CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
+> `<DialogContent variant="glass|opaque">` is RETIRED onto the ONE shared
+> `{glass·veil·opaque}` surface-decoration axis: `<DialogContent surface="glass|veil|opaque">`
+> (no alias — the prior `variant` was Dialog-local and never matched the Card grammar). Migrate
+> per call site: `variant="glass"` → `surface="glass"` (also the new default), `variant="opaque"`
+> → `surface="opaque"`; the `veil` rung is gained for free. The painted output for the `glass`
+> and `opaque` rungs is byte-identical (the same `glass-floating` / `.glass-opaque` material,
+> now reached through the shared resolver).
+>
+> ADDITIVE (next cut, BA.W-SURFACE-AXIS): the shared `Surface = "glass" | "veil" | "opaque"` axis
+> (published on `@mkbabb/glass-ui/api`) reaches the whole content/floating band — `GlassPanel`,
+> `Sheet`, `Popover`, `Command`, `Drawer`, and `ExpandableContainer` each gain a `surface` prop
+> (default `"glass"`, byte-compatible). `<Skeleton>` gains a `surface?: "glass" | "opaque"` prop
+> (default `"opaque"`, byte-identical to today's `bg-muted`); `surface="glass"` is the NEW
+> over-glass register (a translucent `--skeleton-glass-bg` block that lets a frosted plate read
+> through). The `ExpandableContainer` fullscreen overlay now un-walls onto the overlay glass tier
+> by default (`surface="opaque"` restores the prior solid wall). No break for any of these.
 
 > **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
 > now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
@@ -1079,6 +1139,44 @@ A consumer who overrode `--mask-fade-width` (`:root { --mask-fade-width: 0.5rem 
 (zero JS on a supporting engine); the `useFadingScroll` JS fallback covers older engines
 automatically. The fade does NOT vanish under `prefers-reduced-motion: reduce` (it is a
 legibility cue, not motion — it stops interpolating, the discrete edge presence stays).
+
+---
+
+### The disco CTA register retired — `btn-audacious` / `btn-audacious-gold` GONE (BA.W-GLASS-CAL, hinge H2a)
+
+The user removed the "disco effect" wholesale. The `@utility btn-audacious` + `@utility btn-audacious-gold`
+recipes (the sparkle `✦` glyph, the disco-grain hover, the gold-sweep shimmer, the typed press-ripple)
+and their `@keyframes sparkle-sweep` / `btn-gold-bg-sweep` + the `--duration-sparkle` /
+`--glass-grain-opacity-disco` / `--ripple-radius-max` / `--motion-duration-ripple` knobs are **DELETED —
+clean break, no alias** (house no-backwards-compat). The `primary-audacious` / `gold-audacious` Button
+**variant keys are KEPT and re-pointed** onto the calm glass-first register (hinge H2 arm a — *gold
+survives CALM*), so a `<Button variant="primary-audacious">` / `variant="gold-audacious">` call site needs
+**no change** — it inherits the new register automatically. Only a consumer that applied the `btn-audacious`
+*utility class directly* (not via the variant) must migrate.
+
+| was | now |
+|---|---|
+| `class="btn-audacious"` (the disco utility, applied directly) | the calm glass register — `class="glass-wash btn-glass text-foreground"` (the `--glass-specular` edge gleam + the §6 hover/press) |
+| `class="btn-audacious btn-audacious-gold"` (the gold sweep) | `<Button variant="gold-audacious">` (the calm glass + STATIC `--color-gold` tint + specular, no animated sweep) — or a hand-authored `class="glass-wash btn-glass"` + a static `bg-[linear-gradient(135deg,color-mix(in srgb,var(--color-gold) 10%,transparent),…)]` tint |
+| `<Button variant="primary-audacious">` | **unchanged** — the variant key re-points to the calm glass CTA |
+| `<Button variant="gold-audacious">` | **unchanged** — the variant key re-points to the calm gold-glass CTA |
+| `@keyframes sparkle-sweep` / `btn-gold-bg-sweep`, `--duration-sparkle`, `--glass-grain-opacity-disco`, `--ripple-radius-max`, `--motion-duration-ripple`, `@property --ripple-radius` | RETIRED (no surviving consumer) |
+
+The dock-tab PRIMARY tier (`<DockTabButton data-tier="primary">`) no longer auto-attaches `btn-audacious` or
+paints the phase-grain hover/halo — it reads the plain de-red'd dock-control glass hover register. The
+`data-tier="primary"` styling hook is **unchanged** (the taller/wider structural shell stays); only the disco
+accents drop. **Speedtest + slides:** any direct `btn-audacious` class binding migrates to the calm glass
+register per the table; the `gold-audacious` / `primary-audacious` *variant* consumers are untouched. This is
+a **breaking change for direct-utility consumers** (an input to the 4.0.0-vs-3.14.0 version call at W-CLOSE).
+
+### Per-spring duration clock minted — `--spring-<name>-duration` (BA.W-GLASS-CAL Unit 3)
+
+ADDITIVE — no migration required. `--spring-<name>-duration` (generated from the `(response, ζ)` SPRING_PRESETS
+table: smooth 0.36s / snappy 0.34s / bouncy 0.69s / gentle 0.44s / dock 0.28s) is the spring's OWN settle clock.
+A `transition` that pairs `--spring-<name>` with a generic `--duration-*` now re-points to the matching
+`--spring-<name>-duration` so the spring plays at its physical settle (the prior generic clock dragged a dead
+sub-pixel tail). A consumer reading `var(--spring-snappy)` directly gains the option of `var(--spring-snappy-duration)`
+for the matched clock; the existing generic-clock pairings still work.
 
 ---
 

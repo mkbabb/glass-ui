@@ -16,8 +16,11 @@
 // scroll-driven.css: the native `scroll(self)`-timeline drives per-edge `@property`
 // mask-width customs (`--fade-start` opens past `scroll > 0`, `--fade-end` closes on
 // trailing overflow), with the `useFadingScroll` JS fallback feature-detect-gated OFF
-// under timeline support. The four owned consumers (blob mood row, aurora controls
-// column, SegmentedTabs `overflow="scroll"`, PresetPickerRow) fold onto it.
+// under timeline support. The owned consumers (blob mood row, aurora controls
+// column, PresetPickerRow) fold onto it. (The fourth — SegmentedTabs
+// `overflow="scroll"` — had its overflow axis RETIRED at BA.W-TABS: overflow is
+// FadingScroll's job at the consumer level, so SegmentedTabs is no longer a
+// consumer; the c5 invariant narrowed to "carries no scroll-fade machinery".)
 //
 // SOURCE arm only — the BINDING painted truth is the π arm
 // (tests-visual/fading-scroll.spec.ts + the W-FADING-SCROLL-DELTA capture), NEVER this
@@ -137,9 +140,14 @@ add(
 // C1 (blob mood row), C4 (aurora controls column), C5 (SegmentedTabs scroll), C6
 // (PresetPickerRow) carry NO static class, and PresetPickerRow's bespoke machinery
 // is DELETED.
-const c5Migrated =
-    !SCROLL_FADE_CLASS_RE.test(segTabsVue) &&
-    (/FadingScroll/.test(segTabsVue) || /useFadingScroll/.test(segTabsVue));
+// BA.W-TABS — the SegmentedTabs `overflow="scroll"` axis RETIRED (the declared
+// W-FADING-SCROLL coordination): overflow is now `<FadingScroll>`'s job at the
+// CONSUMER's own level, not an in-tabs scroller, so SegmentedTabs is no longer a
+// FadingScroll consumer. The c5 invariant is now "SegmentedTabs carries NO
+// scroll-fade machinery" (the migration GOAL — no static class, no in-tabs scroll
+// port); the prior "reads <FadingScroll>/useFadingScroll" conjunct dissolved WITH
+// the retired axis (a smuggled-back static scroll-fade class still REDs).
+const c5Migrated = !SCROLL_FADE_CLASS_RE.test(segTabsVue);
 const c4Migrated = !SCROLL_FADE_CLASS_RE.test(auroraDock) && /FadingScroll/.test(auroraDock);
 const c1Migrated = !SCROLL_FADE_CLASS_RE.test(blobVue) && /FadingScroll/.test(blobVue);
 // C6 bespoke machinery deleted: no --mask-l / --mask-r / --edge-mask, no measure()
@@ -153,7 +161,7 @@ const c6OnPrimitive = /FadingScroll/.test(presetRow) || /useFadingScroll/.test(p
 add(
     "w5-four-consumers-migrated",
     c5Migrated && c4Migrated && c1Migrated && c6BespokeGone && c6OnPrimitive,
-    `C5 SegmentedTabs + C4 aurora column + C1 blob mood row carry NO scroll-fade-* class and read <FadingScroll>/useFadingScroll; C6 PresetPickerRow bespoke --mask-l/--mask-r/--edge-mask + ResizeObserver machinery DELETED, folded onto the primitive [c5=${c5Migrated} c4=${c4Migrated} c1=${c1Migrated} c6gone=${c6BespokeGone} c6prim=${c6OnPrimitive}]`,
+    `C5 SegmentedTabs carries NO scroll-fade-* class (the overflow axis RETIRED at BA.W-TABS — no longer a FadingScroll consumer); C4 aurora column + C1 blob mood row carry NO scroll-fade-* class and read <FadingScroll>/useFadingScroll; C6 PresetPickerRow bespoke --mask-l/--mask-r/--edge-mask + ResizeObserver machinery DELETED, folded onto the primitive [c5=${c5Migrated} c4=${c4Migrated} c1=${c1Migrated} c6gone=${c6BespokeGone} c6prim=${c6OnPrimitive}]`,
 );
 
 // ── W6 — the static-utility retirement is consumer-clean (the coordination floor) ───
