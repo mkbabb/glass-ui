@@ -117,16 +117,23 @@ export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
-// ── GlassUnderline (the animated draw-on underline, AY.W-UNDERLINE) ──────────
-// The `/underline` subpath's public surface: the two-clock + `active`-overlay
-// prop model, the variant headroom, and the `paths` geometry-escape tuple.
+// ── HandMark (the hand-voice mark family, BA.W-HANDMARK) ─────────────────────
+// The `/handmark` subpath's public surface: the prop model + the flat Brush
+// continuum. `GlassUnderline`/`/underline` RETIRED onto `HandMark shape="underline"`
+// (DEC-8 outcome 1; clean break, no alias — the editorial draw-on underline is
+// `<HandMark shape="underline" animation="draw-on">`, the natural pencil-boil
+// morphology the `boil` brush).
 export type {
-    GlassUnderlineClock,
-    GlassUnderlineVariant,
-    GlassUnderlinePaths,
-    GlassUnderlineProps,
-    GlassUnderlineExpose,
-} from "../components/custom/underline";
+    HandMarkProps,
+    HandShape,
+    HandAnimation,
+    MarkBox,
+    Brush,
+    BrushName,
+    BlendMode,
+    TaperSpec,
+    InkPath,
+} from "../components/custom/handmark";
 
 // ── CVA variant prop types ─────────────────────────────────────────────────
 // Every CVA-driven component's `VariantProps`-derived type. Consumers wrapping
@@ -316,6 +323,12 @@ export type {
     MetricStackProps,
 } from "../components/custom/metric-stack";
 
+// ── PagerDots ────────────────────────────────────────────────────────────────
+// `PagerDotsProps` is the Props shape consumers forward when wrapping
+// `<PagerDots>` — the ONE position-dot rail register the carousel ships and the
+// slides deck adopts (BA.W-PAGER). Ships via its `/pager-dots` subpath.
+export type { PagerDotsProps } from "../components/custom/pager-dots";
+
 // ── Digit / SegmentedTabs primitives ────────────────────────────────────────
 // Props/variant types for the animated-digit + the unified SegmentedTabs.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
@@ -339,6 +352,19 @@ export type {
 // `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked
 // avatar/icon strips pin against from the discovery layer.
 export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
+
+// ── IconChip ─────────────────────────────────────────────────────────────────
+// The section-color pop primitive (BA.W-ICON-CHIP) — the ONE color-event
+// vehicle. `IconChipProps` is the full contract; `IconChipSection` (the 0..12
+// ramp index) + `IconChipTone` (a complete token colour, the MetricCell-iconColor
+// reconcile path) + `IconChipIcon` (the permissive lucide glyph type) are the
+// public axis types consumers pin against.
+export type {
+    IconChipProps,
+    IconChipSection,
+    IconChipTone,
+    IconChipIcon,
+} from "../components/custom/icon-chip";
 
 // ── Dock ───────────────────────────────────────────────────────────────────
 // `UseDockStateReturn` — canonical composable-return shape paralleling

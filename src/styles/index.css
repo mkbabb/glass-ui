@@ -176,6 +176,10 @@
 @import "./drawer.css";
 @import "./segmented-tabs.css";
 @import "./select.css";
+/* BA.W-ICON-CHIP — the <IconChip> section-color pop recipe + the three axes
+   (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
+   / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
+@import "./icon-chip.css";
 
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,

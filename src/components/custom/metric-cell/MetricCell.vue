@@ -2,6 +2,7 @@
 import type { Component, FunctionalComponent, HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn, coalesceMetric, type MetricValue } from "../../../utils";
+import { IconChip } from "../icon-chip";
 
 /**
  * Permissive icon type — Vue's `Component` type ships across multiple
@@ -134,13 +135,18 @@ const displayValue = computed(
             class="metric-cell__label text-micro text-muted-foreground flex items-center gap-1.5"
         >
             <slot name="icon">
-                <component
-                    :is="icon"
+                <!-- The leading-glyph tint reconciles onto IconChip's no-plate
+                     `bare` register (BA.W-ICON-CHIP): the `iconColor` prop maps to
+                     the chip `tone` arm; unset keeps the glyph the `--muted-
+                     foreground` of the label row. The value/unit ink is untouched
+                     (the one-color-event d1 floor). -->
+                <IconChip
                     v-if="icon"
-                    :size="iconSize"
+                    bare
+                    :icon="icon"
+                    :tone="iconColor"
+                    :glyph-size="iconSize"
                     :stroke-width="iconStrokeWidth"
-                    :style="iconColor ? { color: iconColor } : undefined"
-                    aria-hidden="true"
                 />
             </slot>
             <slot name="label">

@@ -143,6 +143,22 @@ const LEDGER = [
         event: "--section-color-7",
         kind: "color",
     },
+    // ── The IconChip POP surfaces — ONE section-color event via the primitive ──
+    // (BA.W-ICON-CHIP). The chip is the ONE event vehicle: the Pops reference row
+    // (icons.vue) + the empty-states grid each read the `--section-color-N` ramp
+    // through `<IconChip :section>` — proof:suffuse now asserts the one-event count
+    // against the SINGLE component, not the N inline pastes the chip subsumed. Body
+    // ink stays untinted (d1) — the chip tints only the plate+glyph, never a <p>.
+    {
+        surface: "demo/stories/foundations/icons.vue",
+        event: "--section-color-*",
+        kind: "color",
+    },
+    {
+        surface: "demo/stories/compositions/empty-states.vue",
+        event: "--section-color-*",
+        kind: "color",
+    },
     // ── The legitimately-monochrome surfaces (D3-9) — ZERO events ──────────────
     // The icon GRID (the icons.vue grid block — NOT the Pops chip block, which is
     // the chip reference and a sanctioned event), the Section type-ladder
@@ -354,6 +370,28 @@ add(
     bodyTintHits.length === 0
         ? `body ink is untinted on EVERY enrolled surface — no <p> body-copy element carries a section/chart/viz/gold/motion tint (the decidable one-color-event floor)`
         : `${bodyTintHits.length} tinted body-copy element(s): ${bodyTintHits.slice(0, 6).join("; ")}`,
+);
+
+// ── (d2) the chip≤glyph ratio is STRUCTURAL — owned by the <IconChip> component ─
+// BA.W-ICON-CHIP consolidated the four inline chip pastes onto the <IconChip>
+// primitive, so the chip≤glyph proportion is no longer re-derived from N inline
+// `size-12`/`size-14`/`size-8` hardcodes — it is the component's enforced ratio
+// recipe. This assert points at the SINGLE component: the `--icon-chip-glyph-ratio`
+// token is declared AND the chip diameter floors at `max(…, <glyph> × ratio)` so a
+// consumer's tiny `size` can NEVER collapse the plate under the glyph. (The full
+// W2 falsifiable bite lives in proof:icon-chip; this is the suffusion-ledger
+// dividend — d2 asserts against one component, not N pastes.)
+const iconChipCss = strip(read("src/styles/icon-chip.css"));
+const ratioTokenDeclared = /--icon-chip-glyph-ratio\s*:/.test(iconChipCss);
+const ratioInFloor =
+    /--icon-chip-glyph-ratio/.test(iconChipCss) &&
+    /(?:inline-size|block-size|width|height)\s*:\s*max\(/.test(iconChipCss);
+add(
+    "d2-chip-glyph-ratio-structural",
+    ratioTokenDeclared && ratioInFloor,
+    ratioTokenDeclared && ratioInFloor
+        ? `the chip≤glyph proportion is STRUCTURAL — the <IconChip> component owns the --icon-chip-glyph-ratio token AND floors the diameter at max(…, glyph × ratio), so the plate can never paint under the glyph (the d2 proportion against ONE component, not N inline pastes)`
+        : `the IconChip chip≤glyph ratio is not enforced in-component (token:${ratioTokenDeclared} floor:${ratioInFloor}) — the d2 proportion did not consolidate onto the primitive`,
 );
 
 // ── (d3) ≤1 declared tinted EVENT per enrolled surface + monochrome ZERO ──────

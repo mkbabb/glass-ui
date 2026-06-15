@@ -25,6 +25,7 @@ import {
 } from "@lucide/vue";
 import type { Component } from "vue";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 
 interface IconRow {
     name: string;
@@ -142,20 +143,7 @@ const pops: { icon: Component; section: number }[] = [
                     :key="pop.section"
                     class="flex flex-col items-center gap-2"
                 >
-                    <span
-                        class="flex size-12 items-center justify-center rounded-full"
-                        :style="{
-                            backgroundColor: `color-mix(in srgb, var(--section-color-${pop.section}) 25%, transparent)`,
-                            color: `var(--section-color-${pop.section})`,
-                        }"
-                    >
-                        <component
-                            :is="pop.icon"
-                            :size="22"
-                            :stroke-width="1.75"
-                            aria-hidden="true"
-                        />
-                    </span>
+                    <IconChip :icon="pop.icon" :section="pop.section" />
                     <span class="text-mono-caption text-muted-foreground"
                         >{{ pop.section }}</span
                     >
