@@ -2,10 +2,10 @@
    (AZ.W-CARVE partial 3 of 5; carved out of dock-controls.css).
 
    The base rule (density-keyed height knob, padding, glass hover/active/press
-   cohort), the PRIMARY tier (the dock extension over `@utility btn-audacious` —
-   structural shell + the `--phase-color` disco-grain hover radial + the
-   `[data-phase]` backplate halo), and the SECONDARY tier (the quieter
-   edge-light/edge-shadow cross-control comma-group over tab + icon button).
+   cohort), the PRIMARY tier (the structural shell — taller min-height + wider
+   padding + a stronger base tint; the disco grain/halo RETIRED at BA.W-GLASS-CAL,
+   it now inherits the base glass hover register), and the SECONDARY tier (the
+   quieter edge-light/edge-shadow cross-control comma-group over tab + icon button).
    Opens its OWN `@layer components`; @import-ed after dark-mode-toggle.css. */
 
 @layer components {
@@ -94,91 +94,24 @@
 
     /* Tier — primary ────────────────────────────────────────────
      *
-     * Per W2.7 §9, §12, §13, §17. The primary tier composes three at-rest
-     * marks (top-highlight, bottom under-shadow, baseline glass) with three
-     * disco accents on hover (specular swap, sparkle sweep, disco-grain).
-     *
-     * Reservation: disco fires on hover only. At rest the button reads as
-     * a Vignelli-restrained composed glass surface. The `--phase-color`
-     * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
-     * the disco-grain radial only on hover; idle is neutral.
-     *
-     * K.W6 Lane B — the canonical disco-grain + sparkle-sweep + specular
-     * recipe lifted to `@utility btn-audacious` (utilities.css). The Vue
-     * <DockTabButton> attaches `btn-audacious` automatically when the
-     * consumer passes `data-tier="primary"`. The dock-local rules below
-     * are STRICTLY the dock extension: structural shell (padding, base
-     * surface tint, min-height) + phase-tint extensions (hover radial
-     * uses `--phase-color`, plus the `[data-phase]` `::before` halo).
+     * BA.W-GLASS-CAL (H2a) — the disco COLLAPSED. The primary tier was a SECOND
+     * disco surface: it composed `@utility btn-audacious` (auto-attached by
+     * <DockTabButton> on `data-tier="primary"`) PLUS a dock-local phase-grain
+     * (the `--glass-grain-opacity-disco` + `--paper-clean-texture`/`--phase-color`
+     * radial hover) PLUS a `[data-phase]` `::before` rest-halo. With the disco
+     * retired, the primary tier keeps ONLY its STRUCTURAL shell (taller min-height,
+     * wider padding, the slightly-stronger base tint that distinguishes it from the
+     * secondary tier) and inherits the plain de-red'd dock-control glass hover
+     * register from the base `.dock-tab-button` rule above (bg → `--dock-control-
+     * hover-bg`, scale → `--scale-hover-dock`, the specular gleam — the SAME register
+     * `.dock-icon-button` speaks). No grain, no phase-radial, no rest-halo. The
+     * <DockTabButton> auto-attach of `btn-audacious` is removed (the utility is gone).
      */
     .dock-tab-button[data-tier="primary"] {
         --dock-tab-min-height: 4rem;
         padding-inline: 1.5rem;
         background: color-mix(in srgb, var(--card) 60%, transparent);
         color: var(--foreground);
-
-        /* Phase-tint hover override — same disco-grain composition as
-         * `btn-audacious`, but the radial uses `--phase-color` (instrument-
-         * cluster axis) instead of the canonical `--primary`. The `--paper-
-         * clean-texture` overlay and `--glass-specular` shadow stack are
-         * inherited from the underlying `btn-audacious` utility. */
-        /* AX.W52 D19 — the phase-tint hover radial DEMOTED: the prior
-         * `ellipse at 30% 30%` at 18% was a loud top-LEFT corner hotspot. Toned to
-         * 8% and the anchor shifted off the hard corner toward a softer top-biased
-         * ellipse (`40% 25%`) with a tighter `transparent 55%` falloff, so it reads
-         * as a surface lift rather than a corner glow — the disco hover identity
-         * survives, the egregious corner bloom does not. */
-        &:hover:not(:disabled) {
-            --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
-            background-image:
-                var(--paper-clean-texture),
-                radial-gradient(
-                    ellipse at 40% 25%,
-                    color-mix(
-                        in srgb,
-                        var(--phase-color, var(--foreground)) 8%,
-                        transparent
-                    ),
-                    transparent 55%
-                );
-            background-blend-mode: overlay, normal;
-            background-size: var(--paper-texture-size), auto;
-        }
-
-        /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
-         *
-         * An inner glyph wrapper's own halo would be clipped by the pill's
-         * `overflow: hidden` and never escape the glyph box. This `::before`
-         * lifts the phase-tint to the pill itself so the glow composes with the
-         * whole CTA. Scoped to active phases — at idle / ready the pill stays
-         * neutral and inherits the W2.7 reservation ("disco fires on hover
-         * only"). */
-        /* AX.W52 D19 — the REST phase-halo `::before` (fires during a speedtest run
-         * on the most prominent dock control) DEMOTED on the same axis as the hover
-         * radial: 18%→8%, the hard `30% 30%` corner shifted to a softer `40% 25%`
-         * top-biased ellipse with a tighter `transparent 55%` falloff, and the
-         * `opacity: 1` dropped to 0.5 so the persistent run-time halo is a subtle
-         * surface lift, not a corner bloom that washes the pill for the whole run. */
-        &[data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(
-                ellipse at 40% 25%,
-                color-mix(
-                        in srgb,
-                        var(--phase-color, var(--foreground)) 8%,
-                        transparent
-                    )
-                    0%,
-                transparent 55%
-            );
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.5;
-            transition: opacity var(--duration-fast) var(--ease-standard);
-        }
     }
 
     /* Tier — secondary ──────────────────────────────────────────

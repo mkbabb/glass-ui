@@ -72,10 +72,9 @@
     --duration-xxl: 1.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
-    /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep, success
-       affirmations. R5 vocab.γ gap row 3 (single-site at dock.css:735 today,
-       reserved for J.W2.7 §17 audacious-CTA buildout). */
-    --duration-sparkle: 600ms;
+    /* BA.W-GLASS-CAL (H2a) — `--duration-sparkle` (600ms) DELETED with the disco
+       recipe retirement: the sparkle-sweep keyframe + its sole `btn-audacious`
+       consumer are gone. */
 
     /* AH.W5-e (FA-8 §4d) — motion-duration + staged-reveal canon.
 
@@ -186,6 +185,28 @@
     --spring-gentle: linear(0, 0.09415 2.041%, 0.27374 4.082%, 0.45506 6.122%, 0.60779 8.163%, 0.72570 10.204%, 0.81213 12.245%, 0.87336 14.286%, 0.91570 16.327%, 0.94445 18.367%, 0.96371 20.408%, 0.97645 22.449%, 0.98481 24.490%, 0.99025 26.531%, 0.99377 28.571%, 0.99604 30.612%, 0.99749 32.653%, 0.99841 34.694%, 0.99900 36.735%, 0.99937 38.776%, 0.99961 40.816%, 0.99975 42.857%, 0.99985 44.898%, 1.00000 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
     --spring-dock: linear(0, 0.10282 2.041%, 0.31773 4.082%, 0.54783 6.122%, 0.74309 8.163%, 0.88550 10.204%, 0.97598 12.245%, 1.02452 14.286%, 1.04368 16.327%, 1.04501 18.367%, 1.03739 20.408%, 1.02681 22.449%, 1.01672 24.490%, 1.00873 26.531%, 1.00323 28.571%, 0.99996 30.612%, 0.99837 32.653%, 0.99789 34.694%, 0.99805 36.735%, 0.99848 38.776%, 0.99897 40.816%, 0.99940 42.857%, 0.99972 44.898%, 0.99993 46.939%, 1.00004 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
 
+    /* ── PER-SPRING DURATION CLOCK (BA.W-GLASS-CAL Unit 3) ──
+       Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
+       Each `--spring-<name>-duration` is the spring's OWN 2%-band envelope-settle
+       time `t_s = -ln(0.02) / (ζ·ωₙ)` (ωₙ = 2π/response), derived from the SAME
+       (response, ζ) PRESETS table the `--spring-*` `linear()` curves above
+       derive from — never a hand value.
+
+       WHY: the `--spring-<name>` curve is NORMALIZED to 0..1 and discards the
+       spring's settle time. Pairing it with a generic `--duration-*` clock
+       (0.2/0.3/0.45s) re-timed EVERY spring to the same wall clock — snappy
+       (response 0.35s) and smooth (0.5s) both ran 300ms, so the crisp snappy
+       register dragged a dead sub-pixel tail (the R10-2 read: within-1px at
+       ~109ms but the transition ran 300ms). These clocks re-time UNDER each
+       register to its own settle WITHOUT touching the §6 register canon (which
+       spring fits which job): a `transition` pairs `--spring-<name>` with the
+       matching `--spring-<name>-duration`. */
+    --spring-smooth-duration: 0.36s;
+    --spring-snappy-duration: 0.34s;
+    --spring-bouncy-duration: 0.69s;
+    --spring-gentle-duration: 0.44s;
+    --spring-dock-duration: 0.28s;
+
     /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
     --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -269,15 +290,13 @@
     /* ═══════════════════════════════════════════════
        §2.C ANIMATION EXPRESSIVENESS
 
-       Three idiom families:
+       Two idiom families (the audacious press-ripple RETIRED at BA.W-GLASS-CAL):
        • Progress lifecycle — the progress bar rides an intake pulse on
          rising-edge, a crescendo brightening at ≥85%, and a one-shot discharge
          flash at 100% (the crescendo is the typed `@property --progress-crescendo`).
        • Chassis phase-tint companion — `@property --phase-tint-amount` so the
          chassis backdrop warms toward the active phase, interpolating with
          `--phase-color` across the consumer's phase-handoff window (600ms default).
-       • Audacious button press-ripple — `btn-audacious` gains a typed
-         `@property --ripple-radius` ramping 0 → max over the ripple duration.
        ═══════════════════════════════════════════════ */
 
     /* Progress lifecycle — typed crescendo + segment-local durations */
@@ -291,13 +310,12 @@
        overwhelming the chassis chrome's resting register. */
     --phase-tint-peak: 6%;
 
-    /* Audacious button press-ripple — geometry + duration. The ripple
-       radius caps at 12rem so an oversized button doesn't paint a
-       transparent halo beyond its bounds (the parent's `overflow:
-       hidden` clips the visible region; the cap keeps the gradient
-       falloff well-defined). */
-    --ripple-radius-max: 12rem;
-    --motion-duration-ripple: 340ms;
+    /* BA.W-GLASS-CAL (H2a) — the `btn-audacious` press-ripple knobs
+       (`--ripple-radius-max` 12rem, `--motion-duration-ripple` 340ms) DELETED
+       with the disco recipe retirement: the ripple was btn-audacious-private and
+       has no surviving consumer (the calm CTA register's press is the §6
+       `--scale-press-btn` scale beat). The `@property --ripple-radius`
+       registration retires with it (property-regs.css). */
 
     /* Skeleton breath variant — the M.3 "known-imminent" loading
        register. 6s cycle (the canon ambient rate) so a known-imminent

@@ -16,7 +16,18 @@ export { default as ToggleChip } from "./ToggleChip.vue";
 export const toggleChipVariants = cva(
     [
         "focus-ring select-none cursor-pointer outline-none",
-        "font-sans transition-colors duration-150 ease-out",
+        "font-sans",
+        // BA.W-GLASS-CAL (H2a §6) — off the off-doctrine `transition-colors
+        // duration-150 ease-out` (a hardcoded 150ms color-only snap with NO lift,
+        // faster + jitterier than every sibling control — the "hover far too quick
+        // and jittery" read). Now the canonical §6 register, identical to the
+        // interactive family: the SURFACE legs (bg/border/box-shadow/color) ride the
+        // bezier `--duration-fast`/`--ease-standard`; the `scale` TRANSFORM leg rides
+        // `--spring-smooth` (the ONE button scale register), so the chip lifts on
+        // hover (`--scale-hover-btn`) + settles on press (`--scale-press-btn`) exactly
+        // like its neighbors instead of color-snapping flat.
+        "scale-100 hover:scale-(--scale-hover-btn) active:scale-(--scale-press-btn) data-[state=on]:scale-(--scale-press-btn)",
+        "[transition:scale_var(--spring-smooth-duration)_var(--spring-smooth),background-color_var(--duration-fast)_var(--ease-standard),border-color_var(--duration-fast)_var(--ease-standard),box-shadow_var(--duration-fast)_var(--ease-standard),color_var(--duration-fast)_var(--ease-standard)]",
         "disabled:opacity-disabled disabled:pointer-events-none disabled:cursor-not-allowed",
     ].join(" "),
     {

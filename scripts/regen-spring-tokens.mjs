@@ -62,10 +62,53 @@ export function generateBlock() {
     return lines.join("\n");
 }
 
+// BA.W-GLASS-CAL Unit 3 — the per-spring DURATION clock.
+//
+// The `--spring-<name>` `linear()` curve is NORMALIZED to 0..1 and discards the
+// spring's settle time, so every CSS consumer that pairs it with a generic
+// `--duration-*` clock (0.2/0.3/0.45s) re-times EVERY spring to the same wall
+// clock regardless of which spring — snappy (response 0.35s) and smooth (0.5s)
+// both ran 300ms, so the crisp snappy register dragged a dead sub-pixel tail
+// while the JS `SpringProgress` path (settles by physics) felt right (the R10-2
+// read). `--spring-<name>-duration` re-derives the spring's OWN settle UNDER each
+// register, GENERATED from the (response, ζ) pair alone — never a hand value.
+//
+// The metric is the analytic 2%-band SETTLING TIME of the underdamped envelope
+// `exp(-ζωₙt)` (ωₙ = 2π/response, the iOS/Apple `response` convention): the
+// moment the residual travel decays below 2% of unit span — the sub-pixel "dead
+// tail" horizon the spec names. `t_s = -ln(0.02) / (ζ·ωₙ)`. This re-times the
+// clock under each register WITHOUT touching the §6 register canon (which spring
+// fits which job): snappy/dock land crisp (~0.28–0.34s, BELOW the generic 0.3s),
+// smooth at its gentle settle (~0.36s), bouncy keeps its emphatic ring read
+// (~0.69s), gentle patient (~0.44s). Rounded to the nearest 10ms (sub-perceptual).
+const SETTLE_BAND = 0.02;
+
+/** The generated 2%-band envelope-settle duration in seconds for one preset. */
+export function springSettleDurationSeconds(preset) {
+    const omegaN = (2 * Math.PI) / preset.response;
+    const zeta = preset.dampingFraction;
+    const ts = -Math.log(SETTLE_BAND) / (zeta * omegaN);
+    // round to nearest 10ms, token-clean
+    return Math.round((ts * 1000) / 10) * 10 / 1000;
+}
+
+export function generateDurationBlock() {
+    const lines = PRESETS.map((preset) => {
+        const sec = springSettleDurationSeconds(preset);
+        return `    --spring-${preset.name}-duration: ${sec}s;`;
+    });
+    return lines.join("\n");
+}
+
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
 export const SPRING_LINES_RE =
     /(    --spring-(?:smooth|snappy|bouncy|gentle|dock): linear\([^)]+\);\n?)+/m;
+// BA.W-GLASS-CAL Unit 3 — the per-spring DURATION block. A SEPARATE contiguous
+// block (immediately after the `linear()` easing block) so SPRING_LINES_RE keeps
+// matching only the easing lines; this regex owns the duration lines.
+export const SPRING_DURATION_LINES_RE =
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock)-duration: [\d.]+s;\n?)+/m;
 
 export function main() {
     const source = readFileSync(tokensPath, "utf8");
@@ -75,24 +118,37 @@ export function main() {
                 `Did the marker comment change?`,
         );
     }
-    const block = generateBlock() + "\n";
-
-    const next = source.replace(SPRING_LINES_RE, block);
-    if (next === source) {
+    if (!SPRING_LINES_RE.test(source)) {
         throw new Error(
-            `Spring-token replacement matched nothing — the existing ` +
+            `Spring-token block matched nothing — the existing ` +
                 `--spring-* lines may have moved out of the §2 EASING block.`,
         );
     }
+    if (!SPRING_DURATION_LINES_RE.test(source)) {
+        throw new Error(
+            `Spring-DURATION block matched nothing — the existing ` +
+                `--spring-*-duration lines may have moved or are missing from the §2 EASING block.`,
+        );
+    }
+
+    const block = generateBlock() + "\n";
+    const durationBlock = generateDurationBlock() + "\n";
+    // The replacements are idempotent when the PRESETS table is unchanged — a
+    // no-op rewrite is correct (the regen is also a sync-verifier), so we do NOT
+    // throw on `next === source`; the match-presence checks above are the guard.
+    const next = source
+        .replace(SPRING_LINES_RE, block)
+        .replace(SPRING_DURATION_LINES_RE, durationBlock);
+
     writeFileSync(tokensPath, next);
 
     console.log(
-        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* tokens in`,
+        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* tokens + ${PRESETS.length} --spring-*-duration clocks in`,
         tokensPath,
     );
     for (const preset of PRESETS) {
         console.log(
-            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction} (${preset.comment})`,
+            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction}, settle=${springSettleDurationSeconds(preset)}s (${preset.comment})`,
         );
     }
 }

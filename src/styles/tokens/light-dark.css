@@ -22,14 +22,18 @@
 }
 
 /* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
-   richer 24px overlay wash is amortised by the extra device pixels (the blur
-   samples a denser backing store), so the design ceiling is restored where it
-   is affordable. Standard-density displays keep the 15px budget radius set in
-   §-1a `:root`. Token-only override — every overlay surface that reads
-   `--glass-blur-overlay-radius` inherits the restored value automatically. */
+   richer overlay wash is amortised by the extra device pixels (the blur samples
+   a denser backing store), so a higher ceiling is restored where it is
+   affordable. Standard-density displays keep the 13px budget radius set in §-1a
+   `:root`. Token-only override — every overlay surface that reads
+   `--glass-blur-overlay-radius` inherits the restored value automatically.
+
+   BA.W-GLASS-CAL Unit 1 — the restore pulled 24→20px in lockstep with the base
+   ladder's ~15-20% dial-back (the base overlay rung moved 15→13). 20px stays the
+   amortised high-DPI ceiling; standard density reads the dialed-back 13px. */
 @media (min-resolution: 2dppx) {
     :root {
-        --glass-blur-overlay-radius: 24px;
+        --glass-blur-overlay-radius: 20px;
     }
 }
 

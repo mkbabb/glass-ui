@@ -28,26 +28,36 @@
     /* Blur primitives. The radii here feather the dock + meter card to a
        barely-perceptible diffusion that lets the substrate behind it bleed
        through cleanly while keeping hero typography crisp at meter scale.
-       The resting blur sits at 12px so a glass plate reads as a diffusion
-       without consumer-side override. */
+       The resting blur sits at 10px so a glass plate reads as a diffusion
+       without consumer-side override.
+
+       BA.W-GLASS-CAL Unit 1 — the ladder dialed back ~15-20% UNIFORMLY (the
+       user's "a hair too much" over-diffusion): quiet 10→8, resting 12→10,
+       floating 16→13, overlay 15→13, dock 11→9; wash stays 1px (sub-perceptual).
+       The pull is proportional (it preserves tier separation) and keeps every
+       rung in the AV.W7-F2 8-15px band — the backdrop's structure reads a hair
+       more through the plate while the glass still reads unmistakably as glass.
+       The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
+       companion below are UNTOUCHED (the W-DARK-MATERIAL dark-recipe saturate/
+       brightness companions preserved — radius-only, the gate's B3 assert). */
     --glass-blur-wash-radius:     1px;
-    --glass-blur-quiet-radius:    10px;
-    --glass-blur-resting-radius:  12px;
-    --glass-blur-floating-radius: 16px;
+    --glass-blur-quiet-radius:    8px;
+    --glass-blur-resting-radius:  10px;
+    --glass-blur-floating-radius: 13px;
     /* AV.W7 F2 — clamped from 24px into the 8–15px budget band. A blur radius
        past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
        expensive idiom — the radius is the dominant cost). 15px is the band
-       ceiling; the lower rungs (wash/quiet/resting 1/10/12) sit in-band and the
-       floating 16px is the design ceiling at the band edge (left as-is). A
-       high-resolution display restores the richer 24px wash via the @media arm
-       below — the cost is amortised by the extra device pixels. */
-    --glass-blur-overlay-radius:  15px;
-    /* Dock blur radius — 11px, paired with the 0.42 opacity below: a crisp
-       glass pill (the iOS Control Center register), not a feathered wash.
-       The dock composes `blur()` only (no saturate); the
+       ceiling; BA.W-GLASS-CAL dialed the overlay rung to 13px (off 15) so the
+       whole ladder pulls back in proportion. A high-resolution display restores
+       a richer wash via the @media arm in light-dark.css — the cost is amortised
+       by the extra device pixels. */
+    --glass-blur-overlay-radius:  13px;
+    /* Dock blur radius — 9px (BA.W-GLASS-CAL, off 11), paired with the 0.42
+       opacity below: a crisp glass pill (the iOS Control Center register), not a
+       feathered wash. The dock composes `blur()` only (no saturate); the
        `prefers-reduced-transparency` bracket at glass.css maps it to the
        opacity-only register. */
-    --glass-blur-dock-radius:     11px;
+    --glass-blur-dock-radius:     9px;
 
     /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
@@ -155,13 +165,32 @@
     --glass-border:          var(--glass-border-quiet);
     --glass-border-strong:   var(--glass-border-floating);
 
+    /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────
+       ONE shared resting surface for the FORM family — Input/Textarea/Select/
+       Combobox/NumberField/TagsInput — so the whole control band is ONE material
+       at rest, not a per-control fork. Input rode the warm near-white `quiet`
+       glass register while Select rode the lighter `glass-wash` gray (live-probed
+       at R10 SM-3/NF-4: input `oklab(0.986)` near-white vs select `oklab(0.636)`
+       gray — the "no gray" bar at a control-family seam). The unified register
+       adopts the WARMER input rung (the no-gray choice); the per-control recipes
+       re-point to read these tokens, no per-control fork. The W-NO-GRAY warm floor
+       lands underneath in Batch 1b (it warms the VALUES); this register unifies
+       the TIER. The hover lift mixes the rest fill one step toward the resting
+       rung so a control brightens on hover in lockstep. */
+    --control-surface-bg:        var(--glass-bg-quiet);
+    --control-surface-border:    var(--glass-border-floating);
+    --control-surface-blur:      var(--glass-blur-quiet);
+    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-bg-quiet), var(--glass-bg-resting) 35%);
+
     /* Shared decorative. Light grain dropped 0.035 → 0.025 in P.W1.B —
        at the chassis scale the original alpha read as crawl over the new
        lower-alpha chassis bg; the grain's role is texture, not reading,
        so it sits at the perceptual floor. Dark companion drops 0.06 →
        0.045 below to keep the soft-light blend alive without stippling. */
     --glass-grain-opacity: 0.025;
-    --glass-grain-opacity-disco: 0.08;
+    /* BA.W-GLASS-CAL — `--glass-grain-opacity-disco` (0.08) DELETED with the disco
+       recipe retirement (H2a): no surviving consumer once `btn-audacious` + the
+       dock-tab primary phase-grain collapse onto the calm glass register. */
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* Hairline-accent — 0.5px catch-light + under-shadow pair.

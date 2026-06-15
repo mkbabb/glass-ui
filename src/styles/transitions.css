@@ -23,7 +23,7 @@
     .fade-slide-enter-active {
         transition:
             opacity var(--duration-normal) var(--ease-out),
-            transform var(--duration-normal) var(--spring-smooth);
+            transform var(--spring-smooth-duration) var(--spring-smooth);
     }
     .fade-slide-leave-active {
         transition:
@@ -43,7 +43,7 @@
     .dialog-scale-enter-active {
         transition:
             opacity var(--duration-slow) var(--ease-out),
-            transform var(--duration-slow) var(--spring-bouncy);
+            transform var(--spring-bouncy-duration) var(--spring-bouncy);
     }
     .dialog-scale-leave-active {
         transition:
@@ -63,7 +63,7 @@
     .pop-enter-active {
         transition:
             opacity var(--duration-fast) var(--ease-out),
-            transform var(--duration-slow) var(--spring-bouncy);
+            transform var(--spring-bouncy-duration) var(--spring-bouncy);
     }
     .pop-leave-active {
         transition:
@@ -83,7 +83,7 @@
     .dropdown-enter-active {
         transition:
             opacity var(--duration-instant) var(--ease-out),
-            transform var(--duration-normal) var(--spring-snappy);
+            transform var(--spring-snappy-duration) var(--spring-snappy);
     }
     .dropdown-leave-active {
         transition:
@@ -110,7 +110,7 @@
     .pane-swap-enter-active {
         transition:
             opacity var(--duration-normal) var(--ease-out),
-            transform var(--duration-normal) var(--spring-smooth);
+            transform var(--spring-smooth-duration) var(--spring-smooth);
     }
     .pane-swap-leave-active {
         transition:
@@ -130,7 +130,7 @@
     .metric-swap-enter-active {
         transition:
             opacity var(--duration-normal) var(--ease-out),
-            transform var(--duration-normal) var(--spring-smooth);
+            transform var(--spring-smooth-duration) var(--spring-smooth);
     }
     .metric-swap-leave-active {
         transition:
@@ -145,7 +145,7 @@
 
     /* ── Dock entrance utility ── */
     .dock-in {
-        animation: dock-in var(--duration-panel) var(--spring-snappy) both;
+        animation: dock-in var(--spring-snappy-duration) var(--spring-snappy) both;
         transform-origin: center bottom;
     }
 

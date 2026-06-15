@@ -40,7 +40,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   >
     <SwitchThumb
       :class="cn('pointer-events-none block h-5 w-5 rounded-pill bg-background ring-0 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0')"
-      style="box-shadow: var(--shadow-md), var(--glass-highlight); transition: translate var(--duration-normal) var(--spring-snappy)"
+      style="box-shadow: var(--shadow-md), var(--glass-highlight); transition: translate var(--spring-snappy-duration) var(--spring-snappy)"
     />
   </SwitchRoot>
 </template>

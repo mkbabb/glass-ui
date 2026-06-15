@@ -141,32 +141,13 @@
     100% { background-position: -200% 0; }
 }
 
-/* ── Sparkle sweep: four-point star traverses a surface diagonally ──
- *
- * Reserved for the chassis primary-action hover (dock-tab-button[data-tier="primary"])
- * and the `Complete!` shimmer cycle. Single keyframe, ~600ms per pass; the
- * consumer rule sets the duration and easing. Reduced-motion guard at the
- * consumer site (per surface — not all sparkle uses share the same gate).
+/* ── Sparkle sweep RETIRED (BA.W-GLASS-CAL, H2a) ──
+ * The `@keyframes sparkle-sweep` + its reduced-motion stub are DELETED with the
+ * disco recipe family — the `btn-audacious` ::after star (its sole consumer) is
+ * gone, and the dock-tab primary tier collapsed onto the calm glass register.
+ * The `Complete!` celebratory shimmer rides its OWN keyframes (gold-shimmer-slide
+ * / shimmer above), never sparkle-sweep.
  */
-@keyframes sparkle-sweep {
-    0% {
-        transform: translate(-30%, -30%) scale(0.5);
-        opacity: 0;
-    }
-    25% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(180%, 180%) scale(1.2);
-        opacity: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    @keyframes sparkle-sweep {
-        0%, 100% { opacity: 0; transform: none; }
-    }
-}
 
 /* ── Pulse dot bounce: dots variant of <Pulse> ──
  *
@@ -334,7 +315,11 @@
         opacity: 0;
         scale: var(--top-layer-enter-scale, 0.96);
         transition-property: opacity, scale, display, overlay;
-        transition-duration: var(--duration-normal);
+        /* BA.W-GLASS-CAL Unit 3 — the enter rides the bouncy spring's OWN settle
+           clock (`--spring-bouncy-duration`, the 2%-band envelope settle) rather
+           than the generic `--duration-normal`, so the emphatic dialog/popover
+           entrance bounce reads fully instead of being clipped at 0.3s. */
+        transition-duration: var(--spring-bouncy-duration);
         transition-timing-function: var(--spring-bouncy);
         transition-behavior: allow-discrete;
     }

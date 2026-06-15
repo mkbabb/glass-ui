@@ -35,7 +35,10 @@
 /* Shared group class — consumers add `view-transition-class: gl-list-item` on
  * each tracked element plus a unique `view-transition-name` per element. */
 ::view-transition-group(.gl-list-item) {
-    animation-duration: var(--vt-duration, var(--duration-normal));
+    /* BA.W-GLASS-CAL Unit 3 — the duration fallback rides the bouncy spring's
+       OWN settle clock (`--spring-bouncy-duration`) so the default VT bounce
+       plays at its physical settle; a consumer still overrides via `--vt-duration`. */
+    animation-duration: var(--vt-duration, var(--spring-bouncy-duration));
     animation-timing-function: var(--vt-ease, var(--spring-bouncy));
 }
 

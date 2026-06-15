@@ -72,7 +72,7 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            scale var(--duration-normal) var(--spring-smooth);
+            scale var(--spring-smooth-duration) var(--spring-smooth);
     }
 
     .glass-btn:hover:not(:disabled) {
@@ -141,7 +141,7 @@
             box-shadow var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--spring-smooth);
+            scale var(--spring-smooth-duration) var(--spring-smooth);
     }
 
     .btn-pill > * {
@@ -189,16 +189,21 @@
            `:focus-visible` accent ring + the `:user-invalid`/`[aria-invalid]`
            destructive ring below still win by order + specificity.
            AX.W54 — moved off the srgb `--surface-tint-15` fork onto the glass
-           border seam (`--glass-border-floating`, the matching 15%α rung) so the
-           pill is ONE glass model with the rest of the ladder, not a divergent
-           tint axis. */
-        border: 1.5px solid var(--glass-border-floating);
-        background: var(--glass-bg-quiet);
-        /* AX.W54 — the pill reads as REAL glass: the quiet-tier 10px blur (the
-           same `--glass-blur-quiet` its `--glass-bg-quiet` background pairs with),
-           not the sub-perceptual `blur(1px)` wash it carried — and the
-           `--glass-level` knob now clarifies it in lockstep with every surface. */
-        backdrop-filter: var(--glass-blur-quiet);
+           border seam so the pill is ONE glass model with the rest of the ladder.
+           BA.W-SURFACE-AXIS scope 7 — re-pointed onto the SHARED `--control-surface-*`
+           REST register so Input/Textarea/NumberField/Select/Combobox/TagsInput are
+           ONE material at rest (the input rung was the warmer of the two; Select rode
+           the `glass-wash` gray — the no-gray control-family seam). The register reads
+           the same `--glass-*` ladder, so `--glass-level`/the W55 bright bucket retune
+           the whole form family in lockstep (--control-surface-border defaults to the
+           `--glass-border-floating` 15%α rung, --control-surface-bg to `--glass-bg-quiet`,
+           --control-surface-blur to `--glass-blur-quiet`). */
+        border: 1.5px solid var(--control-surface-border);
+        background: var(--control-surface-bg);
+        /* The control's REAL glass blur — the shared register's quiet-tier radius
+           (the same `--control-surface-blur` pairs with `--control-surface-bg`); the
+           `--glass-level` knob clarifies it in lockstep with every surface. */
+        backdrop-filter: var(--control-surface-blur);
         padding: 0 calc(1rem * var(--ui-scale));
         font-size: var(--control-text);
         color: var(--foreground);
@@ -212,6 +217,24 @@
 
     .input-pill::placeholder {
         color: var(--surface-tint-35);
+    }
+
+    /* BA.W-SURFACE-AXIS scope 7 — the shared control REST surface class. The
+       NON-pill control families (the Select trigger, the TagsInput root) that do
+       NOT compose `.input-pill` but want the SAME resting material read this — so
+       the whole form band is ONE register at rest (the Select default rode the
+       lighter `glass-wash` gray before; this is the no-gray control-family seam).
+       It carries the bg/border/blur ONLY (each control owns its own height/radius/
+       padding/font), so a non-pill control composes `.control-surface` + its own
+       geometry. The hover lift brightens the fill one step toward the resting rung. */
+    .control-surface {
+        background: var(--control-surface-bg);
+        border: 1px solid var(--control-surface-border);
+        backdrop-filter: var(--control-surface-blur);
+        -webkit-backdrop-filter: var(--control-surface-blur);
+    }
+    .control-surface:hover:not(:disabled, [data-disabled]) {
+        background: var(--control-surface-bg-hover);
     }
 
     /* AQ.W4 §W4.6 — keyboard-focus ring only. Was bare `:focus` (showed the

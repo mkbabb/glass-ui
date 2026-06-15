@@ -82,10 +82,12 @@
         --dock-motion-fast: var(--duration-fast) var(--ease-standard);
         --dock-motion-standard: var(--duration-normal) var(--ease-standard);
         /* AT.W6-dock-c — the FLIP-fallback timing. `--dock-resize-spring` (the
-           `--spring-snappy` linear()) is the single source curve the native
+           `--spring-dock` linear()) is the single source curve the native
            View-Transition path ALSO consumes, so the morph is timing-identical
-           across engines. */
-        --dock-motion-resize: var(--duration-normal) var(--dock-resize-spring);
+           across engines. BA.W-GLASS-CAL Unit 3 — the duration leg re-times off
+           the generic `--duration-normal` (0.3s) onto `--spring-dock-duration`
+           (0.28s, the dock spring's OWN 2%-band envelope settle). */
+        --dock-motion-resize: var(--spring-dock-duration) var(--dock-resize-spring);
     }
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are

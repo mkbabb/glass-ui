@@ -139,7 +139,7 @@
     /* Kinetic: per-character stagger */
     .char-stagger > .char {
         display: inline-block;
-        animation: fade-in var(--duration-normal) var(--spring-smooth, ease) backwards;
+        animation: fade-in var(--spring-smooth-duration) var(--spring-smooth, ease) backwards;
         animation-delay: calc(var(--char-index, 0) * 30ms);
     }
 
