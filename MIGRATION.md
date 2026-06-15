@@ -113,6 +113,19 @@
 > ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
 
+> **CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
+> The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the
+> FIXED-square icon primitive (`width/height: var(--size-icon-btn)` + `contain:paint`),
+> `.btn-pill` is the CONTENT-WIDTH text pill. Stacked on one element the fixed square
+> wins and `contain:paint` clips a wrapped text label into a ~40px blob (the R8-17
+> defect). A text-bearing `.glass-btn` (an icon button carrying a text child) collapses
+> the same way even without `.btn-pill`. MIGRATE: for a play/replay or text-bearing
+> affordance reach for a real `<Button>` with a leading Lucide glyph (the content-width
+> pill), never an icon-button primitive carrying text. No library recipe changes — the
+> `.glass-btn`/`.btn-pill` recipes are untouched; this is a caller-side hazard the new
+> `proof:demo-affordances` gate machine-locks (W1: no class co-occurrence, no text-bearing
+> icon button across `demo/**` + the `src/styles/**` recipes).
+>
 > **CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
 > `<DialogContent variant="glass|opaque">` is RETIRED onto the ONE shared
 > `{glass·veil·opaque}` surface-decoration axis: `<DialogContent surface="glass|veil|opaque">`

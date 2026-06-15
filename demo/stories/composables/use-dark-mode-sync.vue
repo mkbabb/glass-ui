@@ -27,9 +27,13 @@ const { isDark, toggleDark } = useGlobalDark();
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-col gap-4">
-                    <Button @click="toggleDark">
-                        Toggle (theme: {{ isDark ? "dark" : "light" }})
-                    </Button>
+                    <!-- BA.W-DEMO-AFFORDANCES — the lone toggle sits content-width
+                         on its own row, never stretched to the full column. -->
+                    <div class="flex items-center gap-3">
+                        <Button @click="toggleDark">
+                            Toggle (theme: {{ isDark ? "dark" : "light" }})
+                        </Button>
+                    </div>
                     <div class="grid grid-cols-2 gap-3 text-sm">
                         <div>sync count: <code class="fira-code">{{ syncCount }}</code></div>
                         <div>last: <code class="fira-code">{{ lastSync }}</code></div>

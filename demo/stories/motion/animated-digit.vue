@@ -22,8 +22,12 @@ function resample(): void {
             label="value tween"
             blurb="A null/undefined value paints the placeholder; a numeric value tweens toward it on the useAnimatedNumber spring."
         >
+            <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+                 (--motion-accent, the demo-local --viz-legendre twin): a leading
+                 accent bar above each tweening figure. The value+unit stay ink. -->
             <div class="flex flex-wrap items-end gap-10">
                 <div class="flex flex-col items-start gap-1">
+                    <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
                     <span class="text-admin-label text-muted-foreground">download · Mbps</span>
                     <AnimatedDigit
                         :value="downloadMbps"
@@ -32,6 +36,7 @@ function resample(): void {
                     />
                 </div>
                 <div class="flex flex-col items-start gap-1">
+                    <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
                     <span class="text-admin-label text-muted-foreground">latency · ms</span>
                     <AnimatedDigit
                         :value="latencyMs"

@@ -13,6 +13,10 @@ import {
     ContextMenuShortcut,
     ContextMenuTrigger,
 } from "../../../src/components/ui/context-menu";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { MousePointerClick } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
+const CONTAINERS_STOP = 2;
 
 const tone = ref<"warm" | "cool" | "neutral">("warm");
 const showGrid = ref(true);
@@ -20,6 +24,27 @@ const showGrid = ref(true);
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="MousePointerClick" :section="CONTAINERS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Containers · Context menu
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Right-click contextual surface — the menu items stay ink; the
+                    section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="text-subheading">Right-click surface</h2>

@@ -8,6 +8,10 @@ import {
 import { Button } from "../../../src/components/ui/button";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { GalleryVerticalEnd } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
+const CONTAINERS_STOP = 2;
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -15,6 +19,27 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="GalleryVerticalEnd" :section="CONTAINERS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Containers · Popover
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Anchored floating pod — the form body stays ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="text-subheading">Form pod</h2>

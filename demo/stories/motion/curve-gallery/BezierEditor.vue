@@ -12,7 +12,7 @@
 import { computed, ref, useTemplateRef } from "vue";
 import { CSSCubicBezier } from "../../../../src/composables/motion/curves";
 import { bezierPresets } from "@mkbabb/value.js";
-import { Button } from "../../../../src/components/ui/button";
+import StoryPlayButton from "../../StoryPlayButton.vue";
 import {
     Select,
     SelectContent,
@@ -228,7 +228,8 @@ async function copy(): Promise<void> {
                 </button>
             </div>
 
-            <Button variant="default" @click="playTravel">▶ Trace the curve</Button>
+            <StoryPlayButton label="Trace the curve" @play="playTravel" />
+
 
             <p class="text-xs text-muted-foreground">
                 Drag a handle to author the curve live. The path is the real

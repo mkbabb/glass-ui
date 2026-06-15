@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Notification } from "../../../src/components/ui/notification";
@@ -76,7 +77,10 @@ const swatch: Record<Item["type"], string> = {
 
         <section class="flex flex-col gap-3">
             <p class="section-label">tones</p>
-            <div class="grid gap-2 rounded-lg border border-border/60 bg-card/60 p-4">
+            <!-- BA.W-DEMO-AFFORDANCES — the tones table re-points off the dead
+                 bg-card/60 slab onto the glass-routed <ShowcaseFrame> so it reads
+                 as glass over the staged backdrop (FD-FS X-2). -->
+            <ShowcaseFrame pad="sm" class="grid gap-2">
                 <div
                     v-for="s in samples"
                     :key="s.type"
@@ -91,7 +95,7 @@ const swatch: Record<Item["type"], string> = {
                     </span>
                     <span class="text-sm text-foreground">{{ s.message }}</span>
                 </div>
-            </div>
+            </ShowcaseFrame>
         </section>
 
         <Notification :notifications="notifications" @remove="remove" />

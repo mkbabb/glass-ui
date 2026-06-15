@@ -6,6 +6,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
+import { Play } from "@lucide/vue";
 import { Toaster, useToast } from "../../../src/components/ui/toast";
 
 const { toast } = useToast();
@@ -27,9 +28,15 @@ function fireToast() {
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-col gap-4">
                     <Toaster />
-                    <Button variant="default" @click="fireToast">
-                        Fire a toast
-                    </Button>
+                    <!-- BA.W-DEMO-AFFORDANCES — the lone trigger sits content-width
+                         on its own self-start row, never stretched by the column's
+                         implicit align-items:stretch (R8-13a). -->
+                    <div class="flex items-center gap-3">
+                        <Button variant="default" @click="fireToast">
+                            <Play />
+                            Fire a toast
+                        </Button>
+                    </div>
                     <p class="text-mono-caption text-muted-foreground">
                         The Toaster lives mounted above; clicking the button calls useToast().toast(...) and the
                         viewport paints in the bottom-right (top on small screens).

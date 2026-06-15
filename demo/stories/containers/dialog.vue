@@ -15,6 +15,10 @@ import { Button } from "../../../src/components/ui/button";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { MessageSquare } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
+const CONTAINERS_STOP = 2;
 
 const confirmOpen = ref(false);
 const confirming = ref(false);
@@ -31,6 +35,27 @@ function onConfirm() {
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="MessageSquare" :section="CONTAINERS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Containers · Dialog
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Modal task surface — the form body stays ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="text-subheading">Standard dialog</h2>

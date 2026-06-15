@@ -16,28 +16,56 @@
 //     rungs so the chips/rails/header actually paint, the load-bearing copy is lifted
 //     off `--muted-foreground` to `--foreground`, and the page declares a calm `grid`
 //     substrate (manifest row) so the glass POPs.
-//   · THE PICKER — the family selector is the canonical `<SegmentedTabs
-//     variant="underline">` panel-nav register at the section-heading scale, the
-//     families the PRIMARY IA (`:responsive` → `<Select>` on narrow widths).
+//   · THE PICKER (BA.W-DEMO-AFFORDANCES) — the family selector is the dock-like
+//     glass CHIP RACK: each family a glass chip, the SELECTED chip lifting to the
+//     var(--glass-bg-floating) plate tier (the dock's "selected reads as glass"
+//     --dock-control-active-bg register), composing <FadingScroll axis="x"> for the
+//     horizontal-overflow arm. The PLATE is the active signal — structurally immune
+//     to the R8-16 contrast-color luminance inversion the prior underline picker
+//     suffered. All 12 families preserved as the PRIMARY IA; a <Select> is the
+//     extreme-narrow floor.
 //
 // The plots + driven dots read ONE coherent purple — `--motion-accent` (the glass-ui
 // `--viz-legendre` violet twin), the motion family's single color event; the THICK
 // stroke in it IS the point.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
+import StoryPlayButton from "../StoryPlayButton.vue";
 import { computed, onUnmounted, ref } from "vue";
-import { SegmentedTabs } from "../../../src/components/custom/tabs";
+import { Play } from "@lucide/vue";
+import { FadingScroll } from "../../../src/components/custom/fading-scroll";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../../../src/components/ui/select";
 import { cn } from "../../../src/utils/cn";
 import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
 import BezierEditor from "./curve-gallery/BezierEditor.vue";
+// BA.W-FOURIER-STUDIO / REC-6 — the live steppedEase(n, term) sub-editor (the
+// W-MOTION3 G7 defer's demo-only interim home; the published <EasingPicker> fold
+// is BOOKED to W-EASING-PRIMITIVE — arm B, the cross-repo fence-respect close).
+import StepsEditor from "./curve-gallery/StepsEditor.vue";
 
 const CUSTOM_FAMILY = "Custom";
+// BA.W-FOURIER-STUDIO / REC-6 — the Steps family hosts the live steppedEase(n,
+// term) sub-editor ABOVE its static reference rows.
+const STEPS_FAMILY = "Steps";
+// The 12 W-MOTION2 isomorphism families + the live Custom editor = the PRIMARY
+// IA (presentation-only; all 12 preserved). The picker renders them as the glass
+// chip rack (the dock-like "selected reads as glass" register).
 const FAMILY_TABS = [
     ...CURVE_FAMILIES.map((f) => ({ value: f.family, label: f.family })),
     { value: CUSTOM_FAMILY, label: CUSTOM_FAMILY },
 ];
 
 const activeFamily = ref<string>(CURVE_FAMILIES[0]!.family);
+
+function selectFamily(value: string): void {
+    activeFamily.value = value;
+}
 
 const activeRows = computed<readonly CurveRow[]>(
     () => CURVE_FAMILIES.find((f) => f.family === activeFamily.value)?.rows ?? [],
@@ -158,18 +186,52 @@ const houseCores: { token: string; cp: string }[] = [
             label="The curve canon"
             blurb="The FULL motion taxonomy — 1:1 with the keyframes easing inventory: the four CSS Standard bezier keywords, the value.js analytic ease* families (Sine / Quad / Cubic + smooth-step-3 / Expo / Circ), the Back overshoot curves, the Bounce family, the Steps generators, the CSS linear() multi-stop form, and the iOS spring presets — each plot driven by its REAL JS twin. Pick a family; press a card to fire its dot off the twin (springs and back-curves overshoot past the track then settle)."
         >
-            <!-- THE PICKER — the canonical underline panel-nav register at the
-                 section-heading scale, the families the PRIMARY IA. Collapses to a
-                 <Select> below 768px (the 12-way strip's narrow-width affordance). -->
-            <div class="mb-5">
-                <SegmentedTabs
-                    :options="FAMILY_TABS"
+            <!-- THE PICKER — the dock-like glass CHIP RACK (BA.W-DEMO-AFFORDANCES,
+                 curve-picker lane). Each family is a glass chip; the SELECTED chip
+                 lifts to the var(--glass-bg-floating) tier (the "selected reads as
+                 glass" iOS register, the same --dock-control-active-bg model the
+                 dock owns), hover to var(--glass-bg-resting). The active signal is a
+                 PLATE, not an fg/muted-fg luminance delta — so it is STRUCTURALLY
+                 immune to the R8-16 contrast-color inversion (the dimmest-selected
+                 defect). The label stays warm-ink --foreground (the W-REGISTER-IOS
+                 de-RED'd register). All 12 families preserved as the IA. The rack is
+                 a flex row composing <FadingScroll axis="x"> for the horizontal-
+                 overflow arm (the fade engages only on real overflow / narrow widths
+                 — the dead transparent-strip backdrop-filter is GONE: the chip
+                 surfaces carry the glass, not the empty container). The narrow floor
+                 is a <Select> below the breakpoint. -->
+            <div class="curve-family-picker mb-5">
+                <FadingScroll axis="x" class="hidden md:block">
+                    <div role="group" aria-label="Curve family" class="curve-chip-rack">
+                        <button
+                            v-for="tab in FAMILY_TABS"
+                            :key="tab.value"
+                            type="button"
+                            class="curve-chip"
+                            :class="{ 'curve-chip--active': activeFamily === tab.value }"
+                            :aria-pressed="activeFamily === tab.value"
+                            @click="selectFamily(tab.value)"
+                        >
+                            {{ tab.label }}
+                        </button>
+                    </div>
+                </FadingScroll>
+
+                <!-- The extreme-narrow floor — a <Select> below the breakpoint. -->
+                <Select
                     :model-value="activeFamily"
-                    variant="underline"
-                    :responsive="{ breakpoint: '768px', ariaLabel: 'Curve family', triggerClass: 'text-subheading' }"
-                    class="curve-family-picker text-subheading font-semibold"
-                    @update:model-value="(v: string | string[]) => (activeFamily = Array.isArray(v) ? v[0]! : v)"
-                />
+                    class="md:hidden"
+                    @update:model-value="(v) => selectFamily(String(v))"
+                >
+                    <SelectTrigger aria-label="Curve family" class="text-subheading">
+                        <SelectValue placeholder="Pick a family" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem v-for="tab in FAMILY_TABS" :key="tab.value" :value="tab.value">
+                            {{ tab.label }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
 
             <!-- The active family heading rung (W-HIERARCHY: section heading → body) -->
@@ -180,15 +242,21 @@ const houseCores: { token: string; cp: string }[] = [
             <BezierEditor v-if="activeFamily === CUSTOM_FAMILY" />
 
             <template v-else>
-                <div class="mb-4">
-                    <button
-                        type="button"
-                        class="btn-pill glass-btn rounded-pill px-4 py-2 text-sm font-medium"
-                        @click="playAll"
-                    >
-                        ▶ Play family
-                    </button>
+                <!-- BA.W-DEMO-AFFORDANCES — the play control is the ONE register
+                     (content-width <Button> + leading Lucide <Play>), never the
+                     .btn-pill+.glass-btn stack that clipped to a 40px blob (R8-17).
+                     Sits content-width on its own row. -->
+                <div class="mb-4 flex items-center gap-3">
+                    <StoryPlayButton label="Play family" @play="playAll" />
                 </div>
+
+                <!-- BA.W-FOURIER-STUDIO / REC-6 — the Steps family gains the LIVE
+                     steppedEase(n, term) sub-editor (the W-MOTION3 G7 defer's
+                     demo-only interim; the published <EasingPicker> fold is the
+                     named successor, W-EASING-PRIMITIVE). It sits ABOVE the static
+                     reference rows so a user parameterizes the staircase live, then
+                     sees the canon rows below. -->
+                <StepsEditor v-if="activeFamily === STEPS_FAMILY" class="mb-5" />
 
                 <div class="grid gap-4 sm:grid-cols-2">
                     <button
@@ -199,7 +267,13 @@ const houseCores: { token: string; cp: string }[] = [
                         @click="play(row)"
                     >
                         <div class="mb-2 flex items-baseline justify-between gap-2">
-                            <code class="text-sm font-semibold text-foreground">{{ row.name }}</code>
+                            <!-- BA.W-DEMO-AFFORDANCES — a discoverable leading <Play>
+                                 so the card reads as activatable (press fires the dot
+                                 off its twin), not a static plot. -->
+                            <span class="flex items-baseline gap-1.5 min-w-0">
+                                <Play class="curve-card-play size-3 shrink-0 self-center text-muted-foreground" aria-hidden="true" />
+                                <code class="truncate text-sm font-semibold text-foreground">{{ row.name }}</code>
+                            </span>
                             <span
                                 :class="cn(
                                     'rounded-pill px-2 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide',
@@ -286,15 +360,82 @@ const houseCores: { token: string; cp: string }[] = [
 </template>
 
 <style scoped>
-/* THE PICKER at the section-heading scale (R7-3) — the families are the PRIMARY IA,
-   so the underline tabs read at the section rung (text-subheading 20.4px / 600) with
-   generous block-padding so the strip is navigation, not a cramped chip row. Demo-
-   local: the gallery's own register tune, the SegmentedTabs base stays unchanged. */
-.curve-family-picker :deep(.segmented-tab) {
+/* THE CURVE-FAMILY CHIP RACK (BA.W-DEMO-AFFORDANCES, curve-picker lane) — the
+   dock-like glass chip register. Each family is a glass chip; the SELECTED chip
+   lifts to the var(--glass-bg-floating) tier (the "selected reads as glass" iOS
+   register, the same --dock-control-active-bg model the dock owns), hover to
+   var(--glass-bg-resting). The active signal is a PLATE (a glass background), not
+   an fg/muted-fg luminance delta — so it is STRUCTURALLY immune to the R8-16
+   contrast-color inversion (the selected family was the DIMMEST label because the
+   muted inactive tabs were lifted to white while the active --foreground stayed
+   below it). Here the selected chip's PLATE luminance is always ABOVE the rest
+   chips' (no plate → the field shows through), in BOTH modes. The label stays
+   warm-ink --foreground (the W-REGISTER-IOS de-RED'd register), so no saturated
+   hue rides an interactive register. Demo-local: a DEMO-side chip rack composing
+   the existing dock active-register tokens, NOT a SegmentedTabs variant edit. */
+.curve-chip-rack {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    /* The rack is a single scroll row; <FadingScroll axis="x"> feathers the
+       overflow edges. The 12 short labels fit at desktop; the fade engages only
+       on real overflow / narrow widths. */
+    padding-block: 0.25rem;
+    /* The chips snap when the rack scrolls. */
+    scroll-snap-type: x proximity;
+}
+
+.curve-chip {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    /* REST — no plate: the chip reads as bare text over the field, so the
+       selected plate's luminance is unambiguously ABOVE it. */
+    background: transparent;
+    color: var(--foreground);
     font-size: var(--type-subheading);
     font-weight: 600;
-    padding-block: 0.6rem;
+    line-height: 1.2;
+    padding-block: 0.45rem;
     padding-inline: 0.85rem;
-    line-height: 1.25;
+    white-space: nowrap;
+    /* §6 doctrine — the surface legs ride the bezier --ease-standard. */
+    transition:
+        background var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard);
+}
+
+.curve-chip:hover:not(.curve-chip--active) {
+    /* HOVER — the resting glass plate (one tier below the active floating). */
+    background: var(--glass-bg-resting);
+    border-color: var(--glass-border-resting);
+}
+
+.curve-chip:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+}
+
+.curve-chip--active {
+    /* SELECTED — the var(--glass-bg-floating) plate lift (the dock's
+       --dock-control-active-bg "selected reads as glass" tier). The PLATE is the
+       active signal; immune to the contrast-color luminance race. */
+    background: var(--dock-control-active-bg, var(--glass-bg-floating));
+    border-color: var(--glass-border-floating);
+    backdrop-filter: var(--glass-blur-floating);
+    color: var(--foreground);
+}
+
+/* The per-card discoverable play glyph — quiets at rest, lifts on card hover so
+   the card reads as activatable. */
+.curve-card-play {
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+button:hover > div .curve-card-play {
+    color: var(--foreground);
 }
 </style>

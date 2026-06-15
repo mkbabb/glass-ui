@@ -8,6 +8,10 @@ import type {
 } from "../../../src/components/ui/data-table";
 import { Input } from "../../../src/components/ui/input";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Sheet as SheetIcon } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the data band's ONE coherent --section-color-9 ledger-slate identity.
+const DATA_STOP = 9;
 
 interface Repo {
     _id: string;
@@ -149,6 +153,28 @@ const paged = computed(() => {
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the data-band identity event family on --section-color-9
+             (the ledger-slate register). The chip is the ONE section event. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="SheetIcon" :section="DATA_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Data · Data table
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Sortable, filterable ledger — the cells stay ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="flex items-end justify-between gap-4">
             <div>
                 <!-- D1-5 (AZ.W-HIERARCHY): the in-card eyebrow 'Data table' was a

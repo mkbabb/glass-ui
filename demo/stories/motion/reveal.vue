@@ -38,8 +38,12 @@ const rows = ["Discover", "Compose", "Refine", "Ship", "Measure", "Iterate"];
                     v-for="(label, i) in rows"
                     :key="label"
                     v-reveal:fade="i + 1"
-                    class="glass-card px-5 py-3"
+                    class="glass-card flex items-center gap-3 px-5 py-3"
                 >
+                    <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+                         (--motion-accent, the demo-local --viz-legendre twin): a
+                         leading stagger marker. The row label stays ink. -->
+                    <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
                     {{ label }}
                 </div>
             </div>

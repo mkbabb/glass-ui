@@ -43,6 +43,17 @@
 
     /* ── Glassmorphic circular icon button ── */
 
+    /* BA.W-DEMO-AFFORDANCES (IG-A4) — the two size registers below are
+       MUTUALLY EXCLUSIVE; never stack `.glass-btn` and `.btn-pill` on one
+       element. `.glass-btn` is the FIXED-square icon primitive (width/height:
+       var(--size-icon-btn) + contain:paint) — `.btn-pill` is the CONTENT-WIDTH
+       text pill. Stacked, the fixed square wins and contain:paint clips the
+       wrapped label into a ~40px blob (the R8-17 "play button" defect). A
+       text-bearing `.glass-btn` collapses the same way even without `.btn-pill`.
+       For a play/replay affordance reach for <StoryPlayButton> (demo) or a real
+       <Button> with a leading Lucide glyph, never an icon-button carrying text.
+       Machine-locked by proof:demo-affordances (W1 — no class co-occurrence,
+       no text-bearing icon button). */
     .glass-btn {
         @apply flex items-center justify-center cursor-pointer;
 

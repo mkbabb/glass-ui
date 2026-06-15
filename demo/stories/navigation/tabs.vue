@@ -13,6 +13,10 @@ import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "../../../src/components/custom/tabs";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { LayoutGrid } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the navigation band's ONE coherent --section-color-12 indigo identity.
+const NAV_STOP = 12;
 
 // ── Pill (glass) — horizontal ──
 const viewMode = ref("grid");
@@ -76,6 +80,29 @@ const chapterBody: Record<string, string> = {
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the navigation-band identity event family on
+             --section-color-12 (indigo). The chip is the ONE section event; the
+             tab indicator stays the component's own selected-reads-as-glass register. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="LayoutGrid" :section="NAV_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Navigation · Tabs
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Panel and toggle navigation — the labels stay ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
             heading="Pill — the glass material (default)"
