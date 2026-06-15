@@ -267,3 +267,47 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   glitch) — all files tracked+pushed, gates green, attribution muddied not lost.
   Full battery + typecheck + build green. Batch 7 (W-REFLECT2 → W-CLOSE, the 4.0.0
   cut) opens — the LAST batch.
+
+## Batch 7 — the gestalt reflection (W-REFLECT2)
+
+### Reflection board (the 8 roster surfaces, re-walked LIVE on :5199, both modes, whole-page)
+
+| surface | light | dark | operative | redressed-in-wave? | structural-FAIL + successor |
+|---|---|---|---|---|---|
+| dock | clipped title (desktop) | clipped title (desktop) | **FAIL** | no (structural) | **BA.W-SHELL-RAIL-RESEAT** — SidebarDock floating chips occlude the page `<h1>` on desktop StoryPage routes |
+| configurators-goo | PASS | PASS | **PASS** | — | — |
+| aurora | PASS | PASS | **PASS** | — | — |
+| glass-feedback | PASS | PASS | **PASS** | — | — (the captured-route title-clip is the shell's FAIL, not glass-feedback's own) |
+| shell | clipped title (desktop) | clipped title (desktop) | **FAIL** | no (structural) | **BA.W-SHELL-RAIL-RESEAT** (shared root with dock) |
+| motion-fourier | PASS | PASS | **PASS** | — | — |
+| dark-register | PASS | PASS | **PASS** | — | — (the binding R8-11 flip: dark glass TRANSMITS the live field) |
+| cross-repo | PASS | PASS | **PASS** | — | — (library-adoptability; the actual adopt/deploy is W-CLOSE's hinge) |
+
+- 2026-06-15 (W-REFLECT2 — the gestalt reflection, conductor lane) — re-walked all 8
+  roster surfaces LIVE on :5199 (the existing dev server; never touched :5210/:5273),
+  BOTH modes × 2 viewports, WHOLE-PAGE over the real W-DARK-MATERIAL backdrop. Authored
+  `scripts/wf-ba-reflect.js` (the BA capture-conductor, mirroring wf-az-reflect.js;
+  PRM-freeze + load-wait + robust-screenshot) → 32 fresh whole-page captures (8×4) under
+  `docs/tranches/BA/audit/reflect/`, all md5-distinct (real per-route content, not the
+  `/` redirect). Authored the 8 per-surface reflection records (RECAPITULATE → RE-VERIFY
+  LIVE → PERFECTION QUESTION → VERDICT, with the surface-paths/surface-hash freshness
+  headers — all 8 FRESH against current bytes). **6/8 flip FAIL→PASS** (configurators-goo,
+  aurora, glass-feedback, motion-fourier, dark-register, cross-repo — every R8 content
+  defect discharged + verified on a real render; the dark register TRANSMITS the live
+  field, the R8-11 "black bg hides glass" comprehensively cleared). **2/8 stay FAIL**
+  (dock + shell — the gestalt walk found the SidebarDock W-RAIL3 floating-carousel facet
+  chips OCCLUDE the page `<h1>` on desktop StoryPage-chrome routes: measured "Selection"+
+  "Toggles" over "Inputs" 85px, "Progress" over "Notification" 65px, "Panes" over
+  "Overview" 43px; mobile BottomDock + substrate/hero routes CLEAN). This is the exact
+  P-1 mechanism-green/page-wrong gap the gestalt gate exists to catch: W-DOCK-SECTIONS
+  booked it as an accepted *breadcrumb* tradeoff, the whole-page render shows a full
+  *title* occlusion. Bound to the binding ℱ-home-seam topology (the midline relocate is
+  the forbidden workaround #4) → STRUCTURAL, NOT a token nudge → recorded FAIL + named
+  successor **BA.W-SHELL-RAIL-RESEAT** (one shared root, one triumvirate), authored under
+  waves/. PROMOTED `proof:ba-gestalt` off the born-RED no-tag isolation onto `["release"]`
+  (the operative close set, mirroring proof:az-reflect/proof:az-final — release-only, NOT
+  ci; the gestalt OR is now the BINDING close decision). Gate state: 6/8 PASS, exit 1
+  (RED on dock+shell — correctly keeps W-CLOSE shut until the successor lands, the
+  `complete_with_misses` discipline). proof:gate-script-parity GREEN post-promotion; the
+  8 reflect-record surface-hashes all FRESH. The AZ-era scratch tests-visual/reflect-*.spec.ts
+  are superseded by wf-ba-reflect.js.
