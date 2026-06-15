@@ -100,7 +100,9 @@
 > binary consumer (`docs/consumer-evidence/{header-ribbon,glass-panel}.md`); both ship again.
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
-> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
+> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`) — RETIRED at the BA cut
+> onto `<HandMark shape="underline">` (see the BA.W-HANDMARK row above; it never reached
+> a real consumer, the 3.11/3.12 publishes were stale-lineage).
 > BREAKING (3.13.0): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
 > `value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
 > Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
@@ -149,6 +151,60 @@
 > prop (default `"solid"`, byte-compatible). `variant="ghost"` renders the SAME seeded blob
 > silhouette as a STROKE (a `color` border over a low-alpha fill) — the empty-palette-slot
 > affordance, NOT a CSS dashed rectangle. No break.
+
+> **BA.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>` + the counter re-registers
+> off `bg-card`. Clean break, no alias ("No legacy code").** The carousel dots and the
+> slides deck `DeckPager` were ALREADY one register; BA.W-PAGER harvests that into ONE
+> primitive — `<PagerDots>` (`@mkbabb/glass-ui/pager-dots`), encapsulated in a glass pager
+> pill. Two breaks:
+>
+> 1. **`CarouselDots` → `<PagerDots>` (clean break).** `CarouselDots` is GONE from the
+>    `/carousel` barrel (it auto-wired the embla API via `useCarousel()` inject).
+>    `<PagerDots>` is standalone — wire `:count`, `:active` (`v-model:active`), and
+>    `@select`/`scrollTo` to the embla API explicitly. MIGRATE: `<CarouselDots />` →
+>    `<PagerDots :count="api.scrollSnapList().length" :active="api.selectedScrollSnap()"
+>    @select="(i) => api.scrollTo(i)" />`. The pip anatomy (24px hit-box, 6px pip,
+>    elongate-on-active, the `--foreground` 52%/72%/full register) is IDENTICAL — the dots
+>    look the same; they now read a `--pager-dot-*` token set (retint the active fill via
+>    `--pager-dot-active`) and sit in the `.glass-pager-ring` chassis by default
+>    (`ring="false"` for a flush-on-an-ambient-glass-host deck). `windowFit?` generalizes
+>    the DeckPager dock-gutter windowing (off by default).
+> 2. **The `<CarouselPager>` counter is off the opaque `bg-card` ring.** The counter
+>    `<span>` now composes `.glass-pager-ring` (the glass-floating pill) instead of
+>    `rounded-pill border border-border bg-card` — the dark `rgb(28,25,23)` slab dies.
+>    No consumer change (the counter is internal to `<CarouselPager>`); a consumer that
+>    hand-overrode the counter's `bg-card` re-points to the glass ring.
+
+> **BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
+> `<HandMark shape="underline">`. Clean break, no alias (DEC-8 outcome 1).** The d6
+> hand-voice family re-landed on `@mkbabb/glass-ui/handmark` (`<HandMark>` / `<InkMark>`
+> + the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
+> is now ONE shape of that ONE hand voice — not a parallel component. Two breaks:
+>
+> 1. **`@mkbabb/glass-ui/underline` (`<GlassUnderline>`) is GONE.** The `/underline`
+>    subpath + the `GlassUnderline*` types are removed from the surface (no alias, per
+>    the no-backwards-compat invariant). MIGRATE: `import { GlassUnderline } from
+>    "@mkbabb/glass-ui/underline"` → `import { HandMark } from
+>    "@mkbabb/glass-ui/handmark"`; `<GlassUnderline>word</GlassUnderline>` →
+>    `<HandMark shape="underline">word</HandMark>`. The editorial draw-on underline is
+>    `<HandMark shape="underline" animation="draw-on">`; the natural pencil-boil
+>    morphology (scale-relative amplitude, irregular seeded periods) is the `boil`
+>    brush (`<HandMark brush="boil" shape="underline">`). The default `pen` brush is a
+>    clean wobbled line, `grain:0`, no extra dep.
+> 2. **New optional peers (vendored/peer split).** `<HandMark>` adds two OPTIONAL peers:
+>    `@mkbabb/pencil-boil ^0.4.1` (the L1 wobble geometry — imported only when a wobble
+>    paints) and `perfect-freehand ^1.2.3` (the variable-width hull body — VENDORED into
+>    `freehand.ts`, declared as an optional peer for provenance, touched only by the
+>    `ribbon:"hull"` highlighter). Both are tree-shaken when unused; a `pen`-only
+>    consumer pulls neither. The `/handmark` chunk is ≈7.6 KiB-gzip (the `profile:budget`
+>    rebaseline records it + the engaged pf hull body).
+>
+> **This row is for any FUTURE external `/underline` consumer — NOT slides.** The
+> 2026-06-15 slides ground-truth (BINDING) confirms slides imports ZERO
+> `@mkbabb/glass-ui/underline` / `GlassUnderline`: its `SlideIntro`/`SlideCloser` red
+> pen-underlines are deck-LOCAL CSS/SVG `::after` glyphs, never the library component.
+> The phantom "slides adopt-book break" was the AZ-H6-fold assumption the slides session
+> disproved at HEAD `c943a49`; there is no slides edit on this fold.
 
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the
@@ -1177,6 +1233,20 @@ A `transition` that pairs `--spring-<name>` with a generic `--duration-*` now re
 `--spring-<name>-duration` so the spring plays at its physical settle (the prior generic clock dragged a dead
 sub-pixel tail). A consumer reading `var(--spring-snappy)` directly gains the option of `var(--spring-snappy-duration)`
 for the matched clock; the existing generic-clock pairings still work.
+
+### The section-color pop primitive — `<IconChip>` + the `@mkbabb/glass-ui/icon-chip` subpath (BA.W-ICON-CHIP, additive)
+
+ADDITIVE — no breaking change, a NET-NEW primitive + subpath. `<IconChip :icon :section>` (or
+`:tone="var(--chart-download)"`) is the library's single section-color POP vehicle — the
+`color-mix(… 25%, transparent)` backplate + full-chroma glyph the demo previously hand-rolled as an
+inline `:style` paste. It enforces the chip≤glyph proportion IN the component (the
+`--icon-chip-glyph-ratio` floor, default 2.18 — a consumer cannot collapse the plate under the glyph)
+and ships three opt-in axes (`:duotone` filled-tonal fill / `:bloom` smooth-glass hover / `:reveal`
+entrance, all PRM-gated, disco-FREE). A consumer wanting a proportioned section-color pop reaches for
+`<IconChip>` instead of re-pasting the recipe. Reachable on the root barrel AND
+`@mkbabb/glass-ui/icon-chip`; the types ride `@mkbabb/glass-ui/api` (`IconChipProps`,
+`IconChipSection`, `IconChipTone`). `MetricCell`'s `iconColor` prop is unchanged (it now reconciles
+internally onto `<IconChip bare :tone>` — the value/unit ink stays neutral; no consumer change).
 
 ---
 

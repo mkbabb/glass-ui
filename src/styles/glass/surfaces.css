@@ -314,6 +314,48 @@
         border-color: var(--surface-tint-15);
     }
 
+    /* ── BA.W-PAGER — the glass pager pill chassis (.glass-pager-ring) ──────────
+       The ONE pager-CHASSIS ring register: a `--radius-pill` glass-floating pill
+       (the DockRail-chip recipe — `--glass-bg-floating` + `--glass-blur-floating`
+       + `--glass-edge-light`/`--glass-specular` + the soft drop + the `.dark`
+       box-shadow arm). It encapsulates BOTH the `<PagerDots ring>` dot rail AND
+       the `<CarouselPager>` counter (the counter re-registers OFF the opaque
+       `bg-card` slab onto this — the R9/R10-5 dark-slab class dies in the same
+       edit). NEVER an opaque `bg-card` plate: this is the house "controls in a
+       glass pill" idiom, translucent (reads the substrate through it), already
+       dark/light-safe, already specular-rimmed (≥2-consumer-proven on the dock
+       rail-extend chips + the dock collapsed pill). The legibility floor over the
+       carousel's image content rides the SAME rebuilt registers
+       (W-DARK-MATERIAL/W-NO-GRAY) — no local opaque fallback. */
+    .glass-pager-ring {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding-inline: 0.625rem;
+        padding-block: 0.3125rem;
+        border-radius: var(--radius-pill);
+        background: var(--glass-bg-floating);
+        backdrop-filter: var(--glass-blur-floating);
+        -webkit-backdrop-filter: var(--glass-blur-floating);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+        /* §6 EASING DOCTRINE — the surface channel cross-fades on the bezier
+           `--ease-standard` (NEVER a spring; a surface prop on a spring is the
+           violation). */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+    .dark .glass-pager-ring {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
+    }
+
     /* ── AW.W23 — chromatic edge dispersion (the polished-glass rim fringe) ──
        An opt-in `.glass-chromatic` composes the warm/cool oklab fringe OVER the
        W22 uniform rim (it does NOT replace it — the rim still rides each rung's
