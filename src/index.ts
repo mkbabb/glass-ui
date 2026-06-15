@@ -31,7 +31,7 @@
 //   useRegisteredShortcuts, ShortcutOptions,
 //   RegisteredShortcut, ShortcutCombo,
 //   ShortcutEventType
-//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      @vueuse/core
+//   Carousel, CarouselContent,                 @mkbabb/glass-ui/carousel      @vueuse/core
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
@@ -128,6 +128,14 @@ export * from "./components/custom/configurator";
 
 // Custom composites — overflow-marquee primitive
 export * from "./components/custom/scrolling-text";
+
+// Custom composites — the section-color pop primitive (BA.W-ICON-CHIP). The ONE
+// color-event vehicle (the `color-mix` backplate + full-chroma glyph + the
+// duotone/bloom/reveal axes). Vueuse-FREE + lightweight (it composes only `cn` +
+// the dependency-free `vReveal` directive — no `@vueuse/core`, no
+// `@mkbabb/keyframes.js`), so it is root-barrel safe and cherry-picked here for
+// BROAD reach; also reachable via `@mkbabb/glass-ui/icon-chip`.
+export * from "./components/custom/icon-chip";
 
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed

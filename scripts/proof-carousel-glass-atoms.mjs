@@ -8,8 +8,17 @@
 // `scale-[var(--scale-hover)]` Tailwind-v4 var-in-arbitrary class (it emits NO
 // CSS — `transform:none`). AX.W23 re-authored the rail. (AX.W19 pruned the
 // custom/glass-carousel composite — its four-state / chrome-substrate clauses,
-// formerly C+D, retired with it; this gate now guards the surviving
-// `ui/carousel/CarouselDots.vue` dot rail only.)
+// formerly C+D, retired with it.)
+//
+// BA.W-PAGER RE-POINT — the dot rail RETIRED onto the shared `<PagerDots>`
+// primitive (`src/components/custom/pager-dots/PagerDots.vue`, the carousel ≡
+// slides-deck register), its class renamed `.carousel-dot` → `.pager-dot`. This
+// gate's two surviving render assertions (DOT-CONTRAST + NO-DEAD-CLASS) re-point
+// onto PagerDots.vue + the emitted `.pager-dot::before` rule (the AX.W23 intent —
+// the dot's WCAG 1.4.11 contrast + the REAL emitted active morph — survives the
+// rename intact). The W-PAGER own gate `proof:pager-ring` carries the ring chassis
+// + the one-register clauses; this gate keeps the orthogonal dot-paint contrast +
+// no-dead-class half.
 //
 // This gate is a RENDER assertion (not a source-string scan): it reads the
 // EMITTED `dist/glass-ui.css` — the actual painted recipe — and computes the
@@ -45,7 +54,7 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        DOTS: resolve(ROOT, "src/components/ui/carousel/CarouselDots.vue"),
+        DOTS: resolve(ROOT, "src/components/custom/pager-dots/PagerDots.vue"),
         CSS: resolve(ROOT, "dist/glass-ui.css"),
         ARTIFACT: gateArtifactPath("GLASS_UI_CAROUSEL_GLASS_ATOMS_ARTIFACT", "AX-carousel-glass-atoms"),
     };
@@ -100,7 +109,7 @@ function run() {
     const violations = [];
     const facts = {};
 
-    for (const [label, p] of [["CarouselDots.vue", DOTS]]) {
+    for (const [label, p] of [["PagerDots.vue", DOTS]]) {
         if (!existsSync(p)) violations.push(`${label} missing at ${p.slice(ROOT.length + 1)}`);
     }
     if (!existsSync(CSS)) {
@@ -117,13 +126,18 @@ function run() {
     const dotsSrc = readFileSync(DOTS, "utf8");
 
     // ── (A) DOT-CONTRAST — read the emitted inactive-dot recipe + resolve ────────
-    // Match the `.carousel-dot::before` base rule (the inactive resting fill) in
-    // the emitted CSS (scoped hash tolerated). Extract its color-mix α.
-    const beforeRule = css.match(/\.carousel-dot(?:\[[^\]]*\])?\s*:{1,2}before\s*\{([^}]*background\s*:\s*color-mix\(in srgb,\s*var\(--foreground\)\s*(\d+)%[^}]*)\}/i);
+    // BA.W-PAGER — the `.pager-dot::before` inactive fill reads the
+    // `--pager-dot-inactive` TOKEN (declared on `.pager-dot`, consumed by var() in
+    // `::before` so a consumer retints with zero fork). The painted default IS that
+    // token's `color-mix(in srgb, var(--foreground) N%, transparent)` value, so the
+    // contrast computation reads the token declaration's α (the emitted CSS, scoped
+    // hash tolerated). A consumer override of the token does not change the shipped
+    // default this gate proves.
+    const beforeRule = css.match(/--pager-dot-inactive\s*:\s*color-mix\(in srgb,\s*var\(--foreground\)\s*(\d+)%/i);
     if (!beforeRule) {
-        violations.push("could not find the emitted `.carousel-dot::before` background color-mix(in srgb, var(--foreground) N%) rule in dist/glass-ui.css — the inactive dot must paint a foreground-tint (NOT bg-muted-medium)");
+        violations.push("could not find the emitted `--pager-dot-inactive: color-mix(in srgb, var(--foreground) N%, …)` token in dist/glass-ui.css — the inactive dot must paint a foreground-tint (NOT bg-muted-medium)");
     } else {
-        const alpha = Number(beforeRule[2]);
+        const alpha = Number(beforeRule[1]);
         facts.inactiveDotAlphaPct = alpha;
         const ctx = schemeContexts();
         const results = {};
@@ -142,7 +156,7 @@ function run() {
 
     // bg-muted-medium guard — the retired opaque-light-card token.
     if (/bg-muted-medium/.test(stripVueComments(dotsSrc))) {
-        violations.push("CarouselDots.vue still references `bg-muted-medium` — the inactive dot must paint a foreground-tint that clears ≥3:1 on a dark card");
+        violations.push("PagerDots.vue still references `bg-muted-medium` — the inactive dot must paint a foreground-tint that clears ≥3:1 on a dark card");
     }
 
     // ── (B) NO-DEAD-CLASS — no scale-[var(--…)] non-emit; real morph emitted ────
@@ -150,14 +164,14 @@ function run() {
     const deadArbitrary = dotsCode.match(/(?:scale|translate|rotate|shadow)-\[var\(--[^\])]+\)\]/);
     facts.deadArbitraryClass = deadArbitrary ? deadArbitrary[0] : null;
     if (deadArbitrary) {
-        violations.push(`CarouselDots.vue carries the var-in-arbitrary non-emit class \`${deadArbitrary[0]}\` — it emits NO CSS; drive the morph through a scoped [data-active] rule instead`);
+        violations.push(`PagerDots.vue carries the var-in-arbitrary non-emit class \`${deadArbitrary[0]}\` — it emits NO CSS; drive the morph through a scoped [data-active] rule instead`);
     }
     // The active emphasis must emit a REAL morph (width or height) in a scoped
     // [data-active]::before rule in the emitted CSS.
-    const activeMorph = css.match(/\.carousel-dot\[data-active\](?:\[[^\]]*\])?\s*:{1,2}before\s*\{([^}]*(?:width|height)\s*:[^}]*)\}/i);
+    const activeMorph = css.match(/\.pager-dot\[data-active\](?:\[[^\]]*\])?\s*:{1,2}before\s*\{([^}]*(?:width|height)\s*:[^}]*)\}/i);
     facts.activeMorphEmitted = Boolean(activeMorph);
     if (!activeMorph) {
-        violations.push("no emitted `.carousel-dot[data-active]::before { width|height: … }` morph in dist/glass-ui.css — the active emphasis must be a REAL emitted morph, not a dead arbitrary class");
+        violations.push("no emitted `.pager-dot[data-active]::before { width|height: … }` morph in dist/glass-ui.css — the active emphasis must be a REAL emitted morph, not a dead arbitrary class");
     }
 
     const status = violations.length === 0 ? "pass" : "fail";

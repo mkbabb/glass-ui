@@ -72,10 +72,15 @@ const NextIcon = computed(() =>
             <component :is="PrevIcon" class="size-4" />
         </Button>
 
+        <!-- BA.W-PAGER — the counter re-registers OFF the opaque `bg-card` slab
+             onto the shared `.glass-pager-ring` glass pill chassis (the dark
+             `rgb(28,25,23)` slab dies; the dots + counter are ONE register). The
+             ring recipe owns the radius/padding/glass; the counter adds only the
+             mono caption + tabular figures. -->
         <span
             v-if="showCounter && slideCount > 0"
             data-slot="carousel-pager-counter"
-            class="rounded-pill border border-border bg-card px-3 py-1 text-mono-caption tabular-nums"
+            class="glass-pager-ring text-mono-caption tabular-nums"
         >
             {{ selectedIndex + 1 }} / {{ slideCount }}
         </span>

@@ -4,11 +4,11 @@ import { ref } from "vue";
 import {
     Carousel,
     CarouselContent,
-    CarouselDots,
     CarouselItem,
     CarouselPager,
     type CarouselApi,
 } from "../../../src/components/ui/carousel";
+import { PagerDots } from "../../../src/components/custom/pager-dots";
 import { cn } from "../../../src/utils/cn";
 
 const slides = [
@@ -29,10 +29,24 @@ const stories = [
     { category: "Navigation", id: "dock" },
 ];
 
-const pagerIndex = ref(0);
+// The first section's dots — driven off the embla API (PagerDots is standalone,
+// so the story wires count/active/@select rather than the prior auto-inject).
+const heroApi = ref<CarouselApi>();
+const heroIndex = ref(0);
+function setHeroApi(api: CarouselApi | undefined) {
+    if (!api) return;
+    heroApi.value = api;
+    heroIndex.value = api.selectedScrollSnap();
+    api.on("select", () => {
+        heroIndex.value = api.selectedScrollSnap();
+    });
+}
 
+const pagerApi = ref<CarouselApi>();
+const pagerIndex = ref(0);
 function setApi(api: CarouselApi | undefined) {
     if (!api) return;
+    pagerApi.value = api;
     pagerIndex.value = api.selectedScrollSnap();
     api.on("select", () => {
         pagerIndex.value = api.selectedScrollSnap();
@@ -47,14 +61,18 @@ function setApi(api: CarouselApi | undefined) {
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes
                 <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
-                with a "X / N" counter pill;
-                <code class="rounded bg-muted px-1">&lt;CarouselDots&gt;</code> renders a dark/light-safe
-                position dot per snap (inactive dots stay clearly visible against the translucent card),
-                with the active dot elongating into a pip via a real emitted morph. Both wire to the embla
-                API via <code class="rounded bg-muted px-1">useCarousel()</code>.
+                with a "X / N" counter in the
+                <code class="rounded bg-muted px-1">.glass-pager-ring</code> glass pill chassis;
+                <code class="rounded bg-muted px-1">&lt;PagerDots&gt;</code> renders the same dark/light-safe
+                position-dot register in a matched ring (the one register the carousel ships and the slides
+                deck adopts), the active dot elongating into a pip via a real emitted morph. The pager reads
+                as ONE encapsulated glass control — no opaque slab, no bare floating dot row.
             </p>
             <div class="relative mx-auto flex w-full max-w-md flex-col gap-4">
-                <Carousel class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4">
+                <Carousel
+                    class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4"
+                    @init-api="setHeroApi"
+                >
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">
                             <div
@@ -67,7 +85,11 @@ function setApi(api: CarouselApi | undefined) {
                         </CarouselItem>
                     </CarouselContent>
                     <div class="mt-4 flex items-center justify-between gap-3">
-                        <CarouselDots />
+                        <PagerDots
+                            :count="slides.length"
+                            :active="heroIndex"
+                            @select="(i: number) => heroApi?.scrollTo(i)"
+                        />
                         <CarouselPager />
                     </div>
                 </Carousel>
@@ -109,7 +131,12 @@ function setApi(api: CarouselApi | undefined) {
                             </div>
                         </CarouselItem>
                     </CarouselContent>
-                    <CarouselDots class="absolute inset-x-0 -bottom-6 justify-center" />
+                    <PagerDots
+                        class="absolute inset-x-0 -bottom-6 mx-auto"
+                        :count="stories.length"
+                        :active="pagerIndex"
+                        @select="(i: number) => pagerApi?.scrollTo(i)"
+                    />
                     <div class="mt-8 flex items-center justify-center">
                         <CarouselPager />
                     </div>
