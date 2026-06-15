@@ -53,6 +53,7 @@ export const CSS_MONOLITHS = {
             "material.css",
             "ladder.css",
             "surfaces.css",
+            "surface-axis.css",
             "progress-rail.css",
             "squircle.css",
             "a11y-fallback.css",

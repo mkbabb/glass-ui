@@ -13,12 +13,20 @@ import { X } from "@lucide/vue"
 import { cn } from '../../../utils'
 import { useSpringMount, type SpringPreset } from '../../../composables/motion/useSpringMount'
 import ModalOverlay from '../_shared/ModalOverlay.vue'
+// BA.W-SURFACE-AXIS — Dialog's binary `variant: glass|opaque` string RETIRES onto
+// the SHARED {glass·veil·opaque} `surface` axis (clean break, no alias — the prior
+// `variant` was Dialog-local and never matched the Card grammar; MIGRATION.md row).
+import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
 
 const props = withDefaults(
   defineProps<DialogContentProps & {
     class?: HTMLAttributes['class'];
-    /** Visual variant: "glass" (translucent blur, default) or "opaque" (solid background). */
-    variant?: 'glass' | 'opaque';
+    /** Surface decoration register (BA.W-SURFACE-AXIS) — the SHARED
+     *  {glass·veil·opaque} axis. `glass` (translucent blur, default) renders the
+     *  floating glass tier; `veil` overlays the borderless/rimless text-legibility
+     *  plate; `opaque` sets `--glass-level:0` (the solid-card escape). Replaces the
+     *  retired binary `variant: glass|opaque` (clean break). */
+    surface?: Surface;
     /**
      * Optional CSS `animation` shorthand forwarded to the portaled scrim
      * via the `--scrim-animation` typed cascade variable. reka-ui's
@@ -61,12 +69,12 @@ const props = withDefaults(
      */
     showClose?: boolean;
   }>(),
-  { variant: 'glass', showClose: true },
+  { surface: 'glass', showClose: true },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, scrimAnimation: _sa, spring: _sp, showClose: _sc, ...delegated } = props
+  const { class: _, surface: _su, scrimAnimation: _sa, spring: _sp, showClose: _sc, ...delegated } = props
   return delegated
 })
 
@@ -79,13 +87,16 @@ const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 p
 // Default cubic path retains the canonical popover-animate + translate trick.
 const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-normal popover-animate'
 
-// One opaque path (AX.W54): the `opaque` arm rides the SAME glass-floating tier
-// (edge, rim, under-shadow preserved) and adds `.glass-opaque`, which drives
-// `--glass-level:0` through the ONE glass knob — NOT a parallel solid recipe.
+// BA.W-SURFACE-AXIS — the surface decoration rides the SHARED resolver on the
+// `floating` tier. `surfaceClass` emits `glass-floating` + the veil/opaque
+// decoration; Dialog appends its own `rounded-dialog` radius. The `opaque` rung
+// rides the SAME glass-floating tier (edge, rim, under-shadow preserved) + adds
+// `.glass-opaque` (`--glass-level:0` through the ONE knob, NOT a parallel solid
+// recipe); the `veil` rung overlays the borderless text-legibility plate — the
+// byte-identical `glass`/`opaque` output the prior binary string emitted, now
+// reached through the ONE axis with the `veil` rung gained for free.
 const variantClasses = computed(() =>
-  props.variant === 'opaque'
-    ? 'glass-floating rounded-dialog glass-opaque'
-    : 'glass-floating rounded-dialog'
+  cn(surfaceClass(props.surface, 'floating'), 'rounded-dialog')
 )
 
 // W13 spring entrance. Inject reka-ui's open ref and wire a useSpringMount
@@ -129,6 +140,7 @@ const springStyle = computed<CSSProperties | undefined>(() => {
       v-bind="forwarded"
       :class="cn(baseClasses, props.spring ? '' : defaultMotionClasses, variantClasses, props.class)"
       :style="springStyle"
+      :data-surface="props.surface"
       :data-spring="props.spring ? (typeof props.spring === 'string' ? props.spring : 'smooth') : undefined"
     >
       <slot />

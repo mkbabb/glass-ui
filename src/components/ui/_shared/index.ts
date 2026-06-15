@@ -9,3 +9,11 @@
 
 export { menuItemVariants } from "./menuItemVariants";
 export type { MenuItemVariants } from "./menuItemVariants";
+
+// BA.W-SURFACE-AXIS — the shared {glass·veil·opaque} surface-decoration axis.
+// The `Surface` union + the `surfaceClass` resolver every enrolled content/
+// floating surface threads (Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/
+// ExpandableContainer/Skeleton) + the consumer waves import (W-FEEDBACK-TONE,
+// W-MENU-GLASS). The ONE seam — no second axis.
+export { surfaceClass } from "./useSurfaceAxis";
+export type { Surface, SurfaceTier } from "./useSurfaceAxis";

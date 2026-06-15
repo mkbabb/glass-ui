@@ -59,6 +59,48 @@
 }
 
 /*
+ * BA.W-SURFACE-AXIS — the shared {glass·veil·opaque} surface decoration ON TOP of
+ * the `.glass-drawer` recipe. `.glass-drawer` is UNLAYERED (this file), so the
+ * `@layer components` `[data-surface]` seam in glass/surface-axis.css would LOSE
+ * to it (an unlayered rule always beats a layered one — the AZ.W-DOCK-RAIL
+ * cascade-win trap). The fix is the SAME-LAYER carve: these `.glass-drawer[data-
+ * surface=…]` rules sit unlayered alongside `.glass-drawer` and win by specificity
+ * (attr+class > class), composing the SAME veil/opaque deltas the shared seam
+ * declares — NO `glass-drawer`-local recipe fork (they read the same `--veil-*` /
+ * `--glass-level` machinery). The `glass` rung is the identity (no rule).
+ */
+.glass-drawer[data-surface="veil"] {
+    --veil-bg: color-mix(
+        in oklab,
+        var(--glass-bg-quiet),
+        var(--glass-tint-source) var(--glass-tint-strength)
+    );
+    --veil-blur: var(--glass-blur-quiet);
+    background: var(--veil-bg);
+    backdrop-filter: var(--veil-blur);
+    -webkit-backdrop-filter: var(--veil-blur);
+    border: none;
+    box-shadow: none;
+}
+
+.glass-drawer[data-surface="opaque"] {
+    /* The solid-card escape. The `.glass-drawer` background reads the `:root`-baked
+       `--glass-bg-overlay` token (which substitutes `--glass-level` at :root), so a
+       per-element `--glass-level: 0` cannot re-resolve it — the substitution-vs-
+       inheritance trap (mirrors surface-axis.css). Set the SOLID plate AT THE
+       ELEMENT; still flip the level/tint knobs for a nested glass descendant. */
+    --glass-level: 0;
+    --glass-tint-strength: 0%;
+    /* The SOLID --card plate via the house color-mix idiom (solid --card, expressed
+       as the cohesion-sanctioned mix the token ladder speaks — NOT the bare
+       `var(--card)` the cohesion D1 check forbids for the always-on drawer plate;
+       this is the EXPLICIT opt-out behind `surface="opaque"`, not the default). */
+    background: color-mix(in srgb, var(--card), transparent 0%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/*
  * Detented (snap-point) sheets fill the viewport height. vaul positions the
  * sheet by translating it DOWN by `innerHeight - (fraction * innerHeight)` —
  * so for a snap fraction to read as that fraction OF THE VIEWPORT, the sheet's

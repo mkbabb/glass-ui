@@ -13,11 +13,21 @@
         <slot :fullscreen="false" />
     </div>
 
-    <!-- Fullscreen mode: teleport to body -->
+    <!-- Fullscreen mode: teleport to body. BA.W-SURFACE-AXIS — the fullscreen
+         overlay un-walls onto the floating/overlay GLASS tier (`glass-overlay` +
+         the shared `[data-surface]` decoration) so the expand reads as the surface
+         LIFTING off the page (a frosted-over-content plate) rather than a solid
+         `bg-background` wall erasing it. A consumer who genuinely wants the solid
+         wall opts in via `surface="opaque"` (the `--glass-level:0` escape — the wall
+         becomes the explicit opt-out, not the silent default). -->
     <Teleport to="body">
         <div
             v-if="open"
-            class="fixed inset-0 z-modal flex flex-col bg-background"
+            :data-surface="surface"
+            :class="cn(
+                'fixed inset-0 z-modal flex flex-col glass-overlay',
+                surfaceDecoration,
+            )"
         >
             <button
                 class="expandable-container__trigger absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
@@ -62,25 +72,43 @@ function releaseBodyOverflowLock() {
 </script>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch } from "vue";
+import { computed, onMounted, onUnmounted, watch } from "vue";
 import { Maximize2, Minimize2 } from "@lucide/vue";
 import { registerShortcut } from "../../../composables/keyboard";
+import { cn } from "../../../utils";
+// BA.W-SURFACE-AXIS — the fullscreen overlay routes through the SHARED
+// {glass·veil·opaque} axis (it was a solid `bg-background` wall — the IG-B5/FD-6
+// off-allowlist miss). Default `glass` (the un-walled frosted-over-content plate);
+// `surface="opaque"` is the explicit solid-wall opt-out.
+import { surfaceClass, type Surface } from "../../ui/_shared/useSurfaceAxis";
 
 defineOptions({ inheritAttrs: false });
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         buttonPosition?: "left" | "right";
         /** Accessible name for the expand (fullscreen) button. */
         expandLabel?: string;
         /** Accessible name for the collapse (exit fullscreen) button. */
         collapseLabel?: string;
+        /** Surface decoration register for the fullscreen overlay
+         *  (BA.W-SURFACE-AXIS) — `glass` (default) frosts over the page;
+         *  `opaque` is the solid-wall opt-out; `veil` the borderless plate. */
+        surface?: Surface;
     }>(),
     {
         buttonPosition: "right",
         expandLabel: "Fullscreen",
         collapseLabel: "Exit fullscreen",
+        surface: "glass",
     },
+);
+
+// The veil/opaque decoration on top of the `glass-overlay` base tier (strip the
+// resolver's base-tier prefix; the overlay owns the base). `:data-surface`
+// (template) drives the CSS seam in lockstep.
+const surfaceDecoration = computed(() =>
+    surfaceClass(props.surface).replace(/^glass-\w+\s*/, ""),
 );
 
 /**

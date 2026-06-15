@@ -68,7 +68,7 @@ function onConfirm() {
                         <DialogTrigger as-child>
                             <Button variant="outline">Opaque variant</Button>
                         </DialogTrigger>
-                        <DialogContent variant="opaque">
+                        <DialogContent surface="opaque">
                             <DialogHeader>
                                 <DialogTitle>Solid surface</DialogTitle>
                                 <DialogDescription>

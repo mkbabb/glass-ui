@@ -144,7 +144,7 @@ function repaintHighlight(container: HTMLElement | null) {
         </Popover>
 
         <Dialog v-model:open="state.isExpanded.value">
-            <DialogContent variant="opaque"
+            <DialogContent surface="opaque"
                 class="!max-w-[36rem] !top-[12vh] !translate-y-0 max-h-[70vh] !p-0 overflow-hidden flex flex-col gap-0"
                 @open-auto-focus="(e: Event) => e.preventDefault()">
                 <div class="flex items-center gap-2 border-b border-border/50 px-3.5 py-3">

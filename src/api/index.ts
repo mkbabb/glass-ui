@@ -100,6 +100,14 @@ export type {
 // `tier` prop against; `CardSurface` is the orthogonal decoration register
 // (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
+// `Surface` is the SHARED {glass·veil·opaque} surface-decoration axis
+// (BA.W-SURFACE-AXIS) — the ONE three-rung register every content/floating
+// surface (Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/Expandable/
+// Skeleton) threads via `surfaceClass`. Distinct from `CardSurface` (Card's
+// own superset, which adds the Card-local `cartoon` decoration member). A
+// consumer types `<Sheet surface="opaque">` / `<Popover surface="veil">`
+// against `Surface`; the discovery layer publishes the union.
+export type { Surface } from "../components/ui/_shared";
 // `GlassPanelVariant` is the 5-rung glass-ladder surface vocabulary
 // (wash/quiet/resting/floating/overlay) parallel to `CardTier` — distinct because
 // GlassPanel paints the glass substrate directly while Card composes the same
@@ -312,9 +320,10 @@ export type {
 // Props/variant types for the animated-digit + the unified SegmentedTabs.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
 // into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
-// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabOption` are the
-// unified tab family — ONE component, a `variant` axis (segmented · pill ·
-// underline), multi-select + responsive collapse as props.
+// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabsOrientation`/
+// `SegmentedTabOption` are the standardized tab family (BA.W-TABS) — ONE engine,
+// TWO materials (`variant`: pill · underline), ONE orientation axis (horizontal ·
+// vertical), responsive collapse as a prop.
 export type {
     AnimatedDigitMode,
     AnimatedDigitProps,
@@ -322,6 +331,7 @@ export type {
 export type {
     SegmentedTabsProps,
     SegmentedTabsVariant,
+    SegmentedTabsOrientation,
     SegmentedTabOption,
 } from "../components/custom/tabs";
 
