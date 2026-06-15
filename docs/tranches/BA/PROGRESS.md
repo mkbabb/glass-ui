@@ -60,11 +60,11 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 | 5 | W-ICON-CHIP | **live-verified** (62dc5c20) | <IconChip> primitive; 4 paste sites collapsed (icons/empty-states/auth-shell/MetricCell); proof:suffuse d2 carved; π 12/12 |
 | 5 | W-PAGER | **live-verified** (7f46736e) | <PagerDots> + .glass-pager-ring; the counter off bg-card (dark slab dead); CarouselDots retired; π 9/9; the slide chassis stays slides-local |
 | 5 | W-HANDMARK | **live-verified** (26a81929) | the d6 family ported (B-1 anchors); /underline DEC-8 fold (the phantom slides break struck); the highlighter 5 deltas engaged (multiply reaches the page); the seeded morphology; π 10/10 |
-| 6 | W-STAGE | planned (spec authored) | the per-category background map + glassiness-over-aurora stagings + token-tour contrast chassis |
-| 6 | W-DEMO-AFFORDANCES | planned (spec authored) | the play register + trigger convention + the curve-picker chip rack + padding rhythm |
-| 6 | W-FOURIER-STUDIO | planned (spec authored) | the foreground fourier studio: partial-sum N axis + orthogonal registers + trace-a-shape + the clock |
-| 6 | W-SUFFUSE2 | planned (spec authored) | category color identity + display-ladder grading + the motion violet |
-| 6 | W-ANIMATE | planned (spec authored) | page-enter orchestration + scroll-progress + countup + hero entrance |
+| 6 | W-STAGE | **live-verified** (a54dcfd2) | per-category bg map (no keyless route) + ShowcaseFrame field tier + DockStage + dark-wash recalibration + the breathing register honest + the h1-rung/scroll-reveal literal-diff applications; proof:stage 6/6 + π 14/14 |
+| 6 | W-DEMO-AFFORDANCES | **live-verified** (13110a50 — absorbed into the suffuse2 commit by a pass-2 commit glitch; files tracked+pushed) | StoryPlayButton + the curve-picker glass chip rack (selected = --glass-bg-floating, FadingScroll overflow) + the trigger convention + 5 plates re-pointed; proof:demo-affordances W1-W4 + π |
+| 6 | W-FOURIER-STUDIO | **live-verified** (f220a497) | the partial-sum studio (orthogonal N/epicycle/color axes + assembling curve) + trace-a-shape DFT + the clock + the StepsEditor (ARM B) + R5-11 warm-hero rider; proof:fourier-studio 6/6 + π |
+| 6 | W-SUFFUSE2 | **live-verified** (13110a50; session-wall continuation wizmuotnw) | per-category eyebrow+rail+chip identity + the event-family escalation + the motion violet + SM-1/SM-2; the SYSTEMIC accent-on-renderless-root render fix (the π caught it — 6/18→18/18); proof:suffuse2 7/7 + suffuse 17/17 + hierarchy 6/6 |
+| 6 | W-ANIMATE | **live-verified** (111a5208) | AppShell route page-enter Transition + compositor scroll-progress bar + metric count-up (SETTLE, intersection-gated) + hero fade-rise; proof:ba-animate W1-W4 + π, all via shipped engines, PRM-clean |
 | 7 | W-REFLECT2 | planned (spec authored) | the gestalt reflection — triumvirate-looped until operative-PASS |
 | 7 | W-CLOSE | planned (spec authored) | battery · MIGRATION · version [H4] · publish [H5] · disposition re-stamps · FINAL · the slides book |
 
@@ -255,3 +255,15 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   exposed it since Batch 2). The full battery: three wave gates + colocation +
   the no-regress set + build + typecheck GREEN; parity GREEN; /underline retired.
   Batch 6 opens (the demo staged to demonstrate).
+- 2026-06-15 (Batch 6 CLOSED) — the demo staged to demonstrate (wz3js4svb + the
+  wizmuotnw continuation): W-STAGE (chassis single-writer) + W-DEMO-AFFORDANCES +
+  W-FOURIER-STUDIO + W-SUFFUSE2 + the pre-landed W-ANIMATE — all five live-verified.
+  W-SUFFUSE2 hit the session wall mid-flight (its source gate was green but the π
+  was RED on data/forms/containers — the gestalt bar caught a real systemic defect:
+  --section-label-accent set via :style on a renderless TooltipProvider root was
+  dropped, so the eyebrow fell back to rose on EVERY category; the continuation
+  moved the accent onto the real <header> across ~27 pages, π 6/18→18/18). Note:
+  the W-DEMO-AFFORDANCES commit folded into 13110a50 (a pass-2 commit-ordering
+  glitch) — all files tracked+pushed, gates green, attribution muddied not lost.
+  Full battery + typecheck + build green. Batch 7 (W-REFLECT2 → W-CLOSE, the 4.0.0
+  cut) opens — the LAST batch.
