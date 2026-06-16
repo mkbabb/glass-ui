@@ -101,3 +101,16 @@ Tranche development opened 2026-06-16 (post-4.0.0-publish). Status legend: `SPEC
 | W-HIERARCHY2 | SPEC | proof:hierarchy (extend) | P1 | the reading-order inversion + the dock-collision-on-ALL-routes (reinforces W-CHIP-GRAZE/W-DOCK-RAIL-SEAT-FINAL) |
 | W-SUFFUSE3 | SPEC | proof:suffuse (extend) | P1 | the feedback-band enrollment + the IconChip pop-entrance + the :saturated pop axis (within proportion) |
 | W-SCROLL-MOTION | (candidate) | proof:scroll-motion (new) | P1 | the SOTA scroll-driven choreography (page-build → section-cascade → scroll-pinned) — the awwwards live-audit's one genuinely-new element; spec from the frontend-design fleet |
+
+## Batch L — deep-SOTA addendum (BB-AMENDMENT-deep-sota.md; the Apple+awwwards harden/refine/prune layer)
+| wave | status | gate | note |
+|---|---|---|---|
+| W-SCROLL-MOTION | SPEC | proof:scroll-motion (new) | promoted from candidate — the SOTA scroll-driven choreography (sticky-pin+IO + native scroll() + smooth-scroll); ADOPT |
+| W-DISPLAY-TRACKING | SPEC | proof:display-tracking (new) | the Apple proportional negative display tracking + tight line-height; a display-ONLY rung (avoids the shared-heading-token substitution-trap); HARDEN |
+| W-DEEP-GLASS | SPEC | proof:glass-depth (new) | the opt-in --glass-depth tier (Apple sat-1.8/blur-14-20) ABOVE the calm default; a SEPARATE --glass-blur-deep-* family so proof:glass-cal stays GREEN; HARDEN |
+| W-PRUNE-CONSOLIDATE | SPEC | proof:no-dual-path (new) | retire popover-animate + the dual CSS-press + the static specular-disc class the band supersedes (symmetric no-dual-path closure) + the half-primitive DECIDE census; PRUNE |
+| W-DEMO-DESIGN | SPEC | proof:demo-design (new) | the flat token tours → designed specimens; WIRES the band primitives onto the demo panes (not re-authored); the demo panes join the gestalt roster |
+
+The refinement-notes (BB-AMENDMENT-deep-sota §1) fold into the extant band waves at execution: --ease-expo-out → W-MOTION-CANON; the BG-2 staging → W-BUTTON-GLASS; the pop-entrance → W-SUFFUSE3; the CTA-inversion → W-HIERARCHY2; the deep tier → W-LENSING. The DEPRECATE fences (scroll-jacking/cursor-hijack/preloaders/jitter) → W-MOTION-CANON's doctrine.
+
+- **2026-06-16 (deep-SOTA)** — the user-directed deeper liquid-glass pass (Apple's own site + 8 awwwards winners, live via chrome-devtools-mcp + the full frontend-design plugin wave) folded. 5 waves added (W-SCROLL-MOTION + the 4 deep-SOTA). The W-DEEP-GLASS reconciles the user's "increase glassmorphism" with the W-GLASS-CAL calm default via an opt-in tier (no revert). Transient API-500 flakiness recovered via an in-workflow retry wrapper. BB now: 57 wave specs.
