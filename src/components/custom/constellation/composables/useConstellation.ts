@@ -149,28 +149,65 @@ export function useConstellation(
     // The hoisted client→canvas-local-px mapper, assigned on mount. The exposed
     // `warpTo(clientX, clientY)` reads it (the deck-scale invariant); null pre-mount.
     const toLocalRef = ref<
-        ((e: { clientX: number; clientY: number }) => ConstellationPointer | null) | null
+        | ((e: { clientX: number; clientY: number }) => ConstellationPointer | null)
+        | null
     >(null);
 
     onMounted(() => {
         const canvas = canvasRef.value;
         if (!canvas) return;
 
-        const handle = useCanvas2D({
+        // The substrate handle the render loop reads back for its LIVE reduced-motion
+        // state. It is forward-declared (`let`, not the inline `const`) so the render
+        // closure below can reference it WITHOUT a temporal-dead-zone hazard: the
+        // substrate arms SYNCHRONOUSLY inside `useCanvas2D(...)` (autoStart), and its
+        // resize/initial-paint path can drive the very first `render` BEFORE the
+        // `useCanvas2D(...)` expression returns — i.e. before a `const handle = …`
+        // binding would have finished initializing. Reading a TDZ `const` from that
+        // first paint throws "Cannot access … before initialization" (a real
+        // production crash surfaced under warm V8 code-cache linearization). With a
+        // forward `let` (initialized `null`), an early first-paint reads `null` and
+        // the helper below falls back to a DIRECT PRM probe — the substrate's own
+        // source of truth — so the static-frame decision is correct either way; once
+        // the assignment lands, the handle's live, change-monitored value governs.
+        let handle: ReturnType<typeof useCanvas2D> | null = null;
+
+        // The single reduced-motion read for the render loop. Prefers the substrate's
+        // live, matchMedia-monitored flag; before the handle has been assigned (the
+        // synchronous-arm first-paint window above) it falls back to a direct
+        // `matchMedia` probe so the very first frame still honours PRM. SSR-safe.
+        const reducedMotionNow = (): boolean => {
+            if (handle) return handle.reducedMotion;
+            return (
+                typeof window !== "undefined" &&
+                !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+            );
+        };
+
+        handle = useCanvas2D({
             canvas: canvasRef,
             setup: () => {
                 // Resolve the palette + lay out the field on the first frame, once
                 // the canvas has been sized by the substrate's resize.
                 return {
                     render(c, now) {
-                        const w = canvas.clientWidth || canvas.offsetWidth || BASE_WIDTH;
+                        const w =
+                            canvas.clientWidth || canvas.offsetWidth || BASE_WIDTH;
                         const h = canvas.clientHeight || canvas.offsetHeight || 720;
                         const k = w / BASE_WIDTH;
                         field.canvas = canvas;
-                        const kFloorRaw = parseFloat(getComputedStyle(canvas).getPropertyValue("--constellation-k-floor")); // R5-8 size-floor knob
-                        field.kFloor = Number.isFinite(kFloorRaw) ? kFloorRaw : undefined;
+                        const kFloorRaw = parseFloat(
+                            getComputedStyle(canvas).getPropertyValue(
+                                "--constellation-k-floor",
+                            ),
+                        ); // R5-8 size-floor knob
+                        field.kFloor = Number.isFinite(kFloorRaw)
+                            ? kFloorRaw
+                            : undefined;
                         field.dpr = Math.min(
-                            (typeof window !== "undefined" && window.devicePixelRatio) || 1,
+                            (typeof window !== "undefined" &&
+                                window.devicePixelRatio) ||
+                                1,
                             2,
                         );
                         if (field.w !== w || field.h !== h) {
@@ -235,7 +272,7 @@ export function useConstellation(
                         // `!handle.reducedMotion` guards (one predicate, not a
                         // parallel branch) so the whole render-loop has ONE
                         // live-vs-static fork.
-                        const isStatic = isFrozen.value || handle.reducedMotion;
+                        const isStatic = isFrozen.value || reducedMotionNow();
 
                         // PRM-true-edge state reset (AY.W-CON2). The substrate LIVE-
                         // MONITORS reduced-motion and re-arms on un-reduce; a user
@@ -286,8 +323,22 @@ export function useConstellation(
                         drawEdges(c, field, link, palette, opacityCeiling, accentIndex);
                         drawNodes(c, field, palette, opacityCeiling);
                         if (pointerReactive && !isStatic) {
-                            drawPointerWeb(c, field, link, palette, pointer, opacityCeiling);
-                            drawRipples(c, field, now, ripples, palette, opacityCeiling);
+                            drawPointerWeb(
+                                c,
+                                field,
+                                link,
+                                palette,
+                                pointer,
+                                opacityCeiling,
+                            );
+                            drawRipples(
+                                c,
+                                field,
+                                now,
+                                ripples,
+                                palette,
+                                opacityCeiling,
+                            );
                         }
                         // The consumer skin runs LAST with the live field. Under a
                         // static frame it gets a FROZEN `now` (AY.W-CON3) so a phase-
