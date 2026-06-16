@@ -4,9 +4,21 @@ The dependency spine + the parallelism plan for the FULL post-amendment 64-wave 
 
 This DAG graphs ALL 64 waves across SIX bands: the original 8-batch INTEGRITY spine (Batches 0–7), the cross-repo PRIMITIVES band (Batch P), the LIQUID-GLASS band (Batch L, incl. the deep-SOTA addendum), the doc-coherence node (W-DAG-RECONCILE), and the substrates / procedural-viz band (Batch V). The §-fences are carried + extended at the bottom.
 
-## §1 — The spine (the integrity floor → the close)
+## §1 — The spine (the constellation foundation → the integrity floor → the close)
 
 ```
+Batch C  CONSTELLATION COHERENCE ──────────────────────────────────────► (pre-Batch-0 foundation; BEAT 3 the keystone)
+  W-SPINE-LATEST ──┐  (the keystone hub edit: kf union→^4, value cap→^0.13.0 IDENTITY,
+  W-SPINE-CONSTELLATION ─┤   +the T1 gate-collapse deletions atomic; SUPERSEDES BB.W-PEER-SPINE)
+  W-SPINE-LEDGER ──┘  (the legacy-class ledger + the dependency-order book; the born-RED
+        │              proof:constellation-spine 6-clause gate, tagged ["local"], born-RED→promote)
+        │
+        │   ◄── WHY pre-Batch-0: BB's feature work needs the latest toolchain IN PLACE —
+        │        the WebGPU suite (Batch V) needs latest vite/TS; the value `^0.13.0` peer
+        │        UNBLOCKS W-BORDER-PROGRESS's (Batch P) sampleColorRamp consume. The hub edit
+        │        is the foundation, not a late-Batch-5 patch. Soft-reads Batch 0's repaired
+        │        gate harness (proof:gate-script-parity/manifest-sound sound before extending gates).
+        ▼
 Batch 0  INTEGRITY FLOOR ─────────────────────────────────────────────► (unblocks all)
   W-CI-GREEN ──┐  (the master-CI-red set, siblings-absent)
   W-CLOSE-BATTERY ─┤  (the full-set close rule + gate: local∪ci∪release)
@@ -38,13 +50,17 @@ Batch 2  FINISH BA + RETIRE DEAD     Batch 3  PERFORMANCE        Batch 4  ARCHIT
    ONE card-scroll family, the row counts here, the umbrella owns it. (coherence-harden §6)
         │
         ▼
-Batch 5  CROSS-REPO ADOPT             Batch 6  CHRONIC RESIDUALS + DOC SYNC   (parallel after the lib work stabilizes)
-  W-PEER-SPINE   (4.0.1-candidate → 4.1.0)  W-NDA-DECIDE   (build-or-retire)
-  W-ADOPT-RECONCILE                          W-AUR-KUWAHARA (build-or-retire)
-  W-SLIDES-DRIVE (DRIVEN; the one foreign tree)  W-PRECEPT-SYNC
-  W-EASING-PRIMITIVE (cross-repo)            W-DELTA-RESHOOT
-  W-LINEAGE-PROBE (gate)                     W-DOC-FRESHEN
+Batch 5  CROSS-REPO ADOPT (GENERALIZED)   Batch 6  CHRONIC RESIDUALS + DOC SYNC   (parallel after the lib work stabilizes)
+  W-PEER-SPINE → FOLDED to Batch C            W-NDA-DECIDE   (build-or-retire)
+     (W-SPINE-LATEST; back-pointer, §A3)      W-AUR-KUWAHARA (build-or-retire)
+  W-ADOPT-RECONCILE (MULTI-EDGE+prop-probe)   W-PRECEPT-SYNC
+  W-SLIDES-DRIVE (DRIVEN; +6-major spine lift) W-DELTA-RESHOOT
+  W-EASING-PRIMITIVE (cross-repo)             W-DOC-FRESHEN
+  W-LINEAGE-PROBE (=spine clause-6 probe)
   W-CROSSREPO-ASKS (by-name)
+  W-LEAF-MODERNIZE   (BEATs 0–2+4; value/kf/pencil-boil/latex-paper)
+  W-CONSUMER-MODERNIZE (BEAT 5; fourier/speedtest/sci-report)
+     │  the dependency-ORDER is the spine: leaves → glass-ui (Batch C) → consumers (here)
         │                                          │
         └──────────────────────┬───────────────────┘
                                ▼
@@ -179,22 +195,25 @@ Aliases + non-migrators + booked successors:
 
 | band | waves | count |
 |---|---|---|
+| Batch C — CONSTELLATION COHERENCE (pre-Batch-0 foundation) | W-SPINE-LATEST · W-SPINE-CONSTELLATION · W-SPINE-LEDGER | 3 |
 | Batch 0 — INTEGRITY FLOOR | W-CI-GREEN · W-CLOSE-BATTERY · W-LEDGER-REPAIR · W-DISPOSITION-RESTAMP | 4 |
 | Batch 1 — GESTALT-BAR HARDENING | W-GESTALT-GATE2 · W-VISUAL-RUNNER · W-CHIP-GRAZE | 3 |
 | Batch 2 — FINISH BA + RETIRE DEAD | W-SCROLL-FADE-RETIRE · W-SURFACE-AXIS-COMPLETE · W-DEAD-SWEEP · W-DOCK-RAIL-SEAT-FINAL | 4 |
 | Batch 3 — PERFORMANCE | W-LIGHTHOUSE · W-CSS-CRITICAL · W-CARD-COMPOSITE¹ · W-PERF-PRODUCER · W-PAYLOAD-DEFER | 5 |
 | Batch 4 — ARCHITECTURE TRANSPOSITIONS | W-CARVE3 · W-CANVAS-UNIFY · W-DARK-INK-WARM · W-INVALID-RING · W-EYEBROW-UNION | 5 |
 | Batch P — PRIMITIVES (cross-repo) | W-BORDER-PROGRESS · W-DECK · W-DOCK-MORPH-FAMILY · W-ON-GLASS-FG · W-AURORA-SWRASTER · W-SCROLL-CARD · W-LIQUIDHOVER · W-PHASE-PALETTE · W-PAPER-GRID-TEXTURE · W-CONTROL-TOKENS | 10 |
-| Batch 5 — CROSS-REPO ADOPT | W-PEER-SPINE · W-ADOPT-RECONCILE · W-SLIDES-DRIVE · W-EASING-PRIMITIVE · W-LINEAGE-PROBE · W-CROSSREPO-ASKS | 6 |
+| Batch 5 — CROSS-REPO ADOPT (GENERALIZED) | W-ADOPT-RECONCILE · W-SLIDES-DRIVE · W-EASING-PRIMITIVE · W-LINEAGE-PROBE · W-CROSSREPO-ASKS · W-LEAF-MODERNIZE · W-CONSUMER-MODERNIZE | 7 |
 | Batch 6 — CHRONIC RESIDUALS + DOC SYNC | W-NDA-DECIDE · W-AUR-KUWAHARA · W-PRECEPT-SYNC · W-DELTA-RESHOOT · W-DOC-FRESHEN | 5 |
 | Batch L — LIQUID-GLASS | W-LIQUID-REVEAL · W-DRAG-MORPH · W-LENSING · W-BUTTON-GLASS · W-MOTION-CANON · W-PRESS-UNIFY · W-HIERARCHY2 · W-SUFFUSE3 | 8 |
 | Batch L — deep-SOTA addendum | W-SCROLL-MOTION · W-DISPLAY-TRACKING · W-DEEP-GLASS · W-PRUNE-CONSOLIDATE · W-DEMO-DESIGN | 5 |
 | coherence-harden — DAG | W-DAG-RECONCILE | 1 |
 | Batch V — substrates / procedural-viz | W-VIZ-SUITE + the 5 serial sub-waves (W-GPU-SUBSTRATE · W-AURORA-WGPU · W-GOOBLOB-WGPU · W-FLOWFIELD · W-CONCENTRIC) | 6 |
 | Batch 7 — CLOSE | W-REFLECT3 · W-CLOSE | 2 |
-| **TOTAL** | | **64** |
+| **TOTAL** | | **68** |
 
-`4 + 3 + 4 + 5 + 5 + 10 + 6 + 5 + 8 + 5 + 1 + 6 + 2 = 64.`
+`3 (Batch C) + 4 + 3 + 4 + 5 + 5 + 10 + 7 (Batch 5 GENERALIZED) + 5 + 8 + 5 + 1 + 6 + 2 = 68.`
+
+**The constellation-modernize arithmetic** (BB-AMENDMENT-constellation-modernize §A3): 64 (prior) **+3** (Batch C: W-SPINE-LATEST · W-SPINE-CONSTELLATION · W-SPINE-LEDGER) **+2** (Batch 5 new: W-LEAF-MODERNIZE · W-CONSUMER-MODERNIZE) **−1** (W-PEER-SPINE FOLDED into Batch C's W-SPINE-LATEST — a back-pointer, no longer a standalone count; its narrow value-peer-widen is SUPERSEDED by the clean-break `^0.13.0` IDENTITY + the kf union collapse) = **68**. W-ADOPT-RECONCILE / W-LINEAGE-PROBE / W-SLIDES-DRIVE / W-CROSSREPO-ASKS are GENERALIZED in place (extended scope, not new rows).
 
 ¹ **W-CARD-COMPOSITE is counted ONCE (Batch 3)** — it is the CLS-keyframes-fix ARM of the W-SCROLL-CARD umbrella (Batch P), per coherence-harden §6 ("one wave with a sub-unit, NOT two competing"). The §A5 "absorbs" and the spec's "builds on" are the SAME statement.
 
@@ -211,6 +230,8 @@ Aliases + non-migrators + booked successors:
 - **The deep-SOTA §1 refinement-notes are ANNOTATIONS, not nodes** — folded onto W-MOTION-CANON (--ease-expo-out + the DEPRECATE fences), W-LENSING (--glass-depth consume), W-BUTTON-GLASS (BG-2 staging + CTA depth), W-SUFFUSE3 (the pop-entrance reaching the tours), W-HIERARCHY2 (the CTA-inversion), W-SCROLL-MOTION (the sticky-pin + IO ADOPT).
 - **W-CARD-COMPOSITE / W-SCROLL-CARD** reconciled to ONE statement (umbrella + CLS arm; coherence-harden §6).
 - **The booked successors** (W-FOURIER-GPU, W-CONSTELLATION-GPU) are shown as trigger-gated NON-band nodes, NOT counted in the 64.
+- **W-PEER-SPINE → W-SPINE-LATEST (the constellation-modernize fold).** The Batch-5 W-PEER-SPINE (the narrow value `^0.12`/`^0.13` peer-optional widen) is SUPERSEDED by Batch C's **W-SPINE-LATEST** (the clean-break `^0.13.0` IDENTITY + the kf union collapse + the T1 gate-collapse deletions, the keystone hub edit moved pre-Batch-0 because the Batch P/V feature work needs the widened spine). The Batch-5 row is now a back-pointer; the `proof:peer-optional` spine-arm RECONCILES into `proof:constellation-spine` clause 1. Per `BB-AMENDMENT-constellation-modernize §A3` — recorded so the 64→68 arithmetic is unambiguous (no double-count, no orphan).
+- **The 64-wave graph → 68 (the constellation-modernize band).** The constellation dependency-modernization added Batch C (3 waves: the spine-to-latest foundation + the born-RED `proof:constellation-spine`) + generalized Batch 5 (W-LEAF-MODERNIZE + W-CONSUMER-MODERNIZE; W-ADOPT-RECONCILE/W-LINEAGE-PROBE/W-SLIDES-DRIVE/W-CROSSREPO-ASKS extended in place). The dependency-ORDER (leaves → glass-ui → consumers, §A4 publish beats) is the new spine edge: Batch C lands the hub keystone; Batch 5 lands the consumer adopt.
 
 ## §8 — The §7-style fences (carried from AZ/BA, extended for the new bands)
 
