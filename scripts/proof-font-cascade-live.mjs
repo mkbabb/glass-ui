@@ -221,8 +221,11 @@ function run() {
     // AZ.W-CARVE — the composed read of the thin theme.css root + the four
     // theme/*.css partials so the STRUCTURE-2 font-bridge asserts resolve.
     const theme = existsSync(P.THEME) ? stripComments(readMonolith(P.ROOT, "theme")) : "";
+    // BA.W-CARVE2 — typography.css carved into typography/*.css partials (body{}
+    // cascade + the ladder + the cm-serif survivor live there); readMonolith
+    // concatenates root + partials so the STRUCTURE-3 asserts resolve.
     const typography = existsSync(P.TYPOGRAPHY)
-        ? stripComments(readFileSync(P.TYPOGRAPHY, "utf8"))
+        ? stripComments(readMonolith(P.ROOT, "typography"))
         : "";
     const fonts = existsSync(P.FONTS) ? readFileSync(P.FONTS, "utf8") : "";
 

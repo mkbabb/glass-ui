@@ -16,8 +16,11 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
             )"
         >
             <header
-                class="flex flex-col gap-2 border-l-[3px] pl-6 mb-10"
-                :style="{ borderColor: sectionAccent }"
+                class="paper-ink-mark flex flex-col gap-2 border-l-[3px] pl-6 mb-10"
+                :style="{
+                    borderColor: 'var(--paper-ink-mark-color)',
+                    '--paper-ink-mark-color': sectionAccent,
+                }"
             >
                 <span
                     class="text-admin-label section-label font-mono"

@@ -23,6 +23,43 @@ export interface DockRailItem {
 }
 
 /**
+ * BA.W-DOCK-SECTIONS — the three named zone kinds the declarative `<DockSection>`
+ * descriptor renders (the R8-9 "rail core + sections + nav" three-zone gestalt):
+ *   - `"rail-core"` — the leading home/brand region (the ℱ wordmark / category trigger).
+ *   - `"section"`   — a named, divider-demarcated group of controls; a section
+ *                     carrying `layers` composes the existing `DockLayerGroup`/`DockLayer`
+ *                     registry (NOT a parallel layer machine).
+ *   - `"nav"`       — the trailing nav arrows / utility group.
+ */
+export type DockSectionKind = "rail-core" | "section" | "nav";
+
+/**
+ * BA.W-DOCK-SECTIONS — one declarative section descriptor. A consumer passes
+ * `sections: readonly DockSectionDescriptor[]` to `<DockSection>` and the dock body
+ * renders the tripartite silhouette (rail-core | divided named sections | nav)
+ * demarcated by `<DockSeparator>` — the IG-A3 / R8-9 "abstract this into a re-usable
+ * component for layering" library gap. A `<script setup>` SFC cannot re-export a named
+ * type through its default barrel, so the descriptor lives here (the colocated types
+ * home, beside `DockRailItem`) and `DockSection.vue` imports it; the barrel re-exports
+ * it for consumers typing their `sections` array.
+ */
+export interface DockSectionDescriptor {
+    /** Which of the three zone kinds this descriptor renders. */
+    kind: DockSectionKind;
+    /** Stable identifier — the `v-for` key + the layer-context id for a `section`. */
+    id: string;
+    /** Optional accessible label for the grouped zone. */
+    label?: string;
+    /**
+     * For a `section` kind: the contextual facets this section carries. When present
+     * (length > 1) the section's facets are the rail's chips (the W-RAIL3 move OUT of
+     * the dock body — the facets ride the seam rail, never re-inflate the box). The
+     * descriptor names them; `<DockRail :items>` renders them.
+     */
+    layers?: readonly DockRailItem[];
+}
+
+/**
  * The ONE dock-morph spring authority — the iOS-26 interruptible-physics tuning the
  * dock's single `SpringProgress` orchestrator (`dockMorphContext.ts`) AND the
  * `useLayerTransition` engine both read. Co-located here so the `response`/`damping`

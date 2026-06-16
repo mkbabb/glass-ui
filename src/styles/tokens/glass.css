@@ -28,26 +28,36 @@
     /* Blur primitives. The radii here feather the dock + meter card to a
        barely-perceptible diffusion that lets the substrate behind it bleed
        through cleanly while keeping hero typography crisp at meter scale.
-       The resting blur sits at 12px so a glass plate reads as a diffusion
-       without consumer-side override. */
+       The resting blur sits at 10px so a glass plate reads as a diffusion
+       without consumer-side override.
+
+       BA.W-GLASS-CAL Unit 1 — the ladder dialed back ~15-20% UNIFORMLY (the
+       user's "a hair too much" over-diffusion): quiet 10→8, resting 12→10,
+       floating 16→13, overlay 15→13, dock 11→9; wash stays 1px (sub-perceptual).
+       The pull is proportional (it preserves tier separation) and keeps every
+       rung in the AV.W7-F2 8-15px band — the backdrop's structure reads a hair
+       more through the plate while the glass still reads unmistakably as glass.
+       The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
+       companion below are UNTOUCHED (the W-DARK-MATERIAL dark-recipe saturate/
+       brightness companions preserved — radius-only, the gate's B3 assert). */
     --glass-blur-wash-radius:     1px;
-    --glass-blur-quiet-radius:    10px;
-    --glass-blur-resting-radius:  12px;
-    --glass-blur-floating-radius: 16px;
+    --glass-blur-quiet-radius:    8px;
+    --glass-blur-resting-radius:  10px;
+    --glass-blur-floating-radius: 13px;
     /* AV.W7 F2 — clamped from 24px into the 8–15px budget band. A blur radius
        past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
        expensive idiom — the radius is the dominant cost). 15px is the band
-       ceiling; the lower rungs (wash/quiet/resting 1/10/12) sit in-band and the
-       floating 16px is the design ceiling at the band edge (left as-is). A
-       high-resolution display restores the richer 24px wash via the @media arm
-       below — the cost is amortised by the extra device pixels. */
-    --glass-blur-overlay-radius:  15px;
-    /* Dock blur radius — 11px, paired with the 0.42 opacity below: a crisp
-       glass pill (the iOS Control Center register), not a feathered wash.
-       The dock composes `blur()` only (no saturate); the
+       ceiling; BA.W-GLASS-CAL dialed the overlay rung to 13px (off 15) so the
+       whole ladder pulls back in proportion. A high-resolution display restores
+       a richer wash via the @media arm in light-dark.css — the cost is amortised
+       by the extra device pixels. */
+    --glass-blur-overlay-radius:  13px;
+    /* Dock blur radius — 9px (BA.W-GLASS-CAL, off 11), paired with the 0.42
+       opacity below: a crisp glass pill (the iOS Control Center register), not a
+       feathered wash. The dock composes `blur()` only (no saturate); the
        `prefers-reduced-transparency` bracket at glass.css maps it to the
        opacity-only register. */
-    --glass-blur-dock-radius:     11px;
+    --glass-blur-dock-radius:     9px;
 
     /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
@@ -137,15 +147,40 @@
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
 
-    /* Composed borders — foreground-tinted */
-    --glass-border-wash:     color-mix(in srgb, var(--foreground) 8%, transparent);
-    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 10%, transparent);
-    --glass-border-resting:  color-mix(in srgb, var(--foreground) 12%, transparent);
-    --glass-border-floating: color-mix(in srgb, var(--foreground) 15%, transparent);
-    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 18%, transparent);
-    --glass-border-dock:     color-mix(in srgb, var(--foreground) 11%, transparent);
+    /* Composed borders — foreground-tinted. BA.W-NO-GRAY L3 — the warm RIM
+       re-anchor (G9). The rim IS warm (it rides --foreground, hsl-24 warm ink),
+       but at 8-12% α over a near-white plate it was a near-invisible hairline —
+       the plate had no carved silhouette, reading as a borderless gray rectangle
+       (the user's "no gray ... for cards"). The α lifts a few points per rung so
+       the warm hairline CARVES the silhouette (the WWDC25 "rim that defines the
+       silhouette" device, on the warm-ink register). Still bounded low — the rim
+       is a whisper that defines the edge, never a hard rule. The source stays
+       --foreground (the warm-ink tint, NOT a new color); only the presence lifts. */
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 11%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 13%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 16%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 19%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 22%, transparent);
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 14%, transparent);
     --glass-border:          var(--glass-border-quiet);
     --glass-border-strong:   var(--glass-border-floating);
+
+    /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────
+       ONE shared resting surface for the FORM family — Input/Textarea/Select/
+       Combobox/NumberField/TagsInput — so the whole control band is ONE material
+       at rest, not a per-control fork. Input rode the warm near-white `quiet`
+       glass register while Select rode the lighter `glass-wash` gray (live-probed
+       at R10 SM-3/NF-4: input `oklab(0.986)` near-white vs select `oklab(0.636)`
+       gray — the "no gray" bar at a control-family seam). The unified register
+       adopts the WARMER input rung (the no-gray choice); the per-control recipes
+       re-point to read these tokens, no per-control fork. The W-NO-GRAY warm floor
+       lands underneath in Batch 1b (it warms the VALUES); this register unifies
+       the TIER. The hover lift mixes the rest fill one step toward the resting
+       rung so a control brightens on hover in lockstep. */
+    --control-surface-bg:        var(--glass-bg-quiet);
+    --control-surface-border:    var(--glass-border-floating);
+    --control-surface-blur:      var(--glass-blur-quiet);
+    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-bg-quiet), var(--glass-bg-resting) 35%);
 
     /* Shared decorative. Light grain dropped 0.035 → 0.025 in P.W1.B —
        at the chassis scale the original alpha read as crawl over the new
@@ -153,7 +188,9 @@
        so it sits at the perceptual floor. Dark companion drops 0.06 →
        0.045 below to keep the soft-light blend alive without stippling. */
     --glass-grain-opacity: 0.025;
-    --glass-grain-opacity-disco: 0.08;
+    /* BA.W-GLASS-CAL — `--glass-grain-opacity-disco` (0.08) DELETED with the disco
+       recipe retirement (H2a): no surviving consumer once `btn-audacious` + the
+       dock-tab primary phase-grain collapse onto the calm glass register. */
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* Hairline-accent — 0.5px catch-light + under-shadow pair.
@@ -185,7 +222,13 @@
        on text. The `-dark` companion is overridden inside `.dark` mirroring
        the `--glass-specular-dark` precedent. */
     --glass-edge-light:      inset 0 0 0 0.75px hsl(0 0% 100% / 0.18);
-    --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.10);
+    /* BA.W-DARK-MATERIAL scope 2 — the dark edge/rim is the PRIMARY silhouette device in
+       dark. The light register's fill+shadow carry the plate; in dark the fill barely
+       separates (the deep page is near-black), so the EDGE + the transmitted glow carry the
+       silhouette — two registers, one design language. HEAD α 0.10 sits below the reading
+       threshold over the deep canvas; lifted to 0.22 so the rim DEFINES the plate (the
+       WWDC25 "rim that defines the silhouette" device, dialed up for the dark substrate). */
+    --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.22);
 
     /* AW.W23 — content-aware adaptive tint (the Baseline-2025 "tint informed by
        surrounding content" axis, WWDC25 sess. 219). A surface can tint toward a
@@ -259,6 +302,23 @@
        ~10.6–10.9:1 (within the ~11:1 ratified register — the bump is a silhouette
        strengthening, not a silent re-tint below AA). The live π readback ratifies. */
     --glass-tint-strength-aa:   20%;
+
+    /* BA.W-DARK-MATERIAL scope 7 — the calm-light recalibration (R9-1; the slides gray-slab
+       fix). The AZ unconditional content-tier self-engage applied the full 20% AA darken to
+       EVERY .glass-card/.glass-resting/.glass-quiet/.glass-wash mode- and backdrop-agnostically
+       — over a plain LIGHT page (not a bright/busy backdrop) the 20% warm-ink darken + the
+       muted→ink lift composited the translucent cream card into a flat gray slab (the slides
+       presenter card: 20% → oklab(0.785) gray). The recalibration: the FULL AA darken is now
+       gated on the declared/sampled bright signal (the @container --glass-backdrop:light bucket /
+       the observer); the UNCONDITIONAL content-tier floor drops to this sub-perceptual SILHOUETTE
+       tint — just enough edge over a busy backdrop without graying a calm-light card (the
+       calm-light plate stays warm, L ≈ 0.94 at the slides-equivalent fixture). The overlay band
+       (.glass-floating/.glass-overlay) keeps the FULL unconditional darken (floating over an
+       UNKNOWN consumer surface, darkening is the correct default). A consumer opts out on a
+       light-page ancestor via --glass-tint-strength: 0%. Bounded > 0%, ≤ 10%. The DARK arm
+       re-tunes --glass-tint-strength-aa directly (dark-arm.css scope 3) — the luminous-dark lift
+       is the desired default there, NOT a sub-perceptual floor, so the floor is a light-mode knob. */
+    --glass-tint-strength-floor: 4%;
 
     /* R5-7 — the VEIL text-plate feather. The `veil-surface` decoration
        (cards.css) paints a borderless/rimless translucent glass plate as a LOCAL

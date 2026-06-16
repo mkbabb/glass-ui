@@ -1,7 +1,45 @@
 /* utilities/base.css
-   The @layer components base half — section-description, labeled-field, popover-content, scrollbar, focus-ring, hairline-accent, interactive-item, tap-squish, status-dot, depth-text, preserve-3d, ios input fix, scroll-fade masks, deferred-section, scroll-timeline host, shimmer text, keyboard key.
+   The @layer components base half — section-description, labeled-field, popover-content, scrollbar, focus-ring, hairline-accent, interactive-item, tap-squish, status-dot, depth-text, preserve-3d, ios input fix, scroll-fade masks, fading-scroll (scroll-state-driven edge fade), deferred-section, scroll-timeline host, shimmer text, keyboard key.
    Carved from the utilities.css cascade root; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
+
+/* ═══════════════════════════════════════════════
+   §FADING-SCROLL — the per-edge mask-width interpolation customs (BA.W-FADING-SCROLL)
+
+   `<FadingScroll>`'s scroll-state-driven edge fade is a `mask-image` whose two
+   per-edge ramp widths are these registered `@property <length-percentage>`
+   customs. Registered (not bare custom props) so they INTERPOLATE smoothly off
+   the `scroll(self)` timeline below — an unregistered custom would jump between
+   the textual `0px` / `var(--fade-scroll-width)` endpoints rather than feathering.
+   `inherits: false`: each scroll port owns its own edge state (an ancestor must
+   never push a fade-width onto an unrelated descendant strip — mirrors the
+   `--progress-crescendo` / `--ripple-radius` non-inheriting registrations).
+   `initial-value: 0px` = the SHARP floor: an at-rest, no-overflow edge has NO
+   feather (the R8-08 "Shy" defect — the static `.scroll-fade-*` mask half-erased
+   the first card's chrome at rest — is structurally impossible because the
+   default is sharp and the timeline OPENS the feather only on real scroll).
+
+   These customs are INTERNAL (not a public token). The public knob is
+   `--fade-scroll-width` (offsets-sizing.css). Co-registered HERE (the consuming
+   CSS file) per the `@property --dock-morph-t` in dock.css precedent — a
+   component's typed property rides its own recipe file.
+
+   Co-written by the `useFadingScroll` JS fallback (the dual-path single writer):
+   the native `scroll(self)` timeline below owns these customs on a supporting
+   engine, the composable writes the SAME two customs when it is absent. Never
+   both — the composable feature-detect-gates OFF under timeline support.
+   ═══════════════════════════════════════════════ */
+@property --fade-start {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 0px;
+}
+@property --fade-end {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 0px;
+}
+
 @layer components {
     /* ── Section description (V.W3.T7) ──────────────────────────────
        Canonical recipe for the `<Section>` primitive's description
@@ -40,6 +78,23 @@
        without `:has()`/`:user-invalid` (not a live+dead alias). */
     .labeled-field {
         --field-label-color: var(--muted-foreground);
+        /* THE WIDTH CONTRACT (BA.W-CONFIG-CHASSIS.1, S1 / CFG-1). The
+           labeled-field root claims FULL inline width + lays its label/control
+           stack out as a column, so a slotted control (a Slider whose inner
+           `.glass-slider` resolves `width: 100%`) has a DEFINITE width to
+           resolve against — never the content-sized 0 the bare `display:block`
+           default produced inside the configurator row's flex slot. This is the
+           half that survives the `hide-label` register: with the visible label
+           rendered `sr-only`, the label was the only intrinsic width
+           contributor, so the field collapsed; `width:100%` makes the field own
+           its inline axis regardless of label visibility. `min-width:0` lets it
+           shrink below content min inside a constrained row. Standalone use is
+           unaffected (a `<LabeledField>` outside a flex parent fills its block
+           container exactly as the prior `display:block` did). */
+        display: flex;
+        flex-direction: column;
+        inline-size: 100%;
+        min-inline-size: 0;
     }
     .labeled-field:has(:user-invalid),
     .labeled-field.has-error {
@@ -282,6 +337,127 @@
 
     .scroll-fade-y {
         mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
+    }
+
+    /* ── Fading scroll — the scroll-STATE-driven edge fade (BA.W-FADING-SCROLL) ──
+       `<FadingScroll>`'s recipe. SUPERSEDES the scroll-BLIND `.scroll-fade-*`
+       masks above (which feathered both edges unconditionally — the R8-08 "Shy"
+       defect). Here each edge's ramp width is a registered `--fade-start` /
+       `--fade-end` custom (above, default 0px = SHARP), driven by the
+       `scroll(self)` timeline so the start edge feathers only past `scroll > 0`
+       and the end edge only while trailing overflow remains.
+
+       The root IS the scroll port (the component sets overflow via the consumer's
+       utilities — `overflow-x-auto` / `overflow-y-auto` come from the class the
+       consumer passes; the axis floor below sets the OTHER axis). The 4-stop
+       mask reads the two customs; at rest both are 0px so the gradient is a flat
+       opaque pass-through (no feather). */
+    .fading-scroll {
+        /* The base mask is axis-specialized by the modifier classes below. The
+           default-x case uses the inline ramp; the y case the block ramp. */
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            black var(--fade-start),
+            black calc(100% - var(--fade-end)),
+            transparent 100%
+        );
+    }
+    .fading-scroll--x {
+        overflow-x: auto;
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            black var(--fade-start),
+            black calc(100% - var(--fade-end)),
+            transparent 100%
+        );
+    }
+    .fading-scroll--y {
+        overflow-y: auto;
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            black var(--fade-start),
+            black calc(100% - var(--fade-end)),
+            transparent 100%
+        );
+    }
+
+    /* The NATIVE primary path: drive the per-edge customs off a `scroll(self)`
+       timeline — ZERO JS on a supporting engine (the `scroll-driven.css` /
+       Baseline-Newly-Available bar). UNLIKE `scroll-driven.css` this is NOT
+       wrapped in `prefers-reduced-motion: no-preference` — the fade is a
+       LEGIBILITY cue, not motion, so it stays present under PRM (it merely stops
+       interpolating; the discrete overflow-edge presence stays correct, and the
+       registered customs make even the static endpoints land right). */
+    @supports (animation-timeline: scroll()) {
+        /* The start edge: from sharp (0) to feathered, completing within the
+           first `--fade-scroll-width` of scroll — so at `scroll = 0` the start is
+           SHARP and it ramps in only once the user genuinely scrolls past. */
+        @keyframes gl-fade-start-in {
+            from {
+                --fade-start: 0px;
+            }
+            to {
+                --fade-start: var(--fade-scroll-width);
+            }
+        }
+        /* The end edge: feathered while trailing overflow remains, ramping OUT to
+           sharp over the last `--fade-scroll-width` of scroll — so at the scroll
+           end (no trailing overflow) the end is SHARP. */
+        @keyframes gl-fade-end-out {
+            from {
+                --fade-end: var(--fade-scroll-width);
+            }
+            to {
+                --fade-end: 0px;
+            }
+        }
+        /* x axis — `scroll(self inline)`; two animations on the ONE element, each
+           gated by `animation-range` to the start / end sliver of the scroll
+           distance. `fadeStart`/`fadeEnd` props toggle their respective
+           animation off via the `[data-fade-*]` presence attrs. */
+        .fading-scroll--x[data-fade-start] {
+            animation: gl-fade-start-in linear both;
+            animation-timeline: scroll(self inline);
+            animation-range: 0 var(--fade-scroll-width);
+        }
+        .fading-scroll--x[data-fade-end] {
+            animation: gl-fade-end-out linear both;
+            animation-timeline: scroll(self inline);
+            animation-range: calc(100% - var(--fade-scroll-width)) 100%;
+        }
+        /* BOTH edges on one element compose as two named animations. */
+        .fading-scroll--x[data-fade-start][data-fade-end] {
+            animation:
+                gl-fade-start-in linear both,
+                gl-fade-end-out linear both;
+            animation-timeline: scroll(self inline), scroll(self inline);
+            animation-range:
+                0 var(--fade-scroll-width),
+                calc(100% - var(--fade-scroll-width)) 100%;
+        }
+        /* y axis — `scroll(self block)`. */
+        .fading-scroll--y[data-fade-start] {
+            animation: gl-fade-start-in linear both;
+            animation-timeline: scroll(self block);
+            animation-range: 0 var(--fade-scroll-width);
+        }
+        .fading-scroll--y[data-fade-end] {
+            animation: gl-fade-end-out linear both;
+            animation-timeline: scroll(self block);
+            animation-range: calc(100% - var(--fade-scroll-width)) 100%;
+        }
+        .fading-scroll--y[data-fade-start][data-fade-end] {
+            animation:
+                gl-fade-start-in linear both,
+                gl-fade-end-out linear both;
+            animation-timeline: scroll(self block), scroll(self block);
+            animation-range:
+                0 var(--fade-scroll-width),
+                calc(100% - var(--fade-scroll-width)) 100%;
+        }
     }
 
     /* ── Deferred section — render-skip an offscreen subtree (AQ.W3 §5) ──────

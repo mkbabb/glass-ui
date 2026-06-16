@@ -22,6 +22,11 @@ import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "../../src/components/custom/tabs";
+import {
+    ConfiguratorLayer,
+    ConfiguratorRow,
+} from "../../src/components/custom/configurator";
+import { DarkModeToggle } from "../../src/components/custom/controls";
 import { PRESETS } from "../presets/manifest";
 import {
     FONT_OPTIONS,
@@ -30,7 +35,6 @@ import {
     type FontSlots,
 } from "./usePresetEditor";
 import { useConfiguratorOpen } from "./useConfiguratorOpen";
-import PresetEditorField from "./PresetEditorField.vue";
 
 const CONFIG_EVENT = "glass-ui-demo:toggle-configurator";
 
@@ -90,10 +94,9 @@ const cartoonModel = computed<boolean>({
     get: () => cfg.effective("cartoonShadow"),
     set: (v) => cfg.setField("cartoonShadow", v),
 });
-const darkModel = computed<boolean>({
-    get: () => cfg.effective("dark"),
-    set: (v) => cfg.setField("dark", v),
-});
+// BA.W-CONFIG-CHASSIS.3 — the `darkModel` computed is GONE. The dark row renders
+// the canonical <DarkModeToggle> bound to the live `useGlobalDark` (self-syncing
+// over `isDark`/`toggleDark`); there is no config-store shadow to desync.
 const motionModel = computed<boolean>({
     get: () => cfg.effective("motion"),
     set: (v) => cfg.setField("motion", v),
@@ -159,7 +162,10 @@ function effectiveFont(slot: keyof FontSlots): string {
             class="glass-resting w-full sm:max-w-md overflow-y-auto p-0"
         >
             <div class="flex h-full flex-col">
-                <SheetHeader class="px-6 pt-6 pb-4 border-b border-border/40">
+                <SheetHeader
+                    class="px-6 pt-6 pb-4 border-b"
+                    style="border-color: var(--configurator-divider)"
+                >
                     <SheetTitle class="font-display text-2xl">
                         glass-ui demo Configurator
                     </SheetTitle>
@@ -169,26 +175,30 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </SheetDescription>
                 </SheetHeader>
 
-                <div class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
-                    <!-- Appearance — the dark toggle leads (R4-3: dark-mode at the
-                         TOP of the gear view), then the post-W54 design axes:
-                         --glass-level (the maximal-glass knob), --ui-scale (the
-                         global comfort scalar), and the reduced-motion override. -->
-                    <section class="space-y-1">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Appearance
-                        </h3>
-                        <PresetEditorField
+                <!-- BA.W-CONFIG-CHASSIS.3 — the gear RECOMPOSED on the Configurator
+                     chassis (CFG-5, clean break): each former hand-rolled
+                     `<section>`+`<h3 text-xs font-mono>` (a 12px mono eyebrow that
+                     read BELOW body as a caption) is now a `<ConfiguratorLayer>` so
+                     its label resolves the 20.4px `.configurator-section-label`
+                     section rung, and each former `<PresetEditorField>` (a byte-for-
+                     byte ConfiguratorRow clone) is now a `<ConfiguratorRow>` — ONE
+                     anatomy, the W-HIERARCHY vocabulary the studios already speak.
+                     The dividers read the dark-adaptive --configurator-divider token.
+                     The controls column is a plain scroll port (the Sheet owns the
+                     overflow; no Configurator stage grid in this single-column host). -->
+                <div class="configurator glass-floating flex-1 overflow-y-auto">
+                    <!-- Appearance — the dark toggle LEADS (R4-3: dark-mode at the TOP
+                         of the gear view), now the canonical live <DarkModeToggle>. -->
+                    <ConfiguratorLayer label="Appearance" :dividers="true">
+                        <ConfiguratorRow
                             label="Dark mode"
-                            description="Mirrors the global dark toggle — the single chrome dark control."
-                            can-reset
-                            @reset="() => cfg.clearField('dark')"
+                            description="The single chrome dark control — flips the live global mode."
                         >
                             <div class="flex w-full items-center justify-end">
-                                <Switch v-model="darkModel" />
+                                <DarkModeToggle size="control" aria-label="Toggle dark mode" />
                             </div>
-                        </PresetEditorField>
-                        <PresetEditorField
+                        </ConfiguratorRow>
+                        <ConfiguratorRow
                             label="Glass level"
                             name="--glass-level"
                             :description="`${cfg.effective('glassLevel').toFixed(2)} — 0 opaque · 1 calibrated · >1 clearer`"
@@ -200,10 +210,9 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="0"
                                 :max="1.5"
                                 :step="0.05"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                        <PresetEditorField
+                        </ConfiguratorRow>
+                        <ConfiguratorRow
                             label="UI scale"
                             name="--ui-scale"
                             :description="`${cfg.effective('scale').toFixed(2)}× — the global comfort scalar (the dock derives from it)`"
@@ -215,10 +224,9 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="0.85"
                                 :max="1.5"
                                 :step="0.05"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                        <PresetEditorField
+                        </ConfiguratorRow>
+                        <ConfiguratorRow
                             label="Reduce motion"
                             name="--demo-reduce-motion"
                             description="Force-reduce spatial animation this session (overrides the system preference)."
@@ -228,33 +236,28 @@ function effectiveFont(slot: keyof FontSlots): string {
                             <div class="flex w-full items-center justify-end">
                                 <Switch v-model="motionModel" />
                             </div>
-                        </PresetEditorField>
-                    </section>
+                        </ConfiguratorRow>
+                    </ConfiguratorLayer>
 
                     <!-- Preset — the segmented register (R4-4: glassy pill tabs,
                          not bare radios). The active preset's prose rides below. -->
-                    <section class="space-y-2">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Preset
-                        </h3>
-                        <SegmentedTabs
-                            v-model="presetModel"
-                            variant="segmented"
-                            :options="PRESET_OPTIONS"
-                            class="w-full"
-                            aria-label="Design preset"
-                        />
-                        <p class="text-micro leading-snug text-muted-foreground/80">
-                            {{ presetDescription }}
-                        </p>
-                    </section>
+                    <ConfiguratorLayer label="Preset">
+                        <div class="space-y-2">
+                            <SegmentedTabs
+                                v-model="presetModel"
+                                :options="PRESET_OPTIONS"
+                                class="w-full"
+                                aria-label="Design preset"
+                            />
+                            <p class="text-micro leading-snug text-muted-foreground/80">
+                                {{ presetDescription }}
+                            </p>
+                        </div>
+                    </ConfiguratorLayer>
 
                     <!-- Typography -->
-                    <section class="space-y-1">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Typography
-                        </h3>
-                        <PresetEditorField
+                    <ConfiguratorLayer label="Typography" :dividers="true">
+                        <ConfiguratorRow
                             v-for="slot in (['serif', 'sans', 'display', 'mono'] as const)"
                             :key="slot"
                             :label="slot[0].toUpperCase() + slot.slice(1)"
@@ -279,9 +282,9 @@ function effectiveFont(slot: keyof FontSlots): string {
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
-                        </PresetEditorField>
+                        </ConfiguratorRow>
 
-                        <PresetEditorField
+                        <ConfiguratorRow
                             label="Scale base"
                             name="--type-body"
                             :description="`${cfg.effective('scaleBase')}px`"
@@ -293,17 +296,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="14"
                                 :max="18"
                                 :step="0.5"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                    </section>
+                        </ConfiguratorRow>
+                    </ConfiguratorLayer>
 
                     <!-- Color & texture -->
-                    <section class="space-y-1">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Color & texture
-                        </h3>
-                        <PresetEditorField
+                    <ConfiguratorLayer label="Color & texture" :dividers="true">
+                        <ConfiguratorRow
                             label="Hue shift"
                             name="--hue-shift"
                             :description="`${cfg.effective('hueShift')}° — rotates sections via filter`"
@@ -315,10 +314,9 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="-180"
                                 :max="180"
                                 :step="1"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                        <PresetEditorField
+                        </ConfiguratorRow>
+                        <ConfiguratorRow
                             label="Grain"
                             name="--glass-grain-opacity"
                             :description="cfg.effective('grain').toFixed(3)"
@@ -330,17 +328,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="0"
                                 :max="0.1"
                                 :step="0.005"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                    </section>
+                        </ConfiguratorRow>
+                    </ConfiguratorLayer>
 
                     <!-- Layout -->
-                    <section class="space-y-1">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Layout
-                        </h3>
-                        <PresetEditorField
+                    <ConfiguratorLayer label="Layout" :dividers="true">
+                        <ConfiguratorRow
                             label="Density"
                             name="--density-pad / --density-gap"
                             description="Adds deltas to story padding and gaps."
@@ -349,14 +343,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                         >
                             <SegmentedTabs
                                 v-model="densityModel"
-                                variant="segmented"
                                 :options="DENSITY_OPTIONS"
                                 class="w-full"
                                 aria-label="Layout density"
                             />
-                        </PresetEditorField>
+                        </ConfiguratorRow>
 
-                        <PresetEditorField
+                        <ConfiguratorRow
                             label="Radius"
                             name="--radius"
                             :description="`${cfg.effective('radius')}px`"
@@ -368,17 +361,13 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 :min="0"
                                 :max="16"
                                 :step="1"
-                                class="w-full"
                             />
-                        </PresetEditorField>
-                    </section>
+                        </ConfiguratorRow>
+                    </ConfiguratorLayer>
 
-                    <!-- Toggles -->
-                    <section class="space-y-1">
-                        <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                            Surface
-                        </h3>
-                        <PresetEditorField
+                    <!-- Surface -->
+                    <ConfiguratorLayer label="Surface">
+                        <ConfiguratorRow
                             label="Cartoon shadow"
                             name="--shadow-card / --shadow-card-hover"
                             description="Routes demo card shadows through semantic surface tokens."
@@ -388,11 +377,11 @@ function effectiveFont(slot: keyof FontSlots): string {
                             <div class="flex w-full items-center justify-end">
                                 <Switch v-model="cartoonModel" />
                             </div>
-                        </PresetEditorField>
-                    </section>
+                        </ConfiguratorRow>
+                    </ConfiguratorLayer>
                 </div>
 
-                <div class="flex items-center justify-between gap-2 px-6 py-4 border-t border-border/40">
+                <div class="configurator-footer flex items-center justify-between gap-2 px-6 py-4 border-t">
                     <Label class="text-micro font-mono text-muted-foreground/70">
                         glass-ui-demo-config
                     </Label>

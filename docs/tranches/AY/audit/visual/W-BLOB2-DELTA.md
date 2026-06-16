@@ -1,23 +1,13 @@
 # AY.W-BLOB2 — the light warm-cream default base + config-atom simplification · live DELTA
 
-<!-- capture-commit: 83e1e3b2 -->
-<!-- surface-paths: src/components/custom/goo-blob/shaders/metaball.frag.ts, src/components/custom/goo-blob/composables/useMetaballRenderer.ts, src/components/custom/goo-blob/GooBlob.vue -->
-<!-- surface-hash: 96b6bd877c1d34d56c9c3f0d2a2dc6191123bab8a095688af893322e1fea3368 -->
-<!-- superseded-by: W-BLOB-REBUILD -->
-<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 9 own-surface W-BLOB2-*
-     PNGs (4 goo-blob default-bead × {desktop,mobile} × {light,dark} + the 5 mood-hover lean
-     frames) were RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-blob2.mjs`
-     against the live /substrates/blob route on :5199. The capture-commit is now HEAD (a
-     descendant of the surface's last-touch 875c271a), so the freshness clause reads FRESH.
-     SUPERSEDED-SURFACE note: the blob was rebuilt first-principles by W-BLOB-REBUILD (B10+B18 —
-     the blob-as-background category error fix), so the bare standalone `<GooBlob>` the original
-     default-identity frames shot is now the STUDIO STAGE blob (the ONE live GL context the
-     rebuilt page holds); the re-capture shoots that CURRENT surface at its default cream
-     (curious) preset — the warm-cream lit gel bead the DELTA's body-L readback (0.814 light /
-     0.775 dark) describes. The dims reflect the current studio stage (820×822 desktop /
-     616×616 mobile), not the old bare-default box (the surface rebuild). The blob route carries
-     NO Aurora and the GooBlob WebGL2 metaball does not stall headless Chromium (verified), so a
-     normal capture runs clean. -->
+<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form blob surface NO LONGER
+     EXISTS — the AZ blob-studio rebuild (AZ.W-BLOB-STUDIO + W-BLOB-PAGE + W-BLOB-REDRESS) re-shot
+     the equivalent under its OWN wave ids (the bare standalone `<GooBlob>` the AY frames shot
+     became the studio-stage blob; the AZ DELTAs carry the current cream-default capture). This is
+     RETIRE-with-rationale over re-shoot: a re-capture would shoot a DIFFERENT surface, so the AY
+     freshness headers (capture-commit / surface-paths / surface-hash / superseded-by) are removed
+     rather than re-stamped. The W-BLOB2 engine record below is preserved as the historical reasoning;
+     it is no longer a freshness-bearing live DELTA. -->
 
 This wave closes the chronic README↔reality lie (CHRONIC across AX.W15 + AX.W46): a bare
 `<GooBlob :config="BLOB_CONFIG_DEFAULTS">` rendered a **dark coffee-bean**, not the

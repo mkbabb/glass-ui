@@ -1,24 +1,12 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
-<!-- surface-paths: src/styles/dock/layers.css, src/styles/dock/shell.css, src/components/custom/dock/composables/dockMorphContext.ts -->
-<!-- surface-hash: 0db3a00c8bbf32004dd4c8781695df462869b02a251651b1262c585da9686b12 -->
-<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
-     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
-     content hash of the declared surface-paths' bytes above — fresh IFF the surface
-     is byte-identical to capture time, regardless of unrelated commits. The
-     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
-<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface
-     W-DOCK1-dock-overview-* stills were RE-SHOT on the current tree (HEAD 83e1e3b2) via
-     `npm run proof:dock-items-lag-capture` against the REAL /dock/overview dock on :5199 —
-     the SAME 3 conditions × 2 viewports × {light,dark} scenes, real dock-element crops.
-     The capture-commit is now HEAD (a descendant of the surface's last-touch 0947c740), so
-     the freshness clause reads FRESH. The R6 cited gate AY-dock-items-lag-capture.json now
-     persists status:"pass" (re-run-on-real discharged). Root-cause of the prior stall: the
-     /dock/overview live Aurora WebGL ReadPixels hung headless Chromium's renderer mid-probe;
-     the harness now parks the WebGL substrate via the SHIPPED offscreen-pause seam
-     (document.hidden) for the rAF-heavy capture while the dock morph SpringProgress (its own
-     rAF, visibility-independent) rings unchanged. The lockstep VERDICT (box↔scalar Δ=0ms)
-     re-confirmed on the fresh captures. -->
+<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form dock-overview morph surface
+     drifted — the AZ dock re-renders (AZ.W-DOCK-FLICKER's collapse-onset fix + W-DOCK-RAIL's
+     hairline-rail re-render) re-shot the equivalent dock-morph surface under their OWN wave ids, so
+     the AY surface-hash no longer matches the live dock bytes (stamped 0db3a00c…). This is
+     RETIRE-with-rationale over re-shoot: the AY freshness headers (surface-paths / surface-hash) are
+     removed rather than re-stamped; the items-lag VERIFY-OR-FALSIFY verdict (box↔scalar Δ=0ms) below
+     is preserved as the historical record, no longer a freshness-bearing live DELTA. -->
 
 This wave discharges the SIGNATURE recurring complaint (PROMPT-CORPUS #5 / AUDIT-LEDGER
 #5, marked CHRONIC across keyframes.js → AX → AY): *"the dock will shrink first, and

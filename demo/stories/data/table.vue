@@ -12,6 +12,12 @@ import {
 } from "../../../src/components/ui/table";
 import { Badge } from "../../../src/components/ui/badge";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Table as TableIcon } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the data band's ONE coherent --section-color-9 ledger-slate
+// identity. The Badge status pills are the FUNCTIONAL tone event (paid/pending/
+// overdue), distinct from this section identity — they don't compete.
+const DATA_STOP = 9;
 
 interface Invoice {
     id: string;
@@ -42,6 +48,32 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the data-band identity event family on --section-color-9
+             (the ledger-slate register). The chip is the ONE section event; the
+             status Badges are the FUNCTIONAL tone event. The --section-label-accent
+             override sits on THIS header (the real DOM ancestor of the eyebrow + the
+             rail element itself) — StoryPage's root is a renderless TooltipProvider,
+             so a :style on <StoryPage> never reaches the slotted eyebrow. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="TableIcon" :section="DATA_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Data · Table
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Ledger rows and cells — the values stay ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Basic table</p>
             <div

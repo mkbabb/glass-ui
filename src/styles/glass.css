@@ -40,11 +40,14 @@
  * docs/precepts/design-idioms.md §cohesion-aware partials.
  */
 
-/* CSS @import rules must precede every other rule. The six partials @import in
-   cascade order: */
+/* CSS @import rules must precede every other rule. The seven partials @import in
+   cascade order (surface-axis.css AFTER ladder/surfaces so its [data-surface]
+   decoration attr rules win over the base rung by source order; BEFORE the
+   squircle + a11y @supports overrides, which must stay last): */
 @import "./glass/material.css";
 @import "./glass/ladder.css";
 @import "./glass/surfaces.css";
+@import "./glass/surface-axis.css";
 @import "./glass/progress-rail.css";
 @import "./glass/squircle.css";
 @import "./glass/a11y-fallback.css";

@@ -6,6 +6,10 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "../../../src/components/ui/accordion";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ChevronsDownUp } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
+const CONTAINERS_STOP = 2;
 
 const faq = [
     {
@@ -33,6 +37,32 @@ const faq = [
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on
+             --section-color-2 (the empty-states model: a leading glyph-chip on
+             the lead card header). The --section-label-accent override sits on
+             THIS header (the real DOM ancestor of the eyebrow + the rail element
+             itself) — StoryPage's root is a renderless TooltipProvider, so a
+             :style on <StoryPage> never reaches the slotted eyebrow. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ChevronsDownUp" :section="CONTAINERS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Containers · Accordion
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Stacked disclosure panels — the content stays ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="text-subheading">Single</h2>

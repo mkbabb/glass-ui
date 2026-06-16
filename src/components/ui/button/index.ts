@@ -37,19 +37,25 @@ export const buttonVariants = cva(
         // recipe, named so consumers can still get the solid bg-primary look.
         solid:
           'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 aria-pressed:bg-primary/85',
-        // AX.W52 — the hover lift is the restrained `--scale-hover-btn` (1.035),
-        // not the emphatic `--scale-hover` (1.08); routed through `--spring-smooth`
-        // via the `.btn-pill` base scale transition, the lift reads as ONE coherent
-        // glide with the surface cross-fade rather than a mechanical pop.
+        // BA.W-GLASS-CAL (H2a) — the disco RETIRED. `primary-audacious` collapses
+        // onto the calm glass-first register: the `glass-wash btn-glass` surface (the
+        // real 10px glass blur + the `--glass-specular` edge catch-light gleam from
+        // the glass-material mixin the `glass-wash` rung composes), hover/press on the
+        // §6 doctrine (surface→`--ease-standard`, scale→`--spring-smooth` via the
+        // `.btn-pill` base). No sparkle, no disco-grain, no ripple. The variant KEY is
+        // kept + re-pointed so every `variant="primary-audacious"` call site inherits
+        // the calm register with no rename. Distinguished from bare `default`/`glass`
+        // by the `--scale-hover-btn` lift (it reads as a deliberate primary CTA).
         'primary-audacious':
-          'btn-audacious bg-primary text-primary-foreground hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
-        // AW.W13 — rest text is the warm-ink `--foreground`, NOT `text-white`:
-        // the `btn-audacious-gold` REST substrate is an 8%-gold-tint over glass
-        // (near-cream in light mode), so white-on-cream was sub-legible. Light
-        // text is reserved for hover/active, where the gold sweep darkens the
-        // backplate enough to clear contrast.
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
+        // BA.W-GLASS-CAL (H2a) — `gold-audacious` keeps the STATIC warm-gold tint (the
+        // at-rest 8%-gold linear-gradient wash over the glass surface, the AW.W13
+        // rest-text contract: rest text is the warm-ink `--foreground`) + the
+        // `--glass-specular` edge catch-light, MINUS the animated gold sweep + sparkle.
+        // The static wash + edge catch-light is hinge H2 arm (a): gold survives CALM.
+        // The gold tint rides a `background-image` over the `btn-glass` backdrop.
         'gold-audacious':
-          'btn-audacious btn-audacious-gold text-foreground hover:text-white active:text-white aria-pressed:text-white hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
+          'glass-wash btn-glass text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_10%,transparent),color-mix(in_srgb,var(--color-gold-light)_6%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_10%,transparent))] hover:bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_16%,transparent),color-mix(in_srgb,var(--color-gold-light)_10%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_16%,transparent))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
         outline:

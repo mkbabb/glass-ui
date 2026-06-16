@@ -25,6 +25,10 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BA.W-CARVE2 — typography.css is now a thin @import root over typography/*.css
+// partials (the @font-face fallback faces live in scale.css); readMonolith
+// concatenates root + partials in cascade order so the shipped-face derive holds.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 // Generic CSS font keywords + platform-native stack keywords that need no face.
 const GENERIC = new Set([
@@ -192,7 +196,7 @@ function run() {
 
     const libFonts = readFileSync(P.FONTS_LIB, "utf8");
     const demoFonts = readFileSync(P.FONTS_DEMO, "utf8");
-    const typography = readFileSync(P.TYPOGRAPHY, "utf8");
+    const typography = readMonolith(P.ROOT, "typography");
     const shipped = deriveShipped([libFonts, demoFonts, typography]);
     facts.shipped = [...shipped].sort();
 

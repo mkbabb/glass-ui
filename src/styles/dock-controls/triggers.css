@@ -26,6 +26,13 @@
         cursor: pointer;
         border: none;
         background: transparent;
+        /* BA.W-DOCK-GEOMETRY — the control-plate clearance inset (DC-2). As on the
+           tab button: the trigger's OWN padding insets a content box within the
+           row-locked border box, and `background-clip: content-box` realizes that
+           as a PAINTED-plate inset so the hover (×1.1) / open pill clears the
+           cross-axis clip edge — the same plate-inset-within-cell principle the
+           icon-button consumes via `--dock-control-safe-inset`. No box growth. */
+        background-clip: content-box;
         border-radius: var(--dock-control-radius, var(--radius-pill));
         /* Shares the dock-icon-button legibility base (`--dock-fg-on-aurora`). */
         color: color-mix(

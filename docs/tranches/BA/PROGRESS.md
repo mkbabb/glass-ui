@@ -1,7 +1,7 @@
 # BA tranche — PROGRESS
 
-The dark-register-rebuilt tranche: 29 waves over 8 batches (4 floor, 1 dark-material,
-4 S1-redress, 2 dock, 5 glass-grammar, 1 promotion, 5 demo-staging, 2 close), grounded
+The dark-register-rebuilt tranche: 30 waves over 8 batches (4 floor, 2 register-substrate,
+6 S1-redress+emission, 2 dock, 6 glass-grammar, 3 promotion, 5 demo-staging, 2 close), grounded
 in the user's round-8 post-close audit (`audit/USER-AUDIT-2026-06-11-R8.md`, 19 reads +
 7 standing directives) and the 32-lane deep audit (`audit/fleet/*.md`, all lanes
 harvested + committed). Base **master @ v3.13.0** (the AZ close cut, published with
@@ -37,35 +37,38 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
 
 | batch | wave | status | notes |
 |---|---|---|---|
-| 0 | W-SHELL-HOLD | planned (spec authored) | the railContext route-push guard — lands first; every live pass depends on it |
-| 0 | W-GESTALT-GATE | planned (spec authored) | proof:ba-gestalt born-RED vs the R8 captures + the :5175/:5173 gate-default hygiene |
-| 0 | W-HYGIENE | planned (spec authored) | MIGRATION re-anchor · CLAUDE.md custom/ sync · colocation derive · precepts submodule · AX/AY debt retirements |
-| 0 | W-CARVE2 | planned (spec authored) | typography.css + constellationField/Constellation carve-or-justified-keep |
-| 1 | W-DARK-MATERIAL | planned (spec authored) | THE prerequisite — the dark elevation ladder + transmissive glass + tint-seam dark arm + chromatic --primary + surface-tint dark arm + the contrast-color() inversion fix + the R9 over-light self-engage recalibration (scope 7) [H1] |
+| 0 | W-SHELL-HOLD | **complete** (b2ad0ebe) | the set guard landed BOTH docks; S1 born-RED→GREEN + P1 live π 2/2. §0 HONEST FINDING: the diagnosed v-model mount-echo does NOT reproduce at HEAD (instrumented; the guard is the correctness floor W-DOCK-SECTIONS inherits) |
+| 0 | W-GESTALT-GATE | **complete** (1c03a2d9) | proof:ba-gestalt BORN-RED 8/8 FAIL + the roster ledger + anti-evasion; the :5175×3 + :5173×2 ports → :5199; clause 4 widened to generic NON-:5199 (+ the latent comment-strip http:// bug fixed); one triumvirate trigger resolved in-wave (the 9337 service-port shape-allowlist) |
+| 0 | W-HYGIENE | **complete** (d853bd0f) | all 10 scopes: MIGRATION 3.13.0-true · CLAUDE.md 36→33 + structure-sync gate born-RED→GREEN (P-4 png arm) · colocation DERIVED (README-marker; aurora/fourier-field/underline covered, self-test bitten) · 5 AY DELTAs RETIRED-SUPERSEDED + the Clause-7 banner exemption · AX rows retired · png ledger executed (16 commit/10 delete) · deck-progress-rail RE-WIRED · precepts submodule ff+commit+pointer (0c03de8, N-W10/O-W10 archive-tagged, I34 flagged) |
+| 0 | W-CARVE2 | **complete** (continuation — predecessor partial completed + verified) | typography.css → typography/{scale,semantic,utilities}.css thin @import root (each <500); constellationField types → constellationTypes.ts (CARVE); Constellation.vue orchestrator → composables/useConstellation.ts (CARVE, no §5-keep). proof:no-god-module GREEN at its DECLARED CLOSE (ratchetBaselineCount 0, ratchetDrained true, violations []). W1-W4 GREEN. Typography dist byte-isomorphic A/B: HEAD-monolith build == carved build == dist/glass-ui.css 916c5ea5. typecheck 0 · build 0 · verify-export-types 0 · barrel export-set unchanged (17 syms) · constellation 38/38 · the 5 readers re-pointed via readMonolith all GREEN; proof:storybook-ia + proof:components-css NO-OP-correct (drift — not src readers). OWED to orchestrator: CLAUDE.md constellation §Structure line +constellationTypes.ts (deferred to W-HYGIENE's enumeration diff); the orphan proof-claude-structure-sync.mjs parity FAIL is sibling-owned |
+| 1 | W-DARK-MATERIAL | **live-verified** (all 7 scopes, H1a) | page L6→L4 · card L10→L16 (relL 7.12×, band span 2.69×) · transmissive saturate/brightness dark arm + edge α 0.22 · the dark tint LIFT 12% (same seam) · --primary legendre-violet oklch(0.739 0.134 318.1) fg 7.15:1 · surface-tint light-ink 2.9× · contrast-color lockstep 2/2 · the calm-light floor 4% w/ AA bright bucket; proof:dark-material 20/20 · π 12/12 · adaptive-glass REBASELINED 26/26 + live 18/18 · 956/956 · the gestalt verdict staged for W-REFLECT2 |
 | 1b | W-NO-GRAY | planned (spec authored) | the warm-chroma floor (R10-5 "No gray"): the neutral ladder + light glass plates + borders re-saturated onto the warm identity — sequenced after W-DARK-MATERIAL |
-| 2 | W-CONFIG-CHASSIS | planned (spec authored) | the ConfiguratorRow width contract (S1) + occlusion/dividers/swatch + gear recompose + DarkModeToggle + preview alpha |
-| 2 | W-GOO-REDRESS | planned (spec authored) | satellite smin reach + the pointer wake seam |
-| 2 | W-DOCK-GEOMETRY | planned (spec authored) | the control-plate clipping cluster + overflow-engage-on-real-overflow |
-| 2 | W-FADING-SCROLL | planned (spec authored) | the library FadingScroll primitive (h+v, scroll-state-driven) + static-utility retirement |
-| 2 | W-ATLAS-RECONCILE | planned (spec authored) | the atlas A/B fold: the settle seam + reflow deletion + the suppression carve + test port + PAPER_WASH_GROUND + async-VT need + the silver conditional |
-| 3 | W-DOCK-SECTIONS | planned (spec authored) | the 4th-rail-attempt RE-CONCEPTION: tripartite sections + divider-seam rail seat + fan-out/retract [H3] |
-| 3 | W-DOCK-MORPH-INSITU | planned (spec authored) | V↔H morph + layering demos in the shell docks |
-| 4 | W-SURFACE-AXIS | planned (spec authored) | the shared {glass·veil·opaque} surface axis across the container band |
-| 4 | W-FEEDBACK-TONE | planned (spec authored) | tone-on-glass: ONE recipe for Toast/Notification/Alert + cohesion-gate teeth |
-| 4 | W-MENU-GLASS | planned (spec authored) | the R5-10 fold: .glass-menu-row + .glass-menu-section on menuItemVariants |
-| 4 | W-GLASS-CAL | planned (spec authored) | the blur dial-back (six primitives) + the disco retirement + hover smoothing [H2] |
-| 4 | W-PROGRESS-GRADIENT | planned (spec authored) | the sectioned Progress single-gradient rebuild + the glass meter register |
-| 4 | W-TABS | planned (spec authored) | the R10-2 overhaul: ONE engine, pill-glass + underline-paper, axis-derived orientation, release-at-arrival on the calibrated spring clock; segmented/overflow/multi-select/ui-Tabs-public retire |
-| 5 | W-ICON-CHIP | planned (spec authored) | the IconChip pop primitive (duotone/bloom/reveal axes) |
-| 5 | W-PAGER | planned (spec authored) | PagerDots + the glass pager ring (R10-1 + the R10-3 deck-dots fold; the counter off bg-card) |
-| 5 | W-HANDMARK | planned (spec authored) | the hand-voice family: /handmark port + the /underline DEC-8 fold + the highlighter engaged + the seeded pencil-boil morphology |
-| 6 | W-STAGE | planned (spec authored) | the per-category background map + glassiness-over-aurora stagings + token-tour contrast chassis |
-| 6 | W-DEMO-AFFORDANCES | planned (spec authored) | the play register + trigger convention + the curve-picker chip rack + padding rhythm |
-| 6 | W-FOURIER-STUDIO | planned (spec authored) | the foreground fourier studio: partial-sum N axis + orthogonal registers + trace-a-shape + the clock |
-| 6 | W-SUFFUSE2 | planned (spec authored) | category color identity + display-ladder grading + the motion violet |
-| 6 | W-ANIMATE | planned (spec authored) | page-enter orchestration + scroll-progress + countup + hero entrance |
-| 7 | W-REFLECT2 | planned (spec authored) | the gestalt reflection — triumvirate-looped until operative-PASS |
-| 7 | W-CLOSE | planned (spec authored) | battery · MIGRATION · version [H4] · publish [H5] · disposition re-stamps · FINAL · the slides book |
+| 2 | W-CONFIG-CHASSIS | **live-verified** (4e70a83a) | the width contract S1 dead at the chassis · dividers dark-adaptive · ColorSwatch + /color-swatch · DERIVE wraps · the gear on the chassis (PresetEditorField deleted; DarkModeToggle on live useGlobalDark) · alpha clamp; π 8/8 |
+| 2 | W-GOO-REDRESS | **live-verified** (b0060bdf) | the bridge rides the WORST-CASE orbit (1.25x clamp; smin-normalized stays green) + the wake seam (lurchRatio 0.21-0.29); BA-VJS-5 arm B BOOKED |
+| 2 | W-DOCK-GEOMETRY | **live-verified** (757c28da) | --dock-control-safe-inset per rung (plate 80% of cell, hit box full) · cross-axis pinned visible · shell docks off overflow=scroll · contain:paint verdict (a) |
+| 2 | W-FADING-SCROLL | **live-verified** (3e823cba) | native scroll(self)-driven edge fades + JS fallback; 4 consumers migrated (PresetPickerRow prototype deleted); 9/9 + π 11/12; static-utility retire pends the C2/C3 allowlist |
+| 2 | W-ATLAS-RECONCILE | **live-verified** (51c2d9fe) | onFlipSettled + the reflow deletion + the carve (the ported test 6/6 — the morph runs, the storm dies) + PAPER_WASH_GROUND + async-VT/navigate + THE SILVER QUAD SHIPPED (chassis variant=structure consumer #2) + the cut-notes staged |
+| 2 | W-EMISSION | **live-verified** (db1e5688) | the value.js N2 fold register B (the P9 dead-@source): the @source re-point + the Select collision-bound + the Slider size axis as shipped CSS + the WatercolorDot ghost variant + the load-bearing producer-side emission gate (born-RED) |
+| 3 | W-DOCK-SECTIONS | **live-verified** | direction (b) HELD — the separator IS the rail (seam-derived anchor, dual ±40 overrun, flush fan, retract stub, box Δ0); the tripartite <DockSection> model in BOTH shells; S1-S5 + π 4/4; the breadcrumb-overlap tension recorded |
+| 3 | W-DOCK-MORPH-INSITU | **live-verified** | the in-situ morph stage (VT shipped, teardrop perf-gated — the §7 conservative fall) + live layering switch + THE BA-VJS-1 FIX (from:40→to:242 four-cycle; DOCK_SPRING byte-untouched); M1-M5 + π 4/4 |
+| 4 | W-SURFACE-AXIS | **live-verified** (79863371) | the ONE axis minted (surface-axis.css + useSurfaceAxis); 9 surfaces + the control REST tier + .paper-ink-mark; Dialog clean break; π 13/13 (substitution-trap fixed) |
+| 4 | W-FEEDBACK-TONE | **live-verified** (6f77ab12) | ONE .feedback-tone color-mix recipe; the 3 opaque-slab maps collapsed; cohesion-gate variant-arm teeth; π 4/4 (α<0.92 both modes) |
+| 4 | W-MENU-GLASS | **live-verified** (19fa2ac2) | .glass-menu-row on the CVA (13 SFCs inherit) + .glass-menu-section + the SelectTrigger font-rung; π 30 passed |
+| 4 | W-GLASS-CAL | **live-verified** (364e3d94) | the spring-clock vocabulary (unit 3 first) + blur ~15-20% + the DISCO retirement (H2a, gold survives calm); affordance+animation gates rebaselined; π 8/8 |
+| 4 | W-PROGRESS-GRADIENT | **live-verified** (573c9898) | single-fill linear-gradient (hard+soft stops); the cell stack + screen-blend seam + dead notch DELETED; pending ghost; π 10/10 |
+| 4 | W-TABS | **live-verified** (6cf5c318) | ONE engine, pill-glass + underline-paper on .paper-ink-mark, axis-derived orientation, release-at-arrival clock, BA-VJS-3 centering; segmented/overflow/multi-select/ui-Tabs-public RETIRED; tabs-unified→tabs-std; π 12/12 |
+| 5 | W-ICON-CHIP | **live-verified** (62dc5c20) | <IconChip> primitive; 4 paste sites collapsed (icons/empty-states/auth-shell/MetricCell); proof:suffuse d2 carved; π 12/12 |
+| 5 | W-PAGER | **live-verified** (7f46736e) | <PagerDots> + .glass-pager-ring; the counter off bg-card (dark slab dead); CarouselDots retired; π 9/9; the slide chassis stays slides-local |
+| 5 | W-HANDMARK | **live-verified** (26a81929) | the d6 family ported (B-1 anchors); /underline DEC-8 fold (the phantom slides break struck); the highlighter 5 deltas engaged (multiply reaches the page); the seeded morphology; π 10/10 |
+| 6 | W-STAGE | **live-verified** (a54dcfd2) | per-category bg map (no keyless route) + ShowcaseFrame field tier + DockStage + dark-wash recalibration + the breathing register honest + the h1-rung/scroll-reveal literal-diff applications; proof:stage 6/6 + π 14/14 |
+| 6 | W-DEMO-AFFORDANCES | **live-verified** (13110a50 — absorbed into the suffuse2 commit by a pass-2 commit glitch; files tracked+pushed) | StoryPlayButton + the curve-picker glass chip rack (selected = --glass-bg-floating, FadingScroll overflow) + the trigger convention + 5 plates re-pointed; proof:demo-affordances W1-W4 + π |
+| 6 | W-FOURIER-STUDIO | **live-verified** (f220a497) | the partial-sum studio (orthogonal N/epicycle/color axes + assembling curve) + trace-a-shape DFT + the clock + the StepsEditor (ARM B) + R5-11 warm-hero rider; proof:fourier-studio 6/6 + π |
+| 6 | W-SUFFUSE2 | **live-verified** (13110a50; session-wall continuation wizmuotnw) | per-category eyebrow+rail+chip identity + the event-family escalation + the motion violet + SM-1/SM-2; the SYSTEMIC accent-on-renderless-root render fix (the π caught it — 6/18→18/18); proof:suffuse2 7/7 + suffuse 17/17 + hierarchy 6/6 |
+| 6 | W-ANIMATE | **live-verified** (111a5208) | AppShell route page-enter Transition + compositor scroll-progress bar + metric count-up (SETTLE, intersection-gated) + hero fade-rise; proof:ba-animate W1-W4 + π, all via shipped engines, PRM-clean |
+| 7 | W-REFLECT2 | **complete** | the gestalt reflection: 8 surfaces re-walked LIVE both modes whole-page; 6/8 flipped FAIL→PASS, 2/8 (dock+shell) → the named successor W-SHELL-RAIL-RESEAT; proof:ba-gestalt promoted to the operative close set |
+| 7 | W-SHELL-RAIL-RESEAT | **complete** | the dock+shell FAIL redress (the SidebarDock facet carousel re-seated below the title band; overlapH1:false on every named desktop route both modes); the dock+shell reflection records RE-REFLECTED PASS → proof:ba-gestalt 8/8 |
+| 7 | W-SHELL-RAIL-RESEAT | **complete** (36e7640c) | the triumvirate redress of W-REFLECT2's title-collision FAIL — the SidebarDock rail re-anchored ℱ-home→trailing-utility seam (chips clear of the <h1>, no workaround #4); proof:ba-gestalt 6/8→8/8 |
+| 7 | W-CLOSE | **complete** (this close) | proof:ba-final minted born-RED→GREEN (the 9-clause gate, the gestalt-bar clause replacing the reflection-matrix); proof:az-final retired from the release set; MIGRATION appended (the BA clean breaks onto 3.13.0); disposition re-stamped un-MET (31 BOOK ids); ORPHANS:0; FINAL.md (zero unnamed deferrals); the 3 adopt books; the changeset staged (4.0.0); invariant 11 in CLAUDE.md |
 
 ## Events
 
@@ -147,3 +150,216 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   branch-close protocol — archive-tag + delete per the register, the 105-worktree
   prune) + scope 10 (the orphan proof:deck-progress-rail re-wire-or-retire) + the
   scope-6 submodule branch fold (the precepts N-W10/O-W10 unmerged lines).
+- 2026-06-12 (Batch 0 EXECUTION, first harvest) — the 4-lane opus batch ran
+  (wf_6d8afbc9-fa6): W-SHELL-HOLD COMPLETE (b2ad0ebe) + W-GESTALT-GATE COMPLETE
+  (1c03a2d9 — the registry single-owner protocol held; the shell-hold rows rode the
+  gestalt commit); W-CARVE2 + W-HYGIENE hit the session wall MID-FLIGHT with
+  substantial partials in-tree (the carve ratchet already drained to ∅) — the
+  completion lanes redispatched on the user's reset edict (wf_33885df7-3df) with
+  per-scope verify-then-complete discipline. ALSO ARRIVED: the value.js N2 letter
+  (coordination/VALUEJS-N2-ASKS-2026-06-12.md — the same user's value.js audit; ~16
+  of 33 U-findings collapse to "consume the BA cut"; register A carries reproduced
+  P0 mechanisms BA never witnessed, headline: the nested-DockLayerGroup FLIP
+  measures to:0px — deterministic, the spring constants explicitly FINE); the fold
+  analysis rides the same workflow.
+- 2026-06-12 (Batch 0 CLOSED) — the continuation lanes landed: W-CARVE2 complete
+  (2c713253 — dist BYTE-IDENTICAL 916c5ea5… both arms, ratchet ∅, 38/38) +
+  W-HYGIENE complete (d853bd0f — all 10 scopes; the orchestrator executed the
+  registry rows, the png disposition, the precepts submodule sequence). The
+  GATE-DEBT RECONCILE rode the harvest: gate-manifest-sound Clause 5 un-staled
+  (the route parses from the gate, whitespace-tolerant manifest match — the
+  /dock/layers literal + the prettier-broken regex both fixed), Clause 3 re-cut to
+  its stated crash-class purpose (an honest named-gate red is a FACT not a
+  violation — born-RED gates are the house discipline; full-green lives at the
+  W-CLOSE battery; current first-red: proof:phantom-classes, the known DC-EXT-2
+  external row), proof:ba-gestalt → untagged (the au-final precedent; aggregates
+  complete while the bar stays visible; W-REFLECT2 promotes), structure-sync →
+  +ci. tag-parity GREEN, manifest-sound GREEN-at-commit. The value.js N2 fold
+  analysis harvested (fleet/valuejs-fold.md): ONE new wave recommended
+  (W-EMISSION — the dead-@source emission class + the dead Select/Slider props)
+  + 6 riders (A-1→W-DOCK-MORPH-INSITU w/ the no-spring-retune fence,
+  A-4→W-STAGE, A-5→W-TABS, WO-3→W-MENU-GLASS, C-1→W-GOO-REDRESS, E→W-CLOSE) +
+  C-3 EasingPicker folds into W-FOURIER-STUDIO (the StepsEditor generalizes;
+  value.js's 3 forks = consumer #2) + C-2 ghost variant rides W-EMISSION.
+  The spec amendments + the W-EMISSION authoring ride the Batch-1 window.
+- 2026-06-12 (the value.js N2 fold EXECUTED — docs-only, NO impl) — the six riders
+  surgically amended into the authored specs + the W-EMISSION spec authored
+  (`waves/BA.W-EMISSION.md`, 190 lines): (a) **A-1 → W-DOCK-MORPH-INSITU** — BA-VJS-1
+  the nested-`DockLayerGroup` measure-ordering defect (the `to:0` FLIP at
+  `dockMorphContext.ts:344-360` + `DockLayerGroup.vue:92-93`): §0 RE-GROUND + defect
+  row 5 + scope 6 (compose the inner target's `max-content` into the outer measure) +
+  gate M5 + the π four-cycle `from:40→to:≈261` clause + `dockMorphContext.ts:344-360`
+  modify-carve bound; THE SPRING FENCE recorded (`DOCK_SPRING`/`constants.ts`
+  byte-untouched, NOT a re-tune — the letter forbids it); the §F2 booking re-scoped
+  first-mount-intermittent → deterministic-for-nested. (b) **A-4 → W-STAGE** — BA-VJS-2
+  the aurora `breathing` register dead (`atoms.ts:166` all-drift-zero → DEAD): §0
+  grounding + defect row 8 + scope 12 (non-zero `nucleiDrift`/`paletteDrift`, the JS
+  motion TABLE — `aurora.frag` untouched, the fence holds) + gate W4 + the π
+  perceptible-drift clause + `atoms.ts` modify-carve on A1's bound. (c) **A-5 → W-TABS**
+  — BA-VJS-3 the pill indicator mis-centered (`useTabIndicator.ts:102/120` translateX-only):
+  an ACCEPTANCE ROW (W5, indicator center == label center, both axes, both materials),
+  NO new scope/bound (the letter is explicit). (d) **WO-3 → W-MENU-GLASS** — BA-VJS-4
+  the menu size→font-rung prop (the `--dropdown-text` lever exists): §0 + defect row 5 +
+  scope 6 (extend `SelectTrigger`'s `size` into a font-rung writing `--dropdown-text`) +
+  gate W4 + `SelectTrigger.vue` bound + the W-EMISSION disjointness note. (e) **C-1 →
+  W-GOO-REDRESS** — BA-VJS-5 per-satellite derived color (`uSatColor=0` at
+  `metaball-uniforms.glsl.ts:84-86`): the seam note recorded BOTH arms (arm A widen the
+  GL fence to the `uSatColor` seam via §Triumvirate, arm B book to 4.x; default arm B) +
+  defect row 5 + scope 6 + conditional gate W4 + conditional arm-A bounds + the
+  §Named-successors 4.x book. (f) **C-3 → W-FOURIER-STUDIO** — BA-VJS-6 the StepsEditor
+  GENERALIZES to a published `<EasingPicker>` primitive (value.js's 3 forks = consumer
+  #2; the kf donor coordination NOTED, not executed — inv-10): §0 + defect row 8 + scope
+  7 rewritten (arm A publish-now via §Triumvirate, arm B demo-only-interim + book
+  W-EASING-PRIMITIVE) + Unit C re-shaped + gate W6 arm + the §Named-successors book +
+  the FLAGGED `curve-gallery.vue` coordination conflict (W-DEMO-AFFORDANCES is the owner;
+  literal-diff-block or sequence). (g) **E → W-CLOSE** — BA-VJS-E the value.js adopt
+  section beside slides + atlas: §0 + scope 13 (the cut-notes BY NAME — tabs/Dialog/menu/
+  Select/Slider; the interim-arm retirements; the C-1 4.x block) + `valuejs-adopt-book.md`
+  bound + the value.js-tree foreign fence + the scope-4 MIGRATION by-name rows.
+  W-EMISSION = Batch 2 (6th parallel wave; bounds disjoint vs the 5 landed/authored
+  Batch-2 specs — `index.css`/`SelectContent`/`ui/slider`/`watercolor-dot` touched by no
+  Batch-2 sibling; `ui/slider/*` explicitly fenced OUT of W-CONFIG-CHASSIS per its line
+  119). ROSTER 29→30; the three count sites updated (BA.md header + Batch-2 header +
+  row · EXECUTION-DAG numbering + §3 header/table + §8 order + §9.9 fold seams ·
+  PROGRESS header + wave-table row + this event). NO source edited; docs-only.
+- 2026-06-12 (Batch 2 CLOSED) — all six waves landed in two staged groups
+  (wf_3323fc5d-ff4; commits 3e823cba..65717916): the R8 S1 pair redressed (the 0px
+  sliders dead at the chassis; the goo bridge worst-case-coupled + the wake seam),
+  the dock clipping cluster killed, <FadingScroll> shipped with 4 consumers, the
+  atlas A/B folded (the silver quad SHIPPED on the chassis structure variant —
+  the design-fit held), the emission class fixed at the @source root (glass-ui's
+  utilities reach consumers again). The blob mood-row literal-diff seam + the
+  four emitted registry rows applied at harvest; parity + all six gates + the
+  Batch-1 no-regress pair + build + typecheck GREEN. Batch 3 opens.
+- 2026-06-12 (Batch 3 CLOSED) — the dock re-conceived (wf_fa01f6cb-403, sequenced):
+  W-DOCK-SECTIONS held the BINDING anchor law (no workaround #5 — the topology was
+  realizable as specced, zero triumvirates) and W-DOCK-MORPH-INSITU landed the
+  in-situ morph + the value.js to:0px fix under the absolute spring fence. Batch 4
+  opens (the §5a edge: W-GLASS-CAL.3 first → W-TABS).
+- 2026-06-15 (Batch 4 CLOSED) — the glass grammar, six waves in two staged groups
+  (wf_978747d4-29a; commits 364e3d94..a1249309): the spring-clock vocabulary + blur
+  dial-back + the DISCO retirement (gold survives calm, H2a); the shared surface
+  axis (9 surfaces + control tier + paper-ink-mark); tone-on-glass (the 3 slab maps
+  collapsed); the tabs overhaul (ONE engine, pill+underline, the oval-blob dead);
+  the menu-glass register (13 SFCs); the Progress single-gradient. Integrated tree:
+  14 gates + build + typecheck GREEN; parity GREEN. THE SLIDES GROUND-TRUTH folded
+  (the phantom /underline break STRUCK from W-CLOSE + W-HANDMARK; the slides 4.0.0
+  break narrowed to DeckGate.vue + the gray-arm; the deploy-down heads-up). Batch 5
+  opens (W-ICON-CHIP ‖ W-PAGER ‖ W-HANDMARK).
+- 2026-06-15 (Batch 5 CLOSED) — the promotions: W-PAGER complete (first run), then
+  W-ICON-CHIP + W-HANDMARK rate-limited TWICE on the concurrent-opus-spawn burst
+  (transient server 429, not usage) — re-deployed SERIALLY (wf_8f004268-3d5, one
+  agent at a time) and both completed against their substantial in-tree partials.
+  The IconChip pop primitive (4 pastes collapsed), the unified PagerDots glass ring
+  (the carousel counter off bg-card), the d6 hand-voice family (the /underline DEC-8
+  fold + the highlighter engaged + the seeded morphology). + the proof:colocation
+  debt closed (fading-scroll constants.ts — W-HYGIENE's TARGET_DIRS widening had
+  exposed it since Batch 2). The full battery: three wave gates + colocation +
+  the no-regress set + build + typecheck GREEN; parity GREEN; /underline retired.
+  Batch 6 opens (the demo staged to demonstrate).
+- 2026-06-15 (Batch 6 CLOSED) — the demo staged to demonstrate (wz3js4svb + the
+  wizmuotnw continuation): W-STAGE (chassis single-writer) + W-DEMO-AFFORDANCES +
+  W-FOURIER-STUDIO + W-SUFFUSE2 + the pre-landed W-ANIMATE — all five live-verified.
+  W-SUFFUSE2 hit the session wall mid-flight (its source gate was green but the π
+  was RED on data/forms/containers — the gestalt bar caught a real systemic defect:
+  --section-label-accent set via :style on a renderless TooltipProvider root was
+  dropped, so the eyebrow fell back to rose on EVERY category; the continuation
+  moved the accent onto the real <header> across ~27 pages, π 6/18→18/18). Note:
+  the W-DEMO-AFFORDANCES commit folded into 13110a50 (a pass-2 commit-ordering
+  glitch) — all files tracked+pushed, gates green, attribution muddied not lost.
+  Full battery + typecheck + build green. Batch 7 (W-REFLECT2 → W-CLOSE, the 4.0.0
+  cut) opens — the LAST batch.
+
+## Batch 7 — the gestalt reflection (W-REFLECT2)
+
+### Reflection board (the 8 roster surfaces, re-walked LIVE on :5199, both modes, whole-page)
+
+| surface | light | dark | operative | redressed-in-wave? | structural-FAIL + successor |
+|---|---|---|---|---|---|
+| dock | PASS | PASS | **PASS** | **W-SHELL-RAIL-RESEAT** | RE-REFLECTED PASS — the rail re-seated to the trailing-gutter seam, overlapH1:false on all 3 named routes |
+| configurators-goo | PASS | PASS | **PASS** | — | — |
+| aurora | PASS | PASS | **PASS** | — | — |
+| glass-feedback | PASS | PASS | **PASS** | — | — (the captured-route title-clip was the shell's FAIL, now redressed) |
+| shell | PASS | PASS | **PASS** | **W-SHELL-RAIL-RESEAT** | RE-REFLECTED PASS — the SidebarDock facet carousel re-seated below the title band, the page `<h1>` + breadcrumb clear on every named desktop route |
+| motion-fourier | PASS | PASS | **PASS** | — | — |
+| dark-register | PASS | PASS | **PASS** | — | — (the binding R8-11 flip: dark glass TRANSMITS the live field) |
+| cross-repo | PASS | PASS | **PASS** | — | — (library-adoptability; the actual adopt/deploy is W-CLOSE's hinge) |
+
+- 2026-06-15 (W-REFLECT2 — the gestalt reflection, conductor lane) — re-walked all 8
+  roster surfaces LIVE on :5199 (the existing dev server; never touched :5210/:5273),
+  BOTH modes × 2 viewports, WHOLE-PAGE over the real W-DARK-MATERIAL backdrop. Authored
+  `scripts/wf-ba-reflect.js` (the BA capture-conductor, mirroring wf-az-reflect.js;
+  PRM-freeze + load-wait + robust-screenshot) → 32 fresh whole-page captures (8×4) under
+  `docs/tranches/BA/audit/reflect/`, all md5-distinct (real per-route content, not the
+  `/` redirect). Authored the 8 per-surface reflection records (RECAPITULATE → RE-VERIFY
+  LIVE → PERFECTION QUESTION → VERDICT, with the surface-paths/surface-hash freshness
+  headers — all 8 FRESH against current bytes). **6/8 flip FAIL→PASS** (configurators-goo,
+  aurora, glass-feedback, motion-fourier, dark-register, cross-repo — every R8 content
+  defect discharged + verified on a real render; the dark register TRANSMITS the live
+  field, the R8-11 "black bg hides glass" comprehensively cleared). **2/8 stay FAIL**
+  (dock + shell — the gestalt walk found the SidebarDock W-RAIL3 floating-carousel facet
+  chips OCCLUDE the page `<h1>` on desktop StoryPage-chrome routes: measured "Selection"+
+  "Toggles" over "Inputs" 85px, "Progress" over "Notification" 65px, "Panes" over
+  "Overview" 43px; mobile BottomDock + substrate/hero routes CLEAN). This is the exact
+  P-1 mechanism-green/page-wrong gap the gestalt gate exists to catch: W-DOCK-SECTIONS
+  booked it as an accepted *breadcrumb* tradeoff, the whole-page render shows a full
+  *title* occlusion. Bound to the binding ℱ-home-seam topology (the midline relocate is
+  the forbidden workaround #4) → STRUCTURAL, NOT a token nudge → recorded FAIL + named
+  successor **BA.W-SHELL-RAIL-RESEAT** (one shared root, one triumvirate), authored under
+  waves/. PROMOTED `proof:ba-gestalt` off the born-RED no-tag isolation onto `["release"]`
+  (the operative close set, mirroring proof:az-reflect/proof:az-final — release-only, NOT
+  ci; the gestalt OR is now the BINDING close decision). Gate state: 6/8 PASS, exit 1
+  (RED on dock+shell — correctly keeps W-CLOSE shut until the successor lands, the
+  `complete_with_misses` discipline). proof:gate-script-parity GREEN post-promotion; the
+  8 reflect-record surface-hashes all FRESH. The AZ-era scratch tests-visual/reflect-*.spec.ts
+  are superseded by wf-ba-reflect.js.
+- 2026-06-15 (W-SHELL-RAIL-RESEAT — the dock+shell FAIL redress) — the SidebarDock
+  floating-carousel facet chips re-seated below the title band; overlapH1:false measured
+  on every named desktop route both modes; the dock+shell reflection records RE-REFLECTED
+  PASS → `proof:ba-gestalt` 8/8 operative-PASS. The headline proof the gestalt bar works:
+  the per-mechanism dock gates all greened while the whole-page render showed a full title
+  occlusion — the bar caught it, the named successor closed it.
+- 2026-06-15 (W-CLOSE — the BA terminal close + the 4.0.0 cut staged) — the LAST wave.
+  THE BATTERY: typecheck 0 · build 0 · verify-export-types 0 · budget REBASELINED (+the 5
+  new BA subpaths handmark/pager-dots/color-swatch/fading-scroll/icon-chip) + --enforce 0 ·
+  the full unit suite 984/984 after 5 stale-companion test re-points (the latent-defect class
+  the AZ close named: InstrumentChassis dock-blur 11px→9px [W-GLASS-CAL B1], menuItemVariants
+  flat-fill→glass-menu-row [W-MENU-GLASS], public-surface Tabs-off-barrel + DockSection-added
+  [W-TABS/W-DOCK-SECTIONS], ConfiguratorLayer divider-token [W-CONFIG-CHASSIS], Progress
+  cell-stack→single-flow [W-PROGRESS-GRADIENT] — each the wave's already-gate-verified change,
+  zero paint). proof:gate-script-parity + proof:tag-parity + proof:claude-structure-sync
+  (pager-dots §Structure line added) all GREEN. MINTED proof:ba-final born-RED→GREEN (the
+  9-clause gate; C2 THE-GESTALT-BAR replaces the AZ reflection-matrix clause — the P-1
+  structural fix made the close gate; born-RED at HEAD on FINAL-absent + no-changeset, GREEN
+  at the close commit on clean-tree). RETIRED proof:az-final from the release set (tags=[] +
+  the historical note; the au-final/ay-final precedent; the tag-parity untagged map updated).
+  MIGRATION.md appended (every BA clean break onto the W-HYGIENE 3.13.0 base — `grep staged`
+  stays 0; value.js rows flagged by name). DISPOSITION re-stamped via proof:disposition-live
+  (31 BOOK ids, every ≥2-consumer trigger re-evaluated un-MET; the EXT re-flags DC-EXT-1/2/3/4;
+  R5-9 deck-page-turn re-grepped un-MET → BOOK'd cross-linked to directional-view-transition;
+  css-relative-color + button-icon-sm/select-size opportunistic folds re-evaluated un-MET).
+  ORPHANS:0 (the overfitting audit — every new component exported/≥2-consumer/demo-private).
+  FINAL.md authored (§4 THE GESTALT VERDICT MATRIX 8/8 + §6 zero unnamed deferrals). The 3
+  adopt books: slides (the EXACT-TWO breaks DeckGate.vue:70 + the gray-arm auto-retirement;
+  the phantom /underline struck; the deploy-DOWN heads-up), value.js (the cut-notes by name +
+  the interim-arm retirements + the C-1 4.x block), atlas (the adopt section + the fork-close
+  protocol command sequence). The .changeset/ba-tranche-close.md STAGED (4.0.0 major, two
+  grounds, the by-name break list). Invariant 11 (no out-of-band lineage publish + the
+  registry-consumer prune probe) landed in CLAUDE.md §Design-Axes-9 (the precepts authoring is
+  the orchestrator submodule write). proof:ba-final RED at HEAD only on C9 clean-tree (the 18
+  in-flight close edits) — GREEN at the orchestrator's close commit. THE CUT (orchestrator/user
+  git steps, the hardened agent clause): `changeset version` → `git push --tags` (release.yml
+  provenance publish) → the d6 fork-close protocol + the npm deprecate.
+- 2026-06-15 (Batch 7 CLOSED — THE TRANCHE COMPLETE) — W-REFLECT2 → W-SHELL-RAIL-RESEAT
+  → W-CLOSE. The gestalt bar PROVED OUT: the reflection caught a real whole-page
+  title-collision (SidebarDock chips over the <h1>) that EVERY per-mechanism gate was
+  green on — the exact AZ P-1 close-class failure, caught BEFORE the cut; the
+  triumvirate re-seated the rail (topology-honest, no workaround #4); proof:ba-gestalt
+  6/8→8/8. W-CLOSE staged the 4.0.0 cut: proof:ba-final GREEN (the gestalt-bar clause
+  replacing the per-mechanism matrix — the P-1 fix made the close gate), proof:az-final
+  retired, MIGRATION BA→4.0.0, the disposition re-stamp, FINAL.md (zero unnamed
+  deferrals), the slides/atlas/value.js adopt books, the d6 fork-close protocol,
+  invariant 11. The version is 4.0.0 (aaa1e973). HELD for the user greenlight: the
+  v4.0.0 tag-push + the npm-provenance publish + the d6 fork-close + the slides redeploy
+  (round-15 + the BA adopt together — the site is down). All 32 BA waves landed +
+  gate-green + pushed on tranche/BA.

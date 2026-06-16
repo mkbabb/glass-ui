@@ -149,12 +149,22 @@ watchEffect(() => {
             viewBox="0 0 472.39 472.39"
             class="block h-full w-full fill-foreground"
         >
-            <g class="toggle-sun">
+            <!--
+                BA.W-ATLAS-RECONCILE A-3 (d6 2755ebbd re-land) — `data-allow-motion`
+                carves the icon's OWN morph out of the `.no-transition` theme-flip
+                suppression storm (utilities/a11y-overrides.css). The whole purpose
+                of this control is the half-turn spring; the blanket kill that
+                suppresses the page's incidental transitions during a flip must NOT
+                gag the toggle's deliberate animation. Reduced-motion still
+                OVERRIDES this carve (the icon snaps under PRM) — see the PRM
+                `[data-allow-motion]` override in a11y-overrides.css.
+            -->
+            <g class="toggle-sun" data-allow-motion>
                 <path
                     d="M403.21,167V69.18H305.38L236.2,0,167,69.18H69.18V167L0,236.2l69.18,69.18v97.83H167l69.18,69.18,69.18-69.18h97.83V305.38l69.18-69.18Zm-167,198.17a129,129,0,1,1,129-129A129,129,0,0,1,236.2,365.19Z"
                 />
             </g>
-            <g class="toggle-circle">
+            <g class="toggle-circle" data-allow-motion>
                 <circle cx="236.2" cy="236.2" r="90" />
             </g>
         </svg>
@@ -162,14 +172,23 @@ watchEffect(() => {
 </template>
 
 <style scoped>
+/* BA.W-ATLAS-RECONCILE A-3 (d6 2755ebbd re-land) — authored as transition
+   LONGHANDS (not the `transition:` shorthand) so the suppression carve operates
+   on an explicit `transition-duration` — and the authored spring duration is the
+   single, legible source of truth (the ported icon-morph gate reads the cascaded
+   `transition-duration` off a real `.toggle-sun`; a shorthand it cannot expand). */
 .toggle-sun {
     transform-origin: center center;
-    transition: transform 750ms var(--spring-bouncy);
+    transition-property: transform;
+    transition-duration: 750ms;
+    transition-timing-function: var(--spring-bouncy);
 }
 
 .toggle-circle {
     transform: translateX(0%);
-    transition: transform 500ms var(--ease-out);
+    transition-property: transform;
+    transition-duration: 500ms;
+    transition-timing-function: var(--ease-out);
 }
 
 /* The opt-in slow-ECLIPSE register (E5): while a long-press eclipse is in flight

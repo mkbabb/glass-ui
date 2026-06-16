@@ -25,6 +25,24 @@ import { type VariantProps, cva } from "class-variance-authority";
  *
  * Indicator slot variants reserve the gutter for radio-dot / check / chevron
  * indicator spans the consumer SFCs render absolutely-positioned.
+ *
+ * Surface axis (BA.W-MENU-GLASS) — the menu-row's MATERIAL register, an
+ * EXPRESSION of the shared {glass·veil·opaque} surface-decoration axis
+ * (`_shared/useSurfaceAxis.ts` / `glass/surface-axis.css`), NOT a second axis:
+ * - `glass` (DEFAULT, glass-first canon AX.W54) — the `.glass-menu-row` recipe
+ *   (`src/styles/menu.css`): the hover / focus / `data-highlighted` / open states
+ *   paint the ELEMENT-LEVEL glass-quiet oklab tint (so the row darkens-over-light
+ *   AND lifts-over-dark per W-DARK-MATERIAL's tint arm) + a PRM-gated `translateY`
+ *   hover-lift, the 44px touch floor, the iOS-grade glassy hover-lift plate. The
+ *   flat `bg-accent` utilities are DROPPED on this arm — the cascade-trap-safe
+ *   shape: with no unlayered `hover:bg-accent` utility the ONLY background-painters
+ *   are the `@layer components` `.interactive-item:hover` accent rule and the
+ *   `.glass-menu-row` recipe (imported AFTER utilities.css so it source-order-wins
+ *   at equal specificity+layer — the AZ dock-rail `@layer`-loses-to-utility trap
+ *   pre-empted: never re-add an unlayered flat-accent utility here).
+ * - `accent` — the EXPLICIT flat-accent escape (the prior default's look). A clean
+ *   break, NOT a back-compat alias (BA inv-7): a consumer that wants the flat fill
+ *   opts in via `surface="accent"`.
  */
 export const menuItemVariants = cva(
     [
@@ -35,13 +53,6 @@ export const menuItemVariants = cva(
         // `text-sm` literal; all 13 item SFCs that compose this CVA inherit the
         // governed scale in ONE edit, and the family re-tints from one token.
         "text-dropdown outline-none",
-        // Hover/focus/data-highlighted accent triad — paints the same surface
-        // across pointer, keyboard, and reka-ui's internal highlight.
-        "hover:bg-accent hover:text-accent-foreground",
-        "focus:bg-accent focus:text-accent-foreground",
-        "data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
-        // Sub-trigger open state (DropdownMenuSubTrigger consumer).
-        "data-[state=open]:bg-accent",
         // Disabled — explicit data-[disabled]: selectors. The `.interactive-item`
         // utility paints these via its CSS rule; the explicit Tailwind selectors
         // here are belt-and-suspenders so the contract is visible at the call
@@ -50,6 +61,24 @@ export const menuItemVariants = cva(
     ].join(" "),
     {
         variants: {
+            // Material register (BA.W-MENU-GLASS) — the shared surface axis on the
+            // menu band. `glass` is the DEFAULT (glass-first canon); `accent` is
+            // the explicit flat-fill escape (clean break, no alias).
+            surface: {
+                // The `.glass-menu-row` recipe carries the hover/focus/highlight
+                // glass-quiet tint + lift + the touch floor (src/styles/menu.css).
+                // NO flat-accent utility here — the recipe is the sole hover paint.
+                glass: "glass-menu-row",
+                // The prior flat-accent triad, opt-in. Hover/focus/data-highlighted
+                // paint the same surface across pointer, keyboard, and reka-ui's
+                // internal highlight; the sub-trigger open state matches.
+                accent: [
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "focus:bg-accent focus:text-accent-foreground",
+                    "data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
+                    "data-[state=open]:bg-accent",
+                ].join(" "),
+            },
             // Indicator-slot gutter. `none` is the default (no indicator);
             // `start` reserves 1.75rem (28px, pl-7); `start-wide` reserves
             // 2rem (32px, pl-8 for checkbox/radio-in-context-menu + inset
@@ -67,6 +96,7 @@ export const menuItemVariants = cva(
             },
         },
         defaultVariants: {
+            surface: "glass",
             indicator: "none",
             density: "comfortable",
         },

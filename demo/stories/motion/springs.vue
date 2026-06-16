@@ -11,6 +11,7 @@
 // animated block reads `--motion-accent` (the glass-ui violet twin), not warm-red.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
+import StoryPlayButton from "../StoryPlayButton.vue";
 import { computed, ref, shallowRef } from "vue";
 import {
     useNumericTransition,
@@ -167,7 +168,7 @@ async function copyStops(): Promise<void> {
                         </Select>
                     </div>
 
-                    <Button variant="default" @click="play">Play</Button>
+                    <StoryPlayButton @play="play" />
                     <Button variant="secondary" @click="reset">Reset</Button>
 
                     <p class="text-small text-muted-foreground ml-auto max-w-md">
@@ -197,10 +198,13 @@ async function copyStops(): Promise<void> {
                 </div>
 
                 <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <!-- BA.W-DEMO-AFFORDANCES — the range cells re-point off the dead
+                         bg-card/60 slab onto the quiet glass tier (glass over the
+                         staged backdrop, FD-FS X-2). -->
                     <div
                         v-for="(label, key) in { x: 'translateX', rotate: 'rotate', hue: 'lightness' }"
                         :key="key"
-                        class="flex flex-col gap-1 rounded-panel border border-border/60 bg-card/60 p-3"
+                        class="glass-quiet flex flex-col gap-1 rounded-panel p-3"
                     >
                         <span class="text-mono-caption text-muted-foreground">{{ label }}</span>
                         <span class="fira-code text-small text-foreground">
@@ -236,8 +240,17 @@ async function copyStops(): Promise<void> {
                         @update:model-value="(v: number) => (playDamping = v)"
                     />
 
-                    <!-- live travel stage -->
-                    <div class="relative h-12 overflow-hidden rounded-pill bg-[var(--surface-tint-1)]">
+                    <!-- live travel stage — BA.W-SUFFUSE2: the violet spent HARDER
+                         within proportion (the stage frame reads --motion-accent at a
+                         low alpha alongside the travelling dot; ONE family hue, no
+                         second). -->
+                    <div
+                        class="relative h-12 overflow-hidden rounded-pill border bg-[var(--surface-tint-1)]"
+                        :style="{
+                            borderColor:
+                                'color-mix(in srgb, var(--motion-accent) 35%, transparent)',
+                        }"
+                    >
                         <div
                             ref="playCard"
                             class="absolute left-2 top-1/2 size-8 -translate-y-1/2 rounded-pill bg-[var(--motion-accent)]"
@@ -246,7 +259,7 @@ async function copyStops(): Promise<void> {
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
-                        <Button variant="default" @click="playgroundPlay">▶ Play</Button>
+                        <StoryPlayButton @play="playgroundPlay" />
                         <span class="text-small text-muted-foreground">
                             overshoot ~<span class="fira-code text-foreground">{{ playOvershoot }}%</span>
                         </span>

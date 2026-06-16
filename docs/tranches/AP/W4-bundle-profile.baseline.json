@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-11T15:50:47.772Z",
+  "generatedAt": "2026-06-15T21:19:11.969Z",
   "status": "fail",
-  "command": "npm run profile:budget",
-  "buildDurationMs": 1268,
-  "durationMs": 1308,
+  "command": "npm run profile:bundle",
+  "buildDurationMs": 0,
+  "durationMs": 67,
   "budgets": {
     "dist/glass-ui.js": {
       "raw": 190000,
@@ -22,104 +22,104 @@
     {
       "file": "dist/glass-ui.js",
       "status": "PASS",
-      "raw": 33505,
-      "gzip": 8531,
+      "raw": 33525,
+      "gzip": 8629,
       "budgetRaw": 190000,
       "budgetGzip": 33700,
-      "rawHeadroom": 156495,
-      "gzipHeadroom": 25169
+      "rawHeadroom": 156475,
+      "gzipHeadroom": 25071
     },
     {
       "file": "dist/styles/index.css",
       "status": "PASS",
-      "raw": 226709,
-      "gzip": 54015,
+      "raw": 255674,
+      "gzip": 64924,
       "budgetRaw": 548000,
       "budgetGzip": 140000,
-      "rawHeadroom": 321291,
-      "gzipHeadroom": 85985
+      "rawHeadroom": 292326,
+      "gzipHeadroom": 75076
     },
     {
       "file": "dist/aurora.js",
       "status": "PASS",
-      "raw": 114483,
-      "gzip": 38597,
+      "raw": 115095,
+      "gzip": 38879,
       "budgetRaw": 130000,
       "budgetGzip": 40000,
-      "rawHeadroom": 15517,
-      "gzipHeadroom": 1403
+      "rawHeadroom": 14905,
+      "gzipHeadroom": 1121
     }
   ],
   "subpathReport": [
     {
       "name": "aurora.js",
       "status": "PASS",
-      "gzip": 38597,
-      "baselineGzip": 38599,
-      "drift": -0.000051814813855281225
+      "gzip": 38879,
+      "baselineGzip": 38597,
+      "drift": 0.007306267326476151
     },
     {
       "name": "goo-blob.js",
       "status": "PASS",
-      "gzip": 20653,
-      "baselineGzip": 20651,
-      "drift": 0.00009684761028521622
-    },
-    {
-      "name": "glass-ui.js",
-      "status": "PASS",
-      "gzip": 8531,
-      "baselineGzip": 10035,
-      "drift": -0.14987543597409067
+      "gzip": 20755,
+      "baselineGzip": 20653,
+      "drift": 0.004938749818428316
     },
     {
       "name": "dock.js",
       "status": "FAIL",
-      "gzip": 11027,
-      "baselineGzip": 9832,
-      "drift": 0.12154190398698128
+      "gzip": 12327,
+      "baselineGzip": 11027,
+      "drift": 0.11789244581481817
+    },
+    {
+      "name": "glass-ui.js",
+      "status": "PASS",
+      "gzip": 8629,
+      "baselineGzip": 8531,
+      "drift": 0.01148751611768843
+    },
+    {
+      "name": "constellation.js",
+      "status": "PASS",
+      "gzip": 5979,
+      "baselineGzip": 5895,
+      "drift": 0.014249363867684479
     },
     {
       "name": "typewriter.js",
       "status": "PASS",
-      "gzip": 5629,
-      "baselineGzip": 5630,
-      "drift": -0.00017761989342806393
-    },
-    {
-      "name": "constellation.js",
-      "status": "FAIL",
-      "gzip": 5895,
-      "baselineGzip": 5114,
-      "drift": 0.15271802894016426
+      "gzip": 5637,
+      "baselineGzip": 5629,
+      "drift": 0.0014212115828744004
     },
     {
       "name": "search.js",
       "status": "PASS",
-      "gzip": 4554,
-      "baselineGzip": 4549,
-      "drift": 0.0010991426687183997
+      "gzip": 4560,
+      "baselineGzip": 4554,
+      "drift": 0.0013175230566534915
     },
     {
       "name": "timeline.js",
       "status": "PASS",
-      "gzip": 4460,
+      "gzip": 4465,
       "baselineGzip": 4460,
-      "drift": 0
+      "drift": 0.0011210762331838565
     },
     {
       "name": "tabs.js",
       "status": "PASS",
-      "gzip": 3583,
-      "baselineGzip": 3495,
-      "drift": 0.025178826895565092
+      "gzip": 3330,
+      "baselineGzip": 3583,
+      "drift": -0.07061121964833939
     },
     {
       "name": "carousel.js",
       "status": "PASS",
-      "gzip": 3296,
-      "baselineGzip": 3295,
-      "drift": 0.00030349013657056146
+      "gzip": 2938,
+      "baselineGzip": 3296,
+      "drift": -0.10861650485436893
     },
     {
       "name": "sidebar.js",
@@ -131,79 +131,86 @@
     {
       "name": "fourier-field.js",
       "status": "PASS",
-      "gzip": 2801,
-      "baselineGzip": 2802,
-      "drift": -0.00035688793718772306
+      "gzip": 2845,
+      "baselineGzip": 2801,
+      "drift": 0.01570867547304534
     },
     {
       "name": "forms.js",
       "status": "PASS",
-      "gzip": 2649,
-      "baselineGzip": 2648,
-      "drift": 0.00037764350453172205
+      "gzip": 2648,
+      "baselineGzip": 2649,
+      "drift": -0.00037750094375235937
+    },
+    {
+      "name": "glass-panel.js",
+      "status": "PASS",
+      "gzip": 2345,
+      "baselineGzip": 2256,
+      "drift": 0.03945035460992908
     },
     {
       "name": "motion.js",
       "status": "PASS",
-      "gzip": 1957,
-      "baselineGzip": 1953,
-      "drift": 0.002048131080389145
+      "gzip": 1954,
+      "baselineGzip": 1957,
+      "drift": -0.0015329586101175269
     },
     {
       "name": "labeled-field.js",
       "status": "PASS",
-      "gzip": 1903,
-      "baselineGzip": 1900,
-      "drift": 0.0015789473684210526
+      "gzip": 1959,
+      "baselineGzip": 1903,
+      "drift": 0.029427220178665267
     },
     {
       "name": "watercolor-dot.js",
       "status": "PASS",
-      "gzip": 1896,
-      "baselineGzip": 1865,
-      "drift": 0.016621983914209115
+      "gzip": 1948,
+      "baselineGzip": 1896,
+      "drift": 0.027426160337552744
     },
     {
       "name": "motion-core.js",
       "status": "PASS",
-      "gzip": 1890,
-      "baselineGzip": 1856,
-      "drift": 0.018318965517241378
+      "gzip": 1934,
+      "baselineGzip": 1890,
+      "drift": 0.02328042328042328
     },
     {
       "name": "underline.js",
-      "status": "PASS",
-      "gzip": 1440,
-      "baselineGzip": 1442,
-      "drift": -0.0013869625520110957
+      "status": "MISSING",
+      "gzip": null,
+      "baselineGzip": 1440,
+      "drift": null
     },
     {
       "name": "controls.js",
       "status": "PASS",
-      "gzip": 1408,
+      "gzip": 1422,
       "baselineGzip": 1408,
-      "drift": 0
-    },
-    {
-      "name": "expandable-container.js",
-      "status": "PASS",
-      "gzip": 1345,
-      "baselineGzip": 1346,
-      "drift": -0.0007429420505200594
+      "drift": 0.009943181818181818
     },
     {
       "name": "metric-stack.js",
       "status": "PASS",
-      "gzip": 1358,
-      "baselineGzip": 1341,
-      "drift": 0.01267710663683818
+      "gzip": 1362,
+      "baselineGzip": 1358,
+      "drift": 0.0029455081001472753
+    },
+    {
+      "name": "expandable-container.js",
+      "status": "PASS",
+      "gzip": 1471,
+      "baselineGzip": 1345,
+      "drift": 0.09368029739776952
     },
     {
       "name": "confirm-dialog.js",
       "status": "PASS",
-      "gzip": 1326,
-      "baselineGzip": 1329,
-      "drift": -0.002257336343115124
+      "gzip": 1336,
+      "baselineGzip": 1326,
+      "drift": 0.007541478129713424
     },
     {
       "name": "stacked-icons.js",
@@ -215,16 +222,16 @@
     {
       "name": "motion-curves.js",
       "status": "PASS",
-      "gzip": 1301,
-      "baselineGzip": 1300,
-      "drift": 0.0007692307692307692
+      "gzip": 1300,
+      "baselineGzip": 1301,
+      "drift": -0.0007686395080707148
     },
     {
       "name": "sortable-list.js",
       "status": "PASS",
-      "gzip": 1158,
-      "baselineGzip": 1157,
-      "drift": 0.000864304235090752
+      "gzip": 1160,
+      "baselineGzip": 1158,
+      "drift": 0.0017271157167530224
     },
     {
       "name": "infinite-scroll.js",
@@ -236,37 +243,44 @@
     {
       "name": "status-dot.js",
       "status": "PASS",
-      "gzip": 1034,
+      "gzip": 1035,
       "baselineGzip": 1034,
-      "drift": 0
+      "drift": 0.0009671179883945841
+    },
+    {
+      "name": "metric-cell.js",
+      "status": "PASS",
+      "gzip": 1015,
+      "baselineGzip": 1030,
+      "drift": -0.014563106796116505
     },
     {
       "name": "toggle-chip.js",
       "status": "SKIP",
-      "gzip": 1015,
+      "gzip": 1107,
       "baselineGzip": 1015,
-      "drift": 0
+      "drift": 0.09064039408866995
     },
     {
-      "name": "metric-cell.js",
+      "name": "header-ribbon.js",
       "status": "SKIP",
-      "gzip": 1030,
-      "baselineGzip": 994,
-      "drift": 0.03621730382293763
+      "gzip": 1019,
+      "baselineGzip": 1014,
+      "drift": 0.004930966469428008
     },
     {
       "name": "pulse.js",
       "status": "SKIP",
-      "gzip": 928,
-      "baselineGzip": 929,
-      "drift": -0.001076426264800861
+      "gzip": 933,
+      "baselineGzip": 928,
+      "drift": 0.005387931034482759
     },
     {
       "name": "animated-digit.js",
       "status": "SKIP",
-      "gzip": 825,
-      "baselineGzip": 823,
-      "drift": 0.002430133657351154
+      "gzip": 824,
+      "baselineGzip": 825,
+      "drift": -0.0012121212121212121
     },
     {
       "name": "dark.js",
@@ -278,9 +292,9 @@
     {
       "name": "dom.js",
       "status": "SKIP",
-      "gzip": 310,
-      "baselineGzip": 307,
-      "drift": 0.009771986970684038
+      "gzip": 307,
+      "baselineGzip": 310,
+      "drift": -0.00967741935483871
     },
     {
       "name": "tokens.js",
@@ -292,30 +306,37 @@
     {
       "name": "dropdown-menu.js",
       "status": "SKIP",
-      "gzip": 260,
-      "baselineGzip": 259,
-      "drift": 0.003861003861003861
+      "gzip": 259,
+      "baselineGzip": 260,
+      "drift": -0.0038461538461538464
     },
     {
       "name": "context-menu.js",
       "status": "SKIP",
-      "gzip": 246,
+      "gzip": 243,
       "baselineGzip": 246,
-      "drift": 0
+      "drift": -0.012195121951219513
     },
     {
       "name": "select.js",
       "status": "SKIP",
-      "gzip": 230,
-      "baselineGzip": 231,
-      "drift": -0.004329004329004329
+      "gzip": 231,
+      "baselineGzip": 230,
+      "drift": 0.004347826086956522
     },
     {
       "name": "color.js",
       "status": "SKIP",
       "gzip": 217,
-      "baselineGzip": 218,
-      "drift": -0.0045871559633027525
+      "baselineGzip": 217,
+      "drift": 0
+    },
+    {
+      "name": "dialog.js",
+      "status": "SKIP",
+      "gzip": 201,
+      "baselineGzip": 200,
+      "drift": 0.005
     },
     {
       "name": "configurator.js",
@@ -323,13 +344,6 @@
       "gzip": 198,
       "baselineGzip": 198,
       "drift": 0
-    },
-    {
-      "name": "dialog.js",
-      "status": "SKIP",
-      "gzip": 200,
-      "baselineGzip": 197,
-      "drift": 0.015228426395939087
     },
     {
       "name": "command.js",
@@ -348,37 +362,37 @@
     {
       "name": "toast.js",
       "status": "SKIP",
-      "gzip": 164,
-      "baselineGzip": 162,
-      "drift": 0.012345679012345678
-    },
-    {
-      "name": "keyboard.js",
-      "status": "SKIP",
-      "gzip": 155,
-      "baselineGzip": 156,
-      "drift": -0.00641025641025641
+      "gzip": 163,
+      "baselineGzip": 164,
+      "drift": -0.006097560975609756
     },
     {
       "name": "card.js",
       "status": "SKIP",
-      "gzip": 155,
-      "baselineGzip": 154,
-      "drift": 0.006493506493506494
+      "gzip": 154,
+      "baselineGzip": 155,
+      "drift": -0.0064516129032258064
+    },
+    {
+      "name": "keyboard.js",
+      "status": "SKIP",
+      "gzip": 156,
+      "baselineGzip": 155,
+      "drift": 0.0064516129032258064
     },
     {
       "name": "progress.js",
       "status": "SKIP",
       "gzip": 147,
-      "baselineGzip": 146,
-      "drift": 0.00684931506849315
+      "baselineGzip": 147,
+      "drift": 0
     },
     {
       "name": "fourier-math.js",
       "status": "SKIP",
-      "gzip": 140,
+      "gzip": 155,
       "baselineGzip": 140,
-      "drift": 0
+      "drift": 0.10714285714285714
     },
     {
       "name": "number-field.js",
@@ -397,9 +411,9 @@
     {
       "name": "api.js",
       "status": "SKIP",
-      "gzip": 132,
+      "gzip": 157,
       "baselineGzip": 132,
-      "drift": 0
+      "drift": 0.1893939393939394
     },
     {
       "name": "tooltip.js",
@@ -432,9 +446,9 @@
     {
       "name": "reactive.js",
       "status": "SKIP",
-      "gzip": 109,
-      "baselineGzip": 110,
-      "drift": -0.00909090909090909
+      "gzip": 110,
+      "baselineGzip": 109,
+      "drift": 0.009174311926605505
     },
     {
       "name": "instrument-chassis.js",
@@ -542,38 +556,64 @@
       "drift": 0
     },
     {
-      "name": "glass-panel.js",
+      "name": "handmark.js",
       "status": "NEW",
-      "gzip": 2256,
+      "gzip": 7546,
       "baselineGzip": null,
       "drift": null
     },
     {
-      "name": "header-ribbon.js",
+      "name": "pager-dots.js",
       "status": "NEW",
-      "gzip": 1014,
+      "gzip": 1401,
+      "baselineGzip": null,
+      "drift": null
+    },
+    {
+      "name": "color-swatch.js",
+      "status": "NEW",
+      "gzip": 1004,
+      "baselineGzip": null,
+      "drift": null
+    },
+    {
+      "name": "fading-scroll.js",
+      "status": "NEW",
+      "gzip": 99,
+      "baselineGzip": null,
+      "drift": null
+    },
+    {
+      "name": "icon-chip.js",
+      "status": "NEW",
+      "gzip": 82,
       "baselineGzip": null,
       "drift": null
     }
   ],
   "totals": {
-    "bytes": 1611642,
-    "gzipBytes": 669816,
+    "bytes": 2604731,
+    "gzipBytes": 1095081,
     "byExt": {
       ".css": {
-        "bytes": 847032,
-        "gzipBytes": 332116,
-        "files": 61
+        "bytes": 962988,
+        "gzipBytes": 374615,
+        "files": 71
       },
       ".js": {
-        "bytes": 652679,
-        "gzipBytes": 233185,
-        "files": 152
+        "bytes": 687616,
+        "gzipBytes": 246198,
+        "files": 159
       },
       ".woff2": {
         "bytes": 98624,
         "gzipBytes": 98736,
         "files": 4
+      },
+      ".ts": {
+        "bytes": 842196,
+        "gzipBytes": 369753,
+        "files": 576
       },
       ".md": {
         "bytes": 4516,
@@ -589,94 +629,106 @@
   },
   "subpathTotals": {
     "entry": {
-      "bytes": 428874,
-      "gzipBytes": 147886,
-      "files": 72
+      "bytes": 458295,
+      "gzipBytes": 158410,
+      "files": 76
     },
     "shared": {
-      "bytes": 223805,
-      "gzipBytes": 85299,
-      "files": 80
+      "bytes": 229321,
+      "gzipBytes": 87788,
+      "files": 83
     }
   },
   "subpathTable": [
     {
       "name": "aurora.js",
       "kind": "entry",
-      "bytes": 114483,
-      "gzipBytes": 38597
+      "bytes": 115095,
+      "gzipBytes": 38879
     },
     {
       "name": "goo-blob.js",
       "kind": "entry",
-      "bytes": 56703,
-      "gzipBytes": 20653
+      "bytes": 56930,
+      "gzipBytes": 20755
     },
     {
       "name": "dock.js",
       "kind": "entry",
-      "bytes": 36315,
-      "gzipBytes": 11027
+      "bytes": 41829,
+      "gzipBytes": 12327
     },
     {
       "name": "glass-ui.js",
       "kind": "entry",
-      "bytes": 33505,
-      "gzipBytes": 8531
+      "bytes": 33525,
+      "gzipBytes": 8629
+    },
+    {
+      "name": "handmark.js",
+      "kind": "entry",
+      "bytes": 21766,
+      "gzipBytes": 7546
     },
     {
       "name": "constellation.js",
       "kind": "entry",
-      "bytes": 16894,
-      "gzipBytes": 5895
+      "bytes": 17159,
+      "gzipBytes": 5979
     },
     {
       "name": "typewriter.js",
       "kind": "entry",
-      "bytes": 19501,
-      "gzipBytes": 5629
+      "bytes": 19499,
+      "gzipBytes": 5637
     },
     {
-      "name": "compile-B7NGOBcP.js",
+      "name": "compile-D1uc5LjR.js",
       "kind": "shared",
       "bytes": 12905,
       "gzipBytes": 4936
     },
     {
-      "name": "DataTable-BCddn3T3.js",
+      "name": "DataTable-CbQipNXS.js",
       "kind": "shared",
-      "bytes": 16492,
-      "gzipBytes": 4625
+      "bytes": 16653,
+      "gzipBytes": 4696
     },
     {
       "name": "search.js",
       "kind": "entry",
       "bytes": 13664,
-      "gzipBytes": 4554
+      "gzipBytes": 4560
     },
     {
       "name": "timeline.js",
       "kind": "entry",
-      "bytes": 15680,
-      "gzipBytes": 4460
+      "bytes": 15670,
+      "gzipBytes": 4465
     },
     {
-      "name": "useConfiguratorState-Cqzp7sVp.js",
+      "name": "useConfiguratorState-73BftS5_.js",
       "kind": "shared",
-      "bytes": 10891,
-      "gzipBytes": 3842
+      "bytes": 11333,
+      "gzipBytes": 3972
     },
     {
       "name": "tabs.js",
       "kind": "entry",
-      "bytes": 10019,
-      "gzipBytes": 3583
+      "bytes": 9128,
+      "gzipBytes": 3330
     },
     {
       "name": "carousel.js",
       "kind": "entry",
-      "bytes": 11623,
-      "gzipBytes": 3296
+      "bytes": 10162,
+      "gzipBytes": 2938
+    },
+    {
+      "name": "fourier-field.js",
+      "kind": "entry",
+      "bytes": 7688,
+      "gzipBytes": 2845
     },
     {
       "name": "sidebar.js",
@@ -685,190 +737,184 @@
       "gzipBytes": 2818
     },
     {
-      "name": "fourier-field.js",
-      "kind": "entry",
-      "bytes": 7616,
-      "gzipBytes": 2801
+      "name": "Progress-rNpnBl62.js",
+      "kind": "shared",
+      "bytes": 8792,
+      "gzipBytes": 2812
     },
     {
       "name": "forms.js",
       "kind": "entry",
       "bytes": 9497,
-      "gzipBytes": 2649
+      "gzipBytes": 2648
     },
     {
-      "name": "Progress-DwlUKGbr.js",
+      "name": "SelectScrollDownButton-XmV0I5hu.js",
       "kind": "shared",
-      "bytes": 8106,
-      "gzipBytes": 2579
+      "bytes": 7869,
+      "gzipBytes": 2605
     },
     {
-      "name": "Toaster-D6q4HtXu.js",
+      "name": "Toaster-DHu93Ac-.js",
       "kind": "shared",
-      "bytes": 7885,
-      "gzipBytes": 2565
+      "bytes": 7810,
+      "gzipBytes": 2563
     },
     {
-      "name": "useSortable-muI29agz.js",
+      "name": "useSortable-CNMRmui_.js",
       "kind": "shared",
       "bytes": 7165,
       "gzipBytes": 2510
     },
     {
-      "name": "SelectScrollDownButton-CiDUxfEj.js",
-      "kind": "shared",
-      "bytes": 7546,
-      "gzipBytes": 2481
-    },
-    {
       "name": "glass-panel.js",
       "kind": "entry",
-      "bytes": 5622,
-      "gzipBytes": 2256
+      "bytes": 5837,
+      "gzipBytes": 2345
     },
     {
-      "name": "dropdown-menu-DzkkyBwX.js",
+      "name": "CommandShortcut-D4gIzCu9.js",
+      "kind": "shared",
+      "bytes": 8137,
+      "gzipBytes": 2327
+    },
+    {
+      "name": "dropdown-menu-C5mHqh9d.js",
       "kind": "shared",
       "bytes": 9706,
-      "gzipBytes": 2213
+      "gzipBytes": 2215
     },
     {
-      "name": "CommandShortcut-RowNEO6i.js",
+      "name": "sheet-CVkLf4al.js",
       "kind": "shared",
-      "bytes": 7916,
-      "gzipBytes": 2190
+      "bytes": 6570,
+      "gzipBytes": 2200
     },
     {
-      "name": "sheet-1fChZjtw.js",
-      "kind": "shared",
-      "bytes": 6343,
-      "gzipBytes": 2119
+      "name": "labeled-field.js",
+      "kind": "entry",
+      "bytes": 6658,
+      "gzipBytes": 1959
     },
     {
       "name": "motion.js",
       "kind": "entry",
       "bytes": 4815,
-      "gzipBytes": 1957
-    },
-    {
-      "name": "labeled-field.js",
-      "kind": "entry",
-      "bytes": 6347,
-      "gzipBytes": 1903
-    },
-    {
-      "name": "slider-B-JP2JlI.js",
-      "kind": "shared",
-      "bytes": 4834,
-      "gzipBytes": 1903
+      "gzipBytes": 1954
     },
     {
       "name": "watercolor-dot.js",
       "kind": "entry",
-      "bytes": 4276,
-      "gzipBytes": 1896
+      "bytes": 4434,
+      "gzipBytes": 1948
     },
     {
       "name": "motion-core.js",
       "kind": "entry",
-      "bytes": 4526,
-      "gzipBytes": 1890
+      "bytes": 4628,
+      "gzipBytes": 1934
     },
     {
-      "name": "ContextMenuSubContent-BQmxTAdw.js",
+      "name": "slider-C2iCNOGm.js",
+      "kind": "shared",
+      "bytes": 4654,
+      "gzipBytes": 1865
+    },
+    {
+      "name": "ContextMenuSubContent-DxR0kSSJ.js",
       "kind": "shared",
       "bytes": 6713,
-      "gzipBytes": 1782
+      "gzipBytes": 1785
     },
     {
-      "name": "useViewportReady-B40FK4Pa.js",
+      "name": "useViewportReady-BaZndPNv.js",
       "kind": "shared",
       "bytes": 4983,
       "gzipBytes": 1773
     },
     {
-      "name": "ToggleGroupItem-D_AHlRw9.js",
+      "name": "ToggleGroupItem-DeOiPzzk.js",
       "kind": "shared",
       "bytes": 4281,
-      "gzipBytes": 1511
+      "gzipBytes": 1510
     },
     {
-      "name": "DialogFooter-Blu4t7tJ.js",
+      "name": "DialogContent-BcNcx1MY.js",
+      "kind": "shared",
+      "bytes": 3361,
+      "gzipBytes": 1501
+    },
+    {
+      "name": "DialogFooter-D6c3c5ok.js",
       "kind": "shared",
       "bytes": 4437,
-      "gzipBytes": 1496
+      "gzipBytes": 1494
     },
     {
-      "name": "DialogContent-Dl9WkAoS.js",
-      "kind": "shared",
-      "bytes": 3313,
-      "gzipBytes": 1487
-    },
-    {
-      "name": "useKeyboardShortcuts-Be3w_Rwk.js",
+      "name": "useKeyboardShortcuts-BzlPt_iX.js",
       "kind": "shared",
       "bytes": 3516,
       "gzipBytes": 1476
     },
     {
-      "name": "cn-DJXf4yaB.js",
+      "name": "expandable-container.js",
+      "kind": "entry",
+      "bytes": 3392,
+      "gzipBytes": 1471
+    },
+    {
+      "name": "CardAction-DmdvVdED.js",
+      "kind": "shared",
+      "bytes": 4456,
+      "gzipBytes": 1468
+    },
+    {
+      "name": "button-CG8xQSdX.js",
+      "kind": "shared",
+      "bytes": 4736,
+      "gzipBytes": 1463
+    },
+    {
+      "name": "cn-BJ4Mh0Ov.js",
       "kind": "shared",
       "bytes": 3465,
       "gzipBytes": 1444
     },
     {
-      "name": "underline.js",
-      "kind": "entry",
-      "bytes": 3217,
-      "gzipBytes": 1440
-    },
-    {
-      "name": "CardAction-Cj2eycQ2.js",
-      "kind": "shared",
-      "bytes": 4376,
-      "gzipBytes": 1418
-    },
-    {
-      "name": "button-ChXMfsud.js",
-      "kind": "shared",
-      "bytes": 4195,
-      "gzipBytes": 1412
-    },
-    {
       "name": "controls.js",
       "kind": "entry",
-      "bytes": 2878,
-      "gzipBytes": 1408
+      "bytes": 2948,
+      "gzipBytes": 1422
+    },
+    {
+      "name": "pager-dots.js",
+      "kind": "entry",
+      "bytes": 3008,
+      "gzipBytes": 1401
     },
     {
       "name": "metric-stack.js",
       "kind": "entry",
-      "bytes": 3334,
-      "gzipBytes": 1358
+      "bytes": 3330,
+      "gzipBytes": 1362
     },
     {
-      "name": "useCanvas2D-ClrQuZtp.js",
+      "name": "useCanvas2D-7IMfKIjJ.js",
       "kind": "shared",
       "bytes": 3227,
       "gzipBytes": 1350
     },
     {
-      "name": "expandable-container.js",
-      "kind": "entry",
-      "bytes": 3109,
-      "gzipBytes": 1345
-    },
-    {
-      "name": "HoverPopover-CISOJQuZ.js",
+      "name": "HoverPopover-CXCfOFD8.js",
       "kind": "shared",
-      "bytes": 3101,
-      "gzipBytes": 1342
+      "bytes": 3099,
+      "gzipBytes": 1344
     },
     {
       "name": "confirm-dialog.js",
       "kind": "entry",
-      "bytes": 2891,
-      "gzipBytes": 1326
+      "bytes": 2885,
+      "gzipBytes": 1336
     },
     {
       "name": "stacked-icons.js",
@@ -880,67 +926,67 @@
       "name": "motion-curves.js",
       "kind": "entry",
       "bytes": 3880,
-      "gzipBytes": 1301
+      "gzipBytes": 1300
     },
     {
-      "name": "NumberFieldContent-CqaN-SvN.js",
+      "name": "PopoverContent-ChCbJzwe.js",
+      "kind": "shared",
+      "bytes": 3483,
+      "gzipBytes": 1288
+    },
+    {
+      "name": "NumberFieldContent-C8DYV2Io.js",
       "kind": "shared",
       "bytes": 3922,
-      "gzipBytes": 1272
+      "gzipBytes": 1276
     },
     {
-      "name": "useSpringMount-CI2jOstM.js",
+      "name": "useSpringMount-By-eGxMa.js",
       "kind": "shared",
       "bytes": 3068,
-      "gzipBytes": 1243
+      "gzipBytes": 1242
     },
     {
-      "name": "color-CUYeFbgd.js",
+      "name": "color-IrfxJ5lj.js",
       "kind": "shared",
       "bytes": 2643,
       "gzipBytes": 1227
     },
     {
-      "name": "TabsList-Dttss653.js",
+      "name": "Notification-CyRfQ_SE.js",
       "kind": "shared",
-      "bytes": 3197,
-      "gzipBytes": 1202
+      "bytes": 2516,
+      "gzipBytes": 1195
     },
     {
-      "name": "Notification-DdwNxIrI.js",
-      "kind": "shared",
-      "bytes": 2533,
-      "gzipBytes": 1189
-    },
-    {
-      "name": "PopoverContent-BYwt2-4x.js",
-      "kind": "shared",
-      "bytes": 3214,
-      "gzipBytes": 1188
-    },
-    {
-      "name": "useRAFLoop-Bxv0o6L5.js",
+      "name": "useRAFLoop-D2TPfSvw.js",
       "kind": "shared",
       "bytes": 3046,
-      "gzipBytes": 1186
+      "gzipBytes": 1190
     },
     {
-      "name": "MetricBadge-C9QMz1KT.js",
+      "name": "MetricBadge-C_bcuPVo.js",
       "kind": "shared",
-      "bytes": 3490,
-      "gzipBytes": 1171
+      "bytes": 3488,
+      "gzipBytes": 1174
     },
     {
       "name": "sortable-list.js",
       "kind": "entry",
-      "bytes": 2776,
-      "gzipBytes": 1158
+      "bytes": 2772,
+      "gzipBytes": 1160
     },
     {
-      "name": "TooltipProvider-B3MkB_8P.js",
+      "name": "toggle-chip.js",
+      "kind": "entry",
+      "bytes": 2828,
+      "gzipBytes": 1107
+    },
+    {
+      "name": "TooltipProvider-DjAI5_lO.js",
       "kind": "shared",
       "bytes": 2842,
-      "gzipBytes": 1073
+      "gzipBytes": 1074
     },
     {
       "name": "infinite-scroll.js",
@@ -949,43 +995,55 @@
       "gzipBytes": 1069
     },
     {
+      "name": "FadingScroll-BIuvCn1y.js",
+      "kind": "shared",
+      "bytes": 2270,
+      "gzipBytes": 1044
+    },
+    {
       "name": "status-dot.js",
       "kind": "entry",
       "bytes": 2155,
-      "gzipBytes": 1034
+      "gzipBytes": 1035
     },
     {
-      "name": "metric-cell.js",
-      "kind": "entry",
-      "bytes": 2192,
-      "gzipBytes": 1030
-    },
-    {
-      "name": "ContextMenuContent-CT3AS1WX.js",
+      "name": "ContextMenuContent-NZrlcNQx.js",
       "kind": "shared",
       "bytes": 2396,
       "gzipBytes": 1022
     },
     {
-      "name": "toggle-chip.js",
+      "name": "header-ribbon.js",
       "kind": "entry",
-      "bytes": 2458,
+      "bytes": 2324,
+      "gzipBytes": 1019
+    },
+    {
+      "name": "metric-cell.js",
+      "kind": "entry",
+      "bytes": 2175,
       "gzipBytes": 1015
     },
     {
-      "name": "header-ribbon.js",
+      "name": "color-swatch.js",
       "kind": "entry",
-      "bytes": 2326,
-      "gzipBytes": 1014
+      "bytes": 1814,
+      "gzipBytes": 1004
     },
     {
-      "name": "HoverCardContent-Csywg3YF.js",
+      "name": "HoverCardContent-BEcIUTVu.js",
       "kind": "shared",
       "bytes": 2326,
       "gzipBytes": 968
     },
     {
-      "name": "badge-UILT_3pZ.js",
+      "name": "IconChip-C52OeM_b.js",
+      "kind": "shared",
+      "bytes": 2073,
+      "gzipBytes": 945
+    },
+    {
+      "name": "badge-BWTSr8g-.js",
       "kind": "shared",
       "bytes": 2000,
       "gzipBytes": 937
@@ -993,35 +1051,35 @@
     {
       "name": "pulse.js",
       "kind": "entry",
-      "bytes": 1856,
-      "gzipBytes": 928
+      "bytes": 1854,
+      "gzipBytes": 933
     },
     {
-      "name": "useTouchGate-Dg7MQI1G.js",
+      "name": "useTouchGate-B4mzQcHJ.js",
       "kind": "shared",
       "bytes": 1964,
-      "gzipBytes": 912
+      "gzipBytes": 911
     },
     {
-      "name": "Switch-CsIuYP_e.js",
+      "name": "Switch-CiCDPVee.js",
       "kind": "shared",
-      "bytes": 1726,
-      "gzipBytes": 912
+      "bytes": 1733,
+      "gzipBytes": 909
     },
     {
-      "name": "createLucideIcon-DydS2qgk.js",
+      "name": "createLucideIcon-W04KX8dh.js",
       "kind": "shared",
       "bytes": 1775,
       "gzipBytes": 901
     },
     {
-      "name": "ScrollingText-DfFrwSph.js",
+      "name": "ScrollingText-B-FgIC9D.js",
       "kind": "shared",
-      "bytes": 1570,
-      "gzipBytes": 853
+      "bytes": 1568,
+      "gzipBytes": 858
     },
     {
-      "name": "InstrumentChassis-UUJX0-mW.js",
+      "name": "InstrumentChassis-43Z1iACh.js",
       "kind": "shared",
       "bytes": 1949,
       "gzipBytes": 825
@@ -1029,119 +1087,119 @@
     {
       "name": "animated-digit.js",
       "kind": "entry",
-      "bytes": 1534,
-      "gzipBytes": 825
+      "bytes": 1532,
+      "gzipBytes": 824
     },
     {
-      "name": "useTextHighlight-DmRYkOBx.js",
+      "name": "useTextHighlight-C4uoR8Kd.js",
       "kind": "shared",
       "bytes": 1684,
       "gzipBytes": 820
     },
     {
-      "name": "CollapsibleContent-CP9qF1v4.js",
+      "name": "CollapsibleContent-EPdzxRoC.js",
       "kind": "shared",
       "bytes": 1916,
       "gzipBytes": 813
     },
     {
-      "name": "useIntersectionPause-Cc-H9ees.js",
+      "name": "useIntersectionPause-CBi23KT8.js",
       "kind": "shared",
       "bytes": 1636,
       "gzipBytes": 782
     },
     {
-      "name": "Input-DWQQIOC4.js",
+      "name": "useGlobalDark-Cf7Qvtaq.js",
+      "kind": "shared",
+      "bytes": 1537,
+      "gzipBytes": 772
+    },
+    {
+      "name": "Input-DOlwE-Nh.js",
       "kind": "shared",
       "bytes": 1491,
       "gzipBytes": 756
     },
     {
-      "name": "useAnimatedNumber-C5I3wWd8.js",
+      "name": "useAnimatedNumber-Bhcvi9rr.js",
       "kind": "shared",
       "bytes": 1603,
-      "gzipBytes": 739
+      "gzipBytes": 737
     },
     {
-      "name": "ModalOverlay-DVLI2VRr.js",
+      "name": "ModalOverlay-Dm3OMEIT.js",
       "kind": "shared",
       "bytes": 1444,
-      "gzipBytes": 738
+      "gzipBytes": 737
     },
     {
-      "name": "Separator-0JE6LtNu.js",
+      "name": "math-B53MSgWQ.js",
+      "kind": "shared",
+      "bytes": 1790,
+      "gzipBytes": 735
+    },
+    {
+      "name": "Separator-DjmYf4JP.js",
       "kind": "shared",
       "bytes": 1310,
       "gzipBytes": 732
     },
     {
-      "name": "Label-r3WzWrsj.js",
+      "name": "Label-BwwY7gQh.js",
       "kind": "shared",
       "bytes": 1117,
-      "gzipBytes": 672
+      "gzipBytes": 671
     },
     {
-      "name": "math-U6-RrLmV.js",
-      "kind": "shared",
-      "bytes": 1461,
-      "gzipBytes": 669
-    },
-    {
-      "name": "useScrollProgress-Dlvx-L3v.js",
+      "name": "useScrollProgress-CPJ-7nc1.js",
       "kind": "shared",
       "bytes": 1213,
-      "gzipBytes": 629
+      "gzipBytes": 630
     },
     {
-      "name": "useResizeObserver-BhgdhOIj.js",
+      "name": "useResizeObserver-CdUlm2QZ.js",
       "kind": "shared",
       "bytes": 1215,
       "gzipBytes": 620
     },
     {
-      "name": "SelectSeparator-BQ_1Fcbp.js",
+      "name": "SelectSeparator-CE11KzjY.js",
       "kind": "shared",
       "bytes": 1212,
       "gzipBytes": 614
     },
     {
-      "name": "useGlobalDark-yhL4Wp-s.js",
-      "kind": "shared",
-      "bytes": 1168,
-      "gzipBytes": 609
-    },
-    {
-      "name": "springPresets--YdWTHtm.js",
+      "name": "springPresets-Bwftnd3Y.js",
       "kind": "shared",
       "bytes": 1110,
       "gzipBytes": 596
     },
     {
-      "name": "useSpecularTracking-Bo5su68i.js",
+      "name": "presets-Bt5dJozb.js",
+      "kind": "shared",
+      "bytes": 1268,
+      "gzipBytes": 591
+    },
+    {
+      "name": "useSpecularTracking-BtFRrw8-.js",
       "kind": "shared",
       "bytes": 1126,
       "gzipBytes": 591
     },
     {
-      "name": "vReveal-CqaCz_mC.js",
+      "name": "useViewTransition-uRqguwux.js",
       "kind": "shared",
-      "bytes": 1285,
-      "gzipBytes": 567
+      "bytes": 1405,
+      "gzipBytes": 577
     },
     {
-      "name": "presets-BKVyQfbt.js",
-      "kind": "shared",
-      "bytes": 1031,
-      "gzipBytes": 526
-    },
-    {
-      "name": "useUserInvalidAria-B2h6jAM_.js",
+      "name": "useUserInvalidAria-ChTkWP1X.js",
       "kind": "shared",
       "bytes": 1153,
       "gzipBytes": 525
     },
     {
-      "name": "PaperBackdrop-DIXTtVq6.js",
+      "name": "PaperBackdrop-BC2W9lxF.js",
       "kind": "shared",
       "bytes": 845,
       "gzipBytes": 519
@@ -1153,55 +1211,55 @@
       "gzipBytes": 517
     },
     {
-      "name": "useLiquidFlex-BL0lLLN2.js",
+      "name": "useLiquidFlex-Cv8Ki4qg.js",
       "kind": "shared",
       "bytes": 982,
       "gzipBytes": 496
     },
     {
-      "name": "SelectGroup-aumMgWLs.js",
+      "name": "SelectGroup-Dt-KwE1Y.js",
       "kind": "shared",
       "bytes": 779,
       "gzipBytes": 483
     },
     {
-      "name": "IconTooltip-DPzE09X9.js",
+      "name": "menuItemVariants-CCNPWchS.js",
+      "kind": "shared",
+      "bytes": 942,
+      "gzipBytes": 479
+    },
+    {
+      "name": "IconTooltip-CPw3QgjH.js",
       "kind": "shared",
       "bytes": 822,
-      "gzipBytes": 473
+      "gzipBytes": 471
     },
     {
-      "name": "menuItemVariants-DPiEarb0.js",
-      "kind": "shared",
-      "bytes": 837,
-      "gzipBytes": 439
-    },
-    {
-      "name": "dockContext-BegmJVmx.js",
+      "name": "dockContext-D2nNSiCt.js",
       "kind": "shared",
       "bytes": 633,
       "gzipBytes": 407
     },
     {
-      "name": "resolveCanvasColor-BBiYfp8g.js",
+      "name": "resolveCanvasColor-C3-7gY-u.js",
       "kind": "shared",
       "bytes": 601,
       "gzipBytes": 377
     },
     {
-      "name": "useResolveTokenColor-Dvn2RZJW.js",
+      "name": "useResolveTokenColor-B2FfJnd9.js",
       "kind": "shared",
       "bytes": 546,
       "gzipBytes": 346
     },
     {
-      "name": "useTimer-Dzarvzuk.js",
+      "name": "useTimer-C3yfti4C.js",
       "kind": "shared",
       "bytes": 544,
       "gzipBytes": 333
     },
     {
-      "name": "useInterval-iHludrxk.js",
+      "name": "useInterval-COh8fJ8k.js",
       "kind": "shared",
       "bytes": 507,
       "gzipBytes": 322
@@ -1210,16 +1268,16 @@
       "name": "dom.js",
       "kind": "entry",
       "bytes": 585,
-      "gzipBytes": 310
+      "gzipBytes": 307
     },
     {
-      "name": "minimize-2-BV31Ob_h.js",
+      "name": "minimize-2-CTXXGAqM.js",
       "kind": "shared",
       "bytes": 563,
-      "gzipBytes": 277
+      "gzipBytes": 275
     },
     {
-      "name": "prng-D27-B3tK.js",
+      "name": "prng-C0sIU_G2.js",
       "kind": "shared",
       "bytes": 393,
       "gzipBytes": 274
@@ -1231,7 +1289,7 @@
       "gzipBytes": 264
     },
     {
-      "name": "createContext-BM46COQ-.js",
+      "name": "createContext-BhkE9mLH.js",
       "kind": "shared",
       "bytes": 449,
       "gzipBytes": 263
@@ -1240,22 +1298,22 @@
       "name": "dropdown-menu.js",
       "kind": "entry",
       "bytes": 567,
-      "gzipBytes": 260
+      "gzipBytes": 259
     },
     {
       "name": "context-menu.js",
       "kind": "entry",
       "bytes": 514,
-      "gzipBytes": 246
+      "gzipBytes": 243
     },
     {
       "name": "select.js",
       "kind": "entry",
       "bytes": 435,
-      "gzipBytes": 230
+      "gzipBytes": 231
     },
     {
-      "name": "supportsCssTimeline-BWenxvHU.js",
+      "name": "supportsCssTimeline-BjO1M1eX.js",
       "kind": "shared",
       "bytes": 387,
       "gzipBytes": 221
@@ -1267,10 +1325,16 @@
       "gzipBytes": 217
     },
     {
+      "name": "vReveal-CpKBBHo3.js",
+      "kind": "shared",
+      "bytes": 244,
+      "gzipBytes": 204
+    },
+    {
       "name": "dialog.js",
       "kind": "entry",
       "bytes": 341,
-      "gzipBytes": 200
+      "gzipBytes": 201
     },
     {
       "name": "configurator.js",
@@ -1279,13 +1343,19 @@
       "gzipBytes": 198
     },
     {
-      "name": "search-BSGrf2Sk.js",
+      "name": "useSurfaceAxis-DaKAzxt8.js",
       "kind": "shared",
-      "bytes": 224,
-      "gzipBytes": 191
+      "bytes": 239,
+      "gzipBytes": 190
     },
     {
-      "name": "coalesceMetric-5qIeZnTx.js",
+      "name": "search-ciu64WDi.js",
+      "kind": "shared",
+      "bytes": 224,
+      "gzipBytes": 190
+    },
+    {
+      "name": "coalesceMetric-Cx-138y4.js",
       "kind": "shared",
       "bytes": 231,
       "gzipBytes": 188
@@ -1303,31 +1373,31 @@
       "gzipBytes": 183
     },
     {
-      "name": "x-BUwTKe50.js",
+      "name": "x-CU5f8MBo.js",
       "kind": "shared",
       "bytes": 198,
       "gzipBytes": 176
     },
     {
-      "name": "constants-CS75AWHG.js",
+      "name": "constants-BcKbhhXU.js",
       "kind": "shared",
       "bytes": 219,
       "gzipBytes": 168
     },
     {
-      "name": "chevron-right-CPXbqQQz.js",
+      "name": "chevron-right-tY0hpsXX.js",
       "kind": "shared",
       "bytes": 165,
       "gzipBytes": 166
     },
     {
-      "name": "chevron-up-n_24SqI-.js",
+      "name": "chevron-up-C98JM2yr.js",
       "kind": "shared",
       "bytes": 163,
       "gzipBytes": 166
     },
     {
-      "name": "chevron-down-DKkxb4VV.js",
+      "name": "chevron-down-4EUk2EKX.js",
       "kind": "shared",
       "bytes": 163,
       "gzipBytes": 165
@@ -1336,28 +1406,40 @@
       "name": "toast.js",
       "kind": "entry",
       "bytes": 243,
-      "gzipBytes": 164
+      "gzipBytes": 163
     },
     {
-      "name": "check-njhk-vfu.js",
+      "name": "check-ChIObJVv.js",
       "kind": "shared",
       "bytes": 159,
-      "gzipBytes": 164
+      "gzipBytes": 163
     },
     {
-      "name": "card.js",
+      "name": "api.js",
       "kind": "entry",
-      "bytes": 223,
-      "gzipBytes": 155
+      "bytes": 168,
+      "gzipBytes": 157
     },
     {
       "name": "keyboard.js",
       "kind": "entry",
       "bytes": 199,
+      "gzipBytes": 156
+    },
+    {
+      "name": "fourier-math.js",
+      "kind": "entry",
+      "bytes": 173,
       "gzipBytes": 155
     },
     {
-      "name": "_plugin-vue_export-helper-ok8pgSl5.js",
+      "name": "card.js",
+      "kind": "entry",
+      "bytes": 223,
+      "gzipBytes": 154
+    },
+    {
+      "name": "_plugin-vue_export-helper-B3ysoDQm.js",
       "kind": "shared",
       "bytes": 163,
       "gzipBytes": 152
@@ -1367,12 +1449,6 @@
       "kind": "entry",
       "bytes": 192,
       "gzipBytes": 147
-    },
-    {
-      "name": "fourier-math.js",
-      "kind": "entry",
-      "bytes": 156,
-      "gzipBytes": 140
     },
     {
       "name": "number-field.js",
@@ -1385,12 +1461,6 @@
       "kind": "entry",
       "bytes": 193,
       "gzipBytes": 138
-    },
-    {
-      "name": "api.js",
-      "kind": "entry",
-      "bytes": 136,
-      "gzipBytes": 132
     },
     {
       "name": "tooltip.js",
@@ -1420,7 +1490,7 @@
       "name": "reactive.js",
       "kind": "entry",
       "bytes": 140,
-      "gzipBytes": 109
+      "gzipBytes": 110
     },
     {
       "name": "instrument-chassis.js",
@@ -1433,6 +1503,12 @@
       "kind": "entry",
       "bytes": 106,
       "gzipBytes": 101
+    },
+    {
+      "name": "fading-scroll.js",
+      "kind": "entry",
+      "bytes": 108,
+      "gzipBytes": 99
     },
     {
       "name": "toggle-group.js",
@@ -1501,6 +1577,12 @@
       "gzipBytes": 83
     },
     {
+      "name": "icon-chip.js",
+      "kind": "entry",
+      "bytes": 75,
+      "gzipBytes": 82
+    },
+    {
       "name": "switch.js",
       "kind": "entry",
       "bytes": 71,
@@ -1523,32 +1605,38 @@
     {
       "file": "dist/aurora.js",
       "ext": ".js",
-      "bytes": 114483,
-      "gzipBytes": 38597
+      "bytes": 115095,
+      "gzipBytes": 38879
     },
     {
       "file": "dist/styles/components.css",
       "ext": ".css",
-      "bytes": 61006,
-      "gzipBytes": 10033
+      "bytes": 59555,
+      "gzipBytes": 9998
     },
     {
       "file": "dist/goo-blob.js",
       "ext": ".js",
-      "bytes": 56703,
-      "gzipBytes": 20653
+      "bytes": 56930,
+      "gzipBytes": 20755
     },
     {
       "file": "dist/glass-ui.css",
       "ext": ".css",
-      "bytes": 41361,
-      "gzipBytes": 7822
+      "bytes": 42082,
+      "gzipBytes": 7882
     },
     {
       "file": "dist/dock.js",
       "ext": ".js",
-      "bytes": 36315,
-      "gzipBytes": 11027
+      "bytes": 41829,
+      "gzipBytes": 12327
+    },
+    {
+      "file": "dist/styles/tokens/offsets-sizing.css",
+      "ext": ".css",
+      "bytes": 36381,
+      "gzipBytes": 13449
     },
     {
       "file": "dist/fonts/fira-code/fira-code-latin.woff2",
@@ -1557,22 +1645,16 @@
       "gzipBytes": 36309
     },
     {
-      "file": "dist/glass-ui.js",
-      "ext": ".js",
-      "bytes": 33505,
-      "gzipBytes": 8531
-    },
-    {
-      "file": "dist/styles/tokens/offsets-sizing.css",
-      "ext": ".css",
-      "bytes": 31864,
-      "gzipBytes": 11804
-    },
-    {
       "file": "dist/styles/tokens/glass.css",
       "ext": ".css",
-      "bytes": 28758,
-      "gzipBytes": 9934
+      "bytes": 33693,
+      "gzipBytes": 11744
+    },
+    {
+      "file": "dist/glass-ui.js",
+      "ext": ".js",
+      "bytes": 33525,
+      "gzipBytes": 8629
     },
     {
       "file": "dist/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2",
@@ -1581,28 +1663,34 @@
       "gzipBytes": 27376
     },
     {
-      "file": "dist/styles/dock/shell.css",
-      "ext": ".css",
-      "bytes": 23086,
-      "gzipBytes": 8258
-    },
-    {
       "file": "dist/styles/tokens/scale-paper.css",
       "ext": ".css",
-      "bytes": 22775,
-      "gzipBytes": 7884
+      "bytes": 25722,
+      "gzipBytes": 8894
+    },
+    {
+      "file": "dist/styles/utilities/base.css",
+      "ext": ".css",
+      "bytes": 25646,
+      "gzipBytes": 8151
+    },
+    {
+      "file": "dist/styles/dock/shell.css",
+      "ext": ".css",
+      "bytes": 25411,
+      "gzipBytes": 9087
     },
     {
       "file": "dist/styles/tokens/scheme-motion.css",
       "ext": ".css",
-      "bytes": 22758,
-      "gzipBytes": 7629
+      "bytes": 23962,
+      "gzipBytes": 8031
     },
     {
-      "file": "dist/styles/typography.css",
+      "file": "dist/styles/glass/ladder.css",
       "ext": ".css",
-      "bytes": 22347,
-      "gzipBytes": 5823
+      "bytes": 23343,
+      "gzipBytes": 7709
     },
     {
       "file": "dist/styles/dock/morph.css",
@@ -1611,10 +1699,28 @@
       "gzipBytes": 7668
     },
     {
+      "file": "dist/handmark.js",
+      "ext": ".js",
+      "bytes": 21766,
+      "gzipBytes": 7546
+    },
+    {
       "file": "dist/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2",
       "ext": ".woff2",
       "bytes": 21728,
       "gzipBytes": 21756
+    },
+    {
+      "file": "dist/styles/dock/rail-extend.css",
+      "ext": ".css",
+      "bytes": 21022,
+      "gzipBytes": 6285
+    },
+    {
+      "file": "dist/styles/glass/surfaces.css",
+      "ext": ".css",
+      "bytes": 20952,
+      "gzipBytes": 6882
     },
     {
       "file": "dist/styles/dock/layers.css",
@@ -1623,58 +1729,70 @@
       "gzipBytes": 6922
     },
     {
+      "file": "dist/components/custom/aurora/constants/shaders/brush.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 20437,
+      "gzipBytes": 7549
+    },
+    {
+      "file": "dist/styles/tokens/dark-arm.css",
+      "ext": ".css",
+      "bytes": 20033,
+      "gzipBytes": 7115
+    },
+    {
       "file": "dist/typewriter.js",
       "ext": ".js",
-      "bytes": 19501,
-      "gzipBytes": 5629
-    },
-    {
-      "file": "dist/styles/utilities/btn.css",
-      "ext": ".css",
-      "bytes": 18946,
-      "gzipBytes": 6068
-    },
-    {
-      "file": "dist/styles/glass/ladder.css",
-      "ext": ".css",
-      "bytes": 18591,
-      "gzipBytes": 6309
-    },
-    {
-      "file": "dist/styles/theme/bridges.css",
-      "ext": ".css",
-      "bytes": 18274,
-      "gzipBytes": 4038
-    },
-    {
-      "file": "dist/styles/utilities/base.css",
-      "ext": ".css",
-      "bytes": 16905,
-      "gzipBytes": 5690
-    },
-    {
-      "file": "dist/constellation.js",
-      "ext": ".js",
-      "bytes": 16894,
-      "gzipBytes": 5895
+      "bytes": 19499,
+      "gzipBytes": 5637
     },
     {
       "file": "dist/styles/tokens/color-radius.css",
       "ext": ".css",
-      "bytes": 16664,
-      "gzipBytes": 5963
+      "bytes": 18838,
+      "gzipBytes": 7024
     },
     {
-      "file": "dist/DataTable-BCddn3T3.js",
-      "ext": ".js",
-      "bytes": 16492,
-      "gzipBytes": 4625
-    },
-    {
-      "file": "dist/styles/glass/surfaces.css",
+      "file": "dist/styles/theme/bridges.css",
       "ext": ".css",
-      "bytes": 16311,
-      "gzipBytes": 5398
+      "bytes": 18807,
+      "gzipBytes": 4240
+    },
+    {
+      "file": "dist/styles/instrument-chassis.css",
+      "ext": ".css",
+      "bytes": 18504,
+      "gzipBytes": 5574
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/shaders/vangogh-medium.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 17937,
+      "gzipBytes": 7099
+    },
+    {
+      "file": "dist/components/custom/constellation/constellationTypes.d.ts",
+      "ext": ".ts",
+      "bytes": 17668,
+      "gzipBytes": 6285
+    },
+    {
+      "file": "dist/constellation.js",
+      "ext": ".js",
+      "bytes": 17159,
+      "gzipBytes": 5979
+    },
+    {
+      "file": "dist/styles/dock/overflow.css",
+      "ext": ".css",
+      "bytes": 16860,
+      "gzipBytes": 6014
+    },
+    {
+      "file": "dist/DataTable-CbQipNXS.js",
+      "ext": ".js",
+      "bytes": 16653,
+      "gzipBytes": 4696
     },
     {
       "file": "dist/styles/dock/layer-group.css",
@@ -1683,22 +1801,16 @@
       "gzipBytes": 5234
     },
     {
-      "file": "dist/styles/instrument-chassis.css",
-      "ext": ".css",
-      "bytes": 15861,
-      "gzipBytes": 4914
-    },
-    {
-      "file": "dist/styles/dock/overflow.css",
-      "ext": ".css",
-      "bytes": 15802,
-      "gzipBytes": 5671
-    },
-    {
       "file": "dist/timeline.js",
       "ext": ".js",
-      "bytes": 15680,
-      "gzipBytes": 4460
+      "bytes": 15670,
+      "gzipBytes": 4465
+    },
+    {
+      "file": "dist/styles/segmented-tabs.css",
+      "ext": ".css",
+      "bytes": 14832,
+      "gzipBytes": 4288
     },
     {
       "file": "dist/styles/utilities/components.css",
@@ -1707,10 +1819,16 @@
       "gzipBytes": 4548
     },
     {
+      "file": "dist/styles/index.css",
+      "ext": ".css",
+      "bytes": 13949,
+      "gzipBytes": 5259
+    },
+    {
       "file": "dist/search.js",
       "ext": ".js",
       "bytes": 13664,
-      "gzipBytes": 4554
+      "gzipBytes": 4560
     },
     {
       "file": "dist/styles/glass/material.css",
@@ -1719,16 +1837,16 @@
       "gzipBytes": 4521
     },
     {
-      "file": "dist/styles/animations.css",
-      "ext": ".css",
-      "bytes": 13283,
-      "gzipBytes": 4402
-    },
-    {
       "file": "dist/fonts/fira-code/fira-code-latin-ext.woff2",
       "ext": ".woff2",
       "bytes": 13272,
       "gzipBytes": 13295
+    },
+    {
+      "file": "dist/styles/animations.css",
+      "ext": ".css",
+      "bytes": 13268,
+      "gzipBytes": 4492
     },
     {
       "file": "dist/styles/glass/a11y-fallback.css",
@@ -1737,28 +1855,34 @@
       "gzipBytes": 4610
     },
     {
-      "file": "dist/compile-B7NGOBcP.js",
+      "file": "dist/compile-D1uc5LjR.js",
       "ext": ".js",
       "bytes": 12905,
       "gzipBytes": 4936
     },
     {
-      "file": "dist/carousel.js",
-      "ext": ".js",
-      "bytes": 11623,
-      "gzipBytes": 3296
-    },
-    {
-      "file": "dist/styles/tokens/dark-arm.css",
+      "file": "dist/styles/tokens/light-dark.css",
       "ext": ".css",
-      "bytes": 11209,
-      "gzipBytes": 4260
+      "bytes": 12563,
+      "gzipBytes": 4679
     },
     {
-      "file": "dist/useConfiguratorState-Cqzp7sVp.js",
+      "file": "dist/styles/dock/density.css",
+      "ext": ".css",
+      "bytes": 11732,
+      "gzipBytes": 2655
+    },
+    {
+      "file": "dist/useConfiguratorState-73BftS5_.js",
       "ext": ".js",
-      "bytes": 10891,
-      "gzipBytes": 3842
+      "bytes": 11333,
+      "gzipBytes": 3972
+    },
+    {
+      "file": "dist/styles/utilities/btn.css",
+      "ext": ".css",
+      "bytes": 10954,
+      "gzipBytes": 3896
     },
     {
       "file": "dist/styles/tokens/shadow.css",
@@ -1767,58 +1891,64 @@
       "gzipBytes": 3597
     },
     {
-      "file": "dist/styles/dock/density.css",
-      "ext": ".css",
-      "bytes": 10312,
-      "gzipBytes": 2200
-    },
-    {
-      "file": "dist/styles/dock-controls/tab-button.css",
-      "ext": ".css",
-      "bytes": 10291,
-      "gzipBytes": 3760
-    },
-    {
-      "file": "dist/styles/tokens/light-dark.css",
-      "ext": ".css",
-      "bytes": 10157,
-      "gzipBytes": 3724
-    },
-    {
-      "file": "dist/tabs.js",
+      "file": "dist/carousel.js",
       "ext": ".js",
-      "bytes": 10019,
-      "gzipBytes": 3583
+      "bytes": 10162,
+      "gzipBytes": 2938
     },
     {
       "file": "dist/styles/transitions.css",
       "ext": ".css",
-      "bytes": 9762,
-      "gzipBytes": 2734
+      "bytes": 9816,
+      "gzipBytes": 2735
     },
     {
-      "file": "dist/dropdown-menu-DzkkyBwX.js",
+      "file": "dist/dropdown-menu-C5mHqh9d.js",
       "ext": ".js",
       "bytes": 9706,
-      "gzipBytes": 2213
+      "gzipBytes": 2215
     },
     {
-      "file": "dist/styles/dock/rail-extend.css",
-      "ext": ".css",
-      "bytes": 9695,
-      "gzipBytes": 3367
+      "file": "dist/components/custom/handmark/brush.d.ts",
+      "ext": ".ts",
+      "bytes": 9581,
+      "gzipBytes": 2739
     },
     {
       "file": "dist/forms.js",
       "ext": ".js",
       "bytes": 9497,
-      "gzipBytes": 2649
+      "gzipBytes": 2648
     },
     {
-      "file": "dist/styles/index.css",
+      "file": "dist/styles/utilities/a11y-overrides.css",
       "ext": ".css",
-      "bytes": 9411,
-      "gzipBytes": 3575
+      "bytes": 9324,
+      "gzipBytes": 3839
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/presets.d.ts",
+      "ext": ".ts",
+      "bytes": 9319,
+      "gzipBytes": 3915
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockShellProps.d.ts",
+      "ext": ".ts",
+      "bytes": 9298,
+      "gzipBytes": 3728
+    },
+    {
+      "file": "dist/tabs.js",
+      "ext": ".js",
+      "bytes": 9128,
+      "gzipBytes": 3330
+    },
+    {
+      "file": "dist/components/ui/toast/use-toast.d.ts",
+      "ext": ".ts",
+      "bytes": 9108,
+      "gzipBytes": 1997
     },
     {
       "file": "dist/sidebar.js",
@@ -1827,64 +1957,130 @@
       "gzipBytes": 2818
     },
     {
+      "file": "dist/Progress-rNpnBl62.js",
+      "ext": ".js",
+      "bytes": 8792,
+      "gzipBytes": 2812
+    },
+    {
+      "file": "dist/styles/typography/semantic.css",
+      "ext": ".css",
+      "bytes": 8377,
+      "gzipBytes": 1802
+    },
+    {
+      "file": "dist/components/custom/constellation/constellationInteraction.d.ts",
+      "ext": ".ts",
+      "bytes": 8352,
+      "gzipBytes": 3571
+    },
+    {
       "file": "dist/styles/tokens/property-regs.css",
       "ext": ".css",
-      "bytes": 8436,
-      "gzipBytes": 3359
+      "bytes": 8340,
+      "gzipBytes": 3387
     },
     {
-      "file": "dist/Progress-DwlUKGbr.js",
-      "ext": ".js",
-      "bytes": 8106,
-      "gzipBytes": 2579
+      "file": "dist/styles/drawer.css",
+      "ext": ".css",
+      "bytes": 8297,
+      "gzipBytes": 3289
     },
     {
-      "file": "dist/CommandShortcut-RowNEO6i.js",
-      "ext": ".js",
-      "bytes": 7916,
-      "gzipBytes": 2190
+      "file": "dist/composables/glass/webgl/shaders/procedural-color.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 8280,
+      "gzipBytes": 3244
     },
     {
-      "file": "dist/Toaster-D6q4HtXu.js",
+      "file": "dist/CommandShortcut-D4gIzCu9.js",
       "ext": ".js",
-      "bytes": 7885,
-      "gzipBytes": 2565
+      "bytes": 8137,
+      "gzipBytes": 2327
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/atoms.d.ts",
+      "ext": ".ts",
+      "bytes": 7902,
+      "gzipBytes": 3312
+    },
+    {
+      "file": "dist/SelectScrollDownButton-XmV0I5hu.js",
+      "ext": ".js",
+      "bytes": 7869,
+      "gzipBytes": 2605
+    },
+    {
+      "file": "dist/Toaster-DHu93Ac-.js",
+      "ext": ".js",
+      "bytes": 7810,
+      "gzipBytes": 2563
+    },
+    {
+      "file": "dist/composables/color/index.d.ts",
+      "ext": ".ts",
+      "bytes": 7787,
+      "gzipBytes": 3453
+    },
+    {
+      "file": "dist/styles/dock-controls/tab-button.css",
+      "ext": ".css",
+      "bytes": 7740,
+      "gzipBytes": 3043
     },
     {
       "file": "dist/fourier-field.js",
       "ext": ".js",
-      "bytes": 7616,
-      "gzipBytes": 2801
+      "bytes": 7688,
+      "gzipBytes": 2845
     },
     {
-      "file": "dist/SelectScrollDownButton-CiDUxfEj.js",
-      "ext": ".js",
-      "bytes": 7546,
-      "gzipBytes": 2481
-    },
-    {
-      "file": "dist/styles/utilities/a11y-overrides.css",
+      "file": "dist/styles/dock-controls/icon-button.css",
       "ext": ".css",
-      "bytes": 7263,
-      "gzipBytes": 3122
+      "bytes": 7670,
+      "gzipBytes": 2928
     },
     {
-      "file": "dist/useSortable-muI29agz.js",
+      "file": "dist/styles/menu.css",
+      "ext": ".css",
+      "bytes": 7495,
+      "gzipBytes": 3014
+    },
+    {
+      "file": "dist/styles/typography/scale.css",
+      "ext": ".css",
+      "bytes": 7429,
+      "gzipBytes": 2762
+    },
+    {
+      "file": "dist/useSortable-CNMRmui_.js",
       "ext": ".js",
       "bytes": 7165,
       "gzipBytes": 2510
     },
     {
-      "file": "dist/styles/dock-controls/icon-button.css",
+      "file": "dist/styles/glass/surface-axis.css",
       "ext": ".css",
-      "bytes": 6853,
-      "gzipBytes": 2575
+      "bytes": 6861,
+      "gzipBytes": 2827
     },
     {
-      "file": "dist/ContextMenuSubContent-BQmxTAdw.js",
+      "file": "dist/styles/typography/utilities.css",
+      "ext": ".css",
+      "bytes": 6813,
+      "gzipBytes": 2163
+    },
+    {
+      "file": "dist/ContextMenuSubContent-DxR0kSSJ.js",
       "ext": ".js",
       "bytes": 6713,
-      "gzipBytes": 1782
+      "gzipBytes": 1785
+    },
+    {
+      "file": "dist/labeled-field.js",
+      "ext": ".js",
+      "bytes": 6658,
+      "gzipBytes": 1959
     },
     {
       "file": "dist/styles/dock/morph-bridge.css",
@@ -1893,34 +2089,70 @@
       "gzipBytes": 2653
     },
     {
+      "file": "dist/sheet-CVkLf4al.js",
+      "ext": ".js",
+      "bytes": 6570,
+      "gzipBytes": 2200
+    },
+    {
       "file": "dist/styles/theme/literals.css",
       "ext": ".css",
       "bytes": 6496,
       "gzipBytes": 1966
     },
     {
-      "file": "dist/labeled-field.js",
-      "ext": ".js",
-      "bytes": 6347,
-      "gzipBytes": 1903
+      "file": "dist/components/custom/aurora/constants/shaders/mediums.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 6302,
+      "gzipBytes": 2413
     },
     {
-      "file": "dist/sheet-1fChZjtw.js",
-      "ext": ".js",
-      "bytes": 6343,
-      "gzipBytes": 2119
-    },
-    {
-      "file": "dist/styles/drawer.css",
+      "file": "dist/styles/icon-chip.css",
       "ext": ".css",
-      "bytes": 6122,
-      "gzipBytes": 2490
+      "bytes": 6288,
+      "gzipBytes": 2457
     },
     {
       "file": "dist/styles/dock.css",
       "ext": ".css",
-      "bytes": 5879,
-      "gzipBytes": 2507
+      "bytes": 6115,
+      "gzipBytes": 2615
+    },
+    {
+      "file": "dist/styles/dock-controls/triggers.css",
+      "ext": ".css",
+      "bytes": 6090,
+      "gzipBytes": 2161
+    },
+    {
+      "file": "dist/components/custom/hover-popover/HoverPopover.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 6070,
+      "gzipBytes": 2494
+    },
+    {
+      "file": "dist/styles/feedback-tone.css",
+      "ext": ".css",
+      "bytes": 5979,
+      "gzipBytes": 2465
+    },
+    {
+      "file": "dist/components/custom/configurator/Configurator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 5968,
+      "gzipBytes": 2138
+    },
+    {
+      "file": "dist/components/custom/goo-blob/types.d.ts",
+      "ext": ".ts",
+      "bytes": 5898,
+      "gzipBytes": 2331
+    },
+    {
+      "file": "dist/glass-panel.js",
+      "ext": ".js",
+      "bytes": 5837,
+      "gzipBytes": 2345
     },
     {
       "file": "dist/styles/theme/radius.css",
@@ -1929,22 +2161,16 @@
       "gzipBytes": 2404
     },
     {
+      "file": "dist/composables/sortable/types.d.ts",
+      "ext": ".ts",
+      "bytes": 5763,
+      "gzipBytes": 2277
+    },
+    {
       "file": "dist/styles/dock-controls/touch-floor.css",
       "ext": ".css",
       "bytes": 5670,
       "gzipBytes": 2337
-    },
-    {
-      "file": "dist/glass-panel.js",
-      "ext": ".js",
-      "bytes": 5622,
-      "gzipBytes": 2256
-    },
-    {
-      "file": "dist/styles/dock-controls/triggers.css",
-      "ext": ".css",
-      "bytes": 5556,
-      "gzipBytes": 1935
     },
     {
       "file": "dist/styles/cards.css",
@@ -1953,7 +2179,37 @@
       "gzipBytes": 2242
     },
     {
-      "file": "dist/useViewportReady-B40FK4Pa.js",
+      "file": "dist/components/custom/aurora/composables/runtime.d.ts",
+      "ext": ".ts",
+      "bytes": 5370,
+      "gzipBytes": 2413
+    },
+    {
+      "file": "dist/components/ui/card/Card.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 5242,
+      "gzipBytes": 2144
+    },
+    {
+      "file": "dist/components/custom/dock/DockRail.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 5185,
+      "gzipBytes": 2345
+    },
+    {
+      "file": "dist/components/custom/aurora/Aurora.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 5153,
+      "gzipBytes": 2303
+    },
+    {
+      "file": "dist/components/custom/dock/composables/dockMorphContext.d.ts",
+      "ext": ".ts",
+      "bytes": 5091,
+      "gzipBytes": 2111
+    },
+    {
+      "file": "dist/useViewportReady-BaZndPNv.js",
       "ext": ".js",
       "bytes": 4983,
       "gzipBytes": 1773
@@ -1965,22 +2221,40 @@
       "gzipBytes": 1889
     },
     {
+      "file": "dist/components/custom/typewriter/types.d.ts",
+      "ext": ".ts",
+      "bytes": 4904,
+      "gzipBytes": 1553
+    },
+    {
       "file": "dist/styles/dock-controls/dark-mode-toggle.css",
       "ext": ".css",
       "bytes": 4869,
       "gzipBytes": 1564
     },
     {
-      "file": "dist/slider-B-JP2JlI.js",
-      "ext": ".js",
-      "bytes": 4834,
-      "gzipBytes": 1903
+      "file": "dist/components/custom/timeline/geometry.d.ts",
+      "ext": ".ts",
+      "bytes": 4867,
+      "gzipBytes": 2005
+    },
+    {
+      "file": "dist/components/custom/instrument-chassis/InstrumentChassis.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4866,
+      "gzipBytes": 2141
+    },
+    {
+      "file": "dist/components/custom/metric-cell/MetricCell.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4847,
+      "gzipBytes": 2040
     },
     {
       "file": "dist/motion.js",
       "ext": ".js",
       "bytes": 4815,
-      "gzipBytes": 1957
+      "gzipBytes": 1954
     },
     {
       "file": "dist/styles/glass/progress-rail.css",
@@ -1989,16 +2263,58 @@
       "gzipBytes": 2117
     },
     {
+      "file": "dist/components/custom/timeline/ContinuousTimeline.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4796,
+      "gzipBytes": 1970
+    },
+    {
+      "file": "dist/button-CG8xQSdX.js",
+      "ext": ".js",
+      "bytes": 4736,
+      "gzipBytes": 1463
+    },
+    {
+      "file": "dist/components/custom/labeled-field/LabeledField.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4725,
+      "gzipBytes": 2175
+    },
+    {
       "file": "dist/styles/dock-controls.css",
       "ext": ".css",
       "bytes": 4681,
       "gzipBytes": 2071
     },
     {
+      "file": "dist/slider-C2iCNOGm.js",
+      "ext": ".js",
+      "bytes": 4654,
+      "gzipBytes": 1865
+    },
+    {
       "file": "dist/motion-core.js",
       "ext": ".js",
-      "bytes": 4526,
-      "gzipBytes": 1890
+      "bytes": 4628,
+      "gzipBytes": 1934
+    },
+    {
+      "file": "dist/components/custom/fourier-field/math.d.ts",
+      "ext": ".ts",
+      "bytes": 4623,
+      "gzipBytes": 2013
+    },
+    {
+      "file": "dist/api/index.d.ts",
+      "ext": ".ts",
+      "bytes": 4620,
+      "gzipBytes": 1294
+    },
+    {
+      "file": "dist/components/ui/_shared/ModalOverlay.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4551,
+      "gzipBytes": 1790
     },
     {
       "file": "dist/fonts/README.md",
@@ -2007,10 +2323,64 @@
       "gzipBytes": 1845
     },
     {
-      "file": "dist/DialogFooter-Blu4t7tJ.js",
+      "file": "dist/components/custom/dock/composables/useLayerTransition.d.ts",
+      "ext": ".ts",
+      "bytes": 4515,
+      "gzipBytes": 2235
+    },
+    {
+      "file": "dist/components/custom/dock/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 4510,
+      "gzipBytes": 1949
+    },
+    {
+      "file": "dist/composables/motion/useLiquidFlex.d.ts",
+      "ext": ".ts",
+      "bytes": 4499,
+      "gzipBytes": 1963
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/useAurora.d.ts",
+      "ext": ".ts",
+      "bytes": 4489,
+      "gzipBytes": 2153
+    },
+    {
+      "file": "dist/components/custom/metric-stack/MetricStack.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4476,
+      "gzipBytes": 1961
+    },
+    {
+      "file": "dist/CardAction-DmdvVdED.js",
+      "ext": ".js",
+      "bytes": 4456,
+      "gzipBytes": 1468
+    },
+    {
+      "file": "dist/DialogFooter-D6c3c5ok.js",
       "ext": ".js",
       "bytes": 4437,
-      "gzipBytes": 1496
+      "gzipBytes": 1494
+    },
+    {
+      "file": "dist/watercolor-dot.js",
+      "ext": ".js",
+      "bytes": 4434,
+      "gzipBytes": 1948
+    },
+    {
+      "file": "dist/composables/motion/useViewTransition.d.ts",
+      "ext": ".ts",
+      "bytes": 4422,
+      "gzipBytes": 1852
+    },
+    {
+      "file": "dist/components/custom/metric-stack/MetricRow.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4414,
+      "gzipBytes": 1865
     },
     {
       "file": "dist/fonts/plus-jakarta-sans/OFL.txt",
@@ -2019,34 +2389,58 @@
       "gzipBytes": 1969
     },
     {
+      "file": "dist/components/custom/aurora/composables/color.d.ts",
+      "ext": ".ts",
+      "bytes": 4397,
+      "gzipBytes": 2028
+    },
+    {
       "file": "dist/fonts/fira-code/OFL.txt",
       "ext": ".txt",
       "bytes": 4389,
       "gzipBytes": 1965
     },
     {
-      "file": "dist/CardAction-Cj2eycQ2.js",
-      "ext": ".js",
-      "bytes": 4376,
-      "gzipBytes": 1418
+      "file": "dist/components/ui/dialog/DialogContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4355,
+      "gzipBytes": 1729
     },
     {
-      "file": "dist/ToggleGroupItem-D_AHlRw9.js",
+      "file": "dist/composables/dom/useViewportReady.d.ts",
+      "ext": ".ts",
+      "bytes": 4336,
+      "gzipBytes": 1999
+    },
+    {
+      "file": "dist/components/custom/timeline/GlassTimeline.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 4326,
+      "gzipBytes": 1679
+    },
+    {
+      "file": "dist/ToggleGroupItem-DeOiPzzk.js",
       "ext": ".js",
       "bytes": 4281,
-      "gzipBytes": 1511
+      "gzipBytes": 1510
     },
     {
-      "file": "dist/watercolor-dot.js",
-      "ext": ".js",
-      "bytes": 4276,
-      "gzipBytes": 1896
+      "file": "dist/components/custom/handmark/composables/useHandMark.d.ts",
+      "ext": ".ts",
+      "bytes": 4267,
+      "gzipBytes": 1847
     },
     {
-      "file": "dist/button-ChXMfsud.js",
-      "ext": ".js",
-      "bytes": 4195,
-      "gzipBytes": 1412
+      "file": "dist/components/custom/aurora/composables/uniformBridge.d.ts",
+      "ext": ".ts",
+      "bytes": 4140,
+      "gzipBytes": 1794
+    },
+    {
+      "file": "dist/styles/configurator.css",
+      "ext": ".css",
+      "bytes": 4071,
+      "gzipBytes": 1740
     },
     {
       "file": "dist/styles/glass/squircle.css",
@@ -2055,40 +2449,106 @@
       "gzipBytes": 1704
     },
     {
-      "file": "dist/NumberFieldContent-CqaN-SvN.js",
+      "file": "dist/components/custom/goo-blob/shaders/metaball-uniforms.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 3945,
+      "gzipBytes": 1759
+    },
+    {
+      "file": "dist/NumberFieldContent-C8DYV2Io.js",
       "ext": ".js",
       "bytes": 3922,
-      "gzipBytes": 1272
+      "gzipBytes": 1276
     },
     {
       "file": "dist/motion-curves.js",
       "ext": ".js",
       "bytes": 3880,
-      "gzipBytes": 1301
+      "gzipBytes": 1300
     },
     {
-      "file": "dist/useKeyboardShortcuts-Be3w_Rwk.js",
+      "file": "dist/components/custom/aurora/constants/shaders/flow.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 3856,
+      "gzipBytes": 1367
+    },
+    {
+      "file": "dist/components/custom/dock/DockSection.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3850,
+      "gzipBytes": 1737
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/cursorModel.d.ts",
+      "ext": ".ts",
+      "bytes": 3816,
+      "gzipBytes": 1690
+    },
+    {
+      "file": "dist/styles/view-transition.css",
+      "ext": ".css",
+      "bytes": 3756,
+      "gzipBytes": 1747
+    },
+    {
+      "file": "dist/components/custom/configurator/ConfiguratorRow.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3678,
+      "gzipBytes": 1746
+    },
+    {
+      "file": "dist/components/custom/goo-blob/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 3678,
+      "gzipBytes": 1634
+    },
+    {
+      "file": "dist/components/custom/constellation/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 3583,
+      "gzipBytes": 1700
+    },
+    {
+      "file": "dist/components/ui/section/Section.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3535,
+      "gzipBytes": 1498
+    },
+    {
+      "file": "dist/useKeyboardShortcuts-BzlPt_iX.js",
       "ext": ".js",
       "bytes": 3516,
       "gzipBytes": 1476
     },
     {
-      "file": "dist/styles/view-transition.css",
-      "ext": ".css",
-      "bytes": 3502,
-      "gzipBytes": 1645
-    },
-    {
-      "file": "dist/MetricBadge-C9QMz1KT.js",
+      "file": "dist/MetricBadge-C_bcuPVo.js",
       "ext": ".js",
-      "bytes": 3490,
-      "gzipBytes": 1171
+      "bytes": 3488,
+      "gzipBytes": 1174
     },
     {
-      "file": "dist/cn-DJXf4yaB.js",
+      "file": "dist/PopoverContent-ChCbJzwe.js",
+      "ext": ".js",
+      "bytes": 3483,
+      "gzipBytes": 1288
+    },
+    {
+      "file": "dist/cn-BJ4Mh0Ov.js",
       "ext": ".js",
       "bytes": 3465,
       "gzipBytes": 1444
+    },
+    {
+      "file": "dist/components/custom/fourier-field/FourierField.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3449,
+      "gzipBytes": 1739
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockHold.d.ts",
+      "ext": ".ts",
+      "bytes": 3434,
+      "gzipBytes": 1804
     },
     {
       "file": "dist/styles/scroll-driven.css",
@@ -2103,16 +2563,76 @@
       "gzipBytes": 1319
     },
     {
-      "file": "dist/metric-stack.js",
+      "file": "dist/expandable-container.js",
       "ext": ".js",
-      "bytes": 3334,
-      "gzipBytes": 1358
+      "bytes": 3392,
+      "gzipBytes": 1471
     },
     {
-      "file": "dist/DialogContent-Dl9WkAoS.js",
+      "file": "dist/components/custom/configurator/ConfiguratorLayer.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3391,
+      "gzipBytes": 1639
+    },
+    {
+      "file": "dist/components/custom/tabs/composables/useTabIndicator.d.ts",
+      "ext": ".ts",
+      "bytes": 3389,
+      "gzipBytes": 1575
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/shaders/composition.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 3378,
+      "gzipBytes": 1331
+    },
+    {
+      "file": "dist/components/custom/tabs/SegmentedTabs.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3378,
+      "gzipBytes": 1264
+    },
+    {
+      "file": "dist/components/custom/handmark/geometry.d.ts",
+      "ext": ".ts",
+      "bytes": 3375,
+      "gzipBytes": 1649
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockState.d.ts",
+      "ext": ".ts",
+      "bytes": 3368,
+      "gzipBytes": 1376
+    },
+    {
+      "file": "dist/DialogContent-BcNcx1MY.js",
       "ext": ".js",
-      "bytes": 3313,
-      "gzipBytes": 1487
+      "bytes": 3361,
+      "gzipBytes": 1501
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/useMetaballRenderer.d.ts",
+      "ext": ".ts",
+      "bytes": 3331,
+      "gzipBytes": 1556
+    },
+    {
+      "file": "dist/metric-stack.js",
+      "ext": ".js",
+      "bytes": 3330,
+      "gzipBytes": 1362
+    },
+    {
+      "file": "dist/styles/glass.css",
+      "ext": ".css",
+      "bytes": 3327,
+      "gzipBytes": 1556
+    },
+    {
+      "file": "dist/components/ui/toast/Toast.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3315,
+      "gzipBytes": 670
     },
     {
       "file": "dist/styles/glass-specular-track.css",
@@ -2121,58 +2641,142 @@
       "gzipBytes": 1243
     },
     {
-      "file": "dist/useCanvas2D-ClrQuZtp.js",
+      "file": "dist/components/ui/sheet/SheetContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3241,
+      "gzipBytes": 1260
+    },
+    {
+      "file": "dist/useCanvas2D-7IMfKIjJ.js",
       "ext": ".js",
       "bytes": 3227,
       "gzipBytes": 1350
     },
     {
-      "file": "dist/underline.js",
+      "file": "dist/components/custom/sortable-list/SortableList.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3225,
+      "gzipBytes": 1428
+    },
+    {
+      "file": "dist/composables/dom/useIdleReady.d.ts",
+      "ext": ".ts",
+      "bytes": 3223,
+      "gzipBytes": 1499
+    },
+    {
+      "file": "dist/composables/glass/useGlassBackdropLuminance.d.ts",
+      "ext": ".ts",
+      "bytes": 3212,
+      "gzipBytes": 1427
+    },
+    {
+      "file": "dist/components/custom/icon-chip/types.d.ts",
+      "ext": ".ts",
+      "bytes": 3208,
+      "gzipBytes": 1464
+    },
+    {
+      "file": "dist/components/custom/handmark/freehand.d.ts",
+      "ext": ".ts",
+      "bytes": 3196,
+      "gzipBytes": 1288
+    },
+    {
+      "file": "dist/components/ui/_shared/menuItemVariants.d.ts",
+      "ext": ".ts",
+      "bytes": 3186,
+      "gzipBytes": 1632
+    },
+    {
+      "file": "dist/components/ui/data-table/DataTable.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3170,
+      "gzipBytes": 1164
+    },
+    {
+      "file": "dist/components/custom/goo-blob/shaders/sdf-body.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 3159,
+      "gzipBytes": 1245
+    },
+    {
+      "file": "dist/composables/dark/useGlobalDark.d.ts",
+      "ext": ".ts",
+      "bytes": 3157,
+      "gzipBytes": 1464
+    },
+    {
+      "file": "dist/composables/glass/canvas2d/useCanvas2D.d.ts",
+      "ext": ".ts",
+      "bytes": 3148,
+      "gzipBytes": 1366
+    },
+    {
+      "file": "dist/components/custom/dock/DockSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3147,
+      "gzipBytes": 1476
+    },
+    {
+      "file": "dist/HoverPopover-CXCfOFD8.js",
       "ext": ".js",
-      "bytes": 3217,
-      "gzipBytes": 1440
+      "bytes": 3099,
+      "gzipBytes": 1344
     },
     {
-      "file": "dist/PopoverContent-BYwt2-4x.js",
-      "ext": ".js",
-      "bytes": 3214,
-      "gzipBytes": 1188
-    },
-    {
-      "file": "dist/TabsList-Dttss653.js",
-      "ext": ".js",
-      "bytes": 3197,
-      "gzipBytes": 1202
-    },
-    {
-      "file": "dist/expandable-container.js",
-      "ext": ".js",
-      "bytes": 3109,
-      "gzipBytes": 1345
-    },
-    {
-      "file": "dist/HoverPopover-CISOJQuZ.js",
-      "ext": ".js",
-      "bytes": 3101,
-      "gzipBytes": 1342
-    },
-    {
-      "file": "dist/styles/glass.css",
-      "ext": ".css",
-      "bytes": 3089,
-      "gzipBytes": 1462
-    },
-    {
-      "file": "dist/useSpringMount-CI2jOstM.js",
+      "file": "dist/useSpringMount-By-eGxMa.js",
       "ext": ".js",
       "bytes": 3068,
-      "gzipBytes": 1243
+      "gzipBytes": 1242
     },
     {
-      "file": "dist/useRAFLoop-Bxv0o6L5.js",
+      "file": "dist/useRAFLoop-D2TPfSvw.js",
       "ext": ".js",
       "bytes": 3046,
-      "gzipBytes": 1186
+      "gzipBytes": 1190
+    },
+    {
+      "file": "dist/components/custom/goo-blob/GooBlob.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 3040,
+      "gzipBytes": 1465
+    },
+    {
+      "file": "dist/pager-dots.js",
+      "ext": ".js",
+      "bytes": 3008,
+      "gzipBytes": 1401
+    },
+    {
+      "file": "dist/components/custom/typewriter/TypewriterText.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2998,
+      "gzipBytes": 962
+    },
+    {
+      "file": "dist/controls.js",
+      "ext": ".js",
+      "bytes": 2948,
+      "gzipBytes": 1422
+    },
+    {
+      "file": "dist/composables/glass/webgl/useWebGLCanvas.d.ts",
+      "ext": ".ts",
+      "bytes": 2932,
+      "gzipBytes": 1279
+    },
+    {
+      "file": "dist/components/ui/slider/index.d.ts",
+      "ext": ".ts",
+      "bytes": 2930,
+      "gzipBytes": 1456
+    },
+    {
+      "file": "dist/composables/context/createContext.d.ts",
+      "ext": ".ts",
+      "bytes": 2924,
+      "gzipBytes": 1189
     },
     {
       "file": "dist/styles/paper.css",
@@ -2183,47 +2787,209 @@
     {
       "file": "dist/confirm-dialog.js",
       "ext": ".js",
-      "bytes": 2891,
-      "gzipBytes": 1326
+      "bytes": 2885,
+      "gzipBytes": 1336
     },
     {
-      "file": "dist/controls.js",
-      "ext": ".js",
-      "bytes": 2878,
-      "gzipBytes": 1408
+      "file": "dist/components/custom/watercolor-dot/WatercolorDot.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2867,
+      "gzipBytes": 1331
     },
     {
-      "file": "dist/TooltipProvider-B3MkB_8P.js",
+      "file": "dist/components/custom/animated-digit/AnimatedDigit.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2861,
+      "gzipBytes": 1312
+    },
+    {
+      "file": "dist/styles/typography.css",
+      "ext": ".css",
+      "bytes": 2845,
+      "gzipBytes": 1392
+    },
+    {
+      "file": "dist/TooltipProvider-DjAI5_lO.js",
       "ext": ".js",
       "bytes": 2842,
-      "gzipBytes": 1073
+      "gzipBytes": 1074
+    },
+    {
+      "file": "dist/components/custom/handmark/types.d.ts",
+      "ext": ".ts",
+      "bytes": 2829,
+      "gzipBytes": 1272
+    },
+    {
+      "file": "dist/composables/dom/useClipboard.d.ts",
+      "ext": ".ts",
+      "bytes": 2828,
+      "gzipBytes": 1304
+    },
+    {
+      "file": "dist/toggle-chip.js",
+      "ext": ".js",
+      "bytes": 2828,
+      "gzipBytes": 1107
+    },
+    {
+      "file": "dist/styles/dock/section.css",
+      "ext": ".css",
+      "bytes": 2813,
+      "gzipBytes": 1288
+    },
+    {
+      "file": "dist/components/custom/fourier-field/presets.d.ts",
+      "ext": ".ts",
+      "bytes": 2779,
+      "gzipBytes": 1273
     },
     {
       "file": "dist/sortable-list.js",
       "ext": ".js",
-      "bytes": 2776,
-      "gzipBytes": 1158
+      "bytes": 2772,
+      "gzipBytes": 1160
     },
     {
-      "file": "dist/color-CUYeFbgd.js",
+      "file": "dist/styles/select.css",
+      "ext": ".css",
+      "bytes": 2755,
+      "gzipBytes": 1348
+    },
+    {
+      "file": "dist/components/ui/select/SelectTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2753,
+      "gzipBytes": 1303
+    },
+    {
+      "file": "dist/components/custom/constellation/constellationField.d.ts",
+      "ext": ".ts",
+      "bytes": 2731,
+      "gzipBytes": 1380
+    },
+    {
+      "file": "dist/components/ui/progress/ProgressSectioned.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2717,
+      "gzipBytes": 1276
+    },
+    {
+      "file": "dist/components/ui/card/CardHeader.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2706,
+      "gzipBytes": 1287
+    },
+    {
+      "file": "dist/components/ui/textarea/Textarea.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2699,
+      "gzipBytes": 824
+    },
+    {
+      "file": "dist/composables/motion/curves.d.ts",
+      "ext": ".ts",
+      "bytes": 2684,
+      "gzipBytes": 1141
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/budget.d.ts",
+      "ext": ".ts",
+      "bytes": 2663,
+      "gzipBytes": 1345
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/useBlobPointer.d.ts",
+      "ext": ".ts",
+      "bytes": 2645,
+      "gzipBytes": 1260
+    },
+    {
+      "file": "dist/composables/motion/useNumericTransition.d.ts",
+      "ext": ".ts",
+      "bytes": 2645,
+      "gzipBytes": 1272
+    },
+    {
+      "file": "dist/color-IrfxJ5lj.js",
       "ext": ".js",
       "bytes": 2643,
       "gzipBytes": 1227
     },
     {
-      "file": "dist/Notification-DdwNxIrI.js",
-      "ext": ".js",
-      "bytes": 2533,
-      "gzipBytes": 1189
+      "file": "dist/components/ui/progress/Progress.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2625,
+      "gzipBytes": 1150
     },
     {
-      "file": "dist/toggle-chip.js",
-      "ext": ".js",
-      "bytes": 2458,
-      "gzipBytes": 1015
+      "file": "dist/components/ui/progress/useProgressGeometry.d.ts",
+      "ext": ".ts",
+      "bytes": 2609,
+      "gzipBytes": 1221
     },
     {
-      "file": "dist/ContextMenuContent-CT3AS1WX.js",
+      "file": "dist/composables/motion/useSpring.d.ts",
+      "ext": ".ts",
+      "bytes": 2576,
+      "gzipBytes": 1132
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockOrientationMorph.d.ts",
+      "ext": ".ts",
+      "bytes": 2536,
+      "gzipBytes": 1036
+    },
+    {
+      "file": "dist/components/ui/drawer/Drawer.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2535,
+      "gzipBytes": 1085
+    },
+    {
+      "file": "dist/Notification-CyRfQ_SE.js",
+      "ext": ".js",
+      "bytes": 2516,
+      "gzipBytes": 1195
+    },
+    {
+      "file": "dist/components/custom/constellation/constellationDraw.d.ts",
+      "ext": ".ts",
+      "bytes": 2509,
+      "gzipBytes": 1089
+    },
+    {
+      "file": "dist/components/custom/timeline/types.d.ts",
+      "ext": ".ts",
+      "bytes": 2495,
+      "gzipBytes": 1208
+    },
+    {
+      "file": "dist/composables/glass/useSpecularTracking.d.ts",
+      "ext": ".ts",
+      "bytes": 2491,
+      "gzipBytes": 1308
+    },
+    {
+      "file": "dist/components/ui/drawer/DrawerContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2478,
+      "gzipBytes": 948
+    },
+    {
+      "file": "dist/index.d.ts",
+      "ext": ".ts",
+      "bytes": 2461,
+      "gzipBytes": 529
+    },
+    {
+      "file": "dist/components/custom/handmark/texture.d.ts",
+      "ext": ".ts",
+      "bytes": 2442,
+      "gzipBytes": 1232
+    },
+    {
+      "file": "dist/ContextMenuContent-NZrlcNQx.js",
       "ext": ".js",
       "bytes": 2396,
       "gzipBytes": 1022
@@ -2235,7 +3001,49 @@
       "gzipBytes": 1076
     },
     {
-      "file": "dist/HoverCardContent-Csywg3YF.js",
+      "file": "dist/components/ui/metric-pill/MetricPill.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2373,
+      "gzipBytes": 1075
+    },
+    {
+      "file": "dist/components/ui/_shared/useSurfaceAxis.d.ts",
+      "ext": ".ts",
+      "bytes": 2367,
+      "gzipBytes": 1086
+    },
+    {
+      "file": "dist/composables/motion/useSpringMount.d.ts",
+      "ext": ".ts",
+      "bytes": 2366,
+      "gzipBytes": 1085
+    },
+    {
+      "file": "dist/components/custom/pulse/Pulse.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2364,
+      "gzipBytes": 1120
+    },
+    {
+      "file": "dist/components/custom/dock/composables/dockContext.d.ts",
+      "ext": ".ts",
+      "bytes": 2339,
+      "gzipBytes": 1129
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/uploadBlobUniforms.d.ts",
+      "ext": ".ts",
+      "bytes": 2339,
+      "gzipBytes": 995
+    },
+    {
+      "file": "dist/tokens.d.ts",
+      "ext": ".ts",
+      "bytes": 2339,
+      "gzipBytes": 1101
+    },
+    {
+      "file": "dist/HoverCardContent-BEcIUTVu.js",
       "ext": ".js",
       "bytes": 2326,
       "gzipBytes": 968
@@ -2243,8 +3051,50 @@
     {
       "file": "dist/header-ribbon.js",
       "ext": ".js",
-      "bytes": 2326,
-      "gzipBytes": 1014
+      "bytes": 2324,
+      "gzipBytes": 1019
+    },
+    {
+      "file": "dist/components/custom/expandable-container/ExpandableContainer.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2316,
+      "gzipBytes": 737
+    },
+    {
+      "file": "dist/components/custom/handmark/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 2312,
+      "gzipBytes": 1057
+    },
+    {
+      "file": "dist/composables/sortable/transitionTiming.d.ts",
+      "ext": ".ts",
+      "bytes": 2303,
+      "gzipBytes": 1036
+    },
+    {
+      "file": "dist/composables/sortable/ghostRenderer.d.ts",
+      "ext": ".ts",
+      "bytes": 2275,
+      "gzipBytes": 1114
+    },
+    {
+      "file": "dist/FadingScroll-BIuvCn1y.js",
+      "ext": ".js",
+      "bytes": 2270,
+      "gzipBytes": 1044
+    },
+    {
+      "file": "dist/composables/motion/useRAFLoop.d.ts",
+      "ext": ".ts",
+      "bytes": 2267,
+      "gzipBytes": 950
+    },
+    {
+      "file": "dist/components/custom/goo-blob/shaders/watercolor-edges.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 2262,
+      "gzipBytes": 1015
     },
     {
       "file": "dist/infinite-scroll.js",
@@ -2253,43 +3103,157 @@
       "gzipBytes": 1069
     },
     {
-      "file": "dist/styles/configurator.css",
-      "ext": ".css",
-      "bytes": 2225,
-      "gzipBytes": 1052
+      "file": "dist/components/custom/metric-badge/MetricBadge.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2247,
+      "gzipBytes": 1038
+    },
+    {
+      "file": "dist/components/custom/glass-panel/GlassPanel.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2202,
+      "gzipBytes": 1018
+    },
+    {
+      "file": "dist/composables/motion/useAnimatedNumber.d.ts",
+      "ext": ".ts",
+      "bytes": 2197,
+      "gzipBytes": 987
+    },
+    {
+      "file": "dist/components/custom/timeline/ContinuousMarkers.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2196,
+      "gzipBytes": 1001
+    },
+    {
+      "file": "dist/composables/motion/useStagger.d.ts",
+      "ext": ".ts",
+      "bytes": 2191,
+      "gzipBytes": 1038
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/useBlobMood.d.ts",
+      "ext": ".ts",
+      "bytes": 2187,
+      "gzipBytes": 1029
     },
     {
       "file": "dist/metric-cell.js",
       "ext": ".js",
-      "bytes": 2192,
-      "gzipBytes": 1030
+      "bytes": 2175,
+      "gzipBytes": 1015
+    },
+    {
+      "file": "dist/components/ui/data-table/types.d.ts",
+      "ext": ".ts",
+      "bytes": 2168,
+      "gzipBytes": 938
     },
     {
       "file": "dist/status-dot.js",
       "ext": ".js",
       "bytes": 2155,
-      "gzipBytes": 1034
+      "gzipBytes": 1035
     },
     {
-      "file": "dist/badge-UILT_3pZ.js",
+      "file": "dist/components/custom/dock/DockBackgroundToggle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2137,
+      "gzipBytes": 1043
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/glSetup.d.ts",
+      "ext": ".ts",
+      "bytes": 2099,
+      "gzipBytes": 986
+    },
+    {
+      "file": "dist/composables/glass/webgl/createCanvasLifecycle.d.ts",
+      "ext": ".ts",
+      "bytes": 2092,
+      "gzipBytes": 891
+    },
+    {
+      "file": "dist/IconChip-C52OeM_b.js",
+      "ext": ".js",
+      "bytes": 2073,
+      "gzipBytes": 945
+    },
+    {
+      "file": "dist/composables/sortable/useSortable.d.ts",
+      "ext": ".ts",
+      "bytes": 2067,
+      "gzipBytes": 1047
+    },
+    {
+      "file": "dist/composables/dom/useResizeObserver.d.ts",
+      "ext": ".ts",
+      "bytes": 2059,
+      "gzipBytes": 1094
+    },
+    {
+      "file": "dist/composables/sortable/dragController.d.ts",
+      "ext": ".ts",
+      "bytes": 2056,
+      "gzipBytes": 942
+    },
+    {
+      "file": "dist/components/ui/popover/PopoverContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 2016,
+      "gzipBytes": 641
+    },
+    {
+      "file": "dist/composables/motion/springPresets.d.ts",
+      "ext": ".ts",
+      "bytes": 2008,
+      "gzipBytes": 1045
+    },
+    {
+      "file": "dist/composables/motion/usePrioritizedTask.d.ts",
+      "ext": ".ts",
+      "bytes": 2007,
+      "gzipBytes": 945
+    },
+    {
+      "file": "dist/badge-BWTSr8g-.js",
       "ext": ".js",
       "bytes": 2000,
       "gzipBytes": 937
     },
     {
-      "file": "dist/useTouchGate-Dg7MQI1G.js",
-      "ext": ".js",
-      "bytes": 1964,
-      "gzipBytes": 912
+      "file": "dist/components/custom/configurator/useConfiguratorState.d.ts",
+      "ext": ".ts",
+      "bytes": 1992,
+      "gzipBytes": 831
     },
     {
-      "file": "dist/InstrumentChassis-UUJX0-mW.js",
+      "file": "dist/useTouchGate-B4mzQcHJ.js",
+      "ext": ".js",
+      "bytes": 1964,
+      "gzipBytes": 911
+    },
+    {
+      "file": "dist/components/custom/handmark/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1952,
+      "gzipBytes": 925
+    },
+    {
+      "file": "dist/InstrumentChassis-43Z1iACh.js",
       "ext": ".js",
       "bytes": 1949,
       "gzipBytes": 825
     },
     {
-      "file": "dist/CollapsibleContent-CP9qF1v4.js",
+      "file": "dist/components/ui/carousel/GlassCarouselPager.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1941,
+      "gzipBytes": 877
+    },
+    {
+      "file": "dist/CollapsibleContent-EPdzxRoC.js",
       "ext": ".js",
       "bytes": 1916,
       "gzipBytes": 813
@@ -2307,22 +3271,136 @@
       "gzipBytes": 951
     },
     {
-      "file": "dist/pulse.js",
-      "ext": ".js",
-      "bytes": 1856,
-      "gzipBytes": 928
+      "file": "dist/composables/dom/useBreakpoint.d.ts",
+      "ext": ".ts",
+      "bytes": 1873,
+      "gzipBytes": 1002
     },
     {
-      "file": "dist/createLucideIcon-DydS2qgk.js",
+      "file": "dist/composables/dom/useTokenColor.d.ts",
+      "ext": ".ts",
+      "bytes": 1867,
+      "gzipBytes": 894
+    },
+    {
+      "file": "dist/pulse.js",
+      "ext": ".js",
+      "bytes": 1854,
+      "gzipBytes": 933
+    },
+    {
+      "file": "dist/components/custom/dock/DockIconButton.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1852,
+      "gzipBytes": 850
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuSubContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1850,
+      "gzipBytes": 553
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuSubContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1848,
+      "gzipBytes": 551
+    },
+    {
+      "file": "dist/composables/sidebar/useSidebarState.d.ts",
+      "ext": ".ts",
+      "bytes": 1833,
+      "gzipBytes": 777
+    },
+    {
+      "file": "dist/color-swatch.js",
+      "ext": ".js",
+      "bytes": 1814,
+      "gzipBytes": 1004
+    },
+    {
+      "file": "dist/math-B53MSgWQ.js",
+      "ext": ".js",
+      "bytes": 1790,
+      "gzipBytes": 735
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogScrollContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1781,
+      "gzipBytes": 543
+    },
+    {
+      "file": "dist/createLucideIcon-W04KX8dh.js",
       "ext": ".js",
       "bytes": 1775,
       "gzipBytes": 901
     },
     {
-      "file": "dist/Switch-CsIuYP_e.js",
+      "file": "dist/components/custom/dock/composables/dockLayerContext.d.ts",
+      "ext": ".ts",
+      "bytes": 1774,
+      "gzipBytes": 860
+    },
+    {
+      "file": "dist/composables/sortable/dropResolver.d.ts",
+      "ext": ".ts",
+      "bytes": 1760,
+      "gzipBytes": 830
+    },
+    {
+      "file": "dist/components/ui/carousel/Carousel.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1754,
+      "gzipBytes": 551
+    },
+    {
+      "file": "dist/components/custom/search/composables/fuzzySearchIndex.d.ts",
+      "ext": ".ts",
+      "bytes": 1742,
+      "gzipBytes": 815
+    },
+    {
+      "file": "dist/Switch-CiCDPVee.js",
       "ext": ".js",
-      "bytes": 1726,
-      "gzipBytes": 912
+      "bytes": 1733,
+      "gzipBytes": 909
+    },
+    {
+      "file": "dist/components/custom/fading-scroll/composables/useFadingScroll.d.ts",
+      "ext": ".ts",
+      "bytes": 1730,
+      "gzipBytes": 849
+    },
+    {
+      "file": "dist/components/custom/toggle-chip/ToggleChip.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1724,
+      "gzipBytes": 798
+    },
+    {
+      "file": "dist/components/custom/dock/DockTabButton.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1722,
+      "gzipBytes": 880
+    },
+    {
+      "file": "dist/composables/sidebar/useTreeIndex.d.ts",
+      "ext": ".ts",
+      "bytes": 1721,
+      "gzipBytes": 671
+    },
+    {
+      "file": "dist/components/custom/dock/DockLayerGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1712,
+      "gzipBytes": 751
+    },
+    {
+      "file": "dist/components/custom/timeline/SegmentedTimeline.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1693,
+      "gzipBytes": 675
     },
     {
       "file": "dist/styles/tokens.css",
@@ -2331,40 +3409,232 @@
       "gzipBytes": 870
     },
     {
-      "file": "dist/useTextHighlight-DmRYkOBx.js",
+      "file": "dist/useTextHighlight-C4uoR8Kd.js",
       "ext": ".js",
       "bytes": 1684,
       "gzipBytes": 820
     },
     {
-      "file": "dist/useIntersectionPause-Cc-H9ees.js",
+      "file": "dist/components/custom/constellation/composables/createConstellationField.d.ts",
+      "ext": ".ts",
+      "bytes": 1673,
+      "gzipBytes": 726
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1673,
+      "gzipBytes": 542
+    },
+    {
+      "file": "dist/components/ui/skeleton/Skeleton.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1659,
+      "gzipBytes": 828
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1646,
+      "gzipBytes": 526
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/renderMode.d.ts",
+      "ext": ".ts",
+      "bytes": 1644,
+      "gzipBytes": 906
+    },
+    {
+      "file": "dist/composables/motion/useTextHighlight.d.ts",
+      "ext": ".ts",
+      "bytes": 1644,
+      "gzipBytes": 842
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxList.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1636,
+      "gzipBytes": 561
+    },
+    {
+      "file": "dist/useIntersectionPause-CBi23KT8.js",
       "ext": ".js",
       "bytes": 1636,
       "gzipBytes": 782
     },
     {
-      "file": "dist/useAnimatedNumber-C5I3wWd8.js",
-      "ext": ".js",
-      "bytes": 1603,
-      "gzipBytes": 739
+      "file": "dist/components/custom/aurora/composables/useCursorInteraction.d.ts",
+      "ext": ".ts",
+      "bytes": 1626,
+      "gzipBytes": 865
     },
     {
-      "file": "dist/ScrollingText-DfFrwSph.js",
+      "file": "dist/components/ui/data-table/composables/useDataTableRowIdentity.d.ts",
+      "ext": ".ts",
+      "bytes": 1613,
+      "gzipBytes": 745
+    },
+    {
+      "file": "dist/composables/dom/useUserInvalidAria.d.ts",
+      "ext": ".ts",
+      "bytes": 1612,
+      "gzipBytes": 822
+    },
+    {
+      "file": "dist/components/custom/pager-dots/PagerDots.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1604,
+      "gzipBytes": 709
+    },
+    {
+      "file": "dist/useAnimatedNumber-Bhcvi9rr.js",
       "ext": ".js",
-      "bytes": 1570,
-      "gzipBytes": 853
+      "bytes": 1603,
+      "gzipBytes": 737
+    },
+    {
+      "file": "dist/components/ui/input/Input.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1596,
+      "gzipBytes": 422
+    },
+    {
+      "file": "dist/components/ui/progress/ProgressDefault.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1592,
+      "gzipBytes": 796
+    },
+    {
+      "file": "dist/composables/glass/useGlassRenderer.d.ts",
+      "ext": ".ts",
+      "bytes": 1586,
+      "gzipBytes": 798
+    },
+    {
+      "file": "dist/components/ui/command/Command.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1580,
+      "gzipBytes": 567
+    },
+    {
+      "file": "dist/components/custom/sortable-list/SortableHandle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1578,
+      "gzipBytes": 770
+    },
+    {
+      "file": "dist/components/ui/command/CommandList.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1578,
+      "gzipBytes": 528
+    },
+    {
+      "file": "dist/components/custom/instrument-chassis/ChassisDivider.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1574,
+      "gzipBytes": 797
+    },
+    {
+      "file": "dist/ScrollingText-B-FgIC9D.js",
+      "ext": ".js",
+      "bytes": 1568,
+      "gzipBytes": 858
+    },
+    {
+      "file": "dist/components/custom/fourier-field/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1566,
+      "gzipBytes": 863
+    },
+    {
+      "file": "dist/components/custom/controls/DarkModeToggle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1557,
+      "gzipBytes": 768
+    },
+    {
+      "file": "dist/components/custom/constellation/composables/useConstellationPointer.d.ts",
+      "ext": ".ts",
+      "bytes": 1553,
+      "gzipBytes": 753
+    },
+    {
+      "file": "dist/composables/motion/useIntersectionPause.d.ts",
+      "ext": ".ts",
+      "bytes": 1546,
+      "gzipBytes": 631
+    },
+    {
+      "file": "dist/useGlobalDark-Cf7Qvtaq.js",
+      "ext": ".js",
+      "bytes": 1537,
+      "gzipBytes": 772
     },
     {
       "file": "dist/animated-digit.js",
       "ext": ".js",
-      "bytes": 1534,
-      "gzipBytes": 825
+      "bytes": 1532,
+      "gzipBytes": 824
     },
     {
-      "file": "dist/Input-DWQQIOC4.js",
+      "file": "dist/components/custom/dock/DockLayer.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1522,
+      "gzipBytes": 749
+    },
+    {
+      "file": "dist/components/ui/_shared/useStalePropWarning.d.ts",
+      "ext": ".ts",
+      "bytes": 1522,
+      "gzipBytes": 798
+    },
+    {
+      "file": "dist/composables/dom/useResolveTokenColor.d.ts",
+      "ext": ".ts",
+      "bytes": 1518,
+      "gzipBytes": 750
+    },
+    {
+      "file": "dist/composables/motion/useSpringPress.d.ts",
+      "ext": ".ts",
+      "bytes": 1517,
+      "gzipBytes": 694
+    },
+    {
+      "file": "dist/composables/motion/useCountup.d.ts",
+      "ext": ".ts",
+      "bytes": 1511,
+      "gzipBytes": 783
+    },
+    {
+      "file": "dist/composables/sidebar/types.d.ts",
+      "ext": ".ts",
+      "bytes": 1507,
+      "gzipBytes": 624
+    },
+    {
+      "file": "dist/components/custom/sortable-list/SortableItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1501,
+      "gzipBytes": 723
+    },
+    {
+      "file": "dist/components/ui/data-table/composables/useDataTableResponsive.d.ts",
+      "ext": ".ts",
+      "bytes": 1500,
+      "gzipBytes": 671
+    },
+    {
+      "file": "dist/Input-DOlwE-Nh.js",
       "ext": ".js",
       "bytes": 1491,
       "gzipBytes": 756
+    },
+    {
+      "file": "dist/components/ui/progress/ProgressGradient.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1489,
+      "gzipBytes": 744
     },
     {
       "file": "dist/styles/utilities/animate.css",
@@ -2373,88 +3643,526 @@
       "gzipBytes": 688
     },
     {
-      "file": "dist/math-U6-RrLmV.js",
-      "ext": ".js",
-      "bytes": 1461,
-      "gzipBytes": 669
+      "file": "dist/components/ui/tags-input/TagsInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1485,
+      "gzipBytes": 486
     },
     {
-      "file": "dist/ModalOverlay-DVLI2VRr.js",
+      "file": "dist/composables/sortable/touchGate.d.ts",
+      "ext": ".ts",
+      "bytes": 1478,
+      "gzipBytes": 745
+    },
+    {
+      "file": "dist/components/ui/toggle/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1477,
+      "gzipBytes": 784
+    },
+    {
+      "file": "dist/components/custom/configurator/density.d.ts",
+      "ext": ".ts",
+      "bytes": 1458,
+      "gzipBytes": 722
+    },
+    {
+      "file": "dist/utils/cn.d.ts",
+      "ext": ".ts",
+      "bytes": 1451,
+      "gzipBytes": 847
+    },
+    {
+      "file": "dist/ModalOverlay-Dm3OMEIT.js",
       "ext": ".js",
       "bytes": 1444,
-      "gzipBytes": 738
+      "gzipBytes": 737
     },
     {
-      "file": "dist/Separator-0JE6LtNu.js",
+      "file": "dist/components/ui/slider/Slider.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1433,
+      "gzipBytes": 667
+    },
+    {
+      "file": "dist/components/custom/dock/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1430,
+      "gzipBytes": 379
+    },
+    {
+      "file": "dist/components/custom/timeline/ContinuousRail.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1407,
+      "gzipBytes": 730
+    },
+    {
+      "file": "dist/useViewTransition-uRqguwux.js",
+      "ext": ".js",
+      "bytes": 1405,
+      "gzipBytes": 577
+    },
+    {
+      "file": "dist/components/ui/select/SelectContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1398,
+      "gzipBytes": 578
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/frameLoop.d.ts",
+      "ext": ".ts",
+      "bytes": 1373,
+      "gzipBytes": 664
+    },
+    {
+      "file": "dist/components/custom/aurora/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1336,
+      "gzipBytes": 492
+    },
+    {
+      "file": "dist/composables/motion/useStaggerReveal.d.ts",
+      "ext": ".ts",
+      "bytes": 1335,
+      "gzipBytes": 728
+    },
+    {
+      "file": "dist/components/custom/paper-backdrop/PaperBackdrop.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1312,
+      "gzipBytes": 650
+    },
+    {
+      "file": "dist/Separator-DjmYf4JP.js",
       "ext": ".js",
       "bytes": 1310,
       "gzipBytes": 732
     },
     {
-      "file": "dist/vReveal-CqaCz_mC.js",
-      "ext": ".js",
-      "bytes": 1285,
-      "gzipBytes": 567
+      "file": "dist/utils/coalesceMetric.d.ts",
+      "ext": ".ts",
+      "bytes": 1305,
+      "gzipBytes": 702
     },
     {
-      "file": "dist/useResizeObserver-BhgdhOIj.js",
+      "file": "dist/components/custom/dock/DockDropdownTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1304,
+      "gzipBytes": 617
+    },
+    {
+      "file": "dist/composables/motion/useYieldToMain.d.ts",
+      "ext": ".ts",
+      "bytes": 1298,
+      "gzipBytes": 671
+    },
+    {
+      "file": "dist/composables/motion/useAnimatedNumberMap.d.ts",
+      "ext": ".ts",
+      "bytes": 1295,
+      "gzipBytes": 664
+    },
+    {
+      "file": "dist/components/custom/dock/composables/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1290,
+      "gzipBytes": 363
+    },
+    {
+      "file": "dist/components/ui/combobox/Combobox.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1282,
+      "gzipBytes": 476
+    },
+    {
+      "file": "dist/components/custom/constellation/composables/useConstellation.d.ts",
+      "ext": ".ts",
+      "bytes": 1270,
+      "gzipBytes": 660
+    },
+    {
+      "file": "dist/presets-Bt5dJozb.js",
+      "ext": ".js",
+      "bytes": 1268,
+      "gzipBytes": 591
+    },
+    {
+      "file": "dist/components/custom/sortable-list/context.d.ts",
+      "ext": ".ts",
+      "bytes": 1266,
+      "gzipBytes": 647
+    },
+    {
+      "file": "dist/components/ui/tabs/TabsList.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1265,
+      "gzipBytes": 600
+    },
+    {
+      "file": "dist/components/custom/timeline/ScrubberTimeline.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1263,
+      "gzipBytes": 632
+    },
+    {
+      "file": "dist/composables/keyboard/useKeyboardShortcuts.d.ts",
+      "ext": ".ts",
+      "bytes": 1263,
+      "gzipBytes": 517
+    },
+    {
+      "file": "dist/components/custom/dock/DockSelectTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1253,
+      "gzipBytes": 606
+    },
+    {
+      "file": "dist/composables/motion/useScrollProgress.d.ts",
+      "ext": ".ts",
+      "bytes": 1253,
+      "gzipBytes": 707
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockClickIntegrity.d.ts",
+      "ext": ".ts",
+      "bytes": 1243,
+      "gzipBytes": 638
+    },
+    {
+      "file": "dist/components/custom/header-ribbon/HeaderRibbon.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1224,
+      "gzipBytes": 472
+    },
+    {
+      "file": "dist/components/ui/toggle-group/ToggleGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1223,
+      "gzipBytes": 481
+    },
+    {
+      "file": "dist/useResizeObserver-CdUlm2QZ.js",
       "ext": ".js",
       "bytes": 1215,
       "gzipBytes": 620
     },
     {
-      "file": "dist/useScrollProgress-Dlvx-L3v.js",
+      "file": "dist/useScrollProgress-CPJ-7nc1.js",
       "ext": ".js",
       "bytes": 1213,
-      "gzipBytes": 629
+      "gzipBytes": 630
     },
     {
-      "file": "dist/SelectSeparator-BQ_1Fcbp.js",
+      "file": "dist/SelectSeparator-CE11KzjY.js",
       "ext": ".js",
       "bytes": 1212,
       "gzipBytes": 614
     },
     {
-      "file": "dist/useGlobalDark-yhL4Wp-s.js",
-      "ext": ".js",
-      "bytes": 1168,
-      "gzipBytes": 609
+      "file": "dist/components/custom/dock/GlassDock.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1210,
+      "gzipBytes": 465
     },
     {
-      "file": "dist/useUserInvalidAria-B2h6jAM_.js",
+      "file": "dist/components/custom/labeled-field/LabeledInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1193,
+      "gzipBytes": 561
+    },
+    {
+      "file": "dist/components/custom/labeled-field/LabeledSelect.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1189,
+      "gzipBytes": 574
+    },
+    {
+      "file": "dist/components/custom/infinite-scroll/InfiniteScroll.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1172,
+      "gzipBytes": 509
+    },
+    {
+      "file": "dist/components/ui/label/Label.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1163,
+      "gzipBytes": 574
+    },
+    {
+      "file": "dist/components/ui/toggle/Toggle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1157,
+      "gzipBytes": 488
+    },
+    {
+      "file": "dist/components/custom/constellation/Constellation.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1156,
+      "gzipBytes": 443
+    },
+    {
+      "file": "dist/useUserInvalidAria-ChTkWP1X.js",
       "ext": ".js",
       "bytes": 1153,
       "gzipBytes": 525
     },
     {
-      "file": "dist/useSpecularTracking-Bo5su68i.js",
+      "file": "dist/components/ui/carousel/useCarousel.d.ts",
+      "ext": ".ts",
+      "bytes": 1150,
+      "gzipBytes": 314
+    },
+    {
+      "file": "dist/components/custom/confirm-dialog/ConfirmDialog.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1146,
+      "gzipBytes": 446
+    },
+    {
+      "file": "dist/components/ui/card/CardAction.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1130,
+      "gzipBytes": 573
+    },
+    {
+      "file": "dist/components/custom/search/composables/types.d.ts",
+      "ext": ".ts",
+      "bytes": 1126,
+      "gzipBytes": 543
+    },
+    {
+      "file": "dist/useSpecularTracking-BtFRrw8-.js",
       "ext": ".js",
       "bytes": 1126,
       "gzipBytes": 591
     },
     {
-      "file": "dist/Label-r3WzWrsj.js",
-      "ext": ".js",
-      "bytes": 1117,
-      "gzipBytes": 672
+      "file": "dist/components/custom/typewriter/utils/timing.d.ts",
+      "ext": ".ts",
+      "bytes": 1121,
+      "gzipBytes": 517
     },
     {
-      "file": "dist/springPresets--YdWTHtm.js",
+      "file": "dist/components/ui/carousel/CarouselNext.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1121,
+      "gzipBytes": 497
+    },
+    {
+      "file": "dist/components/ui/carousel/CarouselPrevious.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1121,
+      "gzipBytes": 497
+    },
+    {
+      "file": "dist/Label-BwwY7gQh.js",
+      "ext": ".js",
+      "bytes": 1117,
+      "gzipBytes": 671
+    },
+    {
+      "file": "dist/components/ui/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1117,
+      "gzipBytes": 277
+    },
+    {
+      "file": "dist/composables/glass/canvas2d/resolveCanvasColor.d.ts",
+      "ext": ".ts",
+      "bytes": 1117,
+      "gzipBytes": 629
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1112,
+      "gzipBytes": 222
+    },
+    {
+      "file": "dist/springPresets-Bwftnd3Y.js",
       "ext": ".js",
       "bytes": 1110,
       "gzipBytes": 596
     },
     {
-      "file": "dist/presets-BKVyQfbt.js",
-      "ext": ".js",
-      "bytes": 1031,
-      "gzipBytes": 526
+      "file": "dist/components/custom/handmark/HandMark.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1102,
+      "gzipBytes": 489
     },
     {
-      "file": "dist/useLiquidFlex-BL0lLLN2.js",
+      "file": "dist/components/custom/stacked-icons/StackedIconGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1096,
+      "gzipBytes": 485
+    },
+    {
+      "file": "dist/components/ui/button/Button.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1088,
+      "gzipBytes": 461
+    },
+    {
+      "file": "dist/components/custom/watercolor-dot/useWatercolorBlob.d.ts",
+      "ext": ".ts",
+      "bytes": 1082,
+      "gzipBytes": 590
+    },
+    {
+      "file": "dist/composables/dom/useDocumentVisibility.d.ts",
+      "ext": ".ts",
+      "bytes": 1082,
+      "gzipBytes": 620
+    },
+    {
+      "file": "dist/composables/glass/webgl/compile.d.ts",
+      "ext": ".ts",
+      "bytes": 1079,
+      "gzipBytes": 580
+    },
+    {
+      "file": "dist/components/ui/tooltip/TooltipContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1076,
+      "gzipBytes": 458
+    },
+    {
+      "file": "dist/components/custom/search/SearchBar.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1064,
+      "gzipBytes": 441
+    },
+    {
+      "file": "dist/components/custom/fading-scroll/FadingScroll.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1061,
+      "gzipBytes": 470
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1051,
+      "gzipBytes": 455
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuCheckboxItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1049,
+      "gzipBytes": 450
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1044,
+      "gzipBytes": 432
+    },
+    {
+      "file": "dist/components/ui/command/CommandItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1044,
+      "gzipBytes": 439
+    },
+    {
+      "file": "dist/composables/motion/suite.d.ts",
+      "ext": ".ts",
+      "bytes": 1044,
+      "gzipBytes": 435
+    },
+    {
+      "file": "dist/components/custom/labeled-field/LabeledSlider.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1042,
+      "gzipBytes": 530
+    },
+    {
+      "file": "dist/components/ui/toggle-group/toggleGroupContext.d.ts",
+      "ext": ".ts",
+      "bytes": 1028,
+      "gzipBytes": 521
+    },
+    {
+      "file": "dist/components/custom/tabs/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 1024,
+      "gzipBytes": 638
+    },
+    {
+      "file": "dist/components/custom/constellation/index.d.ts",
+      "ext": ".ts",
+      "bytes": 1019,
+      "gzipBytes": 410
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1013,
+      "gzipBytes": 445
+    },
+    {
+      "file": "dist/components/ui/multi-select/MultiSelect.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1008,
+      "gzipBytes": 416
+    },
+    {
+      "file": "dist/components/ui/select/Select.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 1001,
+      "gzipBytes": 411
+    },
+    {
+      "file": "dist/components/ui/drawer/index.d.ts",
+      "ext": ".ts",
+      "bytes": 998,
+      "gzipBytes": 455
+    },
+    {
+      "file": "dist/components/ui/radio-group/RadioGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 994,
+      "gzipBytes": 428
+    },
+    {
+      "file": "dist/composables/dark/darkModeSyncScript.d.ts",
+      "ext": ".ts",
+      "bytes": 990,
+      "gzipBytes": 550
+    },
+    {
+      "file": "dist/components/custom/labeled-field/LabeledSwitch.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 984,
+      "gzipBytes": 515
+    },
+    {
+      "file": "dist/useLiquidFlex-Cv8Ki4qg.js",
       "ext": ".js",
       "bytes": 982,
       "gzipBytes": 496
+    },
+    {
+      "file": "dist/components/ui/checkbox/Checkbox.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 972,
+      "gzipBytes": 432
+    },
+    {
+      "file": "dist/components/ui/toggle-group/ToggleGroupItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 972,
+      "gzipBytes": 409
+    },
+    {
+      "file": "dist/components/custom/color-swatch/ColorSwatch.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 969,
+      "gzipBytes": 453
+    },
+    {
+      "file": "dist/components/custom/fading-scroll/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 965,
+      "gzipBytes": 574
     },
     {
       "file": "dist/styles/utilities.css",
@@ -2463,100 +4171,1114 @@
       "gzipBytes": 477
     },
     {
+      "file": "dist/menuItemVariants-CCNPWchS.js",
+      "ext": ".js",
+      "bytes": 942,
+      "gzipBytes": 479
+    },
+    {
+      "file": "dist/composables/reactive/useInterval.d.ts",
+      "ext": ".ts",
+      "bytes": 939,
+      "gzipBytes": 442
+    },
+    {
+      "file": "dist/components/ui/avatar/Avatar.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 937,
+      "gzipBytes": 420
+    },
+    {
+      "file": "dist/components/ui/number-field/NumberField.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 934,
+      "gzipBytes": 417
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 931,
+      "gzipBytes": 415
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuRadioItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 924,
+      "gzipBytes": 411
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuRadioItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 922,
+      "gzipBytes": 410
+    },
+    {
+      "file": "dist/composables/reactive/useTimer.d.ts",
+      "ext": ".ts",
+      "bytes": 921,
+      "gzipBytes": 451
+    },
+    {
+      "file": "dist/components/ui/select/SelectItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 913,
+      "gzipBytes": 404
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuRadioGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 908,
+      "gzipBytes": 395
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuRadioGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 905,
+      "gzipBytes": 395
+    },
+    {
+      "file": "dist/components/ui/context-menu/index.d.ts",
+      "ext": ".ts",
+      "bytes": 902,
+      "gzipBytes": 194
+    },
+    {
+      "file": "dist/components/ui/accordion/Accordion.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 894,
+      "gzipBytes": 386
+    },
+    {
+      "file": "dist/components/ui/tabs/Tabs.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 894,
+      "gzipBytes": 389
+    },
+    {
+      "file": "dist/components/custom/goo-blob/shaders/oklch-perturb.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 892,
+      "gzipBytes": 497
+    },
+    {
+      "file": "dist/components/custom/scrolling-text/ScrollingText.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 891,
+      "gzipBytes": 423
+    },
+    {
+      "file": "dist/components/custom/typewriter/composables/useTypewriter.d.ts",
+      "ext": ".ts",
+      "bytes": 890,
+      "gzipBytes": 370
+    },
+    {
+      "file": "dist/components/ui/accordion/AccordionTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 889,
+      "gzipBytes": 390
+    },
+    {
       "file": "dist/dark.js",
       "ext": ".js",
       "bytes": 881,
       "gzipBytes": 517
     },
     {
-      "file": "dist/PaperBackdrop-DIXTtVq6.js",
+      "file": "dist/components/ui/badge/Badge.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 859,
+      "gzipBytes": 382
+    },
+    {
+      "file": "dist/components/custom/toggle-chip/index.d.ts",
+      "ext": ".ts",
+      "bytes": 858,
+      "gzipBytes": 497
+    },
+    {
+      "file": "dist/components/custom/typewriter/utils/typoStateMachine.d.ts",
+      "ext": ".ts",
+      "bytes": 855,
+      "gzipBytes": 437
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuSubTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 854,
+      "gzipBytes": 386
+    },
+    {
+      "file": "dist/components/custom/infinite-scroll/composables/types.d.ts",
+      "ext": ".ts",
+      "bytes": 852,
+      "gzipBytes": 437
+    },
+    {
+      "file": "dist/components/ui/hover-card/HoverCardContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 850,
+      "gzipBytes": 387
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuLabel.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 846,
+      "gzipBytes": 383
+    },
+    {
+      "file": "dist/PaperBackdrop-BC2W9lxF.js",
       "ext": ".js",
       "bytes": 845,
       "gzipBytes": 519
     },
     {
-      "file": "dist/menuItemVariants-DPiEarb0.js",
-      "ext": ".js",
-      "bytes": 837,
-      "gzipBytes": 439
+      "file": "dist/components/ui/context-menu/ContextMenuLabel.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 844,
+      "gzipBytes": 382
     },
     {
-      "file": "dist/IconTooltip-DPzE09X9.js",
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 844,
+      "gzipBytes": 382
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 841,
+      "gzipBytes": 383
+    },
+    {
+      "file": "dist/components/ui/command/CommandGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 841,
+      "gzipBytes": 386
+    },
+    {
+      "file": "dist/components/ui/collapsible/Collapsible.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 839,
+      "gzipBytes": 379
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 835,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/components/ui/select/SelectScrollDownButton.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 835,
+      "gzipBytes": 376
+    },
+    {
+      "file": "dist/components/ui/drawer/DrawerDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 834,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxItemIndicator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 833,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/components/ui/number-field/NumberFieldDecrement.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 833,
+      "gzipBytes": 377
+    },
+    {
+      "file": "dist/components/ui/number-field/NumberFieldIncrement.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 833,
+      "gzipBytes": 377
+    },
+    {
+      "file": "dist/components/ui/select/SelectScrollUpButton.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 831,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/components/ui/tags-input/TagsInputItemDelete.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 829,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/collapsible/CollapsibleTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 827,
+      "gzipBytes": 372
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenu.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 826,
+      "gzipBytes": 376
+    },
+    {
+      "file": "dist/components/ui/alert/Alert.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 825,
+      "gzipBytes": 372
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 825,
+      "gzipBytes": 372
+    },
+    {
+      "file": "dist/components/ui/command/CommandSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 825,
+      "gzipBytes": 374
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 825,
+      "gzipBytes": 370
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 825,
+      "gzipBytes": 370
+    },
+    {
+      "file": "dist/components/ui/accordion/AccordionContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 823,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxViewport.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 823,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenu.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 823,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuSub.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 823,
+      "gzipBytes": 375
+    },
+    {
+      "file": "dist/IconTooltip-CPw3QgjH.js",
       "ext": ".js",
       "bytes": 822,
-      "gzipBytes": 473
+      "gzipBytes": 471
     },
     {
-      "file": "dist/SelectGroup-aumMgWLs.js",
+      "file": "dist/components/ui/drawer/DrawerTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 822,
+      "gzipBytes": 372
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxAnchor.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 819,
+      "gzipBytes": 370
+    },
+    {
+      "file": "dist/components/ui/accordion/AccordionItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 817,
+      "gzipBytes": 369
+    },
+    {
+      "file": "dist/components/ui/combobox/ComboboxEmpty.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 817,
+      "gzipBytes": 369
+    },
+    {
+      "file": "dist/components/ui/command/CommandEmpty.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 817,
+      "gzipBytes": 373
+    },
+    {
+      "file": "dist/components/ui/tags-input/TagsInputItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 817,
+      "gzipBytes": 368
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 365
+    },
+    {
+      "file": "dist/components/ui/hover-card/HoverCard.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 374
+    },
+    {
+      "file": "dist/components/ui/select/SelectGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 365
+    },
+    {
+      "file": "dist/components/ui/select/SelectLabel.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 367
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 365
+    },
+    {
+      "file": "dist/components/ui/tabs/TabsContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 364
+    },
+    {
+      "file": "dist/components/ui/tabs/TabsTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 363
+    },
+    {
+      "file": "dist/components/ui/toast/ToastDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 813,
+      "gzipBytes": 380
+    },
+    {
+      "file": "dist/components/ui/popover/Popover.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 807,
+      "gzipBytes": 372
+    },
+    {
+      "file": "dist/components/ui/tooltip/Tooltip.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 807,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/command/CommandDialog.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 806,
+      "gzipBytes": 373
+    },
+    {
+      "file": "dist/components/ui/dialog/Dialog.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 804,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/sheet/Sheet.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 804,
+      "gzipBytes": 371
+    },
+    {
+      "file": "dist/components/ui/toast/ToastAction.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 803,
+      "gzipBytes": 377
+    },
+    {
+      "file": "dist/components/ui/toast/ToastTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 801,
+      "gzipBytes": 376
+    },
+    {
+      "file": "dist/components/ui/sheet/index.d.ts",
+      "ext": ".ts",
+      "bytes": 799,
+      "gzipBytes": 303
+    },
+    {
+      "file": "dist/components/ui/carousel/CarouselContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 791,
+      "gzipBytes": 367
+    },
+    {
+      "file": "dist/components/ui/table/TableEmpty.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 791,
+      "gzipBytes": 364
+    },
+    {
+      "file": "dist/SelectGroup-Dt-KwE1Y.js",
       "ext": ".js",
       "bytes": 779,
       "gzipBytes": 483
     },
     {
-      "file": "dist/dockContext-BegmJVmx.js",
+      "file": "dist/components/custom/goo-blob/composables/buildMetaballProgram.d.ts",
+      "ext": ".ts",
+      "bytes": 770,
+      "gzipBytes": 478
+    },
+    {
+      "file": "dist/components/custom/dock/composables/useDockMorphWindow.d.ts",
+      "ext": ".ts",
+      "bytes": 766,
+      "gzipBytes": 454
+    },
+    {
+      "file": "dist/components/ui/carousel/interface.d.ts",
+      "ext": ".ts",
+      "bytes": 757,
+      "gzipBytes": 324
+    },
+    {
+      "file": "dist/components/custom/search/FuzzySearch.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 753,
+      "gzipBytes": 354
+    },
+    {
+      "file": "dist/components/ui/drawer/DrawerFooter.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 753,
+      "gzipBytes": 349
+    },
+    {
+      "file": "dist/components/ui/drawer/DrawerHeader.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 753,
+      "gzipBytes": 349
+    },
+    {
+      "file": "dist/components/custom/status-dot/StatusDot.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 750,
+      "gzipBytes": 358
+    },
+    {
+      "file": "dist/components/ui/alert/AlertDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/alert/AlertTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/card/CardContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/card/CardDescription.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/card/CardFooter.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/card/CardTitle.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/command/CommandShortcut.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuShortcut.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogFooter.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogHeader.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuShortcut.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/number-field/NumberFieldContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetFooter.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetHeader.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 346
+    },
+    {
+      "file": "dist/components/ui/table/Table.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableBody.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableCaption.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableCell.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableHead.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableHeader.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/table/TableRow.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 745,
+      "gzipBytes": 343
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 724,
+      "gzipBytes": 335
+    },
+    {
+      "file": "dist/utils/moveBefore.d.ts",
+      "ext": ".ts",
+      "bytes": 723,
+      "gzipBytes": 402
+    },
+    {
+      "file": "dist/components/ui/collapsible/CollapsibleContent.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 721,
+      "gzipBytes": 333
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 721,
+      "gzipBytes": 334
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuGroup.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 718,
+      "gzipBytes": 334
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/shaders/tonemap.glsl.d.ts",
+      "ext": ".ts",
+      "bytes": 717,
+      "gzipBytes": 365
+    },
+    {
+      "file": "dist/components/ui/combobox/index.d.ts",
+      "ext": ".ts",
+      "bytes": 717,
+      "gzipBytes": 195
+    },
+    {
+      "file": "dist/components/ui/hover-card/HoverCardTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 715,
+      "gzipBytes": 333
+    },
+    {
+      "file": "dist/components/ui/tooltip/TooltipProvider.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 712,
+      "gzipBytes": 328
+    },
+    {
+      "file": "dist/components/custom/goo-blob/index.d.ts",
+      "ext": ".ts",
+      "bytes": 710,
+      "gzipBytes": 299
+    },
+    {
+      "file": "dist/components/ui/avatar/AvatarFallback.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 709,
+      "gzipBytes": 333
+    },
+    {
+      "file": "dist/components/ui/popover/PopoverTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 709,
+      "gzipBytes": 331
+    },
+    {
+      "file": "dist/components/ui/tooltip/TooltipTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 709,
+      "gzipBytes": 331
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 706,
+      "gzipBytes": 331
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetTrigger.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 706,
+      "gzipBytes": 331
+    },
+    {
+      "file": "dist/components/ui/carousel/CarouselItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 704,
+      "gzipBytes": 331
+    },
+    {
+      "file": "dist/components/ui/dialog/DialogClose.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 700,
+      "gzipBytes": 329
+    },
+    {
+      "file": "dist/components/ui/select/SelectValue.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 700,
+      "gzipBytes": 328
+    },
+    {
+      "file": "dist/components/ui/sheet/SheetClose.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 700,
+      "gzipBytes": 329
+    },
+    {
+      "file": "dist/composables/dom/useTouchGate.d.ts",
+      "ext": ".ts",
+      "bytes": 696,
+      "gzipBytes": 388
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/useBlobSatellites.d.ts",
+      "ext": ".ts",
+      "bytes": 693,
+      "gzipBytes": 411
+    },
+    {
+      "file": "dist/components/custom/icon-tooltip/IconTooltip.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 685,
+      "gzipBytes": 312
+    },
+    {
+      "file": "dist/components/ui/switch/Switch.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 681,
+      "gzipBytes": 332
+    },
+    {
+      "file": "dist/components/ui/notification/Notification.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 671,
+      "gzipBytes": 325
+    },
+    {
+      "file": "dist/composables/sidebar/useSidebarFollow.d.ts",
+      "ext": ".ts",
+      "bytes": 659,
+      "gzipBytes": 353
+    },
+    {
+      "file": "dist/components/custom/search/composables/useFuzzySearch.d.ts",
+      "ext": ".ts",
+      "bytes": 654,
+      "gzipBytes": 348
+    },
+    {
+      "file": "dist/components/ui/select/index.d.ts",
+      "ext": ".ts",
+      "bytes": 644,
+      "gzipBytes": 173
+    },
+    {
+      "file": "dist/components/ui/command/CommandInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 639,
+      "gzipBytes": 305
+    },
+    {
+      "file": "dist/dockContext-D2nNSiCt.js",
       "ext": ".js",
       "bytes": 633,
       "gzipBytes": 407
     },
     {
-      "file": "dist/resolveCanvasColor-BBiYfp8g.js",
+      "file": "dist/components/custom/typewriter/utils/keyboard.d.ts",
+      "ext": ".ts",
+      "bytes": 627,
+      "gzipBytes": 364
+    },
+    {
+      "file": "dist/composables/sidebar/useScrollTracker.d.ts",
+      "ext": ".ts",
+      "bytes": 621,
+      "gzipBytes": 339
+    },
+    {
+      "file": "dist/components/ui/tabs/TabsIndicator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 610,
+      "gzipBytes": 297
+    },
+    {
+      "file": "dist/components/ui/carousel/CarouselPager.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 606,
+      "gzipBytes": 309
+    },
+    {
+      "file": "dist/resolveCanvasColor-C3-7gY-u.js",
       "ext": ".js",
       "bytes": 601,
       "gzipBytes": 377
     },
     {
+      "file": "dist/components/custom/configurator/index.d.ts",
+      "ext": ".ts",
+      "bytes": 600,
+      "gzipBytes": 226
+    },
+    {
+      "file": "dist/components/custom/typewriter/utils/pausePatterns.d.ts",
+      "ext": ".ts",
+      "bytes": 599,
+      "gzipBytes": 210
+    },
+    {
+      "file": "dist/components/ui/toast/Toaster.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 598,
+      "gzipBytes": 276
+    },
+    {
+      "file": "dist/components/ui/data-table/DataTablePagination.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 594,
+      "gzipBytes": 280
+    },
+    {
+      "file": "dist/components/ui/button/index.d.ts",
+      "ext": ".ts",
+      "bytes": 589,
+      "gzipBytes": 311
+    },
+    {
       "file": "dist/dom.js",
       "ext": ".js",
       "bytes": 585,
-      "gzipBytes": 310
+      "gzipBytes": 307
+    },
+    {
+      "file": "dist/components/custom/stacked-icons/types.d.ts",
+      "ext": ".ts",
+      "bytes": 580,
+      "gzipBytes": 336
+    },
+    {
+      "file": "dist/components/ui/dropdown-menu/DropdownMenuSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 580,
+      "gzipBytes": 284
+    },
+    {
+      "file": "dist/composables/motion/constants.d.ts",
+      "ext": ".ts",
+      "bytes": 580,
+      "gzipBytes": 320
+    },
+    {
+      "file": "dist/components/ui/context-menu/ContextMenuSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 578,
+      "gzipBytes": 283
+    },
+    {
+      "file": "dist/components/ui/separator/Separator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 576,
+      "gzipBytes": 284
+    },
+    {
+      "file": "dist/components/ui/carousel/index.d.ts",
+      "ext": ".ts",
+      "bytes": 572,
+      "gzipBytes": 185
+    },
+    {
+      "file": "dist/components/ui/drawer/DrawerOverlay.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 572,
+      "gzipBytes": 285
+    },
+    {
+      "file": "dist/components/ui/tags-input/TagsInputItemText.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 572,
+      "gzipBytes": 282
+    },
+    {
+      "file": "dist/components/ui/dialog/index.d.ts",
+      "ext": ".ts",
+      "bytes": 570,
+      "gzipBytes": 160
+    },
+    {
+      "file": "dist/components/ui/select/SelectSeparator.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 568,
+      "gzipBytes": 280
     },
     {
       "file": "dist/dropdown-menu.js",
       "ext": ".js",
       "bytes": 567,
-      "gzipBytes": 260
+      "gzipBytes": 259
     },
     {
-      "file": "dist/minimize-2-BV31Ob_h.js",
+      "file": "dist/components/ui/radio-group/RadioGroupItem.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 566,
+      "gzipBytes": 280
+    },
+    {
+      "file": "dist/components/ui/tags-input/TagsInputInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 566,
+      "gzipBytes": 278
+    },
+    {
+      "file": "dist/minimize-2-CTXXGAqM.js",
       "ext": ".js",
       "bytes": 563,
-      "gzipBytes": 277
+      "gzipBytes": 275
     },
     {
-      "file": "dist/useResolveTokenColor-Dvn2RZJW.js",
+      "file": "dist/components/ui/avatar/AvatarImage.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 562,
+      "gzipBytes": 280
+    },
+    {
+      "file": "dist/components/ui/command/index.d.ts",
+      "ext": ".ts",
+      "bytes": 560,
+      "gzipBytes": 159
+    },
+    {
+      "file": "dist/components/ui/toast/ToastClose.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 548,
+      "gzipBytes": 280
+    },
+    {
+      "file": "dist/useResolveTokenColor-B2FfJnd9.js",
       "ext": ".js",
       "bytes": 546,
       "gzipBytes": 346
     },
     {
-      "file": "dist/useTimer-Dzarvzuk.js",
+      "file": "dist/useTimer-C3yfti4C.js",
       "ext": ".js",
       "bytes": 544,
       "gzipBytes": 333
     },
     {
+      "file": "dist/components/ui/avatar/index.d.ts",
+      "ext": ".ts",
+      "bytes": 537,
+      "gzipBytes": 266
+    },
+    {
+      "file": "dist/composables/sidebar/index.d.ts",
+      "ext": ".ts",
+      "bytes": 532,
+      "gzipBytes": 209
+    },
+    {
+      "file": "dist/components/custom/aurora/composables/configSource.d.ts",
+      "ext": ".ts",
+      "bytes": 527,
+      "gzipBytes": 344
+    },
+    {
+      "file": "dist/components/ui/alert/index.d.ts",
+      "ext": ".ts",
+      "bytes": 523,
+      "gzipBytes": 265
+    },
+    {
+      "file": "dist/components/custom/search/index.d.ts",
+      "ext": ".ts",
+      "bytes": 516,
+      "gzipBytes": 202
+    },
+    {
+      "file": "dist/components/ui/toast/index.d.ts",
+      "ext": ".ts",
+      "bytes": 516,
+      "gzipBytes": 172
+    },
+    {
       "file": "dist/context-menu.js",
       "ext": ".js",
       "bytes": 514,
-      "gzipBytes": 246
+      "gzipBytes": 243
     },
     {
-      "file": "dist/useInterval-iHludrxk.js",
+      "file": "dist/useInterval-COh8fJ8k.js",
       "ext": ".js",
       "bytes": 507,
       "gzipBytes": 322
     },
     {
-      "file": "dist/createContext-BM46COQ-.js",
+      "file": "dist/components/custom/handmark/ink.d.ts",
+      "ext": ".ts",
+      "bytes": 475,
+      "gzipBytes": 326
+    },
+    {
+      "file": "dist/components/ui/badge/index.d.ts",
+      "ext": ".ts",
+      "bytes": 471,
+      "gzipBytes": 267
+    },
+    {
+      "file": "dist/components/ui/card/index.d.ts",
+      "ext": ".ts",
+      "bytes": 457,
+      "gzipBytes": 164
+    },
+    {
+      "file": "dist/components/ui/table/index.d.ts",
+      "ext": ".ts",
+      "bytes": 450,
+      "gzipBytes": 139
+    },
+    {
+      "file": "dist/createContext-BhkE9mLH.js",
       "ext": ".js",
       "bytes": 449,
       "gzipBytes": 263
     },
     {
+      "file": "dist/components/custom/dock/composables/isTeleportedTarget.d.ts",
+      "ext": ".ts",
+      "bytes": 447,
+      "gzipBytes": 298
+    },
+    {
+      "file": "dist/components/custom/icon-chip/IconChip.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 438,
+      "gzipBytes": 221
+    },
+    {
       "file": "dist/select.js",
       "ext": ".js",
       "bytes": 435,
-      "gzipBytes": 230
+      "gzipBytes": 231
+    },
+    {
+      "file": "dist/composables/motion/supportsCssTimeline.d.ts",
+      "ext": ".ts",
+      "bytes": 431,
+      "gzipBytes": 243
+    },
+    {
+      "file": "dist/components/custom/infinite-scroll/composables/useInfiniteScroll.d.ts",
+      "ext": ".ts",
+      "bytes": 426,
+      "gzipBytes": 265
+    },
+    {
+      "file": "dist/composables/motion/core/index.d.ts",
+      "ext": ".ts",
+      "bytes": 419,
+      "gzipBytes": 174
+    },
+    {
+      "file": "dist/composables/motion/index.d.ts",
+      "ext": ".ts",
+      "bytes": 408,
+      "gzipBytes": 175
+    },
+    {
+      "file": "dist/utils/platformSupport.d.ts",
+      "ext": ".ts",
+      "bytes": 407,
+      "gzipBytes": 276
     },
     {
       "file": "dist/tokens.js",
@@ -2565,28 +5287,106 @@
       "gzipBytes": 264
     },
     {
-      "file": "dist/prng-D27-B3tK.js",
+      "file": "dist/prng-C0sIU_G2.js",
       "ext": ".js",
       "bytes": 393,
       "gzipBytes": 274
     },
     {
-      "file": "dist/supportsCssTimeline-BWenxvHU.js",
+      "file": "dist/supportsCssTimeline-BjO1M1eX.js",
       "ext": ".js",
       "bytes": 387,
       "gzipBytes": 221
     },
     {
+      "file": "dist/components/custom/watercolor-dot/prng.d.ts",
+      "ext": ".ts",
+      "bytes": 381,
+      "gzipBytes": 255
+    },
+    {
+      "file": "dist/composables/dark/index.d.ts",
+      "ext": ".ts",
+      "bytes": 371,
+      "gzipBytes": 181
+    },
+    {
+      "file": "dist/components/ui/number-field/NumberFieldInput.vue.d.ts",
+      "ext": ".ts",
+      "bytes": 369,
+      "gzipBytes": 192
+    },
+    {
+      "file": "dist/components/ui/progress/index.d.ts",
+      "ext": ".ts",
+      "bytes": 368,
+      "gzipBytes": 149
+    },
+    {
+      "file": "dist/components/ui/number-field/index.d.ts",
+      "ext": ".ts",
+      "bytes": 360,
+      "gzipBytes": 118
+    },
+    {
+      "file": "dist/components/custom/header-ribbon/types.d.ts",
+      "ext": ".ts",
+      "bytes": 342,
+      "gzipBytes": 226
+    },
+    {
       "file": "dist/dialog.js",
       "ext": ".js",
       "bytes": 341,
-      "gzipBytes": 200
+      "gzipBytes": 201
+    },
+    {
+      "file": "dist/components/custom/search/composables/index.d.ts",
+      "ext": ".ts",
+      "bytes": 340,
+      "gzipBytes": 165
+    },
+    {
+      "file": "dist/components/custom/goo-blob/composables/easing.d.ts",
+      "ext": ".ts",
+      "bytes": 336,
+      "gzipBytes": 162
+    },
+    {
+      "file": "dist/components/ui/tags-input/index.d.ts",
+      "ext": ".ts",
+      "bytes": 334,
+      "gzipBytes": 108
+    },
+    {
+      "file": "dist/components/custom/labeled-field/index.d.ts",
+      "ext": ".ts",
+      "bytes": 316,
+      "gzipBytes": 119
+    },
+    {
+      "file": "dist/composables/glass/index.d.ts",
+      "ext": ".ts",
+      "bytes": 315,
+      "gzipBytes": 163
+    },
+    {
+      "file": "dist/composables/dom/index.d.ts",
+      "ext": ".ts",
+      "bytes": 313,
+      "gzipBytes": 145
     },
     {
       "file": "dist/configurator.js",
       "ext": ".js",
       "bytes": 308,
       "gzipBytes": 198
+    },
+    {
+      "file": "dist/utils/index.d.ts",
+      "ext": ".ts",
+      "bytes": 308,
+      "gzipBytes": 180
     },
     {
       "file": "dist/color.js",
@@ -2601,10 +5401,34 @@
       "gzipBytes": 231
     },
     {
+      "file": "dist/composables/index.d.ts",
+      "ext": ".ts",
+      "bytes": 306,
+      "gzipBytes": 138
+    },
+    {
+      "file": "dist/components/custom/typewriter/index.d.ts",
+      "ext": ".ts",
+      "bytes": 299,
+      "gzipBytes": 155
+    },
+    {
       "file": "dist/command.js",
       "ext": ".js",
       "bytes": 298,
       "gzipBytes": 184
+    },
+    {
+      "file": "dist/components/ui/tabs/index.d.ts",
+      "ext": ".ts",
+      "bytes": 284,
+      "gzipBytes": 117
+    },
+    {
+      "file": "dist/components/custom/sortable-list/index.d.ts",
+      "ext": ".ts",
+      "bytes": 281,
+      "gzipBytes": 144
     },
     {
       "file": "dist/sheet.js",
@@ -2613,31 +5437,115 @@
       "gzipBytes": 183
     },
     {
+      "file": "dist/forms.d.ts",
+      "ext": ".ts",
+      "bytes": 262,
+      "gzipBytes": 142
+    },
+    {
+      "file": "dist/components/ui/accordion/index.d.ts",
+      "ext": ".ts",
+      "bytes": 260,
+      "gzipBytes": 109
+    },
+    {
+      "file": "dist/dark.d.ts",
+      "ext": ".ts",
+      "bytes": 255,
+      "gzipBytes": 177
+    },
+    {
+      "file": "dist/components/ui/tooltip/index.d.ts",
+      "ext": ".ts",
+      "bytes": 252,
+      "gzipBytes": 109
+    },
+    {
+      "file": "dist/components/custom/watercolor-dot/index.d.ts",
+      "ext": ".ts",
+      "bytes": 248,
+      "gzipBytes": 158
+    },
+    {
+      "file": "dist/utils/prng.d.ts",
+      "ext": ".ts",
+      "bytes": 246,
+      "gzipBytes": 185
+    },
+    {
+      "file": "dist/vReveal-CpKBBHo3.js",
+      "ext": ".js",
+      "bytes": 244,
+      "gzipBytes": 204
+    },
+    {
       "file": "dist/toast.js",
       "ext": ".js",
       "bytes": 243,
-      "gzipBytes": 164
+      "gzipBytes": 163
     },
     {
-      "file": "dist/coalesceMetric-5qIeZnTx.js",
+      "file": "dist/useSurfaceAxis-DaKAzxt8.js",
+      "ext": ".js",
+      "bytes": 239,
+      "gzipBytes": 190
+    },
+    {
+      "file": "dist/components/custom/instrument-chassis/index.d.ts",
+      "ext": ".ts",
+      "bytes": 236,
+      "gzipBytes": 121
+    },
+    {
+      "file": "dist/composables/glass/canvas2d/index.d.ts",
+      "ext": ".ts",
+      "bytes": 233,
+      "gzipBytes": 140
+    },
+    {
+      "file": "dist/coalesceMetric-Cx-138y4.js",
       "ext": ".js",
       "bytes": 231,
       "gzipBytes": 188
     },
     {
-      "file": "dist/search-BSGrf2Sk.js",
+      "file": "dist/components/custom/metric-stack/index.d.ts",
+      "ext": ".ts",
+      "bytes": 230,
+      "gzipBytes": 107
+    },
+    {
+      "file": "dist/carousel.d.ts",
+      "ext": ".ts",
+      "bytes": 226,
+      "gzipBytes": 129
+    },
+    {
+      "file": "dist/components/ui/_shared/index.d.ts",
+      "ext": ".ts",
+      "bytes": 226,
+      "gzipBytes": 110
+    },
+    {
+      "file": "dist/search-ciu64WDi.js",
       "ext": ".js",
       "bytes": 224,
-      "gzipBytes": 191
+      "gzipBytes": 190
     },
     {
       "file": "dist/card.js",
       "ext": ".js",
       "bytes": 223,
-      "gzipBytes": 155
+      "gzipBytes": 154
     },
     {
-      "file": "dist/constants-CS75AWHG.js",
+      "file": "dist/components/custom/tabs/index.d.ts",
+      "ext": ".ts",
+      "bytes": 221,
+      "gzipBytes": 131
+    },
+    {
+      "file": "dist/constants-BcKbhhXU.js",
       "ext": ".js",
       "bytes": 219,
       "gzipBytes": 168
@@ -2649,16 +5557,46 @@
       "gzipBytes": 139
     },
     {
+      "file": "dist/components/ui/data-table/index.d.ts",
+      "ext": ".ts",
+      "bytes": 211,
+      "gzipBytes": 123
+    },
+    {
+      "file": "dist/components/ui/collapsible/index.d.ts",
+      "ext": ".ts",
+      "bytes": 208,
+      "gzipBytes": 101
+    },
+    {
+      "file": "dist/components/ui/multi-select/index.d.ts",
+      "ext": ".ts",
+      "bytes": 206,
+      "gzipBytes": 146
+    },
+    {
+      "file": "dist/components/custom/goo-blob/shaders/metaball.vert.d.ts",
+      "ext": ".ts",
+      "bytes": 201,
+      "gzipBytes": 171
+    },
+    {
       "file": "dist/keyboard.js",
       "ext": ".js",
       "bytes": 199,
-      "gzipBytes": 155
+      "gzipBytes": 156
     },
     {
-      "file": "dist/x-BUwTKe50.js",
+      "file": "dist/x-CU5f8MBo.js",
       "ext": ".js",
       "bytes": 198,
       "gzipBytes": 176
+    },
+    {
+      "file": "dist/components/ui/hover-card/index.d.ts",
+      "ext": ".ts",
+      "bytes": 196,
+      "gzipBytes": 99
     },
     {
       "file": "dist/canvas.js",
@@ -2673,52 +5611,106 @@
       "gzipBytes": 147
     },
     {
+      "file": "dist/components/custom/fading-scroll/index.d.ts",
+      "ext": ".ts",
+      "bytes": 187,
+      "gzipBytes": 125
+    },
+    {
+      "file": "dist/components/ui/popover/index.d.ts",
+      "ext": ".ts",
+      "bytes": 184,
+      "gzipBytes": 95
+    },
+    {
+      "file": "dist/fourier-math.js",
+      "ext": ".js",
+      "bytes": 173,
+      "gzipBytes": 155
+    },
+    {
       "file": "dist/tooltip.js",
       "ext": ".js",
       "bytes": 169,
       "gzipBytes": 130
     },
     {
-      "file": "dist/chevron-right-CPXbqQQz.js",
+      "file": "dist/api.js",
+      "ext": ".js",
+      "bytes": 168,
+      "gzipBytes": 157
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/shaders/aurora.vert.d.ts",
+      "ext": ".ts",
+      "bytes": 167,
+      "gzipBytes": 158
+    },
+    {
+      "file": "dist/chevron-right-tY0hpsXX.js",
       "ext": ".js",
       "bytes": 165,
       "gzipBytes": 166
     },
     {
-      "file": "dist/_plugin-vue_export-helper-ok8pgSl5.js",
+      "file": "dist/_plugin-vue_export-helper-B3ysoDQm.js",
       "ext": ".js",
       "bytes": 163,
       "gzipBytes": 152
     },
     {
-      "file": "dist/chevron-down-DKkxb4VV.js",
+      "file": "dist/chevron-down-4EUk2EKX.js",
       "ext": ".js",
       "bytes": 163,
       "gzipBytes": 165
     },
     {
-      "file": "dist/chevron-up-n_24SqI-.js",
+      "file": "dist/chevron-up-C98JM2yr.js",
       "ext": ".js",
       "bytes": 163,
       "gzipBytes": 166
     },
     {
-      "file": "dist/check-njhk-vfu.js",
-      "ext": ".js",
-      "bytes": 159,
-      "gzipBytes": 164
+      "file": "dist/components/custom/metric-badge/index.d.ts",
+      "ext": ".ts",
+      "bytes": 163,
+      "gzipBytes": 112
     },
     {
-      "file": "dist/fourier-math.js",
+      "file": "dist/components/custom/timeline/index.d.ts",
+      "ext": ".ts",
+      "bytes": 160,
+      "gzipBytes": 114
+    },
+    {
+      "file": "dist/check-ChIObJVv.js",
       "ext": ".js",
-      "bytes": 156,
-      "gzipBytes": 140
+      "bytes": 159,
+      "gzipBytes": 163
     },
     {
       "file": "dist/collapsible.js",
       "ext": ".js",
       "bytes": 154,
       "gzipBytes": 120
+    },
+    {
+      "file": "dist/components/custom/paper-backdrop/index.d.ts",
+      "ext": ".ts",
+      "bytes": 151,
+      "gzipBytes": 102
+    },
+    {
+      "file": "dist/components/custom/animated-digit/index.d.ts",
+      "ext": ".ts",
+      "bytes": 146,
+      "gzipBytes": 98
+    },
+    {
+      "file": "dist/components/custom/icon-chip/index.d.ts",
+      "ext": ".ts",
+      "bytes": 146,
+      "gzipBytes": 109
     },
     {
       "file": "dist/hover-card.js",
@@ -2730,7 +5722,7 @@
       "file": "dist/reactive.js",
       "ext": ".js",
       "bytes": 140,
-      "gzipBytes": 109
+      "gzipBytes": 110
     },
     {
       "file": "dist/popover.js",
@@ -2739,10 +5731,58 @@
       "gzipBytes": 115
     },
     {
-      "file": "dist/api.js",
-      "ext": ".js",
-      "bytes": 136,
-      "gzipBytes": 132
+      "file": "dist/components/custom/metric-cell/index.d.ts",
+      "ext": ".ts",
+      "bytes": 137,
+      "gzipBytes": 101
+    },
+    {
+      "file": "dist/components/custom/glass-panel/index.d.ts",
+      "ext": ".ts",
+      "bytes": 134,
+      "gzipBytes": 98
+    },
+    {
+      "file": "dist/components/custom/header-ribbon/index.d.ts",
+      "ext": ".ts",
+      "bytes": 134,
+      "gzipBytes": 105
+    },
+    {
+      "file": "dist/components/custom/infinite-scroll/composables/index.d.ts",
+      "ext": ".ts",
+      "bytes": 133,
+      "gzipBytes": 96
+    },
+    {
+      "file": "dist/components/ui/toggle-group/index.d.ts",
+      "ext": ".ts",
+      "bytes": 128,
+      "gzipBytes": 84
+    },
+    {
+      "file": "dist/components/custom/stacked-icons/index.d.ts",
+      "ext": ".ts",
+      "bytes": 124,
+      "gzipBytes": 99
+    },
+    {
+      "file": "dist/components/ui/radio-group/index.d.ts",
+      "ext": ".ts",
+      "bytes": 124,
+      "gzipBytes": 83
+    },
+    {
+      "file": "dist/composables/context/index.d.ts",
+      "ext": ".ts",
+      "bytes": 121,
+      "gzipBytes": 89
+    },
+    {
+      "file": "dist/infinite-scroll.d.ts",
+      "ext": ".ts",
+      "bytes": 118,
+      "gzipBytes": 86
     },
     {
       "file": "dist/instrument-chassis.js",
@@ -2751,10 +5791,28 @@
       "gzipBytes": 107
     },
     {
+      "file": "dist/composables/motion/vReveal.d.ts",
+      "ext": ".ts",
+      "bytes": 112,
+      "gzipBytes": 113
+    },
+    {
+      "file": "dist/components/custom/pager-dots/index.d.ts",
+      "ext": ".ts",
+      "bytes": 111,
+      "gzipBytes": 86
+    },
+    {
       "file": "dist/toggle-group.js",
       "ext": ".js",
       "bytes": 110,
       "gzipBytes": 98
+    },
+    {
+      "file": "dist/fading-scroll.js",
+      "ext": ".js",
+      "bytes": 108,
+      "gzipBytes": 99
     },
     {
       "file": "dist/data-table.js",
@@ -2779,6 +5837,12 @@
       "ext": ".js",
       "bytes": 92,
       "gzipBytes": 96
+    },
+    {
+      "file": "dist/composables/sortable/index.d.ts",
+      "ext": ".ts",
+      "bytes": 86,
+      "gzipBytes": 76
     },
     {
       "file": "dist/paper-backdrop.js",
@@ -2823,6 +5887,24 @@
       "gzipBytes": 83
     },
     {
+      "file": "dist/components/custom/expandable-container/index.d.ts",
+      "ext": ".ts",
+      "bytes": 76,
+      "gzipBytes": 79
+    },
+    {
+      "file": "dist/icon-chip.js",
+      "ext": ".js",
+      "bytes": 75,
+      "gzipBytes": 82
+    },
+    {
+      "file": "dist/composables/dark/installDarkModeSync.d.ts",
+      "ext": ".ts",
+      "bytes": 71,
+      "gzipBytes": 85
+    },
+    {
       "file": "dist/switch.js",
       "ext": ".js",
       "bytes": 71,
@@ -2833,6 +5915,564 @@
       "ext": ".js",
       "bytes": 69,
       "gzipBytes": 79
+    },
+    {
+      "file": "dist/components/custom/controls/index.d.ts",
+      "ext": ".ts",
+      "bytes": 66,
+      "gzipBytes": 74
+    },
+    {
+      "file": "dist/components/custom/infinite-scroll/index.d.ts",
+      "ext": ".ts",
+      "bytes": 66,
+      "gzipBytes": 74
+    },
+    {
+      "file": "dist/components/custom/confirm-dialog/index.d.ts",
+      "ext": ".ts",
+      "bytes": 64,
+      "gzipBytes": 73
+    },
+    {
+      "file": "dist/components/custom/scrolling-text/index.d.ts",
+      "ext": ".ts",
+      "bytes": 64,
+      "gzipBytes": 73
+    },
+    {
+      "file": "dist/components/custom/hover-popover/index.d.ts",
+      "ext": ".ts",
+      "bytes": 62,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/components/ui/notification/index.d.ts",
+      "ext": ".ts",
+      "bytes": 62,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/components/custom/color-swatch/index.d.ts",
+      "ext": ".ts",
+      "bytes": 60,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/components/custom/icon-tooltip/index.d.ts",
+      "ext": ".ts",
+      "bytes": 60,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/composables/reactive/index.d.ts",
+      "ext": ".ts",
+      "bytes": 59,
+      "gzipBytes": 61
+    },
+    {
+      "file": "dist/components/ui/metric-pill/index.d.ts",
+      "ext": ".ts",
+      "bytes": 58,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/expandable-container.d.ts",
+      "ext": ".ts",
+      "bytes": 58,
+      "gzipBytes": 78
+    },
+    {
+      "file": "dist/components/custom/status-dot/index.d.ts",
+      "ext": ".ts",
+      "bytes": 56,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/components/ui/separator/index.d.ts",
+      "ext": ".ts",
+      "bytes": 56,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/fourier-math.d.ts",
+      "ext": ".ts",
+      "bytes": 56,
+      "gzipBytes": 76
+    },
+    {
+      "file": "dist/instrument-chassis.d.ts",
+      "ext": ".ts",
+      "bytes": 56,
+      "gzipBytes": 75
+    },
+    {
+      "file": "dist/components/ui/checkbox/index.d.ts",
+      "ext": ".ts",
+      "bytes": 54,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/components/ui/skeleton/index.d.ts",
+      "ext": ".ts",
+      "bytes": 54,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/components/ui/textarea/index.d.ts",
+      "ext": ".ts",
+      "bytes": 54,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/animated-digit.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/components/custom/goo-blob/shaders/metaball.frag.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/components/ui/section/index.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 67
+    },
+    {
+      "file": "dist/confirm-dialog.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/paper-backdrop.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/scrolling-text.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/watercolor-dot.d.ts",
+      "ext": ".ts",
+      "bytes": 52,
+      "gzipBytes": 72
+    },
+    {
+      "file": "dist/constellation.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/fading-scroll.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/fourier-field.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/header-ribbon.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/hover-popover.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/labeled-field.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/sortable-list.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/stacked-icons.d.ts",
+      "ext": ".ts",
+      "bytes": 51,
+      "gzipBytes": 71
+    },
+    {
+      "file": "dist/color-swatch.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/components/ui/switch/index.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/configurator.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/icon-tooltip.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/metric-badge.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/metric-stack.d.ts",
+      "ext": ".ts",
+      "bytes": 50,
+      "gzipBytes": 70
+    },
+    {
+      "file": "dist/components/custom/typewriter/composables/index.d.ts",
+      "ext": ".ts",
+      "bytes": 49,
+      "gzipBytes": 58
+    },
+    {
+      "file": "dist/glass-panel.d.ts",
+      "ext": ".ts",
+      "bytes": 49,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/metric-cell.d.ts",
+      "ext": ".ts",
+      "bytes": 49,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/toggle-chip.d.ts",
+      "ext": ".ts",
+      "bytes": 49,
+      "gzipBytes": 69
+    },
+    {
+      "file": "dist/components/custom/pulse/index.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/components/ui/input/index.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/components/ui/label/index.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/pager-dots.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/status-dot.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/typewriter.d.ts",
+      "ext": ".ts",
+      "bytes": 48,
+      "gzipBytes": 68
+    },
+    {
+      "file": "dist/dropdown-menu.d.ts",
+      "ext": ".ts",
+      "bytes": 47,
+      "gzipBytes": 67
+    },
+    {
+      "file": "dist/icon-chip.d.ts",
+      "ext": ".ts",
+      "bytes": 47,
+      "gzipBytes": 67
+    },
+    {
+      "file": "dist/canvas.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/context-menu.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/controls.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 65
+    },
+    {
+      "file": "dist/goo-blob.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/handmark.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/notification.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/number-field.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/timeline.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/toggle-group.d.ts",
+      "ext": ".ts",
+      "bytes": 46,
+      "gzipBytes": 66
+    },
+    {
+      "file": "dist/collapsible.d.ts",
+      "ext": ".ts",
+      "bytes": 45,
+      "gzipBytes": 63
+    },
+    {
+      "file": "dist/motion-curves.d.ts",
+      "ext": ".ts",
+      "bytes": 45,
+      "gzipBytes": 65
+    },
+    {
+      "file": "dist/aurora.d.ts",
+      "ext": ".ts",
+      "bytes": 44,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/data-table.d.ts",
+      "ext": ".ts",
+      "bytes": 44,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/hover-card.d.ts",
+      "ext": ".ts",
+      "bytes": 44,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/search.d.ts",
+      "ext": ".ts",
+      "bytes": 44,
+      "gzipBytes": 64
+    },
+    {
+      "file": "dist/components/custom/aurora/constants/shaders/aurora.frag.d.ts",
+      "ext": ".ts",
+      "bytes": 43,
+      "gzipBytes": 63
+    },
+    {
+      "file": "dist/motion-core.d.ts",
+      "ext": ".ts",
+      "bytes": 43,
+      "gzipBytes": 62
+    },
+    {
+      "file": "dist/pulse.d.ts",
+      "ext": ".ts",
+      "bytes": 43,
+      "gzipBytes": 63
+    },
+    {
+      "file": "dist/separator.d.ts",
+      "ext": ".ts",
+      "bytes": 43,
+      "gzipBytes": 63
+    },
+    {
+      "file": "dist/dock.d.ts",
+      "ext": ".ts",
+      "bytes": 42,
+      "gzipBytes": 62
+    },
+    {
+      "file": "dist/progress.d.ts",
+      "ext": ".ts",
+      "bytes": 42,
+      "gzipBytes": 62
+    },
+    {
+      "file": "dist/tabs.d.ts",
+      "ext": ".ts",
+      "bytes": 42,
+      "gzipBytes": 62
+    },
+    {
+      "file": "dist/command.d.ts",
+      "ext": ".ts",
+      "bytes": 41,
+      "gzipBytes": 58
+    },
+    {
+      "file": "dist/popover.d.ts",
+      "ext": ".ts",
+      "bytes": 41,
+      "gzipBytes": 61
+    },
+    {
+      "file": "dist/tooltip.d.ts",
+      "ext": ".ts",
+      "bytes": 41,
+      "gzipBytes": 61
+    },
+    {
+      "file": "dist/button.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/composables/keyboard/index.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/dialog.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/keyboard.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/reactive.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/select.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/slider.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/switch.d.ts",
+      "ext": ".ts",
+      "bytes": 40,
+      "gzipBytes": 60
+    },
+    {
+      "file": "dist/badge.d.ts",
+      "ext": ".ts",
+      "bytes": 39,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/label.d.ts",
+      "ext": ".ts",
+      "bytes": 39,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/sheet.d.ts",
+      "ext": ".ts",
+      "bytes": 39,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/sidebar.d.ts",
+      "ext": ".ts",
+      "bytes": 39,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/toast.d.ts",
+      "ext": ".ts",
+      "bytes": 39,
+      "gzipBytes": 59
+    },
+    {
+      "file": "dist/card.d.ts",
+      "ext": ".ts",
+      "bytes": 38,
+      "gzipBytes": 58
+    },
+    {
+      "file": "dist/motion.d.ts",
+      "ext": ".ts",
+      "bytes": 38,
+      "gzipBytes": 58
+    },
+    {
+      "file": "dist/color.d.ts",
+      "ext": ".ts",
+      "bytes": 37,
+      "gzipBytes": 55
+    },
+    {
+      "file": "dist/dom.d.ts",
+      "ext": ".ts",
+      "bytes": 35,
+      "gzipBytes": 55
     }
   ]
 }

@@ -39,9 +39,13 @@ const { runActive, settle, cancel } = useCountup(host, { easeFn: easeOutBack });
                 <Button variant="ghost" @click="cancel">Cancel</Button>
             </div>
 
+            <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+                 (--motion-accent, the demo-local --viz-legendre twin): a leading
+                 accent bar above each counting figure. The value+unit stay ink. -->
             <div ref="host">
                 <div data-state="active" class="grid grid-cols-3 gap-6">
                     <div class="glass-card flex flex-col items-center gap-1 p-6">
+                        <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
                         <span
                             class="text-display fira-code tabular-nums"
                             data-countup="1280"
@@ -50,6 +54,7 @@ const { runActive, settle, cancel } = useCountup(host, { easeFn: easeOutBack });
                         <span class="text-small text-muted-foreground">requests</span>
                     </div>
                     <div class="glass-card flex flex-col items-center gap-1 p-6">
+                        <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
                         <span
                             class="text-display fira-code tabular-nums"
                             data-countup="98"
@@ -59,6 +64,7 @@ const { runActive, settle, cancel } = useCountup(host, { easeFn: easeOutBack });
                         <span class="text-small text-muted-foreground">% uptime</span>
                     </div>
                     <div class="glass-card flex flex-col items-center gap-1 p-6">
+                        <span class="h-1 w-8 rounded-pill bg-[var(--motion-accent)]" />
                         <span
                             class="text-display fira-code tabular-nums"
                             data-countup="4200"

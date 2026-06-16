@@ -7,15 +7,15 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      class="glass-floating flex items-center gap-3 rounded-panel px-4 py-3"
+      class="glass-floating feedback-tone flex items-center gap-3 rounded-panel px-4 py-3 text-foreground"
       :class="[
-        notificationClasses[notification.type],
+        toneClasses[notification.type],
         'min-w-[300px] max-w-[500px]'
       ]"
     >
       <component
         :is="notificationIcons[notification.type]"
-        class="h-5 w-5 flex-shrink-0"
+        class="feedback-tone-glyph h-5 w-5 flex-shrink-0"
       />
       <p class="flex-1 text-sm font-medium">
         {{ notification.message }}
@@ -48,17 +48,19 @@ defineEmits<{
   remove: [id: string]
 }>()
 
-// Status foregrounds: consume the canonical `--{success,destructive,warning,info}-foreground`
-// tokens (declared at tokens.css:254-256, 669-671) instead of baking
-// `text-white` light-mode glyph colour. The warning rung is dark-on-amber
-// — `--warning-foreground` is `hsl(24 10% 10%)` — so the literal `text-white`
-// previously misread against the luminous amber plate.
-// (Per audit U.W0.C-a §1.4 / §7.2 / §gap.5.)
-const notificationClasses = {
-  success: 'bg-success/90 text-success-foreground',
-  error: 'bg-destructive/90 text-destructive-foreground',
-  warning: 'bg-warning/90 text-warning-foreground',
-  info: 'bg-info/90 text-info-foreground',
+// BA.W-FEEDBACK-TONE — tone rides ON glass. The prior `bg-<tone>/90` per-type map was
+// the SECOND of three independent tone maps — a near-opaque (α 0.9, above the ~0.92
+// translucency floor) slab over the `glass-floating` base (the R8-13b flat-green
+// defect). It is DELETED. The `type` now maps onto the SAME `.feedback-tone-<name>`
+// register Toast consumes (the three-maps-into-one collapse; `error` IS the destructive
+// tone) — a tinted-glass wash + tone-keyed rim + full-chroma glyph, the backdrop
+// showing through. The body `<p>` stays `--foreground` (legibility); the glyph carries
+// the tone via `.feedback-tone-glyph`.
+const toneClasses = {
+  success: 'feedback-tone-success',
+  error: 'feedback-tone-destructive',
+  warning: 'feedback-tone-warning',
+  info: 'feedback-tone-info',
 }
 
 const notificationIcons = {

@@ -23,28 +23,55 @@
            5 → 6  : 10 L  (muted text → strong-muted text, secondary register)
 
        Semantic aliases re-point into the scale — no back-compat shims.
-       ═══════════════════════════════════════════════ */
-    --neutral-0: hsl(48 12% 98%);   /* L 98 — page surface */
-    --neutral-1: hsl(48 10% 95%);   /* L 95 — soft field bg */
-    --neutral-2: hsl(48  9% 90%);   /* L 90 — chip / tab-inactive bg */
-    --neutral-3: hsl(48  8% 82%);   /* L 82 — hover / highlight bg */
-    --neutral-4: hsl(48  7% 70%);   /* L 70 — subtle border */
-    --neutral-5: hsl(48  6% 40%);   /* L 40 — muted text (WCAG AA: 5.23:1 vs L98 page / 4.91:1 vs L95 muted) */
+
+       BA.W-NO-GRAY — THE WARM-CHROMA FLOOR (R10-5 "No gray."). The ladder was
+       SPECIFIED warm (hue 48) but RESOLVED achromatic — at 6-10% sat across
+       L40-95 the painted OKLab chroma landed C 0.0055-0.0155 (below the ~0.020
+       perceptual gray floor) AND at hsl-48 the OKLab hue mapped to ~95° (a
+       yellow-green), NOT the warm-amber the --foreground ink carries (hsl-24 →
+       OKLab H≈56°). The fix is CHROMA-ONLY at constant L: warm the hue toward
+       the foreground register (hsl 28-34 → OKLab H 62-72°, warm MATERIAL not a
+       cast) AND lift the saturation off the gray floor. The L is unchanged (the
+       contrast contract — AA re-ratified, ±0.01 of HEAD). The mid/low-L rungs
+       clear the strong floor C≥0.020; the L90 chip is gamut-bound (it cannot
+       carry 0.020 at L90 without a visible cast — the triumvirate "tinted not
+       warm" trigger), so it lifts to a materially-warm C≈0.013 (~2.4× HEAD).
+       Machine-locked by proof:no-gray + tests-visual/no-gray.spec.ts. */
+    --neutral-0: hsl(40 30% 98%);   /* L 98 — page surface (warm-cream, KEEP-NEUTRAL surface) */
+    --neutral-1: hsl(38 26% 95%);   /* L 95 — soft field bg */
+    --neutral-2: hsl(34 28% 90%);   /* L 90 — chip / tab-inactive bg (warm, gamut-bound C≈0.013) */
+    --neutral-3: hsl(33 30% 82%);   /* L 82 — hover / highlight bg (warm, C≈0.025) */
+    --neutral-4: hsl(32 26% 70%);   /* L 70 — subtle border (warm, C≈0.036) */
+    --neutral-5: hsl(30 22% 40%);   /* L 40 — muted text (warm, C≈0.043; WCAG AA: 5.21:1 vs page / 4.90:1 vs muted) */
     /* W7-α' (AK-FD1) — strong-muted text rung. One principled ladder step
        (10 L darker, the 5→6 cadence above) past muted text toward
        --foreground (L10). Sits at the 1/3 point of the L40→L10 muted→primary
        gap: legible secondary text that reads less-faint than muted but not as
        assertive as primary. By-COLOUR per the canon (a neutral step, not an
-       alpha mute); hue held at 48, sat nudged 6→7 toward --foreground's 10.
-       WCAG AA: 7.79:1 vs L98 page / 7.31:1 vs L95 muted (cf. neutral-5's
-       5.23:1) — comfortably above the 4.5:1 body floor. */
-    --neutral-6: hsl(48  7% 30%);   /* L 30 — strong-muted text (secondary register) */
+       alpha mute). BA.W-NO-GRAY — re-saturated onto the warm identity in
+       lockstep with the ladder (hsl 28 24% — OKLab H 62°, C≈0.038, the warm
+       register; L held at 30). WCAG AA: 7.88:1 vs L98 page / 7.43:1 vs L95
+       muted (cf. neutral-5's 5.21:1) — comfortably above the 4.5:1 body floor. */
+    --neutral-6: hsl(28 24% 30%);   /* L 30 — strong-muted text (secondary register, warm) */
 
     --background: var(--neutral-0);
     --foreground: hsl(24 10% 10%);
-    --card: var(--neutral-0);
+    /* BA.W-NO-GRAY L1 — the warm-bias glass PLATE. --card was `var(--neutral-0)`
+       (the near-achromatic L98 page, OKLab C 0.0017) — so every glass plate
+       (Card/Button/Toast/Popover/Dialog/Sheet, all --card-derived) composited a
+       flat gray slab over a flat backdrop (the G1/G8 defect, the user's "no gray
+       ... for cards, buttons"). Glass is TRANSMISSIVE — over a flat page there
+       is nothing behind to modulate, so the plate is its own near-neutral cream.
+       --card DECOUPLES from the page to a warm-cream value carrying a real OKLab
+       chroma (hsl 36 48% 97% → OKLab C 0.0062 at warm H 75°, L kept ~98 so the
+       page-card SURFACE read is byte-stable), so the plate reads WARM over ANY
+       backdrop — the plate floor (composited C ≥ 0.0035, ~2× HEAD) the gamut
+       allows a near-white translucent surface. The DARK --card is W-DARK-MATERIAL's
+       lifted hsl(24 8% 16%) (NOT re-warmed here — the dark register is its work).
+       Bounded: the cream family, never a tinted cast (the triumvirate bar). */
+    --card: hsl(36 48% 97%);
     --card-foreground: var(--foreground);
-    --popover: var(--neutral-0);
+    --popover: var(--card);
     --popover-foreground: var(--foreground);
 
     /* R0G-5 (AO.W4) — warm-neutral public-data panel surface. One warmth step

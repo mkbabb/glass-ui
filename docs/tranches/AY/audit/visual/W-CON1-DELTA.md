@@ -1,29 +1,13 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
-<!-- surface-paths: src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts, src/components/custom/constellation/Constellation.vue -->
-<!-- surface-hash: f3637de655479ee23aa596e125f22bd90289e80d517ebf2709142615e0241ca7 -->
-<!-- AZ.W-GATES (D6): the freshness model migrated OFF the git-ancestry treadmill
-     (the frozen capture-commit + superseded-by markers are RETIRED) ONTO the
-     content hash of the declared surface-paths' bytes above — fresh IFF the surface
-     is byte-identical to capture time, regardless of unrelated commits. The
-     surface-hash was stamped at this re-capture against the current AZ-tree bytes. -->
-<!-- AY.W-LIVE1 / W-DELTA0 freshness re-capture (2026-06-10): the 12 own-surface W-CON1-*
-     stills (refit-before / refit-after / autodrift × {desktop,mobile} × {light,dark}) were
-     RE-SHOT on the current tree (HEAD 83e1e3b2) via `scripts/wf-ay-capture-con1.mjs` against
-     the live /substrates/constellation route on :5199 — the SAME scenes, the refit-before at
-     the small 360×240 box (the drift-out baseline) and the after at the grown 1280×720
-     desktop / natural 314-card mobile, the lattice re-fit to fill each. The capture-commit
-     is now HEAD (a descendant of the surface's last-touch 875c271a), so the freshness clause
-     reads FRESH. The constellation renders on Canvas2D (no Aurora ReadPixels stall). The carve
-     (W-GOD1: constellationField → Draw/Interaction) was render-neutral, so the re-shot frames
-     match the prior pixels. CAPTURE-HARNESS note: the `__constellationRefit.resizeTo` seam now
-     sets the host's PLAIN inline width, which a flex parent introduced by the later layout
-     reverify stretches (so the plain seam no longer shrinks the box on the live demo — the
-     same regression `proof:constellation-refit-live` surfaces); the re-capture harness forces
-     the host box at CAPTURE TIME (`setProperty(…, "important")` + `flex:none`) to reproduce
-     the small-box drift-out faithfully. The numeric refit verdict (the ≥90% one-frame coverage
-     fill) is the binding evidence in `proof:constellation-refit-live` — see §"Gate evidence"
-     successor note. -->
+<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form constellation surface
+     drifted — the AZ constellation re-renders (AZ.W-CON-GEN's generalization + W-REFLECT's
+     constellation surface) re-shot the equivalent under their OWN wave ids, so the AY surface-hash
+     no longer matches the live bytes (stamped f3637de6…, the live constellation is now a different
+     surface). This is RETIRE-with-rationale over re-shoot: a re-capture would shoot the AZ-generalized
+     surface, not the AY refit surface. The AY freshness headers (surface-paths / surface-hash) are
+     removed rather than re-stamped; the refit reasoning below is preserved as the historical record,
+     no longer a freshness-bearing live DELTA. -->
 
 **Wave:** AY.W-CON1 · **Status:** live-verified · **Verdict:** PASS (the recessive
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified

@@ -14,7 +14,7 @@ const phaseSegments: ProgressSegment[] = [
     { key: "pings", label: "Pings", color: "var(--viz-fourier)", state: "completed" },
     { key: "jitter", label: "Jitter", color: "var(--viz-chebyshev)", state: "completed" },
     { key: "download", label: "Download", color: "var(--viz-legendre)", state: "active" },
-    { key: "upload", label: "Upload", color: "var(--surface-tint-40)", state: "pending" },
+    { key: "upload", label: "Upload", color: "var(--viz-amber)", state: "pending" },
 ];
 const phaseActive = ref<string>("download");
 const phaseProgress = ref<number>(58);

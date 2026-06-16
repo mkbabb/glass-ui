@@ -1,0 +1,159 @@
+/* typography/utilities.css — the MATH / MONO / FONT-FAMILY / ORNAMENTAL / AUX
+ * registers.
+ *
+ * Carved from typography.css (BA.W-CARVE2) — the math/mono variants, the
+ * font-family utilities (.cm-serif/.fira-code), the ornamental .fourier-f, and
+ * the @layer components AUX section-label/pane-title/kinetic hooks. @import-ed
+ * LAST by the typography.css thin root (after the faces+scale and the semantic
+ * classes). The carve moves rules in the SAME cascade position →
+ * byte-isomorphic dist (the no-god-module import-order gate is the witness). */
+
+/* ═══════════════════════════════════════════════
+   MATH — Plus Jakarta Sans italic
+   ═══════════════════════════════════════════════ */
+@utility text-math {
+    font-family: var(--font-text);
+    font-style: italic;
+}
+
+@utility text-math-body {
+    font-family: var(--font-text);
+    font-size: var(--type-prose);
+    line-height: var(--type-leading-prose);
+    font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════
+   MONO variants
+   ═══════════════════════════════════════════════ */
+@utility text-mono-caption {
+    font-family: var(--font-mono);
+    font-size: var(--type-caption);
+    letter-spacing: var(--type-tracking-wider);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+@utility text-mono-small {
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    line-height: var(--type-leading-small);
+}
+
+@utility text-mono-prose {
+    font-family: var(--font-mono);
+    font-size: var(--type-prose);
+    line-height: var(--type-leading-prose);
+    letter-spacing: 0.02em;
+}
+
+@utility text-mono-micro {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    line-height: 1.25;
+    letter-spacing: 0.025em;
+}
+
+/* ═══════════════════════════════════════════════
+   FONT FAMILY UTILITIES
+   ═══════════════════════════════════════════════ */
+/* .cm-serif — the Computer-Modern math/serif voice. A DISTINCT face from the
+   brand text register: it resolves to the consumer-supplied serif (system
+   serif by default; a math consumer maps Computer Modern / KaTeX over it). It
+   is NOT the Plus Jakarta text register — the one serif survivor of the
+   register reconciliation. */
+@utility cm-serif {
+    font-family: var(--font-serif-math, serif);
+}
+
+@utility fira-code {
+    font-family: var(--font-mono);
+    font-feature-settings: "liga", "calt";
+}
+
+/* ═══════════════════════════════════════════════
+   ORNAMENTAL — Fourier F
+   ═══════════════════════════════════════════════ */
+@utility fourier-f {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.35em;
+    line-height: 1;
+    vertical-align: -0.05em;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════
+   AUX — section label, pane title, kinetic hooks
+   ═══════════════════════════════════════════════ */
+@layer components {
+    /* Responsive pane title */
+    .text-pane-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
+        line-height: var(--type-leading-display);
+        letter-spacing: var(--type-tracking-tight);
+        font-weight: 600;
+        font-optical-sizing: auto;
+    }
+
+    /* AV.W16 TW3 — the pane title scales off its PANE's box, not the viewport.
+       An unnamed @container query resolves to the nearest ancestor container,
+       so the title grows once its pane clears 40rem (≈ 640px) regardless of the
+       viewport. Contract: the consuming pane sets `container-type: inline-size`
+       (the dock/chassis pattern); without a container ancestor the compact base
+       holds. */
+    @container (min-width: 40rem) {
+        .text-pane-title {
+            font-size: var(--type-display-3);
+        }
+    }
+
+    /* Section label (mono, small caps) */
+    .section-label {
+        font-family: var(--font-mono);
+        font-size: var(--type-caption);
+        color: var(--muted-foreground);
+        text-transform: uppercase;
+        letter-spacing: var(--type-tracking-caps);
+    }
+
+    /* Section-accent eyebrow (AZ.W-SUFFUSE D3-7 / D1-8). ONE coherent
+       section-accent register — the colored mono eyebrow reads as an
+       intentional system, not a four-hue rainbow. The accent reads a single
+       `--section-label-accent` knob (default `--section-color-7`, the violet
+       brand anchor) so a page tints its whole eyebrow column at ONE chroma
+       from one override, NOT a different hue per section. This is the
+       one-color-event rule at PAGE scope: the eyebrow is the page's ONE
+       accent identity. The label/value/body ink below stays neutral. */
+    .section-label--tinted {
+        color: var(--section-label-accent, var(--section-color-7));
+    }
+
+    /* Font-feature helpers */
+    .tabular-nums {
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* Kinetic: per-character stagger */
+    .char-stagger > .char {
+        display: inline-block;
+        animation: fade-in var(--spring-smooth-duration) var(--spring-smooth, ease) backwards;
+        animation-delay: calc(var(--char-index, 0) * 30ms);
+    }
+
+    /* Letter-pressed treatment — reads as text engraved into the panel
+       surface. Speedtest's idle hero `0` consumes this via
+       `.text-hero[data-idle="true"]`; the `text-engraved` utility is the
+       glass-ui contract that any consumer can apply for the same look.
+       Opacity dropped in P.W1.B — the audacious canon mutes by colour
+       (`--muted-foreground`), not by alpha; opacity ≤ 0.4 over a glass
+       surface read as a fade, not as engraving. */
+    .text-engraved {
+        color: var(--muted-foreground);
+        /* AW.W26 — composes the `--text-shadow-engraved` @theme identity token
+           (the two-stop emboss) instead of a hand-rolled literal (gate 4). */
+        text-shadow: var(--text-shadow-engraved);
+    }
+}

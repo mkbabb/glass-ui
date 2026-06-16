@@ -43,6 +43,17 @@
 
     /* ── Glassmorphic circular icon button ── */
 
+    /* BA.W-DEMO-AFFORDANCES (IG-A4) — the two size registers below are
+       MUTUALLY EXCLUSIVE; never stack `.glass-btn` and `.btn-pill` on one
+       element. `.glass-btn` is the FIXED-square icon primitive (width/height:
+       var(--size-icon-btn) + contain:paint) — `.btn-pill` is the CONTENT-WIDTH
+       text pill. Stacked, the fixed square wins and contain:paint clips the
+       wrapped label into a ~40px blob (the R8-17 "play button" defect). A
+       text-bearing `.glass-btn` collapses the same way even without `.btn-pill`.
+       For a play/replay affordance reach for <StoryPlayButton> (demo) or a real
+       <Button> with a leading Lucide glyph, never an icon-button carrying text.
+       Machine-locked by proof:demo-affordances (W1 — no class co-occurrence,
+       no text-bearing icon button). */
     .glass-btn {
         @apply flex items-center justify-center cursor-pointer;
 
@@ -72,7 +83,7 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            scale var(--duration-normal) var(--spring-smooth);
+            scale var(--spring-smooth-duration) var(--spring-smooth);
     }
 
     .glass-btn:hover:not(:disabled) {
@@ -141,7 +152,7 @@
             box-shadow var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--spring-smooth);
+            scale var(--spring-smooth-duration) var(--spring-smooth);
     }
 
     .btn-pill > * {
@@ -189,16 +200,21 @@
            `:focus-visible` accent ring + the `:user-invalid`/`[aria-invalid]`
            destructive ring below still win by order + specificity.
            AX.W54 — moved off the srgb `--surface-tint-15` fork onto the glass
-           border seam (`--glass-border-floating`, the matching 15%α rung) so the
-           pill is ONE glass model with the rest of the ladder, not a divergent
-           tint axis. */
-        border: 1.5px solid var(--glass-border-floating);
-        background: var(--glass-bg-quiet);
-        /* AX.W54 — the pill reads as REAL glass: the quiet-tier 10px blur (the
-           same `--glass-blur-quiet` its `--glass-bg-quiet` background pairs with),
-           not the sub-perceptual `blur(1px)` wash it carried — and the
-           `--glass-level` knob now clarifies it in lockstep with every surface. */
-        backdrop-filter: var(--glass-blur-quiet);
+           border seam so the pill is ONE glass model with the rest of the ladder.
+           BA.W-SURFACE-AXIS scope 7 — re-pointed onto the SHARED `--control-surface-*`
+           REST register so Input/Textarea/NumberField/Select/Combobox/TagsInput are
+           ONE material at rest (the input rung was the warmer of the two; Select rode
+           the `glass-wash` gray — the no-gray control-family seam). The register reads
+           the same `--glass-*` ladder, so `--glass-level`/the W55 bright bucket retune
+           the whole form family in lockstep (--control-surface-border defaults to the
+           `--glass-border-floating` 15%α rung, --control-surface-bg to `--glass-bg-quiet`,
+           --control-surface-blur to `--glass-blur-quiet`). */
+        border: 1.5px solid var(--control-surface-border);
+        background: var(--control-surface-bg);
+        /* The control's REAL glass blur — the shared register's quiet-tier radius
+           (the same `--control-surface-blur` pairs with `--control-surface-bg`); the
+           `--glass-level` knob clarifies it in lockstep with every surface. */
+        backdrop-filter: var(--control-surface-blur);
         padding: 0 calc(1rem * var(--ui-scale));
         font-size: var(--control-text);
         color: var(--foreground);
@@ -212,6 +228,24 @@
 
     .input-pill::placeholder {
         color: var(--surface-tint-35);
+    }
+
+    /* BA.W-SURFACE-AXIS scope 7 — the shared control REST surface class. The
+       NON-pill control families (the Select trigger, the TagsInput root) that do
+       NOT compose `.input-pill` but want the SAME resting material read this — so
+       the whole form band is ONE register at rest (the Select default rode the
+       lighter `glass-wash` gray before; this is the no-gray control-family seam).
+       It carries the bg/border/blur ONLY (each control owns its own height/radius/
+       padding/font), so a non-pill control composes `.control-surface` + its own
+       geometry. The hover lift brightens the fill one step toward the resting rung. */
+    .control-surface {
+        background: var(--control-surface-bg);
+        border: 1px solid var(--control-surface-border);
+        backdrop-filter: var(--control-surface-blur);
+        -webkit-backdrop-filter: var(--control-surface-blur);
+    }
+    .control-surface:hover:not(:disabled, [data-disabled]) {
+        background: var(--control-surface-bg-hover);
     }
 
     /* AQ.W4 §W4.6 — keyboard-focus ring only. Was bare `:focus` (showed the
@@ -289,6 +323,48 @@
        surface. */
     .glass-wash[role="combobox"] {
         border-color: var(--surface-tint-15);
+    }
+
+    /* ── BA.W-PAGER — the glass pager pill chassis (.glass-pager-ring) ──────────
+       The ONE pager-CHASSIS ring register: a `--radius-pill` glass-floating pill
+       (the DockRail-chip recipe — `--glass-bg-floating` + `--glass-blur-floating`
+       + `--glass-edge-light`/`--glass-specular` + the soft drop + the `.dark`
+       box-shadow arm). It encapsulates BOTH the `<PagerDots ring>` dot rail AND
+       the `<CarouselPager>` counter (the counter re-registers OFF the opaque
+       `bg-card` slab onto this — the R9/R10-5 dark-slab class dies in the same
+       edit). NEVER an opaque `bg-card` plate: this is the house "controls in a
+       glass pill" idiom, translucent (reads the substrate through it), already
+       dark/light-safe, already specular-rimmed (≥2-consumer-proven on the dock
+       rail-extend chips + the dock collapsed pill). The legibility floor over the
+       carousel's image content rides the SAME rebuilt registers
+       (W-DARK-MATERIAL/W-NO-GRAY) — no local opaque fallback. */
+    .glass-pager-ring {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding-inline: 0.625rem;
+        padding-block: 0.3125rem;
+        border-radius: var(--radius-pill);
+        background: var(--glass-bg-floating);
+        backdrop-filter: var(--glass-blur-floating);
+        -webkit-backdrop-filter: var(--glass-blur-floating);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+        /* §6 EASING DOCTRINE — the surface channel cross-fades on the bezier
+           `--ease-standard` (NEVER a spring; a surface prop on a spring is the
+           violation). */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+    .dark .glass-pager-ring {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
     }
 
     /* ── AW.W23 — chromatic edge dispersion (the polished-glass rim fringe) ──

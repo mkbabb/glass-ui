@@ -60,6 +60,10 @@ export type {
 
 export {
     DEFAULT_AURORA_CONFIG,
+    // BA.W-ATLAS-RECONCILE A-4a (d6 9467bd16 adopt) — the library-canon
+    // recessive-ground crayon calibration partial (spread over a consumer's
+    // pole-derived pigment for a paper-on-tooth data-ground aurora).
+    PAPER_WASH_GROUND,
     MAX_NUCLEI,
     MAX_STOPS,
 } from "../components/custom/aurora";
@@ -96,6 +100,14 @@ export type {
 // `tier` prop against; `CardSurface` is the orthogonal decoration register
 // (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
+// `Surface` is the SHARED {glass·veil·opaque} surface-decoration axis
+// (BA.W-SURFACE-AXIS) — the ONE three-rung register every content/floating
+// surface (Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/Expandable/
+// Skeleton) threads via `surfaceClass`. Distinct from `CardSurface` (Card's
+// own superset, which adds the Card-local `cartoon` decoration member). A
+// consumer types `<Sheet surface="opaque">` / `<Popover surface="veil">`
+// against `Surface`; the discovery layer publishes the union.
+export type { Surface } from "../components/ui/_shared";
 // `GlassPanelVariant` is the 5-rung glass-ladder surface vocabulary
 // (wash/quiet/resting/floating/overlay) parallel to `CardTier` — distinct because
 // GlassPanel paints the glass substrate directly while Card composes the same
@@ -105,16 +117,23 @@ export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
-// ── GlassUnderline (the animated draw-on underline, AY.W-UNDERLINE) ──────────
-// The `/underline` subpath's public surface: the two-clock + `active`-overlay
-// prop model, the variant headroom, and the `paths` geometry-escape tuple.
+// ── HandMark (the hand-voice mark family, BA.W-HANDMARK) ─────────────────────
+// The `/handmark` subpath's public surface: the prop model + the flat Brush
+// continuum. `GlassUnderline`/`/underline` RETIRED onto `HandMark shape="underline"`
+// (DEC-8 outcome 1; clean break, no alias — the editorial draw-on underline is
+// `<HandMark shape="underline" animation="draw-on">`, the natural pencil-boil
+// morphology the `boil` brush).
 export type {
-    GlassUnderlineClock,
-    GlassUnderlineVariant,
-    GlassUnderlinePaths,
-    GlassUnderlineProps,
-    GlassUnderlineExpose,
-} from "../components/custom/underline";
+    HandMarkProps,
+    HandShape,
+    HandAnimation,
+    MarkBox,
+    Brush,
+    BrushName,
+    BlendMode,
+    TaperSpec,
+    InkPath,
+} from "../components/custom/handmark";
 
 // ── CVA variant prop types ─────────────────────────────────────────────────
 // Every CVA-driven component's `VariantProps`-derived type. Consumers wrapping
@@ -204,7 +223,15 @@ export type {
 // `startViewTransition` resolves. The `startViewTransition` +
 // `supportsViewTransitions` runtime helpers ship on the root barrel +
 // `@mkbabb/glass-ui/motion-core` (dependency-free).
-export type { ViewTransitionResult } from "../composables/motion/useViewTransition";
+// BA.W-ATLAS-RECONCILE A-4b — `ViewTransitionOptions` gains
+// `instantUnderReducedMotion` (the JS-level reduced-motion instant-path) and an
+// async-capable update; `NavigateOptions` is the route/navigation convenience's
+// option shape (the `navigate(fn)` helper over the ONE VT substrate).
+export type {
+    ViewTransitionResult,
+    ViewTransitionOptions,
+    NavigateOptions,
+} from "../composables/motion/useViewTransition";
 
 // ── Count-up animator ────────────────────────────────────────────────────────
 // `Countup` — the `{ runActive, settle, cancel }` control shape `useCountup`
@@ -296,13 +323,20 @@ export type {
     MetricStackProps,
 } from "../components/custom/metric-stack";
 
+// ── PagerDots ────────────────────────────────────────────────────────────────
+// `PagerDotsProps` is the Props shape consumers forward when wrapping
+// `<PagerDots>` — the ONE position-dot rail register the carousel ships and the
+// slides deck adopts (BA.W-PAGER). Ships via its `/pager-dots` subpath.
+export type { PagerDotsProps } from "../components/custom/pager-dots";
+
 // ── Digit / SegmentedTabs primitives ────────────────────────────────────────
 // Props/variant types for the animated-digit + the unified SegmentedTabs.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
 // into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
-// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabOption` are the
-// unified tab family — ONE component, a `variant` axis (segmented · pill ·
-// underline), multi-select + responsive collapse as props.
+// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabsOrientation`/
+// `SegmentedTabOption` are the standardized tab family (BA.W-TABS) — ONE engine,
+// TWO materials (`variant`: pill · underline), ONE orientation axis (horizontal ·
+// vertical), responsive collapse as a prop.
 export type {
     AnimatedDigitMode,
     AnimatedDigitProps,
@@ -310,6 +344,7 @@ export type {
 export type {
     SegmentedTabsProps,
     SegmentedTabsVariant,
+    SegmentedTabsOrientation,
     SegmentedTabOption,
 } from "../components/custom/tabs";
 
@@ -317,6 +352,19 @@ export type {
 // `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked
 // avatar/icon strips pin against from the discovery layer.
 export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
+
+// ── IconChip ─────────────────────────────────────────────────────────────────
+// The section-color pop primitive (BA.W-ICON-CHIP) — the ONE color-event
+// vehicle. `IconChipProps` is the full contract; `IconChipSection` (the 0..12
+// ramp index) + `IconChipTone` (a complete token colour, the MetricCell-iconColor
+// reconcile path) + `IconChipIcon` (the permissive lucide glyph type) are the
+// public axis types consumers pin against.
+export type {
+    IconChipProps,
+    IconChipSection,
+    IconChipTone,
+    IconChipIcon,
+} from "../components/custom/icon-chip";
 
 // ── Dock ───────────────────────────────────────────────────────────────────
 // `UseDockStateReturn` — canonical composable-return shape paralleling
@@ -348,9 +396,15 @@ export type {
 // fallback → classList("dark") + style.colorScheme). Both runtime values
 // live on the flat `/dark` subpath (vueuse-bearing surface discipline);
 // only the types ride the discovery layer.
+// `DarkFlipSettledCallback` / `UseGlobalDarkReturn` — BA.W-ATLAS-RECONCILE A-1
+// (d6 9467bd16 adopt): the post-flip SETTLE seam shape. A consumer subscribes
+// ONE post-flip post-paint moment via `useGlobalDark().onFlipSettled(cb)` (the
+// atlas's palette-memo/chart-retint/aurora-rederivation batch). `(isDark) => void`.
 export type {
+    DarkFlipSettledCallback,
     DarkModeSyncScriptOptions,
     UseGlobalDarkOptions,
+    UseGlobalDarkReturn,
 } from "../composables/dark";
 
 // ── Canvas2D lifecycle substrate ─────────────────────────────────────────────

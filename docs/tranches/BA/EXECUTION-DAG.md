@@ -9,9 +9,10 @@ the AUTHORING phase — NO implementation runs until the user greenlights (BA in
 `latest` on npm). slides exact-pins 3.13.0 (commit a171266, deployed). The BA branch is
 `tranche/BA` off master.
 
-**Numbering:** the `W-*` named system from `BA.md`'s 29-wave roster (24 at first
+**Numbering:** the `W-*` named system from `BA.md`'s 30-wave roster (24 at first
 authoring + the R9/R10 pre-greenlight amendments W-NO-GRAY/W-TABS/W-PAGER + the
-atlas-letter folds W-ATLAS-RECONCILE/W-HANDMARK). The five user-domain
+atlas-letter folds W-ATLAS-RECONCILE/W-HANDMARK + the value.js N2 fold's
+W-EMISSION, Batch 2). The five user-domain
 hinges (H1 dark-material direction, H2 gold-CTA post-disco form, H3 rail disposition,
 H4 version, H5 publish/deploy creds) gate the named batches.
 
@@ -90,15 +91,16 @@ files — SEQUENCED, never parallel (dark register first, then the light registe
 chroma floor + glass-plate warm bias + border re-anchor on the rebuilt base). Batch 2
 opens only after 1b's live verdict.
 
-## §3 — Batch 2: the S1 redress band (4 parallel waves)
+## §3 — Batch 2: the S1 redress band + the emission class (6 parallel waves)
 
 | wave | write bound (primary) |
 |---|---|
 | W-CONFIG-CHASSIS | src/components/custom/configurator/*, src/components/custom/labeled-field/*, demo/configurator/*, demo/stories/aurora/sections/AuroraColorSection.vue, demo/stories/aurora/presets.ts |
-| W-GOO-REDRESS | src/components/custom/goo-blob/* (the wake seam + satellite envelope), demo/stories/substrates/blob.vue (STUDIO_GEO_BASE) |
+| W-GOO-REDRESS | src/components/custom/goo-blob/* (the wake seam + satellite envelope; the conditional C-1 satellite-color arm-A widen — see the spec), demo/stories/substrates/blob.vue (STUDIO_GEO_BASE) |
 | W-DOCK-GEOMETRY | src/styles/dock/{shell,overflow}.css, src/styles/dock-controls/* (geometry only), demo/layout/{BottomDock,SidebarDock}.vue (the overflow prop only) |
 | W-FADING-SCROLL | src/components/custom/fading-scroll/* (create), src/styles/utilities/base.css (the .scroll-fade-* retirement), demo/stories/aurora/PresetPickerRow.vue, src/styles/segmented-tabs.css (the overflow mask re-point) |
 | W-ATLAS-RECONCILE | src/composables/dark/* (the settle seam + reflow deletion), src/components/custom/controls/DarkModeToggle.vue + src/styles/utilities/a11y-overrides.css (the carve), src/composables/motion/useViewTransition.ts, src/components/custom/aurora/constants/presets.ts (PAPER_WASH_GROUND), the silver/chassis conditional pair |
+| W-EMISSION | src/styles/index.css (the @source re-point), src/components/ui/select/SelectContent.vue + the precompiled Select-bound CSS home, src/components/ui/slider/{index.ts,Slider.vue} (the size axis as [data-size] CSS), src/components/custom/watercolor-dot/WatercolorDot.vue (the ghost variant), scripts/proof-emission.mjs (the producer-side emission gate) |
 
 Coordination seams (declared, not raced):
 - **Configurator.vue's `.scroll-fade-y`**: W-FADING-SCROLL mints the primitive and
@@ -113,6 +115,28 @@ Coordination seams (declared, not raced):
 - **The goo "jittery" defect is split by mechanism**: the renderer half (wake seam) is
   W-GOO-REDRESS; the CSS register half (toggle-chip easing) is W-GLASS-CAL (Batch 4).
   The W-REFLECT2 goo verdict checks BOTH landed.
+- **The W-EMISSION Select/Slider seams (the value.js N2 fold's register B):**
+  W-EMISSION (the 6th Batch-2 wave) fixes the Slider SIZE axis (the track GEOMETRY in
+  `ui/slider/{index.ts,Slider.vue}`) while W-CONFIG-CHASSIS fixes the slot WIDTH (the
+  configurator chassis) — disjoint by construction (W-CONFIG-CHASSIS's spec line 119
+  EXPLICITLY fences `ui/slider/*` OUT, "the width contract lives at the chassis, NOT
+  the primitive"), so `ui/slider/*` is W-EMISSION's clean exclusive bound. W-EMISSION
+  touches `ui/select/SelectContent.vue` (the collision-bound); W-MENU-GLASS (Batch 4)
+  touches `ui/select/SelectTrigger.vue` (the BA-VJS-4 / WO-3 font-rung prop) — DIFFERENT
+  files in the select package, DIFFERENT batches (W-EMISSION lands first); the shared
+  `--dropdown-text` lever is re-minted by neither. The `index.css` `@source` re-point
+  (W-EMISSION, Batch 2) is a different region + an earlier batch than W-MENU-GLASS's
+  `@import "./menu.css"` floating-band add (Batch 4) — W-MENU-GLASS appends onto the
+  W-EMISSION-landed base. The `Slider.vue` range-fill `--primary` is W-DARK-MATERIAL's
+  Batch-1 landed token-consumer edit (region-disjoint from W-EMISSION's `[data-size]`
+  track geometry). All declared, none raced.
+- **The C-1 satellite-color GL-fence-widen (W-GOO-REDRESS arm A)**: the value.js N2
+  fold's C-1 (per-satellite derived color) is a CONDITIONAL arm in W-GOO-REDRESS —
+  arm A widens the GL fence to the `uSatColor` uniform path (a §Triumvirate
+  scope-reveal, the metaball-uniforms/frag/uploadBlobUniforms seam) OR arm B books to
+  a 4.x point release. The default is arm B (book); arm A fires the triumvirate before
+  crossing the GL fence. Recorded so the orchestrator knows the W-GOO-REDRESS bound may
+  conditionally extend to the shader color seam.
 
 ## §4 — Batch 3: the dock re-conceived (sequenced internally)
 
@@ -193,7 +217,7 @@ historical retirement rides W-CLOSE.
 ```
 Batch 0:  W-SHELL-HOLD ‖ W-GESTALT-GATE ‖ W-HYGIENE ‖ W-CARVE2
 Batch 1:  W-DARK-MATERIAL → W-NO-GRAY                       [H1]
-Batch 2:  W-CONFIG-CHASSIS ‖ W-GOO-REDRESS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL ‖ W-ATLAS-RECONCILE
+Batch 2:  W-CONFIG-CHASSIS ‖ W-GOO-REDRESS ‖ W-DOCK-GEOMETRY ‖ W-FADING-SCROLL ‖ W-ATLAS-RECONCILE ‖ W-EMISSION
 Batch 3:  W-DOCK-SECTIONS → W-DOCK-MORPH-INSITU             [H3]
 Batch 4:  W-SURFACE-AXIS ‖ W-FEEDBACK-TONE ‖ W-MENU-GLASS ‖ W-GLASS-CAL ‖ W-PROGRESS-GRADIENT ‖ W-TABS   [H2]
           (intra-batch edge §5a: W-GLASS-CAL.3 spring-clock → W-TABS)
@@ -274,3 +298,5 @@ folded back here as BINDING refinements (each is also recorded in the owning spe
    rebaseline signal, not a regression to revert); (e) W-NO-GRAY (Batch 1b) appends
    to `tokens/glass.css` AFTER W-DARK-MATERIAL's seam edits land (sequenced within
    Batch 1, same nothing-races-the-substrate rationale).
+
+9. **The value.js N2 fold seams** (the cross-repo fold, 2026-06-12 — `audit/fleet/valuejs-fold.md` + `coordination/VALUEJS-N2-ASKS-2026-06-12.md`): ONE new wave (W-EMISSION, Batch 2 — register B + A-2/WO-1/WO-2 + A-3 + C-2) + SIX riders that touch existing waves' bounds: (a) **A-1 → W-DOCK-MORPH-INSITU** gains `dockMorphContext.ts:344-360` as a modify-carve (the BA-VJS-1 nested-group measure-ordering fix — `to:0` → `to:≈261`; the spring fence: `DOCK_SPRING`/`constants.ts` byte-untouched, NOT a re-tune); (b) **A-4 → W-STAGE** gains `aurora/composables/atoms.ts:166` as a modify-carve (the BA-VJS-2 breathing register non-zero drift — the JS motion TABLE, `aurora.frag` untouched, A1's bound); (c) **A-5 → W-TABS** is an ACCEPTANCE-ROW only (BA-VJS-3 — indicator center == label center; NO new scope/bound, the letter is explicit); (d) **WO-3 → W-MENU-GLASS** gains `ui/select/SelectTrigger.vue` (the BA-VJS-4 font-rung prop writing the existing `--dropdown-text`; disjoint from W-EMISSION's `SelectContent.vue`); (e) **C-1 → W-GOO-REDRESS** is a CONDITIONAL arm (BA-VJS-5 — arm A widens the GL fence to the `uSatColor` seam via §Triumvirate, arm B books to 4.x; the default is arm B); (f) **C-3 → W-FOURIER-STUDIO** Unit C GENERALIZES (BA-VJS-6 — the StepsEditor lands in a published `<EasingPicker>` primitive via §Triumvirate arm A, OR ships demo-only + books W-EASING-PRIMITIVE arm B); (g) **E → W-CLOSE** gains the value.js adopt book (`valuejs-adopt-book.md` — the cut-notes BY NAME: tabs/Dialog/menu/Select/Slider; the interim-arm retirements; the C-1 4.x block). **The flagged coordination conflict**: W-FOURIER-STUDIO Unit C (arm B) + W-DEMO-AFFORDANCES both touch `demo/stories/motion/curve-gallery.vue` in Batch 6 (region-disjoint — Steps card vs play/picker — but the single-writer rule binds: Unit C declares a literal-diff block W-DEMO-AFFORDANCES applies, OR sequences; arm A sidesteps it via the net-new `easing-picker/*` file). The conditional arm-A GL-fence-widen (C-1) + the conditional published-primitive (C-3) each conditionally extend their wave's bound — recorded in §3 + the owning specs.

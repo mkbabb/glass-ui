@@ -325,22 +325,25 @@ export function useDockMorphOrchestrator(
         //    target swapping in the same tick (a simultaneous collapse + pane-swap)
         //    does NOT clobber this target's deferred measurement.
         //
-        // BOOKED: AY.W-GOD1 — §F2 first-mount FLIP mis-seat (W-DOCK1-DELTA §F2).
-        // REPRODUCTION: a `#persistent`-slot collapsible dock (overview.vue:89), on a
-        // FRESH, never-interacted session, can first-hover-measure collapsed→collapsed
-        // (10px → 18px, scalar 0) while non-`#persistent` collapsible docks morph
-        // cleanly (35→487px). The `#persistent` slot is shared between the `--summary`
-        // and `--full` panes, so on the FIRST swap the `max-content` measure below can
-        // read the still-collapsed clip width before the persistent slot's layout has
-        // re-settled into the target pane — a measurement-timing edge specific to
-        // first-mount (intermittent / interaction-order-dependent). The FIX (seat
-        // `--dock-morph-from/to` before first paint, or double-rAF the FIRST measure on
-        // a `#persistent` dock) is a GlassDock.vue/orchestrator first-mount-seat change
-        // that rides the W-GOD1 FLIP-engine fold + GlassDock carve (which touch this
-        // same measure code). BOOKED there with this reproduction rather than patched
-        // in this disjoint W-DOCK2 edit. Witnessed by the dock-animation-live π arm on
-        // the deterministic `data-testid="dock-capture"` slider dock (not a #persistent
-        // dock), so the lockstep gate is unaffected by the first-mount edge.
+        // BA.W-DOCK-MORPH-INSITU (BA-VJS-1 [valuejs-fold A-1], §F2 RESOLVED) — the
+        // nested-`DockLayerGroup` measure-ORDERING fix (NOT a spring/clock change —
+        // `DOCK_SPRING` in ../constants is byte-untouched; the letter's fence).
+        // The §F2 booking above under-scoped this as "first-mount intermittent" —
+        // the value.js N2 four-cycle reproduction (U-DOCK.md §5 recipe 2) proves it
+        // DETERMINISTIC + PERMANENT for ANY nested group: the outer `.dock-layers`'
+        // active full pane's ONLY content is a nested `.dock-layer-stack` — itself a
+        // registered morph target STILL pinned at its own collapsed span in the SAME
+        // rAF (`inline-size: var(--dock-morph-size)`, layers.css). Forcing
+        // `max-content` on the OUTER cannot grow the inner (the inner's pinned
+        // `inline-size`/`block-size` caps the shrink-wrap), so the outer measures the
+        // inner's COLLAPSED span → `to:0` every cycle (springs the wrong way,
+        // dead-holds, then snaps). The FIX composes the inner registered target's
+        // OWN target `max-content` contribution into the outer measure: force every
+        // OTHER target whose container is a DOM descendant of this outer's container
+        // to its own-axis `max-content` (clearing its pinned calc span) for the
+        // single synchronous measurement, then RESTORE its exact prior inline state.
+        // So the outer shrink-wraps around the inner's TRUE intrinsic content (the
+        // settled-dock 261.1px the letter records), not the inner's pinned collapse.
         requestAnimationFrame(() => {
             if (id !== t.txId) return;
             const elNow = t.containerEl.value;
@@ -353,11 +356,58 @@ export function useDockMorphOrchestrator(
             // Force `max-content` on the morph axis for the single measurement, then
             // clear it before `armTarget` re-pins the calc span.
             const prop = morphAxisProp(axis);
+            // BA-VJS-1 — force nested descendant targets to their OWN intrinsic span
+            // for the duration of THIS measure so the outer shrink-wraps around the
+            // inner's real content, not its pinned-collapsed clip. Each is restored
+            // to its exact prior inline state right after the synchronous read.
+            const nested = nestedTargetsWithin(t, elNow);
+            const restore = nested.map((n) => forceNestedMaxContent(n));
             elNow.style.setProperty(prop, "max-content");
             const toSize = getSize(elNow, axis);
             elNow.style.removeProperty(prop);
+            for (const r of restore) r();
             armTarget(t, id, fromSize, toSize);
         });
+    }
+
+    /**
+     * BA-VJS-1 (valuejs-fold A-1) — the OTHER registered targets whose container is
+     * a DOM DESCENDANT of `outerEl` (a nested `<DockLayerGroup>` stack inside the
+     * outer `.dock-layers`). These are the pinned inner spans the outer measure must
+     * see at their OWN intrinsic `max-content`, not their collapsed pin, or the outer
+     * shrink-wraps to ~0.
+     */
+    function nestedTargetsWithin(outer: MorphTarget, outerEl: HTMLElement): MorphTarget[] {
+        const out: MorphTarget[] = [];
+        for (const sib of targets) {
+            if (sib === outer) continue;
+            const sibEl = sib.containerEl.value;
+            // `contains` is true for the element itself; we guarded `sib === outer`,
+            // and a sibling's container that is not inside `outerEl` is excluded — so
+            // only genuine nested descendants of THIS outer are forced.
+            if (sibEl && sibEl !== outerEl && outerEl.contains(sibEl)) out.push(sib);
+        }
+        return out;
+    }
+
+    /**
+     * BA-VJS-1 — force ONE nested target to its own-axis `max-content` (clearing its
+     * pinned `--dock-morph-size` calc so it sizes to content), and return a closure
+     * that RESTORES its exact prior inline state. The restore re-writes the precise
+     * prior `inline-size`/`block-size` inline value (or removes it if there was none),
+     * so the inner's in-flight pin is byte-identical after the outer's measurement —
+     * the inner target's own spring/pin pipeline is never disturbed.
+     */
+    function forceNestedMaxContent(n: MorphTarget): () => void {
+        const el = n.containerEl.value;
+        if (!el) return () => {};
+        const prop = morphAxisProp(n.axis.value);
+        const prior = el.style.getPropertyValue(prop);
+        el.style.setProperty(prop, "max-content");
+        return () => {
+            if (prior) el.style.setProperty(prop, prior);
+            else el.style.removeProperty(prop);
+        };
     }
 
     /** Register a morph target; returns its watch-stop. */

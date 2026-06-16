@@ -4,6 +4,15 @@ import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
 import { useSpecularTracking } from "../../../composables/glass";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";
+// BA.W-SURFACE-AXIS — Card's `veil` surface arm routes through the SHARED
+// resolver so the `veil-surface` decoration class has ONE source (the same class
+// Card emitted inline today — a refactor onto the shared seam, byte-identical).
+// `cartoon` stays a Card-LOCAL superset member (NOT a {glass·veil·opaque} axis
+// rung), and `opaque` is a Card TIER (the `.glass-opaque` escape on the resting
+// rung), so Card composes its base tier itself and reaches the shared resolver
+// only for the `veil` decoration. The `:data-surface="surface"` binding (below)
+// is what the CSS seam reads — Card was already the reference axis.
+import { surfaceClass } from "../_shared/useSurfaceAxis";
 
 /**
  * The glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css after the
@@ -175,8 +184,13 @@ useStalePropWarning("Card");
                 // boxed look). It routes the glass material through the
                 // `--glass-*` ladder (cohesion-sanctioned); the `shadow` prop is a
                 // no-op here (veil's rim is stripped by design — the box-shadow:
-                // none clause below covers it).
-                surface === 'veil' && 'veil-surface',
+                // none clause below covers it). BA.W-SURFACE-AXIS — the veil
+                // decoration class now comes from the SHARED resolver so its string
+                // has ONE source library-wide (byte-identical to the prior inline
+                // `'veil-surface'`); the resolver's base-tier prefix is dropped
+                // here since Card composes `glass-${tier}` itself above.
+                surface === 'veil' &&
+                    surfaceClass('veil').replace(/^glass-\w+\s+/, ''),
                 shadow && surface === 'glass' && 'shadow-card',
                 !grain && '[&::after]:hidden',
                 props.class,

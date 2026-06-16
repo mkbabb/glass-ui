@@ -22,14 +22,18 @@
 }
 
 /* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
-   richer 24px overlay wash is amortised by the extra device pixels (the blur
-   samples a denser backing store), so the design ceiling is restored where it
-   is affordable. Standard-density displays keep the 15px budget radius set in
-   §-1a `:root`. Token-only override — every overlay surface that reads
-   `--glass-blur-overlay-radius` inherits the restored value automatically. */
+   richer overlay wash is amortised by the extra device pixels (the blur samples
+   a denser backing store), so a higher ceiling is restored where it is
+   affordable. Standard-density displays keep the 13px budget radius set in §-1a
+   `:root`. Token-only override — every overlay surface that reads
+   `--glass-blur-overlay-radius` inherits the restored value automatically.
+
+   BA.W-GLASS-CAL Unit 1 — the restore pulled 24→20px in lockstep with the base
+   ladder's ~15-20% dial-back (the base overlay rung moved 15→13). 20px stays the
+   amortised high-DPI ceiling; standard density reads the dialed-back 13px. */
 @media (min-resolution: 2dppx) {
     :root {
-        --glass-blur-overlay-radius: 24px;
+        --glass-blur-overlay-radius: 20px;
     }
 }
 
@@ -66,22 +70,38 @@
    ═══════════════════════════════════════════════ */
 @supports (color: light-dark(white, black)) {
     :root {
-        /* Neutral ladder — the source the var()-aliases track */
-        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 8% 6%));
-        --neutral-1: light-dark(hsl(48 10% 95%), hsl(24 6% 11%));
-        --neutral-2: light-dark(hsl(48  9% 90%), hsl(24 5% 16%));
-        --neutral-3: light-dark(hsl(48  8% 82%), hsl(24 5% 22%));
-        --neutral-4: light-dark(hsl(48  7% 70%), hsl(24 5% 34%));
-        --neutral-5: light-dark(hsl(48  6% 40%), hsl(48 5% 62%));
-        --neutral-6: light-dark(hsl(48  7% 30%), hsl(48 6% 72%));
+        /* Neutral ladder — the source the var()-aliases track. BA.W-DARK-MATERIAL scope 1:
+           the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css:32) so the
+           lifted L16 --card sits ~5× its relL — a real dark elevation step.
+           BA.W-NO-GRAY — THE WARM-CHROMA FLOOR, BOTH ARMS in lockstep. The LIGHT arm warms
+           off the achromatic hsl-48 yellow-green onto the warm identity (hsl 28-40, OKLab
+           H 62-85°, C off the gray floor; LOCKSTEP color-radius.css). The DARK arm warms in
+           lockstep on the W-DARK-MATERIAL base (hsl 28-36, the dark neutrals carry chroma on
+           the NEW dark page/card — secondary→border C 0.0138-0.0286, muted-fg C 0.0255). The
+           dark page --neutral-0 hsl(24 9% 4%) is W-DARK-MATERIAL's (KEEP — its luminance floor).
+           Chroma-only at constant L — every L within ±0.01 of HEAD, the AA contract preserved. */
+        --neutral-0: light-dark(hsl(40 30% 98%), hsl(24 9% 4%));
+        --neutral-1: light-dark(hsl(38 26% 95%), hsl(28 12% 11%));
+        --neutral-2: light-dark(hsl(34 28% 90%), hsl(28 14% 16%));
+        --neutral-3: light-dark(hsl(33 30% 82%), hsl(30 18% 22%));
+        --neutral-4: light-dark(hsl(32 26% 70%), hsl(30 16% 34%));
+        --neutral-5: light-dark(hsl(30 22% 40%), hsl(34 14% 62%));
+        --neutral-6: light-dark(hsl(28 24% 30%), hsl(36 14% 72%));
 
         /* Core surfaces + ink */
         --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
-        --card:                       light-dark(var(--neutral-0), hsl(24 8% 10%));
-        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 10%));
-        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 12%));
+        /* BA.W-DARK-MATERIAL scope 1 — the dark --card plate LIFTS L10→L16 (LOCKSTEP
+           dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it.
+           BA.W-NO-GRAY L1 — the LIGHT arm DECOUPLES off the near-achromatic page onto the
+           warm-cream plate hsl(36 48% 97%) (LOCKSTEP color-radius.css --card) so the light
+           glass plate reads warm-not-gray; the dark arm is UNCHANGED (W-DARK-MATERIAL's). */
+        --card:                       light-dark(hsl(36 48% 97%), hsl(24 8% 16%));
+        --popover:                    light-dark(hsl(36 48% 97%), hsl(24 8% 16%));
+        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
 
-        --primary:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        /* BA.W-DARK-MATERIAL scope 4 — the chromatic dark --primary (legendre-violet house
+           hue, oklab chroma 0.134; off the HEAD achromatic cream). LOCKSTEP dark-arm.css:59. */
+        --primary:                 light-dark(hsl(24 10% 10%), oklch(0.739 0.134 318.1));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
         /* AX.W44 — dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
            (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
@@ -154,5 +174,14 @@
         --gold:       light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));
         --gold-light: light-dark(oklch(0.890 0.183 96.1), oklch(0.898 0.182 97.4));
         --gold-dark:  light-dark(oklch(0.599 0.132 64.2), oklch(0.678 0.150 63.8));
+
+        /* Silver family (BA.W-ATLAS-RECONCILE C-3) — the `light-dark()` arm
+           mirroring gold's exact shape: light value, dark-lifted value. The cool
+           near-achromatic structure metal (the W-NO-GRAY named exception).
+           `--silver-deep` is mode-invariant — not a `light-dark()` pair, exactly as
+           `--gold-deep` is omitted from this block. */
+        --silver:       light-dark(oklch(0.760 0.012 255), oklch(0.792 0.012 255));
+        --silver-light: light-dark(oklch(0.902 0.010 255), oklch(0.912 0.010 255));
+        --silver-dark:  light-dark(oklch(0.582 0.014 255), oklch(0.648 0.014 255));
     }
 }

@@ -85,6 +85,52 @@ interface StoryOptions {
     hero?: boolean;
 }
 
+/**
+ * The per-category background map (BA.W-STAGE scope 1 — page-backgrounds.md §4).
+ *
+ * EVERY story row resolves a background: a row's explicit `opts.background` wins,
+ * else it INHERITS its category default below. This is the zero-keyless-routes
+ * mechanism — the storybook stops being an 80%-blank near-black void (BG-1/BG-5).
+ *
+ * The principle: ONE idiom-true background per CATEGORY (so a category reads as a
+ * coherent place), varied ACROSS categories (not one aurora), honoring the
+ * one-GL-per-route budget — live GL (aurora/constellation/fourier) is clustered on
+ * the Substrates / Navigation / Dock / Motion bands (one context per route); the
+ * dense Forms / Display / Containers / Data / Feedback bands ride the calm STATIC
+ * washes (grid / paper), which are free and DARK-recalibrated (story-hero.css) so
+ * they read THROUGH the card.
+ *
+ *   - foundations → paper   (token/ink pages; the intro/paper-glass/motion heroes win explicit)
+ *   - substrates  → aurora  (the GL showcase band; glass-panel inherits — glass over a live field)
+ *   - forms       → grid    (engineering-paper ruled grid — the native forms fit)
+ *   - display     → paper   (printed-specimen warm-cream grain; card wins explicit aurora-hero)
+ *   - containers  → grid    (glass surfaces over a calm blueprint wash)
+ *   - navigation  → aurora  (glass nav chrome over a live field)
+ *   - dock        → grid    (the page wash is the FREE blueprint grid; the live aurora the
+ *                            dock glass reads against is delivered by the in-page DockStage
+ *                            lever — A3 — so the route mounts exactly ONE GL context, not a
+ *                            doubled StoryHero-page-aurora + DockStage-aurora. The one-GL-per-route
+ *                            budget is binding; "Dock → aurora" in page-backgrounds.md §4 is
+ *                            REALIZED via DockStage, not a second page-level field.)
+ *   - data        → grid    (ledger/table/metric blueprint-grid fit)
+ *   - feedback    → paper   (printed status specimens; subtle, calm)
+ *   - motion      → constellation (the motion/drift band identity; curve-gallery/handmark win explicit)
+ *   - compositions→ grid    (the blank scenes fall to grid; the keyed comps win explicit)
+ */
+const CATEGORY_DEFAULT_BG: Record<string, StoryBackground> = {
+    foundations: "paper",
+    substrates: "aurora",
+    forms: "grid",
+    display: "paper",
+    containers: "grid",
+    navigation: "aurora",
+    dock: "grid",
+    data: "grid",
+    feedback: "paper",
+    motion: "constellation",
+    compositions: "grid",
+};
+
 function s(
     cat: string,
     id: string,
@@ -92,12 +138,17 @@ function s(
     blurb?: string,
     opts?: StoryOptions,
 ): Story {
+    // Every row resolves a background — its explicit declaration wins, else it
+    // inherits the per-category default (BA.W-STAGE scope 1; zero keyless routes,
+    // the proof:stage W1 witness). A category with no default entry would leave a
+    // route keyless — the map above covers every category in CATEGORIES.
+    const background = opts?.background ?? CATEGORY_DEFAULT_BG[cat];
     return {
         id,
         title,
         blurb,
         component: lazy(cat, id),
-        background: opts?.background,
+        background,
         hero: opts?.hero,
     };
 }
@@ -226,6 +277,23 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            // BA.W-FOURIER-STUDIO — the FOREGROUND studio (the aurora-studio idiom):
+            // the 1..K partial-sum slider + orthogonal epicycle axes + the
+            // dftFromPoints shape-trace + the controllable clock on the house
+            // transport. Its OWN Canvas2D stage + ambient companion ARE the fourier
+            // surface, so the route declares a CALM `paper` background (NOT a live
+            // `fourier`/`aurora` field) — one-GL/one-Canvas2D-per-route holds (the
+            // stage is the single live context; no competing background field).
+            s(
+                "substrates",
+                "fourier-studio",
+                "Fourier Studio",
+                "The foreground Fourier studio — a Configurator over a Canvas2D stage. Drag the harmonic-count N slider and WATCH the summed curve assemble term by term; toggle epicycles orthogonally; trace the ℱ wordmark / heart / star by its own forward DFT; and drive a controllable clock (play / pause / scrub / speed) on the house transport. The ambient field is the recessive companion.",
+                {
+                    background: "paper",
+                    hero: true,
+                },
+            ),
             s(
                 "substrates",
                 "glass-material",
@@ -236,11 +304,24 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
+            // glass-panel is "currently blank" and should "gain aurora". At HEAD
+            // glass-panel.vue ALREADY self-stages its five-rung ladder over a
+            // contained body <Aurora> (glass-panel.vue:80, W12) — the glass-over-a-
+            // live-field demo is PRESENT. glass-panel.vue is OUT of this wave's bound,
+            // so inheriting the substrates `aurora` default would stack a SECOND GL
+            // context (the StoryHero contained page aurora + the body aurora) on the
+            // route. It declares `grid` (a FREE static wash behind the card) so the
+            // route mounts exactly ONE GL context — its existing body aurora — the
+            // one-GL-per-route budget (BA invariant 9) held.
             s(
                 "substrates",
                 "glass-panel",
                 "Glass Panel",
                 "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive. Shipped /glass-panel.",
+                {
+                    background: "grid",
+                },
             ),
         ],
     },
@@ -278,6 +359,17 @@ export const CATEGORIES: Category[] = [
         icon: Shapes,
         stories: [
             s("display", "buttons", "Buttons"),
+            // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
+            // `/display/card` is "currently blank" and should be staged over an
+            // aurora HERO. At HEAD card.vue ALREADY self-stages: it hand-rolls TWO
+            // contained <Aurora> backdrops (card.vue:126,302, W12) under which the
+            // five tiers float — the R8-11 glass-over-aurora demo is ALREADY PRESENT.
+            // card.vue is OUT of this wave's bound (only glass-material.vue is), so
+            // adding a hero page-aurora would stack a THIRD GL context on the route
+            // (the binding one-GL-per-route fence, BA invariant 9). The route inherits
+            // the display `paper` default (a FREE static wash behind the card) and
+            // its two body auroras remain the live-field demos — budget-clean, the
+            // staging intent satisfied by the existing self-staging.
             s(
                 "display",
                 "card",
@@ -535,9 +627,17 @@ export const CATEGORIES: Category[] = [
             s("motion", "typewriter", "Typewriter"),
             s(
                 "motion",
-                "underline",
-                "Underline",
-                "GlassUnderline — the draw-on pen underline (filter-free). Load clock (imperative play() + :active overlay), scroll clock (native view()), static; the --gu-* bold-register override + a color preset.",
+                "handmark",
+                "Hand Mark",
+                "HandMark — the platform's hand voice. The pen underline, the boil natural morphology, the highlighter (multiply over the page), draw-on, the brush continuum, and a hand-circled datum — over the paper-grain register. GlassUnderline RETIRED onto HandMark shape='underline' (DEC-8).",
+                {
+                    // BA.W-STAGE scope 1 — the per-route exception: the hand-voice
+                    // demo IS a paper-grain register surface (its blurb + its own
+                    // paper-grain cards), so it declares `paper` rather than inherit
+                    // the motion-band constellation default. Idiom-true + free
+                    // (a static wash, within the one-GL budget).
+                    background: "paper",
+                },
             ),
             s(
                 "motion",

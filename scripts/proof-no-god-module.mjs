@@ -46,26 +46,22 @@ const WARN_LIMIT = 300;
  * `// BOOK(<wave-id>):` marker (asserted below).
  */
 const RATCHET_BASELINES = {
-    // AZ.W-CARVE — DRAINED to ∅. The two surviving over-bound CENTRAL stylesheets
-    // (`styles/dock-controls.css` @636 + `styles/theme.css` @530, the BOOK(AY.W-CSS1)
-    // rows) carved into thin `@import` roots over cohesive partials, each < 500:
-    //   dock-controls.css → dock-controls/{icon-button,dark-mode-toggle,tab-button,
-    //                       triggers,touch-floor}.css
-    //   theme.css         → theme/{radius,bridges,literals,dark}.css
-    // The carve moves rules across files in the SAME cascade position (the dist CSS
-    // is byte-isomorphic; the generated rounded-*/text-shadow-*/cartoon utility sets
-    // are byte-identical). BOTH dock-controls-reading (~8) and theme-reading (~15)
-    // gate sets re-point to the composed `readMonolith(ROOT, <name>)` read. The
-    // ratchet is now at its CLOSE state for the styles arm — `RATCHET_BASELINES == {}`.
-    // The MONOTONIC rule holds: a future over-bound src/ file books a row WITH a
-    // `// BOOK(<wave>):` marker; an empty map is the drained terminus.
-    // BOOK(AZ.W-REFLECT): the Batch-3/4 waves grew three files past the bound
-    // (W-SUFFUSE/W-HIERARCHY on typography; W-CON-GEN on the constellation pair).
-    // Frozen at their landed counts; the carve verdicts ride the REFLECT band's
-    // triumvirate (a cohesion-aware split or a justified keep, per surface).
-    "styles/typography.css": 530,
-    "components/custom/constellation/constellationField.ts": 586,
-    "components/custom/constellation/Constellation.vue": 577,
+    // BA.W-CARVE2 — DRAINED to ∅ (the close state). The three grandfathered
+    // BOOK(AZ.W-REFLECT) rows discharged: the carve drops each file under 500.
+    //   styles/typography.css (530) → typography/{scale,semantic,utilities}.css
+    //     thin @import partials (the dist/glass-ui.css emit is BYTE-IDENTICAL —
+    //     the carve moves rules in the SAME cascade position; the seven
+    //     typography.css-reading gates re-point to readMonolith(ROOT, "typography")).
+    //   constellation/constellationField.ts (586) → constellationTypes.ts (the
+    //     ~308 lines of Constellation* type interfaces split off; the seedField/
+    //     refitField/stepField step engine stays, re-exporting the types so the
+    //     sibling import seam is untouched).
+    //   constellation/Constellation.vue (576) → composables/useConstellation.ts
+    //     (the render-loop + lifecycle orchestrator lifted out; the SFC keeps
+    //     template + defineProps<ConstellationProps> + the thin composable call).
+    // The barrel surface is unchanged (typecheck + verify-export-types green). The
+    // MONOTONIC rule holds: a future over-bound src/ file books a row WITH a
+    // `// BOOK(<wave>):` marker; this empty map is the drained terminus.
 };
 
 let _cliPaths = null;

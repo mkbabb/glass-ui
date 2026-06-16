@@ -15,6 +15,12 @@
     --story-grid-color: color-mix(in srgb, var(--foreground) 7%, transparent);
     --story-grid-color-strong: color-mix(in srgb, var(--foreground) 12%, transparent);
 
+    /* The static-paper wash base (BA.W-STAGE scope 4). The paper background is a
+       warm-cream tint under the grain overlay; in light it's near-invisible (the
+       page is already cream), so the base is transparent and the grain does the
+       work. */
+    --story-paper-wash: transparent;
+
     /* The exposed-substrate margin (W-SB-STAGE §2.1b). Over a LIVE substrate the
        glass card no longer fills the container EXACTLY — an inset gutter lets the
        field RIM the card so "a glass card floating over a substrate" literally
@@ -22,9 +28,22 @@
     --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
 }
 
+/* BA.W-STAGE scope 4 — the DARK static-wash recalibration (BG-3 / DARK-4). The
+   grid/paper static washes were tuned LIGHT-FIRST (9%/16% of the warm-ink over the
+   cream page); behind the `wash`-tier card (dark --glass-opacity-wash 0.38, so the
+   card transmits ~62%) over the W-DARK-MATERIAL near-black page (--background L4),
+   the 9%/16% grid lands at ~6%/10% effective and VANISHES (the invisible-dark-wash
+   defect). The lines sit BEHIND the card, not under the prose, so lifting them does
+   NOT touch prose AA (the prose is over the L16 --card surface; the grid is the
+   underlay). The grid lifts to 18%/30% of the cream --foreground (→ ~11%/19%
+   effective through the wash card — a perceptible hairline that still reads as a
+   calm blueprint, not a loud rule). The paper wash gains a faint warm-cream base
+   (the soft-light grain alone reads near-nothing over near-black — it needs a tint
+   under it) so the paper register reads THROUGH the card in dark. */
 .dark {
-    --story-grid-color: color-mix(in srgb, var(--foreground) 9%, transparent);
-    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 16%, transparent);
+    --story-grid-color: color-mix(in srgb, var(--foreground) 18%, transparent);
+    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 30%, transparent);
+    --story-paper-wash: color-mix(in srgb, var(--foreground) 7%, transparent);
 }
 
 /* The container: an isolating positioning context so the -z-10 substrate sits
@@ -136,6 +155,29 @@
     max-inline-size: 18ch;
 }
 
+/* BA.W-ANIMATE scope 5 (applied by W-STAGE on its behalf) — the hero <h1>
+   fade-RISE entrance on the SETTLE register. Audacious type arrives with GRAVITY,
+   NOT bounce: the keyframe rides --ease-out (a strictly monotone bezier, NO
+   overshoot past the terminal transform — never --spring-bouncy/--spring-snappy,
+   the §6 doctrine + the W-ANIMATE W4 negative fence). ONE deliberate event on the
+   title. Gated under prefers-reduced-motion: no-preference — under reduce the
+   <h1> mounts at its static terminal state (no animation declared). */
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes story-hero-title-rise {
+        from {
+            opacity: 0;
+            transform: translateY(1.25rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .story-hero-title--enter {
+        animation: story-hero-title-rise 0.62s var(--ease-out, ease-out) both;
+    }
+}
+
 /* The exposed-substrate margin over a LIVE backdrop. The card no longer fills
    `.story-hero` exactly — the inset gutter shows the substrate AROUND the plate.
    A page-variant card takes a symmetric small gutter; a hero card takes an
@@ -150,6 +192,17 @@
     /* Asymmetric — the substrate bleeds a little wider at the top + leading edge. */
     margin: calc(var(--story-hero-inset) * 1.5) var(--story-hero-inset)
         var(--story-hero-inset) calc(var(--story-hero-inset) * 1.25);
+}
+
+/* The static-paper wash base (BA.W-STAGE scope 4). The paper background <div>
+   carries `paper-grain-overlay` (the library grain utility, soft-light in dark)
+   PLUS this base tint so the paper register reads THROUGH the wash-tier card in
+   DARK. In light the base is transparent (the cream page already reads); in dark
+   it's a faint warm-cream wash (--story-paper-wash, the .dark lift above) under
+   the grain — the calm warm-paper read the grain alone could not deliver over the
+   W-DARK-MATERIAL near-black page. */
+.story-bg-paper {
+    background-color: var(--story-paper-wash);
 }
 
 /* The blueprint ruled grid — two hairline linear-gradients at the cell size,

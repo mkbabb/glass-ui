@@ -34,15 +34,37 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SRC = resolve(ROOT, "src");
+const CUSTOM = resolve(SRC, "components/custom");
 const ARTIFACT = gateArtifactPath("GLASS_UI_COLOCATION_ARTIFACT", "AY-colocation");
 
-// The four carved god-module dirs the convention binds (the >500-origin set).
-const TARGET_DIRS = [
-    "components/custom/goo-blob",
-    "components/custom/dock",
-    "components/custom/tabs",
-    "components/custom/constellation",
-];
+// BA.W-HYGIENE (P-6): the TARGET set is DERIVED, not a frozen hand-list. A `custom/`
+// dir is a COMPLEX feature-dir — bound by the colocation convention — iff it carries a
+// `README.md`, the convention's OWN adoption marker (the §6 clause (d) "+ a README.md":
+// the README is the authored signal that a dir adopted the feature-dir layout). Deriving
+// off the marker the convention itself defines means a future complex dir gains coverage
+// AUTOMATICALLY the moment it adds its README — there is no frozen list to forget to
+// extend, and the gate cannot be gamed by adding a complex dir un-listed.
+//
+// At HEAD this widens coverage to {aurora, constellation, dock, fourier-field, goo-blob,
+// tabs, underline} — the original four PLUS the two escaping complex dirs P-6 names
+// (aurora/ — composables/ + a constants/ dir + shaders/; fourier-field/ — math.ts +
+// presets.ts) PLUS underline/ (a README-bearing simple dir). The spec's literal
+// "composables/ OR shaders/ subdir" criterion was the AUTHORING approximation, but the
+// HEAD re-grep falsifies it: fourier-field/ carries NEITHER subdir (its domain lives in
+// math.ts/presets.ts FILES), so that criterion would MISS the named target, while it
+// would over-pull infinite-scroll/search/typewriter (composables/-bearing but NOT
+// README-adopted, so NOT convention-bound). The README marker is the principled
+// derivation that yields exactly the convention-adopted complex set. (§0 drift recorded
+// in the BA.W-HYGIENE report.)
+function deriveTargetDirs() {
+    return readdirSync(CUSTOM, { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .filter((e) => existsSync(resolve(CUSTOM, e.name, "README.md")))
+        .map((e) => `components/custom/${e.name}`)
+        .sort();
+}
+
+const TARGET_DIRS = deriveTargetDirs();
 
 const rel = (p) => relative(ROOT, p).split(sep).join("/");
 
@@ -119,13 +141,21 @@ function checkDir(dirRel) {
         );
     }
 
-    // (b) constants.ts exists + no surviving magic-number const in a composable.
-    const constantsPath = resolve(dir, "constants.ts");
-    facts.hasConstants = existsSync(constantsPath);
-    if (!facts.hasConstants) {
-        violations.push(`src/${dirRel}/constants.ts — missing (extract the module-scope magic-numbers here)`);
-    }
+    // (b) a constants HOME exists when the dir has composables, + no UN-HOMED magic-
+    //     number scattered across the composables. BA.W-HYGIENE: the home is a
+    //     `constants.ts` FILE *or* a `constants/` DIR (aurora's pattern — the carve
+    //     promoted its named ceilings into constants/{budget,presets,renderMode}.ts).
+    //     The home is required only for a dir that HAS a composables/ subdir (the
+    //     extraction target); a README-adopted simple dir with no composables (underline,
+    //     fourier-field) has nothing to home, so the requirement is vacuous there.
     const composablesDir = resolve(dir, "composables");
+    const hasComposablesDir = existsSync(composablesDir);
+    const hasConstantsFile = existsSync(resolve(dir, "constants.ts"));
+    const hasConstantsDir = existsSync(resolve(dir, "constants"));
+    facts.hasConstants = hasConstantsFile || hasConstantsDir;
+    if (hasComposablesDir && !facts.hasConstants) {
+        violations.push(`src/${dirRel}/constants.ts — missing (extract the module-scope magic-numbers here; a constants/ dir also satisfies)`);
+    }
     const composableFiles = tsUnder(composablesDir).filter((f) => {
         const base = f.split(sep).pop();
         return isComposable(base) || /^build|^upload/.test(base); // carve leaves
@@ -136,10 +166,19 @@ function checkDir(dirRel) {
         if (names.length) stray.push({ file: rel(f), names });
     }
     facts.strayMagicNumbers = stray;
-    for (const s of stray) {
-        violations.push(
-            `${s.file} — surviving module-scope magic-number const(s) [${s.names.join(", ")}]; extract to constants.ts`,
-        );
+    // A scattered magic-number is a violation ONLY when the dir has NO constants home at
+    // all (the consts are genuinely homeless). A dir that HAS a home has made the
+    // colocation decision; composable-local tuning consts beside their consumer are then
+    // a permitted colocation choice ("colocate composables together" — aurora's
+    // CURSOR_* lerp consts live with cursorModel.ts by design), not scatter. The bite
+    // survives on the carve set: the original four carry a constants.ts AND ZERO strays,
+    // so this clause is unchanged for them; a NEW homeless stray REDs.
+    if (!facts.hasConstants) {
+        for (const s of stray) {
+            violations.push(
+                `${s.file} — module-scope magic-number const(s) [${s.names.join(", ")}] with NO constants home in the dir; add a constants.ts/ dir`,
+            );
+        }
     }
 
     // (c) shaders/skeletons co-located WHEN present.

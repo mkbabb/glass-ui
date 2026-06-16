@@ -65,10 +65,9 @@
 //                        TOKEN DEFINITIONS in tokens.css (the single definition
 //                        home, exempt); a surface composes them only via
 //                        `var(--spring-*)` / `var(--ease-*)`. The non-physical
-//                        motion ALLOW-LIST (shimmer / marquee / sparkle-sweep
-//                        keyframes that are intentionally NOT spring-driven) is
-//                        authored below, not discovered ad-hoc (the W31
-//                        triumvirate §3a clause).
+//                        motion ALLOW-LIST (shimmer / marquee keyframes that are
+//                        intentionally NOT spring-driven) is authored below, not
+//                        discovered ad-hoc (the W31 triumvirate §3a clause).
 //
 //   PRESS-FROM-COHORT  — every canonical press surface (`.tap-squish`, the
 //                        button / slider / dock-icon / dock-tab press recipes)
@@ -253,20 +252,23 @@ function lineOf(src, offset) {
 }
 
 // ── Non-physical motion allow-list (W31 triumvirate §3a) ─────────────────────
-// These keyframes are INTENTIONALLY not spring-driven — a marquee/shimmer/
-// sparkle is a continuous material sweep, not a settling physical morph. The
-// `linear()` / `cubic-bezier()` on their CONSUMING rule (or a `linear` timing
-// keyword, distinct from the `linear()` spring function) is legitimate. The
-// list is authored here, not discovered ad-hoc, so the gate never over-reaches
-// onto a legitimate non-physical surface. (None ship on the SURFACE_CSS set
-// today — every shimmer/marquee/sparkle consumer lives in animations.css or a
-// component SFC, OUTSIDE this scan; the list is the authored escape hatch a
-// future surface-CSS shimmer would claim.)
+// These keyframes are INTENTIONALLY not spring-driven — a marquee/shimmer is a
+// continuous material sweep, not a settling physical morph. The `linear()` /
+// `cubic-bezier()` on their CONSUMING rule (or a `linear` timing keyword,
+// distinct from the `linear()` spring function) is legitimate. The list is
+// authored here, not discovered ad-hoc, so the gate never over-reaches onto a
+// legitimate non-physical surface. (None ship on the SURFACE_CSS set today —
+// every shimmer/marquee consumer lives in animations.css or a component SFC,
+// OUTSIDE this scan; the list is the authored escape hatch a future surface-CSS
+// shimmer would claim.)
+//
+// BA.W-GLASS-CAL (H2a) — `sparkle-sweep` DROPPED from the allow-list: the
+// keyframe is RETIRED with the disco recipe family (no surviving consumer). The
+// entry is removed, not defeated.
 export const NON_PHYSICAL_ALLOW = [
     "shimmer",
     "shimmer-sweep",
     "gold-shimmer-slide",
-    "sparkle-sweep",
     "marquee",
     "scroll-marquee",
     // AY.W-MOTION — the ScrollingText overflow-marquee pan: a continuous material
@@ -687,6 +689,13 @@ export function detectEasingTableBound(file, src, curveTokens) {
         const declStart = m.index;
         for (const vm of value.matchAll(/var\(\s*(--(?:ease|spring)-[a-z-]+)\b/gi)) {
             const tok = vm[1];
+            // BA.W-GLASS-CAL Unit 3 — `--spring-<name>-duration` is a DURATION token
+            // (the spring's OWN generated settle clock), NOT an easing CURVE; it rides
+            // the DURATION leg of a transition (graded by DURATION-BAND, not the curve
+            // table). It is generated from the SAME SPRING_PRESETS table the
+            // `--spring-<name>` curve is, so it is a charted member of the spring
+            // vocabulary — skip the curve-row requirement for it.
+            if (/^--spring-[a-z]+-duration$/.test(tok)) continue;
             if (!curveTokens.has(tok)) {
                 violations.push(
                     `${file}:${lineOf(stripped, declStart)}: animated leg names '${tok}' which has NO MOTION_CURVES row — the curve table is the source of truth; add the row or compose a charted token (EASING-TABLE-BOUND, §P4)`,
@@ -1007,10 +1016,16 @@ export function detectSpringCoverage(tokensSrc, files, read) {
     const facts = {};
 
     // The defined preset names (smooth/snappy/bouncy/gentle/dock), from the
-    // §2 EASING block DEFINITIONS in tokens.css.
+    // §2 EASING block DEFINITIONS in tokens.css. BA.W-GLASS-CAL Unit 3 — the
+    // `--spring-<name>-duration` clock twins are EXCLUDED here (the `(?!-duration)`
+    // negative-lookahead segment guard): they are DURATION tokens, not easing
+    // presets, generated for vocabulary completeness from the SAME table — their
+    // coverage is governed below, not by the easing-preset consumer bar (a `gentle`/
+    // `dock` clock with no CSS consumer is a complete generated vocabulary, not a
+    // dead easing mint).
     const names = [
         ...new Set(
-            [...tokensSrc.matchAll(/--spring-([a-z-]+)\s*:/g)].map((m) => m[1]),
+            [...tokensSrc.matchAll(/--spring-([a-z]+)\s*:/g)].map((m) => m[1]),
         ),
     ];
     facts.presets = names;

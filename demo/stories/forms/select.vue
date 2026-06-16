@@ -12,6 +12,10 @@ import {
     SelectValue,
 } from "../../../src/components/ui/select";
 import { Label } from "../../../src/components/ui/label";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ListFilter } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
+const FORMS_STOP = 3;
 
 const font = ref<string>("plus-jakarta-sans");
 const basis = ref<string>("fourier");
@@ -20,6 +24,27 @@ const density = ref<string>("");
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ListFilter" :section="FORMS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Forms · Choice
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Single-choice from a list — the control register stays ink; the
+                    section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- Grouped items with labels + separator. -->
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="sel-font">Font family</Label>

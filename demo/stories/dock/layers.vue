@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "../../../src/components/custom/dock";
 import { cn } from "../../../src/utils/cn";
+import DockStage from "./DockStage.vue";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
 
@@ -55,6 +56,11 @@ function back() {
 
 <template>
     <StoryPage>
+        <!-- BA.W-STAGE scope 8/9 (FD-DOCK-1) — the dock-layers demos sit over ONE
+             shared, offscreen-paused aurora field (DockStage); the flat bg-card/40
+             panels become transparent `.dock-stage-tile` framed slots so the
+             DockLayerGroup glass floats over the live field. -->
+        <DockStage>
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Drill-in navigation</h2>
             <p class="text-small text-muted-foreground">
@@ -63,7 +69,7 @@ function back() {
             <p class="text-mono-caption text-muted-foreground" data-testid="dock-layer-readout">
                 active layer = {{ activeLayer }}
             </p>
-            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="activeLayer"
@@ -116,7 +122,7 @@ function back() {
                 Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.
             </p>
-            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
@@ -144,7 +150,7 @@ function back() {
                 A layer group inside a <code class="rounded bg-muted px-1">GlassDock orientation="vertical"</code>
                 inherits the dock's vertical orientation without a duplicate prop.
             </p>
-            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock
                     orientation="vertical"
                     always-expanded
@@ -187,7 +193,7 @@ function back() {
                 ONE spring (one <code class="rounded bg-muted px-1">--dock-morph-t</code> clock)
                 — no second engine, no double-animated pixels.
             </p>
-            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock fit-content data-testid="dock-nested-collapsible">
                     <DockLayerGroup
                         v-model:active="nestedLayer"
@@ -221,7 +227,7 @@ function back() {
                 pane carries more rows than the resting height — it scrolls its own block axis
                 cleanly without fighting <code class="rounded bg-muted px-1">max-height</code>.
             </p>
-            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock
                     orientation="vertical"
                     always-expanded
@@ -269,5 +275,13 @@ function back() {
                 <li>Clear inline dimension on <code class="rounded bg-muted px-1">transitionend</code>.</li>
             </ol>
         </section>
+        </DockStage>
     </StoryPage>
 </template>
+
+<style scoped>
+/* BA.W-STAGE scope 9 — transparent demo tiles over the shared DockStage field. */
+.dock-stage-tile {
+    background: transparent;
+}
+</style>

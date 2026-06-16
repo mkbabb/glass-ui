@@ -164,6 +164,78 @@ async function readSurface(
 
 const KINDS = ["drawer", "slider-range", "notification"] as const;
 
+// ── BA.W-FEEDBACK-TONE — the tinted-glass tone final-alpha π arm ───────────────────
+// The W2 binding visual truth: a glass-routed base + a (newly-introduced) OPAQUE tone
+// overlay must FAIL here. Every Toast variant + Notification type composes the shared
+// `.feedback-tone-<name>` register over the BUSY backdrop; the resolved `background-
+// color` must composite TRANSLUCENT (α < TONE_ALPHA_FLOOR) so the backdrop shows through
+// — colored GLASS, not a colored slab. POSITIVE final-alpha measure on the COMPILED
+// color: it catches the format evasion (`oklch()`/`rgb()` no-alpha serialization), the
+// alpha-knob evasion (`/0.95` still ≥0.92), and the raw-Tailwind-escape evasion
+// (`bg-emerald-500` compiles to an opaque color). RED at HEAD: the AW.W25 Toast variant
+// map (`bg-success` → `oklch(…)` no-alpha) + the Notification `bg-success/90` map (α 0.9).
+const TONE_ALPHA_FLOOR = 0.92;
+
+/** The four house tone register class names (Toast variant + Notification type → these). */
+const TONE_REGISTERS = [
+    { name: "success", cls: "feedback-tone-success" },
+    { name: "warning", cls: "feedback-tone-warning" },
+    { name: "info", cls: "feedback-tone-info" },
+    { name: "destructive", cls: "feedback-tone-destructive" },
+] as const;
+
+/**
+ * Mount a `.glass-floating.feedback-tone.feedback-tone-<name>` plate (the Toast /
+ * Notification register) over the BUSY backdrop and read back its resolved
+ * `background-color` alpha. `rung` lets the Alert wash-rung register be probed too.
+ */
+async function readToneAlpha(
+    page: Page,
+    toneClass: string,
+    rung: "floating" | "wash",
+): Promise<{ background: string; alpha: number }> {
+    return page.evaluate(
+        ({ toneClass, rung, BUSY_BG }) => {
+            const FIXTURE_ID = "__wtone_fixture__";
+            document.getElementById(FIXTURE_ID)?.remove();
+            const host = document.createElement("div");
+            host.id = FIXTURE_ID;
+            host.style.cssText =
+                "position:fixed;left:0;top:0;width:360px;height:120px;z-index:99999;padding:24px;";
+            host.style.background = BUSY_BG;
+
+            const target = document.createElement("div");
+            // glass-floating is the Toast/Notification register; the wash rung is Alert's
+            // (re-pointed via --feedback-tone-rung). Compose the tone register on top.
+            target.className = `glass-floating feedback-tone ${toneClass}`;
+            if (rung === "wash") {
+                target.style.setProperty("--feedback-tone-rung", "var(--glass-bg-wash)");
+            }
+            target.style.cssText +=
+                "position:relative;width:100%;height:100%;border-radius:12px;";
+            host.appendChild(target);
+            document.body.appendChild(host);
+            void target.offsetHeight;
+
+            const cs = getComputedStyle(target);
+            const background = cs.backgroundColor || cs.background;
+            // Parse alpha from a serialized color (rgba / oklab(... / a) / color(srgb ... / a)).
+            const slash = background.match(/\/\s*([\d.]+%?)\s*\)/);
+            const rgba = background.match(/rgba?\([^)]*,\s*([\d.]+)\s*\)/);
+            let alpha = 1;
+            if (slash) {
+                const v = slash[1]!;
+                alpha = v.endsWith("%") ? Number(v.slice(0, -1)) / 100 : Number(v);
+            } else if (rgba) {
+                alpha = Number(rgba[1]);
+            }
+            document.getElementById(FIXTURE_ID)?.remove();
+            return { background, alpha };
+        },
+        { toneClass, rung, BUSY_BG },
+    );
+}
+
 test.describe("glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED)", () => {
     for (const vp of VIEWPORTS) {
         for (const dark of [false, true]) {
@@ -202,5 +274,38 @@ test.describe("glass-cohesion (π lane — the cohesion surfaces paint glass + f
                 }
             });
         }
+    }
+
+    // ── BA.W-FEEDBACK-TONE — the tone is a tint, not a plate (W2 final-alpha) ──────
+    // Every Toast variant + Notification type (the four house tone registers) AND the
+    // Alert wash-rung re-point composite TRANSLUCENT over the busy backdrop. A glass-
+    // routed base + an opaque tone overlay (the AW.W25 slabs) reds this — the binding
+    // visual truth that the source-green tone-collapse actually paints as colored glass.
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`feedback tone composites translucent — every Toast variant + Notification type (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 800 });
+            await page.goto(PI_TARGETS.dock.path, { waitUntil: "networkidle" });
+            await setDark(page, dark);
+
+            // The Toast / Notification register (floating rung) — all four tones.
+            for (const { name, cls } of TONE_REGISTERS) {
+                const r = await readToneAlpha(page, cls, "floating");
+                expect(
+                    r.alpha,
+                    `feedback-tone-${name} (${mode}, floating rung) composited OPAQUE/near-opaque ("${r.background}", α ${r.alpha}) — the tone is a colored SLAB, not colored glass (must be α < ${TONE_ALPHA_FLOOR})`,
+                ).toBeLessThan(TONE_ALPHA_FLOOR);
+            }
+            // The Alert register (wash rung re-point) — the same translucency floor.
+            for (const { name, cls } of TONE_REGISTERS) {
+                const r = await readToneAlpha(page, cls, "wash");
+                expect(
+                    r.alpha,
+                    `feedback-tone-${name} (${mode}, Alert wash rung) composited OPAQUE/near-opaque ("${r.background}", α ${r.alpha}) — must be α < ${TONE_ALPHA_FLOOR}`,
+                ).toBeLessThan(TONE_ALPHA_FLOOR);
+            }
+        });
     }
 });

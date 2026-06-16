@@ -19,6 +19,7 @@ import { Constellation } from "../../src/components/custom/constellation";
 import { FourierField } from "../../src/components/custom/fourier-field";
 import { defaultBlobColorResolver } from "../../src/composables/color";
 import { useTokenColor } from "../../src/composables/dom/useTokenColor";
+import { useGlobalDark } from "../../src/composables/dark/useGlobalDark";
 import { cn } from "../../src/utils/cn";
 import {
     heroAuroraConfig,
@@ -83,12 +84,30 @@ const auroraPalette = computed<HeroPaletteKey>(() => {
 
 const auroraConfig = computed(() => heroAuroraConfig(auroraPalette.value));
 
+// BA.W-STAGE scope 3 (BG-4) — the contained-live-substrate dark register lift. A
+// contained aurora/constellation is the `-z-10` field behind a `wash`/`quiet` card;
+// in DARK the W-DARK-MATERIAL near-black page beneath it + the card's wash tint over
+// it WASH the field to a dull brown-grey at the light-tuned ceiling. The dark arm
+// lifts the ceiling so the contained field READS as the painterly drift it is (the
+// FULL-BLEED hero already reads — it's the boxed contained register this fixes). An
+// explicit per-page `intensity` always wins (the consumer override is honored).
+const { isDark } = useGlobalDark();
+
 // The per-page opacity ceiling — how far back the live substrate recedes behind
-// the card content. A hero sits richer; a contained page sits quieter.
+// the card content. A hero sits richer; a contained page sits quieter; DARK lifts
+// both so the field is not suppressed by the near-black page + the wash tint.
 const opacityCeiling = computed(() => {
     const d = descriptor.value;
     if (d && "intensity" in d && typeof d.intensity === "number") {
         return d.intensity;
+    }
+    if (isDark.value) {
+        // The dark lift — a contained field needs more presence to read against
+        // the deepened page. Full-bleed heroes already read (the field IS the page
+        // bg) so the lift is gated to the CONTAINED case; the bleed hero keeps the
+        // calmer ceiling so the headline scrim still reads over it.
+        if (fullBleed.value) return props.variant === "hero" ? 0.6 : 0.4;
+        return props.variant === "hero" ? 0.78 : 0.62;
     }
     return props.variant === "hero" ? 0.6 : 0.4;
 });
@@ -211,7 +230,7 @@ const cardTier = computed<CardTier>(() => {
         />
         <div
             v-else-if="kind === 'paper'"
-            class="story-hero-bg paper-grain-overlay"
+            class="story-hero-bg story-bg-paper paper-grain-overlay"
             aria-hidden="true"
         />
 
@@ -224,8 +243,13 @@ const cardTier = computed<CardTier>(() => {
             :style="{ '--glass-backdrop': 'light' }"
             :class="cn('story-hero-bleed-content', cardClass)"
         >
-            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). -->
-            <h1 v-if="showHeroTitle" class="story-hero-title text-display-3">
+            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). It
+                 fade-RISES on entrance on the SETTLE register (BA.W-ANIMATE scope 5,
+                 applied here on its behalf — audacious type arrives with GRAVITY, not
+                 bounce: the `.story-hero-title--enter` keyframe rides --ease-out, NO
+                 overshoot, never --spring-bouncy/--spring-snappy; PRM → static
+                 terminal state via the keyframe's own @media gate). -->
+            <h1 v-if="showHeroTitle" class="story-hero-title story-hero-title--enter text-display-3">
                 {{ title }}
             </h1>
             <slot />
@@ -247,8 +271,13 @@ const cardTier = computed<CardTier>(() => {
                 )
             "
         >
-            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). -->
-            <h1 v-if="showHeroTitle" class="story-hero-title text-display-3">
+            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). It
+                 fade-RISES on entrance on the SETTLE register (BA.W-ANIMATE scope 5,
+                 applied here on its behalf — audacious type arrives with GRAVITY, not
+                 bounce: the `.story-hero-title--enter` keyframe rides --ease-out, NO
+                 overshoot, never --spring-bouncy/--spring-snappy; PRM → static
+                 terminal state via the keyframe's own @media gate). -->
+            <h1 v-if="showHeroTitle" class="story-hero-title story-hero-title--enter text-display-3">
                 {{ title }}
             </h1>
             <slot />

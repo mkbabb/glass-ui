@@ -42,7 +42,14 @@ reference; the Status column reflects each wave's reconciled state.
 > Residual `planned` waves (W20/W21/W28-W32/W35/W39/W41-W43/W49) dispositioned at AY.W-TRIAGE —
 > see [docs/tranches/AY/audit/W-TRIAGE.md](../AY/audit/W-TRIAGE.md) (the machine mirror
 > `AY/audit/residual-disposition.json` is cross-checked by `proof:disposition-live`'s
-> phantom-owner clause). The rows stay `planned` here (AX is a closed historical record).
+> phantom-owner clause). Those rows stay `planned` here (AX is a closed historical record).
+>
+> The AX formal-close residue (W25a/W25b/W26/W27a/W27b/W33) is RETIRED-ABSORBED at
+> BA.W-HYGIENE (DC-CHR-2): the SUBSTANTIVE work landed downstream (the god-module carves →
+> AY.W-COLOCATE/AZ.W-CARVE; the gate hardening — proof:tag-parity, proof:no-legacy-commentary
+> → AY.W-LEG1), so the formal close was the only residue. Those six rows now read
+> `superseded` with the absorbed-by note; no AX FINAL.md is owed (the AY/AZ FINALs are the
+> operative records). The orphaned Task #139/#140 are superseded by the same record.
 
 | Wave | Title | Status |
 |---|---|---|
@@ -71,17 +78,17 @@ reference; the Status column reflects each wave's reconciled state.
 | W22 | font register reconciliation | complete |
 | W23 | carousel indicator reauthor — glass scrubber decision | complete |
 | W24 | deck-progress export + rail recipe | complete |
-| W25a | CSS god-module gate extension | planned |
-| W25b | CSS monolith carves | planned |
-| W26 | TS god-module state encapsulation | planned |
-| W27a | legacy gate hardening — barrel scrub, tag-parity, var/arbitrary guard | planned |
-| W27b | legacy commentary full-tree sweep | planned |
+| W25a | CSS god-module gate extension | superseded — absorbed by AY.W-CARVE/AZ.W-CARVE (proof-no-god-module.mjs drained the central rows); the AX formal close is superseded by the AY→AZ close cadence — no AX FINAL.md owed |
+| W25b | CSS monolith carves | superseded — absorbed by AY.W-COLOCATE + AZ.W-CARVE (the dock/css monolith split + the @import-root carve); no AX FINAL.md owed |
+| W26 | TS god-module state encapsulation | superseded — absorbed by AY.W-COLOCATE (goo-blob/composables/ split + the carve set); no AX FINAL.md owed |
+| W27a | legacy gate hardening — barrel scrub, tag-parity, var/arbitrary guard | superseded — absorbed by AY.W-LEG1 (proof:tag-parity + the barrel/var guards registered); no AX FINAL.md owed |
+| W27b | legacy commentary full-tree sweep | superseded — absorbed by AY.W-LEG1 (proof:no-legacy-commentary registered + the full-tree sweep landed); no AX FINAL.md owed |
 | W28 | speedtest native-first receive | planned |
 | W29 | repatriation prune + orphan prune | planned |
 | W30 | slides baseline — constellation Canvas2D leak | planned |
 | W31 | slides content reframe + visual defects | planned |
 | W32 | slides motion-form adoption + deploy verify | planned |
-| W33 | close — gate fleet, readmes, overfitting, inheritance, final | planned |
+| W33 | close — gate fleet, readmes, overfitting, inheritance, final | superseded — the substantive carves/gate-hardening absorbed by AY.W-COLOCATE/W-LEG1 + AZ.W-CARVE; the AX formal close is superseded by the AY→AZ close cadence (the AY/AZ FINALs are the operative records) — no AX FINAL.md owed. Orphaned Task #139 (W25/26/27 split) + Task #140 (W33 close) are superseded by the same absorbed-by record — doc-only supersede, no new work (the carves already landed) |
 | W34 | cross-constellation idiom + consumer-adoption ledger | planned |
 | W35 | keyframes prune + migration DAG | planned |
 | W36 | forced-colors glass-language skin | live-verified — forced-colors glass-language skin (@media forced-colors maps glass→system colors, rides --glass-level:0); proof:forced-colors-skin green; DELTA audit/visual/W36-DELTA.md |

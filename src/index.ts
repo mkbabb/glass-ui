@@ -31,7 +31,7 @@
 //   useRegisteredShortcuts, ShortcutOptions,
 //   RegisteredShortcut, ShortcutCombo,
 //   ShortcutEventType
-//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      @vueuse/core
+//   Carousel, CarouselContent,                 @mkbabb/glass-ui/carousel      @vueuse/core
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
@@ -106,7 +106,13 @@ export * from "./components/ui/skeleton";
 export * from "./components/ui/slider";
 export * from "./components/ui/switch";
 export * from "./components/ui/table";
-export * from "./components/ui/tabs";
+// BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public surface (the
+// "too many types" cut: two parallel tab families, the always-ON baked-plate
+// indicator default that painted the R10-2 oval blob). The standardized tab family
+// is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials). The reka substrate
+// files (`components/ui/tabs/*`) remain INTERNAL solely for the dock-rail consumer
+// (`DockLayerGroup.vue` + `<TabsIndicator :surface="false">`, the AZ hairline);
+// they are NOT re-exported from any public barrel.
 export * from "./components/ui/tags-input";
 export * from "./components/ui/toast";
 export * from "./components/ui/toggle";
@@ -122,6 +128,14 @@ export * from "./components/custom/configurator";
 
 // Custom composites — overflow-marquee primitive
 export * from "./components/custom/scrolling-text";
+
+// Custom composites — the section-color pop primitive (BA.W-ICON-CHIP). The ONE
+// color-event vehicle (the `color-mix` backplate + full-chroma glyph + the
+// duotone/bloom/reveal axes). Vueuse-FREE + lightweight (it composes only `cn` +
+// the dependency-free `vReveal` directive — no `@vueuse/core`, no
+// `@mkbabb/keyframes.js`), so it is root-barrel safe and cherry-picked here for
+// BROAD reach; also reachable via `@mkbabb/glass-ui/icon-chip`.
+export * from "./components/custom/icon-chip";
 
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
@@ -153,7 +167,13 @@ export * from "./composables/sortable";
 export {
     startViewTransition,
     supportsViewTransitions,
+    // BA.W-ATLAS-RECONCILE A-4b — the route/navigation convenience over the ONE
+    // VT substrate (async update + reduced-motion instant-path). NO parallel
+    // useRouteTransition wrapper.
+    navigate,
+    supportsRouteTransitions,
     type ViewTransitionResult,
+    type NavigateOptions,
 } from "./composables/motion/useViewTransition";
 
 // The v-reveal entrance directive. Dependency-free (`vue` type-only — no

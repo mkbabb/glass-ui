@@ -28,10 +28,12 @@ const colorPresets = [
     <StoryPage>
         <StorySection
             label="Two presets — one engine"
-            blurb="The two variants are whole configurations, not recolours of one curve. The hero
-                preset draws a few big phasors with the nested epicycle circles showing and a warm
-                trail; the final preset draws a denser elliptic spectrum with the epicycles hidden.
-                The hue always comes from the consumer's colour."
+            blurb="The AMBIENT recessive register. The two variants are whole configurations, not
+                recolours of one curve. The hero preset draws a few big phasors with the nested
+                epicycle circles showing and a warm trail; the final preset draws a denser elliptic
+                spectrum with the epicycles hidden. The hue always comes from the consumer's colour.
+                For the FOREGROUND interactive register — the harmonic-count slider, the assembling
+                partial-sum, the shape-trace, and the controllable clock — see the Fourier Studio."
         >
             <ShowcaseFrame pad="none" class="grid gap-4 sm:grid-cols-2">
                 <figure class="flex flex-col gap-2">

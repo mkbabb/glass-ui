@@ -281,3 +281,40 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     paperGrain: 0.008,
     alpha: 1.0,
 };
+
+/**
+ * `PAPER_WASH_GROUND` — the library-canon recessive-ground crayon calibration
+ * (BA.W-ATLAS-RECONCILE A-4a; d6 9467bd16 adopt). A pure PRESET PARTIAL (no
+ * palette/nuclei/motion) pinning the recessive crayon-ground deposition dials so a
+ * data-ground aurora reads as paper-on-tooth without each consumer dial-tuning the
+ * same recessive calibration by hand. It carries NO palette/nuclei — the consumer
+ * spreads it over its own pole-derived pigment (page-glow IS data-glow):
+ * `const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }`.
+ *
+ * House-rule clean (presets-in-consumers): this is the LIBRARY's own recessive-ground
+ * IDENTITY, not a consumer theme — admissible at the root. `satisfies
+ * Partial<AuroraConfig>` holds (every key is a first-class `AuroraConfig` field at
+ * HEAD; the `crayon` medium is `uMedium==4`).
+ */
+export const PAPER_WASH_GROUND = {
+    medium: "crayon",
+    // The structure-tensor edge-tangent deposition (crayon forces tensor in the
+    // bridge anyway); named so the recessive flow is explicit, not lucky.
+    strokeOrient: "tensor",
+    // The deft tooth dials — the named stopping rules (d-paper-aurora M1).
+    granulation: 0.3,
+    canvasGrain: 0.5,
+    strokeAmount: 0.35,
+    strokeAnisotropy: 0.5,
+    // Recessive guards: single dry layer, NO impasto / sheen / broken-color flecks
+    // loud enough to name. The tooth is paper, never a picture.
+    strokeLayers: 1,
+    impasto: 0,
+    brokenColor: 0,
+    wetEdge: 0,
+    // The ground spends NO chroma budget — pull saturation BELOW unity so the
+    // pigment is a whisper of the data hue on tooth, not a colored field.
+    saturation: 0.92,
+    // A felt paper-tooth floor that co-tunes with the page's bare-paper grain.
+    paperGrain: 0.008,
+} as const satisfies Partial<AuroraConfig>;

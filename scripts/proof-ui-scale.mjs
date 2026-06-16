@@ -49,7 +49,10 @@ const stripJs = (s) =>
 
 const tokens = stripCss(readMonolith(ROOT, "tokens"));
 const glass = stripCss(readMonolith(ROOT, "glass"));
-const typography = stripCss(read("src/styles/typography.css"));
+// BA.W-CARVE2 — typography.css carved into typography/*.css partials (the
+// --type-display-* ladder lives in scale.css); readMonolith concatenates
+// root + partials in cascade order.
+const typography = stripCss(readMonolith(ROOT, "typography"));
 const dockOverflow = stripCss(read("src/styles/dock/overflow.css"));
 const dockDensity = stripCss(read("src/styles/dock/density.css"));
 

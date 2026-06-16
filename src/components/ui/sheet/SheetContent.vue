@@ -14,10 +14,18 @@ import { type SheetVariants, sheetVariants } from '.'
 import { cn } from '../../../utils'
 import { useSpringMount, type SpringPreset } from '../../../composables/motion/useSpringMount'
 import ModalOverlay from '../_shared/ModalOverlay.vue'
+// BA.W-SURFACE-AXIS — Sheet (the modal-chrome sibling of Dialog) gains the SHARED
+// {glass·veil·opaque} surface axis (IG-B3 — sheetVariants varied on `side` only).
+import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
 
 interface SheetContentProps extends DialogContentProps {
   class?: HTMLAttributes['class']
   side?: SheetVariants['side']
+  /** Surface decoration register (BA.W-SURFACE-AXIS) — the SHARED
+   *  {glass·veil·opaque} axis. `glass` (default) renders the floating glass tier
+   *  sheetVariants already bakes; `veil` overlays the borderless text-legibility
+   *  plate; `opaque` sets `--glass-level:0` (the solid-card escape). */
+  surface?: Surface
   /**
    * Opt into iOS spring-physics entrance via `useSpringMount` (W13). When
    * truthy, the sheet slides from off-edge via a `useSpring`-driven
@@ -47,10 +55,17 @@ const props = defineProps<SheetContentProps>()
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, side, spring: _sp, dragDismiss: _dd, dragThreshold: _dt, ...delegated } = props
+  const { class: _, side, surface: _su, spring: _sp, dragDismiss: _dd, dragThreshold: _dt, ...delegated } = props
 
   return delegated
 })
+
+// BA.W-SURFACE-AXIS — the veil/opaque decoration on top of sheetVariants' baked
+// `glass-floating` tier (strip the resolver's base-tier prefix; the variant owns
+// the base). `:data-surface` (template) drives the CSS seam in lockstep.
+const surfaceDecoration = computed(() =>
+  surfaceClass(props.surface ?? 'glass').replace(/^glass-\w+\s*/, ''),
+)
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
@@ -106,9 +121,10 @@ const dragHandlers = computed(() =>
   <DialogPortal>
     <ModalOverlay scrim="glass" animate="fade" layout="centered" />
     <DialogContent
-      :class="cn(sheetVariants({ side }), props.spring ? 'transition-none' : '', props.class)"
+      :class="cn(sheetVariants({ side }), surfaceDecoration, props.spring ? 'transition-none' : '', props.class)"
       v-bind="{ ...forwarded, ...$attrs }"
       :style="springStyle"
+      :data-surface="props.surface ?? 'glass'"
       :data-spring="props.spring ? (typeof props.spring === 'string' ? props.spring : 'smooth') : undefined"
       :data-drag-dismiss="props.spring && props.dragDismiss ? '' : undefined"
       v-on="dragHandlers"

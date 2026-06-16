@@ -221,7 +221,7 @@ export const CURVE_FAMILIES: readonly CurveFamily[] = [
     },
     {
         family: "Steps",
-        blurb: "Discrete jumps — the value.js step generators (steppedEase / stepStart / stepEnd). A live-parameterized n / jump-term editor is the W-MOTION3 successor.",
+        blurb: "Discrete jumps — the value.js step generators (steppedEase / stepStart / stepEnd). The live-parameterized n / jump-term editor (BA.W-FOURIER-STUDIO / REC-6) sits above these reference rows; the published <EasingPicker> primitive is its named successor (W-EASING-PRIMITIVE).",
         rows: [
             { name: "steps(4, end)", jsName: "steppedEase(4, \"end\")", fn: steps4Fn, kind: "step", note: "four discrete jumps, last on arrival" },
             { name: "step-start", jsName: "stepStart()", fn: stepStartFn, kind: "step", note: "instant jump at t=0" },

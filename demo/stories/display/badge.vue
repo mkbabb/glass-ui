@@ -3,6 +3,23 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Badge } from "../../../src/components/ui/badge";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { BadgeCheck } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the display band's ONE coherent --section-color-5 amber identity
+// (the eyebrow + rail + chip). Badge is the loud-saturated-pill teaching register,
+// so its body LEGITIMATELY surfaces the section-color tone as a documented axis —
+// the page's content IS color (the icons-Pops-block model).
+const DISPLAY_STOP = 5;
+
+// The section-color tone axis as a documented Badge variant teaching row (the
+// display map's "surface the section-color tone as a documented variant axis").
+const sectionToneBadges: { stop: number; label: string }[] = [
+    { stop: 0, label: "rose" },
+    { stop: 3, label: "teal" },
+    { stop: 5, label: "amber" },
+    { stop: 9, label: "slate" },
+    { stop: 12, label: "indigo" },
+];
 
 const coreVariants: { variant: "default" | "secondary" | "destructive" | "outline"; label: string }[] = [
     { variant: "default", label: "default" },
@@ -26,6 +43,46 @@ const vizBadges: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the display-band identity event family on
+             --section-color-5 (amber). Badge is the loud-pill teaching register,
+             so the body LEGITIMATELY surfaces section-color tones (the icons-Pops
+             model — color is the content). -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DISPLAY_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="BadgeCheck" :section="DISPLAY_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Display · Badge
+                </span>
+                <p class="text-small text-muted-foreground">
+                    The loud-saturated-pill register — surfacing the variant, size,
+                    and section-color tone axes.
+                </p>
+            </div>
+        </header>
+
+        <StorySection
+            label="section-color tone axis"
+            blurb="Compose a --section-color-N fill as a documented Badge tone — the 13-stop jewel-tone ramp as a saturated-pill teaching axis."
+        >
+            <div class="flex flex-wrap items-center gap-3">
+                <Badge
+                    v-for="t in sectionToneBadges"
+                    :key="t.stop"
+                    class="border-transparent text-white"
+                    :style="{ backgroundColor: `var(--section-color-${t.stop})` }"
+                >
+                    {{ t.label }}
+                </Badge>
+            </div>
+        </StorySection>
+
         <StorySection label="variants">
             <div class="flex flex-wrap items-center gap-3">
                 <Badge

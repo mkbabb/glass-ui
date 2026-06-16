@@ -211,7 +211,52 @@ export function uploadBlobUniforms(
     // 1.0-centred MULTIPLIER (idle ≈ 1.0): the config holds the ONE
     // absolute band, mood scales it — there is no split-length regime,
     // so no `/DEFAULTS` ratio normalization is needed.
-    gl.uniform1f(U.uSmoothK, cMem.smoothK * params.smoothK * POS_SCALE);
+    //
+    // BA.W-GOO-REDRESS (root cause 1 / BA-goo-2, direction ii) — the
+    // WORST-CASE-ORBIT BRIDGE WIDEN. The nominal band rides POS_SCALE but
+    // NOT the orbit random worst case: `useBlobSatellites` inflates each
+    // satellite's orbit by an uncapped ×0.8..1.2 (`baseR`) on the Y-long
+    // eccentric axis, so the worst-case satellite CENTER sits at
+    // `orbitRadius × 1.2 × (1+ecc)` (the SAME `satWorst` term the uMaxReach
+    // bounding-discard below already sums). At the high excursion the
+    // satellite NEAR-EDGE (`worstOrbitDist − satelliteRadius`) leaves the
+    // body edge by a GAP the nominal band cannot bridge → an instantaneous
+    // fully-detached disc with no gooey neck (the R8-07 fail state). The
+    // fix scales the band by the worst-case orbit GAP so the smin neck
+    // persists across the WHOLE orbit envelope, not only the nominal frame.
+    //
+    // SELF-TARGETING + LEAN-SAFE: the widen is keyed off `bridgeGap` — how
+    // far the worst-case satellite near-edge sits BEYOND the body edge —
+    // which is NEGATIVE (clamped to 0) when the satellite is well-inside the
+    // body (the library BLOB_CONFIG_DEFAULTS: orbit 0.17, near-edge ≈ 0.132
+    // INSIDE body 0.22 → gap 0, factor 1.0, the band BYTE-IDENTICAL so the
+    // proof:blob-render body lean does not move) and grows only when there
+    // IS a gap to bridge (the studio Calm bead: orbit 0.30, near-edge ≈
+    // 0.274 BEYOND body 0.22 → gap ≈ 0.054). The factor adds band toward the
+    // gap and is CLAMPED to `MAX_BRIDGE_WIDEN` (×1.25) so the widen can never
+    // run the resting body lean away from the gated calm-lean ceiling
+    // (proof:blob-render / proof:blob-studio) NOR over-inflate the painted
+    // footprint past the four-side containment ceiling (proof:blob-page). The
+    // capped per-satellite orbit-random/wobble envelope (useBlobSatellites.ts)
+    // carries the rest of the bridge-hold, so the band only needs a gentle
+    // worst-case lift. All terms ride POS_SCALE in the SAME inner-region UV
+    // space as the radii (no split-length regime). NO orbit/length constant is
+    // edited here — this is a READ of the worst-case excursion the orbit atoms
+    // already define.
+    const MAX_BRIDGE_WIDEN = 1.25;
+    const worstOrbitDist = cGeo.orbitRadius * 1.2 * (1 + cGeo.eccentricity);
+    const nominalBand = cMem.smoothK * params.smoothK;
+    const bridgeGap = Math.max(
+        0,
+        worstOrbitDist - cGeo.satelliteRadius - cGeo.bodyRadius,
+    );
+    // The band must span ~the gap to keep a neck across it; add the gap on
+    // top of the nominal band, clamped so the body self-seam never over-leans.
+    const orbitWiden =
+        nominalBand > 0
+            ? Math.min(MAX_BRIDGE_WIDEN, 1 + bridgeGap / nominalBand)
+            : 1;
+    gl.uniform1f(U.uSmoothK, nominalBand * orbitWiden * POS_SCALE);
     gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
 
     // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
@@ -228,12 +273,16 @@ export function uploadBlobUniforms(
     // plus a 0.10 UV safety pad for the pointer-lean excursion and the
     // squash stretch. NO length constant is edited (W08/W15 own those);
     // this is a READ of them.
-    const satWorst =
-        cGeo.orbitRadius * 1.2 * (1 + cGeo.eccentricity) +
-        cGeo.satelliteRadius;
+    //
+    // BA.W-GOO-REDRESS — the pad sums the WIDENED smin band (`nominalBand *
+    // orbitWiden`, computed above), not the nominal, so the worst-case-orbit
+    // bridge widen can NEVER push the wet meniscus past the bounding-discard
+    // and get clipped (the scope-2 pad-confirm: the widened band exceeds the
+    // nominal, so the pad must track it).
+    const satWorst = worstOrbitDist + cGeo.satelliteRadius;
     const maxReach =
         (Math.max(cGeo.bodyRadius, satWorst) +
-            cMem.smoothK * params.smoothK +
+            nominalBand * orbitWiden +
             (cMem.noiseAmp * params.noiseAmp) / 0.025 +
             Math.abs(pointer.pulse.value) * cInt.clickImpulse) *
             POS_SCALE +

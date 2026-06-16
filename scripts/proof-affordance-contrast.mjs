@@ -76,7 +76,15 @@ function run() {
     const violations = [];
     const facts = {};
 
-    // ── 1. gold-audacious rest text reads in light mode.
+    // ── 1. gold-audacious rest text reads — the CALM register (BA.W-GLASS-CAL).
+    //   The disco RETIRED (H2a): `gold-audacious` is no longer a saturated-sweep
+    //   CTA that flips to white on hover; it is a CALM glass button with a STATIC
+    //   warm-gold tint, the label warm-ink `--foreground` in BOTH rest and hover
+    //   (the soft gold tint never deepens to a backplate that needs a white-label
+    //   flip). So the legibility assertion DROPS onto the new register: the rest
+    //   text is `text-foreground` (legible warm ink over the soft gold tint) AND it
+    //   NEVER flips to `text-white` (there is no saturated state to clear with white
+    //   — a `hover:text-white` would be illegible over the still-light gold tint).
     if (!existsSync(BUTTON)) {
         violations.push("button/index.ts is absent");
     } else {
@@ -85,61 +93,57 @@ function run() {
         const goldStr = gold ? gold[1] : "";
         facts.goldRestForeground =
             /\btext-foreground\b/.test(goldStr) && !/(^|\s)text-white(\s|$)/.test(goldStr);
-        facts.goldHoverLight = /hover:text-white/.test(goldStr);
+        // The CALM register keeps the warm ink at EVERY state — no white flip.
+        facts.goldNoWhiteFlip = !/text-white/.test(goldStr);
+        // The static warm-gold tint is the calm register's identity: a --color-gold
+        // background over the glass surface (replaces the retired animated sweep).
+        facts.goldStaticTint = /--color-gold\b/.test(goldStr);
+        // The variant composes the calm glass-first surface (no retired disco class).
+        facts.goldCalmGlass =
+            /\bbtn-glass\b/.test(goldStr) && !/btn-audacious/.test(goldStr);
         if (!facts.goldRestForeground) {
             violations.push(
-                "gold-audacious rest text is not the warm-ink `text-foreground` — white-on-cream was sub-legible (it must reserve light text for hover/active)",
+                "gold-audacious rest text is not the warm-ink `text-foreground` — white-on-gold-tint-over-cream was sub-legible",
             );
         }
-        if (!facts.goldHoverLight) {
+        if (!facts.goldNoWhiteFlip) {
             violations.push(
-                "gold-audacious does not lift to light text on hover — the saturated state should clear contrast with `hover:text-white`",
+                "gold-audacious still flips to `text-white` — the CALM register (H2a) has no saturated backplate to clear, so a white label is illegible over the soft gold tint (the disco-sweep state retired)",
+            );
+        }
+        if (!facts.goldStaticTint) {
+            violations.push(
+                "gold-audacious carries no static `--color-gold` tint — the calm register's gold identity (gold survives CALM, hinge H2a) is missing",
+            );
+        }
+        if (!facts.goldCalmGlass) {
+            violations.push(
+                "gold-audacious is not the calm glass register (`btn-glass`, no retired `btn-audacious` class) — the disco recipe was not collapsed",
             );
         }
         // No NEW CVA variant key minted.
         facts.noNewVariantKey = !/'gold-audacious-[a-z]+':/.test(src);
         if (!facts.noNewVariantKey) {
-            violations.push("a new gold-audacious-* CVA variant key was minted (forbidden — token swap only)");
+            violations.push("a new gold-audacious-* CVA variant key was minted (forbidden — register collapse only)");
         }
     }
 
-    // ── 1b. AY.W-PRIM-POLISH D1 — the gold CTA HOVER backplate is DEEPENED to a
-    //   SATURATED gold so the white label clears ≥4.5:1 in LIGHT mode (was a
-    //   translucent 22-30% gold wash over near-cream glass → 1.29:1, the white
-    //   label vanishing at click intent). The painted-pixel ratio is the BINDING
-    //   truth — verified by the π twin `tests-visual/affordance-contrast-gold.spec.ts`
-    //   (which drives the live render, hovers the gold CTA, samples the rendered
-    //   label + backplate, asserts ≥4.5:1, and is born-RED on the 1.29:1 state).
-    //   This SOURCE arm locks the recipe shape so a revert to the pale wash REDs
-    //   here too: the `btn-audacious-gold` hover MUST carry a near-opaque (≥80%
-    //   alpha) saturated-gold base layer (the deepened plate the contract names).
+    // ── 1b. BA.W-GLASS-CAL (H2a) — the `btn-audacious-gold` disco utility is
+    //   RETIRED. The prior arm asserted a deepened OPAQUE deep-gold HOVER backplate
+    //   so a white label cleared ≥4.5:1 in light mode; with the calm register there
+    //   is NO white label and NO saturated backplate, so the assertion DROPS (it is
+    //   removed, not defeated). The new positive truth: the retired `@utility
+    //   btn-audacious-gold` is GONE from utilities (the disco recipe family), and the
+    //   calm gold register's legibility is carried by clause 1 (warm-ink at every
+    //   state over the soft tint). This is the rebaselined no-hole assert.
     if (!existsSync(UTILITIES)) {
         violations.push("utilities.css is absent");
     } else {
         const src = stripComments(readMonolith(ROOT, "utilities"));
-        const goldUtil = src.match(/@utility\s+btn-audacious-gold\s*\{([\s\S]*?)\n\}/);
-        const utilBody = goldUtil ? goldUtil[1] : "";
-        const hoverBlock = utilBody.match(/&:hover:not\(:disabled\)\s*\{([\s\S]*?)\n\s{4}\}/);
-        const hoverBody = hoverBlock ? hoverBlock[1] : "";
-        // The deepened plate is the OPAQUE FIXED deep-gold base: a bare
-        // `var(--color-gold-deep)` fill (the mode-invariant saturated CTA plate,
-        // ~6.5:1 white in light / ~5.5:1 in dark) — NOT a translucent wash (the old
-        // pale recipe mixed every gold layer `… N%, transparent` at N ≤ 30, so the
-        // composite stayed near-cream → 1.29:1). The opaque deep-gold base is the
-        // ≥4.5:1 plate; a translucent-only recipe (every gold mix ends in
-        // `transparent`) is the regressed pale wash and REDS.
-        const opaqueDeepGoldBase = /var\(--color-gold-deep\)/.test(hoverBody);
-        // The translucent gold WASHES that still exist must be the SHIMMER only
-        // (low-alpha ≤ 30%) — the legibility floor is the opaque base, not these.
-        const goldWashAlphas = [...hoverBody.matchAll(/var\(--color-gold[a-z-]*\)\s+(\d+)%,\s*transparent/g)].map((m) => Number(m[1]));
-        facts.goldHoverShimmerAlphas = goldWashAlphas;
-        facts.goldHoverPlateDeepened = opaqueDeepGoldBase;
-        // Report the dominant plate signal for the console: 100 when the opaque
-        // base is present, else the max translucent wash (the pale-wash tell).
-        facts.goldHoverMaxAlpha = opaqueDeepGoldBase ? 100 : (goldWashAlphas.length ? Math.max(...goldWashAlphas) : 0);
-        if (!facts.goldHoverPlateDeepened) {
+        facts.goldDiscoUtilityRetired = !/@utility\s+btn-audacious-gold\b/.test(src);
+        if (!facts.goldDiscoUtilityRetired) {
             violations.push(
-                `the btn-audacious-gold :hover backplate carries no OPAQUE deep-gold base (a color-mix(in srgb, var(--color-gold-dark), var(--foreground) …) plate) — the translucent pale-gold wash (max ${facts.goldHoverMaxAlpha}%) leaves white text at 1.29:1 in light mode (D1; the painted ratio is the π-twin's binding truth)`,
+                "the `@utility btn-audacious-gold` disco recipe still exists — BA.W-GLASS-CAL (H2a) retires it; the calm gold register is a variant-class composition, not a disco utility",
             );
         }
     }
@@ -252,10 +256,10 @@ function run() {
     });
 
     console.log(
-        "proof:affordance-contrast — the cream affordances read at rest + the gold CTA hover plate is deepened + the goo-blob var() throw is killed (AW.W13 + AY.W-PRIM-POLISH D1)",
+        "proof:affordance-contrast — the cream affordances read at rest + the CALM gold CTA register (disco retired, BA.W-GLASS-CAL) + the goo-blob var() throw is killed (AW.W13 + AY.W-PRIM-POLISH D1)",
     );
     console.log(`  gold-audacious rest=foreground  : ${facts.goldRestForeground ? "yes ✓" : "NO ✗"}`);
-    console.log(`  gold CTA hover plate deepened   : ${facts.goldHoverPlateDeepened ? `yes ✓ (${facts.goldHoverMaxAlpha}%)` : `NO ✗ (${facts.goldHoverMaxAlpha}% — pale wash)`}`);
+    console.log(`  gold CTA calm (no white flip)   : ${facts.goldNoWhiteFlip ? "yes ✓" : "NO ✗"}   static-tint=${facts.goldStaticTint ? "✓" : "✗"} glass=${facts.goldCalmGlass ? "✓" : "✗"} disco-utility-retired=${facts.goldDiscoUtilityRetired ? "✓" : "✗"}`);
     console.log(`  input/select border lifted      : ${facts.inputBorderLifted && facts.selectTriggerLifted ? "yes ✓" : "NO ✗"}   (${facts.inputBorderToken})`);
     console.log(`  standard slider fill lifted      : ${facts.sliderRangeLifted ? "yes ✓" : "NO ✗"}   (${facts.sliderRangeFallback})`);
     console.log(`  goo-blob var() resolved pre-vjs : ${facts.resolvesViaComputedStyle && facts.feedsResolvedColor ? "yes ✓" : "NO ✗"}`);

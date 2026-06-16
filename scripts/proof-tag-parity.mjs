@@ -59,7 +59,7 @@ const HEADER_LIVE_VERIFIED = new Set([
     "proof:aurora-painterly-statistics",
     "proof:font-cascade-live",
     "proof:substrate-paints-color",
-    "proof:tabs-unified",
+    "proof:tabs-std",
     "proof:dock-animation-live",
     "proof:dock-orchestrator-single",
     "proof:dock-wrap-content-driven",
@@ -82,6 +82,11 @@ const HEADER_LIVE_VERIFIED = new Set([
 const JUSTIFIED_LOCAL_ONLY = new Map([
     // Deliberately-untagged retired close meta-gate (tags=[]).
     ["proof:au-final", "AU close meta-gate, RETIRED from the release/ci set at the 3.3.0 cut (tags=[]); kept untagged for the historical bite-run."],
+    // BA.W-GESTALT-GATE — the gestalt acceptance bar. BORN-RED BY DESIGN against the
+    // R8 captures until BA.W-REFLECT2 flips the roster verdicts and PROMOTES the tag
+    // into the operative close set; untagged (the au-final precedent) so the local/ci
+    // aggregates complete while the bar stays visible + runnable by name.
+    ["proof:ba-gestalt", "BA gestalt bar, born-RED by design until W-REFLECT2 flips the roster verdicts; untagged so aggregates complete (the au-final precedent); W-REFLECT2 promotes it to the operative close set."],
     // AY terminal-close meta-gate — RELEASE-only by design (tags=["release"]). Its
     // STAGED-NOT-PUBLISHED + CLEAN-TREE clauses are release-context truths that
     // cannot pass mid-development in CI (a dirty working tree is the CI norm), so it
@@ -93,7 +98,13 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // red every push during the redress window. The release arm (proof:az-final
     // clause 10) is its enforcement home — the ay-final precedent.
     ["proof:az-reflect", "AZ.W-CLOSE clause-10 reflection bar, RELEASE-only by design (FAIL records are the normal mid-triumvirate state; ci would red every redress-window push); proof:az-final clause 10 enforces it at the close."],
-    ["proof:az-final", "AZ.W-CLOSE terminal-close meta-gate, RELEASE-only by design (STAGED-OR-CUT + CLEAN-TREE are release-context truths that cannot pass in mid-dev CI); the release arm enforces it — the ay-final precedent."],
+    ["proof:az-final", "AZ.W-CLOSE terminal-close meta-gate, RETIRED from the release set at the BA cut (tags=[]; the au-final/ay-final precedent — its STAGED-OR-CUT clause guarded the AZ->3.13.0 window, fulfilled-and-superseded the moment the cut ran); kept untagged for the historical bite-run. proof:ba-final is the successor close gate."],
+    // BA.W-CLOSE terminal-close meta-gate — RELEASE-only by design (tags=["release"]).
+    // Its STAGED-OR-CUT + CLEAN-TREE + THE-GESTALT-BAR clauses are release-context truths
+    // that cannot pass mid-development in CI (a dirty tree is the CI norm; the gestalt
+    // bar is the close-time verdict), so it is deliberately NOT ci-tagged. The release
+    // arm is its enforcement home — the az-final/ay-final precedent.
+    ["proof:ba-final", "BA.W-CLOSE terminal-close meta-gate, RELEASE-only by design (STAGED-OR-CUT + CLEAN-TREE + THE-GESTALT-BAR are release-context truths that cannot pass in mid-dev CI); the release arm enforces it — the az-final/ay-final precedent."],
     // The ci.yml drift meta-step — local+release by design, NOT ci-tagged to avoid
     // double-render (it verifies the ci mirror; its own note documents this).
     ["proof:gen-ci-fresh", "ci.yml byte-match drift meta-step (local+release); NOT ci-tagged to avoid double-rendering itself into the file it checks."],

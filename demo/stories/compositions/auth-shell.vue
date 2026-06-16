@@ -8,6 +8,7 @@ import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { Separator } from "../../../src/components/ui/separator";
 import { Aurora } from "../../../src/components/custom/aurora";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { cn } from "../../../src/utils/cn";
 import { heroAuroraConfig } from "../aurora-hero";
 
@@ -93,19 +94,13 @@ const trustBadges = [
                         :key="badge.text"
                         class="flex items-center gap-3"
                     >
-                        <span
-                            class="flex size-8 items-center justify-center rounded-full"
-                            :style="{
-                                backgroundColor: `color-mix(in srgb, var(--section-color-${badge.section}, var(--muted)) 25%, transparent)`,
-                                color: `var(--section-color-${badge.section}, var(--muted-foreground))`,
-                            }"
-                        >
-                            <component
-                                :is="badge.icon"
-                                class="size-4"
-                                aria-hidden="true"
-                            />
-                        </span>
+                        <IconChip
+                            :icon="badge.icon"
+                            :section="badge.section"
+                            :size="32"
+                            :glyph-size="16"
+                            :stroke-width="2"
+                        />
                         <span class="text-small">{{ badge.text }}</span>
                     </li>
                 </ul>

@@ -2,6 +2,7 @@
 import { computed, type Component } from "vue";
 import { ChevronRight } from "@lucide/vue";
 import DockIconButton from "./DockIconButton.vue";
+import FadingScroll from "../fading-scroll/FadingScroll.vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 import type { DockRailItem } from "./constants";
 
@@ -15,25 +16,26 @@ import type { DockRailItem } from "./constants";
  * dock box is INVIOLATE (R6 §"design REDIRECT" item 1) — and it PERSISTS when the
  * dock collapses (the in-pane switcher rail vanishes on collapse; this one does not).
  *
- * W-RAIL3 EVOLUTION (the third-rail redirect). The prior facility was a single
- * end-icon (one `DockIconButton` cycling `entries` through an invisible list behind
- * a chevron). The contextual facets used to mount as an in-dock `<DockLayerGroup>`,
- * which stretched the dock box ~2× (the R6-1/R6-2 inflation). This wave MOVES the
- * facets OUT of the dock onto THIS rail as the visible chips — "a floating carousel
- * almost" (the user's words). The chips ARE the facets (id + label + icon); the
- * active one is highlighted; when a context carries more chips than fit inline the
- * strip scrolls/cycles (CSS `overflow` + `scroll-snap`).
+ * BA.W-DOCK-SECTIONS — THE DIVIDER-SEAM RE-SEAT (the 4th-rail re-conception). The
+ * facets ride the rail as visible chips (the W-RAIL3 move OUT of the dock body, kept),
+ * but the rail line now co-locates with a NAMED `<DockSeparator anchor>` seam — NOT the
+ * dock edge, NOT the midline (the workaround #4 the brief forbids). The seam line crosses
+ * THROUGH the dock and overruns BOTH edges by `--dock-rail-extend-length` each side (the
+ * SYMMETRIC dual-side overrun); the chips fan FLUSH against the line (the macOS fan-out,
+ * rectilinear), and on collapse they retract INTO the rail leaving a slight protrusion
+ * stub. GlassDock measures the anchored separator's offset (`--dock-rail-seam-offset`)
+ * and the rail's CSS seats the line at it. The chips ARE the facets (id + label + icon);
+ * the active one is highlighted. Overflow routes through `<FadingScroll>` (the Batch-2
+ * primitive — the single scroll-fade port; the bespoke parallel scroll-fade is retired):
+ * the common 2-4-facet set fans flush with no scroll; a larger set scrolls under the
+ * edge fade + the embla-on-overflow momentum (the >budget arm).
  *
- * Axis-aware (the `<DockSeparator>` idiom, read via `useOptionalDockContext()`):
- *   - column dock (vertical)  → the strip hangs BELOW the dock as a horizontal row
- *     of chips on a horizontal hairline (the dock is a narrow column; a horizontal
- *     chip row reads as the carousel below it).
- *   - row dock (horizontal)   → the strip runs BELOW the dock's bottom edge as a
- *     horizontal row of chips on the connective hairline.
  * The hairline is composed from the `--border-hairline` token pair (the 0.5px
  * catch-light + under-shadow the dock + instrument-chassis already speak) — a
- * whisper, NEVER a hard `1px solid` rule (R3). The beyond-edge overrun is
- * `--dock-rail-extend-length` (a dock-scoped geometry knob, consumer-overridable).
+ * whisper, NEVER a hard `1px solid` rule (R3). The dual-side overrun is
+ * `--dock-rail-extend-length` (a dock-scoped geometry knob, consumer-overridable);
+ * the seam axis keys off the dock `orientation` (a vertical dock's rail is a
+ * horizontal line, a horizontal dock's is vertical).
  *
  * The layer-context binding (R2 — one registry, NOT a parallel state path):
  *   The chips write the consumer-owned `v-model:context` — the SAME ref the consumer
@@ -118,27 +120,32 @@ function select(id: string): void {
         role="group"
         :aria-label="iconLabel"
     >
-        <!-- The floating carousel strip — N detached glass chips on the connective
-             hairline, OUTSIDE the dock box. The active chip (matching the
-             consumer-owned `v-model:context`) is highlighted; a click writes its id
-             (one registry, not a parallel store). The strip scrolls/cycles when the
-             chips exceed the inline budget (CSS overflow + scroll-snap). -->
-        <div class="dock-hairline-strip" role="tablist" :aria-label="iconLabel">
-            <DockIconButton
-                v-for="chip in chips"
-                :key="chip.id"
-                type="button"
-                class="dock-hairline-extend-chip"
-                :class="{ 'is-active': context === chip.id }"
-                role="tab"
-                :aria-selected="context === chip.id"
-                :aria-label="chip.label"
-                :title="chip.label"
-                @click="select(chip.id)"
-            >
-                <component :is="chip.icon ?? FallbackIcon" class="size-4" />
-                <span class="dock-hairline-extend-chip-label">{{ chip.label }}</span>
-            </DockIconButton>
-        </div>
+        <!-- BA.W-DOCK-SECTIONS — the FLUSH chip fan, butted to the divider seam line.
+             The N glass chips fan FLUSH alongside the seam (macOS fan-out, rectilinear),
+             OUTSIDE the dock box. The active chip (matching the consumer-owned
+             `v-model:context`) is highlighted; a click writes its id (one registry, not a
+             parallel store). Overflow routes through <FadingScroll> (the Batch-2 primitive
+             — the single scroll-fade port; the bespoke parallel scroll-fade retired, S5):
+             the common 2-4-facet set fans flush with no scroll; a larger set scrolls under
+             the FadingScroll edge fade + the embla-on-overflow momentum (the >budget arm). -->
+        <FadingScroll axis="x" class="dock-hairline-fade">
+            <div class="dock-hairline-strip" role="tablist" :aria-label="iconLabel">
+                <DockIconButton
+                    v-for="chip in chips"
+                    :key="chip.id"
+                    type="button"
+                    class="dock-hairline-extend-chip"
+                    :class="{ 'is-active': context === chip.id }"
+                    role="tab"
+                    :aria-selected="context === chip.id"
+                    :aria-label="chip.label"
+                    :title="chip.label"
+                    @click="select(chip.id)"
+                >
+                    <component :is="chip.icon ?? FallbackIcon" class="size-4" />
+                    <span class="dock-hairline-extend-chip-label">{{ chip.label }}</span>
+                </DockIconButton>
+            </div>
+        </FadingScroll>
     </div>
 </template>

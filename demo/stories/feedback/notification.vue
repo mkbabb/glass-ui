@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Notification } from "../../../src/components/ui/notification";
@@ -45,11 +46,16 @@ const samples: { type: Item["type"]; label: string; message: string }[] = [
     { type: "error", label: "Error", message: "Couldn't reach the analysis service." },
 ];
 
+// BA.W-FEEDBACK-TONE — the demo teaches the HOUSE tone vocabulary, not a raw-Tailwind
+// off-token one. The prior `bg-blue-500`/`bg-emerald-500`/`bg-amber-500`/`bg-red-500`
+// swatches (FD-NOTIF-OFFMODEL — the THIRD tone map) re-point to the house
+// `.feedback-tone-<name>` register, so each dot reads `var(--tone)` (the same
+// `--{info,success,warning,destructive}` tokens the Notification surface tints with).
 const swatch: Record<Item["type"], string> = {
-    info: "bg-blue-500",
-    success: "bg-emerald-500",
-    warning: "bg-amber-500",
-    error: "bg-red-500",
+    info: "feedback-tone-info bg-(--tone)",
+    success: "feedback-tone-success bg-(--tone)",
+    warning: "feedback-tone-warning bg-(--tone)",
+    error: "feedback-tone-destructive bg-(--tone)",
 };
 </script>
 
@@ -71,7 +77,10 @@ const swatch: Record<Item["type"], string> = {
 
         <section class="flex flex-col gap-3">
             <p class="section-label">tones</p>
-            <div class="grid gap-2 rounded-lg border border-border/60 bg-card/60 p-4">
+            <!-- BA.W-DEMO-AFFORDANCES — the tones table re-points off the dead
+                 bg-card/60 slab onto the glass-routed <ShowcaseFrame> so it reads
+                 as glass over the staged backdrop (FD-FS X-2). -->
+            <ShowcaseFrame pad="sm" class="grid gap-2">
                 <div
                     v-for="s in samples"
                     :key="s.type"
@@ -86,7 +95,7 @@ const swatch: Record<Item["type"], string> = {
                     </span>
                     <span class="text-sm text-foreground">{{ s.message }}</span>
                 </div>
-            </div>
+            </ShowcaseFrame>
         </section>
 
         <Notification :notifications="notifications" @remove="remove" />

@@ -25,7 +25,7 @@ const opacity = ref(0.5);
             blurb="Two SVG turbulence baselines. `clean` is the default fine even grain; `aged` swaps in the coarser higher-octave variant via the `--paper-aged-texture` token."
         >
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <ShowcaseFrame pad="none" class="relative h-56 overflow-hidden">
+                <ShowcaseFrame pad="none" class="texture-panel relative h-56 overflow-hidden">
                     <PaperBackdrop frequency="clean" />
                     <div class="relative grid h-full place-items-center">
                         <div class="flex flex-col items-center gap-1">
@@ -34,7 +34,7 @@ const opacity = ref(0.5);
                         </div>
                     </div>
                 </ShowcaseFrame>
-                <ShowcaseFrame pad="none" class="relative h-56 overflow-hidden">
+                <ShowcaseFrame pad="none" class="texture-panel relative h-56 overflow-hidden">
                     <PaperBackdrop frequency="aged" />
                     <div class="relative grid h-full place-items-center">
                         <div class="flex flex-col items-center gap-1">
@@ -141,5 +141,17 @@ const opacity = ref(0.5);
 }
 .scope-bone {
     --paper-underpaint-color: #f6f1e8;
+}
+
+/* BA.W-STAGE scope 7 — the texture panels read as PAPER in BOTH modes. The
+   frequency comparison sits on a warm paper-toned base so the clean-vs-aged grain
+   reads against a paper field, not the generic L16 dark card where the subtle
+   turbulence difference flattens. Plain-ancestor `.dark .x` (the global-wrapped
+   ancestor scoped form is silently dropped — proof:no-scoped-global). */
+.texture-panel {
+    background-color: color-mix(in srgb, var(--foreground) 4%, var(--card));
+}
+.dark .texture-panel {
+    background-color: color-mix(in srgb, var(--foreground) 12%, var(--card));
 }
 </style>

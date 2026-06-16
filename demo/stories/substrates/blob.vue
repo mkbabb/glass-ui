@@ -19,6 +19,7 @@ import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/ty
 import { MAX_SATS } from "../../../src/components/custom/goo-blob/constants";
 import { WatercolorDot } from "../../../src/components/custom/watercolor-dot";
 import { DockBackgroundToggle } from "../../../src/components/custom/dock";
+import { FadingScroll } from "../../../src/components/custom/fading-scroll";
 import {
     Configurator,
     ConfiguratorLayer,
@@ -143,6 +144,15 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // lean-safe); the studio inherits it.
 const STUDIO_GEO_BASE = {
     satelliteCount: 4,
+    // The orbit stays at 0.30 (> bodyRadius 0.22 — the proof:blob-page
+    // orbit-outside-body source-witness + the four-side containment ceiling both
+    // hold; lower than 0.30 inflated the merged footprint past containment). The
+    // BA.W-GOO-REDRESS bridge-hold is carried NOT by tightening this orbit but by
+    // the worst-case smin band widen (uploadBlobUniforms.ts) + the capped
+    // per-satellite orbit-random/wobble envelope (useBlobSatellites.ts), which
+    // keep the satellite near-edge inside the smin reach across the WHOLE orbit so
+    // the gooey neck is the DEFAULT visible state (single connected silhouette,
+    // high-CV necking pseudopod) — the satellite never floats as an unrelated disc.
     orbitRadius: 0.3,
     satelliteRadius: 0.1,
     eccentricity: 0.04,
@@ -400,8 +410,9 @@ watch(studioPaused, () => {
                       the first thing the eye lands on, then the layered sliders below.
                     -->
                     <template #presets="{ presets: ps, activePreset }">
-                        <div
-                            class="flex gap-2 overflow-x-auto scroll-fade-mask scrollbar-hidden"
+                        <FadingScroll
+                            axis="x"
+                            class="flex gap-2 scrollbar-hidden"
                             role="tablist"
                             aria-label="Blob presets"
                         >
@@ -427,7 +438,7 @@ watch(studioPaused, () => {
                                     >{{ p.sub }}</span
                                 >
                             </button>
-                        </div>
+                        </FadingScroll>
                     </template>
                     <template #stage>
                         <div
@@ -666,6 +677,36 @@ watch(studioPaused, () => {
                     animate
                     class="aspect-square w-full"
                 />
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="The ghost register — WatercolorDot variant=ghost"
+            blurb="The empty-palette-slot / placeholder affordance: the SAME seeded blob
+                silhouette rendered as a STROKE (a color border over a low-alpha fill), NOT a
+                CSS dashed rectangle. A ghost of a given color+seed traces the SAME irregular
+                outline the solid swatch of that seed fills — paired here so the silhouette
+                match reads at a glance (solid LEFT, ghost RIGHT of each seed)."
+        >
+            <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div
+                    v-for="c in dotColors"
+                    :key="`ghost-${c}`"
+                    class="flex items-center gap-2"
+                    data-testid="watercolor-ghost-pair"
+                >
+                    <WatercolorDot
+                        :color="c"
+                        :seed="c"
+                        class="aspect-square w-1/2"
+                    />
+                    <WatercolorDot
+                        :color="c"
+                        :seed="c"
+                        variant="ghost"
+                        class="aspect-square w-1/2"
+                    />
+                </div>
             </ShowcaseFrame>
         </StorySection>
 

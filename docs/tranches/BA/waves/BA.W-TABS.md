@@ -3,7 +3,7 @@
 **Name**: W-TABS - the tabs overhaul: pill-glass + underline-paper on ONE re-timed indicator engine
 **Opens after**: BA Batch 4 open, AFTER W-GLASS-CAL's spring-duration unit lands (this wave's indicator clock CONSUMES the `--spring-<name>-duration` vocabulary that unit mints — the intra-batch edge is declared in EXECUTION-DAG §5a); runs ‖ the remaining Batch-4 waves (disjoint bounds: this wave owns `custom/tabs/*` + `ui/tabs/*` + `segmented-tabs.css` + the tabs story; no sibling writes them)
 **Agents**: 2 serial (W-TABS.1 the engine + registers → W-TABS.2 the retirements + demo story + migration map)
-**Hard gate**: `proof:tabs-std` (born-RED) — the underline paints NO plate (the R10-2 oval blob dead), the vertical indicator tracks the vertical axis, the indicator settles on the calibrated spring clock with squish release-at-arrival, the retired surfaces are GONE (ui/Tabs off the public barrel; overflow/multi-select axes dead), `proof:tabs-unified` REBASELINED — plus the π timing/no-plate readback + the `proof:ba-gestalt` verdict on `/navigation/tabs`.
+**Hard gate**: `proof:tabs-std` (born-RED) — the underline paints NO plate (the R10-2 oval blob dead), the vertical indicator tracks the vertical axis, the indicator settles on the calibrated spring clock with squish release-at-arrival, the indicator CENTERS on its label (BA-VJS-3 / valuejs-fold A-5 — indicator center == label center, both axes, both materials), the retired surfaces are GONE (ui/Tabs off the public barrel; overflow/multi-select axes dead), `proof:tabs-unified` REBASELINED — plus the π timing/no-plate/centering readback + the `proof:ba-gestalt` verdict on `/navigation/tabs`.
 **Status**: SPEC
 
 ## Goal criterion
@@ -48,6 +48,14 @@ The four live-proven mechanisms (BA invariant 3 — re-grep, do not re-diagnose)
    spring's response, so every CSS consumer rides a generic duration token —
    W-GLASS-CAL's spring-duration unit mints the `--spring-<name>-duration`
    vocabulary; THIS wave consumes it for the tab clock.
+5. **BA-VJS-3 — the pill indicator is mis-centered on the label (valuejs-fold A-5,
+   U21).** `useTabIndicator.ts:102/120` positions the indicator via
+   `translateX(${btn.offsetLeft}px)` with NO center-correction; `TabsIndicator.vue` is
+   the slab. The value.js consumer side is correct (`flex items-center justify-center`)
+   — the offset is INSIDE the indicator engine. The engine rebuild (scope 1-3) must NOT
+   re-ship it; folded as an ACCEPTANCE ROW (W5), NOT new scope — the letter is explicit
+   ("Do not author new scope — add a centering acceptance row"). Reproduced on a live
+   3.13.0 registry consumer per the value.js N2 fleet (`U-CONTROLS.md §U21`).
 
 Census truth (consumer-evidenced, re-grep at HEAD): segmented ×7 · underline ×4 ·
 pill ×1 (demo) · `overflow=scroll/auto` ×0 · `:multi-select` ×1 (demo) · `ui/Tabs`
@@ -197,7 +205,17 @@ W-GLASS-CAL unit 1) are ordered by the DAG §5a edge.
    external re-issue map authored. **Anti-evasion**: the dock-rail consumer
    re-grepped + its arm (internal-keep vs delete) recorded — a silent ui/Tabs
    survivor on the public barrel reds.
-5. **The gestalt verdict (BA invariant 4)**: `/navigation/tabs` whole-page BOTH modes
+5. **W5 — the indicator centers on its label (BA-VJS-3, valuejs-fold A-5).** π: on
+   `/navigation/tabs`, the active indicator's geometric CENTER equals the active-label's
+   geometric center on BOTH axes (x AND y), in BOTH materials (pill AND underline). The
+   root is `useTabIndicator.ts:102/120` positioning the indicator via
+   `translateX(${btn.offsetLeft}px)` with NO center-correction (the value.js consumer
+   side is correct — `flex items-center justify-center`; the offset is inside the
+   indicator engine). **Acceptance: indicator center == label center, both axes, both
+   materials.** This is an ACCEPTANCE ROW on the rebuilt engine — NO new scope (the
+   letter is explicit); the W-TABS engine rebuild (scope 1-3) must NOT re-ship the
+   offset. RED at HEAD: the un-center-corrected `translateX(offsetLeft)`.
+6. **The gestalt verdict (BA invariant 4)**: `/navigation/tabs` whole-page BOTH modes
    over its (updatable) substrate — judged as a designed pair of materials; recorded
    at W-REFLECT2 on the tabs/motion surface.
 

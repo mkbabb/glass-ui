@@ -1,5 +1,15 @@
 # AY.W-LIVE1 — live-gate CI decision + the freshness depth-header · DELTA
 
+<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): W-LIVE1 is a NO-PIXEL decision + gate-script DELTA
+     (there is no captured surface to re-shoot). The freshness MECHANISM it records was superseded by
+     AZ.W-GATES (D6), which migrated the model OFF the git-ancestry capture-commit treadmill ONTO the
+     content-hash of the declared surface-paths. The capture-commit references below are the
+     self-test/flip-probe TRANSCRIPTS demonstrating the detector is load-bearing (the born-RED witness),
+     not a live freshness header. RETIRE-with-rationale: this record is preserved as the historical
+     decision + bite-proof evidence; it is no longer a freshness-bearing live DELTA, and the
+     `proof:live-verified-ledger` self-test (G2 below) is the surviving load-bearing carrier of the
+     same bite. -->
+
 W-LIVE1 is a DECISION + gate-script wave (NO pixels — `dev-complete`, not a visual close). Its DELTA is the
 born-RED → bite-proof transcript (the W-CARDINAL-INFRA-DELTA precedent), not a screenshot. The cardinal artefact
 is the freshness clause's self-test bite + the real-regressed-surface flip-probe (G3) + the no-false-RED proof

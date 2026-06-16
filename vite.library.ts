@@ -63,6 +63,9 @@ export const libraryExternal = [
     "@vueuse/core",
     "@mkbabb/keyframes.js",
     "@mkbabb/value.js",
+    // BA.W-HANDMARK — the hand-mark family's L1 geometry peer (optional). Externalized
+    // so the /handmark chunk imports it rather than bundling the optional peer.
+    "@mkbabb/pencil-boil",
     "class-variance-authority",
     "clsx",
     "embla-carousel-vue",

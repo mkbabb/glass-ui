@@ -117,6 +117,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the AZ.W-MORPH-SHOWCASE vertical↔horizontal liquid-glass morph facility — the docks are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop preview, both bidirectional on the ONE --dock-morph-t scalar), not a nav rail; a home control would pollute the morph teaching surface",
     },
+    {
+        path: "demo/layout/AppShell.vue",
+        facility:
+            "the BA.W-DOCK-MORPH-INSITU in-situ V↔H morph DEMONSTRATION stage — the two synthetic <GlassDock>s under the focused morph overlay are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop, both bidirectional on the ONE --dock-morph-t scalar, useDockOrientationMorph consumer #2), NOT a nav rail; the SHELL nav docks (SidebarDock/BottomDock — the home-left + DockSeparator nav-pattern) are the separate SHELL_DOCKS census entries. A home control on the morph-stage docks would pollute the morph teaching surface, exactly as the morph-showcase story",
+    },
 ];
 
 let _cliPaths = null;

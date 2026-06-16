@@ -25,19 +25,37 @@ import { cn } from '../../../utils'
  */
 type SkeletonVariant = 'pulse' | 'shimmer' | 'breath'
 
+// BA.W-SURFACE-AXIS — Skeleton's over-glass register (IG-C2). Skeleton is on the
+// glass-cohesion allowlist as SANCTIONED-OPAQUE, so its DEFAULT stays the opaque
+// `bg-muted` block (back-compat — byte-identical to today). `surface="glass"` is
+// the NEW opt-in: in a glass-first system the common case is a skeleton loading
+// INSIDE a glass card over a rich substrate, where an opaque block punches a flat
+// hole in the frosted plate. The `glass` rung swaps the base to a translucent
+// `--skeleton-glass-bg` (a `color-mix(--muted N%, transparent)`) so the plate reads
+// through; the shimmer/breath sweeps (which composite correctly) ride on top
+// unchanged. `surface` is the {glass·opaque} subset Skeleton supports (veil is a
+// text-plate register, not a loading-block one).
+type SkeletonSurface = 'glass' | 'opaque'
+
 const props = withDefaults(
   defineProps<{
     variant?: SkeletonVariant
+    surface?: SkeletonSurface
     class?: HTMLAttributes['class']
   }>(),
-  { variant: 'pulse' },
+  { variant: 'pulse', surface: 'opaque' },
 )
 </script>
 
 <template>
   <div data-slot="skeleton"
+    :data-surface="surface"
     :class="cn(
-      'rounded-input bg-muted',
+      'rounded-input',
+      // The opaque default keeps the sanctioned `bg-muted` block (byte-identical);
+      // the `glass` rung swaps to the translucent over-glass base (scoped CSS).
+      surface === 'opaque' && 'bg-muted',
+      surface === 'glass' && 'skeleton-over-glass',
       variant === 'pulse' && 'animate-pulse',
       variant === 'shimmer' && 'skeleton-shimmer',
       variant === 'breath' && 'skeleton-breath',
@@ -47,6 +65,20 @@ const props = withDefaults(
 </template>
 
 <style scoped>
+/* BA.W-SURFACE-AXIS — the over-glass register (IG-C2). The translucent base block
+   that lets a frosted glass plate read THROUGH the loading skeleton (the opaque
+   `bg-muted` default punches a flat hole in the plate over a rich substrate). The
+   `--skeleton-glass-bg` token makes the translucency strength tunable; the default
+   is the muted register at ~55% opacity (a `color-mix(--muted N%, transparent)`)
+   so the glass plate reads through while the block still reads as an absence. The
+   shimmer/breath sweeps composite over this translucent base unchanged. */
+.skeleton-over-glass {
+    background: var(
+        --skeleton-glass-bg,
+        color-mix(in oklab, var(--muted) 55%, transparent)
+    );
+}
+
 /* Sliding gradient sweep. Compositor-friendly: animates `transform` on an
  * absolutely-positioned `::after` rather than `background-position` on the
  * host (transform composites to GPU; background-position runs on main

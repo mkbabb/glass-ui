@@ -117,7 +117,21 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
                 <RotateCcw class="h-3 w-3" aria-hidden="true" />
             </button>
         </div>
-        <div class="flex items-center">
+        <!-- THE WIDTH CONTRACT (BA.W-CONFIG-CHASSIS.1, S1 / CFG-1). The control
+             slot establishes a DEFINITE-WIDTH block context so a slotted control
+             fills the row's free inline axis regardless of its intrinsic content
+             width — the 0px-slider class (a percentage track resolving against a
+             content-sized flex item → circular → 0) dies here at the chassis,
+             library-wide, not per-consumer. `w-full` makes the wrapper fill the
+             column; `min-w-0` lets it shrink below content min; the immediate
+             child gets `flex-1 min-w-0 w-full` (via `[&>*]`) so a `LabeledField`
+             root / a bare slider claims the full inline span (the `.labeled-field`
+             root also claims `width:100%` in base.css — belt and suspenders for
+             the `hide-label` regression where the label was the only width
+             contributor). Width-bearing controls (Select trigger, the swatch
+             chip) are unaffected — `flex-1` on an already-sized child is a no-op
+             on its intrinsic width but lets it fill the row when it would not. -->
+        <div class="flex w-full min-w-0 items-center [&>*]:min-w-0 [&>*]:w-full [&>*]:flex-1">
             <slot />
         </div>
         <p v-if="description" class="text-micro leading-snug text-muted-foreground/80">

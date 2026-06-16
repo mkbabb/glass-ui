@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, type HTMLAttributes } from "vue";
+import { computed, type HTMLAttributes } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
 
@@ -14,11 +14,11 @@ import { cn } from "../../../utils";
  * automatically activates when the rendered element carries
  * aria-current="page" (which RouterLink sets).
  *
- * K.W6 Lane B — when the consumer attaches `data-tier="primary"`, the
- * button composes the canonical `btn-audacious` utility (the lifted
- * disco-grain + sparkle-sweep + specular-highlight recipe at
- * `utilities.css`). `dock.css` retains the dock-local phase-tinting +
- * structural shell on top of the canonical recipe.
+ * BA.W-GLASS-CAL (H2a) — the `data-tier="primary"` auto-attach of the
+ * `btn-audacious` disco utility is REMOVED (the recipe is retired). The primary
+ * tier now reads ONLY its dock-local structural shell + the plain de-red'd glass
+ * hover register (`dock-controls/tab-button.css`); `data-tier` is still the styling
+ * hook the CSS keys off, the component no longer composes a utility class.
  */
 const props = withDefaults(
     defineProps<{
@@ -29,12 +29,7 @@ const props = withDefaults(
     { as: "button", asChild: false },
 );
 
-const attrs = useAttrs();
-const isPrimaryTier = computed(() => attrs["data-tier"] === "primary");
-
-const classes = computed(() =>
-    cn("dock-tab-button", isPrimaryTier.value && "btn-audacious", props.class),
-);
+const classes = computed(() => cn("dock-tab-button", props.class));
 </script>
 
 <template>

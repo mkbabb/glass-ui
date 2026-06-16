@@ -18,6 +18,19 @@ const props = withDefaults(
     defineProps<{
         /** CSS color painted as the swatch background (any CSS color form). */
         color: string;
+        /**
+         * Render mode (BA.W-EMISSION / BA-VJS-C2):
+         *   `solid` (default) — the filled organic blob (the swatch background IS the
+         *                       color; the existing register, unchanged).
+         *   `ghost`  — the SAME seeded blob SILHOUETTE rendered as a STROKE: a
+         *              `color` border over a low-alpha `color` fill, the irregular-blob
+         *              outline (NOT a CSS dashed rectangle). A `ghost` of a given
+         *              `color + seed` matches the SAME silhouette the `solid` dot of
+         *              that seed renders — both read the same `useWatercolorBlob`
+         *              border-radius morph; the stroke is the only delta. The
+         *              empty-palette-slot / placeholder affordance.
+         */
+        variant?: "solid" | "ghost";
         /** Run the rAF-driven shape morph (default false → static, hover-morph only). */
         animate?: boolean;
         /** Host tag — `div` (decorative) or `button` (interactive). */
@@ -30,6 +43,7 @@ const props = withDefaults(
         seed?: string;
     }>(),
     {
+        variant: "solid",
         animate: false,
         tag: "div",
         cycleDuration: 4000,
@@ -71,9 +85,15 @@ const activeBorderRadius = computed(() => {
         :is="tag"
         :class="['watercolor-swatch', animate && 'watercolor-animated']"
         data-testid="watercolor-swatch"
+        :data-variant="variant"
         :style="{
-            backgroundColor: color,
+            // The solid register fills with the color; the ghost register reads the
+            // color off `--watercolor-color` (the CSS half paints a low-alpha fill +
+            // a color stroke). The SILHOUETTE (`borderRadius`) is the SAME seeded
+            // blob in both — a ghost of a given seed matches the solid dot's outline.
+            backgroundColor: variant === 'ghost' ? undefined : color,
             borderRadius: activeBorderRadius,
+            '--watercolor-color': color,
             '--watercolor-filter': filterUrl,
         }"
         @mouseenter="onMouseEnter"
@@ -150,6 +170,35 @@ const activeBorderRadius = computed(() => {
         filter var(--duration-fast) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard);
     position: relative;
+}
+
+/* The GHOST register (BA.W-EMISSION / BA-VJS-C2) — the SAME seeded blob silhouette
+   (the inline `border-radius` morph from useWatercolorBlob) rendered as a STROKE:
+   a `--watercolor-color` border over a low-alpha `--watercolor-color` fill. This is
+   NOT a CSS dashed rectangle — the irregular-blob OUTLINE is the seeded silhouette,
+   so a ghost of a given `color + seed` matches the solid dot's outline exactly. The
+   empty-palette-slot / placeholder affordance. The inset highlight reads off the
+   color too so the wet edge filter still reads the stroke. */
+.watercolor-swatch[data-variant="ghost"] {
+    background-color: color-mix(
+        in srgb,
+        var(--watercolor-color) 12%,
+        transparent
+    );
+    border: 2px solid
+        color-mix(in srgb, var(--watercolor-color) 70%, transparent);
+    box-shadow:
+        inset 0 0 6px color-mix(in srgb, var(--background) 25%, transparent),
+        0 1px 4px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.watercolor-swatch[data-variant="ghost"]:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--watercolor-color) 18%,
+        transparent
+    );
+    border-color: color-mix(in srgb, var(--watercolor-color) 88%, transparent);
 }
 
 /* Animated blobs: disable the border-radius CSS transition so the rAF-driven

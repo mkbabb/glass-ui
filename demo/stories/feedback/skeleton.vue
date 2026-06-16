@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Skeleton } from "../../../src/components/ui/skeleton";
 </script>
 
@@ -24,10 +25,11 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
         </StorySection>
 
         <StorySection label="card skeleton">
+            <!-- BA.W-DEMO-AFFORDANCES — the hand-rolled bg-card/60 plates re-point
+                 onto the glass-routed <ShowcaseFrame> (the resting glass tier over
+                 the staged backdrop), not a dead opaque slab (FD-FS X-2). -->
             <div class="grid gap-6 sm:grid-cols-2">
-                <div
-                    class="flex flex-col gap-4 rounded-xl border border-border/60 bg-card/60 p-5 shadow-sm"
-                >
+                <ShowcaseFrame class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
                         <Skeleton class="size-10 rounded-full" />
                         <div class="flex flex-1 flex-col gap-2">
@@ -45,11 +47,9 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                         <Skeleton class="h-8 w-24 rounded-full" />
                         <Skeleton class="h-8 w-16 rounded-full" />
                     </div>
-                </div>
+                </ShowcaseFrame>
 
-                <div
-                    class="flex flex-col gap-4 rounded-xl border border-border/60 bg-card/60 p-5 shadow-sm"
-                >
+                <ShowcaseFrame class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
                         <Skeleton variant="shimmer" class="size-10 rounded-full" />
                         <div class="flex flex-1 flex-col gap-2">
@@ -67,12 +67,12 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                         <Skeleton variant="shimmer" class="h-8 w-24 rounded-full" />
                         <Skeleton variant="shimmer" class="h-8 w-16 rounded-full" />
                     </div>
-                </div>
+                </ShowcaseFrame>
             </div>
         </StorySection>
 
         <StorySection label="list rows">
-            <div class="flex flex-col gap-3 rounded-xl border border-border/60 bg-card/60 p-4">
+            <ShowcaseFrame pad="sm" class="flex flex-col gap-3">
                 <div
                     v-for="row in 4"
                     :key="row"
@@ -85,7 +85,7 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                     </div>
                     <Skeleton variant="shimmer" class="h-3 w-10" />
                 </div>
-            </div>
+            </ShowcaseFrame>
         </StorySection>
     </StoryPage>
 </template>

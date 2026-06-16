@@ -11,10 +11,11 @@
 //
 // Single canonical home: `src/components/ui/carousel/index.ts` (the package
 // barrel). The root barrel does NOT re-export this family.
+// BA.W-PAGER — CarouselDots retired onto `<PagerDots>` (@mkbabb/glass-ui/pager-dots);
+// the dots are the shared carousel ≡ slides-deck position-dot register now.
 export {
     Carousel,
     CarouselContent,
-    CarouselDots,
     CarouselItem,
     CarouselNext,
     CarouselPager,

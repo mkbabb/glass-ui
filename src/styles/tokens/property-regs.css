@@ -30,10 +30,9 @@
      wrapper that reads it for a sympathetic tint (matches the
      `--phase-color` inheritance pattern).
 
-   • --ripple-radius (length) — the `btn-audacious` press ripple
-     radial. `inherits: false` because each button owns its own
-     ripple state (a hovered parent must not push a ripple-radius
-     onto a non-pressed child).
+   • --ripple-radius — RETIRED at BA.W-GLASS-CAL (H2a) with the disco recipe
+     family: the typed press-ripple was `btn-audacious`-private and has no
+     surviving consumer (the calm CTA register's press is the §6 scale beat).
    ═══════════════════════════════════════════════ */
 
 @property --progress-crescendo {
@@ -46,12 +45,6 @@
     syntax: "<percentage>";
     inherits: true;
     initial-value: 0%;
-}
-
-@property --ripple-radius {
-    syntax: "<length>";
-    inherits: false;
-    initial-value: 0px;
 }
 
 /* ═══════════════════════════════════════════════

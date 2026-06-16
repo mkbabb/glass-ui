@@ -76,7 +76,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="unified material — moving specular + rim across the band"
             blurb="Hover any plate: every rung + card reads the SAME pointer-anchored catch-light (::before) from ONE useSpecularTracking seam + the --glass-edge-light rim from ONE .glass-material mixin — no per-component opt-in. The gleam follows the cursor and settles back on leave."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
                         v-for="rung in rungs"
@@ -105,7 +105,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="dynamic backdrop luminance — the iOS-27 sampled observer (AZ Arm 2)"
             blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. PRM-gated: under reduce the loop collapses to one mount sample."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-center gap-6">
                     <div
                         ref="liveCardEl"
@@ -126,7 +126,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="subtle rim — the --glass-edge-light contrast device"
             blurb="The rim is a deliberately sub-perceptual 0.75px 18%-α white inset ring (W09 'subtle by design'). Side-by-side: a plate carrying the rim vs the same plate with --glass-edge-light suppressed, over a dark sample where the 0.75px ring reads as a feature, not a missing one."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
                         class="glass-resting flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card bg-foreground/[0.18] text-sm font-medium"
@@ -155,7 +155,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="SOTA fold — #glass-refract convex lens (Chromium PE)"
             blurb="A .glass-material.glass-refract panel composes the shipped #glass-refract SVG filter behind @supports(backdrop-filter:url()). Non-Chromium engines paint the blur base alone."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
                         class="glass-floating glass-refract flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
@@ -175,7 +175,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="SOTA fold — corner-shape: squircle (Chrome 139+ PE)"
             blurb="@supports(corner-shape:superellipse(2)) paints the iOS-26 superellipse corner on the dialog/sheet register where it reads (W56 re-home). Cards/pills stay ROUND by policy — the superellipse is imperceptible at a 16px card radius. The border-radius round is the un-gated cross-engine fallback."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-end gap-6">
                     <!-- The dialog register — `.glass-floating.rounded-dialog` is
                          exactly the compound the DialogContent surface composes, so
@@ -199,7 +199,7 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
             label="SOTA fold — chromatic edge dispersion + adaptive tint"
             blurb="A warm/cool oklab fringe rides the rim under prefers-reduced-transparency:no-preference; the tint sets BOTH --glass-tint-source AND a non-zero --glass-tint-strength (≤30%) so the color-mix(in oklab,…) actually biases the surface toward the sampled backdrop hue (default = warm-white zero delta)."
         >
-            <ShowcaseFrame pad="lg">
+            <ShowcaseFrame pad="lg" tier="field">
                 <div class="mb-4 flex flex-wrap items-center gap-2">
                     <span class="text-mono-caption text-muted-foreground"
                         >tint sample:</span

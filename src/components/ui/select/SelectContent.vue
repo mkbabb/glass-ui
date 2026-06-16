@@ -38,13 +38,25 @@ const dockContext = useOptionalDockContext()
 
 <template>
   <SelectPortal>
+    <!--
+      BA.W-EMISSION (BA-VJS-A2-WO1/WO2): the collision-bound moved OUT of the dead
+      arbitrary-bracket class `[max-height:var(--reka-popper-available-height,60dvh)]`
+      (which compiled only into a dist/*.js chunk no consumer content-scan reaches)
+      into the PRECOMPILED `[data-slot="select-content"]` rule in src/styles/select.css
+      — it now SHIPS in dist/glass-ui.css regardless of consumer JIT reach, so a 16-item
+      dropdown bounds inside the viewport with inner scroll in EVERY consumer. The
+      `origin-(--reka-select-content-transform-origin)` STAYS (WO-2): once the box is
+      bounded the `zoom-in-95` (popover-animate) enter no longer sweeps an unbounded
+      column, and the scale origin tracks reka's measured anchor edge for non-center
+      triggers (the panel grows from the trigger edge with no lateral settle).
+    -->
     <SelectContent
       v-bind="{ ...forwarded, ...$attrs }"
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
       data-slot="select-content"
       :class="cn(
-        'relative z-popover min-w-32 overflow-y-auto rounded-panel border text-popover-foreground [max-height:var(--reka-popper-available-height,60dvh)] popover-animate origin-(--reka-select-content-transform-origin)',
+        'relative z-popover min-w-32 overflow-y-auto rounded-panel border text-popover-foreground popover-animate origin-(--reka-select-content-transform-origin)',
         position === 'popper'
           && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
         'glass-floating',

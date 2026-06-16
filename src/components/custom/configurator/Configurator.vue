@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils/cn";
+import { FadingScroll } from "../fading-scroll";
 import {
     provideConfiguratorDensity,
     type ConfiguratorDensity,
@@ -9,14 +10,14 @@ import {
 /**
  * Scroll behavior for the controls column.
  *
- * - `auto`   — overflow-y-auto with `.scroll-fade-y` mask; controls scroll
- *              when their intrinsic height exceeds the host. Default.
- * - `always` — controls always render scroll affordance (mask + thin
- *              scrollbar). Use when authors want a fixed-height studio
- *              regardless of content.
- * - `never`  — controls do not scroll; host grows to content height. Use
- *              for popover/sheet hosts that already manage their own
- *              overflow.
+ * - `auto`   — the controls column renders a <FadingScroll axis="y"> scroll-port
+ *              (sharp at rest, feathered while overflowing); controls scroll when
+ *              their intrinsic height exceeds the host. Default.
+ * - `always` — same <FadingScroll> scroll-port + thin scrollbar. Use when
+ *              authors want a fixed-height studio regardless of content.
+ * - `never`  — controls do not scroll; host grows to content height. Renders a
+ *              plain div (no FadingScroll). Use for popover/sheet hosts that
+ *              already manage their own overflow.
  */
 export type ConfiguratorScrollMode = "auto" | "always" | "never";
 
@@ -181,17 +182,14 @@ const asideBorderClass = computed(() =>
     props.asideSide === "left" ? "lg:border-r lg:border-l-0" : "lg:border-l",
 );
 
-const controlsScrollClass = computed(() => {
-    switch (props.scrollMode) {
-        case "always":
-            return "overflow-y-auto scroll-fade-y scrollbar-thin";
-        case "never":
-            return "overflow-visible";
-        case "auto":
-        default:
-            return "overflow-y-auto scroll-fade-y scrollbar-thin";
-    }
-});
+// BA.W-CONFIG-CHASSIS.1c — the controls column adopts <FadingScroll axis="y">
+// (the W-FADING-SCROLL primitive) off the static `.scroll-fade-y` mask. The
+// `never` mode does NOT scroll (the host owns overflow — a popover/sheet host),
+// so it renders a plain `<div>`; `auto`/`always` render the FadingScroll
+// scroll-port (which sets `overflow-y: auto` itself + drives the per-edge
+// scroll-state mask — sharp at rest, feathered while overflowing). `scrollMode`
+// thus selects the wrapper element, not a class.
+const controlsScrolls = computed(() => props.scrollMode !== "never");
 </script>
 
 <template>
@@ -209,10 +207,16 @@ const controlsScrollClass = computed(() => {
         </div>
 
         <!-- ── Aside (preset row + controls) ─────────────────────────── -->
+        <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the aside/preset/footer chrome
+             dividers drop the inline `border-border/40` alpha; the dark-adaptive
+             --configurator-divider token paints the border-color via the
+             configurator.css `.configurator-aside`/`.configurator-presets`/
+             `.configurator-footer` rules, so the hairlines survive the dark glass
+             plate. The `border-t`/`border-b`/`lg:border-l` WIDTH stays here. -->
         <aside
             :class="
                 cn(
-                    'configurator-aside flex min-h-0 min-w-0 flex-col border-t border-border/40 lg:border-t-0',
+                    'configurator-aside flex min-h-0 min-w-0 flex-col border-t lg:border-t-0',
                     asideBorderClass,
                     asideColumnClass,
                 )
@@ -221,15 +225,20 @@ const controlsScrollClass = computed(() => {
             <!-- Preset picker row -->
             <div
                 v-if="$slots.presets || (presets && presets.length > 0)"
-                class="configurator-presets shrink-0 border-b border-border/40 px-3 py-2"
+                class="configurator-presets shrink-0 border-b px-3 py-2"
             >
                 <slot name="presets" :presets="presets" :active-preset="activePreset">
                     <!--
                         Default preset row: horizontal scroll-fade chip list. Consumers
                         with thumbnails / richer chrome should provide the slot.
+                        BA.W-CONFIG-CHASSIS.1c — the horizontal scroll-fade adopts
+                        <FadingScroll axis="x"> (the W-FADING-SCROLL primitive) off
+                        the static `.scroll-fade-mask`: the start edge stays SHARP at
+                        rest, the end feathers only while the chip row overflows.
                     -->
-                    <div
-                        class="flex gap-2 overflow-x-auto scroll-fade-mask scrollbar-hidden"
+                    <FadingScroll
+                        axis="x"
+                        class="flex gap-2 scrollbar-hidden"
                         role="tablist"
                         aria-label="Presets"
                     >
@@ -261,12 +270,32 @@ const controlsScrollClass = computed(() => {
                         >
                             {{ p.label }}
                         </button>
-                    </div>
+                    </FadingScroll>
                 </slot>
             </div>
 
-            <!-- Controls column (layered config body) -->
-            <div :class="cn('configurator-controls flex-1 min-h-0', controlsScrollClass)">
+            <!-- Controls column (layered config body). BA.W-CONFIG-CHASSIS.1c —
+                 the `auto`/`always` scroll modes render the <FadingScroll axis="y">
+                 scroll-port (sharp at rest, feathered while overflowing) off the
+                 retired `.scroll-fade-y` mask; `never` renders a plain div (the
+                 host owns overflow). -->
+            <FadingScroll
+                v-if="controlsScrolls"
+                axis="y"
+                class="configurator-controls flex-1 min-h-0 scrollbar-thin"
+            >
+                <slot
+                    name="controls"
+                    :layers="layers"
+                    :active-layer="activeLayer"
+                    :select-layer="(id: string) => emit('select-layer', id)"
+                >
+                    <div class="flex flex-col">
+                        <slot />
+                    </div>
+                </slot>
+            </FadingScroll>
+            <div v-else class="configurator-controls flex-1 min-h-0 overflow-visible">
                 <slot
                     name="controls"
                     :layers="layers"
@@ -287,7 +316,7 @@ const controlsScrollClass = computed(() => {
             <!-- Optional footer (reset affordance hook) -->
             <div
                 v-if="$slots.footer"
-                class="configurator-footer shrink-0 border-t border-border/40 px-3 py-2"
+                class="configurator-footer shrink-0 border-t px-3 py-2"
             >
                 <slot name="footer" :reset="() => emit('reset')" />
             </div>

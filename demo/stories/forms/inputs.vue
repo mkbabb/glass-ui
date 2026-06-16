@@ -4,6 +4,10 @@ import { ref } from "vue";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { SearchBar } from "../../../src/components/custom/search";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { TextCursorInput } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
+const FORMS_STOP = 3;
 
 const plain = ref("");
 const withLabel = ref("");
@@ -14,6 +18,28 @@ const pillBare = ref("");
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the forms-band identity event family (the tinted
+             eyebrow + the accent rail + the focal IconChip, all on --section-color-3). -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="TextCursorInput" :section="FORMS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Forms · Text entry
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Inputs and search — the field controls stay ink; the section
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Default</h2>
             <p class="text-small text-muted-foreground">

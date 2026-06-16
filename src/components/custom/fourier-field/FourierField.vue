@@ -45,6 +45,7 @@ const {
     seed = "",
     freeze = false,
     intensity = 1,
+    clock,
 } = defineProps<{
     /** Configuration bundle. `hero` = epicycles on, fewer harmonics; `final` = epicycles off, denser. Default `hero`. */
     variant?: "hero" | "final";
@@ -62,6 +63,13 @@ const {
      *  loudness); clamped [0, 2] — the field's ~2 upper bound lets a hero push
      *  brighter than the recessed default without runaway. */
     intensity?: number;
+    /** OPTIONAL injected clock — a getter returning the loop parameter `t ∈ [0,1)`.
+     *  When BOUND, the render reads `clock()` (a controllable studio clock: pause,
+     *  scrub, speed); when ABSENT (the ambient face), the autonomous
+     *  `(now / durationMs) % 1` frame-time loop is the DEFAULT. `freeze` /
+     *  `prefers-reduced-motion` still short-circuit to `frozenT` regardless — the
+     *  ambient bundle is unchanged. The SOLE additive seam (BA.W-FOURIER-STUDIO). */
+    clock?: () => number;
 }>();
 
 // Clamp the loudness envelope. Aurora clamps `opacityCeiling` to [0,1]; the
@@ -130,18 +138,34 @@ function refreshResolvedColor(): void {
     }).map((v) => Math.round(v * 255));
     epicycleRgb.value = `rgb(${er}, ${eg}, ${eb})`;
 
-    // The rainbow epicycle palette (hero only) — a hue RAMP swept ±150° across
-    // the spectrum FROM the consumer's base hue (the fourier-analysis chained
+    // The rainbow epicycle palette (hero only) — a hue RAMP swept across the
+    // spectrum FROM the consumer's base hue (the fourier-analysis chained
     // rainbow: the big slow phasors near the base hue, the small fast ones
     // walking away), each phasor a saturated mid-L oklch so the chain reads
     // colorful and PRESENT. Resolved here, read per-phasor in the scaffolding
     // pass; empty when the variant carries no rainbow.
+    //
+    // BA.W-FOURIER-STUDIO R5-11 — the sweep is WARM-ANCHORED, not the prior
+    // symmetric ±150°. A symmetric ±150° ramp from a warm base (~30°) ran
+    // base−150 (≈240, blue) → base+150 (≈210, cyan), so the colorful chain
+    // dragged the field's SAMPLED MEAN cool and the hero lost the warm lean
+    // (r>b) the pre-rebuild analogous field painted (the slides fc-fourier G4
+    // FAIL). The sweep now runs `base + warmStart°` → `base + warmEnd°` over a
+    // tight band biased to the warm side of the base — the chain stays a present
+    // colourful ramp, but its aggregate stays in the warm half so the hero leans
+    // warm and the final (no rainbow) stays cool. Presets-in-consumers honoured:
+    // a consumer's cool `color` still resolves cool; this only governs the RAMP
+    // shape relative to whatever base hue the consumer injects.
     if (activePreset.epicycleRainbow && chainLen > 0) {
         const palette: string[] = [];
-        const span = 150; // ±span° around the base hue across the chain
+        // Warm-anchored sweep around the base hue: a modest cool-ward dip then a
+        // longer warm-ward climb, the band kept tight enough that the mean leans
+        // toward the (warm) base rather than walking into the blue half.
+        const warmStart = -30; // a touch cool of base at the chain root
+        const warmEnd = 70; // climbing warm (toward orange/gold) at the tips
         for (let i = 0; i < chainLen; i++) {
             const tt = chainLen > 1 ? i / (chainLen - 1) : 0;
-            const h = base.h - span + tt * 2 * span;
+            const h = base.h + warmStart + tt * (warmEnd - warmStart);
             const [pr, pg, pb] = oklchToGammaRgb({
                 L: 0.62,
                 C: 0.17,
@@ -239,13 +263,19 @@ onMounted(() => {
                     cy + (my - cyModel) * scale,
                 ];
 
-                // FORWARD-ONLY infinite clock — `t` derives from the frame time
-                // and only ever increases; the fractional part feeds evaluation.
-                // No ping-pong, no eased back-and-forth.
+                // The loop parameter `t`. `freeze` / reduced-motion still
+                // short-circuit to the deterministic best-frame (the ambient
+                // bundle is unchanged). Otherwise, an INJECTED `clock` getter (the
+                // studio's controllable clock — pause/scrub/speed) wins when bound;
+                // ABSENT, the autonomous FORWARD-ONLY frame-time loop
+                // `(now / durationMs) % 1` is the DEFAULT (the ambient face). The
+                // sole additive seam (BA.W-FOURIER-STUDIO).
                 const t =
                     freeze || handle.reducedMotion
                         ? preset.frozenT
-                        : (now / preset.durationMs) % 1;
+                        : clock
+                          ? clock()
+                          : (now / preset.durationMs) % 1;
 
                 // The cached paint colors (the zero-alloc hoist — resolved in the
                 // color/dark watch, NOT per frame). The W-FF3 render recipe reads

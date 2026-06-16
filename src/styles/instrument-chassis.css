@@ -146,6 +146,48 @@
         display: none;
     }
 
+    /* ─────────────────────────────────────────────────────────────
+       BA.W-ATLAS-RECONCILE C-3 — structure variant (SILVER MILLED-METAL register)
+
+       The cool polished-steel housing read: the engraved-bezel `::before` stroke
+       AND the structural twin-line grooves re-point from the warm-cream
+       `--surface-tint-*` default onto the `--silver` quad (gold's cool mirror).
+       The chassis reads as an INDUSTRIAL precision-instrument panel — the
+       cool-metal twin of the warm-gold "complete"-phase affirmation.
+
+       The phase cascade (`[data-phase="…"]`) stays ORTHOGONAL — a `structure`
+       chassis still retints its phase fills on `data-phase`; only the
+       structure-metal recipe (bezel + grooves) forks here. Consumer #2 of the
+       silver quad (the atlas's structure surface is consumer #1).
+
+       The silver is the W-NO-GRAY NAMED cool-neutral exception (a brand METAL
+       identity, not a neutral — its very-low chroma reads as milled steel, the
+       cool hue distinguishes it from the warm glass plate).
+       ───────────────────────────────────────────────────────────── */
+    .instrument-chassis[data-variant="structure"] {
+        /* The milled-panel edge: the chassis border lifts off the resting glass
+           edge onto a hairline silver structure stroke. */
+        border-color: color-mix(in oklab, var(--color-silver-dark) 55%, transparent);
+    }
+
+    /* The engraved bezel re-tints to the cool silver catch (the polished sleeve
+       reads as steel, not warm-cream). */
+    .instrument-chassis[data-variant="structure"]::before {
+        border-color: color-mix(in oklab, var(--color-silver-light) 60%, transparent);
+    }
+    .dark .instrument-chassis[data-variant="structure"]::before {
+        border-color: color-mix(in oklab, var(--color-silver) 40%, transparent);
+    }
+
+    /* The structural grooves re-point to the silver twin-line: the catch reads
+       the light silver, the under-shadow the dark silver — a milled seam, not the
+       default warm twin-line. ONE re-point at the variant root; every
+       `<ChassisDivider>` inside a structure chassis inherits it. */
+    .instrument-chassis[data-variant="structure"] {
+        --twin-line-catch: color-mix(in oklab, var(--color-silver-light) 50%, transparent);
+        --twin-line-shadow: color-mix(in oklab, var(--color-silver-dark) 40%, transparent);
+    }
+
     /* Phase-color cascade — single property, full chassis-wide retint.
        `--phase-color-label` mirrors the cascade through the WCAG companion
        tokens (AC.W6c F1.V-04). The label register falls back to the canvas

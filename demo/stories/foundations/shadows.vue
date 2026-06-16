@@ -19,11 +19,15 @@ const shadows: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Grid of static shadow demos -->
+        <!-- Grid of static shadow demos. BA.W-STAGE scope 7 — the elevation grid
+             sits on a contrasting "stage" so the cast shadows read in DARK: a
+             dark drop-shadow over the W-DARK-MATERIAL near-black page is invisible,
+             so the `.shadow-stage` paints a mid-tone backing in dark (transparent in
+             light, where the cream page already reads the shadows). -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Elevation</p>
             <div
-                class="grid grid-cols-2 gap-8 px-2 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+                class="shadow-stage grid grid-cols-2 gap-8 rounded-card px-4 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             >
                 <div
                     v-for="s in shadows"
@@ -73,3 +77,18 @@ const shadows: { cls: string; label: string }[] = [
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+/* BA.W-STAGE scope 7 — the dark "stage" tile so cast shadows read in DARK. In
+   light the cream page already shows the shadows (transparent stage); in dark a
+   neutral mid-tone backing lifts off the near-black page so a dark drop-shadow has
+   a surface to cast onto. Token-driven so it tracks the warm-neutral identity. */
+.shadow-stage {
+    background-color: transparent;
+}
+/* Plain-ancestor `.dark .x` form — the global-wrapped ancestor form inside a
+   scoped block is SILENTLY DROPPED (the recurring trap, proof:no-scoped-global). */
+.dark .shadow-stage {
+    background-color: color-mix(in srgb, var(--foreground) 10%, var(--card));
+}
+</style>

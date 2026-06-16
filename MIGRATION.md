@@ -1,5 +1,47 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
+> break, no alias ("No legacy code").** `SegmentedTabs` is now ONE engine with TWO
+> MATERIALS (`variant: "pill" | "underline"`) and ONE orientation axis
+> (`orientation: "horizontal" | "vertical"`). Four retirements:
+>
+> 1. **`variant="segmented"` → `variant="pill"` (the DEFAULT now).** Segmented and
+>    pill were one register; the user kept "pill" by name. `pill` is the glass
+>    material — a glass-quiet track + the selected-reads-as-glass (`--glass-bg-floating`)
+>    indicator, no gray. MIGRATE: drop the `variant="segmented"` prop (it re-defaults
+>    to `pill`) or rename it to `variant="pill"`. A `<SegmentedTabs>` with no `variant`
+>    now paints the glass pill.
+> 2. **`overflow="scroll" / "auto"` axis RETIRED.** Overflow is `<FadingScroll>`'s job
+>    (`@mkbabb/glass-ui/fading-scroll`) at the consumer's own level, not an in-tabs
+>    scroller. MIGRATE: wrap the strip in `<FadingScroll>` or apply `useFadingScroll`
+>    where a genuinely-overflowing tab row needs an edge fade (the common ≤4-tab case
+>    needs none).
+> 3. **`:multi-select` RE-HOMED to `<ToggleGroup>`.** A multi-pressed strip (N
+>    independent toggles on one surface, `role="group"`) IS a ToggleGroup, not a tab
+>    family member. MIGRATE: `<SegmentedTabs :multi-select>` →
+>    `<ToggleGroup type="multiple">` (the IG-B2 glass-track register). The single-select
+>    string model replaces the prior `string | string[]` union.
+> 4. **`ui/Tabs` (the reka wrapper family: `Tabs`/`TabsList`/`TabsTrigger`/`TabsContent`/`TabsIndicator`)
+>    LEFT the public surface.** It is no longer re-exported from `@mkbabb/glass-ui` or
+>    `@mkbabb/glass-ui/<ui-tabs>`. The standardized family is `SegmentedTabs`
+>    (`@mkbabb/glass-ui/tabs`). MIGRATE a hand-rolled `ui/Tabs` recipe to the matching
+>    `<SegmentedTabs variant="…">` material. (The reka substrate files remain INTERNAL
+>    solely for the dock-rail consumer `DockLayerGroup` — they are not a consumer
+>    surface.) The `indicator`/`surface` default-ON baked-plate that painted the R10-2
+>    oval blob dies with the public surface.
+>
+> **External migration re-issue (the AY W-CONSUMER ledger, re-stamped at this SHA).**
+> The 5 DEFERRED external rows (fourier-analysis/web 3× `UnderlineTabs`, words/frontend
+> 2× `BouncyToggle`) re-target the standardized API: `UnderlineTabs` →
+> `<SegmentedTabs variant="underline">` (the paper material, panel-nav `role="tablist"`);
+> `BouncyToggle` → `<SegmentedTabs>` (the default pill material — the named-good glass
+> register). The receiver contract is PRESERVED — `:options` / `:model-value` /
+> `@update:model-value` + `variant` are unchanged across the standardization, so the
+> drop-in swap the ledger promises still holds; the `proof:consumer-staleness` allowlist
+> re-stamps (those rows carry their `{receiver-wave, close-gate}` terminals in the
+> consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
+> `proof:tabs-std`.
+
 > **AZ.W-RAIL3 — `<DockRail>` evolved from a single end-icon into the floating-carousel
 > chip STRIP.** The new `items?: readonly DockRailItem[]` prop (`DockRailItem = { id,
 > label, icon? }`, exported from `@mkbabb/glass-ui/dock`) drives the visible facet chips
@@ -33,12 +75,22 @@
 > Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
 > re-introduction on any interactive selector).
 
-> **v3.11.0 (AZ, staged)** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
+> **The published cut is v3.13.0 — there is no 3.11/3.12 entry on the registry.** The
+> AZ tranche's breaks (the dock taxonomy + the metric `amount`→`value` rename + the
+> constellation generalization + the Card `veil` addition) ALL ship together in the
+> published **3.13.0**. The interim `3.11.0/.1/.2 + 3.12.0` registry publishes were
+> STALE-LINEAGE out-of-band publishes from a pre-prune tree (they carry the four
+> since-retired subpaths and lack `/underline`); the AZ cut SKIPPED them and published
+> 3.13.0 from master via release.yml provenance so `latest` resolves the true close (AZ
+> FINAL §5). A consumer pins **3.13.0** and reads every break below as landing on that one
+> release — the number-skip is intentional, the 3.11/3.12 lineage is not the close.
+>
+> **v3.13.0** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
 > `<GlassDock variant="rail">` → `<GlassDock orientation="vertical">` (the `variant`
 > discriminant is removed; a vertical dock is now COLLAPSIBLE by default — it morphs its
 > `height`; a static nav column adds `always-expanded`). `<GlassDock variant="instrument-strip">`
 > is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
-> `SurveyResultDock` cockpit re-pins on the 3.11.0 adopt.
+> `SurveyResultDock` cockpit re-pins on the 3.13.0 adopt.
 
 > **v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
 > aliases, per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress` +
@@ -48,16 +100,124 @@
 > binary consumer (`docs/consumer-evidence/{header-ribbon,glass-panel}.md`); both ship again.
 > A consumer that referenced one composes the equivalent from the surviving
 > primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
-> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`).
-> BREAKING (3.12.0 staged): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
+> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`) — RETIRED at the BA cut
+> onto `<HandMark shape="underline">` (see the BA.W-HANDMARK row above; it never reached
+> a real consumer, the 3.11/3.12 publishes were stale-lineage).
+> BREAKING (3.13.0): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
 > `value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
 > Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
 > surfaces unchanged).
-> ADDITIVE (3.12.0 staged): the `/constellation` subpath gains optional default-OFF generalization
+> ADDITIVE (3.13.0): the `/constellation` subpath gains optional default-OFF generalization
 > props/exports (pinnedIndex/pinNode, accentEdges, the palette accent/edgeFloor/edgeAccentAlpha,
 > stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
-> ADDITIVE (3.12.0 staged): the Card `surface` union gains `"veil"` — the borderless/rimless
+> ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
+
+> **CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
+> The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the
+> FIXED-square icon primitive (`width/height: var(--size-icon-btn)` + `contain:paint`),
+> `.btn-pill` is the CONTENT-WIDTH text pill. Stacked on one element the fixed square
+> wins and `contain:paint` clips a wrapped text label into a ~40px blob (the R8-17
+> defect). A text-bearing `.glass-btn` (an icon button carrying a text child) collapses
+> the same way even without `.btn-pill`. MIGRATE: for a play/replay or text-bearing
+> affordance reach for a real `<Button>` with a leading Lucide glyph (the content-width
+> pill), never an icon-button primitive carrying text. No library recipe changes — the
+> `.glass-btn`/`.btn-pill` recipes are untouched; this is a caller-side hazard the new
+> `proof:demo-affordances` gate machine-locks (W1: no class co-occurrence, no text-bearing
+> icon button across `demo/**` + the `src/styles/**` recipes).
+>
+> **CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
+> `<DialogContent variant="glass|opaque">` is RETIRED onto the ONE shared
+> `{glass·veil·opaque}` surface-decoration axis: `<DialogContent surface="glass|veil|opaque">`
+> (no alias — the prior `variant` was Dialog-local and never matched the Card grammar). Migrate
+> per call site: `variant="glass"` → `surface="glass"` (also the new default), `variant="opaque"`
+> → `surface="opaque"`; the `veil` rung is gained for free. The painted output for the `glass`
+> and `opaque` rungs is byte-identical (the same `glass-floating` / `.glass-opaque` material,
+> now reached through the shared resolver).
+>
+> ADDITIVE (next cut, BA.W-SURFACE-AXIS): the shared `Surface = "glass" | "veil" | "opaque"` axis
+> (published on `@mkbabb/glass-ui/api`) reaches the whole content/floating band — `GlassPanel`,
+> `Sheet`, `Popover`, `Command`, `Drawer`, and `ExpandableContainer` each gain a `surface` prop
+> (default `"glass"`, byte-compatible). `<Skeleton>` gains a `surface?: "glass" | "opaque"` prop
+> (default `"opaque"`, byte-identical to today's `bg-muted`); `surface="glass"` is the NEW
+> over-glass register (a translucent `--skeleton-glass-bg` block that lets a frosted plate read
+> through). The `ExpandableContainer` fullscreen overlay now un-walls onto the overlay glass tier
+> by default (`surface="opaque"` restores the prior solid wall). No break for any of these.
+
+> **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
+> now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
+> structural utilities ship as precompiled CSS instead of dead arbitrary-bracket classes a
+> consumer's content-scan never reached). Three rendered changes a consumer SEES on the bump:
+> (1) `<SelectContent>` now BOUNDS its content to `min(24rem, 60dvh)` tightened by
+> `--reka-popper-available-height` with inner `overflow-y: auto` — a tall (16-item-class)
+> dropdown that previously overflowed the viewport now bottoms INSIDE it and scrolls within
+> (override the cap via `--select-content-max-h` on any ancestor). (2) `<Slider size="md">`
+> (and `sm`/`lg`) now renders its REAL track geometry (`md` ≈ 20px / 1.25rem) — the `size`
+> prop was previously INERT in consumers (fell back to the 6px track); a consumer relying on
+> that broken 6px-regardless behaviour will now see the correct sized track. (3) glass-ui's
+> own `@source` directive (for a consumer re-importing the `/styles` cascade) re-points
+> `"../components"` → `"../*.js"` so it reaches the compiled `dist/*.js` chunks — a consumer
+> that copied glass-ui's `@source` line verbatim should ensure THEIR `@source` points at the
+> installed `dist` (per the consumer-wiring section), unchanged guidance.
+
+> ADDITIVE (next cut, BA.W-EMISSION): `<WatercolorDot>` gains a `variant?: "solid" | "ghost"`
+> prop (default `"solid"`, byte-compatible). `variant="ghost"` renders the SAME seeded blob
+> silhouette as a STROKE (a `color` border over a low-alpha fill) — the empty-palette-slot
+> affordance, NOT a CSS dashed rectangle. No break.
+
+> **BA.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>` + the counter re-registers
+> off `bg-card`. Clean break, no alias ("No legacy code").** The carousel dots and the
+> slides deck `DeckPager` were ALREADY one register; BA.W-PAGER harvests that into ONE
+> primitive — `<PagerDots>` (`@mkbabb/glass-ui/pager-dots`), encapsulated in a glass pager
+> pill. Two breaks:
+>
+> 1. **`CarouselDots` → `<PagerDots>` (clean break).** `CarouselDots` is GONE from the
+>    `/carousel` barrel (it auto-wired the embla API via `useCarousel()` inject).
+>    `<PagerDots>` is standalone — wire `:count`, `:active` (`v-model:active`), and
+>    `@select`/`scrollTo` to the embla API explicitly. MIGRATE: `<CarouselDots />` →
+>    `<PagerDots :count="api.scrollSnapList().length" :active="api.selectedScrollSnap()"
+>    @select="(i) => api.scrollTo(i)" />`. The pip anatomy (24px hit-box, 6px pip,
+>    elongate-on-active, the `--foreground` 52%/72%/full register) is IDENTICAL — the dots
+>    look the same; they now read a `--pager-dot-*` token set (retint the active fill via
+>    `--pager-dot-active`) and sit in the `.glass-pager-ring` chassis by default
+>    (`ring="false"` for a flush-on-an-ambient-glass-host deck). `windowFit?` generalizes
+>    the DeckPager dock-gutter windowing (off by default).
+> 2. **The `<CarouselPager>` counter is off the opaque `bg-card` ring.** The counter
+>    `<span>` now composes `.glass-pager-ring` (the glass-floating pill) instead of
+>    `rounded-pill border border-border bg-card` — the dark `rgb(28,25,23)` slab dies.
+>    No consumer change (the counter is internal to `<CarouselPager>`); a consumer that
+>    hand-overrode the counter's `bg-card` re-points to the glass ring.
+
+> **BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
+> `<HandMark shape="underline">`. Clean break, no alias (DEC-8 outcome 1).** The d6
+> hand-voice family re-landed on `@mkbabb/glass-ui/handmark` (`<HandMark>` / `<InkMark>`
+> + the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
+> is now ONE shape of that ONE hand voice — not a parallel component. Two breaks:
+>
+> 1. **`@mkbabb/glass-ui/underline` (`<GlassUnderline>`) is GONE.** The `/underline`
+>    subpath + the `GlassUnderline*` types are removed from the surface (no alias, per
+>    the no-backwards-compat invariant). MIGRATE: `import { GlassUnderline } from
+>    "@mkbabb/glass-ui/underline"` → `import { HandMark } from
+>    "@mkbabb/glass-ui/handmark"`; `<GlassUnderline>word</GlassUnderline>` →
+>    `<HandMark shape="underline">word</HandMark>`. The editorial draw-on underline is
+>    `<HandMark shape="underline" animation="draw-on">`; the natural pencil-boil
+>    morphology (scale-relative amplitude, irregular seeded periods) is the `boil`
+>    brush (`<HandMark brush="boil" shape="underline">`). The default `pen` brush is a
+>    clean wobbled line, `grain:0`, no extra dep.
+> 2. **New optional peers (vendored/peer split).** `<HandMark>` adds two OPTIONAL peers:
+>    `@mkbabb/pencil-boil ^0.4.1` (the L1 wobble geometry — imported only when a wobble
+>    paints) and `perfect-freehand ^1.2.3` (the variable-width hull body — VENDORED into
+>    `freehand.ts`, declared as an optional peer for provenance, touched only by the
+>    `ribbon:"hull"` highlighter). Both are tree-shaken when unused; a `pen`-only
+>    consumer pulls neither. The `/handmark` chunk is ≈7.6 KiB-gzip (the `profile:budget`
+>    rebaseline records it + the engaged pf hull body).
+>
+> **This row is for any FUTURE external `/underline` consumer — NOT slides.** The
+> 2026-06-15 slides ground-truth (BINDING) confirms slides imports ZERO
+> `@mkbabb/glass-ui/underline` / `GlassUnderline`: its `SlideIntro`/`SlideCloser` red
+> pen-underlines are deck-LOCAL CSS/SVG `::after` glyphs, never the library component.
+> The phantom "slides adopt-book break" was the AZ-H6-fold assumption the slides session
+> disproved at HEAD `c943a49`; there is no slides edit on this fold.
 
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the
@@ -928,6 +1088,181 @@ barrel promotion (`docs/consumer-evidence/use-glass-backdrop-luminance.md`).
 
 ---
 
+### The luminous-dark transmissive material + the calm-light recalibration (BA.W-DARK-MATERIAL)
+
+The DARK register was rebuilt as a luminous transmissive material, and the LIGHT
+content-tier self-engage was recalibrated. Both are **token-identity evolutions, NOT
+breaking aliases** (the lib's own default tokens evolve as the lib's identity changes —
+presets-in-consumers; no clean-break migration, no codemod).
+
+**1 — The calm-light recalibration (the slides gray-slab fix).** The content tiers
+(`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`) no longer apply the full 20%
+AA darken UNCONDITIONALLY — over a plain LIGHT page they self-engage only a sub-perceptual
+`--glass-tint-strength-floor` (4%), so a calm-light card stays a translucent WARM cream
+(was: a flat gray slab). The FULL AA darken on a content tier now engages only under the
+declared/sampled BRIGHT signal (`--glass-backdrop: light` / the observer). A consumer whose
+light-page card was relying on the unconditional 20% darken (rare) declares the bright
+signal on an ancestor; a consumer who wants a content card flat opts out as before:
+
+```css
+/* A calm light page where the card should stay warm needs NOTHING (the new default).
+   To FORCE the full darken on a content card over a known-bright surface: */
+.my-bright-region { --glass-backdrop: light; }
+
+/* The pristine un-tinted plate (unchanged opt-out). */
+.my-surface .glass-card { --glass-tint-strength: 0%; }
+```
+
+**2 — Dark `--primary` is now chromatic.** The dark-mode `--primary` evolved off the
+achromatic cream `hsl(48 10% 90%)` onto the brand legendre-violet `oklch(0.739 0.134 318.1)`
+(a library-identity hue). Every filled/active/selected control reading `--primary` in dark
+(Slider range, Badge `default`, Switch checked, Checkbox accent) now carries the brand
+chroma instead of a flat pale-grey slab. The dark `--primary-foreground` is unchanged
+(`hsl(24 10% 10%)`, clears 7.15:1 over the new accent). A consumer who OVERRODE the dark
+`--primary` (presets-in-consumers) re-pins their own value in `:root`/`.dark` — no action
+otherwise.
+
+**3 — The `--surface-tint-*` family gained a dark arm.** In dark the family now mixes
+toward a light ink (`hsl(48 12% 96%)`) so chip backplates / hairlines / the dock-rail
+divider / the timeline dot read against the near-black card (was: invisible — collapsed
+into the plate). The light arm + the in-srgb interpolation are UNCHANGED (the AW.W26
+fence). Every `--surface-tint-*` consumer re-resolves automatically — no per-site edit.
+
+### The warm-chroma floor — the neutral ladder + glass plate off gray (BA.W-NO-GRAY)
+
+The `--neutral-*` ladder + the `--card` glass plate were re-saturated onto the warm
+identity (R10-5 "No gray."). This is a **token-identity evolution, NOT a breaking alias**
+(the lib's own default tokens evolve as its identity changes — presets-in-consumers; no
+clean-break migration, no codemod). The ladder was SPECIFIED warm (hue 48) but RESOLVED
+achromatic — at the library's low saturation it painted a yellow-green gray (OKLab hue ~95°,
+chroma below the perceptual floor). The values evolve, both modes in lockstep:
+
+| token | was (hsl) | now (hsl) |
+|---|---|---|
+| `--neutral-0` (page) | `48 12% 98%` / dark `24 9% 4%` | `40 30% 98%` / dark `24 9% 4%` (KEEP) |
+| `--neutral-1` | `48 10% 95%` / dark `24 6% 11%` | `38 26% 95%` / dark `28 12% 11%` |
+| `--neutral-2`/`--secondary` | `48 9% 90%` / dark `24 5% 16%` | `34 28% 90%` / dark `28 14% 16%` |
+| `--neutral-3`/`--accent` | `48 8% 82%` / dark `24 5% 22%` | `33 30% 82%` / dark `30 18% 22%` |
+| `--neutral-4`/`--border`/`--input` | `48 7% 70%` / dark `24 5% 34%` | `32 26% 70%` / dark `30 16% 34%` |
+| `--neutral-5`/`--muted-foreground` | `48 6% 40%` / dark `48 5% 62%` | `30 22% 40%` / dark `34 14% 62%` |
+| `--neutral-6` (strong-muted) | `48 7% 30%` / dark `48 6% 72%` | `28 24% 30%` / dark `36 14% 72%` |
+| `--card` (glass plate) | `var(--neutral-0)` / dark `24 8% 16%` | `36 48% 97%` / dark `24 8% 16%` (KEEP) |
+| `--glass-border-*` rim α | wash 8% → overlay 18% | wash 11% → overlay 22% (warmer rim) |
+
+The moves are **chroma-only at constant L** — the L (and therefore every AA contrast ratio)
+is preserved to within ±0.005 of HEAD (the gate re-ratifies). **`--card` now decouples from
+`--neutral-0`** (a glass plate reads warm-cream over a flat backdrop, the page stays calm
+surface). A consumer who OVERRODE any `--neutral-*` rung or `--card` (presets-in-consumers)
+RE-PINS their own value in `:root`/`.dark` — those overrides win as before; no action
+otherwise (every semantic alias `--secondary`/`--accent`/`--border`/`--muted-foreground`
+still tracks the ladder, so a consumer reading those gets the warm value automatically). The
+`--surface-tint-*` in-srgb family + the KEEP-NEUTRAL registers (`--warning-foreground`,
+`--overlay-scrim-ink`, the shadow ink) are UNCHANGED.
+
+```css
+/* A consumer who hand-tuned a neutral re-pins their value (it still wins): */
+:root { --neutral-4: hsl(30 6% 72%); }   /* your border override, unchanged behaviour */
+/* A consumer who wants the prior achromatic plate re-pins --card: */
+:root { --card: var(--neutral-0); }       /* opt back to the page-tracking plate */
+```
+
+---
+
+### The scroll-state edge fade — `.scroll-fade-*` → `<FadingScroll>` + `--mask-fade-width` → `--fade-scroll-width` (BA.W-FADING-SCROLL)
+
+The scroll-BLIND static `.scroll-fade-mask` / `.scroll-fade-y` / `.scroll-fade-top` /
+`.scroll-fade-bottom` mask utilities are SUPERSEDED by the scroll-state-driven
+`<FadingScroll>` primitive (`@mkbabb/glass-ui/fading-scroll`, axis `x`|`y`). The static
+masks feathered BOTH edges unconditionally with no scroll knowledge — so the first card's
+chrome was half-erased at `scroll = 0` (the R8-08 "Shy" defect). `<FadingScroll>` feathers
+the start edge ONLY past `scroll > 0` and the end edge ONLY while trailing overflow remains.
+This is a **CLEAN BREAK — no alias** (the static utilities + the `--mask-fade-width` token
+retire in a coordinated orchestrator commit once every consumer migrates).
+
+| was | now |
+|---|---|
+| `<div class="… overflow-x-auto scroll-fade-mask">` | `<FadingScroll axis="x" class="…">` (root is the scroll port) |
+| `<div class="… overflow-y-auto scroll-fade-y">` | `<FadingScroll axis="y" class="…">` |
+| `.scroll-fade-top` / `.scroll-fade-bottom` (one-sided V) | `<FadingScroll axis="y" :fade-start="false">` / `:fade-end="false"` |
+| `--mask-fade-width: 1rem` (token) | `--fade-scroll-width: 1rem` (token — same default, inheriting) |
+
+```vue
+<!-- before -->
+<div class="flex gap-2 overflow-x-auto scroll-fade-mask scrollbar-hidden">…</div>
+<!-- after -->
+<FadingScroll axis="x" class="flex gap-2 scrollbar-hidden">…</FadingScroll>
+```
+
+When wrapping the scroll port in a `<FadingScroll>` node would re-parent a load-bearing
+anchor (e.g. a `position-anchor` indicator on the scroll container root), call the composable
+form on the existing element instead — no extra DOM node:
+
+```ts
+import { useFadingScroll } from "@mkbabb/glass-ui/fading-scroll";
+useFadingScroll(containerRef, { axis: "x" });   // writes --fade-start/--fade-end on the root
+// + the container carries `fading-scroll fading-scroll--x` + the data-fade-* attrs
+```
+
+A consumer who overrode `--mask-fade-width` (`:root { --mask-fade-width: 0.5rem }`) re-pins
+`--fade-scroll-width` instead. The native `scroll(self)` timeline is the primary path
+(zero JS on a supporting engine); the `useFadingScroll` JS fallback covers older engines
+automatically. The fade does NOT vanish under `prefers-reduced-motion: reduce` (it is a
+legibility cue, not motion — it stops interpolating, the discrete edge presence stays).
+
+---
+
+### The disco CTA register retired — `btn-audacious` / `btn-audacious-gold` GONE (BA.W-GLASS-CAL, hinge H2a)
+
+The user removed the "disco effect" wholesale. The `@utility btn-audacious` + `@utility btn-audacious-gold`
+recipes (the sparkle `✦` glyph, the disco-grain hover, the gold-sweep shimmer, the typed press-ripple)
+and their `@keyframes sparkle-sweep` / `btn-gold-bg-sweep` + the `--duration-sparkle` /
+`--glass-grain-opacity-disco` / `--ripple-radius-max` / `--motion-duration-ripple` knobs are **DELETED —
+clean break, no alias** (house no-backwards-compat). The `primary-audacious` / `gold-audacious` Button
+**variant keys are KEPT and re-pointed** onto the calm glass-first register (hinge H2 arm a — *gold
+survives CALM*), so a `<Button variant="primary-audacious">` / `variant="gold-audacious">` call site needs
+**no change** — it inherits the new register automatically. Only a consumer that applied the `btn-audacious`
+*utility class directly* (not via the variant) must migrate.
+
+| was | now |
+|---|---|
+| `class="btn-audacious"` (the disco utility, applied directly) | the calm glass register — `class="glass-wash btn-glass text-foreground"` (the `--glass-specular` edge gleam + the §6 hover/press) |
+| `class="btn-audacious btn-audacious-gold"` (the gold sweep) | `<Button variant="gold-audacious">` (the calm glass + STATIC `--color-gold` tint + specular, no animated sweep) — or a hand-authored `class="glass-wash btn-glass"` + a static `bg-[linear-gradient(135deg,color-mix(in srgb,var(--color-gold) 10%,transparent),…)]` tint |
+| `<Button variant="primary-audacious">` | **unchanged** — the variant key re-points to the calm glass CTA |
+| `<Button variant="gold-audacious">` | **unchanged** — the variant key re-points to the calm gold-glass CTA |
+| `@keyframes sparkle-sweep` / `btn-gold-bg-sweep`, `--duration-sparkle`, `--glass-grain-opacity-disco`, `--ripple-radius-max`, `--motion-duration-ripple`, `@property --ripple-radius` | RETIRED (no surviving consumer) |
+
+The dock-tab PRIMARY tier (`<DockTabButton data-tier="primary">`) no longer auto-attaches `btn-audacious` or
+paints the phase-grain hover/halo — it reads the plain de-red'd dock-control glass hover register. The
+`data-tier="primary"` styling hook is **unchanged** (the taller/wider structural shell stays); only the disco
+accents drop. **Speedtest + slides:** any direct `btn-audacious` class binding migrates to the calm glass
+register per the table; the `gold-audacious` / `primary-audacious` *variant* consumers are untouched. This is
+a **breaking change for direct-utility consumers** (an input to the 4.0.0-vs-3.14.0 version call at W-CLOSE).
+
+### Per-spring duration clock minted — `--spring-<name>-duration` (BA.W-GLASS-CAL Unit 3)
+
+ADDITIVE — no migration required. `--spring-<name>-duration` (generated from the `(response, ζ)` SPRING_PRESETS
+table: smooth 0.36s / snappy 0.34s / bouncy 0.69s / gentle 0.44s / dock 0.28s) is the spring's OWN settle clock.
+A `transition` that pairs `--spring-<name>` with a generic `--duration-*` now re-points to the matching
+`--spring-<name>-duration` so the spring plays at its physical settle (the prior generic clock dragged a dead
+sub-pixel tail). A consumer reading `var(--spring-snappy)` directly gains the option of `var(--spring-snappy-duration)`
+for the matched clock; the existing generic-clock pairings still work.
+
+### The section-color pop primitive — `<IconChip>` + the `@mkbabb/glass-ui/icon-chip` subpath (BA.W-ICON-CHIP, additive)
+
+ADDITIVE — no breaking change, a NET-NEW primitive + subpath. `<IconChip :icon :section>` (or
+`:tone="var(--chart-download)"`) is the library's single section-color POP vehicle — the
+`color-mix(… 25%, transparent)` backplate + full-chroma glyph the demo previously hand-rolled as an
+inline `:style` paste. It enforces the chip≤glyph proportion IN the component (the
+`--icon-chip-glyph-ratio` floor, default 2.18 — a consumer cannot collapse the plate under the glyph)
+and ships three opt-in axes (`:duotone` filled-tonal fill / `:bloom` smooth-glass hover / `:reveal`
+entrance, all PRM-gated, disco-FREE). A consumer wanting a proportioned section-color pop reaches for
+`<IconChip>` instead of re-pasting the recipe. Reachable on the root barrel AND
+`@mkbabb/glass-ui/icon-chip`; the types ride `@mkbabb/glass-ui/api` (`IconChipProps`,
+`IconChipSection`, `IconChipTone`). `MetricCell`'s `iconColor` prop is unchanged (it now reconciles
+internally onto `<IconChip bare :tone>` — the value/unit ink stays neutral; no consumer change).
+
+---
+
 ## Cohabitation note—v0.9.4 stays supported
 
 v0.9.4 remains available indefinitely as a v0.9.x patch-stream tag.
@@ -1092,3 +1427,199 @@ cursor dot, the ripple ring) while TRUE `k` keeps positions and reach. On a 390p
 their own marks); new optional `ConstellationField.kFloor` member, tokenable per instance via
 `--constellation-k-floor` (read by `<Constellation>` from the canvas). No API changes to the
 existing exports; the slides deck-side `K_VIS_FLOOR` interim arm retires on this release.
+
+## BA — the d6-lineage A/B reconciliation (the Connectivity Atlas fold)
+
+The Connectivity Atlas consumed the d6 fork lineage (the registry 3.11.x/3.12.0 publishes)
+and moves to mainline. BA.W-ATLAS-RECONCILE folds the d6 A/B registers need-shaped. Per the
+atlas letter: zero legacy shims, zero compat re-exports — where an idiom was superseded, the
+new shape is below and the consumer migrates. The full old→new table is in
+`docs/tranches/BA/audit/W-ATLAS-RECONCILE-cut-notes.md`.
+
+### A-1 — the post-flip settle seam (ADDITIVE, no migration)
+
+`useGlobalDark().onFlipSettled(cb)` returns to mainline ADOPTED VERBATIM from the d6 fork —
+register ONE post-flip post-paint callback (`(isDark: boolean) => void`) that batches N
+expensive re-theme ops (palette memo + chart retint + aurora re-derivation) into a single
+coalesced `requestAnimationFrame` beat per flip. On `/dark` + `/api`
+(`DarkFlipSettledCallback`). No call-site change vs the fork — byte-identical seam.
+
+### A-4a — `PAPER_WASH_GROUND` (ADDITIVE, no migration)
+
+The library-canon recessive-ground crayon calibration partial returns ADOPTED VERBATIM. On
+the `/aurora` barrel + `/api`. Spread it over a consumer's pole-derived pigment:
+`const cfg = { ...consumerBase, ...PAPER_WASH_GROUND }`.
+
+### A-4b — the route transition: `navigate` over the ONE VT substrate (ONE-LINE RENAME)
+
+The d6 `useRouteTransition()` standalone wrapper is SUPERSEDED — there is NO parallel route
+wrapper. `navigate` is a thin convenience over the ONE `useViewTransition` substrate
+(`startViewTransition` gained an async update + a JS-level reduced-motion instant-path).
+
+```ts
+// OLD (d6 fork)
+const { navigate } = useRouteTransition();
+await navigate(() => router.push(`/${slug}`));
+
+// NEW (mainline) — `navigate` is a DIRECT named import (root barrel or /motion-core)
+import { navigate } from "@mkbabb/glass-ui";
+await navigate(() => router.push(`/${slug}`), { types: ["forward"] }).finished;
+```
+
+`supportsRouteTransitions()` mirrors `supportsViewTransitions()`. Under reduced motion (or an
+unsupported engine) the navigation runs instantly, unanimated — information parity absolute.
+
+### C-3 — the silver structure quad + `variant="structure"` (NEW, additive)
+
+The silver structure metal (`--silver`/`-light`/`-dark`/`-deep` + `--color-silver*` aliases,
+gold's cool mirror) + the `<InstrumentChassis variant="structure">` register (the cool
+milled-metal housing). The atlas's structure surface adopts `variant="structure"` (or reads
+the `--color-silver*` tokens) for the precision-instrument register.
+
+### A-5 — `MetricBadge` `amount`→`value` (ONE-LINE RENAME; already shipped at AZ)
+
+`<MetricBadge :amount="…">` → `<MetricBadge :value="…">`. The atlas acknowledged this is
+intentional; see the AZ.W-METRIC-UNIFY row above (`MIGRATION.md` §3.x amount→value).
+
+## BA → 4.0.0 — the dark-register-rebuilt cut (the clean breaks)
+
+The 4.0.0 major collects the BA tranche's clean breaks (no aliases, no compat shims — the
+no-backwards-compat house rule: a clean break IS a major). H4 SETTLED to **4.0.0** on the
+atlas register-D two grounds (§the d6 reconciliation above): the A-list is a
+removal+re-add for a live 3.12.0 fork consumer, AND BA carries its own breaks below. Each row
+names the wave, the break, and the consumer re-pin action. **The value.js-impacting rows
+(tabs, Dialog, menu-row, Select, Slider) are flagged `[value.js]` by name** — value.js is the
+live 3.13.0 registry consumer owed the named cut-notes (the atlas register-D discipline — by
+name, never silently; the full value.js adopt is `docs/tranches/BA/audit/valuejs-adopt-book.md`).
+
+### The disco retirement (W-GLASS-CAL / H2a) — gold survives CALM
+
+The audacious disco-grain recipe family RETIRES (clean break, no alias): the `@utility
+btn-audacious` / `btn-audacious-gold` recipes, the `@keyframes sparkle-sweep` /
+`btn-gold-bg-sweep`, and the disco-grain knobs (`--duration-sparkle`,
+`--glass-grain-opacity-disco`) are GONE. Gold survives in the CALM register per H2a arm (a):
+the static `.gold-shimmer` text gradient + the `--glass-specular` edge catch-light registers
+STAY (the FENCE held — only the ANIMATED sweeps die). The dock-tab primary tier collapses onto
+the plain glass hover register (no grain / `--phase-color` radial halo). **Consumer re-pin:**
+drop any `<Button variant="primary-audacious">` / `gold-audacious` binding (the variant rides
+the retired recipe) or accept the calm register — the slides `DeckGate.vue:70`
+`variant="primary-audacious"` is the named live break site (see the slides adopt book).
+
+### The tone-on-glass recompose (W-FEEDBACK-TONE)
+
+Toast / Notification / Alert tone variants render TINTED-GLASS over the floating rung (ONE
+`.feedback-tone` `color-mix` recipe, α < 0.92 both modes), NOT an opaque saturated slab. The
+three independent tone maps collapsed onto the ONE recipe. **Consumer re-pin:** a consumer that
+hardcoded a tone-slab color re-points to the house tone token; the slab look is gone.
+
+### The static scroll-fade retirement (W-FADING-SCROLL)
+
+The static `.scroll-fade-*` utilities RETIRE (clean break). **Consumer re-pin:** migrate to the
+`<FadingScroll>` primitive (`@mkbabb/glass-ui/fading-scroll`) — a native `scroll(self)`-driven
+edge-fade with a JS fallback. A consumer's local FadingScroll prototype (slides had one) deletes
+on the bump.
+
+### PresetEditorField retires onto the Configurator chassis (W-CONFIG-CHASSIS)
+
+The gear PresetEditor recomposes on the Configurator chassis; `PresetEditorField` is REMOVED
+(clean break). **Consumer re-pin:** the migration is the `<ConfiguratorRow>` composition shape
+(label + control row; `DarkModeToggle` on the live `useGlobalDark` seam). The section divider
+COLOR moved off the inline `border-border/30` alpha to the dark-adaptive
+`--configurator-divider` token, keyed by the `data-dividers` attribute (the `border-t` WIDTH
+arm stays).
+
+### The shared `surface` axis (W-SURFACE-AXIS) — incl. the Dialog break `[value.js]`
+
+The shared `{glass · veil · opaque}` `surface` axis is adopted across
+Card / GlassPanel / Dialog / Sheet / Drawer / Popover / Command / ExpandableContainer / Skeleton
+(`surface-axis.css` + `useSurfaceAxis`). It is ADDITIVE where it extends a union, but two breaks
+a consumer re-pins:
+- **The Dialog `variant`→`surface` move `[value.js]`** — Dialog's prior `variant` discriminant
+  is the `surface` axis now. A consumer setting `<Dialog variant="…">` re-points to `surface="…"`.
+  (value.js DeckGate sets no `variant` on its Dialog → a NO-OP for slides specifically; the
+  value.js consumer of `/dialog` re-pins.)
+- **The GlassPanel↔Card axis reconciliation** — the two surfaces share the ONE `surface` axis;
+  a consumer relying on the prior divergent prop shape re-pins to the unified `surface` prop.
+- **`<Skeleton surface="glass">`** is the named downstream register for value.js's bespoke
+  `PaletteCardSkeleton.vue` (`bg-foreground/[0.04]` over `bg-card` — the "too black" composite)
+  re-author at the pin.
+
+### The tabs taxonomy cut (W-TABS) `[value.js]`
+
+ONE tab engine: `<SegmentedTabs>` (`@mkbabb/glass-ui/tabs`, pill-glass + underline-paper on
+`.paper-ink-mark`). The clean breaks (no alias):
+- **`ui/Tabs` LEFT the public root barrel** — the reka `Tabs`/`TabsList`/`TabsTrigger`/
+  `TabsContent` wrapper family is OFF `@mkbabb/glass-ui` (the reka substrate stays INTERNAL
+  solely for the dock-rail consumer). Canonical panel-nav is `<SegmentedTabs variant="underline">`.
+- **`segmented`→`pill` `[value.js]`** — the SegmentedTabs `segmented` variant folds onto `pill`;
+  value.js's `PaneSegmentedControl.vue` (consumes `@mkbabb/glass-ui/tabs`) re-points the variant.
+- **`multi-select` → `<ToggleGroup>`** — the multi-select tabs arm retires onto ToggleGroup
+  (the independent-toggles surface; Tabs is panel-nav only).
+- **`overflow` responsive-collapse** retired (the prior `:responsive` collapse arm).
+The indicator paints ONE elastic register (the oval-blob default-ON `TabsIndicator` plate is dead).
+`proof:tabs-unified` re-pointed to `proof:tabs-std`.
+
+### The menu-row glass default flip (W-MENU-GLASS) `[value.js]`
+
+The `.glass-menu-row` register is minted on the shared `menuItemVariants` CVA — DropdownMenuItem /
+ContextMenuItem / Select / Combobox / Command items inherit the element-level oklab-tint hover/
+highlight by DEFAULT. The base flat-fill (`hover:bg-accent` / `focus:bg-accent` /
+`data-[highlighted]:bg-accent` / `data-[state=open]:bg-accent`) is DROPPED — `accent` is now the
+explicit opt-out ESCAPE, not the base. **Consumer re-pin:** a consumer relying on the flat
+`bg-accent` highlight re-points; the `.glass-menu-section` mono-caption/hairline recipe is the
+section register. `[value.js]` — the dropdown/context-menu glass register.
+
+### The `/underline`→`/handmark` DEC-8 fold (W-HANDMARK)
+
+The d6 hand-voice family RE-LANDS on `@mkbabb/glass-ui/handmark` (`HandMark`/`InkMark`/`BRUSHES`).
+The prior `GlassUnderline` + `custom/underline/` + the `/underline` subpath RETIRE (clean break,
+grep-negative survivor). **Consumer re-pin:** a consumer importing `@mkbabb/glass-ui/underline` /
+`GlassUnderline` re-points to `/handmark` (`<HandMark>`). (slides imports ZERO `/underline` — the
+red pen-underlines on its intro/closer slides are deck-LOCAL CSS/SVG glyphs, never the library
+component; a NO-OP for slides — see the slides adopt book.)
+
+### The `CarouselDots`→`PagerDots` retirement (W-PAGER)
+
+`CarouselDots` RETIRES onto the unified `<PagerDots>` + `.glass-pager-ring` register
+(`@mkbabb/glass-ui/pager`) — the carousel counter off the dark `bg-card` slab. The dots and the
+slides `DeckPager` were ALREADY one recipe (≥2 consumers by construction). **Consumer re-pin:**
+a `CarouselDots` consumer re-points to `<PagerDots>`.
+
+### Dark-material token-identity NOTEs (W-DARK-MATERIAL — token re-points, not API breaks)
+
+The dark register is rebuilt on the EXISTING `--glass-tint-*` seam (no new compositing seam):
+the page→card L-point split (page L6→L4, card L10→L16), the transmissive dark `saturate`/
+`brightness` arm + edge α 0.22, the dark tint LIFT 12%, and the `--primary` →
+legendre-violet (`oklch(0.739 0.134 318.1)`, fg 7.15:1). These are TOKEN re-resolutions on the
+inheriting axis — a consumer overriding a `--glass-*` / `--primary` token re-checks its value
+against the rebuilt register, but there is no API/prop break (the W-DARK-MATERIAL scope-7
+self-engage conditionalization REMOVES the gray-slab self-engage a calm-light content card
+composited — a consumer's content card un-grays at the bump with ZERO consumer edit).
+
+### Warm-chroma-floor NOTEs (W-NO-GRAY — token re-saturation, not API breaks)
+
+The neutral ladder + light glass plates + borders are re-saturated onto the warm identity (the
+achromatic-48 ladder lifted above the C 0.020 chroma floor). TOKEN re-resolution; no API break.
+A consumer overriding a neutral token re-checks its chroma.
+
+### The `--glass-blur-*` dial-back (W-GLASS-CAL B1 — token re-point, not API break)
+
+The six `--glass-blur-*-radius` primitives dialed back ~15-20% within the 8-15px band
+(`10/12/16/15/11` → `8/10/13/13/9`; wash unchanged at 1px; the dock radius 11px→9px). TOKEN
+re-resolution; no API break. The per-spring `--spring-<name>-duration` vocabulary is MINTED (the
+analytic 2%-band settle envelope, GENERATED from `SPRING_PRESETS`) — a consumer that rode a
+`--spring-*` easing on a generic `--duration-*` clock gains the matched per-spring duration.
+
+### The `@source` re-point (W-EMISSION — consumer-wiring fix, not an API break)
+
+The dead `@source` in `index.css` re-points to the real `dist/` surface so glass-ui's compiled
+utilities reach a consumer's Tailwind content-scan again. The Select collision-bound + inner-
+scroll ship as PRECOMPILED CSS; the Slider `size` axis now renders REAL track geometry in every
+consumer (no rename, but the rendered behaviour changes — a consumer relying on the silently-6px
+track now gets the real `size` track) `[value.js — the A-3 Slider size axis]`. The
+`SelectTrigger` `size` gained a font-rung prop writing `--dropdown-text` `[value.js — WO-3]`.
+
+### `MetricBadge` `amount`→`value` (already shipped at AZ; re-flagged here for the BA consumer set)
+
+Carried verbatim from AZ.W-METRIC-UNIFY (above) — a ONE-LINE `amount=`→`value=` rename per call
+site. Named here so a consumer adopting the 4.0.0 cut sees it in the BA break list.

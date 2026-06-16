@@ -1,5 +1,15 @@
 import { mulberry32, hashString } from "../../../../utils/prng";
-import { BASE_OPACITY, MERGE_STAGGER_MS, ORBIT_BLEND_MS } from "../constants";
+import {
+    BASE_OPACITY,
+    MERGE_STAGGER_MS,
+    ORBIT_BLEND_MS,
+    ORBIT_RANDOM_BASE,
+    ORBIT_RANDOM_SPAN,
+    SAT_WOBBLE1_BASE,
+    SAT_WOBBLE1_SPAN,
+    SAT_WOBBLE2_BASE,
+    SAT_WOBBLE2_SPAN,
+} from "../constants";
 import { easeIn, easeOut } from "./easing";
 import type {
     BlobConfig,
@@ -34,7 +44,11 @@ function createSatellite(
     // Spread starts widely — full circle with large random offset
     const baseAngle = (index / 4) * Math.PI * 2 + (rng() - 0.5) * Math.PI;
 
-    const baseR = orbitRadius * (0.8 + rng() * 0.4);
+    // BA.W-GOO-REDRESS (direction i) — the orbit envelope is RE-CENTERED + CAPPED
+    // (×0.85..1.05, was ×0.8..1.2) so the worst-case satellite near-edge stays
+    // within the widened smin band's reach (uploadBlobUniforms.ts) — the satellite
+    // bridges across the WHOLE orbit, never floats as an unrelated disc.
+    const baseR = orbitRadius * (ORBIT_RANDOM_BASE + rng() * ORBIT_RANDOM_SPAN);
     const ecc = eccentricity * (0.3 + rng() * 0.7);
 
     return {
@@ -48,9 +62,9 @@ function createSatellite(
         baseRadiusX: baseR * (1 - ecc),
         baseRadiusY: baseR * (1 + ecc),
 
-        wobbleAmp1: 0.02 + rng() * 0.06,
+        wobbleAmp1: SAT_WOBBLE1_BASE + rng() * SAT_WOBBLE1_SPAN,
         wobbleFreq1: 0.08 + rng() * 0.22,
-        wobbleAmp2: 0.015 + rng() * 0.04,
+        wobbleAmp2: SAT_WOBBLE2_BASE + rng() * SAT_WOBBLE2_SPAN,
         wobbleFreq2: 0.18 + rng() * 0.32,
 
         pertXAmp: 0.03 + rng() * 0.05,
@@ -113,13 +127,16 @@ function randomizeOrbit(
     s.timeOrigin = now;
     s.angularSpeed = 0.08 + rng() * 0.16;
     s.phaseOffset = rng() * Math.PI * 2;
-    const baseR = orbitRadius * (0.8 + rng() * 0.4);
+    // BA.W-GOO-REDRESS (direction i) — the SAME capped orbit envelope on the orbit
+    // re-randomize (the create + re-randomize sites read ONE source so a fresh
+    // orbit never re-inflates past the band reach).
+    const baseR = orbitRadius * (ORBIT_RANDOM_BASE + rng() * ORBIT_RANDOM_SPAN);
     const ecc = eccentricity * (0.3 + rng() * 0.7);
     s.baseRadiusX = baseR * (1 - ecc);
     s.baseRadiusY = baseR * (1 + ecc);
-    s.wobbleAmp1 = 0.02 + rng() * 0.06;
+    s.wobbleAmp1 = SAT_WOBBLE1_BASE + rng() * SAT_WOBBLE1_SPAN;
     s.wobbleFreq1 = 0.08 + rng() * 0.22;
-    s.wobbleAmp2 = 0.015 + rng() * 0.04;
+    s.wobbleAmp2 = SAT_WOBBLE2_BASE + rng() * SAT_WOBBLE2_SPAN;
     s.wobbleFreq2 = 0.18 + rng() * 0.32;
     s.pertXAmp = 0.03 + rng() * 0.05;
     s.pertXFreq = 0.06 + rng() * 0.18;

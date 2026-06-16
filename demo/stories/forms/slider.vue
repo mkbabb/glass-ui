@@ -3,6 +3,10 @@ import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Slider, type SliderVariants } from "../../../src/components/ui/slider";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { SlidersHorizontal } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
+const FORMS_STOP = 3;
 
 const volume = ref<number[]>([42]);
 const balance = ref<number[]>([65]);
@@ -31,6 +35,27 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="SlidersHorizontal" :section="FORMS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Forms · Ranges
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Continuous and range selection — the track and value readouts
+                    stay ink; the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- Standard — the integrated-cylinder glass slider: the fill is one
              continuous glass pill whose rounded leading edge is the grab. With
              label + value readout. -->

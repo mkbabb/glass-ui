@@ -29,10 +29,34 @@ for an ambient per-page background: a literal glyph would read as content, not
 chrome, and a never-repeating elliptic spectrum reads as living texture. The
 `seed` prop is the uniqueness key — one component renders N unique fields.
 
-The pure math (`positionsAt` / `comp` / `makeEllipticSpectrum`) is single-sourced
-in `math.ts` (lifted from the sibling `fourier-analysis` `evaluators`/`bases`
-leaves) and ships separately on the `@mkbabb/glass-ui/fourier-math` subpath, so a
-math-only consumer imports it without dragging the component.
+The pure math (`positionsAt` / `partialSumAt` / `dftFromPoints` / `comp` /
+`makeEllipticSpectrum`) is single-sourced in `math.ts` (lifted from the sibling
+`fourier-analysis` `evaluators`/`bases` leaves) and ships separately on the
+`@mkbabb/glass-ui/fourier-math` subpath, so a math-only consumer imports it
+without dragging the component.
+
+### `partialSumAt` — the truncated-summation curve point (the studio's N-axis)
+
+`partialSumAt(components, t, maxTerms?)` returns the SINGLE curve point of the
+inverse-DFT summation truncated at the first `maxTerms` phasors
+(`Σ_{k<maxTerms} c_k·exp(2πi·k·t)`). It is `positionsAt` read at its final tip,
+on the SAME truncation axis `positionsAt`'s `maxCircles` arg drives —
+`maxCircles` reads the whole chain truncated, `partialSumAt` reads only its
+endpoint. Sweeping `t` over `[0,1)` and joining the points traces the partial-sum
+CURVE; at `maxTerms = 1` a single ellipse, growing toward the full reconstruction
+as `maxTerms` climbs (the "watch it sum" reference idiom the fourier studio
+drives off an N-harmonics slider). `maxTerms` omitted (or `≥ components.length`)
+is the full reconstruction.
+
+### The injected `clock` seam — controllable `t` (the studio transport)
+
+`clock?: () => number` is an OPTIONAL prop: a getter returning the loop parameter
+`t ∈ [0,1)`. When BOUND, the render reads `clock()` (a controllable clock —
+pause/scrub/speed, as the fourier studio's play transport drives it); when ABSENT
+(the ambient face), the autonomous `(now / durationMs) % 1` frame-time loop is the
+DEFAULT. `freeze` / `prefers-reduced-motion` still short-circuit to the
+deterministic `frozenT` regardless. The seam is purely additive — the ambient
+`variant`/`harmonics`/`epicycle*` bundle is unchanged.
 
 ### DC-suppression-free by construction
 
@@ -70,9 +94,14 @@ The render is a **4-pass phosphor-comet** (the fourier-analysis / oscilloscope r
 - **Pass 0 — the epicycle scaffolding** (hero only). The rotating circles + arms +
   filled joint dots draw BELOW the comet off an amplitude-descending sorted
   spectrum (the largest circles first). Each phasor takes its own hue from a rainbow
-  swept ±150° around the consumer's base hue (the fourier-analysis chained-rainbow
-  signature, kept harmonious), at a PRESENT ≈0.5/0.72-of-peak weight — not the prior
-  0.18 ghost. `source-over` — scaffolding is structure, not bloom.
+  swept across a WARM-ANCHORED band around the consumer's base hue (`base − 30°` at
+  the chain root climbing to `base + 70°` at the tips — toward gold/orange; the
+  fourier-analysis chained-rainbow signature, kept harmonious AND warm-leaning), at
+  a PRESENT ≈0.5/0.72-of-peak weight — not the prior 0.18 ghost. `source-over` —
+  scaffolding is structure, not bloom. The band is warm-biased so the hero field's
+  SAMPLED MEAN leans warm (r>b): the prior symmetric `±150°` sweep ran the chain
+  into the blue half and dragged the mean cool, losing the warm lean the consumer
+  hero register expects (BA.W-FOURIER-STUDIO R5-11).
 - **Pass 1 — the comet trail body.** A bold ≈3px `source-over` stroke in BOTH modes
   (the reference register), saturated at the consumer's hue — the prior additive
   `lighter` BODY washed every crossing toward white at the bold peak. The trail is
@@ -117,10 +146,11 @@ chain, the glowing comet head) while staying recessive brand-keyed chrome rather
 than a foreground teaching figure. Two deliberate alignments + two divergences:
 
 - **Adopted (W-FF3):** the `hero` epicycle chain is a per-phasor RAINBOW — swept
-  ±150° around the consumer's base hue (the reference sweeps `hsl((1−t^0.6)·300)`),
-  so the chain reads colorful and present while staying harmonious with the brand
-  hue. The comet trail rides the consumer's ONE hue (the curve is the brand mark);
-  the rainbow is the scaffold.
+  across a warm-anchored band around the consumer's base hue (`base − 30°` →
+  `base + 70°`; the reference sweeps `hsl((1−t^0.6)·300)`), so the chain reads
+  colorful and present while staying harmonious with the brand hue AND keeping the
+  field's sampled mean warm. The comet trail rides the consumer's ONE hue (the
+  curve is the brand mark); the rainbow is the scaffold.
 - **Diverged:** no grey source-contour ghost path (the spectrum IS the curve — there
   is no source to overlay), and the field recedes behind content via `intensity`
   (the reference figure is foreground). The `final` preset is monochromatic
@@ -136,6 +166,7 @@ than a foreground teaching figure. Two deliberate alignments + two divergences:
 | `seed` | `string` | `""` | the per-instance uniqueness key |
 | `freeze` | `boolean` | `false` | paint ONE static deterministic best-frame (the capture lever) |
 | `intensity` | `number` | `1` | the outer loudness envelope (clamped `[0, 2]`) |
+| `clock` | `() => number` | — (optional) | injected controllable clock returning `t ∈ [0,1)`; absent → the autonomous frame-time loop (the ambient default) |
 
 The `color` re-resolves on a color change AND on a dark-mode toggle (a `var()`
 token resolves differently under `.dark`); the resolve is hoisted onto that watch,

@@ -48,6 +48,10 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BA.W-CARVE2 — typography.css carved into typography/*.css partials (the
+// .section-label--tinted variant lives in utilities.css); readMonolith
+// concatenates root + partials in cascade order.
+import { readMonolith } from "./read-css-monoliths.mjs";
 
 const COMMAND = "npm run proof:suffuse";
 
@@ -139,6 +143,72 @@ const LEDGER = [
         event: "--section-color-7",
         kind: "color",
     },
+    // ── The IconChip POP surfaces — ONE section-color event via the primitive ──
+    // (BA.W-ICON-CHIP). The chip is the ONE event vehicle: the Pops reference row
+    // (icons.vue) + the empty-states grid each read the `--section-color-N` ramp
+    // through `<IconChip :section>` — proof:suffuse now asserts the one-event count
+    // against the SINGLE component, not the N inline pastes the chip subsumed. Body
+    // ink stays untinted (d1) — the chip tints only the plate+glyph, never a <p>.
+    {
+        surface: "demo/stories/foundations/icons.vue",
+        event: "--section-color-*",
+        kind: "color",
+    },
+    {
+        surface: "demo/stories/compositions/empty-states.vue",
+        event: "--section-color-*",
+        kind: "color",
+    },
+    // ── The BA.W-SUFFUSE2 per-category identity surfaces — ONE --section-color-N
+    //    event via the IconChip + eyebrow + rail family (the event-FAMILY counts
+    //    as ONE; the R10-4 escalation). The body controls + values stay ink (d1).
+    //    forms→3 (teal), containers→2 (blue), data→9 (slate), navigation→12 (indigo).
+    // ── forms (the 13 zero-event stories — the cool teal stop) ─────────────────
+    { surface: "demo/stories/forms/checks.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/inputs.vue", event: "--section-color-3", kind: "color" },
+    // select + slider carry a SECOND, pre-existing viz event that IS the
+    // component-feature teaching content (the select's viz-colored option dots; the
+    // slider's `spectrum` variant fill + the viz-fourier track demo) — color is part
+    // of the demonstration, not rainbow drift. They are reference-class for the d3
+    // count (the section identity is the page chrome; the viz is the component's own
+    // capability), like display/badge. The body copy + value readouts stay ink (d1).
+    { surface: "demo/stories/forms/select.vue", event: "--section-color-3", kind: "reference" },
+    { surface: "demo/stories/forms/textarea.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/label.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/slider.vue", event: "--section-color-3", kind: "reference" },
+    { surface: "demo/stories/forms/toggle.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/toggle-chip.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/number-field.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/combobox.vue", event: "--section-color-3", kind: "color" },
+    { surface: "demo/stories/forms/multi-select.vue", event: "--section-color-3", kind: "color" },
+    // ── containers (the 13 zero-event stories — the blue stop) ─────────────────
+    { surface: "demo/stories/containers/accordion.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/collapsible.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/command.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/context-menu.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/dialog.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/drawer.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/dropdown-menu.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/expandable-container.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/hover-card.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/hover-popover.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/popover.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/sheet.vue", event: "--section-color-2", kind: "color" },
+    { surface: "demo/stories/containers/tooltip.vue", event: "--section-color-2", kind: "color" },
+    // ── data (the ledger-slate stop) — the Badge status pills are the FUNCTIONAL
+    //    tone event, not a competing section event; they don't trip d3 (no
+    //    --section-color/chart/viz/gold/motion family on them). ─────────────────
+    { surface: "demo/stories/data/table.vue", event: "--section-color-9", kind: "color" },
+    { surface: "demo/stories/data/data-table.vue", event: "--section-color-9", kind: "color" },
+    // ── navigation (the indigo stop) ───────────────────────────────────────────
+    { surface: "demo/stories/navigation/tabs.vue", event: "--section-color-12", kind: "color" },
+    { surface: "demo/stories/navigation/header-ribbon.vue", event: "--section-color-12", kind: "color" },
+    { surface: "demo/stories/navigation/carousel.vue", event: "--section-color-12", kind: "color" },
+    // ── display/badge — the loud-saturated-pill REFERENCE register (the icons-Pops
+    //    model): color IS the content (variant/viz/section-color tone teaching
+    //    rows), so it is EXEMPT from the strict ≤1-event count, like the icon GRID
+    //    is exempt from the monochrome zero. The page identity stays --section-color-5. ─
+    { surface: "demo/stories/display/badge.vue", event: "--section-color-5", kind: "reference" },
     // ── The legitimately-monochrome surfaces (D3-9) — ZERO events ──────────────
     // The icon GRID (the icons.vue grid block — NOT the Pops chip block, which is
     // the chip reference and a sanctioned event), the Section type-ladder
@@ -352,6 +422,28 @@ add(
         : `${bodyTintHits.length} tinted body-copy element(s): ${bodyTintHits.slice(0, 6).join("; ")}`,
 );
 
+// ── (d2) the chip≤glyph ratio is STRUCTURAL — owned by the <IconChip> component ─
+// BA.W-ICON-CHIP consolidated the four inline chip pastes onto the <IconChip>
+// primitive, so the chip≤glyph proportion is no longer re-derived from N inline
+// `size-12`/`size-14`/`size-8` hardcodes — it is the component's enforced ratio
+// recipe. This assert points at the SINGLE component: the `--icon-chip-glyph-ratio`
+// token is declared AND the chip diameter floors at `max(…, <glyph> × ratio)` so a
+// consumer's tiny `size` can NEVER collapse the plate under the glyph. (The full
+// W2 falsifiable bite lives in proof:icon-chip; this is the suffusion-ledger
+// dividend — d2 asserts against one component, not N pastes.)
+const iconChipCss = strip(read("src/styles/icon-chip.css"));
+const ratioTokenDeclared = /--icon-chip-glyph-ratio\s*:/.test(iconChipCss);
+const ratioInFloor =
+    /--icon-chip-glyph-ratio/.test(iconChipCss) &&
+    /(?:inline-size|block-size|width|height)\s*:\s*max\(/.test(iconChipCss);
+add(
+    "d2-chip-glyph-ratio-structural",
+    ratioTokenDeclared && ratioInFloor,
+    ratioTokenDeclared && ratioInFloor
+        ? `the chip≤glyph proportion is STRUCTURAL — the <IconChip> component owns the --icon-chip-glyph-ratio token AND floors the diameter at max(…, glyph × ratio), so the plate can never paint under the glyph (the d2 proportion against ONE component, not N inline pastes)`
+        : `the IconChip chip≤glyph ratio is not enforced in-component (token:${ratioTokenDeclared} floor:${ratioInFloor}) — the d2 proportion did not consolidate onto the primitive`,
+);
+
 // ── (d3) ≤1 declared tinted EVENT per enrolled surface + monochrome ZERO ──────
 // Count the DISTINCT event-token FAMILIES tinted on a surface (across all
 // channels). A surface with its ONE declared event family is fine; a SECOND
@@ -383,6 +475,11 @@ for (const row of LEDGER) {
                 `${row.surface}: monochrome surface gained ${collapsed.size} tint event(s) [${[...collapsed].join(",")}] — must be ZERO`,
             );
         }
+    } else if (row.kind === "reference") {
+        // The loud-saturated-pill / icons-Pops REFERENCE register — color IS the
+        // content (the teaching surface), EXEMPT from the strict ≤1-event count
+        // (BA.W-SUFFUSE2: display/badge surfaces variant/viz/section-color tones).
+        // Skip the count.
     } else if (collapsed.size > 1) {
         eventCountBreaches.push(
             `${row.surface}: ${collapsed.size} competing tint event families [${[...collapsed].join(",")}] — must be ≤1 (declared: ${row.event})`,
@@ -444,10 +541,13 @@ add(
         : `${substrateBreaches.length} content page(s) gained a live substrate: ${substrateBreaches.join("; ")}`,
 );
 
-// ppmycota purple is NOT in any library token (the HARD fence — E1-7).
+// ppmycota purple is NOT in any library token (the HARD fence — E1-7). Comment-
+// blind: a PROSE mention in a comment (a dark-arm.css note "NOT a ppmycota/demo
+// preset") is NOT a leak — only a real token/value reference counts (BA.W-SUFFUSE2
+// drift fix: the W-DARK-MATERIAL comment at dark-arm.css false-tripped the raw read).
 const PPMYCOTA_RE = /ppmycota/i;
 const libStyleFiles = listLibStyleFiles();
-const ppmycotaInLib = libStyleFiles.filter((rel) => PPMYCOTA_RE.test(read(rel)));
+const ppmycotaInLib = libStyleFiles.filter((rel) => PPMYCOTA_RE.test(strip(read(rel))));
 add(
     "e-ppmycota-not-in-library",
     ppmycotaInLib.length === 0,
@@ -457,7 +557,7 @@ add(
 );
 
 // ── (f) The thin pages gain the calm idiom (the section-label--tinted variant) ─
-const typographyCss = strip(read("src/styles/typography.css"));
+const typographyCss = strip(readMonolith(ROOT, "typography"));
 const tintedVariantExists =
     /\.section-label--tinted\s*\{[\s\S]*?--section-label-accent/.test(typographyCss);
 const settingsConsumesTinted = /section-label--tinted/.test(

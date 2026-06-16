@@ -4,12 +4,16 @@ import { ref } from "vue";
 import {
     Carousel,
     CarouselContent,
-    CarouselDots,
     CarouselItem,
     CarouselPager,
     type CarouselApi,
 } from "../../../src/components/ui/carousel";
+import { PagerDots } from "../../../src/components/custom/pager-dots";
 import { cn } from "../../../src/utils/cn";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { GalleryHorizontal } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the navigation band's ONE coherent --section-color-12 indigo identity.
+const NAV_STOP = 12;
 
 const slides = [
     { hue: 24, title: "Warm Cream", note: "base surface" },
@@ -29,10 +33,24 @@ const stories = [
     { category: "Navigation", id: "dock" },
 ];
 
-const pagerIndex = ref(0);
+// The first section's dots — driven off the embla API (PagerDots is standalone,
+// so the story wires count/active/@select rather than the prior auto-inject).
+const heroApi = ref<CarouselApi>();
+const heroIndex = ref(0);
+function setHeroApi(api: CarouselApi | undefined) {
+    if (!api) return;
+    heroApi.value = api;
+    heroIndex.value = api.selectedScrollSnap();
+    api.on("select", () => {
+        heroIndex.value = api.selectedScrollSnap();
+    });
+}
 
+const pagerApi = ref<CarouselApi>();
+const pagerIndex = ref(0);
 function setApi(api: CarouselApi | undefined) {
     if (!api) return;
+    pagerApi.value = api;
     pagerIndex.value = api.selectedScrollSnap();
     api.on("select", () => {
         pagerIndex.value = api.selectedScrollSnap();
@@ -42,19 +60,44 @@ function setApi(api: CarouselApi | undefined) {
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the navigation-band identity event family on --section-color-12. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="GalleryHorizontal" :section="NAV_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Navigation · Carousel
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Paged slide navigation with dots — the slide content stays ink;
+                    the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">Carousel pager + dots substrate</h2>
+            <h2 class="text-subheading">Carousel pager + dots substrate</h2>
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes
                 <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
-                with a "X / N" counter pill;
-                <code class="rounded bg-muted px-1">&lt;CarouselDots&gt;</code> renders a dark/light-safe
-                position dot per snap (inactive dots stay clearly visible against the translucent card),
-                with the active dot elongating into a pip via a real emitted morph. Both wire to the embla
-                API via <code class="rounded bg-muted px-1">useCarousel()</code>.
+                with a "X / N" counter in the
+                <code class="rounded bg-muted px-1">.glass-pager-ring</code> glass pill chassis;
+                <code class="rounded bg-muted px-1">&lt;PagerDots&gt;</code> renders the same dark/light-safe
+                position-dot register in a matched ring (the one register the carousel ships and the slides
+                deck adopts), the active dot elongating into a pip via a real emitted morph. The pager reads
+                as ONE encapsulated glass control — no opaque slab, no bare floating dot row.
             </p>
             <div class="relative mx-auto flex w-full max-w-md flex-col gap-4">
-                <Carousel class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4">
+                <Carousel
+                    class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4"
+                    @init-api="setHeroApi"
+                >
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">
                             <div
@@ -67,7 +110,11 @@ function setApi(api: CarouselApi | undefined) {
                         </CarouselItem>
                     </CarouselContent>
                     <div class="mt-4 flex items-center justify-between gap-3">
-                        <CarouselDots />
+                        <PagerDots
+                            :count="slides.length"
+                            :active="heroIndex"
+                            @select="(i: number) => heroApi?.scrollTo(i)"
+                        />
                         <CarouselPager />
                     </div>
                 </Carousel>
@@ -75,7 +122,7 @@ function setApi(api: CarouselApi | undefined) {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">Glass carousel — story pager</h2>
+            <h2 class="text-subheading">Glass carousel — story pager</h2>
             <p class="text-sm text-muted-foreground">
                 Wraps the same primitive in a glass-surface scroller with a dot indicator. This is the exact
                 treatment the demo uses to page through stories inside a category.
@@ -109,7 +156,12 @@ function setApi(api: CarouselApi | undefined) {
                             </div>
                         </CarouselItem>
                     </CarouselContent>
-                    <CarouselDots class="absolute inset-x-0 -bottom-6 justify-center" />
+                    <PagerDots
+                        class="absolute inset-x-0 -bottom-6 mx-auto"
+                        :count="stories.length"
+                        :active="pagerIndex"
+                        @select="(i: number) => pagerApi?.scrollTo(i)"
+                    />
                     <div class="mt-8 flex items-center justify-center">
                         <CarouselPager />
                     </div>
@@ -118,7 +170,7 @@ function setApi(api: CarouselApi | undefined) {
         </section>
 
         <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-sm font-semibold text-foreground">Using the API</h2>
+            <h2 class="text-subheading">Using the API</h2>
             <ul class="list-disc pl-5 space-y-1">
                 <li>Listen on <code class="rounded bg-muted px-1">@init-api</code> to capture the Embla instance.</li>
                 <li>Call <code class="rounded bg-muted px-1">api.scrollTo(i)</code> to drive the pager from elsewhere (dots, keyboard, URL).</li>

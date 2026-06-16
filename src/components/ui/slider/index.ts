@@ -51,15 +51,22 @@ export const sliderVariants = cva(
         spectrum: '',
       },
       size: {
-        // The CONTINUOUS GLASS CYLINDER: the track is THICK; the standard slider
-        // paints NO VISIBLE THUMB (the filled track edge is the handle). The
-        // `--slider-thumb-size` token still rides each rung — it sizes the spectrum
-        // recipe's VISIBLE thin thumb (0.6×) and the standard's invisible thumb's
-        // value-follow inset / the 44px coarse hit-halo. thumb ≤ track at every
-        // rung (the inscription law the spectrum squircle still obeys).
-        sm: '[--slider-track-height:0.75rem] [--slider-thumb-size:0.5rem]',
-        md: '[--slider-track-height:1.25rem] [--slider-thumb-size:1rem]',
-        lg: '[--slider-track-height:1.75rem] [--slider-thumb-size:1.5rem]',
+        // BA.W-EMISSION (BA-VJS-A3): the size GEOMETRY moved OFF these arbitrary-
+        // property CVA brackets (`[--slider-track-height:1.25rem]` &c.) into the
+        // SFC's `[data-size]`-scoped CSS (Slider.vue, the proven in-file pattern the
+        // spectrum recipe already uses). Those bracket utilities compiled ONLY into a
+        // `dist/*.js` chunk no consumer content-scan reaches AND are rejected by the
+        // P9 emitComponentUtilities safelist (fully-arbitrary brackets), so the `size`
+        // prop was INERT in every consumer — a `size=md` standard slider rendered the
+        // 6px fallback track (`--slider-track-height` undefined → the SFC's
+        // `var(--slider-track-height, 0.375rem)` default). The variant keys (kept EMPTY
+        // here) STILL drive `:data-size` on the root (Slider.vue `:data-size="s"`); the
+        // `--slider-track-height`/`--slider-thumb-size` tokens are now set by the
+        // shipped `[data-size]` rules that SHIP in dist/glass-ui.css. Locked by
+        // proof:emission.
+        sm: '',
+        md: '',
+        lg: '',
       },
     },
     defaultVariants: {

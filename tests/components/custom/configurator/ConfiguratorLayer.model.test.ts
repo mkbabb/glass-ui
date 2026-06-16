@@ -42,12 +42,16 @@ describe("ConfiguratorLayer defineModel(open) round-trip", () => {
 // AU.W9.A — A-1 inter-row divider opt-in (conditional Tailwind arm, no CSS rung).
 describe("ConfiguratorLayer dividers opt-in", () => {
     it("renders the inter-row hairline class when dividers is set", () => {
+        // BA.W-CONFIG-CHASSIS (CFG-4) clean break: the divider COLOR moved off the inline
+        // `border-border/30` alpha to the dark-adaptive `--configurator-divider` token,
+        // keyed by the `data-dividers` attribute (the scoped COLOR rule). The `border-t`
+        // WIDTH + the `pt-2` spacing arbitrary variants stay.
         const wrapper = mount(ConfiguratorLayer, {
             props: { label: "Section", dividers: true },
         });
         const body = wrapper.find(".configurator-layer-body");
         expect(body.classes()).toContain("[&>*+*]:border-t");
-        expect(body.classes()).toContain("[&>*+*]:border-border/30");
+        expect(body.attributes("data-dividers")).toBe("true");
     });
 
     it("renders no divider class by default", () => {
@@ -56,6 +60,6 @@ describe("ConfiguratorLayer dividers opt-in", () => {
         });
         const body = wrapper.find(".configurator-layer-body");
         expect(body.classes()).not.toContain("[&>*+*]:border-t");
-        expect(body.classes()).not.toContain("[&>*+*]:border-border/30");
+        expect(body.attributes("data-dividers")).toBeUndefined();
     });
 });

@@ -1,0 +1,149 @@
+/* icon-chip.css — BA.W-ICON-CHIP: the <IconChip> section-color pop primitive.
+ *
+ * The library's SINGLE section-color icon-chip recipe — the brand's ONE color
+ * event per surface (the one-color-event rule, AZ.W-SUFFUSE / proof:suffuse):
+ * a `color-mix(… 25%, transparent)` backplate under a full-chroma glyph, walked
+ * over the 13-stop `--section-color-N` ramp (or a complete `tone` token). It
+ * OWNS the recipe the four inline `:style` pastes (icons.vue / empty-states.vue
+ * / auth-shell.vue / the MetricCell glyph-tint) collapsed onto, so the recipe
+ * lives ONCE and proof:suffuse asserts against one component, not N pastes.
+ *
+ * THE INTERPOLATION SPACE — `in srgb` (DELIBERATE, recorded). The backplate is
+ * a foreground-over-transparent overlay at a hand-tuned fixed 25% α stop — the
+ * SAME shape as the `--surface-tint-*` brand family, which CLAUDE.md fixes at
+ * `in srgb` (the brand-calibrated mix; switching the space shifts the resting
+ * α off its hand-set value). The chip is byte-faithful to the reference paste
+ * register (the binding W7 π target: stop-0 bg `color(srgb 0.915 0.484 0.671 /
+ * 0.25)`), so it preserves `in srgb` — the same brand-overlay path, NOT the
+ * glass-tint `in oklab` perceptual-mix path. (The spec text says `in oklab`;
+ * the resolution preserves the reference-faithful `in srgb` so the pop register
+ * does not shift — recorded in PROGRESS / the DELTA.)
+ */
+
+:root {
+    /* The chip≤glyph proportion (d2, structural). The diameter floors at
+       `glyph × ratio` so the plate can NEVER paint under the glyph — a
+       consumer's tiny `size` is clamped. The default reproduces the reference
+       48/22 ≈ 2.18 register. Token-first: a consumer retunes without a
+       component edit. */
+    --icon-chip-glyph-ratio: 2.18;
+    /* The duotone fill α — a low-alpha fill of the same hue UNDER the
+       full-chroma stroke (the iOS/Material filled-tonal move). Mono-hue. */
+    --icon-chip-duotone-fill: 18%;
+    /* The hover-bloom backplate lift (25% → ~35%) + the glow-ring spread. */
+    --icon-chip-bloom-mix: 35%;
+    --icon-chip-bloom-glow: 28%;
+    /* The reveal stagger step (consumed by the vReveal `--d` index). */
+    --icon-chip-reveal-step: 60ms;
+}
+
+.icon-chip {
+    /* The diameter FLOORS at glyph × ratio — the d2 proportion enforced in the
+       component, not a per-consumer hope. */
+    --_icon-chip-floor: calc(
+        var(--icon-chip-glyph-size, 22px) * var(--icon-chip-glyph-ratio)
+    );
+    inline-size: max(var(--icon-chip-size, 48px), var(--_icon-chip-floor));
+    block-size: max(var(--icon-chip-size, 48px), var(--_icon-chip-floor));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill, 9999px);
+    /* The backplate — the reference recipe (`in srgb`, 25% α stop). */
+    background-color: color-mix(
+        in srgb,
+        var(--icon-chip-plate-color, var(--muted)) 25%,
+        transparent
+    );
+    color: var(--icon-chip-event-color, var(--muted-foreground));
+    /* The §6 easing doctrine — surface props (bg/box-shadow) on the bezier
+       standard ease; the bloom is the smooth-glass register, NOT a sparkle. */
+    transition:
+        background-color var(--duration-fast, 150ms) var(--ease-standard),
+        box-shadow var(--duration-fast, 150ms) var(--ease-standard);
+}
+
+.icon-chip__glyph {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* ── The bare register (the MetricCell leading-glyph tint — no backplate) ──── */
+.icon-chip--bare {
+    inline-size: auto;
+    block-size: auto;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+/* ── The duotone axis — a low-alpha fill of the same hue UNDER the stroke ──── */
+/* Lucide glyphs bake `fill: none` on the SVG root; CSS wins over the
+   presentation attribute, so the `[data-duotone] svg` rule reaches the inner
+   paths (they inherit `fill` from the root). Mono-hue, proportion-safe. */
+.icon-chip--duotone[data-duotone] svg,
+.icon-chip[data-duotone] .icon-chip__glyph {
+    fill: color-mix(
+        in srgb,
+        var(--icon-chip-event-color, var(--muted-foreground))
+            var(--icon-chip-duotone-fill),
+        transparent
+    );
+}
+
+/* ── The hover-bloom axis — the SMOOTH GLASS register (NO disco) ───────────── */
+/* The backplate mix lifts, a soft same-hue glow ring appears, the glyph stroke
+   firms. DISCO FENCE: composes NO sparkle-sweep / btn-audacious / disco-grain —
+   the W-GLASS-CAL-retired-disco's calm replacement register only. */
+@media (hover: hover) {
+    .icon-chip--bloom:hover {
+        background-color: color-mix(
+            in srgb,
+            var(--icon-chip-plate-color, var(--muted)) var(--icon-chip-bloom-mix),
+            transparent
+        );
+        box-shadow: 0 0 0 0.25rem
+            color-mix(
+                in srgb,
+                var(--icon-chip-event-color, var(--muted-foreground))
+                    var(--icon-chip-bloom-glow),
+                transparent
+            );
+    }
+    /* The glyph stroke firms on the chip's own hover. */
+    .icon-chip--bloom:hover .icon-chip__glyph {
+        stroke-width: 2;
+    }
+}
+
+/* ── The entrance-reveal axis — composes the shipped vReveal directive ─────── */
+/* The directive writes `[data-reveal]` + `--d` (the stagger index); this rule
+   reacts ONLY on an opted-in chip (`.icon-chip--reveal`) so a non-reveal chip's
+   inert `[data-reveal]` hook never animates. PRM-gated. */
+@media (prefers-reduced-motion: no-preference) {
+    .icon-chip--reveal[data-reveal] {
+        animation: icon-chip-reveal var(--duration-medium, 320ms)
+            var(--ease-standard) both;
+        animation-delay: calc(var(--d, 0) * var(--icon-chip-reveal-step));
+    }
+}
+
+@keyframes icon-chip-reveal {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(0.25rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ── The deform axes collapse under reduced motion (the PRM guard) ─────────── */
+@media (prefers-reduced-motion: reduce) {
+    .icon-chip--bloom:hover .icon-chip__glyph {
+        stroke-width: inherit;
+    }
+    .icon-chip--reveal[data-reveal] {
+        animation: none;
+    }
+}

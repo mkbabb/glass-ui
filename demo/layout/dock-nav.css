@@ -136,3 +136,44 @@
         display: none;
     }
 }
+
+/* ── BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar ───────────
+   The `.scroll-progress` recipe (src/styles/scroll-driven.css) drives a 0..1
+   scaleX bar off a native `scroll()` timeline on the compositor. The recipe's
+   scroller defaults to `root`, but the ROUTE owns scroll on `<main>` (the shell
+   is a fixed viewport frame), so we name a scroll-timeline on the scroller and
+   point the bar's `--scroll-progress-scroller` at it. This is a demo-scoped
+   geometry/color rule with no token home (the bar position + ink are demo
+   chrome, not a library token) — the §FileBounds modify-carve clause.
+
+   The whole thing is PRM-safe + off-main-thread by construction: the recipe sits
+   under `@media (prefers-reduced-motion: no-preference)` + an `@supports
+   (animation-timeline: scroll())` block, so under PRM or on a non-supporting
+   engine NO animation attaches and the bar renders in its terminal (scaleX 0)
+   state. There is no JS attach (the useScrollProgress fallback short-circuits
+   when the native timeline is present — the dual-path-single-writer rule). */
+.demo-main-scroller {
+    scroll-timeline-name: --demo-main-progress;
+    scroll-timeline-axis: block;
+}
+.demo-scroll-progress {
+    --scroll-progress-scroller: --demo-main-progress;
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    /* The bar pins to the top edge of the scroll-region's content column, full
+       width, a thin warm-ink hairline that fills left→right as the route scrolls. */
+    height: 2px;
+    width: 100%;
+    margin-block-end: -2px;
+    border-radius: var(--radius-pill, 9999px);
+    background: linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--primary), transparent 10%),
+        var(--primary)
+    );
+    /* The scaleX origin (the recipe sets transform-origin: 0 50%); a faint rest
+       state so the rail reads as an affordance even before the user scrolls. */
+    opacity: 0.85;
+    pointer-events: none;
+}

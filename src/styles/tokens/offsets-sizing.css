@@ -12,6 +12,17 @@
     --lift-lg: -4px;
 
     /* Layout tokens */
+    /* BA.W-FADING-SCROLL — `--fade-scroll-width` is the public edge-fade ramp
+       width knob for `<FadingScroll>` (inheriting, retunable on any ancestor;
+       SegmentedTabs' `overflow="scroll"` strip overrides it to 0.5rem). It
+       SUPERSEDES `--mask-fade-width` (the scroll-BLIND `.scroll-fade-*` static
+       masks' knob). `--mask-fade-width` is RETIRE-COORDINATED: it survives this
+       wave because the static `.scroll-fade-*` utility blocks survive (so
+       W-CONFIG-CHASSIS's C2/C3 configurator columns still render mid-batch); it
+       retires in a CLEAN BREAK (no alias) at the orchestrator's Batch-2-close
+       commit alongside the static utilities, once C2/C3 have migrated onto the
+       primitive. */
+    --fade-scroll-width: 1rem;
     --mask-fade-width: 1rem;
     /* J.W3.C — dock content overflow caps. When dock content exceeds
        these dimensions, the inner `.dock-layers` (horizontal) /
@@ -362,6 +373,18 @@
        Consumers retune the rail-tab size via this one handle. */
     --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
+    /* BA.W-DOCK-SECTIONS — the divider-seam rail knobs.
+       `--dock-rail-extend-length` (declared in rail-extend.css) was RE-SEMANTICIZED:
+       it is no longer a one-way connector length but the SYMMETRIC per-side overrun of
+       the seam line (the line's cross-extent = dock extent + 2× the knob, centered on
+       the seam). `--dock-rail-retract-stub` is the residual protrusion FRACTION the
+       chips leave past the dock edge on collapse (the macOS fan-out "retract INTO the
+       rail leaving a slight protrusion"; 0 = fully retracted, 1 = no retract). The
+       `--dock-section-zone-gap` is the inter-control rhythm inside a <DockSection> zone
+       (defaults to the dock's own `--dock-gap`, so the section grouping adds no box). */
+    --dock-rail-retract-stub: 0.35;
+    --dock-section-zone-gap: var(--dock-gap, 0.25rem);
+
     /* Dock active-state ladder (O.W6 Lane B)
        Token-overridable active paint for `.dock-icon-button`. Promoted
        from hardcoded `background: var(--muted); color: var(--foreground)`
@@ -493,6 +516,45 @@
           slot of `.configurator-presets`, the heavier spatial cadence.) */
     --configurator-preset-row-weight: 0.625rem;           /* 10px — > a body row's 8px py-comfortable */
     --configurator-preset-row-gap: 0.5rem;                /*  8px — generous chip gap */
+
+    /* 3. The DIVIDER register — dark-adaptive (BA.W-CONFIG-CHASSIS.1 / CFG-4).
+       The section + inter-row dividers used to be inline `border-border/40` and
+       `border-border/30` Tailwind alphas; over the W-DARK-MATERIAL dark
+       `glass-floating` plate (a luminous transmissive material, --card L16) those
+       near-equal-luminance hairlines effectively VANISHED — "the sections run
+       together". This ONE token is consumed by every divider rule (the
+       <ConfiguratorLayer> section border, the dividers-prop inter-row border,
+       Configurator.vue's aside/preset/footer borders, configurator.css) so the
+       divider weight is retuned from a single override.
+
+       The dark-LIFTING arm is the load-bearing half: the divider must read on
+       BOTH plates. On LIGHT it is the resting `--border` warm-neutral at the
+       prior ~40% weight; on DARK it LIFTS off `--border` (L34 over the L16 plate
+       — too close) toward the `--foreground` warm-ink (L90) at a higher α, so a
+       visible luminance step survives the dark glass. `light-dark()` carries the
+       arm in ONE declaration (the same :root cascade context as the surface-tint
+       family; an engine without `light-dark()` falls back to the dark-arm.css
+       `.dark` floor minted in lockstep). The SECTION divider runs a touch
+       heavier than the inter-row hairline (a section reads as a section without
+       a second heading rung). */
+    --configurator-divider: light-dark(
+        color-mix(in srgb, var(--border) 55%, transparent),
+        color-mix(in srgb, var(--foreground) 22%, transparent)
+    );
+    --configurator-divider-section: light-dark(
+        color-mix(in srgb, var(--border) 70%, transparent),
+        color-mix(in srgb, var(--foreground) 30%, transparent)
+    );
+    /* The optional faint section-header tonal step — a whisper-light warm wash
+       behind a <ConfiguratorLayer> section so it reads as a grouped section
+       WITHOUT a new heading rung (within the W-HIERARCHY register). Default off
+       (transparent) on light where the hairline carries it; a faint
+       foreground-over-transparent lift on dark where the divider alone is
+       subtle. */
+    --configurator-section-tint: light-dark(
+        transparent,
+        color-mix(in srgb, var(--foreground) 3%, transparent)
+    );
 
     /* Component font override (consumers override locally) */
     --select-font: inherit;

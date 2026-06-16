@@ -164,6 +164,26 @@ watch(
     { deep: true },
 );
 
+// BA.W-GOO-REDRESS (root cause 2 / BA-goo-3) — the POINTER WAKE wire. The demand
+// loop PARKS when fully at rest (the AX.W16 quiescence gate: all satellites orbiting,
+// the pointer at rest). The park re-arms on a scheduled satellite-phase wake OR the
+// color/paletteStops watchers — but NOTHING woke it on POINTER activity, so a first
+// hover over a parked blob did not repaint until the next scheduled satellite wake
+// (up to an orbit horizon away); the loop then read the now-far-off pointer target
+// and the spring caught up in one clamped 50ms step — the delayed-then-lurching
+// "quick and jittery" response. This watch on the pointer's `active` signal calls the
+// renderer's EXISTING wake handle (the public twin of the color/paletteStops wake at
+// useMetaballRenderer.ts) the instant the pointer enters, so the first hover-after-park
+// repaints on the SAME frame with no accumulated-delta lurch. NO new rAF, NO second
+// wake path — it folds into the single substrate loop (the single-substrate-loop
+// invariant). The wake on an already-running loop is a no-op.
+watch(
+    () => pointer.active.value,
+    (isActive) => {
+        if (isActive) renderer.wake();
+    },
+);
+
 // Drive the substrate pause/resume from the declarative `paused` prop. `immediate`
 // so a blob mounted already-`paused` parks from the first frame (the renderer's local
 // `paused` flag gates `shouldContinue` even before the canvas handle arms).

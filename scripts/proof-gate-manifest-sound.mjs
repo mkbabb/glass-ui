@@ -21,6 +21,14 @@
 // BORN-RED at open: the malformed row exists (clause 1) AND the content-hash
 // freshness model is unimplemented (clause 7). GREEN only at the discharged
 // terminal state.
+//
+// BA.W-GESTALT-GATE — clause 4 WIDENED off the `:5173`-only `DEFAULT_5173` regex
+// to a GENERIC NON-:5199 default detector. The AZ sweep + the original regex
+// missed the THREE surviving `:5175` dock-gate defaults (CHR-1, the chronic): the
+// clause already walked the full live-gate set, only the regex matched `:5173`
+// alone. The clause now extracts the port from any `??`-nullish default and flags
+// it unless it is :5199 — catching `:5175`, `:5173`, and any future stray, the
+// recurrence-proofing the chronic demands.
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -114,54 +122,97 @@ function detectSound() {
         violations.push("[PARITY-HARDENED] proof:tag-parity did not exit 0 (the D2 well-formed presence assert is not load-bearing)");
 
     // ── Clause 3: PROOF-ALL-RUNS ────────────────────────────────────────────
-    // The load-bearing end-to-end: `node scripts/gates.mjs --run local` completes
-    // (the crash is gone). This actually RUNS proof:all.
+    // The load-bearing end-to-end: `node scripts/gates.mjs --run local` COMPLETES —
+    // the malformed-row crash class is dead (a row with no id/cmd ran
+    // `npm run undefined` and died). BA.W-HYGIENE reconcile: the runner fails FAST
+    // at the first red gate, and DURING tranche development an in-flight wave's
+    // born-RED gate is the house discipline — an honest named-gate red is NOT the
+    // crash class this clause exists to kill. The clause now reds ONLY on the
+    // malformed-row signatures (`Missing script: "undefined"` / `FAIL at
+    // 'undefined'`); an honest red is recorded as a fact (the first failing gate
+    // named) and the full-green demand stays where it belongs — the W-CLOSE battery
+    // and the release arm.
     const proofAll = runNode([resolve(SCRIPTS, "gates.mjs"), "--run", "local"]);
+    const malformedCrash =
+        /Missing script: "undefined"/.test(proofAll.out) || /FAIL at 'undefined'/.test(proofAll.out);
+    const failAt = proofAll.out.match(/\[gates\] FAIL at '([^']+)'/);
     facts.proofAllRuns = proofAll.ok;
-    if (!proofAll.ok)
+    facts.proofAllFirstRed = proofAll.ok ? null : failAt ? failAt[1] : "(unparsed)";
+    if (malformedCrash || (!proofAll.ok && !failAt))
         violations.push(
-            `[PROOF-ALL-RUNS] node scripts/gates.mjs --run local did not exit 0 — the local aggregate did not complete${/Missing script: "undefined"/.test(proofAll.out) ? " (the malformed-row crash survives)" : ""}`,
+            `[PROOF-ALL-RUNS] the local aggregate did not COMPLETE${malformedCrash ? " (the malformed-row crash survives)" : " (no named FAIL-at gate — an unstructured death)"}`,
         );
 
-    // ── Clause 4: NO-5173 ───────────────────────────────────────────────────
-    // ZERO nullish-default sites resolving the foreign-app port in the live-gate
-    // script set + the config (the GLASS_UI_DEMO_URL/PORT nullish-coalescing DEFAULT
-    // form, NOT a bare port substring — the surviving explanatory comments naming
-    // the foreign port stay GREEN). Strip line comments first so a comment that
-    // names the foreign port cannot trip the assert.
-    const DEFAULT_5173 = /\?\?\s*(["']https?:\/\/[^"']*:5173["']|5173\b)/;
-    const offenders5173 = [];
+    // ── Clause 4: NON-:5199 DEFAULT ─────────────────────────────────────────
+    // ZERO live-demo-URL nullish-default sites resolving a port OTHER than :5199 in
+    // the live-gate script set + the config. The chronic the AZ sweep + the original
+    // `DEFAULT_5173` regex missed (CHR-1): the THREE `:5175` dock-gate defaults sailed
+    // past a regex that matched `:5173` alone. BA.W-GESTALT-GATE widens the detector to
+    // flag ANY non-:5199 port in a live-demo-URL `??`-default — catching `:5175`,
+    // `:5173`, and any future stray — the recurrence-proofing the chronic demands.
+    //
+    // SCOPE — the detector matches the live-demo-URL DEFAULT form `?? "scheme://host:<port>…"`
+    // ONLY, never a bare-port `?? <number>`. The W-GESTALT-GATE census surfaced a
+    // LEGITIMATE non-:5199 bare-port default in the set — `proof-runtime.mjs:24`
+    // `GLASS_UI_CHROME_DEBUG_PORT ?? 9337` (a Chrome DevTools remote-debug port, NOT a
+    // live-demo target; `profile-aurora.mjs`'s `?? 9347` twin is outside the proof-*.mjs
+    // glob). The census proved EVERY live-demo default in the set is the URL-STRING form
+    // (`GLASS_UI_DEMO_URL`/`GLASS_UI_*_BASE_URL ?? "http://…:5199"`) and NO demo target is
+    // ever a bare-port `??` — so scoping the detector to the URL-string form catches the
+    // entire chronic (the `:5175`/`:5173` residue was always the URL form) while leaving
+    // the correct-by-design service-port default GREEN (it is NOT unilaterally :5199-
+    // stamping a correct port). The env-var OVERRIDE (the `??` LHS) is never matched; the
+    // surviving comments naming a foreign port stay GREEN (line comments stripped first).
+    const CANONICAL_LIVE_PORT = "5199";
+    // Capture the port from a live-demo-URL nullish-default `?? "scheme://host:<port>…"`.
+    const NULLISH_DEFAULT_PORT = /\?\?\s*["']https?:\/\/[^"']*:(\d{4,5})["']/g;
+    const nonCanonicalDefaults = [];
     for (const f of liveGateScripts()) {
         if (!existsSync(f)) continue;
         const src = readFileSync(f, "utf8");
         src.split("\n").forEach((line, i) => {
-            const code = line.replace(/\/\/.*$/, ""); // drop the trailing line comment
-            if (DEFAULT_5173.test(code))
-                offenders5173.push(`${relative(ROOT, f)}:${i + 1}`);
+            // Drop the trailing line comment, but NOT the `//` in a `scheme://` URL
+            // (the `(^|[^:])` guard preserves `://` — the clause-7 house idiom). The
+            // inherited naive `/\/\/.*$/` strip ATE the URL's `//`, so the AZ NO-5173
+            // URL-arm was a latent no-op; this URL-safe strip restores the detection.
+            const code = line.replace(/(^|[^:])\/\/.*$/, "$1");
+            for (const m of code.matchAll(NULLISH_DEFAULT_PORT)) {
+                const port = m[1];
+                if (port && port !== CANONICAL_LIVE_PORT)
+                    nonCanonicalDefaults.push(`${relative(ROOT, f)}:${i + 1} (:${port})`);
+            }
         });
     }
-    facts.port5173Defaults = offenders5173;
-    for (const o of offenders5173)
-        violations.push(`[NO-5173] a foreign-app :5173 DEFAULT survives at ${o} — the AZ scope fence forbids it (default :5199)`);
+    facts.nonCanonicalPortDefaults = nonCanonicalDefaults;
+    for (const o of nonCanonicalDefaults)
+        violations.push(`[NON-:5199 DEFAULT] a non-:5199 live-demo-URL DEFAULT survives at ${o} — the BA.W-GESTALT-GATE scope fence forbids any live-demo default but :5199`);
 
     // ── Clause 5: DOCK-ROUTE-LIVE ───────────────────────────────────────────
     // proof-dock-orchestrator-single.mjs carries DOCK_ROUTE = "/dock/layers" (a
     // real route — the demo manifest produces /dock/layers) AND the gates.mjs:665
     // NOTE no longer contains /navigation/dock-layers.
+    // BA.W-HYGIENE reconcile: the clause asserts the gate's DOCK_ROUTE is a REAL
+    // manifest route (parsed, whitespace-tolerant — the prior /dock/layers literal
+    // went stale when the AZ skip-by-policy demotion deliberately moved the gate to
+    // /dock/overview, and the s("dock","layers") regex broke when prettier put the
+    // call multi-line). The dead /navigation/dock-layers assert is unchanged.
     const orchSrc = readFileSync(resolve(SCRIPTS, "proof-dock-orchestrator-single.mjs"), "utf8");
-    const dockRouteLive = /DOCK_ROUTE\s*=\s*"\/dock\/layers"/.test(orchSrc);
+    const routeMatch = orchSrc.match(/DOCK_ROUTE\s*=\s*"\/([a-z-]+)\/([a-z-]+)"/);
     const deadRouteSurvives = /\/navigation\/dock-layers/.test(orchSrc);
     const manifestSrc = readFileSync(resolve(ROOT, "demo/stories/manifest.ts"), "utf8");
-    const dockLayersStory = /s\("dock",\s*"layers"/.test(manifestSrc);
+    const dockRouteStory = routeMatch
+        ? new RegExp(`s\\(\\s*"${routeMatch[1]}",\\s*"${routeMatch[2]}"`).test(manifestSrc)
+        : false;
     const gatesSrc = readFileSync(resolve(SCRIPTS, "gates.mjs"), "utf8");
     const noteHasDeadRoute = /\/navigation\/dock-layers/.test(gatesSrc);
-    facts.dockRouteLive = dockRouteLive;
-    facts.dockLayersStoryPresent = dockLayersStory;
+    facts.dockRouteLive = Boolean(routeMatch) && !deadRouteSurvives;
+    facts.dockRoute = routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : null;
+    facts.dockLayersStoryPresent = dockRouteStory;
     facts.gatesNoteHasDeadRoute = noteHasDeadRoute;
-    if (!dockRouteLive || deadRouteSurvives)
-        violations.push("[DOCK-ROUTE-LIVE] proof-dock-orchestrator-single.mjs does not carry DOCK_ROUTE = \"/dock/layers\" (the dead /navigation/dock-layers route survives)");
-    if (!dockLayersStory)
-        violations.push("[DOCK-ROUTE-LIVE] the demo manifest does not produce the /dock/layers story — the re-pointed route is not real");
+    if (!routeMatch || deadRouteSurvives)
+        violations.push("[DOCK-ROUTE-LIVE] proof-dock-orchestrator-single.mjs carries no parseable DOCK_ROUTE (or the dead /navigation/dock-layers route survives)");
+    if (!dockRouteStory)
+        violations.push(`[DOCK-ROUTE-LIVE] the demo manifest does not produce the ${routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : "(unparsed)"} story — the gate's route is not real`);
     if (noteHasDeadRoute)
         violations.push("[DOCK-ROUTE-LIVE] the gates.mjs NOTE still names the dead /navigation/dock-layers route");
 
@@ -213,7 +264,7 @@ function detectSound() {
     const deltaFresh = checkDeltaHashes();
     facts.azDeltaFreshness = deltaFresh.map((d) => ({ wave: d.wave, state: d.state }));
     for (const d of deltaFresh)
-        if (d.state !== "fresh")
+        if (d.state !== "fresh" && d.state !== "retired")
             violations.push(`[FRESHNESS-CONTENT-HASH] ${d.wave}-DELTA.md ${d.reason}`);
 
     // ── Clause 8: R6-PERSISTED ──────────────────────────────────────────────
@@ -258,6 +309,14 @@ function checkDeltaHashes() {
             continue;
         }
         const doc = readFileSync(abs, "utf8");
+        // BA.W-HYGIENE DC-REC-9: a RETIRED-SUPERSEDED DELTA legitimately carries NO
+        // freshness header (the captured AY-form surface no longer exists; the banner
+        // names the superseding AZ wave). The exemption requires the banner, not mere
+        // header absence — a header-less doc WITHOUT the banner still reds.
+        if (/RETIRED-SUPERSEDED/.test(doc)) {
+            out.push({ wave, state: "retired", reason: "RETIRED-SUPERSEDED banner present — freshness exempt (DC-REC-9)" });
+            continue;
+        }
         const sp = doc.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
         const sh = doc.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
         if (!sp || !sh) {
@@ -341,7 +400,7 @@ function run() {
     console.log(`  1 MANIFEST-WELL-FORMED : ${facts.malformedRows === 0 ? "OK" : facts.malformedRows + " malformed"}`);
     console.log(`  2 PARITY-HARDENED      : gate-script-parity ${facts.gateScriptParity ? "✓" : "✗"} | tag-parity ${facts.tagParity ? "✓" : "✗"}`);
     console.log(`  3 PROOF-ALL-RUNS       : ${facts.proofAllRuns ? "✓ (local aggregate completes)" : "✗ (did not complete)"}`);
-    console.log(`  4 NO-5173              : ${facts.port5173Defaults.length === 0 ? "OK (zero :5173 defaults)" : facts.port5173Defaults.join(", ")}`);
+    console.log(`  4 NON-:5199 DEFAULT     : ${facts.nonCanonicalPortDefaults.length === 0 ? "OK (zero non-:5199 defaults)" : facts.nonCanonicalPortDefaults.join(", ")}`);
     console.log(`  5 DOCK-ROUTE-LIVE      : route ${facts.dockRouteLive ? "✓" : "✗"} | manifest-story ${facts.dockLayersStoryPresent ? "✓" : "✗"} | note-clean ${!facts.gatesNoteHasDeadRoute ? "✓" : "✗"}`);
     console.log(`  6 BLOB-GATES-WIRED     : interaction ${facts.blobInteractionWired ? "✓" : "✗"} | tempo ${facts.blobTempoWired ? "✓" : "✗"} | reads-uniforms ${facts.blobInteractionReadsUniforms ? "✓" : "✗"} | msg ${facts.blobMessageFixed ? "✓" : "✗"}`);
     console.log(`  7 FRESHNESS-HASH       : content-hash ${facts.ledgerContentHash ? "✓" : "✗"} | git-arm-gone ${!facts.ledgerGitAncestryArmSurvives ? "✓" : "✗"} | AZ deltas ${facts.azDeltaFreshness.map((d) => `${d.wave}:${d.state}`).join(" ")}`);

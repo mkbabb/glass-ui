@@ -31,7 +31,8 @@ function looksLikeFullSnapshot(raw: Record<string, unknown>): boolean {
         "density",
         "radius",
         "cartoonShadow",
-        "dark",
+        // BA.W-CONFIG-CHASSIS.3 — `dark` left ConfigBaseline (useGlobalDark owns it);
+        // the legacy full-snapshot detector no longer requires the retired key.
     ];
     return baselineKeys.every((k) => k in raw);
 }
@@ -76,9 +77,10 @@ function migrateFullSnapshotToDelta(raw: Record<string, unknown>): ConfigDelta {
     ) {
         out.cartoonShadow = raw.cartoonShadow;
     }
-    if (typeof raw.dark === "boolean" && raw.dark !== DEFAULT_CONFIG.dark) {
-        out.dark = raw.dark;
-    }
+    // BA.W-CONFIG-CHASSIS.3 — `dark` left the config delta (owned by
+    // `useGlobalDark` now); a legacy-persisted `dark` key is silently ignored
+    // (clean break, no migration shim — the global composable persists the mode
+    // on its own key).
 
     return out;
 }
@@ -102,7 +104,7 @@ function parseDelta(raw: Record<string, unknown>): ConfigDelta {
     }
     if (typeof raw.radius === "number") out.radius = raw.radius;
     if (typeof raw.cartoonShadow === "boolean") out.cartoonShadow = raw.cartoonShadow;
-    if (typeof raw.dark === "boolean") out.dark = raw.dark;
+    // BA.W-CONFIG-CHASSIS.3 — `dark` left the config delta (useGlobalDark owns it).
     return out;
 }
 

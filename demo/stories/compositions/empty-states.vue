@@ -13,6 +13,7 @@ import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
 import { GooBlob } from "../../../src/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { cn } from "../../../src/utils/cn";
 
 interface EmptyState {
@@ -127,16 +128,13 @@ const states: EmptyState[] = [
                 )"
             >
                 <CardContent class="flex flex-col items-center gap-[calc(1rem_+_var(--density-gap,0rem))] px-[calc(1.5rem_+_var(--density-pad,0rem))] py-[calc(2.5rem_+_var(--density-pad,0rem))] text-center">
-                    <span
-                        class="flex size-14 items-center justify-center rounded-full"
-                        :style="{
-                            filter: 'hue-rotate(var(--hue-shift, 0deg))',
-                            backgroundColor: `color-mix(in srgb, var(--section-color-${state.section}, var(--muted)) 25%, transparent)`,
-                            color: `var(--section-color-${state.section}, var(--muted-foreground))`,
-                        }"
-                    >
-                        <component :is="state.icon" class="size-6" aria-hidden="true" />
-                    </span>
+                    <IconChip
+                        :icon="state.icon"
+                        :section="state.section"
+                        :size="56"
+                        :glyph-size="24"
+                        :stroke-width="2"
+                    />
                     <h3 class="text-heading">{{ state.title }}</h3>
                     <p class="text-small text-muted-foreground max-w-xs leading-relaxed">
                         {{ state.blurb }}

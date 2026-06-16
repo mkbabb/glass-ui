@@ -6,6 +6,10 @@ import { Input } from "../../../src/components/ui/input";
 import { Checkbox } from "../../../src/components/ui/checkbox";
 import { Switch } from "../../../src/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "../../../src/components/ui/radio-group";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Tag } from "@lucide/vue";
+// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
+const FORMS_STOP = 3;
 
 const email = ref<string>("");
 const agree = ref<boolean>(false);
@@ -15,6 +19,27 @@ const plan = ref<string>("pro");
 
 <template>
     <StoryPage>
+        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Tag" :section="FORMS_STOP" />
+            <div class="flex flex-col gap-1">
+                <span class="section-label section-label--tinted text-admin-label">
+                    Forms · Labeling
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Accessible name binding — the field labels stay ink; the
+                    section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- Labelled input via `for`. -->
         <section class="flex flex-col gap-3 max-w-sm">
             <p class="section-label">for-attribute coupling</p>

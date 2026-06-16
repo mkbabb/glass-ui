@@ -41,11 +41,12 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Audacious primary CTA</h2>
+            <h2 class="text-subheading">Primary glass CTA</h2>
             <p class="text-small text-muted-foreground">
-                The headline CTA variant. Disco-grain + specular highlight at rest,
-                sparkle-sweep on hover, bound to <code class="fira-code">--primary</code>.
-                Reduced-motion suppresses the sparkle.
+                The headline CTA variant — a calm liquid-glass button with the
+                <code class="fira-code">--glass-specular</code> edge catch-light gleam and a
+                restrained <code class="fira-code">--scale-hover-btn</code> lift on the §6
+                spring register. No sparkle, no disco-grain.
             </p>
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant="primary-audacious" size="lg">Launch sequence</Button>
@@ -55,26 +56,24 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Gold audacious CTA</h2>
+            <h2 class="text-subheading">Gold glass CTA</h2>
             <p class="text-small text-muted-foreground">
-                A primary CTA with a gold sweep shimmer on hover. Reuses the
-                <code class="fira-code">btn-audacious</code> glass substrate (sparkle + ripple)
-                plus a translucent gold gradient sweep via
-                <code class="fira-code">btn-audacious-gold</code>. Reduced-motion suppresses
-                the sweep; the static gold tint remains.
+                A primary glass CTA carrying a STATIC warm-gold tint (the at-rest
+                <code class="fira-code">--color-gold</code> wash) over the glass substrate
+                plus the <code class="fira-code">--glass-specular</code> edge catch-light —
+                gold survives CALM. No animated sweep, no sparkle.
             </p>
-            <!-- The rest text is the warm-ink `--foreground` so the label stays
-                 legible dark ink over the gold-tint-over-cream rest substrate;
-                 light text is reserved for hover/active, where the gold sweep
-                 darkens the backplate. -->
+            <!-- The label is the warm-ink `--foreground` over the soft gold-tint-over
+                 -glass rest substrate; the tint deepens a touch on hover but the calm
+                 register never flips to a saturated sweep. -->
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant="gold-audacious" size="lg">Next →</Button>
                 <Button variant="gold-audacious">Submit</Button>
                 <Button variant="gold-audacious" disabled>Disabled</Button>
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                At rest the label is warm ink, legible over the soft gold tint; on
-                hover and press it flips to white as the gold backplate saturates.
+                The label stays warm ink, legible over the soft gold tint in both
+                modes; the gold deepens slightly on hover without an animated sweep.
             </p>
         </section>
 

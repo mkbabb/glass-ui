@@ -4,6 +4,7 @@ export { default as FourierField } from "./FourierField.vue";
 export {
     comp,
     positionsAt,
+    partialSumAt,
     dftFromPoints,
     makeEllipticSpectrum,
     type BasisComponent,

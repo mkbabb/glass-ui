@@ -53,7 +53,13 @@ const variant = computed<"hero" | "page">(() =>
                      <h1> here would be a duplicate top-level heading in the outline.
                      This is the STRUCTURAL double-<h1> suppression; the hero title's
                      audacious DISPLAY-register upgrade is W-SUFFUSE's D2-1. -->
-                <h1 v-if="title && variant === 'page'" class="text-heading">
+                <!-- HS-2 (BA.W-SUFFUSE2, applied by W-STAGE on its behalf): the
+                     content-page title lifts ONE √φ rung (text-heading 25.9px →
+                     text-title 32.9px) so it DOMINATES the section <h2>
+                     (text-subheading 20.4px) — the display ladder GRADES instead of
+                     cliffing. The D1-4 double-<h1> suppression (the variant==='page'
+                     guard) is preserved. -->
+                <h1 v-if="title && variant === 'page'" class="text-title">
                     {{ title }}
                 </h1>
                 <p v-if="blurb" class="text-small max-w-prose text-muted-foreground">
@@ -70,7 +76,16 @@ const variant = computed<"hero" | "page">(() =>
                 :hero-title="props.heroTitle"
                 class="mt-8"
             >
-                <section :class="cn('flex flex-col gap-10', props.contentClass)">
+                <!-- BA.W-ANIMATE scope 3 (applied by W-STAGE on its behalf): the
+                     section-stagger host. Each direct child (a StorySection block)
+                     fades + lifts on entry via its OWN view() timeline keyed off the
+                     <main> scroller — the implicit stagger, NO setTimeout cascade
+                     (scroll-driven.css [data-scroll-reveal] recipe). PRM → static
+                     terminal state (the recipe's outer @media gate). -->
+                <section
+                    data-scroll-reveal
+                    :class="cn('flex flex-col gap-10', props.contentClass)"
+                >
                     <slot />
                 </section>
             </StoryHero>

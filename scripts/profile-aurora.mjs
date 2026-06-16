@@ -21,7 +21,7 @@ const artifactPath = resolve(
     process.env.GLASS_UI_AURORA_PROFILE_ARTIFACT ??
         "docs/tranches/F/audit/W5-aurora-profile.json",
 );
-const baseUrl = process.env.GLASS_UI_AURORA_BASE_URL ?? "http://127.0.0.1:5173";
+const baseUrl = process.env.GLASS_UI_AURORA_BASE_URL ?? "http://127.0.0.1:5199";
 const debugPort = Number(
     process.env.GLASS_UI_AURORA_CHROME_DEBUG_PORT ??
         process.env.GLASS_UI_CHROME_DEBUG_PORT ??
@@ -232,7 +232,7 @@ async function waitForDocument(client) {
 function startServerIfNeeded() {
     const url = new URL(baseUrl);
     const host = url.hostname || "127.0.0.1";
-    const port = url.port || "5173";
+    const port = url.port || "5199";
     return spawn("npm", ["run", "dev", "--", "--host", host, "--port", port], {
         cwd: root,
         stdio: "ignore",

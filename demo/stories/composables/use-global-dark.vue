@@ -21,9 +21,13 @@ const siteB = useGlobalDark();
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-col gap-4">
-                    <Button variant="default" @click="siteA.toggleDark">
-                        Toggle (theme: {{ siteA.isDark ? "dark" : "light" }})
-                    </Button>
+                    <!-- BA.W-DEMO-AFFORDANCES — the lone toggle sits content-width
+                         on its own row, never stretched to the full column. -->
+                    <div class="flex items-center gap-3">
+                        <Button variant="default" @click="siteA.toggleDark">
+                            Toggle (theme: {{ siteA.isDark ? "dark" : "light" }})
+                        </Button>
+                    </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="rounded-md border border-border bg-card p-3">
                             <code class="fira-code text-mono-caption">site A</code>

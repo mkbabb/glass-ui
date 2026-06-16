@@ -60,6 +60,41 @@ export function positionsAt(
 }
 
 /**
+ * The PARTIAL-SUM curve point at parameter `t` over the FIRST `maxTerms` phasors
+ * — the inverse-DFT truncated summation `Σ_{k<maxTerms} c_k * exp(2*pi*i*k*t)`.
+ * It is {@link positionsAt} truncated at `maxTerms` and read at the FINAL tip:
+ * the single curve POINT (not the whole chain). The truncation axis is the SAME
+ * one `positionsAt`'s `maxCircles` arg drives — `maxCircles` reads the whole
+ * chain truncated, `partialSumAt` reads only its endpoint — so the studio's
+ * N-harmonics slider can draw the assembling chain (`positionsAt(.., N)`) AND the
+ * resolving curve point (`partialSumAt(.., t, N)`) off the ONE axis. Sweeping `t`
+ * over `[0,1)` and joining the points traces the partial-sum CURVE: at `maxTerms`
+ * = 1 a single ellipse, growing toward the full reconstruction as `maxTerms`
+ * climbs to `components.length` (the reference's "watch it sum" beauty).
+ *
+ * `maxTerms` omitted (or ≥ `components.length`) is the full reconstruction — the
+ * same point `positionsAt(components, t)` returns at its final tip.
+ */
+export function partialSumAt(
+    components: BasisComponent[],
+    t: number,
+    maxTerms?: number,
+): [number, number] {
+    let cx = 0;
+    let cy = 0;
+    const n = maxTerms ?? components.length;
+    for (let i = 0; i < n && i < components.length; i++) {
+        const c = components[i];
+        const angle = 2 * Math.PI * c.index * t;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        cx += c.coefficient[0] * cos - c.coefficient[1] * sin;
+        cy += c.coefficient[0] * sin + c.coefficient[1] * cos;
+    }
+    return [cx, cy];
+}
+
+/**
  * The forward DFT — the inverse of {@link positionsAt}. Takes a closed sequence
  * of `[x, y]` samples around a curve (treated as the complex signal `x + i·y`,
  * uniformly spaced in the parameter `t ∈ [0, 1)`) and returns the

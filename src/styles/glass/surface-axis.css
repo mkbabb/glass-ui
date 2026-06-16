@@ -1,0 +1,113 @@
+/* glass/surface-axis.css — the ONE shared {glass·veil·opaque} surface-decoration
+   axis (BA.W-SURFACE-AXIS).
+
+   The house minted `--glass-level` (the opacity knob, AX.W54) and `--glass-tint-*`
+   (the legibility seam, AX.W55) as SHARED inheriting axes, but left the
+   {glass·veil·opaque} surface-DECORATION choice as a per-component one-off
+   (`<Card>` had the only true axis; `<Dialog>` a binary string; everyone else
+   none). This seam factors that choice ONCE — every enrolled surface composes a
+   base glass tier + the `[data-surface]` attribute, and these rules apply the
+   three-rung decoration UNIFORMLY:
+
+     glass   — the resolved tier's plain glass rung (IDENTITY; no rule needed —
+               the bare tier paints).
+     veil    — the borderless/rimless text-legibility plate: the `--glass-bg-quiet`
+               fill + blur with the box border AND rim STRIPPED (the boxed look
+               reads as a dividing line on a text plate). Reads `--glass-bg-quiet`
+               + the W55 `--glass-tint-*` seam through the SAME `--glass-*` ladder,
+               so `--glass-level` / the bright-bucket darken retune it in lockstep
+               with every glass surface — NO veil-local recipe fork.
+     opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
+               solid `--card` + `blur(0)` through the ONE level knob, the tint axis
+               zeroed (a solid plate has no translucent backdrop to darken-over).
+
+   NO second axis: `cartoon` stays a Card-local decoration (it is NOT a
+   {glass·veil·opaque} member — the shared axis is the three-rung MATERIAL
+   decoration; cartoon rides Card's own `surface` superset). The `Surface` union +
+   the `surfaceClass(surface, tier)` resolver are the TS half
+   (`src/components/ui/_shared/useSurfaceAxis.ts`); this file is the CSS half.
+
+   Cascade: `@layer components`, @import-ed AFTER ladder.css so the attr rules
+   (specificity 0-1-0, equal to the `.glass-*` classes) win by source order over
+   the base rung's border/box-shadow. */
+@layer components {
+    /* ── veil — the borderless text-legibility plate ──────────────────────────
+       Composes the SAME deltas as the `veil-surface` @utility (cards.css), keyed
+       off the SAME `--glass-bg-quiet` + `--glass-tint-*` tokens (no recipe fork).
+       Each delta is an overridable `--veil-*` rung so a consumer re-points the
+       plate to any other ladder rung. */
+    [data-surface="veil"] {
+        --veil-bg: color-mix(
+            in oklab,
+            var(--glass-bg-quiet),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+        --veil-blur: var(--glass-blur-quiet);
+        /* The three veil deltas over a bare rung — each overridable. */
+        --veil-border: none;
+        --veil-shadow: none;
+        --veil-feather: none;
+
+        background: var(--veil-bg);
+        backdrop-filter: var(--veil-blur);
+        -webkit-backdrop-filter: var(--veil-blur);
+        border: var(--veil-border);
+        box-shadow: var(--veil-shadow);
+        /* The optional radial feather — a `mask-image` only painted when
+           `--veil-feather` is set to a gradient (default `none` = no mask = a
+           clean rectangle). `mask-image: none` is the identity. */
+        mask-image: var(--veil-feather);
+    }
+
+    /* ── opaque — the solid-card escape ───────────────────────────────────────
+       The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
+       with `blur(0)`. A surface that ALSO carries a base tier keeps its glass
+       edge/rim/under-shadow (a solid plate with a glass edge, not a bare div).
+
+       THE SUBSTITUTION-VS-INHERITANCE TRAP (the recurring AX.W55 / dock-scale
+       class, live-found in the π readback): the `--glass-bg-*` tier tokens bake
+       `var(--glass-level)` at their `:root` DECLARATION (where level=1), so a
+       DESCENDANT element's `--glass-level: 0` does NOT re-resolve the `:root`-baked
+       `--glass-bg-floating` — the plate stayed translucent (α 0.8, NOT solid). The
+       `.glass-opaque` class works only when `--glass-level` is set at `:root` (the
+       cohesion fixture's pattern); a PER-ELEMENT opaque surface (the whole point of
+       `surface="opaque"`) needs the solid plate composed AT THE ELEMENT. So the
+       opaque rung sets the SOLID `--card` background + `blur(0)` DIRECTLY (the
+       level-0 endpoint resolved here, not via the baked token) — AND still flips the
+       `--glass-level: 0` / `--glass-tint-strength: 0%` knobs so a NESTED glass
+       descendant + any consumer reading the level scalar see the opaque register
+       coherently. The adaptive TINT axis is zeroed (a solid plate has no
+       translucent backdrop to darken-over — the bucket-INVARIANT contract). */
+    [data-surface="opaque"] {
+        --glass-level: 0;
+        --glass-tint-strength: 0%;
+        /* The SOLID --card plate composed at the element via the house color-mix
+           idiom (`--card` over transparent at 0% transparent = fully solid --card)
+           — functionally `var(--card)`, expressed as the cohesion-sanctioned mix
+           the token ladder already speaks. */
+        background: color-mix(in srgb, var(--card), transparent 0%);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* ── .paper-ink-mark — the PAPER ink-hairline MARK register ────────────────
+       (BA.W-SURFACE-AXIS scope 8). The 2px `--foreground` ink mark on a paper
+       surface — NO plate, NO blur, NO glass. This is a MARK register, NOT a
+       `[data-surface]` plate rung: a `[data-surface]` value DECORATES a glass
+       plate (fill + edge + rim); `.paper-ink-mark` is the opposite — a bare ink
+       hairline drawn directly on paper, the math-paper section-rail / underline-
+       tab vocabulary. Recorded here (the surface-decoration seam) co-located with
+       the plate axis but DISTINCT from it — the canon note is in CLAUDE.md.
+
+       ≥2 consumers at birth: (1) the math-paper section rail (the `border-l-[3px]`
+       family composes it for a VERTICAL left-edge ink rail); (2) W-TABS's re-cut
+       underline indicator (a HORIZONTAL 2px ink mark — W-TABS CONSUMES this seam,
+       a shape gap there triumvirates HERE per the DAG §5 seam rule). The register
+       exposes ONE knob (`--paper-ink-mark-weight`, default 2px) + the ink color;
+       the consumer applies the weight on whichever edge/axis it draws (a left
+       `border-inline-start-width` rail, a bottom `block-size` underline). */
+    .paper-ink-mark {
+        --paper-ink-mark-weight: 2px;
+        --paper-ink-mark-color: var(--foreground);
+    }
+}
