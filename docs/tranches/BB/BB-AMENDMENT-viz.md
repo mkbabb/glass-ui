@@ -1,0 +1,80 @@
+# BB — the substrates / procedural-viz band fold (the WebGPU-first suite + 2 new viz + the per-viz migration)
+
+**USER-DIRECTED 2026-06-16.** Discharges the coherence-harden §3 WebGPU REVISIT into a CONCRETE band of waves + births the two reference viz (the dot-flow-field + the concentric ring-wave) + documents ALL SEVEN procedural members as ONE family. This amendment is the BAND FOLD: it names the waves, states the dependency spine, reconciles with `BB-AMENDMENT-coherence-harden.md §3` (the directive → this concrete band — no contradiction), and re-affirms every binding fence. It adds NO re-architecture beyond the three viz specs it folds; it is the index + reconcile + fence record for the band the three specs (`waves/W-VIZ-SUITE.md`, `waves/W-VIZ-DOTFIELD.md`, `waves/W-VIZ-CONCENTRIC.md`) describe.
+
+The reference image the band is born against: `docs/tranches/BB/audit/viz-ref/dot-flow-field-reference.jpg` — teal dots over dark navy, seeded along undulating STREAMLINES (a curl-of-Fourier flow field) rippling in waves like wind / fabric / water (the "Claude co-work" dot-wave aesthetic). It is W-VIZ-DOTFIELD's literal target + the FAMILY register the whole band reads as (elegant, subtle, real depth, flowing waves).
+
+## §1 — The band (the substrates / procedural-viz band)
+
+The band is ONE umbrella wave with five serial sub-waves + two named-successor migrations + the suite family doc. The two standalone viz specs (`W-VIZ-DOTFIELD`, `W-VIZ-CONCENTRIC`) ARE the suite's `W-FLOWFIELD` / `W-CONCENTRIC` sub-waves authored as README-grade build docs — the same primitive, not a peer wave (`W-VIZ-CONCENTRIC.md` is explicit: "It is NOT a peer wave that 'opens after' the suite — it is INSIDE it").
+
+| wave / sub-wave | spec | what it lands | gate |
+|---|---|---|---|
+| **W-VIZ-SUITE** (umbrella) | `waves/W-VIZ-SUITE.md` | the WebGPU-first procedural-animation SUITE: the `useWebGPUCanvas` FOUNDATION + the per-viz migration band + the two new viz + the ONE documented FAMILY (all seven members) | `proof:gpu-substrate-single` (NEW, born-RED) + the per-viz sub-gates |
+| → **W-GPU-SUBSTRATE** (sub-wave .a, FOUNDATION) | `W-VIZ-SUITE.md §Agent Units .a` | `useWebGPUCanvas` — the THIRD thin backend over the ONE `createCanvasLifecycle` leaf (ZERO scheduling re-fork) + `useGpuSubstrate` (the transparent feature-detect picker) + `proof:gpu-substrate-single` born-RED | `proof:gpu-substrate-single` (clauses A–G; born-RED on the WebGPU clauses) |
+| → **W-AURORA-WGPU** (sub-wave .b, rank 1) | `W-VIZ-SUITE.md §Agent Units .b` | `aurora.wgsl` PRIMARY (the cleanest port — 405L, 0 textures / 0 derivatives) + the shared `procedural-color.wgsl.ts` OKLCh/OETF chunk; `aurora.frag.ts` byte-UNTOUCHED WebGL2 fallback; CALIBRATES + records the OKLab ΔE bar | `proof:gpu-substrate-single` clause F (aurora row `verified`) |
+| → **W-GOOBLOB-WGPU** (sub-wave .c, rank 2) | `W-VIZ-SUITE.md §Agent Units .c` | `metaball.wgsl` PRIMARY (SDF smin + the two live `fwidth()` AA/Toksvig sites @ 266/364 + the ColorResolver/satellite-envelope thread); `metaball.frag.ts` byte-UNTOUCHED fallback | `proof:gpu-substrate-single` clause F (blob row `verified`) |
+| → **W-FLOWFIELD** ≡ **W-VIZ-DOTFIELD** (sub-wave .d, rank 3, NEW) | `waves/W-VIZ-DOTFIELD.md` (≡ `W-VIZ-SUITE.md §Agent Units .d`) | `<DotFlowField>` — born WebGPU-first (compute curl-noise advection + instanced billboards over a Tessendorf/Gerstner Fourier wave potential); WebGL2 transform-feedback / Canvas2D fallback; the reference reproduction | `proof:flow-field` (NEW, born-RED) + `proof:viz-dotfield` (the standalone spec's gate name) + the binding π |
+| → **W-CONCENTRIC** ≡ **W-VIZ-CONCENTRIC** (sub-wave .e, rank 4, NEW) | `waves/W-VIZ-CONCENTRIC.md` (≡ `W-VIZ-SUITE.md §Agent Units .e`) | `<Concentric>` — born WebGPU-first (radial Fourier ring-interference, two registers `surface`/`rings` off ONE `math.ts` leaf, the 3D-rendered-to-2D raked sheet); GLSL fallback; + the suite family doc rider | `proof:concentric` (NEW, born-RED) + the binding π |
+| (doc rider, closes at .e) | `W-VIZ-SUITE.md §scope 6` | `src/components/custom/PROCEDURAL-SUITE.md` (the family home — all seven viz) + each viz README's "Substrate" section + `docs/tranches/BB/audit/gpu-parity-table.md` | `proof:colocation` + the family-doc-present clause |
+
+**The per-viz WebGPU MIGRATION sub-waves (the extant viz the plan migrates):**
+- **W-AURORA-WGPU** — aurora migrates (rank 1, the cleanest fragment port). IN this band.
+- **W-GOOBLOB-WGPU** — goo-blob migrates (rank 2, the SDF + two `fwidth()` sites). IN this band.
+
+**The non-migrators (recorded WITH the reason + the booked successor — the user's "cover the extant items too" satisfied by an explicit per-member verdict, NOT a silent omission):**
+- **fourier-field** — DO NOT MIGRATE (now). Canvas2D (`useCanvas2D`, the DFT epicycle math) is the RIGHT tool for a few-to-dozens of phasors + `ctx.stroke`; the DFT math is already GPU-agnostic. Booked successor: **W-FOURIER-GPU** (trigger: harmonic density scales to thousands of phasors → GPU line-instancing wins).
+- **constellation** — DO NOT MIGRATE (now). Canvas2D handles the current node count; `proof:constellation-substrate-single` is substrate-agnostic. Booked successor: **W-CONSTELLATION-GPU** (trigger: a much denser lattice → the dot-flow-field advection compute pass generalizes to constellation's nodes).
+- **watercolor-dot** — PERMANENTLY OUT (NEVER a wave). It mounts ZERO drawing context (a CSS/SVG `<filter>` feDisplacementMap + seeded prng, pure geometry); a GPU context for one decorative dot is a regression against the ~8-context-per-page cap. The canonical "mark NOT to migrate, with the reason" case — recorded in `PROCEDURAL-SUITE.md` + its README.
+
+## §2 — The dependency spine
+
+**W-VIZ-SUITE (its FOUNDATION sub-wave W-GPU-SUBSTRATE) is the band foundation; the two migrations + the two new viz build on it.** The five sub-waves run **SERIAL, not parallel** — each proves the pattern the next is born onto (a new compute-particle viz on an unproven substrate would conflate substrate bugs with viz bugs):
+
+```
+W-GPU-SUBSTRATE  →  W-AURORA-WGPU  →  W-GOOBLOB-WGPU  →  W-FLOWFIELD  →  W-CONCENTRIC
+ (the foundation)    (rank 1 port)     (rank 2 port)      (NEW viz)       (NEW viz + family doc)
+ useWebGPUCanvas     calibrates the    proves the SDF     born onto       born onto the proven
+ + the picker        ΔE bar + the      port + the         the proven      substrate; closes the
+ + the born-RED      shared WGSL       fwidth() sites     substrate       suite family doc rider
+ parity gate         chunk pattern
+```
+
+- **W-GPU-SUBSTRATE** lands `useWebGPUCanvas` + `useGpuSubstrate` + the born-RED `proof:gpu-substrate-single`. Everything downstream COMPOSES this (the `useGpuSubstrate` picker / the `useWebGPUCanvas` backend); none of the four downstream sub-waves re-bootstraps `navigator.gpu` (clause D forbids it).
+- **W-AURORA-WGPU** (FIRST migration) establishes the shared `procedural-color.wgsl.ts` OKLCh/OETF WGSL chunk (which `metaball.wgsl` / `concentric.wgsl` later splice) AND CALIBRATES the OKLab ΔE parity bar recorded as a gate fact (mean ΔE ≤ 2.0, p99 ≤ 5.0 the starting bar; the agent records the empirical value).
+- **W-GOOBLOB-WGPU** (SECOND migration) proves the SDF port + the two `fwidth()` derivative sites at the calibrated bar.
+- **W-FLOWFIELD** + **W-CONCENTRIC** are born onto the proven substrate; W-CONCENTRIC closes the doc rider (the family README + the per-viz Substrate sections + the parity table).
+
+**Band dependencies on the rest of BB:** the band soft-reads **W-CANVAS-UNIFY** (Batch 4) — the same-batch Canvas2D de-fork that extends `proof:webgl-substrate-single` with the single-source clause — so `proof:gpu-substrate-single` (its superset) lands on the post-de-fork shape, not the stale pre-fork one. The band is bound-DISJOINT from the sibling Batch-4 waves (W-GPU-SUBSTRATE writes only `webgpu/*` + the new gate; the migrations write their own viz dirs; the two new viz write disjoint NEW dirs). It DEPENDS on the lifecycle leaf (`createCanvasLifecycle`, READ-only; a leaf public-seam ADD for the async device-acquire is a recorded Triumvirate, not a default — the expected outcome is a wrapper-owned async prelude with NO leaf edit). It FEEDS the BB close: `proof:ba-gestalt`'s dock/substrate verdicts read the new viz over their real backdrops; the BB close inherits a documented suite + a parity-locked dual-substrate.
+
+## §3 — Reconciliation with the coherence-harden directive (§3 → this concrete band; no contradiction)
+
+`BB-AMENDMENT-coherence-harden.md §3` recorded the DIRECTIVE (the deferral premise dissolved, the user's verbatim "ALL of our visualizations, from fourier to aurora, should be WebGPU first when possible," the per-viz migration is "NOT a big-bang, NOT merely booked — the user directed the migration"). This amendment is the CONCRETE band that discharges it. The two map 1:1:
+
+| coherence-harden §3 directive | this band discharges it as |
+|---|---|
+| "a `useWebGPUCanvas` substrate (the `glassShader.wgsl` pilot is the seed) that mirrors `useWebGLCanvas`'s offscreen-pause/IntersectionObserver/PRM/DPR discipline" | **W-GPU-SUBSTRATE** — the third thin backend over `createCanvasLifecycle`, ZERO scheduling re-fork; the pilot is READ for convention, never edited |
+| "WebGL2 the graceful fallback (feature-detect `navigator.gpu`; the existing `useWebGLCanvas` IS the fallback path, not retired)" | the `useGpuSubstrate` picker degrades to `useWebGLCanvas`; clause B of the gate machine-blocks a deleted-fallback green (the ~5-10% tail — Linux Firefox, pre-A12 iPhones — keeps a working path) |
+| "the two NEW visualizations are born WebGPU-first (cleanest — new WGSL)" | **W-FLOWFIELD** (compute-particle) + **W-CONCENTRIC** (fragment) |
+| "the EXISTING substrate … MIGRATES per-viz to the WebGPU substrate where the WGSL port is clean + beneficial ('when possible')" | **W-AURORA-WGPU** (rank 1) + **W-GOOBLOB-WGPU** (rank 2) migrate; fourier-field / constellation / watercolor-dot recorded with the reason + the booked trigger (the "when possible" latitude — Canvas2D is the right tool today) |
+| "the shader-fence-respecting port of each `.frag` → `.wgsl`, byte-equivalent output verified" | the GL-shader fence: a NET-NEW `.wgsl` primary + the `.frag.ts` byte-UNTOUCHED fallback; the OKLab ΔE capture-pair per migrated viz (the byte-equivalence bar, calibrated + recorded) |
+| "`proof:webgl-substrate-single` … generalizes to `proof:gpu-substrate-single` (ONE WebGPU bootstrap + ONE WebGL2 fallback bootstrap, the dual-substrate parity table)" | **`proof:gpu-substrate-single`** (NEW, born-RED) — a SUPERSET of `proof:webgl-substrate-single` (every WebGL2/Canvas2D clause stays GREEN); the machine-read parity table |
+| "the suite README is the SUITE's WebGPU-first architecture home" | **`src/components/custom/PROCEDURAL-SUITE.md`** (the family doc rider, closes at W-CONCENTRIC; covers all seven viz) |
+
+NO contradiction with the harden amendment: §3 is the directive, this is the discharge. The harden §5 (demo-integration bar) is honored — each new viz earns a first-class substrates-band story (`proof:storybook-complete`); the harden §2 W-DAG-RECONCILE will graph this band into the spine.
+
+## §4 — The fences (re-affirmed for the band)
+
+- **Tranche-dev ONLY.** This amendment + the three viz specs are SPECIFICATIONS. No component code lands here; the impl agents land it on execution greenlight. No impl agent stages / commits / tags (the hardened-agent git clause).
+- **The GL-shader fence (absolute).** `src/components/custom/aurora/constants/shaders/aurora.frag.ts` (405L) + `src/components/custom/goo-blob/shaders/metaball.frag.ts` (417L) are BYTE-UNTOUCHED. A migration authors a NET-NEW parallel `.wgsl` (the WebGPU primary) and LEAVES the `.frag.ts` as the WebGL2 fallback (`git diff --stat` on the two `.frag.ts` paths is empty at close). The pilot `glassShader.wgsl` is READ for convention, never edited. The new viz' shaders are NET-NEW files in their own feature-dir `shaders/` — the curl-noise / radial-Fourier idiom is COPIED in, never spliced into an existing shader.
+- **presets-in-consumers (the hard fence).** Named themed presets live in CONSUMERS; the library ships ONLY the neutral/warm-cream-identity DEFAULT (resolved via the ColorResolver / `src/composables/color` seam + value.js OKLCh helpers). The reference's teal-on-navy is a DEMO preset (`demo/stories/substrates/presets.ts`), NEVER a library token; ppmycota purple NEVER enters a library token. The gate asserts NO teal/navy literal in any library token or the DEFAULT config (the recurring ppmycota-leak class).
+- **House identity — warm-cream glassmorphism.** Every viz's DEFAULT palette is neutral/warm-identity (warm-cream → warm-amber, the foreground family) via the ColorResolver / value.js OKLCh seam. The dark register reads as luminous transmissive material (W-DARK-MATERIAL) — the viz fields are luminous translucent grounds behind glass cards (glass POPs over a live field).
+- **WebGPU-FIRST when possible; WebGL2 the graceful fallback.** Born WebGPU-first (`navigator.gpu` feature-detect); WebGL2 is the graceful fallback (NOT retired — the existing `useWebGLCanvas` IS the fallback path). "When possible" gives the latitude that keeps Canvas2D the right tool for fourier-field / constellation today.
+- **Real math, named + cited.** Tessendorf *Simulating Ocean Water* (SIGGRAPH 2001) sum-of-sinusoids + deep-water dispersion `ω=√(g·k)`; Gerstner / trochoidal cresting (GPU Gems Ch.1, Finch — the steepness normalization `Q_h = Q/(k_h·A_h·H)`); Bridson *Curl-Noise for Procedural Fluid Flow* (SIGGRAPH 2007) divergence-free `v=(∂ψ/∂y,−∂ψ/∂x)`; Fourier-series synthesis; the DFT epicycle math. The user's "water-like waves that are Fourier-defined" + "3D-rendered-to-2D" met by the Fourier/Gerstner height field projected to the dot/ring plane. No arbitrary noise.
+- **Visual-load-bearing + `proof:storybook-complete`.** Each new primitive ships with a cogent substrates-band story + the configurator studio (the aurora editable-baseline model) — never shelf-ware. The one-GL-context-per-route budget holds (each story self-stages ONE context).
+- **The cardinal lesson (live-verified = an own-surface DELTA + a paired π).** Each migrated/new viz records an own-surface DELTA capture (`docs/tranches/BB/audit/visual/W-VIZ-SUITE-DELTA.md` — light AND dark PNG, ≥2 viewports) with AZ-form freshness headers (`surface-paths` + a sha256 `surface-hash`) so `proof:live-verified-ledger --strict-freshness` can re-verify the capture is not stale. Plus the per-viz parity capture-PAIR (the WebGPU PNG + the WebGL2 PNG + the recorded OKLab ΔE). The gates are BORN-RED with self-test bites (the composition-plus-fork synthetic REDs; the `verified`-row-pointing-at-a-missing-file synthetic REDs). Anything deferred is a NAMED successor (W-FOURIER-GPU / W-CONSTELLATION-GPU / the 4.x per-satellite blob color / the gated `.frag` fallback retirement).
+- **The standing fences.** slides / value.js / kf foreign trees — no edit. The colocation discipline (`proof:colocation`): each complex viz is a sub-component dir (components at root, `composables/`, `constants.ts`, `shaders/` for the `.wgsl` + the `.frag`/`.glsl` fallback, `README.md`).
+
+## §5 — The fold
+
+The band folds into BB as the **substrates / procedural-viz band** — the headline discharge of the coherence-harden §3 WebGPU-first directive. It adds the umbrella **W-VIZ-SUITE** (with its five serial sub-waves W-GPU-SUBSTRATE / W-AURORA-WGPU / W-GOOBLOB-WGPU / W-FLOWFIELD / W-CONCENTRIC) — i.e. the two standalone viz specs `W-VIZ-DOTFIELD` (≡ W-FLOWFIELD) + `W-VIZ-CONCENTRIC` (≡ W-CONCENTRIC) are the suite's two new-viz sub-waves authored as build docs. The booked successors (W-FOURIER-GPU, W-CONSTELLATION-GPU, the 4.x per-satellite blob color, the gated fallback retirement) are NOT band waves — they are recorded triggers. The PROGRESS index + the BB.md band list are updated to carry this band; the per-wave specs live in `waves/`.
