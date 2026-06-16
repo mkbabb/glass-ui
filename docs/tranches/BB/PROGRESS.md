@@ -88,3 +88,16 @@ Tranche development opened 2026-06-16 (post-4.0.0-publish). Status legend: `SPEC
 - **2026-06-16 (seed)** — BB seeded by the 32-agent deep audit. 4.0.0 published + d6 fork closed during the seed turn (the audit straddled the publish; it flagged the release gaps, which were fixed: pencil-boil devDep, lockfile, consumers-static, 5 release gates). Master CI confirmed RED on the full ci set (the close over-claim — 18 real gates, `audit/ci-red-census.md`) — Batch-0's W-CI-GREEN input. BB.md + EXECUTION-DAG authored.
 - **2026-06-16 (amendment)** — the user directed the cross-repo scope addition: BB DRIVES slides Tranche N in totality + builds the speedtest AW v2.1 primitives + folds the kf/vjs augment. Investigated the speedtest ask-brief, slides N (H-BA cleared by the 4.0.0 publish → the adopt arm executable now), kf K + vjs N. `BB-AMENDMENT-crossrepo.md` adds the 10-wave PRIMITIVES band + W-SLIDES-DRIVE + W-CROSSREPO-ASKS; `coordination/cross-repo-inbound.md` records the kf K response (springTimingFunction SATISFIED, KF-OSCILLATOR booked-kf-owned, kf a 4th live consumer).
 - **2026-06-16 (specs)** — all **44 wave specs** authored across two opus workflows (33 + 23; the first hit + recovered the session wall at 19/33). The kf dispositions folded (W-DOCK-MORPH-FAMILY kf-consumer, W-LINEAGE-PROBE constellation, W-DECK spring-note, W-CROSSREPO-ASKS satisfied/booked). The tranche scaffold is COMPLETE (BB.md + amendment + DAG + PROGRESS + ci-red-census + cross-repo-inbound + 44 specs). Execution awaits the user greenlight.
+
+## Batch L — LIQUID-GLASS (the SOTA animation + design band; BB-AMENDMENT-liquid-glass.md; parallel after the integrity floor + gestalt + motion-canon)
+| wave | status | gate | P | note |
+|---|---|---|---|---|
+| W-LIQUID-REVEAL | SPEC | proof:liquid-reveal (new) | P0 | useLiquidReveal over kf flipShared+springTimingFunction — the iOS-27 bloom; the liquid-enter recipe replaces popover-animate |
+| W-DRAG-MORPH | SPEC | proof:drag-morph (new) | P0 | useDragMorph over the UNCONSUMED kf Draggable — the pull/morph tab + DockLayerGroup; the owed roving-tabindex |
+| W-LENSING | SPEC | proof:lensing (new) | P0 | EVOLVES the crude glass-refract.css (AW.W23) + useSpecularTracking (AX.W09) — real edge-lensing + the motion-reactive edge specular |
+| W-BUTTON-GLASS | SPEC | the button CVA + W55 seam | P0 | increased glassmorphism + legibility (fix the live substitution trap) + the springy press |
+| W-MOTION-CANON | SPEC | proof:no-layout-animation (extend) | P1 | the codified doctrine + --ease-expo-out (the SOTA arrival ease) + the compositor-only gate library-wide |
+| W-PRESS-UNIFY | SPEC | — | P1 | wire the shipped-but-dead useSpringPress (buttons/cards/dock — the interruptible squish) |
+| W-HIERARCHY2 | SPEC | proof:hierarchy (extend) | P1 | the reading-order inversion + the dock-collision-on-ALL-routes (reinforces W-CHIP-GRAZE/W-DOCK-RAIL-SEAT-FINAL) |
+| W-SUFFUSE3 | SPEC | proof:suffuse (extend) | P1 | the feedback-band enrollment + the IconChip pop-entrance + the :saturated pop axis (within proportion) |
+| W-SCROLL-MOTION | (candidate) | proof:scroll-motion (new) | P1 | the SOTA scroll-driven choreography (page-build → section-cascade → scroll-pinned) — the awwwards live-audit's one genuinely-new element; spec from the frontend-design fleet |
