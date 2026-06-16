@@ -30,9 +30,9 @@ git log master --oneline -7          # the publish line: merge + 6 hardening com
 cat /tmp/cisweep-result.txt          # the definitive siblings-absent ci-failure list
 ```
 
-## §1 — The wave-set (8 batches, ~32 waves)
+## §1 — The wave-set (8 batches + the cross-repo PRIMITIVES band — 44 waves total)
 
-Each wave names its audit-lane source. `(C)` = a chronic deferral the user directed folded. Charges are one-line; the per-wave specs live in `waves/`.
+Each wave names its audit-lane source. `(C)` = a chronic deferral the user directed folded. Charges are one-line; the per-wave specs live in `waves/`. **The cross-repo SCOPE ADDITION (user-directed 2026-06-16) lives in `BB-AMENDMENT-crossrepo.md`** — the 10-wave PRIMITIVES band (the speedtest AW v2.1 living-chrome asks; `W-SCROLL-CARD` builds on `W-CARD-COMPOSITE`), `W-SLIDES-DRIVE` (drive slides Tranche N in totality; supersedes the coordination-only `W-SLIDES-HANDOFF` below), and `W-CROSSREPO-ASKS`. The sibling responses + the fold record are in `coordination/cross-repo-inbound.md`. `PROGRESS.md` is the complete 44-wave index.
 
 ### Batch 0 — INTEGRITY FLOOR (the close-honesty repair; unblocks the tranche)
 - **W-CI-GREEN** — green master CI: fix every real `ci`-gate failure the `--run local` close never ran (the siblings-absent list). The literal close-integrity repair. (L10·L26·L29)
@@ -121,9 +121,9 @@ The disposition register's own discipline is "don't fold — the ≥2-consumer b
 
 The two silent-drops the audit caught — the value.js A′/F addendum (never dispositioned, violating the no-silent-drop law) and R8-1/R8-12 (named verbatim, left partial) — are folded BY NAME above, not re-buried.
 
-## §4 — Version strategy
+## §4 — Version strategy (USER-DECIDED 2026-06-16: fold all → one 4.1.0)
 
-BB rides on published 4.0.0. Two shipped defects warrant an early **4.0.1 patch** (the user's call): **F-2** (the value.js peer range excludes 0.12.0 — live warnings) and **A'-3** (the CardHeader CLS), plus **W-CI-GREEN** (master CI honest). The feature + transposition + perf bands ship at **4.1.0** at the BB close. The cross-repo adopt (slides redeploy) rides the user's separate re-publication greenlight (the site is intentionally down — round-15 + the BA adopt go up together, never onto a live site).
+BB rides on published 4.0.0. The user chose to **fold everything into BB and ship ONE 4.1.0 cut at the close** — NO interim 4.0.1. So `W-CI-GREEN` (the 18-gate master-CI repair), `W-PEER-SPINE` (F-2: the value.js peer range excludes 0.12.0), and `W-CARD-COMPOSITE` (A'-3 CardHeader CLS) all land INSIDE BB and ship at 4.1.0. **Master CI stays RED until the BB close** — an accepted interim (the user's call): the 4.0.0 PACKAGE is valid (the release 43-gate subset is genuinely green + provenance-published), and the value.js 0.12.x peer-warning + the CLS regression are tolerated for the BB window rather than spent on a patch publish. The cross-repo adopt (slides redeploy) rides the user's separate re-publication greenlight (the site is intentionally down — round-15 + the BA adopt go up together, never onto a live site). The 4.1.0 close runs the FULL release battery (W-CLOSE-BATTERY) — the `--run local`-only over-claim cannot recur.
 
 ## §5 — The binding close
 
