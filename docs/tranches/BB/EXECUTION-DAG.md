@@ -1,8 +1,8 @@
 # BB — EXECUTION DAG
 
-The dependency spine + the parallelism plan for the FULL post-amendment 64-wave tranche. Batches gate left-to-right; waves within a batch run in parallel (the registry single-owner rule: ONE wave per parallel group owns `package.json` + `scripts/gates.mjs`; the others emit rows). Opus fanout, batches of ≤3 concurrent to dodge the rate wall.
+The dependency spine + the parallelism plan for the FULL post-amendment 71-wave tranche. Batches gate left-to-right; waves within a batch run in parallel (the registry single-owner rule: ONE wave per parallel group owns `package.json` + `scripts/gates.mjs`; the others emit rows). Opus fanout, batches of ≤3 concurrent to dodge the rate wall.
 
-This DAG graphs ALL 64 waves across SIX bands: the original 8-batch INTEGRITY spine (Batches 0–7), the cross-repo PRIMITIVES band (Batch P), the LIQUID-GLASS band (Batch L, incl. the deep-SOTA addendum), the doc-coherence node (W-DAG-RECONCILE), and the substrates / procedural-viz band (Batch V). The §-fences are carried + extended at the bottom.
+This DAG graphs ALL 71 waves across SIX bands: the original 8-batch INTEGRITY spine (Batches 0–7), the cross-repo PRIMITIVES band (Batch P), the LIQUID-GLASS band (Batch L, incl. the deep-SOTA addendum + the atlas-expand rim-seam pair W-GLASS-ACCENT/W-METAL-SHIMMER), the doc-coherence node (W-DAG-RECONCILE), and the substrates / procedural-viz band (Batch V). The §-fences are carried + extended at the bottom.
 
 ## §1 — The spine (the constellation foundation → the integrity floor → the close)
 
@@ -40,9 +40,11 @@ Batch 1  GESTALT-BAR HARDENING ────────────────�
 Batch 2  FINISH BA + RETIRE DEAD     Batch 3  PERFORMANCE        Batch 4  ARCHITECTURE TRANSPOSITIONS
   W-SCROLL-FADE-RETIRE                 W-LIGHTHOUSE (gate)          W-CARVE3
   W-SURFACE-AXIS-COMPLETE              W-CSS-CRITICAL               W-CANVAS-UNIFY
-  W-DEAD-SWEEP                         W-CARD-COMPOSITE ◄┐          W-DARK-INK-WARM
-  W-DOCK-RAIL-SEAT-FINAL               W-PERF-PRODUCER  │          W-INVALID-RING
-                                       W-PAYLOAD-DEFER  │          W-EYEBROW-UNION
+  W-DEAD-SWEEP                         W-CARD-COMPOSITE ◄┐          W-DRAWER-ABROGATE ◄── vaul de-fork; @vueuse-10 dual KILLED
+  W-DOCK-RAIL-SEAT-FINAL               W-PERF-PRODUCER  │             (+BB-2 direction-ladder clause); enables spine dual-clause
+                                       W-PAYLOAD-DEFER  │          W-DARK-INK-WARM
+                                                        │          W-INVALID-RING
+                                                        │          W-EYEBROW-UNION
 │                                                       │                                          │
 └───────────────────────────────────────────────────── │ ────────────────────────────────────────┘
                                                         │
@@ -81,7 +83,9 @@ Batch P  PRIMITIVES ────────────────────
   ── P0 (the living-chrome core) ──
   W-BORDER-PROGRESS   ◄── consumes value.js OKLCH sampleColorRamp helper (cross-repo; W-CROSSREPO-ASKS)
   W-DECK              ◄── lifts slides/src/deck → /deck SIBLING subpath;  ◄── kf springTimingFunction (--spring-deck)
-  W-DOCK-MORPH-FAMILY  (extends the BA W-DOCK-MORPH-INSITU lineage — compositor-transform + PRM-seat + self-reserve REPAIR)
+  W-DOCK-MORPH-FAMILY  (extends the BA W-DOCK-MORPH-INSITU lineage — compositor-transform + PRM-seat + self-reserve REPAIR;
+                        += BB-1 dock-vertical-morph-chrome (sub-ask f, un-gate the 12 :not(.vertical) scopes) + BB-4 deck-morph
+                        (the acceptance clause — the vertical summary↔full slot rides the block-size spring) — a FOLD, not a node)
   W-ON-GLASS-FG        (distinct contrast-target register beside the BA adaptive-glass seam — targets the composited fill)
   W-AURORA-SWRASTER    (coordinates-with W-PAYLOAD-DEFER — the aurora split)
   ── P1 ──
@@ -122,6 +126,13 @@ Batch L  LIQUID-GLASS ───────────────────�
      │   ABOVE calm)        ▼
      │                  W-PRESS-UNIFY   (the gesture — wire the shipped-but-dead useSpringPress: buttons/cards/dock/list-rows)
      │
+  ── the rim-seam owners (sequenced: ACCENT mints the rim → SHIMMER's rim variant composes it) ──
+  W-GLASS-ACCENT ──────► the THIRD disjoint glass axis (--glass-accent/--glass-accent-strength, per-instance chromatic rim+glint,
+     │  (BB-3)            neutral-fallback byte-identical at 0%); COMPOSES W-LENSING's ::before catch-light (the .2 opens AFTER
+     ▼                    the W-LENSING ::before mint); DISTINCT-not-fork of W55's --glass-tint-source; mints the rim seam FIRST
+  W-METAL-SHIMMER         the brand-metal triad CLOSED (bronze quad) + the parameterized metal-shimmer-sweep + --duration-metal
+     (BB-5)               + the .metal-* utilities; gold-shimmer-slide RETIRED; PRM=static; the .metal-rainbow-rim COMPOSES
+                          W-GLASS-ACCENT's --glass-accent rim seam (sequenced AFTER it)
   ── the motion signature ──
   W-LIQUID-REVEAL  ◄── kf flipShared + springTimingFunction; the bloom-from-source; replaces popover-animate as the top-layer default
   W-DRAG-MORPH     ◄── kf Draggable (UNCONSUMED) + useLiquidFlex velocity-squish + SpringProgress fling
@@ -140,8 +151,11 @@ Batch L  LIQUID-GLASS ───────────────────�
                     the demo panes JOIN the gestalt roster; closes the storybook-complete bar (coherence-harden §5)
 ```
 
-Family map (coherence-harden §6 — NOT overlap):
-- `useSpecularPointer` is the ONE shared leaf: **W-LENSING mints**, **W-LIQUIDHOVER (Batch P) auto-arms**, **W-BUTTON-GLASS consumes**.
+Family map (coherence-harden §6 + atlas-expand — NOT overlap):
+- `useSpecularPointer` is the ONE shared leaf: **W-LENSING mints**, **W-LIQUIDHOVER (Batch P) auto-arms**, **W-BUTTON-GLASS consumes**, **W-GLASS-ACCENT tints** (the `::before` core COLOR, never a second layer — W-LENSING owns the disc/glint GEOMETRY).
+- the `::before` catch-light is ONE pseudo: **W-LENSING mints the GEOMETRY**, **W-GLASS-ACCENT tints the CORE COLOR** (its `.2` sequences after the W-LENSING mint; line-disjoint).
+- the RIM seam is sequenced: **W-GLASS-ACCENT mints `--glass-accent`** (the per-instance chromatic rim) → **W-METAL-SHIMMER's `.metal-rainbow-rim` COMPOSES it** (binds the accent channel to the swept rainbow; ACCENT lands FIRST).
+- three disjoint glass axes after Batch L: **level** (opacity+blur, AX.W54) · **tint** (whole-plate legibility darken, W55) · **accent** (per-instance chromatic rim+glint, W-GLASS-ACCENT) — coordinated, never collapsed.
 - `--glass-depth` (W-DEEP-GLASS) + the refraction (W-LENSING) are DISTINCT axes; the press (W-PRESS-UNIFY) is the gesture.
 - `W-DOCK-MORPH-FAMILY` (Batch P) is the scalar/button-driven V↔H morph REPAIR; `W-DRAG-MORPH` is the NEW pointer pull-gesture — they share the compositor discipline, not the engine.
 - `proof:no-layout-animation` is ONE gate (W-MOTION-CANON owns it library-wide; W-CARD-COMPOSITE / W-SCROLL-CARD consume it), not three.
@@ -191,7 +205,7 @@ Aliases + non-migrators + booked successors:
 - **Batch 6 decides the chronics** — none re-book; each builds, retires, meets, or holds-with-rationale.
 - **Batch 7 closes** under the hardened gate at the single 4.1.0 cut, the full release battery (W-CLOSE-BATTERY: local∪ci∪release, siblings-absent) — the `--run local`-only over-claim cannot recur.
 
-## §6 — The wave-count arithmetic (verify 64)
+## §6 — The wave-count arithmetic (verify 71)
 
 | band | waves | count |
 |---|---|---|
@@ -200,25 +214,31 @@ Aliases + non-migrators + booked successors:
 | Batch 1 — GESTALT-BAR HARDENING | W-GESTALT-GATE2 · W-VISUAL-RUNNER · W-CHIP-GRAZE | 3 |
 | Batch 2 — FINISH BA + RETIRE DEAD | W-SCROLL-FADE-RETIRE · W-SURFACE-AXIS-COMPLETE · W-DEAD-SWEEP · W-DOCK-RAIL-SEAT-FINAL | 4 |
 | Batch 3 — PERFORMANCE | W-LIGHTHOUSE · W-CSS-CRITICAL · W-CARD-COMPOSITE¹ · W-PERF-PRODUCER · W-PAYLOAD-DEFER | 5 |
-| Batch 4 — ARCHITECTURE TRANSPOSITIONS | W-CARVE3 · W-CANVAS-UNIFY · W-DARK-INK-WARM · W-INVALID-RING · W-EYEBROW-UNION | 5 |
+| Batch 4 — ARCHITECTURE TRANSPOSITIONS | W-CARVE3 · W-CANVAS-UNIFY · W-DRAWER-ABROGATE² · W-DARK-INK-WARM · W-INVALID-RING · W-EYEBROW-UNION | 6 |
 | Batch P — PRIMITIVES (cross-repo) | W-BORDER-PROGRESS · W-DECK · W-DOCK-MORPH-FAMILY · W-ON-GLASS-FG · W-AURORA-SWRASTER · W-SCROLL-CARD · W-LIQUIDHOVER · W-PHASE-PALETTE · W-PAPER-GRID-TEXTURE · W-CONTROL-TOKENS | 10 |
 | Batch 5 — CROSS-REPO ADOPT (GENERALIZED) | W-ADOPT-RECONCILE · W-SLIDES-DRIVE · W-EASING-PRIMITIVE · W-LINEAGE-PROBE · W-CROSSREPO-ASKS · W-LEAF-MODERNIZE · W-CONSUMER-MODERNIZE | 7 |
 | Batch 6 — CHRONIC RESIDUALS + DOC SYNC | W-NDA-DECIDE · W-AUR-KUWAHARA · W-PRECEPT-SYNC · W-DELTA-RESHOOT · W-DOC-FRESHEN | 5 |
-| Batch L — LIQUID-GLASS | W-LIQUID-REVEAL · W-DRAG-MORPH · W-LENSING · W-BUTTON-GLASS · W-MOTION-CANON · W-PRESS-UNIFY · W-HIERARCHY2 · W-SUFFUSE3 | 8 |
+| Batch L — LIQUID-GLASS | W-LIQUID-REVEAL · W-DRAG-MORPH · W-LENSING · W-GLASS-ACCENT³ · W-METAL-SHIMMER³ · W-BUTTON-GLASS · W-MOTION-CANON · W-PRESS-UNIFY · W-HIERARCHY2 · W-SUFFUSE3 | 10 |
 | Batch L — deep-SOTA addendum | W-SCROLL-MOTION · W-DISPLAY-TRACKING · W-DEEP-GLASS · W-PRUNE-CONSOLIDATE · W-DEMO-DESIGN | 5 |
 | coherence-harden — DAG | W-DAG-RECONCILE | 1 |
 | Batch V — substrates / procedural-viz | W-VIZ-SUITE + the 5 serial sub-waves (W-GPU-SUBSTRATE · W-AURORA-WGPU · W-GOOBLOB-WGPU · W-FLOWFIELD · W-CONCENTRIC) | 6 |
 | Batch 7 — CLOSE | W-REFLECT3 · W-CLOSE | 2 |
-| **TOTAL** | | **68** |
+| **TOTAL** | | **71** |
 
-`3 (Batch C) + 4 + 3 + 4 + 5 + 5 + 10 + 7 (Batch 5 GENERALIZED) + 5 + 8 + 5 + 1 + 6 + 2 = 68.`
+`3 (Batch C) + 4 + 3 + 4 + 5 + 6 (Batch 4 +W-DRAWER-ABROGATE) + 10 + 7 (Batch 5 GENERALIZED) + 5 + 10 (Batch L +W-GLASS-ACCENT +W-METAL-SHIMMER) + 5 + 1 + 6 + 2 = 71.`
 
 **The constellation-modernize arithmetic** (BB-AMENDMENT-constellation-modernize §A3): 64 (prior) **+3** (Batch C: W-SPINE-LATEST · W-SPINE-CONSTELLATION · W-SPINE-LEDGER) **+2** (Batch 5 new: W-LEAF-MODERNIZE · W-CONSUMER-MODERNIZE) **−1** (W-PEER-SPINE FOLDED into Batch C's W-SPINE-LATEST — a back-pointer, no longer a standalone count; its narrow value-peer-widen is SUPERSEDED by the clean-break `^0.13.0` IDENTITY + the kf union collapse) = **68**. W-ADOPT-RECONCILE / W-LINEAGE-PROBE / W-SLIDES-DRIVE / W-CROSSREPO-ASKS are GENERALIZED in place (extended scope, not new rows).
 
-¹ **W-CARD-COMPOSITE is counted ONCE (Batch 3)** — it is the CLS-keyframes-fix ARM of the W-SCROLL-CARD umbrella (Batch P), per coherence-harden §6 ("one wave with a sub-unit, NOT two competing"). The §A5 "absorbs" and the spec's "builds on" are the SAME statement.
+**The atlas-expand arithmetic** (UNIFIED-BRIEF §5): 68 (prior) **+3** net-new waves — **W-DRAWER-ABROGATE** (Batch 4, the vaul de-fork + the @vueuse-^14 convergence) **+ W-GLASS-ACCENT** (Batch L, BB-3 the third glass axis) **+ W-METAL-SHIMMER** (Batch L, BB-5 the bronze quad + the parameterized shimmer) = **71**. The **BB-1/BB-4 fold into W-DOCK-MORPH-FAMILY** (sub-ask f + acceptance clause), the **BB-2 fold into W-DRAWER-ABROGATE** (a clause), and the **named-consumer/WASM-leaf additions** (the Atlas + words/frontend + bbnf-lang/playground + bbnf-buddy onto W-CONSUMER-MODERNIZE + the close-battery roster; morph + csp-solver-wasm on the family-caret arm) are SCOPE EXTENSIONS, NOT new rows.
 
-**NOT counted in the 64** (recorded so the arithmetic is unambiguous):
+¹ **W-CARD-COMPOSITE is counted ONCE (Batch 3)** — it is the CLS-keyframes-fix ARM of the W-SCROLL-CARD umbrella (Batch P), per coherence-harden §6 ("one wave with a sub-unit, NOT two competing"). The §A5 "absorbs" and the spec's "builds on" are the SAME statement.
+² **W-DRAWER-ABROGATE** (atlas-expand, Batch 4) — the vaul-vue de-fork; the @vueuse-10 dual KILLED (full `@vueuse ^14` convergence); BB-2's direction-aware snap ladder FOLDS IN as a clause (not a separate count). ENABLES `proof:constellation-spine`'s dual-clause (W-SPINE-CONSTELLATION owns the gate).
+³ **W-GLASS-ACCENT + W-METAL-SHIMMER** (atlas-expand, Batch L) — the rim-seam pair, sequenced ACCENT-mints → SHIMMER-composes. W-GLASS-ACCENT (BB-3) is the third disjoint glass axis composing W-LENSING's `::before`; W-METAL-SHIMMER (BB-5) closes the brand-metal triad + parameterizes the shimmer, its `.metal-rainbow-rim` composing W-GLASS-ACCENT's rim.
+
+**NOT counted in the 71** (recorded so the arithmetic is unambiguous):
 - `W-VIZ-DOTFIELD` ≡ `W-FLOWFIELD` and `W-VIZ-CONCENTRIC` ≡ `W-CONCENTRIC` — ALIAS spec names, the same .d / .e sub-waves authored as build docs.
+- **BB-1 (dock-vertical-morph-chrome) + BB-4 (deck-morph)** — FOLDED into W-DOCK-MORPH-FAMILY (sub-ask f + the acceptance clause); **BB-2 (drawer-direction-ladder)** — FOLDED into W-DRAWER-ABROGATE (a clause). Atlas-need folds, extended scope, NOT new rows.
+- The named-consumer + WASM-leaf additions (the Atlas + words/frontend + bbnf-lang/playground + bbnf-buddy onto W-CONSUMER-MODERNIZE/W-REFLECT3/W-CLOSE; morph + csp-solver-wasm on the family-caret arm) — GENERALIZED in place, NOT new rows.
 - The booked trigger-gated successors: `W-FOURIER-GPU` · `W-CONSTELLATION-GPU` · the 4.x per-satellite blob color (`W-GOO-COLOR`) · the gated `.frag` fallback retirement.
 - The ONE honest HOLD: `useGlassBackdropLuminance` 2nd-binary-consumer promotion (trigger genuinely unmet — recorded, not folded).
 
@@ -232,6 +252,7 @@ Aliases + non-migrators + booked successors:
 - **The booked successors** (W-FOURIER-GPU, W-CONSTELLATION-GPU) are shown as trigger-gated NON-band nodes, NOT counted in the 64.
 - **W-PEER-SPINE → W-SPINE-LATEST (the constellation-modernize fold).** The Batch-5 W-PEER-SPINE (the narrow value `^0.12`/`^0.13` peer-optional widen) is SUPERSEDED by Batch C's **W-SPINE-LATEST** (the clean-break `^0.13.0` IDENTITY + the kf union collapse + the T1 gate-collapse deletions, the keystone hub edit moved pre-Batch-0 because the Batch P/V feature work needs the widened spine). The Batch-5 row is now a back-pointer; the `proof:peer-optional` spine-arm RECONCILES into `proof:constellation-spine` clause 1. Per `BB-AMENDMENT-constellation-modernize §A3` — recorded so the 64→68 arithmetic is unambiguous (no double-count, no orphan).
 - **The 64-wave graph → 68 (the constellation-modernize band).** The constellation dependency-modernization added Batch C (3 waves: the spine-to-latest foundation + the born-RED `proof:constellation-spine`) + generalized Batch 5 (W-LEAF-MODERNIZE + W-CONSUMER-MODERNIZE; W-ADOPT-RECONCILE/W-LINEAGE-PROBE/W-SLIDES-DRIVE/W-CROSSREPO-ASKS extended in place). The dependency-ORDER (leaves → glass-ui → consumers, §A4 publish beats) is the new spine edge: Batch C lands the hub keystone; Batch 5 lands the consumer adopt.
+- **The 68-wave graph → 71 (the atlas-expand band; UNIFIED-BRIEF §5).** The expanded-constellation investigation fleet added THREE net-new waves: **W-DRAWER-ABROGATE** (Batch 4 — the vaul-vue de-fork on reka `DialogRoot` + a `SpringProgress` snap layer; the LONE @vueuse-10 dual KILLED → full `@vueuse ^14` convergence; ENABLES the spine dual-clause), **W-GLASS-ACCENT** (Batch L — BB-3, the third disjoint glass axis `--glass-accent`, composing W-LENSING's `::before`; mints the rim seam FIRST), **W-METAL-SHIMMER** (Batch L — BB-5, the bronze quad closes the brand-metal triad + the parameterized `metal-shimmer-sweep`; its `.metal-rainbow-rim` composes W-GLASS-ACCENT's rim, sequenced after it). The remaining Atlas-needs FOLD (extended scope, NOT new rows): **BB-1/BB-4 → W-DOCK-MORPH-FAMILY** (sub-ask f vertical-chrome + the deck-morph acceptance clause), **BB-2 → W-DRAWER-ABROGATE** (the direction-aware snap ladder), and the **named-consumer roster** grows (the Atlas `sci-report/usf/web` + words/frontend + bbnf-lang/playground + bbnf-buddy onto W-CONSUMER-MODERNIZE + the W-REFLECT3/W-CLOSE close-battery; the two WASM leaves morph + csp-solver-wasm on the family-caret arm validated through bbnf-buddy; the independent-node services NOT enrolled; the MARKS/BA carry a named-consumer fold).
 
 ## §8 — The §7-style fences (carried from AZ/BA, extended for the new bands)
 
@@ -244,4 +265,4 @@ Aliases + non-migrators + booked successors:
 
 ---
 
-*The path-forward synthesis graphs the full 64-wave spine. The per-wave specs live in `waves/`; PROGRESS.md is the running index + status source of truth. No implementation — tranche development only.*
+*The path-forward synthesis graphs the full 71-wave spine. The per-wave specs live in `waves/`; PROGRESS.md is the running index + status source of truth. No implementation — tranche development only.*
