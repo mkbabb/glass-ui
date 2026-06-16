@@ -133,12 +133,15 @@ function unionExports(files) {
 // the dependency-free View-Transitions trio, allowed explicitly below (AQ.W5).
 const rootContractFiles = [
     "src/components/ui/index.ts",
-    // The 5 cherry-picked custom/ packages on the root barrel.
+    // The cherry-picked custom/ packages on the root barrel.
     "src/components/custom/instrument-chassis/index.ts",
     "src/components/custom/instrument-rail/index.ts",
     "src/components/custom/hover-popover/index.ts",
     "src/components/custom/configurator/index.ts",
     "src/components/custom/scrolling-text/index.ts",
+    // BA.W-ICON-CHIP — the section-color POP primitive joins the root barrel
+    // (`export * from "./components/custom/icon-chip"`; also /icon-chip subpath).
+    "src/components/custom/icon-chip/index.ts",
     // The vueuse-free composable sub-trees.
     "src/composables/reactive/index.ts",
     "src/composables/dom/index.ts",
@@ -154,6 +157,14 @@ const rootAllowed = unionExports(rootContractFiles);
 // whole-file contract above cannot express a partial (3-of-N) re-export, so the
 // trio is allowed explicitly here.
 for (const name of ["startViewTransition", "supportsViewTransitions", "ViewTransitionResult"]) {
+    rootAllowed.add(name);
+}
+// BA.W-ATLAS-RECONCILE — navigate()/NavigateOptions/supportsRouteTransitions are the
+// route-transition convenience over startViewTransition, targeted-re-exported to the
+// root barrel from the SAME ./composables/motion/useViewTransition module (dependency-
+// free, per the trio above). The whole-file contract cannot express the partial
+// re-export, so they are allowed explicitly here.
+for (const name of ["navigate", "supportsRouteTransitions", "NavigateOptions"]) {
     rootAllowed.add(name);
 }
 // AV.W3 — `vReveal` is the same shape: a dependency-free motion symbol
