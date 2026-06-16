@@ -50,6 +50,10 @@ function isSoftwareWebGLRenderer(): boolean {
             r.includes("microsoft basic")
         );
     } catch {
+        // fail-explicit: a renderer-probe failure (no WEBGL_debug_renderer_info, a
+        // getParameter throw) is a benign fall-back to the richer default — assume NOT
+        // a software renderer (the conservative-but-lossy choice documented at the fn
+        // header; a false miss keeps the richer render path, never a silent degrade).
         return false;
     } finally {
         gl?.getExtension("WEBGL_lose_context")?.loseContext();

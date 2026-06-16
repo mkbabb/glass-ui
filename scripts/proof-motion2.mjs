@@ -117,20 +117,22 @@ add(
         : `RED: a dead --surface-tint-1/-2 read survives (gallery=${galleryDead}, bezier=${bezierDead}) — re-point to a DEFINED rung (-6/-8/-10/-12)`,
 );
 
-// ── (3) PICKER-UNDERLINE (source-witness) ─────────────────────────────────────────
-// The family picker is variant="underline" (NOT "pill") and carries :responsive.
-const segTabMatch = gallerySrc.match(/<SegmentedTabs[\s\S]*?(?:\/>|<\/SegmentedTabs>)/i);
-const segTabBlock = segTabMatch ? segTabMatch[0] : "";
-const isUnderline = /variant=["']underline["']/.test(segTabBlock);
-const notPill = !/variant=["']pill["']/.test(segTabBlock);
-const hasResponsive = /:responsive=|\bresponsive=/.test(segTabBlock);
-const pickerUnderline = segTabBlock.length > 0 && isUnderline && notPill && hasResponsive;
+// ── (3) PICKER-CHIPRACK (source-witness) ────────────────────────────────────────
+// BA.W-DEMO-AFFORDANCES SUPERSEDED the underline SegmentedTabs picker (it suffered
+// the R8-16 contrast-color luminance inversion) with the dock-like glass CHIP RACK:
+// each family a glass chip, the SELECTED chip lifting to --dock-control-active-bg,
+// composing <FadingScroll axis="x"> for the horizontal overflow + a <Select> below
+// the breakpoint. The picker is that chip rack, NOT a SegmentedTabs.
+const hasChipRack = /class=["'][^"']*\bcurve-chip-rack\b/.test(gallerySrc);
+const chipRackFades = /<FadingScroll[^>]*axis=["']x["']/.test(gallerySrc);
+const hasResponsiveSelect = /curve-family-picker/.test(gallerySrc) && /<Select\b/.test(gallerySrc);
+const pickerChipRack = hasChipRack && chipRackFades && hasResponsiveSelect;
 add(
-    "picker-underline",
-    pickerUnderline,
-    pickerUnderline
-        ? "the family picker is the underline panel-nav register with :responsive collapse"
-        : `RED: the family picker is not the underline+responsive register (underline=${isUnderline}, not-pill=${notPill}, responsive=${hasResponsive})`,
+    "picker-chiprack",
+    pickerChipRack,
+    pickerChipRack
+        ? "the family picker is the BA.W-DEMO-AFFORDANCES glass chip rack (FadingScroll axis=x + responsive Select fallback)"
+        : `RED: the family picker is not the chip-rack register (chip-rack=${hasChipRack}, x-fades=${chipRackFades}, responsive-select=${hasResponsiveSelect})`,
 );
 
 // ── (4) CANON-ISOMORPHIC (source-witness — the R7-4 census vs the LIVE authority) ──

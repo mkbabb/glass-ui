@@ -96,27 +96,27 @@ const RETIRED_CLAIMS = [
         // negative predicate (no interactive-state rule reads --viz-fourier /
         // --demo-nav-accent across src/styles/** + demo/**). Anchored here so the
         // coverage guard knows the claim is owned.
-        label: "the demo nav-accent red interactive preset (MIGRATION.md:30; machine-locked by proof:register-ios)",
+        label: "the demo nav-accent red interactive preset (MIGRATION.md:72; machine-locked by proof:register-ios)",
         mustCarry: "RETIRED",
-        line: 30,
+        line: 72,
     },
     {
-        label: "v3.10.0 AY-prune subpaths deck-progress/instrument-rail (NARROWED at AZ.W-PRUNE2 — header-ribbon/glass-panel RESTORED, keyframes-consumed) (MIGRATION.md:43)",
+        label: "v3.10.0 AY-prune subpaths deck-progress/instrument-rail (NARROWED at AZ.W-PRUNE2 — header-ribbon/glass-panel RESTORED, keyframes-consumed) (MIGRATION.md:95)",
         mustCarry: "RETIRED",
-        line: 43,
+        line: 95,
         subpaths: ["deck-progress", "instrument-rail"],
         dirs: ["deck-progress", "instrument-rail"],
     },
     {
-        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:92)",
+        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:252)",
         mustCarry: "RETIRED",
-        line: 92,
+        line: 252,
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths (MIGRATION.md:97)",
+        label: "pagination/virtual composables + subpaths (MIGRATION.md:257)",
         mustCarry: "RETIRED",
-        line: 97,
+        line: 257,
         subpaths: ["pagination", "virtual"],
         exports: [
             "useOffsetPagination",
@@ -126,10 +126,43 @@ const RETIRED_CLAIMS = [
         ],
     },
     {
-        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:100)",
+        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:260)",
         mustCarry: "RETIRED",
-        line: 100,
+        line: 260,
         exports: ["DockShowcaseFrame"],
+    },
+    // ── BA cut (4.0.0) retirements — anchored here for the coverage guard; the
+    // BINDING "is it actually gone" machine check rides each wave's own gate
+    // (the established pattern: the demo nav-accent claim above is artefact-less,
+    // proof:register-ios is its binding check). ──────────────────────────────────
+    {
+        label: "the SegmentedTabs overflow=scroll/auto axis (W-TABS; machine-locked by proof:tabs-std) (MIGRATION.md:14)",
+        mustCarry: "RETIRED",
+        line: 14,
+    },
+    {
+        label: "DialogContent variant=glass|opaque (W-SURFACE-AXIS; machine-locked by proof:surface-axis) (MIGRATION.md:130)",
+        mustCarry: "RETIRED",
+        line: 130,
+    },
+    {
+        label: "CarouselDots onto <PagerDots> (W-PAGER; machine-locked by proof:pager) (MIGRATION.md:168)",
+        mustCarry: "RETIRED",
+        line: 168,
+    },
+    {
+        // The /underline subpath is gone from package.json exports (the binding
+        // artefact); proof:handmark verifies the DEC-8 fold. The MIGRATION.md:103
+        // subpath-history cross-mention is a back-reference to this claim.
+        label: "GlassUnderline + /underline subpath onto <HandMark> (W-HANDMARK; machine-locked by proof:handmark) (MIGRATION.md:191)",
+        mustCarry: "RETIRED",
+        line: 191,
+        subpaths: ["underline"],
+    },
+    {
+        label: "the disco CTA keyframes/tokens (W-GLASS-CAL; machine-locked by proof:glass-cal) (MIGRATION.md:1232)",
+        mustCarry: "RETIRED",
+        line: 1232,
     },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
     // speedtest-consumed (MIGRATION.md §"KEPT (speedtest-consumed)", corrected
@@ -234,8 +267,10 @@ function run() {
     // flagged so the declared claim list cannot silently fall behind the doc.
     const declaredLines = new Set(RETIRED_CLAIMS.map((c) => c.line));
     // Back-reference / cross-link lines that point at an ALREADY-declared claim
-    // (not a new retirement assertion): MIGRATION.md:198 ("…is RETIRED—see §2").
-    const BACKREF_LINES = new Set([198]);
+    // (not a new retirement assertion): MIGRATION.md:103 (the /underline subpath
+    // history cross-mention → the line-191 claim) + :358 ("…is RETIRED—see §2"
+    // → the line-252 composables/dark claim).
+    const BACKREF_LINES = new Set([103, 358]);
     mdLines.forEach((ln, i) => {
         const n = i + 1;
         if (!/RETIRED/.test(ln)) return;
