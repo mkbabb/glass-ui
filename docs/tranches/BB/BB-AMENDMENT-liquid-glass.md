@@ -1,0 +1,67 @@
+# BB — the LIQUID-GLASS band (the SOTA animation + design amendment)
+
+**USER-DIRECTED 2026-06-16.** The second cross-repo-grade addition to BB: a SOTA liquid-glass animation + design upgrade (iOS-27-grade), folded as a new band. Basis: a 12-lane fleet (`wqqnh25oa`) — iOS 26/27 Liquid Glass + awwwards.com + the web-animation canon (research), the frontend-design lens over tabs/buttons/motion-tokens/hierarchy/suffusion/idioms (audit), and the kf/vjs facility map. (The 2 Fable design-direction lanes failed — `claude-fable-5` is unavailable in this environment — so §1 below is authored by the core model, the design-synthesis authority per the user's standing directive.)
+
+**The convergent finding (10 lanes agree):** glass-ui owns every INGREDIENT but four SOTA primitives sit unbuilt, and a fifth is half-wired:
+1. **No refraction/lensing** — the 5-rung ladder is `blur()`+`saturate()`+oklab-tint+rim+a static specular disc. It never DISPLACES the backdrop. iOS-26's defining move is edge-LENSING (light bends + concentrates at the rim). The single technique separating "frosted glass" from "Liquid Glass".
+2. **No liquid open/fade-in primitive** — the marquee iOS-27 app-open / control-centre-bloom has no home; `@keyframes scale-in`/`dock-in` are generic cubic-bezier zoom-95s, NOT spring-timed source-rect morphs. kf already ships `flipShared` + `springTimingFunction({fn,css})` — unwired.
+3. **No pull/drag-morph tab** — the indicator glides+squishes on a CLICK only; there's no pointer-drag pipe. kf `Draggable` is on the surface with ZERO consumer; `useLiquidFlex.drive()` already records velocity; the squish is drive-ready TODAY.
+4. **The specular is a static centered disc**, not the motion-reactive EDGE highlight; and on buttons it's dead (`Button.vue` never writes `--mouse-x/y`).
+5. **The button hover/active register paints PRE-substituted glass tokens** — the W55 legibility-darken + `contrast-color()` flip never engages on the lit-up button (the substitution-vs-inheritance trap, live on the button register) — so "more glassmorphism" today would COST legibility, the opposite of the iOS-27 both-at-once move.
+
+## §1 — THE DESIGN DIRECTION (the bold liquid-glass point-of-view)
+
+**The one unforgettable thing:** glass-ui's surfaces become *real glass* — light **bends at the rim** (lensing), surfaces **bloom open from their source** (the control-centre fade), and the live chrome is **physical**: you can **grab the tab and pull it**, it morphs and squishes like a gel lozenge and flings to its slot. The warm-cream identity is untouched; what changes is that the glass gains DEPTH (refraction), LIFE (spring-physics open/press/drag), and — the iOS-27 thesis — it gets **more glassy AND more legible at once** (the adaptive tint ramps continuously: more glass where the backdrop affords it, more ink where legibility needs it).
+
+- **The material:** an OPT-IN refractive tier (`--glass-refract`, `@supports`-gated SVG `feDisplacementMap` over a precomputed squircle bevel-profile — Apple's `⁴√(1-(1-x)⁴)` curve, edge-concentrated) layered on the existing ladder; degrades to today's blur+tint on every non-supporting engine (the no-workaround floor). The edge gains a motion-reactive specular GLINT (the rim brightens where light grazes) replacing the centered disc. Legibility rides the EXISTING W55 seam made CONTINUOUS (a luma→tint ramp, not a 2-bucket step) + the `contrast-color()` flip that must finally engage on the lit interactive register.
+- **The motion signature** (three beats, all compositor-only + PRM-safe + on the per-spring duration clock):
+  - **OPEN = bloom-from-source** — every top-layer surface (Dialog/Sheet/Popover/Menu/Command/Tooltip + the dock expand) scales+fades from its trigger's rect on a snappy/bouncy spring with a faint settle-squish and a `blur(4px)→0` decongest; it MATERIALIZES as glass coalescing, never flies in. Exit retracts with NO overshoot.
+  - **PULL = drag-morph** — grab the tab indicator (or a dock layer chip); it follows the finger ~1:1 (stiff spring), STRETCHES along the travel axis by drag VELOCITY (volume-preserving gel-squish, capped low ~1.08), and on release FLINGS velocity-continuously to the nearest slot, settling with a small `ζ<1` overshoot.
+  - **PRESS = squish** — the glass DEFORMS under a press (the reciprocal-scale squish ~1.04 + the edge-specular brightening + the lens-swell, on ONE `--press-t` drive), interruptible (a rapid re-press absorbs mid-flight), releasing at settle. (Wires the shipped-but-dead `useSpringPress`.)
+- **The pops, within proportion:** the audacious color-events gain LIFE — the IconChip blooms in (scale 0.85→1 + overshoot, the plate + glyph together) with an opt-in `:saturated` register + a hover bloom; the under-activated motion/studio titles arrive at the DISPLAY rung with the violet as one color-event; the flat feedback band gets its `--section-color` identity. Color MOTION (the kf/vjs OKLCH spectrum sweeps) is reserved for the genuine focal moments — never everywhere-jitter.
+- **The identity guard:** warm-cream stays; the refraction/lensing is a DEPTH not a hue; no demo/ppmycota color enters tokens; the pops stay one-event-per-surface (the W-SUFFUSE2 proportion rule). This is iOS-27 *grade*, not iOS-27 *skin*.
+
+## §2 — The LIQUID-GLASS band (8 waves; parallel with the other BB feature bands, after the integrity floor + the gestalt + motion-canon)
+
+| wave | P | charge | primitive | consumers |
+|---|---|---|---|---|
+| **W-LIQUID-REVEAL** | P0 | the iOS-27 open/fade-in: `useLiquidReveal(trigger, surface, {preset})` composing kf `flipShared` + `springTimingFunction` — bloom-from-source-rect (scale+opacity+blur-settle, compositor-only) + the LIQUID-ENTER recipe replacing `popover-animate` as the top-layer default (the spring clock threaded into the enter keyframes; exit `--ease-out` no-overshoot) | `useLiquidReveal` (new) + `.glass-reveal` | Dialog · Sheet · Popover · DropdownMenu · ContextMenu · Command · Tooltip · the dock expand (≥8) |
+| **W-DRAG-MORPH** | P0 | the pull/drag-to-morph-squish primitive: `useDragMorph` (abstract — pointer-capture + kf `Draggable` + `useLiquidFlex` velocity-squish + spring-fling-to-nearest, the interruptible re-target) — the headline draggable tab | `useDragMorph` (new, abstract) + `.glass-drag-lift` | SegmentedTabs `:draggable` (the liquid tab) + DockLayerGroup pull-to-switch (the ≥2 bar by construction) |
+| **W-LENSING** | P0 | the refractive-glass tier + the motion-reactive edge specular: `--glass-refract` axis (`@supports`-gated squircle `feDisplacementMap`, opt-in `.glass-lens`, degrades to blur+tint) + `useSpecularPointer` (the edge-anchored glint; writes `--mouse-x/y`, the shared leaf) | `--glass-refract` + `.glass-lens` + `useSpecularPointer` (new) | Card · GlassPanel · dock · overlays · buttons (refraction opt-in); buttons + dock controls (specular) |
+| **W-BUTTON-GLASS** | P0 | increased glassmorphism WITH legibility on buttons: FIX the substitution trap (the W55 darken + `contrast-color()` engages on the lit hover/active register — element-level tint, not pre-substituted tokens) + wire `useSpringPress` (the squishy press) + `useSpecularPointer` + the optional refraction edge; the calm-CTA discipline held (no disco) | the button CVA + `btn-glass-state` + `--glass-bg-resting-tinted` | every glass button + the dock controls |
+| **W-MOTION-CANON** | P1 | codify the binding principle-set: `docs/precepts/motion-canon.md` (the squishy/springy/quick-with-coupled-fade doctrine, the Material-3 spatial-vs-effects split, enter-bouncy/exit-no-overshoot, the per-spring clock, PRM) + extend the §6 easing table with the SIZE/MORPH spatial row + mint/extend `proof:motion-compositor` (the compositor-only ban as a GATE — reconciles with `proof:no-layout-animation`) | `motion-canon.md` + `proof:motion-compositor` | every animated surface (the doctrine) |
+| **W-PRESS-UNIFY** | P1 | wire the shipped-but-dead `useSpringPress` as the ONE interruptible spring-press across buttons + cards + list-rows + dock controls (the squish lives in CSS today; ≥2-consumer the half-primitive or demote it honestly) | `useSpringPress` (wire-internal) | buttons · cards · dock controls · list rows |
+| **W-HIERARCHY2** | P1 | the design-hierarchy + incongruence sweep: the `StoryHeader` cluster fixing the reading-order inversion (eyebrow→title→blurb, not blurb-above-the-giant-title) + the section-heading-rung census extension + the audacious-type entrance (gravity, not bounce). REINFORCES W-CHIP-GRAZE/W-DOCK-RAIL-SEAT-FINAL (A4 re-found the dock-facet/title collision on EVERY desktop route — the re-seat must generalize) | `StoryHeader` (demo chassis) + `proof:hierarchy` (extend) | the demo story chassis (all panes) |
+| **W-SUFFUSE3** | P1 | the suffusion completion + the pop-motion: enroll the flat FEEDBACK band in the `CATEGORY_MAP` (the three-site identity) + lift the under-activated motion/studio titles to the display register + the IconChip pop-ENTRANCE on the spring clock + the `--icon-chip-plate-strength` `:saturated` opt-in axis (the colorful pops increased within proportion) | `CATEGORY_MAP` + IconChip (`:saturated`) + the pop-entrance | the demo panes + IconChip |
+
+## §3 — Reconciliations (with the existing BB waves)
+
+- **W-LIQUIDHOVER (cross-repo amendment) ↔ W-LENSING/`useSpecularPointer`.** W-LIQUIDHOVER finishes the tier-root specular AUTO-ARM (`--mouse-x/y` written without per-consumer wiring); `useSpecularPointer` is the shared leaf it + W-BUTTON-GLASS consume; W-LENSING adds the REFRACTION + the EDGE glint. One specular family, three coordinated waves. W-LIQUIDHOVER's disco-grain-pop-kill stays its own.
+- **W-DOCK-MORPH-FAMILY (cross-repo) ↔ W-DRAG-MORPH.** W-DOCK-MORPH-FAMILY is the V↔H morph REPAIR (compositor-transform + PRM-seat + self-reserve; scalar/button-driven). W-DRAG-MORPH is the NEW pointer pull-gesture. The DockLayerGroup pull-to-switch is W-DRAG-MORPH's 2nd consumer; the two share the compositor-transform discipline, not the engine.
+- **W-SCROLL-CARD / W-CARD-COMPOSITE `proof:no-layout-animation` ↔ W-MOTION-CANON `proof:motion-compositor`.** SAME gate — W-MOTION-CANON adopts/extends `proof:no-layout-animation` as the library-wide compositor-only enforcement (not a second gate). Reconcile at authoring: ONE gate, named `proof:no-layout-animation`, extended to the full keyframe + transition surface.
+- **W-HIERARCHY2 ↔ W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL.** A4 confirms the dock-facet/title collision is on EVERY desktop StoryPage route (not just /forms/inputs). W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL's scope GENERALIZES to all routes (the `chipOverMain:false` band-agnostic assert); W-HIERARCHY2 owns the StoryHeader/reading-order half.
+- **W-LIQUID-TABS (named in the cross-repo amendment's prose) = SegmentedTabs `:draggable` consuming W-DRAG-MORPH** — the same thing, now precisely scoped.
+- **The §6 easing doctrine + the per-spring clock (BA) are the floor** W-MOTION-CANON codifies — not a re-tune.
+
+## §4 — The principles + the gate posture (binding on every wave)
+
+- **Compositor-only** — transform/opacity/filter/clip-path only; NO animating width/padding/font-size/grid-template (the A'-3 lesson), enforced by `proof:no-layout-animation` (W-MOTION-CANON extends it library-wide).
+- **PRM-safe by construction** — every liquid motion (reveal/drag/press/pop) snaps to its endpoint under `prefers-reduced-motion: reduce` with zero in-between frames (the `useSpringMount`/`squishOnTravel` PRM precedent); the drag still FUNCTIONS (gesture works, physics off).
+- **The per-spring duration clock** — every spring pairs with its `--spring-<name>-duration` (the W-GLASS-CAL clock), never a generic `--duration-*`.
+- **The cardinal lesson** — each wave NAMES the own-surface DELTA it captures at execution (a frame-series for reveal/drag/press; a refraction ON/OFF over the live aurora; both modes) + the binding π; the gestalt verdict rides the HARDENED `proof:ba-gestalt` (W-GESTALT-GATE2).
+- **Identity guard** — warm-cream held; no demo/ppmycota color in tokens; the refraction is depth not hue; the pops stay one-event-per-surface; the GL-shader fence holds (the lens is an SVG filter, not a GL-shader edit).
+
+## §5 — The kf/vjs leverage map (the facility → effect, authored by core since D2/Fable was unavailable)
+
+```
+kf flipShared(a,b)           → W-LIQUID-REVEAL bloom-from-source-rect + W-DRAG-MORPH cross-cell size-morph
+kf springTimingFunction{css} → the linear() stops for the liquid CSS transitions (reveal/press), per-spring clock
+kf Draggable / drag          → W-DRAG-MORPH pointer-capture + the drag-follow + the flick velocity (the UNCONSUMED substrate)
+kf SpringProgress            → W-DRAG-MORPH interruptible release-fling (velocity-continuous re-target)
+kf MOTION_CURVES / SPRING_PRESETS → the enter/exit/press registers (already single-sourced via regen-spring-tokens)
+kf decay / motion-path       → (booked) the fling-decay + any arced reveal (UNUSED facilities, named for a successor)
+value.js OKLCH / interpolateHue / shorter-hue → W-SUFFUSE3 the colorful pop spectrum sweeps + the IconChip :saturated ramp + (cross-ref) W-BORDER-PROGRESS
+value.js curve-math (steppedEase/bezier) → W-EASING-PRIMITIVE (cross-repo) + the pop-entrance easing
+```
+
+The unused kf facilities (`flipShared`/`Draggable`/`SpringProgress`/`decay`/`motion-path`) are the load-bearing REUSE — the SOTA direction is mostly WIRING the rich substrate glass-ui already peer-depends on, not net-new engines. The per-wave specs follow (the spec-authoring pass).
