@@ -1,5 +1,5 @@
-import tailwindcss from "@tailwindcss/vite";
-import { build } from "vite";
+import tailwindcss from "@tailwindcss/postcss";
+import postcss from "postcss";
 import {
     existsSync,
     mkdirSync,
@@ -263,22 +263,24 @@ async function run() {
         ...checks.dockScopedStyleBlocks.map((file) => `dock scoped style block remains in ${file}`),
     ];
 
-    await build({
-        root: tmpRoot,
-        logLevel: "silent",
-        plugins: [tailwindcss()],
-        build: {
-            outDir,
-            emptyOutDir: true,
-            minify: false,
-            rollupOptions: {
-                input: join(tmpRoot, "index.html"),
-            },
-        },
-    });
-
-    const files = cssFiles(outDir);
-    const css = files.map((file) => readFileSync(file, "utf8")).join("\n");
+    // Compile the probe via the SAME `postcss([@tailwindcss/postcss])` path
+    // production uses to emit /styles (vite.style-assets.ts) — NOT a vite
+    // `build()`. The vite build pipeline runs a CSS url() asset-resolver AFTER
+    // tailwind inlines @import-s, and it ENOENTs on glass-refract.css's
+    // var()-split `#glass-refract` filter (the TAIL's url() content begins with
+    // the encoded quote `%27`, not a `data:`/`http:` scheme, so the resolver
+    // reads it as a relative path — the EXACT class vite.style-assets.ts:32-38
+    // documents and dodges by going postcss-direct). The postcss plugin leaves
+    // url() tokens alone (it does no asset resolution), so the probe compiles
+    // the byte-real shipped cascade — glass-refract.css UNTOUCHED — and still
+    // validates @theme namespaces + the generated utility classes.
+    const probeCssPath = join(srcDir, "probe.css");
+    const result = await postcss([tailwindcss()]).process(
+        readFileSync(probeCssPath, "utf8"),
+        { from: probeCssPath, to: join(outDir, "probe.css") },
+    );
+    const css = result.css;
+    const files = [probeCssPath];
     const classResults = probeClasses.map((className) => ({
         className,
         present: classRule(css, className) !== null,

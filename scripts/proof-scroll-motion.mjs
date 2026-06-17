@@ -56,7 +56,15 @@ const strip = (s) =>
 const choreoRaw = read("src/styles/scroll-choreography.css");
 const choreo = strip(choreoRaw);
 const indexCss = strip(read("src/styles/index.css"));
-const scalePaper = strip(read("src/styles/tokens/scale-paper.css"));
+// BB.W-CARVE4 — the §20 PLATFORM MOTION knobs (incl. --scroll-reveal-*/--scroll-build-*/
+// --scroll-cascade-*/--scroll-pin-*) carved WHOLE from scale-paper.css into
+// tokens/scroll-tokens.css (an adjacent :root{} partial); read both so the
+// tokens-minted assert follows the carve.
+const scalePaper = strip(
+    read("src/styles/tokens/scale-paper.css") +
+        "\n" +
+        read("src/styles/tokens/scroll-tokens.css"),
+);
 const pkg = read("package.json"); // raw — the dependency NEGATIVE scan reads the manifest
 
 // The choreography recipe block (the body between the outer PRM/@supports gate).
@@ -362,7 +370,7 @@ facts.tokensMinted = tokensMinted;
 add(
     "wiring-tokens-minted",
     tokensMinted,
-    `the --scroll-build-*/--scroll-cascade-*/--scroll-pin-* tokens are minted in tokens/scale-paper.css beside the existing --scroll-reveal-* knobs [minted=${tokensMinted}]`,
+    `the --scroll-build-*/--scroll-cascade-*/--scroll-pin-* tokens are minted in tokens/scroll-tokens.css (carved from scale-paper.css at BB.W-CARVE4) beside the existing --scroll-reveal-* knobs [minted=${tokensMinted}]`,
 );
 
 const piSpecExists = existsSync(resolve(ROOT, "tests-visual/scroll-motion.spec.ts"));

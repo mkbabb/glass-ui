@@ -451,7 +451,11 @@ const dockSelectTrig = strip(read("src/components/custom/dock/DockSelectTrigger.
 const dockDropdownTrig = strip(read("src/components/custom/dock/DockDropdownTrigger.vue"));
 const cardSfc = strip(read("src/components/ui/card/Card.vue"));
 const grainCss = strip(readMonolith(ROOT, "glass")); // ladder.css folds into the glass monolith
-const grainToken = strip(read("src/styles/tokens/glass.css"));
+// BB.W-CARVE4 — the grain knob (--glass-grain-engage-duration) carved from glass.css
+// into tokens/glass-fx.css; read both so the W4 token-minted assert follows the carve.
+const grainToken = strip(
+    read("src/styles/tokens/glass.css") + "\n" + read("src/styles/tokens/glass-fx.css"),
+);
 
 // W1 — the auto-arm seam is minted ONCE and WRAPS the single-source core.
 // vSpecular.ts exists, imports `createSpecularWriter` (NOT a hand-rolled rAF/PRM/coord

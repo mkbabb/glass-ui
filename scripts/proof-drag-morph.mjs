@@ -93,6 +93,12 @@ function cliPaths() {
             ROOT,
             "src/components/custom/tabs/SegmentedTabs.vue",
         ),
+        // BB.W-CARVE4 — the SegmentedTabs `useDragMorph(` CALL carved into the
+        // colocated composable; the D4 tabs-consumer check follows it into the leaf.
+        USE_TAB_DRAG_MORPH_TS: resolve(
+            ROOT,
+            "src/components/custom/tabs/composables/useTabDragMorph.ts",
+        ),
         DOCK_LAYER_GROUP_VUE: resolve(
             ROOT,
             "src/components/custom/dock/DockLayerGroup.vue",
@@ -161,6 +167,10 @@ export function detectDragMorph(sources) {
     const segmentedTabs = stripHtmlComments(
         stripBlockComments(sources.segmentedTabsVue ?? ""),
     );
+    // BB.W-CARVE4 — the SegmentedTabs `useDragMorph(` call carved into this colocated
+    // composable; the D4 tabs-consumer check reads it (the SFC keeps the `draggable`
+    // prop, the click path, and the roving tabindex — those checks stay on the SFC).
+    const tabDragMorph = stripBlockComments(sources.useTabDragMorphTs ?? "");
     const dockLayerGroup = stripHtmlComments(
         stripBlockComments(sources.dockLayerGroupVue ?? ""),
     );
@@ -330,7 +340,10 @@ export function detectDragMorph(sources) {
     // optional `<…>` type-arg between the name and the call paren (the call sites
     // pass `useDragMorph<string>({…})`).
     const callRe = /useDragMorph\s*(<[^>]*>)?\s*\(/;
-    const tabsConsumes = callRe.test(segmentedTabs);
+    // The tabs consumer's `useDragMorph(` call lives in the colocated
+    // useTabDragMorph composable (BB.W-CARVE4); accept it in either the SFC (pre-carve
+    // shape) or the composable (post-carve) so the assert follows the composition.
+    const tabsConsumes = callRe.test(segmentedTabs) || callRe.test(tabDragMorph);
     const dockConsumes = callRe.test(dockLayerGroup);
     const consumerCount = (tabsConsumes ? 1 : 0) + (dockConsumes ? 1 : 0);
     if (consumerCount < 2) {
@@ -463,6 +476,7 @@ function run() {
         useDragMorphTs: safeRead(P.USE_DRAG_MORPH_TS),
         motionIndexTs: safeRead(P.MOTION_INDEX_TS),
         segmentedTabsVue: safeRead(P.SEGMENTED_TABS_VUE),
+        useTabDragMorphTs: safeRead(P.USE_TAB_DRAG_MORPH_TS),
         dockLayerGroupVue: safeRead(P.DOCK_LAYER_GROUP_VUE),
     });
 

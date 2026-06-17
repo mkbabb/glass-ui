@@ -3,6 +3,19 @@ import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { createOptionalContext } from "../../../../composables/context";
 import { DOCK_MORPH_LABEL, DOCK_SPRING } from "../constants";
+// BB.W-CARVE4 — the PURE geometry + reserved-footprint measure + SYNCHRONOUS PRM seat
+// helpers carved into a sibling colocation module (the aurora/goo-blob/useFourierField
+// pattern); the orchestrator below stays the morph DRIVER and IMPORTS them.
+import {
+    clearMorphVars,
+    dimOf,
+    forceNestedMaxContent,
+    getSize,
+    morphAxisProp,
+    nestedTargetsWithin,
+    seatTargetSync,
+    type MorphMeasureTarget,
+} from "./dockMorphMeasure";
 
 /**
  * AX.W02 — ONE morph orchestrator per dock. The dock is a single morph stack
@@ -68,10 +81,10 @@ export interface DockMorphContext {
 }
 
 // ── internal: one morph target the shared spring drives ────────────────────────
-interface MorphTarget {
-    containerEl: Ref<HTMLElement | null>;
+// Extends MorphMeasureTarget (containerEl/axis/txId — the shape the carved measure/
+// seat helpers read), adding the orchestrator-internal layer + lifecycle fields.
+interface MorphTarget extends MorphMeasureTarget {
     activeLayer: Ref<string>;
-    axis: Ref<"horizontal" | "vertical">;
     currentLayer: Ref<string>;
     leavingLayer: Ref<string | null>;
     /**
@@ -79,8 +92,8 @@ interface MorphTarget {
      * targets swapping in the SAME tick (a simultaneous collapse + pane-swap) do
      * NOT clobber each other's deferred rAF measurement — the SHARED spring is the
      * one clock, but each target's pin/measure pipeline is gated on its own id.
+     * (txId comes from MorphMeasureTarget.)
      */
-    txId: number;
     stop: () => void;
 }
 
@@ -169,20 +182,8 @@ export function useDockMorphOrchestrator(
         );
     }
 
-    function dimOf(axis: "horizontal" | "vertical"): "width" | "height" {
-        return axis === "vertical" ? "height" : "width";
-    }
-    function morphAxisProp(axis: "horizontal" | "vertical"): "inline-size" | "block-size" {
-        return dimOf(axis) === "width" ? "inline-size" : "block-size";
-    }
-    function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
-        return el.getBoundingClientRect()[dimOf(axis)];
-    }
-
-    function clearMorphVars(el: HTMLElement) {
-        el.style.removeProperty("--dock-morph-from");
-        el.style.removeProperty("--dock-morph-to");
-    }
+    // dimOf/morphAxisProp/getSize/clearMorphVars are the PURE geometry helpers
+    // imported from dockMorphMeasure (BB.W-CARVE4 — carved sibling).
 
     /**
      * Whether ANY target is still mid-morph (a pinned span on its container). The
@@ -284,65 +285,13 @@ export function useDockMorphOrchestrator(
         ensureSpringRunning();
     }
 
-    /**
-     * BB.W-DOCK-MORPH-FAMILY (c) — measure the true `to` for ONE target with the
-     * morph axis forced to `max-content` (the same circular-measure escape the rAF
-     * path uses), composing the BA-VJS-1 nested-descendant `max-content` ordering so
-     * a nested group reads its TRUE intrinsic span (never `to:0`). The element is at
-     * the live painted geometry on entry; this forces+reads+restores the axis. PURE
-     * measure — no spring, no pin write.
-     */
-    function measureTo(t: MorphTarget, el: HTMLElement): number {
-        const axis = t.axis.value;
-        const prop = morphAxisProp(axis);
-        clearMorphVars(el);
-        const nested = nestedTargetsWithin(t, el);
-        const restore = nested.map((n) => forceNestedMaxContent(n));
-        const prior = el.style.getPropertyValue(prop);
-        el.style.setProperty(prop, "max-content");
-        const toSize = getSize(el, axis);
-        if (prior) el.style.setProperty(prop, prior);
-        else el.style.removeProperty(prop);
-        for (const r of restore) r();
-        return toSize;
-    }
+    // measureTo + seatTargetSync (the reserved-footprint measure + the SYNCHRONOUS
+    // PRM seat, composing the BA-VJS-1 nested ordering) are imported from
+    // dockMorphMeasure (BB.W-CARVE4). The seat composes the orchestrator's settle
+    // callbacks via the `seatCallbacks` bundle below.
 
-    /**
-     * BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
-     * `prefers-reduced-motion: reduce` there is NO morph to play, so the geometry +
-     * the scalar seat at the target in ONE step (the `useDockOrientationMorph.pin()`
-     * precedent transplanted onto the collapse/expand path): measure the true `to`
-     * (composing the BA-VJS-1 nested ordering), write the box at `to` (the
-     * reserved-footprint reads at scale 1), and set `--dock-morph-t` to the endpoint
-     * for THIS swap — then clear the morph state immediately (no rAF measure-defer,
-     * no spring, no morph window). The box NEVER paints the collapsed `from` sliver
-     * with the scalar at 1 (the P0 terminal failure). Endpoint is the per-swap
-     * incoming-ness `1` (the new pane is fully in; the directional `--dock-expand-t`
-     * resolves to the class endpoint with `[data-morphing]` cleared).
-     */
-    function seatTargetSync(t: MorphTarget, id: number) {
-        if (id !== t.txId) return;
-        const el = t.containerEl.value;
-        const r = root();
-        if (!el || !r) return;
-        const axis = t.axis.value;
-        // Measure the settled target (the swapped pane is in-flow after the flush).
-        const toSize = measureTo(t, el);
-        // Seat the box AT the settled footprint with NO live scalar (scale 1) — the
-        // reserved-footprint CSS reads `--dock-morph-to`; set `from=to` so the ratio
-        // is 1 and any in-flight transform is the identity, then clear the morph
-        // state so `[data-morphing]` drops and the rest-state CSS owns the box.
-        el.style.setProperty("--dock-morph-from", `${toSize}px`);
-        el.style.setProperty("--dock-morph-to", `${toSize}px`);
-        // The endpoint scalar — the morph hard-cuts to fully-revealed.
-        r.style.setProperty("--dock-morph-t", "1");
-        // Force a synchronous layout read so the seated box paints at `to` THIS frame
-        // (the box is laid out at `to`, never the collapsed `from`).
-        void el.getBoundingClientRect()[dimOf(axis)];
-        // Clear immediately — no spring, no morph window; the rest-state CSS holds.
-        settleTarget(t);
-        maybeSettleRoot();
-    }
+    /** The settle callbacks the carved synchronous PRM seat composes. */
+    const seatCallbacks = { settleTarget, maybeSettleRoot };
 
     /** The per-target swap handler — the W01 measured-once FLIP, shared spring. */
     function onSwap(t: MorphTarget, newLayer: string, oldLayer: string) {
@@ -410,7 +359,7 @@ export function useDockMorphOrchestrator(
         //     state — no spring, no rAF, no sliver. The orientation driver's `pin()`
         //     precedent, transplanted onto the collapse/expand path.
         if (prefersReducedMotion()) {
-            void nextTick(() => seatTargetSync(t, id));
+            void nextTick(() => seatTargetSync(t, id, root(), targets, seatCallbacks));
             return;
         }
 
@@ -457,7 +406,7 @@ export function useDockMorphOrchestrator(
             // for the duration of THIS measure so the outer shrink-wraps around the
             // inner's real content, not its pinned-collapsed clip. Each is restored
             // to its exact prior inline state right after the synchronous read.
-            const nested = nestedTargetsWithin(t, elNow);
+            const nested = nestedTargetsWithin(t, elNow, targets);
             const restore = nested.map((n) => forceNestedMaxContent(n));
             elNow.style.setProperty(prop, "max-content");
             const toSize = getSize(elNow, axis);
@@ -467,45 +416,8 @@ export function useDockMorphOrchestrator(
         });
     }
 
-    /**
-     * BA-VJS-1 (valuejs-fold A-1) — the OTHER registered targets whose container is
-     * a DOM DESCENDANT of `outerEl` (a nested `<DockLayerGroup>` stack inside the
-     * outer `.dock-layers`). These are the pinned inner spans the outer measure must
-     * see at their OWN intrinsic `max-content`, not their collapsed pin, or the outer
-     * shrink-wraps to ~0.
-     */
-    function nestedTargetsWithin(outer: MorphTarget, outerEl: HTMLElement): MorphTarget[] {
-        const out: MorphTarget[] = [];
-        for (const sib of targets) {
-            if (sib === outer) continue;
-            const sibEl = sib.containerEl.value;
-            // `contains` is true for the element itself; we guarded `sib === outer`,
-            // and a sibling's container that is not inside `outerEl` is excluded — so
-            // only genuine nested descendants of THIS outer are forced.
-            if (sibEl && sibEl !== outerEl && outerEl.contains(sibEl)) out.push(sib);
-        }
-        return out;
-    }
-
-    /**
-     * BA-VJS-1 — force ONE nested target to its own-axis `max-content` (clearing its
-     * reserved `--dock-morph-to` footprint so it sizes to content), and return a closure
-     * that RESTORES its exact prior inline state. The restore re-writes the precise
-     * prior `inline-size`/`block-size` inline value (or removes it if there was none),
-     * so the inner's in-flight pin is byte-identical after the outer's measurement —
-     * the inner target's own spring/pin pipeline is never disturbed.
-     */
-    function forceNestedMaxContent(n: MorphTarget): () => void {
-        const el = n.containerEl.value;
-        if (!el) return () => {};
-        const prop = morphAxisProp(n.axis.value);
-        const prior = el.style.getPropertyValue(prop);
-        el.style.setProperty(prop, "max-content");
-        return () => {
-            if (prior) el.style.setProperty(prop, prior);
-            else el.style.removeProperty(prop);
-        };
-    }
+    // nestedTargetsWithin + forceNestedMaxContent (the BA-VJS-1 nested-descendant
+    // max-content ordering) are imported from dockMorphMeasure (BB.W-CARVE4).
 
     /** Register a morph target; returns its watch-stop. */
     function addTarget(reg: DockMorphGroupRegistration): MorphTarget {

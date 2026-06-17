@@ -53,6 +53,10 @@ const APPSHELL = "demo/layout/AppShell.vue";
 const SIDEBAR = "demo/layout/SidebarDock.vue";
 const BOTTOM = "demo/layout/BottomDock.vue";
 const MORPH_CTX = "src/components/custom/dock/composables/dockMorphContext.ts";
+// BB.W-CARVE4 — the measure helpers (nestedTargetsWithin/forceNestedMaxContent/
+// measureTo + the outerEl.contains nested-ordering) carved into this sibling leaf;
+// the M5 BA-VJS-1 nested-ordering assert reads the orchestrator + the leaf together.
+const MORPH_MEASURE = "src/components/custom/dock/composables/dockMorphMeasure.ts";
 const CONSTANTS = "src/components/custom/dock/constants.ts";
 const DELTA = "docs/tranches/BA/audit/visual/W-DOCK-MORPH-INSITU-DELTA.md";
 
@@ -82,7 +86,11 @@ export function detect() {
     const appShell = stripComments(read(APPSHELL));
     const sidebar = stripComments(read(SIDEBAR));
     const bottom = stripComments(read(BOTTOM));
-    const morphCtx = stripComments(read(MORPH_CTX));
+    // BB.W-CARVE4 — read the orchestrator + the carved measure leaf together so the
+    // M5 nested-ordering asserts FOLLOW the composition into the leaf (the rAF-block
+    // `const nested = nestedTargetsWithin` wiring stays in dockMorphContext.ts; the
+    // `outerEl.contains` nested-detection moved to dockMorphMeasure.ts).
+    const morphCtx = stripComments(read(MORPH_CTX) + "\n" + read(MORPH_MEASURE));
     const constants = stripComments(read(CONSTANTS));
     const deltaRaw = read(DELTA); // not comment-stripped — prose is the content
 

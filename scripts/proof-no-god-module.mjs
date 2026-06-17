@@ -46,61 +46,40 @@ const WARN_LIMIT = 300;
  * `// BOOK(<wave-id>):` marker (asserted below).
  */
 const RATCHET_BASELINES = {
-    // BB.W-CARVE3 DRAINED the three BB.W-CI-GREEN rows to ∅ — the carve LANDED.
-    //   • styles/tokens/offsets-sizing.css (574) → carved at the §9/§10 seam into
-    //     tokens/offsets.css (93) + tokens/sizing.css (499), both < 500, dist
-    //     byte-isomorphic; the parent file DELETED, the `tokens` CSS_MONOLITHS
-    //     order re-pointed.
-    //   • styles/utilities/base.css (516) → the form/interaction half stays in
-    //     utilities/base.css (288); the post-tap-squish tail (status-dot → kbd +
-    //     the fading-scroll recipe) carved into utilities/base-misc.css (250), an
-    //     adjacent same-`@layer components` block at the next cascade slot, dist
-    //     byte-isomorphic.
-    //   • components/custom/fourier-field/FourierField.vue (505) → the ~475-line
-    //     renderer lifted into composables/useFourierField.ts (the
-    //     aurora/goo-blob/constellation colocation symmetry); the SFC drops well
-    //     under 500.
-    // The MONOTONIC drain is honoured (the rows DELETED in the same diff that
-    // carved the files — a stale row reds, the gate's own guard). The close state
-    // is now reached for the three CARVE3 files: `violations == []` for them AND
-    // their rows are gone from the ratchet.
-    //
-    // BB.W-DOCK-MORPH-FAMILY re-armed ONE row: dockMorphContext.ts grew past 500
-    // (the P0 terminal repair — the SYNCHRONOUS PRM seat + the reserved-footprint
-    // measure logic: the measureTo/seatTargetSync/seatSync helpers). BOOK(BB.W-CARVE4)
-    // — the Batch-6 residual carve extracts the measure/seat helpers into a sibling
-    // composables/dockMorphMeasure.ts (the aurora/goo-blob colocation pattern; the
-    // orchestrator stays the morph driver); drained to {} before the Batch-7 close.
-    "components/custom/dock/composables/dockMorphContext.ts": 575, // BOOK(BB.W-CARVE4): extract the measure/seat helpers → composables/dockMorphMeasure.ts (Batch 6)
-    // styles/tokens/glass.css — the §8 glass ladder is the RECURRING at-bound offender:
-    // each glass-token wave (W-ON-GLASS-FG → carved out; W-DARK-INK-WARM; W-LIQUIDHOVER
-    // grain-engage) pushes it over, and the whack-a-mole comment-trim is unsustainable.
-    // BOOK(BB.W-CARVE4): carve the grain/specular/tint sub-blocks into a tokens/glass-fx.css
-    // partial (the §8 opacity/blur/saturate LADDER stays; the grain + specular-track +
-    // tint-source + backdrop-luma knobs split out) — drained to {} before the Batch-7 close.
-    "styles/tokens/glass.css": 505, // BOOK(BB.W-CARVE4): carve the grain/specular/tint knobs → tokens/glass-fx.css (Batch 6)
-    // BB.W-DRAG-MORPH wired the pull/morph gesture + roving-tabindex into the tabs
-    // engine, pushing it past 500. BOOK(BB.W-CARVE4): extract the drag-morph wiring
-    // (and/or the indicator transform path) into the colocated composables/ dir
-    // (tabs/ already carries composables/useTabIndicator.ts) — drained before the
-    // Batch-7 close.
-    "components/custom/tabs/SegmentedTabs.vue": 543, // BOOK(BB.W-CARVE4): extract the drag-morph/indicator wiring → tabs/composables/ (Batch 6)
-    // scale-paper.css holds MANY token families (paper + control + display + the
-    // scroll-reveal/choreography substrate + grid + the gold·silver·BRONZE brand-metal
-    // triad) and is the recurring at-bound tokens offender (W-CONTROL-TOKENS,
-    // W-PAPER-GRID, W-SCROLL-MOTION, W-METAL-SHIMMER each grew it). BB.W-METAL-SHIMMER
-    // added the §13c bronze quad (the third brand metal, ~+32 lines) on the EXISTING
-    // W-CARVE4 BOOK — the rebaseline 519→551 records the metal-triad completion, the
-    // carve target is unchanged. BOOK(BB.W-CARVE4): carve the scroll-reveal/
-    // choreography knob family → a tokens/scroll-tokens.css partial (the paper/
-    // control/display/metal families stay) — drained before the Batch-7 close.
-    "styles/tokens/scale-paper.css": 551, // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knobs → tokens/scroll-tokens.css (Batch 6); rebaselined 519→551 at W-METAL-SHIMMER (the §13c bronze quad)
-    // glass/ladder.css holds the 5-rung surface ladder + the calm-tier re-point
-    // (W-ON-GLASS-FG) + the W-GLASS-ACCENT rim/accent group + the bright-bucket
-    // @container — the glass-effect waves (W-LENSING/W-GLASS-ACCENT) accreted it.
-    // BOOK(BB.W-CARVE4): carve the rim/accent + bright-bucket group → glass/rim.css
-    // (the 5-rung ladder stays) — drained before the Batch-7 close.
-    "styles/glass/ladder.css": 510, // BOOK(BB.W-CARVE4): carve the rim/accent + bright-bucket group → glass/rim.css (Batch 6)
+    // BB.W-CARVE4 DRAINED the FINAL five ratchet rows to ∅ — the carve LANDED, the
+    // close state reached (`violations == []` AND `RATCHET_BASELINES == {}`):
+    //   • components/custom/dock/composables/dockMorphContext.ts (575 → 488) → the
+    //     PURE measure/seat helpers (measureTo/seatTargetSync + the BA-VJS-1 nested-
+    //     ordering nestedTargetsWithin/forceNestedMaxContent + the geometry primitives)
+    //     extracted into a sibling composables/dockMorphMeasure.ts (165, the aurora/
+    //     goo-blob/useFourierField colocation pattern); the orchestrator stays the
+    //     morph driver + IMPORTS them. DOCK_SPRING byte-fenced.
+    //   • styles/tokens/glass.css (505 → 194) → the decorative/fx tail (grain/specular/
+    //     edge-light + the adaptive tint-source/backdrop-luma bucket + fringe/curvature/
+    //     chart-palette + the per-tier shadow/spine/under-shadow/overlay-scrim) carved
+    //     into tokens/glass-fx.css (333), an adjacent :root{} block @import-ed
+    //     IMMEDIATELY AFTER glass.css; the §8 opacity/blur/saturate LADDER + composed
+    //     bg/border + control-REST register stay. Dist byte-identical.
+    //   • components/custom/tabs/SegmentedTabs.vue (543 → 478) → the BB.W-DRAG-MORPH
+    //     wiring (the snap targets + useDragMorph call + the --stretch/refresh watchers)
+    //     extracted into tabs/composables/useTabDragMorph.ts (131, the useTabIndicator
+    //     sibling pattern); the SFC IMPORTS it.
+    //   • styles/tokens/scale-paper.css (551 → 437) → the §20 PLATFORM MOTION section
+    //     (the scroll-driven/choreography --scroll-* knobs + TOP-LAYER + VIEW-TRANSITION
+    //     + dock-spring) carved WHOLE into tokens/scroll-tokens.css (123) at the §19/§20
+    //     seam (the file's last section — a contiguous tail carve); the paper/control/
+    //     display/metal/timeline/metric/table families stay. Dist byte-identical.
+    //   • styles/glass/ladder.css (510 → 433) → the AW.W22 unified rim + the
+    //     BB.W-GLASS-ACCENT per-INSTANCE chromatic rim/accent group carved into
+    //     glass/rim.css (100), an adjacent @layer components block @import-ed
+    //     IMMEDIATELY AFTER ladder.css (the SOLE writer of --glass-material-rim/
+    //     --glass-border-accent, so cascade-order-invariant); the 5-rung ladder + the
+    //     W55 bright-bucket @container (kept to preserve the contrast-color @supports
+    //     source-order tie) + the calm-tier re-point + the ink-flip + the opaque escape
+    //     + the under-shadow modifier + the grain ::after stay. Dist byte-identical.
+    // The MONOTONIC drain is honoured (the rows DELETED in the same diff that carved
+    // the files — a stale row reds, the gate's own guard). The ratchet is now ∅ — the
+    // close-state requirement. Every file is under bound by its own measure.
 };
 
 let _cliPaths = null;

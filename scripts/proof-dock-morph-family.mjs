@@ -228,9 +228,13 @@ export function detectPrmSynchronousSeat(orchestratorTs, layerTransitionTs) {
             src.replace(/\n/g, " "),
         );
         // (c) the synchronous seat composes the BA-VJS-1 nested ordering (the
-        //     orchestrator) — `measureTo`/`nestedTargetsWithin`/`forceNestedMaxContent`
-        //     reached on the sync path; useLayerTransition is the standalone (no nested
-        //     targets), so it only needs the max-content circular-measure escape.
+        //     orchestrator) — `seatTargetSync`/`measureTo`/`nestedTargetsWithin`/
+        //     `forceNestedMaxContent` reached on the sync path; useLayerTransition is
+        //     the standalone (no nested targets), so it only needs the max-content
+        //     circular-measure escape. BB.W-CARVE4 — for the orchestrator, `src` is
+        //     the dockMorphContext.ts + dockMorphMeasure.ts CONCATENATION (the
+        //     measure/seat helpers carved into the sibling leaf; the assert FOLLOWS
+        //     the composition into it).
         const composesNested =
             name === "dockMorphContext.ts"
                 ? /seatTargetSync[\s\S]*measureTo\(/.test(src) &&
@@ -603,9 +607,17 @@ async function run() {
     const morphCss = read("src/styles/dock/morph.css");
     const shellCss = read("src/styles/dock/shell.css");
     const dockCss = read("src/styles/dock.css");
-    const orchestratorTs = read(
-        "src/components/custom/dock/composables/dockMorphContext.ts",
-    );
+    // BB.W-CARVE4 — the orchestrator's measure/seat mechanism (`seatTargetSync` +
+    // `measureTo` + the BA-VJS-1 nested ordering) carved into the sibling
+    // `dockMorphMeasure.ts`; the orchestrator IMPORTS + composes them (the PRM probe
+    // + the `nextTick(() => seatTargetSync(…))` branch stay in dockMorphContext.ts).
+    // F3 reads the CONCATENATION so the asserts FOLLOW the composition into the leaf
+    // (the proof:webgl-substrate-single precedent — the substrate-exists asserts
+    // follow the composition into the carved leaf, never RED on the relocation).
+    const orchestratorTs =
+        read("src/components/custom/dock/composables/dockMorphContext.ts") +
+        "\n" +
+        read("src/components/custom/dock/composables/dockMorphMeasure.ts");
     const layerTransitionTs = read(
         "src/components/custom/dock/composables/useLayerTransition.ts",
     );

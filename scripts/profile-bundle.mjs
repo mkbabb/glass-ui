@@ -184,10 +184,21 @@ const startedAt = Date.now();
 //   fourier-field  gzip  2_856 →  3_200   raw  7_690 →  8_500
 // An overrun is a real payload regression — it HALTS the budget gate (the same
 // fail-closed shape the aurora ceiling has), not a silent re-base.
+// BB re-base (the 4.1.0 cut): the BB aurora band — the structure-tensor field
+// (aurora-tensor-field), the impasto height→normal→relight, the van-Gogh +
+// oil-pastel mediums (aurora-vangogh-preset / aurora-oilpastel-medium), the
+// stroke-composite, and the software-raster luminance-faithful fallback ground
+// (aurora-swraster) — grows the shader+chrome draw of `dist/aurora.js` to gzip
+// ≈40.4k (raw ≈120.0k, 92% of its 130k cap). The AY-era 40000 gzip ceiling is
+// 351 bytes short. Lifted to gzip 42000 — the NINTH conscious lift, sized to
+// carry the BB aurora band with a thin headroom, NOT open-ended per-wave creep
+// (an overrun still HALTS per the W4 §3a field-bake-hoist triumvirate). The raw
+// 130000 stays (92% utilized). A future Batch-V WebGPU aurora migration /
+// kuwahara medium that re-grows the chunk bumps this again at its own landing.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
-    "dist/aurora.js": { raw: 130_000, gzip: 40_000 },
+    "dist/aurora.js": { raw: 130_000, gzip: 42_000 },
     "dist/goo-blob.js": { raw: 62_700, gzip: 22_900 },
     "dist/constellation.js": { raw: 19_000, gzip: 6_700 },
     "dist/fourier-field.js": { raw: 8_500, gzip: 3_200 },

@@ -36,6 +36,13 @@ export const CSS_MONOLITHS = {
             "color-radius.css",
             "shadow.css",
             "glass.css",
+            // BB.W-CARVE4 — glass.css's decorative/fx tail (grain/specular/edge-light
+            // + the adaptive tint-source/backdrop-luma bucket + fringe/curvature/
+            // chart-palette + the per-tier shadow/spine/under-shadow/overlay-scrim)
+            // carved into glass-fx.css, an adjacent same-selector :root{} block
+            // @import-ed IMMEDIATELY AFTER glass.css (preserving the original
+            // ladder→fx source order — the dist is byte-isomorphic).
+            "glass-fx.css",
             // BB.W-DEEP-GLASS — the OPT-IN deep-glass token family (the SEPARATE
             // --glass-blur-deep-* family + the --glass-depth scalar), @import-ed
             // right after glass.css (the deep recipe LERPs against the §8 calm
@@ -52,6 +59,14 @@ export const CSS_MONOLITHS = {
             "offsets.css",
             "sizing.css",
             "scale-paper.css",
+            // BB.W-CARVE4 — scale-paper.css's §20 scroll-driven substrate axes + the
+            // BB.W-SCROLL-MOTION scroll-CHOREOGRAPHY knob family (--scroll-reveal-*/
+            // --scroll-build-*/--scroll-cascade-*/--scroll-pin-*) carved into
+            // scroll-tokens.css, an adjacent same-selector :root{} block @import-ed
+            // IMMEDIATELY AFTER scale-paper.css (the --scroll-* tokens are non-
+            // conflicting + un-re-pointed in light-dark/dark-arm, so the relocation is
+            // cascade-order-invariant — the dist is byte-isomorphic).
+            "scroll-tokens.css",
             "light-dark.css",
             "dark-arm.css",
             "property-regs.css",
@@ -66,6 +81,13 @@ export const CSS_MONOLITHS = {
         order: [
             "material.css",
             "ladder.css",
+            // BB.W-CARVE4 — ladder.css's AW.W22 unified rim + the BB.W-GLASS-ACCENT
+            // per-INSTANCE chromatic rim/accent group carved into rim.css, an adjacent
+            // same-@layer-components block @import-ed IMMEDIATELY AFTER ladder.css (the
+            // rim group was the tail of ladder.css, just before surfaces.css; it is the
+            // SOLE writer of --glass-material-rim/--glass-border-accent so the
+            // relocation is cascade-order-invariant — the dist is byte-isomorphic).
+            "rim.css",
             "surfaces.css",
             "surface-axis.css",
             "reveal.css",

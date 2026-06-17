@@ -14,15 +14,9 @@ import {
     computed,
     onMounted,
     onBeforeUnmount,
-    watch,
-    nextTick,
     type HTMLAttributes,
 } from "vue";
 import { cn } from "../../../utils";
-import {
-    useDragMorph,
-    type DragMorphSnapTarget,
-} from "../../../composables/motion/useDragMorph";
 import {
     Tooltip,
     TooltipContent,
@@ -37,6 +31,7 @@ import {
     SelectValue,
 } from "../../ui/select";
 import { useTabIndicator } from "./composables/useTabIndicator";
+import { useTabDragMorph } from "./composables/useTabDragMorph";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -209,80 +204,20 @@ const { singleSliderStyle, squishOnTravel } = useTabIndicator({
 
 // ── BB.W-DRAG-MORPH — the LIQUID TAB (the :draggable axis) ──
 //
-// When `:draggable`, the pill indicator is wired to `useDragMorph` with the snap
-// targets resolved off the CENTER-ANCHORED button geometry (the SAME measure
-// `useTabIndicator` runs — reused, never re-measured). Dragging the indicator
-// follows the finger, squishes on velocity, and flings to the nearest tab center on
-// release → `onSnap` writes the `model`. The drag is the `pill` material ONLY (the
-// `underline` ink hairline has no `indicatorRef` element to deform). The squish
-// reads the SAME `--tab-indicator-max-stretch` live cap the click squish does (the
-// SOLE cap source); the drag's `--stretch` write composes the existing reciprocal
-// CSS pairing — no second squish recipe.
-const dragEnabled = computed(() => props.draggable && !isUnderline.value);
-
-function readMaxStretch(): number {
-    const el = indicatorRef.value;
-    if (!el) return 1.08;
-    const raw = getComputedStyle(el)
-        .getPropertyValue("--tab-indicator-max-stretch")
-        .trim();
-    return Number(raw) || 1.08;
-}
-
-// The snap targets — the center-anchored button centers on the active axis. kf
-// `Draggable` tracks CLIENT-space pointer coords (`clientX`/`clientY`), so the snap
-// centers are resolved in the SAME client space (`getBoundingClientRect`) — the
-// nearest-snap resolution + the `decayRest` projection compare like spaces (the
-// center-anchor geometry the same as `useTabIndicator`, in client coords).
-function resolveSnapTargets(): DragMorphSnapTarget<string>[] {
-    return stripOptions.value.map((o, idx) => {
-        const btn = buttonRefs.value[idx];
-        const r = btn?.getBoundingClientRect();
-        const center = r
-            ? isVertical.value
-                ? r.top + r.height / 2
-                : r.left + r.width / 2
-            : 0;
-        return { value: o.value, center };
-    });
-}
-
-const drag = useDragMorph<string>({
-    el: indicatorRef,
-    axis: () => (isVertical.value ? "y" : "x"),
-    snapTargets: resolveSnapTargets,
-    maxStretch: readMaxStretch,
-    onSnap: (value) => {
-        // The fling-to-nearest commits the selection — the consumer model is the
-        // single source of truth (no shadow). The click-travel squish does not fire
-        // here (the drag owns its own squish via `useDragMorph`).
-        if (model.value !== value) model.value = value;
-    },
+// The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
+// the `--stretch` write + the option/axis refresh watchers) lives in the colocated
+// `useTabDragMorph` composable (carved at BB.W-CARVE4, the `useTabIndicator` sibling
+// pattern). The SFC binds `drag.dragStyle`/`drag.dragging` + `dragEnabled` in its
+// template; the drag is the `pill` material ONLY + the `:draggable` opt-in.
+const { dragEnabled, drag } = useTabDragMorph({
+    indicatorRef,
+    isVertical,
+    isUnderline,
+    draggable: () => props.draggable,
+    stripOptions,
+    buttonRefs,
+    model,
 });
-
-// The drag `--stretch` write rides the indicator's OWN `--stretch` custom property
-// (the SAME var the click squish writes — ONE source of truth). While dragging, the
-// drag owns `--stretch`; on settle the value relaxes to 1 (the normalized-position
-// drive decays). PRM zeroes the write (the `stretch` read is 1 under reduce).
-watch(
-    () => [drag.dragging.value, drag.stretch.value] as const,
-    ([isDragging, stretch]) => {
-        const el = indicatorRef.value;
-        if (!el || !dragEnabled.value) return;
-        if (isDragging) el.style.setProperty("--stretch", String(stretch));
-        else el.style.removeProperty("--stretch");
-    },
-);
-
-// Re-resolve the snap geometry when the options/orientation change (a resize is
-// caught by useDragMorph's next-grab reattach; an option/axis change needs the
-// explicit refresh so the rebuilt Draggable carries fresh axis).
-watch(
-    () => [stripOptions.value.length, isVertical.value, dragEnabled.value] as const,
-    () => {
-        if (dragEnabled.value) nextTick(() => drag.refresh());
-    },
-);
 
 // ── Button press animation (Web Animations API) ──
 // AX.W53 — the press rides the CONTROL register (`--spring-snappy`), one

@@ -52,7 +52,12 @@ const tokens = strip(readMonolith(ROOT, "tokens"));
 const colorRadius = strip(read("src/styles/tokens/color-radius.css"));
 const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
 const lightDark = strip(read("src/styles/tokens/light-dark.css"));
-const glassTokens = strip(read("src/styles/tokens/glass.css"));
+// BB.W-CARVE4 — glass.css's decorative/fx tail (incl. --overlay-scrim-ink) carved
+// into tokens/glass-fx.css; read both so the KEEP-NEUTRAL byte-assert follows the
+// carve (the assert is over the §8 glass-token cascade, now two adjacent partials).
+const glassTokens = strip(
+    read("src/styles/tokens/glass.css") + "\n" + read("src/styles/tokens/glass-fx.css"),
+);
 
 // ── OKLab plumbing (hsl → rgb → OKLab; the perceptual chroma + hue the eye reads) ────────
 function parseHsl(str) {
