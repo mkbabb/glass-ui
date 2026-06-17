@@ -231,6 +231,8 @@ A consumer retints the cartoon shadow by **overriding the `:root` token** — `:
 
 The cartoon shadow is **token-adaptive under `.dark` BY CONSTRUCTION**: each `--shadow-cartoon-*` value rides `color-mix(in srgb, var(--shadow-color) N%, transparent)` and `--shadow-color: var(--foreground)` flips light→dark, so the offset stamp re-tints under `.dark` with no hardcoded `.dark` re-declaration of `--shadow-cartoon-lg` (the `.dark` block re-resolves `--foreground`/`--shadow-color`, which is a legitimate token re-resolution, not a dead orphan). Presets-in-consumers: named themed cartoon-shadow presets live in the consumer; the library's `--shadow-cartoon-*` is its own identity. Machine-locked by `proof:shadow-contract` (CHAIN-INTACT + OVERRIDE-RESOLVES + DARK-ARM-ALLOWED).
 
+(see claudeMdNote field above — the geometric paper-cascade peer subsection)
+
 ### Adaptive glass legibility (the `--glass-backdrop` bucket + the self-engage default + the sampled observer — AX.W55 · AZ.W-ADAPTIVE-AUTO)
 
 Glass is the maximal default register (AX.W54), so content-on-glass-over-a-bright-backdrop is the common case. Over a VERY LIGHT or busy backdrop the warm-cream translucent glass collapses — the surface has no edge and the text drops below 4.5:1 (the G2 defect: "Glass dock over VERY LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27"). The legibility is expressed entirely in the EXISTING `color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-strength))` tint seam — **ZERO new compositing seam** — across THREE layers (floor → default → refinement):

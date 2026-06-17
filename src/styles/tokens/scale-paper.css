@@ -94,6 +94,45 @@
     --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 
+    /* BB.W-PAPER-GRID-TEXTURE — the GEOMETRIC half of the paper-cascade, the
+       peer of the organic turbulence above. Where `--paper-*-texture` are
+       feTurbulence grain fields, this is a two-frequency engineering-paper
+       grid: a 32px MINOR cell + a 128px MAJOR rule (the 4×-major blueprint
+       vocabulary the demo `.story-bg-grid` speaks, re-expressed as a library
+       token so a document-register card can opt its INTERIOR ground into the
+       line-field, not only the page margin). Unlike the organic SVG textures
+       (a baked-at-parse `opacity` URI), the grid is a STATIC `background-image`
+       gradient-STACK — a one-time compositor-cached paint, NEVER a per-frame
+       repaint. The line INK reads a `color-mix(… var(--foreground) N%, …)` so
+       it composes against the warm ink identity and re-tints with `--foreground`
+       in lockstep — never a hardcoded `hsl()` (the no-gray / token-first
+       floor). The ambient through-card strength is the ONE knob
+       `--paper-grid-opacity` (~0.08, the ask's "felt THROUGH the card ~0.08"):
+       the MINOR line ink scales off it directly and the MAJOR rule rides
+       `* 1.6` (the demo's 7%→12% engineering-paper weight step), so a consumer
+       retunes the whole grid from the single strength knob. (The strength lives
+       in the ink alpha, not a layer `opacity`, because the utility paints the
+       grid on the card's HOST `background-image` to avoid the two-pseudo-budget
+       contention with the grain `::after` / specular `::before` — see
+       cards.css.) */
+    --paper-grid-opacity: 0.08;
+    --paper-grid-texture-size: 32px;
+    --paper-grid-line: color-mix(
+        in srgb,
+        var(--foreground) calc(var(--paper-grid-opacity) * 100%),
+        transparent
+    );
+    --paper-grid-line-major: color-mix(
+        in srgb,
+        var(--foreground) calc(var(--paper-grid-opacity) * 160%),
+        transparent
+    );
+    --paper-grid-texture:
+        linear-gradient(to right, var(--paper-grid-line-major) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid-line-major) 1px, transparent 1px),
+        linear-gradient(to right, var(--paper-grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid-line) 1px, transparent 1px);
+
     /* ═══════════════════════════════════════════════
        §13 GOLD (accent family kept for consumers using it)
        ═══════════════════════════════════════════════ */

@@ -12,7 +12,13 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
             :class="cn(
                 'max-w-3xl rounded-[var(--radius-card)] border border-border/40 bg-card/60',
                 'px-8 py-10 md:px-12 md:py-14 backdrop-blur-sm',
-                'paper-grain-overlay',
+                // BB.W-PAPER-GRID-TEXTURE — the document-register article opts
+                // its INTERIOR ground into BOTH the organic grain (the existing
+                // `paper-grain-overlay` ::after) AND the geometric blueprint
+                // grid (the new `.paper-grid` host bg-image). The two registers
+                // compose orthogonally — the math/grid brand pillar is now felt
+                // THROUGH the plate, not only in the page margin around it.
+                'paper-grain-overlay paper-grid',
             )"
         >
             <header

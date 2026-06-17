@@ -85,6 +85,15 @@ interface Props extends PrimitiveProps {
     /** `::after` paper-grain overlay. Off for scroll panes (the grain conflicts
      *  with overflow:auto repaints). */
     grain?: boolean;
+    /** BB.W-PAPER-GRID-TEXTURE — the GEOMETRIC paper register: a `::after`
+     *  blueprint/graph-paper grid felt THROUGH the card interior (the math/grid
+     *  brand pillar, read through the plate rather than only in the page
+     *  margin). Default **OFF** — a bare card is byte-identical to HEAD; a
+     *  document-register card opts in. ORTHOGONAL to `grain` (organic) — a card
+     *  may carry BOTH the turbulence grain and the geometric grid. The register
+     *  doctrine (paper-register cards opt in, instrument-glass surfaces do NOT)
+     *  is a CONSUMER choice the default-OFF honors by construction. */
+    grid?: boolean;
     /** Specular catch-light register (AX.W09). `off` (default) keeps the card
      *  CLEAN — no pointer-anchored lens, clean over any backplate (the §24
      *  three-consumer-confirmed default for a data/content card). `subtle` wakes
@@ -100,6 +109,7 @@ const props = withDefaults(defineProps<Props>(), {
     surface: "glass",
     shadow: true,
     grain: true,
+    grid: false,
     specular: "off",
     as: "div",
 });
@@ -155,6 +165,7 @@ useStalePropWarning("Card");
         :data-tier="tier"
         :data-surface="surface"
         :data-grain="grain"
+        :data-grid="grid"
         :as="as"
         :as-child="asChild"
         :style="hostStyle"
@@ -213,6 +224,13 @@ useStalePropWarning("Card");
                     surfaceClass('veil').replace(/^glass-\w+\s+/, ''),
                 shadow && surface === 'glass' && 'shadow-card',
                 !grain && '[&::after]:hidden',
+                // BB.W-PAPER-GRID-TEXTURE — the additive geometric grid axis,
+                // default OFF (a bare card is byte-identical to HEAD). When
+                // opted in, composes the `.paper-grid` interior-ground utility
+                // (the `data-grid` binding above mirrors the `grain` shape).
+                // Orthogonal to `grain`: the two `::after`-less utility carries
+                // its own pseudo, so grain + grid compose without contention.
+                grid && 'paper-grid',
                 props.class,
             )
         "

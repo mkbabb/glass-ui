@@ -17,6 +17,82 @@
     :where(.dark) .paper-texture {
         background-blend-mode: screen;
     }
+
+    /* BB.W-PAPER-GRID-TEXTURE — the GEOMETRIC sibling of `.paper-texture`.
+       Paints the two-frequency `--paper-grid-texture` engineering-grid as a
+       card's INTERIOR ground, clipped to the plate's own `border-radius`
+       automatically (a host `background-image`), so the math/grid brand pillar
+       reads THROUGH a document-register card at the ambient `--paper-grid-
+       opacity` — not only in the page margin an opaque plate occludes. A
+       decoration-only register (NOT a tier): it composes ON TOP of any glass/
+       paper tier, exactly like `.paper-texture` / `cartoon-surface` /
+       `veil-surface`.
+
+       THE SEAM (the two-pseudo-budget reveal, recorded — the Triumvirate's
+       through-glass-read locate-the-seam, NOT a token-α loop): a glass tier
+       already claims BOTH pseudos — `::before` is the moving-specular catch-
+       light (glass/material.css) and `::after` is the grain overlay
+       (glass/ladder.css). A `.paper-grid::after` would CLOBBER the grain's
+       `background-image` on the SAME single pseudo — so the grid + grain could
+       not compose (the orthogonality the spec requires). The grid therefore
+       rides the HOST element's `background-image` longhand: the glass tier's
+       `background:` SHORTHAND sets the translucent fill `background-color`, and
+       a later `background-image` longhand COEXISTS with that color (the image
+       paints OVER the color, UNDER the content + UNDER both pseudos), so the
+       grid is the card's own underlay felt THROUGH the glass tint with ZERO
+       pseudo contention — grain (`::after`) + specular (`::before`) + grid
+       (host bg-image) all paint at once. The host bg-image is clipped by the
+       host `border-radius` by construction (no `border-radius: inherit` pseudo
+       needed). A STATIC raster — gradient-stack `background-image`, one
+       compositor-cached paint, no per-frame repaint (the W6 paint-path
+       discipline). The ambient strength lives in the line-ink alpha (the
+       `--paper-grid-opacity`-scaled `--foreground` mix, scale-paper.css) since
+       a host bg-image has no independent layer-opacity — so ONE knob
+       (`--paper-grid-opacity`) still tunes the through-card strength. */
+    .paper-grid {
+        background-image: var(--paper-grid-texture);
+        background-repeat: repeat;
+        background-size:
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size);
+        background-blend-mode: multiply;
+    }
+
+    /* The scheme-aware dark arm — PLAIN-ancestor `.dark` (NOT a scoped
+       `:global()`; the recurring scoped-global-drop trap, recorded; this is a
+       library CSS partial, but the discipline holds). The line ink is
+       `--foreground`-derived, so the warm-cream foreground flips dark→light in
+       the `.dark` block and the grid ink auto-lifts off the near-black `--card`
+       interior with NO parallel `--paper-grid-*-dark` family — only the BLEND
+       flips (light `multiply` → dark `screen`, the legible-on-dark equivalent
+       the `.paper-texture` dark arm uses). */
+    :where(.dark) .paper-grid,
+    .dark .paper-grid {
+        background-blend-mode: screen;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   A11y — the geometric grid honors the SAME transparency idiom the organic
+   paper register establishes (paper.css). A reduced-transparency user gets a
+   clean card interior, no texture; the static grid needs no motion gate (the
+   PRM block guards a future drift only). One a11y idiom, not a grid-local fork.
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-transparency: reduce) {
+    .paper-grid {
+        background-image: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .paper-grid {
+        /* Static raster at rest; guard a future `@property` transform drift. */
+        animation: none !important;
+    }
 }
 
 /* ── Cartoon surface decoration ───────────────────────────────────
