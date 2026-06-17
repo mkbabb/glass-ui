@@ -71,7 +71,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         // base through surfaceClass(surface, floating) — see the script block above
         // (no quotes/parens detail here: this comment lives inside the binding attr).
         surfaceClass(surface, 'floating'),
-        'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel p-6 pr-8 transition-[opacity,transform] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+        // BB.W-CARD-PAD — the overlay-band golden padding ladder: the inline anchor is
+        // --spacing(6) = 24px, the block axis lifts by sqrt-phi (`*1.272`). `pr-8`
+        // STAYS (close-button clearance), overriding the inline pad on the trailing edge.
+        '[--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 transition-[opacity,transform] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
         // The body text stays --foreground (legibility); the tinted-glass wash + the
         // tone-keyed rim + the full-chroma glyph carry the semantic. Toggling on the
         // tone register only for a NON-default variant keeps `default` the un-toned

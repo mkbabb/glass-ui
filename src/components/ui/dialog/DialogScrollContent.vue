@@ -38,7 +38,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <DialogContent
         :class="
           cn(
-            'popover-content relative z-overlay grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 [box-shadow:var(--glass-shadow-floating)] duration-200 sm:rounded-dialog md:w-full',
+            // BB.W-CARD-PAD — the overlay-band golden padding ladder + the off-glass
+            // `bg-background` → `glass-floating` tier fix (the scroll dialog had drifted
+            // off the shared floating glass substrate). The overlay anchor lifts the
+            // block axis by sqrt-phi (`*1.272`) over the inline anchor.
+            'popover-content relative z-overlay grid w-full max-w-lg my-8 gap-4 border border-border glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) [box-shadow:var(--glass-shadow-floating)] duration-200 sm:rounded-dialog md:w-full',
             props.class,
           )
         "

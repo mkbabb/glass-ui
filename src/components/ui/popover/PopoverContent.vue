@@ -55,7 +55,7 @@ const surfaceDecoration = computed(() =>
       :data-surface="props.surface"
       :class="
         cn(
-          'popover-content z-popover w-72 glass-floating p-4 popover-animate slide-in-from-side',
+          'popover-content z-popover w-72 glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) popover-animate slide-in-from-side',
           surfaceDecoration,
           props.class,
         )
@@ -72,7 +72,7 @@ const surfaceDecoration = computed(() =>
     :data-surface="props.surface"
     :class="
       cn(
-        'popover-content z-popover w-72 glass-floating p-4 popover-animate slide-in-from-side',
+        'popover-content z-popover w-72 glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) popover-animate slide-in-from-side',
         surfaceDecoration,
         props.class,
       )

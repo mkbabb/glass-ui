@@ -19,7 +19,10 @@ export const sheetVariants = cva(
   // Composes the canonical `sheet-animate` utility (utilities.css:449-454)
   // for the data-state animation pair — the prior literal `duration-300/-500`
   // bypassed the canon (audit U.W0.C-a §2.3).
-  'fixed z-modal gap-4 glass-floating p-6 transition ease-in-out sheet-animate',
+  // BB.W-CARD-PAD — the overlay-band golden padding ladder: the inline anchor is
+  // --spacing(6) = 24px, the block axis lifts by sqrt-phi (`*1.272`) so the
+  // heading clears the top edge. `gap-4` between sections STAYS.
+  'fixed z-modal gap-4 glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate',
   {
     variants: {
       side: {

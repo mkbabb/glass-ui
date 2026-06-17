@@ -99,6 +99,21 @@ const RUNTIME_PROPS = new Set([
     "--stack-overlap-sm",
     "--stack-overlap-md",
     "--stack-overlap-lg",
+    // BB.W-CARD-PAD — the golden card+overlay padding ladder is minted INLINE on
+    // the component roots (Card.vue / the overlay primitives / DrawerHeader+Footer
+    // via the Tailwind `[--card-pad-inline:--spacing(6)]` arbitrary-property form,
+    // with the sqrt-φ/φ calc derivations), NOT at :root — so the descendant
+    // utilities (`px-(--card-pad-inline)` &c.) the W-EMISSION self-emit ships into
+    // components.css reference these as runtime props resolved on the host root.
+    // Mirrors the --dock-pos / --carousel-nav-* / --stack-overlap-* component-scoped
+    // runtime-prop pattern above.
+    "--card-pad-inline",
+    "--card-pad-block",
+    "--card-pad-section-gap",
+    "--card-pad-footer",
+    "--card-pad-title-gap",
+    "--overlay-pad-inline",
+    "--overlay-pad-block",
 ]);
 
 /** Strip CSS block comments so a `--token` mentioned in prose is not counted. */

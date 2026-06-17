@@ -83,7 +83,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 // Center fade + zoom only — no slide animation. The glass-floating tier
 // (composed via `variantClasses` below) paints `--glass-shadow-floating`;
 // the prior `shadow-xl` literal clobbered it (audit U.W0.C-a §5.2).
-const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 p-6'
+// BB.W-CARD-PAD — the overlay-band golden padding ladder. The overlay anchor is
+// `--overlay-pad-inline` (--spacing(6) = 24px for the modal band); the block axis
+// lifts by sqrt-phi (`*1.272`) so the heading clears the top edge against a 24px
+// side. `gap-4` between header/body/footer sections STAYS (the overlay-band rhythm).
+const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)'
 // Default cubic path retains the canonical popover-animate + translate trick.
 const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-normal popover-animate'
 

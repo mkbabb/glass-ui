@@ -127,7 +127,7 @@ const states: EmptyState[] = [
                     'hover:-translate-x-px hover:-translate-y-px',
                 )"
             >
-                <CardContent class="flex flex-col items-center gap-[calc(1rem_+_var(--density-gap,0rem))] px-[calc(1.5rem_+_var(--density-pad,0rem))] py-[calc(2.5rem_+_var(--density-pad,0rem))] text-center">
+                <CardContent class="flex flex-col items-center gap-[calc(1rem_+_var(--density-gap,0rem))] px-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))] py-[calc(var(--card-pad-block)_+_var(--density-pad,0rem))] text-center">
                     <IconChip
                         :icon="state.icon"
                         :section="state.section"

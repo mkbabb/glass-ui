@@ -63,7 +63,7 @@ const props = defineProps<{
   <div
     data-slot="card-header"
     :class="cn(
-      '@container/card-header flex flex-col gap-y-1.5 p-(--card-spacing)',
+      '@container/card-header flex flex-col gap-y-(--card-pad-title-gap) px-(--card-pad-inline) pt-(--card-pad-block) pb-0',
       // AW.W24 — when a <CardAction> slot is present, the header reflows to a
       // two-column grid (content | action) so the action sits top-right. With
       // no action it stays the flex column (zero delta for the 5+ consumers).

@@ -81,10 +81,12 @@
        the prior hand-set `p-1`/literal, so a consumer retunes every teleported
        menu/panel surface from one override. The comfortable default is `0.375rem`
        (a half-rung over the prior 0.25rem tight floor — comfortable both modes
-       without over-padding a dense menu list). PopoverContent keeps its own
-       `--panel-padding-roomy` (1rem) for the prose-popover register. */
+       without over-padding a dense menu list). BB.W-CARD-PAD — the dead
+       `--panel-padding-roomy` (1rem) is DELETED here (clean break, no alias): it
+       had ZERO `var(--panel-padding-roomy)` consumers (the prose-popover register
+       it claimed to back never read it — PopoverContent paints `p-4` directly), so
+       it was an orphan declaration the golden-padding cut prunes. */
     --panel-padding:       0.375rem;
-    --panel-padding-roomy: 1rem;
     --chart-height-compact: 15rem;
     --chart-height-default: 22.5rem;
     --chart-height-large: 25rem;

@@ -30,7 +30,7 @@ const forwardedProps = useForwardProps(delegatedProps)
       v-bind="forwardedProps"
       :class="
         cn(
-          'z-hovercard w-64 rounded-panel border glass-floating p-4 text-popover-foreground outline-none popover-animate slide-in-from-side',
+          'z-hovercard w-64 rounded-panel border glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-popover-foreground outline-none popover-animate slide-in-from-side',
           props.class,
         )
       "

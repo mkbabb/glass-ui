@@ -186,7 +186,7 @@ const claims = [
                     :key="claim.title"
                     :class="
                         cn(
-                            'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(2rem_+_var(--density-pad,0rem))]',
+                            'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-block)_+_var(--density-pad,0rem))]',
                             idx < claims.length - 1 &&
                                 'md:border-r md:border-border/40',
                             idx < claims.length - 1 &&

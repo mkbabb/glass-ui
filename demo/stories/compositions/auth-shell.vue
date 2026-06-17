@@ -107,7 +107,7 @@ const trustBadges = [
             </div>
 
             <div
-                class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(2.5rem_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
+                class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(var(--card-pad-block,calc(--spacing(6)_*_1.272))_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
                 <div class="flex flex-col gap-2">
                     <span class="section-label">Sign in</span>

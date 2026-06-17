@@ -82,7 +82,7 @@ const groups: Record<string, Group> = {
                 </div>
                 <Card class="border-2 border-foreground/10">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
                     >
                         <LabeledInput
                             v-model="displayName"
@@ -116,7 +116,7 @@ const groups: Record<string, Group> = {
                         :class="
                             cn(
                                 'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
-                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
+                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]',
                             )
                         "
                     >
@@ -210,7 +210,7 @@ const groups: Record<string, Group> = {
                 </div>
                 <Card class="border-2 border-foreground/10">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
                     >
                         <LabeledSwitch
                             :checked="emailAlerts"
@@ -248,7 +248,7 @@ const groups: Record<string, Group> = {
                 </div>
                 <Card class="border-2 border-foreground/10">
                     <CardContent
-                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]"
+                        class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))]"
                     >
                         <LabeledSwitch
                             :checked="reducedMotion"

@@ -156,12 +156,27 @@ useStalePropWarning("Card");
         :class="
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',
-                // AW.W24 — mint the `--card-spacing` knob on the card root. The
-                // three subcomponents drive their padding from it, so one
-                // override retunes all of them. Default `--spacing(6)` preserves
-                // the existing `p-6` rhythm at zero visual delta; `data-size=sm`
-                // tightens it one step (the shadcn-2025 `data-size` card knob).
-                '[--card-spacing:--spacing(6)] data-[size=sm]:[--card-spacing:--spacing(4)]',
+                // BB.W-CARD-PAD — the GOLDEN sqrt-φ/φ padding ladder, minted on
+                // the card root. The single anchor is `--card-pad-inline`
+                // (`--spacing(6)` = 24px; `data-size=sm` tightens it to
+                // `--spacing(4)` = 16px) — the ONE preserved side margin every
+                // other rung derives from in calc(), so a single override retunes
+                // the whole ladder. The sqrt-φ (1.272) / φ (1.618) / φ² (2.618)
+                // constants are EXPRESSED in the calc chains — never a flat
+                // resolved-rem rebake:
+                //   --card-pad-block       = inline × 1.272 (~30.5px) — the
+                //       sqrt-φ-lifted top/bottom: the block axis breathes ABOVE
+                //       the inline so the heading CLEARS the top edge (the prior
+                //       uniform 1:1 axis hugged the heading to the border).
+                //   --card-pad-section-gap = --card-pad-block — the SINGLE interior
+                //       header→content breath (CardHeader zeroes its block-end so
+                //       CardContent owns this gap, killing the 48px double-pad).
+                //   --card-pad-footer      = block ÷ 1.618 (~18.9px) — the
+                //       φ-stepped settling footer cadence.
+                //   --card-pad-title-gap   = inline ÷ 2.618 (~9.2px) — the
+                //       φ²-tight intra-header gap (replaces the flat gap-y-1.5).
+                // CLEAN BREAK: the prior `--card-spacing` knob is GONE, no alias.
+                '[--card-pad-inline:--spacing(6)] [--card-pad-block:calc(var(--card-pad-inline)*1.272)] [--card-pad-section-gap:var(--card-pad-block)] [--card-pad-footer:calc(var(--card-pad-block)/1.618)] [--card-pad-title-gap:calc(var(--card-pad-inline)/2.618)] data-[size=sm]:[--card-pad-inline:--spacing(4)]',
                 // AX.W54 — `opaque` is the `--glass-level:0` escape, NOT a base
                 // rung: `.glass-opaque` only sets the level scalar, so it must
                 // ride a base tier class to keep the glass edge/rim/under-shadow

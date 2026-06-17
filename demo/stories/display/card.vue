@@ -206,7 +206,7 @@ const veilFeather = ref(false);
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="grid gap-4">
-                    <Card tier="wash" :shadow="false" class="p-4 text-sm">
+                    <Card tier="wash" :shadow="false" class="text-sm">
                         <span class="font-mono text-xs text-muted-foreground">
                             inner: tier=wash, shadow=false
                         </span>
@@ -241,7 +241,7 @@ const veilFeather = ref(false);
                     :key="a.id"
                     tier="quiet"
                     surface="cartoon"
-                    class="p-6"
+                    class="p-(--card-pad-inline)"
                     :style="{ borderColor: a.color }"
                 >
                     <h3 class="text-lg font-semibold">{{ a.label }}</h3>
@@ -254,8 +254,8 @@ const veilFeather = ref(false);
                 </Card>
             </div>
 
-            <Card surface="cartoon" class="flex flex-col gap-4 p-6">
-                <CardHeader class="p-0">
+            <Card surface="cartoon" class="flex flex-col gap-4 p-(--card-pad-inline)">
+                <CardHeader>
                     <CardTitle class="text-lg font-semibold">Set a target</CardTitle>
                     <CardDescription>
                         Default tier (<code class="font-mono text-xs">resting</code>)
@@ -306,7 +306,7 @@ const veilFeather = ref(false);
                         surface="veil"
                         tier="quiet"
                         :grain="false"
-                        class="max-w-2xl p-8"
+                        class="max-w-2xl p-(--card-pad-block)"
                         :style="
                             veilFeather
                                 ? { '--veil-feather': 'var(--veil-feather-radial)' }
@@ -332,7 +332,7 @@ const veilFeather = ref(false);
                         surface="veil"
                         tier="wash"
                         :grain="false"
-                        class="max-w-md self-end p-6 text-right"
+                        class="max-w-md self-end p-(--card-pad-inline) text-right"
                         :style="
                             veilFeather
                                 ? { '--veil-feather': 'var(--veil-feather-radial)' }
@@ -457,7 +457,7 @@ const veilFeather = ref(false);
             >
                 <CardHeader
                     shrink
-                    class="sticky top-0 z-10 backdrop-blur-md p-(--card-spacing)"
+                    class="sticky top-0 z-10 backdrop-blur-md px-(--card-pad-inline) pt-(--card-pad-block) pb-0"
                     data-testid="card-shrink-header"
                 >
                     <CardTitle
