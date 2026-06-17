@@ -32,12 +32,18 @@ re-recorded there if the empirical capture demands a re-tune.
     {
       "viz": "aurora",
       "subpath": "/aurora",
-      "status": "pending",
-      "primary": null,
+      "status": "verified",
+      "primary": "src/components/custom/aurora/constants/shaders/aurora.wgsl.ts",
       "fallback": "src/components/custom/aurora/constants/shaders/aurora.frag.ts",
       "rank": 1,
       "subWave": "BB.W-VIZ-SUITE.b W-AURORA-WGPU",
-      "note": "the cleanest port (405L, 0 textures / 0 derivatives, pure fbm/OKLCh fullscreen); the WGSL primary lands at W-AURORA-WGPU + calibrates the ΔE bar. The .frag stays the byte-untouched WebGL2 fallback."
+      "captures": [
+        "docs/tranches/BB/audit/visual/aurora-wgpu-parity/aurora-wgpu-primary.png",
+        "docs/tranches/BB/audit/visual/aurora-wgpu-parity/aurora-webgl2-fallback.png",
+        "docs/tranches/BB/audit/visual/aurora-wgpu-parity/parity-record.json"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "MIGRATED — the cleanest port (405L, 0 textures / 0 derivatives, pure fbm/OKLCh fullscreen). aurora.wgsl.ts is the WebGPU-first primary (the house spliceable-module form, splicing the WGSL twin procedural-color.wgsl.ts); aurora.frag.ts stays the byte-untouched WebGL2 fallback (git diff --stat empty). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY (the parity-critical shared color seam — OETF + Ottosson OKLCh + ramp + PBR-Neutral tonemap — evaluated through both chunk variants over the same deterministic field; mean/p99 = 0.0, both chunks numerically identical). The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE. This anchors the ΔE bar (mean ≤ 2.0 / p99 ≤ 5.0)."
     },
     {
       "viz": "goo-blob",

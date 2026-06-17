@@ -154,11 +154,15 @@ export function detectAuroraSwraster(sources) {
         /wedgeBlocked\s*=[\s\S]{0,120}?!\s*options\.forceWebGLUnderSoftwareRaster[\s\S]{0,40}?isSoftwareWebGLRenderer\s*\(\s*\)/.test(
             rt,
         );
-    // Under the block the WebGL canvas is NOT created — the createWebGLCanvas call
-    // is on the FALSE arm of a `wedgeBlocked ? inertHandle : createWebGLCanvas`
-    // ternary (an inert handle on the blocked arm).
+    // Under the block the GL/GPU substrate is NOT created — the substrate-constructor
+    // call is on the FALSE arm of a `wedgeBlocked ? inertHandle : create…(…)` ternary
+    // (an inert handle on the blocked arm). BB.W-VIZ-SUITE (W-AURORA-WGPU) re-points the
+    // aurora substrate off the direct `createWebGLCanvas` onto the feature-detect picker
+    // `createGpuSubstrate` (WebGPU-first / WebGL2-fallback) — the wedge-catch INTENT is
+    // unchanged (the inert handle blocks the substrate under a software renderer), so the
+    // regex accepts either constructor name on the FALSE arm.
     facts.w2.inertHandleOnBlock =
-        /wedgeBlocked\s*\?\s*inertHandle\s*:\s*createWebGLCanvas/.test(rt) &&
+        /wedgeBlocked\s*\?\s*inertHandle\s*:\s*create(WebGLCanvas|GpuSubstrate)/.test(rt) &&
         /const\s+inertHandle\s*:/.test(rt);
     // The onInitError contract is preserved — the runtime still surfaces genuine
     // eager-path throws (the surfaceInitError/throw path is NOT removed). We assert

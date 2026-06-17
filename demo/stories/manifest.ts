@@ -445,6 +445,12 @@ export const CATEGORIES: Category[] = [
                 "Command Palette",
                 "Fuzzy command tool — a search/command overlay surface, dropdown / context-menu / command-palette family.",
             ),
+            s(
+                "containers",
+                "spa-view",
+                "SpaView",
+                "Bounded view-cache router pane — <SpaView :max> over Vue's <KeepAlive> + an out-in cross-fade; inactive views stay mounted (state survives the switch) up to the LRU cap.",
+            ),
         ],
     },
     {

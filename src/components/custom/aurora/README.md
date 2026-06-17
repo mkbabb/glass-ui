@@ -426,12 +426,37 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
   runtime toggle freezes/wakes. Cursor easing is JS-side (position/strength lerp + decay in
   the runtime, not the shader) so the response stays breath-paced and framerate-independent.
 
-### Substrate
+### Substrate (BB.W-VIZ-SUITE / W-AURORA-WGPU — the first migrated viz)
 
-Aurora renders on a single-pass WebGL2 fragment shader. WebGPU was investigated and
-the multi-pass painterly half (the Gaussian-smoothed structure tensor + anisotropic Kuwahara
-finish a single-pass shader cannot express) was excised as substrate-without-consumer — the
-WebGL2 fragment path is the sole renderer.
+Aurora is the FIRST procedural-suite viz migrated to the WebGPU-first dual-substrate
+(BB.W-VIZ-SUITE). It renders the SAME single-pass fullscreen procedural fragment field
+through ONE of two backends, picked ONCE at mount by `createGpuSubstrate`
+(`navigator.gpu` feature-detect):
+
+- **`aurora.wgsl.ts` — the WebGPU-FIRST primary** (net-new). The fbm/OKLCh nuclei field
+  + the PBR-Neutral tonemap + the mandatory `linearToSrgb` OETF, transcribed to WGSL over
+  the full-screen-triangle `vs_main`, splicing the shared `procedural-color.wgsl.ts` chunk
+  (the WGSL twin of the AV.W2 GLSL chunk — ONE color math across both backends). The
+  default-smooth atmospheric pipeline is the parity surface; the painterly mediums
+  (uMedium 1-6) + the brush SDF are the WebGL2 fallback's full-fidelity register (the
+  booked W-AURORA-WGPU-MEDIUMS successor ports the painterly WGSL bodies).
+- **`aurora.frag.ts` — the WebGL2 fallback** (BYTE-UNTOUCHED — the GL-shader fence). The
+  graceful path for the ~5-10% tail (Linux Firefox stable, pre-A12 iPhones, flagged
+  Firefox-Android), AND the full-fidelity painterly-medium register at HEAD. NOT retired.
+
+The two backends compose the SAME `createCanvasLifecycle` leaf (the offscreen-pause +
+live-PRM-freeze + demand-loop discipline is byte-identical), so the lifecycle wiring
+(`useIntersectionPause`, `DockBackgroundToggle` pause/resume, pointer `wake`) is
+substrate-agnostic. Parity is machine-locked by `proof:gpu-substrate-single` (the aurora
+row is `verified` with a recorded OKLab ΔE within the calibrated bar — mean ≤ 2.0 / p99 ≤
+5.0); the device-free structural-proxy capture-pair is on disk
+(`docs/tranches/BB/audit/visual/aurora-wgpu-parity/`), the binding Metal-GPU live capture
+rides W-REFLECT3.
+
+(The earlier WebGPU investigation — the multi-pass painterly half, the Gaussian-smoothed
+structure tensor + anisotropic Kuwahara finish a single-pass shader cannot express — was
+the MULTI-PASS register, distinct from this single-pass fullscreen WGSL migration. The
+multi-pass painterly path remains a successor; this wave migrates the single-pass field.)
 
 ---
 

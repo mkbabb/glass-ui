@@ -23,13 +23,14 @@
 import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { resolveAuroraWashDpr } from "../constants/budget";
-import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { createGpuSubstrate } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
 import { createCursorState, injectCursorVelocity as injectCursorVel } from "./cursorModel";
 import { createFrameLoop } from "./frameLoop";
+import { createAuroraWGPUSetup } from "./wgpuSetup";
 
 export type AuroraRuntimeMode = "live" | "capture";
 
@@ -185,11 +186,16 @@ export function createAurora(
     // `config` for the next `setup` to upload.
     let setConfig: ((cfg: AuroraConfig) => void) | null = null;
 
-    // The WebGL2 fragment path is the universal aurora backend (the single-pass
-    // OKLCh nuclei field over the `createCanvasLifecycle` core). The handle shape
-    // + the park contract are the backend-agnostic substrate seam.
+    // BB.W-VIZ-SUITE (W-AURORA-WGPU) — the aurora fragment path is now substrate-
+    // AGNOSTIC: the WebGPU-first `aurora.wgsl` primary OR the WebGL2 `aurora.frag`
+    // fallback, picked ONCE by `createGpuSubstrate` (`navigator.gpu` feature-detect).
+    // The handle shape + the park contract are the backend-agnostic substrate seam; the
+    // ONLY difference is the start seam — WebGPU needs the async device-acquire
+    // (`armAsync`), so the runtime's arm path awaits it (fire-and-forget with
+    // `onInitError`). The WebGL2 fallback arms synchronously off `arm()`.
     type CanvasHandle = {
         arm: () => void;
+        armAsync?: () => Promise<void>;
         suspend: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
         resume: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
         wake: () => void;
@@ -213,7 +219,7 @@ export function createAurora(
 
     const canvasHandle: CanvasHandle = wedgeBlocked
         ? inertHandle
-        : createWebGLCanvas(canvas, {
+        : createGpuSubstrate(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
         contextAttrs: {
             antialias: false,
@@ -223,11 +229,22 @@ export function createAurora(
             // readPixels/toDataURL after a deterministic renderAt() draw.
             preserveDrawingBuffer,
         },
+        // BB.W-VIZ-SUITE (W-AURORA-WGPU) — the WGSL primary path (`aurora.wgsl`). The
+        // picker arms this when `navigator.gpu` is present; the closures below
+        // (cursor/config/reduced-motion) are SHARED with the WebGL2 `setupGL` so the
+        // loop is byte-identical across backends. `aurora.frag.ts` stays the
+        // byte-untouched WebGL2 fallback.
+        setupWGPU: createAuroraWGPUSetup({
+            canvas,
+            cursor,
+            getConfig: () => config,
+            getReducedMotion: () => canvasHandle.reducedMotion,
+        }),
         // Build the program + geometry + uniform cache on a fresh context. The
         // substrate calls this on arm() AND on every webglcontextrestored, so a
         // GPU context loss self-heals — the closures below close over the fresh
         // `gl`/program/seams each time.
-        setup: (gl) => {
+        setupGL: (gl) => {
             const {
                 program: prog,
                 vs,
@@ -378,12 +395,30 @@ export function createAurora(
     // handle, so this `arm()` (and the returned `arm`/`renderAt`) are no-ops: the
     // eager / capture path falls cleanly to the placeholder, never the hang, and
     // never a thrown `onInitError` (a software-raster fall is not a violation).
+    // BB.W-VIZ-SUITE (W-AURORA-WGPU) — the arm seam is now backend-aware. The WebGPU
+    // path needs the async device-acquire (`armAsync`); the WebGL2 fallback arms
+    // synchronously off `arm()`. `armRuntime()` calls `armAsync` when the picker
+    // exposes it (the WebGPU backend) and routes a device-init failure to
+    // `onInitError` (or rethrows on the microtask queue via the default the Vue
+    // wrapper installs); otherwise the synchronous `arm()`.
+    function armRuntime(): void {
+        if (canvasHandle.armAsync) {
+            void canvasHandle.armAsync().catch((err: unknown) => {
+                options.onInitError?.(
+                    err instanceof Error ? err : new Error(String(err)),
+                );
+            });
+        } else {
+            canvasHandle.arm();
+        }
+    }
+
     if (options.mode !== "capture" && shouldInitEagerly(options)) {
-        canvasHandle.arm();
+        armRuntime();
     }
 
     return {
-        arm: () => canvasHandle.arm(),
+        arm: () => armRuntime(),
         update: (cfg) => {
             // Pre-arm: stash the config so the next `setup` uploads the latest.
             // Post-arm: upload immediately. Either way the next drawn frame is

@@ -1282,6 +1282,18 @@ export const GATES = [
         note: "BB.W-CARD-TIER-ALPHA (B8, routed speedtest ASK-GU-CARD-TIER-ALPHA-PIN) — the per-tier alpha is CANONICAL at the primitive. The library already ships the tier-opacity primitives (--glass-opacity-{wash,quiet,resting,floating,overlay,dock,chassis}); this wave CANONICALIZES them as the NAMED identity register (documented, gated) so a consumer reads the named alpha instead of re-pinning magic numbers (the speedtest register.css --glass-bg-{tier} re-declarations). Device-free SOURCE: T1 each ladder tier + dock + chassis carries the canonical named alpha (light, tokens/glass.css) at the library-identity value; T2 the light ladder is alpha-monotonic; T3 the dark arm (tokens/dark-arm.css) carries the SAME named register, each rung LIFTED over light + monotonic, dock alpha mode-INVARIANT (no dark re-pin); T4 each --glass-bg-{tier} composes its named alpha through the EXACT AX.W54 --glass-level seam at its ONE :root site (the recipe MECHANISM untouched — proof:glass-level stays GREEN by construction); T5 the canonical register + the substitution-vs-inheritance retune seam are RECORDED in both arms (born-RED 3 violations at pre-wave un-canonicalized source); T6 consumer-override-deletes-byte-equivalent (a re-pin to the canonical alpha composes the byte-identical level-1 fill — the deletable no-op proof; a divergent value is a legitimate consumer preset, presets-in-consumers). 5-bite self-test (missing tier / non-monotonic ladder / dark arm not lifting / recipe detached from level seam / dock re-pinned in dark — each MUST flag). The binding π (per-tier composited-fill readback over a busy backdrop, both modes) + the proof:ba-gestalt glass-band verdict ride W-REFLECT3. Bite: change a tier alpha off its canonical value / break ladder monotonicity / detach a --glass-bg site from the level seam / drop the canon-register doc → RED.",
     },
     {
+        id: "proof:spa-view",
+        cmd: "proof:spa-view",
+        tags: ["local", "ci"],
+        note: "BB.B7 W-SPAVIEW-CACHE — the published <SpaView :max> bounded view-cache router pane (KeepAlive-is-the-cache/no-fork + :max cap + out-in compositor-only PRM-gated + colocation/publication + a no-fork self-test bite)",
+    },
+    {
+        id: "proof:spring-crisp",
+        cmd: "proof:spring-crisp",
+        tags: ["local", "ci"],
+        note: "B9 NO-OP LOCK: --spring-crisp ABSENT (the >=2-consumer bar UNMET — 1 live speedtest consumer self-hosting a local override). SPRING_PRESETS stays the 5 canonical rows; a future agent cannot slip the token in unaudited (D1-D3 + 2 self-test bites). Flips RED->GREEN-at-mint IF >=2 real surfaces ever land.",
+    },
+    {
         id: "proof:eyebrow-union",
         cmd: "proof:eyebrow-union",
         tags: ["local", "ci"],

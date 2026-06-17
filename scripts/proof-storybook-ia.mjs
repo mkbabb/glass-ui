@@ -77,6 +77,9 @@ export const EXPECTED_TREE = [
         "dialog", "sheet", "drawer", "popover",
         "dropdown-menu", "context-menu", "hover-card", "tooltip", "accordion",
         "collapsible", "hover-popover", "expandable-container", "command",
+        // `spa-view` joined at BB.B7 (W-SPAVIEW-CACHE — the <SpaView :max>
+        // bounded view-cache router pane over Vue's <KeepAlive> + out-in).
+        "spa-view",
     ]],
     // `header-ribbon` RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js
     // binary consumer — the published subpath ships again WITH its story).

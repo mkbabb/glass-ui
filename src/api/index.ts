@@ -192,6 +192,7 @@ export type {
 // preset panels) type their forwarded prop bag against this. (AZ.W-PRUNE2
 // RESTORE — re-published with the GlassPanel surface for the keyframes consumer.)
 export type { GlassPanelProps } from "../components/custom/glass-panel";
+export type { SpaViewProps } from "../components/custom/spa-view";
 
 // ── Toast row shape ──────────────────────────────────────────────────────────
 // `ToastType` is the canonical toast row shape (aliased from `Toast` on the
