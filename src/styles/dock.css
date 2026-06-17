@@ -67,6 +67,38 @@
     initial-value: 0;
 }
 
+/* BB.W-DOCK-MORPH-FAMILY (e) — the `@property`-registered dock-scale axis. The
+   dock-scale cascade is `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale,
+   1))` (tokens/sizing.css). UNregistered, that `calc()` substitutes ONCE at `:root`
+   against the `:root` identity `--dock-local-scale: 1`, so a consumer-scope
+   `--dock-local-scale` override is INHERITED but never RE-EVALUATED — the dock keeps
+   `--dock-scale: calc(1 * 1)` and stays at the unscaled base (the 3rd recurrence of
+   the AX.W55 substitution-vs-inheritance trap; the documented-but-broken `:root`
+   preset). Registering `--dock-local-scale` as an INHERITING `@property <number>`
+   makes a registered inheriting custom property re-substitute PER-ELEMENT, so a
+   `--dock-local-scale` override on ANY dock scope re-evaluates the `calc()` at that
+   scope and threads the whole geometry cascade (box·pad·gap·tab·tile·glyph) down in
+   lockstep — the `:root` preset made real (the `@property --dock-morph-t` house
+   idiom above is the precedent). `--dock-scale` itself is ALSO registered (the
+   derived axis) so its `calc()` re-resolves per-element when `--dock-local-scale`
+   shifts. ADDITIVE ONLY: `initial-value: 1` is the identity, so at the default
+   `--dock-local-scale: 1` the resolved `--dock-scale` is byte-IDENTICAL to HEAD (no
+   rung re-tune); the `@media (pointer: coarse)` re-declare (overflow.css) STAYS the
+   `:root`-equivalent re-resolve, and this registration is the complementary
+   non-`:root`-scope thread. DOCK_SPRING is untouched (this is a token registration,
+   not a clock). */
+@property --dock-local-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
+@property --dock-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
 @layer components {
     :where(
         .glass-dock,

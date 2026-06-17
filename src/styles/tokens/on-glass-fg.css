@@ -1,0 +1,39 @@
+/* tokens/on-glass-fg.css
+   The surface-aware FOREGROUND register (BB.W-ON-GLASS-FG — N13). Carved out of
+   tokens/glass.css to keep that partial under the no-god-module bound; @import-ed
+   by tokens.css in cascade order AFTER glass.css (the rungs derive against the
+   glass-bg-quiet composite, so they must resolve after the §8 ladder). Same :root
+   cascade context as its sibling token partials.
+
+   A THREE-RUNG on-glass family whose contrast TARGET is the COMPOSITED content-
+   tier glass FILL, not the canvas. The glass-first MAXIMAL default (AX.W54) makes
+   a caption/well/track rendering over a TRANSLUCENT content plate the common case;
+   --muted-foreground (= --neutral-5, "AA vs page") collapses on its OWN surface
+   (the speedtest ask measured 1.15-3.29:1 in dark theme — the "whisper collapse").
+
+   This is the THIRD state the BA adaptive-glass seam never expressed (the SAME
+   --glass-tint-* cascade context, NOT a fork): (a) bright/darkened plate → full
+   ink (the @container bright bucket + the overlay band, shipped — glass/ladder.css);
+   (b) opaque canvas → page-muted (--neutral-5, kept); (c) THIS — calm translucent
+   glass plate → a register BETWEEN page-muted and full-ink (legible-AND-subordinate;
+   a caption stays quieter than body ink WHILE clearing AA on the composited plate).
+
+   The values are DERIVED against the LIBRARY composite (--card over --neutral-0
+   through --glass-bg-quiet at --glass-tint-strength-floor), warm-amber (the BA.W-
+   NO-GRAY identity, OKLab gray floor cleared at the warm hue) — NOT copied from
+   the slides deck.css §1 reference (the deck's NC-State-red warm-cream literals
+   hsl(24 6% 44%)/hsl(45 12% 64%) are a CONSUMER divergence; the library re-derives).
+   NO ppmycota/demo hue. The page-muted register (--muted-foreground/-strong) is
+   UNTOUCHED — the on-glass rungs are NET-NEW; the glass/ladder.css calm-tier rule
+   re-points --muted-foreground → these on the engaged plate, no per-site edit.
+
+   PLAIN PER-MODE ARM idiom (light here, dark in tokens/dark-arm.css) — NOT
+   light-dark(): the house pattern every explicit-color token follows (a re-
+   resolution under .dark, not a single-declaration light-dark() that an inset-
+   shadow downstream could collapse — the light-dark() inset-shadow trap). */
+:root {
+    --on-glass-muted:        hsl(30 26% 35%);   /* the muted caption rung over the composited cream plate (5.76:1 vs plate; darker than --neutral-5 L40) */
+    --on-glass-muted-strong: hsl(28 28% 28%);   /* the -strong secondary rung, one step more present (7.79:1 vs plate) */
+    --input-on-glass:        hsl(36 40% 92%);   /* the form-well fill over glass — grounded warm so the input TEXT (--foreground) reads against a stable base (14.9:1) */
+    --progress-track-on-glass: hsl(34 24% 84%); /* the recessed meter track over glass — a warm channel distinct from the fill silhouette */
+}

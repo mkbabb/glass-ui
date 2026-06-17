@@ -64,6 +64,14 @@ const RATCHET_BASELINES = {
     // carved the files — a stale row reds, the gate's own guard). The close state
     // is now reached for the three CARVE3 files: `violations == []` for them AND
     // their rows are gone from the ratchet.
+    //
+    // BB.W-DOCK-MORPH-FAMILY re-armed ONE row: dockMorphContext.ts grew past 500
+    // (the P0 terminal repair — the SYNCHRONOUS PRM seat + the reserved-footprint
+    // measure logic: the measureTo/seatTargetSync/seatSync helpers). BOOK(BB.W-CARVE4)
+    // — the Batch-6 residual carve extracts the measure/seat helpers into a sibling
+    // composables/dockMorphMeasure.ts (the aurora/goo-blob colocation pattern; the
+    // orchestrator stays the morph driver); drained to {} before the Batch-7 close.
+    "components/custom/dock/composables/dockMorphContext.ts": 575, // BOOK(BB.W-CARVE4): extract the measure/seat helpers → composables/dockMorphMeasure.ts (Batch 6)
 };
 
 let _cliPaths = null;

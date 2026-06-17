@@ -65,7 +65,7 @@ const crescendoStyle = computed(() => {
         v-bind="delegatedProps"
         :class="
             cn(
-                'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--secondary))] progress-gradient-rail',
+                'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--progress-track-on-glass))] progress-gradient-rail',
                 props.class,
             )
         "
@@ -117,14 +117,14 @@ const crescendoStyle = computed(() => {
 .progress-gradient-rail[data-indeterminate] {
     background: linear-gradient(
         90deg,
-        var(--progress-track, var(--secondary)) 0%,
+        var(--progress-track, var(--progress-track-on-glass)) 0%,
         color-mix(
                 in srgb,
                 var(--progress-fill, var(--primary)) 60%,
-                var(--progress-track, var(--secondary))
+                var(--progress-track, var(--progress-track-on-glass))
             )
             50%,
-        var(--progress-track, var(--secondary)) 100%
+        var(--progress-track, var(--progress-track-on-glass)) 100%
     );
     background-size: 200% 100%;
     animation: progress-indeterminate-sweep

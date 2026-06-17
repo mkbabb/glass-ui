@@ -36,6 +36,10 @@ export const CSS_MONOLITHS = {
             "color-radius.css",
             "shadow.css",
             "glass.css",
+            // BB.W-ON-GLASS-FG — the on-glass foreground register, carved out of
+            // glass.css to hold the bound, @import-ed right after it (the rungs
+            // derive against the §8 ladder composite, so they resolve after it).
+            "on-glass-fg.css",
             // BB.W-CARVE3 — offsets-sizing.css carved at the §9/§10 seam into two
             // adjacent same-selector :root partials at the same cascade slot
             // (offsets.css §9 ANIMATION OFFSETS, then sizing.css §10 SIZING).

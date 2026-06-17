@@ -24,6 +24,7 @@ import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { resolveAuroraWashDpr } from "../constants/budget";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
@@ -83,8 +84,27 @@ export interface AuroraRuntimeOptions {
      * NOTE: this is the `useAurora` Vue-wrapper contract surface. The imperative
      * `createAurora(...)` runtime throws on eager init failure and — for
      * `instance.arm()` on the deferred path — rethrows from `arm()`.
+     *
+     * BB.W-AURORA-SWRASTER — a SOFTWARE-RASTER fall is NOT a contract violation:
+     * it never reaches `onInitError`. The wedge catch (see {@link createAurora})
+     * recognizes the software-raster signal at arm time, leaves the canvas
+     * un-armed (the placeholder stays the surface), and returns CLEANLY — so a
+     * consumer who pins `mode:"capture"`/`mode:"webgl"` under SwiftShader never
+     * has to wire `onInitError` to avoid the hang. The handler is preserved for
+     * GENUINE violations (a malformed shader, an OOM, a real link failure).
      */
     onInitError?: (err: Error) => void;
+    /**
+     * BB.W-AURORA-SWRASTER — opt OUT of the runtime software-raster wedge catch.
+     * Default `false`: the wedge catch is the safe default — `createAurora`
+     * recognizes a software renderer at arm time and falls cleanly to the
+     * placeholder rather than arming the page-wedging live GL layer. `true` (the
+     * named, recorded escape for a deterministic test that ACCEPTS the cost)
+     * arms WebGL even under a detected software renderer. Mirrors the
+     * `resolveRenderMode` escape of the same name — ONE consumer-facing flag,
+     * threaded through both seams.
+     */
+    forceWebGLUnderSoftwareRaster?: boolean;
 }
 
 function shouldInitEagerly(options: AuroraRuntimeOptions): boolean {
@@ -130,6 +150,20 @@ export function createAurora(
 ): AuroraRuntime {
     const preserveDrawingBuffer = shouldPreserveDrawingBuffer(options);
 
+    // BB.W-AURORA-SWRASTER — THE WEDGE CATCH (the guard's second leg). A consumer
+    // that bypasses `resolveRenderMode` (a direct `createAurora(canvas, cfg,
+    // {mode:"capture"})` / `{initStrategy:"eager"}`) reaches the live GL layer
+    // un-probed. We re-run the SAME software-raster predicate here (ONE detector,
+    // shared from renderMode.ts — no second `getContext("webgl2")` is minted; this
+    // composes the substrate's single probe): when a software renderer is detected
+    // AND the escape is OFF, we NEVER create the WebGL canvas. The runtime returns
+    // inert handles — the placeholder stays the surface, `renderAt`/`arm` are
+    // no-ops — so the page never wedges and `onInitError` is NOT fired (a
+    // software-raster fall is a recognized substrate decision, not a contract
+    // violation). The `forceWebGLUnderSoftwareRaster` escape opts back in.
+    const wedgeBlocked =
+        !options.forceWebGLUnderSoftwareRaster && isSoftwareWebGLRenderer();
+
     // ── Aurora-specific state — survives the cheap-construction → arm() split.
     // These hold cursor / config / motion intent the consumer may set BEFORE the
     // GL path arms. The substrate's `setup(gl)` folds them into the live program
@@ -154,7 +188,7 @@ export function createAurora(
     // The WebGL2 fragment path is the universal aurora backend (the single-pass
     // OKLCh nuclei field over the `createCanvasLifecycle` core). The handle shape
     // + the park contract are the backend-agnostic substrate seam.
-    const canvasHandle: {
+    type CanvasHandle = {
         arm: () => void;
         suspend: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
         resume: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
@@ -162,7 +196,24 @@ export function createAurora(
         renderAt: (timeSec: number) => void;
         dispose: () => void;
         readonly reducedMotion: boolean;
-    } = createWebGLCanvas(canvas, {
+    };
+
+    // The inert handle the wedge catch returns under a software renderer: every
+    // member is a no-op, so the placeholder stays the surface and the page never
+    // arms a software-rastered GL layer (BB.W-AURORA-SWRASTER).
+    const inertHandle: CanvasHandle = {
+        arm: () => {},
+        suspend: () => {},
+        resume: () => {},
+        wake: () => {},
+        renderAt: () => {},
+        dispose: () => {},
+        reducedMotion: false,
+    };
+
+    const canvasHandle: CanvasHandle = wedgeBlocked
+        ? inertHandle
+        : createWebGLCanvas(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
         contextAttrs: {
             antialias: false,
@@ -322,6 +373,11 @@ export function createAurora(
     // path a WebGL2/compile/link failure throws straight out of `createAurora`,
     // exactly as a pre-lazy-arm runtime did (O invariant 24); the deferred path
     // throws from `arm()`.
+    //
+    // BB.W-AURORA-SWRASTER — under the wedge catch `canvasHandle` is the inert
+    // handle, so this `arm()` (and the returned `arm`/`renderAt`) are no-ops: the
+    // eager / capture path falls cleanly to the placeholder, never the hang, and
+    // never a thrown `onInitError` (a software-raster fall is not a violation).
     if (options.mode !== "capture" && shouldInitEagerly(options)) {
         canvasHandle.arm();
     }

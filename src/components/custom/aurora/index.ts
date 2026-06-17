@@ -1,7 +1,16 @@
 export { default as Aurora } from "./Aurora.vue";
 // AM.W1 — adaptive render substrate. `AuroraRenderMode` is the public prop
 // type; `resolveRenderMode` is the device-tier resolver (testable in isolation).
-export { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
+// BB.W-AURORA-SWRASTER — `ResolveRenderModeOptions` carries the
+// `forceWebGLUnderSoftwareRaster` escape; `isSoftwareWebGLRenderer` is the shared
+// software-raster predicate (the runtime wedge catch + the resolver consume ONE
+// detector — no second probe context).
+export {
+    resolveRenderMode,
+    isSoftwareWebGLRenderer,
+    type AuroraRenderMode,
+    type ResolveRenderModeOptions,
+} from "./constants/renderMode";
 export { useAurora } from "./composables/useAurora";
 // O.W4 Lane B — Fix 2 (Rγ L2): named return shape for useAurora.
 export type { UseAuroraReturn } from "./composables/useAurora";
@@ -53,6 +62,19 @@ export {
     oklchToLinear,
     paletteToCssGradient,
 } from "./composables/color";
+// BB.W-AURORA-SWRASTER — the luminance-faithful headless fallback ground (the
+// field-sampled nuclei-glow surface for the software-raster / capture substrate;
+// reuses oklchToLinear — ONE color source). `sampleAuroraField` is the per-pixel
+// static composite mirror the certify π measures.
+export {
+    auroraFallbackGround,
+    sampleAuroraField,
+    nucleiFieldStatic,
+    relativeLuminance,
+    type AuroraFallbackGround,
+    type AuroraFallbackGroundOptions,
+    type AuroraGroundMetrics,
+} from "./composables/auroraFallbackGround";
 // D10b — the seed-one-color → N-stop palette producer (composes the shipped
 // value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.
 // W5 — the derive-color superset: more harmonies + easing + temperature.

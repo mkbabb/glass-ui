@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, readonly, ref, useId, useTemplateRef } from "vue";
+import {
+    computed,
+    onBeforeUnmount,
+    readonly,
+    ref,
+    useId,
+    useTemplateRef,
+    watch,
+} from "vue";
 import type { Component, Ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "../../ui/tabs";
 import { useOptionalDockContext } from "./composables/dockContext";
@@ -9,6 +17,7 @@ import {
 } from "./composables/dockLayerContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
 import { useOptionalDockMorphContext } from "./composables/dockMorphContext";
+import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 
 /**
  * <DockLayerGroup> — a stack of <DockLayer> children with crossfade +
@@ -42,16 +51,65 @@ const dock = useOptionalDockContext();
 
 const layers = ref<DockLayerDescriptor[]>([]);
 const containerEl = useTemplateRef<HTMLElement>("containerEl");
+const groupEl = useTemplateRef<HTMLElement>("groupEl");
 
 function register(desc: DockLayerDescriptor) {
     if (!layers.value.find((l) => l.id === desc.id)) {
         layers.value.push(desc);
     }
+    measurePeak();
 }
 
 function unregister(id: string) {
     layers.value = layers.value.filter((l) => l.id !== id);
+    measurePeak();
 }
+
+/* BB.W-DOCK-MORPH-FAMILY (d) — the group SELF-RESERVES its peak-layer block-size.
+   A multi-layer group swaps panes of differing intrinsic block-size; without a
+   reserve the group collapses to whichever pane is active and a hosting consumer
+   hand-rolls a `--dock-host-reserve` guess (the speedtest interim that over-
+   reserves ~70%). The group MEASURES its registered layers' intrinsic content
+   block-size and reserves the PEAK (the max across panes) as `min-block-size` on
+   its OWN root (NEVER the dock root — the box-inviolate fence holds), exposed as a
+   read-only `--dock-layer-peak-block-size` the consumer can READ but never has to
+   COMPUTE. The measure reads each `.dock-layer-item-host` pane's `scrollHeight`
+   (the intrinsic content height — robust even for the inactive absolute-stretched
+   panes, which a `getBoundingClientRect().height` reads circularly as the container
+   size). Re-measured on a `useResizeObserver` tick (a pane's intrinsic size can
+   change with content) + on register/unregister. The reserve is the bare peak PANE
+   footprint — the host's own padding is the host's concern (no double-count). */
+const peakBlockSize = ref(0);
+
+function measurePeak() {
+    const stack = containerEl.value;
+    const group = groupEl.value;
+    if (!stack || !group) return;
+    let peak = 0;
+    const panes = stack.querySelectorAll<HTMLElement>(".dock-layer-item-host");
+    for (const pane of panes) {
+        // `scrollHeight` is the intrinsic content extent — independent of the
+        // absolute-stretch the inactive panes carry (`inset:0`), so the peak is the
+        // tallest pane's real content, not the container's circular size.
+        const h = pane.scrollHeight;
+        if (h > peak) peak = h;
+    }
+    // Only widen the reserve (the running peak across visited content) so a pane
+    // briefly mid-morph cannot SHRINK the reserve below the tallest pane seen.
+    if (peak > peakBlockSize.value) peakBlockSize.value = peak;
+}
+
+const groupReserveStyle = computed<Record<string, string> | undefined>(() =>
+    peakBlockSize.value > 0
+        ? {
+              "min-block-size": `${peakBlockSize.value}px`,
+              "--dock-layer-peak-block-size": `${peakBlockSize.value}px`,
+          }
+        : undefined,
+);
+
+useResizeObserver(containerEl, () => measurePeak());
+watch(() => layers.value.length, () => measurePeak());
 
 const axis = computed(() => props.orientation ?? dock?.orientation.value ?? "horizontal");
 
@@ -188,8 +246,10 @@ function onRailFocusOut(e: FocusEvent) {
 
 <template>
     <div
+        ref="groupEl"
         class="dock-layer-group"
         :class="[axis, `rail-${railPosition}`]"
+        :style="groupReserveStyle"
     >
         <!-- AY.W-DOCK2 (D5 persistence) — BOOKED: AY.W-GOD1. The switcher rail lives
              inside the layer-group, which sits in the dock's clipped `--full` pane, so

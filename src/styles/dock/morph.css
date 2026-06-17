@@ -34,21 +34,31 @@
        during the morph, so the read resolves the correct in-flight blend (collapse
        1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
        expand-t snaps to the exact class endpoint. */
-    .glass-dock:not(.vertical).expanded,
-    .glass-dock:not(.vertical).always-expanded {
+    /* BB.W-DOCK-MORPH-FAMILY (f) — the `--dock-expand-t` directional derivation is
+       ORIENTATION-AGNOSTIC. The derivation reads the per-swap morph scalar + the
+       synchronously-set `.expanded`/`.collapsed` class — there is NO axis in this
+       blend (a `t`-vs-`1-t` directional read), so the `:not(.vertical)` qualifier is
+       DROPPED here. A collapsing VERTICAL dock now derives the same in-flight
+       expand-t (the box-size arm `layers.css` already morphs `block-size` on
+       `--dock-morph-t`; this gives the chrome the matching directional scalar). The
+       earlier "a vertical rail is ALWAYS-EXPANDED" assumption is retired since
+       vertical-collapse shipped — `alwaysExpanded` defaults false (GlassDock.vue),
+       so a genuinely-collapsing vertical dock gets its chrome on the ONE clock. */
+    .glass-dock.expanded,
+    .glass-dock.always-expanded {
         --dock-expand-t: 1;
     }
 
-    .glass-dock:not(.vertical).collapsed {
+    .glass-dock.collapsed {
         --dock-expand-t: 0;
     }
 
-    .glass-dock:not(.vertical).expanded[data-morphing],
-    .glass-dock:not(.vertical).always-expanded[data-morphing] {
+    .glass-dock.expanded[data-morphing],
+    .glass-dock.always-expanded[data-morphing] {
         --dock-expand-t: var(--dock-morph-t);
     }
 
-    .glass-dock:not(.vertical).collapsed[data-morphing] {
+    .glass-dock.collapsed[data-morphing] {
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
@@ -98,6 +108,43 @@
         );
     }
 
+    /* BB.W-DOCK-MORPH-FAMILY (f) — the VERTICAL chrome-interp un-gate (BB-1). The
+       bg/border interp is AXIS-INVARIANT (a color mix reads the scalar with no
+       axis), so the vertical dock interpolates its plate between the SAME
+       collapsed↔expanded endpoints on the SAME `--dock-expand-t` scalar the
+       horizontal block reads — the ONE `DOCK_SPRING` clock, no second clock, no
+       re-added CSS transition. This PARALLEL `.vertical` block (specificity 0,2,0,
+       source-order AFTER the shell.css static `.glass-dock.vertical` plate so it
+       wins at equal specificity) is the inverse-axis twin of the horizontal block
+       above — the box-size morph already rides `block-size` on `layers.css`'s
+       `--dock-morph-t`; this gives the plate chrome the matching directional blend
+       so the vertical collapse↔expand no longer SNAPS its bg/border discretely. At
+       the rest endpoints `--dock-expand-t` resolves to the class value (0 collapsed
+       / 1 expanded), so the resting look is exact — byte-equivalent to the shell.css
+       static plate it supersedes during the morph. */
+    .glass-dock.vertical {
+        background: color-mix(
+            in srgb,
+            color-mix(
+                in oklab,
+                var(--glass-bg-dock, var(--glass-bg-wash)),
+                var(--glass-tint-source) var(--glass-tint-strength)
+            )
+                calc(var(--dock-expand-t, 1) * 100%),
+            color-mix(
+                in oklab,
+                var(--glass-bg-wash),
+                var(--glass-tint-source) var(--glass-tint-strength)
+            )
+        );
+        border-color: color-mix(
+            in srgb,
+            var(--glass-border-dock, var(--glass-border-wash))
+                calc(var(--dock-expand-t, 1) * 100%),
+            var(--glass-border-floating)
+        );
+    }
+
     /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
        wrap variant's own padding rules (W04 territory — `.dock-overflow-wrap` +
        its `@media` snap-back) are NOT clobbered by this higher-specificity longhand.
@@ -138,6 +185,35 @@
         padding-inline: calc(
             var(--dock-pad-collapsed) +
                 (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
+                var(--dock-expand-t, 1)
+        );
+    }
+
+    /* BB.W-DOCK-MORPH-FAMILY (f) — the VERTICAL padding interp is the AXIS-INVERSE
+       of the horizontal layout-isolation contract above. The vertical collapse↔
+       expand is a BLOCK-HEIGHT aperture (the box-size arm morphs `block-size`,
+       layers.css), so the CROSS (inline) axis MUST be invariant across the morph —
+       else the dock's outer WIDTH changes on collapse and reflows its horizontal
+       siblings (the §1 contract, mirrored onto the vertical axis). So `padding-
+       inline` is PINNED at the expanded inline value in BOTH states, and ONLY
+       `padding-block` morphs to tighten the collapsed pill on the morph axis. The
+       collapsed block-pad endpoint is the EXPANDED inline pad (max'd with the
+       consumer `--dock-collapsed-padding` handle) so the height-pinned-cross collapsed
+       pill is SYMMETRIC. Specificity 0,2,0 source-order after shell.css's static
+       `.glass-dock.vertical` padding so this wins at equal specificity; at the rest
+       endpoints `--dock-expand-t` is the class value so the look is exact. Scoped to
+       the NON-scroll/non-wrap vertical dock. */
+    .glass-dock.vertical:not(.dock-overflow-wrap) {
+        --dock-pad-collapsed: max(
+            var(--dock-padding-inline, 0.5rem),
+            var(--dock-collapsed-padding, 0px)
+        );
+        /* inline padding is INVARIANT — the cross axis, pinned both states so the
+           outer inline-size never changes → 0px horizontal sibling reflow. */
+        padding-inline: var(--dock-padding-inline, 0.5rem);
+        padding-block: calc(
+            var(--dock-pad-collapsed) +
+                (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
                 var(--dock-expand-t, 1)
         );
     }

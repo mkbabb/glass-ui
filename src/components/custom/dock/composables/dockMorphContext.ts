@@ -1,4 +1,4 @@
-import { onUnmounted, readonly, ref, watch } from "vue";
+import { nextTick, onUnmounted, readonly, ref, watch } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { createOptionalContext } from "../../../../composables/context";
@@ -152,6 +152,23 @@ export function useDockMorphOrchestrator(
         }
     }
 
+    /**
+     * BB.W-DOCK-MORPH-FAMILY (c) — the PRM probe. Mirrors
+     * `useDockOrientationMorph.prefersReducedMotion()` (the orientation driver's
+     * precedent this collapse/expand path adopts). Under reduce there is NO morph
+     * to play, so the geometry must seat SYNCHRONOUSLY at the target (no rAF
+     * measure-defer, no morph window) — else the box paints the collapsed `from`
+     * sliver while the spring's `respectReducedMotion` jump already reads the scalar
+     * at the endpoint (the measured 10×74 blank-sliver P0 terminal failure).
+     */
+    function prefersReducedMotion(): boolean {
+        return (
+            typeof window !== "undefined" &&
+            typeof window.matchMedia === "function" &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        );
+    }
+
     function dimOf(axis: "horizontal" | "vertical"): "width" | "height" {
         return axis === "vertical" ? "height" : "width";
     }
@@ -267,6 +284,66 @@ export function useDockMorphOrchestrator(
         ensureSpringRunning();
     }
 
+    /**
+     * BB.W-DOCK-MORPH-FAMILY (c) — measure the true `to` for ONE target with the
+     * morph axis forced to `max-content` (the same circular-measure escape the rAF
+     * path uses), composing the BA-VJS-1 nested-descendant `max-content` ordering so
+     * a nested group reads its TRUE intrinsic span (never `to:0`). The element is at
+     * the live painted geometry on entry; this forces+reads+restores the axis. PURE
+     * measure — no spring, no pin write.
+     */
+    function measureTo(t: MorphTarget, el: HTMLElement): number {
+        const axis = t.axis.value;
+        const prop = morphAxisProp(axis);
+        clearMorphVars(el);
+        const nested = nestedTargetsWithin(t, el);
+        const restore = nested.map((n) => forceNestedMaxContent(n));
+        const prior = el.style.getPropertyValue(prop);
+        el.style.setProperty(prop, "max-content");
+        const toSize = getSize(el, axis);
+        if (prior) el.style.setProperty(prop, prior);
+        else el.style.removeProperty(prop);
+        for (const r of restore) r();
+        return toSize;
+    }
+
+    /**
+     * BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
+     * `prefers-reduced-motion: reduce` there is NO morph to play, so the geometry +
+     * the scalar seat at the target in ONE step (the `useDockOrientationMorph.pin()`
+     * precedent transplanted onto the collapse/expand path): measure the true `to`
+     * (composing the BA-VJS-1 nested ordering), write the box at `to` (the
+     * reserved-footprint reads at scale 1), and set `--dock-morph-t` to the endpoint
+     * for THIS swap — then clear the morph state immediately (no rAF measure-defer,
+     * no spring, no morph window). The box NEVER paints the collapsed `from` sliver
+     * with the scalar at 1 (the P0 terminal failure). Endpoint is the per-swap
+     * incoming-ness `1` (the new pane is fully in; the directional `--dock-expand-t`
+     * resolves to the class endpoint with `[data-morphing]` cleared).
+     */
+    function seatTargetSync(t: MorphTarget, id: number) {
+        if (id !== t.txId) return;
+        const el = t.containerEl.value;
+        const r = root();
+        if (!el || !r) return;
+        const axis = t.axis.value;
+        // Measure the settled target (the swapped pane is in-flow after the flush).
+        const toSize = measureTo(t, el);
+        // Seat the box AT the settled footprint with NO live scalar (scale 1) — the
+        // reserved-footprint CSS reads `--dock-morph-to`; set `from=to` so the ratio
+        // is 1 and any in-flight transform is the identity, then clear the morph
+        // state so `[data-morphing]` drops and the rest-state CSS owns the box.
+        el.style.setProperty("--dock-morph-from", `${toSize}px`);
+        el.style.setProperty("--dock-morph-to", `${toSize}px`);
+        // The endpoint scalar — the morph hard-cuts to fully-revealed.
+        r.style.setProperty("--dock-morph-t", "1");
+        // Force a synchronous layout read so the seated box paints at `to` THIS frame
+        // (the box is laid out at `to`, never the collapsed `from`).
+        void el.getBoundingClientRect()[dimOf(axis)];
+        // Clear immediately — no spring, no morph window; the rest-state CSS holds.
+        settleTarget(t);
+        maybeSettleRoot();
+    }
+
     /** The per-target swap handler — the W01 measured-once FLIP, shared spring. */
     function onSwap(t: MorphTarget, newLayer: string, oldLayer: string) {
         if (newLayer === oldLayer) return;
@@ -318,6 +395,25 @@ export function useDockMorphOrchestrator(
         r.style.setProperty("--dock-morph-t", "0");
         r.setAttribute("data-morphing", "");
 
+        // 3b. BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
+        //     `prefers-reduced-motion: reduce` there is NO morph window: seat the
+        //     geometry + the scalar at the target in ONE step, NOT a zero-duration
+        //     spring over an rAF-deferred span. The rAF measure-defer below pins the
+        //     box at `from` while the spring's `respectReducedMotion` jump reads the
+        //     scalar at the endpoint a frame later — so the box paints the collapsed
+        //     `from` sliver (the measured 10×74 P0 terminal failure). The `nextTick`
+        //     (a microtask post-flush, NOT an rAF morph window) runs AFTER Vue
+        //     flushes the swapped pane in-flow (the flush-ordering the named
+        //     successor names), so the synchronous measure reads the TRUE shrink-
+        //     wrapped `to` (composing the BA-VJS-1 nested ordering via `measureTo`),
+        //     then seats the box at `to` + scalar at the endpoint + clears the morph
+        //     state — no spring, no rAF, no sliver. The orientation driver's `pin()`
+        //     precedent, transplanted onto the collapse/expand path.
+        if (prefersReducedMotion()) {
+            void nextTick(() => seatTargetSync(t, id));
+            return;
+        }
+
         // 4. ONE rAF later (post-flush), lift the pin for a single synchronous
         //    measurement of the now-correct shrink-wrapped to-size, then re-pin +
         //    start the spring IN THE SAME FRAME — the box never paints unpinned. The
@@ -332,10 +428,11 @@ export function useDockMorphOrchestrator(
         // the value.js N2 four-cycle reproduction (U-DOCK.md §5 recipe 2) proves it
         // DETERMINISTIC + PERMANENT for ANY nested group: the outer `.dock-layers`'
         // active full pane's ONLY content is a nested `.dock-layer-stack` — itself a
-        // registered morph target STILL pinned at its own collapsed span in the SAME
-        // rAF (`inline-size: var(--dock-morph-size)`, layers.css). Forcing
-        // `max-content` on the OUTER cannot grow the inner (the inner's pinned
-        // `inline-size`/`block-size` caps the shrink-wrap), so the outer measures the
+        // registered morph target STILL reserving its own collapsed/morph footprint
+        // in the SAME rAF (the BB.W-DOCK-MORPH-FAMILY reserved-footprint
+        // `inline-size: var(--dock-morph-to)` + `transform: scale()`, layers.css).
+        // Forcing `max-content` on the OUTER cannot grow the inner (the inner's
+        // reserved `inline-size`/`block-size` caps the shrink-wrap), so the outer measures the
         // inner's COLLAPSED span → `to:0` every cycle (springs the wrong way,
         // dead-holds, then snaps). The FIX composes the inner registered target's
         // OWN target `max-content` contribution into the outer measure: force every
@@ -392,7 +489,7 @@ export function useDockMorphOrchestrator(
 
     /**
      * BA-VJS-1 — force ONE nested target to its own-axis `max-content` (clearing its
-     * pinned `--dock-morph-size` calc so it sizes to content), and return a closure
+     * reserved `--dock-morph-to` footprint so it sizes to content), and return a closure
      * that RESTORES its exact prior inline state. The restore re-writes the precise
      * prior `inline-size`/`block-size` inline value (or removes it if there was none),
      * so the inner's in-flight pin is byte-identical after the outer's measurement —

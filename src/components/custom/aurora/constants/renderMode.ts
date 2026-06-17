@@ -34,8 +34,18 @@ export type AuroraRenderMode = "webgl" | "css" | "auto";
  * never downgrade a renderer we cannot PROVE is software (the `"css"` path is the
  * conservative-but-lossy choice, so a false miss keeps the richer default).
  */
-function isSoftwareWebGLRenderer(): boolean {
-    const r = probeWebGL2Renderer();
+export function isSoftwareWebGLRenderer(): boolean {
+    // BB.W-AURORA-SWRASTER — the probe call is wrapped: a THROWING probe (a partial
+    // webgl2 stub with no `getExtension`, an SSR/happy-dom shim) is morally a `null`
+    // probe — "cannot prove software", so we keep the richer default (`false`). This
+    // matters now the guard runs for forced `mode:"webgl"` too: the probe is reached
+    // in envs the `"auto"`-only gate never exercised.
+    let r: string | null;
+    try {
+        r = probeWebGL2Renderer();
+    } catch {
+        return false;
+    }
     if (r === null) return false;
     return (
         r.includes("swiftshader") ||
@@ -47,16 +57,51 @@ function isSoftwareWebGLRenderer(): boolean {
 }
 
 /**
- * Resolve `"auto"` to a concrete substrate per device tier. `"webgl"` and
- * `"css"` pass through unchanged.
+ * Resolve-mode options. The software-raster GUARD is the safe DEFAULT (see
+ * {@link resolveRenderMode}); the single ESCAPE is `forceWebGLUnderSoftwareRaster`
+ * (BB.W-AURORA-SWRASTER).
+ */
+export interface ResolveRenderModeOptions {
+    /**
+     * Opt OUT of the universal software-raster guard. When `true`, a forced
+     * `mode:"webgl"`/`mode:"capture"` arm ARMS the live WebGL2 surface even on a
+     * detected software renderer (SwiftShader / llvmpipe / MS Basic Render) — for
+     * a deterministic test that ACCEPTS the per-composite raster cost. Default
+     * `false`: the guard is the SAFE default (a software-raster signal forces
+     * `"css"` regardless of the requested mode, so a consumer who pins
+     * `mode:"webgl"` on a headless / GPU-blocklisted device gets the static
+     * ground, never the page-wedging hang). The escape is NAMED + recorded,
+     * never silent.
+     */
+    forceWebGLUnderSoftwareRaster?: boolean;
+}
+
+/**
+ * Resolve `"auto"` to a concrete substrate per device tier — AND universalize the
+ * software-raster guard out of the `"auto"`-only branch (BB.W-AURORA-SWRASTER).
  *
- * `"auto"` resolves to `"css"` when ANY low-power signal is present:
- *   - a SOFTWARE WebGL renderer (SwiftShader / llvmpipe / MS Basic Render — the
- *     GPU-blocklisted path; see {@link isSoftwareWebGLRenderer}),
+ * THE GUARD (the universal first leg). A SOFTWARE WebGL renderer (SwiftShader /
+ * llvmpipe / MS Basic Render — the GPU-blocklisted / headless path) forces `"css"`
+ * for ANY WebGL-ARMING requested mode (`"webgl"` OR `"auto"`), not only `"auto"`.
+ * A full-viewport software-rastered GL layer is so expensive to re-raster on every
+ * composite that a pointer interaction starves the renderer's input ack and the
+ * page goes UNRESPONSIVE (the headless-Chromium hang the speedtest harness
+ * documents). A consumer (or a capture harness) that pins `mode:"webgl"` /
+ * `mode:"capture"` on such a device MUST still fall to the static ground — so the
+ * probe runs BEFORE the `mode !== "auto"` short-circuit when the requested mode
+ * would arm WebGL. The single ESCAPE is `options.forceWebGLUnderSoftwareRaster`
+ * (default `false` — the guard is the safe default).
+ *
+ * `"auto"` then resolves to `"css"` when ANY low-power signal is present:
+ *   - a SOFTWARE WebGL renderer (already handled by the universal guard above),
  *   - `navigator.hardwareConcurrency <= 4` (few logical cores),
  *   - `prefers-reduced-motion: reduce`,
  *   - `navigator.connection.saveData === true` (Data Saver on).
  * Otherwise `"webgl"`.
+ *
+ * THE CAPABLE PATH IS BYTE-UNTOUCHED: `isSoftwareWebGLRenderer()` returns `false`
+ * on a real GPU (or a null probe — never a false downgrade), so a forced
+ * `mode:"webgl"` on hardware passes through exactly as before.
  *
  * SSR / missing-API safe: if `navigator` / `window` / the probes are
  * unavailable we ASSUME a capable device and resolve `"webgl"` (the warm wash
@@ -68,7 +113,22 @@ function isSoftwareWebGLRenderer(): boolean {
  * not a reactive one (a connection-type flip mid-session does not re-resolve;
  * the consumer remounts to re-evaluate, matching the deferred-arm contract).
  */
-export function resolveRenderMode(mode: AuroraRenderMode): "webgl" | "css" {
+export function resolveRenderMode(
+    mode: AuroraRenderMode,
+    options: ResolveRenderModeOptions = {},
+): "webgl" | "css" {
+    // THE UNIVERSAL SOFTWARE-RASTER GUARD (BB.W-AURORA-SWRASTER) — runs BEFORE the
+    // `mode !== "auto"` short-circuit, for any mode that would ARM WebGL (`"webgl"`
+    // or `"auto"`). An explicit `"css"` needs no probe (it never arms WebGL). The
+    // escape opts out (default off — the guard is the safe default).
+    if (
+        mode !== "css" &&
+        !options.forceWebGLUnderSoftwareRaster &&
+        isSoftwareWebGLRenderer()
+    ) {
+        return "css";
+    }
+
     if (mode !== "auto") return mode;
 
     // SSR / non-browser — assume capable; the WebGL arm is itself deferred to
@@ -90,7 +150,7 @@ export function resolveRenderMode(mode: AuroraRenderMode): "webgl" | "css" {
         (navigator as Navigator & { connection?: { saveData?: boolean } })
             .connection?.saveData === true;
 
-    return lowConcurrency || reducedMotion || saveData || isSoftwareWebGLRenderer()
-        ? "css"
-        : "webgl";
+    // The software-raster signal is handled by the universal guard above; the
+    // `"auto"` branch retains the remaining low-power signals.
+    return lowConcurrency || reducedMotion || saveData ? "css" : "webgl";
 }

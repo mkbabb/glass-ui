@@ -217,10 +217,31 @@
        under the declared/sampled BRIGHT signal (the @container --glass-backdrop:light bucket
        above — where the muted lift also lives now). NO unconditional --muted-foreground lift
        here: on the calm-light floor the caption keeps the muted register (the slides read).
-       A consumer opts a light-page card out via `--glass-tint-strength: 0%` on an ancestor. */
+       A consumer opts a light-page card out via `--glass-tint-strength: 0%` on an ancestor.
+
+       BB.W-ON-GLASS-FG (N13) — the THIRD-STATE on-glass FOREGROUND re-point lands HERE,
+       BESIDE the BA seam (the SAME cascade context, the SAME content-tier set, NOT a new
+       competing layer). The calm-light floor keeps the page-muted --neutral-5 at HEAD —
+       but the muted ink is calibrated against the CANVAS, and on a TRANSLUCENT content
+       plate (the glass-first common case) it composites toward the lifted backdrop and
+       its contrast COLLAPSES (1.15-3.29:1 measured in dark). The re-point targets the
+       muted register at the COMPOSITED glass fill: --muted-foreground → --on-glass-muted
+       (+ the -strong twin), a register BETWEEN the page-muted and the bright-bucket full
+       ink (legible-AND-subordinate; the caption stays quieter than body --foreground).
+       This is NOT a fork of --glass-tint-* — it READS the seam context and expresses the
+       third state; it NEVER re-declares --glass-tint-ink/-strength-* (W-DARK-MATERIAL's
+       frozen bound). The BA bright-bucket lift (@container --glass-backdrop:light above,
+       --muted-foreground → --foreground) STILL WINS where the plate darkens — the
+       @container conditional overrides this unconditional :where() when it engages, so a
+       darkened plate goes full ink; this calm re-point is the calm-plate case ONLY. The
+       overlay band (:where(.glass-floating, .glass-overlay) above) is a DISJOINT selector
+       set (it keeps the full-ink lift), so neither path collides. The values auto-flip per
+       mode (the on-glass rungs carry their own light/dark per-mode arms in tokens). */
     :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-floor);
+        --muted-foreground: var(--on-glass-muted);
+        --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
     /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).

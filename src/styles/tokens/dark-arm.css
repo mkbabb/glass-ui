@@ -252,6 +252,22 @@
        mode arms — the content-tier self-engage needs no mode branch. */
     --glass-tint-strength-floor: 12%;
 
+    /* BB.W-ON-GLASS-FG — the surface-aware FOREGROUND register, DARK arm (the N13
+       whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
+       "AA: 7.64:1 vs page") COLLAPSES over the lifted luminous-dark plate (the L16 card
+       at the 12% --glass-tint-strength-floor composites the bright backdrop UP — the
+       measured 1.15-3.29:1). The on-glass muted rung lifts BRIGHTER (the mirror of the
+       light arm's darkening) so it clears AA over the composited dark plate WHILE
+       staying subordinate to the L90 --foreground ink (the quiet-subordinate hierarchy
+       preserved — NOT a blanket lift to full ink, which the bright bucket already does).
+       Warm-amber (the BB.W-DARK-INK-WARM identity), NOT the slides deck hsl(45 …) literal
+       (the deck is the REFERENCE; the library re-derives against its own --card). The
+       light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
+    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (6.63:1 vs the luminous-dark plate; subordinate to --foreground) */
+    --on-glass-muted-strong: hsl(36 14% 78%);   /* the -strong rung, one step more present (7.75:1 vs plate) */
+    --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
+    --progress-track-on-glass: hsl(28 14% 26%); /* the recessed meter track — a warm-dark channel distinct from the fill silhouette */
+
     /* BA.W-DARK-MATERIAL scope 5 + BB.W-DARK-INK-WARM — the --surface-tint-* dark arm,
        --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,
        transparent) — over a near-black dark card a LIGHT-ink (dark --foreground IS light

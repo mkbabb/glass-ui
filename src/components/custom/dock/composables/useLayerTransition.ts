@@ -1,4 +1,4 @@
-import { computed, ref, watch, onUnmounted } from "vue";
+import { computed, nextTick, ref, watch, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { DOCK_SPRING } from "../constants";
@@ -174,6 +174,44 @@ export function useLayerTransition(
         el.style.removeProperty("--dock-morph-to");
     }
 
+    /**
+     * BB.W-DOCK-MORPH-FAMILY (c) — the PRM probe (mirrors the orchestrator +
+     * `useDockOrientationMorph`). Under reduce the standalone group seats the morph
+     * SYNCHRONOUSLY (no spring, no rAF morph window).
+     */
+    function prefersReducedMotion(): boolean {
+        return (
+            typeof window !== "undefined" &&
+            typeof window.matchMedia === "function" &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        );
+    }
+
+    /**
+     * BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat for the standalone
+     * `useLayerTransition` engine. Measures the true `to` with the morph axis forced
+     * to `max-content` (the circular-measure escape), seats the box at `to` (the
+     * reserved-footprint reads it at scale 1) + the scalar at the endpoint, then
+     * settles — no spring, no rAF, no morph window (the box never paints the
+     * collapsed `from` sliver).
+     */
+    function seatSync(el: HTMLElement, root: HTMLElement, id: number) {
+        if (id !== transitionId) return;
+        const prop = morphAxisProp.value;
+        clearMorphVars(el);
+        const prior = el.style.getPropertyValue(prop);
+        el.style.setProperty(prop, "max-content");
+        const toSize = getSize(el);
+        if (prior) el.style.setProperty(prop, prior);
+        else el.style.removeProperty(prop);
+        // Seat at the settled footprint with no live scalar (from=to → ratio 1).
+        el.style.setProperty("--dock-morph-from", `${toSize}px`);
+        el.style.setProperty("--dock-morph-to", `${toSize}px`);
+        root.style.setProperty("--dock-morph-t", "1");
+        void el.getBoundingClientRect()[dim.value];
+        settle(el, root);
+    }
+
     function settle(el: HTMLElement, root: HTMLElement) {
         clearMorphVars(el);
         root.style.removeProperty("--dock-morph-t");
@@ -283,6 +321,17 @@ export function useLayerTransition(
         root.style.setProperty("--dock-morph-t", "0");
         root.setAttribute("data-morphing", "");
         morphing.value = true; // A′-4 — gesture START: defer Popper re-positions
+
+        // 3b. BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
+        // `prefers-reduced-motion: reduce` there is NO morph window: the `nextTick`
+        // (a microtask post-flush, NOT an rAF morph window) seats the box at the true
+        // `to` + the scalar at the endpoint synchronously, so the box never paints the
+        // collapsed `from` sliver while the spring's `respectReducedMotion` jump reads
+        // the scalar at 1 a frame later (the P0 terminal failure).
+        if (prefersReducedMotion()) {
+            void nextTick(() => seatSync(el, root, id));
+            return;
+        }
 
         // 4. ONE rAF later (after the class flip flushes), lift the pin for a single
         // synchronous measurement of the now-correct shrink-wrapped to-size, then

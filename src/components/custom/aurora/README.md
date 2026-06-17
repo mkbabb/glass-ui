@@ -61,6 +61,43 @@ offscreen, content-hidden, or tab-backgrounded, and freezes to one static frame 
 `prefers-reduced-motion: reduce` (the `useWebGLCanvas` substrate, gated by
 `proof:offscreen-pause`).
 
+### The software-raster guard + the luminance-faithful fallback (BB.W-AURORA-SWRASTER)
+
+The substrate is **headless-safe and certify-grade** under a software rasterizer:
+
+- **The universal software-raster guard.** A SOFTWARE WebGL renderer (SwiftShader /
+  llvmpipe / MS Basic Render — the GPU-blocklisted / headless path) forces the `"css"`
+  substrate for ANY WebGL-arming mode — `mode:"webgl"` and `mode:"capture"` too, not only
+  `mode:"auto"`. A full-viewport software-rastered GL layer is so expensive to re-raster on
+  every composite that a pointer interaction starves input and the page WEDGES; the guard
+  falls cleanly to the static ground instead. The single ESCAPE is the
+  `forceWebGLUnderSoftwareRaster` runtime option (`runtimeOptions` /
+  `resolveRenderMode(mode, { forceWebGLUnderSoftwareRaster })`), default `false` — the guard
+  is the safe default; a deterministic test that ACCEPTS the cost opts in explicitly. The
+  capable path is byte-untouched. `createAurora` carries the matching WEDGE CATCH: under a
+  software renderer with the escape off it returns an inert handle (the WebGL canvas is
+  never created), so the placeholder stays the surface and no `onInitError` fires (a
+  software-raster fall is a recognized substrate decision, not a contract violation; the
+  `onInitError` contract is preserved for genuine shader/OOM violations).
+- **The luminance-faithful fallback ground.** On the `"css"` substrate the placeholder is
+  no longer the flat `paletteToCssGradient` diagonal band (a "visually-adjacent
+  approximation" whose mean + spatial luminance diverge from the composite). It upgrades to
+  `auroraFallbackGround` — a field-sampled ground derived from the SAME palette + nuclei the
+  WebGL path uploads. `sampleAuroraField` mirrors the shader's static composite
+  (`nucleiField` softmax-Gaussian + `samplePalette` linear LUT + the PBR-Neutral tonemap +
+  the `linearToSrgb` OETF), reusing the value.js `oklchToLinear` core (ONE color source — no
+  re-implemented OKLCh math; the GL-shader fence holds, this is a CPU/CSS derivation). The
+  ground is a one-shot 2D-canvas raster (CSS-upscaled, painted once, parked) so its mean +
+  per-quadrant luminance match the composite within the certify band — a HEADLESS contrast
+  capture certifies the right floor with NO headed `--use-gl=angle` browser. The flat
+  gradient stays the cheap capable-device first-frame the WebGL canvas cross-fades over.
+
+Machine-locked by `proof:aurora-swraster` (W1 the universal signal + the safe-default
+escape, W2 the wedge catch + the preserved `onInitError` contract, W3 the field-derived
+one-color-source ground) + the binding headless π (`tests-visual/aurora-swraster.spec.ts` —
+the painted mean + per-quadrant luminance within band, both modes, + the SwiftShader
+no-hang). See `docs/tranches/BB/audit/visual/W-AURORA-SWRASTER-DELTA.md`.
+
 ---
 
 ## Use cases

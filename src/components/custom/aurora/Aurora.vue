@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useAurora } from "./composables/useAurora";
 import { paletteToCssGradient } from "./composables/color";
+import { auroraFallbackGround } from "./composables/auroraFallbackGround";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
 import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./constants/presets";
 import { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
@@ -95,7 +96,17 @@ const props = withDefaults(
 // `"auto"` collapses to `"css"`/`"webgl"` per device tier here so the arm gate
 // downstream sees a concrete substrate; `"webgl"`/`"css"` pass through. SSR /
 // missing-API safe inside `resolveRenderMode`.
-const resolvedRenderMode = resolveRenderMode(props.renderMode);
+//
+// BB.W-AURORA-SWRASTER — the universal software-raster GUARD: a forced
+// `mode:"webgl"`/`mode:"capture"` arm under a software renderer (SwiftShader /
+// llvmpipe / headless) now falls to `"css"` too, not only `"auto"`. The
+// `forceWebGLUnderSoftwareRaster` runtime option is the named escape (default off
+// — the guard is the safe default); it is threaded into BOTH the resolver here AND
+// the runtime wedge catch (via `mergedRuntimeOptions`).
+const resolvedRenderMode = resolveRenderMode(props.renderMode, {
+    forceWebGLUnderSoftwareRaster:
+        props.runtimeOptions?.forceWebGLUnderSoftwareRaster ?? false,
+});
 
 // Clamp defensively — out-of-range values would otherwise leak straight
 // into the CSS custom property and either invert (negative) or over-
@@ -122,11 +133,29 @@ const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions.value,
     renderMode: resolvedRenderMode,
 });
 
-// Cheap static first frame — a CSS gradient derived from the same palette
-// stops the shader interpolates. Zero JS, zero GPU; paints before the WebGL
-// path arms. Reactive, so a preset switch repaints the placeholder too.
-const placeholderGradient = computed(() =>
-    paletteToCssGradient(props.config.palette),
+// The placeholder paint depends on the substrate (BB.W-AURORA-SWRASTER):
+//
+//  - On the CAPABLE WebGL path the placeholder is the cheap flat
+//    `paletteToCssGradient` first-frame — zero JS, zero GPU, paints before the
+//    WebGL canvas arms and cross-fades over it (faithfulness is NOT load-bearing
+//    here; the real shader composite arms within an idle tick).
+//  - On the `"css"` substrate (the software-raster / forced-capture permanent
+//    surface — where there is NO live composite to cross-fade in) the placeholder
+//    upgrades to the LUMINANCE-FAITHFUL `auroraFallbackGround`: a field-sampled
+//    nuclei-glow ground derived from the SAME palette + nuclei the WebGL path
+//    uploads, matching the composite's mean + per-quadrant luminance so a headless
+//    contrast capture certifies the right floor (the certify-without-headed truth).
+//
+// Reactive, so a preset switch repaints the placeholder too.
+const isCssSubstrate = computed(() => resolvedRenderMode === "css");
+const faithfulGround = computed(() => auroraFallbackGround(props.config));
+const placeholderBackgroundImage = computed(() =>
+    isCssSubstrate.value
+        ? faithfulGround.value.backgroundImage
+        : paletteToCssGradient(props.config.palette),
+);
+const placeholderBackgroundColor = computed(() =>
+    isCssSubstrate.value ? faithfulGround.value.backgroundColor : "transparent",
 );
 
 defineExpose({
@@ -153,16 +182,23 @@ defineExpose({
     -->
     <div
         class="aurora-root block h-full w-full overflow-hidden"
+        :data-aurora-substrate="resolvedRenderMode"
         :style="{ '--aurora-opacity-ceiling': clampedOpacityCeiling }"
     >
         <!--
-          Static gradient placeholder — the cheap first frame. Sits under the
-          canvas; remains as the WebGL2-unavailable fallback (HA4 §1.5).
+          Placeholder ground (BB.W-AURORA-SWRASTER). On the capable WebGL path
+          this is the cheap flat first-frame the canvas cross-fades over; on the
+          `"css"` substrate (software-raster / forced-capture) it upgrades to the
+          luminance-faithful field-sampled ground (the permanent certify surface).
+          Sits under the canvas; remains as the WebGL2-unavailable fallback (HA4 §1.5).
         -->
         <div
             class="aurora-placeholder h-full w-full"
             aria-hidden="true"
-            :style="{ backgroundImage: placeholderGradient }"
+            :style="{
+                backgroundImage: placeholderBackgroundImage,
+                backgroundColor: placeholderBackgroundColor,
+            }"
         />
         <!--
           The WebGL canvas cross-fades in over the placeholder once the
@@ -216,6 +252,20 @@ defineExpose({
    the custom property is unset (consumer that never reads the prop). */
 .aurora-root > .aurora-placeholder {
     opacity: var(--aurora-opacity-ceiling, 1);
+}
+
+/* BB.W-AURORA-SWRASTER — on the `"css"` substrate the placeholder is the
+   luminance-faithful field raster (a low-res 2D-canvas data: URI). `cover` +
+   smooth `image-rendering` upscale it bilinearly to fill the box — the upscale
+   preserves the per-quadrant mean luminance the certify reads, and reads as a
+   smooth nuclei-glow field rather than a hard grid. The capable WebGL path's
+   placeholder is the flat first-frame gradient (no size/render override needed —
+   a gradient fills the box natively). */
+.aurora-root[data-aurora-substrate="css"] > .aurora-placeholder {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: auto;
 }
 
 .aurora-canvas {

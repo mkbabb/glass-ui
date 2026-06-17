@@ -292,16 +292,19 @@
            shell above; the cross axis stays visible there. */
         padding: var(--dock-padding-block, 0.375rem);
         border-radius: var(--radius-dock);
-        /* AX.W01 — a vertical rail is ALWAYS-EXPANDED (no collapse↔expand morph),
-           so its root padding/background/border-color never morph; the prior
-           `padding/background/border-color var(--dock-motion-*)` transition arms
-           are DELETED (a residual root CSS-transition on the morph-chrome props is
-           the second-clock smell the single-scalar rebuild retires). The block-axis
-           (height) morph is owned by the inner `.dock-layer-stack` / DockLayerGroup
-           via the `--dock-morph-t` scalar (the size `calc()` above), never a CSS
-           transition here. KEPT: the DECORATIVE hover-scale + press-squish (the
-           individual `scale`/`transform`) and the box-shadow fade — these are
-           interaction polish on the static rail, NOT the morph. */
+        /* BB.W-DOCK-MORPH-FAMILY (f) — the stale "a vertical rail is ALWAYS-EXPANDED
+           (no collapse↔expand morph)" assumption is RETIRED (it was false since
+           vertical-collapse shipped: `alwaysExpanded` defaults FALSE, so a vertical
+           dock genuinely collapses its `block-size`). The vertical plate's
+           bg/border/padding/radius now MORPH on the SAME `--dock-expand-t` scalar
+           the horizontal chrome rides (the morph.css `.glass-dock.vertical` interp +
+           padding axis-inverse + the radius arm below) — the chrome follows the
+           box-size morph, no discrete snap. NO root CSS-transition on the morph-
+           chrome props is re-added (a `transition: padding/background/border-color`
+           arm is the second-clock smell the single-scalar rebuild forbids — the
+           `--dock-expand-t` interp is the single authority). KEPT: the DECORATIVE
+           hover-scale + press-squish (the individual `scale`/`transform`) and the
+           box-shadow fade — interaction polish on the rail, NOT the morph chrome. */
         transition:
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
@@ -335,6 +338,22 @@
 
     .glass-dock.vertical.shape-rounded {
         border-radius: var(--radius-xl);
+    }
+
+    /* BB.W-DOCK-MORPH-FAMILY (f) — the VERTICAL big-dock CARD radius MORPHS on the
+       SAME `--dock-expand-t` scalar the horizontal `.shape-card` rides (the radius
+       arm of the vertical chrome un-gate; it lives in shell.css beside the horizontal
+       arm, not morph.css). `--radius-pill` at expand-t 0 (collapsed), the finite
+       `--dock-card-radius` at expand-t 1 (expanded) — the radius follows the box-size
+       block morph, no discrete snap. The static `.shape-pill`/`.shape-rounded` rest
+       radii above are the rest endpoints for those shapes; this is the card shape's
+       interpolated radius (mirroring the horizontal `:not(.vertical).shape-card`). */
+    .glass-dock.vertical.shape-card {
+        border-radius: calc(
+            var(--radius-pill) +
+                (var(--dock-card-radius) - var(--radius-pill)) *
+                var(--dock-expand-t, 1)
+        );
     }
 
     /* AW.W3b — horizontal-root shape rules. The `shape-*` class once bound ONLY under

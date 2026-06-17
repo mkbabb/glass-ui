@@ -71,5 +71,12 @@ const elementAttrs = computed(() => ({
 </script>
 
 <template>
-  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
+  <!-- BB.W-ON-GLASS-FG (N13) — the well fill re-points the SHARED control REST register
+       (--control-surface-bg) onto the surface-aware --input-on-glass rung (the form-well
+       contrast target is the COMPOSITED glass fill, not the canvas). The `.input-pill`
+       recipe reads --control-surface-bg, so this re-point is the ONE well register — NOT
+       a second well recipe (the no-fork floor; it coordinates with the BA control-surface
+       tier rather than forking). A consumer wanting the pristine glass-quiet well
+       overrides --control-surface-bg on an ancestor; the on-glass rung auto-flips per mode. -->
+  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
 </template>

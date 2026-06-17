@@ -10,8 +10,9 @@ import { cn } from "../../../utils";
  * dispatcher routes here for `variant="default"`.
  *
  * Token-read parity with the `gradient` variant (AX.W24 F1): the rail/indicator
- * colour read `--progress-track`/`--progress-fill` (fallbacks `var(--secondary)`/
- * `var(--primary)`) as Tailwind arbitrary properties — `bg-[var(--token,…)]` /
+ * colour read `--progress-track`/`--progress-fill` (fallbacks
+ * `var(--progress-track-on-glass)`/`var(--primary)`) as Tailwind arbitrary
+ * properties — `bg-[var(--token,…)]` /
  * `[background:var(--token,…)]` — NOT the `bg-secondary`/`bg-primary` utility
  * classes. A `bg-primary` utility lives in `@layer utilities`, which ALWAYS
  * outranks the `@layer components` `.glass-progress-rail` recipe regardless of
@@ -33,7 +34,7 @@ const delegatedProps = computed(() => {
         v-bind="delegatedProps"
         :class="
             cn(
-                'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--secondary))]',
+                'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--progress-track-on-glass))]',
                 props.class,
             )
         "

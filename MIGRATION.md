@@ -153,6 +153,27 @@
 > and the `solid` variant are the same `--glass-level:0` endpoint reached from two axes (NOT
 > duplicated recipes). No break for either.
 
+> **ADDITIVE (4.1.0, BB.W-ON-GLASS-FG) — the surface-aware FOREGROUND register (the dark-theme
+> whisper collapse closed).** glass-ui mints a THREE-RUNG on-glass foreground family whose
+> contrast TARGET is the COMPOSITED content-tier glass FILL, not the canvas: `--on-glass-muted`
+> (+ `--on-glass-muted-strong`), `--input-on-glass`, and `--progress-track-on-glass`. The
+> glass-first MAXIMAL default (AX.W54) makes a caption/well/track over a TRANSLUCENT glass plate
+> the common case, where the canvas-calibrated `--muted-foreground` (= `--neutral-5`, "AA vs
+> page") COLLAPSED on its own surface (1.15-3.29:1 measured in dark theme). The calm-light content
+> tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`) now re-point
+> `--muted-foreground` → `--on-glass-muted` (+ the `-strong` twin) BESIDE the BA adaptive-glass
+> seam (the THIRD state — between page-muted and the bright-bucket full ink; legible-AND-subordinate),
+> so every `text-muted-foreground` caption + CardDescription inherits the on-glass rung with ZERO
+> per-site edit. Input/Textarea wells read `--input-on-glass`; the Progress default/gradient track
+> reads `--progress-track-on-glass`. No break, no rename — the page-muted register
+> (`--muted-foreground: var(--neutral-5)`) is UNTOUCHED for the opaque-canvas case.
+>
+> CONSUMER-INTERIM DELETION (the ≥2-consumer law closed): a consumer that hand-re-declared
+> `--muted-foreground` over glass — the slides `deck.css §1` `--muted-foreground`/`-strong`
+> override, the speedtest WG (secondary-text + value-plate) + WV1 (survey-seat) interims — DELETES
+> its override on the `^4.1.0` re-pin and INHERITS the library on-glass register. The override that
+> PROVED the fix retires onto the root.
+
 > **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
 > now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
 > structural utilities ship as precompiled CSS instead of dead arbitrary-bracket classes a

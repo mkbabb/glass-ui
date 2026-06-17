@@ -62,11 +62,14 @@ const elementAttrs = computed(() => ({
        `.input-pill` `9999px` stadium radius. A multi-line box inheriting the
        single-line pill resolved grotesque stadium ends; the field rung gives a
        multi-line-appropriate finite corner. Single-line Input keeps the pill. -->
+  <!-- BB.W-ON-GLASS-FG (N13) — the well fill re-points the SHARED control REST register
+       (--control-surface-bg) onto --input-on-glass (the surface-aware well rung; see
+       Input.vue). ONE well register, no fork — `.input-pill` reads --control-surface-bg. -->
   <textarea
     v-model="modelValue"
     data-slot="textarea"
     v-bind="{ ...$attrs, ...elementAttrs }"
     :data-autosize="autosize ? '' : undefined"
-    :class="cn('input-pill rounded-field py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
+    :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] rounded-field py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
   />
 </template>
