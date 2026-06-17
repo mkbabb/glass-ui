@@ -93,8 +93,17 @@ const displayValue = computed(
     () => coalesceMetric(props.value, props.placeholder).display,
 );
 
+// BB.W-CONTROL-TOKENS (METRIC) — the leading glyph reads
+// `--metric-row-icon-color` (CSS, see `.metric-row__icon`). For byte-identical
+// back-compat, the per-row `phaseColor` prop seeds the token here (the prior
+// inline `color: phaseColor` becomes a token write), so today's consumers paint
+// exactly as before; a consumer wanting a DISTINCT icon ink from the phase tint
+// sets `--metric-row-icon-color` from its OWN stylesheet (`:root`/parent/per-row)
+// with no `:deep()` reach. When `phaseColor` is unset the token is unset and the
+// CSS fallback (`inherit`) keeps the icon on the inherited cascade — unchanged.
 const rowStyle = computed(() => ({
     ...(props.phaseColor ? { "--phase-color": props.phaseColor } : {}),
+    ...(props.phaseColor ? { "--metric-row-icon-color": props.phaseColor } : {}),
     "--digit-count": String(props.digitCount),
 }));
 </script>
@@ -113,7 +122,6 @@ const rowStyle = computed(() => ({
                 class="metric-row__icon result-icon"
                 :size="iconSize"
                 :stroke-width="iconStrokeWidth"
-                :style="phaseColor ? { color: phaseColor } : undefined"
                 aria-hidden="true"
             />
         </slot>
@@ -169,6 +177,14 @@ const rowStyle = computed(() => ({
    selector retunes them register-locally. */
 .metric-row__label {
     text-transform: uppercase;
+    /* BB.W-CONTROL-TOKENS (METRIC) — the label alignment is a consumer knob.
+       Default `left` is byte-identical to today; a cert-grid consumer building a
+       labelled ledger sets `--metric-row-label-align: right` at `:root`/per-row
+       for a right-aligned fixed seam, WITHOUT a `:deep(.metric-row__label)` reach
+       (the Design-Axis-2 component-over-class bar). The token-with-fallback is
+       the ONLY `text-align` declaration on this rule so the override always wins
+       (no hardcoded shadowing). */
+    text-align: var(--metric-row-label-align, left);
     font-size: clamp(
         var(--metric-row-label-clamp-min),
         calc(
@@ -275,6 +291,14 @@ const rowStyle = computed(() => ({
     width: 1rem;
     height: 1rem;
     flex-shrink: 0;
+    /* BB.W-CONTROL-TOKENS (METRIC) — the leading-glyph ink is a consumer knob
+       (the MetricCell `iconColor`→IconChip precedent, mirrored here as a token
+       since MetricRow ships a raw `<component :is>` not an IconChip). The
+       `phaseColor` prop seeds `--metric-row-icon-color` inline (rowStyle) for
+       byte-identical back-compat; the fallback `inherit` keeps an un-tinted icon
+       on the inherited cascade. A consumer wanting a distinct icon ink overrides
+       `--metric-row-icon-color` with no `:deep(.metric-row__icon)` reach. */
+    color: var(--metric-row-icon-color, inherit);
 }
 
 /* Description slot promotion at ≥ 32rem container width. The slot

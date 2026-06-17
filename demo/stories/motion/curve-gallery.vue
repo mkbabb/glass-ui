@@ -43,11 +43,12 @@ import {
 } from "../../../src/components/ui/select";
 import { cn } from "../../../src/utils/cn";
 import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
-import BezierEditor from "./curve-gallery/BezierEditor.vue";
-// BA.W-FOURIER-STUDIO / REC-6 — the live steppedEase(n, term) sub-editor (the
-// W-MOTION3 G7 defer's demo-only interim home; the published <EasingPicker> fold
-// is BOOKED to W-EASING-PRIMITIVE — arm B, the cross-repo fence-respect close).
-import StepsEditor from "./curve-gallery/StepsEditor.vue";
+// BB.W-EASING-PRIMITIVE — the C-3 fold LANDED. The two demo editors (BezierEditor +
+// StepsEditor) re-home onto the ONE published <EasingPicker> primitive (the
+// /easing subpath). The curve-gallery is consumer #1 by construction — it binds the
+// picker in BOTH modes (bezier + steps). The demo SFC forks are DELETED (clean
+// break, no alias — the no-fourth-fork discipline made code).
+import { EasingPicker } from "../../../src/components/custom/easing";
 
 const CUSTOM_FAMILY = "Custom";
 // BA.W-FOURIER-STUDIO / REC-6 — the Steps family hosts the live steppedEase(n,
@@ -238,8 +239,9 @@ const houseCores: { token: string; cp: string }[] = [
             <h2 class="text-subheading mb-1">{{ activeFamily }}</h2>
             <p class="mb-5 max-w-prose text-small text-muted-foreground">{{ activeBlurb }}</p>
 
-            <!-- Custom family → the live editable bezier editor -->
-            <BezierEditor v-if="activeFamily === CUSTOM_FAMILY" />
+            <!-- Custom family → the published <EasingPicker> in bezier mode (the
+                 re-homed BezierEditor — the draggable cubic-bezier arm). -->
+            <EasingPicker v-if="activeFamily === CUSTOM_FAMILY" mode="bezier" />
 
             <template v-else>
                 <!-- BA.W-DEMO-AFFORDANCES — the play control is the ONE register
@@ -250,13 +252,12 @@ const houseCores: { token: string; cp: string }[] = [
                     <StoryPlayButton label="Play family" @play="playAll" />
                 </div>
 
-                <!-- BA.W-FOURIER-STUDIO / REC-6 — the Steps family gains the LIVE
-                     steppedEase(n, term) sub-editor (the W-MOTION3 G7 defer's
-                     demo-only interim; the published <EasingPicker> fold is the
-                     named successor, W-EASING-PRIMITIVE). It sits ABOVE the static
+                <!-- BB.W-EASING-PRIMITIVE — the Steps family hosts the published
+                     <EasingPicker> in steps mode (the re-homed StepsEditor — the
+                     steppedEase(n, term) staircase arm). It sits ABOVE the static
                      reference rows so a user parameterizes the staircase live, then
                      sees the canon rows below. -->
-                <StepsEditor v-if="activeFamily === STEPS_FAMILY" class="mb-5" />
+                <EasingPicker v-if="activeFamily === STEPS_FAMILY" mode="steps" class="mb-5" />
 
                 <div class="grid gap-4 sm:grid-cols-2">
                     <button

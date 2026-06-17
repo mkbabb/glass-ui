@@ -79,8 +79,17 @@ const viewportClass = computed(() => {
       ToastPortal teleports the viewport to <body>, escaping every glass
       containing block so `fixed` anchors to the viewport as intended.
     -->
+    <!--
+      BB.W-CONTROL-TOKENS (A11Y) — the toast announce contract. reka's
+      ToastViewport carries `role="region"` but NOT `aria-live`, so a screen
+      reader gets the landmark but no announce-on-toast. Marking the viewport
+      region `aria-live="polite"` (+ `aria-atomic="false"` so each toast
+      announces as it arrives, not the whole region) delivers the polite
+      announce contract the a11y pair names. The `$attrs` fall through to reka's
+      Primitive, landing on the rendered region element.
+    -->
     <ToastPortal>
-      <ToastViewport :class="viewportClass" />
+      <ToastViewport :class="viewportClass" aria-live="polite" aria-atomic="false" />
     </ToastPortal>
   </ToastProvider>
 </template>

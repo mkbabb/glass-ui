@@ -281,6 +281,32 @@
     --metric-row-label-clamp-cqi: 5cqi;
     --metric-row-label-clamp-max: 2.75rem;
 
+    /* BB.W-CONTROL-TOKENS — the two CONSUMER-reach knobs (the no-`:deep`
+       precept, Design Axis 2). MetricRow internals a consumer must reach are
+       exposed as tokens, never an internal a `:deep()` overrides.
+
+       • `--metric-row-label-align` — the label `text-align`. Default `left`
+         (byte-identical to the prior render). A cert-grid consumer building a
+         labelled ledger sets `right` at `:root`/a parent/per-row for a
+         right-aligned fixed seam — cascades into `.metric-row__label` with no
+         `:deep()`.
+       • `--metric-row-icon-color` — the leading-glyph ink (the MetricCell
+         `iconColor`→IconChip precedent, mirrored as a token since MetricRow
+         ships a raw `<component :is>`). The per-row `phaseColor` prop seeds it
+         inline so today's consumers paint unchanged; un-set, the component
+         fallback (`inherit`) keeps the icon on the inherited cascade. A consumer
+         wanting a DISTINCT icon ink from the phase tint overrides it directly.
+
+       Both carry their byte-identical defaults — `left` (the prior render) /
+       `inherit` (the prior un-tinted glyph). Declaring them here keeps the
+       `--metric-row-*` family discoverable in one home; the component-level
+       `var(…, fallback)` read preserves the same default if the token is ever
+       un-declared (the defense-in-depth back-compat floor). A per-row
+       `phaseColor` prop still wins over the `:root` `--metric-row-icon-color`
+       (inline cascades higher), so today's phase-tinted icons are unchanged. */
+    --metric-row-label-align: left;
+    --metric-row-icon-color: inherit;
+
     /* ═══════════════════════════════════════════════
        §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM
 

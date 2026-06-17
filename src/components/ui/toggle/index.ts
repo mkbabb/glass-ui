@@ -38,8 +38,16 @@ export const toggleVariants = cva(
         default: 'bg-transparent',
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
+        // BB.W-CONTROL-TOKENS (N11) — the card tile is a `p-8` glass-card
+        // shape, so it must paint the 1rem `--radius-card` corner that matches
+        // its `glass-card` surface vocabulary, NOT the base CVA's 10px
+        // `rounded-button`. CVA emits the `variants` classes AFTER the base
+        // string, so `rounded-card` here wins the source-order race against the
+        // base `rounded-button` (the same mechanism the `h-auto` compoundVariant
+        // relies on). `default`/`outline` keep the base `rounded-button` — a
+        // button shape gets a button radius.
         card:
-          'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
+          'rounded-card glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
       },
       size: {
         // AX.W51 D18 — the height rungs read the `--control-h-*` comfort cohort.

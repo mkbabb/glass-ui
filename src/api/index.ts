@@ -435,3 +435,22 @@ export type {
     HighlightMatcher,
     UseTextHighlightControls,
 } from "../composables/motion/useTextHighlight";
+
+// ── EasingPicker (the boundary-law curve editor) ─────────────────────────────
+// The published <EasingPicker>/<EasingConfigurator> curve-authoring family
+// (BB.W-EASING-PRIMITIVE — the C-3 fold). `EasingPickerMode` is the two-arm axis
+// (`"bezier" | "steps"`); `EasingPickerValue` is the v-model payload (mode + the
+// re-parseable css literal + the live value.js callable + raw params); `JumpTerm`
+// is the value.js step jump-term family. The boundary law: curve MATH = value.js ·
+// playback = keyframes.js · the editor COMPONENT = glass-ui. The value.js-BEARING
+// runtime values live ONLY on the `/easing` subpath (NOT the value.js-free root
+// barrel — the /motion-curves SCC-trap precedent).
+export type {
+    EasingPickerMode,
+    EasingPickerValue,
+    EasingFn,
+    BezierPoints,
+    JumpTerm,
+    UseEasingPickerOptions,
+    UseEasingPickerReturn,
+} from "../components/custom/easing";
