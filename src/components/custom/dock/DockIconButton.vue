@@ -7,7 +7,7 @@ import {
 } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
-import { useSpecularTracking } from "../../../composables/glass";
+import { vSpecular } from "../../../composables/glass";
 
 /**
  * <DockIconButton> — fixed-square icon button for use inside GlassDock.
@@ -19,6 +19,15 @@ import { useSpecularTracking } from "../../../composables/glass";
  * `as="a"` swaps the host tag, `as-child` merges the dock class onto a slotted
  * child (the reka-ui Primitive idiom). `type` is emitted only on a <button>
  * host (an anchor/RouterLink carries no `type`).
+ *
+ * BB.W-LIQUIDHOVER — the pointer-anchored moving-specular gleam AUTO-ARMS via the
+ * `v-specular` directive (the tier-root delivery wrapping the ONE position-write
+ * core, `createSpecularWriter`). The prior hand-composed `useSpecularTracking` +
+ * `:style="specularStyle"` + `@pointermove="onPointerMove"` triplet RETIRED onto it:
+ * the dock control gleams pointer-following with ZERO call-site wiring. The
+ * `.dock-icon-button` `::before` (material.css) paints + lifts intensity on hover/
+ * active; the directive supplies the position. PRM-aware by construction (the wrapped
+ * core skips the write under reduce; the CSS bracket pins the catch-light static).
  */
 const props = withDefaults(
     defineProps<{
@@ -43,15 +52,6 @@ const classes = computed(() =>
     ),
 );
 
-// AX.W09 — the pointer-anchored moving-specular write seam, lifted to the DRY
-// `useSpecularTracking` composable (was the verbatim inline `trackSpecular` copy
-// shared with Card). On pointer-move it writes the catch-light position
-// (--mouse-x/--mouse-y, percentages of the control box) onto the host so the
-// `.glass-material` recipe maps it to the typed specular channel and paints the
-// travelling glow at the subtle hover/active token magnitudes. PRM-aware +
-// style-only (no reflow, no re-render).
-const { specularStyle, onPointerMove } = useSpecularTracking();
-
 // `type` is a <button>-only attribute; emit it only when the host is a button.
 // It is spread through `$attrs` (not bound on <Primitive> directly — reka's
 // Primitive only types `as`/`as-child`) so it lands on the rendered host.
@@ -62,12 +62,11 @@ const hostAttrs = computed(() =>
 
 <template>
     <Primitive
+        v-specular
         :as="as"
         :as-child="asChild"
         v-bind="hostAttrs"
         :class="classes"
-        :style="specularStyle"
-        @pointermove="onPointerMove"
     >
         <slot />
     </Primitive>

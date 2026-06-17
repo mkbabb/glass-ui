@@ -2,7 +2,7 @@
 import { computed, type HTMLAttributes, type CSSProperties } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
-import { useSpecularTracking } from "../../../composables/glass";
+import { vSpecular } from "../../../composables/glass";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";
 // BA.W-SURFACE-AXIS — Card's `veil` surface arm routes through the SHARED
 // resolver so the `veil-surface` decoration class has ONE source (the same class
@@ -104,10 +104,14 @@ const props = withDefaults(defineProps<Props>(), {
     as: "div",
 });
 
-// AX.W09 — the pointer-anchored moving-specular seam, lifted to the DRY
-// `useSpecularTracking` composable (was the verbatim inline `trackSpecular` copy
-// shared with DockIconButton). PRM-aware + style-only.
-const { specularStyle, onPointerMove } = useSpecularTracking();
+// BB.W-LIQUIDHOVER — the pointer-anchored moving-specular gleam routes through the
+// SAME tier-root seam as the interactive controls (the `v-specular` directive wrapping
+// the ONE position-write core), but Card is NOT inherently interactive — the gleam is
+// an explicit `specular` prop affordance, NOT an always-on control register. So Card
+// keeps its CONDITIONAL opt-in: `v-specular="specularArmed"` arms the directive only
+// when `specular` is opted in on a glass surface (the directive's reactive value flips
+// the listener on/off). No hand-composed `@pointermove`/`useSpecularTracking` triplet
+// survives — ONE position-write source, ONE delivery, the gated case stays gated.
 
 // The catch-light is wired only when `specular` is opted in on a glass surface.
 const specularArmed = computed(
@@ -130,10 +134,11 @@ const specularTokenStyle = computed<CSSProperties>(() =>
         : {},
 );
 
+// The host style carries the `full`-rung intensity-token override only (the position
+// write is the directive's job now — a direct `el.style` host write, not a merged
+// `:style` object). `off`/`subtle`/cartoon carry nothing.
 const hostStyle = computed<CSSProperties | undefined>(() =>
-    specularArmed.value
-        ? { ...specularTokenStyle.value, ...specularStyle.value }
-        : undefined,
+    specularArmed.value ? specularTokenStyle.value : undefined,
 );
 
 // invariant 31 — dev-WARN on stale prop names (`variant`, `flush`). Card's
@@ -145,6 +150,7 @@ useStalePropWarning("Card");
 
 <template>
     <Primitive
+        v-specular="specularArmed"
         data-slot="card"
         :data-tier="tier"
         :data-surface="surface"
@@ -152,7 +158,6 @@ useStalePropWarning("Card");
         :as="as"
         :as-child="asChild"
         :style="hostStyle"
-        @pointermove="specularArmed && onPointerMove($event)"
         :class="
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',

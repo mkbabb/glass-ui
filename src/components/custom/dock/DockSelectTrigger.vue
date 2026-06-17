@@ -3,6 +3,7 @@ import { computed, type HTMLAttributes } from "vue";
 import { SelectIcon, SelectTrigger, type SelectTriggerProps, useForwardProps } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../../../utils";
+import { vSpecular } from "../../../composables/glass";
 
 /**
  * <DockSelectTrigger> — variable-width Select trigger for use inside GlassDock.
@@ -27,6 +28,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 
 <template>
     <SelectTrigger
+        v-specular
         v-bind="forwardedProps"
         :class="cn('dock-select-trigger', props.class)"
     >

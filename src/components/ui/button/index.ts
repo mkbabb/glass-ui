@@ -79,9 +79,13 @@ export const buttonVariants = cva(
         // AW.W22 — glass / glass-wash inherit the moving specular + edge rim
         // from the unified `.glass-material` mixin via the `glass-wash` ladder
         // rung they already compose (the per-component `glass-specular-track`
-        // opt-in is retired onto the ladder). The pointer write seam is still
-        // the consumer's (a pointermove handler writing --mouse-x/--mouse-y);
-        // without it the var() fallback paints a centred catch-light.
+        // opt-in is retired onto the ladder).
+        // BB.W-LIQUIDHOVER — the pointer write AUTO-ARMS at the tier root: Button.vue
+        // applies the `v-specular` directive on the glass-register variants, so a bare
+        // `<Button variant="glass">` gleams pointer-following with ZERO consumer wiring
+        // (the dead-centre 50% static fallback fixed — no more "the position is the
+        // consumer's"). The directive wraps the ONE position-write core; no per-call-
+        // site `@pointermove`/`useSpecularTracking` triplet survives.
         // AX.W52 — `.btn-glass` re-points the backdrop off the wash-tile 1px blur
         // onto `--glass-blur-btn` (the real 10px quiet-tier glass blur), so the
         // glass button variants actually READ as liquid glass (live readback found

@@ -13,8 +13,20 @@
 // AX.W09 — the DRY pointer-anchored moving-specular write seam (lifted from the
 // verbatim Card.vue + DockIconButton.vue copies; PRM-aware; the `.glass-material`
 // recipe maps the host `--mouse-x/y` write onto its typed specular channel).
-export { useSpecularTracking } from "./useSpecularTracking";
-export type { UseSpecularTracking } from "./useSpecularTracking";
+// BB.W-LIQUIDHOVER — `createSpecularWriter` is the extracted single-source position-
+// write core (rAF-coalesce + cached-PRM + cleanup); both `useSpecularTracking` (the
+// Vue `:style`-ref delivery) and `vSpecular` (the tier-root auto-arm directive) wrap
+// it. `vSpecular` is the zero-wiring delivery published on the `/glass` barrel so a
+// NET-NEW interactive glass surface auto-arms the gleam with `v-specular`.
+export {
+    useSpecularTracking,
+    createSpecularWriter,
+} from "./useSpecularTracking";
+export type {
+    UseSpecularTracking,
+    SpecularWriter,
+} from "./useSpecularTracking";
+export { vSpecular } from "./vSpecular";
 
 // AW.W17 — the Canvas2D lifecycle substrate (park/freeze/dispose parallel to
 // the WebGL substrate). AX.W37 published it on `/canvas` under the contract

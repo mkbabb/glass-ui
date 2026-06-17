@@ -72,6 +72,13 @@ const RATCHET_BASELINES = {
     // composables/dockMorphMeasure.ts (the aurora/goo-blob colocation pattern; the
     // orchestrator stays the morph driver); drained to {} before the Batch-7 close.
     "components/custom/dock/composables/dockMorphContext.ts": 575, // BOOK(BB.W-CARVE4): extract the measure/seat helpers → composables/dockMorphMeasure.ts (Batch 6)
+    // styles/tokens/glass.css — the §8 glass ladder is the RECURRING at-bound offender:
+    // each glass-token wave (W-ON-GLASS-FG → carved out; W-DARK-INK-WARM; W-LIQUIDHOVER
+    // grain-engage) pushes it over, and the whack-a-mole comment-trim is unsustainable.
+    // BOOK(BB.W-CARVE4): carve the grain/specular/tint sub-blocks into a tokens/glass-fx.css
+    // partial (the §8 opacity/blur/saturate LADDER stays; the grain + specular-track +
+    // tint-source + backdrop-luma knobs split out) — drained to {} before the Batch-7 close.
+    "styles/tokens/glass.css": 505, // BOOK(BB.W-CARVE4): carve the grain/specular/tint knobs → tokens/glass-fx.css (Batch 6)
 };
 
 let _cliPaths = null;

@@ -33,6 +33,13 @@ import { onScopeDispose, ref, type CSSProperties } from "vue";
  * W54 maximal-glass every blurred-surface repaint is amortized to the frame, not the
  * event). The composable cancels the pending rAF + removes the matchMedia listener on
  * scope dispose (cleanup discipline).
+ *
+ * BB.W-LIQUIDHOVER — the rAF-coalesce + cached-PRM + cleanup LOGIC is extracted to
+ * `createSpecularWriter()`, the SINGLE position-write core. The composable below wraps
+ * it for the Vue `:style`-ref case (Card's prop-gated `specular` opt-in); the
+ * tier-root auto-arm (`vSpecular`) wraps the SAME core to write directly on the
+ * directive host's `el.style` (the zero-wiring delivery). ONE position-write source,
+ * TWO deliveries — never a re-pasted handler.
  */
 export interface UseSpecularTracking {
     /** Bind to the host element's `:style`. Carries the `--mouse-x/--mouse-y` write. */
@@ -41,9 +48,22 @@ export interface UseSpecularTracking {
     onPointerMove: (event: PointerEvent) => void;
 }
 
-export function useSpecularTracking(): UseSpecularTracking {
-    const specularStyle = ref<CSSProperties>({});
+/**
+ * The SINGLE position-write core (BB.W-LIQUIDHOVER) — the rAF-coalesced,
+ * PRM-aware `--mouse-x/y` write seam, sink-agnostic. `sink(x, y)` receives the
+ * percentage position once per animation frame; the composable sinks into its
+ * `specularStyle` ref, the `vSpecular` directive sinks into `el.style.setProperty`.
+ * Returns the event handler + a `dispose` (cancel the pending rAF + drop the cached
+ * PRM listener) so BOTH deliveries share ONE cleanup discipline.
+ */
+export interface SpecularWriter {
+    onPointerMove: (event: PointerEvent) => void;
+    dispose: () => void;
+}
 
+export function createSpecularWriter(
+    sink: (xPct: number, yPct: number) => void,
+): SpecularWriter {
     // ── The cached PRM ref (AV.W7 substrate pattern) — ONE matchMedia + change
     // listener minted once for the seam's lifetime, NOT a fresh matchMedia per event.
     const canMatch =
@@ -77,10 +97,7 @@ export function useSpecularTracking(): UseSpecularTracking {
         if (rect.width === 0 || rect.height === 0) return;
         const x = ((pendingClientX - rect.left) / rect.width) * 100;
         const y = ((pendingClientY - rect.top) / rect.height) * 100;
-        specularStyle.value = {
-            "--mouse-x": `${x.toFixed(2)}%`,
-            "--mouse-y": `${y.toFixed(2)}%`,
-        } as CSSProperties;
+        sink(x, y);
     }
 
     function onPointerMove(event: PointerEvent): void {
@@ -101,14 +118,29 @@ export function useSpecularTracking(): UseSpecularTracking {
         }
     }
 
-    onScopeDispose(() => {
+    function dispose(): void {
         if (rafId !== 0 && typeof cancelAnimationFrame === "function") {
             cancelAnimationFrame(rafId);
         }
         rafId = 0;
         pendingTarget = null;
         prmQuery?.removeEventListener("change", onPrmChange);
+    }
+
+    return { onPointerMove, dispose };
+}
+
+export function useSpecularTracking(): UseSpecularTracking {
+    const specularStyle = ref<CSSProperties>({});
+
+    const writer = createSpecularWriter((x, y) => {
+        specularStyle.value = {
+            "--mouse-x": `${x.toFixed(2)}%`,
+            "--mouse-y": `${y.toFixed(2)}%`,
+        } as CSSProperties;
     });
 
-    return { specularStyle, onPointerMove };
+    onScopeDispose(writer.dispose);
+
+    return { specularStyle, onPointerMove: writer.onPointerMove };
 }

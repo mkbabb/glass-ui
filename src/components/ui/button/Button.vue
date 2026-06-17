@@ -7,7 +7,7 @@ import { cn } from '../../../utils'
 import type { Surface } from '../_shared/useSurfaceAxis'
 import { useSpringPress } from '../../../composables/motion/useSpringPress'
 import { useLiquidFlex } from '../../../composables/motion/useLiquidFlex'
-import { useSpecularTracking } from '../../../composables/glass'
+import { vSpecular } from '../../../composables/glass'
 
 interface Props extends PrimitiveProps {
   variant?: ButtonVariants['variant']
@@ -129,25 +129,29 @@ const pressStyle = computed<CSSProperties>(() => {
   return style
 })
 
-// BB.W-BUTTON-GLASS (c) — the moving-specular gleam consume. §0 RE-GROUND DRIFT:
-// the spec named a W-LENSING `useSpecularPointer` leaf + a tier-root auto-arm
-// (W-LIQUIDHOVER) — NEITHER has landed at HEAD. The ONE shared specular-position
-// leaf at HEAD is `useSpecularTracking` (AX.W09 — the DRY seam Card.vue +
-// DockIconButton.vue already consume), so the button consumes THAT one leaf (the
-// documented branch: "if the auto-arm has NOT landed, the button calls the leaf
-// explicitly" — ONE position-write source, NEVER a button-local pointermove fork).
-// It writes `--mouse-x/--mouse-y` on the host; the `.glass-wash::before` recipe
-// (material.css) maps it to the typed `--specular-*` channel and slides the gleam
-// toward the pointer (the dead-centre 50% static fallback fixed). PRM-aware: under
-// reduce the leaf does NOT write (the centred fallback is the static frame).
-const { specularStyle, onPointerMove } = useSpecularTracking()
+// BB.W-LIQUIDHOVER — the moving-specular gleam AUTO-ARMS via the `v-specular`
+// directive (the tier-root delivery wrapping the ONE position-write core,
+// `createSpecularWriter`). The prior BB.W-BUTTON-GLASS hand-wire (the explicit
+// `useSpecularTracking` + `@pointermove` pair — the documented "auto-arm not landed"
+// branch) RETIRES onto it now that the auto-arm IS landed: a bare `<Button
+// variant="glass">` gleams pointer-following with ZERO call-site wiring. The directive
+// arms only the GLASS-register variants (the `.glass-wash::before` recipe paints there;
+// a `solid`/`link`/`outline` button has no `::before` to gleam, so it opts out — no
+// wasted pointermove listener). PRM-aware by construction (the wrapped core skips the
+// write under reduce; the CSS bracket pins the catch-light static at centre).
+const GLASS_VARIANTS = new Set<ButtonVariants['variant']>([
+  'default',
+  'glass',
+  'glass-wash',
+  'primary-audacious',
+  'gold-audacious',
+])
+const specularArmed = computed(() => GLASS_VARIANTS.has(props.variant ?? 'default'))
 
-// The host style merges the specular position write, the press squish/drive, and —
-// when `:liquid` is set — nothing extra (the `.glass-refract` class carries the
-// filter). One merged style object; the press squish overrides the CVA `scale`
-// utility (the single-source press).
+// The host style carries the press squish/drive only; the specular position write is
+// the directive's job now (a direct `el.style` host write, not a merged `:style`
+// object). The press squish overrides the CVA `scale` utility (the single-source press).
 const hostStyle = computed<CSSProperties>(() => ({
-  ...(specularStyle.value ?? {}),
   ...pressStyle.value,
 }))
 
@@ -160,6 +164,7 @@ const liquidDecoration = computed(() =>
 
 <template>
   <Primitive
+    v-specular="specularArmed"
     :as="as"
     :as-child="asChild"
     data-slot="button"
@@ -169,7 +174,6 @@ const liquidDecoration = computed(() =>
     v-bind="hostAttrs"
     :class="cn(buttonVariants({ variant, size }), surfaceDecoration, liquidDecoration, props.class)"
     :style="hostStyle"
-    @pointermove="onPointerMove"
     @pointerdown="press.press"
     @pointerup="press.release"
     @pointercancel="press.release"

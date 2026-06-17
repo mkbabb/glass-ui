@@ -2,6 +2,7 @@
 import { computed, type HTMLAttributes } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
+import { vSpecular } from "../../../composables/glass";
 
 /**
  * <DockTabButton> — text-tab button for use inside a horizontal GlassDock.
@@ -33,7 +34,10 @@ const classes = computed(() => cn("dock-tab-button", props.class));
 </script>
 
 <template>
-    <Primitive :as="as" :as-child="asChild" :class="classes">
+    <!-- BB.W-LIQUIDHOVER — the dock-tab control auto-arms the pointer-following gleam
+         via the tier-root `v-specular` directive (it is a material `::before` consumer,
+         material.css). Zero call-site wiring, ONE position-write source. -->
+    <Primitive v-specular :as="as" :as-child="asChild" :class="classes">
         <slot />
     </Primitive>
 </template>

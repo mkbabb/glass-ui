@@ -187,6 +187,11 @@
        so it sits at the perceptual floor. Dark companion drops 0.06 →
        0.045 below to keep the soft-light blend alive without stippling. */
     --glass-grain-opacity: 0.025;
+    /* BB.W-LIQUIDHOVER — the grain ENGAGE clock: a hover/active grain lift cross-fades
+       the grain `::after` OPACITY on this thin ~120ms linear write while the
+       `background-image` stays ALWAYS PRESENT (never a none→image swap — the one-frame
+       decode-and-pop, the T8-F6 disco-grain pop); collapses to 0ms under PRM. */
+    --glass-grain-engage-duration: 120ms;
     /* BA.W-GLASS-CAL — `--glass-grain-opacity-disco` (0.08) DELETED with the disco
        recipe retirement (H2a): no surviving consumer once `btn-audacious` + the
        dock-tab primary phase-grain collapse onto the calm glass register. */

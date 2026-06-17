@@ -2,6 +2,7 @@
 import { computed, type ButtonHTMLAttributes, type HTMLAttributes } from "vue";
 import { DropdownMenuTrigger, type DropdownMenuTriggerProps, useForwardProps } from "reka-ui";
 import { cn } from "../../../utils";
+import { vSpecular } from "../../../composables/glass";
 
 /**
  * <DockDropdownTrigger> — variable-width DropdownMenu trigger for use inside GlassDock.
@@ -28,6 +29,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 
 <template>
     <DropdownMenuTrigger
+        v-specular
         v-bind="forwardedProps"
         :class="cn('dock-dropdown-trigger', props.class)"
     >

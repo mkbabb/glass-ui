@@ -358,7 +358,16 @@
             var(--glass-shadow-floating);
     }
 
-    /* Grain noise overlay — reuses paper texture SVG, no extra assets */
+    /* Grain noise overlay — reuses paper texture SVG, no extra assets.
+       BB.W-LIQUIDHOVER — the disco-grain pop (T8-F6) killed at the COMPOSITION CLASS:
+       the `background-image` is ALWAYS PRESENT (decoded once at rest, NEVER toggled to
+       `none`), and any STATE-driven grain engagement cross-fades the `opacity` ONLY on
+       the thin `--glass-grain-engage-duration` (~120ms linear) clock. A `background-
+       image: none → var(--paper-clean-texture)` engage decodes-and-appears in one frame
+       (the pop); the opacity cross-fade is a compositor-cheap interpolation with the
+       image constant — the only sanctioned grain engage. The `transition` lives HERE so
+       a hover/active grain lift (wherever a glass surface raises grain on interaction)
+       reads as a smooth fade by construction, not a discrete swap. */
     .glass-wash::after,
     .glass-quiet::after,
     .glass-resting::after,
@@ -368,12 +377,36 @@
         position: absolute;
         inset: 0;
         border-radius: inherit;
-        background: var(--paper-clean-texture);
+        /* The grain texture is the `background-image` longhand (NOT the `background`
+           shorthand) so the image stays a STABLE always-present layer the engage
+           never re-declares — the structural anti-pop: opacity is the only animated
+           channel, the image is never `none → image`. */
+        background-image: var(--paper-clean-texture);
         background-repeat: repeat;
         background-size: var(--paper-texture-size);
         opacity: var(--glass-grain-opacity);
+        /* The opacity cross-fade engage — plain ~120ms linear direct-write (no spring,
+           no overshoot — instant-but-smooth per the ask). Under the PRM / reduced-
+           transparency brackets the clock collapses to 0ms (the a11y bracket below). */
+        transition: opacity var(--glass-grain-engage-duration, 120ms) linear;
         pointer-events: none;
         mix-blend-mode: overlay;
+    }
+
+    /* BB.W-LIQUIDHOVER — the grain engage collapses to INSTANT under reduced motion (a
+       grain that cross-fades on hover under reduce is still motion; accessibility is
+       absolute). The reduced-transparency / forced-colors brackets already zero
+       `--glass-grain-opacity` (a11y-fallback.css), so the grain is inert there; this
+       bracket covers the reduced-MOTION case where the grain still paints but must not
+       animate. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-wash::after,
+        .glass-quiet::after,
+        .glass-resting::after,
+        .glass-floating::after,
+        .glass-overlay::after {
+            transition: none;
+        }
     }
 
     /* (b) The unified rim — `--glass-edge-light` full-perimeter inset ring on

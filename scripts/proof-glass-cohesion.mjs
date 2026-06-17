@@ -427,6 +427,174 @@ add(
     "the OPAQUE_TONE_UTIL bite flags bg-success / bg-destructive/90 / bg-info/95 (opaque slabs) AND exempts bg-card/40 + bg-success/20 (the narrowed translucent-only door) — the bite distinguishes opaque-tone from translucent-escape",
 );
 
+// ── ARM: liquid-hover — the tier-root specular auto-arm + the grain pop-kill ──────
+// BB.W-LIQUIDHOVER. The moving-specular system is fully wired to PAINT (the
+// material.css `::before` maps --mouse-x/y + lifts intensity on :hover/:active for
+// EVERY interactive glass rung), but at HEAD its POSITION write was a per-consumer
+// opt-in (hand-wired at DockIconButton + Card + Button) — so every glass control that
+// did NOT hand-wire the composable hovered DEAD at the centred 50% fallback (the
+// "dead-centre static gleam", speedtest C8 / T8-F5). This arm locks the auto-arm: the
+// position write is a PROPERTY OF THE TIER (the `vSpecular` directive wrapping the ONE
+// position-write core), the per-consumer hand-wires RETIRE onto it, and the disco-grain
+// pop (T8-F6) is killed at the COMPOSITION CLASS (the grain engage rides an opacity
+// cross-fade, never a `background-image: none → image` swap). All four witnesses are
+// born-RED on the pre-wave tree (no vSpecular.ts; the SFC triplets; no engage clock).
+
+const vSpecularSrc = read("src/composables/glass/vSpecular.ts");
+const vSpecularStripped = strip(vSpecularSrc);
+const specularCore = strip(read("src/composables/glass/useSpecularTracking.ts"));
+const glassBarrel = strip(read("src/composables/glass/index.ts"));
+const buttonSfc = strip(read("src/components/ui/button/Button.vue"));
+const dockIconBtn = strip(read("src/components/custom/dock/DockIconButton.vue"));
+const dockTabBtn = strip(read("src/components/custom/dock/DockTabButton.vue"));
+const dockSelectTrig = strip(read("src/components/custom/dock/DockSelectTrigger.vue"));
+const dockDropdownTrig = strip(read("src/components/custom/dock/DockDropdownTrigger.vue"));
+const cardSfc = strip(read("src/components/ui/card/Card.vue"));
+const grainCss = strip(readMonolith(ROOT, "glass")); // ladder.css folds into the glass monolith
+const grainToken = strip(read("src/styles/tokens/glass.css"));
+
+// W1 — the auto-arm seam is minted ONCE and WRAPS the single-source core.
+// vSpecular.ts exists, imports `createSpecularWriter` (NOT a hand-rolled rAF/PRM/coord
+// copy), and `createSpecularWriter` is the extracted SINGLE core in
+// useSpecularTracking.ts (so both the composable + the directive share ONE write).
+const w1SeamExists = vSpecularSrc.length > 0;
+const w1WrapsCore =
+    /import\s*\{[^}]*createSpecularWriter[^}]*\}\s*from\s*["']\.\/useSpecularTracking["']/.test(
+        vSpecularSrc,
+    ) && /createSpecularWriter\s*\(/.test(vSpecularStripped);
+const w1CoreSingleSource =
+    /export function createSpecularWriter\b/.test(specularCore) &&
+    /createSpecularWriter\s*\(/.test(strip(read("src/composables/glass/useSpecularTracking.ts")));
+add(
+    "liquid-hover",
+    "auto-arm-seam-minted-once-wraps-core",
+    w1SeamExists && w1WrapsCore && w1CoreSingleSource,
+    w1SeamExists && w1WrapsCore && w1CoreSingleSource
+        ? "vSpecular.ts exists + imports/composes createSpecularWriter (the ONE extracted position-write core in useSpecularTracking.ts) — the directive WRAPS the single-source, does NOT re-implement the rAF/PRM/coordinate write"
+        : `the auto-arm seam is NOT minted-once-wrapping-the-core — exists=${w1SeamExists}, wraps-core=${w1WrapsCore}, core-single-source=${w1CoreSingleSource}`,
+);
+
+// W1 bite (anti-evasion) — NO second `--mouse-x`/`--mouse-y` writer exists outside the
+// core + the directive that wraps it. A `pointermove → --mouse-x` write (a re-pasted
+// handler, a forked tracker) in ANY component SFC returns ZERO (the single-source is
+// machine-locked). The core's `el.style.setProperty("--mouse-x"` (directive) +
+// `"--mouse-x": ...` (composable ref) are the ONLY sanctioned writers.
+const MOUSE_WRITE =
+    /setProperty\(\s*["']--mouse-x["']|["']--mouse-x["']\s*:/;
+const forkedWriters = [];
+for (const file of allFiles) {
+    const rel = relative(ROOT, file).replace(/\\/g, "/");
+    // The two sanctioned write homes are exempt (the composable + the directive).
+    if (
+        rel === "src/composables/glass/useSpecularTracking.ts" ||
+        rel === "src/composables/glass/vSpecular.ts"
+    )
+        continue;
+    if (MOUSE_WRITE.test(strip(read(rel)))) forkedWriters.push(rel);
+}
+add(
+    "liquid-hover",
+    "no-forked-mouse-writer",
+    forkedWriters.length === 0,
+    forkedWriters.length === 0
+        ? "NO second --mouse-x/--mouse-y writer exists outside createSpecularWriter + vSpecular (the single-source is machine-locked; a re-pasted/forked tracker would flag)"
+        : `a FORKED --mouse-x/y writer exists outside the single-source core: ${forkedWriters.join(", ")}`,
+);
+
+// W2 — the interactive-glass surfaces auto-arm with ZERO per-consumer wiring. Button's
+// glass variants + the dock control family carry the `v-specular` directive at their
+// component root. The directive is exported on the /glass barrel (a consumer with a
+// NET-NEW surface auto-arms it with `v-specular`).
+const w2ButtonArms = /v-specular\b/.test(buttonSfc);
+const w2DockArms =
+    /v-specular\b/.test(dockIconBtn) &&
+    /v-specular\b/.test(dockTabBtn) &&
+    /v-specular\b/.test(dockSelectTrig) &&
+    /v-specular\b/.test(dockDropdownTrig);
+const w2Published = /\bvSpecular\b/.test(glassBarrel);
+add(
+    "liquid-hover",
+    "interactive-glass-auto-arms-zero-wiring",
+    w2ButtonArms && w2DockArms && w2Published,
+    w2ButtonArms && w2DockArms && w2Published
+        ? "Button + the four dock controls (icon/tab/select/dropdown) carry the v-specular auto-arm at their root, and vSpecular is published on the /glass barrel — a bare <Button variant=\"glass\"> / <DockIconButton> gleams pointer-following with ZERO consumer wiring"
+        : `the interactive-glass auto-arm is INCOMPLETE — button=${w2ButtonArms}, dock-family=${w2DockArms}, published=${w2Published}`,
+);
+
+// W3 — the per-consumer hand-wire RETIRED onto the seam (DRY restored). DockIconButton
+// carries NO hand-composed `@pointermove="onPointerMove"`/`:style="specularStyle"`
+// triplet (it auto-arms via the directive). The count of hand-composed onPointerMove
+// SFC call sites dropped to ≤1 (NO always-on interactive control re-pastes the handler;
+// Card routes the gated case through the SAME directive, NOT a re-pasted handler). The
+// bite: scan every glass-bearing SFC for a live `@pointermove="onPointerMove"` triplet.
+const HANDWIRED_TRIPLET =
+    /@pointermove=["']onPointerMove["']|@pointermove=["'][^"']*onPointerMove\(/;
+const handwired = [];
+for (const file of allFiles) {
+    if (!/\.vue$/.test(file)) continue;
+    const rel = relative(ROOT, file).replace(/\\/g, "/");
+    if (HANDWIRED_TRIPLET.test(strip(read(rel)))) handwired.push(rel);
+}
+const dockIconNoTriplet = !HANDWIRED_TRIPLET.test(dockIconBtn);
+add(
+    "liquid-hover",
+    "handwire-retired-no-two-copies",
+    dockIconNoTriplet && handwired.length === 0,
+    dockIconNoTriplet && handwired.length === 0
+        ? "DockIconButton carries NO hand-composed @pointermove=\"onPointerMove\" triplet (it auto-arms via the directive); ZERO interactive control re-pastes the handler — the DRY single-source is restored (Card's gated opt-in routes the SAME directive)"
+        : `a hand-composed @pointermove triplet survives — dock-icon-clean=${dockIconNoTriplet}, surviving sites: ${handwired.join(", ") || "none"}`,
+);
+
+// W4 — the disco-grain pop is killed (opacity engage, NEVER `none → image`). The grain
+// `::after` keeps `background-image: var(--paper-clean-texture)` ALWAYS PRESENT (never
+// `none` at rest), and the grain engage rides a `--glass-grain-engage-duration` opacity
+// cross-fade. The negative predicate (anti-pop): NO `background-image: none → image`
+// transition on a grain layer.
+const w4TokenMinted = /--glass-grain-engage-duration\s*:/.test(grainToken);
+const w4OpacityCrossfade =
+    /transition:\s*opacity\s+var\(--glass-grain-engage-duration/.test(grainCss);
+const w4ImageAlwaysPresent =
+    /background-image:\s*var\(--paper-clean-texture\)/.test(grainCss);
+// The anti-pop negative predicate: NO `background-image: none` anywhere on a grain
+// layer (the discrete none→image swap is the forbidden pop).
+const w4NoNoneSwap = !/background-image:\s*none/.test(grainCss);
+add(
+    "liquid-hover",
+    "grain-pop-killed-opacity-crossfade",
+    w4TokenMinted && w4OpacityCrossfade && w4ImageAlwaysPresent && w4NoNoneSwap,
+    w4TokenMinted && w4OpacityCrossfade && w4ImageAlwaysPresent && w4NoNoneSwap
+        ? "the grain ::after keeps background-image always present + rides a --glass-grain-engage-duration opacity cross-fade (NO background-image: none → image swap) — the disco-grain pop (T8-F6) killed at the composition class"
+        : `the grain pop-kill is INCOMPLETE — token=${w4TokenMinted}, opacity-crossfade=${w4OpacityCrossfade}, image-always-present=${w4ImageAlwaysPresent}, no-none-swap=${w4NoNoneSwap}`,
+);
+
+// W4 self-test bite — a synthetic `.grain-x { background-image: none } .grain-x:hover {
+// background-image: var(--paper-clean-texture) }` fixture (the none→image swap) MUST be
+// flagged by the anti-pop predicate; the opacity cross-fade fixture MUST NOT. The bite
+// is demonstrated every run (born-RED on the swap pattern, GREEN on the cross-fade).
+const SWAP_FIXTURE =
+    ".grain-x { background-image: none; } .grain-x:hover { background-image: var(--paper-clean-texture); }";
+const CROSSFADE_FIXTURE =
+    ".grain-y { background-image: var(--paper-clean-texture); transition: opacity 120ms linear; }";
+const swapBites = /background-image:\s*none/.test(SWAP_FIXTURE);
+const crossfadeClean = !/background-image:\s*none/.test(CROSSFADE_FIXTURE);
+add(
+    "liquid-hover",
+    "grain-pop-self-test-bite",
+    swapBites && crossfadeClean,
+    swapBites && crossfadeClean
+        ? "the anti-pop predicate FLAGS the synthetic none→image swap fixture AND exempts the opacity cross-fade fixture — the bite has teeth (born-RED on the pop pattern)"
+        : `the grain pop self-test bite is broken — swap-flags=${swapBites}, crossfade-exempt=${crossfadeClean}`,
+);
+
+// W5 — the π binding readback spec is wired (the gleam-tracks-cursor + grain-no-pop +
+// PRM-static truth, both modes — runs under W-VISUAL-RUNNER, never existsSync'd alone).
+add(
+    "liquid-hover",
+    "pi-readback-spec-exists",
+    existsSync(resolve(ROOT, "tests-visual/liquid-hover.spec.ts")),
+    "tests-visual/liquid-hover.spec.ts exists (the π render readback — the gleam POSITION tracks the cursor off the centred 50%, the grain engage shows NO pop, the PRM bracket pins static; the BINDING visual truth, both modes)",
+);
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const failed = checks.filter((c) => !c.pass);
 const arms = [...new Set(checks.map((c) => c.arm))];
@@ -456,5 +624,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    `\n[proof:glass-cohesion] TOTAL glass cohesion locked — ${inventory.length} surfaces on ONE model; Drawer/Slider/Notification on the band; the moving-specular transition is opt-in (0 idle tracks); the π arm proves the render.`,
+    `\n[proof:glass-cohesion] TOTAL glass cohesion locked — ${inventory.length} surfaces on ONE model; Drawer/Slider/Notification on the band; the moving-specular transition is opt-in (0 idle tracks); the tier-root specular auto-arm (vSpecular wrapping the ONE position-write core) gleams pointer-following with zero per-consumer wiring; the disco-grain pop is killed onto an opacity cross-fade; the π arm proves the render.`,
 );
