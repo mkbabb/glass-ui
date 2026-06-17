@@ -28,15 +28,25 @@
 //        `surfaceClass`, re-exported from _shared/index.ts, AND `Surface` is
 //        published in src/api/index.ts (the discovery layer). RED at HEAD: no such
 //        symbol.
-//   W3 — EVERY ENROLLED SURFACE THREADS THE AXIS. Each of the nine surfaces
+//   W3 — EVERY ENROLLED SURFACE THREADS THE AXIS. Each of the ELEVEN surfaces
 //        (Card, GlassPanel, Dialog, Sheet, Drawer, Popover, Command,
-//        ExpandableContainer, Skeleton) carries the `surface` prop routed through
+//        ExpandableContainer, Skeleton + Toast, Button — BB.W-SURFACE-AXIS-COMPLETE
+//        finished the R8-12 enrollment) carries the `surface` prop routed through
 //        `surfaceClass` (or the `[data-surface]` decoration). The POSITIVE assert:
 //        the surface composes the axis (a `surfaceClass(` call OR a `data-surface`
 //        binding), ExpandableContainer's fullscreen overlay carries `glass-overlay`
 //        (NOT `bg-background`), Skeleton carries the `--skeleton-glass-bg` over-
-//        glass register. RED at HEAD: the prop on NONE of Sheet/Popover/Command/
-//        Drawer; ExpandableContainer is `bg-background`; Skeleton bare `bg-muted`.
+//        glass register. The roster-COUNT fact (eleven) is the anti-evasion floor —
+//        a re-freeze at nine (dropping Toast/Button to dodge the work) reds W3. RED
+//        at HEAD pre-BB: Toast.vue/Button.vue carry no `surface` thread.
+//   W7 — THE DOC CLAIM IS HONEST (the doc-lie kill, BB.W-SURFACE-AXIS-COMPLETE).
+//        The gate reads CLAUDE.md and asserts every `<Toast surface=…>` /
+//        `<Button surface=…>` example references a prop the corresponding SFC
+//        actually DECLARES (a `surface` prop in Toast.vue / Button.vue). A
+//        documented prop with no backing declaration REDS the witness — the
+//        structural anti-P-5 bite (a future doc claim AHEAD of the source fails).
+//        RED at HEAD pre-BB: CLAUDE.md documented `<Toast surface="veil">` while
+//        Toast.vue declared no `surface` prop.
 //   W4 — THE CLEAN BREAK LANDED. DialogContent carries NO `variant` prop (the
 //        binary glass|opaque string retired onto `surface`) AND a `surface` prop is
 //        present, AND MIGRATION.md carries the `variant`→`surface` row. RED at
@@ -76,7 +86,10 @@ function cliPaths() {
         SHARED_INDEX_TS: ui("_shared/index.ts"),
         API_INDEX_TS: resolve(ROOT, "src/api/index.ts"),
         MIGRATION_MD: resolve(ROOT, "MIGRATION.md"),
-        // The nine enrolled surfaces.
+        // BB.W-SURFACE-AXIS-COMPLETE — the W7 doc-honesty witness reads CLAUDE.md.
+        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
+        // The eleven enrolled surfaces (BB.W-SURFACE-AXIS-COMPLETE finished the
+        // R8-12 enrollment — Toast + Button join the prior nine).
         CARD_VUE: ui("card/Card.vue"),
         GLASS_PANEL_VUE: custom("glass-panel/GlassPanel.vue"),
         DIALOG_VUE: ui("dialog/DialogContent.vue"),
@@ -86,6 +99,9 @@ function cliPaths() {
         COMMAND_VUE: ui("command/Command.vue"),
         EXPANDABLE_VUE: custom("expandable-container/ExpandableContainer.vue"),
         SKELETON_VUE: ui("skeleton/Skeleton.vue"),
+        // BB.W-SURFACE-AXIS-COMPLETE — the two surfaces R8-12 named verbatim.
+        TOAST_VUE: ui("toast/Toast.vue"),
+        BUTTON_VUE: ui("button/Button.vue"),
         // Scope 7 — control surfaces.
         SELECT_TRIGGER_VUE: ui("select/SelectTrigger.vue"),
         // Scope 8 — paper-ink-mark consumers.
@@ -172,6 +188,9 @@ export function detectSurfaceAxis(sources) {
     const sharedIndexTs = stripBlockComments(sources.sharedIndexTs ?? "");
     const apiIndexTs = stripBlockComments(sources.apiIndexTs ?? "");
     const migrationMd = sources.migrationMd ?? "";
+    // CLAUDE.md is markdown prose (the W7 doc-honesty witness) — read raw, no
+    // comment-strip (the `//`-strip would mangle prose `://` and is not owed here).
+    const claudeMd = sources.claudeMd ?? "";
 
     const sfc = {};
     for (const [k, v] of Object.entries(sources.sfc ?? {})) {
@@ -290,6 +309,10 @@ export function detectSurfaceAxis(sources) {
         ["Command", "command"],
         ["ExpandableContainer", "expandable"],
         ["Skeleton", "skeleton"],
+        // BB.W-SURFACE-AXIS-COMPLETE — the R8-12 "buttons + toasts" close. The
+        // roster MUST stay at eleven (the count fact below reds a re-freeze at nine).
+        ["Toast", "toast"],
+        ["Button", "button"],
     ];
     const w3 = {};
     for (const [label, key] of ENROLLED) {
@@ -301,6 +324,14 @@ export function detectSurfaceAxis(sources) {
                 `W3: ${label} does not thread the shared surface axis (no surfaceClass(…) call or data-surface binding).`,
             );
         }
+    }
+    // The anti-evasion roster-count floor: the enrollment is COMPLETE at eleven
+    // (BB finished the two named-but-skipped surfaces). A re-freeze at nine reds.
+    const enrolledCount = ENROLLED.length;
+    if (enrolledCount !== 11) {
+        violations.push(
+            `W3: the ENROLLED roster is ${enrolledCount}, not eleven — the R8-12 "buttons + toasts" enrollment must stay complete (a re-freeze that drops Toast/Button dodges the work).`,
+        );
     }
     // ExpandableContainer fullscreen overlay carries glass-overlay, NOT bg-background.
     const expandableSrc = sfc.expandable ?? "";
@@ -394,6 +425,47 @@ export function detectSurfaceAxis(sources) {
         );
     }
 
+    // ── W7 — the doc claim is HONEST (the doc-lie kill) ───────────────────────
+    // For each of Toast/Button: IF CLAUDE.md carries a `<Toast surface=…>` /
+    // `<Button surface=…>` example, THEN the corresponding SFC MUST DECLARE a
+    // `surface` prop (an example for a prop the component does not declare is the
+    // P-5 doc lie — RED). The SFC declares the prop iff it carries a
+    // `surface?: Surface` interface field (a `surface\s*\?\s*:` declaration). A
+    // documented surface example with a backing declaration is honest; an example
+    // with NO backing declaration (the pre-BB state) reds — the structural anti-
+    // doc-lie bite.
+    const docExample = (component) =>
+        new RegExp(`<${component}\\s+surface\\s*=`).test(claudeMd);
+    const sfcDeclaresSurface = (src) => /surface\s*\?\s*:/.test(src);
+    const toastDocExample = docExample("Toast");
+    const buttonDocExample = docExample("Button");
+    const toastDeclares = sfcDeclaresSurface(sfc.toast ?? "");
+    const buttonDeclares = sfcDeclaresSurface(sfc.button ?? "");
+    // HONEST iff: a doc example is present AND the SFC declares the prop. (The
+    // wave's intent is the example IS documented and the prop EXISTS — both true.)
+    const toastDocHonest = toastDocExample && toastDeclares;
+    const buttonDocHonest = buttonDocExample && buttonDeclares;
+    if (toastDocExample && !toastDeclares) {
+        violations.push(
+            "W7: CLAUDE.md documents a `<Toast surface=…>` example but Toast.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
+        );
+    }
+    if (buttonDocExample && !buttonDeclares) {
+        violations.push(
+            "W7: CLAUDE.md documents a `<Button surface=…>` example but Button.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
+        );
+    }
+    if (!toastDocHonest) {
+        violations.push(
+            "W7: the CLAUDE.md surface-axis canon must name Toast with a `<Toast surface=…>` example AND Toast.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
+        );
+    }
+    if (!buttonDocHonest) {
+        violations.push(
+            "W7: the CLAUDE.md surface-axis canon must name Button with a `<Button surface=…>` example AND Button.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
+        );
+    }
+
     const facts = {
         w1: {
             seamHasVeil,
@@ -405,10 +477,18 @@ export function detectSurfaceAxis(sources) {
             resolverDefined,
         },
         w2: { unionExported, sharedReExports, apiPublishes },
-        w3: { ...w3, expandableUnwalled, skeletonOverGlass },
+        w3: { ...w3, expandableUnwalled, skeletonOverGlass, enrolledCount },
         w4: { dialogHasVariantProp, dialogHasSurfaceProp, migrationRow },
         w5: { controlRegisterDefined, inputReadsRegister, selectRidesGrayWash },
         w6: { paperMarkDefined, mathPaperConsumes, tabsConsumes, consumerCount },
+        w7: {
+            toastDocExample,
+            buttonDocExample,
+            toastDeclares,
+            buttonDeclares,
+            toastDocHonest,
+            buttonDocHonest,
+        },
     };
 
     return { facts, violations };
@@ -437,6 +517,7 @@ function run() {
         sharedIndexTs: safeRead(P.SHARED_INDEX_TS),
         apiIndexTs: safeRead(P.API_INDEX_TS),
         migrationMd: safeRead(P.MIGRATION_MD),
+        claudeMd: safeRead(P.CLAUDE_MD),
         sfc: {
             card: safeRead(P.CARD_VUE),
             glassPanel: safeRead(P.GLASS_PANEL_VUE),
@@ -447,6 +528,8 @@ function run() {
             command: safeRead(P.COMMAND_VUE),
             expandable: safeRead(P.EXPANDABLE_VUE),
             skeleton: safeRead(P.SKELETON_VUE),
+            toast: safeRead(P.TOAST_VUE),
+            button: safeRead(P.BUTTON_VUE),
         },
         selectTrigger: safeRead(P.SELECT_TRIGGER_VUE),
         mathPaper: safeRead(P.MATH_PAPER_VUE),
@@ -486,11 +569,11 @@ function run() {
         )}`,
     );
     console.log(
-        `  W3 nine surfaces thread axis  : ${yn(
+        `  W3 eleven surfaces thread axis: ${yn(
             !violations.some((v) => v.startsWith("W3")),
-        )}  (unwalled:${yn(facts.w3.expandableUnwalled)} skel-glass:${yn(
-            facts.w3.skeletonOverGlass,
-        )})`,
+        )}  (count:${facts.w3.enrolledCount} unwalled:${yn(
+            facts.w3.expandableUnwalled,
+        )} skel-glass:${yn(facts.w3.skeletonOverGlass)})`,
     );
     console.log(
         `  W4 Dialog clean break         : ${yn(
@@ -510,6 +593,13 @@ function run() {
         `  W6 paper-ink-mark register    : ${yn(
             facts.w6.paperMarkDefined && facts.w6.consumerCount >= 2,
         )}  (consumers:${facts.w6.consumerCount})`,
+    );
+    console.log(
+        `  W7 doc claim is HONEST        : ${yn(
+            facts.w7.toastDocHonest && facts.w7.buttonDocHonest,
+        )}  (toast:${yn(facts.w7.toastDocHonest)} button:${yn(
+            facts.w7.buttonDocHonest,
+        )})`,
     );
 
     if (violations.length > 0) {

@@ -47,14 +47,14 @@ Each row names *what should exist and be referenced via its semantic alias when 
 | Color — neutral | `--neutral-{0..5}` (dark mirrored) |
 | Typography | golden-ratio `--type-{admin-label,micro,caption,small,body,prose,subheading,heading,title,display-{1..5}}`; `--leading-*`; `--tracking-*`; family quartet `--font-{display,serif,sans,mono}` |
 | Interactive | `--scale-{hover,hover-dock,press,press-btn,press-dock}`, `--opacity-{disabled,icon-muted}`, `--focus-ring*`, `--lift-{sm,md,lg}` |
-| Sizing | `--size-icon-btn`, `--icon-{xs..xl}`, dock geometry, `--max-width-input`, `--mask-fade-width` |
+| Sizing | `--size-icon-btn`, `--icon-{xs..xl}`, dock geometry, `--max-width-input` (`--mask-fade-width` RETIRED BB.W-SCROLL-FADE-RETIRE → `--fade-scroll-width`) |
 | Border opacity | `--border-opacity-{light,medium,strong}` |
 
 ## Audit axes
 
 **1. Token alignment.** Inline literals where a token exists; primitive tokens where a semantic alias is defined; raw `rgba`/hex where the canonical recipe is `color-mix(in srgb, var(--foreground) N%, transparent)`; hand-rolled spring/cubic strings duplicating tokens; body neutrals not stepping through `--neutral-{0..5}`.
 
-**2. Utility & `@apply` hygiene.** Tailwind utility soup that has a canonical class (`.glass-{subtle,default,medium,elevated,card,cartoon,btn,pill}`, `.btn-pill`, `.interactive-item`, `.focus-ring`, `.active-scale`, `.disabled-base`, `.hover-lift{,-md,-lg}`, `.scroll-fade-{y,top,bottom,mask}`, `.popover-animate`, `.slide-in-from-side`, `.shadow-cartoon-{sm,md,lg}`, `.kbd`, `.code-badge`, `.inline-pill`, `.input-bar`, `.section-label`, `.divider-h{,-tapered}`, `.scrollbar-{hidden,thin}`, `.paper-texture`, `.dock-{separator,spacer,label}`); custom CSS that should `@apply` `@theme` utilities; consumer `@layer components` redefining glass-ui's component layer.
+**2. Utility & `@apply` hygiene.** Tailwind utility soup that has a canonical class (`.glass-{subtle,default,medium,elevated,card,cartoon,btn,pill}`, `.btn-pill`, `.interactive-item`, `.focus-ring`, `.active-scale`, `.disabled-base`, `.hover-lift{,-md,-lg}`, `.fading-scroll` (`<FadingScroll>`; the `.scroll-fade-{y,top,bottom,mask}` masks RETIRED BB.W-SCROLL-FADE-RETIRE), `.popover-animate`, `.slide-in-from-side`, `.shadow-cartoon-{sm,md,lg}`, `.kbd`, `.code-badge`, `.inline-pill`, `.input-bar`, `.section-label`, `.divider-h{,-tapered}`, `.scrollbar-{hidden,thin}`, `.paper-texture`, `.dock-{separator,spacer,label}`); custom CSS that should `@apply` `@theme` utilities; consumer `@layer components` redefining glass-ui's component layer.
 
 **3. Interactive consistency.** Hover/press/disabled/focus implemented ad hoc instead of reusing the canonical interactive vocabulary — `<Button>` + `buttonVariants`, `.btn-pill`, `.glass-btn`, `.interactive-item`, `.focus-ring`, `.active-scale`, `.disabled-base`. Bespoke transforms instead of `--scale-hover*` / `--scale-press*`. Missing focus-visible on custom interactives. Touch hit areas under `--size-icon-btn`.
 

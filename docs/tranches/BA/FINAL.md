@@ -186,6 +186,7 @@ surface FAIL. The gestalt verdict is PASS; the graze is a refinement, not a page
    segmented→pill, multi-select→ToggleGroup), W-PAGER (the carousel-dots re-home), the tone-on-glass
    recompose, the static scroll-fade retirement, the `/underline`→`/handmark` fold, the dark-material
    token-identity rebuild, and `MetricBadge` amount→value.
+   > **BB forward-note (integrity correction):** "the static scroll-fade retirement" was over-claimed here as a LANDED BA clean break — the static `.scroll-fade-*` utilities + `--mask-fade-width` actually retired at BB.W-SCROLL-FADE-RETIRE (the 4.1.0 cut), one batch later. The deferral is recorded, not erased.
 
 **The registry lineage map** (from `636adeae`; the publishable two-line history): the bifurcation
 point is `87c2d384` (AY pre-close, 3.9.0). Arc 1 — the d6 fork (`feat/d6-library-3.10`, tip

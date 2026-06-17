@@ -106,9 +106,14 @@ add(
 );
 
 // ── S4 — a <DockSeparator> demarcates the home control ───────────────────────────
+// BB.W-DOCK-RAIL-SEAT-FINAL re-anchored the ℱ-home separator: it now carries the
+// `:anchor="true"` attribute (the SOLE [data-rail-anchor] the seam-locator queries),
+// so the bare `<DockSeparator>`/`<DockSeparator />` regex no longer matched. Widen
+// to `<DockSeparator\b` (word-boundary) so an attributed home separator still
+// satisfies S4 — the home divider is present, now ALSO the rail seam anchor.
 add(
     "home-separator",
-    /<DockSeparator\s*\/?>/.test(persistentBody),
+    /<DockSeparator\b/.test(persistentBody),
     "a <DockSeparator> demarcates the ℱ home control in the #persistent region (the home-top divider, R3-12 / D1)",
 );
 

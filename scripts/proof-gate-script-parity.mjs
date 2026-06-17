@@ -29,24 +29,23 @@
 //   C. MANIFEST-RESOLVES — every gates.mjs GATES row's `cmd` is a real package.json
 //      script (the manifest never points at a ghost).
 //
-// THE STANDING KNOWN-ORPHAN BASELINE (the AW partially-registered fleet). Six
-// proof-*.mjs were authored by AW waves W12–W16 + W3b but never registered in
-// package.json (the exact class this meta-gate exists to catch). Registering them is
-// OUT of W00 FileBounds — each ties to its own AW/AX wave (it may reference src/
-// paths or a test that does not pass at HEAD), and W00 writes no src/ + co-edits no
-// other wave's registration line. So they are recorded here as a FINITE, OWNER-
-// ATTRIBUTED standing baseline: an explicit allowlist, NOT a fail-open wildcard. A
-// NEW orphan (any proof-*.mjs not on this list and not registered) STILL reds —
-// the gate is load-bearing. The allowlist shrinks to empty as each owner wave
-// registers (or removes) its script. This is the fail-EXPLICIT shape: the orphans
-// are named + owed, never silently swept.
-const KNOWN_ORPHANS = new Map([
-    ["proof-affordance-contrast.mjs", "AW.W13 — owner-wave registers/removes"],
-    // proof-composable-return-types.mjs REGISTERED + ci-tagged at AY.W-GOD1 (the
-    // carve-parity gate — its owner wave landed it), so it leaves the allowlist.
-    ["proof-datatable-split.mjs", "AW.W14 — owner-wave registers/removes"],
-    ["proof-dock-big-dock.mjs", "AW.W3b — owner-wave registers/removes"],
-]);
+// THE STANDING KNOWN-ORPHAN BASELINE — DRAINED TO ∅ (BB.W-DEAD-SWEEP). The AW
+// partially-registered fleet (proof-*.mjs authored by AW waves W12–W16 + W3b with
+// no package.json registration) was the exact drift class this meta-gate exists to
+// catch. AX.W00 recorded the last three as a FINITE, OWNER-ATTRIBUTED baseline with
+// the discipline "the allowlist shrinks to empty as each owner wave registers (or
+// removes) its script." BB.W-DEAD-SWEEP executes that drain: each of the three was
+// re-grounded at HEAD and confirmed to assert a LIVE invariant over a still-shipping
+// surface, so all three are REGISTERED + tagged into an aggregate (no deletion):
+//   - proof-affordance-contrast.mjs (AW.W13) → proof:affordance-contrast, ci
+//     (the gold-CTA/input-border/slider-fill calm-affordance source invariants live)
+//   - proof-datatable-split.mjs (AW.W14) → proof:datatable-split, ci
+//     (DataTable.vue ≤380 lines + the two colocated composables — both present)
+//   - proof-dock-big-dock.mjs (AW.W3b) → proof:dock-big-dock, local
+//     (the shape="card"/layout="grid" big-dock behavioral surface — device-π)
+// The baseline is now EMPTY: any NEW orphan (any proof-*.mjs not registered) reds
+// immediately — the gate is load-bearing with no standing amnesty.
+const KNOWN_ORPHANS = new Map([]);
 
 // THE STANDING KNOWN-DANGLING baseline. Two proof:* package.json scripts were
 // registered by AW waves but their proof-*.mjs file does NOT exist on disk — so

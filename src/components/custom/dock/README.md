@@ -300,6 +300,7 @@ substrate-with-consumer precept).
 | `proof:dock-clip-reveal` · `proof:dock-region-model` · `proof:dock-vocabulary` | The clip-aperture reveal, the region model (home-left nav-pattern + separators), and the dock CSS vocabulary cohesion. |
 | `proof:dock-hold-contract` · `proof:dock-perfection` · `proof:dock-unify` | The dock-held keep-open contract, the W45-TUNE hover/active register, and the one-root nav-pattern unify. |
 | `proof:dock-wrap-content-driven` | `overflow="wrap"` reflows by INTRINSIC content-driven flex-wrap (shrink-wrap + `max-inline-size: var(--dock-max-inline-size)` cap, no viewport `@media`); the multi-row card lifts onto the card-tier `--shadow-dock-wrap` shadow + the `--dock-card-radius` corner, both tracking `--dock-morph-t` in lockstep; horizontal-only; the `--dock-overflow-bp` token is gone. |
+| `proof:dock-big-dock` | The big-dock card+grid behavioral contract (AW.W3b): `shape="card"` is a finite concentric shell that morphs ↔ pill on the dock morph scalar, `layout="grid"` lays concentric inner tiles, `corner-shape: squircle` is `@supports`-gated, and an `alwaysExpanded` grid never reflows. Device-π (the demo big-dock showcase; SKIPs clean when `:5199` is unreachable). |
 | `proof:dock-a11y-contract` | The switcher-rail roles. |
 | `proof:offscreen-pause` | The dock's motion honors the WebGL-substrate park. |
 | `proof:dock-taxonomy` | ONE GlassDock, ONE orientation axis — the `variant` discriminant stays dead; the rail noun stays de-overloaded (the T2 allowlist). |

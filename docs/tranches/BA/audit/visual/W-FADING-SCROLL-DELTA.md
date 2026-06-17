@@ -53,6 +53,7 @@ Before (the ground capture): `docs/tranches/BA/audit/ground/R8-08-fading-scroll-
 - **Dual-path, single writer** (mirrors `scroll-driven.css`): the native `@supports (animation-timeline: scroll())` block in `utilities/base.css` drives the registered `@property <length-percentage>` `--fade-start` / `--fade-end` customs off a `scroll(self inline|block)` timeline — `animation-range: 0 var(--fade-scroll-width)` opens the start past `scroll > 0`, `animation-range: calc(100% - var(--fade-scroll-width)) 100%` closes the end on trailing overflow. The `useFadingScroll` JS fallback (promoted from the `PresetPickerRow` measure loop, reusing `useResizeObserver` + a rAF-coalesced scroll listener) writes the SAME customs, feature-detect-gated OFF (`supportsScrollTimeline()`) under native support — no double-feather.
 - **PRM** — the fade is a LEGIBILITY cue, not motion: it does NOT vanish under `prefers-reduced-motion: reduce` (unlike `scroll-driven.css`); it stops interpolating, the discrete overflow-edge presence stays correct.
 - **token** — `--fade-scroll-width` (1rem, inheriting) supersedes `--mask-fade-width` (retire-coordinated to the orchestrator's Batch-close commit). SegmentedTabs' local `0.5rem` re-points onto it.
+  > **BB forward-note (integrity correction):** the static-utility + `--mask-fade-width` retirement was DEFERRED past the BA close and landed at BB.W-SCROLL-FADE-RETIRE (the 4.1.0 cut) — the BA close over-claimed it as a landed clean break; the BB integrity-floor correction records, not erases, the deferral.
 
 ## The migrated consumers (unit 2)
 
@@ -64,3 +65,5 @@ Before (the ground capture): `docs/tranches/BA/audit/ground/R8-08-fading-scroll-
 ## proof:fading-scroll state
 
 7/9 source witnesses GREEN at this wave's HEAD. The two remaining (W5 four-consumers-migrated, W6 retirement-consumer-clean) are RED ONLY on `demo/stories/substrates/blob.vue` (C1) — the W-GOO-REDRESS file; they flip GREEN automatically when the sibling applies the mood-row wrap. The C2/C3 configurator references (W6 allowlist) retire at the orchestrator's Batch-close commit after W-CONFIG-CHASSIS migrates them.
+
+> **BB forward-note (integrity correction):** the "orchestrator's Batch-close commit" that retires the static utilities + `--mask-fade-width` was never executed at BA — it landed at BB.W-SCROLL-FADE-RETIRE (the 4.1.0 cut). At BB the W6 witness was upgraded from the consumer-survivor allowlist to a DEFINITION-ABSENT + token-absent + dist-absent assert, so the dead bytes cannot silently re-ship.

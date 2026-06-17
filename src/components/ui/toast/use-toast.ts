@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import type { Component, VNode } from 'vue'
+import type { Surface } from '../_shared/useSurfaceAxis'
 
 const TOAST_LIMIT = 5
 const TOAST_REMOVE_DELAY = 1000000
@@ -21,6 +22,12 @@ export interface Toast {
   description?: string
   action?: Component | VNode
   variant?: ToastVariant
+  /**
+   * BB.W-SURFACE-AXIS-COMPLETE — the shared {glass·veil·opaque} surface-decoration
+   * axis on a queued toast (default `glass`). Forwarded through `Toaster.vue`'s
+   * per-toast `v-bind` exactly like `variant`; orthogonal to the tone arm.
+   */
+  surface?: Surface
   /**
    * Auto-dismiss delay in ms, forwarded to reka-ui's `ToastRoot`. Omit to
    * inherit the `ToastProvider` default; `Number.POSITIVE_INFINITY` keeps the

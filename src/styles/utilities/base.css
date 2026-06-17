@@ -1,5 +1,5 @@
 /* utilities/base.css
-   The @layer components base half — section-description, labeled-field, popover-content, scrollbar, focus-ring, hairline-accent, interactive-item, tap-squish, status-dot, depth-text, preserve-3d, ios input fix, scroll-fade masks, fading-scroll (scroll-state-driven edge fade), deferred-section, scroll-timeline host, shimmer text, keyboard key.
+   The @layer components base half — section-description, labeled-field, popover-content, scrollbar, focus-ring, hairline-accent, interactive-item, tap-squish, status-dot, depth-text, preserve-3d, ios input fix, fading-scroll (scroll-state-driven edge fade), deferred-section, scroll-timeline host, shimmer text, keyboard key.
    Carved from the utilities.css cascade root; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 
@@ -315,35 +315,10 @@
         font-size: max(1rem, 1em);
     }
 
-    /* ── Scroll fade masks ──
-       Single-source `mask-image` (AV.W16 TW7): the `-webkit-` companion is
-       dropped — Tailwind v4's Lightning CSS build pipeline auto-prefixes per
-       the browserslist targets, mirroring the glass ladder's single-source
-       `backdrop-filter` (glass.css). NOTE: this is the consistency cut; it
-       does NOT conflict with W15's `@supports`-gated older-Safari mask
-       fallback (that fallback is the distinct case where the companion is
-       genuinely needed and W15 gates it). */
-    .scroll-fade-mask {
-        mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
-    }
-
-    .scroll-fade-top {
-        mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width));
-    }
-
-    .scroll-fade-bottom {
-        mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-width)), transparent);
-    }
-
-    .scroll-fade-y {
-        mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
-    }
-
     /* ── Fading scroll — the scroll-STATE-driven edge fade (BA.W-FADING-SCROLL) ──
-       `<FadingScroll>`'s recipe. SUPERSEDES the scroll-BLIND `.scroll-fade-*`
-       masks above (which feathered both edges unconditionally — the R8-08 "Shy"
-       defect). Here each edge's ramp width is a registered `--fade-start` /
-       `--fade-end` custom (above, default 0px = SHARP), driven by the
+       `<FadingScroll>`'s recipe. Each edge's ramp width is a registered
+       `--fade-start` / `--fade-end` custom (above, default 0px = SHARP), driven
+       by the
        `scroll(self)` timeline so the start edge feathers only past `scroll > 0`
        and the end edge only while trailing overflow remains.
 
@@ -495,9 +470,9 @@
        isolation guarantee the value.js `PaneHeader.vue:18-29` comment
        called out and the AI.W1 spec §1.2 ratified as canon).
 
-       Disambiguated from `.scroll-fade-*` (mask-image fade gradient at
-       the container's leading/trailing edge) — `.card-scroll-host` does
-       NOT paint any visual; it only emits the timeline. */
+       Disambiguated from `.fading-scroll` (the `<FadingScroll>` mask-image
+       edge fade at the container's leading/trailing edge) — `.card-scroll-host`
+       does NOT paint any visual; it only emits the timeline. */
     .card-scroll-host {
         contain: layout style paint;
         scroll-timeline: --card-scroll block;

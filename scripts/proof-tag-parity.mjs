@@ -152,6 +152,14 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // the close set by the BB close. It also imports gates.mjs's gatesFor, so it
     // cannot be in the set it walks.
     ["proof:close-battery-parity", "BB.W-CLOSE-BATTERY close-path meta-gate; promoted at the BB close (the proof:gate-manifest-sound precedent)."],
+    // BB.W-DEAD-SWEEP — proof:peer-conformance is a RELEASE-time registry peer-range
+    // probe (it `npm view`s the upstream latest + asserts glass-ui's peer ranges admit
+    // it). A per-push `ci` tag would red the instant an upstream @mkbabb minor publishes
+    // ahead of the consumer's range widen — a release concern, not a push concern. It is
+    // manifested release-only (the proof:ba-final release-only precedent); the gate-fleet
+    // reconcile surfaced it (manifesting an un-manifested gate exposed its tag to the
+    // parity walk). Justified not-ci.
+    ["proof:peer-conformance", "BB.W-DEAD-SWEEP — release-time registry peer-range probe; ci would red on an upstream version publish before the consumer widens (the proof:ba-final release-only precedent)."],
 ]);
 
 /** Does a gate's backing script spawn a browser (a Playwright/live gate)? */

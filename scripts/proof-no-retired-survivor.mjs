@@ -108,15 +108,15 @@ const RETIRED_CLAIMS = [
         dirs: ["deck-progress", "instrument-rail"],
     },
     {
-        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:252)",
+        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:261)",
         mustCarry: "RETIRED",
-        line: 252,
+        line: 261,
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths (MIGRATION.md:257)",
+        label: "pagination/virtual composables + subpaths (MIGRATION.md:266)",
         mustCarry: "RETIRED",
-        line: 257,
+        line: 266,
         subpaths: ["pagination", "virtual"],
         exports: [
             "useOffsetPagination",
@@ -126,9 +126,9 @@ const RETIRED_CLAIMS = [
         ],
     },
     {
-        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:260)",
+        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:269)",
         mustCarry: "RETIRED",
-        line: 260,
+        line: 269,
         exports: ["DockShowcaseFrame"],
     },
     // ── BA cut (4.0.0) retirements — anchored here for the coverage guard; the
@@ -146,23 +146,33 @@ const RETIRED_CLAIMS = [
         line: 130,
     },
     {
-        label: "CarouselDots onto <PagerDots> (W-PAGER; machine-locked by proof:pager) (MIGRATION.md:168)",
+        label: "CarouselDots onto <PagerDots> (W-PAGER; machine-locked by proof:pager) (MIGRATION.md:177)",
         mustCarry: "RETIRED",
-        line: 168,
+        line: 177,
     },
     {
         // The /underline subpath is gone from package.json exports (the binding
         // artefact); proof:handmark verifies the DEC-8 fold. The MIGRATION.md:103
         // subpath-history cross-mention is a back-reference to this claim.
-        label: "GlassUnderline + /underline subpath onto <HandMark> (W-HANDMARK; machine-locked by proof:handmark) (MIGRATION.md:191)",
+        label: "GlassUnderline + /underline subpath onto <HandMark> (W-HANDMARK; machine-locked by proof:handmark) (MIGRATION.md:200)",
         mustCarry: "RETIRED",
-        line: 191,
+        line: 200,
         subpaths: ["underline"],
     },
     {
-        label: "the disco CTA keyframes/tokens (W-GLASS-CAL; machine-locked by proof:glass-cal) (MIGRATION.md:1232)",
+        label: "the disco CTA keyframes/tokens (W-GLASS-CAL; machine-locked by proof:glass-cal) (MIGRATION.md:1241)",
         mustCarry: "RETIRED",
-        line: 1232,
+        line: 1241,
+    },
+    {
+        // BB.W-SCROLL-FADE-RETIRE — the static .scroll-fade-* utility rules + the
+        // --mask-fade-width token retired at the 4.1.0 cut (clean break). The
+        // artefacts are CSS (outside this gate's src/subpath probes); the BINDING
+        // machine check is proof:fading-scroll's W6 DEFINITION-ABSENT + token-absent
+        // + dist-absent arms. Anchored here for the coverage guard.
+        label: "the static .scroll-fade-* utilities + --mask-fade-width token (W-SCROLL-FADE-RETIRE; machine-locked by proof:fading-scroll W6) (MIGRATION.md:1189)",
+        mustCarry: "RETIRED",
+        line: 1189,
     },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
     // speedtest-consumed (MIGRATION.md §"KEPT (speedtest-consumed)", corrected
@@ -268,9 +278,10 @@ function run() {
     const declaredLines = new Set(RETIRED_CLAIMS.map((c) => c.line));
     // Back-reference / cross-link lines that point at an ALREADY-declared claim
     // (not a new retirement assertion): MIGRATION.md:103 (the /underline subpath
-    // history cross-mention → the line-191 claim) + :358 ("…is RETIRED—see §2"
-    // → the line-252 composables/dark claim).
-    const BACKREF_LINES = new Set([103, 358]);
+    // history cross-mention → the line-200 claim) + :367 ("…is RETIRED—see §2"
+    // → the line-261 composables/dark claim). (BB Batch 2: the MIGRATION.md
+    // surface-axis + scroll-fade edits shifted the lower-doc anchors +9; :358→:367.)
+    const BACKREF_LINES = new Set([103, 367]);
     mdLines.forEach((ln, i) => {
         const n = i + 1;
         if (!/RETIRED/.test(ln)) return;

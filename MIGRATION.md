@@ -143,6 +143,15 @@
 > over-glass register (a translucent `--skeleton-glass-bg` block that lets a frosted plate read
 > through). The `ExpandableContainer` fullscreen overlay now un-walls onto the overlay glass tier
 > by default (`surface="opaque"` restores the prior solid wall). No break for any of these.
+>
+> ADDITIVE (4.1.0, BB.W-SURFACE-AXIS-COMPLETE): the shared `Surface = "glass" | "veil" | "opaque"`
+> axis reaches the last two surfaces R8-12 named verbatim — `<Toast>` and `<Button>` each gain a
+> `surface` prop (the Card-`surface`-gains-`veil` precedent). `<Toast surface="glass">` (the default,
+> byte-identical to today's `glass-floating` plate) composes WITH the `variant` tone arm — the
+> feedback-tone tint rides ON the resolved surface, orthogonal to the {glass·veil·opaque} decoration.
+> `<Button surface=…>` defaults UNSET (the `variant` axis owns Button's default); `surface="opaque"`
+> and the `solid` variant are the same `--glass-level:0` endpoint reached from two axes (NOT
+> duplicated recipes). No break for either.
 
 > **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
 > now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
@@ -1177,7 +1186,7 @@ masks feathered BOTH edges unconditionally with no scroll knowledge — so the f
 chrome was half-erased at `scroll = 0` (the R8-08 "Shy" defect). `<FadingScroll>` feathers
 the start edge ONLY past `scroll > 0` and the end edge ONLY while trailing overflow remains.
 This is a **CLEAN BREAK — no alias** (the static utilities + the `--mask-fade-width` token
-retire in a coordinated orchestrator commit once every consumer migrates).
+were RETIRED at the 4.1.0 cut — BB.W-SCROLL-FADE-RETIRE — after every consumer migrated).
 
 | was | now |
 |---|---|

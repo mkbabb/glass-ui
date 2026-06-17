@@ -112,16 +112,19 @@ const railItems = computed<DockRailItem[]>(() =>
 // nav silhouette demarcated by <DockSeparator>, adding only the divider seams (the
 // chassis is display:contents — the dock box shrink-wraps as before).
 //
-// BA.W-SHELL-RAIL-RESEAT — the rail's anchor seam is the trailing UTILITY (`nav`)
-// separator, NOT the top ℱ-home divider (direction (a), the below-title gutter seat).
-// The W-REFLECT2 whole-page render found the top-seated rail (the ℱ-home seam at
-// y≈62) fans its facet chips RIGHT into <main>'s title band, occluding the page <h1>
-// on every desktop StoryPage route. Re-pointing the anchor DOWN the column to the
-// `utility` zone's leading separator (measured at y≈529 within the rail) seats the
-// chip carousel in the rail's trailing gutter, far below the title band — the seam
-// stays a REAL measured `--dock-rail-seam-offset`, never the forbidden midline
-// workaround #4. (`anchor-id="utility"` is the DockSection default's `nav`-first
-// resolution made explicit.)
+// BB.W-DOCK-RAIL-SEAT-FINAL — the rail's anchor seam is RESTORED to the top ℱ-home
+// divider (the verbatim R8-1: "placed where the dividing line for the ℱ is"). The
+// `<DockSection>` chassis no longer carries the anchor: its `anchor-id` is nulled to a
+// sentinel that matches NO descriptor, so NO `<DockSection>`-rendered separator stamps
+// `data-rail-anchor`. The ONLY anchored separator is the ℱ-home `<DockSeparator :anchor>`
+// in the #persistent slot above (the seam-locator queries the FIRST `[data-rail-anchor]`
+// and finds it). The seam line then anchors at the ℱ divider — un-doing the five-attempt
+// whack-a-mole (W-SHELL-RAIL-RESEAT moved it DOWN to `utility` y≈529 to dodge the title;
+// W-CHIP-GRAZE then re-found the field-graze inside that dodge). The title no longer
+// collides because the CHIP FAN is decoupled from the seam Y (dock-nav.css seats it in
+// the rail's LOWER gutter, clear of <main> at EVERY y by topology — the band-agnostic
+// graze is structurally dead, not chased). The seam stays a REAL measured
+// `--dock-rail-seam-offset`, never the forbidden `inset-block-start: 50%` midline #4.
 const sections = computed<DockSectionDescriptor[]>(() => [
     { kind: "section", id: "categories", label: "Categories", layers: railItems.value },
     { kind: "nav", id: "utility", label: "Utilities" },
@@ -264,17 +267,20 @@ function openDockMorph(): void {
             </DockIconButton>
             <!-- Demarcate the home control from the category nav below (D1) — the
                  home-top nav-pattern divider, the same idiom as the reference-shelf
-                 separator. BA.W-SHELL-RAIL-RESEAT — this ℱ-home separator is NO LONGER
-                 the rail's anchor seam. The W-REFLECT2 whole-page render found the
-                 top-seated rail fans its facet chips RIGHT into <main>'s title band
-                 (the seam at y≈62 sits beside the page <h1> at y≈58, so the chips
-                 occlude the title on every desktop StoryPage route). The anchor moves
-                 DOWN the column to the trailing utility (`nav`) separator — direction
-                 (a), the below-title gutter seat — so the chips fan clear of the title
-                 (the seam relocates to a REAL measured separator offset, NEVER the
-                 forbidden `inset-block-start: 50%` midline workaround #4). This divider
-                 stays a plain group demarcator. -->
-            <DockSeparator />
+                 separator. BB.W-DOCK-RAIL-SEAT-FINAL — this ℱ-home separator IS the
+                 rail's anchor seam again (R8-1 verbatim: "placed where the dividing line
+                 for the ℱ is"). The five-attempt whack-a-mole that moved the anchor DOWN
+                 the column (BA.W-SHELL-RAIL-RESEAT → the utility seam, abandoning the
+                 verbatim ask to dodge the title collision) is UN-DONE: the seam line
+                 anchors at THIS divider (the measured `--dock-rail-seam-offset` at the
+                 ℱ-home separator's Y, NEVER the forbidden `inset-block-start: 50%`
+                 midline workaround #4). The title no longer collides because the CHIP
+                 FAN is decoupled from the seam Y and seated in the rail's LOWER gutter
+                 (dock-nav.css), clear of <main> by topology at EVERY y — so the anchor
+                 can return to the ℱ divider without the band-agnostic graze. This is the
+                 ONLY anchored separator in the dock (the `<DockSection>` anchor-id below
+                 is nulled so no second `[data-rail-anchor]` competes). -->
+            <DockSeparator :anchor="true" />
         </template>
 
         <!-- BA.W-DOCK-SECTIONS — the tripartite section model RETURNS to the shell
@@ -288,7 +294,7 @@ function openDockMorph(): void {
              W-RAIL3 deletion REVERSED as a grouping, not a re-mounted layer group). -->
         <DockSection
             :sections="sections"
-            anchor-id="utility"
+            anchor-id="__none__"
             aria-label="Sidebar sections"
         >
             <template #categories>
@@ -392,11 +398,14 @@ function openDockMorph(): void {
              is dock chrome, so it sits outside the morph aperture and NEVER changes the
              dock's width/height. Rendered only when the section carries >1 facet.
 
-             BA.W-SHELL-RAIL-RESEAT — the strip co-locates with the trailing `utility`
-             (`nav`) separator seam (the DockSection `anchor-id="utility"`), so it fans
-             in the rail's lower gutter clear of <main>'s page-title band (the prior
-             ℱ-home top seam collided with the page <h1> on every desktop StoryPage
-             route). -->
+             BB.W-DOCK-RAIL-SEAT-FINAL — the SEAM LINE anchors at the ℱ-home divider
+             again (the verbatim R8-1), but the CHIP FAN is decoupled from the seam Y and
+             seated in the rail's LOWER gutter (dock-nav.css, scoped `.demo-sidebar-rail`)
+             — a vertical icon column below the nav controls, capped at the rail width so
+             it clears <main> by topology at EVERY y (chipOverMain:false on every route).
+             The five-attempt seam-Y whack-a-mole (title→field→title) is ended by
+             structure: the chips never share an x-band with <main>, so neither the title
+             NOR the field can be grazed, AND the anchor returns to the ℱ divider. -->
         <template #rail>
             <DockRail
                 v-if="railItems.length"

@@ -72,14 +72,11 @@ const auroraDock = strip(read("demo/stories/aurora/AuroraConfigDock.vue"));
 const presetRow = strip(read("demo/stories/aurora/PresetPickerRow.vue"));
 const blobVue = strip(read("demo/stories/substrates/blob.vue"));
 
-// The named C2/C3 configurator coordination exception — the ONLY surviving
-// static `.scroll-fade-*` consumer references allowed (held by W-CONFIG-CHASSIS
-// until the orchestrator's Batch-close retire commit).
-const C2_C3_ALLOWLIST = ["src/components/custom/configurator/Configurator.vue"];
-
-// Every in-tree file that could reference the static `.scroll-fade-*` utilities,
-// excluding the gate/proof scripts (which name the class in prose) and the
-// retiring utility DEFINITIONS themselves (base.css blocks survive this wave).
+// The static `.scroll-fade-*` utilities + `--mask-fade-width` token RETIRED at
+// the 4.1.0 cut (BB.W-SCROLL-FADE-RETIRE) — clean break, no alias. W6 below is
+// the DEFINITION-ABSENT + token-absent + dist-absent witness (was the
+// consumer-survivor allowlist; the C2/C3 configurator pair migrated onto
+// `<FadingScroll>` at BA, so the allowlist is dead).
 const SCROLL_FADE_CLASS_RE = /scroll-fade-(?:mask|top|bottom|y)\b/;
 
 const checks = [];
@@ -173,10 +170,68 @@ add(
     `C5 SegmentedTabs carries NO scroll-fade-* class (the overflow axis RETIRED at BA.W-TABS — no longer a FadingScroll consumer); C4 aurora column + C1 blob mood row carry NO scroll-fade-* class and read <FadingScroll>/useFadingScroll; C6 PresetPickerRow bespoke --mask-l/--mask-r/--edge-mask + ResizeObserver machinery DELETED, folded onto the primitive [c5=${c5Migrated} c4=${c4Migrated} c1=${c1Migrated} c6gone=${c6BespokeGone} c6prim=${c6OnPrimitive}]`,
 );
 
-// ── W6 — the static-utility retirement is consumer-clean (the coordination floor) ───
-// The ONLY surviving in-tree `.scroll-fade-*` references are the named C2/C3
-// configurator pair. Scan every src/ + demo/ file; the gate/proof scripts and the
-// retiring utility DEFINITIONS in base.css are excluded.
+// ── W6 — the static-utility retirement is DEFINITION-ABSENT (BB.W-SCROLL-FADE-RETIRE) ───
+// The static `.scroll-fade-*` utilities + the `--mask-fade-width` token retired
+// clean-break (no alias) at the 4.1.0 cut. W6 is the producer-side absence
+// witness — the rule DEFINITIONS gone from source AND from the built dist (the
+// W-EMISSION precedent), the token gone, no consumer re-appears. Born-RED at
+// HEAD (the 4 rules + the token + the dist artefacts all SHIPPED pre-deletion);
+// GREEN once the deletion lands and the dist is re-emitted.
+
+// W6a — the utility DEFINITIONS are absent from source. The comment-strip is
+// already applied to `baseCss` (the concatenated utilities monolith), so a
+// prose mention does NOT count — only a live rule selector matches.
+const scrollFadeDefinitions = ["mask", "top", "bottom", "y"].filter((suffix) =>
+    new RegExp(`\\.scroll-fade-${suffix}\\b`).test(baseCss),
+);
+facts.scrollFadeDefinitions = scrollFadeDefinitions;
+add(
+    "w6a-utility-definitions-absent",
+    scrollFadeDefinitions.length === 0,
+    `the static .scroll-fade-{mask,top,bottom,y} utility DEFINITIONS are ABSENT from the utilities monolith (retired clean-break at BB.W-SCROLL-FADE-RETIRE) — surviving definitions: ${scrollFadeDefinitions.length ? scrollFadeDefinitions.map((s) => `.scroll-fade-${s}`).join(", ") : "none"}`,
+);
+
+// W6b — the `--mask-fade-width` token is absent from source (a DECLARATION,
+// not a prose mention — the comment-strip means a doc reference does not count).
+const maskFadeWidthToken = /--mask-fade-width\s*:/.test(offsets);
+facts.maskFadeWidthToken = maskFadeWidthToken;
+add(
+    "w6b-mask-fade-width-token-absent",
+    maskFadeWidthToken === false,
+    `the orphan --mask-fade-width token is ABSENT from offsets-sizing.css (retired clean-break onto --fade-scroll-width, no alias) [tokenStillDeclared=${maskFadeWidthToken}]`,
+);
+
+// W6c — the dead code is gone from the BUILT dist (the producer-side mirror, the
+// W-EMISSION bar). Skipped when dist/ is absent (the proof:emission producer-vs-
+// source gating); in that case W6a/W6b carry the close assertion.
+const DIST_BASE = resolve(ROOT, "dist/styles/utilities/base.css");
+const DIST_OFFSETS = resolve(ROOT, "dist/styles/tokens/offsets-sizing.css");
+const distPresent = existsSync(DIST_BASE) || existsSync(DIST_OFFSETS);
+let distScrollFadeShipped = false;
+if (distPresent) {
+    const distBase = existsSync(DIST_BASE) ? readFileSync(DIST_BASE, "utf8") : "";
+    const distOffsets = existsSync(DIST_OFFSETS) ? readFileSync(DIST_OFFSETS, "utf8") : "";
+    distScrollFadeShipped =
+        SCROLL_FADE_CLASS_RE.test(distBase) || /--mask-fade-width\s*:/.test(distOffsets);
+    facts.distScrollFadeShipped = distScrollFadeShipped;
+    add(
+        "w6c-dist-absent",
+        distScrollFadeShipped === false,
+        `the dead .scroll-fade-* rules + --mask-fade-width token are gone from the BUILT dist/styles (the producer-side W-EMISSION mirror) [distShipsDeadCode=${distScrollFadeShipped}]`,
+    );
+} else {
+    facts.distScrollFadeShipped = "skipped";
+    add(
+        "w6c-dist-absent",
+        true,
+        "dist/ absent — the producer-side dist-absence clause is SKIPPED (proof:emission gating); the source clauses w6a/w6b carry the close assertion",
+    );
+}
+
+// W6d — no consumer re-appears (the regression guard). Every src/ + demo/
+// template carries NO static `.scroll-fade-*` class. The C2/C3 allowlist is
+// REMOVED (Configurator migrated onto `<FadingScroll>` at BA) and the base.css /
+// offsets-sizing.css exclusions are gone (W6a/W6b own those source files now).
 let survivors = [];
 try {
     const grepped = execSync(
@@ -187,22 +242,23 @@ try {
         .split("\n")
         .map((s) => s.trim())
         .filter(Boolean)
-        // exclude the retiring utility DEFINITIONS (base.css blocks survive this wave)
-        .filter((p) => !p.endsWith("src/styles/utilities/base.css"))
-        // exclude the dock overflow comment that names .scroll-fade-{x,y} in prose
-        .filter((p) => !p.endsWith("src/styles/tokens/offsets-sizing.css"));
+        // The remaining in-tree mentions are prose comments in Configurator.vue
+        // (describing what it migrated OFF) — a prose reference is not a class
+        // consumer. Strip CSS/JS comments AND Vue/HTML `<!-- -->` comments (the
+        // configurator references live in template comments), then match only a
+        // live class in a non-comment position.
+        .filter((p) => {
+            const body = strip(read(p)).replace(/<!--[\s\S]*?-->/g, "");
+            return SCROLL_FADE_CLASS_RE.test(body);
+        });
 } catch {
     survivors = [];
 }
-const unexpectedSurvivors = survivors.filter(
-    (p) => !C2_C3_ALLOWLIST.some((a) => p.endsWith(a)),
-);
 facts.scrollFadeSurvivors = survivors;
-facts.unexpectedSurvivors = unexpectedSurvivors;
 add(
-    "w6-retirement-consumer-clean",
-    unexpectedSurvivors.length === 0,
-    `the ONLY surviving in-tree .scroll-fade-* consumer references are the named C2/C3 configurator pair (held by W-CONFIG-CHASSIS) — unexpected survivors: ${unexpectedSurvivors.length ? unexpectedSurvivors.join(", ") : "none"}`,
+    "w6d-no-consumer-reappears",
+    survivors.length === 0,
+    `no src/ or demo/ template carries a static .scroll-fade-* class (the regression guard — every consumer migrated onto <FadingScroll> at BA) — survivors: ${survivors.length ? survivors.join(", ") : "none"}`,
 );
 
 // ── Subpath + barrel registration ───────────────────────────────────────────────────
@@ -244,7 +300,7 @@ writeGateArtifact(ARTIFACT, {
     status: pass ? "pass" : "fail",
     gate: "proof:fading-scroll",
     command: COMMAND,
-    note: "SOURCE arm only — the painted at-rest-sharp / overflow-feathered truth is proven by tests-visual/fading-scroll.spec.ts + the W-FADING-SCROLL-DELTA capture (the π arm), never this gate alone (the BA P-1 close-class fix). The W6 static-utility retirement re-runs GREEN automatically when the orchestrator's Batch-close retire commit lands (C2/C3 migrated).",
+    note: "SOURCE arm only — the painted at-rest-sharp / overflow-feathered truth is proven by tests-visual/fading-scroll.spec.ts + the W-FADING-SCROLL-DELTA capture (the π arm), never this gate alone (the BA P-1 close-class fix). W6 (a-d) is the BB.W-SCROLL-FADE-RETIRE retirement witness — the static .scroll-fade-* utility DEFINITIONS + the --mask-fade-width token are ABSENT from source (w6a/w6b) AND from the built dist (w6c, skipped when dist absent), with the consumer-regression guard (w6d). Born-RED pre-deletion (the 4 rules + token + dist artefacts shipped).",
     facts,
     checks: checks.map((c) => ({ id: c.id, pass: c.pass, detail: c.detail })),
 });
@@ -255,5 +311,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    "\n[proof:fading-scroll] the scroll-state-driven edge fade holds — <FadingScroll> drives per-edge mask-width customs off the native scroll(self) timeline (start past scroll>0, end on trailing overflow) with the feature-detect-gated useFadingScroll fallback, both axes one primitive, the four owned consumers migrated, and the only surviving static .scroll-fade-* references are the named C2/C3 coordination pair. The π arm proves the painted at-rest-sharp truth.",
+    "\n[proof:fading-scroll] the scroll-state-driven edge fade holds — <FadingScroll> drives per-edge mask-width customs off the native scroll(self) timeline (start past scroll>0, end on trailing overflow) with the feature-detect-gated useFadingScroll fallback, both axes one primitive, the four owned consumers migrated. The static .scroll-fade-* utilities + the --mask-fade-width token retired clean-break at BB.W-SCROLL-FADE-RETIRE — W6 asserts their DEFINITION-ABSENCE from source + the built dist. The π arm proves the painted at-rest-sharp truth.",
 );

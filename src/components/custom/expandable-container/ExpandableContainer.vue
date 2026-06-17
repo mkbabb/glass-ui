@@ -19,8 +19,17 @@
          LIFTING off the page (a frosted-over-content plate) rather than a solid
          `bg-background` wall erasing it. A consumer who genuinely wants the solid
          wall opts in via `surface="opaque"` (the `--glass-level:0` escape — the wall
-         becomes the explicit opt-out, not the silent default). -->
-    <Teleport to="body">
+         becomes the explicit opt-out, not the silent default).
+         BB.W-DEAD-SWEEP — the Teleport is GATED `:disabled="!open"` (the Vue idiom:
+         a disabled Teleport renders its children IN PLACE, not to body). The prior
+         UNCONDITIONAL `<Teleport to="body">` mounted an empty body anchor on every
+         render — the atlas-flagged "always-teleport blank-canvas" residual that
+         disturbed body layout/stacking in the inline (`!open`) state. With the
+         disabled gate the inline state mounts NO body anchor (the inner `v-if="open"`
+         is false AND nothing renders in place); only fullscreen teleports. The
+         `open`-driven `syncBodyOverflowLock` watcher is ORTHOGONAL (it fires on the
+         `open` state, never on the teleport mount), so the lock ordering is intact. -->
+    <Teleport to="body" :disabled="!open">
         <div
             v-if="open"
             :data-surface="surface"

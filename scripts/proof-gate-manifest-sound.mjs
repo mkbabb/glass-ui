@@ -22,25 +22,87 @@
 // freshness model is unimplemented (clause 7). GREEN only at the discharged
 // terminal state.
 //
-// BA.W-GESTALT-GATE — clause 4 WIDENED off the `:5173`-only `DEFAULT_5173` regex
-// to a GENERIC NON-:5199 default detector. The AZ sweep + the original regex
-// missed the THREE surviving `:5175` dock-gate defaults (CHR-1, the chronic): the
-// clause already walked the full live-gate set, only the regex matched `:5173`
-// alone. The clause now extracts the port from any `??`-nullish default and flags
-// it unless it is :5199 — catching `:5175`, `:5173`, and any future stray, the
-// recurrence-proofing the chronic demands.
+// CLAUSE 4 — the live-demo-URL default sweep. Every live-gate `??`-nullish default
+// resolves the canonical demo origin :5199; the env-var OVERRIDE (the `??` LHS) is
+// never matched. The CHR-1 chronic (the stray non-:5199 dock-gate defaults) is GONE
+// from source — the surviving non-canonical residue is comment prose only. The
+// detector carries TWO arms: the live-demo-URL string form (`?? "scheme://host:<port>"`)
+// AND a bare-port form (`?? <port>`) checked against a recorded service-port allowlist
+// (BB.W-DEAD-SWEEP closes the URL-string-only blind spot the BA widen's own scope
+// comment admitted — a future `GLASS_UI_DEMO_URL ?? 5175` bare-port default now reds).
+//
+// CLAUSE 10 — proof:gate-manifested (BB.W-DEAD-SWEEP). Every package.json `proof:*`
+// key resolves to a `gatesFor()` manifest row OR is on the recorded
+// COMPOSITE_OR_RUNNER allowlist (the aggregate runners + the per-tranche ledger
+// sub-keys, each carrying a non-empty rationale). The 24 registered-but-unmanifested
+// gates (a key + a live script but NO aggregate row — manifest dark matter that
+// passes parity yet runs nowhere) are tagged-or-removed; a future unmanifested gate
+// reds. The allowlist's non-empty-rationale discipline forbids parking a bare key.
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gatesFor } from "./gates.mjs";
+import { GATES, gatesFor } from "./gates.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SCRIPTS = resolve(ROOT, "scripts");
+const PKG_PATH = resolve(ROOT, "package.json");
 const COMMAND = "npm run proof:gate-manifest-sound";
+
+// THE COMPOSITE_OR_RUNNER ALLOWLIST (clause 10, proof:gate-manifested). A package.json
+// `proof:*` key that is NOT a `gatesFor()` manifest row is manifest dark matter UNLESS
+// it is an aggregate RUNNER (it invokes the manifest, it cannot be IN the set it runs)
+// or a per-tranche LEDGER SUB-KEY (a composite arm invoked by its parent ledger gate).
+// Map<key, rationale>; a NON-EMPTY rationale is REQUIRED per entry (the anti-evasion
+// bite — a bare key cannot be parked here to dodge a tag). NOT a fail-open wildcard.
+const COMPOSITE_OR_RUNNER = new Map([
+    ["proof:all", "the LOCAL aggregate runner (node scripts/gates.mjs --run local) — it invokes the manifest, it cannot be a row in the set it runs"],
+    ["proof:full", "the FULL deduped-union aggregate runner (--run full; local ∪ ci ∪ release) — the close-battery runner, not a manifest row"],
+    ["proof:live-verified-ledger:ax", "the AX ledger composite arm — invoked by the parent proof:live-verified-ledger gate, not a standalone aggregate row"],
+    ["proof:live-verified-ledger:ay", "the AY ledger composite arm — invoked by the parent ledger gate"],
+    ["proof:live-verified-ledger:az", "the AZ ledger composite arm — invoked by the parent ledger gate"],
+    ["proof:live-verified-ledger:ba", "the BA ledger composite arm — invoked by the parent ledger gate"],
+    ["proof:live-verified-ledger:bb", "the BB ledger composite arm — invoked by the parent ledger gate"],
+]);
+
+/**
+ * Clause 10 — proof:gate-manifested. Every package.json `proof:*` key resolves to a
+ * `gatesFor()` manifest row (any tag, incl. the empty-tag historical-close rows) OR is
+ * on the COMPOSITE_OR_RUNNER allowlist (each carrying a non-empty rationale). A key
+ * with a live script but NO manifest row + NO allowlist entry is manifest dark matter.
+ * PURE over injectable inputs so the self-test can drive a synthetic key + a synthetic
+ * bare-rationale allowlist entry.
+ */
+export function manifestedViolations({ extraKeys = [], extraAllowlist = [] } = {}) {
+    const pkg = JSON.parse(readFileSync(PKG_PATH, "utf8"));
+    const proofKeys = [
+        ...Object.keys(pkg.scripts ?? {}).filter((k) => k.startsWith("proof:")),
+        ...extraKeys,
+    ];
+    const manifestCmds = new Set(GATES.map((g) => g.cmd));
+    const allowlist = new Map([...COMPOSITE_OR_RUNNER, ...extraAllowlist]);
+    const violations = [];
+    const unmanifested = [];
+    for (const key of proofKeys) {
+        if (manifestCmds.has(key)) continue;
+        if (allowlist.has(key)) {
+            const rationale = allowlist.get(key);
+            if (typeof rationale !== "string" || rationale.trim().length === 0)
+                violations.push(
+                    `[GATE-MANIFESTED] the COMPOSITE_OR_RUNNER allowlist entry ${key} carries no rationale — a bare key cannot be parked here to dodge a tag (the anti-evasion bite)`,
+                );
+            continue;
+        }
+        unmanifested.push(key);
+        violations.push(
+            `[GATE-MANIFESTED] ${key} is registered (a live proof:* script) but resolves to NO gatesFor() manifest row + is not on the COMPOSITE_OR_RUNNER allowlist — manifest dark matter (passes parity, runs in no aggregate); tag it into a gatesFor() row or remove it`,
+        );
+    }
+    return { violations, unmanifested, allowlist: [...allowlist.keys()] };
+}
 
 // The standing user-domain dirt the clean-tree guard allowlists (the docs/precepts
 // submodule pointer the user owns). Any OTHER dirty tracked entry means a gate
@@ -75,10 +137,15 @@ function runNode(args) {
     }
 }
 
-/** The live-gate script set + the playwright config (the NO-5173 sweep targets). */
+/** The live-gate script set + the playwright config (the live-demo-default sweep
+ *  targets). This meta-gate's OWN file is EXCLUDED — it is the detector, not a
+ *  live-demo gate, and it carries the clause-4 self-test fixture literals (`?? 5175`,
+ *  `?? 9337`) that would false-trip the scan it performs (the detector cannot scan
+ *  itself for the pattern it tests). BB.W-DEAD-SWEEP. */
+const SELF_FILE = "proof-gate-manifest-sound.mjs";
 function liveGateScripts() {
     const set = readdirSync(SCRIPTS)
-        .filter((f) => /^proof-.*\.mjs$/.test(f))
+        .filter((f) => /^proof-.*\.mjs$/.test(f) && f !== SELF_FILE)
         .map((f) => resolve(SCRIPTS, f));
     set.push(resolve(ROOT, "tests-visual/playwright.config.ts"));
     return set;
@@ -144,28 +211,38 @@ function detectSound() {
         );
 
     // ── Clause 4: NON-:5199 DEFAULT ─────────────────────────────────────────
-    // ZERO live-demo-URL nullish-default sites resolving a port OTHER than :5199 in
-    // the live-gate script set + the config. The chronic the AZ sweep + the original
-    // `DEFAULT_5173` regex missed (CHR-1): the THREE `:5175` dock-gate defaults sailed
-    // past a regex that matched `:5173` alone. BA.W-GESTALT-GATE widens the detector to
-    // flag ANY non-:5199 port in a live-demo-URL `??`-default — catching `:5175`,
-    // `:5173`, and any future stray — the recurrence-proofing the chronic demands.
+    // ZERO live-demo nullish-default sites resolving a port OTHER than :5199 in the
+    // live-gate script set + the config. BA.W-GESTALT-GATE widened the detector off
+    // the `:5173`-only `DEFAULT_5173` regex to flag ANY non-:5199 port in a live-demo-URL
+    // `??`-default; the chronic (CHR-1) is now closed at source (every live-demo default
+    // uniformly resolves :5199 — the surviving non-canonical residue is comment prose).
     //
-    // SCOPE — the detector matches the live-demo-URL DEFAULT form `?? "scheme://host:<port>…"`
-    // ONLY, never a bare-port `?? <number>`. The W-GESTALT-GATE census surfaced a
-    // LEGITIMATE non-:5199 bare-port default in the set — `proof-runtime.mjs:24`
-    // `GLASS_UI_CHROME_DEBUG_PORT ?? 9337` (a Chrome DevTools remote-debug port, NOT a
-    // live-demo target; `profile-aurora.mjs`'s `?? 9347` twin is outside the proof-*.mjs
-    // glob). The census proved EVERY live-demo default in the set is the URL-STRING form
-    // (`GLASS_UI_DEMO_URL`/`GLASS_UI_*_BASE_URL ?? "http://…:5199"`) and NO demo target is
-    // ever a bare-port `??` — so scoping the detector to the URL-string form catches the
-    // entire chronic (the `:5175`/`:5173` residue was always the URL form) while leaving
-    // the correct-by-design service-port default GREEN (it is NOT unilaterally :5199-
-    // stamping a correct port). The env-var OVERRIDE (the `??` LHS) is never matched; the
-    // surviving comments naming a foreign port stay GREEN (line comments stripped first).
+    // BB.W-DEAD-SWEEP — the URL-string-only BLIND SPOT closed. The BA widen's own scope
+    // comment ADMITTED it matched the URL-string form `?? "scheme://host:<port>"` ONLY,
+    // justified by a SNAPSHOT census ("every live-demo default IS the URL-string form").
+    // That is not a STRUCTURAL guarantee — a future `GLASS_UI_DEMO_URL ?? 5175` bare-port
+    // default sails past the URL regex (the chronic's next mutation). The detector now
+    // carries a SECOND arm: a bare-port `?? <port>` form. A bare-port default flags
+    // UNLESS the port is on the recorded SERVICE_PORT_ALLOWLIST — the proven-legitimate
+    // service ports the W-GESTALT-GATE census named: `9337` (proof-runtime.mjs's Chrome
+    // DevTools remote-debug port) + `9347` (profile-aurora.mjs's profile twin), NEITHER a
+    // live-demo target. The allowlist is a finite recorded Set WITH the per-port rationale
+    // — NOT a fail-open wildcard; a new debug/profile port a sibling wave adds joins it
+    // explicitly. The env-var OVERRIDE (the `??` LHS) is never matched; line comments are
+    // stripped first (the URL-safe `(^|[^:])//` strip preserving `://`).
     const CANONICAL_LIVE_PORT = "5199";
-    // Capture the port from a live-demo-URL nullish-default `?? "scheme://host:<port>…"`.
+    // The proven-legitimate non-live-demo service ports (the W-GESTALT-GATE census set).
+    // A bare-port `?? <port>` resolving one of these is correct-by-design, NOT a stray
+    // live-demo default. Recorded WITH rationale — never fail-open.
+    const SERVICE_PORT_ALLOWLIST = new Map([
+        ["9337", "Chrome DevTools remote-debug port (proof-runtime.mjs GLASS_UI_CHROME_DEBUG_PORT)"],
+        ["9347", "the profile-aurora.mjs profile twin of the Chrome debug port"],
+    ]);
+    // Arm 1 — the live-demo-URL nullish-default `?? "scheme://host:<port>…"`.
     const NULLISH_DEFAULT_PORT = /\?\?\s*["']https?:\/\/[^"']*:(\d{4,5})["']/g;
+    // Arm 2 — a BARE-PORT nullish-default `?? <port>` (4-5 digits). The BB.W-DEAD-SWEEP
+    // blind-spot close: a live-demo default smuggled in as a bare integer port.
+    const BARE_PORT_DEFAULT = /\?\?\s*(\d{4,5})\b/g;
     const nonCanonicalDefaults = [];
     for (const f of liveGateScripts()) {
         if (!existsSync(f)) continue;
@@ -179,13 +256,85 @@ function detectSound() {
             for (const m of code.matchAll(NULLISH_DEFAULT_PORT)) {
                 const port = m[1];
                 if (port && port !== CANONICAL_LIVE_PORT)
-                    nonCanonicalDefaults.push(`${relative(ROOT, f)}:${i + 1} (:${port})`);
+                    nonCanonicalDefaults.push(`${relative(ROOT, f)}:${i + 1} (url :${port})`);
+            }
+            // Arm 2: a bare-port `?? <port>` default that is neither :5199 nor a
+            // recorded service port is a stray live-demo bare-port default — reds.
+            for (const m of code.matchAll(BARE_PORT_DEFAULT)) {
+                const port = m[1];
+                if (port && port !== CANONICAL_LIVE_PORT && !SERVICE_PORT_ALLOWLIST.has(port))
+                    nonCanonicalDefaults.push(
+                        `${relative(ROOT, f)}:${i + 1} (bare-port :${port} — not :5199 and not a recorded service port)`,
+                    );
             }
         });
     }
     facts.nonCanonicalPortDefaults = nonCanonicalDefaults;
+    facts.servicePortAllowlist = [...SERVICE_PORT_ALLOWLIST.keys()];
     for (const o of nonCanonicalDefaults)
-        violations.push(`[NON-:5199 DEFAULT] a non-:5199 live-demo-URL DEFAULT survives at ${o} — the BA.W-GESTALT-GATE scope fence forbids any live-demo default but :5199`);
+        violations.push(`[NON-:5199 DEFAULT] a non-:5199 live-demo DEFAULT survives at ${o} — the live-demo origin is uniformly :5199 (BB.W-DEAD-SWEEP: the bare-port form is now caught against the recorded service-port allowlist)`);
+
+    // ── Clause 4b: CLAUSE-4 SELF-TEST (the bare-port blind-spot bite) ────────
+    // BB.W-DEAD-SWEEP anti-evasion: a synthetic `GLASS_UI_DEMO_URL ?? 5175` bare-port
+    // default MUST be flagged by Arm 2, AND the `9337`/`9347` service ports MUST stay
+    // GREEN. If the detector mis-fires either way, red loudly — the widen is not
+    // load-bearing. (The bite the BA URL-string-only regex could not demonstrate.)
+    const synthRedLine = 'const u = process.env.GLASS_UI_DEMO_URL ?? 5175;';
+    const synthGreenLine = 'const p = process.env.GLASS_UI_CHROME_DEBUG_PORT ?? 9337;';
+    const flags = (line) => {
+        const out = [];
+        const code = line.replace(/(^|[^:])\/\/.*$/, "$1");
+        for (const m of code.matchAll(BARE_PORT_DEFAULT)) {
+            const port = m[1];
+            if (port && port !== CANONICAL_LIVE_PORT && !SERVICE_PORT_ALLOWLIST.has(port))
+                out.push(port);
+        }
+        return out;
+    };
+    const synthRedFlagged = flags(synthRedLine).includes("5175");
+    const synthGreenFlagged = flags(synthGreenLine).length > 0;
+    facts.clause4SelfTest = { synthRedFlagged, synthGreenFlagged };
+    if (!synthRedFlagged)
+        violations.push(
+            "[NON-:5199 DEFAULT] SELF-TEST FAILED: a synthetic `?? 5175` bare-port live-demo default was NOT flagged by Arm 2 — the BB.W-DEAD-SWEEP blind-spot close is not load-bearing",
+        );
+    if (synthGreenFlagged)
+        violations.push(
+            "[NON-:5199 DEFAULT] SELF-TEST FAILED: a recorded service port (`?? 9337`) was flagged — the service-port allowlist is broken",
+        );
+
+    // ── Clause 10: GATE-MANIFESTED (proof:gate-manifested) ──────────────────
+    // Every package.json `proof:*` key resolves to a `gatesFor()` manifest row OR is on
+    // the recorded COMPOSITE_OR_RUNNER allowlist (aggregate runners + the per-tranche
+    // ledger sub-keys). A key with a live script but NO aggregate row + NO allowlist
+    // entry is manifest dark matter (passes parity, runs nowhere) → RED. The allowlist
+    // is a Map<key, rationale> with a NON-EMPTY rationale per entry (the anti-evasion
+    // bite: a bare key cannot be parked here to dodge a tag). BB.W-DEAD-SWEEP tags-or-
+    // removes the 24 registered-but-unmanifested gates; a future unmanifested gate reds.
+    const manifested = manifestedViolations();
+    facts.unmanifestedGates = manifested.unmanifested;
+    facts.compositeOrRunnerAllowlist = manifested.allowlist;
+    for (const v of manifested.violations) violations.push(v);
+    // SELF-TEST: a synthetic unmanifested key MUST be flagged, AND a bare-rationale
+    // allowlist entry MUST be flagged — the two anti-evasion bites.
+    const synthManifest = manifestedViolations({
+        extraKeys: ["proof:synthetic-unmanifested-fixture", "proof:bare-allowlist-fixture"],
+        extraAllowlist: [["proof:bare-allowlist-fixture", ""]],
+    });
+    const caughtUnmanifested = synthManifest.violations.some((v) =>
+        v.includes("proof:synthetic-unmanifested-fixture"),
+    );
+    const caughtBareRationale = synthManifest.violations.some((v) =>
+        v.includes("proof:bare-allowlist-fixture"),
+    );
+    if (!caughtUnmanifested)
+        violations.push(
+            "[GATE-MANIFESTED] SELF-TEST FAILED: a synthetic unmanifested `proof:*` key was NOT flagged — the manifested clause is not load-bearing",
+        );
+    if (!caughtBareRationale)
+        violations.push(
+            "[GATE-MANIFESTED] SELF-TEST FAILED: a bare-rationale COMPOSITE_OR_RUNNER allowlist entry was NOT flagged — the rationale bite is broken",
+        );
 
     // ── Clause 5: DOCK-ROUTE-LIVE ───────────────────────────────────────────
     // proof-dock-orchestrator-single.mjs carries DOCK_ROUTE = "/dock/layers" (a
@@ -406,6 +555,8 @@ function run() {
     console.log(`  7 FRESHNESS-HASH       : content-hash ${facts.ledgerContentHash ? "✓" : "✗"} | git-arm-gone ${!facts.ledgerGitAncestryArmSurvives ? "✓" : "✗"} | AZ deltas ${facts.azDeltaFreshness.map((d) => `${d.wave}:${d.state}`).join(" ")}`);
     console.log(`  8 R6-PERSISTED         : dock-animation-live status "${facts.r6DockAnimationStatus}"`);
     console.log(`  9 FONT-PATH-LIVE       : ${facts.fontCascadeLive ? "✓ (reads the carved partial)" : "✗ (stale tokens.css path)"}`);
+    console.log(`  10 GATE-MANIFESTED     : ${facts.unmanifestedGates.length === 0 ? "OK (every proof:* key manifested or allowlisted)" : facts.unmanifestedGates.length + " unmanifested: " + facts.unmanifestedGates.join(", ")}`);
+    console.log(`  4b CLAUSE-4 SELF-TEST  : bare-port-5175-red ${facts.clause4SelfTest.synthRedFlagged ? "✓" : "✗"} | service-port-green ${!facts.clause4SelfTest.synthGreenFlagged ? "✓" : "✗"}`);
     console.log(`  clean tree             : ${facts.unallowedDirt.length === 0 ? "YES" : "NO — " + facts.unallowedDirt.join(", ")}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -110,6 +110,67 @@ async function readSurfaceRungs(
     }, busyBg);
 }
 
+/**
+ * BB.W-SURFACE-AXIS-COMPLETE — mount synthetic Toast/Button surfaces composing
+ * exactly what the SFCs render and read the resolved background + border-style per
+ * rung. Toast paints `surfaceClass(surface, "floating")` (the `glass-floating` base
+ * + the veil/opaque decoration class) + `:data-surface`; Button paints its glass
+ * variant register (`glass-wash btn-glass`) + the bare decoration class + the
+ * `:data-surface` attr. The translucent-where-glass / solid-where-opaque /
+ * frosted-where-veil truth must hold for both — the eleven-surface enrollment reads
+ * as ONE material grammar.
+ */
+async function readComponentRungs(
+    page: Page,
+    busyBg: string,
+    component: "toast" | "button",
+): Promise<{ surface: string; bg: string; borderStyle: string }[]> {
+    return page.evaluate(
+        ({ bg, component }) => {
+            const FIXTURE_ID = `__sa_${component}__`;
+            document.getElementById(FIXTURE_ID)?.remove();
+            const host = document.createElement("div");
+            host.id = FIXTURE_ID;
+            host.style.cssText = `position:fixed;left:0;top:0;width:480px;height:360px;background:${bg};z-index:99999;padding:16px;display:flex;flex-direction:column;gap:8px;`;
+            const SURFACES = ["glass", "veil", "opaque"] as const;
+            for (const s of SURFACES) {
+                const el = document.createElement(
+                    component === "button" ? "button" : "div",
+                );
+                if (component === "toast") {
+                    // surfaceClass(s, "floating") — the Toast base + decoration.
+                    el.className = "glass-floating";
+                    if (s === "veil") el.classList.add("veil-surface");
+                    if (s === "opaque") el.classList.add("glass-opaque");
+                } else {
+                    // Button's glass variant register + the bare decoration class
+                    // (the `surfaceDecoration` computed — NOT a forced base tier).
+                    el.className = "glass-wash btn-glass";
+                    if (s === "veil") el.classList.add("veil-surface");
+                    if (s === "opaque") el.classList.add("glass-opaque");
+                }
+                el.setAttribute("data-surface", s);
+                el.style.cssText = "width:100%;height:64px;border-radius:8px;";
+                host.appendChild(el);
+            }
+            document.body.appendChild(host);
+            void host.offsetHeight;
+            const out: { surface: string; bg: string; borderStyle: string }[] = [];
+            for (const child of Array.from(host.children)) {
+                const cs = getComputedStyle(child as HTMLElement);
+                out.push({
+                    surface: (child as HTMLElement).getAttribute("data-surface")!,
+                    bg: cs.backgroundColor,
+                    borderStyle: cs.borderTopStyle,
+                });
+            }
+            host.remove();
+            return out;
+        },
+        { bg: busyBg, component },
+    );
+}
+
 /** Read the resolved Skeleton over-glass vs opaque base block backgrounds. */
 async function readSkeletonRungs(
     page: Page,
@@ -201,6 +262,70 @@ test.describe("surface-axis (π — the shared {glass·veil·opaque} surface dec
                     byKey.veil!.borderStyle,
                     "veil surface must be borderless (border-style: none)",
                 ).toBe("none");
+            });
+
+            // BB.W-SURFACE-AXIS-COMPLETE — Toast + Button now thread the axis. Each
+            // must paint translucent-where-glass / solid-where-opaque / frosted-
+            // borderless-where-veil over the busy backdrop, BOTH modes (the R8-12
+            // "buttons + toasts" close reads as ONE material with the other nine).
+            for (const component of ["toast", "button"] as const) {
+                test(`(f-${component}) ${component} glass/veil translucent · opaque solid · veil borderless @ ${vp.name} ${mode}`, async ({ page }) => {
+                    await page.setViewportSize({ width: vp.width, height: vp.height });
+                    await setDark(page, dark);
+
+                    const rungs = await readComponentRungs(page, BUSY_BG, component);
+                    const byKey = Object.fromEntries(rungs.map((r) => [r.surface, r]));
+
+                    // glass + veil translucent (the backdrop reads through).
+                    const glassA = alphaOf(byKey.glass!.bg);
+                    const veilA = alphaOf(byKey.veil!.bg);
+                    expect(glassA, `${component} glass bg "${byKey.glass!.bg}"`).not.toBeNull();
+                    expect(veilA, `${component} veil bg "${byKey.veil!.bg}"`).not.toBeNull();
+                    expect(glassA!, `${component} surface=glass must be translucent`).toBeLessThan(0.999);
+                    expect(veilA!, `${component} surface=veil must be translucent`).toBeLessThan(0.999);
+
+                    // opaque solid (the --glass-level:0 --card plate).
+                    const opaqueA = alphaOf(byKey.opaque!.bg);
+                    expect(opaqueA, `${component} opaque bg "${byKey.opaque!.bg}"`).not.toBeNull();
+                    expect(opaqueA!, `${component} surface=opaque must be solid (alpha = 1)`).toBeGreaterThan(0.999);
+
+                    // veil strips the border/rim (the borderless plate).
+                    expect(
+                        byKey.veil!.borderStyle,
+                        `${component} surface=veil must be borderless (border-style: none)`,
+                    ).toBe("none");
+                });
+            }
+
+            // BB.W-SURFACE-AXIS-COMPLETE — the tone⊥surface composition: a TONED
+            // toast (`variant="destructive"` → `feedback-tone-destructive`) over
+            // `surface="glass"` reads as colored GLASS — the tone tint rides ON the
+            // resolved translucent surface (the W-FEEDBACK-TONE register intact under
+            // the new axis), NOT an opaque tone slab.
+            test(`(g) toned toast over glass reads as colored GLASS (tone⊥surface) @ ${vp.name} ${mode}`, async ({ page }) => {
+                await page.setViewportSize({ width: vp.width, height: vp.height });
+                await setDark(page, dark);
+                const tonedBg = await page.evaluate((bg) => {
+                    const FIXTURE_ID = "__sa_toned__";
+                    document.getElementById(FIXTURE_ID)?.remove();
+                    const host = document.createElement("div");
+                    host.id = FIXTURE_ID;
+                    host.style.cssText = `position:fixed;left:0;top:0;width:360px;height:120px;background:${bg};z-index:99999;padding:16px;`;
+                    const el = document.createElement("div");
+                    // The Toast destructive tone arm over the resolved glass surface.
+                    el.className = "glass-floating feedback-tone feedback-tone-destructive";
+                    el.setAttribute("data-surface", "glass");
+                    el.style.cssText = "width:100%;height:64px;border-radius:8px;";
+                    host.appendChild(el);
+                    document.body.appendChild(host);
+                    void host.offsetHeight;
+                    const out = getComputedStyle(el).backgroundColor;
+                    host.remove();
+                    return out;
+                }, BUSY_BG);
+                const a = alphaOf(tonedBg);
+                expect(a, `toned-toast bg "${tonedBg}"`).not.toBeNull();
+                expect(a!, "toned toast over glass must stay translucent (colored glass)").toBeLessThan(0.999);
             });
 
             test(`(d) skeleton over-glass translucent, opaque default solid @ ${vp.name} ${mode}`, async ({ page }) => {

@@ -163,7 +163,6 @@
     --glass-border-overlay:  color-mix(in srgb, var(--foreground) 22%, transparent);
     --glass-border-dock:     color-mix(in srgb, var(--foreground) 14%, transparent);
     --glass-border:          var(--glass-border-quiet);
-    --glass-border-strong:   var(--glass-border-floating);
 
     /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────
        ONE shared resting surface for the FORM family — Input/Textarea/Select/
@@ -429,7 +428,6 @@
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 8%, transparent),
         var(--glass-highlight);
     --glass-shadow:    var(--glass-shadow-quiet);
-    --glass-shadow-lg: var(--glass-shadow-floating);
 
     /* ─────────────────────────────────────────────────────────────
        AL-W1-α augmented — SPINE 8th tier (HOUSING register)
@@ -444,7 +442,8 @@
        The 4 tokens here cover the minimum viable substrate the SLIM
        Y4/Y6/Y7 retention set ratified. The 35 rejected axes (saturate
        band, edge-light per tier, depth-shadow per tier, tier-up macro)
-       stay rejected per the conservative-creation mandate.
+       stay rejected per the conservative-creation mandate. (BB.W-DEAD-SWEEP KEEP:
+       --glass-spine-opacity/-blur — no var() consumer, pinned by InstrumentChassis.spine-variant.test.ts; Batch-6 re-anchor.)
        ───────────────────────────────────────────────────────────── */
     --glass-spine-opacity: 0;
     --glass-spine-blur: 0px;

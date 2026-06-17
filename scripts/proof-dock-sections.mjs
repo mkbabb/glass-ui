@@ -79,6 +79,7 @@ function cliPaths() {
         INDEX: resolve(ROOT, "src/components/custom/dock/index.ts"),
         SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
         BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
+        DOCK_NAV_CSS: resolve(ROOT, "demo/layout/dock-nav.css"),
         ARTIFACT: gateArtifactPath("GLASS_UI_DOCK_SECTIONS_ARTIFACT", "BA-dock-sections"),
     };
     return _cliPaths;
@@ -104,6 +105,7 @@ export function detectDockSections(fs) {
     const index = stripComments(fs.indexText ?? "", "code");
     const sidebar = stripComments(fs.sidebarText ?? "", "vue");
     const bottom = stripComments(fs.bottomText ?? "", "vue");
+    const dockNavCss = stripComments(fs.dockNavCssText ?? "", "code");
 
     // ── S1 — the declarative tripartite descriptor renders ──
     const dockSectionExists = (fs.dockSectionText ?? "").length > 0;
@@ -291,6 +293,129 @@ export function detectDockSections(fs) {
         );
     }
 
+    // ── S6 — BB.W-DOCK-RAIL-SEAT-FINAL: the ℱ-anchor RESTORED + the fan never reaches
+    //         <main> (the chronic R8-1 seat, the topology-honest re-conception) ──
+    // The five-attempt whack-a-mole chased the seam Y to dodge whichever content band
+    // collided (title→field→title); W-SHELL-RAIL-RESEAT ABANDONED the verbatim ℱ-anchor
+    // (anchor-id="utility", y≈529) to dodge the title, then W-CHIP-GRAZE re-found the
+    // field-graze inside that dodge. This wave restores the ℱ-anchor AND decouples the
+    // chip fan to the off-canvas (lower) gutter so it never shares an x-band with <main>
+    // at ANY y — the band-agnostic clearance the gestalt gate names (chipOverMain:false).
+    // S6 is the device-free SOURCE half; the binding chipOverMain:false / anchor-at-ℱ π
+    // is the W-DOCK-RAIL-SEAT-FINAL-DELTA + the proof:ba-gestalt dock+shell verdict
+    // (flipped by W-REFLECT3, the single authorized verdict-flipper).
+
+    // S6a — the ℱ-anchor is RESTORED (the verbatim-ask un-abandonment). The SidebarDock
+    // marks a `<DockSeparator :anchor>` (the ℱ-home divider in the #persistent slot), the
+    // dodge `anchor-id="utility"` is GONE, and the <DockSection> anchor-id is nulled to a
+    // non-matching sentinel so the ℱ-home separator is the SOLE [data-rail-anchor]. The
+    // POSITIVE bite (anti-evasion): the anchored separator is the ℱ-home/leading divider
+    // (it co-occurs with the #persistent / home-wordmark region), not merely "not utility"
+    // (re-pointing to a THIRD arbitrary separator still fails).
+    const sidebarMarksAnchorSeparator =
+        /<DockSeparator\b[^>]*\b:?anchor(?:="true")?\b/.test(sidebar);
+    const sidebarDropsUtilityAnchor = !/anchor-id\s*=\s*["']utility["']/.test(sidebar);
+    // the anchored separator lives in the ℱ-home / #persistent region (the positive bite):
+    // the `#persistent` slot block (or the home-wordmark control) precedes the anchored
+    // separator in source — the ℱ divider, NOT an arbitrary one.
+    const persistentIdx = sidebar.indexOf("#persistent");
+    const anchorSepIdx = sidebar.search(/<DockSeparator\b[^>]*\b:?anchor(?:="true")?\b/);
+    // the <DockSection> ELEMENT open tag (whitespace-then-prop), NOT the
+    // `computed<DockSectionDescriptor[]>` type annotation in the <script>.
+    const sectionOpenIdx = sidebar.search(/<DockSection(?=[\s>])/);
+    const anchorIsHomeSeparator =
+        persistentIdx > -1 &&
+        anchorSepIdx > -1 &&
+        anchorSepIdx > persistentIdx &&
+        // before the <DockSection> default-slot block (the ℱ-home divider sits in the
+        // leading #persistent region, not buried in a trailing section group)
+        (sectionOpenIdx === -1 || anchorSepIdx < sectionOpenIdx);
+    facts.s6aSidebarMarksAnchorSeparator = sidebarMarksAnchorSeparator;
+    facts.s6aSidebarDropsUtilityAnchor = sidebarDropsUtilityAnchor;
+    facts.s6aAnchorIsHomeSeparator = anchorIsHomeSeparator;
+    if (!sidebarMarksAnchorSeparator) {
+        violations.push(
+            "S6a: SidebarDock.vue does NOT mark a `<DockSeparator :anchor>` — the rail's seam anchor must be RESTORED to the ℱ-home divider (R8-1 verbatim: 'where the dividing line for the ℱ is')",
+        );
+    }
+    if (!sidebarDropsUtilityAnchor) {
+        violations.push(
+            "S6a: SidebarDock.vue STILL carries `anchor-id=\"utility\"` — the W-SHELL-RAIL-RESEAT dodge that abandoned the verbatim ℱ-anchor; null it (the ℱ-home `<DockSeparator :anchor>` is the sole seam) ",
+        );
+    }
+    if (!anchorIsHomeSeparator) {
+        violations.push(
+            "S6a: the anchored `<DockSeparator :anchor>` is NOT the ℱ-home/leading divider (it must sit in the #persistent region BEFORE the <DockSection> default slot) — the anchor must be the ℱ divider R8-1 names, not a third arbitrary separator (the seam-Y-dodge bar)",
+        );
+    }
+
+    // S6b — the desktop fan does NOT reach into <main> (the off-canvas-gutter source).
+    // The demo dock-nav.css scopes a `.demo-sidebar-rail` override that seats the chip
+    // fan in the LOWER gutter (a vertical column capped at `--demo-nav-rail-w`, seated via
+    // `inset-block-end` at the slot bottom — NOT the library's rightward `flex-end` +
+    // `60vw` reach). The witnesses: the desktop chip column is rail-width-capped AND
+    // bottom-gutter-seated; no rightward 60vw reach survives on the desktop sidebar.
+    const desktopGutterScope = /\.demo-sidebar-rail\b[\s\S]*?dock-hairline/.test(dockNavCss);
+    const desktopColumnCapped =
+        /\.demo-sidebar-rail[\s\S]*?max-inline-size:\s*var\(--demo-nav-rail-w/.test(dockNavCss);
+    const desktopLowerGutterSeat =
+        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-fade\s*\{[^}]*inset-block-end:/.test(
+            dockNavCss,
+        );
+    // the chip column flows VERTICAL (off the library horizontal row) in the desktop scope.
+    const desktopColumnFlow =
+        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-strip\s*\{[^}]*flex-direction:\s*column/.test(
+            dockNavCss,
+        );
+    facts.s6bDesktopGutterScope = desktopGutterScope;
+    facts.s6bDesktopColumnCapped = desktopColumnCapped;
+    facts.s6bDesktopLowerGutterSeat = desktopLowerGutterSeat;
+    facts.s6bDesktopColumnFlow = desktopColumnFlow;
+    if (!desktopGutterScope || !desktopColumnCapped || !desktopColumnFlow) {
+        violations.push(
+            "S6b: demo dock-nav.css does NOT scope the desktop SidebarDock chip fan to the off-canvas gutter (a `.demo-sidebar-rail` vertical column capped at `--demo-nav-rail-w`) — the rightward fan into <main> (the chronic root cause across all five attempts) must be re-fanned down the rail gutter",
+        );
+    }
+    if (!desktopLowerGutterSeat) {
+        violations.push(
+            "S6b: the desktop chip fade is NOT seated in the LOWER gutter (`inset-block-end` at the slot bottom) — with the seam restored to the ℱ divider the fan must decouple to the lower gutter (below the nav column) so it clears BOTH <main> and the nav controls; a fade tracking the ℱ-seam Y would re-collide the nav column",
+        );
+    }
+
+    // S6c — the box-inviolate + dual-overrun R-arms hold (the no-regress floor). The
+    // library rail-extend.css is byte-untouched (the redress is demo-shell-local); the
+    // dual-side overrun witness (S2's `dualOverrun`) survives, and proof:rail-extend /
+    // proof:rail3 stay GREEN (asserted by the still-green sibling gates — recorded here as
+    // a fact, the same shape as S4's box-inviolate cross-reference).
+    facts.s6cDualOverrunSurvives = facts.s2DualSideOverrun;
+    facts.s6cSeamLocatorIntact = facts.s2ReadsSeamOffset && facts.s2GlassDockWritesSeam;
+    if (!facts.s6cDualOverrunSurvives || !facts.s6cSeamLocatorIntact) {
+        violations.push(
+            "S6c: the dual-side overrun / seam-locator R-arms regressed — the seam line must still overrun BOTH edges (the `--dock-rail-seam-offset` read GlassDock writes), the box-inviolate floor; the re-seat moves the CHIP fan, not the line architecture",
+        );
+    }
+
+    // S6d — no midline regress + no verbatim abandonment. The demo override introduces NO
+    // `inset-block-start: 50%` SLOT seat (the workaround #4 stays gone in BOTH the library
+    // AND the demo override), and the anchor is the ℱ divider (S6a positive), not a dodge
+    // seam. The demo override's slot/seam rules must not re-introduce the midline seat.
+    const demoIntroducesMidlineSlotSeat =
+        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-slot\s*\{[^}]*inset-block-start:\s*50%/.test(
+            dockNavCss,
+        );
+    facts.s6dDemoMidlineSlotSeat = demoIntroducesMidlineSlotSeat;
+    facts.s6dAnchorIsForwardDivider = anchorIsHomeSeparator && sidebarDropsUtilityAnchor;
+    if (demoIntroducesMidlineSlotSeat) {
+        violations.push(
+            "S6d: the demo dock-nav.css override re-introduces an `inset-block-start: 50%` SLOT seat — the forbidden midline workaround #4; the seam stays the measured `--dock-rail-seam-offset`, never a static midline",
+        );
+    }
+    if (!facts.s6dAnchorIsForwardDivider) {
+        violations.push(
+            "S6d: the anchor is NOT the ℱ-home divider (a verbatim-ask abandonment / a dodge-seam) — the anchor must be the ℱ divider (S6a), never a seam-Y dodge to clear a collision",
+        );
+    }
+
     return { violations, facts };
 }
 
@@ -308,6 +433,7 @@ function loadFs() {
         indexText: read(P.INDEX),
         sidebarText: read(P.SIDEBAR),
         bottomText: read(P.BOTTOM),
+        dockNavCssText: read(P.DOCK_NAV_CSS),
     };
 }
 
@@ -343,6 +469,9 @@ function run() {
     );
     console.log(
         `  S5 FadingScroll, no dup fade    : composes=${facts.s5ComposesFadingScroll} dupFade=${facts.s5HasDuplicateScrollFade} ${ok(facts.s5ComposesFadingScroll && !facts.s5HasDuplicateScrollFade)}`,
+    );
+    console.log(
+        `  S6 ℱ-anchor + fan clear of main : anchorSep=${facts.s6aSidebarMarksAnchorSeparator} dropsUtility=${facts.s6aSidebarDropsUtilityAnchor} isHome=${facts.s6aAnchorIsHomeSeparator} gutterFan=${facts.s6bDesktopColumnCapped} lowerSeat=${facts.s6bDesktopLowerGutterSeat} noMidline=${!facts.s6dDemoMidlineSlotSeat} ${ok(facts.s6aSidebarMarksAnchorSeparator && facts.s6aSidebarDropsUtilityAnchor && facts.s6aAnchorIsHomeSeparator && facts.s6bDesktopColumnCapped && facts.s6bDesktopLowerGutterSeat && facts.s6cDualOverrunSurvives && facts.s6cSeamLocatorIntact && !facts.s6dDemoMidlineSlotSeat && facts.s6dAnchorIsForwardDivider)}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
