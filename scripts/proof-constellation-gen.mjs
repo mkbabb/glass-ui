@@ -38,10 +38,23 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const CONST = resolve(ROOT, "src/components/custom/constellation");
 const FIELD = resolve(CONST, "constellationField.ts");
+// BA.W-CARVE2 split the ~308 lines of `Constellation*` interface declarations off
+// the step engine into `constellationTypes.ts` (re-exported `from
+// "./constellationField"` so the import seam is untouched). The TYPE-MEMBER witnesses
+// below (pinnedIndex/accent/edgeFloor/pinnedDrift?/warpAutoRelease?) read the field
+// engine AND the carved types file together (BB.W-CI-GREEN — the re-point follows the
+// carve; the declarations are present, just relocated).
+const TYPES = resolve(CONST, "constellationTypes.ts");
 const INTER = resolve(CONST, "constellationInteraction.ts");
 const DRAW = resolve(CONST, "constellationDraw.ts");
 const CONSTS = resolve(CONST, "constants.ts");
 const VUE = resolve(CONST, "Constellation.vue");
+// BA.W-CARVE2 also lifted the 528-line render-loop/expose orchestrator out of
+// Constellation.vue's <script setup> into `composables/useConstellation.ts` (the SFC
+// keeps only the template + defineProps + the thin composable call). The COMPONENT
+// witnesses (the accentIndex thread, the warpSettled()/pinNode expose) read the SFC
+// AND its orchestrator together.
+const ORCHESTRATOR = resolve(CONST, "composables/useConstellation.ts");
 const FACTORY = resolve(CONST, "composables/createConstellationField.ts");
 const COLOR_CSS = resolve(ROOT, "src/styles/tokens/color-radius.css");
 const DARK_CSS = resolve(ROOT, "src/styles/tokens/dark-arm.css");
@@ -56,11 +69,16 @@ function run() {
     const violations = [];
     const facts = {};
 
-    const field = read(FIELD);
+    // `field` carries the step engine + the carved type declarations (the carve split
+    // the `Constellation*` interfaces off into constellationTypes.ts); `vue` carries
+    // the SFC + its render-loop orchestrator (the carve lifted the threading/expose
+    // into useConstellation.ts). Both pairs read together so the type-member +
+    // component-threading witnesses follow the BA.W-CARVE2 relocation.
+    const field = `${read(FIELD)}\n${read(TYPES)}`;
     const inter = read(INTER);
     const draw = read(DRAW);
     const consts = read(CONSTS);
-    const vue = read(VUE);
+    const vue = `${read(VUE)}\n${read(ORCHESTRATOR)}`;
     const factory = read(FACTORY);
     const colorCss = read(COLOR_CSS);
     const darkCss = read(DARK_CSS);

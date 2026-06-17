@@ -185,6 +185,73 @@ if (existsSync(RESIDUAL)) {
     process.exit(1);
 }
 
+// ── Decided-destination soundness clause (BB.W-DISPOSITION-RESTAMP) ─────────────
+// BB §2 folds the chronic backlog by DECIDING each row — not re-booking. A row's
+// decision is recorded as a `pendingResolvedBy` (a BB wave that BUILDS/MEETS it
+// later) or a `resolvedBy` (the build LANDED) value naming a wave-spec by id. This
+// clause is the machine arm of "every fold names a REAL destination": every such
+// value MUST resolve to a wave-spec file on disk — a `pendingResolvedBy: "BB.W-PHANTOM"`
+// pointing at a non-existent wave is the phantom-owner class for the new field and
+// REDs the close. PURE document cross-check (no siblings) — it runs BEFORE the
+// sibling-present skip and gates CI with zero consumers on disk.
+//
+// A destination value is "<LETTER>.<id>" (e.g. "BB.W-CSS-CRITICAL"). The wave-spec
+// lives at docs/tranches/<LETTER>/waves/ in one of two filename forms (both ship in
+// the BB tree): the qualified "<LETTER>.<id>.md" or the bare "<id>.md". Either form
+// resolves the destination.
+function waveSpecExists(value) {
+    if (typeof value !== "string") return false;
+    const dot = value.indexOf(".");
+    if (dot <= 0) return false;
+    const letter = value.slice(0, dot);
+    const id = value.slice(dot + 1);
+    if (!letter || !id) return false;
+    const dir = join(ROOT, `docs/tranches/${letter}/waves`);
+    return existsSync(join(dir, `${value}.md`)) || existsSync(join(dir, `${id}.md`));
+}
+
+// The acceptance-is-the-inverse self-test: a synthetic phantom-destination row the
+// clause MUST classify as a violation every run (mirrors the always-MET selfTest).
+const DECIDED_DESTINATION_SELFTEST = {
+    id: "__decided_destination_selftest__",
+    pendingResolvedBy: "BB.W-DOES-NOT-EXIST",
+};
+
+const phantomDestinations = [];
+for (const item of reg.items ?? []) {
+    for (const field of ["pendingResolvedBy", "resolvedBy"]) {
+        const value = item[field];
+        if (value && !waveSpecExists(value)) {
+            phantomDestinations.push(
+                `${item.id} → ${field} "${value}" names no wave-spec file in docs/tranches/<LETTER>/waves/`,
+            );
+        }
+    }
+}
+
+// Self-test: the synthetic phantom destination MUST be detected as un-resolvable.
+const selfTestPhantomDetected = !waveSpecExists(
+    DECIDED_DESTINATION_SELFTEST.pendingResolvedBy,
+);
+if (!selfTestPhantomDetected) {
+    console.error(
+        "[proof:disposition-live] DECIDED-DESTINATION SELF-TEST FAILED — the synthetic phantom destination (BB.W-DOES-NOT-EXIST) resolved to a real wave-spec; the soundness detector is not load-bearing.",
+    );
+    process.exit(1);
+}
+
+console.log("proof:disposition-live — decided-destination soundness clause (BB.W-DISPOSITION-RESTAMP)");
+console.log(`  rows with a decided dest: ${(reg.items ?? []).filter((i) => i.pendingResolvedBy || i.resolvedBy).length}`);
+console.log(`  phantom destinations    : ${phantomDestinations.length}`);
+console.log(`  self-test (bite proof)  : OK — synthetic phantom destination flagged`);
+for (const p of phantomDestinations) console.error(`  PHANTOM-DEST   ${p}`);
+if (phantomDestinations.length > 0) {
+    console.error(
+        `\n[proof:disposition-live] ${phantomDestinations.length} decided destination(s) name a non-existent wave-spec — every pendingResolvedBy/resolvedBy must resolve to a real docs/tranches/<L>/waves/<id>.md (BB.W-DISPOSITION-RESTAMP).`,
+    );
+    process.exit(1);
+}
+
 // Registry-default world (inv-θ): every trigger re-evaluates via a min-consumers
 // grep over consumer SIBLINGS. A clean CI runner has no consumer sibling checked
 // out, so (a) there is no booked deferral to re-evaluate and (b) the synthetic
@@ -209,6 +276,7 @@ if (!anySiblingPresent) {
         uncovered,
         residualRows,
         phantomCount,
+        phantomDestinations: phantomDestinations.length,
         reason:
             "no consumer sibling present on this runner (registry-default) — the deferral-trigger re-evaluation walks siblings; nothing to check, and the min-consumers self-test cannot meet without a present consumer.",
     });
@@ -269,6 +337,7 @@ writeGateArtifact(ARTIFACT, {
     uncovered,
     residualRows,
     phantomCount,
+    phantomDestinations: phantomDestinations.length,
     violations,
 });
 

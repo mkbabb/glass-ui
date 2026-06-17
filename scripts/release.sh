@@ -69,15 +69,19 @@ fi
 # `verify-export-types` enumerates every subpath from package.json
 # and subsumes the loop's coverage.
 
-# AS.W2 inv-θ — the release gate set is the manifest's `release` filter, NOT a
+# AS.W2 inv-θ — the release gate set is the manifest's filter, NOT a
 # hand-curated inline list. Before AS.W2 release.sh ran 4 gates and ZERO
 # proof:*, so VT-name / surface / phantom-class drift between the last CI run
-# and the tag shipped unguarded. `gates.mjs --run release` runs typecheck +
-# build + verify-export-types + profile:budget + the proof:* binding-correctness
-# floor (sibling gates skip-by-policy on a clean machine). local == ci ==
-# release is now structural.
-echo "[release] running the manifest 'release' gate set..."
-node scripts/gates.mjs --run release
+# and the tag shipped unguarded.
+#
+# BB.W-CLOSE-BATTERY — the tag now re-runs `--run full` (the DEDUPED union
+# local ∪ ci ∪ release), NOT `--run release` alone. BA's close claimed
+# `--run local` green while `ci ⊂ local` carried 18 reds AND never ran the union
+# siblings-absent; `--run full` makes that close-class lie impossible (the runner
+# is siblings-absent by construction, siblings skip-by-policy, so the clean-runner
+# union IS the CI-accurate battery). `proof:close-battery-parity` locks this path.
+echo "[release] running the manifest 'full' gate set (local ∪ ci ∪ release)..."
+node scripts/gates.mjs --run full
 
 echo "[release] Smoke check on dist/index.d.ts..."
 if [[ ! -f dist/index.d.ts ]]; then

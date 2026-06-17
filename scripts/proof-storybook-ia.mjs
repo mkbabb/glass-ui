@@ -54,8 +54,11 @@ export const EXPECTED_TREE = [
     // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
     // `fourier-field` is the new Canvas2D render-background sibling. `glass-panel`
     // RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js binary consumer —
-    // the published subpath ships again WITH its story).
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel"]],
+    // the published subpath ships again WITH its story). `fourier-studio` joined at
+    // BA.W-FOURIER-STUDIO (the FOREGROUND studio — the aurora-studio idiom over a
+    // Canvas2D stage; studio chrome paired with the ambient `fourier-field` sibling,
+    // declares a calm paper background not a self-demo'd field — page-redesign exempt).
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "fourier-studio", "glass-material", "glass-panel"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
@@ -85,8 +88,10 @@ export const EXPECTED_TREE = [
     // The headline primitive's own first-class category.
     // `morph-showcase` joined at AZ.W-MORPH-SHOWCASE (the V<->H orientation morph
     // on the one --dock-morph-t scalar; the VT-crossfade default + the perf-gated
-    // teardrop preview).
-    ["dock", ["overview", "layers", "rail", "morph-showcase"]],
+    // teardrop preview). `sections` demonstrates the declarative tripartite
+    // `<DockSection>` chassis (BA.W-DOCK-SECTIONS — the descriptor-driven
+    // rail-core | section | nav zones over the in-flow controls).
+    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
@@ -97,13 +102,15 @@ export const EXPECTED_TREE = [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
         "confirm-dialog",
     ]],
-    // `underline` (the GlassUnderline draw-on pen) joined motion at AY.W-UNDERLINE
-    // (finished-and-published — the `/underline` subpath ships with its consumer).
+    // `handmark` is the hand-voice family story (BA.W-HANDMARK). The prior
+    // `underline` row (the GlassUnderline draw-on pen, AY.W-UNDERLINE) RETIRED onto
+    // `<HandMark shape="underline">` at the DEC-8 fold — the `/underline` subpath +
+    // `GlassUnderline` folded into `<HandMark>`, so the story id is now `handmark`.
     // `scroll-vt` joined at AZ.W-MOTION-SUITE (the native scroll-driven +
     // View-Transitions facilities demo).
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
-        "curve-gallery", "underline", "scroll-vt",
+        "curve-gallery", "handmark", "scroll-vt",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +

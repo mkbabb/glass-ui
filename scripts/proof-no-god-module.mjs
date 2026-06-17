@@ -46,22 +46,16 @@ const WARN_LIMIT = 300;
  * `// BOOK(<wave-id>):` marker (asserted below).
  */
 const RATCHET_BASELINES = {
-    // BA.W-CARVE2 — DRAINED to ∅ (the close state). The three grandfathered
-    // BOOK(AZ.W-REFLECT) rows discharged: the carve drops each file under 500.
-    //   styles/typography.css (530) → typography/{scale,semantic,utilities}.css
-    //     thin @import partials (the dist/glass-ui.css emit is BYTE-IDENTICAL —
-    //     the carve moves rules in the SAME cascade position; the seven
-    //     typography.css-reading gates re-point to readMonolith(ROOT, "typography")).
-    //   constellation/constellationField.ts (586) → constellationTypes.ts (the
-    //     ~308 lines of Constellation* type interfaces split off; the seedField/
-    //     refitField/stepField step engine stays, re-exporting the types so the
-    //     sibling import seam is untouched).
-    //   constellation/Constellation.vue (576) → composables/useConstellation.ts
-    //     (the render-loop + lifecycle orchestrator lifted out; the SFC keeps
-    //     template + defineProps<ConstellationProps> + the thin composable call).
-    // The barrel surface is unchanged (typecheck + verify-export-types green). The
-    // MONOTONIC rule holds: a future over-bound src/ file books a row WITH a
-    // `// BOOK(<wave>):` marker; this empty map is the drained terminus.
+    // BB.W-CI-GREEN — the carve is DEFERRED to W-CARVE3 (Batch 4); the ratchet is
+    // re-armed at the live counts. The BA.W-CARVE2 discharge that drained this map
+    // to ∅ was a false close-class claim — the carve never landed, so three files
+    // measure OVER 500 at HEAD. Each row carries a `// BOOK(BB.W-CARVE3):` marker
+    // (the count + the deferral move in one commit; the gate reds a marker-less
+    // bump). W-CARVE3 drains these rows to {} for real when the carve lands — the
+    // MONOTONIC drain restored, recorded, never a silent re-drain.
+    "styles/tokens/offsets-sizing.css": 562, // BOOK(BB.W-CARVE3): carve the §offset/§sizing token block into thin @import partials.
+    "styles/utilities/base.css": 541, // BOOK(BB.W-CARVE3): carve the base-utility cluster into per-concern partials.
+    "components/custom/fourier-field/FourierField.vue": 505, // BOOK(BB.W-CARVE3): lift the render-loop/lifecycle orchestrator out into a composable.
 };
 
 let _cliPaths = null;

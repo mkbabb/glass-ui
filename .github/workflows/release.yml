@@ -1,14 +1,18 @@
 # release — publish @mkbabb/glass-ui to npm on a v*.*.* tag.
 #
 # Trigger: a pushed tag matching v*.*.* (changesets Version-Packages merge, or
-# hand-cut). Before publishing, the job re-runs the FULL release gate matrix as
-# the `gates.mjs --run release` FILTER — inv-θ: local == ci == release derive
-# from ONE manifest (scripts/gates.mjs), never a hand-curated list that drifts
-# (the prior hand list had silently dropped proof:components-css, proof:lockfile,
-# and proof:phantom-classes). A tag can therefore never ship an artifact the
-# gate would reject. Sibling gates (proof:resolution, proof:phantom-classes,
-# proof:consumers:static) skip-by-policy on the clean runner where the sibling
-# repos are absent.
+# hand-cut). Before publishing, the job re-runs the FULL gate matrix as the
+# `gates.mjs --run full` UNION (BB.W-CLOSE-BATTERY — the deduped local ∪ ci ∪
+# release, NOT `--run release` alone; BA's close claimed `--run local` green while
+# `ci ⊂ local` carried 18 reds and never ran the union siblings-absent). inv-θ:
+# the union derives from ONE manifest (scripts/gates.mjs), never a hand-curated
+# list that drifts (the prior hand list had silently dropped proof:components-css,
+# proof:lockfile, proof:phantom-classes). A tag can therefore never ship an
+# artifact the gate would reject. Sibling + detected-Playwright gates
+# (proof:resolution, proof:phantom-classes, proof:consumers:static,
+# proof:substrate-cohesion, proof:touch-target) skip-by-policy on the clean runner
+# where the sibling repos + a live demo are absent. `proof:close-battery-parity`
+# locks that this path runs `--run full`.
 #
 # Publish auth: the NPM_TOKEN repository secret (automation token, publish
 # scope) + an OIDC id-token for npm provenance (`--provenance` attests the
@@ -47,8 +51,8 @@ jobs:
                   TAG="${GITHUB_REF_NAME#v}"
                   PKG="$(node -p "require('./package.json').version")"
                   test "$TAG" = "$PKG" || { echo "tag ${GITHUB_REF_NAME} != package.json ${PKG}"; exit 1; }
-            - name: release gate matrix (gates.mjs --run release)
-              run: node scripts/gates.mjs --run release
+            - name: release gate matrix (gates.mjs --run full)
+              run: node scripts/gates.mjs --run full
             - name: publish
               run: npm publish --access public --provenance
               env:

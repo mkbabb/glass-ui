@@ -247,18 +247,25 @@ assert(
     leaks.length === 0 && supportsOpener >= 0,
 );
 
-// ── (h) the AA contrast floors at tokens.css:332/339 survive ──
-// The wave must not touch the neutral-5 muted-text rung (AA 5.23:1 / 4.91:1) nor
-// the neutral-6 strong-muted rung (AA 7.79:1 / 7.31:1). The edge-light + moving
-// specular are decoration layers over the GLASS surfaces, not text-color edits —
-// assert the legibility-floor rungs are byte-unchanged.
+// ── (h) the AA contrast floors survive — re-baselined onto the W-NO-GRAY warm
+// ladder (BB.W-CI-GREEN). The legibility floor this clause guards is the rung's
+// LUMINANCE (L40 muted-text / L30 strong-muted) at-or-above AA vs the page. The
+// W-NO-GRAY recalibration moved the neutral ladder CHROMA-ONLY at constant L
+// (hue 48→30/28, sat lifted onto the warm-chroma floor — the gray-reading hsl-48
+// retired), so the rungs now ship `hsl(30 22% 40%)` / `hsl(28 24% 30%)` — the L is
+// UNCHANGED at 40/30 and the AA contract is PRESERVED (the source comment + the
+// numeric check: neutral-5 5.21:1, neutral-6 7.89:1 vs the warm-cream page, ±0.04
+// of the pre-recalibration gray rungs). The decoration work (edge-light + moving
+// specular) still must not touch these text-color rungs; the assert reads the
+// SHIPPED warm values (a revert to the gray hsl-48 form, OR an L drift off 40/30,
+// REDs).
 assert(
-    "neutral-5 muted-text AA floor (L40) intact",
-    /--neutral-5:\s*hsl\(48\s+6%\s+40%\)/.test(tokens),
+    "neutral-5 muted-text AA floor (warm L40) intact",
+    /--neutral-5:\s*hsl\(30\s+22%\s+40%\)/.test(tokens),
 );
 assert(
-    "neutral-6 strong-muted AA floor (L30) intact",
-    /--neutral-6:\s*hsl\(48\s+7%\s+30%\)/.test(tokens),
+    "neutral-6 strong-muted AA floor (warm L30) intact",
+    /--neutral-6:\s*hsl\(28\s+24%\s+30%\)/.test(tokens),
 );
 // the edge-light rim alpha is held low (decoration, must not eat legibility).
 const edgeAlpha = tokens

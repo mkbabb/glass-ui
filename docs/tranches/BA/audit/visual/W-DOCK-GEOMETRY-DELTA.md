@@ -83,8 +83,8 @@ The plate EXACTLY filled its cell on every rung (negative slack), neither scroll
 
 The press state shrinks the plate (the iOS darken-plus-shrink) → clearance only improves (13.64px / 11.64px). The shell docks at `/dock/overview` use icon buttons; the tab-button / trigger plate fix (the `background-clip: content-box` inset over their existing padding) is gate-asserted in W1 source + compiles.
 
-After frames: `dock-plate-clearance/{sidebar-vertical,bottom-horizontal}-{light,dark}.png`.
-Before baseline (the sliced lozenge): `docs/tranches/BA/audit/fleet/probe-bottomdock-active-DARK.png`; the ownership proof: `fleet/probe-bottomdock-nocontain.png`.
+After frames: `dock-plate-clearance/{sidebar-vertical,bottom-horizontal}-{light,dark}.png` — resolved (this dir): `dock-plate-clearance/sidebar-vertical-light.png`, `dock-plate-clearance/sidebar-vertical-dark.png`, `dock-plate-clearance/bottom-horizontal-light.png`, `dock-plate-clearance/bottom-horizontal-dark.png`.
+Before baseline (the sliced lozenge): `../fleet/probe-bottomdock-active-DARK.png`; the ownership proof: `../fleet/probe-bottomdock-nocontain.png` (both relative to this `visual/` dir).
 
 ## The GREEN gate
 

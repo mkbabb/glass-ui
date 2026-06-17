@@ -359,7 +359,10 @@ version, H5 publish/deploy creds), and the declared write-bound coordination sea
   replacing the per-mechanism matrix — the P-1 fix made the close gate), proof:az-final
   retired, MIGRATION BA→4.0.0, the disposition re-stamp, FINAL.md (zero unnamed
   deferrals), the slides/atlas/value.js adopt books, the d6 fork-close protocol,
-  invariant 11. The version is 4.0.0 (aaa1e973). HELD for the user greenlight: the
-  v4.0.0 tag-push + the npm-provenance publish + the d6 fork-close + the slides redeploy
-  (round-15 + the BA adopt together — the site is down). All 32 BA waves landed +
-  gate-green + pushed on tranche/BA.
+  invariant 11. The version is 4.0.0 (aaa1e973). LANDED (the three irreversible legs):
+  the v4.0.0 tag-push + the npm-provenance publish (npm latest = 4.0.0) + the d6 fork-close
+  are DONE — 4.0.0 is PUBLISHED. STILL HELD on the user's separate re-publication
+  greenlight: the slides redeploy (round-15 + the BA adopt together — the site is
+  intentionally down, never onto a live site; W-SLIDES-DRIVE / W-SLIDES-HANDOFF, BB Batch 5).
+  All 32 BA waves landed + gate-green + pushed on tranche/BA. (Reconciled at
+  BB.W-DISPOSITION-RESTAMP — the publish happened; the slides leg stays honestly held.)

@@ -11,7 +11,13 @@
 // Helper SFCs are excluded by construction: only directories whose name is a
 // manifest category id are story folders. Root-level shared chassis
 // (StoryPage.vue, ShowcaseFrame.vue, …) and per-story helper dirs (aurora/**)
-// are NOT category folders, so they are never counted as stories.
+// are NOT category folders, so they are never counted as stories. A composed-by
+// chassis helper that DOES live directly in a category folder (DockStage.vue, the
+// BA.W-STAGE dock-stage tile host; FourierStudioStage.vue, the BA.W-FOURIER-STUDIO
+// Canvas2D foreground stage) is named in PascalCase — the convention discriminator:
+// a route id always comes through the `s("cat", "kebab-id", …)` factory (lowercase
+// kebab), so a PascalCase-named `.vue` is a composed-by helper a real story imports,
+// NOT a top-level route, and is excluded from the file↔row bijection.
 //
 // inv ε / bite-check: leave an unreferenced `.vue` in a category folder → RED
 // (orphan file); add a manifest row pointing at a nonexistent `.vue` → RED
@@ -68,6 +74,10 @@ export function collectStoryFiles(storiesDir, categories, fs) {
         if (!fs.existsSync(dir)) continue;
         for (const entry of fs.readdirSync(dir)) {
             if (!entry.endsWith(".vue")) continue;
+            // A PascalCase-named SFC is a composed-by chassis helper (DockStage,
+            // FourierStudioStage), not a `s()`-factory route (which is lowercase
+            // kebab) — excluded from the file↔row bijection by construction.
+            if (/^[A-Z]/.test(entry)) continue;
             const full = resolve(dir, entry);
             if (!fs.statSync(full).isFile()) continue;
             files.push(`${cat}/${entry.replace(/\.vue$/, "")}`);

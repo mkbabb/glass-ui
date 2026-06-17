@@ -145,6 +145,13 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // its own wave at AZ close (the JUSTIFIED_LOCAL_ONLY precedent for an
     // active-tranche meta-gate, like proof:ay-w0-reground / proof:blob-config).
     ["proof:gate-manifest-sound", "AZ.W-GATES active-tranche gate-manifest-soundness meta-gate; promoted at AZ close."],
+    // BB.W-CLOSE-BATTERY — the close-path meta-gate (asserts the close/release path
+    // runs `gates.mjs --run full` = local ∪ ci ∪ release siblings-absent before the
+    // tag). The proof:gate-manifest-sound precedent: a CLOSE-time meta-gate (it
+    // gates the close battery, not a per-push surface), local-tagged + promoted to
+    // the close set by the BB close. It also imports gates.mjs's gatesFor, so it
+    // cannot be in the set it walks.
+    ["proof:close-battery-parity", "BB.W-CLOSE-BATTERY close-path meta-gate; promoted at the BB close (the proof:gate-manifest-sound precedent)."],
 ]);
 
 /** Does a gate's backing script spawn a browser (a Playwright/live gate)? */

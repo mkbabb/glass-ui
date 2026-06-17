@@ -81,6 +81,14 @@ const SHOWCASE_DOCKS = [
     { path: "demo/stories/dock/overview.vue", requireHome: true },
     { path: "demo/stories/dock/rail.vue", requireHome: true },
     { path: "demo/stories/dock/layers.vue", requireHome: false },
+    // BB.W-CI-GREEN — the DockSection declarative-tripartite chassis showcase
+    // (rail-core | sections | nav from a `sections` descriptor array; the
+    // proof:storybook-complete DockSection demonstration). A FACILITY showcase like
+    // layers.vue — the leading home/brand region is expressed declaratively via the
+    // rail-core descriptor, not the strict #persistent home-left slot, so requireHome
+    // is false (the section chassis composes <DockSeparator> internally — no raw-class
+    // separators). Census-accounted on exactly one list (the W5 closure floor).
+    { path: "demo/stories/dock/sections.vue", requireHome: false },
 ];
 
 // The shell docks. At W61 they were tracked as pendingW40 rows (the W40 rebuild

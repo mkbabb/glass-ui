@@ -94,7 +94,24 @@ const SCALE_FAMILIES = [
         // --spring-dock is the dock FLIP choreography constant — consumed as raw
         // var(--spring-dock) inside the dock motion recipes (proof:dock-motion-*),
         // no per-element `ease-spring-dock` utility use case.
-        holdout: ["--spring-dock"],
+        //
+        // The five --spring-<name>-duration tokens (BA.W-GLASS-CAL Unit 3 — the
+        // per-spring SETTLE clock, GENERATED in regen-spring-tokens.mjs from the
+        // SPRING_PRESETS (response, ζ) table) are the matching holdout: each is
+        // consumed ONLY as a raw `var(--spring-<name>-duration)` read paired with
+        // its `--spring-<name>` curve inside a `transition`/`animation` shorthand
+        // (transitions.css, dock.css, view-transition.css, animations.css) + the
+        // `--tab-indicator-duration` vocabulary — never a per-element
+        // `duration-spring-smooth` Tailwind utility, so there is no `--ease-*`/
+        // duration bridge use case (the same raw-var register as --spring-dock).
+        holdout: [
+            "--spring-dock",
+            "--spring-smooth-duration",
+            "--spring-snappy-duration",
+            "--spring-bouncy-duration",
+            "--spring-gentle-duration",
+            "--spring-dock-duration",
+        ],
     },
     {
         name: "glass-blur-radius",

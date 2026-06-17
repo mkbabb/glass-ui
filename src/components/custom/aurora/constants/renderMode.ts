@@ -6,11 +6,16 @@
  * static CSS-gradient placeholder (a complete render of the same palette) on
  * low-power / reduced-motion / save-data devices.
  */
+import { probeWebGL2Renderer } from "../../../../composables/glass/webgl/useWebGLCanvas";
+
 export type AuroraRenderMode = "webgl" | "css" | "auto";
 
 /**
  * Detect a SOFTWARE / CPU WebGL renderer (SwiftShader, llvmpipe, the Microsoft
- * Basic Render Driver) via a throwaway WebGL2 context's `WEBGL_debug_renderer_info`.
+ * Basic Render Driver) via the shared `probeWebGL2Renderer` capability helper
+ * (BB.W-CI-GREEN — the substrate owns the SINGLE `getContext("webgl2")`
+ * bootstrap; this consumer reads the renderer STRING through it rather than
+ * creating a second probe context, per `proof:webgl-substrate-single`).
  *
  * WHY this is a `"css"` signal (the N.W5 Defect-A root cause, proven live under
  * the playwright SwiftShader harness): a full-viewport WebGL2 surface is a
@@ -25,39 +30,20 @@ export type AuroraRenderMode = "webgl" | "css" | "auto";
  * same palette, composites cheaply, and never stalls input. A blocklisted-GPU
  * user gets a smooth atmosphere instead of a janky/hanging one.
  *
- * Failing the probe (no WebGL2 / extension masked / throw) returns `false` — we
+ * A `null` probe (no WebGL2 / extension masked / throw) returns `false` — we
  * never downgrade a renderer we cannot PROVE is software (the `"css"` path is the
- * conservative-but-lossy choice, so a false miss keeps the richer default). The
- * throwaway context is released via `WEBGL_lose_context` under the per-page cap.
+ * conservative-but-lossy choice, so a false miss keeps the richer default).
  */
 function isSoftwareWebGLRenderer(): boolean {
-    if (typeof document === "undefined") return false;
-    let gl: WebGL2RenderingContext | null = null;
-    try {
-        const probe = document.createElement("canvas");
-        gl = probe.getContext("webgl2");
-        if (!gl) return false;
-        const ext = gl.getExtension("WEBGL_debug_renderer_info");
-        if (!ext) return false;
-        const r = String(
-            gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) ?? "",
-        ).toLowerCase();
-        return (
-            r.includes("swiftshader") ||
-            r.includes("llvmpipe") ||
-            r.includes("software") ||
-            r.includes("basic render") ||
-            r.includes("microsoft basic")
-        );
-    } catch {
-        // fail-explicit: a renderer-probe failure (no WEBGL_debug_renderer_info, a
-        // getParameter throw) is a benign fall-back to the richer default — assume NOT
-        // a software renderer (the conservative-but-lossy choice documented at the fn
-        // header; a false miss keeps the richer render path, never a silent degrade).
-        return false;
-    } finally {
-        gl?.getExtension("WEBGL_lose_context")?.loseContext();
-    }
+    const r = probeWebGL2Renderer();
+    if (r === null) return false;
+    return (
+        r.includes("swiftshader") ||
+        r.includes("llvmpipe") ||
+        r.includes("software") ||
+        r.includes("basic render") ||
+        r.includes("microsoft basic")
+    );
 }
 
 /**

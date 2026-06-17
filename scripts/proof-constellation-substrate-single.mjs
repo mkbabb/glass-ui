@@ -43,6 +43,17 @@ function cliPaths() {
         SUBSTRATE: resolve(ROOT, "src/composables/glass/canvas2d/useCanvas2D.ts"),
         SUBSTRATE_BARREL: resolve(ROOT, "src/composables/glass/canvas2d/index.ts"),
         COMPONENT: resolve(ROOT, "src/components/custom/constellation/Constellation.vue"),
+        // The PRNG single-source seed lives in the render-loop ORCHESTRATOR, which
+        // BA.W-CARVE2 lifted out of Constellation.vue's <script setup> into the
+        // co-located useConstellation composable (the 576→105-line carve). The
+        // prng-import witness reads BOTH (the SFC + its composable) so the
+        // single-source check follows the seed to its post-carve home (BB.W-CI-GREEN
+        // — the re-point follows the carve, the contract is identical: zero private
+        // re-roll across the component + its conductor).
+        ORCHESTRATOR: resolve(
+            ROOT,
+            "src/components/custom/constellation/composables/useConstellation.ts",
+        ),
         FIELD: resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts"),
         DIR: resolve(ROOT, "src/components/custom/constellation"),
         ARTIFACT: gateArtifactPath(
@@ -53,7 +64,7 @@ function cliPaths() {
 }
 
 function run() {
-    const { ROOT, SUBSTRATE, SUBSTRATE_BARREL, COMPONENT, FIELD, DIR, ARTIFACT } =
+    const { ROOT, SUBSTRATE, SUBSTRATE_BARREL, COMPONENT, ORCHESTRATOR, FIELD, DIR, ARTIFACT } =
         cliPaths();
     const violations = [];
     const facts = {};
@@ -110,16 +121,21 @@ function run() {
         violations.push("Constellation.vue is absent");
         facts.componentExists = false;
     } else {
-        const comp = stripComments(readFileSync(COMPONENT, "utf8"));
         facts.componentExists = true;
-        // The prng symbols must come FROM the shared utils/prng leaf.
+        // The prng symbols must come FROM the shared utils/prng leaf — read across the
+        // SFC + its render-loop orchestrator (the seed lives in useConstellation
+        // post-BA.W-CARVE2; either home satisfies the single-source rule).
+        const prngSources = [COMPONENT, ORCHESTRATOR]
+            .filter(existsSync)
+            .map((p) => stripComments(readFileSync(p, "utf8")))
+            .join("\n");
         facts.prngImportFromShared =
             /import\s*\{[^}]*\b(mulberry32|hashString)\b[^}]*\}\s*from\s*["'][^"']*utils\/prng["']/.test(
-                comp,
+                prngSources,
             );
         if (!facts.prngImportFromShared)
             violations.push(
-                "Constellation.vue does not import `mulberry32`/`hashString` from `utils/prng` (the single-source PRNG) — a private re-roll is the regression",
+                "Constellation does not import `mulberry32`/`hashString` from `utils/prng` (the single-source PRNG) — neither the SFC nor its useConstellation orchestrator pulls the shared leaf; a private re-roll is the regression",
             );
     }
 

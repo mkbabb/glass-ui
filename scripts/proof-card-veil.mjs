@@ -124,13 +124,25 @@ add(
 );
 
 // ── ARM A: the Card wiring routes surface=veil → veil-surface ────────────────────
+// BA.W-SURFACE-AXIS re-pointed Card's `veil` arm through the SHARED resolver:
+// Card now composes `surface === 'veil' && surfaceClass('veil').replace(…)` (the
+// `useSurfaceAxis.surfaceClass` seam emits the same `veil-surface` string, base-
+// tier prefix stripped since Card composes `glass-${tier}` itself). The wiring is
+// still gated on `surface === 'veil'`, the decoration class still flows through
+// `surfaceClass`, the union still carries `veil`, and the `:data-surface` attr the
+// CSS seam reads is bound — assert the SHIPPED routing (the source is correct, the
+// shape moved onto the shared resolver).
 const cardVue = read("src/components/ui/card/Card.vue");
 add(
     "veil-source",
     "card-wires-veil",
-    /surface\s*===\s*'veil'\s*&&\s*'veil-surface'/.test(cardVue) &&
+    /surface\s*===\s*'veil'\s*&&\s*\n?\s*surfaceClass\('veil'\)/.test(cardVue) &&
+        /import\s*\{\s*surfaceClass\s*\}\s*from\s*["']\.\.\/_shared\/useSurfaceAxis["']/.test(
+            cardVue,
+        ) &&
+        /:data-surface="surface"/.test(cardVue) &&
         /CardSurface\s*=\s*"glass"\s*\|\s*"cartoon"\s*\|\s*"veil"/.test(cardVue),
-    "Card.vue routes `surface === 'veil' && 'veil-surface'` and the CardSurface union carries `veil`",
+    "Card.vue routes `surface === 'veil' && surfaceClass('veil')` through the shared useSurfaceAxis resolver, binds `:data-surface`, and the CardSurface union carries `veil` (BA.W-SURFACE-AXIS — the veil decoration flows through the shared seam, not the inline ternary)",
 );
 
 // ── ARM B: the ≥2-consumer muster ───────────────────────────────────────────────

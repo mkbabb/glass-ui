@@ -57,6 +57,16 @@ const GOO_BLOB = resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue");
 const SHADOW_CSS = resolve(ROOT, "src/styles/tokens/shadow.css");
 const COLOR_LEAF = resolve(ROOT, "src/composables/color/index.ts");
 const CONSTELLATION = resolve(ROOT, "src/components/custom/constellation/Constellation.vue");
+// BA.W-CARVE2 moved the public `ConstellationProps` declaration (carrying the
+// `opacityCeiling?` recession knob) off the SFC into the co-located
+// constellationTypes.ts (the SFC composes `defineProps<ConstellationProps>()`). The
+// recession-knob witness reads BOTH so it follows the carve (BB.W-CI-GREEN — the prop
+// is declared, just relocated to its public type home, the same way Aurora/Fourier
+// declare theirs inline).
+const CONSTELLATION_TYPES = resolve(
+    ROOT,
+    "src/components/custom/constellation/constellationTypes.ts",
+);
 const AURORA = resolve(ROOT, "src/components/custom/aurora/Aurora.vue");
 const FOURIER = resolve(ROOT, "src/components/custom/fourier-field/FourierField.vue");
 const BLOB_TYPES = resolve(ROOT, "src/components/custom/goo-blob/types.ts");
@@ -172,9 +182,10 @@ function run() {
     const aurora = existsSync(AURORA) ? readFileSync(AURORA, "utf8") : "";
     const fourier = existsSync(FOURIER) ? readFileSync(FOURIER, "utf8") : "";
     const blobTypes = existsSync(BLOB_TYPES) ? readFileSync(BLOB_TYPES, "utf8") : "";
-    const constellation = existsSync(CONSTELLATION)
-        ? readFileSync(CONSTELLATION, "utf8")
-        : "";
+    const constellation =
+        (existsSync(CONSTELLATION) ? readFileSync(CONSTELLATION, "utf8") : "") +
+        "\n" +
+        (existsSync(CONSTELLATION_TYPES) ? readFileSync(CONSTELLATION_TYPES, "utf8") : "");
     const auroraKnob = /opacityCeiling\s*\??\s*:\s*number/.test(aurora);
     const fourierKnob = /intensity\s*\??\s*:\s*number/.test(fourier);
     const blobKnob = /quality\s*:\s*BlobQuality/.test(blobTypes);

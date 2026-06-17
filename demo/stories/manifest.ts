@@ -498,6 +498,17 @@ export const CATEGORIES: Category[] = [
                 "Vertical ↔ Horizontal Morph",
                 "The liquid-glass dock morph (AZ.W-MORPH-SHOWCASE) — a button flows the VERTICAL dock, as an amorphous metaball teardrop, into the HORIZONTAL dock, fully bidirectional + deterministic on ONE --dock-morph-t scalar. An SVG-goo metaball bridge merges the two plates and occludes the topology reflow at the midpoint (the AX.W42 fold-7 limit respected, not fought); useLiquidFlex (the W-LIQUID substrate) drives the two-dock spans + the volume-preserving teardrop squish.",
             ),
+            // BA.W-DOCK-SECTIONS — the declarative tripartite section chassis. A
+            // `sections` descriptor array renders the rail-core | divided sections |
+            // nav zones over the dock's in-flow controls by composing <DockSeparator>
+            // (display: contents — the dock box shrink-wraps as before, no inflation).
+            // No live substrate: <DockSection> is chrome over existing controls.
+            s(
+                "dock",
+                "sections",
+                "Dock Sections",
+                "The declarative <DockSection> chassis (BA.W-DOCK-SECTIONS) — pass ONE `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading rail-core home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. display: contents so the dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
+            ),
         ],
     },
     {

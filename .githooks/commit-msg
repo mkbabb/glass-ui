@@ -4,21 +4,18 @@
 # commit: a row flipped to `live-verified` without a fresh on-disk .png DELTA,
 # or a retired `(DEVELOPED)` status cell, fails the commit.
 #
-# THE HOOK GATES THE ACTIVE TRANCHE (AY), NOT the bare default (AX). The AX
-# `complete`-allowlist seeds 6 born-RED backlog rows (W05/W08/W15/W16/W17/W23 —
-# the owed-DELTA debt W-DELTA0 pays). Those rows are RED-ON-PURPOSE: a TRACKER
-# signal, NOT a commit-blocker. Defaulting the hook to AX would lock EVERY commit
-# (including AY's own work) out behind that backlog — the gate-locks-you-out
-# anti-pattern. So the hook runs `--tranche=AY` (the active tranche, green), and
-# the AX backlog is the W-DELTA0 CI/local tracker (`proof:live-verified-ledger:ax`,
-# born-RED, NON-blocking). When AY closes and a successor tranche opens, bump
-# the `--tranche=` arg here to the new active tranche.
-node scripts/proof-live-verified-ledger.mjs --tranche=AY || {
+# THE HOOK GATES THE ACTIVE TRANCHE (BB), NOT a closed one (BB.W-LEDGER-REPAIR
+# re-pointed it AY→BB; the bare `proof:live-verified-ledger` arm runs the same
+# `--tranche=BB`). The gate's parser reads the wave/status columns BY HEADER NAME
+# (not position), so column order is FREE and the BA silent-no-op class — the gate
+# parsing 0 rows on a re-ordered table and greening vacuously — cannot recur. When
+# BB closes and a successor tranche opens, bump the `--tranche=` arg here to the
+# new active tranche (the per-tranche tracker arms `:ax`/`:ay`/`:az`/`:ba` stay).
+node scripts/proof-live-verified-ledger.mjs --tranche=BB || {
     echo ""
-    echo "commit blocked: the AY live-verified ledger is inconsistent (see above)."
+    echo "commit blocked: the BB live-verified ledger is inconsistent (see above)."
     echo "  Either capture the owed .png DELTA, or set the status to 'live-pending'."
-    echo "  (The AX 6-row born-RED backlog is W-DELTA0's tracker, NOT this hook —"
-    echo "   it does not block your commit. Run \`npm run proof:live-verified-ledger:ax\`"
-    echo "   to see the backlog state.)"
+    echo "  (The closed-tranche backlogs are their own per-tranche trackers, NOT this"
+    echo "   hook — run \`npm run proof:live-verified-ledger:ba\` &c. to see them.)"
     exit 1
 }

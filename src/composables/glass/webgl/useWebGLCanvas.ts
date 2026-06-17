@@ -35,6 +35,42 @@ import {
     type CanvasFrameHooks,
 } from "./createCanvasLifecycle";
 
+/**
+ * The ONE `getContext("webgl2")` capability probe (BB.W-CI-GREEN — the
+ * single-bootstrap rule). A throwaway WebGL2 context is created here, in the
+ * substrate (the sole webgl2-creating module per `proof:webgl-substrate-single`),
+ * so a consumer feature-detecting WebGL2 / reading the unmasked renderer string
+ * NEVER creates a second context of its own. The probe canvas is detached, its
+ * context released via `WEBGL_lose_context` under the per-page context cap; the
+ * read is one-shot (a mount-time device-tier decision, not a reactive one).
+ *
+ * Returns the lower-cased `UNMASKED_RENDERER_WEBGL` string (e.g.
+ * `"google swiftshader"`), or `null` when WebGL2 / the debug-renderer extension
+ * is unavailable or the probe throws — the caller treats `null` as "cannot prove"
+ * (the conservative-but-lossy fall-back). SSR-safe (returns `null` with no
+ * `document`).
+ */
+export function probeWebGL2Renderer(): string | null {
+    if (typeof document === "undefined") return null;
+    let gl: WebGL2RenderingContext | null = null;
+    try {
+        const probe = document.createElement("canvas");
+        gl = probe.getContext("webgl2");
+        if (!gl) return null;
+        const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        if (!ext) return null;
+        return String(
+            gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) ?? "",
+        ).toLowerCase();
+    } catch {
+        // fail-explicit: a probe failure (no extension, a getParameter throw) is a
+        // benign "cannot prove" — the caller keeps its richer default.
+        return null;
+    } finally {
+        gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    }
+}
+
 // Lockstep with createCanvasLifecycle's CanvasSuspendReason (AX.W16 F6 adds
 // "off-screen-io" — the IntersectionObserver fallback's OWN reason key, distinct from
 // the content-visibility path's "off-screen").

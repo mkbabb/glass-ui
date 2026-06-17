@@ -41,6 +41,8 @@ Before → after: **6/18 → 18/18** (the 12 prior failures were all S1-S3 the t
 - **S4 the rung grade** — the content chrome `<h1>` (`text-title` 32.9px, the W-STAGE-applied literal diff) resolves strictly above the section `<h2>` (`text-subheading` 20.4px) by > 4px. PASS.
 - **S5 the motion band (`/motion/countup`)** — `--motion-accent` resolves violet (hue 290-350°), no warm-red; a painted `bg-[var(--motion-accent)]` marker reads the SAME violet. PASS both modes.
 
+Resolved captures (this dir): `W-SUFFUSE2-forms-light.png`, `W-SUFFUSE2-forms-dark.png`, `W-SUFFUSE2-containers-light.png`, `W-SUFFUSE2-containers-dark.png`, `W-SUFFUSE2-data-light.png`, `W-SUFFUSE2-data-dark.png`.
+
 ## Source arm + the proof:suffuse LEDGER (unchanged by the continuation — predecessor-landed, re-confirmed green)
 
 - `proof:suffuse2` 7/7: W1 per-category three-site identity (30 pages, the MAP recorded as gate facts: forms→3, containers→2, data→9, display→5, navigation→12), W1 no-inline-paste, W2 h1-rung `text-title`, W3 motion-accent + no-warm-red + demo-local.

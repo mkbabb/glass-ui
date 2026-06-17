@@ -23,8 +23,10 @@
 //   2. COMPOSABLES-GONE (deletion proof) — manifest.ts has NO id:"composables"
 //      category and NO Cog import.
 //   3. SINGLE-DARK-HOME (deletion proof + source-witness) — SidebarDock.vue imports NO
-//      DarkModeToggle and renders none; the configurator Switch (PresetEditor.vue dark
-//      model) is the single chrome dark control.
+//      DarkModeToggle and renders none; the configurator renders the canonical live
+//      <DarkModeToggle> bound to useGlobalDark (BA.W-CONFIG-CHASSIS.3 — the prior
+//      `darkModel`/<Switch> shadow was REMOVED, dark mode is owned SOLELY by the global
+//      composable). The configurator's <DarkModeToggle> is the single chrome dark control.
 //   4. AXES-PRESENT (source-witness) — ConfigBaseline carries the two REQUIRED axes
 //      (glassLevel + scale), css-writers.ts writes --glass-level + --ui-scale to :root
 //      (NOT --dock-scale), and PRM-if-present is verified (a `motion` field that DOES
@@ -35,8 +37,10 @@
 //      glass-ui-demo:toggle-configurator event (the rehomed open).
 //
 // Born-RED at the pre-edit tree: PresetEditor.vue carried the fixed FAB + the "Preset
-// Editor" title + no glass-level/scale/PRM; manifest.ts had id:"composables" + Cog;
-// SidebarDock.vue imported + rendered DarkModeToggle.
+// Editor" title + no glass-level/scale/PRM + no canonical <DarkModeToggle> dark home;
+// manifest.ts had id:"composables" + Cog; SidebarDock.vue imported + rendered the
+// standalone DarkModeToggle. The single-dark-home check is born-RED on a tree whose
+// configurator has neither the live <DarkModeToggle> nor the useGlobalDark binding.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -92,19 +96,26 @@ add(
 );
 
 // ── 3 — SINGLE-DARK-HOME ────────────────────────────────────────────────────────
-// SidebarDock.vue imports NO DarkModeToggle and renders none; the configurator Switch
-// (PresetEditor.vue dark model) is the single chrome dark control.
+// SidebarDock.vue imports NO standalone DarkModeToggle and renders none; the
+// configurator renders the canonical live <DarkModeToggle> as its single chrome dark
+// control (BA.W-CONFIG-CHASSIS.3 — the prior `darkModel`/<Switch> config-store shadow
+// was REMOVED so there is no desync). The <DarkModeToggle> is SELF-SYNCING — it owns
+// the useGlobalDark binding INTERNALLY (DarkModeToggle.vue calls useGlobalDark()), so
+// the chrome dark home is the component RENDER (import + template use), not a direct
+// useGlobalDark call in PresetEditor (dark mode is owned SOLELY by the global composable
+// the component binds).
 const sidebarHasDarkToggle = /\bDarkModeToggle\b/.test(sidebar);
-const configHasDarkSwitch =
-    /darkModel/.test(presetEditor) && /<Switch\b[^>]*v-model="darkModel"/.test(presetEditor);
+const configImportsDarkToggle = /import\s*\{[^}]*\bDarkModeToggle\b[^}]*\}/.test(presetEditor);
+const configRendersDarkToggle = /<DarkModeToggle\b/.test(presetEditor);
+const configHasDarkHome = configImportsDarkToggle && configRendersDarkToggle;
 add(
     "single-dark-home",
-    !sidebarHasDarkToggle && configHasDarkSwitch,
+    !sidebarHasDarkToggle && configHasDarkHome,
     sidebarHasDarkToggle
-        ? "SidebarDock.vue STILL imports/renders the standalone DarkModeToggle — the configurator Switch must be the SINGLE chrome dark control (D5)"
-        : configHasDarkSwitch
-          ? "SidebarDock.vue renders NO standalone DarkModeToggle; the configurator dark Switch (v-model=\"darkModel\") is the single chrome home — D5"
-          : "the configurator's dark Switch (v-model=\"darkModel\") is missing — the single chrome dark home must exist after the standalone toggle removal",
+        ? "SidebarDock.vue STILL imports/renders the standalone DarkModeToggle — the configurator's <DarkModeToggle> must be the SINGLE chrome dark control (D5)"
+        : configHasDarkHome
+          ? "SidebarDock.vue renders NO standalone DarkModeToggle; the configurator's canonical self-syncing <DarkModeToggle> is the single chrome home — D5"
+          : "the configurator's canonical <DarkModeToggle> (the self-syncing single chrome dark control) is missing — it must be imported AND rendered after the standalone toggle removal",
 );
 
 // ── 4 — AXES-PRESENT (source-witness) ───────────────────────────────────────────

@@ -210,10 +210,17 @@ Every deferral lands / retires / archives / names its next-letter destination (P
 
 - **The ~28 DISPOSITION-REGISTER BOOK rows** — re-stamped un-MET at BA via `proof:disposition-live`
   (31 register ids, every ≥2-consumer trigger re-evaluated un-MET; the register-completeness clause
-  GREEN). Destination: the NEXT tranche's Batch-0 re-stamp (NOT folded — L inv-8; folding REDs the
-  completeness check). Named long-tail incl. the FOUNDING chronic `native-drawer-as-asChild`
-  (5-tranche carry), `panel-host-primitive`, `interruptible-reorder`, `tooltip-mono-variant`,
-  `completion-seal-family`, etc.
+  GREEN). **DISCHARGED at BB.W-DISPOSITION-RESTAMP** (this IS the named next-tranche re-stamp): per the
+  BB §2 chronic-fold decision each of the 31 rows is now DECIDED, not silently re-booked — THREE rows
+  carry a decided BB destination (`native-drawer-as-asChild` → W-NDA-DECIDE DECIDE, `styles-critical-split`
+  → W-CSS-CRITICAL BUILD, `css-relative-color` → W-DARK-INK-WARM MEET, each via a `pendingResolvedBy`
+  field the new decided-destination soundness clause verifies resolves to a real wave-spec), and the
+  honest-hold long-tail (the FOUNDING chronic stays armed as a WATCH; `panel-host-primitive`,
+  `interruptible-reorder`, `tooltip-mono-variant`, `completion-seal-family`, etc.) STAYS BOOK'd with a
+  recorded `reStampedAt: "BB"` + `reStampNote` confirming the trigger re-evaluates un-MET (NOT folded —
+  L inv-8; no row deleted, no row force-resolved — the register-completeness check stays GREEN). See the
+  per-row dispositions in `docs/tranches/AX/audit/DISPOSITION-REGISTER.json` + the BB.W-DISPOSITION-RESTAMP
+  DELTA re-stamp table.
 - **The opportunistic-fold caveats re-evaluated un-MET (recorded, not forced):** `css-relative-color`
   (the two `oklch(from …)` hits are COMMENTS noting "browsers don't gamut-map yet" — no BA wave landed
   an `oklch(from …)` paint recipe; re-stamps BOOK'd, folds when a tint recipe pays the relative-color

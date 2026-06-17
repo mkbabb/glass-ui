@@ -4,7 +4,9 @@
 underline-paper), ONE orientation axis, the re-timed indicator.
 **Branch**: tranche/BA · **HEAD at start**: d60ffdd3
 **Captured-π**: `tests-visual/tabs-std.spec.ts` (12/12 GREEN, both projects, both modes,
-≥2 viewports) · captures `W-TABS-std-{mobile,desktop}-{light,dark}.png` (this dir).
+≥2 viewports) · captures `W-TABS-std-{mobile,desktop}-{light,dark}.png` (this dir) —
+resolved: `W-TABS-std-desktop-light.png`, `W-TABS-std-desktop-dark.png`,
+`W-TABS-std-mobile-light.png`, `W-TABS-std-mobile-dark.png`.
 **Gate**: `proof:tabs-std` — GREEN (SOURCE arm all clauses + the fail-CLOSED π live arm:
 glided=true, squished=true, noPlate=true). Born-RED at HEAD by construction (the old
 3-value/overflow/multi shape + the `--duration-normal` clock + `INDICATOR_RELEASE_MS`

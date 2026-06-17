@@ -388,6 +388,12 @@ export const GATES = [
         note: "BB.W-SPINE-CONSTELLATION — the cross-repo coherent-latest spine gate (born-RED, tagged [\"local\"]; the proof:ba-gestalt born-RED → promote model). Walks every constellation member's package.json (the hub + 4 leaves + 7 enrolled consumers + the WASM-leaf caret arm; the 3 independent-node services explicitly NOT enrolled) and asserts the 8 clauses (§6 BB-AMENDMENT-constellation-modernize.md): C1 value singleton IDENTITY (glass-ui value peer ⊇ kf value dep + every member admits the coherent 0.13.0 floor, pre-1.0 lockstep) · C2 no @mkbabb multi-major `||` (the value ^0.13.0||^1.0.0 pre-guard bridge the ONLY sanctioned exception) · C3 no dist-tag/star/next on @mkbabb or shared singleton · C4 no stale-lineage glass-ui cap (every consumer admits ^4.x) · C5 no ancient major (TS ^6/vite ^8/vue-tsc ^3) · C6 the registry-consumer probe discipline recorded (dependency-order-book.md, cross-refs W-LINEAGE-PROBE) · C7 the WASM-leaf family-caret arm + the csp divergent-publisher provenance fence (csc411 wasm crate, never muster/csp-wasm) · C8 the born-RED value ^1.0.0 pre-guard (the hub admits ^1 so value's DECIDED 1.0.0 cut cannot re-strand). SIBLING (walks foreign trees; absent members skip gracefully). BORN-RED at HEAD: the hub is bumped but the 7 enrolled consumers still cap glass-ui at ^3.x (C4) + the TS5/Vite7 trio + playground vite-6 (C5) — RED until the Batch-5 fleet adopt (W-CONSUMER-MODERNIZE + W-SLIDES-DRIVE), the single authorized verdict-flipper that PROMOTES it to the close set. Bite: re-introduce a @mkbabb union / a star / a stale glass-ui cap / an ancient major REDs the census.",
     },
     {
+        id: "proof:close-battery-parity",
+        cmd: "proof:close-battery-parity",
+        tags: ["local"],
+        note: "BB.W-CLOSE-BATTERY — the full-set close-battery lock (born-RED → GREEN at the close-path wiring). Asserts the close/release path runs `gates.mjs --run full` (the deduped union local ∪ ci ∪ release) siblings-absent BEFORE the irreversible tag, NOT `--run local`/`--run release` alone (the BA over-claim: `ci ⊂ local` carried 18 reds AND the close never ran the union). 4 clauses: C1 the `--run full` union mode exists + is the deduped union; C2 release.sh runs `--run full`; C3 release.yml runs `--run full`; C4 the `proof:full` script + the CLAUDE.md close-battery canon. + the self-test bite (a synthetic `--run local`-only close path MUST flag). DEVICE-FREE meta-gate (imports gatesFor — it cannot be in the set it walks); `local`-tagged (the proof:gate-manifest-sound precedent), promoted to the close set by the BB close. Bite: re-point the release path to `--run local`/`--run release`, or narrow the full union → RED.",
+    },
+    {
         id: "proof:vueuse-free-root",
         cmd: "proof:vueuse-free-root",
         tags: ["local", "ci"],
@@ -937,7 +943,7 @@ export const GATES = [
     {
         id: "proof:substrate-cohesion",
         cmd: "proof:substrate-cohesion",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AY.W-COHERE — the SET-LEVEL substrate cohesion gate (the four live substrates AS A SET): G-ACCENT (the blob mood bead C=0.136 inside the comet-anchored warm-red band via the deriveBlobPalette chromaCeiling), G-RECESSION (all FOUR expose the outer-envelope knob; the constellation opacityCeiling BITES — 0.4 ceiling paints 25% ink), G-SHADOW (no 5px-5px stamp; the adaptive --blob-shadow ambient — darkest-cast L 0.780 >= the 0.58 floor). Self-proving. Bite: re-add the stamp / drop the prop / remove the ceiling -> RED",
     },
     {
@@ -1021,8 +1027,8 @@ export const GATES = [
     {
         id: "proof:touch-target",
         cmd: "proof:touch-target",
-        tags: ["local", "ci"],
-        note: "AY.W-SCALE2 — the REAL touch-target runtime gate (the phantom made real): every sub-44 form atom (Switch/Checkbox/Radio/Slider-thumb/TagsInput-delete/MultiSelect-X) paints a composited hit-rect >=44x44 under pointer:coarse via the ONE touch-hit-area utility; fine-pointer non-regression. Fail-CLOSED with device; befitting-SKIP zero-device. Bite: revert a compose -> 16x16 REDs",
+        tags: ["local"],
+        note: "AY.W-SCALE2 — the REAL touch-target runtime gate (the phantom made real): every sub-44 form atom (Switch/Checkbox/Radio/Slider-thumb/TagsInput-delete/MultiSelect-X) paints a composited hit-rect >=44x44 under pointer:coarse via the ONE touch-hit-area utility; fine-pointer non-regression. Fail-CLOSED with device; befitting-SKIP zero-device. Bite: revert a compose -> 16x16 REDs. BB.W-CI-GREEN re-tag (#18): a detected-Playwright :5199 live-π gate cannot run in headless ci — re-tagged ['local'] per the cardinal-lesson architecture (proof:gate-manifest-sound clause-4 detected-Playwright exemption); the live π + the open Switch sub-44 hit-rect source defect rerun under W-VISUAL-RUNNER (Batch 1).",
     },
     {
         id: "proof:webkit-backdrop",
@@ -1226,7 +1232,7 @@ export const GATES = [
         id: "proof:live-verified-ledger",
         cmd: "proof:live-verified-ledger",
         tags: ["local", "ci"],
-        note: "AX.W62 Gate 1 / AY.W-CARDINAL-INFRA (cardinal forcing function) — a PROGRESS wave-row whose STATUS cell is `live-verified` (or an allowlisted `complete`) REDs unless a matching audit/visual/W<NN>-DELTA.md references ≥1 REAL own-surface PNG (the SOURCE arm rejects prose/section-markers); any `(DEVELOPED)` modifier in a status cell REDs (the retired inflation-vehicle vocabulary). Self-proving: 3 synthetic rows flagged every run. GATES THE ACTIVE TRANCHE (AY — `--tranche=AY` via the bare `proof:live-verified-ledger` script); also the .githooks/commit-msg local bite, same AY arm. The AX 6-row `complete`-allowlist backlog (W05/W08/W15/W16/W17/W23) is born-RED-on-purpose — the W-DELTA0 owed-DELTA TRACKER (`proof:live-verified-ledger:ax`), NON-blocking, NOT a commit/CI gate (defaulting to AX would be the gate-locks-you-out anti-pattern). Bite: flip an AY row to live-verified with no own-surface .png → RED; write `(DEVELOPED)` in a status cell → RED.",
+        note: "AX.W62 Gate 1 / AY.W-CARDINAL-INFRA (cardinal forcing function) — a PROGRESS wave-row whose STATUS cell is `live-verified` (or an allowlisted `complete`) REDs unless a matching audit/visual/W<NN>-DELTA.md references ≥1 REAL own-surface PNG (the SOURCE arm rejects prose/section-markers); any `(DEVELOPED)` modifier in a status cell REDs (the retired inflation-vehicle vocabulary). Self-proving: 7 synthetic rows flagged every run (incl. the BB.W-LEDGER-REPAIR column-order born-RED witness). GATES THE ACTIVE TRANCHE (BB — `--tranche=BB` via the bare `proof:live-verified-ledger` script + the .githooks/commit-msg local bite). The parser reads the wave/status columns BY HEADER NAME, not position (BB.W-LEDGER-REPAIR) — column order is FREE, the BA/BB silent-no-op class (a re-ordered table parsing 0 rows + greening vacuously) cannot recur; escaped-pipe-safe rowCells + a fail-loud-on-no-header fallback. The per-tranche tracker arms (:ax/:ay/:az/:ba) gate the closed tranches. The AX 6-row `complete`-allowlist backlog (W05/W08/W15/W16/W17/W23) is born-RED-on-purpose — the W-DELTA0 owed-DELTA TRACKER (`proof:live-verified-ledger:ax`), NON-blocking, NOT a commit/CI gate (defaulting to AX would be the gate-locks-you-out anti-pattern). Bite: flip an AY row to live-verified with no own-surface .png → RED; write `(DEVELOPED)` in a status cell → RED.",
     },
     {
         id: "proof:consumer-staleness",
@@ -1271,6 +1277,17 @@ export const GATES = [
 
 /** The gate cmds tagged for a given aggregate, in manifest order. */
 export function gatesFor(mode) {
+    if (mode === "full") {
+        // BB.W-CLOSE-BATTERY — the DEDUPED union of the three tag sets (local ∪ ci ∪
+        // release), in manifest order, a row tagged in >1 set running ONCE. This is
+        // the close-battery set: the close/release path runs `--run full`
+        // siblings-absent before the tag, so a `--run local`-only close (the BA
+        // over-claim — `ci ⊂ local` carried 18 reds AND the close never ran the
+        // union) is structurally impossible. `proof:close-battery-parity` locks it.
+        return GATES.filter((g) =>
+            ["local", "ci", "release"].some((t) => g.tags.includes(t)),
+        );
+    }
     return GATES.filter((g) => g.tags.includes(mode));
 }
 
@@ -1437,7 +1454,7 @@ if (isMain) {
         );
     } else {
         console.error(
-            "usage: gates.mjs --run <local|ci|release> | --verify-ci | --emit-ci | --list <mode>",
+            "usage: gates.mjs --run <local|ci|release|full> | --verify-ci | --emit-ci | --list <mode>",
         );
         process.exit(2);
     }

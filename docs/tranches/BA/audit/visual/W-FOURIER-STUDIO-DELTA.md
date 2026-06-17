@@ -46,7 +46,7 @@ The R5-11 RIDER (the slides-arm deposit): the slides nine-gate fc-fourier audit 
 - **(b) the epicycle toggle is ORTHOGONAL** — toggling the chain checkbox changes the painted footprint (chain appears/disappears) while both states keep a non-empty summed curve (N truncation and epicycle visibility are independent axes).
 - **(d) pause freezes a frame** — clicking the transport Pause toggle freezes the clock; two reads of the canvas signature 450ms apart are byte-identical (the controllable clock froze the playhead).
 - **(R5-11) the hero field leans WARM** — on the ambient `/substrates/fourier-field` route the hero-variant canvas's sampled mean RGB has `r > b` (the restored warm-anchored register; the slides fc-fourier G4 reproduction PASSES).
-- **Captures** (fullPage, BOTH modes × 2 viewports): `W-FOURIER-STUDIO-{desktop,mobile}-{light,dark}.png` — the studio reads as the foreground center of gravity (the "Fourier Studio" hero, the assembling warm-ink curve with epicycle arms, the status pill `N 4/7 playing · t`, the transport row), NOT the three read-only panels (the BA-FOUR-1 defect).
+- **Captures** (fullPage, BOTH modes × 2 viewports): `W-FOURIER-STUDIO-{desktop,mobile}-{light,dark}.png` — the studio reads as the foreground center of gravity (the "Fourier Studio" hero, the assembling warm-ink curve with epicycle arms, the status pill `N 4/7 playing · t`, the transport row), NOT the three read-only panels (the BA-FOUR-1 defect). Resolved (this dir): `W-FOURIER-STUDIO-desktop-light.png`, `W-FOURIER-STUDIO-desktop-dark.png`, `W-FOURIER-STUDIO-mobile-light.png`, `W-FOURIER-STUDIO-mobile-dark.png`.
 
 ## Gestalt provisional verdict (the `motion+fourier` row — W-REFLECT2 confirms operative)
 

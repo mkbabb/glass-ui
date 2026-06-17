@@ -21,7 +21,17 @@
 //
 // bite-check: re-add a native <select>/<input type=range> to a section panel →
 // RED; render medium as SegmentedTabs → RED; host the section stack in a
-// DockLayerGroup → RED; mint a ColorSwatch library primitive → RED.
+// DockLayerGroup → RED; revert the seed swatch off <ColorSwatch> back to a raw
+// native <input type=color> slab → RED.
+//
+// BA.W-CONFIG-CHASSIS re-pointed clause 5: the prior "Option-B ratify" expected a
+// native `<input type=color>` wrapped in LabeledField AND forbade a ColorSwatch
+// primitive. That wave SHIPPED `<ColorSwatch>` (the first-class color-input
+// register — a proportioned chip + hex affordance replacing the raw full-width
+// `<input type=color w-full>` slabs), and the aurora seed swatch adopted it. The
+// shipped idiom is now ColorSwatch — clause 5 asserts the seed swatch composes
+// `<ColorSwatch>` and the primitive resolves (a clean break; the Option-B
+// expectation was superseded, not reverted).
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -147,19 +157,22 @@ function main() {
     if (!facts.mediumOneWay)
         violations.push(`(4) the \`medium\` enum renders ${mediumSelectSites} times (expected exactly 1 — one rendering, one place)`);
 
-    // (5) Color-swatch RATIFY = Option B (keep native + LabeledField wrap) — NO new
-    //     src/components/ color primitive minted; the seed swatch stays a native
-    //     <input type=color> wrapped in LabeledField.
-    facts.seedIsNativeColorInLabeledField = /LabeledField[\s\S]{0,400}type="color"|type="color"[\s\S]{0,400}LabeledField/.test(
-        color,
-    );
-    facts.noColorSwatchPrimitive = !existsSync(
-        resolve(ROOT, "src/components/custom/color-swatch"),
-    ) && !existsSync(resolve(ROOT, "src/components/ui/color-swatch"));
-    if (!facts.seedIsNativeColorInLabeledField)
-        violations.push("(5) the seed swatch is not a native <input type=color> wrapped in LabeledField (the Option-B ratify)");
-    if (!facts.noColorSwatchPrimitive)
-        violations.push("(5) a ColorSwatch library primitive was minted — Option A is a dedicated sub-wave (compose-only)");
+    // (5) Color-swatch idiom = ColorSwatch (BA.W-CONFIG-CHASSIS) — the seed swatch
+    //     composes the first-class `<ColorSwatch>` register (a proportioned chip +
+    //     hex affordance) OFF the raw native `<input type=color w-full>` slab, and
+    //     the ColorSwatch library primitive RESOLVES (it is the new canonical color
+    //     register, not a forbidden mint). A revert to a raw native color input REDS.
+    facts.seedComposesColorSwatch = /<ColorSwatch[\s>]/.test(color);
+    facts.seedNotRawNativeColor = !/<input[^>]*type="color"/.test(color);
+    facts.colorSwatchPrimitiveResolves =
+        existsSync(resolve(ROOT, "src/components/custom/color-swatch")) ||
+        existsSync(resolve(ROOT, "src/components/ui/color-swatch"));
+    if (!facts.seedComposesColorSwatch)
+        violations.push("(5) the seed swatch does not compose the library <ColorSwatch> register (BA.W-CONFIG-CHASSIS — off the raw native <input type=color> slab)");
+    if (!facts.seedNotRawNativeColor)
+        violations.push("(5) the aurora color section still carries a raw native <input type=color> slab — the seed swatch is the <ColorSwatch> register now");
+    if (!facts.colorSwatchPrimitiveResolves)
+        violations.push("(5) the ColorSwatch library primitive does not resolve — the shipped color-input register is missing");
 
     // (6) The studio is ONE progressive-disclosure column — the prior top-level
     //     "Atoms ↔ Advanced" SegmentedTabs split was DELIBERATELY retired (B21:
@@ -192,7 +205,7 @@ function main() {
         console.error("[proof:aurora-chrome-idiomatic] FAIL\n  - " + violations.join("\n  - "));
         process.exit(1);
     }
-    console.log("[proof:aurora-chrome-idiomatic] PASS — atom sections on the library form primitives, medium enum renders once via LabeledSelect, section stack on ConfiguratorLayer, Option-B native swatch, one progressive-disclosure column, composes-only");
+    console.log("[proof:aurora-chrome-idiomatic] PASS — atom sections on the library form primitives, medium enum renders once via LabeledSelect, section stack on ConfiguratorLayer, the seed swatch on the <ColorSwatch> register, one progressive-disclosure column, composes-only");
 }
 
 main();

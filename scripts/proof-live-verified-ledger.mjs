@@ -28,21 +28,37 @@
 // the shared-surface `live-verified` rows that legitimately cite a sibling wave's
 // captures (W06↔W61, W40↔W18, …, declared in the PROGRESS status cell) stay GREEN.
 //
-// Targets the STATUS cell (the 3rd column) of wave-table rows only — a prose or
-// legend mention of `live-verified`/`(DEVELOPED)` (e.g. documenting the retired
-// label) is not a claim and is ignored.
+// Targets the STATUS cell of wave-table rows only — located by HEADER NAME, not by
+// a hardcoded column ordinal (BB.W-LEDGER-REPAIR: the parser was positionally
+// coupled to the AX `| Wave | Title | Status |` shape — wave=col0, status=last —
+// and went SILENTLY INERT the moment BA re-ordered to `| batch | wave | status |
+// notes |` and BB to `| wave | status | gate | note |`, the cardinal-lesson class
+// recurring inside the gate built to catch it). The parser reads the table's OWN
+// header row and finds the `wave` + `status` columns by name, so column order is
+// FREE — a future tranche orders its columns however it likes. A prose or legend
+// mention of `live-verified`/`(DEVELOPED)` (e.g. documenting the retired label) is
+// not a claim and is ignored (the wave-id regex still gates the row).
 //
-// SELF-PROVING: three synthetic rows are evaluated every run — a `live-verified`
-// row with no DELTA, a `complete`-on-(synthetic)-allowlist row with no DELTA, and
-// a `live-verified` row whose only referenced PNG is a NON-matching (neighbour's)
-// filename. If the detector fails to flag any of the three, the gate reds loudly
-// (acceptance is the RED-witness inverse). So the bite is demonstrated on every
-// invocation while the committed ledger stays honest.
+// SELF-PROVING: seven synthetic checks are evaluated every run — a `live-verified`
+// row with no DELTA, a `complete`-on-(synthetic)-allowlist row with no DELTA, a
+// `live-verified` row whose only referenced PNG is a NON-matching (neighbour's)
+// filename, a freshness-stale header, an R1 fabricated-viewport PNG, an R6
+// non-GREEN cited-gate artefact, and (BB.W-LEDGER-REPAIR) a COLUMN-ORDER bite — a
+// `batch`-first / `status`-mid table the OLD positional parser mis-read to 0 rows,
+// which the header-named parser must parse to exactly one `W-TEST` live-verified
+// row. If the detector fails to flag any of the seven, the gate reds loudly
+// (acceptance is the RED-witness inverse). And a PROGRESS table with NO header row
+// naming both `wave` and `status` fails LOUD (a named diagnostic + non-zero exit)
+// — a silent 0-row green is the precise failure this gate kills.
 //
 // Tranche-parameterized: `--tranche=<X>` (default `AX`) reads
 // `docs/tranches/<X>/PROGRESS.md` + `<X>/audit/visual/` and stamps the artefact
-// `<X>-live-verified-ledger`. The AY arm runs `--tranche=AY`; the slides twin
-// (slides/scripts/proof-live-verified-ledger.mjs) defaults `--tranche=L`.
+// `<X>-live-verified-ledger`. The bare arm + the commit-msg hook run the ACTIVE
+// tranche `--tranche=BB`; the per-tranche tracker arms `:ax`/`:ay`/`:az`/`:ba`
+// gate the closed tranches. The slides twin
+// (slides/scripts/proof-live-verified-ledger.mjs) defaults `--tranche=L` and
+// carries the SAME latent positional fragility — it re-syncs to this column-by-
+// header parser on the slides repo's next adopt (W-SLIDES-HANDOFF coordination).
 //
 // Also runnable as the commit-msg hook (.githooks/commit-msg) for the fast local
 // bite; the CI job re-runs it so a `--no-verify` bypass is still caught.
@@ -94,32 +110,106 @@ function loadAllowlist() {
     }
 }
 
-// ── Parse the PROGRESS wave-table rows ────────────────────────────────────────
-/** @returns {{wave:string, status:string, line:number}[]} */
+// ── Parse the PROGRESS wave-table rows — by HEADER NAME, not position ──────────
+// BB.W-LEDGER-REPAIR: the parser was positionally coupled to the AX `| Wave |
+// Title | Status |` shape (wave=col0, status=last). BA re-ordered to `| batch |
+// wave | status | notes |` (wave=col1, status=col2) and BB to `| wave | status |
+// gate | note |` (status=col1) — so `body[0]`/`body[last]` silently read the wrong
+// cells and the gate went INERT (the cardinal-lesson class recurring inside the
+// gate built to catch it). The fix reads the table's OWN header row: scan for the
+// first pipe-row whose lowercased cells carry BOTH `wave` and `status`, record those
+// column INDICES, then read `cells[waveIdx]`/`cells[statusIdx]` for the data rows.
+// A file may carry MULTIPLE wave tables (BB's per-batch sections each open a fresh
+// `| wave | status | gate | note |` header); the most-recent header in source order
+// governs the rows beneath it, so a column re-order between sections is honoured.
+// Column order is now FREE — a future tranche orders its columns however it likes.
+
+/**
+ * Split a pipe-row into trimmed inner cells (drop the outer-pipe empties). A
+ * markdown `\|` is a LITERAL pipe inside a cell, NOT a column delimiter (AZ's
+ * W-METRIC-UNIFY row carries `amount \|\| placeholder` in its grounding cell) —
+ * splitting naively on every `|` would shift the column indices and the
+ * header-named parser would read the wrong cell. Split on UN-escaped pipes only
+ * (a `|` not preceded by `\`), then unescape `\|` → `|` in each cell.
+ */
+function rowCells(ln) {
+    const cells = ln
+        .split(/(?<!\\)\|/)
+        .map((c) => c.replace(/\\\|/g, "|").trim());
+    return cells.filter((_, idx) => idx > 0 && idx < cells.length - 1);
+}
+
+/** A markdown separator row (`|---|---|`) carries only dashes/colons. */
+function isSeparatorRow(cells) {
+    return cells.length > 0 && cells.every((c) => /^:?-+:?$/.test(c));
+}
+
+/**
+ * Locate the wave + status column indices from a header row's cells. The match is
+ * by NAME (lowercased exact-cell): the first cell that is `wave` and the first that
+ * is `status`. Returns null when the row does not carry BOTH.
+ * @param {string[]} cells
+ * @returns {{waveIdx:number, statusIdx:number} | null}
+ */
+function headerIndices(cells) {
+    const lower = cells.map((c) => c.toLowerCase());
+    const waveIdx = lower.indexOf("wave");
+    const statusIdx = lower.indexOf("status");
+    if (waveIdx === -1 || statusIdx === -1) return null;
+    return { waveIdx, statusIdx };
+}
+
+/**
+ * Parse the PROGRESS wave-table rows by header name.
+ * @returns {{wave:string, status:string, line:number}[]}
+ */
 function waveRows(md) {
     const rows = [];
     const lines = md.split("\n");
+    /** @type {{waveIdx:number, statusIdx:number} | null} */
+    let cols = null;
+    let sawHeader = false;
     lines.forEach((ln, i) => {
         if (!ln.trimStart().startsWith("|")) return;
-        const cells = ln.split("|").map((c) => c.trim());
-        // drop the leading/trailing empties from the outer pipes
-        const body = cells.filter((_, idx) => idx > 0 && idx < cells.length - 1);
-        if (body.length < 2) return;
-        const wave = body[0];
-        // wave id only (skips the `Wave` header + legend/other tables): the AX
-        // numbered form `W<digit>…` OR the AY named form `W-<UPPER>…`. The `Wave`
-        // header (`W` + lowercase `a`) and prose rows never match.
+        const cells = rowCells(ln);
+        if (cells.length < 2) return;
+        if (isSeparatorRow(cells)) return; // the `|---|---|` rule under a header
+        // A header row re-anchors the column map (a file may carry many tables).
+        const found = headerIndices(cells);
+        if (found) {
+            cols = found;
+            sawHeader = true;
+            return; // the header itself is not a data row
+        }
+        if (!cols) return; // a pipe-row before any wave/status header — not a wave table
+        const wave = cells[cols.waveIdx] ?? "";
+        // wave id only (skips legend/other tables): the AX numbered form `W<digit>…`
+        // OR the AY/BA/BB named form `W-<UPPER>…`. Prose + batch-digit cells never match.
         if (!/^W(\d|-[A-Z])/.test(wave)) return;
-        const status = body[body.length - 1];
+        const status = cells[cols.statusIdx] ?? "";
         rows.push({ wave, status, line: i + 1 });
     });
+    if (!sawHeader) {
+        // Fail-loud: no header row named both `wave` and `status`. A silent 0-row
+        // green is the precise failure BB.W-LEDGER-REPAIR kills.
+        console.error(
+            `[proof:live-verified-ledger] could not locate the wave/status columns by header — the table must carry a header row naming both \`wave\` and \`status\` (${PROGRESS}).`,
+        );
+        process.exit(1);
+    }
     return rows;
 }
 
 // The status token a cell asserts: live-verified vs live-pending vs … The first
-// segment before a separator (— · () ) is the token.
+// segment before a separator (— · () ) is the token. Strip the `**bold**` markers
+// some tables wrap the close-token in (BA's `**complete**`/`**live-verified**`
+// idiom) so the token reads through the markdown.
 function statusToken(status) {
-    return status.split(/[—·(]/)[0].trim().toLowerCase();
+    return status
+        .replace(/\*\*/g, "")
+        .split(/[—·(]/)[0]
+        .trim()
+        .toLowerCase();
 }
 
 // ── DELTA resolution: a real on-disk PNG referenced by the wave's DELTA doc ────
@@ -569,6 +659,35 @@ const selfTests = [
                 ? "flagged"
                 : null,
     },
+    {
+        // BB.W-LEDGER-REPAIR: the COLUMN-ORDER self-test — the born-RED witness that
+        // makes the positional-coupling regression structurally impossible to re-
+        // introduce. The fixture is a `batch`-first / `status`-mid table (BA's exact
+        // shape, where the OLD positional parser read `body[0]` = the batch digit → 0
+        // rows, mis-reading the whole ledger to green). The repaired column-by-header
+        // parser must locate `wave` (col 1) + `status` (col 2) by NAME and return
+        // EXACTLY ONE row with `wave === "W-TEST"` and status token `live-verified`.
+        // The `**bold**` wrap mirrors BA's idiom (the marker must strip through). PURE
+        // over the fixture string (no on-disk file), deterministic every run. If
+        // `waveRows` regresses to positional, the W-TEST row mis-parses → the parsed
+        // set is not the expected single live-verified row → this flag goes falsy →
+        // the gate reds loudly (the RED-witness inverse).
+        label: "column-order — a batch-first / status-mid table parses W-TEST as live-verified by HEADER NAME, not position",
+        flag: (() => {
+            const fixture =
+                "| batch | wave | status | notes |\n" +
+                "|---|---|---|---|\n" +
+                "| 0 | W-TEST | **live-verified** | x |\n" +
+                "| 0 | W-OTHER | live-pending | y |";
+            const parsed = waveRows(fixture);
+            const lv = parsed.filter((r) => statusToken(r.status) === "live-verified");
+            return parsed.length === 2 &&
+                lv.length === 1 &&
+                lv[0].wave === "W-TEST"
+                ? "flagged"
+                : null;
+        })(),
+    },
 ];
 if (selfTests.some((t) => !t.flag)) {
     const missed = selfTests
@@ -600,7 +719,7 @@ console.log(`  visual allowlist      : ${allowlist.size}${allowlist.size ? " (" 
 console.log(`  wave rows parsed      : ${rows.length}`);
 console.log(`  live-verified rows    : ${liveVerified.length}${liveVerified.length ? " (" + liveVerified.map((r) => r.wave).join(", ") + ")" : ""}`);
 console.log(`  complete-on-allowlist : ${completeOnAllowlist.length}${completeOnAllowlist.length ? " (" + completeOnAllowlist.map((r) => r.wave).join(", ") + ")" : ""}`);
-console.log(`  self-test (bite proof): OK — ${selfTests.length} synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch, freshness-stale, R1-viewport-fidelity, R6-gate-status)`);
+console.log(`  self-test (bite proof): OK — ${selfTests.length} synthetic rows flagged (live-verified-no-DELTA, complete-on-allowlist-no-DELTA, filename-mismatch, freshness-stale, R1-viewport-fidelity, R6-gate-status, column-order)`);
 console.log(`  freshness mode        : ${STRICT_FRESHNESS ? "STRICT (header-less own-surface DELTA + non-GREEN-cited-gate REDs)" : "bare (header-less + non-GREEN-cited-gate graced; NOTEd — AY.W-LIVE1 backfill window)"}`);
 console.log(`  freshness notes       : ${freshnessNotes.length}${freshnessNotes.length ? " (header-less own-surface DELTAs, owed AY.W-DELTA0 re-capture)" : ""}`);
 for (const n of freshnessNotes) console.log(`  NOTE  ${n}`);

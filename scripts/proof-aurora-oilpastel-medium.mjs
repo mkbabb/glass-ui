@@ -136,8 +136,15 @@ function run() {
     facts.unionCrayonMedium = /AuroraMedium\s*=[\s\S]*?"crayon"/.test(presets);
     facts.mediumIdOilPastel = /MEDIUM_ID\s*=\s*\{[\s\S]*?"oil-pastel":\s*6/.test(bridge);
     facts.mediumIdCrayon = /MEDIUM_ID\s*=\s*\{[\s\S]*?crayon:\s*4/.test(bridge);
-    // The legacy strokeMode:"crayon" peer-route is REMOVED (clean break).
-    facts.strokeModeCrayonGone = !/StrokeMode\s*=[\s\S]*?"crayon"/.test(presets) && !/strokeMode\s*===\s*"crayon"/.test(bridge);
+    // The legacy strokeMode:"crayon" peer-route is REMOVED (clean break). The
+    // `StrokeMode` union must carry NO "crayon" member — scoped to the type-decl
+    // STATEMENT (`[^;]*?`, stopping at the `;` terminator) so the lazy match cannot
+    // span the whole file forward to an unrelated legitimate `medium: "crayon"`
+    // preset (BB.W-CI-GREEN — the AX.W13 source removal is shipped; the prior
+    // `[\s\S]*?` whole-file span false-RED'd on the `PAPER_WASH_GROUND` `medium:
+    // "crayon"` line; the tighten still BITES a re-added union member, single- or
+    // multi-line, since a union runs to its `;`).
+    facts.strokeModeCrayonGone = !/StrokeMode\s*=[^;]*?"crayon"/.test(presets) && !/strokeMode\s*===\s*"crayon"/.test(bridge);
     if (!facts.unionOilPastel) violations.push("(5) AuroraMedium union does not include \"oil-pastel\"");
     if (!facts.unionCrayonMedium) violations.push("(5) AuroraMedium union does not include first-class \"crayon\"");
     if (!facts.mediumIdOilPastel) violations.push("(5) MEDIUM_ID does not map \"oil-pastel\": 6");

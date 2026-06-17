@@ -71,7 +71,7 @@ All α < 0.92 → colored GLASS, the backdrop shows through. RED at HEAD: `succe
 
 ## The gestalt verdict (inv-4 — the GESTALT bar)
 
-`docs/tranches/BA/audit/visual/feedback-tone/{alert,toast,notification}-{light,dark}.png` — the feedback band captured WHOLE-PAGE, both modes, over its real backdrop.
+`docs/tranches/BA/audit/visual/feedback-tone/{alert,toast,notification}-{light,dark}.png` — the feedback band captured WHOLE-PAGE, both modes, over its real backdrop. Resolved (relative to this `visual/` dir): `feedback-tone/alert-light.png`, `feedback-tone/alert-dark.png`, `feedback-tone/toast-light.png`, `feedback-tone/toast-dark.png`, `feedback-tone/notification-light.png`, `feedback-tone/notification-dark.png`.
 
 **VERDICT: PASS.** The tone reads as COLORED GLASS across all three surfaces in both modes:
 - Alert (light + dark): each tone is a tinted-glass plate — destructive a soft/dark red wash, warning amber, info blue, success green — with a tone-keyed rim + full-chroma glyph, body ink legible. The `default` stays neutral glass. NOT the R8 flat outline-only plate.

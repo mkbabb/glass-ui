@@ -107,22 +107,29 @@ function lenToPx(v) {
 }
 
 // Parse the per-rung `--slider-track-height` / `--slider-thumb-size` CSS vars out
-// of the index.ts size axis (the Tailwind arbitrary `[--slider-track-height:1.25rem]`
-// classes). Returns { sm: {track, thumb}, md: …, lg: … } in px.
-function parseSizeRungs(indexSrc) {
-    const code = stripComments(indexSrc);
-    const m = code.match(/size\s*:\s*\{([\s\S]*?)\}\s*,/);
-    if (!m) return null;
+// of the SHIPPED size axis. BA.W-EMISSION (BA-VJS-A3) moved the geometry OFF the
+// dead index.ts arbitrary-property CVA brackets (`[--slider-track-height:1.25rem]`
+// &c. — they compiled only into a `dist/*.js` chunk no consumer content-scan
+// reaches, so the `size` prop was INERT) INTO the SFC's `[data-size]`-scoped
+// SHIPPED CSS (Slider.vue: `.glass-slider[data-size="md"] { --slider-track-height:
+// 1.25rem; --slider-thumb-size: 1rem; }`), which SHIPS in dist/glass-ui.css. The
+// parse reads the SHIPPED source — the three `[data-size="sm|md|lg"]` scoped
+// rules in the SFC. Returns { sm: {track, thumb}, md: …, lg: … } in px.
+function parseSizeRungs(sfcSrc) {
+    const code = stripComments(sfcSrc);
     const rungs = {};
-    const rowRe = /(sm|md|lg)\s*:\s*'([^']*)'/g;
-    let r;
-    while ((r = rowRe.exec(m[1]))) {
-        const cls = r[2];
-        const track = (cls.match(/--slider-track-height\s*:\s*([^\]]+)\]/) || [])[1];
-        const thumb = (cls.match(/--slider-thumb-size\s*:\s*([^\]]+)\]/) || [])[1];
-        rungs[r[1]] = { track: lenToPx(track), thumb: lenToPx(thumb), trackRaw: track, thumbRaw: thumb };
+    for (const rung of ["sm", "md", "lg"]) {
+        const ruleRe = new RegExp(
+            `\\.glass-slider\\[data-size="${rung}"\\]\\s*\\{([^}]*)\\}`,
+        );
+        const m = code.match(ruleRe);
+        if (!m) continue;
+        const body = m[1];
+        const track = (body.match(/--slider-track-height\s*:\s*([^;]+);/) || [])[1]?.trim();
+        const thumb = (body.match(/--slider-thumb-size\s*:\s*([^;]+);/) || [])[1]?.trim();
+        rungs[rung] = { track: lenToPx(track), thumb: lenToPx(thumb), trackRaw: track, thumbRaw: thumb };
     }
-    return rungs;
+    return Object.keys(rungs).length ? rungs : null;
 }
 
 // Parse the CVA `variant: { … }` keyset out of index.ts.
@@ -370,13 +377,15 @@ function run() {
     // The size rungs still parse (the `--slider-thumb-size` token sizes the
     // spectrum's visible thin thumb + the standard's invisible-thumb value-follow
     // inset / the 44px coarse hit-halo). thumb ≤ track at every rung keeps the
-    // spectrum squircle inscribed in the tall track.
-    const rungs = parseSizeRungs(indexSrc);
+    // spectrum squircle inscribed in the tall track. BA.W-EMISSION: the geometry
+    // moved off the index.ts brackets into the SFC's `[data-size]` scoped CSS, so
+    // the rungs are parsed from Slider.vue (the SHIPPED source), not index.ts.
+    const rungs = parseSizeRungs(sfcSrc);
     facts.sizeRungs = rungs
         ? Object.fromEntries(Object.entries(rungs).map(([k, v]) => [k, { track: v.trackRaw, thumb: v.thumbRaw }]))
         : null;
     if (!rungs) {
-        violations.push("could not parse the `size: { … }` rungs in index.ts (the size axis must thread --slider-track-height / --slider-thumb-size per rung)");
+        violations.push("could not parse the `[data-size]` rungs in Slider.vue (the size axis must thread --slider-track-height / --slider-thumb-size per [data-size] scoped rule)");
     } else {
         for (const [rung, { track, thumb }] of Object.entries(rungs)) {
             if (track == null || thumb == null) {

@@ -11,7 +11,9 @@
 - **surface-hash** (sha256 of the concatenated surface files): `1af0765480f31b17fce52bca137f0441bad2d6196914a402049d3d89970b4b49`
 - **captured-at**: 2026-06-12, `/substrates/blob`, `:5199`, chromium-headless-new, BOTH modes
 - **π spec**: `tests-visual/goo-redress.spec.ts`
-- **frames**: `W-GOO-REDRESS-{bridge,hover}-{light,dark}.png`
+- **frames**: `W-GOO-REDRESS-{bridge,hover}-{light,dark}.png` — resolved (this dir):
+  `W-GOO-REDRESS-bridge-light.png`, `W-GOO-REDRESS-bridge-dark.png`,
+  `W-GOO-REDRESS-hover-light.png`, `W-GOO-REDRESS-hover-dark.png`.
 
 ## Arm decision (scope 6 / BA-VJS-5 / C-1)
 

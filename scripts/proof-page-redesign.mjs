@@ -233,6 +233,13 @@ export function detect() {
         // blob: the contained-creature supersession (W-BLOB-REBUILD) — its page
         // presents over paper; the creature mounts contained, never a field.
         if (m[1] === "blob") continue;
+        // fourier-studio: the FOREGROUND studio (BA.W-FOURIER-STUDIO, the
+        // aurora-studio idiom) — a Configurator over its OWN Canvas2D stage, so the
+        // stage IS the live context and the route declares a CALM paper background
+        // (a live fourier/aurora field would double the per-route context). It is
+        // studio CHROME, not a render-background substrate page — the same exempt
+        // class as glass-material/blob (demos over paper, never self-demos a field).
+        if (m[1] === "fourier-studio") continue;
         assert(
             `substrates/${m[1]} self-demos its own substrate (${own})`,
             kind === own,
