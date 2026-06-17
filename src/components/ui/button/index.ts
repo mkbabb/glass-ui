@@ -31,8 +31,17 @@ export const buttonVariants = cva(
         // AX.W54 — GLASS is the DEFAULT surface register: a bare <Button> paints
         // liquid glass (resolves the same recipe as the `glass` variant below).
         // The opaque primary-fill is no longer the default — reach for `solid`.
+        // BB.W-BUTTON-GLASS (a) — the hover/active fills re-point off the RAW
+        // `--glass-bg-resting`/`--glass-bg-floating` rung tokens onto the ELEMENT-LEVEL
+        // oklab-TINTED pair (`--glass-bg-*-tinted`, surfaces.css), which wraps each rung
+        // in the SAME `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)`
+        // seam the REST bg `.glass-wash` composes. So the W55 adaptive darken + the
+        // `contrast-color()` flip + the content-tier floor reach the LIT surface too —
+        // the lit button stays AA over a bright backdrop (the substitution-vs-inheritance
+        // trap closed on the button register). The `aria-pressed` toggle fill re-points
+        // onto the tinted base too (the pressed register stays legible over bright).
         default:
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
         // AX.W54 — `solid` is the opaque escape: the previous default's primary-fill
         // recipe, named so consumers can still get the solid bg-primary look.
         solid:
@@ -46,8 +55,9 @@ export const buttonVariants = cva(
         // kept + re-pointed so every `variant="primary-audacious"` call site inherits
         // the calm register with no rename. Distinguished from bare `default`/`glass`
         // by the `--scale-hover-btn` lift (it reads as a deliberate primary CTA).
+        // BB.W-BUTTON-GLASS (a) — same oklab-tinted hover/active re-point as `default`.
         'primary-audacious':
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         // BA.W-GLASS-CAL (H2a) — `gold-audacious` keeps the STATIC warm-gold tint (the
         // at-rest 8%-gold linear-gradient wash over the glass surface, the AW.W13
         // rest-text contract: rest text is the warm-ink `--foreground`) + the
@@ -76,8 +86,9 @@ export const buttonVariants = cva(
         // onto `--glass-blur-btn` (the real 10px quiet-tier glass blur), so the
         // glass button variants actually READ as liquid glass (live readback found
         // them at a negligible blur(1px)). The wash TILE tier keeps its 1px.
+        // BB.W-BUTTON-GLASS (a) — same oklab-tinted hover/active re-point as `default`.
         glass:
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
         'glass-wash':
           'glass-wash btn-glass text-foreground/70 hover:bg-foreground/[0.04] hover:border-(--surface-tint-22) hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',

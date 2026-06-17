@@ -9,6 +9,8 @@ import {
     CardContent,
     CardFooter,
     CardAction,
+    ScrollCard,
+    ScrollCardHeader,
     type CardTier,
 } from "../../../src/components/ui/card";
 import { Button } from "../../../src/components/ui/button";
@@ -484,6 +486,53 @@ const veilFeather = ref(false);
                     </p>
                 </CardContent>
             </Card>
+        </section>
+
+        <!-- ScrollCard — the first-class scroll-shrink card family. -->
+        <section class="flex flex-col gap-4" data-testid="scroll-card-section">
+            <header class="flex flex-col gap-1">
+                <h2 class="text-subheading">recipe — &lt;ScrollCard&gt; family</h2>
+                <p class="text-sm text-muted-foreground">
+                    <code class="font-mono text-xs">&lt;ScrollCard&gt;</code> owns the
+                    <code class="font-mono text-xs">.card-scroll-host</code> scroll-port
+                    + the <code class="font-mono text-xs">--card-scroll</code> timeline
+                    internally, and
+                    <code class="font-mono text-xs">&lt;ScrollCardHeader&gt;</code> is
+                    the LARGER-header-items hero-rung header that shrinks on scroll via
+                    the SAME compositor-safe lanes — ZERO consumer rAF/scroll-listener.
+                    The header background lifts transparent → painted as it sticks.
+                </p>
+            </header>
+
+            <ScrollCard
+                max-height="18rem"
+                data-testid="scroll-card-host"
+            >
+                <ScrollCardHeader data-testid="scroll-card-header">
+                    <CardTitle
+                        class="font-semibold"
+                        data-testid="scroll-card-title"
+                    >
+                        Larger header, shrinks on scroll
+                    </CardTitle>
+                    <CardDescription data-testid="scroll-card-desc">
+                        The hero-rung title shrinks in place as the card scrolls; the
+                        description retires faster. First-class, no hand-rolled host.
+                    </CardDescription>
+                </ScrollCardHeader>
+                <CardContent class="flex flex-col gap-3 text-sm">
+                    <p
+                        v-for="row in longList"
+                        :key="row.id"
+                        class="flex items-baseline justify-between gap-4 border-b border-border/40 pb-3 last:border-0"
+                    >
+                        <span class="font-mono text-xs text-muted-foreground">
+                            #{{ row.id.toString().padStart(2, "0") }}
+                        </span>
+                        <span class="flex-1">{{ row.title }}</span>
+                    </p>
+                </CardContent>
+            </ScrollCard>
         </section>
 
         <!-- CardAction — the shadcn-2025 top-right header action slot. -->

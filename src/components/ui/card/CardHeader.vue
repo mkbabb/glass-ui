@@ -27,6 +27,17 @@ import { cn } from '../../../utils'
  *      `transform: scaleY(1 → 0)` (origin: top) so the slot visually retires
  *      upward; the real-estate reclaim is the composited scaleY, NOT a
  *      `grid-template-rows` relayout.
+ *   4. Header background lift (0..120px — BB.W-SCROLL-CARD) — a `::before`
+ *      BACKPLATE carrying the `--card-header-bg` tint fades `opacity: 0 → 1`
+ *      on the same timeline, so a stuck header reads transparent over the
+ *      body at scroll-top and lifts to the painted tint as it sticks. The
+ *      opacity channel keeps the lift compositor-safe.
+ *
+ * BB.W-SCROLL-CARD — the two text lanes (2 + 3) re-target via `:slotted()`
+ * (the precise Vue scoped-CSS slotted-content selector, the MetricRow.vue
+ * idiom) so they MATCH a consumer-SLOTTED <CardTitle>/<CardDescription>; the
+ * prior `:deep()` enabler was the W-CARD-COMPOSITE minimal stopgap, replaced
+ * here by the precise tool (no descendant-leak sledgehammer).
  *
  * The choreography ORIGINALLY migrated verbatim from value.js's
  * `PaneHeader.vue`, which animated LAYOUT properties (padding/font-size/
@@ -43,9 +54,10 @@ import { cn } from '../../../utils'
  * scroll wrapper). Without that host the named timeline never emits and
  * the choreography sits idle. Documented in DESIGN.md `## Card` section.
  *
- * Sticky positioning + background tint stay consumer-side (the consumer
- * adds `class="sticky top-0 backdrop-blur-md"` etc. via `props.class`);
- * `--card-header-bg` is the canonical tint token for that backdrop.
+ * Sticky positioning stays consumer-side (the consumer adds
+ * `class="sticky top-0 backdrop-blur-md"` etc. via `props.class`); the
+ * background TINT is now scroll-driven by lane 4 (the `::before` backplate),
+ * reading `--card-header-bg` as the canonical tint token.
  */
 const props = defineProps<{
   /**
@@ -119,25 +131,55 @@ const props = defineProps<{
    font-size animation. */
 .card-header--shrink {
   --card-title-shrink-ratio: 0.695;
+  /* BB.W-SCROLL-CARD lane 4 (A4) — the header background is a scroll-driven
+     LIFT, not a static tint. A `::before` BACKPLATE carries the
+     `--card-header-bg` tint and fades `opacity: 0 → 1` on the same
+     `--card-scroll` timeline, so a stuck header reads transparent over the
+     body at scroll-top and lifts to the painted tint as it sticks (the
+     standard sticky-header affordance). The `opacity` channel is
+     compositor-safe — a scroll-driven `background-color` keyframe would be a
+     (cheaper-but-still) PAINT lane, so the opacity-on-a-backplate form is the
+     preferred compositor channel. The backplate is `position: absolute`
+     behind the slotted content (z-index 0; the slot sits above at the default
+     stacking), so it never occludes the title/description. */
+  position: relative;
+}
+
+.card-header--shrink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: var(--card-header-bg);
+  opacity: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* The slotted content sits ABOVE the scroll-driven backplate. */
+.card-header--shrink > :slotted(*) {
+  position: relative;
+  z-index: 1;
 }
 
 /* Lane 3 base: the description is a transform-collapsible block. transform-
    origin: top so the scaleY collapse retires it UPWARD (toward the title),
    not toward its own center.
 
-   :deep() is LOAD-BEARING on the descendant lanes (lane 2 title + lane 3
+   :slotted() is LOAD-BEARING on the descendant lanes (lane 2 title + lane 3
    description): <CardTitle>/<CardDescription> are SLOTTED children from
    sibling SFCs, so they do NOT carry CardHeader's `data-v-…` scope hash;
    a plain `.card-header--shrink > [data-slot="card-title"]` scoped selector
    rewrites to require that hash on the child and NEVER matches a slotted
-   title (the 2-of-3-lanes-dead defect). `:deep()` drops the descendant
-   scope-attr requirement so the lanes reach the real slotted content. This
-   is the minimal enabler the W-CARD-COMPOSITE lanes 2+3 require; the broader
-   consumer-slot-match work (the scroll-driven header background, the
-   <ScrollCard>/<ScrollCardHeader> family) is W-SCROLL-CARD's scope, riding
-   ON the compositor-safe keyframes minted here. */
-.card-header--shrink > :deep([data-slot="card-description"]) {
+   title (the 2-of-3-lanes-dead defect, the value.js PaneHeader lineage trap).
+   `:slotted()` is the PRECISE Vue scoped-CSS slotted-content selector (the
+   exact idiom MetricRow.vue:284-285 already speaks) — it re-targets the
+   choreography at content this component's parent passed into the `<slot/>`,
+   without the `:deep()` sledgehammer that would leak the lanes into UNRELATED
+   nested cards. This is the W-SCROLL-CARD scoped-slot fix (W4): the dead
+   title/description lanes now MATCH the consumer-slotted CardTitle/
+   CardDescription, so the choreography animates for the real consumer case. */
+.card-header--shrink > :slotted([data-slot="card-description"]) {
   transform-origin: top;
   will-change: transform, opacity;
 }
@@ -154,11 +196,22 @@ const props = defineProps<{
       transform-origin: top;
     }
 
+    /* Lane 4 — the scroll-driven header background LIFT. The backplate fades
+       in (opacity 0 → 1) on the same --card-scroll timeline so the stuck
+       header lifts from transparent to the painted --card-header-bg tint.
+       opacity is the compositor-safe channel (the box's own background is
+       never animated). */
+    .card-header--shrink::before {
+      animation: card-header-bg-lift linear both;
+      animation-timeline: --card-scroll;
+      animation-range: 0px 120px;
+    }
+
     /* Lane 2 — title shrink-in-place. transform: scale() down to the pinned
        ratio with the leading edge anchored, so the glyph visually shrinks
        toward --type-prose; the text run lays out ONCE at --type-heading.
-       :deep() reaches the slotted <CardTitle> (see the lane-3 base note). */
-    .card-header--shrink > :deep([data-slot="card-title"]) {
+       :slotted() reaches the slotted <CardTitle> (see the lane-3 base note). */
+    .card-header--shrink > :slotted([data-slot="card-title"]) {
       animation: card-title-shrink linear both;
       animation-timeline: --card-scroll;
       animation-range: 0px 120px;
@@ -167,7 +220,7 @@ const props = defineProps<{
 
     /* Lane 3 — description retire. opacity fade + scaleY collapse (origin
        top), the real-estate reclaim composited, not a grid-track relayout. */
-    .card-header--shrink > :deep([data-slot="card-description"]) {
+    .card-header--shrink > :slotted([data-slot="card-description"]) {
       animation: card-desc-shrink linear both;
       animation-timeline: --card-scroll;
       animation-range: 0px 80px;
@@ -179,6 +232,15 @@ const props = defineProps<{
       }
       to {
         transform: translateY(-0.5rem);
+      }
+    }
+
+    @keyframes card-header-bg-lift {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
       }
     }
 

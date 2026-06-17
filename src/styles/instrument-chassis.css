@@ -72,6 +72,28 @@
         --phase-color: var(--muted-foreground);
         --phase-color-label: var(--muted-foreground);
 
+        /* BB.W-PHASE-PALETTE (N18) — the `complete` phase ink is a CONSUMER
+           token, not a hardcoded brand metal. The four active phases
+           (ping/download/upload/jitter) already read a consumer-registerable
+           `--chart-{phase}` with a library `--viz-*` fallback (the bus carries
+           phase IDENTITY); `complete` was the one arm that pinned the gold
+           directly, so every completion gilded itself the moment the phase
+           flipped. `--phase-complete-color` (+ its WCAG-twin
+           `--phase-complete-color-label`) DEFAULT to the same gold the arm
+           hardcoded — an un-overriding consumer paints byte-identical gold (the
+           back-compat floor) — but a consumer (or any ancestor) overrides EITHER
+           on its host/preset to re-ink completion (its phase spectrum, an aurora
+           register, …), so gold is EARNED (the dock CTA + personal-best
+           garnish), never the chassis default leaking onto every completion.
+           The default lives at the chassis root (NOT :root/tokens.css) because
+           it is a chassis-phase register, scoped to the surface owning the bus —
+           the same home `--phase-color`'s idle default occupies above. It reads
+           `var(--color-gold)` / `var(--color-gold-dark)` (the existing mode-
+           resolved tokens, unedited), so it inherits the SAME .dark / light-dark
+           resolution the hardcoded form did. */
+        --phase-complete-color: var(--color-gold);
+        --phase-complete-color-label: var(--color-gold-dark, var(--color-gold));
+
         /* AV.W16 TW3 — inline-size container named `chassis` so the dial reflow
            below reads the chassis's OWN box, not the viewport (portable into a
            narrow host). */
@@ -153,7 +175,10 @@
        AND the structural twin-line grooves re-point from the warm-cream
        `--surface-tint-*` default onto the `--silver` quad (gold's cool mirror).
        The chassis reads as an INDUSTRIAL precision-instrument panel — the
-       cool-metal twin of the warm-gold "complete"-phase affirmation.
+       cool-metal twin of the warm-gold "complete"-phase affirmation the chassis
+       ships BY DEFAULT (the `--phase-complete-color` consumer token's gold
+       default; BB.W-PHASE-PALETTE — a consumer may re-ink completion, but the
+       silver register's narration is of the warm-gold completion default).
 
        The phase cascade (`[data-phase="…"]`) stays ORTHOGONAL — a `structure`
        chassis still retints its phase fills on `data-phase`; only the
@@ -220,8 +245,15 @@
         --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="complete"] {
-        --phase-color: var(--color-gold);
-        --phase-color-label: var(--color-gold-dark, var(--color-gold));
+        /* BB.W-PHASE-PALETTE — demoted onto the `--phase-complete-color`
+           consumer seam (the exact `var(--chart-{phase}, …)` idiom the four
+           active arms above run). The arm reads ONLY the consumer token; the
+           gold lives in the token's DEFAULT at the chassis root, not as a
+           hardcoded ink here (a clean break with a back-compat default, NOT a
+           back-compat alias — no `--color-gold` dual-read survives). The warmth
+           ramp stays: `--phase-tint-amount` is orthogonal to the ink choice. */
+        --phase-color: var(--phase-complete-color);
+        --phase-color-label: var(--phase-complete-color-label);
         --phase-tint-amount: var(--phase-tint-peak);
     }
 

@@ -152,6 +152,13 @@
     --glass-specular-intensity-rest: 0;
     --glass-specular-intensity-hover: 0.1;
     --glass-specular-intensity-active: 0.16;
+    /* BB.W-BUTTON-GLASS (d) — the BUTTON-SCOPED hover gleam bump. The lit glass
+       button should read a notch brighter at the grazing edge than the global
+       hover whisper (0.10). `.btn-glass` re-points its own
+       `--glass-specular-intensity-hover` to this knob (surfaces.css), so ONLY the
+       button lifts — the global cohort above is UNTOUCHED. A consumer retints the
+       button gleam from this ONE override. */
+    --glass-specular-btn-hover: 0.14;
 }
 
 /* Over the deep canvas `plus-lighter` still lifts, so the dark arm runs a touch
@@ -159,4 +166,23 @@
 .dark {
     --glass-specular-intensity-hover: 0.08;
     --glass-specular-intensity-active: 0.12;
+    /* The button bump rides a touch softer in dark too (the dark hover is 0.08;
+       the button reads ~0.11, still a notch above the global whisper). */
+    --glass-specular-btn-hover: 0.11;
+}
+
+/* BB.W-BUTTON-GLASS (b)/(e) — the press DRIVE scalar. ONE typed 0..1 custom
+   property Button.vue writes off the `useSpringPress` spring (0 released → 1
+   pressed, with the ~5% overshoot the spring carries). It is the SINGLE drive the
+   press SQUISH (the `useLiquidFlex` reciprocal X/Y deform), the coupled specular/
+   brightness lift, and the optional `.glass-refract` lens-swell all read — the "one
+   drive, the glass deforms under press" read. Registered typed so a `transition`/
+   downstream `calc()` interpolates the VALUE (number), not the text. `inherits:
+   true` so the host-written value reaches the `.glass-material::before` pseudo +
+   the coupled rules. `initial-value: 0` so an unwired/SSR button is the static
+   rest frame (the no-JS CSS `.tap-squish` scale floor still presses). */
+@property --glass-btn-press-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
 }

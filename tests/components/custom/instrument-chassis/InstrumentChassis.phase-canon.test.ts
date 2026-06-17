@@ -110,9 +110,15 @@ describe("InstrumentChassis phase-cascade canon", () => {
         );
     });
 
-    it("`complete` resolves to `--color-gold` (brand-canon directly, not a `--chart-*` alias)", () => {
+    it("`complete` resolves through the `--phase-complete-color` consumer token (BB.W-PHASE-PALETTE — demoted off the direct `--color-gold` bake, NOT a `--chart-*` alias)", () => {
+        // The complete phase reads the overridable consumer token …
         const completeRegex =
-            /\[data-phase="complete"\][\s\S]*?--phase-color:\s*var\(--color-gold\)/;
+            /\[data-phase="complete"\][\s\S]*?--phase-color:\s*var\(--phase-complete-color\)/;
         expect(cssSource).toMatch(completeRegex);
+        // … and that token DEFAULTS to the brand-canon gold (no --chart-* alias,
+        // no back-compat --color-gold dual-read in the phase arm).
+        expect(cssSource).toMatch(
+            /--phase-complete-color:\s*var\(--color-gold\)/,
+        );
     });
 });

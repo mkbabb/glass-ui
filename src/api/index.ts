@@ -100,6 +100,10 @@ export type {
 // `tier` prop against; `CardSurface` is the orthogonal decoration register
 // (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
+// BB.W-SCROLL-CARD — the first-class scroll-shrink card family prop types. A
+// consumer types `<ScrollCard :max-height>` / `<ScrollCardHeader :sticky>`
+// against these; the family ships in the same `card` chunk + `/card` subpath.
+export type { ScrollCardProps, ScrollCardHeaderProps } from "../components/ui/card";
 // `Surface` is the SHARED {glass·veil·opaque} surface-decoration axis
 // (BA.W-SURFACE-AXIS) — the ONE three-rung register every content/floating
 // surface (Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/Expandable/

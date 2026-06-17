@@ -181,6 +181,94 @@
        dedup-and-keep-prefixed, which modern Chromium then drops). */
     .btn-glass {
         backdrop-filter: var(--glass-blur-btn);
+
+        /* BB.W-BUTTON-GLASS (d) — the button-scoped DEPTH stack + the hover-specular
+           bump. The glass button was the flattest wash rung (a bare backdrop-filter,
+           no rim, no under-shadow) — it read as a tinted rectangle, not a lifted
+           glass lozenge. The `--glass-btn-*` knobs compose ALREADY-MINTED tokens (the
+           `--glass-edge-light` rim + the `quiet`/`resting`-tier `--glass-under-shadow-*`
+           drop) so a consumer retints the whole button depth from ONE override; NO new
+           compositing axis. The rim+under-shadow lifts the lozenge; the box-shadow is
+           additive over the variant's own focus/press shadow legs (the `.btn-pill`
+           transition carries box-shadow on the §6 bezier, so the depth cross-fades
+           coherently). */
+        --glass-btn-rim: var(--glass-edge-light);
+        --glass-btn-under-shadow: var(--glass-under-shadow-quiet);
+        --glass-btn-under-shadow-hover: var(--glass-under-shadow-default);
+        box-shadow: var(--glass-btn-rim), var(--glass-btn-under-shadow);
+        /* The button-scoped hover gleam bump (0.10 → ~0.14): a hovered glass button
+           reads a notch brighter at the grazing edge than the global hover whisper.
+           Token-scoped to `.btn-glass` (NOT the global `:root` cohort property-regs.css
+           owns) so only the button lifts. The active/rest rungs ride the global cohort
+           (the press whisper + the dormant rest). */
+        --glass-specular-intensity-hover: var(--glass-specular-btn-hover);
+    }
+
+    /* The depth deepens one rung on hover (the lifted-lozenge read) — additive over
+       the variant's own hover surface legs. The variants paint the bg/border on
+       hover; this adds the deeper drop. */
+    .btn-glass:hover:not(:disabled, [data-disabled]) {
+        box-shadow: var(--glass-btn-rim), var(--glass-btn-under-shadow-hover);
+    }
+
+    /* BB.W-BUTTON-GLASS (a) — the ELEMENT-LEVEL oklab-tinted hover/active fill pair
+       (the substitution-vs-inheritance trap fixed on the button register). The glass
+       button variants painted `hover:bg-(--glass-bg-resting) active:bg-(--glass-bg-
+       floating)` — the RAW `:root` rung tokens, which carry NO `color-mix(in oklab, …,
+       --glass-tint-source --glass-tint-strength)` wrapper. So the W55 adaptive darken
+       + the `contrast-color()` ink flip + the content-tier floor (all of which the REST
+       bg `.glass-wash` composes via the element-level oklab seam) DROPPED the moment the
+       pointer landed — "more glass would cost legibility" exactly inverted from the
+       iOS-27 ask. These two tokens wrap the raw rungs in the SAME element-level oklab
+       seam `ladder.css` composes for the rest bg + `--glass-bg-dock` for the dock — ZERO
+       new compositing axis, the literal darken-over-light recipe reached at the lit
+       fill. ZERO-delta at the `--glass-tint-strength: 0%`/floor default (the mix toward
+       the source is 0%); under the declared/sampled bright bucket the lit fill darkens
+       to AA in lockstep with the rest bg. The `:root` raw `--glass-bg-*` tokens are
+       UNTOUCHED (other surfaces compose them at the element correctly — the raw token +
+       the element-level oklab wrapper is the correct ladder shape). */
+    .btn-glass {
+        --glass-bg-resting-tinted: color-mix(
+            in oklab,
+            var(--glass-bg-resting),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+        --glass-bg-floating-tinted: color-mix(
+            in oklab,
+            var(--glass-bg-floating),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+    }
+
+    /* BB.W-BUTTON-GLASS (e) — the optional refraction-edge opt-in. CONSUMES the
+       EXISTING `.glass-refract` axis (glass-refract.css, the AW.W23 `#glass-refract`
+       SVG-filter convex-lens, `@supports (backdrop-filter: url(#…))`-gated with the
+       un-gated blur base as the off-Chromium floor) — NEVER a button-local lens fork.
+       §0 RE-GROUND DRIFT: the spec named a W-LENSING `.glass-lens` / `--press-t` axis
+       that has NOT landed at HEAD; the HEAD refractive axis is `.glass-refract` + the
+       `--glass-refract-filter` it bakes, so this wave consumes THAT one axis.
+
+       A `<Button :liquid>` adds `.glass-refract` to the host; on a supporting engine
+       the button reads the edge-bend over its blur base. The base recipe (the
+       `@supports`-gated `.glass-refract` rule in glass-refract.css) already paints the
+       displacement filter over `--glass-blur-resting`; this block adds NOTHING to the
+       filter graph (it would fork the axis) — the button merely COMPOSES `.glass-refract`.
+
+       The `:active` LENS-SWELL is the CHEAP coupled read, NOT a per-frame displacement-
+       map re-rasterize (the §Triumvirate / R2 budget: `feDisplacementMap` is resize-
+       expensive — only the `scale` attr animates without rebuilding the map, and even
+       that re-rasterizes; the one-refractive-element-per-route budget forbids the per-
+       frame cost). The swell is the press SQUISH (Button.vue, the `useLiquidFlex`
+       reciprocal X/Y deform) + the coupled `--glass-specular-intensity-active` gleam
+       lift on the SAME `--glass-btn-press-t` drive — the glass reads as DEFORMING under
+       the press without re-rasterizing the lens map. Off-Chromium the whole arm degrades
+       to the un-gated `.btn-glass` blur+tint base (the no-workaround floor). The
+       `--glass-btn-press-t` typed drive (property-regs.css) is the ONE press scalar the
+       squish + the gleam coupling both read. */
+    .btn-glass.glass-refract {
+        /* The press drive scalar (0 rest → 1 pressed) Button.vue writes off the spring;
+           the resting default is 0 so an unwired refraction button is the static lens. */
+        --glass-btn-press-t: 0;
     }
 
     /* ── Pill input ───────────────────────────────── */

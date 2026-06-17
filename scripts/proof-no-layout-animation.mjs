@@ -212,6 +212,32 @@ const violations = [];
 const allowedHits = [];
 let keyframesScanned = 0;
 
+// ── W4 (BB.W-SCROLL-CARD) — the scoped-slot source-companion clause. The
+//    CardHeader shrink choreography reaches the consumer-SLOTTED <CardTitle>/
+//    <CardDescription> via `:slotted()` (the precise Vue scoped-CSS slotted-
+//    content selector, the MetricRow.vue idiom) — NOT the bare
+//    `.card-header--shrink > [data-slot="card-title"]` direct-child form (which
+//    rewrites to require CardHeader's `data-v-…` scope hash on a child it never
+//    carries — the 2-of-3-lanes-dead defect) and NOT the `:deep()` sledgehammer
+//    (which leaks the choreography into UNRELATED nested cards). The COMMENT-
+//    STRIPPED CardHeader <style> must (a) use `:slotted(` on the title/desc
+//    lanes AND (b) carry ZERO bare-direct-child `> [data-slot]` selector AND
+//    (c) carry ZERO `:deep([data-slot]` selector. ──
+const cardHeaderFile = resolve(ROOT, "src/components/ui/card/CardHeader.vue");
+let slottedSourceOk = false;
+let slottedFacts = { usesSlotted: false, noBareDirectChild: false, noDeepDataSlot: false };
+if (existsSync(cardHeaderFile)) {
+    const chRaw = readFileSync(cardHeaderFile, "utf8");
+    const chStyle = strip(styleBodyOf(cardHeaderFile, chRaw));
+    const usesSlotted = /:slotted\(\s*\[data-slot="card-(title|description)"\]\s*\)/.test(chStyle);
+    // the bare direct-child form on a data-slot child (the dead-lane defect)
+    const noBareDirectChild = !/--shrink\s*>\s*\[data-slot=/.test(chStyle);
+    // the :deep() sledgehammer on a data-slot child (the W-CARD-COMPOSITE stopgap, now retired)
+    const noDeepDataSlot = !/:deep\(\s*\[data-slot=/.test(chStyle);
+    slottedFacts = { usesSlotted, noBareDirectChild, noDeepDataSlot };
+    slottedSourceOk = usesSlotted && noBareDirectChild && noDeepDataSlot;
+}
+
 for (const file of corpusFiles) {
     const raw = readFileSync(file, "utf8");
     const source = strip(styleBodyOf(file, raw));
@@ -256,6 +282,21 @@ for (const kf of parseKeyframes("self-test", SELF_TEST_SOURCE)) {
 const selfTestBites =
     selfHits.size === 1 && selfHits.has("__self_test_padding_anim__/padding-top");
 
+// ── W4 self-test bite (anti-evasion): the scoped-slot detector MUST flag a
+//    bare-direct-child selector AND a :deep([data-slot]) selector, and PASS a
+//    `:slotted([data-slot])` one — the reflow-vs-precise-idiom partition for the
+//    scoped-slot fix is exact (a re-introduced > [data-slot] / :deep([data-slot])
+//    reds; the :slotted() form greens). ──
+const slottedReGood = `.card-header--shrink > :slotted([data-slot="card-title"]) { animation: x; }`;
+const slottedReBareBad = `.card-header--shrink > [data-slot="card-title"] { animation: x; }`;
+const slottedReDeepBad = `.card-header--shrink > :deep([data-slot="card-title"]) { animation: x; }`;
+const slottedBiteOk =
+    /:slotted\(\s*\[data-slot="card-(title|description)"\]\s*\)/.test(slottedReGood) &&
+    !/--shrink\s*>\s*\[data-slot=/.test(slottedReGood) &&
+    !/:deep\(\s*\[data-slot=/.test(slottedReGood) &&
+    /--shrink\s*>\s*\[data-slot=/.test(slottedReBareBad) &&
+    /:deep\(\s*\[data-slot=/.test(slottedReDeepBad);
+
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
 
@@ -282,6 +323,20 @@ add(
         .map((a) => `${a.keyframe}/${a.property}`)
         .join(", ") || "none"}`,
 );
+add(
+    "W4-slotted-source-assert",
+    slottedSourceOk,
+    slottedSourceOk
+        ? "CardHeader shrink lanes re-target the slotted title/description via :slotted() — the bare > [data-slot] direct-child form AND the :deep([data-slot]) sledgehammer are GONE (the scoped-slot defect fixed, the precise Vue idiom)"
+        : `CardHeader scoped-slot assert FAILED: ${JSON.stringify(slottedFacts)} (need usesSlotted=true, noBareDirectChild=true, noDeepDataSlot=true)`,
+);
+add(
+    "W4-slotted-self-test-bite",
+    slottedBiteOk,
+    slottedBiteOk
+        ? "the scoped-slot detector flags a bare > [data-slot] AND a :deep([data-slot]) selector, and passes a :slotted([data-slot]) one — the precise-idiom partition bites"
+        : "scoped-slot self-test partition broke (the :slotted/bare/deep detector mis-classified the synthetic selectors)",
+);
 
 const failed = checks.filter((c) => !c.pass);
 const pass = failed.length === 0;
@@ -297,6 +352,7 @@ writeGateArtifact(ARTIFACT, {
     filesScanned: corpusFiles.length,
     violations,
     allowlisted: allowedHits,
+    slottedSource: slottedFacts,
     checks: checks.map((c) => ({ id: c.id, pass: c.pass, detail: c.detail })),
 });
 

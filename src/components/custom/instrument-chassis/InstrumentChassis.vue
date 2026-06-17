@@ -35,7 +35,9 @@ export type InstrumentChassisPhase =
  *   the structural grooves re-point to the `--silver` quad (the gold quad's
  *   cool mirror) instead of the warm-cream `--surface-tint-*` default, so the
  *   chassis reads as an INDUSTRIAL precision-instrument housing — the cool-metal
- *   twin of the gold "complete"-phase affirmation. The phase cascade stays
+ *   twin of the warm-gold "complete"-phase affirmation the chassis ships by
+ *   DEFAULT (the `--phase-complete-color` consumer token defaults to gold;
+ *   BB.W-PHASE-PALETTE — a consumer may re-ink completion). The phase cascade stays
  *   orthogonal (a `structure` chassis still retints on `data-phase`); only the
  *   structure-metal recipe forks. The silver is the W-NO-GRAY named cool-neutral
  *   exception. Consumer #2 of the silver quad (the atlas's structure surface is
