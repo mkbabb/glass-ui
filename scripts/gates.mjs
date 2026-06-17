@@ -14,11 +14,11 @@
 //
 // So local == ci == release is STRUCTURAL, not coincidental.
 
-import { execSync } from "node:child_process";
+import { execSync, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { argv } from "node:process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { ROOT } from "./constellation.mjs";
 
 /**
@@ -41,6 +41,23 @@ import { ROOT } from "./constellation.mjs";
  * captured on-disk DELTA (.png + π readback) — that ledger is the CI-side proof
  * the live-verification HAPPENED. This is alignment with the cardinal lesson, not
  * a weakening of it.
+ *
+ * THE `--run pi` VISUAL-π RUNNER (BB.W-VISUAL-RUNNER). The ~22-gate subset above
+ * is NOT the whole binding-π suite: the workspace carries ~79 non-private
+ * `tests-visual/*.spec.ts` (every BA-wave readback — surface-axis, menu-glass,
+ * dark-material, glass-cal, feedback-tone, no-gray, …), of which the other ~57 ran
+ * NOWHERE automated. `node scripts/gates.mjs --run pi` (the `gates:pi` npm script)
+ * is the ONE command that spawns the FULL ENROLLED set — the non-private glob MINUS
+ * the declared EXCLUDE allowlist (`tests-visual/pi-runner-manifest.mjs`,
+ * computed-from-disk, no hand-list) — over BOTH Playwright projects
+ * (chromium-headless-new desktop + coarse-touch mobile) against the `:5199` demo
+ * origin the config defaults, served-app-sentinel fail-closed. `--run pi` is a
+ * spec-runner MODE (not a gate-tag aggregate): it is `local`-tagged ONLY (a real
+ * browser + demo + GPU), the same carve-out as the live-π gates. The split is the
+ * cardinal-lesson architecture: CI proves the suite is ENROLLED + the runner is
+ * invokable (the headless `proof:visual-runner` `ci` arm — every committed
+ * non-private spec is enrolled-or-excluded-with-rationale, the orphan-class fix);
+ * the LOCAL real-device `--run pi` GREEN proves the PIXELS painted (the close-leg).
  */
 export const GATES = [
     { id: "typecheck", cmd: "typecheck", tags: ["local", "ci", "release"] },
@@ -1261,10 +1278,16 @@ export const GATES = [
         note: "AZ.W-GATES — the gate-manifest soundness meta-gate (9 clauses + clean-tree): well-formed id/cmd rows, the parity pre-pass, the NON-:5199 live-demo-URL default sweep (BA.W-GESTALT-GATE WIDENED clause 4 off the :5173-only regex to flag ANY non-:5199 live-demo-URL default — the three :5175 dock-gate defaults the AZ sweep missed, CHR-1), the content-hash freshness model, the :az ledger arm. Device-free; promoted to ci at the AZ close. Bite: re-add a cmd-less row or any non-:5199 live-demo-URL default → RED.",
     },
     {
+        id: "proof:visual-runner",
+        cmd: "proof:visual-runner",
+        tags: ["local", "ci"],
+        note: "BB.W-VISUAL-RUNNER — the visual-π ENROLLMENT-SOUNDNESS gate (the headless CI half of the cardinal-lesson architecture, the proof:live-verified-ledger precedent). PURE source/enrollment census — it reads files + the pi-runner-manifest, it NEVER paints a pixel (a GPU-less CI runner cannot render the WebGL2 shaders), so it is a genuine static src-scan gate carrying `ci` (proof:tag-parity classifies it ci-owed; the `--run pi` spawn lives in the gates.mjs RUNNER MODE, never in this gate). FOUR arms: W1 the `gates.mjs --run pi` mode exists (the dispatch case + runPi() + both projects [chromium-headless-new, coarse-touch] + the :5199 config default + the served-app-sentinel fail-closed); W2 every committed non-private `*.spec.ts` is ENROLLED or on the EXCLUDE allowlist with a rationale, COMPUTED-from-disk (no hand-list — the orphan self-test bite reds a synthetic unenrolled spec; a literal enrolled-spec array reds); W3 the `gates:pi` script binds `--run pi` + proof:visual-runner self-registers (+ the ci-tag membership asserted by proof:tag-parity); W4 the LOCAL real-device `--run pi` GREEN + the per-orphan verdict ledger — BORN-RED by design (the suite ran nowhere; the binding paint runs on a real GPU at the W-REFLECT3 (Batch 7) close, NOT in this ci run), reported in facts, NOT a ci-failing violation. So CI proves ENROLLMENT; the local close proves the PAINT. Bite: drop a committed spec off both the enrolled set + the EXCLUDE allowlist → RED; re-hand-list the enrollment → RED; remove the `--run pi` mode → RED.",
+    },
+    {
         id: "proof:ba-gestalt",
         cmd: "proof:ba-gestalt",
         tags: ["release"],
-        note: "BA.W-GESTALT-GATE — the holistic per-surface acceptance gate (the P-1 close-class fix). PROMOTED to the operative close set by BA.W-REFLECT2 (off the born-RED no-tag isolation onto [\"release\"], mirroring the proof:az-reflect/proof:az-final precedent — release-only, NOT ci, so it gates W-CLOSE's full battery + release.sh without breaking per-push CI mid-tranche). The gestalt OR is now the BINDING close decision (the P-1 structural fix landed operatively): W-CLOSE cannot cut while any roster surface holds an open FAIL. A roster of the 8 named W-REFLECT2 surfaces (dock · configurators-goo · aurora · glass-feedback · shell · motion-fourier · dark-register · cross-repo), each owed a whole-page capture in BOTH modes over its real backdrop + a recorded GESTALT verdict ABOVE the per-mechanism π readback. Device-free source/docs detector reading docs/tranches/BA/audit/reflect/ba-gestalt-roster.md; operative-PASS IFF every verdict is PASS AND every declared capture path resolves on disk (the anti-evasion floor — a PASS with a missing capture is the close-class lie the AZ matrix told, forbidden). W-REFLECT2 STATE (2026-06-15): 6/8 PASS (configurators-goo · aurora · glass-feedback · motion-fourier · dark-register · cross-repo flipped on fresh whole-page captures); 2/8 FAIL (dock + shell — the SidebarDock floating-carousel facet chips occlude the page <h1> on desktop StoryPage-chrome routes, the binding ℱ-home-seam topology W-DOCK-SECTIONS booked as an accepted *breadcrumb* tradeoff but the whole-page render shows a full *title* occlusion — the exact P-1 mechanism-green/page-wrong gap). The two FAILs share ONE root → ONE named successor BA.W-SHELL-RAIL-RESEAT (triumvirate); the gate STAYS RED until it lands + the dock/shell reflection records gain a RE-REFLECTION verdict that supersedes the FAIL. LINEAGE: AZ closed `complete` on a 9-surface per-mechanism PASS matrix the user re-opened the SAME DAY (R8) on ≥7 surfaces (precepts P-1, the 6th re-open R3→R8); a per-mechanism π verifies a local ΔL but cannot verify the gestalt the user reads. Bite: flip a verdict to PASS with no on-disk capture → RED; drop a roster surface → RED.",
+        note: "BA.W-GESTALT-GATE — the holistic per-surface acceptance gate (the P-1 close-class fix). PROMOTED to the operative close set by BA.W-REFLECT2 (off the born-RED no-tag isolation onto [\"release\"], mirroring the proof:az-reflect/proof:az-final precedent — release-only, NOT ci, so it gates W-CLOSE's full battery + release.sh without breaking per-push CI mid-tranche). The gestalt OR is now the BINDING close decision (the P-1 structural fix landed operatively): W-CLOSE cannot cut while any roster surface holds an open FAIL. A roster of the 8 named W-REFLECT2 surfaces (dock · configurators-goo · aurora · glass-feedback · shell · motion-fourier · dark-register · cross-repo), each owed a whole-page capture in BOTH modes over its real backdrop + a recorded GESTALT verdict ABOVE the per-mechanism π readback. Device-free source/docs detector reading docs/tranches/BA/audit/reflect/ba-gestalt-roster.md; operative-PASS IFF every verdict is PASS AND every declared capture path resolves on disk (the anti-evasion floor — a PASS with a missing capture is the close-class lie the AZ matrix told, forbidden). W-REFLECT2 STATE (2026-06-15): 6/8 PASS (configurators-goo · aurora · glass-feedback · motion-fourier · dark-register · cross-repo flipped on fresh whole-page captures); 2/8 FAIL (dock + shell — the SidebarDock floating-carousel facet chips occlude the page <h1> on desktop StoryPage-chrome routes, the binding ℱ-home-seam topology W-DOCK-SECTIONS booked as an accepted *breadcrumb* tradeoff but the whole-page render shows a full *title* occlusion — the exact P-1 mechanism-green/page-wrong gap). The two FAILs share ONE root → ONE named successor BA.W-SHELL-RAIL-RESEAT (triumvirate); the gate STAYS RED until it lands + the dock/shell reflection records gain a RE-REFLECTION verdict that supersedes the FAIL. LINEAGE: AZ closed `complete` on a 9-surface per-mechanism PASS matrix the user re-opened the SAME DAY (R8) on ≥7 surfaces (precepts P-1, the 6th re-open R3→R8); a per-mechanism π verifies a local ΔL but cannot verify the gestalt the user reads. Bite: flip a verdict to PASS with no on-disk capture → RED; drop a roster surface → RED. — HARDENED at BB.W-GESTALT-GATE2: the desktop-PNG-existence floor (existsSync+size>0) is RETIRED. An operative PASS now demands, per surface, FOUR content-real dimension-correct viewport-faithful captures over a FRESH surface: G1 content+dimension (isRealPng magic-byte+≥1KiB + pngDimensions IHDR ≥320×320), G2 the 16 mobile twins READ + viewport-faithful (direction 2b: derive <surface>-<mode>-mobile-full.png from the declared -desktop- path; a -mobile- IHDR ≥1000px or a -desktop- <1280px reds as fabricated), G3 the per-surface surface-hash freshness header WIRED via the SHARED surfaceHash (scripts/reflect-capture-verify.mjs re-exports the ledger's — ONE createHash in the tree; stale/header-less reds under --strict-freshness, the close arm; NOTEs on the bare arm), G4 the self-test bite rides every run (the proof-live-verified-ledger sibling transposed, no second copy). BB.W-CHIP-GRAZE added the CG2 chipOverField clause (dock+shell: the SidebarDock floating-carousel grazes the form FIELD at narrow-desktop — the title-fix masked it; redressed CSS-only by re-fanning the desktop reach down the rail gutter, library byte-untouched, chipOverField TRUE→FALSE live-measured) + REVOKED the dock/shell roster PASS→FAIL (the P-1 lie). Born-RED G3 + CG2 at BB HEAD on dock/shell/dark-register; W-REFLECT3 (Batch 7, the single authorized verdict-flipper) re-captures + re-stamps to flip GREEN.",
     },
     {
         id: "gates:verify-ci",
@@ -1311,6 +1334,112 @@ function runMode(mode) {
         }
     }
     console.log(`\n[gates] '${mode}' set PASSED (${set.length} gates).`);
+}
+
+// ── BB.W-VISUAL-RUNNER — the `--run pi` visual-π runner mode ───────────────────
+//
+// `pi` is NOT a gate-tag aggregate (it does not pass through gatesFor): it is a
+// SPEC-runner mode that spawns the ENROLLED `tests-visual/*.spec.ts` set as ONE
+// command — the non-private glob MINUS the declared EXCLUDE allowlist
+// (`tests-visual/pi-runner-manifest.mjs`, computed-from-disk), over BOTH Playwright
+// projects against the `:5199` demo origin the config defaults, served-app-sentinel
+// fail-closed. `local`-tagged ONLY (a real browser + demo + GPU). It reuses the
+// canonical `spawnSync(PW_BIN, ["test", …, "--reporter=list,json"])` idiom
+// (proof-blob-render.mjs) — the runner resolution across the workspace-local AND the
+// hoisted-root node_modules layout, the workspace-absent fail-closed.
+const PI_WORKSPACE = resolve(ROOT, "tests-visual");
+// npm workspaces HOIST @playwright/test to the ROOT node_modules; resolve the runner
+// across BOTH the workspace-local AND hoisted-root layout (else a hoisted install
+// false-SKIPs the fail-closed arm — the proof-blob-render.mjs:33-37 idiom).
+const PI_PW_BIN =
+    [
+        resolve(PI_WORKSPACE, "node_modules/.bin/playwright"),
+        resolve(ROOT, "node_modules/.bin/playwright"),
+    ].find(existsSync) ?? null;
+const PI_PW_PKG =
+    [
+        resolve(PI_WORKSPACE, "node_modules/@playwright/test/package.json"),
+        resolve(ROOT, "node_modules/@playwright/test/package.json"),
+    ].find(existsSync) ?? null;
+// The two Playwright projects the config declares (the desktop + the coarse/touch
+// mobile viewport the gestalt close needs). Asserted by proof:visual-runner.
+const PI_PROJECTS = ["chromium-headless-new", "coarse-touch"];
+
+/** Lazy-load the computed enrollment (the no-hand-list source of truth). */
+async function piEnrolledSpecs() {
+    const mod = await import(
+        pathToFileURL(resolve(PI_WORKSPACE, "pi-runner-manifest.mjs")).href
+    );
+    return mod.enrolledSpecs();
+}
+
+/**
+ * `--list pi` — print the ENROLLED visual-π spec set (computed-from-disk), one per
+ * line. The runner-mode twin of `--list <gate-mode>` (which lists gate cmds); this
+ * lists spec filenames so a human can see exactly what `--run pi` spawns.
+ */
+async function listPi() {
+    const specs = await piEnrolledSpecs();
+    console.log(specs.join("\n"));
+}
+
+/**
+ * `--run pi` — spawn the ENROLLED visual-π set over both Playwright projects against
+ * the `:5199` demo origin, served-app-sentinel fail-closed. Fails-closed on the
+ * workspace-absent case AND on the first red spec. The `local`-binding real-device
+ * run; on a GPU-less runner the workspace-absent path is the only honest exit.
+ */
+async function runPi() {
+    if (!PI_PW_PKG || !PI_PW_BIN) {
+        // Genuine device absence — fail-CLOSED with the install hint (NOT a silent
+        // green). The binding paint runs on the real device; a GPU-less CI runner
+        // does NOT paint the WebGL2 shaders, so it relies on the headless
+        // `proof:visual-runner` enrollment-soundness arm instead.
+        console.error(
+            "[gates --run pi] the tests-visual π workspace has no installed @playwright/test — " +
+                "run `npm i` in tests-visual + `npx playwright install chromium`, then a live demo " +
+                "dev server, for the rendered-pixel visual-π suite. (The local real-device run is the " +
+                "binding paint; CI proves ENROLLMENT via proof:visual-runner, not the pixels.)",
+        );
+        process.exit(2);
+    }
+    const specs = await piEnrolledSpecs();
+    if (!specs.length) {
+        console.error(
+            "[gates --run pi] the enrolled visual-π set is EMPTY — the pi-runner-manifest glob " +
+                "matched no non-private *.spec.ts. The workspace spec tree moved; fix the manifest.",
+        );
+        process.exit(1);
+    }
+    console.log(
+        `[gates --run pi] running the enrolled visual-π set (${specs.length} specs) over ` +
+            `${PI_PROJECTS.length} projects [${PI_PROJECTS.join(", ")}] against the :5199 demo origin ` +
+            `(served-app-sentinel fail-closed).`,
+    );
+    const args = [
+        "test",
+        ...specs,
+        ...PI_PROJECTS.flatMap((p) => ["--project", p]),
+        "--reporter=list,json",
+    ];
+    const res = spawnSync(PI_PW_BIN, args, {
+        cwd: PI_WORKSPACE,
+        stdio: "inherit",
+        encoding: "utf8",
+        env: {
+            ...process.env,
+            PLAYWRIGHT_JSON_OUTPUT_NAME: resolve(PI_WORKSPACE, ".cache/pi-report.json"),
+        },
+    });
+    if (res.status !== 0) {
+        console.error(
+            `\n[gates --run pi] FAIL — the visual-π suite did not pass (exit ${res.status}). ` +
+                `The served-app-sentinel fails-CLOSED on a foreign app on the port (never a silent skip); ` +
+                `a red spec is the binding-truth rot the runner exists to surface.`,
+        );
+        process.exit(1);
+    }
+    console.log(`\n[gates --run pi] the enrolled visual-π set PASSED (${specs.length} specs, both projects).`);
 }
 
 /**
@@ -1442,9 +1571,14 @@ function emitCi() {
 const isMain = Boolean(argv[1]) && resolve(argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
     const arg = argv[2];
-    if (arg === "--run") runMode(argv[3]);
+    // `pi` is the SPEC-runner mode (BB.W-VISUAL-RUNNER) — it spawns the enrolled
+    // visual-π set, NOT a gatesFor aggregate. It dispatches off the runMode/list
+    // branches BEFORE the gate-tag path so `gatesFor("pi")` is never consulted.
+    if (arg === "--run" && argv[3] === "pi") runPi();
+    else if (arg === "--run") runMode(argv[3]);
     else if (arg === "--verify-ci") verifyCi();
     else if (arg === "--emit-ci") emitCi();
+    else if (arg === "--list" && argv[3] === "pi") listPi();
     else if (arg === "--list") {
         const mode = argv[3] ?? "local";
         console.log(
@@ -1454,7 +1588,7 @@ if (isMain) {
         );
     } else {
         console.error(
-            "usage: gates.mjs --run <local|ci|release|full> | --verify-ci | --emit-ci | --list <mode>",
+            "usage: gates.mjs --run <local|ci|release|full|pi> | --verify-ci | --emit-ci | --list <mode|pi>",
         );
         process.exit(2);
     }

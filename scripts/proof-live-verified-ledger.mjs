@@ -66,6 +66,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
@@ -213,8 +214,13 @@ function statusToken(status) {
 }
 
 // ── DELTA resolution: a real on-disk PNG referenced by the wave's DELTA doc ────
+// BB.W-GESTALT-GATE2: these four pure verify functions (isRealPng, pngDimensions,
+// viewportFidelityVerdict, baseName) + surfaceHash + freshnessVerdict are the SINGLE
+// SOURCE the gestalt gate (proof:ba-gestalt) shares via scripts/reflect-capture-
+// verify.mjs (re-exported there). They are `export`ed here and the module's top-level
+// run is guarded behind import.meta.url so importing them never runs this gate.
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]); // \x89PNG
-function isRealPng(p) {
+export function isRealPng(p) {
     try {
         if (!existsSync(p) || !statSync(p).isFile()) return false;
         const fd = readFileSync(p);
@@ -233,7 +239,7 @@ function isRealPng(p) {
 // reconcile the filename's viewport TOKEN against the actual pixels — a fabrication
 // the magic-byte check can never catch.
 // @returns {{w:number, h:number} | null} the IHDR dimensions, or null if unreadable.
-function pngDimensions(p) {
+export function pngDimensions(p) {
     try {
         const fd = readFileSync(p);
         // signature(8) + length(4) + "IHDR"(4) then width(4) + height(4).
@@ -250,7 +256,7 @@ function pngDimensions(p) {
 // basename whose IHDR width is ≥ this bound is a desktop screenshot mislabeled mobile
 // (the fabrication class) — 1000 sits cleanly ABOVE the max real mobile (780) and
 // BELOW the min desktop full-viewport (1280), so it false-flags neither.
-const FABRICATED_MOBILE_WIDTH = 1000;
+export const FABRICATED_MOBILE_WIDTH = 1000;
 
 /**
  * The R1 fabricated-viewport verdict over a single own-surface PNG path. A basename
@@ -262,7 +268,7 @@ const FABRICATED_MOBILE_WIDTH = 1000;
  * @param {{w:number, h:number} | null} dims
  * @returns {{ok:true} | {ok:false, reason:string}}
  */
-function viewportFidelityVerdict(basename, dims) {
+export function viewportFidelityVerdict(basename, dims) {
     if (!/-mobile-/.test(basename)) return { ok: true };
     if (!dims) return { ok: true }; // unreadable IHDR ≠ fabrication; the real-PNG bar already held
     if (dims.w >= FABRICATED_MOBILE_WIDTH)
@@ -274,7 +280,7 @@ function viewportFidelityVerdict(basename, dims) {
 }
 
 /** The basename of a referenced path (drop any dir segments). */
-function baseName(ref) {
+export function baseName(ref) {
     const idx = ref.lastIndexOf("/");
     return idx === -1 ? ref : ref.slice(idx + 1);
 }
@@ -325,7 +331,7 @@ export function surfaceHash(root, surfacePaths) {
  *   - "no-header" : the headers are absent (the backfill-window grace boundary —
  *                   RED under --strict-freshness, a non-fatal NOTE on the bare arm).
  */
-function freshnessVerdict(doc, root = ROOT) {
+export function freshnessVerdict(doc, root = ROOT) {
     const sp = doc.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
     const sh = doc.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
     if (!sp || !sp[1].trim() || !sh) return { state: "no-header" };
@@ -589,6 +595,11 @@ function evaluateRow(row, allowlist = new Set()) {
     return null;
 }
 
+// BB.W-GESTALT-GATE2: guard the top-level run behind the script-entrypoint check so
+// importing this module (the gestalt gate imports surfaceHash/pngDimensions/… via
+// scripts/reflect-capture-verify.mjs) NEVER runs this gate — no console output, no
+// artifact write, no process.exit on import. Invoked as a script it runs identically.
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
 const allowlist = loadAllowlist();
 
 const md = existsSync(PROGRESS) ? readFileSync(PROGRESS, "utf8") : "";
@@ -757,3 +768,4 @@ if (!pass) {
 console.log(
     "\n[proof:live-verified-ledger] every live-verified + allowlisted-complete row is backed by a real on-disk DELTA; no (DEVELOPED) modifier in any status cell.",
 );
+} // end the import.meta.url script-entrypoint guard (BB.W-GESTALT-GATE2)

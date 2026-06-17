@@ -50,6 +50,79 @@
     margin: 0;
 }
 
+/* ── BB.W-CHIP-GRAZE — the desktop SidebarDock facet carousel fans DOWN the rail
+   gutter, never RIGHT into <main> (the field-clearance re-fan; direction (b)) ──────
+   THE FIELD GRAZE (the P-1 recurrence): W-SHELL-RAIL-RESEAT (BA) moved the rail's
+   anchor seam DOWN from the top ℱ-home divider (which collided with the page <h1>)
+   to the trailing `utility` separator (y≈529). That cleared the TITLE band — but the
+   vertical-dock floating carousel still fans its chips RIGHTWARD on the inline axis
+   (the library `.dock-hairline-extend.vertical` fade seats at the dock's trailing edge
+   `100% - --dock-rail-extend-length` with `justify-content: flex-end`, the strip a
+   `flex-direction: row` overflowing into `<main>`, which begins at x=83). Seated at
+   y≈529 — squarely in the band where `/forms/inputs`'s FORM FIELDS live — the chips
+   GRAZE the input affordance (measured at HEAD: chips at x=[73,329]/y=[532,558] over
+   an `.input-pill` at x=[144,528]/y=[520,560] → chipOverField:true). The title re-seat
+   traded a title-collision for a field-collision (the exact close-class the gestalt
+   gate exists to catch).
+
+   THE FIX (direction (b), the spec's recorded de-risk — direction (a) cannot hold the
+   `proof:rail3` R6 ≥2-SHELL-consumer census, which binds BOTH shell docks to mount a
+   live `<DockRail>`; removing it from the SidebarDock reds R6, and re-mounting an
+   in-pane `<DockLayerGroup>` switcher reds R1's box-inflation prohibition). The library
+   floating carousel STAYS on the SidebarDock (R6 + R1 hold; the box is INVIOLATE — this
+   touches NO library CSS, only the demo shell). On the DESKTOP fixed sidebar (scoped to
+   `.demo-sidebar-rail`, so the mobile off-canvas drawer rail is untouched) the carousel
+   re-fans DOWN the rail's own gutter as a VERTICAL icon column instead of rightward into
+   `<main>`: the chip labels collapse (icon + the existing `title` tooltip keep every
+   facet REACHABLE — the chips are still RENDERED + clickable, never `display:none`'d,
+   so the gate's "hide-it-to-green-it" evasion is barred), so each chip is ~36px (10px
+   pad + 16px glyph + 10px pad) — well inside the 4.5rem (~72px) rail column, never
+   reaching x≥83. The seam stays the REAL measured `--dock-rail-seam-offset` (529px) —
+   NEVER the forbidden `inset-block-start: 50%` midline workaround #4; the library
+   `rail-extend.css` is byte-untouched, so `proof:dock-sections` S2 / `proof:rail3` /
+   `proof:rail-extend` box-equality all stay GREEN. The live chipOverField:false MEASURE
+   is W-REFLECT3's (Batch 7) to record on a fresh capture; this is the SOURCE redress. */
+.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-fade {
+    /* Seat the chip fan CENTERED on the dock (the slot's `inline-size` is the dock box
+       + 2× the symmetric overrun, so the slot's horizontal CENTER is the dock center),
+       fanning DOWN from the seam — within the rail's own column width, never rightward
+       into <main> nor off the viewport's left edge. */
+    inset-inline-start: 50%;
+    inset-block-start: 0;
+    translate: -50% 0;
+    /* Cap the column to the rail gutter width so a chip can never reach <main>. */
+    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
+}
+.demo-sidebar-rail .dock-hairline-extend.vertical {
+    /* The chips column-flow down the gutter from the seam, top-aligned. */
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-strip {
+    /* A VERTICAL icon column inside the gutter — overrides the library's horizontal
+       `flex-direction: row` / `max-inline-size: 60vw` / `overflow-x` row strip. */
+    flex-direction: column;
+    align-items: stretch;
+    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
+    max-block-size: min(50vh, 22rem);
+    overflow-x: visible;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+}
+.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-extend-chip {
+    /* Icon-only in the gutter — the facet stays REACHABLE via the glyph + the existing
+       `title` tooltip (never display:none'd: still rendered + clickable, the gate's
+       anti-evasion bar). The label run collapses so the chip fits the gutter. */
+    justify-content: center;
+}
+.demo-sidebar-rail
+    .dock-hairline-extend.vertical
+    .dock-hairline-extend-chip
+    .dock-hairline-extend-chip-label {
+    display: none;
+}
+
 /* AZ.W-RAIL3 — the in-dock contextual facet group (the vertical <DockLayerGroup>
    that carried the `.demo-sidebar-context-label` rotated label) is DELETED from the
    shell docks: the facets re-home on the rail's floating carousel strip OUTSIDE the

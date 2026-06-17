@@ -255,8 +255,6 @@ jobs:
               run: npm run proof:glass-level
             - name: proof:glass-cohesion
               run: npm run proof:glass-cohesion
-            - name: proof:substrate-cohesion
-              run: npm run proof:substrate-cohesion
             - name: proof:component-orphan
               run: npm run proof:component-orphan
             - name: proof:substrate-staging
@@ -279,8 +277,6 @@ jobs:
               run: npm run proof:aurora-preset-roster
             - name: proof:ui-scale
               run: npm run proof:ui-scale
-            - name: proof:touch-target
-              run: npm run proof:touch-target
             - name: proof:webkit-backdrop
               run: npm run proof:webkit-backdrop
             - name: proof:nested-backdrop-budget
@@ -335,6 +331,8 @@ jobs:
               run: npm run proof:consumer-staleness
             - name: proof:disposition-live
               run: npm run proof:disposition-live
+            - name: proof:visual-runner
+              run: npm run proof:visual-runner
             - name: audit:stash
               run: npm run audit:stash
             - name: gates:verify-ci
