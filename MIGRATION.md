@@ -249,6 +249,29 @@
 > The phantom "slides adopt-book break" was the AZ-H6-fold assumption the slides session
 > disproved at HEAD `c943a49`; there is no slides edit on this fold.
 
+> **BB.W-METAL-SHIMMER — the `@keyframes gold-shimmer-slide` RETIRED onto the
+> metal-PARAMETERIZED `@keyframes metal-shimmer-sweep`. Clean break, no alias ("No
+> legacy code").** The gold-only shimmer keyframe generalized into ONE metal-agnostic
+> position sweep (reading a `--metal-shimmer-color` channel + the `--metal-stop-*`
+> slots the recipe binds per-metal), so the bronze quad (the third brand metal) + the
+> gold + silver registers all share ONE keyframe. Two notes:
+>
+> 1. **`@keyframes gold-shimmer-slide` is GONE** — the keyframe NAME is removed (no
+>    alias). The `.gold-shimmer` CLASS is PRESERVED (it re-points onto
+>    `metal-shimmer-sweep` with `--metal-shimmer-color: gold`; the gold gradient stops +
+>    `background-size`/`background-clip` + the PRM bracket are byte-identical — the gold
+>    READ is UNCHANGED). The `--animate-gold-shimmer` token is PRESERVED (re-pointed onto
+>    `metal-shimmer-sweep`). MIGRATE only if a consumer referenced `gold-shimmer-slide`
+>    BY NAME in a hand-rolled `animation:` rule → `animation: metal-shimmer-sweep …`.
+>    No consumer that composed the `.gold-shimmer` class or read `--animate-gold-shimmer`
+>    changes.
+> 2. **NEW additive surface (no break).** The bronze quad (`--bronze`/`-light`/`-dark`/
+>    `-deep` + `--color-bronze*`, the third brand metal on the W-NO-GRAY exception), the
+>    `--duration-metal: 6s` slow clock, and the `.metal-{gold,silver,bronze}` /
+>    `.metal-*-border` / `.metal-rainbow-rim` utilities are all ADDITIVE — a consumer
+>    opts in by composing a `.metal-*` class. The `.metal-rainbow-rim` composes
+>    W-GLASS-ACCENT's `--glass-accent` rim seam.
+
 > **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
 > the new `@mkbabb/glass-ui/motion` flat subpath, closing the
 > AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**

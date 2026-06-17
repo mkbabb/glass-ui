@@ -11,13 +11,16 @@
  * docs/precepts/design-idioms.md §cohesion-aware partials.
  */
 
-/* CSS @import rules must precede every other rule. The six partials @import in
+/* CSS @import rules must precede every other rule. The partials @import in
    cascade order (base.css's post-tap-squish tail was carved into base-misc.css at
    BB.W-CARVE3 — an adjacent same-`@layer components` block at the next slot, so
-   the cascade is unchanged): */
+   the cascade is unchanged). BB.W-METAL-SHIMMER homes `metal.css` right after
+   `base-misc.css` (its `.gold-shimmer` sibling — both `@layer components` metal
+   registers; the metal family is cohesive with the re-pointed gold-shimmer): */
 @import "./utilities/animate.css";
 @import "./utilities/base.css";
 @import "./utilities/base-misc.css";
+@import "./utilities/metal.css";
 @import "./utilities/components.css";
 @import "./utilities/btn.css";
 @import "./utilities/a11y-overrides.css";

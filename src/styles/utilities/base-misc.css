@@ -213,11 +213,16 @@
     }
 
     /* ── Shimmer text effects ──
-       The text-fill + background-clip composition is load-bearing visual
-       (the gold gradient itself); only the `animation:` line is wrapped in
-       the PRM no-preference bracket so PRM users see the static gradient
-       without the slide animation. */
+       BB.W-METAL-SHIMMER — the gold-only `gold-shimmer-slide` is RETIRED (clean
+       break, no alias); `.gold-shimmer` re-points onto the metal-PARAMETERIZED
+       `metal-shimmer-sweep` keyframe with `--metal-shimmer-color: gold`. The gold
+       gradient stops + the `background-size`/`background-clip` + the PRM bracket are
+       byte-PRESERVED — the gold READ is unchanged; only the keyframe NAME generalizes.
+       The text-fill + background-clip composition is load-bearing visual (the gold
+       gradient itself); only the `animation:` line is wrapped in the PRM no-preference
+       bracket so PRM users see the static gradient without the slide. */
     .gold-shimmer {
+        --metal-shimmer-color: gold;
         background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
         background-size: 250% 100%;
         background-clip: text;
@@ -226,7 +231,7 @@
     }
     @media (prefers-reduced-motion: no-preference) {
         .gold-shimmer {
-            animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
+            animation: metal-shimmer-sweep var(--duration-shimmer) linear infinite;
         }
     }
 

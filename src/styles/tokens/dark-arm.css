@@ -345,5 +345,16 @@
     --silver: oklch(0.792 0.012 255);
     --silver-light: oklch(0.912 0.010 255);
     --silver-dark: oklch(0.648 0.014 255);
+
+    /* Bronze — lifted for dark (BB.W-METAL-SHIMMER; mirrors gold's dark arm: the
+       warm metal lifts ~+0.03 L so the bronze register reads on the deep canvas.
+       `--bronze-deep` is mode-invariant — NOT re-declared here, exactly as
+       `--gold-deep`/`--silver-deep` are omitted from this dark block). The warm hue
+       holds; the chroma stays above the W-NO-GRAY floor. The `.dark`-class fallback
+       for engines without `light-dark()` (the §2c lockstep — the light-dark arm AND
+       this dark fallback move TOGETHER). */
+    --bronze: oklch(0.650 0.090 54.0);
+    --bronze-light: oklch(0.790 0.110 60.0);
+    --bronze-dark: oklch(0.560 0.085 50.0);
 }
 

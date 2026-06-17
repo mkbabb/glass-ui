@@ -1,0 +1,189 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BB.W-METAL-SHIMMER — the brand-metal utility family
+   ═══════════════════════════════════════════════════════════════════════════
+   ONE single-home partial for the gold·silver·bronze metal register (so a new
+   metal pop is ONE class, not a re-paste — the W-SUFFUSE icon-chip consolidation
+   discipline). Three registers, ALL metal-PARAMETERIZED off the SAME shared recipe
+   reading the `--metal-shimmer-color` channel + its four resolved stop slots:
+
+     • `.metal-{gold,silver,bronze}` — the text-clip metal gradient (the
+       `.gold-shimmer` recipe GENERALIZED): a `linear-gradient(90deg, dark, light,
+       base, light, dark)` band off the bound metal quad, `background-clip: text`.
+     • `.metal-{gold,silver,bronze}-border` — the swept metallic RIM (the §N6
+       selected-item-border consumer): the SAME `--metal-shimmer-color`-bound
+       gradient on a `border-image`-sliced rim, swept by the SAME keyframe.
+     • `.metal-rainbow-rim` — the prismatic gilt-figure / record-badge rim: it
+       COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it does NOT re-author
+       the rim) by binding the accent channel to a swept rainbow hue.
+
+   The PARAMETERIZATION: `--metal-shimmer-color` is the metal-NAME marker each
+   `.metal-{name}` SETS (`gold`/`silver`/`bronze`); the shared recipe resolves the
+   gradient off the four `--metal-stop-*` slots each class binds to its quad. The
+   `metal-shimmer-sweep` keyframe (animations.css) is PURE position — ZERO baked
+   metal color — so the SAME keyframe sweeps any of the three metals depending only
+   on which slots the class bound. A silver/bronze sweep is a NEW CLASS that binds
+   the slots, NEVER a forked keyframe (the N-copy this wave exists to kill).
+
+   THE PRM-STATIC BRACKET (the §6 calm register, the `.gold-shimmer` model byte-
+   faithfully): every utility paints the FULL static metal gradient at REST (the
+   load-bearing visual — the metal sheen itself); ONLY the `animation:` line sits
+   inside `@media (prefers-reduced-motion: no-preference)`. A PRM user sees the
+   full static metal gradient WITHOUT the slide — the metal still READS as metal,
+   the motion is the only thing gated. The sweep is a slow `--duration-metal` (6s)
+   one-pass — the disco family is GONE and STAYS gone (no sparkle/grain/ripple). */
+
+@layer components {
+    /* ── The shared metal recipe (the metal-agnostic engine) ─────────────────
+       The four stop slots default to GOLD (the neutral metal — so a bare
+       `--metal-shimmer-color`-bearing surface paints gold, matching the
+       `.gold-shimmer` precedent); each `.metal-{name}` re-binds them to its quad.
+       The `--metal-shimmer-color` marker carries the metal NAME for the gate's
+       parameterization assert + for any consumer query. */
+    .metal-gold,
+    .metal-silver,
+    .metal-bronze {
+        --metal-stop-dark: var(--color-gold-dark);
+        --metal-stop-light: var(--color-gold-light);
+        --metal-stop-base: var(--color-gold);
+        background: linear-gradient(
+            90deg,
+            var(--metal-stop-dark),
+            var(--metal-stop-light),
+            var(--metal-stop-base),
+            var(--metal-stop-light),
+            var(--metal-stop-dark)
+        );
+        background-size: 250% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    /* Per-metal: set the channel marker + re-bind the stop slots to the quad. */
+    .metal-gold {
+        --metal-shimmer-color: gold;
+        --metal-stop-dark: var(--color-gold-dark);
+        --metal-stop-light: var(--color-gold-light);
+        --metal-stop-base: var(--color-gold);
+    }
+    .metal-silver {
+        --metal-shimmer-color: silver;
+        --metal-stop-dark: var(--color-silver-dark);
+        --metal-stop-light: var(--color-silver-light);
+        --metal-stop-base: var(--color-silver);
+    }
+    .metal-bronze {
+        --metal-shimmer-color: bronze;
+        --metal-stop-dark: var(--color-bronze-dark);
+        --metal-stop-light: var(--color-bronze-light);
+        --metal-stop-base: var(--color-bronze);
+    }
+
+    /* ── The swept metallic RIM (the §N6 selected-item-border consumer) ───────
+       The SAME `--metal-shimmer-color`-bound gradient applied to a `border-image`
+       slice — a swept metallic RIM, not a text fill. `border-image` reads the same
+       `background`-position-swept gradient (the metal-shimmer-sweep keyframe drives
+       the `background-position`; the `border-image-source` references the SAME
+       gradient via the stop slots), so ONE keyframe drives both registers. The rim
+       sits over the surface's own background (no `background-clip: text`). */
+    .metal-gold-border,
+    .metal-silver-border,
+    .metal-bronze-border {
+        --metal-stop-dark: var(--color-gold-dark);
+        --metal-stop-light: var(--color-gold-light);
+        --metal-stop-base: var(--color-gold);
+        border: var(--metal-border-width, 2px) solid transparent;
+        border-image: linear-gradient(
+                90deg,
+                var(--metal-stop-dark),
+                var(--metal-stop-light),
+                var(--metal-stop-base),
+                var(--metal-stop-light),
+                var(--metal-stop-dark)
+            )
+            1;
+        /* The sweep rides a backing gradient `background-position` on the same band
+           (the `border-image` slice tracks the host's background extent); the
+           250% size + the position sweep give the rim its travelling sheen. */
+        background-image: linear-gradient(
+            90deg,
+            var(--metal-stop-dark),
+            var(--metal-stop-light),
+            var(--metal-stop-base),
+            var(--metal-stop-light),
+            var(--metal-stop-dark)
+        );
+        background-size: 250% 100%;
+        background-clip: border-box;
+    }
+    .metal-gold-border {
+        --metal-shimmer-color: gold;
+        --metal-stop-dark: var(--color-gold-dark);
+        --metal-stop-light: var(--color-gold-light);
+        --metal-stop-base: var(--color-gold);
+    }
+    .metal-silver-border {
+        --metal-shimmer-color: silver;
+        --metal-stop-dark: var(--color-silver-dark);
+        --metal-stop-light: var(--color-silver-light);
+        --metal-stop-base: var(--color-silver);
+    }
+    .metal-bronze-border {
+        --metal-shimmer-color: bronze;
+        --metal-stop-dark: var(--color-bronze-dark);
+        --metal-stop-light: var(--color-bronze-light);
+        --metal-stop-base: var(--color-bronze);
+    }
+
+    /* ── The prismatic rainbow rim (the gilt-figure / record-badge sheen) ─────
+       COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it binds the accent
+       channel, it does NOT re-author the rim `color-mix`/`::before`). The host is
+       a glass surface (carrying the `--glass-material-rim` ring + the
+       `--glass-border-accent` border W-GLASS-ACCENT minted); this utility drives
+       the accent through the spectrum so the rim sheen SHIFTS through the rainbow.
+       `--glass-accent` is a typed `<color>` `@property` (NOT animatable as a
+       conic per-frame), so the prismatic shift is the swept metal-gradient overlay
+       PLUS the accent engaged at a metal-warm hue — the rim reads as a shifting
+       metallic sheen over the W-GLASS-ACCENT rim. The accent STRENGTH lifts to a
+       rim whisper (the demo specimen engages ~45%, the accent's documented ceiling
+       for the rim/glint). The sweep is the SAME `metal-shimmer-sweep` over the
+       rainbow band on the host's own background. */
+    .metal-rainbow-rim {
+        /* Engage W-GLASS-ACCENT's rim seam at a warm-metal hue + the rim whisper
+           strength (the accent channel — NOT a second rim recipe). */
+        --glass-accent: var(--color-gold);
+        --glass-accent-strength: 45%;
+        --metal-shimmer-color: rainbow;
+        /* The swept prismatic band rides the host's own background-image (the rim
+           ring + border come from the W-GLASS-ACCENT seam the host already carries). */
+        background-image: linear-gradient(
+            90deg,
+            var(--rainbow-red),
+            var(--rainbow-orange),
+            var(--rainbow-yellow),
+            var(--rainbow-green),
+            var(--rainbow-blue),
+            var(--rainbow-indigo),
+            var(--rainbow-violet),
+            var(--rainbow-red)
+        );
+        background-size: 250% 100%;
+        background-clip: border-box;
+    }
+
+    /* ── The PRM-static bracket: the ONLY motion declaration ──────────────────
+       Every metal utility paints the static gradient above (un-bracketed — the
+       metal READS for PRM users); the `animation:` is the sole thing gated. The
+       slow `--duration-metal` (6s) clock — the calm dignified pass. */
+    @media (prefers-reduced-motion: no-preference) {
+        .metal-gold,
+        .metal-silver,
+        .metal-bronze,
+        .metal-gold-border,
+        .metal-silver-border,
+        .metal-bronze-border,
+        .metal-rainbow-rim {
+            animation: metal-shimmer-sweep var(--duration-metal) linear infinite;
+        }
+    }
+}

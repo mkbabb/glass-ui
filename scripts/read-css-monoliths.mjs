@@ -80,6 +80,10 @@ export const CSS_MONOLITHS = {
             // the fading-scroll recipe) carved into base-misc.css, an adjacent
             // same-`@layer components` block immediately after base.css.
             "base-misc.css",
+            // BB.W-METAL-SHIMMER — the brand-metal utility family (.metal-*),
+            // homed right after base-misc.css (its .gold-shimmer sibling — both
+            // @layer components metal registers).
+            "metal.css",
             "components.css",
             "btn.css",
             "a11y-overrides.css",

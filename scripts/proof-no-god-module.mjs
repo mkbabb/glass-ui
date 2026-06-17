@@ -86,12 +86,15 @@ const RATCHET_BASELINES = {
     // Batch-7 close.
     "components/custom/tabs/SegmentedTabs.vue": 543, // BOOK(BB.W-CARVE4): extract the drag-morph/indicator wiring → tabs/composables/ (Batch 6)
     // scale-paper.css holds MANY token families (paper + control + display + the
-    // scroll-reveal/choreography substrate + grid) and is the recurring at-bound
-    // tokens offender (W-CONTROL-TOKENS, W-PAPER-GRID, W-SCROLL-MOTION each grew it).
-    // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knob family → a
-    // tokens/scroll-tokens.css partial (the paper/control/display families stay) —
-    // drained before the Batch-7 close.
-    "styles/tokens/scale-paper.css": 519, // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knobs → tokens/scroll-tokens.css (Batch 6)
+    // scroll-reveal/choreography substrate + grid + the gold·silver·BRONZE brand-metal
+    // triad) and is the recurring at-bound tokens offender (W-CONTROL-TOKENS,
+    // W-PAPER-GRID, W-SCROLL-MOTION, W-METAL-SHIMMER each grew it). BB.W-METAL-SHIMMER
+    // added the §13c bronze quad (the third brand metal, ~+32 lines) on the EXISTING
+    // W-CARVE4 BOOK — the rebaseline 519→551 records the metal-triad completion, the
+    // carve target is unchanged. BOOK(BB.W-CARVE4): carve the scroll-reveal/
+    // choreography knob family → a tokens/scroll-tokens.css partial (the paper/
+    // control/display/metal families stay) — drained before the Batch-7 close.
+    "styles/tokens/scale-paper.css": 551, // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knobs → tokens/scroll-tokens.css (Batch 6); rebaselined 519→551 at W-METAL-SHIMMER (the §13c bronze quad)
     // glass/ladder.css holds the 5-rung surface ladder + the calm-tier re-point
     // (W-ON-GLASS-FG) + the W-GLASS-ACCENT rim/accent group + the bright-bucket
     // @container — the glass-effect waves (W-LENSING/W-GLASS-ACCENT) accreted it.

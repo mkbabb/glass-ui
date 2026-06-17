@@ -134,9 +134,18 @@
     }
 }
 
-/* ── Gold shimmer: metallic text highlight sweep ── */
-
-@keyframes gold-shimmer-slide {
+/* ── Metal shimmer: the metal-PARAMETERIZED text/border highlight sweep ──
+ * BB.W-METAL-SHIMMER — the ONE metal-agnostic sweep (the gold-only
+ * `gold-shimmer-slide` RETIRED onto it — clean break, no alias). The keyframe is
+ * PURE position (ZERO baked metal color): the metal hue is the recipe's job via
+ * the `--metal-shimmer-color`-bound gradient (see utilities/metal.css). The SAME
+ * keyframe sweeps a gold, silver, or bronze gradient depending only on the channel,
+ * usable for BOTH text-clip (the `.metal-*` text register) AND border/mask (the
+ * `.metal-*-border` swept RIM) — the position pass shifts whatever gradient the
+ * surface paints. The `200% 0`→`-200% 0` shape carries the gold READ exactly
+ * (byte-faithful to the retired `gold-shimmer-slide`). The slow `--duration-metal`
+ * (6s) clock is set at the consumer (the metal recipe), not baked here. */
+@keyframes metal-shimmer-sweep {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
@@ -145,8 +154,8 @@
  * The `@keyframes sparkle-sweep` + its reduced-motion stub are DELETED with the
  * disco recipe family — the `btn-audacious` ::after star (its sole consumer) is
  * gone, and the dock-tab primary tier collapsed onto the calm glass register.
- * The `Complete!` celebratory shimmer rides its OWN keyframes (gold-shimmer-slide
- * / shimmer above), never sparkle-sweep.
+ * The `Complete!` celebratory shimmer rides the metal-shimmer-sweep / shimmer
+ * keyframes above, never sparkle-sweep.
  */
 
 /* ── Pulse dot bounce: dots variant of <Pulse> ──

@@ -307,5 +307,47 @@ const ACCENT_STRENGTH = "48%";
                 </div>
             </ShowcaseFrame>
         </StorySection>
+
+        <StorySection
+            label="The brand-metal triad — gold · silver · bronze (BB.W-METAL-SHIMMER)"
+            blurb="The three brand metals on the W-NO-GRAY metal exception: gold (warm-yellow ~84°), silver (cool-steel ~255°), bronze (warm-brown ~54°). The text-clip register (.metal-{gold,silver,bronze}) sweeps the slow --duration-metal (6s) patina pass off the ONE metal-PARAMETERIZED metal-shimmer-sweep keyframe; the swept metallic RIM (.metal-*-border, the §N6 selected-item-border consumer) and the prismatic .metal-rainbow-rim (composing W-GLASS-ACCENT's rim seam) read on a glass plate. PRM=static — the metal READS as metal without the slide."
+        >
+            <ShowcaseFrame pad="lg" tier="field">
+                <!-- The medal triad — the text-clip register (consumer #1). -->
+                <div class="flex flex-wrap items-center gap-8" data-metal-triad>
+                    <span class="metal-gold text-display-2 font-black" data-metal="gold"
+                        >Au</span
+                    >
+                    <span class="metal-silver text-display-2 font-black" data-metal="silver"
+                        >Ag</span
+                    >
+                    <span class="metal-bronze text-display-2 font-black" data-metal="bronze"
+                        >Bz</span
+                    >
+                </div>
+                <!-- The swept metallic RIM (.metal-*-border) + the prismatic rainbow
+                     rim — the badge/§N6-border register (consumer #2). -->
+                <div class="mt-6 flex flex-wrap items-center gap-6">
+                    <div
+                        class="metal-gold-border flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        data-metal-border="gold"
+                    >
+                        gold rim
+                    </div>
+                    <div
+                        class="metal-bronze-border flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        data-metal-border="bronze"
+                    >
+                        bronze rim
+                    </div>
+                    <div
+                        class="glass-floating metal-rainbow-rim flex h-20 w-32 items-center justify-center rounded-card text-sm font-medium"
+                        data-metal-rainbow
+                    >
+                        rainbow rim
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
     </StoryPage>
 </template>

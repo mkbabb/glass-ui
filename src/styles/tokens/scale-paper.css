@@ -184,6 +184,38 @@
     --color-silver-deep: var(--silver-deep);
 
     /* ═══════════════════════════════════════════════
+       §13c BRONZE (the THIRD brand-metal — BB.W-METAL-SHIMMER)
+       ═══════════════════════════════════════════════ */
+    /* The warm-brown patina quad — the third member of the gold·silver·bronze
+       brand-metal TRIAD (the medal triad, the gilt/aged "third place" figure, the
+       record-badge register). Gold (warm-yellow ~84°) + silver (cool-steel ~255°)
+       are the two poles; bronze is the warm-amber-brown ~54° register between them.
+       The cascade EXACTLY mirrors gold's and silver's (scale-paper raw → bridges
+       `--color-bronze*` alias → both dark arms); `-deep` is mode-invariant.
+
+       BA.W-NO-GRAY brand-metal EXCEPTION — bronze is the THIRD metal on the SAME
+       sanction silver carries (the ONE cool-neutral exception). Bronze is a WARM
+       metal identity with chroma ABOVE the warm floor: each rung resolves OKLab
+       C 0.072-0.112 (far above the STRONG_FLOOR 0.020) at hue ~49-60°, so it reads
+       as polished bronze MATERIAL, never a desaturated brown CAST (the W-NO-GRAY
+       "warm-not-tinted" bar). It is NOT a neutral — a low-chroma bronze would BE a
+       neutral and break the brand-metal read; the chroma is the metal. The hue sits
+       between gold and red-orange so it distinguishes from a dark gold at the rim. */
+    --bronze: oklch(0.620 0.092 54.0);
+    --bronze-light: oklch(0.760 0.112 60.0);
+    --bronze-dark: oklch(0.500 0.082 50.0);
+    /* The mode-INVARIANT deep bronze plate (mirrors `--gold-deep`/`--silver-deep`'s
+       contract — a fixed dark bronze so a white label clears ≥4.5:1 in BOTH modes;
+       it does NOT flip with `--foreground`). 8.36:1 white in light / 4.79:1 in dark
+       on the dark-arm-lifted rungs. The would-be saturated CTA twin of the metal. */
+    --bronze-deep: oklch(0.430 0.072 50.0);
+
+    --color-bronze: var(--bronze);
+    --color-bronze-light: var(--bronze-light);
+    --color-bronze-dark: var(--bronze-dark);
+    --color-bronze-deep: var(--bronze-deep);
+
+    /* ═══════════════════════════════════════════════
        §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
        mirror; hue preserved from the prior hsl() cadence)
        ═══════════════════════════════════════════════ */
