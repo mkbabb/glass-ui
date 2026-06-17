@@ -122,6 +122,49 @@
     initial-value: 28;
 }
 
+/* BB.W-GLASS-ACCENT — the THIRD disjoint glass axis: the per-INSTANCE
+   CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a consumer DATA
+   hue) that OKLab-tints a glass surface's RIM (the `--glass-material-rim` inset
+   ring + the per-rung `--glass-border-*`) and the `::before` specular catch-light
+   CORE — so the §F1 data-keyed colored hover (a chart cell whose surface glows
+   with that datum's series hue) is a ONE-LINE seam (`--glass-accent: <hue>;
+   --glass-accent-strength: <N%>` on the instance), not a hand-threaded
+   `border-color` + inline catch-light per consumer.
+
+   DISTINCT-not-fork of W55's `--glass-tint-source` (the WHOLE-PLATE BACKGROUND
+   legibility darken toward `--glass-tint-ink`): the accent is the RIM+GLINT
+   chromatic DECORATION axis (toward a consumer DATA hue, per-instance), it NEVER
+   writes the W55 cohort and NEVER tints the plate background. Three disjoint glass
+   axes: LEVEL (opacity+blur, AX.W54) · TINT (whole-plate legibility, W55) · ACCENT
+   (per-instance chromatic rim+glint, this wave).
+
+   • --glass-accent (<color>) — the consumer data hue. `inherits: true` (the
+     `--glass-level`-style cascading scalar — a host sets it on an ancestor to tint
+     a sub-tree; a consumer sets it per-INSTANCE on the surface). `initial-value:
+     transparent` is the NEUTRAL IDENTITY: a `color-mix(in oklab, X, transparent N)`
+     is byte-identical X at the resting end, so an UNSET surface paints exactly
+     today's warm-ink rim + warm-cream catch-light (the W2 neutral-fallback floor).
+
+   • --glass-accent-strength (<percentage>) — the bounded knob. `inherits: true`
+     (rides the accent down the same sub-tree). `initial-value: 0%` so the mix is a
+     provable no-op when unset (`color-mix(in oklab, X, <accent> 0%)` === X). The
+     consumer-set ceiling is a WHISPER at the rim, not a flooded plate — the demo
+     specimens engage ~40-55% (the rim/glint reads the hue while the warm-cream core
+     + the AA legibility survive; the `--glass-tint-strength-aa` ≤24% bounding
+     precedent, lifted here because the accent rides the THIN rim/glint not the
+     whole plate). A malformed override CLAMPS to 0% (the typed fail-safe). */
+@property --glass-accent {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+
+@property --glass-accent-strength {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}
+
 /* AX.W54 — the GLASS-FIRST single knob. `--glass-level` is the ONE clarity
    scalar threaded through BOTH glass ladders at their single sites (the
    `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,

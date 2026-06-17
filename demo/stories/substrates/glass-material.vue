@@ -64,6 +64,23 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
     liveCardEl,
     { live: true, backgroundCanvas: () => document.querySelector("canvas") },
 );
+
+// BB.W-GLASS-ACCENT — the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
+// tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`
+// per-INSTANCE (inline :style) — the §F1 data-keyed colored hover made a ONE-LINE
+// seam, NOT a hand-threaded border-color + inline catch-light per surface. The data
+// hues are the demo's OWN palette (presets-in-consumers — the library token default
+// is the NEUTRAL transparent identity; a consumer's DATA hue never enters the lib).
+// The accent tints the RIM (silhouette edge) + the ::before catch-light glint with
+// the datum's color; an UNSET surface beside it stays byte-identical warm-cream glass.
+const accentSamples = [
+    { label: "series · rose", hue: "oklch(0.68 0.19 18)" },
+    { label: "series · amber", hue: "oklch(0.78 0.16 75)" },
+    { label: "series · teal", hue: "oklch(0.72 0.13 195)" },
+    { label: "series · violet", hue: "oklch(0.62 0.2 295)" },
+] as const;
+// the per-instance accent strength ceiling — a rim WHISPER, not a flooded plate.
+const ACCENT_STRENGTH = "48%";
 </script>
 
 <template>
@@ -145,6 +162,66 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
                         <span>rim OFF</span>
                         <span class="text-mono-caption text-muted-foreground"
                             >suppressed</span
+                        >
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="glass-accent — the per-instance chromatic rim+glint axis (BB)"
+            blurb="The THIRD disjoint glass axis (level · tint · accent). A consumer DATA hue OKLab-tints the surface's RIM (silhouette edge) + the ::before catch-light glint — set per-INSTANCE (--glass-accent: <hue>; --glass-accent-strength: <N%>), the §F1 data-keyed colored hover made a one-line seam. DISTINCT-not-fork of W55's --glass-tint-source (the whole-plate legibility darken): the accent rides the rim+glint only, never the plate background. Each swatch carries its own series hue; the UNSET plate beside them stays byte-identical warm-cream glass."
+        >
+            <ShowcaseFrame pad="lg" tier="field">
+                <!-- consumer #1 — the data-hue swatch GRID: each cell sets its OWN
+                     --glass-accent per-instance, so each rim+glint glows a DISTINCT
+                     series hue (the per-instance proof). -->
+                <div class="flex flex-wrap gap-6">
+                    <div
+                        v-for="s in accentSamples"
+                        :key="s.label"
+                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        data-accent-swatch
+                        :data-accent-hue="s.hue"
+                        :style="{
+                            '--glass-accent': s.hue,
+                            '--glass-accent-strength': ACCENT_STRENGTH,
+                        }"
+                        :data-specular-plate="true"
+                        @pointermove="onPointerMove"
+                    >
+                        <span>{{ s.label }}</span>
+                        <span class="text-mono-caption text-muted-foreground"
+                            >--glass-accent</span
+                        >
+                    </div>
+                </div>
+                <!-- consumer #2 — the Atlas-shaped data-hue surface (a HoverCard-
+                     shaped accented plate) BESIDE the unset neutral plate: the
+                     accented one glows the datum hue at rim + glint, the unset one
+                     reads exactly today's warm-cream glass (the byte-identical
+                     neutral fallback, the on/off contrast device). -->
+                <div class="mt-6 flex flex-wrap gap-6">
+                    <div
+                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        data-accent-device="on"
+                        :style="{
+                            '--glass-accent': 'oklch(0.62 0.2 295)',
+                            '--glass-accent-strength': ACCENT_STRENGTH,
+                        }"
+                    >
+                        <span>accent ON</span>
+                        <span class="text-mono-caption text-muted-foreground"
+                            >data hue · violet</span
+                        >
+                    </div>
+                    <div
+                        class="glass-floating flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        data-accent-device="off"
+                    >
+                        <span>accent OFF</span>
+                        <span class="text-mono-caption text-muted-foreground"
+                            >unset · warm-cream</span
                         >
                     </div>
                 </div>

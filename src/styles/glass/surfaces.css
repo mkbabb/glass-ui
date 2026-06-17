@@ -18,7 +18,12 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-quiet);
-        border: 1px solid var(--card-focus-border);
+        /* BB.W-GLASS-ACCENT — the card border feeds its focus-elevation ink into the
+           accent-composed `--glass-border-accent` (ladder.css rim group); byte-
+           identical at 0% strength. The focus rung still re-points `--card-focus-
+           border`, which flows through `--glass-border-rung`. */
+        --glass-border-rung: var(--card-focus-border);
+        border: 1px solid var(--glass-border-accent);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
         /* AY.W-A11Y-PERF O-4 — upgrade `layout style` → include `paint` so the

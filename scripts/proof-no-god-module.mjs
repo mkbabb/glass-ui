@@ -92,6 +92,12 @@ const RATCHET_BASELINES = {
     // tokens/scroll-tokens.css partial (the paper/control/display families stay) —
     // drained before the Batch-7 close.
     "styles/tokens/scale-paper.css": 519, // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knobs → tokens/scroll-tokens.css (Batch 6)
+    // glass/ladder.css holds the 5-rung surface ladder + the calm-tier re-point
+    // (W-ON-GLASS-FG) + the W-GLASS-ACCENT rim/accent group + the bright-bucket
+    // @container — the glass-effect waves (W-LENSING/W-GLASS-ACCENT) accreted it.
+    // BOOK(BB.W-CARVE4): carve the rim/accent + bright-bucket group → glass/rim.css
+    // (the 5-rung ladder stays) — drained before the Batch-7 close.
+    "styles/glass/ladder.css": 510, // BOOK(BB.W-CARVE4): carve the rim/accent + bright-bucket group → glass/rim.css (Batch 6)
 };
 
 let _cliPaths = null;

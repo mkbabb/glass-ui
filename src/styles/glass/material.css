@@ -117,18 +117,37 @@
            so the glint is a bounded RIM ring, NOT a whole-plate wash (the AX.W52 D19
            bounded-gleam discipline). The `--specular-angle` floor `0deg` sits the glint
            at the top edge when unwired (static rest — no ambient drift, no blowout). */
+        /* BB.W-GLASS-ACCENT — the catch-light CORE COLOR composes the per-instance
+           chromatic accent. The warm-cream `hsl(40 35% 92%)` core resolves through
+           the ONE `--glass-specular-core` var, OKLab-mixed toward `var(--glass-
+           accent)` at `var(--glass-accent-strength)`. This tints the CORE only — it
+           is the COLOR axis; W-LENSING owns the GEOMETRY (the conic angle-keyed
+           edge-glint + the radial disc + the masks + the `plus-lighter` blend, all
+           BELOW, untouched). Tinting the ONE core tints BOTH the centered disc AND
+           the rim glint (they share the core), so the data hue reads at the glint
+           where the pointer grazes — the data-keyed colored catch-light. At
+           `--glass-accent-strength: 0%` + `--glass-accent: transparent` (the
+           `@property` defaults) the mix === `hsl(40 35% 92%)` byte-identical (the W2
+           warm-cream floor). Each gradient stop reproduces its original alpha via
+           `color-mix(in srgb, <core> N%, transparent)` (=== the prior `<core> / 0.NN`),
+           so the geometry + falloff is byte-identical at rest. */
+        --glass-specular-core: color-mix(
+            in oklab,
+            hsl(40 35% 92%),
+            var(--glass-accent) var(--glass-accent-strength)
+        );
         background:
             conic-gradient(
                 from var(--specular-angle, 0deg) at 50% 50%,
-                hsl(40 35% 92% / 0) 0deg,
-                hsl(40 35% 92% / 0.55) 18deg,
-                hsl(40 35% 92% / 0) 60deg,
-                hsl(40 35% 92% / 0) 360deg
+                transparent 0deg,
+                color-mix(in srgb, var(--glass-specular-core) 55%, transparent) 18deg,
+                transparent 60deg,
+                transparent 360deg
             ),
             radial-gradient(
                 circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
-                hsl(40 35% 92% / 0.5) 0%,
-                hsl(40 35% 92% / 0) 70%,
+                color-mix(in srgb, var(--glass-specular-core) 50%, transparent) 0%,
+                transparent 70%,
                 transparent 100%
             );
         opacity: var(--specular-intensity, 0);

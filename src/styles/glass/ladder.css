@@ -42,7 +42,10 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-wash);
-        border: 1px solid var(--glass-border-wash);
+        /* BB.W-GLASS-ACCENT — the rung border ink feeds the accent-composed
+           `--glass-border-accent` (rim group above); byte-identical at 0%. */
+        --glass-border-rung: var(--glass-border-wash);
+        border: 1px solid var(--glass-border-accent);
         box-shadow: var(--glass-material-rim), var(--glass-shadow-wash);
     }
 
@@ -62,7 +65,8 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-quiet);
-        border: 1px solid var(--glass-border-quiet);
+        --glass-border-rung: var(--glass-border-quiet);
+        border: 1px solid var(--glass-border-accent);
         box-shadow:
             var(--glass-material-rim),
             var(--glass-under-shadow-quiet),
@@ -73,7 +77,8 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-resting);
-        border: 1px solid var(--glass-border-resting);
+        --glass-border-rung: var(--glass-border-resting);
+        border: 1px solid var(--glass-border-accent);
         box-shadow:
             var(--glass-material-rim),
             var(--glass-under-shadow-default),
@@ -99,7 +104,8 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-floating);
-        border: 1px solid var(--glass-border-floating);
+        --glass-border-rung: var(--glass-border-floating);
+        border: 1px solid var(--glass-border-accent);
         box-shadow:
             var(--glass-material-rim),
             var(--glass-under-shadow-vivid),
@@ -113,7 +119,8 @@
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-overlay);
-        border: 1px solid var(--glass-border-overlay);
+        --glass-border-rung: var(--glass-border-overlay);
+        border: 1px solid var(--glass-border-accent);
         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
     }
 
@@ -419,6 +426,40 @@
        their now-redundant inline `--glass-edge-light` layer below). The alpha is
        deliberately low so the rim never eats AA legibility over a busy
        backdrop. */
+    /* ── BB.W-GLASS-ACCENT — the per-INSTANCE chromatic-RIM tint ───────────────
+       The THIRD disjoint glass axis (LEVEL · TINT · ACCENT). The rim is TWO
+       resolved things — the `--glass-material-rim` inset RING (= `--glass-edge-
+       light`, an inset box-shadow) and the per-rung `--glass-border-*` BORDER —
+       and BOTH must carry the accent hue so the rim reads as ONE accent silhouette,
+       not a half-tinted edge.
+
+       The composition is `color-mix(in oklab, <current rim color>, var(--glass-
+       accent) var(--glass-accent-strength))` — the PERCEPTUAL oklab mix the W55
+       glass-tint seam + the `<IconChip>` chip already speak (NOT in-srgb — the
+       in-srgb fence is the `--surface-tint-*` brand-overlay family, a SEPARATE
+       axis this never touches). At the resting `--glass-accent-strength: 0%` (the
+       `@property` default) + `--glass-accent: transparent` (the neutral identity)
+       the mix resolves byte-identical to today's rim (the W2 no-op floor).
+
+       The RING: a box-shadow value cannot be `color-mix`-ed whole, so the rim ring
+       is REBUILT here as `inset 0 0 0 0.75px <mixed-color>` — the SAME 0.75px inset
+       geometry the `--glass-edge-light` token paints (AV.W15 M3), only its COLOR
+       stop composing the accent. At 0% strength the color resolves to the
+       `--glass-edge-light` base ink (`hsl(0 0% 100% / 0.18)` light / 0.22 dark —
+       read via `--glass-rim-ink`) so the ring is byte-identical to
+       `var(--glass-edge-light)`. The `.dark` arm re-points `--glass-rim-ink` to the
+       dark base so the dark rim composes off `--glass-edge-light-dark`.
+
+       The BORDER: each rung's `border-color` reads `--glass-border-accent`, which
+       composes the accent onto the rung's own `--glass-border-*` ink. The rung
+       borders are re-pointed at their declarations (the `border: 1px solid
+       var(--glass-border-accent)`) so ONE derived token carries the accent across
+       the band; `--glass-border-accent` reads the per-rung `--glass-border-rung`
+       the rung sets locally, mixed with the accent.
+
+       This axis NEVER touches the plate BACKGROUND (the W55 `--glass-tint-source`
+       cohort) — the accent is the rim+glint chromatic DECORATION, not the
+       whole-plate legibility darken (the distinct-axis-not-fork fence). */
     .glass-material,
     .glass-wash,
     .glass-quiet,
@@ -428,7 +469,34 @@
     .glass-card,
     .glass-specular-track,
     .dock-icon-button {
-        --glass-material-rim: var(--glass-edge-light);
+        /* the resolved rim ring INK (white-α light / lifted-white-α dark — the
+           SAME stop the `--glass-edge-light` token carries; the `.dark` arm below
+           re-points it). The accent mixes ONTO this ink. */
+        --glass-rim-ink: hsl(0 0% 100% / 0.18);
+        --glass-material-rim: inset 0 0 0 0.75px
+            color-mix(in oklab, var(--glass-rim-ink), var(--glass-accent) var(--glass-accent-strength));
+        /* the per-rung border ink, accent-composed. `--glass-border-rung` is set by
+           each rung at its own declaration (it reads the rung's `--glass-border-*`
+           token); the accent mixes onto it so the BORDER half of the rim carries the
+           same hue as the RING. At 0% strength === the un-mixed rung ink. */
+        --glass-border-accent: color-mix(
+            in oklab,
+            var(--glass-border-rung, var(--glass-border)),
+            var(--glass-accent) var(--glass-accent-strength)
+        );
+    }
+    .dark .glass-material,
+    .dark .glass-wash,
+    .dark .glass-quiet,
+    .dark .glass-resting,
+    .dark .glass-floating,
+    .dark .glass-overlay,
+    .dark .glass-card,
+    .dark .glass-specular-track,
+    .dark .dock-icon-button {
+        /* the dark rim ink is the lifted-α base (`--glass-edge-light-dark` stop) so
+           the accent composes off the dark silhouette device (W-DARK-MATERIAL). */
+        --glass-rim-ink: hsl(0 0% 100% / 0.22);
     }
 
     .dark .glass-wash::after,
