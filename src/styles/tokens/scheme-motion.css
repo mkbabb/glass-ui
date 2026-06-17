@@ -153,21 +153,53 @@
        ── EASING DOCTRINE (AX.W52 §6 — which easing fits which job) ──
        ONE recorded rule so the animation easing stops forking live. This
        FORMALIZES the already-correct `transitions.css` idiom (enter=spring,
-       exit=bezier) as the house rule every recipe reaches for:
+       exit=bezier) as the house rule every recipe reaches for.
 
-         | Transition kind                                  | Easing                              |
-         |--------------------------------------------------|-------------------------------------|
-         | Surface props (bg, border, color, box-shadow,    | `--ease-standard` (bezier — a       |
-         |   opacity)                                       |   colour cross-fade reads as a      |
-         |                                                  |   wobble on a spring)               |
-         | Transform — hover/press/active (scale, translate,| `--spring-smooth` (the ONE button/  |
-         |   rotate)                                         |   interactive scale register) or    |
-         |                                                  |   `--spring-snappy` (crisp press)   |
-         | Enter (mount, popover open, dialog in)           | `--spring-bouncy` / `--spring-snappy`|
-         | Exit (unmount, close)                            | `--ease-out` / `--ease-standard`    |
-         |                                                  |   (bezier, NO overshoot — an exit   |
-         |                                                  |   must never overshoot past gone)   |
-         | Position-tracked (specular pointer follow)       | `--ease-standard`                   |
+       BB.W-MOTION-CANON — the table embodies ONE principle (Material 3's
+       spatial-vs-effects split, codified in `docs/precepts/motion-canon.md`
+       as P1): a SPATIAL channel (the box MOVES/RESHAPES — position, SIZE,
+       rotation, corners) rides a `--spring-<name>` (overshoot = physicality);
+       an EFFECTS channel (the surface RE-TINTS — color, opacity, box-shadow)
+       rides a bezier `--ease-*` (a colour cross-fade reads as a wobble on a
+       spring). Each row below is tagged [SPATIAL] (spring) or [EFFECTS]
+       (bezier) so the rule is legible, not implicit. The canon doc is the
+       canonical home; this table is the SOURCE it re-states:
+
+         | Transition kind                                  | Tier      | Easing                   |
+         |--------------------------------------------------|-----------|--------------------------|
+         | Surface props (bg, border, color, box-shadow,    | [EFFECTS] | `--ease-standard` (bezier|
+         |   opacity)                                       |           |   — a colour cross-fade  |
+         |                                                  |           |   reads as a wobble on a |
+         |                                                  |           |   spring)                |
+         | Transform — hover/press/active (scale, translate,| [SPATIAL] | `--spring-smooth` (the   |
+         |   rotate)                                         |           |   ONE button/interactive |
+         |                                                  |           |   scale register) or     |
+         |                                                  |           |   `--spring-snappy`      |
+         | Size / morph (dock V↔H, indicator size-          | [SPATIAL] | `--spring-dock` /        |
+         |   correction, reveal source-rect bloom)          |           |   `--spring-snappy`,     |
+         |                                                  |           |   expressed as a         |
+         |                                                  |           |   COMPOSITOR transform   |
+         |                                                  |           |   (P5) — NEVER an        |
+         |                                                  |           |   animated width/height  |
+         | Enter (mount, popover open, dialog in, reveal)   | [SPATIAL] | `--spring-bouncy` /      |
+         |                                                  |           |   `--spring-snappy`      |
+         | Bold decelerating arrival (the SOTA arrival —    | [SPATIAL] | `--ease-out-expo`        |
+         |   reveal draw-on, big-distance settle)           |           |   (cubic-bezier(.16,1,   |
+         |                                                  |           |   .3,1); the house expo) |
+         | Exit (unmount, close)                            | [EFFECTS] | `--ease-out` /           |
+         |                                                  |           |   `--ease-standard`      |
+         |                                                  |           |   (bezier, NO overshoot —|
+         |                                                  |           |   an exit must never     |
+         |                                                  |           |   overshoot past gone)   |
+         | Position-tracked (specular pointer follow)       | [EFFECTS] | `--ease-standard`        |
+
+       The SOTA arrival ease is the EXISTING `--ease-out-expo` (alias →
+       `--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`, the house
+       expo with the value.js `easeOutExpo` JS twin in the MOTION_CURVES table)
+       — NOT a net-new token. The motion canon NAMES it as the arrival register;
+       it is not re-minted (a duplicate alias would fail proof:animation-
+       coherence's EASING-TABLE-BOUND arm — the curve already has its canonical
+       + alias row in `curves.ts`).
 
        The BUTTON family (`.btn-pill` / `.tap-squish` / `.glass-btn` /
        `btn-interactive`) UNIFIES its `scale` transform leg onto ONE register —

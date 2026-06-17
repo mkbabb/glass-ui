@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
                  viewport-anchored BottomDock that floats over this region. -->
             <main
                 ref="mainEl"
-                class="demo-main-scroller relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
+                class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
                 <!-- BA.W-ANIMATE Tier B — the compositor scroll-progress bar.
                      A native `scroll()`-timeline 0..1 scaleX rail pinned to the

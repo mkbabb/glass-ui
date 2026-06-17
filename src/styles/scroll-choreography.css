@@ -1,0 +1,300 @@
+/*
+ * scroll-choreography.css — the SOTA scroll-driven CHOREOGRAPHY register
+ * (BB.W-SCROLL-MOTION).
+ *
+ * Cascade rung AFTER scroll-driven.css. glass-ui owns the native scroll-driven
+ * SUBSTRATE (scroll-driven.css `scroll()`/`view()` + the `--demo-main-progress`
+ * named timeline + the `supportsCssTimeline` harden) but composes none of the
+ * CHOREOGRAPHY — the page-load BUILD, the section CASCADE, the scroll-PINNED
+ * fixed-stage-advances-time reveals + the smooth-scroll register. The award-winners
+ * hand-roll these on Lenis+GSAP (a 20-40KB JS dependency); glass-ui ships the
+ * NATIVE register — the platform now ships `scroll()`/`view()`/`timeline-scope`
+ * natively, off the compositor at 60fps (the no-net-dep fence; the 2026
+ * universal-support convergence). NO Lenis/GSAP/Locomotive dependency, ever.
+ *
+ *   .scroll-build   — the route-enter page-build (chrome -> hero -> body, a
+ *                     spring-clocked coupled-fade, @keyframes-on-mount [NOT a
+ *                     scroll timeline — the build fires on mount], PRM-snapped).
+ *   .scroll-cascade — the orchestrated section cascade (per-child view() timeline,
+ *                     the implicit stagger [NO setTimeout], the spring-clocked
+ *                     coupled transform+opacity build).
+ *   .scroll-pin     — the fixed-stage-advances-time scroll-pinned register
+ *                     (position: sticky stage + a named scroll-timeline linked via
+ *                     timeline-scope; the stage's internal phases advance with
+ *                     scroll progress, compositor channels only).
+ *   .smooth-scroll  — the native scroll-behavior: smooth opt-in (PRM-gated,
+ *                     zero runtime — a smooth-scroll under reduce is a vestibular
+ *                     concern, so the smooth interpolation is dropped under PRM).
+ *
+ * THE DISCIPLINE (mirrors scroll-driven.css EXACTLY — the exemplary outer-gate):
+ * the whole register sits under `@media (prefers-reduced-motion: no-preference)`
+ * so under PRM no scroll/build animation attaches at all and content renders in
+ * its terminal state (the `from` keyframe never applies because the animation
+ * never binds; the .scroll-pin stage shows its terminal phase, no sweep). The
+ * scroll-driven recipes sit under a second `@supports (animation-timeline: …)`
+ * gate so a non-supporting engine gets the STATIC layout (the .scroll-pin stage
+ * is a correct non-pinned read, never a broken silent stage).
+ *
+ * COMPOSITOR-ONLY (the proof:no-layout-animation floor BB.W-CARD-COMPOSITE): every
+ * @keyframes step + transition animates ONLY transform/translate/scale/opacity/
+ * clip-path — NEVER a layout-triggering property (no height/padding/inline-size/
+ * top/grid-template). The SPATIAL (transform) legs ride the per-spring `--spring-*`
+ * + the matching `--spring-*-duration` settle clock (P2/P4); the EFFECTS (opacity)
+ * legs ride the no-overshoot `--ease-out` bezier (P1/P3 — a fade must never
+ * overshoot). The spring tokens are READ-ONLY (the W-GLASS-CAL clock fence — this
+ * register THREADS them, it never re-tunes a spring value or a duration).
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * .scroll-build — the route-enter page-build.
+ *
+ * A MOUNT-driven entrance (route-enter), NOT a scroll-driven one — so it rides a
+ * plain `@keyframes ... animation` (NOT a `view()`/`scroll()` timeline; the build
+ * fires on first paint of the new route, not on scroll). It sits under the PRM
+ * no-preference gate ALONE (no `@supports (animation-timeline)` — it does not use a
+ * timeline, so it runs on every engine; under PRM it never binds, so the page
+ * mounts at its terminal state).
+ *
+ * The coordinated stagger: the .scroll-build container's direct children are the
+ * BEATS (chrome, hero, body), each delayed by `--scroll-build-step * --i` (the
+ * per-beat coordinated stagger — the page assembles chrome-first, then the hero,
+ * then the first section). `--i` is the beat index a consumer sets per child
+ * (0-based); the chassis sets it on the chrome/hero/section in reading order
+ * (W-HIERARCHY2 owns the ORDER; this register threads the entrance ON it).
+ * ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes gl-page-build {
+        from {
+            opacity: 0;
+            /* SPATIAL leg — the build rise (a transform, compositor-only). */
+            transform: translateY(var(--scroll-build-rise, 1.5rem));
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* The page-build container marks the entrance; the beats are its children. */
+    .scroll-build > * {
+        /* The coupled build: the SPATIAL transform rides the snappy spring settle
+           clock (P2/P4 — the page parts arrive with crisp gravity); the opacity is
+           a coupled leg in the SAME keyframe on the SAME clock so the fade tracks
+           the rise as ONE coherent glide (P3 — fade coupled to transform). The
+           no-overshoot bezier governs the FADE channel where the spring's
+           overshoot is not wanted: `--ease-out` is named on the build's title beat
+           (the hero <h1> — audacious type arrives with GRAVITY, not bounce, per
+           W-HIERARCHY2); the other beats ride the snappy spring. */
+        animation: gl-page-build var(--spring-snappy-duration, 0.34s)
+            var(--spring-snappy) both;
+        animation-delay: calc(var(--scroll-build-step, 90ms) * var(--i, 0));
+    }
+
+    /* The hero/title beat: the audacious-type-arrives-with-gravity register — the
+       no-overshoot `--ease-out` bezier (a strictly monotone settle, NO overshoot
+       past the terminal transform), the existing .story-hero-title--enter
+       discipline folded into the ONE entrance system. A consumer marks the hero
+       beat `.scroll-build-hero`. */
+    .scroll-build > .scroll-build-hero {
+        animation: gl-page-build 0.62s var(--ease-out, ease-out) both;
+    }
+}
+
+/* The EXPLICIT P6 carve — under prefers-reduced-motion: reduce the page-build DROPS
+   the spatial transform (no movement — the vestibular floor) but KEEPS a gentle
+   terminal fade-in (the EFFECTS channel survives per P6: fade-keeps, transform-
+   drops). This sits OUTSIDE the no-preference gate as the reduce-arm of the
+   coordinated build (mirroring the transitions.css fade-slide PRM arm — the
+   opacity leg alone under reduce). The build is mount-driven, so the no-preference
+   gate above never binds under reduce; this arm gives PRM users the coupled-FADE
+   terminal entrance with ZERO motion frames (no translateY), the genuine P6 read. */
+@media (prefers-reduced-motion: reduce) {
+    @keyframes gl-page-build-fade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    .scroll-build > * {
+        /* fade-keeps (opacity only), transform-DROPS (no translateY) — P6. */
+        animation: gl-page-build-fade var(--duration-fast, 0.16s) var(--ease-out, ease-out)
+            both;
+        animation-delay: 0s; /* no coordinated stagger under reduce — a single calm paint */
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * .scroll-cascade — the orchestrated section cascade.
+ *
+ * Extends the bare `[data-scroll-reveal] > *` 6px fade into the SOTA coordinated
+ * build: the per-child `view()` timeline stays the implicit-stagger mechanism (each
+ * child owns its own timeline — NO setTimeout cascade), but the entrance is the
+ * spring-clocked coupled build (a deeper rise + a tighter reveal window). It sits
+ * under the PRM no-preference gate + the `@supports (animation-timeline: view())`
+ * gate (the scroll-driven.css discipline) — under PRM/non-support the sections
+ * render at their terminal state.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        @keyframes gl-cascade-build {
+            from {
+                /* EFFECTS leg — the coupled fade (no overshoot). */
+                opacity: 0;
+                /* SPATIAL leg — the build rise (a transform, compositor-only). */
+                transform: translateY(var(--scroll-cascade-rise, 1.25rem));
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-cascade > * {
+            /* The view()-timeline drives the build off each child's OWN entry into
+               the viewport (the implicit stagger). The progress-bound timeline maps
+               the entrance across the `animation-range` window; the keyframe's
+               coupled transform+opacity build is the orchestrated cascade (vs the
+               bare 6px reveal). `linear` is the right easing for a SCROLL-bound
+               progress map (the spring shaping lives in the section's own settle
+               where the build is mount-driven; a scroll-bound timeline reads
+               1:1 with scroll position — a spring on a scrubbed timeline reads as
+               a scrubbed spring, which is correct here as the linear progress map). */
+            animation: gl-cascade-build auto linear both;
+            animation-timeline: view(block);
+            animation-range: entry 0% entry var(--scroll-cascade-range-end, 45%);
+        }
+
+        /* The horizontal-scroller variant — a `view(inline)` axis. */
+        .scroll-cascade.scroll-cascade--inline > * {
+            animation-timeline: view(inline);
+        }
+
+        /* The OPT-IN column-stagger variant (the Codrops nuance — even columns
+           from top, odd from below). A GRID-surface flourish, NOT the default (the
+           proportion fence: a uniform vertical cascade is the calm StoryPage
+           default; the column-stagger is the front-door grid showcase). A consumer
+           sets `--col` (the column index) per child; even/odd rise from opposite
+           directions, offset by `--scroll-cascade-column-stagger`. */
+        @keyframes gl-cascade-build-col-even {
+            from {
+                opacity: 0;
+                transform: translateY(calc(-1 * var(--scroll-cascade-rise, 1.25rem)));
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .scroll-cascade.scroll-cascade--columns > * {
+            animation-range: entry 0%
+                entry
+                calc(
+                    var(--scroll-cascade-range-end, 45%) +
+                        var(--scroll-cascade-column-stagger, 60ms) * 0
+                );
+        }
+        .scroll-cascade.scroll-cascade--columns > *:nth-child(even) {
+            animation-name: gl-cascade-build-col-even;
+        }
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * .scroll-pin — the fixed-stage-advances-time scroll-pinned register.
+ *
+ * The SOTA "scrolling does not move the scene, it advances time inside it" model:
+ * a `.scroll-pin` tall container (the `--scroll-pin-stage-height` temporal space)
+ * holds a `.scroll-pin-stage` `position: sticky` element. The container declares
+ * a named `scroll-timeline`; the stage's internal phase animations bind to that
+ * named timeline via `timeline-scope` (so the stage animates against the
+ * CONTAINER'S scroll progress — the fixed stage advances time). The phase
+ * animations are compositor-only (transform/opacity/clip-path over the
+ * `animation-range` phase windows — the Codrops phased sequence: a reveal phase
+ * 0..45%, an expand phase 45..90%, a settle phase 90..100%).
+ *
+ * `timeline-scope` is the newest primitive — the `@supports` gate probes it (NOT
+ * just `scroll()`), so an engine with `scroll()`/`view()` but not `timeline-scope`
+ * gets the STATIC layout (a correct non-pinned read: the stage is a plain sticky
+ * element at its terminal phase, never a broken silent stage). In 2026
+ * `timeline-scope` ships alongside `scroll()`/`view()` (the universal-support
+ * convergence), so the CSS-only register is the ship; the JS fallback leaf (mirror
+ * useScrollProgress's dual-path single-writer) is BOOKED only on a material
+ * engine-gap reveal (the §Triumvirate support-matrix trigger) — never a JS scroll
+ * lib (the no-net-dep fence is binding either way).
+ * ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) and (timeline-scope: --gl-pin) {
+        @keyframes gl-pin-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(var(--scroll-pin-lift, 2.5rem)) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes gl-pin-settle {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                /* The settle phase — a gentle compositor drift, never a layout move. */
+                transform: scale(1.02) translateY(calc(-1 * var(--scroll-pin-lift, 2.5rem)));
+                opacity: 1;
+            }
+        }
+
+        /* The tall temporal container declares a named scroll-timeline + exposes it
+           to descendants via timeline-scope (the fixed-stage-advances-time link). */
+        .scroll-pin {
+            position: relative;
+            block-size: var(--scroll-pin-stage-height, 320vh);
+            scroll-timeline-name: --gl-pin;
+            scroll-timeline-axis: block;
+            timeline-scope: --gl-pin;
+        }
+
+        /* The sticky stage — pinned to the viewport while the container scrolls
+           past; its phases advance against the container's --gl-pin timeline. */
+        .scroll-pin-stage {
+            position: sticky;
+            inset-block-start: 0;
+        }
+
+        /* Phase 1 — the reveal (0..45% of the container scroll). */
+        .scroll-pin-stage .scroll-pin-phase-reveal {
+            animation: gl-pin-reveal auto linear both;
+            animation-timeline: --gl-pin;
+            animation-range: 0% var(--scroll-pin-phase-reveal-end, 45%);
+        }
+
+        /* Phase 2 — the settle/expand (the reveal-end..expand-end window). */
+        .scroll-pin-stage .scroll-pin-phase-settle {
+            animation: gl-pin-settle auto linear both;
+            animation-timeline: --gl-pin;
+            animation-range: var(--scroll-pin-phase-reveal-end, 45%)
+                var(--scroll-pin-phase-expand-end, 90%);
+        }
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * .smooth-scroll — the native smooth-scroll opt-in.
+ *
+ * The native `scroll-behavior: smooth` (CSS-first, zero runtime — NOT a JS rAF
+ * momentum loop, which IS Lenis and is the fence). An OPT-IN class the scroller
+ * (`<main>`, a `.scroll-pin` container) applies. PRM-GATED: under
+ * `prefers-reduced-motion: reduce` the smooth interpolation is DROPPED and the
+ * jump-scroll is correct (a smooth-scroll over an anchor-jump is a vestibular
+ * concern). A consumer wanting Lenis-grade momentum brings it in THEIR app (the
+ * presets-in-consumers discipline); the library ships the native register.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+    .smooth-scroll {
+        scroll-behavior: smooth;
+    }
+}

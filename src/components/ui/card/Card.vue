@@ -3,6 +3,7 @@ import { computed, type HTMLAttributes, type CSSProperties } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
 import { vSpecular } from "../../../composables/glass";
+import { useLiquidPress } from "../../../composables/motion/useLiquidPress";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";
 // BA.W-SURFACE-AXIS — Card's `veil` surface arm routes through the SHARED
 // resolver so the `veil-surface` decoration class has ONE source (the same class
@@ -101,6 +102,20 @@ interface Props extends PrimitiveProps {
      *  hero/chrome opt-in); `full` runs the brighter pre-tune rung set for a busy
      *  backdrop. Only `glass` surfaces wire it; `cartoon` owns its own sticker lift. */
     specular?: CardSpecular;
+    /** BB.W-PRESS-UNIFY — the interactive PRESS register, default **OFF**. A bare
+     *  Card is a static content PLATE and never presses (a press on a static surface
+     *  is the visual-load-bearing anti-pattern). A `:pressable` Card is a TAPPABLE
+     *  LIST-CARD (a selectable result row, a navigable tile) — it gains the ONE
+     *  interruptible coupled spring-press (`useLiquidPress`): the reciprocal X/Y squish
+     *  + a sub-perceptual brightness lift on the `--card-press-t` drive, on the
+     *  `--spring-snappy`-class clock, INTERRUPTIBLE (a rapid re-tap re-seats the spring
+     *  velocity-continuously), PRM-instant (the press snaps with zero in-between
+     *  frames). Card is the SECOND binary the dead `useSpringPress` primitive reaches
+     *  (Button is the first — direct; Card via `useLiquidPress` which composes it — the
+     *  J-inv-10 ≥2-consumer bar met; the dock control is the booked third). The press is
+     *  compositor-only (`scale` + a custom property); the `.glass-press` CSS `:active`
+     *  scale is the no-JS / SSR floor. */
+    pressable?: boolean;
     class?: HTMLAttributes["class"];
 }
 
@@ -111,6 +126,7 @@ const props = withDefaults(defineProps<Props>(), {
     grain: true,
     grid: false,
     specular: "off",
+    pressable: false,
     as: "div",
 });
 
@@ -144,12 +160,35 @@ const specularTokenStyle = computed<CSSProperties>(() =>
         : {},
 );
 
-// The host style carries the `full`-rung intensity-token override only (the position
-// write is the directive's job now — a direct `el.style` host write, not a merged
-// `:style` object). `off`/`subtle`/cartoon carry nothing.
-const hostStyle = computed<CSSProperties | undefined>(() =>
-    specularArmed.value ? specularTokenStyle.value : undefined,
-);
+// BB.W-PRESS-UNIFY — the interactive press register (consumer #2). Wired ONLY when
+// `pressable` (a tappable list-card); a static content plate never presses. The driver
+// is the SAME `useLiquidPress` Button composes — the interruptible coupled spring-press
+// (the reciprocal X/Y squish + the `--card-press-t` drive the `.glass-press` brightness
+// leg reads). A card is a larger surface than a button, so the shrink is a touch
+// shallower (0.02 → 0.98 at full press) — the press REGISTER per surface is recorded,
+// not flattened to one curve. PRM-instant + compositor-only by construction (inherited
+// from `useLiquidPress`). The driver is ALWAYS constructed (a composable cannot mount
+// conditionally), but the handlers + the press `:style` only reach the host when
+// `pressable` — the rest-state press value is 0 so an un-pressable card is byte-
+// identical to HEAD (no `scale`, no `--card-press-t` paint).
+const press = useLiquidPress({
+    response: 0.28,
+    dampingFraction: 0.78,
+    pressVar: "--card-press-t",
+    shrinkDepth: 0.02,
+    maxStretch: 1.03,
+});
+
+// The host style carries the `full`-rung specular intensity-token override (the
+// position write is the directive's job now — a direct `el.style` host write) MERGED
+// with the press squish/drive when `pressable`. The press `:style` overrides the CSS
+// `.glass-press:active` scale floor while engaged (the single-source press); a non-
+// pressable card carries neither.
+const hostStyle = computed<CSSProperties | undefined>(() => {
+    const specular = specularArmed.value ? specularTokenStyle.value : undefined;
+    if (!props.pressable) return specular;
+    return { ...(specular ?? {}), ...press.pressStyle.value };
+});
 
 // invariant 31 — dev-WARN on stale prop names (`variant`, `flush`). Card's
 // surface is driven entirely by `tier`/`shadow`/`grain`; a swallowed
@@ -166,9 +205,14 @@ useStalePropWarning("Card");
         :data-surface="surface"
         :data-grain="grain"
         :data-grid="grid"
+        :data-pressable="pressable || undefined"
         :as="as"
         :as-child="asChild"
         :style="hostStyle"
+        @pointerdown="pressable ? press.press() : undefined"
+        @pointerup="pressable ? press.release() : undefined"
+        @pointercancel="pressable ? press.release() : undefined"
+        @pointerleave="pressable ? press.release() : undefined"
         :class="
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',
@@ -231,6 +275,13 @@ useStalePropWarning("Card");
                 // Orthogonal to `grain`: the two `::after`-less utility carries
                 // its own pseudo, so grain + grid compose without contention.
                 grid && 'paper-grid',
+                // BB.W-PRESS-UNIFY — the interactive press register, default OFF. The
+                // `.glass-press` recipe (utilities/base.css) is the CSS `:active` scale
+                // floor (the no-JS / SSR press) + the `--card-press-t`-driven brightness
+                // leg the `useLiquidPress` drive feeds; `cursor: pointer` + the WCAG
+                // touch floor read on the interactive register. A non-pressable card
+                // carries none of it (byte-identical to HEAD).
+                pressable && 'glass-press tap-squish',
                 props.class,
             )
         "

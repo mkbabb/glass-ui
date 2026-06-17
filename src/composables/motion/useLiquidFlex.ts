@@ -91,6 +91,17 @@ export interface UseLiquidFlexReturn {
     /**
      * The size as a CSS length style object, keyed on `axis` (`{ width: "Npx" }` or
      * `{ height: "Npx" }`). Bind on the morphing element's style.
+     *
+     * DOCTRINE (BB.W-MOTION-CANON, P5 — the SIZESTYLE-LATENT record): `sizeStyle`
+     * is the SETTLED-FOOTPRINT writer — a one-time reserve of the morph TARGET box
+     * (the FLIP-measured `to` span), NEVER the per-frame animation channel. The
+     * per-frame channel is `transform` (the `stretchStyle` `--stretch` reciprocal
+     * scale, a compositor property). Binding `sizeStyle` to a CONTINUOUSLY-animated
+     * element animates `width`/`height` per frame OFF the compositor (the A'-3
+     * reflow-storm class proof:no-layout-animation forbids library-wide) — FORBIDDEN
+     * by the canon. Write the reserved footprint ONCE at the morph endpoint, then
+     * drive the visible motion through `stretchStyle`/`transform`. See
+     * `docs/precepts/motion-canon.md` P5.
      */
     sizeStyle: ComputedRef<Record<string, string>>;
     /**

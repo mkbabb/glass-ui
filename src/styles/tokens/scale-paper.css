@@ -427,6 +427,37 @@
     --scroll-reveal-rise: 6px;
     --scroll-reveal-range-end: 60%;
 
+    /* BB.W-SCROLL-MOTION — the scroll-CHOREOGRAPHY register knobs (the page-build /
+       section-cascade / scroll-pinned recipes in scroll-choreography.css). These
+       EXTEND the --scroll-reveal-* substrate above; the existing three are READ-ONLY
+       (the cascade COMPOSES them, it never re-tunes them). All distances are
+       compositor (transform) channels; the clocks are the per-spring settle clocks
+       (scheme-motion.css), threaded, never re-tuned. */
+    /* .scroll-build — the route-enter page-build (the chrome -> hero -> body
+       coordinated entrance). The rise is a touch deeper than the section cascade
+       (the page ASSEMBLES — a more pronounced settle), the step is the per-beat
+       coordinated stagger between the chrome, hero, and first-section beats. */
+    --scroll-build-rise: 1.5rem;
+    --scroll-build-step: 90ms;
+    /* .scroll-cascade — the orchestrated section cascade (the per-child view()
+       timeline, the spring-clocked coupled build). The rise lifts the bare
+       --scroll-reveal-rise 6px to a perceptible SOTA build; the range-end is the
+       reveal window (a touch tighter than the bare reveal so each section lands
+       crisply rather than dragging a long fade tail). The column-stagger delay is
+       the opt-in .scroll-cascade--columns grid-variant knob. */
+    --scroll-cascade-rise: 1.25rem;
+    --scroll-cascade-range-end: 45%;
+    --scroll-cascade-column-stagger: 60ms;
+    /* .scroll-pin — the fixed-stage-advances-time scroll-pinned register. The stage
+       height is the Nvh temporal space the sticky stage advances its phases across;
+       the phase windows are the scroll-progress fractions the stage's internal
+       phases key off (grid-reveal 0..45%, expand 45..90%, settle 90..100% — the
+       Codrops phased-sequence shape). */
+    --scroll-pin-stage-height: 320vh;
+    --scroll-pin-phase-reveal-end: 45%;
+    --scroll-pin-phase-expand-end: 90%;
+    --scroll-pin-lift: 2.5rem;
+
     --top-layer-enter-scale: 0.96;
     --top-layer-backdrop-blur: 8px;
     --top-layer-backdrop-dim: 0.5;

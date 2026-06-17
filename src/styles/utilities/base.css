@@ -285,4 +285,42 @@
         }
     }
 
+    /* ── Glass-press — the interactive press register (BB.W-PRESS-UNIFY) ──
+       The CSS half of the `<Card :pressable>` / interactive-glass press. Two
+       coupled legs on ONE `--card-press-t` drive (the `useLiquidPress` writes the
+       JS-driven value; the CSS `:active` is the no-JS / SSR floor):
+
+         • The SCALE leg is the co-composed `.tap-squish` (the Card binds both
+           classes), so the no-JS press already scales to `--scale-press` on the
+           `--spring-smooth` clock and the JS reciprocal squish wins while engaged.
+         • The BRIGHTNESS leg reads the `--card-press-t` drive directly — a sub-
+           perceptual `filter: brightness()` lift so the glass reads as DEFORMING +
+           catching light under the press, not just shrinking (the W-MOTION-CANON P3
+           coupling — fade/brightness coupled WITH the transform on the same drive).
+           `filter` is compositor-safe (the P5 ban targets layout props only —
+           `proof:no-layout-animation` greens it), so the lift never re-layouts.
+
+       The brightness leg rides the `--card-press-t` VALUE (the typed press drive),
+       NOT a CSS transition — it tracks the JS spring frame-for-frame and degrades to
+       the resting 0 (no lift) when JS is off. The press surface is INTERACTIVE: the
+       cursor + a WCAG-2.5.5 touch floor (`min-block-size`) read here, not on the
+       static-card register. The interruptibility + the PRM-instant snap are the JS
+       driver's (`useLiquidPress` → the kf `SpringProgress` re-seat + the PRM policy);
+       this is the CSS floor the JS enhances. */
+    .glass-press {
+        cursor: pointer;
+        min-block-size: max(0px, var(--control-floor, 0px));
+        /* The coupled brightness lift on the press drive (rest 0 → ~4% at full
+           press). The drive is the JS-written `--card-press-t`; with JS off it stays
+           the `@property` 0 initial so the filter is a no-op (`brightness(1)`). */
+        filter: brightness(calc(1 + var(--card-press-t, 0) * 0.04));
+    }
+    /* The press-drive typed registration so a downstream `calc()` interpolates the
+       VALUE (number) and an unwired/SSR card is the static rest frame. */
+    @property --card-press-t {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    }
+
 }

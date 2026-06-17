@@ -155,18 +155,23 @@
     max-inline-size: 18ch;
 }
 
-/* BA.W-ANIMATE scope 5 (applied by W-STAGE on its behalf) — the hero <h1>
-   fade-RISE entrance on the SETTLE register. Audacious type arrives with GRAVITY,
-   NOT bounce: the keyframe rides --ease-out (a strictly monotone bezier, NO
-   overshoot past the terminal transform — never --spring-bouncy/--spring-snappy,
-   the §6 doctrine + the W-ANIMATE W4 negative fence). ONE deliberate event on the
-   title. Gated under prefers-reduced-motion: no-preference — under reduce the
-   <h1> mounts at its static terminal state (no animation declared). */
+/* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page-build's HERO BEAT, folded
+   onto the ONE entrance system (scroll-choreography.css `.scroll-build`). Audacious
+   type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a strictly
+   monotone bezier, NO overshoot past the terminal transform — never
+   --spring-bouncy/--spring-snappy, the §6 doctrine + the W-ANIMATE W4 negative
+   fence; this is the build's hero beat that uses the no-overshoot leg per P1/P3 —
+   the audacious-type-arrives-with-gravity register W-HIERARCHY2 names). It now reads
+   the shared `--scroll-build-rise` distance token (the page-build register's rise),
+   so the hero <h1> arrives on the SAME build distance as the page chrome — ONE
+   coordinated entrance, not two parallel beats. ONE deliberate event on the title.
+   Gated under prefers-reduced-motion: no-preference — under reduce the <h1> mounts
+   at its static terminal state (no animation declared). */
 @media (prefers-reduced-motion: no-preference) {
     @keyframes story-hero-title-rise {
         from {
             opacity: 0;
-            transform: translateY(1.25rem);
+            transform: translateY(var(--scroll-build-rise, 1.5rem));
         }
         to {
             opacity: 1;

@@ -85,6 +85,13 @@ const RATCHET_BASELINES = {
     // (tabs/ already carries composables/useTabIndicator.ts) — drained before the
     // Batch-7 close.
     "components/custom/tabs/SegmentedTabs.vue": 543, // BOOK(BB.W-CARVE4): extract the drag-morph/indicator wiring → tabs/composables/ (Batch 6)
+    // scale-paper.css holds MANY token families (paper + control + display + the
+    // scroll-reveal/choreography substrate + grid) and is the recurring at-bound
+    // tokens offender (W-CONTROL-TOKENS, W-PAPER-GRID, W-SCROLL-MOTION each grew it).
+    // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knob family → a
+    // tokens/scroll-tokens.css partial (the paper/control/display families stay) —
+    // drained before the Batch-7 close.
+    "styles/tokens/scale-paper.css": 519, // BOOK(BB.W-CARVE4): carve the scroll-reveal/choreography knobs → tokens/scroll-tokens.css (Batch 6)
 };
 
 let _cliPaths = null;

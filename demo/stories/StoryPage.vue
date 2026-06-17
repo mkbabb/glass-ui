@@ -42,8 +42,21 @@ const variant = computed<"hero" | "page">(() =>
 
 <template>
     <TooltipProvider :delay-duration="250">
-        <article class="mx-auto w-full max-w-6xl">
-            <header class="flex flex-col gap-2">
+        <!-- BB.W-SCROLL-MOTION: the route-enter PAGE-BUILD host. On each navigation
+             the <article> mounts inside the AppShell route <Transition>, and the
+             `.scroll-build` register assembles the page chrome-first: the <header>
+             chrome (beat 0) rises, then the <StoryHero> hero+body (beat 1) follows,
+             each on a `--scroll-build-step` coordinated stagger (the SOTA
+             page-assembles-itself read). A pure @keyframes-on-mount — NO setTimeout,
+             so the entrance never races the AppShell scroll-to-top reset (it is the
+             <Transition> hook's ordering, not a timer). The hero <h1> inside
+             <StoryHero> keeps its own `.story-hero-title--enter` (a deep grandchild,
+             not a direct `.scroll-build` child — no double-bind). PRM → no build
+             binds (the recipe's outer @media gate; the page mounts at its terminal
+             state). The reading-ORDER (chrome → hero → body) is W-HIERARCHY2's; this
+             register threads the entrance ON that order. -->
+        <article class="scroll-build mx-auto w-full max-w-6xl">
+            <header class="flex flex-col gap-2" :style="{ '--i': 0 }">
                 <p v-if="eyebrow" class="text-admin-label text-muted-foreground">
                     {{ eyebrow }}
                 </p>
@@ -75,15 +88,20 @@ const variant = computed<"hero" | "page">(() =>
                 :title="title"
                 :hero-title="props.heroTitle"
                 class="mt-8"
+                :style="{ '--i': 1 }"
             >
-                <!-- BA.W-ANIMATE scope 3 (applied by W-STAGE on its behalf): the
-                     section-stagger host. Each direct child (a StorySection block)
-                     fades + lifts on entry via its OWN view() timeline keyed off the
-                     <main> scroller — the implicit stagger, NO setTimeout cascade
-                     (scroll-driven.css [data-scroll-reveal] recipe). PRM → static
-                     terminal state (the recipe's outer @media gate). -->
+                <!-- BB.W-SCROLL-MOTION: the orchestrated section-CASCADE host
+                     (supersedes the bare BA.W-ANIMATE `[data-scroll-reveal]` 6px
+                     fade — a clean break, no parallel alias). Each direct child (a
+                     StorySection block) builds in on entry via its OWN view()
+                     timeline keyed off the <main> scroller — the implicit stagger,
+                     NO setTimeout cascade — but the entrance is now the spring-clocked
+                     coupled transform+opacity build (the SOTA coordinated cascade,
+                     scroll-choreography.css `.scroll-cascade`). PRM → static terminal
+                     state + non-supporting engines the static layout (the recipe's
+                     outer @media + @supports gate). -->
                 <section
-                    data-scroll-reveal
+                    class="scroll-cascade"
                     :class="cn('flex flex-col gap-10', props.contentClass)"
                 >
                     <slot />

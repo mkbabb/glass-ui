@@ -114,6 +114,12 @@
  *  10a. scroll-driven.css    — native scroll-driven recipes (.scroll-progress
  *                              + [data-scroll-reveal]); the `@supports`-gated
  *                              primary over the JS-composable fallback (AQ.W5).
+ *  10a'. scroll-choreography.css — the SOTA scroll-CHOREOGRAPHY register
+ *                              (.scroll-build page-build / .scroll-cascade
+ *                              section-cascade / .scroll-pin scroll-pinned + the
+ *                              native .smooth-scroll opt-in) on the native
+ *                              scroll()/view()/timeline-scope substrate; NO
+ *                              Lenis/GSAP dep (BB.W-SCROLL-MOTION).
  *  10b. view-transition.css  — the `.gl-list-item` View-Transitions group
  *                              recipe + `--vt-*` axes (AQ.W5; the
  *                              `useViewTransition` substrate's CSS half).
@@ -161,6 +167,7 @@
 @import "./transitions.css";
 @import "./animations.css";
 @import "./scroll-driven.css";
+@import "./scroll-choreography.css";
 @import "./view-transition.css";
 @import "./utilities.css";
 /* BA.W-MENU-GLASS — the glass menu-row + menu-section register. @import-ed AFTER

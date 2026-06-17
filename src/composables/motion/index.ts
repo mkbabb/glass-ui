@@ -18,6 +18,13 @@ export * from "./constants";
 export * from "./useSpring";
 export * from "./useSpringMount";
 export * from "./useSpringPress";
+// BB.W-PRESS-UNIFY — the ONE interruptible, coupled spring-press. Composes the
+// shipped `useSpringPress` (the velocity-continuous re-seat) + `useLiquidFlex`
+// (the volume-preserving reciprocal squish) + a `--press-t` drive write into one
+// `pressStyle` object. Bound on ≥2 binaries (Button + Card + dock control — the
+// J-inv-10 dead-primitive flag cleared). Keyframes-bearing (via useSpringPress) →
+// ships on `/motion` ONLY, never the root barrel (the SCC-trap discipline).
+export * from "./useLiquidPress";
 // BB.W-DRAG-MORPH — the pull/drag-to-morph-squish primitive. Composes the
 // UNCONSUMED kf `Draggable` (pointer-capture follow + velocity-window + snap-aware
 // fling) + `SpringProgress` + `useLiquidFlex` `"tanh"` velocity-squish into ONE
