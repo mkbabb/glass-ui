@@ -430,6 +430,62 @@ const veilFeather = ref(false);
             </Card>
         </section>
 
+        <!-- Scroll-shrink choreography — the compositor-safe header collapse. -->
+        <section class="flex flex-col gap-4" data-testid="card-shrink-section">
+            <header class="flex flex-col gap-1">
+                <h2 class="text-subheading">recipe — scroll-shrink header</h2>
+                <p class="text-sm text-muted-foreground">
+                    <code class="font-mono text-xs">&lt;CardHeader shrink&gt;</code>
+                    binds the header to the
+                    <code class="font-mono text-xs">--card-scroll</code> named
+                    scroll-timeline (emitted by
+                    <code class="font-mono text-xs">.card-scroll-host</code> on the
+                    scroll-overflow ancestor) and runs a 3-lane choreography as the host
+                    scrolls — the header content compresses, the title shrinks in place,
+                    the description retires. The lanes are COMPOSITOR-SAFE
+                    (transform/opacity only — BB.W-CARD-COMPOSITE), so ZERO reflow fires
+                    per scroll frame (the A'-3 layout-animation CLS killed). Scroll the
+                    region to watch the header collapse.
+                </p>
+            </header>
+
+            <Card
+                tier="resting"
+                tabindex="0"
+                class="card-scroll-host overflow-auto max-h-72 p-0"
+                data-testid="card-shrink-host"
+            >
+                <CardHeader
+                    shrink
+                    class="sticky top-0 z-10 backdrop-blur-md p-(--card-spacing)"
+                    data-testid="card-shrink-header"
+                >
+                    <CardTitle
+                        class="font-semibold"
+                        data-testid="card-shrink-title"
+                    >
+                        Scroll to compress
+                    </CardTitle>
+                    <CardDescription data-testid="card-shrink-desc">
+                        This description fades + retires across the first 80px of scroll,
+                        faster than the header settles.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent class="flex flex-col gap-3 text-sm">
+                    <p
+                        v-for="row in longList"
+                        :key="row.id"
+                        class="flex items-baseline justify-between gap-4 border-b border-border/40 pb-3 last:border-0"
+                    >
+                        <span class="font-mono text-xs text-muted-foreground">
+                            #{{ row.id.toString().padStart(2, "0") }}
+                        </span>
+                        <span class="flex-1">{{ row.title }}</span>
+                    </p>
+                </CardContent>
+            </Card>
+        </section>
+
         <!-- CardAction — the shadcn-2025 top-right header action slot. -->
         <section class="flex flex-col gap-4">
             <header class="flex flex-col gap-1">

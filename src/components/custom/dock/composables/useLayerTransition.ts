@@ -74,6 +74,19 @@ export interface UseLayerTransitionReturn {
     currentLayer: Ref<string>;
     /** The layer id currently fading out, or null. */
     leavingLayer: Ref<string | null>;
+    /**
+     * BB.W-PERF-PRODUCER A′-4 — `true` while the size morph is in flight (the
+     * reactive twin of the `data-morphing` attr). A floating dock consumer reads
+     * this to hold a reka Popper re-position off the morph's critical frames.
+     */
+    morphing: Ref<boolean>;
+    /**
+     * BB.W-PERF-PRODUCER A′-4 — schedule a reka Popper re-position OFF the
+     * synchronous morph flush. Queued while a morph is live (flushed ONCE on
+     * settle, against the final box), else run on the next rAF. Defers the floating
+     * re-position only — NOT the FLIP measure.
+     */
+    deferReposition(cb: () => void): void;
 }
 
 /**
@@ -98,6 +111,27 @@ export function useLayerTransition(
     const leavingLayer = ref<string | null>(null);
     let transitionId = 0;
 
+    // BB.W-PERF-PRODUCER A′-4 — the Popper-measure DEFER seam. The morph re-sizes
+    // the dock box every frame; a floating consumer (the DockSelectTrigger /
+    // DockDropdownTrigger reka Popper) re-positions synchronously inside the Vue
+    // flush that also runs the morph's first frames — the value.js A′-4 ~40ms
+    // floating-ui reflow blocking the critical morph frames. `morphing` is the
+    // reactive twin of the `data-morphing` attr the driver owns (set at gesture
+    // START, cleared on SETTLE); `deferReposition(cb)` schedules a passed reka
+    // re-position OFF the synchronous morph flush — it runs cb after the morph
+    // SETTLES (the queue drains in `settle`) when a morph is live, else next rAF.
+    // This is NOT the FLIP measure (that one-time getBoundingClientRect is already
+    // rAF-deferred + co-temporal below, and is UNTOUCHED — the value.js letter is
+    // explicit the FLIP primitive stays); it defers the FLOATING re-position only.
+    const morphing = ref(false);
+    const repositionQueue: Array<() => void> = [];
+
+    function drainRepositionQueue() {
+        if (repositionQueue.length === 0) return;
+        const pending = repositionQueue.splice(0, repositionQueue.length);
+        for (const cb of pending) cb();
+    }
+
     // The single live morph driver, held on a closure var so a re-toggle mid-flight
     // RE-BASES it onto the new span from its current velocity rather than
     // reconstructing from rest (the iOS interruptible-spring contract). The scalar
@@ -118,6 +152,23 @@ export function useLayerTransition(
         return (el.closest(".glass-dock") as HTMLElement | null) ?? el;
     }
 
+    /**
+     * BB.W-PERF-PRODUCER A′-4 — defer a reka Popper re-position off the synchronous
+     * morph flush. A floating dock consumer (a Select/Dropdown anchored to a dock
+     * trigger) passes its `update()`/reposition callback here; while a morph is in
+     * flight it is QUEUED and flushed once on SETTLE (so the re-measure lands ONCE
+     * against the final box, not N times against in-flight sizes inside the Vue
+     * flush). When no morph is live the callback runs on the next rAF (still off the
+     * synchronous flush). The FLIP measure is unaffected.
+     */
+    function deferReposition(cb: () => void): void {
+        if (morphing.value) {
+            repositionQueue.push(cb);
+            return;
+        }
+        requestAnimationFrame(cb);
+    }
+
     function clearMorphVars(el: HTMLElement) {
         el.style.removeProperty("--dock-morph-from");
         el.style.removeProperty("--dock-morph-to");
@@ -129,6 +180,10 @@ export function useLayerTransition(
         root.removeAttribute("data-morphing");
         leavingLayer.value = null;
         disposeSpring();
+        // A′-4 — the morph SETTLED: flip the reactive flag + flush any deferred
+        // Popper re-positions ONCE against the now-final box.
+        morphing.value = false;
+        drainRepositionQueue();
     }
 
     /**
@@ -159,6 +214,7 @@ export function useLayerTransition(
         el.style.setProperty("--dock-morph-to", `${toSize}px`);
         root.style.setProperty("--dock-morph-t", "0");
         root.setAttribute("data-morphing", "");
+        morphing.value = true; // A′-4 — Popper re-positions queue while in flight
 
         if (!live) {
             disposeSpring();
@@ -226,6 +282,7 @@ export function useLayerTransition(
         el.style.setProperty("--dock-morph-to", `${fromSize}px`);
         root.style.setProperty("--dock-morph-t", "0");
         root.setAttribute("data-morphing", "");
+        morphing.value = true; // A′-4 — gesture START: defer Popper re-positions
 
         // 4. ONE rAF later (after the class flip flushes), lift the pin for a single
         // synchronous measurement of the now-correct shrink-wrapped to-size, then
@@ -270,7 +327,10 @@ export function useLayerTransition(
         if (spring && spring.settled) settle(el, morphRoot(el));
     }
 
-    onUnmounted(disposeSpring);
+    onUnmounted(() => {
+        disposeSpring();
+        repositionQueue.length = 0;
+    });
 
-    return { onTransitionEnd, currentLayer, leavingLayer };
+    return { onTransitionEnd, currentLayer, leavingLayer, morphing, deferReposition };
 }

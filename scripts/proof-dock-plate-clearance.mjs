@@ -370,9 +370,12 @@ export function detectContainPaintAudit(shellCssRaw) {
         return { facts, violations };
     }
 
-    // verdict (a): contain:paint is UNEDITED (still the bare `contain: paint` on
-    // the `.glass-dock` base; the plate stays inside the dock padding box).
-    const containPaintPresent = /contain\s*:\s*paint/.test(stripBlockComments(shellCssRaw));
+    // verdict (a): the `paint` clip axis is RETAINED on the `.glass-dock` base (the
+    // plate stays inside the dock padding box). BB.W-PERF-PRODUCER A′-4 widened the
+    // value to `contain: layout style paint` (the restyle-scope axes alongside the
+    // paint clip box — NOT a containment LIFT off the control-plate band), so the
+    // probe matches `paint` ANYWHERE in the contain value union, not the bare form.
+    const containPaintPresent = /contain\s*:\s*[^;}]*\bpaint\b/.test(stripBlockComments(shellCssRaw));
     facts.containPaintPresent = containPaintPresent;
     if (verdictA && !containPaintPresent) {
         violations.push(

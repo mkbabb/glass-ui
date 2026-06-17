@@ -1,0 +1,22 @@
+<!doctype html>
+<!--
+  BB.W-LIGHTHOUSE — the minimal bare-consumer app. This is the SMALLEST
+  representative consumer: it imports the PUBLISHED `@mkbabb/glass-ui` bundle +
+  `/styles` (from the built `dist/`, the contract-v2 dev-resolution model) and
+  mounts ONE glass surface (a Card + a Button over a page wash). It proves the
+  PUBLISHED artefact's first-paint reach — the demo imports library SOURCE; a
+  consumer imports the BUNDLE, and only this harness sees the published `/styles`
+  monolith the way a real app does (the W-CSS-CRITICAL `/styles`-split decision's
+  consumer-facing proof).
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>glass-ui consumer harness</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="module" src="./main.ts"></script>
+    </body>
+</html>

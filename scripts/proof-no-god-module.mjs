@@ -53,7 +53,7 @@ const RATCHET_BASELINES = {
     // (the count + the deferral move in one commit; the gate reds a marker-less
     // bump). W-CARVE3 drains these rows to {} for real when the carve lands — the
     // MONOTONIC drain restored, recorded, never a silent re-drain.
-    "styles/tokens/offsets-sizing.css": 551, // BOOK(BB.W-CARVE3): carve the §offset/§sizing token block into thin @import partials. (drained 562→551 at BB Batch 2 — dead border-opacity + --mask-fade-width tokens deleted)
+    "styles/tokens/offsets-sizing.css": 574, // BOOK(BB.W-CARVE3): carve the §offset/§sizing token block into thin @import partials. (drained 562→551 at BB Batch 2 — dead border-opacity + --mask-fade-width tokens deleted; grew 551→574 at BB.W-PERF-PRODUCER — the density-ratio --dock-icon-glyph block: --dock-icon-glyph-ratio/-floor + the max(calc(...)) form replacing the flat 1.25rem token)
     "styles/utilities/base.css": 516, // BOOK(BB.W-CARVE3): carve the base-utility cluster into per-concern partials. (drained 541→516 at BB.W-SCROLL-FADE-RETIRE — the 4 dead .scroll-fade-* rules deleted)
     "components/custom/fourier-field/FourierField.vue": 505, // BOOK(BB.W-CARVE3): lift the render-loop/lifecycle orchestrator out into a composable.
 };

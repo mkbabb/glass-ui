@@ -87,13 +87,32 @@
            centered in its cell (≥1px slack/side at hover), the cell sits flush at the
            dock content edge, and the `--dock-padding-block` (≈6px) padding holds the
            plate ≥7px clear of the `contain: paint` border-box edge on the block axis.
-           So `contain: paint` is the NON-proximate second clip box (the lane's
+           So the `paint` clip axis is the NON-proximate second clip box (the lane's
            `probe-bottomdock-nocontain.png` forced-root probe proved the inner
-           scroll-port box was proximate, not this) and it is UNEDITED here — the
-           inset + freed cross axis suffice, no containment lift on the control-plate
-           band. The π readback (W-DOCK-GEOMETRY-DELTA.md) records the live
-           plate-inside-padding margin number that binds this verdict. */
-        contain: paint;
+           scroll-port box was proximate, not this) and the `paint` axis is RETAINED
+           here — the inset + freed cross axis suffice, no containment LIFT on the
+           control-plate band. (BB.W-PERF-PRODUCER A′-4 widens the value to
+           `contain: layout style paint` — the restyle-scope axes ALONGSIDE the paint
+           clip box, see below — but never lifts `paint`.) The π readback
+           (W-DOCK-GEOMETRY-DELTA.md) records the live plate-inside-padding margin
+           number that binds this verdict. */
+        /* BB.W-PERF-PRODUCER A′-4 — the `--dock-morph-t` restyle-scope narrowing.
+           The per-frame morph scalar write recomputes the inheriting `calc()` group
+           across the dock subtree (dock.css's 10-selector `:where()` consumers); add
+           the `layout` + `style` containment axes so a scalar write recomputes
+           layout/style WITHIN the dock subtree, not up the document (the value.js A′-4
+           ~13fps restyle-cost trace). RECONCILED with the existing axes: `paint`
+           (above, the BA.W-DOCK-GEOMETRY clip box) composes — `contain: layout style
+           paint` is the union, NEVER `size` (which `container-type: inline-size` carries
+           as `inline-size` ONLY on the OPT-IN `containerName` host below; the default
+           free-floating dock must stay shrink-to-fit, so `size`/`inline-size` is
+           DELIBERATELY excluded here — adding it would re-introduce the 3.3.0 sliver
+           regression the §99 comment documents). The morph-axis `overflow: clip`
+           (the reveal aperture) + the `.glass-dock-frame` rail-escape are UNAFFECTED:
+           `layout`/`style` containment scopes RECALC, it does not establish a paint
+           clip beyond the already-present `paint` axis. The `DOCK_SPRING` clock is
+           byte-fenced (the value.js letter) — this is restyle COST, not a re-tune. */
+        contain: layout style paint;
         display: inline-flex;
         align-items: center;
         /* AW.W1 — the dock does NOT establish a default inline-size container.

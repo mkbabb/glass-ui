@@ -82,6 +82,15 @@
 
 @import "tailwindcss" source("../demo");
 @import "tw-animate-css";
+/* BB.W-CSS-CRITICAL — the demo's DEV cascade imports the library SOURCE UNION
+   (the full index.css) for HMR simplicity; this is the byte-complete union the
+   `@mkbabb/glass-ui/styles` export resolves. The critical/deferred SPLIT is a
+   PUBLISHED-dist concern (publishStyleAssets emits dist/styles/{critical,
+   deferred}.css off src/styles/critical-partition.mjs) measured under the
+   W-LIGHTHOUSE production-preview protocol — the loader recipe lives in
+   index.html's <head>. The demo does NOT fork a source critical/deferred block
+   (proof:css-critical W4 — the CRITICAL_PARTITION manifest is the sole partition
+   source; a hand-extracted src critical.css would RED). */
 @import "../src/styles/index.css";
 @import "./stories/story-hero.css";
 

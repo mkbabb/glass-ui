@@ -25,10 +25,15 @@
 // House style mirrors proof-consumers-static.mjs: ESM, lazy paths, comment-strip,
 // a byte-stable JSON artefact, fail-closed.
 
-import { existsSync, readFileSync, statSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BB.W-PAYLOAD-DEFER — the transitive-import walk is now the SHARED leaf
+// (scripts/lib/critical-path-walk.mjs), consumed identically by this gate AND the
+// profile:budget critical-path-weight arm (the no-second-copy discipline). The
+// comment-strip + .vue-<script>-extract + relative-edge-follow live there once.
+import { findReach } from "./lib/critical-path-walk.mjs";
 
 const VUEUSE_RE = /from\s*["'](@vueuse\/[^"']+)["']|import\(\s*["'](@vueuse\/[^"']+)["']\s*\)/g;
 
@@ -45,76 +50,17 @@ function cliPaths() {
     return _cliPaths;
 }
 
-// Strip block + line comments to spaces (newlines preserved) — the false-witness
-// discipline (a commented `// import … "@vueuse/core"` is not a real reach).
-function stripComments(text) {
-    let out = "";
-    let i = 0;
-    while (i < text.length) {
-        if (text[i] === "/" && text[i + 1] === "*") {
-            const end = text.indexOf("*/", i + 2);
-            const stop = end === -1 ? text.length : end + 2;
-            for (let j = i; j < stop; j++) out += text[j] === "\n" ? "\n" : " ";
-            i = stop;
-        } else if (text[i] === "/" && text[i + 1] === "/") {
-            const nl = text.indexOf("\n", i);
-            const stop = nl === -1 ? text.length : nl;
-            for (let j = i; j < stop; j++) out += " ";
-            i = stop;
-        } else {
-            out += text[i];
-            i++;
-        }
-    }
-    return out;
-}
-
-// Pull the <script> blocks out of a .vue SFC (so its imports join the graph).
-function vueScript(source) {
-    let body = "";
-    for (const m of source.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) body += `${m[1]}\n`;
-    return body;
-}
-
-function resolveModulePath(fromFile, specifier) {
-    if (!specifier.startsWith(".")) return null; // only follow relative graph edges
-    const base = resolve(dirname(fromFile), specifier);
-    const candidates = [
-        `${base}.ts`, `${base}.tsx`, `${base}.js`, `${base}.mjs`, `${base}.vue`,
-        join(base, "index.ts"), join(base, "index.tsx"), join(base, "index.js"), join(base, "index.mjs"),
-        base,
-    ];
-    return candidates.find((c) => existsSync(c) && statSync(c).isFile()) ?? null;
-}
-
 // Walk the transitive relative-import graph from ENTRY; return the first reach to
-// @vueuse with the path that led there, or null.
+// @vueuse with the path that led there, or null. The walk (comment-strip + .vue
+// <script>-extract + relative-edge-follow) is the SHARED leaf; this gate supplies
+// only the @vueuse specifier matcher.
 function findVueuseReach(entry) {
-    const seen = new Set();
-    const stack = [{ file: entry, path: [entry] }];
-    while (stack.length) {
-        const { file, path } = stack.pop();
-        const resolved = resolve(file);
-        if (seen.has(resolved) || !existsSync(resolved)) continue;
-        seen.add(resolved);
-
-        let source = readFileSync(resolved, "utf8");
-        if (resolved.endsWith(".vue")) source = vueScript(source);
-        source = stripComments(source);
-
-        // any @vueuse reach in THIS module is a violation
+    return findReach(entry, (source) => {
         for (const m of source.matchAll(VUEUSE_RE)) {
-            return { module: resolved, specifier: m[1] ?? m[2], path };
+            return { specifier: m[1] ?? m[2] };
         }
-        // follow relative import/export edges
-        for (const m of source.matchAll(/(?:import|export)\s+[^"';]*?from\s*["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)|import\s+["']([^"']+)["']/g)) {
-            const spec = m[1] ?? m[2] ?? m[3];
-            if (!spec) continue;
-            const target = resolveModulePath(resolved, spec);
-            if (target) stack.push({ file: target, path: [...path, target] });
-        }
-    }
-    return null;
+        return null;
+    });
 }
 
 function run() {

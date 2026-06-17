@@ -160,6 +160,13 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // reconcile surfaced it (manifesting an un-manifested gate exposed its tag to the
     // parity walk). Justified not-ci.
     ["proof:peer-conformance", "BB.W-DEAD-SWEEP — release-time registry peer-range probe; ci would red on an upstream version publish before the consumer widens (the proof:ba-final release-only precedent)."],
+    // BB.W-LIGHTHOUSE — proof:lighthouse is a DEVICE-BOUND Lighthouse gate (a real
+    // Chrome + npx lighthouse over a production vite-preview build). It is NOT a
+    // spawnSync(PW_BIN) Playwright gate (so the detected-Playwright exemption does
+    // not auto-fire) but is the SAME class — it cannot run on a headless GPU-less CI
+    // runner; the binding score-floor is the local real-device run (the floor is
+    // re-pinned at the close, the live-π architecture). local-only by design.
+    ["proof:lighthouse", "BB.W-LIGHTHOUSE — device-bound Lighthouse score-floor gate (real Chrome + production preview); the binding run is the local close-leg, never a headless CI runner (the live-π architecture, the proof:dock-animation-live precedent)."],
 ]);
 
 /** Does a gate's backing script spawn a browser (a Playwright/live gate)? */

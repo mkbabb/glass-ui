@@ -16,6 +16,11 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
+// BB.W-PAYLOAD-DEFER (W1) — the SHARED transitive-import walker (the no-second-copy
+// leaf proof-vueuse-free-root.mjs also consumes). The critical-path-weight arm walks
+// the root-barrel eager SOURCE graph with it, asserting ZERO reach to the heavy-leaf
+// set (the WebGL substrate / GL shader strings / value.js color-math leaf).
+import { findReach } from "./lib/critical-path-walk.mjs";
 
 // ROOT is the glass-ui repo root — sourced from constellation.mjs (the single
 // constellation/path authority), not re-derived locally.
@@ -167,10 +172,25 @@ const startedAt = Date.now();
 // headroom, NOT open-ended per-wave creep (an overrun still HALTS per the W4 §3a
 // field-bake-hoist triumvirate). The raw 130000 stays (88% utilized). The /styles +
 // glass-ui.js caps are UNCHANGED — the AY squircle/glass-level deltas land inside them.
+// BB.W-PAYLOAD-DEFER (W2) — the four WebGL entry chunks each carry a recorded gzip
+// ceiling so a renderer ballooning (a shader payload growth) OR a renderer landing
+// on the root path (glass-ui.js climbing past its cap — the W1 lock catches the
+// EDGE, the budget catches the BYTE) REDS. The aurora ceiling pre-existed (the
+// AW.W4.0 governor preamble above); goo-blob / constellation / fourier-field are
+// added here, sized at the HEAD measure + ~10% tranche-close headroom (the same
+// convention the aurora/CSS rebases use):
+//   goo-blob       gzip 20_769 → 22_900   raw 56_940 → 62_700
+//   constellation  gzip  6_043 →  6_700   raw 17_281 → 19_000
+//   fourier-field  gzip  2_856 →  3_200   raw  7_690 →  8_500
+// An overrun is a real payload regression — it HALTS the budget gate (the same
+// fail-closed shape the aurora ceiling has), not a silent re-base.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
     "dist/aurora.js": { raw: 130_000, gzip: 40_000 },
+    "dist/goo-blob.js": { raw: 62_700, gzip: 22_900 },
+    "dist/constellation.js": { raw: 19_000, gzip: 6_700 },
+    "dist/fourier-field.js": { raw: 8_500, gzip: 3_200 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.
@@ -190,6 +210,151 @@ function combinedStylesDraw(distRoot) {
         return existsSync(target) ? `\n${readFileSync(target, "utf-8")}\n` : m;
     });
     return { raw: Buffer.byteLength(css), gzip: gzipSync(css).length };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BB.W-PAYLOAD-DEFER — the critical-path-WEIGHT arm.
+//
+// The JS critical path (the cost a Card/Button-only consumer pays through
+// `@mkbabb/glass-ui`) is DEFENDED by a gate, not by accident. The arm has three
+// falsifiable sub-witnesses, all extending profile:budget IN PLACE (no new gate
+// row — the registry stays single-owner). It is born-RED on the arm's ABSENCE at
+// HEAD (the favourable HEAD is LOCKED so a regression reds), NOT on a violation.
+//
+//   W1 — the WebGL substrate + the GL shader strings + the value.js color-math
+//        leaf stay OFF the root barrel's eager graph. Two tiers, mirroring
+//        proof-vueuse-free-root.mjs:
+//          SOURCE tier — the shared transitive walk from src/index.ts reaches ZERO
+//            heavy-leaf module/specifier (the inverse-DataTable bite: re-exporting
+//            the WebGL substrate or a value.js color core into any root-reachable
+//            module reddens the SOURCE tier EVEN WHILE the DIST tier passes, because
+//            the consumer's bundler walks the eager graph the dist split tree-shook).
+//          DIST tier — the built dist/glass-ui.js names ZERO value.js color-math
+//            symbol / GL string (the literal-floor).
+//   W2 — the four WebGL entry chunks each carry a recorded gzip ceiling (in BUDGETS
+//        above) — handled by the standard budget loop, surfaced here as a roll-up.
+//   W3 — the aurora MEDIUM tail's lazy-split status. At HEAD the painterly mediums
+//        are eagerly template-spliced into the single-program FRAGMENT_SRC (a
+//        compile-time splice, not a runtime-selectable module — the scope-reveal
+//        recorded in W-PAYLOAD-DEFER-DELTA.md), so the witness records the eager
+//        medium count as a FACT (not a fail — the GL-fence-respecting split is a
+//        named successor). A future module split that makes the mediums lazy flips
+//        this to a separate-chunk assert; until then it is an informational fact
+//        the DELTA cites, never a green-faking pass.
+
+const CRIT_HEAVY_LEAVES = [
+    // The WebGL substrate (the rAF/GL-context lifecycle the renderers compose).
+    { name: "useWebGLCanvas", kind: "webgl-substrate" },
+    { name: "useGlassRenderer", kind: "webgl-substrate" },
+    // The GL shader-string modules (the .frag/.glsl payload).
+    { name: "aurora.frag", kind: "gl-shader" },
+    { name: "metaball.frag", kind: "gl-shader" },
+    { name: "procedural-color.glsl", kind: "gl-shader" },
+    // The value.js color-math peer (the ~124 KB peer a root-reachable import would
+    // force the consumer's bundler to resolve for a Button-only import).
+    { name: "@mkbabb/value.js", kind: "value-js" },
+];
+// A SOURCE-graph reach is a heavy-leaf IMPORT SPECIFIER naming one of the leaves
+// (a `from "…/glass/webgl/useWebGLCanvas"`, a `from "…/aurora.frag"`, a
+// `from "@mkbabb/value.js"`) OR a bare named-symbol reach to the GL rotation
+// constant FBM_ROT (belt-and-suspenders — the shader-module import carries it, but
+// a future direct `import { FBM_ROT }` is also caught).
+const CRIT_SPECIFIER_RE =
+    /(?:import|export)\s+[^"';]*?from\s*["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)|import\s+["']([^"']+)["']/g;
+function critHeavyMatch(source) {
+    for (const m of source.matchAll(CRIT_SPECIFIER_RE)) {
+        const spec = m[1] ?? m[2] ?? m[3];
+        if (!spec) continue;
+        for (const leaf of CRIT_HEAVY_LEAVES) {
+            // value.js is a bare peer specifier (exact); the others are path tails.
+            const hit =
+                leaf.kind === "value-js"
+                    ? spec === leaf.name
+                    : spec.includes(leaf.name);
+            if (hit) return { specifier: `${spec} (${leaf.kind})` };
+        }
+    }
+    // Direct FBM_ROT named import (the GL rotation constant) — a non-specifier reach.
+    if (/\bimport\b[^;]*\bFBM_ROT\b/.test(source))
+        return { specifier: "FBM_ROT (gl-shader symbol)" };
+    return null;
+}
+
+// The DIST literal-floor — the built root barrel names ZERO of these (value.js
+// color-math symbols + GL strings). Mirrors proof-vueuse-free-root.mjs's DIST tier.
+const CRIT_DIST_FLOOR_RE =
+    /oklabToLinearSRGB|interpolateHue|rawOklchToOklab|colorUnit|useWebGLCanvas|useGlassRenderer|FBM_ROT|gl_FragColor/g;
+
+function evaluateCriticalPath(distRootDir) {
+    const entry = resolve(root, "src/index.ts");
+    const facts = {};
+    const violations = [];
+
+    // W1 SOURCE tier — the shared transitive walk reaches ZERO heavy leaf.
+    const reach = findReach(entry, critHeavyMatch);
+    facts.sourceReach = reach ? reach.specifier : null;
+    if (reach) {
+        const rel = (p) => p.slice(root.length + 1);
+        violations.push(
+            `CRITICAL-PATH SOURCE: the root barrel reaches ${reach.specifier} via ${reach.path.map(rel).join(" → ")}`,
+        );
+    }
+
+    // W1 DIST tier — the built root barrel literal-floor.
+    const distGlassUi = resolve(distRootDir, "glass-ui.js");
+    if (existsSync(distGlassUi)) {
+        const hits = (
+            readFileSync(distGlassUi, "utf8").match(CRIT_DIST_FLOOR_RE) ?? []
+        ).length;
+        facts.distHits = hits;
+        if (hits > 0)
+            violations.push(
+                `CRITICAL-PATH DIST: dist/glass-ui.js names a value.js-color-math / GL string ${hits}× (the built root barrel must be WebGL-free + value.js-color-free)`,
+            );
+    } else {
+        facts.distHits = "(dist absent — run npm run build)";
+        violations.push(
+            "CRITICAL-PATH DIST: dist/glass-ui.js absent — build before the gate (the dist-floor tier cannot run)",
+        );
+    }
+
+    // W3 — the aurora MEDIUM tail status. At HEAD the mediums are template-spliced
+    // into the single-program aurora.js (the scope-reveal); record the eager medium
+    // count as a FACT, and whether a lazy aurora-medium chunk exists. This is
+    // informational until the GL-fence-respecting module split lands (the named
+    // successor in the DELTA) — it never reds the budget (a compile-time splice is
+    // not a regression, it is the as-shipped architecture).
+    const distAurora = resolve(distRootDir, "aurora.js");
+    if (existsSync(distAurora)) {
+        const src = readFileSync(distAurora, "utf8");
+        const eagerMedia = (
+            src.match(/impasto|oil-pastel|vangogh|mediumVangogh|mediumOilPastel/g) ??
+            []
+        ).length;
+        facts.auroraEagerMediumHits = eagerMedia;
+        const lazyChunk = walk(distRootDir).some((f) =>
+            /aurora-medium[-.].*\.js$/.test(f),
+        );
+        facts.auroraMediumLazyChunk = lazyChunk;
+        facts.auroraMediumSplit = lazyChunk
+            ? "split (lazy medium tail chunk present)"
+            : "eager (compile-time spliced — GL-fence scope-reveal, named-successor split)";
+    } else {
+        facts.auroraEagerMediumHits = "(dist absent)";
+        facts.auroraMediumSplit = "(dist absent)";
+    }
+
+    // W4 — the dts build-arm wall-clock fact slot. `.2` supplies the measured
+    // emit-types arm wall-clock via GLASS_UI_DTS_ARM_MS (cold) /
+    // GLASS_UI_DTS_ARM_WARM_MS (warm re-emit); the gate RECORDS them (the perf
+    // witness the DELTA cites). Absent → null (the fact is supplied out-of-band by
+    // the build the DELTA captures, not measured inside the budget run).
+    const dtsCold = process.env.GLASS_UI_DTS_ARM_MS;
+    const dtsWarm = process.env.GLASS_UI_DTS_ARM_WARM_MS;
+    facts.dtsArmMs = dtsCold ? Number(dtsCold) : null;
+    facts.dtsArmWarmMs = dtsWarm ? Number(dtsWarm) : null;
+
+    return { facts, violations };
 }
 
 const args = new Set(process.argv.slice(2));
@@ -427,6 +592,13 @@ for (const [name, cur] of currentEntries) {
     });
 }
 
+// BB.W-PAYLOAD-DEFER — evaluate the critical-path-weight arm (W1 SOURCE+DIST clean,
+// W3 aurora-medium status, W4 dts-arm fact). Its SOURCE/DIST violations FAIL the
+// budget gate (the lock — a heavy-leaf reach onto the root path reds), folded into
+// the same anyBudgetExceeded flag the per-entry ceilings (W2) use.
+const criticalPath = evaluateCriticalPath(distRoot);
+if (criticalPath.violations.length > 0) anyBudgetExceeded = true;
+
 const profile = {
     generatedAt: snapshotStamp(),
     status: anyBudgetExceeded ? "fail" : "pass",
@@ -436,6 +608,7 @@ const profile = {
     budgets: BUDGETS,
     budgetReport,
     subpathReport,
+    criticalPath: { facts: criticalPath.facts, violations: criticalPath.violations },
     totals,
     subpathTotals,
     subpathTable: subpathEntries,
@@ -568,6 +741,27 @@ for (const row of subpathReport) {
     console.log(
         `  [${row.status}] dist/${row.name} — gzip ${row.gzip} vs baseline ${row.baselineGzip} (drift ${driftPct(row.drift)})`,
     );
+}
+
+// BB.W-PAYLOAD-DEFER — the critical-path-weight report. Same rg-friendly format.
+console.log("");
+console.log("Critical-path-weight report (BB.W-PAYLOAD-DEFER):");
+{
+    const f = criticalPath.facts;
+    console.log(
+        `  [W1 SOURCE] root-barrel heavy-leaf reach : ${f.sourceReach ?? "none ✓"}`,
+    );
+    console.log(`  [W1 DIST]   dist/glass-ui.js heavy hits : ${f.distHits}`);
+    console.log(
+        `  [W3 AURORA] medium tail                  : ${f.auroraMediumSplit} (${f.auroraEagerMediumHits} eager hits)`,
+    );
+    console.log(
+        `  [W4 DTS]    emit-types arm cold / warm   : ${f.dtsArmMs ?? "(not supplied)"}ms / ${f.dtsArmWarmMs ?? "(not supplied)"}ms`,
+    );
+    if (criticalPath.violations.length) {
+        console.log("\n  CRITICAL-PATH VIOLATIONS:");
+        for (const v of criticalPath.violations) console.log(`    ✗ ${v}`);
+    }
 }
 
 if (budgetMode && anyBudgetExceeded) {

@@ -368,10 +368,16 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
   (`content-visibility:auto`), and tab-backgrounded (`document.hidden`) all park the rAF
   loop, so an off-screen aurora attaches zero frames (the `useWebGLCanvas` substrate, gated
   by `proof:offscreen-pause`).
-- **DPR is clamped to 2×.** A retina/4K display rendering a full-viewport WebGL surface at
-  3× is ~2.25× the fill for no perceptible gain on a drift background; `AV_DPR_MAX`
-  (`budget.ts`) caps the backing store — the single biggest VRAM/fill lever after the
-  offscreen-park.
+- **The aurora WASH is clamped to 1.5× (BB.W-PERF-PRODUCER A′-5).** The aurora is a
+  heavily-blurred decorative drift wash, not a sharp-silhouette creature, so it backs
+  at the SUB-2× `AV_AURORA_DPR_MAX` (1.5×) ceiling via `resolveAuroraWashDpr()`
+  (`budget.ts`), DISTINCT from the focal goo-blob's `AV_DPR_MAX` (2×, the sharp
+  creature keeps it via `resolveBudgetDpr()`). On a drift wash 1.5× is visually
+  indistinguishable from 2× (the per-pixel FBM is already below the DPR-2 detail
+  floor) while quartering the GPU memory + per-composite raster (the value.js LP1
+  ~2880×1800 / ~21.8 MB full-viewport-2× trace) — the single biggest VRAM/fill lever
+  after the offscreen-park. CPU-side backing-store dimension only; `aurora.frag` is
+  byte-fenced (the GL fence is absolute).
 - **Oil is the heaviest path.** `sampleBase` re-runs the entire warp + nuclei field, and
   `bestOil` calls it once per stroke cell across ~9 neighbors × 4–5 layers ≈ 40+ full-field
   recomputes per fragment. The AW painterly waves are budget-gated (`profile:budget`); the

@@ -246,8 +246,22 @@
                --dock-collapsed-padding / --dock-layer-tab-size paint at the global 1.5×
                while the density box paints at 1.17× — a desync the R5-2 register would
                introduce). The formulas are IDENTICAL to their :root definitions; only
-               the resolution element moves so the lifted --dock-scale flows in. */
-            --dock-icon-glyph: calc(1.25rem * var(--dock-scale));
+               the resolution element moves so the lifted --dock-scale flows in.
+               BB.W-PERF-PRODUCER A′-6 — --dock-icon-glyph is now a RATIO of the
+               density-painted --dock-layer-height (offsets-sizing.css + the density.css
+               [data-density] re-resolve). This coarse block @imports AFTER density.css
+               in the SAME @layer at the SAME specificity, so its --dock-icon-glyph
+               source-order-WINS on coarse pointers — it MUST carry the density-aware
+               formula too (the flat `1.25rem * --dock-scale` here would re-freeze the
+               glyph at the flat rem on touch, re-introducing the D5-1 defect the wave
+               fixes). --dock-layer-height re-resolves transitively at the lifted
+               --dock-scale (re-declared above), so the glyph tracks both the density
+               box AND the coarse register. Formula identical to the :root + density
+               re-resolve; only the resolution element moves. */
+            --dock-icon-glyph: max(
+                calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),
+                var(--dock-icon-glyph-floor)
+            );
             --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
             --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
             /* --dock-collapsed-summary-min-size derives from --dock-layer-height (the

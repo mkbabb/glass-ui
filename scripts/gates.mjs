@@ -411,6 +411,30 @@ export const GATES = [
         note: "BB.W-CLOSE-BATTERY — the full-set close-battery lock (born-RED → GREEN at the close-path wiring). Asserts the close/release path runs `gates.mjs --run full` (the deduped union local ∪ ci ∪ release) siblings-absent BEFORE the irreversible tag, NOT `--run local`/`--run release` alone (the BA over-claim: `ci ⊂ local` carried 18 reds AND the close never ran the union). 4 clauses: C1 the `--run full` union mode exists + is the deduped union; C2 release.sh runs `--run full`; C3 release.yml runs `--run full`; C4 the `proof:full` script + the CLAUDE.md close-battery canon. + the self-test bite (a synthetic `--run local`-only close path MUST flag). DEVICE-FREE meta-gate (imports gatesFor — it cannot be in the set it walks); `local`-tagged (the proof:gate-manifest-sound precedent), promoted to the close set by the BB close. Bite: re-point the release path to `--run local`/`--run release`, or narrow the full union → RED.",
     },
     {
+        id: "proof:no-layout-animation",
+        cmd: "proof:no-layout-animation",
+        tags: ["ci"],
+        note: "BB.W-CARD-COMPOSITE — the compositor-safe-keyframes architectural lock. Device-free SOURCE arm: scans the WHOLE @keyframes corpus (src/styles/*.css + every SFC <style>) and FORBIDS any keyframe step animating a layout-triggering property (padding*/margin*/font-size/width/height/inline-size/block-size/top/left/right/bottom/inset*/grid-template-*/grid-auto-*/flex-basis/line-height/border-*-width/gap), permitting ONLY compositor-safe channels (transform/translate/scale/rotate/opacity/filter/clip-path/paint props/--* customs). Born-RED at HEAD on CardHeader.vue (the A'-3 worst-cluster, CLS 1.03 at 4.0.0) → GREEN after the 3-lane re-expression (translateY/scale/scaleY+opacity). A NARROW, NAMED, CLS-bounded ALLOWLIST carries the reka-ui collapsible-open/close height:0↔content-height reveal (a DISCRETE layout reclaim, never a per-scroll-frame storm). Self-proving synthetic padding-keyframe bite. The binding CLS measure is the π/DELTA arm (tests-visual/card-composite.spec.ts), never this gate alone. Bite: re-add font-size/padding/grid-template-rows to ANY keyframe → RED.",
+    },
+    {
+        id: "proof:css-critical",
+        cmd: "proof:css-critical",
+        tags: ["ci"],
+        note: "BB.W-CSS-CRITICAL — the render-blocking /styles split gate (born-RED at HEAD → GREEN on the build emit). SOURCE/BUILD arm — reads the BUILT dist/styles/*.css (carries the build dependency, like proof:emission/profile:budget; ci-tagged so it runs in the CI battery where the build precedes it, NOT under proof:all/--run local which does not build). Four witnesses: W1 the split is published (./styles/critical + ./styles/deferred resolve to emitted dist/styles/{critical,deferred}.css; the ./styles union still resolves index.css); W2 the union is byte-complete (critical ∪ deferred ≡ the monolith partition set — every partial/fold in EXACTLY ONE bucket, the SFC-fold + components.css + @source in DEFERRED, no leak into critical); W3 the critical subset under CRITICAL_GZIP_CEILING (110000); W4 the CRITICAL_PARTITION manifest (src/styles/critical-partition.mjs) is the SOLE partition source. The BINDING perf truth is the FOUC-safe π + the W-LIGHTHOUSE render-block floor. Bite: drop a subpath, leak a fold into critical, breach the ceiling, or fork a src critical block → RED.",
+    },
+    {
+        id: "proof:lighthouse",
+        cmd: "proof:lighthouse",
+        tags: ["local"],
+        note: "BB.W-LIGHTHOUSE — the never-owned PERFORMANCE axis, owned with a binding gate. A per-surface score FLOOR (perf/a11y/CLS/TBT, mobile+desktop) over the PRODUCTION vite-preview build of the demo SPA (scripts/lighthouse/) + a minimal bare-consumer harness. Born-RED: the floor (scripts/lighthouse/floor.baseline.json) is PROVISIONAL at the pre-fix baseline; the orchestrator re-pins at the post-fix achieved numbers (`--rebaseline`) after the Batch-3 perf fixes land. DEVICE-BOUND (a real Chrome + Lighthouse) — local-only so it never blocks headless CI; skips-by-policy (exit 0) when LH/Chrome absent. The preview port is the distinct :5388/:5389 (NOT a reserved :5199/:5173/:5175) via GLASS_UI_LIGHTHOUSE_URL ?? (the default lives in scripts/lighthouse/protocol.mjs, off the gate-manifest-sound clause-4 scan).",
+    },
+    {
+        id: "proof:perf-producer",
+        cmd: "proof:perf-producer",
+        tags: ["local", "ci", "release"],
+        note: "BB.W-PERF-PRODUCER — the value.js A′ perf-producer cluster dispositioned producer-side. Device-free SOURCE arm (the π headed-GPU runtime readback is tests-visual/perf-producer.spec.ts). W1 A′-4: .glass-dock morph root carries `contain: layout style paint` (the --dock-morph-t restyle-scope narrowing; `size` excluded so the shrink-to-fit pill survives) + useLayerTransition exposes `morphing` + `deferReposition(cb)` (the reka Popper re-position deferred off the Vue flush; the FLIP measure untouched; DOCK_SPRING byte-unchanged). W2 A′-6: --dock-icon-glyph rides the per-density --dock-layer-height (the --dock-icon-glyph-ratio + WCAG floor). W3 A′-1: GooBlob ships EXACTLY ONE <canvas> + the guard + onUnmounted dispose + the value.js demo-double-mount routed BY NAME. W4 A′-5: AV_AURORA_DPR_MAX (1.5) < AV_DPR_MAX (2); the aurora wash sub-cap, the focal goo-blob keeps 2×; aurora.frag/metaball.frag byte-unchanged. Born-RED on all 4 at HEAD; GREEN at close.",
+    },
+    {
         id: "proof:vueuse-free-root",
         cmd: "proof:vueuse-free-root",
         tags: ["local", "ci"],

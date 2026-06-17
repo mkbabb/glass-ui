@@ -236,14 +236,21 @@ export function detect(sources) {
             "dock-controls.css: the `.dock-icon-button > svg { width/height: var(--dock-icon-glyph) }` glyph-ownership rule is missing",
         );
     }
+    // BB.W-PERF-PRODUCER re-expressed `--dock-icon-glyph` off the flat
+    // `calc(1.25rem * var(--dock-scale))` onto a RATIO of `--dock-layer-height`
+    // (the per-density axis): `max(calc(var(--dock-layer-height …) *
+    // var(--dock-icon-glyph-ratio)), var(--dock-icon-glyph-floor))` — the glyph
+    // now scales with the density-painted control height in lockstep, the WCAG
+    // floor held by the `max(…, --dock-icon-glyph-floor)` clamp. The `--dock-scale`
+    // coarse thread is PRESERVED transitively (`--dock-layer-height` rides it).
     const glyphToken =
-        /--dock-icon-glyph\s*:\s*calc\(\s*1\.25rem\s*\*\s*var\(--dock-scale/.test(
+        /--dock-icon-glyph\s*:\s*max\(\s*calc\(\s*var\(--dock-layer-height[\s\S]*?\*\s*var\(--dock-icon-glyph-ratio\)[\s\S]*?var\(--dock-icon-glyph-floor\)/.test(
             tokensCss,
         );
     facts.glyphToken = glyphToken;
     if (!glyphToken) {
         violations.push(
-            "tokens.css: `--dock-icon-glyph: calc(1.25rem * var(--dock-scale))` is missing",
+            "tokens.css: the density-ratio `--dock-icon-glyph: max(calc(var(--dock-layer-height …) * var(--dock-icon-glyph-ratio)), var(--dock-icon-glyph-floor))` form is missing (BB.W-PERF-PRODUCER)",
         );
     }
 

@@ -44,6 +44,29 @@ export default defineConfig({
         },
         rolldownOptions: {
             external: libraryExternal,
+            output: {
+                // BB.W-PAYLOAD-DEFER (scope 3) — the canonical Vite-8 `manualChunks`
+                // recipe, shipped as the LIVE reference (CLAUDE.md §"Vite 8
+                // `manualChunks` recipe" documents it in prose; this is the
+                // verified-by-build copy-paste a consumer lifts). The single-arg
+                // Rolldown-compatible form, ordered glass-ui → vueuse → vendor so the
+                // node_modules catch-all never swallows the two named splits (both
+                // resolve under node_modules). NEVER set `output.advancedChunks`
+                // alongside it — Rolldown IGNORES `manualChunks` when both are set.
+                //
+                // In glass-ui's OWN library build every `@mkbabb`/`@vueuse` peer is
+                // `external` (vite.library libraryExternal), so this recipe is inert
+                // here (no peer is bundled to split) — it is the CONSUMER reference,
+                // verified to load + survive the build, not a library-output change.
+                // A consumer building an APP that depends on glass-ui drops this
+                // recipe into their `build.rollupOptions.output` to isolate the
+                // glass-ui chunk from app code.
+                manualChunks(id: string) {
+                    if (id.includes("@mkbabb/glass-ui")) return "glass-ui";
+                    if (id.includes("@vueuse")) return "vueuse";
+                    if (id.includes("node_modules")) return "vendor";
+                },
+            },
         },
     },
 });

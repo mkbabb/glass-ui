@@ -22,7 +22,7 @@
 
 import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
-import { resolveBudgetDpr } from "../constants/budget";
+import { resolveAuroraWashDpr } from "../constants/budget";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
@@ -186,8 +186,15 @@ export function createAurora(
             } = createGlProgram(gl, VERTEX_SRC, FRAGMENT_SRC);
 
             function resize() {
-                // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
-                const dpr = resolveBudgetDpr();
+                // BB.W-PERF-PRODUCER A′-5 — the aurora decorative WASH backs at the
+                // SUB-2× `AV_AURORA_DPR_MAX` (1.5×) ceiling, distinct from the focal
+                // goo-blob's `AV_DPR_MAX` (2×). The heavily-blurred drift wash is
+                // visually indistinguishable at 1.5×, which quarters the GPU
+                // memory + per-composite raster (the value.js LP1 ~21.8MB trace). The
+                // focal goo-blob KEEPS `resolveBudgetDpr()` (2×) — its silhouette is
+                // sharp. CPU-side backing-store dimension only; `aurora.frag` is
+                // byte-fenced (the GL fence is absolute).
+                const dpr = resolveAuroraWashDpr();
                 // Measure the LAID-OUT box via getBoundingClientRect, not
                 // clientWidth/clientHeight. A canvas inside a `content-visibility:
                 // auto` ancestor reports clientHeight 0 while that ancestor is in

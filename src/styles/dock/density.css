@@ -222,6 +222,27 @@
         );
     }
 
+    /* BB.W-PERF-PRODUCER A′-6 — RE-RESOLVE the glyph token inside the density-painted
+       scope. `--dock-icon-glyph` (offsets-sizing.css) is a RATIO of
+       `--dock-layer-height`, but density.css paints `--dock-layer-height` ONLY on
+       `.glass-dock[data-density]` — the `:root` `--dock-icon-glyph` definition reads
+       `--dock-layer-height` at `:root` (the inline fallback ladder), so it would
+       FREEZE at the fallback rather than track the per-rung painted height (the SAME
+       substitution-vs-inheritance trap the R5-1 sweep fixed for
+       `--dock-collapsed-summary-min-size` in overflow.css). Re-resolving it HERE, on
+       the element that paints `--dock-layer-height`, lets the per-density height flow
+       into the glyph so a `spacious` dock's glyph grows in lockstep with the shelf
+       (the value.js D5-1 defect). The formula is IDENTICAL to the `:root` definition;
+       only the resolution element moves. The WCAG floor + the `--dock-icon-glyph-ratio`
+       knob ride through unchanged; the `.dark-mode-toggle-button > svg` mirror reads
+       the same re-resolved token so both glyphs track the density axis. */
+    .glass-dock[data-density] {
+        --dock-icon-glyph: max(
+            calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),
+            var(--dock-icon-glyph-floor)
+        );
+    }
+
     /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
        box is narrow the audacious-dock label glyphs compress so the chrome
        doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off

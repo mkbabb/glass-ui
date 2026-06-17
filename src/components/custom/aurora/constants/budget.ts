@@ -22,6 +22,20 @@
 export const AV_DPR_MAX = 2;
 
 /**
+ * BB.W-PERF-PRODUCER A′-5 — the aurora decorative-WASH DPR ceiling, SUB-2× and
+ * DISTINCT from the focal goo-blob's {@link AV_DPR_MAX}. The aurora atmosphere is a
+ * heavily-blurred drift background, not a sharp-silhouette creature: backing it at
+ * full-viewport 2× (the value.js LP1 trace: ~2880×1800, ~21.8 MB native heap) is
+ * visually indistinguishable from 1.5× on a drift wash (the per-pixel FBM is
+ * already smoothed below the DPR-2 detail floor), so the 1.5× ceiling quarters the
+ * GPU memory + per-composite raster for no perceptible loss. The FOCAL goo-blob
+ * KEEPS {@link AV_DPR_MAX} = 2 — its silhouette is sharp; only the aurora wash
+ * reads this sub-cap. This is the CPU-side backing-store DIMENSION only; it never
+ * reaches the shader (`aurora.frag` is byte-fenced — the GL fence is absolute).
+ */
+export const AV_AURORA_DPR_MAX = 1.5;
+
+/**
  * The maximum animated metaball nuclei (the goo-blob body + its satellites, or
  * an aurora field's count). The goo-blob shader hard-caps satellites at 4; this
  * is the authored-config soft cap (body + ≤2 satellites is the budget-safe
@@ -58,4 +72,16 @@ export function clampBudget(value: number, min: number, max: number): number {
 export function resolveBudgetDpr(): number {
     const raw = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
     return Math.min(raw, AV_DPR_MAX);
+}
+
+/**
+ * BB.W-PERF-PRODUCER A′-5 — resolve the budget-clamped backing-store DPR for the
+ * aurora decorative WASH, at the SUB-2× {@link AV_AURORA_DPR_MAX} ceiling (distinct
+ * from {@link resolveBudgetDpr}'s focal 2×). SSR-safe (returns `1` when `window` is
+ * absent). The single CPU-side reader is aurora's `runtime.ts` `resize()`; the
+ * focal goo-blob keeps {@link resolveBudgetDpr}.
+ */
+export function resolveAuroraWashDpr(): number {
+    const raw = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    return Math.min(raw, AV_AURORA_DPR_MAX);
 }
