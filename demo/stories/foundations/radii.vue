@@ -1,5 +1,12 @@
 <script setup lang="ts">
+// BB.W-DEMO-DESIGN — the radii token tour gains ONE chassis lever: the calm wash
+// read-through (StorySection over the StoryHero `wash` card drop the `foundations→
+// paper` manifest default declares) + the PRM-safe scroll-cascade rung stagger (the
+// W-SCROLL-MOTION `.scroll-cascade` register, no GL field — a static-wash route by
+// design). The token-tour boxes float over a designed substrate; no per-pane
+// bespoke craft.
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { cn } from "../../../src/utils/cn";
 
 const scale: { cls: string; label: string; hint: string }[] = [
@@ -25,9 +32,8 @@ const semantic: { cls: string; label: string; role: string }[] = [
 
 <template>
     <StoryPage>
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Scale</p>
-            <div class="flex flex-wrap gap-4">
+        <StorySection heading="Scale">
+            <div class="scroll-cascade flex flex-wrap gap-4">
                 <div
                     v-for="r in scale"
                     :key="r.label"
@@ -49,11 +55,10 @@ const semantic: { cls: string; label: string; role: string }[] = [
                     </div>
                 </div>
             </div>
-        </div>
+        </StorySection>
 
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Semantic aliases</p>
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+        <StorySection heading="Semantic aliases">
+            <div class="scroll-cascade grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
                 <div
                     v-for="r in semantic"
                     :key="r.label"
@@ -75,6 +80,6 @@ const semantic: { cls: string; label: string; role: string }[] = [
                     </div>
                 </div>
             </div>
-        </div>
+        </StorySection>
     </StoryPage>
 </template>

@@ -2,10 +2,11 @@
 import StoryPage from "../StoryPage.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ref } from "vue";
+import type { Component } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Notification } from "../../../src/components/ui/notification";
 import { IconChip } from "../../../src/components/custom/icon-chip";
-import { BellDot } from "@lucide/vue";
+import { AlertTriangle, BellDot, CheckCircle2, Info, XCircle } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 
@@ -43,24 +44,23 @@ function fireError() {
     push("error", "Couldn't reach the analysis service. Retrying…");
 }
 
-const samples: { type: Item["type"]; label: string; message: string }[] = [
-    { type: "info", label: "Info", message: "Workspace switched to Chebyshev basis." },
-    { type: "success", label: "Success", message: "Deploy finished — build #2048 is live." },
-    { type: "warning", label: "Warning", message: "Preview session expires in 3 minutes." },
-    { type: "error", label: "Error", message: "Couldn't reach the analysis service." },
+// BB.W-DEMO-DESIGN — the tones table teaches the REAL surface: each sample is an
+// actual mini colored-glass `.feedback-tone` row (the shared tinted-glass recipe
+// the Notification/Toast/Alert surfaces share — a tone-tinted translucent wash + a
+// tone-keyed rim + a full-chroma glyph), NOT a 10px solid dot. The glyph maps the
+// tone to its lucide icon; the `tone` field is the `.feedback-tone-<name>` class.
+const samples: {
+    type: Item["type"];
+    label: string;
+    message: string;
+    icon: Component;
+    tone: string;
+}[] = [
+    { type: "info", label: "Info", message: "Workspace switched to Chebyshev basis.", icon: Info, tone: "feedback-tone-info" },
+    { type: "success", label: "Success", message: "Deploy finished — build #2048 is live.", icon: CheckCircle2, tone: "feedback-tone-success" },
+    { type: "warning", label: "Warning", message: "Preview session expires in 3 minutes.", icon: AlertTriangle, tone: "feedback-tone-warning" },
+    { type: "error", label: "Error", message: "Couldn't reach the analysis service.", icon: XCircle, tone: "feedback-tone-destructive" },
 ];
-
-// BA.W-FEEDBACK-TONE — the demo teaches the HOUSE tone vocabulary, not a raw-Tailwind
-// off-token one. The prior `bg-blue-500`/`bg-emerald-500`/`bg-amber-500`/`bg-red-500`
-// swatches (FD-NOTIF-OFFMODEL — the THIRD tone map) re-point to the house
-// `.feedback-tone-<name>` register, so each dot reads `var(--tone)` (the same
-// `--{info,success,warning,destructive}` tokens the Notification surface tints with).
-const swatch: Record<Item["type"], string> = {
-    info: "feedback-tone-info bg-(--tone)",
-    success: "feedback-tone-success bg-(--tone)",
-    warning: "feedback-tone-warning bg-(--tone)",
-    error: "feedback-tone-destructive bg-(--tone)",
-};
 </script>
 
 <template>
@@ -105,23 +105,32 @@ const swatch: Record<Item["type"], string> = {
 
         <section class="flex flex-col gap-3">
             <p class="section-label">tones</p>
-            <!-- BA.W-DEMO-AFFORDANCES — the tones table re-points off the dead
-                 bg-card/60 slab onto the glass-routed <ShowcaseFrame> so it reads
-                 as glass over the staged backdrop (FD-FS X-2). -->
-            <ShowcaseFrame pad="sm" class="grid gap-2">
-                <div
-                    v-for="s in samples"
-                    :key="s.type"
-                    class="flex items-center gap-4 border-b border-border/40 py-2 last:border-b-0"
-                >
-                    <span
-                        class="inline-block size-2.5 rounded-full"
-                        :class="swatch[s.type]"
-                    />
-                    <span class="w-20 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                        {{ s.label }}
-                    </span>
-                    <span class="text-sm text-foreground">{{ s.message }}</span>
+            <!-- BB.W-DEMO-DESIGN — the tones table TEACHES the real surface: each
+                 sample is a mini colored-glass `.feedback-tone` row (the shared
+                 tinted-glass recipe), staged over the field (no opaque card plate
+                 occluding the paper wash — the BG-2 fix). The 10px solid dot list is
+                 GONE. The rows pop in on the W-SCROLL-MOTION `.scroll-cascade`
+                 register. -->
+            <ShowcaseFrame tier="field" pad="none">
+                <div class="scroll-cascade flex flex-col gap-3">
+                    <div
+                        v-for="s in samples"
+                        :key="s.type"
+                        class="feedback-tone flex items-center gap-4 rounded-card border px-5 py-3.5"
+                        :class="s.tone"
+                    >
+                        <component
+                            :is="s.icon"
+                            class="feedback-tone-glyph shrink-0"
+                            :size="20"
+                            :stroke-width="1.75"
+                            aria-hidden="true"
+                        />
+                        <span class="w-20 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                            {{ s.label }}
+                        </span>
+                        <span class="text-sm text-foreground">{{ s.message }}</span>
+                    </div>
                 </div>
             </ShowcaseFrame>
         </section>

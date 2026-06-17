@@ -1,8 +1,20 @@
 <script setup lang="ts">
+// BB.W-DEMO-DESIGN — the type pane as an EDITORIAL TYPE SPECIMEN, not a flat
+// 18-row label/sample table. It leads with ONE focal display word, ACTIVATES the
+// audacious mega/hero/audacious tiers the library is proud of (the fast.com peg —
+// they were never even shown before), then lays the graded ladder as a designed
+// rhythm over the calm grid/paper wash (the StoryHero `cardTier` drop-through the
+// `foundations→paper` manifest default declares). The body-pane CASCADE rides
+// StoryPage's `.scroll-cascade` host (W-SCROLL-MOTION — each StorySection builds in
+// on its own view() timeline; no demo-local @keyframes). The ONE color event is
+// the TYPE itself — the ladder stays ink, the wash is the calm neutral grid (the
+// proof:suffuse one-color-event proportion held).
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { cn } from "../../../src/utils/cn";
 
-// Ladder order: display → body → admin rail.
+// The graded display ladder — display → body → admin rail, as a DESIGNED rhythm.
 const ladder: { cls: string; label: string; sample: string }[] = [
     { cls: "text-display-5", label: "display-5", sample: "Golden" },
     { cls: "text-display-4", label: "display-4", sample: "Audacious" },
@@ -23,36 +35,93 @@ const ladder: { cls: string; label: string; sample: string }[] = [
     { cls: "text-mono-small", label: "mono-small", sample: "npm run dev" },
     { cls: "text-mono-caption", label: "mono-caption", sample: "mono · caption · caps" },
 ];
+
+// The audacious peaks — the tiers the flat table never showed (the visual-load-
+// bearing-by-activation rule: proof:suffuse already requires ≥2 consumers of the
+// top tiers; the type pane is a legitimate consumer). Each is a real ACTIVATED
+// specimen, not a label row.
+const peaks: { cls: string; label: string; peg: string; word: string }[] = [
+    { cls: "text-display-audacious", label: "display-audacious", peg: "352px peak — the fast.com number", word: "352" },
+    { cls: "text-display-hero", label: "display-hero", peg: "287px peak — the front-door hero", word: "Hero" },
+    { cls: "text-display-mega", label: "display-mega", peg: "177px peak — the metric value", word: "Mega" },
+];
 </script>
 
 <template>
     <StoryPage>
-        <div class="flex flex-col gap-4">
+        <!-- THE FOCAL SPECIMEN — one audacious display word leads the pane. The
+             type IS the experience (the ONE color event is the type itself; it
+             stays ink so the ladder, the peaks, and the wash never compete). The
+             focal word rides the W-SCROLL-MOTION cascade (StoryPage's .scroll-
+             cascade host) on its own view() timeline. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">Foundations · Typography</p>
             <div
-                v-for="row in ladder"
-                :key="row.label"
-                :class="
-                    cn(
-                        'grid grid-cols-[10rem_1fr] items-baseline gap-6 border-b border-border/40 pb-4'
-                    )
-                "
+                class="text-display-audacious font-display leading-[0.85] tracking-tight text-foreground"
+                style="font-variation-settings: 'WONK' 1, 'SOFT' 0"
             >
-                <span class="text-mono-caption text-muted-foreground">{{
-                    row.label
-                }}</span>
-                <span :class="cn(row.cls, 'text-foreground')">{{ row.sample }}</span>
+                Aa
             </div>
-        </div>
-
-        <!-- Bonus: ℱourier glyph showcase. -->
-        <div
-            class="mt-8 flex flex-col items-center gap-4 rounded-card border border-border bg-card p-10 shadow-cartoon"
-        >
-            <p class="text-admin-label text-muted-foreground">Signature glyph</p>
-            <div class="fourier-f text-display-5 leading-none italic">ℱ</div>
-            <p class="text-small text-muted-foreground">
-                <code class="fira-code">.fourier-f</code> — Plus Jakarta Sans display italic, viz-fourier red.
+            <p class="text-small max-w-prose text-muted-foreground">
+                A golden-ratio (√φ) type scale in Plus Jakarta Sans — from the
+                fast.com-peg display peaks down to the mono admin rail. The display
+                register is a chassis affordance; the ladder below grades, never
+                cliffs.
             </p>
-        </div>
+        </section>
+
+        <!-- THE AUDACIOUS PEAKS — the mega/hero/audacious tiers ACTIVATED as real
+             specimens (the library is proud of these; the flat table never showed
+             them). Each is its own focal word, clipped to the frame so the peak
+             reads as the experience it is. -->
+        <StorySection heading="Audacious peaks">
+            <div class="flex flex-col gap-6">
+                <ShowcaseFrame
+                    v-for="p in peaks"
+                    :key="p.label"
+                    tier="field"
+                    pad="lg"
+                    :caption="`.${p.cls} · ${p.peg}`"
+                >
+                    <div class="overflow-hidden">
+                        <span
+                            :class="cn(p.cls, 'font-display leading-none text-foreground')"
+                            style="font-variation-settings: 'WONK' 1, 'SOFT' 0"
+                        >{{ p.word }}</span>
+                    </div>
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <!-- THE GRADED LADDER — a designed rhythm, NOT a label/sample table. The
+             label is a quiet mono caption ABOVE its sample (a designed stack), the
+             sample reads ink at full size, the rungs flow over the calm wash. -->
+        <StorySection heading="The graded ladder">
+            <ShowcaseFrame tier="quiet" pad="lg">
+                <div class="flex flex-col gap-6">
+                    <div
+                        v-for="row in ladder"
+                        :key="row.label"
+                        class="flex flex-col gap-1"
+                    >
+                        <span class="text-mono-caption text-muted-foreground">{{
+                            row.label
+                        }}</span>
+                        <span :class="cn(row.cls, 'text-foreground')">{{
+                            row.sample
+                        }}</span>
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <!-- The signature glyph — the one designed moment, lifted onto ShowcaseFrame. -->
+        <StorySection heading="Signature glyph">
+            <ShowcaseFrame tier="field" pad="xl" caption=".fourier-f — Plus Jakarta Sans display italic, viz-fourier red">
+                <div class="flex flex-col items-center gap-3">
+                    <div class="fourier-f text-display-5 leading-none italic">ℱ</div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
     </StoryPage>
 </template>

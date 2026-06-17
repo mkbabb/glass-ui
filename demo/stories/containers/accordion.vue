@@ -63,7 +63,13 @@ const faq = [
             </div>
         </header>
 
-        <div class="grid gap-12">
+        <!-- BB.W-DEMO-DESIGN — the disclosure demo body pops in on the W-SCROLL-
+             MOTION `.scroll-cascade` register. The content-height open/close
+             animation rides reka-ui's collapsible-open/-close keyframes, which are
+             on W-MOTION-CANON's NAMED CLS-bounded allowlist (a discrete user-
+             initiated reflow, NOT a per-scroll-frame storm — sanctioned, not killed:
+             the accordion demo HOSTS the correct register, no re-cut needed). -->
+        <div class="scroll-cascade grid gap-12">
             <div class="grid gap-4">
                 <h2 class="text-subheading">Single</h2>
                 <p class="text-sm text-muted-foreground">

@@ -1,5 +1,21 @@
 <script setup lang="ts">
+// BB.W-DEMO-DESIGN — the buttons pane: the BG-2 staging fix + the CTA-presence
+// inversion fix. The glass-button rows (glass / glass-wash / primary-audacious /
+// gold-audacious + the raw .glass-btn row) are staged over a LIVE field via
+// `<ShowcaseFrame tier="field">` (the glass-over-field host the BG-2 black-plate
+// kill was minted for — display→paper is a static-wash route, so the paper wash
+// reads THROUGH the glass instead of an opaque bg-card plate occluding it; ONE
+// route, no added GL context). The W-BUTTON-GLASS material (the W55 oklab darken +
+// `contrast-color()` flip + the squishy press + the .glass-lens refraction edge) is
+// then VISIBLE over the busy backdrop. The CTA inversion is fixed: the primary-
+// audacious CTA leads in a focal hero row at `size="lg"` ABOVE the destructive
+// register. The opaque-atom rows (default/destructive/outline/secondary) stay on
+// the opaque specimen host (they have no glass to refract — the field is for the
+// glass variants only). The press-squish rides the LIBRARY <Button> / .glass-btn
+// press register (tap-squish + useSpringPress), never a demo-local fork.
 import StoryPage from "../StoryPage.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { cn } from "../../../src/utils/cn";
@@ -12,125 +28,127 @@ const vizButtons = [
     { id: "legendre", label: "Legendre", bg: "bg-viz-legendre" },
 ] as const;
 
-const coreVariants = [
+// The OPAQUE-ATOM variants — they stay on the opaque specimen host (no glass to
+// refract). The glass variants (glass / glass-wash) move to the field stage below.
+const opaqueVariants = [
     "default",
     "destructive",
     "outline",
     "secondary",
     "accent",
     "ghost",
-    "glass",
-    "glass-wash",
     "ai",
     "link",
 ] as const;
+
+const glassVariants = ["glass", "glass-wash"] as const;
 
 const sizes = ["xs", "sm", "default", "lg"] as const;
 </script>
 
 <template>
     <StoryPage>
+        <!-- THE FOCAL CTA — the primary-audacious "Launch sequence" CTA leads the
+             pane (the page's protagonist), out-presenting the destructive register
+             by focal placement + scale + the lit-glass material over the live field.
+             The CTA-presence inversion (destructive louder than the protagonist) is
+             fixed by construction: the CTA is FIRST, framed, LARGE; destructive is a
+             quiet specimen below. -->
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Variants</h2>
-            <p class="text-small text-muted-foreground">
-                Every <code class="fira-code">buttonVariants</code> entry at default size.
+            <p class="section-label">Display · Buttons</p>
+            <h2 class="text-title">Launch the sequence</h2>
+            <p class="text-small max-w-prose text-muted-foreground">
+                The headline CTA — a calm liquid-glass button with the
+                <code class="fira-code">--glass-specular</code> edge catch-light and a
+                restrained <code class="fira-code">--scale-hover-btn</code> lift on the
+                §6 spring register. Staged over the live field so the lit glass reads.
             </p>
+            <ShowcaseFrame tier="field" pad="xl">
+                <div class="flex flex-wrap items-center gap-4">
+                    <Button variant="primary-audacious" size="lg">Launch sequence</Button>
+                    <Button variant="gold-audacious" size="lg">Next →</Button>
+                </div>
+            </ShowcaseFrame>
+        </section>
+
+        <!-- THE GLASS VARIANTS — staged over the live field (BG-2 fix). The glass
+             material refracts the paper wash behind it instead of collapsing to a
+             pale lozenge on an opaque plate. -->
+        <StorySection
+            heading="Glass register"
+            blurb="The glass + glass-wash variants over the page field — the W-BUTTON-GLASS material reads as lit glass over the busy backdrop, not a pale lozenge on a flat plate."
+        >
+            <ShowcaseFrame tier="field" pad="lg">
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button v-for="v in glassVariants" :key="v" :variant="v">{{ v }}</Button>
+                    <Button
+                        :aria-pressed="pressed"
+                        variant="glass"
+                        @click="pressed = !pressed"
+                    >
+                        {{ pressed ? "Pressed" : "Toggle" }}
+                    </Button>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <!-- THE RAW .glass-btn ROW — also staged over the field so the icon button's
+             real backdrop blur reads. The press-squish + the W-LENSING lens-swell
+             ride the LIBRARY .glass-btn :active register. -->
+        <StorySection
+            heading="Raw .glass-btn utility"
+            blurb="Circular icon button from glass.css, staged over the field. The press scale + the W-LENSING lens-swell ride the library register; supports aria-pressed and :disabled."
+        >
+            <ShowcaseFrame tier="field" pad="lg">
+                <div class="flex flex-wrap items-center gap-3">
+                    <button class="glass-btn" aria-label="plus"><span aria-hidden>+</span></button>
+                    <button class="glass-btn" aria-label="minus"><span aria-hidden>&minus;</span></button>
+                    <button class="glass-btn" aria-pressed="true" aria-label="star">
+                        <span aria-hidden>&#9733;</span>
+                    </button>
+                    <button class="glass-btn" disabled aria-label="disabled">&times;</button>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <!-- THE OPAQUE-ATOM VARIANTS — they have no glass to refract, so they stay on
+             the opaque specimen host (the W54 legibility allowlist surface). The
+             destructive register sits here as a quiet specimen, NOT the page's loud
+             protagonist (the CTA inversion fixed — the CTA above out-presents it). -->
+        <StorySection
+            heading="Opaque variants"
+            blurb="The solid-atom variants on the opaque specimen host. The destructive register is a quiet specimen here, never the page protagonist."
+        >
             <div class="flex flex-wrap gap-3">
-                <Button v-for="v in coreVariants" :key="v" :variant="v">{{ v }}</Button>
+                <Button v-for="v in opaqueVariants" :key="v" :variant="v">{{ v }}</Button>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Primary glass CTA</h2>
-            <p class="text-small text-muted-foreground">
-                The headline CTA variant — a calm liquid-glass button with the
-                <code class="fira-code">--glass-specular</code> edge catch-light gleam and a
-                restrained <code class="fira-code">--scale-hover-btn</code> lift on the §6
-                spring register. No sparkle, no disco-grain.
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-                <Button variant="primary-audacious" size="lg">Launch sequence</Button>
-                <Button variant="primary-audacious">Get started</Button>
-                <Button variant="primary-audacious" disabled>Disabled</Button>
-            </div>
-        </section>
-
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Gold glass CTA</h2>
-            <p class="text-small text-muted-foreground">
-                A primary glass CTA carrying a STATIC warm-gold tint (the at-rest
-                <code class="fira-code">--color-gold</code> wash) over the glass substrate
-                plus the <code class="fira-code">--glass-specular</code> edge catch-light —
-                gold survives CALM. No animated sweep, no sparkle.
-            </p>
-            <!-- The label is the warm-ink `--foreground` over the soft gold-tint-over
-                 -glass rest substrate; the tint deepens a touch on hover but the calm
-                 register never flips to a saturated sweep. -->
-            <div class="flex flex-wrap items-center gap-3">
-                <Button variant="gold-audacious" size="lg">Next →</Button>
-                <Button variant="gold-audacious">Submit</Button>
-                <Button variant="gold-audacious" disabled>Disabled</Button>
-            </div>
-            <p class="text-mono-caption text-muted-foreground">
-                The label stays warm ink, legible over the soft gold tint in both
-                modes; the gold deepens slightly on hover without an animated sweep.
-            </p>
-        </section>
-
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Sizes</h2>
-            <p class="text-small text-muted-foreground">
-                Default variant across the size scale.
-            </p>
+        <StorySection
+            heading="Sizes"
+            blurb="Default variant across the size scale."
+        >
             <div class="flex flex-wrap items-center gap-3">
                 <Button v-for="size in sizes" :key="size" :size="size">size · {{ size }}</Button>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Four-state contract</h2>
-            <p class="text-small text-muted-foreground">
-                Rest, hover, active, disabled, and <code class="fira-code">aria-pressed</code>.
-                Hover and active emerge from pointer interaction — shown simulated for reference.
-            </p>
+        <StorySection
+            heading="Four-state contract"
+            blurb="Rest, hover, active, disabled, and aria-pressed. Hover and active emerge from pointer interaction — shown simulated for reference."
+        >
             <div class="flex flex-wrap items-center gap-3">
                 <Button>Rest</Button>
                 <Button class="bg-[var(--glass-bg-resting)] border-[var(--glass-border-resting)]">Hover (sim.)</Button>
                 <Button class="scale-[0.97]">Active (sim.)</Button>
                 <Button disabled>Disabled</Button>
-                <Button
-                    :aria-pressed="pressed"
-                    variant="glass"
-                    @click="pressed = !pressed"
-                >
-                    {{ pressed ? "Pressed" : "Toggle" }}
-                </Button>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Raw .glass-btn utility</h2>
-            <p class="text-small text-muted-foreground">
-                Circular icon button from <code class="fira-code">glass.css</code>, rendered
-                bare. Supports <code class="fira-code">aria-pressed</code> and
-                <code class="fira-code">:disabled</code> out of the box.
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-                <button class="glass-btn" aria-label="plus"><span aria-hidden>+</span></button>
-                <button class="glass-btn" aria-label="minus"><span aria-hidden>&minus;</span></button>
-                <button class="glass-btn" aria-pressed="true" aria-label="star">
-                    <span aria-hidden>&#9733;</span>
-                </button>
-                <button class="glass-btn" disabled aria-label="disabled">&times;</button>
-            </div>
-        </section>
-
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Chromatic · viz basis</h2>
-            <p class="text-small text-muted-foreground">
-                Fourier / Chebyshev / Legendre — the three basis hues the library exposes as
-                <code class="fira-code">bg-viz-*</code> utilities.
-            </p>
+        <StorySection
+            heading="Chromatic · viz basis"
+            blurb="Fourier / Chebyshev / Legendre — the three basis hues the library exposes as bg-viz-* utilities."
+        >
             <div class="flex flex-wrap gap-3">
                 <Button
                     v-for="v in vizButtons"
@@ -140,15 +158,12 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                     {{ v.label }}
                 </Button>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Cartoon shadow</h2>
-            <p class="text-small text-muted-foreground">
-                The library&rsquo;s signature treatment: a hard offset shadow plus a 1px translate
-                on hover. Default card shadow already points at
-                <code class="fira-code">--shadow-cartoon</code>.
-            </p>
+        <StorySection
+            heading="Cartoon shadow"
+            blurb="The library's signature treatment: a hard offset shadow plus a 1px translate on hover."
+        >
             <div class="flex flex-wrap items-center gap-4">
                 <Button
                     variant="outline"
@@ -160,6 +175,6 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 <Button variant="outline" class="bg-card shadow-cartoon-md">md</Button>
                 <Button variant="outline" class="bg-card shadow-cartoon-lg">lg</Button>
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

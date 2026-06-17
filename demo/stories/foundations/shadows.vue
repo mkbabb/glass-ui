@@ -1,5 +1,11 @@
 <script setup lang="ts">
+// BB.W-DEMO-DESIGN — the shadows token tour gains ONE chassis lever: the calm wash
+// read-through (StorySection over the StoryHero `wash` card drop) + the PRM-safe
+// scroll-cascade rung stagger (W-SCROLL-MOTION `.scroll-cascade`, no GL). The
+// shadows-on-stage perception-correction (the dark mid-tone backing so cast shadows
+// read in DARK) is PRESERVED — the wash sits UNDER it, not replacing it.
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { cn } from "../../../src/utils/cn";
 
 const shadows: { cls: string; label: string }[] = [
@@ -23,11 +29,11 @@ const shadows: { cls: string; label: string }[] = [
              sits on a contrasting "stage" so the cast shadows read in DARK: a
              dark drop-shadow over the W-DARK-MATERIAL near-black page is invisible,
              so the `.shadow-stage` paints a mid-tone backing in dark (transparent in
-             light, where the cream page already reads the shadows). -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Elevation</p>
+             light, where the cream page already reads the shadows). The cells pop in
+             on the scroll-cascade; the stage perception-correction is PRESERVED. -->
+        <StorySection heading="Elevation">
             <div
-                class="shadow-stage grid grid-cols-2 gap-8 rounded-card px-4 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+                class="shadow-stage scroll-cascade grid grid-cols-2 gap-8 rounded-card px-4 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             >
                 <div
                     v-for="s in shadows"
@@ -47,13 +53,10 @@ const shadows: { cls: string; label: string }[] = [
                     }}</span>
                 </div>
             </div>
-        </div>
+        </StorySection>
 
         <!-- Interactive cartoon-mechanic: hover to lift. -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
-                Cartoon lift · hover the card
-            </p>
+        <StorySection heading="Cartoon lift · hover the card">
             <div class="flex flex-wrap items-center gap-8 px-2 py-8">
                 <button
                     type="button"
@@ -68,13 +71,13 @@ const shadows: { cls: string; label: string }[] = [
                     <span class="text-admin-label text-muted-foreground">hover me</span>
                     <span class="text-subheading text-foreground">Lifts 1px</span>
                 </button>
-                <p class="text-prose max-w-md text-muted-foreground">
+                <p class="text-small max-w-md text-muted-foreground">
                     The cartoon mechanic — a hard offset shadow plus a 1px translate on
                     hover — gives cards a paper-on-paper personality without any real
                     depth. It's the library's signature surface affordance.
                 </p>
             </div>
-        </div>
+        </StorySection>
     </StoryPage>
 </template>
 

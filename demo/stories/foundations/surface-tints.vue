@@ -44,7 +44,7 @@ const aliases: TintRow[] = [
             label="9-rung tint scale"
             blurb="Surface tints are translucent overlays (color-mix over transparent). Each rung reads its alpha + warm-cream → cooler gradation against the checkerboard reference field below — NOT over a same-tone plate where the gradation vanishes. Use the canonical `border-[var(--surface-tint-N)]` recipe for chassis hairlines."
         >
-            <div class="tint-grid">
+            <div class="tint-grid scroll-cascade">
                 <div v-for="row in tints" :key="row.label" class="tint-cell">
                     <div class="tint-checker">
                         <div class="tint-swatch" :class="row.cls" />
@@ -63,7 +63,7 @@ const aliases: TintRow[] = [
             label="tier aliases"
             blurb="Semantic tier aliases name the numeric tint rungs. Use these in component-level styles where the rung is implicit (e.g., `<Card tier='quiet'>` paints with --surface-tint-quiet)."
         >
-            <div class="tint-grid">
+            <div class="tint-grid scroll-cascade">
                 <div v-for="row in aliases" :key="row.label" class="tint-cell">
                     <div class="tint-checker">
                         <div class="tint-swatch" :class="row.cls" />
