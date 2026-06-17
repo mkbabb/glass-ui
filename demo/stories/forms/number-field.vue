@@ -33,7 +33,7 @@ const bounded = ref<number>(5);
         >
             <IconChip :icon="Hash" :section="FORMS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Forms · Numeric
                 </span>
                 <p class="text-small text-muted-foreground">

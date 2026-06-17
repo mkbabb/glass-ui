@@ -73,7 +73,7 @@ const groups: Record<string, Group> = {
             <!-- Account -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label section-label--tinted text-admin-label">
+                    <span class="section-label--tinted text-admin-label">
                         {{ groups.account.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -104,7 +104,7 @@ const groups: Record<string, Group> = {
             <!-- Appearance -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label section-label--tinted text-admin-label">
+                    <span class="section-label--tinted text-admin-label">
                         {{ groups.appearance.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -201,7 +201,7 @@ const groups: Record<string, Group> = {
             <!-- Notifications -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label section-label--tinted text-admin-label">
+                    <span class="section-label--tinted text-admin-label">
                         {{ groups.notifications.label }}
                     </span>
                     <p class="text-small text-muted-foreground">
@@ -239,7 +239,7 @@ const groups: Record<string, Group> = {
             <!-- Accessibility -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
-                    <span class="section-label section-label--tinted text-admin-label">
+                    <span class="section-label--tinted text-admin-label">
                         {{ groups.accessibility.label }}
                     </span>
                     <p class="text-small text-muted-foreground">

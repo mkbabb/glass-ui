@@ -165,7 +165,7 @@ const paged = computed(() => {
         >
             <IconChip :icon="SheetIcon" :section="DATA_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Data · Data table
                 </span>
                 <p class="text-small text-muted-foreground">

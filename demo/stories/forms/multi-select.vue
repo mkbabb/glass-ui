@@ -43,7 +43,7 @@ const lockedTools = ref<string[]>(["vue", "tailwind"]);
         >
             <IconChip :icon="ListChecks" :section="FORMS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Forms · Multi-choice
                 </span>
                 <p class="text-small text-muted-foreground">

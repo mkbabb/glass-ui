@@ -46,7 +46,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
         >
             <IconChip :icon="SlidersHorizontal" :section="FORMS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Forms · Ranges
                 </span>
                 <p class="text-small text-muted-foreground">

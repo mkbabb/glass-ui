@@ -57,7 +57,7 @@ const vizBadges: { cls: string; label: string }[] = [
         >
             <IconChip :icon="BadgeCheck" :section="DISPLAY_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Display · Badge
                 </span>
                 <p class="text-small text-muted-foreground">

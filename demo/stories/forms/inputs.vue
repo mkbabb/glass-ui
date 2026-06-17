@@ -30,7 +30,7 @@ const pillBare = ref("");
         >
             <IconChip :icon="TextCursorInput" :section="FORMS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Forms · Text entry
                 </span>
                 <p class="text-small text-muted-foreground">

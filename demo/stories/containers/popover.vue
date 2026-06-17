@@ -30,7 +30,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
         >
             <IconChip :icon="GalleryVerticalEnd" :section="CONTAINERS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Containers · Popover
                 </span>
                 <p class="text-small text-muted-foreground">

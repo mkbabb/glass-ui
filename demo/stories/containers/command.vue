@@ -63,7 +63,7 @@ function pick(id: string) {
         >
             <IconChip :icon="CommandIcon" :section="CONTAINERS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Containers · Command
                 </span>
                 <p class="text-small text-muted-foreground">

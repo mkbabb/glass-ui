@@ -80,7 +80,7 @@ const claims = [
             <div class="relative z-10 flex flex-col gap-8 max-w-4xl">
                 <div class="flex items-center gap-3">
                     <Sparkles class="size-4 text-muted-foreground" aria-hidden="true" />
-                    <span class="text-admin-label section-label">
+                    <span class="section-label">
                         v0.3 · paper-and-glass forward
                     </span>
                 </div>
@@ -195,7 +195,7 @@ const claims = [
                     "
                 >
                     <span
-                        class="text-admin-label section-label font-mono"
+                        class="section-label"
                         :style="{ color: `var(--section-color-${idx * 2}, inherit)` }"
                     >
                         {{ claim.eyebrow }}

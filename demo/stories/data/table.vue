@@ -64,7 +64,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
         >
             <IconChip :icon="TableIcon" :section="DATA_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Data · Table
                 </span>
                 <p class="text-small text-muted-foreground">

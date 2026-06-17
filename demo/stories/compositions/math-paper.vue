@@ -23,7 +23,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                 }"
             >
                 <span
-                    class="text-admin-label section-label font-mono"
+                    class="section-label"
                     :style="{ color: sectionAccent }"
                 >
                     § 3 · Convergence

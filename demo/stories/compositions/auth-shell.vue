@@ -110,7 +110,7 @@ const trustBadges = [
                 class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(2.5rem_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
                 <div class="flex flex-col gap-2">
-                    <span class="text-admin-label section-label">Sign in</span>
+                    <span class="section-label">Sign in</span>
                     <h3 class="text-heading">Welcome back</h3>
                     <p class="text-small text-muted-foreground">
                         New here?

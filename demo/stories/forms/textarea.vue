@@ -31,7 +31,7 @@ const locked = ref("This content is read-only and visually muted.");
         >
             <IconChip :icon="Pilcrow" :section="FORMS_STOP" />
             <div class="flex flex-col gap-1">
-                <span class="section-label section-label--tinted text-admin-label">
+                <span class="section-label--tinted text-admin-label">
                     Forms · Long text
                 </span>
                 <p class="text-small text-muted-foreground">

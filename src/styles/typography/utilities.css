@@ -26,12 +26,24 @@
 /* ═══════════════════════════════════════════════
    MONO variants
    ═══════════════════════════════════════════════ */
+/* BB.W-EYEBROW-UNION — THE canonical mono-caption EYEBROW vocabulary, declared
+   ONCE. The pure color-agnostic register: mono · caption-size · uppercase ·
+   tracking-CAPS. The prior drift (tracking-WIDER 0.05em, weight-500, both off the
+   `.section-label` canon-by-usage) is RECONCILED onto the canon's secondary axes
+   (clean break, no alias): the tracking folds to `--type-tracking-caps` (0.1em),
+   the weight-500 drops (a per-use choice a site states inline via `font-medium`,
+   not a fork in the eyebrow register), and color stays UNBAKED so a consumer
+   pairs any ink (`text-foreground`/`text-muted-foreground`/an accent) — the 17
+   `text-mono-caption text-foreground` sites keep their ink. `.section-label`
+   (below) COMPOSES this vocabulary + bakes the muted ink (the colored canon);
+   the menu caption reads the `--menu-section-*` knobs that DEFAULT to these same
+   tokens (the sanctioned override layer). proof:eyebrow-union locks the
+   single-source-ness. */
 @utility text-mono-caption {
     font-family: var(--font-mono);
     font-size: var(--type-caption);
-    letter-spacing: var(--type-tracking-wider);
+    letter-spacing: var(--type-tracking-caps);
     text-transform: uppercase;
-    font-weight: 500;
 }
 
 @utility text-mono-small {
@@ -110,13 +122,16 @@
         }
     }
 
-    /* Section label (mono, small caps) */
+    /* Section label (mono, small caps) — the COLORED eyebrow canon. Composes the
+       ONE `text-mono-caption` vocabulary (mono · caption · uppercase ·
+       tracking-caps) + bakes the muted ink. BB.W-EYEBROW-UNION: this is the
+       canon-by-usage register (the StorySection eyebrow column + Section.vue's
+       `label` tone + the `.section-label--tinted` accent build on it); it now
+       COMPOSES the vocabulary rather than re-declaring it, so a tracking/size
+       change to the eyebrow is ONE edit (the `text-mono-caption` rule). */
     .section-label {
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
+        @apply text-mono-caption;
         color: var(--muted-foreground);
-        text-transform: uppercase;
-        letter-spacing: var(--type-tracking-caps);
     }
 
     /* Section-accent eyebrow (AZ.W-SUFFUSE D3-7 / D1-8). ONE coherent
