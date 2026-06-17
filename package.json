@@ -586,6 +586,7 @@
         "proof:resolution": "node scripts/proof-resolution-contract.mjs",
         "proof:consumer-staleness": "node scripts/proof-consumer-staleness.mjs",
         "proof:peer-conformance": "node scripts/proof-peer-conformance.mjs",
+        "proof:constellation-spine": "node scripts/proof-constellation-spine.mjs",
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
         "proof:vt-names": "node scripts/proof-vt-names.mjs",
         "proof:dock-animation-live": "node scripts/proof-dock-animation-live.mjs",
@@ -816,9 +817,9 @@
     },
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^2.2.0 || ^3.0.0 || ^4.0.0",
+        "@mkbabb/keyframes.js": "^4.0.0",
         "@mkbabb/pencil-boil": "^0.4.1",
-        "@mkbabb/value.js": "^0.10.0 || ^0.11.0",
+        "@mkbabb/value.js": "^0.13.0 || ^1.0.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
@@ -854,12 +855,12 @@
         }
     },
     "devDependencies": {
-        "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^4.1.0",
+        "@lucide/vue": "^1.20.0",
+        "@mkbabb/keyframes.js": "^4.3.0",
         "@mkbabb/pencil-boil": "^0.4.1",
-        "@mkbabb/value.js": "^0.10.0",
-        "@tailwindcss/postcss": "^4.3.0",
-        "@tailwindcss/vite": "^4.3.0",
+        "@mkbabb/value.js": "^0.13.0 || ^1.0.0",
+        "@tailwindcss/postcss": "^4.3.1",
+        "@tailwindcss/vite": "^4.3.1",
         "@types/node": "^24.12.3",
         "@vitejs/plugin-vue": "^6.0.7",
         "@vue/test-utils": "^2.4.10",
@@ -868,15 +869,15 @@
         "clsx": "^2.1.1",
         "embla-carousel-vue": "^8.6.0",
         "happy-dom": "^20.9.0",
-        "reka-ui": "^2.9.7",
-        "tailwindcss": "^4.3.0",
+        "reka-ui": "^2.9",
+        "tailwindcss": "^4.3.1",
         "tw-animate-css": "^1.2.5",
         "typescript": "^6.0.3",
         "vaul-vue": "^0.4.0",
-        "vite": "^8.0.13",
-        "vitest": "^4.1.7",
+        "vite": "^8",
+        "vitest": "^4.1.9",
         "vue": "^3.5.34",
         "vue-router": "^4.6.4",
-        "vue-tsc": "^3.3.1"
+        "vue-tsc": "^3.3.5"
     }
 }

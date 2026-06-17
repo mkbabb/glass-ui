@@ -381,6 +381,13 @@ export const GATES = [
         note: "AU.W3 — peer optionality is a derived fact of the root bundle (optional IFF absent from dist/glass-ui.js & not core-substrate); the dead optionalPeerDependencies field deleted",
     },
     {
+        id: "proof:constellation-spine",
+        cmd: "proof:constellation-spine",
+        tags: ["local"],
+        sibling: true,
+        note: "BB.W-SPINE-CONSTELLATION — the cross-repo coherent-latest spine gate (born-RED, tagged [\"local\"]; the proof:ba-gestalt born-RED → promote model). Walks every constellation member's package.json (the hub + 4 leaves + 7 enrolled consumers + the WASM-leaf caret arm; the 3 independent-node services explicitly NOT enrolled) and asserts the 8 clauses (§6 BB-AMENDMENT-constellation-modernize.md): C1 value singleton IDENTITY (glass-ui value peer ⊇ kf value dep + every member admits the coherent 0.13.0 floor, pre-1.0 lockstep) · C2 no @mkbabb multi-major `||` (the value ^0.13.0||^1.0.0 pre-guard bridge the ONLY sanctioned exception) · C3 no dist-tag/star/next on @mkbabb or shared singleton · C4 no stale-lineage glass-ui cap (every consumer admits ^4.x) · C5 no ancient major (TS ^6/vite ^8/vue-tsc ^3) · C6 the registry-consumer probe discipline recorded (dependency-order-book.md, cross-refs W-LINEAGE-PROBE) · C7 the WASM-leaf family-caret arm + the csp divergent-publisher provenance fence (csc411 wasm crate, never muster/csp-wasm) · C8 the born-RED value ^1.0.0 pre-guard (the hub admits ^1 so value's DECIDED 1.0.0 cut cannot re-strand). SIBLING (walks foreign trees; absent members skip gracefully). BORN-RED at HEAD: the hub is bumped but the 7 enrolled consumers still cap glass-ui at ^3.x (C4) + the TS5/Vite7 trio + playground vite-6 (C5) — RED until the Batch-5 fleet adopt (W-CONSUMER-MODERNIZE + W-SLIDES-DRIVE), the single authorized verdict-flipper that PROMOTES it to the close set. Bite: re-introduce a @mkbabb union / a star / a stale glass-ui cap / an ancient major REDs the census.",
+    },
+    {
         id: "proof:vueuse-free-root",
         cmd: "proof:vueuse-free-root",
         tags: ["local", "ci"],

@@ -280,8 +280,8 @@ All runtime deps are peer:
 | `@lucide/vue` ^1.16.0 | Icon set (the renamed v1 package; was `lucide-vue-next` ^0.x pre-v1.0) |
 | `vaul-vue` ^0.4 | Drawer primitives |
 | `tw-animate-css` ^1.2.5 | `animate-in`/`animate-out` data-state utilities (optionalPeer) |
-| `@mkbabb/keyframes.js` ^2.2.0 \|\| ^3.0.0 \|\| ^4.0.0 | Spring/keyframe runtime |
-| `@mkbabb/value.js` ^0.10.0 | Color/value normalization (keyframes peer transitive) |
+| `@mkbabb/keyframes.js` ^4.0.0 | Spring/keyframe runtime (BB.W-SPINE-LATEST: the `^2\|\|^3\|\|^4` union collapsed to clean `^4` — the coherent-latest spine) |
+| `@mkbabb/value.js` ^0.13.0 \|\| ^1.0.0 | Color/value normalization (keyframes peer transitive). The `^1.0.0` leg is glass-ui's pre-guard for value.js's DECIDED 1.0.0 stabilization cut (the pre-1.0 lockstep regime dissolves at the cut); the broken-singleton is an enforced IDENTITY against keyframes' value dep (`proof:peer-conformance` / `proof:constellation-spine` clause 1) |
 
 ## Path aliases (tsconfig)
 

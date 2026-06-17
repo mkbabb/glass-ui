@@ -109,16 +109,18 @@ export async function detect() {
     const vjVersion = pkgVersion("@mkbabb/value.js");
     facts.versions = { keyframes: kfVersion, value: vjVersion };
 
-    // VERSION STAMP — the manifest enumerated against keyframes.js 4.1.0 + value.js
-    // 0.10.x. A later bump REDs here and forces a manifest re-run (not silent widen).
-    if (!/^4\.1\./.test(kfVersion)) {
+    // VERSION STAMP — the manifest enumerated against keyframes.js 4.3.x + value.js
+    // 0.13.x (re-enumerated at BB.W-SPINE-LATEST, the coherent-latest spine bump).
+    // A later bump REDs here and forces a manifest re-run (not silent widen) — the
+    // tripwire is HONORED, never loosened to a wildcard.
+    if (!/^4\.3\./.test(kfVersion)) {
         violations.push(
-            `VERSION STAMP: keyframes.js is ${kfVersion}, manifest enumerated against 4.1.x — re-run the manifest after the bump`,
+            `VERSION STAMP: keyframes.js is ${kfVersion}, manifest enumerated against 4.3.x — re-run the manifest after the bump`,
         );
     }
-    if (!/^0\.1[01]\./.test(vjVersion)) {
+    if (!/^0\.13\./.test(vjVersion)) {
         violations.push(
-            `VERSION STAMP: value.js is ${vjVersion}, manifest enumerated against 0.10.x/0.11.x — re-run after the bump`,
+            `VERSION STAMP: value.js is ${vjVersion}, manifest enumerated against 0.13.x — re-run after the bump`,
         );
     }
 

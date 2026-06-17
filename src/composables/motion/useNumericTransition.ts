@@ -45,9 +45,9 @@ export interface UseNumericTransitionOptions<K extends string> {
      * (a name now resolves only through the ASYNC `resolveEasing`, which crosses
      * the value.js dynamic boundary the dock/motion light surface must never
      * pull in). Narrowing glass-ui's public option to a callable decouples it
-     * from keyframes' name-resolution churn AND is assignable to every supported
-     * keyframes major (2.2 / 3 / 4). A consumer wanting a named curve passes the
-     * function directly (e.g. `(t) => 1 - Math.pow(1 - t, 3)` for easeOutCubic).
+     * from keyframes' name-resolution churn. A consumer wanting a named curve
+     * passes the function directly (e.g. `(t) => 1 - Math.pow(1 - t, 3)` for
+     * easeOutCubic).
      */
     timingFunction?: TimingFunction;
     /** Per-frame consumer. Receives the same zero-allocation record each tick. */
