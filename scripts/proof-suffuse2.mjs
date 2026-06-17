@@ -231,13 +231,21 @@ add(
 );
 
 // ── W2 — the content-page chrome <h1> is one √φ rung above the section register ─
-// The StoryPage chrome <h1> (the variant==='page' arm) resolves to text-title
+// The StoryPage chrome <h1> (the content-page arm) resolves to text-title
 // (32.9px) — strictly ABOVE the section <h2> text-subheading (20.4px). The assert
 // names the POSITIVE rung (text-title/text-display-1), NOT merely ≠ text-heading
 // (a regress to text-subheading is also ≠ text-heading but moves the WRONG way).
+// BB.W-HIERARCHY2 restructured the chrome header into the ordered eyebrow→title→blurb
+// cluster: the `variant === 'page'` guard moved from the <h1>'s compound condition
+// onto the wrapping `<header v-if="variant === 'page'">`, leaving the <h1 v-if="title">
+// at text-title INSIDE that page-only header. The assert verifies BOTH facts with
+// equal rigor — the content-page header is gated to variant==='page' AND its <h1> is
+// at the one-rung-above grade (a regress to a lower rung still reds).
 const storyPage = strip(read("demo/stories/StoryPage.vue"));
+const contentHeaderOk = /<header\b[^>]*v-if="variant === 'page'"/.test(storyPage);
 const h1RungOk =
-    /<h1\b[^>]*v-if="title && variant === 'page'"[^>]*class="[^"]*\btext-(title|display-1)\b/.test(
+    contentHeaderOk &&
+    /<h1\b[^>]*v-if="title"[^>]*class="[^"]*\btext-(title|display-1)\b/.test(
         storyPage,
     );
 add(

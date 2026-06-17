@@ -67,11 +67,18 @@ function cliPaths() {
 }
 
 /**
- * Extract the selector list of the FIRST rule whose body contains `bodyNeedle`
- * and whose selector list contains `anchorSelector`. Returns the raw selector
- * text (everything before the `{`).
+ * Extract the selector list of the FIRST rule whose body matches `bodyNeedle`
+ * (a string substring OR a RegExp — the W-LENSING/W-LIQUIDHOVER reformat put the
+ * `mask-image: radial-gradient` value onto its own line, so a brittle exact
+ * substring no longer matches; a whitespace-tolerant RegExp does) and whose
+ * selector list contains `anchorSelector`. Returns the raw selector text
+ * (everything before the `{`).
  */
 function selectorListContaining(src, anchorSelector, bodyNeedle) {
+    const bodyMatches =
+        bodyNeedle instanceof RegExp
+            ? (body) => bodyNeedle.test(body)
+            : (body) => body.includes(bodyNeedle);
     // Match `<selectors> { <body> }` blocks; find the one whose selectors carry
     // the anchor and whose body carries the needle.
     const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
@@ -79,7 +86,7 @@ function selectorListContaining(src, anchorSelector, bodyNeedle) {
     while ((m = ruleRe.exec(src))) {
         const selectors = m[1];
         const body = m[2];
-        if (selectors.includes(anchorSelector) && body.includes(bodyNeedle)) {
+        if (selectors.includes(anchorSelector) && bodyMatches(body)) {
             return selectors;
         }
     }
@@ -98,11 +105,15 @@ function run() {
 
         // ── 1. The unified specular `::before` group reaches every band surface.
         // The group is the rule whose body carries the masked radial-gradient
-        // (`mask-image: radial-gradient`) — the moving-specular body.
+        // (`mask-image: radial-gradient`) — the moving-specular body. The
+        // BB.W-LENSING reformat put the value on its own line (and composed a
+        // SECOND conic edge-glint layer), so the needle is whitespace-tolerant
+        // (the masked-radial body still lives in the ONE group — full teeth: drop
+        // the masked radial and the group is not found).
         const specularSel = selectorListContaining(
             css,
             ".glass-material::before",
-            "mask-image: radial-gradient",
+            /mask-image:\s*radial-gradient/,
         );
         facts.specularGroupFound = Boolean(specularSel);
         if (!specularSel) {
@@ -311,10 +322,17 @@ function run() {
         }
     }
 
-    // ── 5f. DRY composable — the inline `trackSpecular` is GONE from Card.vue +
-    // DockIconButton.vue (a deletion-proof: `useSpecularTracking` is the sole
-    // home). And the Card `specular` prop produces three DISTINCT registers
-    // (off|subtle|full).
+    // ── 5f. DRY single-source — BB.W-LIQUIDHOVER reconciled the per-consumer
+    // pointer hand-wires onto the ONE `createSpecularWriter` core via the
+    // `vSpecular` directive (the tier-root AUTO-ARM, the `vReveal` playbook).
+    // Card / DockIconButton now arm `v-specular` (the zero-wiring delivery), NOT a
+    // hand-composed `useSpecularTracking()` + `@pointermove` triplet — there is
+    // ONE position-write source, TWO deliveries (the directive for the tier-root
+    // controls; the `:style`-ref composable for any future gated `:style` case).
+    // The proof keeps EQUAL rigor: (a) the single-source core ships +
+    // (b) the directive WRAPS it (no forked rAF), + (c) the consumers arm the
+    // directive and carry NO inline `trackSpecular` AND NO retired per-consumer
+    // `@pointermove`-hand-wire (a re-introduced fork reds).
     const CARD = resolve(ROOT, "src/components/ui/card/Card.vue");
     const DOCK_ICON = resolve(
         ROOT,
@@ -324,30 +342,92 @@ function run() {
         ROOT,
         "src/composables/glass/useSpecularTracking.ts",
     );
+    const DIRECTIVE = resolve(ROOT, "src/composables/glass/vSpecular.ts");
     facts.composableExists = existsSync(COMPOSABLE);
     if (!facts.composableExists) {
         violations.push(
-            "src/composables/glass/useSpecularTracking.ts is absent — the DRY pointer seam was not extracted (AX.W09)",
+            "src/composables/glass/useSpecularTracking.ts is absent — the single position-write core was not extracted (AX.W09 / BB.W-LIQUIDHOVER)",
         );
+    } else {
+        // The core lives ONCE — `createSpecularWriter` is the single position-write
+        // source the composable + the directive both wrap.
+        const comp = readFileSync(COMPOSABLE, "utf8");
+        facts.singleSourceCoreExists =
+            /export\s+function\s+createSpecularWriter\s*\(/.test(comp);
+        if (!facts.singleSourceCoreExists) {
+            violations.push(
+                "useSpecularTracking.ts does not export `createSpecularWriter` — the single position-write core is absent (BB.W-LIQUIDHOVER)",
+            );
+        }
+    }
+    // The `vSpecular` directive ships AND WRAPS the single-source core (it imports
+    // `createSpecularWriter` and does NOT re-implement the rAF coalesce — a forked
+    // `requestAnimationFrame` in the directive would be a second position-write
+    // source, the very thing the reconcile retires).
+    facts.directiveExists = existsSync(DIRECTIVE);
+    if (!facts.directiveExists) {
+        violations.push(
+            "src/composables/glass/vSpecular.ts is absent — the tier-root specular auto-arm directive does not ship (BB.W-LIQUIDHOVER)",
+        );
+    } else {
+        const dir = readFileSync(DIRECTIVE, "utf8");
+        const wrapsCore =
+            /import\s*\{[^}]*\bcreateSpecularWriter\b[^}]*\}\s*from/.test(dir) &&
+            /createSpecularWriter\s*\(/.test(dir);
+        const forkedRaf = /requestAnimationFrame\s*\(/.test(dir);
+        facts.directiveWrapsCore = wrapsCore;
+        facts.directiveForkedRaf = forkedRaf;
+        if (!wrapsCore) {
+            violations.push(
+                "vSpecular.ts does not WRAP `createSpecularWriter` — the directive must compose the single-source core, not a second writer (BB.W-LIQUIDHOVER)",
+            );
+        }
+        if (forkedRaf) {
+            violations.push(
+                "vSpecular.ts re-implements `requestAnimationFrame` — the rAF coalesce belongs to `createSpecularWriter` (the ONE position-write source); the directive must only wrap it (BB.W-LIQUIDHOVER)",
+            );
+        }
     }
     for (const [label, path] of [
         ["Card.vue", CARD],
         ["DockIconButton.vue", DOCK_ICON],
     ]) {
         if (!existsSync(path)) continue;
-        const sfc = readFileSync(path, "utf8");
+        // Comment-strip (the house false-witness discipline) so a `v-specular`
+        // mention in a doc-comment cannot satisfy the arm check — the LOAD-BEARING
+        // signal is the real template binding + the directive import.
+        const sfc = stripComments(readFileSync(path, "utf8"));
         const inlineCopy = /function\s+trackSpecular\s*\(/.test(sfc);
-        const usesComposable = /useSpecularTracking\s*\(/.test(sfc);
+        // The DRY seam is now the `v-specular` directive auto-arm (NOT a direct
+        // `useSpecularTracking()` call). The arm is the real template binding
+        // (`v-specular` default OR `v-specular="…"` gated) PAIRED with the
+        // directive import (`import { vSpecular } from …`) — both required so a
+        // bare prose mention is not enough.
+        const armsDirective =
+            /\bv-specular\b/.test(sfc) &&
+            /import\s*\{[^}]*\bvSpecular\b[^}]*\}/.test(sfc);
+        // The RETIRED per-consumer hand-wire: a `@pointermove` listener paired with
+        // a direct `useSpecularTracking()` call (the triplet the reconcile killed
+        // on these always-on/gated controls). The directive owns the listener now —
+        // a surviving `@pointermove` + composable call is the forked second source.
+        const handWire =
+            /@pointermove/.test(sfc) && /useSpecularTracking\s*\(/.test(sfc);
         facts[`${label}_inlineTrackSpecularGone`] = !inlineCopy;
-        facts[`${label}_usesComposable`] = usesComposable;
+        facts[`${label}_armsSpecularDirective`] = armsDirective;
+        facts[`${label}_handWireRetired`] = !handWire;
         if (inlineCopy) {
             violations.push(
-                `${label} still declares an inline \`trackSpecular\` — it must consume useSpecularTracking() (AX.W09 DRY)`,
+                `${label} still declares an inline \`trackSpecular\` — it must arm the \`v-specular\` directive (the single-source delivery; AX.W09 / BB.W-LIQUIDHOVER DRY)`,
             );
         }
-        if (!usesComposable) {
+        if (!armsDirective) {
             violations.push(
-                `${label} does not call useSpecularTracking() — the DRY pointer seam is not the sole home (AX.W09)`,
+                `${label} does not arm the \`v-specular\` directive — the tier-root auto-arm is the DRY position-write delivery (BB.W-LIQUIDHOVER)`,
+            );
+        }
+        if (handWire) {
+            violations.push(
+                `${label} still hand-wires \`@pointermove\` + \`useSpecularTracking()\` — the retired per-consumer triplet; the \`v-specular\` directive owns the listener now (BB.W-LIQUIDHOVER)`,
             );
         }
     }
@@ -483,7 +563,7 @@ function run() {
         `  AX.W09 reads tokens : rest=${facts.restReadsToken ? "✓" : "✗"} hover=${facts.hoverReadsToken ? "✓" : "✗"} active=${facts.activeReadsToken ? "✓" : "✗"}; warm-cream=${facts.warmCreamCore ? "✓" : "✗"} pure-white=${facts.pureWhiteSpecularCore ? "PRESENT ✗" : "gone ✓"}`,
     );
     console.log(
-        `  AX.W09 one-owner+DRY: dock 2nd-specular retired=${facts.dockSecondSpecularRetired ? "✓" : "✗"}; composable=${facts.composableExists ? "✓" : "✗"}; Card-specular-3-register=${facts.cardSpecularType && facts.cardSpecularFullDistinct ? "✓" : "✗"}`,
+        `  one-source+DRY      : dock 2nd-specular retired=${facts.dockSecondSpecularRetired ? "✓" : "✗"}; core=${facts.singleSourceCoreExists ? "✓" : "✗"}; vSpecular-wraps-core=${facts.directiveWrapsCore ? "✓" : "✗"}; Card-arms=${facts["Card.vue_armsSpecularDirective"] ? "✓" : "✗"}; Dock-arms=${facts["DockIconButton.vue_armsSpecularDirective"] ? "✓" : "✗"}; Card-3-register=${facts.cardSpecularType && facts.cardSpecularFullDistinct ? "✓" : "✗"}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

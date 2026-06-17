@@ -38,8 +38,8 @@
 //   (7) PARITY-PRESERVED — proof:motion-suite stays GREEN (a subprocess run).
 //   (8) PI-SPEC — tests-visual/motion-demo.spec.ts exists (the binding π half).
 
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -63,7 +63,13 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 const SPRINGS = "demo/stories/motion/springs.vue";
 const GALLERY = "demo/stories/motion/curve-gallery.vue";
 const FAMILIES = "demo/stories/motion/curve-families.ts";
-const BEZIER = "demo/stories/motion/curve-gallery/BezierEditor.vue";
+// BB.W-EASING-PRIMITIVE — the C-3 fold LANDED: the two demo editors (BezierEditor +
+// StepsEditor) re-home onto the ONE published <EasingPicker> curve-authoring
+// primitive (clean break, no alias — the demo SFCs DELETED). The editor source is
+// now the published component; the gallery is its #1 binary consumer.
+const EASING_PICKER = "src/components/custom/easing/EasingPicker.vue";
+const BEZIER_OLD = "demo/stories/motion/curve-gallery/BezierEditor.vue";
+const STEPS_OLD = "demo/stories/motion/curve-gallery/StepsEditor.vue";
 const SCROLL_VT = "demo/stories/motion/scroll-vt.vue";
 const FOUNDATIONS = "demo/stories/foundations/motion.vue";
 const DEMO_CSS = "demo/demo.css";
@@ -71,7 +77,7 @@ const DEMO_CSS = "demo/demo.css";
 const springsSrc = stripJs(read(SPRINGS));
 const gallerySrc = stripJs(read(GALLERY));
 const familiesSrc = stripJs(read(FAMILIES));
-const bezierSrc = stripJs(read(BEZIER));
+const easingPickerSrc = stripJs(read(EASING_PICKER));
 const scrollVtSrc = stripJs(read(SCROLL_VT));
 const foundationsSrc = stripJs(read(FOUNDATIONS));
 const demoCssRaw = read(DEMO_CSS);
@@ -249,24 +255,34 @@ add(
         ? "the gallery plots/dots + the springs block read --motion-accent / the violet hue (no warm-red hsl(--demo-hue) block)"
         : `RED: the motion family does not read the violet accent (gallery=${galleryReadsAccent}, springs=${springsReadsAccent}, no-red-block=${noWarmRedBlock})`,
 );
-// ppmycota is DEMO-LOCAL only — it does NOT appear in src/styles/.
-let ppmycotaInLib = false;
-try {
-    const out = execFileSync(
-        "grep",
-        ["-rl", "ppmycota", "src/styles"],
-        { cwd: ROOT, encoding: "utf8" },
-    );
-    ppmycotaInLib = out.trim().length > 0;
-} catch {
-    ppmycotaInLib = false; // grep exit 1 = no match = clean
-}
+// ppmycota is DEMO-LOCAL only — it does NOT appear in a src/styles/ RULE
+// (presets-in-consumers). The scan STRIPS CSS comments first (the house comment-
+// strip pattern): a fence-COMMENT asserting "NO ppmycota/demo hue" (on-glass-fg.css)
+// is documentation of the absence, NOT a leak — a raw grep that matched it was the
+// comment-blind false positive. A real leak is a ppmycota color/token in a CSS RULE.
+const stripCss = (s) => s.replace(/\/\*[\s\S]*?\*\//g, " ");
+const walkCss = (dir, acc = []) => {
+    if (!existsSync(dir)) return acc;
+    for (const n of readdirSync(dir)) {
+        const p = join(dir, n);
+        const st = statSync(p);
+        if (st.isDirectory()) walkCss(p, acc);
+        else if (/\.css$/.test(n)) acc.push(p);
+    }
+    return acc;
+};
+const ppmycotaLeaks = walkCss(resolve(ROOT, "src/styles")).filter((p) =>
+    /ppmycota/i.test(stripCss(readFileSync(p, "utf8"))),
+);
+const ppmycotaInLib = ppmycotaLeaks.length > 0;
 add(
     "ppmycota-demo-local-only",
     !ppmycotaInLib,
     ppmycotaInLib
-        ? "RED: ppmycota leaked into src/styles/ (it is a DEMO-LOCAL keyframes consumer color — presets-in-consumers)"
-        : "ppmycota does NOT appear in src/styles/ (it stays demo-local)",
+        ? `RED: ppmycota leaked into a src/styles/ CSS RULE (a DEMO-LOCAL keyframes consumer color — presets-in-consumers): ${ppmycotaLeaks
+              .map((p) => p.slice(ROOT.length + 1))
+              .join(", ")}`
+        : "ppmycota does NOT appear in any src/styles/ CSS RULE (comments stripped — it stays demo-local)",
 );
 
 // ── (7) PARITY-PRESERVED — proof:motion-suite stays GREEN ────────────────────────
@@ -295,20 +311,41 @@ add(
         : "RED: tests-visual/motion-demo.spec.ts is absent (the π capture half is the binding visual truth)",
 );
 
-// the bezier editor exists + is the tailwind-first re-expression (no raw pasted
-// keyframes CSS — the @theme/@utility / Tailwind-utility form, the §7 grep-witness).
-const bezierExists = bezierSrc.length > 0;
-// raw-paste tell: a scoped <style> block carrying the keyframes .easing-curve-canvas
-// selectors (the standalone CSS pasted verbatim) rather than Tailwind utilities.
-const bezierRawPaste = /\.easing-curve-canvas\s*\{|\.bezier-path\s*\{|\.control-point\s*\{/.test(bezierSrc);
+// ── BEZIER/STEPS EDITOR — the W-EASING-PRIMITIVE C-3 fold (re-homed) ──────────────
+// The two demo editors RE-HOME onto the ONE published <EasingPicker> primitive (the
+// boundary-law curve editor: curve MATH = value.js, the editor COMPONENT = glass-ui).
+// The gate asserts (a) the published primitive EXISTS + is tailwind-first (no raw
+// pasted keyframes CSS), (b) the gallery DEMONSTRATES both arms (<EasingPicker
+// mode="bezier"> + mode="steps">), (c) the OLD demo BezierEditor/StepsEditor SFCs are
+// DELETED (the clean-break deletion proof — no fourth fork survives).
+const pickerExists = easingPickerSrc.length > 0;
+// raw-paste tell: a scoped <style> block carrying the standalone curve-editor
+// selectors pasted verbatim rather than Tailwind utilities + token customs.
+const pickerRawPaste =
+    /\.easing-curve-canvas\s*\{|\.bezier-path\s*\{|\.control-point\s*\{/.test(
+        easingPickerSrc,
+    );
+// the gallery demonstrates the re-homed primitive in BOTH authoring modes.
+const galleryImportsPicker = /\bEasingPicker\b/.test(gallerySrc);
+const galleryBezierMode = /<EasingPicker[^>]*mode\s*=\s*["']bezier["']/.test(
+    gallerySrc,
+);
+const galleryStepsMode = /<EasingPicker[^>]*mode\s*=\s*["']steps["']/.test(
+    gallerySrc,
+);
+const galleryDemonstrates =
+    galleryImportsPicker && galleryBezierMode && galleryStepsMode;
+// the deletion proof — the old demo editor SFCs are GONE (clean break, no alias).
+const oldEditorsGone = !existsSync(resolve(ROOT, BEZIER_OLD)) &&
+    !existsSync(resolve(ROOT, STEPS_OLD));
+const bezierOk =
+    pickerExists && !pickerRawPaste && galleryDemonstrates && oldEditorsGone;
 add(
     "bezier-editor-tailwind-first",
-    bezierExists && !bezierRawPaste,
-    bezierExists && !bezierRawPaste
-        ? "the bezier editor is ported tailwind-first (Tailwind utilities + token vars, no raw pasted keyframes .easing-curve-canvas CSS)"
-        : bezierExists
-          ? "RED: the bezier editor pastes raw keyframes CSS (the .easing-curve-canvas/.bezier-path/.control-point standalone selectors) — re-express tailwind-first"
-          : "RED: the bezier editor is absent",
+    bezierOk,
+    bezierOk
+        ? "the bezier+steps editor re-homed onto the published <EasingPicker> (tailwind-first, no raw pasted curve-editor CSS); the gallery demonstrates BOTH modes; the old demo BezierEditor/StepsEditor SFCs are DELETED (the C-3 fold)"
+        : `RED: the re-homed curve editor is not whole (picker-exists=${pickerExists}, no-raw-paste=${!pickerRawPaste}, gallery-demonstrates[import=${galleryImportsPicker} bezier=${galleryBezierMode} steps=${galleryStepsMode}], old-demo-editors-deleted=${oldEditorsGone})`,
 );
 
 // ── Report ──────────────────────────────────────────────────────────────────────

@@ -44,6 +44,11 @@ export function isSoftwareWebGLRenderer(): boolean {
     try {
         r = probeWebGL2Renderer();
     } catch {
+        // fail-explicit: a befitting swallow — a THROWING probe (a partial webgl2
+        // stub with no getExtension, an SSR/happy-dom shim) is morally a `null` probe
+        // ("cannot prove software"). Returning `false` SURFACES the un-proven state:
+        // the conservative non-downgrade keeps the richer WebGL default, never a
+        // silent forced "css" fall on an env we could not certify.
         return false;
     }
     if (r === null) return false;

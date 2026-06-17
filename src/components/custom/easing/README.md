@@ -50,10 +50,14 @@ published component). The optional spring-driven dot reads the library's
 ## The single color event
 
 The curve strokes `--motion-accent` — the motion family's single color event. The
-published-primitive default resolves the library's OWN `--viz-legendre` violet twin
-(`var(--motion-accent, var(--viz-legendre))`) when a consumer has not declared
-`--motion-accent`, so the primitive is self-sufficient standalone AND honours the
-ppmycota fence (a demo hue NEVER enters a library token).
+root folds it into the component-local `--easing-curve-accent`
+(`--easing-curve-accent: var(--motion-accent, var(--viz-legendre))`), so every accent
+site reads the bare `(--easing-curve-accent)` shorthand (no `text-[var]`/`stroke-[var]`
+arbitrary wrap) while the library's OWN `--viz-legendre` violet twin is the
+self-sufficient default when a consumer has not declared `--motion-accent`. The
+primitive is self-sufficient standalone AND honours the ppmycota fence (a demo hue
+NEVER enters a library token); a consumer still overrides `--motion-accent` from any
+ancestor.
 
 ## The `loop` playback seam (named successor)
 

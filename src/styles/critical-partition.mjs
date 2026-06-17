@@ -64,6 +64,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "transitions.css",
     "animations.css",
     "scroll-driven.css",
+    "scroll-choreography.css",
     "view-transition.css",
     "utilities.css",
     "menu.css",
@@ -110,7 +111,7 @@ export const DEFERRED_SOURCE_DIRECTIVE = '@source "../*.js";';
  * flag with a recorded rationale, never silently.
  *
  * Measured at this authoring (HEAD bdbcd479, post-build): the critical subset
- * resolves to raw 347266 / gzip 105460 — the token cascade (tokens.css gzip
+ * resolved to raw 347266 / gzip 105460 — the token cascade (tokens.css gzip
  * ~62KiB) + the 5-rung glass ladder (glass.css gzip ~27KiB) + typography +
  * theme + specular/refract. It is roughly half the monolith's fully-resolved
  * gzip (~230KiB), so the deferred tail (component recipes + SFC scoped payload
@@ -121,5 +122,18 @@ export const DEFERRED_SOURCE_DIRECTIVE = '@source "../*.js";';
  * STILL over the mobile-ms floor, the inline-critical-head-block path routes to
  * the named BB.W-CSS-CRITICAL-INLINE successor (a triumvirate trigger, NOT a
  * token-value edit here).
+ *
+ * RE-BASE (BB liquid-glass band): the critical subset grew to raw 427015 / gzip
+ * 131469 — NOT a component-recipe leak (the critical bucket is still the 6
+ * documented token+glass+type partials; w2 partials-disjoint + w4 hold), but the
+ * legitimate GROWTH of the critical token cascade + glass ladder by the BB
+ * liquid-glass band: the deep-glass token family (tokens/glass-deep.css), the
+ * --glass-accent rim axis, the W-LENSING refract evolution, the W-DARK-MATERIAL
+ * dark-arm + the on-glass-fg / surface-axis registers — all of which live in the
+ * critical tokens/* + glass/* sub-partials by construction. Ceiling lifted
+ * 110000 → 137000 (~4.2% headroom over the measured 131469, the profile-bundle
+ * re-base convention) to carry the BB glass-band critical surface. The
+ * render-block FLOOR stays W-LIGHTHOUSE's W3-arm-1 mobile-ms gate (the binding
+ * perf truth); this ceiling guards against a recipe revert-toward-monolith.
  */
-export const CRITICAL_GZIP_CEILING = 110000;
+export const CRITICAL_GZIP_CEILING = 137000;

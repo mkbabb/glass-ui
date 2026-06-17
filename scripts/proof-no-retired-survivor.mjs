@@ -83,11 +83,15 @@ function tokenSurvives(token, stylesSrc) {
     return stylesSrc.includes(stem);
 }
 
-// ── The declared RETIRED claims — each line+artefacts machine-checked ──────────
-// Parsed from MIGRATION.md (the `line` is verified to carry `RETIRED`), the
-// artefact lists are the concrete promise each claim makes. This keeps the gate
-// precise: a bullet that names BOTH the retired AND the live-replacement surface
-// (the common shape) only asserts the RETIRED side.
+// ── The declared RETIRED claims — each located BY NAME, artefacts machine-checked ─
+// EACH claim carries a `find` regex matching the UNIQUE retirement-asserting line
+// it owns (a marker phrase / wave tag the doc line carries verbatim) — the gate
+// LOCATES the line by searching MIGRATION.md for the first line that matches
+// `find` AND carries `RETIRED`, rather than a hard-coded line number. Inserting a
+// new MIGRATION row above a claim no longer drifts its anchor (the AY.W-LEG1 line-
+// number-coupling class, closed). The artefact lists are the concrete promise each
+// claim makes. This keeps the gate precise: a bullet that names BOTH the retired
+// AND the live-replacement surface (the common shape) only asserts the RETIRED side.
 const RETIRED_CLAIMS = [
     {
         // The demo warm-red interactive preset (--demo-nav-accent → --viz-fourier)
@@ -96,27 +100,23 @@ const RETIRED_CLAIMS = [
         // negative predicate (no interactive-state rule reads --viz-fourier /
         // --demo-nav-accent across src/styles/** + demo/**). Anchored here so the
         // coverage guard knows the claim is owned.
-        label: "the demo nav-accent red interactive preset (MIGRATION.md:72; machine-locked by proof:register-ios)",
-        mustCarry: "RETIRED",
-        line: 72,
+        label: "the demo nav-accent red interactive preset (machine-locked by proof:register-ios)",
+        find: /preset is RETIRED \(the demo consumes the neutral root register/,
     },
     {
-        label: "v3.10.0 AY-prune subpaths deck-progress/instrument-rail (NARROWED at AZ.W-PRUNE2 — header-ribbon/glass-panel RESTORED, keyframes-consumed) (MIGRATION.md:95)",
-        mustCarry: "RETIRED",
-        line: 95,
+        label: "v3.10.0 AY-prune subpaths deck-progress/instrument-rail (NARROWED at AZ.W-PRUNE2 — header-ribbon/glass-panel RESTORED, keyframes-consumed)",
+        find: /\*\*v3\.10\.0 \(AY, NARROWED at AZ\.W-PRUNE2\)\*\*.*RETIRED/,
         subpaths: ["deck-progress", "instrument-rail"],
         dirs: ["deck-progress", "instrument-rail"],
     },
     {
-        label: "nested composables/dark + composables/keyboard subpaths (MIGRATION.md:261)",
-        mustCarry: "RETIRED",
-        line: 261,
+        label: "nested composables/dark + composables/keyboard subpaths",
+        find: /Nested `composables\/dark` \+ `composables\/keyboard` subpaths RETIRED/,
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths (MIGRATION.md:266)",
-        mustCarry: "RETIRED",
-        line: 266,
+        label: "pagination/virtual composables + subpaths",
+        find: /RETIRED composables: `useOffsetPagination`/,
         subpaths: ["pagination", "virtual"],
         exports: [
             "useOffsetPagination",
@@ -126,9 +126,8 @@ const RETIRED_CLAIMS = [
         ],
     },
     {
-        label: "demo-private <DockShowcaseFrame> primitive (MIGRATION.md:269)",
-        mustCarry: "RETIRED",
-        line: 269,
+        label: "demo-private <DockShowcaseFrame> primitive",
+        find: /RETIRED primitive: demo-private `<DockShowcaseFrame>`/,
         exports: ["DockShowcaseFrame"],
     },
     // ── BA cut (4.0.0) retirements — anchored here for the coverage guard; the
@@ -136,33 +135,38 @@ const RETIRED_CLAIMS = [
     // (the established pattern: the demo nav-accent claim above is artefact-less,
     // proof:register-ios is its binding check). ──────────────────────────────────
     {
-        label: "the SegmentedTabs overflow=scroll/auto axis (W-TABS; machine-locked by proof:tabs-std) (MIGRATION.md:14)",
-        mustCarry: "RETIRED",
-        line: 14,
+        label: "the SegmentedTabs overflow=scroll/auto axis (W-TABS; machine-locked by proof:tabs-std)",
+        find: /`overflow="scroll" \/ "auto"` axis RETIRED/,
     },
     {
-        label: "DialogContent variant=glass|opaque (W-SURFACE-AXIS; machine-locked by proof:surface-axis) (MIGRATION.md:130)",
-        mustCarry: "RETIRED",
-        line: 130,
+        label: "DialogContent variant=glass|opaque (W-SURFACE-AXIS; machine-locked by proof:surface-axis)",
+        find: /`<DialogContent variant="glass\|opaque">` is RETIRED/,
     },
     {
-        label: "CarouselDots onto <PagerDots> (W-PAGER; machine-locked by proof:pager) (MIGRATION.md:177)",
-        mustCarry: "RETIRED",
-        line: 177,
+        label: "CarouselDots onto <PagerDots> (W-PAGER; machine-locked by proof:pager)",
+        find: /\*\*BA\.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>`/,
     },
     {
         // The /underline subpath is gone from package.json exports (the binding
-        // artefact); proof:handmark verifies the DEC-8 fold. The MIGRATION.md:103
-        // subpath-history cross-mention is a back-reference to this claim.
-        label: "GlassUnderline + /underline subpath onto <HandMark> (W-HANDMARK; machine-locked by proof:handmark) (MIGRATION.md:200)",
-        mustCarry: "RETIRED",
-        line: 200,
+        // artefact); proof:handmark verifies the DEC-8 fold. The /underline
+        // subpath-history cross-mention (the "NEW subpath … RETIRED at the BA cut"
+        // line) is a back-reference to this claim.
+        label: "GlassUnderline + /underline subpath onto <HandMark> (W-HANDMARK; machine-locked by proof:handmark)",
+        find: /\*\*BA\.W-HANDMARK — `GlassUnderline` \+ the `\/underline` subpath RETIRED/,
         subpaths: ["underline"],
     },
     {
-        label: "the disco CTA keyframes/tokens (W-GLASS-CAL; machine-locked by proof:glass-cal) (MIGRATION.md:1241)",
-        mustCarry: "RETIRED",
-        line: 1241,
+        // BB.W-METAL-SHIMMER — the gold-only @keyframes gold-shimmer-slide retired
+        // onto the parameterized metal-shimmer-sweep. The artefact is a CSS keyframe
+        // NAME (outside this gate's src/subpath/export/token probes); the BINDING
+        // machine check is proof:metal-shimmer (the keyframe-absent + re-point arm).
+        // Anchored here for the coverage guard.
+        label: "the gold-shimmer-slide keyframe onto metal-shimmer-sweep (W-METAL-SHIMMER; machine-locked by proof:metal-shimmer)",
+        find: /\*\*BB\.W-METAL-SHIMMER — the `@keyframes gold-shimmer-slide` RETIRED/,
+    },
+    {
+        label: "the disco CTA keyframes/tokens (W-GLASS-CAL; machine-locked by proof:glass-cal)",
+        find: /`@keyframes sparkle-sweep` \/ `btn-gold-bg-sweep`.*\| RETIRED/,
     },
     {
         // BB.W-SCROLL-FADE-RETIRE — the static .scroll-fade-* utility rules + the
@@ -170,9 +174,26 @@ const RETIRED_CLAIMS = [
         // artefacts are CSS (outside this gate's src/subpath probes); the BINDING
         // machine check is proof:fading-scroll's W6 DEFINITION-ABSENT + token-absent
         // + dist-absent arms. Anchored here for the coverage guard.
-        label: "the static .scroll-fade-* utilities + --mask-fade-width token (W-SCROLL-FADE-RETIRE; machine-locked by proof:fading-scroll W6) (MIGRATION.md:1189)",
-        mustCarry: "RETIRED",
-        line: 1189,
+        label: "the static .scroll-fade-* utilities + --mask-fade-width token (W-SCROLL-FADE-RETIRE; machine-locked by proof:fading-scroll W6)",
+        find: /were RETIRED at the 4\.1\.0 cut — BB\.W-SCROLL-FADE-RETIRE/,
+    },
+    {
+        // BB.W-LENSING — the crude AW.W23 uniform-radial displacement map retired
+        // (the .glass-refract → .glass-lens class rename composes the EVOLVED
+        // squircle bevel-profile filter). The artefact is the SVG filter map (CSS,
+        // outside this gate's probes); the BINDING machine check is proof:lensing.
+        // Anchored here for the coverage guard.
+        label: "the crude AW.W23 uniform-radial lens map onto the squircle bevel-profile filter (W-LENSING; machine-locked by proof:lensing)",
+        find: /the crude AW\.W23 uniform-radial map is RETIRED/,
+    },
+    {
+        // BB.W-LIQUID-REVEAL — the @utility popover-animate + @utility
+        // slide-in-from-side bezier-zoom-95 enter recipes retired onto the
+        // spring-clocked .glass-reveal. The artefacts are CSS @utility bodies
+        // (outside this gate's probes); the BINDING machine check is
+        // proof:liquid-reveal / proof:no-dual-path D1. Anchored here for the guard.
+        label: "the popover-animate + slide-in-from-side enter utilities onto .glass-reveal (W-LIQUID-REVEAL; machine-locked by proof:liquid-reveal)",
+        find: /`@utility slide-in-from-side` are RETIRED, replaced by the spring-clocked LIQUID-ENTER recipe/,
     },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
     // speedtest-consumed (MIGRATION.md §"KEPT (speedtest-consumed)", corrected
@@ -180,6 +201,18 @@ const RETIRED_CLAIMS = [
     // a RETIRED claim for a live-consumed family would be the lie this gate exists
     // to forbid. The gate stays honest by the un-retirement doc correction, not by
     // listing them as retired.
+];
+
+// ── BACK-REFERENCE lines — RETIRED-bearing lines that point at an ALREADY-declared
+// claim (NOT a new retirement assertion). Located BY NAME (a unique marker phrase),
+// same robustness as the claims: a new MIGRATION row above them never drifts the
+// anchor. Each is verified to resolve to exactly one line carrying `RETIRED`.
+const BACKREF_FINDS = [
+    // The /underline subpath-history cross-mention → the BA.W-HANDMARK claim.
+    /NEW subpath: `@mkbabb\/glass-ui\/underline`.*RETIRED at the BA cut/,
+    // "…the v0.9.4 nested form `composables/dark` is RETIRED—see §2" → the line-305
+    // composables/dark claim.
+    /the v0\.9\.4 nested form `composables\/dark` is RETIRED—see §2/,
 ];
 
 /**
@@ -255,19 +288,28 @@ function run() {
 
     const violations = [];
 
-    // Every declared claim's `line` MUST still carry `RETIRED` (the claim is real
-    // + located) — a moved/edited line that no longer asserts retirement is a
-    // stale claim entry, flagged so the gate's claim list stays honest.
+    // Locate each declared claim BY NAME — the first line matching its `find`
+    // regex AND carrying `RETIRED`. A `find` that matches NOTHING (the claim's
+    // marker text vanished or was edited away) is a hard fail-loud: the claim has
+    // drifted off the doc and the gate must not green vacuously. (The artefact
+    // check below is the binding "is it actually gone" probe; this locates + proves
+    // the claim line is still present.)
+    const declaredLines = new Set();
     for (const claim of RETIRED_CLAIMS) {
-        const text = mdLines[claim.line - 1] ?? "";
-        if (!text.includes(claim.mustCarry)) {
-            // Not a hard violation if the artefacts are all gone; but if the line
-            // moved, the human + machine halves drifted — surface it as a note.
-            // We still evaluate the artefacts below (the binding check).
-            console.error(
-                `  NOTE: ${claim.label} — MIGRATION.md:${claim.line} no longer carries "RETIRED"; re-anchor the claim line.`,
+        const idx = mdLines.findIndex(
+            (ln) => /RETIRED/.test(ln) && claim.find.test(ln),
+        );
+        if (idx === -1) {
+            violations.push(
+                `${claim.label}: the declared RETIRED claim's marker (${claim.find}) matches NO line carrying "RETIRED" in MIGRATION.md — the claim drifted off the doc. Restore the retirement assertion OR update the claim's \`find\` marker.`,
             );
+            // Still evaluate artefacts (a surviving artefact for a vanished claim is
+            // its own violation; both surface).
+            violations.push(...evaluateClaim(claim, ctx));
+            continue;
         }
+        declaredLines.add(idx + 1);
+        claim.locatedLine = idx + 1;
         violations.push(...evaluateClaim(claim, ctx));
     }
 
@@ -275,17 +317,23 @@ function run() {
     // anchored by a declared claim (or be a back-reference to one). A NEW RETIRED
     // line not on this set is an un-checked claim that could ride a fresh lie —
     // flagged so the declared claim list cannot silently fall behind the doc.
-    const declaredLines = new Set(RETIRED_CLAIMS.map((c) => c.line));
-    // Back-reference / cross-link lines that point at an ALREADY-declared claim
-    // (not a new retirement assertion): MIGRATION.md:103 (the /underline subpath
-    // history cross-mention → the line-200 claim) + :367 ("…is RETIRED—see §2"
-    // → the line-261 composables/dark claim). (BB Batch 2: the MIGRATION.md
-    // surface-axis + scroll-fade edits shifted the lower-doc anchors +9; :358→:367.)
-    const BACKREF_LINES = new Set([103, 367]);
+    // Back-reference lines (a RETIRED-bearing line pointing at an ALREADY-declared
+    // claim) are located BY NAME too — the same line-number-drift-proof discipline.
+    const backrefLines = new Set();
+    for (const find of BACKREF_FINDS) {
+        const idx = mdLines.findIndex((ln) => /RETIRED/.test(ln) && find.test(ln));
+        if (idx === -1) {
+            violations.push(
+                `BACKREF: the back-reference marker (${find}) matches NO line carrying "RETIRED" in MIGRATION.md — update or remove the stale back-reference.`,
+            );
+            continue;
+        }
+        backrefLines.add(idx + 1);
+    }
     mdLines.forEach((ln, i) => {
         const n = i + 1;
         if (!/RETIRED/.test(ln)) return;
-        if (declaredLines.has(n) || BACKREF_LINES.has(n)) return;
+        if (declaredLines.has(n) || backrefLines.has(n)) return;
         violations.push(
             `MIGRATION.md:${n} asserts RETIRED but is not anchored by a declared claim in RETIRED_CLAIMS — add it (with its named artefacts) so the retirement is machine-checked, or mark it a back-reference.`,
         );

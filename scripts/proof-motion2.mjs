@@ -37,8 +37,8 @@
 //   (8) PARITY-PRESERVED — proof:motion-demo (the predecessor) stays GREEN (subprocess).
 //   (9) PI-SPEC — tests-visual/motion2.spec.ts exists (the binding π half).
 
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 import { homedir } from "node:os";
 import { ROOT } from "./constellation.mjs";
@@ -316,13 +316,25 @@ add(
 // ── (7) PURPLE-PRESERVED (source-witness — the W-MOTION-SUITE identity guard) ──────
 const accentMinted = /--motion-accent:\s*var\(\s*--viz-legendre\s*\)/.test(demoCssRaw);
 const galleryReadsAccent = /var\(\s*--motion-accent\s*\)/.test(gallerySrc);
-let ppmycotaInLib = false;
-try {
-    const out = execFileSync("grep", ["-rl", "ppmycota", "src/styles"], { cwd: ROOT, encoding: "utf8" });
-    ppmycotaInLib = out.trim().length > 0;
-} catch {
-    ppmycotaInLib = false;
-}
+// ppmycota is DEMO-LOCAL only — it does NOT appear in a src/styles/ RULE
+// (presets-in-consumers). The scan STRIPS CSS comments first (the house comment-
+// strip pattern): a fence-COMMENT asserting "NO ppmycota/demo hue" (on-glass-fg.css)
+// documents the absence, NOT a leak — a raw grep that matched it was comment-blind.
+const stripCss = (s) => s.replace(/\/\*[\s\S]*?\*\//g, " ");
+const walkCss = (dir, acc = []) => {
+    if (!existsSync(dir)) return acc;
+    for (const n of readdirSync(dir)) {
+        const p = join(dir, n);
+        const st = statSync(p);
+        if (st.isDirectory()) walkCss(p, acc);
+        else if (/\.css$/.test(n)) acc.push(p);
+    }
+    return acc;
+};
+const ppmycotaLeaks = walkCss(resolve(ROOT, "src/styles")).filter((p) =>
+    /ppmycota/i.test(stripCss(readFileSync(p, "utf8"))),
+);
+const ppmycotaInLib = ppmycotaLeaks.length > 0;
 const purplePreserved = accentMinted && galleryReadsAccent && !ppmycotaInLib;
 add(
     "purple-preserved",

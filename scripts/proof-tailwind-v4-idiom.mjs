@@ -83,7 +83,15 @@ const SCALE_FAMILIES = [
         // The shimmer-tempo durations are consumed ONLY inside the `--animate-shimmer*`
         // composites (theme.css plain @theme block) — they set the keyframe loop
         // tempo, not a per-element `duration-shimmer` utility. No standalone bridge.
-        holdout: ["--duration-shimmer", "--duration-shimmer-fast"],
+        //
+        // --duration-metal (BB.W-METAL-SHIMMER) is the SAME holdout register: the
+        // slow 6s metal-family clock is consumed ONLY inside the `--animate-metal`
+        // composite (theme/literals.css) + the `animation: metal-shimmer-sweep
+        // var(--duration-metal) …` shorthand in utilities/metal.css — it sets the
+        // metal sweep loop tempo, never a per-element `duration-metal` utility, so
+        // there is no standalone `--transition-duration-metal` bridge use case (the
+        // exact --duration-shimmer pattern).
+        holdout: ["--duration-shimmer", "--duration-shimmer-fast", "--duration-metal"],
     },
     {
         name: "ease/spring",
@@ -119,7 +127,17 @@ const SCALE_FAMILIES = [
         // row in theme.css.
         tokenRe: /^\s*(--glass-blur-[a-z-]+-radius)\s*:/gm,
         bridgeRe: /^\s*--blur-[a-z-]+\s*:\s*var\((--glass-blur-[a-z-]+-radius)\)/gm,
-        holdout: [],
+        // The deep-tier radii (BB.W-DEEP-GLASS) are the holdout register: the calm
+        // ladder rungs (wash/quiet/resting/floating/overlay/dock) bridge to
+        // `--blur-glass-*` per-element utilities, but the OPT-IN deep tier is reached
+        // via the `.glass-deep` TOKEN-SUBSTITUTION decoration (it re-points
+        // --glass-blur-floating: var(--glass-blur-deep) locally) + the `--glass-blur-deep`
+        // `blur(var(--glass-blur-deep-active-radius))` filter composite — never a
+        // per-element `blur-glass-deep` Tailwind utility, so there is no standalone
+        // `--blur-*` bridge use case (--glass-blur-deep-active-radius is the
+        // scalar-lerp endpoint consumed only inside the --glass-blur-deep filter +
+        // its dark-arm twin in dark-arm.css).
+        holdout: ["--glass-blur-deep-radius", "--glass-blur-deep-active-radius"],
     },
 ];
 

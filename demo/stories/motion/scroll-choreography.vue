@@ -103,7 +103,13 @@ onMounted(() => {
                     :key="n"
                     class="glass-card rounded-card p-5"
                 >
-                    <p class="text-heading text-foreground">Cascade {{ n }}</p>
+                    <!-- The motion-band ONE color event: the demo-local --motion-accent
+                         violet (the --viz-legendre twin at demo/demo.css), the SAME
+                         coherent violet the springs/reveal/scroll-vt band reads. -->
+                    <p class="text-heading text-foreground flex items-center gap-2">
+                        <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
+                        Cascade {{ n }}
+                    </p>
                     <p class="text-small text-muted-foreground">
                         Builds in on its own view() timeline.
                     </p>
@@ -129,6 +135,7 @@ onMounted(() => {
                     <div
                         class="scroll-pin-phase-reveal glass-card rounded-card flex flex-col items-center gap-3 p-10"
                     >
+                        <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
                         <p class="text-display-4 text-foreground">Pinned</p>
                         <p class="text-small text-muted-foreground">
                             Phase 1 — the reveal (0–45% of the container scroll).

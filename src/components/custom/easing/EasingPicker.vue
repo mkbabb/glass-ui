@@ -14,10 +14,12 @@
 // The canvas chrome is Tailwind utilities + token custom-properties (the tailwind-
 // first law; the BezierEditor/StepsEditor idiom carried in), NEVER raw pasted CSS.
 // The curve strokes `--motion-accent` — the motion family's single color event;
-// the published-primitive default resolves the library's OWN `--viz-legendre`
-// violet twin when a consumer has not declared `--motion-accent` (the ppmycota
-// fence: a demo hue NEVER enters a library token, and the primitive is self-
-// sufficient standalone).
+// the root folds it into the component-local `--easing-curve-accent` with the
+// library's OWN `--viz-legendre` violet twin as the fallback, so every accent
+// site reads the bare `(--easing-curve-accent)` shorthand while the consumer can
+// still override `--motion-accent` from any ancestor (the ppmycota fence: a demo
+// hue NEVER enters a library token, and the primitive is self-sufficient
+// standalone).
 import { computed, onUnmounted, useTemplateRef, watch } from "vue";
 import { Check, Copy } from "@lucide/vue";
 import {
@@ -176,7 +178,11 @@ async function copy(): Promise<void> {
         copied.value = true;
         setTimeout(() => (copied.value = false), COPY_FEEDBACK_MS);
     } catch {
-        /* clipboard unavailable */
+        // fail-explicit: a befitting swallow — the Clipboard API is unavailable
+        // (insecure context / permission denied / no navigator.clipboard). The copy
+        // is a convenience affordance, not a contract: `copied` stays false so the
+        // "copied!" feedback simply never fires; the readout literal is still on
+        // screen for a manual select-copy. No state to recover, nothing to throw.
     }
 }
 
@@ -194,6 +200,7 @@ const canvasViewBox = computed(() =>
         class="grid gap-4 lg:grid-cols-[1fr_18rem]"
         :data-mode="mode"
         data-testid="easing-picker"
+        style="--easing-curve-accent: var(--motion-accent, var(--viz-legendre))"
     >
         <!-- the editable curve canvas (bezier draggable / steps staircase) -->
         <div class="glass-card relative overflow-hidden rounded-card p-3">
@@ -224,12 +231,12 @@ const canvasViewBox = computed(() =>
                 <template v-if="mode === 'bezier'">
                     <line :x1="0" :y1="1" :x2="handlesSvg[0]!.x" :y2="handlesSvg[0]!.y" class="stroke-muted-foreground/50" stroke-width="0.02" stroke-dasharray="0.03 0.02" />
                     <line :x1="1" :y1="0" :x2="handlesSvg[1]!.x" :y2="handlesSvg[1]!.y" class="stroke-muted-foreground/50" stroke-width="0.02" stroke-dasharray="0.03 0.02" />
-                    <path :d="bezierPathD" fill="none" class="stroke-[var(--motion-accent,var(--viz-legendre))]" stroke-width="0.035" stroke-linecap="round" />
+                    <path :d="bezierPathD" fill="none" class="stroke-(--easing-curve-accent)" stroke-width="0.035" stroke-linecap="round" />
                 </template>
 
                 <!-- STEPS: the sampled staircase (the REAL value.js steppedEase twin) -->
                 <template v-else>
-                    <path :d="stepPathD" fill="none" class="stroke-[var(--motion-accent,var(--viz-legendre))]" stroke-width="0.025" stroke-linejoin="miter" stroke-linecap="butt" />
+                    <path :d="stepPathD" fill="none" class="stroke-(--easing-curve-accent)" stroke-width="0.025" stroke-linejoin="miter" stroke-linecap="butt" />
                 </template>
 
                 <!-- endpoints (fixed) -->
@@ -243,7 +250,7 @@ const canvasViewBox = computed(() =>
                 </template>
 
                 <!-- travelling dot (the playback arm) -->
-                <circle v-if="playback" :cx="progress" :cy="1 - easingFn(progress)" r="0.03" class="fill-[var(--motion-accent,var(--viz-legendre))]" />
+                <circle v-if="playback" :cx="progress" :cy="1 - easingFn(progress)" r="0.03" class="fill-(--easing-curve-accent)" />
             </svg>
         </div>
 
@@ -274,7 +281,7 @@ const canvasViewBox = computed(() =>
                         :min="STEP_COUNT_MIN"
                         :max="STEP_COUNT_MAX"
                         step="1"
-                        class="w-full accent-[var(--motion-accent,var(--viz-legendre))]"
+                        class="w-full accent-(--easing-curve-accent)"
                         aria-label="Step count"
                     />
                 </div>
@@ -298,11 +305,11 @@ const canvasViewBox = computed(() =>
                 <code class="min-w-0 flex-1 truncate text-xs text-foreground" :title="readoutLiteral">{{ readoutLiteral }}</code>
                 <button
                     type="button"
-                    class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-8)] hover:text-foreground"
+                    class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground"
                     :aria-label="copied ? 'Copied' : 'Copy curve literal'"
                     @click="copy"
                 >
-                    <Check v-if="copied" class="size-4 text-[var(--motion-accent,var(--viz-legendre))]" />
+                    <Check v-if="copied" class="size-4 text-(--easing-curve-accent)" />
                     <Copy v-else class="size-4" />
                 </button>
             </div>

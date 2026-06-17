@@ -48,7 +48,15 @@ import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
 // /easing subpath). The curve-gallery is consumer #1 by construction — it binds the
 // picker in BOTH modes (bezier + steps). The demo SFC forks are DELETED (clean
 // break, no alias — the no-fourth-fork discipline made code).
-import { EasingPicker } from "../../../src/components/custom/easing";
+// BB.W-EASING-PRIMITIVE — the two names are ONE primitive family sharing the
+// useEasingPicker composable: <EasingPicker> is the bare editor, <EasingConfigurator>
+// is the SAME picker seated in a <ConfiguratorLayer>/<ConfiguratorRow> shell (the
+// picker-on-the-Configurator register — the value.js GradientPane consumer shape).
+// The Custom family demonstrates both so the chassis-seated register has a live story.
+import {
+    EasingConfigurator,
+    EasingPicker,
+} from "../../../src/components/custom/easing";
 
 const CUSTOM_FAMILY = "Custom";
 // BA.W-FOURIER-STUDIO / REC-6 — the Steps family hosts the live steppedEase(n,
@@ -254,7 +262,20 @@ const houseCores: { token: string; cp: string }[] = [
 
             <!-- Custom family → the published <EasingPicker> in bezier mode (the
                  re-homed BezierEditor — the draggable cubic-bezier arm). -->
-            <EasingPicker v-if="activeFamily === CUSTOM_FAMILY" mode="bezier" />
+            <template v-if="activeFamily === CUSTOM_FAMILY">
+                <EasingPicker mode="bezier" />
+
+                <!-- BB.W-EASING-PRIMITIVE — the chassis-seated register: the SAME
+                     picker family in a <ConfiguratorLayer>/<ConfiguratorRow> shell
+                     (the picker-on-the-Configurator register a consumer reaches for
+                     when the curve picker is ONE row in a larger controls column). -->
+                <EasingConfigurator
+                    class="mt-6 max-w-sm"
+                    label="Easing"
+                    name="--ease-custom"
+                    mode="bezier"
+                />
+            </template>
 
             <template v-else>
                 <!-- BA.W-DEMO-AFFORDANCES — the play control is the ONE register

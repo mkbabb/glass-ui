@@ -85,14 +85,18 @@ function run() {
 
         // (a) the filter node ships — feImage → feDisplacementMap → feImage +
         // feBlend mode=screen (URL-encoded inside the data-URI, so check the
-        // encoded primitive names).
+        // encoded primitive names). The filter ID `#glass-refract` is KEPT
+        // (BB.W-LENSING renamed only the OPT-IN CLASS to `.glass-lens` — the
+        // refraction-axis token + the filter-graph id names stay). The data-URI
+        // single-quotes encode as `%27`, so `mode=%27screen` is the SHIPPED form
+        // (the literal `mode='screen` alternation was the stale-encoding drift).
         const hasFilterNode =
-            /id=['"]?glass-refract|id='glass-refract|id%3D%2522glass-refract|id%3D'glass-refract/.test(
+            /id=['"]?glass-refract|id='glass-refract|id%3D%2522glass-refract|id%3D'glass-refract|id=%27glass-refract/.test(
                 refractRaw,
             ) &&
             /feImage/.test(refractRaw) &&
             /feDisplacementMap/.test(refractRaw) &&
-            /feBlend[^>]*mode=['"]?screen|mode%3D%2522screen|mode='screen/.test(
+            /feBlend[^>]*mode=['"]?screen|mode%3D%2522screen|mode='screen|mode=%27screen/.test(
                 refractRaw,
             );
         facts.refractFilterNodeShips = hasFilterNode;
@@ -102,22 +106,40 @@ function run() {
             );
         }
 
-        // (b) the consuming selector is re-homed onto .glass-material.glass-refract
-        // (or standalone .glass-refract), with NO surviving compound on the
-        // folded .glass-specular-track class.
+        // (b) the consuming selector is re-homed onto .glass-material.glass-lens
+        // (or standalone .glass-lens), with NO surviving compound on the
+        // folded .glass-specular-track class. BB.W-LENSING RENAMED the opt-in
+        // class `.glass-refract` → `.glass-lens` (clean break, no alias — the
+        // filter-id `#glass-refract` + the `--glass-refract` magnitude axis name
+        // are KEPT). The re-home asserts the renamed `.glass-lens` class; the
+        // clean-break bite asserts the OLD `.glass-refract` CLASS selector is GONE
+        // (a `.glass-refract` rule re-introducing the retired class reds —
+        // distinct from the kept filter-id `#glass-refract` / token `--glass-refract`,
+        // which the `.` / `-` boundary excludes).
         const reHomed =
-            /\.glass-material\.glass-refract|\.glass-refract\b/.test(refract);
-        const staleCompound = /\.glass-specular-track\.glass-refract/.test(refract);
+            /\.glass-material\.glass-lens|\.glass-lens\b/.test(refract);
+        const staleCompound = /\.glass-specular-track\.glass-(refract|lens)/.test(refract);
+        // The retired opt-in CLASS selector — a class token, NOT the kept
+        // `#glass-refract` filter id nor the `--glass-refract` token (the regex
+        // requires a `.` immediately before `glass-refract` + a word boundary
+        // after, which `#`/`--`/`/` references never satisfy).
+        const staleClass = /\.glass-refract\b/.test(refract);
         facts.refractReHomed = reHomed;
         facts.refractStaleCompound = staleCompound;
+        facts.refractStaleClass = staleClass;
         if (!reHomed) {
             violations.push(
-                "the refraction backdrop-filter is not bound to a re-homed selector (.glass-material.glass-refract or standalone .glass-refract)",
+                "the refraction backdrop-filter is not bound to a re-homed selector (.glass-material.glass-lens or standalone .glass-lens — BB.W-LENSING rename)",
+            );
+        }
+        if (staleClass) {
+            violations.push(
+                "the retired `.glass-refract` opt-in CLASS selector survives — BB.W-LENSING renamed it to `.glass-lens` (clean break, no alias)",
             );
         }
         if (staleCompound) {
             violations.push(
-                "a refraction rule still keys on the W22-folded compound .glass-specular-track.glass-refract — decouple it",
+                "a refraction rule still keys on the W22-folded compound .glass-specular-track.glass-{refract,lens} — decouple it",
             );
         }
 
@@ -150,12 +172,13 @@ function run() {
         }
     }
 
-    // glass-specular-track.css must NOT carry the stale compound either.
+    // glass-specular-track.css must NOT carry the stale compound either (under
+    // either the retired `.glass-refract` or the renamed `.glass-lens` class).
     if (existsSync(SPECULAR)) {
         const spec = stripComments(readFileSync(SPECULAR, "utf8"));
-        if (/\.glass-specular-track\.glass-refract/.test(spec)) {
+        if (/\.glass-specular-track\.glass-(refract|lens)/.test(spec)) {
             violations.push(
-                "glass-specular-track.css still binds the stale .glass-specular-track.glass-refract compound",
+                "glass-specular-track.css still binds the stale .glass-specular-track.glass-{refract,lens} compound",
             );
         }
     }
@@ -280,7 +303,9 @@ function run() {
     } else {
         const story = readFileSync(STORY, "utf8");
         const exercises = {
-            refract: /glass-refract/.test(story),
+            // BB.W-LENSING — the story composes the renamed `.glass-lens` opt-in
+            // class (the `#glass-refract` filter id it references is kept).
+            refract: /glass-lens/.test(story),
             squircle: /squircle/.test(story) && /glass-(card|btn)/.test(story),
             chromatic: /glass-chromatic/.test(story),
             tint: /--glass-tint-source/.test(story),

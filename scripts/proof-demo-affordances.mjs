@@ -65,7 +65,14 @@ const REL = (p) => resolve(ROOT, p);
 const PATHS = {
     STORY_PLAY_BUTTON: REL("demo/stories/StoryPlayButton.vue"),
     CURVE_GALLERY: REL("demo/stories/motion/curve-gallery.vue"),
-    BEZIER_EDITOR: REL("demo/stories/motion/curve-gallery/BezierEditor.vue"),
+    // BEZIER_EDITOR + StepsEditor retired at BB.W-EASING-PRIMITIVE (the C-3 fold):
+    // the curve-gallery's two demo editors RE-HOMED onto the published <EasingPicker>
+    // (`@mkbabb/glass-ui/easing`) — the two demo SFCs DELETED (clean break, no alias).
+    // The play register lives on the surviving curve-gallery (which composes
+    // <StoryPlayButton> + the leading <Play> glyph) and on <EasingPicker>'s own
+    // travelling-dot playback control; neither carries a ▶ text glyph. The deleted
+    // SFC is de-enrolled (a stale assertion against a removed artefact, not a
+    // regression).
     SPRINGS: REL("demo/stories/motion/springs.vue"),
     TOASTER: REL("demo/stories/feedback/toaster.vue"),
     SKELETON: REL("demo/stories/feedback/skeleton.vue"),
@@ -78,7 +85,9 @@ const PATHS = {
 
 // W2 — the play/replay-bearing stories whose every play control must be the ONE
 // register. The U+25B6 `▶` glyph must not survive as a play affordance here.
-const PLAY_STORIES = ["CURVE_GALLERY", "BEZIER_EDITOR", "SPRINGS"];
+// (BEZIER_EDITOR de-enrolled at BB.W-EASING-PRIMITIVE — the demo SFC was deleted
+// when its editor re-homed onto the published <EasingPicker>; see PATHS.)
+const PLAY_STORIES = ["CURVE_GALLERY", "SPRINGS"];
 
 // W3 — the lone-trigger stories: each had a single <Button> as the sole child of
 // a `flex flex-col` column (the stretch). After the wave each lone trigger sits
@@ -271,9 +280,9 @@ export function detectDemoAffordances(sources) {
         );
     }
     // The positive: each play story composes the ONE register (or imports it).
-    // curve-gallery + springs adopt <StoryPlayButton>; BezierEditor too. The
-    // positive arm catches a play site that DROPS ▶ but hand-rolls a non-register
-    // button — we require the register import/use in each play story.
+    // curve-gallery + springs adopt <StoryPlayButton>. The positive arm catches a
+    // play site that DROPS ▶ but hand-rolls a non-register button — we require the
+    // register import/use in each play story.
     const w2RegisterMiss = [];
     for (const name of PLAY_STORIES) {
         const body = stripped[name] ?? "";

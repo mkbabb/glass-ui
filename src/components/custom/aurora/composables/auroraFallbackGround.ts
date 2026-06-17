@@ -335,6 +335,10 @@ function rasterizeField(
     try {
         canvas = document.createElement("canvas");
     } catch {
+        // fail-explicit: a befitting swallow — a `document` shim that throws on
+        // createElement (a partial happy-dom/SSR stub) is morally absent. Returning
+        // `null` SURFACES the absence: the caller takes the layered-CSS fallback
+        // (the documented W-AURORA-SWRASTER `"css"` ground), never a wedged surface.
         return null;
     }
     canvas.width = grid;
@@ -356,6 +360,10 @@ function rasterizeField(
     try {
         return canvas.toDataURL("image/png");
     } catch {
+        // fail-explicit: a befitting swallow — toDataURL throws on a tainted/quota-
+        // exhausted canvas or a stub without the encoder. Returning `null` SURFACES
+        // the failed raster: the caller falls to the layered-CSS ground (W-AURORA-
+        // SWRASTER), never a half-painted data URI.
         return null;
     }
 }

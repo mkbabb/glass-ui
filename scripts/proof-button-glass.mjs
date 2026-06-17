@@ -86,7 +86,8 @@ function safeRead(p) {
  * The sources are passed in so the self-test can inject a fixture (the B5 bite).
  */
 export function detectButtonGlass(sources) {
-    const { buttonIndex, buttonVue, surfacesCss, propertyRegsCss } = sources;
+    const { buttonIndex, buttonVue, surfacesCss, propertyRegsCss, refractCss } =
+        sources;
     const facts = {};
     const violations = [];
 
@@ -94,6 +95,7 @@ export function detectButtonGlass(sources) {
     const vue = stripComments(buttonVue);
     const surf = stripComments(surfacesCss);
     const regs = stripComments(propertyRegsCss);
+    const refract = stripComments(refractCss ?? "");
 
     // The three glass-variant arms whose hover/active fills must be re-pointed.
     const GLASS_ARMS = ["default", "glass", "primary-audacious"];
@@ -196,48 +198,83 @@ export function detectButtonGlass(sources) {
         );
     }
 
-    // ── B3 — the gleam consumes the ONE shared specular leaf, NOT a fork ────────
+    // ── B3 — the gleam consumes the ONE shared position-write source, NOT a fork ──
+    // §0 RE-GROUND RECONCILE (BB.W-LIQUIDHOVER LANDED): the §0 comment booked the
+    // re-point — at this wave's HEAD the auto-arm had not landed, so the button hand-
+    // wired `useSpecularTracking()` + `@pointermove`. W-LIQUIDHOVER then landed the
+    // `vSpecular` tier-root AUTO-ARM (the directive WRAPS the SAME `createSpecularWriter`
+    // single source), so the button RETIRES the hand-wire onto `v-specular`. The
+    // contract is UNCHANGED in spirit — the gleam consumes the ONE shared source, never
+    // a button-local `--mouse-x/y` fork — only the DELIVERY moved from the explicit leaf
+    // call to the directive. Full teeth: the directive arm must be present AND the
+    // no-fork bite stays.
     facts.b3 = {};
-    // the shared leaf is consumed (useSpecularTracking — the AX.W09 ONE position-write
-    // seam; the §0-drift re-located leaf since useSpecularPointer/the auto-arm did not land).
-    facts.b3.consumesLeaf =
-        /useSpecularTracking\s*\(/.test(vue) &&
-        /import\s*\{[^}]*useSpecularTracking[^}]*\}/.test(vue);
-    // the pointermove is bound (the leaf's handler reaches the host).
-    facts.b3.pointerMoveBound = /@pointermove\s*=\s*"onPointerMove"/.test(vue);
+    // the shared source is consumed via the `v-specular` tier-root auto-arm (the
+    // W-LIQUIDHOVER reconcile — `vSpecular` wraps `createSpecularWriter`, the ONE
+    // position-write core; proof:glass-material-unified locks the directive↔core wrap).
+    facts.b3.armsDirective =
+        /\bv-specular\b/.test(vue) &&
+        /import\s*\{[^}]*\bvSpecular\b[^}]*\}/.test(vue);
+    // the arm is GATED to the glass-register variants (a `solid`/`link`/`outline`
+    // button has no `::before` to gleam — the directive's reactive value opts it out).
+    facts.b3.armGated = /v-specular\s*=\s*"specularArmed"/.test(vue);
     // NO button-local --mouse-x / --mouse-y direct write (the DRY single-source — a
-    // hand-rolled pointermove handler writing the vars directly REDs).
+    // hand-rolled pointermove handler writing the vars directly REDs; the directive
+    // owns the host write now).
     facts.b3.noLocalMouseWrite =
         !/['"`]--mouse-x['"`]\s*:/.test(vue) &&
         !/['"`]--mouse-y['"`]\s*:/.test(vue) &&
         !/setProperty\(\s*['"`]--mouse-[xy]['"`]/.test(vue);
+    // the retired hand-wire is GONE — a surviving `useSpecularTracking()` + `@pointermove`
+    // triplet on the button is the forked second source (the W-LIQUIDHOVER kill).
+    facts.b3.handWireRetired = !(
+        /@pointermove/.test(vue) && /useSpecularTracking\s*\(/.test(vue)
+    );
 
-    if (!facts.b3.consumesLeaf) {
+    if (!facts.b3.armsDirective) {
         violations.push(
-            "B3: Button.vue must consume the SHARED `useSpecularTracking` leaf (the ONE position-write seam) — imported + called",
+            "B3: Button.vue must arm the SHARED `v-specular` directive (the W-LIQUIDHOVER tier-root auto-arm wrapping the ONE `createSpecularWriter` source) — imported + applied on the host",
         );
     }
-    if (!facts.b3.pointerMoveBound) {
+    if (!facts.b3.armGated) {
         violations.push(
-            "B3: Button.vue must bind the leaf's `@pointermove=\"onPointerMove\"` so the gleam tracks the pointer",
+            'B3: the `v-specular="specularArmed"` arm must be GATED to the glass-register variants (a non-glass button has no `::before` gleam — no wasted listener)',
         );
     }
     if (!facts.b3.noLocalMouseWrite) {
         violations.push(
-            "B3: Button.vue must NOT write `--mouse-x`/`--mouse-y` directly (a button-local pointermove fork) — the leaf is the ONE source",
+            "B3: Button.vue must NOT write `--mouse-x`/`--mouse-y` directly (a button-local pointermove fork) — the `v-specular` directive owns the ONE host write",
+        );
+    }
+    if (!facts.b3.handWireRetired) {
+        violations.push(
+            "B3: Button.vue still hand-wires `@pointermove` + `useSpecularTracking()` — the retired per-consumer triplet; the `v-specular` directive owns the listener now (BB.W-LIQUIDHOVER)",
         );
     }
 
-    // ── B4 — the refraction edge is the `.glass-refract` opt-in CONSUMING the axis ──
+    // ── B4 — the refraction edge is the `.glass-lens` opt-in CONSUMING the axis ──
+    // §0 RE-GROUND RECONCILE (BB.W-LENSING LANDED): the §0 comment booked the rename —
+    // W-LENSING renamed the opt-in CLASS `.glass-refract` → `.glass-lens` (clean break,
+    // no alias; the filter-id `#glass-refract` + the `--glass-refract` magnitude axis
+    // names are KEPT). The button COMPOSES the renamed `.glass-lens` class; the
+    // `@supports`-gated filter lives in glass-refract.css; surfaces.css carries the
+    // `.btn-glass.glass-lens` press-drive arm. Full teeth: the filter stays `@supports`-
+    // gated (verified in its real home), the blur base survives, no button-local fork.
     facts.b4 = {};
-    // the button opts in via the EXISTING `.glass-refract` class (the `:liquid` prop).
-    facts.b4.consumesRefractAxis = /['"`]glass-refract['"`]/.test(vue);
+    // the button opts in via the EXISTING (renamed) `.glass-lens` class (the `:liquid` prop).
+    facts.b4.consumesRefractAxis = /['"`]glass-lens['"`]/.test(vue);
     // the `:liquid` prop is declared (additive default-OFF).
     facts.b4.liquidProp = /\bliquid\?:\s*boolean/.test(vue);
-    // surfaces.css gates the button-refraction arm on @supports + binds the press
-    // drive (the `.btn-glass.glass-refract` recipe reading `--glass-btn-press-t`).
-    facts.b4.supportsGated = /@supports\s*\(\s*backdrop-filter:\s*url/.test(surf) ||
-        /\.btn-glass\.glass-refract\s*\{[\s\S]*?--glass-btn-press-t/.test(surf);
+    // surfaces.css carries the button-refraction press-drive arm (the
+    // `.btn-glass.glass-lens` recipe binding `--glass-btn-press-t`) AND the refraction
+    // filter stays `@supports (backdrop-filter: url(...))`-gated in glass-refract.css.
+    facts.b4.pressDriveArm =
+        /\.btn-glass\.glass-lens\s*\{[\s\S]*?--glass-btn-press-t/.test(surf);
+    facts.b4.filterSupportsGated =
+        /@supports\s*\(\s*backdrop-filter:\s*url/.test(refract) &&
+        /\.glass-lens\b/.test(refract);
+    facts.b4.supportsGated =
+        facts.b4.pressDriveArm && facts.b4.filterSupportsGated;
     // the un-gated `.btn-glass` blur base is PRESERVED (the off-Chromium floor — the
     // `.btn-glass { backdrop-filter: var(--glass-blur-btn) }` base rule survives).
     facts.b4.blurBasePreserved =
@@ -251,7 +288,7 @@ export function detectButtonGlass(sources) {
 
     if (!facts.b4.consumesRefractAxis) {
         violations.push(
-            "B4: the refraction opt-in must consume the EXISTING `.glass-refract` axis (the `:liquid` prop adds the class) — never a button-local lens",
+            "B4: the refraction opt-in must consume the EXISTING `.glass-lens` axis (BB.W-LENSING renamed `.glass-refract`→`.glass-lens`; the `:liquid` prop adds the class) — never a button-local lens",
         );
     }
     if (!facts.b4.liquidProp) {
@@ -259,9 +296,14 @@ export function detectButtonGlass(sources) {
             "B4: Button.vue must declare the additive `liquid?: boolean` prop (the refraction-edge opt-in, default OFF)",
         );
     }
-    if (!facts.b4.supportsGated) {
+    if (!facts.b4.pressDriveArm) {
         violations.push(
-            "B4: surfaces.css must carry the `.btn-glass.glass-refract` press-drive arm (binding `--glass-btn-press-t`), and the refraction filter stays `@supports (backdrop-filter: url(...))`-gated in glass-refract.css",
+            "B4: surfaces.css must carry the `.btn-glass.glass-lens` press-drive arm (binding `--glass-btn-press-t`)",
+        );
+    }
+    if (!facts.b4.filterSupportsGated) {
+        violations.push(
+            "B4: the refraction filter must stay `@supports (backdrop-filter: url(...))`-gated on `.glass-lens` in glass-refract.css (the off-Chromium engine paints the un-gated blur base alone)",
         );
     }
     if (!facts.b4.blurBasePreserved) {
@@ -271,7 +313,7 @@ export function detectButtonGlass(sources) {
     }
     if (!facts.b4.noLocalLensFork) {
         violations.push(
-            "B4: NO button-local `feDisplacementMap` displacement filter (the lens is the ONE `.glass-refract` axis — a fork REDs)",
+            "B4: NO button-local `feDisplacementMap` displacement filter (the lens is the ONE `.glass-lens` axis — a fork REDs)",
         );
     }
 
@@ -318,6 +360,9 @@ function run() {
         propertyRegsCss: safeRead(
             resolve(ROOT, "src/styles/tokens/property-regs.css"),
         ),
+        // BB.W-LENSING — the `@supports`-gated `#glass-refract` filter on the
+        // renamed `.glass-lens` class lives here (B4 verifies the gate in its home).
+        refractCss: safeRead(resolve(ROOT, "src/styles/glass-refract.css")),
     };
 
     const { facts, violations } = detectButtonGlass(sources);
@@ -374,14 +419,15 @@ function run() {
         )}  (cap=${facts.b2.cap})`,
     );
     console.log(
-        `  B3 gleam consumes the ONE leaf    : ${yn(
-            facts.b3.consumesLeaf &&
-                facts.b3.pointerMoveBound &&
-                facts.b3.noLocalMouseWrite,
+        `  B3 gleam via v-specular auto-arm  : ${yn(
+            facts.b3.armsDirective &&
+                facts.b3.armGated &&
+                facts.b3.noLocalMouseWrite &&
+                facts.b3.handWireRetired,
         )}`,
     );
     console.log(
-        `  B4 refraction opt-in (.glass-refract): ${yn(
+        `  B4 refraction opt-in (.glass-lens): ${yn(
             facts.b4.consumesRefractAxis &&
                 facts.b4.liquidProp &&
                 facts.b4.supportsGated &&

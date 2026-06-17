@@ -107,10 +107,14 @@ export const EXPECTED_TREE = [
     // `<HandMark shape="underline">` at the DEC-8 fold — the `/underline` subpath +
     // `GlassUnderline` folded into `<HandMark>`, so the story id is now `handmark`.
     // `scroll-vt` joined at AZ.W-MOTION-SUITE (the native scroll-driven +
-    // View-Transitions facilities demo).
+    // View-Transitions facilities demo). `scroll-choreography` joined at
+    // BB.W-SCROLL-MOTION (the SOTA scroll-CHOREOGRAPHY register — .scroll-build
+    // page-build / .scroll-cascade section-cascade / .scroll-pin scroll-pinned +
+    // the native .smooth-scroll opt-in on the native scroll()/view()/timeline-scope
+    // substrate; NO Lenis/GSAP dep).
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
-        "curve-gallery", "handmark", "scroll-vt",
+        "curve-gallery", "handmark", "scroll-vt", "scroll-choreography",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +

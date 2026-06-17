@@ -242,6 +242,18 @@ const KEEP_ALLOWLIST = new Map([
         "--select-font",
         "EXTENSION-POINT — the Select component font override a consumer overrides locally (offsets-sizing.css documents it).",
     ],
+    [
+        "--metal-shimmer-color",
+        "EXTENSION-POINT — the metal-NAME MARKER each .metal-{gold,silver,bronze} binds (W-METAL-SHIMMER); proof:metal-shimmer reads it to identify the bound metal. The @keyframes metal-shimmer-sweep reads --metal-stop-* (the gradient slots), not this channel, so it is intentionally a marker not a paint var() consumer.",
+    ],
+    [
+        "--glass-refract-bevel",
+        "EXTENSION-POINT — the documented consumer-facing rim-tune knob on the .glass-lens refraction axis (W-LENSING / glass-refract.css); no internal var() consumer BY DESIGN — a consumer overrides it to retune the bevel profile.",
+    ],
+    [
+        "--dock-content-safe-inset",
+        "EXTENSION-POINT — the CONTENT-side anti-collision gutter token (dock/density.css, W-HIERARCHY2) consumed by the DEMO <main> scroll-padding at demo/layout/dock-nav.css:273; the src-only scan misses the demo consumer.",
+    ],
     // ── ASSERTER-PINNED (the §0 scope-reveal — a gate/test asserter is a live ───
     // consumer; deleting reds it; the asserter is out of this arm's bounds, so the
     // clean-break delete is a coordination follow-up once the asserter re-anchors).

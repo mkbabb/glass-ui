@@ -126,6 +126,14 @@ const RUNTIME_PROPS = new Set([
     // host — the same component-scoped runtime-prop pattern as --dock-pos / --card-pad-*.
     "--glass-bg-resting-tinted",
     "--glass-bg-floating-tinted",
+    // BB.W-EASING-PRIMITIVE — EasingPicker localizes the curve-stroke color onto an
+    // ELEMENT-LEVEL `--easing-curve-accent` (declared inline on the SVG root as
+    // `var(--motion-accent, var(--viz-legendre))` — the violet identity with the
+    // library --viz-legendre fallback, so it is self-sufficient at runtime), then the
+    // de-arbitrary'd Tailwind utility references `(--easing-curve-accent)`. The
+    // component-scoped declaration resolves at runtime off the picker root — the same
+    // element-scoped runtime-prop pattern as --glass-bg-*-tinted / --dock-pos above.
+    "--easing-curve-accent",
 ]);
 
 /** Strip CSS block comments so a `--token` mentioned in prose is not counted. */

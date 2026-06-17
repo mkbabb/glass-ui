@@ -178,17 +178,29 @@ assert(
         /var\(--specular-y,\s*50%\)/.test(specular),
 );
 // the MANDATORY reduced-motion static bracket — pins position to centre + kills
-// the transition.
-const prmBlock =
-    specular.match(
-        /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/,
-    )?.[1] ?? "";
-facts.reducedMotionBracketLen = prmBlock.length;
+// the transition. BB.W-LIQUIDHOVER added an EARLIER `@media (prefers-reduced-motion:
+// reduce)` block (the grain `::after { transition: none }` pop-kill) to the glass
+// monolith, so a first-match scan grabs the wrong block. Scan EVERY PRM block in the
+// concatenated specular family and assert AT LEAST ONE satisfies the full static-pin
+// contract (the `.glass-material::before` group in glass-specular-track.css that pins
+// `--specular-x/y: 50%` + `transition: none`). Full teeth: strip the static pin and
+// no block satisfies the triad → the clause reds.
+const prmBlocks = [
+    ...specular.matchAll(
+        /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/g,
+    ),
+].map((m) => m[1]);
+const specularPinBlock = prmBlocks.find(
+    (b) =>
+        /--specular-x:\s*50%/.test(b) &&
+        /--specular-y:\s*50%/.test(b) &&
+        /transition:\s*none/.test(b),
+);
+facts.reducedMotionBracketLen = specularPinBlock?.length ?? 0;
+facts.reducedMotionBlockCount = prmBlocks.length;
 assert(
     "reduced-motion bracket pins specular static (50%) + transition:none",
-    /--specular-x:\s*50%/.test(prmBlock) &&
-        /--specular-y:\s*50%/.test(prmBlock) &&
-        /transition:\s*none/.test(prmBlock),
+    Boolean(specularPinBlock),
 );
 
 // ── (f) the per-rung saturate maps to the opacity-only register under
