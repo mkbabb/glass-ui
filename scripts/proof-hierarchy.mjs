@@ -139,7 +139,9 @@ add(
 );
 
 // ── (c) The Configurator hierarchy vocabulary — three NAMED tokens ────────────
-const offsets = strip(read("src/styles/tokens/offsets-sizing.css"));
+// BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
+// (§10); the Configurator HIERARCHY vocabulary tokens live in §10 → sizing.css.
+const offsets = strip(read("src/styles/tokens/sizing.css"));
 const configCss = strip(read("src/styles/configurator.css"));
 const layer = strip(read("src/components/custom/configurator/ConfiguratorLayer.vue"));
 

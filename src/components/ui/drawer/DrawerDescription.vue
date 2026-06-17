@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import type { DrawerDescriptionProps } from 'vaul-vue'
-import { DrawerDescription } from 'vaul-vue'
+// BB.W-DRAWER-ABROGATE — the description on the HOUSE reka `DialogDescription` (off
+// vaul's). The type-bind + the typography class are PRESERVED; only the component
+// identity changes.
+import { DialogDescription, type DialogDescriptionProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
 import { cn } from '../../../utils'
 
-const props = defineProps<DrawerDescriptionProps & { class?: HtmlHTMLAttributes['class'] }>()
+const props = defineProps<DialogDescriptionProps & { class?: HtmlHTMLAttributes['class'] }>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
@@ -14,7 +16,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <DrawerDescription v-bind="delegatedProps" :class="cn('text-sm text-muted-foreground', props.class)">
+  <DialogDescription v-bind="delegatedProps" :class="cn('text-sm text-muted-foreground', props.class)">
     <slot />
-  </DrawerDescription>
+  </DialogDescription>
 </template>

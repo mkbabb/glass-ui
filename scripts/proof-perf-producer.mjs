@@ -44,7 +44,9 @@ const PATHS = {
     shellCss: resolve(ROOT, "src/styles/dock/shell.css"),
     layerTransition: resolve(ROOT, "src/components/custom/dock/composables/useLayerTransition.ts"),
     dockConstants: resolve(ROOT, "src/components/custom/dock/constants.ts"),
-    offsetsSizing: resolve(ROOT, "src/styles/tokens/offsets-sizing.css"),
+    // BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
+    // (§10); the --dock-icon-glyph density-ratio block lives in §10 → sizing.css.
+    offsetsSizing: resolve(ROOT, "src/styles/tokens/sizing.css"),
     densityCss: resolve(ROOT, "src/styles/dock/density.css"),
     overflowCss: resolve(ROOT, "src/styles/dock/overflow.css"),
     gooBlobVue: resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue"),

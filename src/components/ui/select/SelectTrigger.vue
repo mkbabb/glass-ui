@@ -109,7 +109,15 @@ const fontRungStyle = computed(() => {
     :class="cn(
       variantClass,
       sizeClass,
-      'tap-squish focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-dropdown placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-(--destructive) aria-invalid:shadow-[0_0_0_var(--focus-ring-width)_color-mix(in_srgb,var(--destructive)_35%,transparent)]',
+      // BB.W-INVALID-RING — the aria-invalid ring reads the SHARED --invalid-ring
+      // token (the --focus-ring-shadow sibling), no inline 35% re-spell. Per the
+      // §Divergence-decisions table: the ring is UNIFIED onto the .input-pill
+      // FOCUS-GATE (`focus-visible:aria-invalid:`) so a long form is not a wall of
+      // always-on red rings, and the trigger group widens to the three-member set
+      // (`:user-invalid`/fallback/`[aria-invalid]`) wherever the styleable node
+      // supports it. The at-rest destructive border stays so an invalid select
+      // reads before focus (the non-ring supplementary cue, off the SAME token).
+      'tap-squish focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-dropdown placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-(--destructive) user-invalid:border-(--destructive) focus-visible:aria-invalid:shadow-(--invalid-ring) focus-visible:user-invalid:shadow-(--invalid-ring)',
       props.class,
     )"
   >

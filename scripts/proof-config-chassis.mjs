@@ -62,7 +62,9 @@ const baseCss = strip(read("src/styles/utilities/base.css"));
 const layerVue = strip(read("src/components/custom/configurator/ConfiguratorLayer.vue"));
 const configuratorVue = strip(read("src/components/custom/configurator/Configurator.vue"));
 const configuratorCss = strip(read("src/styles/configurator.css"));
-const offsets = strip(read("src/styles/tokens/offsets-sizing.css"));
+// BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
+// (§10); the --configurator-divider* tokens live in §10 → sizing.css.
+const offsets = strip(read("src/styles/tokens/sizing.css"));
 const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
 const swatchVue = strip(read("src/components/custom/color-swatch/ColorSwatch.vue"));
 const swatchBarrel = read("src/components/custom/color-swatch/index.ts");
@@ -99,7 +101,7 @@ add(
 );
 
 // ── W2 — the dark-adaptive divider token register ──────────────────────────────────────
-// The token is DECLARED in offsets-sizing.css WITH a distinct dark value (a light-dark()
+// The token is DECLARED in tokens/sizing.css WITH a distinct dark value (a light-dark()
 // arm — the dark half is not the light half), has the dark-arm.css `.dark` floor (the
 // @supports-split engine path), is CONSUMED by the section + inter-row divider rules in
 // configurator.css, and NO inline `border-border/N` DIVIDER survives on the SFC dividers.

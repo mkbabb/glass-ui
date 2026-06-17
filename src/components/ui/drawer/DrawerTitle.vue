@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import type { DrawerTitleProps } from 'vaul-vue'
-import { DrawerTitle } from 'vaul-vue'
+// BB.W-DRAWER-ABROGATE — the title on the HOUSE reka `DialogTitle` (off vaul's). The
+// type-bind + the typography class are PRESERVED; only the component identity changes.
+import { DialogTitle, type DialogTitleProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
 import { cn } from '../../../utils'
 
-const props = defineProps<DrawerTitleProps & { class?: HtmlHTMLAttributes['class'] }>()
+const props = defineProps<DialogTitleProps & { class?: HtmlHTMLAttributes['class'] }>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
@@ -14,7 +15,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <DrawerTitle v-bind="delegatedProps" :class="cn('text-subheading leading-none tracking-tight', props.class)">
+  <DialogTitle v-bind="delegatedProps" :class="cn('text-subheading leading-none tracking-tight', props.class)">
     <slot />
-  </DrawerTitle>
+  </DialogTitle>
 </template>

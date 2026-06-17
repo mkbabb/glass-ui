@@ -4,13 +4,16 @@
  *
  * A full-bleed surface stays live AND reachable while a sheet rides over it as a
  * peek / half / full bottom sheet. `<Drawer mode="live-behind">` flips the three
- * relevant defaults at once — `modal: false` + `shouldScaleBackground: false` +
- * `snapPoints: [0.12, 0.5, 1]` — so the surface behind keeps its size, stays
- * keyboard-reachable, and is not hidden from assistive tech. The modal sheet in
- * the right column DOES scale and trap focus, so the contrast reads as one prop.
+ * relevant defaults at once — reka `:modal="false"` + `shouldScaleBackground: false`
+ * + the direction-derived `[0.12, 0.5, 1]` ladder — so the surface behind keeps its
+ * size, stays keyboard-reachable, and is not hidden from assistive tech (the HOUSE
+ * reka `DialogRoot` substrate delivers the non-modal page-interactive contract
+ * natively; vaul-vue is ABROGATED — BB.W-DRAWER-ABROGATE). The modal sheet in the
+ * right column DOES trap focus, so the contrast reads as one prop.
  *
- * The sheet snaps to 12% / 50% / 100% of viewport height on drag-release; drag
- * the handle to cycle peek → half → full.
+ * The sheet snaps to 12% / 50% / 100% of viewport height on drag-release (the house
+ * `useDrawerSnap` `SpringProgress` engine); drag the handle to cycle peek → half →
+ * full.
  */
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -57,12 +60,15 @@ const ctaPresses = ref(0);
                     </Button>
                 </div>
 
-                <!-- Open the sheet at a chosen initial detent, then DRAG the
-                     handle to cycle peek → half → full. vaul-vue owns the snap
-                     math on drag-release; it does not reliably re-snap an
-                     already-open sheet from an external `activeSnapPoint` write,
-                     so these buttons set the OPENING detent only. The current
-                     fraction is reflected back via `v-model:active-snap-point`. -->
+                <!-- Open the sheet at a chosen detent, then DRAG the handle to
+                     cycle peek → half → full. The HOUSE snap engine
+                     (`useDrawerSnap`, on the §6 `SpringProgress` clock) owns the
+                     snap math end-to-end now (vaul-vue ABROGATED — BB.W-DRAWER-
+                     ABROGATE). It re-snaps an ALREADY-OPEN sheet from an external
+                     `activeSnapPoint` write (no vaul controllable-shadowing
+                     limitation), so these buttons set the detent whether the sheet
+                     is closed OR open. The current fraction round-trips via
+                     `v-model:active-snap-point`. -->
                 <div class="mt-4 flex items-center gap-2">
                     <span class="text-caption text-muted-foreground">Open at:</span>
                     <Button

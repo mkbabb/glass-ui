@@ -30,10 +30,16 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 // The W-GOD1 carve moved VariantPreset/PRESETS into presets.ts; the render/clamp/fork
-// asserts still read the SFC. The gate reads the COMPOSED pair (the carve moved code,
-// not the contract).
+// asserts still read the SFC. The gate reads the COMPOSED set (the carve moved code,
+// not the contract). BB.W-CARVE3 lifted the ~475-line renderer (the render body, the
+// intensity clamp, the cached-color refs, the amplitude sort) into
+// composables/useFourierField.ts — so the composable joins the set, keeping the
+// OUTLINE_PEAK_ALPHA-absent negative assert covering the moved code (a re-appeared
+// constant cannot hide in the composable) and the render-body / clamp / blend-fork
+// / sort asserts finding the moved expressions.
 const FIELD_FILES = [
     "src/components/custom/fourier-field/FourierField.vue",
+    "src/components/custom/fourier-field/composables/useFourierField.ts",
     "src/components/custom/fourier-field/presets.ts",
 ].map((f) => resolve(ROOT, f));
 const FIELD = FIELD_FILES[0];

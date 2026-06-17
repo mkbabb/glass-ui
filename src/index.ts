@@ -87,7 +87,12 @@ export * from "./components/ui/command";
 export * from "./components/ui/context-menu";
 export * from "./components/ui/data-table";
 export * from "./components/ui/dialog";
-export * from "./components/ui/drawer";
+// Drawer is OFF the root barrel — BB.W-DRAWER-ABROGATE rebuilt it on the house
+// `useDrawerSnap` engine (a `@mkbabb/keyframes.js` SpringProgress consumer), so
+// it is now a keyframes-BEARING heavy component that must NOT inline its optional
+// peer into the vueuse-free root bundle. It ships via the `/drawer` subpath
+// (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
+// MIGRATION.md. (clean break, no alias.)
 export * from "./components/ui/dropdown-menu";
 export * from "./components/ui/hover-card";
 export * from "./components/ui/label";

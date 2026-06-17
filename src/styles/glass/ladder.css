@@ -31,8 +31,13 @@
        strength))`). With the default `--glass-tint-strength: 0%` the mix is a
        no-op = byte-identical to the un-tinted rung; a consumer biases the surface
        toward a sampled backdrop hue by setting `--glass-tint-source` + a
-       strength ≤30%. oklab is the mwg-preferred tint space (NEVER an
-       `oklch(from …)` lightness-shift — browsers don't gamut-map yet). */
+       strength ≤30%. oklab is the mwg-preferred tint space for the TINT mix here
+       (NEVER an `oklch(from …)` lightness-shift in the GLASS-TINT mix). The
+       `oklch(from var(--foreground) …)` relative-color recipe DID land its first
+       live consumer at BB.W-DARK-INK-WARM — the dark `--surface-tint-*` arm
+       (`tokens/dark-arm.css`), where the tolerant α-mix absorbs the small high-L
+       chroma (the gamut-map caveat documented + pinned under the gamut edge there).
+       That is the INK derivation, separate from THIS glass-tint mix space. */
     .glass-wash {
         position: relative;
         background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));

@@ -67,6 +67,20 @@
         0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
     --focus-ring: var(--focus-ring-shadow);
 
+    /* BB.W-INVALID-RING — the destructive twin of --focus-ring-shadow. The
+       aria-invalid ring is ONE register: every form control (Input/Textarea/
+       NumberField via `.input-pill`, SelectTrigger, ComboboxInput, TagsInput)
+       reads `box-shadow: var(--invalid-ring)` instead of re-spelling the recipe
+       inline. ONE geometry (the SAME `--focus-ring-width`), ONE tint knob
+       (`--invalid-ring-tint`, the documented retint axis), resolving
+       `var(--destructive)` so a dark `--destructive` re-anchor flows through. A
+       consumer retints every invalid ring library-wide from a single
+       `:root { --invalid-ring-tint: … }` override — the token-first axis
+       `--focus-ring-shadow` already grants the focus ring. */
+    --invalid-ring-tint: 35%;
+    --invalid-ring: 0 0 0 var(--focus-ring-width)
+        color-mix(in srgb, var(--destructive) var(--invalid-ring-tint), transparent);
+
     /* ═══════════════════════════════════════════════
        §12 PAPER TEXTURES
        ═══════════════════════════════════════════════ */

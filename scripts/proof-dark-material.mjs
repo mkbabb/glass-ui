@@ -394,8 +394,17 @@ add(
 // allow --surface-tint-ink or a white/light hsl).
 // Capture the tint SOURCE color (an hsl(...)/oklch(...)/var(...) — balance the inner parens),
 // then the rung percentage. The naive `[^,]+?\s+\d` stops inside `hsl(48 12% 96%)`.
+// BB.W-DARK-INK-WARM re-expressed the dark tint INK as a relative-color recipe
+// `oklch(from var(--foreground) 0.975 c h)` (the foreground-derived light ink, the
+// css-relative-color chronic's first live consumer). The nested `var(...)` paren
+// + the from-syntax's multiple tokens break the naive `oklch\([^)]*\)` capture
+// (it truncates at the inner `var(...)` `)`), so the relative-color form is the
+// FIRST alternative — captured whole, then resolved through the `var(--foreground)`
+// fallback below (the recipe IS the foreground at a lifted L, so the foreground is
+// the correct lifting-ink proxy for the source-arm lift check; the π reads the
+// exact browser-resolved oklch).
 const darkSurfaceTintBlock = darkArm.match(
-    /--surface-tint-4\s*:\s*color-mix\(\s*in srgb,\s*((?:hsl|oklch|rgb)\([^)]*\)|var\([^)]*\))\s+[\d.]+%/,
+    /--surface-tint-4\s*:\s*color-mix\(\s*in srgb,\s*(oklch\(from\s+var\([^)]*\)[^)]*\)|(?:hsl|oklch|rgb)\([^)]*\)|var\([^)]*\))\s+[\d.]+%/,
 );
 const darkSurfaceTintSource = darkSurfaceTintBlock ? darkSurfaceTintBlock[1].trim() : null;
 facts.darkSurfaceTintSource = darkSurfaceTintSource;

@@ -22,6 +22,9 @@
             "dock": [
                 "dist/dock.d.ts"
             ],
+            "drawer": [
+                "dist/drawer.d.ts"
+            ],
             "search": [
                 "dist/search.d.ts"
             ],
@@ -265,6 +268,10 @@
         "./dock": {
             "types": "./dist/dock.d.ts",
             "import": "./dist/dock.js"
+        },
+        "./drawer": {
+            "types": "./dist/drawer.d.ts",
+            "import": "./dist/drawer.js"
         },
         "./search": {
             "types": "./dist/search.d.ts",
@@ -641,6 +648,7 @@
         "proof:design-idiom-localization": "node scripts/proof-design-idiom-localization.mjs",
         "proof:hierarchy": "node scripts/proof-hierarchy.mjs",
         "proof:eyebrow-union": "node scripts/proof-eyebrow-union.mjs",
+        "proof:drawer-abrogate": "node scripts/proof-drawer-abrogate.mjs",
         "proof:suffuse": "node scripts/proof-suffuse.mjs",
         "proof:suffuse2": "node scripts/proof-suffuse2.mjs",
         "proof:colocation": "node scripts/proof-colocation.mjs",
@@ -843,7 +851,6 @@
         "reka-ui": "^2.0",
         "tailwindcss": "^4.0",
         "tw-animate-css": "^1.2.5",
-        "vaul-vue": "^0.4",
         "vue": "^3.5"
     },
     "peerDependenciesMeta": {
@@ -888,7 +895,6 @@
         "tailwindcss": "^4.3.1",
         "tw-animate-css": "^1.2.5",
         "typescript": "^6.0.3",
-        "vaul-vue": "^0.4.0",
         "vite": "^8",
         "vitest": "^4.1.9",
         "vue": "^3.5.34",

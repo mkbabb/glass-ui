@@ -1632,3 +1632,24 @@ track now gets the real `size` track) `[value.js — the A-3 Slider size axis]`.
 
 Carried verbatim from AZ.W-METRIC-UNIFY (above) — a ONE-LINE `amount=`→`value=` rename per call
 site. Named here so a consumer adopting the 4.0.0 cut sees it in the BA break list.
+
+### `Drawer*` moves to the `/drawer` subpath (BB.W-DRAWER-ABROGATE — clean break, no alias)
+
+The Drawer family is re-built on reka `DialogRoot` + the house `useDrawerSnap` engine (a
+`@mkbabb/keyframes.js` `SpringProgress` consumer), abrogating vaul-vue (the lone `@vueuse/core
+^10.8` dual → full `@vueuse ^14` convergence). Because the rebuilt Drawer now bears the optional
+`@mkbabb/keyframes.js` peer, it CANNOT inline that peer into the vueuse-free root bundle, so it
+ships via a dedicated subpath like dock/aurora:
+
+```ts
+// before (v4.0.0)
+import { Drawer, DrawerContent, DrawerTrigger } from "@mkbabb/glass-ui";
+// after (v4.1.0) — one-line rename per call site
+import { Drawer, DrawerContent, DrawerTrigger } from "@mkbabb/glass-ui/drawer";
+```
+
+The `mode` / `surface` / `showOverlay` props + the `[data-surface]` axis are PRESERVED byte-for-byte;
+the `[data-vaul-*]` state-attribute LOOK keys re-pointed to `[data-glass-drawer-*]` (a consumer that
+hand-styled `[data-vaul-snap-points]` re-points to `[data-glass-drawer-snap-points]`). The
+direction-aware default snap ladder is now native (`resolveDefaultSnapPoints(direction)` — no more
+`:snap-points="[]"` workaround for a full-slide left/right drawer).

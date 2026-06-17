@@ -88,8 +88,11 @@
         --neutral-5: light-dark(hsl(30 22% 40%), hsl(34 14% 62%));
         --neutral-6: light-dark(hsl(28 24% 30%), hsl(36 14% 72%));
 
-        /* Core surfaces + ink */
-        --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        /* Core surfaces + ink. BB.W-DARK-INK-WARM — the DARK arg warmed off the H95.1°
+           yellow-green hsl(48 10% 90%) onto the no-gray identity hsl(30 14% 90%) (OKLab
+           H75.4°, L held) in LOCKSTEP with the .dark fallback floor (dark-arm.css:60). The
+           LIGHT arg hsl(24 10% 10%) is already the warm-amber identity (H56°) — untouched. */
+        --foreground:                 light-dark(hsl(24 10% 10%), hsl(30 14% 90%));
         /* BA.W-DARK-MATERIAL scope 1 — the dark --card plate LIFTS L10→L16 (LOCKSTEP
            dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it.
            BA.W-NO-GRAY L1 — the LIGHT arm DECOUPLES off the near-achromatic page onto the

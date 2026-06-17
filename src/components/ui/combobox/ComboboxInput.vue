@@ -22,9 +22,16 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
+  <!-- BB.W-INVALID-RING — the combobox input is a borderless `bg-transparent`
+       box, so the shared --invalid-ring (a box-shadow) is ROUTED onto the
+       ring-bearing WRAPPER ROW (it carries the `border-b`) via `:has()` reaching
+       the descendant input's `aria-invalid`/`:user-invalid` — the destructive ring
+       reads the SAME --invalid-ring token as an invalid Input, not a text-only
+       fork. The text-destructive tint on the input STAYS as the supplementary
+       non-color-redundant cue. -->
   <div
     data-slot="command-input-wrapper"
-    class="flex h-9 items-center gap-2 border-b px-3"
+    class="flex h-9 items-center gap-2 border-b px-3 rounded-input has-[[aria-invalid='true']]:border-(--destructive) has-[:user-invalid]:border-(--destructive) has-[[aria-invalid='true']]:shadow-(--invalid-ring) has-[:user-invalid]:shadow-(--invalid-ring)"
   >
     <SearchIcon class="size-4 shrink-0 opacity-50" />
     <ComboboxInput

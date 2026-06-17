@@ -41,6 +41,10 @@ function cliPaths() {
         SRC: resolve(ROOT, "src"),
         SUBSTRATE: resolve(ROOT, "src/composables/glass/webgl/useWebGLCanvas.ts"),
         CONSUMER2: resolve(ROOT, "tests/composables/glass/webgl/useWebGLCanvas.test.ts"),
+        // BB.W-CANVAS-UNIFY — the Canvas2D backend (the second thin wrapper over the
+        // shared lifecycle core) + the core leaf the two backends BOTH compose.
+        CANVAS2D: resolve(ROOT, "src/composables/glass/canvas2d/useCanvas2D.ts"),
+        LIFECYCLE_LEAF: resolve(ROOT, "src/composables/glass/webgl/createCanvasLifecycle.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_WEBGL_SUBSTRATE_SINGLE_ARTIFACT", "AU-webgl-substrate-single"),
     };
     return _cliPaths;
@@ -48,6 +52,56 @@ function cliPaths() {
 
 function stripComments(t) {
     return t.replace(/\/\*[\s\S]*?\*\//g, " ").split("\n").map((l) => { const i = l.indexOf("//"); return i === -1 ? l : l.slice(0, i); }).join("\n");
+}
+
+// ── BB.W-CANVAS-UNIFY — the Canvas2D single-source detector (a pure function of
+//    the de-commented wrapper source). The two backends (`useWebGLCanvas` +
+//    `useCanvas2D`) must each be a THIN wrapper over `createCanvasLifecycle`, NOT a
+//    forked second copy of the schedule (the AV.W1 two-copy class). The detector
+//    is exported so the self-test bite can feed it synthetic source.
+//
+//   composesLeaf      — the wrapper IMPORTS `createCanvasLifecycle` from the leaf
+//                        AND calls it (delegates the schedule to the core).
+//   forkedMachinery   — the wrapper re-declares INLINE the core's machinery: a
+//                        suspend `Set<…>` gating `isRunning`, a local
+//                        `requestAnimationFrame(tick)` rAF loop, a
+//                        `visibilitychange`/`document.hidden` tab-hidden owner, OR a
+//                        `matchMedia("(prefers-reduced-motion: reduce)")` `change`
+//                        re-monitor. ANY one present → a fork.
+//
+// The two facts JOINTLY forbid the re-fork: a wrapper that drops the composition
+// reds `composesLeaf`; a wrapper that re-inlines the loop reds `forkedMachinery`
+// (composition-PLUS-fork is STILL a fork — a leaf-import fig-leaf over a live
+// duplicate does not pass).
+export function detectCanvas2DSingleSource(rawSrc) {
+    const src = stripComments(rawSrc);
+    const importsLeaf =
+        /import\s*\{[^}]*\bcreateCanvasLifecycle\b[^}]*\}\s*from\s*["'][^"']*createCanvasLifecycle["']/.test(
+            src,
+        );
+    const callsLeaf = /\bcreateCanvasLifecycle\s*\(/.test(src);
+    const composesLeaf = importsLeaf && callsLeaf;
+
+    const forkSignals = [];
+    if (/new\s+Set<[^>]*>/.test(src) && /\bisRunning\b/.test(src))
+        forkSignals.push("a suspend `Set<…>` gating `isRunning`");
+    if (/\brequestAnimationFrame\s*\(\s*tick\s*\)/.test(src))
+        forkSignals.push("a local `requestAnimationFrame(tick)` rAF loop");
+    if (/\bvisibilitychange\b/.test(src) && /\bdocument\.hidden\b/.test(src))
+        forkSignals.push("a `visibilitychange`/`document.hidden` tab-hidden owner");
+    if (
+        /matchMedia\(\s*["'`]\(prefers-reduced-motion: reduce\)["'`]\s*\)/.test(src) &&
+        /addEventListener\(\s*["']change["']/.test(src)
+    )
+        forkSignals.push("a `matchMedia` reduced-motion `change` re-monitor");
+
+    return {
+        composesLeaf,
+        importsLeaf,
+        callsLeaf,
+        forkedMachinery: forkSignals.length > 0,
+        forkSignals,
+    };
 }
 function walk(dir, acc = []) {
     if (!existsSync(dir)) return acc;
@@ -62,7 +116,7 @@ function walk(dir, acc = []) {
 }
 
 function run() {
-    const { ROOT, SRC, SUBSTRATE, CONSUMER2, ARTIFACT } = cliPaths();
+    const { ROOT, SRC, SUBSTRATE, CONSUMER2, CANVAS2D, LIFECYCLE_LEAF, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
@@ -113,14 +167,88 @@ function run() {
     facts.consumer2 = existsSync(CONSUMER2);
     if (!facts.consumer2) violations.push("the consumer-#2 usability assert (useWebGLCanvas.test.ts) is absent");
 
+    // (e) BB.W-CANVAS-UNIFY — the Canvas2D lifecycle is ALSO single-source. The
+    //     second thin backend (`useCanvas2D`) must compose `createCanvasLifecycle`
+    //     and carry NO forked second copy of the schedule (the AV.W1 two-copy class
+    //     the carve was built to prevent, re-forked at AW.W17, undone here).
+    facts.canvas2dExists = existsSync(CANVAS2D);
+    if (!facts.canvas2dExists) {
+        violations.push("the Canvas2D backend src/composables/glass/canvas2d/useCanvas2D.ts is absent");
+    } else {
+        const c2d = detectCanvas2DSingleSource(readFileSync(CANVAS2D, "utf8"));
+        facts.canvas2dComposesLeaf = c2d.composesLeaf;
+        facts.canvas2dForkedMachinery = c2d.forkedMachinery;
+        facts.canvas2dForkSignals = c2d.forkSignals;
+        if (!c2d.composesLeaf)
+            violations.push(
+                `useCanvas2D does NOT compose the shared createCanvasLifecycle core (import:${c2d.importsLeaf}, call:${c2d.callsLeaf}) — it must be a thin Canvas2D backend over the leaf, the way useWebGLCanvas is the WebGL backend`,
+            );
+        if (c2d.forkedMachinery)
+            violations.push(
+                `useCanvas2D re-forks the lifecycle machinery INLINE (${c2d.forkSignals.join("; ")}) — the schedule lives ONCE in createCanvasLifecycle; the wrapper threads only the 2D backend concerns`,
+            );
+        // Cross-check: the leaf the wrapper composes actually owns the machinery
+        // (the composition is not pointing at an empty shell).
+        if (existsSync(LIFECYCLE_LEAF)) {
+            const leaf = stripComments(readFileSync(LIFECYCLE_LEAF, "utf8"));
+            facts.leafOwnsMachinery =
+                /new\s+Set</.test(leaf) &&
+                /\bisRunning\b/.test(leaf) &&
+                /contentvisibilityautostatechange/.test(leaf) &&
+                /\bvisibilitychange\b/.test(leaf) &&
+                /matchMedia\(\s*["'`]\(prefers-reduced-motion: reduce\)["'`]\s*\)/.test(leaf);
+            if (!facts.leafOwnsMachinery)
+                violations.push(
+                    "createCanvasLifecycle (the leaf both backends compose) is missing the shared schedule machinery (suspend Set / isRunning / content-visibility / visibilitychange / reduced-motion re-monitor)",
+                );
+        }
+    }
+
+    // (e-bite) Self-test the Canvas2D single-source detector (anti-evasion): a
+    //     synthetic wrapper that BOTH imports the leaf AND re-inlines a `new Set<…>`
+    //     + an rAF `tick` loop MUST be flagged (composition-PLUS-fork is a fork —
+    //     the leaf-import is not a fig-leaf over a live duplicate); a synthetic
+    //     genuine thin wrapper (composes the leaf, no inline machinery) must PASS.
+    const SELF_FORK = `
+import { createCanvasLifecycle } from "../webgl/createCanvasLifecycle";
+export function evil() {
+  const suspended = new Set<string>();
+  const isRunning = () => suspended.size === 0;
+  function tick() { raf = requestAnimationFrame(tick); }
+  const lc = createCanvasLifecycle({});
+}`;
+    const SELF_CLEAN = `
+import { createCanvasLifecycle, type CanvasFrameHooks } from "../webgl/createCanvasLifecycle";
+export function good() {
+  const lc = createCanvasLifecycle({ buildContext, resize });
+  return { isRunning: () => lc.running };
+}`;
+    const biteFork = detectCanvas2DSingleSource(SELF_FORK);
+    const biteClean = detectCanvas2DSingleSource(SELF_CLEAN);
+    // The fork synthetic IMPORTS the leaf (composesLeaf true) yet must be flagged
+    // forkedMachinery; the clean synthetic composes WITHOUT inline machinery.
+    const biteOk =
+        biteFork.composesLeaf &&
+        biteFork.forkedMachinery &&
+        biteClean.composesLeaf &&
+        !biteClean.forkedMachinery;
+    facts.canvas2dSelfTestBite = biteOk;
+    if (!biteOk)
+        violations.push(
+            `[self-test] the Canvas2D single-source detector bite is broken (fork:${JSON.stringify({ c: biteFork.composesLeaf, f: biteFork.forkedMachinery })}, clean:${JSON.stringify({ c: biteClean.composesLeaf, f: biteClean.forkedMachinery })}) — it must flag a composition-PLUS-fork wrapper AND pass a genuine thin wrapper`,
+        );
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, { generatedAt: snapshotStamp(), status, gate: "proof:webgl-substrate-single", facts, violations });
 
-    console.log("proof:webgl-substrate-single — ONE WebGL2 bootstrap, no baked choices (AU.W6)");
+    console.log("proof:webgl-substrate-single — ONE WebGL2 bootstrap, no baked choices (AU.W6) + Canvas2D single-source (BB.W-CANVAS-UNIFY)");
     console.log(`  webgl2 bootstraps : ${bootstraps.length} (${onlySubstrate ? "substrate only ✓" : bootstraps.join(", ")})`);
     console.log(`  baked choices     : ${baked.length ? baked.join("; ") : "none ✓"}`);
     console.log(`  scheduling missing: ${missing.length ? missing.join("; ") : "none ✓"}`);
     console.log(`  consumer-#2 assert: ${facts.consumer2 ? "present ✓" : "ABSENT"}`);
+    console.log(`  canvas2d composes : ${facts.canvas2dComposesLeaf ? "leaf ✓" : "NO ✗"}`);
+    console.log(`  canvas2d fork     : ${facts.canvas2dForkedMachinery ? `FORKED ✗ (${(facts.canvas2dForkSignals || []).join("; ")})` : "none ✓"}`);
+    console.log(`  canvas2d bite     : ${facts.canvas2dSelfTestBite ? "bites ✓" : "BROKEN ✗"}`);
     if (violations.length) { console.log("\nVIOLATIONS:"); for (const v of violations) console.log(`  ✗ ${v}`); }
     console.log(`\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`);
     process.exit(status === "pass" ? 0 : 1);

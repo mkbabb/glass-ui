@@ -21,13 +21,15 @@
  * (registrations + the specular magnitude cohort that reads them).
  */
 
-/* CSS @import rules must precede every other rule. The nine partials @import in
-   cascade order: */
+/* CSS @import rules must precede every other rule. The ten partials @import in
+   cascade order (offsets-sizing.css was carved into offsets.css + sizing.css at
+   BB.W-CARVE3 — adjacent same-selector :root blocks at the same cascade slot): */
 @import "./tokens/scheme-motion.css";
 @import "./tokens/color-radius.css";
 @import "./tokens/shadow.css";
 @import "./tokens/glass.css";
-@import "./tokens/offsets-sizing.css";
+@import "./tokens/offsets.css";
+@import "./tokens/sizing.css";
 @import "./tokens/scale-paper.css";
 @import "./tokens/light-dark.css";
 @import "./tokens/dark-arm.css";

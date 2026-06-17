@@ -90,7 +90,17 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 // ── The source surfaces (comment-stripped) ───────────────────────────────────
 const mathTs = strip(read("src/components/custom/fourier-field/math.ts"));
 const indexTs = strip(read("src/components/custom/fourier-field/index.ts"));
-const fieldVue = strip(read("src/components/custom/fourier-field/FourierField.vue"));
+// BB.W-CARVE3 — the ~475-line renderer lifted to composables/useFourierField.ts
+// (the aurora/goo-blob/constellation colocation symmetry). The W2 clock-seam
+// regexes read the SFC + composable CONCATENATED: the `clock?: () => number`
+// prop stays in the SFC defineProps, the `clock ? clock()` branch + the
+// autonomous `(now / preset.durationMs) % 1` loop moved to the composable's
+// render body.
+const fieldVue = strip(
+    read("src/components/custom/fourier-field/FourierField.vue") +
+        "\n" +
+        read("src/components/custom/fourier-field/composables/useFourierField.ts"),
+);
 const studioVue = strip(read("demo/stories/substrates/fourier-studio.vue"));
 const stageVue = strip(read("demo/stories/substrates/FourierStudioStage.vue"));
 const pathsTs = strip(read("demo/stories/substrates/fourier-paths.ts"));

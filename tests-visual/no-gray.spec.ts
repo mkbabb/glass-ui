@@ -229,6 +229,68 @@ test.describe("no-gray (π — the warm-chroma floor, fail-CLOSED)", () => {
         }
     }
 
+    // ── (e) THE DARK INK READS WARM (BB.W-DARK-INK-WARM) ────────────────────────────────
+    // The dark --foreground + the dark --surface-tint-15 chip (the oklch(from var(--foreground)
+    // 0.975 c h) relative-color derivation) resolve OKLab H in the warm register under .dark —
+    // the painted truth a hardcoded-yellow-green re-introduction reds on the COMPILED color
+    // (the SOURCE gate can be evaded by a renamed literal; the π reads the rendered hue). The
+    // tint chip composited over the dark L16 card carries the derived warm ink (the chip on
+    // the card warm, NOT the H95° yellow-green BA pasted ×12).
+    for (const vp of VIEWPORTS) {
+        test(`(e) the dark --foreground + the dark --surface-tint-15 chip read warm @ ${vp.name}`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: vp.width, height: vp.height });
+            await setDark(page, true);
+            // the dark --foreground ink itself.
+            const fgStr = await resolveToken(page, "--foreground");
+            const fgRgb = parseRgbA(fgStr);
+            expect(fgRgb, `dark --foreground: could not parse "${fgStr}"`).not.toBeNull();
+            const fgOk = rgbToOklab(fgRgb!.r, fgRgb!.g, fgRgb!.b);
+            expect(
+                fgOk.H,
+                `dark --foreground OKLab H ${fgOk.H.toFixed(1)}° outside the warm register [${WARM_HUE_LO},${WARM_HUE_HI}]° — the H95° yellow-green persists. resolved "${fgStr}"`,
+            ).toBeGreaterThanOrEqual(WARM_HUE_LO);
+            expect(
+                fgOk.H,
+                `dark --foreground OKLab H ${fgOk.H.toFixed(1)}° above the warm ceiling ${WARM_HUE_HI}° (a yellow-green cast). resolved "${fgStr}"`,
+            ).toBeLessThanOrEqual(WARM_HUE_HI);
+            // the dark --surface-tint-15 chip composited over the dark --card (the L16 plate the
+            // chip lifts off). The α-mix over transparent preserves the ink hue; compositing it
+            // over the warm-dark card keeps the warm hue. The chip background is read off a live
+            // element so the relative-color recipe resolves through the real cascade.
+            const chip = await page.evaluate(() => {
+                const host = document.createElement("div");
+                host.style.cssText =
+                    "position:fixed;left:0;top:0;width:200px;height:120px;z-index:99999;background:var(--card);padding:24px;";
+                const c = document.createElement("div");
+                c.style.cssText =
+                    "width:120px;height:60px;border-radius:10px;background:var(--surface-tint-15);";
+                host.appendChild(c);
+                document.body.appendChild(host);
+                void c.offsetHeight;
+                const cardBg = getComputedStyle(host).backgroundColor;
+                const chipBg = getComputedStyle(c).backgroundColor;
+                host.remove();
+                return { cardBg, chipBg };
+            });
+            const cardRgb = parseRgbA(chip.cardBg);
+            const chipOver = parseRgbA(chip.chipBg);
+            expect(cardRgb, `dark --card: could not parse "${chip.cardBg}"`).not.toBeNull();
+            expect(chipOver, `dark --surface-tint-15: could not parse "${chip.chipBg}"`).not.toBeNull();
+            const chipComp = composite(chipOver!, cardRgb!);
+            const chipOk = rgbToOklab(chipComp.r, chipComp.g, chipComp.b);
+            expect(
+                chipOk.H,
+                `the dark --surface-tint-15 chip (over the L16 card) composites OKLab H ${chipOk.H.toFixed(1)}° outside the warm register [${WARM_HUE_LO},${WARM_HUE_HI}]° — the hardcoded H95° yellow-green tint ink persists. chip "${chip.chipBg}" over card "${chip.cardBg}"`,
+            ).toBeGreaterThanOrEqual(WARM_HUE_LO);
+            expect(
+                chipOk.H,
+                `the dark --surface-tint-15 chip composites OKLab H ${chipOk.H.toFixed(1)}° above the warm ceiling ${WARM_HUE_HI}° (a yellow-green cast). chip "${chip.chipBg}" over card "${chip.cardBg}"`,
+            ).toBeLessThanOrEqual(WARM_HUE_HI);
+        });
+    }
+
     // ── THE CAPTURED DELTA — whole-fixture frames (both modes; the cardinal-lesson artefact)
     for (const vp of VIEWPORTS) {
         for (const mode of [false, true] as const) {

@@ -23,7 +23,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
        recipe inline instead of composing `.input-pill` (which hardcodes a
        single-line `height: 2.5rem` + pill radius) — it reads the shared tokens, not
        the pill class. -->
-  <TagsInputRoot data-slot="tags-input" v-bind="forwarded" :class="cn('flex flex-wrap gap-2 items-center rounded-input border border-(--control-surface-border) bg-(--control-surface-bg) [backdrop-filter:var(--control-surface-blur)] px-3 py-2 text-sm', props.class)">
+  <!-- BB.W-INVALID-RING — the fourth-gap close. The W-SURFACE-AXIS scope-7 REST
+       seam unified the rest material but never the invalid material; this adds the
+       invalid arm reading the SHARED --invalid-ring token (the same destructive
+       ring as an invalid Input/Select). TagsInputRoot is a non-form `div`, so the
+       `[aria-invalid]` attr is the trigger floor (reka does not surface a
+       `:user-invalid` pseudo on the styleable root — the §Divergence-decisions
+       recorded floor); `:user-invalid` is carried too for the engines that do. -->
+  <TagsInputRoot data-slot="tags-input" v-bind="forwarded" :class="cn('flex flex-wrap gap-2 items-center rounded-input border border-(--control-surface-border) bg-(--control-surface-bg) [backdrop-filter:var(--control-surface-blur)] px-3 py-2 text-sm aria-invalid:border-(--destructive) user-invalid:border-(--destructive) aria-invalid:shadow-(--invalid-ring) user-invalid:shadow-(--invalid-ring)', props.class)">
     <slot />
   </TagsInputRoot>
 </template>

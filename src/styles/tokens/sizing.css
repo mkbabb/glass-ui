@@ -1,90 +1,16 @@
-/* tokens/offsets-sizing.css
-   §9 animation offsets · §10 sizing (control heights, dropdown, carousel, stack-overlap, touch-target floor).
-   Carved from the tokens.css cascade root; @import-ed by tokens.css in
-   cascade order. Same :root cascade context as its siblings. */
+/* tokens/sizing.css
+   §10 sizing — the --ui-scale doctrine, control-height/font/glyph cohorts,
+   dropdown/carousel/stack-overlap, the dock geometry cascade (--dock-scale +
+   collapsed-pill + rail hairline + active-state ladder + iOS register + touch
+   floor), MetricBadge stacked geometry, the Configurator density + HIERARCHY
+   vocabulary, the single-column stage floor, the section tonal step, the
+   component-font override.
+   Carved (BB.W-CARVE3) from the former tokens/offsets-sizing.css §9/§10 split;
+   @import-ed by tokens.css immediately AFTER offsets.css at offsets-sizing's old
+   cascade slot — adjacent same-selector :root blocks resolve identically, so the
+   dist is byte-isomorphic. See docs/precepts/design-idioms.md
+   §cohesion-aware partials. */
 :root {
-    /* ═══════════════════════════════════════════════
-       §9  ANIMATION OFFSETS
-       ═══════════════════════════════════════════════ */
-    /* Hover lift offsets */
-    --lift-sm: -1px;
-    --lift-md: -2px;
-    --lift-lg: -4px;
-
-    /* Layout tokens */
-    /* BA.W-FADING-SCROLL — `--fade-scroll-width` is the public edge-fade ramp
-       width knob for `<FadingScroll>` (inheriting, retunable on any ancestor).
-       It superseded the scroll-BLIND `.scroll-fade-*` static masks' knob
-       `--mask-fade-width`, which retired in a CLEAN BREAK (no alias) at the
-       4.1.0 cut — BB.W-SCROLL-FADE-RETIRE — alongside the static utilities. */
-    --fade-scroll-width: 1rem;
-    /* J.W3.C — dock content overflow caps. When dock content exceeds
-       these dimensions, the inner `.dock-layers` (horizontal) /
-       `.glass-dock.vertical` (rail) container scrolls with a
-       `.scroll-fade-{x,y}` mask-fade so the boundary feathers rather
-       than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
-       desktop widths; consumers override per-dock by setting either
-       token directly on a `.glass-dock` instance. User findings 1 + 5a. */
-    /* AX.W04 — `--dock-max-inline-size` is the canonical inline cap EVERY overflow
-       strategy reads: `overflow="scroll"` scrolls past it, and `overflow="wrap"`
-       wraps to N rows on the over-cap crossing (the dock shrink-wraps to content,
-       `max-inline-size` caps that intrinsic width at this token). The prior
-       `--dock-overflow-bp: 640px` viewport-breakpoint token (the magic-640
-       snap-back) is DELETED — the wrap is content-driven, not viewport-coupled, so
-       there is no breakpoint threshold to name. */
-    --dock-max-inline-size: min(80vw, 64rem);
-    --dock-max-block-size: min(80vh, 48rem);
-
-    /* AB.W1.T1 — chassis max-block-size guardrail.
-       Maximum block size a centred consumer-app card may consume while
-       preserving the inline dock footprint. The recipe subtracts the
-       consumer-owned `--dock-footer-space` (dock height + dock inset +
-       card-edge inset) and `--page-padding-top` from the dynamic viewport,
-       then takes one further rem of breathing room so the card never
-       butts the dock — the user mandate is `≥ 1rem visible gap above
-       dock`. Both consumer tokens carry safe fallbacks for callers that
-       have not declared them.
-
-       Consumers should shrink internal regions (meter, readout, timeline)
-       before falling back to scroll. This token is a guardrail against
-       chassis overflow, NOT a license to make the card scroll as the
-       default solution; clamp-first / no-scroll-first is the canon.
-       See DESIGN.md `## Chassis sizing — dock-adjusted viewport`. */
-    --chassis-max-block-size: calc(
-        100dvh
-        - var(--dock-footer-space, 5.75rem)
-        - var(--page-padding-top, 0rem)
-        - 1rem
-    );
-    /* R0G-2 (AO.W3/W4) — chassis mobile dial-reserve canon. instrument-
-       chassis.css's mobile breakpoint reserves the dial's final box from
-       frame 0 via these vars (with the same values as inline fallbacks, the
-       safety net). Token-first home so the vars resolve canonically. */
-    --instrument-dial-min-height-mobile: 24rem;
-    --instrument-dial-meter-reserve-mobile: minmax(0, 1fr);
-
-    --max-width-input: 24rem;
-    --input-min-width-sm: 5rem;
-    --min-width-input-sm: var(--input-min-width-sm);
-    /* AU.W8b.4 — canonical popover width (Combobox list + anchor). Lifts the
-       `w-[200px]` arbitrary-value wrap to the `w-popover` @theme utility. */
-    --popover-width: 200px;
-    /* AZ.R5-4 — the ONE panel inner-padding rung (the consumer-verified "the
-       popover/dropdown content reads TIGHT" finding). The floating-panel +
-       DropdownMenuContent recipes read THIS token for their inner pad instead of
-       the prior hand-set `p-1`/literal, so a consumer retunes every teleported
-       menu/panel surface from one override. The comfortable default is `0.375rem`
-       (a half-rung over the prior 0.25rem tight floor — comfortable both modes
-       without over-padding a dense menu list). PopoverContent keeps its own
-       `--panel-padding-roomy` (1rem) for the prose-popover register. */
-    --panel-padding:       0.375rem;
-    --panel-padding-roomy: 1rem;
-    --chart-height-compact: 15rem;
-    --chart-height-default: 22.5rem;
-    --chart-height-large: 25rem;
-    --chart-margin: 1.25rem;
-    --paper-texture-size: 200px 200px;
-
     /* ═══════════════════════════════════════════════
        §10 SIZING
        ═══════════════════════════════════════════════ */
@@ -570,5 +496,4 @@
 
     /* Component font override (consumers override locally) */
     --select-font: inherit;
-
 }

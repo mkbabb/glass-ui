@@ -221,7 +221,20 @@ export function createCanvasLifecycle(
         bindContentVisibility();
         armed = true;
         startTime = performance.now();
-        if (isRunning()) raf = requestAnimationFrame(tick);
+        // Under reduced-motion paint ONE static frame SYNCHRONOUSLY at arm (call
+        // `tick()` in-line: it paints once and parks because `!reducedMotion` gates
+        // the reschedule), so an arm under `reduce` never schedules a deferred tick
+        // that flashes one frame later. The full-motion path schedules the live loop.
+        // BB.W-CANVAS-UNIFY: this is the one symmetric leaf refinement the Canvas2D
+        // de-fork needs — the WebGL backend is byte-behaviour-identical (a static
+        // frame under `reduce` is a static frame either way; the WebGL contract test
+        // + the aurora PRM suite assert the interaction math, never the arm-tick
+        // timing), and the Canvas2D substrate's one-static-frame-at-arm contract is
+        // preserved exactly through the shared lifecycle.
+        if (isRunning()) {
+            if (reducedMotion) tick();
+            else raf = requestAnimationFrame(tick);
+        }
     }
 
     function renderAt(timeSec: number): void {

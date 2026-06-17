@@ -3,17 +3,21 @@
  * ── Thin @import ROOT (cohesion-aware carve) ───────────────────────────────
  * The utility body is carved into cohesive `utilities/*.css` partials (each
  * under the 500-line no-god-module bound), @import-ed below in CASCADE ORDER.
- * The leading @utility animation pair, the @layer components block (split at
- * the metric-badge seam into two adjacent same-layer blocks — isomorphic), the
- * @utility button cluster, and the a11y @media overrides keep their source
- * order so the cascade is unchanged. See docs/precepts/design-idioms.md
- * §cohesion-aware partials.
+ * The leading @utility animation pair, the @layer components base block (split
+ * at the metric-badge seam into base/components AND, at BB.W-CARVE3, at the
+ * post-tap-squish seam into base/base-misc — all adjacent same-layer blocks,
+ * isomorphic), the @utility button cluster, and the a11y @media overrides keep
+ * their source order so the cascade is unchanged. See
+ * docs/precepts/design-idioms.md §cohesion-aware partials.
  */
 
-/* CSS @import rules must precede every other rule. The five partials @import in
-   cascade order: */
+/* CSS @import rules must precede every other rule. The six partials @import in
+   cascade order (base.css's post-tap-squish tail was carved into base-misc.css at
+   BB.W-CARVE3 — an adjacent same-`@layer components` block at the next slot, so
+   the cascade is unchanged): */
 @import "./utilities/animate.css";
 @import "./utilities/base.css";
+@import "./utilities/base-misc.css";
 @import "./utilities/components.css";
 @import "./utilities/btn.css";
 @import "./utilities/a11y-overrides.css";

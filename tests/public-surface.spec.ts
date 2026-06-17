@@ -12,6 +12,7 @@ import * as Controls from "../src/subpaths/controls";
 import * as Dark from "../src/dark";
 import * as DataTableSurface from "../src/subpaths/data-table";
 import * as Dock from "../src/subpaths/dock";
+import * as DrawerSurface from "../src/subpaths/drawer";
 import * as DropdownMenuSurface from "../src/subpaths/dropdown-menu";
 import * as ExpandableContainerSurface from "../src/subpaths/expandable-container";
 import * as Forms from "../src/forms";
@@ -49,7 +50,6 @@ const uiRuntimeExports = [
     "ContextMenu",
     "DataTable",
     "Dialog",
-    "Drawer",
     "DropdownMenu",
     "HoverCard",
     "Label",
@@ -116,6 +116,17 @@ const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "DockSelectTrigger" },
     { subpath: "dock", surface: Dock, name: "DockDropdownTrigger" },
     { subpath: "dock", surface: Dock, name: "DockSeparator" },
+    // Drawer moved OFF the root barrel to the /drawer subpath (BB.W-DRAWER-ABROGATE
+    // — keyframes-bearing heavy component, dock/aurora isolation pattern).
+    { subpath: "drawer", surface: DrawerSurface, name: "Drawer" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerContent" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerTrigger" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerHeader" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerFooter" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerTitle" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerDescription" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerClose" },
     { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
     // AI.W5-δ — `ProgressiveSidebar` SFC retired (Path B archive per

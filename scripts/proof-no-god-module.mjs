@@ -46,16 +46,24 @@ const WARN_LIMIT = 300;
  * `// BOOK(<wave-id>):` marker (asserted below).
  */
 const RATCHET_BASELINES = {
-    // BB.W-CI-GREEN — the carve is DEFERRED to W-CARVE3 (Batch 4); the ratchet is
-    // re-armed at the live counts. The BA.W-CARVE2 discharge that drained this map
-    // to ∅ was a false close-class claim — the carve never landed, so three files
-    // measure OVER 500 at HEAD. Each row carries a `// BOOK(BB.W-CARVE3):` marker
-    // (the count + the deferral move in one commit; the gate reds a marker-less
-    // bump). W-CARVE3 drains these rows to {} for real when the carve lands — the
-    // MONOTONIC drain restored, recorded, never a silent re-drain.
-    "styles/tokens/offsets-sizing.css": 574, // BOOK(BB.W-CARVE3): carve the §offset/§sizing token block into thin @import partials. (drained 562→551 at BB Batch 2 — dead border-opacity + --mask-fade-width tokens deleted; grew 551→574 at BB.W-PERF-PRODUCER — the density-ratio --dock-icon-glyph block: --dock-icon-glyph-ratio/-floor + the max(calc(...)) form replacing the flat 1.25rem token)
-    "styles/utilities/base.css": 516, // BOOK(BB.W-CARVE3): carve the base-utility cluster into per-concern partials. (drained 541→516 at BB.W-SCROLL-FADE-RETIRE — the 4 dead .scroll-fade-* rules deleted)
-    "components/custom/fourier-field/FourierField.vue": 505, // BOOK(BB.W-CARVE3): lift the render-loop/lifecycle orchestrator out into a composable.
+    // BB.W-CARVE3 DRAINED the three BB.W-CI-GREEN rows to ∅ — the carve LANDED.
+    //   • styles/tokens/offsets-sizing.css (574) → carved at the §9/§10 seam into
+    //     tokens/offsets.css (93) + tokens/sizing.css (499), both < 500, dist
+    //     byte-isomorphic; the parent file DELETED, the `tokens` CSS_MONOLITHS
+    //     order re-pointed.
+    //   • styles/utilities/base.css (516) → the form/interaction half stays in
+    //     utilities/base.css (288); the post-tap-squish tail (status-dot → kbd +
+    //     the fading-scroll recipe) carved into utilities/base-misc.css (250), an
+    //     adjacent same-`@layer components` block at the next cascade slot, dist
+    //     byte-isomorphic.
+    //   • components/custom/fourier-field/FourierField.vue (505) → the ~475-line
+    //     renderer lifted into composables/useFourierField.ts (the
+    //     aurora/goo-blob/constellation colocation symmetry); the SFC drops well
+    //     under 500.
+    // The MONOTONIC drain is honoured (the rows DELETED in the same diff that
+    // carved the files — a stale row reds, the gate's own guard). The close state
+    // is now reached for the three CARVE3 files: `violations == []` for them AND
+    // their rows are gone from the ratchet.
 };
 
 let _cliPaths = null;

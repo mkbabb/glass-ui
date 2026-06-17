@@ -289,8 +289,11 @@
        invalid field shows the destructive ring on focus too. */
     .input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]):focus-visible {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 var(--focus-ring-width)
-            color-mix(in srgb, var(--destructive) 35%, transparent);
+        /* BB.W-INVALID-RING — the shared destructive ring register (the
+           --focus-ring-shadow sibling). The byte-identical recipe is now ONE
+           token; the `8%` at-rest bg arm above stays `.input-pill`-local (a
+           glass-tint substrate the bare-ring surfaces do not carry). */
+        box-shadow: var(--invalid-ring);
     }
 
     /* AQ.W4 §W4.3 — `field-sizing: content` autosize (opt-in via the Textarea

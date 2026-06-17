@@ -49,8 +49,11 @@ const strip = (s) =>
         .replace(/\/\/[^\n]*/g, "");
 
 // ── Sources ──────────────────────────────────────────────────────────────────────────
-const baseCss = strip(readMonolith(ROOT, "utilities")); // concatenated utilities partials (incl. base.css)
-const offsets = strip(read("src/styles/tokens/offsets-sizing.css"));
+const baseCss = strip(readMonolith(ROOT, "utilities")); // concatenated utilities partials (incl. base.css + base-misc.css)
+// BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
+// (§10); the --fade-scroll-width public ramp (and the retired --mask-fade-width)
+// live in §9 → offsets.css.
+const offsets = strip(read("src/styles/tokens/offsets.css"));
 const sfc = strip(read("src/components/custom/fading-scroll/FadingScroll.vue"));
 const composable = strip(
     read("src/components/custom/fading-scroll/composables/useFadingScroll.ts"),
@@ -198,14 +201,16 @@ facts.maskFadeWidthToken = maskFadeWidthToken;
 add(
     "w6b-mask-fade-width-token-absent",
     maskFadeWidthToken === false,
-    `the orphan --mask-fade-width token is ABSENT from offsets-sizing.css (retired clean-break onto --fade-scroll-width, no alias) [tokenStillDeclared=${maskFadeWidthToken}]`,
+    `the orphan --mask-fade-width token is ABSENT from tokens/offsets.css (retired clean-break onto --fade-scroll-width, no alias) [tokenStillDeclared=${maskFadeWidthToken}]`,
 );
 
 // W6c — the dead code is gone from the BUILT dist (the producer-side mirror, the
 // W-EMISSION bar). Skipped when dist/ is absent (the proof:emission producer-vs-
 // source gating); in that case W6a/W6b carry the close assertion.
 const DIST_BASE = resolve(ROOT, "dist/styles/utilities/base.css");
-const DIST_OFFSETS = resolve(ROOT, "dist/styles/tokens/offsets-sizing.css");
+// BB.W-CARVE3 — the carved §9 partial in the shipped dist (offsets-sizing.css →
+// offsets.css); the retired --mask-fade-width token lived in §9.
+const DIST_OFFSETS = resolve(ROOT, "dist/styles/tokens/offsets.css");
 const distPresent = existsSync(DIST_BASE) || existsSync(DIST_OFFSETS);
 let distScrollFadeShipped = false;
 if (distPresent) {
@@ -276,7 +281,7 @@ const tokenMinted = /--fade-scroll-width:\s*1rem/.test(offsets);
 add(
     "fade-scroll-width-token-minted",
     tokenMinted,
-    `--fade-scroll-width: 1rem minted in offsets-sizing.css (supersedes --mask-fade-width; retire-coordinated) [minted=${tokenMinted}]`,
+    `--fade-scroll-width: 1rem minted in tokens/offsets.css (supersedes --mask-fade-width; retire-coordinated) [minted=${tokenMinted}]`,
 );
 
 // ── The π readback spec is wired (the BINDING close) ────────────────────────────────

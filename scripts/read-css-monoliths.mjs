@@ -36,7 +36,11 @@ export const CSS_MONOLITHS = {
             "color-radius.css",
             "shadow.css",
             "glass.css",
-            "offsets-sizing.css",
+            // BB.W-CARVE3 — offsets-sizing.css carved at the §9/§10 seam into two
+            // adjacent same-selector :root partials at the same cascade slot
+            // (offsets.css §9 ANIMATION OFFSETS, then sizing.css §10 SIZING).
+            "offsets.css",
+            "sizing.css",
             "scale-paper.css",
             "light-dark.css",
             "dark-arm.css",
@@ -68,6 +72,10 @@ export const CSS_MONOLITHS = {
         order: [
             "animate.css",
             "base.css",
+            // BB.W-CARVE3 — base.css's post-tap-squish tail (status-dot → kbd +
+            // the fading-scroll recipe) carved into base-misc.css, an adjacent
+            // same-`@layer components` block immediately after base.css.
+            "base-misc.css",
             "components.css",
             "btn.css",
             "a11y-overrides.css",

@@ -173,6 +173,32 @@ function rootValue(src, token) {
     const m = src.match(new RegExp(`--${token}\\s*:\\s*([^;]+?)\\s*;`));
     return m ? m[1].trim() : null;
 }
+/** sRGB[0..255] → the OKLCh {L, C, H} the browser reads `oklch(from <color> …)`'s
+ *  channel keywords from (c == C, h == H, l == L). The OKLab plumbing IS the OKLCh
+ *  polar form — C is the chroma magnitude, H the hue angle (rgbToOklab already returns
+ *  both). */
+function oklchOf(str) {
+    const o = oklabOf(str);
+    return o ? { L: o.L, C: o.C, H: o.H } : null;
+}
+/** Model the browser's `oklch(from <src> <lift-L> c h)` relative-color: extract the
+ *  source color's OKLCh c (chroma) + h (hue), substitute the literal lift-L, and
+ *  resolve the result back to OKLab (through the sRGB gamut the browser clamps into —
+ *  the AX `oklch(from …)` "browsers don't gamut-map yet" caveat IS oklchToRgb's clamp).
+ *  This is the gate's source-side model of what `oklch(from var(--foreground) <L> c h)`
+ *  paints, so the dark-tint witness reads the SAME hue the rendered chip carries. */
+function relativeOklchFrom(srcColor, liftL) {
+    const base = oklchOf(srcColor);
+    if (!base) return null;
+    return rgbToOklab(oklchToRgb(liftL, base.C, base.H));
+}
+/** Parse the lift-L literal off the dark `--surface-tint-*` arm's
+ *  `oklch(from var(--foreground) <L> c h)` recipe (the first numeric after the
+ *  `var(--foreground)` token). */
+function darkTintLiftL(src) {
+    const m = src.match(/oklch\(\s*from\s+var\(--foreground\)\s+([\d.]+)\s+c\s+h\s*\)/i);
+    return m ? Number(m[1]) : null;
+}
 
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
@@ -403,6 +429,107 @@ add(
     "aa-muted-fg-over-page-dark",
     aaMutedDark !== null && aaMutedDark >= 4.5,
     `dark --muted-foreground over the dark page = ${aaMutedDark ? aaMutedDark.toFixed(2) : "?"}:1 (≥ 4.5:1 — the warmed dark muted register legible; HEAD 7.39:1)`,
+);
+
+// ════════════════════════════════════════════════════════════════════════════════════
+// W-DARK-INK-WARM — the dark INK reads warm + is --foreground-DERIVED. The dark register's
+// surface-tint arm hardcoded the EXACT yellow-green (hsl(48 …) → OKLab H95°) W-NO-GRAY
+// condemned, ×12, breaking the light arm's --foreground-derived symmetry. These witnesses
+// assert (a) the dark --foreground ink itself reads warm, (b) the two mode arms agree
+// (§2c lockstep), (c) the dark tint ink reads warm AND is the oklch(from var(--foreground) …)
+// relative-color derivation (the css-relative-color chronic's first live consumer), and
+// (d) the dark --foreground over the dark page holds AA after the chroma-only warm.
+// ════════════════════════════════════════════════════════════════════════════════════
+// W1 — the dark --foreground reads warm (off the HEAD H95.1° yellow-green).
+const darkFgFloor = darkClassValue(darkArm, "foreground"); // the .dark fallback floor
+const darkFgEnh = darkArgFromLightDark(lightDark, "foreground"); // the light-dark() dark arg
+const darkFgOk = oklabOf(darkFgFloor ?? "");
+facts.darkForeground = darkFgOk
+    ? {
+          floor: darkFgFloor,
+          enhancementDarkArg: darkFgEnh,
+          L: Number(darkFgOk.L.toFixed(4)),
+          C: Number(darkFgOk.C.toFixed(4)),
+          H: Number(darkFgOk.H.toFixed(1)),
+      }
+    : { floor: darkFgFloor, enhancementDarkArg: darkFgEnh };
+add(
+    "warm-hue-dark-foreground",
+    darkFgOk !== null &&
+        darkFgOk.H >= WARM_HUE_LO &&
+        darkFgOk.H <= WARM_HUE_HI &&
+        darkFgOk.C >= CHIP_FLOOR * 0.5,
+    `the dark --foreground reads OKLab H = ${darkFgOk ? darkFgOk.H.toFixed(1) : "?"}° (in [${WARM_HUE_LO},${WARM_HUE_HI}]° warm register — the no-gray identity, off the HEAD H95.1° yellow-green) at C ${darkFgOk ? darkFgOk.C.toFixed(4) : "?"}`,
+);
+// W3a — the §2c lockstep: the .dark fallback floor == the light-dark() dark arg. The two
+// arms must agree or the FOUC/enhancement split paints two different inks.
+add(
+    "dark-foreground-arms-lockstep",
+    darkFgFloor !== null && darkFgEnh !== null && darkFgFloor === darkFgEnh,
+    `the dark --foreground agrees across both arms (the .dark fallback floor "${darkFgFloor}" == the light-dark() dark arg "${darkFgEnh}" — the §2c lockstep; a warm in only one arm reds)`,
+);
+// W2a — the dark --surface-tint-* arm is --foreground-DERIVED via oklch(from …) AND carries
+// ZERO hsl(48 …) literal (the architectural-asymmetry fix + the workaround deleted). The
+// SOURCE-assert a renamed/re-hued literal cannot evade (the derivation must be present).
+const darkTintHasRelativeColor = /--surface-tint-[a-z0-9-]+:[^;]*oklch\(\s*from\s+var\(--foreground\)/.test(
+    darkArm,
+);
+const darkTintHasHsl48 = /--surface-tint-[a-z0-9-]+:[^;]*hsl\(\s*48\b/.test(darkArm);
+facts.darkSurfaceTintDerived = {
+    relativeColor: darkTintHasRelativeColor,
+    hsl48Literal: darkTintHasHsl48,
+};
+add(
+    "dark-surface-tint-foreground-derived",
+    darkTintHasRelativeColor && !darkTintHasHsl48,
+    `the dark --surface-tint-* arm reads oklch(from var(--foreground) …) (relativeColor=${darkTintHasRelativeColor}) AND carries ZERO hsl(48 …) literal (hsl48=${darkTintHasHsl48}) — the --foreground-derived symmetry restored, the 12-literal workaround deleted`,
+);
+// W2b — the dark tint ink resolves WARM. Model the oklch(from var(--foreground) <lift-L> c h)
+// recipe off the (warmed) dark --foreground at the parsed lift-L: the ink the chip rungs mix
+// over transparent carries the foreground's warm hue by derivation.
+const darkTintLift = darkTintLiftL(darkArm);
+const darkTintInk =
+    darkFgFloor !== null && darkTintLift !== null
+        ? relativeOklchFrom(darkFgFloor, darkTintLift)
+        : null;
+facts.darkSurfaceTint = darkTintInk
+    ? {
+          liftL: darkTintLift,
+          L: Number(darkTintInk.L.toFixed(4)),
+          C: Number(darkTintInk.C.toFixed(4)),
+          H: Number(darkTintInk.H.toFixed(1)),
+      }
+    : { liftL: darkTintLift };
+add(
+    "warm-hue-dark-surface-tint",
+    darkTintInk !== null &&
+        darkTintInk.H >= WARM_HUE_LO &&
+        darkTintInk.H <= WARM_HUE_HI,
+    `the dark --surface-tint-* ink (oklch(from var(--foreground) ${darkTintLift ?? "?"} c h)) resolves OKLab H = ${darkTintInk ? darkTintInk.H.toFixed(1) : "?"}° (in [${WARM_HUE_LO},${WARM_HUE_HI}]° warm register — the chip on the L16 card warm, NOT the HEAD H95.1° yellow-green; the ink hue is preserved through the α-mix over transparent)`,
+);
+// W3b — the dark --foreground holds AA over the dark page after the chroma-only warm (the
+// contrast contract — the L must not move past the AA edge).
+const darkFgRgb = colorToRgb(darkFgFloor ?? "");
+const darkPageRgbAA = colorToRgb(darkClassValue(darkArm, "neutral-0") ?? "");
+let aaDarkFg = null;
+if (darkFgRgb && darkPageRgbAA) aaDarkFg = contrastRatio(darkFgRgb, darkPageRgbAA);
+facts.aaDarkForegroundOverPage = aaDarkFg ? Number(aaDarkFg.toFixed(2)) : null;
+add(
+    "aa-dark-foreground-over-page",
+    aaDarkFg !== null && aaDarkFg >= 4.5,
+    `the dark --foreground over the dark page (--neutral-0) = ${aaDarkFg ? aaDarkFg.toFixed(2) : "?"}:1 (≥ 4.5:1 body floor — the chroma-only warm holds the contrast contract; the L is preserved)`,
+);
+// The relative-color is the INK SOURCE, not the tint mix space — the AW.W26 in-srgb fence
+// (asserted by `surface-tint-stays-srgb` above) is NOT breached: the oklch(from …) sits
+// INSIDE the unchanged `color-mix(in srgb, …)` α-mix. A future reader must not read the
+// dark arm's oklch(from …) as a fence violation.
+add(
+    "dark-tint-relative-color-is-ink-source-not-mix-space",
+    !darkTintHasRelativeColor ||
+        /--surface-tint-[a-z0-9-]+:\s*color-mix\(\s*in srgb,\s*oklch\(\s*from\s+var\(--foreground\)/.test(
+            darkArm,
+        ),
+    "the dark arm's oklch(from var(--foreground) …) is the INK SOURCE inside the unchanged color-mix(in srgb, …) α-mix — NOT a switch of the tint interpolation space (the AW.W26 fence holds; surface-tint-stays-srgb stays GREEN)",
 );
 
 // ── The π readback spec is wired (the BINDING close) ────────────────────────────────

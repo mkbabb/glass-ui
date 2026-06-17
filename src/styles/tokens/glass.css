@@ -232,8 +232,8 @@
     /* AW.W23 — content-aware adaptive tint (the Baseline-2025 "tint informed by
        surrounding content" axis, WWDC25 sess. 219). A surface can tint toward a
        consumer-provided dominant backdrop color via a `color-mix(in oklab, …)`
-       recipe (oklab is the mwg-preferred space for tint generation; NEVER a
-       lightness-shift in `oklch(from …)` — browsers don't gamut-map yet).
+       recipe (oklab is the mwg-preferred space for THIS tint generation; NEVER a
+       lightness-shift in `oklch(from …)` in the glass-tint mix). BB.W-DARK-INK-WARM landed `oklch(from var(--foreground) …)` live on the dark `--surface-tint-*` arm.
 
        DEFAULT is zero delta: `--glass-tint-source` is the warm-white card itself
        and `--glass-tint-strength` is 0%, so the rung background mixes 0% toward

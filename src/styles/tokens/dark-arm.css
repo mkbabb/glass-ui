@@ -57,7 +57,17 @@
        --accent{,-foreground} / --border / --input are pure var()-aliases —
        DELETED here (AQ.W2 §2a): they auto-track the --neutral-* ladder +
        --foreground above. Re-declaring them would be redundant. */
-    --foreground: hsl(48 10% 90%);
+    /* BB.W-DARK-INK-WARM — the dark --foreground warmed off hsl(48 10% 90%) (OKLab H95.1°,
+       the EXACT yellow-green W-NO-GRAY condemned as "a cast, not warm material") onto the
+       no-gray warm identity hsl(30 14% 90%) (OKLab L0.926 C0.0063 H75.4° — the --foreground
+       56° warm-amber family, L held within ±0.001 of HEAD, chroma off the gray floor,
+       chroma-only at constant L). The contrast contract holds (the dark ink over the L4 page
+       stays ≥ the body floor). EVERY dark var(--foreground) consumer (body copy, the lifted
+       muted register, --glass-tint-ink, the cartoon shadow, the configurator divider, the
+       dock-selected-accent, the --surface-tint-* relative-color recipe below) re-resolves
+       warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css:92 (the §2c discipline —
+       both mode arms warm together or the FOUC/enhancement split paints two inks). */
+    --foreground: hsl(30 14% 90%);
     /* BA.W-DARK-MATERIAL scope 1 — the --card plate LIFTS L10→L16 (a warm-dark elevated
        surface, macOS-window territory) so it sits ~5× the deepened L4 page relL — a
        clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css:80. */
@@ -242,28 +252,43 @@
        mode arms — the content-tier self-engage needs no mode branch. */
     --glass-tint-strength-floor: 12%;
 
-    /* BA.W-DARK-MATERIAL scope 5 — the --surface-tint-* dark arm. The light family is
-       color-mix(in srgb, var(--foreground) N%, transparent) — over a near-black dark card
-       a LIGHT-ink (dark --foreground IS light cream) tint composites to near-black: the
-       9-rung chip/hairline/divider scale is INVISIBLE in dark. The dark arm KEEPS the
-       in-srgb space (the AW.W26 fence — NEVER oklab) but re-anchors the mix ink to a
-       BRIGHTER warm off-white so a chip/hairline LIFTS off the deep card (the inverse
-       intent of light's dark-ink tint). This re-resolves every --surface-tint-* consumer
-       (chip backplates, the dock-rail divider, the spine, the timeline dot) in lockstep,
-       zero per-site edit. The brighter ink is a near-white warm (hsl(48 12% 96%)) so the
-       higher rungs read as genuine hairlines on the L16 card. */
-    --surface-tint-4:  color-mix(in srgb, hsl(48 12% 96%)  4%, transparent);
-    --surface-tint-6:  color-mix(in srgb, hsl(48 12% 96%)  6%, transparent);
-    --surface-tint-8:  color-mix(in srgb, hsl(48 12% 96%)  8%, transparent);
-    --surface-tint-10: color-mix(in srgb, hsl(48 12% 96%) 10%, transparent);
-    --surface-tint-12: color-mix(in srgb, hsl(48 12% 96%) 12%, transparent);
-    --surface-tint-15: color-mix(in srgb, hsl(48 12% 96%) 15%, transparent);
-    --surface-tint-18: color-mix(in srgb, hsl(48 12% 96%) 18%, transparent);
-    --surface-tint-22: color-mix(in srgb, hsl(48 12% 96%) 22%, transparent);
-    --surface-tint-25: color-mix(in srgb, hsl(48 12% 96%) 25%, transparent);
-    --surface-tint-35: color-mix(in srgb, hsl(48 12% 96%) 35%, transparent);
-    --surface-tint-40: color-mix(in srgb, hsl(48 12% 96%) 40%, transparent);
-    --surface-tint-70: color-mix(in srgb, hsl(48 12% 96%) 70%, transparent);
+    /* BA.W-DARK-MATERIAL scope 5 + BB.W-DARK-INK-WARM — the --surface-tint-* dark arm,
+       --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,
+       transparent) — over a near-black dark card a LIGHT-ink (dark --foreground IS light
+       cream) tint composites to near-black: the 9-rung chip/hairline/divider scale is
+       INVISIBLE in dark. The dark arm re-anchors the mix ink to a BRIGHTER warm off-white
+       so a chip/hairline LIFTS off the deep card (the inverse intent of light's dark-ink
+       tint). BA executed that intent as a hardcoded hsl(48 12% 96%) literal ×12 — at the
+       EXACT OKLab H95.1° yellow-green the SAME tranche's W-NO-GRAY ruled "a cast, not warm
+       material", AND a per-rung literal a --foreground re-point can never reach (the
+       architectural asymmetry with the light arm + the substitution-vs-redeclaration trap
+       at the token mint). BB re-expresses each rung as a oklch(from var(--foreground) 0.975
+       c h) RELATIVE-COLOR derivation: the recipe extracts the (now-warmed) dark --foreground's
+       warm hue + chroma and lifts the lightness to 0.975 (≈ HEAD's 0.973 ink L, so the chip
+       lift off the L16 card is preserved) — the ink CARRIES the --foreground's warm hue
+       (OKLab H75.4°) BY DERIVATION (re-point the dark ink → every rung re-resolves warm; a
+       future re-tune reaches all 12 from ONE --foreground edit — the symmetry the light arm
+       has had since L.W5). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the
+       SAME 12-rung α ladder + the SAME in-srgb interpolation space the light arm uses (the
+       AW.W26 fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
+       This re-resolves every --surface-tint-* consumer (chip backplates, the dock-rail
+       divider, the spine, the timeline dot) in lockstep, zero per-site edit. The 0.975 lift
+       sits well under the sRGB gamut edge (the AX css-relative-color book's "browsers don't
+       gamut-map yet" caveat does not bite — at 0.975 the small high-L chroma resolves clean;
+       lift→1.0 drifts the hue, so 0.975 is the calibrated pin). The css-relative-color
+       chronic's FIRST live consumer (the tolerant α-mix the AX book was waiting for). */
+    --surface-tint-4:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 25%, transparent);
+    --surface-tint-35: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 35%, transparent);
+    --surface-tint-40: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 70%, transparent);
 
     /* Hairline-accent dark mirror — see light counterpart at line ~404. */
     --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);

@@ -53,6 +53,10 @@ export const COMPOSED_BY = {
     // <MetricStack> hosts a column of <MetricRow> children (the row IS the stack's
     // unit; the metric-stack story renders the rows through the stack).
     MetricRow: "MetricStack",
+    // <DrawerContent> renders the scrim sub-component internally (the BB.W-DRAWER-ABROGATE
+    // reka rebuild; `<DrawerOverlay v-if="showOverlay">`); the drawer stories demonstrate
+    // it through DrawerContent's `showOverlay` default, never independently.
+    DrawerOverlay: "DrawerContent",
 };
 
 let _cliPaths = null;
