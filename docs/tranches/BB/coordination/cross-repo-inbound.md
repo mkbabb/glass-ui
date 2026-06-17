@@ -46,3 +46,74 @@ Everyone consumes the published predecessor; no cycle. The version cut + the npm
 - [ ] W-DECK — note `--spring-deck` consumes the PUBLISHED kf `springTimingFunction` (no kf change).
 - [ ] W-EASING-PRIMITIVE — the boundary law is mutually affirmed (kf owns spring/playback).
 - [ ] BB-AMENDMENT-crossrepo.md §A3 — re-point the deck-spring ask to SATISFIED + KF-OSCILLATOR to BOOKED-kf-owned.
+
+## §5 — speedtest AW v3 relay intake (2026-06-17, via W-CROSSREPO-ASKS)
+
+The speedtest AW v3 session relayed its hardened ask-set to the live BB tranche.
+inv-16: speedtest authored the CONTENT; BB CONSUMES it here (no speedtest/kf/vjs
+tree edits). Reconciled against BB HEAD — **most of the AW thesis-core already
+LANDED**, so the intake is small. Per-item disposition:
+
+### Amends / withdrawals (A)
+
+- **A1 — ACTIONED (P0, time-critical).** `BorderProgress` thickness envelope
+  **6-8px → 10-14px**, amended in `waves/BB.W-BORDER-PROGRESS.md` (the gate-summary
+  line 6, the §Scope thickness bullet :85 with the full provenance, the W4 :116, the
+  π :119) BEFORE the SPEC wave runs — so the born-RED gate W4 + π lock the THICKER
+  band, not the hairline. Spectrum + coverage axes UNCHANGED. (Had 6-8px shipped on
+  the 4.1.0 cut, the gate would have locked the wrong envelope + a third I3-D4
+  hairline regression would ride the publish — the relay's single most time-critical
+  item, now closed at the spec.)
+- **A2 — WITHDRAWN (stale).** The `--ease-expo-out` publish ask is moot: W-MOTION-CANON
+  (complete) deliberately did NOT mint it — the SOTA arrival ease ALREADY ships as
+  `--ease-out-expo` (`scheme-motion.css`, `cubic-bezier(0.16,1,0.3,1)`). A second alias
+  would RED `proof:animation-coherence`'s EASING-TABLE no-alias clause. speedtest
+  CONSUMES the existing `--ease-out-expo` (→ C4). No BB edit.
+- **A3 — ACTIONED (P2, Batch-V prep).** The `sdf-core.wgsl` importable-SDF boundary
+  note added to the W-GOOBLOB-WGPU entry in `BB-AMENDMENT-viz.md:45` — `metaball.wgsl`
+  imports the SDF from `sdf-core.wgsl` so the later DotBlob (B6) imports it too
+  (no-duplication, the `procedural-color.wgsl.ts` shared-chunk precedent). ΔE parity
+  unchanged. Lands when W-GOOBLOB-WGPU runs (Batch V).
+
+### Confirms (C) — resolved against the landed waves
+
+- **C1 — CONFIRMED.** `--phase-complete-color` is the celebration seam (W-PHASE-PALETTE,
+  complete): the InstrumentChassis reads the token (8 references in
+  `instrument-chassis.css`), no baked gold. speedtest's `CompleteHeadline` reads the
+  token.
+- **C2 — CONFIRMED.** `vSpecular` is exported on `/glass` (W-LIQUIDHOVER, complete; 3
+  references in `composables/glass/index.ts`) + arms non-dock glass tiers (Button glass
+  variants + Card gated). W-LENSING added `useSpecularPointer` (the angle channel) on the
+  same core. A non-dock glass-tier surface arms by adding `v-specular`.
+- **C3 — FORWARD (Batch V).** `curlFBM` does NOT exist at HEAD — the shared FBM/curl GLSL
+  chunk lands with the procedural waves (W-AURORA-WGPU establishes the shared WGSL chunk;
+  the `.frag` `curlFBM` home `flow.glsl.ts` + the ≥3-consumer bar are satisfied when B1
+  (aurora-curl-warp) + B5 (paper-grid-breathe) + the flowfield consume it). Recorded as a
+  Batch-V intake; not yet confirmable.
+- **C4 — CONFIRMED.** `--ease-out-expo` is the published name (W-MOTION-CANON, complete).
+  speedtest binds it; no alias minted (= A2).
+
+### New asks (B) — placed at their loci + sequenced (§D)
+
+The no-WebGPU new asks ride the ONE 4.1.0 cut (B1's `.frag` arm, B2, B3, B4-EARLY so
+the born-WebGPU viz consume it at birth, B7, B8, B9); the procedural tail (B1's WGSL
+arm, B5, B6 + A3) sequences AFTER the strict WebGPU viz chain (W-GPU-SUBSTRATE →
+W-AURORA-WGPU → W-GOOBLOB-WGPU → W-FLOWFIELD → W-CONCENTRIC, all SPEC). The
+"parked-on-BB" posture collapses on the single `^4.1.0` bump at AW.W7-BB.
+
+| ID | placement | prio | status |
+|---|---|---|---|
+| B1 aurora-curl-warp (`warpMode:'curl'`, Bridson) | follow-on to W-AURORA-WGPU; `.frag` arm on the 4.1.0 cut, WGSL arm after the viz chain; shared `curlFBM` | P1 | BOOKED (split-arm) |
+| B2 dockmorph-cta-receive | W-DOCK-MORPH-FAMILY (complete) — confirm-or-build the external-CTA-morphs-into-dock seam (compositor-flat, PRM-seats) | P1 | BOOKED (in-repo, 4.1.0) |
+| B3 desktop-reserve `min-block-size` | NEW in-repo wave — wide-axis chassis reserve, desktop dial, CLS≈0; deletes the speedtest App.vue interim | P1 | BOOKED (in-repo, 4.1.0) |
+| B4 viz-pointer-physics `usePointerVelocityField` | NEW in-repo, EARLY (pre-W-GPU-SUBSTRATE so the born-WebGPU viz consume it) — shared composable, no own rAF, PRM `tick(0)`, accel term | P1 | BOOKED (in-repo, 4.1.0, early) |
+| B5 paper-grid-breathe (`<Card grid animated>`) | after W-FLOWFIELD — ¼-res compute ≤4ms, PRM-static, `curlFBM`-shared | P2 | BOOKED (procedural tail) |
+| B6 DotBlob 6th suite member | after W-FLOWFIELD (W-DOTBLOB) — imports A3's `sdf-core.wgsl`; substrate-single A–G + dot-blob gate | P3 | BOOKED (procedural tail) |
+| B7 spaview-cache `<SpaView :max>` | NEW in-repo — caches inactive views, out-in; rewires AdminDashboardLayout | P2 | BOOKED (in-repo, 4.1.0) |
+| B8 card-tier-alpha-pin | NEW in-repo — per-tier alpha canonical; speedtest register.css overrides delete on consume | P2 | BOOKED (in-repo, 4.1.0) |
+| B9 spring-crisp `--spring-crisp` | NEW in-repo, CONDITIONAL — mint IFF the ≥2-consumer bar is met (5+ speedtest sites named); else consumers ride `--spring-snappy` | P2 | BOOKED (in-repo, 4.1.0, conditional) |
+
+These B-asks are the cross-repo SCOPE additions consumed at their named loci; the
+in-repo ones (B2/B3/B4/B7/B8/B9 + B1-`.frag`) are sequenced onto the 4.1.0 cut as
+follow-on waves, the procedural tail (B1-WGSL/B5/B6/A3) onto a later `^4.x` after the
+WebGPU viz chain. None blocks the cut.
