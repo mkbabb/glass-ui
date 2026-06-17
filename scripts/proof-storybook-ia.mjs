@@ -91,7 +91,10 @@ export const EXPECTED_TREE = [
     // teardrop preview). `sections` demonstrates the declarative tripartite
     // `<DockSection>` chassis (BA.W-DOCK-SECTIONS — the descriptor-driven
     // rail-core | section | nav zones over the in-flow controls).
-    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections"]],
+    // `cta-receive` joined at BB.B2 (W-DOCKMORPH-CTA — the external-CTA-morphs-
+    // into-dock receive seam, useDockCtaReceive composing the useLiquidReveal
+    // ElementMorph substrate FORWARD; demonstrated, not a dock-fleet edit).
+    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections", "cta-receive"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",

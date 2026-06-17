@@ -24,7 +24,33 @@
        breaking change. R3-spec §A.
        ═══════════════════════════════════════════════ */
 
-    /* Opacity primitives */
+    /* ── Per-tier alpha — the CANONICAL named opacity register (BB.W-CARD-TIER-ALPHA) ──
+       Each `--glass-opacity-{tier}` IS the library's canonical alpha for that tier —
+       a NAMED, documented input to the ONE compose recipe below, NOT a magic number
+       a consumer re-pins. The values here are the library IDENTITY: the warm-cream
+       glass ladder, alpha-monotonic (wash < quiet < resting < floating < overlay), with
+       the dock (0.42) + chassis (0.28) carrying their own footprint-calibrated rungs.
+       The dark arm (tokens/dark-arm.css) lifts each ~0.08 for read-weight over the
+       deeper canvas — the SAME named tokens, per-mode (the plain per-mode pair idiom).
+
+       A consumer that wants the LIBRARY register reads these named tokens (or composes
+       a `<Card tier>` rung) and re-pins NOTHING; a consumer whose surface needs a
+       divergent composited luminance (the speedtest dark-AA register: instrument 0.72 /
+       document 0.78) keeps that as a NAMED preset IN ITS OWN repo (presets-in-consumers)
+       — the library default is its identity, the consumer preset is the consumer's.
+
+       THE SUBSTITUTION-VS-INHERITANCE SEAM (the recurring trap, recorded). The composed
+       `--glass-bg-{tier}` below is declared HERE at `:root`, so a custom-property
+       substitution resolves at THIS element — overriding `--glass-opacity-{tier}` on a
+       DESCENDANT does NOT re-compose the inherited `--glass-bg-{tier}` (the value is
+       already resolved). A consumer that needs a per-scope tier alpha therefore RE-DECLARES
+       the composed `--glass-bg-{tier}` on the scope (the same recipe, the pinned alpha) —
+       the documented retune path, mirroring the dock's own `--glass-bg-dock` self-re-point.
+       The named alpha is the canonical INPUT; the per-scope `--glass-bg-*` re-declaration is
+       the sanctioned consumer pin. (The `--glass-level` recipe MECHANISM below is the
+       AX.W54 seam — UNTOUCHED by this register; this canonicalizes the alpha INPUTS only.)
+       Machine-locked by `proof:card-tier-alpha`. */
+    /* Opacity primitives — the per-tier canonical alpha (light arm). */
     --glass-opacity-wash:     0.30;
     --glass-opacity-quiet:    0.50;
     --glass-opacity-resting:  0.65;

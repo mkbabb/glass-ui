@@ -268,6 +268,20 @@ export type {
     UseLiquidRevealReturn,
 } from "../composables/motion/useLiquidReveal";
 
+// ── useDockCtaReceive — the external-CTA-morphs-into-dock receive seam (BB.B2 W-DOCKMORPH-CTA) ──
+// `DockCtaReceivePreset` — the spring register ("snappy"|"bouncy", matching useLiquidReveal so
+// the two seams read as ONE family); `UseDockCtaReceiveOptions` — the leaf's options
+// ({ dockControl, preset, blur, respectReducedMotion, onReceived }); `UseDockCtaReceiveReturn`
+// — the { receive, reset } pair. useDockCtaReceive composes the SAME kf ElementMorph +
+// springTimingFunction substrate useLiquidReveal activates (driven FORWARD — the reveal's
+// inverse), a CONSUMING seam beside W-DOCK-MORPH-FAMILY (no dockMorphContext/DOCK_SPRING edit).
+// Keyframes-bearing → ships ONLY on `@mkbabb/glass-ui/motion`, never the root.
+export type {
+    DockCtaReceivePreset,
+    UseDockCtaReceiveOptions,
+    UseDockCtaReceiveReturn,
+} from "../composables/motion/useDockCtaReceive";
+
 // ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
 // `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
 // (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,

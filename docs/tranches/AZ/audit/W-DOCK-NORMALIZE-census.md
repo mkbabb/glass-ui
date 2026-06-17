@@ -147,6 +147,14 @@ A home anchor would pollute the container-query host teaching surface. EXEMPT, r
 
 A home anchor would pollute the morph-facility teaching surface. EXEMPT, recorded positively.
 
+### File: `demo/stories/dock/cta-receive.vue` — FEATURE_EXEMPT (BB.B2 W-DOCKMORPH-CTA)
+
+| dock @line | class | home-status | verdict |
+|---|---|---|---|
+| the receive-target dock (one `<DockIconButton>` is the CTA landing site) | FEATURE | none | EXEMPT (the dock is the morph DESTINATION of the external-CTA-morphs-into-dock receive facility — an external `<Button>` CTA flies + reshapes ONTO the target control via `useDockCtaReceive`, the iOS bloom-from-source inverse; a home control would pollute the receive-seam teaching surface) |
+
+A home anchor would pollute the receive-seam teaching surface. EXEMPT, recorded positively. (The AZ-snapshot totals below predate the BB additions — `AppShell.vue` + `cta-receive.vue`; the gate's live enumeration is the source of truth, currently 11 dock-bearing SFCs all accounted.)
+
 ## Census closure (W5 — the anti-gameability floor)
 
 The 8 dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock

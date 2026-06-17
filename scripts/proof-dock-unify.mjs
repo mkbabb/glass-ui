@@ -130,6 +130,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the BA.W-DOCK-MORPH-INSITU in-situ V↔H morph DEMONSTRATION stage — the two synthetic <GlassDock>s under the focused morph overlay are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop, both bidirectional on the ONE --dock-morph-t scalar, useDockOrientationMorph consumer #2), NOT a nav rail; the SHELL nav docks (SidebarDock/BottomDock — the home-left + DockSeparator nav-pattern) are the separate SHELL_DOCKS census entries. A home control on the morph-stage docks would pollute the morph teaching surface, exactly as the morph-showcase story",
     },
+    {
+        path: "demo/stories/dock/cta-receive.vue",
+        facility:
+            "the BB.B2 W-DOCKMORPH-CTA external-CTA-morphs-into-dock receive facility — the dock is the morph DESTINATION (an external <Button> CTA flies + reshapes ONTO a target <DockIconButton> via the useDockCtaReceive leaf, the iOS bloom-from-source inverse), NOT a nav rail; a home control would pollute the receive-seam teaching surface",
+    },
 ];
 
 let _cliPaths = null;

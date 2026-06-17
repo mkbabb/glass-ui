@@ -1,0 +1,238 @@
+// BB.W-VIZ-SUITE (W-GPU-SUBSTRATE) — the consumer-#2 usability assert for the WebGPU
+// backend + the transparent picker (`proof:gpu-substrate-single` clause G).
+//
+// Mirrors the WebGL2 consumer-#2 test (AU.W6): the substrate must NOT bake viz choices
+// — a SECOND non-aurora consumer with its OWN setup must compose it. This test IS that
+// second consumer. It exercises TWO paths:
+//
+//   (1) the DEGRADE path — under jsdom `navigator.gpu` is absent, so the picker
+//       (`createGpuSubstrate`) deterministically falls back to the WebGL2 backend, and
+//       the uniform handle (`armAsync`/`suspend`/`resume`/`wake`/`renderAt`/`dispose`/
+//       `reducedMotion`) drives a non-aurora consumer generically — proving the
+//       fallback is byte-uniform with the WebGPU path from the consumer's view.
+//   (2) the WebGPU-SELECT path — with a stub `navigator.gpu` present AND a `setupWGPU`
+//       callback, the picker selects the `"webgpu"` backend, the async prelude acquires
+//       a stub adapter+device, configures the context, runs the consumer's setup, and
+//       `armAsync()` resolves — proving the device-acquisition prelude threads through
+//       the leaf WITHOUT a leaf seam change (the scope-1 expected outcome).
+//
+// The live GPU render path is exercised by the binding π under a GPU-bearing headless
+// image; here the device is stubbed (jsdom has no real adapter).
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createGpuSubstrate } from "../../../../src/composables/glass/webgpu/useGpuSubstrate";
+import { createWebGPUCanvas } from "../../../../src/composables/glass/webgpu/useWebGPUCanvas";
+
+let rafQueue: Array<() => void>;
+let listeners: Record<string, Array<(e: any) => void>>;
+
+function makeCanvas(getCtx: (id: string) => unknown) {
+    return {
+        getContext: vi.fn((id: string) => getCtx(id)),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        width: 0,
+        height: 0,
+        clientWidth: 120,
+        clientHeight: 60,
+        parentElement: null,
+    } as unknown as HTMLCanvasElement;
+}
+
+function flushFrames(n: number) {
+    for (let i = 0; i < n; i++) {
+        const next = rafQueue.shift();
+        if (next) next();
+    }
+}
+
+beforeEach(() => {
+    rafQueue = [];
+    listeners = {};
+    vi.stubGlobal("requestAnimationFrame", (cb: () => void) => {
+        rafQueue.push(cb);
+        return rafQueue.length;
+    });
+    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    vi.stubGlobal(
+        "ResizeObserver",
+        class {
+            observe() {}
+            disconnect() {}
+        },
+    );
+    vi.stubGlobal("performance", { now: () => 1000 });
+    vi.stubGlobal("document", {
+        hidden: false,
+        addEventListener: (t: string, cb: any) => {
+            (listeners[t] ??= []).push(cb);
+        },
+        removeEventListener: vi.fn(),
+    });
+    // window with no matchMedia → reducedMotion is false (the leaf handles its absence)
+    vi.stubGlobal("window", {});
+});
+
+afterEach(() => vi.unstubAllGlobals());
+
+describe("useGpuSubstrate — the transparent picker degrade contract (W-GPU-SUBSTRATE)", () => {
+    it("degrades to the WebGL2 backend when navigator.gpu is absent (jsdom)", async () => {
+        // No navigator.gpu → the picker must select WebGL2.
+        vi.stubGlobal("navigator", {});
+        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const canvas = makeCanvas((id) => (id === "webgl2" ? glStub : null));
+
+        let frames = 0;
+        let live = true;
+        const substrate = createGpuSubstrate(canvas, {
+            // a viz authors BOTH setups; with no navigator.gpu the GL path is selected
+            setupWGPU: () => {
+                throw new Error("setupWGPU must NOT run on the degrade path");
+            },
+            setupGL: (gl) => {
+                expect(gl).toBe(glStub);
+                return {
+                    frame: () => {
+                        frames += 1;
+                    },
+                    shouldContinue: () => live,
+                    resize: vi.fn(),
+                };
+            },
+        });
+
+        expect(substrate.backend).toBe("webgl2");
+        // The uniform start seam: `armAsync` resolves immediately on the WebGL2 path.
+        await substrate.armAsync();
+        expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
+        flushFrames(3);
+        expect(frames).toBe(3); // the demand-driven loop ran the consumer's frame
+
+        // demand-gate parks; wake re-arms (the uniform handle drives generically)
+        live = false;
+        flushFrames(2);
+        const settled = frames;
+        flushFrames(5);
+        expect(frames).toBe(settled);
+        live = true;
+        substrate.wake();
+        flushFrames(1);
+        expect(frames).toBe(settled + 1);
+
+        // renderAt draws one frame out of loop (capture parity)
+        substrate.renderAt(0.5);
+        expect(frames).toBe(settled + 2);
+
+        substrate.dispose();
+    });
+
+    it("exposes a uniform handle shape regardless of backend", async () => {
+        vi.stubGlobal("navigator", {});
+        const canvas = makeCanvas(() => ({ getExtension: () => null }));
+        const substrate = createGpuSubstrate(canvas, {
+            setupGL: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
+        });
+        for (const key of [
+            "backend",
+            "armAsync",
+            "arm",
+            "suspend",
+            "resume",
+            "wake",
+            "renderAt",
+            "dispose",
+            "reducedMotion",
+        ]) {
+            expect(key in substrate).toBe(true);
+        }
+        substrate.dispose();
+    });
+});
+
+describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUBSTRATE)", () => {
+    function stubWebGPU(canvas: HTMLCanvasElement) {
+        const device = {
+            lost: new Promise(() => {}), // never resolves in this test
+            pushErrorScope: vi.fn(),
+            popErrorScope: vi.fn(async () => null),
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+            destroy: vi.fn(),
+        };
+        const adapter = { requestDevice: vi.fn(async () => device) };
+        const gpu = {
+            requestAdapter: vi.fn(async () => adapter),
+            getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
+        };
+        vi.stubGlobal("navigator", { gpu });
+        const gpuContext = { configure: vi.fn() };
+        (canvas.getContext as any).mockImplementation((id: string) =>
+            id === "webgpu" ? gpuContext : null,
+        );
+        return { device, adapter, gpu, gpuContext };
+    }
+
+    it("picks the WebGPU backend + runs the consumer setup over the resolved device", async () => {
+        const canvas = makeCanvas(() => null);
+        const { gpu, adapter, gpuContext } = stubWebGPU(canvas);
+
+        let setupCalledWith: { device: unknown; format: unknown } | null = null;
+        const substrate = createGpuSubstrate(canvas, {
+            setupWGPU: (device, _ctx, format) => {
+                setupCalledWith = { device, format };
+                return {
+                    frame: vi.fn(),
+                    shouldContinue: () => false,
+                    resize: vi.fn(),
+                };
+            },
+            setupGL: () => {
+                throw new Error("setupGL must NOT run when WebGPU is selected");
+            },
+        });
+
+        expect(substrate.backend).toBe("webgpu");
+        await substrate.armAsync();
+
+        expect(gpu.requestAdapter).toHaveBeenCalledTimes(1);
+        expect(adapter.requestDevice).toHaveBeenCalledTimes(1);
+        expect(gpuContext.configure).toHaveBeenCalledTimes(1);
+        expect(setupCalledWith).not.toBeNull();
+        expect(setupCalledWith!.format).toBe("bgra8unorm");
+
+        substrate.dispose();
+    });
+
+    it("armAsync is idempotent — a second call does not re-acquire the device", async () => {
+        const canvas = makeCanvas(() => null);
+        const { gpu } = stubWebGPU(canvas);
+        const handle = createWebGPUCanvas(canvas, {
+            setup: () => ({ frame: vi.fn(), shouldContinue: () => false, resize: vi.fn() }),
+        });
+        await handle.armAsync();
+        await handle.armAsync();
+        expect(gpu.requestAdapter).toHaveBeenCalledTimes(1);
+        handle.dispose();
+    });
+
+    it("surfaces a device-unavailable failure through onInitError (no adapter)", async () => {
+        const canvas = makeCanvas(() => null);
+        const gpu = {
+            requestAdapter: vi.fn(async () => null), // no adapter
+            getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
+        };
+        vi.stubGlobal("navigator", { gpu });
+        const onInitError = vi.fn();
+        const handle = createWebGPUCanvas(canvas, {
+            setup: () => ({ frame: vi.fn(), shouldContinue: () => false, resize: vi.fn() }),
+            onInitError,
+        });
+        await expect(handle.armAsync()).rejects.toThrow();
+        expect(onInitError).toHaveBeenCalledTimes(1);
+        handle.dispose();
+    });
+});

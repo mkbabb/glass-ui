@@ -41,6 +41,14 @@ export * from "./useDragMorph";
 // overlays compose; this leaf is the source-rect REFINEMENT (the dialog-from-button,
 // the dock-from-pill).
 export * from "./useLiquidReveal";
+// BB.B2 W-DOCKMORPH-CTA — the external-CTA-MORPHS-INTO-dock seam. Composes the SAME
+// kf `ElementMorph` + `springTimingFunction` substrate useLiquidReveal activates,
+// driven FORWARD (the reveal's inverse): an EXTERNAL CTA flies + reshapes from its
+// own rect ONTO a dock control's rect, fades + congests into the glass, then hands
+// off. A CONSUMING seam BESIDE W-DOCK-MORPH-FAMILY (no dockMorphContext/DOCK_SPRING
+// edit). Keyframes-bearing → `/motion` ONLY, never the root barrel (the SCC-trap
+// discipline). Compositor-only + PRM-seats.
+export * from "./useDockCtaReceive";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV

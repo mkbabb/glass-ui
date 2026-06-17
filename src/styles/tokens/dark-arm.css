@@ -200,9 +200,14 @@
     --constellation-edge-floor:          0;
     --constellation-edge-accent-alpha:   0.34;
 
-    /* Glass opacity + grain for dark — five-tier ladder, alpha-monotonic.
-       Each rung lifts ~0.08 from its light counterpart so the dark surfaces
-       carry comparable read-weight against the deeper canvas. */
+    /* Glass opacity + grain for dark — the per-tier canonical alpha, DARK arm
+       (BB.W-CARD-TIER-ALPHA). The SAME named `--glass-opacity-{tier}` register as
+       the light arm (tokens/glass.css), per-mode — the dark identity. Five-tier
+       ladder, alpha-monotonic; each rung lifts ~0.08 from its light counterpart so
+       the dark surfaces carry comparable read-weight against the deeper canvas. A
+       consumer reads these named tokens; a divergent register stays a consumer preset.
+       Machine-locked by `proof:card-tier-alpha` (the dark-arm-present + monotonic +
+       lift-over-light asserts). */
     --glass-opacity-wash:     0.38;
     --glass-opacity-quiet:    0.58;
     --glass-opacity-resting:  0.72;

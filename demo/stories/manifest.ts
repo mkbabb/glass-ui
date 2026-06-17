@@ -509,6 +509,19 @@ export const CATEGORIES: Category[] = [
                 "Dock Sections",
                 "The declarative <DockSection> chassis (BA.W-DOCK-SECTIONS) — pass ONE `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading rail-core home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. display: contents so the dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
             ),
+            // BB.B2 W-DOCKMORPH-CTA — the external-CTA-morphs-into-dock seam (the iOS
+            // bloom-from-source INVERSE). An external CTA button flies + reshapes from
+            // its own rect ONTO a dock control's rect, fades + congests into the glass,
+            // then hands off — composing the shipped useDockCtaReceive leaf (the SAME kf
+            // ElementMorph substrate useLiquidReveal activates), a consuming seam beside
+            // W-DOCK-MORPH-FAMILY. Compositor-only + PRM-seats. Over DockStage (no
+            // net-new GL).
+            s(
+                "dock",
+                "cta-receive",
+                "CTA → Dock Morph",
+                "The external-CTA-morphs-into-dock seam (BB.B2 W-DOCKMORPH-CTA) — an external CTA button flies + reshapes from its own rect ONTO a target dock control, fades + congests into the glass, then hands off (the dock control owns the spot). The iOS bloom-from-source inverse: composes the SAME kf ElementMorph + springTimingFunction substrate useLiquidReveal activates (useDockCtaReceive), a consuming seam beside the dock morph mechanism (no dockMorphContext/DOCK_SPRING edit). Compositor-only (transform/opacity/filter); reduced-motion snaps the CTA to gone + hands off.",
+            ),
         ],
     },
     {
