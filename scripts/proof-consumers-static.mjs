@@ -197,6 +197,16 @@ rootAllowed.add("useLiquidFlex");
 rootAllowed.add("LiquidFlexAxis");
 rootAllowed.add("UseLiquidFlexParams");
 rootAllowed.add("UseLiquidFlexReturn");
+// BB.B4 (W-VIZ-POINTER) — usePointerVelocityField is the shared viz-pointer-physics
+// field (pointer position + derived velocity + the ACCEL term), fed by the renderer's
+// frame tick (NO own rAF), frozen under PRM (tick(0)). Engine-FREE + vueuse-FREE
+// (imports `vue` only), targeted-re-exported to the root barrel from
+// ./composables/motion/usePointerVelocityField per the useLiquidFlex precedent (on
+// /motion-core + the root; booked binary consumers: W-FLOWFIELD + W-CONCENTRIC).
+rootAllowed.add("usePointerVelocityField");
+rootAllowed.add("PointerVec2");
+rootAllowed.add("UsePointerVelocityField");
+rootAllowed.add("UsePointerVelocityFieldOptions");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

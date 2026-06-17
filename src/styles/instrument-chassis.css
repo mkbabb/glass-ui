@@ -415,4 +415,35 @@
             height: 1px;
         }
     }
+
+    /* BB.W-DESKTOP-RESERVE (B3) — the WIDE-AXIS (desktop) dial reserve, the
+       EXACT DISJOINT COMPLEMENT of the mobile `@container chassis (max-width:
+       44.9375rem)` reserve above: 44.9375rem ≈ 719px is the mobile ceiling, so
+       the desktop floor is 45rem ≈ 720px — the two container-query ranges share
+       no width, so a dial cell is reserved by exactly ONE branch at every box
+       width (no overlap, no gap, no competing `min-block-size`).
+
+       The mobile reflow reserves the dial box from frame 0; the wide box axis
+       had NO library reserve, so a `1fr` meter row collapsed to its pre-
+       hydration `<canvas>` intrinsic and grew on hydration, pushing the results
+       card + dock down (the desktop CLS the speedtest App.vue interim authored
+       a local `min-block-size: var(--chassis-max-block-size)` to cure — the
+       consumer interim this rung SUPERSEDES). The reserve is a STATIC
+       `min-block-size` — a frame-0 box reservation, NOT an animated height (no
+       per-frame layout, compositor-safe, `proof:no-layout-animation` holds: a
+       `min-block-size` reserve is never a `@keyframes`/`transition` target).
+
+       Token-first: `--instrument-dial-min-block-size-desktop` is the DESKTOP
+       DIAL a consumer overrides (default `var(--chassis-max-block-size)`, the
+       library's dock-adjusted dynamic-viewport guardrail, resolved at first
+       paint with no JS). The inline `var(--chassis-max-block-size)` fallback
+       carries the contract if the canonical token is unset. */
+    @container chassis (min-width: 45rem) {
+        .instrument-chassis .instrument-dial {
+            min-block-size: var(
+                --instrument-dial-min-block-size-desktop,
+                var(--chassis-max-block-size)
+            );
+        }
+    }
 }

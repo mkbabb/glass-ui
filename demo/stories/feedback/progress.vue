@@ -8,6 +8,7 @@ import {
 } from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
 import { IconChip } from "../../../src/components/custom/icon-chip";
+import { BorderProgress } from "../../../src/components/custom/border-progress";
 import { Gauge } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress
 // is a REFERENCE surface: the phase-bus carries its OWN --viz-* phase hues (the
@@ -166,6 +167,29 @@ onUnmounted(stopAnimated);
                 :active-progress="phaseProgress / 100"
                 class="h-3"
             />
+        </StorySection>
+
+        <!-- BB.W-BORDER-PROGRESS — progress IS the element's border: the
+             masked-conic @property ring (radius-following, the brand spectrum
+             walked OKLCH/shorter-hue), bound to the same `determinate` model. -->
+        <StorySection label="border ring (progress IS the chrome)">
+            <p class="font-mono text-xs text-muted-foreground">
+                The conic ring paints in the card's own border band ({{ determinate }}%) —
+                no floating bar, no relayout; the glass interior still transmits the
+                backdrop. Coverage full-ring; the spectrum walks the brand ramp.
+            </p>
+            <BorderProgress
+                :value="determinate"
+                coverage="full-ring"
+                class="glass-card rounded-card p-6"
+            >
+                <div class="flex flex-col gap-1">
+                    <span class="text-display-1 tabular-nums">{{ determinate }}%</span>
+                    <span class="section-label--tinted text-admin-label">
+                        Coverage · full-ring
+                    </span>
+                </div>
+            </BorderProgress>
         </StorySection>
     </StoryPage>
 </template>

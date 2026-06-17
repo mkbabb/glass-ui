@@ -210,5 +210,18 @@ export {
     type UseLiquidFlexReturn,
 } from "./composables/motion/useLiquidFlex";
 
+// BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
+// derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
+// (NO own rAF — the one-loop discipline); under PRM it freezes (`tick(0)`). Imports
+// `vue` only — engine-FREE + vueuse-FREE and root-barrel safe per the `useLiquidFlex`
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`. The booked binary
+// consumers are the born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC).
+export {
+    usePointerVelocityField,
+    type PointerVec2,
+    type UsePointerVelocityField,
+    type UsePointerVelocityFieldOptions,
+} from "./composables/motion/usePointerVelocityField";
+
 // Core utilities
 export * from "./utils";

@@ -41,6 +41,21 @@
     initial-value: 0%;
 }
 
+/* BB.W-BORDER-PROGRESS — the masked-conic BORDER ring's sweep fill. The conic
+   gradient (border-progress.css) reads `--border-progress-fill` as the swept
+   extent (`conic-gradient(…, transparent var(--border-progress-fill), …)`), so a
+   determinate progress INTERPOLATES the border ring (a bare unregistered var()
+   snaps the sweep; the registered typed <percentage> lets the engine animate the
+   gradient stop). `inherits: false` — each ring owns its own fill (the per-surface
+   ownership the specular cohort uses; a ringed parent must not push its fill onto a
+   child). `initial-value: 0%` is the safe resting ring (the unregistered fallback
+   paints it; the cross-fade collapses to it on a non-supporting engine). */
+@property --border-progress-fill {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
 @property --phase-tint-amount {
     syntax: "<percentage>";
     inherits: true;

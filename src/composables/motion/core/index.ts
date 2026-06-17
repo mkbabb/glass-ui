@@ -58,3 +58,10 @@ export * from "../useTextHighlight";
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
 // root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
 export * from "../useLiquidFlex";
+// BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
+// derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
+// rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,
+// so it ships on the `/motion-core` surface AND the root barrel. The booked binary
+// consumers are the born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC) — see
+// docs/consumer-evidence/use-pointer-velocity-field.md.
+export * from "../usePointerVelocityField";

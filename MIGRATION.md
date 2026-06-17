@@ -112,6 +112,14 @@
 > stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
 > ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
 > wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
+> ADDITIVE (4.1.0): `@mkbabb/glass-ui/border-progress` — `<BorderProgress>`, the masked-conic
+> border-ring primitive (progress IS the element's border; BB.W-BORDER-PROGRESS). A net-new public
+> subpath (off the root barrel); no retirement, no break. The speedtest AW.W7 consumer binds it on `^4.1.0`.
+> ADDITIVE (4.1.0): `--instrument-dial-min-block-size-desktop` (BB.W-DESKTOP-RESERVE) — the wide-axis
+> (desktop) chassis dial reserve now ships in the library (`@container chassis (min-width: 45rem)` on
+> `.instrument-dial`, default `var(--chassis-max-block-size)`). A consumer that authored a local wide-axis
+> reserve interim (e.g. speedtest's `.instrument-dial { min-block-size: var(--chassis-max-block-size) }`,
+> AW.W4.1) DELETES it on consume — byte-equivalent at the default; retune via the token if the meter block-size differs.
 
 > **CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
 > The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the

@@ -1,0 +1,109 @@
+/* BB.W-BORDER-PROGRESS — progress IS the element's border.
+ *
+ * The masked-conic ring consumption (the registration lives in
+ * tokens/property-regs.css §18, mirroring the specular split: the @property reg
+ * there, the consumption here). The ring paints a `conic-gradient` MASK-COMPOSITED
+ * into the border band so ONLY the band paints AND it FOLLOWS the host
+ * `border-radius` — a `border-image` SQUARES the corners (measured inferior,
+ * forbidden), a floating-bar child re-introduces allocation (forbidden). The host
+ * INTERIOR is untouched: a glass card still transmits the backdrop THROUGH its
+ * content box (the AX.W54 glass-first identity — the ring is a border-band cut-out,
+ * not an opaque overlay).
+ *
+ * Compositor-only: the sweep rides the registered `--border-progress-fill`
+ * <percentage>; no layout property animates (`proof:no-layout-animation`). The
+ * unregistered fallback is safe (the `initial-value` paints the resting ring; the
+ * cross-fade collapses to it on a non-supporting engine — Chromium 85+/Safari
+ * 16.4+, within the deployment floor). */
+
+.border-progress {
+    position: relative;
+    display: block;
+    border-radius: var(--border-progress-radius, 16px);
+    /* The host reserves the border band the ring paints into (allocation-free —
+       the content box is untouched, no reflow). */
+    padding: 0;
+}
+
+/* The ring layer — inset over the host, the border band the conic paints into.
+   The `border` width IS the band thickness; the conic is mask-composited so the
+   padding-box (interior) is EXCLUDED from the border-box (the radius-following
+   cut-out). */
+.border-progress__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: var(--border-progress-width, 12px) solid transparent;
+    pointer-events: none;
+    /* The spectrum conic, swept to --border-progress-fill. The colored arc runs
+       from the top (12 o'clock) clockwise to the fill fraction; past it is
+       transparent so the resting band shows ONLY the filled spectrum. */
+    background:
+        conic-gradient(
+            from 0deg,
+            var(--border-progress-spectrum, var(--section-color-7)),
+            transparent var(--border-progress-fill, 0%),
+            transparent 100%
+        );
+    /* THE RADIUS-FOLLOWING CUT-OUT — the house border-ring idiom: paint a
+       border-box fill, EXCLUDE a padding-box fill, leaving only the border band,
+       which follows `border-radius` exactly (a border-image cannot). */
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: exclude;
+}
+
+/* THE COVERAGE AXIS — ONE conic-mask mechanism, two coverage masks (NOT a second
+   recipe). `bottom-edge` adds a SECOND mask layer scoping the painted band to the
+   bottom edge only; it composes WITH the border-band cut-out above (the mask
+   stack intersects), so the bottom register reuses the exact conic + radius
+   cut-out — the dock-orientation `dim`-idiom discipline (no parallel fork). */
+.border-progress[data-coverage="bottom-edge"] .border-progress__ring {
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box,
+        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px));
+    -webkit-mask-composite: xor, source-in;
+    mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box,
+        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px));
+    mask-composite: exclude, intersect;
+}
+
+/* The content box — the host's own surface (a glass card, a chassis). It is
+   untouched by the ring (backdrop-intact); the ring sits over the border band
+   only. */
+.border-progress__content {
+    position: relative;
+    z-index: 1;
+    border-radius: inherit;
+    height: 100%;
+}
+
+/* THE MILESTONE PULSE — a brief brightness bloom on a crossed phase edge. The
+   pulse is PRM-gated (no edge-pulse under reduced motion — the ring snaps to the
+   new value). Compositor-only (filter brightness, never a layout property). */
+@media (prefers-reduced-motion: no-preference) {
+    .border-progress[data-milestone] .border-progress__ring {
+        animation: border-progress-milestone-pulse
+            var(--spring-snappy-duration, 0.34s) var(--ease-out, ease-out);
+    }
+}
+
+@keyframes border-progress-milestone-pulse {
+    0% {
+        filter: brightness(1);
+    }
+    40% {
+        filter: brightness(1.35);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}

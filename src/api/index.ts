@@ -478,3 +478,32 @@ export type {
     UseEasingPickerOptions,
     UseEasingPickerReturn,
 } from "../components/custom/easing";
+
+// ── BorderProgress ───────────────────────────────────────────────────────────
+// The masked-conic BORDER ring (BB.W-BORDER-PROGRESS) — progress IS the element's
+// border. `BorderProgressProps` is the consume-side shape; `BorderProgressCoverage`
+// is the two-arm axis (`"full-ring" | "bottom-edge"`); `BorderProgressMilestone` +
+// `BorderProgressMilestoneEvent` are the phase-edge milestone descriptor + emit
+// payload. Ships via its `/border-progress` subpath (OFF the root barrel — the
+// conic/@property chunk).
+export type {
+    BorderProgressProps,
+    BorderProgressCoverage,
+    BorderProgressMilestone,
+    BorderProgressMilestoneEvent,
+} from "../components/custom/border-progress";
+
+// ── usePointerVelocityField — the shared viz-pointer-physics field (BB.B4 W-VIZ-POINTER) ──
+// `PointerVec2` — a 2-vector in normalized-host space (0..1); `UsePointerVelocityField`
+// — the field's return shape ({ position, velocity, acceleration, speed, burst, tick, … });
+// `UsePointerVelocityFieldOptions` — its options ({ positionLerp, velocityLerp,
+// accelerationLerp, burstDecay, respectReducedMotion }). `usePointerVelocityField` is
+// engine-FREE + vueuse-FREE (vue-only), so it ships on the root barrel AND
+// `@mkbabb/glass-ui/motion-core`. The viz renderer FEEDS it via its frame `tick(delta)`
+// (NO own rAF); under PRM it freezes (`tick(0)`). The booked binary consumers are the
+// born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC).
+export type {
+    PointerVec2,
+    UsePointerVelocityField,
+    UsePointerVelocityFieldOptions,
+} from "../composables/motion/usePointerVelocityField";

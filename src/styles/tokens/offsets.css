@@ -68,6 +68,27 @@
        safety net). Token-first home so the vars resolve canonically. */
     --instrument-dial-min-height-mobile: 24rem;
     --instrument-dial-meter-reserve-mobile: minmax(0, 1fr);
+    /* BB.W-DESKTOP-RESERVE (B3) — the chassis WIDE-AXIS (desktop) dial reserve
+       canon, the complement of the mobile rung above. The mobile reflow
+       reserves the dial box from frame 0 via the rung above; the WIDE box axis
+       had NO library reserve, so on desktop a `1fr` meter row collapsed to its
+       pre-hydration intrinsic `<canvas>` size and grew on hydration, pushing
+       the results card + dock down (the measured desktop-1440 CLS the speedtest
+       App.vue interim authored a local `min-block-size` to cure). This rung is
+       the library home: the dial cell reserves its settled height from frame 0
+       on the wide axis, so the inner card mounts into an already-correct
+       envelope (CLS≈0, no post-hydration growth).
+
+       The default IS `--chassis-max-block-size` — the library's own
+       chassis-sizing guardrail (the dock-adjusted dynamic-viewport budget a
+       centred consumer card clamps to), a pure CSS calc that resolves at first
+       paint with NO JS. This is the DESKTOP DIAL: a consumer whose meter is a
+       different block-size retunes THIS token (the speedtest-specific value
+       stays in speedtest — presets-in-consumers). A consumer deletes its local
+       App.vue wide-axis interim once it consumes this rung. Both knobs are CSS
+       custom properties (token-first), the inline fallback in
+       instrument-chassis.css carries the contract if the token is unset. */
+    --instrument-dial-min-block-size-desktop: var(--chassis-max-block-size);
 
     --max-width-input: 24rem;
     --input-min-width-sm: 5rem;

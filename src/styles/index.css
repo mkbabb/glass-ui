@@ -187,6 +187,11 @@
    (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
    / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
 @import "./icon-chip.css";
+/* BB.W-BORDER-PROGRESS — progress IS the element's border: the masked-conic ring
+   consumption (the @property reg lives in tokens/property-regs.css §18). A
+   component partial; the conic + the radius-following mask-composite + the coverage
+   masks + the PRM milestone-pulse bracket. */
+@import "./border-progress.css";
 
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,
