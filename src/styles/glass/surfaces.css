@@ -241,18 +241,18 @@
     }
 
     /* BB.W-BUTTON-GLASS (e) — the optional refraction-edge opt-in. CONSUMES the
-       EXISTING `.glass-refract` axis (glass-refract.css, the AW.W23 `#glass-refract`
-       SVG-filter convex-lens, `@supports (backdrop-filter: url(#…))`-gated with the
-       un-gated blur base as the off-Chromium floor) — NEVER a button-local lens fork.
-       §0 RE-GROUND DRIFT: the spec named a W-LENSING `.glass-lens` / `--press-t` axis
-       that has NOT landed at HEAD; the HEAD refractive axis is `.glass-refract` + the
-       `--glass-refract-filter` it bakes, so this wave consumes THAT one axis.
+       EXISTING refraction axis (glass-refract.css, the `#glass-refract` SVG-filter
+       lens, `@supports (backdrop-filter: url(#…))`-gated with the un-gated blur base
+       as the off-Chromium floor) — NEVER a button-local lens fork. BB.W-LENSING landed
+       the squircle bevel-profile + the typed `--glass-refract` axis + the `.glass-lens`
+       opt-in class (renamed off `.glass-refract`, clean break); the button COMPOSES
+       `.glass-lens`.
 
-       A `<Button :liquid>` adds `.glass-refract` to the host; on a supporting engine
-       the button reads the edge-bend over its blur base. The base recipe (the
-       `@supports`-gated `.glass-refract` rule in glass-refract.css) already paints the
+       A `<Button :liquid>` adds `.glass-lens` to the host; on a supporting engine the
+       button reads the edge-bend over its blur base. The base recipe (the
+       `@supports`-gated `.glass-lens` rule in glass-refract.css) already paints the
        displacement filter over `--glass-blur-resting`; this block adds NOTHING to the
-       filter graph (it would fork the axis) — the button merely COMPOSES `.glass-refract`.
+       filter graph (it would fork the axis) — the button merely COMPOSES `.glass-lens`.
 
        The `:active` LENS-SWELL is the CHEAP coupled read, NOT a per-frame displacement-
        map re-rasterize (the §Triumvirate / R2 budget: `feDisplacementMap` is resize-
@@ -265,9 +265,11 @@
        to the un-gated `.btn-glass` blur+tint base (the no-workaround floor). The
        `--glass-btn-press-t` typed drive (property-regs.css) is the ONE press scalar the
        squish + the gleam coupling both read. */
-    .btn-glass.glass-refract {
+    .btn-glass.glass-lens {
         /* The press drive scalar (0 rest → 1 pressed) Button.vue writes off the spring;
-           the resting default is 0 so an unwired refraction button is the static lens. */
+           the resting default is 0 so an unwired refraction button is the static lens.
+           The `:active` LENS-SWELL on this drive lives in material.css's `.glass-lens`
+           block (`--glass-refract` bumps on press); this block only floors the drive. */
         --glass-btn-press-t: 0;
     }
 

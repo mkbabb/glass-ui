@@ -27,6 +27,12 @@ export type {
     SpecularWriter,
 } from "./useSpecularTracking";
 export { vSpecular } from "./vSpecular";
+// BB.W-LENSING — the angle-adding specular delivery. Wraps the SAME
+// `createSpecularWriter` core (single position-write source); adds the
+// `--specular-angle` channel the EDGE-glint conic sweep reads (material.css). The
+// hover/button waves consume this leaf for the motion-reactive rim glint.
+export { useSpecularPointer } from "./useSpecularPointer";
+export type { UseSpecularPointer } from "./useSpecularPointer";
 
 // AW.W17 — the Canvas2D lifecycle substrate (park/freeze/dispose parallel to
 // the WebGL substrate). AX.W37 published it on `/canvas` under the contract

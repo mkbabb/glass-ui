@@ -91,6 +91,37 @@
     initial-value: 0;
 }
 
+/* BB.W-LENSING — the per-surface EDGE-glint angle channel. `--specular-angle` is
+   the pointer angle-from-center the edge-glint conic sweep reads (material.css);
+   `useSpecularPointer` writes it (the angle feed). `inherits: false` — the
+   per-element ownership discipline of the specular cohort above (each pseudo owns
+   its typed value; a parent's angle must never bleed into a child glass surface).
+   `initial-value: 0deg` is the static rest position (the rim glint sits top when
+   unwired — no ambient drift, no blowout). */
+@property --specular-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+/* BB.W-LENSING — the `--glass-refract` lens-magnitude axis (the squircle bevel-
+   profile displacement `scale`). Typed INHERITING `<number>` so a host sets it on
+   any ancestor to retune the lens DEPTH (the `--glass-level`-style cascading scalar,
+   distinct from the per-element `inherits: false` specular cohort above). The
+   `feDisplacementMap` `scale` reads it (glass-refract.css composes the data-URI from
+   `var(--glass-refract-filter-head) var(--glass-refract) var(--glass-refract-filter-tail)`),
+   so animating this var on `:active` (the lens-swell on the `--glass-btn-press-t`
+   drive, material.css) re-targets the displacement magnitude WITHOUT re-baking the
+   map (only the `scale` param moves — the AW.W23 intent). `initial-value: 28` is the
+   resting bend the prior baked `scale='28'` literal painted (byte-identical at rest).
+   The lens is `@supports`-gated PE, so on a non-supporting engine the axis is inert
+   (the blur+tint base paints alone). */
+@property --glass-refract {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 28;
+}
+
 /* AX.W54 — the GLASS-FIRST single knob. `--glass-level` is the ONE clarity
    scalar threaded through BOTH glass ladders at their single sites (the
    `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,

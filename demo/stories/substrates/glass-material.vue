@@ -152,15 +152,15 @@ const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance
         </StorySection>
 
         <StorySection
-            label="SOTA fold — #glass-refract convex lens (Chromium PE)"
-            blurb="A .glass-material.glass-refract panel composes the shipped #glass-refract SVG filter behind @supports(backdrop-filter:url()). Non-Chromium engines paint the blur base alone."
+            label="SOTA fold — #glass-refract squircle edge-lens (Chromium PE)"
+            blurb="A .glass-material.glass-lens panel composes the shipped #glass-refract squircle-bevel SVG filter behind @supports(backdrop-filter:url()): the backdrop BENDS + concentrates at the rim (edge-lensing), the press deepens the lens-swell on --glass-refract. Non-Chromium engines paint the blur base alone."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-floating glass-refract flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
+                        class="glass-floating glass-lens flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"
                     >
-                        .glass-refract
+                        .glass-lens
                     </div>
                     <div
                         class="glass-floating flex h-28 w-44 items-center justify-center rounded-card text-sm font-medium"

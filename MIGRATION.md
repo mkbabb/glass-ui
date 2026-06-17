@@ -1674,3 +1674,21 @@ the `[data-vaul-*]` state-attribute LOOK keys re-pointed to `[data-glass-drawer-
 hand-styled `[data-vaul-snap-points]` re-points to `[data-glass-drawer-snap-points]`). The
 direction-aware default snap ladder is now native (`resolveDefaultSnapPoints(direction)` — no more
 `:snap-points="[]"` workaround for a full-slide left/right drawer).
+
+### `.glass-refract` → `.glass-lens` (BB.W-LENSING — clean break, no alias)
+
+The refractive-glass opt-in class is renamed `.glass-refract` → `.glass-lens` (the iOS-26
+edge-lensing vocabulary). The class now composes the EVOLVED squircle bevel-profile displacement
+filter (the crude AW.W23 uniform-radial map is RETIRED) + the typed inheriting `--glass-refract`
+magnitude axis (the `:active` lens-swell). The `--glass-refract*` AXIS/token names are KEPT (only the
+opt-in CLASS renames). One-line rename per call site:
+
+```html
+<!-- before (v4.0.0) -->
+<div class="glass-floating glass-refract">…</div>
+<!-- after (v4.1.0) -->
+<div class="glass-floating glass-lens">…</div>
+```
+
+`<Button :liquid>` re-points internally (no consumer change). Off-Chromium the lens still degrades to
+the un-gated blur+tint base (the `@supports (backdrop-filter: url(#…))` floor, PRESERVED).

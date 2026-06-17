@@ -1,59 +1,98 @@
-/* AW.W23 — the #glass-refract convex-lens SVG filter, shipped as a library
- * asset so `.glass-refract` works OUT OF THE BOX (no consumer hand-mounts a
- * filter node).
+/* BB.W-LENSING — the #glass-refract edge-lensing SVG filter, EVOLVED off the
+ * AW.W23 crude-radial garnish onto the real squircle bevel-profile + the typed
+ * `--glass-refract` axis driving the animatable displacement `scale` (the press
+ * lens-swell). Shipped as a library asset so `.glass-lens` works OUT OF THE BOX
+ * (no consumer hand-mounts a filter node).
  *
- * The refraction recipe is the canonical 3-primitive graph (kube.io /
+ * The refraction recipe is the canonical 3-primitive graph (kube.io / ekino /
  * LogRocket, 2025):
  *
- *   feImage          — a pre-baked displacement map computed from the convex-
- *                      squircle surface profile  y = ⁴√(1 − (1 − x)⁴)  (Apple's
- *                      preferred corner curve) via Snell's law (n₁ = 1 air,
- *                      n₂ = 1.5 glass). The map is authored as an embedded SVG
- *                      whose R channel carries the x-shift and G channel the
- *                      y-shift (neutral 128 = no shift; bright edges bend light
- *                      inward like a lens), expressed as two crossed linear
- *                      gradients over the squircle silhouette.
+ *   feImage          — the displacement map computed from the convex-squircle
+ *                      surface profile  f(x) = ⁴√(1 − (1 − x)⁴)  (Apple's preferred
+ *                      corner curve) via Snell's law (n₁ = 1 air, n₂ = 1.5 glass).
+ *                      The map's R channel carries the x-shift and G the y-shift
+ *                      (neutral 128 = no shift). The squircle slope is near-flat past
+ *                      the outer ~14% band and STEEP at the rim, so the bend
+ *                      CONCENTRATES at the edge (thin interior) — the iOS edge-lensing
+ *                      read, NOT a uniform radial bulge (the retired AW.W23 placeholder).
+ *                      Encoding: TWO crossed linear gradients — a HORIZONTAL gradient
+ *                      drives the R channel (255 @0% → 128 across the flat interior →
+ *                      0 @100%, the squircle ramp held in the bevel band) and a VERTICAL
+ *                      gradient drives the G channel the same way — SCREEN-composited
+ *                      over a black base so each channel carries its own axis EXACTLY
+ *                      (`screen(C, 0) = C`; the displacement map reads only R/G, B unused).
+ *                      The map carries ZERO color (the warm-cream identity HOLDS —
+ *                      refraction is DEPTH not hue). The asset is baked ONCE (the
+ *                      squircle CURVE is fixed, the Apple-preferred profile); only the
+ *                      `scale` param animates the magnitude (scope 2 — no map re-bake).
  *   feDisplacementMap— displaces the backdrop by the baked map (R = x-shift,
- *                      G = y-shift, `scale` = max px, neutral 128).
- *   feImage specular — a soft top-left specular highlight…
- *   feBlend screen   — …blended `screen` over the displaced backdrop for the
- *                      polished-glass catch.
+ *                      G = y-shift, `scale` = max px the `--glass-refract` axis drives).
+ *   feImage specular — a soft warm top-left specular highlight (PRESERVED from HEAD —
+ *                      the polished-glass catch).
+ *   feBlend screen   — blended `screen` over the displaced backdrop.
  *
- * The filter ships INLINE as a data-URI in the `backdrop-filter` declaration, so
- * the consumer gets it with zero markup. `backdrop-filter: url(#…)` is
- * Chromium-only (WebKit bug 245510 open, Firefox not shipping), so the whole
- * decl sits behind `@supports (backdrop-filter: url(#…))`; a non-supporting
- * engine paints the un-gated blur base alone (no broken `url()` reference).
+ * THE `--glass-refract` AXIS (BB.W-LENSING scope 2). The displacement `scale` is no
+ * longer a baked literal (`scale='28'`) — it reads the typed inheriting `@property
+ * --glass-refract` (`<number>`, property-regs.css). An SVG presentation attribute inside
+ * a data-URI cannot resolve a CSS `var()` directly, so the filter URL is COMPOSED at the
+ * consuming `backdrop-filter` site from THREE concatenated customs:
+ * `var(--glass-refract-filter-head) var(--glass-refract) var(--glass-refract-filter-tail)`
+ * — the head ends `…scale='` and the tail begins `'…`, so the substitution forms ONE
+ * valid `url("…scale='<n>'…")` token (the CSS token-level value-construction idiom). A
+ * host sets `--glass-refract` on any ancestor to retune the lens depth; the `:active`
+ * lens-swell bumps it on the `--glass-btn-press-t` press drive (material.css). The
+ * bevel-band width is the `--glass-refract-bevel` knob (default 14% — the iOS edge band);
+ * the baked stops fix the squircle CURVE, the knob documents the rim concentration the
+ * map encodes.
  *
- * RE-HOME (AW.W23 — decouple from the W22-folded compound). At HEAD the
- * refraction rule was bound to `.glass-specular-track.glass-refract`. W22 folds
- * `glass-specular-track` into `.glass-material`, retiring the compound's left
- * operand, so the rule is re-homed onto `.glass-material.glass-refract` — the
- * refraction garnish opts in on ANY `.glass-material` surface, no dependency on
- * the now-aliased `glass-specular-track` class. The garnish stays PE-only over
- * the blur base; it is NEVER promoted to the card/primitive substrate
- * (feDisplacementMap is resize-expensive — only the `scale` attr animates
- * without rebuilding the map).
+ * The filter ships INLINE as a data-URI in the `backdrop-filter` declaration, so the
+ * consumer gets it with zero markup. `backdrop-filter: url(#…)` is Chromium-only (WebKit
+ * bug 245510 open, Firefox not shipping), so the whole decl sits behind
+ * `@supports (backdrop-filter: url(#…))`; a non-supporting engine paints the un-gated blur
+ * base alone (no broken `url()` reference — the no-workaround degrade floor, PRESERVED).
+ *
+ * CLASS RENAME (BB.W-LENSING scope 5 — clean break, no alias, BB inv-7). The AW.W23
+ * `.glass-refract` opt-in class is RENAMED to `.glass-lens` (the §2 vocabulary); the
+ * `--glass-refract*` AXIS/token names are KEPT (the lens magnitude is the refraction
+ * axis). Consumers (`<Button :liquid>`, the demo witness) compose `.glass-lens`. The
+ * rename is the only public-surface delta (MIGRATION.md row). The garnish stays PE-only
+ * over the blur base; it is NEVER promoted to the card/primitive substrate
+ * (feDisplacementMap is resize-expensive — only the `scale` param animates without
+ * rebuilding the map).
  */
 
 @layer components {
-    /* The shipped filter graph as a data-URI SVG. A `0×0` host SVG mounted via
-       the CSS asset keeps the `#glass-refract` id resolvable in-document. */
-    .glass-refract {
-        /* The named convex-lens displacement filter, baked from the squircle
-           surface profile. Composed as a custom property so the @supports arm
-           below references one source. */
-        --glass-refract-filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='glass-refract' x='0' y='0' width='100%25' height='100%25'%3E%3CfeImage href='data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522m%2522 cx=%252250%2525%2522 cy=%252250%2525%2522 r=%252250%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(128,128,128)%2522/%253E%253Cstop offset=%252270%2525%2522 stop-color=%2522rgb(128,128,128)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(255,255,128)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523m)%2522/%253E%253C/svg%253E' result='map'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='map' scale='28' xChannelSelector='R' yChannelSelector='G' result='disp'/%3E%3CfeImage href='data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522s%2522 cx=%252230%2525%2522 cy=%252225%2525%2522 r=%252260%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgba(255,255,255,0.5)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgba(255,255,255,0)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523s)%2522/%253E%253C/svg%253E' result='spec'/%3E%3CfeBlend in='disp' in2='spec' mode='screen'/%3E%3C/filter%3E%3C/svg%3E#glass-refract");
+    /* The shipped filter graph as a data-URI SVG, COMPOSED from the var()-splittable
+       head/tail so the `--glass-refract` axis drives the `scale` (NOT a baked literal).
+       A `0×0` host SVG mounted via the consuming `backdrop-filter` keeps the
+       `#glass-refract` id resolvable in-document (the data-URI is self-contained). */
+    .glass-lens {
+        /* The bevel-band width the squircle map encodes (the iOS edge concentration).
+           Documents the rim thickness the baked stops fix; a consumer reads it to tune
+           the perceived rim band on a successor re-bake. */
+        --glass-refract-bevel: 14%;
+
+        /* The data-URI head — ends at `scale='` so the axis value substitutes inline. */
+        --glass-refract-filter-head: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27glass-refract%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeImage href=%27data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253ClinearGradient id=%2522hx%2522 x1=%25220%2522 y1=%25220%2522 x2=%2522100%2525%2522 y2=%25220%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(255,0,0)%2522/%253E%253Cstop offset=%252214%2525%2522 stop-color=%2522rgb(128,0,0)%2522/%253E%253Cstop offset=%252286%2525%2522 stop-color=%2522rgb(128,0,0)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(0,0,0)%2522/%253E%253C/linearGradient%253E%253ClinearGradient id=%2522vy%2522 x1=%25220%2522 y1=%25220%2522 x2=%25220%2522 y2=%2522100%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(0,255,0)%2522/%253E%253Cstop offset=%252214%2525%2522 stop-color=%2522rgb(0,128,0)%2522/%253E%253Cstop offset=%252286%2525%2522 stop-color=%2522rgb(0,128,0)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(0,0,0)%2522/%253E%253C/linearGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522black%2522/%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523hx)%2522/%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523vy)%2522 style=%2522mix-blend-mode:screen%2522/%253E%253C/svg%253E%27 result=%27map%27/%3E%3CfeDisplacementMap in=%27SourceGraphic%27 in2=%27map%27 scale=%27");
+        /* The data-URI tail — begins after `scale='<n>'`, closes the filter + the
+           url(). The soft warm specular feImage + the `screen` blend PRESERVED. */
+        --glass-refract-filter-tail: url("%27 xChannelSelector=%27R%27 yChannelSelector=%27G%27 result=%27disp%27/%3E%3CfeImage href=%27data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522s%2522 cx=%252230%2525%2522 cy=%252225%2525%2522 r=%252260%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgba(255,255,255,0.5)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgba(255,255,255,0)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523s)%2522/%253E%253C/svg%253E%27 result=%27spec%27/%3E%3CfeBlend in=%27disp%27 in2=%27spec%27 mode=%27screen%27/%3E%3C/filter%3E%3C/svg%3E%23glass-refract");
+
+        /* The composed filter — the `--glass-refract` axis substitutes between the
+           head's `scale='` and the tail's closing `'`. ONE source the @supports arm
+           references; the axis (NOT a `scale='28'` literal) drives the magnitude. */
+        --glass-refract-filter: var(--glass-refract-filter-head) var(--glass-refract) var(--glass-refract-filter-tail);
     }
 
-    /* The gated consuming selector — RE-HOMED onto `.glass-material.glass-refract`
-       (decoupled from the W22-folded `.glass-specular-track` compound). The
-       refraction composes the shipped `#glass-refract` filter OVER the host's
-       existing blur; it is additive (the blur already painted, this sharpens the
-       refraction edge where the engine supports it). */
+    /* The gated consuming selector. The squircle map + the `--glass-refract` axis + the
+       composed `scale` all ride INSIDE the `@supports (backdrop-filter: url(#…))` block;
+       the refraction composes the shipped `#glass-refract` filter OVER the host's existing
+       blur — additive (the blur already painted, this bends + concentrates the refraction
+       at the rim where the engine supports it). A non-supporting engine never reaches this
+       block and paints the un-gated `--glass-blur-*` + `--glass-tint-*` base ALONE. */
     @supports (backdrop-filter: url("#glass-refract")) {
-        .glass-material.glass-refract,
-        .glass-refract {
+        .glass-material.glass-lens,
+        .glass-lens {
             backdrop-filter: var(--glass-blur-resting) var(--glass-refract-filter);
         }
     }

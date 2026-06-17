@@ -25,9 +25,9 @@ interface Props extends PrimitiveProps {
   surface?: Surface
   // BB.W-BUTTON-GLASS (e) — the optional refraction-edge opt-in (additive,
   // default OFF). On a supporting engine (`@supports (backdrop-filter: url(#…))`,
-  // glass-refract.css) a `:liquid` button adds the EXISTING `.glass-refract` axis
-  // (the AW.W23 `#glass-refract` convex-lens SVG filter), so it reads the iOS-26
-  // edge-bend over its blur base; off-Chromium it degrades cleanly to the un-gated
+  // glass-refract.css) a `:liquid` button adds the EXISTING `.glass-lens` axis
+  // (the `#glass-refract` squircle-bevel SVG filter, BB.W-LENSING), so it reads the
+  // iOS-26 edge-bend over its blur base; off-Chromium it degrades cleanly to the un-gated
   // `.btn-glass` blur+tint base (the no-workaround floor). CONSUMES the one shared
   // refraction axis — NEVER a button-local lens fork. The `:active` lens read is the
   // CHEAP coupled press squish + the gleam lift (NOT a per-frame displacement-map
@@ -156,9 +156,11 @@ const hostStyle = computed<CSSProperties>(() => ({
 }))
 
 // The refraction opt-in is a GLASS-register-only decoration (a `solid` button has
-// no blur base to refract). `liquid` adds the EXISTING `.glass-refract` axis.
+// no blur base to refract). `liquid` adds the EXISTING refraction axis — the class
+// is `.glass-lens` (BB.W-LENSING renamed `.glass-refract`→`.glass-lens`, clean break,
+// no alias; the `--glass-refract` magnitude axis name is kept).
 const liquidDecoration = computed(() =>
-  props.liquid ? 'glass-refract' : undefined,
+  props.liquid ? 'glass-lens' : undefined,
 )
 </script>
 

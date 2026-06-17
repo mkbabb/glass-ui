@@ -105,23 +105,53 @@
            registered-`@property` var() nested in an hsl() alpha computes to 0 in
            Chromium — the cross-engine-safe path); the per-stop alphas are literals so
            even the lifted hover/active states read as a lens, not a flash. */
-        background: radial-gradient(
-            circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
-            hsl(40 35% 92% / 0.5) 0%,
-            hsl(40 35% 92% / 0) 70%,
-            transparent 100%
-        );
+        /* BB.W-LENSING (scope 3) — the motion-reactive EDGE glint UNIFIED with the
+           centered catch-light disc on ONE `::before`. TWO background layers compose:
+           (TOP) the angle-keyed EDGE-anchored conic sweep — a warm-cream arc that
+           brightens the RIM where the pointer's `--specular-angle` grazes (the
+           glass-THICKNESS read iOS-27 fuses with the catch-light); (BOTTOM) the
+           existing pointer-position centered disc. BOTH ride the SAME `--specular-
+           intensity` cohort (the `opacity` below) + `plus-lighter` blend + warm-cream
+           core `hsl(40 35% 92%)` — NEVER a second color/blend fork. The conic is masked
+           to the rim band only (the `--glass-edge-glint-band` radial mask, scope 3),
+           so the glint is a bounded RIM ring, NOT a whole-plate wash (the AX.W52 D19
+           bounded-gleam discipline). The `--specular-angle` floor `0deg` sits the glint
+           at the top edge when unwired (static rest — no ambient drift, no blowout). */
+        background:
+            conic-gradient(
+                from var(--specular-angle, 0deg) at 50% 50%,
+                hsl(40 35% 92% / 0) 0deg,
+                hsl(40 35% 92% / 0.55) 18deg,
+                hsl(40 35% 92% / 0) 60deg,
+                hsl(40 35% 92% / 0) 360deg
+            ),
+            radial-gradient(
+                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+                hsl(40 35% 92% / 0.5) 0%,
+                hsl(40 35% 92% / 0) 70%,
+                transparent 100%
+            );
         opacity: var(--specular-intensity, 0);
-        /* Clip the gleam to ITS OWN radius (not the whole plate) so it stays a
-           bounded glint. `mask-image` Baseline 2023-12-07; a non-supporting engine
-           ignores it and the `inset: 0` + radius-inherit + the in-paint falloff
-           already bound the gleam to the surface. */
-        mask-image: radial-gradient(
-            circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
-            black 0%,
-            black 60%,
-            transparent 100%
-        );
+        /* Per-layer masks (the `,`-separated list pairs with the two backgrounds in
+           order): the EDGE conic is masked to the RIM BAND ONLY — transparent across
+           the interior, opaque in the outer `--glass-edge-glint-band` (default 22%) — so
+           the angle-keyed glint reads as a THICKNESS rim, not a center wash; the centered
+           disc keeps its own-radius clip (AX.W52 D19). `mask-image` Baseline 2023-12-07;
+           a non-supporting engine ignores it and the `inset: 0` + in-paint falloff still
+           bound the gleam. */
+        mask-image:
+            radial-gradient(
+                circle closest-side at 50% 50%,
+                transparent calc(100% - var(--glass-edge-glint-band, 22%)),
+                black calc(100% - calc(var(--glass-edge-glint-band, 22%) * 0.5)),
+                black 100%
+            ),
+            radial-gradient(
+                circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+                black 0%,
+                black 60%,
+                transparent 100%
+            );
         /* AX.W52 D19 — `plus-lighter` (additive but HDR-clamped, Safari 16.4+) over
            the prior `screen` (a non-linear lightener that lifted the whole tile
            toward white — the muddy-card defect). A non-supporting engine degrades to
@@ -233,6 +263,28 @@
     .dock-select-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
     .dock-dropdown-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before {
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
+    }
+
+    /* BB.W-LENSING (scope 2) — the `:active` LENS-SWELL on the ONE `--glass-btn-press-t`
+       drive (the §6 press register, `--spring-snappy` at `--spring-snappy-duration`,
+       W-MOTION-CANON). A pressed `.glass-lens` surface bumps `--glass-refract` UP
+       (the backdrop pinches/deepens under the press) COUPLED with the gleam intensity
+       lift on the SAME drive — ONE scalar, the "glass DEFORMS under press, not just
+       shrinks" read. The swell is the `scale` PARAM only (the displacement magnitude
+       moves; the squircle map is NEVER re-baked — the AW.W23 cheap-animation intent +
+       the F4 compositor/filter-only assert: `--glass-refract` resolves into the
+       `backdrop-filter` displacement `scale`, NOT a layout property). The bump rides
+       the press-t drive Button.vue writes off the spring (0 rest → 1 pressed); at rest
+       (`--glass-btn-press-t: 0`) the lens is byte-identical to the resting axis. PRM:
+       the press-t drive itself snaps under `prefers-reduced-motion: reduce` (Button.vue
+       / .tap-squish PRM carve — the swell reaches its endpoint with no in-between
+       frames; the gesture still functions, the physics off). The `--glass-refract-swell`
+       knob (default 16) is the press depth a consumer retunes. */
+    .glass-lens {
+        --glass-refract: calc(
+            28 + var(--glass-btn-press-t, 0) * var(--glass-refract-swell, 16)
+        );
+        transition: --glass-refract var(--spring-snappy-duration, 0.34s) var(--spring-snappy, ease-out);
     }
 
 }
