@@ -14,10 +14,15 @@ import {
     computed,
     onMounted,
     onBeforeUnmount,
+    watch,
     nextTick,
     type HTMLAttributes,
 } from "vue";
 import { cn } from "../../../utils";
+import {
+    useDragMorph,
+    type DragMorphSnapTarget,
+} from "../../../composables/motion/useDragMorph";
 import {
     Tooltip,
     TooltipContent,
@@ -97,6 +102,15 @@ export interface SegmentedTabsProps {
      * accessible name.
      */
     responsive?: boolean | SegmentedTabsResponsive;
+    /**
+     * BB.W-DRAG-MORPH — the LIQUID TAB. When `true` (ADDITIVE, default `false`),
+     * the `pill` indicator becomes a physical lozenge you can GRAB and PULL: it
+     * follows the finger ~1:1, squishes on drag velocity, and flings to the nearest
+     * tab on release (`useDragMorph`). The click-selection path is byte-identical;
+     * the drag is opt-in. No-op on `underline` (the ink hairline has no indicator
+     * element to deform).
+     */
+    draggable?: boolean;
     class?: HTMLAttributes["class"];
 }
 
@@ -104,6 +118,7 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
     responsive: false,
+    draggable: false,
 });
 
 // Vue 3.5 defineModel — single-select string. (The multi-select array model
@@ -192,6 +207,83 @@ const { singleSliderStyle, squishOnTravel } = useTabIndicator({
     vertical: isVertical,
 });
 
+// ── BB.W-DRAG-MORPH — the LIQUID TAB (the :draggable axis) ──
+//
+// When `:draggable`, the pill indicator is wired to `useDragMorph` with the snap
+// targets resolved off the CENTER-ANCHORED button geometry (the SAME measure
+// `useTabIndicator` runs — reused, never re-measured). Dragging the indicator
+// follows the finger, squishes on velocity, and flings to the nearest tab center on
+// release → `onSnap` writes the `model`. The drag is the `pill` material ONLY (the
+// `underline` ink hairline has no `indicatorRef` element to deform). The squish
+// reads the SAME `--tab-indicator-max-stretch` live cap the click squish does (the
+// SOLE cap source); the drag's `--stretch` write composes the existing reciprocal
+// CSS pairing — no second squish recipe.
+const dragEnabled = computed(() => props.draggable && !isUnderline.value);
+
+function readMaxStretch(): number {
+    const el = indicatorRef.value;
+    if (!el) return 1.08;
+    const raw = getComputedStyle(el)
+        .getPropertyValue("--tab-indicator-max-stretch")
+        .trim();
+    return Number(raw) || 1.08;
+}
+
+// The snap targets — the center-anchored button centers on the active axis. kf
+// `Draggable` tracks CLIENT-space pointer coords (`clientX`/`clientY`), so the snap
+// centers are resolved in the SAME client space (`getBoundingClientRect`) — the
+// nearest-snap resolution + the `decayRest` projection compare like spaces (the
+// center-anchor geometry the same as `useTabIndicator`, in client coords).
+function resolveSnapTargets(): DragMorphSnapTarget<string>[] {
+    return stripOptions.value.map((o, idx) => {
+        const btn = buttonRefs.value[idx];
+        const r = btn?.getBoundingClientRect();
+        const center = r
+            ? isVertical.value
+                ? r.top + r.height / 2
+                : r.left + r.width / 2
+            : 0;
+        return { value: o.value, center };
+    });
+}
+
+const drag = useDragMorph<string>({
+    el: indicatorRef,
+    axis: () => (isVertical.value ? "y" : "x"),
+    snapTargets: resolveSnapTargets,
+    maxStretch: readMaxStretch,
+    onSnap: (value) => {
+        // The fling-to-nearest commits the selection — the consumer model is the
+        // single source of truth (no shadow). The click-travel squish does not fire
+        // here (the drag owns its own squish via `useDragMorph`).
+        if (model.value !== value) model.value = value;
+    },
+});
+
+// The drag `--stretch` write rides the indicator's OWN `--stretch` custom property
+// (the SAME var the click squish writes — ONE source of truth). While dragging, the
+// drag owns `--stretch`; on settle the value relaxes to 1 (the normalized-position
+// drive decays). PRM zeroes the write (the `stretch` read is 1 under reduce).
+watch(
+    () => [drag.dragging.value, drag.stretch.value] as const,
+    ([isDragging, stretch]) => {
+        const el = indicatorRef.value;
+        if (!el || !dragEnabled.value) return;
+        if (isDragging) el.style.setProperty("--stretch", String(stretch));
+        else el.style.removeProperty("--stretch");
+    },
+);
+
+// Re-resolve the snap geometry when the options/orientation change (a resize is
+// caught by useDragMorph's next-grab reattach; an option/axis change needs the
+// explicit refresh so the rebuilt Draggable carries fresh axis).
+watch(
+    () => [stripOptions.value.length, isVertical.value, dragEnabled.value] as const,
+    () => {
+        if (dragEnabled.value) nextTick(() => drag.refresh());
+    },
+);
+
 // ── Button press animation (Web Animations API) ──
 // AX.W53 — the press rides the CONTROL register (`--spring-snappy`), one
 // settle-into squish (no double-spring overshoot past the rest scale). Honors
@@ -237,6 +329,90 @@ function select(value: string, idx: number) {
 // The mobile Select speaks the single-string model.
 function onMobileUpdate(value: unknown) {
     if (typeof value === "string") model.value = value;
+}
+
+// ── BB.W-DRAG-MORPH — the roving-tabindex keyboard contract (the owed prerequisite) ──
+//
+// The WAI-ARIA tablist/toolbar roving-tabindex: EXACTLY ONE tab in the focus order
+// (the active tab `tabindex="0"`, the rest `-1`), arrow keys move focus + activate
+// (selection-follows-focus, the canonical pattern — for the `pill` ToggleGroup
+// register arrows still move focus and activate; the variant's role decides the
+// announce). The arrow AXIS is derived off `isVertical` (ArrowRight/Left horizontal,
+// ArrowDown/Up vertical), Home/End jump, wrapping at the ends, skipping disabled.
+// This is NOT gated behind `:draggable` — it is the keyboard contract the strip
+// ALWAYS owed (a draggable tab that is keyboard-broken is the worse failure); the
+// drag only makes it acute. The keyboard activation IS a selection → the existing
+// click `select(...)` path (with its `squishOnTravel`).
+
+// The active index in the rendered strip — the ONE tabstop. Falls back to 0 so a
+// strip whose model points off the desktop subset still has a single focusable tab.
+const activeIndex = computed(() => {
+    const idx = stripOptions.value.findIndex((o) => o.value === stripValue.value);
+    return idx >= 0 ? idx : 0;
+});
+
+// The roving tabindex for option `idx`: `0` for the active tab, `-1` otherwise.
+function rovingTabindex(idx: number): number {
+    return idx === activeIndex.value ? 0 : -1;
+}
+
+// Move focus to (and activate) the next enabled tab in `dir` (+1/-1), wrapping.
+function focusEnabled(fromIdx: number, dir: 1 | -1) {
+    const n = stripOptions.value.length;
+    if (n === 0) return;
+    for (let step = 1; step <= n; step++) {
+        const idx = (fromIdx + dir * step + n * step) % n;
+        const option = stripOptions.value[idx];
+        if (option && !option.disabled) {
+            buttonRefs.value[idx]?.focus();
+            select(option.value, idx);
+            return;
+        }
+    }
+}
+
+// Move focus to (and activate) the first/last enabled tab.
+function focusEdge(edge: "first" | "last") {
+    const n = stripOptions.value.length;
+    const range = edge === "first"
+        ? Array.from({ length: n }, (_, i) => i)
+        : Array.from({ length: n }, (_, i) => n - 1 - i);
+    for (const idx of range) {
+        const option = stripOptions.value[idx];
+        if (option && !option.disabled) {
+            buttonRefs.value[idx]?.focus();
+            select(option.value, idx);
+            return;
+        }
+    }
+}
+
+function onStripKeydown(e: KeyboardEvent) {
+    const from = activeIndex.value;
+    // Axis-derived next/prev keys: vertical strips navigate on the BLOCK axis
+    // (ArrowDown/Up), horizontal on the INLINE axis (ArrowRight/Left).
+    const nextKey = isVertical.value ? "ArrowDown" : "ArrowRight";
+    const prevKey = isVertical.value ? "ArrowUp" : "ArrowLeft";
+    switch (e.key) {
+        case nextKey:
+            e.preventDefault();
+            focusEnabled(from, 1);
+            break;
+        case prevKey:
+            e.preventDefault();
+            focusEnabled(from, -1);
+            break;
+        case "Home":
+            e.preventDefault();
+            focusEdge("first");
+            break;
+        case "End":
+            e.preventDefault();
+            focusEdge("last");
+            break;
+        default:
+            break;
+    }
 }
 
 // ── Lifecycle ──
@@ -294,20 +470,27 @@ onBeforeUnmount(() => {
             isVertical && 'segmented-tabs--vertical',
             props.class,
         )"
+        @keydown="onStripKeydown"
     >
         <!-- The single shared indicator (pill slider). On the anchor path no
              inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
              fallback the measured `singleSliderStyle`. The underline variant paints
              its indicator as the container `::before` pseudo, so no element node
-             here. -->
+             here. BB.W-DRAG-MORPH — when `:draggable`, the indicator carries the
+             `.glass-drag-grabbable` rest affordance + the `.glass-drag-lift` grabbed
+             state + the `useDragMorph` `dragStyle` translate (compositor-only). -->
         <div
             v-if="!isUnderline"
             ref="indicatorRef"
             :class="[
                 'segmented-indicator',
                 jsSingleSlider ? 'segmented-indicator--js' : 'segmented-indicator--anchor',
+                dragEnabled && 'glass-drag-grabbable',
+                dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"
-            :style="jsSingleSlider ? singleSliderStyle : undefined"
+            :style="dragEnabled
+                ? { ...(jsSingleSlider ? singleSliderStyle : {}), ...drag.dragStyle.value }
+                : (jsSingleSlider ? singleSliderStyle : undefined)"
         />
 
         <!-- Buttons. -->
@@ -319,6 +502,7 @@ onBeforeUnmount(() => {
                             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                             class="segmented-tab"
                             :role="isUnderline ? 'tab' : undefined"
+                            :tabindex="rovingTabindex(idx)"
                             v-bind="isUnderline
                                 ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                                 : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
@@ -342,6 +526,7 @@ onBeforeUnmount(() => {
                 :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                 class="segmented-tab"
                 :role="isUnderline ? 'tab' : undefined"
+                :tabindex="rovingTabindex(idx)"
                 v-bind="isUnderline
                     ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                     : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"

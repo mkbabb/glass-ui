@@ -148,6 +148,22 @@ async function copyStops(): Promise<void> {
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 (b) — the under-activated motion title arrives at the
+             DISPLAY register with the --motion-accent violet as the ONE color
+             text-event (the existing motion-purple family UNIFIED onto the
+             masthead — the plots/dots/spring already carry it; this is the SAME
+             event, not a second hue). Within proportion: the violet lands on the
+             title masthead, never a body <p>/section <h2> (the d1 ink floor). -->
+        <header class="flex flex-col gap-1">
+            <span class="section-label">Motion · Spring Orchestrator</span>
+            <span
+                class="text-display-3 font-display leading-tight"
+                :style="{ color: 'var(--motion-accent)' }"
+            >
+                Springs
+            </span>
+        </header>
+
         <StorySection
             label="Named registers"
             blurb="The four SHIPPED spring registers, driven off the single-source SPRING_PRESETS table — each fires the SAME springTimingFunction twin springLinearStops solves the CSS linear() token from. No local spring solver: the demo teaches the canonical curves, so it can never drift from the vocabulary."

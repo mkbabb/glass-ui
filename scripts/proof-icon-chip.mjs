@@ -343,6 +343,151 @@ export function detectIconChip(sources) {
         );
     }
 
+    // ── W7 — BB.W-SUFFUSE3: the pop-MOTION on the per-spring clock + :saturated ─
+    // c1 — the reveal ENTRANCE rides the per-spring CLOCK, NOT the fixed bezier.
+    // The animation references --spring-snappy (the linear() timing-function
+    // string) AND --spring-snappy-duration (the W-GLASS-CAL per-spring clock), and
+    // is NOT the prior `var(--duration-medium) var(--ease-standard)` fixed bezier.
+    const revealRule =
+        css.match(/\.icon-chip--reveal\[data-reveal\][^}]*animation[^;]*;/) || [];
+    const revealRideSpringClock =
+        /icon-chip-reveal\s+var\(--spring-snappy-duration\)\s+var\(--spring-snappy\)/.test(
+            css,
+        );
+    const revealNotFixedBezier =
+        !/icon-chip-reveal\s+var\(--duration-medium[^)]*\)\s+var\(--ease-standard\)/.test(
+            css,
+        );
+    if (!revealRideSpringClock) {
+        violations.push(
+            "W7-c1: the icon-chip-reveal entrance does not ride the per-spring clock (`animation: icon-chip-reveal var(--spring-snappy-duration) var(--spring-snappy)`) — the pop must bloom on the snappy spring's overshoot, not the fixed --duration-medium var(--ease-standard) bezier (BB.W-SUFFUSE3 c1).",
+        );
+    }
+    if (!revealNotFixedBezier) {
+        violations.push(
+            "W7-c1: the icon-chip-reveal entrance STILL carries the fixed `var(--duration-medium) var(--ease-standard)` bezier — the spring re-time did not replace it (BB.W-SUFFUSE3 c1).",
+        );
+    }
+    // The keyframe stays COMPOSITOR-ONLY (transform/opacity only — the
+    // proof:motion-compositor floor). No width/height/font-size/padding/margin
+    // /inline-size/block-size/top/left key inside the @keyframes icon-chip-reveal.
+    const keyframeBlock =
+        css.match(/@keyframes\s+icon-chip-reveal\s*\{[\s\S]*?\n\}/) || [""];
+    const LAYOUT_KEY_RE =
+        /\b(width|height|inline-size|block-size|font-size|padding|margin|top|left|right|bottom|inset|gap|grid-template|flex-basis|line-height)\b\s*:/;
+    const keyframeCompositorOnly = !LAYOUT_KEY_RE.test(keyframeBlock[0]);
+    if (!keyframeCompositorOnly) {
+        violations.push(
+            "W7-c1: the @keyframes icon-chip-reveal animates a LAYOUT-triggering property (the compositor-only floor — only transform/opacity/filter allowed; proof:motion-compositor).",
+        );
+    }
+    // The opacity is COUPLED on the SAME clock (the P3 coupled-fade — the keyframe
+    // carries BOTH opacity AND transform from→to on the one animation).
+    const opacityCoupled =
+        /@keyframes\s+icon-chip-reveal[\s\S]*?opacity\s*:/.test(css) &&
+        /@keyframes\s+icon-chip-reveal[\s\S]*?(transform|scale)\s*:/.test(css);
+    if (!opacityCoupled) {
+        violations.push(
+            "W7-c1: the icon-chip-reveal keyframe does not couple opacity + transform on the one clock (the P3 coupled-fade — plate + glyph bloom as ONE layer).",
+        );
+    }
+    // The PRM carve survives — the reveal snaps to its endpoint under reduce.
+    const prmRevealCarve =
+        /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.icon-chip--reveal\[data-reveal\][^}]*animation\s*:\s*none/.test(
+            css,
+        );
+    if (!prmRevealCarve) {
+        violations.push(
+            "W7-c1: the PRM carve (the `.icon-chip--reveal[data-reveal] { animation: none }` snap-to-endpoint under prefers-reduced-motion: reduce) is GONE — the pop must snap to its endpoint, zero in-between frames (BB.W-SUFFUSE3 c1 / P6).",
+        );
+    }
+
+    // c2 — the hover-bloom GROW (transform) rides --spring-smooth (enter smooth),
+    // the color legs stay the bezier, the leave is no-overshoot.
+    // Scope to the .icon-chip--bloom:hover RULE BODY (stop at the first close
+    // brace) so a later keyframe `transform: scale()` cannot cross-match.
+    const bloomRuleBody =
+        (css.match(/\.icon-chip--bloom:hover\s*\{[^}]*\}/) || [""])[0];
+    const bloomTransformOnSpring =
+        /transition[\s\S]*?transform\s+var\(--spring-smooth-duration\)\s+var\(--spring-smooth\)/.test(
+            bloomRuleBody,
+        );
+    const bloomHasGrow = /transform\s*:\s*scale\(/.test(bloomRuleBody);
+    if (!(bloomTransformOnSpring && bloomHasGrow)) {
+        violations.push(
+            `W7-c2: the hover-bloom GROW does not ride --spring-smooth (the §6 transform-hover register, enter smooth) — grow:${bloomHasGrow} springTransition:${bloomTransformOnSpring} (BB.W-SUFFUSE3 c2).`,
+        );
+    }
+    // The base transform leg is the no-overshoot bezier (the LEAVE direction — a
+    // bloom must never overshoot past gone). The base .icon-chip transition
+    // carries `transform … var(--ease-out)` (or --ease-standard), NOT a spring.
+    const bloomLeaveNoOvershoot =
+        /\.icon-chip\s*\{[\s\S]*?transition[\s\S]*?transform\s+var\(--duration-fast[^)]*\)\s+var\(--ease-(out|standard)\)/.test(
+            css,
+        );
+    if (!bloomLeaveNoOvershoot) {
+        violations.push(
+            "W7-c2: the base .icon-chip transform leg (the LEAVE direction) is not the no-overshoot bezier (var(--ease-out)/var(--ease-standard)) — the bloom must settle cleanly on hover-out, never overshoot past gone (BB.W-SUFFUSE3 c2 / §6 exit law).",
+        );
+    }
+
+    // c3 — the --icon-chip-plate-strength token + the :saturated axis.
+    const plateStrengthDeclared = /--icon-chip-plate-strength\s*:/.test(css);
+    const plateStrengthDefault25 =
+        /--icon-chip-plate-strength\s*:\s*25%/.test(css);
+    // The plate color-mix reads the token (byte-identical at default).
+    const plateReadsToken =
+        /background-color:\s*color-mix\([\s\S]*?var\(--icon-chip-plate-strength\)/.test(
+            css,
+        );
+    const saturatedRule =
+        /\.icon-chip--saturated\s*\{[^}]*--icon-chip-plate-strength\s*:\s*40%/.test(
+            css,
+        );
+    const saturatedProp = /\bsaturated\s*\?\s*:/.test(types);
+    const saturatedThreaded =
+        /icon-chip--saturated/.test(sfc) && /\bsaturated\b/.test(sfc);
+    if (!plateStrengthDeclared) {
+        violations.push(
+            "W7-c3: no `--icon-chip-plate-strength` token declared (the vibrancy stop must be a token-first knob — BB.W-SUFFUSE3 c3).",
+        );
+    }
+    if (!plateStrengthDefault25) {
+        violations.push(
+            "W7-c3: `--icon-chip-plate-strength` default is NOT 25% — the additive thread must be BYTE-IDENTICAL to the reference register at default (a default render shift REDs — BB.W-SUFFUSE3 c3).",
+        );
+    }
+    if (!plateReadsToken) {
+        violations.push(
+            "W7-c3: the plate `background-color: color-mix(…)` does not read `var(--icon-chip-plate-strength)` (the hardcoded 25% must lift onto the token — BB.W-SUFFUSE3 c3).",
+        );
+    }
+    if (!saturatedRule) {
+        violations.push(
+            "W7-c3: the `.icon-chip--saturated` rule does not re-point --icon-chip-plate-strength to 40% (the louder focal pop axis — BB.W-SUFFUSE3 c3).",
+        );
+    }
+    if (!saturatedProp) {
+        violations.push(
+            "W7-c3: IconChipProps does not declare the `saturated?: boolean` prop (the axis must be prop-gated — BB.W-SUFFUSE3 c3).",
+        );
+    }
+    if (!saturatedThreaded) {
+        violations.push(
+            "W7-c3: the SFC does not thread the `saturated` prop → the `.icon-chip--saturated` class (BB.W-SUFFUSE3 c3).",
+        );
+    }
+    // The interpolation STAYS `in srgb` (the recorded keep — the saturated axis
+    // changes the STRENGTH, not the space). The plate color-mix must remain
+    // `color-mix(in srgb, …)`, never flip to `in oklab`.
+    const plateStaysInSrgb =
+        /background-color:\s*color-mix\(\s*in\s+srgb/.test(css);
+    if (!plateStaysInSrgb) {
+        violations.push(
+            "W7-c3: the plate color-mix is no longer `in srgb` — the saturated axis must change the STRENGTH, not the interpolation space (the recorded reference-register keep — BB.W-SUFFUSE3 c3 / icon-chip.css header).",
+        );
+    }
+
     // ── W6 — born ≥2 live consumers ───────────────────────────────────────────
     // Count the live `<IconChip` render sites across the consumer surfaces + the
     // MetricCell reconcile (if it composes the component).
@@ -391,6 +536,23 @@ export function detectIconChip(sources) {
             rootBarrelHasIt,
         },
         w6: { liveConsumers, count: liveConsumers.length },
+        w7: {
+            revealRideSpringClock,
+            revealNotFixedBezier,
+            keyframeCompositorOnly,
+            opacityCoupled,
+            prmRevealCarve,
+            bloomTransformOnSpring,
+            bloomHasGrow,
+            bloomLeaveNoOvershoot,
+            plateStrengthDeclared,
+            plateStrengthDefault25,
+            plateReadsToken,
+            saturatedRule,
+            saturatedProp,
+            saturatedThreaded,
+            plateStaysInSrgb,
+        },
     };
 
     return { facts, violations };
@@ -482,6 +644,25 @@ function run() {
     );
     console.log(
         `  W6 born ≥2 consumers           : ${yn(facts.w6.count >= 2)}  (${facts.w6.count}: ${facts.w6.liveConsumers.join(", ")})`,
+    );
+    console.log(
+        `  W7 pop-motion + :saturated      : ${yn(
+            facts.w7.revealRideSpringClock &&
+                facts.w7.revealNotFixedBezier &&
+                facts.w7.keyframeCompositorOnly &&
+                facts.w7.opacityCoupled &&
+                facts.w7.prmRevealCarve &&
+                facts.w7.bloomTransformOnSpring &&
+                facts.w7.bloomHasGrow &&
+                facts.w7.bloomLeaveNoOvershoot &&
+                facts.w7.plateStrengthDeclared &&
+                facts.w7.plateStrengthDefault25 &&
+                facts.w7.plateReadsToken &&
+                facts.w7.saturatedRule &&
+                facts.w7.saturatedProp &&
+                facts.w7.saturatedThreaded &&
+                facts.w7.plateStaysInSrgb,
+        )}  (spring-clock:${yn(facts.w7.revealRideSpringClock)} bloom-smooth:${yn(facts.w7.bloomTransformOnSpring)} :saturated:${yn(facts.w7.saturatedRule && facts.w7.saturatedProp)})`,
     );
 
     if (violations.length > 0) {

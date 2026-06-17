@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {
     computed,
+    nextTick,
     onBeforeUnmount,
+    onMounted,
     readonly,
     ref,
     useId,
@@ -18,6 +20,10 @@ import {
 import { useLayerTransition } from "./composables/useLayerTransition";
 import { useOptionalDockMorphContext } from "./composables/dockMorphContext";
 import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
+import {
+    useDragMorph,
+    type DragMorphSnapTarget,
+} from "../../../composables/motion/useDragMorph";
 
 /**
  * <DockLayerGroup> — a stack of <DockLayer> children with crossfade +
@@ -39,10 +45,18 @@ const props = withDefaults(
         showRail?: boolean;
         /** Rail placement relative to the layer stack. */
         railPosition?: "start" | "end";
+        /**
+         * BB.W-DRAG-MORPH — pull-to-switch. When `true` (ADDITIVE, default `false`),
+         * the switcher-rail indicator becomes draggable: pull along the rail axis to
+         * the next layer chip, fling-to-nearest on release writes `activeLayer`
+         * (`useDragMorph`, consumer #2). The reka roving tabindex / Arrow keys stay.
+         */
+        draggable?: boolean;
     }>(),
     {
         showRail: true,
         railPosition: "start",
+        draggable: false,
     },
 );
 
@@ -127,6 +141,72 @@ const axis = computed(() => props.orientation ?? dock?.orientation.value ?? "hor
 const railOrientation = computed<"horizontal" | "vertical">(() =>
     axis.value === "vertical" ? "horizontal" : "vertical",
 );
+
+/* BB.W-DRAG-MORPH — pull-to-switch (consumer #2, the ≥2-consumer bar at birth). The
+   switcher rail becomes draggable: pull along the rail axis to the adjacent layer
+   chip, the fling-to-nearest writes the consumer-owned `activeLayer` model (no shadow
+   state — the one-registry discipline). The drag axis is the rail's VISUAL flex axis
+   (a COLUMN rail / `railOrientation==="vertical"` flexes Y; a ROW rail flexes X). The
+   snap centers are the registered layer-tab centers in CLIENT space (the same space
+   kf `Draggable` tracks). The rail keeps reka's roving tabindex + Arrow keys (the
+   keyboard path is untouched; the pull is the additive pointer gesture). This wave
+   adds the GESTURE on the rail — it does NOT edit the dock morph orchestrator
+   (`dockMorphContext`/`useLayerTransition` — W-DOCK-MORPH-FAMILY's surface). */
+// reka `TabsList` exposes its DOM via `$el` (useForwardExpose), so the template ref
+// resolves the component instance; `railDomEl` unwraps the real element the drag
+// captures. Populated on mount + re-resolved on rail re-render.
+const railListEl = useTemplateRef<{ $el?: HTMLElement } | HTMLElement | null>(
+    "railListEl",
+);
+const railDomEl = ref<HTMLElement | null>(null);
+function resolveRailDom(): void {
+    const node = railListEl.value;
+    railDomEl.value = node
+        ? ((node as { $el?: HTMLElement }).$el ?? (node as HTMLElement))
+        : null;
+}
+const railDragAxis = computed<"x" | "y">(() =>
+    railOrientation.value === "vertical" ? "y" : "x",
+);
+
+function resolveRailSnapTargets(): DragMorphSnapTarget<string>[] {
+    const list = railDomEl.value;
+    if (!list) return [];
+    const tabs = Array.from(
+        list.querySelectorAll<HTMLElement>(".dock-layer-tab"),
+    );
+    return layers.value.map((layer, idx) => {
+        const r = tabs[idx]?.getBoundingClientRect();
+        const center = r
+            ? railDragAxis.value === "y"
+                ? r.top + r.height / 2
+                : r.left + r.width / 2
+            : 0;
+        return { value: layer.id, center };
+    });
+}
+
+const railDrag = useDragMorph<string>({
+    el: railDomEl,
+    axis: () => railDragAxis.value,
+    snapTargets: resolveRailSnapTargets,
+    onSnap: (id) => {
+        if (props.draggable && activeLayer.value !== id) activeLayer.value = id;
+    },
+});
+
+watch(
+    () => [layers.value.length, railOrientation.value, props.draggable] as const,
+    () => {
+        resolveRailDom();
+        if (props.draggable) nextTick(() => railDrag.refresh());
+    },
+);
+
+onMounted(() => {
+    resolveRailDom();
+    if (props.draggable) nextTick(() => railDrag.refresh());
+});
 
 /* AX.W02 — DEFER to the dock's single morph orchestrator when nested in a
    `<GlassDock>`; SELF-ORCHESTRATE when standalone. The dock provides
@@ -286,8 +366,14 @@ function onRailFocusOut(e: FocusEvent) {
                  (the `--primary 15%` plate) below, so without this the rail painted
                  TWO indicators (H-dock §D7 L1). -->
             <TabsList
+                ref="railListEl"
                 class="dock-layer-rail"
-                :class="railPosition"
+                :class="[
+                    railPosition,
+                    props.draggable && 'glass-drag-grabbable',
+                    props.draggable && railDrag.dragging.value && 'glass-drag-lift',
+                ]"
+                :style="props.draggable ? railDrag.dragStyle.value : undefined"
                 :indicator="false"
                 @focusin="onRailFocusIn"
                 @focusout="onRailFocusOut"

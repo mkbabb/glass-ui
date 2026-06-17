@@ -51,9 +51,19 @@
     --type-leading-body: 1.5;
     --type-leading-prose: 1.618;
     --type-leading-heading: 1.2;
-    --type-leading-display: 1.1;
+    /* BB.W-DISPLAY-TRACKING — the display leading is tightened to the Apple
+       84/80 ≈ 1.05 signature (was 1.1). The DISPLAY ladder ONLY reads this rung;
+       --type-leading-heading (1.2) carries the heading/title register. */
+    --type-leading-display: 1.05;
 
     --type-tracking-tight: -0.025em;
+    /* BB.W-DISPLAY-TRACKING — the DISPLAY-ONLY proportional negative tracking
+       rung (the Apple −1.5%-of-size signature: 80px → −1.2px = −0.015em). It is
+       em-relative, so the single value is a constant −1.5% across the whole
+       clamp() ladder (φ² → φ^(11/2)). MINTED as its OWN rung so the display
+       calibration NEVER bleeds into the shared --type-tracking-tight (the
+       heading/title/configurator register's tracking, kept at -0.025em). */
+    --type-tracking-display: -0.015em;
     --type-tracking-snug: -0.01em;
     --type-tracking-normal: 0;
     --type-tracking-wide: 0.025em;

@@ -244,6 +244,18 @@ export type {
 // ships ONLY on `@mkbabb/glass-ui/motion`, not the root barrel.
 export type { Countup, UseCountupOptions } from "../composables/motion/useCountup";
 
+// ── useDragMorph — the pull/drag-to-morph-squish primitive (BB.W-DRAG-MORPH) ──
+// `DragMorphAxis` — the morph axis ("x"|"y"); `DragMorphSnapTarget<V>` — one snap
+// target ({ value, center }); `UseDragMorphParams<V>`/`UseDragMorphReturn` — the
+// gesture's params/return. `useDragMorph` is keyframes-bearing (it wires the kf
+// `Draggable`), so the composable ships ONLY on `@mkbabb/glass-ui/motion`, not the root.
+export type {
+    DragMorphAxis,
+    DragMorphSnapTarget,
+    UseDragMorphParams,
+    UseDragMorphReturn,
+} from "../composables/motion/useDragMorph";
+
 // ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
 // `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
 // (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,

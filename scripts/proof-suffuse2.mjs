@@ -133,6 +133,23 @@ const CATEGORY_MAP = [
             "demo/stories/navigation/carousel.vue",
         ],
     },
+    {
+        // BB.W-SUFFUSE3 (a) — the feedback band's ONE coherent --section-color-8
+        // ruby (warm-status) identity, distinct from data-9 / navigation-12; the
+        // warm-status read for a status/notification band. The three-site register
+        // (tinted eyebrow + border-l-[3px] rail + <IconChip :section>) on the
+        // FEEDBACK_STOP=8 const, the same gold standard as every other category.
+        category: "feedback",
+        stop: 8, // ruby (warm-status)
+        pages: [
+            "demo/stories/feedback/alert.vue",
+            "demo/stories/feedback/toast.vue",
+            "demo/stories/feedback/notification.vue",
+            "demo/stories/feedback/progress.vue",
+            "demo/stories/feedback/skeleton.vue",
+            "demo/stories/feedback/confirm-dialog.vue",
+        ],
+    },
 ];
 
 // ── W1 — each enrolled category carries its MAPPED stop on the THREE sites ────
@@ -189,7 +206,7 @@ add(
     "w1-per-category-three-site-identity",
     w1Breaches.length === 0,
     w1Breaches.length === 0
-        ? `each enrolled category (forms→3, containers→2, data→9, display→5, navigation→12) carries its ONE --section-color-N on the THREE register sites (tinted eyebrow + border-l-[3px] rail + <IconChip :section> focal pop) on the SAME stop across ${CATEGORY_MAP.reduce((n, c) => n + c.pages.length, 0)} pages — the math-paper gold standard, the per-category MAP recorded as gate facts`
+        ? `each enrolled category (forms→3, containers→2, data→9, display→5, navigation→12, feedback→8) carries its ONE --section-color-N on the THREE register sites (tinted eyebrow + border-l-[3px] rail + <IconChip :section> focal pop) on the SAME stop across ${CATEGORY_MAP.reduce((n, c) => n + c.pages.length, 0)} pages — the math-paper gold standard, the per-category MAP recorded as gate facts`
         : `${w1Breaches.length} per-category identity breach(es): ${w1Breaches.slice(0, 8).join("; ")}`,
 );
 
@@ -307,5 +324,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    "\n[proof:suffuse2] the color identity reads on EVERY enrolled category (icons=rose, forms=teal, containers=blue, data=slate, display=amber, navigation=indigo, motion=violet) — each its ONE event on the three register sites, the content title dominates, the motion band sings ONE violet. The π arm binds the resolved render.",
+    "\n[proof:suffuse2] the color identity reads on EVERY enrolled category (icons=rose, forms=teal, containers=blue, data=slate, display=amber, navigation=indigo, feedback=ruby, motion=violet) — each its ONE event on the three register sites, the content title dominates, the motion band sings ONE violet. The π arm binds the resolved render.",
 );

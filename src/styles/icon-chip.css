@@ -9,15 +9,22 @@
  * lives ONCE and proof:suffuse asserts against one component, not N pastes.
  *
  * THE INTERPOLATION SPACE — `in srgb` (DELIBERATE, recorded). The backplate is
- * a foreground-over-transparent overlay at a hand-tuned fixed 25% α stop — the
- * SAME shape as the `--surface-tint-*` brand family, which CLAUDE.md fixes at
- * `in srgb` (the brand-calibrated mix; switching the space shifts the resting
- * α off its hand-set value). The chip is byte-faithful to the reference paste
- * register (the binding W7 π target: stop-0 bg `color(srgb 0.915 0.484 0.671 /
- * 0.25)`), so it preserves `in srgb` — the same brand-overlay path, NOT the
- * glass-tint `in oklab` perceptual-mix path. (The spec text says `in oklab`;
- * the resolution preserves the reference-faithful `in srgb` so the pop register
- * does not shift — recorded in PROGRESS / the DELTA.)
+ * a foreground-over-transparent overlay at a hand-tuned α stop — the SAME shape
+ * as the `--surface-tint-*` brand family, which CLAUDE.md fixes at `in srgb`
+ * (the brand-calibrated mix; switching the space shifts the resting α off its
+ * hand-set value). The chip is byte-faithful to the reference paste register
+ * (the binding W7 π target: stop-0 bg `color(srgb 0.915 0.484 0.671 / 0.25)`),
+ * so it preserves `in srgb` — the same brand-overlay path, NOT the glass-tint
+ * `in oklab` perceptual-mix path. (The spec text says `in oklab`; the resolution
+ * preserves the reference-faithful `in srgb` so the pop register does not shift
+ * — recorded in PROGRESS / the DELTA.)
+ *
+ * THE α STOP IS A TOKEN (BB.W-SUFFUSE3 c3). The hardcoded `25%` lifted onto
+ * `--icon-chip-plate-strength` (default `25%`, BYTE-IDENTICAL); the `:saturated`
+ * axis re-points it to ~40% for a louder focal pop — the STRENGTH varies, the
+ * `in srgb` space + the chip≤glyph ratio do NOT. The pop is ALIVE too: the
+ * reveal entrance + the hover-bloom GROW ride the per-spring CLOCK (the
+ * --spring-snappy/--spring-smooth registers), no longer the fixed bezier.
  */
 
 :root {
@@ -30,6 +37,16 @@
     /* The duotone fill α — a low-alpha fill of the same hue UNDER the
        full-chroma stroke (the iOS/Material filled-tonal move). Mono-hue. */
     --icon-chip-duotone-fill: 18%;
+    /* The backplate vibrancy stop (BB.W-SUFFUSE3 c3). The default reproduces
+       the reference 25% register BYTE-IDENTICALLY — the plate `color-mix`
+       reads this token instead of the hardcoded `25%`. The `:saturated` axis
+       re-points it to a louder focal stop (~40%); the STRENGTH changes, the
+       `in srgb` space + the chip≤glyph ratio do NOT (the recorded keep). Still
+       ONE color event per surface — a saturated chip is the same event,
+       louder, never a license for a second (proof:suffuse d3 counts the event
+       FAMILY, not the saturation). Token-first: a consumer retunes without a
+       component edit. */
+    --icon-chip-plate-strength: 25%;
     /* The hover-bloom backplate lift (25% → ~35%) + the glow-ring spread. */
     --icon-chip-bloom-mix: 35%;
     --icon-chip-bloom-glow: 28%;
@@ -49,18 +66,25 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-pill, 9999px);
-    /* The backplate — the reference recipe (`in srgb`, 25% α stop). */
+    /* The backplate — the reference recipe (`in srgb`, the --icon-chip-plate-
+       strength α stop, default 25% — BB.W-SUFFUSE3 c3 lifts the hardcoded `25%`
+       onto the token, BYTE-IDENTICAL at default). */
     background-color: color-mix(
         in srgb,
-        var(--icon-chip-plate-color, var(--muted)) 25%,
+        var(--icon-chip-plate-color, var(--muted))
+            var(--icon-chip-plate-strength),
         transparent
     );
     color: var(--icon-chip-event-color, var(--muted-foreground));
     /* The §6 easing doctrine — surface props (bg/box-shadow) on the bezier
-       standard ease; the bloom is the smooth-glass register, NOT a sparkle. */
+       standard ease. The transform leg at REST (the leave direction, reverting
+       to base) is the NO-OVERSHOOT bezier (a bloom must never overshoot past
+       gone — §6 exit law, BB.W-SUFFUSE3 c2); the hover ENTER direction lifts
+       onto --spring-smooth on the .icon-chip--bloom:hover rule below. */
     transition:
         background-color var(--duration-fast, 150ms) var(--ease-standard),
-        box-shadow var(--duration-fast, 150ms) var(--ease-standard);
+        box-shadow var(--duration-fast, 150ms) var(--ease-standard),
+        transform var(--duration-fast, 150ms) var(--ease-out);
 }
 
 .icon-chip__glyph {
@@ -74,6 +98,16 @@
     block-size: auto;
     background-color: transparent;
     border-radius: 0;
+}
+
+/* ── The :saturated vibrancy axis (BB.W-SUFFUSE3 c3) ───────────────────────── */
+/* A louder, more-chromatic backplate for a genuine focal pop — the plate
+   `color-mix` re-points off the 25% reference stop to ~40%. STILL the ONE color
+   event (the same event, louder — proof:suffuse d3 counts the event FAMILY, not
+   the saturation). The interpolation STAYS `in srgb` (the recorded reference-
+   register keep) and the chip≤glyph ratio is untouched. */
+.icon-chip--saturated {
+    --icon-chip-plate-strength: 40%;
 }
 
 /* ── The duotone axis — a low-alpha fill of the same hue UNDER the stroke ──── */
@@ -108,6 +142,16 @@
                     var(--icon-chip-bloom-glow),
                 transparent
             );
+        /* The bloom GROW (BB.W-SUFFUSE3 c2) — the plate lifts a hair on the
+           §6 --spring-smooth transform register (enter smooth). The transition
+           is re-declared on :hover so the ENTER direction rides the spring; the
+           base rule's --ease-out transform leg governs the leave (no overshoot
+           past gone). The color legs stay on the bezier (base rule). */
+        transform: scale(var(--icon-chip-bloom-scale, 1.06));
+        transition:
+            background-color var(--duration-fast, 150ms) var(--ease-standard),
+            box-shadow var(--duration-fast, 150ms) var(--ease-standard),
+            transform var(--spring-smooth-duration) var(--spring-smooth);
     }
     /* The glyph stroke firms on the chip's own hover. */
     .icon-chip--bloom:hover .icon-chip__glyph {
@@ -120,9 +164,19 @@
    reacts ONLY on an opted-in chip (`.icon-chip--reveal`) so a non-reveal chip's
    inert `[data-reveal]` hook never animates. PRM-gated. */
 @media (prefers-reduced-motion: no-preference) {
+    /* BB.W-SUFFUSE3 c1 — the pop-ENTRANCE rides the per-spring CLOCK, NOT the
+       fixed --duration-medium bezier. The animation-timing-function is the
+       --spring-snappy linear() string (peaks ~1.068) and the duration is
+       --spring-snappy-duration (0.34s, the W-GLASS-CAL per-spring clock), so the
+       `scale(0.85)→1` keyframe carries the snappy spring's ~+7% overshoot then
+       settles (the springy pop, not a flat fade-up). The opacity 0→1 is COUPLED
+       on the SAME clock (the W-MOTION-CANON P3 coupled-fade — plate + glyph
+       bloom as ONE continuous layer). Compositor-only: transform/opacity only
+       (the proof:motion-compositor floor holds). The per-spring clock is the
+       W-GLASS-CAL/W-MOTION-CANON fence — CONSUMED here, never re-generated. */
     .icon-chip--reveal[data-reveal] {
-        animation: icon-chip-reveal var(--duration-medium, 320ms)
-            var(--ease-standard) both;
+        animation: icon-chip-reveal var(--spring-snappy-duration)
+            var(--spring-snappy) both;
         animation-delay: calc(var(--d, 0) * var(--icon-chip-reveal-step));
     }
 }
@@ -139,7 +193,15 @@
 }
 
 /* ── The deform axes collapse under reduced motion (the PRM guard) ─────────── */
+/* BB.W-SUFFUSE3 c1/c2 — the spring deform drops under reduce: the bloom GROW
+   scale collapses to 1 (the color cross-fade may stay — the legibility cue is
+   not motion), and the reveal pop SNAPS to its endpoint (scale 1, opacity 1,
+   zero in-between frames) via `animation: none` (the chip still APPEARS — only
+   the spring/overshoot is off; the W-MOTION-CANON P6 keep-fade/drop-transform). */
 @media (prefers-reduced-motion: reduce) {
+    .icon-chip--bloom:hover {
+        transform: none;
+    }
     .icon-chip--bloom:hover .icon-chip__glyph {
         stroke-width: inherit;
     }

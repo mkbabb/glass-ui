@@ -383,6 +383,19 @@ watch(studioPaused, () => {
           evidence). The studio stage bead's wrapper SIZE is W-BLOB-STUDIO's axis; this
           wave sets the IA POSITION (hero first) + the satellite-orbit geometry.
         -->
+        <!-- BB.W-SUFFUSE3 (b) — the studio title at the DISPLAY register with the
+             --motion-accent violet as the ONE color text-event (the studio's
+             unifying identity on the masthead, never a body <p>/<h2>). -->
+        <header class="flex flex-col gap-1">
+            <span class="section-label">Substrates · Blob Studio</span>
+            <span
+                class="text-display-3 font-display leading-tight"
+                :style="{ color: 'var(--motion-accent)' }"
+            >
+                Blob Studio
+            </span>
+        </header>
+
         <StorySection
             label="Blob studio — preset · interaction · mood · seed-palette"
             blurb="The blob showcase on the library's own Configurator chrome (the same studio

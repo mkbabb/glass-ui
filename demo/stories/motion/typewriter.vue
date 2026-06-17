@@ -39,6 +39,19 @@ function restart(): void {
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 (b) — the motion title at the DISPLAY register with the
+             --motion-accent violet as the ONE color text-event (the existing
+             motion-purple family on the masthead, never a body <p>/<h2>). -->
+        <header class="flex flex-col gap-1">
+            <span class="section-label">Motion · Typewriter</span>
+            <span
+                class="text-display-3 font-display leading-tight"
+                :style="{ color: 'var(--motion-accent)' }"
+            >
+                Typewriter
+            </span>
+        </header>
+
         <!-- Hero display: Plus Jakarta Sans display type hosting the rotating phrase. -->
         <section
             :class="

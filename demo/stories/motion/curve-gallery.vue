@@ -183,6 +183,19 @@ const houseCores: { token: string; cp: string }[] = [
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 (b) — the motion title at the DISPLAY register with the
+             --motion-accent violet as the ONE color text-event (the existing
+             motion-purple family on the masthead, never a body <p>/<h2>). -->
+        <header class="flex flex-col gap-1">
+            <span class="section-label">Motion · Curve Gallery</span>
+            <span
+                class="text-display-3 font-display leading-tight"
+                :style="{ color: 'var(--motion-accent)' }"
+            >
+                Curve Gallery
+            </span>
+        </header>
+
         <StorySection
             label="The curve canon"
             blurb="The FULL motion taxonomy — 1:1 with the keyframes easing inventory: the four CSS Standard bezier keywords, the value.js analytic ease* families (Sine / Quad / Cubic + smooth-step-3 / Expo / Circ), the Back overshoot curves, the Bounce family, the Steps generators, the CSS linear() multi-stop form, and the iOS spring presets — each plot driven by its REAL JS twin. Pick a family; press a card to fire its dot off the twin (springs and back-curves overshoot past the track then settle)."

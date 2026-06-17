@@ -7,6 +7,7 @@
                 props.bare && 'icon-chip--bare',
                 props.duotone && 'icon-chip--duotone',
                 props.bloom && 'icon-chip--bloom',
+                props.saturated && 'icon-chip--saturated',
                 revealOptedIn && 'icon-chip--reveal',
                 props.class,
             )

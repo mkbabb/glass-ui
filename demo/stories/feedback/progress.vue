@@ -7,6 +7,13 @@ import {
     type ProgressSegment,
 } from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Gauge } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress
+// is a REFERENCE surface: the phase-bus carries its OWN --viz-* phase hues (the
+// component teaching content), so the page identity is the eyebrow/rail/chip and
+// the viz phase-bus is not a competing event (the d3 reference-class discipline).
+const FEEDBACK_STOP = 8;
 
 // Sectioned variant demo — a 4-phase pattern (pings / jitter / download /
 // upload) with one phase active to show the spring active-fill.
@@ -49,6 +56,30 @@ onUnmounted(stopAnimated);
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity event family (the tinted
+             eyebrow + the accent rail + the focal IconChip, all on --section-color-8).
+             The phase-bus body keeps its own --viz-* phase hues (the component's
+             teaching content — a reference surface, not a competing page event). -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Gauge" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Progress
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Determinate, animated, and the phase-bus — the phase hues are
+                    the component's own; the section identity is the page event.
+                </p>
+            </div>
+        </header>
+
         <StorySection label="determinate">
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">

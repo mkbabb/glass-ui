@@ -338,3 +338,34 @@
 .segmented-tabs--underline .segmented-tab:hover {
     color: color-mix(in oklab, var(--foreground) 70%, transparent);
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   BB.W-DRAG-MORPH — the `.glass-drag-lift` decoration (the pull affordance).
+
+   The `useDragMorph` consumer adds this class to the morph element while
+   `dragging` is true (the SegmentedTabs `:draggable` indicator; the
+   DockLayerGroup pull rail). It is the visual "this is grabbable + grabbed"
+   affordance — the GRAB cursor + a sub-perceptual `--glass-specular` catch-light
+   lift + the `will-change: transform` compositor hint that promotes the lozenge
+   to its own layer for the 1:1 follow. It carries NO transform itself (the
+   translate + squish are the primitive's own `translate`/`--stretch` writes, the
+   §6 compositor channels); this class only paints the affordance + the hint.
+
+   The grab cursor sits on the morph element AT REST too (a draggable indicator
+   reads grabbable before the grab), so `.glass-drag-grabbable` marks the rest
+   affordance and `.glass-drag-lift` adds the grabbing state. PRM does not gate
+   the cursor/hint (they are not motion); the lift is a static specular nudge. */
+.glass-drag-grabbable {
+    cursor: grab;
+    touch-action: none;
+}
+
+.glass-drag-lift {
+    cursor: grabbing;
+    /* Promote to its own compositor layer for the 1:1 follow (the translate write
+       is compositor-only; the hint keeps the plate off the main-thread paint). */
+    will-change: transform;
+    /* Sub-perceptual catch-light lift — the grabbed lozenge reads a hair brighter
+       at its specular edge (the W-GLASS-CAL specular register, disco-FREE). */
+    --glass-specular: 0.1;
+}

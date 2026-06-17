@@ -35,6 +35,9 @@ const priorityOptions: SegmentedTabOption[] = [
     { label: "Urgent", value: "urgent" },
 ];
 
+// ── Pill (glass) — DRAGGABLE (the LIQUID TAB, BB.W-DRAG-MORPH) ──
+const liquidView = ref("grid");
+
 // ── Pill (glass) — vertical ──
 const account = ref("profile");
 const accountOptions: SegmentedTabOption[] = [
@@ -119,6 +122,25 @@ const chapterBody: Record<string, string> = {
                     <SegmentedTabs v-model="priority" :options="priorityOptions" />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ priority }}</span
+                    >
+                </div>
+            </div>
+        </StorySection>
+
+        <!-- ════ The PILL material — DRAGGABLE (the LIQUID TAB) ════ -->
+        <StorySection
+            heading="Pill — draggable (the liquid tab)"
+            blurb="The iOS-27 move: GRAB the indicator and PULL it. The lozenge follows the finger ~1:1, stretches on drag velocity (capped low — it swells, never taffy-pulls), and flings to the nearest tab on release. The click path is unchanged; the drag is the additive :draggable axis. Composes the kf Draggable substrate (no second drag engine)."
+        >
+            <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
+                <div class="flex flex-wrap items-center gap-3">
+                    <SegmentedTabs
+                        v-model="liquidView"
+                        :options="viewOptions"
+                        draggable
+                    />
+                    <span class="text-xs text-muted-foreground"
+                        >selected: {{ liquidView }} — drag the pill</span
                     >
                 </div>
             </div>

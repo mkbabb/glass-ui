@@ -230,6 +230,21 @@ watch(maxHarmonics, (mx) => {
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 (b) — the studio title at the DISPLAY register with the
+             --motion-accent violet as the ONE color text-event (the studio's
+             unifying identity on the masthead). The basis-palette <Select> teaches
+             the --viz-* hues (the component-feature content — reference-class), so
+             the title-violet is the page event, not a competing family. -->
+        <header class="flex flex-col gap-1">
+            <span class="section-label">Substrates · Fourier Studio</span>
+            <span
+                class="text-display-3 font-display leading-tight"
+                :style="{ color: 'var(--motion-accent)' }"
+            >
+                Fourier Studio
+            </span>
+        </header>
+
         <StorySection
             label="Fourier studio — harmonics · epicycles · shape-trace · clock"
             blurb="The foreground interactive register (the ambient field is the recessive

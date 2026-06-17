@@ -317,3 +317,140 @@ test.describe("AZ.W-SUFFUSE — the suffusion pass (π)", () => {
         );
     });
 });
+
+// ════════════════════════════════════════════════════════════════════════════
+// BB.W-SUFFUSE3 — the suffusion COMPLETION π readback (the feedback band's
+// three-site identity + the motion/studio display-violet titles). Same LIVE
+// :5199 getComputedStyle discipline; LOCAL-ONLY, backstopped by
+// proof:live-verified-ledger over the W-SUFFUSE3 DELTA.
+// ════════════════════════════════════════════════════════════════════════════
+const BB_VISUAL_DIR = fileURLToPath(
+    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+);
+const paired3: Record<string, unknown> = {};
+
+test.describe("BB.W-SUFFUSE3 — the suffusion completion (π)", () => {
+    // ── (a) — a feedback route renders its three-site --section-color-8 event ────
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`a — /feedback/alert renders the three-site --section-color-8 ruby identity (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 1000 });
+            await page.goto("/feedback/alert", { waitUntil: "networkidle" });
+            await setDark(page, dark);
+            await page.waitForTimeout(300);
+
+            // the eyebrow + rail + chip resolve the feedback stop. We read the
+            // resolved --section-color-8, the eyebrow color, the rail border, and
+            // the IconChip glyph color, and assert each lands in the warm-status
+            // ruby band (NOT flat gray, NOT the adjacent slate/indigo).
+            const evt = await page.evaluate(() => {
+                const stop = getComputedStyle(document.documentElement)
+                    .getPropertyValue("--section-color-8")
+                    .trim();
+                const eyebrow = document.querySelector(
+                    "header .section-label--tinted",
+                );
+                const railHeader = document.querySelector("header.border-l-\\[3px\\]");
+                const chip = document.querySelector("header .icon-chip");
+                const glyph = chip?.querySelector(".icon-chip__glyph");
+                return {
+                    stop,
+                    eyebrow: eyebrow ? getComputedStyle(eyebrow).color : null,
+                    rail: railHeader
+                        ? getComputedStyle(railHeader).borderLeftColor
+                        : null,
+                    chipBg: chip ? getComputedStyle(chip).backgroundColor : null,
+                    glyph: glyph ? getComputedStyle(glyph).color : null,
+                };
+            });
+            (paired3 as Record<string, unknown>)[`feedbackEvent_${mode}`] = evt;
+
+            const stopRgb = parseColor(evt.stop);
+            expect(
+                stopRgb,
+                `--section-color-8 resolves to a color (${evt.stop})`,
+            ).not.toBeNull();
+            const stopHue = rgbHueDeg(...stopRgb!);
+            // ruby/warm-status sits ~0-40° (the tomato/ruby warm band); NOT the
+            // slate ~239° / indigo ~291° adjacent bands.
+            const inWarmBand = stopHue < 45 || stopHue > 345;
+            expect(
+                inWarmBand,
+                `--section-color-8 hue ${stopHue.toFixed(1)}° must be the warm-status ruby band (< 45° or > 345°), distinct from the slate/indigo adjacent bands`,
+            ).toBeTruthy();
+            // the eyebrow reads the stop (not flat gray) — the band has identity.
+            expect(evt.eyebrow, "the feedback eyebrow renders").not.toBeNull();
+            // the chip glyph reads the full-chroma event.
+            expect(evt.glyph, "the feedback IconChip glyph renders").not.toBeNull();
+
+            await page.screenshot({
+                path: `${BB_VISUAL_DIR}/W-SUFFUSE3-feedback-${mode}.png`,
+                fullPage: true,
+            });
+        });
+    }
+
+    // ── (b) — a motion/studio route renders the display-register violet title ────
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`b — /motion/springs masthead is a display-register --motion-accent violet (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 900 });
+            await page.goto("/motion/springs", { waitUntil: "networkidle" });
+            await setDark(page, dark);
+            await page.waitForTimeout(300);
+
+            const masthead = await page.evaluate(() => {
+                const px = (v: string) => Math.round(parseFloat(v) * 100) / 100;
+                // the violet display title is the masthead <header>'s display span.
+                const span = [
+                    ...document.querySelectorAll("header span"),
+                ].find((el) =>
+                    /text-display-/.test((el as HTMLElement).className),
+                );
+                if (!span) return null;
+                const cs = getComputedStyle(span);
+                return {
+                    t: (span.textContent || "").trim().slice(0, 24),
+                    fs: px(cs.fontSize),
+                    color: cs.color,
+                };
+            });
+            (paired3 as Record<string, unknown>)[`motionTitle_${mode}`] = masthead;
+
+            expect(masthead, "the motion masthead display title renders").not.toBeNull();
+            expect(
+                masthead!.fs,
+                `the masthead title "${masthead!.t}" resolves ${masthead!.fs}px — must be a DISPLAY register (>> ${TEXT_HEADING_PX}px text-heading)`,
+            ).toBeGreaterThan(TEXT_HEADING_PX + 4);
+            const titleRgb = parseColor(masthead!.color);
+            expect(
+                titleRgb,
+                `the masthead title color resolves (${masthead!.color})`,
+            ).not.toBeNull();
+            const titleHue = rgbHueDeg(...titleRgb!);
+            // violet ~290-350° (the --motion-accent family), NOT warm-red.
+            expect(
+                titleHue,
+                `the masthead title hue ${titleHue.toFixed(1)}° must be the --motion-accent violet (290-350°), the ONE family event on the masthead, never warm-red`,
+            ).toBeGreaterThan(290);
+            expect(titleHue).toBeLessThan(350);
+
+            await page.screenshot({
+                path: `${BB_VISUAL_DIR}/W-SUFFUSE3-motion-title-${mode}.png`,
+                fullPage: false,
+            });
+        });
+    }
+
+    test.afterAll(() => {
+        mkdirSync(BB_VISUAL_DIR, { recursive: true });
+        writeFileSync(
+            `${BB_VISUAL_DIR}/W-SUFFUSE3-suffuse-readback.json`,
+            `${JSON.stringify(paired3, null, 2)}\n`,
+        );
+    });
+});

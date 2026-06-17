@@ -79,6 +79,12 @@ const RATCHET_BASELINES = {
     // partial (the §8 opacity/blur/saturate LADDER stays; the grain + specular-track +
     // tint-source + backdrop-luma knobs split out) — drained to {} before the Batch-7 close.
     "styles/tokens/glass.css": 505, // BOOK(BB.W-CARVE4): carve the grain/specular/tint knobs → tokens/glass-fx.css (Batch 6)
+    // BB.W-DRAG-MORPH wired the pull/morph gesture + roving-tabindex into the tabs
+    // engine, pushing it past 500. BOOK(BB.W-CARVE4): extract the drag-morph wiring
+    // (and/or the indicator transform path) into the colocated composables/ dir
+    // (tabs/ already carries composables/useTabIndicator.ts) — drained before the
+    // Batch-7 close.
+    "components/custom/tabs/SegmentedTabs.vue": 543, // BOOK(BB.W-CARVE4): extract the drag-morph/indicator wiring → tabs/composables/ (Batch 6)
 };
 
 let _cliPaths = null;

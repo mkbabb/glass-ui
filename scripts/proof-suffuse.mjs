@@ -209,6 +209,31 @@ const LEDGER = [
     //    rows), so it is EXEMPT from the strict ≤1-event count, like the icon GRID
     //    is exempt from the monochrome zero. The page identity stays --section-color-5. ─
     { surface: "demo/stories/display/badge.vue", event: "--section-color-5", kind: "reference" },
+    // ── BB.W-SUFFUSE3 (a) the FEEDBACK band's three-site identity — ONE
+    //    --section-color-8 ruby (warm-status) event via the IconChip + eyebrow +
+    //    rail family. Distinct from forms-3 / containers-2 / data-9 /
+    //    navigation-12; the warm-status read for a status/notification band. The
+    //    tone specimens (Toast/Notification --feedback-tone, Alert variant) carry
+    //    their OWN component color — the page identity is the eyebrow/rail/chip
+    //    event, the component tone is not a competing page event (the d3 per-
+    //    surface discipline, the badge-reference precedent). Progress is a
+    //    REFERENCE surface (its phase-bus --viz-* hues ARE the teaching content).
+    { surface: "demo/stories/feedback/alert.vue", event: "--section-color-8", kind: "color" },
+    { surface: "demo/stories/feedback/toast.vue", event: "--section-color-8", kind: "color" },
+    { surface: "demo/stories/feedback/notification.vue", event: "--section-color-8", kind: "color" },
+    { surface: "demo/stories/feedback/skeleton.vue", event: "--section-color-8", kind: "color" },
+    { surface: "demo/stories/feedback/confirm-dialog.vue", event: "--section-color-8", kind: "color" },
+    // progress: the phase-bus --viz-* IS the component teaching content (reference-
+    // class), so it is EXEMPT from the strict ≤1-event count like select/slider/badge;
+    // the page identity is still the eyebrow/rail/chip on --section-color-8.
+    { surface: "demo/stories/feedback/progress.vue", event: "--section-color-8", kind: "reference" },
+    // ── BB.W-SUFFUSE3 (b) the studio masthead surfaces — the --motion-accent
+    //    violet title is the ONE color text-event. fourier-studio carries the
+    //    --viz-* basis palette (the component-feature teaching content), so it is
+    //    reference-class; aurora/blob carry only the title-violet (color kind).
+    { surface: "demo/stories/substrates/aurora.vue", event: "--motion-accent", kind: "color" },
+    { surface: "demo/stories/substrates/blob.vue", event: "--motion-accent", kind: "color" },
+    { surface: "demo/stories/substrates/fourier-studio.vue", event: "--motion-accent", kind: "reference" },
     // ── The legitimately-monochrome surfaces (D3-9) — ZERO events ──────────────
     // The icon GRID (the icons.vue grid block — NOT the Pops chip block, which is
     // the chip reference and a sanctioned event), the Section type-ladder
@@ -585,11 +610,125 @@ add(
         : "the settings four-hue eyebrow cycle (per-group section-color-N) is still present",
 );
 
+// ── BB.W-SUFFUSE3 (a) — the FEEDBACK band carries its three-site identity ─────
+// Each enrolled feedback story carries the event FAMILY (the eyebrow OR the rail
+// OR the IconChip resolving the feedback --section-color-8 stop). The d1 body-ink
+// floor still holds (covered by the d1-body-ink-untinted clause above, which now
+// scans the feedback LEDGER rows too). A band that adds the chip but tints a body
+// <p> REDs the d1 floor; a band that wears the flat default (no event) REDs here.
+const FEEDBACK_SURFACES = [
+    "demo/stories/feedback/alert.vue",
+    "demo/stories/feedback/toast.vue",
+    "demo/stories/feedback/notification.vue",
+    "demo/stories/feedback/progress.vue",
+    "demo/stories/feedback/skeleton.vue",
+    "demo/stories/feedback/confirm-dialog.vue",
+];
+const FEEDBACK_STOP = "--section-color-8";
+const feedbackIdentityBreaches = [];
+for (const rel of FEEDBACK_SURFACES) {
+    const src = strip(read(rel));
+    // The event FAMILY: the tinted eyebrow (.section-label--tinted + the
+    // --section-label-accent set to the feedback stop) OR the accent rail
+    // (border-l + the stop) OR the <IconChip :section> resolving the stop.
+    const hasEyebrow =
+        /section-label--tinted/.test(src) &&
+        new RegExp(`--section-label-accent[^;]*${FEEDBACK_STOP.replace(/[-]/g, "[-]")}|FEEDBACK_STOP`).test(src);
+    const hasRail = /border-l-\[3px\]/.test(src) && /section-color-/.test(src);
+    const hasChip = /<IconChip\b[^>]*:section/.test(src) || /<IconChip\b[\s\S]*?:section/.test(src);
+    // The feedback stop is referenced (via the FEEDBACK_STOP const → the
+    // --section-color-${FEEDBACK_STOP} template OR a literal --section-color-8).
+    const referencesStop =
+        /FEEDBACK_STOP\s*=\s*8\b/.test(src) ||
+        /--section-color-8\b/.test(src) ||
+        /section-color-\$\{FEEDBACK_STOP\}/.test(src);
+    if (!((hasEyebrow || hasRail || hasChip) && referencesStop)) {
+        feedbackIdentityBreaches.push(
+            `${rel}: eyebrow:${hasEyebrow} rail:${hasRail} chip:${hasChip} stop:${referencesStop}`,
+        );
+    }
+}
+add(
+    "a-feedback-three-site-identity",
+    feedbackIdentityBreaches.length === 0,
+    feedbackIdentityBreaches.length === 0
+        ? `the FEEDBACK band carries its three-site --section-color-8 ruby identity (the tinted eyebrow + the accent rail + the focal <IconChip :section>) on all ${FEEDBACK_SURFACES.length} enrolled stories — the band reads its OWN warm-status identity, not flat-gray-on-cream (BB.W-SUFFUSE3 a)`
+        : `${feedbackIdentityBreaches.length} feedback surface(s) missing the three-site identity: ${feedbackIdentityBreaches.join("; ")}`,
+);
+
+// ── BB.W-SUFFUSE3 (b) — the motion/studio titles at the DISPLAY register + violet ─
+// Each motion (springs/typewriter/curve-gallery) + studio (aurora/blob/fourier-
+// studio) chassis title renders at the display rung AND carries the --motion-accent
+// violet as the ONE color text-event. The bite: the title masthead reads
+// --motion-accent (NOT a second hue / --viz-fourier), AND a display rung
+// (text-display-N), AND the d1 body-ink floor holds (covered above — the violet
+// lands on the masthead, never a body <p>/section <h2>).
+const TITLE_VIOLET_SURFACES = [
+    "demo/stories/motion/springs.vue",
+    "demo/stories/motion/typewriter.vue",
+    "demo/stories/motion/curve-gallery.vue",
+    "demo/stories/substrates/aurora.vue",
+    "demo/stories/substrates/blob.vue",
+    "demo/stories/substrates/fourier-studio.vue",
+];
+const titleVioletBreaches = [];
+for (const rel of TITLE_VIOLET_SURFACES) {
+    const src = strip(read(rel));
+    // A display-register masthead element (text-display-N) carrying the
+    // --motion-accent violet (the color: var(--motion-accent) inline OR the
+    // text-[var(--motion-accent)] arbitrary). The two must co-locate in the
+    // masthead <header> region — we require BOTH the display rung AND the violet
+    // text-event present in the file (the masthead header is the only display
+    // element added by this wave; the body plots read --motion-accent via fill/
+    // bg, not a display title).
+    const hasDisplayRung = /text-display-[1-5]\b|text-display-(mega|audacious|hero)\b/.test(src);
+    const hasTitleViolet =
+        /color:\s*['"]?var\(--motion-accent\)/.test(src) ||
+        /text-\[var\(--motion-accent\)\]/.test(src);
+    // The masthead co-location bite: a <header> region carrying BOTH a display
+    // rung AND the --motion-accent color (the title masthead, not a stray body
+    // display number + an unrelated body plot). We scan for the header block
+    // pattern this wave authors: a display-register span whose :style carries the
+    // motion-accent color.
+    const mastheadColocated =
+        /text-display-[1-5][^>]*\n?[^>]*var\(--motion-accent\)|var\(--motion-accent\)[\s\S]{0,200}text-display-[1-5]|text-display-[1-5][\s\S]{0,200}var\(--motion-accent\)/.test(src);
+    if (!(hasDisplayRung && hasTitleViolet && mastheadColocated)) {
+        titleVioletBreaches.push(
+            `${rel}: display:${hasDisplayRung} violet:${hasTitleViolet} masthead-colocated:${mastheadColocated}`,
+        );
+    }
+}
+add(
+    "b-motion-studio-title-violet",
+    titleVioletBreaches.length === 0,
+    titleVioletBreaches.length === 0
+        ? `the motion + studio titles resolve to the DISPLAY register + the --motion-accent violet as the ONE color text-event on all ${TITLE_VIOLET_SURFACES.length} masthead surfaces (the existing motion-purple family UNIFIED onto the masthead, never a second hue — BB.W-SUFFUSE3 b)`
+        : `${titleVioletBreaches.length} motion/studio surface(s) missing the display-register violet title: ${titleVioletBreaches.join("; ")}`,
+);
+
+// The title-violet is --motion-accent, NOT the banned --viz-fourier orange-red on
+// the title masthead (the d1/c-no-orange-red mirror for the title element).
+const titleRedBreaches = [];
+for (const rel of TITLE_VIOLET_SURFACES) {
+    const src = strip(read(rel));
+    // A display-register element carrying --viz-fourier (the banned title hue).
+    if (/text-display-[1-5][\s\S]{0,200}var\(--viz-fourier\)|var\(--viz-fourier\)[\s\S]{0,200}text-display-[1-5]/.test(src)) {
+        titleRedBreaches.push(rel);
+    }
+}
+add(
+    "b-title-not-orange-red",
+    titleRedBreaches.length === 0,
+    titleRedBreaches.length === 0
+        ? `no motion/studio title masthead carries the banned --viz-fourier orange-red (the title-violet is the --motion-accent family, the SAME event as the body — BB.W-SUFFUSE3 b bite)`
+        : `${titleRedBreaches.length} title masthead(s) carry --viz-fourier orange-red: ${titleRedBreaches.join("; ")}`,
+);
+
 // ── (z) the π readback spec is wired (the BINDING close — G2) ─────────────────
 add(
     "pi-readback-spec-exists",
     existsSync(resolve(ROOT, "tests-visual/suffuse.spec.ts")),
-    "tests-visual/suffuse.spec.ts exists (the π getComputedStyle readback: the hero title display rung + the motion plot --viz-legendre + the activated metric tier + the thin-page grid visibility — the BINDING close)",
+    "tests-visual/suffuse.spec.ts exists (the π getComputedStyle readback: the hero title display rung + the motion plot --viz-legendre + the activated metric tier + the thin-page grid visibility + the feedback three-site event + the motion/studio title-violet — the BINDING close)",
 );
 
 // ── Report ────────────────────────────────────────────────────────────────────

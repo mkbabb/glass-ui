@@ -1,17 +1,47 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { Alert, AlertDescription, AlertTitle } from "../../../src/components/ui/alert";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import {
     Info,
     CircleAlert,
     TriangleAlert,
     CircleCheck,
     Sparkles,
+    Bell,
 } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's ONE coherent --section-color-8 ruby
+// (warm-status) identity. Distinct from forms-3 / containers-2 / data-9 /
+// navigation-12; the warm-status read for a status/notification band.
+const FEEDBACK_STOP = 8;
 </script>
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity event family (the tinted
+             eyebrow + the accent rail + the focal IconChip, all on --section-color-8).
+             The tone specimens carry their OWN component color (the variant content);
+             the page identity is the ONE event here (the d3 per-surface discipline). -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Bell" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Alerts
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Status surfaces — the alert tones carry their own variant
+                    color; the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <div class="grid gap-8">
             <div class="grid gap-3">
                 <h2 class="text-subheading">Default</h2>

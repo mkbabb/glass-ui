@@ -3,10 +3,38 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Skeleton } from "../../../src/components/ui/skeleton";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { LoaderCircle } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+const FEEDBACK_STOP = 8;
 </script>
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity event family (the tinted
+             eyebrow + the accent rail + the focal IconChip, all on --section-color-8).
+             The skeleton placeholders stay neutral material; the section identity
+             is the ONE page event. -->
+        <header
+            class="flex items-center gap-4 border-l-[3px] pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderColor:
+                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="LoaderCircle" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Skeletons
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Loading placeholders — the shimmer stays neutral; the section
+                    identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <StorySection label="variants">
             <div class="grid gap-4 sm:grid-cols-2">
                 <div class="flex flex-col gap-2">

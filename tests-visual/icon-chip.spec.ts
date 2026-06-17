@@ -222,3 +222,145 @@ test.describe("BA.W-ICON-CHIP — the IconChip pop register π readback", () => 
         expect(fill.length).toBeGreaterThan(0);
     });
 });
+
+// ════════════════════════════════════════════════════════════════════════════
+// BB.W-SUFFUSE3 — the pop-MOTION + :saturated π readback. The pop-entrance rides
+// the per-spring CLOCK with the overshoot; the hover-bloom grows on --spring-
+// smooth; the :saturated plate is a louder (more chroma) backplate; under PRM the
+// pop snaps to its endpoint. Same LOCAL :5199 discipline.
+// ════════════════════════════════════════════════════════════════════════════
+const BB_VISUAL_DIR = fileURLToPath(
+    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+);
+
+/**
+ * Synthesize a `.icon-chip--reveal[data-reveal]` chip and sample its transform
+ * scale across the --spring-snappy-duration window — the snappy spring overshoots
+ * past 1 (~1.068) before settling, so a sample mid-window must read scale > 1.0
+ * (the springy bloom, not a flat ease-up that monotonically approaches 1).
+ */
+async function readRevealScaleSeries(page: Page): Promise<number[]> {
+    return page.evaluate(async () => {
+        const ID = "__ic_reveal__";
+        document.getElementById(ID)?.remove();
+        const host = document.createElement("span");
+        host.id = ID;
+        host.style.cssText =
+            "position:fixed;left:40px;top:40px;z-index:99999;--icon-chip-event-color:var(--section-color-8);--icon-chip-plate-color:var(--section-color-8);--icon-chip-glyph-size:22px;--icon-chip-size:48px;--d:0;";
+        host.className = "icon-chip icon-chip--reveal";
+        host.setAttribute("data-reveal", "");
+        document.body.appendChild(host);
+        // force a reflow so the animation begins from frame 0.
+        void host.offsetHeight;
+        const scaleOf = (el: HTMLElement): number => {
+            const t = getComputedStyle(el).transform;
+            if (!t || t === "none") return 1;
+            const m = t.match(/matrix\(([^)]+)\)/);
+            if (m) return parseFloat(m[1]!.split(",")[0]!.trim());
+            const m3 = t.match(/matrix3d\(([^)]+)\)/);
+            if (m3) return parseFloat(m3[1]!.split(",")[0]!.trim());
+            return 1;
+        };
+        const samples: number[] = [];
+        // sample across ~340ms (the --spring-snappy-duration) at ~30ms steps.
+        for (let i = 0; i < 12; i++) {
+            samples.push(scaleOf(host));
+            await new Promise((r) => setTimeout(r, 30));
+        }
+        host.remove();
+        return samples;
+    });
+}
+
+/**
+ * Synthesize a default (25%) chip and a :saturated (40%) chip on the SAME stop
+ * and read both resolved backplate alphas — the saturated plate must read a
+ * LOUDER mix (higher α) than the default reference register.
+ */
+async function readSaturatedVibrancy(page: Page): Promise<{
+    defaultAlpha: number | null;
+    saturatedAlpha: number | null;
+}> {
+    return page.evaluate(() => {
+        const make = (sat: boolean): number | null => {
+            const host = document.createElement("span");
+            host.style.cssText =
+                "position:fixed;left:-9999px;top:0;--icon-chip-event-color:var(--section-color-8);--icon-chip-plate-color:var(--section-color-8);--icon-chip-glyph-size:22px;--icon-chip-size:48px;";
+            host.className = sat
+                ? "icon-chip icon-chip--saturated"
+                : "icon-chip";
+            document.body.appendChild(host);
+            void host.offsetHeight;
+            const bg = getComputedStyle(host).backgroundColor;
+            host.remove();
+            const rgba = bg.match(
+                /rgba?\(\s*[\d.]+[,\s]+[\d.]+[,\s]+[\d.]+(?:[,\s/]+([\d.]+))?/i,
+            );
+            if (rgba) return rgba[1] === undefined ? 1 : Number(rgba[1]);
+            const fn = bg.match(
+                /(?:color\(\s*srgb\s+[\d.]+\s+[\d.]+\s+[\d.]+|oklab\(\s*[-\d.%]+\s+[-\d.%]+\s+[-\d.%]+)\s*\/\s*([\d.]+%?)\s*\)/i,
+            );
+            if (fn) {
+                const v = fn[1]!;
+                return v.endsWith("%") ? Number(v.slice(0, -1)) / 100 : Number(v);
+            }
+            return null;
+        };
+        return { defaultAlpha: make(false), saturatedAlpha: make(true) };
+    });
+}
+
+test.describe("BB.W-SUFFUSE3 — the pop-motion + :saturated π readback", () => {
+    test("c1 — the pop-entrance OVERSHOOTS past 1 on the snappy spring clock", async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await page.goto(ICONS_ROUTE, { waitUntil: "networkidle" });
+        const series = await readRevealScaleSeries(page);
+        const peak = Math.max(...series);
+        // the snappy spring peaks ~1.068 — a flat ease-up never exceeds 1.0.
+        expect(
+            peak,
+            `the reveal scale series ${JSON.stringify(series.map((s) => Math.round(s * 1000) / 1000))} must OVERSHOOT past 1.0 (the snappy spring's ~+7% bloom, not a flat ease-up) — peak ${peak.toFixed(3)}`,
+        ).toBeGreaterThan(1.0);
+    });
+
+    test("c2/c3 — the :saturated plate reads a LOUDER mix than the default", async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await page.goto(ICONS_ROUTE, { waitUntil: "networkidle" });
+        const v = await readSaturatedVibrancy(page);
+        expect(v.defaultAlpha, "the default plate resolves an alpha").not.toBeNull();
+        expect(
+            v.saturatedAlpha,
+            "the :saturated plate resolves an alpha",
+        ).not.toBeNull();
+        // the default is the 25% reference stop; the saturated is ~40% — louder.
+        expect(
+            v.saturatedAlpha!,
+            `the :saturated plate α ${v.saturatedAlpha} must be LOUDER than the default α ${v.defaultAlpha} (the focal-pop vibrancy axis)`,
+        ).toBeGreaterThan(v.defaultAlpha! + 0.05);
+    });
+
+    test("c1 — under PRM the pop SNAPS to its endpoint (scale 1, no overshoot)", async ({
+        page,
+    }) => {
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await page.goto(ICONS_ROUTE, { waitUntil: "networkidle" });
+        const series = await readRevealScaleSeries(page);
+        const peak = Math.max(...series);
+        // under reduce the `animation: none` carve holds — the chip sits at its
+        // natural endpoint (scale 1), zero overshoot frames.
+        expect(
+            peak,
+            `under prefers-reduced-motion: reduce the pop must SNAP to scale 1 (no overshoot) — series ${JSON.stringify(series.map((s) => Math.round(s * 1000) / 1000))}`,
+        ).toBeLessThanOrEqual(1.001);
+        await page.emulateMedia({ reducedMotion: null });
+    });
+
+    test.afterAll(() => {
+        mkdirSync(BB_VISUAL_DIR, { recursive: true });
+    });
+});

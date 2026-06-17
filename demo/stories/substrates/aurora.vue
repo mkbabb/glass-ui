@@ -110,6 +110,19 @@ void currentMeta;
 <template>
     <TooltipProvider :delay-duration="300">
         <section class="flex flex-col gap-8">
+            <!-- BB.W-SUFFUSE3 (b) — the studio title at the DISPLAY register with
+                 the --motion-accent violet as the ONE color text-event (the
+                 studio's unifying identity on the masthead, never a body <p>/<h2>). -->
+            <header class="flex flex-col gap-1">
+                <span class="section-label">Substrates · Aurora</span>
+                <span
+                    class="text-display-3 font-display leading-tight"
+                    :style="{ color: 'var(--motion-accent)' }"
+                >
+                    Aurora
+                </span>
+            </header>
+
             <!-- Preset picker — visible row of baked thumbnails. -->
             <PresetPickerRow
                 :current="currentKey"

@@ -117,15 +117,19 @@ function back() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Switcher rail</h2>
+            <h2 class="text-subheading">Switcher rail — pull-to-switch (BB.W-DRAG-MORPH)</h2>
             <p class="text-small text-muted-foreground">
                 Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.
+                With <code class="rounded bg-muted px-1">draggable</code> the rail is pull-to-switch:
+                drag along the rail axis and fling to the nearest layer (the <code class="rounded bg-muted px-1">useDragMorph</code>
+                consumer #2; the reka Arrow-key roving stays).
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
+                        draggable
                         data-testid="dock-layer-rail-group"
                     >
                         <DockLayer

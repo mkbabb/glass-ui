@@ -61,10 +61,20 @@ export interface IconChipProps {
     duotone?: boolean;
     /**
      * The chip's own smooth-glass hover register (the backplate mix lifts, a soft
-     * glow ring appears, the stroke firms) — on the §6 easing doctrine, PRM-gated,
+     * glow ring appears, the stroke firms) — on the §6 easing doctrine (the GROW
+     * rides --spring-smooth, the color cross-fade the bezier), PRM-gated,
      * disco-FREE. Default `false`.
      */
     bloom?: boolean;
+    /**
+     * The louder focal-pop vibrancy axis (BB.W-SUFFUSE3) — re-points the
+     * backplate `color-mix` strength off the 25% reference stop to ~40% (more
+     * chroma) via `--icon-chip-plate-strength`. STILL the ONE color event per
+     * surface (the same event, louder — proof:suffuse d3 counts the event family,
+     * not the saturation); the `in srgb` space + the chip≤glyph ratio are
+     * untouched. Default `false` (byte-identical to the reference register).
+     */
+    saturated?: boolean;
     /**
      * Entrance choreography — composes the shipped `vReveal` directive. A numeric
      * value is the `--d` stagger index; `true` is index 0. PRM-gated by `vReveal`'s

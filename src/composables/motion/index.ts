@@ -18,6 +18,12 @@ export * from "./constants";
 export * from "./useSpring";
 export * from "./useSpringMount";
 export * from "./useSpringPress";
+// BB.W-DRAG-MORPH — the pull/drag-to-morph-squish primitive. Composes the
+// UNCONSUMED kf `Draggable` (pointer-capture follow + velocity-window + snap-aware
+// fling) + `SpringProgress` + `useLiquidFlex` `"tanh"` velocity-squish into ONE
+// gesture. Statically reaches `@mkbabb/keyframes.js` (via `Draggable`), so it rides
+// the heavy-peer `/motion` barrel — NOT `/motion-core`.
+export * from "./useDragMorph";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV
