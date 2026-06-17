@@ -1,0 +1,44 @@
+/* glass/deep.css — BB.W-DEEP-GLASS — the OPT-IN `.glass-deep` decoration.
+ *
+ * The deep-glass register: the maximal iOS-27 Liquid-Glass tier ABOVE the
+ * W-GLASS-CAL calm default (the Apple `saturate(1.8) blur(20px)` family, landed
+ * at the budget-clearing 16px / saturate 1.5; tokens/glass-deep.css). `.glass-deep`
+ * is the OPT-IN surface — a consumer adds it to a glass surface that wants the
+ * thick refractive liquid read (the hero glass, the dock, the CTA); the bare
+ * content default is UNCHANGED (the calm default is the user's call).
+ *
+ * ── The token-substitution model (the `.glass-opaque` precedent) ───────────
+ * `.glass-deep` is a DECORATION ON a base `.glass-*` rung, NOT a parallel solid/
+ * blur recipe. It mirrors `.glass-opaque` (ladder.css §opaque-escape — which only
+ * sets `--glass-level: 0`, a token re-point, never a competing `backdrop-filter`):
+ * `.glass-deep` re-points the floating-rung blur token to the deep family
+ * (`--glass-blur-floating: var(--glass-blur-deep)`), so the base `.glass-floating`
+ * rule's `backdrop-filter: var(--glass-blur-floating)` resolves to the DEEP blur —
+ * NO cascade fight, NO base-rule edit, the glass edge/rim/under-shadow + the W55
+ * tint axis + the a11y brackets all compose unchanged. The deep tier rides a base
+ * rung exactly as `.glass-opaque` does (the CardTier map is `deep →
+ * 'glass-floating glass-deep'`).
+ *
+ * Because the deep blur (glass-deep.css) COMPOSES `var(--glass-level)`, the a11y
+ * brackets (`prefers-reduced-transparency: reduce` / `prefers-contrast: more` set
+ * `--glass-level: 0` / 0.3 at :root, a11y-fallback.css) reach the deep plate for
+ * FREE — the deep blur collapses to blur(0) under reduced-transparency through the
+ * SAME level path (the opaque escape). The W55 bright-bucket darken reaches the
+ * deep surface by construction too: `.glass-deep` is composed WITH `.glass-floating`,
+ * which is already in the W55 `@container style(--glass-backdrop: light)` material
+ * group (ladder.css) AND self-engages the overlay-band darken — the deep tier
+ * inherits the legibility tint with no selector-list edit.
+ *
+ * @import-ed in glass.css AFTER ladder.css/surfaces.css (the same @layer components,
+ * source-order-after so the token re-point lands beside the rung it rides) and
+ * BEFORE the a11y @media brackets (which still win by the :root level re-point).
+ */
+@layer components {
+    /* The deep decoration: re-point the floating rung's blur token to the deep
+       family. The base `.glass-floating` rule (`backdrop-filter:
+       var(--glass-blur-floating)`) then paints the deep `blur(16px) saturate(1.5)`
+       at `--glass-depth: 1` — the Apple-deep register, opt-in. */
+    .glass-deep {
+        --glass-blur-floating: var(--glass-blur-deep);
+    }
+}

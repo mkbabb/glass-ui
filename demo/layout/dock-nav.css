@@ -257,6 +257,21 @@
 .demo-main-scroller {
     scroll-timeline-name: --demo-main-progress;
     scroll-timeline-axis: block;
+    /* BB.W-HIERARCHY2 — the CONTENT-side anti-collision gutter. The `<main>` route
+       column reserves the library `--dock-content-safe-inset` gutter (keyed to the
+       dock rail reach) on the SCROLL axes so the page-title band is structurally clear
+       of any dock-chip reach even on a route added WITHOUT a per-route audit (the
+       anti-gameability the gestalt gate wants): `scroll-padding-block-start` keeps a
+       scroll-snap/anchor jump from parking the title under the dock chrome; the
+       leading `scroll-padding-inline-start` reserves the dead inline band the fixed
+       SidebarDock rail sits beside. This is the CONTENT-side half of the
+       dock-collision close — the SEAT half (chipOverMain:false on EVERY route by
+       topology) is W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL's; the two close the collision
+       from BOTH sides on the SAME dead gutter (ONE gutter, two consumers — the reserve
+       + the fan). It NEVER widens the SEAT's gutter-fan or the symmetric `px-*` page
+       padding (a scroll-axis reserve, not a layout-box padding clobber). */
+    scroll-padding-block-start: var(--dock-content-safe-inset, 2.5rem);
+    scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
 .demo-scroll-progress {
     --scroll-progress-scroller: --demo-main-progress;

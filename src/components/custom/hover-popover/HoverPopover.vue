@@ -119,7 +119,7 @@ const open = defineModel<boolean>("open", { default: false });
 
 const contentClass = computed(() =>
     cn(
-        "z-popover hover-popover-panel popover-animate",
+        "z-popover hover-popover-panel glass-reveal",
         props.class,
     ),
 );

@@ -36,6 +36,12 @@ export const CSS_MONOLITHS = {
             "color-radius.css",
             "shadow.css",
             "glass.css",
+            // BB.W-DEEP-GLASS — the OPT-IN deep-glass token family (the SEPARATE
+            // --glass-blur-deep-* family + the --glass-depth scalar), @import-ed
+            // right after glass.css (the deep recipe LERPs against the §8 calm
+            // ladder composite, so it resolves after it). The calm ladder NEVER
+            // reads it — proof:glass-cal stays GREEN by construction.
+            "glass-deep.css",
             // BB.W-ON-GLASS-FG — the on-glass foreground register, carved out of
             // glass.css to hold the bound, @import-ed right after it (the rungs
             // derive against the §8 ladder composite, so they resolve after it).
@@ -62,6 +68,13 @@ export const CSS_MONOLITHS = {
             "ladder.css",
             "surfaces.css",
             "surface-axis.css",
+            "reveal.css",
+            // BB.W-DEEP-GLASS — the OPT-IN .glass-deep decoration (a deep blur
+            // token re-point ON a base rung, the .glass-opaque precedent), homed
+            // after surfaces/surface-axis (the same @layer components, source-
+            // order-after so the re-point lands beside the rung it rides) and
+            // BEFORE the squircle/a11y overrides (which still win by :root level).
+            "deep.css",
             "progress-rail.css",
             "squircle.css",
             "a11y-fallback.css",

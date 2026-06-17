@@ -44,35 +44,45 @@ const variant = computed<"hero" | "page">(() =>
     <TooltipProvider :delay-duration="250">
         <!-- BB.W-SCROLL-MOTION: the route-enter PAGE-BUILD host. On each navigation
              the <article> mounts inside the AppShell route <Transition>, and the
-             `.scroll-build` register assembles the page chrome-first: the <header>
-             chrome (beat 0) rises, then the <StoryHero> hero+body (beat 1) follows,
-             each on a `--scroll-build-step` coordinated stagger (the SOTA
-             page-assembles-itself read). A pure @keyframes-on-mount — NO setTimeout,
-             so the entrance never races the AppShell scroll-to-top reset (it is the
-             <Transition> hook's ordering, not a timer). The hero <h1> inside
-             <StoryHero> keeps its own `.story-hero-title--enter` (a deep grandchild,
-             not a direct `.scroll-build` child — no double-bind). PRM → no build
-             binds (the recipe's outer @media gate; the page mounts at its terminal
-             state). The reading-ORDER (chrome → hero → body) is W-HIERARCHY2's; this
-             register threads the entrance ON that order. -->
+             `.scroll-build` register assembles the page in reading order: on a
+             CONTENT page the <header> chrome (beat 0) rises, then the <StoryHero>
+             body (beat 1) follows; on a HERO page the chrome header is suppressed
+             (the descriptor is re-homed into the StoryHero cluster — W-HIERARCHY2),
+             so <StoryHero> is the lone beat 0 and the cluster's eyebrow→title→blurb
+             3-stage stagger carries the reading-order arrival. Each beat is on a
+             `--scroll-build-step` coordinated stagger (the SOTA page-assembles-itself
+             read). A pure @keyframes-on-mount — NO setTimeout, so the entrance never
+             races the AppShell scroll-to-top reset (it is the <Transition> hook's
+             ordering, not a timer). The hero cluster inside <StoryHero> rides its own
+             `.story-hero-cluster--enter` register (a deep grandchild, not a direct
+             `.scroll-build` child — no double-bind). PRM → no build binds (the
+             recipe's outer @media gate; the page mounts at its terminal state). The
+             reading-ORDER (the ordered cluster: eyebrow → title → blurb → body) is
+             W-HIERARCHY2's; this register threads the entrance ON that order. -->
         <article class="scroll-build mx-auto w-full max-w-6xl">
-            <header class="flex flex-col gap-2" :style="{ '--i': 0 }">
+            <!-- BB.W-HIERARCHY2 — the chrome <header> hosts the ordered cluster on a
+                 CONTENT page (variant="page") ONLY: eyebrow → chrome <h1> → blurb,
+                 already in correct reading order. On a HERO page the descriptor
+                 (eyebrow + blurb) is re-homed INTO the StoryHero cluster alongside
+                 the display <h1> (the reading-order inversion fix), so the WHOLE
+                 chrome header is suppressed on the hero path — the descriptor is
+                 shown ONCE, never split across the chrome/card boundary (the D1-4
+                 double-<h1> suppression GENERALIZED to the eyebrow + blurb). -->
+            <header
+                v-if="variant === 'page'"
+                class="flex flex-col gap-2"
+                :style="{ '--i': 0 }"
+            >
                 <p v-if="eyebrow" class="text-admin-label text-muted-foreground">
                     {{ eyebrow }}
                 </p>
-                <!-- D1-4 (AZ.W-HIERARCHY): the chrome <h1> renders on a CONTENT
-                     page (variant="page") only. On a HERO page the hero card owns
-                     the document <h1> (its display-register title), so a chrome
-                     <h1> here would be a duplicate top-level heading in the outline.
-                     This is the STRUCTURAL double-<h1> suppression; the hero title's
-                     audacious DISPLAY-register upgrade is W-SUFFUSE's D2-1. -->
                 <!-- HS-2 (BA.W-SUFFUSE2, applied by W-STAGE on its behalf): the
                      content-page title lifts ONE √φ rung (text-heading 25.9px →
                      text-title 32.9px) so it DOMINATES the section <h2>
                      (text-subheading 20.4px) — the display ladder GRADES instead of
-                     cliffing. The D1-4 double-<h1> suppression (the variant==='page'
-                     guard) is preserved. -->
-                <h1 v-if="title && variant === 'page'" class="text-title">
+                     cliffing. The chrome <h1> is the content-page title; the hero
+                     title's audacious DISPLAY-register upgrade is W-SUFFUSE's D2-1. -->
+                <h1 v-if="title" class="text-title">
                     {{ title }}
                 </h1>
                 <p v-if="blurb" class="text-small max-w-prose text-muted-foreground">
@@ -81,14 +91,19 @@ const variant = computed<"hero" | "page">(() =>
             </header>
 
             <!-- The body sits in a glass card over the per-page background. The
-                 page's StorySection stack flows inside the card. -->
+                 page's StorySection stack flows inside the card. On a HERO page the
+                 chassis hosts the ordered eyebrow→title→blurb cluster (the re-homed
+                 descriptor); on a CONTENT page the eyebrow+blurb are the chrome
+                 header above, so the chassis ignores them. -->
             <StoryHero
                 :background="background"
                 :variant="variant"
                 :title="title"
+                :eyebrow="eyebrow"
+                :blurb="blurb"
                 :hero-title="props.heroTitle"
-                class="mt-8"
-                :style="{ '--i': 1 }"
+                :class="variant === 'page' ? 'mt-8' : undefined"
+                :style="{ '--i': variant === 'page' ? 1 : 0 }"
             >
                 <!-- BB.W-SCROLL-MOTION: the orchestrated section-CASCADE host
                      (supersedes the bare BA.W-ANIMATE `[data-scroll-reveal]` 6px

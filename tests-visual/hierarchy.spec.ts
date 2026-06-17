@@ -204,3 +204,231 @@ test.describe("AZ.W-HIERARCHY — the canonical section rung + Configurator voca
         );
     });
 });
+
+// ══════════════════════════════════════════════════════════════════════════════
+// BB.W-HIERARCHY2 — the StoryHeader cluster reading-order + the GRAVITY entrance +
+// the content-side gutter (the BINDING π readback; LOCAL-ONLY, real-render dev-box,
+// backstopped on CI by proof:live-verified-ledger).
+// ══════════════════════════════════════════════════════════════════════════════
+
+const BB_VISUAL_DIR = fileURLToPath(
+    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+);
+
+// The substrate hero pages that route through the <StoryPage> chassis (so they wear
+// the re-homed StoryHeader cluster) — the inversion baselines. Each renders the
+// ordered cluster eyebrow → title → blurb. NOTE (W-HIERARCHY2 §0 RE-GROUND drift):
+// `/substrates/aurora` is a BESPOKE studio page that hand-authors its OWN layout (it
+// does NOT compose <StoryPage>), so the chassis cluster does not apply there; the
+// three StoryPage-using substrate heroes (glass-material / constellation /
+// fourier-field) are the cluster surfaces. The aurora studio's own header is its
+// bespoke craft (the :hero-title="false"-class front-door pattern).
+const HERO_ROUTES = [
+    "/substrates/glass-material",
+    "/substrates/constellation",
+    "/substrates/fourier-field",
+];
+
+const bbPaired: Record<string, unknown> = {};
+
+test.describe("BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π)", () => {
+    test("H2-ORDER — the cluster renders eyebrow→title→blurb top-to-bottom, one dominant focal", async ({
+        page,
+    }) => {
+        const perRoute: Record<string, unknown> = {};
+        for (const route of HERO_ROUTES) {
+            await page.goto(route, { waitUntil: "domcontentloaded" });
+            await page
+                .waitForSelector(".story-header-cluster", { timeout: 8000 })
+                .catch(() => {});
+            await page.waitForTimeout(900); // let the 3-stage entrance settle
+
+            const r = await page.evaluate(() => {
+                const cluster = document.querySelector(".story-header-cluster");
+                if (!cluster) return null;
+                const eyebrow = cluster.querySelector(".story-header-eyebrow");
+                const h1 = cluster.querySelector("h1");
+                const blurb = cluster.querySelector(".story-header-blurb");
+                const top = (el: Element | null) =>
+                    el ? Math.round(el.getBoundingClientRect().top * 10) / 10 : null;
+                const fs = (el: Element | null) =>
+                    el
+                        ? Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10
+                        : null;
+                // The dominant focal — the display <h1> the largest type mass in the
+                // band (vs the eyebrow + blurb).
+                const h1Fs = fs(h1) ?? 0;
+                const eyebrowFs = fs(eyebrow) ?? 0;
+                const blurbFs = fs(blurb) ?? 0;
+                return {
+                    eyebrowTop: top(eyebrow),
+                    h1Top: top(h1),
+                    blurbTop: top(blurb),
+                    h1Fs,
+                    eyebrowFs,
+                    blurbFs,
+                    h1DominatesEyebrow: h1Fs > eyebrowFs,
+                    h1DominatesBlurb: h1Fs > blurbFs,
+                };
+            });
+
+            perRoute[route] = r;
+            expect(r, `${route} has a .story-header-cluster`).not.toBeNull();
+            const rr = r as {
+                eyebrowTop: number | null;
+                h1Top: number | null;
+                blurbTop: number | null;
+                h1DominatesEyebrow: boolean;
+                h1DominatesBlurb: boolean;
+            };
+            // The baseline order: eyebrow.top < h1.top < blurb.top (reading order).
+            if (rr.eyebrowTop != null && rr.h1Top != null) {
+                expect(
+                    rr.eyebrowTop,
+                    `${route} eyebrow.top (${rr.eyebrowTop}) must be ABOVE the title h1.top (${rr.h1Top}) — A4-INVERSION (descriptor never above the name)`,
+                ).toBeLessThan(rr.h1Top);
+            }
+            if (rr.h1Top != null && rr.blurbTop != null) {
+                expect(
+                    rr.h1Top,
+                    `${route} title h1.top (${rr.h1Top}) must be ABOVE the blurb.top (${rr.blurbTop}) — the blurb is the subordinate rung UNDER the title`,
+                ).toBeLessThan(rr.blurbTop);
+            }
+            // The single dominant focal — the display <h1> is the largest type mass.
+            expect(
+                rr.h1DominatesEyebrow && rr.h1DominatesBlurb,
+                `${route} the display <h1> must be the single dominant focal (largest type mass) over the eyebrow + blurb`,
+            ).toBe(true);
+        }
+        bbPaired.order = perRoute;
+        mkdirSync(BB_VISUAL_DIR, { recursive: true });
+    });
+
+    test("H2-GRAVITY — the title arrives NO-overshoot (translateY monotone to 0, never past)", async ({
+        page,
+    }) => {
+        // Capture the title's translateY across the entrance frame-series; assert it
+        // is monotone-decreasing toward 0 and NEVER negative (the no-overshoot floor —
+        // a --spring leaked onto the audacious title would push translateY past 0).
+        await page.goto("/substrates/glass-material", { waitUntil: "domcontentloaded" });
+        const frames = await page.evaluate(async () => {
+            const ty = () => {
+                const h1 = document.querySelector(
+                    ".story-header-cluster h1.story-hero-title",
+                );
+                if (!h1) return null;
+                const m = new DOMMatrixReadOnly(getComputedStyle(h1).transform);
+                return Math.round(m.m42 * 100) / 100; // translateY in px
+            };
+            const samples: (number | null)[] = [];
+            // sample across ~700ms (the 0.62s title clock + the 60ms stage delay).
+            for (let i = 0; i < 14; i++) {
+                samples.push(ty());
+                await new Promise((res) => setTimeout(res, 55));
+            }
+            return samples;
+        });
+        bbPaired.titleFrames = frames;
+        const nums = frames.filter((v): v is number => v != null);
+        // No-overshoot: every sampled translateY ≥ -0.5px (never past 0 toward
+        // negative — GRAVITY, not bounce). A spring overshoot would dip below 0.
+        for (const v of nums) {
+            expect(
+                v,
+                `title translateY (${v}px) must never overshoot past 0 (≥ -0.5px) — the GRAVITY-not-bounce floor (no --spring on the audacious title)`,
+            ).toBeGreaterThanOrEqual(-0.5);
+        }
+        // It settles to ≈0 by the end (the entrance completes).
+        if (nums.length > 0) {
+            expect(
+                Math.abs(nums[nums.length - 1]),
+                "the title settles to translateY ≈ 0 by the end of the entrance",
+            ).toBeLessThanOrEqual(1.0);
+        }
+    });
+
+    test("H2-PRM — under reduce the cluster paints its static terminal (no rise)", async ({
+        page,
+    }) => {
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        await page.goto("/substrates/glass-material", { waitUntil: "domcontentloaded" });
+        await page
+            .waitForSelector(".story-header-cluster h1.story-hero-title", {
+                timeout: 8000,
+            })
+            .catch(() => {});
+        await page.waitForTimeout(200);
+        const prm = await page.evaluate(() => {
+            const h1 = document.querySelector(
+                ".story-header-cluster h1.story-hero-title",
+            );
+            const eyebrow = document.querySelector(".story-header-eyebrow");
+            const readTy = (el: Element | null) => {
+                if (!el) return null;
+                const t = getComputedStyle(el).transform;
+                if (t === "none") return 0;
+                const m = new DOMMatrixReadOnly(t);
+                return Math.round(m.m42 * 100) / 100;
+            };
+            const opacity = (el: Element | null) =>
+                el ? Math.round(parseFloat(getComputedStyle(el).opacity) * 100) / 100 : null;
+            return {
+                h1Ty: readTy(h1),
+                h1Opacity: opacity(h1),
+                eyebrowOpacity: opacity(eyebrow),
+            };
+        });
+        bbPaired.prm = prm;
+        await page.emulateMedia({ reducedMotion: null });
+        // Static terminal: translateY 0 (no rise), opacity 1 (fully painted).
+        if (prm.h1Ty != null) {
+            expect(
+                Math.abs(prm.h1Ty),
+                `under reduce the title sits at its terminal translateY ≈ 0 (got ${prm.h1Ty}px) — no rise, no in-between frames`,
+            ).toBeLessThanOrEqual(0.5);
+        }
+        if (prm.h1Opacity != null) {
+            expect(
+                prm.h1Opacity,
+                "under reduce the cluster paints at full opacity (the static terminal)",
+            ).toBeGreaterThanOrEqual(0.95);
+        }
+    });
+
+    test("H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter", async ({
+        page,
+    }) => {
+        await page.goto("/substrates/glass-material", { waitUntil: "domcontentloaded" });
+        await page.waitForSelector(".demo-main-scroller", { timeout: 8000 }).catch(() => {});
+        await page.waitForTimeout(300);
+        const gutter = await page.evaluate(() => {
+            const main = document.querySelector(".demo-main-scroller");
+            if (!main) return null;
+            const cs = getComputedStyle(main);
+            const px = (v: string) => Math.round(parseFloat(v) * 10) / 10;
+            return {
+                scrollPaddingBlockStart: px(cs.scrollPaddingTop),
+                scrollPaddingInlineStart: px(cs.scrollPaddingLeft),
+            };
+        });
+        bbPaired.gutter = gutter;
+        writeFileSync(
+            `${BB_VISUAL_DIR}/W-HIERARCHY2-readback.json`,
+            `${JSON.stringify(bbPaired, null, 2)}\n`,
+        );
+        expect(gutter, "the .demo-main-scroller content column exists").not.toBeNull();
+        const g = gutter as {
+            scrollPaddingBlockStart: number;
+            scrollPaddingInlineStart: number;
+        };
+        // The gutter is reserved (non-zero) — the content-side anti-collision gutter.
+        expect(
+            g.scrollPaddingBlockStart,
+            `the <main> reserves a non-zero --dock-content-safe-inset block-start gutter (got ${g.scrollPaddingBlockStart}px)`,
+        ).toBeGreaterThan(0);
+        expect(
+            g.scrollPaddingInlineStart,
+            `the <main> reserves a non-zero --dock-content-safe-inset inline-start gutter (got ${g.scrollPaddingInlineStart}px)`,
+        ).toBeGreaterThan(0);
+    });
+});

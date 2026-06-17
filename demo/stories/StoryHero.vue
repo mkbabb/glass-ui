@@ -21,6 +21,7 @@ import { defaultBlobColorResolver } from "../../src/composables/color";
 import { useTokenColor } from "../../src/composables/dom/useTokenColor";
 import { useGlobalDark } from "../../src/composables/dark/useGlobalDark";
 import { cn } from "../../src/utils/cn";
+import StoryHeader from "./StoryHeader.vue";
 import {
     heroAuroraConfig,
     type HeroPaletteKey,
@@ -47,6 +48,19 @@ interface StoryHeroProps {
      * hero <h1> sets `:hero-title="false"` so the chassis does not double it.
      */
     heroTitle?: boolean;
+    /**
+     * The mono eyebrow (category · story). On a HERO page the chassis re-homes
+     * it into the ordered StoryHeader cluster ABOVE the display <h1>
+     * (BB.W-HIERARCHY2 — the reading-order inversion fix); StoryPage suppresses
+     * the chrome-header eyebrow on the hero path so the descriptor is shown ONCE.
+     */
+    eyebrow?: string | null;
+    /**
+     * The supporting blurb. On a HERO page the chassis re-homes it into the
+     * StoryHeader cluster UNDER the display <h1> (the subordinate rung), never
+     * split across the chrome/card boundary (BB.W-HIERARCHY2).
+     */
+    blurb?: string | null;
     /** Forwarded class string for the glass card surface. */
     cardClass?: string;
 }
@@ -63,6 +77,21 @@ const props = withDefaults(defineProps<StoryHeroProps>(), {
 // flat type ladder starved (D2-1/D2-4).
 const showHeroTitle = computed(
     () => isHero.value && props.heroTitle && Boolean(props.title),
+);
+
+// BB.W-HIERARCHY2 — the ordered StoryHeader cluster renders on a HERO page,
+// re-homing the eyebrow + blurb (out of StoryPage's chrome <header>) into ONE
+// coherent unit alongside the display <h1> so the reading order is
+// eyebrow → title → blurb, never split across the chrome/card boundary. The
+// cluster shows whenever the hero band has ANY rung to host (the display title,
+// an eyebrow, or a blurb). A bespoke front-door hero (:hero-title="false") owns
+// its own header, so its eyebrow/blurb stay in StoryPage's chrome header (the
+// content-page reading-order shape — already correct).
+const showCluster = computed(
+    () =>
+        isHero.value &&
+        props.heroTitle &&
+        Boolean(props.title || props.eyebrow || props.blurb),
 );
 
 // Normalize the string-shorthand and the object form to one shape.
@@ -243,15 +272,28 @@ const cardTier = computed<CardTier>(() => {
             :style="{ '--glass-backdrop': 'light' }"
             :class="cn('story-hero-bleed-content', cardClass)"
         >
-            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). It
-                 fade-RISES on entrance on the SETTLE register (BA.W-ANIMATE scope 5,
-                 applied here on its behalf — audacious type arrives with GRAVITY, not
-                 bounce: the `.story-hero-title--enter` keyframe rides --ease-out, NO
-                 overshoot, never --spring-bouncy/--spring-snappy; PRM → static
-                 terminal state via the keyframe's own @media gate). -->
-            <h1 v-if="showHeroTitle" class="story-hero-title story-hero-title--enter text-display-3">
-                {{ title }}
-            </h1>
+            <!-- BB.W-HIERARCHY2 — the ordered StoryHeader cluster (eyebrow → the
+                 display <h1> → blurb, top-to-bottom; the reading-order inversion
+                 fixed). The audacious chassis hero <h1> at the DISPLAY register
+                 (D2-1) is the cluster's single dominant focal moment; it fade-RISES
+                 on the SETTLE register (the `.story-hero-title--enter` keyframe
+                 rides --ease-out, NO overshoot — audacious type arrives with
+                 GRAVITY, not bounce; PRM → static terminal state). The eyebrow +
+                 blurb ride the same GRAVITY register as the cluster's 3-stage
+                 stagger (story-hero.css). -->
+            <StoryHeader
+                v-if="showCluster"
+                :eyebrow="eyebrow"
+                :blurb="blurb"
+                class="story-hero-cluster"
+            >
+                <h1
+                    v-if="showHeroTitle"
+                    class="story-hero-title story-hero-title--enter text-display-3"
+                >
+                    {{ title }}
+                </h1>
+            </StoryHeader>
             <slot />
         </div>
 
@@ -271,15 +313,28 @@ const cardTier = computed<CardTier>(() => {
                 )
             "
         >
-            <!-- The audacious chassis hero <h1> at the DISPLAY register (D2-1). It
-                 fade-RISES on entrance on the SETTLE register (BA.W-ANIMATE scope 5,
-                 applied here on its behalf — audacious type arrives with GRAVITY, not
-                 bounce: the `.story-hero-title--enter` keyframe rides --ease-out, NO
-                 overshoot, never --spring-bouncy/--spring-snappy; PRM → static
-                 terminal state via the keyframe's own @media gate). -->
-            <h1 v-if="showHeroTitle" class="story-hero-title story-hero-title--enter text-display-3">
-                {{ title }}
-            </h1>
+            <!-- BB.W-HIERARCHY2 — the ordered StoryHeader cluster (eyebrow → the
+                 display <h1> → blurb, top-to-bottom; the reading-order inversion
+                 fixed). The audacious chassis hero <h1> at the DISPLAY register
+                 (D2-1) is the cluster's single dominant focal moment; it fade-RISES
+                 on the SETTLE register (the `.story-hero-title--enter` keyframe
+                 rides --ease-out, NO overshoot — audacious type arrives with
+                 GRAVITY, not bounce; PRM → static terminal state). The eyebrow +
+                 blurb ride the same GRAVITY register as the cluster's 3-stage
+                 stagger (story-hero.css). -->
+            <StoryHeader
+                v-if="showCluster"
+                :eyebrow="eyebrow"
+                :blurb="blurb"
+                class="story-hero-cluster"
+            >
+                <h1
+                    v-if="showHeroTitle"
+                    class="story-hero-title story-hero-title--enter text-display-3"
+                >
+                    {{ title }}
+                </h1>
+            </StoryHeader>
             <slot />
         </Card>
     </div>

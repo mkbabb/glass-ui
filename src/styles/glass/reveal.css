@@ -1,0 +1,136 @@
+/* glass/reveal.css
+   BB.W-LIQUID-REVEAL — the `.glass-reveal` LIQUID-ENTER recipe: the spring-clocked,
+   coupled-channel top-layer open that REPLACES `popover-animate`'s fixed-bezier
+   zoom-95 (clean break, no alias). The zero-JS floor the reka portaled overlays
+   compose (they are not native top-layer, so they cannot ride `@starting-style`;
+   `.glass-reveal` is the data-state form). The `useLiquidReveal` JS leaf is the
+   source-rect REFINEMENT (the dialog-from-button / dock-from-pill bloom); this CSS
+   recipe is the everywhere floor.
+   @import-ed by glass.css in cascade order, in its own @layer components
+   (isomorphic to the monolith). See docs/precepts/design-idioms.md §cohesion-aware
+   partials. */
+
+/* ── THE LIQUID ENTER (the iOS-27 bloom-from-anchor) ──────────────────────────
+ *
+ * Three COUPLED channels, the SPATIAL/EFFECTS split (the Material-3 / §6 /
+ * W-MOTION-CANON doctrine):
+ *
+ *   (a) SCALE (the bloom — SPATIAL) rides `--spring-snappy` + its OWN settle clock
+ *       `--spring-snappy-duration` (the W-GLASS-CAL Unit 3 per-spring clock, NOT the
+ *       generic `--duration-normal` that re-timed every spring to one wall clock).
+ *       The overshoot interior of the spring `linear()` gives the canonical iOS
+ *       arrival. `transform-origin` anchors at the popper edge (`--reka-popper-
+ *       transform-origin`) so the surface blooms FROM its anchor, not center.
+ *   (b) OPACITY (the fade — EFFECTS) rides `--ease-out` (NO overshoot — a fade must
+ *       not bounce), coupled so scale+fade read as ONE continuous coalescing layer.
+ *   (c) BLUR-SETTLE (the iOS "light-bending modulation" decongest — EFFECTS)
+ *       `filter: blur(--glass-reveal-blur)` → `blur(0)`, on the SAME spring clock as
+ *       the scale so the surface clarifies AS it blooms. The decongest rides the
+ *       surface's OWN pixels (`filter`) NOT the backdrop (`backdrop-filter`), so it
+ *       does NOT clobber the resting `glass-floating` tier plate blur the overlay
+ *       carries at rest (a `backdrop-filter: blur(0)` open value would erase the
+ *       glass). A `filter` radius interp is COMPOSITOR-safe (never a layout property
+ *       — the proof:no-layout-animation floor).
+ *
+ * Uses the `scale:` / `translate:` LONGHANDS (not `transform:`), so it composes with
+ * any identity-base transform and mints no stacking context (the `.glass-top-layer`
+ * `scale:` discipline). NEVER animates a layout property (the zoom is `scale`, the
+ * side-slide is `translate` — the directional slide-in `popover-animate` +
+ * `slide-in-from-side` used to carry, now folded onto the compositor `translate` leg).
+ */
+
+@layer components {
+    .glass-reveal {
+        /* The one public start knob (the decongest radius). The spatial/effects
+           clocks read the shared spring tokens (read-only — the W-GLASS-CAL fence). */
+        --glass-reveal-blur: 4px;
+        --glass-reveal-slide: 0.5rem;
+        transform-origin: var(--reka-popper-transform-origin, center);
+        /* The coupled transition list — the SPATIAL legs (scale/translate) on the
+           snappy spring's OWN settle clock, the EFFECTS legs (opacity/filter blur-
+           settle) on the no-overshoot ease-out. ONE coherent glide. The blur rides
+           `filter` (the surface's own pixels) NOT `backdrop-filter` (which would
+           clobber the resting glass-floating plate blur). */
+        transition-property: scale, translate, opacity, filter, display, overlay;
+        transition-duration: var(--spring-snappy-duration), var(--spring-snappy-duration),
+            var(--spring-snappy-duration), var(--spring-snappy-duration),
+            var(--spring-snappy-duration), var(--spring-snappy-duration);
+        transition-timing-function: var(--spring-snappy), var(--spring-snappy),
+            var(--ease-out), var(--ease-out), linear, linear;
+        transition-behavior: allow-discrete;
+    }
+
+    /* OPEN — the settled, bloomed-in state (the spring-clocked scale/fade/blur-settle
+       interpolates FROM the closed values). `filter: blur(0)` clarifies the surface;
+       the resting `glass-floating` backdrop-filter is untouched. The `translate` leg
+       is set ONLY by the `data-side` variants below (a side-anchored popover slides
+       from its edge) — the BASE never writes `translate`, so a center-anchored Dialog
+       keeping its `-translate-x-1/2 -translate-y-1/2` centering is NEVER clobbered. */
+    .glass-reveal[data-state="open"] {
+        scale: 1;
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    /* CLOSED — both the resting CLOSED snapshot AND the EXIT leg. The exit reads
+       `--ease-out` (a bezier, NO overshoot — a closing surface must never overshoot
+       past gone, the §6/W-MOTION-CANON P2 doctrine); NO `--spring-*` token on the
+       exit. The exit is faster + un-sprung — the surface recedes cleanly. */
+    .glass-reveal[data-state="closed"] {
+        scale: var(--glass-reveal-enter-scale, 0.95);
+        opacity: 0;
+        filter: blur(var(--glass-reveal-blur));
+        transition-timing-function: var(--ease-out);
+        transition-duration: var(--duration-fast);
+    }
+
+    /* The directional slide-in — the compositor `translate` leg keyed off the
+       popper's `data-side` (folds the retired `slide-in-from-side` `@utility`'s
+       directional entry onto the compositor channel; the panel enters from outside
+       the anchor's edge). On the SAME snappy spring + clock as the scale. ONLY a
+       side-anchored popover (with `data-side`) sets `translate`; the open settled
+       value is `0 0` (per side, so it slides home from the edge). A center-anchored
+       Dialog has no `data-side` and is never reached here. */
+    .glass-reveal[data-side="top"][data-state="open"],
+    .glass-reveal[data-side="bottom"][data-state="open"],
+    .glass-reveal[data-side="left"][data-state="open"],
+    .glass-reveal[data-side="right"][data-state="open"] {
+        translate: 0 0;
+    }
+    .glass-reveal[data-state="closed"][data-side="top"] {
+        translate: 0 var(--glass-reveal-slide);
+    }
+    .glass-reveal[data-state="closed"][data-side="bottom"] {
+        translate: 0 calc(-1 * var(--glass-reveal-slide));
+    }
+    .glass-reveal[data-state="closed"][data-side="left"] {
+        translate: var(--glass-reveal-slide) 0;
+    }
+    .glass-reveal[data-state="closed"][data-side="right"] {
+        translate: calc(-1 * var(--glass-reveal-slide)) 0;
+    }
+}
+
+/* ── REDUCED-MOTION CARVE (the vestibular floor — WCAG 2.3.3) ──────────────────
+ * Under `prefers-reduced-motion: reduce` the reveal SNAPS the spatial channels to
+ * their endpoints (scale → none, translate → none) and the blur-settle to none —
+ * ZERO transform/blur frames. The OPACITY fade SURVIVES (opacity is not a vestibular
+ * trigger; the surface fades, never flies, never disappears). The fade rides the
+ * short `--duration-fast` clock (the `.glass-top-layer` PRM precedent). */
+@media (prefers-reduced-motion: reduce) {
+    .glass-reveal {
+        scale: none;
+        translate: none;
+        /* The decongest snaps to clear (`filter: blur(0)`); the resting
+           `glass-floating` backdrop-filter plate blur is UNTOUCHED. */
+        filter: blur(0);
+        transition-property: opacity, display, overlay;
+        transition-duration: var(--duration-fast);
+        transition-timing-function: var(--ease-out);
+    }
+    .glass-reveal[data-state="closed"] {
+        scale: none;
+        translate: none;
+        filter: blur(0);
+    }
+}

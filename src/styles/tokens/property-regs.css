@@ -188,6 +188,27 @@
     initial-value: 1;
 }
 
+/* BB.W-DEEP-GLASS — the OPT-IN deep-glass DEPTH scalar. `--glass-depth` is the
+   `--glass-level` TWIN for the deep tier: a typed INHERITING <number> so a host
+   sets it on any ancestor to retune the deep tier's depth (the cascading-scalar
+   idiom, distinct from the per-element `inherits: false` specular cohort). The
+   deep recipe (tokens/glass-deep.css) LERPs both the blur radius AND the saturate
+   between the calm `floating` endpoint (depth 0 ≡ the calm ceiling) and the Apple-
+   deep endpoint (depth 1 ≡ saturate 1.5 / blur 16px), so the deep blur is
+   `--glass-depth`-DRIVEN (the D1 axis assert — never a baked literal) and animates
+   smoothly. `initial-value: 1` is the resting deep magnitude: a `.glass-deep`
+   surface paints at the full Apple-deep register by default; a consumer dials
+   `--glass-depth: 0.5` to land it half-way to the calm floating rung. SEPARATE
+   from `--glass-level` (opacity+blur clarity), `--glass-tint-*` (legibility), and
+   `--glass-refract` (lens displacement) — the disjoint depth axis. The deep tier
+   COMPOSES `--glass-level` too (the deep blur scales it), so the opaque escape +
+   the a11y brackets reach the deep plate through the ONE level path. */
+@property --glass-depth {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
 /* AX.W51 D18 — the master comfortable-sizing scalar registered typed. The
    `<number>` syntax guarantees `calc(<base> * var(--ui-scale))` is always valid (a
    malformed override CLAMPS to the initial value 1, not an invalidated calc — the

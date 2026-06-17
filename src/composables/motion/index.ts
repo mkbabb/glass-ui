@@ -31,6 +31,16 @@ export * from "./useLiquidPress";
 // gesture. Statically reaches `@mkbabb/keyframes.js` (via `Draggable`), so it rides
 // the heavy-peer `/motion` barrel — NOT `/motion-core`.
 export * from "./useDragMorph";
+// BB.W-LIQUID-REVEAL — the iOS-27 bloom-from-source-rect open primitive. Composes
+// the UNCONSUMED kf `ElementMorph` + `springTimingFunction` (the {fn,css} spring
+// pair) into the three-channel liquid reveal (scale+fade+backdrop-blur-settle from
+// the trigger's origin), compositor-only + PRM-snap. Statically reaches
+// `@mkbabb/keyframes.js`, so it rides the heavy-peer `/motion` barrel — NOT
+// `/motion-core` (the SCC-trap discipline; the kf-bearing leaf cannot ship on the
+// engine-free surface). The CSS `.glass-reveal` recipe is the zero-JS floor the ≥8
+// overlays compose; this leaf is the source-rect REFINEMENT (the dialog-from-button,
+// the dock-from-pill).
+export * from "./useLiquidReveal";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV

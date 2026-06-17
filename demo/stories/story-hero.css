@@ -155,6 +155,27 @@
     max-inline-size: 18ch;
 }
 
+/* ── BB.W-HIERARCHY2 — the ordered StoryHeader cluster + the cluster rhythm ──────
+   The reading-order inversion fix: the eyebrow → display <h1> → blurb render as
+   ONE coherent stacked unit (A4-INVERSION). The cluster owns ONE tight micro-rhythm
+   (a single `gap` through the whole header — A4-RHYTHM), then ONE major gap to the
+   first section below; the three-spacing-scale cliff (the chrome-header gap-2, the
+   mt-8 boundary jump, the gap-10 section cadence) is gone. Inside the cluster the
+   title's own `margin-block-end` is RELAXED to the cluster gap (the major gap moves
+   to the cluster root) so the blurb sits CLOSE under the title (the subordinate
+   rung), not pushed away by the title's body-margin. */
+.story-hero-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* the tight cluster micro-rhythm — eyebrow → title → blurb */
+    margin-block-end: clamp(1.5rem, 3vw, 2.5rem); /* the ONE major gap to the body */
+}
+/* Inside the cluster the title carries no body-margin — the cluster gap is the
+   intra-cluster rhythm; the cluster root owns the major gap to the body. */
+.story-hero-cluster .story-hero-title {
+    margin-block-end: 0;
+}
+
 /* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page-build's HERO BEAT, folded
    onto the ONE entrance system (scroll-choreography.css `.scroll-build`). Audacious
    type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a strictly
@@ -180,6 +201,52 @@
     }
     .story-hero-title--enter {
         animation: story-hero-title-rise 0.62s var(--ease-out, ease-out) both;
+    }
+
+    /* BB.W-HIERARCHY2 — the 3-stage GRAVITY cluster entrance (A4-ENTRANCE). The
+       cluster arrives as a tight 3-stage fade-rise that REINFORCES the corrected
+       reading order: the eyebrow LEADS (stage 0), the display title SETTLES
+       (stage 1), the blurb fades in LAST (stage 2). Each stage is COMPOSITOR-ONLY
+       (transform: translateY + coupled opacity — NEVER font-size/margin/top, the
+       W-MOTION-CANON P5 floor) on the no-overshoot SETTLE register (--ease-out — the
+       audacious title NEVER bounces, P2; this EXTENDS the shipped
+       .story-hero-title--enter GRAVITY precedent to the eyebrow + blurb, it forks no
+       new spring). The fade is COUPLED to the rise (opacity + translateY in the SAME
+       keyframe, P3), clocked on the per-element settle (--spring-smooth-duration, the
+       A4-named clock — read-only, the W-GLASS-CAL clock fence). The stagger is the
+       keyframe `animation-delay` per stage (a deterministic CSS stagger, NO
+       setTimeout cascade). The whole block lives inside the no-preference gate so
+       under reduce the cluster paints its static terminal state with ZERO in-between
+       frames (no rise, no fade-in delay — the P6 floor; nothing here binds under
+       reduce). */
+    @keyframes story-hero-cluster-rise {
+        from {
+            opacity: 0;
+            transform: translateY(var(--scroll-build-rise, 1.5rem));
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* The eyebrow LEADS — stage 0, no delay. */
+    .story-hero-cluster .story-header-eyebrow.story-header-cluster--enter {
+        animation: story-hero-cluster-rise
+            var(--spring-smooth-duration, 0.36s) var(--ease-out, ease-out) both;
+        animation-delay: 0ms;
+    }
+    /* The display title SETTLES — stage 1, ~60ms after the eyebrow. It keeps its OWN
+       .story-hero-title--enter keyframe (the audacious-type GRAVITY register, 0.62s
+       --ease-out); the cluster adds ONLY the stage delay so it settles after the
+       eyebrow leads. */
+    .story-hero-cluster .story-hero-title--enter {
+        animation-delay: 60ms;
+    }
+    /* The blurb fades in LAST — stage 2, ~120ms. */
+    .story-hero-cluster .story-header-blurb.story-header-cluster--enter {
+        animation: story-hero-cluster-rise
+            var(--spring-smooth-duration, 0.36s) var(--ease-out, ease-out) both;
+        animation-delay: 120ms;
     }
 }
 

@@ -1,0 +1,86 @@
+<script setup lang="ts">
+// StoryHeader — the ONE ordered header cluster (BB.W-HIERARCHY2).
+//
+// THE READING-ORDER INVERSION FIX (A4-INVERSION). On a HERO page the descriptor
+// (the mono eyebrow + the dense blurb) used to render in StoryPage's chrome
+// <header> ABOVE the giant display <h1> inside the card — a focal INVERSION (the
+// descriptor before the name it describes) AND two focal points stacked in the
+// already-crowded top band. iOS-26 frames hierarchy as the FIRST design pillar: a
+// left-aligned title/subtitle stack in reading order, NEVER subtitle-above-title.
+//
+// This unit re-homes the three rungs into ONE coherent stacked cluster in correct
+// reading order — eyebrow (the quiet supporting tag) → the display <h1> (the
+// single dominant focal moment, passed as the default slot) → blurb (the clearly
+// subordinate rung UNDER the title). The unit is never split across the
+// chrome/card boundary: on a HERO page StoryHero renders this cluster alongside
+// the display <h1>; StoryPage's chrome <header> suppresses the eyebrow+blurb on
+// the hero path (the D1-4 double-<h1> suppression GENERALIZED to the eyebrow +
+// blurb). The descriptor is shown ONCE.
+//
+// THE 3-STAGE GRAVITY ENTRANCE (A4-ENTRANCE). The cluster arrives as a tight
+// 3-stage fade-rise that REINFORCES the reading order — the eyebrow leads, the
+// title settles, the blurb fades last (a ~per-stage stagger). Each stage is
+// COMPOSITOR-ONLY (transform: translateY + coupled opacity, NEVER font-size /
+// margin / top — the W-MOTION-CANON P5 floor) on the no-overshoot SETTLE register
+// (--ease-out; the audacious title NEVER bounces — P2), clocked on the per-element
+// duration. The stagger is the keyframe `animation-delay` per stage (a
+// deterministic CSS stagger, NO setTimeout cascade). Under
+// prefers-reduced-motion: reduce the cluster paints its static terminal state with
+// ZERO in-between frames (the keyframes live inside the no-preference gate; see
+// story-hero.css). The class hooks the entrance; the keyframes are owned by
+// story-hero.css (the .story-hero-cluster-* register that EXTENDS the shipped
+// .story-hero-title--enter GRAVITY precedent to the eyebrow + blurb).
+//
+// A demo-private chassis primitive — NOT a library export.
+import { cn } from "../../src/utils/cn";
+
+interface StoryHeaderProps {
+    /** The mono eyebrow tag (category · story). Rendered ABOVE the title. */
+    eyebrow?: string | null;
+    /** The supporting blurb. Rendered UNDER the title, the subordinate rung. */
+    blurb?: string | null;
+    /** When true, the cluster's three rungs animate the 3-stage GRAVITY entrance. */
+    animate?: boolean;
+    /** Forwarded class string for the cluster root. */
+    class?: string;
+}
+
+const props = withDefaults(defineProps<StoryHeaderProps>(), {
+    animate: true,
+});
+</script>
+
+<template>
+    <!-- The ordered cluster: eyebrow → title (default slot) → blurb, top-to-bottom.
+         The cluster micro-rhythm is a single tight `gap` (A4-RHYTHM) — one
+         spacing scale through the whole header, then the parent owns the ONE major
+         gap to the first section. -->
+    <div :class="cn('story-header-cluster', props.class)">
+        <p
+            v-if="eyebrow"
+            :class="
+                cn(
+                    'text-admin-label text-muted-foreground story-header-eyebrow',
+                    props.animate && 'story-header-cluster--enter',
+                )
+            "
+        >
+            {{ eyebrow }}
+        </p>
+        <!-- The display <h1> — the single dominant focal moment (the largest type
+             mass in the band). Passed by the host (StoryHero owns the
+             text-display-3 rung + the .story-hero-title--enter title-stage). -->
+        <slot />
+        <p
+            v-if="blurb"
+            :class="
+                cn(
+                    'text-small max-w-prose text-muted-foreground story-header-blurb',
+                    props.animate && 'story-header-cluster--enter',
+                )
+            "
+        >
+            {{ blurb }}
+        </p>
+    </div>
+</template>

@@ -46,9 +46,10 @@ const dockContext = useOptionalDockContext()
       — it now SHIPS in dist/glass-ui.css regardless of consumer JIT reach, so a 16-item
       dropdown bounds inside the viewport with inner scroll in EVERY consumer. The
       `origin-(--reka-select-content-transform-origin)` STAYS (WO-2): once the box is
-      bounded the `zoom-in-95` (popover-animate) enter no longer sweeps an unbounded
-      column, and the scale origin tracks reka's measured anchor edge for non-center
-      triggers (the panel grows from the trigger edge with no lateral settle).
+      bounded the `.glass-reveal` spring-clocked scale-in (BB.W-LIQUID-REVEAL, off the
+      retired `popover-animate` bezier zoom-95) no longer sweeps an unbounded column,
+      and the scale origin tracks reka's measured anchor edge for non-center triggers
+      (the panel blooms from the trigger edge with no lateral settle).
     -->
     <SelectContent
       v-bind="{ ...forwarded, ...$attrs }"
@@ -56,7 +57,7 @@ const dockContext = useOptionalDockContext()
       :data-glass-dock-owner="dockContext?.id"
       data-slot="select-content"
       :class="cn(
-        'relative z-popover min-w-32 overflow-y-auto rounded-panel border text-popover-foreground popover-animate origin-(--reka-select-content-transform-origin)',
+        'relative z-popover min-w-32 overflow-y-auto rounded-panel border text-popover-foreground glass-reveal origin-(--reka-select-content-transform-origin)',
         position === 'popper'
           && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
         'glass-floating',

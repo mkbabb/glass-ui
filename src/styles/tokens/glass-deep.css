@@ -1,0 +1,75 @@
+/*
+ * glass-deep.css — BB.W-DEEP-GLASS — the OPT-IN deep-glass token family.
+ *
+ * A SEPARATE `--glass-blur-deep-*` token family ABOVE the W-GLASS-CAL calm
+ * default (the Apple iOS-27 Liquid-Glass deep register: `saturate(1.8) blur(20px)`
+ * measured on Apple's live nav material; glass-ui lands the deep tier in the
+ * 14-20px band at a budget-clearing 16px + saturate 1.5). The calm content
+ * default is BYTE-UNTOUCHED — this family is minted ALONGSIDE the calm
+ * `--glass-blur-*` ladder (tokens/glass.css), which NEVER reads these tokens, so
+ * `proof:glass-cal` B1-B3 stay GREEN by construction (the calm default is the
+ * user's "a hair too much" call, INVIOLATE).
+ *
+ * This is the §8-ladder partial sibling of tokens/glass.css (kept OUT of glass.css
+ * so the ratchet-baselined glass.css stays at 505); @import-ed in tokens.css
+ * AFTER glass.css (the deep family resolves in the same :root cascade slot,
+ * adjacent same-selector blocks). The dark deep arm lives in tokens/dark-arm.css
+ * (the W-DARK-MATERIAL discipline — the luminous-dark companion beside the calm
+ * dark companions).
+ *
+ * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
+ * Apple home nav:       saturate(1.8) blur(20px)  (the canonical measure)
+ * Apple product tiers:  blur(14-20px)             (the band)
+ * glass-ui calm ceiling: floating 13px / saturate 1.18  (W-GLASS-CAL dial-back)
+ * glass-ui DEEP:        16px / saturate 1.5        (STRICTLY deeper on BOTH axes,
+ *                       in-band, the budget-clearing landing — the full 20px is
+ *                       a BOOKED successor with the recorded throttle number).
+ * The deep saturate lands at the LOW end of the 1.5-1.8 band: the Apple 1.8 is
+ * measured over a NEUTRAL backdrop; glass-ui's deep tier sits over warm-aurora,
+ * and the warm-cream light-concentration ceiling (AX.W52 D19 — a saturate that
+ * over-juices a colored substrate reads as a garish smear) keeps it just-rich.
+ * The deepest BLUR carries the "more glass" read; the saturate stays restrained.
+ */
+:root {
+    /* The Apple-range deep ENDPOINTS — the radius + saturate the deep tier reaches
+       at full depth (`--glass-depth: 1`). The calm `floating` rung (13px / 1.18)
+       is the depth-0 floor; the deep recipe LERPs between the two on `--glass-depth`
+       so the axis is a genuine driver, not a literal. */
+    --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 13px */
+    --glass-saturate-deep:       1.5;  /* >= 1.5 (toward Apple 1.8), > calm floating 1.18 */
+
+    /* The deep blur RADIUS — LERPed from the calm floating radius (depth 0) to the
+       Apple-deep radius (depth 1) on `--glass-depth`, THEN scaled by the ONE
+       `--glass-level` clarity scalar (the W54 seam reaches the deep plate, so the
+       opaque escape + the a11y brackets compose: at `--glass-level: 0` the deep
+       blur resolves blur(0), the same solid floor). NOT a parallel recipe — the
+       deep blur COMPOSES `var(--glass-level)` exactly like every calm rung, and
+       reads `var(--glass-depth)` so a host dials the depth on any ancestor. */
+    --glass-blur-deep-active-radius:
+        calc(
+            (
+                var(--glass-blur-floating-radius)
+                + (var(--glass-blur-deep-radius) - var(--glass-blur-floating-radius))
+                * var(--glass-depth)
+            )
+            * var(--glass-level)
+        );
+    /* The deep SATURATE — LERPed from the calm floating saturate (1.18, depth 0)
+       to the deep saturate (depth 1) on `--glass-depth`. The saturate is the
+       light-concentration lift (chroma-only — it LIFTS the backdrop's existing
+       chroma, it does NOT inject a hue; the warm-cream `--card` base is the same). */
+    --glass-saturate-deep-active:
+        calc(
+            1.18 + (var(--glass-saturate-deep) - 1.18) * var(--glass-depth)
+        );
+
+    /* The composed deep backdrop-filter — the SEPARATE deep family. The calm
+       ladder never reads this; `.glass-deep` (glass/deep.css) is its only
+       consumer. The brightness companion mirrors the calm floating arm's
+       light-concentration (the calm floating carries saturate only; the deep
+       tier adds a small brightness lift for the thicker-glass read — still no
+       hue inject). */
+    --glass-blur-deep:
+        blur(var(--glass-blur-deep-active-radius))
+        saturate(var(--glass-saturate-deep-active));
+}

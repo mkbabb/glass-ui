@@ -134,8 +134,9 @@
        (PopoverContent, DropdownMenuContent, SelectContent, etc.).
        Covers radius + outline + popover-foreground; consumers compose
        this with `.glass-floating` (bg + blur + border + shadow), with
-       `.popover-animate` (data-state animation), and with the per-host
-       z-rung. The floating-tier shadow comes from
+       `.glass-reveal` (the spring-clocked data-state LIQUID-ENTER —
+       BB.W-LIQUID-REVEAL, off the retired `popover-animate`), and with the
+       per-host z-rung. The floating-tier shadow comes from
        `--glass-shadow-floating` via `.glass-floating`, replacing the
        `shadow-md`/`shadow-lg` literals that bypassed the canonical
        cascade. */

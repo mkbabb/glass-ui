@@ -1715,3 +1715,29 @@ opt-in CLASS renames). One-line rename per call site:
 
 `<Button :liquid>` re-points internally (no consumer change). Off-Chromium the lens still degrades to
 the un-gated blur+tint base (the `@supports (backdrop-filter: url(#…))` floor, PRESERVED).
+
+### `popover-animate` / `slide-in-from-side` → `.glass-reveal` (BB.W-LIQUID-REVEAL — clean break, no alias)
+
+The reka-overlay enter `@utility popover-animate` (the fixed-bezier `zoom-in-95` + `fade-in-0`) AND
+`@utility slide-in-from-side` are RETIRED, replaced by the spring-clocked LIQUID-ENTER recipe
+`.glass-reveal` (the iOS-27 bloom: scale + fade + `filter` blur-settle on `--spring-snappy` +
+`--spring-snappy-duration`, exit `--ease-out` no-overshoot, PRM-snap). The ≥9 enrolled overlays
+(Dialog/Popover/Sheet/Tooltip/HoverCard/DropdownMenu/ContextMenu/Combobox/Select + HoverPopover)
+re-point INTERNALLY — **no public-prop break; the default enter upgrades to liquid glass.** The
+Dialog `spring` opt-in (`useSpringMount` drag-dismiss) is UNCHANGED.
+
+A consumer who hand-composed `popover-animate` / `slide-in-from-side` directly on a CUSTOM portal
+surface re-points to `glass-reveal` (the directional `slide-in-from-side` folds onto `.glass-reveal`'s
+`data-side` compositor `translate` leg):
+
+```html
+<!-- before (v4.0.0) -->
+<div class="glass-floating popover-animate slide-in-from-side">…</div>
+<!-- after (v4.1.0) -->
+<div class="glass-floating glass-reveal">…</div>
+```
+
+NEW: `useLiquidReveal(surfaceRef, { trigger, preset })` (`@mkbabb/glass-ui/motion`) — the source-rect
+bloom JS leaf (the dialog-from-button / dock-from-pill case), composing the kf `ElementMorph` +
+`springTimingFunction`. The CSS `.glass-reveal` recipe is the zero-JS everywhere floor; the JS leaf is
+the source-rect refinement.

@@ -26,6 +26,11 @@ import { surfaceClass } from "../_shared/useSurfaceAxis";
  *   overlay  — heaviest (~0.95α + blur) : modal-on-modal, dialog over content
  *   opaque   — `--glass-level:0` escape : the solid-card opt-out (AX.W54), maps to
  *              `.glass-opaque` through the same `glass-${tier}` rung as the rest
+ *   deep     — `--glass-blur-deep-*` OPT-IN : the maximal iOS-27 Liquid-Glass tier
+ *              ABOVE the W-GLASS-CAL calm default (Apple saturate-1.5/blur-16px),
+ *              maps to `.glass-floating glass-deep` (a base rung + the deep
+ *              decoration, mirroring opaque) — the hero glass / CTA register
+ *              (BB.W-DEEP-GLASS). The calm content default is byte-unchanged.
  */
 export type CardTier =
     | "wash"
@@ -33,7 +38,8 @@ export type CardTier =
     | "resting"
     | "floating"
     | "overlay"
-    | "opaque";
+    | "opaque"
+    | "deep";
 
 /**
  * Surface decoration register — orthogonal to `tier`/`shadow`/`grain`.
@@ -242,8 +248,15 @@ useStalePropWarning("Card");
                 // ride a base tier class to keep the glass edge/rim/under-shadow
                 // (a solid `--card` plate with a glass edge, not a bare div —
                 // see glass.css §opaque-escape). It composes onto the canonical
-                // `resting` rung. Every other tier maps 1:1 to its `glass-${tier}`.
-                tier === 'opaque' ? 'glass-resting glass-opaque' : `glass-${tier}`,
+                // `resting` rung. BB.W-DEEP-GLASS — `deep` mirrors the opaque
+                // pattern: a deep DECORATION (.glass-deep re-points the floating
+                // rung blur to the deep family) ON the base `floating` rung — the
+                // maximal iOS-27 register, opt-in. Every other tier maps 1:1.
+                tier === 'opaque'
+                    ? 'glass-resting glass-opaque'
+                    : tier === 'deep'
+                      ? 'glass-floating glass-deep'
+                      : `glass-${tier}`,
                 // AX.W09 — wire-or-omit. The pointer-anchored moving catch-light
                 // (`glass-specular-track`) is emitted ONLY when `specular` is
                 // opted in on a glass surface; an `off` (default) glass card does

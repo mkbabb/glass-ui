@@ -88,8 +88,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 // lifts by sqrt-phi (`*1.272`) so the heading clears the top edge against a 24px
 // side. `gap-4` between header/body/footer sections STAYS (the overlay-band rhythm).
 const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)'
-// Default cubic path retains the canonical popover-animate + translate trick.
-const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-normal popover-animate'
+// BB.W-LIQUID-REVEAL — the default (non-spring) path composes the spring-clocked
+// `.glass-reveal` LIQUID-ENTER recipe (off the retired `popover-animate` bezier
+// zoom-95, clean break). The `-translate-x-1/2 -translate-y-1/2` centering stays
+// (unlayered utilities; `.glass-reveal` never writes the BASE `translate` — only its
+// `data-side` variants do, and a center Dialog has no `data-side`, so the centering
+// is never clobbered). The recipe owns the clock, so `duration-normal` is dropped.
+const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 glass-reveal'
 
 // BA.W-SURFACE-AXIS — the surface decoration rides the SHARED resolver on the
 // `floating` tier. `surfaceClass` emits `glass-floating` + the veil/opaque

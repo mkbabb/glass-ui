@@ -11,6 +11,30 @@
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
 
+/* ── BB.W-HIERARCHY2 — the CONTENT-side anti-collision gutter ───────────────────
+   `--dock-content-safe-inset` is the structural CONTENT-side counterpart to the
+   dock-collision SEAT fix (W-CHIP-GRAZE + W-DOCK-RAIL-SEAT-FINAL own the chip-fan
+   SEAT — the chips fan off-canvas into the rail's dead gutter, chipOverMain:false on
+   EVERY route by topology). This token reserves a guaranteed safe-inset gutter on the
+   CONTENT column so the page-title band is structurally clear of any chip reach even
+   on a route added WITHOUT a per-route audit (the anti-gameability the gestalt gate
+   wants). It is keyed to the dock reach (`--dock-rail-extend-length`, the rail's
+   beyond-edge overrun) so the content gutter tracks the dock geometry in lockstep,
+   and it rides `--dock-scale` transitively through that reach token.
+
+   THE DE-OVERLOAD IS BINDING (distinct geometry concerns, distinct tokens):
+   `--dock-control-safe-inset` (per-density, below) is the dock CONTROL plate-clearance
+   inset (the painted plate floors a notch below its track cell — BA.W-DOCK-GEOMETRY,
+   owned by proof:dock-plate-clearance); `--dock-content-safe-inset` is the CONTENT-band
+   gutter (the content column reserves dead inline space the chips can never share).
+   The two close the collision from BOTH sides — the chip seat (the SEAT waves) AND the
+   content gutter (this token) — coordinated on the SAME dead inline gutter: the content
+   gutter is the RESERVE, the gutter-fan lands the chips in it (ONE gutter, two
+   consumers). NEVER re-point this AT --dock-control-safe-inset (the de-overload). */
+:root {
+    --dock-content-safe-inset: var(--dock-rail-extend-length, 2.5rem);
+}
+
 @layer components {
     /* AX.W45 — the density cascade is threaded by the ONE `--dock-scale`
        multiplier (default 1, lifted to `--dock-mobile-scale` on coarse pointers).

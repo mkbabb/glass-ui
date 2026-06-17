@@ -221,7 +221,7 @@ function formatMatches(indices: number[]): string {
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
                     <p class="text-admin-label text-muted-foreground">Search package</p>
-                    <h2 class="text-heading">Fuzzy index</h2>
+                    <h2 class="text-subheading">Fuzzy index</h2>
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <Badge variant="outline" data-testid="dataset-size">

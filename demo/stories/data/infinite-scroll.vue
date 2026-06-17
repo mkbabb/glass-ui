@@ -69,7 +69,7 @@ function reset() {
         <div class="flex items-end justify-between gap-4">
             <div>
                 <p class="text-admin-label text-muted-foreground">Infinite scroll</p>
-                <h2 class="text-heading">Event feed</h2>
+                <h2 class="text-subheading">Event feed</h2>
             </div>
             <button
                 type="button"

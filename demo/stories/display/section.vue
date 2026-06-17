@@ -73,7 +73,7 @@ const gaps = ["tight", "regular", "loose"] as const;
                 <template #header>
                     <div class="flex items-center gap-3">
                         <span class="size-2 rounded-full bg-viz-fourier" />
-                        <h2 class="text-heading">Live · session</h2>
+                        <h2 class="text-subheading">Live · session</h2>
                         <span class="text-mono-caption text-muted-foreground">
                             updated 3s ago
                         </span>

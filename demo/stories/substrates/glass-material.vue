@@ -349,5 +349,36 @@ const ACCENT_STRENGTH = "48%";
                 </div>
             </ShowcaseFrame>
         </StorySection>
+
+        <StorySection
+            label="The OPT-IN deep-glass tier — .glass-deep (BB.W-DEEP-GLASS)"
+            blurb="The maximal iOS-27 Liquid-Glass register ABOVE the W-GLASS-CAL calm default: .glass-deep (or <Card tier='deep'>) reaches the Apple deep band (saturate 1.5 / blur 16px) — the backdrop reads SOFTER + MORE saturated through the deeper plate. A SEPARATE --glass-blur-deep-* family on the --glass-depth scalar (the --glass-level twin); the calm content default is BYTE-UNCHANGED. Opt-in only — the calm .glass-floating plate beside it stays the calm ceiling. The deep tier composes --glass-level (the opaque escape + a11y brackets reach it) and inherits the W55 over-light darken."
+        >
+            <ShowcaseFrame pad="lg" tier="field">
+                <!-- the deep-vs-calm contrast device: the .glass-deep plate reads
+                     visibly more diffuse + more saturated than the calm
+                     .glass-floating default over the SAME live aurora. -->
+                <div class="flex flex-wrap gap-6">
+                    <div
+                        class="glass-floating glass-deep flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        data-glass-deep="on"
+                    >
+                        <span>.glass-deep</span>
+                        <span class="text-mono-caption text-muted-foreground"
+                            >Apple deep · 16px/1.5</span
+                        >
+                    </div>
+                    <div
+                        class="glass-floating flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        data-glass-deep="off"
+                    >
+                        <span>calm default</span>
+                        <span class="text-mono-caption text-muted-foreground"
+                            >floating · 13px/1.18</span
+                        >
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
     </StoryPage>
 </template>

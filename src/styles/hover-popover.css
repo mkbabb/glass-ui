@@ -35,10 +35,11 @@
     }
 }
 
-/* The data-state animation grammar canonicalises onto `.popover-animate`
-   (V.W3.T9 / A5 §5.8). Authors compose `class="hover-popover-panel popover-animate"`
-   on the panel root so the canonical fade + zoom-95 entry/exit grammar
-   replaces the bespoke `hover-popover-in/out` keyframes that lived here.
-   The `prefers-reduced-motion` carve is handled at the canonical site
-   (`utilities.css`'s reduced-motion block) so it cascades to all four
+/* The data-state animation grammar canonicalises onto `.glass-reveal`
+   (BB.W-LIQUID-REVEAL — off the retired `popover-animate` bezier zoom-95, clean
+   break). Authors compose `class="hover-popover-panel glass-reveal"` on the panel
+   root so the spring-clocked LIQUID-ENTER grammar (the coupled scale+fade+filter
+   blur-settle, glass/reveal.css) replaces the bespoke `hover-popover-in/out`
+   keyframes that lived here. The `prefers-reduced-motion` carve is handled at the
+   canonical site (`glass/reveal.css`'s reduced-motion block) so it cascades to all
    popover-animation consumers automatically. */

@@ -323,13 +323,26 @@
     dialog.glass-top-layer {
         opacity: 0;
         scale: var(--top-layer-enter-scale, 0.96);
-        transition-property: opacity, scale, display, overlay;
+        /* BB.W-LIQUID-REVEAL — the coupled blur-settle decongest (the iOS
+           "light-bending modulation" arrival). The surface's OWN pixels decongest
+           `filter: blur(--top-layer-enter-blur)` → `blur(0)` AS it blooms (a `filter`
+           radius interp is compositor-safe; it rides the surface's pixels, so it does
+           NOT fight the resting glass-tier `backdrop-filter` plate blur — the
+           REVEAL-TOPLAYER-NO-BLUR fix, the twin of the `.glass-reveal` recipe's blur
+           leg, glass/reveal.css). */
+        filter: blur(var(--top-layer-enter-blur, 4px));
+        transition-property: opacity, scale, filter, display, overlay;
         /* BA.W-GLASS-CAL Unit 3 — the enter rides the bouncy spring's OWN settle
            clock (`--spring-bouncy-duration`, the 2%-band envelope settle) rather
            than the generic `--duration-normal`, so the emphatic dialog/popover
-           entrance bounce reads fully instead of being clipped at 0.3s. */
-        transition-duration: var(--spring-bouncy-duration);
-        transition-timing-function: var(--spring-bouncy);
+           entrance bounce reads fully instead of being clipped at 0.3s. The blur
+           decongest rides the no-overshoot `--ease-out` (EFFECTS), the scale the
+           bouncy spring (SPATIAL) — the W-MOTION-CANON split. */
+        transition-duration: var(--spring-bouncy-duration),
+            var(--spring-bouncy-duration), var(--spring-bouncy-duration),
+            var(--spring-bouncy-duration), var(--spring-bouncy-duration);
+        transition-timing-function: var(--spring-bouncy), var(--spring-bouncy),
+            var(--ease-out), linear, linear;
         transition-behavior: allow-discrete;
     }
 
@@ -339,9 +352,11 @@
     dialog.glass-top-layer[open] {
         opacity: 1;
         scale: 1;
+        filter: blur(0);
         @starting-style {
             opacity: 0;
             scale: var(--top-layer-enter-scale, 0.96);
+            filter: blur(var(--top-layer-enter-blur, 4px));
         }
     }
 

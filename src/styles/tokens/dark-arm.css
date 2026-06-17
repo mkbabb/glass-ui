@@ -228,6 +228,21 @@
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(1.22) brightness(1.06);
     --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(1.30) brightness(1.12);
 
+    /* BB.W-DEEP-GLASS — the DARK arm of the OPT-IN deep tier (the luminous-dark
+       deep mirror, the W-DARK-MATERIAL scope-2 "dark glass glows where light
+       passes" model). The deep tier is even more transmissive in dark — the deep
+       dark glass glows MORE where the backdrop passes — so its saturate/brightness
+       companion lifts HARDER than the calm dark floating (1.28/1.10): the deep
+       arm carries saturate(1.55) brightness(1.16), in LOCKSTEP with the light deep
+       arm (which sits at saturate 1.5 / depth-LERPed, glass-deep.css). The RADIUS
+       is the SAME --glass-blur-deep-active-radius × --glass-level (radius-only
+       across modes, the §2c discipline — only the saturate/brightness companions
+       differ between light/dark). This is a SEPARATE deep token the calm dark
+       ladder never reads (CALM-UNCHANGED in dark too — proof:glass-cal GREEN). */
+    --glass-blur-deep:
+        blur(var(--glass-blur-deep-active-radius))
+        saturate(1.55) brightness(1.16);
+
     /* BA.W-DARK-MATERIAL scope 3 — the dark arm of the adaptive --glass-tint-* seam (the
        SAME seam, NO third fork). The W55 self-engage block (glass/ladder.css) re-points
        --glass-tint-source → --glass-tint-ink at --glass-tint-strength-aa. In LIGHT that is

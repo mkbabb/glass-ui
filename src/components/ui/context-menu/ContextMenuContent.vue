@@ -26,7 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <ContextMenuContent
       v-bind="forwarded"
       :class="cn(
-        'z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground popover-animate slide-in-from-side',
+        'z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground glass-reveal',
         props.class,
       )"
     >

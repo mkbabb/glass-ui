@@ -256,6 +256,18 @@ export type {
     UseDragMorphReturn,
 } from "../composables/motion/useDragMorph";
 
+// ── useLiquidReveal — the iOS-27 bloom-from-source-rect open (BB.W-LIQUID-REVEAL) ──
+// `LiquidRevealPreset` — the spring register ("snappy"|"bouncy"); `UseLiquidRevealOptions`
+// — the leaf's options ({ trigger, preset, blur, respectReducedMotion });
+// `UseLiquidRevealReturn` — the { reveal, conceal } pair. `useLiquidReveal` is
+// keyframes-bearing (it composes the kf ElementMorph + springTimingFunction), so the
+// composable ships ONLY on `@mkbabb/glass-ui/motion`, not the root.
+export type {
+    LiquidRevealPreset,
+    UseLiquidRevealOptions,
+    UseLiquidRevealReturn,
+} from "../composables/motion/useLiquidReveal";
+
 // ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
 // `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
 // (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,
