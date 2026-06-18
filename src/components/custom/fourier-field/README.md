@@ -179,3 +179,14 @@ The intensity model + the render recipe are research-backed by
 `docs/tranches/AX/audit/inventory/W43-fourier-field-SOTA.md` (the executed SOTA
 research: the epicycle/DFT canon, the phosphor multi-pass register, the
 Canvas2D-vs-WebGPU render-path verdict, and the per-hero consumption story).
+
+## Substrate (BB.W-VIZ-SUITE — DO NOT MIGRATE now)
+
+FourierField renders on the **Canvas2D** substrate (`useCanvas2D` over the ONE
+`createCanvasLifecycle` leaf; `composables/math.ts` carries the DFT epicycle math). It is a
+first-class member of the procedural-animation suite (`src/components/custom/PROCEDURAL-SUITE.md`)
+but is **NOT migrated to WebGPU in BB.W-VIZ-SUITE**: a few-to-dozens of phasors is the RIGHT
+tool for `ctx.stroke`, and the DFT math is already GPU-agnostic ("WebGPU-first WHEN POSSIBLE"
+gives the latitude). Booked successor **W-FOURIER-GPU** — trigger: the harmonic density scales
+to thousands of phasors, where GPU line-instancing wins over `ctx.stroke`. Recorded in the
+parity table as a `no-migrate` row with this reason (the user's "cover the extant items too").

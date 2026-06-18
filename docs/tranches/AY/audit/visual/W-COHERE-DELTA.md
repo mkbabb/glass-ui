@@ -1,8 +1,17 @@
-<!-- capture-commit: a8cfd644548cd524d3713dd9e3063fd7f0445f19 -->
+<!-- capture-commit: 83f2a48876b1761b73376b2500c1194c568e6c34 -->
 <!-- surface-paths: src/components/custom/goo-blob/GooBlob.vue, src/composables/color/index.ts, src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationDraw.ts, src/styles/tokens/shadow.css, demo/stories/substrates/blob.vue, demo/stories/StoryHero.vue -->
-<!-- surface-hash: b5f8acbf03bac95f3db38c9da9fdabc376b34a6beebf685b86f3c3846dfbddd0 -->
-
-# AY.W-COHERE — the four live substrates as ONE set · cohesion convergence DELTA
+<!-- surface-hash: 2dfbe35f1dbff2934d9f759832637e74c0bda671f9268eeafaa3a1fb59ee2a30 -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the convergence DELTA carried its AZ-form headers but
+     the 7 declared surfaces (goo-blob/color/constellation/draw/shadow/blob.vue/StoryHero) all DRIFTED
+     since the original capture (the §0 re-grep confirms EVERY path RESOLVES at HEAD — the surface is
+     DRIFTED, never gone; no Batch-4 carve moved a painting file, so the 7-path declaration is
+     unchanged). The 16 own-surface W-COHERE-{blob,constellation,dock,fourier}-{desktop1280,mobile390}-
+     {light,dark}.png captures are RE-SHOT on the LIVE 4-substrate contact set (`:5199`
+     /substrates/{blob,constellation,fourier-field} + /dock/overview, both modes) and the stale
+     surface-hash RE-STAMPED above (b5f8acbf03ba → 2dfbe35f1dbf, the live bytes via the exported
+     surfaceHash helper over the SAME 7 declared paths in declared order). The convergence read (the
+     warm-red accent band, the recession envelope, the soft ambient shadow) is re-validated on the
+     current surfaces. Live-verified-fresh. -->
 
 This wave is the CONVERGENCE pass the per-substrate waves could not own. The four AY
 Batch-2 substrates — constellation (W-CON1), blob (W-BLOB2), dock (W-DOCK1/2),

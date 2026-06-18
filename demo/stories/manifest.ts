@@ -338,6 +338,22 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            // BB.W-VIZ-SUITE / W-CONCENTRIC — the NEW WebGPU-first radial Fourier
+            // ring-interference viz, closing the Batch-V substrates band. It self-stages
+            // its OWN GL/fragment context (the field IS the surface), so the route
+            // declares the FREE static `grid` wash behind the card and mounts exactly ONE
+            // live context — its own (the one-GL-per-route budget held, the dot-flow-field
+            // precedent above).
+            s(
+                "substrates",
+                "concentric",
+                "Concentric",
+                "A WebGPU-first radial Fourier ring-interference field — concentric ellipsoid rings whose interference is a sum of radial harmonics about one-or-more centers (the same Fourier-series / deep-water dispersion vocabulary the flow field uses — Tessendorf 2001). The 3D-rendered-to-2D look: an ellipsoidal norm reads a tilted disc as ellipses, and multi-center families cross into moiré beats. A pure fullscreen fragment pass (the aurora shape-class) on the WebGPU primary, with a clean WebGL2 GLSL fallback. The warm-cream identity is the library default; the demo themes the rings. Shipped /concentric.",
+                {
+                    background: "grid",
+                    hero: true,
+                },
+            ),
         ],
     },
     {

@@ -82,6 +82,9 @@
             "fourier-math": [
                 "dist/fourier-math.d.ts"
             ],
+            "concentric": [
+                "dist/concentric.d.ts"
+            ],
             "dot-flow-field": [
                 "dist/dot-flow-field.d.ts"
             ],
@@ -363,6 +366,10 @@
         "./fourier-math": {
             "types": "./dist/fourier-math.d.ts",
             "import": "./dist/fourier-math.js"
+        },
+        "./concentric": {
+            "types": "./dist/concentric.d.ts",
+            "import": "./dist/concentric.js"
         },
         "./dot-flow-field": {
             "types": "./dist/dot-flow-field.d.ts",
@@ -685,6 +692,10 @@
         "proof:eyebrow-union": "node scripts/proof-eyebrow-union.mjs",
         "proof:drawer-abrogate": "node scripts/proof-drawer-abrogate.mjs",
         "proof:card-padding": "node scripts/proof-card-padding.mjs",
+        "proof:concentric": "node scripts/proof-concentric.mjs",
+        "proof:crossrepo-asks": "node scripts/proof-crossrepo-asks.mjs",
+        "proof:strict-freshness-armed": "node scripts/proof-strict-freshness-armed.mjs",
+        "proof:live-verified-ledger:strict": "node scripts/proof-live-verified-ledger.mjs --tranche=AY --strict-freshness && node scripts/proof-live-verified-ledger.mjs --tranche=BB --strict-freshness",
         "proof:precept-current": "node scripts/proof-precept-current.mjs",
         "proof:aur-kuwahara": "node scripts/proof-aur-kuwahara.mjs",
         "proof:flow-field": "node scripts/proof-flow-field.mjs",

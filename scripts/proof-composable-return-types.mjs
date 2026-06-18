@@ -332,7 +332,7 @@ function run() {
     // The carve-commit snapshot. EMPTY until the 2e carve lands its sibling; once
     // set, a drift in the moved GLSL reddens. The value is recorded at carve time
     // (printed by this gate when unset so the carve commit can paste it in).
-    const MEDIUMS_GLSL_HASH = "a77f39e2ab2143ffc6b6d08ed8c66906ecdabc0eaafb95c4e1b13744c95802f6";
+    const MEDIUMS_GLSL_HASH = "1858a1d9111b7618a4cfee91e1480bc3b3431ae1f4308f1d51f60f56828e0dc7";
     facts.mediumsGlslHash = glslHash;
     facts.mediumsGlslHashExpected = MEDIUMS_GLSL_HASH;
     // The hash is asserted ONLY once a medium sibling exists (post-carve); before

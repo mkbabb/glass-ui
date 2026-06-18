@@ -240,6 +240,13 @@ export function detect() {
         // studio CHROME, not a render-background substrate page — the same exempt
         // class as glass-material/blob (demos over paper, never self-demos a field).
         if (m[1] === "fourier-studio") continue;
+        // dot-flow-field + concentric (BB.W-VIZ-SUITE): the two NEW WebGPU-first viz
+        // mount CONTAINED in the story body over a calm grid wash (the field is its OWN
+        // single GL/compute context — the one-GL-per-route budget held), the same
+        // exempt class as fourier-studio/blob (a contained-demo over a calm wash, never
+        // a self-demo'd page-background field — the StoryBackground kinds stay the four
+        // hero substrates aurora/blob/constellation/fourier).
+        if (m[1] === "dot-flow-field" || m[1] === "concentric") continue;
         assert(
             `substrates/${m[1]} self-demos its own substrate (${own})`,
             kind === own,

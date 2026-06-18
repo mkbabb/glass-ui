@@ -449,7 +449,7 @@ through ONE of two backends, picked ONCE at mount by `createGpuSubstrate`
 - **`aurora.wgsl.ts` — the WebGPU-FIRST primary** (net-new). The fbm/OKLCh nuclei field
   + the PBR-Neutral tonemap + the mandatory `linearToSrgb` OETF, transcribed to WGSL over
   the full-screen-triangle `vs_main`, splicing the shared `procedural-color.wgsl.ts` chunk
-  (the WGSL twin of the AV.W2 GLSL chunk — ONE color math across both backends). The
+  (the WGSL twin of the shared GLSL color chunk — ONE color math across both backends). The
   default-smooth atmospheric pipeline is the parity surface; the painterly mediums
   (uMedium 1-6) + the brush SDF are the WebGL2 fallback's full-fidelity register (the
   booked W-AURORA-WGPU-MEDIUMS successor ports the painterly WGSL bodies).

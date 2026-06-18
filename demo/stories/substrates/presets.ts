@@ -42,3 +42,31 @@ export const FLOW_PRESET_REFERENCE: FlowFieldConfig = {
 export const FLOW_PRESET_WARM: FlowFieldConfig = {
     ...DEFAULT_FLOW_CONFIG,
 };
+
+// ── Concentric (W-CONCENTRIC) — the demo-themed ring palettes ───────────────────
+// PRESETS-IN-CONSUMERS again: the themed ring ramp is a DEMO preset here, never a
+// library token (`proof:concentric` clause 5 reds a teal/violet literal in the LIBRARY
+// constants.ts; this demo file is the sanctioned home for the themed palettes).
+
+import type { ConcentricConfig } from "../../../src/components/custom/concentric";
+import { DEFAULT_CONCENTRIC_CONFIG } from "../../../src/components/custom/concentric";
+
+// A cool aurora-teal ring ramp (the demo theme — a calm-deep ground that the rings
+// crest over).
+const CONCENTRIC_THEME_PALETTE: OklchStop[] = [
+    { L: 0.16, C: 0.04, h: 250 }, // the trough — a deep indigo ground
+    { L: 0.52, C: 0.12, h: 210 }, // the mid — a teal-cyan
+    { L: 0.9, C: 0.07, h: 190 }, // the crest — a bright aqua
+];
+
+/** The demo-themed concentric reproduction — aurora-teal rings over an indigo ground. */
+export const CONCENTRIC_PRESET_THEME: ConcentricConfig = {
+    ...DEFAULT_CONCENTRIC_CONFIG,
+    palette: CONCENTRIC_THEME_PALETTE,
+    background: { L: 0.12, C: 0.03, h: 255 },
+};
+
+/** The warm-cream library-identity preset (the default look). */
+export const CONCENTRIC_PRESET_WARM: ConcentricConfig = {
+    ...DEFAULT_CONCENTRIC_CONFIG,
+};

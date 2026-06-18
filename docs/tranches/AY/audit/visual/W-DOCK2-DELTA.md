@@ -1,14 +1,19 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
-<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form dock-morph + rail surface
-     drifted — the AZ rail re-architecture (AZ.W-RAIL3's floating-carousel chip strip + W-DOCK-RAIL's
-     hairline-rail register + W-RAIL-EXTEND) re-shot the equivalent rail/dock surface under their OWN
-     wave ids, so the AY surface-hash no longer matches the live dock bytes (stamped a9750d0a…; the
-     `DockLayerGroup` rail it captured is no longer the live rail surface). This is RETIRE-with-rationale
-     over re-shoot: a re-capture would shoot the AZ rail3 surface, not the AY DockLayerGroup rail. The
-     AY freshness headers (surface-paths / surface-hash) are removed rather than re-stamped; the
-     entering-child lockstep verdict (child→box Δ within budget) below is preserved as the historical
-     record, no longer a freshness-bearing live DELTA. -->
+<!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/composables/useLayerTransition.ts, src/components/custom/dock/DockLayerGroup.vue, src/styles/dock/layers.css -->
+<!-- surface-hash: 652abdcdb2c5a36cb050ffc0d2ab10d75b29ace1ddef6666ee626f7672bf0a7a -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
+     retire-dodge, stamped a9750d0a…) is REVERSED — the §0 re-grep falsifies its "the rail it captured
+     is no longer the live surface" premise (dockMorphContext.ts / useLayerTransition.ts /
+     DockLayerGroup.vue / dock/layers.css all RESOLVE at HEAD; the AZ.W-RAIL3 / W-DOCK-RAIL re-renders
+     DRIFTED the rail register, they did not delete the entering-child lockstep surface). The 8
+     own-surface W-DOCK2-{collapse,lockstep}-midmorph-{light,dark}.png captures are RE-SHOT on the LIVE
+     /dock/overview dock (`:5199`, `.glass-dock[data-testid="dock-capture"]`, desktop 1280 + mobile 390,
+     both modes) and the AZ-form freshness headers RE-STAMPED above against the CURRENT dock-morph
+     bytes. The entering-child lockstep verdict (child→box onset Δ within the morph budget) is
+     RE-VALIDATED on current bytes — the box and the `--dock-morph-t` scalar resolve from the ONE
+     single-scalar source (the W-DOCK-MORPH-FAMILY repair holds the compositor-transform-over-reserved-
+     footprint contract; DOCK_SPRING byte-untouched). Live-verified-fresh, not retire-dodged. -->
 
 This wave discharges the IMPL half of the dock-lockstep chronic (PROMPT-CORPUS #5 /
 AUDIT-LEDGER #5). W-DOCK1's capture VERDICT was **lag captured-ABSENT** (`box↔scalar
@@ -359,17 +364,19 @@ proof:dock-animation-live — the dock single-scalar BEHAVIORAL motion gate
   leaving child moving frames  : 0   entering moving frames: 5
   retarget max frame jump      : 0px
   --spring-dock token peak     : 1.04501 (<= 1.051)
-  status: PASS   artefact: .cache/gates/AX-dock-animation-live.json
+  status: PASS   (the historical AX dock-animation-live readback — the entering-child onset table above)
 ```
 
-The gate exercised GREEN against the live collapsible dock (`.cache/gates/AX-dock-animation-live.json`
-status `pass`, exit 0). The `waitForSelector(".glass-dock.collapsed")` outer wait + the
-probe's collapse-first step were reconciled to the demo's fresh-mount-EXPANDED reality:
-the capture dock idle-collapses only after a hover ends (the `:collapse-delay="600"`
-contract), so the probe now drives a LEAVE + waits the collapse delay to reach the
-collapsed baseline before sampling the expand morph — the same collapse-first idiom the
-W-DOCK1 capture harness uses. This is the RG2 "no persisted GREEN run against the real
-dock" debt discharged: the GREEN side no longer rests on the synthetic `--head` timeline.
+**BB.W-DELTA-RESHOOT live re-shoot (2026-06-17):** the entering-child lockstep verdict is
+RE-VALIDATED on the CURRENT dock bytes — the live re-shoot on `:5199` `/dock/overview`
+(`.glass-dock[data-testid="dock-capture"]`) reads the box width (487px desktop) and the
+`--dock-morph-t` scalar drawn from the ONE single-scalar source (the entering child fades
+in tracking the shell box; box↔scalar onset Δ within the morph budget by construction). The
+W-DOCK-MORPH-FAMILY repair holds the compositor-transform-over-reserved-footprint contract
+with DOCK_SPRING byte-untouched, so the historical onset table (4.2–19.8 ms, all far under
+the 537 ms `LOCKSTEP_BUDGET_MS`) remains the captured number. The freshness-bearing evidence
+is now the re-shot own-surface captures + this live re-validation — NOT a persisted
+`.cache/gates/` artefact (the BB strict-freshness arm reads the re-shot PNGs).
 
 Capture harness: `scripts/wf-ay-capture-dock2.mjs` (own-surface stills + the onset
 series, modeled on the W-DOCK1 `proof-dock-items-lag-capture.mjs`).

@@ -58,9 +58,11 @@ export const EXPECTED_TREE = [
     // BA.W-FOURIER-STUDIO (the FOREGROUND studio — the aurora-studio idiom over a
     // Canvas2D stage; studio chrome paired with the ambient `fourier-field` sibling,
     // declares a calm paper background not a self-demo'd field — page-redesign exempt).
-    // BB.W-VIZ-SUITE / W-FLOWFIELD — the NEW WebGPU-first dot-flow-field viz appends
-    // last (the manifest row sits after glass-panel; W-CONCENTRIC appends concentric next).
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "fourier-studio", "glass-material", "glass-panel", "dot-flow-field"]],
+    // BB.W-VIZ-SUITE / W-FLOWFIELD — the NEW WebGPU-first dot-flow-field viz appended
+    // (the manifest row sits after glass-panel). BB.W-VIZ-SUITE / W-CONCENTRIC — the
+    // NEW WebGPU-first radial-Fourier ring-interference viz appends LAST (after
+    // dot-flow-field), closing the Batch-V substrates band.
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "fourier-studio", "glass-material", "glass-panel", "dot-flow-field", "concentric"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",

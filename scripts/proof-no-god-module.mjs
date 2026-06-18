@@ -78,8 +78,20 @@ const RATCHET_BASELINES = {
     //     source-order tie) + the calm-tier re-point + the ink-flip + the opaque escape
     //     + the under-shadow modifier + the grain ::after stay. Dist byte-identical.
     // The MONOTONIC drain is honoured (the rows DELETED in the same diff that carved
-    // the files — a stale row reds, the gate's own guard). The ratchet is now ∅ — the
-    // close-state requirement. Every file is under bound by its own measure.
+    // the files — a stale row reds, the gate's own guard). The ratchet WAS ∅ at the
+    // W-CARVE4 close-state; the Batch-V/B-ask waves below re-grew three files past the
+    // bound (legitimate capability growth), BOOK'd to W-CARVE5 — the final carve that
+    // re-drains the ratchet to ∅ BEFORE W-CLOSE (the close-state is the FINAL bar).
+    // BOOK(BB.W-CARVE5): W-AUR-KUWAHARA grew the aurora mediums GLSL (the kuwahara
+    // medium body) — split the medium bodies into a partial preserving the recompose hash.
+    "components/custom/aurora/constants/shaders/mediums.glsl.ts": 595,
+    // BOOK(BB.W-CARVE5): the BB api publications (border-progress/dock-cta/spa-view/
+    // dot-flow-field/concentric type re-exports) grew the discovery barrel — split into
+    // api sub-modules (the curated-barrel precedent) preserving the public surface.
+    "api/index.ts": 543,
+    // BOOK(BB.W-CARVE5): B1-frag (the warpMode:"curl" branch + warpModeFor) grew the
+    // aurora NOISE atom fan-out — split the warp/medium atom helpers into a sibling.
+    "components/custom/aurora/composables/atoms.ts": 506,
 };
 
 let _cliPaths = null;

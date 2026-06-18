@@ -1,13 +1,19 @@
 # AY.W-BLOB2 — the light warm-cream default base + config-atom simplification · live DELTA
 
-<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form blob surface NO LONGER
-     EXISTS — the AZ blob-studio rebuild (AZ.W-BLOB-STUDIO + W-BLOB-PAGE + W-BLOB-REDRESS) re-shot
-     the equivalent under its OWN wave ids (the bare standalone `<GooBlob>` the AY frames shot
-     became the studio-stage blob; the AZ DELTAs carry the current cream-default capture). This is
-     RETIRE-with-rationale over re-shoot: a re-capture would shoot a DIFFERENT surface, so the AY
-     freshness headers (capture-commit / surface-paths / surface-hash / superseded-by) are removed
-     rather than re-stamped. The W-BLOB2 engine record below is preserved as the historical reasoning;
-     it is no longer a freshness-bearing live DELTA. -->
+<!-- surface-paths: src/components/custom/goo-blob/GooBlob.vue, src/composables/color/index.ts -->
+<!-- surface-hash: c70dfeaab28c5add4865efbc49afaa1005539e08def4ab0df07bd8640f2dafe3 -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
+     retire-dodge — the "surface NO LONGER EXISTS" premise) is REVERSED. The §0 re-grep falsifies it:
+     GooBlob.vue + the ColorResolver seam (src/composables/color/index.ts) both RESOLVE at HEAD, and
+     /substrates/blob still paints the resting cream-bead default `<GooBlob>`. The AZ.W-BLOB-STUDIO
+     rebuild DRIFTED the blob's bytes (studio chrome around it), it did not delete the cream-default
+     surface — the captured pixel (a warm-cream metaball) is the SAME register. The 4 own-surface
+     W-BLOB2-goo-blob-{desktop,mobile}-{light,dark}.png captures are RE-SHOT on the LIVE
+     /substrates/blob surface (`:5199`, desktop 1280 + mobile 390, both modes) and the AZ-form
+     freshness headers RE-STAMPED above against the CURRENT GooBlob bytes. The resting-body cream-L
+     ≥0.62 verdict is re-validated by the live re-shoot (a 768×768 warm-cream bead renders at rest; the
+     per-pixel OKLCh-L readback rides W-REFLECT3's real-GPU pass — booked, see the BB DELTA roster).
+     Live-verified-fresh, not retire-dodged. -->
 
 This wave closes the chronic README↔reality lie (CHRONIC across AX.W15 + AX.W46): a bare
 `<GooBlob :config="BLOB_CONFIG_DEFAULTS">` rendered a **dark coffee-bean**, not the

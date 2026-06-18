@@ -80,12 +80,18 @@ re-recorded there if the empirical capture demands a re-tune.
     {
       "viz": "concentric",
       "subpath": "/concentric",
-      "status": "pending",
-      "primary": null,
-      "fallback": null,
+      "status": "verified",
+      "primary": "src/components/custom/concentric/shaders/concentric.wgsl.ts",
+      "fallback": "src/components/custom/concentric/shaders/concentric.glsl.ts",
       "rank": 4,
       "subWave": "BB.W-VIZ-SUITE.e W-CONCENTRIC",
-      "note": "BORN WebGPU-first — a fullscreen radial-Fourier ring-interference fragment field (the aurora shape-class). GLSL fallback declared at its sub-wave."
+      "captures": [
+        "docs/tranches/BB/audit/visual/concentric-parity/concentric-wgpu-primary.png",
+        "docs/tranches/BB/audit/visual/concentric-parity/concentric-webgl2-fallback.png",
+        "docs/tranches/BB/audit/visual/concentric-parity/parity-record.json"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "BORN WebGPU-first — a fullscreen radial-Fourier ring-interference fragment field (the aurora shape-class, the LAST new viz of Batch V): f(p,t) = Σ_j Σ_i A_i·sin(k_i·‖p−c_j‖_e − ω_i·t + φ_i), an ellipsoidal-norm radial sum over multi-centers → moiré interference, ω = √(g·k) the SAME deep-water dispersion the dot-flow-field uses (the suite's ONE Fourier vocabulary). concentric.wgsl.ts is the WebGPU-first primary (splicing the WGSL twin procedural-color.wgsl.ts); concentric.glsl.ts is the clean aurora-class WebGL2 fallback (splicing the GLSL twin procedural-color.glsl.ts). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: concentric is a PURE fragment field (no compute/particles), so BOTH backends evaluate ONE analytic ring-field evaluator (composables/ringField.ts sampleRingField) through ONE shared color seam — the field raster + the OKLab palette mapping are numerically identical at every (p,t) (proof:concentric clause 3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). UNLIKE the dot-flow-field's `degraded` density delta, concentric's fallback is the SAME pure fragment field — parity `verified`. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "fourier-field",

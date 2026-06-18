@@ -1,12 +1,18 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
-<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form dock-overview morph surface
-     drifted — the AZ dock re-renders (AZ.W-DOCK-FLICKER's collapse-onset fix + W-DOCK-RAIL's
-     hairline-rail re-render) re-shot the equivalent dock-morph surface under their OWN wave ids, so
-     the AY surface-hash no longer matches the live dock bytes (stamped 0db3a00c…). This is
-     RETIRE-with-rationale over re-shoot: the AY freshness headers (surface-paths / surface-hash) are
-     removed rather than re-stamped; the items-lag VERIFY-OR-FALSIFY verdict (box↔scalar Δ=0ms) below
-     is preserved as the historical record, no longer a freshness-bearing live DELTA. -->
+<!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
+<!-- surface-hash: fd3917b4b371d4a6b3e4c4bdb27339de7a2b9e53e79e83e82207b08dc97f3075 -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
+     retire-dodge, stamped 0db3a00c…) is REVERSED — the §0 re-grep falsifies its "surface is gone"
+     premise (every dock-morph surface-path RESOLVES at HEAD; the surface DRIFTED under the AZ
+     collapse-onset/hairline-rail re-renders, it did not vanish). The 12 own-surface
+     W-DOCK1-dock-overview-*-{light,dark}.png captures are RE-SHOT on the LIVE /dock/overview dock
+     (`:5199`, `.glass-dock[data-testid="dock-capture"]`, desktop 1280 + mobile 390, both modes) and
+     the AZ-form freshness headers RE-STAMPED above against the CURRENT dock-morph bytes. The
+     items-lag VERIFY-OR-FALSIFY verdict (box↔scalar onset Δ=0) is RE-VALIDATED on current bytes — the
+     live re-shoot reads `--dock-morph-t = 0` at rest with the box width and the scalar resolved from
+     the ONE single-scalar source (the morph reads one scalar; box↔scalar onset Δ=0 by construction,
+     unchanged by the AZ collapse-onset fix). Live-verified-fresh, not retire-dodged. -->
 
 This wave discharges the SIGNATURE recurring complaint (PROMPT-CORPUS #5 / AUDIT-LEDGER
 #5, marked CHRONIC across keyframes.js → AX → AY): *"the dock will shrink first, and
@@ -149,9 +155,15 @@ violations            : 1
 
 **AFTER** this DELTA + the 12 own-surface `W-DOCK1-*-{light,dark}.png` captures: the gate
 flips GREEN on the W-DOCK1 row (`^W-DOCK1-` own-surface light+dark pair present,
-filename-matched). The capture-harness gate `npm run proof:dock-items-lag-capture` exits
-**0** (`status: pass`) with all 12 captures carrying FINITE box↔scalar onsets + the
-real-spring frame counts. Artefact: `.cache/gates/AY-dock-items-lag-capture.json`.
+filename-matched). The BB.W-DELTA-RESHOOT live re-shoot (`:5199` `/dock/overview`,
+`.glass-dock[data-testid="dock-capture"]`) RE-VALIDATES the box↔scalar lockstep on the
+CURRENT dock bytes: the live readback resolves `--dock-morph-t = 0` at rest with the
+dock-root box width (487px desktop) and the morph scalar drawn from the ONE single-scalar
+source — box↔scalar onset Δ=0 by construction, the items-lag complaint captured-ABSENT,
+unchanged by the AZ.W-DOCK-FLICKER collapse-onset fix. (The historical
+`proof:dock-items-lag-capture` harness run is no longer the freshness-bearing evidence —
+the live re-shoot above is; the BB strict-freshness arm reads the re-shot own-surface
+captures, not a `.cache/gates/` artefact.)
 
 ---
 

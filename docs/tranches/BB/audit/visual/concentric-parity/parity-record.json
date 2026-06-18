@@ -1,0 +1,30 @@
+{
+  "wave": "BB.W-VIZ-SUITE.e W-CONCENTRIC",
+  "capturedAt": "2026-06-18T00:51:04.657Z",
+  "surface": "concentric (default warm-identity config, 2 centers, 5-ring Phillips ladder, t=1.3 deterministic)",
+  "methodology": "device-free STRUCTURAL proxy — concentric is a PURE fragment field (no compute, no particles): BOTH backends evaluate ONE analytic radial-Fourier field (composables/ringField.ts sampleRingField) through the SAME shared color seam (procedural-color.wgsl.ts ⟷ procedural-color.glsl.ts, byte-identical OETF + Ottosson OKLCh). The field raster + the OKLab palette mapping are identical at every (p,t). The W-REFLECT3 Metal-GPU swap-chain readback vs WebGL2 readPixels is the binding live capture. Unlike the dot-flow-field's `degraded` density delta, concentric's fallback is the SAME pure fragment field — parity `verified`.",
+  "raster": {
+    "width": 96,
+    "height": 96
+  },
+  "captures": {
+    "webgpu-primary": {
+      "path": "concentric-wgpu-primary.png",
+      "sha256_16": "98908146c9d3d65e"
+    },
+    "webgl2-fallback": {
+      "path": "concentric-webgl2-fallback.png",
+      "sha256_16": "98908146c9d3d65e"
+    }
+  },
+  "deltaE": {
+    "mean": 0,
+    "p99": 0,
+    "max": 0
+  },
+  "bar": {
+    "mean": 2,
+    "p99": 5
+  },
+  "within": true
+}

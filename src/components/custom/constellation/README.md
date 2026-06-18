@@ -545,3 +545,14 @@ PRNG ([`prng.ts`](../../../utils/prng.ts)) is consumed verbatim — the constell
   park/freeze/dispose contract `useCanvas2D` parallels), [`prng.ts`](../../../utils/prng.ts) (the
   single-source `mulberry32` + `hashString`), [`useIntersectionPause`](../../../composables/motion/useIntersectionPause.ts)
   + [`useResizeObserver`](../../../composables/dom/useResizeObserver.ts) (composed by the substrate).
+
+## Substrate (BB.W-VIZ-SUITE — DO NOT MIGRATE now)
+
+Constellation renders on the **Canvas2D** substrate (`useCanvas2D` over the ONE
+`createCanvasLifecycle` leaf; a node/edge proximity-graph lattice). It is a first-class member
+of the procedural-animation suite (`src/components/custom/PROCEDURAL-SUITE.md`) but is **NOT
+migrated to WebGPU in BB.W-VIZ-SUITE**: Canvas2D handles the current node count fine, and
+`proof:constellation-substrate-single` is substrate-agnostic (unaffected). Booked successor
+**W-CONSTELLATION-GPU** — trigger: a much denser lattice, where the dot-flow-field advection
+compute pass generalizes to constellation's nodes. Recorded in the parity table as a
+`no-migrate` row with this reason.

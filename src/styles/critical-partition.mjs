@@ -75,6 +75,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "segmented-tabs.css",
     "select.css",
     "icon-chip.css",
+    "border-progress.css",
 ]);
 
 /**

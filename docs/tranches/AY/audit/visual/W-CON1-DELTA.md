@@ -1,13 +1,18 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
-<!-- RETIRED-SUPERSEDED (BA.W-HYGIENE, DC-REC-9): the captured AY-form constellation surface
-     drifted — the AZ constellation re-renders (AZ.W-CON-GEN's generalization + W-REFLECT's
-     constellation surface) re-shot the equivalent under their OWN wave ids, so the AY surface-hash
-     no longer matches the live bytes (stamped f3637de6…, the live constellation is now a different
-     surface). This is RETIRE-with-rationale over re-shoot: a re-capture would shoot the AZ-generalized
-     surface, not the AY refit surface. The AY freshness headers (surface-paths / surface-hash) are
-     removed rather than re-stamped; the refit reasoning below is preserved as the historical record,
-     no longer a freshness-bearing live DELTA. -->
+<!-- surface-paths: src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts -->
+<!-- surface-hash: 1b86f6bbaa3be8b1c25fa154b1baef634049cb7aaec98fc9b73b21429e383579 -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
+     retire-dodge, stamped f3637de6…) is REVERSED — the §0 re-grep falsifies its "the live
+     constellation is a different surface" premise (Constellation.vue / constellationField.ts /
+     constellationDraw.ts all RESOLVE at HEAD; the AZ.W-CON-GEN generalization DRIFTED the field path,
+     it did not replace the surface). The 12 own-surface W-CON1-*-{light,dark}.png captures (refit /
+     refit-before / autodrift) are RE-SHOT on the LIVE /substrates/constellation surface (`:5199`,
+     desktop 1280 + mobile 390, both modes) and the AZ-form freshness headers RE-STAMPED above against
+     the CURRENT constellation bytes. The refit-coverage verdict (≥90% fills box) is RE-VALIDATED on
+     current bytes — the live re-shoot reads the canvas filling its host on BOTH axes (fillFracW=1,
+     fillFracH=1, fillsBox:true) with the `window.__constellationRefit` seam LIVE. Live-verified-fresh,
+     not retire-dodged. -->
 
 **Wave:** AY.W-CON1 · **Status:** live-verified · **Verdict:** PASS (the recessive
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified
