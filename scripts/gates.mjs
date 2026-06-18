@@ -95,6 +95,12 @@ export const GATES = [
         tags: ["local", "ci", "release"],
     },
     {
+        id: "proof:dist-css",
+        cmd: "proof:dist-css",
+        tags: ["local", "ci", "release"],
+        note: "GC2 — the dist/styles CSS parse + url()-safety gate. (a) lightningcss parses every dist/styles/**/*.css with errorRecovery:false — catches the comment-injection unterminated-string class (the 4.0.0 bug: prose-mention of @source matched before the real at-rule, injecting a comment-close that orphaned an apostrophe as a live unterminated string). (b) every url() token must resolve to data:/#/http — catches the bundler-hostile relative-url class (the glass-refract split url('HEAD') 28 url('TAIL') where TAIL starts with a bare quote, mis-resolved as a file path by consumer bundlers). Pure function of dist/; runs post-build on every runner.",
+    },
+    {
         id: "proof:consumers:static",
         cmd: "proof:consumers:static",
         tags: ["local", "ci", "release"],

@@ -119,23 +119,14 @@
     initial-value: 0deg;
 }
 
-/* BB.W-LENSING — the `--glass-refract` lens-magnitude axis (the squircle bevel-
-   profile displacement `scale`). Typed INHERITING `<number>` so a host sets it on
-   any ancestor to retune the lens DEPTH (the `--glass-level`-style cascading scalar,
-   distinct from the per-element `inherits: false` specular cohort above). The
-   `feDisplacementMap` `scale` reads it (glass-refract.css composes the data-URI from
-   `var(--glass-refract-filter-head) var(--glass-refract) var(--glass-refract-filter-tail)`),
-   so animating this var on `:active` (the lens-swell on the `--glass-btn-press-t`
-   drive, material.css) re-targets the displacement magnitude WITHOUT re-baking the
-   map (only the `scale` param moves — the AW.W23 intent). `initial-value: 28` is the
-   resting bend the prior baked `scale='28'` literal painted (byte-identical at rest).
-   The lens is `@supports`-gated PE, so on a non-supporting engine the axis is inert
-   (the blur+tint base paints alone). */
-@property --glass-refract {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 28;
-}
+/* BB.W-LENSING `--glass-refract` axis — RETIRED (DDR-LENS-BAKE, glass-refract.css).
+   The axis drove the `feDisplacementMap` `scale` by splicing `var(--glass-refract)`
+   between a head/tail `url()` pair. That construction never parsed as a
+   `backdrop-filter` (it emitted three tokens, not one url) AND broke consumer bundlers
+   (the tail `url("'…")` mis-resolved as a file path); a CSS url() string token cannot
+   carry a substituted `var()`, so a dynamic `scale` inside the mandatory single
+   self-contained data-URI is structurally impossible. The `scale` is now BAKED at 28
+   (the resting bend, byte-identical) — no axis, no `@property` reg. */
 
 /* BB.W-GLASS-ACCENT — the THIRD disjoint glass axis: the per-INSTANCE
    CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a consumer DATA

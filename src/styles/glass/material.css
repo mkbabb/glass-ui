@@ -284,26 +284,18 @@
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 
-    /* BB.W-LENSING (scope 2) — the `:active` LENS-SWELL on the ONE `--glass-btn-press-t`
-       drive (the §6 press register, `--spring-snappy` at `--spring-snappy-duration`,
-       W-MOTION-CANON). A pressed `.glass-lens` surface bumps `--glass-refract` UP
-       (the backdrop pinches/deepens under the press) COUPLED with the gleam intensity
-       lift on the SAME drive — ONE scalar, the "glass DEFORMS under press, not just
-       shrinks" read. The swell is the `scale` PARAM only (the displacement magnitude
-       moves; the squircle map is NEVER re-baked — the AW.W23 cheap-animation intent +
-       the F4 compositor/filter-only assert: `--glass-refract` resolves into the
-       `backdrop-filter` displacement `scale`, NOT a layout property). The bump rides
-       the press-t drive Button.vue writes off the spring (0 rest → 1 pressed); at rest
-       (`--glass-btn-press-t: 0`) the lens is byte-identical to the resting axis. PRM:
-       the press-t drive itself snaps under `prefers-reduced-motion: reduce` (Button.vue
-       / .tap-squish PRM carve — the swell reaches its endpoint with no in-between
-       frames; the gesture still functions, the physics off). The `--glass-refract-swell`
-       knob (default 16) is the press depth a consumer retunes. */
-    .glass-lens {
-        --glass-refract: calc(
-            28 + var(--glass-btn-press-t, 0) * var(--glass-refract-swell, 16)
-        );
-        transition: --glass-refract var(--spring-snappy-duration, 0.34s) var(--spring-snappy, ease-out);
-    }
+    /* BB.W-LENSING (scope 2) — the `:active` LENS-SWELL is RETIRED (DDR-LENS-BAKE,
+       glass-refract.css header). The swell drove the displacement `scale` by mutating
+       the `--glass-refract` axis on the `--glass-btn-press-t` press drive (28 rest → 44
+       pressed). That depended on the var()-spliced head/`scale`/tail filter — which never
+       PARSED as a `backdrop-filter` (three tokens: `url("…") <n> url("…")`), so the lens
+       rendered `none` and the swell animated a value that reached NO filter. A CSS url()
+       string token cannot carry a substituted `var()` (the engine does not re-tokenise
+       inside a string), so a dynamic per-instance `scale` is structurally impossible in a
+       single self-contained data-URI — and the single token is mandatory for both parse
+       validity and bundler url()-rewrite safety. The `scale` is now BAKED at the §10
+       default (28); the resting lens read is PRESERVED (and now actually renders), the
+       press-depth animation is the deliberate tradeoff. The press squish + gleam lift on
+       the SAME `--glass-btn-press-t` drive (material gleam, above) carry the press read. */
 
 }

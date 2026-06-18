@@ -1,7 +1,7 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "4.0.0",
-    "description": "Glassmorphic design system \u2014 Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
+    "version": "4.0.1",
+    "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -112,9 +112,9 @@
             "paper-backdrop": [
                 "dist/paper-backdrop.d.ts"
             ],
-                "pager-dots": [
-                    "dist/pager-dots.d.ts"
-                ],
+            "pager-dots": [
+                "dist/pager-dots.d.ts"
+            ],
             "toggle-chip": [
                 "dist/toggle-chip.d.ts"
             ],
@@ -634,6 +634,7 @@
         "proof:runtime": "node scripts/proof-runtime.mjs",
         "proof:theme": "node scripts/proof-theme-style.mjs",
         "proof:components-css": "node scripts/proof-components-css.mjs",
+        "proof:dist-css": "node scripts/proof-dist-css.mjs",
         "proof:resolution": "node scripts/proof-resolution-contract.mjs",
         "proof:consumer-staleness": "node scripts/proof-consumer-staleness.mjs",
         "proof:peer-conformance": "node scripts/proof-peer-conformance.mjs",
@@ -709,26 +710,26 @@
         "proof:dockmorph-cta": "node scripts/proof-dockmorph-cta.mjs",
         "proof:gpu-substrate-single": "node scripts/proof-gpu-substrate-single.mjs",
         "proof:desktop-reserve": "node scripts/proof-desktop-reserve.mjs",
-"proof:pointer-velocity": "node scripts/proof-pointer-velocity.mjs",
+        "proof:pointer-velocity": "node scripts/proof-pointer-velocity.mjs",
         "proof:border-progress": "node scripts/proof-border-progress.mjs",
         "proof:demo-design": "node scripts/proof-demo-design.mjs",
-"proof:no-dual-path": "node scripts/proof-no-dual-path.mjs",
-"proof:liquid-reveal": "node scripts/proof-liquid-reveal.mjs",
+        "proof:no-dual-path": "node scripts/proof-no-dual-path.mjs",
+        "proof:liquid-reveal": "node scripts/proof-liquid-reveal.mjs",
         "proof:glass-depth": "node scripts/proof-glass-depth.mjs",
         "proof:metal-shimmer": "node scripts/proof-metal-shimmer.mjs",
         "proof:glass-accent": "node scripts/proof-glass-accent.mjs",
         "proof:lensing": "node scripts/proof-lensing.mjs",
-"proof:press-unify": "node scripts/proof-press-unify.mjs",
+        "proof:press-unify": "node scripts/proof-press-unify.mjs",
         "proof:scroll-motion": "node scripts/proof-scroll-motion.mjs",
-"proof:drag-morph": "node scripts/proof-drag-morph.mjs",
+        "proof:drag-morph": "node scripts/proof-drag-morph.mjs",
         "proof:display-tracking": "node scripts/proof-display-tracking.mjs",
         "proof:paper-grid": "node scripts/proof-paper-grid.mjs",
-"proof:control-tokens": "node scripts/proof-control-tokens.mjs",
-"proof:button-glass": "node scripts/proof-button-glass.mjs",
-"proof:phase-palette": "node scripts/proof-phase-palette.mjs",
-"proof:aurora-swraster": "node scripts/proof-aurora-swraster.mjs",
-"proof:on-glass-fg": "node scripts/proof-on-glass-fg.mjs",
-"proof:dock-morph-family": "node scripts/proof-dock-morph-family.mjs",
+        "proof:control-tokens": "node scripts/proof-control-tokens.mjs",
+        "proof:button-glass": "node scripts/proof-button-glass.mjs",
+        "proof:phase-palette": "node scripts/proof-phase-palette.mjs",
+        "proof:aurora-swraster": "node scripts/proof-aurora-swraster.mjs",
+        "proof:on-glass-fg": "node scripts/proof-on-glass-fg.mjs",
+        "proof:dock-morph-family": "node scripts/proof-dock-morph-family.mjs",
         "proof:suffuse": "node scripts/proof-suffuse.mjs",
         "proof:suffuse2": "node scripts/proof-suffuse2.mjs",
         "proof:colocation": "node scripts/proof-colocation.mjs",
@@ -914,7 +915,7 @@
         "profile:aurora": "node scripts/profile-aurora.mjs",
         "validate-consumers": "scripts/validate-consumers.sh",
         "release": "bash scripts/release.sh",
-        "prepublishOnly": "npm run build && npm test"
+        "prepublishOnly": "npm run build && npm test && npm run proof:dist-css"
     },
     "engines": {
         "node": ">=22"

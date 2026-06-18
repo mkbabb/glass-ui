@@ -15,6 +15,29 @@ import {
 const require_ = createRequire(import.meta.url);
 
 /**
+ * atSourceIndex — locate the offset of the real trailing [at-source] AT-RULE in
+ * a CSS string, anchoring the dist-only @import folds (SFC bundle + components)
+ * just before it so they stay inside the leading import block.
+ *
+ * Why not a bare substring scan for the token: the authored index.css mentions
+ * the token at-source INSIDE comment prose (the BA.W-EMISSION block narrates the
+ * dead [dot-dot/components] glob, re-imported this at-source line). A bare
+ * indexOf matches that PROSE occurrence FIRST and slices the injection into the
+ * MIDDLE of an open comment. The injected fold-comment then carries a comment
+ * close delimiter that prematurely closes the OUTER comment, orphaning the rest
+ * of the prose as live CSS (the apostrophe in the prose becomes an unterminated
+ * string, so every consumer Tailwind v4 build dies). A REAL at-source at-rule
+ * begins a statement: it sits at the start of a line after only whitespace.
+ * Anchor on that line-start at-rule, never on a prose mention.
+ *
+ * Returns the byte offset of the at-rule, or -1 (caller appends at EOF).
+ */
+function atSourceIndex(css: string): number {
+    const m = /^[ \t]*@source\b/m.exec(css);
+    return m ? m.index : -1;
+}
+
+/**
  * publishStyleAssets — the post-build CSS/font publish step, shared by both
  * Vite configs (canonical + iter) so every build mode emits the same `dist/`
  * shape (AO inv β — no dist-wipe footgun: the budget gate reads what ships).
@@ -283,7 +306,7 @@ async function emitComponentUtilities(
     const indexSrc = readFileSync(distIndex, "utf-8");
     const compImport = '@import "./components.css";';
     if (indexSrc.includes(compImport)) return;
-    const sourceAt = indexSrc.indexOf("@source");
+    const sourceAt = atSourceIndex(indexSrc);
     const comment =
         "/* P9 — component-utility rules (rounded-panel, text-muted-foreground,\n" +
         "   …) shipped build-independently so a bare consumer paints them. */\n";
@@ -417,7 +440,7 @@ export function publishStyleAssets(): Plugin {
                 const indexSrc = readFileSync(distIndex, "utf-8");
                 const sfcImport = '@import "../glass-ui.css";';
                 if (!indexSrc.includes(sfcImport)) {
-                    const sourceAt = indexSrc.indexOf("@source");
+                    const sourceAt = atSourceIndex(indexSrc);
                     const folded =
                         sourceAt === -1
                             ? `${indexSrc}\n${sfcImport}\n`
