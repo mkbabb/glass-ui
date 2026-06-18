@@ -188,7 +188,12 @@ model) synthesizes; the fanout is opus/sonnet.
 | 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs (w0syxq0x5) | DONE 66 waves | 66 waves/*.md + DEFERRAL-LEDGER (404L) + PROMPT-LEDGER §3.1 |
 | 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs (w2vvz9y8s) | DONE | WAVE-INDEX.md + CHALLENGE-1.md (7B/9M/6m gaps) |
 | 4 | HARDEN | fix CHALLENGE-1 gaps + 4 new waves | bc-iter4-harden.mjs (w3pp3xzy6) | DONE | ALL 7 BLOCKERs closed; 70 waves; Band 11 PERFORMANCE + VISUAL-RECONCILE added; ledgers zero-dangling |
-| 5 | CHALLENGE-2 | re-attack the 70-wave set | bc-iter5-challenge2.mjs | LAUNCHING | gap report (converge if no BLOCKER/MAJOR) |
+| 5 | CHALLENGE-2 | re-attack the 70-wave set | bc-iter5-challenge2.mjs (w6lc0kp2y) | DONE | CHALLENGE-2.md: all C1 closed; NEW 0B/5M/7m |
+| 6 | HARDEN-2 | fix the 5 MAJOR + 7 MINOR | bc-iter6-harden2.mjs (w9fo7c6ul) | IN-FLIGHT | buttons-ownership + DEFERRAL-LEDGER band-only-disposition cluster + F2 band-string guard |
+
+> **GAP TREND collapsing: CHALLENGE-1 7B/9M/6m → iter4 HARDEN closed ALL → CHALLENGE-2 0B/5M/7m.**
+> The 5 MAJORs: 1 buttons double-ownership (iter4 over-corrected) + 4 the DEFERRAL-LEDGER still-band-only
+> dispositions + the missing F2 band-string guard. HARDEN-2 (w9fo7c6ul) fixes them surgically.
 
 > **PLAN COMPLETE — 66 waves authored.** Known gap (the agent flagged it): the DEFERRAL-LEDGER + PM
 > disposition column references DRIFTED wave names (BC.W-VIZ-LIVE/WGSL-COMPILE-GATE/CROSSREPO-ADOPT/
@@ -203,18 +208,19 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iter4 HARDEN done — all 7 BLOCKERs closed, 70 waves, Band 11 + VISUAL-RECONCILE
-> added to §1. iteration 5 CHALLENGE-2 IN-FLIGHT (task w6lc0kp2y, bc-iter5-challenge2.mjs).**
-> On iter5 completion (TaskOutput w6lc0kp2y): harvest result.challenges2[].gaps into CHALLENGE-2.md;
-> note result.blockerMajor.
-> - If blockerMajor == 0 → this is CLEAN PASS #1. Run ONE MORE challenge (iteration 6, CHALLENGE-3,
->   fresh angles e.g. precept-conformance + per-wave-acceptance-quality + cross-repo-disposition) for
->   the 2-consecutive-clean convergence test. If THAT is also clean → converge: tick §1, write
->   FINAL.md, report, retire cron 17dd706c.
-> - If blockerMajor > 0 → HARDEN (iteration 6) fixes them (a focused bc-iter4-style fan-out over the
->   flagged waves), then CHALLENGE again. Loop.
-> Iteration count: …,2,3,4,5 = 11 toward the ≥20 target.
-> Keep ≤3 agents concurrent. Do NOT double-spawn while w6lc0kp2y is in flight.
+> **NEXT CURSOR: CHALLENGE-2 done (0B/5M/7m). iteration 6 HARDEN-2 IN-FLIGHT (task w9fo7c6ul,
+> bc-iter6-harden2.mjs) fixing the 5 MAJOR + 7 MINOR.**
+> On iter6 completion (TaskOutput w9fo7c6ul): verify the fixes (re-grep DEFERRAL-LEDGER.md for
+> band-only disposition cells → should be 0; the buttons ownership single-owned; the F2 band-string
+> guard present in BC.W-FOLD-LEDGER.md); commit. Then:
+> 1. **7 CHALLENGE-3** — re-attack (fresh: precept-conformance + per-wave-acceptance-quality +
+>    cross-repo-disposition + the iter6-touched files). If 0 BLOCKER/MAJOR → CLEAN PASS #1.
+> 2. **8 CHALLENGE-4** — if #1 clean, one more pass for the 2-consecutive-clean convergence test.
+>    If also 0 BLOCKER/MAJOR → CONVERGE: tick §1 fully, write FINAL.md, report, retire cron 17dd706c.
+>    (MINORs that are acceptably-deferred do NOT block convergence — record them in FINAL.md §residuals.)
+> 3. If any challenge finds BLOCKER/MAJOR → HARDEN again + re-challenge (loop 9,10,…).
+> Iteration count: …,2,3,4,5,6 = 12 toward the ≥20 target.
+> Keep ≤3 agents concurrent. Do NOT double-spawn while w9fo7c6ul is in flight.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
