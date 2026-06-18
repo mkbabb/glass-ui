@@ -42,6 +42,13 @@ The user's directive for BC (the new tranche):
 Each box = "a fully-lucid wave (or wave-set) exists in `waves/`, with goal + starting-state +
 acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 
+### Band F — FORENSICS (the post-mortems; feeds Band 0)
+> *"BB, BA, AZ were FULLY formed tranches — what went so wrong in their implementation? What went right?"*
+- [ ] BC.W-PM-BB — BB post-mortem: source-green/visually-broken anatomy (what was built vs claimed vs painted)
+- [ ] BC.W-PM-BA — BA post-mortem (dark-material, dock-sections, glass-cal, tabs-std — what landed in paint)
+- [ ] BC.W-PM-AZ — AZ post-mortem (adaptive-auto grey-glass origin, morph-showcase, rail3 — the divergence point)
+- [ ] BC.W-PM-SYNTHESIS — the cross-tranche failure-class taxonomy → the Band 0 gate-redesign requirements
+
 ### Band 0 — Verification transposition (the disease root)
 - [ ] BC.W-GESTALT-FIRST — per-wave gestalt-first paint verification supersedes single-terminal-reflect
 - [ ] BC.W-PAINT-GATE — gates measure PAINT not source-mechanism (close the gate-paint-blindness)
@@ -70,18 +77,32 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] BC.W-LIQUID-TAB — pull an active tab → morph/squish to location
 - [ ] BC.W-UNDERLINE-TUNE — underline retuned, audacious type, spring curve EASED (not abrupt)
 
-### Band 4 — Procedural viz (WebGPU everywhere, no fallback if Safari works)
-- [ ] BC.W-WEBGPU-EVERYWHERE — WebGPU substrate everywhere; no canvas; no fallbacks (if Safari-capable)
-- [ ] BC.W-GOOBLOB-FIRSTPRINCIPLES — goo-blob re-done from first principles, meatballs on Safari, hover-interactive
-- [ ] BC.W-DOTFLOW-WAVES — dot-flow subtle, large sweeping waves (Claude co-work ref), not noise
-- [ ] BC.W-DOTMATRIX-VARIANT — a dot-matrix goo-blob variant + the goo+dot-matrix hybrid
-- [ ] BC.W-CONCENTRIC-LINES — concentric ellipsoid LINES forming distinct waves (not noise)
-- [ ] BC.W-FOURIER-ONE — fourier collapses to ONE view (kill the duplicates)
-- [ ] BC.W-PAPER-GRID-LIQUID — paper grid evenly-spaced + larger + liquid-waving lines, suffused subtly site-wide
-- [ ] BC.W-GRID-SIMPLE — abrogate the blurry grid → SIMPLE grid like keyframes.js
-- [ ] BC.W-VIZ-INTERACTION — every procedural bg responds to cursor/touch with velocity + acceleration
+### Band 4 — Procedural viz (WebGPU-first, no fallback where Safari is capable)
+> **The procedural-item roster (the user: "for each ... a full SOTA research wave + full WebGPU/WebGL2
+> prototype + full configurator + comprehensive demo suite").** 7-member suite + 2 backgrounds + 2
+> new viz = **11 items.** EACH owed: (a) a SOTA-research doc (iter 1d), (b) a WebGPU-first + WebGL2
+> prototype, (c) a full `useConfiguratorState` studio, (d) a comprehensive demo suite. All Safari-OK.
+>
+> **Cross-cutting:**
+- [ ] BC.W-WEBGPU-EVERYWHERE — WebGPU-first substrate everywhere; WGSL primary; WebGL2 only where WebGPU truly absent; no Canvas2D viz; no fallback where Safari 26+ is capable
+- [ ] BC.W-VIZ-INTERACTION — EVERY procedural bg responds to cursor/touch with velocity + acceleration (usePointerVelocityField everywhere)
 - [ ] BC.W-VIZ-CHOREOGRAPHY — start/transition/end/restart choreography via keyframes.js (ONE source + clock)
-- [ ] BC.W-TEAL-NAVY-PURGE — remove the teal-on-navy reference entirely
+- [ ] BC.W-VIZ-CONFIGURATOR-SUITE — the shared "full configurator + comprehensive demo suite per viz" discipline + gate
+- [ ] BC.W-TEAL-NAVY-PURGE — remove the teal-on-navy reference entirely (warm-cream identity)
+>
+> **Per-viz (SOTA-research → WebGPU/WebGL2 prototype → configurator → demo):**
+- [ ] BC.W-VIZ-AURORA — aurora: WGSL primary, painterly mediums, the kuwahara finish, full configurator + demo
+- [ ] BC.W-GOOBLOB-PLAIN — goo-blob STAGE 1: re-written as JUST a blob, from first principles, Safari-OK
+- [ ] BC.W-GOOBLOB-MEATBALL — goo-blob STAGE 2: + shadowing + meatballing from first principles, Safari-OK, hover-interactive
+- [ ] BC.W-VIZ-DOTFLOW — dot-flow: subtle, LARGE sweeping waves (Claude co-work ref), curl-noise + Gerstner, not noise
+- [ ] BC.W-VIZ-CONCENTRIC — concentric: ELLIPSOID LINES forming distinct waves (not noise)
+- [ ] BC.W-VIZ-FOURIER — fourier: collapse to ONE view (kill duplicates), full epicycle demo
+- [ ] BC.W-VIZ-CONSTELLATION — constellation: WebGPU, hi-res (kill the low-res circles), in a card
+- [ ] BC.W-VIZ-WATERCOLOR — watercolor-dot: the decorative mark, audited + Safari-OK
+- [ ] BC.W-VIZ-PAPERGRID — paper-grid: evenly-spaced + larger + LIQUID-waving lines, suffusable site-wide subtle
+- [ ] BC.W-GRID-SIMPLE — the blurry grid abrogated → SIMPLE grid like keyframes.js (not in-card)
+- [ ] BC.W-VIZ-DOTMATRIX — NEW: the dot-matrix sphere viz (Claude co-work fine-dot spheres)
+- [ ] BC.W-VIZ-HYBRID — NEW: the goo+dot-matrix HYBRID
 
 ### Band 5 — Page standardization (EVERY page)
 - [ ] BC.W-PAGE-CHASSIS — every page: audacious LARGE hero title + subtitle + explicit subpath + scroll-to-shrink + ONE glass card + procedural bg
@@ -124,6 +145,8 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] SOTA research corpus: apple.com + iOS-27, awwwards, Claude co-work dot-matrix, herostudios
 - [ ] keyframes.js + value.js facility inventory (what to leverage)
 - [ ] Every demo route enumerated + audited (the route census)
+- [ ] **BB/BA/AZ forensic post-mortems** (research/postmortem/*.md) + the failure-class synthesis
+- [ ] **Per-viz SOTA research doc ×11** (research/viz/*.md — aurora · goo-blob · dot-flow · concentric · fourier · constellation · watercolor · paper-grid · grid-simple · dot-matrix · hybrid)
 - [ ] A challenge/adversarial pass over the full wave-set (every wave attacked for gaps)
 - [ ] PROMPT-LEDGER.md: original + 50+ historical prompts, each mapped to a covering wave
 
@@ -150,7 +173,10 @@ model) synthesizes; the fanout is opus/sonnet.
 |---|------|-------|----------|--------|--------|
 | 0 | audit | all | bc-audit.mjs (32 agents) | DONE | FINDINGS-DIGEST.md, DEFECT-LEDGER.md, USER-DEFECTS.md |
 | 1 | research | SOTA + codebase + deferral | bc-iter1-research.mjs (way3dy2jj / wf_82240b8d-5f0) | 7/9 HARVESTED | research/*.md ×7 + WAVE-IMPACTS.md (50 rows / 49 waves) |
-| 1b | research-rerun | route-census + viz-codebase | resume wf_82240b8d-5f0 | LAUNCHING | research/route-census.md + viz-codebase.md |
+| 1b | research-rerun | route-census + viz-codebase | resume wf_82240b8d-5f0 (wiremj4eb) | IN-FLIGHT | research/route-census.md + viz-codebase.md |
+| 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs | QUEUED | research/postmortem/*.md + synthesis |
+| 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs | QUEUED | research/viz/*.md ×11 |
+| 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (15+ agents) | STAGED | waves/*.md (50+) + DEFERRAL-LEDGER |
 
 > **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
 > deferral-sweep, cross-repo-asks, kf-vjs-facilities → `research/`. KEY: WebGPU Baseline since
@@ -159,9 +185,18 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iteration 1b resume IN-FLIGHT. On completion: re-harvest route-census + viz-codebase
-> → seed DEFERRAL-LEDGER.md from deferral-sweep.md → launch iteration 2 (PLAN: Band 0 + Band 1 +
-> Band 5 chassis waves from WAVE-IMPACTS.md). Do NOT double-spawn (check TaskList).**
+> **NEXT CURSOR: iteration 1b resume IN-FLIGHT (wiremj4eb). RESEARCH-before-PLAN order (the
+> triumvirate). On 1b completion → re-harvest route-census + viz-codebase, then the research-deepening
+> iterations BEFORE the PLAN fan-out:**
+> 1. **1c FORENSICS** — `bc-iter1c-forensics.mjs` (3 agents: BB/BA/AZ post-mortems — what was built
+>    vs claimed vs painted; the failure-class taxonomy → Band 0 gate-redesign reqs).
+> 2. **1d PER-VIZ SOTA** — `bc-iter1d-viz-sota.mjs` (11 agents, batches of 3: one deep SOTA-research
+>    doc per procedural item → research/viz/*.md, each pinning the WebGPU/WebGL2 technique + configurator
+>    axes + demo-suite scope; uses web.dev/MDN/Baseline guidance).
+> 3. **2 PLAN** — `bc-iter2-plan.mjs` (expanded: +Band F post-mortem-informed gates, +the per-viz
+>    families consuming research/viz/*.md, +goo-blob staging). Authors 50+ waves/*.md + DEFERRAL-LEDGER.
+>
+> Do NOT double-spawn while wiremj4eb is in flight (check TaskList / TaskOutput first).**
 
 ---
 
@@ -203,3 +238,14 @@ crash) it re-enters via the resume protocol. Auto-expires after 7 days (re-arm i
 - Opus/sonnet for fanout, never inherit fable on spawns.
 - Every src/ artefact has ≥2 sites OR is exported OR is a private demo helper.
 - Writing style: no grandiloquence, em-dashes-no-spaces, levity.
+- **MCP at every juncture (user-mandated).** Research + verification agents use the **modern-web-
+  guidance** sources (web.dev / MDN / Baseline / caniuse via WebSearch+WebFetch — no dedicated
+  "modern web guidance MCP" is registered this session, so its INTENT is fulfilled via these) for
+  every web-platform-feature decision (WebGPU/backdrop-filter/scroll-timeline support), AND the
+  **dev-tools MCP** (chrome-devtools + Playwright + claude-in-chrome) for every live paint/perf
+  verification. No "I assume it is supported" — cite the Baseline status. No "looks fixed" — capture
+  the paint. (Binds the EXECUTION phase especially; in tranche-dev the research agents cite the
+  Baseline facts the waves bake.)
+- **Per-viz completeness (user-mandated).** Every procedural item ships a WebGPU-first + WebGL2
+  prototype + a FULL configurator + a COMPREHENSIVE demo suite. A viz wave without all four is
+  incomplete. Goo-blob is staged: plain blob first, then meatball/shadow from first principles.
