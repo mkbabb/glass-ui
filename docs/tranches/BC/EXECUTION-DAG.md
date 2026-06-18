@@ -1,6 +1,6 @@
 # BC — the EXECUTION-DAG (the turnkey build map: topo-ordered build plan + dependency graph + per-band gate battery)
 
-> **What this is.** The single execution-readiness contract for the BC tranche's 70 waves: the BAND
+> **What this is.** The single execution-readiness contract for the BC tranche's 74 waves: the BAND
 > build-order, the intra-band + cross-band dependency edges (read off every wave's `**Sequence:**`
 > line), a topological sort proven ACYCLIC, the parallelizable-vs-serial annotation, and the per-band
 > gate battery (the `proof:*` gates + `tests-visual/*.spec.ts` π each band passes before the next
@@ -9,7 +9,7 @@
 >
 > **Source of truth.** The edge set comes from each wave's `waves/*.md` `**Sequence:**` line — that is
 > the BINDING source for every dependency edge below. `WAVE-INDEX.md` is the band/name REGISTRY (the
-> 70-wave roster + the band column); its `sequence-after` cells are a convenience summary, NOT binding
+> 74-wave roster + the band column); its `sequence-after` cells are a convenience summary, NOT binding
 > over a wave's own `**Sequence:**` line — where the two diverge the wave Sequence wins (and the stale
 > WAVE-INDEX cell is the one to reconcile, never the other way). The band roster matches
 > `ORCHESTRATION.md §1`. Every wave-id below resolves on disk in `WAVE-INDEX.md` (cross-checked). The
@@ -72,6 +72,9 @@ Band 11 (PERFORMANCE)      →  css-critical + lighthouse + perf-producer (measu
 | `BC.W-SPRING-EASE` (B7) READ by `BC.W-BUTTON-GLASS-IOS` (B1) / `BC.W-LIQUID-TAB` (B3) / `BC.W-UNDERLINE-TUNE` (B3) | B7 → B1/B3 | consume-after-mint: SPRING-EASE is a TOKEN-ONLY wave (no consumer edit), so its `snappy`/`press` mint can land EARLY; the consumers DECLARE they read the eased curve, and the spring-reading π ARM of each consumer is the only leg that waits on the mint (the geometry/material legs do not). SPRING-EASE depends on NONE of them → acyclic |
 | `BC.W-SPRING-EASE` (B7) READ by `BC.W-DOCK-ENGINE` (B2) | B7 → B2 | consume-after-mint (the SAME R1/R5 treatment): SPRING-EASE OWNS the `dock` SPRING_PRESETS row + the generated `--spring-dock`/`--spring-dock-duration` tokens; DOCK-ENGINE CONSUMES them (its body confirms the read; its own `**Sequence:**` is downstream of SPRING-EASE). The edge is one-directional INTO DOCK-ENGINE (SPRING-EASE depends on NONE of the dock waves → acyclic). The `dock` row is byte-FROZEN (SPRING-EASE's S4 content-hash), so DOCK-ENGINE need not wait on a curve CHANGE — but it DOES read the token (`--spring-dock`/`--spring-dock-duration`), so the build/verify edge stands. See §3 R2 |
 | `BC.W-PAGE-PRUNE` (B5) BEFORE `BC.W-PAGE-CHASSIS` (B5) | intra-band reorder | prune dead routes/copy FIRST so the chassis is applied to kept copy, not re-threaded onto dead routes — an intra-band ordering, not a cross-band issue |
+| `BC.W-DESHADCN` (B1) READ by the per-band reskin owners `{BUTTON-GLASS-IOS (B1), DIALOG-GLASS (B1), TABS-IOS (B3), RADIO-FIX/DROPDOWN-FIX/CONTROL-SMOOTH (B6)}` | B1 → B1/B3/B6 | forward source-of-truth hand-off (NOT opposite-band): DESHADCN authors the "zero shadcn-neutral" bar + `proof:no-shadcn-default` + the reskin census; the owners CONSUME the verdict and re-paint. DESHADCN depends only on `{GLASS-IDENTITY, BLACK-BAR}` → one-directional, no cycle. See §3 R7 |
+| `BC.W-SELECTION-CARD` (B1) READ by `BC.W-VISUAL-RECONCILE` (B4) | B1 → B4 | forward consume: the selection card composes the BB-BUILT A-2/A-3 seams; VISUAL-RECONCILE re-verifies them LIVE on the fixed floor (the I5-card consume). One-directional — SELECTION-CARD depends only on `{GLASS-IDENTITY, BLACK-BAR}` + the BB-built seams (not BC waves). See §3 R6 |
+| `BC.W-EXPANDABLE-PART` (B5) BEFORE `BC.W-ATLAS-ASK` (B10) | B5 → B10 | forward seam-before-consume: the AR-7 `::part()`/named-slot chrome hook must EXIST before the Atlas's AR-7 expand-chrome consume-and-delete folds onto it (the `^4.x` bump, foreign-tree fence). EXPANDABLE-PART depends on `{GLASS-IDENTITY, GLASS-PRUNE, PADDING-CANON}` → one-directional |
 
 ---
 
@@ -100,21 +103,28 @@ BC.W-PM-SYNTHESIS ──→ BC.W-GESTALT-FIRST ──┐
 - `BC.W-FOLD-LEDGER` consumes the 4 PM wrappers + `DEFERRAL-LEDGER.md`; mints `FOLD-LEDGER.json`. Its `proof:bc-fold-ledger` is a CLOSE oracle (Band 6 + the cut gate on it).
 - **`⇒ Band 1`** (via `BC.W-PAINT-GATE`'s real-paint harness + `BC.W-GESTALT-FIRST`'s per-wave reader) and **`⇒ Band 4`** (`BC.W-WEBGPU-EVERYWHERE`'s gate is built on `BC.W-PAINT-GATE`'s harness).
 
-### Band 1 — Glass identity rebuild (7 waves)
+### Band 1 — Glass identity rebuild (10 waves)
 ```
 BC.W-BLACK-BAR  (FIRST of Band 1 — the rim→catch-light token)
    ├──→ BC.W-GLASS-IDENTITY  (warm-cream FLOOR; reads the corrected rim)
    │       ├──→ BC.W-ADAPTIVE-RECONCILE  (close the observer loop above the floor)
    │       │       └──→ BC.W-GLASS-LEGIBILITY-MEASURED  (measures the AA bar on the closed loop)
-   │       └──→ BC.W-GLASS-PRUNE  (consolidate to Glass CARDS + Glass MATERIALS; needs IDENTITY+ADAPTIVE landed)
-   │               ├──→ BC.W-DIALOG-GLASS       (specimen of the consolidated grammar)
-   │               └──→ BC.W-BUTTON-GLASS-IOS   (specimen; also reads SPRING-EASE press register — see §3)
-   └──→ (BC.W-BUTTON-GLASS-IOS also reads BC.W-BLACK-BAR rim directly)
+   │       ├──→ BC.W-GLASS-PRUNE  (consolidate to Glass CARDS + Glass MATERIALS; needs IDENTITY+ADAPTIVE landed)
+   │       │       ├──→ BC.W-DIALOG-GLASS       (specimen of the consolidated grammar)
+   │       │       ├──→ BC.W-BUTTON-GLASS-IOS   (specimen; also reads SPRING-EASE press register — see §3)
+   │       │       └──→ (BC.W-GLASS-GLOW-FIX runs BESIDE GLASS-PRUNE — see below)
+   │       ├──→ BC.W-DESHADCN        (cross-cutting reskin-DNA invariant + the census + proof:no-shadcn-default; after GLASS-IDENTITY + BLACK-BAR; BEFORE/BESIDE the per-band reskin owners)
+   │       ├──→ BC.W-SELECTION-CARD  (the I5 <Card variant="selection">; after GLASS-IDENTITY + BLACK-BAR; consumes the BB-BUILT --glass-accent + .metal-*-border seams)
+   │       └──→ BC.W-GLASS-GLOW-FIX  (the A-8 unbounded-radial-halo root defect; after GLASS-IDENTITY; beside GLASS-PRUNE + the Band-4 viz surfaces it confirms)
+   └──→ (BC.W-BUTTON-GLASS-IOS + BC.W-SELECTION-CARD also read BC.W-BLACK-BAR rim directly)
 ```
 - Serial spine: `BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → GLASS-LEGIBILITY-MEASURED`.
 - `GLASS-PRUNE` is `[→]` after `{IDENTITY, BLACK-BAR, ADAPTIVE-RECONCILE}`; `DIALOG-GLASS` + `BUTTON-GLASS-IOS` `[‖]` after GLASS-PRUNE.
 - `GLASS-LEGIBILITY-MEASURED` is the Band-1 ratify wave (synthesis/measurement). It can run `[‖]` with GLASS-PRUNE since both only need ADAPTIVE-RECONCILE.
+- **The three iteration-5 ATLAS-FOLD Band-1 waves** (all `[→]` after `{GLASS-IDENTITY, BLACK-BAR}`, all `[‖]` with each other and with GLASS-PRUNE — disjoint owners): `DESHADCN` is the cross-cutting reskin-DNA INVARIANT + the census that hands each per-band reskin owner its verdict (it OWNS the bar + `proof:no-shadcn-default` + the census; the per-component PAINT lands in the owning band waves — BUTTON-GLASS-IOS/CONTROL-SMOOTH/DIALOG-GLASS — so it is a SOURCE-of-truth wave the reskin owners consume, never a back-build into them). `SELECTION-CARD` COMPOSES the two BB-BUILT seams (`--glass-accent` rim A-2 + `.metal-*-border` A-3 — built at BB, NOT BC waves → no intra-BC edge from them) and is re-verified live by `VISUAL-RECONCILE` (Band 4). `GLASS-GLOW-FIX` roots the A-8 unbounded radial halo (a library-CSS leak, NOT a viz-math change) — it runs BESIDE `GLASS-PRUNE` (the glow leak rides one of the glass/viz surfaces prune touches) and the Atlas-confirmed surface is a Band-4 viz route, but the LEAKING RULE is rooted in Band 1.
 - **`⇒ Band 2`**: `BLACK-BAR` + `ADAPTIVE-RECONCILE` → `BC.W-DOCK-ENGINE` (the dock reads the corrected rim + stops reading grey).
+- **`⇒ Band 4 VISUAL-RECONCILE`**: `SELECTION-CARD` (the A-2/A-3 composition) → `BC.W-VISUAL-RECONCILE` (the I5-card consume — the A-2/A-3 paint re-verified LIVE on the fixed floor); the rest of the Band-1 set already feeds it (see below).
+- **`⇒ Band 5`**: `GLASS-IDENTITY` + `GLASS-PRUNE` → `BC.W-EXPANDABLE-PART` (the fullscreen overlay reads the FIXED `glass-overlay` tier; the AR-7 chrome-hook seam lands in Band 5 containers).
 - **`⇒ Band 3`**: `BLACK-BAR` + `GLASS-IDENTITY` + `ADAPTIVE-RECONCILE` → `BC.W-TABS-IOS`.
 - **`⇒ Band 4`**: `GLASS-IDENTITY` + `ADAPTIVE-RECONCILE` → `BC.W-VIZ-AURORA` (the glass over the field reads warm, not grey).
 - **`⇒ Band 5`**: Band 1 (the ONE chassis card hosts the rebuilt warm-cream glass) → `BC.W-PAGE-CHASSIS`.
@@ -143,6 +153,7 @@ BC.W-TABS-IOS  (FIRST — material+geometry; after Band-1 glass; NO spring read)
 ```
 - `TABS-IOS` `[→]` after Band 1. `LIQUID-TAB` + `UNDERLINE-TUNE` `[‖]` after TABS-IOS (disjoint materials).
 - Both read the eased `snappy` curve → the consume-after-mint edge from `BC.W-SPRING-EASE` (§3).
+- **`TABS-IOS` consumes the `BC.W-DESHADCN` census verdict** (the tab material reskin off any residual reka/shadcn-flat tab paint) — a forward Band-1→Band-3 edge (DESHADCN is the SOURCE-of-truth invariant, TABS-IOS the per-band reskin owner; one-directional, no cycle — DESHADCN depends only on GLASS-IDENTITY/BLACK-BAR, never on a tab wave). See §3 R7.
 - **`⇒ Band 10`**: Band-3 PagerDots/pager surface → `BC.W-DECK` (the deck composes the windowed pager).
 
 ### Band 4 — Procedural viz (18 waves: 6 cross-cutting + 11 per-viz + GRID-SIMPLE)
@@ -183,7 +194,7 @@ BC.W-VISUAL-RECONCILE  (Band-4 cross-cutting; after Band-1 glass + GESTALT-FIRST
 - **`⇒ Band 10`**: `BC.W-VIZ-FOURIER` → `BC.W-FOURIER-ASK` (the in-repo "ONE fourier view" lands before the cross-repo re-pin); `BC.W-VIZ-AURORA` (the warm-lean root) → `BC.W-FOURIER-ASK`.
 - **`⇒ Band 11`**: `BC.W-VIZ-AURORA` + `BC.W-GOOBLOB-PLAIN` (the DPR cap + one-canvas invariant ride on the rebuilds) → `BC.W-PERF-PRODUCER`.
 
-### Band 5 — Page standardization (9 waves)
+### Band 5 — Page standardization (10 waves)
 ```
 BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
    └──→ BC.W-PAGE-CHASSIS  (the ONE standardized page idiom; after Band 1 + Band-4 bg recipes + PAGE-PRUNE)
@@ -193,6 +204,7 @@ BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
            ├──→ BC.W-HERO-AUDACIOUS   (sets per-category heroScale; after PAGE-CHASSIS + Band 1)
            │       └──→ BC.W-COMPOSITIONS-HERO  (kill the homepage-duplicate; alongside HERO-AUDACIOUS)
            └──→ BC.W-PADDING-CANON    (the φ ladder; after GLASS-IDENTITY + BLACK-BAR; coordinates DIALOG-GLASS)
+                   └──→ BC.W-EXPANDABLE-PART  (the AR-7 ::part()/named-slot expand-chrome seam; after {GLASS-IDENTITY, GLASS-PRUNE, PADDING-CANON}; BEFORE BC.W-ATLAS-ASK)
 ```
 - `PAGE-PRUNE` is FIRST `[→]` (prune dead routes; COMPOSITIONS-HERO depends on the orphan deletion).
 - `PAGE-CHASSIS` is the Band-5 root `[→]` after `{PAGE-PRUNE, Band 1, GRID-SIMPLE/VIZ-PAPERGRID}`.
@@ -200,6 +212,7 @@ BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
 - `CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX` `[‖]` after PAGE-HIERARCHY (+ their Band-1 reads).
 - `COMPOSITIONS-HERO` `[→]` after `{HERO-AUDACIOUS, PAGE-PRUNE}`.
 - `PADDING-CANON` coordinates with `DIALOG-GLASS` on `DialogContent.vue` (padding ladder vs transparency — disjoint legs, no cycle).
+- `EXPANDABLE-PART` is the iteration-5 ATLAS-FOLD containers seam `[→]` after `{GLASS-IDENTITY (B1), GLASS-PRUNE (B1), PADDING-CANON (B5)}` (the fullscreen overlay reads the FIXED `glass-overlay` tier + the settled overlay-padding ladder before a consumer re-paints the trigger over it). It is `[‖]` with the CODE-BLOCKS/GHOST-DASHED/SEPARATOR-FIX/COMPOSITIONS-HERO content fan (disjoint single-component seam, no cross-band paint). It is file-disjoint from `DESHADCN` — this wave OPENS the `data-part`/named-slot chrome hook; DESHADCN re-paints the trigger's shadcn-residual chrome THROUGH it (the seam SHAPE vs the PAINT-token, the single-owner split). **`⇒ Band 10`**: it is sequenced BEFORE `BC.W-ATLAS-ASK` (the Atlas's AR-7 expand-chrome consume-and-delete lands on this seam at the `^4.x` bump — the seam must exist before the consumer adopts it).
 - **`⇒ Band 4 studios`**: `PAGE-CHASSIS` → `BC.W-VIZ-CONFIGURATOR-SUITE` (the shrinks-on-scroll + subpath + ONE-card idiom every viz studio obeys).
 - **`⇒ Band 9`**: the whole Band-5 set → `BC.W-STORYBOOK-META`.
 - **`⇒ Band 11`**: the page cascade settles → `BC.W-CSS-CRITICAL` (re-measures the partition over the settled draw) + `BC.W-LIGHTHOUSE`.
@@ -214,6 +227,7 @@ BC.W-CONFIG-RIGHT  (after {RADIO-FIX, DROPDOWN-FIX, CONTROL-SMOOTH} — the cont
 - `RADIO-FIX` is FIRST `[→]` after Band 1. `DROPDOWN-FIX` + `CONTROL-SMOOTH` `[‖]` after RADIO-FIX.
 - `CONTROL-SMOOTH` reads `SPRING-EASE` (the re-timed register) + `AFFORDANCE-MAP` (the affordance contract) — a cross-band consume (§3).
 - `CONFIG-RIGHT` `[→]` after all three Band-6 controls (+ reads BLACK-BAR rim + PAGE-CHASSIS studio header).
+- **The Band-6 controls consume the `BC.W-DESHADCN` census verdict** (the per-component reskin owners DESHADCN routes): `CONTROL-SMOOTH` owns the toggle-outline / tags-input-ring / switch-thumb reskins, `RADIO-FIX`/`DROPDOWN-FIX` the picker reskins — each re-points the residual shadcn-neutral token onto the house glass/`.control-surface`/`.focus-ring` register per the census. A forward Band-1→Band-6 edge (DESHADCN depends only on GLASS-IDENTITY/BLACK-BAR, never on a control wave → one-directional, no cycle). See §3 R7.
 - **`⇒ Band 4 studios`**: `CONFIG-RIGHT` → `BC.W-VIZ-CONFIGURATOR-SUITE` (CONFORMS-TO — verified-after, not a back-build).
 
 ### Band 7 — Motion canon + interaction affordances (4 waves)
@@ -278,9 +292,10 @@ BC.W-PERF-PRODUCER  (after Band-2 dock + Band-4 aurora/blob rebuilds; file-disjo
 
 ## 3 — The cross-band reconcile edges (the consume-after-mint + conformance relations, in full)
 
-These are the Sequence edges that run OPPOSITE the band-number spine. Each is shown ACYCLIC. They are
-the executor's "watch these — the data flows backward across the band wall, but the build order does
-not cycle" list.
+These are the Sequence edges that run OPPOSITE the band-number spine (R1-R6 — consume-after-mint /
+conformance / sink), plus the ATLAS-FOLD reskin-DNA hand-off (R7 — a forward Band-1→Bands-1/3/6 source
+edge, recorded here for the executor's hand-off list). Each is shown ACYCLIC. They are the executor's
+"watch these — the data flows across the band wall, but the build order does not cycle" list.
 
 ### R1 — `BC.W-SPRING-EASE` (B7) is READ by Band 1/3 spring consumers (consume-after-mint)
 - **Edge**: `SPRING-EASE → {BUTTON-GLASS-IOS (B1), LIQUID-TAB (B3), UNDERLINE-TUNE (B3)}`.
@@ -309,13 +324,19 @@ not cycle" list.
 - **Edge**: `{SPRING-EASE, AFFORDANCE-MAP} → CONTROL-SMOOTH`.
 - **Why acyclic**: CONTROL-SMOOTH reads the re-timed spring register + the affordance contract; it does NOT re-author springs (the one-clock fence). SPRING-EASE + AFFORDANCE-MAP depend on MOTION-ONE-CLOCK, never on CONTROL-SMOOTH → one-directional. Same consume-after-mint pattern as R1: the Band-7 motion canon can land its tokens/contract before the Band-6 CONTROL-SMOOTH verifies against them.
 
-### R6 — `BC.W-VISUAL-RECONCILE` (B4) reads the Band-1 glass set + `BC.W-SPRING-EASE`
-- **Edge**: `{GLASS-IDENTITY, ADAPTIVE-RECONCILE, BLACK-BAR, GLASS-PRUNE, GLASS-LEGIBILITY-MEASURED, GESTALT-FIRST} → VISUAL-RECONCILE`; its press half coordinates with `SPRING-EASE`/`MOTION-ONE-CLOCK` (does NOT re-tune a spring).
-- **Why acyclic**: VISUAL-RECONCILE is a pure CONSUMER (the BB-band re-walk over the fixed floor) — it re-authors nothing, depends on the Band-1 set + the harness, and is depended on by NOTHING upstream → a pure sink in its sub-DAG.
+### R6 — `BC.W-VISUAL-RECONCILE` (B4) reads the Band-1 glass set + `BC.W-SPRING-EASE` + `BC.W-SELECTION-CARD`
+- **Edge**: `{GLASS-IDENTITY, ADAPTIVE-RECONCILE, BLACK-BAR, GLASS-PRUNE, GLASS-LEGIBILITY-MEASURED, SELECTION-CARD, GESTALT-FIRST} → VISUAL-RECONCILE`; its press half coordinates with `SPRING-EASE`/`MOTION-ONE-CLOCK` (does NOT re-tune a spring).
+- **Why acyclic**: VISUAL-RECONCILE is a pure CONSUMER (the BB-band re-walk over the fixed floor) — it re-authors nothing, depends on the Band-1 set + the harness, and is depended on by NOTHING upstream → a pure sink in its sub-DAG. `SELECTION-CARD` (B1) joins the consumed set: VISUAL-RECONCILE re-verifies the BB-BUILT A-2 `--glass-accent` + A-3 `.metal-*-border` seams LIVE on the BC.W-GLASS-IDENTITY-fixed floor, and the selection card is its I5-card consume — the edge runs INTO VISUAL-RECONCILE (SELECTION-CARD depends only on GLASS-IDENTITY/BLACK-BAR, never on VISUAL-RECONCILE → one-directional).
+
+### R7 — `BC.W-DESHADCN` (B1) is the reskin-DNA SOURCE READ by the per-band reskin owners (Bands 1/3/6)
+- **Edge**: `DESHADCN → {BUTTON-GLASS-IOS (B1), DIALOG-GLASS (B1), TABS-IOS (B3), RADIO-FIX (B6), DROPDOWN-FIX (B6), CONTROL-SMOOTH (B6)}`.
+- **The data**: DESHADCN OWNS the cross-cutting "zero shadcn-neutral" bar + `proof:no-shadcn-default` + the per-component reskin census (`W-DESHADCN-census.md`, merging the CLEANUP-PLAN A6/A7 findings). It does NOT double-own the per-component PAINT — each owning band wave CONSUMES the census verdict and re-points its residual shadcn-neutral token (the button outline/secondary/accent → glass; the toggle outline → `.control-surface`; the tags-input ring → `.focus-ring`; the switch thumb → the material register; ConfirmDialog opaque → `<Dialog surface="glass">`) onto the house register, re-earning its own `proof:ba-gestalt` band verdict.
+- **Why acyclic**: DESHADCN depends ONLY on `{GLASS-IDENTITY, BLACK-BAR}` (Band 1), never on a reskin-owner wave → the edge is one-directional INTO the owners. The §4 topo honors it (DESHADCN Tier 5.5, after GLASS-IDENTITY Tier 4 + BLACK-BAR Tier 3, before the Band-3/6 owners at Tiers 12/13/18 and the Band-1 specimens at Tier 7). It is the EXACT SOURCE-of-truth-precedes-consumer shape R1/R2/R5 use, expressed forward across the band wall (the band number runs the same direction as the data, so it is a normal forward edge — recorded here beside the consume-after-mint family for the executor's "watch the census hand-off" list, not because it threatens a cycle).
+- **The executor resolution**: land DESHADCN's bar + gate + census EARLY (it authors `proof-no-shadcn-default.mjs` + the census doc + the π spec; ZERO per-component paint edit), then each reskin owner consumes the verdict on the band-spine schedule. `proof:no-shadcn-default` is born-RED on the four HEAD residuals and goes GREEN as the owners land their reskins — so it is GREEN at the Band-1/3/6 closes, never before.
 
 ---
 
-## 4 — The topological sort (proven ACYCLIC; 70 waves in a valid build order)
+## 4 — The topological sort (proven ACYCLIC; 74 waves in a valid build order)
 
 A valid topo order exists ⟺ the graph is a DAG. The order below is a CONCRETE valid linearization
 (respecting every Sequence edge incl. the §3 cross-band reconciles); the existence of this complete
@@ -327,8 +348,9 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 3 (Band 1 root):** `BC.W-BLACK-BAR`
 **Tier 4:** `BC.W-GLASS-IDENTITY`
 **Tier 5:** `BC.W-ADAPTIVE-RECONCILE`
+**Tier 5.5 (Band 1 ATLAS-FOLD — needs only `{GLASS-IDENTITY, BLACK-BAR}`, lands here so the de-shadcn census precedes the per-band reskin owners):** `BC.W-DESHADCN`◊ (the reskin-DNA invariant + `proof:no-shadcn-default` + the census — read by Tiers 6/7/12/13/18 reskin owners), `BC.W-SELECTION-CARD` (composes the BB-BUILT A-2/A-3 seams), `BC.W-GLASS-GLOW-FIX` (the A-8 root defect; beside GLASS-PRUNE)
 **Tier 6 (Band 1 fan-out):** `BC.W-GLASS-PRUNE`, `BC.W-GLASS-LEGIBILITY-MEASURED`
-**Tier 7 (Band 1 specimens):** `BC.W-DIALOG-GLASS`, `BC.W-BUTTON-GLASS-IOS`†
+**Tier 7 (Band 1 specimens — consume the `BC.W-DESHADCN` census verdict):** `BC.W-DIALOG-GLASS`, `BC.W-BUTTON-GLASS-IOS`†
 **Tier 7′ (Band 7 motion canon — lands here so its tokens precede the spring-reading π of Bands 1/3/6):** `BC.W-MOTION-ONE-CLOCK` → `BC.W-SPRING-EASE`‡ → `BC.W-AFFORDANCE-MAP` → `BC.W-TUNABLE-ANIM`
 **Tier 8 (Band 2 root):** `BC.W-DOCK-ENGINE`
 **Tier 9 (Band 2 fan-out):** `BC.W-DOCK-ARBITRARY`, `BC.W-DOCK-VERTICAL-FIX`, `BC.W-DOCK-SHRINK-BLUR`
@@ -345,7 +367,7 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 19 (Band 5 prune):** `BC.W-PAGE-PRUNE`
 **Tier 20 (Band 5 chassis):** `BC.W-PAGE-CHASSIS`
 **Tier 21 (Band 5 fan-out):** `BC.W-PAGE-HIERARCHY`, `BC.W-HERO-AUDACIOUS`, `BC.W-PADDING-CANON`
-**Tier 22 (Band 5 content):** `BC.W-CODE-BLOCKS`, `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`
+**Tier 22 (Band 5 content + the containers seam):** `BC.W-CODE-BLOCKS`, `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`, `BC.W-EXPANDABLE-PART`◊◊ (the AR-7 chrome-hook seam — after `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6, PADDING-CANON @ T21}`; BEFORE `BC.W-ATLAS-ASK` @ Tier 28)
 **Tier 23 (Band 4 suite gate — conforms to CONFIG-RIGHT @ Tier 18, hosts PAGE-CHASSIS @ Tier 20):** `BC.W-VIZ-CONFIGURATOR-SUITE`
 **Tier 24 (Band 9):** `BC.W-STORYBOOK-META`
 **Tier 25 (Band 11 perf — measures the settled floor):** `BC.W-CSS-CRITICAL`, `BC.W-PERF-PRODUCER` → `BC.W-LIGHTHOUSE`
@@ -366,11 +388,29 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 > or as late as just-before-Tier-13 — any placement after MOTION-ONE-CLOCK and before the
 > spring-reading π is valid. This float-window with no lower bound from a consumer is the constructive
 > proof that R1/R2/R5 introduce no cycle.
+>
+> ◊ `BC.W-DESHADCN` is placed at Tier 5.5 because it depends ONLY on `{GLASS-IDENTITY @ T4, BLACK-BAR @ T3}`
+> and is READ by every per-band reskin owner (the Band-1 specimens @ Tier 7, TABS-IOS @ Tier 12, the
+> Band-3 tab waves @ Tier 13, the Band-6 controls @ Tier 18). It authors the bar + `proof:no-shadcn-default`
+> + the census (ZERO per-component paint), so it floats anywhere after T4 and before the FIRST reskin owner
+> (Tier 7) — a float-window with no lower bound from a consumer, the §3 R7 no-cycle witness. `BC.W-SELECTION-CARD`
+> + `BC.W-GLASS-GLOW-FIX` co-locate at Tier 5.5 (both need only `{GLASS-IDENTITY, BLACK-BAR}` / `{GLASS-IDENTITY}`;
+> SELECTION-CARD's BB-built A-2/A-3 seams are pre-BC, not intra-BC edges) and are pure sinks except for the
+> `SELECTION-CARD → VISUAL-RECONCILE` forward consume (§3 R6).
+>
+> ◊◊ `BC.W-EXPANDABLE-PART` is placed at Tier 22 because its latest predecessor is `BC.W-PADDING-CANON @ Tier 21`
+> (the overlay-padding ladder must settle before a consumer re-paints the expand trigger over it); its other
+> predecessors `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6}` land far earlier. It is depended on by `BC.W-ATLAS-ASK @ Tier 28`
+> (the AR-7 chrome-hook seam must exist before the Atlas's `^4.x` consume-and-delete) — the BEFORE-ATLAS-ASK edge
+> the Sequence line names, honored by `22 < 28`. One-directional, no cycle (the Atlas adopt is a post-cut sink).
 
 **ACYCLICITY VERDICT: the graph is a DAG (with the `SPRING-EASE → DOCK-ENGINE` edge EXPLICIT).** A
-complete 70-wave linearization exists with every wave after all its predecessors (above). The six
-cross-band reconciles (§3 R1-R6, now including the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint
-edge) are each one-directional (SPRING-EASE/MOTION-ONE-CLOCK depend on nothing downstream; SAFARI-WEBGL
+complete 74-wave linearization exists with every wave after all its predecessors (above). The seven
+cross-band reconciles (§3 R1-R7 — incl. the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint
+edge AND the R7 `DESHADCN →` reskin-owner / R6 `SELECTION-CARD → VISUAL-RECONCILE` / `EXPANDABLE-PART → ATLAS-ASK`
+ATLAS-FOLD edges) are each one-directional (SPRING-EASE/MOTION-ONE-CLOCK depend on nothing downstream;
+DESHADCN/SELECTION-CARD/GLASS-GLOW-FIX depend only on the Band-1 root `{GLASS-IDENTITY, BLACK-BAR}`;
+EXPANDABLE-PART depends only on `{GLASS-IDENTITY, GLASS-PRUNE, PADDING-CANON}` → before the Tier-28 Atlas adopt; SAFARI-WEBGL
 depends only on the Band-4 head + Band-0/2; VIZ-CONFIGURATOR-SUITE→CONFIG-RIGHT is a conformance
 verified-after; VISUAL-RECONCILE is a pure sink; SPRING-EASE → DOCK-ENGINE is a token CONSUME with
 SPRING-EASE depending on no dock wave — DOCK-ENGINE Tier 8 already sits after SPRING-EASE Tier 7′). No
@@ -391,7 +431,8 @@ in one batch; the `[→]` waves are serial-after their predecessor.
 | Band 0 | `GESTALT-FIRST`, `PAINT-GATE`, `FOLD-LEDGER` (3) + `DIST-COMMENT-FIX` (early, disjoint) | after PM-SYNTHESIS |
 | Band 1 spine | `BLACK-BAR` → `GLASS-IDENTITY` → `ADAPTIVE-RECONCILE` (serial chain) | after Band 0 |
 | Band 1 fan | `GLASS-PRUNE`, `GLASS-LEGIBILITY-MEASURED` (2 `[‖]`) | after ADAPTIVE-RECONCILE |
-| Band 1 specimens | `DIALOG-GLASS`, `BUTTON-GLASS-IOS` (2 `[‖]`) | after GLASS-PRUNE |
+| Band 1 ATLAS-FOLD | `DESHADCN`, `SELECTION-CARD`, `GLASS-GLOW-FIX` (3 `[‖]`) | after GLASS-IDENTITY + BLACK-BAR (mint `DESHADCN`'s census EARLY so it precedes the reskin owners) |
+| Band 1 specimens | `DIALOG-GLASS`, `BUTTON-GLASS-IOS` (2 `[‖]`) — consume the `DESHADCN` census verdict | after GLASS-PRUNE (+ `DESHADCN` census) |
 | Band 7 motion | `MOTION-ONE-CLOCK` → `SPRING-EASE` → `AFFORDANCE-MAP` / `TUNABLE-ANIM` (chain; AFFORDANCE/TUNABLE `[‖]` after) | after the Band-2/3 consumers DECLARE (SOURCE audit); mint early |
 | Band 2 fan | `DOCK-ARBITRARY`, `DOCK-VERTICAL-FIX`, `DOCK-SHRINK-BLUR` (3 `[‖]`) | after DOCK-ENGINE |
 | Band 2 tail | `LIQUID-MORPH`, `DOCK-COLLAPSED-BOTH` (2 `[‖]`) → `DOCK-STACK-RAIL` | after the fan |
@@ -401,7 +442,7 @@ in one batch; the `[→]` waves are serial-after their predecessor.
 | Band 4 per-viz | the 9-wave `[‖]` set (AURORA/DOTFLOW/CONCENTRIC/FOURIER/CONSTELLATION/WATERCOLOR/PAPERGRID/DOTMATRIX/GOOBLOB-PLAIN) — **the widest concurrency band; run in batches of 3** | after the floor + cross-cut |
 | Band 4 per-viz tail | `GOOBLOB-MEATBALL` (after PLAIN), `VIZ-HYBRID` (after MEATBALL+DOTMATRIX), `GRID-SIMPLE` (after PAPERGRID+PAGE-CHASSIS) | serial after their parents |
 | Band 6 | `RADIO-FIX` → {`DROPDOWN-FIX`, `CONTROL-SMOOTH`} `[‖]` → `CONFIG-RIGHT` | after Band 1 |
-| Band 5 | `PAGE-PRUNE` → `PAGE-CHASSIS` → {`PAGE-HIERARCHY`, `HERO-AUDACIOUS`, `PADDING-CANON`} `[‖]` → {`CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX`, `COMPOSITIONS-HERO`} `[‖]` | after Band 1 + Band-4 bg recipes |
+| Band 5 | `PAGE-PRUNE` → `PAGE-CHASSIS` → {`PAGE-HIERARCHY`, `HERO-AUDACIOUS`, `PADDING-CANON`} `[‖]` → {`CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX`, `COMPOSITIONS-HERO`, `EXPANDABLE-PART`} `[‖]` (`EXPANDABLE-PART` after `PADDING-CANON`, before `ATLAS-ASK`) | after Band 1 + Band-4 bg recipes |
 | Band 4 suite | `VIZ-CONFIGURATOR-SUITE` (1) | after every per-viz + PAGE-CHASSIS + CONFIG-RIGHT |
 | Band 9 | `STORYBOOK-META` (1) | after Band 5 + Band 1 + Band 6 |
 | Band 11 | {`CSS-CRITICAL`, `PERF-PRODUCER`} `[‖]` → `LIGHTHOUSE` | after the visual bands settle |
@@ -434,9 +475,9 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 - **Exit criterion (LOAD-BEARING)**: `proof:ba-gestalt` is now `["local","ci","release"]`-tagged + measures PAINT not source; `node scripts/gates.mjs --run pi` GREEN on a real GPU device is the binding close-paint for every subsequent visual wave. **No Band 1-9 visual wave opens until this exits.**
 
 ### Band 1 — Glass identity
-- **Gates**: `proof:black-bar` (`BLACK-BAR`); `proof:glass-identity` + `proof:adaptive-glass-live` (`GLASS-IDENTITY`); `proof:adaptive-observer` + `proof:adaptive-reconcile` (`ADAPTIVE-RECONCILE`); `proof:adaptive-glass-live` + `proof:glass-legibility` (`GLASS-LEGIBILITY-MEASURED`); `proof:glass-prune` + `proof:glass-panel-tiers` + `proof:glass-cal` + `proof:no-dual-path` + `proof:lineage-probe` + `proof:claude-structure-sync` + `proof:fading-scroll` + `proof:subpath-enumeration` (`GLASS-PRUNE`); `proof:dialog-glass` (`DIALOG-GLASS`); `proof:button-glass` + `proof:glass-cal` + `proof:glass-card-tiers` + `proof:glass-cohesion` (`BUTTON-GLASS-IOS`).
-- **π**: `black-bar`, `glass-identity`, `glass-legibility`, `glass-prune`, `dialog-glass`, `button-glass` (each `.spec.ts`).
-- **Exit criterion**: the warm-cream translucent base reads at root (grey-slab GONE), the rim is a catch-light (oklab-L > 0.8 on the top edge), the AA bar holds over the composited plate; `proof:ba-gestalt` glass-band verdicts GREEN. **GATES Band 2/3/4/5** (they all read the fixed glass).
+- **Gates**: `proof:black-bar` (`BLACK-BAR`); `proof:glass-identity` + `proof:adaptive-glass-live` (`GLASS-IDENTITY`); `proof:adaptive-observer` + `proof:adaptive-reconcile` (`ADAPTIVE-RECONCILE`); `proof:adaptive-glass-live` + `proof:glass-legibility` (`GLASS-LEGIBILITY-MEASURED`); `proof:glass-prune` + `proof:glass-panel-tiers` + `proof:glass-cal` + `proof:no-dual-path` + `proof:lineage-probe` + `proof:claude-structure-sync` + `proof:fading-scroll` + `proof:subpath-enumeration` (`GLASS-PRUNE`); `proof:dialog-glass` (`DIALOG-GLASS`); `proof:button-glass` + `proof:glass-cal` + `proof:glass-card-tiers` + `proof:glass-cohesion` (`BUTTON-GLASS-IOS`); **`proof:no-shadcn-default` + `proof:glass-cohesion` (`DESHADCN` — the reskin-DNA invariant + the per-component census; born-RED on the four HEAD residuals → GREEN as the per-band reskin owners land); `proof:selection-card` + `proof:glass-accent` + `proof:metal-shimmer` (`SELECTION-CARD` — the I5 `<Card variant="selection">` composing the BB-BUILT A-2/A-3 seams); `proof:glass-glow-fix` (`GLASS-GLOW-FIX` — the A-8 unbounded-radial-halo leak-class structural close).**
+- **π**: `black-bar`, `glass-identity`, `glass-legibility`, `glass-prune`, `dialog-glass`, `button-glass`, **`no-shadcn-default`, `selection-card`, `glass-glow-fix`** (each `.spec.ts`).
+- **Exit criterion**: the warm-cream translucent base reads at root (grey-slab GONE), the rim is a catch-light (oklab-L > 0.8 on the top edge), the AA bar holds over the composited plate; NOTHING reads as the generic shadcn-vue neutral chrome (every plate glass/paper, every focus ring the warm `--focus-ring-shadow`); the selection card reads warm-cream glass + data-hue rim + earned metal-shimmer-on-selected (rim-not-fill); no spurious unbounded radial halo over-paints any glass/viz surface; `proof:ba-gestalt` glass-band verdicts GREEN. **GATES Band 2/3/4/5** (they all read the fixed glass; the per-band reskin owners consume the `DESHADCN` census verdict).
 
 ### Band 2 — Dock
 - **Gates**: `proof:dock-engine` + `proof:no-layout-animation` + `proof:spring-tokens-synced` (`DOCK-ENGINE`); `proof:dock-arbitrary` + `proof:no-layout-animation` (`DOCK-ARBITRARY`); `proof:dock-vertical-clickable` (`DOCK-VERTICAL-FIX`); `proof:dock-collapsed-both` (`COLLAPSED-BOTH`); `proof:dock-stack-rail` + `proof:no-layout-animation` (`DOCK-STACK-RAIL`); `proof:dock-shrink-blur` (`SHRINK-BLUR`); `proof:liquid-morph` + `proof:no-layout-animation` (`LIQUID-MORPH`).
@@ -456,9 +497,9 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 - **Exit criterion**: every viz PAINTS on WebGPU (WGSL primary) + degrades clean to WebGL2 + is Safari-stable (no flash), reacts to pointer velocity+accel, runs on ONE kf clock, ships a full configurator + comprehensive demo, no teal/navy literal; the per-viz Safari-π no-flash arm GREEN (gated on the breaker); `proof:ba-gestalt` aurora/dock/viz verdicts GREEN. **GATES `PERF-PRODUCER` + `FOURIER-ASK`.**
 
 ### Band 5 — Pages
-- **Gates**: `proof:page-prune` + `proof:ba-gestalt` + `proof:claude-structure-sync` (`PAGE-PRUNE`); `proof:page-chassis` + `proof:no-layout-animation` (`PAGE-CHASSIS`); `proof:page-hierarchy` (`PAGE-HIERARCHY`); `proof:code-blocks` + `proof:hierarchy` + `proof:suffuse` (`CODE-BLOCKS`); `proof:hero-audacious` + `proof:icon-chip` + `proof:single-color-core` + `proof:suffuse` (`HERO-AUDACIOUS`); `proof:compositions-hero` (`COMPOSITIONS-HERO`); `proof:card-padding` (`PADDING-CANON`); `proof:ghost-dashed` + `proof:no-gray` (`GHOST-DASHED`); `proof:separator` + `proof:no-gray` (`SEPARATOR-FIX`).
-- **π**: `page-chassis`, `page-hierarchy`, `code-blocks`, `hero-audacious`, `compositions-hero`, `card-padding`, `ghost-dashed`, `separator`.
-- **Exit criterion**: every page reads the ONE standardized chassis (audacious hero + subpath + scroll-shrink + ONE card + procedural bg), the hierarchy is suffused, the φ padding paints, no "view source"/platitude/orphan-route survives; `proof:ba-gestalt` per-page verdicts GREEN. **GATES `STORYBOOK-META` + `CSS-CRITICAL`/`LIGHTHOUSE`.**
+- **Gates**: `proof:page-prune` + `proof:ba-gestalt` + `proof:claude-structure-sync` (`PAGE-PRUNE`); `proof:page-chassis` + `proof:no-layout-animation` (`PAGE-CHASSIS`); `proof:page-hierarchy` (`PAGE-HIERARCHY`); `proof:code-blocks` + `proof:hierarchy` + `proof:suffuse` (`CODE-BLOCKS`); `proof:hero-audacious` + `proof:icon-chip` + `proof:single-color-core` + `proof:suffuse` (`HERO-AUDACIOUS`); `proof:compositions-hero` (`COMPOSITIONS-HERO`); `proof:card-padding` (`PADDING-CANON`); `proof:ghost-dashed` + `proof:no-gray` (`GHOST-DASHED`); `proof:separator` + `proof:no-gray` (`SEPARATOR-FIX`); **`proof:expandable-part` (`EXPANDABLE-PART` — the AR-7 `::part()`/named-slot chrome-hook seam + the anti-fork behaviour-byte-freeze + the Card-is-the-only-new-component fence; `["local","ci","release"]`-tagged — the Atlas consumes it at the cut).**
+- **π**: `page-chassis`, `page-hierarchy`, `code-blocks`, `hero-audacious`, `compositions-hero`, `card-padding`, `ghost-dashed`, `separator`, **`expandable-part`**.
+- **Exit criterion**: every page reads the ONE standardized chassis (audacious hero + subpath + scroll-shrink + ONE card + procedural bg), the hierarchy is suffused, the φ padding paints, no "view source"/platitude/orphan-route survives; the ExpandableContainer exposes the re-skin `data-part` hooks + the replacement named slots with the behaviour (body-lock/teleport/Escape) byte-untouched + the default render byte-identical; `proof:ba-gestalt` per-page verdicts GREEN. **GATES `STORYBOOK-META` + `CSS-CRITICAL`/`LIGHTHOUSE`; `EXPANDABLE-PART` GATES `BC.W-ATLAS-ASK` (the AR-7 consume-and-delete).**
 
 ### Band 6 — Controls
 - **Gates**: `proof:radio-fix` (`RADIO-FIX`); `proof:dropdown-fix` + `proof:menu-glass` (`DROPDOWN-FIX`); `proof:control-smooth` + `proof:animation-coherence` + `proof:no-layout-animation` (`CONTROL-SMOOTH`); `proof:config-right` + `proof:emission` (`CONFIG-RIGHT`). **Plus `proof:bc-fold-ledger` (the close oracle Band 6 gates on).**
@@ -501,6 +542,7 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 - **`proof:gpu-substrate-single`** — the ONE-lifecycle-leaf floor (the WebGPU/WebGL2/Canvas2D backends all compose `createCanvasLifecycle`). Fires across every Band-4 viz.
 - **`proof:offscreen-pause`** — the rAF-park-when-hidden floor. Fires across every Band-4 viz + the motion canon.
 - **`proof:no-gray`** / **`proof:suffuse`** / **`proof:precept-current`** — the warm-chroma + one-color-event + precept-home oracles, fired by the page/control/storybook bands.
+- **`proof:no-shadcn-default`** — the reskin-DNA structural invariant (born in `BC.W-DESHADCN`): no `ui/` component off the legibility allowlist carries a residual shadcn-neutral token (`bg-background`/`border-input`/`ring-ring`/`ring-2`/`ring-offset-*`/bare `rounded-md`/bare `shadow-sm`) in its visual layer + the per-component census closure (every `ui/` dir on EXACTLY one list). Born-RED on the four HEAD residuals → GREEN as the Band-1/3/6 reskin owners land their re-points; it fires at the Band-1, Band-3, and Band-6 closes (the cross-band reskin-owner hand-off, §3 R7). `proof:glass-cohesion` stays authoritative on the bg-opacity axis (the overlap defers).
 
 ---
 
@@ -526,10 +568,11 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
    terminal verification of the never-run live score.
 8. **`BC.W-CUT` is TERMINAL + user-gated** — `--run full` siblings-absent → gated-provenance tag →
    the post-cut adopt sweep (`SPEEDTEST-ADOPT`/`FOURIER-ASK`/`ATLAS-ASK` `[‖]`) → slides redeploy LAST.
-9. **The DAG is ACYCLIC** (§4) — a complete 70-wave linearization exists; the six cross-band
-   reconciles (§3 R1-R6, incl. the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint) are each
-   one-directional. No cycle, no BLOCKER on the DAG axis.
+9. **The DAG is ACYCLIC** (§4) — a complete 74-wave linearization exists; the seven cross-band
+   reconciles (§3 R1-R7, incl. the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint + the
+   ATLAS-FOLD `DESHADCN →` reskin-owner / `SELECTION-CARD → VISUAL-RECONCILE` / `EXPANDABLE-PART → ATLAS-ASK`
+   edges) are each one-directional. No cycle, no BLOCKER on the DAG axis.
 
-> Every wave-id in this document resolves on disk in `WAVE-INDEX.md` (the 70 canonical waves). The
+> Every wave-id in this document resolves on disk in `WAVE-INDEX.md` (the 74 canonical waves). The
 > band membership matches `ORCHESTRATION.md §1`. The edges are read off each `waves/*.md`
 > `**Sequence:**` line. The gate battery is read off each wave's acceptance (`proof:*` + π specs).
