@@ -149,12 +149,19 @@ model) synthesizes; the fanout is opus/sonnet.
 | # | kind | bands | workflow | status | output |
 |---|------|-------|----------|--------|--------|
 | 0 | audit | all | bc-audit.mjs (32 agents) | DONE | FINDINGS-DIGEST.md, DEFECT-LEDGER.md, USER-DEFECTS.md |
-| 1 | research | SOTA + codebase + deferral | bc-iter1-research.mjs (way3dy2jj / wf_82240b8d-5f0) | IN-FLIGHT | research/ corpus + waveImpacts |
+| 1 | research | SOTA + codebase + deferral | bc-iter1-research.mjs (way3dy2jj / wf_82240b8d-5f0) | 7/9 HARVESTED | research/*.md ×7 + WAVE-IMPACTS.md (50 rows / 49 waves) |
+| 1b | research-rerun | route-census + viz-codebase | resume wf_82240b8d-5f0 | LAUNCHING | research/route-census.md + viz-codebase.md |
 
-> **NEXT CURSOR: iteration 1 (research) IN-FLIGHT (task way3dy2jj). On completion: harvest → write
-> `research/<source>.md` ×9 + seed `DEFERRAL-LEDGER.md` from the deferral-sweep result → launch
-> iteration 2 (PLAN: author Band 0 + Band 1 waves from the waveImpacts). Do NOT double-spawn while
-> way3dy2jj is in flight (check TaskList first).**
+> **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
+> deferral-sweep, cross-repo-asks, kf-vjs-facilities → `research/`. KEY: WebGPU Baseline since
+> Jan-2026 (Safari 26+ ships it → the no-fallback ask is reachable); D2 black-bar = warm-ink TOP
+> border; BB never closed (no FINAL, W-REFLECT3 never ran); both kf/vjs local sibling repos exist.
+> 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
+> resume (caches the 7, re-runs the 2).
+>
+> **NEXT CURSOR: iteration 1b resume IN-FLIGHT. On completion: re-harvest route-census + viz-codebase
+> → seed DEFERRAL-LEDGER.md from deferral-sweep.md → launch iteration 2 (PLAN: Band 0 + Band 1 +
+> Band 5 chassis waves from WAVE-IMPACTS.md). Do NOT double-spawn (check TaskList).**
 
 ---
 
