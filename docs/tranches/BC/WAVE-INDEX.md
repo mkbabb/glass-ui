@@ -32,10 +32,14 @@
 > planning docs.** (This closes the literal-rule contradiction CHALLENGE-2 named — the substance is
 > benign, every drifted name is in the drift map.)
 >
-> **70 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
+> **74 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
 > iteration-4 HARDEN's 4 (`BC.W-VISUAL-RECONCILE` + the Band-11 perf trio `BC.W-CSS-CRITICAL`/
 > `BC.W-LIGHTHOUSE`/`BC.W-PERF-PRODUCER` — the CHALLENGE-1 BLOCKER 3/4/5/7 + the un-owned-perf-chronic
-> + the buttons-interaction MAJOR closed).
+> + the buttons-interaction MAJOR closed) + iteration-5 ATLAS-FOLD's 4 (`BC.W-DESHADCN` reka=behavior/
+> glass-ui=100%-material + the `proof:no-shadcn-default` gate, `BC.W-SELECTION-CARD` the I5 `<Card
+> variant="selection">` (the ONE new component), `BC.W-GLASS-GLOW-FIX` the A-8 giant-radial-glow root
+> defect, `BC.W-EXPANDABLE-PART` the AR-7 `::part()`/named-slot expand-chrome seam — the
+> de-shadcn/Atlas-fold re-open; `DESHADCN-BRAINSTORM.md`).
 > `proof:bc-fold-ledger` clause F2 (decided-destination soundness) REDs the close if any disposition
 > names a wave absent from this index; clause F2.b REDs a disposition that names only a bare `Band N`
 > label with no `BC.W-*` wave-id (the band-string-rejection anti-evasion floor).
@@ -46,7 +50,7 @@
 
 ---
 
-## The 70 canonical waves
+## The 74 canonical waves
 
 | id | band | title (one-line owns) | sequence-after |
 |---|---|---|---|
@@ -64,6 +68,9 @@
 | **BC.W-DIALOG-GLASS** | 1 | the glass dialog reads as ACTUAL liquid glass (partially transparent, iOS-27) | after BC.W-GLASS-IDENTITY |
 | **BC.W-BUTTON-GLASS-IOS** | 1 | increased button glass-morphism, the iOS-27 `.glass`/`.glassProminent` register | after BC.W-BLACK-BAR |
 | **BC.W-BLACK-BAR** | 1 | the card/dock top-edge dark rim → a bright catch-light (the D2 root) | FIRST of Band 1 |
+| **BC.W-DESHADCN** | 1 (cross-cutting) | reka = BEHAVIOR / glass-ui = 100% of the MATERIAL (the shadcn-neutral skin abrogated at root + the `proof:no-shadcn-default` gate) | after BC.W-GLASS-IDENTITY + BC.W-BLACK-BAR; beside the per-band reskin owners |
+| **BC.W-SELECTION-CARD** | 1 | the I5 `<Card variant="selection">` (the only NEW Atlas component; composes A-2 `--glass-accent` + A-3 metal-shimmer, no new sub-system) | after BC.W-GLASS-IDENTITY + BC.W-BLACK-BAR; re-verified by BC.W-VISUAL-RECONCILE |
+| **BC.W-GLASS-GLOW-FIX** | 1 | the Atlas A-8 giant-radial-glow ROOT defect (the spurious unbounded halo killed) | after BC.W-GLASS-IDENTITY; beside BC.W-GLASS-PRUNE + the Band-4 viz waves |
 | **BC.W-DOCK-ENGINE** | 2 | the buttery-smooth springy COMPOSITOR-ONLY dock morph (the ONE engine; kill `transition:all`) | FIRST of Band 2 |
 | **BC.W-DOCK-ARBITRARY** | 2 | the dock animates into arbitrary sizes + shapes (compositor clip-path/scale morph register) | after BC.W-DOCK-ENGINE |
 | **BC.W-DOCK-VERTICAL-FIX** | 2 | the vertical dock works + is CLICKABLE | after BC.W-DOCK-ENGINE |
@@ -100,6 +107,7 @@
 | **BC.W-COMPOSITIONS-HERO** | 5 | /compositions/hero made distinct from the homepage; /foundations/intro three-heroes → ONE | after BC.W-HERO-AUDACIOUS |
 | **BC.W-PADDING-CANON** | 5 | the golden padding ladder MADE TO PAINT; /display/card every-card-right; dialog padding | after BC.W-PAGE-CHASSIS |
 | **BC.W-GHOST-DASHED** | 5 | the ONE ghost/empty-slot dashed register + rounded-everywhere-it-should-be | after BC.W-PAGE-HIERARCHY |
+| **BC.W-EXPANDABLE-PART** | 5 | the ExpandableContainer `::part()`/named-slot expand-fullscreen chrome hook (the Atlas AR-7 seam; no consumer fork; Card-is-the-only-new-component fence) | after BC.W-GLASS-IDENTITY + BC.W-GLASS-PRUNE + BC.W-PADDING-CANON; before BC.W-ATLAS-ASK |
 | **BC.W-SEPARATOR-FIX** | 5 | the Separator label-centering rebuilt + the /display/separator page re-authored | after BC.W-PAGE-HIERARCHY |
 | **BC.W-RADIO-FIX** | 6 | radios toggle on every input path + read a clear glass selected-state | after Band 1 glass |
 | **BC.W-DROPDOWN-FIX** | 6 | the picker opens without shifting the trigger, aligns to it, and the selected dot reads | after Band 1 glass |

@@ -62,6 +62,10 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [x] BC.W-DIALOG-GLASS — the glass dialog is actually partially-transparent + glassy
 - [x] BC.W-BUTTON-GLASS-IOS — increased button glass-morphism
 - [x] BC.W-BLACK-BAR — the card border-top dark-rim → catch-light (D2 root)
+> **iter5 ATLAS-FOLD additions (RE-OPENED — own challenge pass owed; see §3 note):**
+- [ ] BC.W-DESHADCN — reka=BEHAVIOR / glass-ui=100%-of-the-MATERIAL; the `proof:no-shadcn-default` gate + the per-component reskin census (merges the cleanup-assay A6/A7); cross-cutting (`DESHADCN-BRAINSTORM.md` §0/§1)
+- [ ] BC.W-SELECTION-CARD — the I5 `<Card variant="selection">`, the ONLY new Atlas component (composes A-2 `--glass-accent` + A-3 metal-shimmer, no new sub-system)
+- [ ] BC.W-GLASS-GLOW-FIX — the Atlas A-8 giant-radial-glow ROOT defect (the spurious unbounded halo killed)
 
 ### Band 2 — Dock (the staple of liquid transition)
 - [x] BC.W-DOCK-ENGINE — buttery-smooth springy compositor-only morph (kill `transition: all`)
@@ -115,6 +119,8 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [x] BC.W-PADDING-CANON — the padding ladder applied; /display/card every-card-right; dialog padding
 - [x] BC.W-GHOST-DASHED — ghost items dashed outline; rounded everywhere it should be
 - [x] BC.W-SEPARATOR-FIX — /display/separator rebuilt; text centering
+> **iter5 ATLAS-FOLD addition (RE-OPENED — own challenge pass owed; see §3 note):**
+- [ ] BC.W-EXPANDABLE-PART — the ExpandableContainer `::part()`/named-slot expand-fullscreen chrome hook (Atlas AR-7 seam; no consumer fork; Card-is-the-only-new-component fence); sequenced before BC.W-ATLAS-ASK
 
 ### Band 6 — Controls
 - [x] BC.W-RADIO-FIX — radios work + proper toggle states
@@ -204,6 +210,22 @@ model) synthesizes; the fanout is opus/sonnet.
 | 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | DONE | WAVE-INDEX:155 + GRID-SIMPLE + H31/H100 mis-routes; whole non-binding surface swept clean; tail broken |
 | 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | DONE — 1 MAJOR | C2 coverage + C3 executor/user CONVERGED; C1 1 MAJOR (DEFERRAL-LEDGER:165 duplicate menu-row band-only cell, FIXED in-place) |
 | 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs (w2cbr2kbv) | DONE — **CONVERGED** | all 3 dims 0B/0M; 2-consecutive-clean MET; FINAL.md written; cron retired |
+| 20 | RE-OPEN (Atlas fold + de-shadcn) | Band 1 + Band 5 + page/motion refinement | DESHADCN-BRAINSTORM.md + CLEANUP-PLAN.md | DONE — 4 new waves | 74 waves (70 converged + 4 added): BC.W-DESHADCN/SELECTION-CARD/GLASS-GLOW-FIX/EXPANDABLE-PART on disk + WAVE-INDEX + §1 boxes; the added set needs its OWN challenge pass |
+
+> **RE-OPENED for the Atlas fold + de-shadcn + page/motion refinement (iter5 ATLAS-FOLD, 2026-06-18).**
+> The user re-opened BC for added scope (`DESHADCN-BRAINSTORM.md`): the de-shadcn first-principles DNA
+> (reka=BEHAVIOR / glass-ui=100%-of-the-MATERIAL), the iOS-27 Safari tab-switcher + apple.com-bested-with-
+> paper glass directions, the Atlas A-1..A-9 fold, and the page/motion refinement. **The original 70 waves
+> stay CONVERGED** (verified CLEAN across CHALLENGE-4..9 — that result is NOT re-litigated). The added
+> wave-set is FOUR new waves — `BC.W-DESHADCN`, `BC.W-SELECTION-CARD`, `BC.W-GLASS-GLOW-FIX` (Band 1) +
+> `BC.W-EXPANDABLE-PART` (Band 5) — plus the de-shadcn-DNA refinement of the extant tabs/glass/dock waves
+> (cited in each refined spec). **The added wave-set needs its OWN challenge pass** (the 2-consecutive-clean
+> counter RESETS for the added scope; the converged-70 result stands). §1 carries the 4 new (unchecked)
+> boxes; WAVE-INDEX.md (74 rows) + the per-wave specs are on disk. The Card-is-the-only-new-component fence
+> (`DESHADCN-BRAINSTORM.md §2`) is machine-checkable: of the Atlas set, exactly ONE new component is minted
+> (`BC.W-SELECTION-CARD`); a second reds the fence. The build-order slots the new Band-1 waves with their
+> band (after `BC.W-GLASS-IDENTITY` + `BC.W-BLACK-BAR`), `BC.W-EXPANDABLE-PART` in Band 5 before
+> `BC.W-ATLAS-ASK`.**
 
 > **CONVERGENCE DECISION (recorded): the BINDING tranche (70 wave specs + EXECUTION-DAG + A11Y-CONTRACT)
 > has been verified CLEAN across CHALLENGE-4..8 (coverage/soundness/executor/intent all CONVERGED

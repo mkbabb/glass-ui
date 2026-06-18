@@ -191,3 +191,33 @@ glass-ui honest 4.x (BC cut, UNRAN) ──repaired primitives + W-DECK──► 
 ```
 
 Everyone consumes the PUBLISHED predecessor; no cycle (the constellation acyclic-spine discipline). The version cut + the npm re-pins stay USER-DOMAIN (confirm-first). The content-only fence (inv-26) holds: this corpus + the band-10 waves are glass-ui-side ONLY; every sibling edit (speedtest consume-and-delete, Atlas `^4.x` bump, slides W-ADOPT, value.js/kf re-pins) lands in the SIBLING's own tree on its bump — the by-name ask is the only channel.
+
+---
+
+## 11 — The I-tranche Atlas-ask reconciliation (the de-shadcn / Atlas-fold re-open, appended 2026-06-18)
+
+> The BC re-open for the de-shadcn first-principles direction + the Atlas A-1..A-9 fold (`DESHADCN-BRAINSTORM.md`) added scope to the Atlas-consume surface. This section RECONCILES the Atlas's A-set against the band-10 wave-set + the asks-relay — using the CANONICAL wave ids (`WAVE-INDEX.md`), not the iter-1 working-names. The seven-needs map (§4) is the BB UNIFIED-BRIEF set; the A-set below adds the AR-7 expand-chrome seam + the A-5/A-6/A-7 marks/DX asks + the A-2/A-3 seam re-verify + the A-1 re-scope + the A-9 dock-toggle clamp. No cross-repo cycle is introduced — every A-item is glass-ui-direct (a seam/clamp/re-verify) OR an upstream by-name ask (pencil-boil); the Atlas edits land in the Atlas tree on its `^4.x` bump (the foreign-tree fence, inv-26).
+
+### The A-set → BC home map (the reconciliation)
+
+| Atlas item | what | BC home (canonical wave) | disposition |
+|---|---|---|---|
+| **A-1** | vertical-rail collapse↔expand height-morph; RE-SCOPED to SMOOTHNESS POLISH (collapse-to-logo ships glass-independently) | `BC.W-DOCK-ENGINE` (the morph SMOOTHNESS) + `BC.W-DOCK-VERTICAL-FIX` (the vertical CHROME-interp + clickability) | RE-SCOPED + Atlas = NAMED 3rd consumer of the `--dock-morph-t`/`DOCK_SPRING` morph (beside speedtest + kf — the ≥2-bar already met). Not a build blocker; the engine owes the BUTTERY vertical glide. |
+| **A-2** | `--glass-accent` per-instance data-hue rim seam | `BB.W-GLASS-ACCENT` (BUILT source) → `BC.W-VISUAL-RECONCILE` (re-verify unit 5) | SEAM RE-VERIFY on the fixed floor; the Atlas's hand-rolled accent threading folds onto `--glass-accent` at the `^4.x` bump (`BC.W-ATLAS-ASK` BB-3 row). |
+| **A-3** | silver/bronze metal-shimmer family | `BB.W-METAL-SHIMMER` (BUILT) → `BC.W-VISUAL-RECONCILE` (re-verify unit 5) | SEAM RE-VERIFY; any Atlas-local shimmer folds onto the `.metal-bronze`/`.metal-*-border` quad (`BC.W-ATLAS-ASK` BB-5 row). |
+| **A-5** | marks deltas: HandMark underline `amplitude` knob (wobble÷stroke ≥0.6) + the hull `se` empty-fragment guard | glass-ui arm → `BC.W-VISUAL-RECONCILE` (re-verify unit 6); library deltas → **by-name ask to `@mkbabb/pencil-boil`** (this relay) | the glass-ui-side `amplitude` arm (the wobble÷stroke ratio in `naturalUnderlinePoints`) is re-verified; the pencil-boil-LIBRARY deltas (the `amplitude` API if owed + the hull `se` guard if it lives in the vendored pf core) are a by-name ask — pencil-boil is upstream (foreign-tree fence). |
+| **A-6** | the ring/circle positioned-mark DX (px→marking-space projection) | **HandMark DX nice-to-have — by-name ask (this relay)** | BOOKED-by-name-ask; not blocking the Atlas adopt. A future HandMark DX refinement. |
+| **A-7** | the boil-budget surface (the boil scheduler's active-subscriber count) | **HandMark/pencil-boil DX nice-to-have — by-name ask (this relay)** | BOOKED-by-name-ask; not blocking. A future scheduler-introspection DX. |
+| **A-9** | the in-dock dark-toggle oversized (the phone "Theme" row) | `BC.W-DOCK-ENGINE` (the token clamp, move 3 + gate E5) | FOLDED — `--dock-control-glyph-size`/`--dark-mode-toggle-padding` clamped at the dock register, re-resolving under the coarse `--dock-scale` re-declare. The Atlas's own A-9 fix is the `^4.x` migration onto the mainline clamp. |
+| **AR-7** | the ExpandableContainer `::part()`/named-slot expand-fullscreen chrome hook | `BC.W-EXPANDABLE-PART` (NEW seam, Band 5) | BUILD-as-a-seam — the `#expand-trigger`/`#fullscreen-chrome` named slots + `[data-part]` re-skin hooks; the Atlas's hand-rolled fullscreen-chrome shim folds onto them at the `^4.x` bump (the eighth need, `BC.W-ATLAS-ASK` AR-7 row). "Card is the only new component" fence holds (AR-7 is a SEAM, not a component). |
+
+### The asks-relay (the by-name pencil-boil asks — the A-5 library deltas + A-6/A-7 DX)
+
+These three carry a TERMINAL disposition (the `proof:crossrepo-asks` no-silent-drop floor); each is a by-name ask to the upstream, NOT a glass-ui build (the foreign-tree fence):
+- **ASK → pencil-boil (A-5 library deltas).** (1) the underline `amplitude` knob — if the wobble÷stroke ≥0.6 ratio needs a pencil-boil API surface beyond glass-ui's own seeded control-point math; (2) the hull ribbon `se` empty-fragment guard — if a degenerate perfect-freehand stroke leaving a stray `<path>` shard is rooted in the vendored pf core (glass-ui vendors `perfect-freehand ^1.2.3` + optional-peers `@mkbabb/pencil-boil ^0.4.1`). glass-ui's OWN `amplitude` arm is re-verified at `BC.W-VISUAL-RECONCILE` unit 6; these are the upstream-rooted deltas.
+- **ASK → HandMark/pencil-boil DX (A-6).** a ring/circle positioned-mark DX — the px→marking-space projection so a consumer positions a circle-around-a-datum mark in pixel coordinates and the mark resolves into the SVG marking space. A nice-to-have; not blocking.
+- **ASK → pencil-boil DX (A-7).** the boil-budget surface — expose the boil scheduler's active-subscriber count so a consumer can budget the living-line boil load. A scheduler-introspection DX; not blocking.
+
+### The 4.0.0→4.1.0 publish drives the adopt (the gate)
+
+The Atlas's `^3.12.0`(deprecated d6 fork-line)→`^4.x` migration is GATED on the honest 4.x cut (`BC.W-CUT`): the 4.0.0/4.0.1 mainline already carries the dock cure + register fixes, and the 4.1.0 honest cut publishes the visually-repaired surface (Bands 1–4) + the AR-7 `BC.W-EXPANDABLE-PART` seam + the W-DECK lift. Only a usable mainline 4.x re-pin ends the strand (the d6 lesson — `npm update`/`^x` silently traversing the bifurcation is the disease). The Atlas re-pins onto whatever BC actually cuts (USER-DOMAIN at the cut — the no-silent-reconcile; the AW relay docs that hard-name `4.1.0` re-point to the actual version). The inv-11 lineage-probe stays GREEN throughout (the Atlas STAYS enrolled in `D6_REQUIRED_CONSUMERS` — the no-un-enroll fence; the anchor persists as the live proof the lesson is structural). The whole A-set is glass-ui-direct (seams/clamps/re-verify) + the asks-relay (upstream pencil-boil asks); no new cross-repo cycle — the dep graph (§10) stays acyclic.
