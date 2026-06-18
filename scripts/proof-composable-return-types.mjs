@@ -332,7 +332,16 @@ function run() {
     // The carve-commit snapshot. EMPTY until the 2e carve lands its sibling; once
     // set, a drift in the moved GLSL reddens. The value is recorded at carve time
     // (printed by this gate when unset so the carve commit can paste it in).
-    const MEDIUMS_GLSL_HASH = "1858a1d9111b7618a4cfee91e1480bc3b3431ae1f4308f1d51f60f56828e0dc7";
+    // BB.W-CARVE5 re-snapshot: the profileFor() (medium,mode)→StrokeProfile selector
+    // moved out of mediums.glsl.ts into the carve sibling oil-modes.glsl.ts (the
+    // no-god-module re-drain). The MEDIUM_SIBLINGS concat (mediums → oil-modes →
+    // vangogh) reorders the SAME GLSL byte multiset (verified: identical length +
+    // identical char-multiset, every moved byte preserved), so this internal hash
+    // legitimately moves while the ASSEMBLED shader string (AURORA_MEDIUMS_POST_BRUSH_GLSL)
+    // is byte-identical to HEAD — the GL shader fence holds (the proof:aurora-* shader
+    // gates + the grep-locked mediumKuwahara/structureTensorField/mediumOilPastel/
+    // mediumCrayon bodies all STAY in mediums.glsl.ts).
+    const MEDIUMS_GLSL_HASH = "27d2e72087db4c34da4ea174764e7b5f44fb876a1f4033ab6b4a5e02734071d7";
     facts.mediumsGlslHash = glslHash;
     facts.mediumsGlslHashExpected = MEDIUMS_GLSL_HASH;
     // The hash is asserted ONLY once a medium sibling exists (post-carve); before

@@ -79,19 +79,39 @@ const RATCHET_BASELINES = {
     //     + the under-shadow modifier + the grain ::after stay. Dist byte-identical.
     // The MONOTONIC drain is honoured (the rows DELETED in the same diff that carved
     // the files — a stale row reds, the gate's own guard). The ratchet WAS ∅ at the
-    // W-CARVE4 close-state; the Batch-V/B-ask waves below re-grew three files past the
-    // bound (legitimate capability growth), BOOK'd to W-CARVE5 — the final carve that
-    // re-drains the ratchet to ∅ BEFORE W-CLOSE (the close-state is the FINAL bar).
-    // BOOK(BB.W-CARVE5): W-AUR-KUWAHARA grew the aurora mediums GLSL (the kuwahara
-    // medium body) — split the medium bodies into a partial preserving the recompose hash.
-    "components/custom/aurora/constants/shaders/mediums.glsl.ts": 595,
-    // BOOK(BB.W-CARVE5): the BB api publications (border-progress/dock-cta/spa-view/
-    // dot-flow-field/concentric type re-exports) grew the discovery barrel — split into
-    // api sub-modules (the curated-barrel precedent) preserving the public surface.
-    "api/index.ts": 543,
-    // BOOK(BB.W-CARVE5): B1-frag (the warpMode:"curl" branch + warpModeFor) grew the
-    // aurora NOISE atom fan-out — split the warp/medium atom helpers into a sibling.
-    "components/custom/aurora/composables/atoms.ts": 506,
+    // W-CARVE4 close-state; the Batch-V/B-ask waves re-grew three files past the bound
+    // (legitimate capability growth), BOOK'd to W-CARVE5.
+    //
+    // BB.W-CARVE5 RE-DRAINED those final three rows to ∅ — the FINAL ratchet re-drain
+    // before W-CLOSE (the close-state `violations == []` AND `RATCHET_BASELINES == {}`):
+    //   • components/custom/aurora/constants/shaders/mediums.glsl.ts (595 → 495) → the
+    //     `StrokeProfile profileFor(int medium, int mode)` (medium,mode)→StrokeProfile
+    //     selector carved into a sibling shaders/oil-modes.glsl.ts and spliced back into
+    //     AURORA_MEDIUMS_POST_BRUSH_GLSL via a template join (immediately after the
+    //     StrokeProfile struct, before paintStrokeLayers). The carve target moved off the
+    //     W-AUR-KUWAHARA mediumKuwahara body (the BOOK marker's suggestion) because that
+    //     body is grep-locked to mediums.glsl.ts by proof:aur-kuwahara — profileFor is the
+    //     same-size cohesive non-grep-locked block, and every grep-locked body
+    //     (mediumKuwahara/structureTensorField/mediumOilPastel/mediumCrayon) + the
+    //     relightImpasto-call witness STAY. The ASSEMBLED shader string is BYTE-IDENTICAL
+    //     (proven: PRE/POST_BRUSH identical to HEAD — the GL shader fence holds); only the
+    //     proof:composable-return-types internal recompose hash re-snapshots (the same GLSL
+    //     byte multiset, re-ordered by the MEDIUM_SIBLINGS concat — oil-modes was already
+    //     enrolled in MEDIUM_SIBLINGS).
+    //   • api/index.ts (543 → 483) → the contiguous composable-return + motion-curve type
+    //     re-export run (Count-up / useDragMorph / useLiquidReveal / useDockCtaReceive / the
+    //     motion suite + curve library) carved into a sibling api/types-extra.ts, re-joined
+    //     via `export type * from "./types-extra"`. The @mkbabb/glass-ui/api public symbol
+    //     set is byte-identical (164 symbols, verified) and every grep-locked discovery type
+    //     (BorderProgress/EasingPicker/Surface/IconChip/HandMark/PagerDots/SpaView) STAYS
+    //     textually in api/index.ts for the per-surface source gates.
+    //   • components/custom/aurora/composables/atoms.ts (506 → 414) → the FIELD-MAPPING
+    //     leaves (the COLOR-energy poles + MOTION_FIELDS table, the textured-medium texture
+    //     fan + its inverse, the lerp/unlerp/motion inverses) carved into a sibling
+    //     composables/atoms-fields.ts, imported back. The ZONES `nucleiPrior` + the NOISE
+    //     `applyNoise`/`warpModeFor` fan + the `{kind:"smooth"}` arm + the public door
+    //     (resolveAtoms/configToAtoms/DEFAULT_ATOMS + the atom types) STAY (the
+    //     proof:aurora-atoms-roundtrip source witnesses read them in atoms.ts).
 };
 
 let _cliPaths = null;

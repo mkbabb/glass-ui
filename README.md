@@ -60,7 +60,9 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
 /* override tokens locally for your project */
 :root {
     --glass-opacity-resting: 0.82;
-    --glass-blur-resting: blur(12px);
+    /* the consumer-tunable radius primitive — the composed --glass-blur-resting
+       threads --glass-level + saturate, never override it directly */
+    --glass-blur-resting-radius: 10px;
 }
 ```
 

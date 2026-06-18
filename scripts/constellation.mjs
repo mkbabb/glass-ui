@@ -47,6 +47,24 @@ export const PUBLISHERS = [
 // the resolution-contract config files (relative to `dir`). Note `bbnf-lang`
 // (the playground) and `bbnf-buddy` (the mascot app) are DISTINCT repos — both
 // real consumers, not a naming drift.
+//
+// BB.W-LINEAGE-PROBE — the d6 blind-spot enrollment. The AY/AZ prune census
+// retired HeaderRibbon + GlassPanel as 0-consumer orphans because this list
+// excluded the TWO consumers the d6-fork lesson is LITERALLY about: the
+// Connectivity Atlas (`sci-report/atlas`, a REGISTRY-LINEAGE consumer pinning
+// the fork-line `^3.12.0` — invisible to a disk import-graph census on a clean
+// runner) and `slides` (a PRESENT on-disk consumer pinning glass-ui, never
+// enrolled). Both are now NAMED members so every constellation-reading gate
+// (consumer-staleness, disposition-live, phantom-classes, no-retired-survivor)
+// holds the TRUE consumer union — the substrate-without-consumer gate (L inv-8)
+// can never again declare an orphan a real consumer holds. The Atlas is the
+// REGISTRY-LINEAGE case: `resolveSibling` returns `present: false` when the
+// `sci-report/atlas` checkout is absent (the registry-default world), and the
+// SECOND consumer-truth source (the live `npm view` probe) is `proof:lineage-probe`'s
+// registry arm — the disk census is the FIRST source, the registry the SECOND
+// (inv-11's exact ordering). The `sci-report/atlas` lineage is enrolled in the
+// `proof:constellation-spine` MEMBERS roster too (clause 4/6); this list is the
+// disk-census source-of-truth those import-graph gates read.
 export const CONSUMERS = [
     {
         id: "glass-ui",
@@ -99,6 +117,28 @@ export const CONSUMERS = [
         id: "speedtest",
         dir: resolve(PARENT, "speedtest"),
         roots: [resolve(PARENT, "speedtest/src")],
+        viteConfigs: ["vite.config.ts"],
+    },
+    // BB.W-LINEAGE-PROBE — slides: a PRESENT on-disk consumer (`../slides`
+    // resolves at HEAD, pins glass-ui → soon 4.0.0 per W-SLIDES-DRIVE). Never
+    // enrolled before, so every constellation-reading gate held a partial view.
+    {
+        id: "slides",
+        dir: resolve(PARENT, "slides"),
+        roots: [resolve(PARENT, "slides/src")],
+        viteConfigs: ["vite.config.ts"],
+    },
+    // BB.W-LINEAGE-PROBE — the Connectivity Atlas (`sci-report/atlas`): the
+    // REGISTRY-LINEAGE consumer the d6 lesson is about. It held the fork-line
+    // registry consume (`^3.12.0`) the disk import-graph census structurally
+    // cannot see — `resolveSibling` returns `present: false` when its checkout
+    // is absent on a clean runner (the registry-default skip), so it is the
+    // NAMED source-fact (L3) + the registry-probe anchor (the live `npm view`
+    // probe records its fork-line versions), never a disk grep that vanishes.
+    {
+        id: "sci-report/atlas",
+        dir: resolve(PARENT, "sci-report/atlas"),
+        roots: [resolve(PARENT, "sci-report/atlas/src")],
         viteConfigs: ["vite.config.ts"],
     },
 ];
