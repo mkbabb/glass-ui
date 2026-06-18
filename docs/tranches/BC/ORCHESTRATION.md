@@ -146,7 +146,7 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [x] keyframes.js + value.js facility inventory — DONE (research/kf-vjs-facilities.md: Oscillator/sampleColorRamp/republish-ask)
 - [x] Every demo route enumerated + audited — DONE (research/route-census.md, 6 impacts)
 - [x] **BB/BA/AZ forensic post-mortems** + the failure-class synthesis — DONE (research/postmortem/{bb,ba,az}.md + SYNTHESIS.md: 29 failure classes, 21 went-right; AZ=grey-glass origin 5b72fd9b, BA=paint-blind gate, BB=0/33 painted)
-- [ ] **Per-viz SOTA research doc ×11** (research/viz/*.md — aurora · goo-blob · dot-flow · concentric · fourier · constellation · watercolor · paper-grid · grid-simple · dot-matrix · hybrid)
+- [x] **Per-viz SOTA research doc ×11** — DONE (research/viz/*.md all 11; aurora=4-wiring-bugs-not-shader, blob=staged-first-principles, watercolor=ghost-dashed-follows-silhouette+Safari-static-filter, WebGPU Baseline confirmed)
 - [ ] A challenge/adversarial pass over the full wave-set (every wave attacked for gaps)
 - [ ] PROMPT-LEDGER.md: original + 50+ historical prompts, each mapped to a covering wave
 
@@ -177,7 +177,12 @@ model) synthesizes; the fanout is opus/sonnet.
 | 1-sweep | deferral fold | AX/AY/AZ/BA/BB/memory/hero | wcbitsihm (213 items) | DONE | research/deferral/*.md ×7 + herostudios-design.md |
 | 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs (w53yzm840) | DONE | research/postmortem/{bb,ba,az}.md + SYNTHESIS.md (29 classes) |
 | 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs (wyy4pa6jq) | 6/11 DONE | research/viz/{aurora,goo-blob,dot-flow-field,concentric,fourier-field,constellation}.md |
-| 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | IN-FLIGHT | the 5 missing research/viz/*.md |
+| 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | DONE | research/viz/*.md ALL 11 |
+| 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs | LAUNCHING | ~60 waves/*.md + DEFERRAL-LEDGER + PM wrappers |
+
+> **RESEARCH PHASE COMPLETE** — 9/9 corpus + 213-item deferral fold + herostudios design + 3
+> post-mortems + SYNTHESIS (29 failure classes) + 11 per-viz SOTA docs. All durable in research/.
+> **NOW: iteration 2 PLAN launching (bc-iter2-plan.mjs, 18 agents, 6 batches).**
 | 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (18 agents) | STAGED | waves/*.md (~60) + DEFERRAL-LEDGER |
 
 > **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
@@ -187,17 +192,19 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: research nearly complete. 1d PER-VIZ SOTA IN-FLIGHT (task wyy4pa6jq,
-> bc-iter1d-viz-sota.mjs — 11 viz docs → research/viz/*.md). 1 (9/9), 1-sweep (213), 1c (post-mortems
-> + SYNTHESIS) all DONE.**
-> On 1d completion (TaskOutput wyy4pa6jq): harvest research/viz/*.md (parse the markdown field per
-> agent if not self-written), then:
-> 1. **2 PLAN** — fire `bc-iter2-plan.mjs` (18 agents, 6 batches → ~60 waves/*.md +
->    DEFERRAL-LEDGER.md + PM wave-wrappers + PROMPT-LEDGER extension). This is the big one.
-> 2. Then **3 HARDEN** (tighten each band's waves: gates/edge-cases/fences/precepts) + **4 CHALLENGE**
->    (adversarial: attack every wave for gaps/contradictions/un-covered USER-DEFECTS lines), repeat
->    until §1 fully checked AND 2 consecutive challenge passes find no new gaps (§2 convergence test).
-> Do NOT double-spawn while wyy4pa6jq is in flight (TaskOutput first). Keep ≤3 agents concurrent.
+> **NEXT CURSOR: RESEARCH COMPLETE. iteration 2 PLAN IN-FLIGHT (task TBD — bc-iter2-plan.mjs, 18
+> agents, 6 batches, ~60 waves).**
+> On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
+> the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
+> any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
+> 1. **3 HARDEN** — per-band: tighten gates/edge-cases/fences/precept-conformance; fill any band
+>    that came back thin. (a PLAN-style fan-out re-reading the authored waves + the corpus.)
+> 2. **4 CHALLENGE** — adversarial: attack every wave for gaps/contradictions + check EVERY
+>    USER-DEFECTS.md line + EVERY 213 deferral item + EVERY PROMPT-LEDGER ask has a covering wave.
+> 3. Repeat HARDEN/CHALLENGE until §1 fully checked AND 2 consecutive challenge passes find no new
+>    gaps (§2 convergence test). Then write FINAL.md, report, retire the cron.
+> Do NOT double-spawn while iter2 is in flight. Keep ≤3 agents concurrent (the server rate-limit bit
+> twice on batches 3+/large fan-outs — batches of 3 + serial iterations is the discipline).
 
 ---
 
