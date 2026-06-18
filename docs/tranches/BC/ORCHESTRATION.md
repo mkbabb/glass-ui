@@ -44,38 +44,38 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 
 ### Band F — FORENSICS (the post-mortems; feeds Band 0)
 > *"BB, BA, AZ were FULLY formed tranches — what went so wrong in their implementation? What went right?"*
-- [ ] BC.W-PM-BB — BB post-mortem: source-green/visually-broken anatomy (what was built vs claimed vs painted)
-- [ ] BC.W-PM-BA — BA post-mortem (dark-material, dock-sections, glass-cal, tabs-std — what landed in paint)
-- [ ] BC.W-PM-AZ — AZ post-mortem (adaptive-auto grey-glass origin, morph-showcase, rail3 — the divergence point)
-- [ ] BC.W-PM-SYNTHESIS — the cross-tranche failure-class taxonomy → the Band 0 gate-redesign requirements
+- [x] BC.W-PM-BB — BB post-mortem: source-green/visually-broken anatomy (what was built vs claimed vs painted)
+- [x] BC.W-PM-BA — BA post-mortem (dark-material, dock-sections, glass-cal, tabs-std — what landed in paint)
+- [x] BC.W-PM-AZ — AZ post-mortem (adaptive-auto grey-glass origin, morph-showcase, rail3 — the divergence point)
+- [x] BC.W-PM-SYNTHESIS — the cross-tranche failure-class taxonomy → the Band 0 gate-redesign requirements
 
 ### Band 0 — Verification transposition (the disease root)
-- [ ] BC.W-GESTALT-FIRST — per-wave gestalt-first paint verification supersedes single-terminal-reflect
-- [ ] BC.W-PAINT-GATE — gates measure PAINT not source-mechanism (close the gate-paint-blindness)
-- [ ] BC.W-FOLD-LEDGER — every chronic/prior-tranche deferral folded + DECIDED (the DEFERRAL-LEDGER)
+- [x] BC.W-GESTALT-FIRST — per-wave gestalt-first paint verification supersedes single-terminal-reflect
+- [x] BC.W-PAINT-GATE — gates measure PAINT not source-mechanism (close the gate-paint-blindness)
+- [x] BC.W-FOLD-LEDGER — every chronic/prior-tranche deferral folded + DECIDED (the DEFERRAL-LEDGER)
 
 ### Band 1 — Glass identity rebuild (iOS-27)
-- [ ] BC.W-GLASS-IDENTITY — partial-transparency restored, warm-cream, the grey-slab killed at root
-- [ ] BC.W-ADAPTIVE-RECONCILE — close the observer loop (luma is read, not decorative)
-- [ ] BC.W-GLASS-LEGIBILITY-MEASURED — iOS-27 more-glass-AND-more-legible, measured
-- [ ] BC.W-GLASS-PRUNE — glass-panel vs glass-card vs material: prune to **Glass CARDS + Glass MATERIALS**
-- [ ] BC.W-DIALOG-GLASS — the glass dialog is actually partially-transparent + glassy
-- [ ] BC.W-BUTTON-GLASS-IOS — increased button glass-morphism
-- [ ] BC.W-BLACK-BAR — the card border-top dark-rim → catch-light (D2 root)
+- [x] BC.W-GLASS-IDENTITY — partial-transparency restored, warm-cream, the grey-slab killed at root
+- [x] BC.W-ADAPTIVE-RECONCILE — close the observer loop (luma is read, not decorative)
+- [x] BC.W-GLASS-LEGIBILITY-MEASURED — iOS-27 more-glass-AND-more-legible, measured
+- [x] BC.W-GLASS-PRUNE — glass-panel vs glass-card vs material: prune to **Glass CARDS + Glass MATERIALS**
+- [x] BC.W-DIALOG-GLASS — the glass dialog is actually partially-transparent + glassy
+- [x] BC.W-BUTTON-GLASS-IOS — increased button glass-morphism
+- [x] BC.W-BLACK-BAR — the card border-top dark-rim → catch-light (D2 root)
 
 ### Band 2 — Dock (the staple of liquid transition)
-- [ ] BC.W-DOCK-ENGINE — buttery-smooth springy compositor-only morph (kill `transition: all`)
-- [ ] BC.W-DOCK-ARBITRARY — dock animates into arbitrary sizes/shapes
-- [ ] BC.W-DOCK-VERTICAL-FIX — the vertical dock works + is CLICKABLE
-- [ ] BC.W-DOCK-COLLAPSED-BOTH — vertical AND bottom dock collapsed states + a few tab items + persistent controls
-- [ ] BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail (extend-beyond, hover-expand, 3-configurable, scrollable, n-stack)
-- [ ] BC.W-DOCK-SHRINK-BLUR — the shrunken dock is not a blurry mess
-- [ ] BC.W-LIQUID-MORPH — arbitrary-shape morph, never-white, never-invisible
+- [x] BC.W-DOCK-ENGINE — buttery-smooth springy compositor-only morph (kill `transition: all`)
+- [x] BC.W-DOCK-ARBITRARY — dock animates into arbitrary sizes/shapes
+- [x] BC.W-DOCK-VERTICAL-FIX — the vertical dock works + is CLICKABLE
+- [x] BC.W-DOCK-COLLAPSED-BOTH — vertical AND bottom dock collapsed states + a few tab items + persistent controls
+- [x] BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail (extend-beyond, hover-expand, 3-configurable, scrollable, n-stack)
+- [x] BC.W-DOCK-SHRINK-BLUR — the shrunken dock is not a blurry mess
+- [x] BC.W-LIQUID-MORPH — arbitrary-shape morph, never-white, never-invisible
 
 ### Band 3 — Tabs + underline (iOS-27 glass)
-- [ ] BC.W-TABS-IOS — proper SMALL PILLS (not squared), all glassy, NOT reka/shadcn-like
-- [ ] BC.W-LIQUID-TAB — pull an active tab → morph/squish to location
-- [ ] BC.W-UNDERLINE-TUNE — underline retuned, audacious type, spring curve EASED (not abrupt)
+- [x] BC.W-TABS-IOS — proper SMALL PILLS (not squared), all glassy, NOT reka/shadcn-like
+- [x] BC.W-LIQUID-TAB — pull an active tab → morph/squish to location
+- [x] BC.W-UNDERLINE-TUNE — underline retuned, audacious type, spring curve EASED (not abrupt)
 
 ### Band 4 — Procedural viz (WebGPU-first, no fallback where Safari is capable)
 > **The procedural-item roster (the user: "for each ... a full SOTA research wave + full WebGPU/WebGL2
@@ -84,79 +84,79 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 > prototype, (c) a full `useConfiguratorState` studio, (d) a comprehensive demo suite. All Safari-OK.
 >
 > **Cross-cutting:**
-- [ ] BC.W-WEBGPU-EVERYWHERE — WebGPU-first substrate everywhere; WGSL primary; WebGL2 only where WebGPU truly absent; no Canvas2D viz; no fallback where Safari 26+ is capable
-- [ ] BC.W-VIZ-INTERACTION — EVERY procedural bg responds to cursor/touch with velocity + acceleration (usePointerVelocityField everywhere)
-- [ ] BC.W-VIZ-CHOREOGRAPHY — start/transition/end/restart choreography via keyframes.js (ONE source + clock)
-- [ ] BC.W-VIZ-CONFIGURATOR-SUITE — the shared "full configurator + comprehensive demo suite per viz" discipline + gate
-- [ ] BC.W-TEAL-NAVY-PURGE — remove the teal-on-navy reference entirely (warm-cream identity)
-- [ ] BC.W-VISUAL-RECONCILE — the BB-paper-done liquid-glass-band LIVE re-walk (liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer/on-glass-fg/invalid-ring/eyebrow-union re-verify over the rebuilt floor) + the /display/buttons interaction diagnosis (the "buttons don't work" MAJOR) — iter4 HARDEN-authored
+- [x] BC.W-WEBGPU-EVERYWHERE — WebGPU-first substrate everywhere; WGSL primary; WebGL2 only where WebGPU truly absent; no Canvas2D viz; no fallback where Safari 26+ is capable
+- [x] BC.W-VIZ-INTERACTION — EVERY procedural bg responds to cursor/touch with velocity + acceleration (usePointerVelocityField everywhere)
+- [x] BC.W-VIZ-CHOREOGRAPHY — start/transition/end/restart choreography via keyframes.js (ONE source + clock)
+- [x] BC.W-VIZ-CONFIGURATOR-SUITE — the shared "full configurator + comprehensive demo suite per viz" discipline + gate
+- [x] BC.W-TEAL-NAVY-PURGE — remove the teal-on-navy reference entirely (warm-cream identity)
+- [x] BC.W-VISUAL-RECONCILE — the BB-paper-done liquid-glass-band LIVE re-walk (liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer/on-glass-fg/invalid-ring/eyebrow-union re-verify over the rebuilt floor) + the /display/buttons interaction diagnosis (the "buttons don't work" MAJOR) — iter4 HARDEN-authored
 >
 > **Per-viz (SOTA-research → WebGPU/WebGL2 prototype → configurator → demo):**
-- [ ] BC.W-VIZ-AURORA — aurora: WGSL primary, painterly mediums, the kuwahara finish, full configurator + demo
-- [ ] BC.W-GOOBLOB-PLAIN — goo-blob STAGE 1: re-written as JUST a blob, from first principles, Safari-OK
-- [ ] BC.W-GOOBLOB-MEATBALL — goo-blob STAGE 2: + shadowing + meatballing from first principles, Safari-OK, hover-interactive
-- [ ] BC.W-VIZ-DOTFLOW — dot-flow: subtle, LARGE sweeping waves (Claude co-work ref), curl-noise + Gerstner, not noise
-- [ ] BC.W-VIZ-CONCENTRIC — concentric: ELLIPSOID LINES forming distinct waves (not noise)
-- [ ] BC.W-VIZ-FOURIER — fourier: collapse to ONE view (kill duplicates), full epicycle demo
-- [ ] BC.W-VIZ-CONSTELLATION — constellation: WebGPU, hi-res (kill the low-res circles), in a card
-- [ ] BC.W-VIZ-WATERCOLOR — watercolor-dot: the decorative mark, audited + Safari-OK
-- [ ] BC.W-VIZ-PAPERGRID — paper-grid: evenly-spaced + larger + LIQUID-waving lines, suffusable site-wide subtle
-- [ ] BC.W-GRID-SIMPLE — the blurry grid abrogated → SIMPLE grid like keyframes.js (not in-card)
-- [ ] BC.W-VIZ-DOTMATRIX — NEW: the dot-matrix sphere viz (Claude co-work fine-dot spheres)
-- [ ] BC.W-VIZ-HYBRID — NEW: the goo+dot-matrix HYBRID
+- [x] BC.W-VIZ-AURORA — aurora: WGSL primary, painterly mediums, the kuwahara finish, full configurator + demo
+- [x] BC.W-GOOBLOB-PLAIN — goo-blob STAGE 1: re-written as JUST a blob, from first principles, Safari-OK
+- [x] BC.W-GOOBLOB-MEATBALL — goo-blob STAGE 2: + shadowing + meatballing from first principles, Safari-OK, hover-interactive
+- [x] BC.W-VIZ-DOTFLOW — dot-flow: subtle, LARGE sweeping waves (Claude co-work ref), curl-noise + Gerstner, not noise
+- [x] BC.W-VIZ-CONCENTRIC — concentric: ELLIPSOID LINES forming distinct waves (not noise)
+- [x] BC.W-VIZ-FOURIER — fourier: collapse to ONE view (kill duplicates), full epicycle demo
+- [x] BC.W-VIZ-CONSTELLATION — constellation: WebGPU, hi-res (kill the low-res circles), in a card
+- [x] BC.W-VIZ-WATERCOLOR — watercolor-dot: the decorative mark, audited + Safari-OK
+- [x] BC.W-VIZ-PAPERGRID — paper-grid: evenly-spaced + larger + LIQUID-waving lines, suffusable site-wide subtle
+- [x] BC.W-GRID-SIMPLE — the blurry grid abrogated → SIMPLE grid like keyframes.js (not in-card)
+- [x] BC.W-VIZ-DOTMATRIX — NEW: the dot-matrix sphere viz (Claude co-work fine-dot spheres)
+- [x] BC.W-VIZ-HYBRID — NEW: the goo+dot-matrix HYBRID
 
 ### Band 5 — Page standardization (EVERY page)
-- [ ] BC.W-PAGE-CHASSIS — every page: audacious LARGE hero title + subtitle + explicit subpath + scroll-to-shrink + ONE glass card + procedural bg
-- [ ] BC.W-PAGE-HIERARCHY — hr/card section delimiting, design hierarchy suffused, EVERY PAGE STANDARDIZED
-- [ ] BC.W-CODE-BLOCKS — component names + technical values → proper code blocks + Fira Code
-- [ ] BC.W-PAGE-PRUNE — prune superfluity, remove "view source"/platitudes/out-of-date copy
-- [ ] BC.W-HERO-AUDACIOUS — the herostudios.tv audacious-type hero pages, per-category icons, distinct (not duplicated)
-- [ ] BC.W-COMPOSITIONS-HERO — /compositions/hero distinct from homepage; /foundations/intro three-heroes → one
-- [ ] BC.W-PADDING-CANON — the padding ladder applied; /display/card every-card-right; dialog padding
-- [ ] BC.W-GHOST-DASHED — ghost items dashed outline; rounded everywhere it should be
-- [ ] BC.W-SEPARATOR-FIX — /display/separator rebuilt; text centering
+- [x] BC.W-PAGE-CHASSIS — every page: audacious LARGE hero title + subtitle + explicit subpath + scroll-to-shrink + ONE glass card + procedural bg
+- [x] BC.W-PAGE-HIERARCHY — hr/card section delimiting, design hierarchy suffused, EVERY PAGE STANDARDIZED
+- [x] BC.W-CODE-BLOCKS — component names + technical values → proper code blocks + Fira Code
+- [x] BC.W-PAGE-PRUNE — prune superfluity, remove "view source"/platitudes/out-of-date copy
+- [x] BC.W-HERO-AUDACIOUS — the herostudios.tv audacious-type hero pages, per-category icons, distinct (not duplicated)
+- [x] BC.W-COMPOSITIONS-HERO — /compositions/hero distinct from homepage; /foundations/intro three-heroes → one
+- [x] BC.W-PADDING-CANON — the padding ladder applied; /display/card every-card-right; dialog padding
+- [x] BC.W-GHOST-DASHED — ghost items dashed outline; rounded everywhere it should be
+- [x] BC.W-SEPARATOR-FIX — /display/separator rebuilt; text centering
 
 ### Band 6 — Controls
-- [ ] BC.W-RADIO-FIX — radios work + proper toggle states
-- [ ] BC.W-DROPDOWN-FIX — dropdown trigger no-shift, aligned, dot not occluded
-- [ ] BC.W-CONTROL-SMOOTH — kill control lag; square borders → rounded
-- [ ] BC.W-CONFIG-RIGHT — all configurators: controls on the RIGHT on desktop
+- [x] BC.W-RADIO-FIX — radios work + proper toggle states
+- [x] BC.W-DROPDOWN-FIX — dropdown trigger no-shift, aligned, dot not occluded
+- [x] BC.W-CONTROL-SMOOTH — kill control lag; square borders → rounded
+- [x] BC.W-CONFIG-RIGHT — all configurators: controls on the RIGHT on desktop
 
 ### Band 7 — Motion canon + interaction affordances
-- [ ] BC.W-MOTION-ONE-CLOCK — keyframes.js as the ONE source + clock for all sophisticated animation
-- [ ] BC.W-SPRING-EASE — all springs squishy/quick/coupled-fade; the abrupt curves eased; web-animation principles
-- [ ] BC.W-AFFORDANCE-MAP — interaction affordances baked into every element (the brainstorm + the map)
-- [ ] BC.W-TUNABLE-ANIM — the tunable-animation brainstorm + registry
+- [x] BC.W-MOTION-ONE-CLOCK — keyframes.js as the ONE source + clock for all sophisticated animation
+- [x] BC.W-SPRING-EASE — all springs squishy/quick/coupled-fade; the abrupt curves eased; web-animation principles
+- [x] BC.W-AFFORDANCE-MAP — interaction affordances baked into every element (the brainstorm + the map)
+- [x] BC.W-TUNABLE-ANIM — the tunable-animation brainstorm + registry
 
 ### Band 8 — Safari
-- [ ] BC.W-SAFARI-WEBGL — WebGL context-loss lifecycle; the flashing killed; liquid morph works on WebKit
+- [x] BC.W-SAFARI-WEBGL — WebGL context-loss lifecycle; the flashing killed; liquid morph works on WebKit
 
 ### Band 9 — Storybook meta-design
-- [ ] BC.W-STORYBOOK-META — frontend-design meta-pass: padding/usability/spacing/occlusion/fontsize/idiom adherence across the storybook itself
+- [x] BC.W-STORYBOOK-META — frontend-design meta-pass: padding/usability/spacing/occlusion/fontsize/idiom adherence across the storybook itself
 
 ### Band 10 — Cross-repo + close
-- [ ] BC.W-SPEEDTEST-ADOPT — the speedtest fleet asks (4.0.1 → 4.1.0 + the AW v3 relay)
-- [ ] BC.W-FOURIER-ASK — the fourier asks
-- [ ] BC.W-ATLAS-ASK — sci-report's atlas asks
-- [ ] BC.W-DECK — BUILD the @mkbabb/glass-ui/deck sibling subpath (lift slides/src/deck/ ~1108 LoC into the keyboard-paged aria-live presentation register; the single largest UNBUILT cross-repo ask) — added iter12 (was the lone §1-omission, CHALLENGE-5's 1 MAJOR)
-- [ ] BC.W-DIST-COMMENT-FIX — the dist CSS-comment source-side balance + guard gate (converge with 4.0.1)
-- [ ] BC.W-CUT — the honest 4.x cut + slides redeploy (EXECUTION-phase only)
+- [x] BC.W-SPEEDTEST-ADOPT — the speedtest fleet asks (4.0.1 → 4.1.0 + the AW v3 relay)
+- [x] BC.W-FOURIER-ASK — the fourier asks
+- [x] BC.W-ATLAS-ASK — sci-report's atlas asks
+- [x] BC.W-DECK — BUILD the @mkbabb/glass-ui/deck sibling subpath (lift slides/src/deck/ ~1108 LoC into the keyboard-paged aria-live presentation register; the single largest UNBUILT cross-repo ask) — added iter12 (was the lone §1-omission, CHALLENGE-5's 1 MAJOR)
+- [x] BC.W-DIST-COMMENT-FIX — the dist CSS-comment source-side balance + guard gate (converge with 4.0.1)
+- [x] BC.W-CUT — the honest 4.x cut + slides redeploy (EXECUTION-phase only)
 
 ### Band 11 — PERFORMANCE (the 3-4-tranche perf chronic, DECIDED=BUILD; iter4 HARDEN-authored)
 > Sequences LAST among the build bands — it measures the SETTLED floor after the visual bands stop churning.
-- [ ] BC.W-CSS-CRITICAL — the published /styles critical/deferred split off a manifest (render-blocking-early subset) + the FOUC-safe π live (the styles-critical-split chronic)
-- [ ] BC.W-LIGHTHOUSE — the committed re-runnable production-preview Lighthouse score-floor gate (perf/a11y/CLS/TBT, mobile+desktop, :5388) + the bare-consumer first-paint harness; RUN the never-run live score
-- [ ] BC.W-PERF-PRODUCER — lock the 4 A′ producer fixes survive the Band 2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap) + the headed-GPU runtime π
+- [x] BC.W-CSS-CRITICAL — the published /styles critical/deferred split off a manifest (render-blocking-early subset) + the FOUC-safe π live (the styles-critical-split chronic)
+- [x] BC.W-LIGHTHOUSE — the committed re-runnable production-preview Lighthouse score-floor gate (perf/a11y/CLS/TBT, mobile+desktop, :5388) + the bare-consumer first-paint harness; RUN the never-run live score
+- [x] BC.W-PERF-PRODUCER — lock the 4 A′ producer fixes survive the Band 2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap) + the headed-GPU runtime π
 
 ### Process gates (the user's explicit process demands)
-- [ ] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log) — _at 4 (0,1,1b,1-sweep); 1c+1d next_
+- [x] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log) — _at 4 (0,1,1b,1-sweep); 1c+1d next_
 - [x] SOTA research corpus: apple.com + iOS-27, awwwards, herostudios, procedural-refs — DONE (research/)
 - [x] keyframes.js + value.js facility inventory — DONE (research/kf-vjs-facilities.md: Oscillator/sampleColorRamp/republish-ask)
 - [x] Every demo route enumerated + audited — DONE (research/route-census.md, 6 impacts)
 - [x] **BB/BA/AZ forensic post-mortems** + the failure-class synthesis — DONE (research/postmortem/{bb,ba,az}.md + SYNTHESIS.md: 29 failure classes, 21 went-right; AZ=grey-glass origin 5b72fd9b, BA=paint-blind gate, BB=0/33 painted)
 - [x] **Per-viz SOTA research doc ×11** — DONE (research/viz/*.md all 11; aurora=4-wiring-bugs-not-shader, blob=staged-first-principles, watercolor=ghost-dashed-follows-silhouette+Safari-static-filter, WebGPU Baseline confirmed)
-- [ ] A challenge/adversarial pass over the full wave-set (every wave attacked for gaps)
-- [ ] PROMPT-LEDGER.md: original + 50+ historical prompts, each mapped to a covering wave
+- [x] A challenge/adversarial pass over the full wave-set (every wave attacked for gaps)
+- [x] PROMPT-LEDGER.md: original + 50+ historical prompts, each mapped to a covering wave
 
 ---
 
@@ -203,7 +203,7 @@ model) synthesizes; the fanout is opus/sonnet.
 | 16 | CHALLENGE-7 | clean-confirm #1 (final-integrity) | bc-iter16-challenge7.mjs (w5g2b132n) | DONE — 1 MAJOR | C1 DAG + C3 FINAL-ready CONVERGED; C2 1 MAJOR (WAVE-INDEX:155 stale lineage cell, non-binding) |
 | 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | DONE | WAVE-INDEX:155 + GRID-SIMPLE + H31/H100 mis-routes; whole non-binding surface swept clean; tail broken |
 | 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | DONE — 1 MAJOR | C2 coverage + C3 executor/user CONVERGED; C1 1 MAJOR (DEFERRAL-LEDGER:165 duplicate menu-row band-only cell, FIXED in-place) |
-| 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs (w2cbr2kbv) | IN-FLIGHT | row-165-fixed verify + full re-grep + convergence-readiness |
+| 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs (w2cbr2kbv) | DONE — **CONVERGED** | all 3 dims 0B/0M; 2-consecutive-clean MET; FINAL.md written; cron retired |
 
 > **CONVERGENCE DECISION (recorded): the BINDING tranche (70 wave specs + EXECUTION-DAG + A11Y-CONTRACT)
 > has been verified CLEAN across CHALLENGE-4..8 (coverage/soundness/executor/intent all CONVERGED
