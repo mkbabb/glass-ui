@@ -27,19 +27,81 @@ The tunable PIECES exist and are SOTA-correct, but there is no unified REGISTRY 
 KISS — the tunable chassis (`<EasingPicker>`, `useConfiguratorState`) + the single-source spring registry are built. This wave BRAINSTORMS the full tunable surface, INDEXES it as ONE registry, BUILDS the one cleanly-buildable live control the deferral names (the steppedEase generator, value.js-shipped), and GATES the registry stays single-source + boundary-law-correct.
 
 ### The brainstorm — the tunable-animation axes (the closed registry)
-Every animatable axis is ONE of these tunable kinds, each a named TOKEN re-tunable by a consumer or a live control:
+Every animatable axis is ONE of these tunable kinds, each a named TOKEN re-tunable by a consumer or a live control. The brainstorm names, per kind, the AUTHORITY (where the value lives), the RE-TUNE path, and whether it carries a LIVE control:
 
-1. **SPRING shape** — the 5+1 named springs (`smooth`/`snappy`/`bouncy`/`gentle`/`dock`/`press`), each a `(response, ζ)` pair in `SPRING_PRESETS` → the CSS `--spring-*` + JS `MOTION_CURVES` twin. Re-tune: edit the ONE table (library identity) OR override `--spring-<name>` (consumer). LIVE control: a `(response, ζ)` editor → a live spring preview (the `SpringScene` idiom, kf-vjs-facilities.md §6 "a live `liveSpring.target = …` chases the tap target").
-2. **CLOCK** — the per-spring `--spring-<name>-duration` (the analytic 2%-band settle, generated). Re-tune: NEVER hand-set (generated from the spring); the registry RECORDS it as derived-not-tunable (the W-GLASS-CAL fence — truncating re-introduces tail-jank, `BC.W-SPRING-EASE` S5).
-3. **EASING curve** — the bezier/steps curves (`--ease-*` + `MOTION_CURVES` + `bezierPresets`/`jumpTerms`). Re-tune: the `<EasingPicker>` (the live authoring chassis). LIVE control: the draggable bezier handles + the steps staircase (built) + the NEW live steppedEase `n + jumpTerm` generator (this wave builds it).
-4. **AFFORDANCE magnitude** — the scales + caps (`--scale-hover-*`, `--scale-press`, `--tab-indicator-max-stretch`, the squish caps). Re-tune: the token (consumer) / the affordance-map (library). The registry indexes them.
-5. **REVEAL/MORPH timing** — the bloom/morph drives (`--*-reveal-t`, `--press-t`, `--dock-morph-t`, the reveal blur-settle). Re-tune: the spring under them (registry kind 1) + the per-instance token. The registry indexes the drive scalars.
+1. **SPRING shape** — the 5+1 named springs (`smooth`/`snappy`/`bouncy`/`gentle`/`dock`/`press`), each a `(response, ζ)` pair in `SPRING_PRESETS` (`springPresets.ts:51-86`) → the CSS `--spring-*` `linear()` (`scheme-motion.css:220-224`, generated) + the JS `MOTION_CURVES` twin (`curves.ts:176` `Object.freeze`, via `springTimingFunction`). Re-tune: edit the ONE table (library identity, `BC.W-SPRING-EASE`) OR override `--spring-<name>` on an instance (consumer). LIVE control: a `(response, ζ)` editor → a live spring preview (the `SpringScene` idiom, kf-vjs-facilities.md §6 "a live `liveSpring.target = …` chases the tap target" — composes `springTimingFunction`/`SpringProgress`, never a hand-rolled spring).
+2. **CLOCK** — the per-spring `--spring-<name>-duration` (the analytic 2%-band settle `t_s = −ln(0.02)/(ζ·ωₙ)`, generated; `scheme-motion.css:242-246`). Re-tune: NEVER hand-set (generated from the spring's own (response, ζ)); the registry RECORDS it as DERIVED-not-tunable (the W-GLASS-CAL fence — truncating re-introduces tail-jank, `BC.W-SPRING-EASE` S6 / motion-canon.md P4). NO live control — the registry exposes it READ-ONLY (a "tune the clock" control is forbidden by T4).
+3. **EASING curve** — the bezier/steps curves (`--ease-standard`/`--ease-out`/`--ease-in`/`--ease-out-expo`/`--ease-apple`, `scheme-motion.css:254-263`; the `MOTION_CURVES` JS twins; value.js `bezierPresets`/`jumpTerms`/`CSSCubicBezier`/`steppedEase`, kf-vjs-facilities.md §2.3). Re-tune: the `<EasingPicker>` (the live authoring chassis) OR override `--ease-<name>` (consumer). LIVE control: the draggable bezier handles + the steps staircase (BB-built) + the NEW live steppedEase `n + jumpTerm` generator (this wave builds it).
+4. **AFFORDANCE magnitude** — the scales + caps (`--scale-hover-btn` 1.05 / `--scale-hover-dock` 1.1 / `--scale-hover` 1.08 / `--scale-press` 0.96 / `--scale-press-sm` 0.97, `scale-paper.css:9,24-41`; `--tab-indicator-max-stretch` 1.08, `scale-paper.css:53`; the squish caps). Re-tune: the token (consumer override on an instance) / the `affordance-map` (library identity, `BC.W-AFFORDANCE-MAP`). NO live control (the proportion fence — these are the affordance-map's, not a debug overlay); the registry INDEXES them with their anti-taffy bounds.
+5. **REVEAL/MORPH timing** — the bloom/morph drive scalars (`--glass-btn-press-t`/`--card-press-t` press drives `property-regs.css:285`; `--dock-morph-t`/`--dock-expand-t` the dock morph scalar; `--border-progress-fill` `property-regs.css:53`; `--progress-crescendo` `property-regs.css:38`; `--phase-tint-amount` `property-regs.css:59`; the `--glass-reveal-blur` settle `glass/reveal.css`; the scroll-choreography knobs `--scroll-build-step` 90ms / `--scroll-cascade-rise` 1.25rem / `--scroll-cascade-range-end` 45% / `--scroll-pin-lift` 2.5rem / `--scroll-pin-stage-height` 320vh, `scroll-choreography.css:90,146,166,232,255`). Re-tune: the spring under them (registry kind 1) + the per-instance token (consumer). The registry indexes the drive scalars + their default + their range.
 
 ### The registry (`docs/precepts/tunable-anim.md`)
-A markdown table: each tunable axis → its TOKEN → its re-tune path (library-table vs consumer-override) → its BOUND (the valid range, e.g. squish cap ≤1.2 anti-taffy; overshoot bands from `BC.W-SPRING-EASE`) → its LIVE control (which demo exposes it). The single index a consumer reads to re-theme the motion identity. Cited by `BC.W-VIZ-CONFIGURATOR-SUITE` (the viz studios) + the storybook.
+A markdown table: each tunable axis → its TOKEN → its DEFAULT → its BOUND (the valid range) → its RE-TUNE path (library-table vs consumer-override vs derived) → its PRM behavior → its LIVE control (which demo exposes it). The single index a consumer reads to re-theme the motion identity. Cited by `BC.W-VIZ-CONFIGURATOR-SUITE` (the viz studios) + the storybook. The full enumerated registry (the binding rows — the gate reads these; a token in the registry RESOLVES in source (T2), a token in source that is animatable but absent from the registry reds (T1's anti-gameability)):
+
+**Kind 1 — SPRING shape** (`SPRING_PRESETS` → CSS `--spring-*` + JS `MOTION_CURVES`; the single authority is the table):
+
+| spring | token (CSS + JS twin) | default (response, ζ) | bound (overshoot, `BC.W-SPRING-EASE` S2) | re-tune | PRM | live control |
+|---|---|---|---|---|---|---|
+| smooth | `--spring-smooth` / `MOTION_CURVES.smooth` | 0.5, 0.86 | ≤0.02 (the kept sub-perceptual alive-peak) | table (identity) or `--spring-smooth` override | snap (binary) or intensity-scaled | the spring editor preview |
+| snappy | `--spring-snappy` | ~0.42, ~0.78 (SPRING-EASE clock-fill) | ≤0.08; 90%-travel ∈ [0.55,0.70] of clock | table or override | snap | preview |
+| bouncy | `--spring-bouncy` | 0.5, 0.60 (SPRING-EASE eased) | ∈ [0.12,0.18] (the Apple band) | table or override | snap | preview |
+| gentle | `--spring-gentle` | 0.7, 1.0 (critically-damped) | 0 (no overshoot) | table or override | snap | preview |
+| dock | `--spring-dock` | 0.32, 0.7 (value.js/kf-fenced KEEP) | ≤0.06 | table (FROZEN — byte-unchanged) | snap | preview |
+| press | `--spring-press` (MINTED, `BC.W-SPRING-EASE` S3) | 0.15, 0.86 (iOS interactiveSpring) | ≤0.08 | table or override | snap (zero transform frames) | preview |
+
+**Kind 2 — CLOCK** (DERIVED-not-tunable; generated from the spring; the registry records READ-ONLY):
+
+| clock | token | default | re-tune | note |
+|---|---|---|---|---|
+| smooth | `--spring-smooth-duration` | 0.36s | DERIVED (regen-spring-tokens.mjs) | NO control — `t_s = −ln(0.02)/(ζ·ωₙ)` |
+| snappy | `--spring-snappy-duration` | 0.34s | DERIVED | truncating re-introduces tail-jank (W-GLASS-CAL fence) |
+| bouncy | `--spring-bouncy-duration` | 0.69s | DERIVED | re-derives on the SPRING-EASE ζ change |
+| gentle | `--spring-gentle-duration` | 0.44s | DERIVED | — |
+| dock | `--spring-dock-duration` | 0.28s | DERIVED | FROZEN with the dock row |
+| press | `--spring-press-duration` | (regen from 0.15/0.86) | DERIVED | minted with the press row |
+
+**Kind 3 — EASING curve** (CSS `--ease-*` + JS `MOTION_CURVES` + value.js catalogue):
+
+| curve | token | default | re-tune | live control |
+|---|---|---|---|---|
+| standard | `--ease-standard` | `var(--motion-ease-standard)` | `<EasingPicker>` bezier OR override | the draggable bezier handles |
+| out | `--ease-out` | `var(--motion-ease-out)` | picker OR override | bezier handles |
+| in | `--ease-in` | `var(--motion-ease-in)` | picker OR override | bezier handles |
+| out-expo | `--ease-out-expo` | `var(--motion-ease-out-expo)` = `cubic-bezier(0.16,1,0.3,1)` | NAMED, never re-minted (a dup alias reds `proof:animation-coherence`) | the SOTA-arrival preset |
+| apple | `--ease-apple` | `var(--motion-ease-apple)` | ambient-only (Pulse) | — |
+| steps | (authored, not a token) | `steps(n, jumpTerm)` via value.js `steppedEase` | `<EasingPicker mode="steps">` | the NEW `n` slider + 7-term selector (this wave) |
+
+**Kind 4 — AFFORDANCE magnitude** (`scale-paper.css`; the affordance-map's identity, the registry INDEXES with anti-taffy bounds):
+
+| axis | token | default | bound | re-tune |
+|---|---|---|---|---|
+| button hover | `--scale-hover-btn` | 1.05 | ≤1.10 (sub-perceptual) | consumer override / affordance-map |
+| dock hover | `--scale-hover-dock` | 1.1 | ≤1.15 | override |
+| generic hover | `--scale-hover` | 1.08 | ≤1.10 | override |
+| press | `--scale-press` | 0.96 | ∈ [0.94,0.98] (no collapse) | override |
+| press (sm/btn) | `--scale-press-sm` / `--scale-press-btn` | 0.97 | ∈ [0.94,0.98] | override |
+| tab squish cap | `--tab-indicator-max-stretch` | 1.08 | ≤1.20 (anti-taffy, the `useLiquidFlex` LOW cap) | override |
+
+**Kind 5 — REVEAL/MORPH drive** (the `@property`-registered 0..1 scalars + the choreography knobs; the spring under them is kind 1):
+
+| drive | token | default | range | re-tune |
+|---|---|---|---|---|
+| button press | `--glass-btn-press-t` | 0 | [0,1] | the spring (kind 1) + the surface CSS |
+| card press | `--card-press-t` | 0 | [0,1] | spring + recipe |
+| dock morph | `--dock-morph-t` / `--dock-expand-t` | 0 | [0,1] | `DOCK_SPRING` (value.js-fenced) |
+| border-progress | `--border-progress-fill` | 0% | [0%,100%] | the value-axis + `useBorderSpectrum` |
+| progress crescendo | `--progress-crescendo` | 0 | [0,1] | the progress value |
+| reveal blur | `--glass-reveal-blur` | 4px | [0,8px] | per-instance |
+| page-build stagger | `--scroll-build-step` | 90ms | [0,200ms] | consumer override (scroll-choreography) |
+| cascade rise | `--scroll-cascade-rise` | 1.25rem | per-instance | override |
+| cascade window | `--scroll-cascade-range-end` | 45% | [0%,100%] | override |
+| scroll-pin lift | `--scroll-pin-lift` | 2.5rem | per-instance | override |
+| scroll-pin stage | `--scroll-pin-stage-height` | 320vh | per-instance | override |
+
+**The named-FUTURE axis (recorded, not built — the proportion fence):** the live `linear()` multi-stop editor (value.js `cssLinear(stops)` is shipped, kf-vjs-facilities.md §2.3, but the live multi-stop-drag editor exceeds the gallery-card register — deferral/az.md item 12). The registry records it as a future EASING-kind axis with its token-home named, NOT built this wave.
 
 ### The one buildable live control — the steppedEase generator (the deferral discharge)
-Build the live-parameterized `steppedEase(n, jumpTerm)` generator INTO `<EasingPicker mode="steps">` (deferral/ba.md item 12 W-MOTION3): an `n` slider (the step count) + a `jumpTerm` selector (the 7 value.js `jumpTerms` — kf-vjs-facilities.md §2.3, value.js-SHIPPED, consumable NOW) driving the REAL value.js `steppedEase(n, term)` → the live staircase preview + the re-parseable `steps(n, term)` readout. It is the natural inhabitant of the existing `mode="steps"` editor (deferral/ba.md item 12: "the natural inhabitant of the `<EasingPicker>` mode='steps' editor"). NO re-implemented staircase evaluator (the boundary law — value.js owns the math).
+Build the live-parameterized `steppedEase(n, jumpTerm)` generator INTO `<EasingPicker mode="steps">` (deferral/ba.md item 12 W-MOTION3): an `n` slider (the step count, integer ≥1) + a `jumpTerm` selector (the 7 value.js `jumpTerms = ["jump-start","jump-end","jump-none","jump-both","start","end","both"]` — kf-vjs-facilities.md §2.3, value.js 0.13.0-SHIPPED, the peer spine `^0.13.0` already admits it, consumable NOW with no republish) driving the REAL value.js `steppedEase(n, term)` → the live staircase preview + the re-parseable `steps(n, term)` readout. It is the natural inhabitant of the existing `mode="steps"` editor (deferral/ba.md item 12: "the natural inhabitant of the `<EasingPicker>` mode='steps' editor"); `useEasingPicker` already imports `steppedEase`/`jumpTerms`/`CSSCubicBezier`/`bezierPresets` (kf-vjs-facilities.md §4 baseline) — the generator WIRES the `n`/`jumpTerm` controls onto the existing import, it does not add a new dep. NO re-implemented staircase evaluator (the boundary law — value.js owns the math; T3 reds an inline staircase). The `n` slider IS a glass-ui `<Slider>` (dogfooding the affordance-mapped control) + the `jumpTerm` selector a `<Select>` (the 7 terms); the readout reads back through value.js `cubicBezierToString`-class serialization so it is re-parseable. The payload is the existing `v-model` `{ mode:"steps", css:"steps(n, term)", fn, steps:n, term }` shape (no new payload field — additive into the built shape).
 
 ### The KF-OSCILLATOR loop seam (BOOKED, not blocking)
 The `<EasingPicker>` default playback is the one-shot rAF travel (ships now). The `loop` playback seam consumes kf `Oscillator` (kf-vjs-facilities.md §3.1 — a LIGHT phase clock, `tick(dt)`-driven, NO rAF ownership) WHEN keyframes.js republishes past 4.3.0 (it is LOCAL-only, machine-verified absent). BOOK the consume in `asks-and-consumes.md` (the cheap by-name ask, no peer-spine widen); the interim is the one-shot travel (NOT a blocker). The viz loop clock consume is `BC.W-VIZ-CHOREOGRAPHY`'s; this wave owns the picker `loop` seam consume.
@@ -55,7 +117,7 @@ This is the gestalt: the tunable-animation thinking becomes an EXPLICIT brainsto
 - The ONE source / ONE clock: the registry indexes the ONE `SPRING_PRESETS` table + the ONE `MOTION_CURVES` + the value.js curve math; the live controls compose them (boundary-law-correct). No second authority.
 
 ## Acceptance (gestalt + measured + gate)
-1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP):** a live tune-and-watch capture on `/motion` (dev-tools MCP, both modes): drag the bezier handles → the travelling dot re-traces; drag the steppedEase `n` slider → the staircase re-steps live + the readout updates to `steps(n, term)`; flip a spring's ζ → the live preview squishes differently. A human reads "I can SEE and TUNE the animation system — the rich facilities are exposed, not buried." Lands at `docs/tranches/BC/audit/visual/W-TUNABLE-ANIM-DELTA.md` (Live-verify = captured delta via dev-tools MCP; per-wave fresh capture per `BC.W-GESTALT-FIRST`).
+1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP):** a live tune-and-watch capture on `/motion` (dev-tools MCP, both modes): drag the bezier handles → the travelling dot re-traces; drag the steppedEase `n` slider → the staircase re-steps live + the readout updates to `steps(n, term)`; flip a spring's ζ → the live preview squishes differently. A human reads "I can SEE and TUNE the animation system — the rich facilities are exposed, not buried." The MEASURABLE bands the capture pins (inline so the executor needs no cross-reference): the staircase preview at `n=4` resolves exactly 4 risers (the painted step count == the slider `n`, ±0); changing the `jumpTerm` `jump-start`↔`jump-end` shifts the first/last riser position visibly (the term re-shapes the staircase); the readout text reads `steps(4, jump-start)` (re-parseable, matches the slider+selector); dragging a bezier handle moves the plotted curve's control point + the travelling dot's path re-traces the NEW curve (not the stale path); the live preview's overshoot peak shifts when ζ drops (a lower ζ → a higher painted peak). Lands at `docs/tranches/BC/audit/visual/W-TUNABLE-ANIM-DELTA.md` (Live-verify = captured delta via dev-tools MCP; per-wave fresh capture per `BC.W-GESTALT-FIRST`).
 2. **Machine gate `proof:tunable-anim`** (born-RED if the registry is absent/incomplete → GREEN at the build):
    - **T1 — the registry is the binding index.** Every tunable axis (the 5+1 springs + their clocks + the affordance scales/caps + the reveal/morph timings) appears in `tunable-anim.md` with its token + re-tune path + bound + live control. Born-RED: the registry does not exist at HEAD. Self-test bite: a planted new spring token absent from the registry reds (anti-gameability — a future axis cannot ship un-indexed).
    - **T2 — the registry names REAL tokens (no phantom axis).** Every axis token in the registry RESOLVES in source (`SPRING_PRESETS` for the springs, `scheme-motion.css`/`scale-paper.css` for the scales/clocks). Self-test bite: a planted phantom `--spring-nonexistent` registry row reds.

@@ -55,6 +55,44 @@ return vec4(rgb * alpha, alpha)   // premultiplied; page reads through the troug
 ### 5 — Defaults flip warm-cream; teal-on-navy GONE
 `concentric.vue:21` `useTheme = ref(true)` → default warm-cream (`useTheme = false`, or remove the binary toggle entirely once the full configurator lands). `CONCENTRIC_PRESET_THEME` (`presets.ts:63`, the indigo/teal) RETIRES (or survives only as a non-default named preset) — coordinated with `BC.W-TEAL-NAVY-PURGE`. The library `WARM_IDENTITY_PALETTE` is the default; `proof:concentric` clause 5 (no teal/navy/violet literal in the LIBRARY `constants.ts`) stays GREEN.
 
+### 6 — The full configurator axes (controls-on-the-RIGHT, rounded — research/viz/concentric.md §4)
+The §E mandate replaces the binary theme `Switch` with a FULL `<Configurator>` on the RIGHT in a rounded panel — `useConfiguratorState<ConcentricConfig>` (`commit-on-write`, a single surface; a preset switch is a clean reset), AZ.W-HIERARCHY section vocabulary. The schema is already declared (`constants.ts:28`); the demo just never drove it. Color inputs are `<ColorSwatch>`. Every axis is a live `<ConfiguratorRow>`:
+
+| axis | control | range / note |
+|---|---|---|
+| ring families (`centers.length`) | stepper / +– | 1–4 — each a ring SOURCE; ≥2 → interference beats |
+| per-family position (`centers[j].x/y`) | 2D pad / two sliders | domain `[-1,1]²` (or drag the source dot on the canvas) |
+| per-family weight (`centers[j].weight`) | slider | 0–1 (a far family is fainter) |
+| per-family tilt (`centers[j].rotAlpha`, NEW) | slider | 0–π — crossing elliptical fronts |
+| ring count per family (`ringComponents.length`) | stepper | 1–2 clean freqs (NOT the 5-octave ladder) |
+| base wavelength (`ringComponents[i].wavelength`) | slider | 0.10–0.35 — ring spacing (smaller = tighter rings) |
+| beat detune (Δλ between families, NEW derived) | slider | 0–0.06 — the moiré envelope wavelength (the "distinct waves" dial) |
+| axis ratio (`axisRatio`) | two sliders / aspect | `(a,b)` — the ellipsoid tilt; `[1,0.62]` default |
+| speed (`speed`) | slider | 0–1.5 — scales `ω` (ring travel) |
+| line width (NEW `line.x`) | slider | 0.5–4 px — the stroke thickness |
+| line softness (NEW `line.y`) | slider | 0.5–3 px — AA edge |
+| render mode (NEW `line.w`) | segmented tabs | traveling-rings · static-contour · both |
+| contour levels (NEW `line.z`) | slider | 4–24 — for the topographic-contour mode |
+| palette (`palette`) | OKLCh stop editor / `<ColorSwatch>` chips | warm-cream default; presets-in-consumers |
+| background (`background`) | `<ColorSwatch>` + transparent toggle | default transparent (reads over the page) |
+| interactive (`interactive`) | switch | pointer warps the rings (§4 of research; the cursor ripple-source) |
+| paused (WCAG 2.2.2) | switch / `<DockBackgroundToggle>` | parks the loop |
+| reduced-motion | (auto) | one static frame then park |
+
+### 7 — The comprehensive demo-suite scope (the stories / states — research/viz/concentric.md §5)
+The §C/§E standard: ONE giant audacious hero header that shrinks on scroll, the subpath `@mkbabb/glass-ui/concentric` shown explicitly (a Fira-Code code block), the body in ONE card with the live procedural animation, the configurator on the right. Each story is a configurator preset (presets-in-consumers):
+
+1. **Hero / default.** The warm-cream identity rings over transparent, the DEFAULT (teal-on-navy is GONE as a default per §E) — the giant `text-display-*` "Concentric" header that shrinks on scroll.
+2. **Distinct-waves showcase.** 2 ring families at a small beat detune, traveling outward — the literal user ask ("ellipsoid lines forming distinct waves"). The headline state.
+3. **Single-family rings.** One center, clean concentric ellipses (the simplest reading; the ellipsoid-tilt demo, axis-ratio slider live).
+4. **Moiré-lattice.** 3–4 families at different tilts crossing into a rich interference lattice.
+5. **Topographic-contour mode.** Static elevation contour lines of the interference envelope (the Dietcode reference look); `render mode = static-contour`, contour-levels slider live.
+6. **Pointer-reactive.** `interactive: true`, the rings warp toward the cursor (a transient ring center follows the pointer — §4 of research); touch + mouse; a flick fires an expanding pulse.
+7. **Palette tour.** Warm-cream default + ≥2 named presets (the section-color ramp, a cool preset) showing presets-in-consumers; NO teal-on-navy default.
+8. **Reduced-motion.** PRM on → ONE static frame, the rings frozen (a still contour map, legible at rest).
+9. **Paused (WCAG 2.2.2).** `<DockBackgroundToggle>` parks the loop; the frozen frame stays crisp lines.
+10. **Configurator-driven.** Every axis from §6 wired live, controls on the right.
+
 ## Mechanism / files
 The gestalt: the smooth color blur becomes thin bright isoline strokes; the turbulence ladder becomes clean beating ring families; the rings paint as distinct ellipsoid waves. On the ONE substrate leaf + the ONE math source + the ONE pointer field + the ONE keyframes.js clock — a render+generator rebuild on the existing fragment pass, not a patch.
 

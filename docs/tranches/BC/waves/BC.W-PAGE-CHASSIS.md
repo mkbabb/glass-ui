@@ -41,29 +41,207 @@ The chassis is REFIT, not re-invented (the architecture exists; the gaps are scr
 
 The KISS architecture: ONE chassis stack (`StoryPage`/`StoryHero`/`StoryHeader` + `story-hero.css`), ONE scroll register (`.story-hero-shrink`, sticky+`scroll()`, compositor-only), ONE subpath source (`manifest.ts:Story.subpath`), ONE card. No new component, no JS scroll engine, no parallel hero idiom. The audacious SIZE + the per-category distinctness ride ON this chassis (`BC.W-HERO-AUDACIOUS`); the section delimiting rides ON it (`BC.W-PAGE-HIERARCHY`).
 
+## The per-route APPLICATION TABLE (the "EVERY PAGE" made literal + checkable)
+
+"EVERY PAGE NEEDS TO BE STANDARDIZED" (USER-DEFECTS §C) is not a promise — it is THIS table. All **108 routes** (the authoritative `manifest.ts` count, live-confirmed; the route-census §6 "~113" was an over-estimate that also double-counted the `DockStage`/`FourierStudioStage`/`AuroraStage` helper SFCs that carry NO manifest row) resolve the SAME chassis shape: hero `<h1>` at `heroScale` → Fira-Code `subpath` chip → one-line subtitle → ONE glass card over the per-category procedural bg → scroll-shrink → delimited body. The columns are the chassis inputs a future executor wires with zero further questions:
+
+- **hero title** = the `manifest.ts` `Story.title` (the displayed `<h1>` text). NEVER re-authored per-SFC.
+- **subtitle** = the `Story.blurb` (the one-line subtitle beneath the title); rows with `blurb: undefined` get a one-line subtitle ADDED here (the per-route copy `BC.W-PAGE-PRUNE` trims, this wave supplies the missing line so the chassis cluster is never blurb-empty).
+- **subpath** = the explicit Fira-Code eyebrow chip. A row mapping to a published component subpath (the 83-entry `package.json exports` set) carries `@mkbabb/glass-ui/<sp>`; a row with NO import surface (foundations token pages, motion facilities, compositions scenes, the dock-band stories) carries its ROUTE path `/category/story` (the spec's "where no import subpath fits" rule). The `s()` factory cannot infer this (title≠subpath, e.g. "GooBlob"→`/goo-blob`), so the subpath is an EXPLICIT per-row field, defaulted from this table.
+- **bg** = the resolved procedural background — the `Story.background` if explicit, else the `CATEGORY_DEFAULT_BG` inherit (W-STAGE map: foundations·display·feedback→`paper`, substrates·navigation→`aurora`, forms·containers·dock·data·compositions→`grid`, motion→`constellation`). The one-GL-per-route budget is BINDING: a route whose BODY self-stages a live field (aurora/blob/constellation/fourier/dot-flow/concentric/glass-panel/card/glass-material) declares the FREE `grid`/`paper` static page-wash so the route mounts exactly ONE live context (the manifest comments at `:307-356`,`:393-403` already encode this — KEEP).
+- **heroScale** = the default hero tier this wave SHIPS (the `heroScale` prop; default `3` byte-identical-to-HEAD where unset). `BC.W-HERO-AUDACIOUS` lifts the per-category tiers ON this column — this wave delivers the MECHANISM + the `3` canary; the table's `heroScale` column is the HANDOFF target `BC.W-HERO-AUDACIOUS` writes (front-door→`mega`, marquee-substrate→`hero`/`5`, content→`4`/`3`).
+- **scroll-shrink** = YES on EVERY row by construction (the `.story-hero-shrink` register is the chassis default; no per-route opt-out). The column is listed to make "EVERY PAGE shrinks on scroll" literal.
+- **ONE-card body** = the chassis `<Card>` (KEEP). The column flags the routes that TODAY hand-roll a second `bg-card`/grid-card inside the body (the PC3 collapse targets) vs the routes already clean.
+- **section delimiter** = the body-section delimiting register (`BC.W-PAGE-HIERARCHY` owns the rule; the column names the per-page delimiter MODE — `hr` (the `<Separator>` hairline between named sections) vs `cards` (each section in its own sub-`<Card>`) — so the two waves agree per-route).
+
+The `heroScale` / delimiter columns are the cross-wave HANDOFF cells (`BC.W-HERO-AUDACIOUS` / `BC.W-PAGE-HIERARCHY` read them); the subpath / bg / ONE-card columns are THIS wave's binding output.
+
+### Foundations (13) — bg `paper` (intro/paper-glass heroes win explicit)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /foundations/intro | Intro | What this storybook is. | `/foundations/intro` | aurora (explicit) | mega | clean | hr | **SPECIAL — the THREE-heroes de-dup** (§4 below; `BC.W-COMPOSITIONS-HERO` owns the collapse — the wordmark ℱ IS the hero, the `text-display-4` tagline demotes to subtitle, the chassis hero stays suppressed via `:hero-title="false"` while the wordmark cluster is the ONE display mass) |
+| /foundations/colors | Colors | Warm cream, 13-stop section palette, viz basis. | `/foundations/colors` | paper | 4 | clean | hr | promote the rainbow to focal (`BC.W-HERO-AUDACIOUS`); chassis-hero this route (HEAD idiom-C) |
+| /foundations/typography | Typography | Plus Jakarta Sans + Fira Code — golden-ratio scale. | `/foundations/typography` | paper | 4 | clean | hr | the TYPE page rendered at chrome-title is the irony — gets the audacious hero |
+| /foundations/radii | Radii | Radius tokens from xs to pill. | `/foundations/radii` | paper | 3 | clean | hr | — |
+| /foundations/shadows | Shadows | Cartoon offset, elevated, modal. | `/foundations/shadows` | paper | 3 | clean | hr | — |
+| /foundations/motion | Motion | Easings, damped spring linear() curves. | `/foundations/motion` | constellation (explicit) | 3 | clean | hr | — |
+| /foundations/paper-glass | Paper & Glass | Four glass tiers, paper grain, blend modes. | `/foundations/paper-glass` | paper (explicit) | hero | clean | hr | HEAD idiom-A; the 4 hand-rolled subheadings → `StorySection heading` (`BC.W-PAGE-HIERARCHY`) |
+| /foundations/icons | Icons | Lucide, 2px stroke, semantic sizes. | `@mkbabb/glass-ui/icon-chip` | paper | 4 | clean | hr | promote the IconChip Pops row to focal (`BC.W-HERO-AUDACIOUS`) |
+| /foundations/surface-tints | Surface Tints | Nine-rung tint scale plus the tier aliases. | `/foundations/surface-tints` | paper | 3 | clean | hr | — |
+| /foundations/overlays-scrims | Overlays & Scrims | Three scrim weights + ModalOverlay + offsets. | `/foundations/overlays-scrims` | paper | 3 | clean | hr | — |
+| /foundations/chart-chassis-palette | Chart & Chassis Palette | Chart aliases + chassis-tier opacities + specular. | `/foundations/chart-chassis-palette` | paper | 3 | clean | hr | — |
+| /foundations/paper-backdrop-texture-system | Paper Backdrop Texture System | The PaperBackdrop frequency register. | `@mkbabb/glass-ui/paper-backdrop` | paper | 3 | clean | hr | verbose copy → `BC.W-PAGE-PRUNE` trims; chassis hero this route |
+| /foundations/css-utilities | CSS Utilities | The scale-on-hover utility over the scale-hover token. | `/foundations/css-utilities` | paper | 3 | clean | hr | — |
+
+### Substrates (9) — bg `aurora`/explicit (the live-GL band; self-staging routes declare `grid`)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /substrates/aurora | Aurora | Procedural painterly gradients. | `@mkbabb/glass-ui/aurora` | aurora (explicit) | hero | clean | hr | **SPECIAL — chassis-BYPASSER** (move 5): import `StoryPage`, delete the hand-rolled `<header>` + the `<span class="text-display-3">` → semantic `<h1>` (a11y fix); configurator placement is `BC.W-CONFIG-RIGHT`'s |
+| /substrates/blob | GooBlob | WebGL2 metaball droplet on the shared substrate. | `@mkbabb/glass-ui/goo-blob` | paper (explicit) | hero | **collapse** | hr | **"TWO headers IN the card → all headers ON TOP"** (USER-DEFECTS §E): the in-body second header folds UP into the chassis hero (`BC.W-PAGE-HIERARCHY` Part C); blob self-stages → `paper` page-wash |
+| /substrates/constellation | Constellation | A drifting proximity-graph lattice. | `@mkbabb/glass-ui/constellation` | constellation (explicit) | hero | **fix** | hr | "not in a card" (§E) → the body sits in the ONE chassis card; 11 `font-mono` → `BC.W-CODE-BLOCKS` |
+| /substrates/fourier-field | Fourier Field | A reconstructing elliptic Fourier curve. | `@mkbabb/glass-ui/fourier-field` | fourier (explicit) | hero | clean | hr | fourier DUPLICATIVE — `BC.W-VIZ-FOURIER` may collapse field+studio (out of this wave's bound; the chassis still applies) |
+| /substrates/fourier-studio | Fourier Studio | The foreground Fourier studio — drag N, watch the curve assemble. | `/substrates/fourier-studio` | paper (explicit) | hero | clean | hr | self-stages a Canvas2D stage → `paper`; fourier-duplicate (`BC.W-VIZ-FOURIER`) |
+| /substrates/glass-material | Glass Material | The unified glass-material grammar + four SOTA folds. | `/substrates/glass-material` | aurora (explicit) | hero | clean | hr | glass-duplicate prune candidate (`BC.W-GLASS-PRUNE`, out of bound); subheadings via StorySection — KEEP |
+| /substrates/glass-panel | Glass Panel | Five-rung glass tier ladder over a renderer cascade. | `@mkbabb/glass-ui/glass-panel` | grid (explicit) | 4 | clean | hr | HEAD idiom-C → chassis hero; self-stages a body `<Aurora>` → `grid` page-wash (one-GL budget) |
+| /substrates/dot-flow-field | Dot Flow Field | A WebGPU-first curl-noise flow field. | `@mkbabb/glass-ui/dot-flow-field` | grid (explicit) | hero | clean | hr | "awful, noise not waves" / teal-on-navy → `BC.W-VIZ-DOTFLOW`/`BC.W-TEAL-NAVY-PURGE` (out of bound); self-stages → `grid` |
+| /substrates/concentric | Concentric | A WebGPU-first radial Fourier ring-interference field. | `@mkbabb/glass-ui/concentric` | grid (explicit) | hero | clean | hr | "awful → ellipsoid lines/waves" → `BC.W-VIZ-CONCENTRIC` (out of bound); self-stages → `grid` |
+
+### Forms (11) — bg `grid`; ALL idiom-B today (the SUFFUSE2 double-descriptor collapse)
+Every forms route TODAY hand-rolls a `border-l-[3px]` IconChip header INSIDE the body (idiom-B, route-census §1) — this wave routes them through the chassis (`heroScale: 4`, the subpath chip) and the in-body second header folds UP into the chassis hero (`BC.W-PAGE-HIERARCHY` Part C). Default subtitle ADDED where `blurb` is empty.
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /forms/inputs | Inputs | Glass-tier text fields with the invalid-ring register. | `@mkbabb/glass-ui/forms` | grid | 4 | collapse | hr | the literal double-descriptor (`inputs.vue:23-41` repeats "Forms · Text entry"); inline invalid-ring respell is `BC`'s forms band |
+| /forms/textarea | Textarea | Autosizing glass textarea. | `@mkbabb/glass-ui/forms` | grid | 4 | collapse | hr | double-descriptor collapse |
+| /forms/checks | Checkbox · Radio · Switch | Selection controls — checkbox, radio group, switch. | `@mkbabb/glass-ui/switch` | grid | 4 | collapse | hr | "radios don't work" → `BC.W-RADIO-FIX` (out of bound); 2 idiom-B headers collapse |
+| /forms/slider | Slider | Two recipes — standard iOS knob + spectrum gradient track. | `@mkbabb/glass-ui/slider` | grid | 4 | collapse | hr | — |
+| /forms/number-field | Number Field | Spinbutton with the keep-dock-open contract. | `@mkbabb/glass-ui/number-field` | grid | 4 | collapse | hr | — |
+| /forms/select | Select | Glass compound select with the menu-glass row register. | `@mkbabb/glass-ui/select` | grid | 4 | collapse | hr | "dropdown shifts/dot occluded" → `BC.W-DROPDOWN-FIX` (out of bound) |
+| /forms/combobox | Combobox | Typeahead select over the menu-glass register. | `@mkbabb/glass-ui/forms` | grid | 4 | collapse | hr | — |
+| /forms/multi-select | Multi-Select | Multi-value chooser with chip readout. | `@mkbabb/glass-ui/multi-select` | grid | 4 | collapse | hr | — |
+| /forms/toggle | Toggle · Toggle Group | aria-pressed toggle + radio-semantics group. | `@mkbabb/glass-ui/toggle-group` | grid | 4 | collapse | hr | "square borders" → `BC.W-CONTROL-SMOOTH` (out of bound) |
+| /forms/toggle-chip | Toggle Chip | chip vs cell variants over a reka Toggle root. | `@mkbabb/glass-ui/toggle-chip` | grid | 4 | collapse | hr | — |
+| /forms/label | Label | The form-label primitive + the focus-ring register. | `@mkbabb/glass-ui/label` | grid | 4 | collapse | hr | — |
+
+### Display (11) — bg `paper`
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /display/buttons | Buttons | The glass-first button register — default · solid · CTA. | `@mkbabb/glass-ui/button` | paper | 4 | clean | hr | "buttons don't work" → `BC.W-BUTTON-GLASS-IOS` (out of bound); 7 StorySection headings KEEP |
+| /display/card | Card | Five-tier glass surface — wash · quiet · resting · floating · overlay. | `@mkbabb/glass-ui/card` | paper | 4 | **collapse** | cards | **SPECIAL — the double-card-grid kill** (PC3): the embedded `<Aurora>` grid-card inside the body (`card.vue:128`,`:302`) is the witness — collapse onto the ONE chassis card; 9 hand-rolled `text-subheading` → StorySection; 45 `font-mono` → `BC.W-CODE-BLOCKS`. Sections-in-sub-`<Card>`s (cards delimiter) is the natural fit for a tier-gallery |
+| /display/badge | Badge | The loud-saturated-pill register. | `@mkbabb/glass-ui/badge` | paper | 4 | collapse | hr | HEAD idiom-B; 17 StorySection KEEP; second header folds up |
+| /display/separator | Separator | The h/v rule + the centered label register. | `@mkbabb/glass-ui/separator` | paper | 4 | **fix** | hr | **"TOTALLY broken" + text centering** → `BC.W-SEPARATOR-FIX` (out of bound; rebuild the raw `bg-card` divs onto `<Card>` + fix label centering); the chassis hero applies here |
+| /display/section | Section | The sectioning landmark over the typography ladder. | `@mkbabb/glass-ui/section` | paper | 4 | clean | hr | 11 StorySection + 1 subH → all StorySection heading |
+| /display/metric-badge | Metric Badge | The compact metric chip primitive. | `@mkbabb/glass-ui/metric-badge` | paper | 4 | clean | hr | NO header at HEAD (StorySection=0) → gains the chassis hero |
+| /display/metric-pill | Metric Pill | A MetricBadge composition — stacked label, spacious. | `@mkbabb/glass-ui/metric-badge` | paper | 4 | clean | hr | NO header at HEAD → chassis hero (subpath is metric-badge — pill is a composition, no own subpath) |
+| /display/status-dot | Status Dot | The semantic status dot with the role="img" contract. | `@mkbabb/glass-ui/status-dot` | paper | 4 | clean | hr | 7 StorySection KEEP |
+| /display/pulse | Pulse | The dots/ring loading indicator. | `@mkbabb/glass-ui/pulse` | paper | 4 | clean | hr | 11 StorySection KEEP |
+| /display/stacked-icons | Stacked Icons | Overlapping icon stack with maxVisible / +N overflow. | `@mkbabb/glass-ui/stacked-icons` | paper | 4 | clean | hr | 7 StorySection KEEP |
+| /display/dark-mode-toggle | Dark Mode Toggle | The animated sun/moon toggle over useGlobalDark. | `@mkbabb/glass-ui/controls` | paper | 4 | clean | hr | 9 StorySection KEEP |
+
+### Containers (14) — bg `grid`; ALL idiom-B today
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /containers/dialog | Dialog | Glass + native top-layer dialog with the entry grammar. | `@mkbabb/glass-ui/dialog` | grid | 4 | collapse | hr | "dialog padding + not glassy" → `BC.W-DIALOG-GLASS`/`BC.W-PADDING-CANON` (out of bound); idiom-B fold |
+| /containers/sheet | Sheet | The side-drawer surface. | `@mkbabb/glass-ui/sheet` | grid | 4 | collapse | hr | — |
+| /containers/drawer | Drawer | The detented bottom sheet — peek/half/full + live-behind. | `@mkbabb/glass-ui/drawer` | grid | 4 | collapse | hr | — |
+| /containers/popover | Popover | The floating glass surface over the reka anchor. | `@mkbabb/glass-ui/popover` | grid | 4 | collapse | hr | 6 `font-mono` → `BC.W-CODE-BLOCKS` |
+| /containers/dropdown-menu | Dropdown Menu | The glass-menu-row compound menu. | `@mkbabb/glass-ui/dropdown-menu` | grid | 4 | collapse | hr | "dropdown shift/dot" → `BC.W-DROPDOWN-FIX` (out of bound) |
+| /containers/context-menu | Context Menu | The right-click menu over the menu-glass register. | `@mkbabb/glass-ui/context-menu` | grid | 4 | collapse | hr | — |
+| /containers/hover-card | Hover Card | The hover-revealed glass card. | `@mkbabb/glass-ui/hover-card` | grid | 4 | collapse | hr | — |
+| /containers/tooltip | Tooltip | The provider/trigger/content tooltip. | `@mkbabb/glass-ui/tooltip` | grid | 4 | collapse | hr | — |
+| /containers/accordion | Accordion | The collapsing disclosure group. | `/containers/accordion` | grid | 4 | collapse | hr | accordion ships via the ROOT barrel (no own `./accordion` subpath, verified) → carry the route path (the subpath-resolution rule below) |
+| /containers/collapsible | Collapsible | The single open/close disclosure. | `@mkbabb/glass-ui/collapsible` | grid | 4 | collapse | hr | 6 `font-mono` → `BC.W-CODE-BLOCKS` |
+| /containers/hover-popover | Hover Popover | Hover-triggered floating label with defer-on-leave. | `@mkbabb/glass-ui/hover-popover` | grid | 4 | collapse | hr | — |
+| /containers/expandable-container | Expandable Container | In-place vs Teleport-to-body fullscreen. | `@mkbabb/glass-ui/expandable-container` | grid | 4 | collapse | hr | "WTF clipped?" candidate (§C); 4 StorySection KEEP |
+| /containers/command | Command Palette | Fuzzy command tool — the search/command overlay. | `@mkbabb/glass-ui/command` | grid | 4 | collapse | hr | 3 StorySection + 2 subH → all StorySection |
+| /containers/spa-view | SpaView | Bounded view-cache router pane over KeepAlive. | `@mkbabb/glass-ui/spa-view` | grid | 4 | collapse | hr | 1 StorySection KEEP |
+
+### Navigation (3) — bg `aurora`; idiom-B today
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /navigation/tabs | Tabs | reka Tabs + the unified SegmentedTabs spring-slider. | `@mkbabb/glass-ui/tabs` | aurora | 4 | collapse | hr | "NOT liquid glass, not pills" → `BC.W-TABS-IOS` (out of bound); 7 subH + 14 StorySection → all StorySection |
+| /navigation/carousel | Carousel | The embla glass carousel + pager dots. | `@mkbabb/glass-ui/carousel` | aurora (explicit) | 4 | collapse | hr | — |
+| /navigation/header-ribbon | Header Ribbon | Hover-tracking ribbon — anchor reveals a control row. | `@mkbabb/glass-ui/header-ribbon` | aurora | 4 | collapse | hr | 3 StorySection KEEP |
+
+### Dock (6) — bg `grid` (the live aurora the dock reads against is the in-page `<DockStage>` lever, NOT a second page field)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /dock/overview | Overview | The GlassDock walkthrough — collapse↔expand morph on one spring. | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | **"TOTALLY broken, blurry, mess"** (dock fixes are Band 2, out of bound); the PAGE defect is 11 undelimited hand-rolled sections → StorySection + hr (`BC.W-PAGE-HIERARCHY`) |
+| /dock/layers | Dock Layers | DockLayerGroup drill-in — named panes + switcher rail. | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | dock fixes Band 2; 6 hand-rolled subH → StorySection |
+| /dock/rail | Vertical Dock | The vertical GlassDock navigation column. | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | "not clickable" → `BC.W-DOCK-VERTICAL-FIX` (out of bound); 4 subH → StorySection |
+| /dock/morph-showcase | Vertical ↔ Horizontal Morph | The liquid-glass dock morph on one --dock-morph-t scalar. | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | "morph turns white" → `BC.W-LIQUID-MORPH` (out of bound) |
+| /dock/sections | Dock Sections | The declarative <DockSection> tripartite chassis. | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | — |
+| /dock/cta-receive | CTA → Dock Morph | The external-CTA-morphs-into-dock seam (bloom inverse). | `@mkbabb/glass-ui/dock` | grid | 4 | clean | hr | — |
+
+### Data (13) — bg `grid`
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /data/table | Table | The sortable/filterable table primitives. | `@mkbabb/glass-ui/data-table` | grid (explicit) | 4 | collapse | hr | HEAD idiom-B fold |
+| /data/data-table | Data Table | The header-driven data table with sort/filter helpers. | `@mkbabb/glass-ui/data-table` | grid (explicit) | 4 | collapse | hr | — |
+| /data/tags-input | Tags Input | The tag-chip entry control. | `/data/tags-input` | grid | 4 | clean | hr | NO header at HEAD → chassis hero; tags-input ships via the ROOT barrel (no own subpath, verified) → route path |
+| /data/avatar | Avatar | Image + fallback avatar with the opaque-allowlist register. | `/data/avatar` | grid | 4 | clean | hr | avatar has no published subpath → route path |
+| /data/sortable-list | Sortable List | Drag-to-reorder list over useSortable. | `@mkbabb/glass-ui/sortable-list` | grid | 4 | clean | hr | — |
+| /data/infinite-scroll | Infinite Scroll | The intersection-driven load-more list. | `@mkbabb/glass-ui/infinite-scroll` | grid | 4 | clean | hr | — |
+| /data/timeline | Timeline | GlassTimeline + Continuous rail/markers. | `@mkbabb/glass-ui/timeline` | grid | 4 | collapse | hr | — |
+| /data/timeline-segmented | Timeline (segmented) | A multi-phase progress timeline with per-segment gradients. | `@mkbabb/glass-ui/timeline` | grid | 4 | collapse | hr | — |
+| /data/timeline-continuous | Timeline (continuous) | One rounded-pill rail with N region children. | `@mkbabb/glass-ui/timeline` | grid | 4 | collapse | hr | — |
+| /data/search | Fuzzy Search | The fuzzy search exports + the result register. | `@mkbabb/glass-ui/search` | grid | 4 | clean | hr | 2 subH → StorySection; 16 `fira` already KEEP |
+| /data/scrolling-text | Scrolling Text | The overflow-marquee for inline text. | `@mkbabb/glass-ui/scrolling-text` | grid | 4 | clean | hr | 7 StorySection KEEP |
+| /data/metric-cell | Metric Cell | Compact metric card — icon + label over value/unit. | `@mkbabb/glass-ui/metric-cell` | grid (explicit) | 4 | clean | hr | 7 StorySection KEEP |
+| /data/metric-stack | Metric Stack | Subgrid shell hosting a column of <MetricRow>. | `@mkbabb/glass-ui/metric-stack` | grid (explicit) | 4 | clean | hr | 7 StorySection KEEP |
+
+### Feedback (7) — bg `paper`; idiom-B today (the SUFFUSE2 §C-color ruby identity folds up)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /feedback/alert | Alert | role="alert" status surface — the feedback primitive. | `/feedback/alert` | paper | 4 | collapse | hr | alert ships via ui barrel (no own subpath) → route path; 6 subH → StorySection |
+| /feedback/toast | Toast | The tinted-glass toast tone register. | `@mkbabb/glass-ui/toast` | paper | 4 | collapse | hr | — |
+| /feedback/toaster | Toaster | Drop-in <ToastProvider> wrapper at the layout root. | `@mkbabb/glass-ui/toast` | paper | 4 | clean | hr | 5 StorySection KEEP |
+| /feedback/notification | Notification | The notification surface + the tone register. | `@mkbabb/glass-ui/notification` | paper | 4 | collapse | hr | — |
+| /feedback/progress | Progress | default · gradient · sectioned phase-bus. | `@mkbabb/glass-ui/progress` | paper | 4 | collapse | hr | 6 `font-mono` → `BC.W-CODE-BLOCKS`; 15 StorySection KEEP |
+| /feedback/skeleton | Skeleton | The compositor-friendly shimmer loading skeleton. | `/feedback/skeleton` | paper | 4 | collapse | hr | skeleton ships via ui barrel → route path; 7 StorySection KEEP |
+| /feedback/confirm-dialog | Confirm Dialog | The confirm-dialog composition. | `@mkbabb/glass-ui/confirm-dialog` | paper | 4 | collapse | hr | — |
+
+### Motion (9) — bg `constellation` (curve-gallery/handmark win explicit)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /motion/springs | Spring Orchestrator | Damped spring linear() curves on the house presets. | `@mkbabb/glass-ui/motion` | constellation (explicit) | 4 | clean | hr | 5 StorySection KEEP |
+| /motion/curve-gallery | Curve Gallery | The FULL curve canon live, 1:1 to the keyframes inventory. | `@mkbabb/glass-ui/easing` | grid (explicit) | 4 | clean | hr | 2 subH → StorySection |
+| /motion/scroll-vt | Scroll & View Transitions | The native scroll-driven facilities + VT reorder. | `@mkbabb/glass-ui/motion-core` | constellation | 4 | clean | hr | 9 StorySection KEEP |
+| /motion/scroll-choreography | Scroll Choreography | The SOTA scroll-driven choreography register. | `/motion/scroll-choreography` | constellation (explicit) | 4 | clean | hr | 3 StorySection KEEP (CSS register, no own subpath) |
+| /motion/countup | Count-up | Walk [data-countup] figures on the NumericAnimation engine. | `@mkbabb/glass-ui/motion` | constellation | 4 | clean | hr | NO header at HEAD → chassis hero |
+| /motion/reveal | v-reveal | Dependency-free entrance directive — [data-reveal] + --d. | `@mkbabb/glass-ui/motion-core` | constellation | 4 | clean | hr | 2 StorySection + 1 subH → StorySection |
+| /motion/typewriter | Typewriter | The character-reveal typewriter text. | `@mkbabb/glass-ui/typewriter` | constellation | 4 | clean | hr | NO header at HEAD → chassis hero |
+| /motion/handmark | Hand Mark | The platform's hand voice — pen/boil/highlighter/draw-on. | `@mkbabb/glass-ui/handmark` | paper (explicit) | 4 | clean | hr | 1 subH + 15 StorySection → StorySection |
+| /motion/animated-digit | Animated Digit | Single-figure smoothed reel over useAnimatedNumber. | `@mkbabb/glass-ui/animated-digit` | constellation | 4 | clean | hr | 5 StorySection KEEP |
+
+### Compositions (12) — bg `grid` (keyed comps win explicit; the scenes have no import subpath → route path)
+| route | hero title | subtitle | subpath chip | bg | heroScale | ONE-card | delimiter | notes (this wave) |
+|---|---|---|---|---|---|---|---|---|
+| /compositions/hero | Hero | A composition showcase — the audacious-type front-door pattern. | `/compositions/hero` | constellation (explicit) | mega | clean | hr | **SPECIAL — the homepage-DUPLICATE de-dup** (§4 below; `BC.W-COMPOSITIONS-HERO` makes it DISTINCT — not a second front-door; "View the source" copy → `BC.W-PAGE-PRUNE` kills it) |
+| /compositions/math-paper | Math Paper | The engineering-paper section-rail + fira-code math idiom. | `/compositions/math-paper` | grid (explicit) | 4 | clean | hr | 3 idiom-B headers fold up; 5 `fira` KEEP |
+| /compositions/auth-shell | Auth Shell | The brand-panel + form sign-in composition. | `/compositions/auth-shell` | fourier (explicit) | hero | **allowlist** | hr | HEAD idiom-A; the auth-shell BRAND PANEL is the narrow PC3 allowlist (a legitimate second card — recorded with rationale) |
+| /compositions/settings | Settings | The grouped settings panel composition. | `/compositions/settings` | grid (explicit) | 4 | clean | hr | "illegible/superfluous" → `BC.W-PAGE-PRUNE` trims; chassis hero applies |
+| /compositions/empty-states | Empty States | The empty-state affordances + the ghost-dashed register. | `/compositions/empty-states` | paper (explicit) | 4 | clean | hr | ghost items → dashed (`BC.W-GHOST-DASHED`, out of bound); carries its OWN contained GooBlob mascot (one-GL budget held by `paper`) |
+| /compositions/drawer-live-behind | Drawer Live-Behind | A detented non-modal bottom sheet over a live surface. | `/compositions/drawer-live-behind` | fourier | 4 | clean | hr | 5 StorySection KEEP |
+| /compositions/configurator | Configurator | Studio shell — preset row + grouped ConfiguratorLayer. | `@mkbabb/glass-ui/configurator` | grid (default) | 4 | clean | hr | controls-on-right → `BC.W-CONFIG-RIGHT` (out of bound); 5 StorySection KEEP |
+| /compositions/instrument-chassis | Instrument Chassis | Three-region chassis with bezel grooves + phase cascade. | `@mkbabb/glass-ui/instrument-chassis` | grid | 4 | clean | hr | NO header at HEAD → chassis hero |
+| /compositions/form-validation | Form Validation | The user-invalid/valid rungs + the aria-invalid bridge. | `/compositions/form-validation` | grid | 4 | clean | hr | 3 subH → StorySection; 9 `font-mono` → `BC.W-CODE-BLOCKS` |
+| /compositions/gate-pattern | Gate Pattern | A contained preview of the non-dismissable access-modal. | `/compositions/gate-pattern` | grid | 4 | clean | hr | 3 StorySection KEEP |
+| /compositions/labeled-field | Labeled Field | Parent SFC + 4 wrappers over a shared IconTooltip label. | `@mkbabb/glass-ui/labeled-field` | grid | 4 | clean | hr | 7 StorySection KEEP |
+| /compositions/icon-tooltip | Icon Tooltip | Auto-provider tooltip for label co-location. | `@mkbabb/glass-ui/icon-tooltip` | grid | 4 | clean | hr | 4 StorySection KEEP |
+
+**The three SPECIAL hero/intro/compositions de-dup cases (the user's "THREE heros" + "==homepage", USER-DEFECTS §G):**
+1. **`/foundations/intro` (the homepage)** stacks THREE display masses (the `ℱ glass-ui` wordmark cluster + a `text-display-4` tagline + the category index grid). `BC.W-COMPOSITIONS-HERO` collapses it to ONE: the wordmark IS the hero title, the tagline demotes to the subtitle, the grid stays as the redirect-card body. The chassis hero stays suppressed (`:hero-title="false"`) because the wordmark cluster is the bespoke display mass — this is the documented `StoryHero.vue:197` full-bleed escape, NOT a chassis-bypass. The scroll-shrink applies to the wordmark cluster (the `.story-hero-shrink` register reaches it).
+2. **`/compositions/hero`** is structurally near-identical to the homepage (a `text-display-4` typewriter headline + a `claims` grid + "View the source"). `BC.W-COMPOSITIONS-HERO` makes it a DISTINCT real composition showcase (not a second front-door); `BC.W-PAGE-PRUNE` kills the `<Button variant="ghost">View the source</Button>` (`hero.vue:175`). It keeps `heroScale: mega` because it IS a deliberate audacious-type showcase — but its CONTENT diverges from intro's.
+3. **`/display/card`** is the double-card-grid kill (PC3): the embedded `<Aurora>` grid-card INSIDE the body collapses onto the ONE chassis card; the tier gallery uses the `cards` delimiter (each tier in its own sub-`<Card>`, the user's "OR in different cards").
+
+The PC3 ONE-card allowlist (the legitimate second cards, recorded with rationale): `compositions/auth-shell` (the brand panel beside the sign-in form is a real two-pane composition, not a redundant grid-card), the dock-band `<DockStage>` tile (the dock-demo host frame), and the `card.vue` per-tier sub-`<Card>`s AFTER the embedded-aurora kill (they are the tier SPECIMENS, the demonstration content, not a page-wrapping double-card). Every other route is exactly ONE chassis card.
+
 ## Mechanism / files
 - **Edit `demo/stories/story-hero.css`** — add the `.story-hero-shrink` register: the sticky cluster wrapper + `@keyframes story-hero-shrink` (compositor scale/translate/opacity) + `animation-timeline: scroll()` + `animation-range: 0 240px` + `animation-fill-mode: forwards`, inside `@supports (animation-timeline: scroll())` AND the `@media (prefers-reduced-motion: no-preference)` outer-gate (the existing pattern at `:191`). The shrunk-header slim layout.
 - **Edit `demo/stories/StoryHero.vue`** — add the `heroScale` prop (`:31-66` props block), the `heroClass` computed (replaces the hardcoded `text-display-3` at `:292,333`), thread `subpath`→`StoryHeader`, wrap the cluster in the `.story-hero-shrink` sticky host.
 - **Edit `demo/stories/StoryHeader.vue`** — render the Fira-Code subpath chip (`<code class="fira-code">`) beneath the eyebrow (`:59-69`).
 - **Edit `demo/stories/StoryPage.vue`** — resolve `subpath` + `heroScale` from `current.value.story` (`:24-40`), pass to `StoryHero` (`:98-107`).
-- **Edit `demo/stories/manifest.ts`** — add `Story.subpath?: string` + `Story.heroScale?` (`:34-53`); populate the per-route subpath for the ~113 rows (the bulk is the `s()` factory default from category, the exceptions explicit).
+- **Edit `demo/stories/manifest.ts`** — add `Story.subpath?: string` + `Story.heroScale?` (`:34-53`); populate the per-route `subpath` + `heroScale` for ALL 108 rows from the per-route APPLICATION TABLE above (NOT a factory inference — title≠subpath, e.g. "GooBlob"→`/goo-blob`, "Vertical Dock"→`/dock`, so the subpath is an explicit per-row literal copied from the table's subpath-chip column). The `heroScale` defaults `3` (the byte-identical-to-HEAD canary) unless the table names a higher tier; `BC.W-HERO-AUDACIOUS` lifts the per-category tiers ON the table's heroScale column.
+- **The subpath-resolution rule (the table's binding contract — verified against `package.json exports`).** A route's `subpath` chip is the published component subpath `@mkbabb/glass-ui/<sp>` IFF `<sp>` is one of the 83 `package.json exports` entries (verified at HEAD: `aurora`/`dock`/`goo-blob`/`forms`/`switch`/`card`/`button`/`tabs`/`timeline`/… all present); else it is the ROUTE path `/category/story`. The barrel-only families carry the route path (verified: `accordion`/`tags-input`/`avatar`/`alert`/`skeleton`/`checkbox`/`input`/`textarea`/`combobox` ship via the ROOT or `/forms` barrel, NOT their own subpath — so `/forms` covers inputs/textarea/combobox, and accordion/tags-input/avatar/alert/skeleton carry their route path). The 4 foundations/motion/compositions token-or-scene routes (intro/typography/scroll-choreography/hero/…) carry the route path by definition (no import surface). This rule is the table's source of truth; a future executor copies the table's subpath-chip cell verbatim.
 - **Edit the 4 chassis-bypassers** (`substrates/aurora.vue` first) — import `StoryPage`, delete the hand-rolled header, the title becomes the chassis `<h1>`.
 - **Audit-sweep** the per-route SFCs that hand-roll a second `bg-card`/grid-card inside the body → collapse onto the ONE chassis card (the list is the idiom-B 41 SFCs + `display/card.vue:128`; the IconChip-identity fold is `BC.W-PAGE-HIERARCHY`/`BC.W-HERO-AUDACIOUS`).
 - The ONE source/clock for the hero motion: the scroll-shrink rides the NATIVE `scroll()` timeline (no rAF, no JS); the entrance rides the existing `--ease-out` `.story-hero-title--enter` keyframe (KEPT). No second engine.
 
 ## Acceptance (gestalt + measured + gate)
 1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP, per `BC.W-GESTALT-FIRST` — NOT a terminal reflect).** A fresh dated `:5199` capture set at the wave's own close: a representative route (`/substrates/aurora`, `/forms/inputs`, `/display/card`) at scroll-TOP and scroll-240px, BOTH modes × desktop+mobile, LIVE motion. A human reads: a LARGE audacious title + a Fira-Code subpath chip + ONE glass card over a live field at top; the SAME title visibly SHRUNK into a slim sticky header at 240px; ONE card (never two). Lands at `docs/tranches/BC/audit/visual/W-PAGE-CHASSIS-DELTA.md` with the pixel-readback table + the surface-hash header (the `BC.W-GESTALT-FIRST` per-wave discipline).
-2. **Machine gate `proof:page-chassis`** (born-RED on HEAD's no-shrink/no-subpath/double-card → GREEN; `["local","ci"]` for the source-presence arm):
+2. **Machine gate `proof:page-chassis`** (born-RED on HEAD's no-shrink / no-subpath / double-card / no-per-route-subpath+heroScale → GREEN; `["local","ci"]` for the source-presence arm):
    - **PC1 — the scroll-shrink register exists + is compositor-only.** `story-hero.css` carries `.story-hero-shrink` with `position: sticky` + `animation-timeline: scroll()` + `animation-range`; the `@keyframes story-hero-shrink` animates ONLY `transform`/`opacity` (NO `font-size`/`width`/`height`/layout property — the `proof:no-layout-animation` corpus assert, reused). Born-RED: HEAD has no such register. Self-test: a planted `font-size` step in the shrink keyframe reds.
    - **PC2 — the `heroScale` prop + the subpath field exist + are threaded.** `StoryHero.vue` carries `heroScale`; `manifest.ts:Story` carries `subpath`; `StoryHeader` renders a `.fira-code` chip bound to it. Born-RED: HEAD `Story` has no `subpath`, the hero is hardcoded `text-display-3`.
    - **PC3 — ONE card per page (no double-card).** A device-free scan of `demo/stories/**/*.vue` asserts no route SFC renders a second `bg-card`/`rounded-card border` grid-card inside the StoryPage body slot off a narrow allowlist (the auth-shell brand panel, the dock-stage tile — recorded with rationale). Born-RED on `display/card.vue`'s embedded grid-card. Self-test: a synthetic nested `bg-card` grid-card reds.
-   - **PC4 — no chassis-bypass.** Every `demo/stories/**/*.vue` (minus the chassis primitives) imports `StoryPage`; the title is a semantic `<h1>` (not a `<span class="text-display-*">`). Born-RED on `substrates/aurora.vue` (the `<span>` title + no `StoryPage` import). Self-test: a synthetic `<span class="text-display-3">` page-title reds.
+   - **PC4 — no chassis-bypass.** Every `demo/stories/**/*.vue` (minus the chassis primitives + the `*Stage`/`*ConfigDock`/`*Overlay`/`*Row` helper SFCs that carry no manifest row) imports `StoryPage`; the title is a semantic `<h1>` (not a `<span class="text-display-*">`). Born-RED on `substrates/aurora.vue` (the `<span>` title + no `StoryPage` import). Self-test: a synthetic `<span class="text-display-3">` page-title reds.
+   - **PC5 — EVERY route resolves a subpath + heroScale (the per-route APPLICATION TABLE made load-bearing).** A device-free walk of the `manifest.ts` `CATEGORIES` tree asserts EVERY one of the 108 `Story` rows resolves a non-empty `subpath` (the Fira-Code chip is never blank) AND a non-empty `heroScale` (defaulted `3`) — so "EVERY PAGE STANDARDIZED" is gate-checkable, not prose. The subpath chip is either a published `@mkbabb/glass-ui/<sp>` (`<sp>` ∈ the `package.json exports` set, asserted) OR a `/category/story` route path (the subpath-resolution rule); a subpath naming a non-existent export reds. Born-RED on HEAD (`Story` has no `subpath`/`heroScale` field). Self-test: a synthetic row with an empty `subpath`, AND a row whose subpath names a phantom `@mkbabb/glass-ui/does-not-exist`, BOTH red.
    - **+ the no-Lenis/GSAP fence bite** (CLAUDE.md §BB.W-SCROLL-MOTION): a grep over `demo/` asserts ZERO `lenis`/`gsap`/`locomotive`/`ScrollTrigger` import; the scroll-shrink is native `scroll()` only.
 3. **π readback `tests-visual/page-chassis.spec.ts`** (both modes + WebKit, LOCAL real-render, LIVE motion):
    - On `/substrates/aurora`: the hero `<h1>` is a semantic heading element resolving a display rung (computed `font-size` ≥ the `heroScale` tier's px); a `.fira-code` subpath chip renders (`textContent` includes the subpath).
    - The scroll-shrink frame-series: scroll the `<main>` from 0 → 280px; the hero title's computed `transform` matrix `scale` drops MONOTONICALLY over the first ~240px then HOLDS (a captured frame-series, NOT a source assert — `BC.W-GESTALT-FIRST` G5 pixel discipline). NO layout shift during the shrink (CLS ≈ 0 — the compositor-only proof).
    - PRM: with `prefers-reduced-motion: reduce` the title `transform` scale stays 1 across the scroll (no shrink), the hero static.
-   - Exactly ONE glass card per page (`document.querySelectorAll` of the chassis card selector returns 1 per StoryPage).
+   - Exactly ONE glass card per page (`document.querySelectorAll` of the chassis card selector returns 1 per StoryPage, off the PC3 allowlist — `auth-shell` brand panel, `card.vue` tier sub-cards, `DockStage` tile).
+   - The per-route subpath chip resolves: on a SAMPLE of routes spanning every category (the table's representative cell per band — `/substrates/aurora`→`@mkbabb/glass-ui/aurora`, `/forms/inputs`→`@mkbabb/glass-ui/forms`, `/dock/overview`→`@mkbabb/glass-ui/dock`, `/foundations/intro`→`/foundations/intro`, `/data/avatar`→`/data/avatar`), the rendered `.fira-code` chip's `textContent` matches the table's subpath cell EXACTLY (the table is the binding source — a drifted chip reds).
    - WebKit: the sticky shrink rides `scroll()` (Safari 26+ Baseline) OR falls to the static large hero (the `@supports` floor) — NEVER a broken/flashing hero (the D7/H Safari fence; the shrink is CSS-native, no WebGL, so the morph-flash class does not touch it).
 
 ## Fences / invariants (must NOT regress)
@@ -83,3 +261,4 @@ The KISS architecture: ONE chassis stack (`StoryPage`/`StoryHero`/`StoryHeader` 
 - **`hero-pages-not-standardized-the-double-card`** (research/deferral/herostudios.md, BOOKED→MEET — "ONE card with the aurora or a procedural animation + EVERY PAGE NEEDS TO BE STANDARDIZED ... NO nested grid-card-over-card; the grid is the full-bleed page wash, never also a card"). **DECIDED — MEET:** the ONE-card enforcement (PC3) + the chassis-bypass route (PC4). Every page has exactly ONE glass card over the per-category procedural bg.
 - **`hero-whitespace-not-herostudios-generous`** (research/deferral/herostudios.md, BUILD — "generous whitespace + the full-bleed hero floats directly over the field ... the content drops to wash/quiet tier"). **DECIDED — MEET (the chassis half):** the chassis's full-bleed hero path (`StoryHero.vue:197`, `cardTier` drop to wash/quiet) is the generous-whitespace vehicle; the per-category application is `BC.W-HERO-AUDACIOUS` Part E. The chassis affordance is MET here.
 - **`hero-acceptance-was-rides-W-REFLECT3`** (research/deferral/herostudios.md, CONTRADICTED-by-new-ask — "Any hero acceptance riding W-REFLECT3 is the exact source-green/visually-broken trap"). **DECIDED — RETIRE the deferral:** this wave closes on its OWN fresh `:5199` pixel-readback per-wave (`BC.W-GESTALT-FIRST` G8 forbids "rides W-REFLECT3"); the scroll-shrink frame-series + the subpath-chip + the ONE-card count are pixel-read inline at close. No terminal-reflect stamp.
+- **`route-census-§6-under-enumerated`** (CHALLENGE-3 MINOR — "route-census.md §6 per-route table UNDER-ENUMERATES against its own category-header counts: Substrates (10)/9, Data (15)/13, Dock (7)/6, Compositions (13)/12 — ~5 routes claimed-but-not-tabulated; the per-route APPLICATION enumeration the user's 'EVERY PAGE STANDARDIZED' mandate rides"). **DECIDED — MEET (the per-route APPLICATION TABLE above):** the table is the RECONCILED per-route enumeration — all **108** rows (the authoritative `manifest.ts` live count; the census "~113" double-counted the `DockStage`/`FourierStudioStage`/`AuroraStage`/`*ConfigDock`/`*Overlay` helper SFCs that carry NO manifest row) — each with its hero-title / subtitle / subpath / bg / heroScale / ONE-card / delimiter cell. The stale census §6 count is SUPERSEDED here (the gates walk DISK via `manifest.ts:CATEGORIES`, not the census prose — PC5 asserts every one of the 108 rows resolves a subpath+heroScale, so no route escapes the standard at execution). The census stays a frozen WAVE-INDEX-exempt research artifact; THIS table is the binding per-route source.

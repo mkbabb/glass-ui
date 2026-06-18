@@ -117,7 +117,7 @@ The gestalt: the lattice stops being a Canvas2D draw and becomes a WebGPU instan
 - **Edit `constellationInteraction.ts`** — byte-untouched physics (warp spring / gravity well / wander / pinned-drift KEEP); the acceleration→burst is a NEW small `fireBurst(field, pointer, accel)` reading `usePointerVelocityField`'s accel/burst, firing the warp + a ripple instance (research/viz/constellation.md §8).
 - **Edit `Constellation.vue`** — the host stays a `<div>` + `<canvas>`; the canvas now carries `getContext("webgpu")` via the substrate (the consumer-overridable `:where(.constellation)` sizing `:92-96` unchanged — it must render correctly INSIDE the bounded rounded card).
 - **Edit `constants.ts`** — add `parallax` default (`0.08`, §9) + `MAX_DEGREE`/`E_MAX` budget constants; the palette/warp/well/wander/pinned-drift defaults byte-unchanged (already warm-cream).
-- **Edit `demo/stories/substrates/constellation.vue`** — re-home into ONE rounded glass card under the shrinking hero (`BC.W-PAGE-CHASSIS`); the studio on the right (`BC.W-CONFIG-RIGHT`); the demo states (§ demo suite below). The accent + any dark presets live in `demo/stories/substrates/presets.ts` (presets-in-consumers).
+- **Edit `demo/stories/substrates/constellation.vue`** — re-home into ONE rounded glass card under the shrinking hero (`BC.W-PAGE-CHASSIS`); the studio on the right (`BC.W-CONFIG-RIGHT`); the demo states (§ "The comprehensive demo-suite scope" below — the 10 stories). The accent + any dark presets live in `demo/stories/substrates/presets.ts` (presets-in-consumers).
 - **The ONE source / ONE clock:** ONE `constellationField.ts` + `constellationInteraction.ts` evaluator (the WGSL transcribes only the RENDER), ONE `createCanvasLifecycle` leaf (the per-frame `t`), ONE keyframes.js choreography clock (`BC.W-VIZ-CHOREOGRAPHY`), ONE `usePointerVelocityField` (`BC.W-VIZ-INTERACTION`). No second engine, no second rAF.
 
 ## The full configurator (the tunable axes — controls-on-the-RIGHT, rounded panel)
@@ -141,6 +141,20 @@ A `useConfiguratorState<ConstellationConfig>` (`commit-on-write` — a single su
 | Background | `<ColorSwatch>` / transparent | transparent | the card ground shows through |
 | Reduced-motion | (inherited) | respect | one static frame then park |
 | Paused | toggle (WCAG 2.2.2, `<DockBackgroundToggle>`) | off | the renderer pause/resume seam |
+
+## The comprehensive demo-suite scope (the stories / states — research/viz/constellation.md §7)
+The page reuses the giant-hero-shrinks-on-scroll + body-in-ONE-rounded-card idiom (`BC.W-PAGE-CHASSIS`); ONE rounded glass card with the live lattice, NOT the double-card-grid idiom. Each story is a configurator preset (presets-in-consumers — the accent + dark presets live in `demo/stories/substrates/presets.ts`, NEVER a library token):
+
+1. **Hero — the crisp default.** The warm-cream drifting lattice, hi-res, inside the hero card under a large `text-display-*` "Constellation" header showing the subpath `@mkbabb/glass-ui/constellation` (a Fira-Code code block) that SHRINKS on scroll — the binding before/after proving the low-res defect is fixed.
+2. **Warm-cream identity default.** The library default palette, pointer-reactive ON — the neutral register (proves the default is warm-cream, not a demo preset).
+3. **Pointer attraction + parallax.** Hover/drag: nodes lean toward the cursor (velocity-aware), the lattice parallax-shifts with depth, the cursor joins the web (§6); velocity + acceleration shown.
+4. **Gravity well.** Hold the pointer: the inverse-square pull gathers nodes; release: the field cools back (the heat-then-cool invariant — the binding π readback).
+5. **Warp + wander.** Click to warp the focal node to the nearest; the autonomous wander cadence re-targets it (the focal mark is a `drawOverlay`-equivalent WGSL accent ring).
+6. **Density sweep.** Three side-by-side stills (sparse / medium / dense `link` + count) — the ε-threshold proximity-graph re-triangulation made visible.
+7. **Accent edges.** The flagged-node tether in a consumer hue (a `<ColorSwatch>`-set accent — presets-in-consumers).
+8. **Recession (suffusion).** A low-`opacityCeiling` instance behind body content (the §E "suffuse it as a subtle background element" register — the lattice as a calm page backdrop, done right).
+9. **Reduced-motion.** One static frame then park (the WCAG/PRM proof — the lattice freezes mid-drift, crisp, held).
+10. **Paused (WCAG 2.2.2).** `<DockBackgroundToggle>` pause/resume.
 
 ## Acceptance (gestalt + measured + gate)
 1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP):** a still + a ~3s GIF of `/substrates/constellation` (dev-tools MCP, GPU-flagged headless + the live demo at 2×/3× DPR, both modes): the dots are CRISP pin-pricks with a clean ~1px AA rim at Retina DPR — a human reads "sharp hi-res dots," NOT the soft jaggy upscaled blobs of HEAD. The lattice drifts + re-triangulates inside ONE rounded glass card under a shrinking hero. A side-by-side OLD (low-res Canvas2D `arc`) vs NEW (WebGPU SDF) zoomed crop is the headline. Lands at `docs/tranches/BC/audit/visual/W-VIZ-CONSTELLATION-DELTA.md` (Live-verify = captured delta via the dev-tools MCP — this wave captures its OWN paint; the BB W-REFLECT3 terminal deferral is dead per `BC.W-GESTALT-FIRST`).

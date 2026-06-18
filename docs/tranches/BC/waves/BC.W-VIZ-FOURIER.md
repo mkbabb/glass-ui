@@ -59,6 +59,42 @@ This makes `usePointerVelocityField` a confirmed binary consumer (its ≥2-consu
 ### 5 — The ONE clock (keyframes.js; research/viz/fourier-field.md §6.1)
 The single loop parameter `head_t ∈ [0,1)` is driven by ONE keyframes.js clock (replacing the HEAD `useRAFLoop` in `fourier-studio.vue:179-191`): a `SpringProgress`/keyframe timeline drives `head_t` so a source-swap (ℱ → heart) MORPHS the head position with a settle, a pause is a spring freeze, a scrub re-seats velocity-continuous (the iOS interruptible contract, W-PRESS-UNIFY). ONE clock for the field + the transport — no second rAF (the `proof:offscreen-pause` discipline). `freeze` / reduced-motion short-circuit to the deterministic `frozenT`. Coordinated with `BC.W-VIZ-CHOREOGRAPHY`.
 
+### 6 — The full configurator axes (controls-on-the-RIGHT, rounded — research/viz/fourier-field.md §5)
+The ONE merged view's `<Configurator>` (the existing studio's stage/controls split, refined to the AZ.W-HIERARCHY vocabulary) on the RIGHT on desktop in a rounded panel (§E `BC.W-CONFIG-RIGHT`), `useConfiguratorState<FourierFieldConfig>` (`per-preset` clone — the source/preset is a named editable baseline). The `variant: "hero"|"final"` enum is GONE — the bundles are config presets. Color inputs are `<ColorSwatch>`. Every axis is a live `<ConfiguratorRow>`:
+
+| axis | type | range / values | what it does |
+|---|---|---|---|
+| source | select | `elliptic-generated` · `ℱ wordmark` · `heart` · `star` (+ custom-trace booked) | the spectrum: a generated elliptic spectrum OR a curated shape's forward DFT |
+| harmonics (N) | slider | 1 .. min(spectrum.length, 64) | TRUNCATE the partial sum — watch the curve assemble term by term |
+| show epicycles | toggle | bool | draw the rotating chain (orthogonal to N) |
+| epicycle arms | slider | 1 .. N | how many chain arms to draw (≤ N) |
+| color | `<ColorSwatch>` / select | `--viz-fourier` (warm) · `--viz-chebyshev` (cool) · `--viz-legendre` (violet) + custom | the curve hue (library viz palette; warm default) |
+| rainbow chain | toggle | bool | paint the chain as a warm-anchored hue sweep vs one analogous hue |
+| trail arc | slider | 0.15 .. 1.0 (fraction of period) | comet body length |
+| trail width | slider | 1 .. 6 px | stroke weight |
+| intensity | slider | 0 .. 2 | outer loudness envelope (per-layer alpha multiply) |
+| harmonic scale | slider | 0.05 .. 0.4 | character of the generated elliptic spectrum (smooth ellipse → crinkled) |
+| transport play/pause | toggle (WCAG 2.2.2) | — | the pause via `<DockBackgroundToggle>` (or the W-DEMO-AFFORDANCES play register) |
+| transport scrub | `<GlassTimeline>` | 0..1 | scrub `head_t` directly |
+| transport speed | select | 0.25× · 0.5× · 1× · 2× | clock speed |
+
+The config presets fold the retired `variant`: `Ambient ellipse` (= hero: epicycles on, few harmonics), `Dense reconstruction` (= final: epicycles off, dense), `Brand mark ℱ`, `Summing harmonics` — the "variant IS the bundle" idiom as configurator presets, not a prop enum (MIGRATION row).
+
+### 7 — The comprehensive demo-suite scope (the ONE view, all stories on it — research/viz/fourier-field.md §7)
+ONE manifest row → ONE `<FourierField>` view that COMPREHENSIVELY demonstrates the primitive (the collapse is the point — every story is a state ON the one page, never a second re-embedded view). The BC standard chassis: an audacious LARGE hero header that shrinks on scroll, the subpath `@mkbabb/glass-ui/fourier-field` in the masthead (a Fira-Code code block), the body in ONE card, configurator controls on the RIGHT:
+
+1. **The live studio.** The ONE `<FourierField>` over its configurator (right): drag N + watch the curve assemble; toggle epicycles; pick a source (elliptic / ℱ / heart / star); pick a color; play/pause/scrub/speed transport.
+2. **Assembling sum (N sweep).** The headline state: N=1 (single ellipse) climbing to full reconstruction — the "watch it sum" reference idiom.
+3. **Epicycle chain on/off.** The rotating circles + arms + joint dots vs the bare curve (orthogonal to N).
+4. **Shape trace.** The ℱ wordmark / heart / star drawn by their own forward DFT (the brand tie-in).
+5. **Rainbow chain vs single hue.** The warm-anchored hue sweep over the chain.
+6. **Injected color.** The warm-cream library default + the `--viz-*` palette (warm/cool/violet) + a custom `<ColorSwatch>`; re-resolves on a dark-mode toggle.
+7. **Freeze (capture lever).** ONE static deterministic best-frame, no animation (also the PRM/offscreen auto-freeze).
+8. **Pointer-scrub.** The cursor scrubs the reconstruction; a flick spins-and-settles; PRM keeps the scrub, drops the momentum.
+9. **Ambient-background register.** The SAME field at low `intensity` as recessive page chrome (the `background:"fourier"` role) — shown as ONE state, NOT a second re-embedded view (the duplication the collapse kills).
+10. **Both modes.** Light (warm-cream) + dark (the phosphor sheen) composited correctly via premultiplied-alpha (§2).
+11. **The WebGPU backend badge.** The resolved backend (`webgpu` on a capable engine) surfaced so the demo proves the migration (the `DotFlowFieldHandle.backend` precedent).
+
 ## Mechanism / files
 The gestalt: SEVEN files + TWO views collapse to ONE GPU view; the Canvas2D renderer becomes a WGSL compute+instanced-line pass; the curve assembles under the harmonic slider + the cursor scrub. On the ONE math source + the ONE substrate leaf + the ONE pointer field + the ONE keyframes.js clock — an architectural collapse + a renderer migration, not a patch.
 

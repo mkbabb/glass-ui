@@ -60,6 +60,42 @@ Replace free-advecting + re-seed with an anchored dot-matrix grid + restoring sp
 ### 5 — Defaults flip warm-cream; teal-on-navy GONE
 `DEFAULT_FLOW_CONFIG.palette` stays `WARM_IDENTITY_PALETTE` (`constants.ts:61`, already correct). The demo default flips to warm-cream; the mono-dim-on-near-black reference reproduction is the demo preset (NOT teal). `presets.ts:20-25` `TEAL_DOTS`/`NAVY_GROUND` are DELETED (coordinated with `BC.W-TEAL-NAVY-PURGE`); replaced by a `REFERENCE_MONO` preset (warm-white dots on near-black + globe mask on).
 
+### 6 — The full configurator axes (controls-on-the-RIGHT, rounded — research/viz/dot-flow-field.md §6)
+A `useConfiguratorState<FlowFieldConfig>` (`commit-on-write` — a single surface) in a `<ConfiguratorLayer>`/`<ConfiguratorRow>` shell on the RIGHT on desktop in a rounded panel (§E `BC.W-CONFIG-RIGHT`). The defaults bias SUBTLE+LARGE (the §1/§2 regime+topology). Color inputs are `<ColorSwatch>` (NEVER raw `<input type=color>`). Every axis is a live `<ConfiguratorRow>`, NOT a two-state Switch:
+
+| axis | type / range | default | what it does |
+|---|---|---|---|
+| Wave scale | slider, λ₀ as a multiple of view extent, 0.5–4 | **2.5** | the dominant wavelength — high = LARGER sweeping waves |
+| Wave speed | slider, ω-scale 0–1 | **0.3** | dispersion travel speed — low = slow sweep |
+| Coherence | slider 0–1 (maps octaves 1↔4 + persistence) | **0.8** | high = few coarse octaves (coherent); low = many fine (chaotic — the OLD look as a counter-example) |
+| Curl | slider 0–0.4 | **0.12** | the divergence-free braiding seasoning — keep low |
+| Dot pitch / density | slider, grid pitch px (drives N) | **~26px** (≈ the reference) | the lattice spacing |
+| Dot size | slider px | **2.0** | base billboard radius |
+| Displacement | slider 0–0.5 pitch | **0.18** | how far dots drift from anchor (sub-cell, capped < 0.5 pitch) |
+| Contrast | slider 0–1 | **0.6** | brightness modulation depth (subtle ↔ bold) |
+| Band width | slider | **wide** | the sweeping bright-stripe thickness (`waveBandWidth`) |
+| Globe mask | toggle + center-drift | **off** (warm default); demo preset **on** | the reference's soft-disc silhouette on a slow Lissajous |
+| Palette | OKLCh ramp (`<ColorSwatch>`) | **warm-cream identity** | dot color; demo preset = mono-white-on-black |
+| Background | `<ColorSwatch>` / transparent | **transparent** | the ground (demo: near-black) |
+| Interactive | toggle | **off** | pointer ripple (§ the interaction model) |
+| Paused (WCAG 2.2.2) | toggle (`<DockBackgroundToggle>`) | **off** | the renderer pause/resume seam |
+
+Config-shape compatibility: `windSpeed`→Wave speed, `curlStrength`→Curl, `dotSize`, `palette`, `background`, `interactive`, `respectReducedMotion` survive; `particleCount` → derived from `gridPitch` (the deterministic-lattice clean break — README MIGRATION row `particleCount → gridPitch`). NEW fields: `gridPitch`, `displaceAmp`, `contrast`, `waveBandWidth`, `springK`, `globeMask`, `coherence`. Caps mirror the WGSL `#define`s (`MAX_WAVE_COMPONENTS=8`, `MAX_FLOW_STOPS=4`).
+
+### 7 — The comprehensive demo-suite scope (the stories / states — research/viz/dot-flow-field.md §7)
+The page reuses the giant-hero-shrinks-on-scroll + body-in-ONE-card idiom (`BC.W-PAGE-CHASSIS`); ONE card with the procedural animation, NOT the double-card-grid idiom. Each story is a configurator preset (presets-in-consumers — the reference + globe presets live in `demo/stories/substrates/presets.ts`, NEVER a library token):
+
+1. **Hero — the reference reproduction.** Mono-dim dots on near-black, the globe mask ON, a slow sweeping wave — the captured reference byte-faithful; the calm subtle LARGE-wave surface filling the hero card under a large `text-display-*` header showing the subpath `@mkbabb/glass-ui/dot-flow-field` (a Fira-Code code block) that shrinks on scroll.
+2. **Warm-cream identity default.** The library default palette + globe mask OFF — the neutral register (proves the default is warm-cream, not the demo preset).
+3. **Wave-scale sweep.** Three side-by-side stills (small / medium / LARGE λ₀) — the "noise → sweeping" proof.
+4. **Coherence sweep.** Low (many octaves, chaotic — the OLD look as a deliberate counter-example) → high (few octaves, coherent — the target). Demonstrates the fix.
+5. **Globe mask + drift.** The soft-disc silhouette drifting on a slow Lissajous (one and two globes — the reference's two-sphere composition).
+6. **Interactive.** Pointer ripple — drag/hover pushes a local displacement wave through the lattice; velocity + acceleration shown (a flick fires the brightness bloom).
+7. **Density / pitch.** Coarse vs fine lattice (the dot pitch axis).
+8. **Reduced-motion.** One static frame then park (the WCAG/PRM proof — the lattice freezes mid-sweep, the shape held).
+9. **Paused (WCAG 2.2.2).** `<DockBackgroundToggle>` pause/resume.
+10. **As a subtle page background (suffusion).** The §E "suffuse it throughout the site as a subtle background element" — a very-low-contrast, large-pitch instance behind content (the grid-background register done RIGHT: simple, large, evenly spaced).
+
 ## Mechanism / files
 The gestalt: the field stops being a particle cloud and becomes a calm anchored lattice a slow LARGE wave sweeps through, on the ONE substrate leaf + the ONE math source + the ONE pointer field + the ONE keyframes.js clock. Not a patch — a topology rebuild on the existing leaf.
 

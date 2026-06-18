@@ -79,6 +79,44 @@ NO compute pass, NO storage buffers — ≤8 noise taps (the two curl terms) + t
 ### 6 — The pinned defaults (SUBTLE + LARGE + evenly-spaced — the user's binding aesthetic)
 The `useConfiguratorState<PaperGridConfig>` defaults (research/viz/paper-grid.md §6): **Cell size 64px** (LARGER than the 28/32px static — the user's "LARGER"); **Major every 5** (the kf `--graph-major` 5rem/1rem ratio); **Minor weight 0.04** (≈ kf 3%); **Major weight 0.11** (kf 11%, above the 10% floor); **Line width 1.0px** (one crisp device-pixel via Golus AA); **Wave amplitude 0.10 cell** (subtle — "felt, not loud"); **Wave scale 0.5** (LOW freq → the whole sheet bows together — the inverse-coherence target); **Wave speed 0.15** (slow breath); **Field alpha 1.0** (demo) / **~0.12** (the suffusion preset); **Bulge strength 0.12 / radius 3 cells / mode repel**; **Line color = warm `--foreground`** (NEVER teal/navy — §E); **Background transparent**.
 
+### 7 — The full configurator axes (controls-on-the-RIGHT, rounded — research/viz/paper-grid.md §6)
+A `useConfiguratorState<PaperGridConfig>` (`commit-on-write` — a single surface) in a `<ConfiguratorLayer>`/`<ConfiguratorRow>` shell on the RIGHT on desktop in a rounded panel (§E `BC.W-CONFIG-RIGHT`), AZ.W-HIERARCHY section vocabulary. Color inputs are `<ColorSwatch>`. Every axis is a live `<ConfiguratorRow>` (the §6 defaults are the resting values):
+
+| axis | type / range | default | what it does |
+|---|---|---|---|
+| Cell size | slider, minor pitch px, 24–128 | **64px** | the grid cell pitch; LARGER = bigger cells (the user's "LARGER") |
+| Major every | slider, N cells, 2–10 | **5** | how many minor cells per major rule (the kf `--graph-major` 5rem/1rem ratio) |
+| Minor weight | slider 0–0.3 | **0.04** (≈ kf 3%) | minor line alpha — the calm hairline |
+| Major weight | slider 0–0.3 | **0.11** (kf 11%, above the 10% floor) | major rule alpha — the bolder tier |
+| Line width | slider px, 0.5–2 | **1.0** | one crisp device-pixel via Golus AA |
+| Wave amplitude | slider 0–0.5 cell | **0.10** (subtle — "felt, not loud") | how far the lines bow (the liquid) |
+| Wave scale | slider, λ multiple, 0.2–2 | **0.5** (LOW freq → the whole sheet bows together) | the warp spatial frequency — LOW = sweeping, HIGH = the noise we don't want |
+| Wave speed | slider, ω-scale 0–1 | **0.15** | the slow warp drift |
+| Field alpha | slider 0–1 | **1.0** (demo) / **~0.12** (suffusion) | the GLOBAL subtlety knob (suffusion → tiny) |
+| Bulge strength | slider 0–0.5 | **0.12** | how far the cursor pushes the grid |
+| Bulge radius | slider, cells | **3** | the Gaussian falloff radius |
+| Bulge mode | toggle attract/repel | **repel** | push grid away (repel) or toward (attract) the cursor |
+| Line color | `<ColorSwatch>` | **warm `--foreground` identity** | the ink (NEVER teal-on-navy — §E REMOVE) |
+| Background | `<ColorSwatch>` / transparent | **transparent** | the ground (so it suffuses over the page) |
+| Interactive | toggle | **on** (demo) / **off** (suffusion) | pointer bulge (§4/§8) |
+| Paused (WCAG 2.2.2) | toggle (`<DockBackgroundToggle>`) | **off** | the renderer pause/resume seam |
+
+`suffusion` is a named PRESET (NOT a separate axis): low `fieldAlpha`, large pitch, slow warp, `interactive:false`. Caps mirror the WGSL `#define`s.
+
+### 8 — The comprehensive demo-suite scope (the stories / states — research/viz/paper-grid.md §7)
+The page reuses the giant-hero-shrinks-on-scroll + body-in-ONE-card idiom (`BC.W-PAGE-CHASSIS`); the title carries the explicit `/paper-grid` subpath (a Fira-Code code block). Each story is a configurator preset (presets-in-consumers — the warm default + the suffusion preset live in `demo/stories/substrates/presets.ts`, NEVER a library token):
+
+1. **Hero — the liquid grid at calm strength.** Warm-ink lines, the global curl warp slowly breathing, the two-tier minor+major rule — the "evenly spaced, LARGER, morphs + waves in a liquid way" target, the calm default the page leads with.
+2. **The static-vs-liquid pair.** Side-by-side: `grid-simple` (the kf-style static CSS grid, no GL) next to `PaperGrid` at low amplitude — proves the liquid register is a *gentle* evolution of the simple grid, not a different animal.
+3. **Amplitude sweep.** Three stills (subtle 0.05 / medium 0.10 / bold 0.30) — the "felt, not loud" calibration.
+4. **Wave-scale sweep.** Low (whole sheet bows together — the target) → high (per-cell chatter — the deliberate counter-example, "the noise we DON'T want").
+5. **Cell-size / density.** Coarse (96px) vs fine (32px) — the "LARGER" axis; even spacing at every pitch (the "oddly spaced" positive counter).
+6. **Interactive bulge.** Pointer drag/hover bulges the grid; velocity drags a directional wake; an acceleration flick fires a transient ripple burst (§4/§8) — the cursor pushing a bulge through a liquid grid.
+7. **Major-tier composition.** The two-tier engineering grid (minor 3% + major 11%) — the kf blueprint identity, animated.
+8. **Suffusion mode — the site-wide subtle background.** The §E "suffuse it throughout the site as a subtle background element" done RIGHT: `fieldAlpha ≈ 0.12`, large pitch, slow warp, behind page content (NOT in a card — the full-bleed `liquid-grid` `StoryBackgroundKind`; the static CSS `grid` kind stays the zero-GL default).
+9. **Reduced-motion.** One static frame then park — the warp freezes mid-breath, the grid held crisp (the decorative-motion-frozen WCAG rule).
+10. **Paused (WCAG 2.2.2).** `<DockBackgroundToggle>` pause/resume.
+
 ## Mechanism / files
 The gestalt: a NEW first-class viz born WebGPU-first — a fullscreen fragment grid on the proven substrate, ONE math source the WGSL/GLSL transcribe, ONE pointer field, ONE keyframes.js clock. A new colocation dir + a new subpath; the static CSS grid (`BC.W-GRID-SIMPLE`) is the calm twin sharing ONE rhythm.
 
