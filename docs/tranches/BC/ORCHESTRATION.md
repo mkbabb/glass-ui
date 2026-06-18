@@ -138,6 +138,7 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] BC.W-SPEEDTEST-ADOPT — the speedtest fleet asks (4.0.1 → 4.1.0 + the AW v3 relay)
 - [ ] BC.W-FOURIER-ASK — the fourier asks
 - [ ] BC.W-ATLAS-ASK — sci-report's atlas asks
+- [ ] BC.W-DECK — BUILD the @mkbabb/glass-ui/deck sibling subpath (lift slides/src/deck/ ~1108 LoC into the keyboard-paged aria-live presentation register; the single largest UNBUILT cross-repo ask) — added iter12 (was the lone §1-omission, CHALLENGE-5's 1 MAJOR)
 - [ ] BC.W-DIST-COMMENT-FIX — the dist CSS-comment source-side balance + guard gate (converge with 4.0.1)
 - [ ] BC.W-CUT — the honest 4.x cut + slides redeploy (EXECUTION-phase only)
 
@@ -195,7 +196,13 @@ model) synthesizes; the fanout is opus/sonnet.
 | 9 | DEEPEN | burning-lucidity enrichment (THIN + under-spec) | bc-iter9-deepen.mjs (whj793t4k) | DONE | 108-route page table + 22-row affordance + 5-kind tunable registries + 6 viz facets |
 | 10 | CHALLENGE-4 | clean-confirm #1 (deepened set) | bc-iter10-challenge4.mjs (wpir8hjb1) | DONE — CLEAN #1 | 0B/0M all 3 CONVERGED; 2 MINOR/5 THIN cosmetic |
 | 11 | HARDEN-4 | final cosmetic cleanup (pristine FINAL) | bc-iter11-harden4.mjs (wvf02hqj7) | DONE | 0 fake chips/0 (Band3) labels/108 roster/F1.b derived-band |
-| 12 | CHALLENGE-5 | clean-confirm #2 (holistic) | bc-iter12-challenge5.mjs (w30jipzis) | IN-FLIGHT | executor-readiness + intent-fidelity + final-soundness/DAG |
+| 12 | CHALLENGE-5 | clean-confirm #2 (holistic) | bc-iter12-challenge5.mjs (w30jipzis) | DONE — 1 MAJOR | executor-readiness+intent-fidelity CONVERGED; 1 MAJOR (BC.W-DECK §1-box omission, FIXED in-place) |
+| 13 | DEEPEN-2 | execution-readiness depth (DAG/a11y/perf) | bc-iter13-deepen2.mjs | LAUNCHING | EXECUTION-DAG.md + a11y/perf wave enrichment |
+
+> **GAP-CONVERGENCE near (CHALLENGE-4 clean #1; CHALLENGE-5 = executor-ready + intent-faithful, the lone
+> MAJOR was a §1-checklist-box omission for BC.W-DECK, FIXED in-place — §1 now 70 boxes = disk). The
+> 2-consecutive-clean counter RESETS (CHALLENGE-5 was not 0-MAJOR). Continuing per the user's ≥20-iter
+> + 12-hour floor with GENUINE depth: the execution-DAG + a11y + perf-realism, then 2 fresh clean confirms.**
 
 > **GAP TREND collapsing: CHALLENGE-1 7B/9M/6m → iter4 HARDEN closed ALL → CHALLENGE-2 0B/5M/7m.**
 > The 5 MAJORs: 1 buttons double-ownership (iter4 over-corrected) + 4 the DEFERRAL-LEDGER still-band-only
@@ -214,11 +221,19 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iter11 HARDEN-4 done (pristine — 0 fake chips/0 stale labels/108 roster/F1.b).
-> iteration 12 CHALLENGE-5 IN-FLIGHT (task w30jipzis, bc-iter12-challenge5.mjs — the 2nd-consecutive
-> clean-confirm, holistic: executor-readiness + user-intent-fidelity + final-soundness/DAG).**
-> On iter12 completion (TaskOutput w30jipzis): harvest result.challenges5[].gaps → CHALLENGE-5.md;
-> note result.blockerMajor.
+> **NEXT CURSOR: CHALLENGE-5 = executor-ready + intent-faithful CONVERGED, the lone MAJOR (BC.W-DECK
+> §1-box omission) FIXED in-place (§1 now 70 boxes). iteration 13 DEEPEN-2 IN-FLIGHT (task TBD,
+> bc-iter13-deepen2.mjs — the execution-DAG + a11y + perf-realism depth, the genuine ≥20-iter value).**
+> On iter13 completion: verify EXECUTION-DAG.md landed + the a11y/perf enrichments; commit. Then:
+> 1. **14 CHALLENGE-6** — fresh clean-confirm over the DECK-box-fixed + DAG/a11y/perf-deepened set.
+>    If 0 BLOCKER/MAJOR → CLEAN PASS #1 (the counter restarts here).
+> 2. **15 CHALLENGE-7** — clean #2. If also 0 BLOCKER/MAJOR → CONVERGE.
+> CONVERGE sequence (unchanged): tick ALL §1 boxes; write docs/tranches/BC/FINAL.md (summary + 70-wave
+> roster by band + the EXECUTION-DAG ref + §residuals + EXECUTION-phase greenlight + build order);
+> report CONVERGED; retire cron 17dd706c via CronDelete.
+> Iteration count: …,10,11,12,13 = 19 toward ≥20 (CHALLENGE-6 = 20, CHALLENGE-7 = 21). Honors the floor.
+> Keep ≤3 agents concurrent.
+> _(superseded harvest note:)_
 > - If blockerMajor == 0 → CLEAN PASS #2 → **CONVERGE** (CHALLENGE-4 #1 + CHALLENGE-5 #2 = 2 consecutive
 >   clean). Do the convergence sequence:
 >   1. tick ALL §1 checklist boxes (every band's waves authored + challenge-clean);
