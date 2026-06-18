@@ -141,11 +141,11 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] BC.W-CUT — the honest 4.x cut + slides redeploy (EXECUTION-phase only)
 
 ### Process gates (the user's explicit process demands)
-- [ ] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log)
-- [ ] SOTA research corpus: apple.com + iOS-27, awwwards, Claude co-work dot-matrix, herostudios
-- [ ] keyframes.js + value.js facility inventory (what to leverage)
-- [ ] Every demo route enumerated + audited (the route census)
-- [ ] **BB/BA/AZ forensic post-mortems** (research/postmortem/*.md) + the failure-class synthesis
+- [ ] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log) — _at 4 (0,1,1b,1-sweep); 1c+1d next_
+- [x] SOTA research corpus: apple.com + iOS-27, awwwards, herostudios, procedural-refs — DONE (research/)
+- [x] keyframes.js + value.js facility inventory — DONE (research/kf-vjs-facilities.md: Oscillator/sampleColorRamp/republish-ask)
+- [x] Every demo route enumerated + audited — DONE (research/route-census.md, 6 impacts)
+- [ ] **BB/BA/AZ forensic post-mortems** (research/postmortem/*.md) + the failure-class synthesis — 1c LAUNCHING
 - [ ] **Per-viz SOTA research doc ×11** (research/viz/*.md — aurora · goo-blob · dot-flow · concentric · fourier · constellation · watercolor · paper-grid · grid-simple · dot-matrix · hybrid)
 - [ ] A challenge/adversarial pass over the full wave-set (every wave attacked for gaps)
 - [ ] PROMPT-LEDGER.md: original + 50+ historical prompts, each mapped to a covering wave
@@ -173,10 +173,11 @@ model) synthesizes; the fanout is opus/sonnet.
 |---|------|-------|----------|--------|--------|
 | 0 | audit | all | bc-audit.mjs (32 agents) | DONE | FINDINGS-DIGEST.md, DEFECT-LEDGER.md, USER-DEFECTS.md |
 | 1 | research | SOTA + codebase + deferral | bc-iter1-research.mjs (way3dy2jj / wf_82240b8d-5f0) | 7/9 HARVESTED | research/*.md ×7 + WAVE-IMPACTS.md (50 rows / 49 waves) |
-| 1b | research-rerun | route-census + viz-codebase | resume wf_82240b8d-5f0 (wiremj4eb) | IN-FLIGHT | research/route-census.md + viz-codebase.md |
-| 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs | QUEUED | research/postmortem/*.md + synthesis |
+| 1b | research-rerun | route-census + viz-codebase | resume (wiremj4eb) — re-ran ALL 9 | DONE 9/9 | research/*.md ×9 + WAVE-IMPACTS (70 rows/57 waves) |
+| 1-sweep | deferral fold | AX/AY/AZ/BA/BB/memory/hero | wcbitsihm (213 items) | DONE | research/deferral/*.md ×7 + herostudios-design.md |
+| 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs | LAUNCHING | research/postmortem/*.md |
 | 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs | QUEUED | research/viz/*.md ×11 |
-| 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (15+ agents) | STAGED | waves/*.md (50+) + DEFERRAL-LEDGER |
+| 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (18 agents) | STAGED | waves/*.md (~60) + DEFERRAL-LEDGER |
 
 > **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
 > deferral-sweep, cross-repo-asks, kf-vjs-facilities → `research/`. KEY: WebGPU Baseline since

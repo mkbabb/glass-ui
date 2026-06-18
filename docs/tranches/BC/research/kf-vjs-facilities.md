@@ -1,211 +1,210 @@
 # kf-vjs-facilities — the keyframes.js + value.js facility map (BC bands 4 + 7)
 
-> Research agent, BC iteration 1. Assignment: MACHINE inventory of the keyframes.js + value.js facility map for the ONE-source / ONE-clock motion model. Every finding grounded in a file:line, a `.d.ts` signature, or a measured fact.
+> BC iteration 1 research (DEEPENED + machine-re-verified). Assignment: the keyframes.js + value.js facility inventory for the ONE-source / ONE-clock motion model. Every finding grounded in a `.d.ts` signature, a `node -e` callability probe, a file:line, or a measured git fact. This corpus supersedes/confirms the prior `research/kf-vjs-facilities.md`; the lineage + facility facts are re-verified, the band-4/7 leverage is the operative section the planning iterations consume.
 
-## 0 — Versions + lineage (the load-bearing fact)
+---
 
-| repo | installed (glass-ui node_modules) | local sibling repo | local git HEAD |
+## 0 — Versions + lineage (THE load-bearing constraint)
+
+| repo | installed in glass-ui node_modules | local sibling | sibling git HEAD |
 |---|---|---|---|
-| `@mkbabb/keyframes.js` | **4.3.0** (`node_modules/@mkbabb/keyframes.js/package.json:version`) | `/Users/mkbabb/Programming/keyframes.js` (EXISTS) | `b271fa1` — `feat(N impl WIP): the Stage switcher baked into the demo` |
-| `@mkbabb/value.js` | **0.13.0** (`node_modules/@mkbabb/value.js/package.json:version`) | `/Users/mkbabb/Programming/value.js` (EXISTS) | `9fce504` — `feat(N): 0.13.0 — the kf-K-dispatched grammar fold` |
+| `@mkbabb/keyframes.js` | **4.3.0** | `/Users/mkbabb/Programming/keyframes.js` (EXISTS) | `b271fa1` — `feat(N impl WIP): the Stage switcher baked into the demo` |
+| `@mkbabb/value.js` | **0.13.0** | `/Users/mkbabb/Programming/value.js` (EXISTS) | 0.13.0 (== installed) |
 
-**The lineage split (the binding constraint on what BC can leverage NOW vs after a republish):**
+**The lineage split (binding — determines what BC can leverage NOW vs after a republish):**
 
-- **value.js**: the installed dist == the local repo HEAD == 0.13.0. The local CHANGELOG `## [0.13.0] — 2026-06-16 (N · the kf-K-dispatched grammar fold)` is the published surface. So **everything value.js 0.13.0 offers is consumable today** — and glass-ui's peer spine already admits it (`package.json`: `"@mkbabb/value.js": "^0.13.0 || ^1.0.0"`).
-- **keyframes.js**: the installed dist is **4.3.0 (tranche K)**. The local repo `package.json` still reads `4.3.0` but the git log is **ahead to tranches L / M / N** (`git log --oneline`: `feat(tranche-L W5): Draggable bounds/snap/rubber-band + drag2D, Sequence segment/label events`, `feat(tranche-L W9): the constellation cross-repo dispatch — Band B armed, the Oscillator shipped`, then M/N WIP). **The L/M/N additions are NOT in the published 4.3.0 dist glass-ui consumes** — VERIFIED below. So Oscillator + drag-snap/bounds/rubberBand + Sequence on-events are LOCAL-ONLY and require a kf re-publish to leverage.
+- **value.js**: installed dist == local repo == **0.13.0** — *everything value.js offers is consumable TODAY.* glass-ui's peer spine already admits it (`package.json` peerDeps: `"@mkbabb/value.js": "^0.13.0 || ^1.0.0"`). No republish, no widen.
+- **keyframes.js**: installed/published dist is **4.3.0 (the local repo's "tranche K")**. The local sibling `package.json` still reads `4.3.0` but its **git HEAD is 30 commits AHEAD of `v4.3.0`** (`git rev-list --count v4.3.0..HEAD` = **30**), through the local tranches L → M → N. The **L/M/N additions are NOT in the published 4.3.0 dist** glass-ui consumes — machine-VERIFIED below.
 
-### Verified-absent from the published 4.3.0 dist (the BLOCKED set)
+### Verified-absent from the published 4.3.0 dist (the BLOCKED-on-republish set)
 ```
-grep -c 'Oscillator' node_modules/@mkbabb/keyframes.js/dist/keyframes.d.ts   → 0 (ABSENT)
-grep -c 'rubberBand|drag2D|DragBounds' …/keyframes.d.ts                       → 0 (ABSENT)
-DragOptions interface in published dist → carries axis/transform/spring/springOptions/velocityWindow ONLY
-                                          (NO bounds, NO snap, NO rubberBand)
+# Oscillator: published vs local
+grep -c 'Oscillator' node_modules/@mkbabb/keyframes.js/dist/keyframes.d.ts   → 0   (ABSENT in published)
+grep -c 'Oscillator' /Users/mkbabb/Programming/keyframes.js/dist/keyframes.d.ts → 17 (present in local)
+grep -c 'waveformValue' node_modules/.../dist/keyframes.js                    → 0   (ABSENT in published .js bundle)
+grep -c 'waveformValue' local/.../dist/keyframes.js                           → 1   (present in local .js bundle)
+
+# git: Oscillator was added at the L.W9 commit, 30 commits past v4.3.0
+git log --diff-filter=A -- src/animation/oscillator.ts → 791b3bd "feat(tranche-L W9): … the Oscillator shipped"
+git log v4.3.0..HEAD -- src/animation/oscillator.ts     → 791b3bd (NOT an ancestor of v4.3.0)
+
+# DragOptions in published dist carries axis/transform/spring/springOptions/velocityWindow ONLY
+#   (NO bounds, NO snap, NO rubberBand — confirmed in dist/keyframes.d.ts DragOptions interface)
 ```
-This confirms CLAUDE.md's standing note verbatim: *"the kf SOURCE Draggable carries a `snap` option, but the PUBLISHED dist `DragOptions` at HEAD does not yet expose it."*
+This confirms CLAUDE.md's standing note verbatim: *"the kf SOURCE `Draggable` carries a `snap` option, but the PUBLISHED dist `DragOptions` at HEAD does not yet expose it"* and the W-EASING-PRIMITIVE book *"the keyframes.js LIGHT `Oscillator` slots into the `loop` playback seam WHEN IT SHIPS."* **It has not shipped to npm.**
+
+**The republish gate is CHEAP:** glass-ui's kf peer spine is `^4.0.0` (`package.json` peerDependencies) — a kf republish to e.g. 4.4.0 carrying the Oscillator + drag-snap/bounds/rubberBand + Sequence on-events needs **NO peer-spine widen** in glass-ui. It is a by-name cross-repo ask only (the foreign-tree fence; glass-ui edits ZERO sibling tree).
 
 ---
 
 ## 1 — keyframes.js facility map (the published 4.3.0 surface)
 
-The entry barrel exports (`dist/keyframes.js`, the named re-export line):
+The LIGHT named exports (value.js-free import cost) — machine-verified callable via `require(dist/keyframes.js)`:
 ```
-AnimationOptionError, Draggable, ElementMorph, ManualTimeline, NumericAnimation,
-RAFPlayback, ScrollTimeline, Sequence, SmoothProgress, SpringProgress, Timeline,
-UnknownEasingError, createNativeTimeline, decay, decayRest, drag, flip, flipShared,
-loadAnimationEngine, probeVelocity, reducedMotionScale, reseatToSpring, resolveEasing,
-springLinearStops, springTimingFunction, stagger, toEasing
+typeof: function  → SpringProgress · Draggable · ElementMorph · NumericAnimation · Sequence ·
+                    stagger · springTimingFunction · springLinearStops · decay · decayRest ·
+                    reseatToSpring · probeVelocity · reducedMotionScale · RAFPlayback ·
+                    SmoothProgress · ManualTimeline · ScrollTimeline · Timeline · flip · flipShared ·
+                    drag · createNativeTimeline · resolveEasing · toEasing · loadAnimationEngine
+typeof: undefined → animate · AnimationGroup · compileToCSS   (HEAVY — behind loadAnimationEngine())
 ```
-(The HEAVY tier — `animate`, `CSSKeyframesAnimation`, `AnimationGroup`, `Sequence`-compile, `compileToCSS`, the `presets` taxonomy — is behind `loadAnimationEngine()`, the dynamic boundary.)
+The HEAVY tier (`animate`, `CSSKeyframesAnimation`, `AnimationGroup`, `compileToCSS`, the `presets` taxonomy, the ingest/scroll-CSS round-trip) is value.js-BEARING and resolves only through `loadAnimationEngine()` (`dist/keyframes.d.ts:554` "The value.js-bearing engine surface, resolved through `loadAnimationEngine()`").
 
 ### 1.1 — SpringProgress (the physics core — THE one-clock primitive)
-`dist/keyframes.d.ts:3302`. The closed-form damped-harmonic-oscillator solver, SwiftUI-`(response, dampingFraction)`-shaped (`x'' + 2ζω₀x' + ω₀²x = ω₀²target`, ω₀=2π/response). Surface:
-- **`tickDt(dt: number): number`** — THE canonical step, advance by `dt` MILLISECONDS. This is the push-API the shared `RAFPlayback.drive` loop steps. **The one-loop discipline lives here**: a consumer that already owns a rAF (a canvas renderer) calls `tickDt(dt)` per frame; it owns NO own loop.
-- **`set target(value)`** — re-seats the closed-form solution from the current `(value, velocity)`, so a mid-flight target change is **trajectory-continuous** (no jump). This is the iOS interruptible re-press contract.
-- **`play(onFrame?)` / `stop()`** — the managed rAF loop (idempotent; auto-stops on settle; auto-resumes on `target` set while a callback is bound).
-- **`respectReducedMotion: ReducedMotionPolicy`** (`SpringProgressOptions`) — `false`(default)/`true`(binary snap)/`number∈[0,1]`(amplitude-INTENSITY scale: keeps curve+settle SHAPE, scales displacement-from-rest; the analytic form makes this exact + free). The WCAG-2.3.3-aligned gate.
-- **`SpringProgress.fromDuration({visualDuration|duration, bounce})`** — the modern Motion-docs time-surface; `response=visualDuration`, `dampingFraction=1−bounce`. Trajectory-identical to the `(response,ζ)` path.
-- Options (`SpringProgressOptions`): `response`(0.5), `dampingFraction`(0.86 = iOS smooth), `initial`, `initialVelocity`, `settleThreshold`(1e-3), `velocitySettleThreshold`(1e-3), `respectReducedMotion`.
+`dist/keyframes.d.ts` — closed-form damped-harmonic-oscillator solver (`x(t)` underdamped/critical/overdamped, analytic).
+- **`constructor({response, dampingFraction, initial, initialVelocity, settleThreshold, velocitySettleThreshold, respectReducedMotion})`** — `response` = angular period (s), default 0.5; `dampingFraction` = ζ, default 0.86 (iOS "smooth"); ζ<1 rings, =1 critical, >1 sluggish.
+- **`static fromDuration({visualDuration|duration, bounce})`** — the Motion-docs idiom: `response = visualDuration`, `dampingFraction = 1 − bounce`. Trajectory-identical to the (response, ζ) path.
+- **`set target(v)`** — re-seats the closed form from the CURRENT `(value, velocity)` so the trajectory is **velocity-continuous** (the iOS interruptible-re-press contract). Idempotent if unchanged.
+- **`tickDt(dt_ms)`** / **`tickToTime(t_s)`** — the canonical step (the `Tickable` shape); the renderer drives the clock, the spring owns no rAF.
+- `get target/value/velocity/settled`, `snap()`, `reset(v?, vel?)`, `subscribe(fn)`, `play(onFrame?)`/`stop()` (the convenience self-driven rAF), `dispose()`.
+- **`respectReducedMotion`** — `ReducedMotionPolicy = boolean | number | undefined`: `false`=full; `true`=binary snap; **a number ∈[0,1] = the AMPLITUDE-INTENSITY** scale (keeps trajectory SHAPE — curve + settle time — and scales only displacement-from-rest; the envelope is preserved by the analytic form, exact + free). Re-resolved per re-seat (a live OS toggle is honored at the next target change; the hot-path `evaluateAt` is a field read — zero matchMedia cost per frame).
 
-**glass-ui consumers TODAY** (all on SpringProgress): `useSpring.ts`, `dockMorphContext.ts`, `useLayerTransition.ts`, `useDockOrientationMorph.ts`, `useDrawerSnap.ts`, `useBlobPointer.ts`, `useDragMorph.ts` (via Draggable). This is the one-clock spine already in place.
+### 1.2 — Draggable / `drag()` (pointer-capture fling over a spring)
+`class Draggable` — `readonly spring: SpringProgress` is the physics core; the release fling re-seats THAT spring from `(currentValue, releaseVelocity)`.
+- **`DragOptions`** (published): `axis?: "x"|"y"`, `transform?: (clientCoord)=>number`, `spring?: SpringProgress`, `springOptions?`, `velocityWindow?: number` (release velocity = avg over last N ms of moves, default 100ms). **NO `bounds`/`snap`/`rubberBand` in published dist** (those are LOCAL-only — §3.2).
+- `attach(el)→detach`, `detach()`, `subscribe((value, velocity)=>…)`, `get dragging/value/velocity/settled`, `dispose()`.
 
-### 1.2 — Draggable / drag (pointer-capture fling over a spring)
-`dist/keyframes.d.ts:1459`/`1437`. One-axis pointer-capture follow + release-velocity fling over a `SpringProgress`. `attach(el)`→binds pointerdown; up re-seats the spring from `(value, releaseVelocity)`. `.spring` is reachable for `.play()`/`.subscribe()`. **Published `DragOptions`**: `axis`, `transform`, `spring`, `springOptions`, `velocityWindow`(100ms). **No bounds/snap/rubberBand** (those are LOCAL-only, §3).
-- `DragSubscriber = (value, velocity) => void`.
-- LIGHT (value.js-free).
+### 1.3 — ElementMorph (FLIP rect-to-rect morph — the bloom/CTA-receive substrate)
+`constructor(from: HTMLElement|MorphRect, to: HTMLElement|MorphRect, {timingFunction, duration, transformOrigin})`. `MorphRect = {x,y,width,height}`.
+- `measure(from,to)→this`, `at(p)→MorphValues`, `toCSSTransform(p)→string`, `apply(el,p)`, `play(el, duration?)→Promise`, `stop()`.
+- `timingFunction` is a callable `TimingFunction` or typed `Easing` (value.js-free — composes `NumericAnimation`); a string name resolves via `await resolveEasing(name)`.
+- This is the engine under `useLiquidReveal` (FLIP bloom-from-source 1→0) + `useDockCtaReceive` (forward 0→1) — both already wired (`suite.ts`).
 
-### 1.3 — ElementMorph (FLIP rect-to-rect morph)
-`dist/keyframes.d.ts:1646`. `new ElementMorph(from, to, {timingFunction, duration, transformOrigin})`; `.at(p)`/`.toCSSTransform(p)`/`.apply(el,p)`/`.play(el,dur)`. Composes `NumericAnimation` (value.js-free). `timingFunction` accepts a typed `Easing` — feed it `springTimingFunction(preset)` for the canonical iOS spring overshoot FLIP. **glass-ui consumers**: `useLiquidReveal.ts` (the bloom-from-source), `useDockCtaReceive.ts` (the CTA→dock receive) — both via `suite.ts`.
+### 1.4 — springTimingFunction (spring → typed Easing — THE source/twin bridge)
+`springTimingFunction({response, dampingFraction, sampleCount=64, settleThreshold=1e-3, maxDuration=4×response}) → Easing` (`{fn, css}` — ONE curve, two forms). Solved from the SAME (response, ζ) pair the CSS `linear()` tokens generate from (via `springLinearStops`, default sampleCount 24) — drift-proof single-source. This is the bridge `MOTION_CURVES` (glass-ui `curves.ts`) uses to give every `--spring-*` token a JS twin.
 
-### 1.4 — springTimingFunction (spring → typed Easing — the SOURCE/twin bridge)
-`dist/keyframes.d.ts:3514`. `springTimingFunction({response, dampingFraction, [samples=64]}): Easing` → `{ fn: (t)=>number, css: linear()-string }`. Samples a `SpringProgress(target=1,initial=0)` solver. `.fn` is the callable curve `ElementMorph`/`NumericAnimation`/`Animation.addFrame` accept directly; `.css` is the WAAPI-compositor `linear()` string — ONE curve, two forms. The bouncy `response 0.5/ζ 0.45` preset peaks at ≈1.205 mid-curve (the overshoot). **glass-ui consumes it as the JS twin of every `--spring-*` token** (`curves.ts:80` `MOTION_CURVES` spring rows; the speedtest reads `MOTION_CURVES["--spring-snappy"].js`).
-
-### 1.5 — Sequence (the GSAP-class TEMPORAL orchestrator — the band-4 choreography substrate)
-`dist/keyframes.d.ts:2822`. A master-playhead timeline beside `AnimationGroup`'s spatial blend. Surface (all GSAP idioms):
-- `add(animation, at?)` — `at` is absolute ms / a label / `"+="`/`"-="` relative / omitted (auto-append at the cursor).
-- `label(name, at?)` — named positions on the master clock.
-- `seek(masterClock)` / `progress` getter+setter — synchronous scrub. **`_applyAt` is the ONE map both `seek` AND the rAF `_frame` drive — so PLAY is pixel-identical to SEEK by construction, forward AND reverse.**
-- `rate` (timeScale; negative = reverse), `_repeatCount` (1 / Infinity / n), `_yoyoOn` (ping-pong). `pause()` retains the playhead. `playback: RAFPlayback` is the rAF owner.
-- **This is start/transition/end/restart choreography** — band 4's `BC.W-VIZ-CHOREOGRAPHY` exact need. A viz intro→loop→outro is a `Sequence` with labels; a restart is `seek(0)` + `play()`.
+### 1.5 — Sequence (the GSAP-Timeline-class TEMPORAL orchestrator — the band-4 choreography substrate)
+`class Sequence<V>` — a master-playhead temporal orchestrator (vs `AnimationGroup`'s spatial blending). Published as a LIGHT named export.
+- `label(name, at?)`, **`add(animation, at?)`** (`at` = number | `+=N` | `-=N` | label-relative), `seek(masterClock)`, `setTargets(...els)`.
+- `get duration/time/progress/rate/finished`, `set progress(p)`, **`play()→Promise`**, `stop()/pause()/resume()`, **`timeScale(n)`**, **`reverse()`**, **`repeat(count)`**, **`yoyo(on?)`**.
+- **SCC FENCE (the import-cost trap the choreography wave MUST respect):** `Sequence<V>` is generic over `Animation_2<V>` you `.add()`. A Sequence orchestrating CUSTOM tick-driven anims (a `SpringProgress`/`ElementMorph`/`NumericAnimation` wrapped as `Tickable`) stays LIGHT. A Sequence of `CSSKeyframesAnimation`/`AnimationGroup` objects (`typeof = undefined` — behind `loadAnimationEngine()`) pulls the HEAVY value.js-bearing engine. So the band-4 viz-choreography Sequence rides the LIGHT path (it sequences `SpringProgress`-driven shader-uniform writers, not CSS keyframes) → keeps the viz chunk off the heavy engine.
+- Choreography idiom (the kf demo reference, `keyframes.js/demo/sequence/useSequenceDemo.ts`): `new Sequence()` + `stagger(N,{...})` distribution + `.add(childAnim, delay)` + `springTimingFunction(...)` timing + `.play()/.reverse()/.timeScale(n)/.seek(0)` — exactly the **start → transition → end → restart** model the user wants for the viz.
 
 ### 1.6 — RAFPlayback (THE shared rAF driver — the one-loop enforcement)
-`dist/keyframes.d.ts:2398`. Owns the ONLY rAF handle in the engine. Generation-guarded (`_gen`) so a stop+restart mid-async-frame cannot double-arm. Three thin entry shapes over one core:
-- **`drive(tickable: Tickable, onFrame?)`** — steps a `Tickable`'s dt-stepper once per frame until `settled`, idempotent (consumers re-arm freely per re-seat). **This is THE one-loop primitive**: any `SpringProgress`/`SmoothProgress`/`Oscillator` (all `Tickable`) is driven through ONE driver.
-- `play(duration, onTick, {respectReducedMotion})` — the shared PRM gate for the light managed-playback surface (NumericAnimation + ElementMorph route through here).
-- `loop(cb)` — self-rescheduling async frame loop.
+`play(duration, onTick, {respectReducedMotion})→Promise` · `drive(tickable, onFrame?)` · `loop(cb)` · `stop()` · `get running`. The doc: *"no other module owns a rAF handle."* `respectReducedMotion` snaps to `onTick(1)` in one paint — THE shared PRM gate that `NumericAnimation`/`ElementMorph` route through. **For the viz, the rule is INVERSE: the viz already own their frame loop via `createCanvasLifecycle` — do NOT add a kf rAF; FEED the kf primitives `tick(dt)` from the existing canvas loop** (the one-loop / `proof:offscreen-pause` discipline).
 
 ### 1.7 — SmoothProgress (exponential-smoothing tracker)
-`dist/keyframes.d.ts:3110`. Sibling of SpringProgress for no-overshoot smoothing. `setTarget`, `tickDt(dt)`, `play(onFrame)`, `snap`/`reset`, `respectReducedMotion`. **glass-ui consumes it in `useAnimatedNumber.ts`** (the editorial number tween).
+`{damping, snapThreshold, targetEpsilon, initial, clamp, respectReducedMotion}`; `setTarget`, `tickDt`, `snap`, `reset`, `play/stop`. `targetEpsilon` filters sub-pixel scroll jitter. The scrub-smoother the scroll-choreography needs (it's what `useAnimatedNumber` consumes today). `createScrollScene`'s `scrub` forces the JS backend because native `animation-range` lacks a smoother.
 
-### 1.8 — decay / decayRest / reseatToSpring / probeVelocity / reducedMotionScale (LIGHT physics)
-- `decay({…}): (t)=>DecaySample` + `decayRest({…}): number` — closed-form frictional glide `x(t)=x0+(v0/k)(1−e^(−kt))` + its projected resting point (`dist:1324`/`1366`). **`useDragMorph.ts:54` consumes `decayRest`** to project the fling's rest for snap-target selection.
-- `reseatToSpring(probe, newTarget, opts): SpringProgress` (`dist:2550`) — velocity-continuous interruption: seeds a fresh spring at `(probe.curr.value, measured velocity)`.
-- `probeVelocity(probe): number` (`dist:2351`) — forward-difference units/SECOND velocity from a two-sample probe.
-- `reducedMotionScale(respect): number` (`dist:2516`) — the WCAG-2.3.3 intensity scalar.
+### 1.8 — The LIGHT physics leaves (decay / reseat / probe / reducedMotionScale)
+- **`decay({velocity, friction=5, initial=0}) → (t)=>{value, velocity}`** + **`decayRest(opts)→number`** — closed-form frictional glide `x(t)=x0+(v0/k)(1−e^(−kt))` + its projected resting point. `useDragMorph` uses `decayRest` to project the fling's rest for nearest-snap.
+- **`reseatToSpring(probe: VelocityProbe, newTarget, options?) → SpringProgress`** + **`probeVelocity(probe)→number`** — `VelocityProbe = {prev:{value,time}, curr:{value,time}}` two-sample forward difference. Velocity-continuous interruption of any parsed/running animation.
+- **`reducedMotionScale(policy)→number`** — the WCAG-2.3.3 intensity-scaled PRM scalar.
 
-### 1.9 — AnimationGroup + presetTaxonomy (HEAVY tier, behind loadAnimationEngine)
-- `AnimationGroup.transitionLayer(name, target, …)` / `crossfade` — spring-driven layer blend weights (`dist:933`). The spatial blender (vs Sequence's temporal). Relevant to band-2 dock layer crossfade if a richer blend is wanted.
-- `presetTaxonomy` (`dist:2301`): `enter` (fadeIn/slideIn/springScaleIn/…), `exit` (fadeOut/warpLeft/…), `attention` (pulse/shake/bounce/springPop/springWobble), `loop` (heartbeat/glow/spinner/gradientBackground/typingCursor/…). Ready-made CSS-keyframe entrances/loops if a wave wants them instead of hand-authored `@keyframes`.
+### 1.9 — Oscillator — ABSENT from published (see §3.1); the band-4 critical blocked facility.
 
 ---
 
-## 2 — value.js facility map (the published 0.13.0 surface)
+## 2 — value.js facility map (the published 0.13.0 surface — all consumable NOW)
 
-### 2.1 — sampleColorRamp (NEW in 0.13.0 — the brand-ramp baker; the band-4 headline)
-`dist/units/color/mix.d.ts:54`:
-```ts
-sampleColorRamp(from: Color, to: Color, n: number, opts?: SampleRampOptions): Color[]
-SampleRampOptions = {
-  space?: ColorSpace,            // default "oklab"; "oklch" for cylindrical hue
-  hueMethod?: HueInterpolationMethod, // default "shorter" — the thing 2-stop @keyframes can't encode
-  endpoints?: "inclusive"|"exclusive", // default inclusive
-  gamutMap?: boolean             // default true — gamutMapOKLab per stop, no silent clip
-}
+### 2.1 — sampleColorRamp (NEW in 0.13.0 — the brand-spectrum baker; the band-4 + "colorful POPS" headline)
+`dist/units/color/mix.d.ts`:
 ```
-INVERSE of `mixColorsN` (N→1): expands 2 colors → N evenly-spaced perceptual stops. ZERO new color science — composes `mixColors` (premultiplied alpha + NaN-propagation + hue path inherited) + `gamutMapOKLab`. The `space` conversion is hoisted (pays 2×, not 2n×). `n≥2` throws otherwise. **This is the named helper the CLAUDE.md `// CONSUME(value.js 0.13.0 oklchSpectrum)` marker in `useBorderSpectrum.ts` was booked against.** It now exists and glass-ui's peer spine already admits 0.13.0.
+sampleColorRamp(from: Color, to: Color, n: number, opts?: SampleRampOptions): Color[]
+SampleRampOptions = { space?: ColorSpace="oklab", hueMethod?: HueInterpolationMethod="shorter",
+                      endpoints?: "inclusive"(def)|"exclusive", gamutMap?: boolean=true }
+```
+N-stop perceptual ramp; `hueMethod:"shorter"|"longer"|"increasing"|"decreasing"` traces the hue arc bare two-stop `@keyframes` cannot encode; each stop gamut-mapped via `gamutMapOKLab` (no silent clip). Machine-VERIFIED callable from the installed 0.13.0 (`typeof v.sampleColorRamp === "function"`). The doc names the use: *"the parameter bare two-stop `@keyframes` cannot encode — the thing the ramp exists to bake."*
+- **THE consume-and-delete is already booked in glass-ui:** `src/components/custom/border-progress/composables/useBorderSpectrum.ts:5` carries `// CONSUME(value.js 0.13.0 oklchSpectrum): … re-points onto it … a thin swap, not a re-author.` glass-ui currently HAND-ROLLS `spectrumAt`/`spectrumStops` over `interpolateHue("shorter")` + the `/color` leaf — re-pointing onto `sampleColorRamp` is a NOW move (peer spine admits 0.13.0).
+- **The wider band-4 leverage:** every viz palette (dot-flow, concentric, the aurora nuclei LUT) + the 13-stop `--section-color` ramp + the BorderProgress conic want the SAME no-trough warm→cool walk — `sampleColorRamp` is the ONE source for all.
+- **`mixColorsN(colors, weights?, space?, hueMethod?)`** — the N-color weighted perceptual mix (the ramp's interior).
 
-### 2.2 — interpolateHue + the OKLCH color kernels (the spectrum math)
-`dist/units/color/dispatch.d.ts`:
-- `interpolateHue(h1, h2, t, method?): number`, `HueInterpolationMethod = "shorter"|"longer"|"increasing"|"decreasing"` (`:22`/`:43`).
-- `mixColors(col1, col2, p1, p2, space?, hueMethod?): Color` (`:49`).
-- The full kernels (re-exported `dist/index.d.ts`): `srgbToOKLab`, `oklabToLinearSRGB`, `oklabToRgb255`, `rawOklabToOklch`/`rawOklchToOklab`, `gamutMap`/`gamutMapOKLab`/`gamutMapSRGB`, `findCusp`, `findGamutIntersection`, `computeMaxSaturation`, `isInSRGBGamut`, `deltaEOK`, `parseCSSColor`, `mixColorsN`, `dominantColor`, `safeAccentColor`/`computeSafeAccent`/`needsContrastAdjustment`.
-- **glass-ui's `/color` leaf already imports** `interpolateHue, isInSRGBGamut, oklabToLinearSRGB, oklabToRgb255, parseCSSColor, rawOklabToOklch, rawOklchToOklab, srgbToOKLab` (`src/composables/color/index.ts:20-30`). `useBorderSpectrum.ts:18` imports `interpolateHue` and hand-rolls `spectrumAt`/`spectrumStops` — the exact re-roll `sampleColorRamp` collapses.
+### 2.2 — interpolateHue + the OKLCH/OKLab color kernels (the spectrum math)
+`dist/units/color/dispatch.d.ts:43` — `interpolateHue(h1, h2, t, method?: HueInterpolationMethod)`; `HueInterpolationMethod = "shorter"|"longer"|"increasing"|"decreasing"`. `mixColors(c1,c2,p1,p2,space?,hueMethod?)`, `color2(color, to)`, `gamutMap(color, targetSpace?)`, `cssColorInterpKeyword(space, hueMethod?)`. The full color class set: `OKLCHColor`/`OKLABColor`/`RGBColor`/`HSLColor`/… + the gamut kernels (`gamutMapOKLab`, `findCusp`, `findGamutIntersection`, `deltaEOK`, `oklabToLinearSRGB`, `srgbToOKLab`). `computeSafeAccent`/`safeAccentColor`/`needsContrastAdjustment`/`getOklchLightness` (the contrast leaves). This is `proof:single-color-core`'s sole math source — glass-ui re-implements ZERO.
 
 ### 2.3 — The easing / bezier catalogue (the curve-editor + motion-canon math)
 `dist/easing.d.ts`:
-- `CSSCubicBezier(x1,y1,x2,y2): (x)=>number` (`:39`) + `solveCubicBezierX` (`:38`) — the Newton-solver bezier evaluator (the EasingPicker's `mode="bezier"` math).
-- `steppedEase(steps, jumpTerm?): (t)=>number` (`:56`) + `jumpTerms = ["jump-start","jump-end","jump-none","jump-both","start","end","both"]` (`:55`) — the staircase (`mode="steps"`).
-- `bezierPresets` (`:73`) — **23 named CSS-canonical bezier 4-tuples** (linear, ease, ease-in/out, the sine/quad/cubic/expo/circ/back families incl. `ease-out-back: [0.175, 0.885, 0.32, 1.275]` and `ease-out-expo: [0.19, 1, 0.22, 1]`). The bold-decelerating arrival curves band 7 needs are HERE (no re-mint).
-- `timingFunctions` (`:105`) — the name→callable catalogue (both camelCase + kebab); `timingFunctionDescriptions` — tooltip copy.
-- `cssLinear`, `interpBezier`, `cubicBezier`, `cubicBezierToSVG`/`cubicBezierToString`, `deCasteljau`, `lerp`/`lerpArray`/`logerp`/`clamp`/`scale`.
-- **glass-ui's `useEasingPicker.ts:23` already imports the value.js easing primitives** (`CSSCubicBezier`, `steppedEase`, `bezierPresets`, `jumpTerms`) per the W-EASING-PRIMITIVE boundary law (curve MATH = value.js, playback = keyframes.js, editor = glass-ui).
+- **`CSSCubicBezier(x1,y1,x2,y2)→(x)=>number`** (Newton-Raphson + bisection via `solveCubicBezierX`) — the curve-editor + `MOTION_CURVES` bezier evaluator.
+- **`steppedEase(steps, jumpTerm?)→(t)=>number`** + `jumpTerms = ["jump-start","jump-end","jump-none","jump-both","start","end","both"]` + `stepStart()`/`stepEnd()` — the staircase the EasingPicker `steps` mode uses.
+- The full callable roster: `linear`, `easeIn/Out/InOut{Quad,Cubic,Sine,Circ,Expo}`, `smoothStep3`, the bounce family, **`easeOutExpo`** (the house bold-decel arrival — the canon NAMES it, never re-mints).
+- **`bezierPresets`** (the canonical control-point tables), **`cssLinear(stops: LinearStop[])`** (CSS Easing L2 `linear()` evaluator), **`timingFunctions`** (the name→string Map keyframes.js re-imports — `dist/keyframes.d.ts:13 import { timingFunctions } from '@mkbabb/value.js'`), `timingFunctionDescriptions`. `TimingFunction = (t)=>number` is the shared canonical type (kf parallel-declares for parity).
+- `cubicBezier`, `deCasteljau`, `interpBezier`, `cubicBezierToSVG`/`cubicBezierToString`, `lerp`/`lerpArray`/`logerp`/`scale`/`clamp` (`dist/math.d.ts`).
 
-### 2.4 — The scroll-timeline VALUE grammar (NEW in 0.13.0, relevant to band 7 scroll-choreography)
-`dist/parsing/scroll-timeline.d.ts`: `parseAnimationTimeline`/`parseAnimationRange`/`parseTimelineScope` + `serialize*` (round-trip `serialize(parse(s))===s`) + the typed `CSSTimelineOptions`/`AnimationTimelineValue`/`AnimationRangeValue` families. value.js owns the VALUES, kf's `ScrollScene` owns TIME. Relevant if BC's scroll-choreography register (the `.scroll-build`/`.scroll-cascade` recipes) ever needs a JS scroll-timeline parser/driver fallback on a gap engine.
+### 2.4 — The scroll-timeline VALUE grammar (NEW in 0.13.0; relevant to band-7 scroll-choreography)
+`dist/parsing/scroll-timeline.d.ts` — `parseAnimationTimeline`/`parseAnimationRange`/`parseTimelineScope` + serializers + `CSSTimelineOptions`/`AnimationTimelineValue`/`AnimationRangeValue`/`RangeBoundary`/`RangePhase`. The grammar kf 4.3.0's `parseScrollCSS`/`createScrollScene` dispatch on. glass-ui's `scroll-choreography.css` ships the NATIVE recipes; this is the value-grammar a JS scroll fallback (booked-only) would parse against.
 
 ---
 
 ## 3 — The LOCAL-only keyframes.js facilities (the BLOCKED-on-republish leverage)
 
-These exist in `/Users/mkbabb/Programming/keyframes.js/src/` (tranche L/M/N) but are ABSENT from the published 4.3.0 dist:
+These are in the local sibling repo (`/Users/mkbabb/Programming/keyframes.js/src/`) at git HEAD (30 commits past v4.3.0), **NOT in the published dist**. Each requires a kf republish to leverage (a by-name cross-repo ask; peer spine `^4.0.0` admits it with no widen).
 
-### 3.1 — Oscillator (`src/animation/oscillator.ts`) — THE looping-phase clock (band-4 critical)
-A LIGHT (value.js-free) periodic phase clock: a frequency-driven phase ramp ∈[0,1) + a pure waveform shaper. `OscillatorConfig = {frequency, waveform?: "sine"|"triangle"|"square"|"sawtooth"}`.
-- **`tick(dt): number`** — advances phase by `frequency × dt`, wraps to [0,1). NO rAF ownership — the caller drives the loop (mirrors SpringProgress/SmoothProgress). `dt` in the caller's units (seconds for rAF, normalized delta for scroll).
-- `get value()` — waveform of the current phase ∈[−1,1]. `sample(t)` — stateless `t→waveform(t×frequency)`. `reset(phase=0)`.
-- `waveformValue(phase, waveform)` — exported value.js-free leaf (apply to your own phase).
-- **The doc names its consume-signal**: *"glass-ui BB's W-EASING-PRIMITIVE wave — its speedtest idle-breath and the demo's KF-OSCILLATOR scene read the phase to drive a looping motion. glass-ui co-schedules; kf owns the phase math."* This is the band-4 idle-breath / viz-loop / EasingPicker `loop` playback clock. CLAUDE.md's W-EASING-PRIMITIVE already books it: *"the keyframes.js LIGHT Oscillator slots into the `loop` playback seam when it ships (a named-successor consume, NOT a blocking dep)."*
+### 3.1 — Oscillator (`src/animation/oscillator.ts`, added L.W9) — THE looping-phase clock (band-4 critical)
+A LIGHT (value.js-free) periodic phase clock — `OscillatorConfig = {frequency: number, waveform?: "sine"|"triangle"|"square"|"sawtooth"}` (named `…Config` not `…Options` to dodge the `globalThis.OscillatorOptions` lib.dom collision).
+- **`tick(dt): number`** — advances `phase += frequency × dt`, wraps to [0,1). **NO rAF ownership** — the caller drives the loop (mirrors `SpringProgress`/`SmoothProgress`). `dt` in caller units (seconds for rAF, normalized delta for scroll); negative `dt` runs phase backward, wraps correctly.
+- `get value` — `waveformValue(phase, waveform)` ∈[−1,1]. `sample(t)` — stateless `t→waveform(t×frequency)` (does not touch the running phase — sample an absolute clock without disturbing a concurrently-`tick`ed phase). `reset(phase=0)`.
+- **`waveformValue(phase, waveform)`** — exported value.js-free leaf (apply to your own phase: sine=`sin(2π·p)`, triangle, square, sawtooth — exact formulas in source lines 67-94).
+- **The band-4 use:** the viz idle/breath/loop clock. A breathing aurora, a pulsing blob, a sweeping dot-wave each read ONE phase clock (`osc.tick(dtSec)` per renderer frame → `.phase`/`.value` → a shader uniform) — replacing the raw `performance.now()` modulo each viz hand-rolls today. Also the EasingPicker `loop` playback seam (CLAUDE.md W-EASING-PRIMITIVE book) + the speedtest idle-breath (the kf doc names this consumer).
 
-### 3.2 — Draggable bounds/snap/rubberBand (`src/animation/drag.ts`) — iOS overscroll + native snap
-The LOCAL `DragOptions` adds three fields the published dist lacks:
-- `bounds?: {min, max}` — hard value-domain clamp (BEFORE rubber-band).
-- `rubberBand?: number` (default 0.4 = the Motion/iOS overscroll feel; `0`=hard clamp, `1`=pass-through) — `boundary + (excess × rubberBand)`.
-- `snap?: number[]` — on release, `decayRest`-projected rest selects the nearest target; the spring re-seats toward it. Bounds apply AFTER snap.
-- `drag2D(el, {x, y})` (`src/animation/drag-2d.ts`) — two 1-axis Draggables behind `(x,y,vx,vy)`; bounds/rubberBand/snap pass through PER AXIS.
+### 3.2 — Draggable bounds/snap/rubberBand (`src/animation/drag.ts`, L.W5) — iOS overscroll + native snap
+The LOCAL `DragOptions` adds 3 fields the published dist lacks:
+- `bounds?: {min, max}` — hard value-domain clamp.
+- `rubberBand?: number` (default 0.4 = the Motion/iOS overscroll feel; 0=hard, 1=pass-through) — `boundary + (excess × rubberBand)`.
+- `snap?: number[]` — on release, `decayRest`-projected rest selects the nearest target; the spring re-seats toward it.
+- `drag2D(el, {x, y})` (`src/animation/drag-2d.ts`) — two 1-axis Draggables behind `(x,y,vx,vy)`; bounds/rubberBand/snap pass through per axis.
+- **The leverage:** `src/composables/motion/useDragMorph.ts` (glass-ui) RE-IMPLEMENTS exactly this — `decayRest` projection + nearest-snap resolution + `spring.target` re-target — because the published dist lacks `snap` (its own file comment: *"glass-ui does NOT re-fork the engine — it wires the published surface … When the kf `snap` ships, this collapses onto it"*). A kf republish unlocks a **consume-and-delete of ~40 lines** of glass-ui snap math + adds **rubberBand overscroll feel** to the liquid-tab drag (the user's "pull → morph → squish to location") FOR FREE.
 
-**The leverage**: `useDragMorph.ts` currently RE-IMPLEMENTS exactly this (`decayRest` projection + nearest-snap resolution + `spring.target` re-target) because the published dist lacks `snap` (file comment lines 21-28: *"glass-ui does NOT re-fork the engine — it wires the published surface ... When the kf `snap` option ships on dist, this collapses onto it"*). A kf republish unlocks a consume-and-delete of ~40 lines of glass-ui-local snap math + adds rubberBand overscroll feel to the liquid-tab drag for free.
-
-### 3.3 — Sequence segment/label events (`src/animation/sequence.ts` + `sequence-events.ts`, L.W5)
-`seq.on("segment"|"label", cb)` — a crossing detector (segment-lifecycle + label straddle) via `SequenceEventBus`. Lets a viz choreography fire callbacks at named beats (e.g. "viz-armed", "intro-complete") without a manual playhead poll. ABSENT from published dist.
+### 3.3 — Sequence segment/label events (`src/animation/sequence-events.ts`, L.W5)
+`seq.on("segment"|"label", cb)` — a crossing detector (segment-lifecycle + label straddle) via `SequenceEventBus`. Lets a viz choreography fire callbacks at named beats ("viz-armed", "intro-complete", "outro-start") without a manual playhead poll. ABSENT from published dist. The base `Sequence` (with `.label`/`.add`/`.seek`/`.timeScale`/`.reverse`/`.repeat`/`.yoyo`) IS published — so the choreography can ship on 4.3.0; only the on-events convenience is blocked.
 
 ---
 
 ## 4 — The current glass-ui consume baseline (the leverage delta)
 
-| glass-ui module | imports from kf/vjs | what it does | BC leverage |
+| glass-ui module | imports | what it does | BC leverage |
 |---|---|---|---|
-| `useDragMorph.ts:54` | `Draggable, SpringProgress, decayRest` | drag-to-morph-squish; RE-IMPLEMENTS snap via decayRest+spring.target | republish → consume kf `snap`/`rubberBand`, delete the re-roll |
-| `useBorderSpectrum.ts:18` | `interpolateHue` (+ leaf `cssToOklch`/`oklchStopToHex`) | hand-rolled `spectrumAt`/`spectrumStops` N-stop ramp | re-point onto `sampleColorRamp` NOW (peer spine admits 0.13.0) |
-| `curves.ts:27,80` | `springTimingFunction` (+ vjs easing) | `MOTION_CURVES` — every `--spring-*` token's JS twin from SPRING_PRESETS | the canonical bridge; band-7 reads this for the JS-side curve |
-| `useEasingPicker.ts:23` | `CSSCubicBezier, steppedEase, bezierPresets, jumpTerms` | the curve editor's bezier/steps math | boundary-law correct; Oscillator slots the `loop` seam on republish |
-| `useSpring.ts`, dock `dockMorphContext/useLayerTransition/useDockOrientationMorph`, `useDrawerSnap`, `useBlobPointer` | `SpringProgress` | every spring morph/press/drawer/pointer | the one-clock spine ALREADY in place |
-| `useLiquidReveal.ts`, `useDockCtaReceive.ts` (via `suite.ts`) | `ElementMorph, springTimingFunction` | FLIP bloom-from-source + CTA→dock receive | band-7 reveal choreography |
-| `useAnimatedNumber.ts` | `SmoothProgress` | editorial number tween | — |
-| `usePointerVelocityField.ts` | **NONE (vue-only, hand-rolled lerp)** | viz pointer position→velocity→acceleration push-API | band-4 D-VIZ-INTERACTION; intentionally kf-free (root-barrel SCC discipline) — KEEP as-is |
+| `useDragMorph.ts` | `Draggable, SpringProgress, decayRest` | drag-to-morph-squish; RE-IMPLEMENTS snap via decayRest+spring.target | republish → consume kf `snap`/`rubberBand`, delete the re-roll (≥2 consumers: tabs + DockLayerGroup) |
+| `useBorderSpectrum.ts` | `interpolateHue` + `/color` leaf | hand-rolled N-stop OKLCH ramp `spectrumAt`/`spectrumStops` | **re-point onto `sampleColorRamp` NOW** (peer spine admits 0.13.0; CONSUME marker already in place) |
+| `curves.ts` | `springTimingFunction` + vjs easing | `MOTION_CURVES` — every `--spring-*`/`--ease-*` token's JS twin from `SPRING_PRESETS` | the canonical bridge; band-7 reads this for the JS-side curve |
+| `useEasingPicker.ts` | `CSSCubicBezier, steppedEase, bezierPresets, jumpTerms` | the curve editor's bezier/steps math | boundary-law correct; Oscillator slots the `loop` seam on republish |
+| `useSpring.ts` + dock `dockMorphContext`/`useLayerTransition`/`useDockOrientationMorph` + `useDrawerSnap` + `useBlobPointer` | `SpringProgress` | every spring morph/press/drawer/pointer | the one-clock spine ALREADY in place |
+| `useLiquidReveal.ts` + `useDockCtaReceive.ts` (via `suite.ts`) | `ElementMorph, springTimingFunction` | FLIP bloom-from-source + CTA→dock receive | band-7 reveal choreography |
+| `useAnimatedNumber.ts`, `useCountup.ts`, `useNumericTransition.ts` | `SmoothProgress`, `NumericAnimation` | editorial number tweens | — |
+| `usePointerVelocityField.ts` | **NONE (vue-only hand-rolled lerp)** | viz pointer position→velocity→acceleration push-API (`tick(dt)`) | band-4 W-VIZ-INTERACTION; **intentionally kf-free** (root-barrel SCC discipline) — KEEP as-is |
+| the 5 viz (aurora/blob/constellation/dot-flow/concentric) | `createCanvasLifecycle` rAF; shader `uTime` from `performance.now()` | own the frame loop; drive uniforms off raw clock | **NO viz feeds a kf phase clock today** — the band-4 gap |
 
-### The spring registry (the source-of-truth both halves derive from)
-`src/composables/motion/springPresets.ts` — `SPRING_PRESETS` is the single authority feeding BOTH `regen-spring-tokens.mjs` (→ CSS `linear()` via `springLinearStops`) AND `MOTION_CURVES` (→ JS `Easing` via `springTimingFunction`):
+### The spring registry (the single source both halves derive from)
+`src/composables/motion/springPresets.ts` — `SPRING_PRESETS` feeds BOTH `regen-spring-tokens.mjs` (→ CSS `linear()` via `springLinearStops`) AND `MOTION_CURVES` (→ JS `Easing` via `springTimingFunction`) — drift-proof:
 ```
-smooth: response 0.5, ζ 0.86  (SETTLE — no overshoot)
-snappy: response 0.35, ζ 0.65 (CONTROL — tab/progress/marker, +6.8% overshoot)
-bouncy: response 0.5, ζ 0.45  (PLAYFUL — dialog/success, +20.5% overshoot)
-gentle: response 0.7, ζ 1.0   (GENTLE — critically-damped settle)
-dock:   response 0.32, ζ 0.7  (DOCK — expand/collapse morph, +4.6% overshoot)
+smooth: response 0.5,  ζ 0.86  (SETTLE — no overshoot)
+snappy: response 0.35, ζ 0.65  (CONTROL — tab/progress/marker, +6.8% overshoot)
+bouncy: response 0.5,  ζ 0.45  (PLAYFUL — dialog/success, +20.5% overshoot)
+gentle: response 0.7,  ζ 1.0   (critically-damped settle)
+dock:   response 0.32, ζ 0.7   (DOCK morph, +4.6% overshoot)
 ```
-The matching per-spring settle clocks (`--spring-<name>-duration`, generated from `t_s = −ln(0.02)/(ζ·ωₙ)`): smooth 0.36s / snappy 0.34s / bouncy 0.69s / gentle 0.44s / dock 0.28s.
+Per-spring settle clocks (`--spring-<name>-duration`, from `t_s = −ln(0.02)/(ζ·ωₙ)`, ωₙ=2π/response): smooth 0.36s / snappy 0.34s / bouncy 0.69s / gentle 0.44s / dock 0.28s.
 
 ---
 
-## 5 — The band-4 (viz choreography) one-source/one-clock recommendation
+## 5 — Band-4 (VIZ CHOREOGRAPHY) one-source/one-clock recommendation
 
-**The current band-4 state**: the 5 viz (aurora/blob/constellation/dot-flow/concentric) each own a rAF via `createCanvasLifecycle` (`src/composables/glass/webgl/createCanvasLifecycle.ts:87` — the ONE lifecycle leaf all three backends compose) and drive their loop animation off a shader `uTime` uniform sampled from `performance.now()`. NO viz feeds a kf phase clock today (the `phase` matches in goo-blob are shader-local SDF phases, not the kf Oscillator).
+**Current state:** the 5 viz each own a rAF via `createCanvasLifecycle` and drive `uTime` off `performance.now()`. NO viz feeds a kf phase clock. The choreography (start/transition/end/restart, coupled fade) the user wants is ABSENT — the viz just free-run.
 
-**The leverage** (`BC.W-VIZ-CHOREOGRAPHY`): the viz already own the frame loop (the one-loop discipline is correct — do NOT add a kf rAF). The ONE-source/ONE-clock move is to feed the viz `uTime`/intro/outro from kf primitives stepped via the renderer's existing `tick`:
-- **Idle/loop motion** → the **Oscillator** (`tick(dtSeconds)` per renderer frame; read `.phase`/`.value` to drive shader uniforms). A breathing aurora, a pulsing blob, a sweeping dot-wave all read ONE phase clock — replacing the raw `performance.now()` modulo each viz hand-rolls. **BLOCKED on kf republish.**
-- **Start/transition/end/restart choreography** → a **Sequence** with labels (`intro` → `loop` → `outro`); `seek(0)` restarts; the renderer steps it via its frame `tick`. **BLOCKED on Sequence on-events; the base Sequence is published in 4.3.0.**
-- **Pointer interaction** (`BC.W-VIZ-INTERACTION`) → `usePointerVelocityField` (already the push-API `tick(delta)` shape, position→velocity→acceleration) is the correct substrate; it intentionally stays kf-free for the root-barrel SCC trap. KEEP. The viz feed it from their frame loop.
-- **Brand-spectrum colors** (the dot-wave / concentric / border-progress palettes) → `sampleColorRamp` (NOW — peer spine admits 0.13.0). The N-stop perceptual ramp with `hueMethod:"shorter"` is the no-trough warm→cool walk every viz palette + BorderProgress + the section-color ramp wants.
+**The recommendation (`BC.W-VIZ-CHOREOGRAPHY`, the user's "start/transition/end/restart … via keyframes.js (ONE source + clock)"):**
+1. **Keep the one-loop discipline** — the viz own the frame loop; do NOT add a kf rAF (the `proof:offscreen-pause` fence). FEED the kf primitives `tick(dt)` from the existing canvas frame callback.
+2. **Idle/loop motion → Oscillator** (`osc.tick(dtSec)` per frame; read `.phase`/`.value` to drive shader uniforms — breath/pulse/sweep all read ONE phase clock). **BLOCKED on kf republish; interim: a glass-ui-local `useOscillator` mirror (the documented interim-then-consume pattern `useDragMorph` set) OR a `SmoothProgress`-driven sine if a republish is out of scope.**
+3. **Start/transition/end/restart → a LIGHT `Sequence`** with labels (`intro` → `loop` → `outro`); `seek(0)` restarts; the renderer steps it via its frame `tick`. The base `Sequence` is published in 4.3.0 — **shippable NOW** (orchestrate `SpringProgress`-driven uniform writers, NOT `CSSKeyframesAnimation` — the §1.5 SCC fence keeps it off the heavy engine). The `.on("label")` convenience is blocked on republish (a manual playhead poll is the interim).
+4. **Coupled fade (the user's "coupled fade in/out")** — the intro/outro opacity is the SAME spring-driven scalar (a `--*-reveal-t` 0..1, the W-MOTION-CANON P3 / `useLiquidPress` pattern) driving both the canvas opacity AND the uniform ramp — ONE drive, both legs, on the spring's own settle clock.
+5. **Pointer interaction (`BC.W-VIZ-INTERACTION`)** → `usePointerVelocityField` is the correct substrate (already `tick(delta)` push-API, position→velocity→acceleration; intentionally kf-free for the root-barrel SCC trap). KEEP. The viz feed it from their frame loop.
+6. **Brand-spectrum palettes** → `sampleColorRamp(from, to, n, {space:"oklch", hueMethod:"shorter"})` (NOW) — the dot-flow/concentric/aurora-LUT palettes + the BorderProgress conic all read ONE no-trough warm→cool source, killing the per-viz hand-rolled hue walks AND folding the teal-on-navy purge (BC.W-TEAL-NAVY-PURGE) onto the warm-cream identity defaults.
 
----
+## 6 — Band-7 (MOTION CANON) one-clock recommendation
 
-## 6 — The band-7 (motion canon) one-clock recommendation
+**Current state:** the canon is codified (`docs/precepts/motion-canon.md` P1-P6; the §6 easing table; `MOTION_CURVES`). The spring spine is in place (SPRING_PRESETS → CSS tokens + JS twin, drift-proof). `useSpringPress`/`useLiquidPress`/`useLiquidFlex` are the press/squish primitives.
 
-**The current band-7 state**: the canon is codified (`docs/precepts/motion-canon.md` P1-P6; the §6 easing table; `MOTION_CURVES`). The spring spine is in place (SPRING_PRESETS → CSS tokens + JS twin, drift-proof). `useSpringPress`/`useLiquidPress`/`useLiquidFlex` are the press/squish primitives.
+**The recommendation (`BC.W-MOTION-ONE-CLOCK`, `BC.W-SPRING-EASE`):**
+- **The ONE clock IS already keyframes.js** — every `--spring-*` is a `SpringProgress` curve; every JS twin is `springTimingFunction`. The work is COMPLETENESS: a gate that asserts NO surface drives a spring against a generic `--duration-*` wall clock (the W-GLASS-CAL per-spring-duration fence) and NO surface hand-rolls a spring/rAF outside the kf spine (the `useDragMorph`/`usePointerVelocityField` intentional exceptions are the only allowed off-spine, both for SCC reasons).
+- **The abrupt curves eased (the user's "the abrupt curves eased")** — the bold-decelerating arrival is `easeOutExpo` (value.js, aliased to glass-ui's `--ease-out-expo`); the canon NAMES it, never re-mints (a duplicate alias reds `proof:animation-coherence`). For squishy/quick/coupled-fade the `snappy` preset (response 0.35/ζ 0.65) is the CONTROL register; its perceptual arrival reads quick (~100-120ms to ~1.0) even though the 2%-band settle runs 340ms — **do NOT truncate the clock** (re-introduces the W-GLASS-CAL tail-jank; the spring fence is binding).
+- **The coupled fade (P3)** — `useLiquidPress`'s `--*-press-t` 0..1 drive is ONE spring scalar feeding BOTH transform AND the brightness/specular leg on the spring's own settle clock. The pattern generalizes to every reveal (opacity coupled to transform via a single spring-driven scalar).
+- **The interruptible re-press** — `SpringProgress.set target` velocity-continuous re-seat (or `reseatToSpring(probe, newTarget)`) is the iOS contract; `useSpringPress` already binds it. Every re-press inherits the live `(position, velocity)`, never a CSS-transition restart (the `SpringScene` demo proves the idiom: a live `liveSpring.target = …` chases the tap target).
+- **PRM** — `respectReducedMotion` (binary OR the intensity-scaled number) is the ONE gate; the CSS `:active`/`a11y-overrides.css` carve is the no-JS floor. Both already wired.
+- **The EasingPicker `loop` seam** — the Oscillator slots in on republish (the booked named-successor consume).
 
-**The leverage** (`BC.W-MOTION-ONE-CLOCK`, `BC.W-SPRING-EASE`):
-- **The ONE clock is already keyframes.js** — every `--spring-*` is a `SpringProgress` curve; every JS twin is `springTimingFunction`. The work is COMPLETENESS: ensure NO surface drives a spring against a generic `--duration-*` wall clock (the W-GLASS-CAL per-spring-duration fence) and NO surface hand-rolls a spring/rAF outside the kf spine.
-- **The abrupt curves eased** — the bold-decelerating arrival is `bezierPresets["ease-out-expo"] = [0.19, 1, 0.22, 1]` (value.js, already aliased to glass-ui's `--ease-out-expo`); the canon NAMES it, never re-mints (a duplicate alias reds `proof:animation-coherence`). For squishy/quick/coupled-fade: the snappy preset (response 0.35/ζ 0.65) is the CONTROL register; its perceptual arrival reads quick (~100-120ms to ~1.0) even though the 2%-band settle runs 340ms — do NOT truncate the clock (re-introduces the tail-jank; the spring fence is binding).
-- **The coupled fade** (W-MOTION-CANON P3) — `useLiquidPress`'s `--*-press-t` 0..1 drive scalar is ONE spring drive feeding BOTH the transform AND the brightness/specular leg on the spring's own settle clock. The pattern generalizes: any reveal couples opacity to the transform via a single spring-driven scalar.
-- **The interruptible re-press** — `SpringProgress.set target` velocity-continuous re-seat (or `reseatToSpring`) is the iOS contract; `useSpringPress` already binds it. Every interactive surface re-press should inherit the live `(position, velocity)`, never a CSS-transition restart.
-- **PRM** — `respectReducedMotion` (binary or intensity-scaled) is the ONE gate; the CSS `:active` carve is the no-JS floor. Both already wired.
-- **EasingPicker `loop` seam** — the Oscillator slots in on republish (the booked named-successor consume).
+## 7 — The republish gate + the cross-repo coordination
 
----
+The band-4/7 BLOCKED leverage (Oscillator, drag snap/bounds/rubberBand, Sequence on-events) all need a **keyframes.js republish past 4.3.0** carrying the local tranche-L/M/N additions. The channel is the by-name cross-repo ask (the foreign-tree fence; glass-ui edits ZERO sibling tree — CLAUDE.md's W-CROSSREPO-ASKS relay). The economics:
+- **value.js `sampleColorRamp` + the full curve catalogue: consumable NOW** (`^0.13.0` already admitted; the `useBorderSpectrum` re-point is a thin swap).
+- **The published 4.3.0 spine (SpringProgress, Draggable, ElementMorph, springTimingFunction, Sequence-base, RAFPlayback, SmoothProgress, decay/decayRest/reseatToSpring, NumericAnimation, stagger): FULLY operable** — the one-clock spine is in place; the viz-choreography Sequence ships on it TODAY.
+- **The kf republish (4.4.0-class) unlocks: Oscillator (viz loop clock) + drag snap/rubberBand (the liquid-tab fling consume-and-delete) + Sequence on-events** — a CHEAP ask (no peer-spine widen). Until then the interim is the documented mirror-then-consume pattern.
 
-## 7 — The cross-repo coordination (the republish gate)
-
-The band-4/7 BLOCKED leverage (Oscillator, drag snap/bounds/rubberBand, Sequence on-events) all require a **keyframes.js republish past 4.3.0** carrying the tranche-L/M/N additions. This is a by-name cross-repo ask per the foreign-tree fence (glass-ui edits ZERO sibling tree; CLAUDE.md's W-CROSSREPO-ASKS relay is the channel). Until then:
-- value.js `sampleColorRamp` is consumable NOW (no republish, no peer-spine widen — `^0.13.0` is already admitted).
-- the kf primitives glass-ui consumes today (SpringProgress, Draggable, ElementMorph, springTimingFunction, Sequence-base, RAFPlayback, SmoothProgress, decay/decayRest, NumericAnimation) are all in the published 4.3.0 dist — the one-clock spine is fully operable.
-- glass-ui's `useDragMorph` snap re-roll is the documented interim that consume-and-deletes on the kf `snap` republish.
-
-The kf demo (the "animation-suffusal demo" the user referenced) is the multi-scene SPA at `/Users/mkbabb/Programming/keyframes.js/demo/app` (sequence/easing/motion-path/cube/amiga scenes + the tranche-N Stage scene-switcher: DK64-barrel carousel + liquid-glass downlight + grid-paper), each scene dogfooding a motion primitive — the reference for what the viz choreography + the storybook meta-design (band 9) should feel like.
+**The "animation-suffusal demo" the user referenced** is the multi-scene kf demo SPA (`/Users/mkbabb/Programming/keyframes.js/demo/app/scenes/`: `SpringScene`, `EasingScene`, `SequenceScene`, `MotionPathScene`, `CubeScene`, `AmigaScene`, `SquareScene` + the tranche-N Stage scene-switcher: DK64-barrel carousel + liquid-glass downlight + grid-paper), each scene dogfooding a motion primitive — the reference for what the viz choreography (band 4) + the storybook meta-design (band 9) should FEEL like.
