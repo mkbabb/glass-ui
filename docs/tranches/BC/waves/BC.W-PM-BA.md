@@ -10,7 +10,7 @@ From `postmortem/ba.md`, re-grounded:
 - `proof:ba-gestalt` is `["local"]`-tagged (`proof-ba-gestalt.mjs:29-32, 461`) — NEVER blocked CI/release mid-tranche.
 - Its operative-PASS reads recorded verdict strings out of `audit/reflect/ba-gestalt-roster.md` + asserts each declared PNG resolves with sane IHDR (`proof-ba-gestalt.mjs:86-87, 137-157, 346-381`) — it reads NO luminance/chroma pixel (`isRealPng` + `pngDimensions` only).
 - The verdict-flipper is a SINGLE terminal wave, W-REFLECT2 (Batch 7); 28 mid-tranche waves closed `live-verified` with the gestalt verdict "staged" (BA.md inv-4: "binding at W-REFLECT2").
-- The grey it shipped: `.glass-floating = oklab(0.798 0.002 0.006 / 0.84)` — L0.80, ZERO chroma (grey), α 0.84 near-opaque (BC LIVE-GROUNDING). Scope-7 fixed the CONTENT tiers to 4% but EXEMPTED the dock + floating + overlay band (`ladder.css:155`, `morph.css:451` as BA shipped — the `BC.W-AUDIT pre-fix e1b4b44c` is what later moved them to the floor). The half-fix.
+- The grey it shipped: `.glass-floating = oklab(0.798 0.002 0.006 / 0.84)` — L0.80, ZERO chroma (grey), α 0.84 near-opaque (BC LIVE-GROUNDING). Scope-7 fixed the CONTENT tiers to 4% but EXEMPTED the dock + floating + overlay band (`ladder.css:155`, `morph.css:451` as BA shipped — the iteration-0 BC audit pre-fix commit `e1b4b44c` is what later moved them to the floor). The half-fix.
 - `proof:adaptive-glass` is GREEN on the grey-broken state AND would FAIL the fix: it asserts the darken is wired + `-aa ≤ 24%` (20% passes, `proof-adaptive-glass.mjs:78,88`); `proof:adaptive-glass-live` asserts the dock clears `4.5:1 + ΔL ≥ 0.08` over synthetic-WHITE (`adaptive-glass-live.spec.ts:38 AA_BODY=4.5`, `:46 DELTA_L_FLOOR=0.08`, `:247-260`) — BOTH monotonic in the darken direction. A grey slab scores BETTER. The most dangerous class: the gate's success metric is anti-correlated with the user's read.
 - The capture method made grey invisible: `reducedMotion:reduce` (`aurora.md:23`, `dark-register.md:23`) parked the field + froze the morph; the dark-register auditor read DARK mode (where the lift is correct) and wrote "dark glass TRANSMITS … VERDICT: PASS" (`dark-register.md:39`) while LIGHT-mode `.glass-floating` was grey.
 
@@ -26,7 +26,7 @@ A thin pointer + verdict-naming wrapper (no src/, no new gate). Records the BA v
 - W-GLASS-CAL (blur dial-back) → SPEC-DIRECTION-WRONG: dialed blur DOWN exactly as specced; the user wanted MORE glass (BB minted `--glass-depth` to undo it). → **BC Band 1 re-design** (restore the maximal register; PRESERVE the disco-retirement — that was correct).
 - W-SURFACE-AXIS → PRUNE-CLAIMED-NOT-EXECUTED: the axis factored (real source, KEEP) but `src/components/custom/glass-panel/` NOT pruned (still on disk) + the Dialog reads opaque downstream of the grey-darken. → **BC Band 1** (BC.W-GLASS-PRUNE → Glass CARDS + Glass MATERIALS; BC.W-DIALOG-GLASS).
 - W-TABS-STD → flat/not-liquid pill register. → **BC Band 3 (tabs)**.
-- W-GOO-REDRESS → bridge/wake source landed, WebGPU-first arming is a Band-3 concern. → **BC Band 3** (BC.W-VIZ-LIVE).
+- W-GOO-REDRESS → bridge/wake source landed, WebGPU-first arming is a Band-4 concern. → **BC Band 4** (BC.W-GOOBLOB-MEATBALL).
 
 **CLAIMED-NOT-BUILT:** W-REFLECT2 (the gestalt close itself) — ran once, reduced-motion, dark-biased; the close-class lie one level up. → **BC Band 0** (BC's reflect runs LIVE motion, BOTH modes stressed for the LIGHT-mode grey, reads pixels).
 

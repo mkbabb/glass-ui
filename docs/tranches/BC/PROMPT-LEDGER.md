@@ -46,7 +46,7 @@ system**, and its storybook the proof. BC's job is to make the live paint finall
 | O4 | the macOS hover-expand stack rail | AZ→BA→BB chronic | BC.W-DOCK-STACK-RAIL |
 | O5 | tabs: iOS-27 glass small-pills, liquid pull-morph-squish, underline eased | recurring | Band 3 |
 | O6 | every procedural viz alive, interactive (cursor/touch + velocity/accel), WebGPU | recurring | Band 4 |
-| O7 | goo-blob meatballs on Safari, from first principles | chronic | BC.W-GOOBLOB-FIRSTPRINCIPLES |
+| O7 | goo-blob meatballs on Safari, from first principles | chronic | BC.W-GOOBLOB-PLAIN + BC.W-GOOBLOB-MEATBALL |
 | O8 | EVERY page standardized: audacious hero + subtitle + subpath + scroll-shrink + ONE glass card + procedural bg | recurring | Band 5 |
 | O9 | design hierarchy suffused; sections delimited; code-blocks+Fira; prune superfluity | recurring | Band 5 |
 | O10 | audacious typography (herostudios.tv north-star) | recurring | BC.W-HERO-AUDACIOUS |
@@ -113,11 +113,11 @@ row with no covering wave is a convergence gap (none found at authoring). Groupe
 |---|---|---|---|
 | H10 | item 1 — dock re-architecture + hairline/stack rail (horizontal+vertical disambiguated, robust layering) | dock-feedback 1 | BC.W-DOCK-ENGINE + BC.W-DOCK-STACK-RAIL |
 | H11 | item 2 — morph hover flicker (the collapse-onset pop) | dock-feedback 2 | BC.W-LIQUID-MORPH |
-| H12 | item 3 — demo gear → glass-ui demo Configurator; remove composables view; remove floating-config; fold dark-toggle in | dock-feedback 3 | BC.W-VISUAL-RECONCILE (re-verify on rebuilt floor) |
+| H12 | item 3 — demo gear → glass-ui demo Configurator; remove composables view; remove floating-config; fold dark-toggle in | dock-feedback 3 | BC.W-STORYBOOK-META (re-verify the demo gear=Configurator on the rebuilt floor) |
 | H13 | item 4 — all docks carry the core persistent controls | dock-feedback 4 | BC.W-DOCK-COLLAPSED-BOTH |
 | H14 | item 5 — iOS-glassy selected register at root, KILL the brand-red | dock-feedback 5 | BC.W-DOCK-ENGINE (de-red register) |
 | H15 | item 6 — iOS-27 dynamic darkening over light bg + audit all glass for readability (the observer loop) | dock-feedback 6 | BC.W-ADAPTIVE-RECONCILE |
-| H16 | item 6b — popover/DropdownMenuContent root padding too tight | dock-feedback 6b | BC.W-PADDING-CANON / BC.W-VISUAL-RECONCILE |
+| H16 | item 6b — popover/DropdownMenuContent root padding too tight | dock-feedback 6b | BC.W-PADDING-CANON |
 | H17 | item 6c — dock ~20-25% too big on mobile; summary-first collapsed mobile register | dock-feedback 6c | BC.W-DOCK-ENGINE (coarse-scale) |
 | H18 | item 6d — `:global(.dark)` scoped-CSS silent-drop chronic | dock-feedback 6d / `feedback_vue_scoped_global_drop.md` | invariant (sweep) + proof:no-scoped-global |
 | H19 | item 7 — constellation generalization (pinned node / accent-edge / edge-floor / label / autonomous drift) | dock-feedback 7 | BC.W-VIZ-CONSTELLATION |
@@ -167,10 +167,10 @@ row with no covering wave is a convergence gap (none found at authoring). Groupe
 
 | # | the prompt/ask (recalled) | origin (memory file) | covering BC wave |
 |---|---|---|---|
-| H56 | AW session-limit halt: aurora W4/W6-11, blob W9-11, glass-atoms W24-26, big-dock Playwright audit | `project_aw_session_limit_halt.md` | Bands 1+4 (re-decided in BC.W-VIZ-LIVE / FOLD-LEDGER) |
+| H56 | AW session-limit halt: aurora W4/W6-11, blob W9-11, glass-atoms W24-26, big-dock Playwright audit | `project_aw_session_limit_halt.md` | Bands 1+4 (re-decided in BC.W-VIZ-AURORA + BC.W-GOOBLOB-PLAIN + BC.W-FOLD-LEDGER) |
 | H57 | AX dock-first re-formulation (the headless-green/visually-broken gap first named) | `project_ax_tranche.md` | Band 0 (BC.W-PAINT-GATE) + Band 2 |
 | H58 | AY/AZ dock work seeded by the 2026-06-10 queue — still broken at BB HEAD (178 commits) | `project_az_tranche_closed.md` | Band 2 (rebuild, not patch) |
-| H59 | BA dark-material / dock-sections / glass-cal / tabs-std — what landed in PAINT | `project_az_tranche_closed.md` / PM | BC.W-PM-BA + BC.W-VISUAL-RECONCILE |
+| H59 | BA dark-material / dock-sections / glass-cal / tabs-std — what landed in PAINT | `project_az_tranche_closed.md` / PM | BC.W-PM-BA + BC.W-GESTALT-FIRST (per-wave re-walk on the rebuilt floor) |
 | H60 | BB shipped source-green/visually-broken; the close (Batches 5/6/7) never ran | `project_bb_tranche_developed.md` | BC.W-PM-BB + BC.W-CUT |
 | H61 | the close lesson: run `--run full` siblings-absent BEFORE tagging (BA cut `--run local` over-claim) | `project_glassui_400_published.md` | BC.W-CUT (proof:close-battery-parity) |
 | H62 | CI monorepo-layout cascade: registry-resolve siblings-absent; optional-peer TS2307 → devDependencies | `project_ci_monorepo_layout_cascade.md` | BC.W-CUT (the pre-tag battery) |

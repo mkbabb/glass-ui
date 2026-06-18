@@ -56,6 +56,6 @@ This wave DECIDES (records the verdict for) the AZ deferral cluster (`deferral/a
 - `az-morph-teardrop-booked` (BOOKED → REBUILD, BC.W-LIQUID-MORPH; the box-morph-white re-opened).
 - `az-glass-luminance-promotion` (BOOKED → BUILD/CLOSE-the-loop, BC.W-ADAPTIVE-RECONCILE — the ≥2-binary bar met by the loop-closure).
 - `az-dock-flicker-cotiming-escalation` + `az-shell-config-e5-normalize-defer` (SUBSUMED by the BC.W-DOCK-ENGINE rebuild).
-- `az-aurora-t5-anisotropic` / `az-blob-ubackdrop-conditions-unmet` / `az-con-gen-g4-label` (HELD-with-rationale → BC.W-VIZ-LIVE; recorded DECIDED-held).
+- `az-aurora-t5-anisotropic` / `az-blob-ubackdrop-conditions-unmet` / `az-con-gen-g4-label` (HELD-with-rationale → the per-viz Band-4 waves BC.W-VIZ-AURORA + BC.W-GOOBLOB-MEATBALL + BC.W-VIZ-CONSTELLATION; recorded DECIDED-held).
 - `az-final-battery-dispositioned-reds` (CONTRADICTED → REBUILD-the-close; the `--run local`-only close is the close-class lie BC.W-CUT abolishes with `--run full` siblings-absent).
 - DECIDED disposition for the wave itself: the verdict matrix feeds BC.W-FOLD-LEDGER; the grey-origin REBUILD is owned by Band 1, the rail by Band 2.
