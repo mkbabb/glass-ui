@@ -198,7 +198,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 11 | HARDEN-4 | final cosmetic cleanup (pristine FINAL) | bc-iter11-harden4.mjs (wvf02hqj7) | DONE | 0 fake chips/0 (Band3) labels/108 roster/F1.b derived-band |
 | 12 | CHALLENGE-5 | clean-confirm #2 (holistic) | bc-iter12-challenge5.mjs (w30jipzis) | DONE — 1 MAJOR | executor-readiness+intent-fidelity CONVERGED; 1 MAJOR (BC.W-DECK §1-box omission, FIXED in-place) |
 | 13 | DEEPEN-2 | execution-readiness depth (DAG/a11y/perf) | bc-iter13-deepen2.mjs (wwhmykhfs) | DONE | EXECUTION-DAG.md (acyclic, gate battery) + A11Y-CONTRACT.md + 18 waves enriched |
-| 14 | CHALLENGE-6 | clean-confirm #1 (post-DEEPEN-2) | bc-iter14-challenge6.mjs (wjh5w4xc6) | IN-FLIGHT | DAG-soundness + a11y/perf-consistency + coverage resweep |
+| 14 | CHALLENGE-6 | clean-confirm #1 (post-DEEPEN-2) | bc-iter14-challenge6.mjs (wjh5w4xc6) | DONE — 1 MAJOR | a11y/perf + coverage CONVERGED; 1 MAJOR (DAG SPRING-EASE→DOCK-ENGINE prose ∅ vs binding edge; acyclic proven) |
+| 15 | HARDEN-5 | reconcile the DAG edge + 2 MINOR | bc-iter15-harden5.mjs (wmtr7bxho) | IN-FLIGHT | DAG R2 consume-after-mint + WAVE-INDEX cells + GRID-SIMPLE tier |
 
 > **GAP-CONVERGENCE near (CHALLENGE-4 clean #1; CHALLENGE-5 = executor-ready + intent-faithful, the lone
 > MAJOR was a §1-checklist-box omission for BC.W-DECK, FIXED in-place — §1 now 70 boxes = disk). The
@@ -225,10 +226,12 @@ model) synthesizes; the fanout is opus/sonnet.
 > **NEXT CURSOR: CHALLENGE-5 = executor-ready + intent-faithful CONVERGED, the lone MAJOR (BC.W-DECK
 > §1-box omission) FIXED in-place (§1 now 70 boxes). iteration 13 DEEPEN-2 IN-FLIGHT (task TBD,
 > bc-iter13-deepen2.mjs — the execution-DAG + a11y + perf-realism depth, the genuine ≥20-iter value).**
-> On iter13 completion: verify EXECUTION-DAG.md landed + the a11y/perf enrichments; commit. Then:
-> 1. **14 CHALLENGE-6** — fresh clean-confirm over the DECK-box-fixed + DAG/a11y/perf-deepened set.
->    If 0 BLOCKER/MAJOR → CLEAN PASS #1 (the counter restarts here).
-> 2. **15 CHALLENGE-7** — clean #2. If also 0 BLOCKER/MAJOR → CONVERGE.
+> **UPDATE (iter14/15): CHALLENGE-6 a11y/perf+coverage CONVERGED; 1 MAJOR (DAG prose edge) → iter15
+> HARDEN-5 reconciles it (task wmtr7bxho). The clean counter is still 0 (CHALLENGE-6 not 0-MAJOR).**
+> On iter15 completion (TaskOutput wmtr7bxho): verify the DAG SPRING-EASE→DOCK-ENGINE edge now reads
+> consume-after-mint + still acyclic; commit. Then:
+> 1. **16 CHALLENGE-7** — clean-confirm (the DAG fix held + a final whole-tranche sweep). 0 BLOCKER/MAJOR → CLEAN #1.
+> 2. **17 CHALLENGE-8** — clean #2. If also 0 BLOCKER/MAJOR → CONVERGE.
 > CONVERGE sequence (unchanged): tick ALL §1 boxes; write docs/tranches/BC/FINAL.md (summary + 70-wave
 > roster by band + the EXECUTION-DAG ref + §residuals + EXECUTION-phase greenlight + build order);
 > report CONVERGED; retire cron 17dd706c via CronDelete.
