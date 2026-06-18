@@ -80,6 +80,7 @@ export const WARP_ID = {
     fbm: 0,
     cellular: 1,
     hybrid: 2,
+    curl: 3, // BB.B1 — opt-in Bridson curl-noise flow warp (the .frag uWarpMode == 3 branch)
 } as const satisfies Record<WarpMode, number>;
 
 // Oil-stroke sub-modes. AX.W13 — `crayon` is a first-class medium (MEDIUM_ID), no

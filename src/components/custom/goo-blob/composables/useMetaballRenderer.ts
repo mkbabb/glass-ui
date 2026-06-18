@@ -1,5 +1,5 @@
 import { watch, onUnmounted, type Ref } from "vue";
-import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { createGpuSubstrate } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { cssToOklch, oklchToGammaRgb } from "../../../../composables/color";
@@ -9,6 +9,7 @@ import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
 import { buildMetaballProgram } from "./buildMetaballProgram";
 import { uploadBlobUniforms, type BlobFrameState } from "./uploadBlobUniforms";
+import { createBlobWGPUSetup } from "./wgpuSetup";
 
 export interface UseMetaballRendererOptions {
     canvasRef: Ref<HTMLCanvasElement | null>;
@@ -49,18 +50,25 @@ export interface UseMetaballRendererReturn {
 }
 
 /**
- * The GooBlob WebGL renderer — composes the `useWebGLCanvas` substrate (AU.W6).
+ * The GooBlob renderer — composes the `createGpuSubstrate` picker (BB.W-VIZ-SUITE /
+ * W-GOOBLOB-WGPU): the WebGPU-first `metaball.wgsl` primary OR the WebGL2
+ * `metaball.frag.ts` fallback, selected ONCE by `navigator.gpu` feature-detect. Both
+ * backends compose the SAME `createCanvasLifecycle` leaf (AU.W6), so the demand-driven
+ * scheduling + offscreen-park + live-PRM-freeze are byte-identical across backends.
  *
- * This module owns ONLY the metaball-specific concerns: compiling the shader,
- * building the quad + uniform cache (the `buildMetaballProgram` leaf), and
- * uploading the per-frame uniforms (the `uploadBlobUniforms` leaf) derived from the
- * mood / pointer / satellite systems and the resolved base color. The generic
- * WebGL2 lifecycle — context creation, the suspend/resume model, the demand-driven
- * rAF loop, the tab-visibility owner, the ResizeObserver, and the
- * webglcontextlost/restored robustness — lives in the substrate; this renderer
- * threads its behaviour through the substrate's
- * `setup`/`frame`/`shouldContinue`/`resize`/`teardown` callbacks. It does NOT call
- * `getContext("webgl2")` itself (the single-bootstrap contract).
+ * This module owns ONLY the metaball-specific concerns: compiling the shader, building
+ * the quad + uniform cache (the WebGL2 `buildMetaballProgram` leaf) OR the WGSL pipeline
+ * + the typed-struct uniform buffer (the WGSL `createBlobWGPUSetup` leaf), and the
+ * per-frame SIMULATION advance + uniform upload derived from the mood / pointer /
+ * satellite systems and the resolved base color. The simulation advance is SHARED — the
+ * `resolveFrame(timeSec)` closure advances the systems and returns the settled
+ * `BlobFrameState`; the WebGL2 `drawFrame` and the WGSL `frame` both call it, so the
+ * physics is substrate-agnostic and only the upload+draw leg differs. The generic
+ * lifecycle (context creation, the suspend/resume model, the demand-driven rAF loop, the
+ * tab-visibility owner, the ResizeObserver, and the context-loss self-heal) lives in the
+ * substrate; this renderer threads its behaviour through the substrate's
+ * `setupGL`/`setupWGPU`/`frame`/`shouldContinue`/`resize`/`teardown` callbacks. It does
+ * NOT call `getContext("webgl2")`/`navigator.gpu` itself (the single-bootstrap contract).
  *
  * Color is resolved INTERNALLY through the `/color` leaf (`cssToOklch →
  * oklchToGammaRgb`) — the GAMMA-sRGB triple fed straight into the base-color uniform
@@ -121,7 +129,7 @@ export function useMetaballRenderer(
         return rgb;
     }
 
-    let canvasHandle: ReturnType<typeof createWebGLCanvas> | null = null;
+    let canvasHandle: ReturnType<typeof createGpuSubstrate> | null = null;
     let paused = false;
 
     // AX.W16 (arm 2) — the satellite-phase WAKE scheduler. When the quiescence gate
@@ -170,178 +178,146 @@ export function useMetaballRenderer(
         { rootMargin: "200px", pauseWhenHidden: false },
     );
 
+    // ── The SHARED simulation advance (substrate-agnostic) ──────────────────────
+    //
+    // `resolveFrame(timeSec)` advances the mood / pointer / satellite systems on the
+    // tempo-scaled step and returns the settled `BlobFrameState`. BOTH backends call it
+    // (the WebGL2 `drawFrame` then `uploadBlobUniforms`; the WGSL `frame` then
+    // `packBlobWGPUUniforms`), so the physics is identical regardless of backend — the
+    // ONLY divergence is the upload+draw leg. The simulation closures (`lastTimeSec` /
+    // `simTimeMs` / `paused`) are renderer-scoped, owned once here.
+    function resolveFrame(timeSec: number): BlobFrameState {
+        // Raw per-frame delta CLAMPED to [0, 50]ms (AY.W-BLOB-CONFIG D4). The first
+        // post-resume frame is the divergence hazard: a `manual` resume rebases the
+        // substrate clock, so `timeSec` snaps back while `lastTimeSec` holds the
+        // pre-pause elapsed. The raw delta is then strongly NEGATIVE, and a negative dt
+        // run BACKWARD through the symplectic click-pulse integrator flips its sign and
+        // diverges. `Math.max(0, ...)` makes a resume rebase a no-op step so the
+        // simulation CANNOT run backward; `Math.min(.., 50)` clamps the seconds-long
+        // offscreen/PRM re-arm.
+        const rawDtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
+        lastTimeSec = timeSec;
+        const dtMs = Math.max(0, Math.min(rawDtMs, 50));
+
+        // ── The ONE master tempo scalar (W11.c) ──────────────────────
+        // `tempo` multiplies every INTEGRATED dt — NEVER the clock (scaling the
+        // absolute clock makes the FBM noise JUMP). The SUBSTRATE owns PRM + the pause;
+        // here we only READ them to drive tempo (no parallel matchMedia).
+        const reduced = canvasHandle?.reducedMotion ?? false;
+        const tempo = reduced || paused ? 0 : config.tempo;
+        const stepMs = tempo * dtMs;
+        simTimeMs += stepMs;
+
+        // Advance the simulation on the tempo-scaled step. Under reduced-motion (tempo
+        // 0) the interaction layer COMPOSES the deterministic rest pose rather than
+        // advancing — the substrate then paints ONE static frame and parks. `update`
+        // tags its internal setMood `source: "auto"` and early-returns while a manual
+        // mood is pinned, so it never clobbers a user-pinned mood.
+        if (!reduced) {
+            mood.update({
+                pointerActive: pointer.active.value,
+                clicked: pointer.consumeClick(),
+                idleMs: pointer.idleMs(),
+            });
+        }
+        mood.tick(stepMs);
+        if (reduced) {
+            pointer.rest();
+        } else {
+            pointer.tick(stepMs);
+        }
+        satellites.tick(simTimeMs, mood.params.value);
+
+        return {
+            params: mood.params.value,
+            rgb: resolveColor(color.value),
+            simTimeMs,
+            timeSec,
+            resolveColor,
+            rimColor: rimColor.value,
+            paletteStops: paletteStops.value,
+        };
+    }
+
+    /**
+     * Demand gate (AX.W16 arm 2 — the EVENT-SCHEDULED quiescence signal), SHARED by both
+     * backends. The loop runs IFF something is actually changing (mood mid-transition,
+     * pointer spring moving / trail non-empty / click pulse non-zero, or a satellite
+     * mid-merge); otherwise it parks and arms a `setTimeout` wake at the next satellite
+     * phase / auto-mood horizon so the loop re-arms on the scheduler, never by polling.
+     */
+    function shouldContinue(): boolean {
+        if (paused) return false;
+        const live =
+            !mood.isSettled() || !pointer.isAtRest() || !satellites.isQuiescent();
+        if (live) {
+            clearWakeTimer();
+            return true;
+        }
+        const satHorizonMs = satellites.nextEventMs(simTimeMs);
+        const moodDelayMs = mood.nextAutoMoodMs();
+        const moodHorizonMs = Number.isFinite(moodDelayMs)
+            ? simTimeMs + moodDelayMs
+            : Infinity;
+        scheduleWake(Math.min(satHorizonMs, moodHorizonMs));
+        return false;
+    }
+
+    /** The DPR-aware backing-store resize (shared math; the WebGL2 path also sets the
+     *  viewport, the WGSL path's render-pass carries the full canvas by default). */
+    function resizeBacking(canvas: HTMLCanvasElement): { w: number; h: number } {
+        // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling. The `half`
+        // quality axis halves the backing buffer (~4× fragment savings; the soft FBM/AA
+        // edge hides the interpolation). `full` (default) renders at the clamped DPR.
+        const dpr = resolveBudgetDpr();
+        const qScale = config.quality === "half" ? 0.5 : 1.0;
+        const cssW = canvas.clientWidth || config.geometry.canvasSize;
+        const cssH = canvas.clientHeight || config.geometry.canvasSize;
+        const w = Math.max(1, Math.round(cssW * dpr * qScale));
+        const h = Math.max(1, Math.round(cssH * dpr * qScale));
+        if (canvas.width !== w || canvas.height !== h) {
+            canvas.width = w;
+            canvas.height = h;
+        }
+        return { w, h };
+    }
+
     function start(canvas: HTMLCanvasElement) {
-        canvasHandle = createWebGLCanvas(canvas, {
+        canvasHandle = createGpuSubstrate(canvas, {
             contextAttrs: {
                 alpha: true,
                 premultipliedAlpha: true,
                 antialias: false,
                 preserveDrawingBuffer: false,
             },
-            // Build the program + quad + uniform cache on a fresh context. The
-            // substrate calls this on arm() AND on every webglcontextrestored, so a
-            // GPU context loss self-heals — the closures below close over the fresh
-            // `gl` + the freshly-built program handles each time.
-            setup: (gl) => {
+            // BB.W-VIZ-SUITE (W-GOOBLOB-WGPU) — the WGSL primary path (`metaball.wgsl`).
+            // The picker arms this when `navigator.gpu` is present; the renderer's SHARED
+            // `resolveFrame`/`shouldContinue` closures drive the simulation identically
+            // across backends. `metaball.frag.ts` stays the byte-untouched WebGL2
+            // fallback.
+            setupWGPU: createBlobWGPUSetup({
+                canvas,
+                config,
+                pointer,
+                satellites,
+                resolveFrame,
+                shouldContinue,
+                getReducedMotion: () => canvasHandle?.reducedMotion ?? false,
+            }),
+            // Build the program + quad + uniform cache on a fresh context. The substrate
+            // calls this on arm() AND on every webglcontextrestored, so a GPU context loss
+            // self-heals — the closures below close over the fresh `gl` + program handles.
+            setupGL: (gl) => {
                 const { prog, vs, fs, vao, buf, locs } = buildMetaballProgram(gl);
 
                 function resize() {
-                    // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
-                    const dpr = resolveBudgetDpr();
-                    // AX.W16 (arm 2) — the quality axis: `half` renders the metaball
-                    // pass at HALF the backing-store resolution (the CSS box stays the
-                    // same, so the browser bilinear-upsamples the smaller buffer on
-                    // composite) for ~4× fragment savings on weak GPUs. The blob is the
-                    // IDEAL candidate — the soft FBM/AA edge HIDES the interpolation;
-                    // ONE blit, never a multi-pass chain. `full` (default) renders at
-                    // the clamped DPR. The fwidth-AA self-adjusts to the lower buffer
-                    // resolution (the edge stays ~1px in buffer space).
-                    const qScale = config.quality === "half" ? 0.5 : 1.0;
-                    // Size from the rendered element, not config — the blob fills its
-                    // container.
-                    const cssW = canvas.clientWidth || config.geometry.canvasSize;
-                    const cssH = canvas.clientHeight || config.geometry.canvasSize;
-                    const w = Math.max(1, Math.round(cssW * dpr * qScale));
-                    const h = Math.max(1, Math.round(cssH * dpr * qScale));
-                    if (canvas.width !== w || canvas.height !== h) {
-                        canvas.width = w;
-                        canvas.height = h;
-                    }
+                    const { w, h } = resizeBacking(canvas);
                     gl.viewport(0, 0, w, h);
                 }
 
                 function drawFrame(timeSec: number) {
-                    // Raw per-frame delta. The first post-park dt can be SECONDS
-                    // (after an offscreen/hidden/PRM re-arm) — CLAMP it to ~50ms on
-                    // EVERY integrated axis so the tempo/rest-pose composition never
-                    // jumps (the W11 extension of the W10 spring-only clamp).
-                    // Raw per-frame delta CLAMPED to [0, 50]ms (AY.W-BLOB-CONFIG D4).
-                    // The first post-resume frame is the divergence hazard: a `manual`
-                    // resume rebases the substrate clock (`startTime = now - 1000`), so
-                    // `timeSec` snaps back to ~1.0 while `lastTimeSec` still holds the
-                    // pre-pause elapsed (often tens of seconds). The raw delta is then
-                    // strongly NEGATIVE (`-1178`, `-2017`ms measured), and a negative dt
-                    // run BACKWARD through the symplectic click-pulse integrator
-                    // (`pulseVel += accel·dt; pulse += pulseVel·dt`) flips its sign and
-                    // diverges — the strobe-to-charcoal-slab wreck the page's own pause
-                    // control produced (RA-blob §C.1). `Math.min(raw, 50)` clamped only
-                    // the UPPER bound (the offscreen/PRM seconds-long re-arm), letting the
-                    // negative half through. The lower clamp (`Math.max(.., 0)`) makes a
-                    // resume rebase a no-op step (dt 0 → simTime/springs/pulse advance
-                    // zero this frame, then resume normally next frame) so the simulation
-                    // CANNOT run backward. The clean off-screen-park path hits the SAME
-                    // rebase, so this also hardens that resume.
-                    const rawDtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
-                    lastTimeSec = timeSec;
-                    const dtMs = Math.max(0, Math.min(rawDtMs, 50));
-
-                    // ── The ONE master tempo scalar (W11.c) ──────────────────────
-                    //
-                    // `tempo` multiplies every INTEGRATED dt — NEVER the clock.
-                    // Scaling the absolute clock makes the FBM noise JUMP when tempo
-                    // changes; integrating a tempo-scaled `simTimeMs` keeps the noise
-                    // scroll CONTINUOUS across a tempo change (it resumes from the
-                    // accumulated value). The SUBSTRATE owns PRM + the pause; here we
-                    // only READ them to drive tempo (no parallel matchMedia).
-                    const reduced = canvasHandle?.reducedMotion ?? false;
-                    const tempo = reduced || paused ? 0 : config.tempo;
-                    const stepMs = tempo * dtMs; // the tempo-scaled integration step
-                    simTimeMs += stepMs;         // the tempo-integrated motion clock
-
-                    // Advance the simulation systems on the tempo-scaled step. Under
-                    // reduced-motion (tempo 0) the interaction layer COMPOSES the
-                    // deterministic rest pose (spring at centre, zero velocity, trail
-                    // collapsed, pulse zero) rather than advancing — the SUBSTRATE
-                    // then paints ONE static frame and parks. Every axis reads the
-                    // SAME tempo-scaled clock so the whole creature breathes as one.
-                    // Drive the AUTONOMIC mood arc from the interaction/idle state
-                    // (W11.c wires setMood: curious on approach, excited on click,
-                    // sleepy after inactivity). `update` IS the auto source — it tags
-                    // every internal `setMood` with `source: "auto"` and EARLY-RETURNS
-                    // while a manual `setMood` pins the mood (AX.W46 D7), so this call
-                    // never clobbers a user-pinned mood; a fresh live click/pointer-over
-                    // releases the pin back to the arc. Under reduced-motion (tempo 0)
-                    // the mood holds — no retargeting on a parked frame.
-                    if (!reduced) {
-                        mood.update({
-                            pointerActive: pointer.active.value,
-                            clicked: pointer.consumeClick(),
-                            idleMs: pointer.idleMs(),
-                        });
-                    }
-                    mood.tick(stepMs);
-                    if (reduced) {
-                        pointer.rest();
-                    } else {
-                        pointer.tick(stepMs);
-                    }
-                    satellites.tick(simTimeMs, mood.params.value);
-
-                    // Resolve the frame state, then hand it to the uniform-upload
-                    // leaf (the byte-identical write + draw). The resolve order —
-                    // advance the systems above, then read their settled values —
-                    // is unchanged; the leaf does ONLY the uniform writes.
-                    const frame: BlobFrameState = {
-                        params: mood.params.value,
-                        rgb: resolveColor(color.value),
-                        simTimeMs,
-                        timeSec,
-                        resolveColor,
-                        rimColor: rimColor.value,
-                        paletteStops: paletteStops.value,
-                    };
+                    const frame = resolveFrame(timeSec);
                     uploadBlobUniforms(gl, prog, vao, locs, canvas, config, pointer, satellites, frame);
-                }
-
-                /**
-                 * Demand gate (AX.W16 arm 2 — the EVENT-SCHEDULED quiescence signal).
-                 *
-                 * The prior gate `return !paused` defeated the substrate's demand loop
-                 * for the onscreen-idle case — an idle ambient blob burned a full 60fps
-                 * rAF (FBM×2 + OKLCh-per-fragment) forever (the `:512` "perpetually
-                 * animated" comment). This replaces it with a REAL at-rest predicate:
-                 * the loop runs IFF SOMETHING is actually changing —
-                 *   • the mood is mid-transition or has a pending auto-mood arc, OR
-                 *   • the pointer spring is moving / the trail is non-empty / the click
-                 *     pulse is non-zero, OR
-                 *   • a satellite is mid-merge/absorbed/emerging (not in steady orbit).
-                 * When ALL are at rest the gate returns false and the substrate STOPS
-                 * rescheduling — the blob renders ZERO frames between phase transitions.
-                 *
-                 * NO false-park: the predicate ORs EVERY motion source (a frozen-mid-
-                 * gesture blob is the hazard); the first-post-park dt clamp (drawFrame's
-                 * `Math.min(rawDtMs, 50)` + the spring/pointer clamps) keeps the re-arm
-                 * smooth. While paused (G2) OR reduced (the substrate's reschedule gate)
-                 * the loop parks regardless — this gate is the MOTION quiescence layer.
-                 *
-                 * The WAKE: a parked-at-rest blob must RE-ARM when its next satellite
-                 * orbit/merge phase is due (a pending idle→sleepy auto-mood arc fires on
-                 * the same wake). The satellite system knows its phase horizon
-                 * (`nextEventMs`); we schedule a `setTimeout` wake at that horizon so the
-                 * loop re-arms on the scheduler (glass-ui's invalidate()/R3F demand
-                 * model), never by polling.
-                 */
-                function shouldContinue(): boolean {
-                    if (paused) return false;
-                    const live =
-                        !mood.isSettled() ||
-                        !pointer.isAtRest() ||
-                        !satellites.isQuiescent();
-                    if (live) {
-                        clearWakeTimer();
-                        return true;
-                    }
-                    // About to park at rest — arm a wake at the SOONER of the next
-                    // satellite phase boundary and the pending auto-mood (idle→sleepy)
-                    // arc, so the parked loop re-renders exactly when the next scheduled
-                    // event is due (the orbit/merge resumes OR the mood drifts).
-                    const satHorizonMs = satellites.nextEventMs(simTimeMs);
-                    const moodDelayMs = mood.nextAutoMoodMs();
-                    const moodHorizonMs = Number.isFinite(moodDelayMs)
-                        ? simTimeMs + moodDelayMs
-                        : Infinity;
-                    scheduleWake(Math.min(satHorizonMs, moodHorizonMs));
-                    return false;
                 }
 
                 return {
@@ -360,7 +336,11 @@ export function useMetaballRenderer(
             },
         });
 
-        canvasHandle.arm();
+        // The WebGPU path needs the async device-acquire (`armAsync`); the WebGL2
+        // fallback's `armAsync` resolves immediately off the synchronous `arm()`, so this
+        // one call arms BOTH backends. Fire-and-forget — a device-init failure is
+        // surfaced by the substrate's own `onInitError`; the loop simply never arms.
+        void canvasHandle.armAsync();
     }
 
     watch(

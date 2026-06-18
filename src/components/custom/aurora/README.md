@@ -233,9 +233,15 @@ mechanism.
 
 ## Flow and warp
 
-- **`warpMode`** (`fbm` | `cellular` | `hybrid`) — the region-boundary character. `fbm`
+- **`warpMode`** (`fbm` | `cellular` | `hybrid` | `curl`) — the region-boundary character. `fbm`
   gives soft organic zones; `cellular` gives chunky almost-rectangular territories;
-  `hybrid` averages both.
+  `hybrid` averages both; `curl` (BB.B1, OPT-IN) advects the field along the
+  divergence-free curl of an fbm potential (the Bridson SOTA flow-field warp — folds +
+  stretches like fluid advection, never the source-y bulge a raw fbm gradient produces).
+  It is never auto-selected by the NOISE atom (set `warpMode: "curl"` explicitly); the
+  default config is byte-unchanged. The curl operator is the shared `curlFBM` glsl chunk
+  (`src/composables/glass/webgl/shaders/flow.glsl.ts`). The WGSL arm degrades to `fbm`
+  until the booked procedural-tail WGSL curl lands.
 - **`flow.pattern`** (`none` | `radial` | `swirl` | `diagonal` | `multi`) — the directional
   field the pastel/oil/crayon mediums lay strokes along (`flow.glsl.ts:6`). Flow drives
   *stroke direction only*, never which palette stop a pixel picks (`DESIGN.md §2.5`).

@@ -13,8 +13,10 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  *
  * Renders a pulsing SDF body with orbiting satellites that periodically merge in,
  * get absorbed, then re-emerge. Mood, pointer-attraction and a deterministic
- * satellite system drive the motion. The renderer composes the `useWebGLCanvas`
- * substrate — it never bootstraps its own context.
+ * satellite system drive the motion. The renderer composes the `createGpuSubstrate`
+ * picker — the WebGPU-first `metaball.wgsl` primary OR the WebGL2 `metaball.frag`
+ * fallback (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU), selected once by `navigator.gpu`
+ * feature-detect; it never bootstraps its own context.
  *
  * Color is resolved INTERNALLY through the `/color` leaf (`cssToOklch →
  * oklchToGammaRgb`): the blob paints the GAMMA-sRGB triple of the `color` prop. A

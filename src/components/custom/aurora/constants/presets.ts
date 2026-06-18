@@ -93,7 +93,11 @@ export type FlowPattern =
  */
 export type StrokeOrient = "flow" | "tensor";
 
-export type WarpMode = "fbm" | "cellular" | "hybrid";
+// BB.B1 — `"curl"` is the OPT-IN Bridson curl-noise flow warp (the divergence-free
+// curl of an fbm potential). It is never auto-selected by the NOISE atom fan-out
+// (warpModeFor stays fbm→hybrid→cellular), so the default config is byte-unchanged;
+// a consumer opts in by setting `warpMode: "curl"` explicitly.
+export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
 
 /**
  * AW.W6/W8 — the interactivity flag SHAPE (declared at W6, default OFF; behavior

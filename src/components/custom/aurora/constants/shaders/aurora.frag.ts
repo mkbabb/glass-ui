@@ -33,6 +33,7 @@ import {
     PALETTE_RAMP_GLSL,
     PCG_HASH_GLSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+import { CURL_FBM_GLSL } from "../../../../../composables/glass/webgl/shaders/flow.glsl";
 import { AURORA_COMPOSITION_GLSL } from "./composition.glsl";
 import { AURORA_FLOW_GLSL } from "./flow.glsl";
 import { AURORA_TONEMAP_GLSL } from "./tonemap.glsl";
@@ -83,7 +84,7 @@ uniform float uValueVariance;
 uniform float uWarpAmount;
 uniform float uWarpScale;
 uniform float uWarpDrift;
-uniform int   uWarpMode;      // 0=fbm 1=cellular 2=hybrid
+uniform int   uWarpMode;      // 0=fbm 1=cellular 2=hybrid 3=curl (BB.B1 — opt-in Bridson flow warp)
 uniform int   uNoiseOctaves;
 
 // Medium
@@ -197,6 +198,19 @@ float fbm(vec2 p) {
   return v;
 }
 
+// BB.B1 — the shared curl-noise flow chunk (curlFBM), spliced from the single source
+// procedural surfaces share (the AV.W2 shared-chunk precedent, applied to FLOW). The
+// chunk owns ONLY the basis-agnostic curl operator; the host owns the noise basis —
+// aurora wraps its OWN fbm as the scalar potential (so curl rides the same 2.02-
+// lacunarity loop the rest of the warp uses). The curl operator is consumed ONLY on
+// the OPT-IN warpMode == "curl" branch (uWarpMode == 3) — the default warp paths are
+// byte-untouched (no curl call), so every existing aurora gate stays byte-equivalent.
+${CURL_FBM_GLSL}
+
+// The scalar fbm potential ψ for curlFBM — aurora's own fbm. The splice above
+// forward-declares potentialFBM; this defines it (ES 3.00 allows the prototype).
+float potentialFBM(vec2 p) { return fbm(p); }
+
 // AX.W12 — the painterly-medium organic noise basis (Jarzynski PCG2D integer-bit hash
 // + 2D simplex gradient noise), SPLICED from the shared procedural-color chunk (the
 // single hash source).
@@ -273,6 +287,13 @@ vec2 domainWarp(vec2 p, float t) {
     float c1 = cellular(p * uWarpScale * 1.2);
     float c2 = cellular(p * uWarpScale * 1.2 + vec2(11.0, 7.0));
     warp = mix(r, vec2(c1, c2), 0.5);
+  } else if (uWarpMode == 3) {
+    // BB.B1 — curl (Bridson flow warp). The divergence-free curl of an fbm potential
+    // advects the field along a source-free swirl — folds + stretches like fluid
+    // advection, never the source-y bulge a raw fbm gradient produces. The potential
+    // scrolls on the same warp-drift clock; curlFBM is the shared chunk's operator.
+    vec2 fp = p * uWarpScale + vec2(t * uWarpDrift * K_WARP);
+    warp = curlFBM(fp);
   }
   vec2 warped = p + uWarpAmount * warp;
 

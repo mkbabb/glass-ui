@@ -48,12 +48,18 @@ re-recorded there if the empirical capture demands a re-tune.
     {
       "viz": "goo-blob",
       "subpath": "/goo-blob",
-      "status": "pending",
-      "primary": null,
+      "status": "verified",
+      "primary": "src/components/custom/goo-blob/shaders/metaball.wgsl.ts",
       "fallback": "src/components/custom/goo-blob/shaders/metaball.frag.ts",
       "rank": 2,
       "subWave": "BB.W-VIZ-SUITE.c W-GOOBLOB-WGPU",
-      "note": "clean SDF smin port (417L); the two live fwidth() sites (line 266 AA-edge + line 364 Toksvig spec-clamp) transcribe to WGSL fragment-stage fwidth() — the ΔE drift suspects. The .frag stays byte-untouched."
+      "captures": [
+        "docs/tranches/BB/audit/visual/goo-blob-wgpu-parity/goo-blob-wgpu-primary.png",
+        "docs/tranches/BB/audit/visual/goo-blob-wgpu-parity/goo-blob-webgl2-fallback.png",
+        "docs/tranches/BB/audit/visual/goo-blob-wgpu-parity/parity-record.json"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "MIGRATED — clean SDF smin port (417L). metaball.wgsl.ts is the WebGPU-first primary (the house spliceable-module form, splicing the SAME procedural-color.wgsl.ts twin aurora splices — ONE color source); metaball.frag.ts stays the byte-untouched WebGL2 fallback (git diff --stat empty). The two live fwidth() sites (line 266 AA-edge half-width + line 364 Toksvig normal-variance spec-clamp) transcribe to WGSL fragment-stage fwidth() — the most rasterizer-drift-prone lines, called out by name in the capture record. The renderer's simulation advance (resolveFrame) is SHARED across both backends; only the upload+draw leg differs. The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY (the parity-critical color seam — shared OETF + Ottosson OKLCh + the per-pixel OKLCh perturb round-trip + the gamut clamp + the warm-cream lit-glass specular/rim + the IGN dither — evaluated through both chunk variants over the same deterministic field; the two fwidth() sites use an analytic stand-in identical for both paths; mean/p99 = 0.0, both chunks numerically identical). The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels, including the REAL per-GPU fwidth() derivative drift) rides W-REFLECT3 + re-records the empirical ΔE."
     },
     {
       "viz": "dot-flow-field",

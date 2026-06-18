@@ -121,6 +121,7 @@
 > reserve interim (e.g. speedtest's `.instrument-dial { min-block-size: var(--chassis-max-block-size) }`,
 > AW.W4.1) DELETES it on consume — byte-equivalent at the default; retune via the token if the meter block-size differs.
 > CANONICALIZED (4.1.0): `--glass-opacity-{tier}` per-tier alpha — documented + gated (BB.W-CARD-TIER-ALPHA); values byte-unchanged, a consumer that re-pinned the same tier alphas (e.g. speedtest register.css) deletes its override on consume.
+> ADDITIVE (4.1.0): aurora `warpMode` gains `"curl"` — the Bridson curl-noise flow warp (opt-in; the default fbm/cellular/hybrid render byte-identical). The published `WarpMode` union widens additively; no break (BB.B1).
 
 > **CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
 > The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the

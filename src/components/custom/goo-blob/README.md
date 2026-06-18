@@ -381,13 +381,17 @@ goo-blob/
 │                            #   MetaballSource, BLOB_CONFIG_KEY/DEFAULTS
 ├── shaders/
 │   ├── metaball.vert.ts     # full-quad vertex
-│   ├── metaball.frag.ts     # the fragment assembler (pre-FBM bounding discard, OKLCh perturb, lit dome)
+│   ├── metaball.frag.ts     # the WebGL2 fragment assembler (pre-FBM bounding discard, OKLCh perturb, lit dome)
+│   ├── metaball.wgsl.ts     # the WebGPU-FIRST primary (the 1:1 WGSL transcription incl. the 2 fwidth() sites)
 │   ├── sdf-body.glsl.ts     # sdCircle + value+gradient smin (the analytic-gradient merge field)
 │   ├── watercolor-edges.glsl.ts  # the domain-warped FBM that displaces the edge
 │   └── oklch-perturb.glsl.ts     # inGamut + hue-preserving gamutClampOklch
 └── composables/
-    ├── useMetaballRenderer.ts   # composes useWebGLCanvas; compile, uniform upload, quiescence gate,
-    │                            #   pause/resume seam, quality axis (DOM-free — concrete colors only)
+    ├── useMetaballRenderer.ts   # composes createGpuSubstrate (WebGPU primary / WebGL2 fallback);
+    │                            #   the SHARED resolveFrame sim-advance, quiescence gate, pause/resume seam
+    ├── wgpuSetup.ts             # the WGSL setupWGPU twin (pipeline + bind-group-0 + the per-frame render pass)
+    ├── uniformBridgeWGPU.ts     # the typed-struct uniform SoURCE-OF-TRUTH (the WGSL struct ↔ ArrayBuffer offsets)
+    ├── uploadBlobUniforms.ts    # the WebGL2 per-frame uniform-upload leaf
     ├── useBlobSatellites.ts     # the orbit/merge/absorb/emerge state machine (seeded, deterministic)
     ├── useBlobMood.ts           # the {valence, arousal} 5-mood cross-fade engine
     ├── useBlobPointer.ts        # spring pointer → [-1,1], trail, click impulse, composed rest pose
@@ -395,10 +399,40 @@ goo-blob/
 ```
 
 The fragment shader is **composed from cohesive partials** spliced into one source string at module
-load — the emitted shader is character-equivalent to a hand-inlined version. The renderer composes the
-shared `useWebGLCanvas` substrate and is DOM-free: the SFC un-wraps every color via one
-`resolveTokenColor` leaf before the renderer resolves the concrete strings through the `/color` leaf
-(`cssToOklch → oklchToGammaRgb`).
+load — the emitted shader is character-equivalent to a hand-inlined version. The renderer is DOM-free:
+the SFC un-wraps every color via one `resolveTokenColor` leaf before the renderer resolves the concrete
+strings through the `/color` leaf (`cssToOklch → oklchToGammaRgb`).
+
+### Substrate (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU — the second migrated viz)
+
+GooBlob is the SECOND procedural-suite viz migrated to the WebGPU-first dual-substrate (after aurora).
+It renders the SAME SDF metaball field through ONE of two backends, picked ONCE at mount by
+`createGpuSubstrate` (`navigator.gpu` feature-detect):
+
+- **`metaball.wgsl.ts` — the WebGPU-FIRST primary** (net-new). The domain-warped membrane body
+  smin-merged with the orbiting satellites + the pointer trail, the analytic-gradient surface normal, the
+  per-pixel OKLCh perturb round-trip, the iridescence / fake-SSS / lit-glass surface, and the mandatory
+  `linearToSrgb` OETF — transcribed 1:1 to WGSL over the full-screen-triangle `vs_main`, splicing the
+  SAME shared `procedural-color.wgsl.ts` chunk aurora splices (ONE color math across both backends).
+  **The two live `fwidth()` sites** (the AA-edge half-width @ `metaball.frag.ts:266` + the Toksvig
+  normal-variance specular clamp @ `:364`) transcribe to WGSL fragment-stage `fwidth()` — the most
+  rasterizer-drift-prone lines (the ΔE-calibration suspects).
+- **`metaball.frag.ts` — the WebGL2 fallback** (BYTE-UNTOUCHED — the GL-shader fence). The graceful
+  path for the ~5-10% tail (Linux Firefox stable, pre-A12 iPhones, flagged Firefox-Android). NOT retired.
+
+The renderer's **simulation advance (`resolveFrame`) is SHARED** across both backends — it advances the
+mood / pointer / satellite systems on the tempo-scaled step and returns the settled `BlobFrameState`; the
+WebGL2 `drawFrame` (then `uploadBlobUniforms`) and the WGSL `frame` (then `packBlobWGPUUniforms`) both
+call it, so the physics is identical regardless of backend and only the upload+draw leg differs. The
+worst-case-orbit smin band widen (BA.W-GOO-REDRESS) + the POS_SCALE contract + the maxReach
+bounding-discard thread through the WGSL uniform buffer IDENTICALLY. Both backends compose the SAME
+`createCanvasLifecycle` leaf (the offscreen-pause + live-PRM-freeze + the satellite-phase wake scheduler
+is byte-identical), so the lifecycle wiring (`useIntersectionPause`, `DockBackgroundToggle` pause/resume,
+the `pointer.active → wake()` seam) is substrate-agnostic. Parity is machine-locked by
+`proof:gpu-substrate-single` (the goo-blob row is `verified` with a recorded OKLab ΔE within the
+calibrated bar — mean ≤ 2.0 / p99 ≤ 5.0); the device-free structural-proxy capture-pair is on disk
+(`docs/tranches/BB/audit/visual/goo-blob-wgpu-parity/`), the binding Metal-GPU live capture (including
+the REAL per-GPU `fwidth()` derivative drift) rides W-REFLECT3.
 
 ---
 
