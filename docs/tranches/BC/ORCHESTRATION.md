@@ -179,7 +179,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs (wyy4pa6jq) | 6/11 DONE | research/viz/{aurora,goo-blob,dot-flow-field,concentric,fourier-field,constellation}.md |
 | 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | DONE | research/viz/*.md ALL 11 |
 | 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs (w0syxq0x5) | DONE 66 waves | 66 waves/*.md + DEFERRAL-LEDGER (404L) + PROMPT-LEDGER §3.1 |
-| 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs | LAUNCHING | WAVE-INDEX.md + name-fix + CHALLENGE gap reports |
+| 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs (w2vvz9y8s) | DONE | WAVE-INDEX.md + CHALLENGE-1.md (7B/9M/6m gaps) |
+| 4 | HARDEN | fix CHALLENGE-1 gaps + 4 new waves | bc-iter4-harden.mjs (w3pp3xzy6) | IN-FLIGHT | viz-drift fixed + VISUAL-RECONCILE + perf band + contradictions resolved |
 
 > **PLAN COMPLETE — 66 waves authored.** Known gap (the agent flagged it): the DEFERRAL-LEDGER + PM
 > disposition column references DRIFTED wave names (BC.W-VIZ-LIVE/WGSL-COMPILE-GATE/CROSSREPO-ADOPT/
@@ -194,19 +195,20 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: PLAN COMPLETE (66 waves). iteration 3 RECONCILE+CHALLENGE IN-FLIGHT (task w2vvz9y8s
-> — bc-iter3-reconcile-challenge.mjs). Reconcile builds WAVE-INDEX.md + fixes the disposition-name
-> drift; 3 challenge agents return gap reports (coverage-defects-prompts / coverage-deferrals-soundness
-> / internal-contradictions-viz-precepts).**
-> On iter3 completion (TaskOutput w2vvz9y8s): verify WAVE-INDEX.md landed; collect the challenge gaps
-> (result.challenges[].gaps) into docs/tranches/BC/CHALLENGE-1.md grouped by severity; commit. Then:
-> 1. **4 HARDEN** — fan-out (batches of 3) that FIXES the BLOCKER+MAJOR gaps: edit the flagged waves,
->    author any NEW waves the challenge demands, add the missing gate/π/captured-paint acceptance arms.
-> 2. **5 CHALLENGE-2** — re-run the adversarial pass; if it finds new gaps, HARDEN again (loop).
-> 3. Converge when §1 fully checked AND 2 consecutive challenge passes find no BLOCKER/MAJOR. Then
+> **NEXT CURSOR: CHALLENGE-1 found 7B/9M/6m gaps (mostly residual name-drift + missing VISUAL-RECONCILE
+> + the perf band + the DOCK/SPRING contradiction). iteration 4 HARDEN IN-FLIGHT (task w3pp3xzy6,
+> bc-iter4-harden.mjs).**
+> On iter4 completion (TaskOutput w3pp3xzy6): verify the 4 new waves landed (BC.W-VISUAL-RECONCILE +
+> BC.W-CSS-CRITICAL/LIGHTHOUSE/PERF-PRODUCER); APPLY the ORCHESTRATION §1 additions H4 returns in its
+> notes (new Band-4 VISUAL-RECONCILE box + a new "Band 11 — PERFORMANCE" section); confirm H4's
+> soundness sweep found no remaining dangling; commit. Then:
+> 1. **5 CHALLENGE-2** — re-run the adversarial pass (bc-iter3-reconcile-challenge.mjs's Challenge
+>    phase, or a fresh 3-agent challenge) over the now-~70-wave set. If BLOCKER/MAJOR remain → HARDEN
+>    again (loop iterations 6,7,...).
+> 2. Converge when §1 fully checked AND 2 consecutive challenge passes find no BLOCKER/MAJOR. Then
 >    write FINAL.md, report, retire cron 17dd706c.
-> Iteration count so far: 0,1,1b,1-sweep,1c,1d,1d-rerun,2,3 = 9 toward the ≥20 target.
-> Keep ≤3 agents concurrent. Do NOT double-spawn while w2vvz9y8s is in flight.
+> Iteration count: 0,1,1b,1-sweep,1c,1d,1d-rerun,2,3,4 = 10 toward the ≥20 target.
+> Keep ≤3 agents concurrent. Do NOT double-spawn while w3pp3xzy6 is in flight.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
