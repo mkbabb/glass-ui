@@ -201,7 +201,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 14 | CHALLENGE-6 | clean-confirm #1 (post-DEEPEN-2) | bc-iter14-challenge6.mjs (wjh5w4xc6) | DONE — 1 MAJOR | a11y/perf + coverage CONVERGED; 1 MAJOR (DAG SPRING-EASE→DOCK-ENGINE prose ∅ vs binding edge; acyclic proven) |
 | 15 | HARDEN-5 | reconcile the DAG edge + 2 MINOR | bc-iter15-harden5.mjs (wmtr7bxho) | DONE | DAG edge=consume-after-mint, acyclic re-confirmed (Kahn 70/70), 0 remaining |
 | 16 | CHALLENGE-7 | clean-confirm #1 (final-integrity) | bc-iter16-challenge7.mjs (w5g2b132n) | DONE — 1 MAJOR | C1 DAG + C3 FINAL-ready CONVERGED; C2 1 MAJOR (WAVE-INDEX:155 stale lineage cell, non-binding) |
-| 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | IN-FLIGHT | WAVE-INDEX:155 + 3 THIN + full lineage-map reconcile |
+| 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | DONE | WAVE-INDEX:155 + GRID-SIMPLE + H31/H100 mis-routes; whole non-binding surface swept clean; tail broken |
+| 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | IN-FLIGHT | tailbreak-verify + coverage/soundness + executor/user holistic |
 
 > **GAP-CONVERGENCE near (CHALLENGE-4 clean #1; CHALLENGE-5 = executor-ready + intent-faithful, the lone
 > MAJOR was a §1-checklist-box omission for BC.W-DECK, FIXED in-place — §1 now 70 boxes = disk). The
