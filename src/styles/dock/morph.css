@@ -427,7 +427,15 @@
        ink, which clears ~10:1). */
     :where(.glass-dock) {
         --glass-tint-source: var(--glass-tint-ink);
-        --glass-tint-strength: var(--glass-tint-strength-aa);
+        /* BC.W-AUDIT — the scope-7 completion: the dock JOINS the content-tier
+           sub-perceptual FLOOR by default (translucent warm liquid glass, NOT a grey
+           slab), and the FULL AA darken engages ONLY under the genuine bright signal —
+           the `@container --glass-backdrop: light` bucket below, written by the dock's
+           own sampled-luminance observer over a bright backdrop (aurora/DockStage) OR a
+           consumer's explicit bucket. The prior unconditional AA (20% ink-ward) darkened
+           the dock to grey over EVERY calm light page — the iOS-27 dynamic model done
+           wrong (darken-always vs darken-when-bright). The full glass rebuild is BC. */
+        --glass-tint-strength: var(--glass-tint-strength-floor);
         --dock-fg-on-aurora: var(--glass-tint-ink);
         --muted-foreground: var(--foreground);
     }

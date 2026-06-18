@@ -211,7 +211,13 @@
        `--glass-tint-strength: 0%`. */
     :where(.glass-floating, .glass-overlay) {
         --glass-tint-source: var(--glass-tint-ink);
-        --glass-tint-strength: var(--glass-tint-strength-aa);
+        /* BC.W-AUDIT — the scope-7 completion: the overlay band JOINS the content-tier
+           sub-perceptual FLOOR by default (translucent warm glass), and the FULL AA
+           darken engages ONLY under the bright bucket (the @container --glass-backdrop:
+           light above). The prior unconditional AA (20% ink-ward) collapsed every
+           floating surface to grey over the common calm-light backdrop. The full glass
+           rebuild + the per-band muted/contrast reconciliation is BC. */
+        --glass-tint-strength: var(--glass-tint-strength-floor);
         --muted-foreground: var(--foreground);
     }
 
