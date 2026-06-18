@@ -137,7 +137,7 @@ row with no covering wave is a convergence gap (none found at authoring). Groupe
 | H28 | double-card-on-grid wrong → ONE card with aurora/procedural; EVERY PAGE audacious hero that shrinks on scroll | USER-DEFECTS §C | BC.W-PAGE-CHASSIS |
 | H29 | /display/card every card's padding wrong; dialog padding wrong | USER-DEFECTS §C | BC.W-PADDING-CANON |
 | H30 | text not centered (specimen); items not rounded (separator/home/aurora-config) | USER-DEFECTS §C | BC.W-SEPARATOR-FIX + BC.W-GHOST-DASHED |
-| H31 | /display/separator totally broken; buttons don't work (specimen) | USER-DEFECTS §C | BC.W-SEPARATOR-FIX |
+| H31 | /display/separator totally broken; buttons don't work (specimen) | USER-DEFECTS §C | BC.W-SEPARATOR-FIX (separator) + BC.W-BUTTON-GLASS-IOS (buttons-don't-work — OWNS the §C live interaction diagnosis + fix-if-dead + BG-IOS-5; BC.W-VISUAL-RECONCILE is the conditional re-open home) |
 | H32 | sections delimited by hr OR cards; EVERY PAGE STANDARDIZED + hierarchy suffused | USER-DEFECTS §C | BC.W-PAGE-HIERARCHY |
 | H33 | component names + technical values → proper CODE BLOCKS + Fira Code | USER-DEFECTS §C | BC.W-CODE-BLOCKS |
 | H34 | ghost items DASHED outline | USER-DEFECTS §C | BC.W-GHOST-DASHED |
@@ -211,7 +211,7 @@ row with no covering wave is a convergence gap (none found at authoring). Groupe
 | H97 | tranche format — bbnf-lang `docs/tranches/{LETTER}/`, hard gates, FINAL.md | `feedback_tranche_format.md` | BC entire (the format) |
 | H98 | the consumer-mis-prune external-blind-spot class (internal rg can't see external consumers) | `project_aw_session_limit_halt.md` | BC.W-ATLAS-ASK (registry-consumer probe) |
 | H99 | the demos-consume-glass-ui name-forward D1-D8 routing (value.js color, kf animation, glass-ui UI) | `project_av_g_tranches.md` | BC.W-SPEEDTEST-ADOPT (fleet, sibling-side) |
-| H100 | the never-run live Lighthouse + the aurora-medium lazy-chunk split (booked successor) | `deferral/memory.md` `perf-producer-lighthouse-never-run-live` | BC.W-CUT (live Lighthouse) |
+| H100 | the never-run live Lighthouse + the aurora-medium lazy-chunk split (booked successor) | `deferral/memory.md` `perf-producer-lighthouse-never-run-live` | BC.W-LIGHTHOUSE (Band 11 — RUNS the live score on the rebuilt floor; the aurora-medium lazy-chunk split re-decided at BC.W-VIZ-AURORA); BC.W-CUT runs `proof:lighthouse` as a cut gate |
 
 > 100 historical prompts/asks recalled + mapped (target ≥50 cleared). Every row carries a covering BC
 > wave; no convergence gap found at authoring. The CHALLENGE iterations re-cross-check this table
