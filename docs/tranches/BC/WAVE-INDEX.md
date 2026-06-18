@@ -1,15 +1,28 @@
 # BC — the WAVE-INDEX (the canonical wave registry — the single source of truth for wave names)
 
 > **The allowlist.** Every disposition / cross-reference in the BINDING wave-set docs —
-> `DEFERRAL-LEDGER.md`, `PROMPT-LEDGER.md`, `ORCHESTRATION.md`, and the wave specs (`waves/*.md`) —
+> `DEFERRAL-LEDGER.md`, `PROMPT-LEDGER.md`, the `ORCHESTRATION.md` cross-references (the §1 band
+> roster — the authoritative band→wave mapping), and the wave specs (`waves/*.md`) —
 > MUST name a wave that appears in this table. A reference to a name NOT in this index is
 > **name-drift** — reconcile it to the canonical id (or, if it maps to NO authored wave, it is a
 > genuine coverage gap for the CHALLENGE pass, never invented here).
 >
+> **ORCHESTRATION.md's NARRATIVE history-notes are EXEMPT (same treatment as `PLAN.md`).** The
+> binding ORCHESTRATION cross-references are the §1 band roster. The iteration-log / progress table
+> and the "Known gap" reconcile-prose are reconcile-NARRATION — they NARRATE the iteration-2 fan-out's
+> working-names (e.g. `BC.W-VIZ-LIVE` / `BC.W-WGSL-COMPILE-GATE` / `BC.W-CROSSREPO-ADOPT` /
+> `BC.W-CONSTELLATION` / `BC.W-SLIDES`) WHILE recording the reconcile that mapped each to a canonical
+> wave — they are NOT binding dispositions. Every name they carry is in the Name-drift map below, so a
+> literal allowlist read no longer contradicts ORCHESTRATION's own prose (the residual CHALLENGE-1
+> flagged for the ORCHESTRATION owner, closed). The F2 / F2.b scan reads `FOLD-LEDGER.json` rows +
+> `DEFERRAL-LEDGER.md` cells, never ORCHESTRATION prose, so no gate trips — pure doc-hygiene.
+>
 > **The historical planning docs are EXEMPT (frozen pre-reconcile working-names, NOT the binding set).**
 > `PLAN.md` (`Status: DEVELOPED` — the iteration-1/2 authoring plan), the `audit/` corpus
-> (`USER-DEFECTS.md`, `DEFECT-LEDGER.md`, `FINDINGS-DIGEST.md`, `LIVE-GROUNDING.md`), and
-> `research/WAVE-IMPACTS.md` are FROZEN planning artifacts: they carry pre-reconcile working-names
+> (`USER-DEFECTS.md`, `DEFECT-LEDGER.md`, `FINDINGS-DIGEST.md`, `LIVE-GROUNDING.md`), and the WHOLE
+> `research/` corpus (`WAVE-IMPACTS.md`, `route-census.md`, `cross-repo-asks.md`, the `deferral/` +
+> `postmortem/` + `viz/` sub-trees — all iteration-1 planning artifacts) are FROZEN: they carry
+> pre-reconcile working-names
 > (e.g. `BC.W-WGSL-COMPILE-GATE`, `BC.W-GPU-PARITY-REAL`, `BC.W-VIZ-LIVE`, `BC.W-DOCK-EDGE`,
 > `BC.W-CHRONIC-FOLD`, `BC.W-CROSSREPO-ADOPT`, `BC.W-CONSTELLATION`, `BC.W-SLIDES`, `BC.W-DECK-BUILD`,
 > `BC.W-PROMPT-LEDGER`) as section headers / intent labels. Every one is catalogued in the Name-drift
@@ -128,7 +141,9 @@ here so a future reader knows the lineage (the drift was a naming slip, not a dr
 | `BC.W-WGSL-COMPILE-GATE` | `BC.W-WEBGPU-EVERYWHERE` (+ `BC.W-SAFARI-WEBGL` for the cross-engine arm) | the headless WGSL-compile floor folded into the WebGPU-everywhere substrate wave |
 | `BC.W-GPU-PARITY-REAL` | `BC.W-WEBGPU-EVERYWHERE` | the real-swap-chain readback (retire the ΔE-0.0 tautology) folded into the WebGPU-everywhere wave |
 | `BC.W-CONSTELLATION` | `BC.W-VIZ-CONSTELLATION` | the constellation viz wave |
-| `BC.W-FOURIER-ONE` | `BC.W-VIZ-FOURIER` | the "ONE fourier view" demo redesign IS the fourier viz wave |
+| `BC.W-FOURIER-ONE` | `BC.W-VIZ-FOURIER` | the "ONE fourier view" demo redesign IS the fourier viz wave (the `research/` corpus — `WAVE-IMPACTS.md` / `route-census.md` / `cross-repo-asks.md` — still names it; the doc is a FROZEN historical artifact per the exempt clause above, the binding `FOURIER-ASK.md` + `DEFERRAL-LEDGER` use the canonical id throughout) |
+| `BC.W-CONCENTRIC-LINES` | `BC.W-VIZ-CONCENTRIC` | the concentric-ellipsoid-lines viz redesign IS the concentric viz wave (named in `research/WAVE-IMPACTS.md` + `research/route-census.md` — FROZEN historical artifacts, the binding docs use `BC.W-VIZ-CONCENTRIC`) |
+| `BC.W-DOTFLOW-WAVES` | `BC.W-VIZ-DOTFLOW` | the dot-flow-waves retopologize IS the dot-flow viz wave (named in `research/WAVE-IMPACTS.md` + `research/route-census.md` — FROZEN historical artifacts, the binding docs use `BC.W-VIZ-DOTFLOW`) |
 | `BC.W-GOOBLOB-FIRSTPRINCIPLES` | `BC.W-GOOBLOB-PLAIN` + `BC.W-GOOBLOB-MEATBALL` | the goo-blob from-first-principles rebuild is the two-stage pair |
 | `BC.W-SLIDES` | `BC.W-CUT` | the slides redeploy is an EXECUTION-phase clause of the cut wave |
 | `BC.W-DECK-BUILD` (deck page-turn) | `BC.W-DECK` | the deck PAGE-TURN primitive lands inside the /deck build |
