@@ -178,11 +178,13 @@ model) synthesizes; the fanout is opus/sonnet.
 | 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs (w53yzm840) | DONE | research/postmortem/{bb,ba,az}.md + SYNTHESIS.md (29 classes) |
 | 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs (wyy4pa6jq) | 6/11 DONE | research/viz/{aurora,goo-blob,dot-flow-field,concentric,fourier-field,constellation}.md |
 | 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | DONE | research/viz/*.md ALL 11 |
-| 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs | LAUNCHING | ~60 waves/*.md + DEFERRAL-LEDGER + PM wrappers |
+| 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs (w0syxq0x5) | DONE 66 waves | 66 waves/*.md + DEFERRAL-LEDGER (404L) + PROMPT-LEDGER §3.1 |
+| 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs | LAUNCHING | WAVE-INDEX.md + name-fix + CHALLENGE gap reports |
 
-> **RESEARCH PHASE COMPLETE** — 9/9 corpus + 213-item deferral fold + herostudios design + 3
-> post-mortems + SYNTHESIS (29 failure classes) + 11 per-viz SOTA docs. All durable in research/.
-> **NOW: iteration 2 PLAN launching (bc-iter2-plan.mjs, 18 agents, 6 batches).**
+> **PLAN COMPLETE — 66 waves authored.** Known gap (the agent flagged it): the DEFERRAL-LEDGER + PM
+> disposition column references DRIFTED wave names (BC.W-VIZ-LIVE/WGSL-COMPILE-GATE/CROSSREPO-ADOPT/
+> CONSTELLATION/SLIDES/…) that landed under canonical names (VIZ-CONSTELLATION/WEBGPU-EVERYWHERE/
+> SPEEDTEST-ADOPT/…). **iteration 3 reconciles + challenges.**
 | 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (18 agents) | STAGED | waves/*.md (~60) + DEFERRAL-LEDGER |
 
 > **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
@@ -192,9 +194,19 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: RESEARCH COMPLETE. iteration 2 PLAN IN-FLIGHT (task w0syxq0x5 — bc-iter2-plan.mjs,
-> 18 agents, 6 batches, ~60 waves). If the server rate-limit drops agents (it bit twice on big
-> fan-outs), re-run the dropped batch via a focused script like bc-iter1d-rerun.mjs.**
+> **NEXT CURSOR: PLAN COMPLETE (66 waves). iteration 3 RECONCILE+CHALLENGE IN-FLIGHT (task w2vvz9y8s
+> — bc-iter3-reconcile-challenge.mjs). Reconcile builds WAVE-INDEX.md + fixes the disposition-name
+> drift; 3 challenge agents return gap reports (coverage-defects-prompts / coverage-deferrals-soundness
+> / internal-contradictions-viz-precepts).**
+> On iter3 completion (TaskOutput w2vvz9y8s): verify WAVE-INDEX.md landed; collect the challenge gaps
+> (result.challenges[].gaps) into docs/tranches/BC/CHALLENGE-1.md grouped by severity; commit. Then:
+> 1. **4 HARDEN** — fan-out (batches of 3) that FIXES the BLOCKER+MAJOR gaps: edit the flagged waves,
+>    author any NEW waves the challenge demands, add the missing gate/π/captured-paint acceptance arms.
+> 2. **5 CHALLENGE-2** — re-run the adversarial pass; if it finds new gaps, HARDEN again (loop).
+> 3. Converge when §1 fully checked AND 2 consecutive challenge passes find no BLOCKER/MAJOR. Then
+>    write FINAL.md, report, retire cron 17dd706c.
+> Iteration count so far: 0,1,1b,1-sweep,1c,1d,1d-rerun,2,3 = 9 toward the ≥20 target.
+> Keep ≤3 agents concurrent. Do NOT double-spawn while w2vvz9y8s is in flight.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
