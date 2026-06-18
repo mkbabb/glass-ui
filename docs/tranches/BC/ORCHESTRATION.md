@@ -186,18 +186,14 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iteration 1b resume IN-FLIGHT (wiremj4eb). RESEARCH-before-PLAN order (the
-> triumvirate). On 1b completion → re-harvest route-census + viz-codebase, then the research-deepening
-> iterations BEFORE the PLAN fan-out:**
-> 1. **1c FORENSICS** — `bc-iter1c-forensics.mjs` (3 agents: BB/BA/AZ post-mortems — what was built
->    vs claimed vs painted; the failure-class taxonomy → Band 0 gate-redesign reqs).
-> 2. **1d PER-VIZ SOTA** — `bc-iter1d-viz-sota.mjs` (11 agents, batches of 3: one deep SOTA-research
->    doc per procedural item → research/viz/*.md, each pinning the WebGPU/WebGL2 technique + configurator
->    axes + demo-suite scope; uses web.dev/MDN/Baseline guidance).
-> 3. **2 PLAN** — `bc-iter2-plan.mjs` (expanded: +Band F post-mortem-informed gates, +the per-viz
->    families consuming research/viz/*.md, +goo-blob staging). Authors 50+ waves/*.md + DEFERRAL-LEDGER.
->
-> Do NOT double-spawn while wiremj4eb is in flight (check TaskList / TaskOutput first).**
+> **NEXT CURSOR: iteration 1 RESEARCH COMPLETE (9/9 corpus + 213-item deferral fold + herostudios).
+> 1c FORENSICS IN-FLIGHT (task w53yzm840, bc-iter1c-forensics.mjs — BB/BA/AZ post-mortems).**
+> On 1c completion (TaskOutput w53yzm840): harvest research/postmortem/{bb,ba,az}.md, then:
+> 1. **1d PER-VIZ SOTA** — fire `bc-iter1d-viz-sota.mjs` (11 agents, batches of 3+3+3+2 → research/viz/*.md).
+> 2. **2 PLAN** — after 1d, fire `bc-iter2-plan.mjs` (18 agents, 6 batches → ~60 waves/*.md +
+>    DEFERRAL-LEDGER.md + PM wave-wrappers + PROMPT-LEDGER extension).
+> 3. Then **3 HARDEN** + **4 CHALLENGE** iterations until convergence (§2 test).
+> Do NOT double-spawn while w53yzm840 is in flight (TaskOutput first). Keep ≤3 agents concurrent.
 
 ---
 
