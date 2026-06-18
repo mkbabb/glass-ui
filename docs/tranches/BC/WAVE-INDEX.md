@@ -32,14 +32,25 @@
 > planning docs.** (This closes the literal-rule contradiction CHALLENGE-2 named — the substance is
 > benign, every drifted name is in the drift map.)
 >
-> **74 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
+> **84 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
 > iteration-4 HARDEN's 4 (`BC.W-VISUAL-RECONCILE` + the Band-11 perf trio `BC.W-CSS-CRITICAL`/
 > `BC.W-LIGHTHOUSE`/`BC.W-PERF-PRODUCER` — the CHALLENGE-1 BLOCKER 3/4/5/7 + the un-owned-perf-chronic
-> + the buttons-interaction MAJOR closed) + iteration-5 ATLAS-FOLD's 4 (`BC.W-DESHADCN` reka=behavior/
+> + the buttons-interaction MAJOR closed) + iteration-5 ATLAS-FOLD's 5 (`BC.W-DESHADCN` reka=behavior/
 > glass-ui=100%-material + the `proof:no-shadcn-default` gate, `BC.W-SELECTION-CARD` the I5 `<Card
-> variant="selection">` (the ONE new component), `BC.W-GLASS-GLOW-FIX` the A-8 giant-radial-glow root
-> defect, `BC.W-EXPANDABLE-PART` the AR-7 `::part()`/named-slot expand-chrome seam — the
-> de-shadcn/Atlas-fold re-open; `DESHADCN-BRAINSTORM.md`).
+> variant="selection">` (the ONE new Atlas component), `BC.W-GLASS-GLOW-FIX` the A-8 giant-radial-glow root
+> defect, `BC.W-EXPANDABLE-PART` the AR-7 `::part()`/named-slot expand-chrome seam, `BC.W-DEMO-COPY-PRUNE`
+> the demo-content de-jargon — the de-shadcn/Atlas-fold re-open; `DESHADCN-BRAINSTORM.md`) +
+> **iteration-6 FEATURE-BAND's 9** (the new Bands 12/13/14, fanned out from `research/feat/WAVE-IMPACTS-FEAT.md`):
+> **Band 12 customizability+golden-defaults** — `BC.W-CUSTOMIZABILITY-CENSUS` (the binding "fully customizable
+> with golden defaults" bar + `proof:customizability-census`), `BC.W-CONTROL-CUSTOM` (the shared control
+> size/tier axis onto the input register), `BC.W-OVERLAY-UNIFORM` (the `surface` + φ overlay-pad ladder on
+> every floating overlay); **Band 13 dock-search+scroll-system** — `BC.W-SCROLL-TRIGGER` (the one rAF-coalesced
+> scroll-event reader), `BC.W-SCROLL-CHROME` (the shrink/opacity/snap scroll-driven chrome behaviors),
+> `BC.W-DOCK-SEARCH` (the DOCK as native dynamic-search-bar, subsuming the words SearchBar); **Band 14
+> latex-paper abstractions** — `BC.W-VIRTUAL-WINDOW` (the homecoming re-mint of the v1.0-retired
+> virtualized-section-windowing), `BC.W-TOC-RECONCILE` (the 3-way ToC-tracking fork reconciled onto
+> glass-ui/sidebar + the three missing leaves), `BC.W-FUZZY-HARDEN` (harden the canonical client fuzzy
+> surface for the dock-wire + the `useAsyncSearch` no-contrivance DECISION).
 > `proof:bc-fold-ledger` clause F2 (decided-destination soundness) REDs the close if any disposition
 > names a wave absent from this index; clause F2.b REDs a disposition that names only a bare `Band N`
 > label with no `BC.W-*` wave-id (the band-string-rejection anti-evasion floor).
@@ -50,7 +61,7 @@
 
 ---
 
-## The 74 canonical waves
+## The 84 canonical waves
 
 | id | band | title (one-line owns) | sequence-after |
 |---|---|---|---|
@@ -103,6 +114,7 @@
 | **BC.W-PAGE-HIERARCHY** | 5 | section delimiting (hr / sub-card) + design-hierarchy suffused, EVERY PAGE STANDARDIZED | after BC.W-PAGE-CHASSIS |
 | **BC.W-CODE-BLOCKS** | 5 | component names + technical values → ONE Fira Code code-block register | after BC.W-PAGE-CHASSIS + BC.W-PAGE-HIERARCHY |
 | **BC.W-PAGE-PRUNE** | 5 | prune superfluity, kill "view source"/platitudes/out-of-date copy + the orphan routes | before BC.W-PAGE-CHASSIS + BC.W-PAGE-HIERARCHY (FIRST of Band-5 re-author) |
+| **BC.W-DEMO-COPY-PRUNE** | 5 | de-jargon the user-facing demo copy (9 leaky blurbs + the changelog section) + kill the view-source SUBSYSTEM (useSourceLoader + Story.sourceFiles) + the orphan scaffolds (useStoryDemo + ToneSwatch); EXTENDS BC.W-PAGE-PRUNE (shared PRUNE-LEDGER) | beside/after BC.W-PAGE-PRUNE; before BC.W-PAGE-CHASSIS/BC.W-PAGE-HIERARCHY/BC.W-CODE-BLOCKS |
 | **BC.W-HERO-AUDACIOUS** | 5 | the herostudios audacious-type heroes, per-category icons, each DISTINCT | after BC.W-PAGE-CHASSIS |
 | **BC.W-COMPOSITIONS-HERO** | 5 | /compositions/hero made distinct from the homepage; /foundations/intro three-heroes → ONE | after BC.W-HERO-AUDACIOUS |
 | **BC.W-PADDING-CANON** | 5 | the golden padding ladder MADE TO PAINT; /display/card every-card-right; dialog padding | after BC.W-PAGE-CHASSIS |
@@ -118,7 +130,7 @@
 | **BC.W-AFFORDANCE-MAP** | 7 | interaction affordances baked into EVERY interactive element | after BC.W-SPRING-EASE + BC.W-MOTION-ONE-CLOCK |
 | **BC.W-TUNABLE-ANIM** | 7 | the tunable-animation brainstorm + the live registry | after BC.W-MOTION-ONE-CLOCK |
 | **BC.W-SAFARI-WEBGL** | 8 | the cross-engine WebGL/WebGPU context lifecycle: the Safari flash KILLED, the liquid morph stable on WebKit | after BC.W-WEBGPU-EVERYWHERE + Band 2 |
-| **BC.W-STORYBOOK-META** | 9 | the frontend-design meta-pass over the storybook ITSELF (padding/usability/spacing/occlusion/fontsize/idiom) | after Bands 1-7 |
+| **BC.W-STORYBOOK-META** | 9 | the frontend-design meta-pass over the storybook ITSELF (padding/usability/spacing/occlusion/fontsize/idiom + the DOGFOOD-completeness axis: raw-triplet/raw-button/SHELL sweep + the StorySectionHeader mint) | after Bands 1-7 |
 | **BC.W-SPEEDTEST-ADOPT** | 10 | the speedtest fleet adopt: ^4.x bump + the 5-interim consume-and-delete sweep + the AW v3 relay reconcile | EXECUTION-phase, after BC.W-CUT |
 | **BC.W-FOURIER-ASK** | 10 | the fourier cross-repo reconcile: NO outbound ask + the fourier-analysis ^4.0.0 consumer bump + FourierField warm-lean pointer | EXECUTION-phase, after BC.W-CUT |
 | **BC.W-ATLAS-ASK** | 10 | the sci-report Atlas adopt: the d6-lineage stranded consumer ^3.12.0(deprecated)→^4.x + the seven-needs consume-and-delete | EXECUTION-phase, after BC.W-CUT; ‖ BC.W-SPEEDTEST-ADOPT + BC.W-FOURIER-ASK |
@@ -128,6 +140,15 @@
 | **BC.W-CSS-CRITICAL** | 11 (PERFORMANCE) | the published `/styles` critical/deferred split (render-blocking-early subset) RE-MEASURED over the settled cascade + the FOUC-safe π RUN LIVE; discharges the `styles-critical-split` chronic | FIRST of Band 11; after the visual bands settle the cascade |
 | **BC.W-LIGHTHOUSE** | 11 (PERFORMANCE) | the committed re-runnable production-preview Lighthouse score-floor (perf/a11y/CLS/TBT, :5388) RUN LIVE + re-pinned via `--rebaseline` + the bare-consumer first-paint harness | after BC.W-CSS-CRITICAL + BC.W-PERF-PRODUCER + the visual bands |
 | **BC.W-PERF-PRODUCER** | 11 (PERFORMANCE) | lock the four producer fixes (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap, density glyph) + RUN the headed-GPU runtime π | after Band 2 dock + Band 4 aurora/blob rebuilds |
+| **BC.W-CUSTOMIZABILITY-CENSUS** | 12 (customizability + golden-defaults) | the binding "fully customizable with golden defaults" bar + the structural gate `proof:customizability-census` (C1-C4) + the per-component EXACTLY-ONE-LIST census + design-idioms §13 | FIRST of Band 12; after Band 1 glass floor (BC.W-GLASS-IDENTITY); beside BC.W-DESHADCN |
+| **BC.W-CONTROL-CUSTOM** | 12 (customizability + golden-defaults) | the shared control `size?: "sm"\|"default"\|"lg"` axis reading the `--control-h-*`/`--control-text` cohort onto the input register (Input/Switch/Textarea/NumberField); flips `proof:customizability-census` C1 GREEN | after BC.W-CUSTOMIZABILITY-CENSUS + BC.W-GLASS-IDENTITY; beside BC.W-DESHADCN + BC.W-CONTROL-SMOOTH |
+| **BC.W-OVERLAY-UNIFORM** | 12 (customizability + golden-defaults) | thread the shared `surface` axis + the φ `--overlay-pad-*` ladder onto the un-threaded floating overlays (Dropdown/Select/Tooltip/ContextMenu/Command/HoverCard); flips `proof:customizability-census` C2 GREEN | after BC.W-CUSTOMIZABILITY-CENSUS + BC.W-GLASS-IDENTITY; beside BC.W-DROPDOWN-FIX + BC.W-DESHADCN |
+| **BC.W-SCROLL-TRIGGER** | 13 (dock-search + scroll-system) | the robust scroll-EVENT / trigger-point system — ONE rAF-coalesced reader, discrete onCross + continuous progress, dual-path single-writer (`useScrollTrigger` on /motion-core) | FIRST of Band 13; no deps (threads the existing scroll leaves) |
+| **BC.W-SCROLL-CHROME** | 13 (dock-search + scroll-system) | the scroll-driven chrome behaviors (shrink-on-down, expand-on-up, opacity/blur-on-scroll, snap-to-state, persistent-by-default — `useScrollChrome`) | after BC.W-SCROLL-TRIGGER; before BC.W-DOCK-SEARCH |
+| **BC.W-DOCK-SEARCH** | 13 (dock-search + scroll-system) | the DOCK as native dynamic-search-bar (the iOS-27 chrome-becomes-search-field morph; subsuming the words SearchBar) — composes the dock morph + FuzzySearch + virtual-window + ToC, box-inviolate | LARGEST of Band 13; after BC.W-SCROLL-CHROME/TRIGGER + BC.W-FUZZY-HARDEN + BC.W-VIRTUAL-WINDOW + BC.W-TOC-RECONCILE + BC.W-DOCK-ENGINE |
+| **BC.W-VIRTUAL-WINDOW** | 14 (latex-paper abstractions) | the homecoming — re-mint the virtualized-section-windowing primitive RETIRED at v1.0 (the words verbatim copy returns) onto /virtual (off the root barrel); ≥2 consumers (words + dock-search) | FIRST of Band 14; after Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT |
+| **BC.W-TOC-RECONCILE** | 14 (latex-paper abstractions) | reconcile the 3-way ToC-tracking fork onto the ONE glass-ui/sidebar + ADD the three missing leaves (useScrollTo/useClickDelegate/useLazyLoader); NO re-mint, no second engine | after BC.W-VIRTUAL-WINDOW + Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT |
+| **BC.W-FUZZY-HARDEN** | 14 (latex-paper abstractions) | glass-ui/search is ALREADY the canonical client fuzzy pipeline — harden the dock-composable-ready surface + DECIDE the `useAsyncSearch` race-guard (one-directional, no scorer edit) | after Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT; ‖ BC.W-VIRTUAL-WINDOW/TOC-RECONCILE |
 
 ---
 
@@ -164,6 +185,7 @@ here so a future reader knows the lineage (the drift was a naming slip, not a dr
 | `BC.W-CSS-CRITICAL` / `BUILD (Band 8/perf)` / `Band 4 controls/reconcile` (the perf-chronic band-only dispositions) | **the Band-11 perf trio `BC.W-CSS-CRITICAL` + `BC.W-LIGHTHOUSE` + `BC.W-PERF-PRODUCER` (AUTHORED — iteration-4 HARDEN)** | the 3-4-tranche perf chronic (`w-lighthouse-perf` / `styles-critical-split` / the BB Batch-3 perf band) was disposed BUILD against the SAFARI band (Band 8) or a band-only "Band 8/perf" / "Band 4 controls/reconcile" with NO building wave (CHALLENGE-1 BLOCKER 4/5/7). iteration-4 authored Band 11 — PERFORMANCE: `BC.W-CSS-CRITICAL` (the `/styles` split, the `styles-critical-split` discharge — FOLD-LEDGER F7's destination is now real), `BC.W-LIGHTHOUSE` (the live score-floor + `--rebaseline`), `BC.W-PERF-PRODUCER` (the four producer fixes + the runtime π). Re-point every perf-chronic ledger BUILD row + the FOLD-LEDGER F7 `styles-critical-split` destination onto these three. (kf-G3 LabeledField action-slot + machined-groove stay their controls/storybook homes — see the FOLD-LEDGER reconcile, not a perf row.) |
 | `BC.W-DOCK-EDGE` (PLAN §54 "rim/border as catch-light, not the black hairline") | `BC.W-BLACK-BAR` | the card/dock top-edge dark-rim → bright-catch-light D2-root fix landed as `BC.W-BLACK-BAR` (the PLAN working-name; the authored wave folds the glass-rim fix) |
 | `BC.W-PROMPT-LEDGER` (PLAN §69/§95 "every user prompt mapped to delivered/undelivered") | the `PROMPT-LEDGER.md` doc + the Band-F PM wrappers (`BC.W-PM-BB`/`BA`/`AZ`/`SYNTHESIS`) | NOT a separate on-disk wave — the prompt-recap deliverable IS the `PROMPT-LEDGER.md` document, authored by the Band-F post-mortem work; the dropped-asks ownership routes through the PM wrappers + the per-defect band waves |
+| `BC.W-SEARCH-CUSTOM` (the SearchBar/FuzzySearch customization surface — the C3 owner) | **GENUINE COVERAGE GAP — no spec on disk (for the CHALLENGE pass).** The `research/feat/WAVE-IMPACTS-FEAT.md` seed carried a `BC.W-SEARCH-CUSTOM` row (size/surface axis + the `.glass-menu-row` result register + the φ overlay-pad modal + the `variant="bare"/"floating"` rung deleting the `!important`-fighting-CVA escape) but the iteration-6 FEATURE-BAND fan-out did NOT author the wave file. THREE on-disk specs name it as a Sequence-after / owner / boundary peer — `BC.W-CUSTOMIZABILITY-CENSUS` (C3 born-RED owner), `BC.W-DOCK-SEARCH` (the glassy search surface it composes), `BC.W-FUZZY-HARDEN` (the explicit "FuzzySearch SURFACE glassify is NOT this wave's — it is BC.W-SEARCH-CUSTOM's" boundary). NOT a drift to a different canonical id — a real un-authored wave the CHALLENGE pass must either AUTHOR (Band 12, after `BC.W-CUSTOMIZABILITY-CENSUS`, flips `proof:customizability-census` C3 GREEN) or re-route its three references onto an existing owner. Recorded here so the dangling references are not silent. |
 
 > Note on prior-tranche wave names: references like `W-DARK-MATERIAL`, `W-REFLECT3`, `W-CLOSE-BATTERY`,
 > `W-VISUAL-RUNNER`, `W-CARD-PAD`, `W-AURORA-SWRASTER`, `W-MENU-GLASS`, `W-ON-GLASS-FG`, `W-CSS-CRITICAL`

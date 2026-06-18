@@ -154,6 +154,26 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [x] BC.W-LIGHTHOUSE — the committed re-runnable production-preview Lighthouse score-floor gate (perf/a11y/CLS/TBT, mobile+desktop, :5388) + the bare-consumer first-paint harness; RUN the never-run live score
 - [x] BC.W-PERF-PRODUCER — lock the 4 A′ producer fixes survive the Band 2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap) + the headed-GPU runtime π
 
+### Band 12 — Customizability + golden-defaults (the FEATURE-BAND re-open; own challenge pass owed; see §3 note)
+> *"ensure ALL of our components are fully customizable with reasonable, pragmatic, GOLDEN (like our golden typography) defaults that afford design hierarchy."* (component-customizability §0)
+- [ ] BC.W-CUSTOMIZABILITY-CENSUS — the binding bar + `proof:customizability-census` (C1-C4) + the per-component EXACTLY-ONE-LIST census + design-idioms §13 (born-RED on the HEAD residuals; FIRST of Band 12)
+- [ ] BC.W-CONTROL-CUSTOM — the shared control `size?` axis reading the `--control-h-*`/`--control-text` cohort onto the input register (Input/Switch/Textarea/NumberField); flips C1 GREEN
+- [ ] BC.W-OVERLAY-UNIFORM — thread the shared `surface` axis + the φ `--overlay-pad-*` ladder onto the un-threaded floating overlays (Dropdown/Select/Tooltip/ContextMenu/Command/HoverCard); flips C2 GREEN
+> **Coverage gap (for the challenge pass):** `BC.W-SEARCH-CUSTOM` (the SearchBar/FuzzySearch customization surface, the C3 owner) is referenced by 3 on-disk specs but has NO spec file — author it (Band 12) or re-route. See WAVE-INDEX name-drift map.
+
+### Band 13 — Dock-search + scroll-system (the FEATURE-BAND re-open; own challenge pass owed; see §3 note)
+> *User mandate (d): the DOCK as native dynamic-search-bar + a robust scroll system (expand-on-click, shrink-on-scroll, opacity-on-scroll, trigger-points), iOS-26/27-persistent.*
+- [ ] BC.W-SCROLL-TRIGGER — the robust scroll-EVENT / trigger-point system (ONE rAF-coalesced reader, discrete onCross + continuous progress, dual-path single-writer; `useScrollTrigger` on /motion-core); FIRST of Band 13
+- [ ] BC.W-SCROLL-CHROME — the scroll-driven chrome behaviors (shrink-on-down/expand-on-up/opacity-blur/snap-to-state/persistent-by-default; `useScrollChrome`)
+- [ ] BC.W-DOCK-SEARCH — the DOCK as native dynamic-search-bar (the iOS-27 chrome-becomes-search-field morph; subsuming the words SearchBar) — composes the dock morph + FuzzySearch + virtual-window + ToC, box-inviolate; LARGEST of Band 13
+
+### Band 14 — Latex-paper abstractions (the FEATURE-BAND re-open; own challenge pass owed; see §3 note)
+> *User mandate (d): ABSTRACT OUT virtualized-windowing + the ToC-tracking + the fuzzy-search pipeline.*
+- [ ] BC.W-VIRTUAL-WINDOW — the homecoming: re-mint the virtualized-section-windowing primitive RETIRED at v1.0 (the words verbatim copy returns) onto /virtual (off the root barrel); ≥2 consumers (words + dock-search); FIRST of Band 14
+- [ ] BC.W-TOC-RECONCILE — reconcile the 3-way ToC-tracking fork onto the ONE glass-ui/sidebar + ADD the three missing leaves (useScrollTo/useClickDelegate/useLazyLoader); NO re-mint, no second engine
+- [ ] BC.W-FUZZY-HARDEN — glass-ui/search is ALREADY the canonical client fuzzy pipeline: harden the dock-composable-ready surface + DECIDE the `useAsyncSearch` race-guard (one-directional, no scorer edit)
+> **Cross-band:** Band 13 dock-search consumes Band 14's three abstractions (virtual-window/ToC/fuzzy) + Band 2 dock; Band 12 customizability is cross-cutting; `BC.W-DEMO-COPY-PRUNE` (Band 5) is the demo-content prune sibling already indexed.
+
 ### Process gates (the user's explicit process demands)
 - [x] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log) — _at 4 (0,1,1b,1-sweep); 1c+1d next_
 - [x] SOTA research corpus: apple.com + iOS-27, awwwards, herostudios, procedural-refs — DONE (research/)
@@ -211,6 +231,7 @@ model) synthesizes; the fanout is opus/sonnet.
 | 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | DONE — 1 MAJOR | C2 coverage + C3 executor/user CONVERGED; C1 1 MAJOR (DEFERRAL-LEDGER:165 duplicate menu-row band-only cell, FIXED in-place) |
 | 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs (w2cbr2kbv) | DONE — **CONVERGED** | all 3 dims 0B/0M; 2-consecutive-clean MET; FINAL.md written; cron retired |
 | 20 | RE-OPEN (Atlas fold + de-shadcn) | Band 1 + Band 5 + page/motion refinement | DESHADCN-BRAINSTORM.md + CLEANUP-PLAN.md | DONE — 4 new waves | 74 waves (70 converged + 4 added): BC.W-DESHADCN/SELECTION-CARD/GLASS-GLOW-FIX/EXPANDABLE-PART on disk + WAVE-INDEX + §1 boxes; the added set needs its OWN challenge pass |
+| 21 | RE-OPEN (feature-band) | Band 12 + Band 13 + Band 14 (customizability / dock-search+scroll / abstractions / demo) | research/feat/WAVE-IMPACTS-FEAT.md fan-out | DONE — 9 new waves (+ DEMO-COPY-PRUNE already indexed at Band 5) | 84 waves on disk (75 prior + 9 added): the Bands 12/13/14 set on disk + WAVE-INDEX (84) + §1 boxes + EXECUTION-DAG topo; the added set needs its OWN challenge pass |
 
 > **RE-OPENED for the Atlas fold + de-shadcn + page/motion refinement (iter5 ATLAS-FOLD, 2026-06-18).**
 > The user re-opened BC for added scope (`DESHADCN-BRAINSTORM.md`): the de-shadcn first-principles DNA
@@ -226,6 +247,28 @@ model) synthesizes; the fanout is opus/sonnet.
 > (`BC.W-SELECTION-CARD`); a second reds the fence. The build-order slots the new Band-1 waves with their
 > band (after `BC.W-GLASS-IDENTITY` + `BC.W-BLACK-BAR`), `BC.W-EXPANDABLE-PART` in Band 5 before
 > `BC.W-ATLAS-ASK`.**
+
+> **RE-OPENED for the FEATURE-BAND (customizability / dock-search / abstractions / demo) — iter21, 2026-06-18.**
+> The user re-opened BC for the feature-band scope (`research/feat/WAVE-IMPACTS-FEAT.md`, 21 impact rows):
+> the "fully-customizable-with-golden-defaults" component bar, the DOCK-as-native-dynamic-search-bar (subsuming
+> the words SearchBar) + a robust scroll system, the latex-paper abstractions (virtualized-windowing / ToC /
+> fuzzy-search), and the demo-content prune. **The prior 74/75 waves stay as-is** (the converged-70 + the
+> Atlas-fold-5; that result is NOT re-litigated). The added wave-set is THREE new bands — **Band 12
+> (customizability + golden-defaults)**: `BC.W-CUSTOMIZABILITY-CENSUS` (the bar + `proof:customizability-census`),
+> `BC.W-CONTROL-CUSTOM`, `BC.W-OVERLAY-UNIFORM`; **Band 13 (dock-search + scroll-system)**:
+> `BC.W-SCROLL-TRIGGER`, `BC.W-SCROLL-CHROME`, `BC.W-DOCK-SEARCH`; **Band 14 (latex-paper abstractions)**:
+> `BC.W-VIRTUAL-WINDOW`, `BC.W-TOC-RECONCILE`, `BC.W-FUZZY-HARDEN` — **9 new waves**, plus `BC.W-DEMO-COPY-PRUNE`
+> (Band 5, already indexed iter20) the demo-content prune sibling. **The added wave-set needs its OWN challenge
+> pass** (the 2-consecutive-clean counter RESETS for the feature-band; the converged-70 + Atlas-fold-5 stand).
+> §1 carries the 3 new bands' (unchecked) boxes; WAVE-INDEX.md (84 rows) + the EXECUTION-DAG topo (Band 14
+> abstractions early as primitives; Band 13 dock-search after Band-2 dock + Band 14; Band 12 cross-cutting;
+> Band 5 demo) + the per-wave specs are on disk. **One KNOWN gap for the challenge pass:** `BC.W-SEARCH-CUSTOM`
+> (the SearchBar/FuzzySearch customization surface, the C3 owner) is referenced by 3 on-disk specs
+> (`BC.W-CUSTOMIZABILITY-CENSUS`/`BC.W-DOCK-SEARCH`/`BC.W-FUZZY-HARDEN`) but has NO spec file — author it
+> (Band 12) or re-route its references onto an existing owner (recorded in the WAVE-INDEX name-drift map, not
+> silently dropped). The build-order: Band 14 abstractions land EARLY as primitives (after Band 0), Band 13
+> dock-search after Band-2 dock + Band 14, Band 12 customizability cross-cutting (after Band-1 glass), the
+> demo prune in Band 5.**
 
 > **CONVERGENCE DECISION (recorded): the BINDING tranche (70 wave specs + EXECUTION-DAG + A11Y-CONTRACT)
 > has been verified CLEAN across CHALLENGE-4..8 (coverage/soundness/executor/intent all CONVERGED
