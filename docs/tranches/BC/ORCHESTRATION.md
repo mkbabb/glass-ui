@@ -192,7 +192,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 6 | HARDEN-2 | fix the 5 MAJOR + 7 MINOR | bc-iter6-harden2.mjs (w9fo7c6ul) | DONE | buttons single-owned; 0 band-only dispositions; F2.b guard added |
 | 7 | CHALLENGE-3 | convergence-confirm (fresh angles) | bc-iter7-challenge3.mjs (wjp9fmp0m) | DONE | 0B/1M/4m/3THIN; 2/3 CONVERGED; iter6 verified held |
 | 8 | HARDEN-3 | fix the 1 MAJOR (G8) + 4 MINOR | bc-iter8-harden3.mjs (w73klou5e) | DONE | G8 re-scoped (4-fixture self-test, GREEN on HEAD) + doc-hygiene |
-| 9 | DEEPEN | burning-lucidity enrichment (THIN + under-spec) | bc-iter9-deepen.mjs (whj793t4k) | IN-FLIGHT | per-route page table + affordance/tunable registries + per-viz 4-facet |
+| 9 | DEEPEN | burning-lucidity enrichment (THIN + under-spec) | bc-iter9-deepen.mjs (whj793t4k) | DONE | 108-route page table + 22-row affordance + 5-kind tunable registries + 6 viz facets |
+| 10 | CHALLENGE-4 | clean-confirm #1 (deepened set) | bc-iter10-challenge4.mjs (wpir8hjb1) | IN-FLIGHT | coverage/soundness/internal final |
 
 > **GAP TREND collapsing: CHALLENGE-1 7B/9M/6m → iter4 HARDEN closed ALL → CHALLENGE-2 0B/5M/7m.**
 > The 5 MAJORs: 1 buttons double-ownership (iter4 over-corrected) + 4 the DEFERRAL-LEDGER still-band-only
@@ -211,18 +212,18 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iter8 HARDEN-3 done (G8 re-scoped + GREEN on HEAD; CHALLENGE-3 1M/4m closed).
-> iteration 9 DEEPEN IN-FLIGHT (task whj793t4k, bc-iter9-deepen.mjs — per-route page table +
-> affordance/tunable registries + per-viz 4-facet enrichment).**
-> On iter9 completion (TaskOutput whj793t4k): verify the enrichments landed; commit. Then:
-> 1. **10 CHALLENGE-4** — clean confirm #1 over the deepened set (coverage + soundness + G8-held +
->    the new depth consistent). If 0 BLOCKER/MAJOR → CLEAN PASS #1.
-> 2. **11 CHALLENGE-5** — clean confirm #2. If also 0 BLOCKER/MAJOR → CONVERGE.
-> CONVERGE = §1 fully checked AND 2 consecutive challenges 0 BLOCKER/MAJOR → tick all §1 boxes, write
-> FINAL.md (summary + §residuals for acceptably-deferred MINOR/THIN + the EXECUTION-phase note),
-> report converged, retire cron 17dd706c.
-> If any challenge finds BLOCKER/MAJOR → HARDEN + re-challenge (loop).
-> Iteration count: …,6,7,8,9 = 15 toward ≥20. Keep ≤3 agents concurrent; no double-spawn while whj793t4k runs.
+> **NEXT CURSOR: iter9 DEEPEN done (108-route table + affordance/tunable registries + viz facets).
+> iteration 10 CHALLENGE-4 IN-FLIGHT (task wpir8hjb1, bc-iter10-challenge4.mjs — clean-confirm #1).**
+> On iter10 completion (TaskOutput wpir8hjb1): harvest result.challenges4[].gaps → CHALLENGE-4.md;
+> note result.blockerMajor.
+> - If blockerMajor == 0 → CLEAN PASS #1. Fire iteration 11 = CHALLENGE-5 (a final independent
+>   confirm, fresh angle) for the 2-consecutive-clean test. If THAT is also 0 BLOCKER/MAJOR →
+>   CONVERGE: tick ALL §1 boxes, write docs/tranches/BC/FINAL.md (tranche summary + the 70-wave
+>   roster + §residuals for the acceptably-deferred MINOR/THIN + the EXECUTION-phase greenlight note),
+>   report CONVERGED to the user, retire cron 17dd706c via CronDelete.
+> - If blockerMajor > 0 → HARDEN (iteration 11) the flagged waves, then re-challenge (loop; the
+>   2-consecutive-clean counter resets on any non-clean challenge).
+> Iteration count: …,7,8,9,10 = 16 toward ≥20. Keep ≤3 agents concurrent; no double-spawn while wpir8hjb1 runs.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
