@@ -203,20 +203,18 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: CHALLENGE-1 found 7B/9M/6m gaps (mostly residual name-drift + missing VISUAL-RECONCILE
-> + the perf band + the DOCK/SPRING contradiction). iteration 4 HARDEN IN-FLIGHT (task w3pp3xzy6,
-> bc-iter4-harden.mjs).**
-> On iter4 completion (TaskOutput w3pp3xzy6): verify the 4 new waves landed (BC.W-VISUAL-RECONCILE +
-> BC.W-CSS-CRITICAL/LIGHTHOUSE/PERF-PRODUCER); APPLY the ORCHESTRATION §1 additions H4 returns in its
-> notes (new Band-4 VISUAL-RECONCILE box + a new "Band 11 — PERFORMANCE" section); confirm H4's
-> soundness sweep found no remaining dangling; commit. Then:
-> 1. **5 CHALLENGE-2** — re-run the adversarial pass (bc-iter3-reconcile-challenge.mjs's Challenge
->    phase, or a fresh 3-agent challenge) over the now-~70-wave set. If BLOCKER/MAJOR remain → HARDEN
->    again (loop iterations 6,7,...).
-> 2. Converge when §1 fully checked AND 2 consecutive challenge passes find no BLOCKER/MAJOR. Then
->    write FINAL.md, report, retire cron 17dd706c.
-> Iteration count: 0,1,1b,1-sweep,1c,1d,1d-rerun,2,3,4 = 10 toward the ≥20 target.
-> Keep ≤3 agents concurrent. Do NOT double-spawn while w3pp3xzy6 is in flight.
+> **NEXT CURSOR: iter4 HARDEN done — all 7 BLOCKERs closed, 70 waves, Band 11 + VISUAL-RECONCILE
+> added to §1. iteration 5 CHALLENGE-2 IN-FLIGHT (task w6lc0kp2y, bc-iter5-challenge2.mjs).**
+> On iter5 completion (TaskOutput w6lc0kp2y): harvest result.challenges2[].gaps into CHALLENGE-2.md;
+> note result.blockerMajor.
+> - If blockerMajor == 0 → this is CLEAN PASS #1. Run ONE MORE challenge (iteration 6, CHALLENGE-3,
+>   fresh angles e.g. precept-conformance + per-wave-acceptance-quality + cross-repo-disposition) for
+>   the 2-consecutive-clean convergence test. If THAT is also clean → converge: tick §1, write
+>   FINAL.md, report, retire cron 17dd706c.
+> - If blockerMajor > 0 → HARDEN (iteration 6) fixes them (a focused bc-iter4-style fan-out over the
+>   flagged waves), then CHALLENGE again. Loop.
+> Iteration count: …,2,3,4,5 = 11 toward the ≥20 target.
+> Keep ≤3 agents concurrent. Do NOT double-spawn while w6lc0kp2y is in flight.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
