@@ -94,8 +94,8 @@
 | **BC.W-VISUAL-RECONCILE** | 4 (cross-cutting) | the BB liquid-glass-band LIVE re-walk over the rebuilt floor (liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer re-verify) + the /display/buttons interaction diagnosis | after the Band-1 glass waves + BC.W-GESTALT-FIRST |
 | **BC.W-PAGE-CHASSIS** | 5 | the ONE standardized page idiom: audacious hero + subpath + scroll-shrink + ONE glass card + procedural bg | after Band 1 glass |
 | **BC.W-PAGE-HIERARCHY** | 5 | section delimiting (hr / sub-card) + design-hierarchy suffused, EVERY PAGE STANDARDIZED | after BC.W-PAGE-CHASSIS |
-| **BC.W-CODE-BLOCKS** | 5 | component names + technical values → ONE Fira Code code-block register | after BC.W-PAGE-HIERARCHY |
-| **BC.W-PAGE-PRUNE** | 5 | prune superfluity, kill "view source"/platitudes/out-of-date copy + the orphan routes | after BC.W-PAGE-HIERARCHY |
+| **BC.W-CODE-BLOCKS** | 5 | component names + technical values → ONE Fira Code code-block register | after BC.W-PAGE-CHASSIS + BC.W-PAGE-HIERARCHY |
+| **BC.W-PAGE-PRUNE** | 5 | prune superfluity, kill "view source"/platitudes/out-of-date copy + the orphan routes | before BC.W-PAGE-CHASSIS + BC.W-PAGE-HIERARCHY (FIRST of Band-5 re-author) |
 | **BC.W-HERO-AUDACIOUS** | 5 | the herostudios audacious-type heroes, per-category icons, each DISTINCT | after BC.W-PAGE-CHASSIS |
 | **BC.W-COMPOSITIONS-HERO** | 5 | /compositions/hero made distinct from the homepage; /foundations/intro three-heroes → ONE | after BC.W-HERO-AUDACIOUS |
 | **BC.W-PADDING-CANON** | 5 | the golden padding ladder MADE TO PAINT; /display/card every-card-right; dialog padding | after BC.W-PAGE-CHASSIS |

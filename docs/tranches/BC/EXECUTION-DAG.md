@@ -7,10 +7,13 @@
 > opens). It is **EXECUTION-PHASE guidance** — BC is tranche-dev-COMPLETE; this map is consumed when
 > the user greenlights the build. Authored by iteration-13 DEEPEN-2 (execution-readiness depth).
 >
-> **Source of truth.** The band column + `sequence-after` come from `WAVE-INDEX.md` (the 70-wave
-> registry); the edge set is read off each `waves/*.md` `**Sequence:**` line; the band roster matches
-> `ORCHESTRATION.md §1`. Every wave-id below resolves on disk in `WAVE-INDEX.md` (cross-checked).
-> The gate battery comes from each wave's acceptance (`proof:*` + π specs).
+> **Source of truth.** The edge set comes from each wave's `waves/*.md` `**Sequence:**` line — that is
+> the BINDING source for every dependency edge below. `WAVE-INDEX.md` is the band/name REGISTRY (the
+> 70-wave roster + the band column); its `sequence-after` cells are a convenience summary, NOT binding
+> over a wave's own `**Sequence:**` line — where the two diverge the wave Sequence wins (and the stale
+> WAVE-INDEX cell is the one to reconcile, never the other way). The band roster matches
+> `ORCHESTRATION.md §1`. Every wave-id below resolves on disk in `WAVE-INDEX.md` (cross-checked). The
+> gate battery comes from each wave's acceptance (`proof:*` + π specs).
 >
 > **The binding-order law (recorded once, applied everywhere below).** ORCHESTRATION §1's band roster
 > is a THEMATIC grouping, NOT a strict numeric execution order. The **per-wave `Sequence:` line is the
@@ -67,7 +70,7 @@ Band 11 (PERFORMANCE)      →  css-critical + lighthouse + perf-producer (measu
 | `BC.W-SAFARI-WEBGL` (B8) hoisted to Band-4 head | B8 → B4-viz | the breaker is a substrate-floor prerequisite; it depends only on Band 0 + `BC.W-WEBGPU-EVERYWHERE`, never on a per-viz wave — pure forward hoist |
 | `BC.W-VIZ-CONFIGURATOR-SUITE` (B4) CONFORMS-TO `BC.W-CONFIG-RIGHT` (B6) | B4 → B6 | CONFORMANCE (verified-after), not a build gate: `<Configurator asideSide='right'>` already defaults right at HEAD, so the viz studio is a first exemplar; CONFIG-RIGHT standardizes the LIBRARY component, the studios host it — one-directional, no back-build |
 | `BC.W-SPRING-EASE` (B7) READ by `BC.W-BUTTON-GLASS-IOS` (B1) / `BC.W-LIQUID-TAB` (B3) / `BC.W-UNDERLINE-TUNE` (B3) | B7 → B1/B3 | consume-after-mint: SPRING-EASE is a TOKEN-ONLY wave (no consumer edit), so its `snappy`/`press` mint can land EARLY; the consumers DECLARE they read the eased curve, and the spring-reading π ARM of each consumer is the only leg that waits on the mint (the geometry/material legs do not). SPRING-EASE depends on NONE of them → acyclic |
-| `BC.W-DOCK-ENGINE` (B2) and `BC.W-SPRING-EASE` (B7) | none (resolved to ∅) | the `dock` SPRING_PRESETS row is byte-FROZEN (SPRING-EASE's S4 content-hash); DOCK-ENGINE reads the JS `--dock-morph-t` scalar, NEVER the `--spring-dock` `linear()` — so there is NO edge between them at all (the registry-owner ↔ consumer split with a frozen curve) |
+| `BC.W-SPRING-EASE` (B7) READ by `BC.W-DOCK-ENGINE` (B2) | B7 → B2 | consume-after-mint (the SAME R1/R5 treatment): SPRING-EASE OWNS the `dock` SPRING_PRESETS row + the generated `--spring-dock`/`--spring-dock-duration` tokens; DOCK-ENGINE CONSUMES them (its body confirms the read; its own `**Sequence:**` is downstream of SPRING-EASE). The edge is one-directional INTO DOCK-ENGINE (SPRING-EASE depends on NONE of the dock waves → acyclic). The `dock` row is byte-FROZEN (SPRING-EASE's S4 content-hash), so DOCK-ENGINE need not wait on a curve CHANGE — but it DOES read the token (`--spring-dock`/`--spring-dock-duration`), so the build/verify edge stands. See §3 R2 |
 | `BC.W-PAGE-PRUNE` (B5) BEFORE `BC.W-PAGE-CHASSIS` (B5) | intra-band reorder | prune dead routes/copy FIRST so the chassis is applied to kept copy, not re-threaded onto dead routes — an intra-band ordering, not a cross-band issue |
 
 ---
@@ -220,7 +223,7 @@ BC.W-MOTION-ONE-CLOCK  (FIRST — the one-clock SOURCE audit over the whole repo
    │       └──→ BC.W-AFFORDANCE-MAP  (rides the eased springs + the press register)
    └──→ BC.W-TUNABLE-ANIM    (LAST — indexes the one-clock; exposes the eased curves + affordances)
 ```
-- `MOTION-ONE-CLOCK` is FIRST `[→]` (reads the Band-2 dock engine + Band-3 liquid-tab as canonical consumers, but does NOT block on them — it is a SOURCE audit).
+- `MOTION-ONE-CLOCK` is FIRST `[→]` (reads the Band-2 dock engine + Band-3 liquid-tab as canonical consumers, but does NOT block on them — it is a SOURCE audit). **Do NOT promote `MOTION-ONE-CLOCK` to a hard dock predecessor** (it audits the dock engine, does not gate it): once the `SPRING-EASE → DOCK-ENGINE` edge is honored (R2), a `MOTION-ONE-CLOCK ← DOCK-ENGINE` build edge would close a cycle (`MOTION-ONE-CLOCK → SPRING-EASE → DOCK-ENGINE → MOTION-ONE-CLOCK`). The SOURCE-audit framing is the hinge that keeps Band-7↔Band-2/3 acyclic — MOTION-ONE-CLOCK reads its consumers as evidence, it never waits on them.
 - `SPRING-EASE` `[→]` after MOTION-ONE-CLOCK; its `snappy`/`press` mint is READ by Band-1/2/3/6 consumers (§3) — but it depends on NONE of them (consume-after-mint).
 - `AFFORDANCE-MAP` `[→]` after `{SPRING-EASE, MOTION-ONE-CLOCK}`; feeds `CONTROL-SMOOTH` (Band 6).
 - `TUNABLE-ANIM` is LAST `[→]` after `{MOTION-ONE-CLOCK, SPRING-EASE, AFFORDANCE-MAP}`; feeds VIZ-CONFIGURATOR-SUITE + STORYBOOK-META.
@@ -286,8 +289,12 @@ not cycle" list.
 - **The executor resolution**: SPRING-EASE's mint can land EARLY (it touches only `springPresets.ts` + `regen-spring-tokens.mjs` + `useSpringPress.ts` defaults). The Band-1/3 consumers build their geometry/material legs on the band-spine schedule; their **spring-reading π ARM** (e.g. `button-glass.spec.ts` BG-IOS-3 "press composes the iOS interactive spring response ~0.15"; `liquid-tab.spec.ts` "the fling reads liquid"; `underline-tune.spec.ts` "the glide fills the clock") is the only leg that requires the mint landed first. So: either pull SPRING-EASE's mint to the front of the build (token-only, cheap), OR verify the spring-reading π arms after SPRING-EASE lands. The wave specs name the BOOK explicitly ("if BC.W-SPRING-EASE has not minted the press preset, this wave books it there and consumes; never a button-local spring").
 - **`UNDERLINE-TUNE` ↔ `SPRING-EASE` are LOCKSTEP** (co-equal): UNDERLINE-TUNE OWNS the indicator-clock half of the `snappy` re-derive; SPRING-EASE owns it globally. They "land together" — ONE source (`SPRING_PRESETS` + `regen-spring-tokens.mjs`), no duplicate prescription. This is a co-mint, not a cycle.
 
-### R2 — `BC.W-DOCK-ENGINE` (B2) and `BC.W-SPRING-EASE` (B7): NO edge (frozen curve)
-- The `dock` SPRING_PRESETS row is byte-FROZEN by SPRING-EASE's S4 content-hash. DOCK-ENGINE reads the JS `--dock-morph-t` scalar (the `DOCK_SPRING` `SpringProgress` already glides), NOT the `--spring-dock` `linear()`. So neither wave prescribes a `dock` curve change → **the edge resolves to ∅**. DOCK-ENGINE can build at the Band-2 head with no wait on SPRING-EASE.
+### R2 — `BC.W-SPRING-EASE` (B7) is READ by `BC.W-DOCK-ENGINE` (B2) (consume-after-mint)
+- **Edge**: `SPRING-EASE → DOCK-ENGINE`. The edge EXISTS (one-directional, acyclic — the SAME R1/R5 treatment), it is NOT ∅. The binding source settles it: SPRING-EASE's `**Sequence:**` line names DOCK-ENGINE among "the consumers that READ the eased curves … `BC.W-DOCK-ENGINE` (Band 2 — the morph reads the eased `dock` register)," and DOCK-ENGINE's body confirms the CONSUME (it READS the `--spring-dock`/`--spring-dock-duration` tokens, never re-emits them — the registry-owner ↔ consumer split).
+- **The data**: SPRING-EASE OWNS the `SPRING_PRESETS.dock` row + the generated `--spring-dock`/`--spring-dock-duration` tokens (its emitted artifact). `dock` is a recorded KEEP — the emitted `--spring-dock` string is byte-FROZEN (SPRING-EASE's S4 content-hash; value.js/kf-fenced). DOCK-ENGINE READS those tokens; it does NOT regenerate the `linear()` (its gestalt fix unifies the dock morph CSS legs onto the JS-driven `--dock-morph-t`/`--dock-expand-t` scalar).
+- **Why acyclic**: SPRING-EASE depends on `MOTION-ONE-CLOCK` (Band 7) ONLY, never on a dock wave → the edge is one-directional INTO DOCK-ENGINE. The §4 topo already honors it (DOCK-ENGINE Tier 8, after SPRING-EASE Tier 7′).
+- **The clarifying note (the "frozen curve" argument, kept correct)**: because the `dock` row is byte-frozen, DOCK-ENGINE need not WAIT on a curve *change* (there is no change to wait on — no conflicting curve prescription). But DOCK-ENGINE STILL READS the token, so the build/verify edge stands (a consumer of a frozen token is still a consumer). The earlier "resolves to ∅ / NO edge at all" framing is RETIRED — it conflated "no curve change" with "no edge," and contradicted both binding Sequence lines. The frozen-curve fact narrows the edge to a CONSUME-and-verify, it does not delete it.
+- **Do NOT confuse the two scalars.** DOCK-ENGINE's E2 envelope-fill asserts the JS `--dock-morph-t` scalar's sampled envelope (which the `DOCK_SPRING` `SpringProgress` glides) — it does NOT parse `--spring-dock`'s emitted `linear()` stops (frozen byte-unchanged by SPRING-EASE; no collision with its S4). The edge is the token READ + the duration-clock consume, not a curve re-bake.
 
 ### R3 — `BC.W-VIZ-CONFIGURATOR-SUITE` (B4) CONFORMS-TO `BC.W-CONFIG-RIGHT` (B6)
 - **Edge**: `CONFIG-RIGHT → VIZ-CONFIGURATOR-SUITE` (the suite conforms the viz studios onto the standardized layout).
@@ -332,7 +339,8 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 14 (Band 4 substrate floor — SAFARI-WEBGL hoisted in):** `BC.W-WEBGPU-EVERYWHERE`, `BC.W-SAFARI-WEBGL`
 **Tier 15 (Band 4 cross-cutting):** `BC.W-VIZ-INTERACTION`, `BC.W-VIZ-CHOREOGRAPHY`, `BC.W-TEAL-NAVY-PURGE`, `BC.W-VISUAL-RECONCILE`
 **Tier 16 (Band 4 per-viz [‖]):** `BC.W-VIZ-AURORA`, `BC.W-GOOBLOB-PLAIN`, `BC.W-VIZ-DOTFLOW`, `BC.W-VIZ-CONCENTRIC`, `BC.W-VIZ-FOURIER`, `BC.W-VIZ-CONSTELLATION`, `BC.W-VIZ-WATERCOLOR`, `BC.W-VIZ-PAPERGRID`, `BC.W-VIZ-DOTMATRIX`
-**Tier 17 (per-viz dependents):** `BC.W-GOOBLOB-MEATBALL` (after PLAIN), `BC.W-GRID-SIMPLE` (after PAPERGRID + PAGE-CHASSIS — see Tier 20), `BC.W-VIZ-HYBRID` (after MEATBALL + DOTMATRIX)
+**Tier 17 (per-viz dependents):** `BC.W-GOOBLOB-MEATBALL` (after PLAIN), `BC.W-VIZ-HYBRID` (after MEATBALL + DOTMATRIX)
+**Tier 20.5 (the page-leg dependent — pulled below Tier 20 so the slot honors its own annotation):** `BC.W-GRID-SIMPLE` — Tier 17 (recipe rhythm: the static `--grid-*` twin beside `BC.W-VIZ-PAPERGRID`) / Tier 20+ (page leg: its `**Sequence:**` is AFTER `BC.W-PAGE-CHASSIS`, so it lands here, after the Tier-20 chassis). The two legs are the recipe/page split §1/§4 already record; the wave linearizes at Tier 20.5 to respect the binding page-leg edge.
 **Tier 18 (Band 6 controls):** `BC.W-RADIO-FIX` → `BC.W-DROPDOWN-FIX`, `BC.W-CONTROL-SMOOTH` → `BC.W-CONFIG-RIGHT`
 **Tier 19 (Band 5 prune):** `BC.W-PAGE-PRUNE`
 **Tier 20 (Band 5 chassis):** `BC.W-PAGE-CHASSIS`
@@ -359,12 +367,15 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 > spring-reading π is valid. This float-window with no lower bound from a consumer is the constructive
 > proof that R1/R2/R5 introduce no cycle.
 
-**ACYCLICITY VERDICT: the graph is a DAG.** A complete 70-wave linearization exists with every wave
-after all its predecessors (above). The five cross-band reconciles (§3) are each one-directional
-(SPRING-EASE/MOTION-ONE-CLOCK depend on nothing downstream; SAFARI-WEBGL depends only on the Band-4
-head + Band-0/2; VIZ-CONFIGURATOR-SUITE→CONFIG-RIGHT is a conformance verified-after; VISUAL-RECONCILE
-is a pure sink; DOCK-ENGINE↔SPRING-EASE is ∅). No back-edge closes a loop. **No cycle found — no
-gapsFound BLOCKER on the DAG axis.**
+**ACYCLICITY VERDICT: the graph is a DAG (with the `SPRING-EASE → DOCK-ENGINE` edge EXPLICIT).** A
+complete 70-wave linearization exists with every wave after all its predecessors (above). The six
+cross-band reconciles (§3 R1-R6, now including the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint
+edge) are each one-directional (SPRING-EASE/MOTION-ONE-CLOCK depend on nothing downstream; SAFARI-WEBGL
+depends only on the Band-4 head + Band-0/2; VIZ-CONFIGURATOR-SUITE→CONFIG-RIGHT is a conformance
+verified-after; VISUAL-RECONCILE is a pure sink; SPRING-EASE → DOCK-ENGINE is a token CONSUME with
+SPRING-EASE depending on no dock wave — DOCK-ENGINE Tier 8 already sits after SPRING-EASE Tier 7′). No
+back-edge closes a loop (MOTION-ONE-CLOCK stays a SOURCE audit, never a hard dock predecessor — see §2
+Band 7). **No cycle found — no gapsFound BLOCKER on the DAG axis.**
 
 ---
 
@@ -501,8 +512,12 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 2. **Hoist `BC.W-SAFARI-WEBGL` to the Band-4 head** (beside `WEBGPU-EVERYWHERE`) — every per-viz
    Safari-π gates on it.
 3. **Mint `BC.W-SPRING-EASE` early** (token-only, after `MOTION-ONE-CLOCK`) so the `snappy`/`press`
-   curves precede the spring-reading π of `BUTTON-GLASS-IOS`/`LIQUID-TAB`/`UNDERLINE-TUNE`/`CONTROL-SMOOTH`.
-   The `dock` row is byte-frozen (DOCK-ENGINE reads the JS scalar, not the curve — no edge).
+   curves precede the spring-reading π of `BUTTON-GLASS-IOS`/`LIQUID-TAB`/`UNDERLINE-TUNE`/`CONTROL-SMOOTH`
+   — AND `DOCK-ENGINE`, which CONSUMES the `--spring-dock`/`--spring-dock-duration` tokens (R2: a real
+   consume-after-mint edge, `SPRING-EASE → DOCK-ENGINE`). The `dock` row is byte-frozen, so DOCK-ENGINE
+   need not wait on a curve CHANGE — but it reads the token, so the edge stands (DOCK-ENGINE Tier 8
+   after SPRING-EASE Tier 7′). DOCK-ENGINE's morph-leg fix reads the JS `--dock-morph-t` scalar, not the
+   frozen `linear()`.
 4. **Run the Band-4 per-viz fan (9 waves `[‖]`) in 3 batches of 3** — the widest concurrency window.
 5. **`CONFIG-RIGHT` before `VIZ-CONFIGURATOR-SUITE`** (conformance, verified-after — not a back-build).
 6. **`PADDING-CANON` after the glass material; `PAGE-PRUNE` before `PAGE-CHASSIS`** (prune dead routes
@@ -511,8 +526,9 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
    terminal verification of the never-run live score.
 8. **`BC.W-CUT` is TERMINAL + user-gated** — `--run full` siblings-absent → gated-provenance tag →
    the post-cut adopt sweep (`SPEEDTEST-ADOPT`/`FOURIER-ASK`/`ATLAS-ASK` `[‖]`) → slides redeploy LAST.
-9. **The DAG is ACYCLIC** (§4) — a complete 70-wave linearization exists; the five cross-band
-   reconciles (§3) are each one-directional. No cycle, no BLOCKER on the DAG axis.
+9. **The DAG is ACYCLIC** (§4) — a complete 70-wave linearization exists; the six cross-band
+   reconciles (§3 R1-R6, incl. the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint) are each
+   one-directional. No cycle, no BLOCKER on the DAG axis.
 
 > Every wave-id in this document resolves on disk in `WAVE-INDEX.md` (the 70 canonical waves). The
 > band membership matches `ORCHESTRATION.md §1`. The edges are read off each `waves/*.md`
