@@ -47,6 +47,12 @@ export const MEDIUM_ID = {
     crayon: 4,
     vangogh: 5,
     "oil-pastel": 6,
+    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara painterly finish (uMedium==7).
+    // The WGSL primary renders the smooth core for every painterly id (1-7) — a
+    // kuwahara config on WebGPU degrades to the smooth core, never an error (the
+    // booked W-AURORA-WGPU-MEDIUMS successor ports the painterly bodies); the WebGL2
+    // path carries the live `mediumKuwahara()` body.
+    kuwahara: 7,
 } as const satisfies Record<AuroraMedium, number>;
 
 // W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
@@ -142,13 +148,16 @@ export function resolveStrokeModeId(cfg: AuroraConfig): number {
  * `oil-pastel`, `crayon`) FORCE the structure-tensor orientation regardless of the
  * config's `strokeOrient` field — their marks must hug the color zones (the
  * congruent-to-real-works contract). Every other medium honors the config's
- * `strokeOrient` (default `"flow"`).
+ * `strokeOrient` (default `"flow"`). BB.W-AUR-KUWAHARA — `kuwahara` ALSO forces
+ * tensor: the anisotropic Kuwahara kernel is squeezed along the structure-tensor
+ * minor eigenvector, so the orientation source must be the tensor field.
  */
 export function resolveStrokeOrientId(cfg: AuroraConfig): number {
     if (
         cfg.medium === "vangogh" ||
         cfg.medium === "oil-pastel" ||
-        cfg.medium === "crayon"
+        cfg.medium === "crayon" ||
+        cfg.medium === "kuwahara"
     ) {
         return STROKE_ORIENT_ID.tensor;
     }

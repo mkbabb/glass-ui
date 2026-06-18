@@ -390,16 +390,20 @@ void main() {
 
   // Medium dispatch (AX.W13 — each is a FIRST-CLASS body, no shared dispatch):
   //   1 pastel · 2 watercolor · 3 oil · 4 crayon (DRY tooth-multiply) ·
-  //   5 van-Gogh (atomic comma/crescent dabs) · 6 oil-pastel (stroke deposition).
+  //   5 van-Gogh (atomic comma/crescent dabs) · 6 oil-pastel (stroke deposition) ·
+  //   7 kuwahara (anisotropic-Kuwahara edge-preserving painterly finish — BB.W-AUR-KUWAHARA).
   // van-Gogh is no longer a mediumOil passthrough; oil-pastel and crayon no longer
   // share a body — they share the SUBSTRATE (the tooth/placement helpers), not the
-  // dispatch body (slice 8 F0/F1).
+  // dispatch body (slice 8 F0/F1). Kuwahara is OPT-IN (default-off — no preset selects
+  // it unless a config explicitly sets medium:"kuwahara"); the smooth default + the
+  // van-Gogh HERO + the existing painterly bodies are byte-unchanged by its addition.
   if (uMedium == 1) col = mediumPastel(col, pN, t);
   else if (uMedium == 2) col = mediumWatercolor(col, pN, t);
   else if (uMedium == 3) col = mediumOil(col, pN, t);
   else if (uMedium == 4) col = mediumCrayon(col, pN, t);
   else if (uMedium == 5) col = mediumVangogh(col, pN, t);
   else if (uMedium == 6) col = mediumOilPastel(col, pN, t);
+  else if (uMedium == 7) col = mediumKuwahara(col, pN, t);
 
   // Saturation trim
   col = saturate3(col, uSaturation);

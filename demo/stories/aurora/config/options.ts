@@ -20,6 +20,9 @@ export const mediumOptions = [
     { label: "Crayon", value: "crayon" },
     { label: "Van Gogh", value: "vangogh" },
     { label: "Oil Pastel", value: "oil-pastel" },
+    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara edge-preserving painterly finish
+    // (uMedium==7), an OPT-IN medium reached only by this explicit selection.
+    { label: "Kuwahara", value: "kuwahara" },
 ] as const satisfies readonly TabOption<AuroraMedium>[];
 
 // AX.W13 — the strokeMode tab is oil sub-modes ONLY; the legacy "Crayon" entry is

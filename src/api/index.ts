@@ -522,3 +522,12 @@ export type {
     UsePointerVelocityField,
     UsePointerVelocityFieldOptions,
 } from "../composables/motion/usePointerVelocityField";
+
+// ── DotFlowField — the WebGPU-first curl-noise flow viz (BB.W-FLOWFIELD) ──
+// Config + handle types for a consumer wrapping <DotFlowField> (the /dot-flow-field subpath).
+export type {
+    FlowFieldConfig,
+    WaveComponent,
+    DotFlowFieldHandle,
+    UseDotFlowFieldOptions,
+} from "../components/custom/dot-flow-field";

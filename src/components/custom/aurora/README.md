@@ -221,12 +221,19 @@ gated by `proof:aurora-tensor-field` · `proof:aurora-impasto-relight` ·
   oil-pastel-technique references.)*
 
 The **anisotropic Kuwahara finish** (the canonical "make a gradient read as oil paint"
-operator — an 8-sector elliptical kernel squeezed along the tensor) and the smoothed
-multi-tap tensor are inherently multi-pass — a form a single-pass fragment shader cannot
-express. The aurora ships the single-pass ETF half (stroke orientation) and the impasto /
-deposition material truth on WebGL2; the multi-pass Kuwahara/LIC half was investigated and
-excised as substrate-without-consumer, so no multi-pass finish ships. Note the
-research lineage names ETF *+ LIC* (line-integral convolution) as the full Van-Gogh
+operator — an 8-sector elliptical kernel squeezed along the tensor) SHIPS as the OPT-IN
+`medium:"kuwahara"` (`uMedium == 7`, BB.W-AUR-KUWAHARA). Aurora is a PROCEDURAL field (no
+input texture), so the SOFT polynomial-weighted variant (Kyprianidis 2010 — NOT the
+pre-2010 hard argmin that bands into the 8-spoke pinwheel) runs SINGLE-PASS per fragment:
+the elliptical kernel samples the procedural `sampleBase` neighbourhood directly along the
+EXISTING single-pass structure-tensor field, with no FBO read. So the edge-preserving
+Kuwahara register lands on WebGL2 as a NEW medium the consumer selects (default-OFF — the
+smooth default + the van-Gogh HERO + the oil/oil-pastel mediums are byte-unchanged). The
+LITERAL multi-pass FBO pipeline (an external FBO render-target + a Gaussian-smoothed
+multi-tap tensor pass + a Kuwahara-resolve pass — the higher-fidelity-but-substrate-changing
+form) is a SEPARATE future capability with its own consumer + substrate decision, NOT a
+re-book of this finish: the single-pass Kuwahara MEDIUM is the shipped + permanent register.
+Note the research lineage names ETF *+ LIC* (line-integral convolution) as the full Van-Gogh
 mechanism.
 
 ---
@@ -460,9 +467,13 @@ row is `verified` with a recorded OKLab ΔE within the calibrated bar — mean �
 rides W-REFLECT3.
 
 (The earlier WebGPU investigation — the multi-pass painterly half, the Gaussian-smoothed
-structure tensor + anisotropic Kuwahara finish a single-pass shader cannot express — was
-the MULTI-PASS register, distinct from this single-pass fullscreen WGSL migration. The
-multi-pass painterly path remains a successor; this wave migrates the single-pass field.)
+multi-tap structure tensor + an external-FBO Kuwahara-resolve pass — was the LITERAL
+MULTI-PASS register, distinct from this single-pass fullscreen WGSL migration. BB.W-AUR-KUWAHARA
+DECIDED the anisotropic-Kuwahara booking: the SOFT-blend finish ships SINGLE-PASS as the opt-in
+`medium:"kuwahara"` (the procedural field has no input texture, so the operator samples
+`sampleBase` over the elliptical neighbourhood directly — no FBO needed). The LITERAL multi-pass
+FBO pipeline remains a SEPARATE future capability with its own consumer + substrate decision,
+NOT a re-book of the Kuwahara finish — that finish is shipped + permanent.)
 
 ---
 

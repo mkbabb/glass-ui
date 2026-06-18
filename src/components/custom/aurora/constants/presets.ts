@@ -65,7 +65,14 @@ export type AuroraMedium =
     | "oil"
     | "crayon"
     | "vangogh"
-    | "oil-pastel";
+    | "oil-pastel"
+    // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara painterly finish (uMedium==7), an
+    // OPT-IN first-class medium: a single-pass generalized/anisotropic Kuwahara
+    // (Kyprianidis 2010 SOFT polynomial-weighted variant) over the procedural color
+    // field, the elliptical kernel squeezed along the structure tensor. DEFAULT-OFF
+    // (no preset/config carries it unless explicitly selected); the smooth default +
+    // the van-Gogh HERO + the oil/oil-pastel mediums are byte-unchanged.
+    | "kuwahara";
 
 // AX.W13 — `crayon` is a first-class `AuroraMedium` (uMedium==4), NOT a `strokeMode`.
 // The legacy `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break, no

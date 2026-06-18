@@ -64,12 +64,18 @@ re-recorded there if the empirical capture demands a re-tune.
     {
       "viz": "dot-flow-field",
       "subpath": "/dot-flow-field",
-      "status": "pending",
-      "primary": null,
-      "fallback": null,
+      "status": "verified",
+      "primary": "src/components/custom/dot-flow-field/shaders/flow-field.compute.wgsl.ts",
+      "fallback": "src/components/custom/dot-flow-field/shaders/flow-field.glsl.ts",
       "rank": 3,
       "subWave": "BB.W-VIZ-SUITE.d W-FLOWFIELD",
-      "note": "BORN WebGPU-first — the compute-particle path (curl-noise advection over a Gerstner/Tessendorf wave potential). WebGL2 transform-feedback / Canvas2D fallback declared at its sub-wave."
+      "captures": [
+        "docs/tranches/BB/audit/visual/flow-field-parity/flow-field-wgpu-primary.png",
+        "docs/tranches/BB/audit/visual/flow-field-parity/flow-field-fallback.png",
+        "docs/tranches/BB/audit/visual/flow-field-parity/parity-record.json"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "BORN WebGPU-first — the compute-particle path: a @compute @workgroup_size(64) curl-noise advection over a Gerstner/Tessendorf sum-of-sines wave potential, drawn as instanced billboard quads (flow-field.compute.wgsl.ts + flow-field.render.wgsl.ts). The fallback is the §3a-recorded Canvas2D point-cloud (flow-field.glsl.ts) — the WebGL2 transform-feedback equivalent is materially more code for the SAME visual, so the parity-honest path is a CPU-stepped point cloud (the fourier/constellation precedent) stepping the SAME flowField.ts sampleVelocity() evaluator (the ONE math source). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: BOTH the WGSL compute kernel and the Canvas2D fallback transcribe ONE analytic velocity evaluator (composables/flowField.ts), so the velocity field is numerically identical at every sample (proof:flow-field clause 3 round-trips the JS evaluator against the WGSL transcription → mean/p99 = 0.0). The fallback density is coarser at the CPU step count (the same flow, fewer dots) — recorded honestly, never a silent mismatch. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs the Canvas2D readback) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "concentric",

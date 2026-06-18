@@ -297,6 +297,10 @@ function applyTexture(
         // the atoms-door texture knob is strokeAmount + canvasGrain (the DRY pressure +
         // tooth), so a `medium:"crayon"` atom does not silently no-op the texture amount.
         case "crayon":
+        // BB.W-AUR-KUWAHARA — the kuwahara finish reads strokeAmount as its smoothing
+        // strength + canvasGrain as its faint oil-paint tooth; the atoms door maps both
+        // so a `medium:"kuwahara"` atom carries its amount (no silent no-op).
+        case "kuwahara":
             cfg.strokeAmount = a;
             cfg.canvasGrain = a * 0.05;
             break;
@@ -456,7 +460,9 @@ function textureAmountFor(cfg: AuroraConfig, kind: Exclude<AuroraMedium, "smooth
         case "pastel":
         case "oil-pastel":
         case "crayon":
-            // strokeAmount is the shared signature knob for every stroke medium.
+        case "kuwahara":
+            // strokeAmount is the shared signature knob for every stroke medium (the
+            // kuwahara finish reads it as its smoothing-strength knob too — BB.W-AUR-KUWAHARA).
             return clampBudget(cfg.strokeAmount, 0, 1);
     }
 }

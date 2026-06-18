@@ -1,0 +1,30 @@
+{
+  "wave": "BB.W-VIZ-SUITE.d W-FLOWFIELD",
+  "capturedAt": "2026-06-18T00:29:36.227Z",
+  "surface": "dot-flow-field (default Gerstner+curl velocity field, t=1.7 deterministic)",
+  "methodology": "device-free STRUCTURAL proxy — BOTH backends transcribe ONE analytic velocity evaluator (composables/flowField.ts sampleVelocity); the velocity-magnitude raster is identical at every (p,t). The W-REFLECT3 Metal-GPU compute+render readback is the binding live capture. The per-particle dot density (GPU instancing vs CPU step count) is the recorded `degraded` delta, NOT the velocity-field parity this certifies.",
+  "raster": {
+    "width": 96,
+    "height": 96
+  },
+  "captures": {
+    "webgpu-primary": {
+      "path": "flow-field-wgpu-primary.png",
+      "sha256_16": "67f6e2a123023da1"
+    },
+    "fallback": {
+      "path": "flow-field-fallback.png",
+      "sha256_16": "67f6e2a123023da1"
+    }
+  },
+  "deltaE": {
+    "mean": 0,
+    "p99": 0,
+    "max": 0
+  },
+  "bar": {
+    "mean": 2,
+    "p99": 5
+  },
+  "within": true
+}

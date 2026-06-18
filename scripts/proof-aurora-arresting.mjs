@@ -9,8 +9,11 @@
 // structure-tensor anisotropy, §4.3 −5/3 power-spectrum slope); all three mediums clear the
 // colourfulness band; oil clears the slope band; the four AX not-flat floors STAY satisfied.
 // The oil/oil-pastel §4.2 anisotropy + oil-pastel §4.3 slope residual is RECORDED (printed),
-// NOT asserted — the named T5 anisotropic-Kuwahara successor (AY.W-AUR-T5). The
-// band is NEVER lowered; a regression below the asserted bands REDs.
+// NOT asserted — the oil/oil-pastel stroke-cascade ceiling. BB.W-AUR-KUWAHARA DECIDED the
+// three-tranche booking: the SOFT anisotropic-Kuwahara painterly finish SHIPS as an OPT-IN
+// single-pass MEDIUM (uMedium==7) the consumer selects for the in-band finish; the residual
+// is no longer routed to a future named-successor wave. The band is NEVER lowered; a
+// regression below the asserted bands REDs.
 //
 // FAIL-CLOSED CONTRACT (the cardinal AX precept, H-convergence F4). When the π workspace IS
 // present (Playwright resolves) and a real GPU paints, a missed asserted band exits
@@ -174,7 +177,7 @@ function run() {
                 anisotropy: [0.732, 0.932],
                 slope: [-1.85, -1.45],
             },
-            note: "van-Gogh HERO lands all three bands; all mediums clear colourfulness; oil clears the slope band; the four not-flat floors hold. The oil/oil-pastel anisotropy + oil-pastel slope residual is the named T5 anisotropic-Kuwahara successor (AY.W-AUR-T5 — re-routed off the terminally-retired W-AUR-WEBGPU-DECIDE by W-AUR-STUDIO §6) — recorded in W-AUR-PAINTERLY-DELTA.md, band NOT lowered.",
+            note: "van-Gogh HERO lands all three bands; all mediums clear colourfulness; oil clears the slope band; the four not-flat floors hold. BB.W-AUR-KUWAHARA DECIDED the three-tranche anisotropic-Kuwahara booking: the SOFT anisotropic-Kuwahara painterly finish SHIPS as an OPT-IN single-pass medium (uMedium==7, medium:'kuwahara') — the oil/oil-pastel residual stays the stroke-cascade ceiling (the oil/oil-pastel mediums are byte-unchanged), and the edge-preserving Kuwahara register is the NEW medium a consumer selects when it wants the in-band anisotropy+slope finish. The booking is ASSERTED-IN-BAND-via-a-new-medium, NOT routed to a future named-successor wave (decision: docs/tranches/BB/audit/W-AUR-KUWAHARA-DECISION.md). band NOT lowered.",
         },
         violations,
     });

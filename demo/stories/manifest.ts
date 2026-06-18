@@ -323,6 +323,21 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
+            // BB.W-VIZ-SUITE / W-FLOWFIELD — the NEW WebGPU-first dot-flow-field viz.
+            // It self-stages its OWN GL/compute context (the field IS the surface), so
+            // the route declares the FREE static `grid` wash behind the card and mounts
+            // exactly ONE live context — the dot-flow-field's own (the one-GL-per-route
+            // budget held, the glass-panel precedent above).
+            s(
+                "substrates",
+                "dot-flow-field",
+                "Dot Flow Field",
+                "A WebGPU-first curl-noise flow field traced by advected particles — teal dots over dark navy, seeded along undulating streamlines rippling in Gerstner/Tessendorf waves (Tessendorf 2001 · Bridson 2007). The compute pass advects N particles through the analytic ∇⊥ψ velocity; the render pass draws instanced billboard quads; a Canvas2D point-cloud fallback steps the SAME evaluator where WebGPU is absent. The warm-cream identity is the library default; teal-on-navy is a demo preset. Shipped /dot-flow-field.",
+                {
+                    background: "grid",
+                    hero: true,
+                },
+            ),
         ],
     },
     {

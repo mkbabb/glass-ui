@@ -8,7 +8,14 @@ v5.0 brings the doc current with the AW aurora band: the W5 shared-color splice
 and the W4 painterly mediums on the WebGL2 single-pass path (landed). The WebGPU
 multi-pass branch was investigated and excised as substrate-without-consumer
 (AX.W14 — see §10 "Spec deltas (v4.1 → v5.0)"). The earlier v4 → v4.1 deltas stay
-archived at §6.
+archived at §6. BB.W-AUR-KUWAHARA DECIDED the three-tranche anisotropic-Kuwahara
+booking: the SOFT-blend anisotropic-Kuwahara finish ships SINGLE-PASS as the opt-in
+`medium:"kuwahara"` (`uMedium == 7`) — the procedural field samples its own
+neighbourhood, so the operator needs no FBO read; the edge-preserving painterly
+register lands on WebGL2 default-OFF. The LITERAL multi-pass FBO pipeline (the
+Gaussian-smoothed multi-tap tensor + an external-FBO Kuwahara-resolve pass) remains
+a SEPARATE future capability with its own consumer + substrate decision — NOT a
+re-book of this finish, which is shipped + permanent.
 
 ## 1. Purpose
 
@@ -32,7 +39,7 @@ Observed across all references; violating any visibly breaks the aesthetic linea
 5. **Flow couples to medium only for palette placement** — flow never drives which palette stop a pixel picks. But see (6).
 6. **Cursor deflects flow AND composition.** Gaussian-radius rotation around the pointer enters both `domainWarp` (color zones swirl) and `flowField` (stroke direction bends). This was a deliberate change from the v4 spec's "flow only" draft — references demand visible color-band curl, not just stroke bend. Palette position stays put; only the spatial coordinate is rotated.
 7. **Breath-paced motion.** Primary `warpDrift` at 0.005–0.010; full breath cycle 40–60 s. Stroke texture stays static (material, not process).
-8. **WebGL2 single-pass-universal.** The universal contract is ONE full-screen triangle, ONE fragment program, ZERO deps — uniforms select medium and flow behavior. Every engine renders the full visual contract on a single WebGL2 fragment pass with no FBO ping-pong and no external library. The multi-pass painterly half (the Gaussian-smoothed multi-tap structure tensor + the anisotropic Kuwahara finish a single fragment shader cannot express) was investigated on a WebGPU branch and excised as substrate-without-consumer (AX.W14 — see §10 Δ09a); aurora renders single-pass WebGL2, unconditionally.
+8. **WebGL2 single-pass-universal.** The universal contract is ONE full-screen triangle, ONE fragment program, ZERO deps — uniforms select medium and flow behavior. Every engine renders the full visual contract on a single WebGL2 fragment pass with no FBO ping-pong and no external library. The LITERAL multi-pass painterly half (the Gaussian-smoothed multi-tap structure tensor + an external-FBO Kuwahara-resolve pass) was investigated on a WebGPU branch and excised as substrate-without-consumer (AX.W14 — see §10 Δ09a). The anisotropic-Kuwahara OPERATOR re-samples the PROCEDURAL field (`sampleBase`) over the elliptical kernel directly, so it needs NO FBO: BB.W-AUR-KUWAHARA ships it SINGLE-PASS as the opt-in `medium:"kuwahara"` (`uMedium == 7`, see §10 Δ09a-K). Aurora renders single-pass WebGL2, unconditionally.
 
 ## 3. Non-invariants (explicit non-goals)
 
@@ -41,7 +48,7 @@ Observed across all references; violating any visibly breaks the aesthetic linea
 - No spatial-distance axis for palette (creates contour-line artifacts).
 - No global saturation/contrast compensation tricks (workarounds masking bad architecture).
 - No medium-specific shader branches at the top level. One shader. Medium parameters route inside.
-- **No multi-pass pipelines** (invariant 8). Aurora is single-pass-universal; the multi-pass painterly half (the smoothed multi-tap structure tensor + the anisotropic Kuwahara finish) was investigated and excised as substrate-without-consumer (AX.W14).
+- **No multi-pass pipelines** (invariant 8). Aurora is single-pass-universal; the LITERAL multi-pass painterly half (the smoothed multi-tap structure tensor + an external-FBO Kuwahara-resolve pass) was investigated and excised as substrate-without-consumer (AX.W14). The anisotropic-Kuwahara OPERATOR itself does NOT need an FBO on the PROCEDURAL field — BB.W-AUR-KUWAHARA ships it SINGLE-PASS as the opt-in `medium:"kuwahara"` (`uMedium == 7`), re-sampling `sampleBase` over the elliptical kernel directly in ONE fragment program, so invariant 8 holds.
 - No external libraries — the WebGL2 path pulls no Three.js/TSL (the zero-dep posture).
 
 ## 4. Architecture
@@ -193,7 +200,7 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 - **The van-Gogh atomic-stroke medium is a FIRST-CLASS body (`vangogh`, uMedium==5; AX.W13).** NOT a `mediumOil` passthrough — `mediumVangogh` AUTHORS its own `vangogh` `StrokeProfile`: a **comma/crescent** `strokeShape` (asymmetric taper — a loaded round head drawn to a fine tail, the divisionist atomic dab), **sparse high-contrast** placement (lower density gates → visible inter-stroke canvas gaps, so each mark reads separable, not a coverage smear), the **energy-grade as a PROFILE field** (`prof.energyGrade=1.0` — the Starry-Night length cascade `bestOil` runs off the field, NOT a buried `uMedium==5` branch), and **full-height impasto crowns** (`prof.impastoFloor=1.0` so every atomic dab catches its own glint). The bridge forces the ETF (tensor) orientation so the dabs queue into swirl-rows along the color field's tangent. The within-stroke OKLCh broken color (`paintOver`) + the OKLab stroke OVER-composite give pigment-true atom-level shimmer. No subject matter — the nuclei field is the "source image", so dabs trace its iso-bands.
 - **Oil-pastel is a DISTINCT deposition body, split from dry crayon (`oil-pastel`, uMedium==6; AX.W13).** `mediumOilPastel` DEPOSITS broad smeared directional strokes via the shared brush engine off its OWN `oil-pastel` `StrokeProfile`: a creamy soft `hardness` (strokes blend on overlap), heavy pigment build-up, and a chroma punch — the stroke-deposition model that gives oil-pastel its depth and less-uniform read. It shares the SUBSTRATE (the stroke cascade + tooth + relight) with oil/van-Gogh, NOT the dispatch body of dry crayon. `mediumCrayon` (uMedium==4) stays the DRY tooth-multiply. The two media share the SUBSTRATE, not the body (no duplicate, no shared dispatch).
 - **OKLab stroke OVER-composite + within-stroke OKLCh broken color (AX.W13).** `paintOver` composites overlapping strokes in OKLab on the painterly stroke mediums (oil/van-Gogh/oil-pastel) — lerp L,a,b of the over-color toward the under-color via the Ottosson matrices spliced from `procedural-color.glsl.ts` — so two complementary-hued strokes overlapping transition through a chromatic path, NOT the linear-RGB grey mud (the muddy-midtone defect OKLCh killed at the palette layer, re-entering at the compositing layer). The smooth/atmospheric pole never reaches `paintOver`, so it keeps the cheap linear mix. The within-stroke streak modulation perturbs HUE + CHROMA in OKLCh (not the old value-only `c *= 1+streak`), seeded per-stroke off a decorrelated streak fBm, so a single stroke carries a small hue gradient — broken color at the ATOM level, the impasto shimmer.
-- **The single-pass ETF half ships; the multi-pass finish was excised (the AW.W4 → AX.W14 outcome).** W4 ships the ETF orientation field as a single-pass small-tap approximation (the load-bearing fidelity lever). The Gaussian-smoothed multi-tap structure tensor, the LIC (line-integral-convolution) smear that convolves the field ALONG the ETF orientation, and the anisotropic Kuwahara finish are multi-pass operators the single-pass WebGL2 fragment shader fundamentally cannot express (invariant 8 bans multi-pass). They were investigated for a WebGPU branch and EXCISED as substrate-without-consumer (AX.W14, terminal — Δ09a): no named consumer route binds the multi-pass finish, so no second backend ships. ETF-without-LIC here is honest: the orientation field is the direction source; the LIC smear is the finish that did not land.
+- **The single-pass ETF half ships; the anisotropic-Kuwahara finish ships SINGLE-PASS as the opt-in `kuwahara` medium (BB.W-AUR-KUWAHARA); the LITERAL multi-pass FBO pipeline is a separate future capability.** W4 ships the ETF orientation field as a single-pass small-tap approximation (the load-bearing fidelity lever). The LITERAL multi-pass form — an external-FBO render-target + a Gaussian-smoothed MULTI-TAP structure tensor pass + the LIC (line-integral-convolution) smear that convolves the field ALONG the ETF orientation + an FBO-RESOLVE Kuwahara pass — is the architecture invariant 8 bans; that WebGPU multi-pass branch was EXCISED as substrate-without-consumer (AX.W14, terminal — Δ09a). **BUT the anisotropic-Kuwahara OPERATOR itself does NOT require an FBO on a PROCEDURAL field**: aurora has no input texture, so the operator re-samples `sampleBase` over the elliptical kernel neighbourhood DIRECTLY in one fragment program — no second pass, no FBO read. BB.W-AUR-KUWAHARA DECIDED the three-tranche booking on that fact: the SOFT polynomial-weighted anisotropic Kuwahara (Kyprianidis 2010, no pinwheel) ships SINGLE-PASS as `medium:"kuwahara"` (`uMedium == 7`, default-OFF) — the edge-preserving painterly finish a consumer selects, off the EXISTING single-pass `structureTensorField`. The LIC smear is still the finish that did not land; the literal multi-pass FBO pipeline remains a separate future capability with its own consumer + substrate decision, NOT a re-book of the Kuwahara finish.
 
 ### The substrate — single-pass WebGL2
 
@@ -306,9 +313,24 @@ ships. Each delta names the proof gate that machine-locks it.
   multi-pass half, and AY deleted the REMAINING smooth single-pass twin root-and-branch:
   the WGSL shader, the GPU canvas + runtime, the uniform-pack half, the async probe arm,
   the render-mode lever, and the five WebGPU gates are all gone. No named consumer route
-  binds the Kuwahara painterly finish at HEAD, so no second backend survives. Aurora
+  bound the Kuwahara painterly finish at AY, so no second backend survived. Aurora
   renders single-pass WebGL2, unconditionally; a future WebGPU path opens fresh with a
   named consumer (a clean greenfield re-introduction, no scaffold to resurrect).
+
+- **Δ09a-K — anisotropic-Kuwahara DECIDED (BB.W-AUR-KUWAHARA, terminal).** The three-tranche
+  anisotropic-Kuwahara booking (the `W-AUR-T5` named-successor the AY EXCISE re-routed the
+  oil/oil-pastel anisotropy + oil-pastel slope residual onto) is DECIDED here, BUILD branch.
+  The key fact the AY decision predated: aurora is a PROCEDURAL field (no input texture), so
+  the anisotropic-Kuwahara OPERATOR does NOT require an FBO — it re-samples `sampleBase` over
+  the elliptical kernel neighbourhood directly in ONE fragment program. So the SOFT
+  polynomial-weighted finish (Kyprianidis 2010 — no pinwheel) ships SINGLE-PASS as the opt-in
+  `medium:"kuwahara"` (`uMedium == 7`, default-OFF), off the EXISTING single-pass
+  `structureTensorField`; the smooth default + van-Gogh HERO + oil/oil-pastel mediums are
+  byte-unchanged. The booking is ASSERTED-IN-BAND-via-a-new-medium, NOT routed to a future
+  named-successor wave (decision: `docs/tranches/BB/audit/W-AUR-KUWAHARA-DECISION.md`). The
+  LITERAL multi-pass FBO pipeline (an external render-target + multi-tap tensor + FBO-resolve)
+  stays a SEPARATE future capability with its own consumer + substrate decision — never a
+  re-book of this finish.
 
 - **Δ10 — Color-seam single-sourcing (AX.W11, LANDED).** Two OKLCh seam leaks the
   W5 migration left closed: (1) the **catch-light** (`lightColor`) is OKLCh-derived

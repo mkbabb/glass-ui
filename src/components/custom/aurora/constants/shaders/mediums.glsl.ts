@@ -356,7 +356,9 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   // ≈1.66× step) moved oil-pastel β −2.534 → −2.413 — TOWARD the −5/3 band but NOT into
   // it (floor −1.85), so the keep-iff-into-band gate failed. The single-pass WebGL2 path
   // is the true limiter (HC-aurora §5): the oil-pastel β + the oil/oil-pastel anisotropy
-  // residual is the named AY.W-AUR-T5 multi-pass anisotropic-Kuwahara candidate. The
+  // residual stays the oil/oil-pastel stroke-cascade ceiling. BB.W-AUR-KUWAHARA DECIDED the
+  // booking: the SOFT anisotropic-Kuwahara finish ships as the OPT-IN mediumKuwahara() body
+  // (uMedium==7) the consumer selects — NOT a re-tune of these oil/oil-pastel knobs. The
   // hand-set 2.4 / 1.1 / 0.45 stays — it is van-Gogh's landed-band spacing.
   float sBig = baseScale * 2.4;
   float sMed = baseScale * 1.1;
@@ -475,6 +477,107 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   int mode = uStrokeMode;
   StrokeProfile prof = profileFor(MEDIUM_OIL, mode);
   return paintStrokeMedium(col, p, t, prof, mode);
+}
+
+#define MEDIUM_KUWAHARA 7
+
+// ── Kuwahara — the anisotropic generalized Kuwahara painterly finish (uMedium==7,
+// BB.W-AUR-KUWAHARA) ───────────────────────────────────────────────────────────────
+// The SOTA edge-preserving painterly smoothing: the generalized/anisotropic Kuwahara
+// of Kyprianidis 2010, the SOFT polynomial-weighted variant (NOT the pre-2010 hard
+// argmin, which BANDS the flat field into an 8-spoke pinwheel — the §4.2 anti-regression).
+// Aurora is a PROCEDURAL field (no input texture), so the operator runs over the
+// sampleBase() color field directly: an elliptical kernel oriented along the structure
+// tensor (elongated along the edge-tangent, narrowed across by the anisotropy), divided
+// into 8 overlapping sectors via smooth weights; each sector accumulates a weighted mean
+// + variance, and the output is the variance-weighted blend of the sector means
+// (1/(1+var^q) — the low-variance sectors dominate, the SOFT criterion). The result is
+// flat painterly oil-paint patches with crisp colour-zone boundaries — the §4.3 −5/3
+// cascade carried by the multi-scale patch structure, the §4.2 anisotropy carried by the
+// ellipse hugging the tensor. Single-pass small-radius WebGL2 form: 4 rings × 8 angular
+// taps = 32 procedural neighbourhood samples (cost-bounded; the offscreen-park / PRM
+// freeze the substrate owns is untouched — a parked frame attaches zero of these taps).
+vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
+  // Orient the kernel along the structure-tensor edge-tangent + read the coherence A.
+  vec3 stf = structureTensorField(p, t, flowField(p, t));
+  vec2 tangent = stf.xy;
+  float A = stf.z;
+  // The ellipse axes: major along the tangent, minor across. Anisotropy squeezes the
+  // minor axis (coherent zones → long-thin patch along the colour band; flat zones →
+  // near-circular so the operator degrades gracefully to the isotropic Kuwahara). The
+  // base radius rides uStrokeScale so the painterly patch size tracks the studio knob.
+  float radius = clamp(0.010 + uStrokeScale * 0.00018, 0.006, 0.024);
+  float aniso = mix(1.0, 0.34, clamp(A, 0.0, 1.0)); // minor/major axis ratio
+  vec2 ax = tangent;                  // major-axis unit vector (edge-tangent)
+  vec2 ay = vec2(-tangent.y, tangent.x); // minor-axis unit vector (edge-normal)
+
+  // 8 sectors, soft polynomial weights. Each sector i centers on angle i·45°; a sample's
+  // sector weight is a smooth gaussian-of-angular-distance so sectors OVERLAP (no hard
+  // argmin → no pinwheel banding). The center sample seeds all sectors equally.
+  const int SECTORS = 8;
+  vec3  m[8];   // per-sector weighted colour sum
+  vec3  s[8];   // per-sector weighted colour² sum (for variance)
+  float w[8];   // per-sector weight sum
+  for (int i = 0; i < SECTORS; i++) { m[i] = vec3(0.0); s[i] = vec3(0.0); w[i] = 0.0; }
+
+  // 4 rings × 8 angular taps over the elliptical disc. Each tap: sample the procedural
+  // field, then deposit into the sectors by the soft angular weight × the radial falloff.
+  const int RINGS = 4;
+  const int TAPS  = 8;
+  for (int r = 1; r <= RINGS; r++) {
+    float rr = float(r) / float(RINGS);          // 0.25 .. 1.0
+    float radial = 1.0 - 0.6 * rr;               // inner taps weigh more (gaussian-ish)
+    for (int a = 0; a < TAPS; a++) {
+      float ang = 6.2831853 * float(a) / float(TAPS);
+      // Elliptical offset: major axis full radius, minor axis squeezed by aniso.
+      vec2 dirE = ax * cos(ang) + ay * (sin(ang) * aniso);
+      vec2 off  = dirE * (radius * rr);
+      vec3 c = sampleBase(p + off, t);
+      // The sample's angular bin (its sector) — soft, so it spills into neighbours.
+      for (int k = 0; k < SECTORS; k++) {
+        float sectorAng = 6.2831853 * float(k) / float(SECTORS);
+        // Smallest signed angular distance to the sector center.
+        float d = ang - sectorAng;
+        d = atan(sin(d), cos(d));                 // wrap to [-π, π]
+        float sw = exp(-d * d * 2.2) * radial;    // gaussian angular weight × radial
+        m[k] += c * sw;
+        s[k] += c * c * sw;
+        w[k] += sw;
+      }
+    }
+  }
+
+  // Per-sector mean + scalar luma-variance, then the SOFT variance-weighted blend.
+  vec3  accum = vec3(0.0);
+  float accumW = 0.0;
+  for (int k = 0; k < SECTORS; k++) {
+    float wk = max(w[k], 1e-4);
+    vec3  mean = m[k] / wk;
+    vec3  var3 = max(s[k] / wk - mean * mean, vec3(0.0));
+    float variance = dot(var3, W_LUMA);           // perceptual scalar variance
+    // SOFT criterion: low-variance sectors (flat, inside a colour zone) dominate; a
+    // high-variance sector (straddling an edge) is suppressed. q controls the sharpness;
+    // a finite q (not argmin) keeps the blend continuous → no pinwheel spoke.
+    float sectorW = 1.0 / (1.0 + pow(variance * 320.0, 4.0));
+    accum  += mean * sectorW;
+    accumW += sectorW;
+  }
+  vec3 result = accum / max(accumW, 1e-4);
+
+  // The center sample anchors the result in near-flat zones (where every sector reads the
+  // same colour) so the operator is a no-op there — the smoothing only BITES at edges.
+  vec3 center = sampleBase(p, t);
+  result = mix(center, result, clamp(0.35 + 0.65 * A, 0.0, 1.0));
+
+  // A faint canvas tooth + pigment-saturation lift so the flattened patches read as
+  // oil-paint, not a posterized blur (the painterly identity the smoothing alone lacks).
+  float tooth = vnoise(p * 300.0) - 0.5;
+  result *= 1.0 + tooth * 0.06 * uCanvasGrain;
+  result = saturate3(result, 1.04);
+
+  // Blend toward the incoming col by uStrokeAmount so the studio amount knob controls
+  // the finish strength (uStrokeAmount=0 → the raw field passes through; default → full).
+  return mix(col, result, clamp(uStrokeAmount, 0.0, 1.0));
 }
 
 `

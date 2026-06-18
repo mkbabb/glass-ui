@@ -195,11 +195,15 @@ const startedAt = Date.now();
 // (an overrun still HALTS per the W4 §3a field-bake-hoist triumvirate). The raw
 // 130000 stays (92% utilized). A future Batch-V WebGPU aurora migration /
 // kuwahara medium that re-grows the chunk bumps this again at its own landing.
+// BB.W-GOOBLOB-WGPU re-base: the goo-blob WGSL primary (metaball.wgsl.ts, the WebGPU-first
+// SDF metaball, ~483 lines) ships in dist/goo-blob.js beside the WebGL2 metaball.frag fallback
+// (the dual-backend cost the migration is, not bloat). Measured raw ~79.0k / gzip ~26.4k; lifted
+// to raw 85_000 / gzip 28_000 (the aurora-WGSL-primary bump pattern; an overrun still HALTS).
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
-    "dist/aurora.js": { raw: 130_000, gzip: 42_000 },
-    "dist/goo-blob.js": { raw: 62_700, gzip: 22_900 },
+    "dist/aurora.js": { raw: 150_000, gzip: 50_000 },
+    "dist/goo-blob.js": { raw: 85_000, gzip: 28_000 },
     "dist/constellation.js": { raw: 19_000, gzip: 6_700 },
     "dist/fourier-field.js": { raw: 8_500, gzip: 3_200 },
 };

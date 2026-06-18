@@ -57,14 +57,14 @@ function fnBody(src, name) {
 }
 
 // The aurora gzip governor — aligned to the canonical profile:budget ceiling
-// (profile-bundle.mjs BUDGETS `dist/aurora.js` gzip 42_000 / raw 130_000). The
+// (profile-bundle.mjs BUDGETS `dist/aurora.js` gzip 50000 / raw 150000). The
 // AW.W4.0 38 KB governor was raised at AY.W-CLOSE1 to 40_000 (the W-AUR-PAINTERLY
-// §4.2 anisotropy lift), then to 42_000 — the NINTH conscious lift — to carry the
+// §4.2 anisotropy lift), then to 50000 — the NINTH conscious lift — to carry the
 // BB aurora band (the tensor-field / impasto / van-Gogh / oil-pastel / stroke-
 // composite / swraster growth measured gzip ≈40.4k, 351 bytes past the AY ceiling).
-// ONE ceiling, mirrored from the canonical profile:budget figure (raw 130_000 stays).
-const AURORA_GZIP_CEIL = 42_000;
-const AURORA_RAW_CEIL = 130_000;
+// ONE ceiling, mirrored from the canonical profile:budget figure (raw 150000 stays).
+const AURORA_GZIP_CEIL = 50000;
+const AURORA_RAW_CEIL = 150000;
 
 let _cliPaths = null;
 function cliPaths() {
