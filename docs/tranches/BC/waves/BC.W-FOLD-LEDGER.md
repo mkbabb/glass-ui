@@ -1,0 +1,68 @@
+# BC.W-FOLD-LEDGER — every chronic / prior-tranche deferral folded + DECIDED (the no-silent-drop floor)
+- **Band:** 0 (Verification transposition) · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** Band 0, sibling of BC.W-GESTALT-FIRST + BC.W-PAINT-GATE; consumes the four PM wrappers (BC.W-PM-BB/BA/AZ/SYNTHESIS) + the `DEFERRAL-LEDGER.md`; the `proof:bc-fold-ledger` gate is a CLOSE oracle (Band 6 gates on it)
+- **Owns / closes:** ORCHESTRATION §1 Band 0 box `BC.W-FOLD-LEDGER — every chronic/prior-tranche deferral folded + DECIDED (the DEFERRAL-LEDGER)`. The user mandate (ORCHESTRATION §0.3) "every chronic + every prior-tranche deferral, folded in and DECIDED." PLAN §2 Band 0 third bullet + §5 (the fold ledger). BC.W-PM-SYNTHESIS requirements **#9** (no-silent-drop at the close) + **#10** (the anti-evasion floor the BB close lacked). The companion artefact is `docs/tranches/BC/DEFERRAL-LEDGER.md` (the exhaustive 213-item consolidated table).
+
+## Goal (the gestalt)
+The BC close CANNOT silently drop a chronic. Every one of the 213 prior-tranche deferral items + every cross-tranche failure-class + every BB-never-run wave + every disposition-register row lives in a machine-checkable `FOLD-LEDGER.json`, each with a DECIDED disposition (BUILD / RETIRE / MET / HELD-with-rationale) mapped to a BC band/wave; `proof:bc-fold-ledger` REDs the close if any item is missing, undecided, or names a phantom wave. What a reader carries away: **the BB close shipped with 18 ci-tagged reds riding along + a 14-row chronic-fold table authored but never executed — because the close was an honest-flush ceremony with no mechanical floor. BC's close is a verification: the ledger is the witness that every chronic is folded + DECIDED, not re-stamped a seventh time.** This is the anti-evasion floor the SYNTHESIS names (req #9/#10) — the structural guarantee the user's "every chronic + every previous-tranche deferral folded + DECIDED" mandate is provably met.
+
+## Starting state (measured, file:line)
+- The BB close was never executed: no `FINAL.md`, the `BB.W-CLOSE.md:24` 14-row chronic-fold disposition table was AUTHORED but never EXECUTED (`deferral-sweep.md §0`) — several rows point at SPEC/never-ran waves (W-LIGHTHOUSE, W-CSS-CRITICAL, W-DECK), so those dispositions did NOT land.
+- The masked-accretion: `ci-red-census.md` — 18 ci-tagged reds rode along; `ci ⊂ local` made "run local green" false; the full-union close (`--run full`) only fires at the un-run W-CLOSE.
+- The disposition register (`docs/tranches/AX/audit/DISPOSITION-REGISTER.json`) — 31 rows (1 retired / 2 archived / 28 book), machine-locked by `proof:disposition-live`, BUT it has a hole: the `pendingResolvedBy → resolvedBy` flip is CLOSE-GATED, and the close never ran, so `styles-critical-split` (pendingResolvedBy `BB.W-CSS-CRITICAL`, SPEC) sits OPEN and the register's own gate could not flag it (`deferral-sweep.md §2a`). The register's mechanism is correct; it needs a close to fire.
+- The deferral magnitude across tranches (re-measured 2026-06-18, `deferral-sweep.md §10`): AX 71 items / AY 41 / AZ 38 / BA 41 / BB 54 = ~245 raw item-mentions, deduped to the **213-item fold** the consolidated `DEFERRAL-LEDGER.md` carries (some items recur cross-tranche as the SAME chronic — counted once, lineage recorded). Plus 15 technical successors (T1-T15) + 4 phantom-successor wave-names (W-BUTTON-TONE / W-FOURIER-GPU / W-CONSTELLATION-GPU / W-AURORA-WGPU-MEDIUMS, all NO-SPEC).
+- `scripts/proof-disposition-live.mjs` exists (the register harness, `uncovered:[]` healthy) + `proof:crossrepo-asks` (the no-silent-drop law for cross-repo asks). BC's `proof:bc-fold-ledger` is the SUPERSET that lands on the whole deferral surface.
+
+## Target spec (grounded)
+**1. `docs/tranches/BC/FOLD-LEDGER.json` — the machine-checkable source-of-truth.** A JSON array; each item:
+```json
+{
+  "id": "az-adaptive-grey-origin",
+  "what": "the unconditional 20%-AA self-engage on every glass surface",
+  "origin": "AZ.W-ADAPTIVE-AUTO 5b72fd9b",
+  "lineage": ["AX.W55", "AZ", "BA scope-7", "BB"],
+  "status": "CONTRADICTED-by-new-ask",
+  "disposition": "REBUILD",
+  "band": 1,
+  "wave": "BC.W-ADAPTIVE-RECONCILE",
+  "evidence": "postmortem/az.md §1; ladder.css:185-197"
+}
+```
+Every one of the 213 deferral items + the BB plan-vs-delivery verdict matrix (the BUILT/PAINTED rows from the four PM wrappers) + the 31 disposition-register rows + the 15 technical successors + the 4 phantom-successor names + the cross-repo asks → ONE row each. `disposition ∈ {BUILD, RETIRE, MET, HELD-with-rationale, SUPERSEDED}`; a `HELD-with-rationale` row carries a non-empty `rationale`; a `BUILD`/`MET` row's `wave` MUST resolve to a real `docs/tranches/BC/waves/BC.W-*.md` (the decided-destination soundness clause, the `proof:disposition-live` precedent).
+
+**2. `scripts/proof-bc-fold-ledger.mjs` — the no-silent-drop gate (born-RED, the anti-evasion floor).** Clauses:
+- **F1 completeness:** every id in `DEFERRAL-LEDGER.md`'s consolidated table appears in `FOLD-LEDGER.json` (the doc + the machine source agree — a deferral in the doc but not the JSON, or vice-versa, REDs). The 213-item count is asserted (a count drift REDs).
+- **F2 decided-destination soundness:** every `BUILD`/`MET` row's `wave` resolves to a real BC wave-spec on disk; a phantom-dest (e.g. naming a never-authored wave) REDs. Born-RED via a synthetic `BC.W-DOES-NOT-EXIST` phantom (the `proof:disposition-live` precedent).
+- **F3 no-undecided:** every row has a `disposition ∈ {BUILD,RETIRE,MET,HELD-with-rationale,SUPERSEDED}`; a `book`/empty/`re-stamped`/`deferred` disposition REDs (the chronic re-stamp is forbidden — every item is DECIDED, not re-booked a seventh time).
+- **F4 HELD-rationale:** every `HELD-with-rationale` row carries a non-empty `rationale` AND a `trigger` (the ≥2-consumer or Baseline-graduation condition that would flip it to BUILD); a bare HELD REDs.
+- **F5 requirement-traceability (BC.W-PM-SYNTHESIS req → wave):** each of the 10 SYNTHESIS root-failure-class requirements maps to a real Band-0 wave clause (the synthesis → cure traceability).
+- **F6 close-union binding:** the close runs `--run full` siblings-absent (the W-CLOSE-BATTERY rule applied PER-ROUND, not only at the terminal cut — the masked-accretion cure); a self-test bite proves a synthetic `--run local`-only close path REDs.
+- **F7 disposition-register reconcile:** the 2 open register destinations (`styles-critical-split` → BC.W-CSS-CRITICAL or its BC home; `deck-subpath` → BC.W-DECK-BUILD) carry a real BC wave (the close-gated flip the BB register could not fire); the 28 honest-hold rows carry their `reStampedAt`/`rationale` (folding violates L-inv-8 — a HOLD is in-place, never a delete).
+- Self-test bites (born-RED→GREEN): a dropped item → F1 RED; a phantom dest → F2 RED; a `book` disposition → F3 RED; a bare HELD → F4 RED; a synthetic `--run local`-only close → F6 RED.
+
+**3. `docs/tranches/BC/DEFERRAL-LEDGER.md` — the human-readable exhaustive table.** The companion doc (authored alongside this wave): all 213 items, grouped by tranche (AX/AY/AZ/BA/BB) + the cross-cutting clusters (technical successors T1-T15, phantom-successors, disposition-register, cross-repo asks), each row `id · what · origin · status · DECIDED BC disposition → band/wave`. Every CHRONIC + UN-ADDRESSED + CONTRADICTED item explicitly mapped. `proof:bc-fold-ledger` F1 asserts the doc + the JSON agree.
+
+## Mechanism / files
+- **Created:** `docs/tranches/BC/FOLD-LEDGER.json` (the machine source-of-truth, 213+ rows). `scripts/proof-bc-fold-ledger.mjs` (the F1-F7 + self-test gate, born-RED). `docs/tranches/BC/DEFERRAL-LEDGER.md` (the human-readable exhaustive table — authored alongside this wave spec, the companion deliverable).
+- **Edited:** `scripts/gates.mjs` (register `proof:bc-fold-ledger`, `tags:["ci","release"]` — a device-free doc/JSON gate, runs in CI + at the close). `docs/tranches/AX/audit/DISPOSITION-REGISTER.json` (the 2 open destinations re-pointed to their BC homes; the 28 holds re-stamped `reStampedAt:"BC"` with rationale — in-place, no delete).
+- **The ONE seam:** `FOLD-LEDGER.json` is the SINGLE source-of-truth; `DEFERRAL-LEDGER.md` is its human face (F1 keeps them in sync); the four PM wrappers' verdict matrices feed the `tranches.{BB,BA,AZ}[]` blocks; `proof:bc-fold-ledger` is the close oracle. NO parallel ledger.
+
+## Acceptance (gestalt + measured + gate)
+1. **CAPTURED-PAINT gestalt criterion (N/A — a doc/JSON integrity wave, zero pixels — PLAN §0 "the integrity/structure floor paints zero pixels, real value").** Its acceptance is documentary + mechanical completeness: a reviewer opens `DEFERRAL-LEDGER.md` and finds all 213 items grouped + DECIDED, and `FOLD-LEDGER.json` agrees.
+2. **Machine gate:** `proof:bc-fold-ledger` born-RED on the un-authored ledger → GREEN when all 213 items are present + decided + dest-sound. Clauses F1-F7 + the 5-bite self-test. `tags:["ci","release"]`.
+3. **π readback:** none (device-free). This wave paints no pixels; it is the structural floor that makes the close honest.
+
+## Fences / invariants (must NOT regress)
+- **No silent drop, no re-book (the user mandate).** Every item is DECIDED — never `book`/`re-stamped`/`deferred` a seventh time. A `HELD-with-rationale` is a DECISION (with a named trigger), not a deferral.
+- **HOLD is in-place, never a delete (L-inv-8).** The 28 honest-hold disposition-register rows stay in the register with `reStampedAt:"BC"` + rationale; a fold is a disposition FLIP in place, never a row deletion (the `proof:disposition-live` no-delete fence).
+- **The decided-destination soundness clause is unconditional.** Every BUILD/MET wave name resolves to a real BC wave-spec; born-RED via a phantom self-test (no `BC.W-DOES-NOT-EXIST` survives).
+- **The full-union close per-round (W-CLOSE-BATTERY).** `--run full` siblings-absent at every round close, not only the terminal cut — the masked-accretion cure; the `--run local`-only close is forbidden (F6 self-test).
+- **No backwards compat.** The chronic-re-stamp mechanism (book → re-stamp → next tranche) is RETIRED; BC's ledger DECIDES, it does not perpetuate the book.
+
+## Folds (deferrals discharged)
+This wave is the FOLD MACHINERY itself — it discharges the META-deferral that all 213 items be folded + DECIDED. Specifically:
+- `deferral-sweep.md §0` (the `BB.W-CLOSE.md:24` 14-row chronic-fold table authored-not-executed) → INHERIT the table into `FOLD-LEDGER.json`, re-decide the un-landed rows, EXECUTE the dispositions per-wave (not at one terminal close).
+- `deferral-sweep.md §2a` (the 2 open disposition-register destinations — `styles-critical-split`, `deck-subpath` — the close-gated flip the BB register could not fire) → F7 re-points them to their BC homes.
+- `deferral-sweep.md §7` (the 4 phantom-successor wave-names W-BUTTON-TONE / W-FOURIER-GPU / W-CONSTELLATION-GPU / W-AURORA-WGPU-MEDIUMS, all NO-SPEC) → each gets a `FOLD-LEDGER.json` row with a DECIDED disposition (BUILD in Band 4 for the viz ones per the WebGPU-everywhere mandate; the others decided per their band).
+- `deferral/ba.md ba-disposition-register-31-rows` + `deferral/ay.md disposition-register-book-backlog` (the 31 AX rows re-stamped un-MET across AX→BB) → DECIDE EACH (the 28 honest-hold rows HELD-with-rationale + named trigger; the 3 BB-decided rows recorded built/retired; the 2 open destinations re-pointed).
+- The four PM wrappers' verdict matrices (BC.W-PM-BB/BA/AZ) → the `tranches.*[]` blocks of the ledger (the plan-vs-delivery delta is machine-checked, no verdict dropped).
+- DECIDED: the chronic-re-stamp machine is RETIRED; `proof:bc-fold-ledger` is the anti-evasion floor the BB close lacked — the witness that every chronic + every prior-tranche deferral is folded + DECIDED, the user's explicit mandate provably met.

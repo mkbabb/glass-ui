@@ -1,0 +1,101 @@
+# BC.W-AFFORDANCE-MAP — interaction affordances baked into EVERY interactive element
+
+- **Band:** 7 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** After `BC.W-SPRING-EASE` (the affordances ride the eased springs + the minted iOS press register — a hover lift on a front-loaded curve is the wrong feel) and `BC.W-MOTION-ONE-CLOCK` (the affordances compose the proven single-source primitives). Reads the Band-1 glass identity (`BC.W-GLASS-IDENTITY`, the rim→catch-light) + the Band-1 button (`BC.W-BUTTON-GLASS-IOS`) so the gleam paints over fixed glass. Feeds `BC.W-CONTROL-SMOOTH` (Band 6 — the laggy/square controls inherit the affordance contract).
+- **Owns / closes:**
+  - USER-DEFECTS §D: "increased glass-morphism + increased legibility together — **suffuse** this throughout" / the iOS-27 interactive register (press/hover/touch-illumination).
+  - USER-DEFECTS §D (brainstorm): "the brainstorm + the per-element map" (the user-commissioned affordance audit, ORCHESTRATION §1 Band 7 box verbatim).
+  - USER-DEFECTS §F: "controls are super laggy" (the affordance must answer crisply — composed on the eased press register, not a desynced bezier).
+  - ORCHESTRATION §1 Band 7 box: `BC.W-AFFORDANCE-MAP — interaction affordances baked into every element (the brainstorm + the map)`.
+  - DEFECT-LEDGER (the reka stale-binding silent-no-op class, postmortem/bb.md "live-verify the control interactions").
+
+## Goal (the gestalt)
+EVERY interactive element in glass-ui answers the pointer the same liquid way. Hover a button and it lifts a hair, its glass gleam wakes and follows your cursor, the surface brightens a touch — three coupled legs, one motion. Press it and it squishes on the iOS press spring with a coupled brightness bump, the gleam illuminating under the touch-point. Hover a menu row, a tab, a dock control, a card — the SAME register answers, scaled to the element's weight. Grab a draggable thing and it follows ~1:1 with a gel-squish; release and it flings to its slot. Nothing is dead — no element sits inert under the cursor, no affordance is a fast-color-snap-then-slow-spring desync, no control lags. The user reads the whole surface as ALIVE and COHERENT (the iOS-27 "the interface responds to me as one material") because every element composes the SAME small set of affordance primitives — hover-lift + gleam-track + press-squish + (where it earns it) drag-morph — off the SAME eased springs. This wave is the BRAINSTORM made into a binding per-element MAP + a gate that reds an interactive element shipped inert.
+
+## Starting state (measured, file:line)
+The affordance PRIMITIVES exist and are SOTA-structured, but their APPLICATION is uneven + paint-unverified (apple-ios27.md §2.5/§4; postmortem/bb.md "live-verify the control interactions"):
+
+- **The hover register is a 3-leg coupled lift (built, correct).** `scale-paper.css:18-22` — the dock control hover is "THREE legs together on hover — the specular gleam waking, a perceptible scale lift, the surface bg shift." `--scale-hover-btn: 1.05`, `--scale-hover-dock: 1.1` (`scale-paper.css:24-25`), `--scale-hover: 1.08`. The button hover-visual channel (bg/border/color/shadow + scale) is UNIFIED onto ONE `--spring-smooth` register (CLAUDE.md BB.W-MOTION-CANON — "the lift reads as ONE coherent glide"). The structure is RIGHT.
+- **The gleam-track is a tier-root auto-arm (built, correct).** `src/composables/glass/vSpecular.ts` (the `v-specular` directive) + `useSpecularTracking.ts` (the `createSpecularWriter` ONE position-write source) + `useSpecularPointer.ts` (the angle-adding leaf for W-LENSING). CLAUDE.md BB.W-LIQUIDHOVER: "a bare `<Button variant=glass>` / `<DockIconButton>` gleams pointer-following with no consumer @pointermove." `--glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45)` (`glass-fx.css:41`), `--glass-specular-size: 36%` (`glass-fx.css:190`). The auto-arm is RIGHT.
+- **The press is the ONE interruptible coupled spring (built, correct, uncalibrated).** `useLiquidPress.ts` (the `--press-t` one-drive-both-legs) + `useSpringPress.ts` (response 0.25/ζ 0.7 — UNCALIBRATED, `BC.W-SPRING-EASE` mints the 0.15/0.86 iOS register). `--scale-press: 0.96` (`scale-paper.css:26`). The CSS `.tap-squish:active`/`.glass-press` is the no-JS floor. The structure is RIGHT; the spring under it is eased by `BC.W-SPRING-EASE`.
+- **The drag-morph is the pull primitive (built, default-OFF).** `useDragMorph.ts` (kf `Draggable` + `SpringProgress` + `useLiquidFlex` + `decayRest`) — consumer #1 the tab pull, #2 the DockLayerGroup pull-to-switch. `BC.W-LIQUID-TAB` wires it ON for tabs.
+- **The GAP — no MAP, no completeness, paint-unverified.** There is no single artefact enumerating WHICH affordance every interactive element class carries, and no gate that reds an interactive element shipped INERT (no hover, no press). BB's disease (postmortem/bb.md): the control interactions were never live-verified — the reka stale-binding silent-no-op class (a `:pressed` that no-ops, MEMORY feedback_glass_ui_binding_verification) is invisible to vue-tsc + units, only an e2e catches it. The user's §F "controls super laggy" is the symptom: an affordance composed on a desynced bezier (not the eased press register) OR an inert control reading as lag.
+- **The brainstorm was commissioned, not delivered.** ORCHESTRATION §1 Band 7 box names "the brainstorm + the map" — no such artefact exists. The user wants the affordance thinking made EXPLICIT + binding.
+
+## Target spec (grounded)
+KISS — the affordance primitives are built; this wave BRAINSTORMS the full set, MAPS each interactive element class to its required affordance(s), and GATES that the map holds (no inert element, no desynced affordance). It composes the existing primitives — it mints NO new affordance engine.
+
+### The brainstorm — the affordance vocabulary (the small closed set)
+Every interactive element draws from ONE of five affordance primitives, all on the eased springs (`BC.W-SPRING-EASE`), all compositor-only (`proof:no-layout-animation`), all PRM-carved (P6):
+
+1. **HOVER-LIFT** — a sub-perceptual scale lift (`--scale-hover-*`) on `--spring-smooth`, the surface bg shifting to the next glass tier, the gleam waking — the 3 legs as ONE motion (`scale-paper.css:18-22`). The "this is touchable" cue.
+2. **GLEAM-TRACK** — the specular catch-light following the pointer (`v-specular` / `createSpecularWriter`) — the iOS "light bends toward your finger" (apple-ios27.md §1.2 specular). Auto-armed at the glass tier root; the position-tracked leg rides `--ease-standard` (motion-canon.md §6 "Position-tracked → --ease-standard").
+3. **PRESS-SQUISH** — the iOS interruptible coupled spring-press: `--scale-press` 0.96 on the `press` register (0.15/0.86, `BC.W-SPRING-EASE`), the coupled `--press-t` brightness/gleam-illumination leg on the SAME spring scalar (P3), velocity-continuous re-seat on rapid re-press (`useLiquidPress`). The "I activated it" + touch-illumination (apple-ios27.md §2.5).
+4. **DRAG-MORPH** — grab → follow ~1:1 → gel-squish → fling-to-nearest (`useDragMorph`), for elements that EARN a pull (the tab pill, the dock layer rail, a sortable handle). NOT every element (the proportion fence — motion-canon.md "morph the meaningful transition, never everywhere-jitter").
+5. **FOCUS-RING** — the keyboard-reachable `.focus-ring` (token `--focus-ring-shadow`) — the non-motion a11y affordance, distinct from hover (CLAUDE.md "the .focus-ring CSS utility over inline focus-visible"). EVERY interactive element carries it (keyboard parity).
+
+### The per-element MAP (the binding assignment — `docs/precepts/affordance-map.md`)
+A markdown table mapping each interactive element CLASS to its required affordance set. Grounded in the existing component inventory:
+
+| element class | HOVER-LIFT | GLEAM-TRACK | PRESS-SQUISH | DRAG-MORPH | FOCUS-RING | source |
+|---|---|---|---|---|---|---|
+| Button (glass variants) | ✓ `--scale-hover-btn` | ✓ auto-arm | ✓ press register | — | ✓ | `Button.vue` (W-BUTTON-GLASS) |
+| Button (solid/link) | ✓ | — (opaque) | ✓ | — | ✓ | `Button.vue` |
+| DockIconButton / dock controls | ✓ `--scale-hover-dock` | ✓ auto-arm | ✓ `--scale-press-dock` | — | ✓ | `dock-controls.css` |
+| SegmentedTabs pill | ✓ (indicator) | ✓ | ✓ (squish-on-travel) | ✓ (the liquid pull, `BC.W-LIQUID-TAB`) | ✓ (roving) | `SegmentedTabs.vue` |
+| menu row (Dropdown/Context/Select/Combobox/Command) | ✓ glass-menu-row lift | — (subtle) | — (select-on-click) | — | ✓ (highlighted) | `menu.css` (W-MENU-GLASS) |
+| Card (`:pressable`) | ✓ (opt-in) | ✓ (gated) | ✓ via `useLiquidPress` | — | ✓ | `Card.vue` (W-PRESS-UNIFY) |
+| Switch / Toggle / Checkbox / Radio | ✓ | — | ✓ (the thumb spring) | — | ✓ | `switch/`,`toggle/` (Band 6 `BC.W-RADIO-FIX`) |
+| Slider thumb | ✓ (halo) | — | ✓ (drag-grab) | ✓ (the track drag) | ✓ | `Slider.vue` (keepDockOpen) |
+| DockLayerGroup rail | ✓ | — | — | ✓ (pull-to-switch) | ✓ (roving) | `DockLayerGroup.vue` |
+| link/nav card (hero redirect) | ✓ | ✓ (glass) | ✓ | — | ✓ | `BC.W-HERO-AUDACIOUS` |
+| SortableHandle | ✓ (grab cursor) | — | — | ✓ (the reorder drag) | ✓ (role=button) | `sortable-list/` |
+
+The map is the BINDING contract: an interactive element NOT on the map (or on it but shipping inert) reds the gate. The map lives in `docs/precepts/affordance-map.md` (the canon home — the affordance idiom), cited by every interactive-component wave.
+
+### The wiring (the gaps the map surfaces)
+- **No inert interactive element.** Every element class in the map carries AT LEAST hover-lift + focus-ring (the floor); the glass-variant elements carry gleam-track; the press-able elements carry press-squish on the eased register. The gate enumerates the inventory + reds an interactive element with NO affordance.
+- **No desynced affordance (the §F lag fix).** The hover-visual channel (bg/border/color/shadow + scale) rides ONE register (`--spring-smooth` for surface+scale, motion-canon.md), NOT a fast-color-bezier desynced from a slow-scale-spring (the §F "laggy" read = the desync OR an inert control). The press rides the eased `press` register (`BC.W-SPRING-EASE`), NOT the uncalibrated 0.25/0.7.
+- **The reka stale-binding e2e check** (MEMORY feedback_glass_ui_binding_verification): the affordance is verified LIVE (a real pointer hover/press/click in the π), not a source assert — a `:pressed`/`v-model` that silently no-ops is caught only by the e2e (the class that bit Switch/Toggle/Radio, USER-DEFECTS §F).
+
+This is the gestalt: the affordance thinking becomes an EXPLICIT brainstorm + a BINDING per-element map + a gate that reds an inert or desynced interactive element — so "every element answers the pointer the same liquid way" is provable, not aspirational.
+
+## Mechanism / files
+- **NEW `docs/precepts/affordance-map.md`** — the brainstorm (the 5-primitive vocabulary) + the per-element MAP table + the wiring rules. The canon home cited by every interactive-component wave (the `affordance idiom`).
+- **NEW `scripts/proof-affordance-map.mjs`** (`["local","ci","release"]` SOURCE arm + a LOCAL live arm) — the completeness gate: enumerates the interactive-element inventory (the components with a `role`/`@click`/`@pointerdown`/`tabindex`), cross-checks each against the map, reds an interactive element NOT mapped OR mapped-but-inert (no hover/press/focus class). The map is READ from `affordance-map.md` (gate + canon single-sourced — the `proof:precept-current` precedent).
+- **Edit the interactive components the map flags as gaps** (the inert/desynced ones — determined by the inventory walk): wire the missing hover-lift/press-squish/gleam-track by COMPOSING the existing primitives (`v-specular`, `useLiquidPress`, the `--scale-hover-*` register), NEVER a new affordance engine. Most will already carry it (the structure is built); the gate finds the few that don't.
+- **NO new affordance primitive** — this wave COMPOSES `vSpecular` / `useSpecularTracking` / `useLiquidPress` / `useDragMorph` / `--scale-hover-*` / `.focus-ring`. The 5-primitive set is the closed vocabulary; a 6th would need a wave of its own (the proportion fence).
+- The ONE source / ONE clock: every affordance rides the eased `SPRING_PRESETS` curves (`BC.W-SPRING-EASE`); the gleam rides the ONE `createSpecularWriter`; the press rides the ONE `useLiquidPress`/`useSpringPress`. No second engine.
+
+## Acceptance (gestalt + measured + gate)
+1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP):** a live affordance sweep — hover + press each element class in one pass (dev-tools MCP, both modes): every element lifts/gleams/squishes coherently; no element sits inert under the cursor; the gleam follows the pointer; the press squishes with a coupled brightness bump. A human reads "every element answers me the same liquid way — the interface is alive." Lands at `docs/tranches/BC/audit/visual/W-AFFORDANCE-MAP-DELTA.md` (Live-verify = captured delta via dev-tools MCP; per-wave fresh capture per `BC.W-GESTALT-FIRST`).
+2. **Machine gate `proof:affordance-map`** (born-RED if any interactive element is inert/unmapped → GREEN at the wiring):
+   - **A1 — the map is the binding inventory.** Every interactive element class (a component with `role`/`@click`/`@pointerdown`/`tabindex` in `src/components/`) appears on the `affordance-map.md` table with its required affordance set. Born-RED: the map does not exist at HEAD. Self-test bite: a planted new interactive component absent from the map reds (the anti-gameability floor — a future element cannot ship unmapped).
+   - **A2 — no inert interactive element.** Every mapped element carries AT LEAST the FLOOR (hover-lift composing `--scale-hover-*` OR the glass-menu-row lift, + `.focus-ring`); the glass elements carry the gleam (`v-specular`/the auto-arm); the pressable carry `useLiquidPress`/`.tap-squish`. The gate reds an element on the map with NO affordance class wired. Self-test bite: a planted inert `<button>` with no hover/press/focus reds.
+   - **A3 — no desynced affordance (the §F lag root).** The hover-visual channel rides ONE register (the bg/border/color/shadow + scale on `--spring-smooth`, not a split fast-bezier/slow-spring); the press rides the eased `press` register (`--spring-press`, not the uncalibrated default). Self-test bite: a planted `transition: background var(--duration-fast), transform var(--spring-smooth-duration)` desync (color faster than scale) reds.
+   - **A4 — the closed vocabulary.** The affordances compose the 5 named primitives (`vSpecular`/`useSpecularTracking`/`useLiquidPress`/`useSpringPress`/`useDragMorph`/`--scale-hover-*`/`.focus-ring`); no 6th hand-rolled affordance engine. Self-test bite: a planted hand-rolled hover rAF lift reds.
+   - **A5 — the map + the canon single-sourced.** The gate's required-affordance table is READ from `affordance-map.md` (gate + canon cannot drift). + the cross-ref to `BC.W-SPRING-EASE` (the eased curves) is recorded.
+   - **+ a self-test bite per clause.**
+3. **π readback `tests-visual/affordance-map.spec.ts`** (both modes + WebKit, LOCAL real-render — the binding paint, the reka stale-binding catcher):
+   - For each element class: a LIVE pointer hover captures the scale lift > 1 + (glass) the gleam position tracking the pointer + the surface tier shift — all three legs co-timed (the hover-visual channel is ONE motion, no desync > 50ms).
+   - A LIVE press captures the `scale` reaching ~`--scale-press` 0.96 on the eased `press` register within ~100ms + the coupled `--press-t`/brightness leg peaking on the SAME spring scalar (P3).
+   - The reka stale-binding catch: a LIVE click on Switch/Toggle/Radio (USER-DEFECTS §F) actually FLIPS the state (the `aria-checked`/`aria-pressed` reflects, the toggle paints the new state) — a silent-no-op binding reds (the e2e the vue-tsc + units miss, MEMORY feedback_glass_ui_binding_verification).
+   - PRM: the affordances keep the fade/color leg, drop the scale/translate (P6) — the gleam/press confirm, the physics off.
+   - Safari/WebKit: hover-lift + gleam-track + press-squish are pointer-events + compositor transforms (no `backdrop-filter: url()`, no WebGL) → identical on WebKit. The affordances are Safari-native.
+
+## Fences / invariants (must NOT regress)
+- **The closed 5-primitive vocabulary** (the proportion fence, motion-canon.md "morph the meaningful transition, never everywhere-jitter"): no 6th affordance engine; drag-morph is reserved for elements that EARN a pull, NOT every element. A gel morph is the exception, not the default.
+- **The ONE position-write source** (CLAUDE.md BB.W-LIQUIDHOVER `proof:glass-cohesion` no-forked-mouse-writer): the gleam is `createSpecularWriter`; no element forks its own `--mouse-x/y` writer. A4 reds a fork.
+- **The ONE press driver** (BB.W-PRESS-UNIFY): the press is `useLiquidPress`/`useSpringPress` on the eased `press` register; no element re-rolls a CSS-transition press beside it (the velocity-continuous re-seat is the spring's, not a fixed `:active`).
+- **The eased springs** (`BC.W-SPRING-EASE`): the affordances READ the eased curves; this wave does NOT re-tune a spring (the disjoint split — curve fix there, affordance composition here).
+- **Compositor-only + PRM-carved** (`proof:no-layout-animation` + P6): every affordance is `transform`/`opacity`/`--*`-custom; the PRM carve (`a11y-overrides.css` + the recipe-local) keeps the fade, drops the transform.
+- **The clean-break discipline** (no back-compat): a desynced/inert affordance is FIXED in place (the component composes the canonical primitive), not aliased. No `--scale-hover-legacy`.
+- **Presets-in-consumers:** the library affordance feel IS its identity; a consumer retunes via the `--scale-hover-*`/`--spring-press` tokens on its instance.
+- **The map is the anti-gameability floor** (postmortem/az.md "claimed-not-built-gate-verifies-easier-thing"): A1 reds a new interactive element that ships unmapped, so a future agent cannot smuggle an inert control past the gate.
+
+## Folds (deferrals discharged)
+- **The affordance brainstorm + map** (USER-DEFECTS §D; ORCHESTRATION §1 Band 7 box): **DECIDED — BUILD:** the brainstorm (the 5-primitive vocabulary) + the binding per-element MAP (`affordance-map.md`) + the completeness gate land. The commissioned thinking is delivered as a binding artefact, not prose.
+- **`controls super laggy`** (USER-DEFECTS §F): **DECIDED — DIAGNOSED + GATED:** the lag is the desynced affordance (fast-color-bezier vs slow-scale-spring) OR an inert control; A3 reds the desync, A2 reds the inert. The fix is the ONE-register hover + the eased press. (The square-borders + the deeper control-smoothness is `BC.W-CONTROL-SMOOTH`'s Band-6 scope; this wave owns the affordance-MOTION arm.)
+- **`bb-paper-done-control-interactions-unverified`** (postmortem/bb.md "W-CONTROL-TOKENS/W-INVALID-RING/... live-verify the control interactions"): **DECIDED — RE-VERIFY LIVE:** the π is a LIVE pointer hover/press/click (the reka stale-binding e2e), not a source assert. The silent-no-op class (MEMORY feedback_glass_ui_binding_verification) is caught at the affordance gate.
+- **`az-suffuse-press-register-reconcile`** (deferral/az.md item 33 — the cross-control press divergence): **DECIDED — RESOLVED-by-the-map:** the map assigns the ONE `press` register (0.15/0.86, `BC.W-SPRING-EASE`) to every pressable element; the divergence is killed by the single-register assignment. BB.W-PRESS-UNIFY landed the wrapper; the map binds the assignment.
+- **The DRAG-MORPH ≥2-consumer bar** (BB.W-DRAG-MORPH): MET by construction — the map assigns drag-morph to the tab pill (#1), the DockLayerGroup rail (#2), the Slider track, the SortableHandle (the earned-pull set). No re-litigation.
+- **The gleam touch-illumination** (apple-ios27.md §2.5 ".interactive() → touch-point illumination radiating to nearby glass"): **DECIDED — the press-squish coupled brightness leg IS the touch-illumination** (the `--press-t` brightens the surface + the gleam on press); the radiating-to-nearby-glass is the iOS GlassEffectContainer behavior (apple-ios27.md §1.1 "glass cannot sample other glass; the container provides a shared sampling region") — BOOKED to a successor (the nested-glass shared-sampling is a Band-1 glass-container concern, named not built). Recorded DECIDED.

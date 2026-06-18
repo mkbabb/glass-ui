@@ -1,0 +1,88 @@
+# BC.W-ADAPTIVE-RECONCILE — close the observer loop (the luma is READ, not decorative)
+
+- **Band:** 1 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** after `BC.W-GLASS-IDENTITY` (which pins the warm-cream FLOOR this wave drives ABOVE) and `BC.W-BLACK-BAR` (the rim); this is the single highest-value Band-1 wave (glass-dock-codebase.md §1.3). `BC.W-GLASS-LEGIBILITY-MEASURED` consumes the closed loop to measure the AA bar.
+- **Owns / closes:**
+  - USER-DEFECTS §D "iOS-27 = increased glass-morphism WHILE increasing legibility — suffuse this throughout."
+  - The user (R3-7, verbatim, postmortem/az.md §3): *"darken DYNAMICALLY like iOS 27 so we can actually see these elements."*
+  - DEFECT-LEDGER **D1** "the luminance observer is decorative (writes `--glass-backdrop-luma` that nothing reads). Pre-fixed (e1b4b44c, 4% floor); real fix = close the observer loop."
+  - ORCHESTRATION §1 Band 1 box: `BC.W-ADAPTIVE-RECONCILE — close the observer loop (luma is read, not decorative)`.
+
+## Goal (the gestalt)
+A dock floating over the live aurora at `/substrates/aurora` **darkens itself DYNAMICALLY, frame-tracking the field beneath it** — when the dock drifts over a bright bleed it deepens toward the warm-ink just enough to keep its controls legible, and when it drifts over a dark trough it lifts back toward translucent warm-cream. The darken is CONTINUOUS and EARNED — it tracks the measured backdrop, not a blanket static heuristic that greys every surface unconditionally. Over a calm light page the same dock stays warm-cream and translucent (no darken to earn). This is the iOS-27 "the amount of tint and the dynamic range shift to always ensure buttons remain legible, while letting as much content through as possible" (apple-ios27.md §1.1) — made LIVE, not decorative.
+
+## Starting state (measured, file:line)
+The observer is built, default-ON, and **architecturally inert** — confirmed by TWO live probes (glass-dock-codebase.md §1.3; postmortem/az.md §3):
+
+- **(a) `--glass-backdrop-luma` has ZERO CSS consumers.** `grep -rn 'var(--glass-backdrop-luma' src/` → **exit 1 (empty)** (glass-dock-codebase.md §1.3 (a), exit-code-verified). The token is WRITTEN at `src/composables/glass/useGlassBackdropLuminance.ts:311` (`el.style.setProperty("--glass-backdrop-luma", value.toFixed(3))`) and declared EMPTY at `tokens/glass-fx.css:123` (`--glass-backdrop-luma: ;`) but no `.css` rule reads it. The composable's own header calls it "its FIRST real consumer" — that consumer never materialized (postmortem/az.md §3: "a pure write-with-no-reader = decorative").
+- **(b) The observer NEVER FIRES on the live dock — even over a live aurora.** Live probe of the SidebarDock at `/substrates/aurora`: `dock.style.getPropertyValue('--glass-backdrop-luma')` = `""` AND `dock.style.getPropertyValue('--glass-backdrop')` = `""` (glass-dock-codebase.md §1.3 (b)). The observer is wired ON by default (`GlassDock.vue:77-81`) but writes NEITHER inline. ROOT:
+  - `useGlassBackdropLuminance.ts:219` `sampleAnimated` needs `options.backgroundCanvas` — but `GlassDock.vue:79` passes `props.backgroundCanvas ?? null`, and the DockStage/shell demos **never pass it** → `resolveSourceCanvas(null)` returns no source → `sampleAnimated` returns null → falls to `sampleStatic`.
+  - `sampleStatic` (`useGlassBackdropLuminance.ts:280-304`) does an `elementsFromPoint` stack-walk: the dock floats over the transparent-walked aurora `<canvas>`, so every layer reads `rgba[3] < 0.5` → `continue` (line 294) → falls to `document.body` luminance. The body bg may be near-transparent or the same `--background`, and the `useIntersectionPause` gate may park the loop before the mount sample lands.
+- **The write() is correct but unreached** (`useGlassBackdropLuminance.ts:307-318`): it DOES set both `--glass-backdrop-luma` AND the discrete `--glass-backdrop` bucket — the gap is the SAMPLE never produces a value over the aurora (no `backgroundCanvas` ref) and NOTHING reads the luma continuously.
+- **The discrete bucket → AA jump is too coarse** (glass-dock-codebase.md §1.3): even when the bucket fires, the CSS reads only the discrete `--glass-backdrop: light|dark` → a binary 4%↔20% jump. SOTA Apple "shifts the dynamic range CONTINUOUSLY" (apple-ios27.md §1.5).
+- **The unconditional darken sold as dynamic is the OPPOSITE of dynamic** (postmortem/az.md §3, §8 class 9 `static-heuristic-dressed-as-dynamic`): "AZ shipped a blanket non-dynamic 20% over an unknown surface — the OPPOSITE of dynamic."
+
+## Target spec (grounded)
+Close the loop with the two moves glass-dock-codebase.md §1.3 + apple-ios27.md §1.5 name. Make `--glass-tint-strength` a CONTINUOUS function of the measured `--glass-backdrop-luma`, and fix the sample so it actually fires over the aurora.
+
+1. **Make `--glass-backdrop-luma` LOAD-BEARING — the continuous strength driver** (apple-ios27.md §1.5 TARGET, verbatim math):
+   - Register `--glass-backdrop-luma` as a typed `@property <number>` (`tokens/property-regs.css`, beside `--glass-level`/`--glass-depth` — `syntax:"<number>"; inherits:true; initial-value:0`) so a bare `var()` interpolates smoothly instead of snapping (the `--progress-crescendo`/`--dock-morph-t` registered-property precedent, property-regs.css §18).
+   - Drive `--glass-tint-strength` as a `calc()` lerp off it, in the SAME content/overlay/dock `:where()` rules that today pin the flat floor:
+     ```css
+     --glass-tint-strength: clamp(
+         var(--glass-tint-strength-floor),
+         calc(
+             var(--glass-tint-strength-floor) +
+             (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
+             max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+         ),
+         var(--glass-tint-strength-aa)
+     );
+     ```
+     So: luma ≤ 0.6 (the `--glass-backdrop-luma-knee`, the apple-ios27.md §1.5 ~0.6 light threshold) → the calm 4% floor (warm-cream, content through); luma rising 0.6→1.0 → the strength ramps CONTINUOUSLY toward the 20% AA ceiling (the iOS dynamic-range shift). The `clamp()` floors at 4% and ceilings at the bounded ≤24% iOS clamp. **This replaces the binary discrete bucket** with the continuous driver — the discrete `--glass-backdrop: light|dark` bucket is RETIRED as the strength driver (clean break; it may stay as a coarse `@supports`-degrade fallback for engines without `@property`, but the continuous calc is the primary).
+   - The `--glass-backdrop-luma-knee` is the ONE retune knob (default 0.6, the iOS threshold; a consumer raising it darkens later).
+2. **FIX the sample so it fires over the aurora** (glass-dock-codebase.md §1.3 fix 2):
+   - **Thread the aurora `<canvas>` through to the observer.** The DockStage / aurora hosts pass `backgroundCanvas` (the aurora/blob canvas the dock floats over) into `GlassDock`'s `backgroundCanvas` prop (already plumbed, `GlassDock.vue:79`), so `sampleAnimated`'s `drawImage + getImageData` path (the correct one for a dock-over-canvas, `useGlassBackdropLuminance.ts:219-275`) has its source. The aurora demo + DockStage set `:background-canvas="auroraCanvasRef"`.
+   - **Harden the static fall.** When no canvas is threaded (a static page), `sampleStatic` already walks `elementsFromPoint` and falls to `document.body` — VERIFY it produces a real luma on the static routes (it reads the page background layer, the legitimate proxy). The fall is correct; the gap was only the missing canvas on the animated route.
+   - **Verify the loop is unparked at mount:** the `useIntersectionPause` gate must allow the mount `sampleNow()` to land before parking (the observer's `sampleNow` bypasses the throttle for the mount path, `useGlassBackdropLuminance.ts:322-330`).
+3. **The ≥2-binary-consumer bar is structurally MET by the loop-closure** (research/deferral/az.md §15, ba.md §10): once the observer DRIVES the strength, every dock/overlay route is a real binary consumer (not the single demo file). The demo-private booking (`docs/consumer-evidence/use-glass-backdrop-luminance.md`) is SUPERSEDED; re-evaluate the public-barrel promotion at the loop-closure (research/deferral/az.md §15 verdict).
+
+The architectural transposition: the darken stops being a static blanket heuristic and BECOMES a measured continuous driver — ONE `--glass-tint-strength` axis, floored by `BC.W-GLASS-IDENTITY` (4% calm) and DRIVEN here off the live observer (up to the ≤24% AA ceiling), exactly the iOS-27 dynamic-range shift.
+
+## Mechanism / files
+- **Edit `src/styles/tokens/property-regs.css`** (§18, beside `@property --glass-level`) — register `@property --glass-backdrop-luma { syntax:"<number>"; inherits:true; initial-value:0; }`.
+- **Edit `src/styles/tokens/glass-fx.css`** — mint `--glass-backdrop-luma-knee: 0.6` (the ONE retune knob); the `--glass-backdrop-luma: ;` empty declaration is replaced by the registered `@property` initial.
+- **Edit the content/overlay/dock `:where()` rules** (`src/styles/glass/ladder.css` content+overlay band, `src/styles/dock/morph.css:428-441` dock) — re-point `--glass-tint-strength` from the flat `var(--glass-tint-strength-floor)` to the `clamp(... calc() off --glass-backdrop-luma ...)` continuous driver. The discrete `@container style(--glass-backdrop: light)` bright bucket is RETIRED as the strength driver (the continuous calc subsumes it); the `@container` block may remain ONLY as the `@supports not (...)` coarse fallback for no-`@property` engines.
+- **Edit `src/components/custom/aurora/` demo hosts + `demo/stories/dock/DockStage.vue`** — pass `:background-canvas` (the aurora/blob canvas ref) into the dock so `sampleAnimated` fires. (Demo wiring; the library `GlassDock.vue` prop is already plumbed.)
+- **Verify (no edit) `useGlassBackdropLuminance.ts`** — the `write()` + `sampleAnimated`/`sampleStatic` are correct; the fix is the canvas thread + the CSS read, not the composable.
+- **Author `scripts/proof-adaptive-reconcile.mjs`** (or extend `proof:adaptive-observer` in place) — the loop-closure gate (born-RED: the luma is unread + the bucket-only driver).
+- **Author/extend `tests-visual/adaptive-glass-live.spec.ts`** — the BIDIRECTIONAL live readback (calm = warm-cream floor; bright = continuous darken toward AA).
+- The ONE source: `--glass-tint-strength` is the ONE axis; the observer is the ONE driver; `--glass-backdrop-luma` is the ONE measured signal. No second darken path.
+
+## Acceptance (gestalt + measured + gate)
+1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP):** a capture series of the dock over `/substrates/aurora` at three field positions (over a bright bleed / a mid tone / a dark trough), BOTH modes — the dock plate VISIBLY deepens over the bright bleed and lifts over the dark trough (the continuous track), while the same dock over a calm `/display/card` page stays warm-cream translucent. Lands at `docs/tranches/BC/audit/visual/W-ADAPTIVE-RECONCILE-DELTA.md`. (Live-verify = captured delta, never a commit claim.)
+2. **Machine gate `proof:adaptive-reconcile`** (born-RED on the open loop → GREEN; the postmortem/az.md §8 disease-root, BIDIRECTIONAL):
+   - **A1 — the luma is READ (loop closed).** `grep -rn 'var(--glass-backdrop-luma' src/styles/` returns ≥1 hit in a `--glass-tint-strength` `calc()` (born-RED: HEAD exit 1, empty). The synthetic bite: deleting the luma read from the calc reds.
+   - **A2 — `--glass-backdrop-luma` is a typed `@property`.** Registered `<number>`, `inherits:true` (so a bare `var()` interpolates, no snap). Born-RED: HEAD has only the empty `--glass-backdrop-luma: ;` declaration.
+   - **A3 — the strength is CONTINUOUS, not the binary bucket.** The content/overlay/dock `:where()` rules drive `--glass-tint-strength` via a `calc()/clamp()` off the luma, NOT a flat `var(--glass-tint-strength-floor)` NOR a binary `@container`-only jump. Self-test: a planted flat-floor-only re-point (the HEAD shape) reds.
+   - **A4 — the sample fires over the aurora (the canvas threaded).** The aurora/DockStage demo hosts pass `:background-canvas`; the gate asserts the prop is bound on the enrolled dock routes (the source-presence half). The binding live half is the π.
+   - **A5 — the floor + ceiling are bounded.** The calc clamps `[--glass-tint-strength-floor, --glass-tint-strength-aa]` (4% .. ≤24%); a calc that can exceed the iOS ≤24% ceiling reds.
+   - **+ the disease-root bites:** (i) a synthetic decorative-write (luma written, nothing reads) reds (the `built-not-wired` class, postmortem/az.md §8 class 6); (ii) a synthetic unconditional-20% blanket darken reds (the `static-heuristic-dressed-as-dynamic` class, postmortem/az.md §8 class 9).
+3. **π readback `tests-visual/adaptive-glass-live.spec.ts` (REBUILT BIDIRECTIONAL — the postmortem/az.md §2 fix)** (both modes + WebKit, LOCAL real-GPU):
+   - **The CALM-LIGHT branch (the missing upper bound, born-RED on grey):** walk the dock + content routes over a synthetic CALM-light backdrop with NO injected bucket — each glass bg resolves `α < 0.72 AND oklab-L > 0.85 AND oklab-chroma > 0` (warm-cream, NOT grey). Born-RED on the historical `oklab(0.695)` grey slab. **This is the bidirectional bound the monotonic gate never had** (postmortem/az.md §2 — the disease that rode three tranches).
+   - **The BRIGHT branch (the legibility floor, kept):** over a synthetic-white / bright-bleed backdrop the plate darkens toward AA and `contrastRatio(bodyInk, effBg) >= 4.5` (the existing legibility floor, monotonic — KEPT but no longer the SOLE check).
+   - **The CONTINUOUS-TRACK branch (the live loop, born-RED on the dead observer):** over the live aurora canvas, sample the dock plate at a bright vs a dark field region and assert the bright-region plate is DARKER than the dark-region plate by a measurable ΔL (the observer is driving — born-RED on the dead loop where both read the same flat floor).
+   - WebKit: the continuous darken is a `calc()` on `background` (cross-engine — no `backdrop-filter: url()`); the dynamic track MUST work on Safari (apple-ios27.md §6: the legibility lives on the cross-engine base).
+
+## Fences / invariants (must NOT regress)
+- **ONE axis, ONE driver, ONE signal** (the §4 collapse): `--glass-tint-strength` is the only darken axis; the observer is the only driver; `--glass-backdrop-luma` is the only measured signal. No parallel darken path, no second bucket fork (the AZ disease was the dual unconditional `:where()` + `@container` — collapsed here).
+- **The floor is `BC.W-GLASS-IDENTITY`'s, the ceiling is the iOS clamp** (≤24%, apple-ios27.md §5): this wave drives BETWEEN them; it never re-pins the floor (that wave's bound) nor exceeds the ceiling.
+- **The observer's BUDGET is preserved** (the AV.W7 substrate-pause precedent): rAF-throttled ≤4Hz, IntersectionObserver-gated, parked on `document.hidden`/offscreen, PRM → single mount sample then park (postmortem/az.md §3 + the composable header). The loop-closure must NOT add a per-frame cost — the throttle stays.
+- **The sample is a legitimate proxy** (the composable header): there is NO web API that reads pixels behind a `backdrop-filter`; the `drawImage(sourceCanvas)` (animated) + `elementsFromPoint` stack-walk (static) are the sanctioned proxies. No new API is invented.
+- **Clean break, no alias** (MEMORY): the binary discrete-bucket strength driver is RETIRED; no `--glass-tint-strength`-via-bucket alias survives as the primary (only the `@supports`-degrade fallback for no-`@property` engines).
+- **Demo-private → load-bearing** (research/deferral/az.md §15): the observer's promotion is re-evaluated at loop-closure; the demo-private booking is superseded. The `--surface-tint-*` in-srgb family is NEVER touched (AW.W26).
+- **Byte-fenced:** the GL shaders, the `--glass-opacity-*`/`--glass-level` opacity+blur recipe, the rim (`BC.W-BLACK-BAR`). The `useGlassBackdropLuminance` composable's `write()`/sample math is verified, not rewritten.
+
+## Folds (deferrals discharged)
+- **`az-adaptive-grey-origin`** (research/deferral/az.md §7 — the DARKEN-DRIVER half: "close the observer loop, make `--glass-tint-strength` a typed `@property` the observer writes DIRECTLY (continuous lerp off `--glass-backdrop-luma`, 0-4% calm/dark → ≤20% only past the bright threshold); DELETE the unconditional `:where()` re-points; make the observer actually sample on every dock/overlay route"). **DECIDED — REBUILD:** this wave closes the loop exactly as the deferral verdict names. The chronic that rode AZ→BA→BB ends here.
+- **`az-glass-luminance-promotion`** (research/deferral/az.md §15) + **`ba-glass-backdrop-luminance-promotion`** (research/deferral/ba.md §10 — "the GREY-SLAB ROOT ... the observer writes `--glass-backdrop-luma` that NOTHING reads ... Close the observer loop: register `--glass-tint-strength` as a typed inheriting `@property`, the observer writes STRENGTH directly off measured `--glass-backdrop-luma` ... The 2nd-consumer bar is structurally MET once the observer drives the strength"). **DECIDED — BUILD/CLOSE-THE-LOOP:** the observer becomes load-bearing; the ≥2-binary bar is MET by construction (every dock/overlay route is now a real consumer); the public-barrel promotion is re-evaluated at the closure. The booked demo-private status is superseded.
+- The postmortem/az.md §8 failure classes 6 (`built-not-wired`) + 9 (`static-heuristic-dressed-as-dynamic`) are the disease-roots this wave's gate bites close — DECIDED, born-RED on the decorative write + the unconditional blanket darken.

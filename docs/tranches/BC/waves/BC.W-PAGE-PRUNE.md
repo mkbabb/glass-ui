@@ -1,0 +1,64 @@
+# BC.W-PAGE-PRUNE — prune superfluity, kill "view source"/platitudes/out-of-date copy + the orphan routes
+- **Band:** 5 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** BEFORE BC.W-PAGE-CHASSIS + BC.W-PAGE-HIERARCHY re-author the surviving pages (prune FIRST so the chassis is applied to the kept copy, not to dead routes / dead copy the chassis would then have to re-thread). BESIDE BC.W-CODE-BLOCKS (prune kills copy, code-blocks re-style the survivors). The orphan-route deletion is a clean prune that BC.W-COMPOSITIONS-HERO depends on (it resolves the homepage-duplicate; the prune kills the dead composables tree first).
+- **Owns / closes:**
+  - USER-DEFECTS §C: *"A page is 'totally illegible — most of it is superfluous and useless.'"* / *"'View source' BS must be REMOVED; platitudes / useless / out-of-date copy removed."*
+  - USER-DEFECTS §C: *"A clipped/odd element with a grid background ('WTF is this — and it's clipped?')."* (the prune identifies + removes/repairs the orphan offender; the chassis re-homes the survivor.)
+  - ORCHESTRATION §1 Band 5 box: `BC.W-PAGE-PRUNE — prune superfluity, remove "view source"/platitudes/out-of-date copy`.
+  - PROMPT-LEDGER O9: *"…prune superfluity"* (the prune half).
+  - route-census §5 (the 21 orphan `composables/*.vue`) + §4 (`/compositions/hero` "View the source" line 175; `/compositions/settings` "totally illegible/superfluous" candidate; `/foundations/paper-backdrop-texture-system` verbose-name + 13 fira-code prune candidate).
+
+## Goal (the gestalt)
+A developer walking the demo never lands on a dead/unreachable page, never reads a marketing platitude or an out-of-date claim, never sees a "View the source" button that goes nowhere, and never hits an illegible wall of superfluous copy. Every surviving page earns its place: it teaches ONE thing, in the calm legible voice. The 21 orphaned `composables/*.vue` SFCs (sitting on disk with no route since AZ retired the shelf) are GONE from disk — the IA matches the manifest exactly. The "totally illegible" `settings.vue` reads as a clean, scannable settings composition, not a wall. The verbose route names are tightened. When the user reads "prune the superfluity," they find the surface has been honestly cut to what's load-bearing.
+
+## Starting state (measured, file:line)
+- **"View the source" BS** — `demo/stories/compositions/hero.vue:175`: `<Button size="lg" variant="ghost">View the source</Button>` — a dead CTA that goes nowhere (no `@click`, no `href`). The literal "view source BS" the user demands removed. (grep `view (the )?source` across `demo/stories/` → this is the sole hit.)
+- **The 21 orphan composables** — `demo/stories/composables/*.vue` (`ls … | wc -l` → **21**): `use-clipboard.vue`, `use-token-color.vue`, `use-raf-loop.vue`, `use-spring-orchestrator.vue`, … The manifest comment (`manifest.ts:13-15`) records the Composables shelf was REMOVED at AZ.W-SHELL-CONFIG ("the demo IA no longer carries the 22-story reference category; clean break"). These SFCs have NO manifest row → NO route → are unreachable dead code on disk (route-census §5). The route-census flags one caveat: "`use-spring-orchestrator.vue` and a few may be referenced elsewhere — verify before delete."
+- **"Totally illegible / superfluous"** — route-census §4 names `compositions/settings.vue` (302 lines, `settings.vue:1-30` shows a dense LabeledField stack with no section hierarchy) as the candidate. The "illegible" read is the wall of un-delimited fields + no section headings (the hierarchy half is BC.W-PAGE-HIERARCHY's; the PRUNE half is cutting any genuinely-superfluous copy/duplication).
+- **"Coming soon" platitude** — `demo/stories/forms/select.vue:122`: `Brutalist (coming soon)` — an out-of-date/never-arriving placeholder option.
+- **Verbose route name** — `/foundations/paper-backdrop-texture-system` (`manifest.ts:220`) — a verbose name + 13 fira-code runs (route-census §4); the name + copy are prune candidates.
+- **"WTF is this — clipped?"** — route-census §4 flags `containers/expandable-container` as the clipped-with-grid-background candidate (the clip is the `overflow-hidden` fullscreen wall; BC.W-PAGE-CHASSIS un-walls it onto glass, this wave identifies + removes any genuinely-superfluous framing).
+
+## Target spec (grounded)
+A scoped, AUDITABLE prune — every cut is recorded in a prune ledger (the `PRUNE-LEDGER.md` precedent, AY) so a future agent cannot silently re-add a dead route:
+
+1. **Kill "View the source"** — `hero.vue:175` the dead `<Button>View the source</Button>` is DELETED (clean break). If `/compositions/hero` survives as a distinct page (BC.W-COMPOSITIONS-HERO owns its re-purpose), its CTA pair becomes ONE real CTA ("Start building" → the docs/intro route) — never a dead "view source." (The whole `/compositions/hero` ==homepage duplication is BC.W-COMPOSITIONS-HERO's; this wave owns the dead-CTA cut + records it.)
+2. **Delete the 21 orphan composables** — with the route-census caveat HONORED: a pre-flight grep proves each `composables/*.vue` has zero `import`/`<route>`/`RouterView` reference outside its own dead tree (the manifest already excludes them). Any SFC found referenced (the `use-spring-orchestrator` caveat) is NOT deleted — it is re-homed onto a real route or flagged in the ledger. The clean-deletable set (the verified-unreferenced subset) is removed from disk; `demo/stories/composables/` is emptied/removed. This matches the AZ manifest decision (the shelf was retired; the disk just never caught up).
+3. **Kill the "coming soon" platitude** — `select.vue:122` the `Brutalist (coming soon)` option is DELETED (an option that never arrives is a lie in the demo; clean break).
+4. **The "illegible" settings page** — audit `settings.vue` for genuinely-superfluous copy (duplicate field descriptions, marketing prose) and cut it; the section-hierarchy fix (delimiters + headings that make it legible) is BC.W-PAGE-HIERARCHY's coordinating concern. The PRUNE deliverable is: every field has a purpose, no copy is decorative filler.
+5. **The verbose route name** — `/foundations/paper-backdrop-texture-system` → a tightened name (e.g. `/foundations/paper-texture` or fold its content into `/foundations/paper-glass` if it's a duplicate teaching surface — verify against the paper-glass route first; record the decision in the ledger). Out-of-date copy on it is cut.
+6. **The clipped offender** — confirm the `expandable-container` clip-with-grid is the "WTF is this" surface (live-probe via dev-tools MCP); the un-wall onto glass is BC.W-PAGE-CHASSIS's, but if there is a genuinely-orphaned/superfluous framing element, this wave removes it.
+
+The prune is GESTALT, not a patch-list: the principle is "every surviving page earns its place; every cut is recorded." NOT a blanket delete — the route-census caveat (`use-spring-orchestrator` reference) is the binding pre-flight that prevents an over-cut (the AV consumer-mis-prune fix-class, `memory.md` `consumer-mis-prune-external-blind-spot` — here the blind spot is intra-repo references, the same shape).
+
+## Mechanism / files
+- **DELETE** `hero.vue:175` (the "View the source" `<Button>`); if `/compositions/hero` survives, its CTA row becomes one real CTA (coordinate with BC.W-COMPOSITIONS-HERO on the file).
+- **DELETE** the verified-unreferenced `demo/stories/composables/*.vue` SFCs (the pre-flight grep gates each); remove the now-empty `demo/stories/composables/` dir. RECORD the kept set (if any) + its re-home in the prune ledger.
+- **DELETE** `select.vue:122` the "coming soon" option.
+- **AUDIT + CUT** `settings.vue` superfluous copy; **RENAME/FOLD** `paper-backdrop-texture-system` + cut its out-of-date copy.
+- **CREATE** `docs/tranches/BC/audit/PRUNE-LEDGER.md` — every cut recorded (path, what, why, the pre-flight verification). The anti-gameability floor: a future agent cannot silently re-add a dead route (the `proof:page-prune` gate reads this ledger).
+- **NO library `src/` paint** — purely a demo-route + demo-copy prune (the `manifest.ts`/`router.ts` IA is the surface; the SFC files are demo-private). The 21 orphans never reached `src/`.
+- **Coordinate the manifest** — if `paper-backdrop-texture-system` is renamed/folded, `manifest.ts:220` + any cross-link updates in lockstep (the `firstStoryPath()`/router derivation stays consistent).
+
+## Acceptance (gestalt + measured + gate)
+1. **Captured-paint gestalt (dev-tools MCP):** navigating `/compositions/hero` shows NO "View the source" button; `/forms/select` shows NO "coming soon" option; every manifest route resolves (no 404, no orphan); a re-walk of `settings.vue` reads as a clean scannable page, not an illegible wall. A human confirms "the superfluity is gone, every page earns its place."
+2. **Machine gate `proof:page-prune`** (device-free, born-RED on the pre-prune tree → GREEN at close):
+   - P1 — ZERO "View the source" / "view-source" string survives in `demo/stories/**` (grep exit 1).
+   - P2 — ZERO orphan SFC under `demo/stories/composables/` survives EXCEPT a verified-kept set recorded in `PRUNE-LEDGER.md` (the dir-on-disk ≡ a kept-allowlist; an un-ledgered orphan REDs — the anti-re-add floor). The deleted set proves zero inbound references (the pre-flight grep is re-run in the gate).
+   - P3 — ZERO "coming soon" / "lorem" / "TODO"-in-template platitude survives in the enrolled demo set (grep exit 1; the `sortable-list.vue` `Todo` column-label is a legitimate kanban label, allowlisted by exact context — not a TODO comment).
+   - P4 — every `manifest.ts` route resolves to an existing SFC on disk AND every SFC under `demo/stories/**` (minus the chassis primitives + the ledgered keeps) has a manifest row (the IA ≡ disk bidirectional assert — no orphan, no dangling row; the `proof:claude-structure-sync` precedent transposed to the demo IA).
+   - P5 — the `PRUNE-LEDGER.md` records every cut with a why + the pre-flight verification (the no-silent-prune floor, the AY PRUNE-LEDGER precedent).
+   - + a self-test bite: a synthetic re-added "View the source" string REDs P1; a synthetic re-added orphan SFC with no manifest row + no ledger entry REDs P2/P4.
+3. **π readback** — NO dedicated visual π (a prune changes the ABSENCE of surfaces, and the surviving pages' paint is BC.W-PAGE-CHASSIS's gestalt verdict — a prune of dead copy paints zero new pixels, the BB inv "a register-disposition flip carries no gestalt verdict" precedent). The `proof:ba-gestalt` page-band verdict (BC.W-GESTALT-FIRST) covers the surviving pages reading as legible. Live-verify = the dev-tools MCP walk confirming no dead route / no dead CTA, captured.
+
+## Fences / invariants (must NOT regress)
+- **The route-census caveat is BINDING** (the pre-flight grep): NO orphan is deleted until proven unreferenced (the `use-spring-orchestrator` caveat). This is the single non-negotiable pre-flight — an over-cut deleting a referenced SFC is the intra-repo mirror of the AV consumer-mis-prune fix-class (`memory.md` `consumer-mis-prune-external-blind-spot`).
+- **Clean break, NO alias** (MEMORY no-backwards-compat): a deleted route/option/CTA is GONE, not stubbed; no redirect alias for a pruned route.
+- **The prune is RECORDED** — every cut in `PRUNE-LEDGER.md` (the no-silent-prune floor). The gate reads the ledger; a future agent cannot re-add a dead route without re-tripping P2/P4.
+- **NO over-prune of TEACHING content** — a page that teaches a real primitive stays (the prune kills superfluity + dead code, NOT pages the user uses). The `settings.vue` cut is superfluous COPY, not the composition itself (settings IS a real composition demo).
+- **Demo-only** — no `src/` symbol is pruned by this wave (the library prune is BC.W-GLASS-PRUNE/BC.W-CHRONIC-FOLD's; this is the demo-route/copy prune). The 21 orphans are demo SFCs.
+
+## Folds (deferrals discharged)
+- route-census §5 (the 21 orphan composables, AZ-retired shelf, disk never caught up) — **BUILT here:** the verified-unreferenced set DELETED, the IA ≡ disk. DECIDED.
+- route-census §4 ("View the source" hero.vue:175; "coming soon" select.vue:122; verbose paper-backdrop-texture-system; illegible settings) — **DECIDED-cut/renamed**, each recorded in the prune ledger.
+- `memory.md` `consumer-mis-prune-external-blind-spot` (the recurring mis-prune fix-class) — **DECIDED-met (the intra-repo arm):** the pre-flight grep is the structural defense against the over-cut; recorded as the binding fence. (The external-consumer arm is BC.W-CROSSREPO-ADOPT's; this wave handles the intra-repo orphan blind-spot.)
+- The AZ.W-SHELL-CONFIG shelf-retire (the manifest comment `manifest.ts:13-15`) — **DECIDED-completed:** the AZ decision retired the shelf in the IA; this wave completes it on disk (the deferred "disk never caught up" residual closed).

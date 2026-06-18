@@ -1,0 +1,63 @@
+# BC.W-COMPOSITIONS-HERO — /compositions/hero made distinct from the homepage; /foundations/intro three-heroes → ONE
+
+- **Band:** 5 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** AFTER `BC.W-PAGE-CHASSIS` (the `heroScale` + scroll-shrink + subpath chassis) and ALONGSIDE `BC.W-HERO-AUDACIOUS` (the audacious-size + one-`<h1>` discipline this collapse rides). Couples `BC.W-PAGE-PRUNE` (the "View the source" + platitude removal lands in this same hero-copy pass).
+- **Owns / closes:**
+  - USER-DEFECTS §G "/compositions/hero has the EXACT same content as the homepage + the three bugged-out views."
+  - USER-DEFECTS §G "/foundations/intro has THREE heros."
+  - USER-DEFECTS §C "'View source' BS must be REMOVED; platitudes / useless / out-of-date copy removed" (the hero-copy half — the "View the source" button at `hero.vue:175`).
+  - DEFECT-LEDGER **D6** (the duplication half — "/compositions/hero has the same content as the homepage + the three bugged views").
+  - ORCHESTRATION §1 Band 5 box: `BC.W-COMPOSITIONS-HERO — /compositions/hero distinct from homepage; /foundations/intro three-heroes → one`.
+
+## Goal (the gestalt)
+The front door (`/foundations/intro`) shows ONE confident audacious hero — the `ℱ glass-ui` wordmark IS the hero title, not a wordmark stacked above a second display tagline stacked above a suppressed third hero. `/compositions/hero` is now a DISTINCT page — a real composition showcase (the dashboard / auth-shell / math-paper specimens, the things compositions actually IS), at the audacious tier over its own field — not a near-verbatim clone of the homepage's typewriter intro + 3-claim grid. The "View the source" button is gone; the platitude prose ("every component honest about its four states") is pruned. A visitor walking intro → compositions/hero reads two clearly different pages, each with exactly ONE `<h1>`.
+
+## Starting state (measured, file:line)
+- **`/foundations/intro` renders THREE display moments** (route-census.md §4, deferral/herostudios.md `intro-three-heroes`): (1) the wordmark cluster `<span class="fourier-f text-display-3 italic">ℱ</span>` + `<span class="cm-serif text-display-2"> glass-ui</span>` (`intro.vue:56-59`); (2) `<h1 class="text-display-4">Glass, paper, and the golden ratio.</h1>` (`intro.vue:61-63`); (3) the chassis hero `<h1>` (suppressed here via `:hero-title="false"` at `intro.vue:46`, but the live aurora still reads as a hero band). Plus the category index grid (`intro.vue:76-114`). Three display-register type masses + a grid in one viewport.
+- **`/compositions/hero` near-duplicates the homepage** (route-census.md §4, deferral/herostudios.md `compositions-hero-duplicates-homepage`): `hero.vue` is `hero:true` + `:hero-title="false"` (`hero.vue:76`), structurally near-identical to `intro.vue` — a `text-display-4` typewriter headline (`hero.vue:99-161` — the seg1→ℱ-glyph→seg2 chain), a `text-prose` blurb (`:163-168`), a `claims` grid of 3 `§01/§02/§03` cards (`hero.vue:53-69, 183-208`). The user: "EXACT same content as the homepage."
+- **The "View the source" button** (`hero.vue:175` `<Button size="lg" variant="ghost">View the source</Button>`) — the "View source BS" the user demands removed (USER-DEFECTS §C). The platitude prose ("every component honest about its four states", `intro.vue:69-70`; "every card carries a cartoon shadow by default", `hero.vue:163-168`).
+- **Both heroes cap at the under-audacious tier** — intro at `text-display-4` (~86px), compositions/hero at `text-display-4` typewriter (~86px). The audacious 177/287px tiers (`scale.css:132,137`) reach neither.
+- **The chassis ONE-`<h1>` discipline exists** (`StoryHero.vue:78-95` — `showHeroTitle`/`showCluster`; `StoryPage.vue:71` suppresses the chrome header on the hero path) — the `:hero-title="false"` opt-out is the mechanism both bespoke front-doors use to own their own title. The gap is they own THREE / a duplicate, not ONE distinct hero.
+
+## Target spec (grounded)
+Demo-private (zero `src/` paint — these are two demo SFCs + a copy prune). TWO collapses + a content pass, riding `BC.W-HERO-AUDACIOUS`'s audacious-size discipline:
+
+**Part A — `/foundations/intro` three → ONE.** Collapse the three display moments to ONE audacious hero (deferral/herostudios.md `intro-three-heroes`): the `ℱ glass-ui` wordmark BECOMES the hero title (the audacious moment is the wordmark itself, at `text-display-mega` — the `BC.W-HERO-AUDACIOUS` Part D fold), with "Glass, paper, and the golden ratio." DEMOTED to the subtitle/blurb rung (not a second `<h1>`). The wordmark's `ℱ` ornament + `cm-serif` accent stay as inline ornament INSIDE the single display `<h1>` (the herostudios serif-accent-moment, awwwards-herostudios.md §5). The category index grid (the bento redirect cards — `BC.W-HERO-AUDACIOUS` Part C) follows as the body. Acceptance: `/foundations/intro` has exactly ONE `<h1>`.
+
+**Part B — `/compositions/hero` made DISTINCT.** Re-author `hero.vue` with content that is compositions' OWN — a composition SHOWCASE (the dashboard / auth-shell / math-paper / settings specimens the compositions band actually carries, manifest `compositions` category): a single distinct audacious hero (`text-display-hero`/`-mega`, NOT the homepage typewriter) + a curated grid/marquee of the real composition specimens. The 3-claim `§01/§02/§03` grid (the homepage clone, `hero.vue:53-69,183-208`) is RETIRED. Acceptance: `content-hash(/compositions/hero) ≠ content-hash(/foundations/intro)` (a structural/text diff, not a pixel hash — the two pages carry materially different markup + copy).
+
+**Part C — the copy prune (couples `BC.W-PAGE-PRUNE`).** Delete the "View the source" button (`hero.vue:175`) and the platitude prose (`intro.vue:69-70`, the "every component honest" / "Every token reachable" lines; `hero.vue:163-168` over-claim prose). Keep the substantive one-line subtitle (the warm-cream / golden-ratio identity line) — prune the platitudes, not the identity.
+
+The KISS architecture: two SFC re-authors riding the chassis `heroScale` + the `BC.W-HERO-AUDACIOUS` audacious tier; no new component, no new mechanism. The intro becomes ONE wordmark-hero; the compositions/hero becomes a distinct composition showcase; the platitudes + "View source" are gone.
+
+## Mechanism / files
+- **Edit `demo/stories/foundations/intro.vue`** — collapse the three hero moments (`:46-71`) to ONE `text-display-mega` wordmark-hero with the tagline as subtitle; prune the platitude prose (`:69-70`); the bento redirect cards (`:76-114`) are `BC.W-HERO-AUDACIOUS` Part C.
+- **Edit `demo/stories/compositions/hero.vue`** — re-author with distinct composition-showcase content (the dashboard/auth-shell/math-paper specimens) at the audacious tier; retire the homepage-clone typewriter + 3-claim grid (`:53-69,99-161,183-208`); delete the "View the source" button (`:175`).
+- **(Reuse) the chassis `heroScale`** (`BC.W-PAGE-CHASSIS`) + the audacious tiers (`BC.W-HERO-AUDACIOUS` Part A). No new mechanism.
+- The ONE-`<h1>` discipline: the `StoryHero` `showHeroTitle`/`showCluster` chassis (KEPT); both SFCs keep `:hero-title="false"` (they own their bespoke hero) but each owns exactly ONE `<h1>`.
+
+## Acceptance (gestalt + measured + gate)
+1. **CAPTURED-PAINT gestalt criterion (dev-tools MCP, per `BC.W-GESTALT-FIRST`).** Fresh dated `:5199` captures: `/foundations/intro` + `/compositions/hero` side-by-side, BOTH modes × desktop+mobile, LIVE motion. A human reads: intro = ONE audacious wordmark-hero (not three stacked type masses); compositions/hero = a DISTINCT composition showcase (not the homepage clone); NO "View the source" button; NO platitude prose. Lands at `docs/tranches/BC/audit/visual/W-COMPOSITIONS-HERO-DELTA.md` with the content-diff + the surface-hash header.
+2. **Machine gate `proof:compositions-hero`** (born-RED on HEAD's three-heroes/duplicate/View-source → GREEN; `["local","ci"]`):
+   - **CH1 — intro has exactly ONE `<h1>`.** A device-free parse of `intro.vue` (+ the live π count) asserts exactly one `<h1>` element; the wordmark + tagline are the ONE hero + its subtitle, not three display masses. Born-RED: HEAD has the wordmark cluster + the `text-display-4 <h1>` (two display moments + the suppressed chassis hero).
+   - **CH2 — compositions/hero ≠ homepage.** `content-hash(compositions/hero.vue body markup) ≠ content-hash(intro.vue body markup)` (a structural diff — the typewriter+3-claim clone is gone; the composition-showcase content is present). Born-RED: HEAD's two bodies are near-identical (the `claims` grid + the typewriter pattern). Self-test: a synthetic re-clone reds.
+   - **CH3 — no "View the source", no platitude.** A grep over `hero.vue`/`intro.vue` asserts ZERO `View the source` / `View source` button + the named platitude lines are gone. Born-RED on `hero.vue:175`. Self-test: a re-added "View source" button reds.
+   - **CH4 — both heroes reach the audacious tier.** intro `<h1>` resolves `text-display-mega`+ ; compositions/hero `<h1>` resolves `text-display-hero`|`-mega`. Born-RED: HEAD caps both at `text-display-4`.
+3. **π readback `tests-visual/compositions-hero.spec.ts`** (both modes + WebKit, LOCAL real-render):
+   - `/foundations/intro`: `document.querySelectorAll('h1').length === 1` (born-RED on HEAD's multi-display front door); the single `<h1>` resolves `font-size` ≥ 160px (the mega tier).
+   - `/compositions/hero`: the page body text content materially differs from `/foundations/intro` (no shared typewriter/3-claim markup); the `<h1>` resolves the audacious tier; NO "View the source" button present.
+   - WebKit: both heroes render identically (CSS-only type; the per-page field is Band-4's Safari-OK substrate) — never the broken/flashing class.
+
+## Fences / invariants (must NOT regress)
+- **The chassis ONE-`<h1>` discipline** (`StoryHero` `showHeroTitle`/`showCluster`, `StoryPage.vue:71` chrome-header suppression) — both bespoke front-doors keep `:hero-title="false"` and own EXACTLY ONE `<h1>` each.
+- **Clean break, no alias** (MEMORY) — the homepage-clone typewriter + the 3-claim grid + the "View the source" button are DELETED, not aliased; the third intro hero moment is folded, not kept-with-flag.
+- **Demo-private** (zero `src/` paint) — two demo SFCs + a copy prune; the type SYSTEM + the chassis are shipped facilities.
+- **Presets-in-consumers** — the composition-showcase content + the wordmark ornament are demo data; no library token absorbs the hero copy.
+- **The audacious-size + the one-color-event are `BC.W-HERO-AUDACIOUS`'s** — this wave consumes them (the heroScale tier + the one-color restraint), it does not re-author them.
+- **Keep the identity, prune the platitude** — the warm-cream / golden-ratio subtitle line is substantive (kept); only the over-claim platitudes + "View source" are pruned (USER-DEFECTS §C).
+
+## Folds (deferrals discharged)
+- **`intro-three-heroes`** (research/deferral/herostudios.md — "/foundations/intro renders THREE stacked focal moments ... collapse three→ONE. The ℱ+cm-serif wordmark folds into the eyebrow OR becomes an inline ornament INSIDE the single display <h1>"). **DECIDED — BUILD (Part A):** the wordmark BECOMES the ONE `text-display-mega` hero; the tagline → subtitle. Acceptance: exactly ONE `<h1>`.
+- **`compositions-hero-duplicates-homepage`** (research/deferral/herostudios.md — "re-author /compositions/hero with DISTINCT content (a composition showcase — the dashboard/auth-shell/math-paper specimens), not the homepage clone"). **DECIDED — BUILD (Part B):** the composition-showcase re-author; the typewriter + 3-claim clone retired. Acceptance: `content-hash ≠ homepage`.
+- **`compositions-hero-typewriter-fragility`** (research/deferral/herostudios.md — "a fragile sequential-typing composition that is NOT audacious-sized and is the duplicated homepage pattern ... lift the size + change the content"). **DECIDED — BUILD (Part B):** the typewriter chain retired for the composition-showcase at the audacious tier (CH4).
+- **`intro-view-source-platitudes`** (research/deferral/herostudios.md, RETIRE — "prune the platitudes + the 'View source' button"). **DECIDED — RETIRE (Part C, couples `BC.W-PAGE-PRUNE`):** the "View the source" button + the platitude prose deleted. Acceptance: CH3 grep.
+- **`hero-acceptance-was-rides-W-REFLECT3`** (research/deferral/herostudios.md, CONTRADICTED-by-new-ask). **DECIDED — RETIRE the deferral:** closes on its OWN fresh `:5199` pixel-readback + content-diff (`BC.W-GESTALT-FIRST` — the one-`<h1>` count + the content-hash + the no-View-source grep pixel/text-read inline), NOT a W-REFLECT3 stamp.
