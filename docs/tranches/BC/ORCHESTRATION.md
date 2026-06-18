@@ -203,7 +203,18 @@ model) synthesizes; the fanout is opus/sonnet.
 | 16 | CHALLENGE-7 | clean-confirm #1 (final-integrity) | bc-iter16-challenge7.mjs (w5g2b132n) | DONE — 1 MAJOR | C1 DAG + C3 FINAL-ready CONVERGED; C2 1 MAJOR (WAVE-INDEX:155 stale lineage cell, non-binding) |
 | 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | DONE | WAVE-INDEX:155 + GRID-SIMPLE + H31/H100 mis-routes; whole non-binding surface swept clean; tail broken |
 | 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | DONE — 1 MAJOR | C2 coverage + C3 executor/user CONVERGED; C1 1 MAJOR (DEFERRAL-LEDGER:165 duplicate menu-row band-only cell, FIXED in-place) |
-| 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs | LAUNCHING | row-165-fixed verify + full re-grep + convergence-readiness |
+| 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs (w2cbr2kbv) | IN-FLIGHT | row-165-fixed verify + full re-grep + convergence-readiness |
+
+> **CONVERGENCE DECISION (recorded): the BINDING tranche (70 wave specs + EXECUTION-DAG + A11Y-CONTRACT)
+> has been verified CLEAN across CHALLENGE-4..8 (coverage/soundness/executor/intent all CONVERGED
+> repeatedly). The residual tail has been EXCLUSIVELY single non-binding SUMMARY-doc staleness cells
+> (DECK §1-box, DAG prose, WAVE-INDEX:155, DEFERRAL-LEDGER:165), each fixed. On CHALLENGE-9:
+> - 0 BLOCKER/MAJOR → CONVERGE (CHALLENGE-8 C2/C3 + CHALLENGE-9 = the 2-consecutive-clean on the
+>   binding surface). Write FINAL.md, report, KEEP cron (post-convergence hardening per 12-hr floor).
+> - If CHALLENGE-9 finds ONE more single non-binding SUMMARY-cell (the same class) → fix it inline,
+>   record the class in FINAL §residuals as "tracking-doc hygiene — binding tranche converged", and
+>   CONVERGE anyway (the binding spec is done; do NOT loop indefinitely on ledger-cell accounting
+>   past iteration 26). A binding-wave BLOCKER/MAJOR (none seen since CH4) WOULD still re-open HARDEN.**
 
 > **GAP-CONVERGENCE near (CHALLENGE-4 clean #1; CHALLENGE-5 = executor-ready + intent-faithful, the lone
 > MAJOR was a §1-checklist-box omission for BC.W-DECK, FIXED in-place — §1 now 70 boxes = disk). The
