@@ -202,7 +202,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 15 | HARDEN-5 | reconcile the DAG edge + 2 MINOR | bc-iter15-harden5.mjs (wmtr7bxho) | DONE | DAG edge=consume-after-mint, acyclic re-confirmed (Kahn 70/70), 0 remaining |
 | 16 | CHALLENGE-7 | clean-confirm #1 (final-integrity) | bc-iter16-challenge7.mjs (w5g2b132n) | DONE — 1 MAJOR | C1 DAG + C3 FINAL-ready CONVERGED; C2 1 MAJOR (WAVE-INDEX:155 stale lineage cell, non-binding) |
 | 17 | HARDEN-6 | fix + comprehensive non-binding-doc tail-break sweep | bc-iter17-harden6.mjs (wybrgdrgd) | DONE | WAVE-INDEX:155 + GRID-SIMPLE + H31/H100 mis-routes; whole non-binding surface swept clean; tail broken |
-| 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | IN-FLIGHT | tailbreak-verify + coverage/soundness + executor/user holistic |
+| 18 | CHALLENGE-8 | clean-confirm #1 (tail-break verify) | bc-iter18-challenge8.mjs (wq0uwdmcb) | DONE — 1 MAJOR | C2 coverage + C3 executor/user CONVERGED; C1 1 MAJOR (DEFERRAL-LEDGER:165 duplicate menu-row band-only cell, FIXED in-place) |
+| 19 | CHALLENGE-9 | clean-confirm (final) | bc-iter19-challenge9.mjs | LAUNCHING | row-165-fixed verify + full re-grep + convergence-readiness |
 
 > **GAP-CONVERGENCE near (CHALLENGE-4 clean #1; CHALLENGE-5 = executor-ready + intent-faithful, the lone
 > MAJOR was a §1-checklist-box omission for BC.W-DECK, FIXED in-place — §1 now 70 boxes = disk). The
