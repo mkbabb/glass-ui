@@ -192,8 +192,9 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: RESEARCH COMPLETE. iteration 2 PLAN IN-FLIGHT (task TBD — bc-iter2-plan.mjs, 18
-> agents, 6 batches, ~60 waves).**
+> **NEXT CURSOR: RESEARCH COMPLETE. iteration 2 PLAN IN-FLIGHT (task w0syxq0x5 — bc-iter2-plan.mjs,
+> 18 agents, 6 batches, ~60 waves). If the server rate-limit drops agents (it bit twice on big
+> fan-outs), re-run the dropped batch via a focused script like bc-iter1d-rerun.mjs.**
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
