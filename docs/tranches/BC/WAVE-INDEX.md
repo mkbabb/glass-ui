@@ -5,7 +5,10 @@
 > A reference to a name NOT in this index is **name-drift** — reconcile it to the canonical id (or, if
 > it maps to NO authored wave, it is a genuine coverage gap for the CHALLENGE pass, never invented here).
 >
-> **66 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`), authored by the iteration-2 PLAN fan-out.
+> **70 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
+> iteration-4 HARDEN's 4 (`BC.W-VISUAL-RECONCILE` + the Band-11 perf trio `BC.W-CSS-CRITICAL`/
+> `BC.W-LIGHTHOUSE`/`BC.W-PERF-PRODUCER` — the CHALLENGE-1 BLOCKER 3/4/5/7 + the un-owned-perf-chronic
+> + the buttons-interaction MAJOR closed).
 > `proof:bc-fold-ledger` clause F2 (decided-destination soundness) REDs the close if any disposition
 > names a wave absent from this index.
 >
@@ -15,7 +18,7 @@
 
 ---
 
-## The 66 canonical waves
+## The 70 canonical waves
 
 | id | band | title (one-line owns) | sequence-after |
 |---|---|---|---|
@@ -60,6 +63,7 @@
 | **BC.W-GRID-SIMPLE** | 4 | abrogate the blurry in-card grid → ONE crisp, evenly-spaced, LARGER, full-bleed page grid (pure CSS, no GL) | after BC.W-VIZ-PAPERGRID |
 | **BC.W-VIZ-DOTMATRIX** | 4 | the dot-matrix SPHERE: a fine-dot phyllotaxis globe, depth-shaded, slowly rotating, pointer-aware (NEW) | after BC.W-WEBGPU-EVERYWHERE |
 | **BC.W-VIZ-HYBRID** | 4 | the goo+dot-matrix HYBRID: a metaball SDF field sampled as a dot-matrix, dense+bright inside the merged blob (NEW) | after BC.W-GOOBLOB-MEATBALL + BC.W-VIZ-DOTMATRIX |
+| **BC.W-VISUAL-RECONCILE** | 4 (cross-cutting) | the BB liquid-glass-band LIVE re-walk over the rebuilt floor (liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer re-verify) + the /display/buttons interaction diagnosis | after the Band-1 glass waves + BC.W-GESTALT-FIRST |
 | **BC.W-PAGE-CHASSIS** | 5 | the ONE standardized page idiom: audacious hero + subpath + scroll-shrink + ONE glass card + procedural bg | after Band 1 glass |
 | **BC.W-PAGE-HIERARCHY** | 5 | section delimiting (hr / sub-card) + design-hierarchy suffused, EVERY PAGE STANDARDIZED | after BC.W-PAGE-CHASSIS |
 | **BC.W-CODE-BLOCKS** | 5 | component names + technical values → ONE Fira Code code-block register | after BC.W-PAGE-HIERARCHY |
@@ -72,7 +76,7 @@
 | **BC.W-RADIO-FIX** | 6 | radios toggle on every input path + read a clear glass selected-state | after Band 1 glass |
 | **BC.W-DROPDOWN-FIX** | 6 | the picker opens without shifting the trigger, aligns to it, and the selected dot reads | after Band 1 glass |
 | **BC.W-CONTROL-SMOOTH** | 6 | kill the control lag (quick coupled response) + square borders → rounded | after BC.W-SPRING-EASE + BC.W-AFFORDANCE-MAP |
-| **BC.W-CONFIG-RIGHT** | 6 | every configurator: stage left, controls RIGHT on desktop (standardized two-column) | after BC.W-DOCK-ENGINE |
+| **BC.W-CONFIG-RIGHT** | 6 | every configurator: stage left, controls RIGHT on desktop (standardized two-column) | after BC.W-RADIO-FIX + BC.W-DROPDOWN-FIX + BC.W-CONTROL-SMOOTH (the Band-4 viz studios are the consumers verified after this lands) |
 | **BC.W-MOTION-ONE-CLOCK** | 7 | keyframes.js is the ONE source + clock for every sophisticated animation | FIRST of Band 7 |
 | **BC.W-SPRING-EASE** | 7 | every spring squishy/quick/coupled-fade; the abrupt curves eased | after BC.W-MOTION-ONE-CLOCK |
 | **BC.W-AFFORDANCE-MAP** | 7 | interaction affordances baked into EVERY interactive element | after BC.W-SPRING-EASE + BC.W-MOTION-ONE-CLOCK |
@@ -85,6 +89,9 @@
 | **BC.W-DECK** | 10 | BUILD the `@mkbabb/glass-ui/deck` sibling subpath: lift slides/src/deck/ (~1108 LoC headless core) into the full-viewport keyboard-paged aria-live PRESENTATION register (the single largest UNBUILT cross-repo ask) | BUILD-phase; after Band 0 + Band-2 dock + Band-3 PagerDots; BEFORE BC.W-CUT + BC.W-SPEEDTEST-ADOPT |
 | **BC.W-DIST-COMMENT-FIX** | 10 | CONFIRM the 4.0.1 dist-CSS comment fix landed + harden the source-side comment-balance guard | EARLY (Band 5/10 convergence) |
 | **BC.W-CUT** | 10 | the honest 4.x cut: `--run full` siblings-absent → gated-provenance tag → consumer adopt sweep + slides redeploy | EXECUTION-phase only, user-gated; LAST |
+| **BC.W-CSS-CRITICAL** | 11 (PERFORMANCE) | the published `/styles` critical/deferred split (render-blocking-early subset) RE-MEASURED over the settled cascade + the FOUC-safe π RUN LIVE; discharges the `styles-critical-split` chronic | FIRST of Band 11; after the visual bands settle the cascade |
+| **BC.W-LIGHTHOUSE** | 11 (PERFORMANCE) | the committed re-runnable production-preview Lighthouse score-floor (perf/a11y/CLS/TBT, :5388) RUN LIVE + re-pinned via `--rebaseline` + the bare-consumer first-paint harness | after BC.W-CSS-CRITICAL + BC.W-PERF-PRODUCER + the visual bands |
+| **BC.W-PERF-PRODUCER** | 11 (PERFORMANCE) | lock the four producer fixes (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap, density glyph) + RUN the headed-GPU runtime π | after Band 2 dock + Band 4 aurora/blob rebuilds |
 
 ---
 
@@ -97,7 +104,9 @@ here so a future reader knows the lineage (the drift was a naming slip, not a dr
 
 | drifted name | reconciled → | rationale |
 |---|---|---|
-| `BC.W-VIZ-LIVE` | the per-viz wave (`BC.W-VIZ-AURORA` / `BC.W-GOOBLOB-PLAIN`+`BC.W-GOOBLOB-MEATBALL` / `BC.W-VIZ-FOURIER` / `BC.W-VIZ-WATERCOLOR` / …) + `BC.W-WEBGPU-EVERYWHERE` | "verify viz LIVE" was authored as one umbrella; the PLAN split it into the 11 per-viz Band-4 waves + the cross-cutting WebGPU wave (ORCHESTRATION drift note) |
+| `BC.W-VIZ-LIVE` (per-viz live-paint half) | the per-viz wave (`BC.W-VIZ-AURORA` / `BC.W-GOOBLOB-PLAIN`+`BC.W-GOOBLOB-MEATBALL` / `BC.W-VIZ-FOURIER` / `BC.W-VIZ-WATERCOLOR` / …) | "verify viz LIVE" was authored as one umbrella; the PLAN split the per-viz LIVE-PAINT verify into the 11 per-viz Band-4 waves (each captures its OWN paint per `BC.W-GESTALT-FIRST`) |
+| `BC.W-VIZ-LIVE` (Safari context-lifecycle half) | `BC.W-SAFARI-WEBGL` | the iteration-2 viz bodies (GOOBLOB-PLAIN/MEATBALL line 3, VIZ-AURORA, VIZ-HYBRID) named `BC.W-VIZ-LIVE` specifically as the home of the Safari `webglcontextlost` lifecycle / the §H flash circuit-breaker (D7/§H) — that lifecycle is owned by Band-8 `BC.W-SAFARI-WEBGL`, NOT the per-viz waves and NOT `BC.W-WEBGPU-EVERYWHERE`. The HARDEN pass (iteration 4) renamed every `BC.W-VIZ-LIVE` Safari-lifecycle body reference to `BC.W-SAFARI-WEBGL` and made the Band-4-viz→Band-8-SAFARI cross-band Safari-π dependency explicit (the no-flash arm GATES on the breaker landing). |
+| `BC.W-WGSL-FALLBACK` | `BC.W-WEBGPU-EVERYWHERE` | the async-adapter-real picker + try-then-rebuild WebGPU→WebGL2 graceful-degrade (the D8 "no GPU adapter" crash close) folded into the substrate-everywhere wave. The iteration-2 fan-out named the phantom `BC.W-WGSL-FALLBACK` as the Sequence-predecessor / fold / byte-fence home in 11 Band-4 viz bodies; the HARDEN pass (iteration 4) renamed every body reference to `BC.W-WEBGPU-EVERYWHERE` (collapsing the dual `WGSL-FALLBACK`+`WEBGPU-EVERYWHERE` Sequence mentions into ONE — the picker + the WGSL-primary mandate both live in WEBGPU-EVERYWHERE). |
 | `BC.W-CROSSREPO-ADOPT` | `BC.W-SPEEDTEST-ADOPT` + `BC.W-FOURIER-ASK` + `BC.W-ATLAS-ASK` (+ `BC.W-CUT` for the slides leg) | the Band-10 cross-repo adopt is the THREE per-sibling waves + the cut, not one wave |
 | `BC.W-CHRONIC-FOLD` | `BC.W-FOLD-LEDGER` | the chronic-fold machine arm IS the FOLD-LEDGER wave (mints FOLD-LEDGER.json) |
 | `BC.W-DECK-BUILD` | `BC.W-DECK` | the /deck subpath build wave landed as `BC.W-DECK` |
@@ -113,7 +122,10 @@ here so a future reader knows the lineage (the drift was a naming slip, not a dr
 | `BC.W-DEMO-DESIGN` | `BC.W-STORYBOOK-META` | the demo-design / storybook-meta pane work |
 | `BC.W-CARD-PAD` (as a BC disposition) | `BC.W-PADDING-CANON` | `W-CARD-PAD` is the BB wave name; the BC padding-ladder wave is `BC.W-PADDING-CANON` |
 | `BC.W-AUDIT` (PM-BA prose) | n/a (the iteration-0 audit commit `e1b4b44c`) | NOT a wave — a pre-fix commit label from the iteration-0 `bc-audit.mjs` run; reworded to name the commit, not a phantom wave |
-| **`BC.W-VISUAL-RECONCILE`** | **NO on-disk wave (genuine GAP)** | the PLAN (`PLAN.md §64`) NAMED a Band-4 "re-walk every paper-done BB primitive live" wave; the iteration-2 fan-out never authored it. Dispositions that map to a SPECIFIC band wave were re-pointed (menu-glass→Band 1 glass, easing→`BC.W-VIZ-FOURIER`/motion, demo-config→`BC.W-STORYBOOK-META`); the residual "BB visual-band reconcile" home is a CHALLENGE-pass item (author the wave or fold the work into the band waves). |
+| `BC.W-VISUAL-RECONCILE` | **`BC.W-VISUAL-RECONCILE` (AUTHORED — Band 4, iteration-4 HARDEN)** | the PLAN-§64 gap is CLOSED: iteration-4 authored the dedicated Band-4 wave (the BB liquid-glass-band live re-walk: liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer/on-glass-fg/invalid-ring/eyebrow-union re-verify over the rebuilt floor) + it owns the USER-DEFECTS §C buttons-INTERACTION diagnosis BC.W-BUTTON-GLASS-IOS line 6 punts + the re-open home BC.W-DIALOG-GLASS lines 60-61 name. The dispositions that map to a SPECIFIC band wave STAY re-pointed (menu-glass→Band 1 glass, easing→`BC.W-VIZ-FOURIER`/motion, demo-config→`BC.W-STORYBOOK-META`); the residual "BB visual-band reconcile" home is now this real wave (no longer a CHALLENGE gap — F2 resolves on it). |
+| `BC.W-CSS-CRITICAL` / `BUILD (Band 8/perf)` / `Band 4 controls/reconcile` (the perf-chronic band-only dispositions) | **the Band-11 perf trio `BC.W-CSS-CRITICAL` + `BC.W-LIGHTHOUSE` + `BC.W-PERF-PRODUCER` (AUTHORED — iteration-4 HARDEN)** | the 3-4-tranche perf chronic (`w-lighthouse-perf` / `styles-critical-split` / the BB Batch-3 perf band) was disposed BUILD against the SAFARI band (Band 8) or a band-only "Band 8/perf" / "Band 4 controls/reconcile" with NO building wave (CHALLENGE-1 BLOCKER 4/5/7). iteration-4 authored Band 11 — PERFORMANCE: `BC.W-CSS-CRITICAL` (the `/styles` split, the `styles-critical-split` discharge — FOLD-LEDGER F7's destination is now real), `BC.W-LIGHTHOUSE` (the live score-floor + `--rebaseline`), `BC.W-PERF-PRODUCER` (the four producer fixes + the runtime π). Re-point every perf-chronic ledger BUILD row + the FOLD-LEDGER F7 `styles-critical-split` destination onto these three. (kf-G3 LabeledField action-slot + machined-groove stay their controls/storybook homes — see the FOLD-LEDGER reconcile, not a perf row.) |
+| `BC.W-DOCK-EDGE` (PLAN §54 "rim/border as catch-light, not the black hairline") | `BC.W-BLACK-BAR` | the card/dock top-edge dark-rim → bright-catch-light D2-root fix landed as `BC.W-BLACK-BAR` (the PLAN working-name; the authored wave folds the glass-rim fix) |
+| `BC.W-PROMPT-LEDGER` (PLAN §69/§95 "every user prompt mapped to delivered/undelivered") | the `PROMPT-LEDGER.md` doc + the Band-F PM wrappers (`BC.W-PM-BB`/`BA`/`AZ`/`SYNTHESIS`) | NOT a separate on-disk wave — the prompt-recap deliverable IS the `PROMPT-LEDGER.md` document, authored by the Band-F post-mortem work; the dropped-asks ownership routes through the PM wrappers + the per-defect band waves |
 
 > Note on prior-tranche wave names: references like `W-DARK-MATERIAL`, `W-REFLECT3`, `W-CLOSE-BATTERY`,
 > `W-VISUAL-RUNNER`, `W-CARD-PAD`, `W-AURORA-SWRASTER`, `W-MENU-GLASS`, `W-ON-GLASS-FG`, `W-CSS-CRITICAL`

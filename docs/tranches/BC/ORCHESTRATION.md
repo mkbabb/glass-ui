@@ -89,6 +89,7 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] BC.W-VIZ-CHOREOGRAPHY — start/transition/end/restart choreography via keyframes.js (ONE source + clock)
 - [ ] BC.W-VIZ-CONFIGURATOR-SUITE — the shared "full configurator + comprehensive demo suite per viz" discipline + gate
 - [ ] BC.W-TEAL-NAVY-PURGE — remove the teal-on-navy reference entirely (warm-cream identity)
+- [ ] BC.W-VISUAL-RECONCILE — the BB-paper-done liquid-glass-band LIVE re-walk (liquid-reveal/lensing/liquidhover/press-unify/card-composite/metal-shimmer/on-glass-fg/invalid-ring/eyebrow-union re-verify over the rebuilt floor) + the /display/buttons interaction diagnosis (the "buttons don't work" MAJOR) — iter4 HARDEN-authored
 >
 > **Per-viz (SOTA-research → WebGPU/WebGL2 prototype → configurator → demo):**
 - [ ] BC.W-VIZ-AURORA — aurora: WGSL primary, painterly mediums, the kuwahara finish, full configurator + demo
@@ -140,6 +141,12 @@ acceptance + gate, cross-checked by a challenge pass." NOT "we mentioned it."
 - [ ] BC.W-DIST-COMMENT-FIX — the dist CSS-comment source-side balance + guard gate (converge with 4.0.1)
 - [ ] BC.W-CUT — the honest 4.x cut + slides redeploy (EXECUTION-phase only)
 
+### Band 11 — PERFORMANCE (the 3-4-tranche perf chronic, DECIDED=BUILD; iter4 HARDEN-authored)
+> Sequences LAST among the build bands — it measures the SETTLED floor after the visual bands stop churning.
+- [ ] BC.W-CSS-CRITICAL — the published /styles critical/deferred split off a manifest (render-blocking-early subset) + the FOUC-safe π live (the styles-critical-split chronic)
+- [ ] BC.W-LIGHTHOUSE — the committed re-runnable production-preview Lighthouse score-floor gate (perf/a11y/CLS/TBT, mobile+desktop, :5388) + the bare-consumer first-paint harness; RUN the never-run live score
+- [ ] BC.W-PERF-PRODUCER — lock the 4 A′ producer fixes survive the Band 2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap) + the headed-GPU runtime π
+
 ### Process gates (the user's explicit process demands)
 - [ ] ≥ 20 audit/research/harden/challenge iterations executed (see §3 log) — _at 4 (0,1,1b,1-sweep); 1c+1d next_
 - [x] SOTA research corpus: apple.com + iOS-27, awwwards, herostudios, procedural-refs — DONE (research/)
@@ -180,7 +187,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | DONE | research/viz/*.md ALL 11 |
 | 2 | PLAN | all bands (18 agents) | bc-iter2-plan.mjs (w0syxq0x5) | DONE 66 waves | 66 waves/*.md + DEFERRAL-LEDGER (404L) + PROMPT-LEDGER §3.1 |
 | 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs (w2vvz9y8s) | DONE | WAVE-INDEX.md + CHALLENGE-1.md (7B/9M/6m gaps) |
-| 4 | HARDEN | fix CHALLENGE-1 gaps + 4 new waves | bc-iter4-harden.mjs (w3pp3xzy6) | IN-FLIGHT | viz-drift fixed + VISUAL-RECONCILE + perf band + contradictions resolved |
+| 4 | HARDEN | fix CHALLENGE-1 gaps + 4 new waves | bc-iter4-harden.mjs (w3pp3xzy6) | DONE | ALL 7 BLOCKERs closed; 70 waves; Band 11 PERFORMANCE + VISUAL-RECONCILE added; ledgers zero-dangling |
+| 5 | CHALLENGE-2 | re-attack the 70-wave set | bc-iter5-challenge2.mjs | LAUNCHING | gap report (converge if no BLOCKER/MAJOR) |
 
 > **PLAN COMPLETE — 66 waves authored.** Known gap (the agent flagged it): the DEFERRAL-LEDGER + PM
 > disposition column references DRIFTED wave names (BC.W-VIZ-LIVE/WGSL-COMPILE-GATE/CROSSREPO-ADOPT/

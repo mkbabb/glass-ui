@@ -55,10 +55,10 @@ The prune is GESTALT, not a patch-list: the principle is "every surviving page e
 - **Clean break, NO alias** (MEMORY no-backwards-compat): a deleted route/option/CTA is GONE, not stubbed; no redirect alias for a pruned route.
 - **The prune is RECORDED** — every cut in `PRUNE-LEDGER.md` (the no-silent-prune floor). The gate reads the ledger; a future agent cannot re-add a dead route without re-tripping P2/P4.
 - **NO over-prune of TEACHING content** — a page that teaches a real primitive stays (the prune kills superfluity + dead code, NOT pages the user uses). The `settings.vue` cut is superfluous COPY, not the composition itself (settings IS a real composition demo).
-- **Demo-only** — no `src/` symbol is pruned by this wave (the library prune is BC.W-GLASS-PRUNE/BC.W-CHRONIC-FOLD's; this is the demo-route/copy prune). The 21 orphans are demo SFCs.
+- **Demo-only** — no `src/` symbol is pruned by this wave (the library prune is `BC.W-GLASS-PRUNE`'s, its disposition recorded as a `BC.W-FOLD-LEDGER` row; this is the demo-route/copy prune). The 21 orphans are demo SFCs.
 
 ## Folds (deferrals discharged)
 - route-census §5 (the 21 orphan composables, AZ-retired shelf, disk never caught up) — **BUILT here:** the verified-unreferenced set DELETED, the IA ≡ disk. DECIDED.
 - route-census §4 ("View the source" hero.vue:175; "coming soon" select.vue:122; verbose paper-backdrop-texture-system; illegible settings) — **DECIDED-cut/renamed**, each recorded in the prune ledger.
-- `memory.md` `consumer-mis-prune-external-blind-spot` (the recurring mis-prune fix-class) — **DECIDED-met (the intra-repo arm):** the pre-flight grep is the structural defense against the over-cut; recorded as the binding fence. (The external-consumer arm is BC.W-CROSSREPO-ADOPT's; this wave handles the intra-repo orphan blind-spot.)
+- `memory.md` `consumer-mis-prune-external-blind-spot` (the recurring mis-prune fix-class) — **DECIDED-met (the intra-repo arm):** the pre-flight grep is the structural defense against the over-cut; recorded as the binding fence. (The external-consumer arm is the per-sibling adopt waves' — `BC.W-SPEEDTEST-ADOPT` / `BC.W-FOURIER-ASK` / `BC.W-ATLAS-ASK`, each running its own registry+constellation probe; this wave handles the intra-repo orphan blind-spot.)
 - The AZ.W-SHELL-CONFIG shelf-retire (the manifest comment `manifest.ts:13-15`) — **DECIDED-completed:** the AZ decision retired the shelf in the IA; this wave completes it on disk (the deferred "disk never caught up" residual closed).

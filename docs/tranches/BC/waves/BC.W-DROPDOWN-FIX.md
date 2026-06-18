@@ -1,6 +1,6 @@
 # BC.W-DROPDOWN-FIX — the picker opens without shifting the trigger, aligns to it, and the selected dot reads
 
-- **Band:** 6 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** after `BC.W-RADIO-FIX` (shares the checks/picker live-verify session); independent of `BC.W-CONTROL-SMOOTH` / `BC.W-CONFIG-RIGHT`. Coordinates with `BC.W-BLACK-BAR` (the picker panel rim) + `BC.W-MENU-GLASS`/`BA.W-MENU-GLASS` (the row register, untouched here).
+- **Band:** 6 · **Status:** SPEC (tranche-dev; NOT executed) · **Sequence:** after `BC.W-RADIO-FIX` (shares the checks/picker live-verify session); independent of `BC.W-CONTROL-SMOOTH` / `BC.W-CONFIG-RIGHT`. Coordinates with `BC.W-BLACK-BAR` (the picker panel rim) + `BA.W-MENU-GLASS` (the prior-tranche row register, untouched here).
 - **Owns / closes:**
   - USER-DEFECTS §F "The DROPDOWN: clicking it **shifts the trigger left + right**; the dropdown is **not spaced/aligned**; the **dropdown dot is totally wrong + occluded**."
   - Route-census `/forms/select` row "dropdown shifts/dot occluded (§F)" + `/containers/dropdown-menu` row "dropdown shift/dot (§F)".
