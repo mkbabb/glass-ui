@@ -176,7 +176,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 1b | research-rerun | route-census + viz-codebase | resume (wiremj4eb) — re-ran ALL 9 | DONE 9/9 | research/*.md ×9 + WAVE-IMPACTS (70 rows/57 waves) |
 | 1-sweep | deferral fold | AX/AY/AZ/BA/BB/memory/hero | wcbitsihm (213 items) | DONE | research/deferral/*.md ×7 + herostudios-design.md |
 | 1c | forensics | BB/BA/AZ post-mortems | bc-iter1c-forensics.mjs (w53yzm840) | DONE | research/postmortem/{bb,ba,az}.md + SYNTHESIS.md (29 classes) |
-| 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs | LAUNCHING | research/viz/*.md ×11 |
+| 1d | per-viz SOTA | 11 procedural items | bc-iter1d-viz-sota.mjs (wyy4pa6jq) | 6/11 DONE | research/viz/{aurora,goo-blob,dot-flow-field,concentric,fourier-field,constellation}.md |
+| 1d-rerun | per-viz SOTA rerun | 5 (watercolor/paper-grid/grid-simple/dot-matrix/hybrid) | bc-iter1d-rerun.mjs (wqn9lcsup) | IN-FLIGHT | the 5 missing research/viz/*.md |
 | 2 | plan | all bands (expanded: +Band F, +per-viz families) | bc-iter2-plan.mjs (18 agents) | STAGED | waves/*.md (~60) + DEFERRAL-LEDGER |
 
 > **HARVESTED (7/9):** apple-ios27, awwwards-herostudios, procedural-refs, glass-dock-codebase,
