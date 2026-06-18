@@ -1,0 +1,28 @@
+# BC CHALLENGE-4 — clean-confirm #1 (iteration 10)
+
+> ALL 3 dimensions CONVERGED (0 BLOCKER / 0 MAJOR). Full traceability + soundness + internal walk passed. Residuals are cosmetic doc-staleness (MINOR/THIN), acceptably deferred — fixed in HARDEN-4 for a pristine FINAL.
+
+## FINAL COVERAGE TRACEABILITY: CONVERGED
+CLEAN-CONFIRM: 0 BLOCKER, 0 MAJOR — the gap surface has converged (7B/9M → 0B/5M → 0B/1M → 0B/0M; the 2 residuals below are THIN cosmetic doc-staleness, acceptably deferred to FINAL §residuals).
+
+FULL TRACEABILITY WALK (adversarial re-grep, not prior-iteration faith):
+(1) USER-DEFECTS §A-§H + §D walked line-by-line — EVERY line traces to a dedicated covering wave whose post-DEEPEN spec specifically closes it with VERBATIM Owns/closes citations + file:line starting-state: §A A1→DOCK-ENGINE A2→DOCK-ENGINE A3→DOCK-SHRINK-BLUR A4→LIQUID-MORPH A5→DOCK-VERTICAL-FIX A6→DOCK-COLLAPSED-BOTH A7→DOCK-STA
+
+## FINAL SOUNDNESS: CONVERGED
+CLEAN-CONFIRM: 0 BLOCKER, 0 MAJOR — CONVERGED. All four FINAL-SOUNDNESS items re-verified adversarially by re-grep/re-read (not prior-iteration faith). (1) Phantom resolution CLEAN: 70/70 waves on disk; every non-resolving BC.W-* token is a documented-benign residual — BC.W-AUDIT (commit-label, WAVE-INDEX:154 'NOT a wave'), BC.W-DOES-NOT-EXIST (F2 self-test fixture), BC.W-GOOBLOB-/BC.W-PAGE-CHASSIS-conformant (glob/suffix artifacts), 20 drift-names confined to WAVE-INDEX drift map + the now-EXEMPT ORCHESTRATION narrative (WAVE-INDEX:10 added the explicit ORCHESTRATION-narrative-exempt clause, 
+
+## FINAL INTERNAL/PRECEPT integrity (clean-confirm pass, BC iteration 10): CONVERGED
+CLEAN-CONFIRM: 0 BLOCKER, 0 MAJOR — the FINAL INTERNAL/PRECEPT dimension is CONVERGED. The gap surface trajectory 7B/9M → 0B/5M → 0B/1M → 0B/0M holds. Adversarial re-grep/re-read of the DEEPEN'd corpus, NOT taken on faith:
+
+(1) NO NEW DEEPEN CONTRADICTION. The 108-route page-chassis bg table matches the W-STAGE CATEGORY_DEFAULT_BG map byte-for-byte across all 11 categories (cross-checked: foundations/display/feedback→paper, substrates/navigation→aurora, forms/containers/dock/data/compositions→grid, motion→constellation) AND honors the one-GL-per-route budget (every self-staging substrate route
+
+
+## Residuals (MINOR 2 / THIN 5)
+
+- **MINOR** [BC.W-PAGE-CHASSIS]: Re-point the L100/L112 subpath-chip cells from `@mkbabb/glass-ui/multi-select`/`@mkbabb/glass-ui/section` to the route-path form `/forms/multi-select`/`/display/section` (per the table's own root-only-component rule), adding the verifying note the sibling rows carry ('ships via root/ui barrel, no own subpath -> route path, verified'). Alternatively, if PC5 validates chips against package.json, ensure the gate treats root-barrel-only components as route-path chips so it does not red.
+- **MINOR** [BC.W-FOLD-LEDGER]: Either (a) sed-correct the stale `(Band 3)` viz parentheticals to `(Band 4)` (rows 69/70/276/292) and name the BC re-verify wave (BC.W-VIZ-AURORA / BC.W-GOOBLOB-MEATBALL) in the disposition cell so the JSON wave field is unambiguous, OR (b) add the FOLD-LEDGER note CHALLENGE-3 prescribed: the doc `(Band N)` parenthetical is advisory-only and the JSON `band` field is DERIVED from the named wave's on-disk `**Band:**` header, never transcribed from the doc cell. Acceptably deferred to FINAL §residuals.
+- **THIN** [BC.W-FOLD-LEDGER (owns DEFERRAL-LEDGER.md + FOLD-LEDGER.json)]: sed the 5 cells `(Band 3)`→`(Band 4)` (lines 69/70/93/276/292) — the wave-ids are already correct, only the parenthetical is stale; OR add the CHALLENGE-3 option-(b) note to FOLD-LEDGER F1 that the `(Band N)` parenthetical is advisory-only and the JSON `band` field is DERIVED from the wave's on-disk `**Band:**` header (never transcribed from the doc parenthetical), closing the band-label-staleness class structurally. Non-close-blocking: F1 compares wave-IDS only (all resolve on disk), F2/F2.b pass (the `wave` field is a real BC.W-* id, never a bare band-string), the disposition (RE-VERIFY-LIVE of the per-viz Band-4 set) is unambiguous; the only theoretical risk is an author transcribing `(Band 3)`→`"band":3` in the JSON, which the FOLD-LEDGER authoring step would derive from disk anyway.
+- **THIN** [BC.W-STORYBOOK-META (the meta-pass roster)]: Re-point the two `113` references to `108` + name the BC.W-PAGE-CHASSIS per-route APPLICATION TABLE as the binding roster (it already supersedes the census). Non-close-blocking: STORYBOOK-META's M-clauses sweep EVERY route via querySelectorAll/getBoundingClientRect (DISK-walk), and PC5 asserts all 108 manifest rows resolve a subpath+heroScale — no route escapes coverage at execution regardless of the stale prose count; route-census is a WAVE-INDEX-exempt frozen research artifact.
+- **THIN** [WAVE-INDEX.md (exemption clause) / BC.W-FOLD-LEDGER (gate scope)]: Already resolved by the WAVE-INDEX:10-18 ORCHESTRATION-narrative exemption added since CHALLENGE-3. No action needed for convergence; record in FINAL §residuals as closed doc-hygiene.
+- **THIN** [BC.W-FOLD-LEDGER]: Either sed-correct the stale (Band N) parentheticals OR add the FOLD-LEDGER note that the (Band N) parenthetical is advisory-only and the JSON band field is DERIVED from the wave's on-disk **Band:** header. Non-close-blocking; FINAL §residuals.
+- **THIN** [BC.W-PAGE-CHASSIS (the 108-route table is the authoritative roster) / BC.W-STORYBOOK-META (disk-sweep)]: Optional: reconcile route-census §6 row counts to its headers. Zero functional impact — the gates walk disk, not the census; the PAGE-CHASSIS 108-route table is the binding enumeration. FINAL §residuals.
