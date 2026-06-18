@@ -186,14 +186,17 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: iteration 1 RESEARCH COMPLETE (9/9 corpus + 213-item deferral fold + herostudios).
-> 1c FORENSICS IN-FLIGHT (task w53yzm840, bc-iter1c-forensics.mjs — BB/BA/AZ post-mortems).**
-> On 1c completion (TaskOutput w53yzm840): harvest research/postmortem/{bb,ba,az}.md, then:
-> 1. **1d PER-VIZ SOTA** — fire `bc-iter1d-viz-sota.mjs` (11 agents, batches of 3+3+3+2 → research/viz/*.md).
-> 2. **2 PLAN** — after 1d, fire `bc-iter2-plan.mjs` (18 agents, 6 batches → ~60 waves/*.md +
->    DEFERRAL-LEDGER.md + PM wave-wrappers + PROMPT-LEDGER extension).
-> 3. Then **3 HARDEN** + **4 CHALLENGE** iterations until convergence (§2 test).
-> Do NOT double-spawn while w53yzm840 is in flight (TaskOutput first). Keep ≤3 agents concurrent.
+> **NEXT CURSOR: research nearly complete. 1d PER-VIZ SOTA IN-FLIGHT (task wyy4pa6jq,
+> bc-iter1d-viz-sota.mjs — 11 viz docs → research/viz/*.md). 1 (9/9), 1-sweep (213), 1c (post-mortems
+> + SYNTHESIS) all DONE.**
+> On 1d completion (TaskOutput wyy4pa6jq): harvest research/viz/*.md (parse the markdown field per
+> agent if not self-written), then:
+> 1. **2 PLAN** — fire `bc-iter2-plan.mjs` (18 agents, 6 batches → ~60 waves/*.md +
+>    DEFERRAL-LEDGER.md + PM wave-wrappers + PROMPT-LEDGER extension). This is the big one.
+> 2. Then **3 HARDEN** (tighten each band's waves: gates/edge-cases/fences/precepts) + **4 CHALLENGE**
+>    (adversarial: attack every wave for gaps/contradictions/un-covered USER-DEFECTS lines), repeat
+>    until §1 fully checked AND 2 consecutive challenge passes find no new gaps (§2 convergence test).
+> Do NOT double-spawn while wyy4pa6jq is in flight (TaskOutput first). Keep ≤3 agents concurrent.
 
 ---
 
