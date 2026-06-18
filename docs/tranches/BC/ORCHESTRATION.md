@@ -189,7 +189,8 @@ model) synthesizes; the fanout is opus/sonnet.
 | 3 | reconcile+challenge | name-drift + adversarial coverage | bc-iter3-reconcile-challenge.mjs (w2vvz9y8s) | DONE | WAVE-INDEX.md + CHALLENGE-1.md (7B/9M/6m gaps) |
 | 4 | HARDEN | fix CHALLENGE-1 gaps + 4 new waves | bc-iter4-harden.mjs (w3pp3xzy6) | DONE | ALL 7 BLOCKERs closed; 70 waves; Band 11 PERFORMANCE + VISUAL-RECONCILE added; ledgers zero-dangling |
 | 5 | CHALLENGE-2 | re-attack the 70-wave set | bc-iter5-challenge2.mjs (w6lc0kp2y) | DONE | CHALLENGE-2.md: all C1 closed; NEW 0B/5M/7m |
-| 6 | HARDEN-2 | fix the 5 MAJOR + 7 MINOR | bc-iter6-harden2.mjs (w9fo7c6ul) | IN-FLIGHT | buttons-ownership + DEFERRAL-LEDGER band-only-disposition cluster + F2 band-string guard |
+| 6 | HARDEN-2 | fix the 5 MAJOR + 7 MINOR | bc-iter6-harden2.mjs (w9fo7c6ul) | DONE | buttons single-owned; 0 band-only dispositions; F2.b guard added |
+| 7 | CHALLENGE-3 | convergence-confirm (fresh angles) | bc-iter7-challenge3.mjs (wjp9fmp0m) | IN-FLIGHT | precept/acceptance-quality + completeness-depth + cross-repo/final-soundness |
 
 > **GAP TREND collapsing: CHALLENGE-1 7B/9M/6m → iter4 HARDEN closed ALL → CHALLENGE-2 0B/5M/7m.**
 > The 5 MAJORs: 1 buttons double-ownership (iter4 over-corrected) + 4 the DEFERRAL-LEDGER still-band-only
@@ -208,19 +209,21 @@ model) synthesizes; the fanout is opus/sonnet.
 > 2 codebase agents (route-census, viz-codebase) hit a TRANSIENT server rate-limit → re-running via
 > resume (caches the 7, re-runs the 2).
 >
-> **NEXT CURSOR: CHALLENGE-2 done (0B/5M/7m). iteration 6 HARDEN-2 IN-FLIGHT (task w9fo7c6ul,
-> bc-iter6-harden2.mjs) fixing the 5 MAJOR + 7 MINOR.**
-> On iter6 completion (TaskOutput w9fo7c6ul): verify the fixes (re-grep DEFERRAL-LEDGER.md for
-> band-only disposition cells → should be 0; the buttons ownership single-owned; the F2 band-string
-> guard present in BC.W-FOLD-LEDGER.md); commit. Then:
-> 1. **7 CHALLENGE-3** — re-attack (fresh: precept-conformance + per-wave-acceptance-quality +
->    cross-repo-disposition + the iter6-touched files). If 0 BLOCKER/MAJOR → CLEAN PASS #1.
-> 2. **8 CHALLENGE-4** — if #1 clean, one more pass for the 2-consecutive-clean convergence test.
->    If also 0 BLOCKER/MAJOR → CONVERGE: tick §1 fully, write FINAL.md, report, retire cron 17dd706c.
->    (MINORs that are acceptably-deferred do NOT block convergence — record them in FINAL.md §residuals.)
-> 3. If any challenge finds BLOCKER/MAJOR → HARDEN again + re-challenge (loop 9,10,…).
-> Iteration count: …,2,3,4,5,6 = 12 toward the ≥20 target.
-> Keep ≤3 agents concurrent. Do NOT double-spawn while w9fo7c6ul is in flight.
+> **NEXT CURSOR: iter6 HARDEN-2 done (0 band-only dispositions, F2.b guard, buttons single-owned).
+> iteration 7 CHALLENGE-3 IN-FLIGHT (task wjp9fmp0m, bc-iter7-challenge3.mjs — convergence-confirm).**
+> On iter7 completion (TaskOutput wjp9fmp0m): harvest result.challenges3[].gaps into CHALLENGE-3.md;
+> note result.blockerMajor + result.thin (THIN = under-specified, a DEEPENING opportunity, NOT a
+> convergence blocker).
+> - If blockerMajor == 0 → CLEAN PASS #1. Two paths to honor BOTH the convergence test AND the user's
+>   ≥20-iteration + "burning lucidity per wave" floor:
+>   (a) iteration 8 = DEEPEN — a per-band enrichment fan-out over the THIN-flagged waves (per-route
+>       page-chassis application table; per-viz 4-facet enumeration; the affordance-map + tunable-anim
+>       registries; storybook-meta), batches of 3. THEN
+>   (b) iteration 9 = CHALLENGE-4 (clean confirm #2). If 0 BLOCKER/MAJOR → CONVERGE.
+> - If blockerMajor > 0 → HARDEN (iteration 8) the flagged waves, then re-challenge. Loop.
+> CONVERGE = §1 fully checked AND 2 consecutive challenges with 0 BLOCKER/MAJOR → tick §1, write
+> FINAL.md, report, retire cron 17dd706c. Acceptably-deferred MINOR/THIN → FINAL §residuals.
+> Iteration count: …,4,5,6,7 = 13 toward ≥20. Keep ≤3 agents concurrent; no double-spawn while wjp9fmp0m runs.
 > On iter2 completion (TaskOutput): verify docs/tranches/BC/waves/*.md (~60) + DEFERRAL-LEDGER.md +
 > the PM wrappers + the PROMPT-LEDGER §3 extension landed (recover from result.plan[].wavesAuthored
 > any agent that returned without self-writing); count waves vs the §1 checklist; commit. Then:
