@@ -1,16 +1,31 @@
 # BC — the WAVE-INDEX (the canonical wave registry — the single source of truth for wave names)
 
-> **The allowlist.** Every disposition / cross-reference in `DEFERRAL-LEDGER.md`, `PROMPT-LEDGER.md`,
-> `ORCHESTRATION.md`, `PLAN.md`, and the wave specs MUST name a wave that appears in this table.
-> A reference to a name NOT in this index is **name-drift** — reconcile it to the canonical id (or, if
-> it maps to NO authored wave, it is a genuine coverage gap for the CHALLENGE pass, never invented here).
+> **The allowlist.** Every disposition / cross-reference in the BINDING wave-set docs —
+> `DEFERRAL-LEDGER.md`, `PROMPT-LEDGER.md`, `ORCHESTRATION.md`, and the wave specs (`waves/*.md`) —
+> MUST name a wave that appears in this table. A reference to a name NOT in this index is
+> **name-drift** — reconcile it to the canonical id (or, if it maps to NO authored wave, it is a
+> genuine coverage gap for the CHALLENGE pass, never invented here).
+>
+> **The historical planning docs are EXEMPT (frozen pre-reconcile working-names, NOT the binding set).**
+> `PLAN.md` (`Status: DEVELOPED` — the iteration-1/2 authoring plan), the `audit/` corpus
+> (`USER-DEFECTS.md`, `DEFECT-LEDGER.md`, `FINDINGS-DIGEST.md`, `LIVE-GROUNDING.md`), and
+> `research/WAVE-IMPACTS.md` are FROZEN planning artifacts: they carry pre-reconcile working-names
+> (e.g. `BC.W-WGSL-COMPILE-GATE`, `BC.W-GPU-PARITY-REAL`, `BC.W-VIZ-LIVE`, `BC.W-DOCK-EDGE`,
+> `BC.W-CHRONIC-FOLD`, `BC.W-CROSSREPO-ADOPT`, `BC.W-CONSTELLATION`, `BC.W-SLIDES`, `BC.W-DECK-BUILD`,
+> `BC.W-PROMPT-LEDGER`) as section headers / intent labels. Every one is catalogued in the Name-drift
+> map below, so a reader can trace the lineage — but a working-name in a historical doc is NOT a real
+> wave and a future reader/gate MUST NOT treat it as one. **The binding wave set is THIS index +
+> `waves/*.md`; the F2 / F2.b destination-soundness scan reads the BINDING docs, never the historical
+> planning docs.** (This closes the literal-rule contradiction CHALLENGE-2 named — the substance is
+> benign, every drifted name is in the drift map.)
 >
 > **70 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
 > iteration-4 HARDEN's 4 (`BC.W-VISUAL-RECONCILE` + the Band-11 perf trio `BC.W-CSS-CRITICAL`/
 > `BC.W-LIGHTHOUSE`/`BC.W-PERF-PRODUCER` — the CHALLENGE-1 BLOCKER 3/4/5/7 + the un-owned-perf-chronic
 > + the buttons-interaction MAJOR closed).
 > `proof:bc-fold-ledger` clause F2 (decided-destination soundness) REDs the close if any disposition
-> names a wave absent from this index.
+> names a wave absent from this index; clause F2.b REDs a disposition that names only a bare `Band N`
+> label with no `BC.W-*` wave-id (the band-string-rejection anti-evasion floor).
 >
 > Built by iteration-3 RECONCILE (2026-06-18) by reading each wave header (`# <id> — <title>` + the
 > `**Band:**` / `**Sequence:**` line). The band membership is cross-checked against `ORCHESTRATION.md §1`
