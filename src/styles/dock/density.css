@@ -265,6 +265,15 @@
             calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),
             var(--dock-icon-glyph-floor)
         );
+        /* BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — RE-RESOLVE the in-dock
+           control-glyph knob against the density-painted `--dock-icon-glyph` (the
+           same substitution-vs-inheritance trap as the glyph above: a `:root`-only
+           `--dock-control-glyph-size` would freeze at the `:root` glyph while
+           `--dock-icon-glyph` lifts per density). Re-declaring it HERE keeps the
+           docked dark-toggle glyph + its inset pad on the density axis with the nav
+           glyphs. Identical to the `:root` default; only the resolution element
+           moves so the density-painted glyph flows in. */
+        --dock-control-glyph-size: var(--dock-icon-glyph);
     }
 
     /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN

@@ -357,6 +357,7 @@
 
     .glass-dock.collapsed:hover:not([data-morphing]) {
         scale: var(--dock-collapsed-hover-scale);
+        will-change: transform; /* BC.W-DOCK-ENGINE move 2 — promote the armed-at-rest scale lift */
     }
 
     /* J.W5.C — held-state substrate response.

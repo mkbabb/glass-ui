@@ -224,6 +224,19 @@
         var(--dock-icon-glyph-floor)
     );
 
+    /* BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — `--dock-control-glyph-size` is
+       the ONE in-dock control-glyph retint knob (the dark-toggle SVG `width`/`height`
+       + the `--dark-mode-toggle-padding` inset BOTH read it), defaulting to the
+       `--dock-scale`-keyed `--dock-icon-glyph` the nav icons paint so the docked
+       toggle is optically uniform out of the box. Like `--dock-icon-glyph` this
+       `:root` declaration resolves the fallback ladder; density.css RE-RESOLVES it
+       inside each `[data-density]` scope and overflow.css RE-DECLARES it in the
+       coarse block, so the density-painted + coarse-scaled `--dock-icon-glyph` flows
+       in (the substitution-vs-inheritance trap closed on all three registers — a
+       `:root`-only knob would freeze at the `:root` `--dock-scale` while the glyph
+       lifts). ONE knob; no per-size literal, no `!important`. */
+    --dock-control-glyph-size: var(--dock-icon-glyph);
+
     /* AX.W45-TUNE Q1 — the COLLAPSED-pill floor tokens. The collapsed summary
        used to fall to `--dock-layer-height` (the FULL control height, ~2.5rem) for
        its `min-width` with NO block floor, so the shrunken pill read as an

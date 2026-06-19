@@ -262,6 +262,18 @@
                 calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),
                 var(--dock-icon-glyph-floor)
             );
+            /* BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — RE-DECLARE the in-dock
+               toggle glyph knob on coarse beside `--dock-icon-glyph`. Its `:root`
+               default tracks `--dock-icon-glyph`, but a `:root`-only default would
+               freeze at the `:root` `--dock-scale` (the identity 1) while the coarse
+               `--dock-icon-glyph` above lifts — the AZ.R5-TOKENS substitution-vs-
+               inheritance dead-knob (the SAME trap the dock-scale re-declare closed,
+               mirrored for the toggle glyph). Re-declaring it HERE, against the
+               coarse-re-resolved `--dock-icon-glyph`, keeps the in-dock dark-toggle
+               glyph optically uniform with the nav glyphs on coarse AND fine pointer.
+               The `--dark-mode-toggle-padding` clamp (dark-mode-toggle.css) subtracts
+               THIS knob, so the box pad re-resolves in lockstep too. */
+            --dock-control-glyph-size: var(--dock-icon-glyph);
             --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
             --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
             /* --dock-collapsed-summary-min-size derives from --dock-layer-height (the

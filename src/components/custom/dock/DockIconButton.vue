@@ -33,6 +33,17 @@ const props = withDefaults(
     defineProps<{
         /** Compact variant: auto-sized instead of fixed 2.5rem square. */
         compact?: boolean;
+        /**
+         * Selected/toggled state (BC.W-DOCK-ENGINE cross-repo fold — fourier-M #10).
+         * The icon button is otherwise STATELESS (hover/press only); a consumer
+         * building a selectable dock control (a filter toggle, a mode picker) had to
+         * hand-roll the active register. Setting `active` stamps `aria-pressed` (the
+         * load-bearing AT-selectable semantic) + `data-active` (the CSS hook reading
+         * the existing `--dock-control-active-bg` "selected reads as glass" tier —
+         * NEVER a saturated brand hue, per W-REGISTER-IOS). Ergonomic sugar over the
+         * shipped register; no new token, no new paint.
+         */
+        active?: boolean;
         /** Button type attribute (default: "button" to prevent form submission). */
         type?: ButtonHTMLAttributes["type"];
         /** Host tag/component (reka-ui Primitive `as`; default "button"). */
@@ -41,7 +52,7 @@ const props = withDefaults(
         asChild?: boolean;
         class?: HTMLAttributes["class"];
     }>(),
-    { compact: false, type: "button", as: "button", asChild: false },
+    { compact: false, active: false, type: "button", as: "button", asChild: false },
 );
 
 const classes = computed(() =>
@@ -50,6 +61,15 @@ const classes = computed(() =>
         { "dock-icon-button--compact": props.compact },
         props.class,
     ),
+);
+
+// The selectable-state attributes (the #10 fold). `aria-pressed` is the AT-selectable
+// semantic; `data-active` is the CSS hook the `.dock-icon-button[data-active]` glass
+// register reads. Both omitted when `active` is unset (a stateless button carries no
+// pressed semantic). Spread through `$attrs` so they land on the rendered host
+// regardless of the `as`/`as-child` Primitive host.
+const stateAttrs = computed(() =>
+    props.active ? { "aria-pressed": "true", "data-active": "" } : {},
 );
 
 // `type` is a <button>-only attribute; emit it only when the host is a button.
@@ -65,7 +85,7 @@ const hostAttrs = computed(() =>
         v-specular
         :as="as"
         :as-child="asChild"
-        v-bind="hostAttrs"
+        v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"
     >
         <slot />

@@ -73,6 +73,34 @@
         will-change: transform;
     }
 
+    /* BC.W-DOCK-ROOT-MORPH — the ROOT box rides the scalar (THE snap fix). The inner
+       `.dock-layers` above reserves its settled `to` + morphs via `scaleX()` (paint-
+       only), so the root `.glass-dock` (inline-flex) shrink-wraps to that reserved full
+       `to` and SNAPS on frame 0 while the inner scales smoothly — yet the gate + the
+       page reflow both read the ROOT box. The orchestrator (dockMorphContext.ts)
+       measures + writes the root's own `--dock-root-morph-{from,to}` px span; this
+       drives the morph-axis size as a `calc()` of the SAME `--dock-morph-t` scalar the
+       spring glides — NOT a `transition: width` (proof:no-layout-animation stays GREEN;
+       a `calc()` over the scalar is not a transition). The span is armed inline ONLY by
+       the outer collapse↔expand swap; a nested-only pane-swap leaves it unset → the
+       fallback-less `var()` invalidates the rule → the box returns to its at-rest
+       shrink-wrap (the inert path). Horizontal morphs `inline-size`, vertical morphs
+       `block-size` (matching the orchestrator's `morphAxisProp` axis pick). */
+    .glass-dock[data-morphing]:not(.vertical) {
+        inline-size: calc(
+            var(--dock-root-morph-from) +
+                (var(--dock-root-morph-to) - var(--dock-root-morph-from)) *
+                var(--dock-morph-t, 0)
+        );
+    }
+    .glass-dock[data-morphing].vertical {
+        block-size: calc(
+            var(--dock-root-morph-from) +
+                (var(--dock-root-morph-to) - var(--dock-root-morph-from)) *
+                var(--dock-morph-t, 0)
+        );
+    }
+
     /* AZ.W-DOCK-TAXONOMY (move 2) — a VERTICAL dock's outer `.dock-layers` morphs the
        BLOCK axis (its collapse↔expand shrinks `height`, not `width`). The orchestrator
        measures/writes the same `--dock-morph-from/to` span on the block axis

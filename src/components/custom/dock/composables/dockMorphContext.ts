@@ -200,7 +200,50 @@ export function useDockMorphOrchestrator(
     function settleTarget(t: MorphTarget) {
         const el = t.containerEl.value;
         if (el) clearMorphVars(el);
+        // BC.W-DOCK-ROOT-MORPH — the outer target also pins the ROOT box span (so the
+        // root's own measured `inline-size` rides the scalar, not just the inner's
+        // compositor `scaleX`). Clear it on settle so the rest-state shrink-wrap owns
+        // the box again.
+        if (t === outerTarget) clearRootMorphSpan();
         t.leavingLayer.value = null;
+    }
+
+    /**
+     * BC.W-DOCK-ROOT-MORPH — clear the ROOT's own morph span (the `inline-size` =
+     * f(scalar) recipe in layers.css reads these; clearing them hands the box back to
+     * the at-rest shrink-wrap once the morph settles).
+     */
+    function clearRootMorphSpan() {
+        const r = root();
+        if (!r) return;
+        r.style.removeProperty("--dock-root-morph-from");
+        r.style.removeProperty("--dock-root-morph-to");
+    }
+
+    /**
+     * BC.W-DOCK-ROOT-MORPH — pin the ROOT box's own from→to span on the dock root.
+     *
+     * THE SNAP ROOT CAUSE: the inner `.dock-layers` reserves its SETTLED `to`
+     * footprint (`inline-size: var(--dock-morph-to)`, layers.css — the E4-frozen
+     * CDP-Layout-flat mechanism) and morphs VISUALLY via `transform: scaleX()`. A
+     * `transform` is paint-only — a parent does NOT shrink-wrap to a scaled child —
+     * so the root `.glass-dock` (display:inline-flex) shrink-wraps to the inner's
+     * RESERVED full `to` width and SNAPS to full on frame 0, while the inner's scaled
+     * box rides the spring smoothly. The gate (and the page) measure the ROOT box, so
+     * the root must ALSO ramp.
+     *
+     * `rootFrom`/`rootTo` are the root box's OWN border-box widths on the morph axis,
+     * measured DIRECTLY at the swap (`from`) and during the post-flush max-content
+     * measure with the root pin lifted (`to`). The layers.css recipe reads
+     * `inline-size: calc(from + (to−from)·--dock-morph-t)` (the SAME scalar the spring
+     * glides, NO CSS transition — proof:no-layout-animation stays GREEN; a `calc()`
+     * over the registered `--dock-morph-t` is not a transition).
+     */
+    function armRootMorphSpan(rootFrom: number, rootTo: number) {
+        const r = root();
+        if (!r) return;
+        r.style.setProperty("--dock-root-morph-from", `${rootFrom}px`);
+        r.style.setProperty("--dock-root-morph-to", `${rootTo}px`);
     }
 
     /** Clear the shared scalar + park the spring only once NO target is morphing. */
@@ -226,39 +269,59 @@ export function useDockMorphOrchestrator(
     function ensureSpringRunning() {
         const r = root();
         if (!r) return;
-        const live = spring !== null && !spring.settled;
-        const inheritedVelocity = live ? spring!.velocity : 0;
-        if (!spring || spring.settled) {
-            disposeSpring();
-            spring = new SpringProgress({
-                response: DOCK_SPRING.response,
-                dampingFraction: DOCK_SPRING.dampingFraction,
-                initial: 0,
-                respectReducedMotion: true,
-            });
-            const activeSpring = spring;
-            activeSpring.reset(0, inheritedVelocity);
-            activeSpring.target = 1;
-            activeSpring.play((tValue: number) => {
-                const rr = root();
-                if (rr) rr.style.setProperty("--dock-morph-t", `${tValue}`);
-                if (activeSpring.settled) {
-                    // Settle every still-pinned target, then park the root.
-                    for (const tt of targets) {
-                        const ttEl = tt.containerEl.value;
-                        if (ttEl && ttEl.style.getPropertyValue("--dock-morph-to")) {
-                            settleTarget(tt);
-                        }
+        // BC.W-DOCK-GLIDE — the SNAP root cause + fix. The dock spring ALWAYS targets 1
+        // (the morph DIRECTION lives in the `--dock-expand-t` derivation off the
+        // `.collapsed`/`.expanded` class, NOT the spring sign — every episode runs the
+        // scalar 0→1). So `set target = 1` on a re-armed spring is ALWAYS IDEMPOTENT
+        // (keyframes.js: "Idempotent if the target is unchanged"), which means the prior
+        // re-seat-the-live-spring path could NOT re-seat the closed-form clock and — when
+        // the prior episode's `play()` rAF loop had already auto-stopped on settle — could
+        // NOT restart the loop either. A swap that arrived while the prior morph was at
+        // value≈1 (low velocity, near settle — exactly the gate's ENTER-at-900ms-mid-
+        // collapse case) thus left `--dock-morph-t` frozen and the box SNAPPED to the
+        // endpoint in one giant-dt frame.
+        //
+        // THE FIX: every morph episode gets a FRESH spring that starts from rest CARRYING
+        // the prior spring's velocity (the iOS interruptible-physics continuity — a
+        // mid-flight retarget joins the same trajectory) and `play()`s a GUARANTEED-running
+        // loop. `reset(0, v)` + a fresh `target = 1` re-seats the closed-form origin/clock
+        // cleanly (the idempotent-target trap cannot bite a fresh instance), so the scalar
+        // genuinely GLIDES 0→1 over the ~285-320ms DOCK_SPRING clock — no snap, no freeze.
+        const inheritedVelocity =
+            spring !== null && !spring.settled ? spring.velocity : 0;
+        disposeSpring();
+        spring = new SpringProgress({
+            response: DOCK_SPRING.response,
+            dampingFraction: DOCK_SPRING.dampingFraction,
+            initial: 0,
+            respectReducedMotion: true,
+        });
+        const activeSpring = spring;
+        activeSpring.reset(0, inheritedVelocity);
+        activeSpring.target = 1;
+        // BC.W-DOCK-GLIDE — seat the scalar at 0 SYNCHRONOUSLY now (before `play()`'s
+        // first rAF callback). The prior episode's still-running `play()` loop may have
+        // overwritten the onSwap pin's `--dock-morph-t = 0` back to its ~1 settle value
+        // during the nextTick+rAF measure gap; `disposeSpring()` above stopped those
+        // writes, but the LAST stale value lingers until this fresh spring's first
+        // callback. Re-seating 0 here makes the single frame between this arm and the
+        // first spring frame read 0 (the inner reserved `to` × scale 0 = collapsed
+        // footprint), eliminating the 1-frame endpoint-flash before the glide.
+        r.style.setProperty("--dock-morph-t", "0");
+        activeSpring.play((tValue: number) => {
+            const rr = root();
+            if (rr) rr.style.setProperty("--dock-morph-t", `${tValue}`);
+            if (activeSpring.settled) {
+                // Settle every still-pinned target, then park the root.
+                for (const tt of targets) {
+                    const ttEl = tt.containerEl.value;
+                    if (ttEl && ttEl.style.getPropertyValue("--dock-morph-to")) {
+                        settleTarget(tt);
                     }
-                    maybeSettleRoot();
                 }
-            });
-        } else {
-            // A live spring mid-flight: re-seat from its current velocity onto the
-            // 0→1 span so a newly-armed target joins the SAME trajectory.
-            spring.reset(0, inheritedVelocity);
-            spring.target = 1;
-        }
+                maybeSettleRoot();
+            }
+        });
     }
 
     /**
@@ -311,6 +374,12 @@ export function useDockMorphOrchestrator(
         //    geometry (a retarget reads mid-morph px; a fresh swap reads the rest
         //    aperture), never an intrinsic re-resolve.
         const fromSize = getSize(el, axis);
+        // BC.W-DOCK-ROOT-MORPH — capture the ROOT box's own `from` on the morph axis
+        // (the outer target only). The root box must ramp on the scalar too — the
+        // inner `scaleX` is paint-only, so the root would otherwise shrink-wrap to the
+        // inner's reserved full `to` and SNAP (the headline defect). Captured here at
+        // the live painted geometry, mirrored to the root once `to` is measured.
+        const rootFromSize = t === outerTarget ? getSize(r, axis) : 0;
 
         // 2. Swap the layer refs (drives the crossfade classes on the next flush).
         t.leavingLayer.value = oldLayer;
@@ -343,6 +412,11 @@ export function useDockMorphOrchestrator(
         el.style.setProperty("--dock-morph-to", `${fromSize}px`);
         r.style.setProperty("--dock-morph-t", "0");
         r.setAttribute("data-morphing", "");
+        // BC.W-DOCK-ROOT-MORPH — pin the ROOT span at `from` too (from=to=rootFrom),
+        // so during the measure-defer frame the root holds its collapsed width on the
+        // scalar recipe rather than snapping to the inner's reserved `to`. The true
+        // `to` is measured one rAF later, after the post-flush inner measurement.
+        if (t === outerTarget) armRootMorphSpan(rootFromSize, rootFromSize);
 
         // 3b. BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
         //     `prefers-reduced-motion: reduce` there is NO morph window: seat the
@@ -390,7 +464,20 @@ export function useDockMorphOrchestrator(
         // single synchronous measurement, then RESTORE its exact prior inline state.
         // So the outer shrink-wraps around the inner's TRUE intrinsic content (the
         // settled-dock 261.1px the letter records), not the inner's pinned collapse.
-        requestAnimationFrame(() => {
+        //
+        // BC.W-DOCK-GLIDE — the measure is gated behind `nextTick` (Vue's post-flush
+        // microtask) BEFORE the layout rAF. The to-pane's in-flow-ness is driven by
+        // the `.dock-layer--full.is-active` class, itself bound to `visualExpanded`. A
+        // re-expand that arrives mid-collapse (the gate's ENTER-at-900ms case) schedules
+        // its measure rAF in the SAME task that flips the reactive state, so a bare rAF
+        // can fire BEFORE Vue flushes the active-pane class — the to-pane is still
+        // `position:absolute` (out of flow), `max-content` reads the empty summary, and
+        // the measure returns `to:0` → armTarget same-size early-returns → the box SNAPS
+        // to rest with no spring (the exact mid-collapse re-expand snap). `nextTick`
+        // lands the measure AFTER the class flush (the same post-flush ordering the PRM
+        // `seatTargetSync` path already relies on), so the to-pane is in-flow and the
+        // max-content read is the true expanded span.
+        void nextTick(() => requestAnimationFrame(() => {
             if (id !== t.txId) return;
             const elNow = t.containerEl.value;
             const rootNow = root();
@@ -408,12 +495,55 @@ export function useDockMorphOrchestrator(
             // to its exact prior inline state right after the synchronous read.
             const nested = nestedTargetsWithin(t, elNow, targets);
             const restore = nested.map((n) => forceNestedMaxContent(n));
+            // BC.W-DOCK-ROOT-MORPH — for the OUTER target, LIFT the root's own pinned
+            // span for the duration of this synchronous measure so the root shrink-
+            // wraps to its TRUE target width (the inner is at `max-content` below), then
+            // read the root's `to` directly. A DIRECT root measurement sidesteps the
+            // chrome-offset arithmetic AND the empty-summary `inner-to:0` trap (the
+            // overview dock's `#collapsed` summary clips `.dock-layers` to 0, so an
+            // inner-span-derived rootTo mis-signs). The root box is exactly what the
+            // gate + the page reflow read — measure it, not a derivation of the inner.
+            // BC.W-DOCK-GLIDE — the ROOT-PIN measure trap. The layers.css recipe
+            // `[data-morphing] .glass-dock { inline-size: calc(rootFrom + (rootTo−rootFrom)·t) }`
+            // CONSTRAINS the root to its pinned (collapsed) width while the span vars are
+            // armed. The `.dock-layers` grid child carries `min-width: 0`, so a
+            // root pinned small CLAMPS the child to 0 even with `inline-size: max-content`
+            // requested → the measure reads `to:0` and the morph snaps. The recipe is
+            // driven by the `--dock-root-morph-from/to` VARS (not an inline `inline-size`),
+            // so the pin must be lifted by clearing those vars, not by removing an inline
+            // size. Snapshot + restore them around the synchronous measure so the root is
+            // free to shrink-wrap to its TRUE expanded width while we read.
+            const liftRootPin = t === outerTarget;
+            const priorRootFrom = liftRootPin
+                ? rootNow.style.getPropertyValue("--dock-root-morph-from")
+                : "";
+            const priorRootTo = liftRootPin
+                ? rootNow.style.getPropertyValue("--dock-root-morph-to")
+                : "";
+            if (liftRootPin) clearRootMorphSpan();
             elNow.style.setProperty(prop, "max-content");
             const toSize = getSize(elNow, axis);
+            const rootToSize = liftRootPin ? getSize(rootNow, axis) : 0;
             elNow.style.removeProperty(prop);
+            if (liftRootPin) {
+                // Restore the prior (pin-at-from) span so the box keeps holding its
+                // collapsed width until armRootMorphSpan re-pins the true to-span below.
+                if (priorRootFrom)
+                    rootNow.style.setProperty("--dock-root-morph-from", priorRootFrom);
+                if (priorRootTo)
+                    rootNow.style.setProperty("--dock-root-morph-to", priorRootTo);
+            }
             for (const r of restore) r();
             armTarget(t, id, fromSize, toSize);
-        });
+            // BC.W-DOCK-ROOT-MORPH — pin the ROOT box's measured from→to span so its
+            // `inline-size` ramps on the SAME scalar the spring drives instead of
+            // snapping to the inner's reserved `to`. A same-size swap (the inner
+            // settled in armTarget) clears the span so the box shrink-wraps at rest.
+            if (t === outerTarget) {
+                if (Math.abs(rootToSize - rootFromSize) < 0.5) clearRootMorphSpan();
+                else armRootMorphSpan(rootFromSize, rootToSize);
+            }
+        }));
     }
 
     // nestedTargetsWithin + forceNestedMaxContent (the BA-VJS-1 nested-descendant

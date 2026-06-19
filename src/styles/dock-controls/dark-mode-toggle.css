@@ -73,13 +73,26 @@
            padding fell to `var(--dock-icon-padding, 0)` (the token is never defined →
            0 pad → the glyph filled the whole 40px box edge-to-edge, ~2.5× the 16-20px
            nav glyphs — the user's "too large" read). Pad the box by HALF the box↔glyph
-           difference so the `h-full` SVG lands at exactly `--dock-icon-glyph` (the
-           `--dock-scale`-keyed size the nav icons paint) — optically UNIFORM with the
-           nav glyphs through the utility-win path, not fighting it. */
+           difference so the `h-full` SVG lands at exactly `--dock-control-glyph-size`
+           (default `--dock-icon-glyph`, the `--dock-scale`-keyed size the nav icons
+           paint) — optically UNIFORM with the nav glyphs through the utility-win path,
+           not fighting it.
+
+           BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — the inset subtracts
+           `--dock-control-glyph-size`, the SAME ONE knob the SVG `width`/`height`
+           reads below, so the pad and the glyph stay LOCKED (a consumer retinting
+           `--dock-control-glyph-size` moves both in lockstep — no drift between the
+           box pad and the painted glyph). `--dock-control-size` AND
+           `--dock-control-glyph-size` both INHERIT from `.glass-dock[data-density]`,
+           where the coarse `--dock-scale` re-declare (overflow.css) re-resolves them
+           in lockstep — so the calc reads the coarse-scaled values on a coarse
+           pointer too (the AZ.R5-TOKENS substitution-vs-inheritance trap closed for
+           the toggle glyph: the var() resolves at the toggle button, reading the
+           coarse-re-resolved inherited tokens, never the frozen `:root` scale). */
         --dark-mode-toggle-padding: calc(
             (
                     var(--dock-control-size, var(--size-icon-btn)) -
-                        var(--dock-icon-glyph, 1.25rem)
+                        var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem))
                 ) / 2
         );
     }

@@ -1638,6 +1638,12 @@ export const GATES = [
         note: "BC.W-MOTION-PRESETS — the convergence-reveal motion preset (the brand partial-sum-settle; prefers the `gentle` reuse unless measurably distinct, no new engine) + the [data-scroll-reveal] `once` latch reusing the shipped IntersectionObserver unobserve machinery (the continuous default UNTOUCHED — no-double-ownership with BC.W-SCROLL-TRIGGER). Bite: a new engine for the reveal / a re-firing `once` latch / a double-owned [data-scroll-reveal] default → RED.",
     },
     {
+        id: "proof:dock-engine",
+        cmd: "proof:dock-engine",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-ENGINE — the buttery COMPOSITOR-ONLY dock morph engine (the dock fleet rides it). E1 every morph-geometry/chrome leg (inline-size/block-size/padding/bg/border-color) is JS-driven via the --dock-morph-t/--dock-expand-t scalar, NEVER a generic transition (the interaction transform/scale channel is the KEEP carve). E2 the CONSUME-side JS envelope (computed from the DOCK_SPRING analytic damped-oscillator, NEVER parsing the byte-frozen --spring-dock linear()): midpoint travel >= 0.40, max dead-flat plateau < 0.35 (kills the BB ~16% stall), monotone rise. E3 compositor promotion (will-change:transform) ONLY on armed states (rail hover/active/held + collapsed-hover), NEVER resting (P5). E5 the Atlas A-9 --dock-control-glyph-size knob declared at :root + per [data-density] + coarse (the substitution-vs-inheritance dead-knob closed). Fences: proof:no-layout-animation LOCKED + proof:spring-tokens-synced (dock 0.32/0.7 byte-frozen). Bite: a generic-duration morph leg / a >0.35 plateau / a resting will-change / a missing glyph-knob register → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

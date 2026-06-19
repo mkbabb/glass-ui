@@ -314,6 +314,21 @@
             scale var(--dock-motion-resize);
     }
 
+    /* BC.W-DOCK-ENGINE move 2 — the rail polish transition is COMPOSITOR-PROMOTED
+       only while its hover/press/held state is ARMED (the transform/scale legs ride
+       the compositor channel; `will-change: transform` hints the layer for the
+       gesture). NEVER a resting `will-change` (a permanent promotion pins a wasted
+       compositor layer at rest — the motion-canon P5 no-resting-promotion floor):
+       the hint lives on the `:hover`/`:active`/`[data-held]` armed selectors and is
+       cleared the instant the state releases. PRM keeps no pinned layer either — the
+       universal a11y carve strips the spatial transform under reduce, and a
+       non-animating rail needs no promotion. */
+    .glass-dock.vertical:hover,
+    .glass-dock.vertical:active,
+    .glass-dock.vertical[data-held] {
+        will-change: transform;
+    }
+
     /* AZ.W-DOCK-TAXONOMY — the vertical dock's surface plate (the prior
        `.variant-rail` block; "rail-ness" is now `orientation="vertical"` + a
        shape/density choice, not a variant). */

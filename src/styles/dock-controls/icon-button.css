@@ -113,6 +113,20 @@
             border: var(--dock-active-border);
             box-shadow: var(--dock-active-shadow);
         }
+
+        /* BC.W-DOCK-ENGINE cross-repo fold (fourier-M #10) — the `<DockIconButton
+           :active>` selectable register. The `data-active` hook the component stamps
+           reads the rail's "selected reads as glass" tier (`--dock-control-active-bg`,
+           default `--glass-bg-floating` — a GLASS tier ABOVE the rest fill, NEVER a
+           saturated brand hue, per W-REGISTER-IOS). Distinct from the consumer
+           `--dock-active-*` cohort above (a parent-scoped audacious override): this is
+           the library's default selected glass, ergonomic sugar over the shipped
+           register so a selectable dock control needs no hand-rolled active paint. The
+           glyph/label firm to the full warm-ink, mirroring the rail's `.is-active`. */
+        &[data-active] {
+            background: var(--dock-control-active-bg, var(--glass-bg-floating));
+            color: var(--dock-fg-on-aurora, var(--foreground));
+        }
     }
 
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
