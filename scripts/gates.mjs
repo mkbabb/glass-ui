@@ -1806,6 +1806,24 @@ export const GATES = [
         note: "BC.W-VISUAL-RECONCILE — the cross-band visual reconcile gate over the FIXED Band-1 identity: re-walks the booked proof:lensing (the BB .glass-lens --glass-refract press-swell, booked from Band 7 to here) + the viz-vs-glass coherence. Bite: a viz/glass identity drift / a regressed lensing press-swell → RED.",
     },
     {
+        id: "proof:viz-aurora",
+        cmd: "proof:viz-aurora",
+        tags: ["ci", "local"],
+        note: "BC.W-VIZ-AURORA — the aurora reads a living WARM-CREAM painterly wash (the BB aurora-core-dark defect cured) over the WebGPU-first substrate. A1 the dead-static-fall gone (no hardwareConcurrency/saveData css branch — low-core + PRM arm webgl, not css); A2 capture awaits armAsync before renderAt; A3 the WGSL primary splices aurora-mediums.wgsl dispatching uMedium 1-7 (the anisotropic-Kuwahara painterly finish ports to WGSL — a real oil read on Safari, NOT smooth degrade; the full Starry-Night STROKE cascade stays the byte-untouched WebGL2 aurora.frag register); A6 warm-cream default, no teal-on-navy; A7 deriveAurora honors avoidHues. Bite: a css-static-fall / a smooth-only WGSL / a teal-on-navy token → RED.",
+    },
+    {
+        id: "proof:gooblob-plain",
+        cmd: "proof:gooblob-plain",
+        tags: ["local"],
+        note: "BC.W-GOOBLOB-PLAIN — the goo-blob reads as a proper LIQUID metaball (the BB blob-broken defect cured), lit-glass surface, warm identity (the live paint arm). The fs_main/main() is re-expressed as a uStage-gated kernel (variant=blob → uStage=1 → the stripped warm-cream floor: SDF circle + smin satellites + fwidth-AA + IGN gamma fill). Bite: a black/broken blob / a non-warm fill → RED.",
+    },
+    {
+        id: "proof:gooblob-plain:source",
+        cmd: "proof:gooblob-plain:source",
+        tags: ["ci"],
+        note: "BC.W-GOOBLOB-PLAIN — the device-free SOURCE floor (the --source arm): the uStage-gated stripped fs_main present in BOTH the WGSL primary + GLSL fallback, the warm-cream identity, the byte-faithful math. CI proves the SOURCE; the bare proof:gooblob-plain proves the PAINT (local). Bite: a missing uStage gate / a forked metaball math → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

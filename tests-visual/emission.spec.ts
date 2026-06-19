@@ -16,9 +16,11 @@
 //   (c) THE SLIDER SIZE AXIS — a standard size=md slider measures a REAL track-height
 //       ≈1.25rem (20px), NOT the 6px fallback; the spectrum thumb is ≤0.5× its track
 //       (the slim value.js bar). The precompiled [data-size] rule is the only backing.
-//   (d) THE WATERCOLOR GHOST — a seeded variant=ghost dot renders the blob SILHOUETTE as
-//       a stroke (a real border + a non-rect border-radius), and a solid dot of the SAME
-//       seed carries the SAME border-radius silhouette (the seeded match), NOT a dashed box.
+//   (d) THE WATERCOLOR GHOST (BC.W-VIZ-WATERCOLOR) — a seeded variant=ghost dot renders
+//       the blob SILHOUETTE as a DASHED SVG <ellipse> stroke (a real stroke-dasharray
+//       tracing the seeded silhouette), and a solid dot of the SAME seed carries the SAME
+//       border-radius silhouette (the seeded match) — a dashed OUTLINE following the
+//       silhouette, NOT a solid ring and NOT a dashed rectangular box border.
 //
 // + the captured DELTA frames written to the DELTA dir. Fail-CLOSED: an unbounded
 // dropdown / a 6px md track / a dashed-rect ghost reds the readback, exit non-zero.
@@ -156,9 +158,9 @@ test.describe("BA.W-EMISSION — the Slider size axis ships as real geometry", (
     });
 });
 
-// ── (d) THE WATERCOLOR GHOST ──────────────────────────────────────────────────────────
-test.describe("BA.W-EMISSION — the WatercolorDot ghost is the seeded silhouette as a stroke", () => {
-    test("a ghost dot renders a real stroke + a non-rect border-radius matching the solid seed", async ({
+// ── (d) THE WATERCOLOR GHOST (BC.W-VIZ-WATERCOLOR — the DASHED silhouette stroke) ──────
+test.describe("BA.W-EMISSION / BC.W-VIZ-WATERCOLOR — the WatercolorDot ghost is a DASHED silhouette stroke", () => {
+    test("a ghost dot renders a dashed SVG <ellipse> stroke tracing the seeded silhouette matching the solid seed", async ({
         page,
     }) => {
         await page.goto("/substrates/blob", { waitUntil: "networkidle" });
@@ -176,29 +178,53 @@ test.describe("BA.W-EMISSION — the WatercolorDot ghost is the seeded silhouett
             if (!solid || !ghost) return null;
             const gcs = getComputedStyle(ghost);
             const scs = getComputedStyle(solid);
+            // The dashed silhouette stroke is an SVG <ellipse> overlay carrying
+            // stroke-dasharray (the dashed OUTLINE following the seeded silhouette).
+            const stroke = ghost.querySelector(
+                ".watercolor-ghost-stroke",
+            ) as SVGElement | null;
+            const strokeCs = stroke ? getComputedStyle(stroke) : null;
             return {
                 ghostVariant: ghost.dataset.variant,
-                // The ghost paints a real border (the stroke), not a 0-width edge.
-                ghostBorderWidth: parseFloat(gcs.borderTopWidth),
+                // The ghost box itself paints NO dashed RECTANGULAR border (forbidden).
                 ghostBorderStyle: gcs.borderTopStyle,
+                // The dashed silhouette stroke is present with a real dasharray pattern.
+                hasStroke: !!stroke,
+                strokeDasharray: strokeCs ? strokeCs.strokeDasharray : "",
+                strokeWidth: strokeCs ? parseFloat(strokeCs.strokeWidth) : 0,
                 // The silhouette: the seeded border-radius. A ghost of a seed must carry
                 // the SAME border-radius the solid dot of that seed carries (the match).
                 ghostRadius: gcs.borderRadius,
                 solidRadius: scs.borderRadius,
-                // The ghost background is NOT the opaque solid color (a low-alpha fill).
-                ghostBg: gcs.backgroundColor,
             };
         });
-        console.log("[emission] watercolor ghost:", JSON.stringify(readback));
+        console.log("[emission] watercolor ghost (dashed):", JSON.stringify(readback));
         expect(readback, "the ghost/solid pair must be present").not.toBeNull();
 
-        // The ghost is a real stroke (a solid border, NOT a dashed-rect affordance).
-        expect(readback!.ghostBorderWidth, "the ghost must paint a real stroke").toBeGreaterThan(
-            0,
-        );
+        // The dashed silhouette stroke is present (an SVG <ellipse> stroke overlay).
+        expect(
+            readback!.hasStroke,
+            "the ghost must render a dashed silhouette stroke overlay",
+        ).toBe(true);
+
+        // The stroke carries a real dasharray (dash/gap alternation — a dashed OUTLINE).
+        expect(
+            readback!.strokeDasharray,
+            "the ghost stroke must carry a stroke-dasharray (the dashed silhouette)",
+        ).toBeTruthy();
+        expect(
+            readback!.strokeDasharray,
+            "the dasharray must not be the `none` resting value",
+        ).not.toBe("none");
+        expect(
+            readback!.strokeWidth,
+            "the dashed stroke must paint a real width",
+        ).toBeGreaterThan(0);
+
+        // The ghost box itself is NOT a dashed rectangular border (the forbidden form).
         expect(
             readback!.ghostBorderStyle,
-            "the ghost stroke must be solid, NOT a dashed rectangle",
+            "the swatch box must NOT be a dashed rectangle",
         ).not.toBe("dashed");
 
         // The silhouette is the seeded blob (a NON-rectangular border-radius — the morph

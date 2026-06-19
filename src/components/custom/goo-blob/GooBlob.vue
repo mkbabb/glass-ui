@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, useTemplateRef, watch, ref, computed, onScopeDispose } from "vue";
 import { createTokenColorCache } from "../../../composables/dom";
-import type { BlobMood, BlobConfig } from "./types";
+import type { BlobMood, BlobConfig, BlobVariant } from "./types";
 import { BLOB_CONFIG_KEY } from "./types";
 import { useBlobMood } from "./composables/useBlobMood";
 import { useBlobPointer } from "./composables/useBlobPointer";
@@ -33,6 +33,7 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
 const {
     color,
     config,
+    variant,
     seed = "",
     paused = false,
 } = defineProps<{
@@ -44,6 +45,14 @@ const {
      * The metaball tuning. Pass `BLOB_CONFIG_DEFAULTS` for the stock look.
      */
     config?: BlobConfig;
+    /**
+     * BC.W-GOOBLOB-PLAIN — the render-variant axis. `"blob"` is the STAGE-1
+     * shadowless lightless fill-only floor; `"meatball"` (default) is the full lit
+     * register. When set it WINS the resolved config's `variant` (the per-instance
+     * override); unset, the config's own `variant` rules. STAGE 1's `uStage` gate
+     * strips the lit/shadow blocks for the `"blob"` register.
+     */
+    variant?: BlobVariant;
     /** Extra seed string mixed into the satellite PRNG for a unique-but-reproducible system. */
     seed?: string;
     /**
@@ -77,6 +86,22 @@ if (!cfg) {
 // reactive prop (falling back to the injected config) so the paletteStops watcher below
 // always resolves the CURRENT stops, not the stale snapshot.
 const liveConfig = (): BlobConfig => config ?? injectedConfig ?? cfg!;
+
+// BC.W-GOOBLOB-PLAIN — the per-instance `variant` override. The renderer reads
+// `config.variant` per frame (the WGSL/GLSL bridges write the `uStage` gate off it).
+// When the `variant` PROP is set it WINS the resolved config's `variant`; unset, the
+// config's own `variant` rules. `renderConfig` is a thin Proxy over `cfg` whose ONLY
+// override is `variant` — every other atom forwards straight through to the (possibly
+// reactive) `cfg` (the demo's `stageConfig`) so the live config stays live and the
+// renderer closes over ONE config object (no second config, no parallel state path).
+// No `reactive()` double-wrap: the upload reads per-frame from inside the rAF (not a
+// reactive effect), so the forward-through `get` is all the renderer needs.
+const renderConfig: BlobConfig = new Proxy(cfg!, {
+    get(target, key, receiver) {
+        if (key === "variant" && variant != null) return variant;
+        return Reflect.get(target, key, receiver);
+    },
+});
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
@@ -124,7 +149,7 @@ const renderer = useMetaballRenderer({
     mood,
     pointer,
     satellites: satelliteSystem,
-    config: cfg,
+    config: renderConfig,
 });
 
 // Resolve once the host is in the tree (the cascade is live), then on every color

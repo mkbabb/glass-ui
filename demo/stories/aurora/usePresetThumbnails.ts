@@ -81,6 +81,13 @@ export function usePresetThumbnails(options: {
         }
 
         try {
+            // BC.W-VIZ-AURORA (T2) — AWAIT the device-resolved arm BEFORE the first
+            // `renderAt`. On the WebGPU backend `renderAt` is a no-op until the async
+            // adapter→device→configure→setup prelude resolves; the prior synchronous
+            // `renderAt` right after `createAurora(…,{mode:"capture"})` baked a BLANK
+            // webp → the dead dark thumbnail card. One await closes it (the WebGL2
+            // fallback / software-raster placeholder resolve immediately).
+            await aurora.armAsync();
             for (const key of PRESET_KEYS) {
                 aurora.update(freezeCfg(PRESETS[key]));
                 aurora.renderAt(1.0);

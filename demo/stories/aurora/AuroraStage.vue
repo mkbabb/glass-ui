@@ -11,26 +11,46 @@ import NucleiOverlay from "./NucleiOverlay.vue";
  * toggle). Studio state stays at the parent so preset selection and config
  * edits survive the remount.
  */
-const props = defineProps<{
-    config: AuroraConfig;
-}>();
+const props = withDefaults(
+    defineProps<{
+        config: AuroraConfig;
+        /**
+         * BC.W-VIZ-AURORA (T5) — enable the live pointer interaction (drag-swirl +
+         * flick-burst + the accel gel snap-back). Default `true` — the studio stage is
+         * interactive; pass `false` for a static specimen. The cursor write-path is
+         * PRM-gated in the runtime regardless.
+         */
+        interactive?: boolean;
+    }>(),
+    { interactive: true },
+);
 
 const stageRef = ref<HTMLDivElement | null>(null);
 const auroraRef = ref<InstanceType<typeof Aurora> | null>(null);
 
 useCursorInteraction(stageRef, () => props.config, {
-    setCursor: (x, y, strength) => auroraRef.value?.setCursor(x, y, strength),
+    setCursor: (x, y, strength) => {
+        if (!props.interactive) return;
+        auroraRef.value?.setCursor(x, y, strength);
+    },
     clearCursor: () => auroraRef.value?.clearCursor(),
     // Feed the per-move delta into the velocity-reactive flow (a fast flick →
     // a transient swirl-burst). The runtime PRM-gates the write-path.
-    injectVelocity: (dx, dy) => auroraRef.value?.injectCursorVelocity(dx, dy),
+    injectVelocity: (dx, dy) => {
+        if (!props.interactive) return;
+        auroraRef.value?.injectCursorVelocity(dx, dy);
+    },
 });
 </script>
 
 <template>
+    <!-- BC.W-VIZ-AURORA (T3) — the rounded clip lands on the CANVAS-bearing wrapper
+         (`rounded-card overflow-hidden`) so the radius reaches the canvas PIXELS, not
+         just the Configurator panel frame; `.aurora-root` keeps its `contain:content`
+         so the corners clip the live field, never a square canvas behind a round panel. -->
     <div
         ref="stageRef"
-        class="relative h-full w-full cursor-crosshair touch-none select-none"
+        class="relative h-full w-full cursor-crosshair touch-none select-none rounded-card overflow-hidden"
     >
         <Aurora ref="auroraRef" :config="config" />
         <NucleiOverlay

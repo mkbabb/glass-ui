@@ -12,6 +12,7 @@
 import type { UniformLocations } from "./glSetup";
 import { advanceCursor, cursorIsLive, type CursorState } from "./cursorModel";
 import type { AuroraConfig } from "../constants/presets";
+import type { UsePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 
 export interface FrameLoopDeps {
     gl: WebGL2RenderingContext;
@@ -22,6 +23,14 @@ export interface FrameLoopDeps {
     getConfig: () => AuroraConfig;
     /** Reduced-motion intent — parks the loop after one static frame. */
     getReducedMotion: () => boolean;
+    /**
+     * BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). FED
+     * `tick(deltaMs)` from THIS frame callback (the one-loop discipline — the field owns
+     * NO own rAF); the renderer reads `acceleration` for the iOS-27 gel snap-back. The
+     * existing cursorModel velocity/burst stays the byte-faithful baseline; the accel
+     * term is the additive fold.
+     */
+    pointerField: UsePointerVelocityField;
 }
 
 export interface FrameLoop {
@@ -32,8 +41,14 @@ export interface FrameLoop {
 }
 
 export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
-    const { gl, prog, uniforms: U, cursor, getConfig, getReducedMotion } = deps;
+    const { gl, prog, uniforms: U, cursor, getConfig, getReducedMotion, pointerField } =
+        deps;
     const flipY = (y: number): number => 1.0 - y;
+
+    // BC.W-VIZ-AURORA (T5) — the per-frame delta the shared field's tick() needs. The
+    // substrate's frame callback hands an absolute `timeSec`; we derive the delta here (the
+    // first frame seeds prevTime so the opening delta is 0 — no teleport spike).
+    let prevTimeSec: number | null = null;
 
     // AW.W8.1 — the MASTER TEMPO SCALAR. The single suppression seam the whole
     // interactive stack routes through: 0 under reduced-motion (the substrate's live
@@ -99,6 +114,26 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
 
     return {
         frame: (timeSec) => {
+            // BC.W-VIZ-AURORA (T5) — FEED the shared pointer field one tick (the one-loop
+            // push-step; the field owns no own rAF). The delta is the inter-frame gap (0 on
+            // the first frame). Under PRM masterTempo()=0 → tick(0) freezes the field too.
+            const deltaMs =
+                prevTimeSec === null
+                    ? 0
+                    : Math.max(0, (timeSec - prevTimeSec) * 1000);
+            prevTimeSec = timeSec;
+            pointerField.tick(masterTempo() === 0 ? 0 : deltaMs);
+            // The iOS-27 GEL SNAP-BACK: a fast flick that DECELERATES (the acceleration
+            // OPPOSES the velocity) injects a transient over-warp into the cursor burst —
+            // the field springs back. The accel term is the additive fold over the
+            // existing velocity/burst baseline (read here, applied to the burst the shader
+            // already consumes — no new uniform, no new loop).
+            const accel = pointerField.acceleration.value;
+            const vel = pointerField.velocity.value;
+            const decel = -(accel.x * vel.x + accel.y * vel.y);
+            if (decel > 0 && masterTempo() > 0) {
+                cursor.burst = Math.min(1, cursor.burst + decel * 6.0);
+            }
             // tempo-scaled cursor advance — the burst/velocity collapse under PRM.
             advanceCursor(cursor, masterTempo());
             drawFrame(timeSec);

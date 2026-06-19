@@ -11,6 +11,7 @@ import type { OklchStop } from "../../../../composables/color";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { CONCENTRIC_WGSL } from "../shaders/concentric.wgsl";
 import type { ConcentricConfig } from "../constants";
+import type { RingCenter } from "./ringField";
 import {
     createConcentricScratch,
     packConcentricUniforms,
@@ -28,8 +29,16 @@ export interface ConcentricWGPUSetupDeps {
     config: ConcentricConfig;
     /** The resolved (ColorResolver) palette stops as OKLCh — re-read each frame so a live edit reaches the buffer. */
     getPalette: () => OklchStop[];
+    /** The render centers (author + the transient pointer center) — re-read each frame. */
+    getCenters: () => RingCenter[];
     /** Demand-gate (the renderer's quiescence layer — substrate-agnostic). */
     shouldContinue: () => boolean;
+    /**
+     * The per-frame pointer hook — useConcentric advances the shared `usePointerVelocityField`
+     * here (the no-own-rAF discipline: the renderer's frame loop FEEDS `tick(delta)`) and
+     * mutates `config.centers` to inject the transient cursor ring-family. ZERO own rAF.
+     */
+    onFrame?: (timeSec: number) => void;
 }
 
 /** Build the concentric `setupWGPU(device, context, format)` callback. */
@@ -40,7 +49,7 @@ export function createConcentricWGPUSetup(
     context: GPUCanvasContext,
     format: GPUTextureFormat,
 ) => WebGPUCanvasFrame {
-    const { canvas, config, getPalette, shouldContinue } = deps;
+    const { canvas, config, getPalette, getCenters, shouldContinue, onFrame } = deps;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -113,9 +122,19 @@ export function createConcentricWGPUSetup(
         }
 
         function frame(timeSec: number): void {
+            // Advance the shared pointer field + inject the transient cursor center (the
+            // no-own-rAF discipline — the renderer's loop feeds the push-API).
+            onFrame?.(timeSec);
             const aspect =
                 (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
-            packConcentricUniforms(scratch, config, timeSec, aspect, getPalette());
+            packConcentricUniforms(
+                scratch,
+                config,
+                timeSec,
+                aspect,
+                getPalette(),
+                getCenters(),
+            );
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 
             const encoder = device.createCommandEncoder({ label: "[Concentric] frame" });

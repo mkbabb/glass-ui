@@ -6,10 +6,13 @@ export {
 } from "./composables/useConcentric";
 export {
     type ConcentricConfig,
+    type ConcentricRenderMode,
+    renderModeToInt,
     DEFAULT_CONCENTRIC_CONFIG,
     DEFAULT_RING_COMPONENTS,
     DEFAULT_CENTERS,
     WARM_IDENTITY_PALETTE,
+    buildDefaultRingComponents,
     MAX_RINGS,
     MAX_CENTERS,
     MAX_RING_STOPS,
@@ -19,8 +22,11 @@ export {
     type RingCenter,
     type Vec2,
     sampleRingField,
+    ringIsolineInk,
     ellipsoidalRadius,
-    buildRingLadder,
+    ellipsoidalRadiusRot,
+    ellipsoidalGradMag,
+    buildRingFamily,
     RING_GRAVITY,
 } from "./composables/ringField";
 export type { OklchStop } from "../../../composables/color";

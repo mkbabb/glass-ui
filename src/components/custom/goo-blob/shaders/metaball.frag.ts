@@ -282,6 +282,24 @@ void main() {
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
+    // ── BC.W-GOOBLOB-PLAIN — the STAGE-1 stripped floor (variant=blob). ──
+    // The minimal verifiable floor: SDF + smin (the meatball field, already in
+    // d/alpha above) + fwidth-AA (the crisp alpha) + warm-cream fill. NO surface
+    // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
+    // deliberately FLAT. It returns BEFORE the STAGE-2 dressing, the GLSL twin of
+    // the WGSL primary's uStage > 0.5 branch. The teaching contrast: the "it
+    // renders, it meatballs" floor STAGE 2 layers the lit/shadow onto via the SAME
+    // uStage/uLit uniforms.
+    if (uStage > 0.5) {
+        oklch = gamutClampOklch(oklch);
+        vec3 lin1 = oklabToLinearSrgb(oklchToOklab(oklch));
+        vec3 rgb1 = clamp(linearToSrgb(lin1), 0.0, 1.0);
+        float ign1 = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
+        rgb1 = clamp(rgb1 + (ign1 - 0.5) / 255.0, 0.0, 1.0);
+        fragColor = vec4(rgb1 * alpha, alpha);
+        return;
+    }
+
     // Surface normal — from the ANALYTIC field gradient (AX.W15: the 4-tap is
     // deleted). Computed ONCE here and reused by the iridescence (W11.a), the
     // fake-SSS (W11.a), and the lit glass block (W9.b).

@@ -6,18 +6,20 @@
 // WebGL2 `aurora.frag.ts` fallback (the GL-shader fence holds — `aurora.frag.ts` is the
 // preserved ~5-10%-tail path; this `.wgsl` is the WebGPU-first path).
 //
-// SCOPE (recorded honestly — the wave's parity bar is the DEFAULT smooth atmospheric
-// config, `medium: "smooth"`/`warpMode: "fbm"`): this transcribes the ALWAYS-ON CORE
-// pipeline the default config exercises end-to-end — domainWarp (all three warp modes +
-// the cursor swirl), nucleiField (anisotropic Gaussian softmax + drift + palette drift),
-// samplePalette (the shared OKLCh ramp), the breath wobble, saturate3, the PBR-Neutral
-// `aces`, the film grain, the OETF, the IGN display-space dither. The PAINTERLY mediums
-// (uMedium 1-6: pastel/watercolor/oil/crayon/vangogh/oil-pastel) + the brush SDF + the
-// structure-tensor flow are the WebGL2 fallback's full-fidelity register — in the WGSL
-// primary a painterly medium renders the smooth core (the booked W-AURORA-WGPU-MEDIUMS
-// successor ports the painterly bodies; until then a painterly-medium consumer rides the
-// WebGL2 path via the picker's `setupWGPU`-absent override, or accepts the smooth read).
-// The parity capture is the DEFAULT (smooth) config → byte-equivalent on both backends.
+// SCOPE: this transcribes the ALWAYS-ON CORE pipeline the default config exercises
+// end-to-end — domainWarp (all three warp modes + the cursor swirl), nucleiField
+// (anisotropic Gaussian softmax + drift + palette drift), samplePalette (the shared OKLCh
+// ramp), the breath wobble, saturate3, the PBR-Neutral `aces`, the film grain, the OETF,
+// the IGN display-space dither — AND, since BC.W-VIZ-AURORA (T4), the PAINTERLY MEDIUMS
+// (the `aurora-mediums.wgsl.ts` splice): pastel/watercolor/crayon/kuwahara port their own
+// bodies, and oil/vangogh/oil-pastel render the anisotropic-Kuwahara painterly finish (a
+// real oil-paint read, NEVER a silent smooth degrade — the user's "WebGPU EVERYWHERE …
+// NO FALLBACKS on Safari" mandate). The smooth default (`medium: "smooth"`/`warpMode:"fbm"`)
+// is byte-identical to the prior WGSL primary (applyMedium is a no-op pass-through at
+// uMedium 0) so the smooth parity capture stays byte-equivalent on both backends. The full
+// per-dab Starry-Night STROKE cascade (bestOil/paintOver/StrokeProfile) stays the WebGL2
+// `aurora.frag.ts` full-fidelity register (byte-untouched — the GL-shader fence); its WGSL
+// port is the booked W-AURORA-WGPU-MEDIUMS-STROKES tail.
 //
 // The shared OETF + Ottosson OKLCh matrices + FBM rotation + the palette ramp are
 // SPLICED from `procedural-color.wgsl.ts` (the WGSL twin of the AV.W2 shared GLSL chunk),
@@ -34,6 +36,7 @@ import {
     OKLCH_MATRICES_WGSL,
     PALETTE_RAMP_WGSL,
 } from "./procedural-color.wgsl";
+import { AURORA_MEDIUMS_WGSL } from "./aurora-mediums.wgsl";
 
 // MAX_NUCLEI=6 / MAX_STOPS=8 mirror aurora.frag.ts's #defines (and the JS-side
 // AURORA_UNIFORM_LAYOUT). Each per-nucleus row + each palette stop is packed into a
@@ -68,6 +71,16 @@ struct Uniforms {
   nuc0: array<vec4<f32>, 6>,
   nuc1: array<vec4<f32>, 6>,
   nuc2: array<vec4<f32>, 6>,
+  // BC.W-VIZ-AURORA (T4) — the painterly-medium scalar lanes. APPENDED after the
+  // arrays so EVERY existing offset (and the smooth-default parity capture) is
+  // byte-identical (these lanes are written 0 on a smooth config). scalars4:
+  // (uStrokeAmount, uStrokeScale, uStrokeAnisotropy, uCanvasGrain). scalars5:
+  // (uWetEdge, uGranulation, uBrokenColor, uKuwaharaQ). kuwahara: (uKuwaharaRadius,
+  // uKuwaharaSectors, _, _) — the Kuwahara radius/sectors/q in lockstep with
+  // packAuroraWGPUUniforms (the typed-struct discipline).
+  scalars4: vec4<f32>,
+  scalars5: vec4<f32>,
+  kuwahara: vec4<f32>,
 };
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
@@ -274,6 +287,13 @@ fn aces(color0: vec3<f32>) -> vec3<f32> {
   return clamp(mix(color, newPeak * vec3<f32>(1.0), g), vec3<f32>(0.0), vec3<f32>(1.0));
 }
 
+// ── BC.W-VIZ-AURORA (T4) — the painterly-medium bodies (the keystone WGSL port) ──
+// Spliced HERE, after every helper the mediums consume is defined (domainWarp,
+// nucleiField, samplePalette, linOklab, saturate3, oklabToOklch/oklchToOklab,
+// hash21/vnoise/fbm) and before the vertex/fragment stages. applyMedium(col,p,t)
+// is the dispatch the fragment stage calls.
+${AURORA_MEDIUMS_WGSL}
+
 // ── Full-screen triangle vertex stage (the pilot idiom — no vertex buffer) ──
 struct VSOut {
   @builtin(position) pos: vec4<f32>,
@@ -317,9 +337,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let breath = sin(t * 6.2831 / max(breathPeriod, 1.0));
   col = col * (1.0 + breathDepth * breath * 0.5);
 
-  // The painterly mediums (uMedium 1-6) are the WebGL2 fallback's register; the WGSL
-  // primary renders the smooth core for the default parity capture (the booked
-  // W-AURORA-WGPU-MEDIUMS successor ports the painterly bodies).
+  // BC.W-VIZ-AURORA (T4) — the painterly-medium dispatch. uMedium 0 (smooth) is a
+  // no-op pass-through so the DEFAULT smooth config is byte-identical to the prior
+  // WGSL primary (the parity capture); uMedium 1-7 render the ported painterly
+  // bodies (pastel/watercolor/crayon/kuwahara) or the anisotropic-Kuwahara finish
+  // (oil/vangogh/oil-pastel) — never a silent smooth degrade on Safari 26.
+  col = applyMedium(col, pN, t);
 
   // Saturation trim.
   col = saturate3(col, saturation);

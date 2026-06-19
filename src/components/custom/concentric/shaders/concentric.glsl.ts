@@ -1,18 +1,15 @@
-// BB.W-VIZ-SUITE (W-CONCENTRIC) — the WebGL2 GLSL FALLBACK (the ~5-10%-tail path).
+// BC.W-VIZ-CONCENTRIC — the WebGL2 GLSL FALLBACK (the genuinely-absent-tail path; never
+// demoed where WebGPU is present).
 //
 // The aurora-class clean twin: a fullscreen fragment pass that evaluates the SAME
 // radial-Fourier ring-interference field f(p,t) the WGSL primary does (transcribing
-// `composables/ringField.ts`), splicing the SHARED `procedural-color.glsl.ts` OETF +
-// OKLCh chunk (the ONE color source — the WGSL primary splices its WGSL twin, so the
-// color math can never DRIFT between the two backends). The full-screen-triangle vertex
-// pass is the substrate's; this module is the fragment source the `setupGL` callback
-// compiles + the JS↔GLSL math the round-trip gate matches against `ringField.ts`.
-//
-// THE PARITY STATUS (recorded honestly — `verified` in the parity table). Concentric is a
-// pure fragment field (no compute pass, no particles), so the GLSL fallback is the SAME
-// math evaluated by the SAME OKLCh ramp — a clean aurora-class port (the only delta is the
-// rasterizer sub-pixel drift the OKLab-ΔE bar accommodates). Unlike the dot-flow-field's
-// `degraded` (a CPU step count vs GPU instancing), concentric's fallback is `verified`.
+// `composables/ringField.ts`) and renders it as thin bright ELLIPSOID ISOLINE STROKES via
+// the same IQ gradient-normalized distance-estimation, splicing the SHARED
+// `procedural-color.glsl.ts` OETF + OKLCh chunk (the ONE color source — the WGSL primary
+// splices its WGSL twin, so the color math can never DRIFT between the two backends). The
+// full-screen-triangle vertex pass is the substrate's; this module is the fragment source
+// the `setupGL` callback compiles + the JS↔GLSL math the round-trip gate matches against
+// `ringField.ts`.
 
 import {
     OETF_GLSL,
@@ -29,7 +26,7 @@ void main() {
   gl_Position = vec4(aPosition, 0.0, 1.0);
 }`;
 
-/** The concentric fragment source — the aurora-class radial-Fourier field. */
+/** The concentric fragment source — the aurora-class radial-Fourier isoline render. */
 export const CONCENTRIC_FRAG_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
@@ -51,19 +48,46 @@ uniform float uAspect;
 uniform int   uCenterCount;
 uniform int   uRingCount;
 uniform int   uStopCount;
+uniform int   uRenderMode;    // 0 traveling-rings · 1 static-contour · 2 both
 uniform float uHasBackground;
+uniform vec3  uLine;          // (lineHalfWidth, aaSoftness, contourLevels) — stroke geometry
+uniform vec3  uBg;            // themed background (linear-sRGB)
 uniform vec3  uRings[MAX_RINGS];     // (amplitude, wavelength, phase)
-uniform vec3  uCenters[MAX_CENTERS]; // (x, y, weight)
+uniform vec4  uCenters[MAX_CENTERS]; // (x, y, weight, rotAlpha)
 uniform vec3  uPalette[MAX_RING_STOPS]; // linear-sRGB stops
 
 ${OETF_GLSL}
 ${OKLCH_MATRICES_GLSL}
 
-// ‖p − c‖_e = sqrt((dx/a)² + (dy/b)²) — transcribes ringField.ts ellipsoidalRadius.
-float ellipsoidalRadius(vec2 p, vec2 center, float axisA, float axisB) {
-  float dx = (p.x - center.x) / max(axisA, 1e-4);
-  float dy = (p.y - center.y) / max(axisB, 1e-4);
+// rotated ellipsoidal radius — transcribes ringField.ts ellipsoidalRadiusRot.
+float ellipsoidalRadiusRot(vec2 p, vec2 center, float rotAlpha, float axisA, float axisB) {
+  float ca = cos(rotAlpha);
+  float sa = sin(rotAlpha);
+  float px = p.x - center.x;
+  float py = p.y - center.y;
+  float rx = ca * px + sa * py;
+  float ry = -sa * px + ca * py;
+  float dx = rx / max(axisA, 1e-4);
+  float dy = ry / max(axisB, 1e-4);
   return sqrt(dx * dx + dy * dy);
+}
+
+// |∇r| of the rotated ellipsoidal radius — transcribes ringField.ts ellipsoidalGradMag.
+float ellipsoidalGradMag(vec2 p, vec2 center, float rotAlpha, float axisA, float axisB) {
+  float ca = cos(rotAlpha);
+  float sa = sin(rotAlpha);
+  float px = p.x - center.x;
+  float py = p.y - center.y;
+  float rx = ca * px + sa * py;
+  float ry = -sa * px + ca * py;
+  float a = max(axisA, 1e-4);
+  float b = max(axisB, 1e-4);
+  float sx = rx / a;
+  float sy = ry / b;
+  float r = sqrt(sx * sx + sy * sy);
+  float gx = sx / a;
+  float gy = sy / b;
+  return sqrt(gx * gx + gy * gy) / max(r, 1e-4);
 }
 
 // f(p,t) — the multi-center weighted radial sum (transcribes ringField.ts sampleRingField).
@@ -71,8 +95,8 @@ float sampleRingField(vec2 p, float t) {
   float acc = 0.0;
   for (int j = 0; j < MAX_CENTERS; j++) {
     if (j >= uCenterCount) break;
-    vec3 cj = uCenters[j];
-    float radius = ellipsoidalRadius(p, cj.xy, uAxis.x, uAxis.y);
+    vec4 cj = uCenters[j];
+    float radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, uAxis.x, uAxis.y);
     float centerSum = 0.0;
     for (int i = 0; i < MAX_RINGS; i++) {
       if (i >= uRingCount) break;
@@ -87,7 +111,54 @@ float sampleRingField(vec2 p, float t) {
   return acc;
 }
 
-// Sample the multi-stop palette (linear-sRGB stops, OKLab mix). t in [0,1].
+// The IQ gradient-normalized isoline ink + the beat envelope (transcribes ringIsolineInk).
+// Returns vec2(ink, env).
+vec2 ringIsolineInk(vec2 p, float t) {
+  float ink = 0.0;
+  float env = 0.0;
+  float lineHalfW = uLine.x;
+  float aa = uLine.y;
+  for (int j = 0; j < MAX_CENTERS; j++) {
+    if (j >= uCenterCount) break;
+    vec4 cj = uCenters[j];
+    float radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, uAxis.x, uAxis.y);
+    float gradR = ellipsoidalGradMag(p, cj.xy, cj.w, uAxis.x, uAxis.y);
+    for (int i = 0; i < MAX_RINGS; i++) {
+      if (i >= uRingCount) break;
+      vec3 r = uRings[i];
+      float k = TAU / max(r.y, 1e-4);
+      float omega = sqrt(RING_GRAVITY * k) * uSpeed;
+      float phase = k * radius - omega * t + r.z;
+      float s = sin(phase);
+      float cphase = abs(cos(phase));
+      float gradPhase = max(k * gradR, 1e-4);
+      // The IQ gradient-normalized distance-to-isoline (domain units; round-trips JS).
+      float de = abs(s) / max(cphase * gradPhase, 1e-4);
+      // Convert to PIXELS via fwidth(phase) so the stroke is a constant pixel width.
+      float dPx = max(fwidth(phase), 1e-4);
+      float dePx = de * gradPhase / dPx;
+      float lineV = 1.0 - smoothstep(lineHalfW, lineHalfW + aa, dePx);
+      // Analytic anti-aliasing: fade lines where the rings pack tighter than a pixel can
+      // resolve (fwidth(phase) ≳ π, near a center / under DPR) so the field stays thin LINES
+      // instead of flooding to a bright slab (IQ filterwidth).
+      float aliasFade = 1.0 - smoothstep(PI * 0.6, PI * 1.2, dPx);
+      lineV *= aliasFade;
+      float w = r.x * cj.z;
+      ink = max(ink, lineV * w);
+      env += s * w;
+    }
+  }
+  return vec2(clamp(ink, 0.0, 1.0), env);
+}
+
+// The topographic-contour operator (transcribes contourInk).
+float contourInk(float envValue, float levels) {
+  float fN = envValue * levels;
+  float band = abs(fract(fN + 0.5) - 0.5);
+  float aaW = max(fwidth(fN), 1e-4);
+  return 1.0 - smoothstep(uLine.x, uLine.x + uLine.y, band / aaW);
+}
+
 vec3 samplePaletteLin(float t) {
   if (uStopCount <= 1) return uPalette[0];
   float n = float(uStopCount);
@@ -95,7 +166,6 @@ vec3 samplePaletteLin(float t) {
   int i0 = int(floor(ft));
   int i1 = min(i0 + 1, uStopCount - 1);
   float f = ft - float(i0);
-  // cube-root LMS (the GLSL chunk inlines cbrt as sign(x)·pow(|x|,1/3) — no cbrt3 fn).
   vec3 lmsA = LINEAR_SRGB_TO_LMS * uPalette[i0];
   vec3 lmsB = LINEAR_SRGB_TO_LMS * uPalette[i1];
   vec3 labA = LMS_TO_OKLAB * (sign(lmsA) * pow(abs(lmsA), vec3(1.0 / 3.0)));
@@ -106,14 +176,29 @@ vec3 samplePaletteLin(float t) {
 void main() {
   float aspect = max(uAspect, 1e-4);
   vec2 p = vec2(vUv.x * aspect, vUv.y);
-  float raw = sampleRingField(p, uTime);
-  float v = clamp(0.5 + raw * uFieldNorm, 0.0, 1.0);
+
+  vec2 ie = ringIsolineInk(p, uTime);
+  float ink = ie.x;
+  float env = ie.y;
+
+  if (uRenderMode == 1) {
+    ink = contourInk(env * uFieldNorm, max(uLine.z, 1.0));
+  } else if (uRenderMode == 2) {
+    ink = max(ink, contourInk(env * uFieldNorm, max(uLine.z, 1.0)));
+  }
+  ink = clamp(ink, 0.0, 1.0);
+
+  // The beat-envelope drives the warm-family tone across the ramp (cream↔amber↔ember) so the
+  // crossing families read as warm-light interference (the warm-cream identity).
+  float v = clamp(0.5 + env * uFieldNorm, 0.0, 1.0);
   vec3 lin = samplePaletteLin(v);
   vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
+
   if (uHasBackground > 0.5) {
-    fragColor = vec4(rgb, 1.0);
+    vec3 bg = clamp(linearToSrgb(uBg), vec3(0.0), vec3(1.0));
+    fragColor = vec4(mix(bg, rgb, ink), 1.0);
     return;
   }
-  float alpha = clamp(v * 0.92 + 0.08, 0.0, 1.0);
+  float alpha = ink;
   fragColor = vec4(rgb * alpha, alpha);
 }`;

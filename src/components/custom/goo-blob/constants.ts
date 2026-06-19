@@ -194,6 +194,7 @@ export const UNIFORM_NAMES = [
     "uWarpAmp",
     "uSmoothK",
     "uMerge",
+    "uStage",
     "uMaxReach",
     "uLit",
     "uRimColor",

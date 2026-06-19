@@ -59,11 +59,16 @@ const props = withDefaults(
          *   - `"css"`   — never arm WebGL; the `paletteToCssGradient` placeholder
          *     stays the permanent surface (the warm wash composites, it just
          *     does not animate).
-         *   - `"auto"` (default) — resolve to `"css"` on low-power /
-         *     reduced-motion / save-data devices (`hardwareConcurrency <= 4` OR
-         *     `prefers-reduced-motion: reduce` OR `connection.saveData`), else
-         *     `"webgl"`. Resolved once at setup; SSR / missing-API safe (assumes
-         *     capable → `"webgl"` when the probes are unavailable).
+         *   - `"auto"` (default) — resolves to `"webgl"` on every device EXCEPT a
+         *     detected SOFTWARE renderer (SwiftShader / llvmpipe / MS Basic Render),
+         *     which falls to `"css"` (the page-wedging-software-raster guard, the only
+         *     surviving `"css"` signal). BC.W-VIZ-AURORA (T1) RETIRED the dead-static
+         *     `hardwareConcurrency <= 4` / `saveData` / `reduced-motion` falls: a
+         *     2026-capable low-core / throttled tab no longer gets a frozen gradient
+         *     (the "renders SLOW" defect root), and reduced-motion is handled SOLELY by
+         *     the substrate's live `matchMedia` freeze (one static frame then park,
+         *     re-arms on un-reduce). Resolved once at setup; SSR / missing-API safe
+         *     (assumes capable → `"webgl"` when the probes are unavailable).
          */
         renderMode?: AuroraRenderMode;
         /**

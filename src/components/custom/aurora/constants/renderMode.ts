@@ -97,12 +97,22 @@ export interface ResolveRenderModeOptions {
  * would arm WebGL. The single ESCAPE is `options.forceWebGLUnderSoftwareRaster`
  * (default `false` — the guard is the safe default).
  *
- * `"auto"` then resolves to `"css"` when ANY low-power signal is present:
- *   - a SOFTWARE WebGL renderer (already handled by the universal guard above),
- *   - `navigator.hardwareConcurrency <= 4` (few logical cores),
- *   - `prefers-reduced-motion: reduce`,
- *   - `navigator.connection.saveData === true` (Data Saver on).
- * Otherwise `"webgl"`.
+ * BC.W-VIZ-AURORA (T1) — the DEAD-STATIC `"auto"` fall is RETIRED. The
+ * `lowConcurrency` (`hardwareConcurrency <= 4`) and `saveData` heuristics are
+ * GONE: they predate the offscreen-park + the `AV_AURORA_DPR_MAX` sub-2× cap +
+ * the demand-gate that make a full-viewport aurora cheap, and `<= 4` is
+ * false-positive-prone in 2026 (a capable base-M-series laptop / a throttled VM
+ * tab reports 4 logical cores → it got a FROZEN static gradient that reads as
+ * "the aurora is broken", USER-DEFECTS §E "renders SLOW"). So `"auto"` arms the
+ * GPU on every Chrome-113/Safari-26/Firefox-141 device.
+ *
+ * Reduced-motion is handled SOLELY by the substrate's live `matchMedia` freeze
+ * (`createCanvasLifecycle` paints ONE static frame then parks, and re-arms on
+ * un-reduce) — NOT a render-mode fall (the old `"css"` fall never armed WebGL,
+ * so an un-reduce mid-session could never wake it; the substrate freeze does).
+ * The ONLY `"css"` signal that remains is the genuine software-raster GUARD
+ * (the universal first leg above) — and even that is subsumed by
+ * `BC.W-WEBGPU-EVERYWHERE`'s try-WebGPU-then-rebuild-WebGL2 picker.
  *
  * THE CAPABLE PATH IS BYTE-UNTOUCHED: `isSoftwareWebGLRenderer()` returns `false`
  * on a real GPU (or a null probe — never a false downgrade), so a forced
@@ -111,8 +121,6 @@ export interface ResolveRenderModeOptions {
  * SSR / missing-API safe: if `navigator` / `window` / the probes are
  * unavailable we ASSUME a capable device and resolve `"webgl"` (the warm wash
  * still composites either way — the only question is whether it animates).
- * `navigator.connection` is non-standard, so it is feature-probed via an
- * optional-chained cast rather than a typed accessor.
  *
  * Called ONCE at component setup — the device tier is a mount-time decision,
  * not a reactive one (a connection-type flip mid-session does not re-resolve;
@@ -136,26 +144,13 @@ export function resolveRenderMode(
 
     if (mode !== "auto") return mode;
 
-    // SSR / non-browser — assume capable; the WebGL arm is itself deferred to
-    // a browser-only idle tick, so this only decides the schedule's intent.
-    if (typeof navigator === "undefined" || typeof window === "undefined") {
-        return "webgl";
-    }
-
-    const lowConcurrency =
-        typeof navigator.hardwareConcurrency === "number" &&
-        navigator.hardwareConcurrency <= 4;
-
-    const reducedMotion =
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // `NetworkInformation` is not in the standard DOM lib; probe defensively.
-    const saveData =
-        (navigator as Navigator & { connection?: { saveData?: boolean } })
-            .connection?.saveData === true;
-
-    // The software-raster signal is handled by the universal guard above; the
-    // `"auto"` branch retains the remaining low-power signals.
-    return lowConcurrency || reducedMotion || saveData ? "css" : "webgl";
+    // BC.W-VIZ-AURORA (T1) — `"auto"` arms the GPU on every device. The only
+    // `"css"` signal is the universal software-raster guard above (a real GPU /
+    // a null probe never trips it). The `lowConcurrency`/`saveData`/`reducedMotion`
+    // dead-static heuristics are RETIRED: reduced-motion is the substrate's live
+    // `matchMedia` freeze (one static frame then park, re-arms on un-reduce), and
+    // a 4-core report no longer demotes a 2026-capable device to a frozen gradient
+    // (the "renders SLOW" defect root). SSR is the same answer (assume capable —
+    // the warm wash composites either way; the WebGL arm is browser-only deferred).
+    return "webgl";
 }

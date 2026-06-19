@@ -16,14 +16,27 @@ import {
     CONCENTRIC_VERT_GLSL,
     CONCENTRIC_FRAG_GLSL,
 } from "../shaders/concentric.glsl";
-import { MAX_RINGS, MAX_CENTERS, MAX_RING_STOPS, type ConcentricConfig } from "../constants";
+import {
+    MAX_RINGS,
+    MAX_CENTERS,
+    MAX_RING_STOPS,
+    renderModeToInt,
+    type ConcentricConfig,
+} from "../constants";
+import type { RingCenter } from "./ringField";
 import { CONCENTRIC_FIELD_NORM } from "./uniformBridgeWGPU";
 
 export interface ConcentricGLSetupDeps {
     canvas: HTMLCanvasElement;
     config: ConcentricConfig;
     getPalette: () => OklchStop[];
+    getCenters: () => RingCenter[];
     shouldContinue: () => boolean;
+    /**
+     * The per-frame pointer hook — useConcentric advances the shared pointer field +
+     * injects the transient cursor center here (the no-own-rAF discipline). ZERO own rAF.
+     */
+    onFrame?: (timeSec: number) => void;
 }
 
 function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLShader {
@@ -42,7 +55,7 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLSh
 export function createConcentricGLSetup(
     deps: ConcentricGLSetupDeps,
 ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
-    const { canvas, config, getPalette, shouldContinue } = deps;
+    const { canvas, config, getPalette, getCenters, shouldContinue, onFrame } = deps;
 
     return function setupGL(gl) {
         const vs = compile(gl, gl.VERTEX_SHADER, CONCENTRIC_VERT_GLSL);
@@ -81,7 +94,10 @@ export function createConcentricGLSetup(
         const uCenterCount = u("uCenterCount");
         const uRingCount = u("uRingCount");
         const uStopCount = u("uStopCount");
+        const uRenderMode = u("uRenderMode");
         const uHasBackground = u("uHasBackground");
+        const uLine = u("uLine");
+        const uBg = u("uBg");
         const uRings = u("uRings[0]");
         const uCenters = u("uCenters[0]");
         const uPalette = u("uPalette[0]");
@@ -100,6 +116,9 @@ export function createConcentricGLSetup(
         }
 
         function frame(timeSec: number): void {
+            // Advance the shared pointer field + inject the transient cursor center (the
+            // no-own-rAF discipline — the renderer's loop feeds the push-API).
+            onFrame?.(timeSec);
             const cssW = canvas.clientWidth || 320;
             const cssH = canvas.clientHeight || 320;
             const aspect = cssW / Math.max(cssH, 1);
@@ -117,18 +136,31 @@ export function createConcentricGLSetup(
             gl.uniform1f(uFieldNorm, CONCENTRIC_FIELD_NORM);
             gl.uniform1f(uAspect, aspect);
 
-            const centerCount = Math.min(config.centers.length, MAX_CENTERS);
+            const centers = getCenters();
+            const centerCount = Math.min(centers.length, MAX_CENTERS);
             const ringCount = Math.min(config.ringComponents.length, MAX_RINGS);
             const palette = getPalette();
             const stopCount = Math.min(palette.length, MAX_RING_STOPS);
             gl.uniform1i(uCenterCount, centerCount);
             gl.uniform1i(uRingCount, ringCount);
             gl.uniform1i(uStopCount, stopCount);
+            gl.uniform1i(uRenderMode, renderModeToInt(config.renderMode));
+
+            // line stroke geometry (field-distance units): half-width, AA softness, levels.
+            gl.uniform3f(
+                uLine,
+                config.lineWidth,
+                config.lineSoftness,
+                config.contourLevels,
+            );
 
             if (config.background === "transparent") {
                 gl.uniform1f(uHasBackground, 0);
+                gl.uniform3f(uBg, 0, 0, 0);
             } else {
                 gl.uniform1f(uHasBackground, 1);
+                const lin = oklchToLinear(config.background);
+                gl.uniform3f(uBg, lin[0], lin[1], lin[2]);
             }
 
             const ringData = new Float32Array(MAX_RINGS * 3);
@@ -140,14 +172,15 @@ export function createConcentricGLSetup(
             }
             gl.uniform3fv(uRings, ringData);
 
-            const centerData = new Float32Array(MAX_CENTERS * 3);
+            const centerData = new Float32Array(MAX_CENTERS * 4);
             for (let i = 0; i < MAX_CENTERS; i++) {
-                const c = config.centers[i];
-                centerData[i * 3 + 0] = c?.x ?? 0;
-                centerData[i * 3 + 1] = c?.y ?? 0;
-                centerData[i * 3 + 2] = c?.weight ?? 0;
+                const c = centers[i];
+                centerData[i * 4 + 0] = c?.x ?? 0;
+                centerData[i * 4 + 1] = c?.y ?? 0;
+                centerData[i * 4 + 2] = c?.weight ?? 0;
+                centerData[i * 4 + 3] = c?.rotAlpha ?? 0;
             }
-            gl.uniform3fv(uCenters, centerData);
+            gl.uniform4fv(uCenters, centerData);
 
             const palData = new Float32Array(MAX_RING_STOPS * 3);
             for (let i = 0; i < MAX_RING_STOPS; i++) {

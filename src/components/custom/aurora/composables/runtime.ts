@@ -31,6 +31,7 @@ import { createUniformBridge } from "./uniformBridge";
 import { createCursorState, injectCursorVelocity as injectCursorVel } from "./cursorModel";
 import { createFrameLoop } from "./frameLoop";
 import { createAuroraWGPUSetup } from "./wgpuSetup";
+import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 
 export type AuroraRuntimeMode = "live" | "capture";
 
@@ -134,6 +135,18 @@ export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> 
     pause(reason?: SuspendReason): void;
     resume(reason?: SuspendReason): void;
     /**
+     * BC.W-VIZ-AURORA (T2) — the device-resolved arm PROMISE. On the WebGPU
+     * backend `renderAt`/`arm` are NO-OPS until `armAsync()` resolves the async
+     * adapter→device→configure→setup prelude (`useGpuSubstrate.armAsync` tries
+     * WebGPU then falls to the WebGL2 net). A CAPTURE consumer (`renderAt(t)` +
+     * `toDataURL`) MUST `await armAsync()` before the first `renderAt` — the
+     * synchronous `arm()` cannot guarantee the WebGPU device is present, so a
+     * synchronous `renderAt` right after `createAurora(…,{mode:"capture"})` paints
+     * a BLANK frame (the dead-preview defect). Resolves once the backend is armed;
+     * the WebGL2 fallback resolves immediately. Idempotent + safe post-dispose.
+     */
+    armAsync(): Promise<void>;
+    /**
      * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
      * a transient swirl-burst). The PRM early-out lives here: the injection is
      * suppressed when the substrate reports reduced-motion (the cursor write-path
@@ -180,6 +193,17 @@ export function createAurora(
     const frozenOffset = 3.7;
 
     const cursor = createCursorState();
+
+    // BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). The fold is
+    // ADDITIVE + byte-faithful: the existing cursorModel velocity/burst (the swirl
+    // attraction) stays the baseline; this field adds the ACCELERATION (second-derivative)
+    // term for the iOS-27 gel snap-back — a fast flick that DECELERATES (negative accel)
+    // gets a transient over-warp that springs back. The field owns NO own rAF — it is FED
+    // `tick(deltaMs)` from inside the EXISTING createCanvasLifecycle frame callback (the
+    // one-loop / proof:offscreen-pause discipline), and FREEZES under PRM (tick(0)). The
+    // pointer POSITION write is event-driven (setCursor / injectCursorVelocity feed
+    // `setPointer`, PRM-gated); the velocity + acceleration are DERIVED in tick.
+    const pointerField = usePointerVelocityField();
 
     // `setConfig` is (re)assigned by `setup(gl)`; before the first arm (and across
     // a context-loss/restore window) it is null and `update()` only stashes
@@ -239,6 +263,9 @@ export function createAurora(
             cursor,
             getConfig: () => config,
             getReducedMotion: () => canvasHandle.reducedMotion,
+            // BC.W-VIZ-AURORA (T5) — the shared pointer field, FED tick() from the WGPU
+            // frame callback (the SAME field instance the WebGL2 loop feeds — one source).
+            pointerField,
         }),
         // Build the program + geometry + uniform cache on a fresh context. The
         // substrate calls this on arm() AND on every webglcontextrestored, so a
@@ -299,6 +326,9 @@ export function createAurora(
                 getConfig: () => config,
                 // Read the substrate's live reduced-motion state (G1).
                 getReducedMotion: () => canvasHandle.reducedMotion,
+                // BC.W-VIZ-AURORA (T5) — the shared pointer field, FED tick() from the
+                // frame callback (the one-loop discipline; no own rAF).
+                pointerField,
             });
 
             // GL state setup — clear-to-transparent, premultiplied-alpha blend.
@@ -349,6 +379,10 @@ export function createAurora(
         cursor.targetX = x;
         cursor.targetY = y;
         cursor.targetStrength = strength;
+        // BC.W-VIZ-AURORA (T5) — feed the shared field the raw pointer target (the
+        // POSITION write the velocity + acceleration derive from; PRM-gated inside
+        // setPointer). The field's velocity/accel are advanced by tick() in the loop.
+        pointerField.setPointer(x, y);
         // A pointer move re-introduces cursor easing — re-arm a parked loop.
         canvasHandle.wake();
     }
@@ -413,12 +447,25 @@ export function createAurora(
         }
     }
 
+    // BC.W-VIZ-AURORA (T2) — the device-resolved arm promise. A capture consumer
+    // awaits THIS before the first `renderAt` so the WebGPU device is present (a
+    // synchronous `renderAt` right after `createAurora(…,{mode:"capture"})` paints
+    // a BLANK frame — the dead-preview defect). The WebGL2 fallback resolves
+    // immediately; the inert (software-raster wedge) handle resolves immediately
+    // too (a no-op renderAt is the placeholder, never a hang).
+    function armRuntimeAsync(): Promise<void> {
+        if (canvasHandle.armAsync) return canvasHandle.armAsync();
+        canvasHandle.arm();
+        return Promise.resolve();
+    }
+
     if (options.mode !== "capture" && shouldInitEagerly(options)) {
         armRuntime();
     }
 
     return {
         arm: () => armRuntime(),
+        armAsync: () => armRuntimeAsync(),
         update: (cfg) => {
             // Pre-arm: stash the config so the next `setup` uploads the latest.
             // Post-arm: upload immediately. Either way the next drawn frame is

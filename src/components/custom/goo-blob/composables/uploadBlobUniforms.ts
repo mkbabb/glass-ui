@@ -259,6 +259,11 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uSmoothK, nominalBand * orbitWiden * POS_SCALE);
     gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
 
+    // BC.W-GOOBLOB-PLAIN — the STAGE-1 gate. variant="blob" strips the lit/shadow/
+    // iridescence/SSS to the plain fill-only floor; "meatball" (default) runs the full
+    // pipeline (byte-identical to HEAD; the `uLit` flag still owns lit-on/off within it).
+    gl.uniform1f(U.uStage, config.variant === "blob" ? 1.0 : 0.0);
+
     // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
     // The fragment early-outs to a transparent write for any pixel
     // OUTSIDE this radius BEFORE the two 3-octave FBM calls + the OKLCh

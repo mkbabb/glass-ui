@@ -29,12 +29,20 @@ import {
     packAuroraWGPUUniforms,
 } from "./uniformBridgeWGPU";
 import type { AuroraConfig } from "../constants/presets";
+import type { UsePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 
 export interface AuroraWGPUSetupDeps {
     canvas: HTMLCanvasElement;
     cursor: CursorState;
     getConfig: () => AuroraConfig;
     getReducedMotion: () => boolean;
+    /**
+     * BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). FED
+     * `tick(deltaMs)` from the WGPU frame callback (the SAME field instance the WebGL2
+     * loop feeds — one source, no own rAF); the renderer reads `acceleration` for the
+     * iOS-27 gel snap-back.
+     */
+    pointerField: UsePointerVelocityField;
 }
 
 // The WebGPU usage/visibility bitflags as their SPEC-defined constants. `lib.dom.d.ts`
@@ -55,7 +63,10 @@ const SHADER_STAGE_FRAGMENT = 0x2;
 export function createAuroraWGPUSetup(
     deps: AuroraWGPUSetupDeps,
 ): (device: GPUDevice, context: GPUCanvasContext, format: GPUTextureFormat) => WebGPUCanvasFrame {
-    const { canvas, cursor, getConfig, getReducedMotion } = deps;
+    const { canvas, cursor, getConfig, getReducedMotion, pointerField } = deps;
+    // BC.W-VIZ-AURORA (T5) — the per-frame delta the shared field's tick() needs (the
+    // first frame seeds prevTime so the opening delta is 0 — no teleport spike).
+    let prevTimeSec: number | null = null;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -139,8 +150,26 @@ export function createAuroraWGPUSetup(
         }
 
         function frame(timeSec: number): void {
+            // BC.W-VIZ-AURORA (T5) — FEED the shared pointer field one tick (the one-loop
+            // push-step; no own rAF). Under PRM tick(0) freezes the field. Then apply the
+            // iOS-27 gel SNAP-BACK: a fast flick that DECELERATES (accel opposes velocity)
+            // injects a transient over-warp into the cursor burst the shader already reads.
+            const tempo = getReducedMotion() ? 0 : 1;
+            const deltaMs =
+                prevTimeSec === null
+                    ? 0
+                    : Math.max(0, (timeSec - prevTimeSec) * 1000);
+            prevTimeSec = timeSec;
+            pointerField.tick(tempo === 0 ? 0 : deltaMs);
+            const accel = pointerField.acceleration.value;
+            const vel = pointerField.velocity.value;
+            const decel = -(accel.x * vel.x + accel.y * vel.y);
+            if (decel > 0 && tempo > 0) {
+                cursor.burst = Math.min(1, cursor.burst + decel * 6.0);
+            }
+
             // tempo-scaled cursor advance — the burst/velocity collapse under PRM.
-            advanceCursor(cursor, getReducedMotion() ? 0 : 1);
+            advanceCursor(cursor, tempo);
 
             // Pack + upload the uniforms (slider drag refills the scratch in place).
             packAuroraWGPUUniforms(scratch, getConfig(), cursor, timeSec);

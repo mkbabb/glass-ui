@@ -143,8 +143,15 @@ void currentMeta;
                      studio frame retired (FD-substrate-pages §1). -->
                 <ExpandableContainer button-position="left">
                     <template #default="{ fullscreen }">
+                        <!-- BC.W-VIZ-AURORA (T3) — the inspector idiom made EXPLICIT:
+                             stage left, controls RIGHT on desktop (`asideSide="right"`
+                             is the Configurator default, pinned here so the studio's
+                             right-side placement is a recorded contract the π asserts).
+                             Below `lg` the layout falls to a single column (controls
+                             stacked below the stage), Configurator-owned. -->
                         <Configurator
                             scroll-mode="never"
+                            aside-side="right"
                             :class="cn(
                                 'aurora-studio',
                                 fullscreen
@@ -153,7 +160,11 @@ void currentMeta;
                             )"
                         >
                             <template #stage>
-                                <AuroraStage :config="studio.config" />
+                                <!-- BC.W-VIZ-AURORA (T5) — :interactive enables the live
+                                     pointer field (drag-swirl + flick-burst + the accel
+                                     gel snap-back); the field is FED tick() from the
+                                     aurora frame loop (proof:viz-interaction V4). -->
+                                <AuroraStage :config="studio.config" :interactive="true" />
                             </template>
                             <template #controls>
                                 <AuroraConfigDock

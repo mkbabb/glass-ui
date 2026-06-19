@@ -63,7 +63,11 @@ struct Uniforms {
   s5: vec4<f32>,
   // s6: (uBrightnessShift, uColorNoiseFreq, uColorNoiseSpeed, uStretch)
   s6: vec4<f32>,
-  // s7: (uPointerActive, uPointerAttraction, uPointerStrength, _pad)
+  // s7: (uPointerActive, uPointerAttraction, uPointerStrength, uStage)
+  // BC.W-GOOBLOB-PLAIN — uStage gates the STAGE-1 stripped floor: 1.0 = the plain
+  // shadowless lightless fill-only floor (variant="blob"); 0.0 = the full lit
+  // pipeline (variant="meatball" / STAGE 2). It rides the spare s7.w lane the typed-
+  // struct SoT (uniformBridgeWGPU.ts) reserved.
   s7: vec4<f32>,
   // ptr: (uPointer.x, uPointer.y, uVelocity.x, uVelocity.y)
   ptr: vec4<f32>,
@@ -351,6 +355,8 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let uPointerActive = u.s7.x;
   let uPointerAttraction = u.s7.y;
   let uPointerStrength = u.s7.z;
+  // BC.W-GOOBLOB-PLAIN — the STAGE-1 gate (1.0 = the plain shadowless fill-only floor).
+  let uStage = u.s7.w;
   let uPointer = u.ptr.xy;
   let uHueRange = u.s5.z;
   let uSatShift = u.s5.w;
@@ -408,6 +414,26 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   oklch.z = oklch.z + (colorNoise - 0.5) * uHueRange * (PI / 180.0);
   oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0);
   oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);
+
+  // ── BC.W-GOOBLOB-PLAIN — the STAGE-1 stripped floor (variant=blob). ──
+  // The minimal verifiable floor: SDF + smin (the meatball field, already in d/
+  // alpha above) + fwidth-AA (the crisp alpha above) + warm-cream fill. NO surface
+  // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
+  // deliberately FLAT. It returns BEFORE any of the STAGE-2 dressing is reached (the
+  // lit block's fwidth(N) derivative is never computed here), so the WGSL primary's
+  // uniformity analysis has no non-uniform-flow derivative to reject: the STAGE-1
+  // path arms on Metal where the STAGE-2 lit path falls to the WebGL2 net. The
+  // teaching contrast: this is the "it renders, it meatballs, it works on Safari"
+  // floor STAGE 2 layers the lit/shadow onto via the SAME uniforms.
+  if (uStage > 0.5) {
+    let okl1 = gamutClampOklch(oklch);
+    var lin1 = oklabToLinearSrgb(oklchToOklab(okl1));
+    var rgb1 = clamp(linearToSrgb(lin1), vec3<f32>(0.0), vec3<f32>(1.0));
+    let fc1 = in.pos.xy;
+    let ign1 = fract(52.9829189 * fract(dot(fc1, vec2<f32>(0.06711056, 0.00583715))));
+    rgb1 = clamp(rgb1 + (ign1 - 0.5) / 255.0, vec3<f32>(0.0), vec3<f32>(1.0));
+    return vec4<f32>(rgb1 * alpha, alpha);
+  }
 
   let N = surfaceNormalFromGrad(fieldGrad, d, bodyR);
   let V = vec3<f32>(0.0, 0.0, 1.0);

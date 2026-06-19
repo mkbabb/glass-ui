@@ -193,6 +193,144 @@ function clauseStory(srcOverride) {
     return viol;
 }
 
+// ── BC.W-VIZ-CONCENTRIC clauses (C1-C5) — the LINES-NOT-BLUR render+generator fix ──
+
+// C1 — the ISOLINE render, not a smooth-field-through-ramp blur.
+function clauseC1Isoline(srcOverride) {
+    const viol = [];
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    const glsl = stripComments(
+        srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
+    );
+    // The IQ gradient-normalized distance-estimation operator: de = |s| / (|cos|·|∇phase|),
+    // then line = 1 − smoothstep(lineW, lineW+aa, de). BOTH shaders carry it.
+    const hasIsoline = (src) =>
+        /abs\(s\)\s*\/\s*max\(\s*cphase\s*\*\s*gradPhase/.test(src) &&
+        /1\.0\s*-\s*smoothstep\(\s*lineHalfW/.test(src);
+    if (!hasIsoline(wgsl))
+        viol.push("C1-isoline: concentric.wgsl.ts fs_main lacks the de=|s|/(|cos|·|∇|) + smoothstep isoline stroke (the LINE render)");
+    if (!hasIsoline(glsl))
+        viol.push("C1-isoline: concentric.glsl.ts lacks the de=|s|/(|cos|·|∇|) + smoothstep isoline stroke (the LINE render)");
+    // ANTI-EVASION: the smooth-field-straight-through-the-ramp must NOT be the SOLE output.
+    // The old defect: `let v = clamp(0.5 + raw*norm); samplePaletteLin(v)` as the only paint,
+    // with the alpha riding `v` (the field brightness), never an isoline `ink`.
+    const ramExpose = (src) =>
+        /alpha\s*=\s*ink/.test(src) || /vec4<f32>\(rgb\s*\*\s*alpha/.test(src);
+    // The new render makes the LINE carry the alpha (`alpha = ink`); a re-paste of the old
+    // `alpha = clamp(v*0.92 + 0.08 ...)` field-brightness alpha reds.
+    const oldFieldAlpha = (src) => /v\s*\*\s*0\.92\s*\+\s*0\.08/.test(src);
+    if (oldFieldAlpha(wgsl))
+        viol.push("C1-isoline: concentric.wgsl.ts still rides the field-brightness alpha (the smooth blur) — the LINE must carry the ink");
+    if (oldFieldAlpha(glsl))
+        viol.push("C1-isoline: concentric.glsl.ts still rides the field-brightness alpha (the smooth blur) — the LINE must carry the ink");
+    void ramExpose;
+    return viol;
+}
+
+// C2 — clean beating families, NO Phillips turbulence ladder.
+function clauseC2CleanFamilies(srcOverride) {
+    const viol = [];
+    const js = stripComments(
+        srcOverride?.["ringField"] ?? read(resolve(DIR, "composables/ringField.ts")),
+    );
+    const consts = stripComments(
+        srcOverride?.["constants"] ?? read(resolve(DIR, "constants.ts")),
+    );
+    // The Phillips ladder is GONE (no buildRingLadder, no 5-octave/×0.62 turbulence body).
+    if (/buildRingLadder/.test(js) || /buildRingLadder/.test(consts))
+        viol.push("C2-families: buildRingLadder (the 5-octave Phillips turbulence ladder) survives — the noise amplifier must be retired");
+    if (/octaves\s*=\s*5/.test(js) || /wavelength\s*\*=\s*0\.62/.test(js))
+        viol.push("C2-families: a 5-octave / ×0.62 turbulence ladder body survives in ringField.ts");
+    // The clean beating-families builder exists (≤2 clean rings per family).
+    if (!/function buildRingFamily/.test(js))
+        viol.push("C2-families: ringField.ts lacks buildRingFamily (the clean beating-families builder)");
+    // The builder caps harmonics ≤ 2 (no octave ladder).
+    if (!/Math\.min\(2,\s*harmonics\)/.test(js))
+        viol.push("C2-families: buildRingFamily does not cap harmonics ≤ 2 (a family must be 1-2 clean frequencies, not an octave ladder)");
+    return viol;
+}
+
+// C3 — ONE math source round-trips (the analytic gradient + rotated radius + isoline).
+function clauseC3MathSource(srcOverride) {
+    const viol = [];
+    const js = stripComments(
+        srcOverride?.["ringField"] ?? read(resolve(DIR, "composables/ringField.ts")),
+    );
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    const glsl = stripComments(
+        srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
+    );
+    const tokens = [
+        ["analytic gradient ellipsoidalGradMag in JS", () => /function ellipsoidalGradMag/.test(js)],
+        ["analytic gradient ellipsoidalGradMag in WGSL", () => /fn ellipsoidalGradMag/.test(wgsl)],
+        ["analytic gradient ellipsoidalGradMag in GLSL", () => /float ellipsoidalGradMag/.test(glsl)],
+        ["rotated radius ellipsoidalRadiusRot in JS", () => /function ellipsoidalRadiusRot/.test(js)],
+        ["rotated radius ellipsoidalRadiusRot in WGSL", () => /fn ellipsoidalRadiusRot/.test(wgsl)],
+        ["rotated radius ellipsoidalRadiusRot in GLSL", () => /float ellipsoidalRadiusRot/.test(glsl)],
+        ["isoline ringIsolineInk in JS", () => /function ringIsolineInk/.test(js)],
+        ["isoline ringIsolineInk in WGSL", () => /fn ringIsolineInk/.test(wgsl)],
+        ["isoline ringIsolineInk in GLSL", () => /vec2 ringIsolineInk/.test(glsl)],
+    ];
+    for (const [label, fn] of tokens) {
+        if (!fn())
+            viol.push(`C3-math-source: ${label} — the analytic gradient + isoline must round-trip JS↔WGSL↔GLSL (the single source)`);
+    }
+    return viol;
+}
+
+// C4 — ellipsoid axis-ratio KEPT + per-family rotAlpha tilt.
+function clauseC4Ellipsoid(srcOverride) {
+    const viol = [];
+    const js = stripComments(
+        srcOverride?.["ringField"] ?? read(resolve(DIR, "composables/ringField.ts")),
+    );
+    const consts = stripComments(
+        srcOverride?.["constants"] ?? read(resolve(DIR, "constants.ts")),
+    );
+    const bridge = stripComments(
+        srcOverride?.["bridge"] ?? read(resolve(DIR, "composables/uniformBridgeWGPU.ts")),
+    );
+    // The axis ratio is KEPT (the ellipsoid; a circular-only render reds).
+    if (!/axisRatio/.test(consts))
+        viol.push("C4-ellipsoid: constants.ts lacks axisRatio (the ellipsoid axis ratio must be kept)");
+    if (!/axisA|axisB/.test(js))
+        viol.push("C4-ellipsoid: ringField.ts dropped the axis-ratio (circular-only) — the ellipsoid norm must be kept");
+    // rotAlpha is the per-family tilt, reusing the spare centers[j].w lane.
+    if (!/rotAlpha/.test(js))
+        viol.push("C4-ellipsoid: ringField.ts lacks the per-family rotAlpha tilt (the crossing-fronts axis)");
+    if (!/rotAlpha/.test(consts))
+        viol.push("C4-ellipsoid: constants.ts RingCenter lacks rotAlpha");
+    // The center row's .w lane carries rotAlpha (no byte-layout break).
+    if (!/c\.rotAlpha/.test(bridge))
+        viol.push("C4-ellipsoid: uniformBridgeWGPU.ts does not pack rotAlpha into the center row .w lane");
+    return viol;
+}
+
+// C5 — warm-cream identity default; teal-on-navy NOT the demo default.
+function clauseC5WarmDefault(srcOverride) {
+    const viol = [];
+    const consts = stripComments(
+        srcOverride?.["constants"] ?? read(resolve(DIR, "constants.ts")),
+    );
+    const story = stripComments(srcOverride?.["story"] ?? read(STORY));
+    // WARM_IDENTITY_PALETTE is the default config palette (re-asserted; clause 5 covers hues).
+    if (!/palette:\s*WARM_IDENTITY_PALETTE/.test(consts))
+        viol.push("C5-warm-default: DEFAULT_CONCENTRIC_CONFIG.palette is not WARM_IDENTITY_PALETTE");
+    // The demo must NOT default useTheme to the teal-on-navy preset (born-RED on the old
+    // `useTheme = ref(true)`).
+    if (/useTheme\s*=\s*ref\(\s*true\s*\)/.test(story))
+        viol.push("C5-warm-default: concentric.vue defaults useTheme to TRUE (the teal-on-navy preset) — the warm-cream identity must lead");
+    // The demo's live config must initialize from the WARM preset (not the THEME preset).
+    // Scoped to the reactive() initializer statement (bounded — not a later import reference).
+    if (/reactive<ConcentricConfig>\([^;]{0,160}CONCENTRIC_PRESET_THEME/.test(story))
+        viol.push("C5-warm-default: concentric.vue initializes the live config from CONCENTRIC_PRESET_THEME — the warm-cream preset must be the default");
+    return viol;
+}
+
 function runAll(overrides = {}) {
     return [
         ...clauseColocation(overrides.colocation ?? {}),
@@ -201,6 +339,11 @@ function runAll(overrides = {}) {
         ...clauseFallback(overrides.fallback),
         ...clauseWarmIdentity(overrides.warm),
         ...clauseStory(overrides.story),
+        ...clauseC1Isoline(overrides.c1),
+        ...clauseC2CleanFamilies(overrides.c2),
+        ...clauseC3MathSource(overrides.c3),
+        ...clauseC4Ellipsoid(overrides.c4),
+        ...clauseC5WarmDefault(overrides.c5),
     ];
 }
 
@@ -228,6 +371,49 @@ function selfTest() {
     // (d) a missing story.
     const noStory = runAll({ story: { story: false } });
     if (noStory.length === 0) fails.push("self-test: a missing story did NOT red");
+
+    // (e) C1 — a re-pasted smooth-field-through-ramp render (no isoline) reds.
+    const smoothBlur = runAll({
+        c1: {
+            wgsl: "let v = clamp(0.5 + raw*norm); let lin = samplePaletteLin(v); let alpha = v * 0.92 + 0.08;",
+            glsl: "float v = clamp(0.5 + raw*norm); vec3 lin = samplePaletteLin(v); float alpha = v * 0.92 + 0.08;",
+        },
+    });
+    if (smoothBlur.length === 0) fails.push("self-test: a smooth-field-through-ramp render (no isoline) did NOT red");
+
+    // (f) C2 — a re-introduced Phillips ladder (octaves=5, ×0.62) reds.
+    const phillips = runAll({
+        c2: {
+            ringField: "export function buildRingLadder(octaves = 5) { wavelength *= 0.62; }\nfunction buildRingFamily(){ Math.min(2, harmonics); }",
+        },
+    });
+    if (phillips.length === 0) fails.push("self-test: a re-introduced Phillips ladder (octaves=5) did NOT red");
+
+    // (g) C3 — a shader missing the analytic gradient transcription reds.
+    const noGrad = runAll({
+        c3: {
+            wgsl: "fn sampleRingField() {}\n// no ellipsoidalGradMag, no ringIsolineInk",
+        },
+    });
+    if (noGrad.length === 0) fails.push("self-test: a missing analytic-gradient transcription did NOT red");
+
+    // (h) C4 — a deleted axis-ratio (circular-only) reds.
+    const circular = runAll({
+        c4: {
+            ringField: "function ellipsoidalRadiusRot(){}\nfunction ringIsolineInk(){}\n// no axisA, no rotAlpha",
+            constants: "WARM_IDENTITY_PALETTE\n// no axisRatio, no rotAlpha",
+        },
+    });
+    if (circular.length === 0) fails.push("self-test: a deleted axis-ratio (circular-only) did NOT red");
+
+    // (i) C5 — a demo defaulting to the teal-on-navy theme reds.
+    const tealDefault = runAll({
+        c5: {
+            story: "const useTheme = ref(true)\npalette: WARM_IDENTITY_PALETTE",
+        },
+    });
+    if (tealDefault.length === 0) fails.push("self-test: a demo defaulting useTheme=true (teal-on-navy) did NOT red");
+
     return fails;
 }
 
@@ -252,7 +438,7 @@ function main() {
         console.error("proof:concentric — RED");
         for (const v of viol) console.error("  ✗ " + v);
     } else {
-        console.log("proof:concentric — GREEN (6 clauses)");
+        console.log("proof:concentric — GREEN (11 clauses: 6 base + C1-C5 lines/families/round-trip/ellipsoid/warm)");
     }
     if (isSelftest) {
         if (selfFails.length) {

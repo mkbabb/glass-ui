@@ -82,6 +82,13 @@ const HEADER_LIVE_VERIFIED = new Set([
 const JUSTIFIED_LOCAL_ONLY = new Map([
     // Deliberately-untagged retired close meta-gate (tags=[]).
     ["proof:au-final", "AU close meta-gate, RETIRED from the release/ci set at the 3.3.0 cut (tags=[]); kept untagged for the historical bite-run."],
+    // BC.W-GOOBLOB-PLAIN — the LIVE PAINT arm of a dual-mode script: the bare
+    // invocation reads the locally-captured pixel readback (the metaball-reads-as-
+    // liquid gestalt, captured on real Metal), so it is genuinely local-only; the
+    // device-free SOURCE floor is the ci-tagged proof:gooblob-plain:source arm (the
+    // SAME script, --source). The local-paint / ci-source split is the cardinal-lesson
+    // live-vs-source pattern (the proof:live-verified-ledger precedent).
+    ["proof:gooblob-plain", "BC.W-GOOBLOB-PLAIN live PAINT arm (reads the local Metal-captured pixel readback); the ci SOURCE floor is the proof:gooblob-plain:source arm of the same dual-mode script."],
     // BA.W-GESTALT-GATE — the gestalt acceptance bar. BORN-RED BY DESIGN against the
     // R8 captures until BA.W-REFLECT2 flips the roster verdicts and PROMOTES the tag
     // into the operative close set; untagged (the au-final precedent) so the local/ci

@@ -57,14 +57,16 @@ function fnBody(src, name) {
 }
 
 // The aurora gzip governor — aligned to the canonical profile:budget ceiling
-// (profile-bundle.mjs BUDGETS `dist/aurora.js` gzip 50000 / raw 150000). The
+// (profile-bundle.mjs BUDGETS `dist/aurora.js` gzip 54000 / raw 162000). The
 // AW.W4.0 38 KB governor was raised at AY.W-CLOSE1 to 40_000 (the W-AUR-PAINTERLY
-// §4.2 anisotropy lift), then to 50000 — the NINTH conscious lift — to carry the
-// BB aurora band (the tensor-field / impasto / van-Gogh / oil-pastel / stroke-
-// composite / swraster growth measured gzip ≈40.4k, 351 bytes past the AY ceiling).
-// ONE ceiling, mirrored from the canonical profile:budget figure (raw 150000 stays).
-const AURORA_GZIP_CEIL = 50000;
-const AURORA_RAW_CEIL = 150000;
+// §4.2 anisotropy lift), then to 50000 — the NINTH lift — for the BB aurora band,
+// then to 54000 — the BC.W-VIZ-AURORA (T4) TENTH lift — for the WGSL painterly-medium
+// port (aurora-mediums.wgsl.ts: the sampleBase/structureTensorField/flowField twins +
+// pastel/watercolor/crayon + the KEYSTONE anisotropic-Kuwahara, so Safari 26 paints the
+// FULL painterly register; measured gzip ≈52.3k / raw ≈158.7k). ONE ceiling, mirrored
+// from the canonical profile:budget figure.
+const AURORA_GZIP_CEIL = 54000;
+const AURORA_RAW_CEIL = 162000;
 
 let _cliPaths = null;
 function cliPaths() {

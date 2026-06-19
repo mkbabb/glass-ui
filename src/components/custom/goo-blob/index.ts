@@ -2,6 +2,7 @@ export { default as GooBlob } from "./GooBlob.vue";
 export type {
     BlobMood,
     BlobMerge,
+    BlobVariant,
     BlobQuality,
     MoodParams,
     MetaballSource,

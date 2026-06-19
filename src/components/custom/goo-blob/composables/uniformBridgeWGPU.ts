@@ -191,11 +191,14 @@ export function packBlobWGPUUniforms(
     f32[OFF.s6 + 2] = cCol.colorNoiseSpeed;
     f32[OFF.s6 + 3] = cInt.stretch;
 
-    // s7: uPointerActive, uPointerAttraction, uPointerStrength, _pad
+    // s7: uPointerActive, uPointerAttraction, uPointerStrength, uStage
+    // BC.W-GOOBLOB-PLAIN — uStage rides the spare s7.w lane the SoT reserved (the
+    // typed-struct extend, never a re-fork). 1.0 = the STAGE-1 plain floor
+    // (variant="blob"); 0.0 = the full lit pipeline (variant="meatball").
     f32[OFF.s7 + 0] = pointer.active.value ? 1.0 : 0.0;
     f32[OFF.s7 + 1] = netAttraction;
     f32[OFF.s7 + 2] = cInt.pointerStrength * POS_SCALE;
-    f32[OFF.s7 + 3] = 0;
+    f32[OFF.s7 + 3] = config.variant === "blob" ? 1.0 : 0.0;
 
     // ptr: uPointer.xy, uVelocity.xy (the `* 0.5 * POS_SCALE` mapping)
     f32[OFF.ptr + 0] = ptr.x * 0.5 * POS_SCALE;

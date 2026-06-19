@@ -6,6 +6,22 @@ export type BlobMood = "idle" | "happy" | "curious" | "sleepy" | "excited";
 export type BlobMerge = "quadratic" | "circular";
 
 /**
+ * The render-variant axis (BC.W-GOOBLOB-PLAIN — STAGE 1 owns the first two members).
+ *
+ * - `"blob"` — the STAGE-1 first-principles floor: a plain shadowless lightless
+ *   fill-only droplet (SDF + smin satellites + fwidth-AA + warm-cream fill). The
+ *   minimal verifiable "it renders, it meatballs, it works on Safari" register the
+ *   `uStage` gate strips the lit/shadow blocks for. NO specular, NO iridescence, NO
+ *   SSS, NO shadow — deliberately minimal.
+ * - `"meatball"` — the full lit register (the default): STAGE 2 builds the lit-glass
+ *   surface / Fresnel rim / iridescence / SSS / shadow ON the same field via the
+ *   `uLit`/`uShadow` flags. Byte-identical to the pre-STAGE-1 default pipeline.
+ *
+ * `"dot-matrix"` / `"dot-sphere"` are the later-sub-wave siblings (not STAGE 1).
+ */
+export type BlobVariant = "blob" | "meatball";
+
+/**
  * Render-quality axis (AX.W16) — `full` (default) renders the metaball pass at the
  * clamped DPR; `half` renders the backing store at HALF resolution and lets the
  * browser bilinear-upsample on composite (~4× fragment savings for weak GPUs — the
@@ -191,6 +207,15 @@ export interface BlobConfig {
     surface: BlobSurface;
     interaction: BlobInteraction;
 
+    /**
+     * The render variant (BC.W-GOOBLOB-PLAIN) — `"meatball"` (default, the full lit
+     * pipeline) | `"blob"` (the STAGE-1 plain shadowless fill-only floor). `"blob"`
+     * sets the shader `uStage` gate so the lit/shadow/iridescence/SSS blocks are NOT
+     * reached — the minimal verifiable floor. `"meatball"` is byte-identical to the
+     * pre-STAGE-1 default (the `surface.lit` flag still owns the lit-on/off within it).
+     */
+    variant: BlobVariant;
+
     // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
     // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length.
     quality: BlobQuality;
@@ -359,6 +384,11 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         stretch: 0.5,
         clickImpulse: 0.5,
     },
+
+    // BC.W-GOOBLOB-PLAIN — the full lit register by default (byte-identical to the
+    // pre-STAGE-1 pipeline); a consumer opts into the plain STAGE-1 floor via
+    // `variant: "blob"` (the shadowless fill-only register the `uStage` gate strips).
+    variant: "meatball",
 
     // AX.W16 — full-resolution by default; weak-GPU consumers opt into `half`.
     quality: "full",

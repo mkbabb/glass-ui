@@ -340,6 +340,28 @@ watch(
     { immediate: true, deep: true },
 );
 
+// BC.W-GOOBLOB-PLAIN — the STAGE-1 plain-blob register. The first-principles floor:
+// the canonical separation geometry (orbit 0.30 OUTSIDE body 0.22, 4 satellites) so the
+// orbit→merge→absorb→emerge meatball show reads, with `variant: "blob"` setting the
+// shader's `uStage` gate to the shadowless lightless fill-only path (NO lit dressing —
+// the teaching contrast with the lit studio hero above). `surface.lit` is left at the
+// default; the `uStage` gate strips the lit block regardless.
+const plainConfig: BlobConfig = {
+    ...BLOB_CONFIG_DEFAULTS,
+    variant: "blob",
+    geometry: {
+        ...BLOB_CONFIG_DEFAULTS.geometry,
+        satelliteCount: 4,
+        orbitRadius: 0.3,
+        satelliteRadius: 0.1,
+        eccentricity: 0.04,
+    },
+    membrane: {
+        ...BLOB_CONFIG_DEFAULTS.membrane,
+        smoothK: 0.06,
+    },
+};
+
 const studioBlob = ref<InstanceType<typeof GooBlob> | null>(null);
 const studioPaused = ref(false);
 const clickCount = ref(0);
@@ -669,6 +691,28 @@ watch(studioPaused, () => {
                         </ConfiguratorLayer>
                     </template>
                 </Configurator>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="STAGE 1 — the plain blob, from first principles"
+            blurb="The minimal verifiable floor (variant='blob'): SDF circle + smin satellites +
+                fwidth-AA + warm-cream fill — NO specular, NO shadow, NO iridescence. Deliberately
+                FLAT. This is the 'it renders, it meatballs, it works on Safari' floor that proves
+                the field is alive before STAGE 2 dresses it. A satellite passing near the body MERGES
+                into one gooey amorphous shape (the smooth liquid neck), then separates — one connected
+                silhouette, never two unrelated discs. WGSL-primary on the shared substrate."
+        >
+            <ShowcaseFrame class="flex items-center justify-center">
+                <div class="relative aspect-square w-[min(60%,22rem)]">
+                    <GooBlob
+                        variant="blob"
+                        color="var(--card)"
+                        :config="plainConfig"
+                        seed="plain"
+                        data-testid="goo-blob-plain"
+                    />
+                </div>
             </ShowcaseFrame>
         </StorySection>
 

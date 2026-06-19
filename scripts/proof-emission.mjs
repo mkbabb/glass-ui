@@ -283,14 +283,19 @@ add(
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
-// W5 — the WatercolorDot `ghost` variant exists + reuses the seeded geometry.
+// W5 — the WatercolorDot `ghost` variant is a DASHED blob-SILHOUETTE stroke
+// (BC.W-VIZ-WATERCOLOR — NARROWED in place; born-RED on HEAD's solid-stroke ghost).
 // Anti-evasion: the source asserts the ghost reuses useWatercolorBlob (the same seeded
-// blob, not a fork) AND renders a stroke/low-alpha-fill of the SILHOUETTE (not a dashed
-// box) — a `border-style: dashed` rectangle REDs.
-// Registered HERE by unit 1 as a born-RED stub; unit 2 lands the variant that greens it.
+// blob, not a fork) AND renders a DASHED SILHOUETTE stroke (a `stroke-dasharray` on the
+// ghost SVG <ellipse>/<path> — REQUIRED) while NOT painting a dashed RECTANGULAR box
+// border on the swatch root (FORBIDDEN). The prior "forbid ALL dashes" over-breadth is
+// narrowed: a dashed silhouette stroke is the affordance the user asked for; a dashed
+// box border is the affordance they did NOT.
 // ════════════════════════════════════════════════════════════════════════════════════
 const watercolorSrc = read("src/components/custom/watercolor-dot/WatercolorDot.vue");
 const watercolorStripped = strip(watercolorSrc);
+const watercolorBlobSrc = read("src/components/custom/watercolor-dot/useWatercolorBlob.ts");
+const watercolorBlobStripped = strip(watercolorBlobSrc);
 // The variant axis exists with a ghost value.
 const hasVariantAxis =
     /variant\??\s*:\s*["']?(ghost|outline|solid)/.test(watercolorStripped) ||
@@ -299,26 +304,97 @@ const hasVariantAxis =
 const hasGhostValue = /["']ghost["']/.test(watercolorStripped);
 // The ghost reuses useWatercolorBlob (the same seeded blob, not a fork).
 const reusesBlob = /useWatercolorBlob/.test(watercolorStripped);
-// NEGATIVE: the ghost is NOT a `border-style: dashed` rectangle affordance. A dashed
-// BORDER on the swatch root would be the rejected CSS dashed-rectangle. The ghost must
-// render the blob silhouette (the border-radius morph) as a STROKE/low-alpha-fill.
-const isDashedRect = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
+// REQUIRED: the ghost renders a DASHED SILHOUETTE stroke — a `stroke-dasharray` on the
+// ghost SVG <ellipse>/<path> stroke. This is the dashed OUTLINE following the silhouette.
+const hasDashedSiloStroke = /stroke-dasharray/.test(watercolorStripped);
+// FORBIDDEN: a dashed RECTANGULAR box border on the swatch root (`border-style: dashed`
+// / `border: … dashed`). The narrowed negative — a dashed BOX, not a dashed silhouette.
+const isDashedBoxBorder = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
     watercolorStripped,
 );
-facts.watercolor = { hasVariantAxis, hasGhostValue, reusesBlob, isDashedRect };
+// The filter seed is PER-INSTANCE (BC.W-VIZ-WATERCOLOR §3) — NOT a hardcoded constant;
+// it reads a computed off hashString(color + seed). Born-RED on HEAD's `seed="2"`.
+const hasHardcodedFilterSeed = /<feTurbulence[\s\S]*?\sseed\s*=\s*["']\d+["']/.test(
+    watercolorStripped,
+);
+const hasPerInstanceFilterSeed =
+    /:seed\s*=\s*["']\w/.test(watercolorStripped) &&
+    /hashString\s*\(/.test(watercolorStripped);
+// The animate liveness is a COMPOSITOR transform wobble, NOT a per-frame border-radius
+// paint under the filter (the §H Safari flash fix). The rAF tick must NOT write
+// `borderRadius.value =`; it drives a `transform` ref.
+const hasPerFrameRadiusPaint =
+    /function\s+tick[\s\S]*?borderRadius\.value\s*=/.test(watercolorBlobStripped);
+const drivesTransformWobble = /function\s+tick[\s\S]*?transform\.value\s*=/.test(
+    watercolorBlobStripped,
+);
+const watercolorGhostOK =
+    hasVariantAxis &&
+    hasGhostValue &&
+    reusesBlob &&
+    hasDashedSiloStroke &&
+    !isDashedBoxBorder &&
+    !hasHardcodedFilterSeed &&
+    hasPerInstanceFilterSeed &&
+    !hasPerFrameRadiusPaint &&
+    drivesTransformWobble;
+facts.watercolor = {
+    hasVariantAxis,
+    hasGhostValue,
+    reusesBlob,
+    hasDashedSiloStroke,
+    isDashedBoxBorder,
+    hasHardcodedFilterSeed,
+    hasPerInstanceFilterSeed,
+    hasPerFrameRadiusPaint,
+    drivesTransformWobble,
+};
 add(
     "watercolor-ghost-variant",
-    hasVariantAxis && hasGhostValue && reusesBlob && !isDashedRect,
-    hasVariantAxis && hasGhostValue && reusesBlob && !isDashedRect
-        ? "WatercolorDot carries a `variant` axis with a `ghost` value rendering the useWatercolorBlob seeded silhouette as a stroke/low-alpha-fill (NOT a CSS dashed rectangle) — the seeded ghost matches the solid dot's silhouette"
-        : `WatercolorDot ghost variant NOT present/correct (variant-axis ${hasVariantAxis}, ghost-value ${hasGhostValue}, reuses-blob ${reusesBlob}, dashed-rect ${isDashedRect}) — unit 2 lands the variant that greens this (born-RED stub registered by unit 1)`,
+    watercolorGhostOK,
+    watercolorGhostOK
+        ? "WatercolorDot `ghost` is a DASHED blob-silhouette `stroke-dasharray` (NOT a dashed box border), reuses the seeded useWatercolorBlob silhouette, the wet filter seed is per-instance off hashString(color+seed) (not the hardcoded seed=2), and the animate liveness rides a compositor `transform` wobble (NOT a per-frame border-radius paint under the filter — the §H Safari flash fix)"
+        : `WatercolorDot ghost NOT correct (variant-axis ${hasVariantAxis}, ghost-value ${hasGhostValue}, reuses-blob ${reusesBlob}, dashed-silhouette-stroke ${hasDashedSiloStroke}, dashed-box-border ${isDashedBoxBorder} [forbidden], hardcoded-filter-seed ${hasHardcodedFilterSeed} [forbidden], per-instance-filter-seed ${hasPerInstanceFilterSeed}, per-frame-radius-paint ${hasPerFrameRadiusPaint} [forbidden], drives-transform-wobble ${drivesTransformWobble})`,
+);
+
+// ════════════════════════════════════════════════════════════════════════════════════
+// W5 self-test bites (BC.W-VIZ-WATERCOLOR) — each planted defect MUST trip its detector,
+// proving the narrowed ghost gate distinguishes the good dashed silhouette from the bad
+// dashed box / clone-seed / per-frame-paint forms (the anti-gameability floor).
+// ════════════════════════════════════════════════════════════════════════════════════
+const dashedBoxBite = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
+    `.watercolor-swatch { border: 2px dashed var(--watercolor-color); }`,
+);
+const removedDashBite = !/stroke-dasharray/.test(
+    `<ellipse stroke="x" stroke-width="2" />`,
+);
+const clonedSeedBite = /<feTurbulence[\s\S]*?\sseed\s*=\s*["']\d+["']/.test(
+    `<feTurbulence type="fractalNoise" seed="2" />`,
+);
+const perFrameRadiusBite = /function\s+tick[\s\S]*?borderRadius\.value\s*=/.test(
+    `function tick(now) { borderRadius.value = radiiToCSS(current); rafId = requestAnimationFrame(tick); }`,
+);
+const selfTestPass =
+    dashedBoxBite && removedDashBite && clonedSeedBite && perFrameRadiusBite;
+facts.w5SelfTest = {
+    dashedBoxBite,
+    removedDashBite,
+    clonedSeedBite,
+    perFrameRadiusBite,
+};
+add(
+    "watercolor-ghost-self-test-bites",
+    selfTestPass,
+    selfTestPass
+        ? "the W5 ghost detectors BITE every planted defect: a dashed box border reds, a removed stroke-dasharray reds, a re-pasted feTurbulence seed=\"2\" reds, a per-frame borderRadius.value= inside the rAF tick reds"
+        : `a W5 ghost self-test bite FAILED to trip (dashed-box ${dashedBoxBite}, removed-dash ${removedDashBite}, cloned-seed ${clonedSeedBite}, per-frame-radius ${perFrameRadiusBite}) — the detector does not bite its defect`,
 );
 
 // ── The π readback spec is wired (the BINDING close) ────────────────────────────────
 add(
     "pi-readback-spec-exists",
     existsSync(resolve(ROOT, "tests-visual/emission.spec.ts")),
-    "tests-visual/emission.spec.ts exists (the π readback — the bounded dropdown computed maxHeight + in-viewport + inner scroll, the md-track ≈1.25rem geometry, the spectrum thumb ≤0.5× track, the seeded ghost silhouette matching the solid seed; the BINDING visual truth)",
+    "tests-visual/emission.spec.ts exists (the π readback — the bounded dropdown computed maxHeight + in-viewport + inner scroll, the md-track ≈1.25rem geometry, the spectrum thumb ≤0.5× track, the dashed-silhouette ghost stroke matching the solid seed; the BINDING visual truth)",
 );
 
 // ── Report ──────────────────────────────────────────────────────────────────────────

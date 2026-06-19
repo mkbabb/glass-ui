@@ -178,6 +178,16 @@ export interface AuroraConfig {
     brokenColor: number; // 0..1
     canvasGrain: number; // 0..0.1
     /**
+     * BC.W-VIZ-AURORA (T4) — the anisotropic-Kuwahara painterly-finish knobs (the
+     * `medium:"kuwahara"` register; the WGSL primary's keystone). Optional; omitted =
+     * the recipe defaults (radius 0.010 procedural-patch units, q 4.0 the SOFT
+     * variance-weight exponent). Sectors are fixed at 8 (the soft-blend overlap floor —
+     * not an authoring axis). These ride the appended WGSL `kuwahara`/`scalars5` struct
+     * lanes; a smooth/non-kuwahara config leaves them at the default (a no-op).
+     */
+    kuwaharaRadius?: number; // 0.006..0.024 procedural-patch units
+    kuwaharaQ?: number; // 1..6 soft-blend variance exponent (4 default)
+    /**
      * AW.W4.2 — the impasto relight direction (the movable directional source the
      * accumulated paint-height field catches). Optional; omitted = upper-left
      * (matching the prior fixed-rim default, so the still default reads identically).
@@ -235,6 +245,14 @@ export interface AuroraInstance extends AuroraCursorApi {
      * 24). A no-op once armed or once `dispose()` has run.
      */
     arm(): void;
+    /**
+     * BC.W-VIZ-AURORA (T2) — the device-resolved arm PROMISE. On the WebGPU
+     * backend `renderAt`/`arm` are no-ops until this resolves the async
+     * adapter→device→configure→setup prelude. A CAPTURE consumer (thumbnail bake)
+     * MUST `await armAsync()` before the first `renderAt` or the frame is BLANK
+     * (the dead-preview defect). The WebGL2 fallback resolves immediately.
+     */
+    armAsync(): Promise<void>;
     update(cfg: AuroraConfig): void;
     /** Render a single deterministic frame at time `t` (seconds). Used for thumbnail bakes. */
     renderAt(timeSec: number): void;

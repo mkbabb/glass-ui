@@ -141,6 +141,19 @@ export interface DeriveAuroraOptions {
      * fold that makes the oil/oil-pastel mediums read as mixed paint. Default 0.
      */
     temperatureShift?: number;
+    /**
+     * BC.W-VIZ-AURORA (A7) — the additive DERIVE-path hue-EXCLUSION axis (the
+     * speedtest-AX cross-repo fold). Named OKLCh hue bands (each `[startDeg, endDeg]`,
+     * wrap-around supported via `start > end`) that EVERY derived stop's hue must fall
+     * OUTSIDE. The mechanism that makes "teal-on-navy is GONE" enforceable in the DERIVE
+     * path, not just the static default — a consumer deriving a palette FROM any seed
+     * can never re-introduce a purged band (e.g. `avoidHues: [[170, 200]]` excludes the
+     * teal arc by construction). The exclusion RE-ROUTES the walked hue to the nearest
+     * band EDGE (preserving L/C — no chroma flatten); it is NOT a post-hoc desaturate.
+     * Additive + default-unset → byte-identical derive (the `WarpMode`-additive-widen
+     * precedent: `proof:aurora-atoms-roundtrip` stays GREEN by construction).
+     */
+    avoidHues?: readonly (readonly [number, number])[];
 }
 
 /**
@@ -181,6 +194,7 @@ export function deriveAurora(
         lightnessEasing = "linear",
         chromaEasing = "bell",
         temperatureShift = 0,
+        avoidHues,
     } = options;
 
     const n = Math.max(2, Math.min(MAX_STOPS, Math.round(stopCount)));
@@ -229,6 +243,13 @@ export function deriveAurora(
         // (toward COOL_POLE) as it darkens — interpolated toward the named poles.
         if (temperatureShift > 0) {
             h = applyTemperature(h, t, temperatureShift);
+        }
+        // BC.W-VIZ-AURORA (A7) — HONOR avoidHues: re-route the walked hue OUT of any
+        // excluded band to the nearest band edge (L/C preserved — no chroma flatten).
+        // The load-bearing half of the fold: the option is ACTED ON, not parsed-and-
+        // dropped, so a derived ramp cannot land a stop inside a purged hue arc.
+        if (avoidHues && avoidHues.length > 0) {
+            h = routeHueOutOfBands(h, avoidHues);
         }
 
         stops.push(gamutMapStop({ L, C, h }));
@@ -295,6 +316,51 @@ function applyTemperature(h: number, t: number, amount: number): number {
         Math.abs(signedArc),
     );
     return ((h + dir * throwDeg) % 360 + 360) % 360;
+}
+
+const wrap360 = (h: number): number => ((h % 360) + 360) % 360;
+
+/** True iff hue `h` (deg) is INSIDE the band `[start, end]` (wrap-around if start > end). */
+function hueInBand(h: number, start: number, end: number): boolean {
+    const hh = wrap360(h);
+    const s = wrap360(start);
+    const e = wrap360(end);
+    return s <= e ? hh >= s && hh <= e : hh >= s || hh <= e;
+}
+
+/** The shorter cyclic angular distance between two hues (deg, always ≥ 0). */
+function hueDist(a: number, b: number): number {
+    const d = Math.abs(wrap360(a) - wrap360(b)) % 360;
+    return d > 180 ? 360 - d : d;
+}
+
+/**
+ * BC.W-VIZ-AURORA (A7) — re-route a hue OUT of any excluded band to the nearest band
+ * EDGE (a tiny ε past the boundary so the in-band test is strictly false). L/C are
+ * untouched (no chroma flatten). Iterated a bounded number of passes so an exit from
+ * one band that lands inside an adjacent band re-routes again; the loop terminates (the
+ * bands are finite + each move strictly exits the band it was in). If the excluded set
+ * covers the whole wheel (a degenerate config) the loop bails and returns the last hue.
+ */
+function routeHueOutOfBands(
+    h: number,
+    bands: readonly (readonly [number, number])[],
+): number {
+    const EPS = 0.5; // a half-degree past the edge — strictly outside the band test
+    let hue = wrap360(h);
+    for (let pass = 0; pass < bands.length + 2; pass++) {
+        let moved = false;
+        for (const [start, end] of bands) {
+            if (!hueInBand(hue, start, end)) continue;
+            // Move to whichever band edge is the shorter cyclic distance away, ε past it.
+            const lowEdge = wrap360(start - EPS);
+            const highEdge = wrap360(end + EPS);
+            hue = hueDist(hue, lowEdge) <= hueDist(hue, highEdge) ? lowEdge : highEdge;
+            moved = true;
+        }
+        if (!moved) return hue; // outside every band — done
+    }
+    return hue; // bailed (degenerate full-wheel exclusion) — return the best effort
 }
 
 // `deriveHue` + `gamutMapStop` are HOISTED to the `/color` leaf (AW.W11.b) and

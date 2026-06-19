@@ -43,6 +43,12 @@ uniform float uNoiseSpeed;
 uniform float uSmoothK;
 uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisci)
 
+// BC.W-GOOBLOB-PLAIN — the STAGE-1 gate. 1.0 = the plain shadowless lightless
+// fill-only floor (variant="blob"); 0.0 = the full lit pipeline (variant="meatball" /
+// STAGE 2). The WebGL2 fallback transcribes the SAME stripped branch the WGSL primary
+// gates (research/viz/goo-blob.md §5 — the GLSL twin).
+uniform float uStage;
+
 // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space). main() early-outs
 // to a transparent write for any fragment OUTSIDE this radius BEFORE the two 3-octave
 // FBM calls + the OKLCh round-trip. The renderer uploads it PADDED by every
