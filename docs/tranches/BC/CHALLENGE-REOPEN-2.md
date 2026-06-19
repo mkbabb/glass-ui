@@ -101,5 +101,24 @@ The four SUBSTANTIVE lenses (coverage/holistic/adversarial-completeness/precept)
 - **M-D1 (artifact)** — EXECUTION-DAG §4 printed PADDING-CANON before CODE-BLOCKS, inverting their consume edge (graph still acyclic; only the printed linearization violated one intra-Band-5 edge). **HARDEN-4 A:** re-ordered CODE-BLOCKS@T22 → PADDING-CANON@T22.5 → EXPANDABLE-PART@T22.7 (fractional-tier idiom); swept the whole Band-5 fan for other inversions (none); 96 nodes + Kahn-acyclic preserved.
 - **M-D2 (gate-coherence)** — the iter-23 behavioral mechanism-folds landed a real mechanism but their dest wave's gate asserted a *neighbor's*, not the fold's own. **HARDEN-4 B (class-closed, not just the 2 named):** born-RED clauses added — VIZ-AURORA A7 (avoidHues honored), CONTROL-CUSTOM CP1 (data-protagonist emphasis), ADAPTIVE-RECONCILE A3-overlay (overlay band joins the continuous luma clamp), GLASS-LEGIBILITY L6, SEARCH-CUSTOM; + the honest carve-out: the rounded focus-ring is born-GREEN at HEAD → recorded VERIFY-no-gate (no invented born-GREEN gate).
 
-**Verdict: bm2=1+bm3=1 → both FIXED + the gate-completeness CLASS closed proactively. Commit `<pending>`. Re-fire the confirmation 2-pass; if clean → 2-consecutive-clean CONVERGED.**
+**Verdict: bm2=1+bm3=1 → both FIXED + the gate-completeness CLASS closed proactively. Committed `f9d974f5`. Re-fire the confirmation 2-pass; if clean → 2-consecutive-clean CONVERGED.**
+
+## Re-fire #3 (post-HARDEN-4) — ALL 6 LENSES CLEAN → **CONVERGED**
+
+| pass | dim | verdict | MAJ |
+|---|---|---|---|
+| P2 | coverage-recheck | CONVERGED | 0 |
+| P2 | artifact-recheck | CLEAN | 0 |
+| P2 | holistic-interaction | PASS (2-consec-confirm) | 0 |
+| P3 | adversarial-completeness | CLEAN | 0 |
+| P3 | gate-coherence | CLEAN | 0 |
+| P3 | precept-conformance | CONVERGED-CLEAN | 0 |
+
+**`twoCleanStreak: True` — `bm2=0, bm3=0`.** Every HARDEN fix (1-4) verified HELD against live source; all six diverse adversarial lenses report zero BLOCKER/MAJOR. The only residuals are fenced/exempt MINORs: FINAL.md's `70` figures behind the iter-19 MILESTONE-SNAPSHOT banner (binding roster = 96 everywhere); ORCHESTRATION §2 iteration-log counts (the WAVE-INDEX-exempt reconcile narration); the `§4 "96 waves"` = 95 build-nodes + 1 honest struck-record (LIQUIDHOVER-AUTOARM) count subtlety. None load-bearing.
+
+---
+
+# ✅ CHALLENGE-REOPEN-2 CONVERGED (iter-23)
+
+The three cross-repo packets (speedtest-AX Band-15 · keyframes.js-M · fourier-analysis-M Band-16) + the §6 out-of-scope fold are absorbed, challenged to **2-consecutive-clean**, and committed. **96 waves**, acyclic, zero phantom, every cross-repo ask → a BC wave/decision with ship+version+consumer-delete-trigger. The convergence took 1 absorption + 3 challenge re-fires + 4 hardens; every gap was genuine and permanently closed (the BB terminal-reflect disease-leak fenced, the DAG nodes/topo-order, the broken consume-link, the stale-count, the structure-gate + fold-gate completeness classes). The four substantive lenses (coverage/holistic/adversarial-completeness/precept) were clean across the final three runs; the churn was confined to — and exhausted in — the two bookkeeping lenses.
 
