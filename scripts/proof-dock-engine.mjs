@@ -435,8 +435,14 @@ export function detectE4() {
     const violations = [];
     const facts = {};
     const layers = stripCss(readRel("src/styles/dock/layers.css"));
-    facts.reservesInlineSize = /inline-size:\s*var\(--dock-morph-to\)/.test(layers);
-    facts.reservesBlockSize = /block-size:\s*var\(--dock-morph-to\)/.test(layers);
+    // BC.W-LIQUID-MORPH owns the reserve FLOOR: the reserve may be bare
+    // `var(--dock-morph-to)` OR floored `max(var(--dock-morph-to), var(--dock-morph-min))`
+    // — both reserve the SETTLED `to` footprint (a single layout solve, NOT a live-scalar
+    // calc), so the CDP-Layout-flat floor is preserved either way. E4 tolerates the floor
+    // wrapper (the white-morph safety net); a per-frame-scalar reserve still REDs (it
+    // would name --dock-morph-t, not --dock-morph-to, inside the size value).
+    facts.reservesInlineSize = /inline-size:\s*(?:max\(\s*)?var\(--dock-morph-to\)/.test(layers);
+    facts.reservesBlockSize = /block-size:\s*(?:max\(\s*)?var\(--dock-morph-to\)/.test(layers);
     facts.scaleX = /transform:\s*scaleX\(var\(--dock-morph-scale\)\)/.test(layers);
     facts.scaleY = /transform:\s*scaleY\(var\(--dock-morph-scale\)\)/.test(layers);
     if (!facts.reservesInlineSize)

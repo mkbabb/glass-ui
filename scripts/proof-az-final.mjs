@@ -55,7 +55,8 @@ const AZ_GATE_MANIFEST = [
     { id: "proof:adaptive-glass-live", class: "runtime" },
     { id: "proof:blob-page", class: "runtime" },
     { id: "proof:blob-studio", class: "runtime" },
-    { id: "proof:rail3", class: "device-free" },
+    // proof:rail3 RETIRED at BC.W-DOCK-STACK-RAIL (the divider-carousel rail clean break →
+    // DockStack); its box-inviolate/escape concern rides the named successor proof:dock-stack-rail.
     { id: "proof:motion2", class: "device-free" },
     { id: "proof:dock-rail-hairline", class: "device-free" },
     { id: "proof:dock-no-scale-pop", class: "device-free" },

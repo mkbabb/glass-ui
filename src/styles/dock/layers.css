@@ -61,13 +61,29 @@
         --dock-morph-ratio: calc(
             var(--dock-morph-from, 0px) / max(var(--dock-morph-to, 1px), 1px)
         );
-        --dock-morph-scale: calc(
-            var(--dock-morph-ratio) +
-                (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0)
+        /* BC.W-LIQUID-MORPH — the SCALE FLOOR (the white morph can never paint). A
+           degenerate `from:0`/`to:0` measurement (the BA-VJS-1 nested-group race)
+           drives `--dock-morph-ratio` to 0 → `scaleX(0)` at t=0 → the zero-width void
+           `overflow: clip` blanks (the white/invisible morph, glass-dock-codebase.md
+           §2.2 fix (2)). Flooring the scale at ~6% bottoms a degenerate ratio at a
+           thin-but-VISIBLE glass sliver (clipped, but never white), recovered by the
+           next correct measurement one frame later. A SAFETY NET: a real measurement is
+           always well above 6%, so the `max()` is inert on the healthy path (the
+           gestalt of a healthy morph is byte-unchanged). */
+        --dock-morph-scale: max(
+            calc(
+                var(--dock-morph-ratio) +
+                    (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0)
+            ),
+            0.06
         );
         /* The box RESERVES its settled `to` footprint — a single layout solve, NOT
-           the live scalar calc. The transform composites over it. */
-        inline-size: var(--dock-morph-to);
+           the live scalar calc. The transform composites over it.
+           BC.W-LIQUID-MORPH — the RESERVE FLOOR: `max(var(--dock-morph-to),
+           var(--dock-morph-min))` so a `to:0` measurement reserves the collapsed-pill
+           minimum (~44px), never a zero-width box (the white morph root). Inert above
+           the floor on every healthy measurement. */
+        inline-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
         transform: scaleX(var(--dock-morph-scale));
         transform-origin: left center;
         will-change: transform;
@@ -113,7 +129,10 @@
        relayout on the vertical axis either. */
     .glass-dock.vertical[data-morphing] .dock-layers {
         inline-size: auto;
-        block-size: var(--dock-morph-to);
+        /* BC.W-LIQUID-MORPH — the vertical RESERVE FLOOR (the inverse axis twin of the
+           horizontal floor above): a `to:0` block measurement reserves the collapsed-pill
+           minimum, never a zero-height void. Inert above the floor on every healthy read. */
+        block-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
         transform: scaleY(var(--dock-morph-scale));
         transform-origin: center top;
         will-change: transform;
@@ -123,7 +142,8 @@
        reserve + `scaleY()` composite over it. */
     .glass-dock[data-morphing] .dock-layer-group.vertical .dock-layer-stack {
         inline-size: auto;
-        block-size: var(--dock-morph-to);
+        /* BC.W-LIQUID-MORPH — the nested vertical group's reserve is floored too. */
+        block-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
         transform: scaleY(var(--dock-morph-scale));
         transform-origin: center top;
         will-change: transform;

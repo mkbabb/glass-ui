@@ -7,19 +7,23 @@
 import type { Component } from "vue";
 
 /**
- * AZ.W-RAIL3 — one `<DockRail>` chip descriptor: the visible facet the floating
- * carousel strip renders (id + label + glyph). A `<script setup>` SFC cannot
- * re-export a named type through the `export { default }` barrel, so the chip
- * descriptor lives here (the colocated types home) and the SFC imports it; the
- * barrel re-exports it for consumers typing their `items` array.
+ * BC.W-DOCK-STACK-RAIL — one `<DockStack>` member descriptor: a stack member that fans
+ * OUT of the macOS hover-expand stack (id + label + glyph + optional select handler).
+ * A `<script setup>` SFC cannot re-export a named type through the `export { default }`
+ * barrel, so the descriptor lives here (the colocated types home) and the SFC imports
+ * it; the barrel re-exports it for consumers typing their `items` array. This is the
+ * stack's MEMBER, not a facet chip — the divider-carousel `DockRailItem` is RETIRED
+ * (clean break, no alias).
  */
-export interface DockRailItem {
-    /** The context id this chip selects (written to `v-model:context`). */
+export interface DockStackItem {
+    /** Stable identifier — the `v-for` key + the selected-member id. */
     id: string;
-    /** The chip label. */
+    /** The member's accessible label (the `aria-label` + tooltip). */
     label: string;
-    /** The chip glyph (a `@lucide/vue` icon or any component). */
+    /** The member glyph (a `@lucide/vue` icon or any component). */
     icon?: Component;
+    /** Optional per-member select handler (fired alongside the model write). */
+    onSelect?: () => void;
 }
 
 /**
@@ -51,12 +55,12 @@ export interface DockSectionDescriptor {
     /** Optional accessible label for the grouped zone. */
     label?: string;
     /**
-     * For a `section` kind: the contextual facets this section carries. When present
-     * (length > 1) the section's facets are the rail's chips (the W-RAIL3 move OUT of
-     * the dock body — the facets ride the seam rail, never re-inflate the box). The
-     * descriptor names them; `<DockRail :items>` renders them.
+     * For a `section` kind: the stack members this section carries. When present
+     * (length > 1) the members ride the dock's `#rail` stack (the macOS hover-expand
+     * stack, OUTSIDE the dock box — never re-inflating it). The descriptor names them;
+     * `<DockStack :items>` fans them out.
      */
-    layers?: readonly DockRailItem[];
+    layers?: readonly DockStackItem[];
 }
 
 /**

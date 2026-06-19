@@ -86,36 +86,62 @@
            zero visual change (the border-radius already clips the fill — this makes the
            bound explicit so the leak-class gate holds). */
         overflow: clip;
-        /* The volume-preserving teardrop squish — stretch along the travel axis,
-           compress reciprocally. Reads `--stretch` (the liquid-flex derivative). The
-           vertical plate squishes on Y, the horizontal on X (set per-plate below). */
-        will-change: width, height, transform;
+        /* BC.W-LIQUID-MORPH — the teardrop silhouette is the COMPOSITOR `clip-path`
+           inset (NOT a per-frame `width`/`height` — the layout-jank root, glass-dock-
+           codebase.md §2.2 fix (3)). Each plate RESERVES its MAX footprint (a single
+           layout solve, the settled box) and the silhouette necks via a `clip-path:
+           inset()` interpolated on `--dock-morph-t`. The volume-preserving squish reads
+           `--stretch` (the liquid-flex derivative) on `scale`. NO `width`/`height`
+           animation — only `clip-path`/`scale`/`opacity` (compositor/paint), so the
+           CDP Layout track stays FLAT across the morph (proof:no-layout-animation +
+           proof:liquid-morph M4). will-change promotes the compositor channels ONLY. */
+        will-change: clip-path, transform, opacity;
     }
 
-    /* The VERTICAL plate — a tall capsule (the t=0 silhouette). It collapses its height
-       toward the center as t: 0 → 0.5, where it has merged into the teardrop. Width is
-       the dock's inline footprint; height interpolates full → a thin neck. */
+    /* The VERTICAL plate — a tall capsule (the t=0 silhouette). It RESERVES its full
+       tall footprint (a one-time layout solve, NOT a per-frame height lerp) and necks
+       its silhouette toward the center via a `clip-path: inset()` whose block insets
+       GROW as t: 0 → 0.5 (the tall capsule collapses to a thin neck at the midpoint
+       where the goo merges, gone by t=1). `--dock-bridge-v-neck` is the inset travel:
+       0 at t=0 (full height shows) → ~half the reserved height by t=0.5 (necked to a
+       circle ~the width). The box footprint is static; the clip carves the silhouette
+       on the compositor. */
     .dock-morph-bridge-plate--vertical {
         width: var(--dock-bridge-v-w, 3.25rem);
-        /* full height at t=0, necking to ~the width (a circle) by t=0.5, gone by t=1 */
-        height: calc(
-            var(--dock-bridge-v-h, 16rem) *
-                (1 - clamp(0, var(--dock-morph-t, 0), 1)) +
-                var(--dock-bridge-v-w, 3.25rem) * clamp(0, var(--dock-morph-t, 0), 1)
+        height: var(--dock-bridge-v-h, 16rem);
+        /* the block-axis inset travel: 0 → (half the reserved height − half the width)
+           so the necked silhouette is ~a circle (the width) at t=0.5. */
+        --dock-bridge-v-neck: calc(
+            (var(--dock-bridge-v-h, 16rem) - var(--dock-bridge-v-w, 3.25rem)) / 2 *
+                clamp(0, calc(var(--dock-morph-t, 0) * 2), 1)
+        );
+        clip-path: inset(
+            var(--dock-bridge-v-neck) 0 var(--dock-bridge-v-neck) 0 round 999px
         );
         opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.5) * 2), 1));
         /* squish Y on travel (the tall plate stretches along its collapse axis) */
         scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
     }
 
-    /* The HORIZONTAL plate — a wide capsule (the t=1 silhouette). It grows its width
-       from the center as t: 0.5 → 1. Height is the dock's block footprint; width
-       interpolates a thin neck → full. */
+    /* The HORIZONTAL plate — a wide capsule (the t=1 silhouette). It RESERVES its full
+       wide footprint (a one-time layout solve) and grows its silhouette from the center
+       via a `clip-path: inset()` whose inline insets SHRINK as t: 0.5 → 1 (a thin neck
+       at the midpoint → the full wide bar at t=1). `--dock-bridge-h-neck` is the inset
+       travel: ~half the reserved width − half the height at t=0.5 (necked to a circle)
+       → 0 at t=1 (full width shows). NO per-frame width — the clip carves the silhouette
+       on the compositor. */
     .dock-morph-bridge-plate--horizontal {
+        width: var(--dock-bridge-h-w, 18rem);
         height: var(--dock-bridge-h-h, 3.25rem);
-        width: calc(
-            var(--dock-bridge-h-h, 3.25rem) * (1 - clamp(0, var(--dock-morph-t, 0), 1)) +
-                var(--dock-bridge-h-w, 18rem) * clamp(0, var(--dock-morph-t, 0), 1)
+        /* the inline-axis inset travel: (half the reserved width − half the height) at
+           t=0.5 → 0 at t=1, so the necked silhouette is ~a circle (the height) at the
+           midpoint and the full bar at t=1. */
+        --dock-bridge-h-neck: calc(
+            (var(--dock-bridge-h-w, 18rem) - var(--dock-bridge-h-h, 3.25rem)) / 2 *
+                (1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.5) * 2), 1))
+        );
+        clip-path: inset(
+            0 var(--dock-bridge-h-neck) 0 var(--dock-bridge-h-neck) round 999px
         );
         opacity: clamp(0, calc(var(--dock-morph-t, 0) * 2), 1);
         /* squish X on travel (the wide plate stretches along its growth axis) */

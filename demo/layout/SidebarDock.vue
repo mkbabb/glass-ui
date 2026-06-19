@@ -17,12 +17,12 @@ import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
     DockIconButton,
-    DockRail,
     DockSection,
     DockSeparator,
+    DockStack,
     GlassDock,
-    type DockRailItem,
     type DockSectionDescriptor,
+    type DockStackItem,
 } from "../../src/components/custom/dock";
 import {
     Tooltip,
@@ -60,6 +60,21 @@ const activeCategoryId = computed<string | null>(() => {
     return loc ? loc.category.id : null;
 });
 
+// BC.W-DOCK-COLLAPSED-BOTH — the desktop fixed column is COLLAPSIBLE (it shrinks toward
+// the ℱ home + the active-category glyph, expands to the full nav column on hover/tap).
+// On the mobile off-canvas path the BottomDock hosts THIS component inside a <Sheet>
+// (passing `:show-tooltips="false"`) — there the Sheet IS the expand affordance, so the
+// rail body must stay fully expanded (a collapse inside the drawer would fight the
+// Sheet host). `showTooltips` is the host discriminator the surface already carries:
+// the desktop fixed column collapses; the Sheet-hosted drawer stays always-expanded.
+const collapsible = computed(() => props.showTooltips);
+
+// The active category's glyph — the compact collapsed summary (a single category
+// affordance you can read at a glance, then tap to open the full column).
+const activeCategory = computed(() =>
+    CATEGORIES.find((c) => c.id === activeCategoryId.value) ?? null,
+);
+
 // The primary categories ride the top of the rail. (The reference-only
 // Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo IA no longer
 // carries a reference category; the `!c.reference` guard stays as a harmless
@@ -96,7 +111,7 @@ const { layers: contextLayers } = useContextualDockLayers(route);
 // Text/Selection/Toggles, …). Each chip's id is the facet id; its label + glyph are
 // the facet descriptor. The strip renders only when the section carries >1 facet (a
 // single-facet or unmapped section shows the bare icon pill — no carousel clutter).
-const railItems = computed<DockRailItem[]>(() =>
+const railItems = computed<DockStackItem[]>(() =>
     contextLayers.value.length > 1
         ? contextLayers.value.map((l) => ({
               id: l.id,
@@ -112,19 +127,11 @@ const railItems = computed<DockRailItem[]>(() =>
 // nav silhouette demarcated by <DockSeparator>, adding only the divider seams (the
 // chassis is display:contents — the dock box shrink-wraps as before).
 //
-// BB.W-DOCK-RAIL-SEAT-FINAL — the rail's anchor seam is RESTORED to the top ℱ-home
-// divider (the verbatim R8-1: "placed where the dividing line for the ℱ is"). The
-// `<DockSection>` chassis no longer carries the anchor: its `anchor-id` is nulled to a
-// sentinel that matches NO descriptor, so NO `<DockSection>`-rendered separator stamps
-// `data-rail-anchor`. The ONLY anchored separator is the ℱ-home `<DockSeparator :anchor>`
-// in the #persistent slot above (the seam-locator queries the FIRST `[data-rail-anchor]`
-// and finds it). The seam line then anchors at the ℱ divider — un-doing the five-attempt
-// whack-a-mole (W-SHELL-RAIL-RESEAT moved it DOWN to `utility` y≈529 to dodge the title;
-// W-CHIP-GRAZE then re-found the field-graze inside that dodge). The title no longer
-// collides because the CHIP FAN is decoupled from the seam Y (dock-nav.css seats it in
-// the rail's LOWER gutter, clear of <main> at EVERY y by topology — the band-agnostic
-// graze is structurally dead, not chased). The seam stays a REAL measured
-// `--dock-rail-seam-offset`, never the forbidden `inset-block-start: 50%` midline #4.
+// BC.W-DOCK-STACK-RAIL — the section's contextual facets ride the dock's `#rail` stack
+// (the macOS hover-expand `<DockStack>` below), OUTSIDE the dock box. The divider-seam
+// anchor mechanism is RETIRED with the divider-carousel: the stack seats at the dock edge
+// (its own gutter topology — dock-nav.css), not a measured `<DockSeparator>` seam, so the
+// `anchor-id` is no longer load-bearing (the stack clears <main> by topology at EVERY y).
 const sections = computed<DockSectionDescriptor[]>(() => [
     { kind: "section", id: "categories", label: "Categories", layers: railItems.value },
     { kind: "nav", id: "utility", label: "Utilities" },
@@ -215,11 +222,21 @@ function openDockMorph(): void {
 </script>
 
 <template>
+    <!-- BC.W-DOCK-COLLAPSED-BOTH — the desktop fixed column is COLLAPSIBLE (the
+         `always-expanded` opt-out is dropped on the desktop host — a clean break). It
+         collapses on its BLOCK axis (height) toward the ℱ home + the active-category
+         glyph and expands to the full category column on hover/tap, riding the
+         orientation-agnostic engine + the BC.W-DOCK-ENGINE morph. When this same body is
+         hosted in the mobile BottomDock <Sheet> (`:show-tooltips="false"`), the Sheet is
+         the expand affordance, so it stays `always-expanded` (the collapse would fight
+         the drawer). The ℱ home stays in #persistent (visible in BOTH states). -->
     <GlassDock
         orientation="vertical"
-        always-expanded
+        :always-expanded="!collapsible"
+        :start-collapsed="collapsible"
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"
+        data-testid="sidebar-dock-collapsible"
     >
         <!-- The brand wordmark is the home-left anchor — it lives in the
              #persistent region so it stays put as the category set scrolls.
@@ -389,29 +406,43 @@ function openDockMorph(): void {
             </template>
         </DockSection>
 
-        <!-- AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The active section's contextual
-             facets ride OUTSIDE the dock box as a strip of detached glass chips on the
-             visible connective hairline (the user's "floating carousel almost"). The
-             active facet (the one containing the current story) is highlighted;
-             selecting a chip navigates to that facet's first story — the SAME
-             navigation state the nav items drive (one registry, no parallel store). It
-             is dock chrome, so it sits outside the morph aperture and NEVER changes the
-             dock's width/height. Rendered only when the section carries >1 facet.
+        <!-- BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary. At rest the
+             collapsed vertical column shows the ℱ home (#persistent, above) + this single
+             active-category glyph — a compact summary you can read at a glance. It is a
+             REAL, named nav control (the active category's first story), so the collapsed
+             pill is operable, not a paint-only glyph; tap/hover it and the column blooms
+             to the full category nav (#default above). On the mobile Sheet host the dock
+             is always-expanded, so this summary never shows there. -->
+        <template #collapsed>
+            <DockIconButton
+                v-if="activeCategory"
+                type="button"
+                class="demo-sidebar-item is-active tap-squish"
+                :aria-label="`${activeCategory.title} — open navigation`"
+                @click="go(activeCategory.id)"
+            >
+                <component :is="activeCategory.icon" class="h-4 w-4" aria-hidden="true" />
+            </DockIconButton>
+        </template>
 
-             BB.W-DOCK-RAIL-SEAT-FINAL — the SEAM LINE anchors at the ℱ-home divider
-             again (the verbatim R8-1), but the CHIP FAN is decoupled from the seam Y and
-             seated in the rail's LOWER gutter (dock-nav.css, scoped `.demo-sidebar-rail`)
-             — a vertical icon column below the nav controls, capped at the rail width so
-             it clears <main> by topology at EVERY y (chipOverMain:false on every route).
-             The five-attempt seam-Y whack-a-mole (title→field→title) is ended by
-             structure: the chips never share an x-band with <main>, so neither the title
-             NOR the field can be grazed, AND the anchor returns to the ℱ divider. -->
+        <!-- BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail (the clean-break
+             rebuild of the retired divider-carousel). The active section's contextual
+             facets are the stack's MEMBERS: a core anchor sits at the dock's trailing
+             edge; hover/focus fans the members OUT into the rail gutter (a row of
+             fully-visible glass icons), and selecting one navigates to that facet's first
+             story — the SAME navigation state the nav items drive (one registry, no
+             parallel store). It is dock chrome OUTSIDE the morph aperture, so it NEVER
+             changes the dock box AND it clears <main>/the <h1>/a form field BY TOPOLOGY:
+             the stack lives in its gutter beyond the dock edge, the fan extending away
+             from content at EVERY y (the chip-graze that revoked the BA dock/shell PASS
+             cannot recur — structure, not a chased seam-Y). Rendered only when the
+             section carries >1 facet. -->
         <template #rail>
-            <DockRail
+            <DockStack
                 v-if="railItems.length"
-                v-model:context="railContext"
+                v-model:selected="railContext"
                 :items="railItems"
-                icon-label="Section facets"
+                core-label="Section facets"
                 data-testid="sidebar-dock-rail"
             />
         </template>

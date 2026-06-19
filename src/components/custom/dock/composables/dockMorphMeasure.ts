@@ -41,6 +41,27 @@ export function clearMorphVars(el: HTMLElement): void {
 }
 
 /**
+ * BC.W-LIQUID-MORPH (M3) — the reserve-floor in px (the measure-failure floor). The
+ * CSS reserve floors the box at `max(var(--dock-morph-to), var(--dock-morph-min))`
+ * (layers.css), but the SCALAR ratio still runs toward `--dock-morph-to`, so a
+ * `to:0` mis-measure would interpolate toward a degenerate target. The orchestrator's
+ * measure-failure guard seats the measured `to` at THIS px so the morph interpolates
+ * toward a visible footprint, never 0 — "visible at the floor," never "white." Reads
+ * the element's RESOLVED `--dock-morph-min` (density-scaled), falling back to the WCAG
+ * ~44px touch floor when the token is unset / unresolvable. Pure read — no write.
+ */
+export function morphMinFloorPx(el: HTMLElement | null): number {
+    const FALLBACK = 44; // the WCAG 2.5.5 touch floor (~2.75rem at the 16px root)
+    if (!el || typeof getComputedStyle !== "function") return FALLBACK;
+    const raw = getComputedStyle(el).getPropertyValue("--dock-morph-min").trim();
+    if (!raw) return FALLBACK;
+    // The token resolves to a px length on a computed read (CSS resolves rem→px); a
+    // bare number / an unresolvable value falls back to the floor.
+    const n = Number.parseFloat(raw);
+    return Number.isFinite(n) && n > 0 ? n : FALLBACK;
+}
+
+/**
  * BA-VJS-1 (valuejs-fold A-1) — the OTHER registered targets whose container is a
  * DOM DESCENDANT of `outerEl` (a nested `<DockLayerGroup>` stack inside the outer
  * `.dock-layers`). These are the pinned inner spans the outer measure must see at

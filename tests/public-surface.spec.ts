@@ -299,8 +299,6 @@ const exactSubpathRuntimeSurfaces = [
             "DockIconButton",
             "DockLayer",
             "DockLayerGroup",
-            // AZ.W-RAIL-EXTEND — the hairline context-rail chrome primitive.
-            "DockRail",
             // BA.W-DOCK-SECTIONS — the declarative tripartite section dock chassis
             // (the descriptor-driven <DockSection> the shell docks compose; the
             // W-SHELL-RAIL-RESEAT re-seat consumer). Runtime SFC default-export.
@@ -308,8 +306,17 @@ const exactSubpathRuntimeSurfaces = [
             "DockSelectTrigger",
             // AX.W45 D13-c — the orientation+layout-aware divider primitive.
             "DockSeparator",
+            // BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail (the clean-break
+            // rebuild of the retired divider-carousel <DockRail>). Runtime SFC default-export.
+            "DockStack",
             "DockTabButton",
             "GlassDock",
+            // BC.W-AX-DOCK-CTA-SEAT — the external-CTA-morphs-into-dock receive seam +
+            // the [data-cta-pending] landing-seat API (setPending/clearPending/pending),
+            // ADDITIVELY re-exported on the /dock subpath as the natural home beside
+            // GlassDock/useDockState (the /motion export STAYS — a re-export, not a move,
+            // so no clean break). The AX.W01 useLayerTransition precedent (above).
+            "useDockCtaReceive",
             // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (consumer #1
             // of useLiquidFlex; the metaball-bridge / arm-c crossfade showcase).
             "useDockOrientationMorph",

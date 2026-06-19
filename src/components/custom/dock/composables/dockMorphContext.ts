@@ -12,6 +12,7 @@ import {
     forceNestedMaxContent,
     getSize,
     morphAxisProp,
+    morphMinFloorPx,
     nestedTargetsWithin,
     seatTargetSync,
     type MorphMeasureTarget,
@@ -522,9 +523,26 @@ export function useDockMorphOrchestrator(
                 : "";
             if (liftRootPin) clearRootMorphSpan();
             elNow.style.setProperty(prop, "max-content");
-            const toSize = getSize(elNow, axis);
-            const rootToSize = liftRootPin ? getSize(rootNow, axis) : 0;
+            const measuredTo = getSize(elNow, axis);
+            const rootMeasuredTo = liftRootPin ? getSize(rootNow, axis) : 0;
             elNow.style.removeProperty(prop);
+            // BC.W-LIQUID-MORPH (M3) — the measure-failure guard (the defensive
+            // complement to the BA-VJS-1 nested-max-content ordering above). If the
+            // synchronous measurement returns 0 (a mis-measure: a mid-morph re-grab, a
+            // nested collapsible still pinned, a race the ordering fix missed), the morph
+            // would otherwise arm a `to:0` span → the reserved-footprint reserves the
+            // collapsed-pill floor (the CSS `max(--dock-morph-to, --dock-morph-min)` net),
+            // but the SCALAR ratio would still run toward a degenerate target. SEAT the
+            // measurement at the resolved floor span here so the morph interpolates toward
+            // a visible footprint, never toward 0 — a missed measurement degrades to
+            // "visible at the floor," NEVER "white." On a healthy measurement (measuredTo
+            // > 0) this is inert (the `||` keeps the real span). The floor reads the
+            // element's resolved `--dock-morph-min` (density-scaled), falling back to the
+            // WCAG ~44px touch floor.
+            const floorPx = morphMinFloorPx(elNow);
+            const toSize = measuredTo > 0 ? measuredTo : floorPx;
+            const rootToSize =
+                !liftRootPin || rootMeasuredTo > 0 ? rootMeasuredTo : morphMinFloorPx(rootNow);
             if (liftRootPin) {
                 // Restore the prior (pin-at-from) span so the box keeps holding its
                 // collapsed width until armRootMorphSpan re-pins the true to-span below.

@@ -88,19 +88,38 @@ export function useDockOrientationMorph(
     const t = ref(0); // 0 = vertical, 1 = horizontal — the ONE scalar
     const morphing = ref(false);
 
+    // BC.W-DOCK-ARBITRARY (A4) — the shape-morph squish cap reads the
+    // `--dock-morph-max-stretch` cascade token (density.css default 1.08, the LOW
+    // iOS-segmented register the tab-indicator already speaks). Resolved per-read off
+    // the live root so a consumer override re-resolves the cap without reconstructing
+    // the primitive (the useLiquidFlex getter contract). Falls back to the 1.08 default
+    // when the root is unmounted / the token is unset.
+    const maxStretchOf = (): number => {
+        const r = rootEl.value;
+        if (!r) return 1.08;
+        const raw = getComputedStyle(r)
+            .getPropertyValue("--dock-morph-max-stretch")
+            .trim();
+        const n = raw ? Number.parseFloat(raw) : NaN;
+        return Number.isFinite(n) && n >= 1 ? n : 1.08;
+    };
+
     // The vertical dock height-collapse span: full → 0 as t: 0 → 1. We interpolate the
     // SAME `--dock-morph-t` scalar through `useLiquidFlex` with the size flipped so the
     // vertical plate shrinks while the horizontal grows. The teardrop squish rides the
-    // scalar's derivative (the M5 scalar-binding) — `verticalFlex` owns the squish.
+    // scalar's derivative (the M5 scalar-binding) — `verticalFlex` owns the squish. The
+    // cap reads `--dock-morph-max-stretch` (A4 — the ONE squish source, no forked math).
     const verticalFlex = useLiquidFlex({
         from: options.verticalSize,
         to: 0,
         axis: "height",
+        maxStretch: maxStretchOf,
     });
     const horizontalFlex = useLiquidFlex({
         from: 0,
         to: options.horizontalSize,
         axis: "width",
+        maxStretch: maxStretchOf,
     });
 
     // ── The ONE spring — the dock's single-scalar morph clock (DOCK_SPRING) ──
@@ -114,7 +133,19 @@ export function useDockOrientationMorph(
         verticalFlex.drive(value);
         horizontalFlex.drive(value);
         const r = rootEl.value;
-        if (r) r.style.setProperty("--dock-morph-t", `${value}`);
+        if (r) {
+            r.style.setProperty("--dock-morph-t", `${value}`);
+            // BC.W-DOCK-ARBITRARY (A4) — write the volume-preserving squish onto the
+            // dock scope so the shape-morph register (dock/shape.css) deforms the plate
+            // like liquid as it changes shape: `scale: var(--stretch) calc(1/--stretch)`
+            // along the morph axis, capped at `--dock-morph-max-stretch` by useLiquidFlex
+            // (the ONE squish source — no forked deformation math). Equal for both flex
+            // spans (same scalar derivative), so the max is the value to write.
+            r.style.setProperty(
+                "--stretch",
+                `${Math.max(verticalFlex.stretch.value, horizontalFlex.stretch.value)}`,
+            );
+        }
     }
 
     function disposeSpring(): void {

@@ -24,12 +24,13 @@ import {
 } from "@lucide/vue";
 import {
     DockIconButton,
-    DockRail,
     DockSection,
     DockSeparator,
+    DockStack,
+    DockTabButton,
     GlassDock,
-    type DockRailItem,
     type DockSectionDescriptor,
+    type DockStackItem,
 } from "../../src/components/custom/dock";
 import {
     Sheet,
@@ -49,8 +50,34 @@ import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";
 
-const { current, next, prev, nextCategory, prevCategory } =
+const { current, next, prev, nextCategory, prevCategory, goTo } =
     useStoryNavigation();
+
+// BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary: the current story + its
+// immediate in-category neighbors, capped at ≤4 chips (NOT the whole strip). A slice of
+// the in-category nav so the collapsed pill ORIENTS you (where you are + what's next),
+// then taps open to the full control row. The full strip lives in the #default slot.
+const SUMMARY_MAX = 4;
+const summaryStories = computed(() => {
+    const loc = current.value;
+    if (!loc) return [];
+    const { category, storyIndex } = loc;
+    // Center the window on the current story; clamp to the category bounds.
+    const half = Math.floor(SUMMARY_MAX / 2);
+    let start = Math.max(0, storyIndex - half);
+    const end = Math.min(category.stories.length, start + SUMMARY_MAX);
+    start = Math.max(0, end - SUMMARY_MAX);
+    return category.stories.slice(start, end).map((story, i) => ({
+        story,
+        index: start + i,
+        active: start + i === storyIndex,
+    }));
+});
+
+function goToSummary(storyId: string): void {
+    const loc = current.value;
+    if (loc) goTo(loc.category.id, storyId);
+}
 
 // AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The third-rail redirect (USER-AUDIT R6):
 // the contextual facets MOVE OUT of the dock body (the in-dock <DockLayerGroup>
@@ -67,7 +94,7 @@ const { layers: contextLayers } = useContextualDockLayers(route);
 // renders only when the section carries >1 facet (a single-facet section shows the
 // bare arrow controls). The chip click navigates to that facet's first story — the
 // SAME router navigation the prev/next arrows drive (one registry).
-const railItems = computed<DockRailItem[]>(() =>
+const railItems = computed<DockStackItem[]>(() =>
     contextLayers.value.length > 1
         ? contextLayers.value.map((l) => ({
               id: l.id,
@@ -147,11 +174,18 @@ function openDockMorph(): void {
 
 <template>
     <nav class="demo-bottom-dock" aria-label="Stories in category">
+        <!-- BC.W-DOCK-COLLAPSED-BOTH — the bottom dock is now COLLAPSIBLE (the
+             `always-expanded` opt-out is dropped — a clean break, no flag). At rest it
+             is a compact summary pill (the persistent category trigger + a few in-category
+             summary chips); hover/tap blooms it to the full control row, leave settles it
+             back. `fit-content` keeps the dock shrink-wrapped to whichever register is
+             active. The collapse rides the orientation-agnostic engine + the
+             BC.W-DOCK-ENGINE morph (center-out, crisp, scale-floored). -->
         <GlassDock
             orientation="horizontal"
-            always-expanded
             fit-content
             class="demo-bottom-dock__shell"
+            data-testid="bottom-dock-collapsible"
         >
             <!-- The category trigger is the home-left anchor — it lives in the
                  #persistent region so it stays put as the story tabs scroll. On
@@ -311,20 +345,43 @@ function openDockMorph(): void {
                 </template>
             </DockSection>
 
-            <!-- AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The in-category contextual
-                 facets ride OUTSIDE the dock box as a strip of detached glass chips on
-                 the visible connective hairline below the dock (the "floating carousel
-                 almost"). The active facet (the one containing the current story) is
-                 highlighted; selecting a chip navigates to that facet's first story —
-                 the SAME router navigation the arrows drive (one registry). It is dock
-                 chrome, so it never changes the dock's height. Rendered only when the
-                 section carries >1 facet. -->
+            <!-- BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary. At rest the
+                 bottom dock shows the persistent category trigger (#persistent, above) +
+                 these few in-category story chips (the current story + its immediate
+                 neighbors, ≤4) — enough to orient you, NOT the whole strip (the full
+                 DockTabButton run lives in #default above, revealed on expand). Each
+                 chip is a REAL nav control (an accessible-named DockTabButton that
+                 navigates to its story), so the collapsed register is operable, not a
+                 paint-only pill. Tap/hover the pill → the dock blooms to the full row. -->
+            <template #collapsed>
+                <DockTabButton
+                    v-for="entry in summaryStories"
+                    :key="entry.story.id"
+                    class="demo-bottom-dock__summary-chip tap-squish"
+                    :aria-current="entry.active ? 'page' : undefined"
+                    :aria-label="entry.story.title"
+                    @click="goToSummary(entry.story.id)"
+                >
+                    {{ entry.story.title }}
+                </DockTabButton>
+            </template>
+
+            <!-- BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail (the clean-break
+                 rebuild of the retired divider-carousel). The in-category contextual facets
+                 are the stack's MEMBERS: a core anchor sits at the dock's trailing edge;
+                 hover/focus fans the members UP into the gutter ABOVE the dock row (a
+                 column of fully-visible glass icons, on-screen for the viewport-bottom
+                 dock), and selecting one navigates to that facet's first story — the SAME
+                 router navigation the arrows drive (one registry). It is dock chrome
+                 OUTSIDE the morph aperture, so it never changes the dock box AND it clears
+                 <main>/the title/a form field by topology (the fan extends into its gutter,
+                 never over content). Rendered only when the section carries >1 facet. -->
             <template #rail>
-                <DockRail
+                <DockStack
                     v-if="railItems.length"
-                    v-model:context="railContext"
+                    v-model:selected="railContext"
                     :items="railItems"
-                    icon-label="Section facets"
+                    core-label="Section facets"
                     data-testid="bottom-dock-rail"
                 />
             </template>

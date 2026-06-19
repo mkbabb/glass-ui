@@ -402,6 +402,21 @@
        WCAG 2.5.5 floor on touch devices. */
     --dock-touch-target: 2.75rem; /* 44px */
 
+    /* BC.W-AX-DOCK-COCKPIT — the dock LABEL-tracks-CONTROL ratio (the
+       dock-oversize chronic close, speedtest A-9). The `dock-label`
+       (typography/semantic.css) sizes its font as a PROPORTION of the
+       control height — `calc(var(--dock-control-size) * var(--dock-label-ratio))`
+       — so a tighter control (the `[data-preset="cockpit"]` 2.75rem floor with
+       compact chrome) carries a proportionally tighter label, never the fixed
+       `--type-subheading` rung that read OVERSIZE on a tight pill. The default
+       reproduces `--type-subheading` (1.272rem) at the comfortable `2.5rem`
+       control (1.272 / 2.5 = 0.5088) so the bare default is byte-near-identical
+       — opt into the cockpit preset (or override this knob from `:root`/the
+       `[data-preset]` scope) to retune the whole dock label family in ONE write.
+       The explicit `--dock-label-size` knob STILL wins when set (the dock.css
+       audacious-mobile carve precedent, KEPT — the ratio is the FALLBACK). */
+    --dock-label-ratio: 0.5088;
+
     /* AQ.W3 §7 — canonical WCAG 2.5.5 (44px) touch-target floor for the
        NON-dock coarse-pointer surfaces (`Button size="icon"`,
        ExpandableContainer triggers, SegmentedTabs responsive mobile trigger). One

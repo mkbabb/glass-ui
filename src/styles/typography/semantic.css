@@ -157,13 +157,26 @@ body {
 /* Canonical dock control label register — text labels INSIDE
    `.dock-tab-button` (Start, Next, Submit, …) that want an emphatic character
    without `.text-heading`'s `font-weight: 700` (which reads as literal bold in
-   a dock pill). Composes the `--dock-label-size` knob when set (dock.css
-   audacious mobile carve), else `--type-subheading`. Weight 400 — Plus Jakarta
-   reads heavier than its numeric weight at pill size, so regular is the
-   not-bold register. */
+   a dock pill). Weight 400 — Plus Jakarta reads heavier than its numeric weight
+   at pill size, so regular is the not-bold register.
+
+   BC.W-AX-DOCK-COCKPIT — the label TRACKS the control height by ratio (the
+   dock-oversize chronic close, speedtest A-9): the font is a PROPORTION of the
+   control (`calc(var(--dock-control-size) * var(--dock-label-ratio))`) so a
+   tighter control (the `[data-preset="cockpit"]` 2.75rem floor + compact chrome)
+   carries a proportionally tighter label — never the fixed `--type-subheading`
+   rung that read OVERSIZE on a tight pill. The explicit `--dock-label-size` knob
+   STILL wins when set (the dock.css audacious-mobile carve precedent, KEPT — the
+   ratio is the FALLBACK). The `--dock-label-ratio` default reproduces
+   `--type-subheading` at the comfortable `2.5rem` control (sizing.css), so the
+   bare default is byte-near-identical; the `--dock-control-size` fallback `2.5rem`
+   mirrors the comfortable rung for a label outside a density-painted scope. */
 @utility dock-label {
     font-family: var(--font-text);
-    font-size: var(--dock-label-size, var(--type-subheading));
+    font-size: var(
+        --dock-label-size,
+        calc(var(--dock-control-size, 2.5rem) * var(--dock-label-ratio))
+    );
     line-height: var(--type-leading-body);
     font-weight: 400;
     letter-spacing: var(--type-tracking-normal);

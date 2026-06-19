@@ -37,12 +37,17 @@
 @import "./dock/shell.css";
 @import "./dock/morph.css";
 @import "./dock/density.css";
+@import "./dock/shape.css";
 @import "./dock/layers.css";
 @import "./dock/layer-group.css";
 @import "./dock/overflow.css";
-@import "./dock/rail-extend.css";
+@import "./dock/stack-rail.css";
 @import "./dock/section.css";
 @import "./dock/morph-bridge.css";
+/* BC.W-AX-DOCK-CTA-SEAT — the [data-cta-pending] CTA-receive landing seat (the static
+   resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
+   dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
+@import "./dock/cta-seat.css";
 
 /* AX.W01 — the SINGLE morph scalar. `useLayerTransition` writes it once per frame
    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,

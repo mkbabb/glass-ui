@@ -33,7 +33,8 @@
 | 6-7 | 1 fan | GLASS-PRUNE · DESHADCN · SELECTION-CARD · GLASS-GLOW-FIX · ACCENT-TONE · AX-METAL-GLOW · DIALOG-GLASS · BUTTON-GLASS-IOS | **DONE** — fan π 43/43 (1 booked press→Band 7) both projects; glass-glow real-defect fixed; CLAUDE.md regenerated; glass-panel retire HELD (live Atlas consumer→ATLAS-ASK); selectable-chip subpath shipped |
 | 7′ | 7 | MOTION-ONE-CLOCK → SPRING-EASE → AFFORDANCE-MAP/TUNABLE-ANIM + SPLIT-CHARS/MOTION-PRESETS | **DONE** — motion π 99/99 both projects; press 0.15/0.86 minted+wired (button-press unblocked); one-clock born-RED gate; SplitChars/MotionPresets 14/14 vitest. proof:lensing→Band 4, 8 clock-fence swaps→downstream owners |
 | 7.7 | 12 | CUSTOMIZABILITY-CENSUS → CONTROL-CUSTOM/OVERLAY-UNIFORM/SEARCH-CUSTOM + METRIC-HOVER/FOURIER-DECIDES | pending |
-| 8-11 | 2 | DOCK-ENGINE → fan → LIQUID-MORPH/COLLAPSED-BOTH → STACK-RAIL + CTA-SEAT/COCKPIT | pending |
+| 8 | 2 engine | DOCK-ENGINE | **DONE** (452846c4) — the buttery morph LIVE-verified (18-frame ramp; BB's snap fixed via 3 live-wiring bug fixes) |
+| 9-11 | 2 fleet | DOCK-ARBITRARY/SHRINK-BLUR/LIQUID-MORPH · VERTICAL-FIX/COLLAPSED-BOTH/STACK-RAIL · COCKPIT · CTA-SEAT | **DONE** — all dock gates GREEN + dock-animation-live PASS + collapse confirmed live; DockRail→DockStack clean-break (rail gates reconciled); dock-tap-integrity hover-expand W3 pre-existing (AY harness, CI-skipped) |
 | 11.5 | 13 | SCROLL-TRIGGER → SCROLL-CHROME → DOCK-SEARCH | pending |
 | 12-13 | 3 | TABS-IOS → LIQUID-TAB/UNDERLINE-TUNE | pending |
 | 14-17 | 4 | WEBGPU-EVERYWHERE/SAFARI-WEBGL → cross-cut → 9 per-viz [‖] → MEATBALL/HYBRID/GRID-SIMPLE | pending |

@@ -499,8 +499,9 @@ async function run() {
         // light page — /dock/layers + /dock/overview mount their showcase docks
         // expanded by story design; /dock/rail keeps stable collapsed pills but
         // its canvas load saturates headless SwiftShader (visibility polls run
-        // ~60s). The live morph-ownership truth is carried at HEAD by the newer
-        // proof:rail3 π (the live collapse/expand cycle, G1-G4) +
+        // ~60s). The live morph-ownership truth is carried at HEAD by the
+        // proof:dock-stack-rail π (the live fan-out/collapse cycle; the rail3 π
+        // RETIRED with the divider-carousel at BC.W-DOCK-STACK-RAIL) +
         // proof:dock-tap-integrity's live replay; THIS gate's binding remains
         // its STRUCTURE arms (the one-orchestrator source contract below). A
         // genuine page error on a reachable target still reds via the
@@ -508,7 +509,7 @@ async function run() {
         const failClosed = false;
         const violations = [...structure.violations];
         console.log(
-            `  SKIP-BY-POLICY (live arm): ${reason} — the live morph truth rides proof:rail3 π + proof:dock-tap-integrity; the structure arms stay binding.`,
+            `  SKIP-BY-POLICY (live arm): ${reason} — the live morph truth rides proof:dock-stack-rail π + proof:dock-tap-integrity; the structure arms stay binding.`,
         );
         const status = violations.length ? "fail" : "skipped";
         writeGateArtifact(ARTIFACT, {

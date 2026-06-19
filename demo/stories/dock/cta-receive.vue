@@ -8,7 +8,7 @@
 // CONSUMING seam BESIDE W-DOCK-MORPH-FAMILY (no dockMorphContext/DOCK_SPRING edit).
 // Compositor-only (transform/opacity/filter) + PRM-seats (a deterministic snap-to-gone
 // + hand-off under reduced-motion).
-import { ref, useTemplateRef } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
 import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
@@ -25,24 +25,45 @@ const targetRef = useTemplateRef<HTMLElement>("targetEl");
 // spot, flashed "received".
 const received = ref(false);
 
-const { receive, reset } = useDockCtaReceive(ctaRef, {
-    dockControl: targetRef,
-    preset: "snappy",
-    onReceived: () => {
-        received.value = true;
+const { receive, reset, setPending, clearPending, pending } = useDockCtaReceive(
+    ctaRef,
+    {
+        dockControl: targetRef,
+        preset: "snappy",
+        onReceived: () => {
+            received.value = true;
+        },
     },
+);
+
+// BC.W-AX-DOCK-CTA-SEAT — ARM the landing seat as soon as the target dock control is
+// mounted: the control shows the dim [data-cta-pending] ghost (sized for its arrival
+// from frame 0, so the dock box does NOT jump when the CTA lands). The default
+// onReceived hand-off calls clearPending() — the seat reveals its real content with the
+// plain transition:opacity FLIP as the CTA lands.
+onMounted(() => {
+    setPending();
 });
 
 function onCta() {
     if (received.value) return;
     // The morph vehicle is the CTA's own host element — the directive measures it +
-    // the dock control fresh, drives the FORWARD spring 0→1.
+    // the dock control fresh, drives the FORWARD spring 0→1. The seat reveals on
+    // hand-off (clearPending fires inside the default onReceived flow).
     receive();
 }
 
 function replay() {
     received.value = false;
     reset();
+    // Re-arm the seat for the next run (the ghost shows again, the box stays sized).
+    setPending();
+}
+
+// Manually clear the seat (the consumer-drives-it-manually path) — demonstrates that
+// clearPending() reveals the seated content without the morph having to land.
+function revealNow() {
+    clearPending();
 }
 </script>
 
@@ -55,15 +76,25 @@ function replay() {
             <section class="flex flex-col gap-4">
                 <h2 class="text-subheading">External CTA morphs into the dock</h2>
                 <p class="text-sm text-muted-foreground max-w-prose">
-                    Click <strong>Add to dock</strong> — the external CTA button flies +
-                    reshapes from its own rect ONTO the starred dock control, fades +
-                    congests into the glass, then hands off (the dock control owns the
-                    spot). The
+                    The starred dock control is a <strong>landing SEAT</strong>, RESERVED
+                    for the CTA from the moment the page mounts (<code
+                        class="rounded bg-muted px-1"
+                        >setPending()</code
+                    >): it shows a dim <code class="rounded bg-muted px-1"
+                        >[data-cta-pending]</code
+                    >
+                    ghost, sized for its arrival so the dock box does NOT jump. Click
+                    <strong>Add to dock</strong> — the external CTA button flies + reshapes
+                    from its own rect ONTO that seat, fades + congests into the glass, then
+                    hands off; the seat REVEALS its real content with a calm
+                    <code class="rounded bg-muted px-1">transition: opacity</code> FLIP (NOT
+                    the dock morph-stagger). The
                     <code class="rounded bg-muted px-1">useDockCtaReceive</code> seam — the
                     iOS bloom-from-source inverse, composing the SAME kf
                     <code class="rounded bg-muted px-1">ElementMorph</code> substrate, a
                     consuming seam beside the dock morph mechanism. Compositor-only;
-                    reduced-motion snaps the CTA to gone + hands off.
+                    reduced-motion snaps the CTA to gone + instant-swaps the reveal.
+                    <span v-if="pending" class="text-mono-caption">(seat armed)</span>
                 </p>
 
                 <div
@@ -81,6 +112,18 @@ function replay() {
                         Add to dock
                     </Button>
                     <Button v-else variant="default" @click="replay">Replay</Button>
+
+                    <!-- The consumer-drives-the-seat-manually path: clearPending() reveals
+                         the seated content without the CTA having to land (the seat is a
+                         CSS state the consumer owns). -->
+                    <Button
+                        v-if="pending && !received"
+                        variant="ghost"
+                        class="text-mono-caption"
+                        @click="revealNow"
+                    >
+                        Reveal seat now
+                    </Button>
 
                     <!-- The dock with the target control. -->
                     <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">

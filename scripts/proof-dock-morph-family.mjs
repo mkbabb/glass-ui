@@ -180,8 +180,14 @@ export function detectCompositorTransform(layersCss) {
     //     calc. AND (the anti-evasion bite) NO morph rule animates a layout property
     //     off the LIVE scalar (`inline-size`/`block-size: var(--dock-morph-size)` or
     //     a calc reading --dock-morph-t).
+    // BC.W-LIQUID-MORPH owns the reserve FLOOR: the reserve may be bare
+    // `var(--dock-morph-to)` OR floored `max(var(--dock-morph-to), var(--dock-morph-min))`
+    // — both reserve the SETTLED `to` footprint (a single layout solve, NOT a live calc;
+    // the floor value contains no --dock-morph-t, so the liveLayoutAnim anti-evasion
+    // below still catches a real per-frame relayout). F1 tolerates the floor wrapper (the
+    // white-morph safety net).
     const anyReserve = morphRules.some((b) =>
-        /(inline-size|block-size)\s*:\s*var\(\s*--dock-morph-to\s*\)/.test(b.body),
+        /(inline-size|block-size)\s*:\s*(?:max\(\s*)?var\(\s*--dock-morph-to\s*\)/.test(b.body),
     );
     facts.reservesSettledFootprint = anyReserve;
     if (!anyReserve) {

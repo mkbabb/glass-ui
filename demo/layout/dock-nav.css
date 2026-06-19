@@ -50,113 +50,54 @@
     margin: 0;
 }
 
-/* ── BB.W-DOCK-RAIL-SEAT-FINAL — the topology-honest seat: the SEAM LINE at the ℱ
-   divider (the verbatim R8-1), the CHIP FAN decoupled to the LOWER gutter, never RIGHT
-   into <main> at ANY y (the band-agnostic clearance ends the five-attempt whack-a-mole) ──
-   THE CHRONIC (the unbroken root cause across all five attempts): the vertical-dock
-   carousel fans its chips RIGHTWARD into <main>, and each attempt chased the seam Y to
-   dodge whichever content band currently collided (title → field → title). W-CHIP-GRAZE
-   (Batch 1) killed the rightward fan — it re-fanned the chips DOWN the rail gutter as a
-   vertical icon column (chipOverMain:false) — but kept the anchor seam at the trailing
-   `utility` separator (y≈529), so the rail no longer anchored "where the dividing line
-   for the ℱ is" (R8-1 verbatim). This wave RESTORES the ℱ-anchor (SidebarDock marks the
-   ℱ-home `<DockSeparator :anchor>`; the `<DockSection>` anchor-id is nulled so it is the
-   sole `[data-rail-anchor]`), so GlassDock now writes `--dock-rail-seam-offset` at the
-   ℱ-home Y (≈70). The SEAM LINE rides there; the CHIP FAN is DECOUPLED from it and seated
-   in the rail's LOWER gutter (below the nav controls, in the empty trailing rail space),
-   so it clears BOTH <main> (capped at the rail width — chipOverMain:false on EVERY route
-   at EVERY y) AND the nav column. The graze is dead by TOPOLOGY (the fan never shares an
-   x-band with <main>), so neither the title NOR the field can be grazed, AND the anchor
-   honors the verbatim ask — both at once, not the seam-Y trade.
-
-   WHY direction (a)-as-vertical-gutter-column (not the side-gutter): the fixed sidebar
-   aside is 4.5rem (~82px) wide, fully occupied by the 58px dock centered in it — the
-   side-gutters are ~12px each, far too narrow for a 36px chip. The off-canvas gutter is
-   thus the LOWER vertical gutter (the dead rail space below the controls), not a side
-   margin. Direction (b)-as-in-pane-switcher is barred: `proof:rail3` R6 binds BOTH shell
-   docks to mount a live `<DockRail>` (an in-pane `<DockLayerGroup>` switcher would red R6
-   + R1's box-inflation prohibition). So the floating carousel STAYS on the SidebarDock
-   (box INVIOLATE — this touches NO library CSS, only the demo shell), the seam returns to
-   the ℱ divider, and the chips live in the lower gutter. The library `rail-extend.css` is
-   byte-untouched (the box-equality + escape + dual-overrun R-arms hold by construction);
-   `proof:dock-sections` S6 records the ℱ-anchor + the chipOverMain:false clearance.
-
-   The slot now anchors at the ℱ-seam (≈70) and is overridden to SPAN from there to the
-   frame bottom (a real-height column), the seam `::before` LINE pinned to the slot TOP
-   (= the ℱ-seam, untranslated), and the chip-fade seated at the slot BOTTOM (the lower
-   gutter). The seam-line overrun is capped to the rail width so the 1px hairline protrudes
-   past BOTH dock edges (the dual-side overrun preserved) yet stays WITHIN the aside, clear
-   of <main>'s title band (the prior ℱ-seam line poked ~28px into <main>). The live
-   chipOverMain:false / anchor-at-ℱ MEASURE is recorded in the DELTA; W-REFLECT3 (Batch 7)
-   re-earns the dock+shell gestalt PASS on a fresh capture. */
-
-/* The slot spans the ℱ-seam → frame bottom (the lower-gutter column), un-translated so
-   its top edge IS the ℱ-seam offset; the seam line + the chips seat within it. */
+/* ── BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK seats in the LOWER gutter
+   (chipOverMain:false on EVERY route, the chronic chip-graze dead by TOPOLOGY) ──
+   The divider-carousel + its seam-locator (`--dock-rail-seam-offset`) are RETIRED; the
+   demo's old `.dock-hairline-extend*` chip-strip overrides go with them (clean break, no
+   dead orphan). The stack-rail's library geometry (stack-rail.css) hangs the vertical
+   dock's stack off the TRAILING (inline-end) edge. But the fixed sidebar aside is 4.5rem
+   (~82px) wide, fully occupied by the ~58px dock centered in it — the side gutters are too
+   narrow for the fan, AND the trailing gutter abuts <main>. So the demo re-seats the
+   stack slot into the LOWER gutter (the dead rail space below the controls, within the
+   aside's own column width), the fan rising UP, capped at the rail width — it can never
+   reach <main>/the title/a form field at ANY y. The chip-graze that revoked the BA
+   dock/shell PASS is dead by structure (the fan never shares an x-band with <main>), not
+   by chasing a seam Y. The library box stays INVIOLATE (this is demo-shell topology only;
+   presets-in-consumers). */
 .demo-sidebar-rail .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-    inset-block-end: 0;
-    block-size: auto;
-    translate: 0 0;
-}
-/* The seam LINE stays AT the ℱ divider: pin the `::before` to the slot TOP (now the
-   ℱ-seam, since the slot is un-translated) instead of the slot's vertical center, and
-   cap the dual-side overrun to the rail width so the 1px hairline protrudes past BOTH
-   dock edges yet never crosses into <main> (the prior +40px overrun poked ~28px in). */
-.demo-sidebar-rail .dock-hairline-extend.vertical::before {
-    inset-block-start: 0;
-    translate: 0 0;
-    inline-size: var(--demo-nav-rail-w, 4.5rem);
-    min-inline-size: var(--demo-nav-rail-w, 4.5rem);
-    inset-inline-start: 50%;
-    margin-inline-start: calc(var(--demo-nav-rail-w, 4.5rem) / -2);
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-fade {
-    /* Seat the chip fan CENTERED on the dock x-axis (the slot's `inline-size` is the
-       dock box + 2× overrun, so 50% is the dock center) at the slot BOTTOM (the lower
-       gutter, below the nav controls), fanning UP — within the rail's own column width,
-       never rightward into <main> nor off the viewport's left edge, and clear of the
-       nav-icon column above. */
-    inset-inline-start: 50%;
+    /* Re-seat the slot from the trailing edge into the LOWER gutter: span the dock's own
+       inline width (centered), anchored to the frame bottom, fanning up — clear of <main>
+       (which is to the inline-end of the aside). */
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    inline-size: 100%;
     inset-block-start: auto;
     inset-block-end: 0;
-    translate: -50% 0;
-    /* Cap the column to the rail gutter width so a chip can never reach <main>. */
-    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical {
-    /* The chips column-flow in the lower gutter, bottom-aligned. */
-    flex-direction: column;
-    align-items: flex-start;
+    block-size: auto;
+    align-items: center;
     justify-content: flex-end;
 }
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-strip {
-    /* A VERTICAL icon column inside the gutter — overrides the library's horizontal
-       `flex-direction: row` / `max-inline-size: 60vw` / `overflow-x` row strip. */
+.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical {
+    /* In the lower gutter the stack is a VERTICAL icon column (not the library's trailing
+       row), bottom-aligned, capped at the rail width so a member can never reach <main>. */
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
+}
+.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical .dock-stack-fan {
+    flex-direction: column;
+    align-items: center;
     max-inline-size: var(--demo-nav-rail-w, 4.5rem);
     max-block-size: min(40vh, 18rem);
-    overflow-x: visible;
-    overflow-y: auto;
-    scroll-snap-type: y proximity;
 }
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-extend-chip {
-    /* Icon-only in the gutter — the facet stays REACHABLE via the glyph + the existing
-       `title` tooltip (never display:none'd: still rendered + clickable, the gate's
-       anti-evasion bar). The label run collapses so the chip fits the gutter. */
-    justify-content: center;
+/* The members tuck DOWN toward the core (the dock floor) at rest and rise on expand —
+   the lower-gutter fan axis (overriding the library's inline tuck). */
+.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical .dock-stack-member {
+    translate: 0 var(--dock-rail-extend-length);
 }
-.demo-sidebar-rail
-    .dock-hairline-extend.vertical
-    .dock-hairline-extend-chip
-    .dock-hairline-extend-chip-label {
-    display: none;
+.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical.is-expanded .dock-stack-member {
+    translate: 0 0;
 }
-
-/* AZ.W-RAIL3 — the in-dock contextual facet group (the vertical <DockLayerGroup>
-   that carried the `.demo-sidebar-context-label` rotated label) is DELETED from the
-   shell docks: the facets re-home on the rail's floating carousel strip OUTSIDE the
-   dock box. The `writing-mode: vertical-rl` clipped "Eng…" label corpse is buried
-   with it (G4) — its CSS rule is gone (no dead orphan). */
 
 /* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
    shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────

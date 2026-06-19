@@ -195,6 +195,17 @@ const RETIRED_CLAIMS = [
         label: "the popover-animate + slide-in-from-side enter utilities onto .glass-reveal (W-LIQUID-REVEAL; machine-locked by proof:liquid-reveal)",
         find: /`@utility slide-in-from-side` are RETIRED, replaced by the spring-clocked LIQUID-ENTER recipe/,
     },
+    {
+        // BC.W-DOCK-STACK-RAIL — the AZ divider-carousel rail (DockRail + DockRailItem)
+        // retired clean onto the macOS hover-expand <DockStack> + DockStackItem (no alias).
+        // The EXPORTS DockRail + DockRailItem are the binding artefacts (ABSENT from
+        // src/index.ts + src/api/index.ts); the deeper retire (the SFC, the rail-extend.css
+        // chip partial, the measureSeam/--dock-rail-seam-offset seam-locator) is machine-
+        // locked by proof:dock-stack-rail's S1 DEFINITION-ABSENT arm.
+        label: "DockRail + DockRailItem onto <DockStack> + DockStackItem (W-DOCK-STACK-RAIL; machine-locked by proof:dock-stack-rail S1)",
+        find: /\*\*BC\.W-DOCK-STACK-RAIL — `<DockRail>` \+ `DockRailItem` RETIRED onto the macOS/,
+        exports: ["DockRail", "DockRailItem"],
+    },
     // NOTE: the metric-cell + metric-stack families are NOT retired — they ship,
     // speedtest-consumed (MIGRATION.md §"KEPT (speedtest-consumed)", corrected
     // here from the AV.W10 doc lie). They are deliberately absent from this list:

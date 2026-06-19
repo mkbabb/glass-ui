@@ -41,6 +41,8 @@ jobs:
               run: npm run proof:theme
             - name: proof:components-css
               run: npm run proof:components-css
+            - name: proof:dist-css
+              run: npm run proof:dist-css
             - name: proof:consumers:static
               run: npm run proof:consumers:static
             - name: proof:resolution
@@ -77,8 +79,6 @@ jobs:
               run: npm run proof:motion-demo
             - name: proof:motion2
               run: npm run proof:motion2
-            - name: proof:rail3
-              run: npm run proof:rail3
             - name: proof:dock-sections
               run: npm run proof:dock-sections
             - name: proof:dock-morph-insitu
@@ -125,6 +125,12 @@ jobs:
               run: npm run proof:strict-templates
             - name: proof:peer-optional
               run: npm run proof:peer-optional
+            - name: proof:no-layout-animation
+              run: npm run proof:no-layout-animation
+            - name: proof:css-critical
+              run: npm run proof:css-critical
+            - name: proof:perf-producer
+              run: npm run proof:perf-producer
             - name: proof:vueuse-free-root
               run: npm run proof:vueuse-free-root
             - name: proof:supportsPostTask-wired
@@ -295,10 +301,90 @@ jobs:
               run: npm run proof:surface-axis
             - name: proof:menu-glass
               run: npm run proof:menu-glass
+            - name: proof:drawer-abrogate
+              run: npm run proof:drawer-abrogate
+            - name: proof:card-padding
+              run: npm run proof:card-padding
+            - name: proof:dock-morph-family
+              run: npm run proof:dock-morph-family
+            - name: proof:on-glass-fg
+              run: npm run proof:on-glass-fg
+            - name: proof:aurora-swraster
+              run: npm run proof:aurora-swraster
+            - name: proof:phase-palette
+              run: npm run proof:phase-palette
+            - name: proof:button-glass
+              run: npm run proof:button-glass
+            - name: proof:control-tokens
+              run: npm run proof:control-tokens
+            - name: proof:paper-grid
+              run: npm run proof:paper-grid
+            - name: proof:display-tracking
+              run: npm run proof:display-tracking
+            - name: proof:drag-morph
+              run: npm run proof:drag-morph
+            - name: proof:scroll-motion
+              run: npm run proof:scroll-motion
+            - name: proof:press-unify
+              run: npm run proof:press-unify
+            - name: proof:lensing
+              run: npm run proof:lensing
+            - name: proof:glass-accent
+              run: npm run proof:glass-accent
+            - name: proof:metal-shimmer
+              run: npm run proof:metal-shimmer
+            - name: proof:glass-depth
+              run: npm run proof:glass-depth
+            - name: proof:liquid-reveal
+              run: npm run proof:liquid-reveal
+            - name: proof:no-dual-path
+              run: npm run proof:no-dual-path
+            - name: proof:demo-design
+              run: npm run proof:demo-design
+            - name: proof:border-progress
+              run: npm run proof:border-progress
+            - name: proof:pointer-velocity
+              run: npm run proof:pointer-velocity
+            - name: proof:desktop-reserve
+              run: npm run proof:desktop-reserve
+            - name: proof:gpu-substrate-single
+              run: npm run proof:gpu-substrate-single
+            - name: proof:dockmorph-cta
+              run: npm run proof:dockmorph-cta
+            - name: proof:card-tier-alpha
+              run: npm run proof:card-tier-alpha
+            - name: proof:spa-view
+              run: npm run proof:spa-view
+            - name: proof:spring-crisp
+              run: npm run proof:spring-crisp
+            - name: proof:aurora-curl-warp
+              run: npm run proof:aurora-curl-warp
+            - name: proof:nda-decided
+              run: npm run proof:nda-decided
+            - name: proof:flow-field
+              run: npm run proof:flow-field
+            - name: proof:aur-kuwahara
+              run: npm run proof:aur-kuwahara
+            - name: proof:precept-current
+              run: npm run proof:precept-current
+            - name: proof:concentric
+              run: npm run proof:concentric
+            - name: proof:strict-freshness-armed
+              run: npm run proof:strict-freshness-armed
+            - name: proof:crossrepo-asks
+              run: npm run proof:crossrepo-asks
+            - name: proof:lineage-probe
+              run: npm run proof:lineage-probe
+            - name: proof:doc-override-idiom
+              run: npm run proof:doc-override-idiom
+            - name: proof:eyebrow-union
+              run: npm run proof:eyebrow-union
             - name: proof:pager-ring
               run: npm run proof:pager-ring
             - name: proof:icon-chip
               run: npm run proof:icon-chip
+            - name: proof:easing-primitive
+              run: npm run proof:easing-primitive
             - name: proof:handmark
               run: npm run proof:handmark
             - name: proof:ba-animate
@@ -333,6 +419,92 @@ jobs:
               run: npm run proof:disposition-live
             - name: proof:visual-runner
               run: npm run proof:visual-runner
+            - name: proof:ba-gestalt
+              run: npm run proof:ba-gestalt
+            - name: proof:bc-fold-ledger
+              run: npm run proof:bc-fold-ledger
+            - name: proof:observer-loop
+              run: npm run proof:observer-loop
+            - name: proof:black-bar
+              run: npm run proof:black-bar
+            - name: proof:glass-identity
+              run: npm run proof:glass-identity
+            - name: proof:adaptive-reconcile
+              run: npm run proof:adaptive-reconcile
+            - name: proof:glass-legibility
+              run: npm run proof:glass-legibility
+            - name: proof:no-shadcn-default
+              run: npm run proof:no-shadcn-default
+            - name: proof:glass-prune
+              run: npm run proof:glass-prune
+            - name: proof:selection-card
+              run: npm run proof:selection-card
+            - name: proof:dialog-glass
+              run: npm run proof:dialog-glass
+            - name: proof:glass-glow-fix
+              run: npm run proof:glass-glow-fix
+            - name: proof:accent-tone
+              run: npm run proof:accent-tone
+            - name: proof:motion-one-clock
+              run: npm run proof:motion-one-clock
+            - name: proof:spring-ease
+              run: npm run proof:spring-ease
+            - name: proof:affordance-map
+              run: npm run proof:affordance-map
+            - name: proof:tunable-anim
+              run: npm run proof:tunable-anim
+            - name: proof:split-chars
+              run: npm run proof:split-chars
+            - name: proof:motion-presets
+              run: npm run proof:motion-presets
+            - name: proof:dock-engine
+              run: npm run proof:dock-engine
+            - name: proof:dock-arbitrary
+              run: npm run proof:dock-arbitrary
+            - name: proof:dock-shrink-blur
+              run: npm run proof:dock-shrink-blur
+            - name: proof:liquid-morph
+              run: npm run proof:liquid-morph
+            - name: proof:dock-vertical-clickable
+              run: npm run proof:dock-vertical-clickable
+            - name: proof:dock-collapsed-both
+              run: npm run proof:dock-collapsed-both
+            - name: proof:dock-stack-rail
+              run: npm run proof:dock-stack-rail
+            - name: proof:dock-cockpit
+              run: npm run proof:dock-cockpit
+            - name: proof:no-dead-token
+              run: npm run proof:no-dead-token
+            - name: proof:affordance-contrast
+              run: npm run proof:affordance-contrast
+            - name: proof:datatable-split
+              run: npm run proof:datatable-split
+            - name: proof:dock-lockstep-bornred
+              run: npm run proof:dock-lockstep-bornred
+            - name: proof:motion-suite
+              run: npm run proof:motion-suite
+            - name: proof:blob-smin-normalized
+              run: npm run proof:blob-smin-normalized
+            - name: proof:blob-gradient-unit-length
+              run: npm run proof:blob-gradient-unit-length
+            - name: proof:blob-spec-premult
+              run: npm run proof:blob-spec-premult
+            - name: proof:blob-mood-resolved
+              run: npm run proof:blob-mood-resolved
+            - name: proof:aurora-arresting-ref
+              run: npm run proof:aurora-arresting-ref
+            - name: proof:constellation-tokens
+              run: npm run proof:constellation-tokens
+            - name: proof:glass-material-unified
+              run: npm run proof:glass-material-unified
+            - name: proof:glass-material-sota
+              run: npm run proof:glass-material-sota
+            - name: proof:reka-binding-idiom
+              run: npm run proof:reka-binding-idiom
+            - name: proof:design-md-current
+              run: npm run proof:design-md-current
+            - name: proof:naming-consistency
+              run: npm run proof:naming-consistency
             - name: audit:stash
               run: npm run audit:stash
             - name: gates:verify-ci

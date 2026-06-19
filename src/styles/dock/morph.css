@@ -62,25 +62,22 @@
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
-    /* BB.W-LIQUID-REVEAL — the dock-expand LIQUID-OPEN bloom beat (DOCK-EXPAND-CONSUMER).
-       The dock pill BLOOMS open from its collapsed circle: a coupled `filter` blur-
-       settle decongest reading the SAME `--dock-expand-t` directional scalar the chrome
-       interp rides (the W-DOCK-MORPH-FAMILY morph mechanism is UNTOUCHED — this is a
-       SURFACE arm, NOT a morph-axis layout edit). Collapsed (`--dock-expand-t` 0) the
-       dock content reads a faint `blur(--dock-reveal-blur)` decongest; as it expands
-       (`--dock-expand-t` → 1) the blur SETTLES to 0 so the chrome clarifies AS the pill
-       blooms — the iOS "light-bending modulation" arrival on the dock's own pixels
-       (`filter`, NOT `backdrop-filter`, so the resting glass-tier plate blur the dock
-       carries is never clobbered). Compositor-safe (a `filter` radius interp, never a
-       layout property — the proof:no-layout-animation floor). The beat rides the ONE
-       `--dock-expand-t` scalar, so it tracks the `DOCK_SPRING` clock with NO second
-       clock + NO re-added CSS transition (the morph already animates `--dock-morph-t`).
-       PRM: the `--dock-reveal-blur` knob is zeroed under reduce (the carve below). */
+    /* BC.W-DOCK-SHRINK-BLUR — the BB.W-LIQUID-REVEAL bloom-from-source decongest is a
+       TRANSIENT, not a resting state. HEAD keyed the bare `.glass-dock` self-blur off
+       `--dock-expand-t`, which AT REST resolves to the class endpoint → a PERMANENT 3px
+       self-blur on the resting collapsed dock, STACKED on the 9px backdrop (the "blurry
+       mess when shrunken", glass-dock-codebase §2.4). The FIX gates the self-blur (a
+       SURFACE `filter` arm on the dock's own pixels — NOT `backdrop-filter`, so the glass
+       plate blur is never clobbered; compositor-safe) to `[data-morphing]`: at REST the
+       dock is CRISP; ONLY mid-morph does the 3px bloom settle to 0 as the pill
+       materializes (the iOS-27 bloom, gesture-only). The backdrop blur (the glass
+       material) is UNTOUCHED. PRM zeroes it (the carve below). Clean break, no alias. */
     .glass-dock {
-        --dock-reveal-blur: 3px;
-        filter: blur(
-            calc(var(--dock-reveal-blur) * (1 - var(--dock-expand-t, 1)))
-        );
+        --dock-reveal-blur: 0px; /* resting: CRISP — no own-pixel self-blur */
+    }
+    .glass-dock[data-morphing] {
+        --dock-reveal-blur: 3px; /* the transient decongest bloom — mid-morph only */
+        filter: blur(calc(var(--dock-reveal-blur) * (1 - var(--dock-expand-t, 1))));
     }
 
     /* The morphing root chrome — background / border-color interpolate between the
@@ -488,13 +485,15 @@
 }
 
 /* BB.W-LIQUID-REVEAL — the dock-expand bloom beat's blur-settle is OFF under
-   `prefers-reduced-motion: reduce` (the vestibular floor). The morph itself snaps
-   instantly under PRM (the `DOCK_SPRING` `respectReducedMotion` in
-   dockMorphContext.ts), and zeroing `--dock-reveal-blur` here removes the resting
-   collapsed-pill decongest blur too — a reduced-motion dock reads crisp at every
-   state, no in-between blur frames. */
+   `prefers-reduced-motion: reduce` (the vestibular floor): a reduced-motion dock reads
+   crisp at every state, no in-between blur frames.
+   BC.W-DOCK-SHRINK-BLUR — the self-blur is now gated to `[data-morphing]`, so the PRM
+   carve zeroes it on the ARMED scope too (specificity 0,2,0) — a PRM dock that briefly
+   arms `[data-morphing]` carries no 3px bloom; the resting `.glass-dock` is already
+   crisp by the re-gate. */
 @media (prefers-reduced-motion: reduce) {
-    .glass-dock {
+    .glass-dock,
+    .glass-dock[data-morphing] {
         --dock-reveal-blur: 0px;
     }
 }

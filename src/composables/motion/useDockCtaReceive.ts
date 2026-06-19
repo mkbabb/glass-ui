@@ -54,7 +54,7 @@ import {
     springTimingFunction,
     type Easing,
 } from "@mkbabb/keyframes.js";
-import { onScopeDispose, type Ref } from "vue";
+import { onScopeDispose, readonly, ref, type Ref } from "vue";
 import { springPreset, type SpringPresetName } from "./springPresets";
 
 /** The receive spring register — `snappy` (the crisp absorb default) or `bouncy`
@@ -95,6 +95,25 @@ export interface UseDockCtaReceiveReturn {
      * abort/reset seam. Cancels any in-flight morph; does NOT fire `onReceived`.
      */
     reset: () => void;
+    /**
+     * ARM the landing SEAT (BC.W-AX-DOCK-CTA-SEAT). Writes `data-cta-pending` on the
+     * `dockControl` element so the seat partial (`src/styles/dock/cta-seat.css`) paints
+     * a dim ghost AND reserves the resting control footprint (a STATIC `min-inline-size`
+     * /`min-block-size` off `--dock-control-size`/`--dock-layer-height`) — the dock box
+     * is already at the seated width, so it does NOT jump when the CTA lands. Idempotent.
+     * A no-op when the `dockControl` is not yet mounted. Sets `pending.value = true`.
+     */
+    setPending: () => void;
+    /**
+     * CLEAR the seat. Removes `data-cta-pending` from the `dockControl`, so the seat
+     * reveals its real content with the FLIP `transition: opacity` (the partial owns the
+     * paint — a calm content fade, NOT the dock morph-stagger). Idempotent. The default
+     * `onReceived` flow calls this on hand-off (the seat reveals as the CTA lands) unless
+     * the consumer drives it manually. Sets `pending.value = false`.
+     */
+    clearPending: () => void;
+    /** The reactive seat state — the consumer binds `:class`/`v-if` off it. */
+    pending: Readonly<Ref<boolean>>;
 }
 
 function prefersReducedMotion(): boolean {
@@ -115,12 +134,18 @@ function prefersReducedMotion(): boolean {
  *
  * @example
  * ```ts
- * const { receive, reset } = useDockCtaReceive(ctaRef, {
- *   dockControl: dockTargetRef,
- *   preset: "snappy",
- *   onReceived: () => (ctaConsumed.value = true),
- * })
- * // on the CTA click: morph it into the dock.
+ * const { receive, setPending, clearPending, pending, reset } = useDockCtaReceive(
+ *   ctaRef,
+ *   {
+ *     dockControl: dockTargetRef,
+ *     preset: "snappy",
+ *     onReceived: () => (ctaConsumed.value = true),
+ *   },
+ * )
+ * // ARM the seat (the dock control shows the dim ghost + reserves its footprint).
+ * setPending()
+ * // on the CTA click: morph it into the dock (the default hand-off clearPending()s,
+ * // revealing the seated content with the opacity FLIP — no box jump).
  * function onCta() { receive() }
  * ```
  */
@@ -146,6 +171,28 @@ export function useDockCtaReceive(
     let raf = 0;
     let startTs = 0;
 
+    // BC.W-AX-DOCK-CTA-SEAT — the landing-seat state. `setPending` arms the seat (the
+    // dim ghost + the static resting-geometry reserve, both painted by the seat partial
+    // off the `[data-cta-pending]` attribute), `clearPending` reveals the real content
+    // with the partial's `transition: opacity` FLIP. The methods toggle a DATA ATTRIBUTE
+    // — the seat partial owns the paint; the JS never animates a layout property (the
+    // compositor-only floor extends to the seat).
+    const pending = ref(false);
+
+    function setPending(): void {
+        const target = options.dockControl.value;
+        if (!target) return; // no seat to arm — a no-op until the control mounts
+        target.setAttribute("data-cta-pending", "");
+        pending.value = true;
+    }
+
+    function clearPending(): void {
+        pending.value = false;
+        const target = options.dockControl.value;
+        if (!target) return;
+        target.removeAttribute("data-cta-pending");
+    }
+
     function clearTransform(el: HTMLElement): void {
         el.style.transform = "";
         el.style.transformOrigin = "";
@@ -159,6 +206,11 @@ export function useDockCtaReceive(
     }
 
     function handOff(): void {
+        // The seat REVEALS as the CTA lands — clearing `data-cta-pending` fires the
+        // partial's `transition: opacity` FLIP (the dim ghost fades to the real content
+        // on an already-sized box; no morph-stagger, no box jump). Idempotent, so a
+        // consumer driving the seat manually is unaffected.
+        clearPending();
         options.onReceived?.();
     }
 
@@ -266,5 +318,5 @@ export function useDockCtaReceive(
         morph = null;
     });
 
-    return { receive, reset };
+    return { receive, reset, setPending, clearPending, pending: readonly(pending) };
 }

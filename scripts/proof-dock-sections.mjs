@@ -1,16 +1,29 @@
 #!/usr/bin/env node
-// BA.W-DOCK-SECTIONS — proof:dock-sections, the born-RED tripartite-section-dock +
-// divider-seam re-seat gate (the FOURTH rail attempt, re-conceived as a topology
-// decision, NOT a fifth patch).
+// BA.W-DOCK-SECTIONS — proof:dock-sections, the born-RED tripartite-section-dock
+// SECTION-GROUPING gate.
 //
-// THE FOUR RAIL FAILURES. W-RAIL-EXTEND → R4-RAIL → W-RAIL3/R6 → R8-1 each "passed" a
-// box-inviolate / structural readback while the user's SHELL stayed broken (the rail
-// detached/midline, the section model deleted). This gate is the device-free SOURCE
-// half (S1-S5); the BINDING π SHELL DELTA (tests-visual/dock-sections.spec.ts +
-// W-DOCK-SECTIONS-DELTA.md) is the visual truth (the seam-anchored Y/X, the dual-side
-// overrun extent, the flush chip gap, the collapse-retract stub, the box-inviolate
-// delta), and the proof:ba-gestalt dock-surface verdict is the holistic close (BA
-// inv-4 — per-mechanism greens do NOT alone close a visual wave).
+// BC.W-DOCK-STACK-RAIL SPLIT (clean break). This gate ORIGINALLY carried two
+// concerns: (a) the declarative tripartite SECTION-GROUPING (the <DockSection> /
+// <DockSeparator> rail-core|section|nav zone descriptor) AND (b) the divider-carousel
+// RAIL (the seam-offset seat S2, the chip-retract S3, the DockRail+FadingScroll
+// overflow S5, the demo chip-fan gutter S6). BC.W-DOCK-STACK-RAIL RETIRED the
+// divider-carousel clean (DockRail.vue → DockStack.vue; rail-extend.css → stack-rail.css;
+// the `measureSeam`/`--dock-rail-seam-offset` seam-locator + the chip CSS DELETED) and
+// rebuilt the rail as the macOS hover-expand <DockStack>. So the RAIL clauses (S2/S3/S5/S6)
+// now police a RETIRED architecture — they are RETIRED here, their concern re-pointed to
+// the named successor proof:dock-stack-rail (S1-S6 of that gate own the new stack rail).
+// What REMAINS valid + still gates is the SECTION-GROUPING:
+//   S1 — the declarative tripartite descriptor (the rail-core|section|nav zones).
+//   S4 — the section model returns to BOTH shell docks WITHOUT inflation.
+// Both are intact on the new DockStack tree (the <DockSection> grouping is orthogonal to
+// the rail rebuild — it groups the dock's already-in-flow controls, the box-INVIOLATE
+// display:contents chassis). A born-RED self-test bite proves the grouping invariant.
+//
+// THE FOUR RAIL FAILURES (history, for context). W-RAIL-EXTEND → R4-RAIL → W-RAIL3/R6 →
+// R8-1 each "passed" a box-inviolate / structural readback while the user's SHELL stayed
+// broken — chased the seam-Y to dodge whichever content band collided. BC.W-DOCK-STACK-RAIL
+// closed that whole class by RE-CONCEIVING the rail as the macOS stack (clearance by
+// TOPOLOGY, not a chased seam); proof:dock-stack-rail is its binding gate.
 //
 // PURE DEVICE-FREE static src-scan (source + DOM-template + CSS scans, no browser, no
 // GPU). Runs on EVERY runner → carries `tags: ["local","ci","release"]`.
@@ -21,32 +34,21 @@
 //        `kind` zones (rail-core | section | nav) demarcated by <DockSeparator> via a
 //        `v-for` over `sections` (NOT a hardcoded three-element literal). RED at HEAD:
 //        no DockSection.vue / DockSectionDescriptor.
-//   S2 — the rail anchors at the SEAM, not the edge/midline. rail-extend.css carries NO
-//        `inset-block-start: 50%` vertical midline seat, NO `inset-block-end: 100%;
-//        inset-inline-start: 0` horizontal edge seat; the rail positioning reads a
-//        separator-derived seam offset (`--dock-rail-seam-offset`) AND overruns BOTH
-//        sides (a `calc(... + 2 * var(--dock-rail-extend-length))` dual extent OR a
-//        `-1 * var(--dock-rail-extend-length)` negative leading inset + matching trailing
-//        extent). RED at HEAD: the midline/edge seat literals + one-side overrun.
-//   S3 — chips fan FLUSH + collapse retracts. The strip butts the seam line (the
-//        connector-as-tether `margin-inline-end`/`margin-block-start` adrift offset of
-//        the one-side connector is GONE), AND a collapse-retract rule exists that is
-//        `prefers-reduced-motion`-gated. RED at HEAD: the 40px-adrift strip, no retract.
 //   S4 — the section model returns to BOTH shell docks WITHOUT inflation. BottomDock.vue
-//        AND SidebarDock.vue render <DockSection :sections>, AND the box-inviolate
-//        proof:rail-extend R-arm stays GREEN (asserted by the still-green sibling gate,
-//        recorded here as a fact). RED at HEAD: the W-RAIL3 deletion comment, no
-//        <DockSection>.
-//   S5 — the overflow routes through <FadingScroll>, the bespoke parallel scroll-fade
-//        retired. DockRail.vue composes <FadingScroll> for the chip overflow (the Batch-2
-//        primitive) AND the strip carries no DUPLICATE hand-rolled scroll-fade mask
-//        (no `mask-image` edge-fade on `.dock-hairline-strip` competing with FadingScroll).
-//        RED at HEAD: no <FadingScroll> consumption.
+//        AND SidebarDock.vue render <DockSection :sections> (the third-rail census: a
+//        story-only census masked the broken shell). The box-inviolate floor is the
+//        display:contents chassis (section.css) + proof:dock-stack-rail's box-INVIOLATE
+//        S2 arm (the kept .glass-dock-frame escape, recorded there).
 //
-// Bite-check: re-seat the rail to a fixed `:50%`/`:120%` literal → S2 RED (the gate
-// requires the separator-exposed seam offset, a static literal is not a derivation);
-// keep the connector tether margin → S3 RED; remove <DockSection> from either shell dock
-// → S4 RED; drop the <FadingScroll> wrap or add a second scroll-fade mask → S5 RED.
+// RETIRED CLAUSES (re-pointed to proof:dock-stack-rail — BC.W-DOCK-STACK-RAIL):
+//   S2 (seam-offset seat) · S3 (chip-retract) · S5 (DockRail+FadingScroll overflow) ·
+//   S6 (demo chip-fan gutter). The seam-locator / chip-strip / divider-carousel they
+//   policed are DEFINITION-ABSENT (clean break); proof:dock-stack-rail S1 asserts that
+//   absence + S2-S6 own the new macOS hover-expand <DockStack> seat/fan/overflow/topology.
+//
+// Bite-check (the grouping invariant, self-tested every run): drop the `kind`-switched
+// <DockSeparator>-composing v-for over `sections` → S1 RED; remove <DockSection> from
+// either shell dock → S4 RED.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve, relative } from "node:path";
@@ -71,15 +73,10 @@ function cliPaths() {
         ROOT,
         DOCK_SECTION: resolve(ROOT, "src/components/custom/dock/DockSection.vue"),
         CONSTANTS: resolve(ROOT, "src/components/custom/dock/constants.ts"),
-        DOCK_SEPARATOR: resolve(ROOT, "src/components/custom/dock/DockSeparator.vue"),
-        DOCK_RAIL: resolve(ROOT, "src/components/custom/dock/DockRail.vue"),
-        RAIL_CSS: resolve(ROOT, "src/styles/dock/rail-extend.css"),
         SECTION_CSS: resolve(ROOT, "src/styles/dock/section.css"),
-        GLASSDOCK: resolve(ROOT, "src/components/custom/dock/GlassDock.vue"),
         INDEX: resolve(ROOT, "src/components/custom/dock/index.ts"),
         SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
         BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
-        DOCK_NAV_CSS: resolve(ROOT, "demo/layout/dock-nav.css"),
         ARTIFACT: gateArtifactPath("GLASS_UI_DOCK_SECTIONS_ARTIFACT", "BA-dock-sections"),
     };
     return _cliPaths;
@@ -87,7 +84,9 @@ function cliPaths() {
 
 /**
  * The PURE detector (injected) — exported so a born-RED self-test can feed a synthetic
- * midline-seat / hardcoded-three-zone / no-adoption mutation and assert exit 1.
+ * grouping mutation (a hardcoded-three-zone literal / a no-adoption shell) and assert
+ * exit 1. The RAIL clauses are RETIRED (re-pointed to proof:dock-stack-rail); only the
+ * SECTION-GROUPING (S1 + S4) gates here.
  *
  * @param {object} fs the source texts (see loadFs)
  */
@@ -97,15 +96,9 @@ export function detectDockSections(fs) {
 
     const section = stripComments(fs.dockSectionText ?? "", "vue");
     const constants = stripComments(fs.constantsText ?? "", "code");
-    const separator = stripComments(fs.dockSeparatorText ?? "", "vue");
-    const rail = stripComments(fs.dockRailText ?? "", "vue");
-    const css = stripComments(fs.railCssText ?? "", "code");
-    const sectionCss = stripComments(fs.sectionCssText ?? "", "code");
-    const gd = stripComments(fs.glassDockText ?? "", "vue");
     const index = stripComments(fs.indexText ?? "", "code");
     const sidebar = stripComments(fs.sidebarText ?? "", "vue");
     const bottom = stripComments(fs.bottomText ?? "", "vue");
-    const dockNavCss = stripComments(fs.dockNavCssText ?? "", "code");
 
     // ── S1 — the declarative tripartite descriptor renders ──
     const dockSectionExists = (fs.dockSectionText ?? "").length > 0;
@@ -154,109 +147,6 @@ export function detectDockSections(fs) {
         );
     }
 
-    // ── S2 — the rail anchors at the SEAM, not the edge/midline ──
-    // The midline/edge SEAT literals are GONE. The workaround #4 was on the SLOT seat
-    // (`.dock-hairline-slot { inset-block-start: 50% }`), NOT a `::before` line's own
-    // self-centering — so we scope the midline/edge detection to the SLOT seat rule
-    // (`.dock-hairline-slot { … }`), where the forbidden seat lived. A `::before` line
-    // centered at 50% WITHIN the seam-anchored slot is legitimate (the slot already
-    // sits at the seam; the line centers in it).
-    const slotSeatRule = (axisGuard) => {
-        // capture the `.glass-dock-frame[data-has-rail]<axisGuard> .dock-hairline-slot {…}`
-        // body and test the seat literal inside it.
-        const re = new RegExp(
-            `\\.glass-dock-frame\\[data-has-rail\\]${axisGuard}\\s+\\.dock-hairline-slot\\s*\\{([^}]*)\\}`,
-            "g",
-        );
-        let body = "";
-        let m;
-        while ((m = re.exec(css)) !== null) body += m[1] + "\n";
-        return body;
-    };
-    const verticalSlotSeat = slotSeatRule("\\.vertical");
-    const horizontalSlotSeat = slotSeatRule(":not\\(\\.vertical\\)");
-    const hasVerticalMidlineSeat = /inset-block-start:\s*50%/.test(verticalSlotSeat);
-    const hasHorizontalEdgeSeat =
-        /inset-block-end:\s*100%/.test(horizontalSlotSeat) &&
-        /inset-inline-start:\s*0\b/.test(horizontalSlotSeat);
-    // the rail positioning reads a separator-derived seam offset.
-    const readsSeamOffset = /var\(--dock-rail-seam-offset/.test(css);
-    // the seam-locator affordance exists on the separator (direction b).
-    const separatorAnchorAffordance =
-        /\banchor\b/.test(separator) && /data-rail-anchor/.test(separator);
-    // GlassDock writes the seam offset (the measured read).
-    const glassDockWritesSeam = /--dock-rail-seam-offset/.test(gd);
-    // the dual-side overrun: a symmetric `2 * var(--dock-rail-extend-length)` extent OR
-    // a negative leading inset alongside the trailing extent.
-    const dualSideOverrun =
-        /2\s*\*\s*var\(--dock-rail-extend-length\)/.test(css) ||
-        /calc\(\s*-1\s*\*\s*var\(--dock-rail-extend-length\)/.test(css);
-    facts.s2HasVerticalMidlineSeat = hasVerticalMidlineSeat;
-    facts.s2HasHorizontalEdgeSeat = hasHorizontalEdgeSeat;
-    facts.s2ReadsSeamOffset = readsSeamOffset;
-    facts.s2SeparatorAnchorAffordance = separatorAnchorAffordance;
-    facts.s2GlassDockWritesSeam = glassDockWritesSeam;
-    facts.s2DualSideOverrun = dualSideOverrun;
-    if (hasVerticalMidlineSeat) {
-        violations.push(
-            "S2: rail-extend.css STILL carries the vertical midline seat `inset-block-start: 50%` — the workaround #4 the brief forbids; re-seat at the separator-derived seam offset",
-        );
-    }
-    if (hasHorizontalEdgeSeat) {
-        violations.push(
-            "S2: rail-extend.css STILL carries the horizontal edge seat (`inset-block-end: 100%` + `inset-inline-start: 0`) — re-seat at the nav-separator seam offset",
-        );
-    }
-    if (!readsSeamOffset || !glassDockWritesSeam) {
-        violations.push(
-            "S2: the rail does NOT read a separator-derived seam offset (`var(--dock-rail-seam-offset)` written by GlassDock) — a static literal is not a seam derivation (the anti-evasion: a `:40%`/`:120%` decoy still fails)",
-        );
-    }
-    if (!separatorAnchorAffordance) {
-        violations.push(
-            "S2: <DockSeparator> lacks the `anchor`/`data-rail-anchor` seam-locator affordance (direction b) — the divider must be able to act as the rail's named anchor",
-        );
-    }
-    if (!dualSideOverrun) {
-        violations.push(
-            "S2: the rail line does NOT overrun BOTH sides — it must carry a symmetric `2 * var(--dock-rail-extend-length)` extent OR a `-1 * var(--dock-rail-extend-length)` negative leading inset with a matching trailing extent",
-        );
-    }
-
-    // ── S3 — chips fan FLUSH + collapse retracts ──
-    // The connector-as-tether adrift margin is GONE (the strip butts the seam).
-    const hasTetherMargin =
-        /\.dock-hairline-extend\.vertical::before\s*\{[^}]*margin-inline-end:/.test(css) ||
-        /\.dock-hairline-extend\.horizontal::before\s*\{[^}]*margin-(?:block|inline)-start:/.test(
-            css,
-        );
-    // a collapse-retract rule exists, PRM-gated.
-    const hasRetractRule =
-        /(?:retract|collapsed)[\s\S]{0,200}(?:translate|opacity|scale)/.test(
-            css + sectionCss,
-        ) || /\.glass-dock\.collapsed[\s\S]{0,400}\.dock-hairline/.test(css + sectionCss);
-    const retractPrmGated = /@media\s*\([^)]*prefers-reduced-motion:\s*reduce/.test(
-        css + sectionCss,
-    );
-    facts.s3HasTetherMargin = hasTetherMargin;
-    facts.s3HasRetractRule = hasRetractRule;
-    facts.s3RetractPrmGated = retractPrmGated;
-    if (hasTetherMargin) {
-        violations.push(
-            "S3: the connector-as-tether `margin-inline-end`/`margin-block-start` adrift offset survives — the chips must fan FLUSH against the seam line, not 40px adrift",
-        );
-    }
-    if (!hasRetractRule) {
-        violations.push(
-            "S3: no collapse-retract rule (the chips translate/fade INTO the rail leaving a stub on collapse) — the macOS-fan-out retraction is missing",
-        );
-    }
-    if (!retractPrmGated) {
-        violations.push(
-            "S3: the collapse-retract is not `prefers-reduced-motion: reduce`-gated — the retract must snap (no travel) under reduce",
-        );
-    }
-
     // ── S4 — the section model returns to BOTH shell docks WITHOUT inflation ──
     const sidebarAdoptsSection = /<DockSection\b/.test(sidebar);
     const bottomAdoptsSection = /<DockSection\b/.test(bottom);
@@ -273,150 +163,59 @@ export function detectDockSections(fs) {
         );
     }
 
-    // ── S5 — the overflow routes through <FadingScroll>, no duplicate scroll-fade ──
-    const composesFadingScroll =
-        /<FadingScroll\b/.test(rail) && /import\s+FadingScroll\b/.test(rail);
-    // a DUPLICATE hand-rolled scroll-fade on the same strip (a competing mask-image edge
-    // fade on `.dock-hairline-strip`) — the two-overflow-path violation.
-    const hasDuplicateScrollFade =
-        /\.dock-hairline-strip\s*\{[^}]*mask-image:\s*linear-gradient/.test(css);
-    facts.s5ComposesFadingScroll = composesFadingScroll;
-    facts.s5HasDuplicateScrollFade = hasDuplicateScrollFade;
-    if (!composesFadingScroll) {
-        violations.push(
-            "S5: DockRail.vue does NOT compose <FadingScroll> for the chip overflow — the Batch-2 primitive is the single scroll-fade port (the bespoke parallel scroll-fade is retired)",
-        );
-    }
-    if (hasDuplicateScrollFade) {
-        violations.push(
-            "S5: a DUPLICATE hand-rolled `mask-image` scroll-fade survives on `.dock-hairline-strip` — no two overflow-fade paths; <FadingScroll> owns the edge fade",
-        );
-    }
-
-    // ── S6 — BB.W-DOCK-RAIL-SEAT-FINAL: the ℱ-anchor RESTORED + the fan never reaches
-    //         <main> (the chronic R8-1 seat, the topology-honest re-conception) ──
-    // The five-attempt whack-a-mole chased the seam Y to dodge whichever content band
-    // collided (title→field→title); W-SHELL-RAIL-RESEAT ABANDONED the verbatim ℱ-anchor
-    // (anchor-id="utility", y≈529) to dodge the title, then W-CHIP-GRAZE re-found the
-    // field-graze inside that dodge. This wave restores the ℱ-anchor AND decouples the
-    // chip fan to the off-canvas (lower) gutter so it never shares an x-band with <main>
-    // at ANY y — the band-agnostic clearance the gestalt gate names (chipOverMain:false).
-    // S6 is the device-free SOURCE half; the binding chipOverMain:false / anchor-at-ℱ π
-    // is the W-DOCK-RAIL-SEAT-FINAL-DELTA + the proof:ba-gestalt dock+shell verdict
-    // (flipped by W-REFLECT3, the single authorized verdict-flipper).
-
-    // S6a — the ℱ-anchor is RESTORED (the verbatim-ask un-abandonment). The SidebarDock
-    // marks a `<DockSeparator :anchor>` (the ℱ-home divider in the #persistent slot), the
-    // dodge `anchor-id="utility"` is GONE, and the <DockSection> anchor-id is nulled to a
-    // non-matching sentinel so the ℱ-home separator is the SOLE [data-rail-anchor]. The
-    // POSITIVE bite (anti-evasion): the anchored separator is the ℱ-home/leading divider
-    // (it co-occurs with the #persistent / home-wordmark region), not merely "not utility"
-    // (re-pointing to a THIRD arbitrary separator still fails).
-    const sidebarMarksAnchorSeparator =
-        /<DockSeparator\b[^>]*\b:?anchor(?:="true")?\b/.test(sidebar);
-    const sidebarDropsUtilityAnchor = !/anchor-id\s*=\s*["']utility["']/.test(sidebar);
-    // the anchored separator lives in the ℱ-home / #persistent region (the positive bite):
-    // the `#persistent` slot block (or the home-wordmark control) precedes the anchored
-    // separator in source — the ℱ divider, NOT an arbitrary one.
-    const persistentIdx = sidebar.indexOf("#persistent");
-    const anchorSepIdx = sidebar.search(/<DockSeparator\b[^>]*\b:?anchor(?:="true")?\b/);
-    // the <DockSection> ELEMENT open tag (whitespace-then-prop), NOT the
-    // `computed<DockSectionDescriptor[]>` type annotation in the <script>.
-    const sectionOpenIdx = sidebar.search(/<DockSection(?=[\s>])/);
-    const anchorIsHomeSeparator =
-        persistentIdx > -1 &&
-        anchorSepIdx > -1 &&
-        anchorSepIdx > persistentIdx &&
-        // before the <DockSection> default-slot block (the ℱ-home divider sits in the
-        // leading #persistent region, not buried in a trailing section group)
-        (sectionOpenIdx === -1 || anchorSepIdx < sectionOpenIdx);
-    facts.s6aSidebarMarksAnchorSeparator = sidebarMarksAnchorSeparator;
-    facts.s6aSidebarDropsUtilityAnchor = sidebarDropsUtilityAnchor;
-    facts.s6aAnchorIsHomeSeparator = anchorIsHomeSeparator;
-    if (!sidebarMarksAnchorSeparator) {
-        violations.push(
-            "S6a: SidebarDock.vue does NOT mark a `<DockSeparator :anchor>` — the rail's seam anchor must be RESTORED to the ℱ-home divider (R8-1 verbatim: 'where the dividing line for the ℱ is')",
-        );
-    }
-    if (!sidebarDropsUtilityAnchor) {
-        violations.push(
-            "S6a: SidebarDock.vue STILL carries `anchor-id=\"utility\"` — the W-SHELL-RAIL-RESEAT dodge that abandoned the verbatim ℱ-anchor; null it (the ℱ-home `<DockSeparator :anchor>` is the sole seam) ",
-        );
-    }
-    if (!anchorIsHomeSeparator) {
-        violations.push(
-            "S6a: the anchored `<DockSeparator :anchor>` is NOT the ℱ-home/leading divider (it must sit in the #persistent region BEFORE the <DockSection> default slot) — the anchor must be the ℱ divider R8-1 names, not a third arbitrary separator (the seam-Y-dodge bar)",
-        );
-    }
-
-    // S6b — the desktop fan does NOT reach into <main> (the off-canvas-gutter source).
-    // The demo dock-nav.css scopes a `.demo-sidebar-rail` override that seats the chip
-    // fan in the LOWER gutter (a vertical column capped at `--demo-nav-rail-w`, seated via
-    // `inset-block-end` at the slot bottom — NOT the library's rightward `flex-end` +
-    // `60vw` reach). The witnesses: the desktop chip column is rail-width-capped AND
-    // bottom-gutter-seated; no rightward 60vw reach survives on the desktop sidebar.
-    const desktopGutterScope = /\.demo-sidebar-rail\b[\s\S]*?dock-hairline/.test(dockNavCss);
-    const desktopColumnCapped =
-        /\.demo-sidebar-rail[\s\S]*?max-inline-size:\s*var\(--demo-nav-rail-w/.test(dockNavCss);
-    const desktopLowerGutterSeat =
-        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-fade\s*\{[^}]*inset-block-end:/.test(
-            dockNavCss,
-        );
-    // the chip column flows VERTICAL (off the library horizontal row) in the desktop scope.
-    const desktopColumnFlow =
-        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-strip\s*\{[^}]*flex-direction:\s*column/.test(
-            dockNavCss,
-        );
-    facts.s6bDesktopGutterScope = desktopGutterScope;
-    facts.s6bDesktopColumnCapped = desktopColumnCapped;
-    facts.s6bDesktopLowerGutterSeat = desktopLowerGutterSeat;
-    facts.s6bDesktopColumnFlow = desktopColumnFlow;
-    if (!desktopGutterScope || !desktopColumnCapped || !desktopColumnFlow) {
-        violations.push(
-            "S6b: demo dock-nav.css does NOT scope the desktop SidebarDock chip fan to the off-canvas gutter (a `.demo-sidebar-rail` vertical column capped at `--demo-nav-rail-w`) — the rightward fan into <main> (the chronic root cause across all five attempts) must be re-fanned down the rail gutter",
-        );
-    }
-    if (!desktopLowerGutterSeat) {
-        violations.push(
-            "S6b: the desktop chip fade is NOT seated in the LOWER gutter (`inset-block-end` at the slot bottom) — with the seam restored to the ℱ divider the fan must decouple to the lower gutter (below the nav column) so it clears BOTH <main> and the nav controls; a fade tracking the ℱ-seam Y would re-collide the nav column",
-        );
-    }
-
-    // S6c — the box-inviolate + dual-overrun R-arms hold (the no-regress floor). The
-    // library rail-extend.css is byte-untouched (the redress is demo-shell-local); the
-    // dual-side overrun witness (S2's `dualOverrun`) survives, and proof:rail-extend /
-    // proof:rail3 stay GREEN (asserted by the still-green sibling gates — recorded here as
-    // a fact, the same shape as S4's box-inviolate cross-reference).
-    facts.s6cDualOverrunSurvives = facts.s2DualSideOverrun;
-    facts.s6cSeamLocatorIntact = facts.s2ReadsSeamOffset && facts.s2GlassDockWritesSeam;
-    if (!facts.s6cDualOverrunSurvives || !facts.s6cSeamLocatorIntact) {
-        violations.push(
-            "S6c: the dual-side overrun / seam-locator R-arms regressed — the seam line must still overrun BOTH edges (the `--dock-rail-seam-offset` read GlassDock writes), the box-inviolate floor; the re-seat moves the CHIP fan, not the line architecture",
-        );
-    }
-
-    // S6d — no midline regress + no verbatim abandonment. The demo override introduces NO
-    // `inset-block-start: 50%` SLOT seat (the workaround #4 stays gone in BOTH the library
-    // AND the demo override), and the anchor is the ℱ divider (S6a positive), not a dodge
-    // seam. The demo override's slot/seam rules must not re-introduce the midline seat.
-    const demoIntroducesMidlineSlotSeat =
-        /\.demo-sidebar-rail[\s\S]*?\.dock-hairline-slot\s*\{[^}]*inset-block-start:\s*50%/.test(
-            dockNavCss,
-        );
-    facts.s6dDemoMidlineSlotSeat = demoIntroducesMidlineSlotSeat;
-    facts.s6dAnchorIsForwardDivider = anchorIsHomeSeparator && sidebarDropsUtilityAnchor;
-    if (demoIntroducesMidlineSlotSeat) {
-        violations.push(
-            "S6d: the demo dock-nav.css override re-introduces an `inset-block-start: 50%` SLOT seat — the forbidden midline workaround #4; the seam stays the measured `--dock-rail-seam-offset`, never a static midline",
-        );
-    }
-    if (!facts.s6dAnchorIsForwardDivider) {
-        violations.push(
-            "S6d: the anchor is NOT the ℱ-home divider (a verbatim-ask abandonment / a dodge-seam) — the anchor must be the ℱ divider (S6a), never a seam-Y dodge to clear a collision",
-        );
-    }
+    // ── RETIRED at BC.W-DOCK-STACK-RAIL: S2 (seam-offset seat) · S3 (chip-retract) ·
+    //    S5 (DockRail+FadingScroll overflow) · S6 (demo chip-fan gutter). The
+    //    divider-carousel they policed (DockRail.vue / rail-extend.css /
+    //    --dock-rail-seam-offset / the .dock-hairline chip strip) is DEFINITION-ABSENT
+    //    (clean break, no alias). Their concern is re-pointed to the named successor
+    //    proof:dock-stack-rail (its S1 asserts the retire; its S2-S6 own the new macOS
+    //    hover-expand <DockStack> seat / fan-out / overflow / topology). No facts here.
 
     return { violations, facts };
+}
+
+/**
+ * The grouping-invariant SELF-TEST (born-RED bite). Drives the PURE detector with a
+ * synthetic shell that DROPS the descriptor-driven grouping (a hardcoded three-zone
+ * literal, NO v-for over `sections`) AND a shell that does NOT adopt <DockSection> —
+ * each MUST flag. If the detector greens on either mutation it is not load-bearing.
+ *
+ * @returns {{ ok: boolean, errors: string[] }}
+ */
+export function groupingSelfTest() {
+    const errors = [];
+    // S1 bite — a NON-descriptor-driven section (hardcoded literal, no v-for, no
+    // separator compose) must flag.
+    const s1Mutant = detectDockSections({
+        dockSectionText:
+            "<template><div class='dock-section'><div>core</div><div>nav</div></div></template>",
+        constantsText: "",
+        indexText: "",
+        sidebarText: "<DockSection :sections />",
+        bottomText: "<DockSection :sections />",
+    });
+    if (!s1Mutant.violations.some((v) => v.startsWith("S1"))) {
+        errors.push(
+            "S1 self-test BROKE — a hardcoded-three-zone <DockSection> (no v-for over `sections`, no <DockSeparator> compose) was NOT flagged; the grouping invariant is not load-bearing",
+        );
+    }
+    // S4 bite — a shell that does NOT adopt <DockSection> must flag.
+    const s4Mutant = detectDockSections({
+        dockSectionText:
+            "<script>import DockSeparator from './DockSeparator.vue';</script><template><div v-for='s in sections' :data-kind='s.kind'><DockSeparator /></div></template>",
+        constantsText:
+            "export interface DockSectionDescriptor {}\nexport type DockSectionKind = string;",
+        indexText:
+            "export { default as DockSection } from './DockSection.vue';\nexport type { DockSectionDescriptor } from './constants';",
+        sidebarText: "<GlassDock><DockIconButton /></GlassDock>",
+        bottomText: "<GlassDock><DockIconButton /></GlassDock>",
+    });
+    if (!s4Mutant.violations.some((v) => v.startsWith("S4"))) {
+        errors.push(
+            "S4 self-test BROKE — a shell dock with NO <DockSection> adoption was NOT flagged; the third-rail census is not load-bearing",
+        );
+    }
+    return { ok: errors.length === 0, errors };
 }
 
 function loadFs() {
@@ -425,54 +224,48 @@ function loadFs() {
     return {
         dockSectionText: read(P.DOCK_SECTION),
         constantsText: read(P.CONSTANTS),
-        dockSeparatorText: read(P.DOCK_SEPARATOR),
-        dockRailText: read(P.DOCK_RAIL),
-        railCssText: read(P.RAIL_CSS),
         sectionCssText: read(P.SECTION_CSS),
-        glassDockText: read(P.GLASSDOCK),
         indexText: read(P.INDEX),
         sidebarText: read(P.SIDEBAR),
         bottomText: read(P.BOTTOM),
-        dockNavCssText: read(P.DOCK_NAV_CSS),
     };
 }
 
 function run() {
     const P = cliPaths();
     const fs = loadFs();
-    const { violations, facts } = detectDockSections(fs);
+    const { violations: detectorViolations, facts } = detectDockSections(fs);
+
+    // The grouping-invariant self-test bites every run (the BC.W-DOCK-STACK-RAIL split
+    // kept a born-RED proof of the SECTION-GROUPING after the RAIL clauses retired).
+    const self = groupingSelfTest();
+    const violations = [...detectorViolations, ...self.errors];
+    facts.groupingSelfTest = self.ok;
     const status = violations.length === 0 ? "pass" : "fail";
 
     writeGateArtifact(P.ARTIFACT, {
         generatedAt: snapshotStamp(),
         status,
         command: "npm run proof:dock-sections",
+        note: "BA.W-DOCK-SECTIONS section-grouping gate, SPLIT at BC.W-DOCK-STACK-RAIL: the RAIL clauses (S2 seam-offset seat · S3 chip-retract · S5 DockRail+FadingScroll overflow · S6 demo chip-fan gutter) RETIRED — the divider-carousel they policed is DEFINITION-ABSENT (clean break) and their concern is re-pointed to the named successor proof:dock-stack-rail. What remains + gates here is the SECTION-GROUPING: S1 the descriptor-driven rail-core|section|nav zone <DockSection>/<DockSeparator> grouping + S4 the BOTH-shell-dock adoption (box-inviolate via the display:contents chassis). A born-RED grouping self-test bites every run.",
         facts,
         violations,
     });
 
     const ok = (b) => (b ? "OK" : "RED");
     console.log(
-        "proof:dock-sections — the tripartite section dock + divider-seam re-seat gate (BA.W-DOCK-SECTIONS)",
+        "proof:dock-sections — the tripartite SECTION-GROUPING gate (BA.W-DOCK-SECTIONS; RAIL clauses retired → proof:dock-stack-rail at BC.W-DOCK-STACK-RAIL)",
     );
     console.log(
         `  S1 descriptor-driven tripartite : exists=${facts.s1DockSectionExists} type=${facts.s1DescriptorType} vfor=${facts.s1RendersVforOverSections} kind=${facts.s1KindSwitchesZone} sep=${facts.s1ComposesSeparator} export=${facts.s1ExportsSection} ${ok(facts.s1DockSectionExists && facts.s1DescriptorType && facts.s1KindType && facts.s1RendersVforOverSections && facts.s1KindSwitchesZone && facts.s1ComposesSeparator && facts.s1ExportsSection)}`,
     );
     console.log(
-        `  S2 seam anchor, no midline/edge : midline=${facts.s2HasVerticalMidlineSeat} edge=${facts.s2HasHorizontalEdgeSeat} seamOffset=${facts.s2ReadsSeamOffset} anchorAfford=${facts.s2SeparatorAnchorAffordance} gdWrites=${facts.s2GlassDockWritesSeam} dualOverrun=${facts.s2DualSideOverrun} ${ok(!facts.s2HasVerticalMidlineSeat && !facts.s2HasHorizontalEdgeSeat && facts.s2ReadsSeamOffset && facts.s2SeparatorAnchorAffordance && facts.s2GlassDockWritesSeam && facts.s2DualSideOverrun)}`,
-    );
-    console.log(
-        `  S3 chips flush + retract (PRM)  : tether=${facts.s3HasTetherMargin} retract=${facts.s3HasRetractRule} prm=${facts.s3RetractPrmGated} ${ok(!facts.s3HasTetherMargin && facts.s3HasRetractRule && facts.s3RetractPrmGated)}`,
-    );
-    console.log(
         `  S4 section model on BOTH shells : sidebar=${facts.s4SidebarAdoptsSection} bottom=${facts.s4BottomAdoptsSection} ${ok(facts.s4SidebarAdoptsSection && facts.s4BottomAdoptsSection)}`,
     );
     console.log(
-        `  S5 FadingScroll, no dup fade    : composes=${facts.s5ComposesFadingScroll} dupFade=${facts.s5HasDuplicateScrollFade} ${ok(facts.s5ComposesFadingScroll && !facts.s5HasDuplicateScrollFade)}`,
+        `  RETIRED → proof:dock-stack-rail : S2 seam-offset seat · S3 chip-retract · S5 DockRail+FadingScroll · S6 demo chip-fan gutter (the divider-carousel DEFINITION-ABSENT, clean break)`,
     );
-    console.log(
-        `  S6 ℱ-anchor + fan clear of main : anchorSep=${facts.s6aSidebarMarksAnchorSeparator} dropsUtility=${facts.s6aSidebarDropsUtilityAnchor} isHome=${facts.s6aAnchorIsHomeSeparator} gutterFan=${facts.s6bDesktopColumnCapped} lowerSeat=${facts.s6bDesktopLowerGutterSeat} noMidline=${!facts.s6dDemoMidlineSlotSeat} ${ok(facts.s6aSidebarMarksAnchorSeparator && facts.s6aSidebarDropsUtilityAnchor && facts.s6aAnchorIsHomeSeparator && facts.s6bDesktopColumnCapped && facts.s6bDesktopLowerGutterSeat && facts.s6cDualOverrunSurvives && facts.s6cSeamLocatorIntact && !facts.s6dDemoMidlineSlotSeat && facts.s6dAnchorIsForwardDivider)}`,
-    );
+    console.log(`  grouping self-test (bite proof) : ${ok(self.ok)}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  x ${v}`);

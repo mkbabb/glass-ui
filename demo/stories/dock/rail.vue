@@ -16,8 +16,8 @@ import {
     DockIconButton,
     DockLayer,
     DockLayerGroup,
-    DockRail,
     DockSeparator,
+    DockStack,
     GlassDock,
 } from "../../../src/components/custom/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../src/components/ui/tooltip";
@@ -43,12 +43,13 @@ const entries: Entry[] = [
 
 const active = ref<string>("primitives");
 
-// The floating-carousel rail facility (AZ.W-RAIL-EXTEND → W-RAIL3) — a `<DockRail>`
-// whose chip strip rides the visible hairline OUTSIDE the dock box. Each chip is a
-// dock layer; clicking it switches the dock's active LAYER. The `railLayer` ref is
-// bound to BOTH the `<DockLayerGroup v-model:active>` AND `<DockRail v-model:context>`
-// (ONE registry — the rail writes the same ref the layer group reads; no parallel
-// state). The chips ARE `railLayers` (id + label + icon).
+// BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK (the clean-break rebuild of the
+// retired divider-carousel). A `<DockStack>` is a core anchor item whose members fan OUT
+// next to the rail on hover/focus, extending BEYOND the dock edge into its gutter (the
+// kept `.glass-dock-frame` escape). The `railLayer` ref is bound to BOTH the
+// `<DockLayerGroup v-model:active>` AND `<DockStack v-model:selected>` (ONE registry — the
+// stack writes the same ref the layer group reads; no parallel state). The members ARE
+// `railLayers` (id + label + icon).
 const railLayer = ref<string>("assets");
 const railLayers = [
     { id: "assets", label: "Assets", icon: Shapes },
@@ -192,20 +193,21 @@ const railLayers = [
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Hairline rail — a floating carousel beyond the dock edge</h2>
+            <h2 class="text-subheading">Stack rail — the macOS hover-expand stack beyond the dock edge</h2>
             <p class="text-small text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;DockRail&gt;</code> is a floating
-                CAROUSEL of glass chips riding a visible hairline that runs BEYOND the dock edge
-                (the <code class="rounded bg-muted px-1">--border-hairline</code> whisper, not a
-                hard rule). Each chip switches the dock's layer context. It is dock CHROME —
-                rendered in the
+                <code class="rounded bg-muted px-1">&lt;DockStack&gt;</code> is the macOS Dock
+                hover-expand STACK: a thin rail extending BEYOND the dock edge into its own
+                gutter, carrying a core anchor item. Hover (or focus) the core and its members
+                FAN OUT next to the rail — a column of fully-visible glass icons springing open
+                beside the line, each on the iOS liquid clock. It is dock CHROME — rendered in the
                 <code class="rounded bg-muted px-1">#rail</code> slot OUTSIDE the clipped morph
-                aperture — so it NEVER changes the dock's width/height (the box is INVIOLATE) and
-                it PERSISTS when the dock collapses (the in-pane switcher rail does not). The chips
-                write the SAME
+                aperture — so it NEVER changes the dock's width/height (the box is INVIOLATE), it
+                clears <code class="rounded bg-muted px-1">&lt;main&gt;</code> by topology (the fan
+                extends into the gutter, away from content), and it PERSISTS when the dock
+                collapses. The members write the SAME
                 <code class="rounded bg-muted px-1">railLayer</code> ref the
                 <code class="rounded bg-muted px-1">&lt;DockLayerGroup&gt;</code> reads (one
-                registry, no parallel state). Hover to expand; collapse and the strip stays put.
+                registry, no parallel state). 3 visible at rest; a longer stack scrolls.
             </p>
             <p class="text-mono-caption text-muted-foreground" data-testid="dock-rail-readout">
                 active layer = {{ railLayer }}
@@ -244,15 +246,16 @@ const railLayers = [
                             <component :is="NavigationIcon" />
                         </DockIconButton>
                     </template>
-                    <!-- The floating-carousel rail — chips ride the hairline beyond the
-                         dock's block edge; clicking one switches the active layer.
-                         Persists on collapse (it is chrome), the box stays INVIOLATE. -->
+                    <!-- The macOS hover-expand stack — the core anchor sits at the dock
+                         edge; hover/focus fans its members OUT into the gutter beyond the
+                         dock's block edge. Clicking one switches the active layer. Persists
+                         on collapse (it is chrome), the box stays INVIOLATE. -->
                     <template #rail>
-                        <DockRail
-                            v-model:context="railLayer"
+                        <DockStack
+                            v-model:selected="railLayer"
                             :items="railLayers"
-                            icon-label="Dock layers"
-                            data-testid="dock-rail-control"
+                            core-label="Dock layers"
+                            data-testid="dock-stack-control"
                         />
                     </template>
                 </GlassDock>

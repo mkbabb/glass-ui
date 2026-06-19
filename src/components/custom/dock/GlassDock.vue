@@ -16,7 +16,6 @@ import { useTouchGate } from "../../../composables/dom/useTouchGate";
 // dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
 import { useGlassBackdropLuminance } from "../../../composables/glass/useGlassBackdropLuminance";
-import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import {
@@ -139,50 +138,15 @@ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 const slots = useSlots();
 const hasRail = computed(() => !!slots.rail);
 
-/* BA.W-DOCK-SECTIONS — the SEAM-LOCATOR read (direction (b): the divider IS the rail's
-   anchor). The `#rail` slot is a `position:absolute` sibling of `.glass-dock` anchored
-   to `.glass-dock-frame`; to seat the rail line AT a named `<DockSeparator anchor>`'s
-   divider (NOT the dock edge, NOT the midline workaround #4) we measure that separator's
-   offset within the frame and write `--dock-rail-seam-offset` on the frame. The rail
-   slot's CSS reads it (inset-block-start for a vertical dock's horizontal line,
-   inset-inline-start for a horizontal dock's vertical line). The separator stamps
-   `data-rail-anchor`; we query the FIRST anchored separator inside this dock.
-
-   The measurement is a pure layout read (`getBoundingClientRect`) on a `useResizeObserver`
-   tick (the dock box) + on mount/orientation change — NO morph-state coupling (the morph
-   engine is W-DOCK-MORPH-INSITU's bound; this read never touches it). When no anchored
-   separator is present the offset stays unset and the rail falls back to its flush
-   default (the `extent` knob), never the midline seat. */
+/* BC.W-DOCK-STACK-RAIL — the `#rail` slot is a `position:absolute` sibling of
+   `.glass-dock` anchored to the non-clipping `.glass-dock-frame` escape. The macOS
+   hover-expand stack (`<DockStack>`) seats at the dock EDGE (its own `position`
+   start/end), extending into its gutter — NOT a measured `<DockSeparator anchor>`
+   divider seam. The divider-carousel's `measureSeam()` seam-locator (+ the
+   `--dock-rail-seam-offset` write) is RETIRED with the chip-strip — the stack needs no
+   layout read; its geometry is the kept frame escape + the `--dock-rail-extend-length`
+   gutter reach (stack-rail.css). `frameEl` stays as the slot's positioning anchor. */
 const frameEl = useTemplateRef<HTMLElement>("frameEl");
-
-function measureSeam(): void {
-    const frame = frameEl.value;
-    if (!frame || !hasRail.value) return;
-    const dock = dockEl.value;
-    const anchor = dock?.querySelector<HTMLElement>("[data-rail-anchor]");
-    if (!anchor) {
-        frame.style.removeProperty("--dock-rail-seam-offset");
-        return;
-    }
-    const frameRect = frame.getBoundingClientRect();
-    const anchorRect = anchor.getBoundingClientRect();
-    // The seam offset is the anchor separator's CENTER on the dock's CROSS axis, within
-    // the frame: a vertical (column) dock's rail is a HORIZONTAL line → the block-axis
-    // (Y) center; a horizontal (row) dock's rail is a VERTICAL line → the inline-axis
-    // (X) center. One scalar either way, the rail's CSS keys the axis off `.vertical`.
-    const offset =
-        orientation.value === "vertical"
-            ? anchorRect.top + anchorRect.height / 2 - frameRect.top
-            : anchorRect.left + anchorRect.width / 2 - frameRect.left;
-    frame.style.setProperty("--dock-rail-seam-offset", `${Math.round(offset)}px`);
-}
-
-// Re-measure when the dock box resizes (the separator moves as controls reflow) and on
-// mount / orientation flip. The observer is on the dock box; it parks itself when the
-// element is gone (the composable owns the disconnect).
-useResizeObserver(dockEl, () => measureSeam());
-onMounted(() => measureSeam());
-watch([orientation, hasRail], () => measureSeam(), { flush: "post" });
 
 /* AX.W02 — ONE morph orchestrator per dock. W01 established the single-scalar
    `--dock-morph-t` spring; W02 folds the outer collapse↔expand pair AND every
@@ -431,15 +395,23 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             class="dock-layers"
             @transitionend="onLayersTransitionEnd"
         >
+            <!-- BC.W-DOCK-VERTICAL-FIX — `inert` reads `visualExpanded`, the SAME
+                 signal the `is-active` class reads (NOT the raw `expanded`). The bug:
+                 an `alwaysExpanded`/mid-flip vertical dock has `visualExpanded` true
+                 (pane painted active) yet `expanded` false → the pane was `:inert`
+                 (every control non-interactive) while VISIBLE — a painted-but-dead
+                 column (glass-dock-codebase.md §2.3). Keying both off `visualExpanded`
+                 means paint + interactivity read ONE source and can never disagree:
+                 a control is interactive IFF its pane is painted active. -->
             <div
                 :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
-                :inert="!expanded || undefined"
+                :inert="!visualExpanded || undefined"
             >
                 <slot />
             </div>
             <div
                 :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
-                :inert="expanded || undefined"
+                :inert="visualExpanded || undefined"
                 @click="onClickCollapsed"
             >
                 <slot name="collapsed" />

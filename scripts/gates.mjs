@@ -236,16 +236,10 @@ export const GATES = [
         note: "AZ.W-MOTION2 (R7) — the curve gallery REDRESS source arm: the THICK non-scaling stroke, the dead --surface-tint-1/-2 BUG killed (negative-predicate), the underline panel-nav picker, the 1:1 keyframes isomorphism census (vs the LIVE EASING_GROUPS authority: CSS keywords + smooth-step-3 + linear() + springs-own-family + hyphen names), the calm-substrate + muted-lift witnesses. The π half rides tests-visual/motion2.spec.ts (local-only). Bite: re-introduce a dead tint / thin the stroke / pill the picker / drop a canon item / un-mint the purple → RED.",
     },
     {
-        id: "proof:rail3",
-        cmd: "proof:rail3",
-        tags: ["local", "ci", "release"],
-        note: "AZ.W-RAIL3 — the floating-carousel rail (facets OUT of the dock, box INVIOLATE). Device-free static src-scan: R1 the in-dock contextual <DockLayerGroup> GONE from BOTH shell docks (the de-inflation source), R2 the strip writes the consumer v-model:context (no internal ref-shadow), R3 the connective hairline composes box-shadow: var(--border-hairline) (no hard 1px solid) + the --dock-rail-extend-length overrun, R4 the #rail strip renders OUTSIDE the dock containment via the .glass-dock-frame escape (the box-INVIOLATE witness), R5 the strip is a flex carousel of v-for chips with overflow+scroll-snap (not a lone end-icon), R6 the >=2-SHELL-consumer census (SidebarDock+BottomDock). Born-RED on all six. The runtime truths (box-equality G1 <=1px + outside-paint G2 + cycle G3 + no-corpse G4) are the local-only π half in W-RAIL3-DELTA.md (tests-visual/rail3.spec.ts), ledger-backstopped. Bite: restore the in-dock group / shadow the seam / hard-rule the hairline / drop the extent token / collapse to a lone icon / drop a shell consumer → RED.",
-    },
-    {
         id: "proof:dock-sections",
         cmd: "proof:dock-sections",
         tags: ["local", "ci", "release"],
-        note: "BA.W-DOCK-SECTIONS — the tripartite section dock + divider-seam re-seat (the FOURTH rail attempt re-conceived as a TOPOLOGY decision, inv-6; W-RAIL-EXTEND -> R4-RAIL -> W-RAIL3/R6 -> R8-1 each passed a box-inviolate readback while the SEAT regressed to the shell). Device-free SOURCE arm (the BINDING visual truth is the π SHELL DELTA tests-visual/dock-sections.spec.ts + W-DOCK-SECTIONS-DELTA.md — the seam-anchored Y/X within <=2px, the dual-side overrun extent, the flush chip gap, the collapse-retract stub, the box-inviolate <=1px delta on BOTH shell docks both modes — PLUS the proof:ba-gestalt dock-surface holistic verdict, BA inv-4). S1 the declarative tripartite descriptor renders descriptor-DRIVEN (a <DockSection> v-for over the `sections` prop, the `kind` switching the rail-core|section|nav zone demarcated by <DockSeparator>, composing the existing registry — NOT a hardcoded three-element literal); S2 the rail anchors at the SEPARATOR-derived seam offset (--dock-rail-seam-offset, written by GlassDock measuring a <DockSeparator anchor>) and overruns BOTH sides (the symmetric 2x --dock-rail-extend-length extent) — the vertical midline seat (inset-block-start:50% on the SLOT) + the horizontal edge seat GONE (the workaround #4 a static :40%/:120% decoy still fails — the gate requires the seam derivation); S3 the chips fan FLUSH (the connector-as-tether margin GONE) + a PRM-gated collapse-retract rule; S4 BOTH shell docks render <DockSection :sections> (the third-rail census) AND proof:rail-extend box-inviolate stays GREEN; S5 the chip overflow routes through <FadingScroll> (the Batch-2 primitive) with no DUPLICATE hand-rolled scroll-fade mask. proof:rail-extend + proof:rail3 stay GREEN (the box-inviolate + escape-architecture + flex-strip-cyclable R-arms survive the re-seat). Bite: re-seat to a fixed literal -> S2 RED; keep the tether margin -> S3 RED; drop <DockSection> from either shell -> S4 RED; drop <FadingScroll> or add a second scroll-fade -> S5 RED.",
+        note: "BA.W-DOCK-SECTIONS — the tripartite SECTION-GROUPING gate, SPLIT at BC.W-DOCK-STACK-RAIL. The RAIL clauses (S2 the --dock-rail-seam-offset seat · S3 the chip-retract · S5 the DockRail+FadingScroll overflow · S6 the demo chip-fan gutter) are RETIRED — the divider-carousel they policed (DockRail.vue / rail-extend.css / the --dock-rail-seam-offset seam-locator / the .dock-hairline chip strip) is DEFINITION-ABSENT (clean break, no alias) and their concern is re-pointed to the named successor proof:dock-stack-rail (its S1 asserts the retire; its S2-S6 own the new macOS hover-expand <DockStack> seat/fan/overflow/topology). What REMAINS valid + gates here is the SECTION-GROUPING (orthogonal to the rail rebuild — it groups the dock's already-in-flow controls on the display:contents box-INVIOLATE chassis): S1 the declarative tripartite descriptor renders descriptor-DRIVEN (a <DockSection> v-for over the `sections` prop, the `kind` switching the rail-core|section|nav zone demarcated by <DockSeparator>, composing the existing registry — NOT a hardcoded three-element literal); S4 BOTH shell docks render <DockSection :sections> (the third-rail census). A born-RED grouping self-test bites every run (S1 hardcoded-literal / S4 no-adoption mutations each flag). Bite: drop the descriptor-driven v-for/kind/separator-compose -> S1 RED; drop <DockSection> from either shell -> S4 RED.",
     },
     {
         id: "proof:dock-morph-insitu",
@@ -1642,6 +1636,48 @@ export const GATES = [
         cmd: "proof:dock-engine",
         tags: ["local", "ci", "release"],
         note: "BC.W-DOCK-ENGINE — the buttery COMPOSITOR-ONLY dock morph engine (the dock fleet rides it). E1 every morph-geometry/chrome leg (inline-size/block-size/padding/bg/border-color) is JS-driven via the --dock-morph-t/--dock-expand-t scalar, NEVER a generic transition (the interaction transform/scale channel is the KEEP carve). E2 the CONSUME-side JS envelope (computed from the DOCK_SPRING analytic damped-oscillator, NEVER parsing the byte-frozen --spring-dock linear()): midpoint travel >= 0.40, max dead-flat plateau < 0.35 (kills the BB ~16% stall), monotone rise. E3 compositor promotion (will-change:transform) ONLY on armed states (rail hover/active/held + collapsed-hover), NEVER resting (P5). E5 the Atlas A-9 --dock-control-glyph-size knob declared at :root + per [data-density] + coarse (the substitution-vs-inheritance dead-knob closed). Fences: proof:no-layout-animation LOCKED + proof:spring-tokens-synced (dock 0.32/0.7 byte-frozen). Bite: a generic-duration morph leg / a >0.35 plateau / a resting will-change / a missing glyph-knob register → RED.",
+    },
+    {
+        id: "proof:dock-arbitrary",
+        cmd: "proof:dock-arbitrary",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-ARBITRARY — the dock morphs into ARBITRARY sizes/shapes on the ONE --dock-morph-t clock. A1 the radius+clip-path silhouette is a token lerp (--dock-shape-from/to in dock/shape.css, the single authority; the default no-op lerp = the circle↔pill identity, the arbitrary teardrop/blob is consumer-opt-in per presets-in-consumers); A3 compositor-only (clip-path:inset() on the scalar, no per-frame width/height); A4 the useLiquidFlex --stretch swell capped at 1.08 + zeroed under PRM; A5 V↔H shares the mechanism. Bite: a static border-radius / a per-frame layout leg / an uncapped --stretch → RED.",
+    },
+    {
+        id: "proof:dock-shrink-blur",
+        cmd: "proof:dock-shrink-blur",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-SHRINK-BLUR — the shrunken dock is NOT a blurry mess: the resting self-blur (filter:blur) is gated to [data-morphing] so the COLLAPSED pill reads crisp (filter:blur(0px) at rest, sharp glyph+edges), the 3px decongest bloom present only transiently mid-morph. S3 the backdrop 9px byte-frozen; S4 the PRM carve. Bite: an un-gated resting filter:blur / a backdrop-blur change → RED.",
+    },
+    {
+        id: "proof:liquid-morph",
+        cmd: "proof:liquid-morph",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-LIQUID-MORPH — the arbitrary-shape morph is NEVER white, NEVER invisible. M1 the reserve floor max(var(--dock-morph-to), --dock-morph-min) (reserves the SETTLED box, a single layout solve, no --dock-morph-t in the value); M2 the scale floor max(...,0.06); M3 the measure-failure guard (a to:0 worst-case seats at the floor — a visible glass sliver, not a white void); M4 the compositor-only teardrop bridge (clip-path neck, not per-frame width). Bite: a bare reserve / an unfloored scale / a per-frame-width bridge / a missing morphMinFloorPx → RED.",
+    },
+    {
+        id: "proof:dock-vertical-clickable",
+        cmd: "proof:dock-vertical-clickable",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-VERTICAL-FIX — the VERTICAL dock works + is CLICKABLE (the BB unclickable defect). The two-line root fix (GlassDock visualExpanded, engine byte-untouched); the vertical dock's controls carry real >=44px tap hit-rects. Closes the pre-existing proof:dock-tap-integrity vertical failure. Bite: an inert vertical control / a sub-44 hit-rect → RED.",
+    },
+    {
+        id: "proof:dock-collapsed-both",
+        cmd: "proof:dock-collapsed-both",
+        tags: ["local", "ci"],
+        note: "BC.W-DOCK-COLLAPSED-BOTH — vertical AND bottom dock COLLAPSED states + a few tab items + persistent controls (demo-shell composition over the UNCHANGED library collapse engine: BottomDock a bounded summary window of DockTabButton #collapsed chips; SidebarDock host-conditional collapsible, the mobile Sheet the expand affordance). Bite: a broken collapsed state / a lost persistent control → RED.",
+    },
+    {
+        id: "proof:dock-stack-rail",
+        cmd: "proof:dock-stack-rail",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail, a CLEAN-BREAK rebuild (DockRail/divider-carousel RETIRED → DockStack). Extend-beyond, hover-expand (reusing HOVER_INTENT_MS, not a re-forked state machine), 3-configurable, scrollable, n-stack; the fan-out compositor-only on --spring-dock (the engine clock, ridden not edited), staggered by --dock-stack-stagger, PRM-carved; seats at the dock EDGE via the kept .glass-dock-frame/--dock-rail-extend-length escape. SUPERSEDES proof:rail3 + the rail clauses of proof:dock-sections. Bite: a re-forked collapse machine / a layout-animated fan / a lost extend-beyond → RED.",
+    },
+    {
+        id: "proof:dock-cockpit",
+        cmd: "proof:dock-cockpit",
+        tags: ["ci", "release"],
+        note: "BC.W-AX-DOCK-COCKPIT — the [data-preset=cockpit] dock preset (cross-repo speedtest-AX A-9): a fixed 2.75rem control floor + --dock-label-ratio beside the density rungs, closing the dock-oversize chronic. The FEATURE_EXEMPT census preserved (proof:dock-unify). Bite: a cockpit preset off the 2.75rem floor / a missing --dock-label-ratio → RED.",
     },
     {
         id: "gates:verify-ci",

@@ -98,9 +98,10 @@ const BA_GATE_MANIFEST = [
     { id: "proof:shell-hold", class: "device-free" },
     { id: "proof:config-chassis", class: "device-free" },
     // W-SHELL-RAIL-RESEAT's box-inviolate re-seat is verified by the rail gate set
-    // (proof:rail3 + proof:rail-extend + proof:dock-rail-cohesion) + the BINDING
-    // proof:ba-gestalt dock/shell whole-page verdict — no standalone reseat script.
-    { id: "proof:rail3", class: "device-free" },
+    // (proof:rail-extend + proof:dock-rail-cohesion) + the BINDING proof:ba-gestalt
+    // dock/shell whole-page verdict — no standalone reseat script. (proof:rail3 RETIRED at
+    // BC.W-DOCK-STACK-RAIL — the divider-carousel clean break → DockStack; its box-inviolate
+    // concern now rides the named successor proof:dock-stack-rail.)
     { id: "proof:rail-extend", class: "device-free" },
     { id: "proof:dock-rail-cohesion", class: "device-free" },
     { id: "proof:ba-gestalt", class: "device-free" },

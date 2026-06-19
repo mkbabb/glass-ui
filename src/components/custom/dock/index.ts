@@ -14,17 +14,17 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 // layout axis (vertical hairline in a row dock, horizontal rule in a column dock,
 // full-row section break in a grid dock).
 export { default as DockSeparator } from "./DockSeparator.vue";
-// AZ.W-RAIL-EXTEND — the net-new hairline-rail facility: a divider that runs BEYOND
-// the dock edge with a leading/trailing end-icon switching the dock's layer context,
-// rendered as a GlassDock `#rail` chrome slot so it survives collapse (the in-dock
-// switcher rail vanishes on collapse; this one persists). Composes --border-hairline
-// (no hard rule) + binds the consumer-owned context model (one registry, not a
-// parallel state path).
-export { default as DockRail } from "./DockRail.vue";
-// AZ.W-RAIL3 — the chip descriptor for the `<DockRail>` floating carousel strip
-// (`items` prop). Lives in `constants.ts` because a `<script setup>` SFC cannot
-// re-export a named type through the default barrel.
-export type { DockRailItem } from "./constants";
+// BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail (the clean-break rebuild of
+// the retired divider-carousel `DockRail`): a core anchor item whose members FAN OUT next
+// to the rail on hover/focus, extending BEYOND the dock edge into its gutter (the kept
+// `.glass-dock-frame` non-clipping escape) so it clears `<main>` by topology and never
+// changes the dock box. 3 configurable, scrollable, n-stack; binds the consumer-owned
+// model (one registry, no parallel state). No `DockRail` alias — clean break.
+export { default as DockStack } from "./DockStack.vue";
+// BC.W-DOCK-STACK-RAIL — the stack-member descriptor for `<DockStack>` (`items` prop).
+// Lives in `constants.ts` because a `<script setup>` SFC cannot re-export a named type
+// through the default barrel. Replaces the retired `DockRailItem` (no alias).
+export type { DockStackItem } from "./constants";
 // BA.W-DOCK-SECTIONS — the declarative tripartite section chassis (R8-9 / IG-A3 — the
 // reusable layering abstraction): a consumer passes `sections: DockSectionDescriptor[]`
 // and the dock body renders rail-core | divided sections | nav by composing the
@@ -81,3 +81,16 @@ export {
     type UseDockOrientationMorphOptions,
     type UseDockOrientationMorphReturn,
 } from "./composables/useDockOrientationMorph";
+
+// BC.W-AX-DOCK-CTA-SEAT — the CTA-receive seat reaches its natural home beside
+// GlassDock/useDockState/DockIconButton. `useDockCtaReceive` (the external-CTA-morphs-
+// into-dock seam + the `setPending`/`clearPending` landing seat) is ALSO published on
+// the /dock subpath so a dock consumer imports it from `@mkbabb/glass-ui/dock`. ADDITIVE
+// — the /motion export (the keyframes-bearing motion primitive's home) STAYS; this is a
+// re-export, not a move, so no clean break and no migration row.
+export {
+    useDockCtaReceive,
+    type UseDockCtaReceiveOptions,
+    type UseDockCtaReceiveReturn,
+    type DockCtaReceivePreset,
+} from "../../../composables/motion/useDockCtaReceive";

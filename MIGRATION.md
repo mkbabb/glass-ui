@@ -42,16 +42,25 @@
 > consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
 > `proof:tabs-std`.
 
-> **AZ.W-RAIL3 — `<DockRail>` evolved from a single end-icon into the floating-carousel
-> chip STRIP.** The new `items?: readonly DockRailItem[]` prop (`DockRailItem = { id,
-> label, icon? }`, exported from `@mkbabb/glass-ui/dock`) drives the visible facet chips
-> riding the connective hairline OUTSIDE the dock box (the dock box is INVIOLATE — the
-> strip renders via the `.glass-dock-frame` escape and never changes the dock's
-> width/height). The prior `entries?: readonly string[]` prop is **REMOVED** (clean
-> break, no alias — zero consumers passed it at the cut; every consumer passes `items`).
-> `v-model:context` + `@advance` are unchanged; `icon` is now the fallback chevron for
-> chips without their own glyph. The facets-as-in-dock-`<DockLayerGroup>` pattern on the
-> demo shell docks is replaced by the rail strip (demo-only; no library API there).
+> **BC.W-DOCK-STACK-RAIL — `<DockRail>` + `DockRailItem` RETIRED onto the macOS
+> hover-expand `<DockStack>` + `DockStackItem`. Clean break, no alias ("No legacy
+> code").** The AZ.W-RAIL3 divider-carousel rail (a floating strip of detached glass
+> chips on a connective hairline at a measured `<DockSeparator>` seam) CONTRADICTED the
+> verbatim macOS-stack ask, so it is rebuilt from scratch as the stack: a core anchor
+> item whose N members FAN OUT next to the rail on hover/focus (3 configurable + scrollable
+> n-stack via `<FadingScroll>`), extending beyond the dock edge into its own gutter so it
+> clears `<main>` BY TOPOLOGY. **`DockRail` + `DockRailItem` are GONE from
+> `@mkbabb/glass-ui/dock`** (the export names + the SFC `DockRail.vue` + the
+> `src/styles/dock/rail-extend.css` chip partial + the `measureSeam` /
+> `--dock-rail-seam-offset` seam-locator all DELETED, no alias). MIGRATE: `<DockRail
+> v-model:context :items>` → `<DockStack v-model:selected :items>` (`DockRailItem` →
+> `DockStackItem = { id, label, icon?, onSelect? }`); the in-dock-`<DockLayerGroup>`
+> contextual pattern stays the route-keyed seam — only its render target is the stack rail
+> (demo-only; no library API there). Machine-locked by `proof:dock-stack-rail` (S1 asserts
+> the divider-carousel DEFINITION-ABSENT; S2-S6 own the new `<DockStack>` seat / fan-out /
+> overflow / topology / one-registry). The `proof:rail3` gate retired with it; the
+> SECTION-GROUPING half of `proof:dock-sections` (S1 the `<DockSection>` zones + S4 the
+> shell adoption) stays GREEN.
 
 > **AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
 > luminance-lift.** No consumer API rename — this is a TOKEN-knob + demo-preset

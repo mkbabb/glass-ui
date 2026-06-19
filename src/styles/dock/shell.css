@@ -129,7 +129,7 @@
            host-constrained width it already has there. The default free-floating
            dock shrink-wraps to its content (AV.W16 TW3 made this a default and
            silently broke dock sizing for the common case). */
-        border-radius: var(--radius-dock);
+        /* BC.W-DOCK-ARBITRARY — the base corner is the shape register's token lerp (dock/shape.css, the single radius authority generalizing the prior static). */
         white-space: nowrap;
         max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);

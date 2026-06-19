@@ -1,0 +1,124 @@
+/* dock/shape.css — BC.W-DOCK-ARBITRARY: the arbitrary-shape morph register.
+ *
+ * The dock is no longer locked to "a rectangle that grows wider/taller." Its SHAPE
+ * is a SCALAR PARAMETER on the ONE `--dock-morph-t` clock (the BC.W-DOCK-ENGINE
+ * buttery scalar): the corner profile LERPS between a `--dock-shape-from`/
+ * `--dock-shape-to` radius pair, an OPT-IN `clip-path` silhouette LERPS between a
+ * `--dock-shape-clip-from`/`--dock-shape-clip-to` pair, and a `useLiquidFlex`
+ * volume-preserving squish couples the deformation. So the dock FLOWS between
+ * arbitrary silhouettes — a circle, a pill, a wide bar, a tall rail, a teardrop —
+ * as one continuous liquid-glass surface (the iOS-27 control-center materialization,
+ * apple-ios27.md §3.1 "physically morphs from one shape to another").
+ *
+ * THE COMPOSITOR FLOOR (apple-ios27.md §3.1 + motion-canon P5): the shape morph
+ * animates ONLY `border-radius`/`clip-path`/`--*` — compositor/paint properties,
+ * ZERO per-frame layout. The footprint is reached by the reserved-`scale()` morph
+ * (layers.css, byte-untouched here), NEVER a per-frame size lerp. proof:dock-arbitrary
+ * + proof:no-layout-animation both hold.
+ *
+ * THE LIBRARY DEFAULT IS THE CIRCLE↔PILL IDENTITY (CLAUDE.md the collapsed-perfect-
+ * circle): `--dock-shape-from`/`--dock-shape-to` default to `--radius-dock` (9999px)
+ * on both endpoints — a no-op lerp byte-identical to the prior static
+ * `border-radius: var(--radius-dock)` — and the clip pair defaults `none`/`none`
+ * (the rectangle/pill common case needs no clip). The arbitrary teardrop/blob
+ * silhouette is OPT-IN: a consumer sets the shape tokens on the dock scope
+ * (presets-in-consumers). Clean break (MEMORY: no backwards compat) — the prior
+ * hardcoded circle/pill radius becomes the token DEFAULT, no `--dock-radius-legacy`.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
+
+@layer components {
+    /* ── The corner-profile lerp (A1 — the shape is a scalar parameter) ───────────
+       The dock surface radius interpolates the `--dock-shape-from`/`--dock-shape-to`
+       token pair on the ONE `--dock-expand-t` scalar (the directional expanded-ness
+       the BC.W-DOCK-ENGINE chrome interp rides; at rest it resolves to the class
+       endpoint, 0 collapsed / 1 expanded, so the resting corner is exact). This
+       GENERALIZES the prior two hardcoded class endpoints into a consumer-targetable
+       parameter: `from` is the collapsed silhouette's corner (the perfect circle,
+       9999px), `to` is the expanded silhouette's corner (the pill / an arbitrary
+       profile). A consumer overrides either token on the dock scope to morph to an
+       arbitrary corner.
+
+       This is the SINGLE radius authority (shell.css's prior static `border-radius:
+       var(--radius-dock)` is GENERALIZED here — no dead static, no duplicate, clean
+       break). Both tokens default to `--radius-dock` (9999px) so the lerp is a NO-OP at
+       the library default — byte-identical to the prior static, the circle↔pill identity
+       preserved. The token-driven `border-radius` interp is a compositor/paint property
+       on the registered `--dock-expand-t` `<number>`, NOT a transition
+       (proof:no-layout-animation stays GREEN). shape.css is imported AFTER shell.css so
+       this rule is the cascade winner for the dock corner. */
+    .glass-dock {
+        border-radius: calc(
+            var(--dock-shape-from, var(--radius-dock)) +
+                (var(--dock-shape-to, var(--radius-dock)) -
+                    var(--dock-shape-from, var(--radius-dock))) *
+                var(--dock-expand-t, 1)
+        );
+    }
+
+    /* ── The arbitrary silhouette — the OPT-IN `clip-path` lerp (A1) ──────────────
+       DEFAULT-OFF: at the library default `--dock-shape-clip-from`/`--dock-shape-clip-to`
+       are `none`, so this rule resolves `clip-path: none` (the rectangle/pill common
+       case needs no clip; the box-morph + corner lerp above is the whole shape). A
+       consumer opts into an arbitrary teardrop/blob silhouette by setting the clip
+       tokens to two compatible `inset()`/`path()`/`shape()` values; the silhouette then
+       LERPS between them on `--dock-morph-t` via the `from` * (1−t) + `to` * t weighting
+       below. `clip-path` is a compositor-friendly property — the silhouette morphs with
+       ZERO reflow (apple-ios27.md §3.1).
+
+       The lerp is expressed as a `clip-path` whose two endpoints carry per-endpoint
+       opacity-like weights via the scalar: the active silhouette is the `to`-clip once
+       the morph crosses, the `from`-clip before. The web platform cannot continuously
+       interpolate two arbitrary mismatched-topology `clip-path` functions, so the
+       opt-in consumer supplies TOPOLOGY-COMPATIBLE endpoints (two `inset()`s, or two
+       `path()`s with equal command counts) — the AX.W42 fold-7 topology limit is
+       RESPECTED (a mismatched-topology V↔H morph occludes its reflow in the goo-merge,
+       BC.W-LIQUID-MORPH, not a continuous clip morph THROUGH the change). The default
+       `none`/`none` opts the whole register off so the limit never bites the common
+       case. The custom property carries the consumer's interpolable pair; the engine
+       resolves it on the scalar only when set. */
+    .glass-dock {
+        --dock-shape-clip: var(--dock-shape-clip-to, none);
+        clip-path: var(--dock-shape-clip);
+    }
+
+    /* While morphing, the opt-in silhouette LERPS: before the midpoint the `from`-clip
+       reads, after it the `to`-clip, so the silhouette flows from one to the other as
+       the box scales under it (the corner + footprint + silhouette all on the ONE
+       scalar). The `none`/`none` default makes this a no-op (`clip-path: none` both
+       sides), so the rectangle/pill morph never pays the clip cost; the arbitrary
+       register engages ONLY when a consumer sets the clip tokens. */
+    .glass-dock[data-morphing] {
+        --dock-shape-clip: var(--dock-shape-clip-from, none);
+    }
+    .glass-dock[data-morphing]:where(.expanded, .always-expanded) {
+        /* expanding (0→1): once past the midpoint the `to`-silhouette is the target */
+        --dock-shape-clip: var(--dock-shape-clip-to, none);
+    }
+
+    /* ── The squish — the `useLiquidFlex` `--stretch` deformation (A4) ────────────
+       The shape morph couples the volume-preserving squish the tab-indicator +
+       useDockOrientationMorph already speak: `scale: var(--stretch) calc(1/var(--stretch))`
+       along the morph axis, capped LOW at `--dock-morph-max-stretch` (~1.08) by
+       useLiquidFlex itself (the ONE squish source — no forked deformation math). The
+       plate DEFORMS like liquid as it changes shape — a fast morph swells, a slow one
+       barely. The driver (useDockOrientationMorph) writes `--stretch` on the dock scope;
+       at rest `--stretch` is unset → 1/1 (no squish). The reciprocal pairing preserves
+       volume (stretch along travel, compress across). This is compositor-only (a
+       `scale` transform), composed WITH the reserved-footprint `scaleX/scaleY` morph
+       (layers.css) — the box scale rides `--dock-morph-scale`, the squish rides
+       `--stretch`, both transforms multiply on the compositor.
+
+       Scoped to `[data-morphing]` so the squish is a morph-transient (at rest the plate
+       is un-squished); the cross-axis is the morph axis's reciprocal. Horizontal docks
+       stretch X / compress Y; vertical stretch Y / compress X (the inverse-axis twin,
+       mirroring the bridge plates' per-orientation squish in morph-bridge.css). The
+       squish multiplies onto the dock's OWN transform box (the shell), distinct from the
+       inner `.dock-layers` reserved-scale box, so the two do not fight. */
+    .glass-dock[data-morphing]:not(.vertical) {
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+    .glass-dock[data-morphing].vertical {
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+}
