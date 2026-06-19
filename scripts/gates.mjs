@@ -1776,6 +1776,36 @@ export const GATES = [
         note: "BC.W-AX-COMPLETION-SEAL — the cross-repo speedtest-AX hero-scale earned-GOLD completion seal: a one-shot gold-draw mark + 4 @property motion tokens on the /completion-seal subpath, reading the W-PHASE-PALETTE --phase-complete-color/--color-gold (earned-gold, NOT the phase spectrum) + the AX-METAL-GLOW --metal-glow-*. Compositor-only. Bite: a seal off the gold register / a non-compositor draw / a missing @property motion token → RED.",
     },
     {
+        id: "proof:webgpu-everywhere",
+        cmd: "proof:webgpu-everywhere",
+        tags: ["local", "ci"],
+        note: "BC.W-WEBGPU-EVERYWHERE — the ONE WebGPU substrate floor every per-viz composes, the anti-BB-disease keystone. THE PICKER FIX: useGpuSubstrate replaced the synchronous presence-only commit with an async try-WebGPU-then-rebuild-WebGL2-SILENTLY shape (on ANY init failure — no adapter / device reject / device-lost / validation throw — it disposes the WebGPU leaf + rebuilds on the lazy WebGL2 net). W1 async picker; W2 typed WebGPUInitError signal (no uncaught 'no GPU adapter' throw, onInitError reserved for genuine post-arm violations); W3 (STANDING) no Canvas2D viz primary — born-RED on constellation/fourier-field/dot-flow, DELIVERED by their per-viz Band-4 waves (flips W3 GREEN at the band close); W7 every assembled WGSL compiles clean (the metaball `var target` WGSL-reserved-word bug — which made GooBlob silently run WebGL2 forever — FIXED → targetL). 28/28 live on Metal: every substrate route paints a non-blank field (blob, pure-black+PAGEERROR at HEAD, now paints). Bite: a sync presence-commit / a bare adapter throw / a WGSL reserved-word identifier / a Canvas2D-primary viz → RED.",
+    },
+    {
+        id: "proof:safari-webgl",
+        cmd: "proof:safari-webgl",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-SAFARI-WEBGL — the WebKit/Safari WebGL2 fallback path PAINTS the same field (no blank, no teal/navy default). Adds the FIRST cross-engine matrix (the scoped headless-WebKit playwright project — same backdrop-filter:url() absence + context-eviction model as Safari; scoped so the chromium-only π corpus does not re-run on WebKit). createCanvasLifecycle stays the engine-agnostic resize/DPR/raf/visibility/dispose leaf. CI proves the WIRING, the local WebKit run proves the PAINT. Bite: a blank WebKit canvas / a Safari-unsafe extension/precision assumption → RED.",
+    },
+    {
+        id: "proof:viz-interaction",
+        cmd: "proof:viz-interaction",
+        tags: ["local"],
+        note: "BC.W-VIZ-INTERACTION — the shared pointer-velocity field every interactive viz reads (usePointerVelocityField, root barrel — pointer position+velocity+decay, rAF-coalesced on the substrate's frame clock, PRM-zeroed) + the gate-blindness cure (the live readback the ba-gestalt/spine-constellation pixel reader extends). Born-RED enforcement net. Bite: a second rAF / a non-PRM-zeroed field / a viz reading a forked pointer model → RED.",
+    },
+    {
+        id: "proof:viz-choreography",
+        cmd: "proof:viz-choreography",
+        tags: ["local", "ci"],
+        note: "BC.W-VIZ-CHOREOGRAPHY — the shared entrance/transition choreography for the viz (the staged reveal/sequence on the ONE keyframes.js motion clock — the MOTION-ONE-CLOCK fence; reads the SPRING-EASE register + VIZ-INTERACTION's field). useVizChoreography. proof:no-layout-animation holds. Bite: a second clock / a layout-animating choreography → RED.",
+    },
+    {
+        id: "proof:visual-reconcile",
+        cmd: "proof:visual-reconcile",
+        tags: ["local", "ci"],
+        note: "BC.W-VISUAL-RECONCILE — the cross-band visual reconcile gate over the FIXED Band-1 identity: re-walks the booked proof:lensing (the BB .glass-lens --glass-refract press-swell, booked from Band 7 to here) + the viz-vs-glass coherence. Bite: a viz/glass identity drift / a regressed lensing press-swell → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

@@ -447,6 +447,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
     // ── fwidth SITE #2 (metaball.frag.ts line 364) — Toksvig normal-variance
     //    specular clamp. The WGSL fragment-stage fwidth() of the surface normal. ──
+    // KNOWN RESIDUAL (BC.W-GOOBLOB-MEATBALL owns the fix): WGSL's uniformity analysis
+    // rejects this fwidth(N) (N derives from uv mutated inside the pointer/satellite
+    // non-uniform branches above), so the WGSL primary does not arm on Metal and GooBlob
+    // falls to the WebGL2 net (which DOES paint — the substrate-everywhere paint floor is
+    // met). The structural fix (a uniform-flow derivative or a Toksvig re-derivation) is a
+    // metaball-math decision the GooBlob per-viz wave owns, not a compile rename.
     let nVar = length(fwidth(N));
     let shininess = uSpecShininess / (1.0 + 24.0 * nVar);
     let energyNorm = (shininess + 2.0) / 8.0;
@@ -456,9 +462,13 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     let bodyL = oklch.x;
     let dL = abs(rimOkl.x - bodyL);
     let lack = clamp((0.22 - dL) / 0.22, 0.0, 1.0);
-    var target = 0.18;
-    if (bodyL < 0.5) { target = 0.92; }
-    rimOkl.x = clamp(mix(rimOkl.x, target, lack), 0.0, 1.0);
+    // target is a WGSL RESERVED word (W3C WGSL 16.2) so a "var target" declaration is an
+    // invalid identifier: the shader module fails to compile and the WGSL primary never
+    // arms (the GooBlob reserved-keyword bug BC.W-WEBGPU-EVERYWHERE W7 catches). Renamed to
+    // a valid identifier; the math + the value are byte-identical.
+    var targetL = 0.18;
+    if (bodyL < 0.5) { targetL = 0.92; }
+    rimOkl.x = clamp(mix(rimOkl.x, targetL, lack), 0.0, 1.0);
     rimOkl.y = rimOkl.y * mix(1.0, 0.5, lack);
     let rimLin = oklabToLinearSrgb(oklchToOklab(rimOkl));
 

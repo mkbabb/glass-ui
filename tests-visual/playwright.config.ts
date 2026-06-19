@@ -101,6 +101,29 @@ export default defineConfig({
                 },
             },
         },
+        {
+            // BC.W-SAFARI-WEBGL — the WebKit project: the FIRST cross-engine matrix in the
+            // suite. Playwright's bundled WebKit is the closest CI-runnable proxy for
+            // Safari/WebKit — the engine with the SAME `backdrop-filter: url()` absence
+            // (WebKit bug 245510, OPEN) + the SAME context-eviction model that drives the
+            // §H Safari flash. It runs the CROSS-ENGINE π subset ONLY (the safari-webgl
+            // readback + the viz-paint/morph-stability/glass-degrade specs) — `testMatch`
+            // scopes it so the chromium-only π corpus does not re-run on WebKit. No ANGLE
+            // launch flags (WebKit drives its own WebGL/Metal path); the cross-engine
+            // sentinel + the no-flash assert are the binding truth. The live real-paint
+            // subset is `local`-tagged (a real GPU + demo); the context-event + lens-degrade
+            // SOURCE facts run headless-WebKit in CI (the proof:visual-runner split — CI
+            // proves the WIRING, the local WebKit run proves the PAINT).
+            name: "webkit",
+            testMatch: [
+                "safari-webgl.spec.ts",
+                "aurora-swraster.spec.ts",
+            ],
+            use: {
+                ...devices["Desktop Safari"],
+                viewport: { width: 1280, height: 800 },
+            },
+        },
     ],
     // Drive the demo vite dev server. `reuseExistingServer` lets the orchestrator
     // pre-start `npm run dev` (the recon's canonical spawn) and have the lane attach.

@@ -9,9 +9,20 @@
 // verdict) is the BINDING visual truth — per-mechanism greens alone do NOT close this
 // visual wave (BB inv-4).
 //
-//   L1 — `--glass-refract` is a typed INHERITING <number> axis (@property) driving the
-//        lens `scale`; the data-URI `scale` is `var(--glass-refract)`-derived, NOT a bare
-//        `scale='28'` literal on the consuming axis.
+//   L1 — DDR-LENS-BAKE RECONCILE (BC.W-VISUAL-RECONCILE). The BB.W-LENSING scope-2
+//        `@property --glass-refract` axis (a `var(--glass-refract)`-spliced head/`scale`/
+//        tail filter) is RETIRED — it never PARSED as a `backdrop-filter` (it emitted
+//        three tokens `url("…") <n> url("…")`, so the lens rendered `none`) AND broke
+//        consumer bundlers (the bare-quote tail mis-resolved as a file). The reconciled
+//        shipped filter is ONE complete, valid, self-contained `url("data:…")` token with
+//        the displacement `scale='28'` BAKED (the §10 default depth) — the single form
+//        that both PARSES as a filter value AND survives a consumer's url()-rewriter. L1
+//        asserts the reconciled identity: the consuming `--glass-refract-filter` is a
+//        single self-contained `data:` URI carrying a baked `scale='<n>'` (NOT the broken
+//        var()-spliced head/tail), AND the retired axis is recorded as retired (no live
+//        `@property --glass-refract` reg drives a phantom axis). RE-LITIGATE-IF the
+//        platform ships var()-substitution into a url() string token (then the dynamic
+//        scale axis could return — the lost-tunability tradeoff in glass-refract.css).
 //   L2 — the displacement map is the edge-concentrated squircle bevel-profile (the
 //        crossed-gradient encoding — a HORIZONTAL R gradient + a VERTICAL G gradient,
 //        SCREEN-composited), NOT the retired uniform `radialGradient` placeholder; the
@@ -19,10 +30,18 @@
 //   L3 — the whole lens sits behind `@supports (backdrop-filter: url(#…))`; no refraction
 //        `backdrop-filter` declaration sits OUTSIDE the gate (the off-Chromium blur+tint
 //        floor preserved).
-//   L4 — the `:active` lens-swell + the edge-glint ride ONE `--glass-btn-press-t` drive
-//        on a compositor/filter property (the `--glass-refract` displacement scale + the
-//        `--specular-intensity` gleam), NO layout property animates on the press path;
-//        the press transition rides the per-spring clock (`--spring-snappy-duration`).
+//   L4 — DDR-LENS-BAKE RECONCILE. The BB.W-LENSING scope-2 `:active` LENS-SWELL (a
+//        `.glass-lens { --glass-refract: calc(28 + …press-t…) }` that mutated the axis
+//        scale on press) is RETIRED with the axis — it drove a value that reached NO
+//        rendering filter (the lens computed `none`). The press read is now carried by
+//        the ONE `--glass-btn-press-t` drive on the MATERIAL gleam — the
+//        `.btn-glass:active::before` `--specular-intensity` interpolation (a compositor/
+//        paint property), the press squish, NOT a phantom lens-swell. L4 asserts the
+//        reconciled identity: the `--glass-btn-press-t` drive reads on the material
+//        specular press path, NO layout property animates on the press path (the
+//        compositor-only `proof:no-layout-animation` floor, PRESERVED), AND the retired
+//        lens-swell coupling does NOT survive (a re-introduced `.glass-lens` axis-swell
+//        on press is the stale-design revival the DDR-LENS-BAKE clean break forbids).
 //   L5 — `useSpecularPointer` is the SHARED angle-adding leaf wrapping the ONE
 //        `createSpecularWriter` core (it writes `--specular-angle`), exported on the
 //        /glass barrel; there is NO duplicate `getBoundingClientRect`/`--mouse-x` write
@@ -31,9 +50,11 @@
 //        ZERO aurora.frag / metaball.frag / webgl/shaders edit in the wave's bounds.
 //
 // bite-check (self-test, proven every run): the squircle map reverted to a uniform
-// radial → L2 reddens; a bare `scale='<n>'` literal driving the consuming filter → L1
-// reddens; a forked `--mouse-x`/getBoundingClientRect in useSpecularPointer → L5 reddens;
-// a layout property on the press path → L4 reddens.
+// radial → L2 reddens; the broken var()-spliced head/`scale`/tail filter (the retired
+// scope-2 three-token form) revived → L1 reddens; a re-introduced `.glass-lens` axis-
+// swell on press (the retired lens-swell) → L4 reddens; a layout property on the press
+// path → L4 reddens; a forked `--mouse-x`/getBoundingClientRect in useSpecularPointer →
+// L5 reddens.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -68,6 +89,7 @@ const FILES = {
     refract: "src/styles/glass-refract.css",
     props: "src/styles/tokens/property-regs.css",
     material: "src/styles/glass/material.css",
+    surfaces: "src/styles/glass/surfaces.css",
     leaf: "src/composables/glass/useSpecularPointer.ts",
     core: "src/composables/glass/useSpecularTracking.ts",
     barrel: "src/composables/glass/index.ts",
@@ -81,38 +103,58 @@ const SHADER_FILES = [
 ];
 
 // ───────────────────────────────────────────── L1 ─────────────────────────────────────
+// DDR-LENS-BAKE RECONCILE (BC.W-VISUAL-RECONCILE). The scope-2 var()-spliced axis is
+// retired; the reconciled identity is ONE complete self-contained `data:` URI with a
+// baked `scale='<n>'` (the only form that parses + survives the url()-rewriter). L1
+// asserts (a) the consuming filter is that single baked `data:` token, NOT the broken
+// var()-spliced head/`scale`/tail form, and (b) the retired `@property --glass-refract`
+// axis is recorded as retired (no live reg drives a phantom axis).
 function checkL1(opts = {}) {
     const v = [];
     const propsSrc = stripCss(read(FILES.props));
     const refractSrc = stripCss(read(FILES.refract));
 
-    // (a) the typed INHERITING @property --glass-refract registration.
-    const reg = /@property\s+--glass-refract\s*\{[^}]*\}/.exec(propsSrc);
-    const hasReg = !!reg;
-    const inheritsTrue = hasReg && /inherits:\s*true/.test(reg[0]);
-    const isNumber = hasReg && /syntax:\s*["']<number>["']/.test(reg[0]);
-    if (!hasReg) v.push("L1: no `@property --glass-refract` registration in property-regs.css");
-    else {
-        if (!inheritsTrue) v.push("L1: `@property --glass-refract` is not `inherits: true` (the host-retunable cascading axis)");
-        if (!isNumber) v.push("L1: `@property --glass-refract` is not `syntax: \"<number>\"`");
-    }
-
-    // (b) the consuming filter `scale` is var(--glass-refract)-derived, NOT a bare literal.
-    //     The composed `--glass-refract-filter` must reference var(--glass-refract); a bare
-    //     `scale='<digits>'` baked on the CONSUMED filter value (the head/tail concat) without
-    //     the var would RED.
+    // (a) the consuming `--glass-refract-filter` is ONE complete self-contained `data:`
+    //     URI token with the displacement `scale` BAKED. The retired scope-2 form spliced
+    //     a `var(--glass-refract)` BETWEEN a head-url and a tail-url (emitting three
+    //     tokens `url("…") <n> url("…")` — a `backdrop-filter` rejects it). The reconciled
+    //     form is a SINGLE `url("data:…scale='<n>'…")` with no var() splice on the scale.
     const composed = /--glass-refract-filter:\s*([^;]+);/.exec(refractSrc);
     const composedVal = composed ? composed[1] : "";
-    // The self-test bite (opts.scaleLiteral) injects a bare-literal consuming filter.
+    // The self-test bite (opts.scaleLiteral) injects the BROKEN var()-spliced revival.
     const consumed = opts.scaleLiteral ?? composedVal;
-    const axisDerived = /var\(--glass-refract\)/.test(consumed);
-    if (!axisDerived) {
-        v.push("L1: the consuming `--glass-refract-filter` does not derive `scale` from `var(--glass-refract)` (a bare `scale='<n>'` literal is the AW.W23 placeholder)");
-    }
+    const declared = consumed.length > 0;
+    // The reconciled identity: exactly ONE `url(...)` token, a `data:` URI, a baked
+    // `scale='<digits>'`. A `var(--glass-refract)` splicing the SCALE is the retired
+    // broken form.
+    const urlTokenCount = (consumed.match(/\burl\(/g) || []).length;
+    const isDataUri = /url\(\s*["']?data:/.test(consumed);
+    const scaleBaked = /scale=(?:%27|%2527|'|")\s*\d+\s*(?:%27|%2527|'|")/.test(consumed);
+    const scaleVarSpliced = /var\(--glass-refract\)/.test(consumed);
+    const singleBakedDataUri = declared && urlTokenCount === 1 && isDataUri && scaleBaked && !scaleVarSpliced;
+    if (!declared)
+        v.push("L1: no `--glass-refract-filter` declared in glass-refract.css");
+    else if (scaleVarSpliced)
+        v.push("L1: the consuming `--glass-refract-filter` splices `var(--glass-refract)` into the `scale` (the RETIRED scope-2 head/`scale`/tail form — it emits three tokens a `backdrop-filter` rejects, so the lens renders `none`; DDR-LENS-BAKE bakes `scale='28'` into ONE complete `data:` URI)");
+    else if (urlTokenCount !== 1)
+        v.push("L1: the consuming `--glass-refract-filter` is not ONE complete url() token (got " + urlTokenCount + ") — the single self-contained `data:` URI is the only bundler-safe + parse-valid form (DDR-LENS-BAKE)");
+    else if (!isDataUri)
+        v.push("L1: the consuming `--glass-refract-filter` is not a `data:` URI — a non-data url() is mis-resolved by a consumer's url()-rewriter (DDR-LENS-BAKE bundler-safety)");
+    else if (!scaleBaked)
+        v.push("L1: the consuming `--glass-refract-filter` has no baked `scale='<n>'` literal (the §10 default depth, DDR-LENS-BAKE)");
+
+    // (b) the `@property --glass-refract` axis is RETIRED — no live registration drives a
+    //     phantom inert axis. A live reg would re-introduce the retired scope-2 design.
+    const reg = /@property\s+--glass-refract\s*\{[^}]*\}/.exec(propsSrc);
+    const axisRetired = !reg;
+    if (reg)
+        v.push("L1: a live `@property --glass-refract` registration survives in property-regs.css — the axis is RETIRED (DDR-LENS-BAKE: it drove a `scale` that reached no rendering filter; the scale is baked at 28)");
+    // The retirement is recorded in the property-regs prose (the DDR-LENS-BAKE note).
+    const retirementRecorded = /--glass-refract.*RETIRED|RETIRED.*--glass-refract|DDR-LENS-BAKE/.test(read(FILES.props));
 
     return {
         violations: v,
-        facts: { hasReg, inheritsTrue, isNumber, axisDerived },
+        facts: { singleBakedDataUri, isDataUri, scaleBaked, scaleVarSpliced, urlTokenCount, axisRetired, retirementRecorded },
     };
 }
 
@@ -173,38 +215,53 @@ function checkL3(opts = {}) {
 }
 
 // ───────────────────────────────────────────── L4 ─────────────────────────────────────
+// DDR-LENS-BAKE RECONCILE (BC.W-VISUAL-RECONCILE). The scope-2 `:active` lens-swell (a
+// `.glass-lens { --glass-refract: calc(28 + …press-t…) }`) is RETIRED with the axis — it
+// drove a value that reached NO rendering filter. The press read is now carried by the
+// ONE `--glass-btn-press-t` drive on the MATERIAL gleam (the `.btn-glass:active::before`
+// `--specular-intensity` interpolation, a compositor/paint property). L4 asserts the
+// reconciled identity: (1) the press read rides `--glass-btn-press-t` on the material
+// specular path, (2) NO layout property animates on that press path (compositor-only,
+// PRESERVED), (3) the retired lens-swell axis-coupling does NOT survive.
 function checkL4(opts = {}) {
     const v = [];
     const materialSrc = stripCss(opts.materialOverride ?? read(FILES.material));
+    const surfacesSrc = stripCss(opts.surfacesOverride ?? read(FILES.surfaces));
 
-    // The `.glass-lens` :active swell couples the --glass-refract scale to the ONE press
-    // drive (--glass-btn-press-t) and rides the per-spring clock; NO layout property animates.
-    const swellBlock =
-        /\.glass-lens\s*\{[^}]*--glass-refract:\s*calc\([^}]*--glass-btn-press-t[^}]*\}/.test(
-            materialSrc,
-        );
-    if (!swellBlock)
-        v.push("L4: the `.glass-lens` :active lens-swell does not couple `--glass-refract` to the `--glass-btn-press-t` press drive via calc()");
+    // (1) the press read rides the ONE `--glass-btn-press-t` drive on the material
+    //     specular gleam — the `.btn-glass:active::before` `--specular-intensity`
+    //     interpolation reading `var(--glass-btn-press-t)` (surfaces.css). This is the
+    //     iOS press read that REPLACED the inert lens-swell.
+    const pressReadHaystack = surfacesSrc + "\n" + materialSrc;
+    const pressDriveReads =
+        /--specular-intensity:\s*calc\([^}]*var\(--glass-btn-press-t\)/.test(pressReadHaystack);
+    if (!pressDriveReads)
+        v.push("L4: the press read does not ride the ONE `--glass-btn-press-t` drive on the material specular gleam (the `.btn-glass:active::before` `--specular-intensity` interpolation) — the iOS press read that replaced the retired lens-swell is missing");
 
-    // The press transition rides the per-spring clock (--spring-snappy-duration), NOT a
-    // generic --duration-*.
-    const swellTransition = /transition:\s*--glass-refract\s+var\(--spring-snappy-duration/.test(
-        materialSrc,
-    );
-    if (!swellTransition)
-        v.push("L4: the lens-swell transition does not ride the per-spring `--spring-snappy-duration` clock");
+    // (2) the retired `.glass-lens` axis-swell on press does NOT survive — a re-introduced
+    //     `.glass-lens { --glass-refract: calc(…press-t…) }` is the stale-design revival
+    //     the DDR-LENS-BAKE clean break forbids (it animated a value reaching no filter).
+    const swellHaystack = opts.materialOverride ?? (materialSrc + "\n" + surfacesSrc);
+    const swellHay = stripCss(swellHaystack);
+    const lensSwellRevival =
+        /\.glass-lens\s*\{[^}]*--glass-refract:\s*calc\([^}]*--glass-btn-press-t[^}]*\}/.test(swellHay);
+    if (lensSwellRevival)
+        v.push("L4: a `.glass-lens` `--glass-refract` axis-swell on `--glass-btn-press-t` survives — the RETIRED scope-2 lens-swell (it mutated an inert axis that reached no rendering filter; DDR-LENS-BAKE bakes the scale, the press read is the material gleam)");
 
-    // Compositor/filter-only: scan the `.glass-lens` swell block for a LAYOUT property
-    // (width/height/padding/margin/font-size/inset/top/left/...). The self-test bite injects one.
+    // (3) compositor/paint-only: NO layout property animates on the press path. Scan the
+    //     :active press blocks for a LAYOUT property. The self-test bite injects one.
     const LAYOUT = /(?:^|[\s;{])(width|height|inline-size|block-size|padding(?:-\w+)?|margin(?:-\w+)?|font-size|line-height|top|left|right|bottom|inset(?:-\w+)?|gap|flex-basis|grid-template-\w+|border-\w*-?width)\s*:/;
-    const lensBlock = /\.glass-lens\s*\{[^}]*\}/.exec(materialSrc);
-    const layoutOnPress = lensBlock ? LAYOUT.test(lensBlock[0]) : false;
+    const pressBlocks = [
+        ...(swellHay.match(/\.btn-glass:active(?:::before)?\s*\{[^}]*\}/g) || []),
+        ...(swellHay.match(/\.glass-lens\s*\{[^}]*\}/g) || []),
+    ];
+    const layoutOnPress = pressBlocks.some((b) => LAYOUT.test(b));
     if (layoutOnPress)
-        v.push("L4: a LAYOUT property animates on the lens-swell press path (the compositor-only canon — proof:no-layout-animation set — is violated)");
+        v.push("L4: a LAYOUT property animates on the press path (the compositor-only canon — proof:no-layout-animation set — is violated)");
 
     return {
         violations: v,
-        facts: { swellBlock, swellTransition, layoutOnPress },
+        facts: { pressDriveReads, lensSwellRevival, layoutOnPress },
     };
 }
 
@@ -292,21 +349,28 @@ function selfTest() {
     const radialRevival = `--glass-refract-filter: url("...radialGradient id=%2522m%2522...");`;
     if (checkL2({ mapOverride: radialRevival }).violations.length === 0)
         failures.push("self-test BITE-1 FAILED: a uniform-radial map revival did NOT red L2");
-    // BITE 2 — a bare scale literal (no var) REDs L1.
-    if (checkL1({ scaleLiteral: "url(\"...scale='28'...\")" }).violations.filter((x) => /axis|var/.test(x) || /scale/.test(x)).length === 0)
-        failures.push("self-test BITE-2 FAILED: a bare `scale='28'` literal did NOT red L1");
+    // BITE 2 (DDR-LENS-BAKE) — the BROKEN var()-spliced head/`scale`/tail revival REDs L1
+    // (the retired scope-2 three-token form: `url("…head") var(--glass-refract) url("…tail")`).
+    if (checkL1({ scaleLiteral: "url(\"...head...scale='\") var(--glass-refract) url(\"'...tail...\")" })
+            .violations.filter((x) => /var\(--glass-refract\)|scope-2|RETIRED/.test(x)).length === 0)
+        failures.push("self-test BITE-2 FAILED: the broken var()-spliced head/`scale`/tail filter revival did NOT red L1");
     // BITE 3 — a forked getBoundingClientRect in the leaf REDs L5.
     const forkedLeaf =
         `import { createSpecularWriter } from "./useSpecularTracking";\n` +
         `export function useSpecularPointer(){ el.getBoundingClientRect(); /* --specular-angle atan2 */ }`;
     if (checkL5({ leafOverride: forkedLeaf }).violations.filter((x) => /FORK/.test(x)).length === 0)
         failures.push("self-test BITE-3 FAILED: a forked position write did NOT red L5");
-    // BITE 4 — a layout property on the press path REDs L4.
-    const layoutSwell =
-        `.glass-lens { --glass-refract: calc(28 + var(--glass-btn-press-t) * 16); ` +
-        `transition: --glass-refract var(--spring-snappy-duration) var(--spring-snappy); padding: 4px; }`;
-    if (checkL4({ materialOverride: layoutSwell }).violations.filter((x) => /LAYOUT/.test(x)).length === 0)
+    // BITE 4 — a layout property on the press path REDs L4 (the compositor-only floor).
+    const layoutPress =
+        `.btn-glass:active::before { --specular-intensity: calc(0.1 + 0.06 * var(--glass-btn-press-t)); padding: 4px; }`;
+    if (checkL4({ materialOverride: layoutPress }).violations.filter((x) => /LAYOUT/.test(x)).length === 0)
         failures.push("self-test BITE-4 FAILED: a layout property on the press path did NOT red L4");
+    // BITE 5 (DDR-LENS-BAKE) — a re-introduced `.glass-lens` axis-swell on press REDs L4
+    // (the retired scope-2 lens-swell that mutated an inert axis reaching no filter).
+    const lensSwellRevival =
+        `.glass-lens { --glass-refract: calc(28 + var(--glass-btn-press-t) * 16); }`;
+    if (checkL4({ materialOverride: lensSwellRevival }).violations.filter((x) => /RETIRED.*lens-swell|lens-swell.*RETIRED|axis-swell/.test(x)).length === 0)
+        failures.push("self-test BITE-5 FAILED: a re-introduced `.glass-lens` axis-swell on press did NOT red L4");
     return failures;
 }
 
@@ -353,14 +417,14 @@ function run() {
         violations,
     });
 
-    console.log("proof:lensing — the squircle edge-lensing axis + the motion-reactive EDGE specular glint (BB.W-LENSING)");
-    console.log(`  L1 --glass-refract axis : reg=${facts.L1.hasReg ? "✓" : "✗"} inherits=${facts.L1.inheritsTrue ? "✓" : "✗"} scale-var-derived=${facts.L1.axisDerived ? "✓" : "✗"}`);
+    console.log("proof:lensing — the squircle edge-lensing axis + the motion-reactive EDGE specular glint (BB.W-LENSING; DDR-LENS-BAKE reconciled at BC.W-VISUAL-RECONCILE)");
+    console.log(`  L1 baked data-URI       : single-baked-data-uri=${facts.L1.singleBakedDataUri ? "✓" : "✗"} no-var-splice=${!facts.L1.scaleVarSpliced ? "✓" : "✗"} axis-retired=${facts.L1.axisRetired ? "✓" : "✗"}`);
     console.log(`  L2 squircle map         : crossed=${facts.L2.hasCrossedGradients ? "✓" : "✗"} screen=${facts.L2.hasScreenComposite ? "✓" : "✗"} no-radial=${!facts.L2.placeholderRadial ? "✓" : "✗"} bevel=${facts.L2.bevelKnob ? "✓" : "✗"}`);
     console.log(`  L3 @supports floor      : gate=${facts.L3.supportsGate ? "✓" : "✗"} no-leak=${!facts.L3.refractOutsideGate ? "✓" : "✗"}`);
-    console.log(`  L4 press lens-swell     : swell=${facts.L4.swellBlock ? "✓" : "✗"} spring-clock=${facts.L4.swellTransition ? "✓" : "✗"} no-layout=${!facts.L4.layoutOnPress ? "✓" : "✗"}`);
+    console.log(`  L4 press read (gleam)   : press-t-drive=${facts.L4.pressDriveReads ? "✓" : "✗"} no-lens-swell-revival=${!facts.L4.lensSwellRevival ? "✓" : "✗"} no-layout=${!facts.L4.layoutOnPress ? "✓" : "✗"}`);
     console.log(`  L5 useSpecularPointer   : exists=${facts.L5.leafExists ? "✓" : "✗"} wraps-core=${facts.L5.wrapsCore ? "✓" : "✗"} angle=${facts.L5.writesAngle ? "✓" : "✗"} no-fork=${!facts.L5.forksPosition ? "✓" : "✗"} exported=${facts.L5.exported ? "✓" : "✗"}`);
     console.log(`  L6 GL fence             : shader-untouched=${facts.L6.shaderTouched.length === 0 ? "✓" : "✗"} svg-filter=${facts.L6.isSvgFilter ? "✓" : "✗"}`);
-    console.log(`  self-test bites         : ${facts.selfTestPassed ? "all 4 fire ✓" : "FAILED ✗"}`);
+    console.log(`  self-test bites         : ${facts.selfTestPassed ? "all 5 fire ✓" : "FAILED ✗"}`);
 
     if (violations.length) {
         console.log("\nVIOLATIONS:");

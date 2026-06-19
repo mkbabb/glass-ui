@@ -21,7 +21,10 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createGpuSubstrate } from "../../../../src/composables/glass/webgpu/useGpuSubstrate";
-import { createWebGPUCanvas } from "../../../../src/composables/glass/webgpu/useWebGPUCanvas";
+import {
+    createWebGPUCanvas,
+    WebGPUInitError,
+} from "../../../../src/composables/glass/webgpu/useWebGPUCanvas";
 
 let rafQueue: Array<() => void>;
 let listeners: Record<string, Array<(e: any) => void>>;
@@ -219,7 +222,12 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         handle.dispose();
     });
 
-    it("surfaces a device-unavailable failure through onInitError (no adapter)", async () => {
+    it("a no-adapter init failure REJECTS with the typed WebGPUInitError + does NOT fire onInitError (BC.W-WEBGPU-EVERYWHERE D8')", async () => {
+        // The D8' close: a no-adapter host is a RECOGNIZED substrate decision the picker
+        // handles — NOT a contract violation. The leaf rejects with the typed signal
+        // (NOT a bare uncaught throw) AND does NOT fire the consumer's onInitError (that
+        // contract is reserved for a genuine POST-arm shader/OOM violation). The picker
+        // catches the typed signal to fall to the WebGL2 net silently.
         const canvas = makeCanvas(() => null);
         const gpu = {
             requestAdapter: vi.fn(async () => null), // no adapter
@@ -231,8 +239,71 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
             setup: () => ({ frame: vi.fn(), shouldContinue: () => false, resize: vi.fn() }),
             onInitError,
         });
-        await expect(handle.armAsync()).rejects.toThrow();
-        expect(onInitError).toHaveBeenCalledTimes(1);
+        await expect(handle.armAsync()).rejects.toBeInstanceOf(WebGPUInitError);
+        // The recognized init failure does NOT spew through onInitError (the picker owns
+        // the fall, silently).
+        expect(onInitError).not.toHaveBeenCalled();
         handle.dispose();
+    });
+});
+
+describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W-WEBGPU-EVERYWHERE D8)", () => {
+    it("FALLS to the WebGL2 net SILENTLY when navigator.gpu exists but requestAdapter returns null", async () => {
+        // The keystone bug: navigator.gpu PRESENT (so the old presence-only picker
+        // committed WebGPU) but requestAdapter() returns null (headless/SwiftShader/
+        // blocklisted) — the old picker THREW `no GPU adapter` to the page → black void.
+        // The fix: the picker attempts WebGPU, catches the rejection, and rebuilds on the
+        // WebGL2 net — SILENTLY (no onInitError, the user never sees a downgrade).
+        const gpu = {
+            requestAdapter: vi.fn(async () => null), // adapter-less host
+            getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
+        };
+        vi.stubGlobal("navigator", { gpu });
+        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const canvas = makeCanvas((id) => (id === "webgl2" ? glStub : null));
+
+        let glFrames = 0;
+        let live = true;
+        let fellTo: string | null = null;
+        const onInitError = vi.fn();
+        const substrate = createGpuSubstrate(canvas, {
+            setupWGPU: () => ({
+                frame: vi.fn(),
+                shouldContinue: () => false,
+                resize: vi.fn(),
+            }),
+            setupGL: (gl) => {
+                expect(gl).toBe(glStub);
+                return {
+                    frame: () => {
+                        glFrames += 1;
+                    },
+                    shouldContinue: () => live,
+                    resize: vi.fn(),
+                };
+            },
+            onInitError, // must NOT fire — a no-adapter fall is silent insurance
+            onBackendFallback: ({ to }) => {
+                fellTo = to;
+            },
+        });
+
+        // Optimistic start: backend is "webgpu" (supportsWebGPU is a presence check).
+        expect(substrate.backend).toBe("webgpu");
+        // armAsync attempts WebGPU, catches the no-adapter reject, rebuilds the WebGL2 net.
+        await substrate.armAsync();
+
+        // The fall happened — SILENTLY (no thrown error spewed; onInitError untouched).
+        expect(gpu.requestAdapter).toHaveBeenCalledTimes(1);
+        expect(substrate.backend).toBe("webgl2"); // the resolved backend is the net
+        expect(fellTo).toBe("webgl2");
+        expect(onInitError).not.toHaveBeenCalled(); // a no-adapter fall is NOT an error
+        // The WebGL2 net armed + the consumer's frame runs — the substrate PAINTS, never
+        // a black void (the D8 close).
+        expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
+        flushFrames(3);
+        expect(glFrames).toBe(3);
+
+        substrate.dispose();
     });
 });

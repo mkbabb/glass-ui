@@ -78,11 +78,48 @@ export interface CanvasLifecycleHandle {
     readonly disposed: boolean;
     readonly running: boolean;
     readonly reducedMotion: boolean;
+    /**
+     * BC.W-SAFARI-WEBGL — the circuit-breaker has tripped: the surface lost-and-restored
+     * its context more than N times within T ms (a real eviction storm), so the lifecycle
+     * is HOLDING the parked state without re-arming (no throw). Resets once the loss window
+     * passes quiet; a healthy single loss never trips it.
+     */
+    readonly contextHeld: boolean;
 }
 
 interface ContentVisibilityAutoStateChangeEvent extends Event {
     readonly skipped: boolean;
 }
+
+// ── BC.W-SAFARI-WEBGL — the context-loss circuit-breaker (the §H Safari flash kill).
+//
+// The WebGL self-heal (re-run buildContext on `webglcontextrestored`) is correct for a
+// single GPU-TDR loss but STORMS on WebKit when the per-page context cap is overrun: an
+// eviction fires `webglcontextlost` → the heal re-creates a context → the new context
+// evicts another → its loss fires → re-heal → … = the rapidly-flashing re-arm loop the
+// user reports ("rapidly FLASHES the screen"). The breaker lives ONCE here (the shared
+// leaf — W-CANVAS-UNIFY single-source) so all THREE backends inherit it: WebGL2 + Canvas2D
+// + the WebGPU `device.lost` self-heal (a Metal TDR storm is bounded too).
+//
+// Two coordinated bounds:
+//   - DEBOUNCE the restore: a `restored` does NOT rebuild synchronously inside the event;
+//     it schedules ONE rebuild on a short window, coalescing a burst of lost/restored
+//     cycles into a SINGLE rebuild per settle. A loss arriving inside the window CANCELS
+//     the pending rebuild (the context is gone again — don't waste it).
+//   - CIRCUIT-BREAK the retries: a sliding window counts lost→restored cycles; once the
+//     surface loses-and-restores more than N=3 times within T=2000ms (a real eviction
+//     storm, not a one-off TDR) the substrate STOPS re-arming and HOLDS the parked state
+//     WITHOUT throwing (the aurora-swraster inert-handle precedent — a recognized
+//     "this host can't hold a live context right now" decision, not a contract violation).
+//     The breaker RESETS once the window passes quiet, so a later genuine single loss
+//     self-heals normally.
+//
+// A genuine single loss STILL self-heals (the present correct behavior, KEPT) — the
+// breaker fires ONLY on the pathological storm. These pinned numbers are SAFETY floors:
+// a healthy single GPU-TDR loss re-heals on the first cycle and never trips the breaker.
+export const N_RESTORE_STORM = 3;
+export const T_RESTORE_STORM_MS = 2000;
+export const RESTORE_DEBOUNCE_MS = 100;
 
 export function createCanvasLifecycle(
     options: CanvasLifecycleOptions,
@@ -198,23 +235,64 @@ export function createCanvasLifecycle(
         resize();
     }
 
+    // ── BC.W-SAFARI-WEBGL — the circuit-breaker state (the §H storm bound). The sliding
+    // window of loss timestamps + the debounce timer + the tripped flag. A `markContextLost`
+    // records a loss; a `rebuild` (the restore) is debounced + breaker-gated. Once tripped
+    // the surface holds parked (no throw) until the window passes quiet.
+    let lossTimestamps: number[] = [];
+    let restoreTimer: ReturnType<typeof setTimeout> | 0 = 0;
+    let breakerTripped = false;
+    const nowMs = (): number =>
+        typeof performance !== "undefined" ? performance.now() : Date.now();
+
+    function clearRestoreTimer(): void {
+        if (restoreTimer) {
+            clearTimeout(restoreTimer);
+            restoreTimer = 0;
+        }
+    }
+
     function arm(): void {
         if (armed || disposed) return;
         options.bindContextEvents?.(
-            // rebuild (the self-heal on context restore): re-acquire the context +
-            // rebuild the program/geometry, then resume the loop.
+            // rebuild (the self-heal on context restore): DEBOUNCED + breaker-gated. A
+            // `restored` schedules ONE rebuild on a short window (coalescing a burst into a
+            // single rebuild per settle); a loss arriving inside the window cancels it. Once
+            // the breaker has tripped (N losses in T) the rebuild is SUPPRESSED — the surface
+            // holds the parked state WITHOUT throwing (a recognized "can't hold a live
+            // context" hold, not a contract violation).
             () => {
-                if (disposed) return;
-                build();
-                if (isRunning()) wake();
+                if (disposed || breakerTripped) return;
+                clearRestoreTimer();
+                restoreTimer = setTimeout(() => {
+                    restoreTimer = 0;
+                    if (disposed || breakerTripped) return;
+                    build();
+                    if (isRunning()) wake();
+                }, RESTORE_DEBOUNCE_MS);
             },
-            // markContextLost: the surface is blank — NULL the hooks + cancel the rAF
-            // so the loop parks (no frame attaches to a dead context) until the restore
-            // rebuilds. The backend has already released its gl.
+            // markContextLost: the surface is blank — NULL the hooks + cancel the rAF so the
+            // loop parks (no frame attaches to a dead context) until the restore rebuilds. The
+            // backend has already released its gl. The loss is COUNTED in the sliding window:
+            // if more than N losses land within T ms, the breaker trips (stop re-arming, hold
+            // parked, no throw); a pending debounced rebuild is cancelled (the context is gone
+            // again — don't waste it). The window self-prunes, so a later quiet single loss
+            // re-heals normally.
             () => {
                 hooks = null;
                 cancelAnimationFrame(raf);
                 raf = 0;
+                clearRestoreTimer();
+                const t = nowMs();
+                lossTimestamps.push(t);
+                lossTimestamps = lossTimestamps.filter(
+                    (ts) => t - ts <= T_RESTORE_STORM_MS,
+                );
+                // The window passed quiet (every prior loss aged past T — only this fresh
+                // loss survives the prune): a later genuine single loss must self-heal, so
+                // the breaker RESETS. A real storm keeps the window full and re-trips.
+                if (lossTimestamps.length <= 1) breakerTripped = false;
+                if (lossTimestamps.length > N_RESTORE_STORM) breakerTripped = true;
             },
         );
         build();
@@ -246,6 +324,7 @@ export function createCanvasLifecycle(
         disposed = true;
         cancelAnimationFrame(raf);
         raf = 0;
+        clearRestoreTimer();
         if (hasDocument) document.removeEventListener("visibilitychange", onVisibilityChange);
         reducedMq?.removeEventListener("change", onReducedMotionChange);
         unbindContentVisibility();
@@ -275,6 +354,9 @@ export function createCanvasLifecycle(
         },
         get reducedMotion() {
             return reducedMotion;
+        },
+        get contextHeld() {
+            return breakerTripped;
         },
     };
 }

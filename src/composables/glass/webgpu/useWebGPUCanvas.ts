@@ -55,6 +55,26 @@ export function supportsWebGPU(): boolean {
     );
 }
 
+/**
+ * The recognizable WebGPU INIT-FAILURE signal (BC.W-WEBGPU-EVERYWHERE — the D8/D8'
+ * close). A no-adapter host (`requestAdapter()` returns null), a `requestDevice()`
+ * reject, or a device-lost-at-birth is NOT a contract violation — it is a recognized
+ * substrate decision the picker (`createGpuSubstrate`) catches to fall to the WebGL2
+ * net. `armAsync()` REJECTS with this typed signal (it does NOT `throw` an uncaught
+ * error to the page, and it does NOT fire the consumer's `onInitError` — that contract
+ * is reserved for a genuine POST-arm shader/OOM/validation violation). The picker's
+ * `try`/`catch` recognizes it; a consumer never sees a `no GPU adapter` PAGEERROR.
+ */
+export class WebGPUInitError extends Error {
+    readonly kind: "no-adapter" | "device-request" | "no-navigator-gpu";
+    constructor(kind: WebGPUInitError["kind"], message: string, cause?: unknown) {
+        super(message);
+        this.name = "WebGPUInitError";
+        this.kind = kind;
+        if (cause !== undefined) this.cause = cause;
+    }
+}
+
 // Lockstep with createCanvasLifecycle's CanvasSuspendReason (the AX.W16 F6
 // "off-screen-io" key — the IntersectionObserver fallback's OWN reason, distinct from
 // the content-visibility path's "off-screen").
@@ -235,16 +255,35 @@ export function createWebGPUCanvas(
         },
     });
 
-    /** Acquire `adapter` → `device` ONCE + wire the device-loss self-heal. */
+    /**
+     * Acquire `adapter` → `device` ONCE + wire the device-loss self-heal. On a
+     * no-adapter host it REJECTS with the typed `WebGPUInitError` (NOT a bare uncaught
+     * `throw new Error("no GPU adapter")` spewed to the page — the picker recognizes
+     * the typed signal and falls to the WebGL2 net silently, the D8/D8' close).
+     */
     async function acquireDevice(): Promise<void> {
         if (!supportsWebGPU()) {
-            throw new Error("[useWebGPUCanvas] navigator.gpu unavailable");
+            throw new WebGPUInitError(
+                "no-navigator-gpu",
+                "[useWebGPUCanvas] navigator.gpu unavailable",
+            );
         }
         const adapter = await navigator.gpu.requestAdapter(options.adapterOptions);
         if (!adapter) {
-            throw new Error("[useWebGPUCanvas] no GPU adapter");
+            // The recognizable no-adapter signal — the picker catches it to fall to the
+            // WebGL2 net. NEVER a bare uncaught throw to the page (D8').
+            throw new WebGPUInitError("no-adapter", "[useWebGPUCanvas] no GPU adapter");
         }
-        const dev = await adapter.requestDevice(options.deviceDescriptor);
+        let dev: GPUDevice;
+        try {
+            dev = await adapter.requestDevice(options.deviceDescriptor);
+        } catch (err) {
+            throw new WebGPUInitError(
+                "device-request",
+                "[useWebGPUCanvas] requestDevice rejected",
+                err,
+            );
+        }
         device = dev;
         wireDeviceLoss(dev);
     }
@@ -285,7 +324,17 @@ export function createWebGPUCanvas(
                 if (disposed) return;
                 lifecycle.arm();
             } catch (err) {
-                options.onInitError?.(err);
+                // A recognized init failure (no adapter / device reject / no
+                // navigator.gpu) is a SUBSTRATE DECISION the picker handles — REJECT so
+                // the picker's `try` falls to the WebGL2 net, but do NOT fire
+                // `onInitError` (that contract is for a genuine POST-arm shader/OOM/
+                // validation violation; a no-adapter fall is the W-AURORA-SWRASTER
+                // recognized degrade). A NON-init error (a `setup` throw on a host that
+                // DID get a device — the shader/OOM class) still surfaces via
+                // `onInitError` AND rejects.
+                if (!(err instanceof WebGPUInitError)) {
+                    options.onInitError?.(err);
+                }
                 throw err;
             } finally {
                 acquiring = null;

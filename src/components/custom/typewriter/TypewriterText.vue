@@ -235,7 +235,14 @@ defineExpose({
 }
 
 .tw-char--interactive:hover {
-    background-color: rgba(128, 128, 128, 0.15);
+    /* BC.W-VISUAL-RECONCILE (the merged BC.W-DESHADCN A7 finding) — the interactive-
+       char hover plate reads the WARM hover-bg rung off `--foreground`, not a literal
+       mid-NEUTRAL gray. NON-isomorphic: `rgba(128,128,128,0.15)` (OKLab a flat neutral)
+       → the warm-amber identity the BA.W-NO-GRAY warm floor speaks library-wide. The
+       `custom/` marks-family sibling already in this wave's unit-6 re-walk; gated by
+       proof:no-gray / the marks re-walk verdict (TypewriterText is custom/, off the
+       proof:no-shadcn-default ui/ scope). */
+    background-color: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .tw-cursor {

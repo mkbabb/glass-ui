@@ -8,6 +8,7 @@
 export {
     createWebGPUCanvas,
     supportsWebGPU,
+    WebGPUInitError,
     type WebGPUCanvasFrame,
     type WebGPUCanvasHandle,
     type WebGPUCanvasOptions,

@@ -25,9 +25,16 @@
 //        deterministic tick(0) — no live velocity).
 //   V4 — the ACCEL TERM is real. The leaf exposes an `acceleration` field DERIVED as
 //        the second derivative (a velocity-delta computed in `tick`), not a stub.
-//   V5 — the ≥2-consumer bar is met OR the consumer-evidence doc names the booked
-//        binaries. The doc exists, names the booked WebGPU-viz consumers, and carries
-//        the no-overfitting re-audit clause; OR ≥2 live call sites already exist.
+//   V5 — the ≥2-consumer bar is met IN FACT (BC.W-VIZ-INTERACTION D — the gate-blindness
+//        cure). RE-POINTED: the prior doc-prose-green path
+//        (`evidenceExists && evidenceNamesBooked && evidenceHasReaudit`) is REMOVED — V5
+//        now runs the REAL `rg src/components/custom/{viz}/` grep the consumer-evidence
+//        doc itself promised. ≥2 live `usePointerVelocityField()` call sites in the
+//        procedural-viz dirs are REQUIRED; a doc with zero real call site REDs (the
+//        SYNTHESIS class 2 cure — source-mechanism-gate-not-paint-gate). The doc still
+//        carries the no-overfitting re-audit/retire clause, but it is no longer a
+//        SUBSTITUTE for a consumer. Born-RED at the BC.W-VIZ-INTERACTION substrate floor
+//        (the per-viz waves wire the field after it); GREEN when ≥2 viz wire it.
 //
 // + a self-test bite: a synthetic leaf that forks an rAF / omits the accel term / does
 //   not freeze under PRM MUST flag, proven every run (the anti-evasion floor — a
@@ -213,50 +220,46 @@ if (!velocityDerived)
     violations.push("V4: usePointerVelocityField does not derive + expose `velocity`");
 facts.derived = { exposesAcceleration, accelDerived, velocityDerived };
 
-// ── V5 — the ≥2-consumer bar OR the consumer-evidence doc ─────────────────────
-// Live call sites across src/ (a real binary consumer is a usePointerVelocityField()
-// call in a non-test, non-leaf source file).
-let liveConsumers = 0;
-try {
-    const grep = execGrep();
-    liveConsumers = grep;
-} catch {
-    liveConsumers = 0;
-}
+// ── V5 — the ≥2-consumer bar, ENFORCED by the REAL grep (BC.W-VIZ-INTERACTION D) ──
+// THE GATE-BLINDNESS CURE (SYNTHESIS class 2). The prior V5 greened off DOC PROSE
+// (`evidenceExists && evidenceNamesBooked && evidenceHasReaudit`) — it NEVER ran the
+// `rg src/components/custom/…` grep the consumer-evidence doc itself promised, so the
+// field shipped on a shelf with ZERO real consumers while greening. That prose-green path
+// is REMOVED: V5 now runs the REAL grep over `src/components/custom/{viz}/` (the live
+// call-site count the doc booked) and the ≥2-consumer bar (J-inv-10 / L-inv-8) must be met
+// in FACT. The consumer-evidence doc still exists (it records the now-live call sites + the
+// re-audit clause), but it is no longer a SUBSTITUTE for a real consumer — a doc with zero
+// real call site REDs.
+//
+// THE SUBSTRATE-FLOOR REALITY: at the BC.W-VIZ-INTERACTION substrate-floor close this is
+// born-RED (every viz grep EMPTY — the per-viz waves wire the field AFTER this floor lands;
+// EXECUTION-DAG §4 Band-4). It goes GREEN when ≥2 per-viz waves wire the field. Mid-build
+// RED is BY-DESIGN — the SYNTHESIS class 2 cure is the grep CATCHING the unmet bar, not a
+// prose pass papering over it.
+const vizConsumers = grepVizConsumers();
+const liveConsumers = vizConsumers.length;
 const evidenceExists = existsSync(resolve(ROOT, FILES.evidence));
-let evidenceNamesBooked = false;
 let evidenceHasReaudit = false;
 if (evidenceExists) {
     const ev = read(FILES.evidence);
-    // Names the booked WebGPU-viz consumers (W-FLOWFIELD + W-CONCENTRIC).
-    evidenceNamesBooked =
-        /W-FLOWFIELD/.test(ev) &&
-        /W-CONCENTRIC/.test(ev) &&
-        /usePointerVelocityField/.test(ev);
-    // Carries the no-overfitting re-audit clause (a retire/wire trigger).
+    // The doc must STILL carry the no-overfitting re-audit/retire clause (a retire/wire
+    // trigger) — but it no longer greens V5 on its own.
     evidenceHasReaudit = /re-audit/i.test(ev) && /retire/i.test(ev);
 }
-const consumerBarMet =
-    liveConsumers >= 2 ||
-    (evidenceExists && evidenceNamesBooked && evidenceHasReaudit);
-if (!consumerBarMet) {
-    if (!evidenceExists)
-        violations.push(
-            `V5: the ≥2-consumer bar is unmet (${liveConsumers} live call site(s)) AND ${FILES.evidence} does not exist (the booked-consumer evidence is required for the EARLY publish)`,
-        );
-    else if (!evidenceNamesBooked)
-        violations.push(
-            "V5: the consumer-evidence doc does not name the booked WebGPU-viz consumers (W-FLOWFIELD + W-CONCENTRIC + usePointerVelocityField)",
-        );
-    else if (!evidenceHasReaudit)
-        violations.push(
-            "V5: the consumer-evidence doc lacks the no-overfitting re-audit/retire clause",
-        );
-}
+// The bar is met in FACT: ≥2 live per-viz call sites (the grep, NOT the prose).
+const consumerBarMet = liveConsumers >= 2;
+if (!consumerBarMet)
+    violations.push(
+        `V5: the ≥2-consumer bar is UNMET — ${liveConsumers} live usePointerVelocityField() call site(s) in src/components/custom/ (${vizConsumers.map((f) => f.replace(/^.*custom\//, "")).join(", ") || "NONE"}). The doc-prose path is REMOVED (the SYNTHESIS class 2 cure): the field's J-inv-10 bar must be met by REAL per-viz wiring (the per-viz waves wire it after the BC.W-VIZ-INTERACTION substrate floor) — a consumer-evidence doc cannot substitute for a call site`,
+    );
+if (evidenceExists && !evidenceHasReaudit)
+    violations.push(
+        "V5: the consumer-evidence doc lacks the no-overfitting re-audit/retire clause (the doc no longer greens V5, but it must still carry the wire-or-retire trigger)",
+    );
 facts.consumerBar = {
     liveConsumers,
+    vizConsumers: vizConsumers.map((f) => f.replace(/^.*custom\//, "")),
     evidenceExists,
-    evidenceNamesBooked,
     evidenceHasReaudit,
     met: consumerBarMet,
 };
@@ -335,7 +338,7 @@ function finish() {
         );
     if (facts.consumerBar)
         console.log(
-            `  consumer bar: liveConsumers=${facts.consumerBar.liveConsumers} evidence=${facts.consumerBar.evidenceExists} booked=${facts.consumerBar.evidenceNamesBooked} met=${facts.consumerBar.met}`,
+            `  consumer bar (REAL per-viz grep, prose-green REMOVED): liveConsumers=${facts.consumerBar.liveConsumers} [${facts.consumerBar.vizConsumers.join(", ") || "NONE"}] evidence=${facts.consumerBar.evidenceExists} met=${facts.consumerBar.met}`,
         );
     console.log(
         `  self-test bites all flagged: ${(facts.selfTestBites ?? []).every((b) => b.flagged)}`,
@@ -350,23 +353,24 @@ function finish() {
     process.exit(status === "pass" ? 0 : 1);
 }
 
-// Count live usePointerVelocityField() CALL sites across src/ (excluding the leaf
-// itself + the barrels + tests). A real binary consumer is a `usePointerVelocityField(`
-// invocation in a non-leaf src file.
-function execGrep() {
+// The REAL per-viz grep (BC.W-VIZ-INTERACTION D — the grep the consumer-evidence doc
+// promised but V5 never ran). A live binary consumer is a `usePointerVelocityField(`
+// invocation under src/components/custom/ (the procedural-viz dirs) — NOT a doc mention,
+// NOT the leaf/barrels/tests. Returns the list of consuming file paths so the gate names
+// them (the J-inv-10 ≥2-consumer bar met in FACT).
+function grepVizConsumers() {
     try {
         const out = execSync(
-            `grep -rl 'usePointerVelocityField(' ${resolve(ROOT, "src")} 2>/dev/null || true`,
+            `grep -rl 'usePointerVelocityField(' ${resolve(ROOT, "src/components/custom")} 2>/dev/null || true`,
             { encoding: "utf8" },
         );
-        const files = out
+        return out
             .split("\n")
             .map((f) => f.trim())
             .filter(Boolean)
             .filter((f) => !f.endsWith("usePointerVelocityField.ts"))
-            .filter((f) => !f.endsWith("/index.ts"));
-        return files.length;
+            .filter((f) => !/\.(test|spec)\.ts$/.test(f));
     } catch {
-        return 0;
+        return [];
     }
 }
