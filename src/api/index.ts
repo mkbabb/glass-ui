@@ -435,6 +435,19 @@ export type {
     UseTextHighlightControls,
 } from "../composables/motion/useTextHighlight";
 
+// ── SplitChars / useCharStagger (the per-glyph split, BC.W-SPLIT-CHARS) ───────
+// `useCharStagger` (the per-glyph split partner to the shipped `.char-stagger`
+// CSS) on `/motion-core` + the root barrel. `UseCharStaggerOptions` is the option
+// shape (`by` split-unit / `preserveWhitespace` / `writeTotal`); `UseCharStaggerReturn`
+// is the `{ split, count }` handle. A consumer wiring its own split surface (a
+// hero word) or typing a wrapper pins them here; the runtime value lives on
+// `/motion-core` + the root barrel (engine-free). `<SplitChars>` is the component
+// face over it.
+export type {
+    UseCharStaggerOptions,
+    UseCharStaggerReturn,
+} from "../composables/motion/useCharStagger";
+
 // ── EasingPicker (the boundary-law curve editor) ─────────────────────────────
 // The published <EasingPicker>/<EasingConfigurator> curve-authoring family
 // (BB.W-EASING-PRIMITIVE — the C-3 fold). `EasingPickerMode` is the two-arm axis

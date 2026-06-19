@@ -29,6 +29,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../ui/select";
+import { Slider } from "../../ui/slider";
 import {
     useEasingPicker,
     type EasingPickerMode,
@@ -98,6 +99,7 @@ const {
     terms,
     easingFn,
     readout: readoutLiteral,
+    reparseOk,
     value,
     handlesSvg,
     bezierPathD,
@@ -193,6 +195,16 @@ const canvasViewBox = computed(() =>
         ? `0 ${viewBox.value.minY} 1 ${viewBox.value.height}`
         : "-0.05 -0.1 1.1 1.2",
 );
+
+// The `n`-count control is the dogfooded glass-ui <Slider> (the affordance-mapped
+// scrubber, not a raw <input type="range">). reka's SliderRoot v-models a
+// number[], so this bridges the array ↔ the scalar `steps` ref the composable owns.
+const stepsModel = computed<number[]>({
+    get: () => [steps.value],
+    set: (v) => {
+        steps.value = v[0] ?? steps.value;
+    },
+});
 </script>
 
 <template>
@@ -275,20 +287,21 @@ const canvasViewBox = computed(() =>
             <template v-else>
                 <div class="flex flex-col gap-2">
                     <span class="text-mono-caption text-muted-foreground">Steps (n) — {{ steps }}</span>
-                    <input
-                        v-model.number="steps"
-                        type="range"
+                    <!-- the dogfooded glass-ui <Slider> (the affordance-mapped
+                         scrubber) drives the live value.js steppedEase(n, term) -->
+                    <Slider
+                        v-model="stepsModel"
                         :min="STEP_COUNT_MIN"
                         :max="STEP_COUNT_MAX"
-                        step="1"
-                        class="w-full accent-(--easing-curve-accent)"
+                        :step="1"
                         aria-label="Step count"
+                        data-testid="easing-steps-n"
                     />
                 </div>
                 <div class="flex flex-col gap-2">
                     <span class="text-mono-caption text-muted-foreground">Jump term</span>
                     <Select :model-value="term" @update:model-value="(v) => (term = String(v) as JumpTerm)">
-                        <SelectTrigger>
+                        <SelectTrigger aria-label="Jump term">
                             <SelectValue placeholder="Pick a jump term" />
                         </SelectTrigger>
                         <SelectContent>
@@ -300,8 +313,15 @@ const canvasViewBox = computed(() =>
                 </div>
             </template>
 
-            <!-- the complete re-parseable readout + copy -->
-            <div v-if="readout" class="glass-card flex items-center gap-2 rounded-card px-3 py-2">
+            <!-- the complete re-parseable readout + copy. data-reparse-ok proves the
+                 steps literal round-trips through value.js parseSteps (the
+                 boundary-law surface, readable by the π spec). -->
+            <div
+                v-if="readout"
+                class="glass-card flex items-center gap-2 rounded-card px-3 py-2"
+                :data-reparse-ok="reparseOk"
+                data-testid="easing-readout"
+            >
                 <code class="min-w-0 flex-1 truncate text-xs text-foreground" :title="readoutLiteral">{{ readoutLiteral }}</code>
                 <button
                     type="button"

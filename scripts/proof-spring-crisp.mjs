@@ -32,8 +32,17 @@ const SCHEME_MOTION = resolve(root, "src/styles/tokens/scheme-motion.css");
 const SPRING_PRESETS_TS = resolve(root, "src/composables/motion/springPresets.ts");
 const DELTA = resolve(root, "docs/tranches/BB/audit/visual/W-SPRING-CRISP-DELTA.md");
 
-/** The five canonical glass-ui spring registers. `crisp` is NOT among them (the B9 no-op). */
-const CANONICAL_SPRINGS = ["smooth", "snappy", "bouncy", "gentle", "dock"];
+/**
+ * The canonical glass-ui spring registers. `crisp` is NOT among them (the B9 no-op
+ * this gate LOCKS). `press` joined at BC.W-SPRING-EASE — the minted iOS interactive
+ * register (response 0.15 / ζ 0.86, the Apple `interactiveSpring`) with REAL
+ * consumers (useSpringPress → Button/Card via the --glass-btn-press-t drive; the
+ * --ease-spring-press @theme alias publishes it). That is exactly the "≥2 real
+ * surfaces → a wave mints the row + the consumer evidence" path this gate's header
+ * names — the roster is widened to it. `crisp` stays out (one self-hosting consumer,
+ * an un-landed roadmap).
+ */
+const CANONICAL_SPRINGS = ["smooth", "snappy", "bouncy", "gentle", "dock", "press"];
 
 const failures = [];
 function check(name, ok, detail) {

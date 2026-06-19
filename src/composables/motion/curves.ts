@@ -145,11 +145,24 @@ const ALIAS_SPEC: ReadonlyArray<{ token: `--${string}`; canonical: `--${string}`
     { token: "--ease-spring", canonical: "--spring-snappy", note: "alias → --spring-snappy (the default spring register)" },
     { token: "--ease-decelerate", canonical: "--motion-ease-out", note: "alias → --motion-ease-out" },
     { token: "--ease-accelerate", canonical: "--motion-ease-in", note: "alias → --motion-ease-in" },
-    // The theme.css @theme quartet (theme.css:410-413) + the @theme --ease-spring (theme.css:420).
+    // The bridges.css @theme aliases + the @theme --ease-spring (the default register).
     { token: "--ease-spring-smooth", canonical: "--spring-smooth", note: "@theme alias → --spring-smooth" },
     { token: "--ease-spring-snappy", canonical: "--spring-snappy", note: "@theme alias → --spring-snappy" },
     { token: "--ease-spring-bouncy", canonical: "--spring-bouncy", note: "@theme alias → --spring-bouncy" },
     { token: "--ease-spring-gentle", canonical: "--spring-gentle", note: "@theme alias → --spring-gentle" },
+    // BC.W-SPRING-EASE — the minted iOS interactive press register's @theme alias.
+    { token: "--ease-spring-press", canonical: "--spring-press", note: "@theme alias → --spring-press (the iOS interactive press register)" },
+    // BC.W-MOTION-PRESETS — the brand "convergence-reveal" / partial-sum settle.
+    // DECIDE (recorded, MEASURED): a Fourier partial sum converges ONTO its target
+    // with a Gibbs ripple that DECAYS — its macro envelope is a monotone
+    // critically-damped approach with NO sustained overshoot past terminal. That is
+    // EXACTLY `gentle` (response 0.7, ζ=1.0): analytic overshoot exp(-ζπ/√(1-ζ²))=0,
+    // the emitted `--spring-gentle` linear() peaks at 1.00000 (never exceeds 1.0).
+    // The reference curve is NOT measurably distinct from `gentle`, so this is the
+    // ALIAS reuse (zero new SPRING_PRESETS row, zero new engine — the no-contrivance
+    // line). `--ease-convergence` resolves THROUGH `--spring-gentle`'s twin; the
+    // settle clock is `--spring-gentle-duration`.
+    { token: "--ease-convergence", canonical: "--spring-gentle", note: "alias → --spring-gentle (the partial-sum settle — critically-damped, no overshoot; REUSE, measured-not-distinct)" },
 ];
 
 const ALIASES: MotionCurve[] = ALIAS_SPEC.map(({ token, canonical, note }) => ({

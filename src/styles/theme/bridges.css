@@ -332,6 +332,10 @@
     --ease-spring-snappy: var(--spring-snappy);
     --ease-spring-bouncy: var(--spring-bouncy);
     --ease-spring-gentle: var(--spring-gentle);
+    /* BC.W-SPRING-EASE — the minted iOS interactive press register's @theme alias
+       (the documented public register the consumers reach by name; the JS path
+       reads it via useSpringPress + --glass-btn-press-t). */
+    --ease-spring-press: var(--spring-press);
 
     --ease-standard: var(--motion-ease-standard);
     --ease-out: var(--motion-ease-out);

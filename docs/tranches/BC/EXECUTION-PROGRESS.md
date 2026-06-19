@@ -31,7 +31,7 @@
 | 2.5 | 14 | VIRTUAL-WINDOW → TOC-RECONCILE · FUZZY-HARDEN | pending (early primitives, ‖ Band 1) |
 | 3-6 | 1 spine | BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → GLASS-LEGIBILITY-MEASURED | **DONE** — warm-cream floor π-VERIFIED (130/130 both projects, real-GPU); observer loop CLOSED; black-bar retired; grey-slab REDs |
 | 6-7 | 1 fan | GLASS-PRUNE · DESHADCN · SELECTION-CARD · GLASS-GLOW-FIX · ACCENT-TONE · AX-METAL-GLOW · DIALOG-GLASS · BUTTON-GLASS-IOS | **DONE** — fan π 43/43 (1 booked press→Band 7) both projects; glass-glow real-defect fixed; CLAUDE.md regenerated; glass-panel retire HELD (live Atlas consumer→ATLAS-ASK); selectable-chip subpath shipped |
-| 7′ | 7 | MOTION-ONE-CLOCK → SPRING-EASE → AFFORDANCE-MAP/TUNABLE-ANIM + SPLIT-CHARS/MOTION-PRESETS | pending |
+| 7′ | 7 | MOTION-ONE-CLOCK → SPRING-EASE → AFFORDANCE-MAP/TUNABLE-ANIM + SPLIT-CHARS/MOTION-PRESETS | **DONE** — motion π 99/99 both projects; press 0.15/0.86 minted+wired (button-press unblocked); one-clock born-RED gate; SplitChars/MotionPresets 14/14 vitest. proof:lensing→Band 4, 8 clock-fence swaps→downstream owners |
 | 7.7 | 12 | CUSTOMIZABILITY-CENSUS → CONTROL-CUSTOM/OVERLAY-UNIFORM/SEARCH-CUSTOM + METRIC-HOVER/FOURIER-DECIDES | pending |
 | 8-11 | 2 | DOCK-ENGINE → fan → LIQUID-MORPH/COLLAPSED-BOTH → STACK-RAIL + CTA-SEAT/COCKPIT | pending |
 | 11.5 | 13 | SCROLL-TRIGGER → SCROLL-CHROME → DOCK-SEARCH | pending |

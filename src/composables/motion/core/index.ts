@@ -65,3 +65,12 @@ export * from "../useLiquidFlex";
 // consumers are the born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC) — see
 // docs/consumer-evidence/use-pointer-velocity-field.md.
 export * from "../usePointerVelocityField";
+// BC.W-SPLIT-CHARS — the per-glyph split partner the shipped `.char-stagger` CSS
+// recipe (typography/utilities.css) has been waiting for. It reads a target's
+// `textContent`, mints `.char` spans + the `--char-index`/`--char-total` customs
+// the recipe reads, sets `aria-label` to the full text + `aria-hidden` on every
+// glyph (the load-bearing a11y fact), and `Intl.Segmenter` grapheme mode is
+// emoji/ZWJ safe. Imports `vue` only — engine-FREE + vueuse-FREE, so it ships on
+// the `/motion-core` surface AND the root barrel (the `vReveal` precedent). The
+// `<SplitChars>` component face composes it (root barrel + /motion-core).
+export * from "../useCharStagger";

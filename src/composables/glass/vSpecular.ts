@@ -1,5 +1,16 @@
 // v-specular — the tier-root moving-specular AUTO-ARM (BB.W-LIQUIDHOVER).
 //
+// This directive is the GLEAM-TRACK primitive of the affordance vocabulary
+// (`docs/precepts/affordance-map.md`, BC.W-AFFORDANCE-MAP — the closed five-primitive
+// set: hover-lift · gleam-track · press-squish · drag-morph · focus-ring). It feeds the
+// host `--mouse-x/y` write; the `.glass-material::before` recipe maps it onto the typed
+// `--specular-x/y` channel and reads the `--glass-specular-intensity-{rest,hover,active}`
+// rungs — so the gleam WAKES on hover (intensity rest 0 → hover) and ILLUMINATES under
+// the touch-point on press (→ active), the iOS-27 touch-illumination coupled to the
+// PRESS-SQUISH leg. The position-tracked write rides `--ease-standard` (motion-canon §6
+// "Position-tracked → --ease-standard"). One delivery, no second engine (the proportion
+// fence — `proof:affordance-map` reds a forked gleam writer).
+//
 // The interactive-glass tier's pointer-following gleam is a PROPERTY OF THE TIER,
 // not a per-consumer opt-in. This dependency-free `ObjectDirective` (the `vReveal`
 // playbook) attaches the rAF-coalesced `pointermove` position write to its host on

@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// Regenerate the four `--spring-*` CSS tokens in `src/styles/tokens.css`
-// from the SpringProgress solver published by `@mkbabb/keyframes.js`.
+// Regenerate the `--spring-*` CSS tokens in `src/styles/tokens.css` from the
+// SpringProgress solver published by `@mkbabb/keyframes.js`.
 //
-// Before this script landed (AL.W9-γ), the four tokens were hand-precomputed
-// — there was no in-repo source of truth tying ζ=0.65 to the snappy stop list.
-// Now the (response, dampingFraction) pairs are the source of truth and the
-// `linear()` strings are derived: edit the PRESETS table below, re-run
-// `node scripts/regen-spring-tokens.mjs`, commit.
+// Before this script landed (AL.W9-γ), the tokens were hand-precomputed — there
+// was no in-repo source of truth tying ζ to the snappy stop list. Now the
+// (response, dampingFraction) pairs in `springPresets.ts` are the source of truth
+// and the `linear()` strings are derived: edit the PRESETS table, re-run
+// `node scripts/regen-spring-tokens.mjs`, commit. (BC.W-SPRING-EASE eased `snappy`
+// + `bouncy` and minted the `press` row off that ONE table — the count is the
+// table's length, never hardcoded.)
 //
 // The script is idempotent — it locates the §2 EASING block in tokens.css by
 // the spring-block marker comments and rewrites the four `--spring-*` lines
@@ -35,18 +37,14 @@ export const PRESETS = SPRING_PRESETS;
 /**
  * 48 intermediate samples + 2 endpoints = 50 stops.
  *
- * Raised from 24 in AM-W2-α: the Path A retune drops `bouncy` to ζ=0.45,
- * which produces a sharper/earlier/higher first peak (analytic overshoot
- * 1 + exp(-ζπ/√(1-ζ²)) = 1.20535 at ~13.8% progress). At SAMPLE_COUNT=24
- * the uniform 4%-apart grid straddles that peak and clips it to ~1.1833 —
- * under-representing the overshoot by ~2pp, a faithfulness defect (the
- * `linear()` must represent the solver, not a clipped approximation).
- *
- * At 48 samples (~2% grid) both retuned peaks land within their targets:
- * bouncy 1.2048 (≈analytic 1.2054) and snappy 1.0680 (≈analytic 1.0681) —
- * verified empirically against the keyframes.js solver. The old comment's
- * claim that 24 was "stable past the first peak even at the bouncy floor"
- * was true only for the old ζ=0.65 bouncy; it is stale under Path A.
+ * Raised from 24 in AM-W2-α: a lower-ζ spring produces a sharper/earlier/higher
+ * first peak, and a coarse uniform grid straddles + clips it (under-representing
+ * the overshoot — a faithfulness defect, since the `linear()` must represent the
+ * solver, not a clipped approximation). At 48 samples (~2% grid) the steepest
+ * retuned peak (BC.W-SPRING-EASE `bouncy` ζ=0.55, analytic overshoot
+ * 1 + exp(-ζπ/√(1-ζ²)) = 1.1263) lands within its target — verified empirically
+ * against the keyframes.js solver. (The eased `snappy` ζ=0.78 + the minted `press`
+ * ζ=0.86 are gentler still; 48 over-samples them comfortably.)
  */
 const SAMPLE_COUNT = 48;
 
@@ -102,13 +100,17 @@ export function generateDurationBlock() {
 
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
+// BC.W-SPRING-EASE — `press` joins the register family (the minted iOS interactive
+// row), so the block-match alternation widens to it. The regex enumerates the SAME
+// six names the PRESETS table carries — a name added to the table must be added here
+// (the gen WRITE + the sync gate READ both anchor on this alternation).
 export const SPRING_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock): linear\([^)]+\);\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press): linear\([^)]+\);\n?)+/m;
 // BA.W-GLASS-CAL Unit 3 — the per-spring DURATION block. A SEPARATE contiguous
 // block (immediately after the `linear()` easing block) so SPRING_LINES_RE keeps
 // matching only the easing lines; this regex owns the duration lines.
 export const SPRING_DURATION_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock)-duration: [\d.]+s;\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press)-duration: [\d.]+s;\n?)+/m;
 
 export function main() {
     const source = readFileSync(tokensPath, "utf8");

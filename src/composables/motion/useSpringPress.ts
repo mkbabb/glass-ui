@@ -12,17 +12,25 @@
 
 import { ref } from "vue";
 import { useSpring, type UseSpringOptions, type SpringRef } from "./useSpring";
+import { springPreset } from "./springPresets";
+
+// BC.W-SPRING-EASE — the press defaults read the minted `press` SPRING_PRESETS
+// row (the Apple `interactiveSpring`, response 0.15 / ζ 0.86) — the ONE source,
+// never a local literal. The old hand-defaults (0.25 / 0.7) were slower + less
+// crisp than the iOS interactive register; re-pointing onto the table answers the
+// press in the sub-100ms iOS window with a tiny alive rebound, drift-proof.
+const PRESS = springPreset("press");
 
 export interface UseSpringPressOptions extends UseSpringOptions {
     /**
-     * Spring `response`. Default 0.25s (iOS tap-press canonical; faster
-     * than the default `useSpring` 0.5s to keep press feedback under the
-     * 100ms perception threshold).
+     * Spring `response`. Default `0.15s` — the `press` SPRING_PRESETS row (the
+     * Apple `interactiveSpring`): the sub-100ms iOS tap-press window, faster than
+     * the generic `useSpring` 0.5s so the feedback lands under the 100ms threshold.
      */
     response?: number;
     /**
-     * Spring `dampingFraction`. Default 0.7 (overshoots ~5% — feels
-     * springy but doesn't ring).
+     * Spring `dampingFraction`. Default `0.86` — the `press` row's ζ: a tiny
+     * sub-perceptual rebound (springy/alive) that does NOT ring.
      */
     dampingFraction?: number;
 }
@@ -66,8 +74,8 @@ export function useSpringPress(
     const target = ref(0);
 
     const spring = useSpring(target, {
-        response: options.response ?? 0.25,
-        dampingFraction: options.dampingFraction ?? 0.7,
+        response: options.response ?? PRESS.response,
+        dampingFraction: options.dampingFraction ?? PRESS.dampingFraction,
         initial: options.initial ?? 0,
         initialVelocity: options.initialVelocity,
         settleThreshold: options.settleThreshold,

@@ -1602,6 +1602,42 @@ export const GATES = [
         note: "BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register (one --tone → idle/active/edge/ink via the shipped value.js safeAccentColor /color leaf) + <SelectableChip>. A3 no hand-rolled active-fill color-mix (the toggle-chip data-[state=on] forms retired onto the register), A5 the idle ≥3:1 contrast floor, the no-gray OKLab floor. SelectableChip ships its OWN /selectable-chip subpath leaf (value.js-bearing, off the value.js-free root barrel — the SCC-trap discipline). Bite: a hand-rolled active-fill / an idle <3:1 tone / SelectableChip on the root barrel → RED.",
     },
     {
+        id: "proof:motion-one-clock",
+        cmd: "proof:motion-one-clock",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-MOTION-ONE-CLOCK — keyframes.js is the ONE source + clock, made a born-RED gate (the structural answer to the masked-accretion drift). M1 SPRING_PRESETS the single hand-authored (response,ζ) table (regen + curves import it); M2 OFF-SPINE allowlist (the 2 sanctioned hand-rolled seams: usePointerVelocityField lerp + useDragMorph snap — de-allowlisting reds the real file); M3 CLOCK-FENCE whole-corpus sweep (0 live forks; the 8 BB-batch drifts NAMED in the CLOCK_FENCE_PENDING verify-not-edit bridge, each with its downstream owning wave); M4 VIZ-INVERSION (0 viz-owned kf rAF); M5 the §P7 canon + asks-and-consumes book. The KF-OSCILLATOR loop-clock stays BOOKED (absent from kf 4.3.0 dist). Bite: a 2nd register table / a hand-rolled spring integrator off the allowlist / a viz kf rAF → RED.",
+    },
+    {
+        id: "proof:spring-ease",
+        cmd: "proof:spring-ease",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-SPRING-EASE — all springs squishy/quick/coupled-fade + the iOS press register minted. S1 snappy 90%-travel in the clock-fill band [0.55,0.70] (retuned 0.42/0.78 → 0.571, NOT the 0.16 front-load); S2 bouncy overshoot in the Apple band; S3 the `press` row 0.15/0.86 minted + wired (useSpringPress) + the --spring-press/-duration tokens emitted (regen-spring-tokens synced); the `dock` row byte-FROZEN (DOCK-ENGINE consumes --spring-dock); S6 universal-sweep 0 abrupt spatial legs (the PENDING bridge leg-specific). proof:spring-tokens-synced rides it. Bite: a front-loaded snappy / an over-sprung bouncy / a missing press row / a regen-skip drift → RED.",
+    },
+    {
+        id: "proof:affordance-map",
+        cmd: "proof:affordance-map",
+        tags: ["local", "ci"],
+        note: "BC.W-AFFORDANCE-MAP — interaction affordances baked into every interactive element (the 22-row registry), riding the eased springs + the minted press register. The vSpecular affordance contract: a hover lift / press / focus on a front-loaded curve reds; the affordance must read the named spring clock. Bite: an un-mapped interactive element / a raw-curve affordance → RED.",
+    },
+    {
+        id: "proof:tunable-anim",
+        cmd: "proof:tunable-anim",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-TUNABLE-ANIM — the tunable-animation registry (the configurator/EasingPicker exposes the eased curves + affordances). Indexes the one-clock single source; every tunable curve resolves to a named SPRING_PRESETS row, not an inline literal. Bite: an un-indexed tunable / an inline curve in the picker → RED.",
+    },
+    {
+        id: "proof:split-chars",
+        cmd: "proof:split-chars",
+        tags: ["local", "ci"],
+        note: "BC.W-SPLIT-CHARS — the per-glyph split JS partner useCharStagger + <SplitChars> with --char-index/--char-total + the MANDATORY accessible full-text label (aria) — the engine-free JS partner to the shipped .char-stagger CSS, placed in /motion-core (root-barrel-safe, engine-free), the ≥2-consumer bar. Bite: a split without the accessible full-text label / a non-/motion-core placement / a value.js or engine import on the leaf → RED.",
+    },
+    {
+        id: "proof:motion-presets",
+        cmd: "proof:motion-presets",
+        tags: ["local", "ci"],
+        note: "BC.W-MOTION-PRESETS — the convergence-reveal motion preset (the brand partial-sum-settle; prefers the `gentle` reuse unless measurably distinct, no new engine) + the [data-scroll-reveal] `once` latch reusing the shipped IntersectionObserver unobserve machinery (the continuous default UNTOUCHED — no-double-ownership with BC.W-SCROLL-TRIGGER). Bite: a new engine for the reveal / a re-firing `once` latch / a double-owned [data-scroll-reveal] default → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

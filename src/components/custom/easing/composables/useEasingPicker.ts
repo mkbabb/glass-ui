@@ -20,6 +20,7 @@ import {
     steppedEase,
     jumpTerms,
     bezierPresets,
+    parseSteps,
 } from "@mkbabb/value.js";
 import {
     CUSTOM_PRESET,
@@ -91,6 +92,11 @@ export interface UseEasingPickerReturn {
     easingFn: ComputedRef<EasingFn>;
     /** The complete re-parseable readout literal for the active mode. */
     readout: ComputedRef<string>;
+    /** Whether the steps-mode readout round-trips through value.js `parseSteps`
+     *  back to the live (n, term) — the boundary-law proof that the painted
+     *  staircase IS a re-parseable value.js literal, not a hand-rolled string
+     *  the catalogue cannot read back. `true` in bezier mode (no steps literal). */
+    reparseOk: ComputedRef<boolean>;
     /** The full v-model payload (mode + css + fn + raw params). */
     value: ComputedRef<EasingPickerValue>;
     // ── SVG plot geometry (the chassis) ──────────────────────────────────────────
@@ -165,6 +171,18 @@ export function useEasingPicker(
         if (mode.value === "steps") return `steps(${steps.value}, ${term.value})`;
         const [x1, y1, x2, y2] = points.value.map((n) => +n.toFixed(3));
         return `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;
+    });
+
+    // The boundary-law round-trip: in steps mode the readout `steps(n, term)` is
+    // fed back through value.js `parseSteps` (the catalogue's OWN reader) and the
+    // recovered (count, jumpTerm) must equal the live (n, term). So the staircase
+    // the editor paints IS a re-parseable value.js literal — never a hand-rolled
+    // string the catalogue cannot read back. Bezier mode has no steps literal
+    // (trivially `true`).
+    const reparseOk = computed<boolean>(() => {
+        if (mode.value !== "steps") return true;
+        const back = parseSteps(readout.value);
+        return back != null && back.count === steps.value && back.jumpTerm === term.value;
     });
 
     const value = computed<EasingPickerValue>(() => ({
@@ -242,6 +260,7 @@ export function useEasingPicker(
         terms: jumpTerms,
         easingFn,
         readout,
+        reparseOk,
         value,
         handlesSvg,
         bezierPathD,

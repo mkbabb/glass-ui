@@ -142,6 +142,14 @@ export * from "./components/custom/scrolling-text";
 // BROAD reach; also reachable via `@mkbabb/glass-ui/icon-chip`.
 export * from "./components/custom/icon-chip";
 
+// BC.W-SPLIT-CHARS — the per-glyph split COMPONENT face (`<SplitChars>`). It
+// composes the engine-free `useCharStagger` + the shipped `.char-stagger` CSS +
+// the mandatory `aria-label` (the `text` prop IS the label source). Vueuse-FREE +
+// keyframes-FREE (it adds NO animation engine — the CSS owns the motion), so it
+// is root-barrel safe per the icon-chip/`vReveal` precedent; also reachable via
+// `@mkbabb/glass-ui/motion-core`.
+export * from "./components/custom/split-chars";
+
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
 // from the root barrel — they are vueuse-bearing SCC-trap leaves.
@@ -222,6 +230,18 @@ export {
     type UsePointerVelocityField,
     type UsePointerVelocityFieldOptions,
 } from "./composables/motion/usePointerVelocityField";
+
+// BC.W-SPLIT-CHARS — the per-glyph split partner to the shipped `.char-stagger`
+// CSS recipe. Reads a target's `textContent`, mints `.char` spans + the
+// `--char-index`/`--char-total` customs, sets `aria-label` to the full text +
+// `aria-hidden` on every glyph (accessible by construction). Imports `vue` only —
+// engine-FREE + vueuse-FREE and root-barrel safe per the `usePointerVelocityField`
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+export {
+    useCharStagger,
+    type UseCharStaggerOptions,
+    type UseCharStaggerReturn,
+} from "./composables/motion/useCharStagger";
 
 // Core utilities
 export * from "./utils";

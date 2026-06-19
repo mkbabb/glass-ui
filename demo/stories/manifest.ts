@@ -718,6 +718,12 @@ export const CATEGORIES: Category[] = [
                 "Animated Digit",
                 "Single-figure smoothed reel over useAnimatedNumber — tweens a metric toward its bound value so it never snaps; null reads the placeholder.",
             ),
+            s(
+                "motion",
+                "split-chars",
+                "Split Chars",
+                "SplitChars / useCharStagger — the per-glyph split partner to the shipped .char-stagger CSS: mints the .char spans + --char-index/--char-total the recipe reads, accessible by construction (the aria-label keeps the word ONE accessible name; the glyphs are aria-hidden). Char / word / grapheme (Intl.Segmenter) split units.",
+            ),
         ],
     },
     {
