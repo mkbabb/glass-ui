@@ -232,9 +232,10 @@ BC.W-VISUAL-RECONCILE  (Band-4 cross-cutting; after Band-1 glass + GESTALT-FIRST
 - **`⇒ Band 10`**: `BC.W-VIZ-FOURIER` → `BC.W-FOURIER-ASK` (the in-repo "ONE fourier view" lands before the cross-repo re-pin); `BC.W-VIZ-AURORA` (the warm-lean root) → `BC.W-FOURIER-ASK`.
 - **`⇒ Band 11`**: `BC.W-VIZ-AURORA` + `BC.W-GOOBLOB-PLAIN` (the DPR cap + one-canvas invariant ride on the rebuilds) → `BC.W-PERF-PRODUCER`.
 
-### Band 5 — Page standardization (10 waves)
+### Band 5 — Page standardization (11 waves)
 ```
 BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
+   ├──→ BC.W-DEMO-COPY-PRUNE  (the demo-CONTENT/de-jargon prune sibling; BESIDE/after PAGE-PRUNE — shared PRUNE-LEDGER.md; BEFORE the chassis re-styles the kept copy)
    └──→ BC.W-PAGE-CHASSIS  (the ONE standardized page idiom; after Band 1 + Band-4 bg recipes + PAGE-PRUNE)
            ├──→ BC.W-PAGE-HIERARCHY   ──→ BC.W-CODE-BLOCKS      (the technical-value code rung; after HIERARCHY)
            │                          ──→ BC.W-GHOST-DASHED     (after HIERARCHY + GLASS-IDENTITY + BLACK-BAR)
@@ -248,6 +249,7 @@ BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
 - `PAGE-CHASSIS` is the Band-5 root `[→]` after `{PAGE-PRUNE, Band 1, GRID-SIMPLE/VIZ-PAPERGRID}`.
 - `PAGE-HIERARCHY`, `HERO-AUDACIOUS`, `PADDING-CANON` `[‖]` after PAGE-CHASSIS.
 - `CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX` `[‖]` after PAGE-HIERARCHY (+ their Band-1 reads).
+- `DEMO-COPY-PRUNE` is `BESIDE`/`[→]` after `PAGE-PRUNE` (they write ONE shared `PRUNE-LEDGER.md`; this owns the demo-CONTENT/de-jargon prune the route prune does not cover) and BEFORE `{PAGE-CHASSIS, PAGE-HIERARCHY, CODE-BLOCKS}` re-thread the survivors (prune the dead copy FIRST so the chassis re-styles only kept copy); it couples `STORYBOOK-META` (the meta-sweep verifies the de-jargon held cross-page).
 - `COMPOSITIONS-HERO` `[→]` after `{HERO-AUDACIOUS, PAGE-PRUNE}`.
 - `PADDING-CANON` coordinates with `DIALOG-GLASS` on `DialogContent.vue` (padding ladder vs transparency — disjoint legs, no cycle).
 - `EXPANDABLE-PART` is the iteration-5 ATLAS-FOLD containers seam `[→]` after `{GLASS-IDENTITY (B1), GLASS-PRUNE (B1), PADDING-CANON (B5)}` (the fullscreen overlay reads the FIXED `glass-overlay` tier + the settled overlay-padding ladder before a consumer re-paints the trigger over it). It is `[‖]` with the CODE-BLOCKS/GHOST-DASHED/SEPARATOR-FIX/COMPOSITIONS-HERO content fan (disjoint single-component seam, no cross-band paint). It is file-disjoint from `DESHADCN` — this wave OPENS the `data-part`/named-slot chrome hook; DESHADCN re-paints the trigger's shadcn-residual chrome THROUGH it (the seam SHAPE vs the PAINT-token, the single-owner split). **`⇒ Band 10`**: it is sequenced BEFORE `BC.W-ATLAS-ASK` (the Atlas's AR-7 expand-chrome consume-and-delete lands on this seam at the `^4.x` bump — the seam must exist before the consumer adopts it).
@@ -456,6 +458,7 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 20.5 (the page-leg dependent — pulled below Tier 20 so the slot honors its own annotation):** `BC.W-GRID-SIMPLE` — Tier 17 (recipe rhythm: the static `--grid-*` twin beside `BC.W-VIZ-PAPERGRID`) / Tier 20+ (page leg: its `**Sequence:**` is AFTER `BC.W-PAGE-CHASSIS`, so it lands here, after the Tier-20 chassis). The two legs are the recipe/page split §1/§4 already record; the wave linearizes at Tier 20.5 to respect the binding page-leg edge.
 **Tier 18 (Band 6 controls):** `BC.W-RADIO-FIX` → `BC.W-DROPDOWN-FIX`, `BC.W-CONTROL-SMOOTH` → `BC.W-CONFIG-RIGHT` · (CROSS-REPO-ABSORB feedback leaf, `[‖]` with the controls — disjoint surface) `BC.W-AX-COMPLETION-SEAL`✪ (the earned-GOLD seal — `[→]` after `{BC.W-AX-METAL-GLOW @ T5.5, GLASS-IDENTITY @ T4}`; the wave's own band is "6 — feedback"; before SPEEDTEST-ADOPT @ Tier 28)
 **Tier 19 (Band 5 prune):** `BC.W-PAGE-PRUNE`
+**Tier 19.5 (Band 5 demo-content prune — `BESIDE`/after `PAGE-PRUNE`, before the chassis re-threads the survivors):** `BC.W-DEMO-COPY-PRUNE` (the demo-CONTENT/de-jargon prune sibling — `[→]` after `BC.W-PAGE-PRUNE @ T19` (they share `PRUNE-LEDGER.md`); BEFORE `BC.W-PAGE-CHASSIS @ T20`/`BC.W-PAGE-HIERARCHY`/`BC.W-CODE-BLOCKS` re-style the kept copy; couples `BC.W-STORYBOOK-META @ T24`)
 **Tier 20 (Band 5 chassis):** `BC.W-PAGE-CHASSIS`
 **Tier 21 (Band 5 fan-out):** `BC.W-PAGE-HIERARCHY`, `BC.W-HERO-AUDACIOUS`, `BC.W-PADDING-CANON`
 **Tier 22 (Band 5 content + the containers seam):** `BC.W-CODE-BLOCKS`, `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`, `BC.W-EXPANDABLE-PART`◊◊ (the AR-7 chrome-hook seam — after `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6, PADDING-CANON @ T21}`; BEFORE `BC.W-ATLAS-ASK` @ Tier 28)
@@ -579,7 +582,7 @@ in one batch; the `[→]` waves are serial-after their predecessor.
 | Band 4 per-viz | the 9-wave `[‖]` set (AURORA/DOTFLOW/CONCENTRIC/FOURIER/CONSTELLATION/WATERCOLOR/PAPERGRID/DOTMATRIX/GOOBLOB-PLAIN) — **the widest concurrency band; run in batches of 3** | after the floor + cross-cut |
 | Band 4 per-viz tail | `GOOBLOB-MEATBALL` (after PLAIN), `VIZ-HYBRID` (after MEATBALL+DOTMATRIX), `GRID-SIMPLE` (after PAPERGRID+PAGE-CHASSIS) | serial after their parents |
 | Band 6 | `RADIO-FIX` → {`DROPDOWN-FIX`, `CONTROL-SMOOTH`} `[‖]` → `CONFIG-RIGHT` | after Band 1 |
-| Band 5 | `PAGE-PRUNE` → `PAGE-CHASSIS` → {`PAGE-HIERARCHY`, `HERO-AUDACIOUS`, `PADDING-CANON`} `[‖]` → {`CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX`, `COMPOSITIONS-HERO`, `EXPANDABLE-PART`} `[‖]` (`EXPANDABLE-PART` after `PADDING-CANON`, before `ATLAS-ASK`) | after Band 1 + Band-4 bg recipes |
+| Band 5 | `PAGE-PRUNE` → {`DEMO-COPY-PRUNE` BESIDE/after PAGE-PRUNE, before chassis} → `PAGE-CHASSIS` → {`PAGE-HIERARCHY`, `HERO-AUDACIOUS`, `PADDING-CANON`} `[‖]` → {`CODE-BLOCKS`, `GHOST-DASHED`, `SEPARATOR-FIX`, `COMPOSITIONS-HERO`, `EXPANDABLE-PART`} `[‖]` (`EXPANDABLE-PART` after `PADDING-CANON`, before `ATLAS-ASK`) | after Band 1 + Band-4 bg recipes |
 | Band 4 suite | `VIZ-CONFIGURATOR-SUITE` (1) | after every per-viz + PAGE-CHASSIS + CONFIG-RIGHT |
 | Band 9 | `STORYBOOK-META` (1) | after Band 5 + Band 1 + Band 6 |
 | Band 11 | {`CSS-CRITICAL`, `PERF-PRODUCER`} `[‖]` → `LIGHTHOUSE` | after the visual bands settle |
