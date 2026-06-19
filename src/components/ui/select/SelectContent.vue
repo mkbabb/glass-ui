@@ -24,7 +24,14 @@ const props = withDefaults(
   defineProps<SelectContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(),
   {
     position: 'popper',
-    align: 'center',
+    // BC.W-DROPDOWN-FIX — the panel's left edge tracks the trigger's left edge
+    // (the inspector-idiom alignment), not a centred narrow box floating off-axis.
+    // With `position: 'popper'` reka exposes `--reka-select-trigger-width`; the
+    // viewport's `min-w-(--reka-select-trigger-width)` floor makes `align: start`
+    // drop the panel flush-left under the trigger AT its width — one continuous
+    // control. Clean break (no `align-legacy`): a consumer wanting centre passes
+    // `align="center"` explicitly (the prop survives; only the DEFAULT flips).
+    align: 'start',
     collisionPadding: 16,
     surface: 'glass',
   },

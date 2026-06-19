@@ -49,12 +49,23 @@
    Shared compound transition for interactive controls that animate their
    surface (background-color/color/box-shadow/border-color) on the four-state
    contract. Replaces the per-site
-   `transition-[background-color,color,box-shadow,border-color] duration-[var(--duration-fast)] ease-[var(--ease-standard)]`
+   `transition-[background-color,color,box-shadow,border-color] duration-[var(--duration-control)] ease-[var(--ease-standard)]`
    arbitrary wraps at ≥2 sites (TabsTrigger, SelectTrigger, Toggle `card`
-   variant). Binds the canonical --duration-fast + --ease-standard tokens. */
+   variant).
+
+   BC.W-CONTROL-SMOOTH — the surface legs read the QUICK control clock
+   `--duration-control` (0.12s, the named iOS control-press surface beat,
+   scheme-motion.css), NOT the 0.2s calm `--duration-fast`. A control the user
+   actively pokes wants the ~100-120ms quick beat that tracks the cursor; the
+   prior 0.2s dragged the colour/border/shadow VISIBLY behind the press (the §F
+   "super laggy" read). The bezier `--ease-standard` STAYS (a colour cross-fade
+   on a spring wobbles — §6 binding); the property list stays SURFACE-ONLY (no
+   `transform` leg — the press-squish is `.tap-squish`/`useSpringPress`'s spring
+   job, the canonical split). One token re-times the whole 12-consumer control
+   family. */
 @utility transition-control {
     transition-property: background-color, color, box-shadow, border-color;
-    transition-duration: var(--duration-fast);
+    transition-duration: var(--duration-control);
     transition-timing-function: var(--ease-standard);
 }
 

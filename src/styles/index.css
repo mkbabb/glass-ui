@@ -193,6 +193,14 @@
    masks + the PRM milestone-pulse bracket. */
 @import "./border-progress.css";
 
+/* BC.W-AX-COMPLETION-SEAL — the hero-scale earned-GOLD completion seal: a one-shot
+   gold-draw mark (a `stroke-dashoffset` wipe on the 4 `@property` motion tokens
+   `--seal-draw`/`--seal-scale`/`--seal-glint`/`--seal-ink`, registered in
+   tokens/property-regs.css §18). The ink reads the W-PHASE-PALETTE earned-gold
+   register; the glint composes the W-AX-METAL-GLOW catch-light. One-shot, PRM-gated,
+   compositor-only — the feedback-surface partial. */
+@import "./completion-seal.css";
+
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,
    layout utilities like h-full/shrink-0).

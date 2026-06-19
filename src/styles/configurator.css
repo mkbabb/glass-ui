@@ -75,3 +75,58 @@
 .configurator-footer {
     border-color: var(--configurator-divider);
 }
+
+/* 4. The DESKTOP TWO-COLUMN LAYOUT — controls on the RIGHT (BC.W-CONFIG-RIGHT).
+ *
+ * The configurator's own desktop grid was the next victim of the BA.W-EMISSION
+ * self-emission class (CLAUDE.md): the SFC carried the structural layout as a
+ * `lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,280px),var(--configurator-aside-max,360px))]`
+ * arbitrary utility — a `lg:` arbitrary bracket with NESTED `var()` + commas +
+ * `minmax()` that dies in a consumer's content-scan (the same failure that killed
+ * the Select collision-bound). So every studio rendered SINGLE-column (controls
+ * stacked BELOW the stage) on desktop: `getComputedStyle(cfg).gridTemplateColumns`
+ * read ONE `1131px` track at 1280px width, the aside below the stage, never right.
+ *
+ * The fix is the BA.W-EMISSION discipline: the structural layout lives in SHIPPED
+ * CSS as a precompiled rule scoped to `[data-slot="configurator"]`, NEVER
+ * load-bearing on a content-scan reach (the SAME mechanism the Select bound got in
+ * select.css). Below `lg` the base `grid grid-cols-1` + the mobile row template
+ * (emitted fine — a plain utility) keeps the single-column stack: stage above,
+ * controls below (a narrow viewport has no room for side-by-side). At `lg`+ this
+ * rule sets the two-column geometry off the SAME `--configurator-aside-{min,max}`
+ * token band (default 280px/360px, retunable via the `asideWidth` prop) the dead
+ * utility read — the token contract is byte-identical, only the MECHANISM moves
+ * onto shipped CSS. The explicit mobile rows reset to `none` so one auto row
+ * stretches to the taller column. */
+@media (min-width: 1024px) {
+    [data-slot="configurator"] {
+        grid-template-columns: minmax(0, 1fr)
+            minmax(
+                var(--configurator-aside-min, 280px),
+                var(--configurator-aside-max, 360px)
+            );
+        grid-template-rows: none;
+    }
+}
+
+/* 5. The SIDE FLIP — a data-attr, default RIGHT (BC.W-CONFIG-RIGHT).
+ *
+ * The aside side moves off the dead `lg:col-start-*` arbitrary utility (gated
+ * behind the same silent-JIT-failure class) onto a `data-aside-side` attr the SFC
+ * binds. `right` (the default) is the NATURAL source order — stage in column 1,
+ * aside in column 2 — so it needs NO override (the bare desktop rule above already
+ * places them left→right). `left` is the reversible taste-level flip: it swaps the
+ * grid-COLUMN targets so the aside paints on the LEFT, while the DOM/tab order
+ * stays stage→aside (the side is grid-cell PLACEMENT + border-side only, never an
+ * `order:`/`row-reverse` that would desync the visual order from the DOM reading
+ * order — WCAG 1.3.2/2.4.3 inviolate, the AM.W0 contract). Below `lg` (single
+ * column) neither side has meaning. */
+@media (min-width: 1024px) {
+    [data-slot="configurator"][data-aside-side="left"] .configurator-stage {
+        grid-column-start: 2;
+    }
+    [data-slot="configurator"][data-aside-side="left"] .configurator-aside {
+        grid-column-start: 1;
+        grid-row-start: 1;
+    }
+}

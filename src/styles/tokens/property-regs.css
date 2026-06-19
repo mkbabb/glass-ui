@@ -320,3 +320,62 @@
     inherits: true;
     initial-value: 0;
 }
+
+/* BC.W-AX-COMPLETION-SEAL — the 4 motion drives of the hero-scale earned-GOLD
+   completion seal (completion-seal.css consumes them). Registered typed so the
+   one-shot draw INTERPOLATES (a bare unregistered var() snaps; the §18 typed-property
+   idiom lets the engine animate the stroke-reveal / settle / glint). The seal is the
+   visual seal of the W-PHASE-PALETTE completion event — its ink reads the earned-gold
+   register; its glint composes the W-AX-METAL-GLOW catch-light. One-shot, PRM-gated,
+   compositor-only.
+
+   • --seal-draw (<percentage>) — the stroke-reveal extent (the stroke-dashoffset wipe
+     drive: 0% undrawn → 100% fully drawn). `inherits: false` (each seal owns its own
+     draw, the per-surface ownership of the specular/border-progress cohort — a sealed
+     parent must not push its draw onto a child seal). `initial-value: 100%` is the
+     SAFE fully-drawn resting seal: on a non-supporting engine (no @property) the seal
+     paints fully drawn, NEVER a blank — the editorial draw-on degrades to the finished
+     mark, never to nothing.
+
+   • --seal-scale (<number>) — the settle scale (the draw-on lands with a small spring
+     overshoot on the seal's own --spring-snappy/--spring-bouncy clock — the SPATIAL
+     leg, W-MOTION-CANON P2 enter-bouncy). `inherits: false` (per-seal). `initial-value:
+     1` is the resting settled scale.
+
+   • --seal-glint (<number>) — the gold catch-light intensity (the one-pass glint that
+     fires once on settle, reading --metal-glow-opacity from W-AX-METAL-GLOW — a glint,
+     not a loop). `inherits: false` (per-seal). `initial-value: 0` so an unwired seal is
+     un-glinting at rest (the calm floor; the glint wakes only on the draw).
+
+   • --seal-ink (<color>) — the seal stroke color. `inherits: true` (the cascading-scalar
+     idiom — a consumer scope re-inks the seal in lockstep with the completion register).
+     The @property `initial-value` MUST be a CONCRETE var-free <color> (the typed-property
+     rule: a registration fallback cannot be a var()), so it is the LITERAL light-gold
+     `oklch(0.751 0.147 84.2)` (scale-paper.css's `--gold` value) — the engine fallback
+     when no cascaded value exists. The RUNTIME cascade default is the TOKEN form the
+     recipe sets: `--seal-ink: var(--phase-complete-color, var(--color-gold))` — the
+     EARNED-gold completion register (Q2: gold is earned at completion, NEVER the running
+     phase spectrum). */
+@property --seal-draw {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 100%;
+}
+
+@property --seal-scale {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
+@property --seal-glint {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --seal-ink {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(0.751 0.147 84.2);
+}

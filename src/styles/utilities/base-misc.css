@@ -212,6 +212,27 @@
         scroll-timeline: --card-scroll block;
     }
 
+    /* ── Stable scroll gutter — the no-shift discipline for overlay-hosting
+       route scrollers (BC.W-DROPDOWN-FIX) ──────────────────────────────────
+       An app-shell route scroller that hosts portaled picker/menu overlays
+       (Select / DropdownMenu / any reka overlay that locks body scroll on open)
+       RESERVES a stable scrollbar gutter so the lock-induced scrollbar removal
+       removes no layout space — the centred content does not reflow and the
+       trigger does not twitch left/right (USER-DEFECTS §F, the classic
+       space-taking-scrollbar reflow).
+
+       PRESETS-IN-CONSUMERS: the library ships the named discipline; the CONSUMER
+       app-shell opts its OWN route scroller in (the demo `.demo-main-scroller`
+       is the reference adoption). glass-ui does not force `scrollbar-gutter` on
+       every consumer's scroller — it provides this utility + the canon note.
+
+       Baseline-newly-available: Chrome 94+, Firefox 97+, Safari 18.2+ — a
+       non-supporting engine ignores the property (the gutter just isn't
+       reserved, the legacy behaviour). */
+    .scroll-gutter-stable {
+        scrollbar-gutter: stable;
+    }
+
     /* ── Shimmer text effects ──
        BB.W-METAL-SHIMMER — the gold-only `gold-shimmer-slide` is RETIRED (clean
        break, no alias); `.gold-shimmer` re-points onto the metal-PARAMETERIZED

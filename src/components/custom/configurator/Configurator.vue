@@ -129,10 +129,18 @@ const containerClass = computed(() =>
         // rounding does not stop one level too high (the stacked
         // ConfiguratorLayer sections inherit a rounded outer clip).
         "configurator glass-floating rounded-panel border border-border/60 overflow-hidden",
-        // Single column below `lg`; at `lg`+ a stage 1fr + aside band. The
-        // band reads from the `--configurator-aside-{min,max}` token pair
-        // (defaults 280px/360px), retunable via the `asideWidth` prop or the
-        // cascade — muster's CLS-fence carrier + value.js's dual-pane axis.
+        // Single column below `lg` (a plain utility — emits reliably). At `lg`+
+        // the DESKTOP TWO-COLUMN layout (stage 1fr + the aside band) comes from
+        // the PRECOMPILED `[data-slot="configurator"]` rule in configurator.css,
+        // NOT a dead arbitrary utility. BC.W-CONFIG-RIGHT — the old
+        // `lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,…),…)]`
+        // arbitrary bracket (nested `var()` + commas) silently died in a
+        // consumer's content-scan (the BA.W-EMISSION self-emission class), so the
+        // chassis stayed single-column on ALL widths. The structural layout now
+        // lives in shipped CSS (the Select-collision-bound precedent) — never
+        // load-bearing on a JIT reach. The aside band still reads the SAME
+        // `--configurator-aside-{min,max}` token pair (defaults 280px/360px,
+        // retunable via the `asideWidth` prop or the cascade).
         "grid grid-cols-1",
         // AZ.W-BLOB-REDRESS — the single-column band sets EXPLICIT rows so the
         // stage row is a DEFINITE track (a `--configurator-stage-min` floor),
@@ -140,10 +148,11 @@ const containerClass = computed(() =>
         // percentage/`h-full` height (the mobile 0×0 live-specimen collapse —
         // a GooBlob hero painting nothing on a phone). The aside row takes the
         // remainder (`minmax(0,1fr)`) and scrolls its controls internally. At
-        // `lg`+ the two-COLUMN layout owns the geometry, so the explicit rows
-        // reset to `none` (one auto row stretched to the taller column).
-        "grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)] lg:grid-rows-none",
-        "lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,280px),var(--configurator-aside-max,360px))]",
+        // `lg`+ the two-COLUMN layout (configurator.css) owns the geometry, so
+        // the explicit rows reset to `none` there (one auto row stretched to the
+        // taller column) — the `grid-template-rows: none` arm rides the same
+        // precompiled desktop rule.
+        "grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]",
         "min-h-0",
         props.class,
     ),
@@ -163,17 +172,15 @@ const containerStyle = computed(() => {
     } as Record<string, string>;
 });
 
-// Visual side flip without a DOM reorder: at `lg`+ place the stage and aside
-// into explicit grid columns. `right` (default) keeps source order (stage in
-// col 1, aside in col 2 — the natural fill). `left` swaps the column targets
-// so the aside paints first; tab order stays stage→aside (no a11y regression).
-// Below `lg` (single column) neither override applies.
-const stageColumnClass = computed(() =>
-    props.asideSide === "left" ? "lg:col-start-2" : "",
-);
-const asideColumnClass = computed(() =>
-    props.asideSide === "left" ? "lg:col-start-1 lg:row-start-1" : "",
-);
+// Visual side flip without a DOM reorder. BC.W-CONFIG-RIGHT — the side moves
+// off the dead `lg:col-start-*` arbitrary utility (gated behind the same silent-
+// JIT-failure class as the grid) onto the `data-aside-side` attr bound on the
+// root `<section>`; the `[data-slot="configurator"][data-aside-side="left"]`
+// rule in configurator.css owns the grid-column swap. `right` (default) keeps
+// the natural source order (stage col 1, aside col 2) and needs no override —
+// the bare desktop rule already places them left→right. `left` swaps the column
+// targets so the aside paints first VISUALLY; the DOM/tab order stays stage→aside
+// (the side is grid-cell placement + border-side only, no a11y regression).
 
 // The aside's vertical/horizontal rules follow the side: on the right the
 // hairline sits on its left edge (`lg:border-l`); flipped left, on its right
@@ -193,15 +200,15 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
 </script>
 
 <template>
-    <section data-slot="configurator" :class="containerClass" :style="containerStyle">
+    <section
+        data-slot="configurator"
+        :data-aside-side="asideSide"
+        :class="containerClass"
+        :style="containerStyle"
+    >
         <!-- ── Stage column (live specimen viewport) ─────────────────── -->
         <div
-            :class="
-                cn(
-                    'configurator-stage relative min-h-0 min-w-0 overflow-hidden',
-                    stageColumnClass,
-                )
-            "
+            class="configurator-stage relative min-h-0 min-w-0 overflow-hidden"
         >
             <slot name="stage" />
         </div>
@@ -218,7 +225,6 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                 cn(
                     'configurator-aside flex min-h-0 min-w-0 flex-col border-t lg:border-t-0',
                     asideBorderClass,
-                    asideColumnClass,
                 )
             "
         >

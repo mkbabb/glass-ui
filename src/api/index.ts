@@ -511,6 +511,19 @@ export type {
     BorderProgressMilestoneEvent,
 } from "../components/custom/border-progress";
 
+// ── CompletionSeal ────────────────────────────────────────────────────────────
+// The hero-scale earned-GOLD completion seal (BC.W-AX-COMPLETION-SEAL) — a one-shot
+// gold-draw mark on 4 `@property` motion tokens. `CompletionSealProps` is the
+// consume-side shape; `CompletionSealShape` is the glyph axis (`"check" | "ring" |
+// "wordmark"`). The ink reads the W-PHASE-PALETTE earned-gold register
+// (`--phase-complete-color`/`--color-gold` — Q2: gold is EARNED at completion, never the
+// phase spectrum); the glint composes the W-AX-METAL-GLOW catch-light. Ships via its
+// `/completion-seal` subpath (OFF the root barrel — a focal opt-in feedback surface).
+export type {
+    CompletionSealProps,
+    CompletionSealShape,
+} from "../components/custom/completion-seal";
+
 // ── usePointerVelocityField — the shared viz-pointer-physics field (BB.B4 W-VIZ-POINTER) ──
 // `PointerVec2` — a 2-vector in normalized-host space (0..1); `UsePointerVelocityField`
 // — the field's return shape ({ position, velocity, acceleration, speed, burst, tick, … });

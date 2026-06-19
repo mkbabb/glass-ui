@@ -42,7 +42,18 @@
        on Checkbox + base Tabs onto a softer, named radius. One geometry language
        across the form family — token + class only, no new primitive. */
     --radius-field:   var(--radius-2xl);
-    --radius-control: var(--radius-md);
+    /* BC.W-CONTROL-SMOOTH — the small-inline-control corner rung is a STADIUM, not a
+       fixed small px. The prior `--radius-md` (6px) read SQUARE on a 16-24px control
+       (6px on a 16px box = 0.38-of-height — a rounded-rect, not a pill); the iOS-27
+       small-control silhouette is a near-stadium pill where the radius SCALES with the
+       control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
+       control reads an 8px-radius pill — soft at every size). This retires the raw
+       `rounded-sm` (4px) on Checkbox + base Tabs AND the small-control square class in
+       ONE rung. The `card` toggle TILE keeps `--radius-card` (the large glass surface
+       keeps its 1rem squircle — only the small inline controls re-round). The corner-
+       SHAPE squircle axis reads at LARGE radius only (ROUND set = card+pill for small),
+       so the small pills stay ROUND (no regression). */
+    --radius-control: var(--radius-pill);
     --radius-badge:   var(--radius-pill);
     --radius-dock:    var(--radius-pill);
     /* BC.W-TABS-IOS — the iOS-27 segmented-control stadium register. The pill is a

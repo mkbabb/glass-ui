@@ -74,6 +74,20 @@
        §1  DURATION
        ═══════════════════════════════════════════════ */
     --duration-instant: 0.1s;
+    /* BC.W-CONTROL-SMOOTH — the named control-press SURFACE clock (the W-GLASS-CAL
+       per-register-clock discipline). An interactive control the user actively pokes
+       (hover-in, press, toggle) wants the iOS quick ~100-120ms surface beat, NOT the
+       0.2s calm card-crossfade beat — at 0.2s the colour/border/shadow easing drags
+       VISIBLY behind the pointer (the §F "super laggy" read). 0.12s brackets the iOS
+       100-120ms quick-control register (apple-ios27.md). `transition-control` (btn.css)
+       reads THIS so the whole control family re-times from one `:root` override, and
+       the surface beat now tracks the press-squish window (the press is `tap-squish`/
+       `useSpringPress`'s coupled transform leg on the spring's own clock — P3 fade-
+       coupled-to-transform). The bezier `--ease-standard` STAYS for the surface legs
+       (a colour cross-fade on a spring wobbles, §6 binding); only the DURATION shortens.
+       The CALM card register keeps `--duration-fast`/`--duration-normal` — a `<Card>` is
+       not an interactive control. */
+    --duration-control: 0.12s;
     --duration-fast: 0.2s;
     --duration-normal: 0.3s;
     --duration-slow: 0.45s;

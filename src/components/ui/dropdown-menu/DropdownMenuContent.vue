@@ -18,6 +18,12 @@ const props = withDefaults(
   defineProps<DropdownMenuContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(),
   {
     sideOffset: 4,
+    // BC.W-DROPDOWN-FIX — mirror the Select default: the panel's left edge tracks
+    // the trigger's left edge (one alignment grammar across the picker family).
+    // At HEAD the `align` was unset so reka's `center` default applied (the
+    // off-axis float); `align: 'start'` drops the menu flush-left under the
+    // trigger. Clean break — a consumer wanting centre passes `align="center"`.
+    align: 'start',
     surface: 'glass',
   },
 )

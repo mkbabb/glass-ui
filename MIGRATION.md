@@ -1,5 +1,14 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BC.W-RADIO-FIX / Band 6 — `<Button variant="solid">` RETIRED (clean break, no
+> alias, "No legacy code").** The `solid` variant was a back-compat escape hatch (the
+> previous default's opaque `bg-primary` fill, "so consumers can still get the solid
+> look") — unused in-repo and at odds with the glass-first identity. MIGRATE: the
+> default `<Button>` is the glass register; for a loud CTA use `variant="accent"` (the
+> gold-tint-on-glass). This flips `proof:no-shadcn-default` fully GREEN (the last
+> shadcn-neutral surface-fill residual removed). The `default`/`outline`/`secondary`/
+> `accent`/`ghost`/`destructive` variants are unchanged.
+
 > **BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
 > break, no alias ("No legacy code").** `SegmentedTabs` is now ONE engine with TWO
 > MATERIALS (`variant: "pill" | "underline"`) and ONE orientation axis

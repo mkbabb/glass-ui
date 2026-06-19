@@ -22,7 +22,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     data-slot="checkbox"
     v-bind="forwarded"
     :class="
-      cn('group tap-squish focus-ring peer relative touch-hit-area h-4 w-4 shrink-0 rounded-control border border-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-[color-mix(in_srgb,var(--primary)_88%,var(--glass-bg-floating))] data-[state=checked]:text-primary-foreground data-[state=indeterminate]:bg-[color-mix(in_srgb,var(--primary)_88%,var(--glass-bg-floating))] data-[state=indeterminate]:text-primary-foreground',
+      cn('group tap-squish focus-ring peer relative touch-hit-area h-4 w-4 shrink-0 rounded-control border border-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-(--control-checked-bg) data-[state=checked]:text-primary-foreground data-[state=indeterminate]:bg-(--control-checked-bg) data-[state=indeterminate]:text-primary-foreground',
          props.class)"
   >
     <CheckboxIndicator class="flex h-full w-full items-center justify-center text-current">

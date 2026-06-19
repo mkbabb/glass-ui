@@ -59,6 +59,13 @@ const itemBindings = computed(() => ({
 </script>
 
 <template>
+  <!-- BC.W-CONTROL-SMOOTH — the item INHERITS the toggle radius from `toggleVariants`:
+       the base now resolves `rounded-pill` (the small-inline-control stadium register,
+       not the prior square 10px `rounded-button`), the `outline` variant the glass-well
+       `.control-surface`, and the surface legs the quick `transition-control` clock
+       (--duration-control 0.12s). The `card` variant keeps `--radius-card` via the CVA
+       compoundVariant (the large glass tile's 1rem squircle — untouched). No per-item
+       fork — the one CVA edit re-rounds + re-times every ToggleGroupItem. -->
   <ToggleGroupItem
     v-bind="itemBindings"
     :class="cn(toggleVariants({

@@ -1746,6 +1746,36 @@ export const GATES = [
         note: "BC.W-FOURIER-DECIDES (#12 BUILD-as-gate) — extends the shipped proof:consumer-staleness harness to lint a consumer's stale tier-class references. Bite: a stale tier-class consumer reference un-flagged → RED.",
     },
     {
+        id: "proof:radio-fix",
+        cmd: "proof:radio-fix",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-RADIO-FIX — radios WORK + proper toggle states (the chronic §F 'radios don't work' killed at ROOT): the @utility touch-hit-area coarse ::before hit-overlay carried pointer-events:auto, intercepting the real pointer before reka's host onClick — flipped to pointer-events:none (the pointer falls through, the 44px WCAG floor stays as pure geometry). Generalized the Slider's local fix to the SHARED utility (Checkbox/Switch/RadioGroupItem/TagsInput/MultiSelect all gain the integrity fix). R1 the checked ring reads var(--control-checked-bg) translucent glass; R2 a legible centre dot (contrast pair); R3 the unchecked --control-ring outline + the focus-ring. Bite: a pointer-events:auto hit-overlay / a same-hue dot / a dropped focus-ring → RED.",
+    },
+    {
+        id: "proof:dropdown-fix",
+        cmd: "proof:dropdown-fix",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DROPDOWN-FIX — the dropdown trigger NO-SHIFT, aligned, the dot not occluded. D1 SelectContent/DropdownMenuContent align:start (not center); D2 the dot gutter structurally coupled + aria-hidden decorative; D3 the scroller scrollbar-gutter:stable (the no-shift fix is a pure layout reservation, never touches overflow/position/focus) + the .scroll-gutter-stable utility + the CLAUDE.md canon; D4 the min-w-(--reka-select-trigger-width) floor survives. SelectSeparator bg-muted re-pointed (flips the no-shadcn-default select residual). Bite: align:center / a dot without gutter / a non-decorative dot / a missing scroll-gutter → RED.",
+    },
+    {
+        id: "proof:control-smooth",
+        cmd: "proof:control-smooth",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-CONTROL-SMOOTH — kill control lag; square borders → rounded; owns the CLOCK across controls (reads SPRING-EASE's re-timed register + AFFORDANCE-MAP's contract, does NOT re-author springs — the one-clock fence). Owns the toggle-outline / tags-input-ring / switch-thumb reskins per the DESHADCN census (flips those no-shadcn residuals onto .control-surface/.focus-ring). proof:animation-coherence + proof:no-layout-animation hold. Bite: a control-local spring / a lagging transition / a square border / a residual shadcn-neutral control token → RED.",
+    },
+    {
+        id: "proof:config-right",
+        cmd: "proof:config-right",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-CONFIG-RIGHT — all configurators: controls on the RIGHT on desktop (the two-column aside, the LIBRARY Configurator standardized so the Band-4 viz studios CONFORM to it). Reads the BLACK-BAR rim + the PAGE-CHASSIS studio header. Bite: an aside on the left / a single-column desktop configurator → RED.",
+    },
+    {
+        id: "proof:completion-seal",
+        cmd: "proof:completion-seal",
+        tags: ["ci", "release"],
+        note: "BC.W-AX-COMPLETION-SEAL — the cross-repo speedtest-AX hero-scale earned-GOLD completion seal: a one-shot gold-draw mark + 4 @property motion tokens on the /completion-seal subpath, reading the W-PHASE-PALETTE --phase-complete-color/--color-gold (earned-gold, NOT the phase spectrum) + the AX-METAL-GLOW --metal-glow-*. Compositor-only. Bite: a seal off the gold register / a non-compositor draw / a missing @property motion token → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

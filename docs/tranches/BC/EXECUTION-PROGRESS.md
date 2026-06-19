@@ -38,7 +38,7 @@
 | 11.5 | 13 | SCROLL-TRIGGER → SCROLL-CHROME → DOCK-SEARCH | pending |
 | 12-13 | 3 | TABS-IOS → LIQUID-TAB/UNDERLINE-TUNE | **DONE** — iOS-27 glass pills (9999px stadium, warm lifted plate); tabs-std π 12/12; liquid pull-morph; eased underline. 3 gates reconciled (tabs-std/drag-morph/tabs-ios T4) |
 | 14-17 | 4 | WEBGPU-EVERYWHERE/SAFARI-WEBGL → cross-cut → 9 per-viz [‖] → MEATBALL/HYBRID/GRID-SIMPLE | pending |
-| 18 | 6 | RADIO-FIX → DROPDOWN-FIX/CONTROL-SMOOTH → CONFIG-RIGHT + COMPLETION-SEAL | pending |
+| 18 | 6 | RADIO-FIX → DROPDOWN-FIX/CONTROL-SMOOTH → CONFIG-RIGHT + COMPLETION-SEAL | **DONE** — 42 π pass; the "radios don't work" chronic killed at ROOT (touch-hit ::before pointer-events:auto→none, generalized to the shared utility); dropdown no-shift; controls smooth; config-right two-col; earned-gold seal on /completion-seal. `<Button variant=solid>` RETIRED → no-shadcn-default fully GREEN |
 | 19-22.7 | 5 | PAGE-PRUNE → DEMO-COPY-PRUNE → PAGE-CHASSIS → fan → PADDING-CANON → EXPANDABLE-PART | pending |
 | 23 | 4 | VIZ-CONFIGURATOR-SUITE | pending |
 | 24 | 9 | STORYBOOK-META | pending |
@@ -46,6 +46,18 @@
 | 26 | 10 | DECK (+ DIST-COMMENT-FIX early) | pending |
 | 27 | 10 | **CUT** (terminal, user-gated 4.x publish + slides redeploy) | pending |
 | 28 | 10 | SPEEDTEST-ADOPT/FOURIER-ASK/ATLAS-ASK (post-cut adopt sweep [‖]) | pending |
+
+## ⚠ CARDINAL CUT-CLOSE — the proof:ba-gestalt 15-surface PIXEL roster
+`proof:ba-gestalt` (ci/release) is the cumulative anti-disease PIXEL ledger with **G7 auto-revoke**: editing
+any surface-path re-stales that surface's capture (FAIL) until it is **re-captured (light+dark PNG) + the
+surface-hash re-recorded + the pixel band re-read warm-translucent**. Its roster spans surfaces from ALL
+bands (glass-base, dark-register, motion-fourier, dock-engine, tabs-segmented, controls-custom, dock-cta-seat,
+completion-seal, **viz-procedural** [Band 4, unbuilt], glass-adaptive, cross-repo …), so the FULL roster goes
+GREEN only at a stable all-surfaces-built point. Mid-build RED is **by-design** (the gate's own message:
+"born-RED until a wave paints warm-cream + re-captures"). **At BC.W-CUT (Band 10):** render all 15 surfaces
+live on the final paint (both modes), save the capture PNGs, re-record surface-hashes, verify the warm-cream
+pixel band — the cardinal anti-disease close. Until then ba-gestalt RED is expected, NOT a regression. (The
+per-wave `bc-gestalt-roster.md` markdown roster + tests-visual specs ARE maintained per-band.)
 
 ## Per-wave close checklist (the gate every wave passes)
 1. src/ gestalt change implemented per the wave's `Target spec` + `Mechanism/files`.

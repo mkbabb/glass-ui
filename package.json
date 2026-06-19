@@ -124,6 +124,9 @@
             "selectable-chip": [
                 "dist/selectable-chip.d.ts"
             ],
+            "completion-seal": [
+                "dist/completion-seal.d.ts"
+            ],
             "spa-view": [
                 "dist/spa-view.d.ts"
             ],
@@ -440,6 +443,10 @@
         "./selectable-chip": {
             "types": "./dist/selectable-chip.d.ts",
             "import": "./dist/selectable-chip.js"
+        },
+        "./completion-seal": {
+            "types": "./dist/completion-seal.d.ts",
+            "import": "./dist/completion-seal.js"
         },
         "./spa-view": {
             "types": "./dist/spa-view.d.ts",
@@ -956,6 +963,11 @@
         "proof:metric-hover": "node scripts/proof-metric-hover.mjs",
         "proof:fourier-decides": "node scripts/proof-fourier-decides.mjs",
         "proof:tier-class-staleness": "node scripts/proof-tier-class-staleness.mjs",
+        "proof:radio-fix": "node scripts/proof-radio-fix.mjs",
+        "proof:dropdown-fix": "node scripts/proof-dropdown-fix.mjs",
+        "proof:control-smooth": "node scripts/proof-control-smooth.mjs",
+        "proof:config-right": "node scripts/proof-config-right.mjs",
+        "proof:completion-seal": "node scripts/proof-completion-seal.mjs",
         "proof:visual-runner": "node scripts/proof-visual-runner.mjs",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "gates:emit-ci": "node scripts/gates.mjs --emit-ci",

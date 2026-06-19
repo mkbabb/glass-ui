@@ -662,6 +662,12 @@ export const CATEGORIES: Category[] = [
             s("feedback", "progress", "Progress"),
             s("feedback", "skeleton", "Skeleton"),
             s("feedback", "confirm-dialog", "Confirm Dialog"),
+            s(
+                "feedback",
+                "completion-seal",
+                "Completion Seal",
+                "The hero-scale earned-GOLD completion mark — a one-shot gold-draw seal (a stroke-dashoffset wipe on 4 @property motion tokens) reading the W-PHASE-PALETTE earned-gold register with the W-AX-METAL-GLOW catch-light.",
+            ),
         ],
     },
     {

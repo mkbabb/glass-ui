@@ -160,10 +160,25 @@ html.no-transition *:not([data-allow-motion])::after {
             translate: -50% -50%;
             min-width: var(--touch-target, 2.75rem);
             min-height: var(--touch-target, 2.75rem);
-            /* Inherit the host's pointer-events so a tap within the halo
-               registers on the atom; the overlay itself is decorative (no
-               paint), so it never occludes the host's own interaction. */
-            pointer-events: auto;
+            /* BC.W-RADIO-FIX — the swallow-fix (the §F headline binding bug).
+               An absolutely-positioned `::before` over the atom with
+               `pointer-events: auto` becomes the topmost hit target across the
+               whole 44px box and INTERCEPTS the real pointer event before it
+               reaches the host's listener — reka's RadioGroupItem / Checkbox /
+               Switch / SliderRoot bind their toggle/drag handler on the HOST
+               button (Radio.vue `onClick`), and the swallowing overlay was the
+               root of "radios don't work" (a synthetic .click() on the host
+               still fired, but a real coarse tap landed on the pseudo and
+               no-op'd). `pointer-events: none` frees the pointer to fall
+               through to the host so the tap reaches reka on EVERY input path,
+               while the 44px GEOMETRY still satisfies the WCAG-2.5.5 readback
+               (getComputedStyle reads min-width/height, not pointer-events —
+               the hit FLOOR is the box, never a pointer-swallowing overlay).
+               The same integrity discipline `useDockClickIntegrity` applies to
+               the dock + the Slider's own `.slider-thumb.touch-hit-area::before`
+               override already discovered (AY.W-SCALE2) — now ONE source for
+               the whole six-atom hit-area family. */
+            pointer-events: none;
         }
     }
 }

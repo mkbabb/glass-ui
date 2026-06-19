@@ -198,6 +198,17 @@
 .demo-main-scroller {
     scroll-timeline-name: --demo-main-progress;
     scroll-timeline-axis: block;
+    /* BC.W-DROPDOWN-FIX — the no-shift discipline. This route scroller hosts the
+       portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
+       removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
+       gutter the centred `max-w-6xl` content reflows wider → the trigger twitches
+       left/right by half the scrollbar width (USER-DEFECTS §F). `scrollbar-gutter:
+       stable` RESERVES the gutter whether or not the scrollbar is present, so the
+       lock removes nothing and the content does not reflow — zero trigger shift.
+       The reference consumer adopts the library `.scroll-gutter-stable` discipline
+       (presets-in-consumers); the durable library utility is in utilities/base-misc.css.
+       Baseline-newly-available (Chrome 94+ / Firefox 97+ / Safari 18.2+). */
+    scrollbar-gutter: stable;
     /* BB.W-HIERARCHY2 — the CONTENT-side anti-collision gutter. The `<main>` route
        column reserves the library `--dock-content-safe-inset` gutter (keyed to the
        dock rail reach) on the SCROLL axes so the page-title band is structurally clear

@@ -2,7 +2,8 @@
 // LabeledField family — a parent SFC + 4 sibling primitives forwarding to the
 // underlying Input / Select / Slider / Switch with a baked-in tooltip-bearing
 // label. The LabeledField parent owns the IconTooltip + label layer.
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { Eye, EyeOff, X } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -13,6 +14,8 @@ import {
     LabeledSlider,
     LabeledSwitch,
 } from "../../../src/components/custom/labeled-field";
+import { Input } from "../../../src/components/ui/input";
+import { Button } from "../../../src/components/ui/button";
 
 const text = ref("hello");
 const choice = ref("Alpha");
@@ -21,6 +24,17 @@ const slider = ref(40);
 const enabled = ref(true);
 
 const choices = ["Alpha", "Beta", "Gamma"];
+
+// BC.W-CONTROL-SMOOTH move C (kf-G3) — the ≥2-consumer bar for the LabeledField
+// `#action` slot: the canonical horizontal-action cases. Consumer #1 a clear-input
+// (an `X` that empties the field); consumer #2 a reveal-password (an eye that toggles
+// the input type). Each action button binds `:aria-label` (an icon-only button has no
+// text content — the AN.W4 name-on-the-focusable contract) + inherits `.focus-ring` +
+// `.tap-squish` + the quick `transition-control` clock + the pill radius by construction.
+const search = ref("aurora preset");
+const password = ref("hunter2");
+const revealed = ref(false);
+const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show password"));
 </script>
 
 <template>
@@ -56,6 +70,61 @@ const choices = ["Alpha", "Beta", "Gamma"];
                         label="Grain overlay"
                         tooltip="Layer the paper-grain SVG above the underlying surface."
                     />
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="horizontal action-slot (kf-G3)"
+            blurb="A labeled control carrying a TRAILING action affordance beside the field via the #action slot. The slot is additive (no #action slot → byte-identical stacked field); the action button binds :aria-label (an icon-only button needs a name), inherits .focus-ring + .tap-squish + the quick transition-control clock + the pill radius. Two canonical cases: a clear-input + a reveal-password."
+        >
+            <ShowcaseFrame pad="lg">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <!-- consumer #1 — clear-input -->
+                    <LabeledField
+                        label="Search"
+                        tooltip="Type to filter; clear with the trailing button."
+                    >
+                        <template #default="{ controlId }">
+                            <Input :id="controlId" v-model="search" placeholder="Search presets" />
+                        </template>
+                        <template #action>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Clear search"
+                                :disabled="!search"
+                                @click="search = ''"
+                            >
+                                <X />
+                            </Button>
+                        </template>
+                    </LabeledField>
+
+                    <!-- consumer #2 — reveal-password -->
+                    <LabeledField
+                        label="Password"
+                        tooltip="Toggle visibility with the trailing button."
+                    >
+                        <template #default="{ controlId }">
+                            <Input
+                                :id="controlId"
+                                v-model="password"
+                                :type="revealed ? 'text' : 'password'"
+                            />
+                        </template>
+                        <template #action>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                :aria-label="revealLabel"
+                                @click="revealed = !revealed"
+                            >
+                                <EyeOff v-if="revealed" />
+                                <Eye v-else />
+                            </Button>
+                        </template>
+                    </LabeledField>
                 </div>
             </ShowcaseFrame>
         </StorySection>

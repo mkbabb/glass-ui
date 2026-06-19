@@ -58,8 +58,17 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       props.class,
     )"
   >
+    <!-- BC.W-CONTROL-SMOOTH (DESHADCN census, reskin-target) — the thumb is a CONTROL
+         AFFORDANCE, so it reads the warm-cream MATERIAL (`bg-card`), NOT the flat
+         `bg-background` page-token slab. A switch thumb is the moving control surface; it
+         belongs to the glass/paper register the rest of the family paints, never the
+         neutral page token. The `--shadow-md` + `--glass-highlight` lift + the spring-on-
+         `translate` thumb-throw (the sanctioned spring-on-transform exception, C4) are
+         UNTOUCHED. This retires the `bg-background` residual (proof:no-shadcn-default) +
+         re-earns proof:ba-gestalt; reka behaviour is paint-only-touched. `ring-0` stays
+         (the OFF state — not a shadcn focus halo, the family zeroes an inherited ring). -->
     <SwitchThumb
-      :class="cn('pointer-events-none block size-(--switch-thumb) rounded-pill bg-background ring-0 data-[state=checked]:translate-x-(--switch-throw) data-[state=unchecked]:translate-x-0')"
+      :class="cn('pointer-events-none block size-(--switch-thumb) rounded-pill bg-card ring-0 data-[state=checked]:translate-x-(--switch-throw) data-[state=unchecked]:translate-x-0')"
       style="box-shadow: var(--shadow-md), var(--glass-highlight); transition: translate var(--spring-snappy-duration) var(--spring-snappy)"
     />
   </SwitchRoot>

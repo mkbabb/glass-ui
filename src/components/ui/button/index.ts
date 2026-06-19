@@ -52,10 +52,6 @@ export const buttonVariants = cva(
         // lens per route).
         default:
           'glass-wash btn-glass glass-deep text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
-        // AX.W54 — `solid` is the opaque escape: the previous default's primary-fill
-        // recipe, named so consumers can still get the solid bg-primary look.
-        solid:
-          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 aria-pressed:bg-primary/85',
         // BA.W-GLASS-CAL (H2a) — the disco RETIRED. `primary-audacious` collapses
         // onto the calm glass-first register: the `glass-wash btn-glass` surface (the
         // real 10px glass blur + the `--glass-specular` edge catch-light gleam from

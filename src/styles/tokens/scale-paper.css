@@ -85,6 +85,26 @@
     --invalid-ring: 0 0 0 var(--focus-ring-width)
         color-mix(in srgb, var(--destructive) var(--invalid-ring-tint), transparent);
 
+    /* BC.W-RADIO-FIX — the selection-control STATE register (the `--focus-ring-shadow`
+       / `--invalid-ring` precedent: one named register, read everywhere — never a
+       per-control magic literal). The checks family (Checkbox + RadioGroupItem) reads
+       these TWO tokens so a re-tint is ONE edit, library-wide.
+
+       • `--control-ring` — the UNCHECKED outline. Post-BC.W-BLACK-BAR the general glass
+         rim is ≤4% warm-ink (`--glass-border-resting`), which reads as a near-invisible
+         hairline on a 16px circle — too faint to tell a rest radio from its siblings. So
+         the selection atoms are the NAMED exception (recorded in BC.W-BLACK-BAR's fences):
+         a slightly-stronger ~12% warm-ink outline that reads as a DEFINED circle at 16px
+         without re-introducing the dark `--primary` hairline. Warm-ink-derived (no gray,
+         BA.W-NO-GRAY).
+       • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
+         ONCE here (the anti-paste bite: a second inline `color-mix(... --primary 88% ...)`
+         literal on a checks atom reds — the recipe IS the token). Mirrors the
+         glass-`--primary` over the floating tier the Checkbox already speaks, so the ring
+         goes outline → filled glass disc (a real material step), warm-not-saturated. */
+    --control-ring: color-mix(in srgb, var(--foreground) 12%, transparent);
+    --control-checked-bg: color-mix(in srgb, var(--primary) 88%, var(--glass-bg-floating));
+
     /* ═══════════════════════════════════════════════
        §12 PAPER TEXTURES
        ═══════════════════════════════════════════════ */

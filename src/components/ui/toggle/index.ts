@@ -31,21 +31,39 @@ export const toggleVariants = cva(
   // AX.W51 D18 — the control FONT reads `--control-text` (scaled `text-sm`), the
   // un-sized GLYPH reads `--ui-glyph` (scaled `size-4`), so both grow on the ONE
   // comfort axis with the height.
-  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-[length:var(--control-text)] font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  // BC.W-CONTROL-SMOOTH (move B) — the base radius is `rounded-pill` (the small-
+  // inline-control STADIUM register), NOT the 10px `rounded-button` that read SQUARE on
+  // a 16-18px toggle (10px on a 16px box = 0.63-of-height, a rounded-rect). The pill
+  // clamps to half-height so the radius scales with the control — soft at every size,
+  // the iOS-27 small-control silhouette. The `card` compoundVariant re-asserts
+  // `rounded-card` (the large glass tile keeps its 1rem squircle — see below).
+  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-pill text-[length:var(--control-text)] font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
         default: 'bg-transparent',
-        outline:
-          'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
+        // BC.W-CONTROL-SMOOTH (DESHADCN census, reskin-target) — the `outline` variant
+        // was the textbook shadcn-neutral toggle: `border border-input bg-transparent
+        // hover:bg-accent`. Re-pointed onto the house glass-WELL register: `.control-
+        // surface` (glass/surfaces.css) carries the `--control-surface-bg`/`-border`/
+        // `-blur` REST material + the warm hover lift (`--control-surface-bg-hover`), so
+        // the outlined toggle reads as a translucent glass well with a warm rim — the
+        // menu-row/control-tier precedent — NOT the cold `border-input` hairline + neutral
+        // `bg-accent` slab. reka behaviour is untouched (paint-layer only); the warm
+        // `data-[state=on]` selected fill carries from the base. This re-earns
+        // proof:no-shadcn-default (the `border-input` residual retired) + proof:ba-gestalt.
+        outline: 'control-surface',
         // BB.W-CONTROL-TOKENS (N11) — the card tile is a `p-8` glass-card
         // shape, so it must paint the 1rem `--radius-card` corner that matches
-        // its `glass-card` surface vocabulary, NOT the base CVA's 10px
-        // `rounded-button`. CVA emits the `variants` classes AFTER the base
-        // string, so `rounded-card` here wins the source-order race against the
-        // base `rounded-button` (the same mechanism the `h-auto` compoundVariant
-        // relies on). `default`/`outline` keep the base `rounded-button` — a
-        // button shape gets a button radius.
+        // its `glass-card` surface vocabulary, NOT the base CVA's small-control
+        // pill. CVA emits the `variants` classes AFTER the base string, so
+        // `rounded-card` here wins the source-order race against the base
+        // `rounded-pill` (the same mechanism the `h-auto` compoundVariant relies
+        // on). BC.W-CONTROL-SMOOTH — `default`/`outline` keep the base
+        // `rounded-pill` (the small-inline-control STADIUM register — soft at
+        // every size, the iOS model); only the large `card` TILE keeps the
+        // 1rem squircle — a large glass surface keeps its squircle, a small
+        // inline control reads a pill.
         card:
           'rounded-card glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
       },
