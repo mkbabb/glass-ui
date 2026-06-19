@@ -36,7 +36,7 @@ In `src/styles/glass/accent-tone.css` (a new `@layer components` partial, `@impo
   --accent-ink:   var(--accent-ink-resolved, var(--foreground));
 }
 ```
-The `in oklab` mix is the perceptual glass-tint family (W55/W-NO-GRAY), NOT the `in srgb` `--surface-tint-*` brand-overlay fence (the disjoint-axis fence, see Fences). The idle FILL floor is the load-bearing new behavior: `--accent-fill-strength` defaults `8%` (the ~6-8% fourier names) and the gate measures the resolved idle fill clears ≥3:1 against the surface (a strength that drops it below 3:1 reds — the resting-legibility floor).
+`var(--surface, var(--card))` reads the surface the accent sits ON — `--surface` is an OPTIONAL consumer-retarget hook (NOT a declared HEAD token; a consumer sets it on the scope to point the accent at a non-`--card` surface), defaulting to the declared `--card` so the recipe resolves at HEAD with zero consumer wiring. The `in oklab` mix is the perceptual glass-tint family (W55/W-NO-GRAY), NOT the `in srgb` `--surface-tint-*` brand-overlay fence (the disjoint-axis fence, see Fences). The idle FILL floor is the load-bearing new behavior: `--accent-fill-strength` defaults `8%` (the ~6-8% fourier names) and the gate measures the resolved idle fill clears ≥3:1 against the surface (a strength that drops it below 3:1 reds — the resting-legibility floor).
 
 ### 2. The contrast-safe INK (the JS half — `useAccentTone`)
 `useAccentTone(tone: MaybeRefOrGetter<string>, opts?)` (`@mkbabb/glass-ui/color` — the value.js-bearing `/color` leaf, NOT the root barrel; value.js-bearing → off the SCC-trap root barrel per the precedent) resolves the contrast-safe ink against the ACTIVE band fill via value.js `safeAccentColor`:

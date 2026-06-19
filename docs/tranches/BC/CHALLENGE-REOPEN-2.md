@@ -51,3 +51,23 @@ Pass 3 lenses: adversarial-completeness (what's MISSING) · gate-coherence · pr
 
 **Verdict: NOT 2-consecutive-clean (bm2=3, bm3=2). All gaps are doc-accuracy/grounding (zero design defects). HARDEN `bc-harden-reopen2` → re-challenge.**
 
+## HARDEN-1 (`bc-harden-reopen2`, 3 opus, disjoint file-sets) — 5 MAJOR + 6 MINOR fixed
+
+All 5 MAJOR + MINORs fixed + grounded against live source (commit `1a991285`): DAG DEMO-COPY-PRUNE node (96 in topo); the W-REFLECT3-deferral disease-leak purged from AX-DOCK-CTA-SEAT/COMPLETION-SEAL + the G8a detector widened article-tolerant + a self-test; CTA-SEAT owns its own ba-gestalt verdict; FOURIER-BC paper-grid restated VISUAL-not-API; ACCENT-TONE `--viz-amber` re-grounded to the `--section-color-5` single-source (3 arms); METAL-GLOW gate-locks its 2-consumer bar; KF-INBOUND BB-prefix/EasingPicker/TUNABLE-ANIM corrections; `@property --seal-ink` concrete gold initial-value.
+
+## Re-challenge (post-HARDEN-1, `bc-challenge-reopen2` re-fire) — 1 MAJOR → FIXED; Pass-3 fully clean
+
+| pass | dim | verdict | MAJ | MIN |
+|---|---|---|---|---|
+| P2 | coverage-recheck | PASS_WITH_MAJOR | 1 | 1 |
+| P2 | artifact-recheck | CONVERGED | 0 | 1 |
+| P2 | holistic-interaction | PASS | 0 | 2 |
+| P3 | adversarial-completeness | PASS | 0 | 2 |
+| P3 | gate-coherence | PASS | 0 | 1 |
+| P3 | precept-conformance | PASS | 0 | 1 |
+
+- **M-R1 (coverage)** — the two §6-out-of-scope folds (`avoidHues`→VIZ-AURORA, `data-protagonist`→CONTROL-CUSTOM) cited `SPEEDTEST-BC.md` as their consume-and-delete home, but that ledger had no rows for them — a broken coordination-link (a speedtest reader following the citation hits a void). **FIX:** added rows §6b/§6c + 2 dest-soundness entries to SPEEDTEST-BC.md. (All 5 prior MAJORs verified HELD; Pass-3 fully clean.)
+- MINORs fixed: GESTALT-FIRST convergence-proof corpus `70-wave`→`96-wave` (the gate scans the full glob); FINAL.md superseded-milestone banner (the tranche reopened 4× to 96); ACCENT-TONE `--surface` grounding note (optional consumer-retarget hook, defaults `--card`). Residual cosmetic MINORs (SPLIT-CHARS publish-choice, metal-glow evidence wording, register-vs-component bar phrasing) do not count toward the BLOCKER+MAJOR convergence bar; left as polish.
+
+**Verdict: bm2=1 (fixed), bm3=0. Gap surface 5 MAJOR → 1 MAJOR (Pass-3 clean) — converging. Commit + re-fire the confirmation 2-pass for 2-consecutive-clean.**
+

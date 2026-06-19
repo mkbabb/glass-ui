@@ -31,7 +31,9 @@ cream); `BC.W-GESTALT-FIRST` G8 reds a real terminal-reflect deferral but greens
 
 ---
 
-## 2 — The 70-wave roster (by band)
+> **MILESTONE SNAPSHOT (iter-19, 70 waves).** The tranche REOPENED 4× after this milestone — iter-20 Atlas/de-shadcn → 74, iter-21 feature-band → 84, iter-22 SEARCH-CUSTOM → 85, iter-23 cross-repo absorb (speedtest-AX Band-15 + fourier/kf Band-16) → **96**. The CURRENT binding roster is `WAVE-INDEX.md` (96 waves) + `ORCHESTRATION.md §1`; this section is the historical convergence record at the 70-wave milestone. Every "70" figure in FINAL.md reads against that snapshot.
+
+## 2 — The 70-wave roster (by band, the iter-19 milestone)
 
 | band | n | waves |
 |---|---|---|
