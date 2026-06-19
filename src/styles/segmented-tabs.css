@@ -36,8 +36,15 @@
 /* ── The PILL track (the glass material — DEFAULT) ── */
 .segmented-tabs {
     --bouncy-track-trim: 0.1875rem;
-    --bouncy-track-radius: 0.4375rem;
-    --bouncy-slider-radius: 0.3125rem;
+    /* BC.W-TABS-IOS — the iOS-27 stadium register. The pill reads the role-bearing
+       `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
+       half-height → a TRUE stadium end-cap (not the squared `0.3125rem` rounded-rect
+       the HEAD shipped). The TRACK corner is CONCENTRIC with the pill (Apple's
+       `.containerConcentric`): the pill radius + the trim inset, so a stadium pill
+       sits inside a near-stadium track. No breakpoint radius bump — a stadium does
+       not change radius across viewports (clean break, the 640px radius lines gone). */
+    --bouncy-slider-radius: var(--radius-tab);
+    --bouncy-track-radius: calc(var(--bouncy-slider-radius) + var(--bouncy-track-trim));
     /* The travel-squish axis — 1 at rest; useTabIndicator writes it transiently
        on selection, the indicator pairs it volume-preserving. */
     --stretch: 1;
@@ -53,7 +60,13 @@
     background: var(--glass-bg-quiet);
     backdrop-filter: var(--glass-blur-quiet);
     -webkit-backdrop-filter: var(--glass-blur-quiet);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 24%, transparent);
+    /* BC.W-TABS-IOS — the track hairline re-points off the `--border` ring (which read
+       dark over the cream plate — the D2 "black bar" on the strip top edge) onto the
+       BC.W-BLACK-BAR directional rim register: a bright top catch-light + a faint warm
+       under-shadow. The track is a thin warm-glass quiet capsule with a lit top edge,
+       never a dark hairline. The pill (above) carries the SAME rim plus the lift shadow
+       so it reads FORWARD; the track carries only the rim. */
+    box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
 }
 
 /* ── The vertical orientation axis (the block stack) ── */
@@ -67,28 +80,40 @@
 
 @media (min-width: 640px) {
     .segmented-tabs {
+        /* BC.W-TABS-IOS — only the trim (pad) axis bumps at the wider breakpoint; the
+           radius is the viewport-invariant stadium (--radius-tab), so the corner
+           track-radius re-resolves concentric off the bigger trim by construction. */
         --bouncy-track-trim: 0.25rem;
-        --bouncy-track-radius: 0.5rem;
-        --bouncy-slider-radius: 0.375rem;
     }
 }
 
 /* ── The shared indicator body (the PILL plate) ── */
 .segmented-indicator {
     position: absolute;
-    /* BA.W-TABS — the active pill indicator rides the glass FLOATING tier (the
-       W-REGISTER-IOS "selected reads as glass" register), reading FORWARD of the
-       quiet-tier track. A glass tint, NEVER a saturated `--foreground` fill or an
-       opaque `bg-card`. */
-    background: var(--glass-bg-floating);
+    /* BC.W-TABS-IOS — the active pill is the iOS-27 / value.js DISTINCT LIFTED PLATE,
+       not a +30%-α same-hue brightness step. The fill reads the SHARED element-level
+       oklab-tinted floating pair (surfaces.css `:where(.btn-glass, .segmented-indicator)`)
+       — over a bright field it darkens-to-legible, over a calm field it stays
+       warm-cream/near-white (the W55 adaptive register reaching the pill, the "raised
+       near-white plate" the user pinned). The FORWARD-ness comes from the rim + lift
+       below, NOT from cranking the same-hue alpha. */
+    background: var(--glass-bg-floating-tinted);
     backdrop-filter: var(--glass-blur-floating);
     -webkit-backdrop-filter: var(--glass-blur-floating);
     z-index: 0;
     inset-block: var(--bouncy-track-trim);
     border-radius: var(--bouncy-slider-radius);
+    /* BC.W-TABS-IOS — the lifted-plate composite: the BC.W-BLACK-BAR directional rim
+       (bright top catch-light `--glass-rim-top` + warm bottom under-shadow
+       `--glass-rim-bottom` — the iOS-27 top-light/bottom-shadow thickness the track does
+       NOT carry, the FORWARD-ness device, NEVER the dark D2 hairline) PLUS a real layered
+       glass under-shadow (`--glass-shadow-floating`) lifting the plate ~2-3px off the
+       quiet track. Replaces the HEAD weak `0 1px 3px rgba(0,0,0,0.08)` + the 30%-border
+       dark ring (the same-hue low-contrast plate that read "not glassy"). */
     box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.08),
-        0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent);
+        var(--glass-rim-top),
+        var(--glass-rim-bottom),
+        var(--glass-shadow-floating);
     /* The volume-preserving travel-squish: stretch along X, compress Y in
        inverse proportion. `transform-origin: center` → a symmetric width-flex
        as it travels (the indicator grows wider mid-travel, settles to fit). */
@@ -165,8 +190,10 @@
 
 @media (min-width: 640px) {
     .segmented-indicator {
+        /* BC.W-TABS-IOS — only the inset (trim) axis bumps; the radius stays the
+           viewport-invariant stadium (`--bouncy-slider-radius` = --radius-tab). The
+           HEAD `border-radius: 0.375rem` px-literal that squared the pill is GONE. */
         inset-block: 0.25rem;
-        border-radius: 0.375rem;
     }
     .segmented-tabs--vertical .segmented-indicator {
         inset-block: auto;
@@ -322,7 +349,16 @@
 
 .segmented-tabs--underline .segmented-tab {
     padding: 0.375rem 0.75rem;
-    font-size: inherit;
+    /* BC.W-UNDERLINE-TUNE — the audacious editorial label voice. The underline is
+       the PAPER/editorial material (BA.W-TABS), so its labels carry the √φ display
+       register, NOT the small 0.8125rem control size the PILL labels keep (the
+       two-voice fence — the pill is a compact control, the underline is an editorial
+       nav head). `--type-subheading` (1.272rem / 20.4px, the √φ rung) + the Apple
+       display tracking `--type-tracking-display` (−1.5%) are the BB.W-DISPLAY-TRACKING
+       ladder rungs CONSUMED here (never re-minted), the same pairing the semantic
+       display rungs ride. A confident editorial strip, not a default Tailwind row. */
+    font-size: var(--type-subheading);
+    letter-spacing: var(--type-tracking-display);
     border-radius: 0.25rem;
     /* The tab-text colour cross-fade rides the fast generic clock (the §6 doctrine
        — a colour shift is a bezier ease, never a spring), matching the pill tab

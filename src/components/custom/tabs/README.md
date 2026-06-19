@@ -46,9 +46,10 @@ TOGGLES that mutate one surface. (See `CLAUDE.md` §Tabs vs ToggleGroup.)
 The active indicator GLIDES on `--spring-snappy` (the confirmed iOS segmented
 register) AND SQUISHES on travel: a volume-preserving stretch along its travel
 axis (`scale: var(--stretch) calc(1 / var(--stretch))` — the X/Y reciprocal
-pairing), capped LOW by `--tab-indicator-max-stretch` (default `1.08`, ≈ +8%),
-released back to fit on the same snappy clock (the Material-3 elastic / Apple
-Liquid-Glass "grow then shrink" register).
+pairing), capped LOW by `--tab-indicator-max-stretch` (default `1.15`, ≈ +15% —
+BC.W-LIQUID-TAB lifted it from +8% so a fast liquid-tab pull visibly swells the
+pill; still ≤1.2, the anti-taffy bar), released back to fit on the same snappy
+clock (the Material-3 elastic / Apple Liquid-Glass "grow then shrink" register).
 
 The squish is owned by the `useTabIndicator` composable (`composables/`): it
 writes a transient `--stretch` scalar to the indicator's own custom property; the

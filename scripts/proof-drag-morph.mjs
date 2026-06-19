@@ -54,12 +54,17 @@
 //        single-commit guard exists (a `committed` flag — the one-registry
 //        discipline forbids a re-fired model write).
 //   D4 — THE SEGMENTEDTABS `:draggable` AXIS IS ADDITIVE WITH ≥2 CONSUMERS.
-//        `draggable?: boolean` (default `false`) on SegmentedTabsProps; the
-//        non-draggable click path is unchanged (the `select` + `squishOnTravel`
-//        click-travel squish still present — the drag is opt-in, not a selection
-//        rewrite); `useDragMorph` has ≥2 binary consumers (SegmentedTabs +
-//        DockLayerGroup — two `useDragMorph(` call sites). RED at HEAD: no
-//        `draggable` prop; zero `useDragMorph` consumer.
+//        `draggable?: boolean` on SegmentedTabsProps; the drag is ADDITIVE OVER the
+//        click/keyboard path — that path is byte-identical (the `select` +
+//        `squishOnTravel` click-travel squish still present, `@click=select(` intact)
+//        whether the drag defaults on or off. BC.W-LIQUID-TAB flipped the default to
+//        `true` (the pull is the iOS-27 PRIMARY affordance), so "additive" is NOT
+//        "default false" — it is "the drag is a pointer ENHANCEMENT, never the SOLE
+//        selection mechanism" (WCAG 2.1.1: a drag has no keyboard equivalent, so the
+//        click/arrow path stays the full operable alternative — the roving D5 below).
+//        `useDragMorph` has ≥2 binary consumers (SegmentedTabs + DockLayerGroup — two
+//        `useDragMorph(` call sites). RED at HEAD: no `draggable` prop; zero
+//        `useDragMorph` consumer; OR a drag that REWRITES the click path (not additive).
 //   D5 — THE ROVING-TABINDEX KEYBOARD CONTRACT LANDS. `.segmented-tab` carries the
 //        roving tabindex (a `:tabindex` binding keyed off the active tab) and a
 //        `@keydown` on the strip root handles the AXIS-DERIVED arrow keys
@@ -318,22 +323,23 @@ export function detectDragMorph(sources) {
             "D4: SegmentedTabs declares no `draggable?: boolean` prop (the additive `:draggable` axis did not land).",
         );
     }
-    // The default is false (additive opt-in) — withDefaults carries `draggable: false`.
-    const draggableDefaultsFalse = /draggable\s*:\s*false/.test(segmentedTabs);
-    if (hasDraggableProp && !draggableDefaultsFalse) {
-        violations.push(
-            "D4: the `draggable` prop does not default `false` (the drag must be opt-in additive — a default-on rewrite of selection REDs).",
-        );
-    }
+    // BC.W-LIQUID-TAB — the drag is ADDITIVE OVER the click/keyboard path, NOT
+    // "default false." The default may be `true` (the pull is the iOS-27 primary
+    // affordance) — what makes it additive is that the click/keyboard path stays the
+    // FULL operable alternative (byte-identical), the drag a pointer ENHANCEMENT
+    // (WCAG 2.1.1: a drag has no keyboard equivalent, so it can never be the sole way
+    // to change tabs). The additive contract is the `clickPathIntact` + the ungated
+    // roving (D5) below, NOT the prop's default value.
+    //
     // BITE: the click path is unchanged (select + squishOnTravel still present —
-    // the drag is opt-in, not a selection rewrite).
+    // the drag is additive over selection, not a rewrite of it).
     const clickPathIntact =
         /squishOnTravel\s*\(/.test(segmentedTabs) &&
         /function\s+select\s*\(/.test(segmentedTabs) &&
         /@click\s*=\s*["']select\(/.test(segmentedTabs);
     if (!clickPathIntact) {
         violations.push(
-            "D4: the click-selection path (`select` + `squishOnTravel` + `@click=select(`) is not intact — the drag must be ADDITIVE, never a rewrite of the click selection (the byte-identical click bite).",
+            "D4: the click-selection path (`select` + `squishOnTravel` + `@click=select(`) is not intact — the drag must be ADDITIVE OVER the click path, never a rewrite of it (the byte-identical click bite). Enabling the pull by default must NOT make selection drag-only.",
         );
     }
     // ≥2 binary consumers — two `useDragMorph(` call sites (tabs + dock). Allow an
@@ -418,7 +424,6 @@ export function detectDragMorph(sources) {
         d3: { projectsRest, resolvesNearest, retargets, singleCommitGuard },
         d4: {
             hasDraggableProp,
-            draggableDefaultsFalse,
             clickPathIntact,
             tabsConsumes,
             dockConsumes,
@@ -531,7 +536,6 @@ function run() {
     console.log(
         `  D4 :draggable additive, ≥2 consumers    : ${yn(
             facts.d4.hasDraggableProp &&
-                facts.d4.draggableDefaultsFalse &&
                 facts.d4.clickPathIntact &&
                 facts.d4.consumerCount >= 2,
         )}  (consumers:${facts.d4.consumerCount})`,

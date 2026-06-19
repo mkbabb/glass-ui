@@ -1680,6 +1680,24 @@ export const GATES = [
         note: "BC.W-AX-DOCK-COCKPIT — the [data-preset=cockpit] dock preset (cross-repo speedtest-AX A-9): a fixed 2.75rem control floor + --dock-label-ratio beside the density rungs, closing the dock-oversize chronic. The FEATURE_EXEMPT census preserved (proof:dock-unify). Bite: a cockpit preset off the 2.75rem floor / a missing --dock-label-ratio → RED.",
     },
     {
+        id: "proof:tabs-ios",
+        cmd: "proof:tabs-ios",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-TABS-IOS — iOS-27 small stadium glass PILLS (not squared, not reka/shadcn-flat). T1 the --radius-tab aliases the ONE --radius-pill source (the px literals + 640px radius bumps DELETED, clean break); T2 the active pill is a distinct lifted glass plate (--glass-bg-floating-tinted + the BLACK-BAR rim-top/-bottom + glass-shadow-floating lift); T3 no dark D2 ring on the track/indicator; T4 the drag engine fence (aria + roving + the cap lockstep const==token in [1.0,1.2]); T5 the active label legible. Reads the DESHADCN census (zero residual shadcn-neutral). Bite: a squared/flat tab / a px-literal radius / a dark ring / a raw untinted plate → RED.",
+    },
+    {
+        id: "proof:liquid-tab",
+        cmd: "proof:liquid-tab",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-LIQUID-TAB — pull an active tab → it MORPHS/squishes/flings to location. L1 draggable default true; L2 the gel cap >=1.12 (1.15 const+token lockstep); L3 no second engine (composes useDragMorph → kf Draggable/SpringProgress/useLiquidFlex + the snappy SPRING_PRESETS row, no local rAF/spring); L4 the CONSUME marker (reads SPRING-EASE snappy); L5 additive a11y (the drag-snap writes the SAME model → same aria flip; the keyboard path byte-identical, WCAG 2.1.1). Compositor-only (translate+scale, proof:no-layout-animation GREEN). Bite: a second spring engine / a gated roving / a layout-animating pull → RED.",
+    },
+    {
+        id: "proof:underline-tune",
+        cmd: "proof:underline-tune",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-UNDERLINE-TUNE — the underline retuned, audacious type, the spring EASED (not abrupt): the indicator glide FILLS its clock (reads the SPRING-EASE eased snappy by name, the indicator-clock half in lockstep — ONE source, springPresets byte-untouched, proof:spring-tokens-synced GREEN). proof:animation-coherence holds. Bite: an abrupt/truncated underline glide / a duplicate curve prescription → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

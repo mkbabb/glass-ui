@@ -271,12 +271,29 @@
        to AA in lockstep with the rest bg. The `:root` raw `--glass-bg-*` tokens are
        UNTOUCHED (other surfaces compose them at the element correctly — the raw token +
        the element-level oklab wrapper is the correct ladder shape). */
+    /* BC.W-TABS-IOS — the tinted-FLOATING seam lifted off the `.btn-glass`-only scope
+       onto a SHARED `:where()` so the iOS-27 segmented-control active pill reads the
+       SAME element-level oklab-tint floating fill the glass button reads (the
+       substitution-over-redeclaration discipline: ONE tinted-floating source, NOT a
+       tab-local fork). The pill's active plate now reaches the W55 darken-over-bright
+       seam — over a bright field the pill darkens-to-legible, over a calm field it
+       stays warm-cream/near-white (the iOS adaptive register reaching the pill).
+       ZERO-delta at the `--glass-tint-strength: 0%`/floor default. */
+    :where(.btn-glass, .segmented-indicator) {
+        --glass-bg-floating-tinted: color-mix(
+            in oklab,
+            var(--glass-bg-floating),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+    }
     .btn-glass {
         /* BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the `quiet` rung gains the SAME element-
            level oklab-tint wrapper so the de-shadcn `outline`/`secondary` reskin (the
            QUIETER glass register, prominence-by-tint) reaches the W55 darken on its lit
            fill too — ZERO new compositing axis, the SAME seam the resting/floating pair
-           composes. */
+           composes. The floating rung is minted on the shared `:where()` seam ABOVE
+           (the tab pill reads it too); quiet + resting stay button-scoped (the
+           hover/active fill register the segmented pill does not engage). */
         --glass-bg-quiet-tinted: color-mix(
             in oklab,
             var(--glass-bg-quiet),
@@ -285,11 +302,6 @@
         --glass-bg-resting-tinted: color-mix(
             in oklab,
             var(--glass-bg-resting),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        --glass-bg-floating-tinted: color-mix(
-            in oklab,
-            var(--glass-bg-floating),
             var(--glass-tint-source) var(--glass-tint-strength)
         );
     }

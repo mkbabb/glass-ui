@@ -144,8 +144,14 @@ export function detect() {
         /\.segmented-tabs\s*\{[^}]*background:\s*var\(--glass-bg-quiet\)/s.test(css),
     );
     assert(
+        // BC.W-TABS-IOS re-pointed the pill onto the element-level W55-tinted floating
+        // pair (`--glass-bg-floating-tinted` = color-mix(in oklab, --glass-bg-floating,
+        // …)) — STILL the glass-floating tier (the adaptive register reaching the pill),
+        // NOT a saturated --foreground fill or opaque bg-card. The clause accepts the
+        // raw rung OR its W55-tinted wrapper (the substitution-over-redeclaration shape
+        // BB.W-BUTTON-GLASS already navigated for the button register).
         "pill indicator rides the glass-floating tier (selected-reads-as-glass)",
-        /\.segmented-indicator\s*\{[^}]*background:\s*var\(--glass-bg-floating\)/s.test(
+        /\.segmented-indicator\s*\{[^}]*background:\s*var\(--glass-bg-floating(?:-tinted)?\)/s.test(
             css,
         ),
     );
@@ -208,13 +214,17 @@ export function detect() {
         /INDICATOR_RELEASE_AT_ARRIVAL/.test(constantsCode) &&
             /INDICATOR_RELEASE_AT_ARRIVAL/.test(composableCode),
     );
-    // The squish is still volume-preserving + PRM-gated + reads the cap token.
+    // The squish is still volume-preserving + PRM-gated + reads the cap token. The
+    // cap is restrained to the anti-taffy band (≤1.2): BC.W-LIQUID-TAB lifted it 1.08
+    // → 1.15 so the liquid-tab pull visibly swells the pill (still LOW — it swells,
+    // never taffy-pulls); the band ceiling is the ≤1.2 anti-taffy bar, not the old
+    // +10% restraint.
     assert(
-        "--tab-indicator-max-stretch token present + restrained (≤1.10)",
+        "--tab-indicator-max-stretch token present + restrained (≤1.2, the anti-taffy bar)",
         (() => {
             const m = tokens.match(/--tab-indicator-max-stretch:\s*([\d.]+)/);
             facts.maxStretch = m ? Number(m[1]) : null;
-            return facts.maxStretch != null && facts.maxStretch <= 1.1 && facts.maxStretch > 1;
+            return facts.maxStretch != null && facts.maxStretch <= 1.2 && facts.maxStretch > 1;
         })(),
     );
     assert(

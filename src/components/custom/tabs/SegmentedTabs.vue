@@ -98,12 +98,14 @@ export interface SegmentedTabsProps {
      */
     responsive?: boolean | SegmentedTabsResponsive;
     /**
-     * BB.W-DRAG-MORPH — the LIQUID TAB. When `true` (ADDITIVE, default `false`),
-     * the `pill` indicator becomes a physical lozenge you can GRAB and PULL: it
-     * follows the finger ~1:1, squishes on drag velocity, and flings to the nearest
-     * tab on release (`useDragMorph`). The click-selection path is byte-identical;
-     * the drag is opt-in. No-op on `underline` (the ink hairline has no indicator
-     * element to deform).
+     * BC.W-LIQUID-TAB — the LIQUID TAB. The `pill` indicator is a physical lozenge
+     * you can GRAB and PULL: it follows the finger ~1:1, squishes on drag velocity,
+     * and flings to the nearest tab on release (`useDragMorph`). DEFAULT `true` — the
+     * pull is the iOS-27 primary affordance, ADDITIVE OVER the click/keyboard path
+     * (which stays byte-identical + fully operable — the drag is a pointer
+     * ENHANCEMENT, never the sole selection mechanism, WCAG 2.1.1). A consumer who
+     * wants click-only opts out with `:draggable="false"`. No-op on `underline` (the
+     * ink hairline has no indicator element to deform — `dragEnabled` gates it).
      */
     draggable?: boolean;
     class?: HTMLAttributes["class"];
@@ -113,7 +115,10 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
     responsive: false,
-    draggable: false,
+    // BC.W-LIQUID-TAB — the pull is the pill DEFAULT (additive over the byte-identical
+    // click/keyboard path; underline stays no-op by `dragEnabled = draggable &&
+    // !isUnderline`). A consumer opts out with `:draggable="false"`.
+    draggable: true,
 });
 
 // Vue 3.5 defineModel — single-select string. (The multi-select array model

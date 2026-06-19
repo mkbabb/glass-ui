@@ -36,7 +36,7 @@
 | 8 | 2 engine | DOCK-ENGINE | **DONE** (452846c4) — the buttery morph LIVE-verified (18-frame ramp; BB's snap fixed via 3 live-wiring bug fixes) |
 | 9-11 | 2 fleet | DOCK-ARBITRARY/SHRINK-BLUR/LIQUID-MORPH · VERTICAL-FIX/COLLAPSED-BOTH/STACK-RAIL · COCKPIT · CTA-SEAT | **DONE** — all dock gates GREEN + dock-animation-live PASS + collapse confirmed live; DockRail→DockStack clean-break (rail gates reconciled); dock-tap-integrity hover-expand W3 pre-existing (AY harness, CI-skipped) |
 | 11.5 | 13 | SCROLL-TRIGGER → SCROLL-CHROME → DOCK-SEARCH | pending |
-| 12-13 | 3 | TABS-IOS → LIQUID-TAB/UNDERLINE-TUNE | pending |
+| 12-13 | 3 | TABS-IOS → LIQUID-TAB/UNDERLINE-TUNE | **DONE** — iOS-27 glass pills (9999px stadium, warm lifted plate); tabs-std π 12/12; liquid pull-morph; eased underline. 3 gates reconciled (tabs-std/drag-morph/tabs-ios T4) |
 | 14-17 | 4 | WEBGPU-EVERYWHERE/SAFARI-WEBGL → cross-cut → 9 per-viz [‖] → MEATBALL/HYBRID/GRID-SIMPLE | pending |
 | 18 | 6 | RADIO-FIX → DROPDOWN-FIX/CONTROL-SMOOTH → CONFIG-RIGHT + COMPLETION-SEAL | pending |
 | 19-22.7 | 5 | PAGE-PRUNE → DEMO-COPY-PRUNE → PAGE-CHASSIS → fan → PADDING-CANON → EXPANDABLE-PART | pending |

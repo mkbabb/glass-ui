@@ -278,6 +278,15 @@ export function useDragMorph<V = string>(
     const nearestValue = (coord: number): V | null =>
         nearestTarget(coord)?.value ?? null;
 
+    // CONSUME(kf snap): BC.W-LIQUID-TAB — when keyframes.js republishes past 4.3.0
+    // with the `snap`+`bounds`+`rubberBand` `DragOptions` (booked by name in
+    // docs/tranches/BC/coordination/asks-and-consumes.md; machine-verified ABSENT on
+    // the published 4.3.0 `DragOptions`), the ~12-line published-surface
+    // `decayRest`+`nearestTarget`+`spring.target` re-roll BELOW collapses onto the
+    // native kf `snap` option AND the pull gains the iOS `rubberBand` overscroll for
+    // free. A cheap by-name kf ask — NO peer-spine widen (glass-ui's spine is
+    // `^4.0.0`); glass-ui edits ZERO kf tree (the foreign-tree fence, inv-26).
+    //
     // The snap RE-TARGET on release (the published-surface interim, IDENTICAL to
     // kf's `handleUp` snap arm). The kf `Draggable` re-seats the spring from
     // `(value, releaseVelocity)` on its own pointerup (the free fling). We then

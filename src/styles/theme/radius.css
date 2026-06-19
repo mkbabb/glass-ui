@@ -45,6 +45,12 @@
     --radius-control: var(--radius-md);
     --radius-badge:   var(--radius-pill);
     --radius-dock:    var(--radius-pill);
+    /* BC.W-TABS-IOS — the iOS-27 segmented-control stadium register. The pill is a
+       stadium by construction (--radius-pill clamps to half-height on a short box →
+       a true end-cap), so the tab strip stops being a squared rounded-rect. The
+       value.js DESIGN.md idiom: the role-bearing pill token, NOT a hand-rolled
+       `rounded-full`. A consumer retunes the tab geometry via `:root { --radius-tab }`. */
+    --radius-tab:     var(--radius-pill);
     /* AW.W3b — the big-dock card shell's default (comfortable-density) radius.
        The density-scaled --dock-card-radius (dock.css) resolves through this. */
     --radius-dock-card: var(--radius-3xl);
