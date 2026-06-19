@@ -71,3 +71,18 @@ All 5 MAJOR + MINORs fixed + grounded against live source (commit `1a991285`): D
 
 **Verdict: bm2=1 (fixed), bm3=0. Gap surface 5 MAJOR → 1 MAJOR (Pass-3 clean) — converging. Commit + re-fire the confirmation 2-pass for 2-consecutive-clean.**
 
+## Confirmation pass (post-HARDEN-2, `bc-challenge-reopen2` re-fire) — Pass-2 FULLY CLEAN; Pass-3 1 MAJOR → FIXED
+
+| pass | dim | verdict | MAJ |
+|---|---|---|---|
+| P2 | coverage-recheck | CONVERGED | 0 |
+| P2 | artifact-recheck | CONVERGED | 0 |
+| P2 | holistic-interaction | PASS | 0 |
+| P3 | adversarial-completeness | CONVERGED | 0 |
+| P3 | gate-coherence | CONVERGED-WITH-ONE-MAJOR | 1 |
+| P3 | precept-conformance | CONVERGED | 0 |
+
+- **M-C1 (gate-coherence)** — `BC.W-SPLIT-CHARS` (new `custom/split-chars/`) + `BC.W-ACCENT-TONE` (new `custom/selectable-chip/` + `/selectable-chip` subpath) mint a new colocation dir/subpath but neither named `proof:claude-structure-sync`/`proof:colocation`/`proof:subpath-enumeration` in its gate set (COMPLETION-SEAL's CS1 is the correct model — it does). **FIX:** added SP6 to SPLIT-CHARS (dir + the `/motion-core` re-export resolution — no new subpath) + A6 to ACCENT-TONE (dir + subpath, all three gates), matching CS1. The earlier SPLIT-CHARS publish-choice MINOR resolved en route (`/motion-core` re-export).
+
+**Verdict: bm2=0, bm3=1 (fixed). Gap surface 1 MAJOR (Pass-2 fully clean). The whack-a-mole risk assessed: every gap so far is GENUINE + PERMANENTLY-CLOSED-by-its-fix (disease-leak fenced, DAG node, consume-link, stale-count, structure-gates) — the substantive gaps came first, now gate-completeness polish; the surface is converging, not thrashing. Commit + re-fire the confirmation 2-pass.**
+
