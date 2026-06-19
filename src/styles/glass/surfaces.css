@@ -209,11 +209,50 @@
         --glass-specular-intensity-hover: var(--glass-specular-btn-hover);
     }
 
+    /* BC.W-BUTTON-GLASS-IOS (move 2 / BG-IOS-2) — the hero CTA reaches DEEP glass.
+       `.btn-glass` reads `--glass-blur-btn` (not `--glass-blur-floating`), so the bare
+       `.glass-deep` axis (which re-points `--glass-blur-floating`) does not deepen a
+       button. This arm re-points `--glass-blur-btn` onto the deep family — the SAME
+       token-substitution model `.glass-deep` uses (glass/deep.css), composing the ONE
+       deep axis, NOT a new blur recipe. So a `default`/`primary-audacious` hero CTA
+       reads the apple.com-nav-grade thick refractive liquid glass (16px / saturate 1.5
+       family, `--glass-blur-deep`), while the plain content tiers + the quieter
+       `outline`/`secondary`/`accent` glass buttons stay calm at the floating-tier
+       `--glass-blur-btn`. The deep BLUR is budget-FREE (the W-LENSING budget binds the
+       `:liquid` SVG lens, not the deep-blur tier). The a11y `--glass-level:0` brackets
+       reach it for free (the deep blur composes `--glass-level`, the opaque-escape path). */
+    .btn-glass.glass-deep {
+        --glass-blur-btn: var(--glass-blur-deep);
+    }
+
     /* The depth deepens one rung on hover (the lifted-lozenge read) — additive over
        the variant's own hover surface legs. The variants paint the bg/border on
        hover; this adds the deeper drop. */
     .btn-glass:hover:not(:disabled, [data-disabled]) {
         box-shadow: var(--glass-btn-rim), var(--glass-btn-under-shadow-hover);
+    }
+
+    /* BC.W-BUTTON-GLASS-IOS (move 3 / BG-IOS-4) — the press is COUPLED (W-MOTION-CANON
+       P3): the ONE `--glass-btn-press-t` 0..1 spring drive (Button.vue writes it off
+       `useSpringPress`) feeds BOTH the squish (the `useLiquidFlex` reciprocal X/Y deform,
+       Button.vue) AND a SPECULAR brightness leg here — the touch-ILLUMINATION (apple-
+       ios27.md §2.5 ".interactive() → scale + bounce + shimmer + touch-illumination").
+       During the press the button's specular tracks the SPRING (not the binary `:active`
+       toggle material.css sets): `--specular-intensity` LERPs from the hover gleam toward
+       the active gleam as `--glass-btn-press-t` travels, so the gleam ILLUMINATES on the
+       SAME spring scalar as the squish (the glass reads as DEFORMING-AND-BRIGHTENING with
+       the spring's alive overshoot, not a uniform shrink). It reads the EXISTING
+       `--glass-specular-intensity-{hover,active}` cohort (property-regs.css) — no new
+       token, ONE drive two legs. Specificity ties material's `.glass-wash:active::before`
+       (0,2,1) and wins by source-order-after (surfaces.css @import-s after material.css),
+       so the button press follows the spring; the hover gleam + the no-JS `:active` floor
+       are untouched. */
+    .btn-glass:active::before {
+        --specular-intensity: calc(
+            var(--glass-specular-intensity-hover) +
+            (var(--glass-specular-intensity-active) - var(--glass-specular-intensity-hover)) *
+            var(--glass-btn-press-t)
+        );
     }
 
     /* BB.W-BUTTON-GLASS (a) — the ELEMENT-LEVEL oklab-tinted hover/active fill pair
@@ -233,6 +272,16 @@
        UNTOUCHED (other surfaces compose them at the element correctly — the raw token +
        the element-level oklab wrapper is the correct ladder shape). */
     .btn-glass {
+        /* BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the `quiet` rung gains the SAME element-
+           level oklab-tint wrapper so the de-shadcn `outline`/`secondary` reskin (the
+           QUIETER glass register, prominence-by-tint) reaches the W55 darken on its lit
+           fill too — ZERO new compositing axis, the SAME seam the resting/floating pair
+           composes. */
+        --glass-bg-quiet-tinted: color-mix(
+            in oklab,
+            var(--glass-bg-quiet),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         --glass-bg-resting-tinted: color-mix(
             in oklab,
             var(--glass-bg-resting),

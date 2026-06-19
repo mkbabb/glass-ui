@@ -166,6 +166,20 @@
        dock reads as painted chrome, not a frosted ghost. */
     --glass-opacity-dock: 0.42;
 
+    /* Dialog-specific opacity (0.68) — BC.W-DIALOG-GLASS. The iOS-27 control-
+       center modal register: SEE-THROUGH frosted glass that reveals the page
+       beneath, NOT the floating-tier near-opaque slab (0.80 read as "NOT glassy
+       at all"). 0.68 sits between `resting` (0.65 — transparent enough to read
+       through) and `floating` (0.80 — opaque enough for AA legibility against
+       the bright bucket), so the modal floats with the FLOATING-tier lift (edge/
+       rim/under-shadow) while reading at the RESTING-tier transparency. The
+       LIBRARY iOS-modal identity (presets-in-consumers — a consumer retunes
+       `--glass-bg-dialog` via :root). Consumed by DialogContent.vue, which re-
+       declares `--glass-bg-floating: var(--glass-bg-dialog)` on the dialog scope
+       (the self-re-point recipe, the dock precedent — NOT a raw rung override
+       that won't re-compose). */
+    --glass-opacity-dialog: 0.68;
+
     /* Dock foreground over an animated backdrop. A dock floating over an
        aurora/animated surface (`value.js` dock-over-aurora, a slides routed
        control, bbnf) sits on a mid-luminance, shifting field where the muted
@@ -211,6 +225,15 @@
        second hand-rolled recipe. */
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
+    /* BC.W-DIALOG-GLASS — the dialog plate bg, composed the SAME oklab-tint-wrapped
+       way the dock self-re-points (so the BC.W-ADAPTIVE-RECONCILE darken reaches the
+       modal over a bright backdrop without a second hand-rolled recipe). The 0.68
+       opacity is the iOS-27 control-center register (see `--glass-opacity-dialog`).
+       DialogContent.vue re-declares `--glass-bg-floating: var(--glass-bg-dialog)` on
+       the dialog scope (the documented retune path — the self-re-point, NOT a raw
+       rung override) so the floating edge/rim/under-shadow LIFT survives the
+       transparency drop. */
+    --glass-bg-dialog:   color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
 
     /* Composed borders — foreground-tinted. BC.W-BLACK-BAR D2 — the perimeter
        hairline is RETIRED as the silhouette device. The old 11-22% warm-ink rung

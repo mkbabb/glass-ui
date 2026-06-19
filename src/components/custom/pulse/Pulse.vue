@@ -158,25 +158,48 @@ const auraScaleMax = computed(() => ({
  * stays at the natural ≥1 stacking order); set --pulse-aura-z to lift
  * if needed.
  */
+/* BC.W-GLASS-GLOW-FIX (Atlas A-8 root) — the bound is a CLIP-BOUNDARY/SCALED-PAINT
+   SPLIT. The `.pulse-aura` element is the UNSCALED `overflow: clip` boundary pinned at
+   `inset:0` (the host content box); the breath-scaled radial lives on the `::before`
+   CHILD. The prior fix put `overflow: clip` AND `transform: scale()` on the SAME
+   element — but a transform scales the clip RECT itself, so the 1.15× peak still spilled
+   past the host edge (the still-bleeds defect). Scaling the CHILD instead, clipped by
+   the unscaled parent, keeps the peak INSIDE `inset:0` on EVERY host overflow. The aura
+   carries only the element-OPACITY breath (it changes no geometry). */
 .pulse-aura {
     position: absolute;
     inset: 0;
     border-radius: inherit;
     pointer-events: none;
     z-index: var(--pulse-aura-z, 0);
+    overflow: clip;
+    opacity: var(--pulse-aura-breath-min, 0.28);
+    /* the keyframe writes `--pulse-aura-breath-scale` (the registered <number>) + the
+       element opacity; the `::before` child reads the scale. No transform HERE — the
+       clip boundary must stay unscaled or it re-scales the clip rect. */
+    animation: ambient-pulse
+        var(--animate-ambient-pulse-duration, 6s)
+        var(--animate-ambient-pulse-easing, ease-in-out)
+        infinite;
+    will-change: opacity;
+}
+
+/* The scaled radial PAINT — clipped to the unscaled `.pulse-aura` border-box. The
+   breath scale rides this child (via the inherited `--pulse-aura-breath-scale`), so the
+   `overflow: clip` on the parent bounds the 1.15× (1.22× vivid) peak to the host box. */
+.pulse-aura::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
     background: radial-gradient(
         ellipse at 50% 50%,
         color-mix(in srgb, var(--pulse-aura-color, currentColor) calc(var(--pulse-aura-strength, 0.22) * 100%), transparent) 0%,
         color-mix(in srgb, var(--pulse-aura-color, currentColor) calc(var(--pulse-aura-strength, 0.22) * 35%), transparent) 35%,
         transparent 70%
     );
-    opacity: var(--pulse-aura-breath-min, 0.28);
-    transform: scale(var(--animate-ambient-pulse-scale-min, 1));
-    animation: ambient-pulse
-        var(--animate-ambient-pulse-duration, 6s)
-        var(--animate-ambient-pulse-easing, ease-in-out)
-        infinite;
-    will-change: transform, opacity;
+    transform: scale(var(--pulse-aura-breath-scale, var(--animate-ambient-pulse-scale-min, 1)));
+    will-change: transform;
 }
 
 .pulse-aura--once {
@@ -191,12 +214,15 @@ const auraScaleMax = computed(() => ({
     /*
      * W3 contract: depth/colour stays visible; the breath cycle
      * disables. The static halo reads at the aura's breath-min stop
-     * so the ambient visual identity persists.
+     * so the ambient visual identity persists. The `::before` paint
+     * holds at rest scale (scale 1) — the clip boundary is unchanged.
      */
     .pulse-aura {
         animation: none;
-        transform: scale(1);
         opacity: var(--pulse-aura-breath-min, 0.28);
+    }
+    .pulse-aura::before {
+        transform: scale(1);
     }
 }
 </style>

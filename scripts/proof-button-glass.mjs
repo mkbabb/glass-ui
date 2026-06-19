@@ -317,6 +317,152 @@ export function detectButtonGlass(sources) {
         );
     }
 
+    // ════════════════════════════════════════════════════════════════════════════
+    // BC.W-BUTTON-GLASS-IOS — the iOS-27 register lift (EXTENDED in place).
+    // BG-IOS-1..6 born-RED on the pre-fix tree → GREEN at close, beside the B1-B5
+    // BB clauses that stay GREEN.
+    // ════════════════════════════════════════════════════════════════════════════
+    const { glassTokens = "", buttonGlassSpec = "" } = sources;
+    const gtok = stripComments(glassTokens);
+    const spec = stripComments(buttonGlassSpec);
+
+    // ── BG-IOS-1 — the button blur reads the FLOATING radius register (≥10px / sat ≥1.15) ──
+    facts.bgIos1 = {};
+    // the composed `--glass-blur-btn` token reads the floating radius primitive (NOT the
+    // quiet 8px) + a saturate ≥ 1.15 (the floating saturate knob). A re-pin to the quiet
+    // radius (`--glass-blur-quiet-radius`) REDs.
+    const btnBlurBlock =
+        gtok.match(/--glass-blur-btn:\s*blur\([\s\S]*?;/)?.[0] ?? "";
+    facts.bgIos1.readsFloatingRadius =
+        /--glass-blur-floating-radius\b/.test(btnBlurBlock);
+    facts.bgIos1.notQuietRadius = !/--glass-blur-quiet-radius\b/.test(btnBlurBlock);
+    facts.bgIos1.readsFloatingSaturate =
+        /saturate\(\s*var\(--glass-saturate-floating\)\s*\)/.test(btnBlurBlock);
+    if (
+        !(
+            facts.bgIos1.readsFloatingRadius &&
+            facts.bgIos1.notQuietRadius &&
+            facts.bgIos1.readsFloatingSaturate
+        )
+    ) {
+        violations.push(
+            "BG-IOS-1: `--glass-blur-btn` must read the FLOATING radius register (`--glass-blur-floating-radius`, 13px ≥ 10px) + `saturate(var(--glass-saturate-floating))` (1.18 ≥ 1.15) — NOT the quiet 8px radius (a re-pin to `--glass-blur-quiet-radius` REDs: the button reads quieter than a content tile)",
+        );
+    }
+
+    // ── BG-IOS-2 — default/primary-audacious compose .glass-deep on the hero register ──
+    facts.bgIos2 = {};
+    // the hero CTA arms carry `glass-deep` in their CVA class string.
+    const heroArmHasDeep = (arm) => {
+        const re = new RegExp(
+            `['"\`]?${arm.replace(/[-]/g, "\\$&")}['"\`]?\\s*:\\s*\\n?\\s*['"\`]([^'"\`]*)['"\`]`,
+        );
+        const m = idx.match(re);
+        return m ? /\bglass-deep\b/.test(m[1]) : false;
+    };
+    facts.bgIos2.defaultDeep = heroArmHasDeep("default");
+    facts.bgIos2.primaryDeep = heroArmHasDeep("primary-audacious");
+    // surfaces.css carries the `.btn-glass.glass-deep` arm re-pointing `--glass-blur-btn`
+    // onto the deep family (the token-substitution model — composing the ONE deep axis).
+    facts.bgIos2.btnDeepArm =
+        /\.btn-glass\.glass-deep\s*\{[\s\S]*?--glass-blur-btn:\s*var\(--glass-blur-deep\)/.test(
+            surf,
+        );
+    if (!(facts.bgIos2.defaultDeep && facts.bgIos2.primaryDeep)) {
+        violations.push(
+            "BG-IOS-2: the hero CTAs (`default` + `primary-audacious`) must compose `.glass-deep` (the maximal iOS deep-glass register) — a flat-quiet hero REDs",
+        );
+    }
+    if (!facts.bgIos2.btnDeepArm) {
+        violations.push(
+            "BG-IOS-2: surfaces.css must carry the `.btn-glass.glass-deep { --glass-blur-btn: var(--glass-blur-deep) }` arm (re-point the button blur onto the ONE deep axis via the token-substitution model — `.btn-glass` reads `--glass-blur-btn`, not `--glass-blur-floating`, so the bare `.glass-deep` axis would not deepen it)",
+        );
+    }
+
+    // ── BG-IOS-3 — the press reads the iOS interactive spring from the ONE source ──
+    facts.bgIos3 = {};
+    // Button.vue must NOT carry a button-local magic-number spring — no `response:`/
+    // `dampingFraction:` LITERAL in the `useSpringPress(...)` call (the spring physics
+    // live at the ONE SPRING_PRESETS table BC.W-SPRING-EASE owns + `useSpringPress`'s
+    // defaults read; a per-call literal is the button-local fork the fence forbids).
+    const springPressCall =
+        vue.match(/useSpringPress\s*\(([\s\S]*?)\)/)?.[1] ?? "";
+    facts.bgIos3.noLocalMagicSpring =
+        !/response\s*:/.test(springPressCall) &&
+        !/dampingFraction\s*:/.test(springPressCall);
+    if (!facts.bgIos3.noLocalMagicSpring) {
+        violations.push(
+            "BG-IOS-3: Button.vue must NOT pass a button-local magic-number spring to `useSpringPress` (no `response:`/`dampingFraction:` literal) — the iOS interactive press (0.15/0.86) lives at the ONE SPRING_PRESETS source (BC.W-SPRING-EASE) that `useSpringPress`'s defaults read; Button consumes the default, never a per-call literal (the W-GLASS-CAL spring fence)",
+        );
+    }
+
+    // ── BG-IOS-4 — the press drive couples a brightness/specular leg (P3) ──
+    facts.bgIos4 = {};
+    // surfaces.css drives `--specular-intensity` off the `--glass-btn-press-t` 0..1 drive
+    // (the ONE drive feeds BOTH the squish AND the gleam illumination — a press that moves
+    // scale-only REDs).
+    facts.bgIos4.specCoupledToPressDrive =
+        /--specular-intensity:\s*calc\([\s\S]*?var\(--glass-btn-press-t\)[\s\S]*?\)/.test(
+            surf,
+        );
+    if (!facts.bgIos4.specCoupledToPressDrive) {
+        violations.push(
+            "BG-IOS-4: the `--glass-btn-press-t` press drive must COUPLE a specular/brightness leg in surfaces.css (`--specular-intensity` LERPed off `--glass-btn-press-t` — the touch-illumination, one drive two legs) — a press that moves scale-ONLY REDs (P3)",
+        );
+    }
+
+    // ── BG-IOS-5 — the §C interaction diagnosis is DISCHARGED ──
+    facts.bgIos5 = {};
+    // The π spec carries a LIVE click/keyboard-fires assert on the variant buttons (the
+    // binding-verification e2e — the MEMORY glass_ui_binding_verification chronic). Either
+    // the diagnosis found interaction-dead (and the e2e is OWED) or it found the buttons
+    // fire (and the lane records the "clicks fire" verdict) — both satisfy by the lane's
+    // presence. A /display/buttons whose click is dead with NO covering e2e REDs; we
+    // satisfy BG-IOS-5 by REQUIRING the click-fires lane exist in the π spec (so the §C
+    // interaction is OWNED in substance, never punted to a phantom).
+    facts.bgIos5.clickFiresLane =
+        /(@click|click handler|fires|\.click\(\))/i.test(spec) &&
+        /(BG-IOS-5|interaction|click[- ]fires|don'?t work)/i.test(spec);
+    if (!facts.bgIos5.clickFiresLane) {
+        violations.push(
+            "BG-IOS-5: tests-visual/button-glass.spec.ts must carry the §C interaction lane — a LIVE click + keyboard Enter/Space fires-`@click` assert on the variant buttons (the binding-verification e2e the MEMORY glass_ui_binding_verification chronic demands; the §C \"buttons don't work\" defect is OWNED in substance, not punted)",
+        );
+    }
+
+    // ── BG-IOS-6 — outline/secondary/accent carry NO shadcn-neutral token (de-shadcn reskin) ──
+    facts.bgIos6 = {};
+    const reskinArm = (arm) => {
+        const re = new RegExp(
+            `['"\`]?${arm}['"\`]?\\s*:\\s*\\n?\\s*['"\`]([^'"\`]*)['"\`]`,
+        );
+        return idx.match(re)?.[1] ?? "";
+    };
+    const SHADCN_NEUTRAL =
+        /(?<![\w:-])bg-background(?![\w-])|(?<![\w-])border-input(?![\w-])|(?<![\w:-])bg-secondary(?![\w/-])|(?<![\w:-])bg-accent(?![\w/-])/;
+    const outlineArm = reskinArm("outline");
+    const secondaryArm = reskinArm("secondary");
+    const accentArm = reskinArm("accent");
+    // each reskinned arm composes the glass register (`glass-wash`/`btn-glass` + a
+    // `--glass-bg-*`/`--glass-border-*` token) AND carries NO leading shadcn-neutral fill.
+    const reskinned = (arm) =>
+        /\bbtn-glass\b/.test(arm) &&
+        /--glass-bg-/.test(arm) &&
+        !SHADCN_NEUTRAL.test(arm);
+    facts.bgIos6.outlineReskinned = reskinned(outlineArm);
+    facts.bgIos6.secondaryReskinned = reskinned(secondaryArm);
+    facts.bgIos6.accentReskinned = reskinned(accentArm);
+    if (
+        !(
+            facts.bgIos6.outlineReskinned &&
+            facts.bgIos6.secondaryReskinned &&
+            facts.bgIos6.accentReskinned
+        )
+    ) {
+        violations.push(
+            "BG-IOS-6: the `outline`/`secondary`/`accent` variants must compose the glass register (`glass-wash btn-glass` + `--glass-bg-*` tier + warm rim) with NO shadcn-neutral token (`border-input`/`bg-background`/`bg-secondary`/`bg-accent`-as-fill) — the de-shadcn A6 reskin (the button half of proof:no-shadcn-default's D1 residual). A re-added `border-input bg-background` outline REDs",
+        );
+    }
+
     // ── B5 — the calm-CTA fence HOLDS (no disco revival) ────────────────────────
     facts.b5 = {};
     const discoNeedles = [
@@ -363,6 +509,12 @@ function run() {
         // BB.W-LENSING — the `@supports`-gated `#glass-refract` filter on the
         // renamed `.glass-lens` class lives here (B4 verifies the gate in its home).
         refractCss: safeRead(resolve(ROOT, "src/styles/glass-refract.css")),
+        // BC.W-BUTTON-GLASS-IOS — the iOS-tier blur lives in the glass tokens
+        // (BG-IOS-1); the §C interaction lane lives in the π spec (BG-IOS-5).
+        glassTokens: safeRead(resolve(ROOT, "src/styles/tokens/glass.css")),
+        buttonGlassSpec: safeRead(
+            resolve(ROOT, "tests-visual/button-glass.spec.ts"),
+        ),
     };
 
     const { facts, violations } = detectButtonGlass(sources);
@@ -383,7 +535,66 @@ function run() {
             "SELF-TEST: the B5 disco self-test bite did NOT red on an injected `btn-audacious`/`✦` revival — the fence has no teeth (gate integrity failure)",
         );
     }
-    facts.selfTest = { b5BiteRed: biteRed };
+
+    // ── BC.W-BUTTON-GLASS-IOS SELF-TEST BITES — each forbidden form must RED ──
+    // BG-IOS-1: a synthetic quiet-8px re-pin of `--glass-blur-btn` REDs.
+    const ios1Bite = detectButtonGlass({
+        ...sources,
+        glassTokens: sources.glassTokens.replace(
+            /--glass-blur-btn:\s*blur\([\s\S]*?;/,
+            "--glass-blur-btn: blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05);",
+        ),
+    });
+    const ios1BiteRed = ios1Bite.violations.some((v) => v.startsWith("BG-IOS-1:"));
+
+    // BG-IOS-4: a synthetic scale-only press (strip the press-drive specular coupling) REDs.
+    const ios4Bite = detectButtonGlass({
+        ...sources,
+        surfacesCss: sources.surfacesCss.replace(
+            /--specular-intensity:\s*calc\([\s\S]*?var\(--glass-btn-press-t\)[\s\S]*?\);/,
+            "/* stripped */",
+        ),
+    });
+    const ios4BiteRed = ios4Bite.violations.some((v) => v.startsWith("BG-IOS-4:"));
+
+    // BG-IOS-5: a synthetic π spec with no interaction lane REDs.
+    const ios5Bite = detectButtonGlass({
+        ...sources,
+        buttonGlassSpec: "// no interaction lane here",
+    });
+    const ios5BiteRed = ios5Bite.violations.some((v) => v.startsWith("BG-IOS-5:"));
+
+    // BG-IOS-6: a synthetic shadcn-neutral `outline` re-paste REDs.
+    const ios6Bite = detectButtonGlass({
+        ...sources,
+        buttonIndex: sources.buttonIndex.replace(
+            /outline:\s*\n?\s*['"`][^'"`]*['"`]/,
+            "outline:\n          'border border-input bg-background hover:bg-accent'",
+        ),
+    });
+    const ios6BiteRed = ios6Bite.violations.some((v) => v.startsWith("BG-IOS-6:"));
+
+    const iosBiteChecks = [
+        ["BG-IOS-1 quiet-8px re-pin", ios1BiteRed],
+        ["BG-IOS-4 scale-only press", ios4BiteRed],
+        ["BG-IOS-5 no-interaction-lane", ios5BiteRed],
+        ["BG-IOS-6 shadcn-neutral outline re-paste", ios6BiteRed],
+    ];
+    for (const [name, red] of iosBiteChecks) {
+        if (!red) {
+            violations.push(
+                `SELF-TEST: the ${name} bite did NOT red — the clause has no teeth (gate integrity failure)`,
+            );
+        }
+    }
+
+    facts.selfTest = {
+        b5BiteRed: biteRed,
+        ios1BiteRed,
+        ios4BiteRed,
+        ios5BiteRed,
+        ios6BiteRed,
+    };
 
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -440,7 +651,46 @@ function run() {
             facts.b5.discoHits.length
         })`,
     );
-    console.log(`  self-test B5 bite reds            : ${yn(facts.selfTest.b5BiteRed)}`);
+    console.log("  ── BC.W-BUTTON-GLASS-IOS (iOS-27 register lift) ──");
+    console.log(
+        `  BG-IOS-1 btn blur = floating reg  : ${yn(
+            facts.bgIos1.readsFloatingRadius &&
+                facts.bgIos1.notQuietRadius &&
+                facts.bgIos1.readsFloatingSaturate,
+        )}`,
+    );
+    console.log(
+        `  BG-IOS-2 hero CTAs on .glass-deep : ${yn(
+            facts.bgIos2.defaultDeep &&
+                facts.bgIos2.primaryDeep &&
+                facts.bgIos2.btnDeepArm,
+        )}`,
+    );
+    console.log(
+        `  BG-IOS-3 press = ONE-source spring: ${yn(facts.bgIos3.noLocalMagicSpring)}`,
+    );
+    console.log(
+        `  BG-IOS-4 press drive couples gleam: ${yn(facts.bgIos4.specCoupledToPressDrive)}`,
+    );
+    console.log(
+        `  BG-IOS-5 §C interaction discharged: ${yn(facts.bgIos5.clickFiresLane)}`,
+    );
+    console.log(
+        `  BG-IOS-6 outline/secondary/accent glass: ${yn(
+            facts.bgIos6.outlineReskinned &&
+                facts.bgIos6.secondaryReskinned &&
+                facts.bgIos6.accentReskinned,
+        )}`,
+    );
+    console.log(
+        `  self-test bites red               : ${yn(
+            facts.selfTest.b5BiteRed &&
+                facts.selfTest.ios1BiteRed &&
+                facts.selfTest.ios4BiteRed &&
+                facts.selfTest.ios5BiteRed &&
+                facts.selfTest.ios6BiteRed,
+        )}`,
+    );
 
     if (violations.length > 0) {
         console.log("\nVIOLATIONS:");

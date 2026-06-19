@@ -76,6 +76,16 @@
             color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
         );
         border-radius: 999px;
+        /* BC.W-GLASS-GLOW-FIX (Atlas A-8 root, CANDIDATE 4) — BOUND the 120%×120% radial
+           to the plate box. The gradient SIZE (120%) reaches past the plate's content box
+           so the domed droplet would over-paint were the silhouette ever un-clipped;
+           `overflow: clip` keeps the radial fill inside the teardrop silhouette (the
+           `border-radius: 999px` capsule), so the oversized radial can NEVER paint a giant
+           cream blob past the plate. The domed-droplet read is PRESERVED — the radial still
+           fills the plate; only the past-bounds escape is killed. Defensive, structural,
+           zero visual change (the border-radius already clips the fill — this makes the
+           bound explicit so the leak-class gate holds). */
+        overflow: clip;
         /* The volume-preserving teardrop squish — stretch along the travel axis,
            compress reciprocally. Reads `--stretch` (the liquid-flex derivative). The
            vertical plate squishes on Y, the horizontal on X (set per-plate below). */

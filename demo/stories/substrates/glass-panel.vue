@@ -1,98 +1,85 @@
 <script setup lang="ts">
-// GlassPanel — five-rung glass tier ladder over a renderer-tier detection
-// cascade (svg-filter → css → fallback). The renderer is the headline
-// differentiator from <Card>; the variants paint the tier semantically.
-import { computed, ref } from "vue";
+// BC.W-GLASS-PRUNE — the MATERIALS gallery. The glass system consolidates to TWO
+// registers: Glass MATERIALS (this route) + Glass CARDS (/display/card). This story
+// teaches the MATERIALS register — the ONE iOS liquid-glass material expressed as the
+// five-rung `.glass-{wash,quiet,resting,floating,overlay}` ladder, shown BARE (composing
+// the library CLASSES directly, not a `<GlassPanel>` component) over a LIVE aurora field
+// (glass on craft — apple.com's web has no glass-materials gallery; ours floats over a
+// breathing field, research/apple-glass.md §3.1). Two modifier AXES toggle live: the
+// `.glass-deep` DEPTH axis (the apple-home-nav 16-20px register) and the `.glass-lens`
+// REFRACTION axis (the OS-grade squircle feDisplacementMap the web SOTA never shipped).
+//
+// A developer reading this beside /display/card sees the binary answer to "which glass
+// do I reach for?": a bare surface → a `.glass-{rung}` MATERIAL; a content container →
+// a `<Card>`. There is no third "panel" thing — the `<GlassPanel>` component is GONE.
+import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { GlassPanel, type GlassPanelProps } from "../../../src/subpaths/glass-panel";
-// The renderer cluster is component-local (AZ.W-PRUNE2 — off the root barrel, the
-// GlassPanel-internal dependency); the story exercises it via the source path.
-import {
-    useGlassRenderer,
-    type GlassTier,
-} from "../../../src/composables/glass/useGlassRenderer";
-// W12 — stage the five-rung ladder over a shipped high-frequency backdrop so
-// the translucency + per-rung tier-alpha reads against busy color (glass does
-// not read on flat cream). Aurora is the canonical busy-color substrate.
 import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/subpaths/aurora";
 import { ToggleGroup, ToggleGroupItem } from "../../../src/components/ui/toggle-group";
 
-const variants: GlassPanelProps["variant"][] = [
-    "wash",
-    "quiet",
-    "resting",
-    "floating",
-    "overlay",
-];
+// The five-rung ladder — the canonical MATERIAL (BC.W-GLASS-IDENTITY owns the values).
+// Each rung is visibly more present than the last (alpha-monotonic by design).
+const rungs = [
+    { cls: "glass-wash", label: "wash", blurb: "~0.30α — sub-perceptual veil" },
+    { cls: "glass-quiet", label: "quiet", blurb: "~0.50α — the calm body rung" },
+    { cls: "glass-resting", label: "resting", blurb: "~0.65α — the canonical plate" },
+    { cls: "glass-floating", label: "floating", blurb: "~0.80α — the lifted overlay" },
+    { cls: "glass-overlay", label: "overlay", blurb: "~0.95α — modal-over-modal" },
+] as const;
 
-const tiers: GlassTier[] = ["svg-filter", "css", "fallback"];
-
-// The tier-force control is a single-select ToggleGroup (W20) — one surface
-// (the ladder) mutated, no panel swap, the canonical ToggleGroup case. The
-// `"auto"` sentinel maps to `forcedTier = undefined` (renderer auto-detect).
-const forcedTierKey = ref<string>("auto");
-const forcedTier = computed<GlassTier | undefined>(() =>
-    forcedTierKey.value === "auto" ? undefined : (forcedTierKey.value as GlassTier),
-);
-
-const { tier: detectedTier } = useGlassRenderer();
+// The two modifier AXES, toggled live (multi-select chips — each is an orthogonal
+// decoration ON the rungs, not a register of its own). `.glass-deep` re-points the blur
+// to the deep family (the maximal-iOS depth tier); `.glass-lens` adds the squircle
+// feDisplacementMap refraction (Chromium-only — WebKit degrades to the blur base, the
+// correct cross-engine degrade per research/apple-ios27.md §6).
+const axes = ref<string[]>([]);
+const deepOn = () => axes.value.includes("deep");
+const lensOn = () => axes.value.includes("lens");
 </script>
 
 <template>
     <StoryPage>
         <StorySection
-            label="renderer-tier detection"
-            blurb="useGlassRenderer probes the host: Chromium SVG-filter → CSS backdrop-filter → fallback. Manual override via the `tier` prop."
+            label="Glass MATERIALS — the five-rung ladder"
+            blurb="The ONE iOS liquid-glass material, expressed bare as the .glass-{wash·quiet·resting·floating·overlay} ladder over a LIVE aurora. Each rung is visibly more present than the last. Toggle the .glass-deep DEPTH axis (the apple-home-nav register) and the .glass-lens REFRACTION axis (the OS-grade squircle, Chromium; WebKit degrades to blur). For a content container, reach for <Card> (the CARDS register, /display/card) — not a panel."
         >
-            <ShowcaseFrame pad="md">
-                <div class="flex flex-wrap items-center gap-4">
-                    <code class="fira-code text-mono-caption">
-                        detected: {{ detectedTier }}
-                    </code>
-                    <span class="text-mono-caption text-muted-foreground">force:</span>
-                    <!-- W20 — the tier-force control is a single-select
-                         ToggleGroup (one surface mutated, no panel swap). -->
-                    <ToggleGroup v-model="forcedTierKey" type="single" class="flex-wrap">
-                        <ToggleGroupItem value="auto">auto</ToggleGroupItem>
-                        <ToggleGroupItem
-                            v-for="tier in tiers"
-                            :key="tier"
-                            :value="tier"
-                        >
-                            {{ tier }}
-                        </ToggleGroupItem>
-                    </ToggleGroup>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+                <span class="text-mono-caption text-muted-foreground">axes:</span>
+                <!-- The two modifier axes — multi-select chips (orthogonal
+                     decorations ON the ladder, composed live onto every rung). -->
+                <ToggleGroup v-model="axes" type="multiple" class="flex-wrap">
+                    <ToggleGroupItem value="deep">.glass-deep</ToggleGroupItem>
+                    <ToggleGroupItem value="lens">.glass-lens</ToggleGroupItem>
+                </ToggleGroup>
+            </div>
 
-        <StorySection
-            label="five-rung ladder"
-            blurb="wash · quiet · resting · floating · overlay — the v0.8 5-rung canon. Each variant honours the tier-detection cascade above."
-        >
-            <!-- W12 — the ladder stages over a shipped Aurora backdrop (busy,
-                 high-frequency color) so the per-rung tier-alpha steps read.
-                 Aurora paints into the relatively-positioned frame; the grid
-                 sits above it. -->
+            <!-- ONE GL context per route (the one-GL-per-route budget): a SINGLE
+                 <Aurora> behind all five rung specimens, never one-per-rung. -->
             <div class="relative overflow-hidden rounded-card">
                 <Aurora :config="DEFAULT_AURORA_CONFIG" class="absolute inset-0" />
                 <div
                     class="relative z-10 grid grid-cols-1 gap-4 p-8 sm:grid-cols-2 lg:grid-cols-5"
                 >
-                    <GlassPanel
-                        v-for="v in variants"
-                        :key="v"
-                        :variant="v"
-                        :tier="forcedTier"
-                        class="rounded-card border border-border/40 p-6"
+                    <!-- Each specimen is a BARE glass material — the rung CLASS
+                         composed with the live-toggled .glass-deep / .glass-lens
+                         axes. No <GlassPanel> component; this IS the material. -->
+                    <div
+                        v-for="rung in rungs"
+                        :key="rung.cls"
+                        :class="[
+                            rung.cls,
+                            { 'glass-deep': deepOn(), 'glass-lens': lensOn() },
+                            'rounded-card p-6',
+                        ]"
                     >
                         <div class="flex flex-col gap-2">
-                            <code class="fira-code text-mono-caption text-foreground">{{ v }}</code>
-                            <p class="text-prose text-muted-foreground">tier sample</p>
+                            <code class="fira-code text-mono-caption text-foreground">
+                                .{{ rung.cls }}
+                            </code>
+                            <p class="text-prose text-muted-foreground">{{ rung.blurb }}</p>
                         </div>
-                    </GlassPanel>
+                    </div>
                 </div>
             </div>
         </StorySection>

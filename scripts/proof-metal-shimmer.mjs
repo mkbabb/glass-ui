@@ -57,6 +57,24 @@ function squish(src) {
     return src.replace(/\s+/g, " ");
 }
 
+// Extract the FIRST `drop-shadow( … )` argument body with balanced-paren matching
+// (a flat `[^)]*` regex stops at the inner var()'s close-paren and misses a trailing
+// baked color — the exact M7b false-negative). Returns the inner body or "".
+function dropShadowBodyOf(src) {
+    const at = src.indexOf("drop-shadow(");
+    if (at < 0) return "";
+    let i = at + "drop-shadow(".length;
+    const start = i;
+    let depth = 1;
+    while (i < src.length && depth > 0) {
+        if (src[i] === "(") depth++;
+        else if (src[i] === ")") depth--;
+        if (depth === 0) break;
+        i++;
+    }
+    return src.slice(start, i);
+}
+
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
 // ── The W-NO-GRAY floor (the brand-metal exception's anchor — bronze is a metal,
@@ -344,6 +362,152 @@ function detect() {
     }
     facts.m6 = m6;
 
+    // ── M7 — the gold catch-light (BC.W-AX-METAL-GLOW) ─────────────────────────
+    // An ADDITIVE glow layer on the metal-shimmer family: a `drop-shadow` halo of
+    // the metal's OWN base hue at `--metal-glow-blur` radius + `--metal-glow-opacity`
+    // strength, PRM-STATIC (painted at rest — the lit metal reads for PRM), ONE
+    // recipe on the SHARED selector (never a per-metal re-paste), and a GATE-LOCKED
+    // ≥2-consumer bar (the loop sweep LIVE + the seal glint booked-live + the
+    // metal-glow.md evidence resolving on disk).
+    const m7 = {};
+    const SEAL_CSS = "src/styles/completion-seal.css";
+    const GLOW_EVIDENCE = "docs/consumer-evidence/metal-glow.md";
+
+    // The shared metal block (before the first PRM bracket) is the only place the
+    // glow may live (the un-bracketed static base — the lit metal reads at rest).
+    const metalBeforeBracket = m5.noPrefBlockCount
+        ? metal.slice(0, noPrefBlocks[0].start)
+        : metal;
+
+    // M7a — the two knobs + the drop-shadow halo layer on the shared recipe.
+    const blurDeclared = /--metal-glow-blur\s*:/.test(metal);
+    const opacityDeclared = /--metal-glow-opacity\s*:/.test(metal);
+    const haloReadsBlur = /drop-shadow\([^)]*var\(--metal-glow-blur\)/.test(metal);
+    const haloReadsOpacity = /var\(--metal-glow-opacity\)/.test(metal);
+    m7.tokensDeclared = blurDeclared && opacityDeclared;
+    m7.haloLayer = haloReadsBlur && haloReadsOpacity;
+    if (!m7.tokensDeclared) {
+        violations.push("M7a: --metal-glow-blur / --metal-glow-opacity are NOT both declared on the metal recipe (the catch-light knobs)");
+    }
+    if (!m7.haloLayer) {
+        violations.push("M7a: no drop-shadow halo layer reads --metal-glow-blur + --metal-glow-opacity (the catch-light layer is absent)");
+    }
+
+    // M7b — the glow reads the metal's OWN base (--metal-stop-base), NOT a fixed
+    // --color-gold halo (a hardcoded gold glow on the silver class is a mismatch).
+    const dropShadowBody = dropShadowBodyOf(metal);
+    m7.glowReadsOwnBase = /var\(--metal-stop-base\)/.test(dropShadowBody);
+    const glowBakesGold = /var\(--color-gold\b/.test(dropShadowBody) || /var\(--gold\b/.test(dropShadowBody);
+    m7.glowBakesFixedGold = glowBakesGold;
+    if (!m7.glowReadsOwnBase) {
+        violations.push("M7b: the catch-light drop-shadow does NOT read --metal-stop-base (the metal's OWN hue) — a fixed-gold glow on silver/bronze is a mismatch");
+    }
+    if (glowBakesGold) {
+        violations.push("M7b: the catch-light drop-shadow BAKES a fixed --color-gold/--gold (it must read --metal-stop-base so each metal glows its own hue)");
+    }
+
+    // M7c — PRM-STATIC: the glow paints at REST, OUTSIDE the no-preference bracket.
+    // A `--metal-glow` reference / `drop-shadow` glow INSIDE the bracket reds (the
+    // lit metal must read for PRM users — only the sweep motion is gated).
+    let glowInsideBracket = false;
+    if (noPrefBlocks.length) {
+        for (const b of noPrefBlocks) {
+            const blockBody = metal.slice(b.start, b.end);
+            if (/--metal-glow|drop-shadow/.test(blockBody)) glowInsideBracket = true;
+        }
+    }
+    const glowOutsideBracket = /drop-shadow\([^)]*var\(--metal-glow-blur\)/.test(metalBeforeBracket);
+    m7.glowPrmStatic = glowOutsideBracket && !glowInsideBracket;
+    if (!glowOutsideBracket) {
+        violations.push("M7c: the catch-light glow is NOT painted at rest (outside the PRM bracket) — the lit metal must read for PRM users");
+    }
+    if (glowInsideBracket) {
+        violations.push("M7c: a --metal-glow / drop-shadow glow sits INSIDE the prefers-reduced-motion: no-preference bracket (it would vanish under PRM — the lit metal must read for everyone)");
+    }
+
+    // M7d — ONE glow recipe on the SHARED selector (the single-home discipline).
+    // Exactly ONE `filter: drop-shadow(... --metal-glow-blur ...)` declaration; a
+    // per-metal re-paste (a second drop-shadow on a .metal-{name} block) reds.
+    const glowDeclRe = /drop-shadow\([^)]*var\(--metal-glow-blur\)/g;
+    const glowDeclCount = (metal.match(glowDeclRe) || []).length;
+    m7.glowDeclCount = glowDeclCount;
+    // The glow lives on the shared multi-metal selector group (gold + silver + bronze).
+    m7.glowOnSharedSelector =
+        /\.metal-gold\s*,\s*\.metal-silver\s*,\s*\.metal-bronze\b[\s\S]*?drop-shadow\([^)]*var\(--metal-glow-blur\)/.test(metal);
+    m7.glowSingleHome = glowDeclCount === 1 && m7.glowOnSharedSelector;
+    if (glowDeclCount !== 1) {
+        violations.push(`M7d: ${glowDeclCount} catch-light drop-shadow recipes in metal.css (expected exactly ONE on the shared selector) — a per-metal re-paste breaks the single-home discipline`);
+    }
+    if (!m7.glowOnSharedSelector) {
+        violations.push("M7d: the catch-light glow is NOT on the shared .metal-gold, .metal-silver, .metal-bronze selector (the ONE-recipe single-home discipline)");
+    }
+
+    // M7e — the ≥2-consumer bar GATE-LOCKED (NOT prose-only). A consumerProbe
+    // confirms BOTH binary consumers + the evidence doc resolves on disk naming both.
+    //   #1 the loop sweep — the shared metal selector reads the glow drop-shadow at
+    //      rest (the same source M7a/M7c parse) — LIVE.
+    //   #2 the seal glint — completion-seal.css (the BC.W-AX-COMPLETION-SEAL recipe)
+    //      reads --metal-glow-blur/--metal-glow-opacity via --seal-glint — LIVE on
+    //      the seal wave's land; pre-seal it is BOOKED (the file may not yet exist).
+    const sealRaw = existsSync(resolve(ROOT, SEAL_CSS))
+        ? stripCss(readFileSync(resolve(ROOT, SEAL_CSS), "utf8"))
+        : null;
+    const consumerProbe = [
+        {
+            id: "loop-sweep",
+            file: METAL_CSS,
+            // LIVE iff the shared metal recipe reads the glow drop-shadow at rest.
+            live: m7.haloLayer && m7.glowReadsOwnBase && glowOutsideBracket,
+            booked: false,
+        },
+        {
+            id: "seal-glint",
+            file: SEAL_CSS,
+            // LIVE iff completion-seal.css exists AND its --seal-glint reads the glow
+            // tokens; BOOKED otherwise (the seal wave lands the live reader).
+            live:
+                sealRaw !== null &&
+                /--seal-glint/.test(sealRaw) &&
+                /var\(--metal-glow-(?:blur|opacity)\)/.test(sealRaw),
+            booked: sealRaw === null,
+        },
+    ];
+    // The evidence doc RESOLVES on disk AND names BOTH consumers (the anti-evasion
+    // floor — a prose-only bar with no resolving evidence reds).
+    const evidenceRaw = existsSync(resolve(ROOT, GLOW_EVIDENCE))
+        ? readFileSync(resolve(ROOT, GLOW_EVIDENCE), "utf8")
+        : null;
+    const evidenceNamesBoth =
+        evidenceRaw !== null &&
+        /loop sweep|metal-shimmer/i.test(evidenceRaw) &&
+        /seal glint|seal-glint|COMPLETION-SEAL/i.test(evidenceRaw) &&
+        /metal-glow-blur/.test(evidenceRaw) &&
+        /metal-glow-opacity/.test(evidenceRaw);
+    const liveCount = consumerProbe.filter((c) => c.live).length;
+    const bookedCount = consumerProbe.filter((c) => c.booked && !c.live).length;
+    // The bar: consumer #1 LIVE + (#2 LIVE post-seal OR #2 BOOKED-with-resolving-
+    // evidence pre-seal) + the evidence doc naming both. Never a bare prose claim.
+    m7.consumers = consumerProbe.map((c) => ({ id: c.id, file: c.file, live: c.live, booked: c.booked && !c.live }));
+    m7.liveCount = liveCount;
+    m7.bookedCount = bookedCount;
+    m7.evidenceResolves = evidenceRaw !== null;
+    m7.evidenceNamesBoth = evidenceNamesBoth;
+    const loopSweepLive = consumerProbe[0].live;
+    const sealCovered = consumerProbe[1].live || consumerProbe[1].booked;
+    m7.consumerBarMet = loopSweepLive && sealCovered && evidenceNamesBoth && liveCount >= 1;
+    if (!loopSweepLive) {
+        violations.push("M7e: consumer #1 (the loop sweep) is NOT live — the shared metal recipe does not read the glow drop-shadow at rest");
+    }
+    if (!sealCovered) {
+        violations.push("M7e: consumer #2 (the seal glint) is neither LIVE (completion-seal.css --seal-glint reads --metal-glow-*) nor BOOKED (the seal file absent) — the ≥2-consumer bar is unmet");
+    }
+    if (!m7.evidenceResolves) {
+        violations.push(`M7e: ${GLOW_EVIDENCE} does NOT resolve on disk (the anti-evasion floor — a prose-only ≥2-consumer bar with no resolving evidence reds)`);
+    } else if (!evidenceNamesBoth) {
+        violations.push(`M7e: ${GLOW_EVIDENCE} does not name BOTH consumers (the loop sweep + the seal glint) reading --metal-glow-blur/--metal-glow-opacity (a stubbed evidence doc reds)`);
+    }
+    facts.m7 = m7;
+
     // metal.css is REACHABLE (wired into the utilities @import root).
     const utilRoot = readFileSync(resolve(ROOT, "src/styles/utilities.css"), "utf8");
     facts.metalImported = /@import\s+["']\.\/utilities\/metal\.css["']/.test(utilRoot);
@@ -407,6 +571,45 @@ function selfTest() {
         fails.push("self-test M6: a sub-second metal clock (0.6s) was NOT caught (the slow-pass fence has no teeth)");
     }
 
+    // M7b bite — a fixed-gold glow on every metal must be flagged (the mismatch).
+    // The detector extracts the drop-shadow() body (balanced parens) then checks it
+    // bakes --color-gold/--gold; mirror that here rather than a flat [^)]* (which
+    // would stop at the inner var()'s close-paren and miss the baked color).
+    const fixedGoldGlow = "filter: drop-shadow(0 0 var(--metal-glow-blur) var(--color-gold));";
+    const fixedBody = dropShadowBodyOf(fixedGoldGlow);
+    const bakesFixedGold = /var\(--color-gold\b/.test(fixedBody) || /var\(--gold\b/.test(fixedBody);
+    if (!bakesFixedGold) {
+        fails.push("self-test M7b: a fixed --color-gold glow (not the metal's own --metal-stop-base) was NOT caught (the own-hue fence has no teeth)");
+    }
+    // M7c bite — a PRM-GATED glow (inside the no-preference bracket) must be flagged.
+    const prmGatedGlow = "@media (prefers-reduced-motion: no-preference) { .metal-gold { filter: drop-shadow(0 0 var(--metal-glow-blur) var(--metal-stop-base)); } }";
+    if (!/--metal-glow|drop-shadow/.test(prmGatedGlow)) {
+        fails.push("self-test M7c: a PRM-gated glow inside the no-preference bracket was NOT detectable (the lit-metal-for-PRM fence has no teeth)");
+    }
+    // M7d bite — a per-metal glow re-paste (a SECOND drop-shadow) must be counted.
+    const rePaste = "drop-shadow(0 0 var(--metal-glow-blur) a) drop-shadow(0 0 var(--metal-glow-blur) b)";
+    const rePasteCount = (rePaste.match(/drop-shadow\([^)]*var\(--metal-glow-blur\)/g) || []).length;
+    if (rePasteCount === 1) {
+        fails.push("self-test M7d: a per-metal glow re-paste (2 drop-shadow recipes) was NOT counted as >1 (the single-home fence has no teeth)");
+    }
+    // M7e bite — a stubbed/absent consumer-evidence doc must NOT pass evidenceNamesBoth.
+    const stubEvidence = "# metal-glow\n\nTODO: document consumers.";
+    const stubNamesBoth =
+        /loop sweep|metal-shimmer/i.test(stubEvidence) &&
+        /seal glint|seal-glint|COMPLETION-SEAL/i.test(stubEvidence) &&
+        /metal-glow-blur/.test(stubEvidence) &&
+        /metal-glow-opacity/.test(stubEvidence);
+    if (stubNamesBoth) {
+        fails.push("self-test M7e: a stubbed evidence doc (no consumers named, no tokens) passed the names-both check (the anti-evasion floor has no teeth)");
+    }
+    // M7e bite — a fake non-reading seal consumer (the file exists but never reads
+    // the glow tokens) must NOT count as LIVE (the import-without-read P1 precedent).
+    const fakeSeal = ".seal-glint { animation: foo; } /* --seal-glint present but no --metal-glow-* read */";
+    const fakeSealLive = /--seal-glint/.test(fakeSeal) && /var\(--metal-glow-(?:blur|opacity)\)/.test(fakeSeal);
+    if (fakeSealLive) {
+        fails.push("self-test M7e: a fake seal consumer (names --seal-glint but never reads --metal-glow-*) counted as a LIVE reader (the fake-consumer fence has no teeth)");
+    }
+
     return fails;
 }
 
@@ -447,6 +650,8 @@ function run() {
     console.log(`  M4 gold-shimmer-slide RETIRED + .gold-shimmer re-points: ${facts.m4.goldSlideRetired && facts.m4.goldShimmerRePointed && facts.m4.animateGoldRePointed ? "✓" : "✗"}`);
     console.log(`  M5 PRM-static bracket (${facts.m5.animationCount} animations, ${facts.m5.animationsOutsideBracket} leaked): ${facts.m5.allAnimationsBracketed && facts.m5.staticGradientUnbracketed ? "✓" : "✗"}`);
     console.log(`  M6 CALM (no disco, --duration-metal=${facts.m6.durationMetal}s): ${facts.m6.discoHits.length === 0 && facts.m6.readsMetalClock && facts.m6.durationMetal >= 6 ? "✓" : "✗"}`);
+    console.log(`  M7 gold catch-light (tokens·own-base·PRM-static·single-home·≥2-consumer): ${facts.m7.tokensDeclared && facts.m7.haloLayer && facts.m7.glowReadsOwnBase && !facts.m7.glowBakesFixedGold && facts.m7.glowPrmStatic && facts.m7.glowSingleHome && facts.m7.consumerBarMet ? "✓" : "✗"}`);
+    console.log(`     M7e consumers: ${facts.m7.liveCount} live + ${facts.m7.bookedCount} booked, evidence resolves: ${facts.m7.evidenceResolves ? "✓" : "✗"}`);
     console.log(`  WIRE metal.css @import-ed: ${facts.metalImported ? "✓" : "✗"}`);
 
     if (violations.length) {

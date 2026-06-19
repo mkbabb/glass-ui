@@ -427,6 +427,10 @@
             "types": "./dist/toggle-chip.d.ts",
             "import": "./dist/toggle-chip.js"
         },
+        "./selectable-chip": {
+            "types": "./dist/selectable-chip.d.ts",
+            "import": "./dist/selectable-chip.js"
+        },
         "./spa-view": {
             "types": "./dist/spa-view.d.ts",
             "import": "./dist/spa-view.js"
@@ -912,6 +916,12 @@
         "proof:glass-identity": "node scripts/proof-glass-identity.mjs",
         "proof:adaptive-reconcile": "node scripts/proof-adaptive-reconcile.mjs",
         "proof:glass-legibility": "node scripts/proof-glass-legibility.mjs",
+        "proof:no-shadcn-default": "node scripts/proof-no-shadcn-default.mjs",
+        "proof:glass-prune": "node scripts/proof-glass-prune.mjs",
+        "proof:selection-card": "node scripts/proof-selection-card.mjs",
+        "proof:dialog-glass": "node scripts/proof-dialog-glass.mjs",
+        "proof:glass-glow-fix": "node scripts/proof-glass-glow-fix.mjs",
+        "proof:accent-tone": "node scripts/proof-accent-tone.mjs",
         "proof:visual-runner": "node scripts/proof-visual-runner.mjs",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "gates:emit-ci": "node scripts/gates.mjs --emit-ci",

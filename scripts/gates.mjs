@@ -1566,6 +1566,42 @@ export const GATES = [
         note: "BC.W-GLASS-LEGIBILITY-MEASURED — iOS-27 more-glass-AND-more-legible, MEASURED both-directions (Band 1): every rung clears 4.5:1 WHILE glassy (grey/opaque/thin all RED — the monotonic blind spot closed). L1/L2 calm+bright per-rung contrast + alpha bound, L3/L4 blur+saturate budget with --glass-saturate-deep-ceiling booking, L5 specular in [0.2,0.5], L6 the .glass-floating overlay alpha clamp (< 0.86, the iOS let-content-through), L7 the per-rung --glass-saturate-{wash,quiet,resting,floating,overlay} knobs minted + read-through <=1.8 (the AX BC-W10 fold).",
     },
     {
+        id: "proof:no-shadcn-default",
+        cmd: "proof:no-shadcn-default",
+        tags: ["local", "ci"],
+        note: "BC.W-DESHADCN — the reskin-DNA structural invariant (reka=BEHAVIOR / glass-ui=100%-of-the-MATERIAL): no ui/ component off the legibility allowlist carries a residual shadcn-neutral token (bg-background/border-input/ring-ring/ring-2/ring-offset-*/bare rounded-md/bare shadow-sm) in its visual LEADING layer + the per-component census closure (every ui/ dir on EXACTLY one list). D2 token-vs-utility, D3 allowlist-survivor, D4 census closure, D1 forbidden-token sweep. BORN-RED on the HEAD residuals (button/switch/tags-input/toggle/select-separator) and goes GREEN INCREMENTALLY as the Band-1/3/6 reskin owners (BUTTON-GLASS-IOS, DIALOG-GLASS, CONTROL-SMOOTH, DROPDOWN-FIX) land their re-points — PARTIAL-until-owners-land is the intended structural pressure. proof:glass-cohesion stays authoritative on the bg-opacity axis (overlap defers).",
+    },
+    {
+        id: "proof:glass-prune",
+        cmd: "proof:glass-prune",
+        tags: ["local", "ci"],
+        note: "BC.W-GLASS-PRUNE — the glass system consolidated to Glass CARDS + Glass MATERIALS (the two-family grammar). P5 anti-silent-prune: a retired export/subpath that is registry-published OR constellation-consumed yet carries no recorded fold REDs (the d6 silent-prune forbidden). The binding pre-flight (the registry-consumer probe) FOUND a live external consumer (sci-report/atlas imports /glass-panel @4.0.1) — so the destructive retire is HELD-FOLDED + routed via BC.W-ATLAS-ASK (coordination/ATLAS-BC.md, foreign-tree fence). The D3b disc-core invariant + single-specular source preserved. Bite: re-add a pruned export / a story re-import / a silent-prune-unrecorded-consumer → RED.",
+    },
+    {
+        id: "proof:selection-card",
+        cmd: "proof:selection-card",
+        tags: ["local", "ci"],
+        note: "BC.W-SELECTION-CARD — the I5 <Card variant=\"selection\">, the ONLY new Atlas component (the Card-is-the-only-new-component fence). Composes the BB-BUILT seams: the --glass-accent data-hue rim (A-2) + the .metal-*-border earned shimmer-on-selected (A-3, rim-not-fill) over the warm-cream glass floor — no new sub-system. S1 variant prop/type + data-variant + --glass-accent host write + metal-border compose. Bite: drop the variant / the data-rim / the shimmer-on-select / mint a 2nd new component → RED.",
+    },
+    {
+        id: "proof:dialog-glass",
+        cmd: "proof:dialog-glass",
+        tags: ["local", "ci"],
+        note: "BC.W-DIALOG-GLASS — the glass dialog is actually partially-transparent + glassy (consumes the DESHADCN census). DG1 --glass-bg-dialog warm-translucent fill (no unconditional overlay ink-flip), DG2 the residual shadcn-neutral re-pointed onto the house glass register, DG3 the padding ladder coordinated (no right-4/top-4 corner-jam), DG4 ConfirmDialog opaque → <Dialog surface=glass>. Bite: re-add the opaque ConfirmDialog / the ink-flip / the corner-jam → RED.",
+    },
+    {
+        id: "proof:glass-glow-fix",
+        cmd: "proof:glass-glow-fix",
+        tags: ["local", "ci"],
+        note: "BC.W-GLASS-GLOW-FIX — the Atlas A-8 unbounded radial-halo ROOT defect closed (a library-CSS leak, NOT a viz-math change). Rooted the leak to the unclipped breath-scaled .pulse-aura (Pulse.vue position:absolute inset:0 transform:scale→1.15 with no containment) + the dock morph-bridge radial; the radial extent is bounded at its source so no spurious unbounded halo over-paints any glass/viz surface. Bite: un-clip the breath-scaled aura / un-bound the morph-bridge radial → RED.",
+    },
+    {
+        id: "proof:accent-tone",
+        cmd: "proof:accent-tone",
+        tags: ["local", "ci"],
+        note: "BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register (one --tone → idle/active/edge/ink via the shipped value.js safeAccentColor /color leaf) + <SelectableChip>. A3 no hand-rolled active-fill color-mix (the toggle-chip data-[state=on] forms retired onto the register), A5 the idle ≥3:1 contrast floor, the no-gray OKLab floor. SelectableChip ships its OWN /selectable-chip subpath leaf (value.js-bearing, off the value.js-free root barrel — the SCC-trap discipline). Bite: a hand-rolled active-fill / an idle <3:1 tone / SelectableChip on the root barrel → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

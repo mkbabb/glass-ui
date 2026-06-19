@@ -381,6 +381,12 @@ export const CATEGORIES: Category[] = [
                 "Toggle Chip",
                 "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics.",
             ),
+            s(
+                "forms",
+                "selectable-chip",
+                "Selectable Chip",
+                "the contrast-floored tonal-accent register — one :tone per chip, idle-legible ≥3:1, active-bold, ink-correct (BC.W-ACCENT-TONE).",
+            ),
             s("forms", "label", "Label"),
         ],
     },

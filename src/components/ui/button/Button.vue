@@ -76,7 +76,18 @@ const surfaceDecoration = computed(() => {
 // PRM-safe by construction: `useSpringPress` respects `prefers-reduced-motion`
 // (the spring snaps to the endpoint with zero in-between frames), so under reduce
 // the press still FUNCTIONS (the scale arrives) with the squish physics off.
-const press = useSpringPress({ response: 0.25, dampingFraction: 0.7 })
+//
+// BC.W-BUTTON-GLASS-IOS (move 3 / BG-IOS-3) — the iOS interactive press register.
+// The press reads `useSpringPress`'s DEFAULTS — the ONE source. The Apple
+// `interactiveSpring` (response 0.15 / ζ 0.86, the sub-100ms iOS press window with a
+// tiny alive overshoot) is BOOKED in the `press` SPRING_PRESETS row that BC.W-SPRING-
+// EASE owns + re-points the `useSpringPress` defaults onto (springPresets.ts +
+// useSpringPress.ts — OUT of this wave's footprint). Button stays consumer #1 of
+// `useSpringPress` (direct composition, `proof:button-glass` B2). NO button-local
+// magic-number spring (the W-GLASS-CAL spring fence) — the press physics live at the
+// ONE table, never a per-call literal. When SPRING-EASE lands the 0.15/0.86 row, the
+// press answers in the iOS window with zero edit here.
+const press = useSpringPress()
 const squish = useLiquidFlex({
   from: 0,
   to: 1,
@@ -139,12 +150,19 @@ const pressStyle = computed<CSSProperties>(() => {
 // a `solid`/`link`/`outline` button has no `::before` to gleam, so it opts out — no
 // wasted pointermove listener). PRM-aware by construction (the wrapped core skips the
 // write under reduce; the CSS bracket pins the catch-light static at centre).
+// BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the de-shadcn-reskinned `outline`/`secondary`/
+// `accent` now compose the `glass-wash btn-glass` register (the `.glass-wash::before`
+// gleam recipe), so the pointer-following gleam arms on them too (one material, the
+// same lit-control affordance). reka behavior is untouched — only the gleam arm widens.
 const GLASS_VARIANTS = new Set<ButtonVariants['variant']>([
   'default',
   'glass',
   'glass-wash',
   'primary-audacious',
   'gold-audacious',
+  'outline',
+  'secondary',
+  'accent',
 ])
 const specularArmed = computed(() => GLASS_VARIANTS.has(props.variant ?? 'default'))
 

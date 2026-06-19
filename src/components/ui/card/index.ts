@@ -3,6 +3,11 @@ export {
     type CardTier,
     type CardSurface,
     type CardSpecular,
+    // BC.W-SELECTION-CARD — the I5 selection-card decoration axis (the ONE new
+    // Atlas component): `variant="selection"` + the earned `metal` quad. The
+    // types live in Card.vue's `<script>` and re-export here (the existing pattern).
+    type CardVariant,
+    type CardMetal,
 } from "./Card.vue";
 export { default as CardHeader } from "./CardHeader.vue";
 // BB.W-SCROLL-CARD — the first-class scroll-shrink card family. <ScrollCard>

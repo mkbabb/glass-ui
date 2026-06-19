@@ -1,57 +1,65 @@
 <template>
-    <Transition name="fade">
-        <div
-            v-if="open"
-            class="absolute inset-0 z-popover grid place-items-center bg-overlay-scrim rounded-dialog"
-            @click.self="!loading && (open = false)"
-            @keydown.escape="!loading && (open = false)"
+    <!-- BC.W-DIALOG-GLASS (move 5 / de-shadcn A2) — the confirm modal re-bases off
+         the hand-rolled OPAQUE `bg-card text-card-foreground border` scaffold onto the
+         house `<Dialog surface="glass">` so it reads the SAME warm-cream translucent
+         glass material the rest of the overlay band does — ONE material, no hand-rolled
+         opaque fork. reka = behavior (DialogRoot owns the focus trap, Escape dismiss,
+         portal, ARIA, click-outside), glass-ui = 100% material. The behavior contract
+         is unchanged: `v-model:open`, the confirm/cancel actions, the body + #action
+         slots, the loading guard (dismiss blocked while loading). -->
+    <Dialog v-model:open="open">
+        <DialogContent
+            surface="glass"
+            class="w-[calc(100%-2rem)] sm:max-w-sm"
+            :show-close="false"
+            @escape-key-down="onDismiss"
+            @interact-outside="onDismiss"
         >
-            <Transition name="confirm-panel" appear>
-                <div
-                    v-if="open"
-                    class="w-[calc(100%-2rem)] sm:max-w-sm bg-card text-card-foreground border border-border rounded-dialog shadow-lg"
+            <DialogHeader>
+                <DialogTitle class="font-display font-semibold">
+                    {{ title }}
+                </DialogTitle>
+                <DialogDescription class="fira-code">
+                    <slot>{{ description }}</slot>
+                </DialogDescription>
+            </DialogHeader>
+            <DialogFooter class="gap-2">
+                <Button
+                    variant="outline"
+                    class="cursor-pointer rounded-pill"
+                    :disabled="loading"
+                    @click="open = false"
                 >
-                    <div class="p-6 grid gap-4">
-                        <div class="grid gap-2">
-                            <h2 class="font-display text-lg font-semibold leading-none tracking-tight">
-                                {{ title }}
-                            </h2>
-                            <div class="fira-code text-sm text-muted-foreground">
-                                <slot>{{ description }}</slot>
-                            </div>
-                        </div>
-                        <div class="flex justify-end gap-2">
-                            <Button
-                                variant="outline"
-                                class="cursor-pointer rounded-pill"
-                                :disabled="loading"
-                                @click="open = false"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                :variant="destructive ? 'destructive' : 'default'"
-                                class="cursor-pointer gap-1.5 rounded-pill"
-                                :disabled="loading"
-                                @click="onConfirm"
-                            >
-                                <LoaderCircle
-                                    v-if="loading"
-                                    class="size-4 animate-spin"
-                                />
-                                <slot name="action">{{ confirmLabel }}</slot>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </Transition>
-        </div>
-    </Transition>
+                    Cancel
+                </Button>
+                <Button
+                    :variant="destructive ? 'destructive' : 'default'"
+                    class="cursor-pointer gap-1.5 rounded-pill"
+                    :disabled="loading"
+                    @click="onConfirm"
+                >
+                    <LoaderCircle
+                        v-if="loading"
+                        class="size-4 animate-spin"
+                    />
+                    <slot name="action">{{ confirmLabel }}</slot>
+                </Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
 import { LoaderCircle } from "@lucide/vue";
 import { Button } from "../../ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter,
+} from "../../ui/dialog";
 
 const props = defineProps<{
     title: string;
@@ -69,20 +77,11 @@ function onConfirm() {
     emit("confirm");
     open.value = false;
 }
-</script>
 
-<style scoped>
-.confirm-panel-enter-active {
-    transition: opacity var(--duration-normal) var(--ease-out),
-                transform var(--duration-normal) var(--ease-out);
+// The loading guard: reka's DialogContent emits these dismiss intents; while a
+// confirm is in-flight (`loading`) we PREVENT the dismiss (the prior scaffold's
+// `!loading && (open = false)` guard), otherwise reka's own update:open closes it.
+function onDismiss(event: Event) {
+    if (props.loading) event.preventDefault();
 }
-.confirm-panel-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-in),
-                transform var(--duration-fast) var(--ease-in);
-}
-.confirm-panel-enter-from,
-.confirm-panel-leave-to {
-    opacity: 0;
-    transform: scale(var(--scale-press));
-}
-</style>
+</script>

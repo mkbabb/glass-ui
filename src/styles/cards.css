@@ -95,6 +95,63 @@
     }
 }
 
+/* ── Selection-card decoration (BC.W-SELECTION-CARD — the I5 selection card) ──────
+   The ONE new Atlas component, realized as a `<Card variant="selection">`
+   DECORATION (NOT a new SFC, NOT a new tier, NOT a new compositing seam). It
+   COMPOSES the two BUILT seams — the A-2 `--glass-accent` rim (glass/rim.css +
+   glass/material.css) + the A-3 `.metal-*-border` swept rim (utilities/metal.css)
+   — and authors ZERO competing rim/background recipe of its own. The rule is a
+   TOKEN-SUBSTITUTION on the base tier (the `.glass-opaque`/`.glass-deep` precedent):
+   it re-points the EXISTING `--glass-accent-strength` (+ an OPTIONAL sub-perceptual
+   floating-tier lift) locally; it does NOT declare a `background`/`border`.
+
+   THE RIM-NOT-FILL DISCIPLINE (the no-saturated-slab structural bar): selection is
+   read by (a) the metal rim (the `.metal-*-border` class Card composes when
+   `:selected`), (b) a BOUNDED accent-strength LIFT (unselected → selected, both ≤
+   the W-GLASS-ACCENT rim ceiling), and OPTIONALLY (c) a sub-perceptual
+   `--glass-bg-floating`-tier lift (the "selected reads as glass" register). The
+   plate STAYS warm-cream translucent — the BC.W-GLASS-IDENTITY floor is inviolate.
+   This rule NEVER writes `--glass-tint-source`/`--glass-tint-strength` (the A-2
+   distinct-axis fence — the accent is rim+glint DECORATION, not whole-plate
+   legibility) and NEVER paints a `--foreground`/`--primary`/`--surface-tint` opaque
+   plate FILL (the "selected = loud fill" anti-pattern is the disease-root the gate's
+   S3 bite reds).
+
+   THE ACCENT-STRENGTH LADDER (the bounded lift, two tokens a consumer retunes):
+     unselected → --selection-accent-strength            (~16% — a calm rim glow)
+     selected   → --selection-accent-strength-selected   (~28% — brighter at the rim,
+                  still ≤ the W-GLASS-ACCENT ceiling; the data hue reads stronger at
+                  the rim/glint, NOT a flooded plate)
+   The host (Card.vue) writes `--glass-accent` (the HUE) per-instance off `data-hue`;
+   this rule supplies the STRENGTH so the calm/selected lift is ONE source. An UNSET
+   `data-hue` leaves `--glass-accent: transparent` (the @property default), so even
+   with the strength engaged the `color-mix(in oklab, X, transparent N%)` === X — the
+   A-2 no-op floor: a `variant="selection"` card with no `data-hue` is byte-identical
+   to a bare Card. A consumer may override `--glass-accent-strength` per-instance
+   (Card.vue's `data-hue-strength`); this rule is the default. */
+[data-variant="selection"] {
+    /* The bounded accent-strength ladder — both ≤ the W-GLASS-ACCENT rim ceiling.
+       A consumer retunes the calm/selected pair from these two knobs. */
+    --selection-accent-strength: 16%;
+    --selection-accent-strength-selected: 28%;
+    /* Re-point the EXISTING accent-strength seam to the calm rung (the rim glow at
+       rest). At an unset `--glass-accent: transparent` this is a provable no-op. */
+    --glass-accent-strength: var(--selection-accent-strength);
+}
+
+[data-variant="selection"][data-selected="true"] {
+    /* SELECTED — lift the accent-strength to the brighter (still-bounded) rung. The
+       brighter rim + the `.metal-*-border` Card composes are the selection read; the
+       plate is UNTOUCHED (no background/fill here — rim-not-fill). */
+    --glass-accent-strength: var(--selection-accent-strength-selected);
+    /* OPTIONAL sub-perceptual "selected reads as glass" lift — re-point the base
+       tier's resting fill toward the floating rung (the W-REGISTER-IOS tier), a
+       TOKEN re-point, NOT a `--surface-tint` gray plate, NEVER a `--foreground`
+       brand fill. The plate stays warm-cream translucent (the floating rung is the
+       SAME warm-cream material at a heavier rung, the BC.W-GLASS-IDENTITY ladder). */
+    --glass-bg-resting: var(--glass-bg-floating, var(--glass-bg-resting));
+}
+
 /* ── Cartoon surface decoration ───────────────────────────────────
    The Memphis-sticker register. Composes ON TOP of a glass tier — it is
    NOT itself a tier. The former `.glass-cartoon` recipe declared

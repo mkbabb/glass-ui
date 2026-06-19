@@ -1,0 +1,66 @@
+/* glass/accent-tone.css
+   BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register.
+
+   ONE `--tone` (a complete `<color>`, default `var(--primary)`) → a coherent,
+   contrast-SAFE four-channel tonal set:
+
+     --accent-fill  idle FILL  — faint but FLOORED (≥3:1 at rest, the load-bearing
+                                 new behavior fourier named: "not just hover/active").
+     --accent-band  active BAND — the bolder selected fill.
+     --accent-edge  active EDGE — the active rim hairline.
+     --accent-ink   label INK  — the contrast-SAFE label colour ON the band, written
+                                 by useAccentTone (the JS half) via value.js
+                                 safeAccentColor; the CSS fallback is the warm ink.
+
+   The mix space is `in oklab` (the perceptual glass-tint family, W55/W-NO-GRAY) —
+   NOT `in srgb` (the `--surface-tint-*` brand-overlay fence, AW.W26). This is the
+   CONTROL tonal-FILL register (the plate background + the contrast-safe ink), a
+   DISTINCT seam from the BB `--glass-accent` glass-RIM axis (decoration on a glass
+   plate) — the two COMPOSE on a chip that is both a glass surface and a tonal
+   control (the rim from `--glass-accent`, the fill from `--accent-tone`); they
+   never fork, never write each other's channels.
+
+   The strength MAGNITUDES are TOKENS a `:root`/scope override retunes (NOT props —
+   the no-over-prop fence, component-customizability §5): `--accent-fill-strength`
+   (idle, the ~6-8% fourier names) / `--accent-band-strength` (active) /
+   `--accent-edge-strength` (rim). The idle floor is the strength default — the
+   8% over the warm-cream `--card` clears ≥3:1; proof:accent-tone A4 measures the
+   resolved idle fill against the surface (a strength that drops it below 3:1 reds).
+
+   @import-ed by glass.css in cascade order IMMEDIATELY AFTER ladder.css (the same
+   @layer components; this is the SOLE writer of the `--accent-*` channels, read at
+   use-time on the chip elements, so the placement is cascade-order-invariant). */
+@layer components {
+    .accent-tone {
+        /* `--surface` is an OPTIONAL consumer-retarget hook (NOT a declared HEAD
+           token) — a consumer sets it on the scope to point the accent at a
+           non-`--card` surface; it defaults to the declared `--card` so the recipe
+           resolves at HEAD with zero consumer wiring. */
+        --accent-fill-strength: 8%;
+        --accent-band-strength: 18%;
+        --accent-edge-strength: 55%;
+
+        /* idle: faint but FLOORED — the resting tint stays ≥3:1 by the strength
+           floor + the perceptual `in oklab` mix (the glass-tint family). */
+        --accent-fill: color-mix(
+            in oklab,
+            var(--surface, var(--card)),
+            var(--tone, var(--primary)) var(--accent-fill-strength)
+        );
+        --accent-band: color-mix(
+            in oklab,
+            var(--surface, var(--card)),
+            var(--tone, var(--primary)) var(--accent-band-strength)
+        );
+        --accent-edge: color-mix(
+            in oklab,
+            transparent,
+            var(--tone, var(--primary)) var(--accent-edge-strength)
+        );
+        /* ink is the contrast-SAFE label colour ON the active band — written by
+           useAccentTone (the JS half) via safeAccentColor onto
+           `--accent-ink-resolved`; the CSS fallback is the warm ink (CSS cannot
+           call value.js at the token tier). */
+        --accent-ink: var(--accent-ink-resolved, var(--foreground));
+    }
+}

@@ -66,19 +66,29 @@ import { Pulse } from "../../../src/components/custom/pulse";
             </div>
         </StorySection>
 
-        <!-- Aura variant — a surface-scope ambient halo. -->
+        <!-- Aura variant — a surface-scope ambient halo. The host MUST be
+             `position: relative` + own a size (the documented Pulse-aura contract):
+             the aura is `position: absolute; inset: 0`, so it fills + is bounded BY
+             this relative host. A bare non-positioned flow parent would let the aura's
+             containing block escape to a distant ancestor (the Atlas A-8 spill). -->
         <StorySection label="aura variant (ambient halo)">
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="aura" speed="slow" class="text-viz-fourier" />
+                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
+                        <Pulse variant="aura" speed="slow" class="text-viz-fourier" />
+                    </div>
                     <span class="text-mono-caption text-muted-foreground">slow · fourier</span>
                 </div>
                 <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="aura" speed="normal" class="text-viz-chebyshev" />
+                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
+                        <Pulse variant="aura" speed="normal" class="text-viz-chebyshev" />
+                    </div>
                     <span class="text-mono-caption text-muted-foreground">normal · chebyshev</span>
                 </div>
                 <div class="flex flex-col items-center gap-2">
-                    <Pulse variant="aura" speed="fast" class="text-viz-legendre" />
+                    <div class="relative grid h-16 w-16 place-items-center rounded-2xl border border-border/40">
+                        <Pulse variant="aura" speed="fast" class="text-viz-legendre" />
+                    </div>
                     <span class="text-mono-caption text-muted-foreground">fast · legendre</span>
                 </div>
             </div>

@@ -35,6 +35,12 @@ import type { Page } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+// BC.W-AX-METAL-GLOW — the gold catch-light π arm reads the resolved drop-shadow
+// glow COLOR via the ONE shared OKLab decompose (paint-arm.mjs statsFromResolvedBg +
+// parseResolvedColor → the warm-cream oklab()/color(srgb) computed form). No second
+// colour parse (the canvas-unify single-source fence; the oklab()-computed bug the
+// shared leaf was built to absorb).
+import { statsFromResolvedBg } from "../scripts/lib/paint-arm.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const VISUAL_DIR = resolve(ROOT, "docs/tranches/BB/audit/visual");
@@ -107,6 +113,42 @@ async function readMetalBorder(page: Page, selector: string) {
             borderImageSource: cs.borderImageSource,
             backgroundImage: cs.backgroundImage,
             color: cs.color,
+            animationName: cs.animationName,
+        };
+    }, selector);
+}
+
+/**
+ * BC.W-AX-METAL-GLOW — probe a metal text-clip specimen's catch-light GLOW: the
+ * resolved `filter` drop-shadow (the lit-metal halo) + the resolved glow tokens.
+ * The lit metal reads iff the `filter` carries a `drop-shadow` with a non-zero blur
+ * extent past the glyph edge; the glow COLOR is the metal's OWN base hue.
+ */
+async function readMetalGlow(page: Page, selector: string) {
+    return page.evaluate((sel) => {
+        const el = document.querySelector(sel);
+        if (!el) return null;
+        const cs = getComputedStyle(el as Element);
+        const filter = cs.filter || "";
+        // Pull the drop-shadow() argument list out of the resolved filter (Chromium
+        // serializes `drop-shadow(<x> <y> <blur> <color>)`).
+        const ds = /drop-shadow\((.*)\)/i.exec(filter);
+        const body = ds ? ds[1] : "";
+        // The blur is the third length token (px). The color is a resolved-color
+        // serialization (rgb()/rgba()/color(srgb …)/oklab()) — Chromium emits the
+        // drop-shadow color FIRST (`drop-shadow(color(srgb …) <x> <y> <blur>)`), not
+        // trailing, so we match it ANYWHERE in the body (not anchored to the end). The
+        // first colour token is the glow ink.
+        const blurMatch = /(?:[-\d.]+px\s+){2}([\d.]+)px/.exec(body);
+        const colorMatch = /(rgba?\([^)]*\)|color\([^)]*\)|oklab\([^)]*\)|oklch\([^)]*\))/i.exec(body.trim());
+        return {
+            filter,
+            hasDropShadow: /drop-shadow\(/i.test(filter),
+            blurPx: blurMatch ? Number(blurMatch[1]) : null,
+            glowColor: colorMatch ? colorMatch[1] : "",
+            glowBlurToken: cs.getPropertyValue("--metal-glow-blur").trim(),
+            glowOpacityToken: cs.getPropertyValue("--metal-glow-opacity").trim(),
+            stopBase: cs.getPropertyValue("--metal-stop-base").trim(),
             animationName: cs.animationName,
         };
     }, selector);
@@ -254,6 +296,99 @@ test.describe("BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized 
                 }
 
                 await page.screenshot({ path: resolve(VISUAL_DIR, `W-METAL-SHIMMER-prm-${scheme}.png`), fullPage: false });
+            }
+        } finally {
+            await ctx.close();
+        }
+    });
+
+    // ── BC.W-AX-METAL-GLOW — the gold catch-light π arm ───────────────────────
+    test("(f) the gold catch-light — LIT metal: a warm halo of the metal's OWN base hue", async ({ page }) => {
+        await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+        const triad = page.locator("[data-metal-triad]");
+        const present = await triad.count().catch(() => 0);
+        test.skip(present === 0, "metal triad specimen absent (demo not served / GPU-less runner)");
+
+        for (const scheme of SCHEMES) {
+            await setScheme(page, scheme);
+
+            const gold = await readMetalGlow(page, "[data-metal='gold']");
+            const silver = await readMetalGlow(page, "[data-metal='silver']");
+            const bronze = await readMetalGlow(page, "[data-metal='bronze']");
+            expect(gold && silver && bronze, `the three glow specimens resolve in ${scheme}`).toBeTruthy();
+            if (!gold || !silver || !bronze) continue;
+
+            for (const [name, m] of [["gold", gold], ["silver", silver], ["bronze", bronze]] as const) {
+                // The metal reads as LIT — a drop-shadow halo with a measurable blur
+                // extent past the glyph edge (NOT a flat gradient text-fill).
+                expect(m.hasDropShadow, `.metal-${name} carries a catch-light drop-shadow in ${scheme}`).toBeTruthy();
+                expect(m.blurPx, `.metal-${name} halo has a measurable warm extent (blur > 0) in ${scheme}`).toBeGreaterThan(0);
+                // The two glow knobs resolve on the element (the retune seam).
+                expect(parseFloat(m.glowOpacityToken), `.metal-${name} --metal-glow-opacity resolves (the halo strength) in ${scheme}`).toBeGreaterThan(0);
+                expect(m.glowBlurToken, `.metal-${name} --metal-glow-blur resolves (the halo radius) in ${scheme}`).not.toBe("");
+            }
+
+            // The glow reads each metal's OWN base hue — silver halos the LOWEST-chroma
+            // (cool steel), gold + bronze halo real warm chroma (NOT a fixed gold halo
+            // on every metal). The ONE shared OKLab decompose (paint-arm.mjs); the glow
+            // color is the resolved drop-shadow color (the warm-cream oklab()/color(srgb)
+            // computed form the shared leaf parses).
+            const gStats = statsFromResolvedBg(gold.glowColor);
+            const sStats = statsFromResolvedBg(silver.glowColor);
+            const bStats = statsFromResolvedBg(bronze.glowColor);
+            if (gStats && sStats && bStats) {
+                expect(sStats.chroma, `silver glow is the lowest-chroma halo (cool steel, not a gold halo) in ${scheme}`).toBeLessThan(gStats.chroma);
+                expect(sStats.chroma, `silver glow chroma < bronze glow in ${scheme}`).toBeLessThan(bStats.chroma);
+                expect(bStats.chroma, `bronze glow carries warm chroma (its own hue, not gold) in ${scheme}`).toBeGreaterThan(0.02);
+            }
+            // The three glow colors are mutually DISTINCT (each metal's own halo).
+            expect(gold.glowColor !== silver.glowColor, `gold halo ≠ silver halo in ${scheme}`).toBeTruthy();
+            expect(silver.glowColor !== bronze.glowColor, `silver halo ≠ bronze halo in ${scheme}`).toBeTruthy();
+
+            await page.screenshot({ path: resolve(VISUAL_DIR, `W-AX-METAL-GLOW-lit-${scheme}.png`), fullPage: false });
+        }
+    });
+
+    test("(g) the catch-light is PRM-STATIC — the lit metal halos with the sweep frozen + the opacity override retunes", async ({ browser }) => {
+        const ctx = await browser.newContext({ reducedMotion: "reduce" });
+        const page = await ctx.newPage();
+        try {
+            await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+            const triad = page.locator("[data-metal-triad]");
+            const present = await triad.count().catch(() => 0);
+            test.skip(present === 0, "metal triad specimen absent (demo not served)");
+
+            for (const scheme of SCHEMES) {
+                await setScheme(page, scheme);
+
+                // PRM: the lit-metal halo still PAINTS (the catch-light is static); the
+                // sweep motion is the only thing frozen.
+                const gold = await readMetalGlow(page, "[data-metal='gold']");
+                expect(gold, `the gold glow resolves under PRM in ${scheme}`).toBeTruthy();
+                if (gold) {
+                    expect(gold.hasDropShadow, `the gold catch-light PAINTS under PRM (lit metal reads for everyone) in ${scheme}`).toBeTruthy();
+                    expect(gold.blurPx, `the gold halo extent is present under PRM in ${scheme}`).toBeGreaterThan(0);
+                    expect(gold.animationName, `the sweep is FROZEN under PRM in ${scheme}`).not.toContain("metal-shimmer-sweep");
+                }
+
+                // The --metal-glow-opacity override RETUNES the halo (a consumer knob:
+                // 0 disables it, a higher value strengthens it — the warm-whisper default
+                // is the library identity, the override is the consumer preset).
+                const retuned = await page.evaluate(() => {
+                    const el = document.querySelector("[data-metal='gold']") as HTMLElement | null;
+                    if (!el) return null;
+                    const before = getComputedStyle(el).getPropertyValue("--metal-glow-opacity").trim();
+                    el.style.setProperty("--metal-glow-opacity", "0.8");
+                    const after = getComputedStyle(el).getPropertyValue("--metal-glow-opacity").trim();
+                    el.style.removeProperty("--metal-glow-opacity");
+                    return { before, after };
+                });
+                if (retuned) {
+                    expect(parseFloat(retuned.after), `--metal-glow-opacity override retunes the halo in ${scheme}`).toBeCloseTo(0.8, 2);
+                    expect(retuned.after !== retuned.before, `the override changes the resolved opacity in ${scheme}`).toBeTruthy();
+                }
+
+                await page.screenshot({ path: resolve(VISUAL_DIR, `W-AX-METAL-GLOW-prm-${scheme}.png`), fullPage: false });
             }
         } finally {
             await ctx.close();

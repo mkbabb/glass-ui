@@ -135,6 +135,29 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     transition: 'none',
   }
 })
+
+// BC.W-DIALOG-GLASS — the dialog reads as ACTUAL iOS-27 liquid glass: drop the
+// modal plate from the floating tier (0.80 — "NOT glassy at all") to the SEE-
+// THROUGH `--glass-bg-dialog` register (0.68). This is the SELF-RE-POINT recipe
+// (the dock precedent, tokens/glass.css §substitution-vs-inheritance): the dialog
+// re-DECLARES the composed `--glass-bg-floating` onto `--glass-bg-dialog` on its
+// OWN scope, so the base `.glass-floating` rule (`background: var(--glass-bg-
+// floating)`) resolves the transparent dialog plate WHILE keeping the floating
+// edge/rim/under-shadow LIFT (the modal floats off the scrim). NOT a raw rung
+// override (which won't re-compose the already-resolved :root value); the re-
+// declaration on the scope is the documented retune path. Rides the DEFAULT
+// `glass` surface; `surface="opaque"` still reaches `--glass-level:0` (the re-
+// point sets the bg token, the level seam zeroes it through unchanged). The
+// `--glass-bg-dialog` token carries the BC.W-ADAPTIVE-RECONCILE oklab tint
+// wrapper, so the bright-bucket darken reaches the modal for AA over a busy page.
+const plateStyle: CSSProperties = {
+  '--glass-bg-floating': 'var(--glass-bg-dialog)',
+} as CSSProperties
+
+const contentStyle = computed<CSSProperties>(() => ({
+  ...plateStyle,
+  ...(springStyle.value ?? {}),
+}))
 </script>
 
 <template>
@@ -148,15 +171,20 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     <DialogContent
       v-bind="forwarded"
       :class="cn(baseClasses, props.spring ? '' : defaultMotionClasses, variantClasses, props.class)"
-      :style="springStyle"
+      :style="contentStyle"
       :data-surface="props.surface"
       :data-spring="props.spring ? (typeof props.spring === 'string' ? props.spring : 'smooth') : undefined"
     >
       <slot />
 
+      <!-- BC.W-DIALOG-GLASS — the dismiss tracks the overlay golden padding ladder
+           (DG4). At the floating tier's `right-4 top-4` (16px) the close jammed
+           inside the 24px inline / ~30.5px block overlay pad; re-pointed onto the
+           same `--overlay-pad-inline`/`--overlay-pad-block` tokens the content body
+           reads so the X clears the heading and breathes with the pad. -->
       <DialogClose
         v-if="props.showClose"
-        class="focus-ring absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+        class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
       >
         <X class="w-4 h-4" />
         <span class="sr-only">Close</span>

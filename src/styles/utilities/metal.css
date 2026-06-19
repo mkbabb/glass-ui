@@ -57,6 +57,32 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
+
+        /* ── BC.W-AX-METAL-GLOW — the gold catch-light (the lit-metal halo) ──────
+           A soft glow halo of the metal's OWN base hue behind the gradient text-clip
+           so the gold reads as LIT metal (light catching its surface), not a flat
+           gradient fill. Because `background-clip: text` makes the text transparent,
+           a `filter: drop-shadow` follows the clipped glyph shape — the halo hugs the
+           letters. ONE recipe on the shared selector (every metal lit, never a per-
+           metal re-paste); the glow reads `--metal-stop-base` so gold halos gold,
+           silver halos silver, bronze halos bronze (NOT a fixed gold-on-every-metal
+           mismatch). The earned-gold register (Q2): `.metal-gold`'s base is
+           `--color-gold`, so the gold catch-light is the earned-gold warm glow.
+
+           PRM-STATIC: the glow paints HERE, at rest, OUTSIDE the no-preference
+           bracket — the lit metal reads for PRM users; ONLY the sweep `animation:`
+           is gated (the §6 calm register; the disco family stays gone — this is a
+           soft warm whisper bounded by `--metal-glow-opacity`, not a neon bloom). */
+        --metal-glow-blur: var(--metal-glow-blur-default, 0.5em);
+        --metal-glow-opacity: var(--metal-glow-opacity-default, 0.35);
+        filter: drop-shadow(
+            0 0 var(--metal-glow-blur)
+                color-mix(
+                    in srgb,
+                    var(--metal-stop-base) calc(var(--metal-glow-opacity) * 100%),
+                    transparent
+                )
+        );
     }
 
     /* Per-metal: set the channel marker + re-bind the stop slots to the quad. */

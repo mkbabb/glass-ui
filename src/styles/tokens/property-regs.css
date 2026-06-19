@@ -171,6 +171,19 @@
     initial-value: 0%;
 }
 
+/* BC.W-GLASS-GLOW-FIX (Atlas A-8) — the Pulse aura breath SCALE. The `ambient-pulse`
+   keyframe runs on `.pulse-aura` and writes this property; the `.pulse-aura::before`
+   child (the radial paint) reads it via `transform: scale(var(--pulse-aura-breath-
+   scale))`. Typed `<number>` so the keyframe INTERPOLATES it per-frame (a bare
+   unregistered var would snap min↔max). INHERITS so the pseudo-element picks it up
+   from its originating `.pulse-aura` (the aura has no content descendants — it is
+   `aria-hidden` + empty — so the inherit only reaches the `::before` halo). */
+@property --pulse-aura-breath-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
 /* AX.W54 — the GLASS-FIRST single knob. `--glass-level` is the ONE clarity
    scalar threaded through BOTH glass ladders at their single sites (the
    `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,

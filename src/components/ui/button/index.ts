@@ -40,8 +40,18 @@ export const buttonVariants = cva(
         // the lit button stays AA over a bright backdrop (the substitution-vs-inheritance
         // trap closed on the button register). The `aria-pressed` toggle fill re-points
         // onto the tinted base too (the pressed register stays legible over bright).
+        // BC.W-BUTTON-GLASS-IOS (move 2 / BG-IOS-2) — the hero CTA reaches DEEP
+        // glass (the maximal iOS register, the apple.com-nav-grade material over
+        // craft). `.glass-deep` is the ONE consolidated depth axis (BC.W-GLASS-PRUNE);
+        // the button COMPOSES it (the `.btn-glass.glass-deep` arm in surfaces.css re-
+        // points `--glass-blur-btn` onto `--glass-blur-deep`, the SAME token-substitution
+        // model `.glass-deep` uses for `--glass-blur-floating` — no new compositing
+        // axis, no button-local lens). The deep BLUR is budget-FREE (the W-LENSING
+        // one-deep-REFRACTIVE-register-per-route budget binds the `:liquid` SVG lens,
+        // NOT the deep-blur tier — several deep-glass CTAs are fine, only one `:liquid`
+        // lens per route).
         default:
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
+          'glass-wash btn-glass glass-deep text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
         // AX.W54 — `solid` is the opaque escape: the previous default's primary-fill
         // recipe, named so consumers can still get the solid bg-primary look.
         solid:
@@ -56,8 +66,11 @@ export const buttonVariants = cva(
         // the calm register with no rename. Distinguished from bare `default`/`glass`
         // by the `--scale-hover-btn` lift (it reads as a deliberate primary CTA).
         // BB.W-BUTTON-GLASS (a) — same oklab-tinted hover/active re-point as `default`.
+        // BC.W-BUTTON-GLASS-IOS (BG-IOS-2) — the hero CTA on the deep-glass register
+        // (see `default` above); the `--scale-hover-btn` lift still distinguishes it as
+        // the deliberate primary CTA.
         'primary-audacious':
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
+          'glass-wash btn-glass glass-deep text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         // BA.W-GLASS-CAL (H2a) — `gold-audacious` keeps the STATIC warm-gold tint (the
         // at-rest 8%-gold linear-gradient wash over the glass surface, the AW.W13
         // rest-text contract: rest text is the warm-ink `--foreground`) + the
@@ -68,12 +81,28 @@ export const buttonVariants = cva(
           'glass-wash btn-glass text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_10%,transparent),color-mix(in_srgb,var(--color-gold-light)_6%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_10%,transparent))] hover:bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_16%,transparent),color-mix(in_srgb,var(--color-gold-light)_10%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_16%,transparent))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
+        // BC.W-BUTTON-GLASS-IOS (move 7 / BG-IOS-6 — the de-shadcn A6 reskin). The
+        // `outline`/`secondary`/`accent` triplet was the un-reskinned shadcn-neutral
+        // tail (`border-input bg-background`/`bg-secondary`/`bg-accent`). They re-point
+        // onto the GLASS register — the EXISTING house material vocabulary (the
+        // `glass-wash btn-glass` glass well + the warm `--glass-border-*` rim + the
+        // `.focus-ring` warm halo the base already carries), NO new register (KISS /
+        // BC.W-DESHADCN §"no new register"). Prominence-by-TINT not by slab: these read
+        // a QUIETER glass than the `default`/`primary-audacious` hero CTAs (which carry
+        // `glass-deep`), so the hierarchy holds (the apple.com/Apple-OS "prominence =
+        // tint, not size" rule, research/apple-glass.md §3.3). Clean break — the shadcn-
+        // neutral classes DELETED, no alias; the variant KEYS stay (a visual upgrade, no
+        // public-prop break). reka behavior is INVIOLATE (only the class strings reskin).
+        // `outline` is the glass-WELL: the quiet glass tier + the warm rim, the lit-
+        // control hover deepening toward the resting rung.
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground active:bg-accent/80 aria-pressed:bg-accent aria-pressed:text-accent-foreground',
+          'glass-wash btn-glass text-foreground border-(--glass-border-floating) hover:bg-(--glass-bg-quiet-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-resting-tinted) active:border-(--glass-border-floating) aria-pressed:bg-(--glass-bg-resting-tinted)',
+        // `secondary` — a quiet glass tier (the subordinate glass register).
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 aria-pressed:bg-secondary/60',
+          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-quiet-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-resting-tinted) aria-pressed:bg-(--glass-bg-resting-tinted)',
+        // `accent` — the glass tier with a faint warm rim (a notch warmer than secondary).
         accent:
-          'bg-accent text-accent-foreground border border-border/40 hover:bg-accent/80 active:bg-accent/70 aria-pressed:bg-accent/60',
+          'glass-wash btn-glass text-foreground border-(--glass-border-resting) hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-floating) active:bg-(--glass-bg-floating-tinted) aria-pressed:bg-(--glass-bg-resting-tinted)',
         ghost:
           'bg-transparent text-foreground/70 hover:bg-foreground/8 hover:text-foreground active:bg-foreground/12 aria-pressed:bg-foreground/10 aria-pressed:text-foreground',
         // AW.W22 — glass / glass-wash inherit the moving specular + edge rim

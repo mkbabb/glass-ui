@@ -230,7 +230,16 @@
             ),
             var(--glass-tint-strength-aa)
         );
-        --muted-foreground: var(--foreground);
+        /* BC.W-DIALOG-GLASS — the overlay band's muted caption keeps the on-glass MUTED
+           register on a CALM modal (the SAME `--on-glass-muted` the content tiers read on
+           their calm path — legible-AND-subordinate against the composited glass fill),
+           NOT an UNCONDITIONAL lift to full `--foreground` that blackened the caption on a
+           cream modal over a light page. The bright-bucket lift (@container --glass-
+           backdrop:light below) moves `--muted-foreground` to the contrast ink in LOCKSTEP
+           with `--foreground` only where the plate ACTUALLY darkens to AA — so a busy-
+           backdrop modal goes full ink, a calm modal keeps the muted register. */
+        --muted-foreground: var(--on-glass-muted);
+        --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
     /* BA.W-DARK-MATERIAL scope 7 — the plain CONTENT tiers self-engage the SUB-PERCEPTUAL
@@ -329,14 +338,22 @@
                 --muted-foreground: contrast-color(var(--card));
             }
         }
-        /* The OVERLAY band self-engages the darken UNCONDITIONALLY (it floats over an
-           UNKNOWN consumer surface), so its ink-flip companion mirrors that — UNCONDITIONAL.
-           --foreground lifts in lockstep with --muted-foreground (the scope-6 lockstep). */
-        :where(.glass-floating, .glass-overlay) {
-            color: contrast-color(var(--card));
-            --foreground: contrast-color(var(--card));
-            --muted-foreground: contrast-color(var(--card));
-        }
+        /* BC.W-DIALOG-GLASS / BC.W-ADAPTIVE-RECONCILE (overlay-band arm) — the overlay
+           band's `contrast-color()` ink flip is now GATED in the bright bucket above
+           (the @container --glass-backdrop:light block already lists `.glass-floating,
+           .glass-overlay` alongside the content tiers), NOT here as an UNCONDITIONAL
+           flip. The retired unconditional `:where(.glass-floating, .glass-overlay)`
+           rule blackened the ink even on a CALM modal over a light page — a translucent
+           cream plate forced to pure-black `contrast-color(--card)`, harsh on the cream,
+           and `--muted-foreground` flipped to the same so captions lost their muted
+           register. Now: over a calm/dark backdrop the modal keeps the WARM-INK
+           `--foreground` (legible, not pure-black) + the muted caption register; only a
+           modal over a genuinely-bright/busy backdrop flips to the dark contrast ink
+           (where the plate ACTUALLY darkens to bright-bucket AA), the `--foreground`/
+           `--muted-foreground` lift moving in LOCKSTEP there (the scope-6 lockstep). The
+           overlay band STILL self-darkens UNCONDITIONALLY (the tint-strength clamp above,
+           it floats over unknown) — only the INK flips in the bright bucket. ONE
+           reconciled flip, not two forks (ladder.css stays the single source). */
         /* BA.W-DARK-MATERIAL scope 7 — the content-tier ink flip is GATED on the bright
            signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
            LIGHT page the content tiers only carry the 4% silhouette floor (still a warm cream

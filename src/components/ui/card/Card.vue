@@ -76,6 +76,25 @@ export type CardSurface = "glass" | "cartoon" | "veil";
  */
 export type CardSpecular = "off" | "subtle" | "full";
 
+/**
+ * Decoration variant — the ONE new Atlas component (BC.W-SELECTION-CARD, the I5
+ * selection card). Default UNSET: a bare `<Card>` is byte-identical to HEAD; the
+ * variant is additive default-OFF (the no-op floor). `selection` binds
+ * `:data-variant="selection"` on the root and ROUTES the chromatic-rim (A-2,
+ * `--glass-accent`) + selected metal-shimmer (A-3, `.metal-*-border`) decoration
+ * through the SHARED BUILT seams — it mints NO new sub-system. The shape mirrors
+ * the `surface` axis exactly: a data-attr the CSS seam reads, ORTHOGONAL to
+ * `tier`/`surface`/`pressable` (a `variant="selection" surface="glass"
+ * tier="resting" pressable` card is valid). The hue is a CONSUMER value
+ * (`data-hue`/`data-hue-strength` per-instance); NO consumer hue enters a token.
+ */
+export type CardVariant = "selection";
+
+/** The earned metal for a SELECTED selection-card (gold default — BA.W-PHASE-PALETTE
+ *  "gold is earned" for the chosen item). Composes the BUILT `.metal-{name}-border`
+ *  utility; NO forked keyframe, NO baked metal color. */
+export type CardMetal = "gold" | "silver" | "bronze";
+
 interface Props extends PrimitiveProps {
     /** Surface tier; selects one rung of the glass ladder. Default `resting`. */
     tier?: CardTier;
@@ -122,6 +141,33 @@ interface Props extends PrimitiveProps {
      *  compositor-only (`scale` + a custom property); the `.glass-press` CSS `:active`
      *  scale is the no-JS / SSR floor. */
     pressable?: boolean;
+    /** BC.W-SELECTION-CARD — the selection decoration axis (the ONE new Atlas
+     *  component). `selection` ROUTES the per-instance data-hue rim (A-2) +
+     *  the selected metal-shimmer border (A-3) through the BUILT seams; default
+     *  UNSET (a bare Card is byte-identical to HEAD). ORTHOGONAL to
+     *  `tier`/`surface`/`pressable`. */
+    variant?: CardVariant;
+    /** BC.W-SELECTION-CARD — the chosen state of a `variant="selection"` card.
+     *  When `true` the card composes the earned `.metal-${metal}-border` swept
+     *  rim + lifts the accent-strength toward `--selection-accent-strength-selected`
+     *  (rim-not-fill — the plate stays warm-cream translucent). The consumer wires
+     *  the matching `aria-selected`/`aria-checked` role contract on the card. */
+    selected?: boolean;
+    /** BC.W-SELECTION-CARD — the metal of the SELECTED-state swept rim. `gold`
+     *  (default) is earned for the chosen item; `silver`/`bronze` are the other
+     *  two BUILT `.metal-*-border` quads. Only read when `variant="selection"` +
+     *  `selected`. */
+    metal?: CardMetal;
+    /** BC.W-SELECTION-CARD — the per-instance data hue (a complete `<color>`) a
+     *  `variant="selection"` card tints its RIM + catch-light glint toward (the
+     *  A-2 `--glass-accent` consumer). The hue NEVER tints the plate background
+     *  (the distinct-axis fence); unset → the neutral `transparent` no-op floor. */
+    dataHue?: string;
+    /** BC.W-SELECTION-CARD — the bounded accent strength override (a `<percentage>`,
+     *  e.g. `"20%"`). Unset → the calm `--selection-accent-strength` default
+     *  (≤ the W-GLASS-ACCENT rim ceiling). Bounded — a whisper at the rim, never a
+     *  flooded plate. */
+    dataHueStrength?: string;
     class?: HTMLAttributes["class"];
 }
 
@@ -133,6 +179,7 @@ const props = withDefaults(defineProps<Props>(), {
     grid: false,
     specular: "off",
     pressable: false,
+    metal: "gold",
     as: "div",
 });
 
@@ -185,22 +232,68 @@ const press = useLiquidPress({
     maxStretch: 1.03,
 });
 
-// The host style carries the `full`-rung specular intensity-token override (the
-// position write is the directive's job now — a direct `el.style` host write) MERGED
-// with the press squish/drive when `pressable`. The press `:style` overrides the CSS
-// `.glass-press:active` scale floor while engaged (the single-source press); a non-
-// pressable card carries neither.
-const hostStyle = computed<CSSProperties | undefined>(() => {
-    const specular = specularArmed.value ? specularTokenStyle.value : undefined;
-    if (!props.pressable) return specular;
-    return { ...(specular ?? {}), ...press.pressStyle.value };
+// BC.W-SELECTION-CARD — the per-instance chromatic-rim ACCENT write (A-2 consume).
+// A `variant="selection"` card SETS `--glass-accent`/`--glass-accent-strength` on the
+// host off the consumer's `data-hue`/`data-hue-strength`, so the EXISTING rim + border
+// + catch-light glint (glass/rim.css + glass/material.css — the BUILT seams) tint toward
+// the data hue through the ONE landed `color-mix`. This authors NO new rim recipe — it
+// is the second per-instance `--glass-accent` consumer the BB.W-GLASS-ACCENT ≥2-bar
+// names. When `data-hue` is UNSET the host writes NOTHING (the neutral `transparent`/
+// `0%` @property defaults stand → byte-identical to a bare Card, the A-2 no-op floor).
+// The strength leg ROUTES through `cards.css`'s `[data-variant="selection"]` token (the
+// calm unselected ~16% → selected ~28% lift) — the host write only sets the HUE +
+// optionally an explicit per-instance strength override; selection NEVER writes
+// `--glass-tint-source`/`--glass-tint-strength` (the distinct-axis fence) and NEVER
+// paints a `--foreground`/brand opaque plate fill (the rim-not-fill discipline lives in
+// cards.css). The accent strength default + the selected lift are CSS tokens so the
+// rim-not-fill bound is gate-checkable in source, not buried in a JS literal.
+const selectionStyle = computed<CSSProperties>(() => {
+    if (props.variant !== "selection" || props.dataHue == null) return {};
+    return {
+        "--glass-accent": props.dataHue,
+        ...(props.dataHueStrength != null
+            ? { "--glass-accent-strength": props.dataHueStrength }
+            : {}),
+    } as CSSProperties;
 });
 
-// invariant 31 — dev-WARN on stale prop names (`variant`, `flush`). Card's
-// surface is driven entirely by `tier`/`shadow`/`grain`; a swallowed
-// `variant="pane"` silently falls back to `tier:"resting" + shadow:true`
-// (the Qα R3 hard-drop-shadow regression). Production builds are silent.
-useStalePropWarning("Card");
+// BC.W-SELECTION-CARD — the SELECTED-state metal-shimmer BORDER class (A-3 consume).
+// A `variant="selection"` card that is `:selected` composes the EARNED
+// `.metal-${metal}-border` swept rim (gold default, BA.W-PHASE-PALETTE "gold is
+// earned"), the BUILT utility — NO forked keyframe, NO baked metal color
+// (utilities/metal.css is the single source). UNSELECTED selection cards carry NO
+// metal border (the chromatic `--glass-accent` rim alone). PRM-static is inherited
+// from the utility (the sweep gated by no-preference).
+const metalBorderClass = computed<string | false>(() =>
+    props.variant === "selection" && props.selected
+        ? `metal-${props.metal}-border`
+        : false,
+);
+
+// The host style carries the `full`-rung specular intensity-token override (the
+// position write is the directive's job now — a direct `el.style` host write) MERGED
+// with the selection accent write + the press squish/drive when `pressable`. The press
+// `:style` overrides the CSS `.glass-press:active` scale floor while engaged (the
+// single-source press); a non-pressable bare card carries none of it.
+const hostStyle = computed<CSSProperties | undefined>(() => {
+    const specular = specularArmed.value ? specularTokenStyle.value : undefined;
+    const accent = selectionStyle.value;
+    const base =
+        specular || Object.keys(accent).length
+            ? { ...(specular ?? {}), ...accent }
+            : undefined;
+    if (!props.pressable) return base;
+    return { ...(base ?? {}), ...press.pressStyle.value };
+});
+
+// invariant 31 — dev-WARN on stale prop names. BC.W-SELECTION-CARD promotes
+// `variant` to a LIVE declared prop (`variant="selection"`, the I5 selection card),
+// so a passed `variant=` is now EXTRACTED as the prop and no longer falls through to
+// `$attrs` — `variant` is dropped from Card's watched stale-name list (the swallowed-
+// prop WARN no longer fires on the live `selection` value). `flush` stays watched (it
+// was never a glass-ui prop). The other axes (`tier`/`surface`/`shadow`/`grain`) drive
+// the rest of the surface; production builds are silent.
+useStalePropWarning("Card", ["flush"]);
 </script>
 
 <template>
@@ -212,6 +305,10 @@ useStalePropWarning("Card");
         :data-grain="grain"
         :data-grid="grid"
         :data-pressable="pressable || undefined"
+        :data-variant="variant || undefined"
+        :data-selected="
+            variant === 'selection' && selected ? 'true' : undefined
+        "
         :as="as"
         :as-child="asChild"
         :style="hostStyle"
@@ -295,6 +392,10 @@ useStalePropWarning("Card");
                 // touch floor read on the interactive register. A non-pressable card
                 // carries none of it (byte-identical to HEAD).
                 pressable && 'glass-press tap-squish',
+                // BC.W-SELECTION-CARD — the SELECTED-state metal-shimmer BORDER
+                // (A-3 consume; the class is computed in <script> off variant +
+                // selected + metal). UNSELECTED selection cards carry NO metal border.
+                metalBorderClass,
                 props.class,
             )
         "

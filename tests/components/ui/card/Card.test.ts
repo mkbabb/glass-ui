@@ -267,19 +267,19 @@ describe("Card — stale-prop dev-warning", () => {
         warnSpy.mockRestore();
     });
 
-    it("warns when the stale `variant` prop falls through to $attrs", () => {
-        mount({
+    // BC.W-SELECTION-CARD — `variant` is now a LIVE declared prop (`variant="selection"`,
+    // the I5 selection card), so a passed `variant=` is EXTRACTED as the prop and no
+    // longer falls through to `$attrs` — `variant` is dropped from Card's watched
+    // stale-name list. The live `variant="selection"` value is silent (it is a real
+    // decoration axis), and it binds `:data-variant="selection"` on the root.
+    it("is silent for the live `variant=\"selection\"` value (no longer a stale prop)", () => {
+        const wrapper = mount({
             components: { Card },
-            template: `<Card variant="pane">content</Card>`,
+            template: `<Card variant="selection" data-hue="oklch(0.55 0.12 70)" class="sel">content</Card>`,
         });
 
-        expect(warnSpy).toHaveBeenCalledTimes(1);
-        const message = String(warnSpy.mock.calls[0][0]);
-        // The warning names the prop, the component, and the canonical recipe.
-        expect(message).toContain("variant");
-        expect(message).toContain("<Card>");
-        expect(message).toContain('tier="wash"');
-        expect(message).toContain(":grain=\"false\"");
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(wrapper.get(".sel").attributes("data-variant")).toBe("selection");
     });
 
     it("warns when the stale bare `flush` attr falls through to $attrs", () => {

@@ -40,17 +40,26 @@ export const toggleChipVariants = cva(
                  * segment pickers, quick filters).
                  */
                 chip: [
+                    // BC.W-ACCENT-TONE — the tonal arm RE-POINTS onto the
+                    // `.accent-tone` register (one --tone → idle/active/edge/ink).
+                    // The per-state `color-mix(…--primary…)` literals are DELETED
+                    // (clean break, no alias); the structural padding/radius/text-
+                    // size stay, the tonal channels are the register's.
+                    "accent-tone",
                     "inline-flex items-center justify-center",
                     "px-2 py-0.5 text-caption",
                     "rounded-sm border",
-                    "border-[color-mix(in_srgb,var(--border)_35%,transparent)]",
-                    "bg-[color-mix(in_srgb,var(--background)_60%,transparent)]",
+                    // idle: the FLOORED faint fill (--accent-fill ≥3:1) + a quiet edge.
+                    "bg-(--accent-fill)",
+                    "border-[color-mix(in_oklab,transparent,var(--accent-edge)_35%)]",
                     "text-muted-foreground",
-                    "hover:bg-[color-mix(in_srgb,var(--accent)_40%,transparent)]",
                     "hover:text-foreground",
-                    "data-[state=on]:bg-[color-mix(in_srgb,var(--primary)_18%,transparent)]",
-                    "data-[state=on]:border-[color-mix(in_srgb,var(--primary)_60%,transparent)]",
-                    "data-[state=on]:text-foreground",
+                    // active: the bolder band + the active edge rim + the
+                    // contrast-safe ink (--accent-ink; the warm-ink CSS fallback
+                    // until a consumer threads useAccentTone).
+                    "data-[state=on]:bg-(--accent-band)",
+                    "data-[state=on]:border-(--accent-edge)",
+                    "data-[state=on]:text-(--accent-ink)",
                     "data-[state=on]:font-medium",
                 ].join(" "),
                 /**
@@ -60,14 +69,18 @@ export const toggleChipVariants = cva(
                  * emotion grid, swatch palette).
                  */
                 cell: [
+                    // BC.W-ACCENT-TONE — the cell tonal arm RE-POINTS onto the
+                    // `.accent-tone` register too (clean break — the per-state
+                    // `--primary` color-mix literals DELETED). The cell idle is
+                    // transparent (the visual IS the content); active reads the band.
+                    "accent-tone",
                     "flex flex-col items-center justify-center gap-1.5",
                     "px-2 py-2.5 text-micro",
                     "rounded-[0.625rem] border border-transparent",
                     "bg-transparent text-foreground",
-                    "hover:bg-[color-mix(in_srgb,var(--accent)_40%,transparent)]",
-                    "hover:border-[color-mix(in_srgb,var(--border)_50%,transparent)]",
-                    "data-[state=on]:bg-[color-mix(in_srgb,var(--primary)_15%,transparent)]",
-                    "data-[state=on]:border-primary",
+                    "data-[state=on]:bg-(--accent-band)",
+                    "data-[state=on]:border-(--accent-edge)",
+                    "data-[state=on]:text-(--accent-ink)",
                 ].join(" "),
             },
         },

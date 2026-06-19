@@ -100,6 +100,13 @@ export type {
 // `tier` prop against; `CardSurface` is the orthogonal decoration register
 // (`glass` | `cartoon` | `veil` — R5-7 added the borderless/rimless text-plate).
 export type { CardTier, CardSurface } from "../components/ui/card";
+// `CardVariant` is the BC.W-SELECTION-CARD decoration axis (`"selection"` — the I5
+// selection card, the ONE new Atlas component); `CardMetal` is the earned
+// selected-rim quad (`"gold" | "silver" | "bronze"`). A consumer types its
+// `<Card variant="selection" :metal>` preview-grid against these (the Atlas I5 grid
+// re-points its hand-rolled accent threading onto the published `--glass-accent` seam
+// on its `^4.x` bump).
+export type { CardVariant, CardMetal } from "../components/ui/card";
 // BB.W-SCROLL-CARD — the first-class scroll-shrink card family prop types. A
 // consumer types `<ScrollCard :max-height>` / `<ScrollCardHeader :sticky>`
 // against these; the family ships in the same `card` chunk + `/card` subpath.
@@ -348,6 +355,19 @@ export type {
     IconChipTone,
     IconChipIcon,
 } from "../components/custom/icon-chip";
+
+// ── SelectableChip / accent-tone (BC.W-ACCENT-TONE) ──────────────────────────
+// The contrast-floored tonal-accent register's public types. `SelectableChipVariants`
+// is the CVA-derived size axis a consumer wrapping <SelectableChip> types against.
+// `UseAccentToneOptions`/`UseAccentToneReturn` are the contrast-safe-ink composable's
+// option + return shapes (the value.js-bearing `safeAccentColor` ink resolver). The
+// value.js-bearing runtime values ride `/selectable-chip` + the `/color` leaf ONLY
+// (OFF the value.js-free root barrel — the SCC-trap discipline); the types ride here.
+export type { SelectableChipVariants } from "../components/custom/selectable-chip";
+export type {
+    UseAccentToneOptions,
+    UseAccentToneReturn,
+} from "../composables/color/useAccentTone";
 
 // ── Dock ───────────────────────────────────────────────────────────────────
 // `UseDockStateReturn` — canonical composable-return shape paralleling

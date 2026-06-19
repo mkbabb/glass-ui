@@ -301,3 +301,13 @@ export function deriveBlobPalette(
     }
     return stops;
 }
+
+// ── BC.W-ACCENT-TONE — the contrast-floored tonal-accent register (JS ink half) ──
+//
+// `useAccentTone` composes value.js `safeAccentColor`/`computeSafeAccent` for the
+// contrast-safe label ink ON the active band — the value.js-bearing JS half of the
+// `.accent-tone` CSS register. Re-exported from this `/color` value.js-bearing leaf
+// (NOT the value.js-free root barrel — the SCC-trap discipline; the chip that
+// statically imports it ships /selectable-chip ONLY).
+export { useAccentTone } from "./useAccentTone";
+export type { UseAccentToneOptions, UseAccentToneReturn } from "./useAccentTone";

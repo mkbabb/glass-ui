@@ -33,6 +33,20 @@
     --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.04);
     --border-hairline: var(--hairline-catch-light), var(--hairline-under-shadow);
 
+    /* BC.W-AX-METAL-GLOW — the brand-metal catch-light DEFAULTS (the consumer
+       retune seam). The metal-shimmer family (`.metal-{gold,silver,bronze}`,
+       metal.css) halos the text-clip with a `drop-shadow` of the metal's OWN base
+       hue at this radius + strength — the gold reads as LIT metal, not a flat fill.
+       Shared by the loop sweep AND the one-shot headline (the W-AX-COMPLETION-SEAL
+       seal glint reads `--metal-glow-blur`/`--metal-glow-opacity` — the ≥2-consumer
+       register). The defaults are a soft warm WHISPER bounded by the warm-cream
+       identity — a halo radius proportional to the text (0.5em) at a low strength
+       (0.35), NOT a neon bloom (the §6 calm register; the disco family stays gone).
+       A garish high-opacity glow is the consumer's preset choice, never the default;
+       a consumer who wants NO glow sets `--metal-glow-opacity: 0`. */
+    --metal-glow-blur-default: 0.5em;
+    --metal-glow-opacity-default: 0.35;
+
     /* Specular catch-light — 1.5px-tall top-edge highlight that swaps in for
        --glass-highlight on interactive moments (e.g. primary-action hover).
        Reads as a real catch-light on a curved surface. The `-dark` companion
