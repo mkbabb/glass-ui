@@ -510,6 +510,12 @@ export const CATEGORIES: Category[] = [
                 "Header Ribbon",
                 "Hover-tracking ribbon — an anchor button reveals a control row, then auto-collapses; the anchor slot exposes pinned / toggled state. Shipped /header-ribbon.",
             ),
+            s(
+                "navigation",
+                "toc-tracking",
+                "ToC Tracking",
+                "The reconciled ToC-tracking family from /sidebar — deepest-visible active highlight (useScrollTracker), damped sidebar follow, a ToC-click warm-then-scroll (useScrollTo + the virtual-window bridge), ONE delegated click handler (useClickDelegate), and a progressive batch-render (useLazyLoader). One home, no second engine.",
+            ),
         ],
     },
     {
@@ -602,6 +608,12 @@ export const CATEGORIES: Category[] = [
                 "One rounded-pill rail with N absolutely-positioned region children — the same segment shape as the segmented timeline, a different geometry.",
             ),
             s("data", "search", "Fuzzy Search"),
+            s(
+                "data",
+                "virtual-section",
+                "Virtual Section Window",
+                "A 1000-section document that renders only the ~20 sections near the viewport — spacer divs hold the full scroll height, and a jump warms the far target into the window before scrolling so it lands painted (the re-homed /virtual windowing leaf).",
+            ),
             s(
                 "data",
                 "scrolling-text",

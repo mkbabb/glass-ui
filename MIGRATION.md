@@ -557,39 +557,61 @@ retired with rationale.
   (`@tanstack/vue-query` if you need server-state coordination,
   `@vueuse/core`'s `useOffsetPagination` if you want a thin wrapper).
 
-#### 3.2—`useVirtualSectionWindow`—REMOVED
+#### 3.2—`useVirtualSectionWindow`—REMOVED → REVERSED-at-BC
 
-- **Status**: REMOVED in v1.0.
-- **Reason**: 0 production consumers. Demo-only at v0.9.x.
-- **Subpath retired**: `@mkbabb/glass-ui/virtual` (the entire subpath
-  retires; it housed `useVirtualSectionWindow` + `useWindowedStore`).
-- **Migration**: production-grade virtualization belongs to
-  `@tanstack/vue-virtual`. Consumers with light sectioned-list needs
-  can hand-roll an `IntersectionObserver`-based windower in ~80 LOC.
+- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
+  `src/composables/virtual/useVirtualSectionWindow.ts` + the `/virtual`
+  subpath, OFF the root barrel).
+- **Reason for the v1.0 removal**: 0 production consumers. Demo-only at
+  v0.9.x. **Reason for the BC reversal**: two binary consumers now
+  overturn the no-consumer verdict — the live words
+  `DefinitionContentView` consumer + the booked `BC.W-DOCK-SEARCH`
+  results list (`docs/consumer-evidence/use-virtual-section-window.md`).
+  The homecoming: v0.9.4 → retired v1.0 → returned BC. The machinery is
+  byte-faithful to the proven words transposed copy save three recorded
+  refinements (binary-search `findSectionOffset`, the house
+  `useResizeObserver` leaf, the shared `SectionHierarchy` type-reconcile).
+- **Subpath retired**: `@mkbabb/glass-ui/virtual` — **RE-MINTED at BC** (it
+  again houses `useVirtualSectionWindow` + `useWindowedStore` + the
+  `virtualSectionLayout` pure core). `useVirtualGrid` (the
+  `@tanstack/vue-virtual`-bearing grid windower) STAYS words-local — one
+  consumer + a hard 3rd-party dep, the ≥2-consumer bar fails for glass-ui.
+- **Migration (pre-BC)**: production-grade virtualization belonged to
+  `@tanstack/vue-virtual`. **Post-BC**: import the re-homed engine from
+  `@mkbabb/glass-ui/virtual`.
 
-#### 3.3—`useWindowedStore`—REMOVED
+#### 3.3—`useWindowedStore`—REMOVED → REVERSED-at-BC
 
-- **Status**: REMOVED in v1.0.
-- **Reason**: 0 production consumers. Demo-only at v0.9.x.
+- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
+  `src/composables/virtual/useWindowedStore.ts`, on `/virtual`).
+- **Reason for the v1.0 removal**: 0 production consumers. **Reason for
+  the BC reversal**: the live words `wordlist.ts` store is the consumer
+  the no-consumer verdict missed (`docs/consumer-evidence/use-windowed-store.md`).
+  The generation-counter stale-append race-guard is the load-bearing
+  concurrency primitive, preserved byte-faithful.
 - **Subpath retired**: `@mkbabb/glass-ui/virtual` (shared with
-  `useVirtualSectionWindow`).
-- **Migration**: a sliding-window resident store is a `ref<T[]>` plus
-  an eviction policy. Copy the v0.9.3 file if you need the exact LRU
-  shape.
+  `useVirtualSectionWindow`) — **RE-MINTED at BC**.
+- **Migration (post-BC)**: import from `@mkbabb/glass-ui/virtual`.
 
-#### 3.4—`virtualSectionLayout` helpers—REMOVED
+#### 3.4—`virtualSectionLayout` helpers—REMOVED → REVERSED-at-BC
 
-- **Status**: REMOVED in v1.0.
+- **Status**: REMOVED in v1.0; **REVERSED-at-BC** (re-promoted to
+  `src/composables/virtual/virtualSectionLayout.ts`, on `/virtual` + the
+  `/api` type discovery layer).
 - **Affected exports**: `buildSectionLayout`, `findSectionOffset`,
   `resolveActiveSection`, `resolveSectionWindow`, plus the
   `FlatSection`, `SectionLayout`, `SectionWindowRange`, and
   `ForcedSectionWindowRange` types.
-- **Reason**: support substrate for `useVirtualSectionWindow`. Retires
-  with its parent.
-- **Migration**: the helpers were pure functions with no glass-ui-private
-  dependencies—copy the v0.9.3 file
-  (`src/composables/virtual/virtualSectionLayout.ts`) as-is if
-  cumulative section-offset math is genuinely needed.
+- **Reason for the v1.0 removal**: support substrate for
+  `useVirtualSectionWindow`; retired with its parent. **Reason for the BC
+  reversal**: returns home WITH its parent. `findSectionOffset` is
+  refined to a binary search over a by-id-sorted view (the words copy
+  linear-scanned; the offset answer is byte-identical), and `FlatSection`
+  now shares the four hierarchy fields with the sidebar's `TreeIndexEntry`
+  via the `SectionHierarchy` base (no redeclared fields).
+- **Migration (post-BC)**: import the pure helpers from
+  `@mkbabb/glass-ui/virtual` (types also discoverable via
+  `@mkbabb/glass-ui/api`).
 
 #### Composables KEPT (cross-repo wired)
 

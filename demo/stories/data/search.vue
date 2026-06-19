@@ -58,7 +58,7 @@ const rowSeeds = [
     ["FuzzySearch overlay", "component", "Keyboard navigation, modal expansion, and highlighted fuzzy result labels.", "wired", "Search", ["FuzzySearch", "keyboard"]],
     ["SearchBar query rail", "component", "Compact input bar with a baked-in icon for filtering catalogue rows.", "proof", "Search", ["SearchBar", "input"]],
     ["useFuzzySearch state", "composable", "Reactive query, debounce, selected index, open state, and result selection.", "wired", "Search", ["useFuzzySearch", "state"]],
-    ["buildIndex helper", "helper", "Builds lowercased index entries from the 50-row sample dataset.", "wired", "Search", ["buildIndex", "index"]],
+    ["buildIndex helper", "helper", "Builds lowercased index entries from the 200-row sample dataset.", "wired", "Search", ["buildIndex", "index"]],
     ["searchIndex helper", "helper", "Scores multi-token fuzzy queries and returns ordered search results.", "proof", "Search", ["searchIndex", "score"]],
     ["fuzzyMatch scorer", "helper", "Subsequence matching with bonuses for prefixes, separators, and consecutive runs.", "proof", "Search", ["fuzzyMatch", "score"]],
     ["clearCache control", "helper", "Flushes cached search results after dataset or route state changes.", "wired", "Search", ["clearCache", "cache"]],
@@ -106,18 +106,28 @@ const rowSeeds = [
     ["Aurora gradient", "flat", "Procedural painterly gradient row with pointer-driven swirl.", "consumer", "Flat", ["aurora", "gradient"]],
 ] satisfies RowSeed[];
 
-const searchItems: StorySearchItem[] = rowSeeds.map(
-    ([label, type, text, status, owner, tags], index) => ({
-        id: `search-row-${String(index + 1).padStart(2, "0")}`,
-        label,
+// The curated 50 seeds are the legible head of the list; the dataset is then
+// extended to 200 rows (the dock-scale fuzzy π — BC.W-FUZZY-HARDEN acceptance)
+// by procedurally derived variants so a query exercises ranking + the prefix-
+// narrowing cache at scale, not just the small head.
+const DATASET_SIZE = 200;
+const STATUSES = ["wired", "proof", "consumer", "triage"] as const satisfies readonly SearchStatus[];
+
+const searchItems: StorySearchItem[] = Array.from({ length: DATASET_SIZE }, (_, index) => {
+    const seed = rowSeeds[index % rowSeeds.length]!;
+    const [label, type, text, status, owner, tags] = seed;
+    const variant = Math.floor(index / rowSeeds.length); // 0 for the curated head
+    return {
+        id: `search-row-${String(index + 1).padStart(3, "0")}`,
+        label: variant === 0 ? label : `${label} ${variant + 1}`,
         type,
-        text,
-        status,
+        text: variant === 0 ? text : `${text} (variant ${variant + 1})`,
+        status: variant === 0 ? status : STATUSES[index % STATUSES.length]!,
         owner,
         tags: [...tags],
         tone: TONES[index % TONES.length]!,
-    }),
-);
+    };
+});
 
 const itemById = new Map(searchItems.map((item) => [item.id, item]));
 const selectedResult = ref<StorySearchItem | null>(null);
@@ -240,7 +250,7 @@ function formatMatches(indices: number[]): string {
                 <div class="flex flex-col gap-4 rounded-card border border-border bg-card p-4 shadow-cartoon">
                     <SearchBar
                         v-model="queryControl"
-                        placeholder="Search the 50-row dataset..."
+                        placeholder="Search the 200-row dataset..."
                         data-testid="search-query"
                     />
 

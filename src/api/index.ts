@@ -170,14 +170,38 @@ export type { MenuItemVariants } from "../components/ui/_shared";
 // `SidebarIndexEntry` describe the flat-index lookup; `ScrollTrackerOptions`
 // pins the `useSidebarFollow` option shape consumers customise root-margin
 // against.
+// The three ToC-tracking-family leaf option shapes (BC.W-TOC-RECONCILE):
+// `ScrollToOptions` (the rAF-retry scroll-to + treeIndex-aware partial-load),
+// `ClickDelegateOptions` (the delegated scroll-target click), and
+// `LazyLoaderOptions` (the progressive batch-render count). A consumer typing a
+// ToC wrapper / fixture pins these from the discovery layer.
 export type {
     ScrollTrackerOptions,
+    ScrollToOptions,
+    ClickDelegateOptions,
+    LazyLoaderOptions,
     SidebarIndexEntry,
     SidebarSection,
     SidebarState,
     TreeIndexEntry,
     TreeNode,
 } from "../composables/sidebar";
+
+// ── Virtual-windowing domain (BC.W-VIRTUAL-WINDOW) ───────────────────────────
+// The re-homed section-windowing contract types. `FlatSection` is the generic
+// windowing INPUT shape (id + index + the shared `SectionHierarchy` fields +
+// `estimatedHeight`) a consumer's flattener produces; `SectionLayout` is the
+// `buildSectionLayout` output; `SectionWindowRange` is the resolved visible
+// range + spacer sizes; `ForcedSectionWindowRange` is the warm-target
+// injection. A consumer typing a windowing fixture / a flattener output pins
+// these from the discovery layer; the value.js-free runtime + composables ride
+// `/virtual` ONLY (OFF the root barrel — the heavy DOM-measure leaf discipline).
+export type {
+    FlatSection,
+    SectionLayout,
+    SectionWindowRange,
+    ForcedSectionWindowRange,
+} from "../composables/virtual";
 
 // ── Search domain ──────────────────────────────────────────────────────────
 // `SearchableItem` is the input shape consumers feed `buildIndex` /

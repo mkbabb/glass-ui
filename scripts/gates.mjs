@@ -1698,6 +1698,24 @@ export const GATES = [
         note: "BC.W-UNDERLINE-TUNE — the underline retuned, audacious type, the spring EASED (not abrupt): the indicator glide FILLS its clock (reads the SPRING-EASE eased snappy by name, the indicator-clock half in lockstep — ONE source, springPresets byte-untouched, proof:spring-tokens-synced GREEN). proof:animation-coherence holds. Bite: an abrupt/truncated underline glide / a duplicate curve prescription → RED.",
     },
     {
+        id: "proof:virtual-window",
+        cmd: "proof:virtual-window",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIRTUAL-WINDOW — the homecoming: the virtualized-section-windowing primitive RETIRED at v1.0 re-minted onto the /virtual subpath (off the value.js-free root barrel — the heavy-DOM-measure leaf, deliberately off-root). VW1 the pure-engine stateless binary (findSectionOffset binary-search byte-identical to the 1000-id linear scan); VW2 the composable full-API house leaf (ResizeObservers route the house composables/dom/useResizeObserver); VW3 the useWindowedStore generation-counter race-guard; VW4 the /virtual subpath published (exports + typesVersions); VW5 >=2 consumers (words + dock-search), off-root, no @tanstack fork. Bite: a vue import in the pure file / a real @tanstack import in src/ → RED.",
+    },
+    {
+        id: "proof:toc-reconcile",
+        cmd: "proof:toc-reconcile",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-TOC-RECONCILE — the 3-way ToC-tracking fork reconciled onto the ONE glass-ui/sidebar + the 3 missing leaves added (useScrollTo / useClickDelegate / useLazyLoader), NO re-mint. useScrollTo.ensureTargetLoaded bridges onto VIRTUAL-WINDOW's useVirtualSectionWindow.ensureTargetWindow; data-toc-id stays canonical (reconcile onto it, not re-invent). The leaves ride the existing /sidebar export. Bite: a second ToC engine / a re-minted windowing / a non-data-toc-id active reader → RED.",
+    },
+    {
+        id: "proof:fuzzy-harden",
+        cmd: "proof:fuzzy-harden",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-FUZZY-HARDEN — glass-ui/search is the canonical client fuzzy pipeline (the VSCode-scorer); HARDEN the dock-composable-ready surface (prefix-cache + multi-token AND + match-index highlighting intact, NO scorer edit — the one-directional fence) + the useAsyncSearch race-guard DECISION (>=2-consumer-OR-BOOK). Bite: a scorer edit / a lost prefix-cache / a missing match-index highlight → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],
