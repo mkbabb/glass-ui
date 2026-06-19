@@ -5,7 +5,11 @@
         "id": "__selftest__",
         "disposition": "book",
         "comment": "A synthetic always-MET book row the gate evaluates every run to prove its detector is load-bearing: every present consumer imports @mkbabb/glass-ui, so n:1 is trivially met. If the detector does NOT classify this as a violation, the gate is broken and reds loudly (the acceptance-is-the-inverse contract).",
-        "trigger": { "kind": "min-consumers", "n": 1, "grep": "@mkbabb/glass-ui" }
+        "trigger": {
+            "kind": "min-consumers",
+            "n": 1,
+            "grep": "@mkbabb/glass-ui"
+        }
     },
     "items": [
         {
@@ -65,8 +69,9 @@
                 "note": "AT W0-L4 ledger #6. AY.W-DECK decision (W-TRIAGE.md §W-DECK): KEEP-BESPOKE. The slides/src/deck/ chassis (15 files: DeckView/DeckPager/DeckSlide/DeckSettings/useDeck/useDeckNav/deckSpring/pagerWindow/deckKeys/captureMode/reveal/slideContext/useCountup/useEdgeZones/types) is consumed by exactly 1 repo (slides; 3 internal decks til-briefing/feedback-coder/_fixture share it) — does NOT clear the ≥2-consumer bar (feedback-coder repo carries no src/deck). glass-ui ships only /deck-progress (the one deck primitive that cleared the bar). Re-evaluates un-MET (1 repo-consumer < 2). FLIPS to a net-new AY.W-DECK lift wave the instant a 2nd repo imports a deck primitive (the scope-reveal trigger)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (FINAL §6 BOOK row, the slides page-transition pair). Trigger re-evaluates un-MET — slides remains the sole consumer (< 2). Cross-linked to W-SLIDES-DRIVE (Batch 5; supersedes the coordination-only W-SLIDES-HANDOFF): the slides Tranche N adopt loop owns any deck primitive promotion. Coordination only — no slides edit (cross-repo fence)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (FINAL §6 BOOK row, the slides page-transition pair). Trigger re-evaluates un-MET — slides remains the sole consumer (< 2). Cross-linked to W-SLIDES-DRIVE (Batch 5; supersedes the coordination-only W-SLIDES-HANDOFF): the slides Tranche N adopt loop owns any deck primitive promotion. Coordination only — no slides edit (cross-repo fence). BC §FOLD-LEDGER F7: re-point — the 2-repo trigger is MET (slides survey + speedtest survey-deck) and /deck is genuinely unbuilt; BC.W-DECK (Band 10) BUILDS the deck chassis. resolvedBy set to its BC home; STAY-booked, re-stamped in-place (L-inv-8) until the lift lands.",
+            "resolvedBy": "BC.W-DECK"
         },
         {
             "id": "button-icon-sm",
@@ -79,8 +84,8 @@
                 "note": "AT W0-L4 ledger #12 — 1 firm consumer (value.js compact dock controls); a 2nd icon-sm consumer (or a control-size-vocabulary fold with select-size #15) graduates it. Re-evaluates un-MET (value.js absent / not on this surface)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 firm consumer (value.js compact dock controls) < 2; no BB wave decides it. Graduates on a 2nd icon-sm consumer or a control-size-vocabulary fold with select-size."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 firm consumer (value.js compact dock controls) < 2; no BB wave decides it. Graduates on a 2nd icon-sm consumer or a control-size-vocabulary fold with select-size. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "dock-select-clamp-label",
@@ -93,8 +98,8 @@
                 "note": "AT W0-L4 ledger #13 — 1 consumer (value.js). Trigger: a 2nd dock-select consumer wants clamp OR value.js's count justifies. Re-evaluates un-MET (1-consumer → substrate-without-2nd-consumer)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js) < 2; no BB wave decides it. Graduates on a 2nd dock-select clamp consumer."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js) < 2; no BB wave decides it. Graduates on a 2nd dock-select clamp consumer. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "tooltip-mono-variant",
@@ -107,8 +112,8 @@
                 "note": "AT W0-L4 ledger #14 — 1 consumer (value.js code/value tooltips). A CVA variant. Trigger: a 2nd mono-tooltip consumer. Re-evaluates un-MET (1-consumer)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js code/value tooltips) < 2; no BB wave decides it. Graduates on a 2nd mono-tooltip consumer."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js code/value tooltips) < 2; no BB wave decides it. Graduates on a 2nd mono-tooltip consumer. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "select-size",
@@ -121,8 +126,8 @@
                 "note": "AT W0-L4 ledger #15 — 1 consumer (value.js). Pairs conceptually with button-icon-sm (#12): a control-size vocabulary across controls is the ≥2 cross-control-coherence fold path. Re-evaluates un-MET (1-consumer)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js) < 2; no BB wave decides it. Pairs with button-icon-sm on the cross-control-size-vocabulary fold path (the ≥2 cross-control-coherence trigger)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (value.js) < 2; no BB wave decides it. Pairs with button-icon-sm on the cross-control-size-vocabulary fold path (the ≥2 cross-control-coherence trigger). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "spring-crisp-token",
@@ -135,8 +140,8 @@
                 "note": "AT W0-L4 ledger #16 — 0 witnessed ≥2 at HEAD (A1 claimed pane-slide + easter-eggs, unconfirmed). Default NOT-SHIP. Trigger: a witnessed ≥2. Re-evaluates un-MET (0 consumers)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 witnessed consumers < 2; no BB wave decides it. Default NOT-SHIP until a witnessed ≥2."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 witnessed consumers < 2; no BB wave decides it. Default NOT-SHIP until a witnessed ≥2. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "metric-badge-icon",
@@ -149,8 +154,8 @@
                 "note": "AT W0-L4 ledger #19 — an icon slot on MetricBadge. 1 consumer (speedtest). Trigger: a 2nd icon-badge consumer. Re-evaluates un-MET (1-consumer additive)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (speedtest) < 2; no BB wave decides it. Graduates on a 2nd icon-badge consumer."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (speedtest) < 2; no BB wave decides it. Graduates on a 2nd icon-badge consumer. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "completion-seal-family",
@@ -163,8 +168,8 @@
                 "note": "AT W0-L4 ledger #20 — NOT in src; the token/keyframe layer is the reusable substrate, the component stays demo-gated until a 2nd consumer (J inv 10). Trigger: 2nd consumer → public-surface. Re-evaluates un-MET (0 consumers)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 consumers < 2; no BB wave decides it. The component stays demo-gated until a 2nd consumer (J inv 10)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 consumers < 2; no BB wave decides it. The component stays demo-gated until a 2nd consumer (J inv 10). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "labeled-field-for-id",
@@ -177,8 +182,8 @@
                 "note": "AT W0-L4 ledger #22 — a label-for/input-id binding correctness ask. Trigger: speedtest's a11y adoption surfaces a concrete gap (if confirmed a real binding bug → correctness wave). Re-evaluates un-MET (needs the specific failing site)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — needs a concrete failing site from speedtest's a11y adoption; no BB wave decides it (it would graduate to a correctness wave only on a confirmed binding bug)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — needs a concrete failing site from speedtest's a11y adoption; no BB wave decides it (it would graduate to a correctness wave only on a confirmed binding bug). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "speedtest-a11y-bundle",
@@ -191,8 +196,8 @@
                 "note": "AT W0-L4 ledger #23 — a bundle label is un-auditable. Pending decomposition against the AY.W-A11Y-PERF sibling lane (the concrete a11y rows); any that is a real WCAG gap → correctness. A bundle is not a row — this single row IS the register entry pending decomposition, never prose-only. Re-evaluates un-MET (no enumerated marker on any present consumer)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no enumerated marker on any present consumer; no BB wave decides it (the bundle stays pending decomposition against speedtest's concrete a11y rows)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no enumerated marker on any present consumer; no BB wave decides it (the bundle stays pending decomposition against speedtest's concrete a11y rows). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "raf-loop-demand-park",
@@ -205,8 +210,8 @@
                 "note": "AT W0-L4 ledger #25 — 1 consumer (speedtest never-parks INP). Trigger: a 2nd rAF consumer wants demand-park OR speedtest's perf wave confirms the API shape. Re-evaluates un-MET (1-consumer)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (speedtest never-parks INP) < 2; no BB wave decides it. Graduates on a 2nd rAF demand-park consumer or speedtest's perf wave confirming the API shape."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 1 consumer (speedtest never-parks INP) < 2; no BB wave decides it. Graduates on a 2nd rAF demand-park consumer or speedtest's perf wave confirming the API shape. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "styles-critical-split",
@@ -220,8 +225,9 @@
             },
             "resolved": false,
             "pendingResolvedBy": "BB.W-CSS-CRITICAL",
-            "reStampedAt": "BB",
-            "reStampNote": "BB §2 chronic-fold: BUILD — W-CSS-CRITICAL (Batch 3) lands the render-blocking critical/deferred /styles split IN glass-ui. The split is library-internal (not a consumer-sibling import), so the min-consumers trigger stays un-MET at HEAD; the disposition stays honest book until the build lands. The BB close (W-CLOSE) flips pending→resolved + a resolvedBy field when the split commits."
+            "reStampedAt": "BC",
+            "reStampNote": "BB §2 chronic-fold: BUILD — W-CSS-CRITICAL (Batch 3) lands the render-blocking critical/deferred /styles split IN glass-ui. The split is library-internal (not a consumer-sibling import), so the min-consumers trigger stays un-MET at HEAD; the disposition stays honest book until the build lands. The BB close (W-CLOSE) flips pending→resolved + a resolvedBy field when the split commits. BC §FOLD-LEDGER F7: re-point — the BB pendingResolvedBy (BB.W-CSS-CRITICAL, SPEC, never ran) sat STILL-OPEN because the BB close never fired the close-gated flip. BC re-homes the BUILD to BC.W-CSS-CRITICAL (Band 11, real on disk); resolvedBy set. The split is library-internal so min-consumers stays un-MET — STAY-booked, re-stamped in-place (L-inv-8), the build at BC.W-CSS-CRITICAL discharges it.",
+            "resolvedBy": "BC.W-CSS-CRITICAL"
         },
         {
             "id": "cross-document-vt",
@@ -234,8 +240,8 @@
                 "note": "AT W0-L4 ledger #27 — the library opt-in `--vt-*` directional vocab ships; navigation:auto is CONSUMER-owned app-shell (imposes route-morphs on every page). Trigger: ≥2 opt-in directional-vocab consumers converge. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — navigation:auto is consumer-owned app-shell, < 2 opt-in directional-vocab consumers converge; no BB wave decides it."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — navigation:auto is consumer-owned app-shell, < 2 opt-in directional-vocab consumers converge; no BB wave decides it. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "css-scope-state",
@@ -248,8 +254,8 @@
                 "note": "AT W0-L4 ledger #28 — authoring-DRY-not-payload (gzipped CSS is compression-saturated). Trigger: an SFC touch that ALREADY pays the diff cost. Re-evaluates un-MET (0 @scope/:state sites in any consumer of the library surface)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 @scope/:state sites in any library-surface consumer; no BB wave decides it (authoring-DRY-not-payload, paid-diff-only)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 @scope/:state sites in any library-surface consumer; no BB wave decides it (authoring-DRY-not-payload, paid-diff-only). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "css-at-function",
@@ -262,8 +268,8 @@
                 "note": "AT W0-L4 ledger #29 — Limited/Chromium-only + authoring-DRY-not-payload. Trigger: Baseline lifts to Newly AND a real cross-engine authoring-DRY site earns it. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited/Chromium-only, no cross-engine authoring-DRY site earns it yet; no BB wave decides it."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited/Chromium-only, no cross-engine authoring-DRY site earns it yet; no BB wave decides it. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "interestfor-previews",
@@ -276,8 +282,8 @@
                 "note": "AT W0-L4 ledger #30 (+ #35 HoverPopover `:native` folds here — graduates with G8 at Baseline Widely). Limited/experimental. Trigger: Baseline Widely + the Configurator/dock destructive-action-preview fit converges a 2nd consumer. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited/experimental, < 2 converged consumers; no BB wave decides it (graduates with G8 at Baseline Widely)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited/experimental, < 2 converged consumers; no BB wave decides it (graduates with G8 at Baseline Widely). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "css-text-box-trim",
@@ -290,8 +296,8 @@
                 "note": "AT W0-L4 ledger #31 — New Baseline-2025, typography-adjacent, 0 consumers. Trigger: a consumer asks OR a typography-rung touch wants it. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 consumers; no BB wave decides it (graduates on a consumer ask or a typography-rung touch that wants it)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 0 consumers; no BB wave decides it (graduates on a consumer ask or a typography-rung touch that wants it). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "css-interpolate-size",
@@ -304,8 +310,8 @@
                 "note": "AT W0-L4 ledger #32 — Newly-Baseline; the kept 0fr↔1fr hack is the fallback. Trigger: glass-ui migrates FIRST with @supports when the SFC is touched AND a consumer is witnessed. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — the 0fr↔1fr hack is the kept fallback, no witnessed consumer; no BB wave decides it (paid-diff-only when the SFC is touched)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — the 0fr↔1fr hack is the kept fallback, no witnessed consumer; no BB wave decides it (paid-diff-only when the SFC is touched). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "css-relative-color",
@@ -319,8 +325,8 @@
             },
             "resolved": false,
             "pendingResolvedBy": "BB.W-DARK-INK-WARM",
-            "reStampedAt": "BB",
-            "reStampNote": "BB §2 chronic-fold: MEET — W-DARK-INK-WARM (Batch 4) re-expresses the dark --surface-tint-* arm as a --foreground-derived oklch(from …) relative-color recipe, the opportunistic-SFC touch the book waited on. The recipe lands library-internal (not a consumer-sibling import), so the min-consumers trigger stays un-MET at HEAD; the disposition stays honest book until the recipe lands. The BB close (W-CLOSE) flips pending→resolved when the recipe commits."
+            "reStampedAt": "BC",
+            "reStampNote": "BB §2 chronic-fold: MEET — W-DARK-INK-WARM (Batch 4) re-expresses the dark --surface-tint-* arm as a --foreground-derived oklch(from …) relative-color recipe, the opportunistic-SFC touch the book waited on. The recipe lands library-internal (not a consumer-sibling import), so the min-consumers trigger stays un-MET at HEAD; the disposition stays honest book until the recipe lands. The BB close (W-CLOSE) flips pending→resolved when the recipe commits. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "glass-dialog-native-pilot",
@@ -333,8 +339,8 @@
                 "note": "AT W0-L4 ledger #34 — demo-gated via the native-top-layer story; 0 barrel/exports. Trigger: Baseline Widely (native <dialog> commandfor). DISTINCT from native-drawer-as-asChild (#8): #8 is the as/asChild polymorphism EXTENSION; this is the component's public-surface graduation. Re-evaluates un-MET (no present consumer imports it)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no present consumer imports it, demo-gated; no BB wave decides it (the W-NDA-DECIDE build/retire targets the DISTINCT as/asChild extension #8, not this component's Baseline-Widely public-surface graduation)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no present consumer imports it, demo-gated; no BB wave decides it (the W-NDA-DECIDE build/retire targets the DISTINCT as/asChild extension #8, not this component's Baseline-Widely public-surface graduation). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "glass-native-select-pilot",
@@ -347,8 +353,8 @@
                 "note": "AT W0-L4 ledger #36 — Limited Baseline; muster declined in AQ → no ≥2. Trigger: Baseline Widely → default. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited Baseline, muster declined → no ≥2; no BB wave decides it (graduates to default at Baseline Widely)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited Baseline, muster declined → no ≥2; no BB wave decides it (graduates to default at Baseline Widely). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "inline-edit-primitive",
@@ -361,8 +367,8 @@
                 "note": "AT W0-L4 ledger #37 — 3 DIVERGENT consumers (numeric-click / string-dblclick / contenteditable). Promote on CONVERGENCE to ONE contract, NOT census (J inv 10) — so the trigger matches a CONVERGED shared glass-ui inline-edit primitive (the `/inline-edit` subpath / `GlassInlineEdit` import), NOT generic `contenteditable` (which 2 repos already use divergently — that is the divergence the convergence-gate is WAITING ON, not the MET condition). 5-tranche carry is legitimate (divergence, not neglect). Re-evaluates un-MET (no consumer imports a converged glass-ui inline-edit primitive)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 3 DIVERGENT consumers (no converged glass-ui inline-edit primitive imported); no BB wave decides it. The 5-tranche carry is legitimate (divergence, not neglect — promote on convergence to ONE contract, J inv 10)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 3 DIVERGENT consumers (no converged glass-ui inline-edit primitive imported); no BB wave decides it. The 5-tranche carry is legitimate (divergence, not neglect — promote on convergence to ONE contract, J inv 10). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "labeled-slider-readout",
@@ -375,8 +381,8 @@
                 "note": "AT W0-L4 ledger #39 — 2-divergent. Trigger: a 3rd consumer wants the readout OR the 2 converge. Re-evaluates un-MET."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 2 divergent consumers; no BB wave decides it. Graduates on a 3rd consumer wanting the readout or the 2 converging."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — 2 divergent consumers; no BB wave decides it. Graduates on a 3rd consumer wanting the readout or the 2 converging. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "directional-view-transition",
@@ -389,8 +395,8 @@
                 "note": "AX PROGRESS:282 item 16 (the §4 close checklist). src/styles/view-transition.css ships the --vt-* opt-in vocab + gl-vt-slide-in/out keyframes, but there is NO directional-driving JS helper. Trigger: ≥2 consumers drive a directional VT via the helper. Re-evaluates un-MET (no consumer sets --vt-direction). DEFAULT book-with-trigger (a plausible ≥2-consumer future — slides page-transitions + a dock-route morph)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (FINAL §6 BOOK row, the slides page-transition pair). Trigger re-evaluates un-MET — no consumer sets --vt-direction (< 2). Cross-linked to W-SLIDES-DRIVE (Batch 5): the slides page-transition adopt could converge the 2nd consumer alongside deck-subpath. Coordination only — no JS driver built here (no BB wave decides it; the CSS half already ships)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (FINAL §6 BOOK row, the slides page-transition pair). Trigger re-evaluates un-MET — no consumer sets --vt-direction (< 2). Cross-linked to W-SLIDES-DRIVE (Batch 5): the slides page-transition adopt could converge the 2nd consumer alongside deck-subpath. Coordination only — no JS driver built here (no BB wave decides it; the CSS half already ships). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "drawer-content-spring",
@@ -403,8 +409,8 @@
                 "note": "AX PROGRESS:282 item 17 (LOW). grep `drawer.*spring|--drawer-spring` over src/styles/drawer.css → 0. vaul-vue owns the snap MATH; a glass-ui `--drawer-spring` token re-tuning the open/snap easing is absent. Trigger: ≥2 consumers retune the drawer spring via the token. Re-evaluates un-MET (no consumer references --drawer-spring)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no consumer references --drawer-spring (< 2). NOTE the adjacency (not a fold): W-DRAWER-ABROGATE (Batch 4) de-forks vaul, but it owns the abrogation, not a --drawer-spring retune token — this row stays a distinct un-MET book."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no consumer references --drawer-spring (< 2). NOTE the adjacency (not a fold): W-DRAWER-ABROGATE (Batch 4) de-forks vaul, but it owns the abrogation, not a --drawer-spring retune token — this row stays a distinct un-MET book. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "cartoon-quiet-preset",
@@ -417,8 +423,8 @@
                 "note": "AX PROGRESS:282 item 18 (LOW). grep `cartoon.*quiet|quiet.*cartoon` over src/ → only PROSE (cards.css var(--glass-bg-cartoon, var(--glass-bg-quiet)) fallback comment; Card.vue retired-component history note). No named cartoon-quiet preset/utility. Trigger: ≥2 consumers compose a cartoon-quiet surface preset. Re-evaluates un-MET (no named preset on any surface)."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no named cartoon-quiet preset on any surface (< 2 consumers compose it); no BB wave decides it."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — no named cartoon-quiet preset on any surface (< 2 consumers compose it); no BB wave decides it. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "speedtest-native-first-receive",
@@ -431,8 +437,8 @@
                 "note": "AX W28 residual (AY.W-TRIAGE DEFERS). The substrate is SHIPPED (/metric-cell, /metric-stack, /instrument-chassis subpaths); the RECEIVE is speedtest's (inv-16 — glass-ui writes glass-ui). Re-evaluates MET when ≥2 consumer repos import; booked, not AY-owned."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — the substrate is SHIPPED but the RECEIVE is speedtest's (consumer-side, inv-16 glass-ui writes glass-ui); no BB wave decides it (re-evaluates MET only when ≥2 consumer repos import)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — the substrate is SHIPPED but the RECEIVE is speedtest's (consumer-side, inv-16 glass-ui writes glass-ui); no BB wave decides it (re-evaluates MET only when ≥2 consumer repos import). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         },
         {
             "id": "keyframes-prune-migration-dag",
@@ -445,8 +451,8 @@
                 "note": "AX W35 residual (AY.W-TRIAGE DEFERS). The prune is keyframes.js-owned (USER-DOMAIN publisher); glass-ui re-pins on publish. The trigger matches the migration-DAG ARTEFACT a consumer adopts when keyframes.js ships the prune (`@mkbabb/keyframes.js/migrate` entry / a `keyframes-migration-dag` marker), NOT the generic `@mkbabb/keyframes.js` import (which every consumer carries today — that is the supplier edge, not the prune signal). Re-evaluates un-MET (no consumer adopts a keyframes migration-DAG yet); booked, not AY-owned."
             },
             "resolved": false,
-            "reStampedAt": "BB",
-            "reStampNote": "BB re-stamp: STAY-booked (cross-repo supplier-edge). Trigger re-evaluates un-MET — no consumer adopts a keyframes migration-DAG artefact yet. Records its W-ADOPT-RECONCILE adjacency (Batch 5; the cross-repo adopt loop owns the kf re-pin on the keyframes.js-published prune) — coordination only, no sibling edit; the prune itself is keyframes.js-owned (USER-DOMAIN publisher)."
+            "reStampedAt": "BC",
+            "reStampNote": "BB re-stamp: STAY-booked (cross-repo supplier-edge). Trigger re-evaluates un-MET — no consumer adopts a keyframes migration-DAG artefact yet. Records its W-ADOPT-RECONCILE adjacency (Batch 5; the cross-repo adopt loop owns the kf re-pin on the keyframes.js-published prune) — coordination only, no sibling edit; the prune itself is keyframes.js-owned (USER-DOMAIN publisher). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
         }
     ]
 }

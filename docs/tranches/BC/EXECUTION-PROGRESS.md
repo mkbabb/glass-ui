@@ -26,10 +26,10 @@
 ## Tier cursor (EXECUTION-DAG §4)
 | tier | band | waves | status |
 |---|---|---|---|
-| 0-1 | F | PM-BB/BA/AZ/SYNTHESIS | **IN FLIGHT** (forensics confirm — postmortems already on disk) |
-| 2 | 0 | GESTALT-FIRST · PAINT-GATE · FOLD-LEDGER | **IN FLIGHT** (the load-bearing floor) |
-| 2.5 | 14 | VIRTUAL-WINDOW → TOC-RECONCILE · FUZZY-HARDEN | pending |
-| 3-7 | 1 | BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → glass fan + ATLAS-FOLD + ACCENT-TONE/METAL-GLOW | pending |
+| 0-1 | F | PM-BB/BA/AZ/SYNTHESIS | **DONE** — forensics confirmed (4 specs consistent, 29 classes, 8 anchor gates present; req→clause traceability appended to SYNTHESIS.md) |
+| 2 | 0 | GESTALT-FIRST · PAINT-GATE · FOLD-LEDGER | **DONE** — proof:ba-gestalt re-authored ci-blocking pixel-reader (G5-G8, born-RED 13/13 surfaces until Band 1); proof:bc-fold-ledger 213-fold GREEN; paint-arm.mjs + proof:observer-loop born-RED; gates registered + verified (tag-parity/script-parity GREEN). Commit 3f844432→ |
+| 2.5 | 14 | VIRTUAL-WINDOW → TOC-RECONCILE · FUZZY-HARDEN | **NEXT** (early primitives, ‖ Band 1) |
+| 3-7 | 1 | BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → glass fan + ATLAS-FOLD + ACCENT-TONE/METAL-GLOW | **NEXT** (the keystone visual band; first live paint capture lands here) |
 | 7′ | 7 | MOTION-ONE-CLOCK → SPRING-EASE → AFFORDANCE-MAP/TUNABLE-ANIM + SPLIT-CHARS/MOTION-PRESETS | pending |
 | 7.7 | 12 | CUSTOMIZABILITY-CENSUS → CONTROL-CUSTOM/OVERLAY-UNIFORM/SEARCH-CUSTOM + METRIC-HOVER/FOURIER-DECIDES | pending |
 | 8-11 | 2 | DOCK-ENGINE → fan → LIQUID-MORPH/COLLAPSED-BOTH → STACK-RAIL + CTA-SEAT/COCKPIT | pending |
@@ -56,4 +56,15 @@
 ## In-flight / log (append-only)
 - 2026-06-19: BB→master FF-merge done + pushed. tranche/BC created + pushed. Revival cron `f3da0715` armed
   (`13,38 * * * *`, durable). Infra recon done (v4.0.1, ~300 proof scripts, gates.mjs 1997L, 119 π specs).
-  Band F + Band 0 workflow LAUNCHING.
+- 2026-06-19: **Band F + Band 0 CLOSED** (workflow wdkviq15n, 4 agents). The verification-transposition floor
+  is live: `proof:ba-gestalt` is now a ci-blocking PIXEL reader (G5 pixel-band, G6 grown roster of 13 surfaces,
+  G7 auto-revoke on source drift, G8 context-aware no-terminal-reflect with the load-bearing negation pair) —
+  born-RED 13/13 surfaces until Band-1 warm-cream. `paint-arm.mjs` (the ONE-color-math shared probe) + the
+  bidirectional calm-light arm (kills the grey-scores-better metric) + `proof:observer-loop` (born-RED on the
+  write-only luma token) + `proof:gpu-substrate-single` ΔE-0.0 demoted to enrollment + the real-GPU meanLum
+  readback machinery. `FOLD-LEDGER.json` 213 folds DECIDED (101 BUILD/44 MET/65 HELD/2 RETIRE/1 SUPERSEDED) +
+  `proof:bc-fold-ledger` GREEN. Gates registered centrally (ba-gestalt→["local","ci","release"]; bc-fold-ledger;
+  observer-loop). Meta-gates GREEN (tag-parity, gate-script-parity). Stray old-tranche audit detritus discarded.
+  docs/precepts submodule committed + pushed (9cad705). The anti-disease law is now ENFORCEABLE.
+- NEXT: Band 14 primitives (Tier 2.5) ‖ Band 1 glass spine (Tiers 3-7) — the first LIVE paint captures land at
+  Band 1 (dev server :5199, both modes, gestalt verdicts flip the bc-gestalt-roster rows GREEN).

@@ -44,11 +44,19 @@ import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { detectCanvas2DSingleSource } from "./proof-webgl-substrate-single.mjs";
+import { pngRegionStats } from "./reflect-capture-verify.mjs";
 
 // The calibrated OKLab ΔE threshold (the parity-credibility floor — too strict reds on
 // legitimate rasterizer drift, too loose greens a broken port). Recorded as a gate
 // FACT; calibrated against the aurora migration (the first, cleanest) at W-AURORA-WGPU.
 export const DELTA_E_THRESHOLD = { mean: 2.0, p99: 5.0 };
+
+// BC.W-PAINT-GATE req #8 — the real-GPU meanLum>0 readback floor (the proof:aurora-
+// swraster model generalized). A viz route that paints emits NON-ZERO luminance; a
+// crashing/blank WGSL canvas reads meanLum 0. The structural-proxy ΔE-0.0 (the CPU
+// evaluator vs itself, identical sha) is DEMOTED to enrollment — it proves the row
+// EXISTS, never that the WGSL path PAINTS on a real host.
+export const MEAN_LUM_FLOOR = 0;
 
 let _cliPaths = null;
 function cliPaths() {
@@ -168,6 +176,53 @@ const VALID_STATUS = new Set([
 ]);
 const NON_MIGRATING = new Set(["fourier-field", "constellation", "watercolor-dot"]);
 
+// ── BC.W-PAINT-GATE req #8 — the real-GPU meanLum>0 readback machinery (the
+//    proof:aurora-swraster model generalized; consumed per-viz by Band 4 via
+//    BC.W-WEBGPU-EVERYWHERE). The structural-proxy ΔE-0.0 is DEMOTED to an enrollment
+//    check; the meanLum>0 readback is the PAINT proof. ─────────────────────────────
+
+/**
+ * The mean OKLab luminance over a captured PNG's full frame (the real-GPU paint readback).
+ * Reuses the SHARED pngRegionStats decoder (BC.W-GESTALT-FIRST — ONE PNG decoder, ONE
+ * colour-math source); region {0,0,1,1} = the whole frame. Returns null when the PNG can't
+ * be decoded (the caller treats null as a degenerate read, never a pass).
+ * @param {string} absPath absolute path to the captured viz frame
+ * @returns {number | null} mean OKLab-L ∈ [0,1], or null
+ */
+export function meanLuminanceFromPng(absPath) {
+    const stats = pngRegionStats(absPath, { x: 0, y: 0, w: 1, h: 1 });
+    return stats ? stats.meanL : null;
+}
+
+/**
+ * The real-GPU PAINT verdict for one parity row (BC.W-PAINT-GATE req #8). A row's
+ * real-GPU readback is recorded as `realGpu: { meanLum, pageError }`:
+ *   - meanLum > MEAN_LUM_FLOOR (the WGSL primary actually emits pixels — NOT a blank/
+ *     crashed canvas); and
+ *   - pageError is falsy OR is NOT the "no GPU adapter" silent-degrade-as-throw class
+ *     (D8' — a clean silent degrade, not an uncaught PAGEERROR).
+ * A row with NO `realGpu` record carries `structuralProxyOnly: true` — the ΔE-0.0
+ * structural proxy enrolls it (the row exists), but it is NOT yet paint-proven; that is
+ * the EXPECTED state until BC.W-WEBGPU-EVERYWHERE runs the per-viz real-GPU capture under
+ * `--run pi`. Exported PURE for the self-test (synthetic records, no live device).
+ * @param {object} row a parity row
+ * @returns {{ paintProven:boolean, structuralProxyOnly:boolean, reasons:string[] }}
+ */
+export function realGpuPaintVerdict(row) {
+    const reasons = [];
+    const rg = row?.realGpu;
+    if (!rg || typeof rg !== "object") {
+        // No real-GPU readback yet — the structural proxy enrolls the row but does NOT
+        // paint-prove it (the ΔE-0.0 demotion). EXPECTED until Band 4 captures it.
+        return { paintProven: false, structuralProxyOnly: true, reasons: ["no realGpu readback recorded — structural-proxy enrollment only (Band-4 captures it)"] };
+    }
+    if (!(typeof rg.meanLum === "number" && rg.meanLum > MEAN_LUM_FLOOR))
+        reasons.push(`realGpu.meanLum ${JSON.stringify(rg.meanLum)} not > ${MEAN_LUM_FLOOR} (the WGSL path painted NO pixels — a blank/crashed canvas)`);
+    if (rg.pageError && /no\s+gpu\s+adapter/i.test(String(rg.pageError)))
+        reasons.push(`realGpu.pageError "${rg.pageError}" is the "no GPU adapter" silent-degrade-as-throw (D8' — must be a clean silent degrade, not an uncaught PAGEERROR)`);
+    return { paintProven: reasons.length === 0, structuralProxyOnly: false, reasons };
+}
+
 function checkParityRows(rows, ROOT) {
     const viol = [];
     const seen = new Set();
@@ -217,6 +272,34 @@ function checkParityRows(rows, ROOT) {
             viol.push(`parity table omits the extant non-migrating viz "${must}" (it must carry a no-migrate row — the user's "cover the extant items")`);
     }
     return viol;
+}
+
+/**
+ * BC.W-PAINT-GATE req #8 — classify each verified row's paint-proof state. A row whose
+ * recorded deltaE is exactly {mean:0, p99:0} is the DEVICE-FREE STRUCTURAL PROXY (the CPU
+ * evaluator vs itself). It is DEMOTED to enrollment-only — it proves the row exists, NEVER
+ * that the WGSL path paints on a real host. The paint proof is realGpuPaintVerdict (a
+ * recorded real-GPU meanLum>0). At HEAD no realGpu record exists, so every verified row is
+ * structuralProxyOnly:true — the EXPECTED state until BC.W-WEBGPU-EVERYWHERE captures it
+ * per-viz under --run pi. This classification is a FACT (never a violation here) — the
+ * device-free CI arm keeps the proxy as enrollment, the real-GPU paint proof runs local.
+ * @param {object[]} rows
+ * @returns {{ row:string, structuralProxyOnly:boolean, paintProven:boolean, isDeltaZeroProxy:boolean }[]}
+ */
+export function classifyPaintProof(rows) {
+    return rows
+        .filter((r) => r.status === "verified")
+        .map((r) => {
+            const dE = r.deltaE ?? {};
+            const isDeltaZeroProxy = dE.mean === 0 && dE.p99 === 0;
+            const v = realGpuPaintVerdict(r);
+            return {
+                row: r.viz ?? "(unnamed)",
+                isDeltaZeroProxy,
+                structuralProxyOnly: v.structuralProxyOnly,
+                paintProven: v.paintProven,
+            };
+        });
 }
 
 function run() {
@@ -363,9 +446,19 @@ function run() {
             facts.parityStatuses = rows.map((r) => `${r.viz}:${r.status}`);
             facts.parityDeltaThreshold = deltaThreshold ?? DELTA_E_THRESHOLD;
             violations.push(...checkParityRows(rows, ROOT));
+            // ── BC.W-PAINT-GATE req #8 — the ΔE-0.0 structural-proxy DEMOTION. Classify
+            //    each verified row's paint-proof state (structural-proxy enrollment vs a
+            //    recorded real-GPU meanLum>0). At HEAD every verified row is
+            //    structuralProxyOnly (the EXPECTED state) — this is a FACT, NOT a
+            //    violation; the real-GPU paint proof runs LOCAL under --run pi, consumed
+            //    per-viz by BC.W-WEBGPU-EVERYWHERE. The device-free CI arm keeps the proxy
+            //    as enrollment ONLY (the row exists), never the paint proof.
+            facts.paintProof = classifyPaintProof(rows);
+            facts.paintProofMachineryEstablished = typeof meanLuminanceFromPng === "function";
         }
     }
     facts.deltaEThreshold = DELTA_E_THRESHOLD;
+    facts.meanLumFloor = MEAN_LUM_FLOOR;
 
     // ── self-test bite 1: the WebGPU single-source detector flags a composition-PLUS-fork.
     const SELF_FORK = `
@@ -408,6 +501,35 @@ export function good() {
     if (!facts.parityMissingFileBite)
         violations.push("[self-test] the parity-table missing-file bite is broken — a verified row pointing at a nonexistent .wgsl must RED");
 
+    // ── BC.W-PAINT-GATE req #8 self-test: the real-GPU paint arm (the ΔE-0.0 demotion).
+    //    A structural-proxy-only "parity" (ΔE 0.0, NO realGpu readback) is NOT paint-
+    //    proven (RED on the paint arm — enrollment only); a recorded warm real-GPU
+    //    meanLum>0 IS paint-proven (GREEN); a blank canvas (meanLum 0) / a "no GPU
+    //    adapter" PAGEERROR is NOT paint-proven (RED — the D8' silent-degrade-as-throw).
+    const proxyOnlyRow = { viz: "proxy", status: "verified", deltaE: { mean: 0, p99: 0 } };
+    const warmRealGpuRow = { viz: "warm", status: "verified", realGpu: { meanLum: 0.42, pageError: null } };
+    const blankRow = { viz: "blank", status: "verified", realGpu: { meanLum: 0, pageError: null } };
+    const adapterThrowRow = { viz: "noadapter", status: "verified", realGpu: { meanLum: 0.3, pageError: "Error: no GPU adapter available" } };
+    const proxyV = realGpuPaintVerdict(proxyOnlyRow);
+    const warmV = realGpuPaintVerdict(warmRealGpuRow);
+    const blankV = realGpuPaintVerdict(blankRow);
+    const adapterV = realGpuPaintVerdict(adapterThrowRow);
+    facts.paintArmBite =
+        proxyV.structuralProxyOnly && !proxyV.paintProven && // structural-proxy-only → RED (enrollment only)
+        warmV.paintProven && // warm real-GPU meanLum>0 → GREEN
+        !blankV.paintProven && // a blank canvas (meanLum 0) → RED
+        !adapterV.paintProven; // a "no GPU adapter" throw → RED (D8')
+    if (!facts.paintArmBite)
+        violations.push(
+            `[self-test] the real-GPU paint-arm bite is broken (proxy:${JSON.stringify({ s: proxyV.structuralProxyOnly, p: proxyV.paintProven })}, warm:${warmV.paintProven}, blank:${blankV.paintProven}, adapter:${adapterV.paintProven}) — a structural-proxy-only row must be enrollment-only (NOT paint-proven), a warm real-GPU meanLum>0 row must be paint-proven, a blank/no-adapter row must NOT`,
+        );
+
+    // ── the meanLum reader bite: the readback over a synthetic warm PNG region reads
+    //    meanLum>0; a missing file reads null (degenerate, never a pass).
+    facts.meanLumReaderBite = meanLuminanceFromPng("/__no_such_capture__.png") === null;
+    if (!facts.meanLumReaderBite)
+        violations.push("[self-test] the meanLuminanceFromPng reader bite is broken — a missing capture must read null (degenerate), never a pass");
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(c.ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -427,7 +549,9 @@ export function good() {
     console.log(`  consumer-#2       : webgpu ${facts.webgpuConsumer2 ? "✓" : "ABSENT"} · webgl2 ${facts.webglConsumer2 ? "✓" : "ABSENT"}`);
     console.log(`  parity table      : ${facts.parityTableExists ? `${facts.parityRowCount ?? "?"} rows` : "ABSENT"}  ΔE bar mean≤${DELTA_E_THRESHOLD.mean}/p99≤${DELTA_E_THRESHOLD.p99}`);
     if (facts.parityStatuses) console.log(`  parity statuses   : ${facts.parityStatuses.join(", ")}`);
-    console.log(`  self-test bites   : fork ${facts.webgpuForkBite ? "✓" : "BROKEN"} · parity-missing ${facts.parityMissingFileBite ? "✓" : "BROKEN"}`);
+    if (facts.paintProof)
+        console.log(`  paint proof (§8)  : ${facts.paintProof.map((p) => `${p.row}:${p.structuralProxyOnly ? "proxy-enroll" : p.paintProven ? "painted✓" : "BLANK✗"}`).join(", ")} (ΔE-0.0 demoted to enrollment; real-GPU meanLum>0 runs --run pi, consumed by Band 4)`);
+    console.log(`  self-test bites   : fork ${facts.webgpuForkBite ? "✓" : "BROKEN"} · parity-missing ${facts.parityMissingFileBite ? "✓" : "BROKEN"} · paint-arm ${facts.paintArmBite ? "✓" : "BROKEN"} · meanLum-reader ${facts.meanLumReaderBite ? "✓" : "BROKEN"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);

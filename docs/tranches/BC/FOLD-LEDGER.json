@@ -1,0 +1,2136 @@
+{
+    "$schema": "BC.W-FOLD-LEDGER — the machine-checkable no-silent-drop source-of-truth. One row per distinct fold (213); the human face is docs/tranches/BC/DEFERRAL-LEDGER.md (F1 keeps them in sync). disposition ∈ {BUILD,RETIRE,MET,HELD-with-rationale,SUPERSEDED} — DECIDED, never re-booked. A BUILD/MET row's `band` is DERIVED from the named `wave`'s on-disk **Band:** header (F1.b), NEVER transcribed from the doc (Band N) parenthetical. proof:bc-fold-ledger REDs the close on any dropped/undecided/phantom-dest/band-only-dest row.",
+    "expectedCount": 213,
+    "closeUnion": {
+        "runMode": "full",
+        "perRound": true,
+        "localOnlyForbidden": true,
+        "note": "The masked-accretion cure (BB.W-CLOSE-BATTERY applied PER-ROUND): the close runs `--run full` siblings-absent at EVERY round close, not only the terminal cut. A `--run local`-only close (ci ⊂ local) is forbidden — it is the close-class lie that let 18 ci-tagged reds ride along in BB."
+    },
+    "items": [
+        {
+            "id": "ax-reg-retired",
+            "what": "native-drawer-as-asChild founding chronic (AT8)",
+            "origin": "DISP-REG",
+            "status": "RETIRED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-reg-retired)"
+        },
+        {
+            "id": "ax-reg-booked-7",
+            "what": "styles-critical-split · css-relative-color · deck-subpath · speedtest-receive · keyframes-dag · drawer-spring · directional-vt",
+            "origin": "DISP-REG",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-CSS-CRITICAL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-reg-booked-7)"
+        },
+        {
+            "id": "ax-reg-held-23",
+            "what": "23 HELD register books (15 single-consumer · 6 CSS-feature · 2 archived) + self-test",
+            "origin": "DISP-REG",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the 23 HELD register books STAY-booked per item; folded in-place at the disposition register with reStampedAt:'BC' (§9), never re-booked",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-reg-held-23)"
+        },
+        {
+            "id": "ax-wave-w20-w21",
+            "what": "W20 glass-panel-retire · W21 recategorize barrel/metric",
+            "origin": "AX-PROGRESS→AY",
+            "status": "NEXT-TRANCHE",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-PRUNE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-wave-w20-w21)"
+        },
+        {
+            "id": "ax-wave-met-slides",
+            "what": "W28/29/34/39/41 met · W30/31/32 slides · W35 keyframes · W43 prng · W49 latex-paper",
+            "origin": "AX-PROGRESS→AY",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-LIGHTHOUSE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-wave-met-slides)"
+        },
+        {
+            "id": "ax-wave-w42-w43",
+            "what": "W42 liquid-morph substrate · W43 fourier-field first-class",
+            "origin": "AX-PROGRESS→AY",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-wave-w42-w43)"
+        },
+        {
+            "id": "ax-w42-custom-shape-reopen",
+            "what": "W42 custom-shape morph residue, AY RETIRED as a topology limit",
+            "origin": "AX-sec19→AY",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-w42-custom-shape-reopen)"
+        },
+        {
+            "id": "ax-superseded-close",
+            "what": "W25a/W25b/W26 carves · W27a/W27b legacy-gate · W33 close NEVER RAN",
+            "origin": "AX superseded",
+            "status": "UN-ADDRESSED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-superseded-close)"
+        },
+        {
+            "id": "ax-req-mandates",
+            "what": "sec13 ledger · sec14/15/16 · sec20 USF · kf-1/2/5/6 met; **headless-green GAP**",
+            "origin": "REQ-sec13-20",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-PAINT-GATE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-req-mandates)"
+        },
+        {
+            "id": "ax-undischarged-builds",
+            "what": "kf-G3 LabeledField horizontal action-slot (HIGH) · W34 A1 machined-groove · A2 type-ladder",
+            "origin": "REQ-sec20/W34",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 6,
+            "wave": "BC.W-CONTROL-SMOOTH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-undischarged-builds)"
+        },
+        {
+            "id": "ax-successor-viz-dock",
+            "what": "viz W10/W11/W07/W14/W16/W42 · dock W42-k/W45-TUNE-dock-glass · sec19-matrix · teardrop",
+            "origin": "AX residue→AZ",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ax-successor-viz-dock)"
+        },
+        {
+            "id": "ay-w-lighthouse-perf",
+            "what": "W-LIGHTHOUSE — proof:lighthouse score-floor + prod-preview + CSS critical-split, never built",
+            "origin": "AY.PROGRESS:86",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-LIGHTHOUSE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-lighthouse-perf)"
+        },
+        {
+            "id": "ay-w-liquid-flex",
+            "what": "W-LIQUID — useLiquidFlex amorphous flex+squish (blob/dock/tabs consumers)",
+            "origin": "AY.PROGRESS:101",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-liquid-flex)"
+        },
+        {
+            "id": "ay-w-blob-glass-snell",
+            "what": "W-BLOB-GLASS — uBackdrop Snell-refraction glass-not-enamel; conditionally greenlit (G-PERF/G-BROWSER)",
+            "origin": "AY.PROGRESS:102",
+            "status": "4.x/SUCCESSOR(conditional)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the Snell-refraction conditions (G-PERF/G-BROWSER) never proven; re-decide on the rebuilt floor only if the live blob clears its frame budget",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-blob-glass-snell)"
+        },
+        {
+            "id": "ay-w-aur-t5-kuwahara",
+            "what": "W-AUR-T5 — multi-pass anisotropic-Kuwahara painterly finish; [USER-HINGE] never decided",
+            "origin": "AY.PROGRESS / FINAL §2",
+            "status": "NEXT-TRANCHE(USER-HINGE)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "single-pass Kuwahara landed at BB.W-AUR-KUWAHARA; the multi-pass anisotropic FBO is a quality-uplift the user may decline",
+            "trigger": "USER-HINGE — surface the quality-uplift with the live render in hand; the user may still decline (no blind build)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-aur-t5-kuwahara)"
+        },
+        {
+            "id": "ay-w-sb2-restructure",
+            "what": "W-SB2 — storybook orphan-retire/restructure",
+            "origin": "AY.PROGRESS / FINAL:88",
+            "status": "DEFERRED(folded)",
+            "disposition": "MET",
+            "band": 9,
+            "wave": "BC.W-STORYBOOK-META",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-sb2-restructure)"
+        },
+        {
+            "id": "ay-w-sb3-language-gate",
+            "what": "W-SB3 — native-top-layer fold + real language gate (proof:story-language)",
+            "origin": "AY.PROGRESS / FINAL:89",
+            "status": "DEFERRED(folded)",
+            "disposition": "MET",
+            "band": 9,
+            "wave": "BC.W-STORYBOOK-META",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-sb3-language-gate)"
+        },
+        {
+            "id": "ay-w-dag-scaffold",
+            "what": "W-DAG — author execution DAG + every wave spec + L reconcile",
+            "origin": "AY.PROGRESS / FINAL:46",
+            "status": "DEFERRED(superseded)",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-dag-scaffold)"
+        },
+        {
+            "id": "ay-w-aur1-folded",
+            "what": "W-AUR1 — aurora research-consume + arresting NUMERIC metric",
+            "origin": "AY.PROGRESS / FINAL:51",
+            "status": "DEFERRED(folded)",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-AURORA",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-aur1-folded)"
+        },
+        {
+            "id": "ay-w-blob1-folded",
+            "what": "W-BLOB1 — blob open-items audit + DEMO-ONLY book + ≥2-consumer trigger (value.js repatriation)",
+            "origin": "AY.PROGRESS / FINAL:52",
+            "status": "DEFERRED(folded)+book",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-GOOBLOB-MEATBALL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-blob1-folded)"
+        },
+        {
+            "id": "ay-w-ff1-folded-ff2",
+            "what": "W-FF1 (rebase) + W-FF2 (LAND W43 intensity model; 3-substrate parity) folded→W-FF3",
+            "origin": "AY.PROGRESS:70 / FINAL:72",
+            "status": "DEFERRED(folded-then-rebuilt)",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-FOURIER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w-ff1-folded-ff2)"
+        },
+        {
+            "id": "ay-ff1-math-leaf-decision",
+            "what": "the /fourier-math shared-leaf promotion (glass-ui math.ts ≡ fourier-analysis evaluators.ts)",
+            "origin": "AY.W-FF1 §2 / FINAL:72",
+            "status": "BOOKED(un-MET trigger)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the /fourier-math shared-leaf promotion stays booked under ≥2-consumer; re-eval at the fourier ^4.x adopt",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-ff1-math-leaf-decision)"
+        },
+        {
+            "id": "ay-dock-collapse-d9-hardcut",
+            "what": "D9 (HIGH) — one-frame HARD CUT-OUT of content at collapse onset; conceal must ride --dock-morph-t",
+            "origin": "AY.W-DOCK2 §7",
+            "status": "4.x/SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-collapse-d9-hardcut)"
+        },
+        {
+            "id": "ay-dock-collapse-d10-undershoot",
+            "what": "D10 (HIGH) — −53% pill-width UNDERSHOOT squash; clamp the collapse-endpoint",
+            "origin": "AY.W-DOCK2 §7",
+            "status": "4.x/SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-collapse-d10-undershoot)"
+        },
+        {
+            "id": "ay-dock-collapse-d11-glyph-snap",
+            "what": "D11 (MINOR) — glyph SNAP (no crossfade) · first-expand stall · parked-pointer collapse",
+            "origin": "AY.W-DOCK2 §7",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-collapse-d11-glyph-snap)"
+        },
+        {
+            "id": "ay-dock-f2-first-mount-flip",
+            "what": "§F2 — #persistent-slot dock first-mount FLIP mis-seat (collapsed→collapsed measure)",
+            "origin": "AY.W-DOCK2 §F2",
+            "status": "BOOKED-or-FIXED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-f2-first-mount-flip)"
+        },
+        {
+            "id": "ay-dock-orchestrator-single-flip-fold",
+            "what": "DOCK_SPRING hoist + dual-FLIP-engine fold (useLayerTransition vs dockMorphContext)",
+            "origin": "AY.W-DOCK2 / FINAL §3",
+            "status": "BOOKED(clean-fold-to-deletion)",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-orchestrator-single-flip-fold)"
+        },
+        {
+            "id": "ay-w42-liquid-morph-arbitrary-shape",
+            "what": "W42 arbitrary-shape facility; box-size V↔H morph turns WHITE at HEAD",
+            "origin": "AY.W-TRIAGE / AZ.W-MORPH-SHOWCASE",
+            "status": "RETIRES→CONTRADICTED(re-opened)",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w42-liquid-morph-arbitrary-shape)"
+        },
+        {
+            "id": "ay-dock-rail-divider-carousel",
+            "what": "the switcher-rail/DockRail divider-carousel lineage",
+            "origin": "AY.W-DOCK2/W-DOCK-NAV→BA",
+            "status": "CONTRADICTED(re-opened)",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock-rail-divider-carousel)"
+        },
+        {
+            "id": "ay-blob-pulse-zeta-bounce",
+            "what": "the blob click FLINCHes not BOUNCEs (over-damped PULSE_ZETA, no ring-back)",
+            "origin": "AY.W-BLOB3 §RESIDUE R2",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a one-constant underdamp tune on the live engine; surface with the working blob, do not re-book blind",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-blob-pulse-zeta-bounce)"
+        },
+        {
+            "id": "ay-blob-per-satellite-derived-shade",
+            "what": "per-satellite derived-shade color (BA-VJS-5 / C-1); GL color-seam fence NOT widened",
+            "origin": "BA.W-GOO-REDRESS (AY-band lineage)",
+            "status": "4.x/BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "if the WGSL-compile-gate re-touches the shader, widen the GL color-seam fence + discharge the value.js block (T15); else STAY-booked",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-blob-per-satellite-derived-shade)"
+        },
+        {
+            "id": "ay-deck-subpath-keep-bespoke",
+            "what": "deck-subpath — /deck chassis + --deck-pager-active; KEEP-BESPOKE under ≥2-consumer",
+            "origin": "DISPOSITION-REGISTER deck-subpath",
+            "status": "BOOKED(un-MET)",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-deck-subpath-keep-bespoke)"
+        },
+        {
+            "id": "ay-watercolor-dot-evidence-keep",
+            "what": "watercolor-dot — 0 external call-sites; KEEP-EVIDENCED, un-MET ≥2-consumer trigger",
+            "origin": "AY.PRUNE-LEDGER §2 R6",
+            "status": "HELD(KEEP-EVIDENCED)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the evidence doc stands; re-grade only if value.js blob repatriation ships; RE-VERIFY the ghost-dashed mark LIVE",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-watercolor-dot-evidence-keep)"
+        },
+        {
+            "id": "ay-weak-keeps-stacked-typewriter-sortable",
+            "what": "weak-KEEPs: sortable-list · stacked-icons · typewriter (re-grade-at-next-close notes)",
+            "origin": "AY.PRUNE-LEDGER §2",
+            "status": "HELD(weak-KEEP)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "stacked-icons RE-GRADED to a real KEEP; sortable-list/typewriter STAY-held; no prune unless the BC.W-PAGE-PRUNE orphan sweep orphans them",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-weak-keeps-stacked-typewriter-sortable)"
+        },
+        {
+            "id": "ay-w49-latex-paper-retire",
+            "what": "W49 — math-paper × latex-paper composition; 0 library-side consumers",
+            "origin": "AY.W-TRIAGE row W49",
+            "status": "RETIRES(booked nowhere)",
+            "disposition": "RETIRE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-w49-latex-paper-retire)"
+        },
+        {
+            "id": "ay-consumer-staleness-tabs-deferred",
+            "what": "the W-CONSUMER staleness ledger — 10 DEFERRED rows (fourier ×3 UnderlineTabs, words ×2 BouncyToggle, words ×5 ui/Tabs)",
+            "origin": "AY.W-CONSUMER-ledger",
+            "status": "DEFERRED(cross-repo)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "glass-ui surface FIXED; the 10 migrations are sibling-owned; the re-points ride each sibling's ^4.x bump",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-consumer-staleness-tabs-deferred)"
+        },
+        {
+            "id": "ay-disposition-register-book-backlog",
+            "what": "the 31-row DISPOSITION-REGISTER backlog AY.W-CARRY mirrored (~25 booked, 2 archived, 1 retired)",
+            "origin": "AX/DISPOSITION-REGISTER.json",
+            "status": "BOOKED/ARCHIVED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-disposition-register-book-backlog)"
+        },
+        {
+            "id": "ay-native-drawer-founding-chronic",
+            "what": "native-drawer-as-asChild — the FOUNDING 5-tranche chronic (rode AT→BA before proof:disposition-live)",
+            "origin": "DISPOSITION-REGISTER",
+            "status": "RETIRED(DECIDED-TERMINAL BB.W-NDA-DECIDE)",
+            "disposition": "RETIRE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-native-drawer-founding-chronic)"
+        },
+        {
+            "id": "ay-blob-flick-pseudopod-copy",
+            "what": "W-BLOB3 R1 — the flick does NOT read as an elastic pseudopod (~6% within noise); copy-honesty + stretch-axis re-tune",
+            "origin": "AY.W-BLOB3 §RESIDUE R1",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "either make the stretch axis read (a real tune) or honest-down the demo copy on the live walk",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-blob-flick-pseudopod-copy)"
+        },
+        {
+            "id": "ay-dock3-progress-bar-off-dock",
+            "what": "the dock-with-slider progress-bar-off-dock sub-clause cross-routed to slides L",
+            "origin": "AY.W-DOCK3 / AUDIT-LEDGER:10",
+            "status": "DEFERRED(cross-routed)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "slides-owned; BC.W-CUT picks it up during the slides adopt; no glass-ui edit owed",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dock3-progress-bar-off-dock)"
+        },
+        {
+            "id": "ay-constellation-bespoke-kill-adopt",
+            "what": "slides ships a bespoke constellation.ts (547L), NOT consuming /constellation; lib DONE, consume OPEN",
+            "origin": "AY.AUDIT-LEDGER:1",
+            "status": "DEFERRED(≥3-tranche chronic)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "cross-repo; lib DONE (re-verify LIVE); the slides bespoke-kill lands at the cut (BC.W-CUT)",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-constellation-bespoke-kill-adopt)"
+        },
+        {
+            "id": "ay-aurora-substrate-paints-color-live-pi",
+            "what": "the AY-close 19 `--run local` reds (proof:substrate-paints-color aurora readPixels π, dock-animation-live, tabs-unified π, touch-target, nested-backdrop-budget)",
+            "origin": "AY.FINAL §3",
+            "status": "DEFERRED(LIVE-π owed)",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-PAINT-GATE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-aurora-substrate-paints-color-live-pi)"
+        },
+        {
+            "id": "ay-aurora-arresting-residual-printed",
+            "what": "oil §4.2 anisotropy + oil-pastel §4.3 slope OUTSIDE band on the single-pass path; band NOT lowered",
+            "origin": "AY.PROGRESS:66",
+            "status": "HELD(printed residual)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the van-Gogh hero clears the bar; the oil/oil-pastel residual stays printed until the W-AUR-T5 multi-pass decision",
+            "trigger": "USER-HINGE — surface the quality-uplift with the live render in hand; the user may still decline (no blind build)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-aurora-arresting-residual-printed)"
+        },
+        {
+            "id": "ay-god-module-ratchet-carry",
+            "what": "proof:no-god-module RATCHET — dock-controls.css re-frozen at 636 (booked re-carve)",
+            "origin": "AY.FINAL §3 / W-GOD1",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-god-module-ratchet-carry)"
+        },
+        {
+            "id": "ay-cardinal-lesson-meta-chronic",
+            "what": "the captured-DELTA meta-chronic — live-verify needs a captured DELTA, carried kf→AX→AY→BB (3+ tranches)",
+            "origin": "AY.AUDIT-LEDGER #1",
+            "status": "CHRONIC(re-relapsed at BB)",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-cardinal-lesson-meta-chronic)"
+        },
+        {
+            "id": "ay-usetokencolor-orphan-demo-wire",
+            "what": "useTokenColor — flagged orphan, demo-wired ≥2 sites at W-SB1",
+            "origin": "AY.AUDIT-LEDGER:11",
+            "status": "MET",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-usetokencolor-orphan-demo-wire)"
+        },
+        {
+            "id": "ay-header-ribbon-glass-panel-restore",
+            "what": "header-ribbon + glass-panel RETIRED at AY then RESTORED at AZ.W-PRUNE2 (keyframes consumer-truth); booked re-audit 2026-09-01",
+            "origin": "AY.PRUNE-LEDGER §0.AMEND",
+            "status": "RESTORED+BOOKED(re-audit)",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-PRUNE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-header-ribbon-glass-panel-restore)"
+        },
+        {
+            "id": "ay-speedtest-native-first-receive",
+            "what": "speedtest-native-first-receive — AX W28 residual, cross-repo book",
+            "origin": "DISPOSITION-REGISTER",
+            "status": "DEFERRED/BOOKED(un-MET)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "speedtest-owned RECEIVE; glass-ui ships the seam, re-eval at the speedtest ^4.x adopt",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-speedtest-native-first-receive)"
+        },
+        {
+            "id": "ay-keyframes-prune-migration-dag",
+            "what": "keyframes-prune-migration-dag — AX W35 residual, cross-repo coordination book",
+            "origin": "DISPOSITION-REGISTER",
+            "status": "DEFERRED/BOOKED(un-MET)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "kf-owned; the spine landed clean ^4 at BB.W-SPINE-LATEST; STAY-booked, no glass-ui edit owed",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-keyframes-prune-migration-dag)"
+        },
+        {
+            "id": "ay-aurora-medium-lazy-chunk-split",
+            "what": "the aurora-medium lazy-chunk split BOOKED to a fence-widening successor (shader-content edit the GL fence forbids)",
+            "origin": "CLAUDE.md (BB Batch 3 perf)",
+            "status": "BOOKED(4.x)",
+            "disposition": "HELD-with-rationale",
+            "rationale": "re-decide if the BC.W-LIGHTHOUSE perf re-walk reveals a material load cost; the GL fence is deliberate",
+            "trigger": "paid-diff-only — graduates opportunistically when an SFC touch ALREADY pays the diff cost and a consumer is witnessed",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-aurora-medium-lazy-chunk-split)"
+        },
+        {
+            "id": "ay-fourier-glass-scrubber-token-cruft",
+            "what": "the fourier-web glass-scrubber token cruft (a dead-token residue)",
+            "origin": "BC PLAN §5 (AY fourier lineage)",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-FOURIER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-fourier-glass-scrubber-token-cruft)"
+        },
+        {
+            "id": "ay-valuejs-samplecolorramp-consume-delete",
+            "what": "the value.js sampleColorRamp consume-and-delete (the /color leaf)",
+            "origin": "BC PLAN §5 (AY blob/color lineage)",
+            "status": "BOOKED(cross-repo)",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-valuejs-samplecolorramp-consume-delete)"
+        },
+        {
+            "id": "ay-dist-css-comment-build-bug",
+            "what": "the dist-CSS-comment build bug (index.css comment unbalanced paren → Oxide extractor poison)",
+            "origin": "BC PLAN §5 (AY W-CSS1 lineage)",
+            "status": "UN-ADDRESSED(urgent)",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DIST-COMMENT-FIX",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dist-css-comment-build-bug)"
+        },
+        {
+            "id": "ay-cut-staged-not-published",
+            "what": "the AY 3.10.0 cut — STAGED not published (W-PUB1 USER-DOMAIN)",
+            "origin": "AY.FINAL §7",
+            "status": "NEXT-TRANCHE",
+            "disposition": "SUPERSEDED",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-cut-staged-not-published)"
+        },
+        {
+            "id": "az-adaptive-grey-origin",
+            "what": "W-ADAPTIVE-AUTO Arm1: unconditional 20%-AA self-engage, NO backdrop read — THE GREY-SLAB ROOT",
+            "origin": "AZ.W-ADAPTIVE-AUTO 5b72fd9b",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-ADAPTIVE-RECONCILE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-adaptive-grey-origin)"
+        },
+        {
+            "id": "az-rail3-divider-carousel",
+            "what": "W-RAIL3 + W-RAIL-EXTEND + W-DOCK-RAIL — a divider-carousel chip-strip; CONTRADICTS the macOS-stack ask",
+            "origin": "AZ.W-RAIL3 / W-RAIL-EXTEND",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-rail3-divider-carousel)"
+        },
+        {
+            "id": "az-morph-teardrop-booked",
+            "what": "W-MORPH-SHOWCASE H4 — the metaball-teardrop MISSED the 4×-throttle budget; VT-crossfade shipped, teardrop BOOKED",
+            "origin": "AZ.W-MORPH-SHOWCASE §7",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-morph-teardrop-booked)"
+        },
+        {
+            "id": "az-blob-ubackdrop-conditions-unmet",
+            "what": "W-BLOB-STUDIO §3.7 — the uBackdrop Snell refraction closed CONDITIONS-UNMET (enamel-not-glass stands)",
+            "origin": "AZ.W-BLOB-STUDIO D7-FOLD",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the enamel bead stands; re-attempt refraction only if perf/browser conditions hold on the rebuilt floor",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-blob-ubackdrop-conditions-unmet)"
+        },
+        {
+            "id": "az-con-gen-g4-label",
+            "what": "W-CON-GEN G4 — label PROP rejected on the zero-deck-domain canon; drawCallout noted-not-built",
+            "origin": "AZ.W-CON-GEN §G4",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the label-PROP rejection stands; drawCallout gated on a 2nd consumer",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-con-gen-g4-label)"
+        },
+        {
+            "id": "az-motion3-steps-generator",
+            "what": "W-MOTION3 — live steppedEase(n, term) generator + the linear() multi-stop row",
+            "origin": "AZ.W-MOTION2 §11",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the natural inhabitant of EasingPicker mode='steps'; build if it lands clean on the rebuilt motion surface, else hold",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-motion3-steps-generator)"
+        },
+        {
+            "id": "az-rail3-embla-overflow",
+            "what": "the embla-on-overflow rail-chip momentum fold (most carry 2-4 chips)",
+            "origin": "AZ.W-RAIL3 §7 / FINAL §6",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-rail3-embla-overflow)"
+        },
+        {
+            "id": "az-shell-ia-n1-dual-carousel",
+            "what": "SHELL-IA-N1 — the desktop double-facet carousel (beside sidebar AND above bottom dock)",
+            "origin": "AZ.W-RAIL3 / FINAL §6",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-shell-ia-n1-dual-carousel)"
+        },
+        {
+            "id": "az-glass-luminance-promotion",
+            "what": "useGlassBackdropLuminance promotion — DEMO-PRIVATE, awaits 2nd-binary trigger",
+            "origin": "AZ.W-ADAPTIVE-AUTO Arm2 / FINAL §6",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-ADAPTIVE-RECONCILE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-glass-luminance-promotion)"
+        },
+        {
+            "id": "az-w-delta0-stale-recaptures",
+            "what": "the 5 AY DELTAs drifted hash-stale; the next Batch-0 owes the re-capture sweep",
+            "origin": "AZ.FINAL §6",
+            "status": "NEXT-TRANCHE",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-w-delta0-stale-recaptures)"
+        },
+        {
+            "id": "az-r5-9-deck-page-turn",
+            "what": "R5-9 the deck PAGE-TURN primitive ([data-state]{active\\",
+            "origin": "prev\\",
+            "status": "next} + --turn-* + cast-shadow gutter)",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-r5-9-deck-page-turn)"
+        },
+        {
+            "id": "az-r5-10-menu-row-panel",
+            "what": "R5-10 glass MENU-ROW + PANEL-SECTION recipes",
+            "origin": "AZ.FINAL §6",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-LEGIBILITY-MEASURED",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-r5-10-menu-row-panel)"
+        },
+        {
+            "id": "az-portal-capture-precept",
+            "what": "the portal-capture discipline — captures drive ?dark/?light, never a class toggle",
+            "origin": "AZ.FINAL §6",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-portal-capture-precept)"
+        },
+        {
+            "id": "az-ax-disposition-backfill",
+            "what": "the AX DISPOSITION-REGISTER back-fill (6 omitted AX planned rows W25a/b/W26/W27a/b/W33)",
+            "origin": "AZ.W-CLOSE §1",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-ax-disposition-backfill)"
+        },
+        {
+            "id": "az-speedtest-useroutetransition",
+            "what": "CR-1 speedtest useRouteTransition mis-import on /motion-core (un-ledgered staleness)",
+            "origin": "AZ.reflect cross-repo CR-1",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "driven by the speedtest ^4.x adopt (real install+typecheck) — the rename lands in the speedtest repo, not glass-ui",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-speedtest-useroutetransition)"
+        },
+        {
+            "id": "az-fourier-phantom-classes",
+            "what": "CR-2 proof:phantom-classes RED on the fourier cartoon-card/glass-elevated fleet (21 sites, un-applied Q.W4 patch)",
+            "origin": "AZ.reflect cross-repo CR-2",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the fourier full re-pin drives the un-applied Q.W4 patch on the sibling; non-blocking but DECIDED",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-fourier-phantom-classes)"
+        },
+        {
+            "id": "az-fourier-full-repin",
+            "what": "fourier's full ^3.1.0→^4.x re-pin (badly pin-stale)",
+            "origin": "AZ.W-KF-CONSUMER §7",
+            "status": "NEXT-TRANCHE",
+            "disposition": "HELD-with-rationale",
+            "rationale": "fourier's ^3.1.0→^4.x re-pin driven + verified by a real install/typecheck on the sibling",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-fourier-full-repin)"
+        },
+        {
+            "id": "az-words-phantom-debt",
+            "what": "words/frontend's phantom-class debt (×4 .glass-{subtle,medium}) + 2 BouncyToggle staleness rows",
+            "origin": "AZ.W-KF-CONSUMER §7",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "words is its own repo's debt; recorded DECIDED-held-cross-repo, no glass-ui source edit",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-words-phantom-debt)"
+        },
+        {
+            "id": "az-feedback-coder-fourier-preset",
+            "what": "the feedback-coder Fourier-preset annotation (--m-red: var(--viz-fourier) as a named preset)",
+            "origin": "AZ.W-ADOPT §5",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "stays deck-local (presets-in-consumers); feedback-coder owns it in its own deck pass",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-feedback-coder-fourier-preset)"
+        },
+        {
+            "id": "az-deck-chassis-lift",
+            "what": "the /deck chassis lift — named successor, opens at a 2nd consumer",
+            "origin": "AZ.W-ADOPT §9",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-deck-chassis-lift)"
+        },
+        {
+            "id": "az-shell-config-e5-normalize-defer",
+            "what": "W-SHELL-CONFIG dock-normalization deferred to W-DOCK-NORMALIZE (found ZERO divergent nav docks — no-op)",
+            "origin": "AZ.W-SHELL-CONFIG",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-shell-config-e5-normalize-defer)"
+        },
+        {
+            "id": "az-speedtest-instrument-strip",
+            "what": "W-DOCK-TAXONOMY — speedtest SurveyResultDock variant=\"instrument-strip\" NOT edited (retired in glass-ui)",
+            "origin": "AZ.W-DOCK-TAXONOMY",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the speedtest ^4.x adopt drives the instrument-strip→orientation+shape re-point on the sibling",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-speedtest-instrument-strip)"
+        },
+        {
+            "id": "az-shell-identity-foundations-dedup",
+            "what": "W-SHELL-IDENTITY §7 — the ℱ-as-Foundations default vs re-icon (gated on a user call)",
+            "origin": "AZ.W-SHELL-IDENTITY §7",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the ℱ-as-Foundations default stands; the re-icon path is a one-line successor on a user call",
+            "trigger": "USER-HINGE — surface the quality-uplift with the live render in hand; the user may still decline (no blind build)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-shell-identity-foundations-dedup)"
+        },
+        {
+            "id": "az-metric-unify-labeledrow",
+            "what": "W-METRIC-UNIFY §7 — a shared LabeledRow chassis (arm a) on a 3rd caller; else the divergence is terminal",
+            "origin": "AZ.W-METRIC-UNIFY §7",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the LabeledRow chassis divergence is terminal unless a 3rd caller surfaces; RE-VERIFY the metric family paints",
+            "trigger": "terminal divergence unless a 3rd caller surfaces a shared contract; promote on convergence to ONE contract (J inv 10), not census",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-metric-unify-labeledrow)"
+        },
+        {
+            "id": "az-hierarchy-library-wide-migration",
+            "what": "W-HIERARCHY — the library-wide section-heading migration (~110 stories onto <StorySection>)",
+            "origin": "AZ.W-HIERARCHY §365",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-PAGE-HIERARCHY",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-hierarchy-library-wide-migration)"
+        },
+        {
+            "id": "az-suffuse-library-wide-w60",
+            "what": "W-SUFFUSE — the library-wide thin-page suffusion (~104 flat routes; the W60-class page-redesign)",
+            "origin": "AZ.W-SUFFUSE §580",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-PAGE-CHASSIS",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-suffuse-library-wide-w60)"
+        },
+        {
+            "id": "az-suffuse-press-register-reconcile",
+            "what": "W-SUFFUSE / W-REGISTER-IOS — the press-register reconciliation (Button CVA vs dock control press)",
+            "origin": "AZ.W-REGISTER-IOS §316",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-suffuse-press-register-reconcile)"
+        },
+        {
+            "id": "az-gates-range-freshness-variant",
+            "what": "W-GATES §6 — the function/selector-RANGE freshness variant + the full :5173 config consolidation",
+            "origin": "AZ.W-GATES §6",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the function/selector-RANGE freshness variant HELD unless a shared-file restale recurs; the :5199 harness inherits the convention",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-gates-range-freshness-variant)"
+        },
+        {
+            "id": "az-dock-flicker-cotiming-escalation",
+            "what": "W-DOCK-FLICKER — the class-flip/morph-arm co-timing fix (BOOKED ESCALATION, not built)",
+            "origin": "AZ.W-DOCK-FLICKER §145",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-dock-flicker-cotiming-escalation)"
+        },
+        {
+            "id": "az-aurora-t5-anisotropic",
+            "what": "the W-AUR-T5 anisotropic-Kuwahara successor (oil/oil-pastel residual outside band; WebGPU painterly path DEAD)",
+            "origin": "AZ.W-PRUNE2 B1 books",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the van-Gogh hero lands the bar; T5 stays the named successor; verify aurora LIVE",
+            "trigger": "USER-HINGE — surface the quality-uplift with the live render in hand; the user may still decline (no blind build)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-aurora-t5-anisotropic)"
+        },
+        {
+            "id": "az-lighthouse-book",
+            "what": "W-LIGHTHOUSE carried book (BB minted proof:lighthouse on :5388 but never ran LIVE)",
+            "origin": "AZ.W-PRUNE2 B1 books",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-LIGHTHOUSE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-lighthouse-book)"
+        },
+        {
+            "id": "az-prune2-census-as-of-hardening",
+            "what": "W-PRUNE2 §5 — the census-as-of model + proof:component-orphan hardening; header-ribbon/glass-panel RESTORE",
+            "origin": "AZ.W-PRUNE2 §5",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-prune2-census-as-of-hardening)"
+        },
+        {
+            "id": "az-w-adopt-deploy-pending-now-done",
+            "what": "W-ADOPT / W-DEPLOY (slides 3.13.0 adopt + deploy; reflect trails the post-cut completion)",
+            "origin": "AZ.reflect cross-repo",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-w-adopt-deploy-pending-now-done)"
+        },
+        {
+            "id": "az-dock-orchestrator-single-successor",
+            "what": "W-CLOSE §3 — proof:dock-orchestrator-single's LIVE arm demoted to a loud skip; re-host on a light fixture route",
+            "origin": "AZ.FINAL §3",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-PAINT-GATE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-dock-orchestrator-single-successor)"
+        },
+        {
+            "id": "az-final-battery-dispositioned-reds",
+            "what": "W-CLOSE §3 — the `--run local` close with dispositioned reds (the close-class lie)",
+            "origin": "AZ.FINAL §3",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-final-battery-dispositioned-reds)"
+        },
+        {
+            "id": "az-shell-config-composables-deleted",
+            "what": "W-SHELL-CONFIG — composables category DELETED, FAB removed, DarkModeToggle folded into the gear",
+            "origin": "AZ.W-SHELL-CONFIG",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 9,
+            "wave": "BC.W-STORYBOOK-META",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-shell-config-composables-deleted)"
+        },
+        {
+            "id": "az-blob-page-gl-fence",
+            "what": "W-BLOB-PAGE — the GL blob renderer + aurora painterly pipeline NOT re-opened (refuted-crisp); satellites fixed by orbit 0.17→0.30",
+            "origin": "AZ.W-BLOB-PAGE §30",
+            "status": "HELD",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (az-blob-page-gl-fence)"
+        },
+        {
+            "id": "ba-dock-shell-gestalt-fail-revoked",
+            "what": "THE BC HEADLINE — dock+shell gestalt PASS (8/8) REVOKED at BB.W-CHIP-GRAZE, re-routed to the never-run W-REFLECT3; rows stand FAIL on disk",
+            "origin": "BA.W-REFLECT2 → BB.W-CHIP-GRAZE",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-dock-shell-gestalt-fail-revoked)"
+        },
+        {
+            "id": "ba-vjs5-satellite-color-4x",
+            "what": "BA-VJS-5 / C-1 — per-satellite derived-shade color (uSatColor=0); GL fence NOT widened (arm B)",
+            "origin": "BA.W-GOO-REDRESS DELTA",
+            "status": "4.x",
+            "disposition": "HELD-with-rationale",
+            "rationale": "if the WGSL-compile-gate re-touches the shader, widen the GL fence + discharge the value.js block; else HOLD (T15)",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-vjs5-satellite-color-4x)"
+        },
+        {
+            "id": "ba-teardrop-morph-fidelity-book",
+            "what": "the always-on metaball-teardrop V↔H morph fidelity BOOKED (missed the 16.7ms budget on the Metal box)",
+            "origin": "BA.W-DOCK-MORPH-INSITU DELTA",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-teardrop-morph-fidelity-book)"
+        },
+        {
+            "id": "ba-glass-backdrop-luminance-promotion",
+            "what": "useGlassBackdropLuminance public-barrel promotion BOOKED on the 2nd-binary trigger — THE GREY-SLAB ROOT (writes a token nothing reads)",
+            "origin": "BA.FINAL §6 (from AZ)",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-ADAPTIVE-RECONCILE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-glass-backdrop-luminance-promotion)"
+        },
+        {
+            "id": "ba-easing-primitive-book",
+            "what": "W-EASING-PRIMITIVE — the StepsEditor → published <EasingPicker>/<EasingConfigurator> /easing primitive",
+            "origin": "BA.W-FOURIER-STUDIO DELTA",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-FOURIER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-easing-primitive-book)"
+        },
+        {
+            "id": "ba-motion3-stepped-ease-generator",
+            "what": "W-MOTION3 — the live steppedEase(n, term) generator (Custom-family sub-editor)",
+            "origin": "BA.FINAL §6 (from AZ MOTION2 G7)",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the natural inhabitant of EasingPicker mode='steps'; fold into the easing re-verify, HOLD if not yet wired",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-motion3-stepped-ease-generator)"
+        },
+        {
+            "id": "ba-chip-graze",
+            "what": "the IconChip section-color chip grazing the input affordance (became the FIELD-collision revoking dock/shell PASS)",
+            "origin": "BA.FINAL §4/§6 → BB.W-CHIP-GRAZE",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-chip-graze)"
+        },
+        {
+            "id": "ba-scroll-fade-retire-overclaim",
+            "what": "the static scroll-fade retirement over-claimed in BA, landed at BB.W-SCROLL-FADE-RETIRE (4.1.0 cut)",
+            "origin": "BA.FINAL §5 → BB",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-scroll-fade-retire-overclaim)"
+        },
+        {
+            "id": "ba-deck-page-turn-r5-9",
+            "what": "R5-9 the deck PAGE-TURN primitive; cross-linked to directional-view-transition",
+            "origin": "BA.FINAL §6 (from AZ)",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-deck-page-turn-r5-9)"
+        },
+        {
+            "id": "ba-glass-menu-row-r5-10",
+            "what": "R5-10 the glass MENU-ROW + PANEL-SECTION recipes (folded as W-MENU-GLASS)",
+            "origin": "BA.W-MENU-GLASS",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-LEGIBILITY-MEASURED",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-glass-menu-row-r5-10)"
+        },
+        {
+            "id": "ba-slides-adopt-deploy-book",
+            "what": "the BA→slides adopt+deploy (bump 3.13.0→4.0.0, 2 edits, redeploy); deploy HELD (site down 2026-06-12)",
+            "origin": "BA.W-CLOSE adopt book scope 11",
+            "status": "HELD",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-slides-adopt-deploy-book)"
+        },
+        {
+            "id": "ba-valuejs-adopt-book",
+            "what": "the BA→value.js adopt (4.0.0 cut-notes by name + interim retirements + the C-1 4.x block)",
+            "origin": "BA.W-CLOSE adopt book scope 13",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-valuejs-adopt-book)"
+        },
+        {
+            "id": "ba-atlas-adopt-fork-close",
+            "what": "the BA→atlas adopt + the d6 fork-close protocol (the Atlas held ^3.12.0 on the fork line)",
+            "origin": "BA.W-CLOSE atlas close set scope 12",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 10,
+            "wave": "BC.W-ATLAS-ASK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-atlas-adopt-fork-close)"
+        },
+        {
+            "id": "ba-disposition-register-31-rows",
+            "what": "the AX DISPOSITION-REGISTER 31 rows re-stamped un-MET (BB.W-DISPOSITION-RESTAMP decided 3; the rest hold)",
+            "origin": "BA.W-CLOSE re-stamp",
+            "status": "DEFERRED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-disposition-register-31-rows)"
+        },
+        {
+            "id": "ba-ext1-tabs-migration",
+            "what": "DC-EXT-1 — the 5 consumer tabs-migration rows (fourier ×3, words ×2)",
+            "origin": "BA.W-CLOSE EXT re-flag",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "sibling-owned; re-stamped; flag at the next consumer touch",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-ext1-tabs-migration)"
+        },
+        {
+            "id": "ba-ext2-phantom-classes",
+            "what": "DC-EXT-2 — fourier-analysis phantom-classes (8 .glass-{subtle,medium} + 3 cartoon-card); un-applied Q.W4 patch",
+            "origin": "BA.W-CLOSE EXT re-flag",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "fourier owns the patch apply; the fourier ^4.x re-pin successor is the eventual home",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-ext2-phantom-classes)"
+        },
+        {
+            "id": "ba-ext3-valuejs-self-alias",
+            "what": "DC-EXT-3 — the value.js self-alias (proof:resolution [pending]; their N.W1.C mechanism)",
+            "origin": "BA.W-CLOSE EXT re-flag",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "value.js owns it; may reconcile when value.js adopts the 4.x cut",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-ext3-valuejs-self-alias)"
+        },
+        {
+            "id": "ba-ext4-bbnf-hard-alias",
+            "what": "DC-EXT-4 — the bbnf-lang/playground consumer hard-alias (DOCUMENTED-EXPECTED)",
+            "origin": "BA.W-CLOSE EXT re-flag",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "bbnf-lang owns it; DOCUMENTED-EXPECTED, no glass-ui action",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-ext4-bbnf-hard-alias)"
+        },
+        {
+            "id": "ba-ext6-keyframes-prune-dag",
+            "what": "EXT-6 — the keyframes.js prune+migration DAG (supplier edge)",
+            "origin": "BA.deferred-census EXT-6",
+            "status": "DEFERRED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "supplier-owned; the spine-latest collapse simplified the peer; STAY-booked on its ≥2-consumer trigger",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-ext6-keyframes-prune-dag)"
+        },
+        {
+            "id": "ba-delta0-freshness-recapture",
+            "what": "DC-REC-9 / W-DELTA0 — the 5 AY DELTAs stale (sliding AY→AZ→BA chronic)",
+            "origin": "BA.W-HYGIENE",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-delta0-freshness-recapture)"
+        },
+        {
+            "id": "ba-icon-pops-w60-breadth",
+            "what": "the icon-pops / hierarchy-suffusion W60-class breadth (~60 flat stories carry zero events)",
+            "origin": "BA.W-SUFFUSE2",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the remaining flat stories are a demo-refinement carry (proportion fence — not every route earns a color event)",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-icon-pops-w60-breadth)"
+        },
+        {
+            "id": "ba-icon-chip-richer-axis-successor",
+            "what": "the richer-pop axes (duotone/bloom/reveal) per category — a W-ICON-CHIP scope-reveal, not a fork",
+            "origin": "BA.W-SUFFUSE2",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "no category at HEAD exceeds the shipped axes (trigger un-MET); RE-VERIFY the IconChip axes LIVE",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-icon-chip-richer-axis-successor)"
+        },
+        {
+            "id": "ba-icon-chip-earned-spectrum-oklch",
+            "what": "the earned-spectrum value.js OKLCH path on IconChip — HELD opt-in/demo-local (in-srgb is the deliberate keep)",
+            "origin": "BA.W-ICON-CHIP",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "in-srgb is the deliberate keep; the OKLCH path promotes only on a 2nd demonstrated consumer",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-icon-chip-earned-spectrum-oklch)"
+        },
+        {
+            "id": "ba-progress-default-variant-glass",
+            "what": "the non-sectioned <Progress variant='default'\\",
+            "origin": "'gradient'> glass register (a surface='glass' Progress)",
+            "status": "BA.W-PROGRESS-GRADIENT",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-GLASS-LEGIBILITY-MEASURED",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-progress-default-variant-glass)"
+        },
+        {
+            "id": "ba-progress-interruption-polish",
+            "what": "live re-snap / interruption polish on the sectioned Progress single-fill grow",
+            "origin": "BA.W-PROGRESS-GRADIENT",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a motion-continuity refinement gated on a demonstrated interruption gap; fold the polish only if the walk shows re-base jank",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-progress-interruption-polish)"
+        },
+        {
+            "id": "ba-embla-overflow-momentum",
+            "what": "DC-REC-7 — the embla-on-overflow rail-chip momentum fold",
+            "origin": "BA.W-FADING-SCROLL / W-DOCK-SECTIONS",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-embla-overflow-momentum)"
+        },
+        {
+            "id": "ba-shell-ia-double-carousel",
+            "what": "REC-8 / SHELL-IA-N1 — the desktop double-carousel (same facet strip beside sidebar AND above bottom dock)",
+            "origin": "BA.W-DOCK-SECTIONS",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-shell-ia-double-carousel)"
+        },
+        {
+            "id": "ba-breadcrumb-overlap-tension",
+            "what": "the breadcrumb-overlap tension at W-DOCK-SECTIONS (the seam-anchored rail in the title band → the dock/shell FAIL)",
+            "origin": "BA.W-DOCK-SECTIONS",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-breadcrumb-overlap-tension)"
+        },
+        {
+            "id": "ba-token-tour-contrast-field-primitive",
+            "what": "the token-tour contrast field as a LIBRARY primitive (≥2-consumer un-MET)",
+            "origin": "BA.W-STAGE",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "serves only the token tours; promotion fires on a 2nd consumer",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-token-tour-contrast-field-primitive)"
+        },
+        {
+            "id": "ba-stage-embla-dock-column",
+            "what": "the embla-on-overflow momentum for the dock-stage scroll column",
+            "origin": "BA.W-STAGE",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "folds with ba-embla-overflow-momentum; re-eval against the rebuilt DockStage, no forced build",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-stage-embla-dock-column)"
+        },
+        {
+            "id": "ba-suffuse2-table-pop-decision",
+            "what": "the data/table grid-as-event vs column-chip decision (carried to W-REFLECT2/3, never run)",
+            "origin": "BA.W-SUFFUSE2",
+            "status": "SUCCESSOR",
+            "disposition": "MET",
+            "band": 5,
+            "wave": "BC.W-PAGE-HIERARCHY",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-suffuse2-table-pop-decision)"
+        },
+        {
+            "id": "ba-stage-h1-rung-literal-diff",
+            "what": "the W-SUFFUSE2 h1-rung literal-diff (content-page <h1> lifts one rung)",
+            "origin": "BA.W-STAGE",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 5,
+            "wave": "BC.W-PAGE-HIERARCHY",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-stage-h1-rung-literal-diff)"
+        },
+        {
+            "id": "ba-card-padding-base-setter-emission",
+            "what": "the W-EMISSION card-padding emission booking (the dead [--card-spacing] bracket-setter)",
+            "origin": "BA.W-EMISSION DELTA",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 5,
+            "wave": "BC.W-PADDING-CANON",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-card-padding-base-setter-emission)"
+        },
+        {
+            "id": "ba-hygiene-ax-w33-close",
+            "what": "CHR-2 — the AX W33/W25/W26/W27 formal close (absorbed by AY/AZ carves)",
+            "origin": "BA.W-HYGIENE",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-hygiene-ax-w33-close)"
+        },
+        {
+            "id": "ba-css-relative-color-fold",
+            "what": "css-relative-color opportunistic fold (the 2 oklch(from …) comment hits)",
+            "origin": "BA.W-CLOSE caveat → BB.W-DARK-INK-WARM",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-IDENTITY",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-css-relative-color-fold)"
+        },
+        {
+            "id": "ba-button-icon-sm-select-size",
+            "what": "button-icon-sm + select-size opportunistic fold (control-size-vocabulary trigger)",
+            "origin": "BA.W-CLOSE caveat (from AZ)",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "trigger un-MET (no BC sizing ask); re-eval if BC's controls band converges a control-size vocabulary",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-button-icon-sm-select-size)"
+        },
+        {
+            "id": "ba-chr1-5175-residue",
+            "what": "CHR-1 — the :5175 live-gate residue + the NO-5173 regex blind spot",
+            "origin": "BA.W-GESTALT-GATE",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-chr1-5175-residue)"
+        },
+        {
+            "id": "ba-dock-sections-anchor-hairline-held",
+            "what": "W-DOCK-SECTIONS direction (b) HELD — the separator IS the rail (the divider-carousel BC re-opens)",
+            "origin": "BA.W-DOCK-SECTIONS",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-dock-sections-anchor-hairline-held)"
+        },
+        {
+            "id": "ba-aurora-breathing-register-vjs2",
+            "what": "BA-VJS-2 — the aurora breathing register made honest (non-zero drift; aurora.frag fence held)",
+            "origin": "BA.W-STAGE",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-AURORA",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-aurora-breathing-register-vjs2)"
+        },
+        {
+            "id": "ba-vjs1-nested-measure-fix",
+            "what": "BA-VJS-1 — the nested-DockLayerGroup measure-ordering fix (from:40→to:242; DOCK_SPRING byte-untouched)",
+            "origin": "BA.W-DOCK-MORPH-INSITU",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-vjs1-nested-measure-fix)"
+        },
+        {
+            "id": "ba-handmark-isolation-slides-fence",
+            "what": "W-HANDMARK — the /underline→/handmark DEC-8 fold (MIGRATION row for a future external consumer)",
+            "origin": "BA.W-HANDMARK",
+            "status": "BOOKED",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-WATERCOLOR",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-handmark-isolation-slides-fence)"
+        },
+        {
+            "id": "ba-fading-scroll-tabs-overrun-successor",
+            "what": "W-FADING-SCROLL — the curve-picker overrun → embla fold (trigger un-MET)",
+            "origin": "BA.W-FADING-SCROLL",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "folds with the embla-overflow-momentum item; embla fires on a demonstrated overrun",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-fading-scroll-tabs-overrun-successor)"
+        },
+        {
+            "id": "ba-config-chassis-slider-track-knob",
+            "what": "the dedicated slider-track knob (if the row-rhythm default leaves the preset/slider row cramped)",
+            "origin": "BA.W-CONFIG-CHASSIS / AZ.W-HIERARCHY",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "BC.W-CONFIG-RIGHT re-walks the studios LIVE; if cramped, the knob lands in the studio refinement; else HOLD",
+            "trigger": "re-decide only if the live render clears its frame budget on the rebuilt floor; do not BUILD blind on the broken base",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-config-chassis-slider-track-knob)"
+        },
+        {
+            "id": "ba-final-zero-deferral-discipline-broken",
+            "what": "META — the BA close model (8/8 gestalt PASS) defeated by the W-REFLECT3 deferral chain",
+            "origin": "BA.FINAL close model",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ba-final-zero-deferral-discipline-broken)"
+        },
+        {
+            "id": "bb-batch7-close",
+            "what": "W-REFLECT3 + W-CLOSE SPEC; ~33 waves paint + 4.1.0 cut deferred; only v4.0.0/4.0.1 shipped",
+            "origin": "BB Batch 7",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-batch7-close)"
+        },
+        {
+            "id": "bb-batch3-perf",
+            "what": "W-LIGHTHOUSE + W-CSS-CRITICAL never built; W-PERF-PRODUCER π never ran",
+            "origin": "BB Batch 3",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-CSS-CRITICAL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-batch3-perf)"
+        },
+        {
+            "id": "bb-batch5-deck-adopt",
+            "what": "W-DECK · W-ADOPT-RECONCILE · W-SLIDES-DRIVE · W-LEAF/W-CONSUMER-MODERNIZE · W-DAG never ran",
+            "origin": "BB Batch 5",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-batch5-deck-adopt)"
+        },
+        {
+            "id": "bb-grey-slab-hold",
+            "what": "useGlassBackdropLuminance HOLD = the grey-slab root; the luma nothing reads, never samples the shell",
+            "origin": "BB Batch 4",
+            "status": "HELD",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-ADAPTIVE-RECONCILE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-grey-slab-hold)"
+        },
+        {
+            "id": "bb-dock-contradicted",
+            "what": "W-DOCK-RAIL-SEAT-FINAL + W-DOCK-MORPH-FAMILY + W-CHIP-GRAZE + press-3 + teardrop",
+            "origin": "BB Batch 2/P/L",
+            "status": "CONTRADICTED-by-new-ask",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-dock-contradicted)"
+        },
+        {
+            "id": "bb-visual-waves-reflect3",
+            "what": "~33 paper-done waves + merge-legs + doc-notes deferred to W-REFLECT3; UNVERIFIED grey",
+            "origin": "BB Batch P/L/4/2",
+            "status": "DEFERRED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-visual-waves-reflect3)"
+        },
+        {
+            "id": "bb-successors-blob-tokens",
+            "what": "11 booked successors + blob-render/warm-default born-RED + 15 dead/asserter-pinned tokens",
+            "origin": "BB Batch P/3/V/2",
+            "status": "SUCCESSOR",
+            "disposition": "HELD-with-rationale",
+            "rationale": "blob → BC.W-GOOBLOB-MEATBALL; the dead tokens swept at BC.W-FOLD-LEDGER's dead-token-sweep floor",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-successors-blob-tokens)"
+        },
+        {
+            "id": "bb-parity-close-residuals",
+            "what": "GPU-PARITY-TAUTOLOGY · FLOWFIELD · CONCENTRIC-RINGS · AX-RESIDUALS · SPA-VIEW · SPRING-CRISP · NDA",
+            "origin": "BB Batch V/0/P/6",
+            "status": "DEFERRED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-parity-close-residuals)"
+        },
+        {
+            "id": "bb-w-reflect3",
+            "what": "the fresh whole-page gestalt reflection; the SINGLE authorized verdict-flipper for ~48 waves",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-reflect3)"
+        },
+        {
+            "id": "bb-w-close",
+            "what": "the 4.1.0 cut + the 14-row chronic-fold disposition table + the lineage map + proof:bb-final",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-close)"
+        },
+        {
+            "id": "bb-w-adopt-reconcile",
+            "what": "the cross-repo adopt loop (proof:adopt-loop aggregator)",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-SPEEDTEST-ADOPT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-adopt-reconcile)"
+        },
+        {
+            "id": "bb-w-slides-drive",
+            "what": "drive slides Tranche N (the 6-major build-spine lift + deck consume-back)",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-slides-drive)"
+        },
+        {
+            "id": "bb-w-leaf-modernize",
+            "what": "leaf-publisher modernization (value.js/kf/pencil-boil/latex-paper)",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "USER-DOMAIN by-name asks; coordination-only, no glass-ui build",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-leaf-modernize)"
+        },
+        {
+            "id": "bb-w-consumer-modernize",
+            "what": "consumer modernization (fourier/speedtest/sci-report + 3 new spine consumers + Atlas ^4.x)",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-ATLAS-ASK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-consumer-modernize)"
+        },
+        {
+            "id": "bb-w-dag-reconcile",
+            "what": "update EXECUTION-DAG to the post-amendment spine (a doc-coherence wave)",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "low-priority doc-sync; the WAVE-INDEX + ORCHESTRATION §1 ARE the post-amendment spine, no separate wave owed",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-dag-reconcile)"
+        },
+        {
+            "id": "bb-w-lighthouse",
+            "what": "the 3-4-tranche perf chronic; proof:lighthouse on :5388",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-LIGHTHOUSE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-lighthouse)"
+        },
+        {
+            "id": "bb-w-css-critical",
+            "what": "the render-blocking critical/deferred /styles split (proof:css-critical); discharges styles-critical-split book",
+            "origin": "",
+            "status": "SPEC",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-CSS-CRITICAL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-css-critical)"
+        },
+        {
+            "id": "bb-w-perf-producer",
+            "what": "the value.js A′ perf-producer cluster (source-GREEN; π local-pending)",
+            "origin": "",
+            "status": "WIP",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-PERF-PRODUCER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-w-perf-producer)"
+        },
+        {
+            "id": "bb-viz-suite-landed",
+            "what": "W-GPU-SUBSTRATE · W-AURORA-WGPU · W-GOOBLOB-WGPU · W-FLOWFIELD · W-CONCENTRIC · B1-aurora-curl-warp · W-VIZ-POINTER · W-LINEAGE-PROBE · W-CROSSREPO-ASKS (source landed; only the π/parity ride W-REFLECT3)",
+            "origin": "",
+            "status": "complete-source",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-viz-suite-landed)"
+        },
+        {
+            "id": "bb-wgsl-gooblob-compile-error",
+            "what": "the GooBlob metaball.wgsl `var target` reserved-keyword → 250×/frame invalid-pipeline, 0 pixels live",
+            "origin": "",
+            "status": "live-broken",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-wgsl-gooblob-compile-error)"
+        },
+        {
+            "id": "bb-webgpu-capture-path-dead",
+            "what": "sync-arm-before-async-device greys all 5 aurora thumbnails; the ΔE-0.0 parity tautology green-stamped a non-executing path",
+            "origin": "",
+            "status": "live-broken",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-webgpu-capture-path-dead)"
+        },
+        {
+            "id": "bb-close-table-14-rows",
+            "what": "the 14-row chronic-fold table (native-drawer→DECIDE, perf→BUILD, dock-rail-seat→BUILD, aria-invalid→MEET, css-relative-color→MEET, Kuwahara→DECIDE, DELTA-reshoot→MEET, styles-critical-split→BUILD, scroll-fade→RETIRE, useGlassBackdropLuminance→HOLD, :5175→RETIRE, EasingPicker→BUILD, goo-uSatColor→BUILD-4.x, 28 books→RESTAMP)",
+            "origin": "",
+            "status": "authored-not-executed",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (bb-close-table-14-rows)"
+        },
+        {
+            "id": "mem-bb-close-never-ran",
+            "what": "the entire BB close (Batches 5/6/7) never ran; W-REFLECT3 never ran → \"complete\" = source-green-only",
+            "origin": "project_bb_tranche_developed + TaskList #266-268",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-bb-close-never-ran)"
+        },
+        {
+            "id": "mem-single-terminal-reflect-mechanism",
+            "what": "the architectural disease itself (~38-47 waves \"rides W-REFLECT3\"; 0/33 paint-verified)",
+            "origin": "CLAUDE.md markers + PLAN §0",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-single-terminal-reflect-mechanism)"
+        },
+        {
+            "id": "mem-precept-live-verify-capture",
+            "what": "live-verified needs a captured DELTA + paired-π, not a commit claim (VIOLATED at scale)",
+            "origin": "feedback_live_verify_capture.md",
+            "status": "CHRONIC",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-live-verify-capture)"
+        },
+        {
+            "id": "mem-precept-gestalt-over-patches",
+            "what": "gestalt redesigns over patches, no workarounds (VIOLATED — dock 178 commits, darken 7 recalibrations)",
+            "origin": "feedback_architectural_approach.md",
+            "status": "CHRONIC",
+            "disposition": "MET",
+            "band": 1,
+            "wave": "BC.W-GLASS-IDENTITY",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-gestalt-over-patches)"
+        },
+        {
+            "id": "mem-precept-binding-verification",
+            "what": "stale reka/glass-ui bindings silently no-op; only e2e catches",
+            "origin": "feedback_glass_ui_binding_verification.md",
+            "status": "CHRONIC",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-PAINT-GATE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-binding-verification)"
+        },
+        {
+            "id": "mem-precept-no-backwards-compat",
+            "what": "clean breaks, no legacy aliases/shims; greenfield no meta-language (KEPT)",
+            "origin": "feedback_no_backwards_compat.md",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding BC-wide operational precept kept across every wave (clean breaks, no shim); not a single-wave dest",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-no-backwards-compat)"
+        },
+        {
+            "id": "mem-precept-opus-for-subagents",
+            "what": "Workflow/Agent spawns pass model:opus explicitly; never inherit fable",
+            "origin": "feedback_opus_for_subagents.md",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding operational rule: every BC fan-out passes model:opus",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-opus-for-subagents)"
+        },
+        {
+            "id": "mem-precept-workflow-parallelization",
+            "what": "barriered parallel() (≤4-5 concurrent, NOT pipeline — the rate-wall) + STEP-0 worktree reset + read-only git",
+            "origin": "feedback_workflow_parallelization.md",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding operational rule: barriered parallel fan-out, STEP-0 reset, agents read-only git, orchestrator commits",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-workflow-parallelization)"
+        },
+        {
+            "id": "mem-precept-vue-scoped-global-drop",
+            "what": ":global(.dark) .x inside <style scoped> silently dropped; plain-ancestor only (3rd recurrence)",
+            "origin": "feedback_vue_scoped_global_drop.md",
+            "status": "CHRONIC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "proof:no-scoped-global is the floor; BC sweeps ':global(' inside scoped when touching the rebuilt dark arms",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-vue-scoped-global-drop)"
+        },
+        {
+            "id": "mem-precept-lightdark-inset-shadow",
+            "what": "light-dark(inset…) inside box-shadow computes the WHOLE shadow to none (silent kill)",
+            "origin": "feedback_lightdark_inset_shadow.md",
+            "status": "CHRONIC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "BC sweeps glass-ui's own shadow tokens during the glass rebuild (the dark-rim re-derivation touches them)",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-lightdark-inset-shadow)"
+        },
+        {
+            "id": "mem-precept-tailwind-first",
+            "what": "design references re-expressed via @theme+@utility, never raw CSS pastes",
+            "origin": "feedback_tailwind_first.md",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding operational precept: design references re-expressed via @theme + @utility, never raw CSS pastes",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-tailwind-first)"
+        },
+        {
+            "id": "mem-precept-overfitting-audit",
+            "what": "every src/ artefact ≥2 sites OR exported OR demo helper; the canned audit runs at EVERY close (BB's never ran)",
+            "origin": "feedback_overfitting_audit.md",
+            "status": "DEFERRED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-overfitting-audit)"
+        },
+        {
+            "id": "mem-precept-presets-in-consumers",
+            "what": "named presets live in consumers; the lib's OWN defaults evolve in src/styles/ (the --motion-accent/deck fences)",
+            "origin": "feedback_presets_in_consumer.md",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding operational rule: the lib's OWN warm-glass defaults evolve in src/styles/; demo hues stay demo-local",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-precept-presets-in-consumers)"
+        },
+        {
+            "id": "mem-slides-production-held-down",
+            "what": "slides.friday.institute TAKEN DOWN 2026-06-12; M+N bands committed local, UNPUSHED",
+            "origin": "project_slides_tranche_n_union",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "user-domain greenlight; BC.W-CUT sequences the deploy LAST, gated on H-DEPLOY + a live-paint gestalt PASS",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-slides-production-held-down)"
+        },
+        {
+            "id": "mem-slides-n-hinge-gated",
+            "what": "slides N waves HINGE-GATED (W-FC3 R5-11, W-ADOPT 1-pin-2-edit, W-DEPLOY); the /underline break is PHANTOM",
+            "origin": "project_slides_tranche_n_union",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-slides-n-hinge-gated)"
+        },
+        {
+            "id": "mem-slides-fc-honesty-unpushed",
+            "what": "the feedback-coder honesty band (W-FC1/4/GATE/FC2) committed local at b538506, NOT pushed",
+            "origin": "project_slides_tranche_n_union",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the honesty band is done, just unpushed; BC.W-CUT pushes it with the N-band + 4.x adopt on the greenlight",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-slides-fc-honesty-unpushed)"
+        },
+        {
+            "id": "mem-slides-m-open-conditionals",
+            "what": "slides M open items (M.W-ATLAS conditional, mobile-reflow stale-debt, homescreen marquee unbuilt)",
+            "origin": "project_slides_tranche_m",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "slides-side, post-deploy; the marquee rail is the shipped PagerDots windowFit successor; consume booked when deck count grows",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-slides-m-open-conditionals)"
+        },
+        {
+            "id": "mem-speedtest-4x-consume-blocked",
+            "what": "speedtest AW v3 relay — the ^4.1.0 consume BLOCKED on the never-cut version",
+            "origin": "project_bb_tranche_developed",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-SPEEDTEST-ADOPT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-speedtest-4x-consume-blocked)"
+        },
+        {
+            "id": "mem-dist-css-comment-build-bug",
+            "what": "index.css:196-217 comment paren/bracket imbalance poisoning Oxide; ships in every consumer tarball",
+            "origin": "BC PLAN §2 Band-5",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DIST-COMMENT-FIX",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-dist-css-comment-build-bug)"
+        },
+        {
+            "id": "mem-constellation-upstream-gaps",
+            "what": "5 constellation generalization items slides wants upstreamed (pinned node, anomaly-edge skin, edge-floor, node label, autonomous drift)",
+            "origin": "project_glassui_dock_feedback item 7",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-CONSTELLATION",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-constellation-upstream-gaps)"
+        },
+        {
+            "id": "mem-dock-feedback-2026-06-10",
+            "what": "the 6-item dock/demo feedback batch (layers/rail, morph flicker, persistent controls, iOS register, dynamic darkening) STILL broken",
+            "origin": "project_glassui_dock_feedback_2026_06_10",
+            "status": "CHRONIC",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-dock-feedback-2026-06-10)"
+        },
+        {
+            "id": "mem-rail-spec-contradicted",
+            "what": "the user's macOS hover-expand STACK vs the BB DIVIDER-CAROUSEL",
+            "origin": "BC PLAN §3",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-STACK-RAIL",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-rail-spec-contradicted)"
+        },
+        {
+            "id": "mem-liquid-morph-white",
+            "what": "the morph NEVER WHITE + arbitrary shapes; BB's box-morph turns white",
+            "origin": "BC PLAN §3",
+            "status": "CONTRADICTED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-LIQUID-MORPH",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-liquid-morph-white)"
+        },
+        {
+            "id": "mem-adaptive-darken-observer-loop",
+            "what": "the grey-slab root — unconditional 20% ink-ward, the observer write-only",
+            "origin": "BC PLAN §0",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-ADAPTIVE-RECONCILE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-adaptive-darken-observer-loop)"
+        },
+        {
+            "id": "mem-wgsl-gooblob-compile",
+            "what": "the GooBlob `var target` reserved-keyword error (live-broken)",
+            "origin": "BC PLAN §2 Band-3",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-wgsl-gooblob-compile)"
+        },
+        {
+            "id": "mem-webgpu-capture-dead",
+            "what": "the dead WebGPU capture path (greys 5 thumbnails); the ΔE-0.0 tautology",
+            "origin": "BC PLAN §2 Band-3",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-WEBGPU-EVERYWHERE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-webgpu-capture-dead)"
+        },
+        {
+            "id": "mem-viz-suite-not-live",
+            "what": "each viz structural-proxy-claimed, never validated LIVE",
+            "origin": "BC PLAN §2 Band-3",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-AURORA",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-viz-suite-not-live)"
+        },
+        {
+            "id": "mem-paint-blind-gates",
+            "what": "proof:adaptive-glass/dark-material/no-gray/glass-cohesion PASS on grey AND fixed; ba-gestalt release-only/roster-text/ΔE-0.0",
+            "origin": "BC PLAN §0 face-2",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-PAINT-GATE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-paint-blind-gates)"
+        },
+        {
+            "id": "mem-bb-paper-done-unverified",
+            "what": "~46% paper-done (the liquid-glass band + suffuse + hierarchy + display-tracking + demo-design + card-pad)",
+            "origin": "BC PLAN §1 rule-3",
+            "status": "DEFERRED",
+            "disposition": "MET",
+            "band": 0,
+            "wave": "BC.W-GESTALT-FIRST",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-bb-paper-done-unverified)"
+        },
+        {
+            "id": "mem-ax-disposition-residuals",
+            "what": "the AX DISPOSITION-REGISTER residuals + every booked/held/successor across AX→BB",
+            "origin": "CLAUDE.md / PLAN §5",
+            "status": "DEFERRED",
+            "disposition": "BUILD",
+            "band": 0,
+            "wave": "BC.W-FOLD-LEDGER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-ax-disposition-residuals)"
+        },
+        {
+            "id": "mem-deck-subpath-vapor",
+            "what": "the genuinely-unbuilt /deck subpath + src/components/custom/deck/ + --spring-deck + proof:deck",
+            "origin": "BC PLAN §2 Band-6",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-DECK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-deck-subpath-vapor)"
+        },
+        {
+            "id": "mem-perf-lighthouse-never-live",
+            "what": "W-PERF-PRODUCER + the never-run live Lighthouse (proof:lighthouse local-only, the close never ran)",
+            "origin": "CLAUDE.md / PLAN §5",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 11,
+            "wave": "BC.W-LIGHTHOUSE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-perf-lighthouse-never-live)"
+        },
+        {
+            "id": "mem-valuejs-samplecolorramp",
+            "what": "the value.js sampleColorRamp consume-and-delete + the fourier-web glass-scrubber cruft",
+            "origin": "BC PLAN §5",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-valuejs-samplecolorramp)"
+        },
+        {
+            "id": "mem-constellation-modernization",
+            "what": "@mkbabb/colors RETIRE, value.js→1.0.0, vaul-vue ABROGATED, the expanded spine consumers",
+            "origin": "project_bb_tranche_developed",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-ATLAS-ASK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-constellation-modernization)"
+        },
+        {
+            "id": "mem-consumer-modernize-batch5",
+            "what": "words/frontend stale ui/Tabs root import + handmark/color-swatch <2-cross-constellation-consumers",
+            "origin": "project_bb_tranche_developed",
+            "status": "NEXT-TRANCHE",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-SPEEDTEST-ADOPT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-consumer-modernize-batch5)"
+        },
+        {
+            "id": "mem-publish-ci-release-vs-local",
+            "what": "THE close lesson — the BA cut declared complete on `--run local` (excludes release gates) → tag-push surfaced blockers",
+            "origin": "project_glassui_400_published",
+            "status": "CHRONIC",
+            "disposition": "MET",
+            "band": 10,
+            "wave": "BC.W-CUT",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-publish-ci-release-vs-local)"
+        },
+        {
+            "id": "mem-ci-monorepo-sibling-cascade",
+            "what": "fixing npm-ci/lockfile unmasks sibling-layout-assuming gates; the optional-peer-static-import TS2307 class recurs",
+            "origin": "project_ci_monorepo_layout_cascade",
+            "status": "CHRONIC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "known fix: regenerate the lock registry-resolved + run npm ci in a throwaway dir; optional-peers stay devDeps",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-ci-monorepo-sibling-cascade)"
+        },
+        {
+            "id": "mem-aw-session-limit-halt",
+            "what": "the AW session-limit residuals (aurora W4/6-11, blob W9-11, glass-atoms W24-26, big-dock audit, the card-lift @utility snag)",
+            "origin": "project_aw_session_limit_halt",
+            "status": "DEFERRED",
+            "disposition": "MET",
+            "band": 4,
+            "wave": "BC.W-VIZ-AURORA",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-aw-session-limit-halt)"
+        },
+        {
+            "id": "mem-consumer-mis-prune-blind-spot",
+            "what": "the recurring consumer-mis-prune class (internal rg can't see external consumers; the d6 lineage stranding)",
+            "origin": "project_aw_session_limit_halt / inv-11",
+            "status": "CHRONIC",
+            "disposition": "HELD-with-rationale",
+            "rationale": "the inv-11 registry-consumer probe + proof:lineage-probe is the floor; BC.W-ATLAS-ASK re-runs the probe before any prune",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-consumer-mis-prune-blind-spot)"
+        },
+        {
+            "id": "mem-popover-dropdown-root-padding",
+            "what": "the popover/DropdownMenuContent default root padding too tight (slides carries a deck-side override)",
+            "origin": "project_glassui_dock_feedback item 6b",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-PADDING-CANON",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-popover-dropdown-root-padding)"
+        },
+        {
+            "id": "mem-dock-mobile-scale-too-big",
+            "what": "the dock ~20-25% too big on mobile; the ratified mobile collapsed-dock = summary/pager pill ALONE, tap-to-expand",
+            "origin": "project_glassui_dock_feedback item 6c",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 2,
+            "wave": "BC.W-DOCK-ENGINE",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-dock-mobile-scale-too-big)"
+        },
+        {
+            "id": "mem-ci-keyframes-still-local",
+            "what": "the publish-CI history (glass-ui release.yml GREEN; keyframes.js CI had a stray file:-link)",
+            "origin": "project_publish_ci_broken",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "upstream/peer-domain; BC.W-CUT pushes the glass-ui v4.x tag, kf's own CI out-of-scope",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-ci-keyframes-still-local)"
+        },
+        {
+            "id": "mem-fourierfield-root-hero-warm-lean",
+            "what": "R5-11 — the feedback-coder fc-fourier G4 hero warm-lean (the ONLY red; the fix is the glass-ui FourierField-ROOT)",
+            "origin": "project_slides_tranche_n_union / AZ USER-AUDIT",
+            "status": "BOOKED",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-FOURIER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-fourierfield-root-hero-warm-lean)"
+        },
+        {
+            "id": "mem-slides-j-tranche-unexecuted",
+            "what": "W-FC2 — docs/tranches/J/** (13 files, an UNEXECUTED plan) cherry-picked banner-marked into slides main",
+            "origin": "project_slides_tranche_n_union",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "slides-side, banner-marked; superseded by the N-union, archived-with-rationale, not a BC build item",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-slides-j-tranche-unexecuted)"
+        },
+        {
+            "id": "mem-demo-config-gear-fold",
+            "what": "item 3 — the gear → glass-ui Configurator (composables view removed, FAB removed, DarkModeToggle folded)",
+            "origin": "project_glassui_dock_feedback item 3",
+            "status": "DEFERRED",
+            "disposition": "MET",
+            "band": 9,
+            "wave": "BC.W-STORYBOOK-META",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-demo-config-gear-fold)"
+        },
+        {
+            "id": "mem-atlas-named-consumer-adopt",
+            "what": "the Connectivity Atlas (7 needs: BB-1/4 vertical-chrome, BB-3 glass-accent, BB-5 metal-shimmer, BB-2 drawer); the d6-lineage registry consumer",
+            "origin": "project_bb_tranche_developed / inv-11",
+            "status": "SUCCESSOR",
+            "disposition": "BUILD",
+            "band": 10,
+            "wave": "BC.W-ATLAS-ASK",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-atlas-named-consumer-adopt)"
+        },
+        {
+            "id": "mem-demos-consume-name-forward",
+            "what": "the UNION-COORDINATION D1-D8 de-dup routing (value.js color+parsing, kf animation, glass-ui CORE UI+substrates, slides deck content)",
+            "origin": "project_av_g_tranches",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a standing contract; BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK honor the routing, verified by real install",
+            "trigger": "sibling-owned RECEIVE (inv-16); flips when the consumer repo adopts on its ^4.x bump (BC.W-SPEEDTEST-ADOPT / W-FOURIER-ASK / W-ATLAS-ASK drive the re-point)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-demos-consume-name-forward)"
+        },
+        {
+            "id": "mem-scc-trap-vueuse-free",
+            "what": "the L.W1 vueuse-FREE root barrel + keyframes/value.js-bearing leaves OFF the root barrel (/motion vs /motion-core)",
+            "origin": "CLAUDE.md / LESSONS-LEARNED",
+            "status": "HELD",
+            "disposition": "HELD-with-rationale",
+            "rationale": "a binding structural rule: keyframes-bearing primitives stay on /motion; proof:vueuse-free-root the floor",
+            "trigger": "binding BC-wide operational precept (not a single-wave dest); kept as an operational rule across every wave",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-scc-trap-vueuse-free)"
+        },
+        {
+            "id": "mem-homescreen-marquee-unbuilt",
+            "what": "the slides homescreen grouping/marquee plan (registry group field + a glass-ui marquee rail)",
+            "origin": "project_slides_tranche_m",
+            "status": "BOOKED",
+            "disposition": "HELD-with-rationale",
+            "rationale": "≥2-consumer + deck-count gated; the PagerDots windowFit seam is shipped; not a BC blocker",
+            "trigger": "≥2-consumer threshold un-MET; graduates when a 2nd distinct consumer repo adopts the surface (proof:disposition-live re-evaluates each close)",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-homescreen-marquee-unbuilt)"
+        },
+        {
+            "id": "phantom-w-button-tone",
+            "what": "the destructive/accent tinted-glass button arm",
+            "origin": "BB.W-BUTTON-GLASS:130,187",
+            "status": "NO-SPEC",
+            "disposition": "BUILD",
+            "band": 1,
+            "wave": "BC.W-BUTTON-GLASS-IOS",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (phantom-w-button-tone)"
+        },
+        {
+            "id": "phantom-w-fourier-gpu",
+            "what": "FourierField Canvas2D → WebGPU line-instancing",
+            "origin": "BB.W-VIZ-SUITE / fourier-field/README",
+            "status": "NO-SPEC",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-FOURIER",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (phantom-w-fourier-gpu)"
+        },
+        {
+            "id": "phantom-w-constellation-gpu",
+            "what": "constellation Canvas2D → WebGPU hi-res",
+            "origin": "BB.W-VIZ-SUITE / PROCEDURAL-SUITE",
+            "status": "NO-SPEC",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-CONSTELLATION",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (phantom-w-constellation-gpu)"
+        },
+        {
+            "id": "phantom-w-aurora-wgpu-mediums",
+            "what": "the painterly-medium WGSL bodies",
+            "origin": "aurora.wgsl.ts comments + README",
+            "status": "NO-SPEC",
+            "disposition": "BUILD",
+            "band": 4,
+            "wave": "BC.W-VIZ-AURORA",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (phantom-w-aurora-wgpu-mediums)"
+        },
+        {
+            "id": "hero-audacious-type-applied",
+            "what": "the √φ display ladder applied audaciously to the heroes (distinct per-category, not the repeated grey-card grid)",
+            "origin": "",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-HERO-AUDACIOUS",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (hero-audacious-type-applied)"
+        },
+        {
+            "id": "hero-compositions-distinct",
+            "what": "/compositions/hero distinct from the homepage; /foundations/intro three-heroes → one",
+            "origin": "",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-COMPOSITIONS-HERO",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (hero-compositions-distinct)"
+        },
+        {
+            "id": "hero-page-chassis",
+            "what": "EVERY page: audacious LARGE hero title + subtitle + explicit subpath + scroll-to-shrink + ONE glass card + procedural bg",
+            "origin": "",
+            "status": "UN-ADDRESSED",
+            "disposition": "BUILD",
+            "band": 5,
+            "wave": "BC.W-PAGE-CHASSIS",
+            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (hero-page-chassis)"
+        }
+    ]
+}

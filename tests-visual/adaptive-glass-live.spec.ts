@@ -34,8 +34,23 @@
 
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
+// BC.W-PAINT-GATE — the BIDIRECTIONAL calm-light paint arm reads the surface's OWN
+// resolved bg → the SHARED OKLab decompose (statsFromResolvedBg) + the paintBand
+// verdict. ONE colour-math source (paint-arm.mjs re-exports reflect-capture-verify's
+// oklabFromRgb); this spec authors NO second decompose for the calm-light arm.
+import { statsFromResolvedBg, paintBand } from "../scripts/lib/paint-arm.mjs";
 
 const AA_BODY = 4.5;
+
+// BC.W-PAINT-GATE — the calm-light anti-grey ceiling. Over a calm-light backdrop the
+// dock/floating/overlay/content bg MUST resolve warm + translucent, NEVER the grey
+// slab: oklabL ∈ [0.85, 0.99] (light, not blown-out) AND chroma ≥ 0.01 (warm, not
+// neutral grey) AND alpha < 0.70 (translucent, the glass reads THROUGH). Born-RED on
+// HEAD: the dock at oklab(0.695 0.002 0.006 / 0.536) FAILS all three (L too low, chroma
+// too low, alpha too high). This is the BIDIRECTIONAL twin of the synthetic-white
+// contrast arm — a grey slab PASSES the white arm (darkening over white raises contrast)
+// yet FAILS here; the warm-cream fix passes BOTH.
+const CALM_LIGHT_BAND = { L: [0.85, 0.99] as [number, number], chroma: 0.01, alpha: 0.7 };
 // The large-text / large-glyph floor (the dock glyph register is large; R3-7 is
 // primarily a dock-plate SILHOUETTE failure, not a body-text failure on the glyph).
 const AA_LARGE = 3.0;
@@ -263,6 +278,44 @@ test.describe("adaptive-glass-live (G1 — the IN-SITU π readback, no injected 
                     expect(
                         r.translucent,
                         `${route} ${r.selector}: surface went OPAQUE (bg ${r.surfaceBg}) — AA cleared by losing the glass (a goal-miss, not the adaptive darken).`,
+                    ).toBe(true);
+                }
+            });
+
+            // BC.W-PAINT-GATE — the BIDIRECTIONAL calm-light paint arm, BESIDE the kept
+            // synthetic-white contrast arm above. The white arm proves legibility-over-
+            // bright (its metrics are MONOTONIC in the darken direction — a grey slab
+            // scores BETTER on it). This arm is the ANTI-GREY CEILING: over the calm-light
+            // page the surface's OWN composited bg must read warm + translucent (oklabL ∈
+            // [0.85,0.99] ∧ chroma ≥ 0.01 ∧ alpha < 0.70). Born-RED on HEAD's grey dock
+            // oklab(0.695 0.002 0.006 / 0.536). The decompose is the SHARED leaf (one math
+            // source); the band verdict is paintBand. The FIX passes BOTH arms; a grey slab
+            // passes the white arm yet FAILS here — the dangerous class is killed.
+            test(`calm-light paint arm: surface reads warm-translucent (NOT grey) @ ${vp.name} — ${route}`, async ({
+                page,
+            }) => {
+                await page.setViewportSize({ width: vp.width, height: vp.height });
+                await page.goto(route, { waitUntil: "networkidle" });
+                await setLight(page);
+
+                const readouts = await readInSituGlass(page);
+                expect(
+                    readouts.length,
+                    `${route}: no in-situ glass surface found (the enrolled route must paint at least one body-bearing glass tier)`,
+                ).toBeGreaterThan(0);
+
+                for (const r of readouts) {
+                    // The decompose is the ONE shared OKLab math source (paint-arm.mjs →
+                    // reflect-capture-verify.mjs oklabFromRgb); this arm authors no second.
+                    const stats = statsFromResolvedBg(r.surfaceBg);
+                    expect(
+                        stats,
+                        `${route} ${r.selector}: could not decompose surface bg "${r.surfaceBg}" to OKLab (the calm-light paint read is degenerate)`,
+                    ).not.toBeNull();
+                    const verdict = paintBand(stats, CALM_LIGHT_BAND);
+                    expect(
+                        verdict.pass,
+                        `${route} ${r.selector}: surface bg "${r.surfaceBg}" is NOT warm-translucent over the calm-light page — ${verdict.reasons.join("; ")}. The grey slab can no longer score BETTER than warm cream (the anti-correlated metric is dead). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the BC.W-ADAPTIVE-RECONCILE warm-cream fix.`,
                     ).toBe(true);
                 }
             });

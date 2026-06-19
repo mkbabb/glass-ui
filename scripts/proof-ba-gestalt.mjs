@@ -1,48 +1,60 @@
 #!/usr/bin/env node
-// BA.W-GESTALT-GATE — proof:ba-gestalt, the holistic per-surface acceptance gate.
+// BC.W-GESTALT-FIRST — proof:ba-gestalt, RE-MADE a PIXEL reader, ci-BLOCKING.
 //
-// THE P-1 CLOSE-CLASS FIX (precepts-conformance.md:42-86). AZ closed `complete` on a
-// 9-surface per-mechanism PASS matrix (AZ/FINAL.md:119-131) the user re-opened the SAME
-// DAY (R8) on ≥7 surfaces — the 6th consecutive re-opening round (R3→R8). A per-mechanism
-// π verifies the LOCAL mechanism the fleet root-caused in isolation (a pixel ΔL, an
-// `h1Overlap:false`) but cannot verify the GESTALT the user reads ("totally mis-aligned"
-// is a placement/relationship judgement, not a contrast delta). This gate is the
-// structural answer: a per-surface roster ABOVE the per-mechanism π readback, each surface
-// owed a whole-page capture in BOTH modes over its real backdrop plus a recorded gestalt
-// VERDICT, born-RED against the R8 state so the mechanism-green/page-wrong gap cannot
-// recur by construction.
+// The keystone gate redesign. BA.W-GESTALT-GATE minted a per-surface acceptance
+// roster ABOVE the per-mechanism π readback — but it was paint-BLIND (it read
+// verdict STRINGS + asserted PNGs resolve, never a luminance/chroma pixel),
+// release-DEFERRED (tags:["local"]/["release"] — it never ran in --run ci, so the
+// mid-tranche battery carried zero gestalt signal), and single-flipper-LOCKED
+// (W-REFLECT2/W-REFLECT3 the single authorized verdict-flipper — the
+// write-locked-verdict deadlock that funneled all paint-verification into one
+// terminal wave the execution stop cut, the disease that destroyed BB).
 //
-// This is a PURE source/docs detector (no Playwright at THIS gate — the gate reads the
-// roster ledger's recorded verdicts + asserts the declared capture paths resolve on disk;
-// the LIVE capture is W-REFLECT2's job). It reads the roster LEDGER at
-// docs/tranches/BA/audit/reflect/ba-gestalt-roster.md and asserts:
-//   (a) COMPLETENESS — every one of the EIGHT named W-REFLECT2 surfaces is present
-//       (a dropped surface reds — a future agent cannot quietly omit a hard surface).
-//   (b) WELL-FORMED — every row carries both mode capture paths + a verdict ∈ {FAIL,PASS}
-//       + a ground anchor (a renamed/dropped column or an out-of-set verdict reds).
-//   (c) OPERATIVE-PASS — the gate is `ok` IFF every verdict is PASS AND every declared
-//       capture path RESOLVES ON DISK as a non-empty file (the anti-evasion floor — a
-//       PASS with a missing/zero-byte capture is the close-class lie the AZ matrix told,
-//       mechanically forbidden).
+// BC re-authors it into the SINGLE close oracle for PAINT, mechanically derived
+// from the captured pixels:
+//   - re-tagged ["local","ci","release"] — it runs in --run ci (the mid-tranche
+//     battery now carries gestalt signal; kills BC.W-PM-SYNTHESIS req #4).
+//   - G5 (PIXEL band) — the gate reads the captured PNG's luminance + chroma +
+//     alpha at the roster row's declared probe region and asserts the stats fall
+//     in the row's expect band (warm-translucent, NOT the grey oklab(0.695) slab).
+//     A hand-typed "PASS" is no longer sufficient (kills req #4 roster-text).
+//   - G6 (grow-the-roster) — the roster MUST enroll every BC-touched surface (the
+//     8 BA surfaces + the BC dock/glass/viz/tabs/controls surfaces). A surface a BC
+//     wave paints but the roster omits → RED (kills the BB roster-never-grew gap).
+//   - G7 (auto-revoke) — the surface-hash freshness clause is RE-PURPOSED: when a
+//     surface's surface-hash no longer matches its surface-paths' current bytes the
+//     verdict AUTO-REVERTS to FAIL (not a stale-warning). ANY wave editing a
+//     painting source revokes that surface's PASS — there is no single authorized
+//     flipper; the surface must be re-captured + re-pixel-read before the close.
+//     This is the DEFAULT for the gestalt gate (BB's --strict-freshness opt-in
+//     became the default — req #5).
+//   - G8 (no-terminal-reflect) — a device-free SOURCE clause scans
+//     docs/tranches/BC/waves/*.md + docs/tranches/BC/**/PROGRESS*.md line-by-line
+//     for a wave DEFERRING its own π/verdict to a future terminal-reflect wave and
+//     REDs on a real deferral (kills req #1). CONTEXT-AWARE, not a blind regex:
+//     G8a forward-deferral (`rides? (the )?W-REFLECT\d`) with two exemption arms
+//     (G8a-exempt-1 forensic-quote span-enclosure, G8a-exempt-2 RETIRE/forbidden
+//     context) + G8b staged/deferred-verdict. The corpus correctly RETIRES the
+//     deferral, so G8 is GREEN on the actual 96-wave HEAD corpus (every W-REFLECT
+//     mention is quote-wrapped OR on a RETIRE line); born-RED only on a SYNTHETIC
+//     real deferral.
 //
-// BORN-RED at HEAD: every verdict is FAIL, anchored to its R8 ground capture; there is no
-// PASS replacement. The gate is tagged ["local"] (RED-by-design until W-REFLECT2 flips the
-// verdicts — it must NOT block ci/release while the tranche is mid-flight). W-REFLECT2
-// (Batch 7) is the single authorized verdict-flipper + the wave that PROMOTES the gate to
-// the operative close set when the verdicts go GREEN (W-GESTALT-GATE G3 defers that).
+// PAINT/GESTALT split: the real-surface roster verdicts stay born-RED at HEAD (the
+// grey ground); they flip GREEN only when a Band-1 wave PAINTS warm-cream + re-
+// captures + re-pixel-reads. The SELF-TEST fixtures are the proof the gate's logic
+// is load-bearing; the real-surface arm staying RED-until-Band-1 is EXPECTED. There
+// is NO terminal reflect wave — the close is the UNION of per-wave verdicts.
 //
-// bite-check: flip a verdict to PASS with no on-disk capture → RED (anti-evasion);
-// delete a roster surface → RED (completeness); a verdict outside {FAIL,PASS} → RED.
+// ONE hash leaf + ONE PNG decoder (BB.W-GESTALT-GATE2 + BC.W-GESTALT-FIRST): the
+// pixel reader extends scripts/reflect-capture-verify.mjs (pngRegionStats); a second
+// createHash/PNG-decoder outside the leaf is forbidden. The OKLab decompose lives in
+// the leaf (BC.W-PAINT-GATE imports it). The import.meta.url run-guard is preserved
+// (importing the leaf never runs this gate).
 
-import { existsSync, readFileSync, statSync } from "node:fs";
-import { resolve, relative, dirname, basename } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { resolve, relative, basename, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-// BB.W-GESTALT-GATE2: the SHARED capture-rigor leaf — the ONE source of the
-// content/dimension/viewport/freshness verify mechanisms (minted in
-// proof-live-verified-ledger.mjs, re-exported through reflect-capture-verify.mjs).
-// NO re-implementation: a second `createHash("sha256")` over surface paths outside
-// the shared source is forbidden (the W-CANVAS-UNIFY two-copy class, G3-asserted).
 import {
     isRealPng,
     pngDimensions,
@@ -50,29 +62,26 @@ import {
     viewportFidelityVerdictBoth,
     surfaceHash,
     freshnessVerdict,
+    pngRegionStats,
 } from "./reflect-capture-verify.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:ba-gestalt";
-const REFLECT_DIR = resolve(ROOT, "docs/tranches/BA/audit/reflect");
-const ROSTER = resolve(REFLECT_DIR, "ba-gestalt-roster.md");
+const REFLECT_DIR = resolve(ROOT, "docs/tranches/BC/audit/reflect");
+const ROSTER = resolve(REFLECT_DIR, "bc-gestalt-roster.md");
+const WAVES_DIR = resolve(ROOT, "docs/tranches/BC/waves");
+const TRANCHE_DIR = resolve(ROOT, "docs/tranches/BC");
 
-// BB.W-GESTALT-GATE2: the CLOSE arm. proof:ba-gestalt is tags:["release"] (the
-// release arm IS the close arm), so freshness/missing-header is FATAL under
-// --strict-freshness (the close-verification battery sets it, in lockstep with the
-// sibling proof:live-verified-ledger convention) and a non-fatal NOTE on the bare
-// mid-tranche arm (the backfill window — W-REFLECT3 owns the re-capture + re-stamp).
-const STRICT_FRESHNESS = process.argv.includes("--strict-freshness");
-
-// The whole-page-capture dimension floor: a real whole-page capture is far above a
-// degenerate/cropped/0×0 sliver. The smallest LEGITIMATE capture in the set is the
-// 780×1688 mobile full-page; a capture below this width OR height is degenerate.
-const MIN_CAPTURE_WIDTH = 320; // below the smallest real mobile viewport
+// The whole-page-capture dimension floor (BB.W-GESTALT-GATE2 — preserved).
+const MIN_CAPTURE_WIDTH = 320;
 const MIN_CAPTURE_HEIGHT = 320;
 
-// The EIGHT named W-REFLECT2 acceptance surfaces (the completeness set). A roster that
-// drops one reds the completeness assert; an extra surface is allowed (a future split).
+// ── G6 — the GROWN roster (the BB roster-never-grew gap closed) ─────────────────
+// The completeness set is the 8 BA surfaces + the BC dock/glass/viz/tabs/controls
+// surfaces. A surface a BC wave paints but the roster omits → RED. An extra surface
+// is allowed (a future split). These are the canonical BC-touched surface names.
 const REQUIRED_SURFACES = [
+    // the 8 BA surfaces (inherited)
     "dock",
     "configurators-goo",
     "aurora",
@@ -81,26 +90,38 @@ const REQUIRED_SURFACES = [
     "motion-fourier",
     "dark-register",
     "cross-repo",
+    // the BC dock/glass/viz/tabs/controls surfaces (the grow)
+    "dock-engine",
+    "glass-adaptive",
+    "viz-procedural",
+    "tabs-segmented",
+    "controls-custom",
 ];
 
 const VALID_VERDICTS = new Set(["FAIL", "PASS"]);
-const COLUMNS = ["surface", "routes", "capture-light", "capture-dark", "verdict", "ground-anchor"];
+const COLUMNS = [
+    "surface",
+    "routes",
+    "capture-light",
+    "capture-dark",
+    "probe",
+    "expect",
+    "verdict",
+    "ground-anchor",
+];
 
 /**
- * Parse the ROSTER markdown table. Strips HTML comments first (so the schema doc-block
- * + the per-cell explanatory prose can name a column without tripping the parse). Returns
- * the data rows (header + separator dropped) as objects keyed by COLUMNS.
+ * Parse the ROSTER markdown table. Strips HTML comments first (so the schema doc-
+ * block + per-cell prose can name a column without tripping the parse). Returns the
+ * data rows (header + separator dropped) as objects keyed by COLUMNS.
  */
 function parseRoster(src) {
-    // Drop HTML comments (the doc-block header + any inline notes).
     const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
     const rows = [];
     let inTable = false;
     for (const raw of noComments.split("\n")) {
         const line = raw.trim();
         if (!line.startsWith("|")) {
-            // A blank/non-pipe line after the table ends it (so a later prose table,
-            // if any, never bleeds in).
             if (inTable && line === "") inTable = false;
             continue;
         }
@@ -109,14 +130,12 @@ function parseRoster(src) {
             .replace(/\|$/, "")
             .split("|")
             .map((c) => c.trim());
-        // The header row carries "surface" in cell 0; the separator row is all dashes.
         const isSeparator = cells.every((c) => /^:?-+:?$/.test(c));
         if (isSeparator) {
             inTable = true;
             continue;
         }
         if (cells[0] === "surface") {
-            // header — confirm the column schema is intact + the table is starting
             inTable = true;
             rows.push({ __header: cells });
             continue;
@@ -133,14 +152,7 @@ function parseRoster(src) {
     return rows;
 }
 
-// ── BB.W-GESTALT-GATE2 (WEAK-1 / G1) — content+dimension verify a single capture ─
-// The PASS anti-evasion floor was existsSync + size>0 (a renamed/truncated nonzero
-// PNG sailed through). The hardened floor: a REAL on-disk PNG (magic-byte + ≥1KiB,
-// isRealPng) AND a readable IHDR with sane whole-page dimensions (pngDimensions),
-// AND the viewport token reconciled against the actual pixels (viewportFidelityVerdict
-// for -mobile-; the symmetric -desktop- arm via viewportFidelityVerdictBoth). The
-// dimension read is the load-bearing upgrade — a nonzero-but-broken PNG no longer
-// passes. PURE over a repo-relative path; returns the verdict + the read dims.
+// ── G1 (content+dimension) — preserved BB.W-GESTALT-GATE2 floor ──────────────────
 /**
  * @param {string} repoRelPath repo-relative capture path
  * @returns {{ok:boolean, reason?:string, dims:{w:number,h:number}|null}}
@@ -164,48 +176,76 @@ function verifyCapture(repoRelPath) {
     if (dims.w <= 0 || dims.h <= 0 || dims.w < MIN_CAPTURE_WIDTH || dims.h < MIN_CAPTURE_HEIGHT)
         return {
             ok: false,
-            reason: `${repoRelPath} has degenerate dimensions ${dims.w}×${dims.h} (below the whole-page floor ${MIN_CAPTURE_WIDTH}×${MIN_CAPTURE_HEIGHT}) — a 0×0 / cropped sliver is not a whole-page capture`,
+            reason: `${repoRelPath} has degenerate dimensions ${dims.w}×${dims.h} (below the whole-page floor ${MIN_CAPTURE_WIDTH}×${MIN_CAPTURE_HEIGHT})`,
             dims,
         };
-    // The viewport-fidelity reconcile: the -mobile- arm is the ledger's shared source;
-    // the -desktop- symmetric arm is the gestalt-only addition (G2). A -mobile- IHDR
-    // ≥1000px is a desktop screenshot mislabeled mobile (fraud, never graced); a
-    // -desktop- below 1280px is the symmetric mislabel.
     const fid = viewportFidelityVerdictBoth(bn, dims, viewportFidelityVerdict);
     if (!fid.ok) return { ok: false, reason: fid.reason, dims };
     return { ok: true, dims };
 }
 
-// ── BB.W-GESTALT-GATE2 (WEAK-2 / G2) — the mobile twin of a declared desktop path ─
-// Direction 2b (the viewport-derivation, recorded de-risk): the roster keeps its two
-// DESKTOP capture columns; the gate DERIVES the mobile twin per surface by re-pointing
-// the basename's `-desktop-` viewport token to `-mobile-` (the wf-ba-reflect.js naming
-// convention: <surface>-<mode>-{desktop,mobile}-full.png) and verifies the derived
-// path. No roster schema migration (the COLUMNS parser is untouched); the gate reads
-// all four PNGs (2 desktop declared + 2 mobile derived) per surface.
+// ── The probe region + expect band parse (G5) ───────────────────────────────────
+// probe cell: `x=0.00,y=0.40,w=0.30,h=0.20` → a fractional box ∈ [0,1].
+// expect cell: `meanL=0.85..0.99;meanChroma>=0.01;meanAlpha<0.70` → the pixel band.
+/** @returns {{x:number,y:number,w:number,h:number}|null} */
+function parseProbe(cell) {
+    const m = {};
+    for (const part of cell.split(/[,;]/)) {
+        const kv = part.trim().match(/^([xywh])\s*=\s*([0-9.]+)$/);
+        if (kv) m[kv[1]] = parseFloat(kv[2]);
+    }
+    if (["x", "y", "w", "h"].every((k) => Number.isFinite(m[k]))) return m;
+    return null;
+}
 /**
- * @param {string} desktopRepoRelPath the declared desktop capture path
- * @returns {string|null} the derived mobile twin path, or null if not a -desktop- path
+ * Parse the expect band into predicates. Supports `meanL=lo..hi`, `meanChroma>=v`,
+ * `meanChroma<=v`, `meanAlpha<v`, `meanAlpha>v` (the three pixel axes).
+ * @returns {{key:string, lo?:number, hi?:number, op?:string, val?:number}[]}
  */
-function deriveMobileTwin(desktopRepoRelPath) {
-    const bn = basename(desktopRepoRelPath);
-    if (!/-desktop-/.test(bn)) return null;
-    const mobileBn = bn.replace("-desktop-", "-mobile-");
-    return `${dirname(desktopRepoRelPath)}/${mobileBn}`;
+function parseExpect(cell) {
+    const preds = [];
+    for (const part of cell.split(/[;,]/)) {
+        const t = part.trim();
+        if (!t) continue;
+        let mm;
+        if ((mm = t.match(/^(\w+)\s*=\s*([0-9.]+)\.\.([0-9.]+)$/)))
+            preds.push({ key: mm[1], lo: parseFloat(mm[2]), hi: parseFloat(mm[3]) });
+        else if ((mm = t.match(/^(\w+)\s*(>=|<=|>|<)\s*([0-9.]+)$/)))
+            preds.push({ key: mm[1], op: mm[2], val: parseFloat(mm[3]) });
+    }
+    return preds;
+}
+/** @returns {{ok:boolean, fails:string[]}} */
+function evalBand(stats, preds) {
+    const fails = [];
+    for (const p of preds) {
+        const v = stats[p.key];
+        if (!Number.isFinite(v)) {
+            fails.push(`${p.key} unread`);
+            continue;
+        }
+        if (p.lo !== undefined) {
+            if (v < p.lo || v > p.hi)
+                fails.push(`${p.key} ${v.toFixed(3)} ∉ [${p.lo},${p.hi}]`);
+        } else {
+            const ok =
+                p.op === ">=" ? v >= p.val :
+                p.op === "<=" ? v <= p.val :
+                p.op === ">" ? v > p.val :
+                v < p.val;
+            if (!ok) fails.push(`${p.key} ${v.toFixed(3)} not ${p.op} ${p.val}`);
+        }
+    }
+    return { ok: fails.length === 0, fails };
 }
 
-// ── BB.W-GESTALT-GATE2 (WEAK-3 / G3) — the per-surface freshness header wire ─────
-// Each roster surface owns a per-surface record docs/tranches/BA/audit/reflect/
-// <surface>.md carrying the AZ.W-GATES content-hash freshness header (surface-paths
-// + surface-hash). The header was stamped but checked by ZERO gate (vacuous). This
-// recomputes the hash via the SHARED surfaceHash import (NO re-implementation) and
-// asserts byte-identity: a PASS over a surface whose painting source DRIFTED since
-// capture is stale and reds on the close arm. The grace discipline mirrors the
-// sibling gate: stale/no-header reds under --strict-freshness (the release/close
-// arm), a non-fatal NOTE on the bare mid-tranche arm (the backfill window —
-// W-REFLECT3 owns the re-capture + re-stamp).
+// ── G7 (auto-revoke) — the surface-hash freshness clause, RE-PURPOSED ────────────
+// BB held freshness behind --strict-freshness (an opt-in NOTE on the bare arm). BC
+// makes auto-revoke the DEFAULT: a drifted surface-hash AUTO-REVERTS the verdict to
+// FAIL (not a warning). The per-surface record docs/tranches/BC/audit/reflect/
+// <surface>.md carries the <!-- surface-paths --> + <!-- surface-hash --> header.
 /**
- * @param {string} surface the canonical surface name
+ * @param {string} surface
  * @returns {{state:"fresh"|"stale"|"no-header"|"no-record", reason?:string, recordPath:string}}
  */
 function surfaceFreshness(surface) {
@@ -213,7 +253,7 @@ function surfaceFreshness(surface) {
     if (!existsSync(recordPath))
         return {
             state: "no-record",
-            reason: `the per-surface record docs/tranches/BA/audit/reflect/${surface}.md is absent — the freshness header cannot be read`,
+            reason: `the per-surface record docs/tranches/BC/audit/reflect/${surface}.md is absent — the freshness header cannot be read`,
             recordPath,
         };
     const doc = readFileSync(recordPath, "utf8");
@@ -221,81 +261,139 @@ function surfaceFreshness(surface) {
     return { ...verdict, recordPath };
 }
 
-// ── BB.W-CHIP-GRAZE (CG2) — the chipOverField:false witness on dock + shell ───────
-// The P-1 close-class RECURRED INSIDE its own fix: W-SHELL-RAIL-RESEAT cleared the
-// page-<h1> collision (overlapsH1:false) but its title-only DELTA masked that the
-// re-seat traded the title-collision for a /forms/inputs FIELD-collision — the desktop
-// SidebarDock floating facet carousel still fanned RIGHT into <main> at the utility-seam
-// Y, GRAZING the form field at the narrow-desktop breakpoint (measured chipOverField:true
-// at HEAD). The roster `dock` + `shell` PASS the BA close wrote on the title-fix alone is
-// REVOKED (the CG1 roster re-anchor); this clause is the matching WITNESS requirement:
-// the `dock` + `shell` surface records must carry a MEASURED `chipOverField:false` at the
-// narrow-desktop breakpoint, recorded by W-REFLECT3 on a FRESH capture.
+// ── G8 (no-terminal-reflect deferral scan) — context-aware, NOT a blind regex ────
+// The CHALLENGE-3 self-inconsistency closed: a blind triple-regex could NEVER reach
+// GREEN (the corpus correctly RETIRES the deferral, citing the phrase to abolish it).
+// THREE detectors, all line-scoped:
 //
-// Born-RED by construction (and ["release"]-tagged, never ci-blocking): the live measure
-// is W-REFLECT3's to record (Batch 7 — this wave lands the SOURCE redress + the clause +
-// the roster revocation but cannot render the close capture). At HEAD-of-this-wave the
-// dock + shell records carry the field-graze EVIDENCE (`chipOverField:true`) + the redress
-// note, NOT the fresh `chipOverField:false` close witness — so the witness is absent. AND
-// the witness is honored ONLY when the surface is FRESH: a `chipOverField:false` recorded
-// over a DRIFTED source (the dock surface-hash drifts the moment this wave edits
-// dock-nav.css) is stale — W-REFLECT3 re-captures + re-stamps the surface-hash in lockstep
-// with the fresh measure. So the clause stays RED at HEAD (no witness yet) and flips GREEN
-// only when W-REFLECT3 records the fresh, freshness-verified `chipOverField:false`.
-//
-// Anti-evasion: the witness must be the explicit measured token `chipOverField:false` (the
-// matching `chipOverField:true` HEAD evidence does NOT satisfy it), AND the record must
-// name the narrow-desktop breakpoint context so a bare token cannot false-green a measure
-// taken at a viewport where the chips never reach the field band.
-const CHIP_GRAZE_SURFACES = ["dock", "shell"];
+//   G8a  — forward-deferral: /\brides?\s+(the\s+)?W-REFLECT\d/i. The trailing \d
+//          anchors it to the terminal-reflect target (W-REFLECT3/W-REFLECT2); a bare
+//          "rides BC.W-PAINT-GATE" carries no digit and is never matched (the
+//          /π .* rides/i pattern is DROPPED — redundant + colliding). The (the\s+)?
+//          article tolerance catches the "rides the W-REFLECT3-class close" leak.
+//   G8a-exempt-1 — forensic-quote: a match WITHIN a backtick/double-quote SPAN is a
+//          citation, not an assertion (span-enclosure, not adjacency).
+//   G8a-exempt-2 — RETIRE/forbidden context: a match on a line carrying a retire/
+//          forbidden/abolished marker is the narration that names the phrase to kill it.
+//   G8b  — staged/deferred-verdict: /gestalt verdict\s+(staged|deferred)/i. Born-clean
+//          (the corpus carries zero such phrase); the same two exemptions apply for
+//          symmetry if a future wave forensically quotes it.
+
+const G8A_RE = /\brides?\s+(?:the\s+)?W-REFLECT\d/i;
+const G8B_RE = /gestalt verdict\s+(staged|deferred)/i;
+const RETIRE_RE =
+    /\b(RETIRE[DS]?|forbidden|mechanically forbidden|DECIDED\s*[—-]\s*RETIRE|never a (?:BC )?carry|abolished|zero ["`]?rides?)\b/i;
+
 /**
- * @param {string} surface the canonical surface name
- * @param {"fresh"|"stale"|"no-header"|"no-record"} freshnessState the G3 freshness verdict
- * @returns {{ok:boolean, state:"witnessed-fresh"|"witnessed-stale"|"evidence-only"|"absent", reason?:string}}
+ * G8a-exempt-1 — is the matched substring enclosed in a backtick or double-quote
+ * span on the line? Span-enclosure (the opening quote may sit several words before
+ * the match). Returns true when the match falls inside any `…`/"…" literal.
+ * @param {string} line
+ * @param {number} matchStart the index where the rides?-match begins
  */
-function chipGrazeWitness(surface, freshnessState) {
-    const recordPath = resolve(REFLECT_DIR, `${surface}.md`);
-    if (!existsSync(recordPath))
-        return {
-            ok: false,
-            state: "absent",
-            reason: `the per-surface record docs/tranches/BA/audit/reflect/${surface}.md is absent — the chipOverField witness cannot be read`,
-        };
-    const doc = readFileSync(recordPath, "utf8");
-    // The close witness: the measured chipOverField:false (tolerant of an optional space)
-    // recorded AT the narrow-desktop breakpoint (the band where the reach is worst).
-    const hasFalseWitness = /chipOverField\s*:\s*false/i.test(doc);
-    const namesBreakpoint = /narrow[- ]desktop|1024|1100|1280/i.test(doc);
-    if (!hasFalseWitness)
-        return {
-            ok: false,
-            state: "evidence-only",
-            reason: `record carries no measured \`chipOverField:false\` close witness (the field-graze \`chipOverField:true\` HEAD evidence does not satisfy it) — W-REFLECT3 records the fresh measure`,
-        };
-    if (!namesBreakpoint)
-        return {
-            ok: false,
-            state: "evidence-only",
-            reason: `the \`chipOverField:false\` witness does not name the narrow-desktop breakpoint context (~1024–1280px) — a measure off the worst-case band cannot stand for the close`,
-        };
-    if (freshnessState !== "fresh")
-        return {
-            ok: false,
-            state: "witnessed-stale",
-            reason: `the \`chipOverField:false\` witness is recorded over a STALE source (freshness:${freshnessState}) — the redress edited the surface after the witness; W-REFLECT3 re-captures + re-stamps in lockstep`,
-        };
-    return { ok: true, state: "witnessed-fresh" };
+function withinQuoteSpan(line, matchStart) {
+    // Backtick span: an odd count of backticks BEFORE the match start means the
+    // match opens inside an unclosed `…` span.
+    const ticksBefore = (line.slice(0, matchStart).match(/`/g) || []).length;
+    if (ticksBefore % 2 === 1) return true;
+    // Double-quote span (incl. the *"…"* emphasis form): same odd-count rule. Use a
+    // straight ASCII double-quote.
+    const quotesBefore = (line.slice(0, matchStart).match(/"/g) || []).length;
+    if (quotesBefore % 2 === 1) return true;
+    return false;
+}
+
+/**
+ * Scan one line for a G8 hit. Returns the hit detector + reason, or null.
+ * @param {string} line
+ * @returns {{detector:"G8a"|"G8b", reason:string}|null}
+ */
+function g8ScanLine(line) {
+    const a = line.match(G8A_RE);
+    if (a) {
+        const start = a.index ?? 0;
+        const quoted = withinQuoteSpan(line, start);
+        const retired = RETIRE_RE.test(line);
+        if (!quoted && !retired)
+            return {
+                detector: "G8a",
+                reason: `forward-deferral "${a[0]}" asserts this wave's π/verdict rides a terminal-reflect wave (the BB disease) — a BC verdict is mechanically derived at the wave's OWN close; there is no terminal reflect wave to defer to`,
+            };
+    }
+    const b = line.match(G8B_RE);
+    if (b) {
+        const start = b.index ?? 0;
+        const quoted = withinQuoteSpan(line, start);
+        const retired = RETIRE_RE.test(line);
+        if (!quoted && !retired)
+            return {
+                detector: "G8b",
+                reason: `staged/deferred gestalt verdict "${b[0]}" punts the verdict to a later wave — every BC verdict is mechanically derived at the wave's own close`,
+            };
+    }
+    return null;
+}
+
+/** Recursively collect the *.md files under a dir that match the G8 scope. */
+function g8ScopedFiles() {
+    const files = [];
+    // every docs/tranches/BC/waves/*.md
+    if (existsSync(WAVES_DIR))
+        for (const f of readdirSync(WAVES_DIR))
+            if (f.endsWith(".md")) files.push(join(WAVES_DIR, f));
+    // every docs/tranches/BC/**/PROGRESS*.md
+    const walk = (dir) => {
+        for (const ent of readdirSync(dir, { withFileTypes: true })) {
+            const p = join(dir, ent.name);
+            if (ent.isDirectory()) walk(p);
+            else if (/PROGRESS.*\.md$/.test(ent.name)) files.push(p);
+        }
+    };
+    if (existsSync(TRANCHE_DIR)) walk(TRANCHE_DIR);
+    return [...new Set(files)];
+}
+
+/**
+ * Scan the G8-scoped corpus for forward-deferral / staged-verdict violations.
+ * @returns {{hits:{file:string, line:number, detector:string, reason:string}[], filesScanned:number}}
+ */
+function g8ScanCorpus() {
+    const hits = [];
+    const files = g8ScopedFiles();
+    for (const f of files) {
+        let doc;
+        try {
+            doc = readFileSync(f, "utf8");
+        } catch {
+            continue;
+        }
+        doc.split("\n").forEach((line, i) => {
+            const hit = g8ScanLine(line);
+            if (hit) hits.push({ file: relative(ROOT, f), line: i + 1, ...hit });
+        });
+    }
+    return { hits, filesScanned: files.length };
 }
 
 function detect() {
     const violations = [];
     const facts = {};
 
+    // ── G8 (no-terminal-reflect) — runs ALWAYS, independent of the roster ───────
+    const g8 = g8ScanCorpus();
+    facts.g8FilesScanned = g8.filesScanned;
+    facts.g8Hits = g8.hits;
+    for (const h of g8.hits)
+        violations.push(
+            `[G8-NO-TERMINAL-REFLECT/${h.detector}] ${h.file}:${h.line} — ${h.reason}`,
+        );
+
     if (!existsSync(ROSTER)) {
         violations.push(
             `[ROSTER-PRESENT] the roster ledger is absent at ${relative(ROOT, ROSTER)} — proof:ba-gestalt has no contract to read`,
         );
-        return { facts: { rosterPresent: false }, violations };
+        facts.rosterPresent = false;
+        return { facts, violations };
     }
     facts.rosterPresent = true;
 
@@ -304,51 +402,43 @@ function detect() {
     const malformed = parsed.filter((r) => r.__malformed);
     const data = parsed.filter((r) => !r.__header && !r.__malformed);
 
-    // ── COLUMN-SCHEMA ───────────────────────────────────────────────────────
-    // The header must carry the exact COLUMNS in order (a rename/reorder reds —
-    // the roster's shape is the binding contract W-REFLECT2 drives).
+    // ── COLUMN-SCHEMA ───────────────────────────────────────────────────────────
     const headerOk = header && COLUMNS.every((c, i) => header[i] === c);
     facts.headerColumns = header ?? null;
     if (!headerOk)
         violations.push(
-            `[COLUMN-SCHEMA] the roster header is not the canonical column set [${COLUMNS.join(", ")}] (got ${JSON.stringify(header)}) — a renamed/dropped column breaks the W-REFLECT2 contract`,
+            `[COLUMN-SCHEMA] the roster header is not the canonical column set [${COLUMNS.join(", ")}] (got ${JSON.stringify(header)})`,
         );
 
-    // ── MALFORMED-ROWS ──────────────────────────────────────────────────────
+    // ── MALFORMED-ROWS ──────────────────────────────────────────────────────────
     facts.malformedRows = malformed.length;
     for (const m of malformed)
         violations.push(
             `[WELL-FORMED] a roster row has fewer than ${COLUMNS.length} cells: ${JSON.stringify(m.__malformed)}`,
         );
 
-    // ── COMPLETENESS — every required surface present ───────────────────────
+    // ── G6 (COMPLETENESS — the GROWN roster) ────────────────────────────────────
     const present = new Set(data.map((r) => r.surface));
     facts.surfaces = [...present];
     const missing = REQUIRED_SURFACES.filter((s) => !present.has(s));
     facts.missingSurfaces = missing;
     for (const s of missing)
         violations.push(
-            `[COMPLETENESS] the roster is missing the required surface "${s}" — the full W-REFLECT2 set must be enumerated (a dropped surface cannot be silently omitted)`,
+            `[G6-COMPLETENESS] the roster is missing the BC-touched surface "${s}" — the GROWN set (8 BA + the BC dock/glass/viz/tabs/controls surfaces) must be enumerated (a surface a BC wave paints but the roster omits is the BB roster-never-grew gap)`,
         );
 
-    // ── WELL-FORMED + OPERATIVE — per-row checks ────────────────────────────
+    // ── per-row checks ──────────────────────────────────────────────────────────
     const surfaceVerdicts = {};
-    // BB.W-GESTALT-GATE2 fact blocks (the machine-readable witnesses):
-    const captureDimensions = {}; // surface → { <path>: "WxH" | "BROKEN" }
-    const brokenCaptures = []; // G1: every capture that fails content+dimension verify
-    const viewportFidelity = {}; // G2: surface → all-pass | the failing reason
-    let mobileCapturesRead = 0; // G2: the count of mobile twins located + verified
-    const freshness = {}; // G3: surface → fresh | stale | no-header | no-record
-    const freshnessNotes = []; // G3: bare-arm grace NOTEs (the backfill window)
-    const chipGraze = {}; // CG2: dock|shell → witnessed-fresh | witnessed-stale | evidence-only | absent
+    const captureDimensions = {};
+    const brokenCaptures = [];
+    const pixelStats = {}; // G5: surface → {light, dark} stats or "unread"
+    const freshness = {}; // G7: surface → fresh | stale | no-header | no-record
     let allPass = data.length > 0 && missing.length === 0;
     for (const row of data) {
         const { surface, verdict } = row;
         surfaceVerdicts[surface] = verdict;
         captureDimensions[surface] = {};
-        viewportFidelity[surface] = "pass";
 
-        // verdict ∈ {FAIL, PASS}
         if (!VALID_VERDICTS.has(verdict)) {
             violations.push(
                 `[WELL-FORMED] surface "${surface}" has verdict "${verdict}" — must be one of {FAIL, PASS}`,
@@ -357,7 +447,6 @@ function detect() {
             continue;
         }
 
-        // both mode capture paths declared (non-empty)
         const lightDeclared = row["capture-light"] && row["capture-light"].length > 0;
         const darkDeclared = row["capture-dark"] && row["capture-dark"].length > 0;
         if (!lightDeclared || !darkDeclared) {
@@ -366,211 +455,191 @@ function detect() {
             );
             allPass = false;
         }
-        // ground anchor declared (the FAIL baseline a flip is audited against)
         if (!row["ground-anchor"] || row["ground-anchor"].length === 0) {
             violations.push(
-                `[WELL-FORMED] surface "${surface}" lacks a ground-anchor — the R8 FAIL baseline a flip clears`,
+                `[WELL-FORMED] surface "${surface}" lacks a ground-anchor — the FAIL baseline a flip clears`,
             );
             allPass = false;
         }
 
-        // ── G1 (content+dimension) + G2 (mobile twin + viewport-fidelity) ───
-        // The hardened anti-evasion floor: every declared DESKTOP capture AND its
-        // DERIVED mobile twin must be a real, dimension-correct, viewport-faithful
-        // PNG. Replaces the old existsSync + size>0 floor (a nonzero-but-broken PNG
-        // no longer passes). Runs on a PASS verdict (the operative bar — a FAIL is
-        // not held to the capture floor, it is already not-ok). The captures exist
-        // on disk regardless of verdict, so the dimension facts are recorded for
-        // every PASS surface.
+        // ── G7 (auto-revoke) — runs per surface, AUTO-REVERTS a PASS on drift ────
+        const fr = surfaceFreshness(surface);
+        freshness[surface] = fr.state;
+        if (verdict === "PASS" && fr.state !== "fresh") {
+            violations.push(
+                `[G7-AUTO-REVOKE] surface "${surface}" verdict PASS but freshness ${fr.state}${fr.reason ? ` (${fr.reason})` : ""} — the painting source DRIFTED since capture; the verdict AUTO-REVERTS to FAIL (there is no single authorized flipper — re-capture + re-pixel-read before the close)`,
+            );
+            allPass = false;
+        }
+
+        // ── G5 (PIXEL band) + G1 (content+dimension) ────────────────────────────
+        // Run on a PASS verdict (the operative bar — a FAIL is already not-ok). The
+        // probe + expect cells declare the warm-translucent band; the captured PNG's
+        // pixels MUST fall in it (a hand-typed PASS over a grey capture REDs G5).
+        const probe = parseProbe(row.probe ?? "");
+        const expect = parseExpect(row.expect ?? "");
         if (verdict === "PASS") {
+            if (!probe) {
+                violations.push(
+                    `[G5-PIXEL] surface "${surface}" PASS but the probe cell "${row.probe}" is not a fractional box (x=,y=,w=,h=) — the pixel band cannot be read`,
+                );
+                allPass = false;
+            }
+            if (!expect.length) {
+                violations.push(
+                    `[G5-PIXEL] surface "${surface}" PASS but the expect cell "${row.expect}" declares no band (meanL=lo..hi; meanChroma>=v; meanAlpha<v)`,
+                );
+                allPass = false;
+            }
             for (const col of ["capture-light", "capture-dark"]) {
                 const p = row[col];
                 if (!p) continue;
-                // The DESKTOP declared capture (G1).
                 const dv = verifyCapture(p);
                 captureDimensions[surface][basename(p)] = dv.dims
                     ? `${dv.dims.w}×${dv.dims.h}`
                     : "BROKEN";
                 if (!dv.ok) {
                     brokenCaptures.push(p);
-                    if (/viewport token/.test(dv.reason ?? "")) viewportFidelity[surface] = dv.reason;
                     violations.push(
-                        `[G1-CAPTURE] surface "${surface}" ${col}: ${dv.reason} — a PASS verdict demands a content-real dimension-correct whole-page capture (the existsSync+size>0 rubber-stamp is retired)`,
+                        `[G1-CAPTURE] surface "${surface}" ${col}: ${dv.reason} — a PASS verdict demands a content-real dimension-correct whole-page capture`,
                     );
                     allPass = false;
+                    continue;
                 }
-                // The DERIVED mobile twin (G2 — the BOTH-viewport protocol floor).
-                const mobile = deriveMobileTwin(p);
-                if (mobile) {
-                    const mv = verifyCapture(mobile);
-                    captureDimensions[surface][basename(mobile)] = mv.dims
-                        ? `${mv.dims.w}×${mv.dims.h}`
-                        : "BROKEN";
-                    if (mv.ok) {
-                        mobileCapturesRead += 1;
-                    } else {
-                        brokenCaptures.push(mobile);
-                        if (/viewport token/.test(mv.reason ?? "")) viewportFidelity[surface] = mv.reason;
+                // G5: read the pixels at the probe region + assert the expect band.
+                if (probe && expect.length) {
+                    const stats = pngRegionStats(resolve(ROOT, p), probe);
+                    pixelStats[surface] = pixelStats[surface] || {};
+                    if (!stats) {
+                        pixelStats[surface][col] = "unread";
                         violations.push(
-                            `[G2-MOBILE] surface "${surface}" mobile twin "${mobile}": ${mv.reason} — the gestalt is judged at BOTH viewports the user reads (the 16 mobile captures are HARD, not graced)`,
+                            `[G5-PIXEL] surface "${surface}" ${col} "${p}": the probe region could not be pixel-read (undecodable PNG colour-type or empty region) — the gestalt cannot verify the warm-translucent band`,
+                        );
+                        allPass = false;
+                        continue;
+                    }
+                    pixelStats[surface][col] = {
+                        meanL: +stats.meanL.toFixed(4),
+                        meanChroma: +stats.meanChroma.toFixed(4),
+                        meanAlpha: +stats.meanAlpha.toFixed(4),
+                    };
+                    const band = evalBand(stats, expect);
+                    if (!band.ok) {
+                        violations.push(
+                            `[G5-PIXEL] surface "${surface}" ${col} reads ${band.fails.join(", ")} at the probe region — OUTSIDE the warm-translucent expect band [${row.expect}]; a hand-typed PASS over a grey-or-broken capture is no longer sufficient (the pixel stats are the operative verdict)`,
                         );
                         allPass = false;
                     }
-                } else {
-                    violations.push(
-                        `[G2-MOBILE] surface "${surface}" ${col} "${p}" is not a -desktop- path — the gate cannot derive its mobile twin (the wf-ba-reflect.js <surface>-<mode>-desktop-full.png convention is the gate's mobile-derivation contract)`,
-                    );
-                    allPass = false;
                 }
             }
         } else {
-            // FAIL — the operative state can never be ok with an open FAIL.
-            allPass = false;
-        }
-
-        // ── G3 (the freshness header wire) ──────────────────────────────────
-        // Runs per surface regardless of verdict (a stale capture is a stale
-        // capture). The recomputed hash ≠ the declared hash (or an absent header/
-        // record) reds under --strict-freshness (the close/release arm) and NOTEs
-        // on the bare mid-tranche arm (the backfill window — W-REFLECT3 re-captures
-        // + re-stamps). The freshness header was vacuous (checked by zero gate);
-        // it is now load-bearing.
-        const fr = surfaceFreshness(surface);
-        freshness[surface] = fr.state;
-        if (fr.state === "stale" || fr.state === "no-header" || fr.state === "no-record") {
-            const msg = `surface "${surface}" freshness ${fr.state}${fr.reason ? `: ${fr.reason}` : ""}`;
-            if (STRICT_FRESHNESS) {
-                violations.push(
-                    `[G3-FRESHNESS] ${msg} — the binding-close gate cannot PASS over a stale/header-less surface (re-capture + re-stamp the surface-hash, W-REFLECT3)`,
-                );
-                allPass = false;
-            } else {
-                freshnessNotes.push(
-                    `${msg} — graced on the bare arm (the W-REFLECT3 backfill window); RED under --strict-freshness (the close/release arm).`,
-                );
-            }
-        }
-
-        // ── CG2 (BB.W-CHIP-GRAZE — the chipOverField:false witness) ─────────────
-        // For the dock + shell surfaces (the two the field-graze regression hit): the
-        // record must carry a MEASURED `chipOverField:false` at the narrow-desktop
-        // breakpoint over a FRESH source. Born-RED at HEAD (the witness is absent + the
-        // source is stale once this wave edits the demo shell); W-REFLECT3 records the
-        // fresh measure + re-stamps. The clause is ALWAYS a hard violation on these two
-        // surfaces (mirroring the operative born-RED model — proof:ba-gestalt is the
-        // ["release"]/local-by-design gate, NOT ci, so a born-RED arm never blocks CI).
-        if (CHIP_GRAZE_SURFACES.includes(surface)) {
-            const cg = chipGrazeWitness(surface, fr.state);
-            chipGraze[surface] = cg.state;
-            if (!cg.ok) {
-                violations.push(
-                    `[CG2-CHIP-GRAZE] surface "${surface}": ${cg.reason} — the W-SHELL-RAIL-RESEAT re-seat traded the page-<h1> collision for a /forms/inputs FIELD-collision (chipOverField:true at HEAD); the title-fix PASS is REVOKED until W-REFLECT3 records the fresh chipOverField:false at the narrow-desktop breakpoint (BB.W-CHIP-GRAZE)`,
-                );
-                allPass = false;
-            }
+            allPass = false; // FAIL — the operative state can never be ok with an open FAIL
         }
     }
 
     facts.captureDimensions = captureDimensions;
     facts.brokenCaptures = brokenCaptures;
-    facts.mobileCapturesRead = mobileCapturesRead;
-    facts.viewportFidelity = viewportFidelity;
+    facts.pixelStats = pixelStats;
     facts.freshness = freshness;
-    facts.freshnessNotes = freshnessNotes;
-    facts.chipGraze = chipGraze; // CG2: dock|shell witness state
-    facts.strictFreshness = STRICT_FRESHNESS;
     facts.verdicts = surfaceVerdicts;
     facts.failCount = data.filter((r) => r.verdict === "FAIL").length;
     facts.passCount = data.filter((r) => r.verdict === "PASS").length;
     facts.operativePass = allPass && violations.length === 0;
 
-    // The OPERATIVE result: ok IFF every verdict is PASS (with a resolving capture
-    // pair) AND no structural violation. Born-RED: every verdict is FAIL → not ok.
-    if (!facts.operativePass && violations.length === 0) {
-        // No structural violation, but at least one FAIL verdict — the born-RED
-        // expected state. Record it as the operative-fail (not a malformedness).
-        violations.push(
-            `[OPERATIVE] ${facts.failCount} of ${data.length} roster surfaces hold an open FAIL verdict — the gestalt acceptance bar is not met (W-REFLECT2 flips each to PASS with a fresh on-disk capture pair)`,
-        );
+    if (!facts.operativePass && data.length && malformed.length === 0) {
+        const openFails = facts.failCount;
+        if (openFails > 0 && !violations.some((v) => v.startsWith("[OPERATIVE]")))
+            violations.push(
+                `[OPERATIVE] ${openFails} of ${data.length} roster surfaces hold an open FAIL verdict — the gestalt acceptance bar is not met (each flips to PASS only when a Band-1 wave paints warm-cream + re-captures + the pixel band reads warm-translucent)`,
+            );
     }
 
     return { facts, violations };
 }
 
-// ── BB.W-GESTALT-GATE2 (G4) — the self-test bite rides EVERY run ─────────────────
-// Three synthetic checks evaluated every invocation that MUST flag (the RED-witness
-// inverse, mirroring proof-live-verified-ledger.mjs:692-701). They prove the gate's
-// new clauses are load-bearing — a future agent cannot quietly weaken them. The
-// checks exercise the PURE verdict functions deterministically with no on-disk
-// fixture: (i) a 0×0/unreadable-IHDR capture fails the dimension floor; (ii) a
-// -mobile- basename with a 1280px desktop-class IHDR is the fabricated-viewport
-// class; (iii) a freshness header over a real repo file with an all-zero hash is
-// stale. If any synthetic check fails to flag, the gate reds loudly.
+// ── The self-test bites ride EVERY run (G4 — the gate is un-weakenable) ──────────
+// The synthetic fixtures prove the new clauses are load-bearing. Each MUST flag
+// (the RED-witness inverse); if any fails to flag, the gate reds loudly.
 function selfTest() {
     const checks = [
         {
-            label: "G1 dimension — a 0×0 / unreadable-IHDR capture fails the whole-page dimension floor",
-            // A degenerate 0×0 dims must fail viewportFidelityVerdictBoth's caller floor;
-            // here exercise the dimension predicate directly (the verifyCapture floor).
-            flag:
-                (() => {
-                    const dims = { w: 0, h: 0 };
-                    return dims.w <= 0 || dims.h <= 0 || dims.w < MIN_CAPTURE_WIDTH;
-                })()
-                    ? "flagged"
-                    : null,
+            label: "G5 grey-capture — a probe reading the grey slab (meanL 0.695, chroma 0) is OUTSIDE the warm-translucent band",
+            flag: (() => {
+                const band = parseExpect("meanL=0.85..0.99;meanChroma>=0.01;meanAlpha<0.70");
+                const grey = evalBand({ meanL: 0.695, meanChroma: 0.001, meanAlpha: 0.9 }, band);
+                return !grey.ok ? "flagged" : null;
+            })(),
         },
         {
-            label: "G2 viewport-fidelity — a -mobile- PNG with a 1280px (desktop-class) IHDR is the fabricated-viewport class",
-            flag: viewportFidelityVerdictBoth(
-                "dock-light-mobile-full.png",
-                { w: 1280, h: 721 },
-                viewportFidelityVerdict,
-            ).ok
-                ? null
-                : "flagged",
+            label: "G5 warm-capture — a probe reading warm-translucent (meanL 0.93, chroma 0.04, alpha 0.55) is INSIDE the band (must NOT flag)",
+            // inverse witness: the warm capture must PASS the band (so the check
+            // flags iff the band correctly accepts it).
+            flag: (() => {
+                const band = parseExpect("meanL=0.85..0.99;meanChroma>=0.01;meanAlpha<0.70");
+                const warm = evalBand({ meanL: 0.93, meanChroma: 0.04, meanAlpha: 0.55 }, band);
+                return warm.ok ? "flagged" : null;
+            })(),
         },
         {
-            label: "G2 viewport-fidelity (symmetric) — a -desktop- PNG below the 1280px floor is a crop mislabeled desktop",
-            flag: viewportFidelityVerdictBoth(
-                "dock-light-desktop-full.png",
-                { w: 400, h: 300 },
-                viewportFidelityVerdict,
-            ).ok
-                ? null
-                : "flagged",
+            label: "G6 missing-surface — a roster present-set omitting a BC-painted surface (glass-adaptive) reds completeness",
+            flag: (() => {
+                const present = new Set(REQUIRED_SURFACES.filter((s) => s !== "glass-adaptive"));
+                const missing = REQUIRED_SURFACES.filter((s) => !present.has(s));
+                return missing.includes("glass-adaptive") ? "flagged" : null;
+            })(),
         },
         {
-            label: "G3 freshness — a header over a real repo file (package.json) with an all-zero surface-hash is stale",
-            flag:
-                freshnessVerdict(
+            label: "G7 auto-revoke — a PASS verdict over a STALE source AUTO-REVERTS (a drifted surface-hash reds, no opt-in flag)",
+            flag: (() => {
+                // a header over a real repo file with an all-zero hash is stale
+                const fr = freshnessVerdict(
                     `<!-- surface-paths: package.json -->\n<!-- surface-hash: ${"0".repeat(64)} -->`,
                     ROOT,
-                ).state === "stale"
+                );
+                const verdict = "PASS";
+                // the gate logic: PASS ∧ !fresh → auto-revoke (red)
+                return verdict === "PASS" && fr.state !== "fresh" ? "flagged" : null;
+            })(),
+        },
+        {
+            // G8 negation pair — (i) the real-deferral fixture → RED
+            label: "G8a (i) real-deferral — `this wave's π rides W-REFLECT3` (un-quoted, un-RETIRE) flags forward-deferral",
+            flag: g8ScanLine("this wave's π rides W-REFLECT3")?.detector === "G8a"
+                ? "flagged"
+                : null,
+        },
+        {
+            // (i′) the W-REFLECT3-class close variant → RED (the (the\s+)? tolerance)
+            label: "G8a (i′) class-close variant — `LOCAL-only (rides the W-REFLECT3-class close via the dock verdict)` flags (the intervening `the` + `-class close`)",
+            flag:
+                g8ScanLine("LOCAL-only (rides the W-REFLECT3-class close via the dock verdict)")
+                    ?.detector === "G8a"
                     ? "flagged"
                     : null,
         },
         {
-            // BB.W-CHIP-GRAZE — the CG2 witness must REJECT a `chipOverField:false`
-            // recorded over a STALE source (the redress edits the demo shell, drifting
-            // the surface-hash; a witness on the un-re-captured source cannot stand). The
-            // synthetic exercises the same regex+freshness gating the disk reader uses.
-            label: "CG2 chip-graze — a chipOverField:false witness over a STALE source is rejected (the redress drifts the hash; W-REFLECT3 re-captures)",
+            // (ii) the forensic-quote fixture → GREEN (both exemption arms)
+            label: 'G8a (ii) forensic-quote — `the BB π "rides W-REFLECT3" — DECIDED — RETIRE the deferral` does NOT flag (quote-span AND RETIRE context)',
             flag:
-                (() => {
-                    const doc = "§field-graze: chipOverField:false at the narrow-desktop breakpoint (~1100px)";
-                    const hasFalse = /chipOverField\s*:\s*false/i.test(doc);
-                    const namesBp = /narrow[- ]desktop|1024|1100|1280/i.test(doc);
-                    const staleState = "stale";
-                    // witnessed-but-stale must NOT be ok
-                    return hasFalse && namesBp && staleState !== "fresh" ? "flagged" : null;
-                })(),
+                g8ScanLine('the BB π "rides W-REFLECT3" — DECIDED — RETIRE the deferral') === null
+                    ? "flagged"
+                    : null,
         },
         {
-            label: "CG2 chip-graze — a record with only the chipOverField:true HEAD evidence (no :false witness) fails the close",
-            flag: /chipOverField\s*:\s*false/i.test("the field graze: chipOverField:true at HEAD")
-                ? null
-                : "flagged",
+            // (iii) the sanctioned-idiom fixture → GREEN (no W-REFLECT\d, dropped collision)
+            label: "G8a (iii) sanctioned-idiom — `π readback rides BC.W-PAINT-GATE — the binding paint` does NOT flag (no W-REFLECT\\d; the /π .* rides/i collision is dead)",
+            flag:
+                g8ScanLine("π readback rides BC.W-PAINT-GATE — the binding paint") === null
+                    ? "flagged"
+                    : null,
+        },
+        {
+            // (iv) the staged-verdict fixture → RED
+            label: "G8b (iv) staged-verdict — `gestalt verdict staged for a later wave` flags G8b",
+            flag:
+                g8ScanLine("gestalt verdict staged for a later wave")?.detector === "G8b"
+                    ? "flagged"
+                    : null,
         },
     ];
     const missed = checks.filter((c) => !c.flag).map((c) => c.label);
@@ -585,8 +654,6 @@ function selfTest() {
 
 function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_BA_GESTALT_ARTIFACT", "BA-gestalt");
-    // G4: the self-test bite rides every run BEFORE the real ledger (the gate is
-    // un-weakenable — if the new clauses regress, this reds loudly first).
     const selfTestCount = selfTest();
     const { facts, violations } = detect();
     facts.selfTestChecks = selfTestCount;
@@ -601,30 +668,22 @@ function run() {
         violations,
     });
 
-    console.log("proof:ba-gestalt — the holistic per-surface acceptance roster (P-1 close-class fix, BA.W-GESTALT-GATE; hardened BB.W-GESTALT-GATE2)");
+    console.log("proof:ba-gestalt — the PIXEL-reading, ci-blocking gestalt close oracle (BC.W-GESTALT-FIRST; re-made from BA.W-GESTALT-GATE)");
     console.log(`  roster ledger        : ${facts.rosterPresent ? relative(ROOT, ROSTER) : "ABSENT"}`);
-    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G1 dimension, G2 mobile + symmetric desktop fidelity, G3 freshness-stale, CG2 chip-graze stale/evidence-only)`);
-    console.log(`  freshness mode        : ${facts.strictFreshness ? "STRICT (stale/header-less REDs — the close/release arm)" : "bare (stale/header-less NOTEd — the W-REFLECT3 backfill window)"}`);
+    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, G6 missing-surface, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv)`);
+    console.log(`  G8 no-terminal-reflect: ${facts.g8FilesScanned ?? 0} files scanned — ${(facts.g8Hits ?? []).length ? (facts.g8Hits.length + " DEFERRAL HIT(S)") : "clean (the corpus RETIRES the deferral)"}`);
     if (facts.rosterPresent) {
         console.log(`  surfaces present     : ${(facts.surfaces ?? []).length} (${(facts.surfaces ?? []).join(", ")})`);
         if (facts.missingSurfaces?.length)
             console.log(`  MISSING surfaces     : ${facts.missingSurfaces.join(", ")}`);
         console.log(`  verdicts             : ${facts.passCount ?? 0} PASS / ${facts.failCount ?? 0} FAIL`);
         if (facts.verdicts)
-            for (const [s, v] of Object.entries(facts.verdicts))
-                console.log(`    ${v === "PASS" ? "✓" : "✗"} ${s.padEnd(20)} ${v}  freshness:${facts.freshness?.[s] ?? "?"}`);
-        console.log(`  G1 broken captures   : ${(facts.brokenCaptures ?? []).length}${(facts.brokenCaptures ?? []).length ? " (" + facts.brokenCaptures.join(", ") + ")" : " — all content+dimension verified"}`);
-        console.log(`  G2 mobile read       : ${facts.mobileCapturesRead ?? 0} / 16 mobile twins (BOTH-viewport protocol floor)`);
-        const fidFails = Object.entries(facts.viewportFidelity ?? {}).filter(([, v]) => v !== "pass");
-        console.log(`  G2 viewport fidelity : ${fidFails.length ? fidFails.length + " FABRICATED" : "all-pass"}`);
-        const fr = facts.freshness ?? {};
-        const freshCt = Object.values(fr).filter((s) => s === "fresh").length;
-        console.log(`  G3 freshness         : ${freshCt} fresh / ${Object.values(fr).filter((s) => s !== "fresh").length} stale-or-headerless`);
-        const cgEntries = Object.entries(facts.chipGraze ?? {});
-        if (cgEntries.length)
-            console.log(`  CG2 chipOverField    : ${cgEntries.map(([s, v]) => `${s}=${v}`).join(" ")} (born-RED until W-REFLECT3 records the fresh chipOverField:false at the narrow-desktop breakpoint)`);
-        for (const n of facts.freshnessNotes ?? []) console.log(`  NOTE  ${n}`);
-        console.log(`  operative result     : ${facts.operativePass ? "PASS (8/8 gestalt verdicts hold + content-verified both-viewport fresh)" : "FAIL (born-RED until W-REFLECT3 re-captures + re-stamps the stale surfaces)"}`);
+            for (const [s, v] of Object.entries(facts.verdicts)) {
+                const px = facts.pixelStats?.[s]?.["capture-light"];
+                const pxStr = px && px !== "unread" ? ` L=${px.meanL} chroma=${px.meanChroma} α=${px.meanAlpha}` : "";
+                console.log(`    ${v === "PASS" ? "✓" : "✗"} ${s.padEnd(20)} ${v}  freshness:${facts.freshness?.[s] ?? "?"}${pxStr}`);
+            }
+        console.log(`  operative result     : ${facts.operativePass ? "PASS (every surface paints warm-translucent in the pixel-read over a fresh source)" : "FAIL (born-RED until a Band-1 wave paints warm-cream + re-captures + the pixel band reads warm-translucent)"}`);
     }
     if (violations.length) {
         console.log("\nVIOLATIONS:");
