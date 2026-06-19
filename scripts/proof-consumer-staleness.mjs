@@ -22,6 +22,19 @@
 // Born-RED at HEAD against the speedtest files. Bite: a consumer importing a
 // deleted symbol / a retired subpath → RED; bump the consumer (or retire the
 // stale import) → green.
+//
+// AXIS BOUNDARY (BC.W-FOURIER-DECIDES #12 — extend-in-place record). This gate is
+// the JS-import-resolution axis ONLY — single-axis on purpose. The DISTINCT,
+// SILENT failure of a retired CSS tier-class STRING in consumer MARKUP
+// (`class="cartoon-card"`/`class="glass-subtle"` → renders zero glass, no error)
+// is the SIBLING gate `proof:tier-class-staleness`'s axis (scripts/proof-tier-
+// class-staleness.mjs), which REUSES this gate's constellation walk (CONSUMERS /
+// resolveSibling / skipSibling) for the SAME present-consumer set. The two gates
+// are jointly complete over the staleness surface (JS-import here · CSS-class
+// there) and never re-fork the sibling-resolution machinery. The producer-side
+// CSS-class diagnostic + the consumer PostCSS lint recipe
+// (docs/consumer-evidence/consumer-tier-class-lint.md) close the mechanism gap
+// that let `cartoon-card` render flat silently for an era.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -350,3 +363,6 @@ if (allowedWithTerminal.length)
     );
 else
     console.log(`\n[proof:consumer-staleness] every present-consumer glass-ui import resolves against the current surface.`);
+console.log(
+    "[proof:consumer-staleness] axis boundary (BC.W-FOURIER-DECIDES #12): this gate is the JS-import-resolution axis; the CSS-tier-class-staleness axis (a retired `class=\"cartoon-card\"`/`class=\"glass-subtle\"` in consumer markup) is the sibling gate `proof:tier-class-staleness` (reuses this gate's constellation walk).",
+);

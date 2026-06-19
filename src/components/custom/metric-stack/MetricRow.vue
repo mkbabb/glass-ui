@@ -76,6 +76,20 @@ export interface MetricRowProps {
      * this to their active-row gating (e.g. the metric being sampled).
      */
     active?: boolean;
+    /**
+     * BC.W-CONTROL-CUSTOM (CP1, the speedtest-AX `data-protagonist` fold) —
+     * marks this row as the ONE focal/protagonist metric per surface. When
+     * `true`, the value lifts to the emphasis register (the heavier
+     * `--metric-row-value-weight-emphasis` rung) and a `data-protagonist`
+     * attribute lands on the row so a consumer can re-tint the focal metric.
+     *
+     * This is the ONE focal emphasis event per surface (the W-SUFFUSE
+     * one-color-event proportion) — exactly one row per <MetricStack> should
+     * be the protagonist. The magnitude stays a `--metric-row-*` token read
+     * with a fallback, so a `:root`/per-row override of the emphasis weight
+     * cascades. A bare (`protagonist`-unset) row is byte-identical.
+     */
+    protagonist?: boolean;
     class?: HTMLAttributes["class"];
 }
 
@@ -85,6 +99,7 @@ const props = withDefaults(defineProps<MetricRowProps>(), {
     digitCount: 3,
     colorTinted: false,
     active: false,
+    protagonist: false,
 });
 
 // AZ.W-METRIC-UNIFY — the shared value core (the ONE empty-check + the "—"
@@ -113,6 +128,7 @@ const rowStyle = computed(() => ({
         :class="cn('metric-row', 'result-row', $props.class)"
         :data-color-tinted="colorTinted ? 'true' : 'false'"
         :data-row-active="active ? 'true' : 'false'"
+        :data-protagonist="protagonist ? 'true' : undefined"
         :style="rowStyle"
     >
         <slot name="icon">
@@ -240,7 +256,12 @@ const rowStyle = computed(() => ({
         var(--metric-row-value-clamp-max)
     );
     line-height: 0.95;
-    font-weight: 400;
+    /* BC.W-CONTROL-CUSTOM (CP1) — the value weight reads
+       `--metric-row-value-weight` (default 400, byte-identical). The
+       `[data-protagonist]` rule below lifts it to the emphasis register
+       (`--metric-row-value-weight-emphasis`) — token-first, so a consumer
+       retunes either rung from `:root`/per-row. */
+    font-weight: var(--metric-row-value-weight, 400);
     letter-spacing: var(--type-tracking-tight);
     font-feature-settings: "ss01", "tnum", "lnum";
     font-variant-numeric: tabular-nums lining-nums;
@@ -285,6 +306,18 @@ const rowStyle = computed(() => ({
 
 .metric-row[data-color-tinted="true"] .metric-row__unit {
     color: var(--metric-row-unit-color, var(--phase-color));
+}
+
+/* BC.W-CONTROL-CUSTOM (CP1, the speedtest-AX `data-protagonist` fold) — the
+   focal/protagonist metric lifts to the EMPHASIS register: the value weight rises
+   to `--metric-row-value-weight-emphasis` (default 650, a heavier rung than the
+   bare 400) — token-first, reading the EXISTING `--metric-row-*` cohort, no new
+   magnitude register beyond the emphasis rung. A `:root`/per-row override of
+   either weight token cascades. This is the ONE focal emphasis event per surface
+   (the W-SUFFUSE one-color-event proportion — exactly one protagonist row per
+   stack); a bare (un-protagonist) row is byte-identical (weight unchanged). */
+.metric-row[data-protagonist="true"] .metric-row__value {
+    font-weight: var(--metric-row-value-weight-emphasis, 650);
 }
 
 .metric-row__icon {

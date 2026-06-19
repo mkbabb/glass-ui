@@ -81,6 +81,20 @@
 }
 
 @import "tailwindcss" source("../demo");
+/* BC.W-CUSTOMIZABILITY — the demo dogfoods the library SOURCE (it `@import`s
+   `src/styles/index.css` directly for HMR), so it must also CONTENT-SCAN the
+   library component SOURCE for the utility classes those components render — the
+   functional/sizing utilities (`size-(--search-icon-size)`, `h-(--switch-track-h)`,
+   `controlSizeClass` data seam) that the published library ships via
+   `emitComponentUtilities` (vite.style-assets.ts, dist-only) but that the DEMO dev
+   build would otherwise never generate (the `source("../demo")` scope stops at the
+   demo tree). Scoped to the `.vue` SFCs + the size/variant `.ts` helpers and AWAY
+   from `composables/` + `*.glsl.ts`/`*.wgsl.ts` so the dev candidate-extractor never
+   trips on a shader template literal (the `Missing opening (` trap index.css §EMISSION
+   narrates). */
+@source "../src/components/**/*.vue";
+@source "../src/components/ui/_shared/*.ts";
+@source "../src/components/custom/**/*Variants.ts";
 @import "tw-animate-css";
 /* BB.W-CSS-CRITICAL — the demo's DEV cascade imports the library SOURCE UNION
    (the full index.css) for HMR simplicity; this is the byte-complete union the

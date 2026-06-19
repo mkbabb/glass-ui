@@ -122,6 +122,24 @@
     --dropdown-text-secondary: var(--control-text-sm);
     --dropdown-input-height:   var(--control-h-md);
 
+    /* ── The search-family magnitude rungs (BC.W-SEARCH-CUSTOM) ───────────────
+       The SearchBar/FuzzySearch compound surfaces read these indirection rungs
+       for the glyph / icon-button / result-label magnitudes — so a consumer
+       retunes the WHOLE search family from ONE `:root` override, not a fork of
+       per-element px literals (`w-3.5 h-3.5`, `!h-6 !w-6`, `text-[0.6rem]`). Each
+       DEFAULTS to the existing cohort it replaces, so the bare search surface is
+       byte-identical to HEAD (the substitution-vs-redeclaration discipline — the
+       NAME is search-local, the magnitude stays the `--ui-glyph`/`--control-*`
+       source). NO parallel magnitude ladder: these are aliases onto the cohort.
+         • PRIMARY result label / field font  → `--control-text` (the `text-sm` register).
+         • SECONDARY type-Badge / footnote    → `--control-text-sm` (the `text-xs` register).
+         • the search/clear/expand glyph       → `--ui-glyph-sm` (the chrome 1.4 glyph).
+         • the icon-button hit-box            → `--control-h-xs` (the HEAD `h-6`/`h-7`). */
+    --search-icon-size:           var(--ui-glyph-sm);
+    --search-button-size:         var(--control-h-xs);
+    --search-result-text:         var(--control-text);
+    --search-result-text-secondary: var(--control-text-sm);
+
     --size-icon-btn: 2.5rem;
     --icon-xs: 0.75rem;
     --icon-sm: 0.875rem;

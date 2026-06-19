@@ -8,13 +8,22 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
+import { type ControlSize, switchSizeClass } from '../_shared/useControlSize'
 
-const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<SwitchRootProps & {
+  class?: HTMLAttributes['class']
+  // BC.W-CONTROL-CUSTOM — the shared control-size axis. The Switch geometry is
+  // control-height-DERIVED: the prop re-points `--switch-track-h` off the chosen
+  // `--control-h-*` rung and the rest of the `--switch-*` quad follows.
+  size?: ControlSize
+}>()
 
 const emits = defineEmits<SwitchRootEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  // `size` is a wrapper-only prop — keep it (with `class`) off the forwarded
+  // reka SwitchRoot props.
+  const { class: _, size: _size, ...delegated } = props
 
   return delegated
 })
@@ -30,16 +39,27 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
        `--input` mix. The checked ON-state stays `--primary` (the warm-ink
        signature, UNCHANGED). Checkbox/Radio (16px) take ARM B (allowlist) —
        below the size where glass reads as glass over a flat substrate. -->
+  <!-- BC.W-CONTROL-CUSTOM — the `--switch-*` geometry quad. The anchor
+       `--switch-track-h` defaults to `--control-h-md × 0.6` (resolving the HEAD
+       `h-6` = 1.5rem); `switchSizeClass(size)` re-points it per rung. The thumb,
+       track-width + throw DERIVE from the anchor (no magic literals): the thumb is
+       the track-h minus the 2px×2 border, the track-w the iOS 11/6 aspect, the
+       throw the track-w minus thumb minus border — so `default` resolves the HEAD
+       `w-11` / `h-5 w-5` / `translate-x-5` EXACTLY (byte-identical) and `sm`/`lg`
+       scale the whole geometry in lockstep. The quad inherits to the thumb via the
+       custom-property cascade. -->
   <SwitchRoot
     data-slot="switch"
     v-bind="forwarded"
     :class="cn(
-      'glass-wash glass-specular-track focus-ring peer relative touch-hit-area inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-pill border-2 border-transparent transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-primary data-[state=unchecked]:bg-(--glass-bg-wash)',
+      '[--switch-track-h:calc(var(--control-h-md)*0.6)] [--switch-thumb:calc(var(--switch-track-h)-0.25rem)] [--switch-track-w:calc(var(--switch-track-h)*11/6)] [--switch-throw:calc(var(--switch-track-w)-var(--switch-thumb)-0.25rem)]',
+      'glass-wash glass-specular-track focus-ring peer relative touch-hit-area inline-flex h-(--switch-track-h) w-(--switch-track-w) shrink-0 cursor-pointer items-center rounded-pill border-2 border-transparent transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-primary data-[state=unchecked]:bg-(--glass-bg-wash)',
+      switchSizeClass(props.size),
       props.class,
     )"
   >
     <SwitchThumb
-      :class="cn('pointer-events-none block h-5 w-5 rounded-pill bg-background ring-0 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0')"
+      :class="cn('pointer-events-none block size-(--switch-thumb) rounded-pill bg-background ring-0 data-[state=checked]:translate-x-(--switch-throw) data-[state=unchecked]:translate-x-0')"
       style="box-shadow: var(--shadow-md), var(--glass-highlight); transition: translate var(--spring-snappy-duration) var(--spring-snappy)"
     />
   </SwitchRoot>

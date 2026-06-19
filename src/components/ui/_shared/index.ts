@@ -17,3 +17,10 @@ export type { MenuItemVariants } from "./menuItemVariants";
 // W-MENU-GLASS). The ONE seam — no second axis.
 export { surfaceClass } from "./useSurfaceAxis";
 export type { Surface, SurfaceTier } from "./useSurfaceAxis";
+
+// BC.W-CONTROL-CUSTOM — the shared control-SIZE axis. The `ControlSize` union +
+// the `controlSizeClass` resolver the input register (Input/Switch/Textarea/
+// NumberFieldInput) threads to select a rung of the EXISTING `--control-h-*` /
+// `--control-text` cohort. ONE axis, zero new magnitude register.
+export { controlSizeClass, switchSizeClass } from "./useControlSize";
+export type { ControlSize } from "./useControlSize";

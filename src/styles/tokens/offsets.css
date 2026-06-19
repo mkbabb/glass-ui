@@ -108,6 +108,33 @@
        it claimed to back never read it — PopoverContent paints `p-4` directly), so
        it was an orphan declaration the golden-padding cut prunes. */
     --panel-padding:       0.375rem;
+
+    /* BC.W-OVERLAY-UNIFORM — the token-BACKING of the raw floating-overlay
+       literals (the token-beats-prop seam). Each defaults to the byte-identical
+       HEAD magnitude so a bare overlay is pixel-unchanged; a consumer retunes
+       EVERY overlay's min-width / max-block / tooltip type / select chevron from
+       ONE `:root` override (the uniformity payoff). These are token-backings of
+       EXISTING raw literals (`min-w-32` / `max-h-[60vh]` / tooltip `text-sm` /
+       chevron `opacity-50`) — NOT a new compositing register (the `surface` axis
+       + the φ `--overlay-pad-*` ladder are THREADED, not re-minted). */
+    /* `min-w-32` = 32 × 0.25rem = 8rem — the dropdown/select/context-menu min-width. */
+    --overlay-min-width: 8rem;
+    /* The collision-bounded max-block ceiling the dropdown (`max-h-[60vh]`) +
+       command list (`max-h-[300px]`) read. Defaults to 60vh — the viewport-
+       relative ceiling so a long menu scrolls inside the overlay rather than
+       running off-screen. (The Select precompiled `[data-slot="select-content"]`
+       max-height in select.css is the BA.W-EMISSION consumer-reach floor — KEPT,
+       not threaded here; see the census on-the-line row.) */
+    --overlay-max-block: 60vh;
+    /* The tooltip type rung — the golden quiet caption register (√φ ladder), the
+       token-backing of the bare `text-sm` on TooltipContent (the overlay share of
+       class 3). Defaults to `--type-caption` so the compact tooltip chip reads the
+       house caption scale; a consumer retunes the tooltip type from `:root`. */
+    --tooltip-text: var(--type-caption);
+    /* The Select trigger chevron opacity — the token-backing of the bare
+       `opacity-50` so a consumer retunes the affordance prominence from `:root`. */
+    --select-chevron-opacity: 0.5;
+
     --chart-height-compact: 15rem;
     --chart-height-default: 22.5rem;
     --chart-height-large: 25rem;

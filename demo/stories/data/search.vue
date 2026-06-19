@@ -248,15 +248,38 @@ function formatMatches(indices: number[]): string {
 
             <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
                 <div class="flex flex-col gap-4 rounded-card border border-border bg-card p-4 shadow-cartoon">
+                    <!-- BC.W-SEARCH-CUSTOM — the size hierarchy on the golden
+                         --control-h-* rungs (sm quieter, default the golden pill, lg
+                         the hero field), all warm-cream glass pills off ONE recipe. -->
                     <SearchBar
                         v-model="queryControl"
+                        size="lg"
+                        surface="glass"
                         placeholder="Search the 200-row dataset..."
                         data-testid="search-query"
                     />
+                    <SearchBar
+                        v-model="queryControl"
+                        size="default"
+                        surface="glass"
+                        placeholder="size=default..."
+                        data-testid="search-query-default"
+                    />
+                    <SearchBar
+                        v-model="queryControl"
+                        size="sm"
+                        surface="glass"
+                        placeholder="size=sm..."
+                        data-testid="search-query-sm"
+                    />
 
+                    <!-- BC.W-SEARCH-CUSTOM — the GLASS expand modal (surface=glass →
+                         the warm-cream floating plate, not the prior opaque slab) +
+                         the .glass-menu-row result rows (glass-quiet hover-lift). -->
                     <FuzzySearch
                         :state="searchState"
                         variant="floating"
+                        surface="glass"
                         placeholder="FuzzySearch component query..."
                         :type-label="typeLabel"
                     />

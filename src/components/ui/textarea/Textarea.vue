@@ -11,12 +11,16 @@ import type { HTMLAttributes, TextareaHTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { cn } from '../../../utils'
+import { type ControlSize, controlSizeClass } from '../_shared/useControlSize'
 
 const props = withDefaults(
   defineProps<{
     class?: HTMLAttributes['class']
     defaultValue?: string | number
     modelValue?: string | number
+    // BC.W-CONTROL-CUSTOM — the shared control-size axis (see Input.vue). Selects
+    // a rung of the `--control-h-*` / `--control-text` cohort.
+    size?: ControlSize
     // Element-specific <textarea> attributes typed on the wrapper surface (the
     // rest of the native attribute set still falls through via `v-bind="$attrs"`).
     placeholder?: TextareaHTMLAttributes['placeholder']
@@ -70,6 +74,6 @@ const elementAttrs = computed(() => ({
     data-slot="textarea"
     v-bind="{ ...$attrs, ...elementAttrs }"
     :data-autosize="autosize ? '' : undefined"
-    :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] rounded-field py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
+    :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] rounded-field py-2', controlSizeClass(props.size), autosize ? '' : 'min-h-20', props.class)"
   />
 </template>

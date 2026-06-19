@@ -25,11 +25,17 @@ import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { cn } from '../../../utils'
+import { type ControlSize, controlSizeClass } from '../_shared/useControlSize'
 
 const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
   class?: HTMLAttributes['class']
+  // BC.W-CONTROL-CUSTOM — the shared control-size axis. Selects a rung of the
+  // `--control-h-*` / `--control-text` cohort (sm→shorter+quieter, default→the
+  // golden pill, lg→taller). The magnitudes stay the cohort tokens — a `:root`
+  // override still retunes the absolute height/font.
+  size?: ControlSize
   // Element-specific <input> attributes typed on the wrapper surface — the
   // forms-guide §3 matrix the header documents (the rest of the native
   // attribute set still falls through via `v-bind="$attrs"`).
@@ -78,5 +84,11 @@ const elementAttrs = computed(() => ({
        a second well recipe (the no-fork floor; it coordinates with the BA control-surface
        tier rather than forking). A consumer wanting the pristine glass-quiet well
        overrides --control-surface-bg on an ancestor; the on-glass rung auto-flips per mode. -->
-  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
+  <!-- BC.W-CONTROL-CUSTOM — the bare `text-sm` is dropped (the `.input-pill` recipe
+       supplies `font-size: var(--control-pill-text, --control-text)`, so the type
+       register reads the cohort, not a static literal). `controlSizeClass(size)`
+       re-points the height/font seam per rung. The `file:`-modifier-scoped literal
+       is the file-upload sub-element register (exempt from C1); re-pointed onto the
+       `--control-text-sm` token so it tracks the cohort under `--ui-scale`. -->
+  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] file:border-0 file:bg-transparent file:text-(length:--control-text-sm) file:font-medium', controlSizeClass(props.size), props.class)">
 </template>

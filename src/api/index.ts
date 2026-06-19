@@ -163,6 +163,12 @@ export type { ToggleChipVariants } from "../components/custom/toggle-chip";
 // select). Sourced from `_shared/` which is private-to-ui/ at runtime; the
 // barrel exists so `/api` can pin the canonical type shape.
 export type { MenuItemVariants } from "../components/ui/_shared";
+// `ControlSize` — BC.W-CONTROL-CUSTOM. The shared control-size union the input
+// register (Input / Switch / Textarea / NumberFieldInput) threads as `size?`.
+// Sourced from `_shared/` (the form-family shared home, beside `surfaceClass`);
+// a consumer wrapping a control types its `size` against this instead of
+// redeclaring the `"sm" | "default" | "lg"` union.
+export type { ControlSize } from "../components/ui/_shared";
 
 // ── Sidebar domain ─────────────────────────────────────────────────────────
 // Composable-return canon (`SidebarState`) parallels `ConfiguratorState<T>`.
@@ -538,3 +544,94 @@ export type {
     ConcentricHandle,
     UseConcentricOptions,
 } from "../components/custom/concentric";
+
+// ── The component customization-surface contract (BC.W-CUSTOMIZABILITY-CENSUS) ──
+//
+// THE BINDING BAR (component-customizability.md §0): every published glass-ui
+// component is *fully customizable with reasonable, pragmatic, GOLDEN (like our
+// golden typography) defaults that afford design hierarchy.* A consumer reaches
+// for ANY component on this discovery surface and finds the SAME three-layer
+// customization surface:
+//
+//   PROPS  — the semantic per-instance choices (variant / size / tier / tone),
+//            typed + published here on `@mkbabb/glass-ui/api` (the `*Variants`
+//            types above are exactly this layer). A primary CTA reads bigger +
+//            glassier than a secondary with ONE prop — hierarchy out of the box.
+//   TOKENS — the visual MAGNITUDES (padding / blur / glyph / alpha / hue /
+//            duration) as CSS custom properties a consumer retunes from ONE
+//            `:root` override. A TOKEN beats a prop where a `:root` override
+//            suffices: the `--control-h-{xs,sm,md,lg}` / `--control-text` cohort
+//            (the control box+type), the φ `--overlay-pad-inline/-block` ladder
+//            (the overlay padding), the sqrt-φ `--card-pad-*` ladder, the √φ
+//            `--type-*` / `text-display-*` ladder, `--glass-level` / the
+//            `--glass-bg-*` tiers (the glass magnitude).
+//   SLOTS  — content insertion.
+//
+// AND the BARE component already reads as a proportioned √φ-typography /
+// warm-cream-glass / spring-clocked design (the golden default) — a consumer
+// composes `<Card>` / `<Button>` / `<Dialog>` with zero props and gets the
+// canonical house plate; the size/tier/surface rungs let them EXPRESS hierarchy
+// without per-site hand-tuning.
+//
+// THE FENCES (the discipline a wave adding a customization axis must hold):
+//   - DON'T over-prop. A magnitude a `:root` token already covers does NOT get a
+//     prop (a `padding` prop where `--overlay-pad-inline` suffices is the
+//     anti-pattern). Magnitudes → tokens; semantic choices → props.
+//   - No contrivance. A size/variant/tier axis is added ONLY where the hierarchy
+//     choice is REAL (the input register Input/Switch/Textarea — yes; a hairline
+//     Separator / a 16px checkbox atom — no).
+//   - DRY. Thread the EXISTING register (the `--control-*` cohort, the shared
+//     `Surface` axis, the φ overlay-pad ladder, the √φ type ladder — each ≥2
+//     consumers); ZERO new parallel register.
+//
+// THE CENSUS + THE GATE (the anti-smuggle floor): every published `ui/` +
+// enrolled `custom/` component appears on EXACTLY ONE list — `gold` | `gap` |
+// `token-only-correct` — at `docs/tranches/BC/audit/W-CUSTOMIZABILITY-census.md`,
+// machine-locked by `proof:customizability-census`
+// (`scripts/proof-customizability-census.mjs`, `["local","ci"]`): C1 no hardcoded
+// control type/height off the `--control-*` cohort · C2 overlay golden uniformity
+// (the `surface` axis + the φ `--overlay-pad-*` ladder) · C3 no fork-forced px
+// literal / `!important`-fighting-CVA in a compound · C4 audacious-type-not-
+// starved. A NEW component bearing a customization gap with no census row reds.
+// The captured-paint twin (the golden default + the prop/token retune cascade) is
+// `tests-visual/customizability.spec.ts`. The gate scopes the customization-
+// SURFACE axis; `proof:no-shadcn-default` owns the default-paint vocabulary,
+// `proof:glass-cohesion` the bg-opacity axis — disjoint by clause.
+
+// ── BC.W-OVERLAY-UNIFORM — the floating-overlay surface-axis consumer record ──
+//
+// The shared `Surface` union (published above from `../components/ui/_shared`) is
+// NOW threaded onto the SIX floating overlays that previously LACKED it, so every
+// floating overlay carries the SAME golden customization surface Dialog/Popover/
+// Sheet/Drawer/Toast already expose. ZERO new register — the threads WIDEN the ONE
+// resolver's enrolled set (`proof:surface-axis` W1 no-fork stays GREEN); no symbol
+// is re-published here (the `Surface` export above already covers the new consumers):
+//
+//   <DropdownMenu><DropdownMenuContent surface="veil"> — the busy-backdrop feather
+//   <Select><SelectContent surface="opaque">           — the solid-card escape
+//   <Tooltip><TooltipContent surface="veil">           — the legibility plate
+//   <ContextMenu><ContextMenuContent surface="glass">  — the default glass plate
+//   <Command surface="veil"> (Dialog-hosted: the surface flows through the host)
+//   <HoverCard><HoverCardContent surface="opaque">     — the half-threaded case closed
+//
+// Each defaults to `surface="glass"` (byte-identical to the prior bare
+// `glass-floating` plate). The raw `min-w-32` / `max-h` / tooltip `text-sm` /
+// chevron `opacity-50` literals are token-backed onto `--overlay-min-width` /
+// `--overlay-max-block` / `--tooltip-text` / `--select-chevron-opacity`
+// (`tokens/offsets.css`) — `:root`-overridable magnitudes that retune EVERY overlay
+// in lockstep (the φ `--overlay-pad-inline/-block` ladder is the shared breath
+// cadence). Censused in docs/tranches/BC/audit/W-CUSTOMIZABILITY-census.md (the C2
+// rows moved gap→gold); machine-locked by `proof:customizability-census` C2.
+
+// ── BC.W-SEARCH-CUSTOM — the search field-CHROME variant CVA type surface ─────
+//
+// `SearchVariants` is the CVA-derived prop union for the field-chrome variant the
+// glassified `<SearchBar>`/`<FuzzySearch>` thread (`inline` boxed glass pill ·
+// `bare`/`floating` chromeless). It REPLACES the `!important`-fighting escape the
+// FuzzySearch field carried (CLEANUP-PLAN HOLD-4) with a real CVA rung. The size
+// axis rides the already-published shared `ControlSize`/`controlSizeClass`
+// (surfaced above); the surface axis rides the already-published `Surface`. ZERO
+// new magnitude register — the search-family `--search-*` tokens are indirection
+// rungs defaulting to the `--ui-glyph`/`--control-*` cohort (tokens/sizing.css).
+// Machine-locked by `proof:search-custom` + `proof:customizability-census` C3.
+export type { SearchVariant, SearchVariants } from "../components/custom/search";

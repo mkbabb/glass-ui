@@ -15,6 +15,12 @@ export default { inheritAttrs: false }
 <script setup lang="ts">
 import { NumberFieldInput } from 'reka-ui'
 import { cn } from '../../../utils'
+import { type ControlSize, controlSizeClass } from '../_shared/useControlSize'
+
+// BC.W-CONTROL-CUSTOM — the shared control-size axis (see Input.vue). The stepper
+// input already rode `--control-h-md`; the `size` prop selects the rung off the
+// `--control-h-*` / `--control-text` cohort via the `.input-pill` seam.
+const props = defineProps<{ size?: ControlSize }>()
 
 // `inputmode` is an <input>-specific attribute reka's NumberFieldInput does not
 // type; supply it as a default through a spread (a consumer `$attrs` override
@@ -31,9 +37,14 @@ const defaultAttrs = { inputmode: 'decimal' as const }
        multi-control NumberField box is not a single-line stadium, so it takes the field
        rung, not the `9999px` pill. The `text-center` + flank-padding for the steppers
        overlay the pill base. -->
+  <!-- BC.W-CONTROL-CUSTOM — the explicit `h-(--control-h-md)` + bare `text-sm` are
+       dropped: the `.input-pill` recipe supplies the height (`--control-pill-h`)
+       + font (`--control-pill-text`) off the cohort, and `controlSizeClass(size)`
+       selects the rung. The stepper flank-padding (`px-9`) + `text-center` overlay
+       the pill base, unchanged. -->
   <NumberFieldInput
     v-bind="{ ...defaultAttrs, ...$attrs }"
     data-slot="input"
-    :class="cn('input-pill h-(--control-h-md) rounded-field px-9 py-2 text-sm text-center')"
+    :class="cn('input-pill rounded-field px-9 py-2 text-center', controlSizeClass(props.size))"
   />
 </template>

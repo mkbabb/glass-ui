@@ -11,23 +11,28 @@ import {
 import { SelectScrollDownButton, SelectScrollUpButton } from '.'
 import { cn } from '../../../utils'
 import { useOptionalDockContext } from "../../custom/dock/composables/dockContext"
+// BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
+// φ --overlay-pad-* ladder onto the Select listbox (the overlay golden uniformity).
+// Default `glass` is byte-identical to the prior bare `glass-floating` plate.
+import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
 
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(
-  defineProps<SelectContentProps & { class?: HTMLAttributes['class'] }>(),
+  defineProps<SelectContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(),
   {
     position: 'popper',
     align: 'center',
     collisionPadding: 16,
+    surface: 'glass',
   },
 )
 const emits = defineEmits<SelectContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  const { class: _, surface: __, ...delegated } = props
 
   return delegated
 })
@@ -55,18 +60,20 @@ const dockContext = useOptionalDockContext()
       v-bind="{ ...forwarded, ...$attrs }"
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
+      :data-surface="props.surface"
       data-slot="select-content"
       :class="cn(
-        'relative z-popover min-w-32 overflow-y-auto rounded-panel border text-popover-foreground glass-reveal origin-(--reka-select-content-transform-origin)',
+        'relative z-popover min-w-(--overlay-min-width) overflow-y-auto rounded-panel border text-popover-foreground glass-reveal origin-(--reka-select-content-transform-origin)',
         position === 'popper'
           && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-        'glass-floating',
+        surfaceClass(props.surface, 'floating'),
+        '[--overlay-pad-inline:--spacing(1)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)]',
         props.class,
       )
       "
     >
       <SelectScrollUpButton />
-      <SelectViewport :class="cn('p-1 overflow-y-auto', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width)')">
+      <SelectViewport :class="cn('px-(--overlay-pad-inline) py-(--overlay-pad-block) overflow-y-auto', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width)')">
         <slot />
       </SelectViewport>
       <SelectScrollDownButton />

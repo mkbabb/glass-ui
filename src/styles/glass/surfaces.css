@@ -349,7 +349,14 @@
            font reads `--control-text`, the inline padding scales — so ONE override
            grows the field's height + padding + font in lockstep. Desktop default is
            the identity. */
-        height: var(--control-h-md);
+        /* BC.W-CONTROL-CUSTOM — the height reads the `--control-pill-h` element-
+           override seam, DEFAULTING to the cohort `--control-h-md` so a bare
+           control is byte-identical to HEAD. The shared `controlSizeClass(size)`
+           (_shared/useControlSize.ts) re-points the seam per rung
+           (sm→`--control-h-sm`, lg→`--control-h-lg`), so the `size` prop retunes
+           the field height WITHOUT a recipe fork — ONE substitution rung, the
+           cohort is still the source. */
+        height: var(--control-pill-h, var(--control-h-md));
         border-radius: var(--radius-pill);
         /* AW.W13 — the resting field edge reads as an enclosed control at rest
            (~15%α — ~2× the prior 8% glass-wash floor that vanished on cream). The
@@ -372,7 +379,12 @@
            `--glass-level` knob clarifies it in lockstep with every surface. */
         backdrop-filter: var(--control-surface-blur);
         padding: 0 calc(1rem * var(--ui-scale));
-        font-size: var(--control-text);
+        /* BC.W-CONTROL-CUSTOM — the font reads the `--control-pill-text` seam,
+           DEFAULTING to `--control-text` (byte-identical at unset). The `sm` rung
+           re-points it to `--control-text-sm` (the quieter register); `default`/`lg`
+           keep `--control-text`. This is the C1 close — the input register reads
+           `--control-text` via the recipe, NOT a bare `text-sm` literal. */
+        font-size: var(--control-pill-text, var(--control-text));
         color: var(--foreground);
         transition:
             background-color var(--duration-fast) var(--ease-standard),

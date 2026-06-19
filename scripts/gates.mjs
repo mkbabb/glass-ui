@@ -1716,6 +1716,36 @@ export const GATES = [
         note: "BC.W-FUZZY-HARDEN — glass-ui/search is the canonical client fuzzy pipeline (the VSCode-scorer); HARDEN the dock-composable-ready surface (prefix-cache + multi-token AND + match-index highlighting intact, NO scorer edit — the one-directional fence) + the useAsyncSearch race-guard DECISION (>=2-consumer-OR-BOOK). Bite: a scorer edit / a lost prefix-cache / a missing match-index highlight → RED.",
     },
     {
+        id: "proof:customizability-census",
+        cmd: "proof:customizability-census",
+        tags: ["local", "ci"],
+        note: "BC.W-CUSTOMIZABILITY-CENSUS — the 'fully customizable with golden defaults' structural invariant + the per-component EXACTLY-ONE-LIST census {gold|gap|token-only-correct} (a synthetic bare new component reds). C1 no hardcoded control type/height off the --control-* cohort (CONTROL-CUSTOM); C2 overlay golden uniformity — surface axis + φ --overlay-pad on the 6 center-floated pickers, Sheet/Drawer edge-anchored exempt (OVERLAY-UNIFORM); C3 no fork-forced px literal in a compound component (SEARCH-CUSTOM); C4 audacious-type-not-starved (the tunable hero rung — books to BC.W-HERO-AUDACIOUS, Band 5). + CP1 the data-protagonist MetricRow emphasis. A CUT close oracle; born-RED until ALL four threads land (C4 at Band 5). Bite: a bare text-sm/h-N control / an un-threaded picker / a fork-forced px literal → RED.",
+    },
+    {
+        id: "proof:search-custom",
+        cmd: "proof:search-custom",
+        tags: ["local", "ci"],
+        note: "BC.W-SEARCH-CUSTOM — the SearchBar/FuzzySearch first-principles customization + glassify (de-shadcn'd onto the house registers): size/surface/variant axes + token-backed icon/button/result magnitudes + the .glass-menu-row result register + the glass expand modal + the φ overlay-pad ladder + the variant=bare/floating rung DELETING the !important-fighting-CVA escape (flips census C3). Box-inviolate with FUZZY-HARDEN (a READ of fuzzyMatch only). Bite: a glyph px-literal / a surviving !important CVA escape / a non-.glass-menu-row result → RED.",
+    },
+    {
+        id: "proof:metric-hover",
+        cmd: "proof:metric-hover",
+        tags: ["ci", "release"],
+        note: "BC.W-AX-METRIC-HOVER — the cross-repo speedtest-AX value-lift on the existing .metric-badge:hover slots (--metric-badge-hover-translate -2px + scale 1.04 + --shadow-cartoon-sm), compositor-only, reading the corrected glass rungs. Bite: a non-compositor lift / a missing hover value-lift → RED.",
+    },
+    {
+        id: "proof:fourier-decides",
+        cmd: "proof:fourier-decides",
+        tags: ["local", "ci"],
+        note: "BC.W-FOURIER-DECIDES — the cross-repo fourier process leaf: the two BOOK promotion-trigger records (AtomDiff #4, canvas-anchored-overlay #7 — the ≥2-bar genuinely UNMET, evidence + named trigger) + the no-silent-drop handshake. Pairs with BC.W-FOURIER-ASK (disjoint). Bite: a BOOK without a named promotion trigger / a silent drop → RED.",
+    },
+    {
+        id: "proof:tier-class-staleness",
+        cmd: "proof:tier-class-staleness",
+        tags: ["local", "ci"],
+        note: "BC.W-FOURIER-DECIDES (#12 BUILD-as-gate) — extends the shipped proof:consumer-staleness harness to lint a consumer's stale tier-class references. Bite: a stale tier-class consumer reference un-flagged → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

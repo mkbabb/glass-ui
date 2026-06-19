@@ -35,6 +35,7 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
+            translate var(--duration-fast) var(--ease-standard),
             scale var(--duration-fast) var(--ease-standard);
     }
 
@@ -49,11 +50,17 @@
 
     .metric-badge:hover {
         /* Hover lifts to the `resting` rung — one step up the canonical
-           ladder (audit U.W0.C-c §7.2). */
+           ladder (audit U.W0.C-c §7.2). BC.W-AX-METRIC-HOVER lifts the badge
+           into a tactile VALUE-LIFT: it nudges UP (--metric-badge-hover-translate
+           -2px) + scales a hair more (1.04) + casts the cartoon-sticker offset
+           shadow (--shadow-cartoon-sm) — token-first, so a consumer zeroes the
+           lift from :root (--metric-badge-hover-translate: 0). Compositor-only
+           (translate/scale/box-shadow — proof:no-layout-animation holds). */
         border-color: var(--metric-badge-hover-border, var(--glass-border-resting));
         background: var(--metric-badge-hover-bg, var(--glass-bg-resting));
-        box-shadow: var(--metric-badge-hover-shadow, 0 2px 10px color-mix(in srgb, var(--shadow-color) 12%, transparent), var(--glass-highlight));
-        scale: var(--metric-badge-hover-scale, 1.02);
+        box-shadow: var(--metric-badge-hover-shadow, var(--shadow-cartoon-sm), var(--glass-highlight));
+        translate: 0 var(--metric-badge-hover-translate, -2px);
+        scale: var(--metric-badge-hover-scale, 1.04);
     }
 
     .metric-badge:active {
@@ -212,7 +219,14 @@
         backdrop-filter: var(--glass-blur-floating);
 
         padding: 0 0.75rem;
-        height: 2.25rem;
+        /* BC.W-SEARCH-CUSTOM — the height reads the shared `--control-pill-h`
+           element-override seam (the SAME rung `.input-pill` reads), DEFAULTING to
+           `--control-h-sm` so a bare search bar is byte-identical to the HEAD
+           2.25rem pill. `controlSizeClass(size)` (_shared/useControlSize.ts) re-points
+           the seam per rung (sm→`--control-h-xs`-ish via the cohort, lg→`--control-h-lg`),
+           so the SearchBar/FuzzySearch `size` prop retunes the field height WITHOUT a
+           recipe fork — ONE substitution rung, the cohort is still the source. */
+        height: var(--control-pill-h, var(--control-h-sm));
         max-width: var(--max-width-input);
         width: 100%;
         transition:
@@ -226,7 +240,13 @@
 
     .input-bar-field {
         font-family: var(--font-mono, monospace);
-        font-size: var(--type-small);
+        /* BC.W-SEARCH-CUSTOM — the field font reads the shared `--control-pill-text`
+           seam (the SAME rung `.input-pill` reads), DEFAULTING to `--control-text`
+           (≈ the prior `--type-small` register at scale 1 — byte-near-identical). The
+           `controlSizeClass("sm")` rung re-points it to `--control-text-sm` (quieter);
+           `default`/`lg` keep `--control-text`. So the search field type tracks the
+           cohort under `--ui-scale`, NOT a static `--type-small` literal. */
+        font-size: var(--control-pill-text, var(--control-text));
         background: transparent;
         border: none;
         outline: none;
