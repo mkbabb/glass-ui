@@ -194,6 +194,26 @@
     initial-value: 1;
 }
 
+/* BC.W-ADAPTIVE-RECONCILE — the OBSERVER's measured backdrop relative-luminance, now
+   LOAD-BEARING. `useGlassBackdropLuminance` WRITES `--glass-backdrop-luma` (0..1) on
+   the glass target; the content/overlay/dock `:where()` rules READ it on the RHS of the
+   `--glass-tint-strength` clamp (glass/ladder.css, dock/morph.css) — the continuous
+   driver that lifts the calm 4% floor toward the ≤24% AA ceiling as the measured
+   backdrop brightens past the knee (the iOS-27 dynamic-range shift; apple-ios27.md §1.5).
+   Registered as a typed INHERITING `<number>` (the `--glass-level`/`--progress-crescendo`
+   precedent) so a bare `var()` INTERPOLATES smoothly between sample frames instead of
+   snapping (a per-sample re-paint would flicker the plate). `inherits: true` so the
+   observer's write on the target reaches every descendant glass surface that reads the
+   clamp. `initial-value: 0` is the calm-dark rest: with luma 0 the clamp's luma-ramp is
+   `max(0, …) = 0`, so an unwired surface resolves EXACTLY the floor (the zero-delta calm
+   identity GLASS-IDENTITY pins). This replaces the empty `--glass-backdrop-luma: ;`
+   placeholder declaration (the dead-knob's write-only stub) — the loop now READS. */
+@property --glass-backdrop-luma {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
 /* BB.W-DEEP-GLASS — the OPT-IN deep-glass DEPTH scalar. `--glass-depth` is the
    `--glass-level` TWIN for the deep tier: a typed INHERITING <number> so a host
    sets it on any ancestor to retune the deep tier's depth (the cascading-scalar

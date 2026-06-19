@@ -18,7 +18,7 @@
  * dark companions).
  *
  * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
- * Apple home nav:       saturate(1.8) blur(20px)  (the canonical measure)
+ * Apple home nav:       saturate(1.8) blur(20px)  (the canonical measure; the CEILING)
  * Apple product tiers:  blur(14-20px)             (the band)
  * glass-ui calm ceiling: floating 13px / saturate 1.18  (W-GLASS-CAL dial-back)
  * glass-ui DEEP:        16px / saturate 1.5        (STRICTLY deeper on BOTH axes,
@@ -29,14 +29,39 @@
  * and the warm-cream light-concentration ceiling (AX.W52 D19 — a saturate that
  * over-juices a colored substrate reads as a garish smear) keeps it just-rich.
  * The deepest BLUR carries the "more glass" read; the saturate stays restrained.
+ *
+ * ── The deep-tier BUDGET CALL (BC.W-GLASS-LEGIBILITY-MEASURED L4) ───────────
+ * The deep blur radius is the most expensive idiom glass-ui ships (`backdrop-
+ * filter` cost is super-linear in the radius past ~16px). The wave's call:
+ * STAY at the budget-clearing 16px and BOOK the 18-20px push (toward the live-
+ * measured apple.com nav `blur(20px)` ceiling, research/apple-glass.md §1.1)
+ * behind a recorded `profile:budget` clearance — the full 20px is the BOOKED
+ * successor (apple-ios27.md §1.4 "the full 20px booked"), NOT a silent over-
+ * spend. `--glass-saturate-deep-ceiling` BAKES the apple.com nav saturate 1.8 as
+ * the deep-tier CEILING (the load-bearing term — research/apple-glass.md §4
+ * "saturate 1.5 shipped, bake 1.8 as the deep ceiling"); the shipped
+ * `--glass-saturate-deep` 1.5 sits at the low end (≤ ceiling), warm-aurora-safe.
+ * `proof:glass-legibility` L4 reads BOTH: the 16px-stay is honest IFF the budget
+ * booking is recorded here, and the shipped deep saturate never crosses the 1.8
+ * ceiling. When a `profile:budget` run clears the 18-20px push, the radius
+ * lifts toward 20px on the SAME LERP (the booked successor lands, no recipe edit).
  */
 :root {
     /* The Apple-range deep ENDPOINTS — the radius + saturate the deep tier reaches
        at full depth (`--glass-depth: 1`). The calm `floating` rung (13px / 1.18)
        is the depth-0 floor; the deep recipe LERPs between the two on `--glass-depth`
        so the axis is a genuine driver, not a literal. */
-    --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 13px */
-    --glass-saturate-deep:       1.5;  /* >= 1.5 (toward Apple 1.8), > calm floating 1.18 */
+    --glass-blur-deep-radius:    16px; /* in [14,20], STRICTLY > calm floating 13px;
+                                          BUDGET CALL (L4): stays 16px, the 18-20px push
+                                          toward the apple.com nav ceiling is BOOKED
+                                          behind a recorded profile:budget clearance. */
+    --glass-saturate-deep:       1.5;  /* >= 1.5 (toward Apple 1.8), > calm floating 1.18;
+                                          ≤ --glass-saturate-deep-ceiling (the apple.com
+                                          nav 1.8 bound — never over-shot, L4). */
+    --glass-saturate-deep-ceiling: 1.8; /* the apple.com-nav saturate CEILING, BAKED as
+                                           the deep-tier load-bearing term (research/
+                                           apple-glass.md §4); the deep saturate never
+                                           exceeds it (the warm-cream identity bound). */
 
     /* The deep blur RADIUS — LERPed from the calm floating radius (depth 0) to the
        Apple-deep radius (depth 1) on `--glass-depth`, THEN scaled by the ONE

@@ -249,10 +249,20 @@ const darkBlurResting = darkClassValue(darkArm, "glass-blur-resting");
 const darkBlurFloating = darkClassValue(darkArm, "glass-blur-floating");
 facts.darkBlurResting = darkBlurResting;
 facts.darkBlurFloating = darkBlurFloating;
-// Extract the saturate() multiplier from a blur token value.
+// Extract the saturate() multiplier from a blur token value. BC.W-GLASS-LEGIBILITY-MEASURED
+// (the speedtest-AX BC-W10 fold) — the per-rung saturate is READ THROUGH the named
+// `--glass-saturate-{tier}` knob (`saturate(var(--glass-saturate-{tier}))`) instead of a
+// baked literal, so resolve BOTH forms: a literal `saturate(N)` OR the named token's value
+// re-declared in the SAME .dark arm (the luminosity lift IS the token default in dark).
 const satOf = (v) => {
-    const m = (v ?? "").match(/saturate\(\s*([\d.]+)\s*\)/);
-    return m ? Number(m[1]) : null;
+    const lit = (v ?? "").match(/saturate\(\s*([\d.]+)\s*\)/);
+    if (lit) return Number(lit[1]);
+    const named = (v ?? "").match(/saturate\(\s*var\(\s*--glass-saturate-(\w+)\s*\)\s*\)/);
+    if (named) {
+        const tok = darkArm.match(new RegExp(`--glass-saturate-${named[1]}:\\s*([\\d.]+)`));
+        return tok ? Number(tok[1]) : null;
+    }
+    return null;
 };
 const britOf = (v) => {
     const m = (v ?? "").match(/brightness\(\s*([\d.]+)\s*\)/);
@@ -535,9 +545,14 @@ facts.contentSelfEngageBlock = contentSelfEngage
 add(
     "content-tiers-self-engage-floor",
     contentSelfEngage
-        ? /--glass-tint-strength:\s*var\(--glass-tint-strength-floor\)/.test(contentSelfEngage[1])
+        // BC.W-ADAPTIVE-RECONCILE — the content-tier self-engage floors via the CONTINUOUS
+        // observer driver: the `--glass-tint-strength` value carries the floor token (the
+        // calm-light plate resolves it when the measured --glass-backdrop-luma ≤ knee) and
+        // only EARNS the -aa darken under a bright backdrop. A FLAT floor (pre-RECONCILE)
+        // also satisfies this. The discrete bucket is retired as the strength driver.
+        ? /--glass-tint-strength:[\s\S]*?var\(--glass-tint-strength-floor\)/.test(contentSelfEngage[1])
         : false,
-    "the UNCONDITIONAL content-tier self-engage reads --glass-tint-strength-floor (the sub-perceptual silhouette, NOT the full AA darken — the slides gray-slab fixed)",
+    "the UNCONDITIONAL content-tier self-engage floors at --glass-tint-strength-floor (the calm-light silhouette — the CONTINUOUS observer clamp earns the full AA darken only under a measured bright backdrop; the slides gray-slab fixed)",
 );
 // The bright-bucket / overlay band STILL drives the full AA strength (the G2 floor survives).
 add(

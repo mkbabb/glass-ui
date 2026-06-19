@@ -427,15 +427,23 @@
        ink, which clears ~10:1). */
     :where(.glass-dock) {
         --glass-tint-source: var(--glass-tint-ink);
-        /* BC.W-AUDIT — the scope-7 completion: the dock JOINS the content-tier
-           sub-perceptual FLOOR by default (translucent warm liquid glass, NOT a grey
-           slab), and the FULL AA darken engages ONLY under the genuine bright signal —
-           the `@container --glass-backdrop: light` bucket below, written by the dock's
-           own sampled-luminance observer over a bright backdrop (aurora/DockStage) OR a
-           consumer's explicit bucket. The prior unconditional AA (20% ink-ward) darkened
-           the dock to grey over EVERY calm light page — the iOS-27 dynamic model done
-           wrong (darken-always vs darken-when-bright). The full glass rebuild is BC. */
-        --glass-tint-strength: var(--glass-tint-strength-floor);
+        /* BC.W-ADAPTIVE-RECONCILE — the dock JOINS the continuous observer driver (the
+           literal G2 surface: "darken DYNAMICALLY like iOS 27"). The dock's own
+           `useGlassBackdropLuminance` observer samples the threaded `:background-canvas`
+           (aurora/blob) and WRITES `--glass-backdrop-luma`; this clamp READS it and lerps
+           the plate from the warm-cream floor toward the ≤24% AA ceiling as the field
+           brightens past the knee — deepening over a bright bleed, lifting translucent over
+           a dark trough (the SAME clamp the content/overlay tiers get — ONE axis/driver/
+           signal; the discrete `@container` bucket RETIRED). Calm (luma ≤ knee) → floor. */
+        --glass-tint-strength: clamp(
+            var(--glass-tint-strength-floor),
+            calc(
+                var(--glass-tint-strength-floor) +
+                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
+                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+            ),
+            var(--glass-tint-strength-aa)
+        );
         --dock-fg-on-aurora: var(--glass-tint-ink);
         --muted-foreground: var(--foreground);
     }

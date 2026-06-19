@@ -183,14 +183,25 @@ function detectAxis() {
     // the deep family is a DISTINCT name the calm ladder never reads — assert the
     // calm composed --glass-blur-floating still composes the calm floating radius
     // (NOT the deep radius — a copy-paste that re-pointed it would be the bleed).
-    const calmFloatingComposed =
-        /--glass-blur-floating:\s*blur\(calc\(var\(--glass-blur-floating-radius\)\s*\*\s*var\(--glass-level\)\)\)\s*saturate\(1\.18\)/.test(
+    // BC.W-GLASS-LEGIBILITY-MEASURED (the speedtest-AX BC-W10 fold) — the calm floating
+    // saturate is now READ THROUGH the named --glass-saturate-floating knob (defaulting to
+    // the W52-D19 1.18 literal), so accept BOTH the literal `saturate(1.18)` AND the
+    // substitution `saturate(var(--glass-saturate-floating))` with the token at its 1.18
+    // default. The load-bearing assert is unchanged: the calm composite reads the FLOATING
+    // radius (NOT the deep radius — a copy-paste re-point would be the deep-into-base bleed).
+    const calmFloatingRadiusIntact =
+        /--glass-blur-floating:\s*blur\(calc\(var\(--glass-blur-floating-radius\)\s*\*\s*var\(--glass-level\)\)\)\s*saturate\(/.test(
             tokensSquished,
         );
+    const calmFloatingSatLiteral = /--glass-blur-floating:[^;]*saturate\(1\.18\)/.test(tokensSquished);
+    const calmFloatingSatNamed =
+        /--glass-blur-floating:[^;]*saturate\(var\(--glass-saturate-floating\)\)/.test(tokensSquished) &&
+        /--glass-saturate-floating:\s*1\.18\b/.test(tokensSquished);
+    const calmFloatingComposed = calmFloatingRadiusIntact && (calmFloatingSatLiteral || calmFloatingSatNamed);
     facts.calmFloatingComposedIntact = calmFloatingComposed;
     if (!calmFloatingComposed)
         violations.push(
-            "D3: the calm `--glass-blur-floating` composed token no longer reads `blur(calc(--glass-blur-floating-radius * --glass-level)) saturate(1.18)` (the calm-ladder composite was edited — the deep mint bled into the base)",
+            "D3: the calm `--glass-blur-floating` composed token no longer reads `blur(calc(--glass-blur-floating-radius * --glass-level)) saturate(1.18 | var(--glass-saturate-floating)@1.18)` (the calm-ladder composite was edited — the deep mint bled into the base, or the named floating saturate default drifted off 1.18)",
         );
 
     // D4 — the deep blur COMPOSES var(--glass-level) (the level seam reaches it; a

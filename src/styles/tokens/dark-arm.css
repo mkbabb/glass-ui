@@ -225,12 +225,29 @@
        aurora/page behind reads with chroma + a glow. The blur() RADIUS is the
        light-arm primitive UNTOUCHED (W-GLASS-CAL owns the radius dial-back) — only the
        saturate/brightness COMPANIONS lift here. The lower rungs lift more (they're
-       thinner, the backdrop carries the read); the heavy overlay lifts least. */
-    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.35) brightness(1.18);
-    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.35) brightness(1.16);
-    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.30) brightness(1.14);
-    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.28) brightness(1.10);
-    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(1.22) brightness(1.06);
+       thinner, the backdrop carries the read); the heavy overlay lifts least.
+
+       BC.W-GLASS-LEGIBILITY-MEASURED — the per-rung `--glass-saturate-{tier}` knob
+       (the speedtest-AX BC-W10 fold) is the SAME named register as the light arm
+       (tokens/glass.css), per-mode — the dark identity. The dark values ARE this
+       scope's luminosity lift (wash/quiet 1.35, resting 1.30, floating 1.28, overlay
+       1.22) become the dark token defaults, and each `--glass-blur-{tier}` reads
+       `saturate(var(--glass-saturate-{tier}))` THROUGH — so a `.dark` override re-
+       resolves the rung saturation with ZERO recipe edit, AND the composed dark blur
+       is BYTE-IDENTICAL to the old baked literal. The `brightness()` companions stay
+       baked (this fold mints ONLY the saturate knob). The dark dock/deep saturate stay
+       baked (off-ladder footprint rungs, not part of the {wash..overlay} ladder).
+       Machine-locked by `proof:glass-legibility` L7. */
+    --glass-saturate-wash:     1.35;
+    --glass-saturate-quiet:    1.35;
+    --glass-saturate-resting:  1.30;
+    --glass-saturate-floating: 1.28;
+    --glass-saturate-overlay:  1.22;
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate-wash)) brightness(1.18);
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate-quiet)) brightness(1.16);
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)) brightness(1.14);
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.10);
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay)) brightness(1.06);
     --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(1.30) brightness(1.12);
 
     /* BB.W-DEEP-GLASS — the DARK arm of the OPT-IN deep tier (the luminous-dark
@@ -337,6 +354,15 @@
        `.dark` (mirroring the `--glass-specular` remap above). The lit token
        resolves to the `-dark` alpha on the deeper canvas. */
     --glass-edge-light: var(--glass-edge-light-dark);
+
+    /* BC.W-BLACK-BAR D2 — the DIRECTIONAL rim dark arm (plain per-mode pair, NEVER
+       light-dark() round an inset — MEMORY: the inset-shadow trap). The top
+       catch-light lifts to 0.40 (the dark plate's fill barely separates from the deep
+       page, so the rim is the PRIMARY silhouette device — dark glass glows where light
+       passes; mirrors the --glass-edge-light-dark 0.18→0.22 lift). The bottom warm
+       under-shadow holds at 6% — the shadow grounds the plate in BOTH modes. */
+    --glass-rim-top: inset 0 1px 0 hsl(0 0% 100% / 0.40);
+    --glass-rim-bottom: inset 0 -1px 0 color-mix(in srgb, var(--foreground) 6%, transparent);
 
     /* AW.W23 — the chromatic-fringe + adaptive-tint dark arm. The fringe drops
        to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-

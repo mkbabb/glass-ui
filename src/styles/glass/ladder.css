@@ -211,13 +211,25 @@
        `--glass-tint-strength: 0%`. */
     :where(.glass-floating, .glass-overlay) {
         --glass-tint-source: var(--glass-tint-ink);
-        /* BC.W-AUDIT — the scope-7 completion: the overlay band JOINS the content-tier
-           sub-perceptual FLOOR by default (translucent warm glass), and the FULL AA
-           darken engages ONLY under the bright bucket (the @container --glass-backdrop:
-           light above). The prior unconditional AA (20% ink-ward) collapsed every
-           floating surface to grey over the common calm-light backdrop. The full glass
-           rebuild + the per-band muted/contrast reconciliation is BC. */
-        --glass-tint-strength: var(--glass-tint-strength-floor);
+        /* BC.W-ADAPTIVE-RECONCILE (the fourier-analysis-M Tier-1 #1 fold, CONTINUOUS half)
+           — the OVERLAY band SPECIFICALLY JOINS the continuous observer driver, the SAME
+           clamp the content tiers get. The dropdown/Dialog/Popover/Select-content plate
+           FLOORS to warm-cream when the measured backdrop is calm/dark, and darkens
+           CONTINUOUSLY only under a measured bright backdrop — NOT the binary `@container`
+           bucket jump, NOT a blanket unconditional darken (the retired 4.0.x 20% slab).
+           The `BC.W-AUDIT` pre-fix already closed the UNCONDITIONAL-darken half (the band
+           floored by default); THIS is the continuous earned-darken half. The MEASURED AA
+           bar (the overlay plate clears 4.5:1 WHILE α < 0.86) is GLASS-LEGIBILITY-
+           MEASURED's roster addition — the driver here, the bar there, no double-ownership. */
+        --glass-tint-strength: clamp(
+            var(--glass-tint-strength-floor),
+            calc(
+                var(--glass-tint-strength-floor) +
+                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
+                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+            ),
+            var(--glass-tint-strength-aa)
+        );
         --muted-foreground: var(--foreground);
     }
 
@@ -252,7 +264,28 @@
        mode (the on-glass rungs carry their own light/dark per-mode arms in tokens). */
     :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
         --glass-tint-source: var(--glass-tint-ink);
-        --glass-tint-strength: var(--glass-tint-strength-floor);
+        /* BC.W-ADAPTIVE-RECONCILE — the CONTINUOUS observer-driven darken (the dead-knob
+           closed; req #7). The strength is no longer a flat floor: it is a clamp that
+           READS the observer's measured `--glass-backdrop-luma` and lerps from the calm
+           warm-cream floor toward the ≤24% AA ceiling as the backdrop brightens past the
+           `--glass-backdrop-luma-knee` (the iOS-27 dynamic-range shift, apple-ios27.md
+           §1.5). Over a calm/dark backdrop (luma ≤ knee, the `max(0, …)` ramp → 0) the
+           clamp resolves EXACTLY `--glass-tint-strength-floor` (the GLASS-IDENTITY calm
+           identity, byte-equal); rising luma ramps the lift CONTINUOUSLY; the clamp floors
+           at the 4% identity and ceilings at the bounded AA — never an unconditional 20%
+           slab (the AZ grey-slab is the OPPOSITE of this earned, measured track). This
+           RETIRES the discrete `@container --glass-backdrop: light` bucket as the strength
+           driver — the continuous calc subsumes it (the bucket survives only as a no-
+           `@property` degrade fallback). */
+        --glass-tint-strength: clamp(
+            var(--glass-tint-strength-floor),
+            calc(
+                var(--glass-tint-strength-floor) +
+                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
+                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+            ),
+            var(--glass-tint-strength-aa)
+        );
         --muted-foreground: var(--on-glass-muted);
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }

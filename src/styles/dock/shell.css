@@ -148,10 +148,13 @@
         );
         backdrop-filter: var(--dock-surface-blur);
         border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
-        /* AV.W15 M3 — the full-perimeter `--glass-edge-light` rim rides as the
-           leading inset layer of the dock shadow stack (the navigation-band
-           silhouette catch-light, distinct from the top-only highlight). */
-        box-shadow: var(--glass-edge-light), var(--shadow-dock-override, var(--shadow-dock));
+        /* BC.W-BLACK-BAR D2 — the dock rim is the DIRECTIONAL pair (bright catch-light
+           on the TOP edge, faint warm under-shadow on the BOTTOM — glass-fx.css), the
+           leading inset layers of the dock shadow stack. RETIRES the omnidirectional
+           `--glass-edge-light` ring that fought the (now ≤4% α) `--glass-border-dock`
+           perimeter; the navigation band reads its rim from the SAME corrected token
+           source as cards/dialogs (no dock-local dark rim re-paste). */
+        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--shadow-dock-override, var(--shadow-dock));
     }
 
     /* AW.W2 — the box IS the reveal aperture (clip-reveal one-clock morph).

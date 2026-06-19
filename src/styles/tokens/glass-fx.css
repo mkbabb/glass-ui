@@ -54,6 +54,25 @@
        on text. The `-dark` companion is overridden inside `.dark` mirroring
        the `--glass-specular-dark` precedent. */
     --glass-edge-light:      inset 0 0 0 0.75px hsl(0 0% 100% / 0.18);
+
+    /* BC.W-BLACK-BAR D2 — the DIRECTIONAL rim register (the iOS-27 glass-thickness
+       physics: light catch-light rims the TOP, a faint warm shadow grounds the
+       BOTTOM, so the plate reads as a physical pane lifted off the page — NEVER a
+       dark full-perimeter ink hairline). This RETIRES the load-bearing dark-rim role
+       of the per-rung `--glass-border-*` (now ≤5% α, glass.css): the silhouette is
+       carved by these two stops, not by the perimeter ink.
+         --glass-rim-top: the BRIGHT catch-light on the top edge (the kevinbism
+           `inset 0 1px white` motif; 0.30 α = apple-ios27.md §1.3 community value
+           rgba(255,255,255,0.3)). Subsumes the old omnidirectional white rim RING.
+         --glass-rim-bottom: the FAINT warm under-shadow grounding the plate (the
+           warm-ink that used to ring the whole perimeter, now only the bottom, at a
+           whisper 6% — riding --foreground so it stays warm-not-grey, BA.W-NO-GRAY).
+       Plain per-mode arms — NEVER an inset fragment inside light-dark() (the dark arm
+       re-declares both in dark-arm.css; light-dark() round an inset computes the WHOLE
+       box-shadow to none). The dark arm lifts the top to 0.40 (dark glass glows where
+       light passes) + keeps the bottom under-shadow at 6%. */
+    --glass-rim-top:         inset 0 1px 0 hsl(0 0% 100% / 0.30);
+    --glass-rim-bottom:      inset 0 -1px 0 color-mix(in srgb, var(--foreground) 6%, transparent);
     /* BA.W-DARK-MATERIAL scope 2 — the dark edge/rim is the PRIMARY silhouette device in
        dark. The light register's fill+shadow carry the plate; in dark the fill barely
        separates (the deep page is near-black), so the EDGE + the transmitted glow carry the
@@ -120,8 +139,18 @@
        bucket blocks drive to; the live 4.5:1 readback (proof:adaptive-glass π arm)
        ratifies the exact value. */
     --glass-backdrop:           dark;
-    --glass-backdrop-luma:      ;
     --glass-tint-ink:           var(--foreground);
+
+    /* BC.W-ADAPTIVE-RECONCILE — the ONE retune knob for the continuous observer
+       driver. `--glass-backdrop-luma` (the measured sampled relative-luminance the
+       useGlassBackdropLuminance observer WRITES, registered typed in property-regs.css)
+       is now READ on the RHS of the `--glass-tint-strength` clamp (glass/ladder.css +
+       dock/morph.css): below this knee the plate holds the calm warm-cream floor; above
+       it the strength ramps CONTINUOUSLY toward the ≤24% AA ceiling (the iOS-27 dynamic-
+       range shift, apple-ios27.md §1.5 ~0.6 light threshold). The dead-knob is closed —
+       the loop READS. A consumer raising the knee darkens LATER (a brighter backdrop is
+       tolerated before the lift); the ONE override point for the whole adaptive axis. */
+    --glass-backdrop-luma-knee: 0.6;
     /* AZ.W-ADAPTIVE-AUTO Arm 1 — recalibrated 18% → 20%. The bump strengthens the
        G2 surface-SILHOUETTE darken (ΔL ≈ 0.40 over synthetic white, the plate is
        distinguishable from a bright page behind) while staying bounded ≤ 24% (the

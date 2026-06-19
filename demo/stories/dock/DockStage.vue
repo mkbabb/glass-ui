@@ -18,6 +18,7 @@
 // field with NO opaque card between (the BG-2 lesson). The pause-toggle demo keeps its
 // OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
 // is NOT a transparent tile; it self-stages.
+import { computed, ref, useTemplateRef } from "vue";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 
 withDefaults(
@@ -27,6 +28,18 @@ withDefaults(
     }>(),
     { opacityCeiling: 0.42 },
 );
+
+// BC.W-ADAPTIVE-RECONCILE — thread the shared aurora <canvas> to the docks staged over
+// it so each GlassDock's useGlassBackdropLuminance observer SAMPLES the live field
+// (drawImage + getImageData) and writes `--glass-backdrop-luma`, closing the observer
+// loop on the demo route. Without the canvas the observer falls to the elementsFromPoint
+// static walk, which reads the transparent aurora canvas as < 0.5α and never lands a
+// real luma over the field. <Aurora> exposes its `canvasRef`; we surface it through the
+// scoped slot so each staged dock binds `:background-canvas="backgroundCanvas"`.
+const auroraRef = useTemplateRef<{ canvasRef: HTMLCanvasElement | null }>("auroraRef");
+const backgroundCanvas = computed<HTMLCanvasElement | null>(
+    () => auroraRef.value?.canvasRef ?? null,
+);
 </script>
 
 <template>
@@ -35,14 +48,18 @@ withDefaults(
              construction (the <Aurora> useIntersectionPause + content-visibility
              seam). aria-hidden — purely decorative staging. -->
         <Aurora
+            ref="auroraRef"
             :config="DEFAULT_AURORA_CONFIG"
             :opacity-ceiling="opacityCeiling"
             class="dock-stage-field"
             aria-hidden="true"
         />
-        <!-- The dock demos flow over the shared field. -->
+        <!-- The dock demos flow over the shared field. The scoped slot surfaces the
+             shared aurora <canvas> so each staged dock threads it into its luminance
+             observer (`:background-canvas="backgroundCanvas"`) — closing the observer
+             loop over the live field (BC.W-ADAPTIVE-RECONCILE). -->
         <div class="dock-stage-column">
-            <slot />
+            <slot :background-canvas="backgroundCanvas" />
         </div>
     </div>
 </template>

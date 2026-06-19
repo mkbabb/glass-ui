@@ -91,12 +91,38 @@
        opacity-only register. */
     --glass-blur-dock-radius:     9px;
 
+    /* ── Per-rung SATURATE — the CANONICAL named saturate register (BC.W-GLASS-
+       LEGIBILITY-MEASURED, the speedtest-AX BC-W10 fold) ───────────────────────
+       The saturate term is the LOAD-BEARING glass knob (research/apple-glass.md §4:
+       the apple.com nav rides `saturate(1.8)` — the highest term, blur moderate).
+       Each `--glass-saturate-{tier}` is the library's canonical saturation for that
+       rung — a NAMED, `:root`-overridable input the composed `--glass-blur-{tier}`
+       reads THROUGH, the SAME substitution-vs-redeclaration discipline as the
+       `--glass-opacity-{tier}` alpha register above. A `:root { --glass-saturate-
+       quiet: … }` override re-resolves the rung's saturation with ZERO recipe edit
+       (the speedtest "dark cards" chronic + the apple-glass saturate-as-load-bearing
+       lever). The values here ARE the W52-D19 bake (wash/quiet/resting 1.05,
+       floating 1.18, overlay 1.2) become the token defaults — so the composed blur
+       is BYTE-IDENTICAL to the old baked literal (proof:glass-cal / proof:card-tier-
+       alpha stay GREEN by construction). The deep-tier `--glass-saturate-deep` 1.8
+       ceiling (glass-deep.css) is the upper bound; no rung saturate exceeds it. The
+       dark arm (tokens/dark-arm.css) re-declares this register with the W-DARK-
+       MATERIAL luminosity lift — the SAME named tokens, per-mode (the plain per-mode
+       pair idiom). The brightness() companions stay baked (this fold mints ONLY the
+       saturate knob). Machine-locked by `proof:glass-legibility` L7. */
+    --glass-saturate-wash:     1.05;
+    --glass-saturate-quiet:    1.05;
+    --glass-saturate-resting:  1.05;
+    --glass-saturate-floating: 1.18;
+    --glass-saturate-overlay:  1.2;
+
     /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
        blur(0) (the clean solid floor with the opacity); level>1 → more diffusion.
-       The per-rung `saturate()`/`brightness()` companions are UNTOUCHED (the level
+       The per-rung `saturate()` companion reads the named `--glass-saturate-{tier}`
+       knob (BC.W-GLASS-LEGIBILITY-MEASURED); `brightness()` stays baked (the level
        scales the RADIUS, not the saturation — W52's calm light-concentration). */
-    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.05);
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate-wash));
     /* AV.W15 M1 — the `quiet` rung gained `saturate(1.05) brightness(1.02)`
        so the lower ladder reads with the same saturation life as `resting`+
        (Apple: Liquid Glass concentrates light, it does not desaturate). The
@@ -104,27 +130,34 @@
        between bare `wash` and `resting` without over-brightening the rung.
        The `prefers-reduced-transparency: reduce` bracket at glass.css maps
        `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
-    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05) brightness(1.02);
-    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.05);
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate-quiet)) brightness(1.02);
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));
     /* AX.W52 D19 — the floating/overlay backdrop saturate tamed from 1.4/1.5 to a
        gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; the prior
        1.4–1.5× over-juiced the bleed-through into a garish smear over a colored
        substrate). wash/quiet/resting already sit at 1.05 — untouched. */
-    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.18);
-    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(1.2);
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
     /* Dock blur composes blur() only — no saturate. */
     --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level)));
 
-    /* AX.W52 — the GLASS BUTTON blur. The `glass`/`glass-wash` button variants
-       compose the `.glass-wash` tier (`--glass-blur-wash` = blur(1px)) — a
-       sub-perceptual diffusion authored for a small detail TILE, not a button
-       the user reads as "glass." A button is a hero control: it wants a real
-       glass blur. `--glass-blur-btn` lifts the variant onto the `quiet`-tier
-       radius (10px — a genuine liquid-glass diffusion) with the same gentle
-       `saturate(1.05) brightness(1.02)` light-concentration the quiet rung
-       carries (NOT a colour-juice). The wash TILE tier (MetricCell et al.) keeps
-       its 1px — only the glass BUTTON variants reach for this. */
-    --glass-blur-btn:      blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05) brightness(1.02);
+    /* AX.W52 → BC.W-GLASS-LEGIBILITY-MEASURED — the GLASS BUTTON blur, lifted to
+       the FLOATING-tier "more glass" register. The `glass`/`glass-wash` button
+       variants compose the `.glass-wash` tier (`--glass-blur-wash` = blur(1px)) — a
+       sub-perceptual diffusion authored for a small detail TILE, not a button the
+       user reads as "glass." A button is a hero control: it wants a real glass blur.
+       The AX.W52 landing sat at the quiet-tier 8px/saturate(1.05) — "quieter than
+       even the calm floating tier" (apple-ios27.md §4.2). This wave lifts it to the
+       FLOATING-tier register (apple-ios27.md §5 bake-table "button blur lift to
+       10-13 / 1.18"): the floating radius (13px, in the 10-13 band) + the named
+       `--glass-saturate-floating` knob (1.18) — a genuinely MORE-glass transmissive
+       capsule revealing the craft beneath (the apple-glass SUPERSET: apple.com's web
+       CTA is a SOLID blue capsule, zero blur — research/apple-glass.md §1.4). The
+       `brightness(1.02)` light-concentration the quiet rung carried is KEPT (no
+       colour-juice). Clean break — the old 8px/quiet value is GONE, no alias. The
+       wash TILE tier (MetricCell et al.) keeps its 1px — only the glass BUTTON
+       variants reach for this. Machine-locked by `proof:glass-legibility` L3. */
+    --glass-blur-btn:      blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.02);
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed
@@ -179,21 +212,25 @@
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
 
-    /* Composed borders — foreground-tinted. BA.W-NO-GRAY L3 — the warm RIM
-       re-anchor (G9). The rim IS warm (it rides --foreground, hsl-24 warm ink),
-       but at 8-12% α over a near-white plate it was a near-invisible hairline —
-       the plate had no carved silhouette, reading as a borderless gray rectangle
-       (the user's "no gray ... for cards"). The α lifts a few points per rung so
-       the warm hairline CARVES the silhouette (the WWDC25 "rim that defines the
-       silhouette" device, on the warm-ink register). Still bounded low — the rim
-       is a whisper that defines the edge, never a hard rule. The source stays
-       --foreground (the warm-ink tint, NOT a new color); only the presence lifts. */
-    --glass-border-wash:     color-mix(in srgb, var(--foreground) 11%, transparent);
-    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 13%, transparent);
-    --glass-border-resting:  color-mix(in srgb, var(--foreground) 16%, transparent);
-    --glass-border-floating: color-mix(in srgb, var(--foreground) 19%, transparent);
-    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 22%, transparent);
-    --glass-border-dock:     color-mix(in srgb, var(--foreground) 14%, transparent);
+    /* Composed borders — foreground-tinted. BC.W-BLACK-BAR D2 — the perimeter
+       hairline is RETIRED as the silhouette device. The old 11-22% warm-ink rung
+       borders rode --foreground (oklab L 0.216, near-black warm ink); over a
+       near-white cream plate the full-perimeter hairline read as the user's "wtf
+       is this black bar" — worst on the TOP edge where the bright white catch-light
+       ring sat just inside a dark border (a bright rim and a dark line at war on the
+       SAME edge). The silhouette is now carved by the directional rim
+       (--glass-rim-top catch-light + --glass-rim-bottom under-shadow, glass-fx.css),
+       NOT by this perimeter ink. So each rung drops to ≤5% α — the warm hue stays
+       --foreground (the warm-not-tinted identity, BA.W-NO-GRAY), only the PRESENCE
+       falls below the read-threshold so the hairline can never read as a bar. The
+       +1% on the two heaviest rungs (floating/overlay) holds a faint tier-presence
+       ordering without crossing the threshold (apple-ios27.md §5 "top ≤4%" target). */
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 5%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 4%, transparent);
     --glass-border:          var(--glass-border-quiet);
 
     /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────

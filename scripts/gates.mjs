@@ -1542,6 +1542,30 @@ export const GATES = [
         note: "BC.W-PAINT-GATE — the observer-loop READ clause (Band 0, SYNTHESIS req #7): the decorative-observer dead-knob closed. Asserts the glass-backdrop-luma strength token the observer WRITES is READ on the RHS of a var() in the tint-compose chain (a paint-driving read, not just a write). Device-free CSS-parse gate. Born-RED on HEAD write-only (the token is written by useGlassBackdropLuminance, zero CSS rule reads it into the tint) → GREEN when BC.W-ADAPTIVE-RECONCILE (Band 1) closes the loop in CSS. Self-test bites: write-only → RED, loop-closed → GREEN, unrelated-token → RED. The structural witness that BC.W-ADAPTIVE-RECONCILE closed the observer loop.",
     },
     {
+        id: "proof:black-bar",
+        cmd: "proof:black-bar",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-BLACK-BAR — the D2 'black bar' retired at ONE token source (Band 1). The card border-top dark-rim becomes a DIRECTIONAL catch-light: --glass-rim-top (bright inset, the lit edge) + --glass-rim-bottom (warm under-shadow grounding the plate); the six --glass-border-* rungs drop from 11-22% to <=5% alpha over --foreground (the perimeter is no longer the silhouette device). Plain per-mode dark pair (never light-dark() round an inset — the inset-shadow trap). Born-RED on the 15 HEAD violations. Bite: an 11%+ border rung / a stripped rim-top / a re-pasted dark top inset / a light-dark()-wrapped inset / the dock box-shadow on the retired ring -> RED.",
+    },
+    {
+        id: "proof:glass-identity",
+        cmd: "proof:glass-identity",
+        tags: ["local", "ci"],
+        note: "BC.W-GLASS-IDENTITY — the warm-cream translucent identity floor, gated BIDIRECTIONALLY (Band 1). The historical grey slab oklab(0.695 0.002 0.006 / 0.536) REDs the calm-light band while warm-cream passes — the monotonic-gate blind spot (postmortem/az.md s2 disease root) closed via the SHARED scripts/lib/paint-arm.mjs paintBand. I1 opacity ladder monotone + warm --card chroma > 0.004 + 4% calm floor; I2 the five unconditional :where() rules point --glass-tint-strength at the floor NOT -aa; I3 the bidirectional bound; I4 no unconditional -aa darken survives. Born-RED if the AZ.W-ADAPTIVE-AUTO 5b72fd9b blanket darken is re-planted.",
+    },
+    {
+        id: "proof:adaptive-reconcile",
+        cmd: "proof:adaptive-reconcile",
+        tags: ["local", "ci"],
+        note: "BC.W-ADAPTIVE-RECONCILE — the observer loop CLOSED (Band 1): --glass-backdrop-luma is READ into the --glass-tint-strength clamp (continuous, bounded [4%..20%, <=24% iOS], knee 0.6). ONE axis (--glass-tint-strength) / ONE driver (the observer) / ONE signal (--glass-backdrop-luma). A1 luma-read, A2 typed @property, A3 continuous + A3-overlay overlay-joins, A4 canvas-threaded, A5 bounded. The discrete @container --glass-backdrop:light bucket retired as the strength driver (kept only as the no-@property degrade fallback). Bite: a decorative-write / unconditional-blanket / overlay-left-behind / luma-less-clamp evasion -> RED.",
+    },
+    {
+        id: "proof:glass-legibility",
+        cmd: "proof:glass-legibility",
+        tags: ["local", "ci"],
+        note: "BC.W-GLASS-LEGIBILITY-MEASURED — iOS-27 more-glass-AND-more-legible, MEASURED both-directions (Band 1): every rung clears 4.5:1 WHILE glassy (grey/opaque/thin all RED — the monotonic blind spot closed). L1/L2 calm+bright per-rung contrast + alpha bound, L3/L4 blur+saturate budget with --glass-saturate-deep-ceiling booking, L5 specular in [0.2,0.5], L6 the .glass-floating overlay alpha clamp (< 0.86, the iOS let-content-through), L7 the per-rung --glass-saturate-{wash,quiet,resting,floating,overlay} knobs minted + read-through <=1.8 (the AX BC-W10 fold).",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

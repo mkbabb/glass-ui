@@ -107,7 +107,7 @@ function togglePlay() {
              ONE GL context for the band's decorative staging — the prior per-demo
              collapsible aurora folds INTO the shared field (the pause-toggle keeps
              its OWN functional aurora below, which the toggle genuinely controls). -->
-        <DockStage>
+        <DockStage #default="{ backgroundCanvas }">
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Collapsible (hover to expand)</h2>
             <p class="text-sm text-muted-foreground">
@@ -121,7 +121,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock class="relative z-10">
+                <GlassDock :background-canvas="backgroundCanvas" class="relative z-10">
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
@@ -140,7 +140,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock always-expanded>
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded>
                     <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
                     <DockIconButton
                         :aria-pressed="playing"
@@ -167,7 +167,7 @@ function togglePlay() {
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <!-- import { DockSelectTrigger, DockDropdownTrigger } from "../../../src/components/custom/dock"; -->
-                <GlassDock always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <Select v-model="dockView">
                         <DockSelectTrigger
                             aria-label="Dock view"
@@ -246,7 +246,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock always-expanded>
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded>
                     <DockIconButton aria-label="New"><Plus /></DockIconButton>
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
@@ -372,7 +372,7 @@ function togglePlay() {
                      for measuring the entering-child onset the chronic owes. The short
                      :collapse-delay="600" keeps the capture's collapse-baseline fast.
                      Demo-private test-affordance only; no behavioral change. -->
-                <GlassDock :collapse-delay="600" data-testid="dock-capture">
+                <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-capture">
                     <DockIconButton aria-label="Volume"><Volume2 /></DockIconButton>
                     <div class="flex w-44 items-center px-2">
                         <Slider
@@ -427,7 +427,7 @@ function togglePlay() {
                      morph and lands on the swapped-in control by coordinate is the
                      defect the guard catches. The short :collapse-delay keeps the
                      collapse baseline fast. No behavioral change. -->
-                <GlassDock :collapse-delay="600" data-testid="dock-tap-capture">
+                <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-tap-capture">
                     <DockIconButton aria-label="Skip back"><SkipBack /></DockIconButton>
                     <DockIconButton aria-label="Previous"
                         ><ChevronDown
@@ -499,7 +499,7 @@ function togglePlay() {
             <!-- Host caps --dock-max-inline-size at 28rem so the 14-control row overflows the cap
                  and wraps ON-SCREEN at desktop (the consumer-override the cap token exposes). -->
             <div class="flex justify-center py-6">
-                <GlassDock
+                <GlassDock :background-canvas="backgroundCanvas"
                     overflow="wrap"
                     always-expanded
                     style="--dock-max-inline-size: 28rem"
@@ -530,7 +530,7 @@ function togglePlay() {
                 lockstep on the one dock spring (no jump-cut).
             </p>
             <div class="flex justify-center py-6">
-                <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
+                <GlassDock :background-canvas="backgroundCanvas" overflow="wrap" style="--dock-max-inline-size: 22rem">
                     <DockIconButton aria-label="Home"><Home /></DockIconButton>
                     <DockIconButton aria-label="Search"><Search /></DockIconButton>
                     <DockIconButton aria-label="Add"><Plus /></DockIconButton>
@@ -560,7 +560,7 @@ function togglePlay() {
                 by contract — no width morph).
             </p>
             <div class="flex justify-center py-6">
-                <GlassDock shape="card" layout="grid" class="w-80">
+                <GlassDock :background-canvas="backgroundCanvas" shape="card" layout="grid" class="w-80">
                     <DockIconButton aria-label="Home"><Home /></DockIconButton>
                     <DockIconButton aria-label="Search"><Search /></DockIconButton>
                     <DockIconButton aria-label="Add"><Plus /></DockIconButton>
@@ -600,7 +600,7 @@ function togglePlay() {
                     class="absolute inset-0"
                     aria-hidden="true"
                 />
-                <GlassDock class="relative z-10">
+                <GlassDock :background-canvas="backgroundCanvas" class="relative z-10">
                     <DockBackgroundToggle v-model:paused="bgPaused" />
                     <DockIconButton aria-label="Home"><Home /></DockIconButton>
                     <DockIconButton aria-label="Settings"><Settings /></DockIconButton>

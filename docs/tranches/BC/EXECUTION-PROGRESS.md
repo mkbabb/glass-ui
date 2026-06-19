@@ -28,8 +28,9 @@
 |---|---|---|---|
 | 0-1 | F | PM-BB/BA/AZ/SYNTHESIS | **DONE** — forensics confirmed (4 specs consistent, 29 classes, 8 anchor gates present; req→clause traceability appended to SYNTHESIS.md) |
 | 2 | 0 | GESTALT-FIRST · PAINT-GATE · FOLD-LEDGER | **DONE** — proof:ba-gestalt re-authored ci-blocking pixel-reader (G5-G8, born-RED 13/13 surfaces until Band 1); proof:bc-fold-ledger 213-fold GREEN; paint-arm.mjs + proof:observer-loop born-RED; gates registered + verified (tag-parity/script-parity GREEN). Commit 3f844432→ |
-| 2.5 | 14 | VIRTUAL-WINDOW → TOC-RECONCILE · FUZZY-HARDEN | **NEXT** (early primitives, ‖ Band 1) |
-| 3-7 | 1 | BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → glass fan + ATLAS-FOLD + ACCENT-TONE/METAL-GLOW | **NEXT** (the keystone visual band; first live paint capture lands here) |
+| 2.5 | 14 | VIRTUAL-WINDOW → TOC-RECONCILE · FUZZY-HARDEN | pending (early primitives, ‖ Band 1) |
+| 3-6 | 1 spine | BLACK-BAR → GLASS-IDENTITY → ADAPTIVE-RECONCILE → GLASS-LEGIBILITY-MEASURED | **DONE** — warm-cream floor π-VERIFIED (130/130 both projects, real-GPU); observer loop CLOSED; black-bar retired; grey-slab REDs |
+| 6-7 | 1 fan | GLASS-PRUNE · DESHADCN · SELECTION-CARD · GLASS-GLOW-FIX · ACCENT-TONE · AX-METAL-GLOW · DIALOG-GLASS · BUTTON-GLASS-IOS | **NEXT** (2-batch conflict-free plan, builds on the verified floor) |
 | 7′ | 7 | MOTION-ONE-CLOCK → SPRING-EASE → AFFORDANCE-MAP/TUNABLE-ANIM + SPLIT-CHARS/MOTION-PRESETS | pending |
 | 7.7 | 12 | CUSTOMIZABILITY-CENSUS → CONTROL-CUSTOM/OVERLAY-UNIFORM/SEARCH-CUSTOM + METRIC-HOVER/FOURIER-DECIDES | pending |
 | 8-11 | 2 | DOCK-ENGINE → fan → LIQUID-MORPH/COLLAPSED-BOTH → STACK-RAIL + CTA-SEAT/COCKPIT | pending |

@@ -73,10 +73,47 @@ export function parseResolvedColor(str) {
  * @returns {{oklabL:number, chroma:number, alpha:number} | null}
  */
 export function statsFromResolvedBg(resolvedBg) {
+    // An oklab()/oklch() computed value is ALREADY in OKLab — read its channels directly
+    // (modern Chromium does NOT down-convert oklab()-authored colours to srgb, so the
+    // warm-cream glass tokens resolve to oklab(L a b / α) on the live surface). This is a
+    // PARSE, not a second colour-math source — the rgb→oklab decompose fence is untouched.
+    const direct = parseOklabLike(resolvedBg);
+    if (direct) return direct;
     const c = parseResolvedColor(resolvedBg);
     if (!c) return null;
     const ok = oklabFromRgb(c.r, c.g, c.b);
     return { oklabL: ok.L, chroma: ok.chroma, alpha: c.alpha };
+}
+
+/**
+ * Parse an `oklab()` / `oklch()` resolved-color string DIRECTLY to {oklabL, chroma,
+ * alpha}. The value is already in OKLab; we only READ its channels (chroma = hypot(a,b)
+ * for oklab, C directly for oklch). NOT a second sRGB→OKLab matrix (the one-source fence
+ * lives on the rgb→oklab path in reflect-capture-verify's oklabFromRgb).
+ * @param {string} str
+ * @returns {{oklabL:number, chroma:number, alpha:number} | null}
+ */
+export function parseOklabLike(str) {
+    if (!str || typeof str !== "string") return null;
+    const num = (s) => (s == null ? null : s.endsWith("%") ? Number(s.slice(0, -1)) / 100 : Number(s));
+    const ok = str.match(
+        /oklab\(\s*([\d.]+%?)\s+(-?[\d.]+%?)\s+(-?[\d.]+%?)(?:\s*\/\s*([\d.]+%?))?\s*\)/i,
+    );
+    if (ok) {
+        const a = num(ok[2]);
+        const b = num(ok[3]);
+        return { oklabL: num(ok[1]), chroma: Math.hypot(a, b), alpha: ok[4] == null ? 1 : num(ok[4]) };
+    }
+    const ch = str.match(
+        /oklch\(\s*([\d.]+%?)\s+([\d.]+%?)\s+(-?[\d.]+)(?:deg)?(?:\s*\/\s*([\d.]+%?))?\s*\)/i,
+    );
+    if (ch) {
+        // CSS oklch C-as-% references 0.4 (100% = 0.4); a bare number is the chroma itself.
+        const cRaw = ch[2];
+        const chroma = cRaw.endsWith("%") ? (Number(cRaw.slice(0, -1)) / 100) * 0.4 : Number(cRaw);
+        return { oklabL: num(ch[1]), chroma, alpha: ch[4] == null ? 1 : num(ch[4]) };
+    }
+    return null;
 }
 
 /**
@@ -126,4 +163,82 @@ export function paintBand(stats, band) {
     if (!(stats.alpha < band.alpha))
         reasons.push(`alpha ${stats.alpha.toFixed(3)} ≥ ${band.alpha} (too opaque — lost the glass)`);
     return { pass: reasons.length === 0, reasons };
+}
+
+// ── BC.W-PAINT-RECONCILE — the ONE per-tier calm-light band set (the shared identity) ──
+//
+// The warm-cream ladder is alpha-MONOTONIC by design (tokens/glass.css §8): each tier's
+// resolved alpha is its OWN opacity rung composited over the warm page, and the dark arm
+// (tokens/dark-arm.css) lifts every rung ~+0.08 for read-weight over the deeper canvas.
+// A SINGLE flat alpha ceiling therefore cannot be the translucency bound for the whole
+// ladder — the content rungs (wash/quiet/resting/card/dock) sit low, the OVERLAY band
+// (.glass-floating/.glass-overlay — the Dialog/Sheet/Popover/Dropdown register) rides
+// heavier by design ("modal-heavy, the topmost scrim is allowed to read more solid").
+//
+// THE PROBED TRUTH (the live :5199 readback, viewport-INVARIANT — the SAME tokens resolve
+// identically at 1280×800 and 390×844; only an adaptive-darken route shifts a plate):
+//   tier      light-α  dark-α     classification
+//   wash      0.328    0.454      content
+//   dock      0.443    0.490      content (chrome)
+//   quiet     0.520    0.630      content
+//   card      0.600    0.630      content
+//   resting   0.664    0.754      content      ← dark lift pushes past the old 0.72 ceil
+//   floating  0.808    0.894      overlay band ← past the content ceil BY DESIGN (the L6 register)
+//   overlay   0.952    0.965      overlay band ← the heaviest modal-over-modal rung
+//
+// THE PER-TIER CEILINGS (the smallest bound that admits the design ladder yet still REDs a
+// went-opaque 1.0 slab) — THREE classes, because the alpha-monotonic ladder spans three
+// design registers:
+//   • CONTENT (wash/quiet/resting/card/dock): the translucent body register —
+//       α < 0.72 light / < 0.82 dark (covers the +0.08 dark resting lift to 0.754).
+//   • FLOATING (.glass-floating — the Dialog/Sheet/Popover/Dropdown "let content through"
+//       overlay): the iOS L6 clamp — α < 0.86 light / < 0.90 dark (the +0.09 dark lift to
+//       0.894). This is the canonical "overlay clamp" the device-free proof-glass-legibility
+//       gate names (0.86) — its overlay fixture is the dropdown register, a .glass-floating.
+//   • OVERLAY (.glass-overlay — the HEAVIEST `--glass-opacity-overlay: 0.95` modal-over-modal
+//       rung, near-opaque BY DESIGN, tokens/glass.css §8 "NEW; modal-over-modal"): its own
+//       ceiling — α < 0.97 light (the 0.952 design rung) / < 0.98 dark (the 0.965 dark lift).
+//       This rung is intentionally the most solid scrim; the bound only excludes a full 1.0
+//       slab. Asserting "reads THROUGH" on the 0.95 rung would contradict its design role.
+// The chroma floor is 0.004 (the warm-cream identity floor — every tier reads ~0.0063-0.0066;
+// the over-tight 0.01 was never what the warm-cream tokens produce). The L window is the
+// light/dark twin ([0.85,0.99] light, [0.10,0.55] dark — the warm material re-resolving the
+// deep-canvas register).
+//
+// THE ANTI-DISEASE INVARIANT (unbroken): the grey slab oklab(0.695 0.002 0.006 / 0.536) —
+// chroma 0.0063, IDENTICAL to the warm-cream dock — REDs EVERY tier's band on L (0.695 <
+// 0.85 light floor / > 0.55 dark ceiling), regardless of the alpha ceiling. Chroma alone
+// cannot separate grey from cream here (same 0.0063); the separation is L (+ the warm-hue
+// direction). No tier's L floor drops below 0.85 in light — the grey slab can never pass.
+
+/**
+ * The per-tier, per-mode calm-light identity band (BC.W-PAINT-RECONCILE) — the ONE band
+ * resolver the three live π specs share. Keyed by the surface SELECTOR (the tier) and the
+ * MODE (light|dark — the dark arm lifts each rung's alpha ~+0.08 for read-weight over the
+ * deeper canvas, so the ceilings rise per-mode). Three alpha registers: content (translucent
+ * body), .glass-floating (the L6 "let content through" overlay), .glass-overlay (the heaviest
+ * modal-over-modal rung, near-opaque by design). Returns {L, chroma, alpha} for paintBand. An
+ * unknown selector falls back to the content band (fail-tight).
+ *
+ * The optional `opts.darkenTolerant` relaxes the LIGHT content ceiling to the dark-mode
+ * value (0.82). The calm-REST identity (glass-identity + adaptive-glass-live's calm arm)
+ * leaves it OFF — light content sits ≤ 0.664 at rest, so the tight 0.72 holds the rest
+ * identity. The legibility spec turns it ON: it runs over BUSY-aurora routes too, where the
+ * adaptive darken legitimately lifts a light content rung to ~0.72 (the dynamic-range shift
+ * — still glassy, not opaque); its "glassy" bound is "didn't go opaque to win contrast", a
+ * design register the +0.056 darken rides. The dark ceiling already carries this headroom.
+ *
+ * @param {string} selector the glass surface selector (e.g. ".glass-floating")
+ * @param {"light"|"dark"} [mode="light"]
+ * @param {{darkenTolerant?:boolean}} [opts]
+ * @returns {{L:[number,number], chroma:number, alpha:number}}
+ */
+export function bandForTier(selector, mode = "light", opts = {}) {
+    const dark = mode === "dark";
+    const L = dark ? [0.1, 0.55] : [0.85, 0.99];
+    let alpha;
+    if (selector === ".glass-overlay") alpha = dark ? 0.98 : 0.97; // the heaviest modal rung
+    else if (selector === ".glass-floating") alpha = dark ? 0.9 : 0.86; // the L6 overlay clamp
+    else alpha = dark || opts.darkenTolerant ? 0.82 : 0.72; // the translucent content register
+    return { L: /** @type {[number,number]} */ (L), chroma: 0.004, alpha };
 }

@@ -51,7 +51,7 @@ function replay() {
         <!-- BA.W-STAGE — the CTA-receive demo sits over the ONE shared offscreen-paused
              aurora field (DockStage); the dock + the CTA float over the live field so
              the morph reads as glass-into-glass. NO net-new GL context (one-GL-per-route). -->
-        <DockStage>
+        <DockStage #default="{ backgroundCanvas }">
             <section class="flex flex-col gap-4">
                 <h2 class="text-subheading">External CTA morphs into the dock</h2>
                 <p class="text-sm text-muted-foreground max-w-prose">
@@ -83,7 +83,7 @@ function replay() {
                     <Button v-else variant="default" @click="replay">Replay</Button>
 
                     <!-- The dock with the target control. -->
-                    <GlassDock always-expanded class="relative z-10">
+                    <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">
                         <DockIconButton aria-label="Foundations"><Compass /></DockIconButton>
                         <DockIconButton aria-label="Primitives"><Shapes /></DockIconButton>
                         <DockIconButton aria-label="Containers"><Boxes /></DockIconButton>

@@ -65,8 +65,12 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 // ── 1. The backdrop probe exists (witness 1 head) ──────────────────────────────
 add(
     "backdrop-probe-minted",
-    /--glass-backdrop:\s*dark\b/.test(tokens) && /--glass-backdrop-luma:/.test(tokens),
-    "--glass-backdrop: dark (zero-delta default) + --glass-backdrop-luma minted in tokens.css",
+    /--glass-backdrop:\s*dark\b/.test(tokens) &&
+        // BC.W-ADAPTIVE-RECONCILE — the luma is now a registered typed @property (the
+        // load-bearing continuous driver), replacing the empty `--glass-backdrop-luma: ;`
+        // stub. Either the registration OR a plain declaration satisfies the mint.
+        (/@property\s+--glass-backdrop-luma\b/.test(tokens) || /--glass-backdrop-luma:/.test(tokens)),
+    "--glass-backdrop: dark (zero-delta default) + --glass-backdrop-luma minted in tokens.css (registered @property — the continuous observer driver)",
 );
 add(
     "warm-ink-token-minted",
@@ -131,13 +135,19 @@ add(
 // busy-bright G2 floor still clears 4.5:1 (the live π adaptive-glass-live spec, bright
 // signal engaged). So this witness now asserts the CONTENT-TIER FLOOR shape (the
 // unconditional self-engage reads the floor token), NOT the old unconditional full AA.
+// BC.W-ADAPTIVE-RECONCILE — the content-tier self-engage now floors via the CONTINUOUS
+// observer driver (the clamp that floors at --glass-tint-strength-floor + READS the
+// measured --glass-backdrop-luma toward the -aa ceiling), retiring the discrete bucket as
+// the strength driver. The block body must carry the floor token (the calm-light plate
+// resolves it when luma ≤ knee) AND the luma read (the earned continuous darken). A FLAT
+// `var(--glass-tint-strength-floor)` (pre-RECONCILE) still satisfies the floor clause.
 const ladderSelfEngage = glass.match(
-    /:where\(\s*\.glass-card,\s*\.glass-resting,\s*\.glass-quiet,\s*\.glass-wash\s*\)\s*\{([\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:\s*var\(--glass-tint-strength-floor\)[\s\S]*?)\}/,
+    /:where\(\s*\.glass-card,\s*\.glass-resting,\s*\.glass-quiet,\s*\.glass-wash\s*\)\s*\{([\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink\)[\s\S]*?--glass-tint-strength:[\s\S]*?var\(--glass-tint-strength-floor\)[\s\S]*?)\}/,
 );
 add(
     "content-tiers-self-engage",
     Boolean(ladderSelfEngage),
-    ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) self-engages the SUB-PERCEPTUAL --glass-tint-strength-floor unconditionally (BA scope-7 recalibration — the calm-light card stays warm, the slides gray-slab fixed; the FULL AA darken gates on the bright bucket)",
+    ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) self-engages the calm-light --glass-tint-strength-floor (the CONTINUOUS observer-driven clamp floors here when luma ≤ knee, earns the -aa darken only under a measured bright backdrop — the slides gray-slab fixed; the discrete bucket retired as the strength driver)",
 );
 // The muted body register lift MOVED into the bright-bucket condition (where the plate
 // actually darkens to the full AA). On the calm-light content-tier floor the caption

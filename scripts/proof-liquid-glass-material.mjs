@@ -247,12 +247,23 @@ function run() {
         }
 
         // 2c. The floating/overlay saturate ≤ 1.2 (the tamed backdrop juice).
-        const floatSat = num(
-            /--glass-blur-floating:[^;]*saturate\(\s*([\d.]+)\s*\)/,
-        );
-        const overlaySat = num(
-            /--glass-blur-overlay:[^;]*saturate\(\s*([\d.]+)\s*\)/,
-        );
+        //   BC.W-GLASS-LEGIBILITY-MEASURED (the speedtest-AX BC-W10 fold) — the per-rung
+        //   saturate is now READ THROUGH the named --glass-saturate-{tier} knob; resolve
+        //   BOTH a literal `saturate(N)` AND the `saturate(var(--glass-saturate-{tier}))`
+        //   substitution (the token default IS the tamed value the AX.W52 bound asserts).
+        const satOf = (tier) => {
+            const composed = (tok.match(new RegExp(`--glass-blur-${tier}:[^;]*`)) || [""])[0];
+            const lit = composed.match(/saturate\(\s*([\d.]+)\s*\)/);
+            if (lit) return Number(lit[1]);
+            const named = composed.match(/saturate\(\s*var\(\s*--glass-saturate-(\w+)\s*\)\s*\)/);
+            if (named) {
+                const m = tok.match(new RegExp(`--glass-saturate-${named[1]}:\\s*([\\d.]+)`));
+                return m ? Number(m[1]) : NaN;
+            }
+            return NaN;
+        };
+        const floatSat = satOf("floating");
+        const overlaySat = satOf("overlay");
         facts.floatingSaturate = floatSat;
         facts.overlaySaturate = overlaySat;
         if (!(floatSat <= 1.2)) {

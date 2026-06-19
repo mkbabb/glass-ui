@@ -59,7 +59,7 @@ const morph = useDockOrientationMorph({
 });
 
 // ── The SHIPPED default — the arm-c View-Transitions crossfade ──────────────────
-// The orientation state the VT crossfade swaps. The `<GlassDock>` swap (vertical ↔
+// The orientation state the VT crossfade swaps. The `<GlassDock :background-canvas="backgroundCanvas">` swap (vertical ↔
 // horizontal) is wrapped in `startViewTransition`, so the compositor crossfades the
 // before/after snapshots — budget-clearing, deterministic (a state flip), bidirectional.
 const vtOrientation = ref<"vertical" | "horizontal">("vertical");
@@ -139,7 +139,7 @@ onMounted(() => {
              the shared, offscreen-paused DockStage field (replacing the prior static
              gradient wash); the goo-bridge threshold already occludes the topology
              reflow, so a moving backdrop only helps. ONE GL context for the route. -->
-        <DockStage>
+        <DockStage #default="{ backgroundCanvas }">
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Vertical ↔ horizontal liquid-glass morph</h2>
             <p class="text-small text-muted-foreground">
@@ -193,7 +193,7 @@ onMounted(() => {
             >
                 <!-- ── The SHIPPED arm-c View-Transitions crossfade ── -->
                 <template v-if="!liquidPreview">
-                    <GlassDock
+                    <GlassDock :background-canvas="backgroundCanvas"
                         v-if="vtOrientation === 'vertical'"
                         orientation="vertical"
                         always-expanded
@@ -211,7 +211,7 @@ onMounted(() => {
                             <component :is="e.icon" />
                         </DockIconButton>
                     </GlassDock>
-                    <GlassDock
+                    <GlassDock :background-canvas="backgroundCanvas"
                         v-else
                         orientation="horizontal"
                         always-expanded
@@ -284,7 +284,7 @@ onMounted(() => {
                     <!-- The two REAL DOM docks, crossfading under the goo veneer. The
                          vertical collapses its height while the horizontal grows its width,
                          both off the ONE scalar. -->
-                    <GlassDock
+                    <GlassDock :background-canvas="backgroundCanvas"
                         orientation="vertical"
                         always-expanded
                         class="dock-morph-pane dock-morph-pane--liquid relative z-10"
@@ -304,7 +304,7 @@ onMounted(() => {
                         </DockIconButton>
                     </GlassDock>
 
-                    <GlassDock
+                    <GlassDock :background-canvas="backgroundCanvas"
                         orientation="horizontal"
                         always-expanded
                         class="dock-morph-pane dock-morph-pane--liquid absolute z-10"

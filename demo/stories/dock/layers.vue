@@ -60,7 +60,7 @@ function back() {
              shared, offscreen-paused aurora field (DockStage); the flat bg-card/40
              panels become transparent `.dock-stage-tile` framed slots so the
              DockLayerGroup glass floats over the live field. -->
-        <DockStage>
+        <DockStage #default="{ backgroundCanvas }">
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Drill-in navigation</h2>
             <p class="text-small text-muted-foreground">
@@ -70,7 +70,7 @@ function back() {
                 active layer = {{ activeLayer }}
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="activeLayer"
                         :show-rail="false"
@@ -126,7 +126,7 @@ function back() {
                 consumer #2; the reka Arrow-key roving stays).
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
                         draggable
@@ -155,7 +155,7 @@ function back() {
                 inherits the dock's vertical orientation without a duplicate prop.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock
+                <GlassDock :background-canvas="backgroundCanvas"
                     orientation="vertical"
                     always-expanded
                     shape="rounded"
@@ -198,7 +198,7 @@ function back() {
                 — no second engine, no double-animated pixels.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock fit-content data-testid="dock-nested-collapsible">
+                <GlassDock :background-canvas="backgroundCanvas" fit-content data-testid="dock-nested-collapsible">
                     <DockLayerGroup
                         v-model:active="nestedLayer"
                         data-testid="dock-nested-collapsible-group"
@@ -232,7 +232,7 @@ function back() {
                 cleanly without fighting <code class="rounded bg-muted px-1">max-height</code>.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock
+                <GlassDock :background-canvas="backgroundCanvas"
                     orientation="vertical"
                     always-expanded
                     shape="rounded"

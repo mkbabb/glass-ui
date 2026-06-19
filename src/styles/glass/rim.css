@@ -67,12 +67,20 @@
     .glass-card,
     .glass-specular-track,
     .dock-icon-button {
-        /* the resolved rim ring INK (white-α light / lifted-white-α dark — the
-           SAME stop the `--glass-edge-light` token carries; the `.dark` arm below
-           re-points it). The accent mixes ONTO this ink. */
-        --glass-rim-ink: hsl(0 0% 100% / 0.18);
-        --glass-material-rim: inset 0 0 0 0.75px
-            color-mix(in oklab, var(--glass-rim-ink), var(--glass-accent) var(--glass-accent-strength));
+        /* BC.W-BLACK-BAR D2 — the rim ring is now DIRECTIONAL: the top catch-light
+           (`--glass-rim-top`, glass-fx.css) carries the white-α ink the old
+           omnidirectional ring carried (0.30 light / 0.40 dark — the dark arm
+           re-points it via dark-arm.css), and the bottom under-shadow
+           (`--glass-rim-bottom`) grounds the plate. The accent (BB.W-GLASS-ACCENT)
+           still mixes ONTO the top catch-light ink so the chromatic rim reads on the
+           lit edge; at 0% strength the mix resolves byte-identical to the bare
+           `--glass-rim-top`. `--glass-rim-ink` is the resolved top-ink stop (kept as
+           the accent-compose seam — the `.dark` arm below re-points it). */
+        --glass-rim-ink: hsl(0 0% 100% / 0.30);
+        --glass-material-rim:
+            inset 0 1px 0
+                color-mix(in oklab, var(--glass-rim-ink), var(--glass-accent) var(--glass-accent-strength)),
+            var(--glass-rim-bottom);
         /* the per-rung border ink, accent-composed. `--glass-border-rung` is set by
            each rung at its own declaration (it reads the rung's `--glass-border-*`
            token); the accent mixes onto it so the BORDER half of the rim carries the
@@ -92,9 +100,11 @@
     .dark .glass-card,
     .dark .glass-specular-track,
     .dark .dock-icon-button {
-        /* the dark rim ink is the lifted-α base (`--glass-edge-light-dark` stop) so
-           the accent composes off the dark silhouette device (W-DARK-MATERIAL). */
-        --glass-rim-ink: hsl(0 0% 100% / 0.22);
+        /* BC.W-BLACK-BAR D2 — the dark top catch-light ink is the lifted 0.40 stop
+           (mirroring the dark `--glass-rim-top`, dark-arm.css) so the accent composes
+           off the dark silhouette device (W-DARK-MATERIAL): dark glass needs a
+           brighter rim to read over the deep canvas. */
+        --glass-rim-ink: hsl(0 0% 100% / 0.40);
     }
 
 }

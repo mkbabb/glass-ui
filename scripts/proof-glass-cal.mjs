@@ -134,18 +134,41 @@ export function detectBlur() {
     // ── B3 — the wrong axis untouched (anti-overreach). The base composed tokens
     //   keep their saturate()/brightness() companions + --glass-level scaling; the
     //   dark-arm.css companions keep their dark saturate/brightness values.
+    //
+    //   BC.W-GLASS-LEGIBILITY-MEASURED (the speedtest-AX BC-W10 fold) — the per-rung
+    //   saturate companion is now READ THROUGH the named `--glass-saturate-{tier}`
+    //   knob (`saturate(var(--glass-saturate-{tier}))`) instead of a baked literal, so
+    //   a `:root` override re-resolves the rung saturation with ZERO recipe edit. The
+    //   companion is PRESERVED, not drifted: the composed string reads the named token,
+    //   AND the named token DEFAULTS to the original W52-D19 literal (so the resolved
+    //   blur is BYTE-IDENTICAL). B3 asserts BOTH — the substitution form is the
+    //   sanctioned shape, and `--glass-saturate-{tier}` carries the unchanged default.
+    //   A drifted DEFAULT (e.g. quiet → 1.30) reds B3 exactly as a baked drift would.
     const expectCompanions = [
-        { tok: "glass-blur-wash", re: /--glass-blur-wash:\s*blur\(calc\(var\(--glass-blur-wash-radius\) \* var\(--glass-level\)\)\) saturate\(1\.05\)/ },
-        { tok: "glass-blur-quiet", re: /--glass-blur-quiet:\s*blur\(calc\(var\(--glass-blur-quiet-radius\) \* var\(--glass-level\)\)\) saturate\(1\.05\) brightness\(1\.02\)/ },
-        { tok: "glass-blur-resting", re: /--glass-blur-resting:\s*blur\(calc\(var\(--glass-blur-resting-radius\) \* var\(--glass-level\)\)\) saturate\(1\.05\)/ },
-        { tok: "glass-blur-floating", re: /--glass-blur-floating:\s*blur\(calc\(var\(--glass-blur-floating-radius\) \* var\(--glass-level\)\)\) saturate\(1\.18\)/ },
-        { tok: "glass-blur-overlay", re: /--glass-blur-overlay:\s*blur\(calc\(var\(--glass-blur-overlay-radius\) \* var\(--glass-level\)\)\) saturate\(1\.2\)/ },
+        { tok: "glass-blur-wash", radius: "wash", sat: "wash", satDefault: "1.05", bright: null },
+        { tok: "glass-blur-quiet", radius: "quiet", sat: "quiet", satDefault: "1.05", bright: "1.02" },
+        { tok: "glass-blur-resting", radius: "resting", sat: "resting", satDefault: "1.05", bright: null },
+        { tok: "glass-blur-floating", radius: "floating", sat: "floating", satDefault: "1.18", bright: null },
+        { tok: "glass-blur-overlay", radius: "overlay", sat: "overlay", satDefault: "1.2", bright: null },
     ];
-    for (const { tok, re } of expectCompanions) {
-        const ok = re.test(glassTokens);
+    const satDefaultRe = (tier, value) =>
+        new RegExp(`--glass-saturate-${tier}:\\s*${value.replace(".", "\\.")}\\s*;`);
+    for (const { tok, radius, sat, satDefault, bright } of expectCompanions) {
+        // the composed string reads the radius × --glass-level AND the named saturate
+        // knob, with the brightness() companion (if any) intact (radius-only axis).
+        const brightArm = bright ? ` brightness\\(${bright.replace(".", "\\.")}\\)` : "";
+        const composedRe = new RegExp(
+            `--${tok}:\\s*blur\\(calc\\(var\\(--glass-blur-${radius}-radius\\) \\* var\\(--glass-level\\)\\)\\) saturate\\(var\\(--glass-saturate-${sat}\\)\\)${brightArm}`,
+        );
+        const composedOk = composedRe.test(glassTokens);
+        // the named saturate knob DEFAULTS to the unchanged W52-D19 literal (byte-equiv).
+        const defaultOk = satDefaultRe(sat, satDefault).test(glassTokens);
+        const ok = composedOk && defaultOk;
         facts.companions[tok] = ok;
-        if (!ok) {
-            violations.push(`B3: the composed --${tok} token's saturate()/brightness() companion + --glass-level scaling drifted (the dial-back must touch the RADIUS axis ONLY)`);
+        if (!composedOk) {
+            violations.push(`B3: the composed --${tok} token's saturate()/brightness() companion + --glass-level scaling drifted (must read saturate(var(--glass-saturate-${sat})) with the brightness companion + radius axis intact — the dial-back must touch the RADIUS axis ONLY)`);
+        } else if (!defaultOk) {
+            violations.push(`B3: the --glass-saturate-${sat} default drifted off ${satDefault} (the named knob must default to the W52-D19 bake so the composed blur is byte-identical — a drifted default is a saturate dial-back the radius-only fence forbids)`);
         }
     }
     // The dark-arm companions (W-DARK-MATERIAL) preserved — radius-only.

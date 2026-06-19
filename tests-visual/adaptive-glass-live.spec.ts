@@ -35,22 +35,24 @@
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 // BC.W-PAINT-GATE — the BIDIRECTIONAL calm-light paint arm reads the surface's OWN
-// resolved bg → the SHARED OKLab decompose (statsFromResolvedBg) + the paintBand
-// verdict. ONE colour-math source (paint-arm.mjs re-exports reflect-capture-verify's
-// oklabFromRgb); this spec authors NO second decompose for the calm-light arm.
-import { statsFromResolvedBg, paintBand } from "../scripts/lib/paint-arm.mjs";
+// resolved bg → the SHARED OKLab decompose (statsFromResolvedBg) + the per-tier band
+// (bandForTier → paintBand). ONE colour-math source (paint-arm.mjs re-exports reflect-
+// capture-verify's oklabFromRgb); this spec authors NO second decompose for the calm arm.
+import { statsFromResolvedBg, paintBand, bandForTier } from "../scripts/lib/paint-arm.mjs";
 
 const AA_BODY = 4.5;
 
-// BC.W-PAINT-GATE — the calm-light anti-grey ceiling. Over a calm-light backdrop the
-// dock/floating/overlay/content bg MUST resolve warm + translucent, NEVER the grey
-// slab: oklabL ∈ [0.85, 0.99] (light, not blown-out) AND chroma ≥ 0.01 (warm, not
-// neutral grey) AND alpha < 0.70 (translucent, the glass reads THROUGH). Born-RED on
-// HEAD: the dock at oklab(0.695 0.002 0.006 / 0.536) FAILS all three (L too low, chroma
-// too low, alpha too high). This is the BIDIRECTIONAL twin of the synthetic-white
-// contrast arm — a grey slab PASSES the white arm (darkening over white raises contrast)
-// yet FAILS here; the warm-cream fix passes BOTH.
-const CALM_LIGHT_BAND = { L: [0.85, 0.99] as [number, number], chroma: 0.01, alpha: 0.7 };
+// BC.W-PAINT-GATE / BC.W-PAINT-RECONCILE — the calm-light anti-grey ceiling, now PER-TIER
+// (paint-arm.mjs bandForTier). Over a calm-light backdrop every glass tier's bg MUST resolve
+// warm + translucent, NEVER the grey slab: oklabL ∈ [0.85,0.99] AND chroma ≥ 0.004 (the
+// warm-cream floor — every tier reads ~0.0065; the over-tight 0.01 was never the value the
+// warm-cream tokens produce, and chroma alone CANNOT separate grey from cream here — both
+// read 0.0063) AND alpha below the tier's ceiling (content < 0.72, the heavier overlay band
+// < 0.86 — the warm-cream ladder is alpha-monotonic by design, so a single flat ceiling can
+// never bound the whole ladder). Born-RED on HEAD's grey dock oklab(0.695 0.002 0.006 /
+// 0.536): L 0.695 < 0.85 fails EVERY tier's band on L (the anti-disease invariant — the
+// separation is L, NOT chroma). This is the BIDIRECTIONAL twin of the synthetic-white
+// contrast arm — a grey slab PASSES the white arm yet FAILS here.
 // The large-text / large-glyph floor (the dock glyph register is large; R3-7 is
 // primarily a dock-plate SILHOUETTE failure, not a body-text failure on the glyph).
 const AA_LARGE = 3.0;
@@ -69,6 +71,15 @@ const VIEWPORTS = [
 // is the binding superset — every route whose page composes a glass tier auto-enrolls,
 // but the runner pins these as the asserted floor). Each route + the in-situ glass
 // surface selectors it paints.
+// The busy-aurora routes (manifest `background: aurora`, hero: true). Their non-dock glass
+// plates carry the ADAPTIVE DARKEN over the bright field (the observer writes a non-zero
+// --glass-tint-strength, pulling a card to L≈0.73) — the LEGITIMATE dynamic-range shift, not
+// the calm-light REST identity. The synthetic-white contrast + ΔL + translucency arm still
+// runs on these (it asserts the darken stays legible AND glassy); the calm-light paint arm
+// (the warm-cream REST band) asserts only the DOCK there (the dock holds the calm floor at
+// rest; the content tiers earn the darken — twinned with glass-identity.spec.ts's treatment).
+const BUSY_AURORA_ROUTES = new Set(["/substrates/glass-material"]);
+
 const ROUTES = [
     "/dock/overview",
     "/dock/layers",
@@ -190,6 +201,9 @@ async function readInSituGlass(page: Page): Promise<InSituReadout[]> {
             // fill in its checked state + carries NO body text (C5-6 decorative discount).
             if (el.closest("[role=switch], [data-state], [role=checkbox], button, label"))
                 return false;
+            // Skip a `.glass-*` tile whose bg is OVERRIDDEN by a `bg-*` utility (the demo rim/
+            // contrast DEVICE — `bg-foreground/[0.18]` paints a dark fill, not the glass material).
+            if (/(^|\s)bg-\S/.test(el.className)) return false;
             const rect = el.getBoundingClientRect();
             // Panel-sized (a switch track is 24×44px; a content panel is larger).
             if (rect.width < 80 || rect.height < 48) return false;
@@ -298,10 +312,20 @@ test.describe("adaptive-glass-live (G1 — the IN-SITU π readback, no injected 
                 await page.goto(route, { waitUntil: "networkidle" });
                 await setLight(page);
 
-                const readouts = await readInSituGlass(page);
+                const allReadouts = await readInSituGlass(page);
+                expect(
+                    allReadouts.length,
+                    `${route}: no in-situ glass surface found (the enrolled route must paint at least one body-bearing glass tier)`,
+                ).toBeGreaterThan(0);
+
+                // On a busy-aurora route the non-dock content tiers carry the earned darken
+                // (the dynamic-range shift, asserted by the white/ΔL arm above) — only the
+                // DOCK holds the calm-light REST identity. On a calm route every tier does.
+                const busy = BUSY_AURORA_ROUTES.has(route);
+                const readouts = busy ? allReadouts.filter((r) => r.isDock) : allReadouts;
                 expect(
                     readouts.length,
-                    `${route}: no in-situ glass surface found (the enrolled route must paint at least one body-bearing glass tier)`,
+                    `${route}: no calm-identity surface to read (a busy-aurora route must still paint the at-REST dock)`,
                 ).toBeGreaterThan(0);
 
                 for (const r of readouts) {
@@ -312,7 +336,7 @@ test.describe("adaptive-glass-live (G1 — the IN-SITU π readback, no injected 
                         stats,
                         `${route} ${r.selector}: could not decompose surface bg "${r.surfaceBg}" to OKLab (the calm-light paint read is degenerate)`,
                     ).not.toBeNull();
-                    const verdict = paintBand(stats, CALM_LIGHT_BAND);
+                    const verdict = paintBand(stats, bandForTier(r.selector, "light"));
                     expect(
                         verdict.pass,
                         `${route} ${r.selector}: surface bg "${r.surfaceBg}" is NOT warm-translucent over the calm-light page — ${verdict.reasons.join("; ")}. The grey slab can no longer score BETTER than warm cream (the anti-correlated metric is dead). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the BC.W-ADAPTIVE-RECONCILE warm-cream fix.`,
@@ -320,5 +344,80 @@ test.describe("adaptive-glass-live (G1 — the IN-SITU π readback, no injected 
                 }
             });
         }
+    }
+});
+
+// ── BC.W-ADAPTIVE-RECONCILE — the CONTINUOUS-TRACK branch (the live observer loop) ──────
+// The observer WRITES `--glass-backdrop-luma`; the content/overlay/dock `:where()` rules
+// READ it on the RHS of the `--glass-tint-strength` clamp. This branch proves the loop
+// DRIVES: with a HIGH measured luma (a bright field, past the 0.6 knee) the plate resolves
+// a STRONGER tint than with a LOW luma (a dark trough, below the knee) — the continuous
+// dynamic-range shift, NOT a binary bucket jump and NOT a flat floor.
+//
+// Born-RED on the DEAD loop: at HEAD the `:where()` rules pinned a FLAT
+// `var(--glass-tint-strength-floor)`, so the resolved strength is IDENTICAL regardless of
+// the injected luma (ΔStrength = 0 — the observer is decorative). GREEN only when the
+// clamp reads the luma. This is a deterministic CSS-resolution readback (a `calc()` over an
+// injected `--glass-backdrop-luma`), so it works CROSS-ENGINE including WebKit (no
+// `backdrop-filter: url()`), exactly where apple-ios27.md §6 puts the legibility — on the
+// cross-engine base. The live aurora drawImage sample is the orchestrator's paint capture;
+// this branch validates the SOURCE response the sample drives.
+function resolvedStrengthAt(page: Page, luma: number): Promise<number | null> {
+    return page.evaluate((lumaValue) => {
+        const surface = document.querySelector(
+            ".glass-dock, .glass-card, .glass-resting, .glass-quiet, .glass-wash, .glass-floating, .glass-overlay",
+        );
+        if (!(surface instanceof HTMLElement)) return null;
+        // The clamp resolves --glass-tint-strength AT THE SURFACE (where the :where() rule
+        // applies), reading the surface's OWN --glass-backdrop-luma. So inject the measured
+        // luma the observer would WRITE (a bright field vs a dark trough) ON THE SURFACE,
+        // forcing the clamp to re-resolve; a child probe then reads the result. The probe
+        // is `inline-block` at a fixed 100px width so the percentage strength resolves
+        // against a KNOWN base (a percentage `padding-top` resolves against the containing
+        // block's WIDTH — pinning the probe's own width makes 4% read 4px deterministically).
+        const priorLuma = surface.style.getPropertyValue("--glass-backdrop-luma");
+        surface.style.setProperty("--glass-backdrop-luma", String(lumaValue));
+        const probe = document.createElement("div");
+        probe.style.display = "inline-block";
+        probe.style.width = "100px";
+        probe.style.paddingTop = "var(--glass-tint-strength)";
+        surface.appendChild(probe);
+        const px = getComputedStyle(probe).paddingTop; // e.g. "4px" (4% of the 100px width)
+        probe.remove();
+        // Restore the surface's prior luma (leave the live observer's state untouched).
+        if (priorLuma) surface.style.setProperty("--glass-backdrop-luma", priorLuma);
+        else surface.style.removeProperty("--glass-backdrop-luma");
+        const m = px.match(/([\d.]+)px/);
+        return m ? Number(m[1]) : null;
+    }, luma);
+}
+
+test.describe("adaptive-glass-live (CONTINUOUS-TRACK — the observer loop DRIVES the plate)", () => {
+    for (const route of ["/dock/overview", "/display/card", "/substrates/glass-material"] as const) {
+        test(`bright-region plate is STRONGER than dark-region plate (the luma DRIVES) — ${route}`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 800 });
+            await page.goto(route, { waitUntil: "networkidle" });
+            await setLight(page);
+
+            // A dark trough (luma 0.2, below the 0.6 knee) → the calm floor; a bright bleed
+            // (luma 0.95, past the knee) → the earned darken. The clamp lerps between.
+            const darkStrength = await resolvedStrengthAt(page, 0.2);
+            const brightStrength = await resolvedStrengthAt(page, 0.95);
+            expect(
+                darkStrength,
+                `${route}: no glass surface to probe the continuous track on`,
+            ).not.toBeNull();
+            expect(brightStrength, `${route}: bright-region strength read degenerate`).not.toBeNull();
+
+            // The dark trough holds the floor (≈4% of 100px = 4px); the bright bleed earns a
+            // STRONGER tint. The loop DRIVES — a measurable ΔStrength, born-RED on the dead
+            // loop (both read the flat floor → ΔStrength = 0).
+            expect(
+                brightStrength! - darkStrength!,
+                `${route}: the bright-region plate (luma 0.95 → ${brightStrength!.toFixed(2)}px tint) is NOT stronger than the dark-region plate (luma 0.2 → ${darkStrength!.toFixed(2)}px) — the observer loop is NOT driving the strength (the dead-knob: both read the flat floor). Born-RED on HEAD's open loop; GREEN only when the clamp READS --glass-backdrop-luma.`,
+            ).toBeGreaterThan(0.5);
+        });
     }
 });

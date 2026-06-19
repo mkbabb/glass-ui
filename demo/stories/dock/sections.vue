@@ -48,7 +48,7 @@ const sections: readonly DockSectionDescriptor[] = [
              the live field in a transparent `.dock-stage-tile` slot. <DockSection> is
              `display: contents` chrome over the existing controls — NO net-new GL/
              substrate context (the one-GL-per-route budget holds). -->
-        <DockStage>
+        <DockStage #default="{ backgroundCanvas }">
             <section class="flex flex-col gap-3">
                 <h2 class="text-subheading">Declarative tripartite sections</h2>
                 <p class="text-sm text-muted-foreground">
@@ -65,7 +65,7 @@ const sections: readonly DockSectionDescriptor[] = [
                 <div
                     class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 >
-                    <GlassDock always-expanded class="relative z-10">
+                    <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">
                         <DockSection
                             :sections="sections"
                             aria-label="Workspace sections"
