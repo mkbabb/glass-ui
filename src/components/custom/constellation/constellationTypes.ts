@@ -16,6 +16,36 @@ export interface ConstellationNode {
     vy: number;
     r: number;
     dim: boolean;
+    /**
+     * BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (`z ∈ [0,1]`, §6). The pointer
+     * offsets the node's SCREEN position by `parallax · z · (pointer − center)` so the flat
+     * lattice reads as having depth (the Awwwards "living network" register). Seeded in
+     * `seedField`; perturbs the GPU node-position write only (never a layout property). A
+     * field literal that omits it is treated as `z = 0.5` (the mid-plane, no parallax bias).
+     */
+    z?: number;
+}
+
+/**
+ * BC.W-VIZ-CONSTELLATION — ONE edge of the proximity graph, the row the CPU all-pairs scan
+ * (`buildEdges`) writes each frame into the instanced-lines storage buffer. `a`/`b` are the
+ * two endpoint positions in canvas-local CSS px; `alpha` is the distance-falloff weight
+ * (`1 − d²/reach²`, the `drawEdges` math) the segment-quad fragment multiplies; `accent`
+ * (0/1) flags the accented-node tether (the flagged-node edge tint); `focus` (0/1) flags
+ * the pointer-web tether (the cursor's incident edges). The WGSL/GLSL render transcribes
+ * the SHAPE, never re-derives the scan (the ONE math source stays JS).
+ */
+export interface ConstellationEdge {
+    ax: number;
+    ay: number;
+    bx: number;
+    by: number;
+    /** The distance-falloff weight `1 − d²/reach²` (the drawEdges math). */
+    alpha: number;
+    /** 1 when the edge is incident on the accented node (the tether tint), else 0. */
+    accent: number;
+    /** 1 when the edge is a pointer-web tether (the cursor's incident edge), else 0. */
+    focus: number;
 }
 
 export interface ConstellationRipple {
@@ -296,6 +326,15 @@ export interface ConstellationProps {
     link?: number;
     /** Drift speed. Default 0.16. */
     speed?: number;
+    /**
+     * BC.W-VIZ-CONSTELLATION (§6) — the pointer-PARALLAX depth. Each node carries a seeded
+     * depth `z ∈ [0,1]`; the pointer offsets node screen positions by `parallax · z ·
+     * (pointer − center)` so the flat lattice reads as having depth (the Awwwards "living
+     * network" register). Additive default-on at a SUB-PERCEPTUAL 0.08 (a hair of depth, not
+     * a behavior break); 0 = the flat lattice. GPU-only (perturbs the node-position write,
+     * never a layout property). Frozen under reduced-motion / `freeze`.
+     */
+    parallax?: number;
     /**
      * AY.W-COHERE E3 — the per-instance outer-envelope RECESSION knob (the aurora
      * `opacityCeiling` / fourier `intensity` sibling — ONE recession vocabulary

@@ -91,6 +91,12 @@
             "dot-flow-field": [
                 "dist/dot-flow-field.d.ts"
             ],
+            "paper-grid": [
+                "dist/paper-grid.d.ts"
+            ],
+            "dot-matrix": [
+                "dist/dot-matrix.d.ts"
+            ],
             "goo-blob": [
                 "dist/goo-blob.d.ts"
             ],
@@ -387,6 +393,14 @@
         "./dot-flow-field": {
             "types": "./dist/dot-flow-field.d.ts",
             "import": "./dist/dot-flow-field.js"
+        },
+        "./paper-grid": {
+            "types": "./dist/paper-grid.d.ts",
+            "import": "./dist/paper-grid.js"
+        },
+        "./dot-matrix": {
+            "types": "./dist/dot-matrix.d.ts",
+            "import": "./dist/dot-matrix.js"
         },
         "./goo-blob": {
             "types": "./dist/goo-blob.d.ts",
@@ -837,9 +851,6 @@
         "proof:constellation-tokens": "node scripts/proof-constellation-tokens.mjs",
         "proof:constellation-warp-live": "node scripts/proof-constellation-warp-live.mjs",
         "proof:constellation-egg-live": "node scripts/proof-constellation-egg-live.mjs",
-        "proof:constellation-freeze-live": "node scripts/proof-constellation-freeze-live.mjs",
-        "proof:fourier-field-intensity": "node scripts/proof-fourier-field-intensity.mjs",
-        "proof:fourier-field-visibility-live": "node scripts/proof-fourier-field-visibility-live.mjs",
         "proof:constellation-refit-live": "node scripts/proof-constellation-refit-live.mjs",
         "proof:canvas2d-substrate": "vitest run tests/composables/glass/canvas2d/useCanvas2D.test.ts",
         "proof:resolve-canvas-color": "vitest run tests/composables/glass/canvas2d/resolveCanvasColor.test.ts",
@@ -891,7 +902,6 @@
         "proof:config-chassis": "node scripts/proof-config-chassis.mjs",
         "proof:progress-gradient": "node scripts/proof-progress-gradient.mjs",
         "proof:demo-affordances": "node scripts/proof-demo-affordances.mjs",
-        "proof:fourier-studio": "node scripts/proof-fourier-studio.mjs",
         "proof:dark-semantic-contrast": "node scripts/proof-dark-semantic-contrast.mjs",
         "proof:glass-material-demo": "node scripts/proof-glass-material-demo.mjs",
         "proof:blob-live-truth": "node scripts/proof-blob-live-truth.mjs",
@@ -976,6 +986,12 @@
         "proof:viz-aurora": "node scripts/proof-viz-aurora.mjs",
         "proof:gooblob-plain": "node scripts/proof-gooblob-plain.mjs",
         "proof:gooblob-plain:source": "node scripts/proof-gooblob-plain.mjs --source",
+        "proof:fourier-field": "node scripts/proof-fourier-field.mjs",
+        "proof:viz-constellation": "node scripts/proof-viz-constellation.mjs",
+        "proof:viz-dotflow": "node scripts/proof-viz-dotflow.mjs",
+        "proof:viz-papergrid": "node scripts/proof-viz-papergrid.mjs",
+        "proof:dot-matrix": "node scripts/proof-dot-matrix.mjs",
+        "proof:teal-navy-purge": "node scripts/proof-teal-navy-purge.mjs",
         "proof:visual-runner": "node scripts/proof-visual-runner.mjs",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "gates:emit-ci": "node scripts/gates.mjs --emit-ci",

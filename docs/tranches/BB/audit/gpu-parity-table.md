@@ -75,7 +75,7 @@ re-recorded there if the empirical capture demands a re-tune.
         "docs/tranches/BB/audit/visual/flow-field-parity/parity-record.json"
       ],
       "deltaE": { "mean": 0.0, "p99": 0.0 },
-      "note": "BORN WebGPU-first — the compute-particle path: a @compute @workgroup_size(64) curl-noise advection over a Gerstner/Tessendorf sum-of-sines wave potential, drawn as instanced billboard quads (flow-field.compute.wgsl.ts + flow-field.render.wgsl.ts). The fallback is the §3a-recorded Canvas2D point-cloud (flow-field.glsl.ts) — the WebGL2 transform-feedback equivalent is materially more code for the SAME visual, so the parity-honest path is a CPU-stepped point cloud (the fourier/constellation precedent) stepping the SAME flowField.ts sampleVelocity() evaluator (the ONE math source). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: BOTH the WGSL compute kernel and the Canvas2D fallback transcribe ONE analytic velocity evaluator (composables/flowField.ts), so the velocity field is numerically identical at every sample (proof:flow-field clause 3 round-trips the JS evaluator against the WGSL transcription → mean/p99 = 0.0). The fallback density is coarser at the CPU step count (the same flow, fewer dots) — recorded honestly, never a silent mismatch. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs the Canvas2D readback) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE."
+      "note": "BC.W-VIZ-DOTFLOW RETOPOLOGY — the field is now a CALM ANCHORED DOT-MATRIX a slow LARGE wave sweeps through (NOT the free-advecting particle cloud the user condemned as a 'mess of noise'). WebGPU-first compute+render: the @compute @workgroup_size(64) kernel pulls the anchored lattice toward its sub-cell displacement target with a restoring spring (NO advection, NO re-seed); the instanced-billboard render pass lights each dot by the sweeping Gerstner-height band (flow-field.compute.wgsl.ts + flow-field.render.wgsl.ts). The Canvas2D point-cloud is GONE (the §E 'no canvas anywhere' mandate); the fallback is now a PURE WebGL2 fullscreen FRAGMENT dot-lattice + brightness shader (flow-field.glsl.ts) — the retopology made the grid+brightness model fragment-friendly, so the fallback flips degraded→verified (the SAME analytic field, no compute particles). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: BOTH the WGSL compute/render AND the WebGL2 fragment transcribe ONE analytic field evaluator (composables/flowField.ts gridOrigin/sampleHeight/sampleDisplacement/waveBand) through ONE shared color seam (procedural-color.{wgsl,glsl}.ts), so the height/displacement/brightness field is numerically identical at every (index, t) (proof:viz-dotflow clause F3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides BC.W-VIZ-DOTFLOW's own close (the per-wave fresh-capture discipline, BC.W-GESTALT-FIRST) + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "concentric",
@@ -94,20 +94,43 @@ re-recorded there if the empirical capture demands a re-tune.
       "note": "BORN WebGPU-first — a fullscreen radial-Fourier ring-interference fragment field (the aurora shape-class, the LAST new viz of Batch V): f(p,t) = Σ_j Σ_i A_i·sin(k_i·‖p−c_j‖_e − ω_i·t + φ_i), an ellipsoidal-norm radial sum over multi-centers → moiré interference, ω = √(g·k) the SAME deep-water dispersion the dot-flow-field uses (the suite's ONE Fourier vocabulary). concentric.wgsl.ts is the WebGPU-first primary (splicing the WGSL twin procedural-color.wgsl.ts); concentric.glsl.ts is the clean aurora-class WebGL2 fallback (splicing the GLSL twin procedural-color.glsl.ts). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: concentric is a PURE fragment field (no compute/particles), so BOTH backends evaluate ONE analytic ring-field evaluator (composables/ringField.ts sampleRingField) through ONE shared color seam — the field raster + the OKLab palette mapping are numerically identical at every (p,t) (proof:concentric clause 3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). UNLIKE the dot-flow-field's `degraded` density delta, concentric's fallback is the SAME pure fragment field — parity `verified`. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE."
     },
     {
+      "viz": "paper-grid",
+      "subpath": "/paper-grid",
+      "status": "verified",
+      "primary": "src/components/custom/paper-grid/shaders/paper-grid.wgsl.ts",
+      "fallback": "src/components/custom/paper-grid/shaders/paper-grid.glsl.ts",
+      "subWave": "BC.W-VIZ-PAPERGRID",
+      "captures": [
+        "docs/tranches/BC/audit/visual/paper-grid-parity/paper-grid-wgpu-primary.png",
+        "docs/tranches/BC/audit/visual/paper-grid-parity/paper-grid-webgl2-fallback.png",
+        "docs/tranches/BC/audit/visual/paper-grid-parity/parity-record.json"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "BORN WebGPU-first — a fullscreen liquid AA-grid fragment field (the aurora/concentric shape-class, the LIGHTEST viz in the suite — no compute, no particles, no storage buffer). The grid is computed at a curl-warped coordinate g(uv) = uv + curlWarp(uv,t) + cursorBulge(uv) (the IQ domain-warp substitution driven by the Bridson divergence-free curl — the whole sheet bows together, never a per-line jitter) and each line is extracted as a constant-pixel-width stroke via the Ben Golus screen-space derivative AA (the blurry-mess kill). paper-grid.wgsl.ts is the WebGPU-first primary (splicing flow.wgsl.ts — the FIRST WGSL curl consumer, the booked procedural-tail chunk minted here); paper-grid.glsl.ts is the clean WebGL2 fallback (splicing the GLSL twin flow.glsl.ts). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: paper-grid is a PURE fragment field (no compute/particles), so BOTH backends evaluate ONE analytic liquid-grid evaluator (composables/paperGrid.ts samplePaperGrid) through ONE shared curl chunk (flow.{wgsl,glsl}.ts) + ONE OETF — the line coverage + the premultiplied ink are numerically identical at every (uv,t) (proof:viz-papergrid clause P3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). UNLIKE the dot-flow-field's `degraded` density delta, paper-grid's fallback is the SAME pure fragment field — parity `verified`. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides this wave's close (the per-wave fresh-capture discipline, BC.W-GESTALT-FIRST) + re-records the empirical rasterizer-drift ΔE."
+    },
+    {
       "viz": "fourier-field",
       "subpath": "/fourier-field",
-      "status": "no-migrate",
-      "primary": null,
-      "fallback": "src/components/custom/fourier-field/composables/useFourierField.ts",
-      "reason": "Canvas2D (useCanvas2D; math.ts DFT epicycle math). A few-to-dozens of phasors is the RIGHT tool for ctx.stroke; the DFT math is already GPU-agnostic. Booked W-FOURIER-GPU — trigger: harmonic density scales to thousands of phasors → GPU line-instancing wins."
+      "status": "verified",
+      "primary": "src/components/custom/fourier-field/shaders/fourier-field.render.wgsl.ts",
+      "fallback": "src/components/custom/fourier-field/shaders/fourier-field.glsl.ts",
+      "captures": [
+        "docs/tranches/BC/audit/visual/W-VIZ-FOURIER-DELTA.md"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "note": "BC.W-VIZ-FOURIER — the booked W-FOURIER-GPU FIRED EARLY (the §E WebGPU-everywhere mandate made the 'thousands of phasors' trigger UNCONDITIONAL). The Canvas2D renderer (useCanvas2D; ctx.stroke/shadowBlur) is RETIRED. The new primary is a compute+fullscreen-fragment SDF: fourier-field.compute.wgsl.ts writes the partial-sum curve samples + epicycle chain tips (transcribing math.ts partialSumAt/positionsAt EXACTLY — the ONE math source, the spectrum CPU-minted via makeEllipticSpectrum/dftFromPoints), fourier-field.render.wgsl.ts composites the comet-trail + epicycle-chain + comet-head SDF over premultiplied-alpha (which KILLS the Canvas2D `lighter` hue-blowout). fourier-field.glsl.ts is the WebGL2 SDF twin — it steps the SAME partialSumAt/positionsAt CPU-side into the SAME uniform curve/chain tables the fragment reads, so the field is the same SDF over the same evaluator. The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: both backends composite ONE analytic field through ONE shared color seam (procedural-color.{wgsl,glsl}.ts) over the SAME CPU-minted curve table — numerically identical at every fragment (proof:fourier-field U3 round-trips the WGSL partialSumAt transcription against math.ts → mean/p99 = 0.0). The BINDING Metal-GPU live capture-pair rides this wave's close (the real WebGPU swap-chain readback vs WebGL2 readPixels) + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "constellation",
       "subpath": "/constellation",
-      "status": "no-migrate",
-      "primary": null,
-      "fallback": "src/components/custom/constellation/composables/useConstellation.ts",
-      "reason": "Canvas2D (useCanvas2D; node/edge proximity-graph lattice). Canvas2D handles the current node count fine; proof:constellation-substrate-single is substrate-agnostic. Booked W-CONSTELLATION-GPU — trigger: a much denser lattice → the dot-flow-field advection compute pass generalizes to constellation's nodes."
+      "status": "verified",
+      "primary": "src/components/custom/constellation/shaders/constellation-points.wgsl.ts",
+      "fallback": "src/components/custom/constellation/shaders/constellation-points.glsl.ts",
+      "captures": [
+        "docs/tranches/BC/audit/visual/W-VIZ-CONSTELLATION-DELTA.md"
+      ],
+      "deltaE": { "mean": 0.0, "p99": 0.0 },
+      "reason": "BC.W-VIZ-CONSTELLATION — the booked W-CONSTELLATION-GPU FIRED (the §E WebGPU-everywhere mandate made it UNCONDITIONAL — the low-res Canvas2D arc() was the literal defect). The Canvas2D renderer (useCanvas2D + the four ctx-bound draw passes) is RETIRED. The new primary is TWO instanced-billboard render passes: constellation-points.wgsl.ts (instanced quads + a crisp fwidth-smoothstep SDF circle, DPR-aware → resolution-independent crisp) + constellation-lines.wgsl.ts (instanced segment quads + cross-line AA, the three edge classes neutral/accent/focus). constellation-points.glsl.ts + constellation-lines.glsl.ts are the WebGL2 instanced-arrays twins (GPU, NOT Canvas2D — the same SDF + segment expansion via gl_VertexID/gl_InstanceID instanced attributes). The field step (constellationField.ts seedField/stepField + the interaction springs + the pure buildEdges CPU all-pairs scan) stays the ONE JS math source the WGSL/GLSL render transcribes (the compute neighbor-bin is BOOKED at N ≫ 256 — overfit at the default count=64). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: both backends draw the SAME instanced primitives over the SAME stepped field + the SAME JS-side palette read (readPalette → parseColorRGBA → the uniform buffer), numerically identical per-instance. The BINDING Metal-GPU live capture-pair rides this wave's close (the real WebGPU swap-chain readback vs WebGL2 readPixels) + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "watercolor-dot",

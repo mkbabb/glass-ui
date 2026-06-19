@@ -5,16 +5,21 @@ import { useConstellation } from "./composables/useConstellation";
 import { cn } from "../../../utils/cn";
 
 /**
- * Constellation — a slow, geometric proximity-graph lattice on a Canvas2D
- * surface. Nodes drift + bounce; near nodes link with distance-falloff
- * hairlines; the web leans toward the cursor and taps ripple. It composes the
- * `useCanvas2D` substrate, so it inherits the offscreen / tab-hidden /
- * reduced-motion freeze for free (no hand-rolled RAF-park).
+ * Constellation — a slow, geometric proximity-graph lattice rendered on the
+ * WebGPU instanced-points + instanced-lines substrate (the WebGL2 instanced-arrays
+ * twin fallback for the genuinely-absent tail; BC.W-VIZ-CONSTELLATION). Nodes drift
+ * + bounce + render as crisp `fwidth`-SDF discs (resolution-independent — no more
+ * low-res Canvas2D `arc()` upscaling); near nodes link with distance-falloff
+ * hairlines; the web leans toward the cursor (velocity-aware) and a flick fires a
+ * focal burst. It composes `createGpuSubstrate` over the ONE canvas lifecycle leaf,
+ * so it inherits the offscreen / tab-hidden / reduced-motion freeze for free (no
+ * hand-rolled RAF-park).
  *
- * The lattice ships NEUTRAL. A branded skin (a focal ring, a callout label) is
- * the consumer's `drawOverlay(ctx, field, now)` pass — it runs AFTER the four
- * neutral passes and receives the live field so it can pin itself to a real
- * node. Zero deck-domain content lives in the component.
+ * The lattice ships NEUTRAL with the warm-cream identity default. The field step
+ * (`constellationField.ts`) is the ONE JS math source the WGSL/GLSL render
+ * transcribes; the palette read (`constellationRender.ts`) resolves the
+ * `--constellation-*` tokens JS-side into the uniform buffer. Zero deck-domain
+ * content lives in the component.
  *
  * Palette reads the FULL `--constellation-*` legibility set off the canvas (the
  * node/node-dim/line colors + the edge-alpha multipliers + the field-yields-to-
@@ -24,8 +29,10 @@ import { cn } from "../../../utils/cn";
  * The focal node + click-to-warp (AX.W17) is a first-class engine concept: with
  * `warpOnClick`, a click warps the focal node to the nearest drifting node via a
  * critically-damped spring stepped INSIDE the substrate's single rAF (no
- * `useSpring`, no second rAF). The consumer paints the focal mark at
- * `field.warp.{x,y}` in its `drawOverlay`.
+ * `useSpring`, no second rAF). The focal mark rides `field.warp.{x,y}` (the
+ * spring-eased position the engine owns); a consumer reads it off the exposed
+ * `field` for its own overlay layer (the Canvas2D `drawOverlay` seam is inert post-
+ * migration — the lattice renders on the GPU, not a 2D context).
  *
  * The prop contract is the public `ConstellationProps` (constellationTypes.ts);
  * the render-loop + lifecycle wiring lives in the `useConstellation` composable
@@ -39,6 +46,7 @@ const props = withDefaults(defineProps<ConstellationProps>(), {
     count: 64,
     link: 132,
     speed: 0.16,
+    parallax: 0.08,
     pointerReactive: true,
     warpOnClick: false,
     wander: false,

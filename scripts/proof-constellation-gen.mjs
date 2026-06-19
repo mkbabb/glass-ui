@@ -46,7 +46,11 @@ const FIELD = resolve(CONST, "constellationField.ts");
 // carve; the declarations are present, just relocated).
 const TYPES = resolve(CONST, "constellationTypes.ts");
 const INTER = resolve(CONST, "constellationInteraction.ts");
-const DRAW = resolve(CONST, "constellationDraw.ts");
+// BC.W-VIZ-CONSTELLATION re-point: the four Canvas2D draw passes RETIRED. The palette read
+// relocated to `constellationRender.ts` (the JS-side render leaf); the accent-edge branch
+// relocated INTO the CPU edge SET scan `buildEdges` (constellationField.ts) — the WGSL/GLSL
+// instanced render strokes the per-edge `accent` flag.
+const DRAW = resolve(CONST, "constellationRender.ts");
 const CONSTS = resolve(CONST, "constants.ts");
 const VUE = resolve(CONST, "Constellation.vue");
 // BA.W-CARVE2 also lifted the 528-line render-loop/expose orchestrator out of
@@ -94,14 +98,20 @@ function run() {
     if (g1Skip < 1)
         violations.push("G1: stepField does not skip the pinned node (`if (i === pinned) continue`)");
 
-    // ── (G2) ACCENT-EDGE ─────────────────────────────────────────────────────
-    const g2Param = /export function drawEdges\([\s\S]*?accentIndex\s*=\s*-1/.test(draw);
-    const g2Branch = /palette\.accent/.test(draw) && /accentIndex\s*>=\s*0/.test(draw);
-    const g2Call = /drawEdges\([\s\S]*?accentIndex/.test(vue) || /accentIndex/.test(vue);
-    facts.g2 = { drawEdgesParam: g2Param, accentBranch: g2Branch, componentThreads: g2Call };
-    if (!g2Param) violations.push("G2: `drawEdges` lacks the trailing `accentIndex = -1` param");
-    if (!g2Branch) violations.push("G2: `drawEdges` lacks the accent-incident edge branch (`palette.accent`)");
-    if (!g2Call) violations.push("G2: Constellation.vue does not thread the accentIndex into drawEdges");
+    // ── (G2) ACCENT-EDGE (BC.W-VIZ-CONSTELLATION — the accent branch is now in buildEdges) ──
+    // The accent-incident edge tint moved out of the retired Canvas2D `drawEdges` into the
+    // CPU edge SET scan `buildEdges` (constellationField.ts): it takes the `accentIndex` and
+    // flags every incident edge with `accent: 1` (the WGSL/GLSL render strokes uAccent).
+    const g2Param = /export function buildEdges\([\s\S]*?accentIndex\s*=\s*-1/.test(field);
+    const g2Branch =
+        /accentIndex\s*>=\s*0/.test(field) &&
+        /const\s+accent\s*=[\s\S]*?accentIndex/.test(field) &&
+        /\baccent\b/.test(field);
+    const g2Call = /accentIndex/.test(vue);
+    facts.g2 = { buildEdgesParam: g2Param, accentBranch: g2Branch, componentThreads: g2Call };
+    if (!g2Param) violations.push("G2: `buildEdges` lacks the trailing `accentIndex = -1` param");
+    if (!g2Branch) violations.push("G2: `buildEdges` lacks the accent-incident edge branch (`accentIndex >= 0` → `accent`)");
+    if (!g2Call) violations.push("G2: useConstellation does not thread the accentIndex into buildEdges");
 
     // ── (G3) PALETTE-EXTEND ──────────────────────────────────────────────────
     const g3Type =

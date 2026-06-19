@@ -43,11 +43,16 @@ import {
 // deliberate sibling for ambient/decorative thumbnails: route the static register
 // here so the page holds exactly ONE live GooBlob context (the interactive studio
 // hero, the lead section) and a grid never exhausts the per-page WebGL context cap.
+// Warm-cream identity palette (BC.W-VIZ-WATERCOLOR §E / BC.W-TEAL-NAVY-PURGE — NO
+// teal-on-navy reference; the demo default is the warm amber/cream/coral family, hue
+// ~30-70). A consumer brings its OWN palette (presets-in-consumers); the dot bakes no
+// hue (it takes `color` as a prop) so it is compliant by construction — the warm
+// default is asserted here.
 const dotColors = [
     "var(--primary)",
-    "oklch(0.62 0.19 25)",
-    "oklch(0.7 0.15 250)",
-    "oklch(0.78 0.16 150)",
+    "oklch(0.72 0.15 55)", // warm amber
+    "oklch(0.66 0.17 35)", // terracotta coral
+    "oklch(0.82 0.1 75)", // pale cream-gold
 ];
 
 // ── The Configurator-driven blob studio (the inv-16 dog-food) — THE LEAD HERO ─
@@ -740,10 +745,12 @@ watch(studioPaused, () => {
         <StorySection
             label="The ghost register — WatercolorDot variant=ghost"
             blurb="The empty-palette-slot / placeholder affordance: the SAME seeded blob
-                silhouette rendered as a STROKE (a color border over a low-alpha fill), NOT a
-                CSS dashed rectangle. A ghost of a given color+seed traces the SAME irregular
-                outline the solid swatch of that seed fills — paired here so the silhouette
-                match reads at a glance (solid LEFT, ghost RIGHT of each seed)."
+                silhouette traced as a DASHED outline — an SVG ellipse stroke-dasharray
+                carrying the same wet filter, so the displacement wobbles the dashes INTO the
+                organic outline (a dashed OUTLINE following the silhouette, NOT a solid ring
+                and NOT a CSS dashed rectangle). A ghost of a given color+seed traces the SAME
+                irregular outline the solid swatch of that seed fills — paired here so the
+                silhouette match reads at a glance (solid LEFT, ghost RIGHT of each seed)."
         >
             <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <div

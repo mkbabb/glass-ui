@@ -1,120 +1,233 @@
-// BB.W-VIZ-SUITE (W-FLOWFIELD) — the WebGL2/Canvas2D FALLBACK (the ~5-10%-tail path).
+// BC.W-VIZ-DOTFLOW — the WebGL2 FRAGMENT FALLBACK (the genuinely-absent ~5-10% tail path).
 //
-// THE FALLBACK DECISION (recorded honestly — the §3a Triumvirate outcome). The WebGPU
-// primary advects N particles in a COMPUTE pass + draws instanced billboard quads. The
-// WebGL2 transform-feedback equivalent (a vertex-shader advection ping-ponged to a
-// feedback buffer + an instanced-array draw) reproduces the field but is materially more
-// code for the SAME visual; per the §scope-4 risk the SOTA-simpler, parity-honest path is
-// a CPU-STEPPED Canvas2D point cloud — the fourier-field / constellation precedent
-// (`useCanvas2D` over the SAME `createCanvasLifecycle` leaf). It steps the SAME
-// `flowField.ts` `sampleVelocity()` evaluator the WGSL kernel transcribes (the ONE math
-// source — no second advection law), so the fallback field is the SAME flow; only the
-// per-particle GPU-instancing is traded for `ctx.arc` dots. The parity status is recorded
-// `degraded` in the parity table (NOT a silent mismatch — the visual flow is equivalent;
-// the per-particle size/density variance is coarser at the CPU step count).
-//
-// This module is NOT a `.glsl.ts` shader-string (the dir-layout slot name is kept for the
-// colocation `isShader` marker + the README contract); it is the Canvas2D stepper the
-// `setupGL` callback composes. It owns NO scheduling — the canvas lifecycle leaf delivers
-// the frame.
+// THE RETOPOLOGY makes the field FRAGMENT-FRIENDLY (the §4.2 verdict). The old Canvas2D
+// point-cloud (`createCpuFlowField`, a `getContext("2d")` stepper) is GONE — clean break,
+// no alias (the "no canvas anywhere" §E mandate). The fallback is now a pure WebGL2
+// fullscreen-fragment dot-lattice + brightness shader: for each pixel it finds the nearest
+// lattice cell, draws the soft circle analytically (`fract(uv·gridFreq)` dot mask), and
+// lights it by the SAME `flowField.ts` height (`waveBand(sampleHeight(o,t))·contrast`) +
+// the optional globe mask. The grid+brightness model evaluates ONE analytic field through
+// ONE shared color seam (the spliced `procedural-color.glsl.ts` OKLCh chunk), so the
+// fallback is a PURE fragment field — parity flips `degraded → verified` (the same flow,
+// no compute particles). The full-screen-triangle vertex pass is the substrate's standard
+// fullscreen pass; this module is the fragment source the `setupGL` callback compiles.
 
-import type { FlowFieldConfig } from "../constants";
-import { MAX_PARTICLES } from "../constants";
-import { sampleVelocity, type Vec2, type WaveComponent } from "../composables/flowField";
+import {
+    OETF_GLSL,
+    OKLCH_MATRICES_GLSL,
+} from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
-/** A CPU particle (the Canvas2D-stepped twin of the WGSL storage Particle). */
-export interface CpuParticle {
-    pos: Vec2;
-    age: number;
-    seed: number;
+/** The full-screen-triangle vertex shader (the substrate's standard fullscreen pass). */
+export const FLOW_FIELD_VERT_GLSL = /* glsl */ `#version 300 es
+precision highp float;
+in vec2 aPosition;
+out vec2 vUv;
+void main() {
+  vUv = aPosition;            // [-1,1]² domain
+  gl_Position = vec4(aPosition, 0.0, 1.0);
+}`;
+
+/** The dot-lattice + sweeping-brightness fragment source (the anchored-grid model). */
+export const FLOW_FIELD_FRAG_GLSL = /* glsl */ `#version 300 es
+precision highp float;
+
+#define PI 3.141592653589793
+#define TAU 6.283185307179586
+#define FLOW_GRAVITY 9.81
+#define CURL_EPS 0.012
+#define MAX_WAVE_COMPONENTS 8
+#define MAX_FLOW_STOPS 4
+
+in vec2 vUv;
+out vec4 fragColor;
+
+uniform float uTime;
+uniform float uWindSpeed;
+uniform float uCurlStrength;
+uniform float uDomainHalf;
+uniform float uAspect;
+uniform float uGridPitchDomain;  // lattice pitch in DOMAIN units
+uniform float uDotRadiusDomain;  // dot radius in DOMAIN units
+uniform float uDisplaceAmp;      // sub-cell drift in pitch fractions
+uniform float uContrast;
+uniform float uBaseBright;
+uniform float uWaveBandCenter;
+uniform float uWaveBandWidth;
+uniform float uGlobeMask;
+uniform int   uWaveCount;
+uniform int   uStopCount;
+uniform float uHasBackground;
+uniform vec3  uBg;
+uniform vec4  uWaves[MAX_WAVE_COMPONENTS];   // (amplitude, wavelength, directionDeg, phase)
+uniform vec3  uPalette[MAX_FLOW_STOPS];      // linear-sRGB stops
+
+const mat2 FBM_ROT = mat2(0.8, 0.6, -0.6, 0.8);
+
+${OETF_GLSL}
+${OKLCH_MATRICES_GLSL}
+
+// ── The Gerstner-sum analytic ∇⊥h velocity (transcribes flowField.ts gerstnerVelocity) ──
+vec2 gerstnerVelocity(vec2 p, float t) {
+  float dhdx = 0.0;
+  float dhdy = 0.0;
+  for (int i = 0; i < MAX_WAVE_COMPONENTS; i++) {
+    if (i >= uWaveCount) break;
+    vec4 w = uWaves[i];
+    float k = TAU / max(w.y, 1e-4);
+    float dirRad = w.z * PI / 180.0;
+    vec2 d = vec2(cos(dirRad), sin(dirRad));
+    float omega = sqrt(FLOW_GRAVITY * k) * uWindSpeed;
+    float theta = k * (d.x * p.x + d.y * p.y) - omega * t + w.w;
+    float akc = w.x * k * cos(theta);
+    dhdx += akc * d.x;
+    dhdy += akc * d.y;
+  }
+  return vec2(dhdy, -dhdx);
 }
 
-/** Deterministic 0..1 hash (the JS twin of the WGSL `hash21`, seed-driven re-spawn). */
-function hash01(a: number, b: number): number {
-    let x = Math.sin(a * 71.13 + b * 13.7) * 43758.5453;
-    x = x - Math.floor(x);
-    return x;
+// ── The scalar Gerstner HEIGHT (transcribes flowField.ts sampleHeight) ──
+float sampleHeight(vec2 o, float t) {
+  float h = 0.0;
+  float ampSum = 0.0;
+  for (int i = 0; i < MAX_WAVE_COMPONENTS; i++) {
+    if (i >= uWaveCount) break;
+    vec4 w = uWaves[i];
+    float k = TAU / max(w.y, 1e-4);
+    float dirRad = w.z * PI / 180.0;
+    vec2 d = vec2(cos(dirRad), sin(dirRad));
+    float omega = sqrt(FLOW_GRAVITY * k) * uWindSpeed;
+    float theta = k * (d.x * o.x + d.y * o.y) - omega * t + w.w;
+    h += w.x * sin(theta);
+    ampSum += abs(w.x);
+  }
+  return h / max(ampSum, 1e-4);
 }
 
-/**
- * The CPU particle field — alloc + seed + step + paint, over the Canvas2D substrate.
- * `step(dt, timeSec)` advects every particle through the SAME `sampleVelocity` evaluator
- * the WGSL compute kernel transcribes; `paint(ctx)` draws the soft dots. The fallback's
- * `degraded` parity is the CPU step count vs the GPU's per-particle instancing — the same
- * flow, a coarser density.
- */
-export function createCpuFlowField(config: FlowFieldConfig) {
-    const count = Math.min(Math.max(config.particleCount, 1), MAX_PARTICLES);
-    const half = 0.85;
-    const particles: CpuParticle[] = [];
-
-    function reseed(seed: number, age: number): Vec2 {
-        const r1 = hash01(seed, age);
-        const r2 = hash01(seed + 4, age + 2);
-        return { x: (r1 * 2 - 1) * half, y: (r2 * 2 - 1) * half };
-    }
-
-    for (let i = 0; i < count; i++) {
-        const seed = (i + 1) * 0.6180339887;
-        const p = reseed(seed, i * 0.137);
-        particles.push({ pos: p, age: hash01(seed, 7) * 6, seed });
-    }
-
-    const waves: WaveComponent[] = config.waveComponents;
-
-    function step(dt: number, timeSec: number): void {
-        const windSpeed = config.windSpeed;
-        const curl = config.curlStrength;
-        for (const pr of particles) {
-            const v = sampleVelocity(pr.pos, timeSec, waves, windSpeed, curl);
-            pr.pos.x += v.x * dt;
-            pr.pos.y += v.y * dt;
-            pr.age += dt;
-            if (
-                Math.abs(pr.pos.x) > half ||
-                Math.abs(pr.pos.y) > half ||
-                pr.age > 6.0
-            ) {
-                pr.pos = reseed(pr.seed, pr.age);
-                pr.age = 0;
-            }
-        }
-    }
-
-    /**
-     * Paint the dots. `dotColor` is the resolved CSS color string (the demo's palette
-     * resolved via the ColorResolver). The dots size by velocity (denser-where-calm),
-     * mirroring the WGSL render pass. `wCss`/`hCss` are the CSS-px canvas extent.
-     */
-    function paint(
-        ctx: CanvasRenderingContext2D,
-        wCss: number,
-        hCss: number,
-        timeSec: number,
-        dotColor: string,
-    ): void {
-        ctx.clearRect(0, 0, wCss, hCss);
-        const cx = wCss / 2;
-        const cy = hCss / 2;
-        const scale = Math.min(wCss, hCss) / (2 * half);
-        ctx.fillStyle = dotColor;
-        const windSpeed = config.windSpeed;
-        const curl = config.curlStrength;
-        for (const pr of particles) {
-            const v = sampleVelocity(pr.pos, timeSec, waves, windSpeed, curl);
-            const speed = Math.hypot(v.x, v.y);
-            const speedNorm = Math.min(speed / 2.0, 1);
-            const r = config.dotSize * (1 - speedNorm * config.dotSizeVelocity);
-            const a = 1 - speedNorm * 0.35;
-            const px = cx + pr.pos.x * scale;
-            const py = cy + pr.pos.y * scale;
-            ctx.globalAlpha = Math.max(a, 0.1);
-            ctx.beginPath();
-            ctx.arc(px, py, Math.max(r, 0.4), 0, Math.PI * 2);
-            ctx.fill();
-        }
-        ctx.globalAlpha = 1;
-    }
-
-    return { particles, step, paint };
+// ── Shared curl-noise basis (the GLSL twin of flow.glsl.ts curlFBM) ──
+float hash21(vec2 p) {
+  vec3 p3 = fract(vec3(p.x, p.y, p.x) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
 }
+float valueNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u2 = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+  float a = hash21(i + vec2(0.0, 0.0));
+  float b = hash21(i + vec2(1.0, 0.0));
+  float c = hash21(i + vec2(0.0, 1.0));
+  float d = hash21(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, u2.x), mix(c, d, u2.x), u2.y);
+}
+float potentialFBM(vec2 p0) {
+  float v = 0.0;
+  float amp = 0.5;
+  float freq = 1.0;
+  vec2 p = p0;
+  for (int i = 0; i < 3; i++) {
+    v += amp * valueNoise(p * freq);
+    p = FBM_ROT * p;
+    freq *= 2.0;
+    amp *= 0.5;
+  }
+  return v;
+}
+vec2 curlFBM(vec2 p) {
+  float dx = potentialFBM(p + vec2(CURL_EPS, 0.0)) - potentialFBM(p - vec2(CURL_EPS, 0.0));
+  float dy = potentialFBM(p + vec2(0.0, CURL_EPS)) - potentialFBM(p - vec2(0.0, CURL_EPS));
+  vec2 g = vec2(dx, dy) / (2.0 * CURL_EPS);
+  return vec2(g.y, -g.x);
+}
+vec2 sampleVelocity(vec2 p, float t) {
+  vec2 v = gerstnerVelocity(p, t);
+  if (uCurlStrength > 0.0) {
+    vec2 c = curlFBM(vec2(p.x * 0.55 + t * 0.15, p.y * 0.55));
+    v += c * uCurlStrength;
+  }
+  return v;
+}
+// sub-cell displacement (transcribes flowField.ts sampleDisplacement — tanh soft-clamp).
+vec2 sampleDisplacement(vec2 o, float t) {
+  vec2 v = sampleVelocity(o, t);
+  float mag = length(v);
+  if (mag < 1e-5) return vec2(0.0);
+  return v * (tanh(mag) / mag);
+}
+
+// The sweeping bright-stripe band (transcribes flowField.ts waveBand).
+float waveBand(float h, float center, float width) {
+  float w = max(width, 1e-3);
+  float d = abs(h - center);
+  return 1.0 - smoothstep(0.0, w, d);
+}
+
+// The optional soft-disc globe mask (the reference's two-sphere composition).
+float globeMask(vec2 o, float t, float on) {
+  if (on <= 0.5) return 1.0;
+  float cx = 0.35 * sin(t * 0.13);
+  float cy = 0.28 * cos(t * 0.11);
+  float d = length(o - vec2(cx, cy));
+  return 1.0 - smoothstep(0.45, 0.75, d);
+}
+
+vec3 samplePaletteLin(float t) {
+  if (uStopCount <= 1) return uPalette[0];
+  float n = float(uStopCount);
+  float ft = clamp(t, 0.0, 1.0) * (n - 1.0);
+  int i0 = int(floor(ft));
+  int i1 = min(i0 + 1, uStopCount - 1);
+  float f = ft - float(i0);
+  vec3 lmsA = LINEAR_SRGB_TO_LMS * uPalette[i0];
+  vec3 lmsB = LINEAR_SRGB_TO_LMS * uPalette[i1];
+  vec3 labA = LMS_TO_OKLAB * (sign(lmsA) * pow(abs(lmsA), vec3(1.0 / 3.0)));
+  vec3 labB = LMS_TO_OKLAB * (sign(lmsB) * pow(abs(lmsB), vec3(1.0 / 3.0)));
+  return oklabToLinearSrgb(mix(labA, labB, f));
+}
+
+void main() {
+  float aspect = max(uAspect, 1e-4);
+  // Domain-space pixel (aspect-corrected x so the lattice stays square).
+  vec2 p = vec2(vUv.x * aspect, vUv.y);
+  float pitch = max(uGridPitchDomain, 1e-3);
+
+  // The nearest lattice cell ORIGIN (the anchored grid — the deterministic gridOrigin
+  // mapping, evaluated per-pixel: round p/pitch to the nearest cell center).
+  vec2 cell = floor(p / pitch + 0.5);
+  vec2 o = cell * pitch;
+
+  // The dot DRIFTS toward o + disp·displaceAmp·pitch (the same sub-cell offset the
+  // compute kernel writes — here evaluated analytically per pixel).
+  vec2 disp = sampleDisplacement(o, uTime);
+  vec2 dotCenter = o + disp * (uDisplaceAmp * pitch);
+
+  // The soft circle around the (drifted) dot center.
+  float dist = length(p - dotCenter);
+  float radius = max(uDotRadiusDomain, 1e-4);
+  float mask = 1.0 - smoothstep(radius * 0.6, radius, dist);
+  if (mask < 0.002) {
+    if (uHasBackground > 0.5) {
+      fragColor = vec4(clamp(linearToSrgb(uBg), vec3(0.0), vec3(1.0)), 1.0);
+    } else {
+      fragColor = vec4(0.0);
+    }
+    return;
+  }
+
+  // The brightness lights the dot — the SWEEPING band over the height at the anchor.
+  float h = sampleHeight(o, uTime);
+  float band = waveBand(h, uWaveBandCenter, uWaveBandWidth);
+  float bright = (uBaseBright + band * uContrast) * globeMask(o, uTime, uGlobeMask);
+  bright = clamp(bright, 0.0, 1.6);
+
+  float tone = clamp(bright, 0.0, 1.0);
+  vec3 lin = samplePaletteLin(tone) * bright;
+  vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
+  float alpha = mask * clamp(bright * 0.8 + 0.12, 0.0, 1.0);
+
+  if (uHasBackground > 0.5) {
+    vec3 bg = clamp(linearToSrgb(uBg), vec3(0.0), vec3(1.0));
+    fragColor = vec4(mix(bg, rgb, alpha), 1.0);
+    return;
+  }
+  fragColor = vec4(rgb * alpha, alpha);
+}`;

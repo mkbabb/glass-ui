@@ -1,5 +1,40 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
+> onto the WebGPU-first `useFourierField`. Clean break, no alias ("No legacy code").**
+> The fourier surface — three views (`fourier-field.vue` + the foreground
+> `fourier-studio.vue` over `FourierStudioStage.vue`) on a Canvas2D renderer the §E
+> "WebGPU everywhere, no canvas" mandate forbids — COLLAPSES to ONE GPU view and
+> MIGRATES off Canvas2D onto the WGSL-primary GPU substrate (`createGpuSubstrate`,
+> `setupWGPU` + `setupGL`). **The demo `fourier-studio.vue` + `FourierStudioStage.vue`
+> are DELETED** (the studio's controllable-clock/N-harmonics/epicycle/ℱ-trace axes fold
+> into the ONE merged `fourier-field.vue` view; no alias). The Canvas2D-era gates
+> `proof:fourier-field-intensity` / `proof:fourier-studio` /
+> `proof:fourier-field-visibility-live` retired with the Canvas2D render they asserted
+> (the flat-alpha/quadratic intensity model + the phosphor-comet canvas readback are
+> gone); the new `proof:fourier-field` (U1 ONE-merged-view + the deleted SFCs ABSENT, U2
+> WGSL-primary-no-Canvas2D, U3 the ONE math source round-trip) is their successor. No
+> public-prop break — `<FourierField>` keeps its `ConstellationProps`-shaped contract;
+> only the demo studio split + the Canvas2D substrate are retired. MIGRATE: none for a
+> library consumer (the public `<FourierField>` surface is unchanged); the demo studio
+> route folds into the merged view.
+
+> **BC.W-VIZ-CONSTELLATION — the Canvas2D `drawOverlay` frozen-`now` handoff gate
+> `proof:constellation-freeze-live` RETIRED with the migration. Clean break, no alias.**
+> The constellation re-homes off the Canvas2D substrate (the low-res `ctx.arc()` discs +
+> the 2D `drawOverlay` skin seam) onto the WebGPU instanced-points+lines substrate
+> (`createGpuSubstrate`); the `drawOverlay` overlay-painter seam is INERT post-migration
+> (the lattice renders on the GPU, not a 2D context, so the render loop never invokes
+> `drawOverlay`). `proof:constellation-freeze-live` measured the `drawOverlay`
+> frozen-`now` handoff — a Canvas2D-era internal the GPU re-home deleted — so it retired;
+> the SURVIVING field-freeze determinism (under `prefers-reduced-motion` two frames are
+> IDENTICAL) is covered by the new `tests-visual/constellation.spec.ts` PRM-freeze π.
+> `drawOverlay` stays a public `ConstellationProps` prop (a consumer-skin seam) but is
+> no longer painted by the built-in GPU loop. The new `proof:viz-constellation` (C1 no
+> Canvas2D / `constellationDraw.ts` DELETED, C2 crisp SDF circle, C3 instanced quads, C4
+> the ONE math source) is the migration's source gate. MIGRATE: none for a library
+> consumer.
+
 > **BC.W-RADIO-FIX / Band 6 — `<Button variant="solid">` RETIRED (clean break, no
 > alias, "No legacy code").** The `solid` variant was a back-compat escape hatch (the
 > previous default's opaque `bg-primary` fill, "so consumers can still get the solid

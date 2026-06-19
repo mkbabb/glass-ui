@@ -274,10 +274,15 @@ export const MAX_STOPS = 8;
  * Not a themed preset — the demo's 11 authored presets override every field.
  */
 export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
+    // The warm-cream library identity (BC.W-TEAL-NAVY-PURGE). NOT teal/navy — a
+    // soft warm-amber-to-cream ramp (hue 45..70, the W-NO-GRAY warm-amber family)
+    // so a bare `<Aurora>` reads warm-cream at rest. The prior blue/teal default
+    // (h:220/200) was the teal-on-navy disease in the library identity. Named
+    // themed presets (Sky, Ocean, …) live in the consumer (presets-in-consumers).
     palette: [
-        { L: 0.72, C: 0.10, h: 220 },
-        { L: 0.86, C: 0.06, h: 200 },
-        { L: 0.95, C: 0.03, h: 80 },
+        { L: 0.72, C: 0.10, h: 55 },
+        { L: 0.86, C: 0.06, h: 45 },
+        { L: 0.95, C: 0.03, h: 70 },
     ],
     nuclei: [
         { x: 0.3, y: 0.3, radius: 0.5, paletteBias: 0.0, valueBias: 0, driftRadius: 0.045, driftPhase: 0.0 },

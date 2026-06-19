@@ -15,7 +15,12 @@ import { Switch } from "../../../src/components/ui/switch";
 import { Label } from "../../../src/components/ui/label";
 import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
 
-const pointerReactive = ref(true);
+// The primary hero lattice's pointer interactivity toggle. The name surfaces the
+// suite-wide `interactive` enable token (aurora/dot-flow-field/concentric/fourier all
+// use it; constellation's gating prop is `pointerReactive`, which this drives) so the
+// shared pointer-velocity field is reachable on the :5199 route (proof:viz-interaction
+// V4 — the aurora dead-flow close).
+const interactive = ref(true);
 
 // Resolve `--primary` to a concrete color so the canvas overlay paints it (a
 // Canvas2D `fillStyle` cannot resolve a `var()`). Re-resolves on a dark flip.
@@ -466,8 +471,8 @@ onMounted(() => {
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
-                    <Switch v-model="pointerReactive" />
-                    <span class="text-sm">pointer-reactive (steer-toward-cursor + tap ripples)</span>
+                    <Switch v-model="interactive" />
+                    <span class="text-sm">interactive (steer-toward-cursor + tap ripples)</span>
                 </Label>
             </div>
 
@@ -479,7 +484,7 @@ onMounted(() => {
                         seed="glass-ui"
                         :count="56"
                         :link="140"
-                        :pointer-reactive="pointerReactive"
+                        :pointer-reactive="interactive"
                         :draw-overlay="drawFocal"
                         class="absolute inset-0"
                     />

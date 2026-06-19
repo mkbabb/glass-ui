@@ -46,16 +46,33 @@ function stripComments(src) {
         .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
 }
 
+/** Recursively walk a dir, yielding `.ts`/`.vue` file paths (the constellation tree has
+ *  composables/ + shaders/ subdirs). */
+function walkTree(dir) {
+    const out = [];
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const full = resolve(dir, entry.name);
+        if (entry.isDirectory()) out.push(...walkTree(full));
+        else if (/\.(ts|vue)$/.test(entry.name)) out.push(full);
+    }
+    return out;
+}
+
 function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     return {
         ROOT,
-        SUBSTRATE: resolve(ROOT, "src/composables/glass/canvas2d/useCanvas2D.ts"),
-        // BB.W-CANVAS-UNIFY — the shared lifecycle leaf the Canvas2D wrapper composes
-        // (the de-fork lifted the schedule machinery HERE); the machinery-presence
-        // asserts follow the composition into it.
+        // BC.W-VIZ-CONSTELLATION — the lattice re-homes off the Canvas2D substrate onto the
+        // WebGPU instanced-points+lines substrate (the §E "WebGPU everywhere, no canvas"
+        // mandate). The SUBSTRATE-EXISTS asserts re-point to the WebGPU leaf the orchestrator
+        // composes (the proof:webgl-substrate-single "asserts follow the composition into the
+        // carved leaf" precedent).
+        SUBSTRATE: resolve(ROOT, "src/composables/glass/webgpu/useWebGPUCanvas.ts"),
+        PICKER: resolve(ROOT, "src/composables/glass/webgpu/useGpuSubstrate.ts"),
+        // The shared lifecycle leaf the WebGPU/WebGL2/Canvas2D backends all compose (the
+        // schedule machinery lives ONCE there); the machinery-presence asserts follow the
+        // composition into it.
         LIFECYCLE_LEAF: resolve(ROOT, "src/composables/glass/webgl/createCanvasLifecycle.ts"),
-        SUBSTRATE_BARREL: resolve(ROOT, "src/composables/glass/canvas2d/index.ts"),
         COMPONENT: resolve(ROOT, "src/components/custom/constellation/Constellation.vue"),
         // The PRNG single-source seed lives in the render-loop ORCHESTRATOR, which
         // BA.W-CARVE2 lifted out of Constellation.vue's <script setup> into the
@@ -68,7 +85,6 @@ function cliPaths() {
             ROOT,
             "src/components/custom/constellation/composables/useConstellation.ts",
         ),
-        FIELD: resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts"),
         DIR: resolve(ROOT, "src/components/custom/constellation"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_CONSTELLATION_ARTIFACT",
@@ -81,28 +97,25 @@ function run() {
     const {
         ROOT,
         SUBSTRATE,
+        PICKER,
         LIFECYCLE_LEAF,
-        SUBSTRATE_BARREL,
         COMPONENT,
         ORCHESTRATOR,
-        FIELD,
         DIR,
         ARTIFACT,
     } = cliPaths();
     const violations = [];
     const facts = {};
 
-    // ── SUBSTRATE-EXISTS ──────────────────────────────────────────────────────
-    // The wrapper-side asserts (exports the factory, has its own dispose, COMPOSES
-    // the shared lifecycle leaf) read the wrapper SOURCE; the machinery-presence
-    // asserts (suspend Set / content-visibility / tab-hidden / reduced-motion
-    // re-monitor) FOLLOW the composition into the leaf (BB.W-CANVAS-UNIFY — the
-    // de-fork lifted the schedule there, so reading the wrapper source for the
-    // inlined machinery would falsely red the moment the fork is removed). The
-    // machinery must be reachable THROUGH the composition: the wrapper imports the
-    // leaf AND the leaf carries the machinery — a two-file transitive check.
+    // ── SUBSTRATE-EXISTS (BC.W-VIZ-CONSTELLATION — re-pointed to the WebGPU leaf) ──
+    // The lattice re-homes onto createGpuSubstrate (WebGPU instanced-points+lines primary,
+    // the WebGL2 instanced-arrays twin fallback). The machinery-presence asserts (suspend
+    // Set / content-visibility / tab-hidden / reduced-motion re-monitor) FOLLOW the
+    // composition into the SHARED lifecycle leaf (the proof:webgl-substrate-single "asserts
+    // follow the composition into the carved leaf" precedent); the WebGPU wrapper composes
+    // that leaf + carries the device.lost self-heal.
     if (!existsSync(SUBSTRATE)) {
-        violations.push("the useCanvas2D substrate is absent");
+        violations.push("the useWebGPUCanvas substrate is absent");
         facts.substrateExists = false;
     } else {
         const sub = stripComments(readFileSync(SUBSTRATE, "utf8"));
@@ -110,18 +123,20 @@ function run() {
             existsSync(LIFECYCLE_LEAF) && stripComments(readFileSync(LIFECYCLE_LEAF, "utf8"));
         facts.substrateExists = true;
         facts.leafExists = Boolean(leaf);
+        facts.pickerExists = existsSync(PICKER);
 
         // Wrapper-side: the public surface + its own teardown + the COMPOSITION.
-        facts.exportsFactory = /export function useCanvas2D/.test(sub);
-        facts.hasDispose = /function dispose\b/.test(sub);
+        facts.exportsFactory = /export function createWebGPUCanvas/.test(sub);
+        facts.hasDispose = /\bdispose\s*:/.test(sub) || /function dispose\b/.test(sub);
         facts.composesLeaf =
             /import\s*\{[^}]*\bcreateCanvasLifecycle\b[^}]*\}\s*from\s*["'][^"']*createCanvasLifecycle["']/.test(
                 sub,
             ) && /\bcreateCanvasLifecycle\s*\(/.test(sub);
+        facts.hasDeviceLost = /\b(dev|device)\.lost\b/.test(sub);
 
         // Machinery-presence: resolve against the LEAF the wrapper composes (the
-        // single-source home post-de-fork). Gate the reads on the composition —
-        // unreachable machinery (a severed import) is no machinery at all.
+        // single-source home). Gate the reads on the composition — unreachable machinery
+        // (a severed import) is no machinery at all.
         const reachable = facts.composesLeaf && Boolean(leaf);
         facts.hasSuspendSet =
             reachable && /new Set</.test(leaf) && /isRunning\b/.test(leaf);
@@ -140,10 +155,16 @@ function run() {
             /addEventListener\(\s*["']change["']/.test(leaf);
 
         if (!facts.exportsFactory)
-            violations.push("useCanvas2D does not export the `useCanvas2D` factory");
+            violations.push("useWebGPUCanvas does not export the `createWebGPUCanvas` factory");
+        if (!facts.pickerExists)
+            violations.push("the createGpuSubstrate picker (useGpuSubstrate.ts) is absent");
         if (!facts.composesLeaf)
             violations.push(
-                "useCanvas2D does not compose the shared `createCanvasLifecycle` leaf (no import + call) — the Canvas2D substrate must be a thin backend over the single-source lifecycle, not a forked copy",
+                "useWebGPUCanvas does not compose the shared `createCanvasLifecycle` leaf (no import + call) — the WebGPU substrate must be a thin backend over the single-source lifecycle",
+            );
+        if (!facts.hasDeviceLost)
+            violations.push(
+                "useWebGPUCanvas is missing the `device.lost` self-heal (the WebGPU blank-surface-forever risk)",
             );
         if (!facts.leafExists)
             violations.push(
@@ -151,26 +172,59 @@ function run() {
             );
         if (!facts.hasSuspendSet)
             violations.push(
-                "the Canvas2D lifecycle has no suspend Set gating `isRunning()` reachable through the composed leaf (the demand-driven park model)",
+                "the lifecycle has no suspend Set gating `isRunning()` reachable through the composed leaf (the demand-driven park model)",
             );
         if (!facts.hasContentVisibility)
             violations.push(
-                "the Canvas2D lifecycle has no content-visibility offscreen-park reachable through the composed leaf (no `contentvisibilityautostatechange` → `suspend(\"off-screen\")`)",
+                "the lifecycle has no content-visibility offscreen-park reachable through the composed leaf (no `contentvisibilityautostatechange` → `suspend(\"off-screen\")`)",
             );
         if (!facts.hasTabHidden)
             violations.push(
-                "the Canvas2D lifecycle does not park on `document.hidden` through the composed leaf (no `visibilitychange` → `suspend(\"tab-hidden\")`)",
+                "the lifecycle does not park on `document.hidden` through the composed leaf (no `visibilitychange` → `suspend(\"tab-hidden\")`)",
             );
         if (!facts.hasReducedMotionReMonitor)
             violations.push(
-                "the Canvas2D lifecycle does not LIVE-monitor `prefers-reduced-motion` through the composed leaf (no `matchMedia` `change` re-monitor)",
+                "the lifecycle does not LIVE-monitor `prefers-reduced-motion` through the composed leaf (no `matchMedia` `change` re-monitor)",
             );
-        if (!facts.hasDispose)
-            violations.push("useCanvas2D has no `dispose()` teardown");
     }
-    facts.substrateBarrelExists = existsSync(SUBSTRATE_BARREL);
-    if (facts.substrateExists && !facts.substrateBarrelExists)
-        violations.push("the canvas2d/ barrel is absent");
+
+    // ── NO-CANVAS2D — the orchestrator composes the picker, never a 2D context ────
+    // BC.W-VIZ-CONSTELLATION §E "no canvas anywhere": the migration RETIRES the Canvas2D
+    // substrate + the four `ctx`-bound draw passes. The orchestrator must compose
+    // createGpuSubstrate AND carry NO `useCanvas2D` import nor any `getContext("2d")`.
+    if (existsSync(ORCHESTRATOR)) {
+        const orch = stripComments(readFileSync(ORCHESTRATOR, "utf8"));
+        facts.orchestratorComposesPicker =
+            /\b(createGpuSubstrate|useGpuSubstrate)\b/.test(orch);
+        facts.orchestratorNoCanvas2D =
+            !/\buseCanvas2D\b/.test(orch) && !/getContext\(\s*["']2d["']\)/.test(orch);
+        if (!facts.orchestratorComposesPicker)
+            violations.push(
+                "useConstellation does not compose createGpuSubstrate — the lattice must render on the WebGPU instanced substrate",
+            );
+        if (!facts.orchestratorNoCanvas2D)
+            violations.push(
+                "useConstellation still binds the Canvas2D substrate (a `useCanvas2D` import or a `getContext(\"2d\")` call) — the §E 'no canvas anywhere' mandate retires it",
+            );
+    }
+    // The constellation tree carries NO `getContext("2d")` / `ctx.arc` / `ctx.fill`
+    // anywhere (the four Canvas2D draw passes are deleted).
+    {
+        const twoDHits = [];
+        if (existsSync(DIR)) {
+            for (const file of walkTree(DIR)) {
+                const src = stripComments(readFileSync(file, "utf8"));
+                if (/getContext\(\s*["']2d["']\)/.test(src) || /\bctx\.arc\b/.test(src))
+                    twoDHits.push(file.slice(ROOT.length + 1));
+            }
+        }
+        facts.canvas2dAbsent = twoDHits.length === 0;
+        facts.canvas2dHits = twoDHits;
+        if (!facts.canvas2dAbsent)
+            violations.push(
+                `a Canvas2D drawing context survives in the constellation tree (must be GONE — WebGPU instanced render): ${twoDHits.join("; ")}`,
+            );
+    }
 
     // ── PRNG-SINGLE-SOURCE ────────────────────────────────────────────────────
     if (!existsSync(COMPONENT)) {
@@ -216,19 +270,34 @@ function run() {
             `deck-domain skin literal found in the constellation source (must live in a consumer drawOverlay): ${dirHits.join("; ")}`,
         );
 
-    // ── field engine carries the four NEUTRAL passes, no anomaly pass ─────────
-    if (existsSync(FIELD)) {
-        const fld = stripComments(readFileSync(FIELD, "utf8"));
-        facts.hasNeutralPasses =
-            /export function drawEdges/.test(fld) &&
-            /export function drawNodes/.test(fld) &&
-            /export function drawPointerWeb/.test(fld) &&
-            /export function drawRipples/.test(fld);
-        if (!facts.hasNeutralPasses)
+    // ── the ONE math source carries the CPU edge SET scan (the render reads it) ────
+    // BC.W-VIZ-CONSTELLATION: the four Canvas2D draw passes RETIRED; the engine exports the
+    // pure CPU edge SET scan (`buildEdges`/`appendPointerWeb`) the WGSL/GLSL render
+    // transcribes (the single-math-source bar — the WGSL renders, it does not re-derive).
+    const ENGINE = resolve(DIR, "constellationField.ts");
+    if (existsSync(ENGINE)) {
+        const eng = stripComments(readFileSync(ENGINE, "utf8"));
+        facts.hasEdgeScan =
+            /export function buildEdges/.test(eng) &&
+            /export function appendPointerWeb/.test(eng);
+        if (!facts.hasEdgeScan)
             violations.push(
-                "constellationField.ts does not export the four neutral passes (drawEdges/drawNodes/drawPointerWeb/drawRipples)",
+                "constellationField.ts does not export the CPU edge SET scan (buildEdges/appendPointerWeb) — the ONE math source the instanced render transcribes",
             );
     }
+    // ── the WGSL primary + the WebGL2 GLSL twin instanced-render shaders exist ─────
+    const SHADERS = [
+        "shaders/constellation-points.wgsl.ts",
+        "shaders/constellation-lines.wgsl.ts",
+        "shaders/constellation-points.glsl.ts",
+        "shaders/constellation-lines.glsl.ts",
+    ];
+    const missingShaders = SHADERS.filter((s) => !existsSync(resolve(DIR, s)));
+    facts.shadersExist = missingShaders.length === 0;
+    if (!facts.shadersExist)
+        violations.push(
+            `the WebGPU/WebGL2 instanced-render shaders are missing: ${missingShaders.join(", ")}`,
+        );
 
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
@@ -240,7 +309,7 @@ function run() {
     });
 
     console.log(
-        "proof:constellation-substrate-single — useCanvas2D + Constellation, single-source prng, anomaly-is-skin (AW.W17)",
+        "proof:constellation-substrate-single — WebGPU instanced substrate + Constellation, single-source prng, anomaly-is-skin (BC.W-VIZ-CONSTELLATION re-point)",
     );
     console.log(`  SUBSTRATE-EXISTS  : ${facts.exportsFactory ? "yes ✓" : "NO ✗"}`);
     console.log(

@@ -1,6 +1,7 @@
 import { watch, onUnmounted, type Ref } from "vue";
 import { createGpuSubstrate } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
+import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { cssToOklch, oklchToGammaRgb } from "../../../../composables/color";
 import type { BlobConfig } from "../types";
@@ -107,6 +108,19 @@ export function useMetaballRenderer(
     // clock, so a tempo change (pause / PRM) freezes motion without a discontinuity.
     let simTimeMs = 0;
 
+    // BC.W-VIZ-GOOBLOB-MEATBALL — the shared viz-pointer-physics field (BB.B4). The
+    // fold is ADDITIVE + byte-faithful: the existing `useBlobPointer` swirl/trail (the
+    // attraction model) stays the baseline; this field adds the ACCELERATION
+    // (second-derivative) term for the iOS-27 gel snap-back — a fast flick that
+    // DECELERATES (the accel OPPOSES the velocity) injects a transient burst into the
+    // mood click-pulse so the blob springs toward the pointer. The field owns NO own
+    // rAF — it is FED `tick(deltaMs)` from inside the EXISTING `resolveFrame` callback
+    // (the createCanvasLifecycle one-loop / proof:offscreen-pause discipline), and
+    // FREEZES under PRM/pause (tick(0)). The pointer POSITION is fed from the existing
+    // `BlobPointer` model (`setPointer`, PRM-gated); velocity + acceleration are DERIVED
+    // in tick. The fold KEEPS useBlobPointer intact (the W-VIZ-POINTER not-re-point rule).
+    const pointerField = usePointerVelocityField();
+
     // Resolve a CONCRETE CSS color string to a GAMMA-sRGB triple via the `/color`
     // leaf (`cssToOklch → oklchToGammaRgb` — the faithful AU.W7 gamma exit; ONE shared
     // color core, inv J-10, no parallel math). Memoised: the consumer cycles through a
@@ -207,6 +221,30 @@ export function useMetaballRenderer(
         const tempo = reduced || paused ? 0 : config.tempo;
         const stepMs = tempo * dtMs;
         simTimeMs += stepMs;
+
+        // BC.W-VIZ-GOOBLOB-MEATBALL — feed the shared pointer-velocity field from THIS
+        // frame callback (NO own rAF — the createCanvasLifecycle one-loop discipline).
+        // The raw pointer target is the existing `useBlobPointer` smoothed position
+        // mapped [-1,1] → [0,1] (the field owns its own derivation); `tick(0)` under
+        // PRM/pause freezes it (the deterministic FREEZE). We READ BOTH derivative axes
+        // (velocity AND acceleration — the user's accel ask, V2): the iOS-27 GEL
+        // SNAP-BACK — a fast flick that DECELERATES (the accel OPPOSES the velocity)
+        // kicks the existing mood click-pulse so the body springs toward the pointer.
+        // The fold is additive; useBlobPointer's swirl/trail baseline is untouched.
+        if (tempo > 0 && pointer.active.value) {
+            const p = pointer.pointer.value;
+            pointerField.setPointer(p.x * 0.5 + 0.5, p.y * 0.5 + 0.5);
+        }
+        pointerField.tick(tempo === 0 ? 0 : dtMs);
+        const accel = pointerField.acceleration.value;
+        const vel = pointerField.velocity.value;
+        const decel = -(accel.x * vel.x + accel.y * vel.y);
+        if (decel > 0 && tempo > 0) {
+            // The decel impulse kicks the EXISTING body pulse oscillator (the one-shot
+            // `click` channel — body overshoots toward the pointer then rings back); the
+            // flick `burst` scales the amplitude. No new uniform, no new channel.
+            pointer.click(Math.min(0.5, decel * 4.0 + pointerField.burst.value * 0.2));
+        }
 
         // Advance the simulation on the tempo-scaled step. Under reduced-motion (tempo
         // 0) the interaction layer COMPOSES the deterministic rest pose rather than

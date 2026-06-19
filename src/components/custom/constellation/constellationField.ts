@@ -5,12 +5,13 @@
 // the cursor; taps drop expanding ripples.
 //
 // This module owns the SHARED TYPES + the engine core: `seedField`/`refitField`/
-// `stepField`. The pointer-INTERACTION machinery lives in
-// `./constellationInteraction`; the FOUR NEUTRAL draw passes + the palette read
-// live in `./constellationDraw` (both import only TYPES from here — no runtime
-// cycle). There is NO branded skin pass: a focal mark / callout is a
-// consumer-supplied `drawOverlay` after the neutral passes; zero deck-domain
-// content lives here.
+// `stepField` + the CPU edge SET scan (`buildEdges`/`appendPointerWeb`) + the
+// parallax-offset helper (BC.W-VIZ-CONSTELLATION). The pointer-INTERACTION machinery
+// lives in `./constellationInteraction`; the palette read + the visual-size floor live
+// in `./constellationRender`. The four Canvas2D draw passes RETIRED — the lattice renders
+// on the WebGPU instanced-points+lines substrate (the WebGL2 instanced-arrays twin
+// fallback); this engine is the ONE math source the WGSL/GLSL render transcribes. Zero
+// deck-domain content lives here.
 
 import {
     stepWell,
@@ -24,6 +25,7 @@ import {
 // The reference width the `k` scale factor is keyed to (CSS px) lives in the
 // feature-dir constants home; re-exported here for the package barrel path.
 export { BASE_WIDTH } from "./constants";
+import { NODE_R_MIN, NODE_R_SPREAD } from "./constants";
 
 // The SHARED field/palette/warp/wander/well/pinned-drift/props TYPE shapes live
 // in the co-located `./constellationTypes` (BA.W-CARVE2 — the ~308 lines of
@@ -63,8 +65,12 @@ export function seedField(
             y: rng() * h,
             vx: Math.cos(a) * speed,
             vy: Math.sin(a) * speed,
-            r: 1.6 + rng() * 1.6,
+            r: NODE_R_MIN + rng() * NODE_R_SPREAD,
             dim: rng() < 0.45,
+            // BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (§6). z ∈ [0,1]; the
+            // pointer offsets the node's SCREEN position by parallax·z·(pointer−center)
+            // so the flat lattice reads as having depth (GPU node-position write only).
+            z: rng(),
         });
     }
     return nodes;
@@ -123,6 +129,7 @@ export function stepField(
     dt = 0,
     now = 0,
     rng: () => number = Math.random,
+    pointerVel: ConstellationPointer | null = null,
 ): void {
     const { nodes, w, h } = field;
     // The PINNED node (AZ.W-CON-GEN G1) is held by every step pass — its drift,
@@ -152,6 +159,24 @@ export function stepField(
     }
     if (pointer && pointer.x >= 0) {
         const infl = 180 * k;
+        // BC.W-VIZ-CONSTELLATION (§6) — the VELOCITY-AWARE lean. The existing position lean
+        // (`pull = (1 − d/infl)·0.08`) reads only position; the shared usePointerVelocity
+        // field supplies a per-frame pointer velocity (canvas-local px/frame, fed by
+        // useConstellation off the smoothed pointer). A FAST sweep (`velMag` large) drags a
+        // stronger directional lean (the nodes follow the cursor's MOMENTUM, biased along
+        // the sweep direction), a slow hover is the gentle local gather (velMag ≈ 0 →
+        // byte-identical to the prior position-only lean). The magnitude scale is bounded
+        // (≤ VEL_LEAN_CAP) so a flick never slingshots; the |v|→sp renorm preserves the
+        // slow geometric drift speed (the cool-down invariant holds). pointerVel null (no
+        // shared field) → velBoost 0 → the position-only lean (byte-identical to HEAD).
+        const velMag = pointerVel ? Math.hypot(pointerVel.x, pointerVel.y) : 0;
+        const VEL_LEAN_GAIN = 0.05; // per (px/frame) of sweep speed
+        const VEL_LEAN_CAP = 0.16; // the bounded extra lean magnitude (anti-slingshot)
+        const velBoost = Math.min(velMag * VEL_LEAN_GAIN, VEL_LEAN_CAP);
+        // The unit sweep direction (the momentum bias axis); zero when not sweeping.
+        const sweepN = velMag > 1e-4 && pointerVel ? velMag : 0;
+        const swx = sweepN > 0 && pointerVel ? pointerVel.x / sweepN : 0;
+        const swy = sweepN > 0 && pointerVel ? pointerVel.y / sweepN : 0;
         for (let i = 0; i < nodes.length; i++) {
             if (i === pinned) continue;
             const p = nodes[i];
@@ -160,9 +185,13 @@ export function stepField(
             const d = Math.hypot(dx, dy);
             if (d > 0.5 && d < infl) {
                 const sp = Math.hypot(p.vx, p.vy) || speed;
-                const pull = (1 - d / infl) * 0.08;
-                const nvx = p.vx + (dx / d) * pull * sp;
-                const nvy = p.vy + (dy / d) * pull * sp;
+                const prox = 1 - d / infl;
+                // The base position pull (byte-identical at velBoost 0) + the
+                // velocity-biased momentum lean along the sweep direction.
+                const pull = prox * 0.08;
+                const lean = prox * velBoost;
+                const nvx = p.vx + ((dx / d) * pull + swx * lean) * sp;
+                const nvy = p.vy + ((dy / d) * pull + swy * lean) * sp;
                 const nsp = Math.hypot(nvx, nvy) || 1;
                 p.vx = (nvx / nsp) * sp;
                 p.vy = (nvy / nsp) * sp;
@@ -217,4 +246,130 @@ export function stepField(
             wd.nextAt = now + wd.minIdle + rng() * wd.jitter;
         }
     }
+}
+
+// ── BC.W-VIZ-CONSTELLATION — the CPU edge SET scan (the ONE math source; §3) ──────
+//
+// The distance-threshold ε-proximity graph: every two nodes within `reach = link·k` are
+// joined by an edge whose `alpha = 1 − d²/reach²` falls off with distance. This is the
+// `drawEdges` math relocated OUT of the retired Canvas2D draw pass into a PURE,
+// node-testable export the render loop calls each frame — the WGSL/GLSL instanced-lines
+// render transcribes only the SHAPE (the segment-quad expansion + the cross-line AA), never
+// re-derives this scan (the single-math-source bar; the GPU spatial-hash compute neighbor-
+// bin is the BOOKED dense-register successor — overfit substrate at the default count=64).
+//
+// At count=64 the O(N²)/2 ≈ 2k pairs/frame is trivial. `accentIndex ≥ 0` flags the edges
+// incident on the accented node (the flagged-node tether); the writer caps total edges at
+// `eMax` (the pre-sized buffer budget) by dropping the WEAKEST (lowest-alpha) overflow.
+
+import type { ConstellationEdge } from "./constellationTypes";
+
+/**
+ * Scan the proximity graph and return its edge SET (the `1 − d²/reach²` distance-falloff
+ * weight per pair within `reach = link·k`). `accentIndex ≥ 0` marks the edges incident on
+ * that node (the flagged-node tether). Pure + node-testable; the render loop calls it each
+ * frame and uploads the result to the instanced-lines storage buffer.
+ *
+ * `eMax` caps the result (the pre-sized buffer budget). When the scan would exceed it, the
+ * WEAKEST overflow edges are dropped (a denser-than-budget neighborhood keeps its strongest
+ * links — never re-allocates the GPU buffer mid-frame).
+ */
+export function buildEdges(
+    field: ConstellationField,
+    link: number,
+    accentIndex = -1,
+    eMax = Infinity,
+): ConstellationEdge[] {
+    const { nodes, k } = field;
+    const reach = link * k;
+    const reach2 = reach * reach;
+    const edges: ConstellationEdge[] = [];
+    for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+            const b = nodes[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 > reach2) continue;
+            const alpha = 1 - d2 / reach2;
+            const accent =
+                accentIndex >= 0 && (i === accentIndex || j === accentIndex) ? 1 : 0;
+            edges.push({
+                ax: a.x,
+                ay: a.y,
+                bx: b.x,
+                by: b.y,
+                alpha,
+                accent,
+                focus: 0,
+            });
+        }
+    }
+    // Budget cap — drop the weakest overflow (the strongest lattice survives).
+    if (edges.length > eMax) {
+        edges.sort((p, q) => q.alpha - p.alpha);
+        edges.length = eMax;
+    }
+    return edges;
+}
+
+/**
+ * Append the POINTER-WEB tether edges to an existing edge set (the `drawPointerWeb` math
+ * relocated): the cursor is a "virtual node" whose incident edges (to every node within
+ * `reach`) carry `focus = 1` (the render strokes them at the focus alpha). No-op when the
+ * pointer is inactive (`x < 0`). The `eMax` budget is shared with the ambient set.
+ */
+export function appendPointerWeb(
+    edges: ConstellationEdge[],
+    field: ConstellationField,
+    link: number,
+    pointer: ConstellationPointer | null,
+    eMax = Infinity,
+): void {
+    if (!pointer || pointer.x < 0) return;
+    const { nodes, k } = field;
+    const reach = link * k;
+    const reach2 = reach * reach;
+    for (const p of nodes) {
+        if (edges.length >= eMax) break;
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 > reach2) continue;
+        edges.push({
+            ax: pointer.x,
+            ay: pointer.y,
+            bx: p.x,
+            by: p.y,
+            alpha: 1 - d2 / reach2,
+            accent: 0,
+            focus: 1,
+        });
+    }
+}
+
+/**
+ * The parallax-offset SCREEN position for a node (§6). Offsets the node by
+ * `parallax · z · (pointer − center)` — a cheap pointer-parallax giving the flat lattice
+ * apparent depth (deeper nodes — higher `z` — shift more, the Awwwards "living network"
+ * register). When the pointer is inactive the offset is 0 (the flat lattice). Pure; the
+ * render loop maps each node's `(x,y)` through this before writing the GPU position buffer.
+ */
+export function parallaxNodePos(
+    node: ConstellationNode,
+    pointer: ConstellationPointer | null,
+    w: number,
+    h: number,
+    parallax: number,
+): { x: number; y: number } {
+    if (!pointer || pointer.x < 0 || parallax <= 0) return { x: node.x, y: node.y };
+    const z = node.z ?? 0.5;
+    const cx = w / 2;
+    const cy = h / 2;
+    // The pointer-relative shift, scaled by depth + the parallax knob (clamped to a hair so
+    // the lattice never shears off the card).
+    const ox = ((pointer.x - cx) / Math.max(w, 1)) * parallax * z * w;
+    const oy = ((pointer.y - cy) / Math.max(h, 1)) * parallax * z * h;
+    return { x: node.x + ox, y: node.y + oy };
 }

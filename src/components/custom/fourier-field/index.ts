@@ -1,4 +1,5 @@
-import type { ColorResolver } from "../../../composables/color";
+import type { ColorResolver, OklchStop } from "../../../composables/color";
+import type { BasisComponent } from "./math";
 
 export { default as FourierField } from "./FourierField.vue";
 export {
@@ -10,28 +11,40 @@ export {
     type BasisComponent,
     type EllipticSpectrumOptions,
 } from "./math";
+export {
+    DEFAULT_FOURIER_CONFIG,
+    WARM_IDENTITY_PALETTE,
+    MAX_PHASORS,
+    MAX_CURVE_SAMPLES,
+    type FourierFieldConfig,
+} from "./constants";
+export {
+    useFourierField,
+    type FourierFieldHandle,
+    type UseFourierFieldOptions,
+} from "./composables/useFourierField";
 
-/** The configuration-BUNDLE axis — `hero` (epicycles on, fewer harmonics) vs
- *  `final` (epicycles off, denser). Not a recolour of one curve; one engine,
- *  two presets. */
-export type FourierFieldVariant = "hero" | "final";
-
-/** The props a consumer forwards when wrapping `<FourierField>` (the seeded
- *  inverse-DFT epicycle background; ships via `/fourier-field`). Mirrors the
- *  component's inline `defineProps` shape (an SFC cannot export its inline
- *  props type). */
+/**
+ * The props a consumer forwards when wrapping `<FourierField>` (the GPU-substrate epicycle
+ * field; ships via `/fourier-field`). Mirrors the component's inline `defineProps` shape (an
+ * SFC cannot export its inline props type). BC.W-VIZ-FOURIER — the `variant: "hero"|"final"`
+ * enum is RETIRED (folds into config presets); the renderer is the WGSL-primary GPU substrate.
+ */
 export interface FourierFieldProps {
-    /** Configuration bundle. Default `hero`. */
-    variant?: FourierFieldVariant;
-    /** Base CSS color (a `var()`/`light-dark()` token resolves against the host). */
-    color: string;
-    /** REQUIRED color seam — resolves a concrete color to a gamma-sRGB [r,g,b] triple in [0,1]. */
-    colorResolver: ColorResolver;
-    /** Extra seed mixed into the spectrum PRNG for a unique-but-reproducible curve. Default "". */
+    /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */
+    config?: import("./constants").FourierFieldConfig;
+    /** An explicit CPU-minted spectrum (a curated shape's DFT). When absent, a seeded elliptic spectrum is generated. */
+    spectrum?: readonly BasisComponent[];
+    /** Resolve the curve palette as OKLCh (the studio themes it). */
+    getPalette?: () => OklchStop[];
+    /** Ambient-consumer color seam — a `var()`/`light-dark()` token or a literal; derives a warm palette. */
+    color?: string;
+    /** The color resolver (the GooBlob/Aurora seam) — required when `color` is a `var()` token. */
+    colorResolver?: ColorResolver;
+    /** Extra seed mixed into the generated elliptic spectrum PRNG. Default "". */
     seed?: string;
     /** Paint ONE static deterministic best-frame and never animate (the capture lever). Default false. */
     freeze?: boolean;
-    /** Outer loudness envelope (the Aurora `opacityCeiling` shape). Scales the
-     *  resolved `peakAlpha`/`headGlowAlpha` at the paint layer. Default 1; clamped [0, 2]. */
+    /** Outer loudness envelope (scales the per-layer alpha). Overrides `config.intensity` when set; clamped [0, 2]. */
     intensity?: number;
 }

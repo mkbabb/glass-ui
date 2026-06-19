@@ -1,24 +1,60 @@
-// BB.W-VIZ-SUITE (W-FLOWFIELD) — the typed-struct SOURCE OF TRUTH for the WebGPU
-// compute + render uniform buffers.
+// BC.W-VIZ-DOTFLOW — the typed-struct SOURCE OF TRUTH for the WebGPU compute + render
+// uniform buffers (the anchored-lattice retopology).
 //
 // The WGSL `FlowUniforms` (compute) + `RenderUniforms` (render) structs and the JS
 // `ArrayBuffer` write offsets are generated from the SAME layout tables here, so a
 // std140-vs-WGSL alignment mismatch (the parity-ΔE-blowout trap) is structurally
-// impossible — the field order + the byte offsets are ONE declaration. The aurora /
-// goo-blob migrations established this pattern; this is its flow-field twin.
+// impossible — the field order + the byte offsets are ONE declaration.
 //
-// Both buffers pack every scalar into a vec4 lane + each wave row + each palette stop
-// into a vec4 so the array stride is the natural 16 bytes (no std140 stride surprise).
+// Both buffers pack every scalar into a vec4 lane + each wave row + each palette stop into
+// a vec4 so the array stride is the natural 16 bytes (no std140 stride surprise).
 
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
 import type { WaveComponent } from "./flowField";
+import { FLOW_DOMAIN_HALF as FLOW_DOMAIN_HALF_MATH } from "./flowField";
 import { MAX_WAVE_COMPONENTS, MAX_FLOW_STOPS, type FlowFieldConfig } from "../constants";
+
+/** The domain half-extent (the lattice spans [-half, half]²; mirrors flowField.ts). */
+export const FLOW_DOMAIN_HALF = FLOW_DOMAIN_HALF_MATH;
+
+// ── The deterministic lattice geometry (cols / rows / count from a px pitch) ────
+// `gridPitch` is in CSS-px; the lattice spans the [-half, half] domain over the MIN CSS
+// dimension. cols = ceil(domainExtentPx / pitchPx); count = cols² (a square lattice). The
+// count is clamped to the storage-buffer cap. The compute kernel + the render pass + the
+// JS seed ALL read this ONE geometry so the index→origin mapping is identical everywhere.
+export interface FlowGridGeometry {
+    cols: number;
+    count: number;
+    /** The lattice pitch in DOMAIN units (the px pitch mapped to the domain). */
+    pitchDomain: number;
+}
+
+/** Compile-time lattice cap (mirrors the WGSL storage-buffer array bound). */
+export const FLOW_MAX_LATTICE = 16384;
+
+export function flowGridGeometry(
+    gridPitchPx: number,
+    canvasCssMin: number,
+): FlowGridGeometry {
+    const domainExtentPx = canvasCssMin || 320;
+    const pitch = Math.max(gridPitchPx, 4);
+    // cols across the visible MIN dimension, +2 margin cells so the lattice fills past the
+    // edges (the wider axis is covered by the same square lattice — the aspect crops it).
+    const cols = Math.min(
+        Math.max(Math.ceil(domainExtentPx / pitch) + 2, 4),
+        128,
+    );
+    const count = Math.min(cols * cols, FLOW_MAX_LATTICE);
+    // pitch in domain units: the domain extent (2·half) spans `cols` cells.
+    const pitchDomain = (2 * FLOW_DOMAIN_HALF) / Math.max(cols, 1);
+    return { cols, count, pitchDomain };
+}
 
 // ── COMPUTE uniform layout ────────────────────────────────────────────────────
 //   p0    : vec4<f32>  off   0  (uTime, uDt, uWindSpeed, uCurlStrength)
-//   p1    : vec4<f32>  off  16  (uDomainHalf, uReseedJitter, _pad, _pad)
-//   ints  : vec4<i32>  off  32  (uWaveCount, uParticleCount, _pad, _pad)
+//   p1    : vec4<f32>  off  16  (uGridPitch, uDisplaceAmp, uSpringK, uGridCols)
+//   ints  : vec4<i32>  off  32  (uWaveCount, uParticleCount, uGridColsI, _pad)
 //   waves : array<vec4<f32>, 8>  off  48  (amplitude, wavelength, directionDeg, phase)
 //   total : 48 + 8*16 = 176 bytes
 export const FLOW_COMPUTE_UNIFORM_BYTES = 48 + MAX_WAVE_COMPONENTS * 16;
@@ -41,16 +77,13 @@ export function createFlowComputeScratch(): FlowUniformScratch {
     return { buffer, f32: new Float32Array(buffer), i32: new Int32Array(buffer) };
 }
 
-/** The domain half-extent (mirrors the WGSL `uDomainHalf`). */
-export const FLOW_DOMAIN_HALF = 0.85;
-
 /** Pack the compute uniforms in place. */
 export function packFlowComputeUniforms(
     scratch: FlowUniformScratch,
     config: FlowFieldConfig,
     timeSec: number,
     dt: number,
-    particleCount: number,
+    geometry: FlowGridGeometry,
 ): FlowUniformScratch {
     const { f32, i32 } = scratch;
     f32[C_OFF.p0 + 0] = timeSec;
@@ -58,15 +91,15 @@ export function packFlowComputeUniforms(
     f32[C_OFF.p0 + 2] = config.windSpeed;
     f32[C_OFF.p0 + 3] = config.curlStrength;
 
-    f32[C_OFF.p1 + 0] = FLOW_DOMAIN_HALF;
-    f32[C_OFF.p1 + 1] = 0.0;
-    f32[C_OFF.p1 + 2] = 0.0;
-    f32[C_OFF.p1 + 3] = 0.0;
+    f32[C_OFF.p1 + 0] = geometry.pitchDomain;
+    f32[C_OFF.p1 + 1] = config.displaceAmp;
+    f32[C_OFF.p1 + 2] = config.springK;
+    f32[C_OFF.p1 + 3] = geometry.cols;
 
     const waveCount = Math.min(config.waveComponents.length, MAX_WAVE_COMPONENTS);
     i32[C_OFF.ints + 0] = waveCount;
-    i32[C_OFF.ints + 1] = particleCount;
-    i32[C_OFF.ints + 2] = 0;
+    i32[C_OFF.ints + 1] = geometry.count;
+    i32[C_OFF.ints + 2] = geometry.cols;
     i32[C_OFF.ints + 3] = 0;
 
     packWaves(f32, C_OFF.waves, config.waveComponents);
@@ -74,22 +107,22 @@ export function packFlowComputeUniforms(
 }
 
 // ── RENDER uniform layout ─────────────────────────────────────────────────────
-//   r0      : vec4<f32>  off   0  (uTime, uWindSpeed, uCurlStrength, uDomainHalf)
-//   r1      : vec4<f32>  off  16  (uDotSize, uDotSizeVelocity, uAspect, uVMax)
-//   ints    : vec4<i32>  off  32  (uWaveCount, uStopCount, uParticleCount, _pad)
-//   bg      : vec4<f32>  off  48  (background.rgb, hasBackground)
-//   waves   : array<vec4<f32>, 8>  off  64  (amplitude, wavelength, directionDeg, phase)
-//   palette : array<vec4<f32>, 4>  off  192  (linear-sRGB rgb + _pad)
-//   total   : 192 + 4*16 = 256 bytes
-export const FLOW_RENDER_UNIFORM_BYTES = 192 + MAX_FLOW_STOPS * 16;
+//   r0      : vec4<f32>  off   0  (uTime, uContrast, uBaseBright, uDomainHalf)
+//   r1      : vec4<f32>  off  16  (uDotSize, uSizePulse, uAspect, uGridPitch)
+//   r2      : vec4<f32>  off  32  (uWaveBandCenter, uWaveBandWidth, uGlobeMask, _pad)
+//   ints    : vec4<i32>  off  48  (uStopCount, uParticleCount, _pad, _pad)
+//   bg      : vec4<f32>  off  64  (background.rgb, hasBackground)
+//   palette : array<vec4<f32>, 4>  off  80  (linear-sRGB rgb + _pad)
+//   total   : 80 + 4*16 = 144 bytes
+export const FLOW_RENDER_UNIFORM_BYTES = 80 + MAX_FLOW_STOPS * 16;
 
 const R_OFF = {
     r0: 0,
     r1: 4,
-    ints: 8,
-    bg: 12,
-    waves: 16, // 8 rows × 4 words
-    palette: 48, // 4 stops × 4 words
+    r2: 8,
+    ints: 12,
+    bg: 16,
+    palette: 20, // 4 stops × 4 words
 } as const;
 
 export function createFlowRenderScratch(): FlowUniformScratch {
@@ -97,11 +130,15 @@ export function createFlowRenderScratch(): FlowUniformScratch {
     return { buffer, f32: new Float32Array(buffer), i32: new Int32Array(buffer) };
 }
 
+/** The base resting brightness (the calm-lattice floor before the band lights a dot). */
+export const FLOW_BASE_BRIGHT = 0.22;
+
+/** The drift-driven size pulse (a subtle breathing; never a re-seed). */
+export const FLOW_SIZE_PULSE = 0.4;
+
 /** A px-size in CSS-px → the same domain units the WGSL `uDotSize` expects. */
 function dotSizeDomain(dotSizePx: number, canvasCssMin: number): number {
-    // size in domain units = px / (px-per-domain-unit); domain spans [-half, half] over
-    // the min CSS dimension → px-per-domain = canvasCssMin / (2·half).
-    const pxPerDomain = canvasCssMin / (2 * FLOW_DOMAIN_HALF);
+    const pxPerDomain = (canvasCssMin || 320) / (2 * FLOW_DOMAIN_HALF);
     return dotSizePx / Math.max(pxPerDomain, 1e-4);
 }
 
@@ -112,24 +149,29 @@ export function packFlowRenderUniforms(
     timeSec: number,
     aspect: number,
     canvasCssMin: number,
+    geometry: FlowGridGeometry,
     palette: OklchStop[],
 ): FlowUniformScratch {
     const { f32, i32 } = scratch;
     f32[R_OFF.r0 + 0] = timeSec;
-    f32[R_OFF.r0 + 1] = config.windSpeed;
-    f32[R_OFF.r0 + 2] = config.curlStrength;
+    f32[R_OFF.r0 + 1] = config.contrast;
+    f32[R_OFF.r0 + 2] = FLOW_BASE_BRIGHT;
     f32[R_OFF.r0 + 3] = FLOW_DOMAIN_HALF;
 
     f32[R_OFF.r1 + 0] = dotSizeDomain(config.dotSize, canvasCssMin);
-    f32[R_OFF.r1 + 1] = config.dotSizeVelocity;
+    f32[R_OFF.r1 + 1] = FLOW_SIZE_PULSE;
     f32[R_OFF.r1 + 2] = aspect;
-    f32[R_OFF.r1 + 3] = 2.0; // uVMax — the velocity normalization ceiling
+    f32[R_OFF.r1 + 3] = geometry.pitchDomain;
 
-    const waveCount = Math.min(config.waveComponents.length, MAX_WAVE_COMPONENTS);
+    f32[R_OFF.r2 + 0] = config.waveBandCenter;
+    f32[R_OFF.r2 + 1] = config.waveBandWidth;
+    f32[R_OFF.r2 + 2] = config.globeMask ? 1 : 0;
+    f32[R_OFF.r2 + 3] = 0;
+
     const stopCount = Math.min(palette.length, MAX_FLOW_STOPS);
-    i32[R_OFF.ints + 0] = waveCount;
-    i32[R_OFF.ints + 1] = stopCount;
-    i32[R_OFF.ints + 2] = config.particleCount;
+    i32[R_OFF.ints + 0] = stopCount;
+    i32[R_OFF.ints + 1] = geometry.count;
+    i32[R_OFF.ints + 2] = 0;
     i32[R_OFF.ints + 3] = 0;
 
     // background (linear-sRGB) + hasBackground flag.
@@ -145,8 +187,6 @@ export function packFlowRenderUniforms(
         f32[R_OFF.bg + 2] = lin[2];
         f32[R_OFF.bg + 3] = 1;
     }
-
-    packWaves(f32, R_OFF.waves, config.waveComponents);
 
     // palette stops baked to LINEAR-sRGB (the WGSL render samples in linear).
     for (let i = 0; i < MAX_FLOW_STOPS; i++) {
@@ -184,26 +224,27 @@ function packWaves(
     }
 }
 
-/** The byte size of one particle in the storage buffer (vec4<f32>). */
+/** The byte size of one lattice dot in the storage buffer (vec4<f32>). */
 export const FLOW_PARTICLE_BYTES = 16;
 
 /**
- * Seed the particle storage buffer: each particle is (pos.x, pos.y, age, seed) in the
- * domain [-half, half]. The seed is deterministic per index so a re-mount is reproducible.
+ * Seed the lattice storage buffer: each dot starts AT its anchor origin (the restoring
+ * spring needs no initial offset). `(pos.x, pos.y, height=0, |disp|=0)` per index — the
+ * compute kernel re-derives the origin from `gridOrigin(index, cols, pitch)` each frame,
+ * so the seed only needs the starting position (the lattice settles on the first frames).
  */
-export function seedParticleBuffer(particleCount: number): Float32Array {
-    const data = new Float32Array(particleCount * 4);
-    for (let i = 0; i < particleCount; i++) {
-        const seed = (i + 1) * 0.6180339887;
-        let r1 = Math.sin(seed * 71.13) * 43758.5453;
-        r1 -= Math.floor(r1);
-        let r2 = Math.sin(seed * 19.31 + 4) * 43758.5453;
-        r2 -= Math.floor(r2);
+export function seedLatticeBuffer(geometry: FlowGridGeometry): Float32Array {
+    const { cols, count, pitchDomain } = geometry;
+    const data = new Float32Array(count * 4);
+    const half = ((cols - 1) * pitchDomain) / 2;
+    for (let i = 0; i < count; i++) {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
         const o = i * 4;
-        data[o + 0] = (r1 * 2 - 1) * FLOW_DOMAIN_HALF;
-        data[o + 1] = (r2 * 2 - 1) * FLOW_DOMAIN_HALF;
-        data[o + 2] = (r1 * 6) % 6; // staggered age
-        data[o + 3] = seed;
+        data[o + 0] = col * pitchDomain - half;
+        data[o + 1] = row * pitchDomain - half;
+        data[o + 2] = 0;
+        data[o + 3] = 0;
     }
     return data;
 }

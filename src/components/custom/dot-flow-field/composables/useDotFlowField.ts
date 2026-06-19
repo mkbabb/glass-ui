@@ -1,24 +1,34 @@
-// BB.W-VIZ-SUITE (W-FLOWFIELD) — the public composable: the studio handle + the
-// lifecycle wiring over the WebGPU-first substrate (with the Canvas2D fallback).
+// BC.W-VIZ-DOTFLOW — the public composable: the studio handle + the lifecycle wiring over
+// the WebGPU-first substrate (with the WebGL2 FRAGMENT fallback) + the shared pointer field.
 //
-// `useDotFlowField(canvasRef, options)` composes the backend picker — `createGpuSubstrate`
-// (the `setupWGPU` compute+render two-pass primary) WHERE WebGPU is supported, else
-// `useCanvas2D` (the §3a CPU-stepped point-cloud fallback over the SAME lifecycle leaf).
-// It wires the offscreen pause + the `DockBackgroundToggle` WCAG-2.2.2 pause/resume seam +
-// `wake()` on pointer, and exposes the uniform `DotFlowFieldHandle`. The renderer owns the
-// frame loop (the canvas lifecycle leaf); this composable re-implements ZERO scheduling.
+// `useDotFlowField(canvasRef, options)` composes the `createGpuSubstrate` picker — the
+// `setupWGPU` compute+render two-pass primary WHERE WebGPU is supported, else the `setupGL`
+// WebGL2 fullscreen-fragment fallback (the Canvas2D point-cloud is GONE — the retopology
+// made the field fragment-friendly; "no canvas anywhere", §E). It wires the offscreen
+// pause + the `DockBackgroundToggle` WCAG-2.2.2 pause/resume seam + `wake()` on pointer, and
+// exposes the uniform `DotFlowFieldHandle`. The renderer owns the frame loop (the canvas
+// lifecycle leaf); this composable re-implements ZERO scheduling.
+//
+// THE POINTER (BC.W-VIZ-INTERACTION). When `config.interactive`, the lattice ripples toward
+// the cursor: useDotFlowField composes the SHARED `usePointerVelocityField` (NEVER a second
+// rAF — the field is FED `tick(delta)` from inside the renderer's existing `frame` callback
+// via the `onFrame` setup hook) and reads BOTH the steady-drag VELOCITY and the flick BURST
+// (the accel axis — the user's "velocity AND acceleration" ask) into a transient
+// displacement-push about the pointer (the `config.interactive` arm raises the local
+// `displaceAmp` along the velocity, the burst fires a brief brightness bloom). The
+// pointermove/enter/leave listeners bind on the wrapper; PRM freezes the field (the
+// usePointerVelocityField `tick(0)` discipline). The pointer push rides a closed-over scalar
+// the setups read each frame; the consumer config is never mutated.
 
 import { onScopeDispose, type Ref } from "vue";
 import {
     createGpuSubstrate,
-    supportsWebGPU,
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
-import { useCanvas2D } from "../../../../composables/glass/canvas2d/useCanvas2D";
-import { oklchStopToHex, type OklchStop } from "../../../../composables/color";
+import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import type { OklchStop } from "../../../../composables/color";
 import type { FlowFieldConfig } from "../constants";
-import { createFlowWGPUSetup } from "./useFlowParticles";
-import { createCpuFlowField } from "../shaders/flow-field.glsl";
+import { createFlowWGPUSetup, createFlowGLSetup } from "./useFlowParticles";
 
 export interface UseDotFlowFieldOptions {
     config: FlowFieldConfig;
@@ -30,7 +40,7 @@ export interface UseDotFlowFieldOptions {
 
 /** The uniform handle a consumer wires its lifecycle against (backend-agnostic). */
 export interface DotFlowFieldHandle {
-    /** The resolved backend (`"webgpu"` where supported, else the Canvas2D fallback as `"webgl2"`). */
+    /** The resolved backend (`"webgpu"` where supported, else the WebGL2 fragment fallback). */
     readonly backend: GpuBackend;
     /** Park the loop (the WCAG-2.2.2 pause seam — `DockBackgroundToggle` wires this). */
     pause: () => void;
@@ -42,14 +52,28 @@ export interface DotFlowFieldHandle {
     renderAt: (timeSec: number) => void;
     /** The live `prefers-reduced-motion: reduce` state. */
     readonly reducedMotion: boolean;
-    /** Tear down the renderer + release GPU/2D resources. */
+    /** Tear down the renderer + release GPU/GL resources. */
     dispose: () => void;
 }
 
 /**
+ * The transient pointer-push the interactive arm injects into the lattice — a closed-over
+ * scalar the setups blend into the config each frame (the consumer config is never
+ * mutated). The push raises the local displacement along the velocity + a brightness bloom
+ * on a flick burst, decaying back to the calm lattice.
+ */
+interface PointerPush {
+    /** A multiplier on `displaceAmp` (1 at rest, >1 while dragging — the velocity ripple). */
+    displaceBoost: number;
+    /** A brightness bloom 0..1 a flick fires (the accel/burst axis). */
+    bloom: number;
+}
+
+/**
  * Mount the dot-flow-field renderer on `canvasRef`. The WebGPU primary runs the
- * compute+render two-pass; the Canvas2D fallback steps the SAME `flowField.ts` evaluator
- * (the ONE math source). Returns the uniform lifecycle handle.
+ * compute+render two-pass over the anchored lattice; the WebGL2 fallback evaluates the SAME
+ * `flowField.ts` field as a fullscreen fragment pass (the ONE math source). Returns the
+ * uniform lifecycle handle.
  */
 export function useDotFlowField(
     canvasRef: Ref<HTMLCanvasElement | null>,
@@ -58,98 +82,137 @@ export function useDotFlowField(
     const { config, getPalette } = options;
     const mode = options.mode ?? "live";
 
-    // ── WebGPU primary path ──
-    if (supportsWebGPU()) {
-        let handle: ReturnType<typeof createGpuSubstrate> | null = null;
-        const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
-            const canvas = canvasRef.value;
-            if (!canvas) return null;
-            if (!handle) {
-                handle = createGpuSubstrate(canvas, {
-                    mode,
-                    respectReducedMotion: config.respectReducedMotion,
-                    setupWGPU: createFlowWGPUSetup({
-                        canvas,
-                        config,
-                        getPalette,
-                        shouldContinue: () => true,
-                        getReducedMotion: () => handle?.reducedMotion ?? false,
-                    }),
-                    // The picker requires a `setupGL` (the WebGL2 path); a flow viz that
-                    // reaches the WebGPU branch never invokes it, but the picker contract
-                    // demands it. On a no-WebGPU device this composable takes the Canvas2D
-                    // fallback branch below (NOT this WebGL2 stub) per §3a.
-                    setupGL: () => ({
-                        frame: () => {},
-                        shouldContinue: () => false,
-                        resize: () => {},
-                    }),
-                });
-                void handle.armAsync();
-            }
-            return handle;
-        };
-        // Arm once the canvas resolves (microtask — the ref is set after mount).
-        queueMicrotask(() => ensure());
-
-        const h: DotFlowFieldHandle = {
-            get backend(): GpuBackend {
-                return ensure()?.backend ?? "webgpu";
-            },
-            pause: () => ensure()?.suspend("manual"),
-            resume: () => ensure()?.resume("manual"),
-            wake: () => ensure()?.wake(),
-            renderAt: (t) => ensure()?.renderAt(t),
-            get reducedMotion() {
-                return handle?.reducedMotion ?? false;
-            },
-            dispose: () => handle?.dispose(),
-        };
-        onScopeDispose(() => h.dispose());
-        return h;
-    }
-
-    // ── Canvas2D fallback path (the §3a CPU-stepped point cloud) ──
-    const field = createCpuFlowField(config);
-    let lastNow = -1;
-    const canvas2d = useCanvas2D({
-        canvas: () => canvasRef.value,
+    // The shared pointer-physics field (NO own rAF — fed by the renderer frame via onFrame).
+    const pointer = usePointerVelocityField({
         respectReducedMotion: config.respectReducedMotion,
-        autoStart: mode === "live",
-        setup: (ctx) => {
-            return {
-                render: (c, now) => {
-                    const timeSec = now / 1000;
-                    const dt =
-                        lastNow < 0
-                            ? 0
-                            : Math.min(Math.max((now - lastNow) / 1000, 0), 0.05);
-                    lastNow = now;
-                    if (dt > 0) field.step(dt, timeSec);
-                    const cv = canvasRef.value;
-                    const wCss = cv?.clientWidth || 320;
-                    const hCss = cv?.clientHeight || 320;
-                    const stop = getPalette()[0] ?? config.palette[0];
-                    field.paint(c, wCss, hCss, timeSec, oklchStopToHex(stop));
-                },
-            };
-        },
     });
 
+    // The transient pointer-push (closed over; the setups read it each frame, never the
+    // consumer config). The renderer blends it into the effective config in onFrame.
+    const push: PointerPush = { displaceBoost: 1, bloom: 0 };
+
+    // The EFFECTIVE config the setups read each frame — a shallow clone of the consumer
+    // config with the pointer push blended in (so the lattice ripples toward the cursor
+    // WITHOUT mutating the reactive consumer config).
+    const effective: FlowFieldConfig = { ...config };
+    const getEffective = (): FlowFieldConfig => {
+        // Re-read the live config each frame so a studio edit reaches the buffer.
+        Object.assign(effective, config);
+        effective.displaceAmp = config.displaceAmp * push.displaceBoost;
+        // The flick bloom lifts the brightness contrast briefly (the accel axis paints).
+        effective.contrast = config.contrast * (1 + push.bloom * 0.8);
+        return effective;
+    };
+
+    let handle: ReturnType<typeof createGpuSubstrate> | null = null;
+    let lastFrameSec = 0;
+
+    // The per-frame pointer hook the setups invoke from inside their frame callback (the
+    // no-own-rAF discipline — the renderer's loop feeds the push-API tick). It advances the
+    // field one renderer frame AND derives the transient push from BOTH velocity + burst.
+    function onFrame(timeSec: number): void {
+        const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
+        lastFrameSec = timeSec;
+        pointer.tick(deltaMs);
+
+        if (!config.interactive || !pointer.active.value) {
+            // Decay any residual push back to the calm lattice.
+            push.displaceBoost = push.displaceBoost + (1 - push.displaceBoost) * 0.1;
+            push.bloom *= 0.9;
+            return;
+        }
+        // The steady-drag VELOCITY raises the local displacement (the ripple pushing
+        // through the lattice); the flick BURST (the accel axis) fires a brightness bloom.
+        const speed = pointer.speed.value;
+        const targetBoost = 1 + Math.min(2.5, speed * 3.0);
+        push.displaceBoost = push.displaceBoost + (targetBoost - push.displaceBoost) * 0.2;
+        push.bloom = Math.max(push.bloom * 0.9, pointer.burst.value);
+    }
+
+    // Bind the pointer listeners on the wrapper (the canvas is pointer-events:none). A first
+    // hover wakes a parked loop on the SAME frame (the no-delayed-response discipline).
+    const onEnter = (): void => {
+        pointer.onPointerEnter();
+        if (config.interactive) handle?.wake();
+    };
+    const onMove = (e: Event): void => {
+        pointer.onPointerMove(e as PointerEvent);
+        if (config.interactive) handle?.wake();
+    };
+    const pointerHost = (canvas: HTMLCanvasElement): HTMLElement =>
+        canvas.parentElement ?? canvas;
+    function bindPointer(canvas: HTMLCanvasElement): void {
+        const host = pointerHost(canvas);
+        host.addEventListener("pointermove", onMove);
+        host.addEventListener("pointerenter", onEnter);
+        host.addEventListener("pointerleave", pointer.onPointerLeave);
+    }
+    function unbindPointer(canvas: HTMLCanvasElement): void {
+        const host = pointerHost(canvas);
+        host.removeEventListener("pointermove", onMove);
+        host.removeEventListener("pointerenter", onEnter);
+        host.removeEventListener("pointerleave", pointer.onPointerLeave);
+    }
+
+    const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
+        const canvas = canvasRef.value;
+        if (!canvas) return null;
+        if (!handle) {
+            bindPointer(canvas);
+            const setupDeps = {
+                canvas,
+                config: getEffective(),
+                getPalette,
+                shouldContinue: () => true,
+                onFrame,
+            };
+            // The setups re-read the effective config each frame via getEffective(); the
+            // closure captures the SAME `effective` object the deps reference, so the
+            // per-frame push reaches the uniform buffer.
+            handle = createGpuSubstrate(canvas, {
+                mode,
+                respectReducedMotion: config.respectReducedMotion,
+                setupWGPU: createFlowWGPUSetup({
+                    ...setupDeps,
+                    config: effective,
+                    onFrame: (t) => {
+                        onFrame(t);
+                        getEffective();
+                    },
+                }),
+                setupGL: createFlowGLSetup({
+                    ...setupDeps,
+                    config: effective,
+                    onFrame: (t) => {
+                        onFrame(t);
+                        getEffective();
+                    },
+                }),
+            });
+            void handle.armAsync();
+        }
+        return handle;
+    };
+    // Arm once the canvas resolves (microtask — the ref is set after mount).
+    queueMicrotask(() => ensure());
+
     const h: DotFlowFieldHandle = {
-        backend: "webgl2",
-        pause: () => canvas2d.suspend("manual"),
-        resume: () => canvas2d.resume("manual"),
-        wake: () => canvas2d.wake(),
-        renderAt: () => {
-            // The Canvas2D fallback paints through its own arm; a manual renderAt re-arms
-            // a single static frame (the capture path).
-            canvas2d.wake();
+        get backend(): GpuBackend {
+            return ensure()?.backend ?? "webgpu";
         },
+        pause: () => ensure()?.suspend("manual"),
+        resume: () => ensure()?.resume("manual"),
+        wake: () => ensure()?.wake(),
+        renderAt: (t) => ensure()?.renderAt(t),
         get reducedMotion() {
-            return canvas2d.reducedMotion;
+            return handle?.reducedMotion ?? false;
         },
-        dispose: () => canvas2d.dispose(),
+        dispose: () => {
+            const canvas = canvasRef.value;
+            if (canvas) unbindPointer(canvas);
+            pointer.dispose();
+            handle?.dispose();
+        },
     };
     onScopeDispose(() => h.dispose());
     return h;

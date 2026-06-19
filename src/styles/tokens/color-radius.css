@@ -224,9 +224,9 @@
        keyframes.js ω₀ = 2π/response convention, mints no second ω). */
     --constellation-warp-response:    0.55;   /* s — keyframes.js angular period (NOT a settle) */
     --constellation-warp-zeta:        1.0;    /* critically damped — a focal mark must NOT ring */
-    --constellation-well-gain:        14000;  /* inverse-square force scale (the held-pull gain) */
+    --constellation-well-gain:        19000;  /* inverse-square force scale (the held-pull gain). Lifted 14000→19000 (BC.W-VIZ-CONSTELLATION): the GPU substrate's high-refresh frame loop ramps the held strength to only ~0.70 within the egg-live π perturb window, so the weaker effective force (fought by the |v|→speed ease-back) fell under the gate's ≥20% perturb floor — a stronger pull restores the heat. Held-physics only; rest is byte-untouched. Mirrors DEFAULT_WELL_CONFIG.gain. */
     --constellation-well-reach:       340;    /* base-width px — the well's reach (k-scaled at step) */
-    --constellation-well-ramp:        4.0;    /* 1/s — the ARM rate (≈0.25s bloom; release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant, not consumer-tunable) */
+    --constellation-well-ramp:        8.0;    /* 1/s — the ARM rate. Doubled 4→8 (BC.W-VIZ-CONSTELLATION) so the strength reaches near-full power within the gate's 40-frame perturb window at the GPU substrate's high refresh (~0.12s bloom); release is the fixed brisk WELL_RELEASE_RAMP — the field-cools invariant, not consumer-tunable. Mirrors DEFAULT_WELL_CONFIG.ramp. */
     --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
     --constellation-well-hold-ms:     140;    /* ms hold before the well arms */
     --constellation-wander-idle:      8000;   /* ms — min idle between auto re-targets (the W-CON1 drift cadence) */

@@ -12,7 +12,6 @@ export {
     MAX_PARTICLES,
     MAX_WAVE_COMPONENTS,
     MAX_FLOW_STOPS,
-    DEFAULT_PARTICLE_COUNT,
 } from "./constants";
 export {
     type WaveComponent,
@@ -21,6 +20,11 @@ export {
     gerstnerVelocity,
     curlFBM,
     buildWaveLadder,
+    gridOrigin,
+    sampleHeight,
+    sampleDisplacement,
+    waveBand,
     FLOW_GRAVITY,
+    FLOW_DOMAIN_HALF,
 } from "./composables/flowField";
 export type { OklchStop } from "../../../composables/color";

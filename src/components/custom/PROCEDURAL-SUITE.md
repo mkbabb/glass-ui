@@ -8,7 +8,7 @@ too — extant items, too"), states the shared discipline ONCE, and records the 
 capability + WebGPU-migration verdict. Each viz's OWN per-dir `README.md` carries a
 "Substrate" section with its local substrate/parity/migration status; this doc is the index.
 
-## The seven members
+## The nine members
 
 | viz | subpath | what it is |
 |---|---|---|
@@ -16,6 +16,8 @@ capability + WebGPU-migration verdict. Each viz's OWN per-dir `README.md` carrie
 | **goo-blob** | `/goo-blob` | a WebGL2 metaball droplet on the SDF `smin` substrate, with orbiting satellites |
 | **dot-flow-field** | `/dot-flow-field` | curl-noise flow field traced by advected particles over a Gerstner/Tessendorf wave potential |
 | **concentric** | `/concentric` | a radial Fourier ring-interference field — concentric ellipsoid rings beating into moiré |
+| **paper-grid** | `/paper-grid` | a liquid AA-grid — a Golus derivative-AA two-tier grid on a Bridson curl-warped UV sheet (BORN WebGPU-first — fullscreen fragment, the aurora/concentric shape-class; the fallback is the SAME pure fragment → parity `verified`) |
+| **dot-matrix** | `/dot-matrix` | a Fibonacci phyllotaxis dot-SPHERE — fine warm-cream dots on a sphere surface, depth-shaded into a translucent dot-shell, slowly rotating (BORN WebGPU-first — instanced billboard quads + the crisp fwidth SDF circle; the WebGL2 fallback is the SAME instanced billboards → parity `verified`; the goo-blob sibling, register **a** — the goo+dot HYBRID register **b** reuses this rasterizer) |
 | **fourier-field** | `/fourier-field` | a reconstructing elliptic Fourier curve — an inverse-DFT closed curve with nested epicycles |
 | **constellation** | `/constellation` | a drifting proximity-graph node/edge lattice |
 | **watercolor-dot** | `/watercolor-dot` | a CSS/SVG `feDisplacementMap` seeded blob (a decorative mark — NO drawing context) |
@@ -59,7 +61,7 @@ below). `proof:gpu-substrate-single` machine-locks the no-second-fork + no-delet
 + parity-resolves discipline; the machine-read parity table is
 `docs/tranches/BB/audit/gpu-parity-table.md`.
 
-## The per-viz capability + migration table (ALL SEVEN members, first-class)
+## The per-viz capability + migration table (ALL NINE members, first-class)
 
 | viz | substrate (HEAD) | configurator | palette source | WebGPU-migration verdict | rank | sub-wave / reason |
 |---|---|---|---|---|---|---|
@@ -67,6 +69,8 @@ below). `proof:gpu-substrate-single` machine-locks the no-second-fork + no-delet
 | **goo-blob** | WebGL2 (`metaball.frag.ts`, 417L, SDF smin + 2 `fwidth()` sites) + the `metaball.wgsl.ts` primary | demo studio per-preset | injected ColorResolver (`uploadBlobUniforms.ts`) | **MIGRATED** — clean SDF port; the two `fwidth()` AA/Toksvig sites transcribed to WGSL fragment-stage `fwidth()` | **2** | **W-GOOBLOB-WGPU** |
 | **dot-flow-field** | NEW — WebGPU compute+instanced primary, Canvas2D point-cloud fallback | `useConfiguratorState<FlowFieldConfig>` commit-on-write | ColorResolver | **BORN WebGPU-first** — the compute-particle path is materially better on WebGPU (per-particle size/density the reference needs); fallback `degraded` | **3** | **W-FLOWFIELD** |
 | **concentric** | NEW — WebGPU fragment primary, GLSL fallback | `useConfiguratorState<ConcentricConfig>` commit-on-write | ColorResolver | **BORN WebGPU-first** — fullscreen fragment, the aurora shape-class; the fallback is the SAME pure fragment field → parity `verified` | **4** | **W-CONCENTRIC** |
+| **paper-grid** | NEW — WebGPU fragment primary, GLSL fallback | `useConfiguratorState<PaperGridConfig>` commit-on-write | ColorResolver | **BORN WebGPU-first** — fullscreen fragment (Golus derivative-AA grid on a Bridson curl-warped UV); the fallback is the SAME pure fragment → parity `verified` | **5** | **W-VIZ-PAPERGRID** |
+| **dot-matrix** | NEW — WebGPU instanced-billboard primary, WebGL2 instanced-billboard fallback | `useConfiguratorState<DotMatrixConfig>` commit-on-write | ColorResolver | **BORN WebGPU-first** — instanced billboard quads + the crisp fwidth SDF circle (the Fibonacci phyllotaxis dot-sphere, depth-shaded); the fallback is the SAME instanced billboards → parity `verified`; the goo-blob sibling that the goo+dot HYBRID reuses | **6** | **W-VIZ-DOTMATRIX** |
 | **fourier-field** | **Canvas2D** (`useCanvas2D`; `math.ts` DFT epicycle math) | demo studio per-preset (`fourier-studio.vue`) | ColorResolver | **DO NOT MIGRATE (now)** — a few-to-dozens of phasors is the RIGHT tool for `ctx.stroke`; the DFT math is already GPU-agnostic. "WebGPU-first WHEN POSSIBLE" gives latitude | — | **W-FOURIER-GPU** (booked; trigger: harmonic density scales to thousands of phasors → GPU line-instancing wins) |
 | **constellation** | **Canvas2D** (`useCanvas2D`; node/edge proximity-graph lattice) | (substrate-agnostic) | ColorResolver | **DO NOT MIGRATE (now)** — Canvas2D handles the current node count fine; `proof:constellation-substrate-single` is substrate-agnostic | — | **W-CONSTELLATION-GPU** (booked; trigger: a much denser lattice → the dot-flow-field advection compute pass generalizes to constellation's nodes) |
 | **watercolor-dot** | **SVG/CSS only — NO drawing context** (`<filter>` feDisplacementMap + seeded prng; `useWatercolorBlob.ts` pure geometry) | (none — a decorative dot) | per-instance prng + color | **PERMANENTLY OUT** — mounts ZERO drawing context; a GPU context for one decorative dot is a regression against the ~8-context-per-page cap | — | NEVER a wave — the canonical "mark NOT to migrate, with the reason" case |

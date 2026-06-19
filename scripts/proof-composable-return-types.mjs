@@ -249,8 +249,7 @@ function run() {
             path: P.BARREL_CONSTELLATION,
             expect: [
                 "Constellation", "seedField", "stepField", "stepWell", "refitField",
-                "readPalette", "drawEdges", "drawNodes", "drawPointerWeb", "drawRipples",
-                "nearestNode", "readInteractionConfig", "warpStep", "warpTo",
+                "readPalette", "nearestNode", "readInteractionConfig", "warpStep", "warpTo",
                 "setWarpTarget", "warpSettled", "pickWanderTarget", "BASE_WIDTH",
                 "DEFAULT_PALETTE", "DEFAULT_WELL_CONFIG", "DEFAULT_WANDER_IDLE",
                 "DEFAULT_WANDER_JITTER", "WARP_RESPONSE", "WARP_ZETA",
@@ -268,6 +267,14 @@ function run() {
                 // scale: SIZES floor at max(k, kFloor); positions/reach stay on
                 // true k; byte-identical at/above ~922px by construction.
                 "DEFAULT_K_FLOOR", "kVisOf",
+                // BC.W-VIZ-CONSTELLATION — the WebGPU instanced-render migration: the four
+                // Canvas2D draw passes (drawEdges/drawNodes/drawPointerWeb/drawRipples)
+                // RETIRED; the CPU edge SET scan (buildEdges/appendPointerWeb) + the
+                // parallax helper + the color-parse seam + the flick-burst are the new
+                // surface (the engine is the ONE math source the WGSL/GLSL render reads).
+                "buildEdges", "appendPointerWeb", "parallaxNodePos", "parseColorRGBA",
+                "DEFAULT_PARALLAX", "MAX_NODES", "MAX_DEGREE", "E_MAX",
+                "fireBurst", "BURST_FIRE_THRESHOLD", "ConstellationEdge",
             ],
         },
         "dock/composables/index.ts": {

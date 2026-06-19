@@ -180,7 +180,13 @@ export function curlFBM(p: Vec2): Vec2 {
 /**
  * The COMPOSITE flow velocity v(p,t): the Gerstner sum-of-sines analytic ∇⊥h PLUS the
  * `curlStrength`-weighted fbm curl-noise braiding term. The SINGLE math source the WGSL
- * compute kernel transcribes; `proof:flow-field` clause 3 round-trips the two paths.
+ * compute kernel transcribes; `proof:viz-dotflow` clause F3 round-trips the two paths.
+ *
+ * RETOPOLOGY (BC.W-VIZ-DOTFLOW). The curl domain-scale dropped 1.7→0.55 (coarse braiding,
+ * not fine chatter) per the §3.2 regime inversion. The velocity is no longer an advection
+ * integrand (the lattice does not advect) — it is the DISPLACEMENT field's perp-gradient
+ * source. `sampleDisplacement` is the per-frame sub-cell offset; `sampleVelocity` stays as
+ * the round-trip anchor + the analytic ∇⊥h the displacement reads.
  */
 export function sampleVelocity(
     p: Vec2,
@@ -191,39 +197,157 @@ export function sampleVelocity(
 ): Vec2 {
     const g = gerstnerVelocity(p, timeSec, waves, windSpeed);
     if (curlStrength <= 0) return g;
-    // The curl-noise term advects on a slow time scale (the braiding the reference shows).
-    const c = curlFBM({ x: p.x * 1.7 + timeSec * 0.15, y: p.y * 1.7 });
+    // The curl-noise term reads at a COARSE domain scale (×0.55 — the §3.2 inversion off
+    // the prior ×1.7 fine braiding) on a slow time scale (the organic break the
+    // reference shows, kept LOW so it never overwhelms the dominant sweeping wave).
+    const c = curlFBM({ x: p.x * 0.55 + timeSec * 0.15, y: p.y * 0.55 });
     return {
         x: g.x + c.x * curlStrength,
         y: g.y + c.y * curlStrength,
     };
 }
 
+// ── BC.W-VIZ-DOTFLOW: the anchored dot-matrix topology (the gestalt fix) ─────────
+// The field stops being a free-advecting particle cloud and becomes a CALM ANCHORED
+// LATTICE a slow LARGE wave sweeps through (research/viz/dot-flow-field.md §3.3, §5).
+// Four pure node-testable functions the WGSL transcribes line-for-line; the round-trip
+// gate (F3) locks JS↔WGSL parity at a fixed (index, t) sample set.
+
+/** The shipped domain half-extent (the lattice is laid out over [-half, half]²). */
+export const FLOW_DOMAIN_HALF = 0.85;
+
 /**
- * Build the default 6-octave Phillips-spectrum wave ladder about a dominant wind
- * direction. Amplitudes follow `A_i ∝ exp(−1/(k_i·L)²) / k_i²` (Tessendorf §4), so the
- * field is energy-realistic. The directions spread about `windDirection` so the
- * streamlines braid like a river delta (not a flat band).
+ * The deterministic lattice origin for a particle index — the WGSL `instance_index →
+ * origin` mapping matches this EXACTLY (the F3 round-trip anchor). `cols` columns, square
+ * pitch in DOMAIN units; the grid is centered on the origin so the field reads symmetric.
+ * Index `i` walks row-major (`col = i % cols`, `row = floor(i / cols)`).
+ */
+export function gridOrigin(index: number, cols: number, pitch: number): Vec2 {
+    const c = Math.max(cols, 1);
+    const col = index % c;
+    const row = Math.floor(index / c);
+    // Center the lattice: the (cols-1) span × pitch, halved, is the leading offset.
+    const half = ((c - 1) * pitch) / 2;
+    return { x: col * pitch - half, y: row * pitch - half };
+}
+
+/**
+ * The scalar Gerstner HEIGHT at an origin — the brightness driver (the moving bright
+ * stripe the lattice paints). `h(o,t) = Σ_i A_i·sin(k_i·(D_i·o) − ω_i·t + φ_i)`, the SAME
+ * sum the velocity derives from (no second wave table). The brightness field reads at the
+ * ANCHOR (`o`), not the live position, so the sweep is stable + low-frequency.
+ */
+export function sampleHeight(
+    o: Vec2,
+    timeSec: number,
+    waves: readonly WaveComponent[],
+    windSpeed: number,
+): number {
+    let h = 0;
+    let ampSum = 0;
+    for (const w of waves) {
+        const k = TAU / Math.max(w.wavelength, 1e-4);
+        const d = dirOf(w.direction);
+        const omega = Math.sqrt(FLOW_GRAVITY * k) * windSpeed;
+        const theta = k * (d.x * o.x + d.y * o.y) - omega * timeSec + w.phase;
+        h += w.amplitude * Math.sin(theta);
+        ampSum += Math.abs(w.amplitude);
+    }
+    // Normalize to ≈[-1,1] by the total amplitude so the `waveBand` thresholds are
+    // wave-table-independent (the Phillips amplitude at a large λ is otherwise huge —
+    // 1/k² with small k). The WGSL transcribes the SAME normalization.
+    return h / Math.max(ampSum, 1e-4);
+}
+
+/**
+ * The sub-cell DISPLACEMENT for an origin — the divergence-free ∇⊥h (the Gerstner perp-
+ * gradient) PLUS a faint coarse curl break. The dot eases toward `o + disp·displaceAmp`
+ * (the restoring spring lives in the kernel); this is the target offset, NOT an advection
+ * step. Capped LOW by `displaceAmp` so the dot never leaves its cell by > ~0.5 pitch.
+ */
+export function sampleDisplacement(
+    o: Vec2,
+    timeSec: number,
+    waves: readonly WaveComponent[],
+    windSpeed: number,
+    curlStrength: number,
+): Vec2 {
+    // The displacement reads the analytic flow velocity (∇⊥h + the coarse curl break),
+    // then BOUNDS it through a smooth tanh-ish soft-clamp so the wave amplitude can never
+    // blow the sub-cell cap — the magnitude rides into [0,1) regardless of the wave
+    // table, and `displaceAmp` (in pitch units, capped < 0.5 pitch) scales the final
+    // offset. The WGSL transcribes the SAME soft-clamp.
+    const v = sampleVelocity(o, timeSec, waves, windSpeed, curlStrength);
+    const mag = Math.hypot(v.x, v.y);
+    if (mag < 1e-5) return { x: 0, y: 0 };
+    // soft-clamp: mag → tanh(mag) keeps direction, bounds magnitude into [0,1).
+    const bounded = Math.tanh(mag);
+    const s = bounded / mag;
+    return { x: v.x * s, y: v.y * s };
+}
+
+/**
+ * The sweeping bright-stripe band: a `smoothstep` band centered `center` width `width`
+ * over the normalized height — the moving iso-band that lights the dots it passes. The
+ * band is symmetric about the center (a soft ridge crossing the lattice as `h` sweeps).
+ */
+export function waveBand(h: number, center: number, width: number): number {
+    const w = Math.max(width, 1e-3);
+    // Distance from the band center, soft-thresholded — 1 at the center, falling to 0 at
+    // ±width. The two-sided smoothstep makes a soft ridge (not a hard edge).
+    const d = Math.abs(h - center);
+    return 1 - smoothstep(0, w, d);
+}
+
+/** A scalar smoothstep (the GLSL/WGSL twin), for `waveBand`. */
+function smoothstep(edge0: number, edge1: number, x: number): number {
+    const t = Math.min(Math.max((x - edge0) / Math.max(edge1 - edge0, 1e-6), 0), 1);
+    return t * t * (3 - 2 * t);
+}
+
+/**
+ * Build the wave ladder about a dominant wind direction. BC.W-VIZ-DOTFLOW REGIME
+ * INVERSION (research/viz/dot-flow-field.md §3.2): the LOW-frequency coherent regime — a
+ * LARGE base wavelength (≈½–1 period across the view → ONE dominant sweeping wave), 2-3
+ * octaves (no fine chatter), a steep amplitude persistence (×0.38 → the base wave
+ * dominates, detail a whisper), the λ falloff floored so the finest λ ≥ ~⅓ view. The
+ * directions spread MODESTLY about `windDirection` (the sweep reads as ONE coherent form,
+ * not a braided delta).
+ *
+ * `lambda0Mul` is λ₀ as a MULTIPLE of the domain extent (default 2.5 — the §1 target);
+ * `octaves` is 2-3 (the coherent band). Amplitudes follow the Phillips falloff × the
+ * per-octave persistence so the field stays energy-realistic.
  */
 export function buildWaveLadder(
     windDirection: number,
-    octaves = 6,
+    octaves = 3,
+    lambda0Mul = 2.5,
 ): WaveComponent[] {
-    const L = 1.6; // the largest wave from the dominant wind (Phillips L)
+    // λ₀ as a multiple of the full domain extent (2·half) — a LARGE dominant wavelength.
+    const domainExtent = 2 * FLOW_DOMAIN_HALF;
+    const lambda0 = Math.max(lambda0Mul, 0.5) * domainExtent;
+    // The Phillips L scales with the dominant wave so the spectrum stays realistic.
+    const L = lambda0 / TAU;
+    // Floor the finest λ at ~⅓ the view so no octave introduces fine chatter.
+    const minLambda = domainExtent / 3;
+    const oct = Math.max(1, Math.min(Math.round(octaves), 3));
     const out: WaveComponent[] = [];
-    let wavelength = 2.4;
-    for (let i = 0; i < octaves; i++) {
-        const k = TAU / wavelength;
+    let wavelength = lambda0;
+    let persistence = 1;
+    for (let i = 0; i < oct; i++) {
+        const lam = Math.max(wavelength, minLambda);
+        const k = TAU / lam;
         const phillips = Math.exp(-1 / (k * L) ** 2) / (k * k);
-        // A spread that widens with octave — the fine octaves braid more.
-        const spread = (i % 2 === 0 ? 1 : -1) * (18 + i * 9);
+        // A MODEST spread (±8° per octave) — the sweep stays one coherent form.
+        const spread = (i % 2 === 0 ? 1 : -1) * (8 + i * 4);
         out.push({
-            amplitude: phillips * 0.5,
-            wavelength,
+            amplitude: phillips * persistence,
+            wavelength: lam,
             direction: windDirection + spread,
             phase: (i * 1.618033) % TAU,
         });
-        wavelength *= 0.62; // decreasing λ → increasing k (multi-scale)
+        wavelength *= 0.58; // §3.2 falloff (floored above)
+        persistence *= 0.38; // §3.2 amplitude persistence — base dominates
     }
     return out;
 }

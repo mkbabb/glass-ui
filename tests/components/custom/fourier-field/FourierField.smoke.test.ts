@@ -1,9 +1,11 @@
-// AY.W-FF2 — the FourierField mount-smoke + the `/fourier-math` consumer-#1.
+// BC.W-VIZ-FOURIER — the FourierField mount-smoke + the `/fourier-math` consumer-#1.
 //
 // Two jobs in one spec:
-//   1. MOUNT-SMOKE — the component mounts with the required resolver seam,
-//      accepts the new `intensity` prop, and does not throw. The COMPONENT is
-//      imported RELATIVE (../…/src) per the mirrored-test-tree rule (AV.W14).
+//   1. MOUNT-SMOKE — the GPU-substrate component mounts with the ambient color
+//      seam, accepts the `intensity` envelope, and does not throw (the substrate
+//      picker degrades gracefully under happy-dom's no-WebGPU/WebGL env). The
+//      `variant: "hero"|"final"` prop is RETIRED (folds into config presets). The
+//      COMPONENT is imported RELATIVE (../…/src) per the mirrored-test-tree rule.
 //   2. THE `/fourier-math` CONSUMER-#1 — the pure math leaf is imported via the
 //      PUBLISHED subpath `@mkbabb/glass-ui/fourier-math` (NOT the relative
 //      `./math`), so this spec doubles as the glass-ui-side importer that clears
@@ -40,17 +42,14 @@ describe("FourierField mount-smoke", () => {
     });
 
     it("accepts the intensity prop (the loudness envelope) across the clamp range", () => {
-        // The intensity-recession truth is load-bearing in the paint math:
-        // `peak = peakAlpha * intensityClamped`, `intensityClamped = max(0,
-        // min(2, intensity))`. happy-dom has no Canvas2D, so the PIXEL recession
-        // is the device gate's binding (tests-visual/fourier-field-visibility);
-        // the unit assert here is that every clamp-range value mounts without
-        // throwing (the prop is wired, not a no-op decl). intensity=0 is the
-        // floor (no paint), 2 the ceiling, 5 clamps to 2.
+        // The intensity envelope is clamped [0,2] at the SFC (intensity=5 clamps to
+        // 2). happy-dom has no WebGPU/WebGL, so the PIXEL paint is the device gate's
+        // binding (tests-visual/fourier-field.spec.ts); the unit assert here is that
+        // every clamp-range value mounts without throwing (the prop is wired, not a
+        // no-op decl) and the GPU substrate degrades gracefully.
         for (const intensity of [0, 0.4, 1, 2, 5]) {
             const wrapper = mount(FourierField, {
                 props: {
-                    variant: "final",
                     color: "oklch(0.6 0.18 25)",
                     colorResolver: defaultBlobColorResolver,
                     seed: "smoke-intensity",

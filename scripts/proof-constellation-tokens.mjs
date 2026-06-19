@@ -41,10 +41,11 @@ import { readMonolith } from "./read-css-monoliths.mjs";
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const TOKENS = resolve(ROOT, "src/styles/tokens.css");
 const FIELD = resolve(ROOT, "src/components/custom/constellation/constellationField.ts");
-// The W-GOD1 carve moved `readPalette` out of the field engine into the DRAW
-// pass module (constellationDraw.ts). The READPALETTE-FULL-SET clause (b) reads
-// it there; the FIELD path stays the presence canary for the engine module.
-const DRAW = resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts");
+// BC.W-VIZ-CONSTELLATION re-point: the four Canvas2D draw passes RETIRED; `readPalette`
+// relocated to `constellationRender.ts` (the JS-side render leaf — the palette read stays
+// JS, written to the WebGPU uniform buffer). The READPALETTE-FULL-SET clause (b) reads it
+// there; the FIELD path stays the presence canary for the engine module.
+const DRAW = resolve(ROOT, "src/components/custom/constellation/constellationRender.ts");
 
 /** The 6 canonical legibility tokens readPalette must read (the FULL set). */
 const REQUIRED_TOKENS = [

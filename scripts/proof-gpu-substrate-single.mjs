@@ -174,7 +174,11 @@ const VALID_STATUS = new Set([
     "degraded",
     "no-migrate",
 ]);
-const NON_MIGRATING = new Set(["fourier-field", "constellation", "watercolor-dot"]);
+// BC.W-VIZ-CONSTELLATION removed "constellation" — it MIGRATED to the WebGPU instanced
+// substrate (the booked W-CONSTELLATION-GPU FIRED), so it carries a `verified` row, not a
+// `no-migrate` one. (fourier-field likewise migrated in its own BC wave.) watercolor-dot
+// stays a genuine non-migrating member (a CSS/SVG blob, no canvas).
+const NON_MIGRATING = new Set(["watercolor-dot"]);
 
 // ── BC.W-PAINT-GATE req #8 — the real-GPU meanLum>0 readback machinery (the
 //    proof:aurora-swraster model generalized; consumed per-viz by Band 4 via

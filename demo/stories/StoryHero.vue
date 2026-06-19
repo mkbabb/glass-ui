@@ -17,6 +17,8 @@ import { Card, type CardTier } from "../../src/components/ui/card";
 import { Aurora } from "../../src/components/custom/aurora";
 import { Constellation } from "../../src/components/custom/constellation";
 import { FourierField } from "../../src/components/custom/fourier-field";
+import { PaperGrid } from "../../src/components/custom/paper-grid";
+import { PAPER_GRID_PRESET_SUFFUSE } from "./substrates/presets";
 import { defaultBlobColorResolver } from "../../src/composables/color";
 import { useTokenColor } from "../../src/composables/dom/useTokenColor";
 import { useGlobalDark } from "../../src/composables/dark/useGlobalDark";
@@ -183,8 +185,13 @@ const liveBackdrop = computed(
     () =>
         kind.value === "aurora" ||
         kind.value === "constellation" ||
-        kind.value === "fourier",
+        kind.value === "fourier" ||
+        kind.value === "liquid-grid",
 );
+
+// The suffusion paper-grid config (a near-invisible large-pitch slow-warp grid behind
+// page content — the §E site-wide subtle background; presets-in-consumers).
+const liquidGridConfig = PAPER_GRID_PRESET_SUFFUSE;
 
 // ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
 // A HERO page over a LIVE substrate paints the field FULL-BLEED behind the WHOLE
@@ -244,13 +251,21 @@ const cardTier = computed<CardTier>(() => {
         />
         <FourierField
             v-else-if="kind === 'fourier'"
-            variant="hero"
             color="var(--viz-fourier, hsl(358 72% 52%))"
             :color-resolver="defaultBlobColorResolver"
             :intensity="opacityCeiling"
             seed="glass-ui-hero"
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
+        />
+        <!-- The SUFFUSION register: a near-invisible LIQUID paper-grid full-bleed behind
+             page content (NOT boxed in the card — the `.story-hero-bg--bleed` escape; the
+             "not displayed in the card" fix). The static `grid` kind below stays the
+             zero-GL default. -->
+        <PaperGrid
+            v-else-if="kind === 'liquid-grid'"
+            :config="liquidGridConfig"
+            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
         />
         <div
             v-else-if="kind === 'grid'"

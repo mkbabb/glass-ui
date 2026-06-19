@@ -4,9 +4,18 @@ export {
     seedField,
     stepField,
     refitField,
+    buildEdges,
+    appendPointerWeb,
+    parallaxNodePos,
     BASE_WIDTH,
 } from "./constellationField";
-export { DEFAULT_K_FLOOR } from "./constants";
+export {
+    DEFAULT_K_FLOOR,
+    DEFAULT_PARALLAX,
+    MAX_NODES,
+    MAX_DEGREE,
+    E_MAX,
+} from "./constants";
 export {
     stepWell,
     nearestNode,
@@ -27,18 +36,18 @@ export {
     DEFAULT_PINNED_DRIFT_JITTER,
     WARP_RESPONSE,
     WARP_ZETA,
+    fireBurst,
+    BURST_FIRE_THRESHOLD,
 } from "./constellationInteraction";
 export {
     kVisOf,
     readPalette,
-    drawEdges,
-    drawNodes,
-    drawPointerWeb,
-    drawRipples,
+    parseColorRGBA,
     DEFAULT_PALETTE,
-} from "./constellationDraw";
+} from "./constellationRender";
 export type {
     ConstellationNode,
+    ConstellationEdge,
     ConstellationRipple,
     ConstellationPointer,
     ConstellationPalette,

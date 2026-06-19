@@ -2,12 +2,15 @@
 // within bounds; stepField drifts + bounces a node off a wall (the velocity sign
 // flips); the four neutral passes paint without throwing on a stub 2D context.
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { mulberry32 } from "../../../../src/utils/prng";
 import {
     seedField,
     stepField,
     refitField,
+    buildEdges,
+    appendPointerWeb,
+    parallaxNodePos,
     type ConstellationField,
     type ConstellationNode,
     type ConstellationWander,
@@ -27,13 +30,7 @@ import {
     WARP_RESPONSE,
     WARP_ZETA,
 } from "../../../../src/components/custom/constellation/constellationInteraction";
-import {
-    drawEdges,
-    drawNodes,
-    drawPointerWeb,
-    drawRipples,
-    DEFAULT_PALETTE,
-} from "../../../../src/components/custom/constellation/constellationDraw";
+import { DEFAULT_PALETTE } from "../../../../src/components/custom/constellation/constellationRender";
 
 /** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
 function makeField(
@@ -52,22 +49,6 @@ function makeField(
         warp: { x: 0, y: 0, vx: 0, vy: 0, targetIdx: -1 },
         pinnedIndex: -1,
     };
-}
-
-function makeCtx() {
-    return {
-        strokeStyle: "",
-        fillStyle: "",
-        lineWidth: 0,
-        globalAlpha: 1,
-        beginPath: vi.fn(),
-        moveTo: vi.fn(),
-        lineTo: vi.fn(),
-        arc: vi.fn(),
-        stroke: vi.fn(),
-        fill: vi.fn(),
-        clearRect: vi.fn(),
-    } as unknown as CanvasRenderingContext2D;
 }
 
 describe("constellationField — the pure proximity-graph engine (AW.W17)", () => {
@@ -115,21 +96,70 @@ describe("constellationField — the pure proximity-graph engine (AW.W17)", () =
         expect(speedAfter).toBeCloseTo(speedBefore, 5);
     });
 
-    it("the four neutral passes paint a field without throwing", () => {
-        const ctx = makeCtx();
-        const field = makeField(seedField(mulberry32(1), 12, 400, 300, 0.16), 400, 300);
-        expect(() => drawEdges(ctx, field, 132, DEFAULT_PALETTE)).not.toThrow();
-        expect(() => drawNodes(ctx, field, DEFAULT_PALETTE)).not.toThrow();
-        expect(() =>
-            drawPointerWeb(ctx, field, 132, DEFAULT_PALETTE, { x: 200, y: 150 }),
-        ).not.toThrow();
-        const ripples = [{ x: 100, y: 100, start: -1 }];
-        expect(() =>
-            drawRipples(ctx, field, 1000, ripples, DEFAULT_PALETTE),
-        ).not.toThrow();
-        // a fully-faded ripple is spliced out.
-        drawRipples(ctx, field, 1000 + 2000, ripples, DEFAULT_PALETTE);
-        expect(ripples).toHaveLength(0);
+    it("buildEdges joins nodes within reach with a distance-falloff alpha (the ONE math source)", () => {
+        // Two nodes at distance 50 (well within reach = 132·1) → ONE edge; alpha falls off
+        // with distance² (1 − d²/reach²). A third node far away (1000px) → no extra edge.
+        const field = makeField([
+            { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 150, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 1100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+        ]);
+        const edges = buildEdges(field, 132);
+        expect(edges).toHaveLength(1);
+        const e = edges[0];
+        const reach2 = 132 * 132;
+        expect(e.alpha).toBeCloseTo(1 - (50 * 50) / reach2, 5);
+        expect(e.accent).toBe(0);
+        expect(e.focus).toBe(0);
+    });
+
+    it("buildEdges flags the accent-incident edges + caps to the eMax budget", () => {
+        const field = makeField([
+            { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 150, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 120, y: 140, vx: 0, vy: 0, r: 2, dim: false },
+        ]);
+        // accentIndex 0 → every edge incident on node 0 carries accent=1.
+        const accented = buildEdges(field, 200, 0);
+        for (const e of accented) {
+            // a [0-i] or [i-0] edge is accent; the [1-2] edge is neutral.
+            const touchesZero =
+                (e.ax === 100 && e.ay === 100) || (e.bx === 100 && e.by === 100);
+            expect(e.accent).toBe(touchesZero ? 1 : 0);
+        }
+        // the eMax budget caps the result (the strongest survive).
+        const capped = buildEdges(field, 200, -1, 1);
+        expect(capped.length).toBeLessThanOrEqual(1);
+    });
+
+    it("appendPointerWeb adds focus tethers from the cursor virtual node", () => {
+        const field = makeField([
+            { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 1000, y: 100, vx: 0, vy: 0, r: 2, dim: false },
+        ]);
+        const edges = buildEdges(field, 132);
+        appendPointerWeb(edges, field, 132, { x: 110, y: 100 });
+        // the cursor (110,100) is within reach of node 0 (100,100) → one focus edge added.
+        const focus = edges.filter((e) => e.focus === 1);
+        expect(focus.length).toBe(1);
+        expect(focus[0].ax).toBe(110);
+        // an inactive pointer (x<0) adds nothing.
+        const edges2 = buildEdges(field, 132);
+        appendPointerWeb(edges2, field, 132, { x: -1, y: -1 });
+        expect(edges2.filter((e) => e.focus === 1)).toHaveLength(0);
+    });
+
+    it("parallaxNodePos offsets a node toward the pointer by depth, no-op when flat/inactive", () => {
+        const node: ConstellationNode = { x: 400, y: 300, vx: 0, vy: 0, r: 2, dim: false, z: 1 };
+        // pointer at the right edge → the node shifts toward it (positive x offset).
+        const shifted = parallaxNodePos(node, { x: 800, y: 300 }, 800, 600, 0.08);
+        expect(shifted.x).toBeGreaterThan(400);
+        // parallax 0 (flat) → no offset.
+        const flat = parallaxNodePos(node, { x: 800, y: 300 }, 800, 600, 0);
+        expect(flat).toEqual({ x: 400, y: 300 });
+        // inactive pointer (x<0) → no offset.
+        const inactive = parallaxNodePos(node, { x: -1, y: -1 }, 800, 600, 0.08);
+        expect(inactive).toEqual({ x: 400, y: 300 });
     });
 });
 
@@ -674,53 +704,30 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
         });
     });
 
-    it("G2 — drawEdges paints the accent register for edges incident on the accentIndex node", () => {
-        // two nodes within link range, one is the accent — the incident edge strokes accent.
+    it("G2 — buildEdges flags the accent register for edges incident on the accentIndex node", () => {
+        // two nodes within link range, one is the accent — the incident edge carries accent=1.
         const nodes: ConstellationNode[] = [
             { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
             { x: 140, y: 120, vx: 0, vy: 0, r: 2, dim: false },
         ];
         const field = makeField(nodes, 800, 600);
-        const palette = { ...DEFAULT_PALETTE, line: "#111111", accent: "#ff0000" };
-        const strokes: string[] = [];
-        const ctx = makeCtx();
-        Object.defineProperty(ctx, "strokeStyle", {
-            get() {
-                return this._s ?? "";
-            },
-            set(v: string) {
-                this._s = v;
-                strokes.push(v);
-            },
-        });
-        drawEdges(ctx, field, 132, palette, 1, 0 /* accentIndex */);
-        // the single incident edge strokes the accent tint, not the neutral line.
-        expect(strokes).toContain("#ff0000");
-        expect(strokes).not.toContain("#111111");
+        const edges = buildEdges(field, 132, 0 /* accentIndex */);
+        // the single incident edge carries the accent flag (the render strokes uAccent).
+        expect(edges).toHaveLength(1);
+        expect(edges[0].accent).toBe(1);
     });
 
-    it("G2/G3 — accentIndex -1 (default) keeps the neutral single-color pass (edgeFloor lifts it)", () => {
+    it("G2/G3 — accentIndex -1 (default) keeps the neutral single-color edge set", () => {
         const nodes: ConstellationNode[] = [
             { x: 100, y: 100, vx: 0, vy: 0, r: 2, dim: false },
             { x: 140, y: 120, vx: 0, vy: 0, r: 2, dim: false },
         ];
         const field = makeField(nodes, 800, 600);
-        // edgeFloor lifts a faded hairline above the perceptual floor.
-        const palette = { ...DEFAULT_PALETTE, edgeFloor: 0.06 };
-        let maxAlpha = 0;
-        const ctx = makeCtx();
-        Object.defineProperty(ctx, "globalAlpha", {
-            get() {
-                return this._a ?? 1;
-            },
-            set(v: number) {
-                this._a = v;
-                if (v > 0 && v < 1) maxAlpha = Math.max(maxAlpha, v);
-            },
-        });
-        drawEdges(ctx, field, 132, palette, 1 /* default accentIndex -1 */);
-        // a near-edge with edgeFloor 0.06 strokes ABOVE the bare edgeAlpha*t (floor lifted).
-        expect(maxAlpha).toBeGreaterThan(0.06 * palette.alpha);
+        const edges = buildEdges(field, 132 /* default accentIndex -1 */);
+        // every edge is neutral (accent=0); the distance-falloff alpha is in (0,1).
+        expect(edges.every((e) => e.accent === 0)).toBe(true);
+        expect(edges[0].alpha).toBeGreaterThan(0);
+        expect(edges[0].alpha).toBeLessThan(1);
     });
 
     it("G3 — DEFAULT_PALETTE carries accent/edgeFloor/edgeAccentAlpha (the SSR fallback)", () => {
@@ -798,7 +805,7 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
 // at/above kFloor·BASE_WIDTH by construction (kVis === k there).
 import { BASE_WIDTH } from "../../../../src/components/custom/constellation/constellationField";
 import { DEFAULT_K_FLOOR } from "../../../../src/components/custom/constellation/constants";
-import { kVisOf } from "../../../../src/components/custom/constellation/constellationDraw";
+import { kVisOf } from "../../../../src/components/custom/constellation/constellationRender";
 
 describe("constellation kVis floor (R5-8)", () => {
     const fieldAt = (k: number, kFloor?: number) =>

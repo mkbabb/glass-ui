@@ -58,7 +58,12 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  * the recede-behind-content opacity ceiling.
  *
  *   "paper"         — a quiet warm-cream grain wash.
- *   "grid"          — a token-driven blueprint ruled grid.
+ *   "grid"          — a token-driven blueprint ruled grid (static CSS, the zero-GL default).
+ *   "liquid-grid"   — the SUFFUSION register: a near-invisible LIQUID paper-grid
+ *                     (a low-fieldAlpha, large-pitch, slow-warp <PaperGrid>) full-bleed
+ *                     behind page content (BC.W-VIZ-PAPERGRID — §E "suffuse it
+ *                     throughout the site as a subtle background element"; the opt-in
+ *                     one-GL-per-route hero upgrade of the static `grid` kind).
  *   "aurora"        — a live painterly drift on the brand hues.
  *   "constellation" — a drifting proximity-graph lattice.
  *   "fourier"       — a reconstructing elliptic Fourier curve.
@@ -69,6 +74,7 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
 export type StoryBackgroundKind =
     | "paper"
     | "grid"
+    | "liquid-grid"
     | "aurora"
     | "constellation"
     | "fourier";

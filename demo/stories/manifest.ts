@@ -267,28 +267,18 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            // BC.W-VIZ-FOURIER — the ONE Fourier view (the collapse). The three duplicate
+            // views (the ambient page, the re-embedded ambient companion, the separate
+            // Canvas2D stage) collapse to this single <FourierField> over its configurator:
+            // the field IS both the ambient register and the interactive teaching surface.
+            // The renderer is the WGSL-primary GPU substrate (the Canvas2D renderer RETIRED).
+            // The route declares a CALM `paper` background (NOT a live `fourier` field) — the
+            // view's OWN <FourierField> is the single live GPU context (one-GL-per-route).
             s(
                 "substrates",
                 "fourier-field",
                 "Fourier Field",
-                "A reconstructing elliptic Fourier curve on the Canvas2D substrate — a seeded inverse-DFT closed curve with a comet trail and nested epicycles, the injected color seam, and a freeze capture lever. Sibling to Aurora and GooBlob.",
-                {
-                    background: "fourier",
-                    hero: true,
-                },
-            ),
-            // BA.W-FOURIER-STUDIO — the FOREGROUND studio (the aurora-studio idiom):
-            // the 1..K partial-sum slider + orthogonal epicycle axes + the
-            // dftFromPoints shape-trace + the controllable clock on the house
-            // transport. Its OWN Canvas2D stage + ambient companion ARE the fourier
-            // surface, so the route declares a CALM `paper` background (NOT a live
-            // `fourier`/`aurora` field) — one-GL/one-Canvas2D-per-route holds (the
-            // stage is the single live context; no competing background field).
-            s(
-                "substrates",
-                "fourier-studio",
-                "Fourier Studio",
-                "The foreground Fourier studio — a Configurator over a Canvas2D stage. Drag the harmonic-count N slider and WATCH the summed curve assemble term by term; toggle epicycles orthogonally; trace the ℱ wordmark / heart / star by its own forward DFT; and drive a controllable clock (play / pause / scrub / speed) on the house transport. The ambient field is the recessive companion.",
+                "ONE Fourier view on the WebGPU substrate. Drag the harmonic-count N slider and WATCH the reconstructing curve assemble term by term — a single ellipse climbing to the full reconstruction; toggle the rotating epicycle chain orthogonally; trace the ℱ wordmark / heart / star by its own forward DFT; pick a color; and SCRUB the reconstruction by dragging the cursor across the field. No Canvas2D anywhere.",
                 {
                     background: "paper",
                     hero: true,
@@ -332,7 +322,7 @@ export const CATEGORIES: Category[] = [
                 "substrates",
                 "dot-flow-field",
                 "Dot Flow Field",
-                "A WebGPU-first curl-noise flow field traced by advected particles — teal dots over dark navy, seeded along undulating streamlines rippling in Gerstner/Tessendorf waves (Tessendorf 2001 · Bridson 2007). The compute pass advects N particles through the analytic ∇⊥ψ velocity; the render pass draws instanced billboard quads; a Canvas2D point-cloud fallback steps the SAME evaluator where WebGPU is absent. The warm-cream identity is the library default; teal-on-navy is a demo preset. Shipped /dot-flow-field.",
+                "A WebGPU-first curl-noise flow field traced by advected particles — soft warm-cream dots seeded along undulating streamlines rippling in Gerstner/Tessendorf waves (Tessendorf 2001 · Bridson 2007). The compute pass advects N particles through the analytic ∇⊥ψ velocity; the render pass draws instanced billboard quads; a Canvas2D point-cloud fallback steps the SAME evaluator where WebGPU is absent. The warm-cream identity is the library default; the mono-on-near-black reference is a non-default demo preset. Shipped /dot-flow-field.",
                 {
                     background: "grid",
                     hero: true,
@@ -349,6 +339,35 @@ export const CATEGORIES: Category[] = [
                 "concentric",
                 "Concentric",
                 "A WebGPU-first radial Fourier ring-interference field — concentric ellipsoid rings whose interference is a sum of radial harmonics about one-or-more centers (the same Fourier-series / deep-water dispersion vocabulary the flow field uses — Tessendorf 2001). The 3D-rendered-to-2D look: an ellipsoidal norm reads a tilted disc as ellipses, and multi-center families cross into moiré beats. A pure fullscreen fragment pass (the aurora shape-class) on the WebGPU primary, with a clean WebGL2 GLSL fallback. The warm-cream identity is the library default; the demo themes the rings. Shipped /concentric.",
+                {
+                    background: "grid",
+                    hero: true,
+                },
+            ),
+            // BC.W-VIZ-PAPERGRID — the NEW WebGPU-first liquid AA-grid viz. It self-stages
+            // its OWN GL/fragment context (the field IS the surface), so the route declares
+            // the FREE static `grid` wash behind the card and mounts exactly ONE live context
+            // — its own (the one-GL-per-route budget held, the concentric precedent above).
+            s(
+                "substrates",
+                "paper-grid",
+                "Paper Grid",
+                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER lines on a slowly breathing curl-flow sheet. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix) on a Bridson divergence-free curl-warped UV (the IQ domain warp — the whole sheet bows together, never a per-line jitter). Drag the cursor for a soft Gaussian bulge through the liquid. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /paper-grid.",
+                {
+                    background: "grid",
+                    hero: true,
+                },
+            ),
+            // BC.W-VIZ-DOTMATRIX — the NEW WebGPU-first Fibonacci phyllotaxis dot-SPHERE
+            // viz (the Claude co-work "fine-dot spheres on dark" reference). It self-stages
+            // its OWN GL context (the globe IS the surface), so the route declares the FREE
+            // static `grid` wash behind the card and mounts exactly ONE live context — its
+            // own (the one-GL-per-route budget held, the paper-grid precedent above).
+            s(
+                "substrates",
+                "dot-matrix",
+                "Dot Matrix",
+                "A WebGPU-first Fibonacci phyllotaxis dot-SPHERE — a globe of fine warm-cream dots laid on a sphere SURFACE (the golden-angle area-centered lattice; Martin Roberts / extremelearning, arXiv 0912.4540 — no pole-pinching, no banded rings), depth-shaded so it reads as a translucent dot-shell (opacity 0.15+0.85·facing, size 0.6+0.4·facing — the Will-Howard / COBE / Stripe lineage), slowly rotating on a gently tilted axis. The render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the globe tracks it (parallax), a soft dimple pushes through the dot-shell, a flick fires a brightness bloom (the accel burst). The warm-cream identity is the library default; the mono-warm-white two-globe reference is a non-default demo preset. Shipped /dot-matrix.",
                 {
                     background: "grid",
                     hero: true,

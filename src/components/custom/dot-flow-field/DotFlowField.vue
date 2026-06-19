@@ -6,19 +6,23 @@ import { DEFAULT_FLOW_CONFIG } from "./constants";
 import type { OklchStop } from "../../../composables/color";
 
 /**
- * DotFlowField — small dots seeded along undulating streamlines, rippling in waves.
+ * DotFlowField — a calm anchored dot-matrix a slow LARGE wave sweeps through
+ * (BC.W-VIZ-DOTFLOW retopology — NOT the BB free-advecting particle cloud).
  *
- * A curl-noise flow field traced by advected particles, where the scalar potential
- * undulates as a Gerstner/Tessendorf sum-of-sines water-wave field (the cited SOTA
- * math — `composables/flowField.ts`). WebGPU-FIRST: the compute pass advects N
- * particles through the analytic ∇⊥ψ velocity, the render pass draws instanced
- * billboard quads; a Canvas2D point-cloud fallback steps the SAME evaluator where
- * WebGPU is absent (the ~5-10% tail). It composes `useDotFlowField` → the
- * `createGpuSubstrate` picker over the ONE canvas lifecycle leaf (offscreen-pause,
- * live-PRM freeze, consumer-owned DPR) — it never bootstraps its own context.
+ * Each dot is anchored to a deterministic lattice cell and eases toward its sub-cell
+ * displacement target with a restoring spring (no advection, no re-seed); a broad
+ * bright iso-band sweeps the lattice, lighting the dots it passes — the low-frequency
+ * Gerstner/Tessendorf sum-of-sines height (`composables/flowField.ts`). WebGPU-FIRST:
+ * the compute pass pulls the lattice to its target, the render pass draws instanced
+ * billboard quads lit by the sweeping band; a pure WebGL2 FRAGMENT fallback evaluates
+ * the SAME field where WebGPU is absent (no Canvas2D — the §E "no canvas" mandate). It
+ * composes `useDotFlowField` → the `createGpuSubstrate` picker over the ONE canvas
+ * lifecycle leaf (offscreen-pause, live-PRM freeze, the shared pointer field) — it never
+ * bootstraps its own context.
  *
- * The DEFAULT palette is the warm-cream library identity; the reference teal-on-navy
- * is a DEMO preset (presets-in-consumers — never a library token).
+ * The DEFAULT palette is the warm-cream library identity; the mono-dim-on-near-black
+ * reference + the globe mask are DEMO presets (presets-in-consumers — never a library
+ * token). The teal-on-navy is GONE entirely (clean break).
  */
 const {
     config = DEFAULT_FLOW_CONFIG,

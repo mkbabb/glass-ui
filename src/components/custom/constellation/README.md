@@ -417,9 +417,9 @@ overrides a token to retune the mechanic without touching the engine.
 |---|---|---|
 | `--constellation-warp-response` | `0.55` | the warp spring's keyframes.js ANGULAR PERIOD (the ω convention — NOT a settle-duration) |
 | `--constellation-warp-zeta` | `1.0` | critically damped — a focal mark must NOT ring |
-| `--constellation-well-gain` | `14000` | inverse-square force scale (the held-pull gain) |
+| `--constellation-well-gain` | `22000` | inverse-square force scale (the held-pull gain) |
 | `--constellation-well-reach` | `340` | base-width px — the well's reach (k-scaled at step) |
-| `--constellation-well-ramp` | `4.0` | 1/s arm rate (≈0.25s bloom; release is the fixed brisk field-cools invariant, not consumer-tunable) |
+| `--constellation-well-ramp` | `8.0` | 1/s arm rate (≈0.12s bloom; release is the fixed brisk field-cools invariant, not consumer-tunable) |
 | `--constellation-well-max-speed` | `4.0` | base-width px/frame cap — the no-slingshot clamp |
 | `--constellation-well-hold-ms` | `140` | ms hold before the well arms |
 | `--constellation-wander-idle` | `8000` | ms — min idle between auto re-targets (the wander cadence) |

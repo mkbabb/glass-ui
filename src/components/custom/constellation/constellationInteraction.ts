@@ -88,9 +88,28 @@ const WELL_EPS = 1e-3;
  * what lets BOTH invariants hold at once — a single mid rate either masks the perturb
  * (too brisk) or never cools (too gentle). Preferred over the steer's hard
  * `|v|=speed` renorm because the well MUST be able to heat the field while held.
+ *
+ * GENTLED 1.5→0.6 (BC.W-VIZ-CONSTELLATION): the GPU-substrate migration runs the frame
+ * loop at the real device refresh (~130fps), halving the per-frame `dt` vs the unit
+ * dt=1/60. The held force injects LESS velocity per frame at that cadence, so a held-cool
+ * fast enough to keep the field calm at 60fps over-cancelled the heat at 130fps — the
+ * held-peak mean |v| collapsed to ~9% over rest (below the egg-live π gate's ≥20% floor).
+ * A gentler held-cool lets the (now faster-ramping, stronger-gain) force build the
+ * perturb the gate reads, while the BRISKER WELL_COOL_RELEASED (below) owns the
+ * cool-down so the field still re-settles to within the ±5% COOL_TOL on release.
+ *
+ * WELL_COOL_RELEASED LIFTED 7.0→11.0 (BC.W-VIZ-CONSTELLATION): the same GPU-substrate
+ * high-refresh cadence that starved the perturb also slowed the cool in WALL-CLOCK
+ * frames — at the headless gate's throttled rAF the released ease-back rendered fewer
+ * effective cool iterations within the 60-frame desktop window, so the larger perturb
+ * (the stronger gain) read HOT (~7% off rest > ±5%) at the sample. A brisker released
+ * ease renorms the lattice inside the window REGARDLESS of frame cadence (HELD perturb
+ * untouched — this rate fires ONLY after release, `target ≤ 0`). The WELL_RELEASE_RAMP
+ * strength-decay derivation (below) is unchanged: it still clears the force inside ~15
+ * frames, leaving the brisker ease the rest of the window to renorm.
  */
-const WELL_COOL_HELD = 1.5;
-const WELL_COOL_RELEASED = 7.0;
+const WELL_COOL_HELD = 0.6;
+const WELL_COOL_RELEASED = 11.0;
 /**
  * The strength-ramp rate (per second) is ASYMMETRIC by phase, MIRRORING the cool
  * asymmetry. The ARM rate is `cfg.ramp` (the token — a gentle ≈0.25s ease so the
@@ -425,6 +444,38 @@ export function makePinnedDrift(
 /** easeInOutQuad — the gentle, symmetric ease the pinned-anchor leg rides. */
 function easeInOutQuad(p: number): number {
     return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+}
+
+// ── BC.W-VIZ-CONSTELLATION — the acceleration→burst (the §6 ACCEL term) ──────────
+/** The flick-burst threshold (the shared usePointerVelocityField `burst` 0..1) above which
+ *  a fast flick fires the focal warp + a transient ripple (a slow drag never fires). */
+export const BURST_FIRE_THRESHOLD = 0.45;
+
+/**
+ * Fire a focal BURST off a flick (the §E "reads velocity AND acceleration" mandate). A high
+ * `burst` (from the shared `usePointerVelocityField`, the eased flick impulse) warps the
+ * focal node toward the cursor (the warp spring snaps it) AND drops an expanding ripple at
+ * the focal — the lattice "snaps the focal toward the cursor and drops an expanding ring"
+ * (the WGSL ripple instance / the accent-ring overlay). A slow drag (`burst` below the
+ * threshold) never fires (a steady hover is the gentle gather, not a snap). Returns true
+ * when a burst fired. Composes the EXISTING `warpTo` + the ripple list — no new mechanic,
+ * no second rAF (the warp rides the substrate's ONE clock); PRM is enforced by the CALLER
+ * (the shared field's `tick(0)` zeroes `burst` under reduce, so this never fires).
+ */
+export function fireBurst(
+    field: ConstellationField,
+    pointer: { x: number; y: number },
+    burst: number,
+    ripples: { x: number; y: number; start: number }[],
+): boolean {
+    if (!(burst >= BURST_FIRE_THRESHOLD)) return false;
+    // Warp the focal node toward the cursor (the snap). warpTo no-ops cleanly on a
+    // degenerate field; it re-points the live warp spring (the ONE focal spring).
+    warpTo(field, pointer.x, pointer.y);
+    // Drop a ripple at the focal's spring-eased position (the expanding ring). `start: -1`
+    // is stamped on the first render frame (the ripple list discipline).
+    ripples.push({ x: field.warp.x, y: field.warp.y, start: -1 });
+    return true;
 }
 
 /**

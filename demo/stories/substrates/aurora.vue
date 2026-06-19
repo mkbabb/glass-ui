@@ -52,14 +52,18 @@ const AURORA_PRESETS: ConfiguratorPreset<AuroraConfig>[] = PRESET_KEYS.map((key)
     config: PRESETS[key],
 }));
 
+// BC.W-TEAL-NAVY-PURGE — the studio LEADS with the warm-cream identity (the warm Dawn
+// coral/amber preset), NOT the blue OPENAI_SKY sky theme. Sky survives as a named,
+// selectable non-default preset (presets-in-consumers — a blue sky is a theme, never the
+// lead); /substrates/aurora reads warm-cream at rest.
 const studio = useConfiguratorState<AuroraConfig>({
     presets: AURORA_PRESETS,
-    initialPreset: "OPENAI_SKY",
+    initialPreset: "OPENAI_DAWN",
     cloneMode: "per-preset",
 });
 
 const currentKey = computed<PresetKey>(
-    () => (studio.activePreset.value ?? "OPENAI_SKY") as PresetKey,
+    () => (studio.activePreset.value ?? "OPENAI_DAWN") as PresetKey,
 );
 const currentMeta = computed(() => PRESET_META[currentKey.value]);
 

@@ -1,0 +1,31 @@
+{
+  "wave": "BC.W-VIZ-PAPERGRID",
+  "capturedAt": "2026-06-19T22:40:01.068Z",
+  "surface": "paper-grid (default warm-identity config, 64/6px cell, majorEvery 5, two-tier Golus AA, curl-warp t=1.3 deterministic; ink composited over a neutral cream page so the lines READ in the raster)",
+  "methodology": "device-free STRUCTURAL proxy — paper-grid is a PURE fragment field (no compute, no particles, no storage buffer): BOTH backends evaluate ONE analytic liquid-grid field (composables/paperGrid.ts samplePaperGrid — Ben Golus derivative-AA two-tier grid on a Bridson divergence-free curl-warped UV) through the SAME shared curl chunk (flow.wgsl.ts ⟷ flow.glsl.ts, byte-identical 2D-curl operator) + the SAME OETF. The line coverage + the premultiplied ink are identical at every (uv,t). The live Metal-GPU swap-chain readback vs WebGL2 readPixels is the binding live capture (rides this wave's close, BC.W-GESTALT-FIRST). The fallback is the SAME pure fragment field — parity `verified`.",
+  "raster": {
+    "width": 96,
+    "height": 96
+  },
+  "linePixels": 4128,
+  "captures": {
+    "webgpu-primary": {
+      "path": "paper-grid-wgpu-primary.png",
+      "sha256_16": "65e1e38bf8dc60ac"
+    },
+    "webgl2-fallback": {
+      "path": "paper-grid-webgl2-fallback.png",
+      "sha256_16": "65e1e38bf8dc60ac"
+    }
+  },
+  "deltaE": {
+    "mean": 0,
+    "p99": 0,
+    "max": 0
+  },
+  "bar": {
+    "mean": 2,
+    "p99": 5
+  },
+  "within": true
+}

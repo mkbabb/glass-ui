@@ -206,20 +206,28 @@ function run() {
         violations.push(
             "G-RECESSION: Constellation.vue is missing the NEW `opacityCeiling` recession knob (the 4th of the shared contract — D3)",
         );
-    // the constellation prop must actually SCALE the draw alpha (not a dead prop).
-    const draw = existsSync(
-        resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts"),
-    )
-        ? readFileSync(
-              resolve(ROOT, "src/components/custom/constellation/constellationDraw.ts"),
-              "utf8",
-          )
-        : "";
-    const drawScales = /opacityCeiling/.test(draw) && /\*\s*opacityCeiling/.test(draw);
+    // the constellation prop must actually SCALE the rendered alpha (not a dead prop).
+    // BC.W-VIZ-CONSTELLATION re-point: the four Canvas2D draw passes RETIRED; the recession
+    // now scales in the WGSL/GLSL render (the points + lines fragments multiply by `u.u1.z`
+    // / `uOpacityCeiling`), fed by the orchestrator's uniform write.
+    const renderSrc = [
+        "src/components/custom/constellation/shaders/constellation-points.wgsl.ts",
+        "src/components/custom/constellation/shaders/constellation-lines.wgsl.ts",
+        "src/components/custom/constellation/composables/useConstellation.ts",
+    ]
+        .map((p) => resolve(ROOT, p))
+        .filter(existsSync)
+        .map((p) => readFileSync(p, "utf8"))
+        .join("\n");
+    const drawScales =
+        /opacityCeiling/.test(renderSrc) &&
+        /(\*\s*opacityCeiling|opacityCeiling\s*=\s*opacityCeiling|\*\s*u\.u1\.z|\*\s*uOpacityCeiling)/.test(
+            renderSrc,
+        );
     facts.gRecession.drawScales = drawScales;
     if (!drawScales)
         violations.push(
-            "G-RECESSION: constellationDraw.ts does not SCALE the painted alpha by `opacityCeiling` — the prop is declared but does not bite (D3)",
+            "G-RECESSION: the constellation render does not SCALE the painted alpha by `opacityCeiling` — the prop is declared but does not bite (D3)",
         );
 
     // ── G-ACCENT (source) — the seed->palette derivation threads a chromaCeiling. ─

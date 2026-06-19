@@ -309,14 +309,15 @@ export type {
 
 // ── Fourier field ───────────────────────────────────────────────────────────
 // `FourierFieldProps` — the props a consumer forwards when wrapping
-// `<FourierField>` (the seeded inverse-DFT epicycle background; the sibling to
-// Aurora/Constellation, ships via `/fourier-field`). `FourierFieldVariant` is
-// the configuration-bundle axis (`hero` | `final`). The `intensity` knob is the
-// Aurora `opacityCeiling`-shape outer loudness envelope (AY.W-FF2). The pure
-// inverse-DFT/epicycle math leaf ships separately via `/fourier-math`.
+// `<FourierField>` (the reconstructing-epicycle field on the WGSL-primary GPU
+// substrate, the sibling to Aurora/GooBlob/DotFlowField; ships via
+// `/fourier-field`). `FourierFieldConfig` is the full author config the studio
+// drives (the `variant: "hero"|"final"` enum is RETIRED — BC.W-VIZ-FOURIER —
+// folded into config presets). The pure inverse-DFT/epicycle math leaf ships
+// separately via `/fourier-math`.
 export type {
     FourierFieldProps,
-    FourierFieldVariant,
+    FourierFieldConfig,
 } from "../components/custom/fourier-field";
 
 // ── Metric primitives ───────────────────────────────────────────────────────
@@ -557,6 +558,14 @@ export type {
     ConcentricHandle,
     UseConcentricOptions,
 } from "../components/custom/concentric";
+
+// ── PaperGrid — the WebGPU-first liquid AA-grid viz (BC.W-VIZ-PAPERGRID) ──
+// Config + handle types for a consumer wrapping <PaperGrid> (the /paper-grid subpath).
+export type {
+    PaperGridConfig,
+    PaperGridHandle,
+    UsePaperGridOptions,
+} from "../components/custom/paper-grid";
 
 // ── The component customization-surface contract (BC.W-CUSTOMIZABILITY-CENSUS) ──
 //

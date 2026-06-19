@@ -781,12 +781,6 @@ export const GATES = [
         note: "AY.W-CON2 — the gravity-well egg PERTURBS-THEN-COOLS on the real engine (pi readback: rest 0.160 -> held-peak 0.210 +31% -> cooled within ±6% via the asymmetric WELL_RELEASE_RAMP), NO-SLINGSHOT (maxOob 0px), PRM-suppressed + state-reset-on-edge; a field-is-drifting pre-check guards runner contention. Bite: heat-without-cool / a slung node / a PRM-advancing well -> RED",
     },
     {
-        id: "proof:constellation-freeze-live",
-        cmd: "proof:constellation-freeze-live",
-        tags: ["local"],
-        note: "AY.W-CON3 — the ?freeze deterministic-capture render gate (pi lane, fail-CLOSED): two back-to-back mounts of <Constellation :freeze :seed :drawOverlay> hash BYTE-IDENTICAL (node positions + overlay phase) + frame-1-vs-later-now still + the ?freeze URL auto-derive fires. Bite: a stepped frozen field / a live-now overlay leak / a non-firing hook -> RED",
-    },
-    {
         id: "proof:aur2-residue",
         cmd: "proof:aur2-residue",
         tags: ["local"],
@@ -1420,12 +1414,6 @@ export const GATES = [
         note: "BA.W-DEMO-AFFORDANCES — the demo's controls unified onto the glass grammar (born-RED→GREEN; the comment-strip pure-detector house pattern, mirroring proof-icon-chip.mjs). Four falsifiable SOURCE witnesses + the BINDING π readback (tests-visual/demo-affordances.spec.ts + the W-DEMO-AFFORDANCES-DELTA capture + the proof:ba-gestalt verdict for the five affected surfaces — the AZ P-1 source-green/visually-broken close-class this tranche fixes; AZ.W-MOTION2 marked complete on the source diff while BOTH the play control + the picker eroded live, R8-16/R8-17). W1 no element in demo/** or any src/styles/** recipe stacks .glass-btn + .btn-pill (class co-occurrence ANY order + a text-bearing-.glass-btn bite — an icon button carrying a text child collapses the same way: the fixed-square primitive wins, contain:paint clips the wrapped label into a ~40px blob, R8-17); the negative-predicate anchor lives in glass/surfaces.css. W2 every demo play/replay control composes <StoryPlayButton> (or the reference <DockIconButton><Play/>), and no U+25B6 ▶ survives as a play affordance in the enrolled stories (curve-gallery/springs/BezierEditor) — the positive register arm catches a play site that drops ▶ but hand-rolls a non-register button. W3 no lone <Button>/<button> is the SOLE direct child of a column-flex (flex flex-col) wrapper across the enrolled trigger stories (toaster/use-global-dark/use-dark-mode-sync) — the implicit align-items:stretch full-width slab, R8-13a; the detector reads the WRAPPER context, not a w-full grep (which would miss the no-class stretch). W4 zero bg-card/60 in the enrolled set (skeleton/notification/springs range cells) — the hand-rolled off-glass plate that reads dead on dark, FD-FS X-2; math-paper.vue:13 (the paper article) + springs.vue:181 (the paper-grain STAGE, bg-background/40) are the declared exceptions. The π readback proves the RENDER: the curve-picker selected chip's resolved background references --glass-bg-floating/--dock-control-active-bg AND selected-plate luminance > unselected (the contrast-color inversion DEAD, structurally a plate not an fg/muted delta), in BOTH modes; the play control renders content-width > the fixed --size-icon-btn square; the lone trigger computes content-width < the parent column. Bite: re-stack .glass-btn+.btn-pill / re-introduce a ▶ play glyph / leave a lone column-flex trigger / smuggle a new bg-card/60 slab into an enrolled story → RED.",
     },
     {
-        id: "proof:fourier-studio",
-        cmd: "proof:fourier-studio",
-        tags: ["local"],
-        note: "BA.W-FOURIER-STUDIO — the fourier band split into ambient + FOREGROUND studio (born-RED). Device-free SOURCE arm (the BINDING painted truth is the π arm tests-visual/fourier-studio.spec.ts + the ba-gestalt verdict): partialSumAt math leaf + the additive clock?:()=>number seam on FourierField (freeze/PRM short-circuit intact, presets.ts byte-untouched, aurora-frag fence held); the foreground fourier-studio.vue (Configurator+useConfiguratorState per-preset over a Canvas2D stage; the orthogonal N-harmonics partial-sum · epicycle-visibility · color axes; the visibly-assembling summed curve); the forward-DFT trace-a-shape (fourier-paths.ts ℱ/heart/star → dftFromPoints — the studio's DFT consumer face); a controllable clock (play/pause/scrub/speed off useRAFLoop, no raw rAF); the W-MOTION3 live steps StepsEditor (ARM B demo-only, <EasingPicker> BOOKED to W-EASING-PRIMITIVE); R5-11 the hero rainbow WARM-ANCHORED (base-30°→base+70°, hero leans warm r>b, final cool — the slides fc-fourier G4). Bite: drop the partial-sum axis / collapse the orthogonal axes / break the clock seam / un-warm the hero rainbow / touch aurora.frag → RED.",
-    },
-    {
         id: "proof:no-gray",
         cmd: "proof:no-gray",
         tags: ["local", "ci"],
@@ -1466,18 +1454,6 @@ export const GATES = [
         cmd: "proof:blob-config-atoms",
         tags: ["local"],
         note: "AY.W-BLOB2 — the BlobConfig atom-count CEILING (≤12 top-level atoms). Born-RED at the pre-prune 46 fields; GREEN at the 8-atom bundle. Asserts: the top-level field count ≤ the ceiling, the three deleted derived-but-unread fields (orbitSpeedScale/wobbleScale/mergeRate) are GONE from the CONFIG surface (a deletion-witness — they legitimately survive on MoodParams), and BLOB_CONFIG_DEFAULTS round-trips to a complete BlobConfig (every atom + field has a default, no orphan). Bite: re-add a deleted field → the count exceeds the ceiling OR the deletion-witness REDs.",
-    },
-    {
-        id: "proof:fourier-field-intensity",
-        cmd: "proof:fourier-field-intensity",
-        tags: ["local"],
-        note: "AY.W-FF2 — the W43 SOTA fourier-field intensity model (STATIC source gate). Asserts the flat OUTLINE_PEAK_ALPHA + the age*age quadratic body are GONE, the six per-variant bundle fields (peakAlpha/headGlowAlpha/headGlowBlur/epicycleRatios/trailFadeExp/trailFloor) populate both PRESETS, headGlowAlpha>peakAlpha (head-forward), trailFadeExp∈[1,2)+trailFloor>0 (soft, never quadratic), the render reads a CACHED color triple (zero-alloc hoist), the intensity prop carries a [0,2] clamp, the dark/light blend fork + the amplitude-descending sort, and evalFourier is deleted from index.ts+math.ts. SELF-PROVING: the quadratic-decay synthetic line is flagged every run. Bite: restore the constant/quadratic, drop a bundle field, or un-delete evalFourier → RED.",
-    },
-    {
-        id: "proof:fourier-field-visibility-live",
-        cmd: "proof:fourier-field-visibility-live",
-        tags: ["local"],
-        note: "AY.W-FF2 — the phosphor-comet VISIBILITY device gate (the painted-canvas readback the static gate cannot reach). Mounts the real <FourierField> over a white ground for BOTH presets × BOTH modes under freeze; asserts the `final` preset is NOT a corner stub (bbox spans ≥25% of each axis), the trail body reads (mean painted intensity floor), intensity=0.4 recesses below intensity=1, and hero paints more structure than final (distinct family). Fail-CLOSED when Playwright is present; befitting-silent SKIP only on a zero-dep runner. Bite: a corner-stub render / a no-op intensity → RED.",
     },
     {
         id: "proof:live-verified-ledger",
@@ -1822,6 +1798,42 @@ export const GATES = [
         cmd: "proof:gooblob-plain:source",
         tags: ["ci"],
         note: "BC.W-GOOBLOB-PLAIN — the device-free SOURCE floor (the --source arm): the uStage-gated stripped fs_main present in BOTH the WGSL primary + GLSL fallback, the warm-cream identity, the byte-faithful math. CI proves the SOURCE; the bare proof:gooblob-plain proves the PAINT (local). Bite: a missing uStage gate / a forked metaball math → RED.",
+    },
+    {
+        id: "proof:fourier-field",
+        cmd: "proof:fourier-field",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-FOURIER — the fourier-field collapse+migration SOURCE gate (born-RED on the pre-migration HEAD → GREEN at close; supersedes the retired Canvas2D-era proof:fourier-field-intensity/-studio/-visibility-live). The fourier surface — three views on a Canvas2D renderer — COLLAPSES to ONE GPU view + MIGRATES onto the WGSL-primary GPU substrate (createGpuSubstrate). U1 ONE merged view (FourierStudioStage.vue + fourier-studio.vue ABSENT, one non-background story row); U2 WGSL primary, no Canvas2D (useFourierField carries no useCanvas2D import / no getContext(\"2d\"); composes createGpuSubstrate setupWGPU+setupGL); U3 ONE math source round-trips (the WGSL compute kernel transcribes math.ts partialSumAt + positionsAt; the CPU-minted spectrum). The binding live-π / own-surface DELTA gestalt capture rides W-REFLECT3 (tests-visual/fourier-field.spec.ts) on the real Metal GPU. Bite: a Canvas2D re-fork / a duplicated view / a forked partial-sum math → RED.",
+    },
+    {
+        id: "proof:viz-constellation",
+        cmd: "proof:viz-constellation",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-CONSTELLATION — the constellation WebGPU-migration SOURCE gate (born-RED on the pre-migration HEAD → GREEN at close). The lattice re-homes off the Canvas2D substrate (the low-res ctx.arc() discs) onto the WebGPU instanced-points+lines substrate (the §E 'WebGPU everywhere, no canvas' mandate). C1 WebGPU substrate, no Canvas2D (useConstellation composes createGpuSubstrate + no useCanvas2D import; no getContext(\"2d\")/ctx.arc/ctx.fill; constellationDraw.ts DELETED); C2 crisp SDF circle (the points WGSL length(...)−1.0 SDF + fwidth-smoothstep AA + DPR-aware *uDpr; the GLSL twin matches); C3 instanced-points+instanced-lines, no point-list/line-list (6×N instanced quads); C4 ONE math source + typed-struct SoT (constellationField.ts the single JS evaluator; uniformBridgeWGPU.ts the struct↔buffer SoT). The binding live Metal-GPU paint (crispness + drift + pointer + Safari + PRM-freeze) rides tests-visual/constellation.spec.ts (W-REFLECT3). Bite: a surviving Canvas2D draw / a point-list topology / a forked field math → RED.",
+    },
+    {
+        id: "proof:viz-dotflow",
+        cmd: "proof:viz-dotflow",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-DOTFLOW — the RETOPOLOGIZED dot-flow-field SOURCE gate (born-RED on the bare BB tree → GREEN at the retopology). The cure for the BB dot-flow noise defect (§E: 'does not form waves/shapes, a mess of NOISE; must be SUBTLE, form LARGER + more SWEEPING waves'). The free-advecting particle cloud → an ANCHORED DOT-MATRIX + a restoring spring + brightness-shape modulation; the coherence regime inverted (octaves 6→2-3, λ₀ 2.4→2.5×, curl 0.6→0.12, windSpeed 1.0→0.3); the Canvas2D fallback retired for a pure WebGL2 fragment; the teal-on-navy fabricated reference GONE (warm-cream identity default). The DEVICE-FREE SOURCE arm; the live-GPU gestalt paint (the stable lattice + the ONE sweeping band, both modes) rides tests-visual/flow-field.spec.ts + the DELTA (W-REFLECT3, the cardinal split). Bite: re-introduce the high-octave noise regime / a Canvas2D fallback / a teal-navy literal → RED.",
+    },
+    {
+        id: "proof:viz-papergrid",
+        cmd: "proof:viz-papergrid",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-PAPERGRID — the liquid paper-grid SOURCE gate (born-RED — the viz does not exist on HEAD → GREEN at the build). The cure for the BB paper-grid mess (§E: 'a mess → fix to be evenly spaced + LARGER; the grid LINES must morph + wave in a liquid way; suffuse it throughout the site as a subtle background element'). A static linear-gradient cannot warp — the liquid grid is a per-pixel fragment field: the Ben Golus derivative-AA distance (the crisp-line fix), the IQ domain warp of the UV (the 'liquid'), the Bridson divergence-free curl driving the warp coherently (WHY it's liquid not noise). BORN WebGPU-first — a fullscreen fragment on both backends (no Canvas2D path), the FIRST WGSL curl consumer (mints flow.wgsl.ts). The DEVICE-FREE SOURCE arm; the live-GPU gestalt paint (the crisp evenly-spaced LARGE-cell liquid grid, the pointer bulge, the suffusion, both modes + WebKit) rides tests-visual/paper-grid.spec.ts + the DELTA (W-REFLECT3). Bite: a static-gradient grid / a Canvas2D path / a missing curl warp → RED.",
+    },
+    {
+        id: "proof:dot-matrix",
+        cmd: "proof:dot-matrix",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-DOTMATRIX — the Fibonacci phyllotaxis dot-sphere SOURCE gate (born-RED on the bare tree — the dir does not exist → GREEN at the build). A NEW first-class procedural-suite member (the 'fine-dot spheres on dark' reference, §E): a globe of N fine dots on a sphere SURFACE via the Fibonacci phyllotaxis spiral, depth-shaded so it reads as a translucent dot-shell, slowly rotating, pointer-aware. Born WebGPU-first; the WebGL2 instanced-billboard fallback is GPU (NOT a Canvas2D context). The warm-cream identity is the library default; the mono-on-near-black reference is a DEMO preset. The DEVICE-FREE SOURCE arm (clauses 1-5: viz exists once + colocation/publication binary, the phyllotaxis math, useGpuSubstrate-compose, the warm-identity default, the story-covers-export); the on-host PAINT (clause 6, the near-hemisphere depth gradient + meanLum>0 on a WebGPU backend AND an adapter-less host) is the local real-GPU arm backstopped by tests-visual/dot-matrix.spec.ts + the DELTA (the cardinal split). Bite: a Canvas2D context / a non-warm default / a missing phyllotaxis math → RED.",
+    },
+    {
+        id: "proof:teal-navy-purge",
+        cmd: "proof:teal-navy-purge",
+        tags: ["ci", "local"],
+        note: "BC.W-TEAL-NAVY-PURGE — the cross-cutting warm-cream identity census (born-RED on the teal-on-navy disease → GREEN at warm-cream). §E verbatim: 'REMOVE the teal-on-navy reference entirely.' + the stray-blue ('WTF is this blue') hunt. The per-viz gates fence their OWN constants; THIS gate is the UNION enforcer + the demo-default flip + the fabricated-reference deletion + the stray-blue hunt + the live-warm-paint arm. T1 (source, ci) NO library viz-substrate constants (aurora/concentric/dot-flow/fourier/goo-blob/constellation) carries a teal/navy/cool-blue literal (OKLCh hue ∈ [180,270] above the W-NO-GRAY neutral chroma floor, or a blue-dominant hex) in a DEFAULT palette/background; the warm-cream defaults (hue ~28-90) pass; the silver/bronze brand-metal quad + the --chart-*/--viz-* semantic data tokens are OUT OF SCOPE. The library defaults are ALREADY warm — T1 is the FENCE that keeps them warm + catches a future regression. Bite: a teal/navy literal in a viz default → RED.",
     },
     {
         id: "gates:verify-ci",

@@ -115,20 +115,53 @@ const RETIRED_CLAIMS = [
         subpaths: ["composables/dark", "composables/keyboard"],
     },
     {
-        label: "pagination/virtual composables + subpaths",
+        // BC.W-VIRTUAL-WINDOW (Band 14) RESTORED the /virtual subpath + its composables
+        // (the homecoming — MIGRATION §3.2-3.4 REVERSED-at-BC; ≥2 binary consumers:
+        // words + dock-search). Only `pagination` (useOffsetPagination) stays retired;
+        // the virtual artefacts are LIVE again (re-exported via /virtual).
+        label: "pagination composables + subpath (virtual restored at BC.W-VIRTUAL-WINDOW)",
         find: /RETIRED composables: `useOffsetPagination`/,
-        subpaths: ["pagination", "virtual"],
-        exports: [
-            "useOffsetPagination",
-            "useVirtualSectionWindow",
-            "useWindowedStore",
-            "virtualSectionLayout",
-        ],
+        subpaths: ["pagination"],
+        exports: ["useOffsetPagination"],
     },
     {
         label: "demo-private <DockShowcaseFrame> primitive",
         find: /RETIRED primitive: demo-private `<DockShowcaseFrame>`/,
         exports: ["DockShowcaseFrame"],
+    },
+    {
+        // BC.W-VIZ-FOURIER — the demo fourier-studio.vue + FourierStudioStage.vue
+        // (the Canvas2D three-view split) DELETED at the WebGPU-first migration. The
+        // artefacts are DEMO-side SFCs, outside this gate's src probes — the BINDING
+        // machine check is proof:fourier-field's U1 clause (FourierStudioStage.vue +
+        // fourier-studio.vue ABSENT, the ONE merged view). Anchored here so the
+        // coverage guard knows the claim is owned (the artefact-less demo nav-accent
+        // precedent above).
+        label: "the demo fourier-studio.vue + FourierStudioStage.vue Canvas2D split (machine-locked by proof:fourier-field U1)",
+        find: /\*\*BC\.W-VIZ-FOURIER — the Canvas2D fourier renderer \+ the three-view split RETIRED/,
+    },
+    {
+        // BC.W-VIZ-CONSTELLATION — the Canvas2D `drawOverlay` frozen-`now` handoff
+        // gate proof:constellation-freeze-live retired with the WebGPU migration (the
+        // drawOverlay overlay-painter seam is INERT post-migration — the GPU loop
+        // never invokes it). The retirement claims no public symbol/subpath/token —
+        // drawOverlay STAYS a public ConstellationProps prop; only the Canvas2D-era
+        // gate is retired. The BINDING "is it actually gone" machine check is
+        // proof:viz-constellation's C1 clause (constellationDraw.ts DELETED, no
+        // getContext("2d")/ctx.arc). Anchored here so the coverage guard knows the
+        // claim is owned (the artefact-less precedent above).
+        label: "the proof:constellation-freeze-live Canvas2D drawOverlay gate (machine-locked by proof:viz-constellation C1)",
+        find: /`proof:constellation-freeze-live` RETIRED with the migration\. Clean break/,
+    },
+    {
+        // BC.W-RADIO-FIX / Band 6 — the <Button variant="solid"> back-compat escape
+        // (the opaque bg-primary fill) RETIRED (clean break, no alias). The variant key
+        // is gone from the buttonVariants CVA; the BINDING machine check is
+        // proof:no-shadcn-default (the last shadcn-neutral surface-fill residual removed
+        // → fully GREEN). Artefact-less here (a CVA variant key, not a named export) —
+        // anchored for the coverage guard (the fourier/constellation precedent above).
+        label: 'the <Button variant="solid"> back-compat escape (machine-locked by proof:no-shadcn-default)',
+        find: /`<Button variant="solid">` RETIRED/,
     },
     // ── BA cut (4.0.0) retirements — anchored here for the coverage guard; the
     // BINDING "is it actually gone" machine check rides each wave's own gate
