@@ -460,8 +460,10 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 19 (Band 5 prune):** `BC.W-PAGE-PRUNE`
 **Tier 19.5 (Band 5 demo-content prune — `BESIDE`/after `PAGE-PRUNE`, before the chassis re-threads the survivors):** `BC.W-DEMO-COPY-PRUNE` (the demo-CONTENT/de-jargon prune sibling — `[→]` after `BC.W-PAGE-PRUNE @ T19` (they share `PRUNE-LEDGER.md`); BEFORE `BC.W-PAGE-CHASSIS @ T20`/`BC.W-PAGE-HIERARCHY`/`BC.W-CODE-BLOCKS` re-style the kept copy; couples `BC.W-STORYBOOK-META @ T24`)
 **Tier 20 (Band 5 chassis):** `BC.W-PAGE-CHASSIS`
-**Tier 21 (Band 5 fan-out):** `BC.W-PAGE-HIERARCHY`, `BC.W-HERO-AUDACIOUS`, `BC.W-PADDING-CANON`
-**Tier 22 (Band 5 content + the containers seam):** `BC.W-CODE-BLOCKS`, `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`, `BC.W-EXPANDABLE-PART`◊◊ (the AR-7 chrome-hook seam — after `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6, PADDING-CANON @ T21}`; BEFORE `BC.W-ATLAS-ASK` @ Tier 28)
+**Tier 21 (Band 5 fan-out):** `BC.W-PAGE-HIERARCHY`, `BC.W-HERO-AUDACIOUS`
+**Tier 22 (Band 5 content — the CODE-BLOCKS register + the content fan that reads only `{PAGE-CHASSIS @ T20, PAGE-HIERARCHY @ T21, Band 1}`):** `BC.W-CODE-BLOCKS` (mints `<Code>`/`<CodeBlock>` — after `{PAGE-CHASSIS @ T20, PAGE-HIERARCHY @ T21}`; CONSUMED by `BC.W-PADDING-CANON` @ Tier 22.5 + `BC.W-SEPARATOR-FIX`), `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`
+**Tier 22.5 (Band 5 padding canon — CONSUMES `BC.W-CODE-BLOCKS`'s `<CodeBlock>` golden-pad witness):** `BC.W-PADDING-CANON` (the φ ladder — after `{GLASS-IDENTITY @ T4, BLACK-BAR @ T3, CODE-BLOCKS @ T22}`; coordinates `BC.W-DIALOG-GLASS` on `DialogContent.vue`)
+**Tier 22.7 (Band 5 containers seam — after the settled padding ladder):** `BC.W-EXPANDABLE-PART`◊◊ (the AR-7 chrome-hook seam — after `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6, PADDING-CANON @ T22.5}`; BEFORE `BC.W-ATLAS-ASK` @ Tier 28)
 **Tier 23 (Band 4 suite gate — conforms to CONFIG-RIGHT @ Tier 18, hosts PAGE-CHASSIS @ Tier 20):** `BC.W-VIZ-CONFIGURATOR-SUITE`
 **Tier 24 (Band 9):** `BC.W-STORYBOOK-META`
 **Tier 25 (Band 11 perf — measures the settled floor):** `BC.W-CSS-CRITICAL`, `BC.W-PERF-PRODUCER` → `BC.W-LIGHTHOUSE` · (CROSS-REPO-ABSORB perf leaf, `[‖]` — a payload move on the repaired surface) `BC.W-AX-BP-LAZY`✪ (the BorderProgress value.js-behind-`import()` boundary — `[→]` after the BorderProgress visual repair; before SPEEDTEST-ADOPT @ Tier 28)
@@ -492,7 +494,7 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 > SELECTION-CARD's BB-built A-2/A-3 seams are pre-BC, not intra-BC edges) and are pure sinks except for the
 > `SELECTION-CARD → VISUAL-RECONCILE` forward consume (§3 R6).
 >
-> ◊◊ `BC.W-EXPANDABLE-PART` is placed at Tier 22 because its latest predecessor is `BC.W-PADDING-CANON @ Tier 21`
+> ◊◊ `BC.W-EXPANDABLE-PART` is placed at Tier 22.7 because its latest predecessor is `BC.W-PADDING-CANON @ Tier 22.5`
 > (the overlay-padding ladder must settle before a consumer re-paints the expand trigger over it); its other
 > predecessors `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6}` land far earlier. It is depended on by `BC.W-ATLAS-ASK @ Tier 28`
 > (the AR-7 chrome-hook seam must exist before the Atlas's `^4.x` consume-and-delete) — the BEFORE-ATLAS-ASK edge

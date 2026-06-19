@@ -86,3 +86,20 @@ All 5 MAJOR + MINORs fixed + grounded against live source (commit `1a991285`): D
 
 **Verdict: bm2=0, bm3=1 (fixed). Gap surface 1 MAJOR (Pass-2 fully clean). The whack-a-mole risk assessed: every gap so far is GENUINE + PERMANENTLY-CLOSED-by-its-fix (disease-leak fenced, DAG node, consume-link, stale-count, structure-gates) — the substantive gaps came first, now gate-completeness polish; the surface is converging, not thrashing. Commit + re-fire the confirmation 2-pass.**
 
+## Re-fire #2 (post-HARDEN-3) — 2 MAJOR (both bookkeeping); HARDEN-4 → class-closed
+
+| pass | dim | verdict | MAJ |
+|---|---|---|---|
+| P2 | coverage-recheck | CONVERGED | 0 |
+| P2 | artifact-recheck | CONVERGED-W-1-MAJOR | 1 |
+| P2 | holistic-interaction | PASS (2-consec-confirm) | 0 |
+| P3 | adversarial-completeness | CONVERGED | 0 |
+| P3 | gate-coherence | HOLDS-W-1-MAJOR | 1 |
+| P3 | precept-conformance | CONVERGED | 0 |
+
+The four SUBSTANTIVE lenses (coverage/holistic/adversarial-completeness/precept) CLEAN; the 2 MAJORs are confined to the 2 bookkeeping lenses:
+- **M-D1 (artifact)** — EXECUTION-DAG §4 printed PADDING-CANON before CODE-BLOCKS, inverting their consume edge (graph still acyclic; only the printed linearization violated one intra-Band-5 edge). **HARDEN-4 A:** re-ordered CODE-BLOCKS@T22 → PADDING-CANON@T22.5 → EXPANDABLE-PART@T22.7 (fractional-tier idiom); swept the whole Band-5 fan for other inversions (none); 96 nodes + Kahn-acyclic preserved.
+- **M-D2 (gate-coherence)** — the iter-23 behavioral mechanism-folds landed a real mechanism but their dest wave's gate asserted a *neighbor's*, not the fold's own. **HARDEN-4 B (class-closed, not just the 2 named):** born-RED clauses added — VIZ-AURORA A7 (avoidHues honored), CONTROL-CUSTOM CP1 (data-protagonist emphasis), ADAPTIVE-RECONCILE A3-overlay (overlay band joins the continuous luma clamp), GLASS-LEGIBILITY L6, SEARCH-CUSTOM; + the honest carve-out: the rounded focus-ring is born-GREEN at HEAD → recorded VERIFY-no-gate (no invented born-GREEN gate).
+
+**Verdict: bm2=1+bm3=1 → both FIXED + the gate-completeness CLASS closed proactively. Commit `<pending>`. Re-fire the confirmation 2-pass; if clean → 2-consecutive-clean CONVERGED.**
+
