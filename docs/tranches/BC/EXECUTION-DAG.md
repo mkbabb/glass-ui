@@ -1,6 +1,6 @@
 # BC — the EXECUTION-DAG (the turnkey build map: topo-ordered build plan + dependency graph + per-band gate battery)
 
-> **What this is.** The single execution-readiness contract for the BC tranche's 84 waves: the BAND
+> **What this is.** The single execution-readiness contract for the BC tranche's 96 waves: the BAND
 > build-order, the intra-band + cross-band dependency edges (read off every wave's `**Sequence:**`
 > line), a topological sort proven ACYCLIC, the parallelizable-vs-serial annotation, and the per-band
 > gate battery (the `proof:*` gates + `tests-visual/*.spec.ts` π each band passes before the next
@@ -9,27 +9,28 @@
 >
 > **Source of truth.** The edge set comes from each wave's `waves/*.md` `**Sequence:**` line — that is
 > the BINDING source for every dependency edge below. `WAVE-INDEX.md` is the band/name REGISTRY (the
-> 84-wave roster + the band column); its `sequence-after` cells are a convenience summary, NOT binding
+> 96-wave roster + the band column); its `sequence-after` cells are a convenience summary, NOT binding
 > over a wave's own `**Sequence:**` line — where the two diverge the wave Sequence wins (and the stale
 > WAVE-INDEX cell is the one to reconcile, never the other way). The band roster matches
 > `ORCHESTRATION.md §1`. Every wave-id below resolves on disk in `WAVE-INDEX.md` (cross-checked). The
 > gate battery comes from each wave's acceptance (`proof:*` + π specs).
 >
-> **The iteration-21 FEATURE-BAND addition (Bands 12/13/14 — 9 new waves).** The feature-band fan-out
+> **The iteration-21 FEATURE-BAND addition (Bands 12/13/14 — 9 new waves; +1 iter22 challenge-pass = 10).** The feature-band fan-out
 > (`research/feat/WAVE-IMPACTS-FEAT.md`) added three bands AFTER the converged 75: **Band 12
 > (customizability + golden-defaults)** is CROSS-CUTTING (after the Band-1 glass floor) — `BC.W-CUSTOMIZABILITY-CENSUS`
-> (the bar + gate, born-RED) → `BC.W-CONTROL-CUSTOM` + `BC.W-OVERLAY-UNIFORM` (the per-register threads that
-> flip the census GREEN); **Band 14 (latex-paper abstractions)** lands EARLY as PRIMITIVES (after Band 0,
+> (the bar + gate, born-RED) → `BC.W-CONTROL-CUSTOM` + `BC.W-OVERLAY-UNIFORM` + `BC.W-SEARCH-CUSTOM` (the per-register threads that
+> flip the census GREEN — C1/C2/C3 respectively); **Band 14 (latex-paper abstractions)** lands EARLY as PRIMITIVES (after Band 0,
 > ‖ the visual bands — sibling-disjoint composables leaves) — `BC.W-VIRTUAL-WINDOW` → `BC.W-TOC-RECONCILE`
 > (its `useScrollTo` bridges onto the windowing) + `BC.W-FUZZY-HARDEN` (‖); **Band 13 (dock-search +
 > scroll-system)** lands AFTER Band-2 dock + Band 14 (it composes them) — `BC.W-SCROLL-TRIGGER` →
 > `BC.W-SCROLL-CHROME` → `BC.W-DOCK-SEARCH` (the largest, consumes the scroll system + the three Band-14
 > abstractions + the dock morph, box-inviolate). `BC.W-DEMO-COPY-PRUNE` (Band 5, indexed iter20) is the
 > demo-content prune sibling. All edges read off each wave's `**Sequence:**` line; the topo (§4) re-confirmed
-> acyclic with the 9 added. **ONE coverage gap (for the challenge pass):** `BC.W-SEARCH-CUSTOM` (the
-> SearchBar/FuzzySearch customization surface) is referenced by 3 on-disk specs but has no spec file —
-> recorded in the WAVE-INDEX name-drift map; it is NOT a DAG node (no spec ⇒ no edges), so its absence does
-> not affect acyclicity; the challenge pass either authors it (Band 12) or re-routes.
+> acyclic with the 10 added. **The coverage gap is CLOSED (iter22 challenge pass):** `BC.W-SEARCH-CUSTOM` (the
+> SearchBar/FuzzySearch customization + glassify surface, the C3 owner) was referenced by 3 on-disk specs with no spec file —
+> the challenge pass AUTHORED it (Band 12, after the census; mints `proof:search-custom`, flips C3 GREEN). It is now
+> a DAG node (`{CUSTOMIZABILITY-CENSUS + GLASS-IDENTITY} → SEARCH-CUSTOM`, beside the FuzzySearch consumers); the
+> topo (§4) re-confirmed acyclic with it added (a pure forward consume, one-directional — see §3 R9).
 >
 > **The binding-order law (recorded once, applied everywhere below).** ORCHESTRATION §1's band roster
 > is a THEMATIC grouping, NOT a strict numeric execution order. The **per-wave `Sequence:` line is the
@@ -62,7 +63,7 @@ Band 9  (storybook meta)   →  the frontend-design meta-pass over the storybook
 Band 10 (cross-repo+cut)   →  deck BUILD + the three sibling adopts + the honest 4.x CUT
 Band 11 (PERFORMANCE)      →  css-critical + lighthouse + perf-producer (measures the SETTLED floor)
 Band 14 (abstractions)     →  virtual-window + toc-reconcile + fuzzy-harden  [EARLY PRIMITIVES — after Band 0, ‖ visual bands]
-Band 12 (customizability)  →  customizability-census + control-custom + overlay-uniform  [CROSS-CUTTING — after Band-1 glass]
+Band 12 (customizability)  →  customizability-census + control-custom + overlay-uniform + search-custom  [CROSS-CUTTING — after Band-1 glass]
 Band 13 (dock-search+scroll) → scroll-trigger + scroll-chrome + dock-search  [after Band-2 dock + Band 14]
         → then BC.W-CUT (terminal, user-gated)
 ```
@@ -138,7 +139,7 @@ BC.W-PM-SYNTHESIS ──→ BC.W-GESTALT-FIRST ──┐
 - `BC.W-FOLD-LEDGER` consumes the 4 PM wrappers + `DEFERRAL-LEDGER.md`; mints `FOLD-LEDGER.json`. Its `proof:bc-fold-ledger` is a CLOSE oracle (Band 6 + the cut gate on it).
 - **`⇒ Band 1`** (via `BC.W-PAINT-GATE`'s real-paint harness + `BC.W-GESTALT-FIRST`'s per-wave reader) and **`⇒ Band 4`** (`BC.W-WEBGPU-EVERYWHERE`'s gate is built on `BC.W-PAINT-GATE`'s harness).
 
-### Band 1 — Glass identity rebuild (10 waves)
+### Band 1 — Glass identity rebuild (10 waves + 3 absorbed: METAL-GLOW, ACCENT-TONE, LIQUIDHOVER-AUTOARM[struck])
 ```
 BC.W-BLACK-BAR  (FIRST of Band 1 — the rim→catch-light token)
    ├──→ BC.W-GLASS-IDENTITY  (warm-cream FLOOR; reads the corrected rim)
@@ -164,8 +165,9 @@ BC.W-BLACK-BAR  (FIRST of Band 1 — the rim→catch-light token)
 - **`⇒ Band 4`**: `GLASS-IDENTITY` + `ADAPTIVE-RECONCILE` → `BC.W-VIZ-AURORA` (the glass over the field reads warm, not grey).
 - **`⇒ Band 5`**: Band 1 (the ONE chassis card hosts the rebuilt warm-cream glass) → `BC.W-PAGE-CHASSIS`.
 - **`⇒ the VISUAL-RECONCILE`**: the whole Band-1 glass set → `BC.W-VISUAL-RECONCILE` (re-walk the BB band over the fixed floor).
+- **The three iteration-23 CROSS-REPO-ABSORB Band-1 waves** (`[→]` after `{GLASS-IDENTITY, BLACK-BAR}`, `[‖]` with the GLASS-PRUNE fan): `BC.W-AX-METAL-GLOW` EXTENDS the BB.W-METAL-SHIMMER family (the `--metal-glow-*` gold catch-light — an additive token-only register on the shipped `.metal-{gold,silver,bronze}` family, no new utility); it lands BEFORE `BC.W-AX-COMPLETION-SEAL` (Band 6 — the seal's glint reads `--metal-glow-*`) + `BC.W-VISUAL-RECONCILE` (re-walks the metal family's paint with the glow). `BC.W-ACCENT-TONE` mints the contrast-floored 3-channel tonal-accent register (one `--tone` → idle/active/edge/ink via the shipped value.js `safeAccentColor` `/color` leaf) + `<SelectableChip>` — it sits BESIDE the BB `--glass-accent` rim seam (DISTINCT — the accent-tone fills a chip surface, the glass-accent tints a rim) + reads the no-gray OKLab floor; it is a Band-1/12 cross-cutting wave (the `<SelectableChip>` co-locates the `ControlSize` union beside `BC.W-CONTROL-CUSTOM`'s `_shared/` home) and ALSO folds the fourier #3 SelectableChip + #13 `--viz-amber` rebaseline. `BC.W-AX-LIQUIDHOVER-AUTOARM` is STRUCK-ALREADY-SHIPS (the tier-root specular auto-arm ships at HEAD — Button `v-specular`, the four dock controls, Card; `proof:glass-cohesion` + `liquid-hover.spec.ts` hold) — NO build node; its live re-verify rides `BC.W-VISUAL-RECONCILE` unit 2.
 
-### Band 2 — Dock (7 waves)
+### Band 2 — Dock (7 waves + 2 absorbed: DOCK-CTA-SEAT, DOCK-COCKPIT)
 ```
 BC.W-DOCK-ENGINE  (FIRST of Band 2 — the ONE-clock buttery engine; after BLACK-BAR + ADAPTIVE-RECONCILE)
    ├──→ BC.W-DOCK-ARBITRARY    ──→ BC.W-LIQUID-MORPH  (hardens ARBITRARY against degeneracy — never white)
@@ -179,6 +181,7 @@ BC.W-DOCK-ENGINE  (FIRST of Band 2 — the ONE-clock buttery engine; after BLACK
 - **`⇒ Band 4`**: `LIQUID-MORPH` → `BC.W-SAFARI-WEBGL` (the cross-engine arm references the Chromium-proven morph stability).
 - **`⇒ Band 10`**: Band-2 dock stable → `BC.W-DECK` (the deck composes the dock surface) + → `BC.W-SAFARI-WEBGL`.
 - **`⇒ Band 11`**: `DOCK-ENGINE` + `LIQUID-MORPH` (the settled morph geometry) → `BC.W-PERF-PRODUCER`.
+- **The two iteration-23 CROSS-REPO-ABSORB Band-2 waves** (`[→]` after `BC.W-DOCK-ENGINE` + the dock visual repair, `[‖]` with the morph fan): `BC.W-AX-DOCK-CTA-SEAT` is a CONSUMING seam BESIDE `BC.W-DOCK-ENGINE` — it composes `useDockCtaReceive` (BB.W-DOCKMORPH-CTA) + the dock-control geometry (the `[data-cta-pending]` landing seat + the un-gated resting reserve + the plain-`transition:opacity` FLIP reveal + `setPending()`/`clearPending()` + the `/dock` re-export); it does NOT edit `dockMorphContext`/`DOCK_SPRING` (the box-inviolate fence). After `BC.W-BLACK-BAR`/`BC.W-ADAPTIVE-RECONCILE` (the seat lands a CTA onto a real glass control, not a grey slab); BEFORE `BC.W-SPEEDTEST-ADOPT` (the speedtest dock/survey band binds it). `BC.W-AX-DOCK-COCKPIT` is a named geometry register ON the repaired dock — `[data-preset="cockpit"]` → a fixed `2.75rem` control floor + `--dock-label-ratio` (Gate-1 Q6) beside the density rungs in `dock/density.css`; after `BC.W-DOCK-ENGINE` + `BC.W-DOCK-ARBITRARY`/`BC.W-DOCK-COLLAPSED-BOTH`; closes the dock-oversize chronic with the speedtest A-9 ask; BEFORE `BC.W-SPEEDTEST-ADOPT`. **The fourier #10 DockIconButton `active?` prop is THREADED into `BC.W-DOCK-ENGINE` (the dock-control-ergonomics fold — `aria-pressed`/`data-active` reading the shipped `--dock-control-active-bg` register), NOT a Band-2 absorb wave.**
 
 ### Band 3 — Tabs + underline (3 waves)
 ```
@@ -252,7 +255,7 @@ BC.W-PAGE-PRUNE  (BEFORE the chassis — kill dead routes/copy first)
 - **`⇒ Band 9`**: the whole Band-5 set → `BC.W-STORYBOOK-META`.
 - **`⇒ Band 11`**: the page cascade settles → `BC.W-CSS-CRITICAL` (re-measures the partition over the settled draw) + `BC.W-LIGHTHOUSE`.
 
-### Band 6 — Controls (4 waves)
+### Band 6 — Controls (4 waves + 1 absorbed: COMPLETION-SEAL [feedback])
 ```
 BC.W-RADIO-FIX  (FIRST — a binding bug; after Band 1 glass)
    ├──→ BC.W-DROPDOWN-FIX   (shares the picker live-verify session; after RADIO-FIX; [‖] otherwise)
@@ -264,8 +267,9 @@ BC.W-CONFIG-RIGHT  (after {RADIO-FIX, DROPDOWN-FIX, CONTROL-SMOOTH} — the cont
 - `CONFIG-RIGHT` `[→]` after all three Band-6 controls (+ reads BLACK-BAR rim + PAGE-CHASSIS studio header).
 - **The Band-6 controls consume the `BC.W-DESHADCN` census verdict** (the per-component reskin owners DESHADCN routes): `CONTROL-SMOOTH` owns the toggle-outline / tags-input-ring / switch-thumb reskins, `RADIO-FIX`/`DROPDOWN-FIX` the picker reskins — each re-points the residual shadcn-neutral token onto the house glass/`.control-surface`/`.focus-ring` register per the census. A forward Band-1→Band-6 edge (DESHADCN depends only on GLASS-IDENTITY/BLACK-BAR, never on a control wave → one-directional, no cycle). See §3 R7.
 - **`⇒ Band 4 studios`**: `CONFIG-RIGHT` → `BC.W-VIZ-CONFIGURATOR-SUITE` (CONFORMS-TO — verified-after, not a back-build).
+- **The iteration-23 CROSS-REPO-ABSORB feedback wave** (the wave's own band is "6 — feedback"; it rides the Band-6 slot as the feedback-surface sibling, file-disjoint from the controls): `BC.W-AX-COMPLETION-SEAL` is the hero-scale earned-GOLD completion seal (a one-shot gold-draw mark + 4 `@property` motion tokens on the `/completion-seal` subpath) reading the prior-tranche `W-PHASE-PALETTE` `--phase-complete-color`/`--color-gold` register (Gate-1 Q2 — earned-gold, not the phase spectrum). It is `[→]` after `BC.W-AX-METAL-GLOW` (Band 1 — the seal's glint reads `--metal-glow-*`) + `BC.W-GLASS-IDENTITY` (the warm floor); `[‖]` with the Band-6 controls (disjoint surface). BEFORE `BC.W-SPEEDTEST-ADOPT` (the speedtest mounts `<CompletionSeal play>` on its complete/personal-best surface).
 
-### Band 7 — Motion canon + interaction affordances (4 waves)
+### Band 7 — Motion canon + interaction affordances (4 waves + 2 absorbed: SPLIT-CHARS, MOTION-PRESETS)
 ```
 BC.W-MOTION-ONE-CLOCK  (FIRST — the one-clock SOURCE audit over the whole repo)
    ├──→ BC.W-SPRING-EASE     (re-tunes SPRING_PRESETS; mints the iOS press register — TOKEN-ONLY)
@@ -279,6 +283,7 @@ BC.W-MOTION-ONE-CLOCK  (FIRST — the one-clock SOURCE audit over the whole repo
 - **`⇒ Band 6`**: `SPRING-EASE` + `AFFORDANCE-MAP` → `BC.W-CONTROL-SMOOTH`.
 - **`⇒ Band 4`**: `MOTION-ONE-CLOCK` → `BC.W-VIZ-CHOREOGRAPHY` (the viz-layer one-clock instance).
 - **`⇒ Band 1/3`**: `SPRING-EASE` press/snappy mint → BUTTON-GLASS-IOS / LIQUID-TAB / UNDERLINE-TUNE (§3 consume-after-mint).
+- **The two iteration-23 CROSS-REPO-ABSORB Band-7 waves** (the fourier #5/#6/#8 folds; `[→]` after `BC.W-MOTION-ONE-CLOCK`, `[‖]` with each other — disjoint motion leaves): `BC.W-SPLIT-CHARS` is the per-glyph split JS partner (`useCharStagger` + `<SplitChars>` with `--char-index`/`--char-total` + the MANDATORY accessible full-text label) — the JS partner to the shipped `.char-stagger` CSS; engine-free → `/motion-core` (the `vReveal`/`usePointerVelocityField` leaf set, root-barrel-safe); after `BC.W-MOTION-ONE-CLOCK` pins the `--spring-<name>-duration` clock the CSS reads. `BC.W-MOTION-PRESETS` mints the convergence-reveal preset (the brand "partial-sum settle" — prefer the `gentle` reuse unless measurably distinct, no new engine) + the `[data-scroll-reveal]` `once` latch; `[→]` after `BC.W-MOTION-ONE-CLOCK` + `BC.W-SPRING-EASE` (the curve-shape canon); the `once` latch edits the `[data-scroll-reveal]` `view()` recipe in `scroll-driven.css` — a COORDINATED edit with `BC.W-SCROLL-TRIGGER` (the scroll READER owns `useScrollTrigger`; this owns the CSS recipe arm — file-disjoint at the seam, the continuous `[data-scroll-reveal]` default UNTOUCHED, the no-double-ownership boundary).
 
 ### Band 8 — Safari (1 wave — but its EXECUTION is hoisted to the Band-4 head)
 ```
@@ -311,7 +316,7 @@ BC.W-CUT  (TERMINAL; after ALL bands + DECK + FOLD-LEDGER + DIST-COMMENT-FIX; us
 - The three sibling adopts `[‖]` after the CUT (`SPEEDTEST-ADOPT`, `FOURIER-ASK`, `ATLAS-ASK` — sibling-disjoint trees; the foreign-tree fence inv-26 binding); `FOURIER-ASK` additionally `[→]` after `BC.W-VIZ-FOURIER` + `BC.W-VIZ-AURORA`.
 - `ATLAS-ASK` + `SPEEDTEST-ADOPT` depend on Bands 1-4 (the wide surface the siblings consume is visually-repaired before they migrate).
 
-### Band 11 — PERFORMANCE (3 waves) — sequences LAST among build bands
+### Band 11 — PERFORMANCE (3 waves + 1 absorbed: BP-LAZY) — sequences LAST among build bands
 ```
 BC.W-CSS-CRITICAL  (FIRST of Band 11; after the visual bands settle the cascade — Bands 1-7 + 9)
    └──→ BC.W-LIGHTHOUSE  (after CSS-CRITICAL + PERF-PRODUCER + the visual bands; the never-run live score)
@@ -322,6 +327,7 @@ BC.W-PERF-PRODUCER  (after Band-2 dock + Band-4 aurora/blob rebuilds; file-disjo
 - `PERF-PRODUCER` `[→]` after `{Band-2 dock (DOCK-ENGINE/LIQUID-MORPH), Band-4 aurora/blob (VIZ-AURORA/GOOBLOB-PLAIN)}`; `[‖]` with CSS-CRITICAL (file-disjoint: the `/styles` carve vs per-frame runtime cost).
 - `LIGHTHOUSE` is LAST `[→]` after `{CSS-CRITICAL, PERF-PRODUCER, the visual bands}` — the score measured on the SETTLED rebuilt floor.
 - **`⇒ the CUT`**: `LIGHTHOUSE` (+ `CSS-CRITICAL` + `PERF-PRODUCER`) → `BC.W-CUT` (the cut runs `proof:lighthouse`).
+- **The iteration-23 CROSS-REPO-ABSORB Band-11 wave**: `BC.W-AX-BP-LAZY` moves the BorderProgress value.js spectrum walk behind a dynamic `import()` boundary (`spectrumStops` stays sync; the default `var(--…)` ramp is value.js-free fast-path) — a PAYLOAD move ON the repaired BorderProgress surface, not a paint change. `[→]` after the BorderProgress visual repair (the masked-conic ring + the 10-14px envelope); `[‖]` with `BC.W-CSS-CRITICAL`/`BC.W-PERF-PRODUCER` (it shares the critical-path-weight discipline — `proof:bp-lazy` asserts the eager graph reaches ZERO of the value.js color-math leaf, the `proof:vueuse-free-root`/critical-path-walk precedent). BEFORE `BC.W-SPEEDTEST-ADOPT` (the speedtest `.results-card` binds `<BorderProgress coverage="bottom-edge">` at first paint — the consumer must not drag value.js into its first-paint chunk).
 
 ### Band 14 — Latex-paper abstractions (3 waves) — EARLY PRIMITIVES
 The three composables-leaves land EARLY (after Band 0, ‖ the visual bands — sibling-disjoint, zero glass/dock paint). They are the PRIMITIVES Band-13 dock-search composes.
@@ -333,17 +339,19 @@ BC.W-FUZZY-HARDEN  ([‖] with VIRTUAL-WINDOW — the near-zero surface-confirm 
 - `VIRTUAL-WINDOW` is FIRST `[→]` after Band 0 (the gate-redesign floor — `proof:virtual-window` born under the hardened harness). `TOC-RECONCILE` `[→]` after VIRTUAL-WINDOW (the scroll-to bridge). `FUZZY-HARDEN` `[‖]` (independent — no scorer edit, the one-directional fence).
 - **`⇒ Band 13`**: all three → `BC.W-DOCK-SEARCH` (the results-window + the result-select scroll-to-and-warm + the matcher). **`⇒ Band 10`**: words + latex-paper delete their forks on the `^4.x` bump (foreign-tree fence, THEIR edit) → coordinated by `BC.W-CUT` + the adopt sweep.
 
-### Band 12 — Customizability + golden-defaults (3 waves) — CROSS-CUTTING
-The census authors the bar + gate (born-RED); the per-register threads flip it GREEN. Lands after the Band-1 glass floor (the golden glass tier the census measures against), ‖ `BC.W-DESHADCN` (disjoint axis).
+### Band 12 — Customizability + golden-defaults (4 waves + 2 absorbed: METRIC-HOVER, FOURIER-DECIDES; + ACCENT-TONE cross-cutting from Band 1) — CROSS-CUTTING
+The census authors the bar + gate (born-RED); the per-register threads flip it GREEN (C1/C2/C3). Lands after the Band-1 glass floor (the golden glass tier the census measures against), ‖ `BC.W-DESHADCN` (disjoint axis).
 ```
 BC.W-CUSTOMIZABILITY-CENSUS  (FIRST of Band 12 — the bar + proof:customizability-census C1-C4 born-RED; after Band-1 GLASS-IDENTITY)
    ├──→ BC.W-CONTROL-CUSTOM   (the input-register size axis → flips C1 GREEN)
-   └──→ BC.W-OVERLAY-UNIFORM  (the overlay surface + φ-pad threads → flips C2 GREEN)
+   ├──→ BC.W-OVERLAY-UNIFORM  (the overlay surface + φ-pad threads → flips C2 GREEN)
+   └──→ BC.W-SEARCH-CUSTOM    (the SearchBar/FuzzySearch size/surface/variant axes + glassify + the !important→CVA fold → flips C3 GREEN; mints proof:search-custom)
 ```
-- `CUSTOMIZABILITY-CENSUS` is FIRST `[→]` after `BC.W-GLASS-IDENTITY` (Band 1) — it authors `proof:customizability-census` + the per-component census + design-idioms §13 (ZERO per-component paint; born-RED on the HEAD residuals). `CONTROL-CUSTOM` + `OVERLAY-UNIFORM` `[‖]` after the census (disjoint registers — the input cohort vs the overlay surface/φ-pad).
+- `CUSTOMIZABILITY-CENSUS` is FIRST `[→]` after `BC.W-GLASS-IDENTITY` (Band 1) — it authors `proof:customizability-census` + the per-component census + design-idioms §13 (ZERO per-component paint; born-RED on the HEAD residuals). `CONTROL-CUSTOM` + `OVERLAY-UNIFORM` + `SEARCH-CUSTOM` `[‖]` after the census (disjoint registers — the input cohort vs the overlay surface/φ-pad vs the `custom/search` SFC paint).
 - `CONTROL-CUSTOM` `[‖]` `BC.W-DESHADCN` (the Switch-thumb reskin is DESHADCN's; the size axis is CONTROL-CUSTOM's — disjoint) + `BC.W-CONTROL-SMOOTH` (the control-lag/rounded fix is Band-6 behavioral; this is the size axis). `OVERLAY-UNIFORM` `[‖]` `BC.W-DROPDOWN-FIX` (the no-shift/aligned/dot fix is Band-6 behavioral; this is the surface/φ-pad customization axis).
-- **C3 owner gap (challenge pass):** `BC.W-SEARCH-CUSTOM` (SearchBar/FuzzySearch customization) flips C3 but has no spec — author it here (Band 12, after the census) or re-route. NOT a DAG node yet.
-- **`⇒ no downstream gate`**: Band 12 is a leaf-cluster (the census + threads); nothing downstream depends on it (the cut reads `proof:customizability-census` GREEN as a close oracle).
+- `SEARCH-CUSTOM` `[‖]` after the census (it reads `CONTROL-CUSTOM`'s `controlSizeClass` size-rung mint + the Band-1 glass floor); it is the boundary-peer of `BC.W-DOCK-SEARCH` (Band 13 — that wave COMPOSES the glassified search surface this wave ships; file-disjoint `custom/search/*` vs `custom/dock/*`, both box-inviolate) + `BC.W-FUZZY-HARDEN` (Band 14 — the matcher BYTE-FENCED, a READ of `fuzzyMatch` only). It re-points the de-shadcn `custom/search` paint `BC.W-DESHADCN`'s census records (`bg-muted/50`→`.glass-menu-row`, `surface="opaque"`→glass), cited not double-owned.
+- **`⇒ no downstream gate`**: Band 12 is a leaf-cluster (the census + threads); nothing downstream depends on it (the cut reads `proof:customizability-census` GREEN — incl. C3 via `SEARCH-CUSTOM` — as a close oracle).
+- **The iteration-23 CROSS-REPO-ABSORB Band-12 waves** (all leaf, `[‖]` after the Band-1 glass floor — disjoint from the census threads): `BC.W-AX-METRIC-HOVER` is a small value-lift on the EXISTING `.metric-badge:hover` slots (`--metric-badge-hover-translate` -2px + scale 1.04 + `--shadow-cartoon-sm`) reading the corrected glass rungs; after `BC.W-GLASS-IDENTITY`; before `BC.W-SPEEDTEST-ADOPT` (the result tiles inherit it). `BC.W-ACCENT-TONE` is the cross-cutting Band-1/12 register (placed in Band 1 — see above; it co-locates `<SelectableChip>` + the `ControlSize` union beside `BC.W-CONTROL-CUSTOM`'s `_shared/` home). `BC.W-FOURIER-DECIDES` is the process-band leaf (Band 12/14) — two BOOKs (AtomDiff #4, canvas-anchored-overlay #7 — the ≥2-bar genuinely UNMET, evidence + promotion-trigger records) + one BUILD-as-gate (tier-class-staleness #12, extending the shipped `proof:consumer-staleness` harness); independent of the Band-1/2/4 surfaces; pairs with `BC.W-FOURIER-ASK` (DISJOINT — that wave owns the in-repo demo defect + the `^4.0.0` consumer bump).
 
 ### Band 13 — Dock-search + scroll-system (3 waves) — composes Band 2 + Band 14
 Lands LATE — it composes the Band-2 dock morph (box-inviolate) + the Band-14 abstractions + the scroll system it builds.
@@ -408,15 +416,15 @@ edge, recorded here for the executor's hand-off list). Each is shown ACYCLIC. Th
 - **Why acyclic**: every parent is upstream (Band-2 dock landed before Band 13; the Band-14 primitives land EARLY after Band 0; the Band-13 scroll cluster is intra-band-prior). DOCK-SEARCH depends on all of them; NONE depends on it → one-directional. It is BOX-INVIOLATE (does NOT edit `dockMorphContext`/`DOCK_SPRING` — the W-DOCKMORPH-CTA consuming-seam precedent) and does NOT re-author the fuzzy pipeline (the one-directional fuzzy fence) → no back-edge into the dock or fuzzy waves. The band number runs WITH the data (12<13<14 is thematic; the EXECUTION places Band 14 early, Band 13 late — §1), so it is a normal forward consume, recorded here for the executor's "watch the dock-search composition" list.
 - **The executor resolution**: build the Band-14 primitives + the Band-13 scroll cluster + the Band-2 dock engine first (all upstream); DOCK-SEARCH composes them last, before the cut. The words SearchBar retires onto `<GlassDock search>` on the `^4.x` consume (foreign-tree fence, THEIR edit, coordinated by `BC.W-CUT`).
 
-### R9 — `BC.W-CONTROL-CUSTOM` + `BC.W-OVERLAY-UNIFORM` (B12) consume `BC.W-CUSTOMIZABILITY-CENSUS` (B12) + the Band-1 glass floor (forward consume)
-- **Edge**: `{CUSTOMIZABILITY-CENSUS (B12), GLASS-IDENTITY (B1)} → {CONTROL-CUSTOM (B12), OVERLAY-UNIFORM (B12)}`.
-- **The data**: the census authors `proof:customizability-census` (C1-C4, born-RED) + the per-component EXACTLY-ONE-LIST census + design-idioms §13 — ZERO per-component paint. `CONTROL-CUSTOM` threads the `--control-h-*`/`--control-text` cohort onto the input register (flips C1 GREEN); `OVERLAY-UNIFORM` threads the `surface` axis + φ `--overlay-pad-*` onto the floating overlays (flips C2 GREEN). The golden glass-well/glass-floating tier the threads read is `BC.W-GLASS-IDENTITY`'s.
-- **Why acyclic**: the census + the glass floor are both upstream; the threads depend on them, neither depends on a thread → one-directional. The census is a leaf-author (born-RED gate, no consumer edit), so it floats anywhere after `GLASS-IDENTITY` and before the first thread. Band 12 is a leaf-cluster — nothing earlier depends on it (the cut reads `proof:customizability-census` GREEN as a close oracle). The `BC.W-SEARCH-CUSTOM` C3 owner (un-authored, NOT a DAG node) does not affect acyclicity — no spec ⇒ no edges.
-- **The executor resolution**: land the census EARLY (after the Band-1 glass floor settles; born-RED), then `CONTROL-CUSTOM` + `OVERLAY-UNIFORM` `[‖]` flip its C1/C2 GREEN on the band-spine schedule; `BC.W-DESHADCN` runs `[‖]` (disjoint axis — the shadcn-neutral token reskin vs the customization axis).
+### R9 — `BC.W-CONTROL-CUSTOM` + `BC.W-OVERLAY-UNIFORM` + `BC.W-SEARCH-CUSTOM` (B12) consume `BC.W-CUSTOMIZABILITY-CENSUS` (B12) + the Band-1 glass floor (forward consume)
+- **Edge**: `{CUSTOMIZABILITY-CENSUS (B12), GLASS-IDENTITY (B1)} → {CONTROL-CUSTOM (B12), OVERLAY-UNIFORM (B12), SEARCH-CUSTOM (B12)}` (+ `SEARCH-CUSTOM` reads `CONTROL-CUSTOM`'s `controlSizeClass` size-rung mint — a forward intra-band consume).
+- **The data**: the census authors `proof:customizability-census` (C1-C4, born-RED) + the per-component EXACTLY-ONE-LIST census + design-idioms §13 — ZERO per-component paint. `CONTROL-CUSTOM` threads the `--control-h-*`/`--control-text` cohort onto the input register (flips C1 GREEN); `OVERLAY-UNIFORM` threads the `surface` axis + φ `--overlay-pad-*` onto the floating overlays (flips C2 GREEN); `SEARCH-CUSTOM` threads the size/surface/variant axes + token-backed magnitudes + the `.glass-menu-row` result register + the glass modal onto the `custom/search` SFCs and DELETES the `!important`-fighting-CVA escape onto a real `variant` rung (flips C3 GREEN; mints `proof:search-custom` SC1-SC5). The golden glass-well/glass-floating tier the threads read is `BC.W-GLASS-IDENTITY`'s.
+- **Why acyclic**: the census + the glass floor are both upstream; the three threads depend on them, none depends back → one-directional. The census is a leaf-author (born-RED gate, no consumer edit), so it floats anywhere after `GLASS-IDENTITY` and before the first thread. `SEARCH-CUSTOM` is the boundary-peer of `BC.W-DOCK-SEARCH` (B13 COMPOSES its glassified surface — the edge runs INTO DOCK-SEARCH, not back) + `BC.W-FUZZY-HARDEN` (B14 — the matcher byte-fenced, a READ only); both edges are one-directional, file-disjoint. Band 12 is a leaf-cluster — nothing earlier depends on it (the cut reads `proof:customizability-census` GREEN as a close oracle).
+- **The executor resolution**: land the census EARLY (after the Band-1 glass floor settles; born-RED), then `CONTROL-CUSTOM` + `OVERLAY-UNIFORM` + `SEARCH-CUSTOM` `[‖]` flip its C1/C2/C3 GREEN on the band-spine schedule (`SEARCH-CUSTOM` after `CONTROL-CUSTOM`'s size-rung mint); `BC.W-DESHADCN` runs `[‖]` (disjoint axis — the shadcn-neutral token reskin vs the customization axis; the `custom/search` paint `SEARCH-CUSTOM` executes is cited from DESHADCN's census, not double-owned).
 
 ---
 
-## 4 — The topological sort (proven ACYCLIC; 84 waves in a valid build order)
+## 4 — The topological sort (proven ACYCLIC; 96 waves in a valid build order)
 
 A valid topo order exists ⟺ the graph is a DAG. The order below is a CONCRETE valid linearization
 (respecting every Sequence edge incl. the §3 cross-band reconciles); the existence of this complete
@@ -429,14 +437,14 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 3 (Band 1 root):** `BC.W-BLACK-BAR`
 **Tier 4:** `BC.W-GLASS-IDENTITY`
 **Tier 5:** `BC.W-ADAPTIVE-RECONCILE`
-**Tier 5.5 (Band 1 ATLAS-FOLD — needs only `{GLASS-IDENTITY, BLACK-BAR}`, lands here so the de-shadcn census precedes the per-band reskin owners):** `BC.W-DESHADCN`◊ (the reskin-DNA invariant + `proof:no-shadcn-default` + the census — read by Tiers 6/7/12/13/18 reskin owners), `BC.W-SELECTION-CARD` (composes the BB-BUILT A-2/A-3 seams), `BC.W-GLASS-GLOW-FIX` (the A-8 root defect; beside GLASS-PRUNE)
+**Tier 5.5 (Band 1 ATLAS-FOLD + CROSS-REPO-ABSORB — needs only `{GLASS-IDENTITY, BLACK-BAR}`, lands here so the de-shadcn census precedes the per-band reskin owners):** `BC.W-DESHADCN`◊ (the reskin-DNA invariant + `proof:no-shadcn-default` + the census — read by Tiers 6/7/12/13/18 reskin owners), `BC.W-SELECTION-CARD` (composes the BB-BUILT A-2/A-3 seams), `BC.W-GLASS-GLOW-FIX` (the A-8 root defect; beside GLASS-PRUNE), `BC.W-AX-METAL-GLOW`✪ (the `--metal-glow-*` gold catch-light EXTENDING BB.W-METAL-SHIMMER — token-only, before COMPLETION-SEAL @ Tier 18 + VISUAL-RECONCILE @ Tier 15), `BC.W-ACCENT-TONE`✪ (the 3-channel tonal-accent register + `<SelectableChip>`, reading the shipped value.js `safeAccentColor` `/color` leaf + the no-gray floor; a Band-1/12 cross-cutting leaf) · (`BC.W-AX-LIQUIDHOVER-AUTOARM` is STRUCK — no DAG node; its re-verify rides VISUAL-RECONCILE @ Tier 15)
 **Tier 6 (Band 1 fan-out):** `BC.W-GLASS-PRUNE`, `BC.W-GLASS-LEGIBILITY-MEASURED`
 **Tier 7 (Band 1 specimens — consume the `BC.W-DESHADCN` census verdict):** `BC.W-DIALOG-GLASS`, `BC.W-BUTTON-GLASS-IOS`†
-**Tier 7′ (Band 7 motion canon — lands here so its tokens precede the spring-reading π of Bands 1/3/6):** `BC.W-MOTION-ONE-CLOCK` → `BC.W-SPRING-EASE`‡ → `BC.W-AFFORDANCE-MAP` → `BC.W-TUNABLE-ANIM`
-**Tier 7.7 (Band 12 customizability — CROSS-CUTTING, after the Band-1 glass floor @ T4; ‖ `BC.W-DESHADCN` @ T5.5):** `BC.W-CUSTOMIZABILITY-CENSUS`✦ (the bar + `proof:customizability-census` born-RED; FIRST of Band 12) → `BC.W-CONTROL-CUSTOM`, `BC.W-OVERLAY-UNIFORM` (`[‖]` — the per-register threads flip C1/C2 GREEN) · *(C3 owner `BC.W-SEARCH-CUSTOM` un-authored — not a DAG node; challenge-pass author/re-route)*
+**Tier 7′ (Band 7 motion canon — lands here so its tokens precede the spring-reading π of Bands 1/3/6):** `BC.W-MOTION-ONE-CLOCK` → `BC.W-SPRING-EASE`‡ → `BC.W-AFFORDANCE-MAP` → `BC.W-TUNABLE-ANIM` · (CROSS-REPO-ABSORB Band-7 leaves, `[‖]` after MOTION-ONE-CLOCK/SPRING-EASE — disjoint motion leaves) `BC.W-SPLIT-CHARS`✪ (the `useCharStagger`/`<SplitChars>` per-glyph split, engine-free → `/motion-core`), `BC.W-MOTION-PRESETS`✪ (the convergence-reveal preset + the `[data-scroll-reveal]` `once` latch — the latch CSS-recipe edit coordinates with `BC.W-SCROLL-TRIGGER` @ Tier 11.5, file-disjoint at the seam, no-double-ownership)
+**Tier 7.7 (Band 12 customizability — CROSS-CUTTING, after the Band-1 glass floor @ T4; ‖ `BC.W-DESHADCN` @ T5.5):** `BC.W-CUSTOMIZABILITY-CENSUS`✦ (the bar + `proof:customizability-census` born-RED; FIRST of Band 12) → `BC.W-CONTROL-CUSTOM`, `BC.W-OVERLAY-UNIFORM`, `BC.W-SEARCH-CUSTOM` (`[‖]` — the per-register threads flip C1/C2/C3 GREEN; SEARCH-CUSTOM the iter22-authored C3 owner, mints `proof:search-custom`) · (CROSS-REPO-ABSORB Band-12 leaves, `[‖]` after the Band-1 glass floor — disjoint from the census threads) `BC.W-AX-METRIC-HOVER`✪ (the `.metric-badge:hover` value-lift, after GLASS-IDENTITY), `BC.W-FOURIER-DECIDES`✪ (the process-band leaf — two BOOKs + one tier-class-staleness gate extending the shipped `proof:consumer-staleness`; independent of the visual bands, floats wide)
 **Tier 8 (Band 2 root):** `BC.W-DOCK-ENGINE`
-**Tier 9 (Band 2 fan-out):** `BC.W-DOCK-ARBITRARY`, `BC.W-DOCK-VERTICAL-FIX`, `BC.W-DOCK-SHRINK-BLUR`
-**Tier 10:** `BC.W-LIQUID-MORPH`, `BC.W-DOCK-COLLAPSED-BOTH`
+**Tier 9 (Band 2 fan-out):** `BC.W-DOCK-ARBITRARY`, `BC.W-DOCK-VERTICAL-FIX`, `BC.W-DOCK-SHRINK-BLUR`, `BC.W-AX-DOCK-CTA-SEAT`✪ (the CTA landing seat — `[→]` after `{DOCK-ENGINE @ T8, BLACK-BAR @ T3, ADAPTIVE-RECONCILE @ T5}`; a CONSUMING seam, box-inviolate — no `dockMorphContext`/`DOCK_SPRING` edit; before SPEEDTEST-ADOPT @ Tier 28)
+**Tier 10:** `BC.W-LIQUID-MORPH`, `BC.W-DOCK-COLLAPSED-BOTH`, `BC.W-AX-DOCK-COCKPIT`✪ (the `cockpit` 2.75rem preset — `[→]` after `{DOCK-ENGINE @ T8, DOCK-ARBITRARY @ T9, DOCK-COLLAPSED-BOTH @ T10}`; before SPEEDTEST-ADOPT @ Tier 28)
 **Tier 11:** `BC.W-DOCK-STACK-RAIL`
 **Tier 11.5 (Band 13 dock-search + scroll — after Band-2 dock @ T8-11 + Band 14 @ T2.5):** `BC.W-SCROLL-TRIGGER`✧ (FIRST of Band 13, no deps) → `BC.W-SCROLL-CHROME` → `BC.W-DOCK-SEARCH`✧✧ (the LARGEST; composes `{DOCK-ENGINE @ T8, VIRTUAL-WINDOW @ T2.5, TOC-RECONCILE @ T2.5, FUZZY-HARDEN @ T2.5, SCROLL-CHROME, SCROLL-TRIGGER}`; box-inviolate)
 **Tier 12 (Band 3 root):** `BC.W-TABS-IOS`
@@ -446,14 +454,14 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 **Tier 16 (Band 4 per-viz [‖]):** `BC.W-VIZ-AURORA`, `BC.W-GOOBLOB-PLAIN`, `BC.W-VIZ-DOTFLOW`, `BC.W-VIZ-CONCENTRIC`, `BC.W-VIZ-FOURIER`, `BC.W-VIZ-CONSTELLATION`, `BC.W-VIZ-WATERCOLOR`, `BC.W-VIZ-PAPERGRID`, `BC.W-VIZ-DOTMATRIX`
 **Tier 17 (per-viz dependents):** `BC.W-GOOBLOB-MEATBALL` (after PLAIN), `BC.W-VIZ-HYBRID` (after MEATBALL + DOTMATRIX)
 **Tier 20.5 (the page-leg dependent — pulled below Tier 20 so the slot honors its own annotation):** `BC.W-GRID-SIMPLE` — Tier 17 (recipe rhythm: the static `--grid-*` twin beside `BC.W-VIZ-PAPERGRID`) / Tier 20+ (page leg: its `**Sequence:**` is AFTER `BC.W-PAGE-CHASSIS`, so it lands here, after the Tier-20 chassis). The two legs are the recipe/page split §1/§4 already record; the wave linearizes at Tier 20.5 to respect the binding page-leg edge.
-**Tier 18 (Band 6 controls):** `BC.W-RADIO-FIX` → `BC.W-DROPDOWN-FIX`, `BC.W-CONTROL-SMOOTH` → `BC.W-CONFIG-RIGHT`
+**Tier 18 (Band 6 controls):** `BC.W-RADIO-FIX` → `BC.W-DROPDOWN-FIX`, `BC.W-CONTROL-SMOOTH` → `BC.W-CONFIG-RIGHT` · (CROSS-REPO-ABSORB feedback leaf, `[‖]` with the controls — disjoint surface) `BC.W-AX-COMPLETION-SEAL`✪ (the earned-GOLD seal — `[→]` after `{BC.W-AX-METAL-GLOW @ T5.5, GLASS-IDENTITY @ T4}`; the wave's own band is "6 — feedback"; before SPEEDTEST-ADOPT @ Tier 28)
 **Tier 19 (Band 5 prune):** `BC.W-PAGE-PRUNE`
 **Tier 20 (Band 5 chassis):** `BC.W-PAGE-CHASSIS`
 **Tier 21 (Band 5 fan-out):** `BC.W-PAGE-HIERARCHY`, `BC.W-HERO-AUDACIOUS`, `BC.W-PADDING-CANON`
 **Tier 22 (Band 5 content + the containers seam):** `BC.W-CODE-BLOCKS`, `BC.W-GHOST-DASHED`, `BC.W-SEPARATOR-FIX`, `BC.W-COMPOSITIONS-HERO`, `BC.W-EXPANDABLE-PART`◊◊ (the AR-7 chrome-hook seam — after `{GLASS-IDENTITY @ T4, GLASS-PRUNE @ T6, PADDING-CANON @ T21}`; BEFORE `BC.W-ATLAS-ASK` @ Tier 28)
 **Tier 23 (Band 4 suite gate — conforms to CONFIG-RIGHT @ Tier 18, hosts PAGE-CHASSIS @ Tier 20):** `BC.W-VIZ-CONFIGURATOR-SUITE`
 **Tier 24 (Band 9):** `BC.W-STORYBOOK-META`
-**Tier 25 (Band 11 perf — measures the settled floor):** `BC.W-CSS-CRITICAL`, `BC.W-PERF-PRODUCER` → `BC.W-LIGHTHOUSE`
+**Tier 25 (Band 11 perf — measures the settled floor):** `BC.W-CSS-CRITICAL`, `BC.W-PERF-PRODUCER` → `BC.W-LIGHTHOUSE` · (CROSS-REPO-ABSORB perf leaf, `[‖]` — a payload move on the repaired surface) `BC.W-AX-BP-LAZY`✪ (the BorderProgress value.js-behind-`import()` boundary — `[→]` after the BorderProgress visual repair; before SPEEDTEST-ADOPT @ Tier 28)
 **Tier 26 (Band 10 deck BUILD):** `BC.W-DECK`
 **Tier 27 (TERMINAL, user-gated):** `BC.W-CUT`
 **Tier 28 (EXECUTION-phase adopt sweep, post-cut [‖]):** `BC.W-SPEEDTEST-ADOPT`, `BC.W-FOURIER-ASK`, `BC.W-ATLAS-ASK`
@@ -501,8 +509,8 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 > paint, so it floats after T4 and before its threads. `CONTROL-CUSTOM`/`OVERLAY-UNIFORM` are `[‖]` after the
 > census (disjoint registers); they run `[‖]` `BC.W-DESHADCN @ T5.5` (disjoint axis — the customization axis vs
 > the shadcn-neutral token reskin). Band 12 is a leaf-cluster — nothing earlier depends on it (the cut reads
-> `proof:customizability-census` GREEN as a close oracle). The C3 owner `BC.W-SEARCH-CUSTOM` is un-authored
-> (no spec ⇒ not a DAG node; challenge-pass author/re-route) — its absence does not affect acyclicity. §3 R9.
+> `proof:customizability-census` GREEN as a close oracle). The C3 owner `BC.W-SEARCH-CUSTOM` is AUTHORED
+> (iter22 — a pure leaf `[‖]` after the census, its `proof:search-custom` mint depended-on by nothing; placed at Tier 7.7 beside the threads) — it does not affect acyclicity. §3 R9.
 >
 > ✧/✧✧ `BC.W-SCROLL-TRIGGER → BC.W-SCROLL-CHROME → BC.W-DOCK-SEARCH` (Band 13) is placed at Tier 11.5 because
 > `DOCK-SEARCH` (✧✧, the LARGEST) composes the Band-2 dock morph (`BC.W-DOCK-ENGINE @ T8` — box-inviolate, no
@@ -512,8 +520,19 @@ linearization with NO wave appearing before a predecessor is the constructive pr
 > one-directional fence) → no back-edge into the dock or fuzzy waves. §3 R8.
 
 **ACYCLICITY VERDICT: the graph is a DAG (with the `SPRING-EASE → DOCK-ENGINE` edge EXPLICIT + the 9
-FEATURE-BAND waves added).** A complete 84-wave linearization exists with every wave after all its
-predecessors (above). The nine cross-band reconciles (§3 R1-R9 — incl. the explicit `SPRING-EASE →
+FEATURE-BAND waves + the iter22 `BC.W-SEARCH-CUSTOM` + the iter23 CROSS-REPO-ABSORB 11 added).** A complete
+96-wave linearization exists with every wave after all its predecessors (above; the 11 absorbed waves ✪
+slot into their thematic tiers — METAL-GLOW/ACCENT-TONE @ T5.5, SPLIT-CHARS/MOTION-PRESETS @ T7′,
+METRIC-HOVER/FOURIER-DECIDES @ T7.7, DOCK-CTA-SEAT @ T9, DOCK-COCKPIT @ T10, COMPLETION-SEAL @ T18,
+BP-LAZY @ T25; LIQUIDHOVER-AUTOARM is STRUCK — no node). **The 11 absorb edges are each one-directional
+forward consumes — every absorbed wave depends ONLY on already-earlier tiers and is depended-on by
+nothing in-repo except the post-cut adopt sweep @ Tier 28** (METAL-GLOW/ACCENT-TONE ← `{GLASS-IDENTITY @ T4, BLACK-BAR @ T3}`;
+METAL-GLOW → COMPLETION-SEAL @ T18 + VISUAL-RECONCILE @ T15 forward; SPLIT-CHARS/MOTION-PRESETS ← MOTION-ONE-CLOCK/SPRING-EASE @ T7′
+(MOTION-PRESETS's `once`-latch is a file-disjoint COORDINATE with SCROLL-TRIGGER @ T11.5, not a build edge);
+METRIC-HOVER/FOURIER-DECIDES ← `{GLASS-IDENTITY @ T4}` / the shipped `proof:consumer-staleness` (no in-repo predecessor);
+DOCK-CTA-SEAT ← `{DOCK-ENGINE @ T8, BLACK-BAR @ T3, ADAPTIVE-RECONCILE @ T5}` box-inviolate; DOCK-COCKPIT ← `{DOCK-ENGINE @ T8, DOCK-ARBITRARY @ T9, DOCK-COLLAPSED-BOTH @ T10}`;
+COMPLETION-SEAL ← `{METAL-GLOW @ T5.5, GLASS-IDENTITY @ T4}`; BP-LAZY ← the BorderProgress repair @ Tier 16-class — each `[‖]` perf); none depends
+on a later tier → no back-edge, the 11 add no cycle). The nine cross-band reconciles (§3 R1-R9 — incl. the explicit `SPRING-EASE →
 DOCK-ENGINE` consume-after-mint edge, the R7 `DESHADCN →` reskin-owner / R6 `SELECTION-CARD →
 VISUAL-RECONCILE` / `EXPANDABLE-PART → ATLAS-ASK` ATLAS-FOLD edges, AND the R8 `{DOCK-ENGINE + Band-14
 abstractions} → DOCK-SEARCH` / R9 `{CUSTOMIZABILITY-CENSUS + GLASS-IDENTITY} → CONTROL-CUSTOM/OVERLAY-UNIFORM`
@@ -527,8 +546,10 @@ Band-14 abstractions depend only on Band 0 → land early @ T2.5, before the Ban
 Band-12 census depends only on GLASS-IDENTITY → @ T7.7, its threads `[‖]` after; DOCK-SEARCH is a pure SINK
 that depends on the dock + the abstractions + the scroll cluster, depended-on by nothing in-repo → @ T11.5
 after all parents). No back-edge closes a loop (MOTION-ONE-CLOCK stays a SOURCE audit, never a hard dock
-predecessor — see §2 Band 7; the `BC.W-SEARCH-CUSTOM` C3 owner is un-authored — no spec ⇒ no edges ⇒ no
-effect on acyclicity). **No cycle found — no gapsFound BLOCKER on the DAG axis.**
+predecessor — see §2 Band 7; the `BC.W-SEARCH-CUSTOM` C3 owner is now AUTHORED @ Tier 7.7 — a pure leaf,
+its `proof:search-custom` mint depended-on by nothing, no effect on acyclicity; the 11 CROSS-REPO-ABSORB
+waves ✪ are forward leaves/consumes, each depended-on only by the post-cut Tier-28 adopt sweep). **No
+cycle found — no gapsFound BLOCKER on the DAG axis (Kahn-orderable, 96 waves).**
 
 ---
 
@@ -547,7 +568,7 @@ in one batch; the `[→]` waves are serial-after their predecessor.
 | Band 1 fan | `GLASS-PRUNE`, `GLASS-LEGIBILITY-MEASURED` (2 `[‖]`) | after ADAPTIVE-RECONCILE |
 | Band 1 ATLAS-FOLD | `DESHADCN`, `SELECTION-CARD`, `GLASS-GLOW-FIX` (3 `[‖]`) | after GLASS-IDENTITY + BLACK-BAR (mint `DESHADCN`'s census EARLY so it precedes the reskin owners) |
 | Band 1 specimens | `DIALOG-GLASS`, `BUTTON-GLASS-IOS` (2 `[‖]`) — consume the `DESHADCN` census verdict | after GLASS-PRUNE (+ `DESHADCN` census) |
-| Band 12 customizability (CROSS-CUTTING) | `CUSTOMIZABILITY-CENSUS` (born-RED) → `CONTROL-CUSTOM`, `OVERLAY-UNIFORM` (`[‖]` — flip C1/C2 GREEN) | after Band-1 GLASS-IDENTITY; ‖ `DESHADCN` (disjoint axis) · *(C3 owner `SEARCH-CUSTOM` un-authored — challenge-pass)* |
+| Band 12 customizability (CROSS-CUTTING) | `CUSTOMIZABILITY-CENSUS` (born-RED) → `CONTROL-CUSTOM`, `OVERLAY-UNIFORM`, `SEARCH-CUSTOM` (`[‖]` — flip C1/C2/C3 GREEN) + the CROSS-REPO-ABSORB `METRIC-HOVER`/`FOURIER-DECIDES` (`[‖]` leaves) | after Band-1 GLASS-IDENTITY; ‖ `DESHADCN` (disjoint axis) · *(C3 owner `SEARCH-CUSTOM` AUTHORED iter22)* |
 | Band 7 motion | `MOTION-ONE-CLOCK` → `SPRING-EASE` → `AFFORDANCE-MAP` / `TUNABLE-ANIM` (chain; AFFORDANCE/TUNABLE `[‖]` after) | after the Band-2/3 consumers DECLARE (SOURCE audit); mint early |
 | Band 2 fan | `DOCK-ARBITRARY`, `DOCK-VERTICAL-FIX`, `DOCK-SHRINK-BLUR` (3 `[‖]`) | after DOCK-ENGINE |
 | Band 2 tail | `LIQUID-MORPH`, `DOCK-COLLAPSED-BOTH` (2 `[‖]`) → `DOCK-STACK-RAIL` | after the fan |
@@ -592,12 +613,14 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 
 ### Band 1 — Glass identity
 - **Gates**: `proof:black-bar` (`BLACK-BAR`); `proof:glass-identity` + `proof:adaptive-glass-live` (`GLASS-IDENTITY`); `proof:adaptive-observer` + `proof:adaptive-reconcile` (`ADAPTIVE-RECONCILE`); `proof:adaptive-glass-live` + `proof:glass-legibility` (`GLASS-LEGIBILITY-MEASURED`); `proof:glass-prune` + `proof:glass-panel-tiers` + `proof:glass-cal` + `proof:no-dual-path` + `proof:lineage-probe` + `proof:claude-structure-sync` + `proof:fading-scroll` + `proof:subpath-enumeration` (`GLASS-PRUNE`); `proof:dialog-glass` (`DIALOG-GLASS`); `proof:button-glass` + `proof:glass-cal` + `proof:glass-card-tiers` + `proof:glass-cohesion` (`BUTTON-GLASS-IOS`); **`proof:no-shadcn-default` + `proof:glass-cohesion` (`DESHADCN` — the reskin-DNA invariant + the per-component census; born-RED on the four HEAD residuals → GREEN as the per-band reskin owners land); `proof:selection-card` + `proof:glass-accent` + `proof:metal-shimmer` (`SELECTION-CARD` — the I5 `<Card variant="selection">` composing the BB-BUILT A-2/A-3 seams); `proof:glass-glow-fix` (`GLASS-GLOW-FIX` — the A-8 unbounded-radial-halo leak-class structural close).**
-- **π**: `black-bar`, `glass-identity`, `glass-legibility`, `glass-prune`, `dialog-glass`, `button-glass`, **`no-shadcn-default`, `selection-card`, `glass-glow-fix`** (each `.spec.ts`).
+- **CROSS-REPO-ABSORB gates (Band 1)**: `proof:metal-shimmer` (`BC.W-AX-METAL-GLOW` — extended in place: the `--metal-glow-*` gold catch-light on the `.metal-{gold,silver,bronze}` family, born-RED on the glow-absent tree → GREEN; the silver/bronze quad byte-fenced); `proof:accent-tone` + `proof:single-color-core` + `proof:vueuse-free-root` (`BC.W-ACCENT-TONE` — the contrast-floored 3-channel register's idle ≥3:1 floor + the value.js `safeAccentColor` math-source-not-forked + the `<SelectableChip>` ≥2-consumer bar + the root-barrel-safe leaf). (`BC.W-AX-LIQUIDHOVER-AUTOARM` is STRUCK — its re-verify is `proof:glass-cohesion`'s liquid-hover arm, no new gate; the live paint rides VISUAL-RECONCILE.)
+- **π**: `black-bar`, `glass-identity`, `glass-legibility`, `glass-prune`, `dialog-glass`, `button-glass`, **`no-shadcn-default`, `selection-card`, `glass-glow-fix`** (each `.spec.ts`), **`metal-shimmer` (with the glow), `accent-tone`** (CROSS-REPO-ABSORB).
 - **Exit criterion**: the warm-cream translucent base reads at root (grey-slab GONE), the rim is a catch-light (oklab-L > 0.8 on the top edge), the AA bar holds over the composited plate; NOTHING reads as the generic shadcn-vue neutral chrome (every plate glass/paper, every focus ring the warm `--focus-ring-shadow`); the selection card reads warm-cream glass + data-hue rim + earned metal-shimmer-on-selected (rim-not-fill); no spurious unbounded radial halo over-paints any glass/viz surface; `proof:ba-gestalt` glass-band verdicts GREEN. **GATES Band 2/3/4/5** (they all read the fixed glass; the per-band reskin owners consume the `DESHADCN` census verdict).
 
 ### Band 2 — Dock
 - **Gates**: `proof:dock-engine` + `proof:no-layout-animation` + `proof:spring-tokens-synced` (`DOCK-ENGINE`); `proof:dock-arbitrary` + `proof:no-layout-animation` (`DOCK-ARBITRARY`); `proof:dock-vertical-clickable` (`DOCK-VERTICAL-FIX`); `proof:dock-collapsed-both` (`COLLAPSED-BOTH`); `proof:dock-stack-rail` + `proof:no-layout-animation` (`DOCK-STACK-RAIL`); `proof:dock-shrink-blur` (`SHRINK-BLUR`); `proof:liquid-morph` + `proof:no-layout-animation` (`LIQUID-MORPH`).
-- **π**: `dock-engine`, `dock-arbitrary`, `dock-vertical-clickable`, `dock-collapsed-both`, `dock-stack-rail`, `dock-shrink-blur`, `liquid-morph`.
+- **CROSS-REPO-ABSORB gates (Band 2)**: `proof:dockmorph-cta` + `proof:no-layout-animation` (`BC.W-AX-DOCK-CTA-SEAT` — the `[data-cta-pending]` seat + the kf-substrate compositor-only receive + the byte-fence (no `dockMorphContext`/`DOCK_SPRING` edit) + the `setPending`/`clearPending`/`/dock` re-export + a self-test bite); `proof:dock-cockpit` + `proof:dock-unify` (`BC.W-AX-DOCK-COCKPIT` — the `[data-preset="cockpit"]` fixed `2.75rem` floor + `--dock-label-ratio` + the FEATURE_EXEMPT census preserved).
+- **π**: `dock-engine`, `dock-arbitrary`, `dock-vertical-clickable`, `dock-collapsed-both`, `dock-stack-rail`, `dock-shrink-blur`, `liquid-morph`, **`dockmorph-cta`, `dock-cockpit`** (CROSS-REPO-ABSORB).
 - **Exit criterion**: the morph reads buttery (the JS scalar's sampled envelope ≥0.40 by clock midpoint, no ~16% plateau), the vertical dock is CLICKABLE, the morph is NEVER white/invisible, the rail is to-spec; `proof:no-layout-animation` GREEN (compositor-only, no resting will-change); `proof:ba-gestalt` dock verdict GREEN. **GATES `SAFARI-WEBGL` + `DECK` + `PERF-PRODUCER`.**
 
 ### Band 3 — Tabs + underline
@@ -619,13 +642,15 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 
 ### Band 6 — Controls
 - **Gates**: `proof:radio-fix` (`RADIO-FIX`); `proof:dropdown-fix` + `proof:menu-glass` (`DROPDOWN-FIX`); `proof:control-smooth` + `proof:animation-coherence` + `proof:no-layout-animation` (`CONTROL-SMOOTH`); `proof:config-right` + `proof:emission` (`CONFIG-RIGHT`). **Plus `proof:bc-fold-ledger` (the close oracle Band 6 gates on).**
-- **π**: `radio-fix`, `dropdown-fix`, `control-smooth`, `config-right`.
-- **Exit criterion**: radios toggle on every input path with a clear glass selected-state, the dropdown opens no-shift+aligned with the dot reading, controls respond quick (no lag) with rounded borders, every configurator is controls-on-the-RIGHT two-column on desktop.
+- **CROSS-REPO-ABSORB gate (feedback surface, rides the Band-6 slot)**: `proof:completion-seal` + `proof:colocation` + `proof:subpath-enumeration` + `proof:claude-structure-sync` + `proof:no-layout-animation` (`BC.W-AX-COMPLETION-SEAL` — the `/completion-seal` subpath + the colocation dir + the earned-gold draw-on + the 4 `@property` motion tokens reading `--phase-complete-color`/`--color-gold` + the compositor-only floor + a self-test bite).
+- **π**: `radio-fix`, `dropdown-fix`, `control-smooth`, `config-right`, **`completion-seal`** (CROSS-REPO-ABSORB).
+- **Exit criterion**: radios toggle on every input path with a clear glass selected-state, the dropdown opens no-shift+aligned with the dot reading, controls respond quick (no lag) with rounded borders, every configurator is controls-on-the-RIGHT two-column on desktop; the earned-gold completion seal draws on the gold register (reading the consumer-overridable `--phase-complete-color`).
 
 ### Band 7 — Motion canon
 - **Gates**: `proof:motion-one-clock` + `proof:animation-coherence` + `proof:no-layout-animation` + `proof:offscreen-pause` + `proof:precept-current` (`MOTION-ONE-CLOCK`); `proof:spring-ease` + `proof:spring-tokens-synced` (`SPRING-EASE`); `proof:affordance-map` + `proof:glass-cohesion` + `proof:no-layout-animation` + `proof:precept-current` (`AFFORDANCE-MAP`); `proof:tunable-anim` + `proof:animation-coherence` (`TUNABLE-ANIM`).
-- **π**: `motion-one-clock`, `spring-ease`, `affordance-map`, `tunable-anim`.
-- **Exit criterion**: keyframes.js is the ONE source+clock (no ad-hoc setTimeout), every spring fills its clock (90%-travel in [0.55,0.70] not 0.16), the `press` register is minted (0.15/0.86) + wired, affordances are baked into every interactive element; `proof:spring-tokens-synced` GREEN (the `dock` row byte-frozen). **R1/R5 mints land here — read by Bands 1/3/6.**
+- **CROSS-REPO-ABSORB gates (Band 7 — the fourier #5/#6/#8 folds)**: `proof:split-chars` (`BC.W-SPLIT-CHARS` — the `useCharStagger`/`<SplitChars>` per-glyph split with `--char-index`/`--char-total` + the MANDATORY accessible full-text label + the engine-free `/motion-core` placement + the ≥2-consumer bar); `proof:motion-presets` + `proof:animation-coherence` + `proof:spring-tokens-synced` (`BC.W-MOTION-PRESETS` — the convergence-reveal preset (the `gentle`-reuse-unless-distinct fence) + the `[data-scroll-reveal]` `once` latch reusing the shipped IntersectionObserver `unobserve` machinery, the continuous default untouched).
+- **π**: `motion-one-clock`, `spring-ease`, `affordance-map`, `tunable-anim`, **`split-chars`, `motion-presets`** (CROSS-REPO-ABSORB).
+- **Exit criterion**: keyframes.js is the ONE source+clock (no ad-hoc setTimeout), every spring fills its clock (90%-travel in [0.55,0.70] not 0.16), the `press` register is minted (0.15/0.86) + wired, affordances are baked into every interactive element; the per-glyph split reads HAND-staggered with the accessible label intact + the scroll-reveal-`once` latches without re-firing; `proof:spring-tokens-synced` GREEN (the `dock` row byte-frozen). **R1/R5 mints land here — read by Bands 1/3/6.**
 
 ### Band 8 — Safari (executed at the Band-4 head)
 - **Gates**: `proof:safari-webgl` + `proof:visual-runner` (`SAFARI-WEBGL`).
@@ -647,8 +672,9 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 
 ### Band 11 — PERFORMANCE
 - **Gates**: `proof:css-critical` + `proof:lighthouse` + `proof:resolution` (`CSS-CRITICAL`); `proof:lighthouse` + `proof:live-verified-ledger` + `proof:no-layout-animation` (`LIGHTHOUSE`); `proof:perf-producer` + `proof:gpu-substrate-single` + `proof:webgl-substrate-single` + `proof:offscreen-pause` + `proof:live-verified-ledger` + `proof:ba-gestalt` (`PERF-PRODUCER`).
-- **π**: `css-critical`, `perf-producer`.
-- **Exit criterion**: the `/styles` critical/deferred split holds over the SETTLED cascade (FOUC-safe), the never-run Lighthouse score RUNS + re-pins via `--rebaseline`, the four producer fixes survive the Band-2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap, density glyph), the headed-GPU runtime π GREEN. **Measures the SETTLED floor — GATES the CUT's `proof:lighthouse`.**
+- **CROSS-REPO-ABSORB gate (Band 11)**: `proof:bp-lazy` + `proof:single-color-core` + `proof:vueuse-free-root` (`BC.W-AX-BP-LAZY` — the eager critical-path graph reaches ZERO of the value.js color-math leaf via the shared `critical-path-walk.mjs` precedent; `spectrumStops` stays sync; the default `var(--…)` ramp value.js-free; the dynamic-`import()` boundary internal to the `border-progress` chunk + a self-test bite).
+- **π**: `css-critical`, `perf-producer`, **`bp-lazy`** (CROSS-REPO-ABSORB — the eager-graph weight assert).
+- **Exit criterion**: the `/styles` critical/deferred split holds over the SETTLED cascade (FOUC-safe), the never-run Lighthouse score RUNS + re-pins via `--rebaseline`, the four producer fixes survive the Band-2/4 rebuilds (dock contain/deferReposition, GooBlob one-canvas+dispose, aurora sub-2×-DPR cap, density glyph), the headed-GPU runtime π GREEN, the BorderProgress eager graph drops the value.js color-math leaf (the speedtest results-card first-paint chunk stays value.js-free). **Measures the SETTLED floor — GATES the CUT's `proof:lighthouse`.**
 
 ### Band 14 — Latex-paper abstractions (EARLY PRIMITIVES)
 - **Gates**: `proof:virtual-window` + `proof:resolution` (`VIRTUAL-WINDOW` — the primitive exists ONCE on `/virtual` + the publication binary + the ≥2-consumer evidence + the no-second-windowing self-test bite); `proof:toc-reconcile` + `proof:resolution` + `proof:webgl-substrate-single` (`TOC-RECONCILE` — the full sidebar family exports incl. the three new leaves + the data-toc-id auto-scroll + the IO+scroll-fallback deepest-visible self-test); `proof:fuzzy-harden` (`FUZZY-HARDEN` — the VSCode-scorer arms intact + the prefix-cache + multi-token AND + the dock-composable-ready surface + the `useAsyncSearch` ≥2-consumer-OR-BOOK decision).
@@ -657,8 +683,10 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
 
 ### Band 12 — Customizability + golden-defaults (CROSS-CUTTING)
 - **Gates**: `proof:customizability-census` + `proof:no-shadcn-default` + `proof:glass-cohesion` + `proof:dock-normalize` (the EXACTLY-ONE-LIST census precedent) + `proof:precept-sync` + `proof:ba-gestalt` (`CUSTOMIZABILITY-CENSUS` — the bar + C1-C4 born-RED + the per-component census + design-idioms §13 + a self-test bite per assert); `proof:customizability-census` (C1 GREEN) + `proof:control-tokens` + `proof:surface-axis` (`CONTROL-CUSTOM` — the input-register size axis); `proof:customizability-census` (C2 GREEN) + `proof:surface-axis` + `proof:binding-verification` (`OVERLAY-UNIFORM` — the overlay surface + φ-pad threads).
-- **π**: `customizability` (a bare component = golden default; a size/tier/surface override visibly retunes; a `:root` token override cascades into the magnitude, both modes — the captured-paint truth a source gate cannot prove).
-- **Exit criterion**: every published component appears on EXACTLY ONE census list (anti-smuggle — a synthetic bare new component reds), the input register reads the `--control-h-*`/`--control-text` cohort (no bare `text-sm`), every floating overlay carries the `surface` axis + the φ `--overlay-pad-*` ladder, the C1/C2 census asserts flip GREEN. **C3 (`BC.W-SEARCH-CUSTOM`) is the un-authored coverage gap — the challenge pass authors/re-routes it.** Band 12 is a leaf-cluster; `proof:customizability-census` GREEN is a CUT close oracle (the four golden-default asserts).
+- **`proof:customizability-census` (C3 GREEN) + `proof:search-custom` + `proof:surface-axis` + `proof:menu-glass` (`BC.W-SEARCH-CUSTOM` — the iter22-authored C3 owner: the SearchBar/FuzzySearch size/surface/variant axes + the `.glass-menu-row` result register + the φ overlay-pad modal + the `!important`→CVA fold).**
+- **CROSS-REPO-ABSORB gates (Band 12)**: `proof:metric-hover` + `proof:no-layout-animation` (`BC.W-AX-METRIC-HOVER` — the `.metric-badge:hover` value-lift, compositor-only); `proof:accent-tone` (`BC.W-ACCENT-TONE` — the cross-cutting Band-1/12 register, see Band 1); `proof:fourier-decides` + `proof:tier-class-staleness` + `proof:consumer-staleness` + `proof:crossrepo-asks` + `proof:fourier-reconcile` + `proof:precept-current` (`BC.W-FOURIER-DECIDES` — the two BOOK promotion-trigger records + the tier-class-staleness gate extension + the no-silent-drop handshake).
+- **π**: `customizability` (a bare component = golden default; a size/tier/surface override visibly retunes; a `:root` token override cascades into the magnitude, both modes — the captured-paint truth a source gate cannot prove), **`metric-hover`** (the badge value-lift, both modes — CROSS-REPO-ABSORB; the BOOK rows in FOURIER-DECIDES carry no π by construction).
+- **Exit criterion**: every published component appears on EXACTLY ONE census list (anti-smuggle — a synthetic bare new component reds), the input register reads the `--control-h-*`/`--control-text` cohort (no bare `text-sm`), every floating overlay carries the `surface` axis + the φ `--overlay-pad-*` ladder, the C1/C2/C3 census asserts flip GREEN (C3 via `BC.W-SEARCH-CUSTOM`, iter22-authored). Band 12 is a leaf-cluster; `proof:customizability-census` GREEN is a CUT close oracle (the four golden-default asserts).
 
 ### Band 13 — Dock-search + scroll-system
 - **Gates**: `proof:scroll-trigger` (`SCROLL-TRIGGER` — the rAF-coalesced reader, dual-path single-writer 0-listeners-on-native, discrete onCross + continuous progress, PRM-snap); `proof:scroll-chrome` + `proof:no-layout-animation` (`SCROLL-CHROME` — dual-path single-writer, flip-delta + snap-midpoint, compositor-only, persistent-default, + the planted-height-animation/always-collapse-default self-test bites); `proof:dock-search` + `proof:ba-gestalt` (`DOCK-SEARCH` — the searchable register morphs via the SHARED metaball + `--dock-morph-t` (no second engine, no `dockMorphContext` edit), persistent-default, the field consumes FuzzySearch + the results consume `useVirtualSectionWindow`, the AA-legibility assert + a self-test bite).
@@ -704,8 +732,11 @@ surface verdicts are GREEN on a FRESH capture. Per-band gate sets read off each 
    Band 0, ‖ visual; they are the PRIMITIVES Band-13 dock-search composes), Band 12 customizability is
    cross-cutting (after Band-1 glass; `proof:customizability-census` is a CUT close oracle), Band 13
    dock-search lands LATE (after Band-2 dock + Band 14; box-inviolate). `BC.W-SEARCH-CUSTOM` (C3 owner)
-   is the un-authored coverage gap for the challenge pass.
-10. **The DAG is ACYCLIC** (§4) — a complete 84-wave linearization exists; the nine cross-band
+   is AUTHORED (iter22). **The CROSS-REPO-ABSORB (iter23) Bands 15/16 interleave too** — the 11 absorbed
+   waves slot into their thematic tiers (speedtest-AX gold/seat/cockpit/seal/badge/bp-lazy with Bands 1/2/6/11/12,
+   the fourier/kf motion leaves with Band 7, fourier-decides as a Band-12/14 process leaf) — each a forward
+   leaf/consume depended-on only by the post-cut adopt sweep.
+10. **The DAG is ACYCLIC** (§4) — a complete 96-wave linearization exists; the nine cross-band
     reconciles (§3 R1-R9, incl. the explicit `SPRING-EASE → DOCK-ENGINE` consume-after-mint, the
     ATLAS-FOLD `DESHADCN →` reskin-owner / `SELECTION-CARD → VISUAL-RECONCILE` / `EXPANDABLE-PART → ATLAS-ASK`
     edges, AND the feature-band `{DOCK-ENGINE + Band-14} → DOCK-SEARCH` / `{CENSUS + GLASS-IDENTITY} →

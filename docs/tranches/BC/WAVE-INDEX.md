@@ -32,7 +32,7 @@
 > planning docs.** (This closes the literal-rule contradiction CHALLENGE-2 named — the substance is
 > benign, every drifted name is in the drift map.)
 >
-> **84 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
+> **96 wave specs on disk** (`ls docs/tranches/BC/waves/*.md`) — the iteration-2 PLAN fan-out's 66 +
 > iteration-4 HARDEN's 4 (`BC.W-VISUAL-RECONCILE` + the Band-11 perf trio `BC.W-CSS-CRITICAL`/
 > `BC.W-LIGHTHOUSE`/`BC.W-PERF-PRODUCER` — the CHALLENGE-1 BLOCKER 3/4/5/7 + the un-owned-perf-chronic
 > + the buttons-interaction MAJOR closed) + iteration-5 ATLAS-FOLD's 5 (`BC.W-DESHADCN` reka=behavior/
@@ -40,17 +40,36 @@
 > variant="selection">` (the ONE new Atlas component), `BC.W-GLASS-GLOW-FIX` the A-8 giant-radial-glow root
 > defect, `BC.W-EXPANDABLE-PART` the AR-7 `::part()`/named-slot expand-chrome seam, `BC.W-DEMO-COPY-PRUNE`
 > the demo-content de-jargon — the de-shadcn/Atlas-fold re-open; `DESHADCN-BRAINSTORM.md`) +
-> **iteration-6 FEATURE-BAND's 9** (the new Bands 12/13/14, fanned out from `research/feat/WAVE-IMPACTS-FEAT.md`):
+> **iteration-6 FEATURE-BAND's 10** (the new Bands 12/13/14, fanned out from `research/feat/WAVE-IMPACTS-FEAT.md`;
+> the iteration-6 fan-out's 9 + the CHALLENGE-pass authored `BC.W-SEARCH-CUSTOM` — the C3 owner the
+> Name-drift map below records as the resolved coverage gap):
 > **Band 12 customizability+golden-defaults** — `BC.W-CUSTOMIZABILITY-CENSUS` (the binding "fully customizable
 > with golden defaults" bar + `proof:customizability-census`), `BC.W-CONTROL-CUSTOM` (the shared control
 > size/tier axis onto the input register), `BC.W-OVERLAY-UNIFORM` (the `surface` + φ overlay-pad ladder on
-> every floating overlay); **Band 13 dock-search+scroll-system** — `BC.W-SCROLL-TRIGGER` (the one rAF-coalesced
+> every floating overlay), `BC.W-SEARCH-CUSTOM` (the SearchBar/FuzzySearch first-principles customization +
+> glassify surface — size/surface/variant axes + the `.glass-menu-row` result register + the φ overlay-pad
+> modal + the `variant="bare"/"floating"` rung deleting the `!important`-fighting-CVA escape; flips
+> `proof:customizability-census` C3 GREEN); **Band 13 dock-search+scroll-system** — `BC.W-SCROLL-TRIGGER` (the one rAF-coalesced
 > scroll-event reader), `BC.W-SCROLL-CHROME` (the shrink/opacity/snap scroll-driven chrome behaviors),
 > `BC.W-DOCK-SEARCH` (the DOCK as native dynamic-search-bar, subsuming the words SearchBar); **Band 14
 > latex-paper abstractions** — `BC.W-VIRTUAL-WINDOW` (the homecoming re-mint of the v1.0-retired
 > virtualized-section-windowing), `BC.W-TOC-RECONCILE` (the 3-way ToC-tracking fork reconciled onto
 > glass-ui/sidebar + the three missing leaves), `BC.W-FUZZY-HARDEN` (harden the canonical client fuzzy
 > surface for the dock-wire + the `useAsyncSearch` no-contrivance DECISION).
+> + **iteration-7 CROSS-REPO-ABSORB's 11** (the new Bands 15/16 — the three cross-repo intake packets:
+> speedtest-AX Band-15 + keyframes.js-M + fourier-analysis-M Band-16; the absorb agents wrote the disjoint
+> new wave files, this index re-indexes them). **Band 15 speedtest-AX absorption (7 waves)** — `BC.W-AX-METAL-GLOW`
+> (the gold catch-light → Band 1), `BC.W-AX-LIQUIDHOVER-AUTOARM` (STRUCK-already-ships, the §6 re-verify → Band 1),
+> `BC.W-ACCENT-TONE` (the 3-channel tonal-accent register + `<SelectableChip>` → Band 1/12; ALSO a Band-16/fourier
+> fold), `BC.W-AX-DOCK-CTA-SEAT` (the CTA landing seat + `/dock` re-export → Band 2), `BC.W-AX-DOCK-COCKPIT`
+> (the `cockpit` 2.75rem preset → Band 2), `BC.W-AX-COMPLETION-SEAL` (the earned-GOLD seal → Band 6),
+> `BC.W-AX-METRIC-HOVER` (the metric-badge lift → Band 12), `BC.W-AX-BP-LAZY` (the BorderProgress lazy-import
+> boundary → Band 11). **Band 16 cross-repo: keyframes.js + fourier-analysis (3 net-new waves + the threaded
+> folds)** — `BC.W-SPLIT-CHARS` (the `useCharStagger`/`<SplitChars>` per-glyph split → Band 7), `BC.W-MOTION-PRESETS`
+> (the convergence-reveal preset + `[data-scroll-reveal]` `once` latch → Band 7), `BC.W-FOURIER-DECIDES` (the
+> three DECIDE-or-BOOK fourier asks → Band 12/14). The keyframes.js-M asks are CONFIRMS/BOOKS threaded onto
+> existing waves (`BC.W-MOTION-ONE-CLOCK`/`BC.W-VIZ-CHOREOGRAPHY` Oscillator-republish-gated, `BC.W-PERF-PRODUCER`
+> value.js `/color` BOOK) — no net-new kf wave; the green-handshakes are `coordination/{SPEEDTEST-BC,KF-BC,FOURIER-BC}.md`.
 > `proof:bc-fold-ledger` clause F2 (decided-destination soundness) REDs the close if any disposition
 > names a wave absent from this index; clause F2.b REDs a disposition that names only a bare `Band N`
 > label with no `BC.W-*` wave-id (the band-string-rejection anti-evasion floor).
@@ -61,7 +80,7 @@
 
 ---
 
-## The 84 canonical waves
+## The 96 canonical waves
 
 | id | band | title (one-line owns) | sequence-after |
 |---|---|---|---|
@@ -143,12 +162,24 @@
 | **BC.W-CUSTOMIZABILITY-CENSUS** | 12 (customizability + golden-defaults) | the binding "fully customizable with golden defaults" bar + the structural gate `proof:customizability-census` (C1-C4) + the per-component EXACTLY-ONE-LIST census + design-idioms §13 | FIRST of Band 12; after Band 1 glass floor (BC.W-GLASS-IDENTITY); beside BC.W-DESHADCN |
 | **BC.W-CONTROL-CUSTOM** | 12 (customizability + golden-defaults) | the shared control `size?: "sm"\|"default"\|"lg"` axis reading the `--control-h-*`/`--control-text` cohort onto the input register (Input/Switch/Textarea/NumberField); flips `proof:customizability-census` C1 GREEN | after BC.W-CUSTOMIZABILITY-CENSUS + BC.W-GLASS-IDENTITY; beside BC.W-DESHADCN + BC.W-CONTROL-SMOOTH |
 | **BC.W-OVERLAY-UNIFORM** | 12 (customizability + golden-defaults) | thread the shared `surface` axis + the φ `--overlay-pad-*` ladder onto the un-threaded floating overlays (Dropdown/Select/Tooltip/ContextMenu/Command/HoverCard); flips `proof:customizability-census` C2 GREEN | after BC.W-CUSTOMIZABILITY-CENSUS + BC.W-GLASS-IDENTITY; beside BC.W-DROPDOWN-FIX + BC.W-DESHADCN |
+| **BC.W-SEARCH-CUSTOM** | 12 (customizability + golden-defaults) | the SearchBar/FuzzySearch first-principles CUSTOMIZATION + glassify surface (de-shadcn'd onto the house registers): size/surface/variant axes + token-backed icon/button/result magnitudes + the `.glass-menu-row` result register + the glass expand modal + the φ overlay-pad ladder + the `variant="bare"/"floating"` rung DELETING the `!important`-fighting-CVA escape; flips `proof:customizability-census` C3 GREEN + `proof:search-custom` | after BC.W-CUSTOMIZABILITY-CENSUS + BC.W-GLASS-IDENTITY; beside BC.W-DESHADCN; boundary-peer BC.W-DOCK-SEARCH + BC.W-FUZZY-HARDEN (the matcher byte-fenced) |
 | **BC.W-SCROLL-TRIGGER** | 13 (dock-search + scroll-system) | the robust scroll-EVENT / trigger-point system — ONE rAF-coalesced reader, discrete onCross + continuous progress, dual-path single-writer (`useScrollTrigger` on /motion-core) | FIRST of Band 13; no deps (threads the existing scroll leaves) |
 | **BC.W-SCROLL-CHROME** | 13 (dock-search + scroll-system) | the scroll-driven chrome behaviors (shrink-on-down, expand-on-up, opacity/blur-on-scroll, snap-to-state, persistent-by-default — `useScrollChrome`) | after BC.W-SCROLL-TRIGGER; before BC.W-DOCK-SEARCH |
 | **BC.W-DOCK-SEARCH** | 13 (dock-search + scroll-system) | the DOCK as native dynamic-search-bar (the iOS-27 chrome-becomes-search-field morph; subsuming the words SearchBar) — composes the dock morph + FuzzySearch + virtual-window + ToC, box-inviolate | LARGEST of Band 13; after BC.W-SCROLL-CHROME/TRIGGER + BC.W-FUZZY-HARDEN + BC.W-VIRTUAL-WINDOW + BC.W-TOC-RECONCILE + BC.W-DOCK-ENGINE |
 | **BC.W-VIRTUAL-WINDOW** | 14 (latex-paper abstractions) | the homecoming — re-mint the virtualized-section-windowing primitive RETIRED at v1.0 (the words verbatim copy returns) onto /virtual (off the root barrel); ≥2 consumers (words + dock-search) | FIRST of Band 14; after Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT |
 | **BC.W-TOC-RECONCILE** | 14 (latex-paper abstractions) | reconcile the 3-way ToC-tracking fork onto the ONE glass-ui/sidebar + ADD the three missing leaves (useScrollTo/useClickDelegate/useLazyLoader); NO re-mint, no second engine | after BC.W-VIRTUAL-WINDOW + Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT |
 | **BC.W-FUZZY-HARDEN** | 14 (latex-paper abstractions) | glass-ui/search is ALREADY the canonical client fuzzy pipeline — harden the dock-composable-ready surface + DECIDE the `useAsyncSearch` race-guard (one-directional, no scorer edit) | after Band 0; before BC.W-DOCK-SEARCH + BC.W-CUT; ‖ BC.W-VIRTUAL-WINDOW/TOC-RECONCILE |
+| **BC.W-AX-METAL-GLOW** | 15 (speedtest-AX absorption) → builds in Band 1 (glass + brand-metal) | the gold catch-light: `--metal-glow-blur`/`--metal-glow-opacity` on the BB.W-METAL-SHIMMER family (the gold reads as lit metal; an additive catch-light, no new utility) | EXTENDS BB.W-METAL-SHIMMER; after BC.W-GLASS-IDENTITY; before BC.W-AX-COMPLETION-SEAL + BC.W-VISUAL-RECONCILE + BC.W-SPEEDTEST-ADOPT |
+| **BC.W-AX-LIQUIDHOVER-AUTOARM** | 15 (speedtest-AX absorption) → Band 1 (glass) | the tier-root specular auto-arm — STRUCK-ALREADY-SHIPS (a RECORD + routing note, no build); the live re-verify rides BC.W-VISUAL-RECONCILE unit 2 | N/A (no build); the §6 out-of-scope re-verify rides BC.W-VISUAL-RECONCILE |
+| **BC.W-ACCENT-TONE** | 15 (speedtest-AX absorption) + 16 (fourier) → Band 1/12 (glass+color × customizability) | the contrast-floored 3-channel tonal-accent register (one `--tone` → idle/active/edge/ink via value.js `safeAccentColor`) + `<SelectableChip>`; folds the fourier #3 SelectableChip + #13 `--viz-amber` rebaseline | after BC.W-GLASS-IDENTITY + the no-gray OKLab floor; beside BC.W-CONTROL-CUSTOM (the `_shared/` form home) + the prior-tranche W-SUFFUSE IconChip vehicle (DISTINCT) |
+| **BC.W-AX-DOCK-CTA-SEAT** | 15 (speedtest-AX absorption) → builds in Band 2 (dock) | the CTA-receive landing SEAT: `[data-cta-pending]` partial + un-gated resting geometry + the FLIP reveal + `setPending()`/`clearPending()` on `useDockCtaReceive` + the `/dock` re-export (folds AX intake BC-W3) | after BC.W-DOCK-ENGINE + BC.W-BLACK-BAR/BC.W-ADAPTIVE-RECONCILE; a CONSUMING seam BESIDE BC.W-DOCK-ENGINE (no orchestrator edit); before BC.W-SPEEDTEST-ADOPT |
+| **BC.W-AX-DOCK-COCKPIT** | 15 (speedtest-AX absorption) → builds in Band 2 (dock) | the `cockpit` dock preset: a fixed 2.75rem control floor + `--dock-label-ratio` (closes the dock-oversize chronic with the speedtest A-9 ask; threads Gate-1 Q6) | after BC.W-DOCK-ENGINE + BC.W-DOCK-ARBITRARY/BC.W-DOCK-COLLAPSED-BOTH; beside dock/density.css; before BC.W-SPEEDTEST-ADOPT |
+| **BC.W-AX-COMPLETION-SEAL** | 15 (speedtest-AX absorption) → builds in Band 6 (feedback) | the hero-scale earned-GOLD completion seal: a one-shot gold-draw mark + 4 `@property` motion tokens reading W-PHASE-PALETTE `--phase-complete-color`/`--color-gold` (threads Gate-1 Q2; `/completion-seal` subpath) | after BC.W-AX-METAL-GLOW (the gold glint) + BC.W-GLASS-IDENTITY; before BC.W-SPEEDTEST-ADOPT |
+| **BC.W-AX-METRIC-HOVER** | 15 (speedtest-AX absorption) → builds in Band 12 (customizability) | the metric-badge value-lift: `--metric-badge-hover-translate` (-2px) + scale 1.04 + `--shadow-cartoon-sm` (a small lift on the EXISTING `.metric-badge:hover`, no new authoring) | beside the Band-12 customizability waves; after BC.W-GLASS-IDENTITY; before BC.W-SPEEDTEST-ADOPT |
+| **BC.W-AX-BP-LAZY** | 15 (speedtest-AX absorption) → builds in Band 11 (perf) | BorderProgress eager-graph-safe: the value.js spectrum walk behind a dynamic `import()` boundary; `spectrumStops` stays sync; the `var()` fast path value.js-free (folds AX intake BC-W1) | after the BorderProgress visual repair; beside BC.W-PERF-PRODUCER/BC.W-CSS-CRITICAL; before BC.W-SPEEDTEST-ADOPT |
+| **BC.W-SPLIT-CHARS** | 16 (cross-repo: fourier) → builds in Band 7 (motion) | the per-glyph split JS partner: `useCharStagger` + `<SplitChars>` with `--char-index`/`--char-total` + the MANDATORY accessible full-text label (the JS partner to the shipped `.char-stagger` CSS; the fourier #6 fold) | beside BC.W-MOTION-ONE-CLOCK (the per-spring clock) + BC.W-MOTION-PRESETS; engine-free → /motion-core |
+| **BC.W-MOTION-PRESETS** | 16 (cross-repo: fourier) → builds in Band 7 (motion) | the convergence-reveal motion preset (the brand "partial-sum settle"; prefer the `gentle` reuse) + the `[data-scroll-reveal]` `once` latch (folds fourier #5 + #8) | after BC.W-MOTION-ONE-CLOCK + BC.W-SPRING-EASE; beside BC.W-SCROLL-TRIGGER (the `once` latch CSS-recipe edit, file-disjoint at the seam) |
+| **BC.W-FOURIER-DECIDES** | 16 (cross-repo: fourier) → Band 12/14 (customizability + process) | the three DECIDE-or-BOOK fourier asks: AtomDiff BOOK (#4) · canvas-anchored-overlay BOOK (#7) · tier-class-staleness BUILD-as-gate (#12, extends `proof:consumer-staleness`) | independent of the Band-1/2/4 surfaces; pairs with BC.W-FOURIER-ASK (DISJOINT — that wave owns the in-repo demo defect + the `^4.0.0` bump) |
 
 ---
 
@@ -185,7 +216,7 @@ here so a future reader knows the lineage (the drift was a naming slip, not a dr
 | `BC.W-CSS-CRITICAL` / `BUILD (Band 8/perf)` / `Band 4 controls/reconcile` (the perf-chronic band-only dispositions) | **the Band-11 perf trio `BC.W-CSS-CRITICAL` + `BC.W-LIGHTHOUSE` + `BC.W-PERF-PRODUCER` (AUTHORED — iteration-4 HARDEN)** | the 3-4-tranche perf chronic (`w-lighthouse-perf` / `styles-critical-split` / the BB Batch-3 perf band) was disposed BUILD against the SAFARI band (Band 8) or a band-only "Band 8/perf" / "Band 4 controls/reconcile" with NO building wave (CHALLENGE-1 BLOCKER 4/5/7). iteration-4 authored Band 11 — PERFORMANCE: `BC.W-CSS-CRITICAL` (the `/styles` split, the `styles-critical-split` discharge — FOLD-LEDGER F7's destination is now real), `BC.W-LIGHTHOUSE` (the live score-floor + `--rebaseline`), `BC.W-PERF-PRODUCER` (the four producer fixes + the runtime π). Re-point every perf-chronic ledger BUILD row + the FOLD-LEDGER F7 `styles-critical-split` destination onto these three. (kf-G3 LabeledField action-slot + machined-groove stay their controls/storybook homes — see the FOLD-LEDGER reconcile, not a perf row.) |
 | `BC.W-DOCK-EDGE` (PLAN §54 "rim/border as catch-light, not the black hairline") | `BC.W-BLACK-BAR` | the card/dock top-edge dark-rim → bright-catch-light D2-root fix landed as `BC.W-BLACK-BAR` (the PLAN working-name; the authored wave folds the glass-rim fix) |
 | `BC.W-PROMPT-LEDGER` (PLAN §69/§95 "every user prompt mapped to delivered/undelivered") | the `PROMPT-LEDGER.md` doc + the Band-F PM wrappers (`BC.W-PM-BB`/`BA`/`AZ`/`SYNTHESIS`) | NOT a separate on-disk wave — the prompt-recap deliverable IS the `PROMPT-LEDGER.md` document, authored by the Band-F post-mortem work; the dropped-asks ownership routes through the PM wrappers + the per-defect band waves |
-| `BC.W-SEARCH-CUSTOM` (the SearchBar/FuzzySearch customization surface — the C3 owner) | **GENUINE COVERAGE GAP — no spec on disk (for the CHALLENGE pass).** The `research/feat/WAVE-IMPACTS-FEAT.md` seed carried a `BC.W-SEARCH-CUSTOM` row (size/surface axis + the `.glass-menu-row` result register + the φ overlay-pad modal + the `variant="bare"/"floating"` rung deleting the `!important`-fighting-CVA escape) but the iteration-6 FEATURE-BAND fan-out did NOT author the wave file. THREE on-disk specs name it as a Sequence-after / owner / boundary peer — `BC.W-CUSTOMIZABILITY-CENSUS` (C3 born-RED owner), `BC.W-DOCK-SEARCH` (the glassy search surface it composes), `BC.W-FUZZY-HARDEN` (the explicit "FuzzySearch SURFACE glassify is NOT this wave's — it is BC.W-SEARCH-CUSTOM's" boundary). NOT a drift to a different canonical id — a real un-authored wave the CHALLENGE pass must either AUTHOR (Band 12, after `BC.W-CUSTOMIZABILITY-CENSUS`, flips `proof:customizability-census` C3 GREEN) or re-route its three references onto an existing owner. Recorded here so the dangling references are not silent. |
+| `BC.W-SEARCH-CUSTOM` | **`BC.W-SEARCH-CUSTOM` (AUTHORED — Band 12, the CHALLENGE pass).** The coverage gap is CLOSED: the CHALLENGE pass authored the dedicated Band-12 wave file (`waves/BC.W-SEARCH-CUSTOM.md`) — the SearchBar/FuzzySearch first-principles customization + glassify surface (size/surface/variant axes reading the `--control-*` cohort + the `Surface` axis + token-backed `--search-icon-size`/`--search-button-size`/`--search-result-text` magnitudes + the `.glass-menu-row` result register + the glass expand modal off `surface="opaque"` + the φ overlay-pad ladder + the `variant="bare"/"floating"` CVA rung DELETING the `!important`-fighting-CVA escape — the `CLEANUP-PLAN.md:105-106` A6/HOLD-4 fold discharged). It is the resolution of the THREE on-disk specs that name it as a Sequence-after / owner / boundary peer — `BC.W-CUSTOMIZABILITY-CENSUS` (C3 born-RED owner, flipped GREEN at this wave), `BC.W-DOCK-SEARCH` (the glassy search surface it composes), `BC.W-FUZZY-HARDEN` (the "FuzzySearch SURFACE glassify is NOT this wave's — it is BC.W-SEARCH-CUSTOM's" boundary; the matcher is byte-fenced). Mints `proof:search-custom` (SC1-SC5 born-RED→GREEN); F2 resolves on it (no longer a dangling reference). |
 
 > Note on prior-tranche wave names: references like `W-DARK-MATERIAL`, `W-REFLECT3`, `W-CLOSE-BATTERY`,
 > `W-VISUAL-RUNNER`, `W-CARD-PAD`, `W-AURORA-SWRASTER`, `W-MENU-GLASS`, `W-ON-GLASS-FG`, `W-CSS-CRITICAL`
