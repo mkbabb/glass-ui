@@ -128,6 +128,34 @@ function buildWebGL2(
 }
 
 /**
+ * Replace a WebGPU-POISONED canvas with a fresh clone in the SAME DOM position — the
+ * prerequisite for the WebGL2 fall (BC.W-WEBGPU-EVERYWHERE the lying-adapter close).
+ *
+ * The HTML canvas one-context-type rule: once `getContext("webgpu")` is called on a
+ * canvas, `getContext("webgl2")` on the SAME element returns `null` forever (the canvas
+ * is locked to the `webgpu` context type). So when the picker falls from a failed-to-
+ * validate WebGPU pipeline to the WebGL2 net, the original canvas can NEVER host WebGL2 —
+ * the net would throw `WebGL2 unavailable` even on a WebGL2-capable host (the headless
+ * software-Metal class: a Metal adapter that reports hardware yet cannot validate the
+ * pipeline, on a host whose WebGL2 works fine). The fix: clone the canvas (copying its
+ * attributes + class + inline style so the layout/aria are byte-identical) and swap it in
+ * place, returning the fresh un-poisoned element for the WebGL2 net to acquire.
+ *
+ * SSR / detached-canvas safe: with no `parentNode` (never mounted) the clone cannot swap
+ * — the original is returned unchanged (a never-mounted canvas was never poisoned anyway).
+ */
+function freshCanvasForFallback(poisoned: HTMLCanvasElement): HTMLCanvasElement {
+    const parent = poisoned.parentNode;
+    if (!parent || typeof document === "undefined") return poisoned;
+    const fresh = poisoned.cloneNode(false) as HTMLCanvasElement;
+    // cloneNode(false) copies attributes (class/aria-hidden/data-*/inline style) but the
+    // backing-store width/height are reset by the next `resize()`; the CSS box is carried
+    // by the copied class/style.
+    parent.replaceChild(fresh, poisoned);
+    return fresh;
+}
+
+/**
  * Pick the backend + return the uniform handle. WebGPU-first (`supportsWebGPU()` AND a
  * `setupWGPU` callback is provided); otherwise the WebGL2 net. The decision is NO
  * LONGER committed at construction off a presence check — `armAsync()` ATTEMPTS the
@@ -150,6 +178,9 @@ export function createGpuSubstrate(
     let webgl2: ReturnType<typeof createWebGLCanvas> | null = null;
     let backend: GpuBackend = attemptWebGPU ? "webgpu" : "webgl2";
     let disposed = false;
+    // The live canvas — swapped for a fresh clone on the WebGPU→WebGL2 fall (the WebGPU
+    // context-type poison forbids reusing the original for the net; see `freshCanvasForFallback`).
+    let liveCanvas = canvas;
 
     // Build the WebGL2 net NOW only when WebGPU is not even attempted (no WGSL path /
     // platform absent) — a Baseline WebGPU host never pays the WebGL2-context cost
@@ -175,15 +206,34 @@ export function createGpuSubstrate(
         });
     }
 
-    /** Fall from a failed WebGPU init to the WebGL2 net (the invisible insurance). */
+    /**
+     * Fall from a failed WebGPU init to the WebGL2 net (the invisible insurance). The
+     * WebGPU leaf may have already poisoned the canvas (`getContext("webgpu")` ran inside
+     * `buildContext` before the pipeline-validation reject), so the net is built on a
+     * FRESH cloned canvas swapped in place — the original can never host WebGL2 again. The
+     * net build + arm is guarded: a genuine WebGL2-unavailable (a host with NEITHER
+     * working substrate) surfaces via `onInitError`, never an uncaught page throw (the
+     * D8' no-spew floor extends to the second-leg failure).
+     */
     function fallToWebGL2(error: unknown): void {
         // Dispose the half-built WebGPU leaf (releases the device, unbinds the
         // device-loss promise) before standing up the net.
         webgpu?.dispose();
         webgpu = null;
         backend = "webgl2";
-        webgl2 = buildWebGL2(canvas, options);
+        // Swap the WebGPU-poisoned canvas for a fresh clone so the WebGL2 net can acquire
+        // a context (the canvas one-context-type rule — see `freshCanvasForFallback`).
+        liveCanvas = freshCanvasForFallback(liveCanvas);
         options.onBackendFallback?.({ from: "webgpu", to: "webgl2", error });
+        try {
+            webgl2 = buildWebGL2(liveCanvas, options);
+            webgl2.arm();
+        } catch (netErr) {
+            // The host has NEITHER a working WebGPU pipeline NOR a WebGL2 context (a
+            // genuinely GL-less env). Surface for telemetry, never spew an uncaught throw.
+            webgl2 = null;
+            options.onInitError?.(netErr);
+        }
     }
 
     async function armAsync(): Promise<void> {
@@ -200,7 +250,10 @@ export function createGpuSubstrate(
                 if (disposed) return;
                 // The WebGPU path could not arm (no adapter, device reject,
                 // device-lost-at-birth, validation throw) — fall to the net, silently.
+                // `fallToWebGL2` builds + arms the net (on a fresh canvas) inside its own
+                // guard, so the net is live on return.
                 fallToWebGL2(err);
+                return;
             }
         }
         // The WebGL2 net is synchronous — arm it immediately.

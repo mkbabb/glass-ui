@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, shallowRef, useTemplateRef, watch } from "vue";
+import { computed, onMounted, shallowRef, useTemplateRef, watch } from "vue";
 import type { ColorResolver, OklchStop } from "../../../composables/color";
 import { cssToOklch } from "../../../composables/color";
+import { resolveTokenColor } from "../../../composables/dom";
 import { useGlobalDark } from "../../../composables/dark";
 import { mulberry32, hashString } from "../../../utils/prng";
 import { makeEllipticSpectrum, type BasisComponent } from "./math";
@@ -88,11 +89,22 @@ const spectrum = computed<readonly BasisComponent[]>(() => {
 const getSpectrum = (): readonly BasisComponent[] => spectrum.value;
 
 // AW.W13 seam — resolve a `var(--token)`/`light-dark()` color to a concrete value BEFORE
-// reading it (value.js cannot parse a `var()` wrapper). The host element resolves the cascade.
+// reading it (value.js cannot parse a `var()` wrapper). The host element resolves the
+// cascade through the SHARED un-wrap leaf (`resolveTokenColor` — the ONE
+// getComputedStyle-paint-and-read path the aurora/blob ColorResolver seam uses); the
+// `light-dark()` literal rides the same paint-and-read trick (a `light-dark()` painted on
+// a real CSS property resolves through the cascade), so it is folded into the leaf's
+// scope here. A `var()`/`light-dark()` wrapper that did NOT resolve concretely (the host
+// is not yet mounted — the immediate watch fires in setup() before `hostRef`) is NOT
+// handed to value.js (it cannot parse the wrapper and throws); the caller keeps the prior
+// warm-identity palette until the on-mount resolve lands.
 function resolveColorString(css: string): string {
     if (!css.includes("var(") && !css.includes("light-dark(")) return css;
     const el = hostRef.value;
     if (typeof window === "undefined" || !el) return css;
+    // resolveTokenColor un-wraps a `var()` wrapper; paint-and-read the cascade for a
+    // `light-dark()` wrapper the leaf's `var(`-only guard skips.
+    if (css.includes("var(")) return resolveTokenColor(css, el);
     const prev = el.style.color;
     el.style.color = css;
     const resolved = getComputedStyle(el).color;
@@ -111,7 +123,12 @@ function refreshPalette(): void {
     }
     void isDark.value; // the dark-flip retint trigger
     if (props.color) {
-        const base = cssToOklch(resolveColorString(props.color));
+        const resolved = resolveColorString(props.color);
+        // Guard the value.js parse: an UNRESOLVED `var()`/`light-dark()` wrapper (the
+        // host is not yet mounted) cannot be parsed by value.js (it throws on a `var()`
+        // reference). Keep the prior warm-identity palette and re-resolve on mount.
+        if (resolved.includes("var(") || resolved.includes("light-dark(")) return;
+        const base = cssToOklch(resolved);
         resolvedPalette.value = [
             { L: Math.max(0.5, base.L), C: Math.max(0.12, base.C), h: base.h },
             { L: Math.min(0.9, base.L + 0.22), C: base.C * 0.4, h: base.h + 18 },
@@ -132,6 +149,10 @@ const renderer = useFourierField(canvasRef, {
 watch([() => props.color, () => props.getPalette, isDark], refreshPalette, {
     immediate: true,
 });
+// The immediate watch fires in setup() before `hostRef` is mounted, so a `var()`-token
+// `color` cannot resolve the cascade yet (it kept the warm-identity default). Re-resolve
+// once the host element exists — the `var()` un-wrap now reaches a real element.
+onMounted(refreshPalette);
 watch(isDark, () => renderer.wake());
 watch(
     () => props.freeze,

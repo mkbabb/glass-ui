@@ -1,5 +1,50 @@
 # Changelog
 
+## 4.1.0
+
+### The honest paint-verified cut — the BB source-green/visually-broken disease CURED
+
+BC — the anti-disease tranche. The BB cut shipped source-green gates over a visually-broken surface;
+4.1.0 makes the gate measure PAINT, not source-mechanism. Every surface's warmth is verified by pixels:
+`proof:ba-gestalt` is a ci-blocking 16-surface PIXEL roster (it decodes each surface's captured PNG and
+asserts the warm-cream luminance/chroma/alpha band — a grey/missing/wrong-hue capture cannot pass), and
+every wave closed born-RED→GREEN with a captured paint delta on real Metal GPU. The 96-wave build is
+paint-gated end to end.
+
+### Minor (additive) — the new surface
+
+- **The WebGPU-first procedural-viz suite.** A third canvas backend (`useGpuSubstrate` — WebGPU-first,
+  WebGL2 fallback, over the ONE `createCanvasLifecycle` leaf) + new viz: `<PaperGrid>` (`/paper-grid`),
+  `<DotMatrix>` (`/dot-matrix`), `<GooDotMatrix>` (`/goo-dot-matrix`), `<Concentric>` (`/concentric`),
+  `<DotFlowField>` (`/dot-flow-field`). Aurora, GooBlob, FourierField, and Constellation re-homed onto the
+  dual substrate (WGSL primary + the byte-fenced GL fallback). The aurora anisotropic-Kuwahara painterly
+  medium + the divergence-free curl-noise warp. `usePointerVelocityField` (the shared viz-pointer physics).
+- **New subpaths:** `/deck` (the keyboard-paged aria-live DeckPager), `/completion-seal`, `/selectable-chip`,
+  `/border-progress` (progress AS the element's border), `/spa-view` (the bounded view-cache pane),
+  `/easing` (the boundary-law curve editor), `/virtual` (the homecoming windowing leaf).
+- **iOS-27 glass identity:** the warm-cream maximal-glass default, the opt-in deep-glass tier
+  (`--glass-depth`), the squircle refractive `--glass-refract` lensing axis, the per-instance chromatic
+  `--glass-accent` rim, the bloom-from-source `.glass-reveal` / `useLiquidReveal`, the brand-metal triad
+  (gold·silver·bronze) + the gold catch-light.
+- **The motion canon** (`docs/precepts/motion-canon.md`): the ONE interruptible coupled spring-press
+  (`useSpringPress`/`useLiquidPress`), the per-spring settle clock, compositor-only keyframes enforced
+  library-wide, the native scroll-choreography register (no Lenis/GSAP), `useDragMorph` (pull-to-morph).
+- **The dock:** the repaired liquid morph engine (compositor-transform over a reserved footprint), the
+  dock-as-fuzzy-search (`useDockSearch`), the cockpit preset, the CTA-receive seat.
+
+### Clean breaks (the no-backwards-compat house rule; each in MIGRATION.md)
+
+- `<Button variant="solid">` retired (the unused bg-primary escape).
+- `DockRail` → `<DockStack>` (the macOS hover-expand rebuild; the divider-carousel retired).
+- `popover-animate` / `slide-in-from-side` retired → `.glass-reveal` (the 11 overlays re-point; a visual
+  upgrade, no public-prop break).
+- The fourier/constellation Canvas2D renderers → the WebGPU/WebGL2 substrate.
+- The `secondary` Button variant reskinned onto the quiet glass register.
+
+The cross-repo consumers (speedtest, slides, the Connectivity Atlas, fourier) adopt by-name on the `^4.x`
+bump (the coherent-latest spine; the foreign-tree fence). Published via the gated-provenance `release.yml`
+path (`--run full` siblings-absent before the tag).
+
 ## 4.0.0
 
 ### Major Changes

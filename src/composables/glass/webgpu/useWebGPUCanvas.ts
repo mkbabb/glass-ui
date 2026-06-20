@@ -56,6 +56,60 @@ export function supportsWebGPU(): boolean {
 }
 
 /**
+ * Detect a SOFTWARE / CPU WebGPU adapter (SwiftShader / llvmpipe / the Microsoft
+ * Basic Render Driver, or a UA-supplied `isFallbackAdapter` software fallback) — the
+ * WebGPU twin of `isSoftwareWebGLRenderer` (the `renderMode.ts` WebGL software-raster
+ * guard, BB.W-AURORA-SWRASTER).
+ *
+ * WHY this forces the WebGL2 net (the BC WebGPU re-home regression this closes): on a
+ * headless / GPU-blocklisted / CI host, `navigator.gpu` exists AND `requestAdapter()`
+ * SUCCEEDS — it returns a SOFTWARE adapter (SwiftShader). `requestDevice()` succeeds
+ * too, so the WebGPU init does NOT reject; `setup()` builds the render pipeline, but the
+ * software backend cannot validate/compile it (a metaball `RenderPipeline` is invalid
+ * under SwiftShader), so the per-frame `pass.setPipeline(...)` floods
+ * `[Invalid RenderPipeline] is invalid due to a previous error` — a never-ending console
+ * spew with no fallback (the loop keeps trying to draw the invalid pipeline). A
+ * software-rastered WebGPU surface is the same per-composite cost class the WebGL guard
+ * forbids. So a software adapter is treated as a recognized INIT FAILURE: the picker's
+ * `armAsync` try/catch falls to the WebGL2 net — exactly the silent W-AURORA-SWRASTER
+ * degrade, never the invalid-pipeline flood.
+ *
+ * The signal is the `isFallbackAdapter` spec flag (a UA sets it on a software fallback —
+ * the spec moved it from `GPUAdapter` to `GPUAdapterInfo`, so it is read off BOTH the
+ * adapter AND its `info` for cross-UA coverage) OR a software/SwiftShader/llvmpipe/
+ * basic-render string in `adapter.info` (vendor/architecture/description). On a real
+ * Metal/Vulkan/D3D adapter both are false/empty, so the WebGPU path is BYTE-UNTOUCHED
+ * (the cardinal ba-gestalt capture holds). The read is defensive (the fields are optional
+ * across UAs); a throwing read is morally "cannot prove software" → keep WebGPU.
+ */
+export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
+    try {
+        const info = adapter.info as GPUAdapterInfo | undefined;
+        // `isFallbackAdapter` lives on `GPUAdapterInfo` per the current spec; older UAs
+        // expose it directly on the adapter — read both (the runtime cast covers the
+        // pre-`info` location lib.dom does not type).
+        if (info?.isFallbackAdapter) return true;
+        if ((adapter as { isFallbackAdapter?: boolean }).isFallbackAdapter) return true;
+        if (!info) return false;
+        const haystack = [info.vendor, info.architecture, info.description]
+            .filter((s): s is string => typeof s === "string")
+            .join(" ")
+            .toLowerCase();
+        return (
+            haystack.includes("swiftshader") ||
+            haystack.includes("llvmpipe") ||
+            haystack.includes("software") ||
+            haystack.includes("basic render") ||
+            haystack.includes("microsoft basic")
+        );
+    } catch {
+        // fail-explicit: an env we cannot certify keeps the richer WebGPU default
+        // (the conservative non-downgrade — the `isSoftwareWebGLRenderer` precedent).
+        return false;
+    }
+}
+
+/**
  * The recognizable WebGPU INIT-FAILURE signal (BC.W-WEBGPU-EVERYWHERE — the D8/D8'
  * close). A no-adapter host (`requestAdapter()` returns null), a `requestDevice()`
  * reject, or a device-lost-at-birth is NOT a contract violation — it is a recognized
@@ -66,7 +120,12 @@ export function supportsWebGPU(): boolean {
  * `try`/`catch` recognizes it; a consumer never sees a `no GPU adapter` PAGEERROR.
  */
 export class WebGPUInitError extends Error {
-    readonly kind: "no-adapter" | "device-request" | "no-navigator-gpu";
+    readonly kind:
+        | "no-adapter"
+        | "device-request"
+        | "no-navigator-gpu"
+        | "software-adapter"
+        | "pipeline-validation";
     constructor(kind: WebGPUInitError["kind"], message: string, cause?: unknown) {
         super(message);
         this.name = "WebGPUInitError";
@@ -186,6 +245,17 @@ export function createWebGPUCanvas(
     let rebuildFromLeaf: (() => void) | null = null;
     let markContextLostFromLeaf: (() => void) | null = null;
 
+    // The validation-scope result of the MOST RECENT buildContext — the
+    // `popErrorScope("validation")` promise wrapping the consumer `setup` + a one-shot
+    // PROBE draw. `armAsync` awaits it to decide whether the WebGPU pipeline is sound:
+    // a non-null error means the pipeline/shader failed validation (a software-backed /
+    // headless-Metal host whose adapter LIES that it is hardware — `adapter.info` reads
+    // `apple/metal-3` yet the metaball `RenderPipeline` is invalid → the per-frame
+    // `[Invalid RenderPipeline]` flood). On that signal `armAsync` rejects so the picker
+    // falls to the WebGL2 net (the silent W-AURORA-SWRASTER degrade — the device-string
+    // guard cannot catch a lying adapter, the validation PROBE can).
+    let validationProbe: Promise<GPUError | null> | null = null;
+
     // ── the WebGPU BACKEND seam — the one backend-specific concern the agnostic
     // lifecycle core threads through `buildContext`. By the time the leaf calls this
     // (on `arm()` / on the self-heal `rebuild`) the device is ALREADY resolved (the
@@ -202,11 +272,18 @@ export function createWebGPUCanvas(
         format = navigator.gpu.getPreferredCanvasFormat();
         ctx.configure({ device, format, alphaMode });
         // Surface validation errors deterministically (not silent garbage): bracket
-        // the consumer `setup` in an error scope + listen for an uncaptured error.
+        // the consumer `setup` AND a one-shot probe draw in an error scope + listen for
+        // an uncaptured error. The probe draw forces the pipeline to be EXERCISED inside
+        // the scope so a draw-time-invalid pipeline (the headless software-Metal class)
+        // surfaces here, not as a per-frame console flood.
         device.pushErrorScope("validation");
         device.addEventListener("uncapturederror", onUncapturedError);
         frameHooks = setup(device, context, format);
-        void device.popErrorScope().then((err) => {
+        probePipeline();
+        // The validation result feeds BOTH the legacy onInitError surface (kept) AND the
+        // `armAsync` fall-decision (the new gate). One pop, two readers.
+        validationProbe = device.popErrorScope();
+        void validationProbe.then((err) => {
             if (err) options.onInitError?.(err);
         });
         if (!ro) {
@@ -224,6 +301,7 @@ export function createWebGPUCanvas(
                 ro = null;
                 context = null;
                 frameHooks = null;
+                validationProbe = null;
             },
         };
     }
@@ -231,6 +309,27 @@ export function createWebGPUCanvas(
     function onUncapturedError(e: Event): void {
         const err = (e as GPUUncapturedErrorEvent).error;
         options.onInitError?.(err);
+    }
+
+    /**
+     * One-shot PROBE draw — exercises the consumer's pipeline ONCE inside the
+     * `pushErrorScope("validation")` bracket so a draw-time-invalid pipeline (the headless
+     * software-Metal class whose `createRenderPipeline` reports clean but whose
+     * `setPipeline` is invalid) surfaces in `popErrorScope()` here, not as a never-ending
+     * per-frame console flood. It calls the consumer's own `frame(0)` (the SAME render
+     * path the loop uses) so the probe is faithful to the real draw. A consumer `frame`
+     * that throws is caught (a `resolveFrame` returning null is a legitimate no-draw — the
+     * probe is a no-op then, and the next real frame will draw); the THROW is swallowed so
+     * the validation scope still pops cleanly (a JS throw is not a GPU validation error).
+     */
+    function probePipeline(): void {
+        try {
+            frameHooks?.resize();
+            frameHooks?.frame(0);
+        } catch {
+            // A consumer-`frame` JS throw is not a GPU validation signal — the validation
+            // scope owns the pipeline verdict. Swallow so the pop is clean.
+        }
     }
 
     const lifecycle = createCanvasLifecycle({
@@ -273,6 +372,20 @@ export function createWebGPUCanvas(
             // The recognizable no-adapter signal — the picker catches it to fall to the
             // WebGL2 net. NEVER a bare uncaught throw to the page (D8').
             throw new WebGPUInitError("no-adapter", "[useWebGPUCanvas] no GPU adapter");
+        }
+        // SOFTWARE-ADAPTER GUARD (the WebGPU twin of the WebGL software-raster guard,
+        // BB.W-AURORA-SWRASTER). A SwiftShader / llvmpipe / fallback adapter creates a
+        // device + arms WITHOUT rejecting, but cannot validate the metaball pipeline —
+        // it would flood per-frame `[Invalid RenderPipeline]` errors with no fallback. So
+        // a software adapter is a RECOGNIZED init failure: reject with the typed signal so
+        // the picker's `armAsync` try/catch falls to the WebGL2 net SILENTLY (the
+        // invisible insurance), never the invalid-pipeline spew. On a real GPU this is
+        // false → the WebGPU path is byte-untouched.
+        if (isSoftwareWebGPUAdapter(adapter)) {
+            throw new WebGPUInitError(
+                "software-adapter",
+                "[useWebGPUCanvas] software WebGPU adapter (SwiftShader/llvmpipe/fallback) — falling to the WebGL2 net",
+            );
         }
         let dev: GPUDevice;
         try {
@@ -323,6 +436,34 @@ export function createWebGPUCanvas(
                 await acquireDevice();
                 if (disposed) return;
                 lifecycle.arm();
+                // The PIPELINE-VALIDATION gate (the lying-adapter close). `lifecycle.arm()`
+                // ran `buildContext` → `setup` + the one-shot probe draw inside the
+                // `pushErrorScope("validation")` bracket; `validationProbe` is the pop
+                // promise. AWAIT it: a non-null error means the consumer's pipeline/shader
+                // failed validation on THIS host (a headless software-Metal adapter that
+                // reports `apple/metal-3` yet cannot validate the metaball pipeline). Park
+                // + reject with the typed signal so the picker falls to the WebGL2 net,
+                // never the per-frame `[Invalid RenderPipeline]` flood. On a real GPU the
+                // pipeline validates → null → the WebGPU path is byte-untouched.
+                if (validationProbe) {
+                    // Hold the loop parked across the (async) validation pop so the rAF
+                    // never submits an as-yet-unverified pipeline (no flood window). The
+                    // resume restores the live loop only when the pipeline is clean.
+                    // Capture mode already holds the `"manual"` suspension by construction
+                    // (renderAt-only), so it must NOT be resumed here — only the LIVE loop
+                    // is parked-then-resumed across the probe.
+                    const parkAcrossProbe = options.mode !== "capture";
+                    if (parkAcrossProbe) lifecycle.suspend("manual");
+                    const validationError = await validationProbe;
+                    if (disposed) return;
+                    if (validationError) {
+                        throw new WebGPUInitError(
+                            "pipeline-validation",
+                            `[useWebGPUCanvas] pipeline failed validation (${validationError.message}) — falling to the WebGL2 net`,
+                        );
+                    }
+                    if (parkAcrossProbe) lifecycle.resume("manual");
+                }
             } catch (err) {
                 // A recognized init failure (no adapter / device reject / no
                 // navigator.gpu) is a SUBSTRATE DECISION the picker handles — REJECT so

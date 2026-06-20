@@ -241,6 +241,49 @@ export function assembleWgsl(absPath, readFile) {
     const chunkCache = new Map();
     const resolveChunk = (chunkName) => {
         if (chunkCache.has(chunkName)) return chunkCache.get(chunkName);
+        // (a) A chunk may be a LOCAL same-file backtick literal — `export const X_WGSL
+        // = \`…\`` — spliced into the main export. A VALID splice (the JS template
+        // resolves it at module load), resolved from the SAME source.
+        const localLit = raw.match(
+            new RegExp(
+                `export\\s+const\\s+${chunkName}\\s*=\\s*(?:\\/\\*\\s*wgsl\\s*\\*\\/\\s*)?\`([\\s\\S]*?)\``,
+            ),
+        );
+        if (localLit) {
+            chunkCache.set(chunkName, localLit[1]);
+            return localLit[1];
+        }
+        // (b) A local const may ALIAS/SLICE an IMPORTED shader at RUNTIME — the goo-dot
+        // `export const GOO_DOT_FIELD_WGSL = … ? METABALL_WGSL.slice(0, fieldEnd) : …`
+        // case (the byte-untouched goo-blob field, sliced before the vertex stage). The
+        // static scan cannot compute the slice, so resolve to the imported shader's FULL
+        // content — a conservative SUPERSET: the static reserved-keyword / brace-balance
+        // / unresolved-splice checks that pass on the whole imported shader (already ✓)
+        // pass on ANY slice of it; the real assembled shader is validated by the LOCAL π
+        // (createShaderModule) arm + the cardinal ba-gestalt capture.
+        const localExpr = raw.match(
+            new RegExp(`export\\s+const\\s+${chunkName}\\s*=\\s*([^;]+);`),
+        );
+        if (localExpr) {
+            for (const importedName of localToModule.keys()) {
+                if (
+                    importedName === chunkName ||
+                    !new RegExp(`\\b${importedName}\\b`).test(localExpr[1])
+                )
+                    continue;
+                let aliasPath = resolve(dir, localToModule.get(importedName));
+                if (!aliasPath.endsWith(".ts")) aliasPath += ".ts";
+                if (!existsSync(aliasPath)) continue;
+                // Fully ASSEMBLE the imported shader (its OWN nested ${…} splices — e.g.
+                // METABALL_WGSL splices FBM_ROT_WGSL — resolved against ITS module), so the
+                // runtime-aliased field carries no leftover splice token.
+                const sub = assembleWgsl(aliasPath, readFile);
+                if (sub.name === importedName && sub.unresolved.length === 0) {
+                    chunkCache.set(chunkName, sub.assembled);
+                    return sub.assembled;
+                }
+            }
+        }
         const mod = localToModule.get(chunkName);
         if (!mod) {
             chunkCache.set(chunkName, null);

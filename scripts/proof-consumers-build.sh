@@ -40,23 +40,34 @@ for row in "${CONSUMER_ROWS[@]}"; do
     consumer_dir="${row#*$'\t'}"
     start="$(date +%s)"
     rc=0
+    state="pass"
 
     echo
     echo "[$consumer] npm run build"
     echo "path: $consumer_dir"
 
     if [[ ! -d "$consumer_dir" ]]; then
-        echo "[$consumer] FAIL: missing consumer directory"
-        rc=127
+        # Absent sibling — SKIP-by-policy (the registry-default; the gates.mjs
+        # "skipped-by-policy when no sibling is present — never a hard failure
+        # on a clean runner" contract + the proof:consumers:static skipSibling
+        # precedent). A clean CI/release checkout (release.yml --run full) has
+        # no sibling app repos; the gate cannot build what is not present, and
+        # an absent consumer is not a glass-ui regression — it is the expected
+        # clean-runner state. (Prior latent bug: this set rc=127 and FAILED,
+        # contradicting line-9's documented policy; the BC clean siblings-absent
+        # --run full surfaced it.)
+        echo "[$consumer] SKIP: absent sibling (registry-default policy)"
+        state="skip"
     elif (cd "$consumer_dir" && npm run build); then
         echo "[$consumer] PASS"
     else
         rc=$?
         echo "[$consumer] FAIL: npm run build exited $rc"
+        state="fail"
     fi
 
     duration="$(( $(date +%s) - start ))"
-    if [[ "$rc" -ne 0 ]]; then
+    if [[ "$state" == "fail" ]]; then
         status=1
     fi
 
@@ -69,7 +80,7 @@ for row in "${CONSUMER_ROWS[@]}"; do
         printf '      "consumer": "%s",\n' "$consumer"
         printf '      "path": "%s",\n' "$consumer_dir"
         printf '      "command": "npm run build",\n'
-        printf '      "status": "%s",\n' "$([[ "$rc" -eq 0 ]] && echo pass || echo fail)"
+        printf '      "status": "%s",\n' "$state"
         printf '      "exitCode": %s,\n' "$rc"
         printf '      "durationSeconds": %s\n' "$duration"
         printf '    }'
