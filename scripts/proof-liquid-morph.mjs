@@ -124,11 +124,14 @@ export function detectM3() {
     const ctx = stripJs(readRel(CTX_TS));
     const measure = stripJs(readRel(MEASURE_TS));
     // The orchestrator seats a 0 measurement at the floor span (morphMinFloorPx).
+    // BC.W-CARVE4 carved the measure/seat helpers OUT of dockMorphContext.ts INTO
+    // dockMorphMeasure.ts, so the seat-at-floor branch now lives in `measure` — the
+    // reader gate FOLLOWS the carve into the leaf (the W-CARVE4 reader-gate discipline).
     facts.guardPresent =
-        /morphMinFloorPx/.test(ctx) &&
-        /measuredTo\s*>\s*0\s*\?\s*measuredTo\s*:/.test(ctx);
+        /morphMinFloorPx/.test(measure) &&
+        /measuredTo\s*>\s*0\s*\?\s*measuredTo\s*:/.test(measure);
     if (!facts.guardPresent)
-        violations.push("M3: dockMorphContext.ts has no `measuredTo === 0 → seat-at-floor` guard (the defensive measure-failure complement) — a missed measurement degrades to white, not visible-at-floor");
+        violations.push("M3: dockMorphMeasure.ts has no `measuredTo === 0 → seat-at-floor` guard (the defensive measure-failure complement; W-CARVE4 carved the measure/seat helpers here from dockMorphContext.ts) — a missed measurement degrades to white, not visible-at-floor");
     // The floor helper exists (pure, reads the resolved --dock-morph-min, falls back to 44px).
     facts.floorHelperPresent =
         /export function morphMinFloorPx/.test(measure) &&
