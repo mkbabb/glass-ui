@@ -1,19 +1,21 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/composables/useLayerTransition.ts, src/components/custom/dock/DockLayerGroup.vue, src/styles/dock/layers.css -->
-<!-- surface-hash: 652abdcdb2c5a36cb050ffc0d2ab10d75b29ace1ddef6666ee626f7672bf0a7a -->
-<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
-     retire-dodge, stamped a9750d0a…) is REVERSED — the §0 re-grep falsifies its "the rail it captured
-     is no longer the live surface" premise (dockMorphContext.ts / useLayerTransition.ts /
-     DockLayerGroup.vue / dock/layers.css all RESOLVE at HEAD; the AZ.W-RAIL3 / W-DOCK-RAIL re-renders
-     DRIFTED the rail register, they did not delete the entering-child lockstep surface). The 8
-     own-surface W-DOCK2-{collapse,lockstep}-midmorph-{light,dark}.png captures are RE-SHOT on the LIVE
-     /dock/overview dock (`:5199`, `.glass-dock[data-testid="dock-capture"]`, desktop 1280 + mobile 390,
-     both modes) and the AZ-form freshness headers RE-STAMPED above against the CURRENT dock-morph
-     bytes. The entering-child lockstep verdict (child→box onset Δ within the morph budget) is
-     RE-VALIDATED on current bytes — the box and the `--dock-morph-t` scalar resolve from the ONE
-     single-scalar source (the W-DOCK-MORPH-FAMILY repair holds the compositor-transform-over-reserved-
-     footprint contract; DOCK_SPRING byte-untouched). Live-verified-fresh, not retire-dodged. -->
+<!-- surface-hash: 8ab9d82d4611cfa18e30f1f172ed2237f5b648b4d988ad54c03ba2371469f1ff -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN BC.W-DELTA-RESHOOT, 2026-06-20): the
+     BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge, stamped a9750d0a…) is REVERSED —
+     the §0 re-grep falsifies its "the rail it captured is no longer the live surface" premise
+     (dockMorphContext.ts / useLayerTransition.ts / DockLayerGroup.vue / dock/layers.css all RESOLVE at
+     HEAD; the AZ.W-RAIL3 / W-DOCK-RAIL re-renders + the BC liquid-glass band re-renders DRIFTED the
+     rail register, they did not delete the entering-child lockstep surface). The 8 own-surface
+     W-DOCK2-{collapse,lockstep}-midmorph-{light,dark}.png captures are RE-SHOT on the LIVE
+     /dock/overview dock (`:5199`, `.glass-dock[data-testid="dock-capture"]` ELEMENT crops,
+     Chrome-headless-new ANGLE→Metal, desktop 1440 + mobile 390, both modes) and the AZ-form freshness
+     header RE-STAMPED above against the CURRENT dock-morph bytes (BC: 8ab9d82d…). The entering-child
+     lockstep verdict (child→box onset Δ within the morph budget) is RE-VALIDATED on current bytes — the
+     box and the `--dock-morph-t` scalar resolve from the ONE single-scalar source (the
+     W-DOCK-MORPH-FAMILY repair holds the compositor-transform-over-reserved-footprint contract;
+     DOCK_SPRING byte-untouched). Live-verified-fresh, not retire-dodged. -->
 
 This wave discharges the IMPL half of the dock-lockstep chronic (PROMPT-CORPUS #5 /
 AUDIT-LEDGER #5). W-DOCK1's capture VERDICT was **lag captured-ABSENT** (`box↔scalar

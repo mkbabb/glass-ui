@@ -1,18 +1,20 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
-<!-- surface-hash: fd3917b4b371d4a6b3e4c4bdb27339de7a2b9e53e79e83e82207b08dc97f3075 -->
-<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
-     retire-dodge, stamped 0db3a00c…) is REVERSED — the §0 re-grep falsifies its "surface is gone"
-     premise (every dock-morph surface-path RESOLVES at HEAD; the surface DRIFTED under the AZ
-     collapse-onset/hairline-rail re-renders, it did not vanish). The 12 own-surface
+<!-- surface-hash: 02e14c23480132a8aa1b1c34cd52e3e52fe120e0d962b0015b289cbd262d8b3a -->
+<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN BC.W-DELTA-RESHOOT, 2026-06-20): the
+     BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge, stamped 0db3a00c…) is REVERSED —
+     the §0 re-grep falsifies its "surface is gone" premise (every dock-morph surface-path RESOLVES at
+     HEAD; the surface DRIFTED under the AZ collapse-onset/hairline-rail re-renders and the BC
+     liquid-glass band re-renders, it did not vanish). The 12 own-surface
      W-DOCK1-dock-overview-*-{light,dark}.png captures are RE-SHOT on the LIVE /dock/overview dock
-     (`:5199`, `.glass-dock[data-testid="dock-capture"]`, desktop 1280 + mobile 390, both modes) and
-     the AZ-form freshness headers RE-STAMPED above against the CURRENT dock-morph bytes. The
-     items-lag VERIFY-OR-FALSIFY verdict (box↔scalar onset Δ=0) is RE-VALIDATED on current bytes — the
-     live re-shoot reads `--dock-morph-t = 0` at rest with the box width and the scalar resolved from
-     the ONE single-scalar source (the morph reads one scalar; box↔scalar onset Δ=0 by construction,
-     unchanged by the AZ collapse-onset fix). Live-verified-fresh, not retire-dodged. -->
+     (`:5199`, `.glass-dock[data-testid="dock-capture"]` ELEMENT crops, Chrome-headless-new ANGLE→Metal,
+     desktop 1440 + mobile 390, both modes) and the AZ-form freshness header RE-STAMPED above against
+     the CURRENT dock-morph bytes (BC: 02e14c23…). The items-lag VERIFY-OR-FALSIFY verdict (box↔scalar
+     onset Δ=0) is RE-VALIDATED on current bytes — the live re-shoot reads `--dock-morph-t = 0` at rest
+     with the box width and the scalar resolved from the ONE single-scalar source (the morph reads one
+     scalar; box↔scalar onset Δ=0 by construction, unchanged by the AZ collapse-onset fix nor the BC
+     re-renders). Live-verified-fresh, not retire-dodged. -->
 
 This wave discharges the SIGNATURE recurring complaint (PROMPT-CORPUS #5 / AUDIT-LEDGER
 #5, marked CHRONIC across keyframes.js → AX → AY): *"the dock will shrink first, and

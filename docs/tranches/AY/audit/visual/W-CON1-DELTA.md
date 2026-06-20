@@ -1,18 +1,26 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
-<!-- surface-paths: src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationDraw.ts -->
-<!-- surface-hash: 1b86f6bbaa3be8b1c25fa154b1baef634049cb7aaec98fc9b73b21429e383579 -->
-<!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17): the BA.W-HYGIENE RETIRE-with-rationale (removed-header
-     retire-dodge, stamped f3637de6…) is REVERSED — the §0 re-grep falsifies its "the live
-     constellation is a different surface" premise (Constellation.vue / constellationField.ts /
-     constellationDraw.ts all RESOLVE at HEAD; the AZ.W-CON-GEN generalization DRIFTED the field path,
-     it did not replace the surface). The 12 own-surface W-CON1-*-{light,dark}.png captures (refit /
-     refit-before / autodrift) are RE-SHOT on the LIVE /substrates/constellation surface (`:5199`,
-     desktop 1280 + mobile 390, both modes) and the AZ-form freshness headers RE-STAMPED above against
-     the CURRENT constellation bytes. The refit-coverage verdict (≥90% fills box) is RE-VALIDATED on
-     current bytes — the live re-shoot reads the canvas filling its host on BOTH axes (fillFracW=1,
-     fillFracH=1, fillsBox:true) with the `window.__constellationRefit` seam LIVE. Live-verified-fresh,
-     not retire-dodged. -->
+<!-- surface-paths: src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationInteraction.ts -->
+<!-- surface-hash: c9338215152f171930864c5ea24256167c283c41e7984582ecb37b14f76200ac -->
+<!-- RE-SHOT + RE-POINTED (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN + SURFACE-PATH RE-POINT
+     BC.W-DELTA-RESHOOT, 2026-06-20): the BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge,
+     stamped f3637de6…) is REVERSED, and the surface-paths header is RE-POINTED off a BC-carved file.
+     THE CARVE: at BC the Canvas2D `constellationDraw.ts` (the four `ctx`-bound draw passes) was RETIRED
+     — the lattice now renders on `createGpuSubstrate` (WebGPU/WebGL2 instanced points+lines), the
+     JS-side render leaf relocated to `constellationRender.ts`, and the pointer/well/warp/auto-drift
+     INTERACTION machinery carved into `constellationInteraction.ts` (+ `constellationWell.ts` at
+     BC.W-CARVE6). The W-CON1 captured surface is the RESIZE RE-FIT + AUTO-DRIFT WANDER behaviour
+     (`refitField` in `constellationField.ts` + the wander cadence/warp in `constellationInteraction.ts`),
+     NOT the retired rasterizer — so the surface MOVED (constellationDraw.ts → constellationInteraction.ts),
+     it did not vanish. The surface-paths header re-points constellationDraw.ts → constellationInteraction.ts
+     (Constellation.vue + constellationField.ts RESOLVE unchanged), and the surface-hash is RE-STAMPED
+     against the CURRENT re-pointed bytes (BC: c9338215…). The 12 own-surface W-CON1-*-{light,dark}.png
+     captures (refit / refit-before / autodrift) are RE-SHOT on the LIVE /substrates/constellation surface
+     (`:5199`, Chrome-headless-new ANGLE→Metal, desktop 1280 + mobile 390, both modes, the third
+     `<Constellation>` via the DEMO-PRIVATE `window.__constellationRefit` seam). The refit-coverage
+     verdict (≥90% fills box) is RE-VALIDATED on current bytes — the live re-shoot reads the canvas
+     filling its host on BOTH axes with the `window.__constellationRefit` seam LIVE.
+     Live-verified-fresh, not retire-dodged. -->
 
 **Wave:** AY.W-CON1 · **Status:** live-verified · **Verdict:** PASS (the recessive
 `--constellation-alpha` midpoints HELD — no E3 tune needed; the π readback ratified
