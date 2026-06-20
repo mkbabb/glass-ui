@@ -550,7 +550,24 @@ try {
     const routes = manifestRoutes();
     const results = [];
     for (const route of routes) {
-        results.push(await checkRoute(route));
+        // Per-route retry on a TRANSIENT throw (a CDP/navigation `waitForReady`
+        // timeout under battery load — `gates.mjs --run full` runs this after a
+        // build + 11 gates, so the dev server can be momentarily slow). A THROW is
+        // transient (re-navigate fixes it); a RETURNED result with console errors is
+        // a REAL defect (kept, never masked). Up to 3 attempts, then surface the throw.
+        let result = null;
+        let lastErr = null;
+        for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+                result = await checkRoute(route);
+                break;
+            } catch (err) {
+                lastErr = err;
+                await sleep(750);
+            }
+        }
+        if (result == null) throw lastErr;
+        results.push(result);
     }
 
     const failed = results.filter(
