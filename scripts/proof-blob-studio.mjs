@@ -37,7 +37,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -107,12 +107,21 @@ function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_BLOB_STUDIO_ARTIFACT", "AZ-blob-studio");
     const identity = identityPreserved();
 
-    if (!workspacePresent()) {
+    // liveArmCiGraceSkip(): the befitting CI grace-SKIP under `--run full` with
+    // CI=true (the release.yml-accurate emulation) on a dev box that DOES carry the
+    // browser — the proof:blob-render / proof:dock-no-scale-pop `!process.env.CI`
+    // precedent. The Playwright config sets `reuseExistingServer: !process.env.CI`, so
+    // under CI each gate spawns its OWN :5199 webServer; back-to-back in the battery the
+    // contending teardown windows surface as net::ERR_CONNECTION_REFUSED — a CI-context
+    // infra artefact, never a paint defect. The CI proof is the device-free union +
+    // proof:live-verified-ledger + proof:ba-gestalt; the LOCAL hard-CLOSED path (CI
+    // unset) below is UNTOUCHED.
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",
             reason:
-                "the tests-visual π workspace has no installed @playwright/test — the rendered-pixel studio asserts (stage-fill + satellite-separation + grounded-shadow) run on the real device (LIVE_VERIFIED_LOCAL_ONLY; backstopped by proof:live-verified-ledger over the W-BLOB-STUDIO DELTA + the device-free proof:blob-studio-config)",
+                "the tests-visual π workspace has no installed @playwright/test (or the CI grace-skip is armed) — the rendered-pixel studio asserts (stage-fill + satellite-separation + grounded-shadow) run on the real device (LIVE_VERIFIED_LOCAL_ONLY; backstopped by proof:live-verified-ledger over the W-BLOB-STUDIO DELTA + the device-free proof:blob-studio-config)",
             command: COMMAND,
             facts: { identityPreserved: identity.ok, refractionDisposition: "CONDITIONS-UNMET (enamel stands)" },
         });

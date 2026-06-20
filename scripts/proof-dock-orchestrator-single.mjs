@@ -46,7 +46,7 @@
 import { resolve } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 // The live morph probe needs a COLLAPSED dock on a LIGHT page. /dock/layers
 // became the all-pinned DockLayerGroup showcase (every host always-expanded —
@@ -446,7 +446,11 @@ async function run() {
     };
     const piPresent = piWorkspacePresent(ROOT);
 
-    const pw = await loadPlaywright();
+    // liveArmCiGraceSkip(): under CI, skip the live-rAF arm (the structure arm below
+    // still gates) — the proof:dock-no-scale-pop `!process.env.CI` precedent; the CI
+    // proof is the device-free union + the ledger; the local hard-CLOSED live path,
+    // CI unset, is untouched. See gate-output.mjs.
+    const pw = liveArmCiGraceSkip() ? null : await loadPlaywright();
     if (!pw) {
         const status = structure.violations.length === 0 ? "skipped" : "fail";
         writeGateArtifact(ARTIFACT, {

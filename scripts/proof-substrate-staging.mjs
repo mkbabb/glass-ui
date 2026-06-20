@@ -54,7 +54,13 @@ const REQUIRED_BACKDROPS = [
     // gate now BITES on (the inverted guard).
     { cat: "substrates", id: "blob", kind: "paper", hero: true },
     { cat: "substrates", id: "constellation", kind: "constellation", hero: true },
-    { cat: "substrates", id: "fourier-field", kind: "fourier", hero: true },
+    // BC: the fourier-field route's OWN <FourierField> IS the single live GPU context
+    // (one-GL-per-route), so the route declares a CALM `paper` BACKGROUND — a live
+    // `fourier` background would be a SECOND GL context (the budget breach). This
+    // mirrors the `blob` row above (its own contained mascot over a paper wash). The
+    // manifest documents the decision (manifest.ts: "The route declares a CALM `paper`
+    // background (NOT a live `fourier` field)"); the gate FOLLOWS it.
+    { cat: "substrates", id: "fourier-field", kind: "paper", hero: true },
     { cat: "compositions", id: "empty-states", kind: "paper", hero: false },
     { cat: "foundations", id: "motion", kind: "constellation", hero: false },
     { cat: "motion", id: "springs", kind: "constellation", hero: false },

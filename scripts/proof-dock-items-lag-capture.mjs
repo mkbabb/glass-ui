@@ -45,7 +45,7 @@
 import { resolve } from "node:path";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { onsetTimeMs, risingFrames, maxInterFrameJump } from "./proof-dock-animation-live.mjs";
 
 // The CORRECT collapsible-dock route (D-B: the prior gate's `/navigation/dock` route
@@ -429,7 +429,10 @@ async function run() {
     );
     const piPresent = piWorkspacePresent(ROOT);
 
-    const pw = await loadPlaywright();
+    // liveArmCiGraceSkip(): under CI, skip the live capture arm (this is a CAPTURE wave;
+    // the CI proof is the device-free union + the ledger) — the proof:dock-no-scale-pop
+    // `!process.env.CI` precedent; the local hard path, CI unset, is untouched.
+    const pw = liveArmCiGraceSkip() ? null : await loadPlaywright();
     if (!pw) {
         const status = "skipped";
         writeGateArtifact(ARTIFACT, {

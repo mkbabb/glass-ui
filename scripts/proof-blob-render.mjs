@@ -23,7 +23,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -78,12 +78,17 @@ function parseReport(path) {
 function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_BLOB_RENDER_ARTIFACT", "AX-blob-render");
 
-    if (!workspacePresent()) {
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         // Genuine device absence — befitting-silent SKIP (the zero-dep runner does
         // not carry the Playwright browser binary). This is NOT a false GREEN and NOT
         // a hard RED on a missing optional device; the orchestrator runs the
         // fail-CLOSED arm on the real Chrome. (Distinct from a wiring break — that
         // would have the workspace PRESENT and the render broken → exit 1 below.)
+        // liveArmCiGraceSkip(): the SAME befitting skip under `--run full` with
+        // CI=true (the release.yml-accurate emulation) on a dev box that DOES carry
+        // the browser — the proof:dock-no-scale-pop `!process.env.CI` precedent. The
+        // CI proof is the device-free union + proof:live-verified-ledger; the local
+        // hard-CLOSED path (CI unset) below is UNTOUCHED.
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",

@@ -145,12 +145,19 @@ export function detect() {
     // The shell docks consume the useContextualDockLayers resolver + wire the
     // section/layer switch ON the shell (the DockSection chassis + the railContext
     // one-registry write), not only on the /dock/layers story.
+    // BC.W-DOCK-STACK-RAIL retired the divider-carousel `DockRail` clean (no alias —
+    // DEFINITION-ABSENT, asserted by proof:dock-stack-rail S1) and re-pointed the rail
+    // concern to the macOS hover-expand `<DockStack>` successor (DockStack.vue, bound on
+    // both shell docks — proof:dock-stack-rail S2/S6). This M3 check FOLLOWS that
+    // retirement: it requires the LIVE `DockStack` rail surface, not the retired
+    // `DockRail` (a stale `DockRail` requirement here would force the retired component
+    // back into the shell, contradicting the BC clean break).
     function shellLayering(code) {
         return (
             /useContextualDockLayers\s*\(/.test(code) &&
             /railContext/.test(code) &&
             /DockSection/.test(code) &&
-            /DockRail/.test(code)
+            /DockStack/.test(code)
         );
     }
     assert("M3 — the SidebarDock exercises the in-situ layering/contextual switch", shellLayering(sidebar));

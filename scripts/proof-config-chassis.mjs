@@ -63,8 +63,16 @@ const layerVue = strip(read("src/components/custom/configurator/ConfiguratorLaye
 const configuratorVue = strip(read("src/components/custom/configurator/Configurator.vue"));
 const configuratorCss = strip(read("src/styles/configurator.css"));
 // BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
-// (§10); the --configurator-divider* tokens live in §10 → sizing.css.
-const offsets = strip(read("src/styles/tokens/sizing.css"));
+// (§10); the --configurator-divider* tokens live in §10. BC.W-CUT re-drained that
+// §10 tail into the cohesive leaf tokens/sizing-config.css (the no-god-module
+// drain, sizing.css:447). This reader FOLLOWS the carve into the leaf (the
+// W-CARVE4 "reader gates follow the carve into the leaf" precedent) by reading
+// BOTH the parent + the carved leaf, so the token's relocation never silently
+// de-fangs the w2 --configurator-divider declaration check.
+const offsets =
+    strip(read("src/styles/tokens/sizing.css")) +
+    "\n" +
+    strip(read("src/styles/tokens/sizing-config.css"));
 const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
 const swatchVue = strip(read("src/components/custom/color-swatch/ColorSwatch.vue"));
 const swatchBarrel = read("src/components/custom/color-swatch/index.ts");

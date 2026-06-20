@@ -125,12 +125,27 @@ function s2(sep, tokenSrc) {
     };
 }
 
-// S3 — NO `bg-background` occlusion-mask survives on the label (the trick that fails
-//      on glass is retired).
+// S3 — NO `bg-background` OCCLUSION-MASK survives on the label (the trick that fails
+//      on glass is retired). BC.W-CUT batch-1 added a SMALL flex-label CHIP backplate
+//      (`bg-background px-1.5 rounded-sm` on the shrink-0 label between two flex-1 rule
+//      segments) — the sanctioned legibility-allowlist survivor so a floated label reads
+//      over ANY host. That CHIP is NOT the retired occlusion mask: the mask was the
+//      ABSOLUTE-positioned full-width `bg-background` over a 1px line (the architecture
+//      s1 already proves is gone — flex split-rule, no absolute label). So S3 forbids the
+//      MASK specifically (a `bg-background` paired with the absolute/translate/1px-line
+//      occlusion architecture), NOT a chip on a flex-centered label. A `bg-background`
+//      that co-occurs with `absolute`/`-translate-x-1/2`/`h-[1px]`/`w-[1px]` IS the mask.
 function s3(sep) {
     if (!sep) return { pass: false, present: false };
-    const occlusionMask = /\bbg-background\b/.test(sep);
-    return { pass: !occlusionMask, present: true, occlusionMask };
+    const hasBgBackground = /\bbg-background\b/.test(sep);
+    const occlusionArchitecture =
+        /absolute/.test(sep) ||
+        /-translate-x-1\/2/.test(sep) ||
+        /\bh-\[1px\]\b/.test(sep) ||
+        /\bw-\[1px\]\b/.test(sep);
+    // The MASK = a bg-background co-occurring with the absolute-over-1px-line trick.
+    const occlusionMask = hasBgBackground && occlusionArchitecture;
+    return { pass: !occlusionMask, present: true, occlusionMask, hasBgBackground };
 }
 
 // S4 — the page hosts each demo in a <Card>; zero raw `bg-card` div; no ad-hoc p-6.
@@ -172,8 +187,16 @@ if (SELF_TEST) {
     // Bite 2 — a synthetic bare grey `bg-border` rule REDs S2.
     const greyRule = '<span class="bg-border h-px flex-1"></span>';
     if (!s2(greyRule, read(TOKEN_FILE)).pass) selfTestCount++;
-    // Bite 3 — a synthetic `bg-background` occlusion mask REDs S3.
-    if (!s3('<span class="bg-background">or</span>').pass) selfTestCount++;
+    // Bite 3 — a synthetic `bg-background` OCCLUSION MASK (the retired absolute-over-1px
+    // architecture) REDs S3. A bare `bg-background` chip on a flex label is NOT the mask
+    // (the BC.W-CUT batch-1 legibility chip survivor) and does NOT red — the bite is the
+    // mask architecture (absolute + translate over a 1px line), distinguishing the two.
+    if (
+        !s3(
+            '<span class="absolute left-1/2 -translate-x-1/2 bg-background h-[1px]">or</span>',
+        ).pass
+    )
+        selfTestCount++;
     // Bite 4 — a synthetic raw bg-card div in the page REDs S4.
     if (
         !s4('<div class="rounded-card border border-border bg-card p-6">x</div>').pass

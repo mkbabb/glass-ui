@@ -155,8 +155,16 @@ add(
 
 // ── (c) The Configurator hierarchy vocabulary — three NAMED tokens ────────────
 // BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
-// (§10); the Configurator HIERARCHY vocabulary tokens live in §10 → sizing.css.
-const offsets = strip(read("src/styles/tokens/sizing.css"));
+// (§10); the Configurator HIERARCHY vocabulary tokens live in §10. BC.W-CUT
+// re-drained that §10 tail into the cohesive leaf tokens/sizing-config.css (the
+// no-god-module drain, sizing.css:447). This reader FOLLOWS the carve into the
+// leaf (the W-CARVE4 "reader gates follow the carve into the leaf" precedent) by
+// reading BOTH the parent + the carved leaf, so a token's relocation never
+// silently de-fangs the c1/c3 declaration checks below.
+const offsets =
+    strip(read("src/styles/tokens/sizing.css")) +
+    "\n" +
+    strip(read("src/styles/tokens/sizing-config.css"));
 const configCss = strip(read("src/styles/configurator.css"));
 const layer = strip(read("src/components/custom/configurator/ConfiguratorLayer.vue"));
 

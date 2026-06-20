@@ -4,7 +4,7 @@
   (re-capture + re-pixel-read before the close). Re-stamped at the BC anti-disease close to
   the CURRENT source bytes against the fresh warm-cream LIVE-motion :5199 capture set. -->
 <!-- surface-paths: demo/stories/StoryPage.vue, demo/stories/StorySectionHeader.vue, demo/stories/story-hero.css -->
-<!-- surface-hash: 5457ad7ea708be1383cd99fe728286994f734bc60da0f7e93d017638ec8f1d51 -->
+<!-- surface-hash: 4b39e2b6c2f8aa241496013cde0e37d1d6d186bd30cf4265556a9d11323b2a21 -->
 
 # BC gestalt surface — page-band
 

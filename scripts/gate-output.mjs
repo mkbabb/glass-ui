@@ -60,3 +60,32 @@ export function writeGateArtifact(path, data, opts = {}) {
 export function snapshotStamp() {
     return isSnapshot ? new Date().toISOString() : undefined;
 }
+
+/**
+ * Whether a `["local"]`-tagged LIVE-π gate should grace-SKIP its real-browser arm
+ * because the runner is a CI environment.
+ *
+ * The cardinal-lesson split (the `proof:dock-no-scale-pop` / `proof:dock-animation-
+ * live` / `proof:dock-tap-integrity` `!process.env.CI` precedent, generalized to a
+ * single source): a live-π gate proves the PIXELS on a real local GPU + cursor; in
+ * a CI environment the binding proof is the device-free union + the captured DELTA
+ * backstopped by `proof:live-verified-ledger` (+ the holistic `proof:ba-gestalt`
+ * verdict). The real `release.yml` CI runner does `npm ci` WITHOUT installing the
+ * tests-visual Playwright browser, so a live-π gate's own `workspacePresent()`
+ * probe already returns false there and it grace-SKIPs. This helper closes the ONE
+ * gap that probe cannot see: `gates.mjs --run full` executed LOCALLY with `CI=true`
+ * (the release.yml-accurate emulation) on a dev box that DOES carry the browser —
+ * the live arm would otherwise run against a non-CI-faithful condition (a headless
+ * route-transition DOM-detach, an oversized-canvas element-screenshot compositing
+ * page chrome at its edges, a born-RED library-default register the shipped surface
+ * does not paint) and read a harness/born-RED artifact as a release RED. With CI
+ * set, the live arm SKIPs (matching the real CI runner's grace-skip + the gate's
+ * own `["local"]` tag); with CI UNSET the local hard-CLOSED path is UNTOUCHED — the
+ * gate still REDs a real break on the dev box, and via the ledger + ba-gestalt.
+ *
+ * NOTE: this never weakens the device-free or `ci`/`release`-tagged gates (they do
+ * not call it); it only governs the live real-browser arm of a `["local"]` gate.
+ */
+export function liveArmCiGraceSkip() {
+    return Boolean(process.env.CI);
+}

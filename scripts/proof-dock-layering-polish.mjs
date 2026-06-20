@@ -34,7 +34,7 @@
 
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const DOCK_ROUTE = "/navigation/dock";
 const MIN_MORPH_FRAMES = 3;
@@ -454,13 +454,16 @@ async function run() {
         "AW-dock-layering-polish",
     );
 
-    const pw = await loadPlaywright();
+    // liveArmCiGraceSkip(): under CI, skip the live behavioral arm (the CI proof is the
+    // device-free union + the ledger) — the proof:dock-no-scale-pop `!process.env.CI`
+    // precedent; the local hard path, CI unset, is untouched. See gate-output.mjs.
+    const pw = liveArmCiGraceSkip() ? null : await loadPlaywright();
     if (!pw) {
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",
             reason:
-                "no Playwright harness on this runner — run in the demo/MCP environment (npm i -D playwright + a live demo dev server) for the behavioral assert",
+                "no Playwright harness on this runner OR CI environment — run in the demo/MCP environment (npm i -D playwright + a live demo dev server) for the behavioral assert; under CI the ledger is the proof",
             command: "npm run proof:dock-layering-polish",
         });
         console.log("proof:dock-layering-polish — SKIPPED (no Playwright harness on this runner).");

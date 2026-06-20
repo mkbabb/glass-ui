@@ -192,22 +192,17 @@ function run() {
     //    anti-assertion; the gate locks the KEPT recipe + the /deck reserved guard.
     facts.deckProgressWrapperRetired = !existsSync(P.WRAPPER);
 
-    // ── STRUCTURE 4: the /deck RESERVED guard (the reserved deck-engine namespace
-    //    must NOT be squatted — the surviving namespace contract).
-    facts.noDeckSubpathFile = !existsSync(P.DECK_SUBPATH);
-    if (!facts.noDeckSubpathFile)
-        violations.push(
-            "src/subpaths/deck.ts exists — the reserved /deck deck-engine namespace must NOT be squatted",
-        );
-    if (existsSync(P.PKG)) {
-        const pkg = readFileSync(P.PKG, "utf8");
-        // The reserved guard matches `./deck` EXACTLY.
-        facts.noDeckExport = !/"\.\/deck"\s*:/.test(pkg);
-        if (!facts.noDeckExport)
-            violations.push(
-                'package.json exports a "./deck" entry — the reserved /deck namespace must NOT be consumed',
-            );
-    }
+    // ── STRUCTURE 4 (RETIRED at BC.W-DECK): the /deck namespace reservation is OVER.
+    //    AY.W-CLOSE1 reserved `/deck` for a future slides deck-engine and forbade any
+    //    `src/subpaths/deck.ts` / `./deck` export (the squat guard). BC.W-DECK shipped
+    //    the `/deck` keyboard-paged PRESENTATION register LEGITIMATELY — `src/subpaths/
+    //    deck.ts` (export * from "../components/custom/deck") + the `./deck` package
+    //    export are now the OWNED surface, gated by its own `proof:deck`. So the reserved
+    //    guard is RETIRED: it would forbid what BC.W-DECK correctly consumed. This gate
+    //    keeps ONLY the .glass-progress-rail recipe + the retired-DeckProgress-WRAPPER
+    //    locks above (orthogonal to the /deck subpath, which `proof:deck` owns). The
+    //    facts record the namespace is now consumed-by-design, not a squat.
+    facts.deckNamespaceOwnedByDeckWave = existsSync(P.DECK_SUBPATH);
 
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {

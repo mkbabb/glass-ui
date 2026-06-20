@@ -33,7 +33,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -92,21 +92,29 @@ function parseReport(path) {
 function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_BLOB_PAGE_ARTIFACT", "AZ-blob-page");
 
-    if (!workspacePresent()) {
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         // Genuine device absence — befitting-silent SKIP (the zero-dep CI runner does
         // not carry the Playwright browser binary). NOT a false GREEN and NOT a hard RED
         // on a missing optional device. The W-BLOB-PAGE visual truth is the captured
         // DELTA backstopped by proof:live-verified-ledger; the device-free GL-fence is
-        // the separate proof:blob-page-fence (which DOES run on CI).
+        // the separate proof:blob-page-fence (which DOES run on CI). The CI grace-skip
+        // (liveArmCiGraceSkip) is the SAME befitting skip for `--run full` run locally
+        // with CI=true (the release.yml-accurate emulation) where the dev box DOES carry
+        // the browser — the proof:dock-no-scale-pop `!process.env.CI` precedent; the
+        // local hard-CLOSED path (CI unset) below is untouched.
+        const ci = liveArmCiGraceSkip();
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",
-            reason:
-                "the tests-visual π workspace has no installed @playwright/test — run `npm i` in tests-visual + `npx playwright install chromium`, then a live demo dev server on :5199, for the rendered-pixel blob-page asserts (swatch-edge-crisp + satellites-separate + hero-first IA)",
+            reason: ci
+                ? "CI environment — the live π arm grace-SKIPs (the cardinal-lesson split: CI proves the device-free union + the ledger DELTA, the LOCAL real-GPU run proves the pixels). The blob-page visual truth is proof:live-verified-ledger over the W-BLOB-PAGE DELTA + the proof:ba-gestalt configurators-goo verdict; the device-free GL-fence is proof:blob-page-fence."
+                : "the tests-visual π workspace has no installed @playwright/test — run `npm i` in tests-visual + `npx playwright install chromium`, then a live demo dev server on :5199, for the rendered-pixel blob-page asserts (swatch-edge-crisp + satellites-separate + hero-first IA)",
             command: COMMAND,
         });
         console.log(
-            "proof:blob-page — SKIPPED (π workspace device absent on this runner).",
+            ci
+                ? "proof:blob-page — SKIPPED (CI environment; live π arm is LOCAL-only, ledger-backstopped)."
+                : "proof:blob-page — SKIPPED (π workspace device absent on this runner).",
         );
         console.log(
             "  The blob-page visual truth is asserted on the real device (the orchestrator runs the fail-CLOSED arm) + the ledger DELTA. The device-free GL-fence runs separately as proof:blob-page-fence.",

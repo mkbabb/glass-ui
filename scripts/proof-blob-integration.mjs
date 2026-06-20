@@ -21,7 +21,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -79,7 +79,10 @@ function run() {
         "AX-blob-integration",
     );
 
-    if (!workspacePresent()) {
+    // liveArmCiGraceSkip(): grace-SKIP the live arm under CI (the proof:dock-no-scale-pop
+    // `!process.env.CI` precedent — the CI proof is the device-free union + the ledger;
+    // the local hard-CLOSED path, CI unset, is untouched). See gate-output.mjs.
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         // Genuine device absence — befitting-silent SKIP (the zero-dep runner does not
         // carry the Playwright browser binary). NOT a false GREEN and NOT a hard RED on
         // a missing optional device; the orchestrator runs the fail-CLOSED arm on the

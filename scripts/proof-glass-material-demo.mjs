@@ -38,7 +38,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -239,11 +239,14 @@ function piArm(WORKSPACE) {
         resolve(WORKSPACE, "../node_modules/.bin/playwright"),
     ].find(existsSync);
     const SPEC = resolve(WORKSPACE, "glass-material-demo.spec.ts");
-    if (!PW_BIN || !existsSync(SPEC)) {
+    // liveArmCiGraceSkip(): grace-SKIP the live arm under CI (the proof:dock-no-scale-pop
+    // `!process.env.CI` precedent — the CI proof is the device-free union + the ledger;
+    // the local hard-CLOSED path, CI unset, is untouched). See gate-output.mjs.
+    if (!PW_BIN || !existsSync(SPEC) || liveArmCiGraceSkip()) {
         return {
             ran: false,
             status: "skip",
-            note: "π render arm SKIPPED — tests-visual Playwright workspace/spec absent (befitting-silent device absence; the orchestrator drives the chrome-devtools-mcp moving-specular + biting-tint readback per the cardinal lesson)",
+            note: "π render arm SKIPPED — tests-visual Playwright workspace/spec absent OR CI environment (befitting-silent device absence / the CI-grace-skip; the orchestrator drives the chrome-devtools-mcp moving-specular + biting-tint readback per the cardinal lesson, ledger-backstopped)",
         };
     }
     const res = spawnSync(PW_BIN, ["test", "glass-material-demo.spec.ts"], {

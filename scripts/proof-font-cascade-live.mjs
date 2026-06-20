@@ -50,7 +50,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 // AZ.W-CARVE — theme.css became a thin @import root over theme/*.css partials;
 // readMonolith concatenates root + partials in cascade order so the --font-text
 // / --font-serif @theme-inline bridges (now in theme/bridges.css) resolve.
@@ -159,7 +159,14 @@ function parseReport(path) {
 function renderArm(P) {
     const BIN = pwBin(P);
     const PKG = pwPkg(P);
-    if (BIN === null || PKG === null) {
+    // liveArmCiGraceSkip(): the befitting CI grace-SKIP under `--run full` CI=true (the
+    // release.yml emulation) on a dev box that DOES carry the browser — the
+    // proof:blob-render / proof:dock-no-scale-pop `!process.env.CI` precedent. The
+    // Playwright config sets `reuseExistingServer: !process.env.CI`, so under CI each
+    // gate spawns its OWN :5199 webServer; the contending teardown windows surface as
+    // net::ERR_CONNECTION_REFUSED — a CI-context artefact, never a paint defect. CI
+    // proves the device-free union + the ledger; the LOCAL hard arm (CI unset) is kept.
+    if (BIN === null || PKG === null || liveArmCiGraceSkip()) {
         return {
             ran: false,
             status: "skipped",

@@ -261,11 +261,27 @@ export function detectCompletionSeal(inputs) {
     // The no-re-author fence: the seal mints NO new gold token (a --seal-gold literal
     // reds — the earned-gold register lives at W-PHASE-PALETTE's --color-gold; the
     // catch-light at W-AX-METAL-GLOW's --metal-glow-*). A re-authored
-    // `--metal-glow-blur:`/`--metal-glow-opacity:` DECLARATION (not a read) reds.
+    // `--metal-glow-blur:`/`--metal-glow-opacity:` DECLARATION reds — but the seal is NOT
+    // a `.metal-*` element, so the bare `--metal-glow-*` (scoped inside .metal-{gold,
+    // silver,bronze}) do NOT cascade to it; the seal LOCALLY RE-POINTS them OFF the
+    // `--metal-glow-*-default` knob (`--metal-glow-blur: var(--metal-glow-blur-default,
+    // …)`, BC.W-CUT batch-1, completion-seal.css:62-63) so a consumer who retunes the
+    // `-default` re-tunes the seal in LOCKSTEP — that IS composing the glow (the comment
+    // names it "composed, never re-authored"). The RE-AUTHOR the fence forbids is a
+    // HARDCODED magic-number declaration that does NOT read the `-default` token. So a
+    // `--metal-glow-blur: var(--metal-glow-blur-default, …)` re-point is GREEN; a
+    // `--metal-glow-blur: 2em` literal (no `-default` read) REDS.
     const mintsSealGold = /--seal-gold\b/.test(css);
-    const reAuthorsGlow =
-        /--metal-glow-blur(-default)?\s*:/.test(css) ||
-        /--metal-glow-opacity(-default)?\s*:/.test(css);
+    const reAuthorsGlowDecl = (prop) => {
+        const re = new RegExp(`--metal-glow-${prop}\\s*:\\s*([^;]+);`, "g");
+        for (const m of css.matchAll(re)) {
+            // a declaration that READS the matching `-default` knob is the sanctioned
+            // local re-point (composes); anything else is a hardcoded re-author.
+            if (!new RegExp(`var\\(\\s*--metal-glow-${prop}-default`).test(m[1])) return true;
+        }
+        return false;
+    };
+    const reAuthorsGlow = reAuthorsGlowDecl("blur") || reAuthorsGlowDecl("opacity");
     facts.cs4 = { glintReadsMetalGlow, mintsSealGold, reAuthorsGlow };
     if (!glintReadsMetalGlow)
         violations.push(

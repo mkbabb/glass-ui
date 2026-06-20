@@ -35,7 +35,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -254,7 +254,11 @@ function run() {
     // ── the LIVE π readback arms (G-ACCENT band, G-RECESSION bite, G-SHADOW soft) ─
     let piReport = null;
     let piExit = null;
-    if (workspacePresent()) {
+    // liveArmCiGraceSkip(): under CI, skip the live π readback (the device-free source
+    // arm above still gates) — the proof:dock-no-scale-pop `!process.env.CI` precedent;
+    // the CI proof is the device-free union + the ledger; the local hard-CLOSED live
+    // path, CI unset, is untouched. See gate-output.mjs.
+    if (workspacePresent() && !liveArmCiGraceSkip()) {
         const res = spawnSync(
             PW_BIN,
             ["test", "substrate-cohesion.spec.ts", "--reporter=list,json"],

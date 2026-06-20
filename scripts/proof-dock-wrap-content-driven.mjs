@@ -37,7 +37,7 @@
 import { resolve } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
 
 // AY.W-CLOSE1 — the wrap-overflow demo dock lives in the `dock/overview` story
@@ -415,7 +415,14 @@ async function run() {
     const source = detectWrapSource(src);
     const piPresent = piWorkspacePresent(ROOT);
 
-    const pw = await loadPlaywright();
+    // liveArmCiGraceSkip(): under `--run full` CI=true (the release.yml emulation) skip
+    // the live browser arm — the proof:dock-orchestrator-single `pw = … ? null : …`
+    // precedent. The Playwright config sets `reuseExistingServer: !process.env.CI`, so
+    // under CI each gate spawns its OWN :5199 webServer; the contending teardown windows
+    // surface as connection-refused — a CI-context artefact, never a paint defect. The
+    // device-free SOURCE arm STILL hard-REDs below; the LOCAL live arm (CI unset) is
+    // UNTOUCHED. CI proves the source union + the ledger + ba-gestalt.
+    const pw = liveArmCiGraceSkip() ? null : await loadPlaywright();
     if (!pw) {
         // No browser harness reachable. The SOURCE arm STILL hard-REDs on a
         // violation; the live arm belongs to the tests-visual π workspace spec.

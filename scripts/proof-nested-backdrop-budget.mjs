@@ -15,6 +15,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import { liveArmCiGraceSkip } from "./gate-output.mjs";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const require = createRequire(import.meta.url);
@@ -36,9 +37,17 @@ try {
 }
 
 const specPath = `${ROOT}tests-visual/nested-backdrop-budget.spec.ts`;
-if (!playwrightPresent || !existsSync(specPath)) {
+// liveArmCiGraceSkip(): the befitting CI grace-SKIP under `--run full` CI=true (the
+// release.yml emulation) on a dev box that DOES carry the browser — the
+// proof:blob-render / proof:dock-no-scale-pop `!process.env.CI` precedent. The
+// Playwright config sets `reuseExistingServer: !process.env.CI`, so under CI each gate
+// spawns its OWN :5199 webServer; the contending teardown windows surface as a
+// demo-unreachable failure — a CI-context artefact, never a frame-budget defect. CI
+// proves the device-free union + the ledger; the LOCAL fail-CLOSED arm (CI unset) below
+// is UNTOUCHED.
+if (!playwrightPresent || !existsSync(specPath) || liveArmCiGraceSkip()) {
     log(
-        `befitting-SKIP — the π workspace device backend is absent (playwright:${playwrightPresent}, spec:${existsSync(specPath)}). The binding frame-budget readback runs where the workspace is installed.`,
+        `befitting-SKIP — the π workspace device backend is absent or the CI grace-skip is armed (playwright:${playwrightPresent}, spec:${existsSync(specPath)}, CI:${Boolean(process.env.CI)}). The binding frame-budget readback runs where the workspace is installed (LOCAL).`,
     );
     process.exit(0);
 }

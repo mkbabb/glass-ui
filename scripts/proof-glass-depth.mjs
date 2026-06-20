@@ -234,14 +234,23 @@ function detectClass() {
     // `.glass-opaque` precedent), NOT a competing full recipe. Assert it re-points
     // the floating blur token to the deep family AND does NOT re-declare a full
     // background/border/box-shadow block.
-    const deepRule = /\.glass-deep\s*\{([^}]*)\}/.exec(glass)?.[1] ?? "";
-    facts.deepRuleExists = deepRule.length > 0;
-    facts.deepRePointsFloating = /--glass-blur-floating:\s*var\(--glass-blur-deep\)/.test(deepRule);
-    // the no-parallel-recipe fence: .glass-deep must NOT carry a full background/
-    // box-shadow recipe (it rides the base rung's). A `background:` or `box-shadow:`
-    // declaration inside the .glass-deep block is the parallel-recipe fork.
-    facts.deepNoParallelBackground = !/background\s*:/.test(deepRule);
-    facts.deepNoParallelBoxShadow = !/box-shadow\s*:/.test(deepRule);
+    // BC: the glass monolith now carries MULTIPLE `.glass-deep` blocks — the core
+    // floating re-point (`.glass-deep { --glass-blur-floating: var(--glass-blur-deep) }`,
+    // deep.css) PLUS the W-BUTTON-GLASS button-scoped deep block
+    // (`.glass-deep { --glass-blur-btn: var(--glass-blur-deep) }`). A single-match
+    // `.exec()` picked only the FIRST block (the btn one) and missed the core re-point.
+    // Collect ALL `.glass-deep` blocks: the re-point must hold in AT LEAST ONE (the core
+    // floating re-point), and the no-parallel-recipe fence must hold across EVERY block.
+    const deepRules = [...glass.matchAll(/\.glass-deep\s*\{([^}]*)\}/g)].map((m) => m[1]);
+    facts.deepRuleExists = deepRules.length > 0;
+    facts.deepRePointsFloating = deepRules.some((r) =>
+        /--glass-blur-floating:\s*var\(--glass-blur-deep\)/.test(r),
+    );
+    // the no-parallel-recipe fence: NO `.glass-deep` block may carry a full background/
+    // box-shadow recipe (each rides the base rung's). A `background:` or `box-shadow:`
+    // declaration inside ANY .glass-deep block is the parallel-recipe fork.
+    facts.deepNoParallelBackground = deepRules.every((r) => !/background\s*:/.test(r));
+    facts.deepNoParallelBoxShadow = deepRules.every((r) => !/box-shadow\s*:/.test(r));
 
     if (!facts.deepRuleExists) {
         violations.push("D4/D5: no `.glass-deep` rule found (the opt-in deep decoration is unminted)");

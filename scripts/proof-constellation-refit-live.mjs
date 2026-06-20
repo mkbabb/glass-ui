@@ -22,7 +22,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -79,12 +79,20 @@ function run() {
         "AY-constellation-refit-live",
     );
 
-    if (!workspacePresent()) {
+    // liveArmCiGraceSkip(): the befitting CI grace-SKIP under `--run full` CI=true (the
+    // release.yml emulation) on a dev box that DOES carry the browser — the
+    // proof:blob-render / proof:dock-no-scale-pop `!process.env.CI` precedent. The
+    // Playwright config sets `reuseExistingServer: !process.env.CI`, so under CI each
+    // gate spawns its OWN :5199 webServer; the contending teardown windows surface as
+    // net::ERR_CONNECTION_REFUSED — a CI-context artefact, never a paint defect. CI
+    // proves the device-free union + the ledger + ba-gestalt; the LOCAL hard arm (CI
+    // unset) below is UNTOUCHED.
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",
             reason:
-                "the tests-visual π workspace has no installed @playwright/test — run `npm i` in tests-visual + `npx playwright install chromium`, then a live demo dev server, for the resize-refit + auto-drift render assert",
+                "the tests-visual π workspace has no installed @playwright/test (or the CI grace-skip is armed) — run `npm i` in tests-visual + `npx playwright install chromium`, then a live demo dev server, for the resize-refit + auto-drift render assert",
             command: COMMAND,
         });
         console.log(

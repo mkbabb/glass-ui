@@ -27,7 +27,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -84,7 +84,10 @@ function run() {
         "AY-aurora-arresting",
     );
 
-    if (!workspacePresent()) {
+    // liveArmCiGraceSkip(): grace-SKIP the live arm under CI (the proof:dock-no-scale-pop
+    // `!process.env.CI` precedent — the CI proof is the device-free union + the ledger;
+    // the local hard-CLOSED path, CI unset, is untouched). See gate-output.mjs.
+    if (!workspacePresent() || liveArmCiGraceSkip()) {
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
             status: "skipped",

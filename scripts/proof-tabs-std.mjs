@@ -31,7 +31,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { gateArtifactPath, liveArmCiGraceSkip, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { DELETION_SWEEP_ROOTS } from "./constellation.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
@@ -438,11 +438,22 @@ async function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_TABS_STD_ARTIFACT", "BA-tabs-std");
     const { facts, violations } = detect();
 
+    // liveArmCiGraceSkip(): under `--run full` CI=true (the release.yml emulation) skip
+    // the live browser arm entirely — the proof:dock-no-scale-pop / proof:blob-render
+    // `!process.env.CI` precedent. The Playwright config sets `reuseExistingServer:
+    // !process.env.CI`, so under CI each gate spawns its OWN :5199 webServer; the
+    // contending teardown windows surface as demo-unreachable — a CI-context artefact,
+    // never a paint defect. The device-free SOURCE arm STILL hard-REDs below; the LOCAL
+    // live arm (CI unset, workspace present → fail-CLOSED) is UNTOUCHED.
     let live = { ran: false, failClosed: false, reason: "not attempted" };
-    try {
-        live = await liveArm();
-    } catch (err) {
-        live = { ran: false, failClosed: false, error: String(err?.message ?? err) };
+    if (!liveArmCiGraceSkip()) {
+        try {
+            live = await liveArm();
+        } catch (err) {
+            live = { ran: false, failClosed: false, error: String(err?.message ?? err) };
+        }
+    } else {
+        live = { ran: false, failClosed: false, reason: "CI grace-skip (live arm is LOCAL-only)" };
     }
     facts.live = live;
 
