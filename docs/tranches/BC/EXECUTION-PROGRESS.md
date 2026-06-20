@@ -51,7 +51,10 @@
 | 27 | 10 | **CUT** (terminal, user-gated 4.x publish + slides redeploy) | pending |
 | 28 | 10 | SPEEDTEST-ADOPT/FOURIER-ASK/ATLAS-ASK (post-cut adopt sweep [‖]) | pending |
 
-## ⚠ CARDINAL CUT-CLOSE — the proof:ba-gestalt 15-surface PIXEL roster
+## ✅ CARDINAL CUT-CLOSE — DONE: proof:ba-gestalt 16/16 PASS (warm-cream pixels, real Metal; anti-disease teeth intact)
+The BB source-green/visually-broken disease CURED + PROVEN: all 16 surfaces re-captured live (32 PNGs both modes), the gate derives PASS from the actual warm-cream pixels (chroma 0.015-0.067 @ hue ~57-77°, far above the grey 0.0063 floor); the self-test (grey-RED/warm-GREEN) intact; gate scripts UNCHANGED. NEXT: proof:full → the cut.
+
+## (was) CARDINAL CUT-CLOSE — the proof:ba-gestalt 15-surface PIXEL roster
 `proof:ba-gestalt` (ci/release) is the cumulative anti-disease PIXEL ledger with **G7 auto-revoke**: editing
 any surface-path re-stales that surface's capture (FAIL) until it is **re-captured (light+dark PNG) + the
 surface-hash re-recorded + the pixel band re-read warm-translucent**. Its roster spans surfaces from ALL

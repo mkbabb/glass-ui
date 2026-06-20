@@ -1,12 +1,12 @@
-<!-- BC.W-GESTALT-FIRST — per-surface freshness record for the `glass-adaptive` gestalt surface.
+<!-- BC.W-GESTALT-FIRST — per-surface freshness record for the `dock-cta-seat` gestalt surface.
   proof:ba-gestalt G7 (auto-revoke) reads the header below: when the painting source bytes
   DRIFT from the recorded surface-hash, a PASS verdict for this surface AUTO-REVERTS to FAIL
   (re-capture + re-pixel-read before the close). Re-stamped at the BC anti-disease close to
   the CURRENT source bytes against the fresh warm-cream LIVE-motion :5199 capture set. -->
-<!-- surface-paths: src/styles/glass.css, src/styles/glass/material.css, src/styles/glass/surfaces.css -->
-<!-- surface-hash: ebd865ffad818f674cde63f0fad9d1c70a44d84b760cb1120cb9985934291c54 -->
+<!-- surface-paths: src/styles/dock/cta-seat.css -->
+<!-- surface-hash: 39225d4fef4e2562e3b00d30fa461c29a6fd767880cdd83b206eef997fee127d -->
 
-# BC gestalt surface — glass-adaptive
+# BC gestalt surface — dock-cta-seat
 
 The painting source bytes for this surface are hashed in the header above. The roster verdict
 flips PASS only with a fresh LIVE-motion :5199 capture whose pixel-read clears the warm-cream
