@@ -75,148 +75,10 @@ export function readInteractionConfig(canvas: HTMLCanvasElement): {
     return { warp, well, wander };
 }
 
-// ── Gravity-well force (AY.W-CON2) ───────────────────────────────────────────
-/** Below this strength the well force is sub-perceptual — skip the O(count) pass. */
-const WELL_EPS = 1e-3;
-/**
- * The `|v|→speed` ease-back rate (per second), ASYMMETRIC by well phase (the
- * shape-(ii) cool-down). While the well is HELD it is GENTLE
- * ({@link WELL_COOL_HELD}/s) so the inverse-square force out-paces it and the field
- * HEATS to a bounded equilibrium (the perturb the π gate reads); once RELEASED it is
- * BRISK ({@link WELL_COOL_RELEASED}/s) so the lattice re-settles to within a few % of
- * `speed` inside the ≥30-frame window (the field-cools invariant). The asymmetry is
- * what lets BOTH invariants hold at once — a single mid rate either masks the perturb
- * (too brisk) or never cools (too gentle). Preferred over the steer's hard
- * `|v|=speed` renorm because the well MUST be able to heat the field while held.
- *
- * GENTLED 1.5→0.6 (BC.W-VIZ-CONSTELLATION): the GPU-substrate migration runs the frame
- * loop at the real device refresh (~130fps), halving the per-frame `dt` vs the unit
- * dt=1/60. The held force injects LESS velocity per frame at that cadence, so a held-cool
- * fast enough to keep the field calm at 60fps over-cancelled the heat at 130fps — the
- * held-peak mean |v| collapsed to ~9% over rest (below the egg-live π gate's ≥20% floor).
- * A gentler held-cool lets the (now faster-ramping, stronger-gain) force build the
- * perturb the gate reads, while the BRISKER WELL_COOL_RELEASED (below) owns the
- * cool-down so the field still re-settles to within the ±5% COOL_TOL on release.
- *
- * WELL_COOL_RELEASED LIFTED 7.0→11.0 (BC.W-VIZ-CONSTELLATION): the same GPU-substrate
- * high-refresh cadence that starved the perturb also slowed the cool in WALL-CLOCK
- * frames — at the headless gate's throttled rAF the released ease-back rendered fewer
- * effective cool iterations within the 60-frame desktop window, so the larger perturb
- * (the stronger gain) read HOT (~7% off rest > ±5%) at the sample. A brisker released
- * ease renorms the lattice inside the window REGARDLESS of frame cadence (HELD perturb
- * untouched — this rate fires ONLY after release, `target ≤ 0`). The WELL_RELEASE_RAMP
- * strength-decay derivation (below) is unchanged: it still clears the force inside ~15
- * frames, leaving the brisker ease the rest of the window to renorm.
- */
-const WELL_COOL_HELD = 0.6;
-const WELL_COOL_RELEASED = 11.0;
-/**
- * The strength-ramp rate (per second) is ASYMMETRIC by phase, MIRRORING the cool
- * asymmetry. The ARM rate is `cfg.ramp` (the token — a gentle ≈0.25s ease so the
- * pull blooms in, not snaps). The RELEASE rate is a brisk {@link WELL_RELEASE_RAMP}
- * floor (independent of `cfg.ramp`) so on release the pull DROPS below
- * {@link WELL_EPS} within a handful of frames — the inverse-square force STOPS
- * injecting velocity, and the brisk {@link WELL_COOL_RELEASED} `|v|→speed` ease
- * then renorms the lattice to within a few % of `speed` inside the ≥30-frame
- * window (the field-cools invariant). A symmetric `cfg.ramp` release decays the
- * pull too slowly — the force keeps heating the field past the 30-frame sample,
- * so the field reads HOT at any canvas where the held equilibrium |v| sits above
- * the tolerance (the live-vs-unit `k`-scale divergence the π gate caught).
- *
- * THE 22.0 DERIVATION (F8.2 F1.3 — so the next tuner does not treat it as free):
- * `strength` decays as `(1 − min(rate/60, 1))^n` per frame at 60 fps. At
- * `rate = 22/s` the per-frame factor is `(1 − 22/60) ≈ 0.633`, so `strength`
- * falls below {@link WELL_EPS} (1e-3) in `n ≈ ln(1e-3)/ln(0.633) ≈ 15` frames —
- * about HALF the ≥30-frame cool sample. That leaves the remaining ~15+ frames for
- * the {@link WELL_COOL_RELEASED} `|v|→speed` ease to renorm the lattice inside the
- * window. A slower rate (e.g. the 4/s ARM token → ~110 frames to clear EPS) keeps
- * the force injecting velocity well past the sample → the field reads HOT. This is
- * why the release ramp is a FIXED const (F8.2), NOT the consumer `cfg.ramp` token:
- * it guards the cool invariant, so a consumer must NOT be able to slow it past the
- * §6-clause-2 cool gate.
- */
-const WELL_RELEASE_RAMP = 22.0;
-
-/**
- * Advance the gravity-well one `dt` (AY.W-CON2). A transient held-pointer force
- * composed inside `stepField` (NO new rAF): ease `well.strength` toward
- * `well.target` (1 held / 0 released) at `cfg.ramp`/s; while active, add an
- * inverse-square pull toward the held point onto each node within `cfg.reach`
- * (the `max(d, soften)` no-singularity floor + the `cfg.maxSpeed` no-slingshot
- * clamp); ALWAYS ease every node's |v| back toward `speed` (the field-cools
- * invariant — so a released well re-settles). No-ops (entirely skipped) when
- * `field.well` is undefined → the default render is byte-identical to HEAD.
- *
- * `dt` is clamped to {@link WARP_DT_CLAMP} (the same park-resume guard the warp
- * uses) so a tab-throttle gap cannot slingshot the field in one giant step.
- */
-export function stepWell(
-    field: ConstellationField,
-    k: number,
-    speed: number,
-    dt: number,
-): void {
-    const well = field.well;
-    if (!well || !(dt > 0)) return;
-    const h = Math.min(dt, WARP_DT_CLAMP);
-    const cfg = well.cfg;
-    // Ease the pull strength toward its target (1 held, 0 released) — a bounded
-    // approach so a long frame cannot overshoot the [0,1] ramp. The ARM rate is
-    // the `cfg.ramp` token (gentle bloom); the RELEASE rate is the brisk
-    // WELL_RELEASE_RAMP floor so the pull drops below WELL_EPS in a handful of
-    // frames and the force STOPS injecting velocity (the cool-down precondition).
-    const rampRate = well.target > 0 ? cfg.ramp : WELL_RELEASE_RAMP;
-    const ramp = Math.min(rampRate * h, 1);
-    well.strength += (well.target - well.strength) * ramp;
-    if (well.strength < WELL_EPS) well.strength = well.target <= 0 ? 0 : well.strength;
-
-    const { nodes } = field;
-    const reach = cfg.reach * k;
-    const reach2 = reach * reach;
-    const cap = cfg.maxSpeed * k;
-    // The cool-back fraction this frame (the |v|→speed ease toward `speed`),
-    // ASYMMETRIC: gentle while held (`target > 0` → the field heats), brisk once
-    // released (`target ≤ 0` → the field cools fast). See the WELL_COOL_* doc.
-    const coolRate = well.target > 0 ? WELL_COOL_HELD : WELL_COOL_RELEASED;
-    const cool = Math.min(coolRate * h, 1);
-    const active = well.strength > WELL_EPS && well.x >= 0;
-    // The PINNED node (AZ.W-CON-GEN G1) is exempt from the well pull AND the |v|→speed
-    // ease-back — it holds its anchor (the gentle `pinnedDrift` is the only mover).
-    const pinned = field.pinnedIndex;
-    for (let i = 0; i < nodes.length; i++) {
-        if (i === pinned) continue;
-        const p = nodes[i];
-        if (active) {
-            const dx = well.x - p.x;
-            const dy = well.y - p.y;
-            const d2 = dx * dx + dy * dy;
-            if (d2 <= reach2) {
-                const d = Math.max(Math.sqrt(d2), cfg.soften); // singularity floor
-                const a = (cfg.gain * well.strength) / (d * d); // inverse-square pull
-                let nvx = p.vx + (dx / d) * a * h;
-                let nvy = p.vy + (dy / d) * a * h;
-                const nsp = Math.hypot(nvx, nvy);
-                if (nsp > cap) {
-                    nvx = (nvx / nsp) * cap; // no-slingshot clamp
-                    nvy = (nvy / nsp) * cap;
-                }
-                p.vx = nvx;
-                p.vy = nvy;
-            }
-        }
-        // |v|→speed ease-back (the field-cools invariant). Pulls each node's speed
-        // a `cool` fraction toward `speed` every frame — while the well is held the
-        // force out-paces it (the field heats), once released it wins (the field
-        // cools back to `speed`). A node at rest (|v|≈0) is nudged up to `speed`.
-        const sp = Math.hypot(p.vx, p.vy);
-        if (sp > 1e-9) {
-            const eased = sp + (speed - sp) * cool;
-            const scale = eased / sp;
-            p.vx *= scale;
-            p.vy *= scale;
-        }
-    }
-}
+// The gravity-well FORCE (the WELL_* tuning consts + stepWell) is carved into the sibling
+// constellationWell.ts leaf (the no-god-module re-drain); re-exported below so the field
+// engine + the package barrel reach `stepWell` through this module unchanged.
+export { stepWell } from "./constellationWell";
 
 // ── Focal node + warp spring (AX.W17) ────────────────────────────────────────
 // The design thesis: drift and warp are THE SAME mechanic — "spring the focal
@@ -446,38 +308,6 @@ function easeInOutQuad(p: number): number {
     return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
 }
 
-// ── BC.W-VIZ-CONSTELLATION — the acceleration→burst (the §6 ACCEL term) ──────────
-/** The flick-burst threshold (the shared usePointerVelocityField `burst` 0..1) above which
- *  a fast flick fires the focal warp + a transient ripple (a slow drag never fires). */
-export const BURST_FIRE_THRESHOLD = 0.45;
-
-/**
- * Fire a focal BURST off a flick (the §E "reads velocity AND acceleration" mandate). A high
- * `burst` (from the shared `usePointerVelocityField`, the eased flick impulse) warps the
- * focal node toward the cursor (the warp spring snaps it) AND drops an expanding ripple at
- * the focal — the lattice "snaps the focal toward the cursor and drops an expanding ring"
- * (the WGSL ripple instance / the accent-ring overlay). A slow drag (`burst` below the
- * threshold) never fires (a steady hover is the gentle gather, not a snap). Returns true
- * when a burst fired. Composes the EXISTING `warpTo` + the ripple list — no new mechanic,
- * no second rAF (the warp rides the substrate's ONE clock); PRM is enforced by the CALLER
- * (the shared field's `tick(0)` zeroes `burst` under reduce, so this never fires).
- */
-export function fireBurst(
-    field: ConstellationField,
-    pointer: { x: number; y: number },
-    burst: number,
-    ripples: { x: number; y: number; start: number }[],
-): boolean {
-    if (!(burst >= BURST_FIRE_THRESHOLD)) return false;
-    // Warp the focal node toward the cursor (the snap). warpTo no-ops cleanly on a
-    // degenerate field; it re-points the live warp spring (the ONE focal spring).
-    warpTo(field, pointer.x, pointer.y);
-    // Drop a ripple at the focal's spring-eased position (the expanding ring). `start: -1`
-    // is stamped on the first render frame (the ripple list discipline).
-    ripples.push({ x: field.warp.x, y: field.warp.y, start: -1 });
-    return true;
-}
-
 /**
  * Advance the autonomous PINNED-ANCHOR drift one frame (AZ.W-CON-GEN G5). DISTINCT
  * from `wander` (warp re-target): this gently eases the PINNED node around its seeded
@@ -537,3 +367,36 @@ export function stepPinnedDrift(
         pd.nextAt = now + pd.minIdle + rng() * pd.jitter;
     }
 }
+
+// ── BC.W-VIZ-CONSTELLATION — the acceleration→burst (the §6 ACCEL term) ──────────
+/** The flick-burst threshold (the shared usePointerVelocityField `burst` 0..1) above which
+ *  a fast flick fires the focal warp + a transient ripple (a slow drag never fires). */
+export const BURST_FIRE_THRESHOLD = 0.45;
+
+/**
+ * Fire a focal BURST off a flick (the §E "reads velocity AND acceleration" mandate). A high
+ * `burst` (from the shared `usePointerVelocityField`, the eased flick impulse) warps the
+ * focal node toward the cursor (the warp spring snaps it) AND drops an expanding ripple at
+ * the focal — the lattice "snaps the focal toward the cursor and drops an expanding ring"
+ * (the WGSL ripple instance / the accent-ring overlay). A slow drag (`burst` below the
+ * threshold) never fires (a steady hover is the gentle gather, not a snap). Returns true
+ * when a burst fired. Composes the EXISTING `warpTo` + the ripple list — no new mechanic,
+ * no second rAF (the warp rides the substrate's ONE clock); PRM is enforced by the CALLER
+ * (the shared field's `tick(0)` zeroes `burst` under reduce, so this never fires).
+ */
+export function fireBurst(
+    field: ConstellationField,
+    pointer: { x: number; y: number },
+    burst: number,
+    ripples: { x: number; y: number; start: number }[],
+): boolean {
+    if (!(burst >= BURST_FIRE_THRESHOLD)) return false;
+    // Warp the focal node toward the cursor (the snap). warpTo no-ops cleanly on a
+    // degenerate field; it re-points the live warp spring (the ONE focal spring).
+    warpTo(field, pointer.x, pointer.y);
+    // Drop a ripple at the focal's spring-eased position (the expanding ring). `start: -1`
+    // is stamped on the first render frame (the ripple list discipline).
+    ripples.push({ x: field.warp.x, y: field.warp.y, start: -1 });
+    return true;
+}
+

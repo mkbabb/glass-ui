@@ -18,8 +18,7 @@ import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
 // The primary hero lattice's pointer interactivity toggle. The name surfaces the
 // suite-wide `interactive` enable token (aurora/dot-flow-field/concentric/fourier all
 // use it; constellation's gating prop is `pointerReactive`, which this drives) so the
-// shared pointer-velocity field is reachable on the :5199 route (proof:viz-interaction
-// V4 — the aurora dead-flow close).
+// shared pointer-velocity field is reachable on the live route.
 const interactive = ref(true);
 
 // Resolve `--primary` to a concrete color so the canvas overlay paints it (a

@@ -250,11 +250,11 @@ const interactive = computed({
                                     hide-label
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Paused (WCAG 2.2.2)" name="paused">
+                            <ConfiguratorRow label="Paused" name="paused">
                                 <LabeledSwitch
                                     :checked="paused"
                                     @update:checked="(v: boolean) => (paused = v)"
-                                    label="Paused (WCAG 2.2.2)"
+                                    label="Paused"
                                     tooltip="parks the render loop"
                                     hide-label
                                 />

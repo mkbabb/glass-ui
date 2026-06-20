@@ -58,6 +58,12 @@ export const CSS_MONOLITHS = {
             // (offsets.css §9 ANIMATION OFFSETS, then sizing.css §10 SIZING).
             "offsets.css",
             "sizing.css",
+            // BC.W-CARVE6 — sizing.css's §10 tail (MetricBadge stacked geometry +
+            // the Configurator density/HIERARCHY/divider family + the --select-font
+            // override) carved into sizing-config.css to hold the 500-line bound,
+            // @import-ed IMMEDIATELY AFTER sizing.css (adjacent :root blocks —
+            // byte-isomorphic).
+            "sizing-config.css",
             "scale-paper.css",
             // BB.W-CARVE4 — scale-paper.css's §20 scroll-driven substrate axes + the
             // BB.W-SCROLL-MOTION scroll-CHOREOGRAPHY knob family (--scroll-reveal-*/
@@ -81,6 +87,12 @@ export const CSS_MONOLITHS = {
         order: [
             "material.css",
             "ladder.css",
+            // BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register
+            // (.accent-tone: one --tone → idle/active/edge/ink), @import-ed AFTER
+            // ladder.css (it reads the warm-cream --card surface the ladder mints) and
+            // BEFORE rim.css; the SOLE writer of the --accent-* channels, so the
+            // placement is cascade-order-invariant (the dist is byte-isomorphic).
+            "accent-tone.css",
             // BB.W-CARVE4 — ladder.css's AW.W22 unified rim + the BB.W-GLASS-ACCENT
             // per-INSTANCE chromatic rim/accent group carved into rim.css, an adjacent
             // same-@layer-components block @import-ed IMMEDIATELY AFTER ladder.css (the
@@ -89,6 +101,11 @@ export const CSS_MONOLITHS = {
             // relocation is cascade-order-invariant — the dist is byte-isomorphic).
             "rim.css",
             "surfaces.css",
+            // BC.W-CARVE6 — the .input-pill / .control-surface form-control REST
+            // register carved out of surfaces.css to hold the 500-line bound,
+            // @import-ed IMMEDIATELY AFTER surfaces.css (same @layer components,
+            // same source order — the dist is byte-isomorphic).
+            "control-surfaces.css",
             "surface-axis.css",
             "reveal.css",
             // BB.W-DEEP-GLASS — the OPT-IN .glass-deep decoration (a deep blur

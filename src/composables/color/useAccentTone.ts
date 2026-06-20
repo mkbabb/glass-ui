@@ -113,7 +113,10 @@ export function useAccentTone(
             toneStop = cssToOklch(toneCss);
             surfaceStop = cssToOklch(surfaceCss);
         } catch {
-            return ""; // an unparseable tone → CSS fallback ink
+            // fail-explicit: an unparseable tone/surface token → return "" so the
+            // consumer falls back to the CSS default ink (a befitting graceful
+            // degrade for a bad consumer color, not a swallowed error).
+            return "";
         }
 
         const bandL = bandLightness(surfaceStop, toneStop, bandStrength);

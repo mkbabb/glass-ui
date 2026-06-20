@@ -280,6 +280,7 @@ const SUBPATHS: Record<string, string> = {
     "dock/morph-showcase": "@mkbabb/glass-ui/dock",
     "dock/sections": "@mkbabb/glass-ui/dock",
     "dock/cta-receive": "@mkbabb/glass-ui/dock",
+    "dock/dock-search": "@mkbabb/glass-ui/dock",
     // Data — the ledger surfaces.
     "data/table": "@mkbabb/glass-ui/data-table",
     "data/data-table": "@mkbabb/glass-ui/data-table",
@@ -924,6 +925,12 @@ export const CATEGORIES: Category[] = [
                 "CTA → Dock Morph",
                 "The external-CTA-morphs-into-dock seam — an external CTA button flies and reshapes from its own rect onto a target dock control, fades and congests into the glass, then hands off (the dock control owns the spot). The iOS bloom-from-source inverse: useDockCtaReceive composes the same element-morph substrate useLiquidReveal activates, beside the dock morph mechanism. Compositor-only (transform/opacity/filter); reduced-motion snaps the CTA to gone and hands off.",
             ),
+            s(
+                "dock",
+                "dock-search",
+                "Dock Search",
+                "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
+            ),
         ],
     },
     {
@@ -1054,7 +1061,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "scroll-system",
                 "Scroll System",
-                "useScrollTrigger — the ONE scroll reader: a continuous progress ramp AND discrete onCross/onEnter/onLeave trigger-point events off the SAME rAF-coalesced read (the shared createScrollReader core — no fourth listener). Direction (committed past the 8px flip-delta) + per-second velocity + the dual-path single-writer (native --scroll-t ramp / JS events). PRM keeps the crossings, drops the interpolation. The §3.2 trigger-point gap closed; BC.W-SCROLL-CHROME consumes it.",
+                "useScrollTrigger — the ONE scroll reader: a continuous progress ramp AND discrete onCross/onEnter/onLeave trigger-point events off the SAME rAF-coalesced read (no second listener). Direction (committed past an 8px flip-delta) plus per-second velocity, the native --scroll-t ramp where the platform drives it and a JS fallback where it does not. Reduced-motion keeps the crossings and drops the interpolation.",
             ),
             s(
                 "motion",

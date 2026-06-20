@@ -8,7 +8,7 @@
 // StoryPage's `.scroll-cascade` host (W-SCROLL-MOTION — each StorySection builds in
 // on its own view() timeline; no demo-local @keyframes). The ONE color event is
 // the TYPE itself — the ladder stays ink, the wash is the calm neutral grid (the
-// proof:suffuse one-color-event proportion held).
+// one-color-event proportion held).
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -37,8 +37,8 @@ const ladder: { cls: string; label: string; sample: string }[] = [
 ];
 
 // The audacious peaks — the tiers the flat table never showed (the visual-load-
-// bearing-by-activation rule: proof:suffuse already requires ≥2 consumers of the
-// top tiers; the type pane is a legitimate consumer). Each is a real ACTIVATED
+// bearing-by-activation rule: the top tiers earn their place by being ACTIVATED
+// on a real surface; the type pane is a legitimate consumer). Each is a real ACTIVATED
 // specimen, not a label row.
 const peaks: { cls: string; label: string; peg: string; word: string }[] = [
     { cls: "text-display-audacious", label: "display-audacious", peg: "352px peak — the fast.com number", word: "352" },

@@ -142,7 +142,7 @@ const CONTAINERS_STOP = 2;
 
         <StorySection
             label="API"
-            blurb="Slot prop `fullscreen: boolean` lets the consumer paint differently in expanded mode. The `data-part` re-skin hooks (trigger/overlay/panel + `data-mode`) and the `#expand-trigger`/`#fullscreen-chrome` replacement slots are the contracted chrome seam (proof:expandable-part)."
+            blurb="Slot prop `fullscreen: boolean` lets the consumer paint differently in expanded mode. The `data-part` re-skin hooks (trigger/overlay/panel + `data-mode`) and the `#expand-trigger`/`#fullscreen-chrome` replacement slots are the contracted chrome seam."
         />
     </StoryPage>
 </template>

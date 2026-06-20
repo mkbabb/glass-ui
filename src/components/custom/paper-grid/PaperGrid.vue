@@ -65,7 +65,9 @@ onMounted(() => {
                 try {
                     effective.lineColor = cssToOklch(fg);
                 } catch {
-                    // keep the WARM_IDENTITY_INK fallback (an unparseable token).
+                    // fail-explicit: a consumer --foreground that value.js cannot
+                    // parse falls back to the WARM_IDENTITY_INK default ink (the grid
+                    // must still paint — a befitting graceful degrade, not a swallow).
                 }
             }
         }

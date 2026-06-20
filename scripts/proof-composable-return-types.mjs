@@ -243,6 +243,9 @@ function run() {
                 "BLOB_CONFIG_KEY", "useBlobMood", "BlobMoodSystem", "useBlobPointer",
                 "BlobPointer", "useBlobSatellites", "BlobSatelliteSystem",
                 "useMetaballRenderer", "UseMetaballRendererOptions",
+                // BC — the goo-dot-matrix HYBRID shares the goo-blob field config; the
+                // `BlobVariant` discriminant rode onto the public barrel for it.
+                "BlobVariant",
             ],
         },
         "constellation/index.ts": {
@@ -295,6 +298,9 @@ function run() {
                 // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver.
                 "useDockOrientationMorph", "DockMorphOrientation",
                 "UseDockOrientationMorphOptions", "UseDockOrientationMorphReturn",
+                // BC.W-DOCK-SEARCH — the dock fuzzy-search composable surface (the
+                // useFuzzySearch consumer the dock band exposes on its composables barrel).
+                "useDockSearch", "UseDockSearchOptions", "UseDockSearchReturn",
             ],
         },
     };

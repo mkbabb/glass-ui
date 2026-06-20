@@ -183,15 +183,25 @@ add(
 );
 const inputPillBlock = glass.match(/\.input-pill\s*\{([\s\S]*?)\}/);
 const inputPill = inputPillBlock ? inputPillBlock[1] : "";
+// BC.W-CONTROL-CUSTOM — the .input-pill height/font read the cohort token as the
+// DEFAULT arm of the element-override seam (`var(--control-pill-h, var(--control-h-md))`
+// / `var(--control-pill-text, var(--control-text))`), so the `size` prop retunes the
+// field per rung via `controlSizeClass(size)` WITHOUT a recipe fork (the seam is π-bound
+// by customizability.spec.ts + search-custom.spec.ts). The clause INTENT is unchanged —
+// the cohort token is the height/font source, never a raw 2.5rem/1rem — so the positive
+// arm accepts the cohort token bare OR as the seam fallback; the negative raw-rem arm is
+// untouched (a re-introduced raw 2.5rem/1rem still reds).
 add(
     "input-pill-height-on-cohort",
-    /height:\s*var\(--control-h-md\)/.test(inputPill) && !/height:\s*2\.5rem/.test(inputPill),
-    ".input-pill height reads var(--control-h-md), no raw 2.5rem",
+    /height:\s*(?:var\(--control-pill-h,\s*)?var\(--control-h-md\)/.test(inputPill) &&
+        !/height:\s*2\.5rem/.test(inputPill),
+    ".input-pill height reads var(--control-h-md) (bare or as the --control-pill-h seam default), no raw 2.5rem",
 );
 add(
     "input-pill-font-on-control-text",
-    /font-size:\s*var\(--control-text\)/.test(inputPill) && !/font-size:\s*1rem/.test(inputPill),
-    ".input-pill font-size reads var(--control-text), no raw 1rem",
+    /font-size:\s*(?:var\(--control-pill-text,\s*)?var\(--control-text\)/.test(inputPill) &&
+        !/font-size:\s*1rem/.test(inputPill),
+    ".input-pill font-size reads var(--control-text) (bare or as the --control-pill-text seam default), no raw 1rem",
 );
 
 // ── 5. --dock-scale is RECONCILED onto the master (RED 5 — the retro-reconcile) ──

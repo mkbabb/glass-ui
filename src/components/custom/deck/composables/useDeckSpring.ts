@@ -50,7 +50,10 @@ let installed = false;
 export function installDeckSpring(): void {
     if (installed || typeof document === "undefined") return;
     installed = true;
-    void import("@mkbabb/keyframes.js")
+    // BC.W-DECK — the keyframes.js HEAVY-tier spring engine is loaded on demand so the
+    // /deck subpath ships engine-free; the declarative --spring-deck token carries first
+    // paint and the count-up keeps its cubic fallback until this resolves.
+    void import("@mkbabb/keyframes.js") // lazy-boundary: BC.W-DECK keyframes.js HEAVY-tier engine, demand-loaded; /deck ships engine-free
         .then(({ springTimingFunction }) => {
             // `springTimingFunction` returns the typed `Easing` pair ({ fn, css });
             // we read its callable curve for the count-up's per-frame sample.

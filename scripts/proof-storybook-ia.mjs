@@ -105,7 +105,10 @@ export const EXPECTED_TREE = [
     // `cta-receive` joined at BB.B2 (W-DOCKMORPH-CTA — the external-CTA-morphs-
     // into-dock receive seam, useDockCtaReceive composing the useLiquidReveal
     // ElementMorph substrate FORWARD; demonstrated, not a dock-fleet edit).
-    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections", "cta-receive"]],
+    // `dock-search` joined at BC.W-DOCK-SEARCH (the dock-as-native-dynamic-search-bar
+    // — the consumer #1 exerciser composing useDockSearch + the shipped /search
+    // useFuzzySearch matcher + the virtual-section window + the ToC scroll-to subuse).
+    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
@@ -129,8 +132,11 @@ export const EXPECTED_TREE = [
     // (the ONE scroll reader — useScrollTrigger: continuous progress + discrete
     // onCross/onEnter/onLeave trigger-points off the SAME rAF-coalesced read, the
     // §3.2 trigger-point gap closed; BC.W-SCROLL-CHROME consumes it).
+    // `deck` joined at BC.W-DECK (the full-viewport keyboard-paged aria-live
+    // PRESENTATION register — useDeck + useDeckKeyboard + <DeckPager>, DISTINCT
+    // from /carousel's item-scroller).
     ["motion", [
-        "springs", "countup", "reveal", "typewriter", "animated-digit",
+        "springs", "countup", "reveal", "deck", "typewriter", "animated-digit",
         "curve-gallery", "handmark", "scroll-vt", "scroll-system",
         "scroll-choreography", "split-chars",
     ]],

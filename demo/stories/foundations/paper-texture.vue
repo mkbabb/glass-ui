@@ -144,7 +144,7 @@ const opacity = ref(0.5);
    frequency comparison sits on a warm paper-toned base so the clean-vs-aged grain
    reads against a paper field, not the generic L16 dark card where the subtle
    turbulence difference flattens. Plain-ancestor `.dark .x` (the global-wrapped
-   ancestor scoped form is silently dropped — proof:no-scoped-global). */
+   ancestor scoped form is silently dropped). */
 .texture-panel {
     background-color: color-mix(in srgb, var(--foreground) 4%, var(--card));
 }

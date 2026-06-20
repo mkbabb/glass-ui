@@ -136,7 +136,7 @@ const boldOn = computed({
                             v-model:paused="paused"
                             class="absolute inset-0"
                         />
-                        <!-- WCAG 2.2.2 pause/play for the continuously-running field. -->
+                        <!-- Pause/play for the continuously-running field. -->
                         <div class="absolute right-3 top-3">
                             <DockBackgroundToggle v-model:paused="paused" />
                         </div>

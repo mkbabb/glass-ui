@@ -90,7 +90,7 @@ const shadows: { cls: string; label: string }[] = [
     background-color: transparent;
 }
 /* Plain-ancestor `.dark .x` form — the global-wrapped ancestor form inside a
-   scoped block is SILENTLY DROPPED (the recurring trap, proof:no-scoped-global). */
+   scoped block is SILENTLY DROPPED (the recurring trap). */
 .dark .shadow-stage {
     background-color: color-mix(in srgb, var(--foreground) 10%, var(--card));
 }

@@ -147,9 +147,9 @@ const labelId = useId();
 <style scoped>
 /* BC.W-CONTROL-SMOOTH move C (kf-G3) — the horizontal action-slot layout. These are
    NEW local elements this component renders, so scoped styling applies directly (no
-   `:global()` — the Vue-scoped-:global-drop trap, MEMORY). The default stacked layout
-   (`.labeled-field { flex-direction: column }`, utilities/base.css) is UNTOUCHED — a bare
-   `<LabeledField>` with no `#action` slot and `horizontal=false` renders byte-identical. */
+   scoped-global escape — the Vue scoped-global DROP trap, MEMORY). The default stacked
+   layout (`.labeled-field { flex-direction: column }`, utilities/base.css) is UNTOUCHED —
+   a bare `<LabeledField>` with no `#action` slot and `horizontal=false` is byte-identical. */
 
 /* The control + trailing action cell sit on the inline axis when an `#action` slot is
    present. The control flexes to fill, the action cell is intrinsic-width (the affordance

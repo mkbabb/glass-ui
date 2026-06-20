@@ -13,7 +13,7 @@
 // the blurb composed ONCE. The surviving genuine section headers (after PH3's
 // fold) compose THIS — no 42nd paste.
 //
-// IT COMPOSES, IT DOES NOT RE-PASTE (proof:icon-chip D4). The IconChip POP is the
+// IT COMPOSES, IT DOES NOT RE-PASTE. The IconChip POP is the
 // shipped <IconChip> primitive — NOT an inline `:style` chip backplate re-paste.
 // The `--section-label-accent` inline style is BAKED IN here (the `.section-label
 // --tinted` eyebrow-accent register, keyed off the section ramp index), so a

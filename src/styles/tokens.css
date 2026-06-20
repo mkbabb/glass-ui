@@ -33,6 +33,11 @@
 @import "./tokens/on-glass-fg.css";
 @import "./tokens/offsets.css";
 @import "./tokens/sizing.css";
+/* BC.W-CARVE6 — sizing.css's §10 tail (MetricBadge stacked geometry + the
+   Configurator density/HIERARCHY/divider family + the --select-font override)
+   carved into sizing-config.css to hold the 500-line bound, @import-ed IMMEDIATELY
+   AFTER sizing.css (adjacent same-selector :root blocks — byte-isomorphic). */
+@import "./tokens/sizing-config.css";
 @import "./tokens/scale-paper.css";
 @import "./tokens/scroll-tokens.css";
 @import "./tokens/light-dark.css";

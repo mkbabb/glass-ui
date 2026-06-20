@@ -338,7 +338,13 @@ const bypassNoStoryPage = [];
 const bypassSpanTitle = [];
 for (const { key, rel } of storyFiles) {
     const src = strip(read(rel));
-    const importsStoryPage = /StoryPage/.test(src);
+    // A story routes through the chassis EITHER directly (<StoryPage>) OR via the
+    // shared VizStudio chassis partial (which itself bundles <StoryPage> — the
+    // BC.W-VIZ-CONFIGURATOR-SUITE single-writer studio shape; substrates/aurora
+    // composes it). This mirrors proof:viz-configurator-suite S6's own chassis
+    // detection (`<StoryPage> || <VizStudio>`) so a viz on the shared studio
+    // chassis is not a false bypass.
+    const importsStoryPage = /StoryPage/.test(src) || /<VizStudio/.test(src);
     // intro/hero are SUPPRESSED-hero pages but STILL import StoryPage.
     if (!importsStoryPage) bypassNoStoryPage.push(key);
     // The BYPASS shape: a <header> hand-rolling a <span class="text-display-*">

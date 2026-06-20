@@ -36,48 +36,31 @@ import { usePointerVelocityField } from "../../../../composables/motion/usePoint
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { cssToOklch, oklchToGammaRgb } from "../../../../composables/color";
-import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
 import {
     useBlobMood,
     useBlobPointer,
     useBlobSatellites,
 } from "../../goo-blob";
-import {
-    BLOB_WGPU_UNIFORM_BYTES,
-    createBlobWGPUUniformScratch,
-    packBlobWGPUUniforms,
-} from "../../goo-blob/composables/uniformBridgeWGPU";
+import { packBlobWGPUUniforms } from "../../goo-blob/composables/uniformBridgeWGPU";
 import {
     uploadBlobUniforms,
     type BlobFrameState,
-    type MetaballUniformLocations,
-    type UniformName,
 } from "../../goo-blob/composables/uploadBlobUniforms";
-import {
-    MAX_SATS,
-    TRAIL_N,
-    MAX_BLOB_STOPS,
-    UNIFORM_NAMES,
-} from "../../goo-blob/constants";
-import { GOO_DOT_WGSL } from "../shaders/goo-dot.wgsl";
-import { GOO_DOT_VERT_GLSL, GOO_DOT_FRAG_GLSL } from "../shaders/goo-dot.frag";
 import type { GooDotConfig } from "../constants";
 import {
-    GOO_DOT_UNIFORM_BYTES,
-    createGooDotScratch,
     packGooDotUniforms,
     pointerModeSign,
     restingDotPointer,
     type GooDotPointerState,
 } from "./uniformBridgeWGPU";
-
-// WebGPU usage/visibility bitflags (lib.dom declares the TYPES not the VALUE namespaces).
-const BUFFER_USAGE_UNIFORM = 0x40;
-const BUFFER_USAGE_COPY_DST = 0x8;
-const SHADER_STAGE_VERTEX = 0x1;
-const SHADER_STAGE_FRAGMENT = 0x2;
-
-const GOO_DOT_LABEL = "[GooDotMatrix]";
+// The one-time GPU/GL RESOURCE construction is carved into the sibling gooDotSetup.ts leaf
+// (the no-god-module re-drain); the per-frame pack+draw closures (the field/dot-grid uniform
+// writes + the draw) stay HERE so the SHARED field SoT + the dot-grid extend read at the call site.
+import {
+    GOO_DOT_LABEL,
+    createGooDotWGPUResources,
+    createGooDotGLResources,
+} from "./gooDotSetup";
 
 export interface UseGooDotMatrixOptions {
     config: GooDotConfig;
@@ -229,6 +212,8 @@ export function useGooDotMatrix(
     }
 
     // ── The WGPU setup (Register A: the dot-stamp fragment over the spliced field) ──
+    // The one-time pipeline/buffer/bind-group build lives in the carved gooDotSetup.ts leaf;
+    // the per-frame pack+draw closure stays HERE (the field SoT + dot-grid extend at the call site).
     function buildWGPUSetup(
         canvas: HTMLCanvasElement,
     ): (
@@ -237,72 +222,7 @@ export function useGooDotMatrix(
         format: GPUTextureFormat,
     ) => WebGPUCanvasFrame {
         return function setupWGPU(device, context, format) {
-            const module = device.createShaderModule({
-                label: `${GOO_DOT_LABEL} goo-dot.wgsl`,
-                code: GOO_DOT_WGSL,
-            });
-            const fieldBuffer = device.createBuffer({
-                label: `${GOO_DOT_LABEL} field-uniforms`,
-                size: BLOB_WGPU_UNIFORM_BYTES,
-                usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
-            });
-            const dotBuffer = device.createBuffer({
-                label: `${GOO_DOT_LABEL} dot-uniforms`,
-                size: GOO_DOT_UNIFORM_BYTES,
-                usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
-            });
-            const bgl = device.createBindGroupLayout({
-                label: `${GOO_DOT_LABEL} bgl`,
-                entries: [
-                    {
-                        binding: 0,
-                        visibility: SHADER_STAGE_VERTEX | SHADER_STAGE_FRAGMENT,
-                        buffer: { type: "uniform" },
-                    },
-                    {
-                        binding: 1,
-                        visibility: SHADER_STAGE_FRAGMENT,
-                        buffer: { type: "uniform" },
-                    },
-                ],
-            });
-            const pipeline = device.createRenderPipeline({
-                label: `${GOO_DOT_LABEL} pipeline`,
-                layout: device.createPipelineLayout({ bindGroupLayouts: [bgl] }),
-                vertex: { module, entryPoint: "vs_main" },
-                fragment: {
-                    module,
-                    entryPoint: "fs_main",
-                    targets: [
-                        {
-                            format,
-                            blend: {
-                                color: {
-                                    srcFactor: "one",
-                                    dstFactor: "one-minus-src-alpha",
-                                    operation: "add",
-                                },
-                                alpha: {
-                                    srcFactor: "one",
-                                    dstFactor: "one-minus-src-alpha",
-                                    operation: "add",
-                                },
-                            },
-                        },
-                    ],
-                },
-                primitive: { topology: "triangle-list" },
-            });
-            const bindGroup = device.createBindGroup({
-                label: `${GOO_DOT_LABEL} bg`,
-                layout: bgl,
-                entries: [
-                    { binding: 0, resource: { buffer: fieldBuffer } },
-                    { binding: 1, resource: { buffer: dotBuffer } },
-                ],
-            });
-            const fieldScratch = createBlobWGPUUniformScratch();
-            const dotScratch = createGooDotScratch();
+            const res = createGooDotWGPUResources(device, format);
 
             function resize(): void {
                 const dpr = resolveBudgetDpr();
@@ -320,23 +240,23 @@ export function useGooDotMatrix(
                 const frameState = resolveFrame(timeSec);
                 // Field lanes (binding0) — the goo-blob SoT, REUSED.
                 packBlobWGPUUniforms(
-                    fieldScratch,
+                    res.fieldScratch,
                     canvas,
                     field,
                     pointer,
                     satellites,
                     frameState,
                 );
-                device.queue.writeBuffer(fieldBuffer, 0, fieldScratch.buffer);
+                device.queue.writeBuffer(res.fieldBuffer, 0, res.fieldScratch.buffer);
                 // Dot-grid lanes (binding1) — the extend.
                 packGooDotUniforms(
-                    dotScratch,
+                    res.dotScratch,
                     config,
                     { w: canvas.width || 1, h: canvas.height || 1 },
                     resolveBudgetDpr(),
                     dotPush,
                 );
-                device.queue.writeBuffer(dotBuffer, 0, dotScratch.buffer);
+                device.queue.writeBuffer(res.dotBuffer, 0, res.dotScratch.buffer);
 
                 const view = context.getCurrentTexture().createView();
                 const encoder = device.createCommandEncoder({ label: `${GOO_DOT_LABEL} frame` });
@@ -350,8 +270,8 @@ export function useGooDotMatrix(
                         },
                     ],
                 });
-                pass.setPipeline(pipeline);
-                pass.setBindGroup(0, bindGroup);
+                pass.setPipeline(res.pipeline);
+                pass.setBindGroup(0, res.bindGroup);
                 pass.draw(3, 1, 0, 0);
                 pass.end();
                 device.queue.submit([encoder.finish()]);
@@ -362,8 +282,8 @@ export function useGooDotMatrix(
                 shouldContinue,
                 resize,
                 teardown: () => {
-                    fieldBuffer.destroy();
-                    dotBuffer.destroy();
+                    res.fieldBuffer.destroy();
+                    res.dotBuffer.destroy();
                 },
             };
         };
@@ -374,73 +294,8 @@ export function useGooDotMatrix(
         canvas: HTMLCanvasElement,
     ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
         return function setupGL(gl) {
-            const vs = compileShader(gl, gl.VERTEX_SHADER, GOO_DOT_VERT_GLSL, GOO_DOT_LABEL);
-            const fs = compileShader(gl, gl.FRAGMENT_SHADER, GOO_DOT_FRAG_GLSL, GOO_DOT_LABEL);
-            const prog = linkProgram(gl, vs, fs, GOO_DOT_LABEL);
-            gl.useProgram(prog);
-
-            // The full-quad VAO (the metaball aPosition convention — uploadBlobUniforms draws it).
-            const vao = gl.createVertexArray()!;
-            gl.bindVertexArray(vao);
-            const buf = gl.createBuffer()!;
-            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-            gl.bufferData(
-                gl.ARRAY_BUFFER,
-                new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-                gl.STATIC_DRAW,
-            );
-            const aPos = gl.getAttribLocation(prog, "aPosition");
-            gl.enableVertexAttribArray(aPos);
-            gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-            // The field uniform-location cache (the SAME UNIFORM_NAMES the field GLSL declares).
-            const U = {} as Record<UniformName, WebGLUniformLocation | null>;
-            for (const n of UNIFORM_NAMES) U[n] = gl.getUniformLocation(prog, n);
-            const satPosLocs: (WebGLUniformLocation | null)[] = [];
-            const satRadLocs: (WebGLUniformLocation | null)[] = [];
-            const satOpLocs: (WebGLUniformLocation | null)[] = [];
-            for (let i = 0; i < MAX_SATS; i++) {
-                satPosLocs.push(gl.getUniformLocation(prog, `uSatPos[${i}]`));
-                satRadLocs.push(gl.getUniformLocation(prog, `uSatRadius[${i}]`));
-                satOpLocs.push(gl.getUniformLocation(prog, `uSatOpacity[${i}]`));
-            }
-            const trailPosLocs: (WebGLUniformLocation | null)[] = [];
-            const trailRadLocs: (WebGLUniformLocation | null)[] = [];
-            for (let i = 0; i < TRAIL_N; i++) {
-                trailPosLocs.push(gl.getUniformLocation(prog, `uTrailPos[${i}]`));
-                trailRadLocs.push(gl.getUniformLocation(prog, `uTrailRadius[${i}]`));
-            }
-            const paletteLocs: (WebGLUniformLocation | null)[] = [];
-            for (let i = 0; i < MAX_BLOB_STOPS; i++) {
-                paletteLocs.push(gl.getUniformLocation(prog, `uPalette[${i}]`));
-            }
-            const locs: MetaballUniformLocations = {
-                U,
-                satPosLocs,
-                satRadLocs,
-                satOpLocs,
-                trailPosLocs,
-                trailRadLocs,
-                paletteLocs,
-            };
-
-            // The dot-grid uniform locations (the extend).
-            const dU = {
-                mode: gl.getUniformLocation(prog, "uDotMode"),
-                pix: gl.getUniformLocation(prog, "uDotPixelSize"),
-                floor: gl.getUniformLocation(prog, "uFieldFloor"),
-                bright: gl.getUniformLocation(prog, "uDotBrightFloor"),
-                min: gl.getUniformLocation(prog, "uDotMin"),
-                max: gl.getUniformLocation(prog, "uDotMax"),
-                pr: gl.getUniformLocation(prog, "uDotPointerRadius"),
-                pm: gl.getUniformLocation(prog, "uDotPointerMode"),
-                pa: gl.getUniformLocation(prog, "uDotPointerActive"),
-                cursor: gl.getUniformLocation(prog, "uDotCursor"),
-                bloom: gl.getUniformLocation(prog, "uDotBloom"),
-            };
-
-            gl.enable(gl.BLEND);
-            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            const res = createGooDotGLResources(gl);
+            const { prog, vao, locs, dU } = res;
 
             function resize(): void {
                 const dpr = resolveBudgetDpr();
@@ -483,11 +338,11 @@ export function useGooDotMatrix(
                 shouldContinue,
                 resize,
                 teardown: () => {
-                    gl.deleteProgram(prog);
-                    gl.deleteShader(vs);
-                    gl.deleteShader(fs);
-                    gl.deleteBuffer(buf);
-                    gl.deleteVertexArray(vao);
+                    gl.deleteProgram(res.prog);
+                    gl.deleteShader(res.vs);
+                    gl.deleteShader(res.fs);
+                    gl.deleteBuffer(res.buf);
+                    gl.deleteVertexArray(res.vao);
                 },
             };
         };

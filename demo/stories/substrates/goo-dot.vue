@@ -89,7 +89,7 @@ function setVariant(v: GooDotVariant): void {
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch v-model="paused" />
-                    <span class="text-sm">paused (WCAG 2.2.2)</span>
+                    <span class="text-sm">paused</span>
                 </Label>
             </div>
 

@@ -66,6 +66,7 @@ const COMPOSITE_OR_RUNNER = new Map([
     ["proof:live-verified-ledger:az", "the AZ ledger composite arm — invoked by the parent ledger gate"],
     ["proof:live-verified-ledger:ba", "the BA ledger composite arm — invoked by the parent ledger gate"],
     ["proof:live-verified-ledger:bb", "the BB ledger composite arm — invoked by the parent ledger gate"],
+    ["proof:live-verified-ledger:strict", "the --strict-freshness close arm (BB.W-DELTA-RESHOOT) — runs the frozen-AY + active-BB ledger under --strict-freshness at the close; a named variant arm of the parent ledger gate (the :ax/:ay/:az/:ba/:bb sub-key precedent), load-bearing-witnessed by the gatesFor()-tagged proof:strict-freshness-armed self-test, not a standalone aggregate row"],
 ]);
 
 /**

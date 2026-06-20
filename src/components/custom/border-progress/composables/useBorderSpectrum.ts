@@ -82,7 +82,10 @@ export function spectrumStops(
     if (cached) return cached;
 
     if (onUpgrade) {
-        void import("./spectrum-walk").then(({ walkConcreteSpectrum }) => {
+        // BC.W-AX-BP-LAZY — the value.js-bearing perceptual walk is a dynamic chunk reached
+        // ONLY for concrete #hex/oklch() anchors, so the default brand-ramp /border-progress
+        // chunk stays value.js-free on its first-paint critical path.
+        void import("./spectrum-walk").then(({ walkConcreteSpectrum }) => { // lazy-boundary: BC.W-AX-BP-LAZY value.js-free fast path; perceptual walk only for concrete anchors
             const walked = walkConcreteSpectrum(stops, count);
             walkCache.set(key, walked);
             onUpgrade(walked);

@@ -134,7 +134,7 @@ const configuratorClass = computed(() =>
 
                 <!-- The full configurator (RIGHT on desktop). EVERY tunable axis is a
                      live <ConfiguratorRow>, grouped into <ConfiguratorLayer> sections;
-                     color inputs are <ColorSwatch>; a WCAG-2.2.2 pause + reduced-motion
+                     color inputs are <ColorSwatch>; a pause/play control + reduced-motion
                      respect ride here. The viz owns its axes; the chassis owns the
                      layout. -->
                 <template #controls>

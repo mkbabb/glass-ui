@@ -157,8 +157,8 @@ const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 // lean-safe); the studio inherits it.
 const STUDIO_GEO_BASE = {
     satelliteCount: 4,
-    // The orbit stays at 0.30 (> bodyRadius 0.22 — the proof:blob-page
-    // orbit-outside-body source-witness + the four-side containment ceiling both
+    // The orbit stays at 0.30 (> bodyRadius 0.22 — the orbit-outside-body
+    // relationship + the four-side containment ceiling both
     // hold; lower than 0.30 inflated the merged footprint past containment). The
     // BA.W-GOO-REDRESS bridge-hold is carried NOT by tightening this orbit but by
     // the worst-case smin band widen (uploadBlobUniforms.ts) + the capped

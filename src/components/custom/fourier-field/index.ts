@@ -1,4 +1,5 @@
 import type { ColorResolver, OklchStop } from "../../../composables/color";
+import type { FourierFieldConfig } from "./constants";
 import type { BasisComponent } from "./math";
 
 export { default as FourierField } from "./FourierField.vue";
@@ -32,7 +33,7 @@ export {
  */
 export interface FourierFieldProps {
     /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */
-    config?: import("./constants").FourierFieldConfig;
+    config?: FourierFieldConfig;
     /** An explicit CPU-minted spectrum (a curated shape's DFT). When absent, a seeded elliptic spectrum is generated. */
     spectrum?: readonly BasisComponent[];
     /** Resolve the curve palette as OKLCh (the studio themes it). */

@@ -29,7 +29,7 @@ const choices = ["Alpha", "Beta", "Gamma"];
 // `#action` slot: the canonical horizontal-action cases. Consumer #1 a clear-input
 // (an `X` that empties the field); consumer #2 a reveal-password (an eye that toggles
 // the input type). Each action button binds `:aria-label` (an icon-only button has no
-// text content — the AN.W4 name-on-the-focusable contract) + inherits `.focus-ring` +
+// text content — the name-on-the-focusable contract) + inherits `.focus-ring` +
 // `.tap-squish` + the quick `transition-control` clock + the pill radius by construction.
 const search = ref("aurora preset");
 const password = ref("hunter2");
