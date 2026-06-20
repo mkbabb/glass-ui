@@ -21,13 +21,14 @@
 
 import type { AuroraConfig } from "../../src/components/custom/aurora";
 import { DEFAULT_AURORA_CONFIG } from "../../src/components/custom/aurora";
+import { cssToOklch } from "../../src/composables/color";
 
 /** A painterly hero stop mirroring a `--section-color-*` brand hue, lifted to
  *  a pastel-wash L/C the static radial blooms used. */
-type HeroStop = { L: number; C: number; h: number };
+export type HeroStop = { L: number; C: number; h: number };
 
 /** The brand section-ramp hues this demo's heros paint with (tokens.css §colors). */
-const HERO_PALETTES = {
+const BASE_HERO_PALETTES = {
     /** hero.vue / intro.vue — rose → indigo → amber (section-color-0/2/5). */
     "rose-indigo-amber": [
         { L: 0.78, C: 0.13, h: 359.8 }, // rose      (--section-color-0)
@@ -48,6 +49,95 @@ const HERO_PALETTES = {
         { L: 0.76, C: 0.13, h: 30.4 }, // tomato    (--section-color-6)
         { L: 0.9, C: 0.04, h: 350.0 }, // warm tail
     ],
+} satisfies Record<string, HeroStop[]>;
+
+// BC.W-HERO-AUDACIOUS Part B — the 13-stop `--section-color-N` ramp as the
+// per-category hero-palette source (the untapped per-category hue source the
+// deferral named). The literals are the LIGHT-mode library token values
+// (tokens/color-radius.css §6) read AS DATA — `sectionColorToHeroPalette` parses
+// each through `cssToOklch` (value.js — `proof:single-color-core` holds, ZERO
+// re-rolled OKLCh math) and LIFTS the dark jewel L (≈0.49–0.60) into the
+// pastel-wash band the existing hero stops use, so a category hero reads DISTINCT
+// (substrates=aurora-blue, motion=constellation-violet, forms=grid-teal …) while
+// staying the calm painterly drift a text-dense hero wants.
+const SECTION_COLOR_OKLCH: readonly string[] = [
+    "oklch(0.552 0.192 359.8)", //  0 rose
+    "oklch(0.502 0.165 305.9)", //  1 purple
+    "oklch(0.484 0.163 265.5)", //  2 indigo
+    "oklch(0.542 0.089 222.8)", //  3 teal-cyan
+    "oklch(0.551 0.088 171.1)", //  4 forest
+    "oklch(0.530 0.124 69.6)", //   5 amber
+    "oklch(0.579 0.201 30.4)", //   6 tomato-red
+    "oklch(0.532 0.180 317.5)", //  7 violet
+    "oklch(0.520 0.176 8.4)", //    8 ruby
+    "oklch(0.492 0.038 239.6)", //  9 slate-blue
+    "oklch(0.556 0.103 128.8)", // 10 olive
+    "oklch(0.601 0.092 208.0)", // 11 ocean
+    "oklch(0.513 0.163 291.9)", // 12 periwinkle
+];
+
+// The pastel-wash L/C band the existing painterly hero stops occupy (HERO_PALETTES
+// above run L 0.74–0.93, C 0.03–0.13) — a jewel section hue is LIFTED into it so the
+// hero is a gentle drift, never the saturated chart ink.
+const HERO_WASH_L = 0.8; // the lifted lightness for the dominant stop
+const HERO_WASH_C_CAP = 0.13; // the chroma ceiling (the calm-drift bound)
+const HERO_CREAM_TAIL: HeroStop = { L: 0.92, C: 0.04, h: 30.0 }; // the warm-cream settle
+
+/**
+ * Derive a painterly hero palette from a `--section-color-N` ramp index — the
+ * per-category distinctness source (BC.W-HERO-AUDACIOUS Part B). Composes the
+ * `/color` leaf `cssToOklch` (value.js — no re-rolled OKLCh math) to read the
+ * section hue, then lifts it into the pastel-wash band a calm hero drifts in:
+ * a 3-stop {hue · a cooler/warmer neighbour · warm-cream tail} ramp on the ONE
+ * section hue (NOT a rainbow — the dominant stop carries the category identity).
+ */
+export function sectionColorToHeroPalette(n: number): HeroStop[] {
+    const css = SECTION_COLOR_OKLCH[((n % 13) + 13) % 13]!;
+    const { h, C } = cssToOklch(css);
+    const c = Math.min(C, HERO_WASH_C_CAP);
+    return [
+        { L: HERO_WASH_L, C: c, h }, // the category hue — the dominant wash
+        { L: HERO_WASH_L + 0.06, C: c * 0.78, h: (h + 18) % 360 }, // a near-neighbour for depth
+        { ...HERO_CREAM_TAIL }, // the warm-cream settle (the shared identity tail)
+    ];
+}
+
+/** The per-category section hue index → the hero palette KEY. The 11 categories
+ *  each get a DISTINCT section hue (the `CATEGORY_HERO` map in category-hero.ts
+ *  is the single source; this mirror is keyed by the same index so the palette
+ *  catalogue carries one entry per category). The `as const` keeps the literal
+ *  keys so `HeroPaletteKey` carries the 11 `cat-<id>` entries. */
+const CATEGORY_PALETTE_HUES = {
+    "cat-foundations": 7, // violet  — the system root
+    "cat-substrates": 3, // teal    — the GL field band (aurora-blue family)
+    "cat-forms": 2, // indigo  — the input register
+    "cat-display": 5, // amber   — the atomic primitives
+    "cat-containers": 9, // slate   — the glass surfaces
+    "cat-navigation": 11, // ocean   — the nav chrome
+    "cat-dock": 6, // tomato  — the headline primitive
+    "cat-data": 1, // purple  — the ledger band
+    "cat-feedback": 8, // ruby    — the status band
+    "cat-motion": 12, // periwinkle — the drift band (constellation-violet family)
+    "cat-compositions": 4, // forest  — the real scenes
+} as const;
+
+type CategoryPaletteKey = keyof typeof CATEGORY_PALETTE_HUES;
+
+// Compose the base painterly palettes with the 11 per-category section-derived
+// palettes (one keyed entry per category) so `HeroPaletteKey` carries both the
+// named editorial palettes AND the per-category distinct fields. The mapped-type
+// build preserves the literal `cat-<id>` keys (a bare `Object.fromEntries` widens
+// to `Record<string, …>` and erases them).
+const CATEGORY_HERO_PALETTES = Object.fromEntries(
+    (Object.keys(CATEGORY_PALETTE_HUES) as CategoryPaletteKey[]).map((key) => [
+        key,
+        sectionColorToHeroPalette(CATEGORY_PALETTE_HUES[key]),
+    ]),
+) as Record<CategoryPaletteKey, HeroStop[]>;
+
+const HERO_PALETTES = {
+    ...BASE_HERO_PALETTES,
+    ...CATEGORY_HERO_PALETTES,
 } satisfies Record<string, HeroStop[]>;
 
 export type HeroPaletteKey = keyof typeof HERO_PALETTES;

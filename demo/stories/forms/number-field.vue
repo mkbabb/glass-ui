@@ -9,10 +9,7 @@ import {
     NumberFieldInput,
 } from "../../../src/components/ui/number-field";
 import { Label } from "../../../src/components/ui/label";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { Hash } from "@lucide/vue";
-// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
-const FORMS_STOP = 3;
+
 
 const quantity = ref<number>(3);
 const tip = ref<number>(0.18);
@@ -22,27 +19,6 @@ const bounded = ref<number>(5);
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="Hash" :section="FORMS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Numeric
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Stepped numeric entry — the value display stays ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <section class="grid grid-cols-1 gap-10 md:grid-cols-2">
             <!-- Plain integer counter. -->
             <div class="flex flex-col gap-3">

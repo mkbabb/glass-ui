@@ -114,7 +114,7 @@ html.no-transition *:not([data-allow-motion])::after {
    `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
 @media (pointer: coarse) {
     [data-size="icon"],
-    .expandable-container__trigger,
+    [data-part="trigger"],
     .segmented-tabs__trigger {
         min-block-size: var(--touch-target, 2.75rem);
         min-inline-size: var(--touch-target, 2.75rem);

@@ -118,29 +118,49 @@
     --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 
-    /* BB.W-PAPER-GRID-TEXTURE — the GEOMETRIC half of the paper-cascade, the
-       peer of the organic turbulence above. Where `--paper-*-texture` are
-       feTurbulence grain fields, this is a two-frequency engineering-paper
-       grid: a 32px MINOR cell + a 128px MAJOR rule (the 4×-major blueprint
-       vocabulary the demo `.story-bg-grid` speaks, re-expressed as a library
-       token so a document-register card can opt its INTERIOR ground into the
-       line-field, not only the page margin). Unlike the organic SVG textures
-       (a baked-at-parse `opacity` URI), the grid is a STATIC `background-image`
-       gradient-STACK — a one-time compositor-cached paint, NEVER a per-frame
-       repaint. The line INK reads a `color-mix(… var(--foreground) N%, …)` so
-       it composes against the warm ink identity and re-tints with `--foreground`
-       in lockstep — never a hardcoded `hsl()` (the no-gray / token-first
-       floor). The ambient through-card strength is the ONE knob
-       `--paper-grid-opacity` (~0.08, the ask's "felt THROUGH the card ~0.08"):
-       the MINOR line ink scales off it directly and the MAJOR rule rides
-       `* 1.6` (the demo's 7%→12% engineering-paper weight step), so a consumer
-       retunes the whole grid from the single strength knob. (The strength lives
-       in the ink alpha, not a layer `opacity`, because the utility paints the
-       grid on the card's HOST `background-image` to avoid the two-pseudo-budget
-       contention with the grain `::after` / specular `::before` — see
-       cards.css.) */
+    /* BC.W-GRID-SIMPLE — the ONE engineering-graph-paper rhythm source. The
+       keyframes.js `EditorShell` magnitudes, re-expressed as `--grid-*` tokens:
+       a fine 1rem cell + a bolder 5rem major rule (the 5× engineering-graph
+       rhythm), each line a hairline-crisp single device-pixel. The pitch is
+       REM-RELATIVE — 1rem (16px at the default root) and 5rem (80px) divide
+       cleanly at DPR 1/2/3, so every line lands on a whole device-pixel column/
+       row (the anti-blur rule; the prior 28px/32px integer pitch landed on
+       sub-pixel boundaries at fractional-DPR zoom and the anti-aliaser softened
+       the 1px lines). The fine 3% is the user's "less busy substrate" — DELIBERATELY
+       BELOW the 10% legibility floor — and the major 11% is held STRICTLY ABOVE it
+       (the kf weight step). The line INK is a `color-mix(… var(--foreground) N%, …)`
+       so it re-tints with the theme by construction (warm-ink on light, lifting
+       off near-black on dark) — NO parallel `--grid-*-dark` family (the
+       `--foreground` flip re-resolves the mix; the cards.css dark-arm precedent).
+       A consumer dials it LARGER (`--grid-pitch: 1.25rem` / `--grid-major: 6.25rem`)
+       or quieter (the `--grid-line`/`--grid-line-major` strength knobs) at `:root`
+       — the token-first axis. This is the SINGLE rhythm source: the demo full-bleed
+       page grid (`.grid-bg`, story-hero.css) AND the library card-interior register
+       (`.paper-grid`, cards.css) both read it (the two-parallel-28px/32px-systems
+       fix). The LIQUID full-bleed sibling (`<PaperGrid>`, BC.W-VIZ-PAPERGRID)
+       re-uses the SAME rhythm — one pitch, two registers (static page-bg vs liquid). */
+    --grid-pitch: 1rem;
+    --grid-major: 5rem;
+    --grid-line: color-mix(in srgb, var(--foreground) 3%, transparent);
+    --grid-line-major: color-mix(in srgb, var(--foreground) 11%, transparent);
+
+    /* The library card-interior GEOMETRIC register (`.paper-grid`, cards.css) —
+       the document-register card's INTERIOR ground, felt THROUGH the glass tint.
+       It UNIFIES its pitch onto the shared `--grid-pitch` (the prior 32px literal
+       retired — ONE rhythm source) and keeps its OWN ambient through-card strength
+       register: the `--paper-grid-opacity` single knob (~0.08, the ask's "felt
+       THROUGH the card ~0.08"). DISTINCT from the page-bg 3%/11% tier above — a
+       card interior reads quieter than a full-bleed page wash — but the PITCH is
+       shared. The ink stays a `color-mix(… var(--foreground) N%, …)` (re-tints with
+       --foreground in lockstep, never a hardcoded literal — the no-gray floor); the
+       MAJOR rule rides `* 1.6` (the 0.08→0.128 weight step). The strength lives in
+       the ink alpha, not a layer `opacity`, because `.paper-grid` paints the grid on
+       the card's HOST `background-image` to avoid two-pseudo-budget contention with
+       the grain `::after` / specular `::before` (see cards.css). A STATIC raster —
+       gradient-stack `background-image`, one compositor-cached paint, never a
+       per-frame repaint. */
     --paper-grid-opacity: 0.08;
-    --paper-grid-texture-size: 32px;
+    --paper-grid-texture-size: var(--grid-pitch);
     --paper-grid-line: color-mix(
         in srgb,
         var(--foreground) calc(var(--paper-grid-opacity) * 100%),

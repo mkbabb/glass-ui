@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { onMounted, ref } from "vue";
 import { cn } from "../../../src/utils/cn";
 
@@ -138,17 +139,12 @@ onMounted(() => {
 
         <!-- The tier ladder over a vivid in-region colour field, so each rung
              reads as a distinct translucent plate rather than a white box. -->
-        <section data-testid="paper-glass-section" class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <p class="text-admin-label text-muted-foreground">
-                        Glass tiers over colour
-                    </p>
-                    <h2 class="text-subheading text-foreground">
-                        The ladder, against something
-                    </h2>
-                </div>
-            </div>
+        <StorySection
+            label="Glass tiers over colour"
+            heading="The ladder, against something"
+            gap="lg"
+            data-testid="paper-glass-section"
+        >
 
             <div
                 :class="
@@ -199,7 +195,7 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Paper-grain overlay tile: explicit grain utility on a flat surface. -->
         <div>

@@ -1,210 +1,155 @@
 <script setup lang="ts">
+// compositions/hero — the DISTINCT composition showcase (BC.W-COMPOSITIONS-HERO).
+//
+// This page was a near-verbatim clone of the front-door (`/foundations/intro`): the
+// same sequential-typing intro headline + a §01/§02/§03 three-claim grid. The user:
+// "/compositions/hero has the EXACT same content as the homepage." So it is re-authored
+// with content that is compositions' OWN — a showcase of the real composition specimens
+// the band actually carries (the dashboard / auth-shell / math-paper / form scenes), at
+// the audacious tier over its own field, the D2 MAIN of the compositions section.
+//
+// It hand-authors ONE audacious `text-display-hero` <h1> (`:hero-title="false"` so the
+// chassis does not double it — the one-<h1> discipline) + a curated bento grid of
+// <SectionPreviewCard>s linking the real scenes (each with an inline preview). The
+// homepage-clone typewriter + the 3-claim grid + the "View the source"/CTA buttons are
+// RETIRED (clean break, no alias). The per-category hue (forest — compositions) lives in
+// the IconChip + eyebrow ONLY; the title + body stay warm ink (the one-color-event rule).
 import StoryPage from "../StoryPage.vue";
-import { ArrowRight, Sparkles } from "@lucide/vue";
-import { ref } from "vue";
-import { Button } from "../../../src/components/ui/button";
-import { Card, CardContent } from "../../../src/components/ui/card";
-import { TypewriterText } from "../../../src/components/custom/typewriter";
-import { cn } from "../../../src/utils/cn";
+import SectionPreviewCard from "../SectionPreviewCard.vue";
+import { categoryHue } from "../category-hero";
+import {
+    LayoutDashboard,
+    KeyRound,
+    Sigma,
+    SlidersHorizontal,
+    ShieldCheck,
+    FileQuestion,
+} from "@lucide/vue";
 
-const wonkSettings = '"WONK" 1, "SOFT" 0';
+// The forest section hue (compositions) is the ONE color event — every card's IconChip
+// + the eyebrow read it; the audacious title + the bento bodies stay warm ink.
+const hue = categoryHue("compositions");
 
-// The hero declares a live constellation lattice on its manifest row; the page
-// chassis renders it behind a glassy hero card, so the headline reads glass-
-// first over the drifting proximity graph.
-
-// ─── Motion gate ─────────────────────────────────────────────────────────
-// Synchronous probe: SSR-safe (returns false if window absent), feeds the
-// TypewriterText v-if. Reduced-motion → static h2 fallback (radial
-// gradients carry the static case).
-const prefersReducedMotion = (() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-        return false;
-    }
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-})();
-
-const animateHeadline = !prefersReducedMotion;
-
-// ─── Typewriter prose segments ──────────────────────────────────────────
-// The hero h2 splits around the italic-f signature glyph:
-//
-//   [seg1: "A design system "][italic-f "f"][seg2: "or mathematicians,
-//   writers & makers."]
-//
-// Segment 1 types first; on `@complete`, segment 2 starts typing with a
-// short startDelay. The italic-f is static markup between the segments —
-// it appears immediately at mount (no animation), preserving the
-// signature glyph's "anchored, deliberate" visual weight while the
-// prose around it lays itself in. Cursor is hidden on segment 1 and
-// shown on segment 2 (it's the visible "in-progress" indicator at the
-// tail end of typing). Once segment 2 completes, the cursor blinks
-// briefly then stops.
-const headlineSeg1 = "A design system ";
-// The italic ℱ-glyph and the leading "or" must never break across a line ("f /
-// or…"), so the "or" rides a nowrap unit WITH the glyph; the rest of seg2 flows
-// normally (a full nowrap on the long tail would overflow a narrow viewport).
-const headlineSeg2Lead = "or";
-const headlineSeg2Rest = " mathematicians, writers & makers.";
-
-const seg1Done = ref(false);
-const seg2LeadDone = ref(false);
-
-const claims = [
+// The curated showcase — the real scenes the compositions band carries (manifest
+// `compositions` category). Each card links its route + carries its own distinct glyph
+// (all on the ONE forest hue — distinct glyph, not a per-card rainbow) + an inline
+// non-text preview thumbnail. NOT the homepage typewriter, NOT a §01/§02/§03 claims
+// grid — the things compositions actually IS.
+const scenes = [
     {
-        eyebrow: "§ 01",
-        title: "Paper & glass",
-        body: "Warm cream underpaint, SVG turbulence grain, translucent card surfaces blending multiply over the backdrop.",
+        id: "settings",
+        title: "Settings dashboard",
+        blurb: "A grouped settings shell — sectioned controls over the blueprint grid.",
+        subpath: "/compositions/settings",
+        icon: LayoutDashboard,
     },
     {
-        eyebrow: "§ 02",
-        title: "Audacious type",
-        body: "Plus Jakarta Sans display + body, golden-ratio scale from 11px micro to 110px hero.",
+        id: "auth-shell",
+        title: "Auth shell",
+        blurb: "A full-bleed sign-in scene — glass card centred over the live field.",
+        subpath: "/compositions/auth-shell",
+        icon: KeyRound,
     },
     {
-        eyebrow: "§ 03",
-        title: "Cartoon shadows",
-        body: "3px offset, no blur. Cards translate (-1, -1) on hover. The signature that defines the whole system.",
+        id: "math-paper",
+        title: "Math paper",
+        blurb: "The warm-cream paper idiom — section-accent rail + Fira-Code math block.",
+        subpath: "/compositions/math-paper",
+        icon: Sigma,
+    },
+    {
+        id: "form-validation",
+        title: "Form validation",
+        blurb: "The user-invalid / user-valid rungs, the aria-invalid bridge, an error slot.",
+        subpath: "/compositions/form-validation",
+        icon: ShieldCheck,
+    },
+    {
+        id: "configurator",
+        title: "Configurator studio",
+        blurb: "Preset row + grouped layers + a live specimen stage — aurora's real consumer.",
+        subpath: "@mkbabb/glass-ui/configurator",
+        icon: SlidersHorizontal,
+    },
+    {
+        id: "empty-states",
+        title: "Empty states",
+        blurb: "A contained GooBlob mascot — the pointer-leaning companion for a blank scene.",
+        subpath: "/compositions/empty-states",
+        icon: FileQuestion,
     },
 ];
 </script>
 
 <template>
-    <!-- :hero-title="false" — this front-door hero hand-authors its own
-         display-register headline (the typewriter composition below), promoted
-         to the document <h1>, so the chassis does not double it (W-SUFFUSE D2-1). -->
+    <!-- :hero-title="false" — this main hand-authors its own audacious <h1>, promoted
+         to the document <h1>, so the chassis does not double it (one-<h1> discipline). -->
     <StoryPage :hero-title="false">
-        <!-- The hero copy sits glass-first over the live constellation the
-             chassis renders behind this card. -->
-        <div class="px-2 py-10 md:px-6 md:py-16">
-            <div class="relative z-10 flex flex-col gap-8 max-w-4xl">
-                <div class="flex items-center gap-3">
-                    <Sparkles class="size-4 text-muted-foreground" aria-hidden="true" />
-                    <span class="section-label">
-                        v0.3 · paper-and-glass forward
-                    </span>
-                </div>
+        <!-- The compositions hero sits glass-first over the live constellation the
+             chassis renders behind this card. ONE audacious `text-display-hero` moment
+             (the D2 main rung) — the ℱ ornament is an inline serif accent, NOT a
+             typewriter sequence. The eyebrow carries the ONE color event (forest); the
+             title + the prose stay warm ink. -->
+        <section class="px-2 py-12 md:px-6 md:py-20">
+            <p class="text-admin-label mb-8 text-muted-foreground">
+                <span class="fourier-f italic">ℱ</span> compositions · real scenes
+            </p>
 
-                <!--
-                    Headline. Split around the italic-f
-                    signature glyph so the typewriter animates the prose
-                    while the f stays anchored as a static, deliberate
-                    visual mark. Segment 1 types first (no cursor — the
-                    glyph and seg 2 follow it); segment 2 types after
-                    seg 1 emits @complete, with a brief startDelay
-                    keyed off the italic-f's anchored presence. Cursor
-                    is shown on segment 2 only and blinks once typing
-                    settles. Reduced-motion → static h2 (no animation).
-                -->
-                <h1 class="text-display-4 tracking-tight">
-                    <template v-if="animateHeadline">
-                        <TypewriterText
-                            :text="headlineSeg1"
-                            :base-speed="55"
-                            :variance="0.35"
-                            :error-rate="0.008"
-                            :first-animation-speed-factor="0.7"
-                            :cursor-visible="false"
-                            :interactive="false"
-                            @complete="seg1Done = true"
-                        />
-                        <!-- The ℱ-glyph + the leading "or" are ONE nowrap unit so
-                             the line never breaks mid-word ("f / or…"). -->
-                        <span class="whitespace-nowrap">
-                            <span
-                                class="fourier-f font-display italic"
-                                :style="{
-                                    color: 'var(--viz-fourier, hsl(358 72% 52%))',
-                                    fontSize: '1.1em',
-                                    fontVariationSettings: wonkSettings,
-                                }"
-                                >f</span
-                            ><TypewriterText
-                                v-if="seg1Done"
-                                :text="headlineSeg2Lead"
-                                :base-speed="55"
-                                :variance="0.35"
-                                :error-rate="0.008"
-                                :first-animation-speed-factor="0.7"
-                                :start-delay="220"
-                                :cursor-visible="false"
-                                :interactive="false"
-                                @complete="seg2LeadDone = true"
-                        /></span>
-                        <TypewriterText
-                            v-if="seg2LeadDone"
-                            :text="headlineSeg2Rest"
-                            :base-speed="55"
-                            :variance="0.35"
-                            :error-rate="0.008"
-                            :first-animation-speed-factor="0.7"
-                            :cursor-visible="true"
-                            :cursor-blink="true"
-                            :interactive="false"
-                        />
-                    </template>
-                    <template v-else>
-                        A design system
-                        <span class="whitespace-nowrap"
-                            ><span
-                                class="fourier-f font-display italic"
-                                :style="{
-                                    color: 'var(--viz-fourier, hsl(358 72% 52%))',
-                                    fontSize: '1.1em',
-                                    fontVariationSettings: wonkSettings,
-                                }"
-                                >f</span
-                            >or</span
-                        >
-                        mathematicians, writers &amp; makers.
-                    </template>
-                </h1>
+            <h1 class="text-display-hero mb-8 max-w-5xl text-foreground">
+                Real scenes, assembled from the parts.
+            </h1>
 
-                <p class="text-prose max-w-2xl">
-                    Glass-UI pairs Vue 3.5 primitives with a warm-cream, paper-textured
-                    visual identity. Every surface composes translucent glass over a
-                    grain underpaint; every heading is set in Plus Jakarta Sans display;
-                    every card carries a cartoon shadow by default.
-                </p>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Dashboards, auth shells, the math-paper idiom — the components composed
+                into the surfaces they were built for. Warm cream, cartoon offset shadows,
+                translucent glass over a grain underpaint; the golden-ratio scale carries
+                every heading.
+            </p>
+        </section>
 
-                <div class="flex flex-wrap items-center gap-3 pt-2">
-                    <Button size="lg" variant="primary-audacious" class="gap-2">
-                        Start building
-                        <ArrowRight class="size-4" aria-hidden="true" />
-                    </Button>
-                </div>
-            </div>
-        </div>
-
-        <Card
-            class="transition-transform duration-200 hover:-translate-x-px hover:-translate-y-px"
-        >
-            <CardContent class="grid gap-0 p-0 md:grid-cols-3">
-                <div
-                    v-for="(claim, idx) in claims"
-                    :key="claim.title"
-                    :class="
-                        cn(
-                            'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(var(--card-pad-block)_+_var(--density-pad,0rem))]',
-                            idx < claims.length - 1 &&
-                                'md:border-r md:border-border/40',
-                            idx < claims.length - 1 &&
-                                'border-b border-border/40 md:border-b-0',
-                        )
-                    "
+        <!-- The composition specimen grid — one SectionPreviewCard per real scene, each
+             linking its route WITH an inline non-text preview (the chassis affordance;
+             never a text-only link). The forest hue is the ONE color event — every chip
+             reads it; the bodies stay warm ink. -->
+        <section class="mt-16">
+            <p class="text-admin-label mb-4 text-muted-foreground">The scenes</p>
+            <div
+                class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            >
+                <SectionPreviewCard
+                    v-for="(scene, idx) in scenes"
+                    :key="scene.id"
+                    :to="scene.subpath.startsWith('/') ? scene.subpath : `/compositions/${scene.id}`"
+                    :title="scene.title"
+                    :blurb="scene.blurb"
+                    :subpath="scene.subpath"
+                    :icon="scene.icon"
+                    :section="hue"
+                    :lead="idx === 0"
                 >
-                    <span
-                        class="section-label"
-                        :style="{ color: `var(--section-color-${idx * 2}, inherit)` }"
-                    >
-                        {{ claim.eyebrow }}
-                    </span>
-                    <h3 class="text-heading">{{ claim.title }}</h3>
-                    <p class="text-small text-muted-foreground leading-relaxed">
-                        {{ claim.body }}
-                    </p>
-                </div>
-            </CardContent>
-        </Card>
+                    <template #preview>
+                        <div class="composition-scene-thumb">
+                            <component
+                                :is="scene.icon"
+                                :size="34"
+                                :stroke-width="1.5"
+                            />
+                        </div>
+                    </template>
+                </SectionPreviewCard>
+            </div>
+        </section>
     </StoryPage>
 </template>
+
+<style scoped>
+/* The budget-safe scene thumbnail — a bounded inert glyph-over-tint render (no GL, no
+   second live context — the one-GL-per-route budget; the constellation field the chassis
+   paints is the page's ONE live context). */
+.composition-scene-thumb {
+    display: grid;
+    place-items: center;
+    block-size: 7rem;
+    color: color-mix(in oklab, var(--foreground), transparent 55%);
+}
+</style>

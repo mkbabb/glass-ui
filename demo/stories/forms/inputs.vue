@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { SearchBar } from "../../../src/components/custom/search";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { TextCursorInput } from "@lucide/vue";
-// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
-const FORMS_STOP = 3;
+
 
 const plain = ref("");
 const withLabel = ref("");
@@ -18,40 +16,16 @@ const pillBare = ref("");
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the forms-band identity event family (the tinted
-             eyebrow + the accent rail + the focal IconChip, all on --section-color-3). -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="TextCursorInput" :section="FORMS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Text entry
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Inputs and search — the field controls stay ink; the section
-                    identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Default</h2>
+        <StorySection heading="Default" gap="lg">
             <p class="text-small text-muted-foreground">
                 Bare <code class="fira-code">Input</code>, no label.
             </p>
             <div class="max-w-sm">
                 <Input v-model="plain" placeholder="Type something…" />
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">With label</h2>
+        <StorySection heading="With label" gap="lg">
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">Label</code> + <code class="fira-code">Input</code>,
                 explicit <code class="fira-code">for</code> binding.
@@ -60,10 +34,9 @@ const pillBare = ref("");
                 <Label for="story-email">Email</Label>
                 <Input id="story-email" v-model="withLabel" type="email" placeholder="name@domain.tld" />
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">With error</h2>
+        <StorySection heading="With error" gap="lg">
             <p class="text-small text-muted-foreground">
                 Error messaging lives below the field and borrows the
                 <code class="fira-code">destructive</code> token.
@@ -81,10 +54,9 @@ const pillBare = ref("");
                     That doesn&rsquo;t look like an email address.
                 </p>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Disabled</h2>
+        <StorySection heading="Disabled" gap="lg">
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">disabled</code> attribute dims opacity and blocks pointer events.
             </p>
@@ -96,10 +68,9 @@ const pillBare = ref("");
                     disabled
                 />
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">SearchBar</h2>
+        <StorySection heading="SearchBar" gap="lg">
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">SearchBar</code> from
                 <code class="fira-code">@/components/custom/search</code>, icon baked in.
@@ -107,10 +78,9 @@ const pillBare = ref("");
             <div class="max-w-sm">
                 <SearchBar v-model="searchTerm" placeholder="Search the catalogue…" />
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">.input-pill utility</h2>
+        <StorySection heading=".input-pill utility" gap="lg">
             <p class="text-small text-muted-foreground">
                 Raw <code class="fira-code">.input-pill</code> from
                 <code class="fira-code">glass.css</code>, no component wrapper.
@@ -123,6 +93,6 @@ const pillBare = ref("");
                     aria-label="bare pill input"
                 >
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

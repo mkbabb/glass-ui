@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import {
     Home,
     Search,
@@ -49,8 +50,7 @@ const sections: readonly DockSectionDescriptor[] = [
              `display: contents` chrome over the existing controls — NO net-new GL/
              substrate context (the one-GL-per-route budget holds). -->
         <DockStage #default="{ backgroundCanvas }">
-            <section class="flex flex-col gap-3">
-                <h2 class="text-subheading">Declarative tripartite sections</h2>
+            <StorySection heading="Declarative tripartite sections" gap="md">
                 <p class="text-sm text-muted-foreground">
                     One <code class="rounded bg-muted px-1">sections</code> descriptor
                     array drives the dock's
@@ -101,7 +101,7 @@ const sections: readonly DockSectionDescriptor[] = [
                     The nav-separator seam is the rail's default anchor (the
                     <code class="rounded bg-muted px-1">anchorId</code> prop overrides it).
                 </p>
-            </section>
+            </StorySection>
         </DockStage>
     </StoryPage>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "../../../src/components/custom/dock";
@@ -61,8 +62,7 @@ function back() {
              panels become transparent `.dock-stage-tile` framed slots so the
              DockLayerGroup glass floats over the live field. -->
         <DockStage #default="{ backgroundCanvas }">
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Drill-in navigation</h2>
+        <StorySection heading="Drill-in navigation" gap="md">
             <p class="text-small text-muted-foreground">
                 Root pane shows three entry points. Clicking one swaps the pane; the dock resizes in place.
             </p>
@@ -114,10 +114,9 @@ function back() {
                     </DockLayerGroup>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Switcher rail — pull-to-switch</h2>
+        <StorySection heading="Switcher rail — pull-to-switch" gap="md">
             <p class="text-small text-muted-foreground">
                 Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.
@@ -146,10 +145,9 @@ function back() {
                     </DockLayerGroup>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Rail-hosted layer stack</h2>
+        <StorySection heading="Rail-hosted layer stack" gap="md">
             <p class="text-small text-muted-foreground">
                 A layer group inside a <code class="rounded bg-muted px-1">GlassDock orientation="vertical"</code>
                 inherits the dock's vertical orientation without a duplicate prop.
@@ -187,10 +185,9 @@ function back() {
                     </DockLayerGroup>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Collapse while switching layers</h2>
+        <StorySection heading="Collapse while switching layers" gap="md">
             <p class="text-small text-muted-foreground">
                 A layer group inside a <strong>collapsible</strong> dock. Hover to expand;
                 switch panes via the rail. The dock box and the nested pane stack morph on
@@ -222,10 +219,9 @@ function back() {
                     </template>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Vertical overflow — a tall pane scrolls cleanly</h2>
+        <StorySection heading="Vertical overflow — a tall pane scrolls cleanly" gap="md">
             <p class="text-small text-muted-foreground">
                 A vertical <code class="rounded bg-muted px-1">DockLayerGroup</code> whose active
                 pane carries more rows than the resting height — it scrolls its own block axis
@@ -267,18 +263,17 @@ function back() {
                     </DockLayerGroup>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="text-small flex flex-col gap-2 text-muted-foreground">
-            <h2 class="text-subheading text-foreground">Mechanics</h2>
-            <ol class="list-decimal space-y-1 pl-5">
+        <StorySection heading="Mechanics" gap="sm">
+            <ol class="text-small list-decimal space-y-1 pl-5 text-muted-foreground">
                 <li>Capture the container's current dimension, pin it inline.</li>
                 <li>Swap active/leaving classes on the panes (grid-stacked at <code class="rounded bg-muted px-1">1 / 1</code>).</li>
                 <li>Measure the new pane's natural dimension on <code class="rounded bg-muted px-1">nextTick</code>.</li>
                 <li>Re-pin to old dimension, then transition to new on the next frame.</li>
                 <li>Clear inline dimension on <code class="rounded bg-muted px-1">transitionend</code>.</li>
             </ol>
-        </section>
+        </StorySection>
         </DockStage>
     </StoryPage>
 </template>

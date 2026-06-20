@@ -28,6 +28,18 @@
        paper tier, exactly like `.paper-texture` / `cartoon-surface` /
        `veil-surface`.
 
+       BC.W-GRID-SIMPLE — the card-interior pitch UNIFIES onto the ONE
+       `--grid-*` rhythm source: `--paper-grid-texture-size` now reads
+       `var(--grid-pitch)` (scale-paper.css), retiring the prior 32px literal so
+       the demo page grid + this card interior share ONE pitch (the
+       two-parallel-28px/32px-systems fix). This card-interior register keeps its
+       OWN quieter ambient strength (`--paper-grid-opacity`), DISTINCT from the
+       full-bleed page-bg 3%/11% tier — a card interior reads softer than a page
+       wash. It is a host `background-image` only — NO `backdrop-filter`/`filter`
+       on this element, so the grid lines are NEVER convolved into the "blurry
+       mess" the page grid suffered (the de-blur discipline: the grid is the
+       card's own underlay, not a crisp grid read THROUGH a blurred glass plate).
+
        THE SEAM (the two-pseudo-budget reveal, recorded — the Triumvirate's
        through-glass-read locate-the-seam, NOT a token-α loop): a glass tier
        already claims BOTH pseudos — `::before` is the moving-specular catch-

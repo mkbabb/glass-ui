@@ -103,10 +103,15 @@ export function detect() {
         "StoryHero renders <FourierField> behind the card",
         /<FourierField[\s>]/.test(storyHeroCode),
     );
-    assert(
-        "StoryHero renders the .story-bg-grid substrate",
-        /story-bg-grid/.test(storyHeroCode),
-    );
+    // BC.W-GRID-SIMPLE clean break (no alias): the `.story-bg-grid` 28px/center
+    // recipe was ABROGATED and re-expressed as the crisp full-bleed `.grid-bg`
+    // page wash off the shared `--grid-*` rhythm. The grid-substrate assert is
+    // RETIRED here and re-pointed to `proof:grid-simple` (G1–G6 own the new
+    // recipe end-to-end: the abrogation is clean, the `--grid-*` tokens exist,
+    // crisp-by-construction, full-bleed, warm-ink, no-GL). Asserting the old
+    // `story-bg-grid` here would now RED on the supersession and duplicate
+    // grid-simple's single-source coverage. StoryHero STILL renders the grid
+    // backdrop — `.grid-bg` (the new class), proven by proof:grid-simple G2/G3.
     assert(
         "StoryHero renders the paper-grain substrate",
         /paper-grain-overlay/.test(storyHeroCode),
@@ -138,25 +143,20 @@ export function detect() {
             /intensity\?:/.test(auroraHero),
     );
 
-    // ── 3. The .story-bg-grid blueprint-grid recipe exists, token-driven. ──
+    // ── 3. story-hero.css is wired into the cascade. ──
     assert(
         "story-hero.css exists + is wired into the demo cascade",
         heroCss.length > 0 && /story-hero\.css/.test(demoCss),
     );
-    assert(
-        ".story-bg-grid recipe exists",
-        /\.story-bg-grid\s*\{/.test(heroCss),
-    );
-    assert(
-        ".story-bg-grid is a token-driven linear-gradient grid",
-        /--story-grid-size/.test(heroCss) &&
-            /--story-grid-color/.test(heroCss) &&
-            /linear-gradient/.test(heroCss),
-    );
-    assert(
-        ".story-bg-grid is light + dark token-adaptive",
-        /\.dark\s*\{[\s\S]*--story-grid-color/.test(heroCss),
-    );
+    // The three `.story-bg-grid` recipe asserts (recipe-exists / token-driven /
+    // dark-adaptive over `--story-grid-size`/`--story-grid-color`) are RETIRED at
+    // BC.W-GRID-SIMPLE (the clean-break supersession, no alias). They asserted the
+    // OLD 28px/center recipe that `proof:grid-simple` now ABROGATES — keeping them
+    // would directly contradict grid-simple's G1 (`--story-grid-*` must be GONE).
+    // The NEW crisp full-bleed `.grid-bg`/`--grid-*` recipe is owned end-to-end by
+    // `proof:grid-simple` (G2 the rhythm tokens + foreground-flip-not-parallel-dark-
+    // family, G3 crisp construction, G4 full-bleed) — the single-gate coverage moves
+    // there intact. See proof-grid-simple.mjs.
 
     // ── 4. StoryPage hosts StoryHero (the universal container). ──
     assert(
@@ -240,13 +240,25 @@ export function detect() {
         // studio CHROME, not a render-background substrate page — the same exempt
         // class as glass-material/blob (demos over paper, never self-demos a field).
         if (m[1] === "fourier-studio") continue;
-        // dot-flow-field + concentric (BB.W-VIZ-SUITE): the two NEW WebGPU-first viz
-        // mount CONTAINED in the story body over a calm grid wash (the field is its OWN
-        // single GL/compute context — the one-GL-per-route budget held), the same
-        // exempt class as fourier-studio/blob (a contained-demo over a calm wash, never
-        // a self-demo'd page-background field — the StoryBackground kinds stay the four
-        // hero substrates aurora/blob/constellation/fourier).
-        if (m[1] === "dot-flow-field" || m[1] === "concentric") continue;
+        // dot-flow-field + concentric (BB.W-VIZ-SUITE) + paper-grid + dot-matrix +
+        // goo-dot (BC.W-VIZ-SUITE/VIZ-HYBRID) + fourier-field (BC.W-VIZ-FOURIER, the
+        // three-view collapse): each NEW WebGPU-first viz mounts CONTAINED in the story
+        // body over a calm grid/paper wash (the field is its OWN single GL/compute
+        // context — the one-GL-per-route budget held), so each route DELIBERATELY
+        // declares a CALM static background (grid for the viz-suite cohort, paper for
+        // the fourier-field collapse) rather than self-demoing a page-background field.
+        // The same exempt class as fourier-studio/blob (a contained-demo over a calm
+        // wash, never a self-demo'd page-background field — the StoryBackground kinds
+        // stay the four hero substrates aurora/blob/constellation/fourier).
+        if (
+            m[1] === "dot-flow-field" ||
+            m[1] === "concentric" ||
+            m[1] === "paper-grid" ||
+            m[1] === "dot-matrix" ||
+            m[1] === "goo-dot" ||
+            m[1] === "fourier-field"
+        )
+            continue;
         assert(
             `substrates/${m[1]} self-demos its own substrate (${own})`,
             kind === own,
@@ -326,7 +338,7 @@ function run() {
     );
     console.log(`  StoryHero glass container : ${facts["StoryHero composes a glass Card"]}`);
     console.log(`  background descriptor seam: ${facts["Story interface carries background?: StoryBackground"]}`);
-    console.log(`  .story-bg-grid recipe     : ${facts[".story-bg-grid recipe exists"]}`);
+    console.log(`  grid recipe (→ grid-simple): RETIRED at BC.W-GRID-SIMPLE (proof:grid-simple owns .grid-bg/--grid-*)`);
     console.log(`  StoryPage hosts StoryHero : ${facts["StoryPage composes <StoryHero> around the body slot"]}`);
     console.log(`  hero substrates           : ${JSON.stringify(facts.heroSubstrates)}`);
     console.log(`  unique per hero           : ${facts["each hero declares a UNIQUE substrate (no two the same)"]}`);

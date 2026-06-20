@@ -274,3 +274,34 @@
     }
 
 }
+
+/* ── @utility ghost-slot (BC.W-GHOST-DASHED) ────────────────────────────────
+   The ONE dashed-outline placeholder register: everywhere a slot is empty / a
+   thing is a placeholder / an affordance is "add something here", the surface
+   reads this — a dashed-outline plate, consistently rounded (--radius-card),
+   calm-muted, that reads unmistakably "this is a placeholder, not a filled
+   surface." The 6 ad-hoc `rounded-{md,2xl,card} border border-dashed
+   border-border bg-{card,background}` forks (three radii, three hosts, three
+   pads) COLLAPSE onto this ONE register: ONE radius, ONE faint-wash host, ONE
+   muted ink, ONE warm dashed hairline.
+
+   WARM-NOT-GREY (BA.W-NO-GRAY): the dashed hairline is the warm-ink at 22%
+   (a color-mix off --foreground, the warm identity), NEVER a grey
+   `border-border` — the ghost must read warm-material, not grey.
+
+   GLASS-ADJACENT, not opaque: the host is a faint glass-wash (the rebuilt W55
+   material reads THROUGH it), NOT a flat opaque `bg-card` slab — so the ghost
+   reads "empty," not "filled," and the D1 grey-plate regression cannot re-enter
+   through the placeholder.
+
+   THE FENCE (binding both ways): this is the RECTANGULAR-placeholder register.
+   The `WatercolorDot variant="ghost"` (the seeded-blob SILHOUETTE traced as a
+   dashed stroke — the empty-PALETTE-slot affordance) is a DISTINCT register;
+   neither forks the other. .ghost-slot is never applied to a blob-silhouette
+   slot, and the watercolor ghost never adopts this rectangle recipe. */
+@utility ghost-slot {
+    border: 1px dashed color-mix(in srgb, var(--foreground) 22%, transparent);
+    border-radius: var(--radius-card);
+    background: color-mix(in oklab, var(--glass-bg-wash), transparent 40%);
+    color: var(--muted-foreground);
+}

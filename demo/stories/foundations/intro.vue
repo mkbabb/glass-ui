@@ -3,11 +3,12 @@ import { computed } from "vue";
 import StoryPage from "../StoryPage.vue";
 import SectionPreviewCard from "../SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
+import { categoryHero } from "../category-hero";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
 // the page chassis renders it behind a glassy hero card so the title sits glass-
-// first over the brand painterly drift. The body here is just the hero copy + the
-// category index — the substrate comes from the container layer.
+// first over the brand painterly drift. The body here is the ONE audacious hero
+// moment + the category index — the substrate comes from the container layer.
 
 // Per-category one-line summaries for the front-door index. The category SET is
 // derived from the live manifest (the single source the rail + docks read) so
@@ -29,32 +30,24 @@ const SUMMARIES: Record<string, string> = {
 
 // The first item leads the grid (a wider span); the rest rest — a small
 // lead/rest rhythm so the set is not eight identical boxes. Each card carries the
-// category's own icon + its landing subpath (the route identity) + an inline
-// non-text preview (BC.W-PAGE-CHASSIS — the front door is a section-landing peer;
-// no text-only redirect card survives, PC7).
-const SECTION_HUE: Record<string, number> = {
-    foundations: 7,
-    substrates: 3,
-    forms: 2,
-    display: 5,
-    containers: 9,
-    navigation: 12,
-    dock: 6,
-    data: 1,
-    feedback: 8,
-    motion: 7,
-    compositions: 4,
-};
+// category's DISTINCT icon + section hue from the ONE CATEGORY_HERO source (the
+// per-category {icon, sectionHue} — never a hand-rolled SECTION_HUE duplicate),
+// its landing subpath (the route identity), and an inline non-text preview
+// (BC.W-HERO-AUDACIOUS — the front door is a section-landing peer; the cards link
+// the 11 section LANDINGS, each preview a budget-safe still).
 const categories = computed(() =>
-    CATEGORIES.filter((c) => !c.reference).map((c, idx) => ({
-        slug: c.id,
-        title: c.title,
-        blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
-        subpath: c.landing?.subpath ?? `/${c.id}`,
-        icon: c.icon,
-        section: SECTION_HUE[c.id] ?? 7,
-        lead: idx === 0,
-    })),
+    CATEGORIES.filter((c) => !c.reference).map((c, idx) => {
+        const hero = categoryHero(c.id);
+        return {
+            slug: c.id,
+            title: c.title,
+            blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
+            subpath: c.landing?.subpath ?? `/${c.id}`,
+            icon: hero?.icon ?? c.icon,
+            section: hero?.sectionHue ?? 7,
+            lead: idx === 0,
+        };
+    }),
 );
 </script>
 
@@ -63,29 +56,27 @@ const categories = computed(() =>
          display-register <h1> (the wordmark + tagline composition), so the
          chassis does not render a duplicate hero title (AZ.W-SUFFUSE D2-1). -->
     <StoryPage :hero-title="false">
-        <!-- The hero copy sits glass-first over the live aurora the chassis
-             renders behind this card. -->
+        <!-- The front-door hero sits glass-first over the live aurora the chassis
+             renders behind this card. BC.W-HERO-AUDACIOUS Part D — the THREE prior
+             display moments (the ℱ + serif wordmark, the display-4 tagline, the
+             suppressed chassis hero) collapse to ONE audacious `text-display-mega`
+             hero (177px peak — the storybook root, the D0 of the title-size
+             hierarchy). The ℱ wordmark folds into an INLINE ornament inside the
+             single display <h1>; the eyebrow + the body prose stay warm ink (the
+             one-color-event restraint). -->
         <section class="px-2 py-12 md:px-6 md:py-20">
-            <p class="text-admin-label mb-6 text-muted-foreground">
-                glass-ui · storybook
+            <p class="text-admin-label mb-8 text-muted-foreground">
+                <span class="fourier-f italic">ℱ</span> glass-ui · storybook
             </p>
 
-            <!-- Brand wordmark: ℱ ornament + brand serif " glass-ui", both
-                 set in the published Plus Jakarta Sans display face. -->
-            <div class="mb-10 flex items-baseline gap-1 font-display">
-                <span class="fourier-f text-display-3 italic">ℱ</span>
-                <span class="cm-serif text-display-2 text-foreground"> glass-ui</span>
-            </div>
-
-            <h1 class="text-display-4 mb-8 max-w-4xl text-foreground">
+            <h1 class="text-display-mega mb-8 max-w-5xl text-foreground">
                 Glass, paper, and the golden ratio.
             </h1>
 
             <p class="text-prose max-w-2xl text-foreground/80">
                 A design system built around warm cream, cartoon offset shadows, and the
                 published Plus Jakarta Sans brand face for prose and ornament.
-                Tailwind-native, Vue 3.5, reka-ui primitives under the hood. Every token
-                reachable as a utility; every component honest about its four states.
+                Tailwind-native, Vue 3.5, reka-ui primitives under the hood.
             </p>
         </section>
 

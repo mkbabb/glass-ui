@@ -16,10 +16,23 @@ interface StoryPageProps {
      * `:hero-title="false"` so the chassis does not double the title.
      */
     heroTitle?: boolean;
+    /**
+     * BC.W-PAGE-HIERARCHY — the section-delimiter chassis affordance (Part B).
+     * Default `true`: consecutive top-level body sections are separated by a
+     * visible hairline rule on the dark-adaptive `--configurator-divider` token
+     * (so the seam survives the dark glass plate — CLAUDE.md §BA.W-CONFIG-CHASSIS),
+     * applied AUTOMATICALLY by the chassis (no per-SFC hand-rolled `<hr>`). A page
+     * whose body is its OWN single composition (a bento landing, a front-door
+     * grid, a scene with a bespoke interior) sets `:delimited="false"` so the
+     * chassis draws no inter-section seams. The user's "delimit sections with hr
+     * lines OR in different cards" bar (USER-DEFECTS §C) — the `hr` mode.
+     */
+    delimited?: boolean;
 }
 
 const props = withDefaults(defineProps<StoryPageProps>(), {
     heroTitle: true,
+    delimited: true,
 });
 
 const { current } = useStoryNavigation();
@@ -128,9 +141,27 @@ const depth = computed(() => current.value?.story.depth);
                      scroll-choreography.css `.scroll-cascade`). PRM → static terminal
                      state + non-supporting engines the static layout (the recipe's
                      outer @media + @supports gate). -->
+                <!-- BC.W-PAGE-HIERARCHY (Part B) — the section-delimiter chassis
+                     affordance. `.story-sections--delimited` draws a visible
+                     hairline on the dark-adaptive `--configurator-divider` token
+                     BETWEEN consecutive top-level body sections (the `> * + *`
+                     adjacent-sibling seam), so the page reads as cleanly DELIMITED
+                     sections — never an undelimited gap-stack where every block
+                     blurs into the next (USER-DEFECTS §C). The seam is a hairline
+                     whisper (the `.glass-menu-section` register precedent), reading
+                     the dark-adaptive token so it survives the dark glass plate —
+                     NEVER an inline `border-border/N` alpha. The delimiter sits
+                     INSIDE the `.scroll-cascade` build (it does not re-author the
+                     section-entrance). -->
                 <section
-                    class="scroll-cascade"
-                    :class="cn('flex flex-col gap-10', props.contentClass)"
+                    class="scroll-cascade story-sections"
+                    :class="
+                        cn(
+                            'flex flex-col gap-10',
+                            props.delimited && 'story-sections--delimited',
+                            props.contentClass,
+                        )
+                    "
                 >
                     <slot />
                 </section>

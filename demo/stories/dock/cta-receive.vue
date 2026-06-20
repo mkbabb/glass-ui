@@ -10,6 +10,7 @@
 // + hand-off under reduced-motion).
 import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
 import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
 import { Button } from "../../../src/components/ui/button";
@@ -73,8 +74,7 @@ function revealNow() {
              aurora field (DockStage); the dock + the CTA float over the live field so
              the morph reads as glass-into-glass. NO net-new GL context (one-GL-per-route). -->
         <DockStage #default="{ backgroundCanvas }">
-            <section class="flex flex-col gap-4">
-                <h2 class="text-subheading">External CTA morphs into the dock</h2>
+            <StorySection heading="External CTA morphs into the dock" gap="lg">
                 <p class="text-sm text-muted-foreground max-w-prose">
                     The starred dock control is a <strong>landing SEAT</strong>, RESERVED
                     for the CTA from the moment the page mounts (<code
@@ -147,7 +147,7 @@ function revealNow() {
                     control is the destination. ONE kf spring substrate, ONE family with
                     <code class="rounded bg-muted px-1">useLiquidReveal</code>.
                 </p>
-            </section>
+            </StorySection>
         </DockStage>
     </StoryPage>
 </template>

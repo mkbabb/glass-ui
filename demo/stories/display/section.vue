@@ -56,7 +56,7 @@ const gaps = ["tight", "regular", "loose"] as const;
                         description="Stacking gap between header and body."
                     >
                         <div
-                            class="rounded-md border border-dashed border-border px-3 py-2 text-mono-caption text-muted-foreground"
+                            class="ghost-slot px-3 py-2 text-mono-caption"
                         >
                             slot body
                         </div>
@@ -73,7 +73,7 @@ const gaps = ["tight", "regular", "loose"] as const;
                 <template #header>
                     <div class="flex items-center gap-3">
                         <span class="size-2 rounded-full bg-viz-fourier" />
-                        <h2 class="text-subheading">Live · session</h2>
+                        <span class="text-subheading">Live · session</span>
                         <span class="text-mono-caption text-muted-foreground">
                             updated 3s ago
                         </span>

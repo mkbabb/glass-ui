@@ -208,7 +208,7 @@ function legendBackground(seg: TimelineSegment): string {
                                 <div
                                     v-else
                                     key="detail-idle"
-                                    class="phase-detail-idle rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
+                                    class="phase-detail-idle ghost-slot p-4 text-small"
                                 >
                                     Hover or click a boundary dot to inspect the phase payload.
                                 </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { computed, ref } from "vue";
 import {
     useVirtualSectionWindow,
@@ -69,14 +70,10 @@ function scrollToTarget() {
 <template>
     <StoryPage>
         <div class="flex flex-wrap items-end justify-between gap-4">
-            <div>
-                <p class="text-admin-label text-muted-foreground">
-                    Virtual section window
-                </p>
-                <h2 class="text-subheading">
-                    {{ TOTAL }}-section document — only the window renders
-                </h2>
-            </div>
+            <StorySection
+                label="Virtual section window"
+                :heading="`${TOTAL}-section document — only the window renders`"
+            />
             <div class="flex items-center gap-3">
                 <Badge variant="outline" class="fira-code" data-testid="rendered-count">
                     {{ renderedCount }} / {{ TOTAL }} in DOM

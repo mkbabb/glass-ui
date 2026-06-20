@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
+import Code from "../Code.vue";
+import CodeBlock from "../CodeBlock.vue";
 import {
     Card,
     CardHeader,
@@ -91,23 +94,39 @@ const cartoonAccents = [
 // translucent glass plate over a busy backdrop as a LOCAL text-legibility
 // surface. The `--veil-feather` toggle opts the soft radial edge fade in.
 const veilFeather = ref(false);
+
+// The Card import snippet — the explicit subpath, rendered as a real, copy-able
+// <CodeBlock> (the per-page import idiom; the code is a literal, not prose).
+const importSnippet = `import {
+  Card, CardHeader, CardTitle, CardDescription, CardContent,
+} from "@mkbabb/glass-ui/card";`;
+
+// The scroll-pane recipe rendered as a real, copy-able <CodeBlock> — the
+// retired <ScrollPane> is field-for-field this Card configuration.
+const scrollPaneRecipe = `<Card
+  tier="wash"
+  :grain="false"
+  tabindex="0"
+  class="overflow-auto max-h-80"
+>
+  <!-- scroll content -->
+</Card>`;
 </script>
 
 <template>
     <StoryPage>
         <!-- Five-rung tier ladder. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">tiers — wash → overlay</h2>
-                <p class="text-sm text-muted-foreground">
+        <StorySection heading="tiers — wash → overlay" gap="lg"><p class="text-sm text-muted-foreground">
                     The R3-spec ladder. Each rung names a class on the
-                    <code class="font-mono text-xs">.glass-{tier}</code> surface family;
+                    <Code>.glass-{tier}</Code> surface family;
                     the Card primitive maps the
-                    <code class="font-mono text-xs">tier</code> prop straight through to
+                    <Code>tier</Code> prop straight through to
                     the class. Default is
-                    <code class="font-mono text-xs">resting</code>.
+                    <Code>resting</Code>.
                 </p>
-            </header>
+
+            <!-- The explicit import subpath, as a real copy-able code block. -->
+            <CodeBlock lang="ts" :code="importSnippet" />
 
             <div class="flex flex-wrap items-center gap-6">
                 <Label class="flex items-center gap-2">
@@ -143,28 +162,22 @@ const veilFeather = ref(false);
                         <CardContent class="text-sm text-muted-foreground">
                             Surface alpha {{ t.alpha }}. The tier prop is the only knob
                             the consumer touches; the class merge happens at the single
-                            <code class="font-mono text-xs"
-                                >cn(`glass-{{ "${tier}" }}`, props.class)</code
-                            >
+                            <Code>cn(`glass-{{ "${tier}" }}`, props.class)</Code>
                             seam in Card.vue.
                         </CardContent>
                     </Card>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Polymorphic root. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">polymorphic root via reka-ui Primitive</h2>
-                <p class="text-sm text-muted-foreground">
-                    The <code class="font-mono text-xs">as</code> prop swaps the
+        <StorySection heading="polymorphic root via reka-ui Primitive" gap="lg"><p class="text-sm text-muted-foreground">
+                    The <Code>as</Code> prop swaps the
                     rendered tag without losing the surface composition. Useful when
                     semantic HTML matters — a results card is a
-                    <code class="font-mono text-xs">&lt;section&gt;</code>, a feed item
-                    is an <code class="font-mono text-xs">&lt;article&gt;</code>.
+                    <Code>&lt;section&gt;</Code>, a feed item
+                    is an <Code>&lt;article&gt;</Code>.
                 </p>
-            </header>
 
             <Card as="article" tier="resting">
                 <CardHeader>
@@ -173,8 +186,8 @@ const veilFeather = ref(false);
                     </CardTitle>
                     <CardDescription>
                         Inspect the DOM — the root tag is
-                        <code class="font-mono text-xs">article</code>, not the default
-                        <code class="font-mono text-xs">div</code>.
+                        <Code>article</Code>, not the default
+                        <Code>div</Code>.
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="text-sm text-muted-foreground">
@@ -186,19 +199,15 @@ const veilFeather = ref(false);
                     <Button size="sm">Continue</Button>
                 </CardFooter>
             </Card>
-        </section>
+        </StorySection>
 
         <!-- Nested-card pattern (shadow off on the inner card). -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">nested cards — shadow toggle</h2>
-                <p class="text-sm text-muted-foreground">
-                    Pass <code class="font-mono text-xs">:shadow="false"</code> on a
+        <StorySection heading="nested cards — shadow toggle" gap="lg"><p class="text-sm text-muted-foreground">
+                    Pass <Code>:shadow="false"</Code> on a
                     nested card to drop the second drop-shadow stacking on the parent's.
                     The grain overlay can also be silenced with
-                    <code class="font-mono text-xs">:grain="false"</code>.
+                    <Code>:grain="false"</Code>.
                 </p>
-            </header>
 
             <Card tier="resting">
                 <CardHeader>
@@ -209,9 +218,7 @@ const veilFeather = ref(false);
                 </CardHeader>
                 <CardContent class="grid gap-4">
                     <Card tier="wash" :shadow="false" class="text-sm">
-                        <span class="font-mono text-xs text-muted-foreground">
-                            inner: tier=wash, shadow=false
-                        </span>
+                        <Code>inner: tier=wash, shadow=false</Code>
                         <p class="mt-2 text-muted-foreground">
                             No second drop-shadow stacking; reads as a quiet inset
                             rather than a floating element.
@@ -219,23 +226,19 @@ const veilFeather = ref(false);
                     </Card>
                 </CardContent>
             </Card>
-        </section>
+        </StorySection>
 
         <!-- Cartoon surface — orthogonal `surface` decoration. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">surface — the cartoon decoration</h2>
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">surface="cartoon"</code> is
-                    orthogonal to <code class="font-mono text-xs">tier</code> — exactly
-                    like <code class="font-mono text-xs">shadow</code> and
-                    <code class="font-mono text-xs">grain</code>. It layers the
-                    <code class="font-mono text-xs">cartoon-surface</code>
+        <StorySection heading="surface — the cartoon decoration" gap="lg"><p class="text-sm text-muted-foreground">
+                    <Code>surface="cartoon"</Code> is
+                    orthogonal to <Code>tier</Code> — exactly
+                    like <Code>shadow</Code> and
+                    <Code>grain</Code>. It layers the
+                    <Code>cartoon-surface</Code>
                     decoration utility (2px border, offset-stamp shadow, hover-lift) on
                     top of whatever tier resolved. It replaces the retired standalone
-                    <code class="font-mono text-xs">&lt;CartoonCard&gt;</code>.
+                    <Code>&lt;CartoonCard&gt;</Code>.
                 </p>
-            </header>
 
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <Card
@@ -249,9 +252,9 @@ const veilFeather = ref(false);
                     <h3 class="text-lg font-semibold">{{ a.label }}</h3>
                     <p class="mt-2 text-sm text-muted-foreground">
                         Hover to confirm the lift transition: shadow swaps from
-                        <code class="font-mono text-xs">--shadow-cartoon-md</code>
+                        <Code>--shadow-cartoon-md</Code>
                         to
-                        <code class="font-mono text-xs">--shadow-cartoon-lg</code>.
+                        <Code>--shadow-cartoon-lg</Code>.
                     </p>
                 </Card>
             </div>
@@ -260,10 +263,10 @@ const veilFeather = ref(false);
                 <CardHeader>
                     <CardTitle class="text-lg font-semibold">Set a target</CardTitle>
                     <CardDescription>
-                        Default tier (<code class="font-mono text-xs">resting</code>)
+                        Default tier (<Code>resting</Code>)
                         with the cartoon decoration — proof that
-                        <code class="font-mono text-xs">surface</code> composes onto any
-                        tier, not just <code class="font-mono text-xs">quiet</code>.
+                        <Code>surface</Code> composes onto any
+                        tier, not just <Code>quiet</Code>.
                     </CardDescription>
                 </CardHeader>
                 <div class="flex flex-wrap gap-3">
@@ -271,24 +274,20 @@ const veilFeather = ref(false);
                     <Button variant="outline">Discard</Button>
                 </div>
             </Card>
-        </section>
+        </StorySection>
 
         <!-- Veil surface — the borderless/rimless text-legibility plate. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">surface — the veil text plate</h2>
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">surface="veil"</code> is the
+        <StorySection heading="surface — the veil text plate" gap="lg"><p class="text-sm text-muted-foreground">
+                    <Code>surface="veil"</Code> is the
                     text-legibility PLATE register — the wash/quiet glass fill + blur
-                    with the <code class="font-mono text-xs">border</code> AND
+                    with the <Code>border</Code> AND
                     rim/highlight STRIPPED (the boxed look reads as a "dividing line" on
                     a text plate). Conceptually the W55 adaptive-tint applied as a LOCAL
                     plate: it darkens content-on-glass over a busy/bright backdrop so
                     text clears AA, without the box. The optional
-                    <code class="font-mono text-xs">--veil-feather</code> radial fades
+                    <Code>--veil-feather</Code> radial fades
                     the plate edges into the page.
                 </p>
-            </header>
 
             <div class="flex flex-wrap items-center gap-6">
                 <Label class="flex items-center gap-2">
@@ -350,28 +349,25 @@ const veilFeather = ref(false);
                     </Card>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Scroll-pane recipe — wash tier + grain off + overflow + tabindex. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">recipe — scroll-pane surface</h2>
-                <p class="text-sm text-muted-foreground">
+        <StorySection heading="recipe — scroll-pane surface" gap="lg"><p class="text-sm text-muted-foreground">
                     The retired
-                    <code class="font-mono text-xs">&lt;ScrollPane&gt;</code>
+                    <Code>&lt;ScrollPane&gt;</Code>
                     was field-for-field
-                    <code class="font-mono text-xs"
-                        >&lt;Card tier="wash" :grain="false"&gt;</code
-                    >
-                    plus <code class="font-mono text-xs">overflow-auto</code>. No new
+                    <Code>&lt;Card tier="wash" :grain="false"&gt;</Code>
+                    plus <Code>overflow-auto</Code>. No new
                     component — it is a Card configuration. Card already emits
-                    <code class="font-mono text-xs">scrollbar-hidden</code>;
-                    <code class="font-mono text-xs">tabindex="0"</code> makes the
+                    <Code>scrollbar-hidden</Code>;
+                    <Code>tabindex="0"</Code> makes the
                     hidden-scrollbar region keyboard-scrollable (the standalone
                     component shipped without it — a latent a11y regression this recipe
                     fixes).
                 </p>
-            </header>
+
+            <!-- The scroll-pane recipe as a real, copy-able code block. -->
+            <CodeBlock lang="vue" :code="scrollPaneRecipe" />
 
             <Card
                 tier="wash"
@@ -385,7 +381,7 @@ const veilFeather = ref(false);
                         :key="row.id"
                         class="flex items-baseline justify-between gap-4 border-b border-border/40 pb-3 last:border-0"
                     >
-                        <span class="font-mono text-xs text-muted-foreground">
+                        <span class="text-mono-small tabular-nums text-muted-foreground">
                             #{{ row.id.toString().padStart(2, "0") }}
                         </span>
                         <span class="flex-1 text-sm">{{ row.title }}</span>
@@ -404,7 +400,7 @@ const veilFeather = ref(false);
                     <CardDescription>
                         A scroll-pane recipe inside a host card drops its own shadow
                         with
-                        <code class="font-mono text-xs">:shadow="false"</code>.
+                        <Code>:shadow="false"</Code>.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -430,25 +426,26 @@ const veilFeather = ref(false);
                     </Card>
                 </CardContent>
             </Card>
-        </section>
+        </StorySection>
 
         <!-- Scroll-shrink choreography — the compositor-safe header collapse. -->
-        <section class="flex flex-col gap-4" data-testid="card-shrink-section">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">recipe — scroll-shrink header</h2>
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">&lt;CardHeader shrink&gt;</code>
+        <StorySection
+            heading="recipe — scroll-shrink header"
+            gap="lg"
+            data-testid="card-shrink-section"
+        >
+            <p class="text-sm text-muted-foreground">
+                    <Code>&lt;CardHeader shrink&gt;</Code>
                     binds the header to the
-                    <code class="font-mono text-xs">--card-scroll</code> named
+                    <Code>--card-scroll</Code> named
                     scroll-timeline (emitted by
-                    <code class="font-mono text-xs">.card-scroll-host</code> on the
+                    <Code>.card-scroll-host</Code> on the
                     scroll-overflow ancestor) and runs a 3-lane choreography as the host
                     scrolls — the header content compresses, the title shrinks in place,
                     the description retires. The lanes are COMPOSITOR-SAFE
                     (transform/opacity only), so ZERO reflow fires per scroll frame (no
                     layout-shift). Scroll the region to watch the header collapse.
                 </p>
-            </header>
 
             <Card
                 tier="resting"
@@ -478,30 +475,31 @@ const veilFeather = ref(false);
                         :key="row.id"
                         class="flex items-baseline justify-between gap-4 border-b border-border/40 pb-3 last:border-0"
                     >
-                        <span class="font-mono text-xs text-muted-foreground">
+                        <span class="text-mono-small tabular-nums text-muted-foreground">
                             #{{ row.id.toString().padStart(2, "0") }}
                         </span>
                         <span class="flex-1">{{ row.title }}</span>
                     </p>
                 </CardContent>
             </Card>
-        </section>
+        </StorySection>
 
         <!-- ScrollCard — the first-class scroll-shrink card family. -->
-        <section class="flex flex-col gap-4" data-testid="scroll-card-section">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">recipe — &lt;ScrollCard&gt; family</h2>
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">&lt;ScrollCard&gt;</code> owns the
-                    <code class="font-mono text-xs">.card-scroll-host</code> scroll-port
-                    + the <code class="font-mono text-xs">--card-scroll</code> timeline
+        <StorySection
+            heading="recipe — &lt;ScrollCard&gt; family"
+            gap="lg"
+            data-testid="scroll-card-section"
+        >
+            <p class="text-sm text-muted-foreground">
+                    <Code>&lt;ScrollCard&gt;</Code> owns the
+                    <Code>.card-scroll-host</Code> scroll-port
+                    + the <Code>--card-scroll</Code> timeline
                     internally, and
-                    <code class="font-mono text-xs">&lt;ScrollCardHeader&gt;</code> is
+                    <Code>&lt;ScrollCardHeader&gt;</Code> is
                     the LARGER-header-items hero-rung header that shrinks on scroll via
                     the SAME compositor-safe lanes — ZERO consumer rAF/scroll-listener.
                     The header background lifts transparent → painted as it sticks.
                 </p>
-            </header>
 
             <ScrollCard
                 max-height="18rem"
@@ -525,28 +523,24 @@ const veilFeather = ref(false);
                         :key="row.id"
                         class="flex items-baseline justify-between gap-4 border-b border-border/40 pb-3 last:border-0"
                     >
-                        <span class="font-mono text-xs text-muted-foreground">
+                        <span class="text-mono-small tabular-nums text-muted-foreground">
                             #{{ row.id.toString().padStart(2, "0") }}
                         </span>
                         <span class="flex-1">{{ row.title }}</span>
                     </p>
                 </CardContent>
             </ScrollCard>
-        </section>
+        </StorySection>
 
         <!-- CardAction — the shadcn-2025 top-right header action slot. -->
-        <section class="flex flex-col gap-4">
-            <header class="flex flex-col gap-1">
-                <h2 class="text-subheading">CardAction — header action slot</h2>
-                <p class="text-sm text-muted-foreground">
-                    A <code class="font-mono text-xs">&lt;CardAction&gt;</code> inside a
-                    <code class="font-mono text-xs">&lt;CardHeader&gt;</code>
+        <StorySection heading="CardAction — header action slot" gap="lg"><p class="text-sm text-muted-foreground">
+                    A <Code>&lt;CardAction&gt;</Code> inside a
+                    <Code>&lt;CardHeader&gt;</Code>
                     reflows the header to a two-column grid (title/description +
                     action), self-aligned to the header's top-right via the
-                    <code class="font-mono text-xs">has-data-[slot=card-action]</code>
+                    <Code>has-data-[slot=card-action]</Code>
                     container query.
                 </p>
-            </header>
 
             <Card tier="resting">
                 <CardHeader>
@@ -563,6 +557,6 @@ const veilFeather = ref(false);
                     rows, justified to the end — no manual grid markup.
                 </CardContent>
             </Card>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

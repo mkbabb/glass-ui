@@ -22,6 +22,7 @@
 // the ONE scalar in BOTH modes (HG1, arm-c marker on the shipped default).
 import { computed, nextTick, onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { Compass, Shapes, Boxes, Database, Bell, ArrowLeftRight } from "@lucide/vue";
 import {
     DockIconButton,
@@ -140,8 +141,7 @@ onMounted(() => {
              gradient wash); the goo-bridge threshold already occludes the topology
              reflow, so a moving backdrop only helps. ONE GL context for the route. -->
         <DockStage #default="{ backgroundCanvas }">
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Vertical ↔ horizontal liquid-glass morph</h2>
+        <StorySection heading="Vertical ↔ horizontal liquid-glass morph" gap="md">
             <p class="text-small text-muted-foreground">
                 Press the button and watch the dock flow from <strong>vertical</strong> to
                 <strong>horizontal</strong> and back, fully bidirectional and deterministic. The
@@ -325,7 +325,7 @@ onMounted(() => {
                     </GlassDock>
                 </template>
             </div>
-        </section>
+        </StorySection>
         </DockStage>
     </StoryPage>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import {
     Tooltip,
     TooltipContent,
@@ -7,10 +8,7 @@ import {
     TooltipTrigger,
 } from "../../../src/components/ui/tooltip";
 import { Button } from "../../../src/components/ui/button";
-import { Bold, Italic, Underline, Save, Share2, MessageCircle } from "@lucide/vue";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
-const CONTAINERS_STOP = 2;
+import { Bold, Italic, Underline, Save, Share2 } from "@lucide/vue";
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -18,31 +16,9 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="MessageCircle" :section="CONTAINERS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Tooltip
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Hover/focus hints over controls — the labels stay ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <TooltipProvider :delay-duration="150">
             <div class="grid gap-12">
-                <div class="grid gap-4">
-                    <h2 class="text-subheading">Icon toolbar</h2>
+                <StorySection heading="Icon toolbar" gap="lg">
                     <p class="text-sm text-muted-foreground">
                         Canonical use case — every icon gets a label.
                     </p>
@@ -74,10 +50,9 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                             <TooltipContent>Underline · ⌘U</TooltipContent>
                         </Tooltip>
                     </div>
-                </div>
+                </StorySection>
 
-                <div class="grid gap-4">
-                    <h2 class="text-subheading">Button annotations</h2>
+                <StorySection heading="Button annotations" gap="lg">
                     <p class="text-sm text-muted-foreground">
                         Use sparingly for labeled buttons — only when the tooltip
                         carries non-redundant info.
@@ -104,10 +79,9 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                             </TooltipContent>
                         </Tooltip>
                     </div>
-                </div>
+                </StorySection>
 
-                <div class="grid gap-4">
-                    <h2 class="text-subheading">Placement</h2>
+                <StorySection heading="Placement" gap="lg">
                     <p class="text-sm text-muted-foreground">
                         <code class="font-mono text-xs">side</code> preference —
                         Floating UI flips on collision.
@@ -124,7 +98,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                             </TooltipContent>
                         </Tooltip>
                     </div>
-                </div>
+                </StorySection>
             </div>
         </TooltipProvider>
     </StoryPage>

@@ -99,7 +99,7 @@ function jumpTo(e: TimelineEvent) {
                 </div>
                 <div
                     v-else
-                    class="rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
+                    class="ghost-slot p-4 text-small"
                 >
                     Drag the scrubber or click an event below.
                 </div>

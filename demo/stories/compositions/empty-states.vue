@@ -123,8 +123,15 @@ const states: EmptyState[] = [
                 v-for="state in states"
                 :key="state.id"
                 :class="cn(
-                    'border-2 border-foreground/10 transition-transform duration-200',
+                    'transition-transform duration-200',
                     'hover:-translate-x-px hover:-translate-y-px',
+                    // An empty-state IS the canonical 'ghost item' — its ghost
+                    // (empty/placeholder) kinds read the .ghost-slot dashed framing
+                    // (the ghost-iff-empty discipline); the filled states keep the
+                    // solid card frame.
+                    state.ctaVariant === 'ghost'
+                        ? 'ghost-slot'
+                        : 'border-2 border-foreground/10',
                 )"
             >
                 <CardContent class="flex flex-col items-center gap-[calc(1rem_+_var(--density-gap,0rem))] px-[calc(var(--card-pad-inline)_+_var(--density-pad,0rem))] py-[calc(var(--card-pad-block)_+_var(--density-pad,0rem))] text-center">

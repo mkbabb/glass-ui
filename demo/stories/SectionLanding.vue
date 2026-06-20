@@ -13,6 +13,7 @@ import { TooltipProvider } from "../../src/components/ui/tooltip";
 import StoryHero from "./StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
 import { findCategory } from "./manifest";
+import { categoryHero } from "./category-hero";
 
 const route = useRoute();
 
@@ -24,23 +25,13 @@ const category = computed(() => {
 const landing = computed(() => category.value?.landing ?? null);
 const eyebrow = computed(() => category.value?.title ?? null);
 
-// The per-section IconChip POP glyph + ramp index — the category's own icon over a
-// section-color event. The exact per-category {hue, preview content} is
-// BC.W-HERO-AUDACIOUS's; the chassis seeds the icon + a stable ramp index here.
-const SECTION_HUE: Record<string, number> = {
-    foundations: 7,
-    substrates: 3,
-    forms: 2,
-    display: 5,
-    containers: 9,
-    navigation: 12,
-    dock: 6,
-    data: 1,
-    feedback: 8,
-    motion: 7,
-    compositions: 4,
-};
-const sectionHue = computed(() => SECTION_HUE[category.value?.id ?? ""] ?? 7);
+// BC.W-HERO-AUDACIOUS Part B/E — the per-category {icon, sectionHue} from the ONE
+// CATEGORY_HERO source (never a hand-rolled SECTION_HUE duplicate). The section
+// hue is the ONE color event — the IconChip POP + the eyebrow; the audacious
+// title + the bento bodies stay warm ink (the one-color-event restraint).
+const hero = computed(() => categoryHero(category.value?.id ?? ""));
+const sectionIcon = computed(() => hero.value?.icon ?? category.value?.icon);
+const sectionHue = computed(() => hero.value?.sectionHue ?? 7);
 </script>
 
 <template>
@@ -71,19 +62,20 @@ const sectionHue = computed(() => SECTION_HUE[category.value?.id ?? ""] ?? 7);
                             :title="story.title"
                             :blurb="story.blurb"
                             :subpath="story.subpath"
-                            :icon="category.icon"
+                            :icon="sectionIcon"
                             :section="sectionHue"
                             :lead="idx === 0"
                         >
-                            <!-- The inline preview — a bounded inert mini-render. The
-                                 per-category live specimen is BC.W-HERO-AUDACIOUS's; the
-                                 chassis ships a budget-safe glyph-over-tint thumbnail so
+                            <!-- The inline preview — a bounded inert mini-render (the
+                                 user-mandate "a live mini-preview, not a text link").
+                                 A budget-safe single-paint glyph-over-tint thumbnail so
                                  every card carries a NON-text preview by construction
-                                 (the one-GL budget — no second live context). -->
+                                 (the one-GL budget — no second live context on the
+                                 landing). The per-category icon over the section tint. -->
                             <template #preview>
                                 <div class="section-preview-thumb">
                                     <component
-                                        :is="category.icon"
+                                        :is="sectionIcon"
                                         :size="34"
                                         :stroke-width="1.5"
                                     />

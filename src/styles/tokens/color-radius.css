@@ -121,6 +121,16 @@
        `--border` (which is `var(--neutral-4)`, light-dark()-resolved). */
     --border-soft: color-mix(in srgb, var(--border) 45%, transparent);
 
+    /* BC.W-SEPARATOR-FIX — the warm separator hairline ink. A rule reads as
+       WARM material, not a grey `--border` line (BA.W-NO-GRAY floor): the
+       split-rule segments + un-labelled hairline both paint `--separator-ink`.
+       It is a `color-mix` off `--foreground` (`light-dark()`-resolved, so it
+       auto-darks warm in both modes — the warm-ink hairline, not `--neutral-4`
+       grey). 22% is a visible-but-whisper rule (crisper than `--border-soft`'s
+       45%-of-grey; this one is foreground-derived so it carries the warm hue
+       directly). A consumer retints every separator from this single rung. */
+    --separator-ink: color-mix(in srgb, var(--foreground) 22%, transparent);
+
     /* AQ.W3 §W3.4 — tokenized scrollbar thumb + track. Minted in the color
        block so the `scrollbar-color` / `::-webkit-scrollbar-thumb` rungs read a
        single source. Auto-dark via `--muted-foreground` (light-dark()-resolved,

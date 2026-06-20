@@ -180,7 +180,7 @@ function legendBackground(seg: TimelineSegment): string {
                 </div>
                 <div
                     v-else
-                    class="rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
+                    class="ghost-slot p-4 text-small"
                 >
                     Hover or click a segment dot to inspect the phase payload.
                 </div>

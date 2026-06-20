@@ -103,9 +103,7 @@ const pops: { icon: Component; section: number }[] = [
              IconChip `:reveal` spring-clock entrance (the `:saturated` + `:bloom`
              axes deepen the chroma + the hover register). The monochrome grid below
              is the supporting reference. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">Foundations · Icons</p>
-            <h2 class="text-subheading">Pops · the color event</h2>
+        <StorySection label="Foundations · Icons" heading="Pops · the color event">
             <p class="text-small max-w-2xl text-muted-foreground">
                 The icon chip is the brand's color event: a
                 <span class="font-mono text-xs">color-mix(… 25%, transparent)</span>
@@ -136,7 +134,7 @@ const pops: { icon: Component; section: number }[] = [
                     </div>
                 </div>
             </ShowcaseFrame>
-        </section>
+        </StorySection>
 
         <!-- THE MONOCHROME GRID — the supporting reference. The grid cells gain the
              calm wash read-through + the glass-tier hover lift; the glyphs stay ink

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import {
     Carousel,
@@ -10,10 +11,7 @@ import {
 } from "../../../src/components/ui/carousel";
 import { PagerDots } from "../../../src/components/custom/pager-dots";
 import { cn } from "../../../src/utils/cn";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { GalleryHorizontal } from "@lucide/vue";
-// BA.W-SUFFUSE2 — the navigation band's ONE coherent --section-color-12 indigo identity.
-const NAV_STOP = 12;
+
 
 const slides = [
     { hue: 24, title: "Warm Cream", note: "base surface" },
@@ -60,29 +58,7 @@ function setApi(api: CarouselApi | undefined) {
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the navigation-band identity event family on --section-color-12. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="GalleryHorizontal" :section="NAV_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Navigation · Carousel
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Paged slide navigation with dots — the slide content stays ink;
-                    the section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Carousel pager + dots substrate</h2>
+        <StorySection heading="Carousel pager + dots substrate" gap="md">
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes
                 <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
@@ -119,10 +95,9 @@ function setApi(api: CarouselApi | undefined) {
                     </div>
                 </Carousel>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Glass carousel — story pager</h2>
+        <StorySection heading="Glass carousel — story pager" gap="md">
             <p class="text-sm text-muted-foreground">
                 Wraps the same primitive in a glass-surface scroller with a dot indicator. This is the exact
                 treatment the demo uses to page through stories inside a category.
@@ -167,15 +142,14 @@ function setApi(api: CarouselApi | undefined) {
                     </div>
                 </Carousel>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-subheading">Using the API</h2>
+        <StorySection heading="Using the API" gap="sm" class="text-sm text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li>Listen on <code class="rounded bg-muted px-1">@init-api</code> to capture the Embla instance.</li>
                 <li>Call <code class="rounded bg-muted px-1">api.scrollTo(i)</code> to drive the pager from elsewhere (dots, keyboard, URL).</li>
                 <li>Subscribe to <code class="rounded bg-muted px-1">"select"</code> for the active index.</li>
             </ul>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

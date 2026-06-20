@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref, watch, useTemplateRef } from "vue";
 import {
     Home,
@@ -108,8 +109,7 @@ function togglePlay() {
              collapsible aurora folds INTO the shared field (the pause-toggle keeps
              its OWN functional aurora below, which the toggle genuinely controls). -->
         <DockStage #default="{ backgroundCanvas }">
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Collapsible (hover to expand)</h2>
+        <StorySection heading="Collapsible (hover to expand)" gap="md">
             <p class="text-sm text-muted-foreground">
                 The collapsed pill scales up on hover on the same
                 <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the
@@ -133,10 +133,9 @@ function togglePlay() {
                     <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Always expanded — media transport</h2>
+        <StorySection heading="Always expanded — media transport" gap="md">
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
@@ -159,10 +158,12 @@ function togglePlay() {
                     </span>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3" data-testid="dock-trigger-story">
-            <h2 class="text-subheading">Select and dropdown triggers</h2>
+        <StorySection
+            heading="Select and dropdown triggers"
+            data-testid="dock-trigger-story"
+        >
             <div
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
@@ -233,10 +234,9 @@ function togglePlay() {
                     </p>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">With popover triggers</h2>
+        <StorySection heading="With popover triggers" gap="md">
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
                 pins the parent dock open while the popover is visible. reka-ui's
@@ -342,10 +342,12 @@ function togglePlay() {
                     </HoverPopover>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3" data-testid="dock-slider-section">
-            <h2 class="text-subheading">Slider in dock — the keep-dock-open hold</h2>
+        <StorySection
+            heading="Slider in dock — the keep-dock-open hold"
+            data-testid="dock-slider-section"
+        >
             <p class="text-sm text-muted-foreground">
                 A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant
                 of a dock holds the dock open while the user drags (the
@@ -401,10 +403,9 @@ function togglePlay() {
                 intensify when either is dragged since both read the dock's shared held
                 state.
             </p>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Tap and click land where you aimed</h2>
+        <StorySection heading="Tap and click land where you aimed" gap="md">
             <p class="text-sm text-muted-foreground">
                 A tap on the collapsed pill, or a click during the hover-expand morph,
                 must land on the control it was AIMED at — never on whatever the layer
@@ -448,10 +449,9 @@ function togglePlay() {
                 The settled click (after the morph) reaches the control normally — only
                 the racing, identity-mismatched click is swallowed.
             </p>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Menus inside a dock teleport out</h2>
+        <StorySection heading="Menus inside a dock teleport out" gap="md">
             <p class="text-sm text-muted-foreground">
                 A dropdown or menu mounted inside a dock MUST be wired into the dock's
                 <code class="rounded bg-muted px-1">keepOpen</code> +
@@ -477,12 +477,9 @@ function togglePlay() {
                 contract), not a raw
                 <code class="rounded bg-muted px-1">&lt;DropdownMenu&gt;</code> child.
             </p>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">
-                Overflow wrap — content reflows to multiple rows
-            </h2>
+        <StorySection heading="Overflow wrap — content reflows to multiple rows" gap="md">
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the
                 row to multiple rows by INTRINSIC flex-wrap whenever the content's
@@ -545,10 +542,9 @@ function togglePlay() {
                     <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Big dock — card shell + tile grid</h2>
+        <StorySection heading="Big dock — card shell + tile grid" gap="md">
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">shape="card"</code> gives a finite
                 concentric card radius (not a stadium pill);
@@ -572,10 +568,9 @@ function togglePlay() {
                     <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Background pause/play toggle</h2>
+        <StorySection heading="Background pause/play toggle" gap="md">
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
                 lets the user pause a running Aurora/GooBlob background — wire it to the
@@ -618,10 +613,9 @@ function togglePlay() {
                     bgPaused ? "paused (rAF parked)" : "running"
                 }}</code>
             </p>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-subheading">Notes</h2>
+        <StorySection heading="Notes" gap="sm" class="text-sm text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li>
                     The dock stays open while a popover or held control inside it is
@@ -636,7 +630,7 @@ function togglePlay() {
                     buttons that fit the dock flush.
                 </li>
             </ul>
-        </section>
+        </StorySection>
         </DockStage>
     </StoryPage>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import {
     FileText, Settings, User, Palette, Moon, Sun, Search, Plus,
@@ -15,9 +16,6 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "../../../src/components/ui/command";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
-const CONTAINERS_STOP = 2;
 
 const selected = ref<string | null>(null);
 const query = ref("");
@@ -52,29 +50,7 @@ function pick(id: string) {
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="CommandIcon" :section="CONTAINERS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Command
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Command palette over a filtered list — the rows stay ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Inline palette</h2>
+        <StorySection heading="Inline palette" gap="md">
             <p class="text-sm text-muted-foreground">
                 The Command element embeds inline here; in practice you'd wrap it in a
                 <code class="rounded bg-muted px-1">CommandDialog</code> for a ⌘K overlay.
@@ -143,10 +119,9 @@ function pick(id: string) {
                     <code class="rounded bg-muted px-1.5 py-0.5">{{ selected ?? "—" }}</code>
                 </p>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-2 text-sm text-muted-foreground">
-            <h2 class="text-subheading">Anatomy</h2>
+        <StorySection heading="Anatomy" gap="sm" class="text-sm text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li><code class="rounded bg-muted px-1">Command</code> — root, owns the query and selection.</li>
                 <li><code class="rounded bg-muted px-1">CommandInput</code> — search box, auto-focuses.</li>
@@ -154,6 +129,6 @@ function pick(id: string) {
                 <li><code class="rounded bg-muted px-1">CommandEmpty</code> — renders when the filter returns zero.</li>
                 <li><code class="rounded bg-muted px-1">CommandShortcut</code> — aligned key glyph at the row's tail.</li>
             </ul>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

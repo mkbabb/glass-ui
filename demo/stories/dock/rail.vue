@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import {
     Home,
@@ -60,8 +61,7 @@ const railLayers = [
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Vertical dock</h2>
+        <StorySection heading="Vertical dock" gap="md">
             <p class="text-small text-muted-foreground">
                 A vertical <code class="rounded bg-muted px-1">&lt;GlassDock orientation="vertical"&gt;</code>
                 is the side-nav column. There is ONE way to express orientation — the
@@ -114,10 +114,9 @@ const railLayers = [
                     </Tooltip>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Rounded shape</h2>
+        <StorySection heading="Rounded shape" gap="md">
             <p class="text-small text-muted-foreground">
                 Consumers can switch to rectangular corners via
                 <code class="rounded bg-muted px-1">shape="rounded"</code> when the dock hosts a
@@ -149,10 +148,9 @@ const railLayers = [
                     </DockIconButton>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Collapsible vertical dock — it morphs its height</h2>
+        <StorySection heading="Collapsible vertical dock — it morphs its height" gap="md">
             <p class="text-small text-muted-foreground">
                 A vertical dock collapses and morphs its height like a horizontal dock does its
                 width — it animates its
@@ -189,10 +187,9 @@ const railLayers = [
                     </template>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Stack rail — the macOS hover-expand stack beyond the dock edge</h2>
+        <StorySection heading="Stack rail — the macOS hover-expand stack beyond the dock edge" gap="md">
             <p class="text-small text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;DockStack&gt;</code> is the macOS Dock
                 hover-expand STACK: a thin rail extending BEYOND the dock edge into its own
@@ -259,6 +256,6 @@ const railLayers = [
                     </template>
                 </GlassDock>
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

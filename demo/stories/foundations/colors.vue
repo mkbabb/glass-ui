@@ -53,9 +53,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
              stops pop in on the W-SCROLL-MOTION `.scroll-cascade--columns` register
              (the column-stagger spring-clocked build — the focal pop-entrance, no
              demo-local @keyframes). The stops are LARGER than the buried HEAD row. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">Foundations · Color</p>
-            <h2 class="text-subheading">Section ramp · 13 stops</h2>
+        <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
             <p class="text-small max-w-prose text-muted-foreground">
                 The chapter palette — <code class="fira-code">--section-color-0..12</code>,
                 exposed as <code class="fira-code">bg-section-N</code>. The brand's
@@ -78,7 +76,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                     <span class="text-mono-caption text-muted-foreground">{{ i }}</span>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- VIZ BASIS — the math-paper hues. The hue is the ONE event per tile (the
              ornamental glyph carries it; the label stays ink). The tiles pop in on

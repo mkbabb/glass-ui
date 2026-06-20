@@ -10,10 +10,15 @@
  */
 
 :root {
-    /* The blueprint-grid background knobs. */
-    --story-grid-size: 28px;
-    --story-grid-color: color-mix(in srgb, var(--foreground) 7%, transparent);
-    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 12%, transparent);
+    /* BC.W-GRID-SIMPLE — the blurry, oddly-spaced, in-card `--story-grid-*` grid is
+       ABROGATED (clean break, no alias). The crisp full-bleed page grid (`.grid-bg`
+       below) reads the ONE shared `--grid-pitch` 1rem / `--grid-major` 5rem /
+       `--grid-line` 3% / `--grid-line-major` 11% rhythm minted in scale-paper.css
+       (the keyframes.js `EditorShell` magnitudes). NO demo-local grid token, NO 28px
+       pitch, NO `center center`, NO blurred-through-`wash` mount — the static grid
+       escapes the rounded card box and is the WHOLE-PAGE wash. The dark arm re-tints
+       FOR FREE (the `--foreground` flip re-resolves the `--grid-*` color-mix); there
+       is NO parallel `--grid-*-dark` family. */
 
     /* The static-paper wash base (BA.W-STAGE scope 4). The paper background is a
        warm-cream tint under the grain overlay; in light it's near-invisible (the
@@ -28,21 +33,15 @@
     --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
 }
 
-/* BA.W-STAGE scope 4 — the DARK static-wash recalibration (BG-3 / DARK-4). The
-   grid/paper static washes were tuned LIGHT-FIRST (9%/16% of the warm-ink over the
-   cream page); behind the `wash`-tier card (dark --glass-opacity-wash 0.38, so the
-   card transmits ~62%) over the W-DARK-MATERIAL near-black page (--background L4),
-   the 9%/16% grid lands at ~6%/10% effective and VANISHES (the invisible-dark-wash
-   defect). The lines sit BEHIND the card, not under the prose, so lifting them does
-   NOT touch prose AA (the prose is over the L16 --card surface; the grid is the
-   underlay). The grid lifts to 18%/30% of the cream --foreground (→ ~11%/19%
-   effective through the wash card — a perceptible hairline that still reads as a
-   calm blueprint, not a loud rule). The paper wash gains a faint warm-cream base
-   (the soft-light grain alone reads near-nothing over near-black — it needs a tint
-   under it) so the paper register reads THROUGH the card in dark. */
+/* BA.W-STAGE scope 4 — the DARK static-PAPER wash recalibration (BG-3 / DARK-4). The
+   paper wash gains a faint warm-cream base (the soft-light grain alone reads
+   near-nothing over the W-DARK-MATERIAL near-black page — it needs a tint under it)
+   so the paper register reads THROUGH the card in dark. (BC.W-GRID-SIMPLE — the
+   parallel dark `--story-grid-*` arm is RETIRED with the grid token abrogation: the
+   full-bleed `--grid-*` line re-tints off the `--foreground` flip automatically, no
+   `-dark` arm; the grid is the page wash BEHIND content now, not a faint line read
+   through a wash card that needed a dark over-lift to survive.) */
 .dark {
-    --story-grid-color: color-mix(in srgb, var(--foreground) 18%, transparent);
-    --story-grid-color-strong: color-mix(in srgb, var(--foreground) 30%, transparent);
     --story-paper-wash: color-mix(in srgb, var(--foreground) 7%, transparent);
 }
 
@@ -349,20 +348,75 @@
     background-color: var(--story-paper-wash);
 }
 
-/* The blueprint ruled grid — two hairline linear-gradients at the cell size,
-   with a stronger line at every 4th cell (the engineering-paper major rule).
+/* BC.W-GRID-SIMPLE — the crisp engineering-graph-paper page grid (the keyframes.js
+   `EditorShell` foil to glass; pure CSS, NO GL). Four hard-stop repeating-linear-
+   gradients — a major pair (5rem, 11%, listed FIRST so it dominates intersections)
+   + a fine pair (1rem, 3%) — on the ONE shared `--grid-*` rhythm. CRISP BY
+   CONSTRUCTION: the hard color stops (`var(--line) 0 1px, transparent 1px …`) are a
+   sharp transparent↔ink edge (NOT a soft gradient ramp — a ramp is what blurs a
+   gradient grid); the rem-relative pitch divides cleanly at DPR 1/2/3; and
+   `background-position: 0 0` pins the tile to the box origin so every line lands on a
+   device-pixel boundary (the prior `center center` offset the tile a half-cell on
+   odd-pixel viewports → the lines drifted off the device-pixel grid → softening). NO
+   filter, NO backdrop-filter, NO opacity layer, NO transform — one compositor-cached
+   static raster. Mounted FULL-BLEED (`.story-hero-bg--bleed`, StoryHero.vue) so it is
+   the WHOLE-PAGE wash BEHIND the content, NOT a `-z-10` layer clipped inside the
+   rounded card and NOT a crisp grid blurred through a `backdrop-filter` glass plate.
    Static under reduced-motion by construction (a grid does not animate). */
-.story-bg-grid {
+.grid-bg {
     background-color: var(--background);
     background-image:
-        linear-gradient(to right, var(--story-grid-color-strong) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--story-grid-color-strong) 1px, transparent 1px),
-        linear-gradient(to right, var(--story-grid-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--story-grid-color) 1px, transparent 1px);
-    background-size:
-        calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),
-        calc(var(--story-grid-size) * 4) calc(var(--story-grid-size) * 4),
-        var(--story-grid-size) var(--story-grid-size),
-        var(--story-grid-size) var(--story-grid-size);
-    background-position: center center;
+        repeating-linear-gradient(
+            to right,
+            var(--grid-line-major) 0 1px,
+            transparent 1px var(--grid-major)
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            var(--grid-line-major) 0 1px,
+            transparent 1px var(--grid-major)
+        ),
+        repeating-linear-gradient(
+            to right,
+            var(--grid-line) 0 1px,
+            transparent 1px var(--grid-pitch)
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            var(--grid-line) 0 1px,
+            transparent 1px var(--grid-pitch)
+        );
+    background-position: 0 0;
+}
+
+/* ── BC.W-PAGE-HIERARCHY (Part B) — the section-delimiter chassis affordance ─────
+ *
+ * The user's bar (USER-DEFECTS §C): "Each section on a page must be properly
+ * delimited with hr lines OR in different cards." At HEAD the StoryPage body was
+ * an undelimited `gap-10` gap-stack — every block blurred into the next (~0% of
+ * routes met the bar). This register draws a visible hairline rule BETWEEN
+ * consecutive top-level body sections AUTOMATICALLY — the chassis applies it, no
+ * per-SFC hand-rolled `<hr>`.
+ *
+ * The seam reads the dark-adaptive `--configurator-divider` token (CLAUDE.md
+ * §BA.W-CONFIG-CHASSIS — a `light-dark()` warm-ink hairline that survives the dark
+ * glass plate), NEVER an inline `border-border/N` alpha that vanishes on the dark
+ * card. It is a hairline whisper (the `.glass-menu-section --border-hairline`
+ * register precedent), never a hard `1px solid` page-rule.
+ *
+ * The `> * + *` adjacent-sibling form delimits between top-level sections only —
+ * the first section stays flush (no leading rule), the seam sits BETWEEN named
+ * sections (≥2 sections → ≥1 delimiter). It rides the `gap-10` stack: the
+ * border-top draws at the existing gap, with a touch of breathing padding so the
+ * rule does not crowd the next section's heading. The delimiter sits INSIDE the
+ * `.scroll-cascade` build (it does not re-author the section entrance). */
+.story-sections--delimited > * + *,
+/* The dock walkthroughs stage their sections inside a <DockStage> backdrop
+   column (`.dock-stage-column`, a flex stack of StorySection children over the
+   shared field) — the ONE structural grouping wrapper in the demo. Reach one
+   level into it so the staged walkthrough steps are delimited too (the
+   "EVERY PAGE STANDARDIZED" bar reaches the dock band). */
+.story-sections--delimited .dock-stage-column > section + section {
+    border-top: 1px solid var(--configurator-divider);
+    padding-top: var(--story-section-delimiter-gap, 1.5rem);
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import {
     DropdownMenu,
@@ -18,10 +19,7 @@ import {
     DropdownMenuTrigger,
 } from "../../../src/components/ui/dropdown-menu";
 import { Button } from "../../../src/components/ui/button";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { Menu } from "@lucide/vue";
-// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
-const CONTAINERS_STOP = 2;
+
 
 const panelLayout = ref<"grid" | "list" | "board">("grid");
 const flags = ref({ minimap: true, overlays: false, rulers: true });
@@ -29,30 +27,8 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="Menu" :section="CONTAINERS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · Dropdown menu
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Triggered menu with groups and checks — the items stay ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="text-subheading">Composed menu</h2>
+        
+            <StorySection heading="Composed menu" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     One trigger, every subcomponent.
                 </p>
@@ -132,7 +108,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                     layout = {{ panelLayout }} · minimap = {{ flags.minimap }} ·
                     overlays = {{ flags.overlays }} · rulers = {{ flags.rulers }}
                 </div>
-            </div>
-        </div>
+            </StorySection>
+        
     </StoryPage>
 </template>

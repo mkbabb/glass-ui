@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { CompletionSeal } from "../../../src/components/custom/completion-seal";
-import { IconChip } from "../../../src/components/custom/icon-chip";
 import { Button } from "../../../src/components/ui/button";
-import { Award } from "@lucide/vue";
+
 
 // BB.W-SUFFUSE3 — the feedback-band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
@@ -19,27 +19,7 @@ function fireAgain() {
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="Award" :section="FEEDBACK_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Feedback · Completion Seal
-                </span>
-                <p class="text-small text-muted-foreground">
-                    The hero-scale earned-GOLD completion mark — a one-shot
-                    gold-draw seal that inks itself, settles, and glints once.
-                    Gold because completion is EARNED.
-                </p>
-            </div>
-        </header>
-
+        
         <div class="grid gap-8">
             <div class="flex items-center gap-4">
                 <Button variant="outline" @click="fireAgain">
@@ -89,8 +69,7 @@ function fireAgain() {
             <!-- The completion-register lockstep: a consumer re-inking
                  --phase-complete-color re-inks the seal (here a ruby completion
                  register instead of gold). The seal is token-first. -->
-            <div class="grid gap-3">
-                <h2 class="text-subheading">Re-inked completion register</h2>
+            <StorySection heading="Re-inked completion register" gap="md">
                 <p class="text-small text-muted-foreground">
                     A consumer overriding
                     <code>--phase-complete-color</code> re-inks the seal in
@@ -111,7 +90,7 @@ function fireAgain() {
                         class="h-24 w-24"
                     />
                 </div>
-            </div>
+            </StorySection>
         </div>
     </StoryPage>
 </template>

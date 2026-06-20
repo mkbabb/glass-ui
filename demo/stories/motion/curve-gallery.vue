@@ -257,8 +257,12 @@ const houseCores: { token: string; cp: string }[] = [
             </div>
 
             <!-- The active family heading rung (W-HIERARCHY: section heading → body) -->
-            <h2 class="text-subheading mb-1">{{ activeFamily }}</h2>
-            <p class="mb-5 max-w-prose text-small text-muted-foreground">{{ activeBlurb }}</p>
+            <StorySection
+                :heading="activeFamily"
+                :blurb="activeBlurb"
+                gap="sm"
+                class="mb-5"
+            />
 
             <!-- Custom family → the published <EasingPicker> in bezier mode (the
                  re-homed BezierEditor — the draggable cubic-bezier arm). -->

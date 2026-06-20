@@ -9,10 +9,8 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { SelectableChip } from "../../../src/subpaths/selectable-chip";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { ToggleRight } from "@lucide/vue";
 
-const FORMS_STOP = 3;
+
 
 // A tag picker — each tag carries its own section-color --tone, so the row reads as
 // one tonal family with per-tag identity. Idle chips stay legibly tinted; selected
@@ -40,27 +38,7 @@ function pick(v: string) {
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="ToggleRight" :section="FORMS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Selectable Chip
-                </span>
-                <p class="text-small text-muted-foreground">
-                    The contrast-floored tonal-accent register — one
-                    <code class="fira-code">:tone</code> per chip, idle-legible,
-                    active-bold, ink-correct in both modes.
-                </p>
-            </div>
-        </header>
-
+        
         <StorySection
             label="per-tone tag picker — idle legible, active bold"
             blurb="Each chip carries a distinct `:tone` (a `--section-color-*`). At REST the `--accent-fill` is faint but floored ≥3:1 (legibly tinted, not a whisper); SELECTED, the chip reads the bolder `--accent-band` + `--accent-edge` rim + the contrast-safe `--accent-ink` label."

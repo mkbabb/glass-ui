@@ -9,11 +9,8 @@ import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { SpaView } from "../../../src/components/custom/spa-view";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
-import { IconChip } from "../../../src/components/custom/icon-chip";
 import { Layers } from "@lucide/vue";
 
-// BA.W-SUFFUSE2 — the containers band's ONE coherent --section-color-2 blue identity.
-const CONTAINERS_STOP = 2;
 
 // Three views, each with its OWN local counter. The counter is the cache witness:
 // after the KeepAlive caches the inactive view, switching back restores the SAME
@@ -62,28 +59,6 @@ const tabs = [
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the containers-band identity event family on --section-color-2. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="Layers" :section="CONTAINERS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Containers · SpaView
-                </span>
-                <p class="text-small text-muted-foreground">
-                    A bounded view-cache router pane — KeepAlive caches the inactive
-                    views, the out-in fade swaps between them; the section identity
-                    is the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <StorySection
             heading="Cached views, out-in fade"
             label=":max LRU + KeepAlive + Transition mode=out-in"

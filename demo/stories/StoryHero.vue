@@ -222,21 +222,34 @@ const liquidGridConfig = PAPER_GRID_PRESET_SUFFUSE;
 const fullBleed = computed(() => isHero.value && liveBackdrop.value);
 
 // A STATIC declared backdrop — the calm blueprint-grid / paper-grain wash. Not a
-// live GL field, but a real declared background the card must let read THROUGH.
+// live GL field, but a real declared background that is the WHOLE-PAGE wash BEHIND
+// the content.
 const staticBackdrop = computed(() => kind.value === "grid" || kind.value === "paper");
+
+// BC.W-GRID-SIMPLE — the BACKGROUND-mount full-bleed condition. The crisp grid /
+// paper wash gets the SAME `.story-hero-bg--bleed` (`position: fixed; inset: 0`)
+// escape the live substrates have, so the static grid is the WHOLE-PAGE background
+// BEHIND the content — NOT a `-z-10` layer clipped inside the rounded `.story-hero`
+// box (the "WTF clipped" / "NOT displayed in the card" defect dead). DISTINCT from
+// `fullBleed`: `fullBleed` ALSO switches the content to the no-card bleed-content
+// float (the LIVE hero read), while a static grid keeps its normal card — the grid
+// is the page background, the card a separate plate OVER it, NOT a thin wash card the
+// grid reads (and blurs) THROUGH.
+const bgFullBleed = computed(() => fullBleed.value || staticBackdrop.value);
 
 // ── The read-through seam (W-SB-STAGE §2.1a / AZ.W-SUFFUSE D4-3) ──────────────
 // Over a LIVE substrate the card drops to a THINNER glass rung so the field reads
-// THROUGH it. AZ.W-SUFFUSE D4-3 extends the SAME lever to the declared STATIC
-// backdrops (grid / paper): the 7%-grid / paper-grain under a 0.65α `resting`
-// card is invisible (the over-restraint defect), so a grid/paper page also drops
-// to the calm `wash` (page) / `quiet` (hero) tier and the underlay reads. Over
-// NO declared background the tier is BYTE-IDENTICAL to HEAD (`floating` hero /
-// `resting` page) — the default-path canary. A full-bleed hero has no card box
-// (the content floats free over the field).
+// THROUGH it. BC.W-GRID-SIMPLE — the STATIC grid / paper backdrops NO LONGER take
+// the wash/quiet drop: the crisp grid is now the WHOLE-PAGE full-bleed wash BEHIND
+// the content (`bgFullBleed`), NOT a faint underlay the card reads through, so a
+// `backdrop-filter: blur()` `wash` plate over it would Gaussian-blur the crisp grid
+// lines into the "blurry mess" the user condemned. The static-backdrop card stays on
+// its opaque-enough default tier (`floating` hero / `resting` page) — a separate
+// plate OVER the page grid, de-blurred by construction. The wash/quiet drop survives
+// ONLY for the LIVE substrate read-through. Over NO declared background the tier is
+// BYTE-IDENTICAL to HEAD (`floating` hero / `resting` page) — the default-path canary.
 const cardTier = computed<CardTier>(() => {
-    if (liveBackdrop.value || staticBackdrop.value)
-        return isHero.value ? "quiet" : "wash";
+    if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
     return isHero.value ? "floating" : "resting";
 });
 </script>
@@ -245,7 +258,7 @@ const cardTier = computed<CardTier>(() => {
     <div
         class="story-hero"
         :data-variant="variant"
-        :data-full-bleed="fullBleed ? 'true' : null"
+        :data-full-bleed="bgFullBleed ? 'true' : null"
     >
         <!-- Per-page background substrate. A full-bleed hero pins it
              `position: fixed; inset: 0` (the `.story-hero-bg--bleed` modifier) so
@@ -285,14 +298,25 @@ const cardTier = computed<CardTier>(() => {
             :config="liquidGridConfig"
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
         />
+        <!-- BC.W-GRID-SIMPLE — the static crisp grid / paper wash mounts FULL-BLEED
+             (`.story-hero-bg--bleed` → `position: fixed; inset: 0`) so it is the
+             WHOLE-PAGE background BEHIND the content, NOT a `-z-10` layer clipped
+             inside the rounded `.story-hero` and NOT read through a blurred `wash`
+             card. The crisp `.grid-bg` recipe (story-hero.css) reads the shared
+             `--grid-*` rhythm. -->
         <div
             v-else-if="kind === 'grid'"
-            class="story-hero-bg story-bg-grid"
+            :class="cn('story-hero-bg grid-bg', bgFullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
         />
         <div
             v-else-if="kind === 'paper'"
-            class="story-hero-bg story-bg-paper paper-grain-overlay"
+            :class="
+                cn(
+                    'story-hero-bg story-bg-paper paper-grain-overlay',
+                    bgFullBleed && 'story-hero-bg--bleed',
+                )
+            "
             aria-hidden="true"
         />
 

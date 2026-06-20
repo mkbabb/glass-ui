@@ -1,15 +1,26 @@
 <template>
     <!-- Normal mode: render inline -->
     <div v-if="!open" class="relative" v-bind="$attrs">
-        <button
-            class="expandable-container__trigger absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
-            :class="buttonPosition === 'left' ? 'left-2 top-2' : 'right-2 top-2'"
-            title="Fullscreen"
-            :aria-label="expandLabel"
-            @click="open = true"
-        >
-            <Maximize2 class="h-4 w-4" />
-        </button>
+        <!-- BC.W-EXPANDABLE-PART — the expand affordance is a chrome HOOK, not a
+             hard-coded button. `#expand-trigger` (named slot) REPLACES it; the
+             unfilled default below renders today's <Maximize2> corner button
+             byte-identical. The button carries `data-part="trigger"`
+             + `data-mode="expand"` (the `::part()`-analogue re-skin hook a consumer
+             styles via a plain descendant selector — NOT a `:deep()` reach). The
+             `expand()` callback flips the SAME `v-model:open` (no parallel state). -->
+        <slot name="expand-trigger" :expand="expand" :label="expandLabel">
+            <button
+                data-part="trigger"
+                data-mode="expand"
+                class="absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
+                :class="buttonPosition === 'left' ? 'left-2 top-2' : 'right-2 top-2'"
+                title="Fullscreen"
+                :aria-label="expandLabel"
+                @click="expand"
+            >
+                <Maximize2 class="h-4 w-4" />
+            </button>
+        </slot>
         <slot :fullscreen="false" />
     </div>
 
@@ -32,22 +43,37 @@
     <Teleport to="body" :disabled="!open">
         <div
             v-if="open"
+            data-part="overlay"
             :data-surface="surface"
             :class="cn(
                 'fixed inset-0 z-modal flex flex-col glass-overlay',
                 surfaceDecoration,
             )"
         >
-            <button
-                class="expandable-container__trigger absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
-                :class="buttonPosition === 'left' ? 'left-3 top-3' : 'right-3 top-3'"
-                title="Exit fullscreen"
-                :aria-label="collapseLabel"
-                @click="open = false"
+            <!-- BC.W-EXPANDABLE-PART — the fullscreen-overlay chrome is a HOOK.
+                 `#fullscreen-chrome` (named slot) REPLACES it (a branded top
+                 toolbar, a custom close); the unfilled default renders today's
+                 <Minimize2> corner button byte-identical. `collapse()` flips the
+                 SAME `v-model:open`. -->
+            <slot
+                name="fullscreen-chrome"
+                :collapse="collapse"
+                :label="collapseLabel"
+                :fullscreen="true"
             >
-                <Minimize2 class="h-4 w-4" />
-            </button>
-            <div class="h-full w-full">
+                <button
+                    data-part="trigger"
+                    data-mode="collapse"
+                    class="absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
+                    :class="buttonPosition === 'left' ? 'left-3 top-3' : 'right-3 top-3'"
+                    title="Exit fullscreen"
+                    :aria-label="collapseLabel"
+                    @click="collapse"
+                >
+                    <Minimize2 class="h-4 w-4" />
+                </button>
+            </slot>
+            <div data-part="panel" class="h-full w-full">
                 <slot :fullscreen="true" />
             </div>
         </div>
@@ -126,6 +152,18 @@ const surfaceDecoration = computed(() =>
  * buttons continue to operate without parent wiring.
  */
 const open = defineModel<boolean>("open", { default: false });
+
+// BC.W-EXPANDABLE-PART — the ONLY behaviour seam the chrome hooks expose: thin
+// wrappers that flip the SAME `v-model:open` (no parallel state ref — the
+// one-registry discipline). A consumer's replacement `#expand-trigger` /
+// `#fullscreen-chrome` button calls these; the body-lock + teleport + Escape stay
+// the SFC's, so there is no machinery a consumer would fork to change the chrome.
+function expand() {
+    open.value = true;
+}
+function collapse() {
+    open.value = false;
+}
 
 let holdsBodyOverflowLock = false;
 

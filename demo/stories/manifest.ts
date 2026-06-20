@@ -16,6 +16,7 @@
  */
 import type { Component } from "vue";
 import type { StoryBackground } from "./aurora-hero";
+import { CATEGORY_HERO } from "./category-hero";
 import {
     Compass,
     Droplet,
@@ -397,11 +398,23 @@ function s(
  * Never hand-authored; derived from the category + the landing maps above.
  */
 function sectionLanding(cat: Category): SectionLanding {
+    // BC.W-HERO-AUDACIOUS Part B/E — each section landing reads its DISTINCT field
+    // from the per-category CATEGORY_HERO descriptor (the `bgKind` + the per-category
+    // aurora `heroPalette`), so substrates wears its aurora-blue field, motion its
+    // constellation-violet, forms its grid-teal — never the one-aurora sameness. An
+    // aurora band carries the per-category palette key (the ONE color event); the
+    // static grid/paper bands carry no palette (a static wash has no aurora stops).
+    const hero = CATEGORY_HERO[cat.id];
+    const bgKind = hero?.bgKind ?? CATEGORY_DEFAULT_BG[cat.id] ?? "paper";
+    const background: StoryBackground =
+        bgKind === "aurora" && hero
+            ? { kind: "aurora", palette: hero.heroPalette }
+            : bgKind;
     return {
         title: cat.title,
         blurb: LANDING_BLURBS[cat.id] ?? `The ${cat.title.toLowerCase()} family.`,
         subpath: LANDING_SUBPATHS[cat.id] ?? `/${cat.id}`,
-        background: CATEGORY_DEFAULT_BG[cat.id] ?? "paper",
+        background,
         heroScale: "hero",
         depth: "D1",
     };

@@ -1128,7 +1128,7 @@ export const GATES = [
     {
         id: "proof:card-padding",
         cmd: "proof:card-padding",
-        tags: ["ci"],
+        tags: ["local", "ci", "release"],
         note: "BB.W-CARD-PAD — the GOLDEN sqrt-φ/φ card + overlay padding ladder (born-RED→GREEN). At HEAD every Card section was a uniform p-(--card-spacing)=24px on ALL sides (axis ratio 1:1, NO golden relationship) + the header→content gap was a 48px DOUBLE-pad artifact (header pb24 + content pt24) — the heading HUGGED the top because top pad == side pad. The fix lifts the BLOCK axis by sqrt-φ (1.272) over the preserved INLINE anchor (--card-pad-inline = --spacing(6), sm --spacing(4)) so the heading clears the top by ~30.5px against a 24px side; the footer steps by φ (1.618), the intra-header gap tightens by φ² (2.618). CLEAN BREAK: --card-spacing GONE, no alias. C1 the 5-token ladder on Card.vue with the LITERAL 1.272/1.618/2.618 constants IN the calc chains (a flat resolved-rem rebake REDS — the C7 self-test bite); C2 ZERO --card-spacing survives in src/ (clean-break grep, comment-stripped); C3 the Card family consumes the inline-vs-block AXIS SPLIT (Header px-inline+pt-block+pb-0; Content px-inline+pt-section-gap+pb-block; Footer px-inline+pt-footer+pb-block — a uniform p-(--card-pad-*) on any member REDS); C4 no ad-hoc p-N on the enrolled /display/card cards off the card-padding-roster.md allowlist (the scroll-shrink Card-root p-0 + two tight-pane scroll cards p-4 recorded); C5 [arm 2] Dialog/Sheet/Popover/HoverCard/Toast each mint --overlay-pad-inline + --overlay-pad-block (block=inline×1.272) + apply px-(--overlay-pad-inline) py-(--overlay-pad-block) — born-RED until the overlay band merges; C5b --panel-padding-roomy DELETED from the token tree (the dead orphan); C6 ≥2 referencing sites per new token (mint site + read site — a derived rung is load-bearing, declared AND consumed, not a dead orphan); C7 the self-test bite (re-hardcode/re-card-spacing/uniform-pad/ad-hoc-pad each RED their clause through the pure detector). The BINDING painted truth is tests-visual/card-padding.spec.ts (the heading clears the top edge, the top:side ratio ≈ sqrt-φ, the interior gap ≈ section-gap NOT 48px, both modes). Bite: rebake the golden ratio to a flat rem, re-introduce --card-spacing, uniform-pad a Card member, or smuggle an ad-hoc p-N onto an enrolled demo card → RED.",
     },
     {
@@ -1870,6 +1870,54 @@ export const GATES = [
         cmd: "proof:page-chassis",
         tags: ["local", "ci"],
         note: "BC.W-PAGE-CHASSIS — every surviving route reads as ONE coherent StoryPage chassis (StoryPage + StoryHero + StoryHeader + SectionPreviewCard — the masthead + section rhythm), NOT a bespoke per-page layout. Reads the Band-1 glass identity + the per-category backgrounds. Bite: a bespoke off-chassis page layout → RED.",
+    },
+    {
+        id: "proof:page-hierarchy",
+        cmd: "proof:page-hierarchy",
+        tags: ["local", "ci"],
+        note: "BC.W-PAGE-HIERARCHY — section delimiting + the design hierarchy suffused on EVERY route, standardized: each named section carries the canonical √φ 20.4px section <h2> rung, consecutive sections are split by a visible hairline (mode `hr`) or sit in their own sub-card (mode `cards`), and NO route carries a second in-body descriptor header (the chassis hero is the ONE descriptor). The recognizable shape on every page: hero <h1> (R1) → section <h2 text-subheading> (R2) → mono eyebrow + blurb (R3/R4). Device-free SOURCE arm; the painted render rides the :5199 capture + tests-visual/page-hierarchy.spec.ts. Bite: a route with a double in-body header / an off-rung section heading → RED.",
+    },
+    {
+        id: "proof:grid-simple",
+        cmd: "proof:grid-simple",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-GRID-SIMPLE — the blurry in-card grid ABROGATED → ONE crisp, evenly-spaced, LARGER, full-bleed page grid (the keyframes.js EditorShell magnitudes). G1 the clean break (no alias): --story-grid-size/--story-grid-color/center-center GONE from story-hero.css; G2 ONE rhythm source --grid-pitch(1rem)/--grid-major(5rem)/--grid-line(3%)/--grid-line-major(11%) in scale-paper.css, the demo .grid-bg reads them, --paper-grid-texture-size unifies onto --grid-pitch (no parallel 28/32px); G3 crisp by construction (hard 0-1px stops, position 0 0, no filter/backdrop-filter); G4 full-bleed .story-hero-bg--bleed (NOT a -z-10 boxed mount read through a blurred wash plate); G5 ONE warm-ink color-mix(--foreground) line, NO teal/navy (the foreground-flip re-tint, no parallel --grid-*-dark family); G6 static by construction, no GL dir/rAF/canvas. SUPERSEDES proof:page-redesign's 4 retired grid clauses (the single-gate grid coverage homes here). Device-free SOURCE + per-clause self-test bites + tests-visual/grid-simple.spec.ts. Bite: re-introduce --story-grid-*, a stray 28/32px pitch, a soft-ramp/center-center grid, or a teal/navy literal → RED.",
+    },
+    {
+        id: "proof:ghost-dashed",
+        cmd: "proof:ghost-dashed",
+        tags: ["local", "ci"],
+        note: "BC.W-GHOST-DASHED — the ONE ghost/empty-slot dashed register + rounded-everywhere-it-should-be: the 6 ad-hoc `border-dashed` forks (three radii, three hosts, three pads) COLLAPSE onto `.ghost-slot` (a dashed-outline plate, --radius-card rounding, calm-muted warm dashed color, translucent host), and everything that SHOULD be rounded IS rounded (the iOS-concentric-corner bar). Device-free SOURCE arm; the render (border-style dashed + radius == --radius-card + warm color, the rounded witnesses non-zero) rides tests-visual/ghost-dashed.spec.ts + the proof:ba-gestalt verdict. Bite: a re-added ad-hoc border-dashed fork / a square placeholder → RED.",
+    },
+    {
+        id: "proof:hero-audacious",
+        cmd: "proof:hero-audacious",
+        tags: ["local", "ci"],
+        note: "BC.W-HERO-AUDACIOUS — the herostudios-grade audacious-type hero pages, per-category icons, each DISTINCT (not a duplicated grey-card grid). APPLIES the existing √φ display ladder (demo-private, zero src/ paint): the front door + the 11 section landings reach the audacious display rung, each category gets a DISTINCT {icon, sectionHue, heroPalette, bgKind} from the ONE CATEGORY_HERO map, the redirect cards compose the shipped <IconChip> (NO re-paste) + an inline preview + the Fira-Code subpath chip, the per-category hue the ONE color event (chip + eyebrow only — title + body stay warm ink, the herostudios restraint). Flips proof:customizability-census C4 GREEN. Device-free SOURCE witnesses + tests-visual/hero-audacious.spec.ts. Bite: a hero capped below the audacious rung / a duplicated icon-less grey slab / a second per-category color event → RED.",
+    },
+    {
+        id: "proof:code-blocks",
+        cmd: "proof:code-blocks",
+        tags: ["local", "ci"],
+        note: "BC.W-CODE-BLOCKS — component names + technical values → ONE Fira Code code register: every component name (<GlassDock>), token (--glass-bg-floating), subpath, px/numeric value reads in ONE consistent Fira-Code treatment — a tinted inline <Code> chip for the inline case, a real multi-line <CodeBlock> glass plate (with a copy affordance) for the import-snippet case. The 3-way fira-code/font-mono/bare-<code> fork collapses onto the ONE <Code>/<CodeBlock> register (display/card.vue's 45 font-mono runs the headline re-author). Device-free SOURCE; the render (consistent chips, the glass-quiet code-block plate over a busy backdrop, the copy affordance) rides tests-visual/code-blocks.spec.ts. Bite: a re-added font-mono/bare-<code> fork on an enrolled surface → RED.",
+    },
+    {
+        id: "proof:separator-fix",
+        cmd: "proof:separator-fix",
+        tags: ["local", "ci"],
+        note: "BC.W-SEPARATOR-FIX — the Separator label-centering rebuilt + the /display/separator page re-authored. THE ROOT was the COMPONENT: the labelled separator was an ABSOLUTE span pinned to the line's own 1px height with a `bg-background` occlusion trick (the text overflowed the 1px box; bg-background cannot occlude the translucent rebuilt material — the line bled through the label). The fix is the architectural transposition: a FLEX split-rule [rule flex-1][label][rule flex-1], the label naturally centered by the flexbox, the rule two warm-ink segments (─── or ───), correct on ANY host; the page demos sit in correctly-padded rounded <Card>s. Device-free SOURCE + tests-visual/separator-fix.spec.ts. Bite: a re-introduced absolute-pinned label / a bg-background occlusion trick → RED.",
+    },
+    {
+        id: "proof:compositions-hero",
+        cmd: "proof:compositions-hero",
+        tags: ["local", "ci"],
+        note: "BC.W-COMPOSITIONS-HERO — /compositions/hero made DISTINCT from the homepage; /foundations/intro three-heroes → ONE; the platitudes + the 'View the source' button pruned. At HEAD /compositions/hero was a near-verbatim clone of the front door (same typing intro + §01/§02/§03 three-claim grid) and the front door stacked THREE display moments. Riding BC.W-HERO-AUDACIOUS's size discipline: the intro collapses to ONE audacious text-display-mega wordmark-hero; /compositions/hero is re-authored as a DISTINCT composition showcase at text-display-hero; the platitudes + 'View source' are gone. Device-free SOURCE witnesses + tests-visual/compositions-hero.spec.ts. Bite: a re-cloned homepage intro on /compositions/hero / a re-stacked three-heroes front door / a re-added view-source button → RED.",
+    },
+    {
+        id: "proof:expandable-part",
+        cmd: "proof:expandable-part",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-EXPANDABLE-PART — the ExpandableContainer ::part()/named-slot chrome-hook seam (the Atlas AR-7 expand-fullscreen seam; no consumer fork). A consumer re-skins OR fully REPLACES the fullscreen-overlay chrome (the corner expand/collapse glyph, the overlay frame) WITHOUT forking the SFC's body-teleport + body-overflow-lock + Escape machinery. The Vue-idiomatic ::part()/slots equivalent: (1) STABLE `data-part` attributes (styled via a PLAIN descendant selector, NOT a :deep() reach), (2) NAMED slots (#expand-trigger/#fullscreen-chrome) for full replacement, each with a today-default fallback (the unfilled-slot no-op floor is byte-identical), exposing ONLY the expand/collapse callbacks (thin wrappers over the SAME v-model:open — no parallel state path). Device-free SOURCE + a self-test bite. Bite: a removed data-part / a :deep()-only reskin path / a parallel state fork → RED.",
     },
     {
         id: "gates:verify-ci",

@@ -3,6 +3,7 @@
 // drives the `aria-invalid` / error-message wiring across the fields below.
 import { onMounted, onUnmounted, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { useUserInvalidAria } from "../../../src/composables/dom/useUserInvalidAria";
 import { Input } from "../../../src/components/ui/input";
 import { Textarea } from "../../../src/components/ui/textarea";
@@ -27,9 +28,8 @@ const name = ref("");
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="text-subheading">Validity vocabulary</h2>
+        
+            <StorySection heading="Validity vocabulary" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">:user-invalid</code> paints
                     the field on field-exit (blur), never on mount;
@@ -84,10 +84,9 @@ const name = ref("");
 
                     <Button type="submit">Submit</Button>
                 </form>
-            </div>
+            </StorySection>
 
-            <div class="grid gap-4">
-                <h2 class="text-subheading">LabeledInput — required + error slot</h2>
+            <StorySection heading="LabeledInput — required + error slot" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     The <code class="font-mono text-xs">required</code> prop threads
                     the asterisk onto the label and the native attribute onto the
@@ -104,10 +103,9 @@ const name = ref("");
                         <template #error>A workspace name is required.</template>
                     </LabeledInput>
                 </form>
-            </div>
+            </StorySection>
 
-            <div class="grid gap-4">
-                <h2 class="text-subheading">Native customizable &lt;select&gt;</h2>
+            <StorySection heading="Native customizable &lt;select&gt;" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     The customizable native <code class="font-mono text-xs">&lt;select&gt;</code>
                     (<code class="font-mono text-xs">appearance: base-select</code>) is
@@ -115,7 +113,7 @@ const name = ref("");
                     reka-ui <code class="font-mono text-xs">&lt;Select&gt;</code> stays the
                     default rich path.
                 </p>
-            </div>
-        </div>
+            </StorySection>
+        
     </StoryPage>
 </template>

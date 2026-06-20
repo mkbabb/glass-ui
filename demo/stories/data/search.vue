@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { computed, ref } from "vue";
 import {
     CheckCircle2,
@@ -229,10 +230,7 @@ function formatMatches(indices: number[]): string {
     <StoryPage>
         <section class="flex flex-col gap-5">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-                <div>
-                    <p class="text-admin-label text-muted-foreground">Search package</p>
-                    <h2 class="text-subheading">Fuzzy index</h2>
-                </div>
+                <StorySection label="Search package" heading="Fuzzy index" />
                 <div class="flex flex-wrap gap-2">
                     <Badge variant="outline" data-testid="dataset-size">
                         {{ searchItems.length }} rows
@@ -428,12 +426,11 @@ function formatMatches(indices: number[]): string {
         </section>
 
         <section class="flex flex-col gap-4">
-            <div class="flex items-center justify-between gap-4">
-                <h2 class="text-subheading">Results</h2>
+            <StorySection heading="Results" gap="lg" class="items-center justify-between">
                 <span class="fira-code text-mono-caption text-muted-foreground" data-testid="visible-result-count">
                     {{ resultCount }}
                 </span>
-            </div>
+            </StorySection>
 
             <div
                 v-if="visibleResults.length > 0"
@@ -481,7 +478,7 @@ function formatMatches(indices: number[]): string {
 
             <div
                 v-else
-                class="rounded-card border border-dashed border-border bg-card p-6 text-small text-muted-foreground"
+                class="ghost-slot p-6 text-small"
                 data-testid="empty-results"
             >
                 No fuzzy results for the current query.

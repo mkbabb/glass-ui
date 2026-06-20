@@ -7,10 +7,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ToggleChip } from "../../../src/subpaths/toggle-chip";
-import { Triangle, Square, Circle, Hexagon, ToggleRight } from "@lucide/vue";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
-const FORMS_STOP = 3;
+import { Triangle, Square, Circle, Hexagon } from "@lucide/vue";
 
 const tags = ref<Record<string, boolean>>({
     bone: true,
@@ -34,27 +31,6 @@ const cells = [
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="ToggleRight" :section="FORMS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Chip toggles
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Segmented chip and cell toggles — the glyphs stay ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <StorySection
             label="variant=chip — multi-select"
             blurb="Inline horizontal selectors. Each chip carries `aria-pressed` from the reka-ui Toggle root; consumers manage their own selection model."

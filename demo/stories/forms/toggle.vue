@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleLeft } from "@lucide/vue";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "@lucide/vue";
 import { Toggle } from "../../../src/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "../../../src/components/ui/toggle-group";
 import { ToggleChip } from "../../../src/components/custom/toggle-chip";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-// BA.W-SUFFUSE2 — the forms band's ONE coherent --section-color-3 teal identity.
-const FORMS_STOP = 3;
 
 const bold = ref<boolean>(false);
 const marks = ref<string[]>(["bold"]);
@@ -25,27 +22,6 @@ const cell = ref<string>("warm");
 
 <template>
     <StoryPage>
-        <!-- BA.W-SUFFUSE2 — the forms-band identity event family on --section-color-3. -->
-        <header
-            class="flex items-center gap-4 border-l-[3px] pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderColor:
-                    'color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="ToggleLeft" :section="FORMS_STOP" />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Toggles
-                </span>
-                <p class="text-small text-muted-foreground">
-                    On/off and grouped toggles — the control glyphs stay ink; the
-                    section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <!-- Single toggle. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">single toggle</p>
