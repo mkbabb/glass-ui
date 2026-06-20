@@ -61,7 +61,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 The headline CTA — a calm liquid-glass button with the
                 <code class="fira-code">--glass-specular</code> edge catch-light and a
                 restrained <code class="fira-code">--scale-hover-btn</code> lift on the
-                §6 spring register. Staged over the live field so the lit glass reads.
+                library's spring register. Staged over the live field so the lit glass reads.
             </p>
             <ShowcaseFrame tier="field" pad="xl">
                 <div class="flex flex-wrap items-center gap-4">
@@ -76,7 +76,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
              pale lozenge on an opaque plate. -->
         <StorySection
             heading="Glass register"
-            blurb="The glass + glass-wash variants over the page field — the W-BUTTON-GLASS material reads as lit glass over the busy backdrop, not a pale lozenge on a flat plate."
+            blurb="The glass + glass-wash variants over the page field — lit glass over the busy backdrop, not a pale lozenge on a flat plate."
         >
             <ShowcaseFrame tier="field" pad="lg">
                 <div class="flex flex-wrap items-center gap-3">
@@ -97,7 +97,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
              ride the LIBRARY .glass-btn :active register. -->
         <StorySection
             heading="Raw .glass-btn utility"
-            blurb="Circular icon button from glass.css, staged over the field. The press scale + the W-LENSING lens-swell ride the library register; supports aria-pressed and :disabled."
+            blurb="Circular icon button from glass.css, staged over the field. The press scale + lens-swell ride the library register; supports aria-pressed and :disabled."
         >
             <ShowcaseFrame tier="field" pad="lg">
                 <div class="flex flex-wrap items-center gap-3">

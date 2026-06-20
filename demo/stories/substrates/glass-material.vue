@@ -119,7 +119,7 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="dynamic backdrop luminance — the iOS-27 sampled observer (AZ Arm 2)"
+            label="dynamic backdrop luminance — the iOS-27 sampled observer"
             blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. PRM-gated: under reduce the loop collapses to one mount sample."
         >
             <ShowcaseFrame pad="lg" tier="field">
@@ -141,7 +141,7 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="subtle rim — the --glass-edge-light contrast device"
-            blurb="The rim is a deliberately sub-perceptual 0.75px 18%-α white inset ring (W09 'subtle by design'). Side-by-side: a plate carrying the rim vs the same plate with --glass-edge-light suppressed, over a dark sample where the 0.75px ring reads as a feature, not a missing one."
+            blurb="The rim is a deliberately sub-perceptual 0.75px 18%-α white inset ring — subtle by design. Side-by-side: a plate carrying the rim vs the same plate with --glass-edge-light suppressed, over a dark sample where the 0.75px ring reads as a feature, not a missing one."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
@@ -169,8 +169,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="glass-accent — the per-instance chromatic rim+glint axis (BB)"
-            blurb="The THIRD disjoint glass axis (level · tint · accent). A consumer DATA hue OKLab-tints the surface's RIM (silhouette edge) + the ::before catch-light glint — set per-INSTANCE (--glass-accent: <hue>; --glass-accent-strength: <N%>), the §F1 data-keyed colored hover made a one-line seam. DISTINCT-not-fork of W55's --glass-tint-source (the whole-plate legibility darken): the accent rides the rim+glint only, never the plate background. Each swatch carries its own series hue; the UNSET plate beside them stays byte-identical warm-cream glass."
+            label="glass-accent — the per-instance chromatic rim+glint axis"
+            blurb="The third glass axis (level · tint · accent). A consumer data hue OKLab-tints the surface's rim (silhouette edge) and the ::before catch-light glint — set per instance (--glass-accent: <hue>; --glass-accent-strength: <N%>), so a data-keyed colored hover is a one-line seam. Distinct from the whole-plate tint axis (--glass-tint-source): the accent rides the rim and glint only, never the plate background. Each swatch carries its own series hue; the unset plate beside them stays plain warm-cream glass."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- consumer #1 — the data-hue swatch GRID: each cell sets its OWN
@@ -229,7 +229,7 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="SOTA fold — #glass-refract squircle edge-lens (Chromium PE)"
+            label="#glass-refract squircle edge-lens (Chromium, progressively enhanced)"
             blurb="A .glass-material.glass-lens panel composes the shipped #glass-refract squircle-bevel SVG filter behind @supports(backdrop-filter:url()): the backdrop BENDS + concentrates at the rim (edge-lensing), the press deepens the lens-swell on --glass-refract. Non-Chromium engines paint the blur base alone."
         >
             <ShowcaseFrame pad="lg" tier="field">
@@ -249,8 +249,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="SOTA fold — corner-shape: squircle (Chrome 139+ PE)"
-            blurb="@supports(corner-shape:superellipse(2)) paints the iOS-26 superellipse corner on the dialog/sheet register where it reads (W56 re-home). Cards/pills stay ROUND by policy — the superellipse is imperceptible at a 16px card radius. The border-radius round is the un-gated cross-engine fallback."
+            label="corner-shape: squircle (Chrome 139+, progressively enhanced)"
+            blurb="@supports(corner-shape:superellipse(2)) paints the iOS-26 superellipse corner on the dialog/sheet register where it reads. Cards/pills stay round by policy — the superellipse is imperceptible at a 16px card radius. The border-radius round is the un-gated cross-engine fallback."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-end gap-6">
@@ -273,7 +273,7 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="SOTA fold — chromatic edge dispersion + adaptive tint"
+            label="chromatic edge dispersion + adaptive tint"
             blurb="A warm/cool oklab fringe rides the rim under prefers-reduced-transparency:no-preference; the tint sets BOTH --glass-tint-source AND a non-zero --glass-tint-strength (≤30%) so the color-mix(in oklab,…) actually biases the surface toward the sampled backdrop hue (default = warm-white zero delta)."
         >
             <ShowcaseFrame pad="lg" tier="field">
@@ -309,8 +309,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="The brand-metal triad — gold · silver · bronze (BB.W-METAL-SHIMMER)"
-            blurb="The three brand metals on the W-NO-GRAY metal exception: gold (warm-yellow ~84°), silver (cool-steel ~255°), bronze (warm-brown ~54°). The text-clip register (.metal-{gold,silver,bronze}) sweeps the slow --duration-metal (6s) patina pass off the ONE metal-PARAMETERIZED metal-shimmer-sweep keyframe; the swept metallic RIM (.metal-*-border, the §N6 selected-item-border consumer) and the prismatic .metal-rainbow-rim (composing W-GLASS-ACCENT's rim seam) read on a glass plate. PRM=static — the metal READS as metal without the slide."
+            label="The brand-metal triad — gold · silver · bronze"
+            blurb="Three brand metals: gold (warm-yellow ~84°), silver (cool-steel ~255°), bronze (warm-brown ~54°). The text-clip register (.metal-{gold,silver,bronze}) sweeps the slow --duration-metal (6s) patina pass; the swept metallic rim (.metal-*-border) and the prismatic .metal-rainbow-rim read on a glass plate. Reduced motion keeps the metal static — it reads as metal without the slide."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- The medal triad — the text-clip register (consumer #1). -->
@@ -351,8 +351,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="The OPT-IN deep-glass tier — .glass-deep (BB.W-DEEP-GLASS)"
-            blurb="The maximal iOS-27 Liquid-Glass register ABOVE the W-GLASS-CAL calm default: .glass-deep (or <Card tier='deep'>) reaches the Apple deep band (saturate 1.5 / blur 16px) — the backdrop reads SOFTER + MORE saturated through the deeper plate. A SEPARATE --glass-blur-deep-* family on the --glass-depth scalar (the --glass-level twin); the calm content default is BYTE-UNCHANGED. Opt-in only — the calm .glass-floating plate beside it stays the calm ceiling. The deep tier composes --glass-level (the opaque escape + a11y brackets reach it) and inherits the W55 over-light darken."
+            label="The opt-in deep-glass tier — .glass-deep"
+            blurb="The maximal iOS-27 Liquid-Glass register above the calm default: .glass-deep (or <Card tier='deep'>) reaches the Apple deep band (saturate 1.5 / blur 16px) — the backdrop reads softer and more saturated through the deeper plate. A separate --glass-blur-deep-* family on the --glass-depth scalar (the --glass-level twin); the calm content default is unchanged. Opt-in only — the calm .glass-floating plate beside it stays the calm ceiling. The deep tier composes --glass-level, so the opaque escape and the contrast brackets reach it, and inherits the over-light darken."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- the deep-vs-calm contrast device: the .glass-deep plate reads

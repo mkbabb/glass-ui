@@ -100,8 +100,8 @@ const chapterBody: Record<string, string> = {
                     Navigation · Tabs
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Panel and toggle navigation — the labels stay ink; the section
-                    identity is the ONE color event.
+                    Panel and toggle navigation in two variants — pill and underline.
+                    The labels stay ink; the section identity is the ONE color event.
                 </p>
             </div>
         </header>
@@ -228,11 +228,5 @@ const chapterBody: Record<string, string> = {
                 </p>
             </div>
         </StorySection>
-
-        <!-- ════ The retirement note ════ -->
-        <StorySection
-            heading="Retired axes"
-            blurb="No legacy code. variant=segmented FOLDED into pill (one register). The overflow axis retired — overflow is FadingScroll's job. A multi-pressed strip is a ToggleGroup (role=group, N independent toggles), not a tab family member. ui/Tabs left the public surface — the dock-rail keeps the reka substrate internally. See MIGRATION.md."
-        />
     </StoryPage>
 </template>

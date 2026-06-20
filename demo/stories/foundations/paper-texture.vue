@@ -1,14 +1,11 @@
 <script setup lang="ts">
-// PaperBackdrop texture-system.
+// Paper texture.
 //
 // The texture register on `<PaperBackdrop>` accepts `frequency="clean"`
 // (default 0.65-baseFrequency / 4-octave) or `"aged"` (0.5-baseFrequency
 // / 5-octave). Consumers extend the register by re-declaring
-// `--paper-*-texture` vars at any ancestor scope — the canonical
-// texture-system cascade per DESIGN.md.
-//
-// AZ.W-PRUNE2 (E4-5): absorbed the near-duplicate `paper-backdrop.vue` twin —
-// its unique opacity-knob + layered-composition sections fold in below.
+// `--paper-*-texture` vars at any ancestor scope — the cascade is the
+// canonical way to retint or swap the turbulence without forking the SFC.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";

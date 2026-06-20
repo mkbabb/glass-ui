@@ -594,7 +594,7 @@ onMounted(() => {
 
         <StorySection
             label="recession envelope (opacityCeiling)"
-            blurb="The per-instance opacityCeiling recession knob — the aurora/fourier sibling that lets a constellation hero recede behind content. Two identical lattices differ ONLY in opacityCeiling: 1.0 (full) vs 0.4 (recessed). The recessed field paints its edges/nodes/web at ~0.4× the alpha, so it yields to the prose a glass card would float over — the ONE recession contract the four live substrates share. Default 1 is byte-identical to a constellation with no opacityCeiling."
+            blurb="The per-instance opacityCeiling recession knob — the aurora/fourier sibling that lets a constellation hero recede behind content. Two identical lattices differ ONLY in opacityCeiling: 1.0 (full) vs 0.4 (recessed). The recessed field paints its edges/nodes/web at ~0.4× the alpha, so it yields to the prose a glass card would float over — the ONE recession contract the four live substrates share. Default 1 leaves a constellation with no opacityCeiling unchanged."
         >
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div
@@ -638,7 +638,7 @@ onMounted(() => {
 
         <StorySection
             label="pinned anomaly (generalized)"
-            blurb="The R5-6 six-item generalization made first-class: a PINNED node the engine HOLDS while the field drifts around it (pinned), its incident edges tinted accent (accentEdges), the autonomous gentle anchor-drift that breathes it around its rest distinct from the click-warp (pinnedDrift), and the exposed warpSettled() signal a consumer reads to drive its own UI (the settled badge). The drawOverlay is the SAME anomaly recipe (a pulse ring + halo + core + dashed callout + monospace label) — now pinned to the engine-held node, NOT a hand-frozen vx=vy=0 node + an i=1 skip loop the consumer maintains. The label stays consumer drawOverlay content (the zero-deck-domain canon — no label prop)."
+            blurb="A pinned anomaly node: the engine holds it in place while the field drifts around it (pinned), tints its incident edges accent (accentEdges), gives it a gentle autonomous anchor-drift distinct from the click-warp (pinnedDrift), and exposes a warpSettled() signal a consumer reads to drive its own UI (the settled badge). The drawOverlay is the same anomaly recipe — a pulse ring, halo, core, dashed callout, and monospace label — pinned to the held node. The label is consumer drawOverlay content; there is no label prop on the component."
         >
             <ShowcaseFrame pad="none">
                 <div
@@ -748,7 +748,7 @@ onMounted(() => {
                 This instance carries <code class="font-mono text-xs">:freeze="true"</code>
                 — the lattice is a frozen, reproducible static frame (seeded layout,
                 no drift, no warp advance) and the anomaly recipe's pulse phase is
-                clamped, so two captures of this frame are byte-identical. Omit the
+                clamped, so two captures of this frame are pixel-identical. Omit the
                 prop to auto-derive freeze from a
                 <code class="font-mono text-xs">?export</code> /
                 <code class="font-mono text-xs">?print</code> /

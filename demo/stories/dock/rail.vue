@@ -154,12 +154,11 @@ const railLayers = [
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Collapsible vertical dock — it morphs its height</h2>
             <p class="text-small text-muted-foreground">
-                A vertical dock now carries the SAME collapse / morph / shrink machinery a
-                horizontal dock does (AZ.W-DOCK-TAXONOMY) — it animates its
+                A vertical dock collapses and morphs its height like a horizontal dock does its
+                width — it animates its
                 <code class="rounded bg-muted px-1">height</code> on the
-                <code class="rounded bg-muted px-1">--dock-morph-t</code> spring, the machinery the
-                old rail variant denied. Hover to expand; the dock grows its block axis open and
-                shrinks back to the collapsed circle on idle.
+                <code class="rounded bg-muted px-1">--dock-morph-t</code> spring. Hover to expand;
+                the dock grows its block axis open and shrinks back to the collapsed circle on idle.
             </p>
             <div class="flex min-h-[18rem] items-start justify-start p-6">
                 <GlassDock

@@ -75,8 +75,8 @@ const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show pas
         </StorySection>
 
         <StorySection
-            label="horizontal action-slot (kf-G3)"
-            blurb="A labeled control carrying a TRAILING action affordance beside the field via the #action slot. The slot is additive (no #action slot → byte-identical stacked field); the action button binds :aria-label (an icon-only button needs a name), inherits .focus-ring + .tap-squish + the quick transition-control clock + the pill radius. Two canonical cases: a clear-input + a reveal-password."
+            label="horizontal action-slot"
+            blurb="A labeled control carrying a TRAILING action affordance beside the field via the #action slot. The slot is additive (no #action slot leaves the plain stacked field unchanged); the action button binds :aria-label (an icon-only button needs a name), inherits .focus-ring + .tap-squish + the quick transition-control clock + the pill radius. Two canonical cases: a clear-input + a reveal-password."
         >
             <ShowcaseFrame pad="lg">
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">

@@ -48,7 +48,7 @@ export const EXPECTED_TREE = [
         // motion/transitions row folded in — no duplicate motion page).
         "intro", "colors", "typography", "radii", "shadows", "motion",
         "paper-glass", "icons", "surface-tints", "overlays-scrims",
-        "chart-chassis-palette", "paper-backdrop-texture-system",
+        "chart-chassis-palette", "paper-texture",
         "css-utilities",
     ]],
     // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
@@ -62,11 +62,15 @@ export const EXPECTED_TREE = [
     // (the manifest row sits after glass-panel). BB.W-VIZ-SUITE / W-CONCENTRIC — the
     // NEW WebGPU-first radial-Fourier ring-interference viz appends LAST (after
     // dot-flow-field), closing the Batch-V substrates band.
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "fourier-studio", "glass-material", "glass-panel", "dot-flow-field", "concentric"]],
+    // BC: `fourier-studio` RETIRED (BC.W-VIZ-FOURIER merged the Canvas2D three-view
+    // split into the ONE WebGPU `fourier-field` view). `paper-grid` (BC.W-VIZ-PAPERGRID)
+    // + `dot-matrix` (BC.W-VIZ-DOTMATRIX) + `goo-dot` (BC.W-VIZ-HYBRID, the goo-dot-matrix
+    // hybrid) append — the WebGPU-first viz suite.
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "paper-grid", "dot-matrix", "goo-dot"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
-        "combobox", "multi-select", "toggle", "toggle-chip", "label",
+        "combobox", "multi-select", "toggle", "toggle-chip", "selectable-chip", "label",
     ]],
     // The Primitives bin split: display atoms.
     ["display", [
@@ -90,7 +94,7 @@ export const EXPECTED_TREE = [
     // `deck-progress` stays retired (AY.W-PRUNE — slides ships its own deck-local
     // progress bar; 0 real consumers, RETIRE-FULL public-surface delete).
     ["navigation", [
-        "tabs", "carousel", "header-ribbon",
+        "tabs", "carousel", "header-ribbon", "toc-tracking",
     ]],
     // The headline primitive's own first-class category.
     // `morph-showcase` joined at AZ.W-MORPH-SHOWCASE (the V<->H orientation morph
@@ -106,11 +110,11 @@ export const EXPECTED_TREE = [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
         "timeline-continuous", "search", "scrolling-text",
-        "metric-cell", "metric-stack",
+        "metric-cell", "metric-stack", "virtual-section",
     ]],
     ["feedback", [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
-        "confirm-dialog",
+        "confirm-dialog", "completion-seal",
     ]],
     // `handmark` is the hand-voice family story (BA.W-HANDMARK). The prior
     // `underline` row (the GlassUnderline draw-on pen, AY.W-UNDERLINE) RETIRED onto
@@ -125,6 +129,7 @@ export const EXPECTED_TREE = [
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
         "curve-gallery", "handmark", "scroll-vt", "scroll-choreography",
+        "split-chars",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +

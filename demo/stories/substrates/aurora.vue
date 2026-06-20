@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { cn } from "../../../src/utils/cn";
+import StoryPage from "../StoryPage.vue";
 import {
     Configurator,
     useConfiguratorState,
@@ -8,7 +9,6 @@ import {
 } from "../../../src/components/custom/configurator";
 import { ExpandableContainer } from "../../../src/components/custom/expandable-container";
 import { registerShortcut } from "../../../src/composables/keyboard";
-import { TooltipProvider } from "../../../src/components/ui/tooltip";
 import type { AuroraConfig } from "../../../src/components/custom/aurora";
 import PresetPickerRow from "../aurora/PresetPickerRow.vue";
 import AuroraStage from "../aurora/AuroraStage.vue";
@@ -112,21 +112,13 @@ void currentMeta;
 </script>
 
 <template>
-    <TooltipProvider :delay-duration="300">
+    <!-- BC.W-PAGE-CHASSIS — routed through the ONE StoryPage chassis (the prior
+         hand-rolled <header> + the <span class="text-display-3"> a11y defect are
+         GONE). The audacious "Aurora" <h1> + the @mkbabb/glass-ui/aurora subpath chip
+         + the scroll-shrink + the ONE glass card over the live aurora field are the
+         chassis's; this page hosts the studio body. -->
+    <StoryPage>
         <section class="flex flex-col gap-8">
-            <!-- BB.W-SUFFUSE3 (b) — the studio title at the DISPLAY register with
-                 the --motion-accent violet as the ONE color text-event (the
-                 studio's unifying identity on the masthead, never a body <p>/<h2>). -->
-            <header class="flex flex-col gap-1">
-                <span class="section-label">Substrates · Aurora</span>
-                <span
-                    class="text-display-3 font-display leading-tight"
-                    :style="{ color: 'var(--motion-accent)' }"
-                >
-                    Aurora
-                </span>
-            </header>
-
             <!-- Preset picker — visible row of baked thumbnails. -->
             <PresetPickerRow
                 :current="currentKey"
@@ -189,7 +181,7 @@ void currentMeta;
                 <p v-for="(line, i) in hintText" :key="i">{{ line }}</p>
             </aside>
         </section>
-    </TooltipProvider>
+    </StoryPage>
 </template>
 
 <style scoped>

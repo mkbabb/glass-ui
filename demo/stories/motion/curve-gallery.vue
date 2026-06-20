@@ -356,7 +356,7 @@ const houseCores: { token: string; cp: string }[] = [
         </StorySection>
 
         <StorySection
-            label="Easing doctrine (§6)"
+            label="Easing doctrine"
             blurb="The house rule for which easing fits which job — the legend every recipe reaches for. Surface props on a bezier; transform interactions on a spring; enters bouncy/snappy; exits NEVER overshoot."
         >
             <div class="overflow-hidden rounded-card border border-border">

@@ -59,7 +59,7 @@ import { Download, Upload, Gauge, Waves } from "@lucide/vue";
 
         <StorySection
             label="poster hero · the audacious display tier"
-            blurb="The single result that wins the page — the audacious display tiers (φ^(9/2) peak 177px, φ^(11/2) peak 352px) on the metric surface, their natural home (AZ.W-SUFFUSE D2-3). The number is warm ink; the tier IS the event (no second color)."
+            blurb="The single result that wins the page — the audacious display tiers (mega 177px / audacious 352px) on the metric surface, their natural home. The number is warm ink; the tier IS the event (no second color)."
         >
             <div class="grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
                 <div

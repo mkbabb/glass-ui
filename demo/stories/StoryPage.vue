@@ -4,6 +4,7 @@ import { cn } from "../../src/utils/cn";
 import { TooltipProvider } from "../../src/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import StoryHero from "./StoryHero.vue";
+import StoryHeader from "./StoryHeader.vue";
 
 interface StoryPageProps {
     /** Override the max-width on the content section. */
@@ -38,6 +39,12 @@ const background = computed(() => current.value?.story.background);
 const variant = computed<"hero" | "page">(() =>
     current.value?.story.hero ? "hero" : "page",
 );
+
+// BC.W-PAGE-CHASSIS — the explicit subpath chip + the depth-keyed hero rung resolve
+// from the manifest row (the binding per-route table) and thread to the chassis.
+const subpath = computed(() => current.value?.story.subpath ?? null);
+const heroScale = computed(() => current.value?.story.heroScale ?? "4");
+const depth = computed(() => current.value?.story.depth);
 </script>
 
 <template>
@@ -60,34 +67,38 @@ const variant = computed<"hero" | "page">(() =>
              reading-ORDER (the ordered cluster: eyebrow → title → blurb → body) is
              W-HIERARCHY2's; this register threads the entrance ON that order. -->
         <article class="scroll-build mx-auto w-full max-w-6xl">
-            <!-- BB.W-HIERARCHY2 — the chrome <header> hosts the ordered cluster on a
-                 CONTENT page (variant="page") ONLY: eyebrow → chrome <h1> → blurb,
-                 already in correct reading order. On a HERO page the descriptor
-                 (eyebrow + blurb) is re-homed INTO the StoryHero cluster alongside
-                 the display <h1> (the reading-order inversion fix), so the WHOLE
-                 chrome header is suppressed on the hero path — the descriptor is
-                 shown ONCE, never split across the chrome/card boundary (the D1-4
-                 double-<h1> suppression GENERALIZED to the eyebrow + blurb). -->
-            <header
-                v-if="variant === 'page'"
-                class="flex flex-col gap-2"
-                :style="{ '--i': 0 }"
-            >
-                <p v-if="eyebrow" class="text-admin-label text-muted-foreground">
-                    {{ eyebrow }}
-                </p>
-                <!-- HS-2 (BA.W-SUFFUSE2, applied by W-STAGE on its behalf): the
-                     content-page title lifts ONE √φ rung (text-heading 25.9px →
-                     text-title 32.9px) so it DOMINATES the section <h2>
-                     (text-subheading 20.4px) — the display ladder GRADES instead of
-                     cliffing. The chrome <h1> is the content-page title; the hero
-                     title's audacious DISPLAY-register upgrade is W-SUFFUSE's D2-1. -->
-                <h1 v-if="title" class="text-title">
-                    {{ title }}
-                </h1>
-                <p v-if="blurb" class="text-small max-w-prose text-muted-foreground">
-                    {{ blurb }}
-                </p>
+            <!-- BC.W-PAGE-CHASSIS — the chrome <header> hosts the AUDACIOUS hero cluster
+                 on a CONTENT page (variant="page"): the ONE standardized page idiom
+                 (the user-mandate uniformity — EVERY page carries the LARGE audacious
+                 title + the explicit Fira-Code subpath chip that SHRINKS ON SCROLL).
+                 The cluster is the StoryHeader unit in reading order (eyebrow → subpath
+                 → display <h1> → blurb), the display <h1> at the per-route depth-keyed
+                 `heroScale` rung (≥ text-display-4 — the prior text-title 32.9px chrome
+                 title is RETIRED), wrapped in the `.story-hero-shrink` sticky register
+                 so it shrinks into a slim sticky header on scroll (the iOS-27 large-title
+                 collapse). On a HERO page this whole chrome header is suppressed — the
+                 descriptor is re-homed INTO the StoryHero cluster over the live field
+                 (the D1-4 double-<h1> suppression). -->
+            <header v-if="variant === 'page'" :style="{ '--i': 0 }">
+                <StoryHeader
+                    :eyebrow="eyebrow"
+                    :subpath="subpath"
+                    :blurb="blurb"
+                    class="story-hero-cluster story-hero-shrink"
+                    :data-depth="depth"
+                >
+                    <h1
+                        v-if="title"
+                        :class="
+                            cn(
+                                'story-hero-title story-hero-title--enter',
+                                `text-display-${heroScale}`,
+                            )
+                        "
+                    >
+                        {{ title }}
+                    </h1>
+                </StoryHeader>
             </header>
 
             <!-- The body sits in a glass card over the per-page background. The
@@ -100,9 +111,11 @@ const variant = computed<"hero" | "page">(() =>
                 :variant="variant"
                 :title="title"
                 :eyebrow="eyebrow"
+                :subpath="subpath"
                 :blurb="blurb"
+                :hero-scale="heroScale"
+                :depth="depth"
                 :hero-title="props.heroTitle"
-                :class="variant === 'page' ? 'mt-8' : undefined"
                 :style="{ '--i': variant === 'page' ? 1 : 0 }"
             >
                 <!-- BB.W-SCROLL-MOTION: the orchestrated section-CASCADE host

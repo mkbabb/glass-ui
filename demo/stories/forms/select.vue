@@ -118,9 +118,7 @@ const density = ref<string>("");
                     <SelectItem value="cozy">Cozy</SelectItem>
                     <SelectItem value="comfortable">Comfortable</SelectItem>
                     <SelectItem value="compact">Compact</SelectItem>
-                    <SelectItem value="brutalist" disabled>
-                        Brutalist (coming soon)
-                    </SelectItem>
+                    <SelectItem value="spacious" disabled>Spacious</SelectItem>
                 </SelectContent>
             </Select>
         </section>

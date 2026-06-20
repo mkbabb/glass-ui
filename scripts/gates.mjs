@@ -1854,6 +1854,24 @@ export const GATES = [
         note: "BC.W-VIZ-HYBRID — the goo-dot-matrix HYBRID viz (the /goo-dot-matrix subpath + colocation dir): composes the EXISTING goo-blob metaball (sceneDistG SPLICED from the metaball source, not re-forked) + the dot-matrix lattice (fibonacciDot IMPORTED), the dot-field fragment-swap register over createGpuSubstrate (no own rAF, the field consumed). WARM-CREAM identity. Bite: a re-forked metaball/lattice / a Canvas2D-primary / a second rAF → RED.",
     },
     {
+        id: "proof:page-prune",
+        cmd: "proof:page-prune",
+        tags: ["local", "ci"],
+        note: "BC.W-PAGE-PRUNE — every demo route earns its place (the PRUNE-LEDGER): the 21-SFC orphan composables/ dir DELETED (zero inbound refs proved), duplicate/dead stories collapsed, paper-backdrop-texture-system → paper-texture (clean break, no slug alias). The ABSENCE arm (a prune paints zero new pixels). Bite: a re-added dead view-source button / a coming-soon fiction / an orphan SFC → RED.",
+    },
+    {
+        id: "proof:demo-copy-prune",
+        cmd: "proof:demo-copy-prune",
+        tags: ["local", "ci"],
+        note: "BC.W-DEMO-COPY-PRUNE — the demo speaks to a DESIGNER, NOT tranche-jargon: D1 zero leaked wave-ID/§-number jargon in the comment-stripped RENDERED copy; D2 the dead view-source SUBSYSTEM (useSourceLoader/useStoryDemo/ToneSwatch/Story.sourceFiles + 4 orphan scaffolds) DELETED; D3 the PRUNE-LEDGER records every cut. Bite: a re-added wave-ID in rendered copy / a re-imported useStoryDemo / a re-added sourceFiles → RED.",
+    },
+    {
+        id: "proof:page-chassis",
+        cmd: "proof:page-chassis",
+        tags: ["local", "ci"],
+        note: "BC.W-PAGE-CHASSIS — every surviving route reads as ONE coherent StoryPage chassis (StoryPage + StoryHero + StoryHeader + SectionPreviewCard — the masthead + section rhythm), NOT a bespoke per-page layout. Reads the Band-1 glass identity + the per-category backgrounds. Bite: a bespoke off-chassis page layout → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

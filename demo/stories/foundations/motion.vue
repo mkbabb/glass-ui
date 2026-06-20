@@ -79,7 +79,7 @@ function toggle(id: string): void {
 <template>
     <StoryPage>
         <StorySection
-            label="Easing doctrine (§6)"
+            label="Easing doctrine"
             blurb="The house rule for which easing fits which job — the legend every <Transition> below composes from. The full curve canon (every spring + bezier + analytic family, plotted off its real JS twin) lives on Motion ▸ Curve Gallery; this is the foundation tour of the grammar those curves build."
         >
             <div class="overflow-hidden rounded-card border border-border">

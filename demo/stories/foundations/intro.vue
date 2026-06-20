@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import StoryPage from "../StoryPage.vue";
-import { cn } from "../../../src/utils/cn";
+import SectionPreviewCard from "../SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
@@ -28,12 +28,31 @@ const SUMMARIES: Record<string, string> = {
 };
 
 // The first item leads the grid (a wider span); the rest rest — a small
-// lead/rest rhythm so the set is not eight identical boxes.
+// lead/rest rhythm so the set is not eight identical boxes. Each card carries the
+// category's own icon + its landing subpath (the route identity) + an inline
+// non-text preview (BC.W-PAGE-CHASSIS — the front door is a section-landing peer;
+// no text-only redirect card survives, PC7).
+const SECTION_HUE: Record<string, number> = {
+    foundations: 7,
+    substrates: 3,
+    forms: 2,
+    display: 5,
+    containers: 9,
+    navigation: 12,
+    dock: 6,
+    data: 1,
+    feedback: 8,
+    motion: 7,
+    compositions: 4,
+};
 const categories = computed(() =>
     CATEGORIES.filter((c) => !c.reference).map((c, idx) => ({
         slug: c.id,
         title: c.title,
         blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
+        subpath: c.landing?.subpath ?? `/${c.id}`,
+        icon: c.icon,
+        section: SECTION_HUE[c.id] ?? 7,
         lead: idx === 0,
     })),
 );
@@ -70,47 +89,49 @@ const categories = computed(() =>
             </p>
         </section>
 
-        <!-- Category index — one glass card per category, navigating to the
-             category's first story via the router. The cards ride the resting
-             glass rung so the aurora the chassis paints reads THROUGH them. -->
+        <!-- Category index — one SectionPreviewCard per category, navigating to the
+             category's SECTION-LANDING hero. Each card carries its IconChip POP + an
+             inline non-text preview (BC.W-PAGE-CHASSIS — no text-only redirect card
+             survives on the front door, PC7). The cards ride the resting glass rung so
+             the aurora the chassis paints reads THROUGH them. -->
         <section class="mt-16">
             <p class="text-admin-label mb-4 text-muted-foreground">Categories</p>
             <div
                 class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             >
-                <RouterLink
+                <SectionPreviewCard
                     v-for="cat in categories"
                     :key="cat.slug"
                     :to="`/${cat.slug}`"
-                    :class="
-                        cn(
-                            'glass-resting paper-grain-overlay group relative focus-ring flex flex-col gap-[calc(0.5rem_+_var(--density-gap,0rem))] rounded-card border border-[var(--glass-border-quiet)] p-[calc(1.25rem_+_var(--density-pad,0rem))]',
-                            'shadow-[var(--shadow-card)] transition-transform duration-normal ease-out',
-                            'hover:-translate-x-px hover:-translate-y-px hover:shadow-[var(--story-card-shadow-hover)]',
-                            cat.lead && 'sm:col-span-2',
-                        )
-                    "
-                    style="
-                        --story-card-shadow-hover: var(
-                            --shadow-card-hover,
-                            var(--shadow-cartoon-hover)
-                        );
-                    "
+                    :title="cat.title"
+                    :blurb="cat.blurb"
+                    :subpath="cat.subpath"
+                    :icon="cat.icon"
+                    :section="cat.section"
+                    :lead="cat.lead"
                 >
-                    <span
-                        :class="
-                            cn(
-                                'text-foreground',
-                                cat.lead ? 'text-heading' : 'text-subheading',
-                            )
-                        "
-                        >{{ cat.title }}</span
-                    >
-                    <span class="text-small text-muted-foreground">{{
-                        cat.blurb
-                    }}</span>
-                </RouterLink>
+                    <template #preview>
+                        <div class="intro-cat-thumb">
+                            <component
+                                :is="cat.icon"
+                                :size="34"
+                                :stroke-width="1.5"
+                            />
+                        </div>
+                    </template>
+                </SectionPreviewCard>
             </div>
         </section>
     </StoryPage>
 </template>
+
+<style scoped>
+/* The budget-safe category thumbnail — a bounded inert glyph-over-tint render (no
+   GL, no second live context — the one-GL-per-route budget). */
+.intro-cat-thumb {
+    display: grid;
+    place-items: center;
+    block-size: 7rem;
+    color: color-mix(in oklab, var(--foreground), transparent 55%);
+}
+</style>

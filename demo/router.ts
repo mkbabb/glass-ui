@@ -4,9 +4,10 @@ import { CATEGORIES, firstStoryPath } from "./stories/manifest";
 
 /**
  * Routes are derived from the manifest. Every category produces a
- * `/:category` landing redirect plus a `/:category/:story` route per story.
- * There are no flat standalone routes — the former Aurora/GooBlob/Blob flat
- * tools are now rows in the Substrates category (AV.W10).
+ * `/:category` SECTION-LANDING hero (BC.W-PAGE-CHASSIS — the SECTION-HERO model)
+ * plus a `/:category/:story` route per story. There are no flat standalone routes
+ * — the former Aurora/GooBlob/Blob flat tools are now rows in the Substrates
+ * category (AV.W10).
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -17,17 +18,29 @@ function buildRoutes(): RouteRecordRaw[] {
     ];
 
     for (const category of CATEGORIES) {
-        // Category landing — redirect to first story (or show empty-state fallback below).
-        routes.push({
-            path: `/${category.id}`,
-            name: `category:${category.id}`,
-            redirect: () => {
-                const first = category.stories[0];
-                return first
-                    ? `/${category.id}/${first.id}`
-                    : firstStoryPath();
-            },
-        });
+        // BC.W-PAGE-CHASSIS — the category landing is the D1 SECTION HERO (the
+        // newly-begotten per-section identity moment + the bento <SectionPreviewCard>
+        // grid), NOT a redirect to the first story. The SAME StoryHero chassis at
+        // heroScale: "hero" / depth: "D1" (no new component — SectionLanding composes
+        // it). An empty category falls back to the first story path.
+        routes.push(
+            category.stories.length > 0
+                ? {
+                      path: `/${category.id}`,
+                      name: `category:${category.id}`,
+                      component: () => import("./stories/SectionLanding.vue"),
+                      meta: {
+                          categoryId: category.id,
+                          landing: true,
+                          title: category.title,
+                      },
+                  }
+                : {
+                      path: `/${category.id}`,
+                      name: `category:${category.id}`,
+                      redirect: () => firstStoryPath(),
+                  },
+        );
 
         for (const story of category.stories) {
             routes.push({

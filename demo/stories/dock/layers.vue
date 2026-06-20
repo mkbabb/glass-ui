@@ -117,7 +117,7 @@ function back() {
         </section>
 
         <section class="flex flex-col gap-3">
-            <h2 class="text-subheading">Switcher rail — pull-to-switch (BB.W-DRAG-MORPH)</h2>
+            <h2 class="text-subheading">Switcher rail — pull-to-switch</h2>
             <p class="text-small text-muted-foreground">
                 Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.

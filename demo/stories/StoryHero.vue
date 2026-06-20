@@ -63,6 +63,19 @@ interface StoryHeroProps {
      * split across the chrome/card boundary (BB.W-HIERARCHY2).
      */
     blurb?: string | null;
+    /**
+     * The explicit Fira-Code subpath chip (BC.W-PAGE-CHASSIS). Threaded to
+     * StoryHeader, rendered beneath the eyebrow as the route identity.
+     */
+    subpath?: string | null;
+    /**
+     * The hero title size rung (BC.W-PAGE-CHASSIS — the depth-keyed √φ ladder). The
+     * hardcoded `text-display-3` is retired; every route resolves a rung ≥ `4`. The
+     * `heroClass` computed maps this onto `text-display-${heroScale}`.
+     */
+    heroScale?: "audacious" | "mega" | "hero" | "5" | "4";
+    /** The page-depth tier — passed through for the scroll-shrink + the data-attr. */
+    depth?: "D0" | "D1" | "D2" | "D3";
     /** Forwarded class string for the glass card surface. */
     cardClass?: string;
 }
@@ -70,13 +83,18 @@ interface StoryHeroProps {
 const props = withDefaults(defineProps<StoryHeroProps>(), {
     variant: "page",
     heroTitle: true,
+    heroScale: "4",
 });
 
+// BC.W-PAGE-CHASSIS — the hero <h1> size class off the depth-keyed √φ ladder. The
+// hardcoded `text-display-3` (the user-mandate-RETIRED floor) is replaced by the
+// per-route `heroScale` rung — `text-display-{4,5,mega,hero,audacious}` (≥4 always).
+const heroClass = computed(() => `text-display-${props.heroScale}`);
+
 // The chassis hero <h1> renders at the DISPLAY register on a hero page that has
-// not opted out (the bespoke front-door heroes own their own title). The
-// front-door rows (the foundations/compositions heroes) ride text-display-4; the
-// substrate hero pages ride text-display-3 — both are the audacious moment the
-// flat type ladder starved (D2-1/D2-4).
+// not opted out (the bespoke front-door heroes own their own title). The rung is
+// the per-route depth-keyed `heroScale` (≥ text-display-4 — BC.W-PAGE-CHASSIS; the
+// prior hardcoded text-display-3 is RETIRED), the audacious moment on EVERY page.
 const showHeroTitle = computed(
     () => isHero.value && props.heroTitle && Boolean(props.title),
 );
@@ -299,12 +317,19 @@ const cardTier = computed<CardTier>(() => {
             <StoryHeader
                 v-if="showCluster"
                 :eyebrow="eyebrow"
+                :subpath="subpath"
                 :blurb="blurb"
-                class="story-hero-cluster"
+                class="story-hero-cluster story-hero-shrink"
+                :data-depth="depth"
             >
                 <h1
                     v-if="showHeroTitle"
-                    class="story-hero-title story-hero-title--enter text-display-3"
+                    :class="
+                        cn(
+                            'story-hero-title story-hero-title--enter',
+                            heroClass,
+                        )
+                    "
                 >
                     {{ title }}
                 </h1>
@@ -340,12 +365,19 @@ const cardTier = computed<CardTier>(() => {
             <StoryHeader
                 v-if="showCluster"
                 :eyebrow="eyebrow"
+                :subpath="subpath"
                 :blurb="blurb"
-                class="story-hero-cluster"
+                class="story-hero-cluster story-hero-shrink"
+                :data-depth="depth"
             >
                 <h1
                     v-if="showHeroTitle"
-                    class="story-hero-title story-hero-title--enter text-display-3"
+                    :class="
+                        cn(
+                            'story-hero-title story-hero-title--enter',
+                            heroClass,
+                        )
+                    "
                 >
                     {{ title }}
                 </h1>

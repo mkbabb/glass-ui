@@ -176,6 +176,78 @@
     margin-block-end: 0;
 }
 
+/* BC.W-PAGE-CHASSIS — the explicit Fira-Code subpath chip. The route identity in
+   the eyebrow cluster — a code-rung mono caption that reads as the import line, and
+   PERSISTS through the scroll-shrink (it is the route identity, never faded away). */
+.story-header-subpath {
+    align-self: flex-start;
+    color: var(--muted-foreground);
+    font-size: var(--type-caption);
+    letter-spacing: -0.01em;
+    /* a faint code-chip plate so the import line reads as code over the field */
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--foreground) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+/* ── BC.W-PAGE-CHASSIS — the scroll-shrink hero register (the CSS-native SOTA) ────
+   Every hero SHRINKS as you scroll: a large audacious title collapses into a slim
+   sticky page-header that holds the title + the subpath chip (the iOS-27 large-title
+   collapse). The mechanism is the NATIVE scroll() timeline — NO Lenis/GSAP/rAF scroll
+   engine (the binding fence, CLAUDE.md §BB.W-SCROLL-MOTION); the shrink is
+   COMPOSITOR-ONLY (transform: scale + translateY + opacity, NEVER font-size/width/
+   layout — the text lays out ONCE, the proof:no-layout-animation floor, BB.W-CARD-
+   COMPOSITE). The whole register is gated by @supports (animation-timeline: scroll())
+   (progressive enhancement — a non-supporting engine paints the static large hero, the
+   correct fallback; Baseline: scroll-driven animations Chrome 115+ / Safari 26+) AND
+   @media (prefers-reduced-motion: no-preference) (PRM → the large static hero holds,
+   no shrink — the vestibular floor). */
+
+/* The cluster sticks to the top of the <main> route-scroller so the shrunk header
+   persists while the body slides up under it. The sticky positioning is OUTSIDE the
+   @supports/PRM gate (it is harmless on every engine — a non-shrinking sticky header
+   is the correct static fallback); the shrink ANIMATION is gated below. The cluster
+   shrinks toward its leading edge (transform-origin: left top) so it collapses into a
+   slim leading-aligned header, the iOS-27 large-title-collapse read. */
+.story-hero-shrink {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    transform-origin: left top;
+}
+
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        /* The cluster shrinks: transform: scale(1 → 0.5) (the display→heading-class
+           collapse ratio), coupled with a slight upward translate so the shrunk
+           header hugs the top. COMPOSITOR-ONLY — scale + translate, NEVER font-size/
+           width/height (the text lays out ONCE; the proof:no-layout-animation floor,
+           BB.W-CARD-COMPOSITE). The scroll-shrink rides the cluster WRAPPER (not the
+           entrance-animated children), so it never collides with the 3-stage GRAVITY
+           entrance on the eyebrow/title/blurb — two disjoint registers, one wrapper. */
+        @keyframes story-hero-shrink {
+            from {
+                transform: scale(1) translateY(0);
+            }
+            to {
+                transform: scale(0.5) translateY(-0.25rem);
+            }
+        }
+
+        /* The shrink completes within the first ~240px of scroll then HOLDS the
+           shrunk state (animation-fill-mode: forwards). The native scroll() timeline
+           is the <main> route-scroller (the nearest scroll-container ancestor) — NO
+           JS, NO Lenis/GSAP (the binding fence). */
+        .story-hero-shrink {
+            animation: story-hero-shrink linear both;
+            animation-timeline: scroll();
+            animation-range: 0 240px;
+            animation-fill-mode: forwards;
+        }
+    }
+}
+
 /* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page-build's HERO BEAT, folded
    onto the ONE entrance system (scroll-choreography.css `.scroll-build`). Audacious
    type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a strictly

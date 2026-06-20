@@ -72,7 +72,14 @@ const dockStage = strip(read("demo/stories/dock/DockStage.vue"));
 const dockOverview = strip(read("demo/stories/dock/overview.vue"));
 const dockLayers = strip(read("demo/stories/dock/layers.vue"));
 const dockMorph = strip(read("demo/stories/dock/morph-showcase.vue"));
-const atoms = strip(read("src/components/custom/aurora/composables/atoms.ts"));
+// BB.W-CARVE5 carved the MOTION_FIELDS table (incl. the `breathing` atom) out of
+// atoms.ts into atoms-fields.ts; the W4 breathing-drift assert FOLLOWS the carve into
+// the leaf (the "asserts follow the carve into the leaf" precedent). Read both so the
+// breathing literal resolves wherever it lives.
+const atoms =
+    strip(read("src/components/custom/aurora/composables/atoms.ts")) +
+    "\n" +
+    strip(read("src/components/custom/aurora/composables/atoms-fields.ts"));
 
 // ── W1 — every route declares a background (zero keyless) ─────────────────────
 //

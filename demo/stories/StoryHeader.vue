@@ -37,6 +37,13 @@ import { cn } from "../../src/utils/cn";
 interface StoryHeaderProps {
     /** The mono eyebrow tag (category · story). Rendered ABOVE the title. */
     eyebrow?: string | null;
+    /**
+     * The explicit Fira-Code subpath chip (BC.W-PAGE-CHASSIS — "subpath explicitly
+     * defined"). Rendered beneath the eyebrow as the route identity — a published
+     * `@mkbabb/glass-ui/<sp>` or the route path. It persists into the shrunk sticky
+     * header (the chip IS the route identity).
+     */
+    subpath?: string | null;
     /** The supporting blurb. Rendered UNDER the title, the subordinate rung. */
     blurb?: string | null;
     /** When true, the cluster's three rungs animate the 3-stage GRAVITY entrance. */
@@ -67,9 +74,22 @@ const props = withDefaults(defineProps<StoryHeaderProps>(), {
         >
             {{ eyebrow }}
         </p>
+        <!-- BC.W-PAGE-CHASSIS — the explicit Fira-Code subpath chip. The route
+             identity ("@mkbabb/glass-ui/aurora"), rendered as a code-rung chip in
+             the eyebrow cluster and persisting into the shrunk sticky header. -->
+        <code
+            v-if="subpath"
+            :class="
+                cn(
+                    'fira-code story-header-subpath',
+                    props.animate && 'story-header-cluster--enter',
+                )
+            "
+            >{{ subpath }}</code
+        >
         <!-- The display <h1> — the single dominant focal moment (the largest type
-             mass in the band). Passed by the host (StoryHero owns the
-             text-display-3 rung + the .story-hero-title--enter title-stage). -->
+             mass in the band). Passed by the host (StoryHero owns the display rung
+             + the .story-hero-title--enter title-stage). -->
         <slot />
         <p
             v-if="blurb"

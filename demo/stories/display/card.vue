@@ -82,9 +82,9 @@ const longList = Array.from({ length: 24 }, (_, i) => ({
 // cartoon decoration. `surface="cartoon"` reattaches the 2px border, the
 // offset-stamp shadow, and the hover-lift; it is orthogonal to tier/shadow/grain.
 const cartoonAccents = [
-    { id: "rose", label: "Rose §0", color: "var(--section-color-0)" },
-    { id: "amber", label: "Amber §5", color: "var(--section-color-5)" },
-    { id: "teal", label: "Teal §3", color: "var(--section-color-3)" },
+    { id: "rose", label: "Rose", color: "var(--section-color-0)" },
+    { id: "amber", label: "Amber", color: "var(--section-color-5)" },
+    { id: "teal", label: "Teal", color: "var(--section-color-3)" },
 ];
 
 // R5-7 — the veil text plate. `surface="veil"` paints a borderless/rimless
@@ -445,9 +445,8 @@ const veilFeather = ref(false);
                     scroll-overflow ancestor) and runs a 3-lane choreography as the host
                     scrolls — the header content compresses, the title shrinks in place,
                     the description retires. The lanes are COMPOSITOR-SAFE
-                    (transform/opacity only — BB.W-CARD-COMPOSITE), so ZERO reflow fires
-                    per scroll frame (the A'-3 layout-animation CLS killed). Scroll the
-                    region to watch the header collapse.
+                    (transform/opacity only), so ZERO reflow fires per scroll frame (no
+                    layout-shift). Scroll the region to watch the header collapse.
                 </p>
             </header>
 

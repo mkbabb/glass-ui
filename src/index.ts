@@ -157,8 +157,7 @@ export * from "./components/custom/split-chars";
 // subpaths (flat naming).
 //
 // Sub-trees: reactive/ (useInterval + useTimer), dom/ (useResizeObserver +
-// useTouchGate + useTokenColor), glass/, sortable/. `useStoryDemo` is
-// demo-private per CLAUDE.md.
+// useTouchGate + useTokenColor), glass/, sortable/.
 //
 // `composables/motion` is NOT on the root barrel — it statically reaches a
 // heavy peer (`@mkbabb/keyframes.js` — the NumericAnimation + SmoothProgress

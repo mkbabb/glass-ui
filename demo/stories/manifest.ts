@@ -31,12 +31,22 @@ import {
     type LucideIcon,
 } from "@lucide/vue";
 
+/**
+ * The hero title size rung (BC.W-PAGE-CHASSIS — the depth-keyed √φ ladder). Every
+ * route resolves a rung ≥ `4` (the user-mandate floor; the prior hardcoded
+ * `text-display-3` is retired). The depth tier (D0 front-door / D1 section-landing /
+ * D2 main / D3 sub) maps to a rung: D0 `mega`, D1 `hero`, D2 `5`–`hero`, D3 `4`.
+ */
+export type HeroScale = "audacious" | "mega" | "hero" | "5" | "4";
+
+/** The page-depth tier (BC.W-PAGE-CHASSIS). Reads as title size — depth IS size. */
+export type StoryDepth = "D0" | "D1" | "D2" | "D3";
+
 export interface Story {
     id: string;
     title: string;
     blurb?: string;
     component: () => Promise<Component>;
-    sourceFiles?: string[];
     /**
      * The per-page background substrate, painted behind the page's glass
      * container. A HERO page declares a rich live substrate (aurora /
@@ -50,6 +60,24 @@ export interface Story {
      * front-door demonstration) rather than the contained content register.
      */
     hero?: boolean;
+    /**
+     * The explicit Fira-Code subpath chip in the hero eyebrow (BC.W-PAGE-CHASSIS).
+     * A published component subpath (`@mkbabb/glass-ui/<sp>`) where one fits, else
+     * the route path (`/category/story`) for token/scene/facility pages with no
+     * import surface. Title ≠ subpath (e.g. "GooBlob" → `@mkbabb/glass-ui/goo-blob`),
+     * so this is an explicit per-row literal, never an inferred default.
+     */
+    subpath?: string;
+    /**
+     * The hero title size rung (the depth-keyed √φ ladder). Resolved from `depth`
+     * when unset; an explicit value (a marquee `hero` on a live-GL sub-page) wins.
+     */
+    heroScale?: HeroScale;
+    /**
+     * The page-depth tier (BC.W-PAGE-CHASSIS). The FIRST story in a category is the
+     * D2 main; the rest are D3 subs — `s()` derives this from position when unset.
+     */
+    depth?: StoryDepth;
 }
 
 /** Re-export the descriptor type so consumers reach it from the manifest. */
@@ -62,6 +90,28 @@ export interface Category {
     /** Reference-only shelf — rendered collapsed below the fold in the rail. */
     reference?: boolean;
     stories: Story[];
+    /**
+     * The section-landing hero (BC.W-PAGE-CHASSIS — the SECTION-HERO model). Each
+     * category's `/<id>` route resolves to a newly-begotten D1 hero (the section's
+     * identity moment) over the bento `<SectionPreviewCard>` grid of its stories.
+     * Synthesized by `sectionLanding(category)` below — never hand-authored.
+     */
+    landing?: SectionLanding;
+}
+
+/** The per-section landing descriptor (the `/<category>` D1 hero — the bento parent). */
+export interface SectionLanding {
+    /** The category title — the audacious section <h1>. */
+    title: string;
+    /** The one-line section subtitle. */
+    blurb: string;
+    /** The section's import-namespace root (a published subpath or the route path). */
+    subpath: string;
+    /** The section field — the category's idiom-true background. */
+    background: StoryBackground;
+    /** D1 always — the largest audacious rung, out-sizing every page beneath it. */
+    heroScale: HeroScale;
+    depth: StoryDepth;
 }
 
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
@@ -83,6 +133,16 @@ function lazy(category: string, id: string): () => Promise<Component> {
 interface StoryOptions {
     background?: StoryBackground;
     hero?: boolean;
+    /**
+     * The explicit hero title rung override (BC.W-PAGE-CHASSIS). Unset → `s()`
+     * derives it from the position-keyed depth (D2 main → `5`, D3 sub → `4`); a
+     * live-GL marquee story sets `heroScale: "hero"` so it keeps the largest sub-rung.
+     */
+    heroScale?: HeroScale;
+    /** The section-landing root subpath — the category landing's import namespace. */
+    landingSubpath?: string;
+    /** The section-landing field — the category's idiom-true background. */
+    landingBackground?: StoryBackground;
 }
 
 /**
@@ -131,6 +191,174 @@ const CATEGORY_DEFAULT_BG: Record<string, StoryBackground> = {
     compositions: "grid",
 };
 
+/**
+ * The explicit Fira-Code subpath chip per route (BC.W-PAGE-CHASSIS — the binding
+ * per-route table). A route maps to a published `@mkbabb/glass-ui/<sp>` IFF `<sp>`
+ * is a package export (the subpath-resolution rule); a token/scene/facility route
+ * with no import surface carries its route path `/category/story`. Title ≠ subpath,
+ * so this is an explicit literal per row — never an inferred default (the map IS the
+ * per-route enumeration the user's "EVERY PAGE STANDARDIZED" mandate rides; PC5 reads
+ * it). Keyed `category/id`.
+ */
+const SUBPATHS: Record<string, string> = {
+    // Foundations — token/ink pages carry the route path; the import-surface ones win.
+    "foundations/intro": "/foundations/intro",
+    "foundations/colors": "/foundations/colors",
+    "foundations/typography": "/foundations/typography",
+    "foundations/radii": "/foundations/radii",
+    "foundations/shadows": "/foundations/shadows",
+    "foundations/motion": "/foundations/motion",
+    "foundations/paper-glass": "/foundations/paper-glass",
+    "foundations/icons": "@mkbabb/glass-ui/icon-chip",
+    "foundations/surface-tints": "/foundations/surface-tints",
+    "foundations/overlays-scrims": "/foundations/overlays-scrims",
+    "foundations/chart-chassis-palette": "/foundations/chart-chassis-palette",
+    "foundations/paper-texture": "@mkbabb/glass-ui/paper-backdrop",
+    "foundations/css-utilities": "/foundations/css-utilities",
+    // Substrates — the shipped viz subpaths.
+    "substrates/aurora": "@mkbabb/glass-ui/aurora",
+    "substrates/blob": "@mkbabb/glass-ui/goo-blob",
+    "substrates/constellation": "@mkbabb/glass-ui/constellation",
+    "substrates/fourier-field": "@mkbabb/glass-ui/fourier-field",
+    "substrates/glass-material": "/substrates/glass-material",
+    "substrates/glass-panel": "@mkbabb/glass-ui/glass-panel",
+    "substrates/dot-flow-field": "@mkbabb/glass-ui/dot-flow-field",
+    "substrates/concentric": "@mkbabb/glass-ui/concentric",
+    "substrates/paper-grid": "@mkbabb/glass-ui/paper-grid",
+    "substrates/dot-matrix": "@mkbabb/glass-ui/dot-matrix",
+    "substrates/goo-dot": "@mkbabb/glass-ui/goo-dot-matrix",
+    // Forms — the input/select/toggle family via /forms + the own subpaths.
+    "forms/inputs": "@mkbabb/glass-ui/forms",
+    "forms/textarea": "@mkbabb/glass-ui/forms",
+    "forms/checks": "@mkbabb/glass-ui/switch",
+    "forms/slider": "@mkbabb/glass-ui/slider",
+    "forms/number-field": "@mkbabb/glass-ui/number-field",
+    "forms/select": "@mkbabb/glass-ui/select",
+    "forms/combobox": "@mkbabb/glass-ui/forms",
+    "forms/multi-select": "/forms/multi-select",
+    "forms/toggle": "@mkbabb/glass-ui/toggle-group",
+    "forms/toggle-chip": "@mkbabb/glass-ui/toggle-chip",
+    "forms/selectable-chip": "@mkbabb/glass-ui/selectable-chip",
+    "forms/label": "@mkbabb/glass-ui/label",
+    // Display — the atomic primitives.
+    "display/buttons": "@mkbabb/glass-ui/button",
+    "display/card": "@mkbabb/glass-ui/card",
+    "display/badge": "@mkbabb/glass-ui/badge",
+    "display/separator": "@mkbabb/glass-ui/separator",
+    "display/section": "/display/section",
+    "display/metric-badge": "@mkbabb/glass-ui/metric-badge",
+    "display/metric-pill": "@mkbabb/glass-ui/metric-badge",
+    "display/status-dot": "@mkbabb/glass-ui/status-dot",
+    "display/pulse": "@mkbabb/glass-ui/pulse",
+    "display/stacked-icons": "@mkbabb/glass-ui/stacked-icons",
+    "display/dark-mode-toggle": "@mkbabb/glass-ui/controls",
+    // Containers — the glass surfaces.
+    "containers/dialog": "@mkbabb/glass-ui/dialog",
+    "containers/sheet": "@mkbabb/glass-ui/sheet",
+    "containers/drawer": "@mkbabb/glass-ui/drawer",
+    "containers/popover": "@mkbabb/glass-ui/popover",
+    "containers/dropdown-menu": "@mkbabb/glass-ui/dropdown-menu",
+    "containers/context-menu": "@mkbabb/glass-ui/context-menu",
+    "containers/hover-card": "@mkbabb/glass-ui/hover-card",
+    "containers/tooltip": "@mkbabb/glass-ui/tooltip",
+    "containers/accordion": "/containers/accordion",
+    "containers/collapsible": "@mkbabb/glass-ui/collapsible",
+    "containers/hover-popover": "@mkbabb/glass-ui/hover-popover",
+    "containers/expandable-container": "@mkbabb/glass-ui/expandable-container",
+    "containers/command": "@mkbabb/glass-ui/command",
+    "containers/spa-view": "@mkbabb/glass-ui/spa-view",
+    // Navigation — the glass nav chrome.
+    "navigation/tabs": "@mkbabb/glass-ui/tabs",
+    "navigation/carousel": "@mkbabb/glass-ui/carousel",
+    "navigation/header-ribbon": "@mkbabb/glass-ui/header-ribbon",
+    "navigation/toc-tracking": "@mkbabb/glass-ui/sidebar",
+    // Dock — the whole family is /dock.
+    "dock/overview": "@mkbabb/glass-ui/dock",
+    "dock/layers": "@mkbabb/glass-ui/dock",
+    "dock/rail": "@mkbabb/glass-ui/dock",
+    "dock/morph-showcase": "@mkbabb/glass-ui/dock",
+    "dock/sections": "@mkbabb/glass-ui/dock",
+    "dock/cta-receive": "@mkbabb/glass-ui/dock",
+    // Data — the ledger surfaces.
+    "data/table": "@mkbabb/glass-ui/data-table",
+    "data/data-table": "@mkbabb/glass-ui/data-table",
+    "data/tags-input": "/data/tags-input",
+    "data/avatar": "/data/avatar",
+    "data/sortable-list": "@mkbabb/glass-ui/sortable-list",
+    "data/infinite-scroll": "@mkbabb/glass-ui/infinite-scroll",
+    "data/timeline": "@mkbabb/glass-ui/timeline",
+    "data/timeline-segmented": "@mkbabb/glass-ui/timeline",
+    "data/timeline-continuous": "@mkbabb/glass-ui/timeline",
+    "data/search": "@mkbabb/glass-ui/search",
+    "data/virtual-section": "@mkbabb/glass-ui/virtual",
+    "data/scrolling-text": "@mkbabb/glass-ui/scrolling-text",
+    "data/metric-cell": "@mkbabb/glass-ui/metric-cell",
+    "data/metric-stack": "@mkbabb/glass-ui/metric-stack",
+    // Feedback — the status surfaces.
+    "feedback/alert": "/feedback/alert",
+    "feedback/toast": "@mkbabb/glass-ui/toast",
+    "feedback/toaster": "@mkbabb/glass-ui/toast",
+    "feedback/notification": "@mkbabb/glass-ui/notification",
+    "feedback/progress": "@mkbabb/glass-ui/progress",
+    "feedback/skeleton": "/feedback/skeleton",
+    "feedback/confirm-dialog": "@mkbabb/glass-ui/confirm-dialog",
+    "feedback/completion-seal": "@mkbabb/glass-ui/completion-seal",
+    // Motion — the spring/curve/reveal vocabulary.
+    "motion/springs": "@mkbabb/glass-ui/motion",
+    "motion/curve-gallery": "@mkbabb/glass-ui/easing",
+    "motion/scroll-vt": "@mkbabb/glass-ui/motion-core",
+    "motion/scroll-choreography": "/motion/scroll-choreography",
+    "motion/countup": "@mkbabb/glass-ui/motion",
+    "motion/reveal": "@mkbabb/glass-ui/motion-core",
+    "motion/typewriter": "@mkbabb/glass-ui/typewriter",
+    "motion/handmark": "@mkbabb/glass-ui/handmark",
+    "motion/animated-digit": "@mkbabb/glass-ui/animated-digit",
+    "motion/split-chars": "@mkbabb/glass-ui/motion-core",
+    // Compositions — real scenes carry the route path.
+    "compositions/hero": "/compositions/hero",
+    "compositions/math-paper": "/compositions/math-paper",
+    "compositions/auth-shell": "/compositions/auth-shell",
+    "compositions/settings": "/compositions/settings",
+    "compositions/empty-states": "/compositions/empty-states",
+    "compositions/drawer-live-behind": "/compositions/drawer-live-behind",
+    "compositions/configurator": "@mkbabb/glass-ui/configurator",
+    "compositions/instrument-chassis": "@mkbabb/glass-ui/instrument-chassis",
+    "compositions/form-validation": "/compositions/form-validation",
+    "compositions/gate-pattern": "/compositions/gate-pattern",
+    "compositions/labeled-field": "@mkbabb/glass-ui/labeled-field",
+    "compositions/icon-tooltip": "@mkbabb/glass-ui/icon-tooltip",
+};
+
+/** The per-category section-landing import-namespace root (the D1 hero's chip). */
+const LANDING_SUBPATHS: Record<string, string> = {
+    foundations: "@mkbabb/glass-ui/styles",
+    substrates: "@mkbabb/glass-ui/aurora",
+    forms: "@mkbabb/glass-ui/forms",
+    display: "@mkbabb/glass-ui/button",
+    containers: "@mkbabb/glass-ui/dialog",
+    navigation: "@mkbabb/glass-ui/tabs",
+    dock: "@mkbabb/glass-ui/dock",
+    data: "@mkbabb/glass-ui/data-table",
+    feedback: "@mkbabb/glass-ui/toast",
+    motion: "@mkbabb/glass-ui/motion",
+    compositions: "@mkbabb/glass-ui/configurator",
+};
+
+/** The per-category section-landing one-line subtitle. */
+const LANDING_BLURBS: Record<string, string> = {
+    foundations: "The token, ink, and paper vocabulary the system is built from.",
+    substrates: "The procedural WebGL/WebGPU fields the glass floats over.",
+    forms: "Glass-tier controls — the input, select, and toggle family.",
+    display: "The atomic primitives — buttons, cards, badges, metrics.",
+    containers: "Glass surfaces over a calm blueprint wash — dialogs, sheets, menus.",
+    navigation: "Glass nav chrome over a live field — tabs, carousel, ribbon.",
+    dock: "The GlassDock family — collapse↔expand morph, layers, sections.",
+    data: "Ledger surfaces — tables, timelines, metrics over the blueprint grid.",
+    feedback: "Status surfaces — alerts, toasts, progress over printed specimens.",
+    motion: "The spring, curve, and reveal vocabulary — the drift band identity.",
+    compositions: "Real scenes — dashboards, auth shells, the math-paper idiom.",
+};
+
 function s(
     cat: string,
     id: string,
@@ -143,6 +371,11 @@ function s(
     // the proof:stage W1 witness). A category with no default entry would leave a
     // route keyless — the map above covers every category in CATEGORIES.
     const background = opts?.background ?? CATEGORY_DEFAULT_BG[cat];
+    // The subpath is the explicit per-route chip (BC.W-PAGE-CHASSIS PC5) — the map
+    // above is the binding per-route enumeration; the route path is the fallback for
+    // a row the map has not yet declared (a new story is keyless until enrolled —
+    // the gate's no-blank-subpath assert keeps the map ≡ the route set).
+    const subpath = SUBPATHS[`${cat}/${id}`] ?? `/${cat}/${id}`;
     return {
         id,
         title,
@@ -150,7 +383,64 @@ function s(
         component: lazy(cat, id),
         background,
         hero: opts?.hero,
+        subpath,
+        // depth + heroScale are finalized by assignDepths() once the category's
+        // story order is known (the FIRST story is the D2 main; the rest D3 subs).
+        heroScale: opts?.heroScale,
     };
+}
+
+/**
+ * Build the section-landing descriptor for a category (BC.W-PAGE-CHASSIS — the
+ * SECTION-HERO model). The `/<id>` route resolves to this D1 hero — the LARGEST
+ * audacious rung, the section's identity moment — over the bento grid of its stories.
+ * Never hand-authored; derived from the category + the landing maps above.
+ */
+function sectionLanding(cat: Category): SectionLanding {
+    return {
+        title: cat.title,
+        blurb: LANDING_BLURBS[cat.id] ?? `The ${cat.title.toLowerCase()} family.`,
+        subpath: LANDING_SUBPATHS[cat.id] ?? `/${cat.id}`,
+        background: CATEGORY_DEFAULT_BG[cat.id] ?? "paper",
+        heroScale: "hero",
+        depth: "D1",
+    };
+}
+
+/**
+ * Finalize each story's depth + heroScale (BC.W-PAGE-CHASSIS — the depth-keyed
+ * √φ ladder). The FIRST story in a category is the D2 MAIN (the marquee anchor);
+ * every subsequent story is a D3 SUB. The hero rung floors at the depth tier — D0
+ * `mega`, D2 `5`, D3 `4` — and an explicit `heroScale` override (a live-GL marquee
+ * keeping `hero`) wins, never resolving below `4` (the user-mandate floor). The
+ * front door (`foundations/intro`) is the lone D0 — the storybook root.
+ */
+function assignDepths(categories: Category[]): void {
+    for (const cat of categories) {
+        // The front door (foundations/intro) is the lone D0 — the storybook root,
+        // out-sized only by the 11 D1 section landings. The MAIN of each category is
+        // its first NON-front-door story (in foundations that is `colors`, since intro
+        // is the D0 root); the rest are D3 subs.
+        let mainSeen = false;
+        cat.stories.forEach((story) => {
+            const isFrontDoor = cat.id === "foundations" && story.id === "intro";
+            let depth: StoryDepth;
+            if (isFrontDoor) {
+                depth = "D0";
+            } else if (!mainSeen) {
+                depth = "D2";
+                mainSeen = true;
+            } else {
+                depth = "D3";
+            }
+            story.depth = depth;
+            if (!story.heroScale) {
+                story.heroScale =
+                    depth === "D0" ? "mega" : depth === "D2" ? "5" : "4";
+            }
+        });
+        cat.landing = sectionLanding(cat);
+    }
 }
 
 export const CATEGORIES: Category[] = [
@@ -194,6 +484,8 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "paper",
                     hero: true,
+                    // A paper-glass marquee specimen (the live glass-tier demo).
+                    heroScale: "hero",
                 },
             ),
             s("foundations", "icons", "Icons", "Lucide, 2px stroke, semantic sizes."),
@@ -217,9 +509,9 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "foundations",
-                "paper-backdrop-texture-system",
-                "Paper Backdrop Texture System",
-                "The PaperBackdrop frequency register (clean / aged), the cascade-overridable paper tokens, the per-instance opacity knob, and the layered composition recipe.",
+                "paper-texture",
+                "Paper Texture",
+                "The PaperBackdrop frequency register (clean / aged), cascade-overridable paper tokens, the per-instance opacity knob, and the layered composition recipe.",
             ),
             s(
                 "foundations",
@@ -242,6 +534,8 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "aurora",
                     hero: true,
+                    // The D2 marquee main of the live-GL band — the largest sub-rung.
+                    heroScale: "hero",
                 },
             ),
             s(
@@ -255,6 +549,8 @@ export const CATEGORIES: Category[] = [
                     // prior `background: "blob"` blew the creature to full-page width).
                     background: "paper",
                     hero: true,
+                    // A live-GL marquee specimen — keeps the largest D3 sub-rung.
+                    heroScale: "hero",
                 },
             ),
             s(
@@ -265,6 +561,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "constellation",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BC.W-VIZ-FOURIER — the ONE Fourier view (the collapse). The three duplicate
@@ -282,6 +579,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "paper",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             s(
@@ -292,6 +590,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "aurora",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BA.W-STAGE scope 2 / page-backgrounds.md §5 DRIFT — the §5 cite says
@@ -326,6 +625,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "grid",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BB.W-VIZ-SUITE / W-CONCENTRIC — the NEW WebGPU-first radial Fourier
@@ -342,6 +642,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "grid",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BC.W-VIZ-PAPERGRID — the NEW WebGPU-first liquid AA-grid viz. It self-stages
@@ -356,6 +657,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "grid",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BC.W-VIZ-DOTMATRIX — the NEW WebGPU-first Fibonacci phyllotaxis dot-SPHERE
@@ -371,6 +673,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "grid",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
             // BC.W-VIZ-HYBRID — the NEW goo+dot-matrix HYBRID viz. The merging metaball SDF
@@ -386,6 +689,7 @@ export const CATEGORIES: Category[] = [
                 {
                     background: "grid",
                     hero: true,
+                    heroScale: "hero",
                 },
             ),
         ],
@@ -419,7 +723,7 @@ export const CATEGORIES: Category[] = [
                 "forms",
                 "selectable-chip",
                 "Selectable Chip",
-                "the contrast-floored tonal-accent register — one :tone per chip, idle-legible ≥3:1, active-bold, ink-correct (BC.W-ACCENT-TONE).",
+                "The contrast-floored tonal-accent register — one tone per chip, idle-legible at ≥3:1, bold when active, ink stays correct.",
             ),
             s("forms", "label", "Label"),
         ],
@@ -533,7 +837,7 @@ export const CATEGORIES: Category[] = [
                 "navigation",
                 "tabs",
                 "Tabs",
-                "reka Tabs (default · pill · underline · vertical) + the unified SegmentedTabs spring-slider (segmented · pill · underline variants, multi-select, responsive collapse).",
+                "Two tab materials on one engine — pill (glass) and underline (paper) — with a spring-slider indicator, horizontal and vertical orientation, draggable pills, and a responsive collapse to a Select.",
             ),
             s("navigation", "carousel", "Carousel", undefined, {
                 background: "aurora",
@@ -579,7 +883,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "morph-showcase",
                 "Vertical ↔ Horizontal Morph",
-                "The liquid-glass dock morph (AZ.W-MORPH-SHOWCASE) — a button flows the VERTICAL dock, as an amorphous metaball teardrop, into the HORIZONTAL dock, fully bidirectional + deterministic on ONE --dock-morph-t scalar. An SVG-goo metaball bridge merges the two plates and occludes the topology reflow at the midpoint (the AX.W42 fold-7 limit respected, not fought); useLiquidFlex (the W-LIQUID substrate) drives the two-dock spans + the volume-preserving teardrop squish.",
+                "The liquid-glass dock morph — a button flows the vertical dock, as an amorphous metaball teardrop, into the horizontal dock, fully bidirectional and deterministic on one --dock-morph-t scalar. An SVG-goo metaball bridge merges the two plates and hides the layout change at the midpoint; the shared liquid-flex primitive drives the two-dock spans and the volume-preserving teardrop squish.",
             ),
             // BA.W-DOCK-SECTIONS — the declarative tripartite section chassis. A
             // `sections` descriptor array renders the rail-core | divided sections |
@@ -590,7 +894,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "sections",
                 "Dock Sections",
-                "The declarative <DockSection> chassis (BA.W-DOCK-SECTIONS) — pass ONE `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading rail-core home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. display: contents so the dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
+                "The declarative <DockSection> chassis — pass one `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. The dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
             ),
             // BB.B2 W-DOCKMORPH-CTA — the external-CTA-morphs-into-dock seam (the iOS
             // bloom-from-source INVERSE). An external CTA button flies + reshapes from
@@ -603,7 +907,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "cta-receive",
                 "CTA → Dock Morph",
-                "The external-CTA-morphs-into-dock seam (BB.B2 W-DOCKMORPH-CTA) — an external CTA button flies + reshapes from its own rect ONTO a target dock control, fades + congests into the glass, then hands off (the dock control owns the spot). The iOS bloom-from-source inverse: composes the SAME kf ElementMorph + springTimingFunction substrate useLiquidReveal activates (useDockCtaReceive), a consuming seam beside the dock morph mechanism (no dockMorphContext/DOCK_SPRING edit). Compositor-only (transform/opacity/filter); reduced-motion snaps the CTA to gone + hands off.",
+                "The external-CTA-morphs-into-dock seam — an external CTA button flies and reshapes from its own rect onto a target dock control, fades and congests into the glass, then hands off (the dock control owns the spot). The iOS bloom-from-source inverse: useDockCtaReceive composes the same element-morph substrate useLiquidReveal activates, beside the dock morph mechanism. Compositor-only (transform/opacity/filter); reduced-motion snaps the CTA to gone and hands off.",
             ),
         ],
     },
@@ -700,7 +1004,7 @@ export const CATEGORIES: Category[] = [
                 "feedback",
                 "completion-seal",
                 "Completion Seal",
-                "The hero-scale earned-GOLD completion mark — a one-shot gold-draw seal (a stroke-dashoffset wipe on 4 @property motion tokens) reading the W-PHASE-PALETTE earned-gold register with the W-AX-METAL-GLOW catch-light.",
+                "The hero-scale earned-gold completion mark — a one-shot gold-draw seal (a stroke-dashoffset wipe on four @property motion tokens) reading the earned-gold phase register with the metal-glow catch-light.",
             ),
         ],
     },
@@ -786,6 +1090,9 @@ export const CATEGORIES: Category[] = [
             s("compositions", "hero", "Hero", undefined, {
                 background: "constellation",
                 hero: true,
+                // The deliberate audacious-type showcase — the ONE D2 main at `mega`
+                // (its content IS the audacious-type demonstration).
+                heroScale: "mega",
             }),
             s("compositions", "math-paper", "Math Paper", undefined, {
                 background: "grid",
@@ -793,6 +1100,8 @@ export const CATEGORIES: Category[] = [
             s("compositions", "auth-shell", "Auth Shell", undefined, {
                 background: { kind: "fourier" },
                 hero: true,
+                // A full-bleed scene specimen — keeps the largest D3 sub-rung.
+                heroScale: "hero",
             }),
             // AZ.W-SUFFUSE D4-1 — the canonical thin offender: a page literally
             // ABOUT grain / paper / type rendered flat white-on-white. The calm
@@ -853,6 +1162,11 @@ export const CATEGORIES: Category[] = [
         ],
     },
 ];
+
+// BC.W-PAGE-CHASSIS — finalize the depth-keyed √φ title ladder + the section
+// landings AFTER the category tree is built (the FIRST story per category is the
+// D2 main, the rest D3 subs; each category gains its D1 section-landing hero).
+assignDepths(CATEGORIES);
 
 export function findCategory(id: string): Category | undefined {
     return CATEGORIES.find((c) => c.id === id);

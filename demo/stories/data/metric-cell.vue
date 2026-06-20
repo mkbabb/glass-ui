@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
 
         <StorySection
             label="hero metric · the audacious display tier"
-            blurb="The fast.com peg — the result number IS the page. The mega/audacious display tiers (φ^(9/2) peak 177px, φ^(11/2) peak 352px) activate on the metric surface, their natural home (AZ.W-SUFFUSE D2-3). The leading glyph tints to its semantic --chart-* viz color; the number stays warm ink (the one-color-event rule)."
+            blurb="The fast.com peg — the result number IS the page. The mega/audacious display tiers (mega 177px / audacious 352px) activate on the metric surface, their natural home. The leading glyph tints to its semantic --chart-* viz color; the number stays warm ink (the one-color-event rule)."
         >
             <!-- BA.W-ANIMATE Tier C — the count-up host. `countupHost` is the OUTER
                  wrapper the IntersectionObserver watches; the inner grid carries

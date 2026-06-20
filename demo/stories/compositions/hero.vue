@@ -172,7 +172,6 @@ const claims = [
                         Start building
                         <ArrowRight class="size-4" aria-hidden="true" />
                     </Button>
-                    <Button size="lg" variant="ghost">View the source</Button>
                 </div>
             </div>
         </div>
