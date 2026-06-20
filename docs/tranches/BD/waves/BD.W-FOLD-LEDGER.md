@@ -1,0 +1,68 @@
+# BD.W-FOLD-LEDGER
+
+## (1) Band + goal
+
+**Band 9 — Fold-machine + terminal cut.**
+
+Author the BD `FOLD-LEDGER.json` — every owed item from the 12 BD audit findings + every BC HELD/BOOKED long-tail carried forward, each with a TERMINAL disposition (a BD wave id, a tracked-hold + trigger, or a retire-with-rationale), plus the `proof:bd-fold-ledger` no-silent-drop gate (the `proof:bc-fold-ledger` superset on the BD surface). This wave IS the ledger; `docs/tranches/BD/FOLD-LEDGER.md` (already authored, the human-readable companion) is its human face — F1 keeps them in sync.
+
+## (2) Starting state — the exact on-disk reality
+
+- **`docs/tranches/BD/FOLD-LEDGER.md` (VERIFIED, read in full — the human-readable map):** 122 lines; the no-silent-drop ledger grouped into Classes A-J (A glass-uplift books, B viz GL-fence tails + parity debt, C kf/value.js republish-gated consumes, D cross-repo sibling adopt sweep, E kf-O ARIA re-open, F demo pages modernization, G precept canon, H CLAUDE.md coherence, I the standing fold-machine arms, J challenge-threads/resolved-do-not-reopen). Line 5: "The machine-readable companion is the BD.W-FOLD-LEDGER.json wave (band 9). This .md is the human-readable map." Line 122 (the no-silent-drop attestation): "Every candidate-wave from the 12 findings is dispositioned above." So the `.md` EXISTS; the `.json` machine source + the gate are what THIS wave authors.
+- **`docs/tranches/BD/FOLD-LEDGER.json` — ABSENT (VERIFIED):** `ls docs/tranches/BD/` shows `CANDIDATE-WAVES.md`, `SEED.md`, `FOLD-LEDGER.md`, `waves/` — no `.json`. The machine source-of-truth does not yet exist.
+- **`scripts/proof-bd-fold-ledger.mjs` — ABSENT (VERIFIED):** `grep '"proof:bd-fold-ledger"' package.json` → no hit; `ls scripts/proof-bd-fold-ledger.mjs` → not found. The gate does not yet exist (born-RED by absence).
+- **The precedent — `docs/tranches/BC/FOLD-LEDGER.json` (VERIFIED, read in full structure):** the machine-checkable source-of-truth. `expectedCount:213`; a `closeUnion` block (`{runMode:"full", perRound:true, localOnlyForbidden:true, note:…}` — the masked-accretion cure); `items[]` each `{id, what, origin, status, disposition, band, wave, evidence}` (BUILD/MET) or `{…, rationale, trigger}` (HELD-with-rationale). VERIFIED via `node -e` count: 213 items, distribution `{MET:46, BUILD:99, HELD-with-rationale:65, RETIRE:2, SUPERSEDED:1}`.
+- **The precedent gate — `scripts/proof-bc-fold-ledger.mjs` (VERIFIED, read in full — 428 lines):** the no-silent-drop floor. Clauses F1 (doc⟷JSON completeness + the 213-count, `:166-178`), F1.b (band DERIVED from the named wave's on-disk `**Band:**` header, NOT transcribed, `:89-106,207-217`), F2 (decided-destination soundness — every BUILD/MET `wave` resolves to a real `docs/tranches/BC/waves/BC.W-*.md`, `:108-114,204-205`), F2.b (band-string rejection — a `wave` matching `/^Band\s*\d+/` or empty REDs, `:59,200-203`), F3 (no-undecided — `disposition ∈ {BUILD,RETIRE,MET,HELD-with-rationale,SUPERSEDED}`, `:51-57,185-187`), F4 (HELD carries rationale + trigger, `:190-195`), F5 (the 10 PM-SYNTHESIS requirements each map to a real Band-0 wave, `:221-246`), F6 (close-union binding — `--run full` per-round, `:138-155,248`), F7 (disposition-register reconcile — the 2 open dests + the 28 holds reStampedAt, `:251-286`). A 7-bite self-test (`:316-407`: dropped-item→F1, stale-band→F1.b, phantom-dest→F2, band-only→F2.b, book→F3, bare-HELD→F4, local-only-close→F6). `EXPECTED_COUNT=213`, `BC_WAVE_RE=/^BC\.W-[A-Z0-9-]+$/`.
+- **The BD residual to carry (VERIFIED via `CANDIDATE-WAVES.md` + `FOLD-LEDGER.md`):** 43 candidate waves across 9 bands; the FOLD-LEDGER.md Classes A-J map every owed item. The BD count is FAR smaller than BC's 213 (BC consolidated 5 tranches of accretion; BD is the post-cut discharge long-tail). The BD ledger carries: the Class A-D HELD/BOOKED long-tail (each with its un-MET trigger), the Class E-F-G-H BUILD/MET waves (each resolving to a real `docs/tranches/BD/waves/BD.W-*.md`), the Class I standing arms, and the Class J resolved-do-not-reopen rows (CARRIED/RESOLVED/CURED-CLOSED dispositions).
+
+The decision: FOLD-LEDGER Class I `→BD.W-FOLD-LEDGER` — "The ledger itself + proof:bd-fold-ledger (items == expectedCount, every item terminal)."
+
+## (3) The build — the machine ledger + the gate
+
+**Two created files (glass-ui src/scripts + docs/), one edited (gate registration):**
+
+**1. `docs/tranches/BD/FOLD-LEDGER.json` — the machine source-of-truth.** A JSON object mirroring the BC shape:
+```json
+{
+  "$schema": "BD.W-FOLD-LEDGER — the machine-checkable no-silent-drop source-of-truth. One row per distinct owed item; the human face is docs/tranches/BD/FOLD-LEDGER.md (F1 keeps them in sync). disposition ∈ {BUILD,RETIRE,MET,HELD-with-rationale,SUPERSEDED} — DECIDED, never re-booked. A BUILD/MET row's band is DERIVED from the named wave's on-disk **Band:** header (F1.b), NEVER transcribed.",
+  "expectedCount": <N>,
+  "closeUnion": { "runMode": "full", "perRound": true, "localOnlyForbidden": true, "note": "…" },
+  "items": [ … ]
+}
+```
+- `expectedCount` = the BD distinct-fold count (derived at authoring, NOT a frozen literal copied from BC — BD's ledger is its OWN size; the count is asserted so a drift REDs).
+- Each Class A-J row → one `items[]` entry. A BUILD/MET row carries `{id, what, origin, status, disposition, band, wave, evidence}` where `wave` resolves to a real `docs/tranches/BD/waves/BD.W-*.md` and `band` is DERIVED from that wave's on-disk `**Band:**` header. A HELD-with-rationale row (Class A-D republish-gated consumes, the CSS-feature Baseline books, the gated compute density) carries `{…, rationale, trigger}` (the non-empty rationale + the named ≥2-consumer/Baseline/republish trigger that flips it to BUILD). A RETIRE row (a weak-keep retire, the watercolor-dot-permanent-out) carries the rationale + successor. A SUPERSEDED row carries the superseding wave. The Class J rows carry their terminal disposition (CARRIED/RESOLVED/CURED-CLOSED — recorded with rationale, NOT re-opened).
+- The standing-arm cross-references: the 28 DISPOSITION-REGISTER restamps (BD.W-DISPOSITION-RESTAMP) + the weak-keep verdicts (BD.W-WEAK-KEEP-REGRADE) + the band-1-8 waves each get a ledger row; the no-double-count rule (a BC item already CLOSED at BC is NOT re-counted — only the carried-forward HELD/BOOKED long-tail + the NEW BD-owed items).
+
+**2. `scripts/proof-bd-fold-ledger.mjs` — the no-silent-drop gate (born-RED, the anti-evasion floor).** A copy of the `proof:bc-fold-ledger` shape re-pointed at the BD tree:
+- `LEDGER_JSON` = `docs/tranches/BD/FOLD-LEDGER.json`, `LEDGER_DOC` = `docs/tranches/BD/FOLD-LEDGER.md`, `WAVES_DIR` = `docs/tranches/BD/waves`, `REGISTER` = `docs/tranches/AX/audit/DISPOSITION-REGISTER.json`, `BD_WAVE_RE = /^BD\.W-[A-Z0-9-]+$/`, `EXPECTED_COUNT` = the BD count.
+- Clauses F1 (doc⟷JSON completeness + the count), F1.b (band DERIVED from the wave's on-disk `**Band:**`), F2 (decided-destination soundness — BD wave-spec resolves), F2.b (band-string rejection — empty or `/^Band\s*\d+/` REDs), F3 (no-undecided — the disposition enum), F4 (HELD carries rationale + trigger). F5 (the PM-SYNTHESIS requirement-traceability) is DROPPED or RE-POINTED — BD has no PM-SYNTHESIS wave (it is a discharge tranche, not a root-failure-class synthesis); if BD has a synthesis-equivalent it re-points, else F5 is omitted (the clause set is BD's, not a verbatim BC copy). F6 (close-union binding — `--run full` per-round). F7 (disposition-register reconcile — re-pointed to assert the 28 holds now carry `reStampedAt:"BD"` per BD.W-DISPOSITION-RESTAMP, the BC's "BC" assertion re-stamped to "BD").
+- The self-test (`--self-test`): the 6-7 born-RED bites (dropped-item→F1, stale-band→F1.b, phantom-dest→F2, band-only→F2.b, book→F3, bare-HELD→F4, local-only-close→F6), each MUST flag; the real BD ledger MUST pass every clause (GREEN-after).
+
+**3. `scripts/gates.mjs` — register `proof:bd-fold-ledger`, `tags:["ci","release"]`** (a device-free doc/JSON gate, runs in CI + at the close — the `proof:bc-fold-ledger` registration precedent).
+
+**The F7 reconcile coupling (load-bearing):** the BD F7 clause asserts the 28 honest-hold register rows carry `reStampedAt:"BD"` — so `proof:bd-fold-ledger` and BD.W-DISPOSITION-RESTAMP are COUPLED: the restamp must land for F7 to green. The BC gate asserts `reStampedAt:"BC"` (`proof-bc-fold-ledger.mjs:276`); the BD gate re-points the assertion to "BD". The 2 open dests (`deck-subpath`→`BC.W-DECK`, `styles-critical-split`→`BC.W-CSS-CRITICAL`) carry their BC `resolvedBy` (they discharged at BC) — the BD F7 re-asserts them present (a regression that drops the BC dest REDs).
+
+## (4) The gate — born-RED → GREEN
+
+**`proof:bd-fold-ledger` is the new gate (born-RED by absence, GREEN at the authored ledger).**
+
+- **Born-RED:** at BD HEAD the gate does not exist AND `docs/tranches/BD/FOLD-LEDGER.json` does not exist. On first authoring, run `node scripts/proof-bd-fold-ledger.mjs --self-test` — the 6-7 synthetic bites MUST each flag their clause (a dropped item flags F1, a stale-transcribed band flags F1.b, a phantom dest flags F2, a band-only dest flags F2.b, a `book` disposition flags F3, a bare HELD flags F4, a `--run local`-only closeUnion flags F6). If ANY bite fails to flag, the detector is not load-bearing → the gate REDs loudly (the `proof:bc-fold-ledger:316-407` self-test precedent).
+- **GREEN-after:** the real BD ledger passes every clause — `items.length == expectedCount`, every doc id ⟷ JSON id agrees, every BUILD/MET `wave` resolves to a real `docs/tranches/BD/waves/BD.W-*.md` with a DERIVED band, every HELD carries rationale + trigger, the closeUnion is `{full, perRound:true, localOnlyForbidden:true}`, F7's 28 register holds carry `reStampedAt:"BD"`.
+- **The self-test bite (this wave's own):** the `--self-test` arm IS the bite — a synthetic dropped/undecided/phantom-dest/band-only/book/bare-HELD/local-only row MUST flag. Born-RED on the synthetic mutations → GREEN on the real ledger. This is the anti-evasion floor: a future agent dropping a BD owed item, leaving one undecided, or naming a phantom destination REDs the close.
+- **The coupling check:** F7 born-RED on a register whose holds still carry `reStampedAt:"BC"` (BD.W-DISPOSITION-RESTAMP not yet landed) → GREEN when the restamp lands. So the gate witnesses the standing-arm landing.
+
+## (5) Paint verification
+
+**Device-free — a doc/JSON integrity wave, zero pixels (no paint, BB inv-4; the BC.W-FOLD-LEDGER precedent — "the integrity/structure floor paints zero pixels, real value").** NO `proof:ba-gestalt` verdict (the ledger paints no surface). Its acceptance is documentary + mechanical completeness: a reviewer opens `docs/tranches/BD/FOLD-LEDGER.md` and finds every owed item from the 12 findings grouped + DECIDED, and `FOLD-LEDGER.json` agrees (F1). The binding verification is `proof:bd-fold-ledger` born-RED→GREEN + the `--self-test` 6-7 bites flagging. The BC anti-disease law is trivially satisfied (no visual surface, no source-green-close hazard). This wave is the STRUCTURAL floor that makes the BD close honest — the witness every chronic + every prior-tranche deferral is folded + DECIDED, the user's no-silent-drop mandate provably met.
+
+## (6) Fences + risks
+
+- **NO SILENT DROP, NO RE-BOOK (the user mandate, the headline).** Every owed item is DECIDED — never `book`/`re-stamped`/`deferred` an 8th time. A HELD-with-rationale is a DECISION (with a named trigger), not a deferral. `proof:bd-fold-ledger` F3 REDs a `book`/empty disposition; F4 REDs a bare HELD.
+- **THE COUNT IS DERIVED, NOT FROZEN.** `expectedCount` is the BD distinct-fold count computed at authoring (NOT a literal copied from BC's 213 — BD is its own size). The count is asserted so a drift REDs, but it must MATCH the real items length (a frozen-wrong literal would green a wrong ledger — the count is the BD reality, re-derived).
+- **THE BAND IS DERIVED FROM THE WAVE'S ON-DISK HEADER (F1.b).** A BUILD/MET row's `band` equals the named `wave`'s on-disk `**Band:**` token, NEVER the doc parenthetical (the band-label-staleness class closed structurally). Born-RED via the stale-transcribed-band bite.
+- **EVERY DESTINATION RESOLVES (F2/F2.b).** A BUILD/MET `wave` resolves to a real `docs/tranches/BD/waves/BD.W-*.md` (no phantom); a bare `Band N` label or empty `wave` REDs (a band is a thematic grouping, never a destination). Born-RED via the phantom-dest + band-only bites.
+- **THE FULL-UNION CLOSE PER-ROUND (W-CLOSE-BATTERY, F6).** `--run full` siblings-AND-submodule-absent at every round close, not only the terminal cut — the masked-accretion cure; the `--run local`-only close is forbidden (F6 self-test). The BD closeUnion block re-states it.
+- **F7 COUPLES TO BD.W-DISPOSITION-RESTAMP.** The 28 register holds must carry `reStampedAt:"BD"` for F7 to green — the gate witnesses the standing-arm landing. Authoring the ledger BEFORE the restamp lands → F7 born-RED (correct — it reds until the restamp commits).
+- **CLASS J IS CARRIED, NOT RE-OPENED.** The resolved-do-not-reopen rows (the aria-palette HELD verdict RESOLVED at Tier-16b, the BB single-terminal-reflect disease CURED at BC, the 6 closed BC challenge threads) carry their terminal disposition (CARRIED/RESOLVED/CURED-CLOSED) — recorded with rationale, NEVER re-booked into a BD wave (the anti-stale-reopen fence).
+- **No glass-ui src/ paint.** This is a docs/ JSON + a scripts/ gate + a gates.mjs registration — zero src/ component/style edit. The gate is device-free (runs under CI=true with no siblings — the F1-F4/F6/F7 clauses are pure doc cross-checks).
