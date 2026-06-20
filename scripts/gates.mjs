@@ -1836,6 +1836,24 @@ export const GATES = [
         note: "BC.W-TEAL-NAVY-PURGE — the cross-cutting warm-cream identity census (born-RED on the teal-on-navy disease → GREEN at warm-cream). §E verbatim: 'REMOVE the teal-on-navy reference entirely.' + the stray-blue ('WTF is this blue') hunt. The per-viz gates fence their OWN constants; THIS gate is the UNION enforcer + the demo-default flip + the fabricated-reference deletion + the stray-blue hunt + the live-warm-paint arm. T1 (source, ci) NO library viz-substrate constants (aurora/concentric/dot-flow/fourier/goo-blob/constellation) carries a teal/navy/cool-blue literal (OKLCh hue ∈ [180,270] above the W-NO-GRAY neutral chroma floor, or a blue-dominant hex) in a DEFAULT palette/background; the warm-cream defaults (hue ~28-90) pass; the silver/bronze brand-metal quad + the --chart-*/--viz-* semantic data tokens are OUT OF SCOPE. The library defaults are ALREADY warm — T1 is the FENCE that keeps them warm + catches a future regression. Bite: a teal/navy literal in a viz default → RED.",
     },
     {
+        id: "proof:gooblob-meatball",
+        cmd: "proof:gooblob-meatball",
+        tags: ["local"],
+        note: "BC.W-GOOBLOB-MEATBALL — the WGSL fwidth STRUCTURAL fix: the metaball.wgsl fwidth(N) (the Toksvig normal-variance spec clamp) sat INSIDE `if (uLit > 0.5)` AFTER the per-fragment alpha early-return — NON-uniform control flow, which WGSL rejects → the WGSL primary never armed → GooBlob fell to the WebGL2 net forever. RESTRUCTURED: hoisted the normal-derivative `length(fwidth(Nh))` to UNIFORM control flow (top of fs_main, before the alpha early-return, outside uLit/uShadow). + a net-new softShadow2D SDF march SYMMETRIC across WGSL+GLSL (the GLSL diff PURELY additive — the lit-glass/smin/normal/OKLCh math byte-untouched, gpu-substrate-single ΔE-0.0 parity held); uShadow/uShadowSoftness on the spare res.z/res.w lanes; variant=meatball flips uLit/uShadow on. The full LIT liquid metaball now arms via the WGSL primary (not the stripped fallback). The live PAINT arm; bite: a fwidth in non-uniform flow / a broken parity → RED.",
+    },
+    {
+        id: "proof:gooblob-meatball:source",
+        cmd: "proof:gooblob-meatball:source",
+        tags: ["ci"],
+        note: "BC.W-GOOBLOB-MEATBALL — the device-free SOURCE floor (--source): the fwidth(Nh) hoist is provably in uniform control flow (before the alpha early-return, outside uLit), the softShadow2D symmetric WGSL+GLSL, the typed-struct SoT lockstep (WGSL struct + GLSL uniforms + bridge + GL upload + types.ts). CI proves the SOURCE; the bare arm proves the PAINT (local). Bite: an inline-branch fwidth / a missing shadow lane → RED.",
+    },
+    {
+        id: "proof:viz-hybrid",
+        cmd: "proof:viz-hybrid",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-VIZ-HYBRID — the goo-dot-matrix HYBRID viz (the /goo-dot-matrix subpath + colocation dir): composes the EXISTING goo-blob metaball (sceneDistG SPLICED from the metaball source, not re-forked) + the dot-matrix lattice (fibonacciDot IMPORTED), the dot-field fragment-swap register over createGpuSubstrate (no own rAF, the field consumed). WARM-CREAM identity. Bite: a re-forked metaball/lattice / a Canvas2D-primary / a second rAF → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

@@ -89,6 +89,7 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // SAME script, --source). The local-paint / ci-source split is the cardinal-lesson
     // live-vs-source pattern (the proof:live-verified-ledger precedent).
     ["proof:gooblob-plain", "BC.W-GOOBLOB-PLAIN live PAINT arm (reads the local Metal-captured pixel readback); the ci SOURCE floor is the proof:gooblob-plain:source arm of the same dual-mode script."],
+    ["proof:gooblob-meatball", "BC.W-GOOBLOB-MEATBALL live PAINT arm (the WGSL-primary full-lit metaball + soft-shadow capture, Metal); the ci SOURCE floor is the proof:gooblob-meatball:source arm of the same dual-mode script."],
     // BA.W-GESTALT-GATE — the gestalt acceptance bar. BORN-RED BY DESIGN against the
     // R8 captures until BA.W-REFLECT2 flips the roster verdicts and PROMOTES the tag
     // into the operative close set; untagged (the au-final precedent) so the local/ci

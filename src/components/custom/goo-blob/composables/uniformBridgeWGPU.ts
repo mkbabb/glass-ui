@@ -24,7 +24,7 @@
 //   base : vec4<f32>  off  144  (uBaseColor.rgb, _pad)
 //   rim  : vec4<f32>  off  160  (uRimColor.rgb, _pad)
 //   light: vec4<f32>  off  176  (uLightDir.xyz, _pad)
-//   res  : vec4<f32>  off  192  (uResolution.x, uResolution.y, _pad, _pad)
+//   res  : vec4<f32>  off  192  (uResolution.x, uResolution.y, uShadow, uShadowSoftness)
 //   ints : vec4<i32>  off  208  (uStopCount, uSatCount, uTrailCount, _pad)
 //   palette  : array<vec4<f32>, 4>   off  224  (rgb gamma-sRGB stop + _pad)
 //   satPos   : array<vec4<f32>, 4>   off  288  (pos.x, pos.y, radius, opacity)
@@ -162,10 +162,15 @@ export function packBlobWGPUUniforms(
     f32[OFF.s1 + 3] = cMem.warpAmp;
 
     // s2: uSmoothK, uMerge, uMaxReach, uLit
+    // BC.W-GOOBLOB-MEATBALL — variant=meatball flips uLit on (T1); variant=blob keeps it
+    // OFF (the STAGE-1 floor — the uStage gate strips the lit work regardless, this is the
+    // explicit per-variant flip). The surface.lit flag still owns the lit-on/off WITHIN
+    // the meatball register.
+    const isMeatball = config.variant !== "blob";
     f32[OFF.s2 + 0] = smoothK;
     f32[OFF.s2 + 1] = cMem.merge === "circular" ? 1.0 : 0.0;
     f32[OFF.s2 + 2] = maxReach;
-    f32[OFF.s2 + 3] = cSurf.lit ? 1.0 : 0.0;
+    f32[OFF.s2 + 3] = isMeatball && cSurf.lit ? 1.0 : 0.0;
 
     // s3: uSpecStrength, uSpecShininess, uRimPower, uRimStrength
     f32[OFF.s3 + 0] = cSurf.specStrength;
@@ -225,11 +230,15 @@ export function packBlobWGPUUniforms(
     f32[OFF.light + 2] = cSurf.lightDir[2];
     f32[OFF.light + 3] = 0;
 
-    // res: uResolution.xy
+    // res: uResolution.xy, uShadow, uShadowSoftness
+    // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
+    // typed-struct SoT reserved (the EXTEND, never a re-fork). variant=meatball flips
+    // uShadow on (T1); variant=blob keeps it OFF (the STAGE-1 shadowless floor). The
+    // surface.shadow flag owns the on/off WITHIN the meatball register.
     f32[OFF.res + 0] = canvas.width;
     f32[OFF.res + 1] = canvas.height;
-    f32[OFF.res + 2] = 0;
-    f32[OFF.res + 3] = 0;
+    f32[OFF.res + 2] = isMeatball && cSurf.shadow ? 1.0 : 0.0;
+    f32[OFF.res + 3] = cSurf.shadowSoftness;
 
     // ── palette (W11.b) — write rgb into the vec4 lanes (a=0); empty → uBaseColor. ──
     const stops = paletteStops;

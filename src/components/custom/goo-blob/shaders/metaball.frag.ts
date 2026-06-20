@@ -181,6 +181,32 @@ vec3 surfaceNormalFromGrad(vec2 grad2d, float d, float bodyR) {
     return normalize(vec3(g * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
 }
 
+// BC.W-GOOBLOB-MEATBALL — the 2D SDF soft-shadow march (IQ rmshadows improved-penumbra,
+// research/viz/goo-blob.md §2.3, §5). The GLSL twin of the WGSL softShadow2D — a procedural
+// soft contact shadow FOLLOWING the irregular metaball silhouette (NOT a hard disc/box
+// shadow). Marches from ro along rd (the in-plane projection of uLightDir),
+// accumulating the closest miss via the Aaltonen penumbra (y = h*h/(2*ph) + d =
+// sqrt(h*h - y*y)) that kills the banding the naive res = min(res, h/(w*t)) shows. CHEAP:
+// 24 steps, re-uses the SAME sceneDistG().x field (NO separate field re-eval, NO FBO/
+// multi-pass — the procedural field needs none). w is the penumbra hardness (inverse
+// light-source size -> uShadowSoftness). Derivative-FREE. Returns 1.0 (lit) -> 0.0 (occluded).
+float softShadow2D(vec2 ro, vec2 rd, float mint, float maxt, float w) {
+    float res = 1.0;
+    float ph = 1e20;
+    float t = mint;
+    for (int i = 0; i < 24; i++) {
+        if (t >= maxt) break;
+        float h = sceneDistG(ro + rd * t).x;
+        if (h < 0.001) return 0.0;
+        float y = h * h / (2.0 * ph);
+        float dd = sqrt(max(h * h - y * y, 0.0));
+        res = min(res, dd / (w * max(0.001, t - y)));
+        ph = h;
+        t += h;
+    }
+    return clamp(res, 0.0, 1.0);
+}
+
 // W11.b — sample the multi-stop palette at t in [0,1], interpolating adjacent
 // stops in OKLab with a MIDPOINT CHROMA-BUMP (a linear OKLab mix of a vivid pair
 // dips chroma through grey; the bump lifts it back). Falls back to uBaseColor when
@@ -347,6 +373,26 @@ void main() {
         // Warm the THIN leaking rim only (scale by 1 - thickness): the SSS hue-warm
         // shift rides the rim, not the core (AX.W15 — only the thin rim warms).
         oklch.z += sss * 0.1 * (1.0 - thickness);
+    }
+
+    // ── BC.W-GOOBLOB-MEATBALL — the soft contact shadow (T2, the GLSL twin). A procedural
+    //    soft shadow FOLLOWING the irregular silhouette: march from this fragment's uv
+    //    toward the in-plane projection of uLightDir; where the metaball field occludes the
+    //    light, DARKEN the OKLCh L — a soft grounded contact band under the dome
+    //    (PROCEDURAL, silhouette-following, unlike the static CSS gel-dome drop-shadow).
+    //    Rim-weighted (1 - thickness) so the lit interior stays bright. Gated uShadow > 0.5;
+    //    variant=blob (STAGE 1) ships shadowless via the uStage early-return above. ──
+    if (uShadow > 0.5) {
+        vec2 L2 = normalize(uLightDir.xy + vec2(1e-6));
+        float sh = softShadow2D(uv, L2, max(aa, 0.004), bodyR * 1.5, max(uShadowSoftness, 4.0));
+        // The contact band sits on the LOWER rim (the side AWAY from the light), gated by
+        // the away-facing rim weight + a thin-rim Gaussian band (peak thickness ≈ 0.18) so
+        // the deep-lit interior + the light-facing edge stay BRIGHT (the warm-cream body
+        // mean + the proof:blob-warm-default floor hold). The 0.20 cap is a soft grounding.
+        float away = clamp(-dot(normalize(fieldGrad + vec2(1e-6)), L2), 0.0, 1.0);
+        float band = exp(-pow((thickness - 0.18) / 0.16, 2.0));
+        float shadowDarken = (1.0 - sh) * away * band * 0.20;
+        oklch.x = max(oklch.x - shadowDarken, 0.0);
     }
 
     oklch = gamutClampOklch(oklch);

@@ -203,6 +203,9 @@ export const UNIFORM_NAMES = [
     "uSpecShininess",
     "uRimPower",
     "uRimStrength",
+    // BC.W-GOOBLOB-MEATBALL — the procedural soft-shadow march (T2).
+    "uShadow",
+    "uShadowSoftness",
     "uIridescence",
     "uIridHue",
     "uIridSpeed",

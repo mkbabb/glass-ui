@@ -97,6 +97,9 @@
             "dot-matrix": [
                 "dist/dot-matrix.d.ts"
             ],
+            "goo-dot-matrix": [
+                "dist/goo-dot-matrix.d.ts"
+            ],
             "goo-blob": [
                 "dist/goo-blob.d.ts"
             ],
@@ -401,6 +404,10 @@
         "./dot-matrix": {
             "types": "./dist/dot-matrix.d.ts",
             "import": "./dist/dot-matrix.js"
+        },
+        "./goo-dot-matrix": {
+            "types": "./dist/goo-dot-matrix.d.ts",
+            "import": "./dist/goo-dot-matrix.js"
         },
         "./goo-blob": {
             "types": "./dist/goo-blob.d.ts",
@@ -986,6 +993,9 @@
         "proof:viz-aurora": "node scripts/proof-viz-aurora.mjs",
         "proof:gooblob-plain": "node scripts/proof-gooblob-plain.mjs",
         "proof:gooblob-plain:source": "node scripts/proof-gooblob-plain.mjs --source",
+        "proof:gooblob-meatball": "node scripts/proof-gooblob-meatball.mjs",
+        "proof:gooblob-meatball:source": "node scripts/proof-gooblob-meatball.mjs --source",
+        "proof:viz-hybrid": "node scripts/proof-viz-hybrid.mjs",
         "proof:fourier-field": "node scripts/proof-fourier-field.mjs",
         "proof:viz-constellation": "node scripts/proof-viz-constellation.mjs",
         "proof:viz-dotflow": "node scripts/proof-viz-dotflow.mjs",

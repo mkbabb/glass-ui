@@ -30,6 +30,7 @@ import {
 import {
     LabeledSelect,
     LabeledSlider,
+    LabeledSwitch,
 } from "../../../src/components/custom/labeled-field";
 import {
     deriveBlobPalette,
@@ -104,6 +105,13 @@ interface BlobStudioCfg {
     smoothK: number;
     /** Merge variant — `quadratic` (creased) | `circular` (rounder menisci). */
     merge: BlobMerge;
+    // ── BC.W-GOOBLOB-MEATBALL §6 Surface — the STAGE-2 lit/shadow axes, surfaced LIVE.
+    /** Lit-glass surface (Blinn-Phong glint + Fresnel rim) — STAGE-2 dressing. */
+    lit: boolean;
+    /** The procedural 2D SDF soft contact shadow following the silhouette (STAGE-2). */
+    shadow: boolean;
+    /** Soft-shadow penumbra hardness (4–48; a higher value = a harder penumbra). */
+    shadowSoftness: number;
 }
 
 const HARMONIES: ColorHarmony[] = [
@@ -163,6 +171,11 @@ const STUDIO_GEO_BASE = {
     eccentricity: 0.04,
     smoothK: 0.06,
     merge: BLOB_CONFIG_DEFAULTS.membrane.merge,
+    // BC.W-GOOBLOB-MEATBALL — the STAGE-2 lit/shadow surface baseline (the meatball
+    // default: lit-glass ON, the procedural soft contact shadow ON, mid-penumbra).
+    lit: BLOB_CONFIG_DEFAULTS.surface.lit,
+    shadow: BLOB_CONFIG_DEFAULTS.surface.shadow,
+    shadowSoftness: BLOB_CONFIG_DEFAULTS.surface.shadowSoftness,
 } as const;
 
 const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
@@ -296,7 +309,12 @@ const stageConfig = reactive<BlobConfig>({
         satelliteRadius: studio.config.satelliteRadius,
         eccentricity: studio.config.eccentricity,
     },
-    surface: { ...BLOB_CONFIG_DEFAULTS.surface },
+    surface: {
+        ...BLOB_CONFIG_DEFAULTS.surface,
+        lit: studio.config.lit,
+        shadow: studio.config.shadow,
+        shadowSoftness: studio.config.shadowSoftness,
+    },
     membrane: {
         ...BLOB_CONFIG_DEFAULTS.membrane,
         smoothK: studio.config.smoothK,
@@ -327,9 +345,12 @@ watch(
             studio.config.eccentricity,
             studio.config.smoothK,
             studio.config.merge,
+            studio.config.lit,
+            studio.config.shadow,
+            studio.config.shadowSoftness,
             paletteStops.value,
         ] as const,
-    ([attraction, clickImpulse, responsiveness, satCount, orbit, satRadius, ecc, smoothK, merge, stops]) => {
+    ([attraction, clickImpulse, responsiveness, satCount, orbit, satRadius, ecc, smoothK, merge, lit, shadow, shadowSoftness, stops]) => {
         stageConfig.interaction.pointerAttraction = attraction;
         stageConfig.interaction.clickImpulse = clickImpulse;
         stageConfig.interaction.pointerStrength = leanStrength(responsiveness);
@@ -340,6 +361,9 @@ watch(
         stageConfig.geometry.eccentricity = ecc;
         stageConfig.membrane.smoothK = smoothK;
         stageConfig.membrane.merge = merge;
+        stageConfig.surface.lit = lit;
+        stageConfig.surface.shadow = shadow;
+        stageConfig.surface.shadowSoftness = shadowSoftness;
         stageConfig.color.paletteStops = [...stops];
     },
     { immediate: true, deep: true },
@@ -614,6 +638,42 @@ watch(studioPaused, () => {
                                         class="h-10 w-10"
                                     />
                                 </div>
+                            </ConfiguratorRow>
+                        </ConfiguratorLayer>
+                        <!--
+                          BC.W-GOOBLOB-MEATBALL §6 Surface — the STAGE-2 lit/shadow axes
+                          surfaced LIVE: the lit-glass dressing, the procedural soft contact
+                          shadow that follows the silhouette, and the penumbra-hardness slider.
+                          Toggling shadow OFF reveals the un-grounded creature; the softness
+                          slider widens/tightens the contact band.
+                        -->
+                        <ConfiguratorLayer label="Surface (STAGE 2)" sub="--surface-*" dividers>
+                            <ConfiguratorRow label="Lit glass" name="lit">
+                                <LabeledSwitch
+                                    v-model:checked="studio.config.lit"
+                                    label="Lit glass"
+                                    hide-label
+                                    tooltip="The lit-glass dressing (Blinn-Phong glint + Fresnel rim) — the STAGE-2 surface."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Soft shadow" name="shadow">
+                                <LabeledSwitch
+                                    v-model:checked="studio.config.shadow"
+                                    label="Soft shadow"
+                                    hide-label
+                                    tooltip="The procedural 2D SDF soft contact shadow following the irregular silhouette (NOT a hard disc shadow)."
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Shadow softness" name="shadowSoftness">
+                                <LabeledSlider
+                                    v-model="studio.config.shadowSoftness"
+                                    :min="4"
+                                    :max="48"
+                                    :step="1"
+                                    label="Shadow softness"
+                                    hide-label
+                                    tooltip="The penumbra hardness — higher is a harder, tighter shadow band."
+                                />
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                         <!--

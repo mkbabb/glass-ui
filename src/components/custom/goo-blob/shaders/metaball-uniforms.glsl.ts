@@ -69,6 +69,12 @@ uniform float uSpecShininess;   // specular exponent (16-64, tight glint)
 uniform float uRimPower;        // Fresnel/Schlick exponent (~2-3)
 uniform float uRimStrength;     // Fresnel rim weight
 
+// BC.W-GOOBLOB-MEATBALL — the procedural 2D SDF soft-shadow march (T2, the GLSL twin of
+// the WGSL res.z/res.w lanes). uShadow gates the IQ rmshadows soft contact shadow that
+// FOLLOWS the irregular silhouette; uShadowSoftness is the penumbra hardness (4-48).
+uniform float uShadow;          // 0 = no shadow, 1 = the soft contact shadow ON
+uniform float uShadowSoftness;  // penumbra hardness (inverse light-source size, 4-48)
+
 // Iridescence + fake subsurface (W11.a) — translucent-gel read.
 uniform float uIridescence;     // warm-pearl rim sheen weight (0 = off)
 uniform float uIridHue;         // base hue (radians) the cosine palette biases toward (warm)

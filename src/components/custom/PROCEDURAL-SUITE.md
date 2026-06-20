@@ -8,7 +8,7 @@ too — extant items, too"), states the shared discipline ONCE, and records the 
 capability + WebGPU-migration verdict. Each viz's OWN per-dir `README.md` carries a
 "Substrate" section with its local substrate/parity/migration status; this doc is the index.
 
-## The nine members
+## The ten members
 
 | viz | subpath | what it is |
 |---|---|---|
@@ -18,6 +18,7 @@ capability + WebGPU-migration verdict. Each viz's OWN per-dir `README.md` carrie
 | **concentric** | `/concentric` | a radial Fourier ring-interference field — concentric ellipsoid rings beating into moiré |
 | **paper-grid** | `/paper-grid` | a liquid AA-grid — a Golus derivative-AA two-tier grid on a Bridson curl-warped UV sheet (BORN WebGPU-first — fullscreen fragment, the aurora/concentric shape-class; the fallback is the SAME pure fragment → parity `verified`) |
 | **dot-matrix** | `/dot-matrix` | a Fibonacci phyllotaxis dot-SPHERE — fine warm-cream dots on a sphere surface, depth-shaded into a translucent dot-shell, slowly rotating (BORN WebGPU-first — instanced billboard quads + the crisp fwidth SDF circle; the WebGL2 fallback is the SAME instanced billboards → parity `verified`; the goo-blob sibling, register **a** — the goo+dot HYBRID register **b** reuses this rasterizer) |
+| **goo-dot-matrix** | `/goo-dot-matrix` | the goo+dot HYBRID (register **b**) — the metaball SDF FIELD (the byte-untouched goo-blob `sceneDistG`) rendered as a DOT MATRIX, dense+big+bright inside the merged blob and sparse+small+dim at the rim (`v = thickness(sceneDistG(cellCenter))` drives the dot grid; tixy.land applied to an SDF). Composes the goo-blob FIELD + the dot-matrix RENDER — register **a**=`dot-field` (the FRAGMENT swap of the metaball pass, the default), `dot-dither` (the Codrops Bayer8 halftone), `dot-lattice`/`dot-sphere` (the opt-in instanced rasterizer, reusing dot-matrix's `fibonacciDot`). BORN WebGPU-first — the dot-stamp fragment over the spliced field; the WebGL2 fallback runs the SAME field → parity `verified` |
 | **fourier-field** | `/fourier-field` | a reconstructing elliptic Fourier curve — an inverse-DFT closed curve with nested epicycles |
 | **constellation** | `/constellation` | a drifting proximity-graph node/edge lattice |
 | **watercolor-dot** | `/watercolor-dot` | a CSS/SVG `feDisplacementMap` seeded blob (a decorative mark — NO drawing context) |

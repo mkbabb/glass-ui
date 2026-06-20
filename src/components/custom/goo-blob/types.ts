@@ -150,6 +150,19 @@ export interface BlobSurface {
     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
     // whole block (default ON).
     lit: boolean;
+    /**
+     * The procedural 2D SDF soft-shadow march (BC.W-GOOBLOB-MEATBALL T2). A soft contact
+     * shadow FOLLOWING the irregular silhouette (NOT a hard disc/box shadow), gated behind
+     * the shader `uShadow` flag. Default ON (the `meatball` register); the `blob` STAGE-1
+     * floor ships shadowless via the `uStage` gate.
+     */
+    shadow: boolean;
+    /**
+     * Soft-shadow penumbra hardness (BC.W-GOOBLOB-MEATBALL T2) — the inverse light-source
+     * size fed to the IQ rmshadows march `w` term (a higher value = a harder penumbra).
+     * Range 4–48, default 16.
+     */
+    shadowSoftness: number;
     /** CSS color for the Fresnel rim tint (resolved through the `/color` leaf). */
     rimColor: string;
     /** Light direction [x, y, z] (normalized in-shader). */
@@ -343,6 +356,11 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         // the silhouette) + a WHISPER of core-glow; iridescence/SSS sit at ≈half their
         // floors so the sheen is FELT, not seen.
         lit: true,
+        // BC.W-GOOBLOB-MEATBALL — the procedural soft contact shadow ON by default (the
+        // `meatball` register); softness 16 (mid-penumbra). The `blob` STAGE-1 floor ships
+        // shadowless via the `uStage` gate regardless of this flag.
+        shadow: true,
+        shadowSoftness: 16,
         // ── The rim re-anchored for the LIGHT cream body (AY.W-BLOB2) ──────────────────
         // `var(--foreground)` (near-black) over the OLD dark default read as the rim; over
         // the new LIGHT cream body it would ring a hard near-black band (the

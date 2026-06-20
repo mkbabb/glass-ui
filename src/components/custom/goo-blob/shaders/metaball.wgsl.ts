@@ -77,7 +77,11 @@ struct Uniforms {
   rim: vec4<f32>,
   // light: (uLightDir.xyz, _pad)
   light: vec4<f32>,
-  // res: (uResolution.x, uResolution.y, _pad, _pad)
+  // res: (uResolution.x, uResolution.y, uShadow, uShadowSoftness)
+  // BC.W-GOOBLOB-MEATBALL — the soft-shadow march rides the spare res.z/res.w lanes the
+  // typed-struct SoT (uniformBridgeWGPU.ts) reserved (the EXTEND, never a re-fork): res.z
+  // = uShadow (1.0 = the variant=meatball shadow ON), res.w = uShadowSoftness (the
+  // penumbra hardness, inverse light-source size → 4-48).
   res: vec4<f32>,
   // ints: (uStopCount, uSatCount, uTrailCount, _pad)
   ints: vec4<i32>,
@@ -307,6 +311,33 @@ fn surfaceNormalFromGrad(grad2d: vec2<f32>, d: f32, bodyR: f32) -> vec3<f32> {
   return normalize(vec3<f32>(g * (1.0 - z), z) + vec3<f32>(0.0, 0.0, 1e-6));
 }
 
+// ── BC.W-GOOBLOB-MEATBALL — the 2D SDF soft-shadow march (IQ rmshadows improved-penumbra,
+//    research/viz/goo-blob.md §2.3). A procedural soft contact shadow that FOLLOWS the
+//    irregular metaball silhouette (NOT a hard disc / box shadow). Marches a ray from ro
+//    along rd (the in-plane projection of uLightDir), accumulating the closest miss via
+//    the Aaltonen penumbra (y = h*h/(2*ph) + d = sqrt(h*h - y*y)) that kills the
+//    banding the naive res = min(res, h/(w*t)) shows. CHEAP: 24 steps, re-uses the SAME
+//    sceneDistG().x field (NO separate field re-eval, NO FBO/multi-pass — the procedural
+//    field needs none, §2.3). w is the penumbra hardness (inverse light-source size →
+//    uShadowSoftness). It is derivative-FREE (no fwidth/dpdx/dpdy), so it is fragment-safe
+//    here. Returns 1.0 (fully lit) → 0.0 (fully occluded). ──
+fn softShadow2D(ro: vec2<f32>, rd: vec2<f32>, mint: f32, maxt: f32, w: f32) -> f32 {
+  var res = 1.0;
+  var ph = 1e20;
+  var t = mint;
+  for (var i = 0; i < 24; i = i + 1) {
+    if (t >= maxt) { break; }
+    let h = sceneDistG(ro + rd * t).x;
+    if (h < 0.001) { return 0.0; }
+    let y = h * h / (2.0 * ph);
+    let dd = sqrt(max(h * h - y * y, 0.0));
+    res = min(res, dd / (w * max(0.001, t - y)));
+    ph = h;
+    t = t + h;
+  }
+  return clamp(res, 0.0, 1.0);
+}
+
 // W11.b — sample the multi-stop palette at t, OKLab mix + midpoint chroma-bump. Returns
 // an OKLCh stop [L, C, h(rad)]. Falls back to uBaseColor when uStopCount <= 1.
 fn samplePaletteOklch(t: f32) -> vec3<f32> {
@@ -375,6 +406,9 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let uRimStrength = u.s3.w;
   let uLightDir = u.light.xyz;
   let uRimColor = u.rim.rgb;
+  // BC.W-GOOBLOB-MEATBALL — the soft-shadow gate + penumbra hardness (res.z/res.w lanes).
+  let uShadow = u.res.z;
+  let uShadowSoftness = u.res.w;
 
   var uv = in.uv - 0.5;
 
@@ -403,6 +437,28 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let aa = max(fwidth(d), 1e-6);
   let alpha = 1.0 - smoothstep(-aa, aa, d);
 
+  // ── BC.W-GOOBLOB-MEATBALL — the WGSL uniformity STRUCTURAL fix (the meatball-armer).
+  //    The Toksvig screen-space derivative (fwidth SITE #2) is hoisted HERE, into the SAME
+  //    uniform control flow fwidth(d) above already arms in (top-level fs_main, before the
+  //    per-fragment alpha < 0.001 early-return and the uLit/uShadow non-uniform branches).
+  //    WGSL uniformity analysis rejects a fwidth() reached only through a return predicated
+  //    on a per-fragment value (the alpha < 0.001 early-out) nested under further branches
+  //    — exactly the BB residual that kept the normal-derivative inside the lit branch from
+  //    compiling, so the WGSL primary never armed and GooBlob fell to the WebGL2 net. Nh is
+  //    the uniform-flow surface normal computed for this derivative ONLY (byte-identical to
+  //    the lit block's own N = surfaceNormalFromGrad(...) below — the SAME inputs, so
+  //    nVar = length(fwidth(Nh)) IS the Toksvig clamp the lit block reads); the named lit-
+  //    block N stays AFTER the uStage early-return (the STAGE-1 floor reaches no lit work).
+  //    nVar is a pure uniform-flow value the lit block READS — no derivative in non-uniform
+  //    flow; the math is byte-identical to the GLSL fallback's Toksvig clamp, only its
+  //    EVALUATION POINT moved. The shadow march (T2) reuses d (the same sceneDistG().x).
+  let Nh = surfaceNormalFromGrad(fieldGrad, d, bodyR);
+  // ── fwidth SITE #2 (metaball.frag.ts line 364) — Toksvig normal-variance specular
+  //    clamp, the WGSL fragment-stage fwidth() of the surface normal. NOW in uniform
+  //    control flow (the structural fix), so the WGSL primary ARMS + paints the full lit
+  //    creature instead of falling to the stripped WebGL2 fallback. ──
+  let nVar = length(fwidth(Nh));
+
   if (alpha < 0.001) {
     return vec4<f32>(0.0);
   }
@@ -419,10 +475,11 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // The minimal verifiable floor: SDF + smin (the meatball field, already in d/
   // alpha above) + fwidth-AA (the crisp alpha above) + warm-cream fill. NO surface
   // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
-  // deliberately FLAT. It returns BEFORE any of the STAGE-2 dressing is reached (the
-  // lit block's fwidth(N) derivative is never computed here), so the WGSL primary's
-  // uniformity analysis has no non-uniform-flow derivative to reject: the STAGE-1
-  // path arms on Metal where the STAGE-2 lit path falls to the WebGL2 net. The
+  // deliberately FLAT. It returns BEFORE any of the STAGE-2 dressing is reached. The
+  // STAGE-1 path simply never READS the hoisted Nh/nVar or the lit/shadow blocks; the
+  // normal-derivative is now in UNIFORM control flow above (BC.W-GOOBLOB-MEATBALL — the
+  // structural armer), so BOTH the STAGE-1 floor AND the STAGE-2 lit path arm on Metal
+  // (the BB residual that kept STAGE 2 falling to the WebGL2 net is CLOSED). The
   // teaching contrast: this is the "it renders, it meatballs, it works on Safari"
   // floor STAGE 2 layers the lit/shadow onto via the SAME uniforms.
   if (uStage > 0.5) {
@@ -435,6 +492,9 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     return vec4<f32>(rgb1 * alpha, alpha);
   }
 
+  // The named surface normal the lit/iridescence/SSS blocks read (byte-identical inputs to
+  // the hoisted Nh above — the Toksvig nVar = length(fwidth(Nh)) IS this N's screen-space
+  // variance). It sits AFTER the uStage early-return so the STAGE-1 floor reaches no lit work.
   let N = surfaceNormalFromGrad(fieldGrad, d, bodyR);
   let V = vec3<f32>(0.0, 0.0, 1.0);
   let thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
@@ -460,6 +520,34 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     oklch.z = oklch.z + sss * 0.1 * (1.0 - thickness);
   }
 
+  // ── BC.W-GOOBLOB-MEATBALL — the soft contact shadow (T2). A procedural soft shadow that
+  //    FOLLOWS the irregular silhouette: march from this fragment's uv toward the in-plane
+  //    projection of uLightDir; where the metaball field occludes the light (the body
+  //    shadows itself opposite the light, a satellite shadows the body across the neck), the
+  //    march returns < 1 and DARKENS the OKLCh L — a soft grounded contact band UNDER the
+  //    dome, congruent with (but PROCEDURAL, silhouette-following, unlike) the CSS gel-dome
+  //    drop-shadow. Concentrated on the AWAY-facing lower rim (an away-facing weight × a
+  //    thin-rim Gaussian band) so the deep-lit interior + the light-facing edge stay bright
+  //    and the grounded shadow reads at the lower silhouette edge — the warm-cream body mean
+  //    holds. Gated uShadow > 0.5; variant=blob (STAGE 1) ships shadowless. ──
+  if (uShadow > 0.5) {
+    let L2 = normalize(uLightDir.xy + vec2<f32>(1e-6));
+    // w increases with the inverse light-source size → uShadowSoftness (a harder penumbra at a
+    // higher value). Start the march just off the surface so a fragment never self-shadows
+    // at t=0; cap the reach at the body span.
+    let sh = softShadow2D(uv, L2, max(aa, 0.004), bodyR * 1.5, max(uShadowSoftness, 4.0));
+    // The contact band sits on the LOWER rim (the side AWAY from the light) — gated by
+    // dot(fieldGrad, L2) < 0 (the rim facing away from L2) AND the thin-rim weight
+    // (a Gaussian band peaking at thickness ≈ 0.18 so the deep-lit interior + the
+    // light-facing edge stay BRIGHT — the warm-cream body mean holds). The 0.20 cap keeps
+    // it a soft GROUNDING whisper, never a gouge (the warm-cream identity + the
+    // proof:blob-warm-default floor hold).
+    let away = clamp(-dot(normalize(fieldGrad + vec2<f32>(1e-6)), L2), 0.0, 1.0);
+    let band = exp(-pow((thickness - 0.18) / 0.16, 2.0));
+    let shadowDarken = (1.0 - sh) * away * band * 0.20;
+    oklch.x = max(oklch.x - shadowDarken, 0.0);
+  }
+
   oklch = gamutClampOklch(oklch);
 
   var lin = oklabToLinearSrgb(oklchToOklab(oklch));
@@ -471,15 +559,11 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
     let warmCream = oklabToLinearSrgb(oklchToOklab(vec3<f32>(0.97, 0.03, radians(85.0))));
 
-    // ── fwidth SITE #2 (metaball.frag.ts line 364) — Toksvig normal-variance
-    //    specular clamp. The WGSL fragment-stage fwidth() of the surface normal. ──
-    // KNOWN RESIDUAL (BC.W-GOOBLOB-MEATBALL owns the fix): WGSL's uniformity analysis
-    // rejects this fwidth(N) (N derives from uv mutated inside the pointer/satellite
-    // non-uniform branches above), so the WGSL primary does not arm on Metal and GooBlob
-    // falls to the WebGL2 net (which DOES paint — the substrate-everywhere paint floor is
-    // met). The structural fix (a uniform-flow derivative or a Toksvig re-derivation) is a
-    // metaball-math decision the GooBlob per-viz wave owns, not a compile rename.
-    let nVar = length(fwidth(N));
+    // ── fwidth SITE #2 — Toksvig normal-variance specular clamp. nVar is the HOISTED
+    //    length(fwidth(N)) (BC.W-GOOBLOB-MEATBALL — computed once at the top of fs_main
+    //    in uniform control flow, so the WGSL primary ARMS on Metal). The math is
+    //    byte-identical to the GLSL fallback (length(fwidth(N))); only its evaluation
+    //    point moved out of this non-uniform if (uLit > 0.5) branch. ──
     let shininess = uSpecShininess / (1.0 + 24.0 * nVar);
     let energyNorm = (shininess + 2.0) / 8.0;
     let spec = pow(max(dot(N, H), 0.0), shininess) * uSpecStrength * energyNorm;

@@ -373,6 +373,21 @@ export const CATEGORIES: Category[] = [
                     hero: true,
                 },
             ),
+            // BC.W-VIZ-HYBRID — the NEW goo+dot-matrix HYBRID viz. The merging metaball SDF
+            // FIELD (the byte-untouched goo-blob sceneDistG) rendered as a DOT MATRIX, joined
+            // by the dot-grid OUTPUT stage. It self-stages ONE live WebGPU context (the field
+            // IS the surface), so the route declares the FREE static `grid` wash behind the
+            // card and mounts exactly ONE live context — the one-GL-per-route budget held.
+            s(
+                "substrates",
+                "goo-dot",
+                "Goo Dot-Matrix",
+                "A WebGPU-first goo+dot-matrix HYBRID — the merging metaball SDF FIELD (the byte-untouched goo-blob sceneDistG) rendered as a DOT MATRIX, dense+big+bright inside the merged blob and sparse+small+dim at the rim (v = thickness(sceneDistG(cellCenter)) drives the dot size + brightness; tixy.land applied to an SDF). As a satellite meatballs into the body the band of dots between them thickens into a connected bridge then snaps back — the gooey form drawn entirely in dots. Four registers, ONE field: dot-field (the smooth field-driven dot, the default), dot-dither (the Codrops Bayer8 halftone), dot-lattice / dot-sphere (the opt-in instanced flow/depth look). It re-uses two SOTA primitives the codebase owns — the goo-blob FIELD + the dot-matrix RENDER — joined by ONE new idea. WebGPU-first; a WebGL2 dot-stamp fallback runs the SAME field where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the dot-cloud leans toward it (the field lean), the near-cursor dots brighten + swell, a flick fires a one-shot bloom (the accel burst). The warm-cream identity is the library default; the near-dark dotted-tone register is a non-default demo preset. Shipped /goo-dot-matrix.",
+                {
+                    background: "grid",
+                    hero: true,
+                },
+            ),
         ],
     },
     {

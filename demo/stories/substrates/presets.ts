@@ -162,3 +162,43 @@ export const DOT_MATRIX_PRESET_REFERENCE: DotMatrixConfig = {
     spheres: 2, // the reference's two-globe composition
     breathing: 0.02, // the sub-perceptual radius pulse (the calmest non-dead register)
 };
+
+// ── BC.W-VIZ-HYBRID — the goo-dot-matrix presets ────────────────────────────────────────
+// PRESETS-IN-CONSUMERS again. The library default (`DEFAULT_GOO_DOT_CONFIG`) is the warm-cream
+// identity — the metaball field stamped as warm-cream dots over a transparent ground (the
+// glass card shows through). The mono-warm-white-on-near-black register (the dotted-tone
+// "the goo blob drawn as a dot matrix") lives HERE in the DEMO tree, NEVER a library token.
+// NO teal/navy literal — `proof:viz-hybrid` clause 5 reds a teal/navy stop in the LIBRARY
+// constants.ts; this demo file is the sanctioned home for the named themes.
+
+import type { GooDotConfig } from "../../../src/components/custom/goo-dot-matrix";
+import { DEFAULT_GOO_DOT_CONFIG } from "../../../src/components/custom/goo-dot-matrix";
+
+/** The warm-cream library-identity preset (the calm default lead, the field-driven dot). */
+export const GOO_DOT_PRESET_WARM: GooDotConfig = {
+    ...DEFAULT_GOO_DOT_CONFIG,
+    interactive: true,
+};
+
+// The mono-warm-white dot core (warm-white, hue ~70 cream, NOT teal) for the near-dark register.
+const GOO_DOT_MONO_WARM_PALETTE: OklchStop[] = [
+    { L: 0.95, C: 0.012, h: 70 }, // warm-white (the dense+bright dot core)
+    { L: 0.84, C: 0.02, h: 64 }, // a whisper-warmer rim dot
+];
+
+// The near-black ground (a warm near-black, NOT navy — hue ~50, low C).
+const GOO_DOT_NEAR_BLACK_GROUND: OklchStop = { L: 0.1, C: 0.008, h: 50 };
+
+/**
+ * The near-dark dotted-tone register — the SUBTLE mono-warm-white dot-matrix on near-black,
+ * the merging metaball drawn entirely in dots. Re-tinted off the warm-cream default; only the
+ * COLOR + the ground + the register differ from the library identity. The dot-dither register
+ * reads as a halftone (denser dots at the core, the classic dotted-tone read).
+ */
+export const GOO_DOT_PRESET_REFERENCE: GooDotConfig = {
+    ...DEFAULT_GOO_DOT_CONFIG,
+    variant: "dot-dither", // the Bayer8 halftone register
+    palette: GOO_DOT_MONO_WARM_PALETTE,
+    background: GOO_DOT_NEAR_BLACK_GROUND,
+    interactive: true,
+};

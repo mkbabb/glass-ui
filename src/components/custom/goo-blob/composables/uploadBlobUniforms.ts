@@ -309,7 +309,11 @@ export function uploadBlobUniforms(
     // var()-token via resolveTokenColor — AX.W16) and resolves through
     // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
     // never the DOM. Gated behind `uLit` (default lit).
-    gl.uniform1f(U.uLit, cSurf.lit ? 1.0 : 0.0);
+    // BC.W-GOOBLOB-MEATBALL — variant=meatball flips uLit/uShadow on (T1); variant=blob
+    // keeps them OFF (the STAGE-1 floor — the uStage gate strips the lit/shadow work
+    // regardless; this is the explicit per-variant flip, the GLSL twin of the WGSL bridge).
+    const isMeatball = config.variant !== "blob";
+    gl.uniform1f(U.uLit, isMeatball && cSurf.lit ? 1.0 : 0.0);
     const rim = resolveColor(rimColor);
     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
     gl.uniform3f(
@@ -322,6 +326,9 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uSpecShininess, cSurf.specShininess);
     gl.uniform1f(U.uRimPower, cSurf.rimPower);
     gl.uniform1f(U.uRimStrength, cSurf.rimStrength);
+    // BC.W-GOOBLOB-MEATBALL — the procedural soft-shadow march (T2, the GLSL twin).
+    gl.uniform1f(U.uShadow, isMeatball && cSurf.shadow ? 1.0 : 0.0);
+    gl.uniform1f(U.uShadowSoftness, cSurf.shadowSoftness);
 
     // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,
     // radians in-shader. Mood routes the sheen intensity (excited =
