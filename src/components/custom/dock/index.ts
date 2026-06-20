@@ -94,3 +94,14 @@ export {
     type UseDockCtaReceiveReturn,
     type DockCtaReceivePreset,
 } from "../../../composables/motion/useDockCtaReceive";
+
+// BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar seam. `useDockSearch`
+// composes `useDockState` + the SHIPPED /search fuzzy pipeline (`useFuzzySearch`, the
+// VSCode subsequence scorer — NO re-fork) + the dock's OWN `--dock-morph-t` metaball
+// morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
+// optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
+// A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. The words
+// `SearchBar` + its 7 search composables retire onto this register on the `^4.x` consume
+// (THEIR edit — the foreign-tree fence; the network source plugs via `onSearch`).
+export { useDockSearch } from "./composables";
+export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";

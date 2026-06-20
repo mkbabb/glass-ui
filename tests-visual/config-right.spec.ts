@@ -42,7 +42,9 @@ const VISUAL_DIR = fileURLToPath(
 const STUDIOS = [
     { route: "/substrates/aurora", id: "aurora" },
     { route: "/substrates/blob", id: "blob" },
-    { route: "/substrates/fourier-studio", id: "fourier-studio" },
+    // BC.W-VIZ-CONFIGURATOR-SUITE — the ONE merged fourier view (proof:fourier-field
+    // U1 retired the duplicate fourier-studio); the π roster names the live route.
+    { route: "/substrates/fourier-field", id: "fourier-field" },
     { route: "/compositions/configurator", id: "configurator" },
 ] as const;
 

@@ -78,6 +78,20 @@
        the `max()` resolves to the real `to` (inert above the floor); it fires ONLY on the
        degenerate race. Density-scaled, riding `--dock-scale` transitively. */
     --dock-morph-min: max(2.75rem, var(--dock-control-floor, 0px));
+
+    /* ── BC.W-DOCK-SEARCH — the collapse-on-scroll trigger-points ─────────────────
+       The dock-search optional shrink-on-scroll (composing useScrollChrome — the
+       native dual-path reader, persistent-default) reads these two tunable px
+       trigger-points: the shrink BEGINS at `--dock-search-shrink-start` of scroll and
+       reaches the compact form at `--dock-search-shrink-end` (the words
+       `scrollInflectionPoint` generalized into dock-scoped tokens). They ride
+       `--dock-scale` transitively (a coarse-pointer dock's trigger-points scale with
+       its geometry), and a consumer retunes the inflection in ONE write. NOTE the
+       PERSISTENT default — these are inert unless the consumer opts in via
+       `collapseOnScroll`; the morph itself NEVER fires on a passive scroll (the
+       iOS-27 lesson — the scroll path is the distinct compositor shrink). */
+    --dock-search-shrink-start: calc(0rem * var(--dock-scale));
+    --dock-search-shrink-end: calc(7.25rem * var(--dock-scale));
 }
 
 @layer components {

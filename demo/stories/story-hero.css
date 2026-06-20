@@ -31,6 +31,18 @@
        field RIM the card so "a glass card floating over a substrate" literally
        floats. Off a live substrate the gutter is 0 (the default-path canary). */
     --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
+
+    /* BC.W-STORYBOOK-META — the page-level whitespace RHYTHM, tokenized (axis-3).
+       The HEAD `StoryPage.vue` hardcoded `gap-10`/`max-w-6xl`/`gap-2`; promoting
+       them to named rhythm tokens is the "every page breathes consistently" bar
+       (a meta-gate measures the inter-section gap is ≥ `--story-page-section-gap`
+       on every route — no cramped page). The herostudios generous-whitespace
+       north-star (a steady vertical rhythm, the article width bounded) is the bar
+       these magnitudes meet. Clean break (no `gap-10` literal survives on the
+       chassis), single retune point. */
+    --story-page-max-inline: 72rem; /* the bounded article width (was max-w-6xl). */
+    --story-page-section-gap: 2.5rem; /* the section cadence (was gap-10 = 2.5rem). */
+    --story-page-header-gap: 0.5rem; /* the chrome-header micro-rhythm (was gap-2). */
 }
 
 /* BA.W-STAGE scope 4 — the DARK static-PAPER wash recalibration (BG-3 / DARK-4). The
@@ -166,7 +178,10 @@
 .story-hero-cluster {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem; /* the tight cluster micro-rhythm — eyebrow → title → blurb */
+    /* BC.W-STORYBOOK-META — the chrome-header micro-rhythm reads the tokenized
+       `--story-page-header-gap` (was the hardcoded 0.5rem / gap-2) so the cluster
+       cadence retunes from the ONE page-rhythm family (axis-3). */
+    gap: var(--story-page-header-gap); /* the tight cluster micro-rhythm — eyebrow → title → blurb */
     margin-block-end: clamp(1.5rem, 3vw, 2.5rem); /* the ONE major gap to the body */
 }
 /* Inside the cluster the title carries no body-margin — the cluster gap is the

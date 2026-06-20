@@ -167,6 +167,17 @@ export interface DockProps {
         | (() => HTMLCanvasElement | null)
         | string
         | null;
+    /**
+     * BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar MODE (additive,
+     * default `false`). When true the dock stamps `[data-search]` (the CSS hook the
+     * `dock/search.css` active-field tint seam + the `.glass-menu-row` result rows
+     * target) and renders the `#search` slot INSIDE the existing morph aperture — the
+     * consumer composes `useDockSearch` (the gesture/shrink/dropdown seam) and slots
+     * its search field + fuzzy dropdown there. The pill→field morph is the dock's OWN
+     * `--dock-morph-t` glide (box-inviolate — no second engine). A non-search dock is
+     * byte-identical to HEAD (the slot + the data-attr are present only when authored).
+     */
+    search?: boolean;
 }
 
 /** The resolved shell-prop computeds the GlassDock SFC binds. */

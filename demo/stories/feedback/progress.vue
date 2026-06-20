@@ -8,6 +8,12 @@ import {
 } from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
 import { BorderProgress } from "../../../src/components/custom/border-progress";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Gauge } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress is
+// a REFERENCE surface (its phase-bus --viz-* hues ARE the teaching content); the
+// page identity is the eyebrow/rail/chip event, distinct from the bus colors.
+const FEEDBACK_STOP = 8;
 
 
 // Sectioned variant demo — a 4-phase pattern (pings / jitter / download /
@@ -51,6 +57,31 @@ onUnmounted(stopAnimated);
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+             eyebrow + the inline accent rail + the focal IconChip, all on
+             --section-color-8). The page-level color identity, DISTINCT from the
+             StorySection labels + the phase-bus --viz-* content below — it carries
+             NO heading rung (not an idiom-B second header; PH3). -->
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Gauge" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Progress
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Progress surfaces — the phase bus carries its own --viz-* hues;
+                    the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <StorySection label="determinate">
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">

@@ -540,6 +540,58 @@ export type {
     UsePointerVelocityFieldOptions,
 } from "../composables/motion/usePointerVelocityField";
 
+// ── useScrollTrigger — the ONE scroll reader (BC.W-SCROLL-TRIGGER) ─────────────
+// `TriggerPoint` — a declared trigger-point on the scroll source ({ at: px | {fraction}
+// | {element}, direction?, id? }); `UseScrollTriggerOptions` — the reader options
+// ({ triggers, flipDeltaPx, trackProgress, respectReducedMotion, onCross, onEnter,
+// onLeave }); `UseScrollTriggerReturn` — the reader's return shape ({ progress,
+// direction, velocity, recalculate }). `useScrollTrigger` is engine-FREE + vueuse-FREE
+// (vue-only), so it ships on `@mkbabb/glass-ui/motion-core` — the dock-search +
+// scroll-chrome consumers reach it there. The continuous `progress` ramp is
+// native-timeline-gated (dual-path single-writer); the discrete crossing events run
+// the JS rAF tick on every engine (events can't ride a CSS timeline) and SURVIVE PRM.
+export type {
+    TriggerPoint,
+    UseScrollTriggerOptions,
+    UseScrollTriggerReturn,
+} from "../composables/motion/useScrollTrigger";
+
+// ── useScrollChrome — the floating-chrome COLLAPSE-STATE machine (BC.W-SCROLL-CHROME) ──
+// `UseScrollChromeOptions` — the collapse machine options ({ collapseOnScroll (DEFAULT
+// FALSE — persistent-by-default, the iOS-27 lesson), flipDeltaPx, velocityGate,
+// snapMidpoint, collapseRangePx, chromeRef, respectReducedMotion, scrollStopMs });
+// `UseScrollChromeReturn` — the machine's return ({ collapseT (0..1), collapsed,
+// direction, recalculate }). `useScrollChrome` is a THIN collapse-state machine OVER
+// `useScrollTrigger` (the ONE reader — no second listener); it ramps `collapseT` on
+// direction + a px range, snaps to a discrete endpoint on scroll-stop, and writes the
+// `--chrome-collapse-t` custom the `.scroll-chrome` recipe reads for the COMPOSITOR
+// shrink/quiet (NEVER a per-frame reflow). Engine-FREE + vueuse-FREE (vue-only), so it
+// ships on `@mkbabb/glass-ui/motion-core` — the dock-search + page-header consumers reach
+// it there.
+export type {
+    UseScrollChromeOptions,
+    UseScrollChromeReturn,
+} from "../composables/motion/useScrollChrome";
+
+// ── useDockSearch — the DOCK-as-native-dynamic-search-bar seam (BC.W-DOCK-SEARCH) ──
+// `UseDockSearchOptions` — the seam options ({ dockState (the composed state machine),
+// items | onSearch (sync XOR the pluggable async source), debounceMs, maxResults,
+// collapseOnScroll (DEFAULT FALSE — persistent-default, the iOS-27 lesson), scrollContainer,
+// chromeRef, onResultSelect, ensureTargetWindow, scrollTo (the ToC subsume) });
+// `UseDockSearchReturn` — the handle ({ fuzzy (the composed useFuzzySearch state),
+// autocompleteText (the ghost-text top-match completion), scrollChrome, armSearch,
+// disarmSearch, acceptAutocomplete, isSearchArmed }). `useDockSearch` COMPOSES the dock
+// state machine + the SHIPPED /search fuzzy pipeline (the VSCode scorer — NO re-fork) +
+// the dock's OWN `--dock-morph-t` metaball morph (box-inviolate — no second engine, no
+// `dockMorphContext`/`DOCK_SPRING` edit) + the optional `useScrollChrome` shrink + the
+// virtual-window/ToC scroll-to-and-warm. `<GlassDock search>` opts into it; the words
+// `SearchBar` retires onto it on the `^4.x` consume (the foreign-tree fence — the network
+// source plugs via `onSearch`). Reached from `@mkbabb/glass-ui/dock`.
+export type {
+    UseDockSearchOptions,
+    UseDockSearchReturn,
+} from "../components/custom/dock/composables/useDockSearch";
+
 // ── DotFlowField — the WebGPU-first curl-noise flow viz (BB.W-FLOWFIELD) ──
 // Config + handle types for a consumer wrapping <DotFlowField> (the /dot-flow-field subpath).
 export type {

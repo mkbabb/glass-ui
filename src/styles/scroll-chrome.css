@@ -1,0 +1,123 @@
+/*
+ * scroll-chrome.css — the scroll-driven floating-CHROME collapse recipe
+ * (BC.W-SCROLL-CHROME).
+ *
+ * Cascade rung AFTER scroll-choreography.css. Where scroll-choreography.css is the
+ * ENTRANCE register (the page-build / section-cascade / scroll-pinned reveals), this is
+ * the COLLAPSE-STATE recipe a floating chrome bar (a dock, a header) composes: scroll
+ * down and it SHRINKS smoothly into a compact form; scroll up and it EXPANDS back; on
+ * scroll-stop it SNAPS to the nearest state (the `useScrollChrome` JS machine owns the
+ * snap + the ramp value — this recipe is the compositor paint of `--chrome-collapse-t`).
+ *
+ *   .scroll-chrome — the chrome surface (a dock/header) reads `--chrome-collapse-t`
+ *                    (0 expanded → 1 collapsed; the @property reg in property-regs.css)
+ *                    for the COMPOSITOR shrink/quiet/shadow-lift ramp.
+ *
+ * COMPOSITOR-ONLY (the proof:no-layout-animation floor — motion-canon P5). The shrink is
+ * `transform: scale()/translateY()` — NEVER an animated `height`/`padding`/`width` (the
+ * box never reflows per scroll frame; the CDP Layout track stays flat). The quiet is
+ * `opacity` BOUNDED above a never-invisible floor (the NN/g pale-fade-into-content trap
+ * is the FORBIDDEN direction — the bar reads at EVERY collapse fraction). The
+ * SEPARATION/shadow LIFTS as content scrolls under (Apple "as text scrolls underneath,
+ * shadows become more prominent") — `box-shadow` is a paint prop, compositor-safe.
+ *
+ * THE BLUR STAYS CRISP (the W-DOCK-SHRINK-BLUR fence). The chrome's resting
+ * `backdrop-filter` blur is NOT animated by `--chrome-collapse-t` — a shrunken bar is
+ * crisp glass, not a blurry mess. The recipe touches ONLY transform/opacity/box-shadow;
+ * the surface's own `glass-*` tier owns the (untouched) backdrop blur.
+ *
+ * PERSISTENT BY DEFAULT (the iOS-27 lesson). `--chrome-collapse-t` rests at 0 (the
+ * @property initial-value), so a bare `.scroll-chrome` is byte-identical to the expanded
+ * chrome — it does NOT collapse until the `useScrollChrome` machine (opted in with
+ * `collapseOnScroll: true`) ramps the custom.
+ *
+ * PRM (the discrete-state-survives model, the useFadingScroll precedent). The transform/
+ * opacity RAMP sits inside the `@media (prefers-reduced-motion: no-preference)` outer
+ * gate (the scroll-choreography.css discipline) — under reduce the continuous ramp drops;
+ * the `useScrollChrome` machine snaps `--chrome-collapse-t` to a discrete 0/1 endpoint, so
+ * the DISCRETE collapsed/expanded state stays correct, instant, never half. The shadow
+ * lift sits OUTSIDE the gate (a paint cue, not a vestibular motion) so the lifted
+ * separation reads even under reduce.
+ */
+
+/* The tunable depth knobs — a consumer retunes the shrink/fade depth per chrome. */
+:root {
+    /* The shrink depth: at fully collapsed the chrome scales to (1 − this). 0.12 → a
+       compact 88% bar (a real shrink that still reads as the same bar). */
+    --chrome-shrink-depth: 0.12;
+    /* The rise (px) the chrome translates toward its anchor edge as it collapses. */
+    --chrome-rise-px: 6px;
+    /* The fade depth — BOUNDED LOW: at fully collapsed opacity floors at (1 − this).
+       0.28 → a 0.72 floor (the bar quiets but is NEVER invisible — the NN/g pale-fade
+       trap forbidden). A consumer that wants no quiet sets it 0. */
+    --chrome-fade-depth: 0.28;
+    /* The shadow-lift strength — the separation shadow grows from rest → this as content
+       scrolls under (Apple shadow-on-scroll). A paint prop, compositor-safe. */
+    --chrome-shadow-lift: 18%;
+}
+
+/* The shrink/quiet RAMP — the SPATIAL (transform) + the EFFECTS (opacity) channels. It
+   rides `--chrome-collapse-t` directly (no CSS transition — the JS scalar already glides
+   on the reader's tick; on a native-timeline engine the same custom rides
+   `animation-timeline: scroll(self)`, the native-ramp path). Inside the PRM no-preference
+   gate: under reduce the ramp drops and the chrome reads its discrete snapped endpoint. */
+@media (prefers-reduced-motion: no-preference) {
+    .scroll-chrome {
+        /* SPATIAL leg — scale toward the compact size + a small rise toward the anchor
+           edge. transform-origin at the top (a header anchors its top; a consumer dock
+           re-points the origin to its natural seat). Compositor-only — never height/pad. */
+        transform: scale(calc(1 - var(--chrome-collapse-t) * var(--chrome-shrink-depth)))
+            translateY(calc(var(--chrome-collapse-t) * var(--chrome-rise-px) * -1));
+        transform-origin: top center;
+        /* EFFECTS leg — the quiet, BOUNDED above the never-invisible floor (the bar reads
+           at every fraction; the `* fade-depth` caps the drop, opacity never reaches 0). */
+        opacity: calc(1 - var(--chrome-collapse-t) * var(--chrome-fade-depth));
+        /* will-change the compositor channels (NEVER a layout property). */
+        will-change: transform, opacity;
+    }
+}
+
+/* The shadow LIFT — OUTSIDE the PRM gate (a paint cue, not a vestibular motion): the
+   separation shadow strengthens as content scrolls under the chrome. `box-shadow` is a
+   paint prop (compositor-safe, in the proof:no-layout-animation paint set, NOT the reflow
+   set). The lift composes the house `--shadow-color: var(--foreground)` so it re-tints
+   light↔dark for free; the strength grows from a whisper at rest → `--chrome-shadow-lift`
+   at fully collapsed. */
+.scroll-chrome {
+    box-shadow: 0 calc(2px + var(--chrome-collapse-t) * 6px)
+        calc(8px + var(--chrome-collapse-t) * 12px)
+        color-mix(
+            in srgb,
+            var(--shadow-color)
+                calc(6% + var(--chrome-collapse-t) * var(--chrome-shadow-lift)),
+            transparent
+        );
+}
+
+/* The native-ramp path — on a `scroll()`-supporting engine the consumer can drive
+   `--chrome-collapse-t` off `animation-timeline: scroll(self)` directly (the
+   `useScrollProgress`/`--scroll-t` native precedent: the JS writer is inert, the CSS owns
+   the compositor ramp). The keyframe is the linear 0→1 map over the collapse range; the
+   consumer binds it on the chrome with its own `animation-range` (the collapse-px span).
+   The SNAP-to-state stays the JS leg (a snap is a discrete commit, not a continuous ramp —
+   it rides the `useScrollChrome` scroll-stop tick on every engine). PRM-gated + supports-
+   gated (a non-supporting engine reads the JS `collapseT` write, never this keyframe). */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+        @keyframes gl-chrome-collapse {
+            from {
+                --chrome-collapse-t: 0;
+            }
+            to {
+                --chrome-collapse-t: 1;
+            }
+        }
+        /* OPT-IN: a consumer adds `.scroll-chrome--native` to ride the compositor ramp
+           (it must set `animation-range` for its own collapse-px span; the
+           `useScrollChrome` machine's JS write is the cross-engine floor + the snap). */
+        .scroll-chrome--native {
+            animation: gl-chrome-collapse auto linear both;
+            animation-timeline: scroll(self block);
+        }
+    }
+}

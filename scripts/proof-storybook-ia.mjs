@@ -125,11 +125,14 @@ export const EXPECTED_TREE = [
     // BB.W-SCROLL-MOTION (the SOTA scroll-CHOREOGRAPHY register — .scroll-build
     // page-build / .scroll-cascade section-cascade / .scroll-pin scroll-pinned +
     // the native .smooth-scroll opt-in on the native scroll()/view()/timeline-scope
-    // substrate; NO Lenis/GSAP dep).
+    // substrate; NO Lenis/GSAP dep). `scroll-system` joined at BC.W-SCROLL-TRIGGER
+    // (the ONE scroll reader — useScrollTrigger: continuous progress + discrete
+    // onCross/onEnter/onLeave trigger-points off the SAME rAF-coalesced read, the
+    // §3.2 trigger-point gap closed; BC.W-SCROLL-CHROME consumes it).
     ["motion", [
         "springs", "countup", "reveal", "typewriter", "animated-digit",
-        "curve-gallery", "handmark", "scroll-vt", "scroll-choreography",
-        "split-chars",
+        "curve-gallery", "handmark", "scroll-vt", "scroll-system",
+        "scroll-choreography", "split-chars",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +

@@ -379,3 +379,44 @@
     inherits: true;
     initial-value: oklch(0.751 0.147 84.2);
 }
+
+/* BC.W-SCROLL-TRIGGER — the native scroll-ramp custom. The continuous 0..1 scroll
+   progress the `useScrollTrigger` reader exposes rides this registered custom on a
+   `supportsScrollTimeline()` engine: a `.scroll-progress`-style recipe writes it via
+   `animation-timeline: scroll(self)` so a consumer's CSS ramp (the BC.W-SCROLL-CHROME
+   shrink/opacity) reads `--scroll-t` with ZERO JS (the dual-path single-writer — the JS
+   `progress` ref attaches NOTHING on a supporting engine). `inherits: true` (the
+   cascading-scalar idiom — a scroll-driven ancestor exposes the ramp to descendant
+   chrome, the `--ui-scale`/`--glass-level` pattern), distinct from the per-element
+   non-inheriting specular/progress cohort. `initial-value: 0` is the safe resting ramp
+   (the unregistered fallback paints it; on a non-supporting engine the JS reader writes
+   `progress.value` and the consumer reads the ref, not this custom). The typed
+   `<number>` lets the engine interpolate the ramp rather than the textual rep (a bare
+   unregistered var() snaps — the `--border-progress-fill`/`--dock-morph-t` precedent). */
+@property --scroll-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+/* BC.W-SCROLL-CHROME — the floating-chrome COLLAPSE fraction. `--chrome-collapse-t`
+   is the 0..1 collapse scalar `useScrollChrome` ramps off the scroll reader's
+   direction + range (0 = fully expanded, 1 = fully collapsed). The `.scroll-chrome`
+   recipe (scroll-chrome.css) reads it for the COMPOSITOR shrink/quiet ramp:
+   `transform: scale()/translateY()` (the SPATIAL leg), `opacity` (bounded above a
+   never-invisible floor — the NN/g pale-fade trap forbidden), and the shadow LIFT as
+   content scrolls under (Apple "as text scrolls underneath, shadows become more
+   prominent"). It NEVER drives the resting `backdrop-filter` blur (the
+   W-DOCK-SHRINK-BLUR fence — the shrunken bar is crisp glass, not a blurry mess).
+   Registered typed so a bare `var()` INTERPOLATES the ramp rather than snapping (the
+   `--scroll-t`/`--dock-morph-t` precedent); `inherits: true` (the cascading-scalar
+   idiom — a scroll-driven ancestor exposes the collapse to descendant chrome, the
+   `--scroll-t`/`--glass-level` pattern, distinct from the per-element non-inheriting
+   specular cohort). `initial-value: 0` is the PERSISTENT rest (the iOS-27 default — a
+   bare chrome does NOT collapse; the unregistered fallback paints it too, so the
+   recipe is byte-identical to the expanded chrome when unwired). */
+@property --chrome-collapse-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}

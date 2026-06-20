@@ -228,12 +228,11 @@ const LEDGER = [
     // the page identity is still the eyebrow/rail/chip on --section-color-8.
     { surface: "demo/stories/feedback/progress.vue", event: "--section-color-8", kind: "reference" },
     // ── BB.W-SUFFUSE3 (b) the studio masthead surfaces — the --motion-accent
-    //    violet title is the ONE color text-event. fourier-studio carries the
-    //    --viz-* basis palette (the component-feature teaching content), so it is
-    //    reference-class; aurora/blob carry only the title-violet (color kind).
+    //    violet title is the ONE color text-event. aurora/blob carry the
+    //    title-violet (color kind). (BC.W-VIZ-FOURIER — substrates/fourier-studio
+    //    was RETIRED onto the shared VizStudio chassis; its ledger row is dropped.)
     { surface: "demo/stories/substrates/aurora.vue", event: "--motion-accent", kind: "color" },
     { surface: "demo/stories/substrates/blob.vue", event: "--motion-accent", kind: "color" },
-    { surface: "demo/stories/substrates/fourier-studio.vue", event: "--motion-accent", kind: "reference" },
     // ── The legitimately-monochrome surfaces (D3-9) — ZERO events ──────────────
     // The icon GRID (the icons.vue grid block — NOT the Pops chip block, which is
     // the chip reference and a sanctioned event), the Section type-ladder
@@ -250,18 +249,39 @@ const LEDGER = [
 const LEDGER_BY_FILE = new Map(LEDGER.map((r) => [r.surface, r]));
 
 // ── (a) StoryHero hero-title display register ────────────────────────────────
-// The chassis renders a DISPLAY-register hero <h1> (text-display-3 / -4) when
-// variant="hero", off the prior flat text-heading-for-all-pages.
+// The chassis renders a DISPLAY-register hero <h1> when variant="hero", off the
+// prior flat text-heading-for-all-pages.
+//
+// BC.W-PAGE-CHASSIS / BC.W-HERO-AUDACIOUS — the hardcoded `text-display-3` rung was
+// RETIRED in favour of the per-route depth-keyed `heroScale` rung: the hero <h1>
+// renders `:class="cn('story-hero-title …', heroClass)"` where
+// `heroClass = computed(() => 'text-display-${heroScale}')` and `heroScale`
+// resolves the audacious ladder (`audacious|mega|hero|5|4` — EVERY rung ≥
+// text-display-4, the DISPLAY register; the prior `-3` floor is gone, the masthead
+// is LARGER, not smaller). So the literal `class="…text-display-3…"` no longer
+// appears on the <h1>; the display register is present via the computed binding.
+// Accept EITHER the legacy literal `text-display-[34]` OR the computed
+// `heroClass`/`text-display-${heroScale}` form gated to the audacious ladder.
 const storyHero = strip(read("demo/stories/StoryHero.vue"));
+// The hero <h1> binds the display rung via :class with the heroClass computed
+// (BC.W-PAGE-CHASSIS) — the <h1> carries `story-hero-title` + `heroClass`.
+const heroH1BindsComputed =
+    /<h1\b[\s\S]{0,160}\bstory-hero-title\b[\s\S]{0,120}\bheroClass\b/.test(storyHero) &&
+    /heroClass\s*=\s*computed\([\s\S]{0,80}?text-display-\$\{[^}]*heroScale/.test(storyHero) &&
+    // the heroScale ladder is the DISPLAY register (≥ text-display-4 — never below).
+    /heroScale\??:\s*["']audacious["']\s*\|\s*["']mega["']\s*\|\s*["']hero["']\s*\|\s*["']5["']\s*\|\s*["']4["']/.test(
+        storyHero,
+    );
+const heroH1LiteralDisplay = /<h1[^>]*\bclass="[^"]*\btext-display-[34]\b/.test(storyHero);
 const heroTitleIsDisplay =
-    /<h1[^>]*\bclass="[^"]*\btext-display-[34]\b/.test(storyHero) &&
+    (heroH1LiteralDisplay || heroH1BindsComputed) &&
     /showHeroTitle|variant\s*===\s*["']hero["']/.test(storyHero);
 add(
     "a-hero-title-display-register",
     heroTitleIsDisplay,
     heroTitleIsDisplay
-        ? "StoryHero renders the chassis hero <h1> at the DISPLAY register (text-display-3/4) on a hero page — the title rung is no longer text-heading for ALL pages (D2-1)"
-        : "StoryHero does NOT render a display-register hero <h1> (text-display-3/4 on variant=hero)",
+        ? "StoryHero renders the chassis hero <h1> at the DISPLAY register on a hero page — the per-route depth-keyed `heroScale` rung (`text-display-${heroScale}`, ≥ text-display-4, the audacious ladder; BC.W-PAGE-CHASSIS retired the hardcoded text-display-3 floor) — the title rung is no longer text-heading for ALL pages (D2-1)"
+        : "StoryHero does NOT render a display-register hero <h1> (the literal text-display-3/4 OR the heroClass `text-display-${heroScale}` computed gated to the audacious ladder on variant=hero)",
 );
 
 // ── (b) Activate the dead audacious tiers — FLOOR (≥2 each) + CEILING ─────────
@@ -669,7 +689,9 @@ const TITLE_VIOLET_SURFACES = [
     "demo/stories/motion/curve-gallery.vue",
     "demo/stories/substrates/aurora.vue",
     "demo/stories/substrates/blob.vue",
-    "demo/stories/substrates/fourier-studio.vue",
+    // BC.W-VIZ-FOURIER — substrates/fourier-studio.vue was RETIRED (the fourier
+    // studio re-homed onto the shared VizStudio chassis / fourier-field.vue). The
+    // stale enrollment is dropped; the surviving studio mastheads carry the violet.
 ];
 const titleVioletBreaches = [];
 for (const rel of TITLE_VIOLET_SURFACES) {

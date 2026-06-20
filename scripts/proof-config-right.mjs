@@ -164,7 +164,11 @@ add(
 const TWO_COLUMN_STUDIOS = [
     "demo/stories/substrates/aurora.vue",
     "demo/stories/substrates/blob.vue",
-    "demo/stories/substrates/fourier-studio.vue",
+    // BC.W-VIZ-CONFIGURATOR-SUITE — the fourier studio is the ONE merged
+    // `fourier-field.vue` view (proof:fourier-field U1 RETIRED the duplicate
+    // `fourier-studio.vue`); the census roster names the live merged view, not the
+    // retired duplicate.
+    "demo/stories/substrates/fourier-field.vue",
     "demo/stories/compositions/configurator.vue",
 ];
 const SINGLE_COLUMN_EXEMPT = [
@@ -179,8 +183,12 @@ facts.census = { twoColumnStudios: TWO_COLUMN_STUDIOS, singleColumnExempt: SINGL
 const studioVerdicts = TWO_COLUMN_STUDIOS.map((rel) => {
     const src = strip(read(rel));
     // Opens the chassis tag (`<Configurator` followed by whitespace/`>`/newline — NOT
-    // `<ConfiguratorRow`/`<ConfiguratorLayer`).
-    const composesChassis = /<Configurator(?:\s|>|$)/m.test(src);
+    // `<ConfiguratorRow`/`<ConfiguratorLayer`) — OR `<VizStudio>` (BC.W-VIZ-CONFIGURATOR-
+    // SUITE — the shared studio chassis that BUNDLES <Configurator asideSide="right">; a
+    // studio composing VizStudio reads the SAME standardized controls-right layout, the
+    // single-writer chassis discipline). aurora is the first VizStudio exemplar.
+    const composesChassis =
+        /<Configurator(?:\s|>|$)/m.test(src) || /<VizStudio(?:\s|>|\/|$)/m.test(src);
     // The left fork: an asideSide="left" / :aside-side="'left'" / aside-side="left" prop.
     const passesLeft =
         /aside-side\s*=\s*["']left["']/.test(src) ||

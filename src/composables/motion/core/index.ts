@@ -74,3 +74,26 @@ export * from "../usePointerVelocityField";
 // the `/motion-core` surface AND the root barrel (the `vReveal` precedent). The
 // `<SplitChars>` component face composes it (root barrel + /motion-core).
 export * from "../useCharStagger";
+// BC.W-SCROLL-TRIGGER — useScrollTrigger: the ONE scroll reader (continuous 0..1
+// progress off the SAME rAF read + discrete onCross/onEnter/onLeave trigger-point
+// events, direction + per-second velocity + the flip-delta debounce). Composes the
+// shared `createScrollReader` rAF-coalesced core (the no-fourth-listener fence — the
+// ToC `useScrollTracker` re-points onto the same leaf). Dual-path single-writer: the
+// continuous ramp is `supportsScrollTimeline()`-gated (the native `--scroll-t` recipe
+// owns it on a supporting engine), the discrete crossing events run the JS tick on
+// EVERY engine (events can't ride a CSS timeline). Imports `vue` only — engine-FREE +
+// vueuse-FREE, so it ships on the engine-free `/motion-core` surface (the
+// `usePointerVelocityField`/`useScrollProgress` precedent). NOT on the keyframes-
+// bearing `/motion` barrel; the dock-search consumer reaches it here. The CONTINUOUS
+// `useScrollProgress` + the ToC `useScrollTracker` STAY (this wave threads them).
+export * from "../useScrollTrigger";
+// BC.W-SCROLL-CHROME — useScrollChrome: the floating-chrome COLLAPSE-STATE machine
+// (shrink-on-down / expand-on-up / velocity-flick / snap-to-nearest-on-stop), a THIN
+// machine OVER useScrollTrigger (the ONE reader — no second listener). PERSISTENT by
+// default (collapseOnScroll: false — the iOS-27 lesson). It ramps a 0..1 collapseT off
+// the reader's direction + a px range, snaps to a discrete endpoint on scroll-stop, and
+// writes the `--chrome-collapse-t` custom the .scroll-chrome recipe reads for the
+// compositor shrink/quiet. Imports `vue` only — engine-FREE + vueuse-FREE, so it ships on
+// the engine-free /motion-core surface (the useScrollTrigger precedent). The dock-search
+// consumer (BC.W-DOCK-SEARCH) + the demo scroll-system header reach it here.
+export * from "../useScrollChrome";

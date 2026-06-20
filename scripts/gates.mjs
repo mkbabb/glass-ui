@@ -1920,6 +1920,36 @@ export const GATES = [
         note: "BC.W-EXPANDABLE-PART — the ExpandableContainer ::part()/named-slot chrome-hook seam (the Atlas AR-7 expand-fullscreen seam; no consumer fork). A consumer re-skins OR fully REPLACES the fullscreen-overlay chrome (the corner expand/collapse glyph, the overlay frame) WITHOUT forking the SFC's body-teleport + body-overflow-lock + Escape machinery. The Vue-idiomatic ::part()/slots equivalent: (1) STABLE `data-part` attributes (styled via a PLAIN descendant selector, NOT a :deep() reach), (2) NAMED slots (#expand-trigger/#fullscreen-chrome) for full replacement, each with a today-default fallback (the unfilled-slot no-op floor is byte-identical), exposing ONLY the expand/collapse callbacks (thin wrappers over the SAME v-model:open — no parallel state path). Device-free SOURCE + a self-test bite. Bite: a removed data-part / a :deep()-only reskin path / a parallel state fork → RED.",
     },
     {
+        id: "proof:scroll-trigger",
+        cmd: "proof:scroll-trigger",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-SCROLL-TRIGGER — the scroll-state reader (useScrollTrigger + createScrollReader on /motion-core, engine-free vue-only). T2 factored ONCE (useScrollTracker re-points onto it, no fourth scroll+rAF listener); T3 dual-path single-writer (native-timeline-gated, @property --scroll-t registered); T4 progress/direction(8px flip-delta anti-thrash)/velocity(per-second)/onCross. Bite: a second scroll listener / a PRM-gated crossing / an un-debounced direction flip → RED.",
+    },
+    {
+        id: "proof:scroll-chrome",
+        cmd: "proof:scroll-chrome",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-SCROLL-CHROME — the scroll-driven chrome collapse (useScrollChrome composes useScrollTrigger, owns NO second listener). C2 collapseOnScroll default-false (persistent by default); C3 .scroll-chrome compositor-only (transform:scale, 0 reflow); C4 flip-delta/snap-midpoint/velocity-gate/scroll-stop-snap; C5 crisp-blur fence (no backdrop-filter reads --chrome-collapse-t) + never-invisible opacity; C6 PRM discrete-snap. Bite: an always-collapse default / a layout-animating collapse / an opacity-to-zero / a blur-on-collapse → RED.",
+    },
+    {
+        id: "proof:dock-search",
+        cmd: "proof:dock-search",
+        tags: ["local", "ci", "release"],
+        note: "BC.W-DOCK-SEARCH — the dock becomes a fuzzy SEARCH bar: useDockSearch composes the SHIPPED /search VSCode-scorer pipeline (useFuzzySearch — NO re-fork) + GlassDock, so the dock morphs into a command/search surface that filters as you type. Bite: a re-forked scorer / a dock-local search engine → RED.",
+    },
+    {
+        id: "proof:viz-configurator-suite",
+        cmd: "proof:viz-configurator-suite",
+        tags: ["local", "ci"],
+        note: "BC.W-VIZ-CONFIGURATOR-SUITE — the viz STUDIOS conform to ONE VizStudio chassis: controls on the RIGHT (CONFIG-RIGHT two-column aside) + the PAGE-CHASSIS hero header over the warm-cream field, NOT per-studio bespoke chrome. Bite: a bespoke off-chassis studio / an aside on the left → RED.",
+    },
+    {
+        id: "proof:storybook-meta",
+        cmd: "proof:storybook-meta",
+        tags: ["local", "ci"],
+        note: "BC.W-STORYBOOK-META — the storybook META chassis: the AppShell + StoryPage + the section header read as ONE coherent storybook (the meta-level IA, the page-band surface enrolled in the gestalt roster). The LAST page band. Bite: an incoherent meta-chassis / a missing page-band roster row → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

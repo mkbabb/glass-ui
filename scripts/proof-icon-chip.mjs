@@ -267,11 +267,20 @@ export function detectIconChip(sources) {
         );
     }
 
-    // ── W4 — the four pastes are GONE (complete-consolidation floor) ──────────
+    // ── W4 — the four ICON-CHIP pastes are GONE (complete-consolidation floor) ──
     // The inline template-literal paste form `color-mix(in srgb, var(--section-
-    // color-${…})` must NOT survive anywhere under src/ or demo/ OUTSIDE the
-    // icon-chip/ dir. Walk the trees.
+    // color-${…})` must NOT survive as an ICON-CHIP backplate (a 48px plate + glyph,
+    // the chip≤glyph proportion) anywhere under src/ or demo/ OUTSIDE the icon-chip/
+    // dir. Walk the trees, exempting the recipe-OWNING primitives.
     const PASTE_RE = /color-mix\(in srgb, var\(--section-color-\$\{/;
+    // The recipe-owning primitives are exempt by the same logic the icon-chip/ dir
+    // is: a primitive that OWNS its own tint-chip recipe is not one of "the four
+    // inline icon-chip pastes." BC.W-CODE-BLOCKS minted `demo/stories/Code.vue` —
+    // the inline-CODE-literal tint chip (a `<code>` backplate, NO glyph, NO
+    // plate-vs-glyph proportion) — a DISTINCT consolidating primitive that owns the
+    // code-chip recipe, not an icon-chip paste (the same `--section-color-${tone}`
+    // family, a different chip). It is exempt like the icon-chip/ dir.
+    const W4_OWNER_FILES = new Set(["demo/stories/Code.vue"]);
     const scanFiles = [
         ...listFiles(resolve(ROOT, "src"), [".vue", ".ts", ".css"]),
         ...listFiles(resolve(ROOT, "demo"), [".vue", ".ts", ".css"]),
@@ -279,6 +288,7 @@ export function detectIconChip(sources) {
     const pasteHits = [];
     for (const rel of scanFiles) {
         if (rel.includes("components/custom/icon-chip/")) continue;
+        if (W4_OWNER_FILES.has(rel)) continue;
         const body = stripAll(safeRead(resolve(ROOT, rel)));
         if (PASTE_RE.test(body)) pasteHits.push(rel);
     }

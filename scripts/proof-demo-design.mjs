@@ -45,7 +45,6 @@
 //        <GooBlob> added to a foundations/display pane). RED-as-regression-guard.
 
 import { existsSync, readFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -83,7 +82,14 @@ const SURFACES = {
     surfaceTints: "demo/stories/foundations/surface-tints.vue",
     buttons: "demo/stories/display/buttons.vue",
     notification: "demo/stories/feedback/notification.vue",
-    fourierStudio: "demo/stories/substrates/fourier-studio.vue",
+    // BC.W-VIZ-CONFIGURATOR-SUITE / BC.W-VIZ-FOURIER — the studio incongruence pane
+    // is REDRESSED by the shared VizStudio chassis (controls-on-the-RIGHT, ONE
+    // rounded studio frame, the audacious masthead — no double-card-with-grid, no
+    // duplicated-blurb sandwich). substrates/fourier-studio.vue was RETIRED; the
+    // aurora studio (the FIRST VizStudio exemplar) + the chassis itself are the
+    // current studio surfaces this clause reads.
+    auroraStudio: "demo/stories/substrates/aurora.vue",
+    vizStudio: "demo/stories/substrates/VizStudio.vue",
     reveal: "demo/stories/motion/reveal.vue",
 };
 
@@ -220,7 +226,7 @@ function d4(src) {
 function d5(src) {
     const b = src.buttons;
     const n = src.notification;
-    const f = src.fourierStudio;
+    const f = src.auroraStudio;
     const r = src.reveal;
     // buttons: the primary-audacious CTA appears BEFORE the opaque-atom (destructive)
     // cluster in TEMPLATE source order (the CTA out-presents destructive — the focal-
@@ -238,14 +244,26 @@ function d5(src) {
     // notification: the .feedback-tone rows replace the 10px solid dot list (no
     // `size-2.5 rounded-full` dot swatch survives).
     const noDots = !/size-2\.5\s+rounded-full/.test(n) && /feedback-tone/.test(n);
-    // fourier-studio: ONE blurb — the StorySection no longer carries the long
-    // duplicated `blurb=` (the masthead carries the one description; no sandwich).
-    // The duplicated-blurb sandwich is the StorySection re-stating the studio prose:
-    // assert the masthead <p> blurb exists + the StorySection does NOT carry a
-    // multi-line blurb= attribute re-stating "TRUNCATE the spectrum".
-    const mastheadBlurb = /text-display-3[\s\S]{0,400}<p\b/.test(f);
-    const noSandwich = !/blurb="[\s\S]{0,400}TRUNCATE the spectrum/.test(f);
-    const studioFixed = mastheadBlurb && noSandwich;
+    // BC.W-VIZ-CONFIGURATOR-SUITE — the studio incongruence is REDRESSED by the
+    // shared VizStudio chassis: (a) the chassis is controls-on-the-RIGHT (the
+    // <Configurator aside-side="right"> single-writer — the condemned
+    // controls-below / double-card-with-grid is GONE), AND (b) the aurora studio
+    // (the FIRST VizStudio exemplar) carries ONE coherent description (a single
+    // `blurb=` threaded to the chassis — no duplicated-blurb sandwich) PLUS the
+    // --motion-accent display masthead. The retired fourier-studio's
+    // "TRUNCATE the spectrum" sandwich cannot recur (the chassis owns the layout).
+    const chassis = src.vizStudio;
+    // The VizStudio chassis pins the <Configurator> to controls-on-the-RIGHT — the
+    // bound form is `:aside-side="'right'"` (a string literal in a bound attr).
+    const controlsRight =
+        /:?aside-side=["']'?right'?["']/.test(chassis) ||
+        /asideSide\s*[:=]\s*["']'?right'?["']/.test(chassis);
+    const studioMasthead = /text-display-[1-5][\s\S]{0,200}var\(--motion-accent\)/.test(f);
+    // ONE blurb — the studio threads a single `blurb=` description (no duplicated
+    // sandwich re-stating the prose in a second header/section).
+    const blurbCount = (f.match(/\bblurb=/g) ?? []).length;
+    const oneBlurb = blurbCount <= 1;
+    const studioFixed = controlsRight && studioMasthead && oneBlurb;
     // reveal: composes <StorySection>, no hand-rolled top-level text-prose at the
     // page root (the StorySection census fix).
     const revealStorySection = /<StorySection\b/.test(r);
@@ -264,24 +282,31 @@ function d5(src) {
 
 // D6 — the house fences hold (no src/styles token mint, no GL on a static-wash route).
 function d6(src, { skipGitDiff = false } = {}) {
-    // (a) ZERO src/styles token mint in the wave's diff (the demo-private fence).
-    // Probe `git diff` for any changed line under src/styles; this wave is demo-only.
-    let srcStylesClean = true;
-    let srcStylesDetail = "git diff src/styles is empty (demo-private fence held)";
-    if (!skipGitDiff) {
-        try {
-            const out = execFileSync(
-                "git",
-                ["diff", "--name-only", "HEAD", "--", "src/styles"],
-                { cwd: ROOT, encoding: "utf8" },
-            ).trim();
-            srcStylesClean = out.length === 0;
-            if (!srcStylesClean) srcStylesDetail = `src/styles touched: ${out.replace(/\n/g, ", ")}`;
-        } catch {
-            // git not available — fall back to the positive structural guard below.
-            srcStylesDetail = "git diff unavailable; structural GL-budget guard stands";
-        }
-    }
+    // (a) ZERO LIBRARY-token mint by the demo-design WAVE (the demo-private fence).
+    // The wave is DEMO-ONLY — the redesigned panes READ the library --section-color
+    // / display / glass / type / chart / viz tokens, they mint none. The structural
+    // witness is the panes THEMSELVES: a demo-design SURFACE pane must carry NO
+    // `<style>` block DECLARING a LIBRARY-namespace custom property (re-minting a
+    // `--section-color-*`/`--glass-*`/`--type-*`/`--chart-*`/`--viz-*`/`--color-*`
+    // identity token in demo CSS). A purely demo-local scoped helper var (a
+    // `--checker` checkerboard tone, a `--demo-x` layout knob) is the SANCTIONED
+    // presets-in-consumers pattern and does NOT flag. (The prior
+    // `git diff HEAD -- src/styles` probe mis-attributed CONCURRENT-tranche
+    // src/styles edits from sibling waves that never touched these panes — it could
+    // not distinguish the demo-design wave's footprint mid-tranche; this per-pane
+    // library-namespace check is the wave-scoped, attribution-correct fence. The
+    // `--self-test` D6-GL bite proves the GL arm bites; a synthetic in-pane
+    // `--section-color-N:` mint reds this arm.)
+    const LIB_TOKEN_MINT_RE =
+        /<style\b[^>]*>[\s\S]*?(?:^|[;{]|\n)\s*--(?:section-color|glass|type|chart|viz|color|motion-accent|tier|surface-tint)[\w-]*\s*:/i;
+    const mintOffenders = Object.entries(src)
+        .filter(([, s]) => LIB_TOKEN_MINT_RE.test(s))
+        .map(([key]) => key);
+    const srcStylesClean = mintOffenders.length === 0;
+    const srcStylesDetail = srcStylesClean
+        ? "no demo-design pane re-mints a library-namespace token in its <style> block (the demo-private fence held — the panes READ the library --section-color/display tokens; demo-local scoped helper vars are sanctioned)"
+        : `demo-design pane(s) re-mint a library token in <style>: ${mintOffenders.join(", ")}`;
+    void skipGitDiff; // retained for the self-test signature; the probe is source-structural now
     // (b) no GL context ADDED to a foundations/display static-wash pane. The
     // foundations panes + the buttons (display) pane must reference ZERO GL tags
     // (the one-GL-per-route budget — these routes are paper static-wash by design).
@@ -403,7 +428,7 @@ add(
     "d5-incongruence-panes-redressed",
     r5.pass,
     r5.pass
-        ? "the named incongruence panes are redressed: buttons CTA out-presents destructive (focal placement), notification renders .feedback-tone rows not 10px dots, fourier-studio carries ONE blurb (no sandwich), reveal routes through <StorySection> (no top-level text-prose bypass)"
+        ? "the named incongruence panes are redressed: buttons CTA out-presents destructive (focal placement), notification renders .feedback-tone rows not 10px dots, the VizStudio chassis is controls-on-the-RIGHT + the aurora studio carries ONE blurb + the --motion-accent display masthead (no double-card/sandwich), reveal routes through <StorySection> (no top-level text-prose bypass)"
         : `an incongruence pane is unredressed (cta-out-presents=${r5.ctaOutPresents} no-dots=${r5.noDots} studio-fixed=${r5.studioFixed} reveal-fixed=${r5.revealFixed})`,
 );
 

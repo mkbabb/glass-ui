@@ -3,7 +3,10 @@ import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
-import { Trash2, LogOut, Archive, CheckCircle2 } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Trash2, LogOut, Archive, CheckCircle2, ShieldAlert } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+const FEEDBACK_STOP = 8;
 
 const destructiveOpen = ref(false);
 const destructiveLoading = ref(false);
@@ -35,6 +38,31 @@ const signOutOpen = ref(false);
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+             eyebrow + the inline accent rail + the focal IconChip, all on
+             --section-color-8). The page-level color identity, DISTINCT from the
+             section labels below — it carries NO heading rung (not an idiom-B
+             second header; PH3). -->
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ShieldAlert" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Confirm Dialog
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Guardrail surfaces — the destructive tone carries its own
+                    variant color; the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3">
             <p class="section-label">destructive — delete workspace</p>
             <div

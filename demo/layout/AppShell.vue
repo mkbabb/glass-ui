@@ -10,6 +10,9 @@ import {
     DialogTitle,
 } from "../../src/components/ui/dialog";
 import { PaperBackdrop } from "../../src/components/custom/paper-backdrop";
+import { Button } from "../../src/components/ui/button";
+import { Switch } from "../../src/components/ui/switch";
+import { Card } from "../../src/components/ui/card";
 import {
     Compass,
     Shapes,
@@ -294,10 +297,10 @@ onBeforeUnmount(() => {
                             v-if="Component"
                             :key="route.fullPath"
                         />
-                        <div
-                            v-else
-                            class="mx-auto max-w-xl rounded-[var(--radius)] border border-border/60 bg-background/40 p-8 text-center"
-                        >
+                        <!-- BC.W-STORYBOOK-META — the empty-state composes the
+                             shipped <Card> (the dogfood SHELL sweep — GAP-5), not a
+                             raw `rounded-[…] border bg-background/40` div. -->
+                        <Card v-else class="mx-auto max-w-xl p-8 text-center">
                             <p class="font-display text-2xl text-foreground">
                                 Pick a story
                             </p>
@@ -305,7 +308,7 @@ onBeforeUnmount(() => {
                                 Choose a category from the rail on the left, then
                                 a story from the bar below.
                             </p>
-                        </div>
+                        </Card>
                     </Transition>
                 </RouterView>
             </main>
@@ -363,21 +366,29 @@ onBeforeUnmount(() => {
                 </header>
 
                 <div class="demo-dock-morph-controls">
-                    <button
+                    <!-- BC.W-STORYBOOK-META — the morph toggle composes the shipped
+                         glass <Button> (the dogfood SHELL sweep — GAP-5), not a raw
+                         `btn-pill` chain. The data-testid is preserved so the
+                         in-situ dock-morph wiring stays byte-stable. -->
+                    <Button
                         type="button"
-                        class="btn-pill btn-interactive focus-ring inline-flex items-center gap-2 rounded-pill border border-border/40 bg-card/60 px-4 py-2 text-small font-medium"
+                        variant="secondary"
+                        size="sm"
+                        class="gap-2"
                         data-testid="shell-morph-toggle"
                         @click="toggleShellMorph"
                     >
                         <ArrowLeftRight class="size-4" aria-hidden="true" />
                         Morph to {{ morphFacing }}
-                    </button>
+                    </Button>
+                    <!-- The liquid-teardrop toggle composes the shipped <Switch>
+                         (the dogfood SHELL sweep — GAP-5), not a raw
+                         `<input type="checkbox">`. The data-testid is preserved. -->
                     <label class="flex items-center gap-2 text-small">
-                        <input
-                            type="checkbox"
+                        <Switch
                             v-model="liquidPreview"
                             data-testid="shell-liquid-preview-toggle"
-                            class="focus-ring size-4 rounded"
+                            aria-label="Liquid teardrop preview"
                         />
                         Liquid teardrop (preview)
                     </label>

@@ -59,6 +59,25 @@ export const COMPOSED_BY = {
     DrawerOverlay: "DrawerContent",
 };
 
+// ── DEMONSTRATED_AS_MATERIAL allowlist (BC.W-STORYBOOK-META) ──────────────────
+// A published component whose NAMED story route demonstrates the SURFACE IT
+// RENDERS by composing the library MATERIAL CLASSES directly rather than the
+// component tag. This is the Band-1 W-GLASS-PRUNE design decision recorded as a
+// gate fact: `<GlassPanel>` paints the five-rung `.glass-{wash..overlay}` ladder
+// over a live aurora; `substrates/glass-panel.vue` teaches that EXACT material by
+// composing the `.glass-{rung}` classes bare (the "which glass do I reach for?"
+// binary answer — a bare surface is a `.glass-{rung}` MATERIAL, a content container
+// is a `<Card>`). The component stays a PUBLISHED surface (the AZ.W-PRUNE2 RESTORE
+// for the keyframes consumer — subpath `/glass-panel` + the `GlassPanelVariant`/
+// `GlassPanelProps` api seats), so its export is real; its DEMONSTRATION is the
+// material it renders, shown on its own named route. Each entry names the route SFC
+// whose body teaches the surface (the gate verifies the SFC exists on disk).
+export const DEMONSTRATED_AS_MATERIAL = {
+    // GlassPanel renders the five-rung glass ladder; the substrates/glass-panel
+    // route demonstrates that ladder bare (the W-GLASS-PRUNE MATERIALS gallery).
+    GlassPanel: "demo/stories/substrates/glass-panel.vue",
+};
+
 let _cliPaths = null;
 function cliPaths() {
     if (_cliPaths) return _cliPaths;
@@ -191,7 +210,7 @@ export function collectDemonstrated(storiesDir, fs) {
 }
 
 /** The pure detector: {facts, violations} over the enumerated sets. */
-export function detect(comps, demonstrated, composedBy) {
+export function detect(comps, demonstrated, composedBy, materialBy = {}, fileExists = () => false) {
     const violations = [];
     const facts = {};
     facts.componentExports = comps.size;
@@ -211,14 +230,28 @@ export function detect(comps, demonstrated, composedBy) {
             }
             continue;
         }
+        // DEMONSTRATED_AS_MATERIAL: a published surface demonstrated by composing
+        // its material classes on its named route. The route SFC must exist on disk
+        // (an absent route is a dead claim — the same anti-evasion floor as the
+        // composed-by parent check).
+        const route = materialBy[name];
+        if (route) {
+            if (!fileExists(route)) {
+                violations.push(
+                    `${name} is allowlisted as demonstrated-as-material on ${route}, but that route SFC is absent on disk — the allowlist entry is a dead claim`,
+                );
+            }
+            continue;
+        }
         undemonstrated.push(name);
     }
     undemonstrated.sort();
     facts.undemonstrated = undemonstrated;
     facts.composedByCount = Object.keys(composedBy).length;
+    facts.materialByCount = Object.keys(materialBy).length;
     for (const name of undemonstrated) {
         violations.push(
-            `component export "${name}" has zero demonstration — no story SFC imports it and it is not a composed-by allowlist entry`,
+            `component export "${name}" has zero demonstration — no story SFC imports it and it is not a composed-by / demonstrated-as-material allowlist entry`,
         );
     }
     return { facts, violations };
@@ -239,7 +272,14 @@ function run({ selftest = false } = {}) {
         comps.set("__PhantomUndemoComponent", "<synthetic>");
     }
 
-    const { facts, violations } = detect(comps, demonstrated, COMPOSED_BY);
+    const fileExists = (rel) => existsSync(resolve(P.ROOT, rel));
+    const { facts, violations } = detect(
+        comps,
+        demonstrated,
+        COMPOSED_BY,
+        DEMONSTRATED_AS_MATERIAL,
+        fileExists,
+    );
     const status = violations.length === 0 ? "pass" : "fail";
 
     writeGateArtifact(P.ARTIFACT, {
@@ -259,6 +299,7 @@ function run({ selftest = false } = {}) {
     console.log(`  component exports      : ${facts.componentExports}`);
     console.log(`  demonstrated ids       : ${facts.demonstratedIdentifiers}`);
     console.log(`  composed-by allowlist  : ${facts.composedByCount}`);
+    console.log(`  material-by allowlist  : ${facts.materialByCount ?? 0}`);
     console.log(`  undemonstrated         : ${facts.undemonstrated.length}`);
     if (selftest) console.log("  (SELFTEST: synthetic phantom export injected)");
     if (violations.length) {

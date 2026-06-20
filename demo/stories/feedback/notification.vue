@@ -5,7 +5,10 @@ import { ref } from "vue";
 import type { Component } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Notification } from "../../../src/components/ui/notification";
-import { AlertTriangle, CheckCircle2, Info, XCircle } from "@lucide/vue";
+import { AlertTriangle, CheckCircle2, Info, XCircle, BellDot } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+const FEEDBACK_STOP = 8;
 
 interface Item {
     id: string;
@@ -62,6 +65,32 @@ const samples: {
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+             eyebrow + the inline accent rail + the focal IconChip, all on
+             --section-color-8). The page-level color identity, DISTINCT from the
+             section labels below — it carries NO heading rung (not an idiom-B
+             second header; PH3). The tone samples below carry their OWN
+             component color; the section identity is the ONE page event. -->
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="BellDot" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Notifications
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Status surfaces — the notification tones carry their own
+                    variant color; the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3">
             <p class="section-label">triggers</p>
             <div class="flex flex-wrap items-center gap-3">

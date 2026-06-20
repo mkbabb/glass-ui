@@ -120,6 +120,12 @@
  *                              native .smooth-scroll opt-in) on the native
  *                              scroll()/view()/timeline-scope substrate; NO
  *                              Lenis/GSAP dep (BB.W-SCROLL-MOTION).
+ *  10a''. scroll-chrome.css  — BC.W-SCROLL-CHROME the scroll-driven floating-
+ *                              CHROME collapse recipe (.scroll-chrome reads
+ *                              --chrome-collapse-t for the compositor shrink/
+ *                              quiet/shadow-lift; PERSISTENT-by-default, crisp
+ *                              blur, never-invisible quiet, PRM-discrete). The
+ *                              useScrollChrome JS machine owns the snap + ramp.
  *  10b. view-transition.css  — the `.gl-list-item` View-Transitions group
  *                              recipe + `--vt-*` axes (AQ.W5; the
  *                              `useViewTransition` substrate's CSS half).
@@ -168,6 +174,7 @@
 @import "./animations.css";
 @import "./scroll-driven.css";
 @import "./scroll-choreography.css";
+@import "./scroll-chrome.css";
 @import "./view-transition.css";
 @import "./utilities.css";
 /* BA.W-MENU-GLASS — the glass menu-row + menu-section register. @import-ed AFTER

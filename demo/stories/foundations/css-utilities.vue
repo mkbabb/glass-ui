@@ -19,17 +19,21 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center justify-center gap-6">
+                    <!-- BC.W-STORYBOOK-META — the demo glyphs read the IDENTITY
+                         palette (`--section-color-N`), not raw Tailwind off-brand
+                         hues (the stray-blue idiom-adherence sweep — the "WTF is
+                         this blue" close). Each glyph pops one ramp stop. -->
                     <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
-                        <Heart class="h-5 w-5 text-rose-500" />
+                        <Heart class="h-5 w-5" :style="{ color: 'var(--section-color-8)' }" />
                     </button>
                     <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
-                        <Star class="h-5 w-5 text-amber-500" />
+                        <Star class="h-5 w-5" :style="{ color: 'var(--section-color-2)' }" />
                     </button>
                     <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
-                        <Sparkles class="h-5 w-5 text-violet-500" />
+                        <Sparkles class="h-5 w-5" :style="{ color: 'var(--section-color-7)' }" />
                     </button>
                     <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
-                        <Zap class="h-5 w-5 text-sky-500" />
+                        <Zap class="h-5 w-5" :style="{ color: 'var(--section-color-5)' }" />
                     </button>
                 </div>
             </ShowcaseFrame>

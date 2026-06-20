@@ -308,6 +308,7 @@ const SUBPATHS: Record<string, string> = {
     "motion/springs": "@mkbabb/glass-ui/motion",
     "motion/curve-gallery": "@mkbabb/glass-ui/easing",
     "motion/scroll-vt": "@mkbabb/glass-ui/motion-core",
+    "motion/scroll-system": "@mkbabb/glass-ui/motion-core",
     "motion/scroll-choreography": "/motion/scroll-choreography",
     "motion/countup": "@mkbabb/glass-ui/motion",
     "motion/reveal": "@mkbabb/glass-ui/motion-core",
@@ -1047,6 +1048,12 @@ export const CATEGORIES: Category[] = [
                 "scroll-vt",
                 "Scroll & View Transitions",
                 "The native scroll-driven facilities — .scroll-progress (scroll() timeline), [data-scroll-reveal] (view() timeline), the .gl-list-item View-Transitions reorder, and a capability badge.",
+            ),
+            s(
+                "motion",
+                "scroll-system",
+                "Scroll System",
+                "useScrollTrigger — the ONE scroll reader: a continuous progress ramp AND discrete onCross/onEnter/onLeave trigger-point events off the SAME rAF-coalesced read (the shared createScrollReader core — no fourth listener). Direction (committed past the 8px flip-delta) + per-second velocity + the dual-path single-writer (native --scroll-t ramp / JS events). PRM keeps the crossings, drops the interpolation. The §3.2 trigger-point gap closed; BC.W-SCROLL-CHROME consumes it.",
             ),
             s(
                 "motion",

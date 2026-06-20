@@ -11,7 +11,10 @@ import {
     ToastTitle,
     useToast,
 } from "../../../src/components/ui/toast";
-import { CheckCircle2, AlertTriangle, XCircle, Info } from "@lucide/vue";
+import { CheckCircle2, AlertTriangle, XCircle, Info, BellRing } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
+const FEEDBACK_STOP = 8;
 
 const { toasts, toast } = useToast();
 
@@ -92,6 +95,31 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
 
 <template>
     <StoryPage>
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+             eyebrow + the inline accent rail + the focal IconChip, all on
+             --section-color-8). The page-level color identity, DISTINCT from the
+             StorySection HEADINGs below — it carries NO heading rung (not an
+             idiom-B second header; PH3). -->
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="BellRing" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Toasts
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Transient surfaces — the toast tones carry their own variant
+                    color; the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3">
             <p class="section-label">triggers</p>
             <div class="flex flex-wrap items-center gap-3">

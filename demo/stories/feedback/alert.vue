@@ -2,12 +2,45 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Alert, AlertDescription, AlertTitle } from "../../../src/components/ui/alert";
-import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";
+// BB.W-SUFFUSE3 — the feedback band's ONE coherent --section-color-8 ruby
+// (warm-status) identity. Distinct from forms-3 / containers-2 / data-9 /
+// navigation-12; the warm-status read for a status/notification band.
+const FEEDBACK_STOP = 8;
 </script>
 
 <template>
     <StoryPage>
-        
+        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
+             eyebrow + the accent rail + the focal IconChip, all on
+             --section-color-8). This is the page-level color identity, DISTINCT
+             from the StorySection HEADING below — it carries NO `text-subheading`
+             heading rung, so it is not an idiom-B second header (PH3). The left
+             accent rail rides an inline `border-left` (the same 3px hairline) so
+             it is the suffuse color event, not the section-heading idiom. The tone
+             specimens carry their OWN component color; the section identity is the
+             ONE page event (the d3 per-surface discipline). -->
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Bell" :section="FEEDBACK_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Feedback · Alerts
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Status surfaces — the alert tones carry their own variant
+                    color; the section identity is the ONE page event.
+                </p>
+            </div>
+        </header>
+
             <StorySection heading="Default" gap="md">
                 <Alert>
                     <Sparkles />

@@ -345,6 +345,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         ]"
         :data-density="density"
         :data-held="isHeld || undefined"
+        :data-search="search || undefined"
         :data-container-name="containerName || undefined"
         :style="[containerStyle, rootVtStyle]"
         @mouseenter="onMouseEnter"
@@ -415,6 +416,21 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
                 @click="onClickCollapsed"
             >
                 <slot name="collapsed" />
+            </div>
+
+            <!--
+                BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar field region.
+                Rendered ONLY when `search` is set (additive default-false → byte-
+                identical to HEAD otherwise). It seats INSIDE the `.dock-layers` morph
+                aperture so the pill→field reveal rides the dock's OWN `--dock-morph-t`
+                glide (the box shrink-wraps; NO second engine, NO dockMorphContext edit).
+                The consumer composes `useDockSearch` and slots its search field + the
+                fuzzy dropdown here; the `.dock-search-field` surface reads the W55 tint
+                seam (dock/search.css) so the active field reads ≥4.5:1 over the backdrop
+                (the no-pale-fade legibility floor).
+            -->
+            <div v-if="search" class="dock-search-field">
+                <slot name="search" />
             </div>
         </div>
 

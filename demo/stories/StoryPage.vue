@@ -79,7 +79,13 @@ const depth = computed(() => current.value?.story.depth);
              recipe's outer @media gate; the page mounts at its terminal state). The
              reading-ORDER (the ordered cluster: eyebrow → title → blurb → body) is
              W-HIERARCHY2's; this register threads the entrance ON that order. -->
-        <article class="scroll-build mx-auto w-full max-w-6xl">
+        <!-- BC.W-STORYBOOK-META — the article width is the tokenized rhythm
+             (`--story-page-max-inline`, was `max-w-6xl`) so every page is bounded
+             to the SAME generous-whitespace width (axis-3). -->
+        <article
+            class="scroll-build story-page-article mx-auto w-full"
+            :style="{ maxInlineSize: 'var(--story-page-max-inline)' }"
+        >
             <!-- BC.W-PAGE-CHASSIS — the chrome <header> hosts the AUDACIOUS hero cluster
                  on a CONTENT page (variant="page"): the ONE standardized page idiom
                  (the user-mandate uniformity — EVERY page carries the LARGE audacious
@@ -153,11 +159,15 @@ const depth = computed(() => current.value?.story.depth);
                      NEVER an inline `border-border/N` alpha. The delimiter sits
                      INSIDE the `.scroll-cascade` build (it does not re-author the
                      section-entrance). -->
+                <!-- BC.W-STORYBOOK-META — the inter-section gap is the tokenized
+                     rhythm (`--story-page-section-gap`, was the hardcoded `gap-10`)
+                     so every page's section cadence is the SAME measured rhythm
+                     (axis-3; the meta-gate asserts ≥ this minimum, no cramped page). -->
                 <section
-                    class="scroll-cascade story-sections"
+                    class="scroll-cascade story-sections flex flex-col"
+                    :style="{ gap: 'var(--story-page-section-gap)' }"
                     :class="
                         cn(
-                            'flex flex-col gap-10',
                             props.delimited && 'story-sections--delimited',
                             props.contentClass,
                         )
