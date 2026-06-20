@@ -12,7 +12,7 @@
  * as the warm step BEFORE `scrollTo` (the two leaves are file-disjoint, joined
  * at the call site: ToC-click → `ensureTargetWindow(id)` → `scrollTo(id)`).
  */
-import { nextTick } from "vue";
+import { nextTick, onScopeDispose } from "vue";
 import type { ScrollToOptions } from "./types";
 
 export function useScrollTo(options: ScrollToOptions) {
@@ -20,6 +20,19 @@ export function useScrollTo(options: ScrollToOptions) {
     const scrollOffset = options.scrollOffset ?? 16;
     const maxAttempts = options.maxAttempts ?? 60;
     const treeIndex = options.treeIndex;
+
+    // The rAF-retry loop is cancelable: a new scrollTo() supersedes the prior
+    // loop (one retry at a time), and the loop STOPS when the owning scope is
+    // disposed (an unmounted ToC must not keep retrying a stale target — and a
+    // unit test that never mounts must not leak frames past teardown).
+    let rafHandle: number | null = null;
+    function cancel() {
+        if (rafHandle !== null) {
+            cancelAnimationFrame(rafHandle);
+            rafHandle = null;
+        }
+    }
+    onScopeDispose(cancel);
 
     function ensureTargetLoaded(id: string) {
         if (treeIndex) {
@@ -40,15 +53,18 @@ export function useScrollTo(options: ScrollToOptions) {
 
     function scrollTo(id: string) {
         ensureTargetLoaded(id);
+        cancel();
 
         let attempts = 0;
         let lastY = -1;
 
         function tryScroll() {
+            rafHandle = null;
             const el = document.getElementById(id);
             const scroller = scrollContainer.value;
             if (!el || !scroller) {
-                if (attempts++ < maxAttempts) requestAnimationFrame(tryScroll);
+                if (attempts++ < maxAttempts)
+                    rafHandle = requestAnimationFrame(tryScroll);
                 return;
             }
 
@@ -68,10 +84,13 @@ export function useScrollTo(options: ScrollToOptions) {
             }
             lastY = absoluteTop;
             attempts++;
-            if (attempts < maxAttempts) requestAnimationFrame(tryScroll);
+            if (attempts < maxAttempts)
+                rafHandle = requestAnimationFrame(tryScroll);
         }
-        nextTick(() => requestAnimationFrame(tryScroll));
+        nextTick(() => {
+            rafHandle = requestAnimationFrame(tryScroll);
+        });
     }
 
-    return { scrollTo };
+    return { scrollTo, cancel };
 }

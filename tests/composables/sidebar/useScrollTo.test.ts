@@ -1,7 +1,19 @@
 import { ref } from "vue";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useScrollTo } from "../../../src/composables/sidebar/useScrollTo";
 import type { TreeIndexEntry } from "../../../src/composables/sidebar/types";
+
+// These specs assert the SYNCHRONOUS ensureTargetLoaded partial-load (the
+// visibleCount math), not the rAF scroll settle. The composable is invoked bare
+// (no mounted scope), so its rAF-retry loop would otherwise leak frames past
+// teardown (a 60-attempt "does-not-exist" retry surfacing an unhandled error in a
+// later spec under battery load). Stub rAF to a no-op — the loop never runs.
+beforeEach(() => {
+    vi.stubGlobal("requestAnimationFrame", () => 0);
+});
+afterEach(() => {
+    vi.unstubAllGlobals();
+});
 
 // ── Fixture — a flat treeIndex over 10 root sections ─────────────────────────
 // Each entry carries the four SectionHierarchy fields; `rootIndex` is the
