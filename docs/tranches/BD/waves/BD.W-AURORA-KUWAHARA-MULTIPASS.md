@@ -44,9 +44,13 @@ The invariant-8 constraint: the single-pass runs over the EXISTING one-draw/one-
 
 ## (5) Paint verification
 
-**IF BUILD:** the multi-pass FBO Kuwahara read vs the single-pass, both on real GPU; the no-pinwheel orientation histogram (the literal multi-pass must STILL show no 8-spoke pinwheel — the multi-tap Gaussian smoothing is the anti-pinwheel mechanism); the offscreen-park + PRM-freeze still hold (the FBO chain parks). `proof:ba-gestalt` aurora verdict on the fresh capture. Both modes × desktop.
+**IF BUILD** (the IF-BUILD arm inherits the band-3 paint-enforcement discipline — the dedicated π + the surface-hash re-stamp, since a multi-pass FBO pipeline edits the aurora shaders the BD.W-GESTALT-ROSTER-GROW step 2 viz-shader widen enumerates):
 
-**IF DECLINE:** device-free — the terminal-HOLD disposition is recorded; no paint (a re-stamp, not a visual change). The recorded user verdict IS the artefact.
+1. **The dedicated feature-localized π — `tests-visual/aurora-kuwahara-multipass.spec.ts` (the no-PINWHEEL orientation-histogram readback, the binding feature witness; a whole-region OKLab mean is paint-blind to the 8-spoke pinwheel artefact).** The literal multi-pass FBO Kuwahara must STILL show NO 8-spoke pinwheel — the readback builds the orientation histogram over the field and asserts the angular distribution is SMOOTH (no 8 discrete spokes — the multi-tap Gaussian smoothing is the anti-pinwheel mechanism), and reads as a sharper/cleaner painterly finish than the single-pass procedural Kuwahara (the quality-uplift the build claims). Both modes × desktop. (This is the SAME no-pinwheel orientation-histogram metric `proof:aur-kuwahara`'s π carries — re-pointed at the multi-pass output.)
+2. **The cross-backend PARITY arm** (if the multi-pass ships on both backends) via `BD.W-VIZ-PARITY-METAL`'s machinery — at least ONE real-GPU backend pair captured (MINOR-2's cap). The multi-pass FBO read vs the single-pass, both on real GPU; the offscreen-park + PRM-freeze still hold (the FBO chain parks — invariant 8).
+3. **The `proof:ba-gestalt` aurora verdict on the fresh capture** — the whole-surface gestalt pass. **The surface-hash re-stamp (named here, IF-BUILD):** the multi-pass pipeline edits the aurora WGSL/shader stage (a NEW pipeline, the `.frag` byte-untouched — §3 step 2a), DRIFTING the `aurora.md` + `viz-procedural.md` BD freshness records' surface-hash (those enumerate the aurora shaders per BD.W-GESTALT-ROSTER-GROW step 2), so G7 auto-revokes the aurora/viz-procedural PASS until this wave re-captures + re-pixel-reads AND **re-stamps the `aurora.md` + `viz-procedural.md` surface-hash headers** at close.
+
+**IF DECLINE** (the likely default): device-free — the terminal-HOLD disposition is recorded; no paint, no dedicated π, no surface-hash re-stamp (the shaders are byte-untouched, so no freshness record drifts). The recorded user verdict IS the artefact.
 
 ## (6) Fences + risks
 
