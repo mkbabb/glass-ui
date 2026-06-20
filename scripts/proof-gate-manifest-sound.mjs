@@ -125,12 +125,13 @@ function runNpm(script) {
 }
 
 /** Run a node script as a subprocess; return { ok, out }. */
-function runNode(args) {
+function runNode(args, extraEnv) {
     try {
         const out = execFileSync("node", args, {
             cwd: ROOT,
             encoding: "utf8",
             stdio: ["ignore", "pipe", "pipe"],
+            ...(extraEnv ? { env: { ...process.env, ...extraEnv } } : {}),
         });
         return { ok: true, out };
     } catch (e) {
@@ -200,16 +201,31 @@ function detectSound() {
     // 'undefined'`); an honest red is recorded as a fact (the first failing gate
     // named) and the full-green demand stays where it belongs — the W-CLOSE battery
     // and the release arm.
-    const proofAll = runNode([resolve(SCRIPTS, "gates.mjs"), "--run", "local"]);
-    const malformedCrash =
-        /Missing script: "undefined"/.test(proofAll.out) || /FAIL at 'undefined'/.test(proofAll.out);
-    const failAt = proofAll.out.match(/\[gates\] FAIL at '([^']+)'/);
-    facts.proofAllRuns = proofAll.ok;
-    facts.proofAllFirstRed = proofAll.ok ? null : failAt ? failAt[1] : "(unparsed)";
-    if (malformedCrash || (!proofAll.ok && !failAt))
-        violations.push(
-            `[PROOF-ALL-RUNS] the local aggregate did not COMPLETE${malformedCrash ? " (the malformed-row crash survives)" : " (no named FAIL-at gate — an unstructured death)"}`,
-        );
+    // RECURSION GUARD (the all-green-cut close). This gate is tags:["local"], so it is a
+    // ROW in the `--run local` set this clause spawns. During tranche dev an in-flight
+    // born-RED gate stops the inner battery before it reaches this gate; but at the
+    // ALL-GREEN cut there is no red, so the inner `--run local` reaches gate-manifest-sound
+    // → which would spawn ANOTHER `--run local` → unbounded recursion (the close-time hang
+    // that never surfaced mid-tranche). The spawn carries GLASS_UI_GATE_MANIFEST_NESTED=1;
+    // the NESTED invocation SKIPS its own spawn (the OUTER invocation owns the completeness
+    // check), bounding recursion to exactly one level.
+    if (process.env.GLASS_UI_GATE_MANIFEST_NESTED === "1") {
+        facts.proofAllRuns = true;
+        facts.proofAllNested = true;
+    } else {
+        const proofAll = runNode([resolve(SCRIPTS, "gates.mjs"), "--run", "local"], {
+            GLASS_UI_GATE_MANIFEST_NESTED: "1",
+        });
+        const malformedCrash =
+            /Missing script: "undefined"/.test(proofAll.out) || /FAIL at 'undefined'/.test(proofAll.out);
+        const failAt = proofAll.out.match(/\[gates\] FAIL at '([^']+)'/);
+        facts.proofAllRuns = proofAll.ok;
+        facts.proofAllFirstRed = proofAll.ok ? null : failAt ? failAt[1] : "(unparsed)";
+        if (malformedCrash || (!proofAll.ok && !failAt))
+            violations.push(
+                `[PROOF-ALL-RUNS] the local aggregate did not COMPLETE${malformedCrash ? " (the malformed-row crash survives)" : " (no named FAIL-at gate — an unstructured death)"}`,
+            );
+    }
 
     // ── Clause 4: NON-:5199 DEFAULT ─────────────────────────────────────────
     // ZERO live-demo nullish-default sites resolving a port OTHER than :5199 in the
@@ -418,12 +434,21 @@ function detectSound() {
             violations.push(`[FRESHNESS-CONTENT-HASH] ${d.wave}-DELTA.md ${d.reason}`);
 
     // ── Clause 8: R6-PERSISTED ──────────────────────────────────────────────
-    // The persisted dock-animation-live PASS artefact (the quiet-server re-run,
-    // §2c) reads status:"pass".
+    // The persisted dock-animation-live artefact must read a NON-fail status. The
+    // original problem this kills is status:"fail" (the server-down false-fail). A
+    // LOCAL quiet-server re-run (CI unset) persists "pass" (the §2c binding paint); a
+    // CI run (CI=true, GitHub Actions) cannot launch a real-GPU π against a live :5199,
+    // so dock-animation-live befittingly SKIPS and persists "skipped" — the
+    // cardinal-lesson split (CI proves device-free + the ledger/ba-gestalt; LOCAL proves
+    // paint). So: require "pass" locally, accept "skipped" under CI, reject "fail" (and
+    // any absent/garbage) in BOTH.
     const r6 = readGateArtifactStatus("AX-dock-animation-live");
     facts.r6DockAnimationStatus = r6;
-    if (r6 !== "pass")
-        violations.push(`[R6-PERSISTED] .cache/gates/AX-dock-animation-live.json reads status:"${r6}" (expected "pass" from a quiet-server run)`);
+    const r6Ok = r6 === "pass" || (process.env.CI && r6 === "skipped");
+    if (!r6Ok)
+        violations.push(
+            `[R6-PERSISTED] .cache/gates/AX-dock-animation-live.json reads status:"${r6}" (expected "pass" from a quiet-server run${process.env.CI ? ' or "skipped" under CI' : ""} — a "fail" is the server-down false-fail this kills)`,
+        );
 
     // ── Clause 9: FONT-PATH-LIVE ────────────────────────────────────────────
     // proof:font-cascade-live exits 0 (it reads the carved tokens/scheme-motion.css
