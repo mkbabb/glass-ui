@@ -1,6 +1,6 @@
 # BD tranche — SEED
 
-**Status:** tranche-DEVELOPMENT (planning-only). EXECUTION awaits a separate greenlight.
+**Status:** tranche-DEVELOPMENT — **CONVERGED (2-consecutive-clean)** 2026-06-20 over 10 iterations (audit → develop → 8 challenge/harden rounds, 5 diverse lenses: completeness · phantom · fence · paint-realizability · gate-soundness). PLANNING-ONLY; EXECUTION awaits a separate greenlight.
 **Predecessor:** BC (shipped 4.1.0 LIVE on npm 2026-06-20; HEAD `9c0e06e2`; release.yml run 27873146903 SUCCESS, the honest paint-verified cut that cured the BB single-terminal-reflect disease).
 **Author:** BD synthesizer over 12 parallel audit findings.
 **Created:** 2026-06-20.
