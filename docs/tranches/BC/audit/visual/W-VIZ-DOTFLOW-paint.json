@@ -1,0 +1,56 @@
+{
+  "wave": "BC.W-VIZ-DOTFLOW",
+  "route": "/substrates/dot-flow-field",
+  "canvas": ".dot-flow-field-canvas",
+  "note": "Real-Metal LIVE-GPU paint record for DOTFLOW. webgpu = the WebGPU primary (default ANGLE/Metal launch); adapterless = the WebGL2 net (navigator.gpu removed at the page → createGpuSubstrate falls to the GLSL twin). Per backend: meanLum/chroma = the MIN across light+dark (the conservative both-modes read); coverageVariance = the MAX (the structured-field witness). A living warm field (meanLum>0, chroma≥0), no black void, no teal/navy.",
+  "backends": {
+    "webgpu": {
+      "meanLum": 61.62987914052858,
+      "chroma": 6.860633287473518,
+      "opaque": 473908,
+      "coverageVariance": 343.9653776418687,
+      "perScheme": {
+        "light": {
+          "meanLum": 233.4072473323093,
+          "meanChroma": 7.196097132776826,
+          "opaque": 473908,
+          "coverageVariance": 343.9653776418687,
+          "width": 1028,
+          "height": 461
+        },
+        "dark": {
+          "meanLum": 61.62987914052858,
+          "meanChroma": 6.860633287473518,
+          "opaque": 473908,
+          "coverageVariance": 233.68281695604512,
+          "width": 1028,
+          "height": 461
+        }
+      }
+    },
+    "adapterless": {
+      "meanLum": 61.866329265446055,
+      "chroma": 6.947576322830591,
+      "opaque": 473908,
+      "coverageVariance": 343.0024569103022,
+      "perScheme": {
+        "light": {
+          "meanLum": 233.1417582306179,
+          "meanChroma": 7.2533867332900055,
+          "opaque": 473908,
+          "coverageVariance": 343.0024569103022,
+          "width": 1028,
+          "height": 461
+        },
+        "dark": {
+          "meanLum": 61.866329265446055,
+          "meanChroma": 6.947576322830591,
+          "opaque": 473908,
+          "coverageVariance": 230.93322001411596,
+          "width": 1028,
+          "height": 461
+        }
+      }
+    }
+  }
+}

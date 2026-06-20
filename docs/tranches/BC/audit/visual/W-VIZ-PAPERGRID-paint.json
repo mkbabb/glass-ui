@@ -1,0 +1,56 @@
+{
+  "wave": "BC.W-VIZ-PAPERGRID",
+  "route": "/substrates/paper-grid",
+  "canvas": ".paper-grid-canvas",
+  "note": "Real-Metal LIVE-GPU paint record for PAPERGRID. webgpu = the WebGPU primary (default ANGLE/Metal launch); adapterless = the WebGL2 net (navigator.gpu removed at the page → createGpuSubstrate falls to the GLSL twin). Per backend: meanLum/chroma = the MIN across light+dark (the conservative both-modes read); coverageVariance = the MAX (the structured-field witness). A living warm field (meanLum>0, chroma≥0), no black void, no teal/navy.",
+  "backends": {
+    "webgpu": {
+      "meanLum": 71.95096189340228,
+      "chroma": 6.845129284939394,
+      "opaque": 468268,
+      "coverageVariance": 530.1261471321185,
+      "perScheme": {
+        "light": {
+          "meanLum": 187.9860281111005,
+          "meanChroma": 7.652115882357966,
+          "opaque": 468268,
+          "coverageVariance": 517.4838622808436,
+          "width": 668,
+          "height": 701
+        },
+        "dark": {
+          "meanLum": 71.95096189340228,
+          "meanChroma": 6.845129284939394,
+          "opaque": 468268,
+          "coverageVariance": 530.1261471321185,
+          "width": 668,
+          "height": 701
+        }
+      }
+    },
+    "adapterless": {
+      "meanLum": 72.05185292503451,
+      "chroma": 6.8566611427644,
+      "opaque": 468268,
+      "coverageVariance": 550.9681728025763,
+      "perScheme": {
+        "light": {
+          "meanLum": 188.5677480979651,
+          "meanChroma": 7.636172021150282,
+          "opaque": 468268,
+          "coverageVariance": 550.9681728025763,
+          "width": 668,
+          "height": 701
+        },
+        "dark": {
+          "meanLum": 72.05185292503451,
+          "meanChroma": 6.8566611427644,
+          "opaque": 468268,
+          "coverageVariance": 531.3397976600231,
+          "width": 668,
+          "height": 701
+        }
+      }
+    }
+  }
+}

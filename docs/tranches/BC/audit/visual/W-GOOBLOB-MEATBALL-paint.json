@@ -1,0 +1,47 @@
+{
+  "wave": "BC.W-GOOBLOB-MEATBALL",
+  "route": "/substrates/blob",
+  "note": "Real-Metal capture of the STAGE-2 lit meatball (variant=meatball, lit+shadow ON). webgpu = the WebGPU primary (default ANGLE/Metal launch); adapterless = the WebGL2 net (navigator.gpu removed at the page → useGpuSubstrate falls to the GLSL twin). Per backend: meanLum = min across light+dark; specularPeakRatio = the dome-glint peak/interior, taken in the mode where it reads (the bright cream body compresses the ratio in light; the glint reads sharp against the dark body in dark); shadowBandPresent = the softShadow2D away-rim darken observed in EITHER mode (the 29% darken reads against the bright body in light).",
+  "backends": {
+    "webgpu": {
+      "meanLum": 68.57476905085453,
+      "specularPeakRatio": 3.576088823953943,
+      "shadowBandPresent": true,
+      "opaque": 590592,
+      "perScheme": {
+        "light": {
+          "meanLum": 202.6049500638346,
+          "specularPeakRatio": 1.1834870070760177,
+          "shadowDarken": 0.2912000810147265,
+          "shadowBandPresent": true
+        },
+        "dark": {
+          "meanLum": 68.57476905085453,
+          "specularPeakRatio": 3.576088823953943,
+          "shadowDarken": 0.016111608704360857,
+          "shadowBandPresent": false
+        }
+      }
+    },
+    "adapterless": {
+      "meanLum": 79.48740616889108,
+      "specularPeakRatio": 2.8650614206485483,
+      "shadowBandPresent": true,
+      "opaque": 590592,
+      "perScheme": {
+        "light": {
+          "meanLum": 201.13232683704987,
+          "specularPeakRatio": 1.1972277881184805,
+          "shadowDarken": 0.2722445904645868,
+          "shadowBandPresent": true
+        },
+        "dark": {
+          "meanLum": 79.48740616889108,
+          "specularPeakRatio": 2.8650614206485483,
+          "shadowDarken": 0.4355622869559823,
+          "shadowBandPresent": true
+        }
+      }
+    }
+  }
+}

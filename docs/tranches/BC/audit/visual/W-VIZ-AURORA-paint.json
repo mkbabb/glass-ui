@@ -1,0 +1,56 @@
+{
+  "wave": "BC.W-VIZ-AURORA",
+  "route": "/substrates/aurora",
+  "canvas": ".aurora-canvas",
+  "note": "Real-Metal LIVE-GPU paint record for AURORA. webgpu = the WebGPU primary (default ANGLE/Metal launch); adapterless = the WebGL2 net (navigator.gpu removed at the page → createGpuSubstrate falls to the GLSL twin). Per backend: meanLum/chroma = the MIN across light+dark (the conservative both-modes read); coverageVariance = the MAX (the structured-field witness). A living warm field (meanLum>0, chroma≥0), no black void, no teal/navy.",
+  "backends": {
+    "webgpu": {
+      "meanLum": 62.04197915148721,
+      "chroma": 20.568511776017296,
+      "opaque": 1883574,
+      "coverageVariance": 2469.427853405727,
+      "perScheme": {
+        "light": {
+          "meanLum": 221.56842238390567,
+          "meanChroma": 20.568511776017296,
+          "opaque": 1883574,
+          "coverageVariance": 1072.7960553988669,
+          "width": 1134,
+          "height": 1661
+        },
+        "dark": {
+          "meanLum": 62.04197915148721,
+          "meanChroma": 24.18671419333671,
+          "opaque": 1883574,
+          "coverageVariance": 2469.427853405727,
+          "width": 1134,
+          "height": 1661
+        }
+      }
+    },
+    "adapterless": {
+      "meanLum": 60.491981183918185,
+      "chroma": 21.09443058780807,
+      "opaque": 1883574,
+      "coverageVariance": 2453.3616026575587,
+      "perScheme": {
+        "light": {
+          "meanLum": 220.8578249645891,
+          "meanChroma": 21.51686149790843,
+          "opaque": 1884708,
+          "coverageVariance": 1088.6139972714486,
+          "width": 1134,
+          "height": 1662
+        },
+        "dark": {
+          "meanLum": 60.491981183918185,
+          "meanChroma": 21.09443058780807,
+          "opaque": 1883574,
+          "coverageVariance": 2453.3616026575587,
+          "width": 1134,
+          "height": 1661
+        }
+      }
+    }
+  }
+}
