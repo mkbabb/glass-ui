@@ -11,8 +11,14 @@ import {
     TableEmpty,
 } from "../../../src/components/ui/table";
 import { Badge } from "../../../src/components/ui/badge";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { cn } from "../../../src/utils/cn";
-import { Table as TableIcon } from "@lucide/vue";
+import { Table as TableIcon, Table2 } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
+// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
+// double-header shape).
+const DATA_STOP = 9;
 
 interface Invoice {
     id: string;
@@ -43,6 +49,26 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Table2" :section="DATA_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Data · Table
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Sortable, filterable data tables — the section identity is
+                    the ONE color event; the cells stay ink.
+                </p>
+            </div>
+        </header>
+
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Basic table</p>
             <div

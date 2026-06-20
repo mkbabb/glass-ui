@@ -59,7 +59,12 @@ const index = computed({
                         :inert="i !== deck.index.value ? true : undefined"
                     >
                         <p class="text-mono-caption">{{ i + 1 }} / {{ slides.length }}</p>
-                        <h3 class="text-display-2">{{ s.title }}</h3>
+                        <!-- BC.W-SUFFUSE-reconcile — the motion band's ONE color
+                             text-event: the slide DISPLAY title in the
+                             --motion-accent violet (the motion-purple family, never
+                             a body <p>). The slide title is a display heading, not a
+                             StorySection <h2> (PH1/PH3 unaffected). -->
+                        <h3 class="text-display-2" :style="{ color: 'var(--motion-accent)' }">{{ s.title }}</h3>
                         <p class="text-body">{{ s.body }}</p>
                         <Button v-if="s.title === 'Focus-guarded'" variant="default">
                             Focusable control

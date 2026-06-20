@@ -4,7 +4,7 @@ import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import {
     FileText, Settings, User, Palette, Moon, Sun, Search, Plus,
-    GitBranch, Package, Command as CommandIcon,
+    GitBranch, Package, Command as CommandIcon, TerminalSquare,
 } from "@lucide/vue";
 import {
     Command,
@@ -16,6 +16,12 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "../../../src/components/ui/command";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 const selected = ref<string | null>(null);
 const query = ref("");
@@ -50,6 +56,26 @@ function pick(id: string) {
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="TerminalSquare" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Command
+                </span>
+                <p class="text-small text-muted-foreground">
+                    A command-palette picker — the container identity is the ONE
+                    color event.
+                </p>
+            </div>
+        </header>
+
         <StorySection heading="Inline palette" gap="md">
             <p class="text-sm text-muted-foreground">
                 The Command element embeds inline here; in practice you'd wrap it in a

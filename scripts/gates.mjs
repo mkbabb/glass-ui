@@ -194,12 +194,6 @@ export const GATES = [
         note: "AZ.W-DOCK-TAXONOMY (H2 arm-a) — ONE GlassDock on ONE orientation axis. Device-free static src-scan: T1 no live variant=rail/instrument-strip call-site, T2 the CLOSED rail-noun allowlist ({.dock-layer-rail, DockRail-reserved} — a new rail-named construct REDs), T3 no vertical alwaysExpanded force-pin (a vertical dock collapses/morphs height), T4 ONE DockProps shape (no variant discriminant). Born-RED executed on T1+T2. Bite: re-introduce variant=rail or a third rail noun → RED.",
     },
     {
-        id: "proof:rail-extend",
-        cmd: "proof:rail-extend",
-        tags: ["local", "ci", "release"],
-        note: "AZ.W-RAIL-EXTEND — the net-new hairline-rail-beyond-dock facility (DockRail). Device-free static src-scan: R1 the hairline composes box-shadow: var(--border-hairline) (no hard 1px solid), R2 the end-icon writes ONE sanctioned seam (consumer v-model:context OR the injected DockLayerGroup active — no internal ref-shadow), R3 the --dock-rail-extend-length beyond-edge overrun rule, R4 the #rail chrome slot renders OUTSIDE .dock-layers (escapes the morph clip — persists on collapse), R5 >=2 live DockRail demo mounts. Born-RED on all five. The runtime truths (beyond-edge + end-icon switch + persist-on-collapse) are the local-only π half in W-RAIL-EXTEND-DELTA.md, ledger-backstopped. Bite: hard-rule the hairline / shadow the seam / drop the extent token / clip the slot / drop a consumer → RED.",
-    },
-    {
         id: "proof:dock-contextual-layers",
         cmd: "proof:dock-contextual-layers",
         tags: ["local", "ci", "release"],

@@ -12,7 +12,12 @@ import {
     SelectValue,
 } from "../../../src/components/ui/select";
 import { Label } from "../../../src/components/ui/label";
-
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ListFilter } from "@lucide/vue";
+// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
+// identity (the cool stop). PH3-safe (inline borderLeft, not the
+// border-l-[3px] + <IconChip> double-header shape).
+const FORMS_STOP = 3;
 
 const font = ref<string>("plus-jakarta-sans");
 const basis = ref<string>("fourier");
@@ -21,6 +26,26 @@ const density = ref<string>("");
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ListFilter" :section="FORMS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Forms · Select
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Single-choice dropdown pickers — the section identity is the
+                    ONE color event; the controls stay ink.
+                </p>
+            </div>
+        </header>
+
         <!-- Grouped items with labels + separator. -->
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="sel-font">Font family</Label>

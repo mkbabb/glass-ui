@@ -101,24 +101,34 @@ const SCALE_FAMILIES = [
         bridgeRe: /^\s*--ease-[a-z-]+\s*:\s*var\((--(?:motion-ease|spring)-[a-z-]+)\)/gm,
         // --spring-dock is the dock FLIP choreography constant — consumed as raw
         // var(--spring-dock) inside the dock motion recipes (proof:dock-motion-*),
-        // no per-element `ease-spring-dock` utility use case.
+        // no per-element `ease-spring-dock` utility use case. --spring-deck
+        // (BC.W-DECK) is the matching deck-slide choreography ALIAS
+        // (`--spring-deck: var(--spring-smooth)`) — consumed as a raw
+        // var(--spring-deck) read in the deck slide-transition recipe + the
+        // useDeckSpring JS half, never a per-element `ease-spring-deck` utility, so
+        // it is the same raw-var register as --spring-dock (the curve register has
+        // its own --ease-spring-smooth bridge through the donor).
         //
-        // The five --spring-<name>-duration tokens (BA.W-GLASS-CAL Unit 3 — the
-        // per-spring SETTLE clock, GENERATED in regen-spring-tokens.mjs from the
-        // SPRING_PRESETS (response, ζ) table) are the matching holdout: each is
-        // consumed ONLY as a raw `var(--spring-<name>-duration)` read paired with
-        // its `--spring-<name>` curve inside a `transition`/`animation` shorthand
-        // (transitions.css, dock.css, view-transition.css, animations.css) + the
+        // The six --spring-<name>-duration tokens (BA.W-GLASS-CAL Unit 3 + the
+        // BC.W-SPRING-EASE press clock — the per-spring SETTLE clock, GENERATED in
+        // regen-spring-tokens.mjs from the SPRING_PRESETS (response, ζ) table) are
+        // the matching holdout: each is consumed ONLY as a raw
+        // `var(--spring-<name>-duration)` read paired with its `--spring-<name>`
+        // curve inside a `transition`/`animation` shorthand (transitions.css,
+        // dock.css, view-transition.css, animations.css) + the JS press path
+        // (useSpringPress reads --spring-press-duration) + the
         // `--tab-indicator-duration` vocabulary — never a per-element
         // `duration-spring-smooth` Tailwind utility, so there is no `--ease-*`/
         // duration bridge use case (the same raw-var register as --spring-dock).
         holdout: [
             "--spring-dock",
+            "--spring-deck",
             "--spring-smooth-duration",
             "--spring-snappy-duration",
             "--spring-bouncy-duration",
             "--spring-gentle-duration",
             "--spring-dock-duration",
+            "--spring-press-duration",
         ],
     },
     {

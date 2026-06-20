@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Check, ChevronsUpDown } from "@lucide/vue";
+import { Check, ChevronsUpDown, Search } from "@lucide/vue";
 import {
     Combobox,
     ComboboxAnchor,
@@ -14,7 +14,11 @@ import {
     ComboboxTrigger,
 } from "../../../src/components/ui/combobox";
 import { Label } from "../../../src/components/ui/label";
-
+import { IconChip } from "../../../src/components/custom/icon-chip";
+// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
+// identity (the cool stop). PH3-safe (inline borderLeft, not the
+// border-l-[3px] + <IconChip> double-header shape).
+const FORMS_STOP = 3;
 
 interface Option {
     value: string;
@@ -38,6 +42,26 @@ const selected = ref<string>("");
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Search" :section="FORMS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Forms · Combobox
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Type-ahead filtered selection — the section identity is the
+                    ONE color event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="cbx">Basis or palette</Label>
             <Combobox v-model="selected" by="value">

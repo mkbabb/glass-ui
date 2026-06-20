@@ -3,7 +3,12 @@ import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { MultiSelect, type MultiSelectOption } from "../../../src/components/ui/multi-select";
 import { Label } from "../../../src/components/ui/label";
-
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ListChecks } from "@lucide/vue";
+// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
+// identity (the cool stop). PH3-safe (inline borderLeft, not the
+// border-l-[3px] + <IconChip> double-header shape).
+const FORMS_STOP = 3;
 
 const bases: MultiSelectOption[] = [
     { value: "fourier", label: "Fourier" },
@@ -29,6 +34,26 @@ const lockedTools = ref<string[]>(["vue", "tailwind"]);
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ListChecks" :section="FORMS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Forms · Multi-select
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Multiple-choice tag selection — the section identity is the
+                    ONE color event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3 max-w-sm">
             <Label>Bases</Label>
             <MultiSelect

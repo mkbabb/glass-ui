@@ -14,7 +14,13 @@ import {
     ContextMenuShortcut,
     ContextMenuTrigger,
 } from "../../../src/components/ui/context-menu";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { MousePointerClick } from "@lucide/vue";
 
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 const tone = ref<"warm" | "cool" | "neutral">("warm");
 const showGrid = ref(true);
@@ -22,7 +28,26 @@ const showGrid = ref(true);
 
 <template>
     <StoryPage>
-        
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="MousePointerClick" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Context menu
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Right-click contextual actions — the container identity is the
+                    ONE color event.
+                </p>
+            </div>
+        </header>
+
             <StorySection heading="Right-click surface" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     Right-click the paper below.

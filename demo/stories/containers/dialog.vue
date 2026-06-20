@@ -16,7 +16,13 @@ import { Button } from "../../../src/components/ui/button";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { MessageSquare } from "@lucide/vue";
 
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 const confirmOpen = ref(false);
 const confirming = ref(false);
@@ -33,7 +39,26 @@ function onConfirm() {
 
 <template>
     <StoryPage>
-        
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="MessageSquare" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Dialog
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Modal dialog surfaces — the container identity is the ONE color
+                    event.
+                </p>
+            </div>
+        </header>
+
             <StorySection heading="Standard dialog" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     Glass variant with a form body and a cancel/submit footer.

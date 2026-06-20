@@ -2,8 +2,14 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Badge } from "../../../src/components/ui/badge";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { cn } from "../../../src/utils/cn";
+import { BadgeCheck } from "@lucide/vue";
 
+// BC.W-SUFFUSE-reconcile — the display band's ONE coherent --section-color-5
+// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
+// double-header shape).
+const DISPLAY_STOP = 5;
 
 // The section-color tone axis as a documented Badge variant teaching row (the
 // display map's "surface the section-color tone as a documented variant axis").
@@ -37,6 +43,26 @@ const vizBadges: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DISPLAY_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="BadgeCheck" :section="DISPLAY_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Display · Badge
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Loud-pill status badges — the section identity is the ONE
+                    color event; the loud pills carry their own register.
+                </p>
+            </div>
+        </header>
+
         <StorySection
             label="section-color tone axis"
             blurb="Compose a --section-color-N fill as a documented Badge tone — the 13-stop jewel-tone ramp as a saturated-pill teaching axis."

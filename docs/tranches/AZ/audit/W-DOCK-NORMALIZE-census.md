@@ -153,18 +153,29 @@ A home anchor would pollute the morph-facility teaching surface. EXEMPT, recorde
 |---|---|---|---|
 | the receive-target dock (one `<DockIconButton>` is the CTA landing site) | FEATURE | none | EXEMPT (the dock is the morph DESTINATION of the external-CTA-morphs-into-dock receive facility — an external `<Button>` CTA flies + reshapes ONTO the target control via `useDockCtaReceive`, the iOS bloom-from-source inverse; a home control would pollute the receive-seam teaching surface) |
 
-A home anchor would pollute the receive-seam teaching surface. EXEMPT, recorded positively. (The AZ-snapshot totals below predate the BB additions — `AppShell.vue` + `cta-receive.vue`; the gate's live enumeration is the source of truth, currently 11 dock-bearing SFCs all accounted.)
+A home anchor would pollute the receive-seam teaching surface. EXEMPT, recorded positively. (The AZ-snapshot totals below predate the BB/BC additions — `AppShell.vue` + `cta-receive.vue` + `dock-search.vue`; the gate's live enumeration is the source of truth, currently 12 dock-bearing SFCs all accounted.)
+
+### File: `demo/stories/dock/dock-search.vue` — FEATURE_EXEMPT (BC.W-DOCK-SEARCH)
+
+| dock @line | class | home-status | verdict |
+|---|---|---|---|
+| the `<GlassDock search>` dock-as-search-bar (the collapsed pill morphs into a search field) | FEATURE | none | EXEMPT (the dock is the SEARCH SUBJECT of the dock-as-native-dynamic-search-bar facility — the collapsed pill MORPHS on the `--dock-morph-t` glide + the byte-untouched morph-bridge metaball into a search field, composing `useDockSearch` + the SHIPPED `/search` `useFuzzySearch` matcher into the `#search` aperture; a home control would pollute the search-facility teaching surface) |
+
+A home anchor would pollute the search-facility teaching surface. EXEMPT, recorded positively.
 
 ## Census closure (W5 — the anti-gameability floor)
 
-The 8 dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock
-file:
+The dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock
+file (the AZ-snapshot list below is the historical baseline; the gate's live enumeration is the
+source of truth, currently 12 dock-bearing SFCs all accounted — `sections.vue` joined SHOWCASE,
+and the BB `AppShell.vue` + `cta-receive.vue` and the BC `dock-search.vue` additions extend the
+FEATURE_EXEMPT set):
 
-- **SHOWCASE_DOCKS** (3): `overview.vue`, `rail.vue`, `layers.vue`
+- **SHOWCASE_DOCKS** (4): `overview.vue`, `rail.vue`, `layers.vue`, `sections.vue`
 - **SHELL_DOCKS** (2, promoted to strict): `BottomDock.vue`, `SidebarDock.vue`
-- **FEATURE_EXEMPT_DOCKS** (3): `dark-mode-toggle.vue`, `metric-pill.vue`, `morph-showcase.vue`
+- **FEATURE_EXEMPT_DOCKS** (6 — AZ snapshot `dark-mode-toggle.vue`, `metric-pill.vue`, `morph-showcase.vue`; **+ BB** `AppShell.vue`, `cta-receive.vue`; **+ BC** `dock-search.vue`)
 
-3 + 2 + 3 = **8** = the HEAD enumeration. The gate ENUMERATES `demo/**/*.vue` (HTML-comment-stripped)
+4 + 2 + 6 = **12** = the HEAD enumeration. The gate ENUMERATES `demo/**/*.vue` (HTML-comment-stripped)
 filtered to files containing `<GlassDock` and asserts each appears on exactly one list. A future
 agent adding a new nav dock to a NEW story file (hand-rolled home chrome, no `#persistent`) would
 land OFF all three lists → the closure RED-flags the unaccounted file, forcing it onto a list

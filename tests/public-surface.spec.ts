@@ -320,6 +320,10 @@ const exactSubpathRuntimeSurfaces = [
             // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (consumer #1
             // of useLiquidFlex; the metaball-bridge / arm-c crossfade showcase).
             "useDockOrientationMorph",
+            // BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar seam
+            // (composes useDockState + the /search fuzzy pipeline + the dock
+            // --dock-morph-t metaball morph; <GlassDock search> opts into it).
+            "useDockSearch",
             "provideDockContext",
             "useDockContext",
             "useLayerTransition",

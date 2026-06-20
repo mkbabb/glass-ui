@@ -8,8 +8,14 @@ import type {
     DataTableSort,
 } from "../../../src/components/ui/data-table";
 import { Input } from "../../../src/components/ui/input";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { cn } from "../../../src/utils/cn";
-import { Sheet as SheetIcon } from "@lucide/vue";
+import { Sheet as SheetIcon, Database } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
+// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
+// double-header shape).
+const DATA_STOP = 9;
 
 interface Repo {
     _id: string;
@@ -151,6 +157,26 @@ const paged = computed(() => {
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${DATA_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Database" :section="DATA_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Data · Data table
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Column sorting and filtering helpers — the section identity
+                    is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <div class="flex items-end justify-between gap-4">
             <!-- D1-5 (AZ.W-HIERARCHY): the in-card eyebrow 'Data table' was a DUP of
                  the page-chrome eyebrow ('DATA · DATA TABLE'); dropped. The card

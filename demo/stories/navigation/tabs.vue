@@ -13,6 +13,11 @@ import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "../../../src/components/custom/tabs";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { LayoutGrid } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip> double-header shape).
+const NAV_STOP = 12;
 
 
 // ── Pill (glass) — horizontal ──
@@ -80,6 +85,25 @@ const chapterBody: Record<string, string> = {
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="LayoutGrid" :section="NAV_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Navigation · Tabs
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Panel-nav and toggle-strip tabs — the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
             heading="Pill — the glass material (default)"

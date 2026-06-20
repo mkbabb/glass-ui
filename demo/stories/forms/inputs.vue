@@ -5,7 +5,12 @@ import { ref } from "vue";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { SearchBar } from "../../../src/components/custom/search";
-
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { TextCursorInput } from "@lucide/vue";
+// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
+// identity (the cool stop). PH3-safe (inline borderLeft, not the
+// border-l-[3px] + <IconChip> double-header shape).
+const FORMS_STOP = 3;
 
 const plain = ref("");
 const withLabel = ref("");
@@ -16,6 +21,26 @@ const pillBare = ref("");
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="TextCursorInput" :section="FORMS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Forms · Text input
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Text fields, search, and password inputs — the field controls
+                    stay ink; the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <StorySection heading="Default" gap="lg">
             <p class="text-small text-muted-foreground">
                 Bare <code class="fira-code">Input</code>, no label.

@@ -142,6 +142,10 @@ const rootContractFiles = [
     // BA.W-ICON-CHIP — the section-color POP primitive joins the root barrel
     // (`export * from "./components/custom/icon-chip"`; also /icon-chip subpath).
     "src/components/custom/icon-chip/index.ts",
+    // BC.W-SPLIT-CHARS — the per-glyph split COMPONENT face <SplitChars> joins the
+    // root barrel (`export * from "./components/custom/split-chars"`; engine-FREE —
+    // vueuse + keyframes free, the icon-chip/vReveal precedent; also /motion-core).
+    "src/components/custom/split-chars/index.ts",
     // The vueuse-free composable sub-trees.
     "src/composables/reactive/index.ts",
     "src/composables/dom/index.ts",
@@ -207,6 +211,13 @@ rootAllowed.add("usePointerVelocityField");
 rootAllowed.add("PointerVec2");
 rootAllowed.add("UsePointerVelocityField");
 rootAllowed.add("UsePointerVelocityFieldOptions");
+// BC.W-SPLIT-CHARS — useCharStagger is the engine-free per-glyph stagger composable
+// the <SplitChars> face composes, targeted-re-exported to the root barrel from
+// ./composables/motion/useCharStagger (vueuse-FREE + keyframes-FREE — the CSS owns
+// the motion, per the vReveal/useLiquidFlex precedent; on /motion-core + the root).
+rootAllowed.add("useCharStagger");
+rootAllowed.add("UseCharStaggerOptions");
+rootAllowed.add("UseCharStaggerReturn");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`
@@ -217,6 +228,17 @@ const subpathOnlyUiFiles = [
     "src/components/ui/textarea/index.ts",
     "src/components/ui/combobox/index.ts",
     "src/components/ui/carousel/index.ts",
+    // BB.W-DRAWER-ABROGATE — Drawer is OFF the root barrel (a clean break, no alias):
+    // the reka rebuild's `useDrawerSnap` engine is a keyframes.js SpringProgress
+    // consumer, so the Drawer is keyframes-BEARING and must NOT inline its optional
+    // peer into the vueuse-free root bundle. It ships via the `/drawer` subpath only;
+    // `ui/index.ts` still re-exports it (the ui barrel), so subtract it from the
+    // curated root surface (the input/textarea/combobox/carousel precedent above).
+    "src/components/ui/drawer/index.ts",
+    // BC — FocusScope (the substrate-single focus-trap host over reka's FocusScope)
+    // ships via the `/focus-scope` subpath + the ui barrel, NOT the curated root
+    // barrel. Same subtraction as Drawer above (in ui/index.ts, off src/index.ts).
+    "src/components/ui/focus-scope/index.ts",
 ].map((file) => resolve(root, file));
 for (const name of unionExports(subpathOnlyUiFiles)) rootAllowed.delete(name);
 const actualRootExports = collectExports(resolve(root, "src/index.ts"));

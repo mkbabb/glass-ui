@@ -1,28 +1,43 @@
 import { describe, expect, it } from "vitest";
 
-import { detectDockSections } from "../../scripts/proof-dock-sections.mjs";
+import {
+    detectDockSections,
+    groupingSelfTest,
+} from "../../scripts/proof-dock-sections.mjs";
 
 /**
- * BB.W-DOCK-RAIL-SEAT-FINAL — the S6 born-RED self-test bites.
+ * proof:dock-sections — the tripartite SECTION-GROUPING gate (BA.W-DOCK-SECTIONS).
  *
- * S6 extends proof:dock-sections in-place: the ℱ-anchor RESTORED (S6a) + the desktop
- * chip fan re-fanned to the off-canvas lower gutter (S6b), the dual-overrun R-arm held
- * (S6c), no midline/abandonment regress (S6d). These units feed the exported detector
- * synthetic fixtures so the born-RED + the anti-evasion bites cannot regress to
- * false-GREEN: the pre-wave shape (anchor-id="utility", rightward fan) REDs S6; a
- * third-arbitrary-separator anchor REDs S6a; a re-introduced midline slot seat REDs S6d.
+ * BC.W-DOCK-STACK-RAIL SPLIT (clean break). This gate ORIGINALLY carried the S6
+ * ℱ-anchor-seat-final + off-canvas gutter-fan RAIL clauses (the divider-carousel
+ * <DockRail> seam-offset seat / chip-retract / chip-fan). The rail was RE-CONCEIVED
+ * as the macOS hover-expand <DockStack> (DockRail.vue → DockStack.vue; rail-extend.css
+ * → stack-rail.css; the `--dock-rail-seam-offset` seam-locator + the chip CSS DELETED),
+ * so the rail clauses (S2/S3/S5/S6) now police a RETIRED architecture — they are RETIRED
+ * here and re-pointed to the named successor `proof:dock-stack-rail` (which owns the new
+ * stack seat / fan-out / overflow / topology with its OWN S1-S6 + self-tests).
  *
- * Only the S1-S5 inputs the fixtures need are populated; the GREEN baseline carries the
- * minimal S1-S5 satisfiers so a S6-only RED is isolated from the prior clauses.
+ * What REMAINS valid + still gates is the SECTION-GROUPING:
+ *   S1 — the declarative tripartite descriptor (the rail-core|section|nav zone
+ *        <DockSection>/<DockSeparator> grouping rendered descriptor-DRIVEN — a `v-for`
+ *        over the `sections` prop, NOT a hardcoded three-element literal).
+ *   S4 — the section model returns to BOTH shell docks WITHOUT inflation.
+ *
+ * These units drive the exported PURE detector with synthetic fixtures so the born-RED
+ * + the anti-evasion bites cannot regress to false-GREEN: a hardcoded-literal section
+ * (no v-for / no <DockSeparator> compose) REDs S1; a shell that does NOT adopt
+ * <DockSection> REDs S4. The S6 rail facts/violations are ABSENT — the retirement-witness
+ * (the divider-carousel seam-locator is DEFINITION-ABSENT; its concern lives in
+ * `proof:dock-stack-rail` now).
  */
 
-// ── The S1-S5 GREEN floor (the prior clauses satisfied so S6 RED is isolated) ──
+// ── A descriptor-driven <DockSection> (the S1 GREEN shape) ──
 const DOCK_SECTION_OK = `
 import DockSeparator from "./DockSeparator.vue";
 import type { DockSectionDescriptor } from "./constants";
 <template>
   <template v-for="(section, index) in sections" :key="section.id">
-    <DockSeparator :anchor="isAnchorSeparator(section)" />
+    <DockSeparator />
     <div class="dock-section-zone" :data-kind="section.kind"><slot /></div>
   </template>
 </template>
@@ -31,186 +46,87 @@ const CONSTANTS_OK = `
 export type DockSectionKind = "rail-core" | "section" | "nav";
 export interface DockSectionDescriptor { kind: DockSectionKind; id: string; }
 `;
-const SEPARATOR_OK = `
-defineProps<{ anchor?: boolean }>();
-<template><div class="dock-separator" :data-rail-anchor="anchor || undefined" /></template>
-`;
-const RAIL_OK = `
-import FadingScroll from "../fading-scroll/FadingScroll.vue";
-const context = defineModel<string>("context");
-<template><FadingScroll axis="x"><div class="dock-hairline-strip" /></FadingScroll></template>
-`;
 const INDEX_OK = `
 export { default as DockSection } from "./DockSection.vue";
 export type { DockSectionDescriptor } from "./constants";
 `;
-const RAIL_CSS_OK = `
-@layer components {
-  :root { --dock-rail-extend-length: calc(2.5rem * var(--dock-scale, 1)); }
-  .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-    inset-block-start: var(--dock-rail-seam-offset, 0px);
-    inset-inline-start: calc(-1 * var(--dock-rail-extend-length));
-    inline-size: calc(100% + 2 * var(--dock-rail-extend-length));
-    translate: 0 -50%;
-  }
-  .dock-hairline-extend.vertical::before {
-    block-size: 1px; min-inline-size: var(--dock-rail-extend-length); inset-block-start: 50%;
-  }
-  .dock-hairline-strip { scrollbar-width: none; }
-  .glass-dock.collapsed ~ .dock-hairline-slot .dock-hairline-strip { opacity: 0; translate: 1px 0; }
-  @media (prefers-reduced-motion: reduce) { .dock-hairline-strip { transition: none; } }
-}
-`;
-const GLASSDOCK_OK = `
-function measureSeam() { frame.style.setProperty("--dock-rail-seam-offset", offset); }
-`;
+const SIDEBAR_OK = `<template><DockSection :sections="sections" /></template>`;
 const BOTTOM_OK = `<template><DockSection :sections="sections" /></template>`;
 
-// ── The post-wave SidebarDock (S6 GREEN): the ℱ-home :anchor + nulled DockSection ──
-const SIDEBAR_AFTER = `
+// ── The hardcoded-literal section (S1 born-RED): no v-for over `sections`, no
+//    <DockSeparator> compose — a fixed three-zone literal ──
+const DOCK_SECTION_HARDCODED = `
 <template>
-  <GlassDock orientation="vertical" always-expanded>
-    <template #persistent>
-      <DockIconButton class="demo-sidebar-home"><span>F</span></DockIconButton>
-      <DockSeparator :anchor="true" />
-    </template>
-    <DockSection :sections="sections" anchor-id="__none__">
-      <template #categories><DockIconButton /></template>
-    </DockSection>
-    <template #rail><DockRail :items="railItems" /></template>
-  </GlassDock>
-</template>
-`;
-// ── The pre-wave SidebarDock (S6 born-RED): anchor-id="utility", no ℱ-home anchor ──
-const SIDEBAR_BEFORE = `
-<template>
-  <GlassDock orientation="vertical" always-expanded>
-    <template #persistent>
-      <DockIconButton class="demo-sidebar-home"><span>F</span></DockIconButton>
-      <DockSeparator />
-    </template>
-    <DockSection :sections="sections" anchor-id="utility">
-      <template #categories><DockIconButton /></template>
-    </DockSection>
-    <template #rail><DockRail :items="railItems" /></template>
-  </GlassDock>
-</template>
-`;
-// ── The third-arbitrary-separator anchor (S6a anti-evasion): a :anchor buried INSIDE
-//    the DockSection default slot, not the ℱ-home #persistent region ──
-const SIDEBAR_THIRD_SEP = `
-<template>
-  <GlassDock orientation="vertical" always-expanded>
-    <template #persistent>
-      <DockIconButton class="demo-sidebar-home"><span>F</span></DockIconButton>
-      <DockSeparator />
-    </template>
-    <DockSection :sections="sections" anchor-id="__none__">
-      <template #categories><DockIconButton /><DockSeparator :anchor="true" /></template>
-    </DockSection>
-    <template #rail><DockRail :items="railItems" /></template>
-  </GlassDock>
+  <div class="dock-section">
+    <div>core</div><div>section</div><div>nav</div>
+  </div>
 </template>
 `;
 
-// ── The demo dock-nav.css (S6 GREEN): the lower-gutter column fan ──
-const DOCK_NAV_AFTER = `
-.demo-sidebar-rail .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-  inset-block-end: 0; block-size: auto; translate: 0 0;
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-fade {
-  inset-inline-start: 50%; inset-block-start: auto; inset-block-end: 0; translate: -50% 0;
-  max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-strip {
-  flex-direction: column; max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-`;
-// ── The pre-wave demo dock-nav.css (S6b born-RED): the W-CHIP-GRAZE top-seat (the chips
-//    track the seam top, NOT the lower gutter) — `inset-block-start: 0`, no `inset-block-end` ──
-const DOCK_NAV_BEFORE = `
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-fade {
-  inset-inline-start: 50%; inset-block-start: 0; translate: -50% 0;
-  max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-strip {
-  flex-direction: column; max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-`;
-// ── A demo override that re-introduces the midline SLOT seat (S6d bite) ──
-const DOCK_NAV_MIDLINE = `
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-fade {
-  inset-block-end: 0; max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-extend.vertical .dock-hairline-strip {
-  flex-direction: column; max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-slot { inset-block-start: 50%; }
-`;
-
-function fs(sidebar: string, dockNavCss: string) {
+function fs(overrides: Partial<Record<string, string>> = {}) {
     return {
         dockSectionText: DOCK_SECTION_OK,
         constantsText: CONSTANTS_OK,
-        dockSeparatorText: SEPARATOR_OK,
-        dockRailText: RAIL_OK,
-        railCssText: RAIL_CSS_OK,
         sectionCssText: "",
-        glassDockText: GLASSDOCK_OK,
         indexText: INDEX_OK,
-        sidebarText: sidebar,
+        sidebarText: SIDEBAR_OK,
         bottomText: BOTTOM_OK,
-        dockNavCssText: dockNavCss,
+        ...overrides,
     };
 }
 
+const s1Violations = (v: string[]) => v.filter((x) => x.startsWith("S1"));
+const s4Violations = (v: string[]) => v.filter((x) => x.startsWith("S4"));
 const s6Violations = (v: string[]) => v.filter((x) => x.startsWith("S6"));
 
-describe("proof:dock-sections S6 — the ℱ-anchor restore + the off-canvas gutter fan", () => {
-    it("PASSES on the post-wave shape (ℱ-home :anchor + lower-gutter fan)", () => {
+describe("proof:dock-sections — the retained tripartite SECTION-GROUPING (S1 + S4)", () => {
+    it("PASSES on the descriptor-driven shell (v-for over `sections` + BOTH shells adopt)", () => {
+        const { violations, facts } = detectDockSections(fs());
+        expect(violations).toEqual([]);
+        // S1 — the descriptor-driven grouping is satisfied.
+        expect(facts.s1DockSectionExists).toBe(true);
+        expect(facts.s1DescriptorType).toBe(true);
+        expect(facts.s1KindType).toBe(true);
+        expect(facts.s1RendersVforOverSections).toBe(true);
+        expect(facts.s1KindSwitchesZone).toBe(true);
+        expect(facts.s1ComposesSeparator).toBe(true);
+        expect(facts.s1ExportsSection).toBe(true);
+        // S4 — both shell docks adopt <DockSection>.
+        expect(facts.s4SidebarAdoptsSection).toBe(true);
+        expect(facts.s4BottomAdoptsSection).toBe(true);
+    });
+
+    it("S1 born-RED: a hardcoded-literal <DockSection> (no v-for, no <DockSeparator>) REDs", () => {
         const { violations, facts } = detectDockSections(
-            fs(SIDEBAR_AFTER, DOCK_NAV_AFTER),
+            fs({ dockSectionText: DOCK_SECTION_HARDCODED }),
         );
+        // not descriptor-DRIVEN, no separator compose
+        expect(facts.s1RendersVforOverSections).toBe(false);
+        expect(facts.s1ComposesSeparator).toBe(false);
+        expect(s1Violations(violations).length).toBeGreaterThan(0);
+    });
+
+    it("S4 born-RED: a shell dock that does NOT adopt <DockSection> REDs", () => {
+        const { violations, facts } = detectDockSections(
+            fs({ sidebarText: "<template><GlassDock><DockIconButton /></GlassDock></template>" }),
+        );
+        expect(facts.s4SidebarAdoptsSection).toBe(false);
+        expect(facts.s4BottomAdoptsSection).toBe(true);
+        expect(s4Violations(violations).some((v) => /SidebarDock/.test(v))).toBe(true);
+    });
+
+    it("the grouping invariant self-test bites (the born-RED grouping mutations flag)", () => {
+        // The gate's own self-test drives a hardcoded-literal section (S1) + a
+        // no-adoption shell (S4); both MUST flag for the grouping to be load-bearing.
+        expect(groupingSelfTest().ok).toBe(true);
+        expect(groupingSelfTest().errors).toEqual([]);
+    });
+
+    it("the S6 RAIL clauses are RETIRED — no S6 facts/violations (concern → proof:dock-stack-rail)", () => {
+        const { violations, facts } = detectDockSections(fs());
+        // the divider-carousel seam-locator / chip-fan facts are DEFINITION-ABSENT here;
+        // the rail seat/fan/overflow/topology is owned by proof:dock-stack-rail.
+        expect(Object.keys(facts).some((k) => /^s6/i.test(k))).toBe(false);
         expect(s6Violations(violations)).toEqual([]);
-        expect(facts.s6aSidebarMarksAnchorSeparator).toBe(true);
-        expect(facts.s6aSidebarDropsUtilityAnchor).toBe(true);
-        expect(facts.s6aAnchorIsHomeSeparator).toBe(true);
-        expect(facts.s6bDesktopLowerGutterSeat).toBe(true);
-        expect(facts.s6dDemoMidlineSlotSeat).toBe(false);
-    });
-
-    it("born-RED on the pre-wave shape (anchor-id=utility + the seam-top fan)", () => {
-        const { violations, facts } = detectDockSections(
-            fs(SIDEBAR_BEFORE, DOCK_NAV_BEFORE),
-        );
-        const s6 = s6Violations(violations);
-        // S6a: utility-anchor survives → dropsUtility false; no ℱ-home :anchor
-        expect(facts.s6aSidebarDropsUtilityAnchor).toBe(false);
-        expect(facts.s6aSidebarMarksAnchorSeparator).toBe(false);
-        // S6b: the fan is NOT lower-gutter seated (seam-top, no inset-block-end)
-        expect(facts.s6bDesktopLowerGutterSeat).toBe(false);
-        expect(s6.length).toBeGreaterThan(0);
-    });
-
-    it("S6a anti-evasion: a third-arbitrary-separator anchor (inside the section) still REDs", () => {
-        const { violations, facts } = detectDockSections(
-            fs(SIDEBAR_THIRD_SEP, DOCK_NAV_AFTER),
-        );
-        // a :anchor exists, but it is NOT the ℱ-home/leading divider (buried in the section)
-        expect(facts.s6aSidebarMarksAnchorSeparator).toBe(true);
-        expect(facts.s6aAnchorIsHomeSeparator).toBe(false);
-        expect(
-            violations.some((v) => v.startsWith("S6a") && /third arbitrary/.test(v)),
-        ).toBe(true);
-    });
-
-    it("S6d bite: a re-introduced midline SLOT seat in the demo override REDs", () => {
-        const { violations, facts } = detectDockSections(
-            fs(SIDEBAR_AFTER, DOCK_NAV_MIDLINE),
-        );
-        expect(facts.s6dDemoMidlineSlotSeat).toBe(true);
-        expect(
-            violations.some((v) => v.startsWith("S6d") && /midline/.test(v)),
-        ).toBe(true);
     });
 });

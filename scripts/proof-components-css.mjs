@@ -134,6 +134,42 @@ const RUNTIME_PROPS = new Set([
     // component-scoped declaration resolves at runtime off the picker root — the same
     // element-scoped runtime-prop pattern as --glass-bg-*-tinted / --dock-pos above.
     "--easing-curve-accent",
+    // BC.W-BUTTON-GLASS-IOS (BG-IOS-6) — the de-shadcn `outline`/`secondary`/`accent`
+    // reskin re-points its QUIETER glass fill onto the SAME element-level oklab-tinted
+    // wrapper the resting/floating pair use, on the `quiet` rung: `--glass-bg-quiet-tinted`
+    // is minted on `.btn-glass` (glass/surfaces.css), DELIBERATELY element-scoped (NOT a
+    // :root base — the W55 bright-bucket darken must reach the lit fill, the
+    // substitution-vs-inheritance trap). The CVA's `bg-(--glass-bg-quiet-tinted)` utility
+    // (self-emitted by W-EMISSION) resolves it off the `.btn-glass` host — the SAME pattern
+    // as the already-allowlisted --glass-bg-{resting,floating}-tinted above.
+    "--glass-bg-quiet-tinted",
+    // BC.W-ACCENT-TONE — the contrast-floored tonal-accent register. SelectableChip's
+    // `.accent-tone` (glass/accent-tone.css) mints the four per-instance accent rungs
+    // (`--accent-fill`/`--accent-band`/`--accent-edge`/`--accent-ink`) from the consumer
+    // `--glass-accent` data hue, ON the `.accent-tone` element (NOT :root — the accent is a
+    // per-INSTANCE chromatic axis, W-GLASS-ACCENT). The de-arbitrary'd utilities the
+    // W-EMISSION self-emit ships reference them off the chip host — the element-scoped
+    // runtime-prop pattern as --glass-bg-*-tinted above.
+    "--accent-fill",
+    "--accent-band",
+    "--accent-edge",
+    "--accent-ink",
+    // BC.W-DOCK-SEARCH — FuzzySearch's modal root sets `--search-modal-width` inline
+    // (`[--search-modal-width:36rem]` on the modal content, FuzzySearch.vue), a consumer-
+    // tunable width the `max-w-(--search-modal-width)` utility reads off the modal host —
+    // the same component-scoped inline runtime-prop pattern as --card-pad-* / --dock-pos.
+    "--search-modal-width",
+    // BC — the Switch geometry quad is derived from the control-height anchor INLINE on the
+    // Switch root (`[--switch-track-h:…] [--switch-thumb:…] [--switch-track-w:…]
+    // [--switch-throw:…]`, Switch.vue) so the whole switch scales in lockstep off the ONE
+    // `--switch-track-h` anchor (useControlSize.ts §derivation). The `h-(--switch-track-w)`
+    // / `size-(--switch-thumb)` / `translate-x-(--switch-throw)` utilities the W-EMISSION
+    // self-emit ships resolve them off the switch host — element-scoped, NOT :root (a :root
+    // base would freeze the quad at the md size). Same pattern as --stack-overlap-* above.
+    "--switch-track-h",
+    "--switch-thumb",
+    "--switch-track-w",
+    "--switch-throw",
 ]);
 
 /** Strip CSS block comments so a `--token` mentioned in prose is not counted. */

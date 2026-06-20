@@ -7,7 +7,13 @@ import { RadioGroup, RadioGroupItem } from "../../../src/components/ui/radio-gro
 import { Switch } from "../../../src/components/ui/switch";
 import { Label } from "../../../src/components/ui/label";
 import { IconChip } from "../../../src/components/custom/icon-chip";
-
+import { SquareCheck } from "@lucide/vue";
+// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
+// (the cool stop the per-category map assigns forms). The page identity COLOR
+// EVENT (the tinted eyebrow + the inline accent rail + the focal IconChip, all on
+// --section-color-3); PH3-safe (the rail is an INLINE borderLeft, not the
+// `border-l-[3px]` + <IconChip> in-body double-header SHAPE PH3 forbids).
+const FORMS_STOP = 3;
 
 const tos = ref(true);
 const marketing = ref(false);
@@ -22,6 +28,26 @@ const airplane = ref(false);
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="SquareCheck" :section="FORMS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Forms · Selection
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Checkboxes, radios, and switches — the field controls stay ink;
+                    the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <StorySection heading="Checkbox" gap="lg">
             <p class="text-small text-muted-foreground">
                 Standard, indeterminate, and disabled.

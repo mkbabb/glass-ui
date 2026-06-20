@@ -315,6 +315,14 @@
     --shadow-cartoon-md: var(--cartoon-shadow-md);
     --shadow-cartoon-lg: var(--cartoon-shadow-lg);
 
+    /* BC.W-CONTROL-SMOOTH — the warm focus-ring box-shadow bridged to the
+       `shadow-focus-ring` utility (AW.W26 --focus-ring-shadow register). The
+       `.focus-ring` utility auto-arms on :focus-visible; this bridge lets a
+       surface compose the SAME warm ring on a NON-:focus-visible state (the
+       TagsInputItem reka roving-tabindex `data-[state=active]` selection) via the
+       @theme utility, not a `shadow-[var(--focus-ring-shadow)]` arbitrary wrap. */
+    --shadow-focus-ring: var(--focus-ring-shadow);
+
     /* ═══════════════════════════════════════════════
        Blur → blur-* and backdrop-blur-* utilities
        ═══════════════════════════════════════════════ */
@@ -356,6 +364,11 @@
     --transition-duration-panel: var(--duration-panel);
     --transition-duration-xl: var(--duration-xl);
     --transition-duration-xxl: var(--duration-xxl);
+    /* BC.W-CONTROL-SMOOTH — the named iOS control-press surface beat (0.12s, the
+       calm bg/color/box-shadow cross-fade clock the `.control-surface`/Toggle
+       family rides). Bridged to the `duration-control` utility so a control
+       composes the named clock, not a `duration-[var(--duration-control)]` wrap. */
+    --transition-duration-control: var(--duration-control);
     /* BA.W-GLASS-CAL — `--transition-duration-sparkle` bridge DELETED with the
        `--duration-sparkle` token (the disco retirement); no `duration-sparkle`
        utility consumer. */

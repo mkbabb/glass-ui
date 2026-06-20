@@ -1,12 +1,38 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { Button } from "../../../src/components/ui/button";
-import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
+import { Settings, ArrowLeft, RotateCcw, Square, MousePointer2 } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 </script>
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="MousePointer2" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Hover popover
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Hover-open popovers with keep-open delay — the container
+                    identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <section class="flex flex-col gap-3">
             <p class="section-label">label · sides</p>
             <div class="flex flex-wrap items-center gap-6">

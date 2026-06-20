@@ -30,8 +30,16 @@ function replay(): void {
             blurb="A word splits into per-glyph .char spans, each carrying --char-index, and the shipped .char-stagger CSS staggers them in on the per-spring clock. The whole thing stays accessible: a screen reader hears the word ONCE (the aria-label), never the per-glyph spell-out."
         >
             <div :key="playKey" class="flex flex-col gap-8">
-                <!-- The hero word — a single-character split as a display heading. -->
-                <SplitChars text="Fourier" as="h1" class="text-pane-title" />
+                <!-- The hero word — a single-character split as a display heading.
+                     BC.W-SUFFUSE-reconcile — the motion band's ONE color text-event:
+                     the hero word in the --motion-accent violet (the motion-purple
+                     family, the ONE color event on the display word). -->
+                <SplitChars
+                    text="Fourier"
+                    as="h1"
+                    class="text-pane-title"
+                    :style="{ color: 'var(--motion-accent)' }"
+                />
 
                 <!-- A multi-word headline, split on whitespace (each word is one
                      .char unit; the spacers hold the gap). -->

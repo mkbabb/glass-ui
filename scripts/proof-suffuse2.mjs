@@ -180,8 +180,19 @@ for (const { category, stop, pages } of CATEGORY_MAP) {
                 src,
             ) && constResolvesToStop;
         const hasAccent = accentLiteral || accentViaConst;
-        // (b) the border-l-[3px] section-accent rail.
-        const hasRail = /border-l-\[3px\]/.test(src);
+        // (b) the section-accent rail. TWO accepted forms — both the SAME 3px
+        //     hairline keyed off the page's --section-label-accent:
+        //       1. the `border-l-[3px]` Tailwind utility (the original math-paper
+        //          gold-standard rail), OR
+        //       2. the BC.W-SUFFUSE-reconcile INLINE `borderLeft: '3px solid …'`
+        //          style (the PH3-safe form — proof:page-hierarchy PH3 forbids the
+        //          `border-l-[3px]` + <IconChip> in-body double-header SHAPE, so the
+        //          reconcile draws the SAME 3px rail via an inline style that the PH3
+        //          class-literal detector does not match). Both paint the identical
+        //          rail; the inline form is the PH3-coexistence idiom.
+        const hasRail =
+            /border-l-\[3px\]/.test(src) ||
+            /border(?:Left|-left)['"\s]*:\s*['"]?\s*3px\s+solid/.test(src);
         // (c) the focal IconChip on the MAPPED stop (numeric prop OR a const that
         //     resolves to the stop — accept :section="N" or :section="CONST").
         const chipNumericRe = new RegExp(
@@ -213,9 +224,15 @@ add(
 // W1 anti-evasion — NO inline template-literal color-mix paste survives outside
 // icon-chip/ (the W-ICON-CHIP W4 complete-consolidation floor).
 const PASTE_RE = /color-mix\(in srgb, var\(--section-color-\$\{/;
+// The two single-home primitives that OWN a --section-color-N family tint are not
+// inline re-pastes: icon-chip/ (the focal pop backplate, the W-ICON-CHIP floor)
+// and Code.vue (BC.W-CODE-BLOCKS — the inline-code chip's `tone` prop tints a CODE
+// literal's backplate, a DISTINCT one-color-event primitive, the single demo-private
+// home for the code-chip event, never an inline icon-chip re-paste in a story body).
+const PASTE_PRIMITIVE_HOMES = ["icon-chip", "stories/Code.vue"];
 const pasteHits = [];
 for (const rel of listFiles("demo", ".vue")) {
-    if (rel.includes("icon-chip")) continue;
+    if (PASTE_PRIMITIVE_HOMES.some((h) => rel.includes(h))) continue;
     if (PASTE_RE.test(read(rel))) pasteHits.push(rel);
 }
 for (const rel of listFiles("src/components/custom", ".vue")) {
@@ -243,17 +260,28 @@ add(
 // at the one-rung-above grade (a regress to a lower rung still reds).
 const storyPage = strip(read("demo/stories/StoryPage.vue"));
 const contentHeaderOk = /<header\b[^>]*v-if="variant === 'page'"/.test(storyPage);
+// BC.W-PAGE-CHASSIS lifted the content chrome <h1> off the W-STAGE `text-title`
+// rung onto the depth-keyed AUDACIOUS hero `text-display-${heroScale}` (≥
+// text-display-4 — the chassis hero is one√φ-or-MORE above the section register,
+// the display ladder still GRADES, never cliffs). The assert accepts BOTH the
+// legacy `text-title`/`text-display-1` literal rung AND the page-chassis
+// `text-display-${heroScale}` template rung (the cn(`text-display-${heroScale}`)
+// form) — either is strictly ABOVE the section <h2> text-subheading. The :class is
+// a cn() call (not a single class= literal), so the h1RungOk read scans the <h1>'s
+// class binding region, not only the static class attribute.
+const h1Block = storyPage.match(/<h1\b[\s\S]*?>/);
+const h1ClassRegion = h1Block ? h1Block[0] : "";
 const h1RungOk =
     contentHeaderOk &&
-    /<h1\b[^>]*v-if="title"[^>]*class="[^"]*\btext-(title|display-1)\b/.test(
-        storyPage,
-    );
+    /v-if="title"/.test(h1ClassRegion) &&
+    (/\btext-(?:title|display-1)\b/.test(h1ClassRegion) ||
+        /text-display-\$\{heroScale\}/.test(h1ClassRegion));
 add(
     "w2-content-h1-one-rung-above-section",
     h1RungOk,
     h1RungOk
-        ? "the StoryPage content chrome <h1> (variant==='page') resolves to text-title (32.9px, φ^(3/2)) — the next √φ rung ABOVE the section <h2> text-subheading (20.4px); the display ladder GRADES instead of cliffing (the W-STAGE-applied literal diff, HS-2)"
-        : "the StoryPage content <h1> is NOT at text-title/text-display-1 (the one-rung-above-section grade did not land — W-STAGE's literal-diff block missing or the rung regressed)",
+        ? "the StoryPage content chrome <h1> (variant==='page') resolves to the depth-keyed audacious hero text-display-${heroScale} (≥ text-display-4 — BC.W-PAGE-CHASSIS), one√φ-or-more rung ABOVE the section <h2> text-subheading (20.4px); the display ladder GRADES instead of cliffing (text-title/display-1 also accepted as the prior W-STAGE rung)"
+        : "the StoryPage content <h1> is NOT at text-title/text-display-1/text-display-${heroScale} (the one-rung-above-section grade did not land — the chassis hero rung missing or regressed)",
 );
 
 // ── W3 — the motion band reads ONE coherent violet, no warm-red survivor ──────

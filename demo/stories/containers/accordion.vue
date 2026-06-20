@@ -7,7 +7,13 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "../../../src/components/ui/accordion";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ChevronsDownUp } from "@lucide/vue";
 
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 const faq = [
     {
@@ -35,6 +41,26 @@ const faq = [
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ChevronsDownUp" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Accordion
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Stacked collapsible sections — the container identity is the
+                    ONE color event.
+                </p>
+            </div>
+        </header>
+
         <!-- BB.W-DEMO-DESIGN — the disclosure demo body pops in on the W-SCROLL-
              MOTION `.scroll-cascade` register. The content-height open/close
              animation rides reka-ui's collapsible-open/-close keyframes, which are

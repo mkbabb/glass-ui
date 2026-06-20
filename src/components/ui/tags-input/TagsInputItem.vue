@@ -27,7 +27,7 @@ const forwardedProps = useForwardProps(delegatedProps)
        active]` BEHAVIOUR is untouched — only the paint it drives. This retires the
        ring-ring/ring-2/ring-offset residual (proof:no-shadcn-default) + re-earns
        proof:ba-gestalt. -->
-  <TagsInputItem v-bind="forwardedProps" :class="cn('control-surface flex h-6 items-center rounded-pill px-2 data-[state=active]:shadow-[var(--focus-ring-shadow)]', props.class)">
+  <TagsInputItem v-bind="forwardedProps" :class="cn('control-surface flex h-6 items-center rounded-pill px-2 data-[state=active]:shadow-focus-ring', props.class)">
     <slot />
   </TagsInputItem>
 </template>

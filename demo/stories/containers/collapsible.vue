@@ -8,14 +8,39 @@ import {
     CollapsibleTrigger,
 } from "../../../src/components/ui/collapsible";
 import { Button } from "../../../src/components/ui/button";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { ChevronDown } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 const open = ref(true);
 </script>
 
 <template>
     <StoryPage>
-        
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="ChevronDown" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Collapsible
+                </span>
+                <p class="text-small text-muted-foreground">
+                    A single show/hide region — the container identity is the ONE
+                    color event.
+                </p>
+            </div>
+        </header>
+
             <StorySection heading="Basic" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     Open — <code class="font-mono text-xs">{{ open }}</code>.

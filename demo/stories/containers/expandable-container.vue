@@ -10,11 +10,37 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ExpandableContainer } from "../../../src/components/custom/expandable-container";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import { Maximize2, X } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 </script>
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Maximize2" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Expandable
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Expand-to-fullscreen content panes — the container identity is
+                    the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <StorySection
             label="buttonPosition + Teleport fullscreen"
             blurb="The Maximize2 button promotes inline content to a fixed full-viewport host via Teleport. Body overflow is locked while open; the lock-depth counter ensures adjacent expanded containers don't collide."

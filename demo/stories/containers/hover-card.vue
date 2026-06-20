@@ -9,12 +9,37 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../../../src/components/ui/avatar";
 import { Button } from "../../../src/components/ui/button";
 import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
-import { Info, CircleHelp, Sparkles } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Info, CircleHelp, Sparkles, IdCard } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 </script>
 
 <template>
     <StoryPage>
-        
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="IdCard" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Hover card
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Hover-reveal preview cards — the container identity is the ONE
+                    color event.
+                </p>
+            </div>
+        </header>
+
             <StorySection heading="Profile preview" gap="lg">
                 <p class="text-sm text-muted-foreground">
                     Hover the underlined trigger.

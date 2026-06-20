@@ -8,7 +8,13 @@ import {
     TooltipTrigger,
 } from "../../../src/components/ui/tooltip";
 import { Button } from "../../../src/components/ui/button";
-import { Bold, Italic, Underline, Save, Share2 } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Bold, Italic, Underline, Save, Share2, Info } from "@lucide/vue";
+
+// BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
+// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+// <IconChip> double-header shape).
+const CONTAINERS_STOP = 2;
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -16,6 +22,26 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="Info" :section="CONTAINERS_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Containers · Tooltip
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Pointer-anchored hint tooltips — the container identity is the
+                    ONE color event.
+                </p>
+            </div>
+        </header>
+
         <TooltipProvider :delay-duration="150">
             <div class="grid gap-12">
                 <StorySection heading="Icon toolbar" gap="lg">

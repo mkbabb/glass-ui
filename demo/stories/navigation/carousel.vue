@@ -10,8 +10,12 @@ import {
     type CarouselApi,
 } from "../../../src/components/ui/carousel";
 import { PagerDots } from "../../../src/components/custom/pager-dots";
+import { IconChip } from "../../../src/components/custom/icon-chip";
+import { GalleryHorizontal } from "@lucide/vue";
 import { cn } from "../../../src/utils/cn";
 
+// BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip> double-header shape).
+const NAV_STOP = 12;
 
 const slides = [
     { hue: 24, title: "Warm Cream", note: "base surface" },
@@ -58,6 +62,25 @@ function setApi(api: CarouselApi | undefined) {
 
 <template>
     <StoryPage>
+        <header
+            class="flex items-center gap-4 pl-5"
+            :style="{
+                '--section-label-accent': `var(--section-color-${NAV_STOP})`,
+                borderLeft:
+                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
+            }"
+        >
+            <IconChip :icon="GalleryHorizontal" :section="NAV_STOP" bloom reveal />
+            <div class="flex flex-col gap-1">
+                <span class="section-label--tinted text-admin-label">
+                    Navigation · Carousel
+                </span>
+                <p class="text-small text-muted-foreground">
+                    Paged item scrollers with dot pagers — the section identity is the ONE color event.
+                </p>
+            </div>
+        </header>
+
         <StorySection heading="Carousel pager + dots substrate" gap="md">
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes

@@ -135,6 +135,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the BB.B2 W-DOCKMORPH-CTA external-CTA-morphs-into-dock receive facility — the dock is the morph DESTINATION (an external <Button> CTA flies + reshapes ONTO a target <DockIconButton> via the useDockCtaReceive leaf, the iOS bloom-from-source inverse), NOT a nav rail; a home control would pollute the receive-seam teaching surface",
     },
+    {
+        path: "demo/stories/dock/dock-search.vue",
+        facility:
+            "the BC.W-DOCK-SEARCH dock-as-native-dynamic-search-bar facility — the collapsed dock pill MORPHS (the --dock-morph-t glide + the byte-untouched morph-bridge metaball) into a search field, composing useDockSearch + the SHIPPED /search useFuzzySearch matcher into <GlassDock search>'s #search aperture; the dock is the SEARCH SUBJECT (the consumer #1 binding of the morph-into-search seam), NOT a nav rail — a home control would pollute the search-facility teaching surface",
+    },
 ];
 
 let _cliPaths = null;
