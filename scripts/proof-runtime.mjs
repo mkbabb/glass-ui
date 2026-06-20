@@ -1,4 +1,4 @@
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { spawn } from "node:child_process";
@@ -521,6 +521,21 @@ function startServerIfNeeded() {
 
 mkdirSync(auditDir, { recursive: true });
 mkdirSync(screenshotDir, { recursive: true });
+
+// Device-bound gate — the LOCAL-π half of the cardinal split: the runtime smoke
+// needs a real Chrome (it boots the demo + reads each route's console). When Chrome
+// is absent at the resolved path — a browser-less CI/release runner: release.yml does
+// not install Chrome, the macOS default does not exist on the ubuntu runner, and
+// CHROME_PATH is unset there — SKIP gracefully, the same skip-by-policy the sibling +
+// Playwright gates use on the clean runner (so `gates.mjs --run full` reaches the tag).
+// The smoke RUNS where Chrome is present (local dev / a CHROME_PATH-set runner), which
+// is the binding paint-verification half. Set CHROME_PATH to run it on a CI runner.
+if (!existsSync(chromePath)) {
+    console.log(
+        `[proof:runtime] SKIP — no Chrome at "${chromePath}" (device-bound gate; the local-π half of the cardinal split). The browser-less CI/release runner skips it by policy; set CHROME_PATH to run it on a browser-bearing runner.`,
+    );
+    process.exit(0);
+}
 
 let server = null;
 const serverAlreadyRunning = await waitForHttp(baseUrl, 1_000);
