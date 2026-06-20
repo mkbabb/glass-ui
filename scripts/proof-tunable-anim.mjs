@@ -46,7 +46,7 @@
 // pure exported detectors over loaded sources (so the self-test feeds synthetic fixtures
 // with no disk), a human summary, exit(1) on any violation.
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -292,6 +292,13 @@ export function runChecks(sources) {
         sfcSrc,
         asksSrc,
     } = sources;
+    // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot init
+    // it. Absent-submodule → skip-by-policy (the sibling-gate convention) for the
+    // tunable-anim.md registry clauses (T1 completeness + T2 phantom) ONLY; the
+    // boundary law (T3), single-source (T4), generator + the asks-and-consumes.md
+    // book (T5 — a main-repo file, NOT a submodule) keep biting below. Default
+    // true so the self-test (synthetic registryDoc) keeps biting.
+    const submodulePresent = sources.submodulePresent !== false;
 
     const failures = [];
     const push = (arr) => arr.forEach((m) => failures.push(m));
@@ -300,8 +307,10 @@ export function runChecks(sources) {
     const springNames = extractSpringPresetNames(presetSrc);
     const sourceTokenSet = buildSourceTokenSet(sourceFiles, springNames);
 
-    push(detectRegistryCompleteness(registryTokens, springNames));
-    push(detectPhantomTokens(registryTokens, sourceTokenSet));
+    if (submodulePresent) {
+        push(detectRegistryCompleteness(registryTokens, springNames));
+        push(detectPhantomTokens(registryTokens, sourceTokenSet));
+    }
     push(detectBoundaryLaw(composableSrc, sfcSrc));
     push(
         detectSingleSource(presetSrc, [
@@ -318,6 +327,11 @@ export function runChecks(sources) {
     };
 }
 
+function preceptsSubmodulePresent() {
+    const dir = join(ROOT, "docs/precepts");
+    return existsSync(dir) && readdirSync(dir).length > 0;
+}
+
 function loadReal() {
     return {
         registryDoc: read(REGISTRY_DOC),
@@ -326,6 +340,7 @@ function loadReal() {
         composableSrc: read(USE_EASING_PICKER_TS),
         sfcSrc: read(EASING_PICKER_SFC),
         asksSrc: read(ASKS_DOC),
+        submodulePresent: preceptsSubmodulePresent(),
     };
 }
 
@@ -422,6 +437,11 @@ if (process.argv.includes("--self-test")) {
     const real = loadReal();
     const { failures, registryTokenCount, springCount } = runChecks(real);
     console.log("proof:tunable-anim — the tunable-animation registry-completeness gate (BC.W-TUNABLE-ANIM)");
+    if (!real.submodulePresent) {
+        console.log(
+            "  T1/T2 registry: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the tunable-anim.md registry clauses bite locally; T3/T4/T5 still bite)",
+        );
+    }
     console.log(`  registry tokens indexed : ${registryTokenCount}`);
     console.log(`  spring presets          : ${springCount}`);
     console.log(`  failures                : ${failures.length}`);

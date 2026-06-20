@@ -276,10 +276,20 @@ export function detectEasingPrimitive(sources) {
     if (!claudeRecordsBoundary) {
         violations.push("W5: CLAUDE.md does not record the boundary law (curve MATH = value.js · playback = keyframes.js · the editor = glass-ui).");
     }
+    // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot init it,
+    // so design-idioms.md is absent. Absent-submodule → skip-by-policy (the
+    // sibling-gate convention) for THIS clause ONLY; the CLAUDE.md (claudeNamesPicker
+    // / claudeRecordsBoundary) and src/api (apiPublishesTypes) W5 sub-checks are
+    // NON-submodule and keep biting. Default true so any caller keeps biting.
+    const submodulePresent = sources.submodulePresent !== false;
     const idiomHomesConfigurator =
         /Easing/.test(designIdiomsMd) &&
         (/EasingConfigurator/.test(designIdiomsMd) || /editor-on-(?:the-)?[Cc]onfigurator/.test(designIdiomsMd));
-    if (!idiomHomesConfigurator) {
+    if (!submodulePresent) {
+        console.log(
+            "  W5 design-idioms: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the editor-on-Configurator idiom-home clause bites locally)",
+        );
+    } else if (!idiomHomesConfigurator) {
         violations.push("W5: design-idioms.md does not home the editor-on-Configurator idiom (the <EasingConfigurator> register).");
     }
     const apiPublishesTypes =
@@ -304,7 +314,7 @@ export function detectEasingPrimitive(sources) {
         w2: { composesMath, forksStaircase, forksBezierSolver },
         w3: { demoStepsPresent, demoBezierPresent, galleryImportsLibraryPicker, galleryDirEditorForks },
         w4: { bindsBezierMode, bindsStepsMode, progressRecordsConsumer2, deltaRecordsConsumer2 },
-        w5: { claudeNamesPicker, claudeRecordsBoundary, idiomHomesConfigurator, apiPublishesTypes },
+        w5: { claudeNamesPicker, claudeRecordsBoundary, idiomHomesConfigurator, apiPublishesTypes, submodulePresent },
     };
     return { facts, violations };
 }
@@ -331,8 +341,13 @@ function run() {
     const curveGalleryDirEntries = existsSync(P.CURVE_GALLERY_DIR)
         ? readdirSync(P.CURVE_GALLERY_DIR)
         : [];
+    // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot init it.
+    const preceptsDir = resolve(ROOT, "docs/precepts");
+    const submodulePresent =
+        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
 
     const { facts, violations } = detectEasingPrimitive({
+        submodulePresent,
         dirExists: existsSync(P.EASING_DIR),
         pickerVue: safeRead(P.PICKER_VUE),
         configuratorVue: safeRead(P.CONFIGURATOR_VUE),
@@ -404,9 +419,9 @@ function run() {
         `  W5 canon + boundary law recorded    : ${yn(
             facts.w5.claudeNamesPicker &&
                 facts.w5.claudeRecordsBoundary &&
-                facts.w5.idiomHomesConfigurator &&
+                (facts.w5.submodulePresent === false || facts.w5.idiomHomesConfigurator) &&
                 facts.w5.apiPublishesTypes,
-        )}`,
+        )}${facts.w5.submodulePresent === false ? " (idiom-home skip — submodule absent)" : ""}`,
     );
 
     if (violations.length > 0) {

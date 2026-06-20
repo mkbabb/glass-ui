@@ -365,14 +365,32 @@ const booked = parseBookedSuccessors(mapSrc);
 const dirBodies = buildDirBodies();
 const inventory = walkInventory(dirBodies);
 
-add(
-    "A1",
-    "map-exists-non-trivial",
-    mapSrc.length > 0 && mapRows.length >= 12,
-    mapSrc.length > 0 && mapRows.length >= 12
-        ? `affordance-map.md exists with ${mapRows.length} mapped element classes (the binding inventory)`
-        : `affordance-map.md is ABSENT or trivial (${mapRows.length} rows) — born-RED before BC.W-AFFORDANCE-MAP`,
-);
+// docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner the
+// checkout does not initialize it (and cannot — the default token has no cross-repo
+// grant), so the dir is empty + affordance-map.md is absent. Absent-submodule →
+// skip-by-policy (the sibling-gate convention) for the map-READING clauses ONLY
+// (A1 map-exists/every-mapped, A2 inert/focus, A5 map-canon, the map-derived live
+// violations); the src-derived A3 desync, A4 primitives, the inventory walk, and
+// the π-spec/self-test bites keep biting. Locally the map clauses BITE.
+const preceptsDir = resolve(ROOT, "docs/precepts");
+const submodulePresent =
+    existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+if (!submodulePresent) {
+    console.log(
+        "  affordance-map: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the affordance-map.md clauses bite locally; A3/A4/inventory/π still bite)",
+    );
+}
+
+if (submodulePresent) {
+    add(
+        "A1",
+        "map-exists-non-trivial",
+        mapSrc.length > 0 && mapRows.length >= 12,
+        mapSrc.length > 0 && mapRows.length >= 12
+            ? `affordance-map.md exists with ${mapRows.length} mapped element classes (the binding inventory)`
+            : `affordance-map.md is ABSENT or trivial (${mapRows.length} rows) — born-RED before BC.W-AFFORDANCE-MAP`,
+    );
+}
 add(
     "A1",
     "inventory-non-empty",
@@ -381,9 +399,11 @@ add(
 );
 
 const { facts, violations } = detectAffordanceGaps({ mapRows, inventory, dirBodies, booked });
-add("A1", "every-interactive-mapped", facts.unmapped.length === 0, facts.unmapped.length === 0 ? "every interactive package is on the map" : `${facts.unmapped.length} unmapped: ${facts.unmapped.join(", ")}`);
-add("A2", "no-inert-cell", facts.inertCells.length === 0, facts.inertCells.length === 0 ? "no ✓ cell ships inert (every mapped affordance is wired in its corpus)" : `${facts.inertCells.length} inert: ${facts.inertCells.join(", ")}`);
-add("A2", "focus-ring-hard-floor", facts.focusGaps.length === 0, facts.focusGaps.length === 0 ? "every operable element resolves a visible focus indicator (F never — on an operable element, WCAG 2.4.7)" : `${facts.focusGaps.length} focus gap(s): ${facts.focusGaps.join("; ")}`);
+if (submodulePresent) {
+    add("A1", "every-interactive-mapped", facts.unmapped.length === 0, facts.unmapped.length === 0 ? "every interactive package is on the map" : `${facts.unmapped.length} unmapped: ${facts.unmapped.join(", ")}`);
+    add("A2", "no-inert-cell", facts.inertCells.length === 0, facts.inertCells.length === 0 ? "no ✓ cell ships inert (every mapped affordance is wired in its corpus)" : `${facts.inertCells.length} inert: ${facts.inertCells.join(", ")}`);
+    add("A2", "focus-ring-hard-floor", facts.focusGaps.length === 0, facts.focusGaps.length === 0 ? "every operable element resolves a visible focus indicator (F never — on an operable element, WCAG 2.4.7)" : `${facts.focusGaps.length} focus gap(s): ${facts.focusGaps.join("; ")}`);
+}
 add("A3", "no-desynced-abrupt-affordance", facts.desynced.length === 0, facts.desynced.length === 0 ? "no affordance leg reads abrupt/desynced/wall-clocked (the eased registers hold)" : `${facts.desynced.length}: ${facts.desynced.join("; ")}`);
 
 // A4 — the closed vocabulary.
@@ -404,15 +424,17 @@ add(
         : `missing primitive(s): ${missingPrim.join(", ")}`,
 );
 
-// A5 — the map + the canon single-sourced.
-add(
-    "A5",
-    "map-canon-single-sourced",
-    /proof:affordance-map\b/.test(mapSrc) && /BC\.W-SPRING-EASE/.test(mapSrc),
-    /proof:affordance-map\b/.test(mapSrc) && /BC\.W-SPRING-EASE/.test(mapSrc)
-        ? "affordance-map.md names proof:affordance-map (the gate reads it) + the BC.W-SPRING-EASE eased-curve cross-ref (gate + canon single-sourced)"
-        : "affordance-map.md does NOT record the gate single-source + the BC.W-SPRING-EASE cross-ref",
-);
+// A5 — the map + the canon single-sourced (reads the submodule map).
+if (submodulePresent) {
+    add(
+        "A5",
+        "map-canon-single-sourced",
+        /proof:affordance-map\b/.test(mapSrc) && /BC\.W-SPRING-EASE/.test(mapSrc),
+        /proof:affordance-map\b/.test(mapSrc) && /BC\.W-SPRING-EASE/.test(mapSrc)
+            ? "affordance-map.md names proof:affordance-map (the gate reads it) + the BC.W-SPRING-EASE eased-curve cross-ref (gate + canon single-sourced)"
+            : "affordance-map.md does NOT record the gate single-source + the BC.W-SPRING-EASE cross-ref",
+    );
+}
 
 // The π readback spec is wired.
 add(
@@ -466,7 +488,13 @@ const SYNTH_DIRS = new Map([
 add("self-proof", "a1-a3-bites-have-teeth", selfFailures.length === 0, selfFailures.length === 0 ? "the A1/A2/A3 self-test bites flag the planted unmapped/inert/no-focus/abrupt/wall-clock fixtures AND exempt the reveal-surface + effects-only + good-spring fixtures — the bites have teeth" : selfFailures.join("; "));
 
 // ── Report ────────────────────────────────────────────────────────────────────────────
-for (const v of violations) add("live-violation", "map-violation", false, v);
+// On an absent submodule the A1/A2 live violations are map-DERIVED (empty mapRows →
+// every package reads unmapped) — skip-by-policy. The A3 desync violations are
+// src-DERIVED (the per-component corpus) and keep biting either way.
+for (const v of violations) {
+    if (!submodulePresent && !v.startsWith("A3:")) continue;
+    add("live-violation", "map-violation", false, v);
+}
 
 const failed = checks.filter((c) => !c.pass);
 const arms = [...new Set(checks.map((c) => c.arm))];

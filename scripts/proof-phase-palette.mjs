@@ -52,7 +52,7 @@
 // across prose), a pure exported detector, a synthetic self-test bite, a
 // byte-stable JSON artefact, a human summary, process.exit(1) on any violation.
 
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import {
@@ -96,6 +96,13 @@ function ruleBody(css, needle) {
  */
 export function detectPhasePalette(sources) {
     const { chassisCss, chassisCssRaw, vueRaw, claudeMd, idiomsMd } = sources;
+    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
+    // the checkout does not initialize it (and cannot — the default token has no
+    // cross-repo grant), so the dir is empty. Absent-submodule → skip-by-policy
+    // (the sibling-gate convention) — never a hard failure on a runner that cannot
+    // see the doc. Locally the design-idioms.md clause BITES. Default true so the
+    // self-test (which supplies a synthetic idiomsMd) keeps biting.
+    const submodulePresent = sources.submodulePresent !== false;
     const facts = {};
     const violations = [];
 
@@ -220,7 +227,12 @@ export function detectPhasePalette(sources) {
             "W4: CLAUDE.md's InstrumentChassis phase-canon section must record the `--phase-complete-color` consumer seam",
         );
     }
-    if (!facts.w4.idiomsRecordsSeam) {
+    if (!submodulePresent) {
+        facts.w4.idiomsSkipped = true;
+        console.log(
+            "  W4 design-idioms: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the demotion-line clause bites locally)",
+        );
+    } else if (!facts.w4.idiomsRecordsSeam) {
         violations.push(
             "W4: design-idioms.md's chassis idiom row must carry the `--phase-complete-color` demotion line",
         );
@@ -322,6 +334,13 @@ function run() {
         // examples + prose (the binding-rules directive).
         claudeMd: safeRead(resolve(ROOT, "CLAUDE.md")),
         idiomsMd: safeRead(resolve(ROOT, "docs/precepts/design-idioms.md")),
+        // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot
+        // init it. Skip the design-idioms.md clause when absent (the CLAUDE.md /
+        // silver-source / vue-doc W4 sub-checks below are NON-submodule and keep biting).
+        submodulePresent: (() => {
+            const preceptsDir = resolve(ROOT, "docs/precepts");
+            return existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+        })(),
     };
 
     const { facts, violations } = detectPhasePalette(sources);

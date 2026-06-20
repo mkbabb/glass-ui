@@ -636,30 +636,47 @@ export function detectVizInversion(read) {
 export function detectCanonSync(read) {
     const violations = [];
     const facts = {};
-    const canon = read(MOTION_CANON) ?? "";
-    facts.hasP7 = /##\s*P7\b/.test(canon);
-    if (!facts.hasP7) {
-        violations.push(
-            `${MOTION_CANON}: no §P7 section — the ONE source + sanctioned off-spine SET canon is missing; the gate's allowlist has no canonical home (M5).`,
+    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
+    // the checkout does not initialize it (and cannot — the default token has no
+    // cross-repo grant), so the dir is empty + motion-canon.md is absent.
+    // Absent-submodule → skip-by-policy (the sibling-gate convention) for the §P7
+    // motion-canon.md clause ONLY; the cross-repo book (asks-and-consumes.md, a
+    // main-repo file, NOT a submodule) keeps biting below. Locally the §P7 clause BITES.
+    const preceptsDir = resolve(ROOT, "docs/precepts");
+    const submodulePresent =
+        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    facts.submodulePresent = submodulePresent;
+    if (!submodulePresent) {
+        console.log(
+            "  M5 §P7: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the motion-canon.md §P7 clause bites locally)",
         );
-    }
-    // Each sanctioned seam must be NAMED in §P7 (by its basename — the canon names
-    // the seam, not the full path).
-    const p7 = facts.hasP7 ? canon.slice(canon.indexOf("## P7")) : "";
-    const p7Body = p7.slice(0, p7.indexOf("\n## ") === -1 ? p7.length : p7.indexOf("\n## ", 4));
-    for (const entry of OFF_SPINE_ALLOWLIST) {
-        const base = entry.file.split("/").pop().replace(/\.(ts|vue)$/, "");
-        if (!p7Body.includes(base)) {
+        facts.hasP7 = null;
+    } else {
+        const canon = read(MOTION_CANON) ?? "";
+        facts.hasP7 = /##\s*P7\b/.test(canon);
+        if (!facts.hasP7) {
             violations.push(
-                `${MOTION_CANON} §P7: the sanctioned off-spine seam '${base}' (${entry.seam}) is not named in the canon — the gate allowlist and the canon have drifted (add the seam to §P7, M5).`,
+                `${MOTION_CANON}: no §P7 section — the ONE source + sanctioned off-spine SET canon is missing; the gate's allowlist has no canonical home (M5).`,
             );
         }
-    }
-    for (const entry of SPRING_DEFAULTS_ALLOWLIST) {
-        if (!p7Body.includes(entry.name)) {
-            violations.push(
-                `${MOTION_CANON} §P7: the sanctioned per-primitive default '${entry.name}' is not named in the canon — the gate defaults-allowlist and the canon have drifted (M5).`,
-            );
+        // Each sanctioned seam must be NAMED in §P7 (by its basename — the canon names
+        // the seam, not the full path).
+        const p7 = facts.hasP7 ? canon.slice(canon.indexOf("## P7")) : "";
+        const p7Body = p7.slice(0, p7.indexOf("\n## ") === -1 ? p7.length : p7.indexOf("\n## ", 4));
+        for (const entry of OFF_SPINE_ALLOWLIST) {
+            const base = entry.file.split("/").pop().replace(/\.(ts|vue)$/, "");
+            if (!p7Body.includes(base)) {
+                violations.push(
+                    `${MOTION_CANON} §P7: the sanctioned off-spine seam '${base}' (${entry.seam}) is not named in the canon — the gate allowlist and the canon have drifted (add the seam to §P7, M5).`,
+                );
+            }
+        }
+        for (const entry of SPRING_DEFAULTS_ALLOWLIST) {
+            if (!p7Body.includes(entry.name)) {
+                violations.push(
+                    `${MOTION_CANON} §P7: the sanctioned per-primitive default '${entry.name}' is not named in the canon — the gate defaults-allowlist and the canon have drifted (M5).`,
+                );
+            }
         }
     }
     // The cross-repo kf one-clock book exists + names the springTimingFunction +
@@ -846,7 +863,7 @@ function run() {
     console.log(`  M2 off-spine seams     : ${facts.m2.prongA.length + facts.m2.prongB.length} (sanctioned ${OFF_SPINE_ALLOWLIST.length}), files scanned ${facts.m2.filesScanned}`);
     console.log(`  M3 clock fence         : ${facts.m3.clockForks} forks over ${facts.m3.corpusFilesScanned} corpus files; pending bridges ${facts.m3.pendingBridges.length}`);
     console.log(`  M4 viz inversion       : ${facts.m4.hits.length} viz-owned rAF over ${facts.m4.vizFilesScanned} viz files`);
-    console.log(`  M5 canon + book        : §P7 ${facts.m5.hasP7 ? "yes ✓" : "NO ✗"}, cross-repo book ${facts.m5.crossRepoBookExists ? "yes ✓" : "NO ✗"}`);
+    console.log(`  M5 canon + book        : §P7 ${facts.m5.submodulePresent === false ? "skip (submodule absent)" : facts.m5.hasP7 ? "yes ✓" : "NO ✗"}, cross-repo book ${facts.m5.crossRepoBookExists ? "yes ✓" : "NO ✗"}`);
     console.log(`  self-test failures     : ${selfFailures.length}`);
     console.log(`  one clock              : ${facts.oneClock && selfFailures.length === 0 ? "YES" : "NO"}`);
     if (all.length) {

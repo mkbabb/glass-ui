@@ -333,7 +333,34 @@ function run() {
     const indexSrc = readRel(INDEX) ?? "";
     const census = buildRecipeCensus();
 
-    const { facts, violations } = detectPreceptDrift({ docSrc, census, indexSrc });
+    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
+    // the checkout does not initialize it (and cannot — the default token has no
+    // cross-repo grant), so the dir is empty. Absent-submodule → skip-by-policy
+    // (the sibling-gate convention) — the LIVE-doc detector (W1/W2/W3 read
+    // design-idioms.md) skips; the SYNTHETIC-doc self-test (which supplies its own
+    // inline §3 fixtures, NOT the submodule) keeps biting. Locally the clause BITES.
+    const preceptsDir = resolve(ROOT, "docs/precepts");
+    const submodulePresent =
+        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+
+    let facts, violations;
+    if (!submodulePresent) {
+        console.log(
+            "  precept-current: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the design-idioms.md home-map clause bites locally)",
+        );
+        facts = {
+            homeMapFileCells: 0,
+            homeMapExampleTokens: 0,
+            w2_sharedRegisterPartials: [],
+            w1_danglingExamples: 0,
+            w2_unhomed: 0,
+            w3_danglingFileCells: 0,
+            submoduleSkipped: true,
+        };
+        violations = [];
+    } else {
+        ({ facts, violations } = detectPreceptDrift({ docSrc, census, indexSrc }));
+    }
     const selfFailures = selfTest(census, indexSrc);
 
     const allViolations = [...violations, ...selfFailures];
