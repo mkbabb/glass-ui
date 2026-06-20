@@ -550,21 +550,36 @@ try {
     const routes = manifestRoutes();
     const results = [];
     for (const route of routes) {
-        // Per-route retry on a TRANSIENT throw (a CDP/navigation `waitForReady`
-        // timeout under battery load — `gates.mjs --run full` runs this after a
-        // build + 11 gates, so the dev server can be momentarily slow). A THROW is
-        // transient (re-navigate fixes it); a RETURNED result with console errors is
-        // a REAL defect (kept, never masked). Up to 3 attempts, then surface the throw.
+        // Per-route retry on a TRANSIENT DEV-server artifact that a re-navigate (warm
+        // cache) clears — NEVER a real app defect (none can occur against the
+        // production build): (a) a CDP `waitForReady` THROW under battery load
+        // (`gates.mjs --run full` runs this after a build + 11 gates, so the dev server
+        // can be momentarily slow), and (b) the Vite optimizeDeps RELOAD RACE — "Failed
+        // to fetch dynamically imported module" — where the module itself serves 200 but
+        // Vite's cold-cache re-optimize killed the in-flight dynamic import. A result
+        // whose console errors are ANYTHING ELSE is a REAL defect, KEPT verbatim (never
+        // masked); a genuinely broken module persists past the retries and stays failed.
+        const TRANSIENT_RE =
+            /Failed to fetch dynamically imported module|Importing a module script failed/i;
         let result = null;
         let lastErr = null;
-        for (let attempt = 0; attempt < 3; attempt++) {
+        for (let attempt = 0; attempt < 4; attempt++) {
             try {
                 result = await checkRoute(route);
-                break;
             } catch (err) {
                 lastErr = err;
+                result = null;
                 await sleep(750);
+                continue;
             }
+            const onlyTransient =
+                result.consoleErrors.length > 0 &&
+                result.consoleErrors.every((e) => TRANSIENT_RE.test(e));
+            if (onlyTransient && attempt < 3) {
+                await sleep(750);
+                continue;
+            }
+            break;
         }
         if (result == null) throw lastErr;
         results.push(result);
