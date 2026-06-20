@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { computed, nextTick, ref, watch } from "vue";
 import { cn } from "../../../utils";
+import { pagerWindow } from "./pagerWindow";
 
 /* PagerDots — the ONE position-dot rail register (BA.W-PAGER, R10-1 + R10-3).
    The shared oracle the carousel ships and the slides deck adopts: the carousel
@@ -48,6 +49,14 @@ export interface PagerDotsProps {
     windowFit?: number;
     /** Encapsulate the rail in the glass pager pill chassis. Default true. */
     ring?: boolean;
+    /**
+     * The ARIA register. `"tabs"` (default, byte-identical) is the carousel
+     * panel-nav register (`role="tablist"`/`role="tab"` + `aria-selected`);
+     * `"group"` is the full-viewport deck PRESENTATION register
+     * (`role="group"`/`aria-current`) the `<DeckPager>` selects. ONE windowing
+     * oracle, two aria registers — the `pagerWindow` math is NEVER re-forked.
+     */
+    pattern?: "tabs" | "group";
     /** Accessible name for the rail group. */
     ariaLabel?: string;
     /** Additional classes for the rail root. */
@@ -57,6 +66,7 @@ export interface PagerDotsProps {
 const props = withDefaults(defineProps<PagerDotsProps>(), {
     orientation: "horizontal",
     ring: true,
+    pattern: "tabs",
     ariaLabel: "Pager",
 });
 
@@ -73,28 +83,6 @@ const dotEls = new Map<number, HTMLButtonElement>();
 function setDot(i: number, el: Element | null): void {
     if (el) dotEls.set(i, el as HTMLButtonElement);
     else dotEls.delete(i);
-}
-
-/** The dot-window the rail renders for a given allotment: every index while they
-    all fit, else `fit` indices centered on the active and clamped to the ends,
-    with edge flags cueing more beyond. Pure + DOM-free (lifted from the slides
-    `pagerWindow` oracle — the boundary verdict rides the pure math with the dots,
-    never the deck engine). */
-function pagerWindow(
-    total: number,
-    activeIndex: number,
-    fit: number,
-): { shown: number[]; clippedStart: boolean; clippedEnd: boolean } {
-    const m = Math.max(1, Math.min(fit, total));
-    const start =
-        total <= m ? 0 : Math.max(0, Math.min(activeIndex - Math.floor(m / 2), total - m));
-    const length = Math.min(m, total);
-    const shown = Array.from({ length }, (_, i) => start + i);
-    return {
-        shown,
-        clippedStart: shown.length > 0 && shown[0]! > 0,
-        clippedEnd: shown.length > 0 && shown[shown.length - 1]! < total - 1,
-    };
 }
 
 const win = computed(() =>
@@ -131,9 +119,9 @@ function select(i: number): void {
     <div
         ref="rootEl"
         data-slot="pager-dots"
-        role="tablist"
+        :role="pattern === 'group' ? 'group' : 'tablist'"
         :aria-label="ariaLabel"
-        :aria-orientation="orientation"
+        :aria-orientation="pattern === 'group' ? undefined : orientation"
         :data-orientation="orientation"
         :class="
             cn(
@@ -149,8 +137,9 @@ function select(i: number): void {
             :key="i"
             :ref="(el) => setDot(i, el as Element | null)"
             type="button"
-            role="tab"
-            :aria-selected="i === active"
+            :role="pattern === 'group' ? undefined : 'tab'"
+            :aria-selected="pattern === 'group' ? undefined : i === active"
+            :aria-current="pattern === 'group' && i === active ? 'true' : undefined"
             :aria-label="`Go to slide ${i + 1}`"
             :data-active="i === active ? '' : undefined"
             :data-edge="

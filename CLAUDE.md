@@ -95,7 +95,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 48 custom package dirs (every dir has a package barrel). FEATURE-DIR COLOCATION (AY.W-COLOCATE): a complex component is a sub-component dir — components at root, composables under `composables/`, constants in `constants.ts`, shaders in `shaders/`, skeletons in `skeleton/` (each "if needed"), + a `README.md`. Enforced by `proof:colocation`; the dir-set ≡ disk is enforced by `proof:claude-structure-sync` (BA.W-HYGIENE — the enumeration below cannot drift from `ls src/components/custom/` again); the idiom home + the CSS half are docs/precepts/design-idioms.md.
+│   ├── custom/                     # 49 custom package dirs (every dir has a package barrel). FEATURE-DIR COLOCATION (AY.W-COLOCATE): a complex component is a sub-component dir — components at root, composables under `composables/`, constants in `constants.ts`, shaders in `shaders/`, skeletons in `skeleton/` (each "if needed"), + a `README.md`. Enforced by `proof:colocation`; the dir-set ≡ disk is enforced by `proof:claude-structure-sync` (BA.W-HYGIENE — the enumeration below cannot drift from `ls src/components/custom/` again); the idiom home + the CSS half are docs/precepts/design-idioms.md.
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── border-progress/        # BorderProgress — progress IS the element's BORDER: a @property-animated masked CONIC ring (conic-gradient mask-composited into the border band, radius-following — NOT a border-image, NOT a floating bar), the brand spectrum walked OKLCH/shorter-hue via the /color leaf (useBorderSpectrum — the CONSUME), coverage full-ring|bottom-edge, the phase-edge milestone register, the 10-14px envelope (subpath /border-progress, OFF the root barrel; BB.W-BORDER-PROGRESS)
 │   │   ├── completion-seal/        # CompletionSeal — the hero-scale earned-GOLD completion mark: a one-shot gold-draw seal (a stroke-dashoffset wipe on 4 @property motion tokens --seal-draw/--seal-scale/--seal-glint/--seal-ink) reading the W-PHASE-PALETTE earned-gold register (--phase-complete-color/--color-gold, Q2: gold is EARNED at completion, never the phase spectrum) with the W-AX-METAL-GLOW catch-light; one-shot, PRM-gated, compositor-only (subpath /completion-seal, OFF the root barrel; BC.W-AX-COMPLETION-SEAL)
@@ -107,6 +107,7 @@ src/
 │   │   ├── constellation/          # Constellation.vue + constellationField/Draw/Interaction carve + composables/ + constants.ts (subpath /constellation; the generalization props default-OFF — AZ.W-CON-GEN)
 │   │   ├── controls/
 │   │   │   └── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
+│   │   ├── deck/                    # the full-viewport keyboard-paged aria-live PRESENTATION register (subpath /deck, OFF the root barrel; BC.W-DECK — a clean MOVE of the slides donor's headless core, DISTINCT from /carousel's embla item-scroller). useDeck (the index/progress/liveMessage core, vueuse+keyframes-free) · useDeckKeyboard (focus-guarded — Space/digit reach a focused control's native activation) · useDeckSpring (installDeckSpring → keyframes.js springTimingFunction, the LAZY dynamic import) · <DeckPager> (the windowed dots over PagerDots' ONE pagerWindow oracle via the pattern="group" aria axis — no third fork). --spring-deck = var(--spring-smooth) (an alias, no new spring family). The ≥2-consumer bar met by construction (speedtest survey-deck + the slides consume-back = two REPOS)
 │   │   ├── dock/
 │   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical, containerName prop (V.W2); writes --dock-rail-seam-offset for the DockSeparator-anchored rail (BA.W-DOCK-SECTIONS)
 │   │   │   ├── DockSection.vue      # declarative tripartite [{kind}] section chassis — rail-core | divided sections | nav (BA.W-DOCK-SECTIONS)
@@ -409,6 +410,7 @@ import {
 } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { Sidebar } from "@mkbabb/glass-ui/sidebar";
+import { useDeck, useDeckKeyboard, DeckPager } from "@mkbabb/glass-ui/deck"; // BC.W-DECK — the keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel)
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
 //   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip,
 //   sortable-list, timeline, labeled-field, expandable-container,

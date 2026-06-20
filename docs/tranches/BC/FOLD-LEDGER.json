@@ -526,13 +526,13 @@
         },
         {
             "id": "ay-dist-css-comment-build-bug",
-            "what": "the dist-CSS-comment build bug (index.css comment unbalanced paren → Oxide extractor poison)",
+            "what": "the dist-CSS-comment build bug (index.css comment unbalanced paren → Oxide extractor poison); ROOT-FIXED at 4.0.1 (vite.style-assets.ts atSourceIndex line-start anchor) + proof:dist-css guard present; BC.W-DIST-COMMENT-FIX confirms + adds the source-side DC3/DC4 harden",
             "origin": "BC PLAN §5 (AY W-CSS1 lineage)",
-            "status": "UN-ADDRESSED(urgent)",
-            "disposition": "BUILD",
+            "status": "MET",
+            "disposition": "MET",
             "band": 10,
             "wave": "BC.W-DIST-COMMENT-FIX",
-            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (ay-dist-css-comment-build-bug)"
+            "evidence": "docs/tranches/BC/coordination/dist-comment-converge.md (the landed-fix confirm + cross-repo convergence + the DC3/DC4 source-side harden)"
         },
         {
             "id": "ay-cut-staged-not-published",
@@ -1754,13 +1754,13 @@
         },
         {
             "id": "mem-dist-css-comment-build-bug",
-            "what": "index.css:196-217 comment paren/bracket imbalance poisoning Oxide; ships in every consumer tarball",
+            "what": "index.css:196-217 comment paren/bracket imbalance poisoning Oxide; ships in every consumer tarball; ROOT-FIXED at 4.0.1 (the source comment region is well-formed at HEAD, the atSourceIndex anchor lands the fold outside the prose) + proof:dist-css guard present; BC.W-DIST-COMMENT-FIX confirms + adds the source-side DC3/DC4 harden",
             "origin": "BC PLAN §2 Band-5",
-            "status": "UN-ADDRESSED",
-            "disposition": "BUILD",
+            "status": "MET",
+            "disposition": "MET",
             "band": 10,
             "wave": "BC.W-DIST-COMMENT-FIX",
-            "evidence": "docs/tranches/BC/DEFERRAL-LEDGER.md (mem-dist-css-comment-build-bug)"
+            "evidence": "docs/tranches/BC/coordination/dist-comment-converge.md (the landed-fix confirm + cross-repo convergence + the DC3/DC4 source-side harden)"
         },
         {
             "id": "mem-constellation-upstream-gaps",

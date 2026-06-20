@@ -20,11 +20,13 @@
 //        + an `initial-value`, the safe unregistered fallback), and the conic
 //        sweep READS it (`conic-gradient(…, transparent var(--border-progress-fill),
 //        …)`).
-//   W3 — THE SPECTRUM IS OKLCH/SHORTER-HUE ON THE LEAF (the CONSUME, no re-roll).
-//        The spectrum helper IMPORTS the `/color` leaf + value.js's
-//        `interpolateHue("shorter")`, re-implements ZERO color math (no inline
-//        OKLab→sRGB matrix), AND carries the `// CONSUME(value.js 0.13.0
-//        oklchSpectrum):` consume-and-delete marker.
+//   W3 — THE SPECTRUM IS OKLCH/SHORTER-HUE VIA value.js sampleColorRamp (the CONSUME
+//        DISCHARGED, no re-roll). The spectrum walk IMPORTS the `/color` leaf +
+//        value.js's `sampleColorRamp` walked the `"shorter"` arc, re-implements ZERO
+//        color math (no inline OKLab→sRGB matrix). The `// CONSUME(value.js 0.13.0
+//        oklchSpectrum):` interim is DISCHARGED — the local `interpolateHue` walk is
+//        GONE, re-pointed onto the published `sampleColorRamp`; the marker must be
+//        ABSENT (consume-and-delete — no dangling re-point booking survives).
 //   W4 — THE COVERAGE AXIS + THE 10-14px ENVELOPE. The `coverage` prop resolves
 //        `full-ring` | `bottom-edge` through ONE conic-mask mechanism (a
 //        `coverage`-scoped mask region, NOT a parallel conic-fill block), and the
@@ -212,15 +214,23 @@ export function detectBorderProgress(inputs) {
             "W2: the conic sweep does not read `var(--border-progress-fill)` — the registered angle must drive the interpolable fill",
         );
 
-    // ── W3 — the spectrum is OKLCH/shorter-hue on the leaf (no re-roll) ───────
-    // BC.W-AX-BP-LAZY — the value.js-bearing walk + the CONSUME marker live in the
-    // CARVED spectrum-walk.ts leaf (the dynamic-import boundary); W3 reads the carve.
+    // ── W3 — the spectrum is OKLCH/shorter-hue via value.js sampleColorRamp ───
+    // BC.W-AX-BP-LAZY — the value.js-bearing walk lives in the CARVED spectrum-walk.ts
+    // leaf (the dynamic-import boundary); W3 reads the carve. The value.js CONSUME is
+    // DISCHARGED here (BC.W-VALUE-JS-CONSUME): the local `interpolateHue` walk is
+    // re-pointed onto value.js's published `sampleColorRamp`, and the consume-and-delete
+    // marker is GONE (no dangling re-point booking — the no-orphan-marker discipline).
     const importsLeaf = /from\s+["'][^"']*composables\/color["']/.test(walk);
-    const importsInterpolateHue = /interpolateHue/.test(walk);
+    const importsSampleColorRamp = /\bsampleColorRamp\b/.test(walk);
     const usesShorterArc = /["']shorter["']/.test(walk);
-    const hasConsumeMarker = /CONSUME\(value\.js[^)]*oklchSpectrum\)/.test(
-        walkRaw,
-    );
+    // The interim is discharged — the local interpolateHue form must be GONE (the
+    // shorter-hue arc now rides value.js's sampleColorRamp `hueMethod: "shorter"`).
+    const hasInterpolateHueInterim = /\binterpolateHue\b/.test(walk);
+    // The CONSUME marker must be ABSENT post-discharge (consume-and-delete). Scanned in
+    // the carved walk leaf AND the sync shell so a re-introduced booking anywhere reds.
+    const consumeMarkerRe = /CONSUME\(value\.js[^)]*oklchSpectrum\)/;
+    const hasOrphanConsumeMarker =
+        consumeMarkerRe.test(walkRaw) || consumeMarkerRe.test(helperRaw);
     // The no-re-roll fence: no inline OKLab→sRGB matrix / hand-rolled hue lerp in the
     // component, the sync shell, OR the carved walk leaf (proof:single-color-core's
     // mirror). A re-rolled path would name the matrix coefficients or re-define a
@@ -231,9 +241,10 @@ export function detectBorderProgress(inputs) {
         reRollRe.test(helper) || reRollRe.test(walk) || reRollRe.test(vue);
     facts.w3 = {
         importsLeaf,
-        importsInterpolateHue,
+        importsSampleColorRamp,
         usesShorterArc,
-        hasConsumeMarker,
+        hasInterpolateHueInterim,
+        hasOrphanConsumeMarker,
         reRollsColorMath,
     };
     if (!helperExists)
@@ -242,15 +253,19 @@ export function detectBorderProgress(inputs) {
         );
     if (!importsLeaf)
         violations.push(
-            "W3: the spectrum helper does not IMPORT the /color leaf (src/composables/color) — the CONSUME must compose the leaf, not fork",
+            "W3: the spectrum walk does not IMPORT the /color leaf (src/composables/color) — the CONSUME composes the leaf, not a fork",
         );
-    if (!(importsInterpolateHue && usesShorterArc))
+    if (!(importsSampleColorRamp && usesShorterArc))
         violations.push(
-            "W3: the spectrum walk does not use `interpolateHue` with the `\"shorter\"` arc — the OKLCH/shorter-hue arc avoids the OKLab chroma trough",
+            'W3: the spectrum walk does not use value.js `sampleColorRamp` with the `"shorter"` arc — the published helper IS the OKLCH/shorter-hue walk (no chroma trough)',
         );
-    if (!hasConsumeMarker)
+    if (hasInterpolateHueInterim)
         violations.push(
-            "W3: missing the `// CONSUME(value.js 0.13.0 oklchSpectrum):` consume-and-delete marker (the interim must name its re-point successor, not silently fork)",
+            "W3: the local `interpolateHue` interim survives — the CONSUME is DISCHARGED, the hand-rolled shorter-hue walk must be GONE (re-pointed onto sampleColorRamp)",
+        );
+    if (hasOrphanConsumeMarker)
+        violations.push(
+            "W3: the `// CONSUME(value.js 0.13.0 oklchSpectrum):` marker survives — the consume is discharged, the re-point booking must be DELETED (no orphan marker)",
         );
     if (reRollsColorMath)
         violations.push(
@@ -413,11 +428,14 @@ function selfTest() {
         // The sync shell — value.js-FREE (BC.W-AX-BP-LAZY); the dynamic boundary only.
         helper: `import("./spectrum-walk")`,
         helperRaw: ``,
-        // The CARVED value.js-bearing dynamic leaf — W3 reads its evidence here.
+        // The CARVED value.js-bearing dynamic leaf — W3 reads its evidence here. The
+        // value.js CONSUME is DISCHARGED (BC.W-VALUE-JS-CONSUME): the walk uses the
+        // published `sampleColorRamp` shorter-hue arc, NO local interpolateHue interim,
+        // NO orphan consume marker.
         walk: `import { cssToOklch } from "../../../../composables/color";
-            import { interpolateHue } from "@mkbabb/value.js";
-            interpolateHue(a, b, f, "shorter")`,
-        walkRaw: `// CONSUME(value.js 0.13.0 oklchSpectrum): re-point here`,
+            import { sampleColorRamp } from "@mkbabb/value.js";
+            sampleColorRamp(a, b, n, { space: "oklch", hueMethod: "shorter" })`,
+        walkRaw: ``,
         constants: `export type BorderProgressCoverage = "full-ring" | "bottom-edge";
             export const BORDER_PROGRESS_WIDTH_MIN = 10;
             export const BORDER_PROGRESS_WIDTH_MAX = 14;
@@ -484,12 +502,25 @@ function selfTest() {
                     .replace("WIDTH_DEFAULT = 12", "WIDTH_DEFAULT = 7"),
             }).violations.length > 0,
     });
-    // Bite E — drop the consume marker reds W3 (it lives in the carved walk leaf).
+    // Bite E1 — the discharged interpolateHue interim survives reds W3 (the consume
+    // is DISCHARGED — the hand-rolled shorter-hue walk must be GONE).
     bites.push({
-        name: "no-consume-marker",
+        name: "interpolateHue-interim-survives",
         red:
-            detectBorderProgress({ ...good, walkRaw: "no marker here" }).violations
-                .length > 0,
+            detectBorderProgress({
+                ...good,
+                walk: good.walk + '\ninterpolateHue(a, b, f, "shorter");',
+            }).violations.length > 0,
+    });
+    // Bite E2 — an orphan consume marker survives reds W3 (consume-and-delete — the
+    // re-point booking must be deleted once discharged).
+    bites.push({
+        name: "orphan-consume-marker",
+        red:
+            detectBorderProgress({
+                ...good,
+                walkRaw: "// CONSUME(value.js 0.13.0 oklchSpectrum): re-point here",
+            }).violations.length > 0,
     });
     // Bite F — drop the bottom-edge shared-mask scope reds W4.
     bites.push({
@@ -568,11 +599,12 @@ function run() {
         )}`,
     );
     console.log(
-        `  W3 spectrum OKLCH/shorter on leaf  : ${yn(
+        `  W3 spectrum OKLCH/shorter sampleColorRamp: ${yn(
             facts.w3.importsLeaf &&
-                facts.w3.importsInterpolateHue &&
+                facts.w3.importsSampleColorRamp &&
                 facts.w3.usesShorterArc &&
-                facts.w3.hasConsumeMarker &&
+                !facts.w3.hasInterpolateHueInterim &&
+                !facts.w3.hasOrphanConsumeMarker &&
                 !facts.w3.reRollsColorMath,
         )}`,
     );

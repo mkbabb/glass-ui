@@ -263,6 +263,16 @@
     --spring-dock-duration: 0.28s;
     --spring-press-duration: 0.11s;
 
+    /* ── DECK SLIDE-TRANSITION CURVE (BC.W-DECK) ──
+       The full-viewport keyboard-paged deck's slide transition rides the SAME
+       `--spring-smooth` register the deck's `DECK_SPRING` samples (the calm-settle
+       `.smooth` family; the (response, ζ) pair lives in deck/constants.ts) — an
+       ALIAS, NOT a new spring family (the donor's own fence + the W-GLASS-CAL spring
+       fence). `--spring-deck: var(--spring-smooth)` so a deck slide reads as a calm
+       settle, not a bounce; the JS half (`installDeckSpring`) consumes keyframes.js
+       `springTimingFunction(DECK_SPRING)` for the count-up easing. */
+    --spring-deck: var(--spring-smooth);
+
     /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
     --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);

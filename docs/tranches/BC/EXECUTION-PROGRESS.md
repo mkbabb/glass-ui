@@ -47,7 +47,7 @@
 | 23 | 4 | VIZ-CONFIGURATOR-SUITE | **DONE** — the viz studios on the ONE VizStudio chassis (controls-RIGHT + the page-chassis hero + #masthead violet) |
 | 24 | 9 | STORYBOOK-META | **DONE** — the storybook meta chassis (AppShell + StoryPage coherent). The suffuse reconcile: PAGE-HIERARCHY over-stripped the W-SUFFUSE feedback identity → restored (inline border-left rail + IconChip + tinted eyebrow, PH3-safe); demo-design/icon-chip/storybook-meta cross-wave false-positives reconciled |
 | 25 | 11 | CSS-CRITICAL/PERF-PRODUCER → LIGHTHOUSE + BP-LAZY | **DONE** — CSS-CRITICAL (critical gzip 47.3%, FOUC-safe π 4/4 live) + PERF-PRODUCER (dock morph 129.9fps ~10x lift, the 4 producer fixes survived + byte-fenced) + BP-LAZY + LIGHTHOUSE floor re-pinned. profile:budget GREEN (rebaselined the 62 new chunks + lifted constellation/fourier-field ceilings for the WebGPU re-home). **Band 11 + the Tier-23/24 suite COMPLETE** |
-| 26 | 10 | DECK (+ DIST-COMMENT-FIX early) | pending |
+| 26 | 10 | DECK (+ DIST-COMMENT-FIX early) + value.js consume | **DONE** — the /deck subpath (DeckPager over PagerDots, keyboard-paged aria-live, focus-guarded; slides+speedtest 2-repo consumers) + DIST-COMMENT-FIX (dist-css source comment-balance + fold-anchor) + the value.js sampleColorRamp consume-and-delete (the ONE re-pointable-now cross-repo consume; single-color-core GREEN). 79 subpaths, typecheck 0 |
 | 27 | 10 | **CUT** (terminal, user-gated 4.x publish + slides redeploy) | pending |
 | 28 | 10 | SPEEDTEST-ADOPT/FOURIER-ASK/ATLAS-ASK (post-cut adopt sweep [‖]) | pending |
 

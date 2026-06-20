@@ -350,6 +350,17 @@ export type {
 // slides deck adopts (BA.W-PAGER). Ships via its `/pager-dots` subpath.
 export type { PagerDotsProps } from "../components/custom/pager-dots";
 
+// ── Deck ──────────────────────────────────────────────────────────────────────
+// The full-viewport keyboard-paged aria-live PRESENTATION register (BC.W-DECK),
+// DISTINCT from `/carousel`'s embla item-scroller. `DeckCore` is the headless
+// state core shape (`index`/`total`/`progress`/`liveMessage` + the moves);
+// `DeckMoves` is the minimal move surface the keyboard handler drives; `PagerWindow`
+// is the ONE windowing-oracle return shape `<DeckPager>` composes (sourced from the
+// single `pager-dots/pagerWindow` leaf — no third fork). Ships via its `/deck`
+// subpath (OFF the root barrel — vueuse-FREE + keyframes-FREE on the static graph).
+export type { DeckCore, DeckMoves } from "../components/custom/deck";
+export type { PagerWindow } from "../components/custom/pager-dots";
+
 // ── Digit / SegmentedTabs primitives ────────────────────────────────────────
 // Props/variant types for the animated-digit + the unified SegmentedTabs.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded

@@ -1,4 +1,5 @@
-// proof-dist-css.mjs — the dist/styles CSS parse + url() safety gate (GC2).
+// proof-dist-css.mjs — the dist/styles CSS parse + url() safety gate (GC2),
+// PLUS the SOURCE-SIDE comment-balance + fold-anchor harden (BC.W-DIST-COMMENT-FIX).
 //
 // The 4.0.0 prepublish gate (`build && test`) had NO check that the emitted
 // dist CSS was syntactically valid or bundler-safe. Two distinct bug classes
@@ -45,18 +46,49 @@
 //       cleanly, the url() values in the output are the VALUES lightningcss
 //       normalised — a reliable surface to inspect.
 //
-// SCOPE
-//   Pure function of dist/styles/**/*.css — no sibling checkout, no network, no
-//   browser. Runs identically on a dev machine and a clean CI runner. Tags:
-//   local + ci + release (the build step runs first in the gates matrix,
-//   guaranteeing dist/ is fresh before this gate executes). Fast: a full parse
-//   pass over ~84 files finishes in < 200 ms.
+//   (c) SOURCE-SIDE COMMENT-BALANCE (BC.W-DIST-COMMENT-FIX harden, DC3). (a)/(b)
+//       catch the bug in the EMITTED dist (after the build); (c) catches it
+//       BEFORE the build, at the SOURCE. Every src/styles/**/*.css is walked by a
+//       STATEFUL comment-tokenizer (NOT a naive `/\*` vs `*/` regex count — those
+//       false-fire on a JSDoc `* theme/*.css` line or a `*/` inside a string,
+//       both of which appear in the real cascade). A block comment left UNCLOSED
+//       at EOF (or an unterminated string at EOF) is the imbalance that, once the
+//       vite fold injects its comment-close, poisons the downstream prose — the
+//       root cause of the apostrophe-as-unterminated-string class, caught at the
+//       source. CSS comments do NOT nest, so the tokenizer treats any `/*` already
+//       inside a comment as literal text — the only real failure is an unclosed
+//       comment / unterminated string at EOF.
 //
-// SELF-TEST — The guard runs two synthetic bad-CSS fixtures as a born-RED
+//   (d) FOLD-ANCHOR CONFIRM (BC.W-DIST-COMMENT-FIX confirm, DC4). vite.style-
+//       assets.ts MUST anchor the @import fold-injection on the line-start
+//       `atSourceIndex` regex (`/^[ \t]*@source\b/m`), NOT a bare
+//       `indexOf("@source")` that matches the PROSE mention inside the comment
+//       block first (the exact 4.0.0 bug). A regression to an `indexOf("@source")`
+//       fold-injection REDs. This is a CONFIRM clause — the 4.0.1 hotfix landed
+//       the anchor; the gate makes a future un-fix impossible.
+//
+//   The cross-repo convergence (the speedtest fleet's vite.style-assets.ts fix and
+//   glass-ui's 4.0.1 atSourceIndex fix are the SAME root fix) is recorded in
+//   docs/tranches/BC/coordination/dist-comment-converge.md — the no-silent-drop
+//   ledger. The unterminated-string class is now closed at all THREE layers: the
+//   SOURCE (c)/(d), the emitted DIST (a)/(b), and the consumer BUILD (the fleet's
+//   green npm run build, the EXECUTION-phase witness).
+//
+// SCOPE
+//   Pure function of dist/styles/**/*.css + src/styles/**/*.css + the
+//   vite.style-assets.ts source — no sibling checkout, no network, no browser.
+//   Runs identically on a dev machine and a clean CI runner. Tags: local + ci +
+//   release (the build step runs first in the gates matrix, guaranteeing dist/ is
+//   fresh before this gate executes). Fast: a full parse pass over ~90 files
+//   finishes in < 200 ms.
+//
+// SELF-TEST — The guard runs synthetic bad-CSS/bad-source fixtures as a born-RED
 // inline self-test every invocation (the proof:fail-explicit / comment-strip
 // house pattern, per proof-gate-manifest-sound precedent). If the detector
-// mis-fires and does NOT catch either class, the guard aborts loudly — never
-// silently reports 0 violations on a broken detector.
+// mis-fires and does NOT catch a class, the guard aborts loudly — never silently
+// reports 0 violations on a broken detector. Fixtures: A unterminated string
+// (parse), B relative url() (url-safety), C safe data: url() (anti-false-positive),
+// D unclosed source comment (DC3), E synthetic `indexOf("@source")` fold (DC4).
 
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve, relative } from "node:path";
@@ -69,6 +101,8 @@ const require_ = createRequire(import.meta.url);
 const lc = require_("lightningcss");
 
 const DIST_STYLES = resolve(ROOT, "dist/styles");
+const SRC_STYLES = resolve(ROOT, "src/styles");
+const VITE_STYLE_ASSETS = resolve(ROOT, "vite.style-assets.ts");
 const COMMAND = "npm run proof:dist-css";
 
 // ── helpers ────────────────────────────────────────────────────────────────
@@ -168,6 +202,149 @@ function checkFile(filePath, css) {
     return violations;
 }
 
+// ── source-side comment-balance (DC3) ──────────────────────────────────────
+
+/**
+ * STATEFUL comment-balance scan. CSS comments do NOT nest and `/*` / `*\/`
+ * substrings appear legitimately inside JSDoc-style prose (`* theme/*.css`) and
+ * inside string literals (`url("…*\/…")`), so a naive `/\*` vs `*\/` regex count
+ * false-fires. The tokenizer walks char-by-char tracking `inComment`/`inString`,
+ * so only a block comment / string left OPEN at EOF is reported.
+ *
+ * Returns { unclosedComment, commentStartLine, unterminatedString }.
+ */
+function commentBalance(css) {
+    let i = 0;
+    const n = css.length;
+    let inComment = false;
+    let inString = false;
+    let quote = "";
+    let line = 1;
+    let commentStartLine = 0;
+    let stringStartLine = 0;
+    while (i < n) {
+        const c = css[i];
+        const c2 = css[i + 1];
+        if (c === "\n") line++;
+        if (inComment) {
+            if (c === "*" && c2 === "/") {
+                inComment = false;
+                i += 2;
+                continue;
+            }
+            i++;
+            continue;
+        }
+        if (inString) {
+            if (c === "\\") {
+                i += 2;
+                continue;
+            }
+            if (c === quote) {
+                inString = false;
+                quote = "";
+            }
+            i++;
+            continue;
+        }
+        if (c === "/" && c2 === "*") {
+            inComment = true;
+            commentStartLine = line;
+            i += 2;
+            continue;
+        }
+        if (c === '"' || c === "'") {
+            inString = true;
+            quote = c;
+            stringStartLine = line;
+            i++;
+            continue;
+        }
+        i++;
+    }
+    return {
+        unclosedComment: inComment,
+        commentStartLine: inComment ? commentStartLine : 0,
+        unterminatedString: inString,
+        stringStartLine: inString ? stringStartLine : 0,
+    };
+}
+
+/**
+ * DC3 — scan every src/styles/**\/*.css for comment-balance. Returns an array of
+ * violation strings (an unclosed comment / unterminated string at EOF is the
+ * imbalance that poisons the downstream prose once the vite fold injects).
+ */
+function checkSourceComments() {
+    const violations = [];
+    if (!statSync(SRC_STYLES, { throwIfNoEntry: false })?.isDirectory()) {
+        // src/styles is the repo source — its absence is itself a violation.
+        violations.push(`[source-missing] src/styles/ does not exist`);
+        return { violations, filesScanned: 0 };
+    }
+    const files = walkCss(SRC_STYLES);
+    for (const f of files) {
+        const css = readFileSync(f, "utf8");
+        const rel = relative(ROOT, f);
+        const bal = commentBalance(css);
+        if (bal.unclosedComment) {
+            violations.push(
+                `[source-comment-imbalance] ${rel}: a /* block comment opened at line ${bal.commentStartLine} is never closed (*/) before EOF — an unclosed comment lets the vite @import fold-injection orphan the downstream prose as live CSS (the unterminated-string class).`,
+            );
+        }
+        if (bal.unterminatedString) {
+            violations.push(
+                `[source-string-imbalance] ${rel}: a string literal opened at line ${bal.stringStartLine} is never closed before EOF.`,
+            );
+        }
+    }
+    return { violations, filesScanned: files.length };
+}
+
+// ── source-side fold-anchor confirm (DC4) ──────────────────────────────────
+
+/**
+ * DC4 — confirm vite.style-assets.ts anchors the @import fold-injection on the
+ * line-start `atSourceIndex` regex (`/^[ \t]*@source\b/m`), NOT a bare
+ * `indexOf("@source")` that matches the prose mention inside a comment block
+ * first (the 4.0.0 bug). Returns violation strings.
+ *
+ * Accepts an optional `src` override so the self-test can feed a synthetic
+ * `indexOf("@source")`-fold source and prove the detector bites.
+ */
+function checkAtSourceAnchor(src) {
+    const violations = [];
+    let text = src;
+    if (text === undefined) {
+        if (!statSync(VITE_STYLE_ASSETS, { throwIfNoEntry: false })?.isFile()) {
+            violations.push(`[fold-anchor-missing] vite.style-assets.ts does not exist`);
+            return violations;
+        }
+        text = readFileSync(VITE_STYLE_ASSETS, "utf8");
+    }
+    // Strip block comments so the prose mention of `indexOf` (in the atSourceIndex
+    // docstring) is not mistaken for a live fold-injection call.
+    const code = stripComments(text);
+
+    // The line-start anchor regex MUST be present in the live code.
+    const hasLineStartAnchor = /\/\^\[ \\t\]\*@source\\b\/m/.test(code);
+    if (!hasLineStartAnchor) {
+        violations.push(
+            `[fold-anchor-regression] vite.style-assets.ts no longer carries the line-start fold anchor (/^[ \\t]*@source\\b/m) — without it the @import fold-injection can land inside a comment block's prose mention of @source (the 4.0.0 unterminated-string bug).`,
+        );
+    }
+
+    // A bare indexOf("@source") / indexOf('@source') in LIVE code is the
+    // regressed fold-injection form (the prose-matching bug). Forbidden.
+    const BARE_INDEXOF = /\.indexOf\(\s*["'`]@source\b/;
+    if (BARE_INDEXOF.test(code)) {
+        violations.push(
+            `[fold-anchor-indexof] vite.style-assets.ts uses a bare indexOf("@source") for the @import fold-injection — that matches the PROSE mention inside the comment block FIRST and slices the injection into an open comment (the 4.0.0 bug). Anchor on the line-start at-rule via atSourceIndex (/^[ \\t]*@source\\b/m) instead.`,
+        );
+    }
+    return violations;
+}
+
 // ── self-test (inline, runs every invocation) ──────────────────────────────
 
 function runSelfTest() {
@@ -197,6 +374,44 @@ function runSelfTest() {
     if (errorsC.length > 0) {
         selfFails.push(
             `SELF-TEST C FAILED: a safe data: url() was incorrectly flagged (false positive): ${errorsC.join("; ")}`,
+        );
+    }
+
+    // Fixture D — DC3 source-side: an UNCLOSED block comment (the @source prose
+    // mention an indexOf fold would slice). The stateful tokenizer must report it.
+    const fixtureD = "/* BA.W-EMISSION — re-pointed the @source glob, the apostrophe's here\n.a { color: red; }";
+    const balD = commentBalance(fixtureD);
+    if (!balD.unclosedComment) {
+        selfFails.push(
+            "SELF-TEST D FAILED: an unclosed source comment was NOT caught by commentBalance() — the DC3 source-side arm is not load-bearing",
+        );
+    }
+    // Fixture D' — a WELL-FORMED comment with a `@source` prose mention + an
+    // apostrophe inside it must NOT be flagged (anti-false-positive — this is the
+    // real index.css shape).
+    const fixtureDok = "/* re-pointed the @source glob; the apostrophe's fine */\n.a { color: red; }";
+    const balDok = commentBalance(fixtureDok);
+    if (balDok.unclosedComment || balDok.unterminatedString) {
+        selfFails.push(
+            "SELF-TEST D' FAILED: a well-formed comment with a @source prose mention was incorrectly flagged (false positive)",
+        );
+    }
+
+    // Fixture E — DC4 source-side: a synthetic `indexOf("@source")` fold-injection
+    // (the regressed form) must RED.
+    const fixtureE = 'const sourceAt = indexSrc.indexOf("@source");';
+    const errorsE = checkAtSourceAnchor(fixtureE);
+    if (!errorsE.some((v) => v.includes("fold-anchor-indexof"))) {
+        selfFails.push(
+            "SELF-TEST E FAILED: a synthetic indexOf(\"@source\") fold was NOT caught by checkAtSourceAnchor() — the DC4 anchor-confirm arm is not load-bearing",
+        );
+    }
+    // Fixture E' — the line-start anchor form must NOT be flagged.
+    const fixtureEok = "const m = /^[ \\t]*@source\\b/m.exec(css);";
+    const errorsEok = checkAtSourceAnchor(fixtureEok);
+    if (errorsEok.length > 0) {
+        selfFails.push(
+            `SELF-TEST E' FAILED: the line-start anchor form was incorrectly flagged (false positive): ${errorsEok.join("; ")}`,
         );
     }
 
@@ -232,7 +447,7 @@ export function detect() {
         return { facts, violations };
     }
 
-    // 2. Check each file.
+    // 2. Check each dist file (DC1 parse + DC2 url-safety).
     const parseErrors = [];
     const urlViolations = [];
     for (const f of files) {
@@ -246,6 +461,18 @@ export function detect() {
     }
     facts.parseErrors = parseErrors.length;
     facts.unsafeUrlViolations = urlViolations.length;
+
+    // 3. DC3 — SOURCE-SIDE comment-balance over src/styles/**/*.css.
+    const { violations: sourceCommentViolations, filesScanned: srcScanned } =
+        checkSourceComments();
+    facts.sourceFilesScanned = srcScanned;
+    facts.sourceCommentViolations = sourceCommentViolations.length;
+    for (const v of sourceCommentViolations) violations.push(v);
+
+    // 4. DC4 — fold-anchor confirm over vite.style-assets.ts.
+    const foldAnchorViolations = checkAtSourceAnchor();
+    facts.foldAnchorViolations = foldAnchorViolations.length;
+    for (const v of foldAnchorViolations) violations.push(v);
 
     return { facts, violations };
 }
@@ -267,11 +494,14 @@ function run() {
         violations,
     });
 
-    console.log("proof:dist-css — dist/styles CSS parse + url() safety gate (GC2)");
-    console.log(`  self-test   : ${facts.selfTestPassed ? "PASS" : "FAIL"}`);
-    console.log(`  files scanned: ${facts.filesScanned ?? 0}`);
-    console.log(`  parse errors : ${facts.parseErrors ?? 0}  (catches comment/unterminated-string class)`);
-    console.log(`  unsafe url() : ${facts.unsafeUrlViolations ?? 0}  (catches bundler-hostile url() class)`);
+    console.log("proof:dist-css — dist/styles CSS parse + url() safety gate (GC2) + source-side comment-balance harden (BC.W-DIST-COMMENT-FIX)");
+    console.log(`  self-test        : ${facts.selfTestPassed ? "PASS" : "FAIL"}  (5 bites: parse / url / data-safe / DC3 source-comment / DC4 fold-anchor)`);
+    console.log(`  dist files scanned: ${facts.filesScanned ?? 0}`);
+    console.log(`  DC1 parse errors  : ${facts.parseErrors ?? 0}  (catches comment/unterminated-string class)`);
+    console.log(`  DC2 unsafe url()  : ${facts.unsafeUrlViolations ?? 0}  (catches bundler-hostile url() class)`);
+    console.log(`  src files scanned : ${facts.sourceFilesScanned ?? 0}`);
+    console.log(`  DC3 src comments  : ${facts.sourceCommentViolations ?? 0}  (catches source-side comment imbalance before the build)`);
+    console.log(`  DC4 fold anchor   : ${facts.foldAnchorViolations ?? 0}  (confirms vite.style-assets.ts atSourceIndex line-start anchor, not bare indexOf)`);
 
     if (violations.length) {
         console.error("\nVIOLATIONS:");
@@ -280,7 +510,11 @@ function run() {
             "\n  To fix a parse error: ensure the vite build emits syntactically valid CSS" +
             " (see vite.style-assets.ts atSourceIndex — the comment-injection anchor)." +
             "\n  To fix an unsafe url(): use a data: URI, #fragment, or https: URL in the" +
-            " dist CSS — never a relative/bare path (consumer bundlers will try to resolve it).",
+            " dist CSS — never a relative/bare path (consumer bundlers will try to resolve it)." +
+            "\n  To fix a source-comment imbalance (DC3): close every /* with a matching */ in" +
+            " src/styles/**/*.css — an unclosed comment poisons the downstream prose once the fold injects." +
+            "\n  To fix a fold-anchor regression (DC4): anchor the @import fold-injection on the" +
+            " line-start atSourceIndex regex (/^[ \\t]*@source\\b/m), never a bare indexOf(\"@source\").",
         );
     }
 

@@ -26,14 +26,16 @@ a spectrum of our colors."_
   `<percentage>` (`tokens/property-regs.css §18`, `inherits: false`) drives the conic
   sweep extent so the fill INTERPOLATES (a bare unregistered `var()` snaps). The
   `initial-value: 0%` is the safe resting ring on a non-supporting engine.
-- **The brand-spectrum fill via the OKLCH/shorter-hue helper (the CONSUME).** The
-  conic stops are the section/viz brand ramp (`--section-color-*`/`--viz-*`)
-  interpolated SHORTER-hue (no chroma trough — OKLab greys a warm→cool midpoint; the
-  shorter arc stays saturated). `composables/useBorderSpectrum.ts` is a thin consumer
-  of the EXISTING `/color` leaf (`cssToOklch`/`oklchStopToHex` + value.js's
-  `interpolateHue("shorter")`) — it re-implements ZERO color math
-  (`proof:single-color-core` holds). The `// CONSUME(value.js 0.13.0 oklchSpectrum):`
-  marker books the consume-and-delete onto value.js 0.13.0's named helper.
+- **The brand-spectrum fill via value.js `sampleColorRamp`.** The conic stops are the
+  section/viz brand ramp (`--section-color-*`/`--viz-*`) walked SHORTER-hue (no chroma
+  trough — OKLab greys a warm→cool midpoint; the shorter arc stays saturated). The
+  perceptual walk (`composables/spectrum-walk.ts`, behind the value.js-free dynamic
+  `import()` boundary) is a thin consumer of value.js's published
+  `sampleColorRamp(from, to, n, { space: "oklch", hueMethod: "shorter" })` + the
+  EXISTING `/color` leaf (`cssToOklch`/`oklchStopToHex`) — it re-implements ZERO color
+  math (`proof:single-color-core` holds; the math source IS value.js). The
+  `// CONSUME(value.js 0.13.0 oklchSpectrum):` interim is DISCHARGED — the walk
+  re-points off the local `interpolateHue("shorter")` form onto the published helper.
 - **The `coverage` axis — `full-ring` | `bottom-edge`.** `full-ring` (default)
   sweeps the perimeter; `bottom-edge` paints ONLY the bottom band (the literal C2
   case). The two share the ONE conic-mask mechanism (a `coverage`-scoped mask region,

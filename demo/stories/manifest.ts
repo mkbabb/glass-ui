@@ -312,6 +312,7 @@ const SUBPATHS: Record<string, string> = {
     "motion/scroll-choreography": "/motion/scroll-choreography",
     "motion/countup": "@mkbabb/glass-ui/motion",
     "motion/reveal": "@mkbabb/glass-ui/motion-core",
+    "motion/deck": "@mkbabb/glass-ui/deck",
     "motion/typewriter": "@mkbabb/glass-ui/typewriter",
     "motion/handmark": "@mkbabb/glass-ui/handmark",
     "motion/animated-digit": "@mkbabb/glass-ui/animated-digit",
@@ -1072,6 +1073,12 @@ export const CATEGORIES: Category[] = [
                 "reveal",
                 "v-reveal",
                 "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads.",
+            ),
+            s(
+                "motion",
+                "deck",
+                "Deck",
+                "The full-viewport keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel) — useDeck (headless index/progress/liveMessage) + useDeckKeyboard (focus-guarded Arrow/Space/digit) + <DeckPager> (windowed dots over PagerDots' ONE oracle) + the --spring-deck slide settle. Unblocks the speedtest survey-deck + the slides consume-back.",
             ),
             s("motion", "typewriter", "Typewriter"),
             s(

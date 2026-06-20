@@ -19,6 +19,9 @@
             "tokens": [
                 "dist/tokens.d.ts"
             ],
+            "deck": [
+                "dist/deck.d.ts"
+            ],
             "dock": [
                 "dist/dock.d.ts"
             ],
@@ -301,6 +304,10 @@
         "./styles/fonts": "./dist/styles/fonts.css",
         "./styles.css": "./dist/glass-ui.css",
         "./fonts/*": "./dist/fonts/*",
+        "./deck": {
+            "types": "./dist/deck.d.ts",
+            "import": "./dist/deck.js"
+        },
         "./dock": {
             "types": "./dist/dock.d.ts",
             "import": "./dist/dock.js"
@@ -688,6 +695,7 @@
         "proof:perf-producer": "node scripts/proof-perf-producer.mjs",
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
         "proof:vt-names": "node scripts/proof-vt-names.mjs",
+        "proof:deck": "node scripts/proof-deck.mjs",
         "proof:dock-animation-live": "node scripts/proof-dock-animation-live.mjs",
         "proof:dock-rail-cohesion": "node scripts/proof-dock-rail-cohesion.mjs",
         "proof:dock-lockstep-bornred": "node scripts/proof-dock-lockstep-bornred.mjs",
