@@ -74,3 +74,247 @@ export type {
     SpringPresetRow,
     SpringPresetName,
 } from "../composables/motion/curves";
+
+// ── Aurora ─────────────────────────────────────────────────────────────────
+// Substrate config + family, plus numeric ceilings the consumer needs to
+// type-check preset shapes against. (The aurora CONSTANTS —
+// DEFAULT_AURORA_CONFIG/PAPER_WASH_GROUND/MAX_NUCLEI/MAX_STOPS — are VALUE
+// exports and stay in api/index.ts, which re-joins this module's types.)
+export type {
+    AuroraAtoms,
+    AuroraConfig,
+    AuroraCursorApi,
+    AuroraFlow,
+    AuroraHarmony,
+    AuroraHuePath,
+    AuroraInstance,
+    AuroraInteractivity,
+    AuroraInteractivityAtom,
+    AuroraMedium,
+    AuroraMediumAtom,
+    AuroraMotionAtom,
+    AuroraNucleus,
+    AuroraRuntimeMode,
+    AuroraRuntimeOptions,
+    AuroraZoneArrangement,
+    AuroraZones,
+    DeriveAuroraOptions,
+    DeriveEasing,
+    FlowPattern,
+    OklchStop,
+    StrokeMode,
+    StrokeOrient,
+    WarpMode,
+} from "../components/custom/aurora";
+
+// ── Configurator ───────────────────────────────────────────────────────────
+// Preset descriptor + state-machine return shape. Consumers building generic
+// configurator wrappers (e.g. aurora chrome) type against these.
+export type {
+    ConfiguratorCloneMode,
+    ConfiguratorPreset,
+    ConfiguratorScrollMode,
+    ConfiguratorState,
+    ConfiguratorStateOptions,
+} from "../components/custom/configurator";
+
+// ── Timeline ───────────────────────────────────────────────────────────────
+// Segment data shape consumers type fixture arrays + preset descriptors against.
+export type {
+    TimelineSegment,
+    TimelineSegmentGradient,
+    TimelineSegmentState,
+} from "../components/custom/timeline";
+
+// ── CVA variant prop types ─────────────────────────────────────────────────
+// Every CVA-driven component's `VariantProps`-derived type. Consumers wrapping a
+// component type against these instead of redeclaring the union. (MenuItemVariants
+// + ControlSize stay in api/index.ts beside `Surface` for the _shared per-surface
+// source gate; the others ride here.)
+export type { AlertVariants } from "../components/ui/alert";
+export type { AvatarVariants } from "../components/ui/avatar";
+export type { BadgeVariants } from "../components/ui/badge";
+export type { ButtonVariants } from "../components/ui/button";
+export type { SheetVariants } from "../components/ui/sheet";
+export type { SliderVariants } from "../components/ui/slider";
+export type { ToggleVariants } from "../components/ui/toggle";
+export type { ToggleChipVariants } from "../components/custom/toggle-chip";
+
+// ── Search domain ──────────────────────────────────────────────────────────
+// `SearchableItem` is the input shape consumers feed `buildIndex` /
+// `useFuzzySearch`; `SearchResult` carries scored matches; `FuzzySearchState`
+// is the composable-return canon; `UseFuzzySearchOptions` parameterises the
+// reactive composable; `SearchIndex` is the prebuilt-index handle.
+// (`SearchVariant`/`SearchVariants` stay in api/index.ts for proof:search-custom.)
+export type {
+    FuzzySearchState,
+    SearchableItem,
+    SearchIndex,
+    SearchResult,
+    UseFuzzySearchOptions,
+} from "../components/custom/search";
+
+// ── Toast row shape ──────────────────────────────────────────────────────────
+// `ToastType` is the canonical toast row shape (aliased from `Toast` on the toast
+// barrel); paired with the `ToastVariant` enum (published from api/index.ts).
+export type { ToastType } from "../components/ui/toast";
+
+// ── Clipboard ──────────────────────────────────────────────────────────────
+// `UseClipboardReturn` — canonical composable-return shape paralleling
+// `ConfiguratorState` / `SidebarState` / `FuzzySearchState`. `UseClipboardOptions`
+// ships paired so consumers can forward the `resetMs` / `onCopyError` knobs.
+export type {
+    UseClipboardOptions,
+    UseClipboardReturn,
+} from "../composables/dom/useClipboard";
+
+// ── User-invalid ARIA bridge ─────────────────────────────────────────────────
+// `UseUserInvalidAriaReturn` — canonical composable-return shape (the `{ bind }`
+// handle). `UseUserInvalidAriaOptions` ships paired so a consumer wrapping
+// `useUserInvalidAria` can forward the `fallbackClasses` knob.
+export type {
+    UseUserInvalidAriaOptions,
+    UseUserInvalidAriaReturn,
+} from "../composables/dom/useUserInvalidAria";
+
+// ── View-Transition substrate ───────────────────────────────────────────────
+// `ViewTransitionResult` — the `{ finished, transitioned }` shape
+// `startViewTransition` resolves. `ViewTransitionOptions` gains
+// `instantUnderReducedMotion`; `NavigateOptions` is the route/navigation
+// convenience's option shape.
+export type {
+    ViewTransitionResult,
+    ViewTransitionOptions,
+    NavigateOptions,
+} from "../composables/motion/useViewTransition";
+
+// ── Metric primitives ───────────────────────────────────────────────────────
+// `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact" |
+// "bare"`); `MetricCellProps` is the Props shape consumers forward when wrapping
+// `<MetricCell>`. `MetricStackProps` + `MetricRowProps` cover the layout shell +
+// row pair. `MetricBadgeProps` is the inline/stacked badge-pill shape.
+export type {
+    MetricBadgeProps,
+    MetricBadgeSize,
+    MetricBadgeLabelPosition,
+} from "../components/custom/metric-badge";
+export type {
+    MetricCellAppearance,
+    MetricCellProps,
+} from "../components/custom/metric-cell";
+export type {
+    MetricRowProps,
+    MetricStackProps,
+} from "../components/custom/metric-stack";
+
+// ── StackedIconGroup ───────────────────────────────────────────────────────
+// `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked
+// avatar/icon strips pin against.
+export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
+
+// ── Paper / texture ────────────────────────────────────────────────────────
+// `PaperBackdropProps` — the Props shape consumers forward when wrapping
+// `<PaperBackdrop>`. `PaperBackdropFrequency` is the turbulence-register enum
+// (`"clean" | "aged"`).
+export type {
+    PaperBackdropFrequency,
+    PaperBackdropProps,
+} from "../components/custom/paper-backdrop";
+
+// ── Dark ergonomics ──────────────────────────────────────────────────────────
+// `UseGlobalDarkOptions` — the one-shot `initialValue` seed shape;
+// `DarkModeSyncScriptOptions` — options for the parse-time FOUC eliminator;
+// `DarkFlipSettledCallback` / `UseGlobalDarkReturn` — the post-flip SETTLE seam
+// shape. Both runtime values live on the flat `/dark` subpath; only the types
+// ride the discovery layer.
+export type {
+    DarkFlipSettledCallback,
+    DarkModeSyncScriptOptions,
+    UseGlobalDarkOptions,
+    UseGlobalDarkReturn,
+} from "../composables/dark";
+
+// ── Canvas2D lifecycle substrate ─────────────────────────────────────────────
+// The Canvas2D park/freeze/dispose substrate's public option + handle + frame
+// shapes. `Canvas2DSuspendReason` is the three-reason park enum. The runtime
+// values live on `/canvas`.
+export type {
+    Canvas2DFrame,
+    Canvas2DHandle,
+    Canvas2DOptions,
+    Canvas2DSuspendReason,
+} from "../composables/glass/canvas2d";
+
+// ── Text-highlight controls ──────────────────────────────────────────────────
+// `UseTextHighlightControls` is the imperative-handle return shape of
+// `useTextHighlight` and `HighlightMatcher` the per-node match callback. The
+// runtime value lives on `/motion-core` + the root barrel.
+export type {
+    HighlightMatcher,
+    UseTextHighlightControls,
+} from "../composables/motion/useTextHighlight";
+
+// ── DotFlowField — the WebGPU-first curl-noise flow viz (BB.W-FLOWFIELD) ──
+// Config + handle types for a consumer wrapping <DotFlowField> (the
+// /dot-flow-field subpath).
+export type {
+    FlowFieldConfig,
+    WaveComponent,
+    DotFlowFieldHandle,
+    UseDotFlowFieldOptions,
+} from "../components/custom/dot-flow-field";
+
+// ── Concentric — the WebGPU-first radial Fourier ring-interference viz (BB.W-CONCENTRIC) ──
+// Config + handle types for a consumer wrapping <Concentric> (the /concentric subpath).
+export type {
+    ConcentricConfig,
+    RingComponent,
+    RingCenter,
+    ConcentricHandle,
+    UseConcentricOptions,
+} from "../components/custom/concentric";
+
+// ── HeaderRibbon ───────────────────────────────────────────────────────────
+// `HeaderRibbonProps` — props shape consumers forward when wrapping
+// `<HeaderRibbon>`. `HeaderRibbonPosition` is the alignment enum (`'left' | 'right'`).
+export type {
+    HeaderRibbonPosition,
+    HeaderRibbonProps,
+} from "../components/custom/header-ribbon";
+
+// ── Constellation ───────────────────────────────────────────────────────────
+// `ConstellationProps` — the props a consumer forwards when wrapping
+// `<Constellation>` (the proximity-graph lattice; ships via `/constellation`).
+// `ConstellationField` — the live field handed to the `drawOverlay` skin seam.
+// `ConstellationWarp` — the engine-owned focal-warp spring state (`field.warp`).
+export type {
+    ConstellationProps,
+    ConstellationField,
+    ConstellationWarp,
+} from "../components/custom/constellation";
+
+// ── Fourier field ───────────────────────────────────────────────────────────
+// `FourierFieldProps` — the props a consumer forwards when wrapping
+// `<FourierField>` (the reconstructing-epicycle field on the WGSL-primary GPU
+// substrate). `FourierFieldConfig` is the full author config the studio drives.
+export type {
+    FourierFieldProps,
+    FourierFieldConfig,
+} from "../components/custom/fourier-field";
+
+// ── Digit / SegmentedTabs primitives ────────────────────────────────────────
+// Props/variant types for the animated-digit + the unified SegmentedTabs.
+// `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`);
+// `AnimatedDigitProps` is the consume-side shape.
+// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabsOrientation`/
+// `SegmentedTabOption` are the standardized tab family (BA.W-TABS).
+export type {
+    AnimatedDigitMode,
+    AnimatedDigitProps,
+} from "../components/custom/animated-digit";
+export type {
+    SegmentedTabsProps,
+    SegmentedTabsVariant,
+    SegmentedTabsOrientation,
+    SegmentedTabOption,
+} from "../components/custom/tabs";

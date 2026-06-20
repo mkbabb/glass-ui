@@ -12,9 +12,15 @@ import { cn } from '../../../utils'
 // divider: a flex row (horizontal) / column (vertical) where the label is
 // centered by the flexbox AT ITS NORMAL SIZE, between two rule segments that
 // grow to fill (`flex-1`). The rule is genuinely two segments — so it reads as
-// "─── or ───" on ANY host, glass or opaque, with NO `bg-background` occlusion
-// trick (which fails on the rebuilt translucent material: the line bled through
-// the label). reka's `Separator` carries `role="separator"` + `aria-orientation`;
+// "─── or ───" on ANY host, glass or opaque, with NO absolute-occlusion trick
+// (the retired floated-label design rode a single 1px line + a `bg-background`
+// occluder behind the label, which fails on the rebuilt translucent material:
+// the line bled through). The split-rule needs no occluder — the rules simply
+// stop at the gap. The label keeps a small `bg-background` chip backplate (the
+// sanctioned legibility-allowlist survivor) so the centered caption reads
+// clearly over a busy glass/aurora host, but it is a label chip, not an
+// occluder over a continuous line. reka's `Separator` carries
+// `role="separator"` + `aria-orientation`;
 // the labelled arm wraps it as `role="separator"` with the label as its
 // accessible name.
 const props = defineProps<
@@ -56,7 +62,12 @@ const ruleClass = computed(() =>
     "
   >
     <span :class="ruleClass" />
-    <span class="text-mono-caption text-muted-foreground shrink-0">{{ props.label }}</span>
+    <!-- The label chip carries a legible opaque backplate (the sanctioned
+         legibility-allowlist survivor — a label floated between two rule
+         segments must read clearly over ANY host, glass or paper, so it gets a
+         small `bg-background` chip; this is the chip backplate, NOT the retired
+         absolute-occlusion trick — the rule is genuinely two segments). -->
+    <span class="text-mono-caption text-muted-foreground bg-background shrink-0 px-1.5 rounded-sm">{{ props.label }}</span>
     <span :class="ruleClass" />
   </div>
 

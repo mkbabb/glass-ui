@@ -28,36 +28,11 @@
 //   - Carousel domain types — vueuse-bearing per-subpath only.
 //   - Dock orientation/state — component-internal; not on public surface.
 
-// ── Aurora ─────────────────────────────────────────────────────────────────
-// Substrate config + family, plus numeric ceilings the consumer needs to
-// type-check preset shapes against.
-export type {
-    AuroraAtoms,
-    AuroraConfig,
-    AuroraCursorApi,
-    AuroraFlow,
-    AuroraHarmony,
-    AuroraHuePath,
-    AuroraInstance,
-    AuroraInteractivity,
-    AuroraInteractivityAtom,
-    AuroraMedium,
-    AuroraMediumAtom,
-    AuroraMotionAtom,
-    AuroraNucleus,
-    AuroraRuntimeMode,
-    AuroraRuntimeOptions,
-    AuroraZoneArrangement,
-    AuroraZones,
-    DeriveAuroraOptions,
-    DeriveEasing,
-    FlowPattern,
-    OklchStop,
-    StrokeMode,
-    StrokeOrient,
-    WarpMode,
-} from "../components/custom/aurora";
-
+// ── Aurora constants ─────────────────────────────────────────────────────────
+// The aurora numeric ceilings + default config (consumers building presets). The
+// aurora TYPE re-exports (AuroraConfig/AuroraAtoms/… + the Configurator + Timeline
+// type groups) ride the carved api/types-extra sibling (the no-god-module bound);
+// these VALUE exports stay here (a `export type *` re-join cannot carry a value).
 export {
     DEFAULT_AURORA_CONFIG,
     // BA.W-ATLAS-RECONCILE A-4a (d6 9467bd16 adopt) — the library-canon
@@ -67,31 +42,6 @@ export {
     MAX_NUCLEI,
     MAX_STOPS,
 } from "../components/custom/aurora";
-
-// ── Configurator ───────────────────────────────────────────────────────────
-// Preset descriptor + state-machine return shape. Consumers building generic
-// configurator wrappers (e.g. aurora chrome) type against these.
-// `ConfiguratorCloneMode` drives the per-preset vs. commit-on-write
-// disposition — the aurora chrome pins `'per-preset'`; new chrome consumers
-// narrow against this union when picking their slot model.
-export type {
-    ConfiguratorCloneMode,
-    ConfiguratorPreset,
-    ConfiguratorScrollMode,
-    ConfiguratorState,
-    ConfiguratorStateOptions,
-} from "../components/custom/configurator";
-
-// ── Timeline ───────────────────────────────────────────────────────────────
-// Segment data shape consumers type fixture arrays + preset descriptors
-// against. `TimelineSegmentState` is the lifecycle enum (parallel to
-// `ToastVariant`); `TimelineSegment` is the row shape; `TimelineSegmentGradient`
-// is the `{from, to}` endpoint pair.
-export type {
-    TimelineSegment,
-    TimelineSegmentGradient,
-    TimelineSegmentState,
-} from "../components/custom/timeline";
 
 // ── Surface enums ──────────────────────────────────────────────────────────
 // Semantic enums that recur across consumer code paths (typed prop values,
@@ -147,17 +97,11 @@ export type {
 } from "../components/custom/handmark";
 
 // ── CVA variant prop types ─────────────────────────────────────────────────
-// Every CVA-driven component's `VariantProps`-derived type. Consumers wrapping
-// a component (e.g. a domain Button that forwards `variant` + `size`) type
-// against these instead of redeclaring the union.
-export type { AlertVariants } from "../components/ui/alert";
-export type { AvatarVariants } from "../components/ui/avatar";
-export type { BadgeVariants } from "../components/ui/badge";
-export type { ButtonVariants } from "../components/ui/button";
-export type { SheetVariants } from "../components/ui/sheet";
-export type { SliderVariants } from "../components/ui/slider";
-export type { ToggleVariants } from "../components/ui/toggle";
-export type { ToggleChipVariants } from "../components/custom/toggle-chip";
+// The per-component `VariantProps`-derived CVA types ride the carved
+// api/types-extra sibling (Alert/Avatar/Badge/Button/Sheet/Slider/Toggle/
+// ToggleChip — the no-god-module bound). `MenuItemVariants` + `ControlSize` stay
+// HERE beside `Surface` (the `_shared` per-surface source gate reads them in
+// api/index.ts).
 // `MenuItemVariants` — CVA-derived union for the 11-site menu/picker item
 // four-state contract (command / dropdown-menu / context-menu / combobox /
 // select). Sourced from `_shared/` which is private-to-ui/ at runtime; the
@@ -210,18 +154,10 @@ export type {
 } from "../composables/virtual";
 
 // ── Search domain ──────────────────────────────────────────────────────────
-// `SearchableItem` is the input shape consumers feed `buildIndex` /
-// `useFuzzySearch`; `SearchResult` carries scored matches; `FuzzySearchState`
-// is the composable-return canon; `UseFuzzySearchOptions` parameterises the
-// reactive composable; `SearchIndex` is the prebuilt-index handle the
-// imperative `searchIndex(...)` accepts.
-export type {
-    FuzzySearchState,
-    SearchableItem,
-    SearchIndex,
-    SearchResult,
-    UseFuzzySearchOptions,
-} from "../components/custom/search";
+// The fuzzy-search input/result/state/option types (SearchableItem / SearchResult
+// / FuzzySearchState / UseFuzzySearchOptions / SearchIndex) ride the carved
+// api/types-extra sibling. `SearchVariant`/`SearchVariants` (the field-chrome CVA)
+// stay HERE for proof:search-custom (see the BC.W-SEARCH-CUSTOM record below).
 
 // ── Props triad ────────────────────────────────────────────────────────────
 // `GlassPanelProps` — the props shape sibling of the already-promoted
@@ -231,49 +167,11 @@ export type {
 export type { GlassPanelProps } from "../components/custom/glass-panel";
 export type { SpaViewProps } from "../components/custom/spa-view";
 
-// ── Toast row shape ──────────────────────────────────────────────────────────
-// `ToastType` is the canonical toast row shape (aliased from `Toast` on the
-// toast barrel — `Toast` itself is the SFC default-export, so the row shape
-// flows as `ToastType` per shadcn-vue parity); paired with the `ToastVariant`
-// enum above.
-export type { ToastType } from "../components/ui/toast";
-
-// ── Clipboard ──────────────────────────────────────────────────────────────
-// `UseClipboardReturn` — canonical composable-return shape paralleling
-// `ConfiguratorState` / `SidebarState` / `FuzzySearchState`. Consumers
-// wrapping `useClipboard` (e.g. a domain-specific copy button factory)
-// pin against this rather than redeclaring `{ copied, copy }`.
-// `UseClipboardOptions` ships paired so consumers can forward the
-// `resetMs` / `onCopyError` knobs from a wrapper.
-export type {
-    UseClipboardOptions,
-    UseClipboardReturn,
-} from "../composables/dom/useClipboard";
-
-// ── User-invalid ARIA bridge ─────────────────────────────────────────────────
-// `UseUserInvalidAriaReturn` — canonical composable-return shape (the `{ bind }`
-// handle) paralleling `UseClipboardReturn`. `UseUserInvalidAriaOptions` ships
-// paired so a consumer wrapping `useUserInvalidAria` (e.g. a form-shell factory)
-// can forward the `fallbackClasses` knob.
-export type {
-    UseUserInvalidAriaOptions,
-    UseUserInvalidAriaReturn,
-} from "../composables/dom/useUserInvalidAria";
-
-// ── View-Transition substrate ───────────────────────────────────────────────
-// `ViewTransitionResult` — the `{ finished, transitioned }` shape
-// `startViewTransition` resolves. The `startViewTransition` +
-// `supportsViewTransitions` runtime helpers ship on the root barrel +
-// `@mkbabb/glass-ui/motion-core` (dependency-free).
-// BA.W-ATLAS-RECONCILE A-4b — `ViewTransitionOptions` gains
-// `instantUnderReducedMotion` (the JS-level reduced-motion instant-path) and an
-// async-capable update; `NavigateOptions` is the route/navigation convenience's
-// option shape (the `navigate(fn)` helper over the ONE VT substrate).
-export type {
-    ViewTransitionResult,
-    ViewTransitionOptions,
-    NavigateOptions,
-} from "../composables/motion/useViewTransition";
+// ── Toast / Clipboard / User-invalid / View-Transition ───────────────────────
+// The ToastType row shape, the UseClipboard* / UseUserInvalidAria* composable-
+// return canons, and the ViewTransition* substrate types ride the carved
+// api/types-extra sibling (the no-god-module bound). `ToastVariant` (the enum)
+// stays in the Surface-enums block above.
 
 // ── Carved type-publication extension (BB.W-CARVE5) ───────────────────────────
 // The composable-return + motion-curve type re-exports (Count-up animator,
@@ -283,66 +181,19 @@ export type {
 export type * from "./types-extra";
 
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
-// `HeaderRibbonProps` — props shape consumers forward when wrapping
-// `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`
-// is the alignment enum (`'left' | 'right'`). (AZ.W-PRUNE2 RESTORE — keyframes.js
-// binds `@mkbabb/glass-ui/header-ribbon` in EditorShell, so the surface + its api
-// seats are live again.)
-export type {
-    HeaderRibbonPosition,
-    HeaderRibbonProps,
-} from "../components/custom/header-ribbon";
+// `HeaderRibbonProps`/`HeaderRibbonPosition` ride the carved api/types-extra
+// sibling (AZ.W-PRUNE2 RESTORE — keyframes.js binds `/header-ribbon` in EditorShell).
 
-// ── Constellation ───────────────────────────────────────────────────────────
-// `ConstellationProps` — the props a consumer forwards when wrapping
-// `<Constellation>` (the proximity-graph lattice; ships via `/constellation`).
-// `ConstellationField` — the live field handed to the `drawOverlay` skin seam,
-// so a consumer types its overlay against the node set + scale.
-// `ConstellationWarp` — the engine-owned focal-warp spring state (`field.warp`),
-// so a consumer types its focal-mark overlay against the spring-eased position
-// (the click-to-warp seam).
-export type {
-    ConstellationProps,
-    ConstellationField,
-    ConstellationWarp,
-} from "../components/custom/constellation";
-
-// ── Fourier field ───────────────────────────────────────────────────────────
-// `FourierFieldProps` — the props a consumer forwards when wrapping
-// `<FourierField>` (the reconstructing-epicycle field on the WGSL-primary GPU
-// substrate, the sibling to Aurora/GooBlob/DotFlowField; ships via
-// `/fourier-field`). `FourierFieldConfig` is the full author config the studio
-// drives (the `variant: "hero"|"final"` enum is RETIRED — BC.W-VIZ-FOURIER —
-// folded into config presets). The pure inverse-DFT/epicycle math leaf ships
-// separately via `/fourier-math`.
-export type {
-    FourierFieldProps,
-    FourierFieldConfig,
-} from "../components/custom/fourier-field";
+// ── Constellation / Fourier field ────────────────────────────────────────────
+// The Constellation* (proximity-graph lattice) + FourierField* (epicycle field)
+// config/props types ride the carved api/types-extra sibling (the no-god-module
+// bound). They ship via the `/constellation` + `/fourier-field` subpaths.
 
 // ── Metric primitives ───────────────────────────────────────────────────────
-// `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
-// | "bare"`) parallel to `CardTier`; `MetricCellProps` is the Props
-// shape consumers forward when wrapping `<MetricCell>`. `MetricStackProps` +
-// `MetricRowProps` cover the layout shell + row pair. `MetricBadgeProps` is the
-// inline/stacked badge-pill shape (the unified `value` field per
-// AZ.W-METRIC-UNIFY). All metric families share the `coalesceMetric` value core
-// (the single empty-check + the "—" placeholder default). The cell/stack
-// families ship via their `/metric-cell` + `/metric-stack` subpaths (speedtest
-// consumes them).
-export type {
-    MetricBadgeProps,
-    MetricBadgeSize,
-    MetricBadgeLabelPosition,
-} from "../components/custom/metric-badge";
-export type {
-    MetricCellAppearance,
-    MetricCellProps,
-} from "../components/custom/metric-cell";
-export type {
-    MetricRowProps,
-    MetricStackProps,
-} from "../components/custom/metric-stack";
+// The metric-family Props/enum types (MetricBadge* / MetricCell* / MetricStack* /
+// MetricRow*) ride the carved api/types-extra sibling (the no-god-module bound).
+// The cell/stack families ship via their `/metric-cell` + `/metric-stack`
+// subpaths (speedtest consumes them).
 
 // ── PagerDots ────────────────────────────────────────────────────────────────
 // `PagerDotsProps` is the Props shape consumers forward when wrapping
@@ -362,28 +213,11 @@ export type { DeckCore, DeckMoves } from "../components/custom/deck";
 export type { PagerWindow } from "../components/custom/pager-dots";
 
 // ── Digit / SegmentedTabs primitives ────────────────────────────────────────
-// Props/variant types for the animated-digit + the unified SegmentedTabs.
-// `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
-// into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
-// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabsOrientation`/
-// `SegmentedTabOption` are the standardized tab family (BA.W-TABS) — ONE engine,
-// TWO materials (`variant`: pill · underline), ONE orientation axis (horizontal ·
-// vertical), responsive collapse as a prop.
-export type {
-    AnimatedDigitMode,
-    AnimatedDigitProps,
-} from "../components/custom/animated-digit";
-export type {
-    SegmentedTabsProps,
-    SegmentedTabsVariant,
-    SegmentedTabsOrientation,
-    SegmentedTabOption,
-} from "../components/custom/tabs";
+// The AnimatedDigit* + SegmentedTabs* (BA.W-TABS) props/variant types ride the
+// carved api/types-extra sibling (the no-god-module bound).
 
 // ── StackedIconGroup ───────────────────────────────────────────────────────
-// `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked
-// avatar/icon strips pin against from the discovery layer.
-export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
+// `StackedIconGroupProps<TItem>` rides the carved api/types-extra sibling.
 
 // ── IconChip ─────────────────────────────────────────────────────────────────
 // The section-color pop primitive (BA.W-ICON-CHIP) — the ONE color-event
@@ -419,63 +253,12 @@ export type {
 // ship via the `/dock` subpath barrel only (component-internal arg + state-enum).
 export type { UseDockStateReturn } from "../components/custom/dock";
 
-// ── Paper / texture ────────────────────────────────────────────────────────
-// `PaperBackdropProps` — the Props shape consumers forward when wrapping
-// `<PaperBackdrop>` (e.g. app-shell substrate composers). `PaperBackdropFrequency`
-// is the turbulence-register enum (`"clean" | "aged"`) parallel to
-// `AnimatedDigitMode`. The texture-system canonical
-// pattern (CSS custom-property cascade via `--paper-*-texture` vars at `:root`)
-// is documented in DESIGN.md "Texture system" section.
-export type {
-    PaperBackdropFrequency,
-    PaperBackdropProps,
-} from "../components/custom/paper-backdrop";
-
-// ── Dark ergonomics ──────────────────────────────────────────────────────────
-// `UseGlobalDarkOptions` — the one-shot `initialValue` seed shape honored on
-// FIRST `useGlobalDark()` construction (the createGlobalState factory is
-// memoized; a later conflicting seed throws). `DarkModeSyncScriptOptions` —
-// options for the parse-time FOUC eliminator `darkModeSyncScript()`, the
-// PURE inline-<head>-script string emitter that byte-mirrors the runtime
-// dark contract (localStorage["vueuse-color-scheme"] → prefers-color-scheme
-// fallback → classList("dark") + style.colorScheme). Both runtime values
-// live on the flat `/dark` subpath (vueuse-bearing surface discipline);
-// only the types ride the discovery layer.
-// `DarkFlipSettledCallback` / `UseGlobalDarkReturn` — BA.W-ATLAS-RECONCILE A-1
-// (d6 9467bd16 adopt): the post-flip SETTLE seam shape. A consumer subscribes
-// ONE post-flip post-paint moment via `useGlobalDark().onFlipSettled(cb)` (the
-// atlas's palette-memo/chart-retint/aurora-rederivation batch). `(isDark) => void`.
-export type {
-    DarkFlipSettledCallback,
-    DarkModeSyncScriptOptions,
-    UseGlobalDarkOptions,
-    UseGlobalDarkReturn,
-} from "../composables/dark";
-
-// ── Canvas2D lifecycle substrate ─────────────────────────────────────────────
-// The Canvas2D park/freeze/dispose substrate now ships on the `/canvas` subpath
-// (`useCanvas2D`/`useCanvasLifecycle` + `resolveCanvasColor`). Its public option
-// + handle + frame shapes ride the discovery layer so a consumer composing the
-// substrate (a custom Canvas2D field paralleling Constellation/FourierField)
-// pins them without dragging the runtime. `Canvas2DSuspendReason` is the
-// three-reason park enum. The runtime values live on `/canvas`.
-export type {
-    Canvas2DFrame,
-    Canvas2DHandle,
-    Canvas2DOptions,
-    Canvas2DSuspendReason,
-} from "../composables/glass/canvas2d";
-
-// ── Text-highlight controls ──────────────────────────────────────────────────
-// `useTextHighlight` (the named CSS Custom Highlight composable) re-homed to
-// `/motion-core`. `UseTextHighlightControls` is its imperative-handle return
-// shape and `HighlightMatcher` the per-node match callback; consumers wiring a
-// search-mark / equation-var highlight pin them here. The runtime value lives on
-// `/motion-core` + the root barrel.
-export type {
-    HighlightMatcher,
-    UseTextHighlightControls,
-} from "../composables/motion/useTextHighlight";
+// ── Paper / Dark / Canvas2D / Text-highlight ─────────────────────────────────
+// The PaperBackdrop* props/enum, the UseGlobalDark* / DarkModeSyncScriptOptions /
+// DarkFlipSettledCallback dark-ergonomics types, the Canvas2D* lifecycle-substrate
+// shapes, and the UseTextHighlightControls / HighlightMatcher types all ride the
+// carved api/types-extra sibling (the no-god-module bound). Their runtime values
+// live on `/dark` / `/canvas` / `/motion-core` respectively.
 
 // ── SplitChars / useCharStagger (the per-glyph split, BC.W-SPLIT-CHARS) ───────
 // `useCharStagger` (the per-glyph split partner to the shipped `.char-stagger`
@@ -603,24 +386,9 @@ export type {
     UseDockSearchReturn,
 } from "../components/custom/dock/composables/useDockSearch";
 
-// ── DotFlowField — the WebGPU-first curl-noise flow viz (BB.W-FLOWFIELD) ──
-// Config + handle types for a consumer wrapping <DotFlowField> (the /dot-flow-field subpath).
-export type {
-    FlowFieldConfig,
-    WaveComponent,
-    DotFlowFieldHandle,
-    UseDotFlowFieldOptions,
-} from "../components/custom/dot-flow-field";
-
-// ── Concentric — the WebGPU-first radial Fourier ring-interference viz (BB.W-CONCENTRIC) ──
-// Config + handle types for a consumer wrapping <Concentric> (the /concentric subpath).
-export type {
-    ConcentricConfig,
-    RingComponent,
-    RingCenter,
-    ConcentricHandle,
-    UseConcentricOptions,
-} from "../components/custom/concentric";
+// ── DotFlowField / Concentric (the WebGPU-first viz, BB.W-FLOWFIELD/CONCENTRIC) ──
+// The DotFlowField* + Concentric* config/handle types ride the carved
+// api/types-extra sibling. `PaperGridConfig` stays HERE for proof:viz-papergrid.
 
 // ── PaperGrid — the WebGPU-first liquid AA-grid viz (BC.W-VIZ-PAPERGRID) ──
 // Config + handle types for a consumer wrapping <PaperGrid> (the /paper-grid subpath).

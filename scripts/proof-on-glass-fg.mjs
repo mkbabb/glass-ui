@@ -175,11 +175,25 @@ function detectOnGlassFg({
     );
     const brightBucketLiftIntact =
         /--muted-foreground:\s*var\(--foreground\)\s*;/.test(brightBucketRegion);
-    // The overlay-band unconditional lift STILL fires (byte-untouched).
-    const overlayLiftIntact =
-        /:where\(\s*\.glass-floating\s*,\s*\.glass-overlay\s*\)\s*\{[\s\S]*?--muted-foreground:\s*var\(--foreground\)\s*;[\s\S]*?\}/.test(
+    // BC.W-DIALOG-GLASS — the overlay band's UNCONDITIONAL :where() rule expresses the
+    // on-glass MUTED register (`--on-glass-muted`), the SAME calm-modal register the
+    // content tiers read on their calm path (a cream modal over a light page no longer
+    // BLACKENS its caption with an unconditional full-ink lift). The full-ink lift moves
+    // into the bright-bucket @container block (in LOCKSTEP with --foreground) where the
+    // plate ACTUALLY darkens — the overlay band is enrolled there (`.glass-floating,
+    // .glass-overlay` listed alongside the content tiers). So W3 asserts BOTH: the
+    // overlay band reads --on-glass-muted unconditionally AND the bright-bucket lift
+    // covers the overlay band — the reconciled third-state shape, not the retired
+    // unconditional :where() full-ink lift.
+    const overlayCalmRegister =
+        /:where\(\s*\.glass-floating\s*,\s*\.glass-overlay\s*\)\s*\{[\s\S]*?--muted-foreground:\s*var\(--on-glass-muted\)\s*;[\s\S]*?\}/.test(
             ladder,
         );
+    const overlayBrightLiftEnrolled =
+        /@container\s+style\(\s*--glass-backdrop:\s*light\s*\)\s*\{[\s\S]*?\.glass-floating\s*,[\s\S]*?\.glass-overlay\s*,[\s\S]*?--muted-foreground:\s*var\(--foreground\)\s*;/.test(
+            ladder,
+        );
+    const overlayLiftIntact = overlayCalmRegister && overlayBrightLiftEnrolled;
     // The calm re-point must NOT clobber the bright bucket: it does NOT touch
     // --glass-tint-ink / --glass-tint-strength-aa / --glass-tint-strength-floor (the
     // frozen BA bound — the register READS the seam, never re-declares it).
@@ -255,10 +269,16 @@ function selfTest() {
         }`;
     const goodLadder = `
         @container style(--glass-backdrop: light) {
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
             .glass-card { --muted-foreground: var(--foreground); }
         }
         :where(.glass-floating, .glass-overlay) {
-            --muted-foreground: var(--foreground);
+            --muted-foreground: var(--on-glass-muted);
+            --muted-foreground-strong: var(--on-glass-muted-strong);
         }
         :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
             --glass-tint-source: var(--glass-tint-ink);
@@ -313,20 +333,23 @@ function selfTest() {
         const f = detectOnGlassFg({ ...base, tokens: grayed, darkArm: grayed });
         bites.push({ name: "W2 non-warm-hue reds", reds: !f.w2.ok });
     }
-    // Bite D — dropping the calm-tier re-point reds W3.
+    // Bite D — dropping the CONTENT-TIER calm re-point reds W3. The overlay band now
+    // ALSO reads --on-glass-muted (BC.W-DIALOG-GLASS), so this bite targets the
+    // content-tier :where() rule specifically (the one `calmRepoint` checks).
     {
         const noRepoint = base.ladder.replace(
-            /--muted-foreground:\s*var\(--on-glass-muted\)[\s\S]*?--muted-foreground-strong:\s*var\(--on-glass-muted-strong\);/,
-            "",
+            /:where\(\s*\.glass-card\s*,\s*\.glass-resting\s*,\s*\.glass-quiet\s*,\s*\.glass-wash\s*\)\s*\{[\s\S]*?--muted-foreground:\s*var\(--on-glass-muted\)[\s\S]*?--muted-foreground-strong:\s*var\(--on-glass-muted-strong\);/,
+            ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {",
         );
         const f = detectOnGlassFg({ ...base, ladder: noRepoint });
         bites.push({ name: "W3 dropped-repoint reds", reds: !f.w3.ok });
     }
-    // Bite E — re-declaring the frozen seam tokens INSIDE the calm re-point reds W3.
+    // Bite E — re-declaring the frozen seam tokens INSIDE the CONTENT-TIER calm re-point
+    // reds W3 (the noSeamReDeclare scope is the content-tier :where() rule).
     {
         const clobber = base.ladder.replace(
-            "--muted-foreground: var(--on-glass-muted);",
-            "--glass-tint-strength-aa: 9%; --muted-foreground: var(--on-glass-muted);",
+            ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {\n            --glass-tint-source: var(--glass-tint-ink);",
+            ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {\n            --glass-tint-strength-aa: 9%;\n            --glass-tint-source: var(--glass-tint-ink);",
         );
         const f = detectOnGlassFg({ ...base, ladder: clobber });
         bites.push({ name: "W3 seam-re-declare reds", reds: !f.w3.ok });

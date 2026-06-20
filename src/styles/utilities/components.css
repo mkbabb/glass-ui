@@ -31,12 +31,17 @@
         background: var(--metric-badge-bg, var(--glass-bg-quiet));
         backdrop-filter: var(--metric-badge-blur, var(--glass-blur-quiet));
         box-shadow: var(--metric-badge-shadow, 0 1px 6px color-mix(in srgb, var(--shadow-color) 8%, transparent), var(--glass-highlight));
+        /* SPATIAL/EFFECTS split (motion-canon P1): the EFFECTS legs
+           (background/border-color/box-shadow) ride the bezier --ease-standard;
+           the SPATIAL hover-lift legs (translate/scale) ride the --spring-smooth
+           hover register on its own settle clock --spring-smooth-duration (the
+           ONE interactive transform register .btn-pill/.glass-btn settle on). */
         transition:
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
-            translate var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--ease-standard);
+            translate var(--spring-smooth-duration) var(--spring-smooth),
+            scale var(--spring-smooth-duration) var(--spring-smooth);
     }
 
     .metric-badge > span {

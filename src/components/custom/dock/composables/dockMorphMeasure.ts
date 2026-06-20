@@ -184,3 +184,171 @@ export function seatTargetSync(
     cb.settleTarget(t);
     cb.maybeSettleRoot();
 }
+
+/**
+ * The swap-while-morphing sibling re-base. The shared scalar resets to 0 for the
+ * new span; if SIBLING targets are mid-morph, re-base their `from` to their CURRENT
+ * painted px first, so resetting the scalar keeps them visually continuous (they
+ * interpolate fresh from where they are, toward their unchanged `to`) rather than
+ * snapping back to their old `from`. PURE over the swapping target + the target set.
+ */
+export function rebaseSiblingSpans(
+    swapping: MorphMeasureTarget,
+    targets: Iterable<MorphMeasureTarget>,
+): void {
+    for (const sib of targets) {
+        if (sib === swapping) continue;
+        const sibEl = sib.containerEl.value;
+        if (sibEl && sibEl.style.getPropertyValue("--dock-morph-to")) {
+            const cur = getSize(sibEl, sib.axis.value);
+            sibEl.style.setProperty("--dock-morph-from", `${cur}px`);
+        }
+    }
+}
+
+/**
+ * BC.W-DOCK-ROOT-MORPH — clear the ROOT box's own morph span (the `inline-size` =
+ * f(scalar) recipe in layers.css reads `--dock-root-morph-from/to`; clearing them
+ * hands the box back to the at-rest shrink-wrap once the morph settles). PURE on
+ * the root element — no orchestrator closure.
+ */
+export function clearRootMorphSpan(root: HTMLElement | null): void {
+    if (!root) return;
+    root.style.removeProperty("--dock-root-morph-from");
+    root.style.removeProperty("--dock-root-morph-to");
+}
+
+/**
+ * BC.W-DOCK-ROOT-MORPH — pin the ROOT box's own from→to span on the dock root.
+ *
+ * THE SNAP ROOT CAUSE: the inner `.dock-layers` reserves its SETTLED `to`
+ * footprint (`inline-size: var(--dock-morph-to)`, layers.css — the E4-frozen
+ * CDP-Layout-flat mechanism) and morphs VISUALLY via `transform: scaleX()`. A
+ * `transform` is paint-only — a parent does NOT shrink-wrap to a scaled child —
+ * so the root `.glass-dock` (display:inline-flex) shrink-wraps to the inner's
+ * RESERVED full `to` width and SNAPS to full on frame 0, while the inner's scaled
+ * box rides the spring smoothly. The gate (and the page) measure the ROOT box, so
+ * the root must ALSO ramp. The layers.css recipe reads
+ * `inline-size: calc(from + (to−from)·--dock-morph-t)` (the SAME scalar the spring
+ * glides, NO CSS transition — proof:no-layout-animation stays GREEN; a `calc()`
+ * over the registered `--dock-morph-t` is not a transition). PURE on the root.
+ */
+export function armRootMorphSpan(
+    root: HTMLElement | null,
+    rootFrom: number,
+    rootTo: number,
+): void {
+    if (!root) return;
+    root.style.setProperty("--dock-root-morph-from", `${rootFrom}px`);
+    root.style.setProperty("--dock-root-morph-to", `${rootTo}px`);
+}
+
+/** The orchestrator callbacks the rAF measure-and-arm window composes — the arm
+ *  step re-pins the per-target + root spans on the shared scalar. */
+export interface MorphMeasureArmCallbacks {
+    /** Arm the per-target `--dock-morph-from/to` span + ensure the shared spring. */
+    armTarget(t: MorphMeasureTarget, id: number, fromSize: number, toSize: number): void;
+}
+
+/**
+ * BC.W-DOCK-ROOT-MORPH / BA-VJS-1 / BC.W-LIQUID-MORPH (M3) — the rAF measure-and-arm
+ * window: ONE rAF (post-flush) later, lift the pin for a single synchronous
+ * measurement of the now-correct shrink-wrapped to-size, then re-pin + start the
+ * spring IN THE SAME FRAME. The measurement + arm are gated on THIS target's own
+ * `txId`, so a sibling target swapping in the same tick does NOT clobber it.
+ *
+ * BA-VJS-1 — the nested-`DockLayerGroup` measure-ORDERING fix: force every OTHER
+ * registered target whose container is a DOM descendant of this outer's container
+ * to its own-axis `max-content` (clearing its pinned calc span) for the single
+ * synchronous measurement, then RESTORE its exact prior inline state, so the outer
+ * shrink-wraps around the inner's TRUE intrinsic content, not its pinned collapse.
+ *
+ * BC.W-DOCK-ROOT-MORPH — for the OUTER target, LIFT the root's own pinned span for
+ * the duration of this synchronous measure (clearing `--dock-root-morph-from/to`,
+ * which the layers.css recipe constrains the root by) so the root shrink-wraps to
+ * its TRUE expanded width, read it DIRECTLY (sidestepping the chrome-offset
+ * arithmetic + the empty-summary `inner-to:0` trap), then RESTORE the pin and
+ * arm the root from→to span so its `inline-size` ramps on the SAME scalar.
+ *
+ * BC.W-LIQUID-MORPH (M3) — the measure-failure guard: a `to:0` mis-measure (a
+ * mid-morph re-grab, a nested collapsible still pinned, a race the ordering fix
+ * missed) seats the measured `to` at the resolved floor (`--dock-morph-min`,
+ * density-scaled, WCAG ~44px fallback) so the morph interpolates toward a visible
+ * footprint, never toward 0 — "visible at the floor," never "white." Inert on a
+ * healthy measurement.
+ *
+ * PURE over its explicit deps (the orchestrator passes the live element/targets/
+ * outer identity + the `armTarget` re-pin callback) — no module-level state, so the
+ * extraction is behaviour-identical to the prior inline rAF closure.
+ */
+export function measureAndArmMorph(
+    t: MorphMeasureTarget,
+    id: number,
+    axis: "horizontal" | "vertical",
+    fromSize: number,
+    rootFromSize: number,
+    isOuter: boolean,
+    rootEl: HTMLElement | null,
+    targets: Iterable<MorphMeasureTarget>,
+    cb: MorphMeasureArmCallbacks,
+): void {
+    if (id !== t.txId) return;
+    const elNow = t.containerEl.value;
+    const rootNow = rootEl;
+    if (!elNow || !rootNow) return;
+    clearMorphVars(elNow);
+    // The container is laid out at the still-collapsed clip width, so a bare
+    // measure reads the CLIPPED size, not the target pane's intrinsic size
+    // (circular — the expanded aperture is what the spring solves for). Force
+    // `max-content` on the morph axis for the single measurement, then clear it
+    // before `armTarget` re-pins the calc span.
+    const prop = morphAxisProp(axis);
+    // BA-VJS-1 — force nested descendant targets to their OWN intrinsic span for
+    // the duration of THIS measure so the outer shrink-wraps around the inner's
+    // real content, not its pinned-collapsed clip. Each is restored to its exact
+    // prior inline state right after the synchronous read.
+    const nested = nestedTargetsWithin(t, elNow, targets);
+    const restore = nested.map((n) => forceNestedMaxContent(n));
+    // BC.W-DOCK-ROOT-MORPH — for the OUTER target, LIFT the root's own pinned span
+    // (the layers.css recipe constrains the root to its pinned width via the
+    // `--dock-root-morph-from/to` vars, and the `.dock-layers` grid child carries
+    // `min-width: 0` so a root pinned small CLAMPS the child to 0 even at
+    // `max-content`). Snapshot + restore around the synchronous measure so the
+    // root is free to shrink-wrap to its TRUE expanded width while we read.
+    const liftRootPin = isOuter;
+    const priorRootFrom = liftRootPin
+        ? rootNow.style.getPropertyValue("--dock-root-morph-from")
+        : "";
+    const priorRootTo = liftRootPin
+        ? rootNow.style.getPropertyValue("--dock-root-morph-to")
+        : "";
+    if (liftRootPin) clearRootMorphSpan(rootNow);
+    elNow.style.setProperty(prop, "max-content");
+    const measuredTo = getSize(elNow, axis);
+    const rootMeasuredTo = liftRootPin ? getSize(rootNow, axis) : 0;
+    elNow.style.removeProperty(prop);
+    // BC.W-LIQUID-MORPH (M3) — the measure-failure guard (the `||` keeps a real
+    // span on a healthy measurement; a 0 mis-measure degrades to the floor).
+    const floorPx = morphMinFloorPx(elNow);
+    const toSize = measuredTo > 0 ? measuredTo : floorPx;
+    const rootToSize =
+        !liftRootPin || rootMeasuredTo > 0 ? rootMeasuredTo : morphMinFloorPx(rootNow);
+    if (liftRootPin) {
+        // Restore the prior (pin-at-from) span so the box keeps holding its
+        // collapsed width until armRootMorphSpan re-pins the true to-span below.
+        if (priorRootFrom)
+            rootNow.style.setProperty("--dock-root-morph-from", priorRootFrom);
+        if (priorRootTo)
+            rootNow.style.setProperty("--dock-root-morph-to", priorRootTo);
+    }
+    for (const r of restore) r();
+    cb.armTarget(t, id, fromSize, toSize);
+    // BC.W-DOCK-ROOT-MORPH — pin the ROOT box's measured from→to span so its
+    // `inline-size` ramps on the SAME scalar the spring drives instead of snapping
+    // to the inner's reserved `to`. A same-size swap (the inner settled in
+    // armTarget) clears the span so the box shrink-wraps at rest.
+    if (isOuter) {
+        if (Math.abs(rootToSize - rootFromSize) < 0.5) clearRootMorphSpan(rootNow);
+        else armRootMorphSpan(rootNow, rootFromSize, rootToSize);
+    }
+}

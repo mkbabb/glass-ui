@@ -4,7 +4,9 @@
 //
 // The born-RED→GREEN device-free SOURCE arm for the five control-register
 // refinements speedtest AW v2.1 names as P2: (W1) the ToggleGroupItem `card`
-// variant paints `--radius-card`, not the base `rounded-button`; (W2) the
+// variant paints `--radius-card`, distinct from the base small-control radius
+// register (BC.W-CONTROL-SMOOTH — the iOS-27 stadium `rounded-pill`, which
+// retired the prior square 10px `rounded-button`); (W2) the
 // single-select ToggleGroup chooser threads `role="radiogroup"`/`role="radio"`/
 // `:aria-checked` on the `type="single"` arm (the `multiple` arm keeps reka's
 // native `aria-pressed`); (W3) MetricRow exposes `--metric-row-label-align` +
@@ -133,7 +135,8 @@ function extractCardArm(toggleSrc) {
 
 /**
  * Extract the CVA BASE array (the first cva() argument, before the `variants`
- * object) — where `default`/`outline` inherit the base `rounded-button`.
+ * object) — where `default`/`outline` inherit the base small-control radius
+ * register (BC.W-CONTROL-SMOOTH `rounded-pill`).
  */
 function extractBaseString(toggleSrc) {
     const cvaStart = toggleSrc.indexOf("cva(");
@@ -175,35 +178,46 @@ export function detectControlTokens(sources) {
 
     const violations = [];
 
-    // ── W1 — the card variant resolves `rounded-card`, not `rounded-button` ──
+    // ── W1 — the card variant resolves `rounded-card`, distinct from the base ──
+    // small-control radius register (BC.W-CONTROL-SMOOTH `rounded-pill`) ──
     const cardArm = extractCardArm(toggle);
     const baseStr = extractBaseString(toggle);
     const cardHasRoundedCard = /\brounded-card\b/.test(cardArm);
-    // Anti-evasion: the card arm must NOT also leave the tile on rounded-button
-    // (a stray rounded-button survivor on the card arm REDS).
-    const cardHasRoundedButton = /\brounded-button\b/.test(cardArm);
-    // The base still carries rounded-button (so default/outline keep the button
-    // radius — a wholesale base swap that broke the button-shape variants REDS).
-    const baseHasRoundedButton = /\brounded-button\b/.test(baseStr);
+    // Anti-evasion: the card arm must NOT leave the tile on the SMALL-control
+    // radius register (a stray `rounded-button`/`rounded-pill` survivor on the
+    // card arm would let the base small-control radius win the source-order race
+    // — the large glass tile must paint its own `rounded-card` squircle).
+    const cardHasBaseRadius =
+        /\brounded-button\b/.test(cardArm) || /\brounded-pill\b/.test(cardArm);
+    // BC.W-CONTROL-SMOOTH — the base CVA carries the small-INLINE-control radius
+    // register: a STADIUM `rounded-pill` (the iOS-27 small-control silhouette —
+    // `rounded-pill` clamps to half-height so the radius scales with the control,
+    // soft at every size) which RETIRED the prior 10px `rounded-button` (10px on
+    // a 16px toggle read square). The anti-evasion intent is unchanged: the base
+    // must carry a small-control radius register DISTINCT from the card tile's
+    // `rounded-card` squircle, so a wholesale base swap that left the small
+    // controls radius-less (no pill, no button — the bare-corner break) REDS.
+    const baseHasSmallControlRadius =
+        /\brounded-pill\b/.test(baseStr) || /\brounded-button\b/.test(baseStr);
 
     const w1 = {
         cardHasRoundedCard,
-        cardHasRoundedButton,
-        baseHasRoundedButton,
+        cardHasBaseRadius,
+        baseHasSmallControlRadius,
     };
     if (!cardHasRoundedCard) {
         violations.push(
-            "W1: the toggleVariants `card` arm does not carry `rounded-card` (the p-8 card tile still inherits the base 10px rounded-button — the N11 defect).",
+            "W1: the toggleVariants `card` arm does not carry `rounded-card` (the p-8 card tile still inherits the base small-control radius — the N11 defect).",
         );
     }
-    if (cardHasRoundedButton) {
+    if (cardHasBaseRadius) {
         violations.push(
-            "W1: the toggleVariants `card` arm carries a `rounded-button` survivor (the card radius is not the resolved corner — a stray base radius wins the source-order race).",
+            "W1: the toggleVariants `card` arm carries a base small-control radius (`rounded-button`/`rounded-pill`) survivor (the card radius is not the resolved corner — a stray base radius wins the source-order race).",
         );
     }
-    if (!baseHasRoundedButton) {
+    if (!baseHasSmallControlRadius) {
         violations.push(
-            "W1: the toggleVariants base CVA no longer carries `rounded-button` (a wholesale base swap broke the default/outline button-shape variants).",
+            "W1: the toggleVariants base CVA no longer carries a small-control radius register (`rounded-pill`/`rounded-button`) — a wholesale base swap left the default/outline controls bare-cornered.",
         );
     }
 
@@ -458,13 +472,21 @@ function selfTest() {
             expectViolation: true,
         },
         {
-            name: "W1 — re-add rounded-button to the card arm REDS",
+            name: "W1 — re-add the base small-control radius to the card arm REDS",
             mutate: (s) => ({
                 ...s,
                 toggle: s.toggle.replace(
                     /'rounded-card glass-card/,
-                    "'rounded-card rounded-button glass-card",
+                    "'rounded-card rounded-pill glass-card",
                 ),
+            }),
+            expectViolation: true,
+        },
+        {
+            name: "W1 — strip the base small-control radius (bare-corner swap) REDS",
+            mutate: (s) => ({
+                ...s,
+                toggle: s.toggle.replace(/ rounded-pill /, " "),
             }),
             expectViolation: true,
         },
@@ -585,10 +607,10 @@ function run() {
     console.log(
         `  W1 card variant → rounded-card : ${yn(
             facts.w1.cardHasRoundedCard &&
-                !facts.w1.cardHasRoundedButton &&
-                facts.w1.baseHasRoundedButton,
-        )}  (card-radius:${yn(facts.w1.cardHasRoundedCard)} base-button-kept:${yn(
-            facts.w1.baseHasRoundedButton,
+                !facts.w1.cardHasBaseRadius &&
+                facts.w1.baseHasSmallControlRadius,
+        )}  (card-radius:${yn(facts.w1.cardHasRoundedCard)} base-pill-kept:${yn(
+            facts.w1.baseHasSmallControlRadius,
         )})`,
     );
     console.log(

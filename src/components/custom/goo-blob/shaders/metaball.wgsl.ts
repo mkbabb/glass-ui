@@ -32,17 +32,25 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../aurora/constants/shaders/procedural-color.wgsl";
+// BC.W-CARVE6 — the noise/FBM + the OKLCh gamut-clamp/palette helper groups carved
+// into sibling chunks (the no-god-module bound; the shared-chunk SPLICE precedent).
+// Spliced back IN POSITION below — the noise chunk after `${FBM_ROT_WGSL}` (its
+// FBM_ROT source), the palette chunk after `${OKLCH_MATRICES_WGSL}` (its matrix
+// source). The ASSEMBLED METABALL_WGSL is byte-equivalent (the goo-dot FIELD slice
+// + the GL fence hold); the chunks carry NO `${...}` so the W7 assembler resolves
+// them to complete bodies.
+import { METABALL_NOISE_WGSL } from "./metaball-noise.wgsl";
+import { METABALL_PALETTE_WGSL } from "./metaball-palette.wgsl";
 
 // MAX_SATS=4 / TRAIL_N=15 / MAX_BLOB_STOPS=4 mirror metaball-uniforms.glsl.ts's #defines
-// (and the JS-side BLOB_WGPU_UNIFORM layout). FBM_LACUNARITY / FBM_GAIN mirror the
-// blob-local LIQUID-not-rocky constants in watercolor-edges.glsl.ts.
+// (and the JS-side BLOB_WGPU_UNIFORM layout). FBM_LACUNARITY / FBM_GAIN (the blob-local
+// LIQUID-not-rocky constants, watercolor-edges.glsl.ts) are declared in the carved
+// metaball-noise.wgsl chunk beside their only consumers (BC.W-CARVE6).
 export const METABALL_WGSL = /* wgsl */ `
 const MAX_SATS: i32 = 4;
 const TRAIL_N: i32 = 15;
 const MAX_BLOB_STOPS: i32 = 4;
 const PI: f32 = 3.141592653589793;
-const FBM_LACUNARITY: f32 = 1.8;
-const FBM_GAIN: f32 = 0.42;
 
 // ── Uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 // Scalars packed into vec4 lanes; per-satellite / per-trail / per-palette rows packed
@@ -92,87 +100,9 @@ struct Uniforms {
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
 
-// ── Noise (blob-LOCAL 3D-p3 hash + IQ analytic-derivative gradient noise) ──
-fn hash21(p: vec2<f32>) -> f32 {
-  var p3 = fract(vec3<f32>(p.x, p.y, p.x) * 0.1031);
-  p3 = p3 + dot(p3, p3.yzx + 33.33);
-  return fract((p3.x + p3.y) * p3.z);
-}
-
-// IQ analytic-derivative gradient noise — value in .x, ANALYTIC gradient (d/dx, d/dy) in
-// .yz, from one eval. The quintic fade has a continuous 2nd derivative.
-fn noised(p: vec2<f32>) -> vec3<f32> {
-  let i = floor(p);
-  let f = fract(p);
-  let uu = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
-  let du = 30.0 * f * f * (f * (f - 2.0) + 1.0);
-
-  let ga = -1.0 + 2.0 * vec2<f32>(hash21(i + vec2<f32>(0.0, 0.0)), hash21(i + vec2<f32>(7.3, 0.0)));
-  let gb = -1.0 + 2.0 * vec2<f32>(hash21(i + vec2<f32>(1.0, 0.0)), hash21(i + vec2<f32>(8.3, 0.0)));
-  let gc = -1.0 + 2.0 * vec2<f32>(hash21(i + vec2<f32>(0.0, 1.0)), hash21(i + vec2<f32>(7.3, 1.0)));
-  let gd = -1.0 + 2.0 * vec2<f32>(hash21(i + vec2<f32>(1.0, 1.0)), hash21(i + vec2<f32>(8.3, 1.0)));
-
-  let va = dot(ga, f - vec2<f32>(0.0, 0.0));
-  let vb = dot(gb, f - vec2<f32>(1.0, 0.0));
-  let vc = dot(gc, f - vec2<f32>(0.0, 1.0));
-  let vd = dot(gd, f - vec2<f32>(1.0, 1.0));
-
-  let n = va + uu.x * (vb - va) + uu.y * (vc - va) + uu.x * uu.y * (va - vb - vc + vd);
-  let value = 0.5 + 0.5 * n;
-
-  let grad =
-    ga + uu.x * (gb - ga) + uu.y * (gc - ga) + uu.x * uu.y * (ga - gb - gc + gd) +
-    du * (vec2<f32>(uu.y, uu.x) * (va - vb - vc + vd) + vec2<f32>(vb, vc) - va);
-  return vec3<f32>(value, 0.5 * grad);
-}
-
+// Noise + FBM (BC.W-CARVE6 → metaball-noise.wgsl) — spliced AFTER ${FBM_ROT_WGSL}.
 ${FBM_ROT_WGSL}
-
-fn fbm(p0: vec2<f32>, octaves: i32) -> f32 {
-  var value = 0.0;
-  var amp = 0.5;
-  var freq = 1.0;
-  var p = p0;
-  for (var i = 0; i < 4; i = i + 1) {
-    if (i >= octaves) { break; }
-    value = value + amp * noised(p * freq).x;
-    p = FBM_ROT * p;
-    freq = freq * FBM_LACUNARITY;
-    amp = amp * FBM_GAIN;
-  }
-  return value;
-}
-
-// FBM with ANALYTIC GRADIENT — value in .x, ∂/∂x, ∂/∂y in .yz. The gradient accumulates
-// noised()'s analytic gradient per octave, chain-ruled through the per-octave frequency
-// scale AND the FBM_ROT rotation (the keystone feed for the analytic surface normal).
-fn fbmG(p: vec2<f32>, octaves: i32) -> vec3<f32> {
-  var value = 0.0;
-  var grad = vec2<f32>(0.0, 0.0);
-  var amp = 0.5;
-  var freq = 1.0;
-  var rotAccum = mat2x2<f32>(1.0, 0.0, 0.0, 1.0);
-  var pp = p;
-  for (var i = 0; i < 4; i = i + 1) {
-    if (i >= octaves) { break; }
-    let n = noised(pp * freq);
-    value = value + amp * n.x;
-    grad = grad + amp * freq * (transpose(rotAccum) * n.yz);
-    pp = FBM_ROT * pp;
-    freq = freq * FBM_LACUNARITY;
-    amp = amp * FBM_GAIN;
-    rotAccum = FBM_ROT * rotAccum;
-  }
-  return vec3<f32>(value, grad);
-}
-
-// One domain-warp pass with the ANALYTIC GRADIENT carried (warp-Jacobian approximation).
-fn fbmWarpedG(p: vec2<f32>, octaves: i32, warpAmp: f32) -> vec3<f32> {
-  if (warpAmp <= 0.0) { return fbmG(p, octaves); }
-  let q = vec2<f32>(fbm(p + vec2<f32>(0.0, 0.0), octaves),
-                    fbm(p + vec2<f32>(5.2, 1.3), octaves));
-  return fbmG(p + warpAmp * (q - 0.5), octaves);
-}
+${METABALL_NOISE_WGSL}
 
 // ── SDF body (value+gradient circle + the IQ normalized smin, value+gradient form) ──
 fn sdgCircle(p: vec2<f32>, center: vec2<f32>, radius: f32) -> vec3<f32> {
@@ -213,27 +143,9 @@ fn sminG(a: vec3<f32>, b: vec3<f32>, k: f32) -> vec3<f32> {
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 
-// ── OKLCh gamut clamp (hue-preserving inward chroma clamp — blob-local) ──
-fn inGamut(lin: vec3<f32>) -> bool {
-  return all(lin >= vec3<f32>(0.0)) && all(lin <= vec3<f32>(1.0));
-}
-fn gamutClampOklch(lch: vec3<f32>) -> vec3<f32> {
-  let lin = oklabToLinearSrgb(oklchToOklab(lch));
-  if (inGamut(lin)) { return lch; }
-  var lo = 0.0;
-  var hi = lch.y;
-  for (var i = 0; i < 16; i = i + 1) {
-    let mid = 0.5 * (lo + hi);
-    let test = vec3<f32>(lch.x, mid, lch.z);
-    if (inGamut(oklabToLinearSrgb(oklchToOklab(test)))) { lo = mid; } else { hi = mid; }
-  }
-  return vec3<f32>(lch.x, lo, lch.z);
-}
-
-// AX.W15 — de-synced breath (three DETUNED sines at irrational ratios).
-fn breath(phase: f32) -> f32 {
-  return (sin(phase) + 0.5 * sin(phase * 1.4444 + 1.7) + 0.28 * sin(phase * 0.31 + 4.1)) / 1.78;
-}
+// OKLCh gamut clamp + palette sample + breath (BC.W-CARVE6 → metaball-palette.wgsl)
+// — spliced AFTER ${OKLCH_MATRICES_WGSL} (its matrix source).
+${METABALL_PALETTE_WGSL}
 
 // AX.W15 — the composite SDF field WITH its ANALYTIC GRADIENT vec3(dist, ∂/∂x, ∂/∂y).
 fn sceneDistG(uv: vec2<f32>) -> vec3<f32> {
@@ -336,24 +248,6 @@ fn softShadow2D(ro: vec2<f32>, rd: vec2<f32>, mint: f32, maxt: f32, w: f32) -> f
     t = t + h;
   }
   return clamp(res, 0.0, 1.0);
-}
-
-// W11.b — sample the multi-stop palette at t, OKLab mix + midpoint chroma-bump. Returns
-// an OKLCh stop [L, C, h(rad)]. Falls back to uBaseColor when uStopCount <= 1.
-fn samplePaletteOklch(t: f32) -> vec3<f32> {
-  let uStopCount = u.ints.x;
-  if (uStopCount <= 1) { return oklabToOklch(srgbToOklab(u.base.rgb)); }
-  let n = f32(uStopCount);
-  let ft = clamp(t, 0.0, 1.0) * (n - 1.0);
-  let i0 = i32(floor(ft));
-  let i1 = min(i0 + 1, uStopCount - 1);
-  let f = ft - f32(i0);
-  let labA = srgbToOklab(u.palette[i0].rgb);
-  let labB = srgbToOklab(u.palette[i1].rgb);
-  let lab = mix(labA, labB, f);
-  var lch = oklabToOklch(lab);
-  lch.y = lch.y + 0.03 * sin(PI * f);
-  return lch;
 }
 
 // ── Full-screen triangle vertex stage (the pilot idiom — no vertex buffer) ──

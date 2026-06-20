@@ -53,15 +53,22 @@
     stroke-dashoffset: calc(100 - var(--seal-draw, 100%) / 1%);
     /* The one-pass gold glint on settle — the W-AX-METAL-GLOW catch-light, scaled by
        `--seal-glint` (0 at rest → 1 on settle-pass). A drop-shadow halo of the seal's
-       OWN gold ink at the metal-glow radius/strength — composed, never re-authored. */
+       OWN gold ink at the metal-glow radius/strength — composed, never re-authored.
+       The seal is NOT a `.metal-*` element, so the bare `--metal-glow-blur`/`-opacity`
+       (declared scoped inside `.metal-{gold,silver,bronze}`) do not cascade here; the
+       seal CONSUMES THE REGISTER by chaining to the `:root` `-default` retune seam
+       (glass-fx.css), NOT a hardcoded magic-number copy — a consumer who retunes
+       `--metal-glow-blur-default` re-tunes the seal halo in lockstep. */
+    --metal-glow-blur: var(--metal-glow-blur-default, 0.5em);
+    --metal-glow-opacity: var(--metal-glow-opacity-default, 0.35);
     filter: drop-shadow(
         0 0
-        calc(var(--metal-glow-blur, 0.5em) * var(--seal-glint, 0))
+        calc(var(--metal-glow-blur) * var(--seal-glint, 0))
         color-mix(
             in oklab,
             var(--seal-ink),
             transparent
-                calc(100% - var(--metal-glow-opacity, 0.35) * var(--seal-glint, 0) * 100%)
+                calc(100% - var(--metal-glow-opacity) * var(--seal-glint, 0) * 100%)
         )
     );
 }
