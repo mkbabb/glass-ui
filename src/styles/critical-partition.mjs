@@ -27,13 +27,18 @@
  * component recipes) — under the recorded gzip ceiling (W3).
  *
  * DEFERRED (./styles/deferred) — the below-the-fold + late-mount tail: every
- * component recipe + the transitions/animations/scroll-driven/view-transition
- * grammar + utilities + the menu/configurator/instrument-chassis/hover-popover/
- * drawer/segmented-tabs/select/icon-chip component partials, PLUS the folded SFC
- * `<style scoped>` payload (`../glass-ui.css`) and the emitted Tailwind
- * component-utility surface (`components.css`). These decorate components that
- * mount after first paint or sit below the fold; their late arrival shifts no
- * above-the-fold pixel (the FOUC-safe floor, W5).
+ * component recipe + the transitions/animations/scroll-driven/scroll-chrome/
+ * view-transition grammar + utilities + the menu/configurator/instrument-chassis/
+ * hover-popover/drawer/segmented-tabs/select/icon-chip/border-progress/
+ * completion-seal component partials, PLUS the folded SFC `<style scoped>`
+ * payload (`../glass-ui.css`) and the emitted Tailwind component-utility surface
+ * (`components.css`). These decorate components that mount after first paint or
+ * sit below the fold; their late arrival shifts no above-the-fold pixel (the
+ * FOUC-safe floor, W5). The BC-added `scroll-chrome.css` (the scroll-driven
+ * floating-CHROME collapse recipe — a late-mount surface decoration) and
+ * `completion-seal.css` (the one-shot earned-gold feedback seal — a focal opt-in
+ * surface that mounts on a completion event) are BOTH deferred: neither paints
+ * an above-the-fold first-paint chrome pixel.
  *
  * The `paper.css` partial is bucketed DEFERRED — the paper underpaint/grain
  * utilities pair with glass for paper-on-glass compositions that mount with the
@@ -65,6 +70,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "animations.css",
     "scroll-driven.css",
     "scroll-choreography.css",
+    "scroll-chrome.css",
     "view-transition.css",
     "utilities.css",
     "menu.css",
@@ -76,6 +82,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "select.css",
     "icon-chip.css",
     "border-progress.css",
+    "completion-seal.css",
 ]);
 
 /**
@@ -133,8 +140,23 @@ export const DEFERRED_SOURCE_DIRECTIVE = '@source "../*.js";';
  * dark-arm + the on-glass-fg / surface-axis registers — all of which live in the
  * critical tokens/* + glass/* sub-partials by construction. Ceiling lifted
  * 110000 → 137000 (~4.2% headroom over the measured 131469, the profile-bundle
- * re-base convention) to carry the BB glass-band critical surface. The
- * render-block FLOOR stays W-LIGHTHOUSE's W3-arm-1 mobile-ms gate (the binding
- * perf truth); this ceiling guards against a recipe revert-toward-monolith.
+ * re-base convention) to carry the BB glass-band critical surface.
+ *
+ * RE-BASE (BC.W-CSS-CRITICAL — re-measured over the SETTLED BC cascade): the
+ * critical subset grew to raw 482228 / gzip 149748 — AGAIN not a component-recipe
+ * leak (the critical bucket is STILL the 6 documented token+glass+type partials;
+ * the BC visual bands 1-7 + 9 re-authored the critical tokens/* + glass/* sub-
+ * partials — the warm-cream page chassis tokens, the on-glass-fg/surface-axis
+ * registers, the calm/deep glass ladder, the scroll/motion token additions in
+ * scale-paper.css — all of which live in the critical token cascade by
+ * construction; the two BC-added PARTIALS scroll-chrome.css + completion-seal.css
+ * are bucketed DEFERRED, NOT critical). The critical subset is 47.3% of the
+ * settled monolith's resolved gzip (316614) — the spec's ~46% small-above-the-
+ * fold-subset bar HELD over the settled cascade. Ceiling re-pinned 137000 →
+ * 156000 (~4.2% headroom over the measured 149748, the profile-bundle re-base
+ * convention — the reviewed write, NEVER a silent component-recipe swallow to
+ * stay under the old number). The render-block FLOOR stays W-LIGHTHOUSE's
+ * W3-arm-1 mobile-ms gate (the binding perf truth); this ceiling guards against a
+ * recipe revert-toward-monolith.
  */
-export const CRITICAL_GZIP_CEILING = 137000;
+export const CRITICAL_GZIP_CEILING = 156000;

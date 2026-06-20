@@ -1950,6 +1950,12 @@ export const GATES = [
         note: "BC.W-STORYBOOK-META — the storybook META chassis: the AppShell + StoryPage + the section header read as ONE coherent storybook (the meta-level IA, the page-band surface enrolled in the gestalt roster). The LAST page band. Bite: an incoherent meta-chassis / a missing page-band roster row → RED.",
     },
     {
+        id: "proof:bp-lazy",
+        cmd: "proof:bp-lazy",
+        tags: ["ci", "release"],
+        note: "BC.W-AX-BP-LAZY — the cross-repo speedtest-AX BorderProgress lazy-chunk: the heavy spectrum/conic ring lazy-loads off the eager path (the profile:budget critical-path-weight floor — the root barrel reaches none of the heavy BorderProgress spectrum eagerly). Bite: the heavy spectrum/conic ring on the eager graph → RED.",
+    },
+    {
         id: "gates:verify-ci",
         cmd: "gates:verify-ci",
         tags: ["release"],

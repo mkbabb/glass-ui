@@ -67,6 +67,12 @@ function cliPaths() {
         DIR: resolve(ROOT, "src/components/custom/border-progress"),
         VUE: d("BorderProgress.vue"),
         HELPER: d("composables/useBorderSpectrum.ts"),
+        // BC.W-AX-BP-LAZY — the value.js OKLCH/shorter-hue walk + the CONSUME marker
+        // CARVED into the dynamically-imported spectrum-walk.ts leaf (the eager-graph
+        // payload move). W3's value.js-consume evidence FOLLOWS the carve into the
+        // leaf (the proof:webgl-substrate-single "asserts follow the composition into
+        // the carved leaf" precedent — proof:bp-lazy owns the dynamic-boundary lock).
+        WALK: d("composables/spectrum-walk.ts"),
         CONSTANTS: d("constants.ts"),
         INDEX: d("index.ts"),
         README: d("README.md"),
@@ -119,6 +125,9 @@ export function detectBorderProgress(inputs) {
         vueRaw = "", // un-stripped (for the CONSUME-marker comment presence)
         helper = "",
         helperRaw = "",
+        // BC.W-AX-BP-LAZY — the carved value.js-bearing dynamic leaf (spectrum-walk.ts).
+        walk = "",
+        walkRaw = "",
         constants = "",
         css = "",
         propertyRegs = "",
@@ -204,18 +213,22 @@ export function detectBorderProgress(inputs) {
         );
 
     // ── W3 — the spectrum is OKLCH/shorter-hue on the leaf (no re-roll) ───────
-    const importsLeaf = /from\s+["'][^"']*composables\/color["']/.test(helper);
-    const importsInterpolateHue = /interpolateHue/.test(helper);
-    const usesShorterArc = /["']shorter["']/.test(helper);
+    // BC.W-AX-BP-LAZY — the value.js-bearing walk + the CONSUME marker live in the
+    // CARVED spectrum-walk.ts leaf (the dynamic-import boundary); W3 reads the carve.
+    const importsLeaf = /from\s+["'][^"']*composables\/color["']/.test(walk);
+    const importsInterpolateHue = /interpolateHue/.test(walk);
+    const usesShorterArc = /["']shorter["']/.test(walk);
     const hasConsumeMarker = /CONSUME\(value\.js[^)]*oklchSpectrum\)/.test(
-        helperRaw,
+        walkRaw,
     );
-    // The no-re-roll fence: no inline OKLab→sRGB matrix / hand-rolled hue lerp in
-    // the component or the helper (proof:single-color-core's mirror). A re-rolled
-    // path would name the matrix coefficients or re-define a color primitive.
+    // The no-re-roll fence: no inline OKLab→sRGB matrix / hand-rolled hue lerp in the
+    // component, the sync shell, OR the carved walk leaf (proof:single-color-core's
+    // mirror). A re-rolled path would name the matrix coefficients or re-define a
+    // color primitive — scanned across all three so the carve cannot hide a re-roll.
     const reRollRe =
         /(srgbToOKLab|oklabToLinearSRGB|oklabToRgb255|rawOklabToOklch|rawOklchToOklab)\s*=|\b0\.2104542553\b|\b1\.9779984951\b/;
-    const reRollsColorMath = reRollRe.test(helper) || reRollRe.test(vue);
+    const reRollsColorMath =
+        reRollRe.test(helper) || reRollRe.test(walk) || reRollRe.test(vue);
     facts.w3 = {
         importsLeaf,
         importsInterpolateHue,
@@ -365,11 +378,14 @@ export function detectBorderProgress(inputs) {
 function readInputs(P) {
     const vueRaw = read(P.VUE);
     const helperRaw = read(P.HELPER);
+    const walkRaw = read(P.WALK);
     return {
         vue: stripTs(vueRaw),
         vueRaw,
         helper: stripTs(helperRaw),
         helperRaw,
+        walk: stripTs(walkRaw),
+        walkRaw,
         constants: stripTs(read(P.CONSTANTS)),
         css: stripCss(read(P.CSS)),
         propertyRegs: stripCss(read(P.PROPERTY_REGS)),
@@ -394,10 +410,14 @@ function selfTest() {
             milestones?: readonly BorderProgressMilestone[]
             var(--border-progress-fill)`,
         vueRaw: "",
-        helper: `import { cssToOklch } from "../../../../composables/color";
+        // The sync shell — value.js-FREE (BC.W-AX-BP-LAZY); the dynamic boundary only.
+        helper: `import("./spectrum-walk")`,
+        helperRaw: ``,
+        // The CARVED value.js-bearing dynamic leaf — W3 reads its evidence here.
+        walk: `import { cssToOklch } from "../../../../composables/color";
             import { interpolateHue } from "@mkbabb/value.js";
             interpolateHue(a, b, f, "shorter")`,
-        helperRaw: `// CONSUME(value.js 0.13.0 oklchSpectrum): re-point here`,
+        walkRaw: `// CONSUME(value.js 0.13.0 oklchSpectrum): re-point here`,
         constants: `export type BorderProgressCoverage = "full-ring" | "bottom-edge";
             export const BORDER_PROGRESS_WIDTH_MIN = 10;
             export const BORDER_PROGRESS_WIDTH_MAX = 14;
@@ -443,13 +463,13 @@ function selfTest() {
                 css: good.css.replace(/mask-composite\s*:\s*exclude/g, "mask-composite: add"),
             }).violations.length > 0,
     });
-    // Bite C — re-roll the color math reds W3.
+    // Bite C — re-roll the color math reds W3 (planted in the carved walk leaf).
     bites.push({
         name: "re-rolled-color",
         red:
             detectBorderProgress({
                 ...good,
-                helper: good.helper + "\nconst rawOklchToOklab = (L,C,h) => [L,0,0];",
+                walk: good.walk + "\nconst rawOklchToOklab = (L,C,h) => [L,0,0];",
             }).violations.length > 0,
     });
     // Bite D — out-of-envelope width (a 6-8px hairline) reds W4.
@@ -464,11 +484,11 @@ function selfTest() {
                     .replace("WIDTH_DEFAULT = 12", "WIDTH_DEFAULT = 7"),
             }).violations.length > 0,
     });
-    // Bite E — drop the consume marker reds W3.
+    // Bite E — drop the consume marker reds W3 (it lives in the carved walk leaf).
     bites.push({
         name: "no-consume-marker",
         red:
-            detectBorderProgress({ ...good, helperRaw: "no marker here" }).violations
+            detectBorderProgress({ ...good, walkRaw: "no marker here" }).violations
                 .length > 0,
     });
     // Bite F — drop the bottom-edge shared-mask scope reds W4.

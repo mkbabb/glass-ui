@@ -83,11 +83,26 @@ const ariaNow = computed(() => props.value);
 
 // The spectrum walk — the CONSUME (the brand ramp via the /color leaf). The
 // resolved stops are written as a `--border-progress-spectrum` gradient-stop list
-// the conic-gradient reads. CONCRETE anchors are sampled OKLCH/shorter-hue; the
-// default `var(--…)` token ramp passes through to the live cascade.
-const spectrum = computed<string[]>(() =>
-    spectrumStops(props.stops ?? BORDER_PROGRESS_DEFAULT_SPECTRUM),
-);
+// the conic-gradient reads. The default `var(--…)` token ramp passes through to the
+// live cascade SYNCHRONOUSLY (value.js-free, no dynamic load — byte-identical paint).
+// CONCRETE anchors show the synchronous interim first, then UPGRADE to the OKLCH/
+// shorter-hue perceptual walk on the next tick when `./spectrum-walk` resolves
+// (BC.W-AX-BP-LAZY — the value.js spectrum walk rides a dynamic `import()` boundary).
+const spectrum = ref<string[]>([]);
+const resolveSpectrum = () => {
+    const stops = props.stops ?? BORDER_PROGRESS_DEFAULT_SPECTRUM;
+    // The synchronous result (the `var()` pass-through or the concrete-anchor
+    // interim); the cold path upgrades `spectrum` via the callback on the next tick.
+    spectrum.value = spectrumStops(stops, undefined, (walked) => {
+        // Guard the stale-write race: only adopt the upgrade if the live stops still
+        // match the request that fired this load.
+        if ((props.stops ?? BORDER_PROGRESS_DEFAULT_SPECTRUM) === stops) {
+            spectrum.value = walked;
+        }
+    });
+};
+resolveSpectrum();
+watch(() => props.stops, resolveSpectrum);
 const spectrumStopList = computed(() => {
     const s = spectrum.value;
     const n = s.length;

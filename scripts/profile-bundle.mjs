@@ -212,8 +212,16 @@ const BUDGETS = {
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
     "dist/aurora.js": { raw: 162_000, gzip: 54_000 },
     "dist/goo-blob.js": { raw: 85_000, gzip: 28_000 },
-    "dist/constellation.js": { raw: 19_000, gzip: 6_700 },
-    "dist/fourier-field.js": { raw: 8_500, gzip: 3_200 },
+    // BC.W-VIZ-CONSTELLATION / W-VIZ-FOURIER re-base — the WebGPU-first re-home
+    // (the per-viz Band-4 waves) moved both viz OFF Canvas2D onto createGpuSubstrate:
+    // they now carry the WGSL compute/render primaries + the typed uniformBridgeWGPU
+    // + the WebGL2/Canvas2D fallback (the dual-substrate cost — the same conscious
+    // shader-growth lift aurora.js took for the kuwahara medium). constellation
+    // gzip 6_700 → 13_500 (actual 12_527) raw 19_000 → 42_000; fourier-field gzip
+    // 3_200 → 11_000 (actual 10_206) raw 8_500 → 33_500. A one-time conscious lift
+    // sized to the WebGPU re-home, NOT per-wave creep.
+    "dist/constellation.js": { raw: 42_000, gzip: 13_500 },
+    "dist/fourier-field.js": { raw: 33_500, gzip: 11_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

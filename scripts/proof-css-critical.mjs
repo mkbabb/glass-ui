@@ -278,8 +278,8 @@ add("w4-manifest-single-source", w4Pass, w4Detail);
 // ── The FOUC-safe π + the render-block DELTA are wired (the BINDING close) ───────────
 add(
     "delta-capture-exists",
-    existsSync(resolve(ROOT, "docs/tranches/BB/audit/visual/W-CSS-CRITICAL-DELTA.md")),
-    "docs/tranches/BB/audit/visual/W-CSS-CRITICAL-DELTA.md exists (the render-block before/after + the FOUC-safe critical-only-vs-both above-the-fold pixel-stability pair, both modes, AZ-form freshness headers — the cardinal-lesson on-disk artefact; the render-block FLOOR is W-LIGHTHOUSE's W3-arm-1 gate)",
+    existsSync(resolve(ROOT, "docs/tranches/BC/audit/visual/W-CSS-CRITICAL-DELTA.md")),
+    "docs/tranches/BC/audit/visual/W-CSS-CRITICAL-DELTA.md exists (BC.W-CSS-CRITICAL — the binding-paint discharge the BB close never ran: the render-block before/after + the FOUC-safe critical-only-vs-both above-the-fold pixel-stability pair, both modes, AZ-form freshness headers — the cardinal-lesson on-disk artefact; the render-block FLOOR is W-LIGHTHOUSE's W3-arm-1 gate)",
 );
 
 // ── Report ──────────────────────────────────────────────────────────────────────────

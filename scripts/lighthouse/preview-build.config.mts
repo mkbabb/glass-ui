@@ -40,9 +40,16 @@ export default defineConfig({
     // Run from the repo root so `index.html` (which references `/demo/main.ts`)
     // resolves the demo entry exactly as `npm run dev` does.
     root: ROOT,
-    // A relative base so the built SPA serves correctly under `vite preview`
-    // regardless of the mount path.
-    base: "./",
+    // ABSOLUTE root base — the SPA serves its `<script>`/`<link>` assets from
+    // `/assets/…` regardless of route depth. A RELATIVE `base: "./"` is broken
+    // for an SPA with DEEP client routes: at `/forms/inputs` the browser
+    // resolves `./assets/index-*.js` against `/forms/` → `/forms/assets/…`,
+    // which `vite preview`'s history-fallback serves as index.html (text/html),
+    // so the `<script type="module">` fails its MIME check, Vue never mounts, the
+    // page paints blank, and Lighthouse reports NO_FCP on every surface. The
+    // demo preview is always root-mounted on `:5388`, so the absolute base is
+    // correct + makes the deep-route surfaces actually paint.
+    base: "/",
     plugins: [tailwindcss(), vue()],
     build: {
         // The PRODUCTION SPA: NOT lib-mode. `index.html` is the input; Vite

@@ -5,4 +5,8 @@ export type {
     BorderProgressMilestone,
     BorderProgressMilestoneEvent,
 } from "./constants";
-export { spectrumAt, spectrumStops } from "./composables/useBorderSpectrum";
+// `spectrumStops` is the SYNCHRONOUS public surface (the `var()` pass-through + the
+// concrete-anchor interim). The OKLCH/shorter-hue `spectrumAt`/`walkConcreteSpectrum`
+// walk lives behind the dynamic `./spectrum-walk` boundary (BC.W-AX-BP-LAZY — it
+// stays OFF this static barrel so `dist/border-progress.js` is value.js-free).
+export { spectrumStops, type SpectrumUpgrade } from "./composables/useBorderSpectrum";
