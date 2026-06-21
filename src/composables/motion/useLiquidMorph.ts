@@ -96,6 +96,15 @@ export const DIRECTED_SPLIT: LiquidMorphSignature = {
 export interface UseLiquidMorphOptions {
     /** The host element carrying the `--liquid-morph-t` scalar (a card OR a dock). */
     rootEl: Ref<HTMLElement | null>;
+    /**
+     * The ORIGIN element the split BUDS FROM (the dock pill). The pieces fan out of
+     * this element's center (a connecting goo neck back to the dock), NOT the host
+     * stage center — the WAVE-1 "bud from the dock" fix. Its center is measured
+     * relative to `rootEl` each episode and written as `--liquid-morph-origin-x/y`
+     * (px-from-the-host-top-left) which the goo group (liquid-morph.css) anchors at.
+     * When unset the goo group falls back to the host center (the standalone case).
+     */
+    originEl?: Ref<HTMLElement | null>;
     /** The morphology signature (default `RADIAL_SPLIT`). */
     signature?: LiquidMorphSignature;
     /**
@@ -226,7 +235,9 @@ export function useLiquidMorph(options: UseLiquidMorphOptions): UseLiquidMorphRe
             // fanned by the piece rank so an n-set spreads around the beam.
             const rank = p.handle.rank ?? 0;
             const n = pieces.size || 1;
-            const spread = ((rank - (n - 1) / 2) / Math.max(1, n)) * (Math.PI / 3);
+            // a GENTLE fan (~22° total) so the chain stays a connected goo arm along θ,
+            // not a wide spray that breaks the metaball necks.
+            const spread = ((rank - (n - 1) / 2) / Math.max(1, n)) * (Math.PI / 8);
             theta = (p.handle.angle ?? 0) + spread;
         } else if (signature.vector === "radial" && r && el) {
             // The unit vector host-center -> piece-center (the n-ary fan; ANY theta).

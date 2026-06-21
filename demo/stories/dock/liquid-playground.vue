@@ -63,7 +63,10 @@ function registerControls(): void {
             el: computed(() => ctlEls.value[i] ?? null),
             angle: angleRad.value,
             rank: i,
-            distance: 132,
+            // a CONNECTED goo arm budding from the core: rank 0 at centre, each next
+            // ~30px further along θ — close enough that the metaball necks stay bridged
+            // (a wider gap separates the blobs; the reference is ONE connected arm).
+            distance: i * 30,
         }),
     );
 }

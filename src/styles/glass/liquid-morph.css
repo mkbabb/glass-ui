@@ -132,6 +132,13 @@
         filter: url(#liquid-morph-goo);
     }
     .liquid-dock[data-mode="split"] .liquid-dock-control {
+        /* STACK every control on the dock centre, then fan from there — so they
+           originate from ONE point (the goo necks stay bridged), not their scattered
+           flex-row slots. */
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        margin: -1.375rem 0 0 -1.375rem; /* centre the 2.75rem disc */
         transform: translate(
                 calc(
                     var(--split-dx, 0) * var(--liquid-morph-distance, 0px) *
@@ -143,8 +150,14 @@
                 )
             )
             scale(var(--stretch, 1));
-        /* the goo body reads warm-cream glass, NOT white */
-        background: color-mix(in oklab, var(--glass-bg-floating), var(--card) 45%);
+        /* a real WARM tan (chroma, not the near-neutral card↔ink mix) so the metaball
+           reads as warm glass material, not pale grey. */
+        background: color-mix(in oklab, var(--card), oklch(0.72 0.075 62) 32%);
+        box-shadow: none;
+    }
+    .liquid-dock[data-mode="split"] .liquid-dock-control:first-child {
+        /* the CORE the others bud from — a touch brighter so the origin reads */
+        background: color-mix(in oklab, var(--card), oklch(0.78 0.06 62) 22%);
     }
 
     @media (prefers-reduced-motion: reduce) {
