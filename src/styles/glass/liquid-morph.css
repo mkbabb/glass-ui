@@ -33,6 +33,20 @@
         will-change: inline-size, block-size;
     }
 
+    /* ── VERTICAL orientation — the rest pill is a narrow COLUMN; the morph swaps the
+       pill axis (narrow×tall ⇄ card). The controls stack; expand grows the same card. ── */
+    .liquid-dock[data-orientation="vertical"] {
+        inline-size: calc(var(--pill-h) + (var(--card-w) - var(--pill-h)) * var(--t));
+        block-size: calc(var(--pill-w) + (var(--card-h) - var(--pill-w)) * var(--t));
+    }
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-controls {
+        flex-direction: column;
+    }
+    .liquid-dock[data-orientation="vertical"]:is([data-mode="split"], [data-mode="union"]) {
+        inline-size: var(--pill-h);
+        block-size: var(--pill-w);
+    }
+
     /* the glass PLATE — on a ::before so it can grow with the box (expand) yet
        DISSOLVE independently as the controls leave (split — no empty husk). */
     .liquid-dock::before {

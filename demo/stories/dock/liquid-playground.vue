@@ -56,6 +56,12 @@ const angleDeg = ref(35);
 const splitCount = ref(4);
 const angleRad = computed(() => (angleDeg.value * Math.PI) / 180);
 const open = ref(false);
+// the dock's resting axis — horizontal pill (row) or vertical pill (column). The morph
+// works on BOTH ("function in a vertical or horizontal state").
+const orientation = ref<"horizontal" | "vertical">("horizontal");
+function toggleOrientation(): void {
+    orientation.value = orientation.value === "horizontal" ? "vertical" : "horizontal";
+}
 
 // ── the dock element IS the morph root ──────────────────────────────────────────
 const dockRef = ref<HTMLElement | null>(null);
@@ -256,6 +262,9 @@ function onRailLeave(): void {
                         }}
                     </Button>
                     <Button variant="outline" @click="reset">Reset</Button>
+                    <Button variant="outline" @click="toggleOrientation">
+                        {{ orientation === "horizontal" ? "↕ Vertical" : "↔ Horizontal" }}
+                    </Button>
                 </div>
             </div>
 
@@ -298,6 +307,7 @@ function onRailLeave(): void {
                     class="liquid-dock"
                     :data-mode="mode"
                     :data-open="open"
+                    :data-orientation="orientation"
                     :style="{ '--liquid-dock-controls': splitCount }"
                     data-testid="liquid-dock"
                 >
