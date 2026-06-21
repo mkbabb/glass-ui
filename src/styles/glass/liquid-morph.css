@@ -619,6 +619,198 @@
         background: color-mix(in oklab, var(--card), oklch(0.78 0.06 62) 22%);
     }
 
+    /* ═══════════════════════════════════════════════════════════════════════
+       ISLAND mode — the Dynamic Island SPLIT. The combined activity pill (a
+       timer half + a now-playing half, touching at centre → goo-merged into
+       ONE body) fissions into TWO distinct islands that translate apart on --t,
+       the goo NECK stretching then snapping. COMPOSITOR-ONLY (transform
+       translate) — the content is always present (no layout reveal), so the
+       morph stays smooth. Two layers: a goo BLOB layer (solid metaballs,
+       filter:url merges them) + a crisp CONTENT layer on top (un-filtered, so
+       the ring/text/eq stay sharp); both share the centre-anchored ±gap·t
+       geometry so they track in lockstep.
+       ═══════════════════════════════════════════════════════════════════════ */
+    .liquid-dock[data-mode="island"] {
+        --island-w: 8.5rem; /* each island's fixed width */
+        --island-gap: 2.4rem; /* each island's travel on full split */
+        inline-size: 17rem; /* bounding box — the islands float at its centre */
+        block-size: 3.5rem;
+        overflow: visible;
+        background: transparent;
+    }
+    /* the box's own glass plate is hidden — each island carries its own goo blob */
+    .liquid-dock[data-mode="island"]::before {
+        opacity: 0;
+    }
+    .liquid-dock[data-mode="island"] .liquid-dock-controls {
+        display: none;
+    }
+
+    .liquid-islands-goo {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        filter: url(#liquid-morph-goo);
+        pointer-events: none;
+    }
+    .liquid-island-blob {
+        position: absolute;
+        inset-block: 0;
+        block-size: 3.5rem;
+        inline-size: var(--island-w);
+        border-radius: 1.75rem;
+        background: color-mix(in oklab, var(--card), oklch(0.75 0.066 64) 18%);
+    }
+    .liquid-island-blob--left {
+        inset-inline-end: 50%;
+        translate: calc(-1 * var(--island-gap) * var(--t)) 0;
+    }
+    .liquid-island-blob--right {
+        inset-inline-start: 50%;
+        translate: calc(var(--island-gap) * var(--t)) 0;
+    }
+
+    .liquid-island {
+        position: absolute;
+        inset-block: 0;
+        inline-size: var(--island-w);
+        block-size: 3.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-inline: 0.65rem;
+        color: var(--foreground);
+        z-index: 2;
+        pointer-events: none;
+        border-radius: 1.75rem;
+        box-shadow: inset 0 0.5px 0 0 color-mix(in oklab, white, transparent 55%);
+    }
+    .liquid-island--left {
+        inset-inline-end: 50%;
+        translate: calc(-1 * var(--island-gap) * var(--t)) 0;
+        justify-content: flex-end;
+    }
+    .liquid-island--right {
+        inset-inline-start: 50%;
+        translate: calc(var(--island-gap) * var(--t)) 0;
+        justify-content: flex-start;
+    }
+
+    /* the timer ring — a conic progress ring (mask → ring, not disc) + centre time */
+    .liquid-island-ring {
+        position: relative;
+        flex: 0 0 auto;
+        inline-size: 2.35rem;
+        block-size: 2.35rem;
+        display: grid;
+        place-items: center;
+        font: 650 0.6rem / 1 var(--font-mono, ui-monospace, monospace);
+        color: var(--foreground);
+    }
+    .liquid-island-ring::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+            from -90deg,
+            var(--section-color-8),
+            var(--section-color-8) calc(0.68 * 360deg),
+            color-mix(in oklab, var(--foreground) 15%, transparent) calc(0.68 * 360deg)
+        );
+        -webkit-mask: radial-gradient(circle, transparent 56%, #000 59%);
+        mask: radial-gradient(circle, transparent 56%, #000 59%);
+    }
+    .liquid-island-ring-time {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* the album thumbnail */
+    .liquid-island-album {
+        flex: 0 0 auto;
+        inline-size: 2.35rem;
+        block-size: 2.35rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+            135deg,
+            var(--section-color-2),
+            var(--section-color-7) 72%
+        );
+        box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 60%);
+    }
+
+    .liquid-island-meta {
+        display: flex;
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.05rem;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .liquid-island--left .liquid-island-meta {
+        align-items: flex-end;
+        text-align: right;
+    }
+    .liquid-island-title {
+        max-inline-size: 100%;
+        overflow: hidden;
+        font-size: 0.76rem;
+        font-weight: 650;
+        line-height: 1.15;
+        text-overflow: ellipsis;
+    }
+    .liquid-island-sub {
+        max-inline-size: 100%;
+        overflow: hidden;
+        color: var(--muted-foreground);
+        font-size: 0.64rem;
+        line-height: 1.1;
+        text-overflow: ellipsis;
+    }
+
+    /* the equalizer — compositor-safe scaleY bars (PRM gates the motion) */
+    .liquid-island-eq {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: flex-end;
+        gap: 0.13rem;
+        block-size: 1.15rem;
+    }
+    .liquid-island-eq i {
+        inline-size: 0.17rem;
+        block-size: 1.15rem;
+        border-radius: 1px;
+        background: var(--section-color-7);
+        transform: scaleY(0.4);
+        transform-origin: bottom;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .liquid-island-eq i {
+            animation: liquid-island-eq 0.9s ease-in-out infinite;
+        }
+        .liquid-island-eq i:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .liquid-island-eq i:nth-child(3) {
+            animation-delay: 0.38s;
+        }
+        .liquid-island-eq i:nth-child(4) {
+            animation-delay: 0.1s;
+        }
+    }
+    @keyframes liquid-island-eq {
+        0%,
+        100% {
+            transform: scaleY(0.32);
+        }
+        50% {
+            transform: scaleY(1);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .liquid-dock,
         .liquid-dock-control,

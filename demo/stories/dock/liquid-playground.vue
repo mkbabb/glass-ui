@@ -61,12 +61,14 @@ import { useLiquidRail } from "../../../src/components/custom/dock/composables/u
 // "player" is NOT a morph mode (the engine just drives t); it's a CONTENT register —
 // the dock becomes a now-playing PILL that expands into a full media player (the
 // iconic Apple Music dock facility; media control IS the primary control interface).
-type PlaygroundMode = LiquidMorphMode | "player";
+// the dock becomes a real iOS surface per mode — NOT abstract goo. "island" is the
+// Dynamic Island SPLIT: the pill fissions into two distinct activity islands (a timer
+// + a now-playing), goo-bridged as they part. "player" → the Apple Music player.
+type PlaygroundMode = LiquidMorphMode | "player" | "island";
 const mode = ref<PlaygroundMode>("expand");
 const modeTabs = [
-    { value: "expand", label: "Expand → card" },
-    { value: "split", label: "Split" },
-    { value: "union", label: "Union" },
+    { value: "expand", label: "Search → sheet" },
+    { value: "island", label: "Split → islands" },
     { value: "player", label: "Now Playing" },
 ];
 const track = {
@@ -283,14 +285,14 @@ function onAuroraInitError(err: Error): void {
             gap="md"
         >
             <p class="text-small text-muted-foreground">
-                The dock ITSELF morphs. ONE engine —
+                The dock ITSELF morphs into real iOS surfaces. ONE engine —
                 <code class="rounded bg-muted px-1">useLiquidMorph</code> — writes one
                 dock-spring scalar onto the dock element:
-                <strong>EXPAND</strong> grows the pill into a container card in place
-                (the iOS-27 search-pill <span aria-hidden="true">→</span> sheet bloom),
-                and <strong>SPLIT</strong> detaches the dock's own controls as
-                free-floating glass pieces at an arbitrary
-                <code class="rounded bg-muted px-1">θ</code>.
+                <strong>SEARCH</strong> blooms the pill into a Maps Places sheet,
+                <strong>SPLIT</strong> fissions it into two distinct activity islands (a
+                timer + a now-playing), goo-bridged as they part — the Dynamic Island
+                split — and <strong>NOW PLAYING</strong> grows it into the full Apple
+                Music player.
             </p>
 
             <!-- controls -->
@@ -414,13 +416,9 @@ function onAuroraInitError(err: Error): void {
                     :style="{
                         '--liquid-dock-controls': splitCount,
                         // sheets/players BLOOM UP from the bottom dock (reference motion);
-                        // the split/union goo BURST centres so it has room to fan.
-                        alignSelf:
-                            mode === 'split' || mode === 'union'
-                                ? 'center'
-                                : 'flex-end',
-                        marginBlockEnd:
-                            mode === 'split' || mode === 'union' ? '0' : '2rem',
+                        // the island split centres so it has room to fan apart.
+                        alignSelf: mode === 'island' ? 'center' : 'flex-end',
+                        marginBlockEnd: mode === 'island' ? '0' : '2rem',
                     }"
                     data-testid="liquid-dock"
                 >
@@ -531,6 +529,40 @@ function onAuroraInitError(err: Error): void {
                             <SkipForward class="size-5" />
                         </span>
                     </div>
+
+                    <!-- ISLAND mode — the Dynamic Island SPLIT. The compact pill
+                         fissions into TWO real activity islands (a timer + a now-
+                         playing), goo-bridged as they part. TWO layers: the goo BLOB
+                         layer (solid metaballs, filter:url merges them into one body
+                         that necks + snaps) + the crisp CONTENT layer on top (NOT
+                         filtered, so the ring/text/eq stay sharp). Both share the
+                         center-anchored geometry (--island-w + the ±gap·t translate)
+                         so they track in lockstep. -->
+                    <template v-if="mode === 'island'">
+                        <div class="liquid-islands-goo" aria-hidden="true">
+                            <span class="liquid-island-blob liquid-island-blob--left" />
+                            <span class="liquid-island-blob liquid-island-blob--right" />
+                        </div>
+                        <div class="liquid-island liquid-island--left" aria-hidden="true">
+                            <span class="liquid-island-meta">
+                                <span class="liquid-island-title">Timer</span>
+                                <span class="liquid-island-sub">Laundry · 8:24</span>
+                            </span>
+                            <span class="liquid-island-ring">
+                                <span class="liquid-island-ring-time">8:24</span>
+                            </span>
+                        </div>
+                        <div class="liquid-island liquid-island--right" aria-hidden="true">
+                            <span class="liquid-island-album" />
+                            <span class="liquid-island-meta">
+                                <span class="liquid-island-title">{{ track.title }}</span>
+                                <span class="liquid-island-sub">{{ track.artist }}</span>
+                            </span>
+                            <span class="liquid-island-eq">
+                                <i /><i /><i /><i />
+                            </span>
+                        </div>
+                    </template>
                 </div>
             </div>
 
