@@ -111,12 +111,14 @@
         gap: 0.5rem;
     }
 
-    /* ── EXPAND — box grows; controls cross-fade out, pane in ── */
+    /* ── EXPAND — box grows; controls cross-fade out, pane in. The ranges OVERLAP
+       (controls gone by ~0.6, pane in from ~0.32) so the dock is NEVER an empty box
+       mid-morph — a true cross-fade, not a dead zone. ── */
     .liquid-dock[data-mode="expand"] .liquid-dock-controls {
-        opacity: clamp(0, 1 - var(--t) * 2.5, 1); /* gone by t≈0.4 */
+        opacity: clamp(0, 1 - var(--t) * 1.7, 1); /* gone by t≈0.59 */
     }
     .liquid-dock[data-mode="expand"] .liquid-dock-pane {
-        opacity: clamp(0, (var(--t) - 0.45) * 2.2, 1); /* in from t≈0.45 */
+        opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
     }
 
     /* ── SPLIT — box stays a pill; controls fly out, goo-merged ── */
