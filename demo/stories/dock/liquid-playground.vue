@@ -144,13 +144,12 @@ const rail = useLiquidRail({
         // the golden asymmetry the knobs drive: the above side fans ~φ² (≈2.618×, the
         // pinned "golden ~2x above") the below span, scaled by the above/below ratio so
         // the sliders retune it (the "partial peek below").
-        // the golden 2x ABOVE is a COUNT ratio (more items shown above than below),
-        // NOT a per-slot spacing blow-up. Keep the slot spacing UNIFORM + tight (a
-        // fanned deck), so the stack reads close like the sketch; the asymmetry comes
-        // from itemsAbove > itemsBelow.
-        goldenAbove: 1,
+        // the golden 2x ABOVE — now a FADE asymmetry (the below side fades ~2.2x
+        // faster, a "partial peek"), at UNIFORM tight spacing. More items read above
+        // the chosen than below, the sketch's golden register.
+        goldenAbove: 2.2,
         fadeStart: 0.6,
-        fadeRange: () => Math.max(itemsAbove.value, itemsBelow.value) + 0.6,
+        fadeRange: () => itemsAbove.value + 0.7,
         slotSpacing: 38,
         tierRatio: 1.0,
         scaleStep: 0.08,

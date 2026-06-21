@@ -323,14 +323,20 @@ export function useLiquidRail(opts: UseLiquidRailOptions): UseLiquidRailReturn {
             const adist = Math.abs(off);
             const above = off < 0;
 
-            // the φ-tiered, golden-asymmetric translate × the expand progress (collapsed
-            // ⇒ all items collapse onto the chosen at the line; expanded ⇒ they fan).
-            const span = tieredSpan(adist, slotSpacing, tierRatio, goldenAbove, above);
+            // the φ-tiered translate × the expand progress (collapsed ⇒ all items
+            // collapse onto the chosen at the line; expanded ⇒ they fan). The spacing is
+            // UNIFORM (goldenAbove drives the FADE asymmetry below, NOT the per-slot
+            // spacing — the sketch's stack is a TIGHT fanned deck, not a sparse spray).
+            const span = tieredSpan(adist, slotSpacing, tierRatio, 1, above);
             const translate = Math.sign(off) * span * exp;
 
-            // the iCarousel FadeRange/FadeMinAlpha model — fade by |offset|, capped at
-            // a min alpha; MULTIPLY by expand so off-chosen items are invisible collapsed.
-            const faded = 1 - (adist - fadeStart) / fadeRange;
+            // the iCarousel FadeRange/FadeMinAlpha model — fade by |offset|, capped at a
+            // min alpha; MULTIPLY by expand so off-chosen items are invisible collapsed.
+            // GOLDEN ASYMMETRY: the BELOW side (a "partial peek") fades faster than the
+            // ABOVE by `goldenAbove`, so ~goldenAbove× more items show above than below
+            // (the sketch's "golden ~2x above / partial peek below").
+            const sideRange = above ? fadeRange : fadeRange / Math.max(1, goldenAbove);
+            const faded = 1 - (adist - fadeStart) / sideRange;
             const baseAlpha = Math.min(1, Math.max(fadeMinAlpha, faded));
             const opacity = adist === 0 ? 1 : baseAlpha * exp;
 
