@@ -392,6 +392,35 @@
         padding: 1.25rem;
         opacity: 0;
         pointer-events: none;
+        overflow: hidden;
+    }
+    /* the Apple Music AMBIENT background — the player fills with the album art's own
+       colors, blurred (the iconic now-playing ambience). Reads the SAME --section-color
+       stops the album-art gradient uses, soft over the warm glass plate. */
+    .liquid-dock-player-pane::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        z-index: -1;
+        background:
+            radial-gradient(
+                ellipse 70% 60% at 28% 22%,
+                color-mix(in oklab, var(--section-color-8), transparent 50%),
+                transparent 72%
+            ),
+            radial-gradient(
+                ellipse 65% 55% at 78% 82%,
+                color-mix(in oklab, var(--section-color-10), transparent 55%),
+                transparent 68%
+            ),
+            radial-gradient(
+                ellipse 60% 70% at 60% 55%,
+                color-mix(in oklab, var(--section-color-7), transparent 60%),
+                transparent 64%
+            );
+        filter: blur(14px);
+        opacity: 0.55;
+        pointer-events: none;
     }
     .liquid-dock[data-mode="player"] .liquid-dock-player-pane {
         opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
