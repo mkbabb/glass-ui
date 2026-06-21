@@ -16,7 +16,7 @@ player); the **rail** carousel-stack section; the **orientation** (V⇄H) toggle
 
 | story | facility | playground coverage | verdict |
 |---|---|---|---|
-| `morph-showcase.vue` | V↔H orientation morph | **orientation toggle** (V⇄H, verified) | **SUBSUMED** |
+| `morph-showcase.vue` | V↔H orientation morph | **orientation toggle** (V⇄H, now ANIMATED — box reshape) | **PARTIAL** — CORRECTED: the orientation toggle was an instant SNAP (audit-caught), now fixed to animate the box reshape (232×64⇄64×232, spring-clocked). But morph-showcase's goo-bridge / View-Transitions topology-OCCLUSION is the richer morph: the playground reshapes the box without occluding the row⇄column content flip, while morph-showcase hides the topology change inside a crossfade/goo. Keep morph-showcase as the richer V↔H demo, OR enhance the playground's V↔H to occlude the topology (then retire). |
 | `rail.vue` | DockRail divider-seam strip | **liquid-rail** carousel-stack (a DISTINCT, richer rail) | PARTIAL — the liquid-rail is a superset carousel; the DockRail's divider-seam anchor is not yet ported |
 | `overview.vue` | nav-pattern dock (home-left, separators, nav items) | — | NOT COVERED (the playground is a morph showcase, not a nav dock) |
 | `layers.vue` | DockLayerGroup multi-layer + switcher rail | — | NOT COVERED |
@@ -26,22 +26,31 @@ player); the **rail** carousel-stack section; the **orientation** (V⇄H) toggle
 
 ## The honest conclusion
 
-The playground **adds** a liquid-morph control-interface showcase and **subsumes**
-`morph-showcase`; it is currently **additive**, not a full replacement for the dock demo
-set. The 5 NOT-COVERED stories demonstrate distinct dock FACILITIES (nav pattern, layers,
-sections, search, CTA-receive) the morph playground does not exercise.
+The playground **adds** a liquid-morph control-interface showcase and is **additive**, not
+a full replacement for the dock demo set. CORRECTED (audit finding): the playground does
+NOT fully subsume `morph-showcase` — its V↔H orientation is now ANIMATED (the box-reshape
+fix) but does NOT occlude the row⇄column topology change the way morph-showcase's
+goo-bridge / View-Transitions does, so morph-showcase remains the richer V↔H demo. The 5
+NOT-COVERED stories demonstrate distinct dock FACILITIES (nav pattern, layers, sections,
+search, CTA-receive) the morph playground does not exercise. So NONE of the 7 dock stories
+is cleanly subsumed at HEAD — the playground is purely additive (the lead liquid-morph
+story), and retiring any existing story would lose coverage.
 
-**Two honest paths to full subsumption (user's call):**
+**Two honest paths (user's call) — REVISED after the V↔H audit finding:**
 
 1. **Extend the playground** to also host the nav/layers/sections/search/cta facilities
    as additional sections (so it becomes THE comprehensive dock page) — a larger build,
-   then retire the 5 stories.
-2. **Keep the facility stories**, position the playground as the LEAD liquid-morph story
-   (already registered first), and retire ONLY `morph-showcase` (genuinely subsumed by
-   the orientation toggle).
+   then retire the covered stories.
+2. **Keep ALL facility stories**, position the playground as the LEAD liquid-morph story
+   (already registered first), retire NOTHING yet. (The earlier "retire morph-showcase"
+   recommendation is WITHDRAWN — the audit found its V↔H topology-occlusion is richer than
+   the playground's box-reshape, so retiring it would lose coverage.) To make
+   morph-showcase genuinely retireable, the playground's V↔H morph would first need to
+   occlude the row⇄column topology change (a crossfade/goo bridge, as morph-showcase does).
 
-Path 2 is the smaller, lower-risk move and is recommended as the first step; Path 1 is
-the full subsumption the ask names, sequenced as its own focused effort.
+Path 2 (keep everything, playground is additive lead) is now the recommended default —
+zero coverage loss. Path 1 is the full subsumption the ask names, a focused future effort.
+NOTHING should be retired without your greenlight; the playground is purely additive today.
 
 ## Productionization (the other track)
 
