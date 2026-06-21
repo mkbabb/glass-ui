@@ -69,10 +69,12 @@ function setCtlEl(i: number, el: Element | null): void {
 }
 
 // the ONE engine — DIRECTED so the angle slider drives each control's escape beam.
+// The morph rides the SMOOTH spring (response ~0.5) for a deliberate, luxuriant
+// pill→card bloom (the iOS-27 V3 expand is a substantial ~1s morph, not a 150ms snap).
 const morph = useLiquidMorph({
     rootEl: dockRef,
     signature: DIRECTED_SPLIT,
-    spring: "dock",
+    spring: "smooth",
 });
 
 // the dock's controls ARE the split pieces — register them with the engine so a
