@@ -41,6 +41,7 @@ import {
     Play,
     SkipBack,
     SkipForward,
+    Mic,
 } from "@lucide/vue";
 import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
@@ -469,6 +470,7 @@ function onRailWheel(e: WheelEvent): void {
                     >
                         <Search class="liquid-dock-search-icon" />
                         <span class="liquid-dock-search-hint">Search places</span>
+                        <Mic class="liquid-dock-search-mic" />
                     </div>
 
                     <!-- PLAYER mode — the now-playing PILL (rest) that grows into the
