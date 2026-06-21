@@ -238,6 +238,25 @@ function onRailLeave(): void {
     railOpen.value = false;
     rail.onPointerLeave();
 }
+// ── SCROLL the carousel — wheel moves through the items (the rail stays open while
+// scrolling, then settles). The accumulator gives a notch-per-item discrete scroll. ──
+let wheelAccum = 0;
+let wheelTimer: ReturnType<typeof setTimeout> | undefined;
+function onRailWheel(e: WheelEvent): void {
+    e.preventDefault();
+    railOpen.value = true;
+    rail.expandTo(true);
+    wheelAccum += e.deltaY;
+    while (Math.abs(wheelAccum) >= 36) {
+        stepChosen(wheelAccum > 0 ? 1 : -1);
+        wheelAccum -= Math.sign(wheelAccum) * 36;
+    }
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+        railOpen.value = false;
+        rail.expandTo(false);
+    }, 1100);
+}
 </script>
 
 <template>
@@ -566,6 +585,7 @@ function onRailLeave(): void {
                     class="liquid-rail-host"
                     @pointerenter="onRailEnter"
                     @pointerleave="onRailLeave"
+                    @wheel="onRailWheel"
                     data-testid="liquid-rail-host"
                 >
                     <!-- THE RAIL — the carousel-stack. Each item seats at the centre

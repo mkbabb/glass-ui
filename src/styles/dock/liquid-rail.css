@@ -132,6 +132,27 @@
         display: grid;
         place-items: center;
     }
+
+    /* THE RAIL HAIRLINE — the vertical dock-edge SPINE the chips fan along (IMG_1880).
+       A 1px warm-ink whisper through the centre, feathered at the ends so it reads as a
+       connective line, NOT a hard rule. The chips sit ON it. */
+    .liquid-rail-host::before {
+        content: "";
+        position: absolute;
+        inset-block: 8%;
+        inset-inline-start: 50%;
+        inline-size: 1px;
+        translate: -50% 0;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            color-mix(in oklab, var(--foreground) 30%, transparent) 16%,
+            color-mix(in oklab, var(--foreground) 30%, transparent) 84%,
+            transparent
+        );
+        pointer-events: none;
+        z-index: 0;
+    }
     /* the CENTRED rail — the chosen sits at the host's centre line (the demo's
        dock line), items fan above/below from there. Overrides the edge offset. */
     .liquid-rail.liquid-rail--centred {
