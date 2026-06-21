@@ -46,6 +46,7 @@
 // if PRM is lifted. The static page surface samples ONCE on mount + on resize-settle.
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
+import { srgbToOKLab, rawOklabToOklch } from "@mkbabb/value.js";
 import { useRAFLoop, type RAFLoopControls } from "../motion/useRAFLoop";
 import { useIntersectionPause } from "../motion/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
@@ -107,6 +108,117 @@ export interface UseGlassBackdropLuminanceControls {
 
 const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 const SAMPLE_DOWNSAMPLE = 32;
+
+// ── BE.W-AMBIENT-TINT — the ambient-hue histogram (a FREE rider) ────────────────
+//
+// iOS-27's defining glass move is richer than the W55 legibility darken: the plate
+// ABSORBS the room's HUE — a now-playing pill warms violet over "Your Essentials",
+// teal over "Chill" (the same pill, a sub-perceptual cast per album). This rides as
+// a 12-bucket chroma×alpha-weighted OKLCh hue histogram accumulated INSIDE the
+// EXISTING per-pixel loop (the SAME getImageData pass — NO second canvas, NO second
+// getImageData, the budget is the existing loop). The chroma×alpha weight makes a
+// gray pixel contribute ~0 (a gray room tints NOTHING — the correct null identity);
+// the picked hue is written as a complete `oklch()` at a FIXED sub-perceptual
+// chroma/L so the plate absorbs the CAST, never the backdrop's saturation.
+//
+// The sRGB→OKLCh conversion routes through value.js's `srgbToOKLab` +
+// `rawOklabToOklch` (the EXACT primitives `composables/color`'s `cssToOklch`
+// composes) — the ONE color-math source, NO hand-rolled rgb→oklch matrix
+// (`proof:single-color-core` holds; raw 0..255 pixel triples cannot ride the
+// CSS-string `cssToOklch`, so the underlying value.js primitives are imported
+// directly — the aurora-swraster fallback precedent).
+const AMBIENT_HUE_BUCKETS = 12; // 30° per bucket — the coarse modal-hue resolution.
+// The fixed sub-perceptual chroma + lightness the ambient HUE is written at. The
+// plate absorbs the ROOM'S HUE at the LIBRARY'S calm chroma — NEVER the backdrop's
+// (a vivid album yields a faint cast, not a saturated plate). Mid-L so the mix reads
+// in both modes; chroma well below the warm-cream identity's own.
+const AMBIENT_HUE_L = 0.72;
+const AMBIENT_HUE_C = 0.06;
+// The minimum chroma-weighted mass (relative to the pixel count) below which the
+// sample is NULL — a flat-gray backdrop has near-zero chroma mass, so it writes NO
+// hue (the correct gray-room-tints-nothing identity).
+const AMBIENT_NULL_MASS = 0.004;
+
+/** The per-sample result — the luminance AND the ambient hue (the FREE rider). */
+interface SampleResult {
+    /** WCAG relative luminance of the sampled backdrop (0..1). */
+    luma: number;
+    /** A complete `oklch()` ambient-hue string, or `transparent` for a gray null. */
+    ambientHue: string;
+}
+
+/** A 12-bucket chroma×alpha-weighted OKLCh hue accumulator over the SAME pixel pass. */
+interface HueHistogram {
+    /** chroma×alpha mass per hue bucket (the bucket weight). */
+    weight: Float64Array;
+    /** Σ chroma×alpha·cos(h) per bucket (for the circular-mean refine). */
+    sumCos: Float64Array;
+    /** Σ chroma×alpha·sin(h) per bucket. */
+    sumSin: Float64Array;
+    /** total chroma×alpha mass (the null-detection denominator numerator). */
+    totalMass: number;
+    /** total pixels accumulated (the null-mass denominator). */
+    n: number;
+}
+
+function makeHueHistogram(): HueHistogram {
+    return {
+        weight: new Float64Array(AMBIENT_HUE_BUCKETS),
+        sumCos: new Float64Array(AMBIENT_HUE_BUCKETS),
+        sumSin: new Float64Array(AMBIENT_HUE_BUCKETS),
+        totalMass: 0,
+        n: 0,
+    };
+}
+
+/**
+ * Bin ONE sRGB pixel (composited triple, already over-white) into the histogram,
+ * weighted by its OKLCh chroma × the source alpha — a low-chroma/gray pixel
+ * contributes ~0. The sRGB→OKLCh math is value.js's primitives (NOT hand-rolled).
+ */
+function accumulateHuePixel(
+    h: HueHistogram,
+    r: number,
+    g: number,
+    b: number,
+    alpha: number,
+): void {
+    h.n++;
+    // value.js Ottosson primitives — the EXACT `cssToOklch` composition path.
+    const [L, a, bch] = srgbToOKLab(r, g, b);
+    const [, C, H] = rawOklabToOklch(L, a, bch);
+    if (!Number.isFinite(C) || !Number.isFinite(H) || C <= 0) return;
+    const mass = C * alpha; // chroma × alpha — a gray pixel weighs ~0 (the null floor).
+    if (mass <= 0) return;
+    const hueRad = (H * Math.PI) / 180;
+    let bucket = Math.floor((H / 360) * AMBIENT_HUE_BUCKETS) % AMBIENT_HUE_BUCKETS;
+    if (bucket < 0) bucket += AMBIENT_HUE_BUCKETS;
+    h.weight[bucket]! += mass;
+    h.sumCos[bucket]! += mass * Math.cos(hueRad);
+    h.sumSin[bucket]! += mass * Math.sin(hueRad);
+    h.totalMass += mass;
+}
+
+/**
+ * Resolve the histogram → a complete `oklch()` ambient-hue string, or `transparent`
+ * for a NULL (gray) sample. The modal bucket's chroma-weighted CIRCULAR MEAN is the
+ * picked hue; it is emitted at the FIXED sub-perceptual chroma/L (a HUE event, never
+ * the backdrop's saturation).
+ */
+function resolveAmbientHue(h: HueHistogram): string {
+    if (h.n === 0 || h.totalMass / h.n < AMBIENT_NULL_MASS) return "transparent";
+    // pick the modal (heaviest) bucket.
+    let modal = 0;
+    for (let i = 1; i < AMBIENT_HUE_BUCKETS; i++) {
+        if (h.weight[i]! > h.weight[modal]!) modal = i;
+    }
+    if (h.weight[modal]! <= 0) return "transparent";
+    // the chroma-weighted circular mean of the modal bucket (refine off the 30° bin).
+    let hueDeg =
+        (Math.atan2(h.sumSin[modal]!, h.sumCos[modal]!) * 180) / Math.PI;
+    if (hueDeg < 0) hueDeg += 360;
+    return `oklch(${AMBIENT_HUE_L} ${AMBIENT_HUE_C} ${hueDeg.toFixed(1)})`;
+}
 
 function isCanvas(v: unknown): v is HTMLCanvasElement {
     return (
@@ -214,9 +326,10 @@ export function useGlassBackdropLuminance(
 
     /**
      * Sample the ANIMATED backdrop: downsample the known source canvas under the
-     * surface's bounding box → mean relative luminance. Returns null if no source.
+     * surface's bounding box → mean relative luminance + the ambient-hue histogram
+     * (a FREE rider over the SAME pixel pass). Returns null if no source.
      */
-    function sampleAnimated(el: HTMLElement): number | null {
+    function sampleAnimated(el: HTMLElement): SampleResult | null {
         const source = resolveSourceCanvas(options.backgroundCanvas);
         if (!source || source.width === 0 || source.height === 0) return null;
         const ctx = getDownContext();
@@ -253,6 +366,7 @@ export function useGlassBackdropLuminance(
             ).data;
             let sum = 0;
             let n = 0;
+            const hist = makeHueHistogram();
             for (let i = 0; i < data.length; i += 4) {
                 // Composite over white (the alpha-translucent aurora over the page).
                 const a = data[i + 3]! / 255;
@@ -260,9 +374,14 @@ export function useGlassBackdropLuminance(
                 const g = data[i + 1]! * a + 255 * (1 - a);
                 const b = data[i + 2]! * a + 255 * (1 - a);
                 sum += relLuminance(r, g, b);
+                // BE.W-AMBIENT-TINT — the hue histogram, a FREE rider in the SAME
+                // loop (no second getImageData, no second canvas, no second pass).
+                accumulateHuePixel(hist, r, g, b, a);
                 n++;
             }
-            return n > 0 ? sum / n : null;
+            return n > 0
+                ? { luma: sum / n, ambientHue: resolveAmbientHue(hist) }
+                : null;
         } catch {
             // fail-explicit: befitting — a tainted/cross-origin canvas throws on
             // getImageData; the null return SURFACES the miss to the caller, which
@@ -275,9 +394,10 @@ export function useGlassBackdropLuminance(
     /**
      * Sample the STATIC backdrop: stack-walk `elementsFromPoint` at the surface centre,
      * read the first element under it with a resolved non-transparent background, un-wrap
-     * the `var(--token)` through the resolveTokenColor leaf → relative luminance.
+     * the `var(--token)` through the resolveTokenColor leaf → relative luminance + the
+     * ambient hue (the single resolved background color binned the SAME way).
      */
-    function sampleStatic(el: HTMLElement): number | null {
+    function sampleStatic(el: HTMLElement): SampleResult | null {
         const rect = el.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -292,7 +412,7 @@ export function useGlassBackdropLuminance(
             const rgba = parseRgb(concrete);
             if (!rgba) continue;
             if (rgba[3] < 0.5) continue; // a near-transparent layer is not the backdrop
-            return relLuminance(rgba[0], rgba[1], rgba[2]);
+            return staticResult(rgba);
         }
         // Nothing opaque under it → the page paints through to the body/root; read that.
         const bodyBg = resolveTokenColor(
@@ -300,15 +420,32 @@ export function useGlassBackdropLuminance(
             el,
         );
         const bodyRgba = parseRgb(bodyBg);
-        return bodyRgba ? relLuminance(bodyRgba[0], bodyRgba[1], bodyRgba[2]) : null;
+        return bodyRgba ? staticResult(bodyRgba) : null;
+    }
+
+    /** A single resolved backdrop color → the luma + the ambient hue (binned alone). */
+    function staticResult(rgba: [number, number, number, number]): SampleResult {
+        const hist = makeHueHistogram();
+        accumulateHuePixel(hist, rgba[0], rgba[1], rgba[2], rgba[3]);
+        return {
+            luma: relLuminance(rgba[0], rgba[1], rgba[2]),
+            ambientHue: resolveAmbientHue(hist),
+        };
     }
 
     /** Write the derived signal onto the target's inline style. */
-    function write(value: number): void {
+    function write(result: SampleResult): void {
+        const value = result.luma;
         luma.value = value;
         const el = target.value;
         if (!el) return;
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
+        // BE.W-AMBIENT-TINT — the ambient hue (a complete `oklch()` at a FIXED
+        // sub-perceptual chroma, or `transparent` for a gray null) the plate's tint
+        // cascade biases toward at the opt-in `--glass-ambient-strength` (the W55
+        // self-engage re-point reads it; ZERO new compositing seam). A gray backdrop
+        // writes `transparent` — the room tints nothing (the correct null identity).
+        el.style.setProperty("--glass-ambient-hue", result.ambientHue);
         if (writeBucket) {
             const next: GlassBackdropBucket =
                 value >= lightThreshold ? "light" : "dark";
@@ -323,8 +460,10 @@ export function useGlassBackdropLuminance(
     function sampleNow(): void {
         const el = target.value;
         if (!el) return;
-        const value = isLive() ? sampleAnimated(el) ?? sampleStatic(el) : sampleStatic(el);
-        if (value !== null) write(value);
+        const result = isLive()
+            ? sampleAnimated(el) ?? sampleStatic(el)
+            : sampleStatic(el);
+        if (result !== null) write(result);
         lastSampleAt =
             typeof performance !== "undefined" ? performance.now() : Date.now();
     }

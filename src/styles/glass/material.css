@@ -55,7 +55,22 @@
        tier's own shadow recipe. The `::after` grain overlay already claims the
        five rungs' `::after`; the rim is folded INTO that same overlay's
        box-shadow below (the grain `::after` gets the rim inset ring) so no
-       pseudo-element collides. */
+       pseudo-element collides.
+
+       ── BE.W5 — `--glass-edge-light` IS A WHOLE BOX-SHADOW LAYER, NEVER A COLOR ──
+       `--glass-edge-light` resolves to a COMPLETE box-shadow layer (the token is
+       `inset 0 0 0 0.75px hsl(0 0% 100% / 0.18)` — geometry + color, glass-fx.css:70;
+       the `.dark` arm re-points it to `--glass-edge-light-dark`). It is consumed as a
+       WHOLE LAYER inside a `box-shadow:` list — `box-shadow: var(--glass-edge-light),
+       <other layers>` (surfaces.css:203/371, stack-rail.css:176). The MISUSE is
+       NESTING it as a COLOR inside another shadow — `inset 0 0 0 1px
+       var(--glass-edge-light)` — which expands to `inset 0 0 0 1px inset 0 0 0 0.75px
+       hsl(…)`: an INVALID shadow value → the WHOLE `box-shadow` declaration DROPS →
+       NO rim, NO drop-shadow (worst in dark, where the rim is the silhouette device).
+       THE RULE: read `--glass-edge-light` as a whole `box-shadow` layer, NEVER nested
+       inside another shadow's geometry. To compose the rim's COLOR (e.g. accent-tint
+       it) use `--glass-rim-ink`/`--glass-material-rim` (rim.css — the COLOR seam),
+       NOT `--glass-edge-light` (the LAYER token). */
 
     /* (a)+(c) The moving-specular `::before` catch-light — the iOS-26
        illuminate-from-within behaviour. A masked radial-gradient glow rides the
@@ -297,5 +312,59 @@
        default (28); the resting lens read is PRESERVED (and now actually renders), the
        press-depth animation is the deliberate tradeoff. The press squish + gleam lift on
        the SAME `--glass-btn-press-t` drive (material gleam, above) carry the press read. */
+
+    /* ── BE.W-CLEAR-VARIANT — the Apple-Clear `surface="clear"` decoration + the
+       MANDATORY legibility scrim ──────────────────────────────────────────────────
+       The 4th surface-axis member (`useSurfaceAxis.ts` maps `clear → glass-clear`).
+       A `surface="clear"` surface paints the maximally-translucent `--glass-bg-clear`
+       (0.58 — the clearest rung the library ships, the album grid bleeds through) AND
+       a MANDATORY legibility scrim IN THE SAME SEAM — a `.glass-clear` cannot exist
+       without it (the Apple Clear contract: near-transparent → the text needs a scrim
+       floor). The scrim DIMS THE BACKDROP (`color-mix(in srgb, var(--background) N%,
+       transparent)` — the A5-1 modal-scrim idiom, painted BEHIND the translucent fill
+       within the box, see the two-layer-background note below), DISTINCT from the W55
+       `--glass-tint-*` PLATE-darken axis (the two legibility axes stay disjoint: the
+       scrim dims the backdrop, the W55 tint darkens the plate). The scrim strength
+       DERIVES from the sampled
+       `--glass-backdrop-luma` (useGlassBackdropLuminance's existing write) so it dims
+       MORE over a bright album grid (luma→1) and relaxes over a dark one (luma→0) —
+       the dynamic legibility that betters Apple's fixed scrim. The `0.5` fallback is
+       the safe mid-scrim when no observer is wired. The plate fill rides the SAME
+       oklab-tint seam so the W55 darken reaches it; the see-through frost is the
+       cross-engine FLOOR (pure opacity + backdrop-filter, no `url()` — Safari paints
+       it via the build-time -webkit- prefix pass). The scrim is a STATIC paint (no
+       layout, no animation — `proof:no-layout-animation` GREEN by construction).
+
+       THE SCRIM IS A SECOND BACKGROUND LAYER, NOT A PSEUDO. The glass family already
+       claims BOTH pseudos on every base rung — `::before` (the moving specular core)
+       AND `::after` (the grain overlay, ladder.css). `surface="clear"` composes ON a
+       base tier (`glass-floating glass-clear`), so its `::before`/`::after` are taken;
+       a scrim pseudo would CLOBBER the specular or grain. The mandatory scrim is
+       therefore the FIRST of two comma-separated `background` LAYERS — painted FRONT
+       (the translucent glass fill) over BACK (the `--background` dim) within the box,
+       so the dim sits between the backdrop-filtered backdrop and the content (a child
+       paints above both). The fill stays translucent so the backdrop still reads
+       THROUGH the dim — see-through AND legible, one element, no pseudo collision. */
+    [data-surface="clear"],
+    .glass-clear {
+        /* The dynamic scrim strength — DERIVED from the sampled backdrop luma
+           (dims MORE over a bright grid). `0.5` is the safe mid-scrim fallback. */
+        --glass-clear-scrim-strength: calc(
+            var(--glass-backdrop-luma, 0.5) * 40%
+        );
+        background:
+            color-mix(
+                in oklab,
+                var(--glass-bg-clear),
+                var(--glass-tint-source) var(--glass-tint-strength)
+            ),
+            color-mix(
+                in srgb,
+                var(--background) var(--glass-clear-scrim-strength),
+                transparent
+            );
+        backdrop-filter: var(--glass-blur-floating);
+        position: relative;
+    }
 
 }

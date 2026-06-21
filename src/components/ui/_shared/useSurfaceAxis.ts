@@ -18,7 +18,7 @@
 // they do not re-author it.
 
 /**
- * The shared surface-decoration axis — three rungs, ONE grammar.
+ * The shared surface-decoration axis — four rungs, ONE grammar.
  *
  *   glass   — the resolved tier's plain glass rung (default). The translucent
  *             blur surface, the maximal glass-first register.
@@ -30,8 +30,16 @@
  *   opaque  — the `--glass-level:0` solid-card escape: solid `--card` + `blur(0)`
  *             through the ONE level knob. The explicit opt-out from the maximal
  *             glass default.
+ *   clear   — BE.W-CLEAR-VARIANT: the Apple-Clear MAXIMALLY translucent register —
+ *             the `--glass-bg-clear` (0.58) plate, the clearest the library ships
+ *             (the album grid bleeds genuinely through). STRUCTURALLY coupled to a
+ *             MANDATORY `::before` legibility scrim (a near-transparent plate → the
+ *             text needs a scrim floor) whose strength derives from the sampled
+ *             `--glass-backdrop-luma` (it dims MORE over a bright backdrop). A
+ *             scrim-less clear surface is FORBIDDEN — the `.glass-clear` decoration
+ *             class carries the scrim in the SAME rule (the Apple Clear contract).
  */
-export type Surface = "glass" | "veil" | "opaque";
+export type Surface = "glass" | "veil" | "opaque" | "clear";
 
 /**
  * The 5-rung glass-ladder tier the surface paints its base over. Mirrors the
@@ -60,8 +68,14 @@ export type SurfaceTier =
  *   surfaceClass("glass",  "floating") → "glass-floating"
  *   surfaceClass("veil",   "floating") → "glass-floating veil-surface"
  *   surfaceClass("opaque", "floating") → "glass-floating glass-opaque"
+ *   surfaceClass("clear",  "floating") → "glass-floating glass-clear"
  *
- * @param surface the decoration rung (`glass` default · `veil` · `opaque`)
+ * The `glass-clear` decoration class (BE.W-CLEAR-VARIANT) is scrim-COUPLED: its CSS
+ * rule carries the MANDATORY `::before` legibility scrim in the SAME seam, so a
+ * `surface="clear"` surface can NEVER paint the maximally-translucent plate without
+ * the dim — the Apple Clear contract is structural, not opt-out.
+ *
+ * @param surface the decoration rung (`glass` default · `veil` · `opaque` · `clear`)
  * @param tier    the base ladder rung (default `resting`)
  */
 export function surfaceClass(
@@ -71,5 +85,6 @@ export function surfaceClass(
     const base = `glass-${tier}`;
     if (surface === "veil") return `${base} veil-surface`;
     if (surface === "opaque") return `${base} glass-opaque`;
+    if (surface === "clear") return `${base} glass-clear`;
     return base;
 }

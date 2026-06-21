@@ -180,6 +180,32 @@
        that won't re-compose). */
     --glass-opacity-dialog: 0.68;
 
+    /* Sheet-specific opacity (0.74) — BE.W-SHEET-TRANSLUCENT. The iOS-27 bottom-
+       sheet register: SEE-THROUGH frosted glass whose lifted crown reveals the
+       page/album grid beneath, NOT the near-opaque overlay slab (0.95 read as "not
+       glassy"). 0.74 sits BETWEEN the dialog 0.68 (transparent enough that the
+       backdrop reads through) and the overlay 0.95 (opaque enough for AA body text
+       against a busy grid) — a sheet is content-bearing, so it sits a hair above the
+       dialog. The composed `--glass-bg-sheet` rides the SAME oklab-tint-wrapped
+       recipe `--glass-bg-dialog` speaks, so the W55 bright-bucket darken + the
+       `--glass-level` opaque escape + the dark-arm saturate companions reach the
+       sheet with ZERO new compositing seam. Drawer + Sheet self-re-point onto it.
+       Presets-in-consumers — a consumer retunes `--glass-opacity-sheet` via :root. */
+    --glass-opacity-sheet: 0.74;
+
+    /* Clear-specific opacity (0.58) — BE.W-CLEAR-VARIANT. The Apple-Clear MAXIMALLY
+       translucent register — the clearest rung the library ships, BELOW the dialog
+       0.68 (the now-playing pill, the Control-Center clear tile: the album grid
+       bleeds genuinely through). It is STRUCTURALLY coupled to a MANDATORY legibility
+       scrim (the `surface="clear"` decoration carries a `::before` backdrop-dim whose
+       strength derives from the sampled `--glass-backdrop-luma`) — a scrim-less clear
+       plate is FORBIDDEN by construction (the Apple Clear contract: near-transparent →
+       the text needs a scrim floor). 0.58 sits in the Apple-Clear band (clearer than
+       the modal 0.68, still a plate not a ghost — > 0.45). The composed
+       `--glass-bg-clear` rides the SAME oklab-tint-wrapped recipe so the W55 darken +
+       the `--glass-level` escape reach it. Presets-in-consumers — retune via :root. */
+    --glass-opacity-clear: 0.58;
+
     /* Dock foreground over an animated backdrop. A dock floating over an
        aurora/animated surface (`value.js` dock-over-aurora, a slides routed
        control, bbnf) sits on a mid-luminance, shifting field where the muted
@@ -234,6 +260,40 @@
        rung override) so the floating edge/rim/under-shadow LIFT survives the
        transparency drop. */
     --glass-bg-dialog:   color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+    /* BE.W-SHEET-TRANSLUCENT — the bottom-sheet plate bg, composed the SAME oklab-
+       tint-wrapped way the dialog self-re-points (so the W55 darken + the dark-arm
+       saturate companion reach the see-through sheet without a second hand-rolled
+       recipe — byte-isomorphic to `--glass-bg-dialog`, only the opacity token
+       differs). Drawer + SheetContent re-declare `--glass-bg-floating:
+       var(--glass-bg-sheet)` on their scope (the self-re-point recipe — NOT a raw
+       rung override that won't re-compose) so the floating edge/rim/under-shadow LIFT
+       survives the transparency drop. */
+    --glass-bg-sheet:    color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-sheet)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+    /* BE.W-CLEAR-VARIANT — the maximally-translucent Apple-Clear plate bg, composed
+       the SAME oklab-tint-wrapped way (so the W55 darken reaches the clear plate).
+       The `surface="clear"` decoration reads this fill AND couples its MANDATORY
+       `::before` legibility scrim (the scrim dims the BACKDROP — distinct from this
+       PLATE tint; the two axes stay disjoint). Byte-isomorphic to `--glass-bg-dialog`,
+       only the (lower) clear opacity differs. */
+    --glass-bg-clear:    color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-clear)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
+
+    /* ── BE.W-TINTED-CHIP — the per-INSTANCE PLATE-FILL tint axis (`--glass-fill-tint`
+       / `--glass-fill-strength`) ──────────────────────────────────────────────────
+       The THIRD per-instance chromatic axis (BESIDE the rim `--glass-accent` and the
+       whole-plate legibility `--glass-tint-source`): `--glass-fill-tint` tints the
+       plate BACKGROUND BODY toward a consumer DATA hue, so a glass surface reads as
+       COLORED GLASS (a green chip, a violet facet) without re-declaring the composed
+       `--glass-bg-*` token. DISTINCT-not-fork of `--glass-accent` (which tints only the
+       RIM + the `::before` specular CORE — file-line-disjoint): the fill writes the
+       plate body, the accent writes the rim; a chip may carry BOTH. The mix is `in
+       oklab` (the perceptual glass-tint family — NOT the in-srgb `--surface-tint-*`
+       brand-overlay fence, AW.W26). It rides ON TOP of the W55 legibility composite
+       (the plate still darkens-over-light for AA AND carries the data hue — additive,
+       never a replacement). At the `@property` defaults (transparent + 0%) the body is
+       byte-identical to today (`color-mix(in oklab, X, transparent 0%)` ≡ X — the no-op
+       floor). `<GlassChip :tone>` is the first-class consumer (BE.W-TINTED-CHIP
+       component) — the fill is read on the surface, never written into a `--glass-bg-*`
+       token here. The `@property` registration is below (the typed no-op floor). */
 
     /* Composed borders — foreground-tinted. BC.W-BLACK-BAR D2 — the perimeter
        hairline is RETIRED as the silhouette device. The old 11-22% warm-ink rung
@@ -277,4 +337,53 @@
        backdrop-luma bucket + fringe/curvature/chart-palette + per-tier shadow/spine/
        under-shadow/overlay-scrim) lives in tokens/glass-fx.css (carved at BB.W-CARVE4
        — the next adjacent :root{} block in the cascade). */
+}
+
+/* ── BE.W5 foundation — the typed per-instance axes (the @property no-op floors) ──
+   Registered HERE beside the §8 glass tokens (the canonical @property idiom home is
+   tokens/property-regs.css; these foundation axes live with the §8 ladder they
+   compose so the BE Tier-0 foundation is one self-contained partial). Each mirrors the
+   `--glass-accent`/`--glass-accent-strength` registration shape: a `<color>` HUE +
+   a `<percentage>` STRENGTH, both `inherits: true` (a host sets them on any ancestor
+   to retune the sub-tree) with the NEUTRAL no-op identity (`transparent` / `0%`) so
+   an unset surface is byte-identical to today — `color-mix(in oklab, X, <hue> 0%)` ≡ X.
+   A malformed override CLAMPS to the initial-value (the typed fail-safe). */
+
+/* BE.W-AMBIENT-TINT — the backdrop hue the glass absorbs. `useGlassBackdropLuminance`
+   writes a sampled `oklch()` modal hue here (at a FIXED sub-perceptual chroma — a HUE
+   event, never the backdrop's saturation); a gray backdrop writes `transparent` (the
+   room tints nothing). The `transparent` initial-value is the neutral identity. */
+@property --glass-ambient-hue {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+
+/* The opt-in ambient bias knob — the EXISTING `--glass-tint-source` self-engage
+   re-point biases toward `--glass-ambient-hue` at this strength (bounded ≤ 8% in the
+   cascade — sub-perceptual under the W55 `--glass-tint-strength-aa` bound). `0%`
+   default is the no-op floor (the un-biased `--glass-tint-ink`); the dock wires it on. */
+@property --glass-ambient-strength {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}
+
+/* BE.W-TINTED-CHIP — the per-INSTANCE PLATE-FILL tint. A complete `<color>` data hue
+   the plate BODY mixes toward (`in oklab`, ON TOP of the W55 legibility composite —
+   DISTINCT from the rim `--glass-accent`). `transparent` is the neutral identity (the
+   no-op floor: `color-mix(in oklab, X, transparent 0%)` ≡ X). */
+@property --glass-fill-tint {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+
+/* The fill-tint bounded strength — `0%` default (an unset surface carries no fill
+   tint, byte-identical to today). A consumer (`<GlassChip :strength>`) dials it for a
+   louder colored-glass chip; the body ink stays legible (the W-ON-GLASS-FG floor). */
+@property --glass-fill-strength {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
 }

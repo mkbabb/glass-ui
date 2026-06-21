@@ -28,26 +28,56 @@
         position: relative;
         box-sizing: border-box;
         cursor: pointer; /* the dock IS the trigger — click it to morph */
-        /* the morph: the box grows in place off the ONE scalar */
-        inline-size: calc(var(--pill-w) + (var(--card-w) - var(--pill-w)) * var(--t));
-        block-size: calc(var(--pill-h) + (var(--card-h) - var(--pill-h)) * var(--t));
-        /* the card stays GENEROUSLY rounded (iOS-27 sheets ~28px) — was shrinking to a
-           square-ish 16px. Pill 2rem(32px) → card 1.75rem(28px), both liquid-round. */
+
+        /* BE.W-DOCK-FISSION (W1) — the COMPOSITOR-SAFE box morph, the
+           dockMorphContext reserve-then-scale pattern (layers.css) transposed onto
+           the liquid dock. The prior recipe lerped `inline-size`/`block-size` off
+           `--t` per frame (the C3 relayout-every-frame storm) and `transition`'d the
+           V↔H reshape on `inline-size`/`block-size` (the proof:no-layout-animation
+           MC3 RED). Now: the box RESERVES its SETTLED footprint (ONE layout solve,
+           never animated) and the live `--t` scalar drives a `transform: scale()`
+           between the from/to RATIO and 1.
+
+           The reserve is the EXPANDED card footprint (the `to`); the rest pill reads
+           as the scaled-down box. `--lm-scale-{x,y}` run `ratio → 1` as `t: 0 → 1`
+           (`ratio = pill/card` per axis), so at rest (t=0) the box paints at the pill
+           footprint via the compositor transform and at t=1 at the full card. The
+           content lays out COMPLETE at the reserved `to` behind the `overflow: clip`
+           aperture (below) — the clip uncovers the scaled box, never a half-painted
+           growing layout (the bloom-up reveal-seat). NO `inline-size`/`block-size`
+           reads the live scalar → ZERO per-frame relayout (the F1 compositor-bound
+           floor). The split/island modes keep their STATIC pill box (the scalar drives
+           the pieces' translate, not the box) and reset the scale to 1 below. */
+        --lm-ratio-x: calc(var(--pill-w) / var(--card-w));
+        --lm-ratio-y: calc(var(--pill-h) / var(--card-h));
+        --lm-scale-x: calc(var(--lm-ratio-x) + (1 - var(--lm-ratio-x)) * var(--t));
+        --lm-scale-y: calc(var(--lm-ratio-y) + (1 - var(--lm-ratio-y)) * var(--t));
+
+        /* the box RESERVES its settled `to` footprint — a single layout solve, NOT a
+           live-scalar calc. The split/island modes override these to their static pill
+           box (and reset the scale below). */
+        inline-size: var(--card-w);
+        block-size: var(--card-h);
+        /* the card stays GENEROUSLY rounded (iOS-27 sheets ~28px). The radius is a
+           SCALAR read (compositor-safe — `border-radius` is a paint property, not a
+           reflow trigger), Pill 2rem(32px) → card 1.75rem(28px), both liquid-round. */
         border-radius: calc(2rem - 0.25rem * var(--t));
         overflow: visible;
         isolation: isolate;
-        will-change: inline-size, block-size;
-        /* the V↔H orientation MORPH — toggling orientation RESHAPES the box (wide-short
-           pill ⇄ narrow-tall pill) on a transition, not an instant snap. Gated OFF during
-           the expand/split morph (`[data-liquid-morphing]`) so the `--t` spring owns the
-           size there (no double-drive). The topology change (row⇄column content) is
-           occluded by the reshape + the content's own cross-fade below. */
-        transition:
-            inline-size 0.44s cubic-bezier(0.16, 1, 0.3, 1),
-            block-size 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: auto; /* the transform layer is promoted ONLY while morphing (below) */
+
+        /* the transform composites over the reserved footprint. `transform-origin`
+           anchors the BOTTOM edge (the plate/pane bottom-anchor, below) so the box
+           BLOOMS UP from the pill base — the iOS-27 Maps/Music sheet-from-dock motion.
+           At rest (t=0) scale = pill/card; the box reads as the pill. */
+        transform: scale(var(--lm-scale-x), var(--lm-scale-y));
+        transform-origin: bottom center;
     }
+    /* promote the transform layer ONLY while a morph is in flight (the engine arms
+       `[data-liquid-morphing]` on the root; cleared on settle — never a wasted
+       resting layer). Mirrors the dock morph's `[data-morphing]` will-change gate. */
     .liquid-dock[data-liquid-morphing] {
-        transition: none;
+        will-change: transform;
     }
     /* OCCLUDE the row⇄column topology flip during the V↔H reshape — a brief opacity dip on
        the rest content so the flex-direction snap is hidden behind the cross-fade (the cheap
@@ -81,17 +111,24 @@
     }
 
     /* ── VERTICAL orientation — the rest pill is a narrow COLUMN; the morph swaps the
-       pill axis (narrow×tall ⇄ card). The controls stack; expand grows the same card. ── */
+       pill axis (narrow×tall pill ⇄ card). BE.W-DOCK-FISSION (W1) — the SAME reserve-
+       then-scale: the box still RESERVES the card footprint (one layout solve), only the
+       rest-pill RATIO swaps axes (narrow `--pill-h` wide × tall `--pill-w` high), so the
+       compositor scale reads as the column pill at rest. NO live-scalar size calc. The
+       controls stack; expand grows the same card.
+
+       TODO(BE.W-DOCK-CONTEXT-SILHOUETTE / W3+W6): the orientation flip is still a
+       discrete `data-orientation` reserve-swap occluded by the `[data-reorienting]`
+       opacity dip below. W3's descriptor engine makes slot geometry orientation-derived
+       (the `dim`-idiom) so the column layout falls out of the reserved footprint and the
+       reorient becomes a real silhouette FLIP (startViewTransition / goo-merge occlusion),
+       retiring the setTimeout-raced opacity blink. */
     .liquid-dock[data-orientation="vertical"] {
-        inline-size: calc(var(--pill-h) + (var(--card-w) - var(--pill-h)) * var(--t));
-        block-size: calc(var(--pill-w) + (var(--card-h) - var(--pill-w)) * var(--t));
+        --lm-ratio-x: calc(var(--pill-h) / var(--card-w));
+        --lm-ratio-y: calc(var(--pill-w) / var(--card-h));
     }
     .liquid-dock[data-orientation="vertical"] .liquid-dock-controls {
         flex-direction: column;
-    }
-    .liquid-dock[data-orientation="vertical"]:is([data-mode="split"], [data-mode="union"]) {
-        inline-size: var(--pill-h);
-        block-size: var(--pill-w);
     }
 
     /* the glass PLATE — on a ::before so it can grow with the box (expand) yet
@@ -110,17 +147,16 @@
         z-index: 0;
     }
 
-    /* expand/player: the glass plate is FIXED at the card footprint, bottom-anchored —
-       the box CLIPS it (the bloom-up reveal). So the expensive backdrop-filter NEVER
-       re-rasterizes on the box grow (the morph stays smooth) and the plate's content is
-       revealed, not resized. */
+    /* BE.W-DOCK-FISSION (W1) — expand/player: the plate fills the RESERVED box
+       (`inset: 0`, base rule above) — the box itself IS the card footprint (one layout
+       solve) and the WHOLE box compositor-scales pill→card on `--t`, the plate riding
+       that transform. So the expensive `backdrop-filter` rasterizes ONCE at the reserved
+       card size and the box transform COMPOSITES the result (it never re-rasterizes per
+       frame — the smoothness the prior counter-sized fixed plate chased, now intrinsic to
+       the reserve-then-scale). The prior `inset:auto; inline-size:var(--card-w); …`
+       counter-size is RETIRED (it double-sized the plate against the now-reserved box).
+       Only the card radius differs from the base. */
     .liquid-dock:is([data-mode="expand"], [data-mode="player"])::before {
-        inset: auto;
-        inset-block-end: 0;
-        inset-inline-start: 50%;
-        inline-size: var(--card-w);
-        block-size: var(--card-h);
-        translate: -50% 0;
         border-radius: var(--radius-card);
     }
 
@@ -256,9 +292,17 @@
            (the goo pieces must fly OUTSIDE the box). */
         clip-path: inset(0 round calc(2rem - 0.25rem * var(--t)));
     }
-    /* the container pane — anchored to the box TOP (which RISES as the box blooms up),
-       so the content reveals TOP-FIRST: the Places row appears at the rising top edge,
-       Recents fills in below as the sheet grows taller (the Maps reveal order). */
+    /* the container pane — laid out ONCE at the reserved card block-size, anchored to
+       the box TOP (which RISES as the box blooms up from the bottom origin), so the
+       content reveals TOP-FIRST: the Places row appears at the rising top edge, Recents
+       fills in below as the sheet grows taller (the Maps reveal order).
+       BE.W-DOCK-FISSION (W1) — the pane lays out ONCE here (`block-size: var(--card-h)`,
+       never a per-frame size calc) and reveals via OPACITY (below); the box's reserve-
+       then-scale envelope provides the bloom-up clip. The content blooms WITH the box
+       (the reveal gesture), reading complete behind the `overflow:hidden` aperture.
+       TODO(BE.W-BLOOM-UP): an optional inverse content counter-scale (the FLIP
+       text-lays-out-once refinement, W-CARD-COMPOSITE) is that wave's scope — the W1
+       mechanism is the compositor-safe box morph; the content already lays out once. */
     .liquid-dock-pane {
         position: absolute;
         inset-block-start: 0;
@@ -555,10 +599,21 @@
         padding-block-end: calc(1.5rem + var(--pill-h));
     }
 
-    /* ── SPLIT — box stays a pill; controls fly out, goo-merged ── */
+    /* ── SPLIT — box stays a STATIC pill; the controls fly out, goo-merged. The box
+       does NOT morph here (the scalar drives the pieces' translate, not the box), so
+       it pins the pill footprint directly and RESETS the reserve-scale to 1 (the
+       compositor transform is inert — no box scale, the pill is its own size). The
+       horizontal pill; the vertical override below swaps the axes. ── */
     .liquid-dock:is([data-mode="split"], [data-mode="union"]) {
         inline-size: var(--pill-w);
         block-size: var(--pill-h);
+        --lm-scale-x: 1;
+        --lm-scale-y: 1;
+        transform: none;
+    }
+    .liquid-dock[data-orientation="vertical"]:is([data-mode="split"], [data-mode="union"]) {
+        inline-size: var(--pill-h);
+        block-size: var(--pill-w);
     }
     /* the glass plate dissolves FAST — the dock cross-fades from GLASS to GOO */
     .liquid-dock:is([data-mode="split"], [data-mode="union"])::before {
@@ -633,10 +688,16 @@
     .liquid-dock[data-mode="island"] {
         --island-w: 8.5rem; /* each island's fixed width */
         --island-gap: 2.4rem; /* each island's travel on full split */
-        inline-size: 17rem; /* bounding box — the islands float at its centre */
+        inline-size: 17rem; /* STATIC bounding box — the islands float at its centre */
         block-size: 3.5rem;
         overflow: visible;
         background: transparent;
+        /* the box itself is static (the islands carry the motion via their own
+           centre-anchored ±gap·t translate) — RESET the reserve-scale to 1 so the
+           bounding box never compositor-scales. */
+        --lm-scale-x: 1;
+        --lm-scale-y: 1;
+        transform: none;
     }
     /* the box's own glass plate is hidden — each island carries its own goo blob */
     .liquid-dock[data-mode="island"]::before {
