@@ -879,6 +879,12 @@ export const CATEGORIES: Category[] = [
         stories: [
             s(
                 "dock",
+                "liquid-playground",
+                "Liquid Morph",
+                "The dock as the primary control interface — a glass dock pill that EXPANDS into a container card (the iOS-27 search-pill → sheet bloom) and n-ary SPLITS into free-floating glass pieces at a configurable angle of attack. One generalized useLiquidMorph engine (split · union · expand) composing the real dock spring, the FLIP bloom, and the volume-preserving squish, over an angle-generalized SVG-goo bridge. Subsumes the dock demo set.",
+            ),
+            s(
+                "dock",
                 "overview",
                 "Overview",
                 "The GlassDock walkthrough — the collapse↔expand morph on one spring, always-expanded media transport, select / dropdown / popover triggers, the slider keep-open hold, content-driven overflow wrap, the big-dock card + tile grid, and the background pause toggle.",

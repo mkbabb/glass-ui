@@ -1,0 +1,151 @@
+/* glass/liquid-morph.css — the ANGLE-GENERALIZED liquid-morph SVG-goo bridge.
+ *
+ * The generalization of dock/morph-bridge.css. The dock bridge necks ONE vertical
+ * plate + ONE horizontal plate toward a shared center via a `clip-path: inset()`
+ * hardcoded to the BLOCK axis (vertical) and the INLINE axis (horizontal) — an
+ * H/V-only metaball. This recipe generalizes the neck to an ARBITRARY angle theta:
+ * each piece's neck-capsule rotates its inset into the piece's LOCAL travel frame
+ * (`rotate(var(--piece-angle))`), so the inset always runs along the piece's own
+ * fly-out axis for ANY theta — the n-ary goo-split (the macOS Music dock detach,
+ * /tmp/ios27-ref/v1) at any angle of attack, not just the four cardinals.
+ *
+ * THE GOO (the classic gooey-CSS metaball trick): blur the pieces' alpha so it
+ * bleeds together, then threshold the blurred alpha back to a sharp edge
+ * (feColorMatrix on the A channel) — the merge reads as ONE amorphous silhouette.
+ * The filter is mounted ONCE as a library hidden `<svg><filter id=liquid-morph-goo>`
+ * (the playground/host mounts it); this stylesheet references it via `filter: url()`.
+ *
+ * SAFARI FENCE (BE.W-LENS-SAFARI / WebKit 245510). The goo rides `filter: url(#…)`
+ * on the LOCAL container (a same-document inline SVG filter) — NEVER
+ * `backdrop-filter: url()` (broken on WebKit). The glass PIECES carry their OWN
+ * resting `backdrop-filter: blur()` (a plain blur, NO url — fully cross-engine); the
+ * goo merge is a paint-side `filter` on the group, so the two never collide.
+ *
+ * DETERMINISM (the M5 scalar-binding clause). Every animated axis below is
+ * `f(var(--liquid-morph-t))` (the ONE inheriting scalar the morph spring writes) or
+ * `f(var(--stretch))` (its derivative the liquid-flex squish writes) — NEVER a CSS
+ * animation/transition with its own clock. A frame captured at a given
+ * `--liquid-morph-t` is byte-reproducible.
+ *
+ * COMPOSITOR-ONLY. clip-path / transform / opacity / filter ONLY — never a layout
+ * property (the `proof:no-layout-animation` floor). `contain: layout paint` +
+ * `will-change` promote the compositor channels; the host box is INVIOLATE. */
+
+@layer components {
+    /* The non-clipping overlay frame the pieces + the goo group paint in — sits over
+       the host (a card or a dock) without changing its box. The host stays
+       shrink-wrapped; the morph never re-lays-out it (box-inviolate). */
+    .liquid-morph-frame {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        /* isolate so the goo blur/threshold scopes to the pieces, not the page. */
+        isolation: isolate;
+        z-index: 1;
+    }
+
+    /* The goo GROUP — the only element the metaball filter applies to, so only the
+       pieces inside it merge. `contain: paint` clips the per-frame filter work to a
+       tight box (the morph frame budget clears — paint-bounded, not full-stage). The
+       filter id is `liquid-morph-goo` (the library `<svg><filter>` the host mounts);
+       a non-supporting engine falls through to `none` and the pieces read un-merged
+       (a valid split, just without the gooey bridge). */
+    .liquid-morph-goo {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        contain: layout paint;
+        filter: var(--liquid-morph-goo-filter, url(#liquid-morph-goo));
+    }
+
+    /* A liquid PIECE — a free-floating warm-glass shard. It RESERVES its static
+       footprint (one layout solve, never a per-frame size animation) and:
+       (a) TRANSLATES along its travel vector `(--split-dx, --split-dy)` by
+           `distance · t` (a compositor translate);
+       (b) NECKS its silhouette via a `clip-path: inset()` in its LOCAL travel frame
+           (`rotate(var(--piece-angle))`), so the neck runs along the fly-out axis at
+           ANY theta — the inset GROWS on the cross-axis as t falls toward 0 so the
+           shard is a thin neck near the host (merged) and a full disc out at t=1;
+       (c) SQUISHES on `--stretch` (the volume-preserving velocity swell), paired
+           reciprocally across the local axis.
+       The warm-cream gel fill is kept from dock/morph-bridge (the domed-droplet
+       radial) so the goo reads as a warm metaball, not a flat slab. */
+    .liquid-morph-piece {
+        position: absolute;
+        inline-size: var(--liquid-morph-piece-size, 3.25rem);
+        block-size: var(--liquid-morph-piece-size, 3.25rem);
+        border-radius: 999px;
+        /* the warm-cream gel body (the metaball-teardrop fill, kept from morph-bridge:
+           a soft radial so the blur threshold reads a domed droplet). */
+        background: radial-gradient(
+            120% 120% at 50% 38%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 62%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        /* the warm rim hairline (the silhouette device) + the resting plate blur — a
+           PLAIN blur(), NO url(): fully cross-engine, the Safari fence holds. */
+        border: 1px solid var(--glass-edge-light, color-mix(in oklab, var(--foreground), transparent 88%));
+        -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px));
+        backdrop-filter: blur(var(--glass-blur-floating-radius, 13px));
+        overflow: clip;
+        /* the travel along the piece's vector — t · distance · (dx, dy). */
+        --liquid-morph-travel-x: calc(
+            var(--split-dx, 0) * var(--liquid-morph-distance, 96px) *
+                var(--liquid-morph-t, 0)
+        );
+        --liquid-morph-travel-y: calc(
+            var(--split-dy, 0) * var(--liquid-morph-distance, 96px) *
+                var(--liquid-morph-t, 0)
+        );
+        /* the cross-axis NECK inset: full at the host (t=0 -> thin neck), 0 at the
+           fly-out (t=1 -> full disc). Half the piece size at t=0 -> 0 at t=1. */
+        --liquid-morph-neck: calc(
+            (var(--liquid-morph-piece-size, 3.25rem) / 2) *
+                (1 - clamp(0, var(--liquid-morph-t, 0), 1))
+        );
+        /* the silhouette necks along the LOCAL CROSS axis (top/bottom of the rotated
+           frame), so after the `rotate(--piece-angle)` the neck runs perpendicular to
+           the travel direction — a capsule pinched toward the host at low t. */
+        clip-path: inset(
+            var(--liquid-morph-neck) 0 var(--liquid-morph-neck) 0 round 999px
+        );
+        transform: translate(
+                var(--liquid-morph-travel-x),
+                var(--liquid-morph-travel-y)
+            )
+            rotate(var(--piece-angle, 0deg))
+            scale(var(--stretch, 1), calc(1 / var(--stretch, 1)))
+            rotate(calc(-1 * var(--piece-angle, 0deg)));
+        /* fade in as the piece detaches (a budding shard appears as it leaves). */
+        opacity: clamp(0.35, calc(0.35 + var(--liquid-morph-t, 0) * 0.65), 1);
+        will-change: clip-path, transform, opacity;
+    }
+
+    /* The CONTAINER card the dock EXPANDS into (the V3 search-pill -> Places sheet).
+       The bloom transform is driven by `useLiquidReveal` (the ElementMorph FLIP) on
+       the element's inline style; this class only carries the glass tier + the
+       warm-cream identity so the expanded surface reads as glass-ui. */
+    .liquid-morph-card {
+        border-radius: var(--radius-card, 1rem);
+        will-change: transform, opacity, filter;
+    }
+
+    /* PRM — the goo bridge does not paint; the morph snaps (the spring's
+       respectReducedMotion jumps the scalar to the endpoint, the pieces land at
+       their fly-out, no gooey neck animates). The pieces stay at their terminal
+       silhouette (full disc), un-necked. */
+    @media (prefers-reduced-motion: reduce) {
+        .liquid-morph-goo {
+            filter: none;
+        }
+        .liquid-morph-piece {
+            clip-path: inset(0 0 0 0 round 999px);
+            transform: translate(
+                var(--liquid-morph-travel-x),
+                var(--liquid-morph-travel-y)
+            );
+        }
+    }
+}
