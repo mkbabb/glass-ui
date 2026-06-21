@@ -38,6 +38,9 @@ import {
     MapPin,
     Building2,
     Scissors,
+    Play,
+    SkipBack,
+    SkipForward,
 } from "@lucide/vue";
 import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
@@ -54,12 +57,22 @@ import {
 import { useLiquidRail } from "../../../src/components/custom/dock/composables/useLiquidRail";
 
 // ── controls ──────────────────────────────────────────────────────────────────
-const mode = ref<LiquidMorphMode>("expand");
+// "player" is NOT a morph mode (the engine just drives t); it's a CONTENT register —
+// the dock becomes a now-playing PILL that expands into a full media player (the
+// iconic Apple Music dock facility; media control IS the primary control interface).
+type PlaygroundMode = LiquidMorphMode | "player";
+const mode = ref<PlaygroundMode>("expand");
 const modeTabs = [
     { value: "expand", label: "Expand → card" },
     { value: "split", label: "Split" },
     { value: "union", label: "Union" },
+    { value: "player", label: "Now Playing" },
 ];
+const track = {
+    title: "You Are (Not) Alone",
+    artist: "Shiro Sagisu",
+    album: "Evangelion: 1.0",
+};
 const angleDeg = ref(35);
 const splitCount = ref(4);
 const angleRad = computed(() => (angleDeg.value * Math.PI) / 180);
@@ -105,7 +118,8 @@ function setCtlEl(i: number, el: Element | null): void {
 const morph = useLiquidMorph({
     rootEl: dockRef,
     signature: DIRECTED_SPLIT,
-    spring: () => (mode.value === "expand" ? "smooth" : "snappy"),
+    spring: () =>
+        mode.value === "expand" || mode.value === "player" ? "smooth" : "snappy",
 });
 
 // the dock's controls ARE the split pieces — register them with the engine so a
@@ -243,7 +257,7 @@ function onRailLeave(): void {
                     <SegmentedTabs v-model="mode" :options="modeTabs" />
                 </div>
                 <div
-                    v-show="mode !== 'expand'"
+                    v-show="mode === 'split' || mode === 'union'"
                     class="flex min-w-[14rem] flex-1 flex-col gap-2"
                 >
                     <label class="text-mono-caption text-muted-foreground">
@@ -258,7 +272,7 @@ function onRailLeave(): void {
                     />
                 </div>
                 <div
-                    v-show="mode !== 'expand'"
+                    v-show="mode === 'split' || mode === 'union'"
                     class="flex min-w-[10rem] flex-1 flex-col gap-2"
                 >
                     <label class="text-mono-caption text-muted-foreground">
@@ -279,11 +293,15 @@ function onRailLeave(): void {
                                 ? open
                                     ? "Merge"
                                     : "Spread"
-                                : open
-                                  ? "Collapse"
-                                  : mode === "expand"
-                                    ? "Expand"
-                                    : "Split"
+                                : mode === "player"
+                                  ? open
+                                      ? "Collapse"
+                                      : "Open player"
+                                  : open
+                                    ? "Collapse"
+                                    : mode === "expand"
+                                      ? "Expand"
+                                      : "Split"
                         }}
                     </Button>
                     <Button variant="outline" @click="reset">Reset</Button>
@@ -384,6 +402,41 @@ function onRailLeave(): void {
                                 </span>
                             </span>
                         </div>
+                    </div>
+
+                    <!-- PLAYER mode — the now-playing PILL (rest) that grows into the
+                         full media player (expand): the iconic Apple Music dock facility,
+                         the dock AS the media control interface. -->
+                    <div
+                        v-if="mode === 'player'"
+                        class="liquid-dock-player-pill"
+                        aria-hidden="true"
+                    >
+                        <span class="liquid-dock-album" />
+                        <span class="liquid-dock-nowplaying">
+                            <span class="liquid-dock-track">{{ track.title }}</span>
+                            <span class="liquid-dock-artist">{{ track.artist }}</span>
+                        </span>
+                        <span class="liquid-dock-play"><Play class="size-4" /></span>
+                    </div>
+                    <div
+                        v-if="mode === 'player'"
+                        class="liquid-dock-player-pane"
+                        aria-hidden="true"
+                    >
+                        <span class="liquid-dock-album-big" />
+                        <span class="liquid-dock-track-big">{{ track.title }}</span>
+                        <span class="liquid-dock-artist-big">{{ track.artist }}</span>
+                        <span class="liquid-dock-scrubber">
+                            <span class="liquid-dock-scrubber-fill" />
+                        </span>
+                        <span class="liquid-dock-transport">
+                            <SkipBack class="size-5" />
+                            <span class="liquid-dock-transport-play">
+                                <Play class="size-6" />
+                            </span>
+                            <SkipForward class="size-5" />
+                        </span>
                     </div>
                 </div>
             </div>

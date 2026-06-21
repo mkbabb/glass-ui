@@ -192,6 +192,135 @@
         text-overflow: ellipsis;
     }
 
+    /* ── PLAYER mode — the now-playing PILL (rest) cross-fades into the full media
+       PLAYER (expand), the same grow + cross-fade the Places sheet rides. ── */
+    .liquid-dock[data-mode="player"] .liquid-dock-controls {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .liquid-dock-player-pill {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding-inline: 0.5rem;
+        opacity: 0;
+    }
+    .liquid-dock[data-mode="player"] .liquid-dock-player-pill {
+        opacity: clamp(0, 1 - var(--t) * 1.7, 1); /* gone by t≈0.59 */
+    }
+    .liquid-dock-album,
+    .liquid-dock-album-big {
+        flex: 0 0 auto;
+        /* a vibrant album-art gradient (no real art) off the --section-color ramp */
+        background: linear-gradient(
+            135deg,
+            var(--section-color-8),
+            var(--section-color-7) 55%,
+            var(--section-color-10)
+        );
+    }
+    .liquid-dock-album {
+        inline-size: 3rem;
+        block-size: 3rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--foreground) 40%, transparent);
+    }
+    .liquid-dock-nowplaying {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+        min-inline-size: 0;
+        flex: 1 1 auto;
+    }
+    .liquid-dock-track {
+        font-size: var(--type-small, 0.875rem);
+        color: var(--foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .liquid-dock-artist {
+        font-size: var(--type-caption, 0.75rem);
+        color: var(--muted-foreground);
+        white-space: nowrap;
+    }
+    .liquid-dock-play {
+        display: grid;
+        place-items: center;
+        inline-size: 2.25rem;
+        block-size: 2.25rem;
+        border-radius: 999px;
+        background: var(--glass-bg-resting);
+        color: var(--foreground);
+        flex: 0 0 auto;
+    }
+    .liquid-dock-player-pane {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        padding: 1.25rem;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .liquid-dock[data-mode="player"] .liquid-dock-player-pane {
+        opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
+    }
+    .liquid-dock-album-big {
+        inline-size: 8.5rem;
+        block-size: 8.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 12px 32px -8px color-mix(in srgb, var(--foreground) 50%, transparent);
+    }
+    .liquid-dock-track-big {
+        font-size: var(--type-subheading);
+        font-weight: 600;
+        color: var(--foreground);
+        text-align: center;
+    }
+    .liquid-dock-artist-big {
+        font-size: var(--type-small, 0.875rem);
+        color: var(--muted-foreground);
+        margin-block-start: -0.375rem;
+    }
+    .liquid-dock-scrubber {
+        inline-size: 100%;
+        block-size: 4px;
+        border-radius: 999px;
+        background: var(--glass-bg-resting);
+        overflow: hidden;
+        margin-block-start: 0.25rem;
+    }
+    .liquid-dock-scrubber-fill {
+        display: block;
+        inline-size: 38%;
+        block-size: 100%;
+        border-radius: 999px;
+        background: var(--foreground);
+    }
+    .liquid-dock-transport {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        color: var(--foreground);
+        margin-block-start: 0.25rem;
+    }
+    .liquid-dock-transport-play {
+        display: grid;
+        place-items: center;
+        inline-size: 3rem;
+        block-size: 3rem;
+        border-radius: 999px;
+        background: var(--glass-bg-floating);
+    }
+
     /* ── EXPAND — box grows; controls cross-fade out, pane in. The ranges OVERLAP
        (controls gone by ~0.6, pane in from ~0.32) so the dock is NEVER an empty box
        mid-morph — a true cross-fade, not a dead zone. ── */
