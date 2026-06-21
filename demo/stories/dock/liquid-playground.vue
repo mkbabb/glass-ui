@@ -407,6 +407,10 @@ function onRailWheel(e: WheelEvent): void {
                 >
                     <!-- the controls (also the split pieces) -->
                     <div class="liquid-dock-controls">
+                        <!-- the GOO BODY — the dock's mass IN the goo filter. On split the
+                             glass plate dissolves, this appears + CONTRACTS to the core as
+                             the icons fly off (the dock fissions, not an empty husk). -->
+                        <span class="liquid-dock-goo-body" aria-hidden="true" />
                         <button
                             v-for="i in ctlIndices"
                             :key="i"
