@@ -18,6 +18,7 @@ import StorySection from "../StorySection.vue";
 import { Button } from "../../../src/components/ui/button";
 import { Slider } from "../../../src/components/ui/slider";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
+import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 import {
     useLiquidMorph,
     DIRECTED_SPLIT,
@@ -155,9 +156,17 @@ watch(mode, () => {
 
             <!-- the stage — the dock sits centred; it grows / splits IN PLACE -->
             <div
-                class="relative flex min-h-[28rem] items-center justify-center overflow-visible rounded-[var(--radius-card)] glass-wash p-10"
+                class="relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
                 data-testid="liquid-stage"
             >
+                <!-- the live aurora field — the dock's glass reads AGAINST it (the
+                     reference always has rich content behind the glass). Offscreen-
+                     paused by construction; ONE GL context for this route. -->
+                <Aurora
+                    :config="DEFAULT_AURORA_CONFIG"
+                    class="pointer-events-none absolute inset-0 size-full"
+                    aria-hidden="true"
+                />
                 <!-- the goo <filter> — feGaussianBlur + threshold (Safari-safe,
                      filter:url() inline). Referenced by .liquid-dock[data-mode=split]
                      when the controls detach so they read as ONE metaball body. -->
