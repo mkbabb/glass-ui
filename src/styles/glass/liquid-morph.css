@@ -37,6 +37,17 @@
         overflow: visible;
         isolation: isolate;
         will-change: inline-size, block-size;
+        /* the V↔H orientation MORPH — toggling orientation RESHAPES the box (wide-short
+           pill ⇄ narrow-tall pill) on a transition, not an instant snap. Gated OFF during
+           the expand/split morph (`[data-liquid-morphing]`) so the `--t` spring owns the
+           size there (no double-drive). The topology change (row⇄column content) is
+           occluded by the reshape + the content's own cross-fade below. */
+        transition:
+            inline-size 0.44s cubic-bezier(0.16, 1, 0.3, 1),
+            block-size 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .liquid-dock[data-liquid-morphing] {
+        transition: none;
     }
 
     /* ── VERTICAL orientation — the rest pill is a narrow COLUMN; the morph swaps the
