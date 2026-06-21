@@ -240,12 +240,14 @@
             0 8px 22px -6px color-mix(in srgb, var(--foreground) 45%, transparent);
     }
 
-    /* PRM — the chip's own hover transition snaps; the carousel travel snaps via the
-       spring's respectReducedMotion (JS). The edge feather (mask) STAYS — a legibility
-       cue, not motion (the FadingScroll discipline). */
+    /* PRM — the chip hover AND the item's opacity/transform transition snap (the item
+       inherits a global opacity transition that otherwise left the fanned items mid-fade
+       under reduce, reading as collapsed). The carousel travel snaps via the spring's
+       respectReducedMotion (JS); the edge feather (mask) STAYS — a legibility cue. */
     @media (prefers-reduced-motion: reduce) {
-        .liquid-rail-chip {
-            transition-duration: 0.01ms;
+        .liquid-rail-chip,
+        .liquid-rail-item {
+            transition-duration: 0.01ms !important;
         }
     }
 }

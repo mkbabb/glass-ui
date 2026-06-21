@@ -241,6 +241,20 @@ export function useLiquidRail(opts: UseLiquidRailOptions): UseLiquidRailReturn {
      *  velocity (the iOS interruptible re-base — the dockMorphContext :255-256 idiom).
      *  `respectReducedMotion` snaps the scalar in one frame under PRM. */
     function driveExpand(to: number): void {
+        // PRM — snap the scalar SYNCHRONOUSLY (the spring's play loop does not write
+        // `--rail-expand-t` under `prefers-reduced-motion: reduce`, which left the rail
+        // stuck COLLAPSED — non-functional. The useLiquidMorph explicit-snap precedent;
+        // the rail's expand is a state change that MUST still happen, just instantly.)
+        if (
+            typeof window !== "undefined" &&
+            window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+        ) {
+            disposeSpring();
+            expand.value = to;
+            writeRoot(to);
+            expanding.value = false;
+            return;
+        }
         const inheritedVelocity = spring && !spring.settled ? spring.velocity : 0;
         const from = spring ? spring.value : expand.value;
         disposeSpring();
