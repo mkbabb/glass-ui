@@ -1,17 +1,20 @@
 <script setup lang="ts">
-// BE.W-LIQUID-MORPH (WAVE-1) — the liquid-morph PLAYGROUND.
+// BE.W-LIQUID-MORPH (WAVE-2) — the liquid-morph PLAYGROUND, re-architected so the
+// CORE DOCK ITSELF morphs (the wave-1 side-element approach was wrong).
 //
-// The dock as the PRIMARY control interface: a glass DOCK pill that (1) EXPANDS into
-// a CONTAINER card (the iOS-27 V3 search-pill -> Places-sheet bloom) and (2) n-ary
-// SPLITS into free-floating glass pieces at a CONFIGURABLE angle of attack (the
-// macOS Music goo-split, generalized to ANY theta). It SUBSUMES the dock demo set
-// onto ONE engine (`useLiquidMorph`), composing the REAL substrate (no re-fork) and
-// reading as glass-ui (glass tiers, warm-cream, the dock spring clock).
-import { computed, ref, watch } from "vue";
-import { Layers, Maximize2, Split, Sparkles } from "@lucide/vue";
+// ONE glass dock element is the morph SUBJECT. It carries `--liquid-morph-t` (0 rest
+// → 1 morphed) written by `useLiquidMorph`'s single dock-spring scalar:
+//   • EXPAND — the dock box GROWS pill → container card IN PLACE (its own footprint,
+//     anchored at its own centre; the controls cross-fade out, the pane reveals).
+//     This is the iOS-27 V3 search-pill → sheet bloom — the dock IS the sheet.
+//   • SPLIT — the dock's OWN control buttons DETACH and fly out as free-floating
+//     glass pieces at the configurable angle (the dock disintegrates into its
+//     controls, goo-necked). The dock is the body the pieces bud from.
+// No separate card, no FLIP-from-a-hidden-trigger. One element, one scalar.
+import { computed, onMounted, ref, watch } from "vue";
+import { Layers, Search, Maximize2, Split as SplitIcon, Star, Clock } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
 import { Button } from "../../../src/components/ui/button";
 import { Slider } from "../../../src/components/ui/slider";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
@@ -22,122 +25,97 @@ import {
 } from "../../../src/composables/motion/useLiquidMorph";
 
 // ── controls ──────────────────────────────────────────────────────────────────
-const mode = ref<LiquidMorphMode>("split");
+const mode = ref<LiquidMorphMode>("expand");
 const modeTabs = [
+    { value: "expand", label: "Expand → card" },
     { value: "split", label: "Split" },
-    { value: "expand", label: "Expand" },
-    { value: "union", label: "Union" },
 ];
-const angleDeg = ref(30); // the configurable angle of attack (degrees)
-const splitCount = ref(4); // 2..6 free-floating pieces
+const angleDeg = ref(35);
+const splitCount = ref(4);
 const angleRad = computed(() => (angleDeg.value * Math.PI) / 180);
+const open = ref(false);
 
-// ── the morph host (a card-or-dock root carrying --liquid-morph-t) ─────────────
-const stageRoot = ref<HTMLElement | null>(null);
-const cardRef = ref<HTMLElement | null>(null);
-const pillRef = ref<HTMLElement | null>(null);
-
-// the free-floating shard refs — re-collected as splitCount changes
-const pieceEls = ref<(HTMLElement | null)[]>([]);
-const pieceIndices = computed(() =>
+// ── the dock element IS the morph root ──────────────────────────────────────────
+const dockRef = ref<HTMLElement | null>(null);
+const ctlEls = ref<(HTMLElement | null)[]>([]);
+const ctlIndices = computed(() =>
     Array.from({ length: splitCount.value }, (_, i) => i),
 );
-function setPieceEl(i: number, el: Element | null): void {
-    pieceEls.value[i] = (el as HTMLElement | null) ?? null;
+const ctlIcons = [Layers, Search, Star, Clock, SplitIcon, Maximize2];
+function setCtlEl(i: number, el: Element | null): void {
+    ctlEls.value[i] = (el as HTMLElement | null) ?? null;
 }
 
-// The ONE engine — DIRECTED signature so the angle slider drives the travel axis.
-// The spring defaults to the `dock` register (response 0.32 / zeta 0.7 — the iOS
-// interruptible-control clock); the bloom is the bouncy iOS-27 overshoot.
+// the ONE engine — DIRECTED so the angle slider drives each control's escape beam.
 const morph = useLiquidMorph({
-    rootEl: stageRoot,
+    rootEl: dockRef,
     signature: DIRECTED_SPLIT,
     spring: "dock",
-    revealPreset: "bouncy",
 });
 
-const expanded = ref(false);
-const splitOpen = ref(false);
-
-// Register the pieces whenever the count (and thus the ref set) changes.
-let registered: ReturnType<typeof morph.registerPiece>[] = [];
-function registerPieces(): void {
-    for (const r of registered) r.release();
-    registered = [];
-    pieceIndices.value.forEach((i) => {
-        const elRef = computed(() => pieceEls.value[i] ?? null);
-        registered.push(
-            morph.registerPiece({
-                el: elRef,
-                angle: angleRad.value,
-                rank: i,
-                distance: 120,
-            }),
-        );
-    });
+// the dock's controls ARE the split pieces — register them with the engine so a
+// split flies them out along --split-dx/dy · distance · t.
+let handles: ReturnType<typeof morph.registerPiece>[] = [];
+function registerControls(): void {
+    for (const h of handles) h.release();
+    handles = ctlIndices.value.map((i) =>
+        morph.registerPiece({
+            el: computed(() => ctlEls.value[i] ?? null),
+            angle: angleRad.value,
+            rank: i,
+            distance: 132,
+        }),
+    );
 }
-watch(splitCount, () => {
-    // let the new shard nodes mount, then re-register
-    requestAnimationFrame(registerPieces);
-});
-watch(angleRad, () => {
-    // re-register so each piece picks up the new explicit angle
-    registerPieces();
-});
+watch([splitCount, angleRad], () => requestAnimationFrame(registerControls));
+onMounted(() => requestAnimationFrame(registerControls));
 
-// ── the actions ────────────────────────────────────────────────────────────────
+// ── the actions — ONE scalar; the mode gates what reads it ───────────────────────
 function play(): void {
-    if (mode.value === "expand") {
-        expanded.value = true;
-        // bloom the card FROM the dock pill rect (the dock -> card materialize)
-        requestAnimationFrame(() =>
-            morph.expand({ card: cardRef, trigger: pillRef }),
-        );
-    } else if (mode.value === "split") {
-        if (registered.length === 0) registerPieces();
-        splitOpen.value = true;
-        morph.split();
-    } else {
-        // union — pull the pieces back in (the reverse of the same scalar)
-        splitOpen.value = false;
-        morph.union();
-    }
+    open.value = !open.value;
+    if (open.value) morph.split(); // drive t → 1
+    else morph.union(); // drive t → 0
 }
 function reset(): void {
-    expanded.value = false;
-    splitOpen.value = false;
-    morph.collapse();
+    open.value = false;
     morph.union();
 }
-
-// register the initial set after mount
-requestAnimationFrame(registerPieces);
+// a mode change while open re-seats to rest so the two registers never overlap.
+watch(mode, () => {
+    open.value = false;
+    morph.union();
+});
 </script>
 
 <template>
     <StoryPage>
-        <StorySection heading="Liquid playground — the dock is the control interface" gap="md">
+        <StorySection
+            heading="Liquid playground — the dock is the control interface"
+            gap="md"
+        >
             <p class="text-small text-muted-foreground">
-                ONE engine —
-                <code class="rounded bg-muted px-1">useLiquidMorph</code> — drives the whole
-                liquid framework. A glass dock pill <strong>EXPANDS</strong> into a container
-                card (the iOS-27 search-pill <span aria-hidden="true">→</span> sheet bloom)
-                and n-ary <strong>SPLITS</strong> into free-floating glass pieces at an
-                <strong>arbitrary angle of attack</strong> — a metaball from any
-                <code class="rounded bg-muted px-1">θ</code>, not just the four cardinals.
-                It composes the real substrate (the dock
-                <code class="rounded bg-muted px-1">SpringProgress</code> loop shape,
-                <code class="rounded bg-muted px-1">useLiquidReveal</code>'s FLIP bloom,
-                <code class="rounded bg-muted px-1">useLiquidFlex</code>'s squish) — never a re-fork.
+                The dock ITSELF morphs. ONE engine —
+                <code class="rounded bg-muted px-1">useLiquidMorph</code> — writes one
+                dock-spring scalar onto the dock element:
+                <strong>EXPAND</strong> grows the pill into a container card in place
+                (the iOS-27 search-pill <span aria-hidden="true">→</span> sheet bloom),
+                and <strong>SPLIT</strong> detaches the dock's own controls as
+                free-floating glass pieces at an arbitrary
+                <code class="rounded bg-muted px-1">θ</code>.
             </p>
 
-            <!-- The controls row — real reactive inputs over the glass register. -->
-            <div class="flex flex-wrap items-end gap-6 rounded-[var(--radius-card)] glass-resting p-5">
-                <div class="flex min-w-[12rem] flex-col gap-2">
+            <!-- controls -->
+            <div
+                class="flex flex-wrap items-end gap-6 rounded-[var(--radius-card)] glass-resting p-5"
+            >
+                <div class="flex min-w-[14rem] flex-col gap-2">
                     <label class="text-mono-caption text-muted-foreground">Mode</label>
                     <SegmentedTabs v-model="mode" :options="modeTabs" />
                 </div>
-                <div class="flex min-w-[14rem] flex-1 flex-col gap-2">
+                <div
+                    v-show="mode === 'split'"
+                    class="flex min-w-[14rem] flex-1 flex-col gap-2"
+                >
                     <label class="text-mono-caption text-muted-foreground">
                         Angle of attack — {{ angleDeg }}°
                     </label>
@@ -149,9 +127,12 @@ requestAnimationFrame(registerPieces);
                         @update:model-value="(v) => (angleDeg = v?.[0] ?? 0)"
                     />
                 </div>
-                <div class="flex min-w-[12rem] flex-1 flex-col gap-2">
+                <div
+                    v-show="mode === 'split'"
+                    class="flex min-w-[10rem] flex-1 flex-col gap-2"
+                >
                     <label class="text-mono-caption text-muted-foreground">
-                        Pieces — {{ splitCount }}
+                        Controls — {{ splitCount }}
                     </label>
                     <Slider
                         :model-value="[splitCount]"
@@ -163,136 +144,92 @@ requestAnimationFrame(registerPieces);
                 </div>
                 <div class="flex gap-2">
                     <Button variant="primary-audacious" @click="play">
-                        <Sparkles class="size-4" />
-                        Play
+                        {{ open ? "Collapse" : mode === "expand" ? "Expand" : "Split" }}
                     </Button>
                     <Button variant="outline" @click="reset">Reset</Button>
                 </div>
             </div>
 
-            <!-- The stage — the morph host. A non-clipping overlay frame paints the
-                 pieces + the goo group OVER the dock pill so the host box is never
-                 re-laid-out (box-inviolate). The hidden <svg><filter> is mounted
-                 ONCE here (the library goo filter the CSS references). -->
+            <!-- the stage — the dock sits centred; it grows / splits IN PLACE -->
             <div
-                ref="stageRoot"
-                class="relative flex min-h-[26rem] items-center justify-center overflow-visible rounded-[var(--radius-card)] glass-wash p-10"
+                class="relative flex min-h-[28rem] items-center justify-center overflow-visible rounded-[var(--radius-card)] glass-wash p-10"
                 data-testid="liquid-stage"
             >
-                <!-- the library goo <filter> — feGaussianBlur + feColorMatrix
-                     threshold (the classic metaball). Mounted once; referenced by
-                     liquid-morph.css via filter: url(#liquid-morph-goo). LOCAL inline
-                     SVG (the Safari fence — never backdrop-filter: url()). -->
-                <svg
-                    aria-hidden="true"
-                    width="0"
-                    height="0"
-                    style="position: absolute"
-                >
+                <!-- the goo <filter> — feGaussianBlur + threshold (Safari-safe,
+                     filter:url() inline). Referenced by .liquid-dock[data-mode=split]
+                     when the controls detach so they read as ONE metaball body. -->
+                <svg aria-hidden="true" width="0" height="0" style="position: absolute">
                     <defs>
                         <filter id="liquid-morph-goo">
-                            <feGaussianBlur
-                                in="SourceGraphic"
-                                stdDeviation="7"
-                                result="blur"
-                            />
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b" />
                             <feColorMatrix
-                                in="blur"
+                                in="b"
                                 mode="matrix"
-                                values="1 0 0 0 0
-                                        0 1 0 0 0
-                                        0 0 1 0 0
-                                        0 0 0 19 -9"
-                                result="goo"
+                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+                                result="g"
                             />
-                            <feBlend in="SourceGraphic" in2="goo" />
+                            <feComposite in="SourceGraphic" in2="g" operator="atop" />
                         </filter>
                     </defs>
                 </svg>
 
-                <!-- The DOCK pill — the primary control interface + the bloom source
-                     rect. When NOT expanded it shows the dock; the card blooms FROM
-                     its rect. -->
+                <!-- THE DOCK — the single morph subject. data-mode/data-open gate the
+                     CSS; --split-count sizes the control row; the engine writes
+                     --liquid-morph-t here (box grow) and onto each control (fly). -->
                 <div
-                    v-show="!expanded"
-                    ref="pillRef"
-                    class="relative z-[2]"
+                    ref="dockRef"
+                    class="liquid-dock"
+                    :data-mode="mode"
+                    :data-open="open"
+                    :style="{ '--liquid-dock-controls': splitCount }"
+                    data-testid="liquid-dock"
                 >
-                    <GlassDock always-expanded aria-label="Liquid morph dock">
-                        <DockIconButton type="button" aria-label="Layers">
-                            <Layers />
-                        </DockIconButton>
-                        <DockIconButton type="button" aria-label="Split">
-                            <Split />
-                        </DockIconButton>
-                        <DockIconButton
-                            type="button"
-                            aria-label="Expand into a card"
-                            @click="
-                                mode = 'expand';
-                                play();
-                            "
-                        >
-                            <Maximize2 />
-                        </DockIconButton>
-                    </GlassDock>
-                </div>
-
-                <!-- The CONTAINER card the dock expands into (the V3 bloom target).
-                     useLiquidReveal drives the FLIP transform on its inline style;
-                     the .liquid-morph-card + glass-floating classes carry the glass
-                     tier so it reads as the Places sheet. -->
-                <div
-                    v-show="expanded"
-                    ref="cardRef"
-                    class="liquid-morph-card glass-floating relative z-[2] w-[22rem] max-w-full p-6"
-                    data-testid="liquid-card"
-                >
-                    <div class="flex items-center gap-3">
-                        <span class="flex size-10 items-center justify-center rounded-full glass-resting">
-                            <Layers class="size-5" />
-                        </span>
-                        <div>
-                            <h3 class="text-subheading">Container</h3>
-                            <p class="text-mono-caption text-muted-foreground">
-                                bloomed from the dock pill
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span
-                            v-for="chip in ['Recents', 'Shared', 'Favorites', 'Tags']"
-                            :key="chip"
-                            class="rounded-pill glass-resting px-3 py-1 text-small"
-                        >
-                            {{ chip }}
-                        </span>
-                    </div>
-                </div>
-
-                <!-- The n-ary goo group — the free-floating glass pieces. They bud off
-                     through the metaball neck along the configurable angle. Only the
-                     pieces inside .liquid-morph-goo merge (the filtered group). -->
-                <div class="liquid-morph-frame" aria-hidden="true">
-                    <div class="liquid-morph-goo">
-                        <!-- the source disc at the host center (the body the pieces
-                             detach from — kept full so the goo always has a core). -->
-                        <span class="liquid-morph-piece" style="--liquid-morph-t: 0" />
-                        <span
-                            v-for="i in pieceIndices"
+                    <!-- the controls (also the split pieces) -->
+                    <div class="liquid-dock-controls">
+                        <button
+                            v-for="i in ctlIndices"
                             :key="i"
-                            :ref="(el) => setPieceEl(i, el as Element | null)"
-                            class="liquid-morph-piece"
-                            data-testid="liquid-piece"
-                        />
+                            :ref="(el) => setCtlEl(i, el as Element | null)"
+                            type="button"
+                            class="liquid-dock-control liquid-morph-piece"
+                            data-testid="liquid-control"
+                            :aria-label="`control ${i + 1}`"
+                        >
+                            <component :is="ctlIcons[i % ctlIcons.length]" class="size-5" />
+                        </button>
+                    </div>
+
+                    <!-- the container pane the dock grows into (expand) -->
+                    <div class="liquid-dock-pane" aria-hidden="true">
+                        <div class="liquid-dock-pane-header">
+                            <span class="liquid-dock-pane-chip"><Layers class="size-5" /></span>
+                            <div>
+                                <h3 class="text-subheading">Container</h3>
+                                <p class="text-mono-caption text-muted-foreground">
+                                    the dock grew into this card
+                                </p>
+                            </div>
+                        </div>
+                        <div class="liquid-dock-pane-chips">
+                            <span
+                                v-for="chip in ['Recents', 'Shared', 'Favorites', 'Tags']"
+                                :key="chip"
+                                class="rounded-pill glass-resting px-3 py-1 text-small"
+                            >
+                                {{ chip }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <p class="text-mono-caption text-muted-foreground" data-testid="liquid-readout">
-                mode = {{ mode }} · θ = {{ angleDeg }}° · pieces = {{ splitCount }} ·
+            <p
+                class="text-mono-caption text-muted-foreground"
+                data-testid="liquid-readout"
+            >
+                mode = {{ mode }} · θ = {{ angleDeg }}° · controls = {{ splitCount }} ·
                 t = {{ morph.t.value.toFixed(2) }} ·
-                {{ morph.morphing.value ? "morphing" : "settled" }}
+                {{ morph.morphing.value ? "morphing" : open ? "open" : "rest" }}
             </p>
         </StorySection>
     </StoryPage>
