@@ -1,9 +1,9 @@
-# BE tranche — RECONCILED WAVE LIST (develop-ready, post pass-4)
+# BE tranche — RECONCILED WAVE LIST (develop-ready, post pass-5 — DEVELOP-COMPLETE)
 
-_38 true-distinct shippable waves · 11 criticals · 10 bands. Convergence ~93%. The PASS-1/2/3/4 corrections are FOLDED INTO the bands here (no appendix); the per-wave SPEC development (goal · starting-state · born-RED→GREEN gate · binding π · jubilance manifest) is the final step._
-_Recommended PARTITION (pass-4 dedup): **BE** = Band 1 (dock hallmark, the user's named centerpiece) ships first; **BF** = Bands 2–10 (glass/aurora/cards/safari/jubilance/de-shadcn/fold). One coherent loop, two cuts — decision deferred to develop-start._
+_38 true-distinct shippable waves · 11 criticals · 10 bands. Convergence ~96% (DESIGN CONVERGED). 39 per-wave specs written to waves/. The PASS-1/2/3/4 corrections are FOLDED INTO the bands here (no appendix); the per-wave SPEC development (goal · starting-state · born-RED→GREEN gate · binding π · jubilance manifest) is the final step._
+_PARTITION (pass-5 DECIDED): ONE tranche BE — all waves, one coherent loop (the BE/BF split was reversed; see PASS-5 FINAL DECISIONS). Dock hallmark sequenced first by the EXECUTION-DAG, not a tranche boundary._
 
-## Band 1 — THE DOCK HALLMARK (→ tranche BE)
+## Band 1 — THE DOCK HALLMARK
 - **BE.W-GOO-SPLIT-PERF** (critical) — `fission-bridge.css` generalizes `morph-bridge.css` (159L, merge-2-plate→detach-N-toward-slots) + the **library** SVG-goo `<filter>` mount (today demo-resident in morph-showcase.vue) re-tuned for 56px satellites. The WebKit constraint: a piece is **goo OR glass per-frame** (the SVG-filter-clips-backdrop-filter stacking failure) — goo during the neck, glass at rest, swapped at a sub-perceptual --split-t threshold (no pop). Gate `proof:dock-goo-split`: device-free source (one-scalar · filter:url()-not-backdrop · clipped region · contain:paint) + a **MANUAL real-Safari-26-Metal** budget capture (the 4× throttle is CDP-only; framesOver==0 relaxed to a measured p50). BLOCKED-ON BE.W-VIZ-PARITY-METAL.
 - **BE.W-DOCK-FISSION** (critical) — `useDockFission` + `<DockSplit>`/`<DockFissionPiece>`: ONE new orchestrator (clones the dockMorphContext one-spring loop for a 0→1 `--dock-split-t`) + per-piece DIRECTION-VECTOR + context PROFILE (registered like a MorphTarget). NOT "zero new engine" — one orchestrator + one bridge recipe over the existing physics. Owns the goo-split delights (snap-recoil, neck-wobble, bud-off squish). + the **per-context goo-SIGNATURE FLOOR** (search=radial, media=lateral peel, nav=inward merge — the per-context direction-vector) + the **pointer-reactive SEAM-TENSION FLOOR** (the neck resists the pull, f_021 — clip-path-inset reading usePointerVelocityField, capped, PRM-off, NO per-frame rerasterize). Gate `proof:dock-fission`.
 - **BE.W-DOCK-CONTEXT-SILHOUETTE** (critical) — MINT `useDockContextSilhouette` (the descriptor map is net-new; NB demo `useContextualDockLayers` EXISTS — the README-only claim was about a hypothetical *library* composable). Declarative `DockSilhouetteDescriptor[]` (bar | bar+pill | split{pill,circles} | search); FLIP surviving controls (ElementMorph). **+ the pill↔tabbar FUSION morph** (f_055/f_065/f_047 — the now-playing pill DOCKS DOWN and merges INTO the 5-tab bar as ONE continuous glass plate, not a pill floating above). Gate `proof:dock-context`.
@@ -13,7 +13,7 @@ _Recommended PARTITION (pass-4 dedup): **BE** = Band 1 (dock hallmark, the user'
 - **BE.W-DOCK-TINTED-CHIP** (major) — the dock-control consumer of `--glass-fill-tint` (Maps facet-chip face + bronze/gold metal quad). Per-facet accent-hue FLOOR.
 - **BE.W-DOCK-JUBILANCE** (major) — fission ripple · merge-splash gold-coalesce · the magnetic-tendril (the ONE perf-gated opt-in). Gate `proof:jubilance` (compositor-only + PRM-safe + disco-fenced).
 
-## Band 2 — LIQUID GLASS MATERIAL, Safari-first (→ BF)
+## Band 2 — LIQUID GLASS MATERIAL, Safari-first
 - **BE.W-LENS-SAFARI** (critical) — two-tier `.glass-lens`: the cross-engine FLOOR is the REAL Safari refraction path — `filter: url(#displace)` (the REGULAR filter, feDisplacementMap IS WebKit-supported) over a **captured/duplicated backdrop layer** (the architecture: a `background-clip`/`element()`-or-duplicated-DOM backdrop the filter displaces) + the directional rim + conic `--specular-angle` glint + `--glass-edge-dispersion` fringe; the `backdrop-filter:url()` feDisplacement stays the Chromium-only enhancement INSIDE the @supports gate (WebKit bug 245510). Gate `proof:lensing-safari`: a REAL pixel rim-vs-interior getImageData readback (not proof:lensing's property-only assert).
 - **BE.W-SQUIRCLE-COVERAGE** (critical) — CORRECTED mechanism: `corner-shape:superellipse` is ITSELF Chromium-only (radius.css:75-78). The cross-engine Safari FLOOR is a **clip-path superellipse path** (verified absent) on card/chip/dock-control + grouped-cluster cards; `corner-shape` stays the Chromium PE enhancement. Gate π: a real Safari corner-pixel getImageData proving the superellipse silhouette paints. (f_073 Control-Center clusters read most broken without it.)
 - **BE.W-AMBIENT-TINT** (critical) — extend `useGlassBackdropLuminance` (the highest-leverage betters-move): a 12-bucket chroma×alpha-weighted OKLCh hue histogram as a FREE rider over the EXISTING 32×32 getImageData loop (no 2nd canvas/pass; reuse the value.js cssToOklch leaf — proof:single-color-core fence) → `--glass-ambient-hue` + a sub-perceptual `--glass-tint-source` bias. Gray backdrop → null hue (correct).
@@ -24,36 +24,36 @@ _Recommended PARTITION (pass-4 dedup): **BE** = Band 1 (dock hallmark, the user'
 - **BE.W-LENS-PRISM** (major) — WIRING (`--glass-edge-dispersion` EXISTS glass-fx.css:223) the chromatic-aberration rim onto the lens; READS the LENS-SAFARI floor (sequence after).
 - **BE.W-DEEP-CEILING** (major) — the glass-deep 18-20px Apple ceiling (absorbs BD.W-DEEP-PUSH) behind a recorded throttle number.
 
-## Band 3 — TABS (→ BF)
+## Band 3 — TABS
 - **BE.W-TAB-IOS-CAPSULE** (major) — FOLD (DockTabBar + SegmentedTabs): ONE iOS recessed-accent glass-capsule register, dock + segmented arms, composing useTabIndicator+useLiquidFlex. Owns icon-bloom-on-select + accent-suffuse-sweep + capsule-goo-pull.
 
-## Band 4 — AURORA album-art (→ BF)
+## Band 4 — AURORA album-art
 - **BE.W-AUR-SATIN** (critical) — `medium:"satin"` (uMedium==8, WebGL2+WGSL-lockstep): silky light-bending fold (Heavy Rotation), fold-height from the domain-warp, directional sheen; default byte-identical, GL-fence. Owns satin sheen-on-play + pointer-as-key-light.
 - **BE.W-AUR-PRISM** (critical) — `burst` (uMedium==9): angular palette around uFlowFocal → the prismatic station bursts. [+ AUR-PRESETS rider, demo].
 - **BE.W-AUR-REACTIVE** (critical) — the BETTERS (the 2 mediums are the floor; this reacts): a consumer-side DockStage seam (presets-in-consumers, NOT a library edit) re-seeds aurora `nuclei[].color` toward the album hue + nudges `flow.focal*` toward the now-playing pill + the living-shimmer (fold-ridge migration + spoke slow-rotation, bounded shader term). Cross-band dep on NOWPLAYING-PILL (the active accent) — sequence after Band 1.
 
-## Band 5 — BLOOM / FLIP (→ BF)
+## Band 5 — BLOOM / FLIP
 - **BE.W-BLOOM-UP** (critical) — `useBloomUp(sourceRef, destRef)` shared-element FLIP (ElementMorph+springTimingFunction); 3 compositor channels + the **4th color channel on the DESTINATION FIELD** (destRef, not the blooming surface — preserves the compositor-only floor): the field re-tints to the source's dominant album hue (f_009→f_010). Safari-safe + PRM-snap; /motion off-root. Gate `proof:bloom-up`.
 - **BE.W-BACKDROP-SETTLE** (major) — opt-in backdrop-blur settle leg on .glass-reveal. Owns per-channel color-bloom.
 
-## Band 6 — CARDS / BUTTONS / ICONS, the Maps card (→ BF)
+## Band 6 — CARDS / BUTTONS / ICONS, the Maps card
 - **BE.W-ICONCHIP-GLASS** (critical) — REAL gap (icon-chip.css NO backdrop-filter): `glass` register (frosted disc + oklab tone-tint) + `filled` register (opaque tone + value.js safeAccentColor auto-contrast). + the **grouped-squircle-cluster cards-betters** (the f_073 Control-Center idiom: N controls fused into ONE frosted squircle group with concentric nested radii + shared rim-lensing — composes SQUIRCLE + CONCENTRIC). Gate `proof:iconchip-glass`.
 - **BE.W-GLASS-CONTROL** (major) — `<GlassControl shape=circle|pill>` (/glass-control): the floating circular glass button (Maps controls); ExpandableContainer's corner buttons consume it. [+ SEARCH-WELL rider].
 
-## Band 7 — SAFARI floor (→ BF)
+## Band 7 — SAFARI floor
 - **BE.W-SAFARI-CAPTURE** (major) — the webkit Playwright project EXISTS (playwright.config.ts:117, NO ANGLE/throttle by construction); testMatch-WIDEN to the 5 liquid specs (fission/pill/bloom/rail/lens) + `proof:safari-liquid` (the per-transition Safari-26 support matrix: @starting-style ✓26.0, animation-timeline ✓26.0, startViewTransition feature-detected; verify transition-behavior:allow-discrete) + degrade-gracefully-per-transition.
 
-## Band 8 — JUBILANCE primitives + lock (→ BF)
+## Band 8 — JUBILANCE primitives + lock
 - **BE.W-CELEBRATE-BURST** (major) — `useCelebrationBurst` (net-new): one-shot earned glass-petal radial bloom, PRM-static + chip-bloom-in cascade.
 - **BE.W-HAPTIC-COUPLE** (major) — `useHaptic` (navigator.vibrate, net-new, feature-detected) wired to snap/detent/completion.
 - **BE.W-ANTICIPATE-FOLLOW** (minor) + **BE.W-ALIVE-IDLE** (minor) — anticipation pre-dip + follow-through; the breathing-pill idle FLOOR (±1.5%, offscreen-paused).
 - (BE.W-JUBILANCE-GATE folds into proof:jubilance under DOCK-JUBILANCE.)
 
-## Band 9 — DE-SHADCN FORM (gate exists, residue narrow) (→ BF)
+## Band 9 — DE-SHADCN FORM (gate exists, residue narrow)
 - **BE.W-DESHADCN-SWEEP** (major) — the CORRECTED custom/ exact-6 set: selectableChipVariants.ts:50-52 (rounded-sm/md/lg→named chip-radius), toggle-chip/index.ts:51 (rounded-sm border), MetricBadge.vue:108 (outline-2 cold ring→.focus-ring), ScrubberTimeline `.caret-value` (var(--popover) flat-popover slab→glass-reveal, in a `<style>` body), hover-popover.css dead var() fallbacks, StackedIconGroup +N chip (named-exemption). (The ui/ close-X/separator/Toggle/ToastClose residue is the existing gate's domain.)
 - **BE.W-DESHADCN-GATE-WIDEN** (major) — WIDEN proof:no-shadcn-default (3 verified holes): outline-form vocabulary (outline-ring/-offset/-2-as-focus — ZERO entry today) + a `<style>`-body arm (tokenizes only class strings today) + the custom/** walk + the sanctioned-escape allowlist (the 10-dir viz clean-by-construction group; re-pointed var(--ring/--accent/--popover/--input) reads; the avatar-stack occlusion).
 
-## Band 10 — FOLD / DISPOSITION (→ BF)
+## Band 10 — FOLD / DISPOSITION
 - **BE.W-FOLD-LEDGER** — absorb BD's HELD/FIRED tail + an EXPLICIT BUILD|DEFER|RETIRE verdict for every dropped betters-wave + the DECIDED-OUT record (scroll-reactive-dock-condense — useDockSearch.ts:8 "the dock NEVER auto-collapses on passive scroll").
 - **BE.W-VIZ-PARITY-METAL** (absorb BD) — real-Metal + real-WebKit parity for goo-blob + aurora + the goo-split bridge (the GOO-SPLIT-PERF blocker).
 - **BE.W-GESTALT-ROSTER-BE** — proof:ba-gestalt +9 roster rows.
