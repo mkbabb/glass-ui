@@ -212,6 +212,19 @@
         opacity: 0;
         pointer-events: none;
     }
+    /* the iOS sheet GRABBER — the small pill at the sheet's top edge (the Maps/iOS
+       bottom-sheet affordance the reference shows). Sits in the pane's top padding. */
+    .liquid-dock-grabber {
+        position: absolute;
+        inset-block-start: 0.6rem;
+        inset-inline-start: 50%;
+        translate: -50% 0;
+        inline-size: 2.25rem;
+        block-size: 0.3125rem;
+        border-radius: 999px;
+        background: color-mix(in oklab, var(--foreground) 20%, transparent);
+        z-index: 3;
+    }
     .liquid-dock-pane-header {
         display: flex;
         align-items: center;

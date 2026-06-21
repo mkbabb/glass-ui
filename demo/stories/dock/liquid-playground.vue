@@ -428,6 +428,7 @@ function onRailWheel(e: WheelEvent): void {
                     <!-- the container pane the dock grows into (expand) — the iOS-27
                          Maps "Places" sheet: a COLOURFUL Places row + a Recents list. -->
                     <div class="liquid-dock-pane" aria-hidden="true">
+                        <span class="liquid-dock-grabber" />
                         <div class="liquid-dock-places">
                             <span
                                 v-for="p in places"
