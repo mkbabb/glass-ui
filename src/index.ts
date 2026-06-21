@@ -242,5 +242,17 @@ export {
     type UseCharStaggerReturn,
 } from "./composables/motion/useCharStagger";
 
+// BE.W-HAPTIC-COUPLE — the library's ONE haptic primitive (a thin, feature-detected
+// navigator.vibrate wrapper coupled to the platform's confirm-moments). Imports `vue`
+// only — engine-FREE + vueuse-FREE and root-barrel safe per the `useCharStagger`
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`. Feature-detects to a
+// clean no-op on iOS Safari + SSR (never a throw).
+export {
+    useHaptic,
+    type HapticPattern,
+    type UseHapticOptions,
+    type UseHapticReturn,
+} from "./composables/motion/core/useHaptic";
+
 // Core utilities
 export * from "./utils";

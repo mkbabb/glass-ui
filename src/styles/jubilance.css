@@ -1,0 +1,65 @@
+/* jubilance.css — BE.W-CELEBRATE-BURST — the earned glass-petal radial-bloom recipe.
+ *
+ * THE PETAL IS THE SURFACE'S OWN GLASS (CB4 / warm-cream identity). `.glass-celebration-
+ * petal` paints the warm-cream frosted glass material via the EXACT element-level oklab
+ * tint seam `glass/ladder.css` composes — `color-mix(in oklab, var(--glass-bg-floating),
+ * var(--glass-tint-source) var(--glass-tint-strength))` — so the petal reads as the
+ * surface's OWN glass, NOT a saturated confetti color. There is NO disco-grain, NO `✦`
+ * glyph, NO sparkle-sweep (the §6 calm register, the disco-fenced floor).
+ *
+ * THE :tone OPT-IN (the hue-keyed burst). `useCelebrationBurst({ tone })` writes
+ * `--glass-accent` onto each petal (the W-GLASS-ACCENT rim-tint seam); the catch-light
+ * core reads `--glass-specular-core` which ALREADY OKLab-mixes toward `--glass-accent ×
+ * --glass-accent-strength` (material.css) — so a download-complete petal blooms
+ * `--viz-download` through the SHARED specular cohort, never a second fork. At the default
+ * (no tone) `--glass-accent` is transparent → the warm-cream identity (the no-op floor).
+ *
+ * COMPOSITOR-ONLY (CB3 / proof:no-layout-animation). The recipe paints a static frosted
+ * pill; the per-frame motion (translate/scale/opacity/filter) is the JS rAF step's inline
+ * writes (compositor channels ONLY — never a layout property). The recipe carries NO
+ * layout-animating transition.
+ *
+ * PRM-STATIC (the vestibular floor). Under reduce the JS `burst()` spawns NO drifting
+ * petals (the prefersReducedMotion() branch fires only the destination chip-bloom-in
+ * cascade) — so there are no petals to carve here; the destination cascade is PRM-carved
+ * by the EXISTING icon-chip-reveal `animation: none` rule (icon-chip.css), re-used not
+ * re-authored. */
+
+@layer components {
+    /* The short-lived overlay container the JS appends to the origin's offsetParent (one
+       DOM write, removed on settle). It is a zero-size anchor at the origin center; the
+       petals position-absolute off it. */
+    .glass-celebration-overlay {
+        position: absolute;
+        pointer-events: none;
+    }
+
+    /* The earned glass petal — the surface's OWN warm-cream frosted glass material. */
+    .glass-celebration-petal {
+        /* The petal footprint — a small pill, tokenized for the one-knob retune. */
+        --celebration-petal-size: 10px;
+        position: absolute;
+        inline-size: var(--celebration-petal-size);
+        block-size: var(--celebration-petal-size);
+        border-radius: var(--radius-pill, 9999px);
+        pointer-events: none;
+        /* THE WARM-CREAM GLASS (CB4) — the EXACT element-level oklab tint seam ladder.css
+           composes for every glass rung. NOT a saturated bg-<hue>/raw-Tailwind confetti
+           color: the petal reads as the surface's own frosted glass. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)),
+            var(--glass-tint-source, transparent) var(--glass-tint-strength, 0%)
+        );
+        /* A sub-perceptual warm-cream catch-light — reads the SHARED --glass-specular-core
+           (which carries the --glass-accent :tone opt-in via material.css's oklab mix), a
+           soft inner gleam so the petal reads as lit glass, never a flat slab. NO second
+           specular fork, NO disco. */
+        box-shadow:
+            inset 0 0 0 0.5px
+                color-mix(in oklab, var(--glass-specular-core, hsl(40 35% 92%)) 40%, transparent),
+            0 1px 3px color-mix(in oklab, var(--foreground), transparent 86%);
+        /* will-change promotes ONLY the compositor channels the JS step writes. */
+        will-change: transform, opacity, filter;
+    }
+}

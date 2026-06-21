@@ -334,6 +334,16 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             el.style.setProperty("--split-dy", String(v.dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(neckT));
+            // The NECK SPECULAR-SWEEP angle (BE.W-METABALL-BRIDGE2 B3 / BE.W-DOCK-JUBILANCE
+            // §3a) — the catch-light bends ALONG the filament as it stretches: the conic
+            // angle advances with neck-t (the light grazes the throat as it thins) and the
+            // pointer tension biases it (a fast pull skews the grazing angle — the light
+            // bends under tension). A function of the SAME scalar (no second clock); the
+            // fission-bridge.css ::after sweep reads it (falls back to a neck-t-derived
+            // angle un-wired). ONE write off the SAME loop. The full sweep is 0..1 → 0..360°
+            // + a small tension skew so the refractive read tracks the pull.
+            const sweepAngle = (neckT * 360 + tension * 60) % 360;
+            el.style.setProperty("--neck-specular-angle", `${sweepAngle.toFixed(1)}deg`);
             // The piece's own --stretch (the volume-preserving squish — read reciprocally
             // by fission-bridge.css's piece scale). One write off the SAME loop.
             el.style.setProperty("--stretch", String(p.flex.stretch.value));
@@ -353,6 +363,8 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             } else {
                 r.setAttribute("data-fissioning", "");
             }
+            // PRM cut — no merge-splash paints (the §6 PRM-static jubilance fence).
+            r.removeAttribute("data-merging");
         }
         field.tick(0); // zero the field (no live velocity under the cut).
         // Seat each piece at its endpoint vector, neck-t at the target, stretch at rest.
@@ -365,6 +377,12 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             el.style.setProperty("--split-dy", String(v.dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(target));
+            // PRM seat — the specular-sweep is static-OFF (the @media block hides the
+            // neck ::after); seat the angle at the endpoint for a deterministic frame.
+            el.style.setProperty(
+                "--neck-specular-angle",
+                `${(target * 360).toFixed(1)}deg`,
+            );
             el.style.setProperty("--stretch", "1");
         }
         fissioned.value = target >= SPLIT_THRESHOLD;
@@ -399,6 +417,14 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
         activeSpring.reset(t.value, inheritedVelocity);
         activeSpring.target = target;
         r.setAttribute("data-fissioning", "");
+        // BE.W-DOCK-JUBILANCE §2 — the MERGE-DIRECTION signal. The merge-splash
+        // gold-coalesce fires ONLY on the reverse fission (1→0, the pieces merging back
+        // into ONE liquid surface — a completion event). `[data-merging]` gates the
+        // fission-bridge.css splash so a SPLIT (0→1) that also passes near split-t≈0 at
+        // its onset never false-flashes the gold. A re-merge while already split sets it;
+        // a split clears it. The splash itself is `f(--dock-split-t)` (no second clock).
+        if (target < SPLIT_THRESHOLD) r.setAttribute("data-merging", "");
+        else r.removeAttribute("data-merging");
         lastFrameTs = 0;
         activeSpring.play((tValue: number) => {
             const rr = root();
@@ -422,6 +448,9 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
                     rr.removeAttribute("data-fissioning");
                     rr.style.removeProperty("--seam-tension");
                 }
+                // The merge-splash one-shot is spent once the merge settles — clear the
+                // gate so the flash does not re-paint at rest (the §6 calm one-shot).
+                rr.removeAttribute("data-merging");
                 disposeSpring();
             }
         });

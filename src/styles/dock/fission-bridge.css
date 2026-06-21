@@ -92,6 +92,11 @@
         /* The neck filament half-thickness at rest (the inset toward the centerline the
            neck THINS from). Tokenized so the gel throat is one retune. */
         --neck-filament: 42%;
+        /* BE.W-DOCK-JUBILANCE — the FLOOR-delight intensity knobs (a calm whisper, the §6
+           register — a consumer who wants no ripple/splash sets these to 0). The ripple is
+           the warm-cream specular ring's peak; the splash is the earned-gold flash's peak. */
+        --ripple-intensity: 0.5;
+        --merge-splash-intensity: 0.7;
         position: absolute;
         inset: 0;
         pointer-events: none;
@@ -111,6 +116,135 @@
        `[data-fissioning]` attr is set by the orchestrator past the carve threshold. */
     [data-fissioning] .dock-fission-bridge {
         filter: var(--dock-fission-goo-filter, none);
+    }
+
+    /* ── BE.W-DOCK-JUBILANCE §1 — THE FISSION RIPPLE (the FLOOR) ──────────────
+       An expanding ring of light travels the dock plate as the fission begins — the
+       outward bloom that ANNOUNCES the bud-off (the f_034 read). It is a `::before`
+       radial-gradient RING whose radius GROWS with `--dock-split-t` (a pure function of
+       the ONE scalar the fission spring writes — NO second clock, NO bespoke @keyframes),
+       `plus-lighter`-blended warm-cream (the EXISTING `--glass-specular-core` cohort —
+       NO new color), `opacity` fading at the rim. Compositor-paint ONLY — `transform:
+       scale` on the ring (the radius is the scale, NEVER an animated `width`/radius) +
+       `opacity`. The pieces detach in the ripple's wake (the ripple radius LEADS the
+       per-piece neck-t the orchestrator stages). */
+    .dock-fission-bridge::before {
+        content: "";
+        position: absolute;
+        /* A centered square anchor at the plate centroid; the ring is a radial-gradient
+           BAND scaled by the split scalar. The base footprint is small (a reserved box,
+           one layout solve); the live radius is the `transform: scale`. */
+        inset: 50%;
+        inline-size: 8rem;
+        block-size: 8rem;
+        margin-inline-start: -4rem;
+        margin-block-start: -4rem;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+        /* The warm-cream ring — a thin annulus (transparent core, a bright band near the
+           rim, transparent past it) reading the SHARED `--glass-specular-core` (NO fork).
+           The ring is the band; the `scale` moves the band outward. */
+        background: radial-gradient(
+            circle at 50% 50%,
+            transparent 0%,
+            transparent 58%,
+            color-mix(in oklab, var(--glass-specular-core, hsl(40 35% 92%)) 70%, transparent) 76%,
+            transparent 92%
+        );
+        /* The radius IS the scale — the ring expands from a point (scale ~0.15 at split
+           onset) to the full plate as `--dock-split-t` rises (the compositor transform,
+           NEVER an animated radius/width). */
+        transform: scale(calc(0.15 + var(--dock-split-t, 0) * 1.1));
+        transform-origin: center;
+        /* The ring BLOOMS bright as the split begins then FADES at the rim — peak near the
+           onset (a `f(--dock-split-t)` envelope: bright early, gone by full separation),
+           so it ANNOUNCES the bud-off then clears. One-shot by construction (it lives on
+           the split scalar; at rest split-t=0 → opacity 0). */
+        opacity: calc(
+            var(--ripple-intensity, 0.5) *
+                4 *
+                clamp(0, var(--dock-split-t, 0), 1) *
+                clamp(0, calc(1 - var(--dock-split-t, 0)), 1)
+        );
+        /* plus-lighter (additive, HDR-clamped, Safari 16.4+) — the SAME blend the
+           material.css gleam rides; a non-supporting engine degrades to a plain warm
+           overlay (no blowout). NO second blend fork. */
+        mix-blend-mode: plus-lighter;
+        will-change: transform, opacity;
+    }
+
+    /* ── BE.W-DOCK-JUBILANCE §2 — THE MERGE-SPLASH gold-coalesce (the FLOOR, one-shot) ──
+       On the REVERSE fission (`--dock-split-t` 1→0, the N pieces merging back into ONE
+       liquid surface), the convergence point flashes a one-shot EARNED-gold splash — the
+       completion delight (a merge IS a completion event; gold is EARNED, Q2). A `::after`
+       radial-gradient flash reading `--color-gold` (the earned-gold register, NEVER a
+       phase spectrum) with the `--metal-glow-*` catch-light idiom, `opacity` 0→peak→0
+       keyed off the merge-instant (`--dock-split-t` crossing a sub-perceptual band near
+       0). GATED to `[data-merging]` so a SPLIT onset that also passes near split-t≈0 never
+       false-flashes the gold (the direction signal the orchestrator sets). Compositor-paint
+       — `scale` + `opacity` + `filter` ONLY. One-shot (no loop — the §6 calm register, the
+       completion-seal one-shot precedent). */
+    .dock-fission-bridge::after {
+        content: "";
+        position: absolute;
+        inset: 50%;
+        inline-size: 6rem;
+        block-size: 6rem;
+        margin-inline-start: -3rem;
+        margin-block-start: -3rem;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 2;
+        /* The earned-gold flash core — reads `--color-gold` (Q2 earned-gold), a soft
+           radial that brightens the convergence point at the merge instant. */
+        background: radial-gradient(
+            circle at 50% 50%,
+            color-mix(in oklab, var(--color-gold, gold) 85%, transparent) 0%,
+            color-mix(in oklab, var(--color-gold, gold) 40%, transparent) 38%,
+            transparent 70%
+        );
+        /* The gold catch-light HALO — the EXISTING `--metal-glow-*` idiom (metal.css), a
+           drop-shadow of the gold's own hue (NO re-author — it READS the tokens). */
+        filter: drop-shadow(
+            0 0 var(--metal-glow-blur, 0.5em)
+                color-mix(
+                    in oklab,
+                    var(--color-gold, gold)
+                        calc(var(--metal-glow-opacity, 0.35) * 100%),
+                    transparent
+                )
+        );
+        /* The splash blooms-and-fades in the sub-perceptual merge band — the flash peaks
+           as `--dock-split-t` crosses the `--merge-flash-band` (~0.12) toward 0 then is
+           gone (a triangular `f(--dock-split-t)` envelope inside the band). At rest
+           (split-t = 0, the merged endpoint) the envelope is 0 → no paint. The
+           `[data-merging]` gate (below) zeroes it entirely on the SPLIT direction. */
+        --merge-flash-band: 0.12;
+        opacity: 0;
+        transform: scale(calc(0.6 + (1 - clamp(0, calc(var(--dock-split-t, 0) / var(--merge-flash-band, 0.12)), 1)) * 0.6));
+        transform-origin: center;
+        mix-blend-mode: plus-lighter;
+        will-change: transform, opacity;
+    }
+    /* The splash is LIT only on the merge direction (the orchestrator sets `[data-merging]`
+       while target<threshold mid-flight; cleared on settle + on split). The opacity is a
+       triangular peak inside the merge band: 0 at the band edge (split-t = band), peak at
+       the mid, 0 at the merged endpoint (split-t = 0) — a one-shot flash as the pieces
+       converge, gone once merged. */
+    [data-merging] .dock-fission-bridge::after {
+        opacity: calc(
+            var(--merge-splash-intensity, 0.7) *
+                clamp(
+                    0,
+                    calc(
+                        (var(--merge-flash-band, 0.12) - var(--dock-split-t, 0)) /
+                            var(--merge-flash-band, 0.12)
+                    ),
+                    1
+                ) *
+                clamp(0, calc(var(--dock-split-t, 0) / 0.02), 1)
+        );
     }
 
     /* A fission PIECE — a surviving control that DETACHES along its `--split-dx`/
@@ -249,6 +383,16 @@
     @media (prefers-reduced-motion: reduce) {
         .dock-fission-bridge {
             --dock-bridge-opacity: 0;
+        }
+        /* BE.W-DOCK-JUBILANCE §4 — the jubilance delights are static-OFF under reduce: the
+           FISSION RIPPLE (bridge ::before), the MERGE-SPLASH gold-coalesce (bridge
+           ::after), and the neck specular-sweep (piece ::after) never paint; the fission
+           sync-seats every piece (the orchestrator's prefersReducedMotion() branch). The
+           gesture still CONFIRMS (the piece translates to its endpoint) — only the delight
+           motion is off (P6: the dock still fissions, no ripple/splash/sweep frames). */
+        .dock-fission-bridge::before,
+        .dock-fission-bridge::after {
+            display: none;
         }
         .dock-fission-piece::before,
         .dock-fission-piece::after {

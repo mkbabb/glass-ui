@@ -68,6 +68,22 @@ export type {
     UseBloomUpReturn,
 } from "../composables/motion/useBloomUp";
 
+// ── useCelebrationBurst — the one-shot earned glass-petal radial bloom (BE.W-CELEBRATE-BURST) ──
+// `CelebrationBurstPreset` — the spring register ("bouncy"|"snappy", matching the bloom
+// family so the EARNED-moment burst reads as ONE); `UseCelebrationBurstOptions` — the
+// leaf's options ({ count, preset, radius, destination, tone, respectReducedMotion,
+// onSettled }); `UseCelebrationBurstReturn` — the { burst } shape. useCelebrationBurst
+// composes the SAME springTimingFunction + SPRING_PRESETS substrate useLiquidReveal
+// activates (the bouncy row — NO new spring family) into a radial bloom of warm-cream
+// glass petals (compositor-only + PRM-static), then the EXISTING icon-chip-reveal cascade
+// settles the destination. Keyframes-bearing → ships ONLY on `@mkbabb/glass-ui/motion`,
+// never the root barrel (the SCC-trap discipline).
+export type {
+    CelebrationBurstPreset,
+    UseCelebrationBurstOptions,
+    UseCelebrationBurstReturn,
+} from "../composables/motion/useCelebrationBurst";
+
 // ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
 // `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
 // (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,

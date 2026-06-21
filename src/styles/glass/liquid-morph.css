@@ -78,6 +78,39 @@
         opacity: 0;
         pointer-events: none;
     }
+
+    /* ── BE.W-ALIVE-IDLE — the sub-perceptual REST breath. A barely-there scale(1↔1.012)
+       breath so the resting pill reads ALIVE (the §6 calm register — tasteful, sub-
+       perceptual, NEVER disco). Compositor-only (transform: scale), STATIC under reduce
+       (the @keyframes only attaches inside the no-preference bracket; at rest the pill
+       paints its identity scale). The breath is OFF while the bloom origin is hidden
+       (an invisible pill should not animate) — and the island variant is gated to the
+       MERGED (non-fissioning) state below so it never fights the carve transforms. ── */
+    @media (prefers-reduced-motion: no-preference) {
+        .liquid-pill:not(.liquid-pill--hidden) {
+            animation: liquid-idle-breath var(--liquid-idle-breath-duration, 6s)
+                ease-in-out infinite;
+        }
+        /* the island's crisp resting pill breathes ONLY while merged (goo OFF). The breath
+           rides the resting ::before PLATE (the crisp pill at rest), NOT the host element
+           — so it NEVER competes with the carve translate/squish the host's blob+content
+           layers carry, and it cross-fades out cleanly as the plate dissolves at t>0.
+           Gated to :not([data-fissioning]) so a split removes it at the merged endpoint
+           (the plate is already fading; the breath resumes from scale(1) on full merge). */
+        .liquid-island-host:not([data-fissioning])::before {
+            animation: liquid-idle-breath var(--liquid-idle-breath-duration, 6s)
+                ease-in-out infinite;
+        }
+    }
+    @keyframes liquid-idle-breath {
+        0%,
+        100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.012);
+        }
+    }
     .liquid-pill-icon {
         inline-size: 1.2rem;
         block-size: 1.2rem;
@@ -562,7 +595,12 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding-inline: 0.85rem;
+        /* the OUTER inline edge clears the pill's 1.875rem rounded corner so the ring/eq
+           content sits WITHIN the goo-blob pill at rest (no overhang past the rounded
+           edge) — the rounded end needs more clearance than the straight middle. The INNER
+           (seam) edge stays tight so the two halves read as ONE pill. The per-half rules
+           below set the inner edge to the tight 0.85rem; this is the outer default. */
+        padding-inline: 1.15rem;
         color: var(--foreground);
         border-radius: 1.875rem;
     }
@@ -575,11 +613,16 @@
     .liquid-island--timer {
         justify-content: flex-end;
         text-align: end;
+        /* the seam (inner) edge is the RIGHT edge — keep it tight so the two halves abut
+           as ONE pill; the LEFT (outer, rounded) edge keeps the 1.15rem clearance. */
+        padding-inline-end: 0.7rem;
         --half-dx: -1; /* peel LEFT (matches the timer blob's --split-dx) */
         --half-dy: 0;
     }
     .liquid-island--music {
         justify-content: flex-start;
+        /* the seam (inner) edge is the LEFT edge — keep it tight. */
+        padding-inline-start: 0.7rem;
         --half-dx: 1; /* peel RIGHT (matches the music blob's --split-dx) */
         --half-dy: 0;
     }
@@ -696,17 +739,26 @@
         justify-content: center;
         text-align: center;
         gap: 0.35rem;
-        padding-block: 0.75rem;
+        /* the vertical content is CENTRED inline (the inline edges are not the carve axis),
+           so reset to a symmetric inline padding that sits within the narrow pill; the
+           block (carve) axis carries the outer/seam clearance below. */
+        padding-inline: 0.6rem;
+        padding-block: 1rem;
     }
     /* the carve axis swaps to the column (dy) so the content tracks the column-peeling
-       blobs (the SFC re-points the blob fission vectors to dy in lockstep). */
+       blobs (the SFC re-points the blob fission vectors to dy in lockstep). The OUTER
+       block edge clears the rounded pill end; the SEAM (inner) block edge stays tight. */
     .liquid-island-host[data-orientation="vertical"] .liquid-island--timer {
         justify-content: center;
+        padding-inline-end: 0.6rem; /* reset the horizontal seam override */
+        padding-block-end: 0.6rem; /* the seam is the BOTTOM edge — tight */
         --half-dx: 0;
         --half-dy: -1; /* peel UP */
     }
     .liquid-island-host[data-orientation="vertical"] .liquid-island--music {
         justify-content: center;
+        padding-inline-start: 0.6rem; /* reset the horizontal seam override */
+        padding-block-start: 0.6rem; /* the seam is the TOP edge — tight */
         --half-dx: 0;
         --half-dy: 1; /* peel DOWN */
     }

@@ -136,6 +136,7 @@ function detectB2() {
 function detectB3() {
     const violations = [];
     const css = stripComments(readRel(FISSION_CSS));
+    const ts = stripComments(readRel(FISSION_TS));
     const facts = {};
     facts.hasNeckSpecularAngle = /--neck-specular-angle/.test(css);
     facts.conicSweep = /conic-gradient\(\s*from\s+var\(--neck-specular-angle/.test(css);
@@ -145,12 +146,19 @@ function detectB3() {
     // The anti-evasion bite: a neck-local forked --mouse-x/y specular writer (a second
     // specular fork) reds B3.
     facts.hasForkedMouseWriter = /--mouse-(x|y)/.test(css);
+    // BE.W-DOCK-JUBILANCE — the FLOOR is WIRED, not just CSS-present: the orchestrator
+    // WRITES --neck-specular-angle off the SAME loop (a function of --neck-t — the light
+    // bends along the filament as it stretches). A CSS sweep with no JS writer is a
+    // dead-fallback (it only sweeps off the neck-t-derived fallback, never the orchestrator
+    // signal). Assert the JS setProperty("--neck-specular-angle", …).
+    facts.orchestratorWritesAngle = /setProperty\(\s*["']--neck-specular-angle["']/.test(ts);
     facts.specularFloor =
         facts.hasNeckSpecularAngle &&
         facts.conicSweep &&
         facts.readsSharedCore &&
         facts.usesPlusLighter &&
-        !facts.hasForkedMouseWriter;
+        !facts.hasForkedMouseWriter &&
+        facts.orchestratorWritesAngle;
     if (!facts.hasNeckSpecularAngle)
         violations.push("B3: no --neck-specular-angle — the neck specular-sweep FLOOR is absent");
     if (!facts.conicSweep)
@@ -159,6 +167,75 @@ function detectB3() {
         violations.push("B3: the neck sweep does not read the SHARED --glass-specular-core/plus-lighter cohort (a second specular fork)");
     if (facts.hasForkedMouseWriter)
         violations.push("B3: a neck-local --mouse-x/y specular writer is forked — the sweep must read the shared cohort (the no-forked-mouse-writer discipline)");
+    if (!facts.orchestratorWritesAngle)
+        violations.push("B3: the orchestrator does not WRITE --neck-specular-angle off the spring loop — the specular-sweep FLOOR is a dead CSS fallback (it must be wired to --neck-t)");
+    return { violations, facts };
+}
+
+// ── B7 — the jubilance FLOOR delights (BE.W-DOCK-JUBILANCE) ──
+// The FISSION RIPPLE (the outward warm-cream specular ring announcing the bud-off) + the
+// MERGE-SPLASH gold-coalesce (the one-shot earned-gold flash rewarding the merge). Both
+// FLOOR delights, compositor-only + PRM-safe + disco-fenced, riding the ONE scalar.
+function detectB7() {
+    const violations = [];
+    const css = stripComments(readRel(FISSION_CSS));
+    const ts = stripComments(readRel(FISSION_TS));
+    const facts = {};
+
+    // The FISSION RIPPLE — a bridge ::before ring on transform: scale(f(--dock-split-t))
+    // reading --glass-specular-core + plus-lighter (the EXISTING cohort, no new color),
+    // compositor-only (NO animated radius/width — the radius IS the scale).
+    facts.rippleRing = /\.dock-fission-bridge::before\b/.test(css);
+    facts.rippleScalesOnSplitT =
+        /\.dock-fission-bridge::before[\s\S]*?transform:\s*scale\([^)]*var\(--dock-split-t/.test(
+            css,
+        );
+    facts.rippleReadsSpecularCore =
+        /\.dock-fission-bridge::before[\s\S]*?var\(--glass-specular-core/.test(css);
+
+    // The MERGE-SPLASH — a bridge ::after gold flash reading --color-gold (the EARNED-gold
+    // Q2 register, NOT a phase spectrum) + the --metal-glow-* catch-light idiom, GATED to
+    // the [data-merging] direction signal so a SPLIT never false-flashes.
+    facts.splashLayer = /\.dock-fission-bridge::after\b/.test(css);
+    facts.splashReadsGold =
+        /\.dock-fission-bridge::after[\s\S]*?var\(--color-gold/.test(css);
+    facts.splashReadsMetalGlow =
+        /\.dock-fission-bridge::after[\s\S]*?var\(--metal-glow-(blur|opacity)/.test(css);
+    facts.splashGatedToMerging = /\[data-merging\]\s+\.dock-fission-bridge::after/.test(css);
+    facts.orchestratorSetsMerging = /setAttribute\(\s*["']data-merging["']/.test(ts);
+    // The anti-evasion bite: a splash reading a PHASE-SPECTRUM hue (--viz-*/--chart-*)
+    // instead of the earned-gold reds (the Q2 earned-gold fence).
+    facts.splashReadsPhaseSpectrum =
+        /\.dock-fission-bridge::after[\s\S]*?var\(--(viz|chart)-/.test(css);
+
+    facts.rippleFloor =
+        facts.rippleRing && facts.rippleScalesOnSplitT && facts.rippleReadsSpecularCore;
+    facts.splashFloor =
+        facts.splashLayer &&
+        facts.splashReadsGold &&
+        facts.splashReadsMetalGlow &&
+        facts.splashGatedToMerging &&
+        facts.orchestratorSetsMerging &&
+        !facts.splashReadsPhaseSpectrum;
+
+    if (!facts.rippleRing)
+        violations.push("B7: no .dock-fission-bridge::before — the FISSION RIPPLE FLOOR is absent");
+    if (facts.rippleRing && !facts.rippleScalesOnSplitT)
+        violations.push("B7: the ripple does not scale on f(--dock-split-t) (it must ride the ONE scalar via transform: scale, NOT an animated radius/width)");
+    if (facts.rippleRing && !facts.rippleReadsSpecularCore)
+        violations.push("B7: the ripple does not read --glass-specular-core (the EXISTING warm-cream cohort, no new color)");
+    if (!facts.splashLayer)
+        violations.push("B7: no .dock-fission-bridge::after — the MERGE-SPLASH gold-coalesce FLOOR is absent");
+    if (facts.splashLayer && !facts.splashReadsGold)
+        violations.push("B7: the merge-splash does not read --color-gold (the EARNED-gold Q2 register)");
+    if (facts.splashLayer && !facts.splashReadsMetalGlow)
+        violations.push("B7: the merge-splash does not read the --metal-glow-* catch-light idiom (the no-re-author gold halo)");
+    if (facts.splashLayer && !facts.splashGatedToMerging)
+        violations.push("B7: the merge-splash is not gated to [data-merging] — a SPLIT onset would false-flash the gold (the direction signal)");
+    if (facts.splashLayer && !facts.orchestratorSetsMerging)
+        violations.push("B7: the orchestrator does not set [data-merging] on the reverse fission — the splash gate has no writer");
+    if (facts.splashReadsPhaseSpectrum)
+        violations.push("B7: the merge-splash reads a PHASE-SPECTRUM hue (--viz-*/--chart-*) — it MUST read --color-gold (the Q2 earned-gold fence)");
     return { violations, facts };
 }
 
@@ -302,6 +379,25 @@ function selfTests() {
         const css = ".dock-fission-bridge { opacity: 1; }";
         return /@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)/.test(css) === false;
     })();
+    // (vii) a merge-splash reading a PHASE-SPECTRUM hue (not --color-gold) reds B7.
+    out.vii = (() => {
+        const css = ".dock-fission-bridge::after { background: var(--viz-fourier); }";
+        return /\.dock-fission-bridge::after[\s\S]*?var\(--(viz|chart)-/.test(css);
+    })();
+    // (viii) a ripple animating a layout radius/width (not transform: scale) reds B7.
+    out.viii = (() => {
+        // The honest ripple scales on f(--dock-split-t); a ripple with NO scale-on-split-t
+        // (e.g. an animated width) fails the rippleScalesOnSplitT assert.
+        const css = ".dock-fission-bridge::before { width: calc(var(--dock-split-t) * 10rem); }";
+        return !/\.dock-fission-bridge::before[\s\S]*?transform:\s*scale\([^)]*var\(--dock-split-t/.test(
+            css,
+        );
+    })();
+    // (ix) a merge-splash with NO [data-merging] gate (a split would false-flash) reds B7.
+    out.ix = (() => {
+        const css = ".dock-fission-bridge::after { opacity: 1; }";
+        return /\[data-merging\]\s+\.dock-fission-bridge::after/.test(css) === false;
+    })();
     return out;
 }
 
@@ -312,6 +408,7 @@ export function detect() {
     const b4 = detectB4();
     const b5 = detectB5();
     const b6 = detectB6();
+    const b7 = detectB7();
     const fence = detectBbFence();
 
     const st = selfTests();
@@ -326,6 +423,7 @@ export function detect() {
         ...b4.violations,
         ...b5.violations,
         ...b6.violations,
+        ...b7.violations,
         ...fence.violations,
         ...stViolations,
     ];
@@ -338,6 +436,7 @@ export function detect() {
             b4: b4.facts,
             b5: b5.facts,
             b6: b6.facts,
+            b7: b7.facts,
             fence: fence.facts,
             selfTests: st,
         },
@@ -360,10 +459,11 @@ function run() {
     console.log(`proof:metaball-bridge2 — ${status.toUpperCase()}`);
     console.log(`  B1 n-seam: css=${facts.b1.cssExists} neck-t=${facts.b1.hasNeckT} clip-on-neck-t=${facts.b1.neckClipOnNeckT} piece-scoped=${facts.b1.scopedToPiece} no-named-plates=${!facts.b1.hasTwoNamedPlateLiteral}`);
     console.log(`  B2 recoil: liquid-flex=${facts.b2.usesLiquidFlex} tanh=${facts.b2.tanhLaw} capped-low=${facts.b2.cappedLow} stretch-scale=${facts.b2.drivesStretch && facts.b2.scaleReadsStretch} no-layout=${!facts.b2.recoilAnimatesLayout}`);
-    console.log(`  B3 specular: angle=${facts.b3.hasNeckSpecularAngle} conic=${facts.b3.conicSweep} shared-core+plus-lighter=${facts.b3.readsSharedCore && facts.b3.usesPlusLighter} no-fork=${!facts.b3.hasForkedMouseWriter}`);
+    console.log(`  B3 specular: angle=${facts.b3.hasNeckSpecularAngle} conic=${facts.b3.conicSweep} shared-core+plus-lighter=${facts.b3.readsSharedCore && facts.b3.usesPlusLighter} no-fork=${!facts.b3.hasForkedMouseWriter} orchestrator-writes-angle=${facts.b3.orchestratorWritesAngle}`);
     console.log(`  B4 compositor: regular-filter=${facts.b4.regularFilterGoo} no-backdrop-url=${facts.b4.notBackdropFilterUrl} neck-break=${facts.b4.hasNeckBreak} goo-swap=${facts.b4.gooSwapGated} no-layout=${!facts.b4.animatesLayout}`);
     console.log(`  B5 one-spring: neck-t-js=${facts.b5.neckTWrittenByJs} spring-scalar=${facts.b5.springWritesScalar} no-second-clock=${!facts.b5.hasSecondNeckClock} reads-dock-spring=${facts.b5.readsDockSpring}`);
     console.log(`  B6 prm: block=${facts.b6.hasPrmBlock} zeroes-bridge=${facts.b6.zeroesBridge} kills-neck=${facts.b6.killsNeckPaint}`);
+    console.log(`  B7 jubilance: ripple=${facts.b7.rippleFloor} (ring=${facts.b7.rippleRing} scale-on-split-t=${facts.b7.rippleScalesOnSplitT} specular-core=${facts.b7.rippleReadsSpecularCore}) merge-splash=${facts.b7.splashFloor} (gold=${facts.b7.splashReadsGold} metal-glow=${facts.b7.splashReadsMetalGlow} merging-gated=${facts.b7.splashGatedToMerging} sets-merging=${facts.b7.orchestratorSetsMerging} no-phase-spectrum=${!facts.b7.splashReadsPhaseSpectrum})`);
     console.log(`  FENCE: morph-bridge-two-plates=${facts.fence.keepsTwoPlates} no-neck-t-bleed=${facts.fence.noNeckTInMorph}`);
     console.log(`  self-tests: ${Object.entries(facts.selfTests).map(([k, v]) => `${k}=${v ? "OK" : "BROKE"}`).join(" ")}`);
     if (violations.length) {

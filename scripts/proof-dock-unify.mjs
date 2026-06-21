@@ -140,6 +140,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the BC.W-DOCK-SEARCH dock-as-native-dynamic-search-bar facility — the collapsed dock pill MORPHS (the --dock-morph-t glide + the byte-untouched morph-bridge metaball) into a search field, composing useDockSearch + the SHIPPED /search useFuzzySearch matcher into <GlassDock search>'s #search aperture; the dock is the SEARCH SUBJECT (the consumer #1 binding of the morph-into-search seam), NOT a nav rail — a home control would pollute the search-facility teaching surface",
     },
+    {
+        path: "demo/stories/dock/liquid-playground.vue",
+        facility:
+            "the BE.W-DOCK-RAIL-REALIZE facet-carousel RAIL facility — the two <GlassDock>s (one horizontal, one vertical) are the RAIL-IN-A-DOCK SUBJECT: each hosts the accent-facet context carousel in its #rail gutter via <DockStack mode=\"facets\"> (the box-INVIOLATE hairline strip — the rail is NOT a vertical dock), demonstrating the per-facet --glass-accent hues + the box-equality across both orientations; NOT a nav rail — the in-flow controls are placeholder nav glyphs framing the rail facility, a home-pattern would pollute the rail teaching surface (the dock-as-control-interface liquid-morph register, same scope as morph-showcase/cta-receive/dock-search)",
+    },
 ];
 
 let _cliPaths = null;

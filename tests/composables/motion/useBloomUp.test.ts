@@ -12,7 +12,7 @@
 // snap path is fully synchronous and exercises every seam.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
 import { mountComposable } from "../../utils/mountComposable";
 
@@ -201,6 +201,77 @@ describe("useBloomUp — the field-resolution contract (explicit > data-glass-fi
         // The marked ancestor — NOT the immediate parent — carries the bias.
         expect(grandparent.style.getPropertyValue("--glass-ambient-hue")).toBe("oklch(0.7 0.12 60)");
         expect(parent.style.getPropertyValue("--glass-ambient-hue")).toBe("");
+        unmount();
+    });
+
+    it("prime() seats the dest hidden (opacity 0) — the no-mount-flash floor", () => {
+        const field = document.createElement("div");
+        field.setAttribute("data-glass-field", "");
+        const destEl = document.createElement("div");
+        const sourceEl = document.createElement("div");
+        field.appendChild(destEl);
+        document.body.appendChild(field);
+        document.body.appendChild(sourceEl);
+        stubRect(sourceEl, { x: 10, y: 10, width: 40, height: 40 });
+        stubRect(destEl, { x: 0, y: 0, width: 400, height: 300 });
+
+        const { result, unmount } = mountComposable(() =>
+            useBloomUp(ref(sourceEl), ref(destEl), { fieldHue: "oklch(0.7 0.12 60)" }),
+        );
+        result.prime();
+        // The dest shows NOTHING — opacity 0 (the load-bearing no-flash leg). The geometry
+        // is collapsed toward the source via the FLIP transform (a transform is written).
+        expect(destEl.style.opacity).toBe("0");
+        expect(destEl.style.transform).not.toBe("");
+        unmount();
+    });
+
+    it("auto-primes the dest hidden the moment its ref resolves (no full-size flash)", async () => {
+        const field = document.createElement("div");
+        field.setAttribute("data-glass-field", "");
+        const destEl = document.createElement("div");
+        const sourceEl = document.createElement("div");
+        field.appendChild(destEl);
+        document.body.appendChild(field);
+        document.body.appendChild(sourceEl);
+        stubRect(sourceEl, { x: 10, y: 10, width: 40, height: 40 });
+        stubRect(destEl, { x: 0, y: 0, width: 400, height: 300 });
+
+        // The dest ref starts NULL (the v-if-unmounted case), then resolves — the auto-prime
+        // watch must seat it hidden BEFORE the consumer ever blooms.
+        const destRef = ref<HTMLElement | null>(null);
+        const { unmount } = mountComposable(() =>
+            useBloomUp(ref(sourceEl), destRef, { fieldHue: "oklch(0.7 0.12 60)" }),
+        );
+        destRef.value = destEl; // the v-if mounts the dest
+        await nextTick();
+        // Seated hidden — never a full-size opacity-1 flash.
+        expect(destEl.style.opacity).toBe("0");
+        unmount();
+    });
+
+    it("autoPrime:false leaves the dest untouched at mount (consumer owns initial state)", async () => {
+        const field = document.createElement("div");
+        field.setAttribute("data-glass-field", "");
+        const destEl = document.createElement("div");
+        const sourceEl = document.createElement("div");
+        field.appendChild(destEl);
+        document.body.appendChild(field);
+        document.body.appendChild(sourceEl);
+        stubRect(sourceEl, { x: 10, y: 10, width: 40, height: 40 });
+        stubRect(destEl, { x: 0, y: 0, width: 400, height: 300 });
+
+        const destRef = ref<HTMLElement | null>(null);
+        const { unmount } = mountComposable(() =>
+            useBloomUp(ref(sourceEl), destRef, {
+                fieldHue: "oklch(0.7 0.12 60)",
+                autoPrime: false,
+            }),
+        );
+        destRef.value = destEl;
+        await nextTick();
+        // No auto-prime — the dest keeps its un-seated style (the consumer opts out).
+        expect(destEl.style.opacity).toBe("");
         unmount();
     });
 

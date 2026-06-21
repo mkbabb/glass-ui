@@ -48,6 +48,7 @@ import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Button } from "../../../src/components/ui/button";
+import { Slider } from "../../../src/components/ui/slider";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
@@ -206,8 +207,82 @@ function registerIslandPieces(): void {
 }
 const islandSplit = ref(false);
 function toggleIsland(): void {
+    // a click hands the host back to the ENGINE spring — clear any frozen scrub overrides
+    // first so the spring is the sole driver (no engine-vs-scrub double-write), then
+    // toggle from the engine's own state. The scrubber re-seats to 0 (rest) on hand-off.
+    clearScrubOverrides();
     islandSplit.value = !islandSplit.value;
     fission.toggle();
+}
+
+// ── the SPLIT SCRUBBER — a demo affordance to make the BRIEF goo neck VISIBLE ──────
+// The goo neck stretches→snaps in ~150ms at the fast DOCK_SPRING — too quick to SEE
+// frame-by-frame. The scrubber drives `--dock-split-t` DIRECTLY (scrub 0→1) onto the
+// island host + pieces, so the neck stretch/snap is showcasable at any frozen frame. It
+// writes the SAME CSS vars the engine writes (the demo replicates the engine's per-piece
+// vector writes from the registered halves — timer peels -1, music +1), NEVER a second
+// engine. The dock still TOGGLES on click; scrubbing is the inspect affordance beside it.
+const scrubT = ref<number[]>([0]);
+// the goo `filter:url()` engages only past the engine's carve threshold (the
+// `[data-fissioning]` gate); mirror it so a scrubbed frame > threshold shows the goo neck.
+const SPLIT_THRESHOLD = 0.02;
+function scrub(value: number[] | number | undefined): void {
+    const t = Math.min(
+        1,
+        Math.max(0, Array.isArray(value) ? (value[0] ?? 0) : (value ?? 0)),
+    );
+    const host = islandHostRef.value;
+    if (!host) return;
+    const vertical = orientation.value === "vertical";
+    // write the host scalar + the fissioning gate (the goo-OR-glass swap reads BOTH).
+    host.style.setProperty("--dock-split-t", String(t));
+    if (t > SPLIT_THRESHOLD) host.setAttribute("data-fissioning", "");
+    else host.removeAttribute("data-fissioning");
+    // write each piece's vector + neck-t (the same shape useDockFission writes; the
+    // demo knows the two halves' vectors). neck-t == the host scalar (no phase shift in
+    // the frozen-frame inspect; the spring's per-piece neck phase is a motion nicety).
+    const pieces: Array<{ el: HTMLElement | null; dx: number; dy: number; rank: number }> = [
+        {
+            el: timerPieceRef.value,
+            dx: vertical ? 0 : -1,
+            dy: vertical ? -1 : 0,
+            rank: 0,
+        },
+        {
+            el: musicPieceRef.value,
+            dx: vertical ? 0 : 1,
+            dy: vertical ? 1 : 0,
+            rank: 1,
+        },
+    ];
+    for (const p of pieces) {
+        if (!p.el) continue;
+        p.el.style.setProperty("--split-dx", String(p.dx));
+        p.el.style.setProperty("--split-dy", String(p.dy));
+        p.el.style.setProperty("--neck-t", String(t));
+        p.el.style.setProperty("--i", String(p.rank));
+        p.el.style.setProperty("--stretch", "1");
+    }
+    // keep the readout state honest with the scrubbed position.
+    islandSplit.value = t >= SPLIT_THRESHOLD;
+}
+// when the user leaves island mode (or merges via click), clear the scrub overrides so
+// the engine's spring re-owns the host on the next toggle (no stale inline --dock-split-t).
+function clearScrubOverrides(): void {
+    const host = islandHostRef.value;
+    if (host) {
+        host.style.removeProperty("--dock-split-t");
+        host.removeAttribute("data-fissioning");
+    }
+    for (const el of [timerPieceRef.value, musicPieceRef.value]) {
+        if (!el) continue;
+        el.style.removeProperty("--split-dx");
+        el.style.removeProperty("--split-dy");
+        el.style.removeProperty("--neck-t");
+        el.style.removeProperty("--i");
+        el.style.removeProperty("--stretch");
+    }
+    scrubT.value = [0];
 }
 
 // ── the unified Play/Close action — the timeline button drives the active mode ───
@@ -218,6 +293,7 @@ function play(): void {
 function reset(): void {
     // close every register to rest.
     if (open.value) close();
+    clearScrubOverrides();
     if (islandSplit.value) {
         islandSplit.value = false;
         fission.merge();
@@ -228,6 +304,7 @@ function reset(): void {
 // starts at rest (so a switch never strands an open overlay or a split island).
 watch(mode, () => {
     if (open.value) close();
+    clearScrubOverrides();
     if (islandSplit.value) {
         islandSplit.value = false;
         fission.merge();
@@ -360,6 +437,29 @@ function onAuroraInitError(err: Error): void {
                     <Button variant="outline" @click="toggleOrientation">
                         {{ orientation === "horizontal" ? "↕ Vertical" : "↔ Horizontal" }}
                     </Button>
+                </div>
+
+                <!-- THE SPLIT SCRUBBER — only in island mode. The goo neck stretches→snaps
+                     in ~150ms at the fast DOCK_SPRING (too quick to SEE); scrub --dock-split-t
+                     directly (0→1) to inspect the neck stretch/snap frame-by-frame. A demo
+                     affordance beside the click toggle — the engine still drives the click. -->
+                <div
+                    v-if="mode === 'island'"
+                    class="flex min-w-[16rem] flex-1 flex-col gap-2"
+                >
+                    <label class="text-mono-caption text-muted-foreground">
+                        Scrub the goo neck · split-t = {{ (scrubT[0] ?? 0).toFixed(2) }}
+                    </label>
+                    <Slider
+                        v-model="scrubT"
+                        :min="0"
+                        :max="1"
+                        :step="0.01"
+                        :keep-dock-open="false"
+                        aria-label="Scrub the fission split"
+                        data-testid="liquid-island-scrubber"
+                        @update:model-value="scrub"
+                    />
                 </div>
             </div>
 

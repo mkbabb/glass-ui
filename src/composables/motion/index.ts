@@ -59,6 +59,15 @@ export * from "./useDockCtaReceive";
 // bearing → `/motion` ONLY, never the root barrel (the SCC-trap discipline).
 // Compositor-only on the surface + Safari-safe + PRM-snap.
 export * from "./useBloomUp";
+// BE.W-CELEBRATE-BURST — useCelebrationBurst: the library's ONE EARNED-moment celebration
+// primitive (a one-shot radial bloom of N warm-cream glass petals that scale+fade+drift
+// outward on the bouncy spring, then a coupled chip-bloom-in cascade settles the
+// destination). Composes the SAME springTimingFunction + SPRING_PRESETS substrate
+// useLiquidReveal activates (the bouncy row — NO new spring family, NO hand (response, ζ),
+// NO second rAF integrator). Keyframes-bearing (via springTimingFunction) → ships on
+// `/motion` ONLY, NEVER the root barrel (the SCC-trap discipline). Compositor-only +
+// PRM-static.
+export * from "./useCelebrationBurst";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV

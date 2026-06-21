@@ -74,13 +74,25 @@
 // step — zero transform/blur frames, the fade survives — AND lands the field hue
 // INSTANTLY (the strength jumps to its target). A color change is not a vestibular
 // trigger; scale/translate/blur are. Mirrors `useLiquidReveal.respectReducedMotion`.
+//
+// NO MOUNT-FLASH (the prime seam — the 1-frame full-size flash fix). A `v-if`-mounted
+// destination paints ONCE at its full settled rect BEFORE `bloom()` seats it — a sub-
+// frame flash of the full-size sheet before it collapses to the source pill. The leaf
+// SEATS the dest at its collapsed/hidden initial state (opacity 0 + the source-FLIP
+// transform) THE MOMENT `destRef` becomes available, before the browser paints. The
+// auto-prime is a `watch(dest, …, { flush: "pre" })` (pre-render: it runs in the SAME
+// tick the element mounts, before paint) so a dest that hasn't bloomed yet shows
+// NOTHING, never a full-size flash; `prime()` is the explicit imperative twin. Priming
+// is opacity-0 + a transform (compositor-only — never a layout property), released the
+// instant `bloom()`/`reset()` runs. PRM-safe: under reduce the prime seats opacity 0
+// only (no transform/blur frames at rest either), and the bloom snap clears it.
 
 import {
     ElementMorph,
     springTimingFunction,
     type Easing,
 } from "@mkbabb/keyframes.js";
-import { onScopeDispose, readonly, ref, type Ref } from "vue";
+import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
 import { springPreset, type SpringPresetName } from "./springPresets";
 
 /** The bloom spring register — `snappy` (the quick shared-element default) or `bouncy`
@@ -119,6 +131,15 @@ export interface UseBloomUpOptions {
     /** Honor `prefers-reduced-motion: reduce` (snap surface to settled, land hue instantly). Default true. */
     respectReducedMotion?: boolean;
     /**
+     * Auto-prime the destination the moment it mounts — seat it at the collapsed/hidden
+     * initial state (opacity 0 + the source-FLIP transform) BEFORE the browser paints,
+     * so a freshly-`v-if`-mounted dest never flashes its full-size frame before `bloom()`
+     * fires. A `watch(dest, …, { flush: "pre" })` runs in the SAME tick the element
+     * mounts. Default `true` — the no-flash floor; pass `false` to opt a consumer that
+     * owns its own initial-state seating out. `prime()` is the explicit imperative twin.
+     */
+    autoPrime?: boolean;
+    /**
      * Fired ONCE when the bloom has settled (the hand-off — the consumer marks the
      * bloom complete: hides the source, owns the destination). Fires on the animation
      * settle AND on the PRM/no-rAF snap (the bloom always completes).
@@ -140,6 +161,14 @@ export interface UseBloomUpReturn {
      * cancels any in-flight bloom; does NOT fire `onBloomed`.
      */
     reset: () => void;
+    /**
+     * Seat the destination at its collapsed/hidden initial state (opacity 0 + the
+     * source-FLIP transform) WITHOUT animating — so a freshly-mounted dest shows
+     * NOTHING until `bloom()` fires (the no-mount-flash seam). Idempotent; a no-op if
+     * the dest is not yet mounted. The auto-prime (`autoPrime`, default on) calls this
+     * for the consumer; `prime()` is the explicit imperative twin.
+     */
+    prime: () => void;
     /** The reactive bloom state — `true` while a bloom is in flight, `false` at rest. */
     blooming: Readonly<Ref<boolean>>;
 }
@@ -225,6 +254,7 @@ export function useBloomUp(
     const respectPRM = options.respectReducedMotion !== false;
     const blurStart = options.blur ?? 4;
     const strengthTarget = clampStrength(options.fieldStrength);
+    const autoPrime = options.autoPrime !== false;
 
     // The spring curve — the typed {fn, css} pair from the SAME SPRING_PRESETS row the
     // --spring-<name> CSS tokens generate from (never a hand (response, ζ)). The same
@@ -244,6 +274,9 @@ export function useBloomUp(
     let morph: ElementMorph | null = null;
     let raf = 0;
     let startTs = 0;
+    // Whether the dest is currently SEATED at its primed (hidden) initial state. Set by
+    // prime(), cleared the instant bloom()/reset() runs (those own the surface from then).
+    let primed = false;
     // The field the 4th channel is biasing (held across the rAF loop so the cleanup +
     // reset can release the hue from the SAME element it was written to).
     let activeField: HTMLElement | null = null;
@@ -253,6 +286,51 @@ export function useBloomUp(
         el.style.transformOrigin = "";
         el.style.opacity = "";
         el.style.filter = "";
+        primed = false;
+    }
+
+    // Seat the dest at its collapsed/hidden INITIAL state — opacity 0 + the source-FLIP
+    // transform — WITHOUT animating, so a freshly-mounted (v-if) dest shows NOTHING until
+    // bloom() fires (the no-mount-flash floor). The load-bearing leg is opacity 0; the
+    // transform is the best-effort FLIP toward the source so a prime read MID-frame
+    // already shows the collapsed geometry (never the full-size frame). bloom() always
+    // re-measures fresh, so an imprecise prime rect is harmless. Compositor-only.
+    function prime(): void {
+        const el = dest.value;
+        if (!el) return;
+        // Never clobber an in-flight bloom (raf running) — that already owns the surface.
+        if (raf) return;
+        const settled = el.getBoundingClientRect();
+        const sourceEl = source.value;
+        const sourceRect = sourceEl
+            ? sourceEl.getBoundingClientRect()
+            : {
+                  x: settled.x + settled.width * 0.04,
+                  y: settled.y + settled.height * 0.04,
+                  width: settled.width * 0.92,
+                  height: settled.height * 0.92,
+              };
+        el.style.opacity = "0";
+        // Seat the FLIP transform at progress=1 (looks like the source) so the geometry is
+        // already collapsed — but ONLY when the rects measure (a zero-rect dest mid-mount
+        // still shows nothing via opacity 0). The ElementMorph at progress 1 writes the
+        // source-rect delta; transform-origin at the source point (the shared-element feel).
+        if (settled.width > 0 && settled.height > 0) {
+            const originX = sourceRect.x - settled.x;
+            const originY = sourceRect.y - settled.y;
+            const primeMorph = new ElementMorph(
+                { x: settled.x, y: settled.y, width: settled.width, height: settled.height },
+                {
+                    x: sourceRect.x,
+                    y: sourceRect.y,
+                    width: sourceRect.width,
+                    height: sourceRect.height,
+                },
+                { transformOrigin: `${originX}px ${originY}px` },
+            );
+            primeMorph.apply(el, 1);
+        }
+        primed = true;
     }
 
     // The 4th color channel writes — the hue + the ramped strength on the FIELD (a
@@ -286,6 +364,7 @@ export function useBloomUp(
         const el = dest.value;
         if (!el) return;
         cancelRaf();
+        primed = false; // bloom() owns the surface from here (clears any primed seat)
 
         // The settled rect (the destination's real, painted FULL position — it lays out
         // ONCE at its full footprint). The source rect (the small element it blooms FROM).
@@ -402,6 +481,21 @@ export function useBloomUp(
         activeField = null;
     }
 
+    // Auto-prime — seat the dest hidden the MOMENT it mounts (the no-mount-flash floor).
+    // `flush: "pre"` runs the callback in the SAME tick the ref resolves, BEFORE the
+    // browser paints, so a freshly-v-if-mounted dest never shows its full-size frame. We
+    // only prime a dest that is NOT mid-bloom and NOT already settled-open (blooming false
+    // + no raf): a re-resolve of the dest ref during an open state must not hide it.
+    if (autoPrime) {
+        watch(
+            dest,
+            (el) => {
+                if (el && !raf && !blooming.value) prime();
+            },
+            { flush: "pre" },
+        );
+    }
+
     onScopeDispose(() => {
         cancelRaf();
         morph = null;
@@ -409,5 +503,5 @@ export function useBloomUp(
         activeField = null;
     });
 
-    return { bloom, reset, blooming: readonly(blooming) };
+    return { bloom, reset, prime, blooming: readonly(blooming) };
 }

@@ -97,3 +97,12 @@ export * from "../useScrollTrigger";
 // the engine-free /motion-core surface (the useScrollTrigger precedent). The dock-search
 // consumer (BC.W-DOCK-SEARCH) + the demo scroll-system header reach it here.
 export * from "../useScrollChrome";
+// BE.W-HAPTIC-COUPLE — useHaptic: the library's ONE haptic primitive (a thin,
+// feature-detected navigator.vibrate wrapper with a bounded named-pattern register
+// coupled to the platform's confirm-moments). Imports `vue` ONLY — engine-FREE +
+// vueuse-FREE — so it ships on the engine-free /motion-core surface (and reaches the
+// root barrel through it, the useLiquidFlex/usePointerVelocityField precedent). A
+// keyframes/vueuse import would force the heavy peer onto /motion-core (the SCC-trap,
+// H1-fenced). It lives IN core/ (the only leaf that does — the spec's home) so it is
+// exported by its local path, not the sibling-up `../` form.
+export * from "./useHaptic";

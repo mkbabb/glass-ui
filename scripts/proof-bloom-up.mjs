@@ -61,6 +61,14 @@
 //   W4 — THE 3 COMPOSITOR CHANNELS (byte-shape with useLiquidReveal).
 //        transform (morph.apply) + opacity + filter blur are all present on the bloom
 //        path. BITE: a bloom omitting any of the three channels reds.
+//   W5 — NO MOUNT-FLASH: THE DEST IS SEATED-HIDDEN-ON-MOUNT (the prime seam).
+//        A v-if-mounted dest paints ONCE at its full settled rect BEFORE bloom() seats
+//        it — a sub-frame flash of the full-size sheet. useBloomUp SEATS the dest at its
+//        collapsed/hidden state (opacity 0 + the source-FLIP transform) the MOMENT destRef
+//        becomes available, before paint. BITE: (a) a `prime()` seam exists + is returned;
+//        (b) the auto-prime is a `watch(dest, …)` running pre-paint (`flush: "pre"`); (c)
+//        prime seats opacity "0" (shows NOTHING — the load-bearing leg). Self-test: a leaf
+//        with NO prime/auto-prime seam reds W5 (born-RED on the flash).
 //
 //   + the inline self-test bite (a synthetic leaf that: hand-rolls the spring reds W1;
 //     writes a layout property on the surface reds W1; omits the 4th channel reds W2;
@@ -233,6 +241,21 @@ function checkLeaf(rawLeaf, { fail }) {
         fail("W4", "useBloomUp does not drive the opacity channel (the coupled fade is absent)");
     if (!/\.style\.filter\s*=\s*`?blur/.test(src) && !/filter\s*=\s*`blur/.test(src))
         fail("W4", "useBloomUp does not drive the filter blur-decongest channel (the iOS light-bending decongest is absent)");
+
+    // ── W5 — no mount-flash: the dest is seated-hidden-on-mount (the prime seam) ──────
+    // (a) a prime() seam exists.
+    const hasPrime = /\bprime\b/.test(src);
+    if (!hasPrime)
+        fail("W5", "useBloomUp has no prime() seam (the dest must be seated-hidden the moment it mounts — a v-if-mounted dest flashes its full-size frame for ONE paint before bloom() seats it)");
+    // (b) the auto-prime is a pre-paint watch on the dest ref (flush:"pre" runs in the
+    //     SAME tick the element mounts, before the browser paints).
+    const hasAutoPrimeWatch =
+        /\bwatch\s*\(\s*dest\b/.test(src) && /flush\s*:\s*["']pre["']/.test(src);
+    if (!hasAutoPrimeWatch)
+        fail("W5", "useBloomUp has no pre-paint auto-prime (a `watch(dest, …, { flush: \"pre\" })` must seat the dest hidden BEFORE the browser paints — a post-flush prime is one frame too late, the flash survives)");
+    // (c) prime seats opacity "0" — the load-bearing leg (the dest shows NOTHING).
+    if (hasPrime && !/\.style\.opacity\s*=\s*["']0["']/.test(src))
+        fail("W5", "the prime seam does not seat opacity \"0\" (showing NOTHING is the load-bearing no-flash leg — a transform-only prime still flashes the full-size opaque frame)");
 }
 
 function checkMotionBarrel(rawBarrel, { fail }) {
@@ -384,6 +407,41 @@ checkRootBarrel(read(ROOT_BARREL), ctx);
     );
     if (!s5.some((f) => f.clause === "W3"))
         fails.push("[SELF-TEST] the synthetic still-animating PRM branch did NOT flag W3 (the deterministic-snap detector is broken)");
+
+    // S6 — a leaf with NO prime/auto-prime seam MUST flag W5 (born-RED on the flash).
+    const s6 = [];
+    checkLeaf(
+        `
+        import { ElementMorph, springTimingFunction } from "@mkbabb/keyframes.js";
+        import { springPreset } from "./springPresets";
+        function prefersReducedMotion() { return false; }
+        export function useBloomUp(source, dest, options) {
+            const fieldHue = options.fieldHue;
+            const { response } = springPreset("snappy");
+            let morph = null;
+            function readHue() { return getComputedStyle(source.value).getPropertyValue("--glass-ambient-hue"); }
+            function resolveField() { return options.field || null; }
+            function bloom() {
+                const el = dest.value;
+                const field = resolveField();
+                field.style.setProperty("--glass-ambient-hue", readHue());
+                if (prefersReducedMotion()) {
+                    el.style.opacity = "1";
+                    field.style.setProperty("--glass-ambient-strength", "8%");
+                    return;
+                }
+                morph.apply(el, 1);
+                el.style.opacity = "1";
+                el.style.filter = \`blur(0px)\`;
+                field.style.setProperty("--glass-ambient-strength", "8%");
+            }
+            return { bloom, reset() {}, blooming: false };
+        }
+        `,
+        { fail: (clause, msg) => s6.push({ clause, msg }) },
+    );
+    if (!s6.some((f) => f.clause === "W5"))
+        fails.push("[SELF-TEST] the synthetic no-prime-seam leaf did NOT flag W5 (the seated-hidden-on-mount detector is broken — the 1-frame mount-flash survives)");
 }
 
 // ── Verdict ─────────────────────────────────────────────────────────────────────────
@@ -393,5 +451,5 @@ if (fails.length) {
     process.exit(1);
 }
 console.log(
-    "proof:bloom-up — PASS (W1 kf-substrate+compositor-only-surface · W2 4th-color-channel-on-the-field+reads-source-hue · W3 Safari-safe+PRM-snap+off-root · W4 3-compositor-channels · self-test bites fired)",
+    "proof:bloom-up — PASS (W1 kf-substrate+compositor-only-surface · W2 4th-color-channel-on-the-field+reads-source-hue · W3 Safari-safe+PRM-snap+off-root · W4 3-compositor-channels · W5 no-mount-flash+seated-hidden-on-mount · self-test bites fired)",
 );
