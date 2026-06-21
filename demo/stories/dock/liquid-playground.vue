@@ -81,8 +81,17 @@ const open = ref(false);
 // the dock's resting axis — horizontal pill (row) or vertical pill (column). The morph
 // works on BOTH ("function in a vertical or horizontal state").
 const orientation = ref<"horizontal" | "vertical">("horizontal");
+// the V<->H morph reshapes the box (CSS transition), but the row<->column content flip is a
+// TOPOLOGY change the web platform can't continuously interpolate — so we OCCLUDE it inside a
+// brief content cross-fade (the morph-showcase goo/View-Transitions discipline, the cheap
+// CSS-only version): `reorienting` arms a `[data-reorienting]` opacity dip over the reshape.
+const reorienting = ref(false);
+let reorientTimer: ReturnType<typeof setTimeout> | undefined;
 function toggleOrientation(): void {
     orientation.value = orientation.value === "horizontal" ? "vertical" : "horizontal";
+    reorienting.value = true;
+    clearTimeout(reorientTimer);
+    reorientTimer = setTimeout(() => (reorienting.value = false), 460);
 }
 
 // the expand pane content — the iOS-27 Maps "Places" sheet: a COLORFUL Places row
@@ -401,6 +410,7 @@ function onAuroraInitError(err: Error): void {
                     :data-mode="mode"
                     :data-open="open"
                     :data-orientation="orientation"
+                    :data-reorienting="reorienting ? '' : undefined"
                     :style="{
                         '--liquid-dock-controls': splitCount,
                         // sheets/players BLOOM UP from the bottom dock (reference motion);

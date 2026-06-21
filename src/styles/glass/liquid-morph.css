@@ -49,6 +49,36 @@
     .liquid-dock[data-liquid-morphing] {
         transition: none;
     }
+    /* OCCLUDE the row⇄column topology flip during the V↔H reshape — a brief opacity dip on
+       the rest content so the flex-direction snap is hidden behind the cross-fade (the cheap
+       CSS-only version of morph-showcase's goo / View-Transitions topology occlusion). The
+       content fades out FAST (by ~22%, hiding the flip), then fades back as the box settles. */
+    @keyframes liquid-reorient-occlude {
+        0% {
+            opacity: 1;
+        }
+        22% {
+            opacity: 0.08;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    /* MODE-SCOPED — crossfade only the VISIBLE rest content per mode (the controls are
+       opacity:0 in expand/player, so an unscoped animation would FLASH them visible). */
+    .liquid-dock[data-reorienting]:is([data-mode="split"], [data-mode="union"])
+        .liquid-dock-controls,
+    .liquid-dock[data-reorienting][data-mode="expand"] .liquid-dock-search,
+    .liquid-dock[data-reorienting][data-mode="player"] .liquid-dock-player-pill {
+        animation: liquid-reorient-occlude 0.44s ease both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .liquid-dock[data-reorienting] .liquid-dock-controls,
+        .liquid-dock[data-reorienting] .liquid-dock-search,
+        .liquid-dock[data-reorienting] .liquid-dock-player-pill {
+            animation: none;
+        }
+    }
 
     /* ── VERTICAL orientation — the rest pill is a narrow COLUMN; the morph swaps the
        pill axis (narrow×tall ⇄ card). The controls stack; expand grows the same card. ── */
