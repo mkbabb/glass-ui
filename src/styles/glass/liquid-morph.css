@@ -26,6 +26,7 @@
 
         position: relative;
         box-sizing: border-box;
+        cursor: pointer; /* the dock IS the trigger — click it to morph */
         /* the morph: the box grows in place off the ONE scalar */
         inline-size: calc(var(--pill-w) + (var(--card-w) - var(--pill-w)) * var(--t));
         block-size: calc(var(--pill-h) + (var(--card-h) - var(--pill-h)) * var(--t));

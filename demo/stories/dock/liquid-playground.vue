@@ -155,6 +155,15 @@ function reset(): void {
     if (open.value) morph.split();
     else morph.union();
 }
+// ── the keyframes.js timeline scrubber — full manual control of the morph ────────
+// `progress` mirrors the live spring scalar (so the scrubber FOLLOWS a running play);
+// dragging it calls `morph.seek()` (disposes the spring, scrubs the scalar directly).
+const progress = computed(() => Math.round(morph.t.value * 100));
+function seekTo(v: number[] | undefined): void {
+    const p = (v?.[0] ?? 0) / 100;
+    morph.seek(p);
+    open.value = p > 0.5;
+}
 // a mode change re-seats: union STARTS spread (N separate pieces to merge); the others
 // start at rest. (so union demonstrably collapses N elements into one.)
 watch(mode, (m) => {
@@ -286,25 +295,31 @@ function onRailLeave(): void {
                         @update:model-value="(v) => (splitCount = v?.[0] ?? 2)"
                     />
                 </div>
+                <!-- the keyframes.js TIMELINE — click the DOCK to play, or scrub here.
+                     The slider FOLLOWS a running spring and SCRUBS the scalar on drag. -->
+                <div class="flex min-w-[18rem] flex-1 flex-col gap-2">
+                    <label class="text-mono-caption text-muted-foreground">
+                        Timeline — {{ progress }}%
+                    </label>
+                    <div class="flex items-center gap-3">
+                        <Button
+                            variant="primary-audacious"
+                            size="sm"
+                            @click="play"
+                        >
+                            {{ open ? "Close" : "Play ▶" }}
+                        </Button>
+                        <Slider
+                            class="flex-1"
+                            :model-value="[progress]"
+                            :min="0"
+                            :max="100"
+                            :step="1"
+                            @update:model-value="seekTo"
+                        />
+                    </div>
+                </div>
                 <div class="flex gap-2">
-                    <Button variant="primary-audacious" @click="play">
-                        {{
-                            mode === "union"
-                                ? open
-                                    ? "Merge"
-                                    : "Spread"
-                                : mode === "player"
-                                  ? open
-                                      ? "Collapse"
-                                      : "Open player"
-                                  : open
-                                    ? "Collapse"
-                                    : mode === "expand"
-                                      ? "Expand"
-                                      : "Split"
-                        }}
-                    </Button>
-                    <Button variant="outline" @click="reset">Reset</Button>
                     <Button variant="outline" @click="toggleOrientation">
                         {{ orientation === "horizontal" ? "↕ Vertical" : "↔ Horizontal" }}
                     </Button>
@@ -348,6 +363,13 @@ function onRailLeave(): void {
                 <div
                     ref="dockRef"
                     class="liquid-dock"
+                    role="button"
+                    tabindex="0"
+                    :aria-pressed="open"
+                    aria-label="Toggle the dock morph"
+                    @click="play"
+                    @keydown.enter.prevent="play"
+                    @keydown.space.prevent="play"
                     :data-mode="mode"
                     :data-open="open"
                     :data-orientation="orientation"

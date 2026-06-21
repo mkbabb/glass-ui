@@ -146,6 +146,8 @@ export interface UseLiquidMorphReturn {
     split(): void;
     /** UNION — drive the scalar 1 -> 0 (the SAME loop, reversed; bidirectional). */
     union(): void;
+    /** SEEK — scrub the scalar to an arbitrary 0..1 value (the timeline scrubber). */
+    seek(value: number): void;
     /** EXPAND — bloom a card FROM a trigger pill (the dock->card materialize). */
     expand(opts: { card: Ref<HTMLElement | null>; trigger: Ref<HTMLElement | null> }): void;
     /** COLLAPSE — conceal the expanded card back to the pill (the bloom's close). */
@@ -431,6 +433,16 @@ export function useLiquidMorph(options: UseLiquidMorphOptions): UseLiquidMorphRe
         reveal?.conceal();
     }
 
+    /** Scrub the scalar to an arbitrary 0..1 value (the timeline scrubber). Disposes
+     *  any in-flight spring so a manual seek wins over a running play. */
+    function seek(value: number): void {
+        disposeSpring();
+        morphing.value = false;
+        const r = root();
+        if (r) r.removeAttribute("data-liquid-morphing");
+        writeFrame(Math.min(1, Math.max(0, value)));
+    }
+
     onScopeDispose(() => {
         disposeSpring();
         for (const p of pieces) p.handle.release();
@@ -441,6 +453,7 @@ export function useLiquidMorph(options: UseLiquidMorphOptions): UseLiquidMorphRe
         registerPiece,
         split,
         union,
+        seek,
         expand,
         collapse,
         t: readonly(t),
