@@ -75,12 +75,14 @@ function setCtlEl(i: number, el: Element | null): void {
 }
 
 // the ONE engine — DIRECTED so the angle slider drives each control's escape beam.
-// The morph rides the SMOOTH spring (response ~0.5) for a deliberate, luxuriant
-// pill→card bloom (the iOS-27 V3 expand is a substantial ~1s morph, not a 150ms snap).
+// The spring varies BY GESTURE (resolved per-drive): EXPAND rides SMOOTH (a deliberate,
+// luxuriant pill→card bloom, no overshoot — the iOS-27 V3 register), while SPLIT/UNION
+// ride SNAPPY (a livelier clock with a slight overshoot — the pieces bud with LIFE, the
+// creed's jubilance). One engine, two registers.
 const morph = useLiquidMorph({
     rootEl: dockRef,
     signature: DIRECTED_SPLIT,
-    spring: "smooth",
+    spring: () => (mode.value === "expand" ? "smooth" : "snappy"),
 });
 
 // the dock's controls ARE the split pieces — register them with the engine so a

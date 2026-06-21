@@ -50,7 +50,7 @@
 // `/motion` barrel, NEVER the vueuse-free root barrel (the SCC-trap discipline — the
 // `useLiquidReveal` / `useDragMorph` precedent).
 
-import { onScopeDispose, ref, readonly, type Ref } from "vue";
+import { onScopeDispose, ref, readonly, toValue, type MaybeRefOrGetter, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { springPreset, type SpringPresetName } from "./springPresets";
 import { useLiquidReveal, type LiquidRevealPreset } from "./useLiquidReveal";
@@ -108,10 +108,11 @@ export interface UseLiquidMorphOptions {
     /** The morphology signature (default `RADIAL_SPLIT`). */
     signature?: LiquidMorphSignature;
     /**
-     * The spring register the scalar rides — a `SPRING_PRESETS` row name. Default
-     * `"dock"` (the iOS interruptible-control register). NO new family is minted.
+     * The spring register the scalar rides — a `SPRING_PRESETS` row name, or a
+     * ref/getter resolved PER-DRIVE so a host can vary the clock by gesture (a smooth
+     * card bloom vs a livelier split). Default `"dock"`. NO new family is minted.
      */
-    spring?: SpringPresetName;
+    spring?: MaybeRefOrGetter<SpringPresetName>;
     /** The bloom preset for `expand()` (default `"bouncy"`). */
     revealPreset?: LiquidRevealPreset;
     /** Honor `prefers-reduced-motion: reduce` (seat synchronously). Default true. */
@@ -189,9 +190,11 @@ const RAD_TO_DEG = 180 / Math.PI;
  */
 export function useLiquidMorph(options: UseLiquidMorphOptions): UseLiquidMorphReturn {
     const signature = options.signature ?? RADIAL_SPLIT;
-    const presetName: SpringPresetName = options.spring ?? "dock";
     const respectPRM = options.respectReducedMotion !== false;
-    const { response, dampingFraction } = springPreset(presetName);
+    // resolved PER-DRIVE so a host can vary the spring by gesture (the getter form).
+    function resolveSpring(): { response: number; dampingFraction: number } {
+        return springPreset(toValue(options.spring) ?? "dock");
+    }
 
     const t = ref(0);
     const morphing = ref(false);
@@ -330,6 +333,7 @@ export function useLiquidMorph(options: UseLiquidMorphOptions): UseLiquidMorphRe
         const inheritedVelocity =
             spring !== null && !spring.settled ? spring.velocity : 0;
         disposeSpring();
+        const { response, dampingFraction } = resolveSpring();
         spring = new SpringProgress({
             response,
             dampingFraction,
