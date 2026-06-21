@@ -98,10 +98,21 @@
         background: var(--glass-bg-floating);
     }
 
-    /* the container pane — revealed as the box grows (expand) */
+    /* expand/player CLIP the content to the growing box, so nothing OVERFLOWS outside
+       the dock mid-morph (the user's 'transitions partially overflow and occlude'). The
+       pane is pinned to the box BOTTOM at the FINAL card height + only fades in past the
+       half-grown mark, so the content reads complete behind the bloom-up aperture and
+       never squishes. */
+    .liquid-dock:is([data-mode="expand"], [data-mode="player"]) {
+        overflow: hidden;
+    }
+    /* the container pane — anchored to the box BOTTOM at the final card HEIGHT (the box
+       width tracks --card-w so the row never over-reflows), revealed by the clip. */
     .liquid-dock-pane {
         position: absolute;
-        inset: 0;
+        inset-block-end: 0;
+        inset-inline: 0;
+        block-size: var(--card-h);
         padding: 1.5rem;
         display: flex;
         flex-direction: column;
@@ -264,7 +275,9 @@
     }
     .liquid-dock-player-pane {
         position: absolute;
-        inset: 0;
+        inset-block-end: 0;
+        inset-inline: 0;
+        block-size: var(--card-h);
         z-index: 1;
         display: flex;
         flex-direction: column;
