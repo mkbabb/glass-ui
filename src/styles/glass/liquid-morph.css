@@ -129,11 +129,12 @@
     .liquid-dock:is([data-mode="expand"], [data-mode="player"]) {
         overflow: hidden;
     }
-    /* the container pane — anchored to the box BOTTOM at the final card HEIGHT (the box
-       width tracks --card-w so the row never over-reflows), revealed by the clip. */
+    /* the container pane — anchored to the box TOP (which RISES as the box blooms up),
+       so the content reveals TOP-FIRST: the Places row appears at the rising top edge,
+       Recents fills in below as the sheet grows taller (the Maps reveal order). */
     .liquid-dock-pane {
         position: absolute;
-        inset-block-end: 0;
+        inset-block-start: 0;
         inset-inline: 0;
         block-size: var(--card-h);
         padding: 1.5rem;
@@ -298,7 +299,7 @@
     }
     .liquid-dock-player-pane {
         position: absolute;
-        inset-block-end: 0;
+        inset-block-start: 0;
         inset-inline: 0;
         block-size: var(--card-h);
         z-index: 1;
