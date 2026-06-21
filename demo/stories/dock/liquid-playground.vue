@@ -501,6 +501,10 @@ function onRailWheel(e: WheelEvent): void {
                         <span class="liquid-dock-scrubber">
                             <span class="liquid-dock-scrubber-fill" />
                         </span>
+                        <span class="liquid-dock-scrubber-times">
+                            <span>1:59</span>
+                            <span>-3:14</span>
+                        </span>
                         <span class="liquid-dock-transport">
                             <SkipBack class="size-5" />
                             <span class="liquid-dock-transport-play">
