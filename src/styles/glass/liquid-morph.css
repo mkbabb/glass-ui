@@ -189,6 +189,12 @@
        hairline + a faint field tint separate it from the content. */
     .liquid-dock[data-mode="expand"] .liquid-dock-search {
         opacity: 1;
+        border-radius: inherit; /* round the bar bg to the box so it never squares the corners */
+    }
+    /* the field tint + hairline ONLY when the sheet is OPEN — at REST the bar IS the
+       whole rounded pill, so a square tint bleeds over the rounded plate corners (the
+       aliasing). Open, the bar sits at the sheet bottom with content above it. */
+    .liquid-dock[data-mode="expand"][data-open="true"] .liquid-dock-search {
         border-block-start: 1px solid
             color-mix(in oklab, var(--foreground) 9%, transparent);
         background: color-mix(in oklab, var(--card), transparent 35%);
@@ -244,6 +250,11 @@
        never squishes. */
     .liquid-dock:is([data-mode="expand"], [data-mode="player"]) {
         overflow: hidden;
+        /* clip-path DOES clip backdrop-filter (overflow:hidden does NOT) — so the
+           card-size ::before plate's saturate() can't bleed a square halo around the
+           rounded pill at rest. Round MATCHES the box radius. NOT applied in split/union
+           (the goo pieces must fly OUTSIDE the box). */
+        clip-path: inset(0 round calc(2rem - 0.25rem * var(--t)));
     }
     /* the container pane — anchored to the box TOP (which RISES as the box blooms up),
        so the content reveals TOP-FIRST: the Places row appears at the rising top edge,
