@@ -53,6 +53,21 @@ export type {
     UseDockCtaReceiveReturn,
 } from "../composables/motion/useDockCtaReceive";
 
+// ── useBloomUp — the shared-element FLIP where source≠dest + the 4th color channel (BE.W-BLOOM-UP) ──
+// `BloomUpPreset` — the spring register ("snappy"|"bouncy", matching useLiquidReveal/
+// useDockCtaReceive so the bloom family reads as ONE); `UseBloomUpOptions` — the leaf's
+// options ({ preset, blur, fieldHue, field, fieldStrength, respectReducedMotion, onBloomed });
+// `UseBloomUpReturn` — the { bloom, reset, blooming } shape. useBloomUp composes the SAME kf
+// ElementMorph + springTimingFunction substrate useLiquidReveal activates (driven 1→0 — a
+// SMALL source blooms UP onto a LARGE destination's full settled rect) PLUS a 4th COLOR
+// channel on the destination FIELD (the field warms to the source's album hue on the spring
+// curve). Keyframes-bearing → ships ONLY on `@mkbabb/glass-ui/motion`, never the root.
+export type {
+    BloomUpPreset,
+    UseBloomUpOptions,
+    UseBloomUpReturn,
+} from "../composables/motion/useBloomUp";
+
 // ── Motion suite + curve library (AY.W-MOTION2) ───────────────────────────────
 // `/motion` is the distribution seam for the @mkbabb/keyframes.js STATIC suite
 // (NumericAnimation, Sequence, the spring/FLIP/gesture/stagger constructors,

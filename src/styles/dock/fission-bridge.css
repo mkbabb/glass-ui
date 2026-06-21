@@ -1,0 +1,265 @@
+/* dock/fission-bridge.css — BE.W-DOCK-FISSION + BE.W-METABALL-BRIDGE2 — the N-seam
+ * stretch-and-snap goo bridge.
+ *
+ * THE GENERALIZATION (the no-dual-path discipline). The shipped `morph-bridge.css`
+ * merges exactly TWO named plates (`--vertical`/`--horizontal`) onto ONE shared center
+ * on `--dock-morph-t` — a 1→1 V↔H crossfade. That file is BYTE-UNTOUCHED (the BB
+ * V↔H showcase keeps it; `proof:morph-showcase`/`proof:dock-morph-insitu` stay GREEN by
+ * construction). THIS file is the sibling: the 1→N fission topology the merge bridge
+ * cannot express — each detaching `.dock-fission-piece` carries its OWN goo neck (a
+ * per-seam `--neck-t` scalar) that STRETCHES as the piece pulls away, THINS to a tense
+ * filament, then SNAPS BACK with a `useLiquidFlex` recoil overshoot as the neck breaks.
+ * The rule is `v-for`-shaped — scoped to `.dock-fission-piece`, NEVER a `--vertical`/
+ * `--horizontal` hardcode (B1).
+ *
+ * DETERMINISM (B5 / the M5 idiom). Every animated axis below is `f(var(--neck-t))` /
+ * `f(var(--dock-split-t))` (the ONE inheriting scalar the fission spring writes) or
+ * `f(var(--stretch))` (the scalar's DERIVATIVE the liquid-flex squish writes) — NEVER a
+ * CSS animation/transition with its own clock. A frame captured at a given `--neck-t` is
+ * byte-reproducible. The `--neck-t` writer rides the SAME `SpringProgress`/`DOCK_SPRING`
+ * the orchestrator owns — no second spring, no second @keyframes clock.
+ *
+ * COMPOSITOR-ONLY (B4 / proof:no-layout-animation). Every neck axis is `clip-path` /
+ * `transform` / `scale` / `opacity` / `filter` / `--*` — ZERO animated layout property
+ * (no `inline-size`/`block-size`/`inset`/`padding`/`width`/`height`). `will-change`
+ * promotes the compositor channels ONLY.
+ *
+ * SAFARI-FIRST (B4 / §W7). The goo is the REGULAR `filter: url(#…)` property (NOT
+ * `backdrop-filter: url()`, WebKit-unsupported — bug 245510); the filter mount
+ * (`DockGooFilter` / fission-goo.css) declares `color-interpolation-filters="sRGB"` + a
+ * GENEROUS explicit region `x=-50% width=200%` so the neck + the flying pieces never
+ * clip. GOO-OR-GLASS per-frame: goo during the active neck band, crisp glass at rest,
+ * swapped at the sub-perceptual `--neck-break` threshold (no pop).
+ *
+ * NECK SPECULAR-SWEEP FLOOR (B3 / the betters delight). The neck filament carries a
+ * moving catch-light — a `--neck-specular-angle`-keyed conic sweep masked to the neck
+ * band, reading the EXISTING `--specular-*`/`--glass-specular-core`/`plus-lighter`
+ * cohort (the `material.css:141` idiom) — NO second specular fork, NO neck-local
+ * `--mouse-x/y` writer, NO parallel color/blend. So a stretched neck reads as refractive
+ * glass under tension, not a flat grey throat.
+ *
+ * PRM (B6 / F5). Under `prefers-reduced-motion: reduce` the bridge is removed
+ * (`--dock-bridge-opacity: 0`), the necks never paint, the specular-sweep is static-OFF;
+ * the orchestrator sync-seats every piece at its `to` (the JS sync-seat — no neck frames).
+ */
+
+/* The fission scalars — typed INHERITING <number>/<angle> @property so a bare var()
+   INTERPOLATES the ramp rather than snapping (the --dock-morph-t/--glass-level/--scroll-t
+   precedent). `inherits: true` (the cascading-scalar idiom — the fission scope writes the
+   shared split-t/seam-tension once and every descendant piece reads it). `--neck-t`/
+   `--neck-specular-angle` are per-PIECE writes (the orchestrator writes them on each
+   piece element), so they ride the same inheriting registration but resolve per-element.
+   @property rules must precede the @layer block (a @property after a non-@import rule in
+   a file with no @import is fine; the orchestrator @imports this file AFTER the others so
+   these registrations are valid). */
+@property --dock-split-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --seam-tension {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --neck-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --neck-specular-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0deg;
+}
+
+@layer components {
+    /* The fission scope — the dock root (or the fission host) the orchestrator writes
+       `--dock-split-t`/`--seam-tension` onto. The goo `<filter>` applies to the bridge
+       host (the REGULAR filter property, NOT backdrop-filter — B4 / Safari). The goo is
+       gated to the active neck band: OFF at rest (crisp glass), ON during the neck travel,
+       swapped at the sub-perceptual `--neck-break` threshold (no pop). */
+    .dock-fission-bridge {
+        /* The neck-break threshold (a sub-perceptual ~0.7) past which the neck opacity
+           drops + the piece snaps (the recoil). One knob, read by every seam. */
+        --neck-break: 0.7;
+        /* The seam-give — how far `--seam-tension` THINS the neck inset (the pointer-pull
+           resist; capped LOW so the saturating tanh tension never taffy-pulls). */
+        --seam-give: 0.18;
+        /* The neck filament half-thickness at rest (the inset toward the centerline the
+           neck THINS from). Tokenized so the gel throat is one retune. */
+        --neck-filament: 42%;
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        /* GOO-OR-GLASS — the goo filter engages ONLY while the bridge is mid-fission (the
+           split scalar past the carve threshold AND below full separation). At rest the
+           filter is `none` (crisp glass); during the neck band it is the library mount.
+           The swap is keyed off `--dock-split-t` via the data-attr the orchestrator sets
+           (`[data-fissioning]`), so a static frame reads the right path. The REGULAR
+           `filter` property (NOT backdrop-filter) so it paints on WebKit. */
+        filter: none;
+        opacity: var(--dock-bridge-opacity, 1);
+        /* isolation keeps the blur/threshold scoped to the pieces, not the page behind. */
+        isolation: isolate;
+    }
+    /* When the dock is fissioning, the bridge host applies the promoted library goo. The
+       `[data-fissioning]` attr is set by the orchestrator past the carve threshold. */
+    [data-fissioning] .dock-fission-bridge {
+        filter: var(--dock-fission-goo-filter, none);
+    }
+
+    /* A fission PIECE — a surviving control that DETACHES along its `--split-dx`/
+       `--split-dy` vector, bridged to the dock body by its OWN goo neck. The piece
+       translates off its `(dx, dy)` × `--dock-split-t` (the spring scalar MINUS the
+       pointer `--seam-tension` so a fast pull RESISTS the spring release), squishes on
+       `--stretch` (the liquid-flex recoil — volume-preserving, capped LOW), and its neck
+       necks via the `::before` clip-path filament. ZERO layout property — only
+       `transform`/`clip-path`/`opacity`/`--*` (compositor/paint), so the CDP Layout track
+       stays FLAT (proof:no-layout-animation). */
+    .dock-fission-piece {
+        position: relative;
+        /* The resist-aware progress: the spring scalar pulled back by the pointer tension
+           so a fast drag stretches the neck PAST where the spring has released (the seam
+           RESISTS, then snaps when the pointer lets go and the spring re-bases). Clamped
+           to 0..1 so a tension spike never inverts the travel. */
+        --piece-progress: clamp(
+            0,
+            calc(var(--dock-split-t, 0) - var(--seam-tension, 0)),
+            1
+        );
+        /* The detach translate — the piece flies along its unit vector scaled by the
+           progress. The vector magnitude is in px (the orchestrator resolves the dx/dy
+           in dock-local px); a unit vector × a px reach. NO layout property — translate is
+           the compositor channel. */
+        --piece-reach: var(--dock-fission-reach, 4.5rem);
+        translate:
+            calc(var(--split-dx, 0) * var(--piece-reach) * var(--piece-progress))
+            calc(var(--split-dy, 0) * var(--piece-reach) * var(--piece-progress));
+        /* The volume-preserving squish on travel — reciprocal X/Y (the liquid-flex
+           `--stretch` derivative). The piece SWELLS along its travel axis as it pulls,
+           capped LOW (≤1.08), and RECOILS (ζ<1 overshoot the spring drives) as the neck
+           breaks. */
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+        will-change: transform, clip-path, opacity;
+    }
+
+    /* The per-seam goo NECK — a `::before` filament bridging the piece back to the dock
+       body. It THINS as `--neck-t` rises (the `clip-path: inset()` block insets GROW
+       toward the centerline — the BB neck-travel idiom generalized to the per-piece
+       `--neck-t`), drops opacity past `--neck-break`, and rides the goo layer's own
+       pixels (the REGULAR filter on the bridge host). A rounded-rect bridge (`round
+       999px`) so the throat reads as a gel filament, never a hard rectangle. */
+    .dock-fission-piece::before {
+        content: "";
+        position: absolute;
+        /* The neck spans from the piece back toward the dock body along the cross of the
+           travel — a centered band the clip-path necks. Reserved footprint (a one-time
+           box), the silhouette carved on the compositor. */
+        inset: 0;
+        z-index: -1;
+        border-radius: 999px;
+        /* The warm-cream gel body — the metaball throat fill (a soft radial so the goo
+           threshold reads a domed filament, not a flat slab). Reads the SAME warm-cream
+           floating-glass register morph-bridge.css uses — NO hue injected (warm-cream
+           identity holds). */
+        background: radial-gradient(
+            120% 120% at 50% 38%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 62%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        overflow: clip;
+        /* The neck THINS: the block-axis inset GROWS from 0 (full neck at neck-t=0,
+           bridged) toward `--neck-filament` (a thin filament at the break) as `--neck-t`
+           rises; the pointer `--seam-tension` ADDS to the inset so a fast pull thins it
+           further (the RESIST). The `round 999px` keeps the throat a gel capsule. */
+        --neck-inset: calc(
+            var(--neck-filament) *
+                clamp(0, calc(var(--neck-t, 0) + var(--seam-tension, 0) * var(--seam-give, 0.18) * 10), 1)
+        );
+        clip-path: inset(var(--neck-inset) 0 var(--neck-inset) 0 round 999px);
+        /* The neck opacity holds full until the break threshold, then drops to gone — the
+           goo-OR-glass swap (the neck stops painting once the piece has separated). */
+        opacity: calc(
+            1 - clamp(0, calc((var(--neck-t, 0) - var(--neck-break, 0.7)) / (1 - var(--neck-break, 0.7))), 1)
+        );
+        will-change: clip-path, opacity;
+        pointer-events: none;
+    }
+
+    /* The NECK SPECULAR-SWEEP FLOOR (B3) — a moving catch-light bending along the
+       stretched filament. A SECOND `::after` layer on the piece, masked to the neck band,
+       reading the EXISTING `--specular-*`/`--glass-specular-core`/`plus-lighter` cohort
+       (the material.css:141 conic edge-sweep idiom) — NO second specular fork, NO
+       neck-local `--mouse-x/y` writer. The conic angle is the orchestrator-written
+       `--neck-specular-angle` (a function of `--neck-t` — light bends along the filament
+       as it stretches; falls back to a `--neck-t`-derived angle so it sweeps even
+       un-wired). Compositor-paint only (`opacity`/conic `background` on `plus-lighter`),
+       so a stretched neck reads as refractive glass under tension. */
+    .dock-fission-piece::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: 999px;
+        pointer-events: none;
+        /* The catch-light core reads the SHARED warm-cream specular core (the
+           --glass-specular-core var the material.css cohort owns) — same color, same
+           blend, NO fork. The conic sweep brightens the filament where the angle grazes. */
+        background: conic-gradient(
+            from var(--neck-specular-angle, calc(var(--neck-t, 0) * 360deg)) at 50% 50%,
+            transparent 0deg,
+            color-mix(
+                in srgb,
+                var(--glass-specular-core, hsl(40 35% 92%)) 55%,
+                transparent
+            ) 18deg,
+            transparent 60deg,
+            transparent 360deg
+        );
+        /* The sweep is bounded to the neck filament band (the same clip the neck rides),
+           and lit ONLY while the neck is engaged (opacity coupled to the neck presence —
+           bright as it stretches, gone once it breaks). Reads the SAME --specular-intensity
+           cohort the material.css gleam reads. */
+        --neck-sweep-intensity: calc(
+            var(--glass-specular-intensity-rest, 0.12) +
+                clamp(0, var(--neck-t, 0), 1) * 0.18
+        );
+        opacity: calc(
+            var(--neck-sweep-intensity) *
+                (1 - clamp(0, calc((var(--neck-t, 0) - var(--neck-break, 0.7)) / (1 - var(--neck-break, 0.7))), 1))
+        );
+        /* plus-lighter (additive HDR-clamped, Safari 16.4+) — the SAME blend the
+           material.css gleam rides; a non-supporting engine degrades to a plain low-alpha
+           warm overlay (no blowout). NO second blend fork. */
+        mix-blend-mode: plus-lighter;
+        will-change: opacity;
+    }
+
+    /* PRM — the bridge is removed (the necks never paint), the specular-sweep static-OFF;
+       the orchestrator sync-seats every piece at its `to` (no neck frames, no recoil, no
+       sweep). The morph snaps to the fissioned/merged endpoint (the spring's
+       respectReducedMotion jumps the scalar in one frame; the orchestrator's
+       `prefersReducedMotion()` branch seats the pieces synchronously). */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-fission-bridge {
+            --dock-bridge-opacity: 0;
+        }
+        .dock-fission-piece::before,
+        .dock-fission-piece::after {
+            display: none;
+        }
+        /* The piece still TRANSLATES to its endpoint (the gesture confirms — the dock
+           still fissions), but with NO squish (the stretch stays 1 — the field tick(0) +
+           the JS seat write `--stretch: 1`). The clamp here is a defensive floor in case
+           a frame writes a non-1 stretch under reduce. */
+        .dock-fission-piece {
+            scale: 1 1;
+        }
+    }
+}

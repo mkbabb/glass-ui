@@ -53,3 +53,21 @@ export {
     type UseDockOrientationMorphOptions,
     type UseDockOrientationMorphReturn,
 } from "./useDockOrientationMorph";
+
+// BE.W-DOCK-FISSION — the n-ary detach orchestrator. A CONSUMING seam BESIDE the morph
+// engine (dockMorphContext/DOCK_SPRING byte-untouched — box-inviolate): ONE SpringProgress
+// on DOCK_SPRING writing --dock-split-t + per-piece DIRECTION-VECTOR off a DockSplitSignature,
+// the snap-recoil on useLiquidFlex, the seam-tension on usePointerVelocityField (fed from
+// inside the ONE loop), PRM sync-seated. The N-seam goo bridge is fission-bridge.css.
+export {
+    useDockFission,
+    DOCK_SPLIT_SIGNATURES,
+    type DockSplitContext,
+    type DockSplitVector,
+    type DockSplitSquishPeak,
+    type DockSplitSignature,
+    type DockFissionPieceRegistration,
+    type DockFissionPieceHandle,
+    type UseDockFissionOptions,
+    type UseDockFissionReturn,
+} from "./useDockFission";

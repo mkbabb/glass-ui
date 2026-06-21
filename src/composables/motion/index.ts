@@ -49,6 +49,16 @@ export * from "./useLiquidReveal";
 // edit). Keyframes-bearing → `/motion` ONLY, never the root barrel (the SCC-trap
 // discipline). Compositor-only + PRM-seats.
 export * from "./useDockCtaReceive";
+// BE.W-BLOOM-UP — the shared-element FLIP where source≠dest (the search-pill→Places-
+// sheet, the album-card→fullscreen bloom). Composes the SAME kf `ElementMorph` +
+// `springTimingFunction` substrate useLiquidReveal activates (driven 1→0 — the dest
+// blooms FROM a SEPARATE source's rect onto its OWN full settled rect, NEVER a box-
+// scale that crushes content) PLUS a 4TH COLOR channel on the destination FIELD (the
+// field warms to the source's album hue via the registered @property --glass-ambient-
+// hue/-strength on the spring curve — the f_009→f_010 iOS field-warm). Keyframes-
+// bearing → `/motion` ONLY, never the root barrel (the SCC-trap discipline).
+// Compositor-only on the surface + Safari-safe + PRM-snap.
+export * from "./useBloomUp";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 // AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV
