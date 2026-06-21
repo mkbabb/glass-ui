@@ -294,8 +294,15 @@ const exactSubpathRuntimeSurfaces = [
         // to the composables barrel — NOT re-exported on the `/dock` surface.
         names: [
             "DOCK_CONTEXT_KEY",
+            // BE.W-DOCK-FISSION — the n-ary detach orchestrator + the per-signature
+            // split-vector registry, ADDITIVELY on the /dock surface (the dock-as-
+            // control-interface liquid-morph register). Runtime composable + const.
+            "DOCK_SPLIT_SIGNATURES",
             "DockBackgroundToggle",
             "DockDropdownTrigger",
+            // BE.W-DOCK-FISSION — the ONE library goo <filter> mount (the fission
+            // bridge's url(#dock-fission-goo) target). Runtime SFC default-export.
+            "DockGooFilter",
             "DockIconButton",
             "DockLayer",
             "DockLayerGroup",
@@ -317,6 +324,10 @@ const exactSubpathRuntimeSurfaces = [
             // GlassDock/useDockState (the /motion export STAYS — a re-export, not a move,
             // so no clean break). The AX.W01 useLayerTransition precedent (above).
             "useDockCtaReceive",
+            // BE.W-DOCK-FISSION — the n-ary detach orchestrator (ONE SpringProgress on
+            // DOCK_SPRING writing --dock-split-t + per-piece direction vectors; a
+            // consuming seam BESIDE the morph engine). ADDITIVELY on the /dock surface.
+            "useDockFission",
             // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (consumer #1
             // of useLiquidFlex; the metaball-bridge / arm-c crossfade showcase).
             "useDockOrientationMorph",

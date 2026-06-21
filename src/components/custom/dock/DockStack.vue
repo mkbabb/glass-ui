@@ -6,34 +6,41 @@ import FadingScroll from "../fading-scroll/FadingScroll.vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 import { HOVER_INTENT_MS } from "./constants";
 import type { DockStackItem } from "./constants";
+import { projectFacets } from "./composables/railProjection";
 
 /**
- * <DockStack> — BC.W-DOCK-STACK-RAIL. The macOS Dock hover-expand STACK (the clean-break
- * rebuild of the retired divider-carousel `DockRail`). It renders in `GlassDock`'s `#rail`
- * slot, over the KEPT `.glass-dock-frame` non-clipping escape, so it extends BEYOND the
- * dock edge into its own gutter WITHOUT touching the dock box (the box-INVIOLATE
- * discipline — `deltaW = deltaH = 0`).
+ * <DockStack> — BC.W-DOCK-STACK-RAIL + BE.W-DOCK-RAIL-REALIZE. The ONE rail engine on
+ * the KEPT `.glass-dock-frame` non-clipping escape, with TWO render modes:
  *
- * THE STACK. A `core` anchor item (the always-visible glyph, sitting in the dock(1)) +
- * `items: readonly DockStackItem[]` (the members). On hover (pointer-enter) OR focus of
- * the core item, the members FAN OUT next to the rail — a column (vertical dock) / row
- * (horizontal dock) of FULLY-VISIBLE glass icons springing open beside the line, each on
- * the iOS liquid clock, staggered by `--dock-stack-stagger * var(--i)` in reading order.
- * The hover-collapse reverses on the no-overshoot `--ease-out`. Every member is a clear
- * `--glass-bg-floating` glass icon — NEVER a shadowed half-tucked chip (the "NOT shadowed"
- * verbatim ask). At rest only the core (1) shows; expanded, the n members.
+ *   • `mode="stack"` (DEFAULT — the BC byte-identical path). The macOS Dock
+ *     hover-expand STACK: a `core` anchor glyph + N members that FAN OUT on hover/focus
+ *     beside the rail, each a clear `--glass-bg-floating` glass icon.
  *
- * 3 CONFIGURABLE, SCROLLABLE, N-STACK. `visibleCount` (default 3) members fan at rest;
- * an >visibleCount stack routes the fanned column through `<FadingScroll>` (the one
- * scroll-fade port) so the n-stack is reachable by scrolling the rail, NOT by overflowing
- * the dock box.
+ *   • `mode="facets"` (BE.W-DOCK-RAIL-REALIZE — the re-instated AZ context carousel).
+ *     The members render as a CONTEXT CAROUSEL — a flex strip of facet-CHIPS that fans
+ *     in the SAME gutter, each chip carrying its OWN `--glass-accent` hue (the
+ *     per-instance chromatic-rim axis), the active facet lit on the selected-as-glass
+ *     `--dock-control-active-bg` tier. Clicking a chip writes the consumer-owned
+ *     `v-model:selected`. This is a RENDER MODE, NOT a second component — there is no
+ *     `DockRail.vue`/`DockFacetRail.vue`; `<DockStack>` owns both modes.
+ *
+ * THE KEPT ESCAPE (both modes). It renders in `GlassDock`'s `#rail` slot, over the
+ * `.glass-dock-frame` shell — a `display:contents`-by-default wrapper that becomes a
+ * NON-clipping positioning context only on `data-has-rail`, so the rail extends BEYOND
+ * the dock edge into its own gutter WITHOUT touching the dock box (the box-INVIOLATE
+ * discipline — `deltaW = deltaH = 0`; the chips feed NO size into the dock's intrinsic
+ * box).
+ *
+ * 3 CONFIGURABLE, SCROLLABLE, N-STACK (both modes). `visibleCount` (default 3) members
+ * fan at rest; an >visibleCount set routes the fanned strip through `<FadingScroll>`
+ * (the one scroll-fade port) so the n-set is reachable by scrolling the rail, NOT by
+ * overflowing the dock box.
  *
  * THE HOVER-HYSTERESIS (REUSED, not re-forked — AZ.W-DOCK-FLICKER). The pointer-enter
- * commits the open only after the `HOVER_INTENT_MS` intent-dwell (the SAME constant the
- * dock-collapse hysteresis reads), so a sweeping-edge enter does not flash the stack open.
- * Focus opens immediately (keyboard intent is explicit); blur/leave closes.
+ * commits the open only after the `HOVER_INTENT_MS` intent-dwell. Focus opens
+ * immediately; blur/leave closes.
  *
- * ONE REGISTRY (R2 KEPT). The members write the consumer-owned `v-model:selected`; this
+ * ONE REGISTRY (R4 KEPT). The members write the consumer-owned `v-model:selected`; this
  * primitive owns NO internal `ref()`/`reactive()` shadow of the active member. The hover
  * `expanded` is a transient UI state (optionally `v-model:expanded` controlled), NOT a
  * selection shadow.
@@ -41,8 +48,14 @@ import type { DockStackItem } from "./constants";
 
 const props = withDefaults(
     defineProps<{
-        /** The stack members — the fan-out contents (NOT facet chips; the macOS stack). */
+        /** The stack/facet members — the fan-out contents. */
         items: readonly DockStackItem[];
+        /**
+         * The render mode. `"stack"` (default) = the macOS hover-expand glyph fan (the BC
+         * byte-identical path). `"facets"` = the re-instated AZ context carousel of
+         * accent-tinted facet chips (each chip writes its own `--glass-accent` hue).
+         */
+        mode?: "stack" | "facets";
         /** The core anchor glyph (the always-visible dock(1) item). Default: a layers glyph. */
         core?: Component;
         /** The core's accessible label (the stack's name). */
@@ -53,6 +66,7 @@ const props = withDefaults(
         position?: "start" | "end";
     }>(),
     {
+        mode: "stack",
         coreLabel: "Open stack",
         visibleCount: 3,
         position: "end",
@@ -61,7 +75,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ select: [id: string] }>();
 
-/* The consumer-owned selected member (R2 — the only selection write is through this
+/* The consumer-owned selected member (R4 — the only selection write is through this
    v-model ref; no internal store). */
 const selected = defineModel<string>("selected");
 
@@ -69,9 +83,8 @@ const selected = defineModel<string>("selected");
    consumer (`v-model:expanded`). NOT a selection shadow. */
 const expanded = defineModel<boolean>("expanded", { default: false });
 
-/* The orientation read — the stack fans on the dock's CROSS axis (a vertical dock's stack
-   fans as a row beside the column; a horizontal dock's fans as a column above the row).
-   Defaults to vertical so the stack renders standalone too. */
+/* The orientation read — the stack fans on the dock's CROSS axis. Defaults to vertical
+   so the stack renders standalone too. */
 const dock = useOptionalDockContext();
 const orientation = computed(() => dock?.orientation.value ?? "vertical");
 
@@ -84,9 +97,35 @@ const scrolls = computed(() => members.value.length > props.visibleCount);
 /* The fanned port's main-axis budget caps at visibleCount members (the rest scroll). */
 const visibleBudget = computed(() => Math.min(members.value.length, props.visibleCount));
 
+const isFacets = computed(() => props.mode === "facets");
+
+/* BE.W-DOCK-RAIL-REALIZE — the facet-carousel PROJECTION (facets mode only). The
+   harvested PURE φ-tier/ring math (`projectFacets`, railProjection.ts — the spike's only
+   keepable: the ringOffset modulo + the tiered span) gives each facet its DEPTH read: a
+   recession SCALE + OPACITY keyed off the signed shortest-arc distance from the ACTIVE
+   facet, so the strip reads as a tiered context carousel (the active forward + full, the
+   neighbours receding) — NOT a flat row. The translate is owned by the flex layout (the
+   gutter strip); the projection owns the compositor-only scale/opacity tier. Re-projects
+   off `selected`/the item set. (Stack mode never reads it — the macOS glyph fan owns its
+   own fold→expand transition.) */
+const activeFacetIndex = computed(() =>
+    Math.max(0, members.value.findIndex((m) => m.id === selected.value)),
+);
+const facetProjection = computed(() =>
+    isFacets.value
+        ? projectFacets(members.value.length, activeFacetIndex.value, 1)
+        : [],
+);
+/** The per-facet depth tier (scale + opacity), keyed by ring index — the projection's
+ *  compositor-only recession read. Defaults to the identity (1/1) for a missing index. */
+function facetTier(index: number): { scale: number; opacity: number } {
+    const p = facetProjection.value.find((f) => f.index === index);
+    return p ? { scale: p.scale, opacity: p.opacity } : { scale: 1, opacity: 1 };
+}
+
 /* The hover-hysteresis (REUSED — the SAME HOVER_INTENT_MS the dock-collapse machine reads,
    AZ.W-DOCK-FLICKER). A sweeping-edge pointer-enter is canceled by a chasing leave inside
-   the intent dwell, so the stack never flashes open. Focus opens immediately. */
+   the intent dwell, so the strip never flashes open. Focus opens immediately. */
 let intentTimer: ReturnType<typeof setTimeout> | null = null;
 function clearIntent(): void {
     if (intentTimer != null) {
@@ -128,15 +167,16 @@ function select(item: DockStackItem): void {
 <template>
     <div
         class="dock-stack"
-        :class="[orientation, `at-${position}`, { 'is-expanded': expanded }]"
+        :class="[orientation, `at-${position}`, `mode-${mode}`, { 'is-expanded': expanded }]"
         :data-orientation="orientation"
+        :data-mode="mode"
         @pointerenter="onPointerEnter"
         @pointerleave="onPointerLeave"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
     >
-        <!-- The CORE anchor — the always-visible dock(1) item. Hover/focus fans the stack
-             open. It is the named expand control (the stack's accessible name). -->
+        <!-- The CORE anchor — the always-visible dock(1) item. Hover/focus fans the
+             strip open. It is the named expand control (the strip's accessible name). -->
         <DockIconButton
             type="button"
             class="dock-stack-core"
@@ -148,9 +188,13 @@ function select(item: DockStackItem): void {
         </DockIconButton>
 
         <!-- The fanned members — a FadingScroll port (the one scroll-fade port) holding
-             the n-stack. At rest the members are folded behind the core (opacity 0,
-             translated toward the rail); expanded, they spring OUT staggered. Every member
-             is a fully-visible --glass-bg-floating glass icon (the "NOT shadowed" ask). -->
+             the n-set. At rest the members are folded behind the core (opacity 0,
+             translated toward the rail); expanded, they spring OUT staggered.
+
+             mode="stack": every member is a clear --glass-bg-floating glass icon.
+             mode="facets": every member is an ACCENT-tinted context chip — it writes its
+             own `--glass-accent` (the per-instance chromatic-rim axis) so each context
+             facet carries its OWN rim+glint hue (the AZ context-carousel identity). -->
         <FadingScroll
             :axis="orientation === 'vertical' ? 'x' : 'y'"
             class="dock-stack-fan"
@@ -162,8 +206,26 @@ function select(item: DockStackItem): void {
                 :key="item.id"
                 type="button"
                 class="dock-stack-member"
-                :class="{ 'is-active': selected === item.id }"
-                :style="{ '--i': i }"
+                :class="{ 'is-active': selected === item.id, 'dock-facet-chip': isFacets }"
+                :style="{
+                    '--i': i,
+                    // BE.W-DOCK-RAIL-REALIZE — the per-facet accent hue (facets mode
+                    // only). A complete <color> tinting the chip's rim+glint via the
+                    // BB.W-GLASS-ACCENT axis; the facet mode engages the strength so the
+                    // hue reads, while the stack mode leaves the resting transparent/0%
+                    // no-op floor untouched.
+                    ...(isFacets && item.accent
+                        ? { '--glass-accent': item.accent, '--glass-accent-strength': 'var(--dock-facet-accent-strength)' }
+                        : {}),
+                    // the φ-tier projection (facets mode) — the recession scale + opacity
+                    // depth read off distance-from-active (railProjection.projectFacets).
+                    ...(isFacets
+                        ? {
+                              '--dock-facet-tier-scale': `${facetTier(i).scale}`,
+                              '--dock-facet-tier-opacity': `${facetTier(i).opacity}`,
+                          }
+                        : {}),
+                }"
                 :aria-label="item.label"
                 :aria-pressed="selected === item.id"
                 :title="item.label"

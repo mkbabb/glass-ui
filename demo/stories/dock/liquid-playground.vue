@@ -48,7 +48,6 @@ import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Button } from "../../../src/components/ui/button";
-import { Slider } from "../../../src/components/ui/slider";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
@@ -56,8 +55,14 @@ import {
     useDockFission,
     DOCK_SPLIT_SIGNATURES,
 } from "../../../src/components/custom/dock/composables";
-import { DockGooFilter } from "../../../src/components/custom/dock";
-import { useLiquidRail } from "../../../src/components/custom/dock/composables/useLiquidRail";
+import {
+    DockGooFilter,
+    DockIconButton,
+    DockSeparator,
+    DockStack,
+    GlassDock,
+} from "../../../src/components/custom/dock";
+import type { DockStackItem } from "../../../src/components/custom/dock/constants";
 
 // ── controls ──────────────────────────────────────────────────────────────────
 // THREE registers, all driven by REAL primitives:
@@ -255,79 +260,30 @@ const readoutState = computed(() => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// THE RAIL — the carousel-stack on a vertical dock's right edge.
-// (BE.W-DOCK-RAIL-REALIZE scope — UNTOUCHED by this integration pass.)
+// THE RAIL — the re-instated AZ context FACET CAROUSEL (BE.W-DOCK-RAIL-REALIZE).
+// The rail is NOT a standalone vertical dock — it is a HAIRLINE strip of accent-tinted
+// facet chips that fans in a REAL dock's gutter (the `#rail` slot over the kept
+// `.glass-dock-frame` non-clipping escape), box-INVIOLATE. It is a RENDER MODE on the
+// shipped <DockStack> (`mode="facets"`), shown in BOTH a horizontal AND a vertical dock.
 // ═══════════════════════════════════════════════════════════════════════════════
-const railIcons = [Folder, Image, Music, Film, Star, Heart, Tag, Clock];
-const railLabels = ["Files", "Photos", "Music", "Video", "Starred", "Loved", "Tags", "Recent"];
-const itemsAbove = ref(2);
-const itemsBelow = ref(1);
-const railOpen = ref(false);
-const chosenIdx = ref(0);
-const railCount = computed(() => railIcons.length);
-const railRoot = ref<HTMLElement | null>(null);
 
-const rail = useLiquidRail({
-    count: railCount,
-    chosen: chosenIdx,
-    edge: "right",
-    spring: "dock",
-    rootEl: railRoot,
-    geometry: {
-        goldenAbove: 2.2,
-        fadeStart: 0.6,
-        fadeRange: () => itemsAbove.value + 0.7,
-        slotSpacing: 38,
-        tierRatio: 1.0,
-        scaleStep: 0.08,
-    },
-});
-
-function toggleRail(): void {
-    railOpen.value = !railOpen.value;
-    rail.expandTo(railOpen.value);
-}
-function stepChosen(delta: number): void {
-    const n = railCount.value;
-    chosenIdx.value = ((chosenIdx.value + delta) % n + n) % n;
-}
-function onRailEnter(): void {
-    railOpen.value = true;
-    rail.onPointerEnter();
-}
-function onRailLeave(): void {
-    railOpen.value = false;
-    rail.onPointerLeave();
-}
-const SCROLL_PX_PER_SLOT = 150;
-const railSettling = ref(false);
-let wheelTimer: ReturnType<typeof setTimeout> | undefined;
-let settleTimer: ReturnType<typeof setTimeout> | undefined;
-function onRailWheel(e: WheelEvent): void {
-    e.preventDefault();
-    railOpen.value = true;
-    rail.expandTo(true);
-    railSettling.value = false;
-    rail.scrollBy(e.deltaY / SCROLL_PX_PER_SLOT);
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(settleRail, 150);
-}
-function settleRail(): void {
-    const pos = rail.position.value;
-    const n = railCount.value;
-    if (Math.abs(pos) >= 0.001) {
-        const target = Math.round(chosenIdx.value + pos);
-        railSettling.value = true;
-        chosenIdx.value = ((target % n) + n) % n;
-        rail.scrollBy(-pos);
-    }
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => {
-        railSettling.value = false;
-        railOpen.value = false;
-        rail.expandTo(false);
-    }, 520);
-}
+// the context facets — each a context/category, each carrying its OWN accent hue (the
+// per-instance `--glass-accent` axis). The hues are the library `--section-color-N` ramp
+// (a library identity, NOT a demo-local invented hue), so the strip reads as a row of
+// DISTINCT accent-tinted contexts (the AZ context-carousel identity).
+const facets: DockStackItem[] = [
+    { id: "files", label: "Files", icon: Folder, accent: "var(--section-color-2)" },
+    { id: "photos", label: "Photos", icon: Image, accent: "var(--section-color-3)" },
+    { id: "music", label: "Music", icon: Music, accent: "var(--section-color-7)" },
+    { id: "video", label: "Video", icon: Film, accent: "var(--section-color-6)" },
+    { id: "starred", label: "Starred", icon: Star, accent: "var(--section-color-5)" },
+    { id: "loved", label: "Loved", icon: Heart, accent: "var(--section-color-0)" },
+    { id: "tags", label: "Tags", icon: Tag, accent: "var(--section-color-10)" },
+    { id: "recent", label: "Recent", icon: Clock, accent: "var(--section-color-11)" },
+];
+// the ONE registry — the active context (the chip click + the layer context write the
+// SAME ref; the rail keeps NO internal selection shadow). DockStack writes this model.
+const railContext = ref<string>("music");
 
 function onAuroraInitError(err: Error): void {
     console.warn("[liquid-playground] aurora backdrop init failed:", err.message);
@@ -653,78 +609,46 @@ function onAuroraInitError(err: Error): void {
         </StorySection>
 
         <!-- ═══════════════════════════════════════════════════════════════════ -->
-        <!-- THE RAIL — the carousel-stack on a vertical dock's right edge.       -->
+        <!-- THE RAIL — the accent-facet CONTEXT CAROUSEL inside a real dock.     -->
+        <!-- A HAIRLINE strip of accent-tinted chips that fans in the dock's      -->
+        <!-- gutter, box-INVIOLATE. NOT a standalone vertical dock — a RENDER     -->
+        <!-- MODE on the shipped <DockStack> (mode="facets"), shown in BOTH a     -->
+        <!-- horizontal AND a vertical dock.                                      -->
         <!-- ═══════════════════════════════════════════════════════════════════ -->
         <StorySection
-            heading="The rail — a carousel-stack WITHIN a vertical glass dock"
+            heading="The rail — a context FACET carousel INSIDE a real dock"
             gap="md"
         >
             <p class="text-small text-muted-foreground">
-                A carousel-stack of icon chips scrolling INSIDE a vertical glass dock
-                capsule — <code class="rounded bg-muted px-1">useLiquidRail</code>
-                projects the <strong>chosen</strong> chip at the dock centre line, items
-                fanning <strong>above</strong> (golden ~2x span) and
-                <strong>below</strong> (a partial peek), fading + receding toward the
-                rounded ends. Collapsed by default; <strong>hover</strong> (or
-                <em>Expand rail</em>) fans the stack open. <strong>Scroll</strong> the
-                dock — the wheel feeds a CONTINUOUS position scalar, so the items SLIDE
-                fluidly under the finger (slow, ~150px per item) then spring-settle on
-                the nearest slot. The list CAROUSEL-WRAPS. NOT the macOS 3D fan — a
-                STRAIGHT carousel-wrap, the depth read from opacity + scale tiers.
+                The rail is NOT a vertical dock — it is a
+                <strong>hairline strip of accent-tinted facet chips</strong> that fans in
+                a real dock's GUTTER, each chip one context/category carrying its OWN
+                <code class="rounded bg-muted px-1">--glass-accent</code> hue (the
+                per-instance chromatic-rim axis), the active facet reading the
+                selected-as-glass tier. It is a render MODE on the shipped
+                <code class="rounded bg-muted px-1">&lt;DockStack mode="facets"&gt;</code>
+                — fanning in the
+                <code class="rounded bg-muted px-1">#rail</code> slot over the kept
+                <code class="rounded bg-muted px-1">.glass-dock-frame</code> non-clipping
+                escape, so the dock's OWN box never grows (box-INVIOLATE,
+                <code class="rounded bg-muted px-1">deltaW = deltaH = 0</code>). Hover the
+                core chip to fan the contexts; click a facet to switch context. Shown in
+                BOTH orientations below — the strip fans along the gutter hairline either
+                way.
             </p>
 
-            <!-- rail controls -->
-            <div
-                class="liquid-controls relative flex flex-wrap items-end gap-6 overflow-hidden rounded-[var(--radius-card)] glass-resting p-5"
+            <p
+                class="text-mono-caption text-muted-foreground"
+                data-testid="liquid-rail-readout"
             >
-                <div class="flex min-w-[10rem] flex-1 flex-col gap-2">
-                    <label class="text-mono-caption text-muted-foreground">
-                        Items above — {{ itemsAbove }}
-                    </label>
-                    <Slider
-                        :model-value="[itemsAbove]"
-                        :min="1"
-                        :max="4"
-                        :step="1"
-                        @update:model-value="(v) => (itemsAbove = v?.[0] ?? 1)"
-                    />
-                </div>
-                <div class="flex min-w-[10rem] flex-1 flex-col gap-2">
-                    <label class="text-mono-caption text-muted-foreground">
-                        Items below — {{ itemsBelow }}
-                    </label>
-                    <Slider
-                        :model-value="[itemsBelow]"
-                        :min="1"
-                        :max="3"
-                        :step="1"
-                        @update:model-value="(v) => (itemsBelow = v?.[0] ?? 1)"
-                    />
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label class="text-mono-caption text-muted-foreground">
-                        Chosen — {{ railLabels[chosenIdx] }}
-                    </label>
-                    <div class="flex gap-2">
-                        <Button variant="outline" size="sm" @click="stepChosen(-1)">
-                            ↑ Prev
-                        </Button>
-                        <Button variant="outline" size="sm" @click="stepChosen(1)">
-                            ↓ Next
-                        </Button>
-                    </div>
-                </div>
-                <div class="flex gap-2">
-                    <Button variant="primary-audacious" @click="toggleRail">
-                        {{ railOpen ? "Collapse rail" : "Expand rail" }}
-                    </Button>
-                </div>
-            </div>
+                active context = {{ railContext }} · the SAME ref the chip click writes
+                (one registry, no shadow)
+            </p>
 
-            <!-- the rail stage — a vertical glass dock + the carousel rail on its right. -->
+            <!-- ── A HORIZONTAL dock — the facet strip fans up off the top edge ── -->
             <div
-                class="relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
-                data-testid="liquid-rail-stage"
+                class="relative flex min-h-[20rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
+                data-testid="liquid-rail-stage-horizontal"
             >
                 <Aurora
                     :config="DEFAULT_AURORA_CONFIG"
@@ -733,60 +657,96 @@ function onAuroraInitError(err: Error): void {
                     aria-hidden="true"
                 />
 
-                <div
-                    class="liquid-rail-dock"
-                    :data-settling="railSettling ? '' : undefined"
-                    @pointerenter="onRailEnter"
-                    @pointerleave="onRailLeave"
-                    @wheel="onRailWheel"
-                    data-testid="liquid-rail-host"
+                <!-- a real horizontal <GlassDock> with in-flow nav controls; the facet
+                     carousel rides its #rail gutter (box-inviolate). -->
+                <GlassDock
+                    orientation="horizontal"
+                    always-expanded
+                    position="inline"
+                    data-testid="liquid-rail-dock-horizontal"
                 >
-                    <div
-                        ref="railRoot"
-                        class="liquid-rail liquid-rail--centred"
-                        data-edge="right"
-                        data-testid="liquid-rail"
-                    >
-                        <button
-                            v-for="item in rail.items.value"
-                            :key="item.index"
-                            type="button"
-                            class="liquid-rail-item"
-                            :data-chosen="item.chosen"
-                            :style="item.style"
-                            :aria-label="railLabels[item.index]"
-                            :title="railLabels[item.index]"
-                            @click="chosenIdx = item.index"
-                            data-testid="liquid-rail-item"
-                        >
-                            <span class="liquid-rail-chip">
-                                <component
-                                    :is="railIcons[item.index]"
-                                    :stroke-width="2.1"
-                                />
-                            </span>
-                        </button>
-                    </div>
-                </div>
+                    <DockIconButton aria-label="Home" title="Home">
+                        <Home class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+                    <DockIconButton aria-label="Search" title="Search">
+                        <Search class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+                    <DockSeparator />
+                    <DockIconButton aria-label="Bookmarks" title="Bookmarks">
+                        <Bookmark class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+
+                    <!-- THE FACET CAROUSEL — fans in the gutter above the row. -->
+                    <template #rail>
+                        <DockStack
+                            v-model:selected="railContext"
+                            mode="facets"
+                            :items="facets"
+                            :core="Folder"
+                            core-label="Switch context"
+                            :visible-count="4"
+                            position="end"
+                            data-testid="liquid-rail-facets-horizontal"
+                        />
+                    </template>
+                </GlassDock>
             </div>
 
-            <p
-                class="text-mono-caption text-muted-foreground"
-                data-testid="liquid-rail-readout"
+            <!-- ── A VERTICAL dock — the facet strip fans out off the trailing edge ── -->
+            <div
+                class="relative flex min-h-[24rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
+                data-testid="liquid-rail-stage-vertical"
             >
-                chosen = {{ railLabels[chosenIdx] }} ({{ chosenIdx }}) · above =
-                {{ itemsAbove }} · below = {{ itemsBelow }} · expand =
-                {{ rail.expand.value.toFixed(2) }} ·
-                {{ rail.expanding.value ? "fanning" : railOpen ? "open" : "collapsed" }}
-                · rendered = {{ rail.items.value.length }} items
-            </p>
+                <Aurora
+                    :config="DEFAULT_AURORA_CONFIG"
+                    :on-init-error="onAuroraInitError"
+                    class="pointer-events-none absolute inset-0 size-full"
+                    aria-hidden="true"
+                />
+
+                <!-- a real vertical <GlassDock> column with in-flow nav controls; the
+                     facet carousel rides its #rail gutter (box-inviolate). -->
+                <GlassDock
+                    orientation="vertical"
+                    always-expanded
+                    position="inline"
+                    data-testid="liquid-rail-dock-vertical"
+                >
+                    <DockIconButton aria-label="Home" title="Home">
+                        <Home class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+                    <DockIconButton aria-label="Search" title="Search">
+                        <Search class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+                    <DockSeparator />
+                    <DockIconButton aria-label="Bookmarks" title="Bookmarks">
+                        <Bookmark class="size-4" aria-hidden="true" />
+                    </DockIconButton>
+
+                    <!-- THE FACET CAROUSEL — fans in the gutter beside the column. -->
+                    <template #rail>
+                        <DockStack
+                            v-model:selected="railContext"
+                            mode="facets"
+                            :items="facets"
+                            :core="Folder"
+                            core-label="Switch context"
+                            :visible-count="4"
+                            position="end"
+                            data-testid="liquid-rail-facets-vertical"
+                        />
+                    </template>
+                </GlassDock>
+            </div>
         </StorySection>
     </StoryPage>
 </template>
 
 <style scoped>
-/* the .liquid-rail-dock glass capsule the carousel scrolls within is the LIBRARY recipe
-   in src/styles/dock/liquid-rail.css (loaded via /styles) — NOT a demo-scoped override. */
+/* the facet carousel rides the SHIPPED <DockStack mode="facets"> over the kept
+   .glass-dock-frame escape (src/styles/dock/stack-rail.css, loaded via /styles) — no
+   demo-local rail capsule, no demo-scoped rail override (the standalone capsule fork is
+   DELETED). */
 
 /* the controls panel — a subtle warm gradient behind the glass so the tabs/controls
    have something RICH to refract. A whisper, not a wall — the controls stay legible. */

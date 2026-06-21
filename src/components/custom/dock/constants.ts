@@ -24,6 +24,17 @@ export interface DockStackItem {
     icon?: Component;
     /** Optional per-member select handler (fired alongside the model write). */
     onSelect?: () => void;
+    /**
+     * BE.W-DOCK-RAIL-REALIZE — the per-FACET accent hue (the `mode="facets"` context
+     * carousel only — IGNORED by the macOS `mode="stack"` glyph fan). A complete
+     * `<color>` (a consumer DATA/context hue) written to the chip's `--glass-accent`
+     * (the BB.W-GLASS-ACCENT per-instance chromatic-rim axis, `rim.css`/`material.css`),
+     * so each context facet carries its OWN rim+glint hue — the AZ context-carousel
+     * identity. Unset ⇒ the neutral warm-cream rim (the `--glass-accent: transparent`
+     * no-op floor). NOT a plate-background fill (the accent rides the THIN rim/glint;
+     * presets-in-consumers — no consumer hue enters a library token).
+     */
+    accent?: string;
 }
 
 /**

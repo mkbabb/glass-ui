@@ -1680,6 +1680,12 @@ export const GATES = [
         note: "BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail, a CLEAN-BREAK rebuild (DockRail/divider-carousel RETIRED → DockStack). Extend-beyond, hover-expand (reusing HOVER_INTENT_MS, not a re-forked state machine), 3-configurable, scrollable, n-stack; the fan-out compositor-only on --spring-dock (the engine clock, ridden not edited), staggered by --dock-stack-stagger, PRM-carved; seats at the dock EDGE via the kept .glass-dock-frame/--dock-rail-extend-length escape. SUPERSEDES proof:rail3 + the rail clauses of proof:dock-sections. Bite: a re-forked collapse machine / a layout-animated fan / a lost extend-beyond → RED.",
     },
     {
+        id: "proof:dock-rail-realize",
+        cmd: "proof:dock-rail-realize",
+        tags: ["local", "ci", "release"],
+        note: "BE.W-DOCK-RAIL-REALIZE — the RAIL-AS-HAIRLINE (user defect #4). The standalone vertical glass CAPSULE (.liquid-rail-dock + useLiquidRail, a 2nd dock + a 3rd rail engine) is DELETED wholesale (no legacy); the rail is now a `mode=\"facets\"` RENDER MODE on the shipped <DockStack> — a hairline strip of accent-tinted facet chips fanning in a real dock's gutter, box-INVIOLATE. EXTENDS proof:dock-stack-rail (S1-S6 re-asserted GREEN). R1 the facet mode exists ONCE on DockStack (mode=stack|facets, default stack byte-identical; NO second component). R2 the per-facet --glass-accent FLOOR (each chip writes its own context hue off the per-instance chromatic-rim axis). R3 the fork DEFINITION-ABSENT (useLiquidRail.ts + liquid-rail.css gone, demo.css @import gone, box-INVIOLATE — the .glass-dock-frame escape un-clipped, the fan on the ONE --spring-dock clock, the projection helper PURE). R4 ONE registry — the facet click writes the consumer v-model, no shadow. R5 the CLAUDE.md doc-reconcile (proof:rail3/rail3.spec/--dock-rail-seam-offset/proof:rail-extend GONE; the facet mode documented). Born-RED on the capsule-fork tree (9b301f4a). Bite: a 2nd rail SFC / a flat-fill facet / a surviving useLiquidRail / a re-clipped frame / a stale proof:rail3 CLAUDE.md ref → RED.",
+    },
+    {
         id: "proof:dock-cockpit",
         cmd: "proof:dock-cockpit",
         tags: ["ci", "release"],
