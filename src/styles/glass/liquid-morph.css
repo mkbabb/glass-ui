@@ -178,6 +178,16 @@
         inline-size: 1.4rem;
         block-size: 1.4rem;
     }
+    /* VERTICAL player — a narrow tall pill can't hold the horizontal now-playing row;
+       show just the album thumb centred (track text + play don't fit, they clipped). */
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-player-pill {
+        justify-content: center;
+        padding: 0;
+    }
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-nowplaying,
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-play {
+        display: none;
+    }
 
     /* expand/player CLIP the content to the growing box, so nothing OVERFLOWS outside
        the dock mid-morph (the user's 'transitions partially overflow and occlude'). The
