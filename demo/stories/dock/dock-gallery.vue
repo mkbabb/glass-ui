@@ -28,6 +28,10 @@ import {
 } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
+import TabBar from "./examples/TabBar.vue";
+import VolumeHUD from "./examples/VolumeHUD.vue";
+import Spotlight from "./examples/Spotlight.vue";
+import AppSwitcher from "./examples/AppSwitcher.vue";
 
 // each example owns one open flag — tap the dock to morph it.
 const playerOpen = ref(false);
@@ -194,6 +198,12 @@ const queue = [
                         <span class="dock-ex-hint">pill → expanded card + actions</span>
                     </p>
                 </div>
+
+                <!-- four more morphs (self-contained example components) -->
+                <TabBar />
+                <VolumeHUD />
+                <Spotlight />
+                <AppSwitcher />
             </div>
         </StorySection>
     </StoryPage>
