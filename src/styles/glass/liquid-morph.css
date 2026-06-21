@@ -19,9 +19,10 @@
         /* the pill footprint scales with the control count; the card footprint is fixed */
         --pill-w: calc(var(--liquid-dock-controls, 4) * 3.25rem + 1.5rem);
         --pill-h: 4rem;
-        /* the card is at most 22rem, but SHRINKS to fit a narrow (mobile) stage — the
-           references are all iPhone, so the sheet must never overflow the viewport. */
-        --card-w: min(22rem, calc(100% - 1.5rem));
+        /* card width — BOX-INDEPENDENT (rem/vw, never %-of-box) so the fixed-size glass
+           plate + pane can reference it without tracking the growing box. Mobile shrinks
+           via the media query below (the references are all iPhone). */
+        --card-w: 22rem;
         --card-h: 20rem;
 
         position: relative;
@@ -66,6 +67,28 @@
             inset 0 0 0 0.5px var(--glass-edge-light),
             var(--shadow-floating);
         z-index: 0;
+    }
+
+    /* expand/player: the glass plate is FIXED at the card footprint, bottom-anchored —
+       the box CLIPS it (the bloom-up reveal). So the expensive backdrop-filter NEVER
+       re-rasterizes on the box grow (the morph stays smooth) and the plate's content is
+       revealed, not resized. */
+    .liquid-dock:is([data-mode="expand"], [data-mode="player"])::before {
+        inset: auto;
+        inset-block-end: 0;
+        inset-inline-start: 50%;
+        inline-size: var(--card-w);
+        block-size: var(--card-h);
+        translate: -50% 0;
+        border-radius: var(--radius-card);
+    }
+
+    /* mobile — the card shrinks (vw/rem, box-independent) so it never overflows the
+       iPhone viewport while the fixed-plate optimisation holds. */
+    @media (max-width: 30rem) {
+        .liquid-dock {
+            --card-w: min(20rem, 88vw);
+        }
     }
     .liquid-dock-controls,
     .liquid-dock-pane {
