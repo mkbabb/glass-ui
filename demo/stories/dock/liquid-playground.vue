@@ -351,7 +351,11 @@ function onRailLeave(): void {
                     :data-mode="mode"
                     :data-open="open"
                     :data-orientation="orientation"
-                    :style="{ '--liquid-dock-controls': splitCount }"
+                    :style="{
+                        '--liquid-dock-controls': splitCount,
+                        alignSelf: 'flex-end',
+                        marginBlockEnd: '2rem',
+                    }"
                     data-testid="liquid-dock"
                 >
                     <!-- the controls (also the split pieces) -->
