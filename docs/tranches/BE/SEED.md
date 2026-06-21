@@ -1,7 +1,7 @@
 # BE tranche — SEED (iOS-27 liquid-glass alignment · the DOCK as hallmark · de-shadcn form)
 
-**Status:** tranche-DEVELOPMENT (planning-only, convergence loop). Pass 4 complete. See `WAVE-LIST.md` for the finalized ~30-wave dedup.
-**Convergence:** ~93% (pass 4 = re-challenge confirmed the betters-corrections held (dock/glass/aurora/bloom clear bettered; cards sharpened); the WAVE-LIST body RECONCILED — corrections folded into bands; 3 sharpenings added (squircle clip-path floor, pill-album-tint FLOOR, pill-tabbar fusion); 38 true-distinct waves / 11 criticals; mechanisms designed on verified substrate; BE/BF split recommended. Pass 5 final confirm → 100% → develop per-wave specs).
+**Status:** tranche-DEVELOPMENT (planning-only, convergence loop). Pass 5 complete (DESIGN CONVERGED). See `WAVE-LIST.md` for the finalized ~30-wave dedup.
+**Convergence:** ~96% — DESIGN CONVERGED (pass 5 final: betters CLEAR every-domain-bettered, paint CLEAR all-mechanisms-buildable; DECIDED one-tranche (not BE/BF split), BE absorbs the still-owed BD waves (ARIA defect + precept-canon + FOLD-LEDGER — BD was planning-only, never built), + the terminal BE.W-CUT. ~44 waves, ONE tranche. The remaining 4% is the mechanical per-wave-SPEC write — no further design. NEXT: develop docs/tranches/BE/waves/*.md).
 **Predecessor:** BD (converged 2-consecutive-clean; the post-cut discharge tranche). BE is the NEXT, larger tranche — the iOS-27 alignment + the dock hallmark + de-shadcn, a NEW-capability tranche (BD was discharge; this is build).
 **Inputs:** the two iOS-27 reference videos (V1 Apple Music dock/glass, V2 aurora album-art) + the Maps liquid-glass-card screenshot + 21-lens pass-1 fleet (frame-dissection · web-research · suite-audit · plan-brainstorm). Raw findings: `audit/pass-1-findings.json`; gap map: `PASS-1-GAPMAP.md`.
 

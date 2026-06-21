@@ -63,3 +63,28 @@ _Recommended PARTITION (pass-4 dedup): **BE** = Band 1 (dock hallmark, the user'
 ## Convergence ledger
 - Pass 1 ~50% · Pass 2 ~78% · Pass 3 ~85% · **Pass 4 ~93%** (re-challenge confirmed the betters-corrections held; dock/glass/aurora/bloom clear "bettered"; 3 sharpenings folded (squircle clip-path floor, pill-album-tint FLOOR, pill↔tabbar fusion); the body RECONCILED — corrections folded into bands; 38 true-distinct waves / 11 criticals; mechanisms designed on verified substrate; the BE/BF split recommended).
 - **Pass 5 (next, final):** one confirming challenge on THIS reconciled body (no new criticals → 100%) → then develop the per-wave SPECS (goal · starting-state · born-RED→GREEN gate · binding π · jubilance manifest · the BE/BF cut decision).
+
+---
+# PASS-5 FINAL DECISIONS (the convergence resolutions)
+
+## DECISION 1 — ONE TRANCHE (BE), not the BE/BF split (REVERSES pass-4)
+Ship all waves as ONE coherent loop. Rationale (pass-5 ch5-partition, verified): BC=96 waves / BB=63 / BD=43 all shipped as single tranches that converged 2-consecutive-clean; a ~44-wave BE is SMALLER than every recent cut. The split would pay the `gates.mjs --run full` siblings-absent close-battery + the irreversible-tag/publish/provenance path + the proof:ba-gestalt roster re-earn TWICE. The cross-band deps (NOWPLAYING-PILL→AUR-REACTIVE, LENS-SAFARI→LENS-PRISM, AMBIENT-HUE→pill-album-tint) become an EXECUTION-DAG ordering constraint, not a tranche boundary. CONDITIONAL carve-out: IF BE.W-VIZ-PARITY-METAL's manual real-Safari-26-Metal capture proves the goo-split budget a HARD un-relaxable miss at execution, the goo-as-FLOOR carves to a VT-fall (the morph-showcase precedent) — a wave-level decision, not a tranche split.
+
+## DECISION 2 — BE ABSORBS the still-owed BD waves (BD was PLANNING-ONLY, never executed)
+BD converged 2-consecutive-clean but was NEVER built (git-verified). Its still-owed discharge work must be absorbed into BE so nothing is lost (the no-silent-drop discipline):
+- **BE.W-ARIA-ORIENTATION-GUARD** (critical, NEW Band-9-conformance) — absorb BD.W-ARIA-ORIENTATION-GUARD: the ONE genuine undischarged a11y DEFECT (SegmentedTabs.vue:406 unconditional aria-orientation on role="group") + proof:aria-orientation (the marker-presence fence, no content-hash). The BC cut shipped it unfixed.
+- **BE.W-PRECEPT-CANON** (major, Band 10) — absorb BD's precept-canon (close-discipline · submodule-skip-policy · live-arm-CI-grace) — the BC cut lessons that live ONLY in commit bodies + the LESSONS-LEARNED backfill (AY→BE) + the CLAUDE.md count/doc resync.
+- **BE.W-FOLD-LEDGER** (already listed) — ABSORBS BD's full ~50-item FOLD-LEDGER + the iOS-27 gap-map dispositions; every BD HELD/FIRED row carried with its disposition; the demo-modernization folds into the iOS-27 demo work where it overlaps.
+- VIZ-PARITY-METAL + DISPOSITION-RESTAMP already in BE Band 10.
+
+## DECISION 3 — the terminal cut
+- **BE.W-CUT** (critical, Band 10, sequenced LAST) — the user-gated 4.x→(4.2/5.0) publish: a live-paint gestalt PASS (proof:ba-gestalt all-GREEN on fresh captures) + the CI-accurate `--run full` siblings-AND-submodule-absent close-battery + the irreversible tag + the provenance publish + (user-authorized) the slides redeploy. NO source-green close (the BC anti-disease law).
+
+## DEVELOP-PREP (folded at per-wave-spec writing)
+- Each band line gains its `proof:` gate INLINE (the full des-gate-final manifest in pass-4-findings.json is promoted into the per-wave specs).
+- BE.W-FOLD-LEDGER carries the explicit BUILD|DEFER|RETIRE verdict per dropped/considered item (incl. the popover speech-bubble-tail minor: BUILD a thin reka-Arrow→.glass-reveal-tailed register, or DEFER-with-rationale).
+- Dedup truth: 37 distinct iOS-27 IDs + ~3 absorbed-BD waves + BE.W-CUT ≈ **~44 waves, ONE tranche BE**.
+
+## Convergence ledger FINAL
+- Pass 1 ~50% · Pass 2 ~78% · Pass 3 ~85% · Pass 4 ~93% · **Pass 5 ~96%** (betters CLEAR ~96% every-domain-bettered; paint CLEAR ~96% all-mechanisms-buildable; develop-readiness design-sound; partition DECIDED one-tranche; BD-absorption DECIDED; the CUT wave added). The design is CONVERGED. The remaining 4% is the mechanical develop step: WRITE the per-wave specs (goal · starting-state · the inline gate · the binding π · the jubilance manifest) for the ~44 waves — no further design.
+- **NEXT: develop the per-wave SPECS** (docs/tranches/BE/waves/*.md), the BD precedent. The convergence loop is complete.
