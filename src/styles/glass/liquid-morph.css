@@ -23,7 +23,7 @@
            plate + pane can reference it without tracking the growing box. Mobile shrinks
            via the media query below (the references are all iPhone). */
         --card-w: 22rem;
-        --card-h: 20rem;
+        --card-h: 23rem; /* taller so Places/Recents fit ABOVE the persistent search bar */
 
         position: relative;
         box-sizing: border-box;
@@ -133,7 +133,7 @@
         inset-block-end: 0;
         inset-inline: 0;
         block-size: var(--pill-h);
-        z-index: 1;
+        z-index: 2; /* above the pane content — it persists at the sheet bottom */
         display: flex;
         align-items: center;
         gap: 0.625rem;
@@ -142,8 +142,15 @@
         opacity: 0;
         pointer-events: none;
     }
+    /* the search bar PERSISTS at the sheet bottom (Maps — the search bar stays as the
+       sheet blooms above it, never vanishes). The box grows UP from the pill, so the
+       bottom-anchored bar is stationary while Places/Recents fill in above it. A top
+       hairline + a faint field tint separate it from the content. */
     .liquid-dock[data-mode="expand"] .liquid-dock-search {
-        opacity: clamp(0, 1 - var(--t) * 1.9, 1); /* fades as the sheet blooms */
+        opacity: 1;
+        border-block-start: 1px solid
+            color-mix(in oklab, var(--foreground) 9%, transparent);
+        background: color-mix(in oklab, var(--card), transparent 35%);
     }
     .liquid-dock-search-icon {
         inline-size: 1.2rem;
@@ -492,6 +499,8 @@
     }
     .liquid-dock[data-mode="expand"] .liquid-dock-pane {
         opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
+        /* clear the persistent search bar at the sheet bottom (the Recents stop above it) */
+        padding-block-end: calc(1.5rem + var(--pill-h));
     }
 
     /* ── SPLIT — box stays a pill; controls fly out, goo-merged ── */
