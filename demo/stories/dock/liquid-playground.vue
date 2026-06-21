@@ -1,36 +1,31 @@
 <script setup lang="ts">
-// BE.W-LIQUID-MORPH (WAVE-2) — the liquid-morph PLAYGROUND, re-architected so the
-// CORE DOCK ITSELF morphs (the wave-1 side-element approach was wrong).
+// BE.W-LIQUID-MORPH (WAVE-2 integration) — the liquid-dock PLAYGROUND, re-wired onto
+// the SHIPPED BE library primitives (commit 5b7c4530). The wave-1 box-scale-crush +
+// orphan-magnifier + island-waist + vertical-amputation defects are fixed at the
+// ROOT by composing the real engines, not by tuning the throwaway spike:
 //
-// ONE glass dock element is the morph SUBJECT. It carries `--liquid-morph-t` (0 rest
-// → 1 morphed) written by `useLiquidMorph`'s single dock-spring scalar:
-//   • EXPAND — the dock box GROWS pill → container card IN PLACE (its own footprint,
-//     anchored at its own centre; the controls cross-fade out, the pane reveals).
-//     This is the iOS-27 V3 search-pill → sheet bloom — the dock IS the sheet.
-//   • SPLIT — the dock's OWN control buttons DETACH and fly out as free-floating
-//     glass pieces at the configurable angle (the dock disintegrates into its
-//     controls, goo-necked). The dock is the body the pieces bud from.
-// No separate card, no FLIP-from-a-hidden-trigger. One element, one scalar.
-//
-// WAVE-2 — THE RAIL. A second section adds the carousel-stack rail: a vertical glass
-// dock with `useLiquidRail` projecting a carousel-WRAP stack on its right edge — the
-// chosen chip at the dock line, items fanning above (golden ~2x) + below, collapsed
-// by default, EXPANDING on hover (or the Expand-rail button), the far ones fading
-// toward 0 opacity (the ↑z fade). NOT the macOS 3D fan — a STRAIGHT carousel-wrap.
+//   • EXPAND (Search → Places sheet) + PLAYER (now-playing pill → player) use
+//     `useBloomUp(pillRef, sheetRef)`: the dock box STAYS PILL-SIZED; the sheet/player
+//     is a SEPARATE overlay that lays out at its FULL settled rect ONCE and BLOOMs from
+//     the pill's rect (transform/opacity/filter — NEVER a box-scale that crushes
+//     content). The pill's magnifier and the sheet's search field are ONE FLIPping
+//     element, so the orphan magnifier is gone. The 4th color channel warms the stage
+//     FIELD toward the album hue (the sheet's --glass-ambient-hue).
+//   • ISLAND (Split → islands) uses `useDockFission`: at REST the island is ONE crisp
+//     `.glass-floating` pill (goo OFF); the two activity halves register as fission
+//     PIECES with opposite vectors. On split the goo NECK stretches-thins-snaps between
+//     them (the `.dock-fission-bridge` host + the library `<DockGooFilter>` mount). No
+//     two-abutting-blob waist.
+//   • VERTICAL is a CONTENT REFLOW per mode (album → title → transport stacked), never
+//     a `display:none` amputation to a bare square.
 import { computed, onMounted, ref, watch } from "vue";
 import {
-    Layers,
     Search,
-    Maximize2,
-    Split as SplitIcon,
-    Star,
-    Clock,
-    Image,
-    Music,
-    Film,
-    Folder,
-    Heart,
-    Tag,
+    Play,
+    Pause,
+    SkipBack,
+    SkipForward,
+    Mic,
     Briefcase,
     Home,
     Bookmark,
@@ -38,10 +33,16 @@ import {
     MapPin,
     Building2,
     Scissors,
-    Play,
-    SkipBack,
-    SkipForward,
-    Mic,
+    Timer,
+    Music,
+    // ── the rail section (BE.W-DOCK-RAIL-REALIZE scope — untouched here) ──
+    Folder,
+    Image,
+    Film,
+    Star,
+    Heart,
+    Tag,
+    Clock,
 } from "@lucide/vue";
 import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
@@ -50,21 +51,21 @@ import { Button } from "../../../src/components/ui/button";
 import { Slider } from "../../../src/components/ui/slider";
 import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
 import {
-    useLiquidMorph,
-    DIRECTED_SPLIT,
-    type LiquidMorphMode,
-} from "../../../src/composables/motion/useLiquidMorph";
+    useDockFission,
+    DOCK_SPLIT_SIGNATURES,
+} from "../../../src/components/custom/dock/composables";
+import { DockGooFilter } from "../../../src/components/custom/dock";
 import { useLiquidRail } from "../../../src/components/custom/dock/composables/useLiquidRail";
 
 // ── controls ──────────────────────────────────────────────────────────────────
-// "player" is NOT a morph mode (the engine just drives t); it's a CONTENT register —
-// the dock becomes a now-playing PILL that expands into a full media player (the
-// iconic Apple Music dock facility; media control IS the primary control interface).
-// the dock becomes a real iOS surface per mode — NOT abstract goo. "island" is the
-// Dynamic Island SPLIT: the pill fissions into two distinct activity islands (a timer
-// + a now-playing), goo-bridged as they part. "player" → the Apple Music player.
-type PlaygroundMode = LiquidMorphMode | "player" | "island";
+// THREE registers, all driven by REAL primitives:
+//   • "expand" → a Maps SEARCH PILL that BLOOMS into a Places sheet (useBloomUp).
+//   • "island" → a Dynamic-Island SPLIT — ONE crisp pill FISSIONS into a timer + a
+//     now-playing island, goo-necked as they part (useDockFission).
+//   • "player" → a now-playing PILL that BLOOMS into the full Apple Music player.
+type PlaygroundMode = "expand" | "island" | "player";
 const mode = ref<PlaygroundMode>("expand");
 const modeTabs = [
     { value: "expand", label: "Search → sheet" },
@@ -76,29 +77,22 @@ const track = {
     artist: "Shiro Sagisu",
     album: "Evangelion: 1.0",
 };
-const angleDeg = ref(35);
-const splitCount = ref(4);
-const angleRad = computed(() => (angleDeg.value * Math.PI) / 180);
-const open = ref(false);
-// the dock's resting axis — horizontal pill (row) or vertical pill (column). The morph
-// works on BOTH ("function in a vertical or horizontal state").
+// the album's dominant hue — the 4th color channel the bloom warms the FIELD toward
+// (the iOS "the whole world takes on the album's color"). A complete <color>, demo-local
+// (presets-in-consumers — never a library token).
+const albumHue = "oklch(0.62 0.19 18)";
+
+// the dock's resting axis — horizontal pill (row) or vertical pill (column). EVERY mode
+// works on BOTH; vertical is a content REFLOW (a column layout), never a display:none.
 const orientation = ref<"horizontal" | "vertical">("horizontal");
-// the V<->H morph reshapes the box (CSS transition), but the row<->column content flip is a
-// TOPOLOGY change the web platform can't continuously interpolate — so we OCCLUDE it inside a
-// brief content cross-fade (the morph-showcase goo/View-Transitions discipline, the cheap
-// CSS-only version): `reorienting` arms a `[data-reorienting]` opacity dip over the reshape.
-const reorienting = ref(false);
-let reorientTimer: ReturnType<typeof setTimeout> | undefined;
 function toggleOrientation(): void {
     orientation.value = orientation.value === "horizontal" ? "vertical" : "horizontal";
-    reorienting.value = true;
-    clearTimeout(reorientTimer);
-    reorientTimer = setTimeout(() => (reorienting.value = false), 460);
+    // a mid-flight orientation flip while a bloom is open closes it cleanly (the sheet
+    // re-blooms from the re-oriented pill on the next open).
+    if (open.value && mode.value !== "island") close();
 }
 
-// the expand pane content — the iOS-27 Maps "Places" sheet: a COLORFUL Places row
-// (vibrant IconChips off the --section-color ramp) + a real Recents list, so the dock
-// grows into RICH, vibrant content the way the reference does, not generic grey chips.
+// the expand pane content — the iOS-27 Maps "Places" sheet.
 const places = [
     { icon: Briefcase, label: "Work", section: 8 },
     { icon: Home, label: "Home", section: 10 },
@@ -111,101 +105,164 @@ const recents = [
     { icon: Scissors, name: "A Better Man's Barber", sub: "Reynolda Road" },
 ];
 
-// ── the dock element IS the morph root ──────────────────────────────────────────
-const dockRef = ref<HTMLElement | null>(null);
-const ctlEls = ref<(HTMLElement | null)[]>([]);
-const ctlIndices = computed(() =>
-    Array.from({ length: splitCount.value }, (_, i) => i),
-);
-const ctlIcons = [Layers, Search, Star, Clock, SplitIcon, Maximize2];
-function setCtlEl(i: number, el: Element | null): void {
-    ctlEls.value[i] = (el as HTMLElement | null) ?? null;
-}
+// ── refs: the pill (the bloom SOURCE) + the bloom DESTINATIONS ───────────────────
+const stageRef = ref<HTMLElement | null>(null); // the [data-glass-field] the 4th channel warms
+const dockRef = ref<HTMLElement | null>(null); // the PILL (stays pill-sized; the bloom source)
+const sheetRef = ref<HTMLElement | null>(null); // the Places sheet (expand) — full-size dest
+const playerRef = ref<HTMLElement | null>(null); // the player card (player) — full-size dest
 
-// the ONE engine — DIRECTED so the angle slider drives each control's escape beam.
-// The spring varies BY GESTURE (resolved per-drive): EXPAND rides SMOOTH (a deliberate,
-// luxuriant pill→card bloom, no overshoot — the iOS-27 V3 register), while SPLIT/UNION
-// ride SNAPPY (a livelier clock with a slight overshoot — the pieces bud with LIFE, the
-// creed's jubilance). One engine, two registers.
-const morph = useLiquidMorph({
-    rootEl: dockRef,
-    signature: DIRECTED_SPLIT,
-    spring: () =>
-        mode.value === "expand" || mode.value === "player" ? "smooth" : "snappy",
+// the open state for the BLOOM modes (expand/player). The sheet/player overlay is
+// rendered only while open || blooming so it never occludes the pill at rest.
+const open = ref(false);
+
+// ── EXPAND / PLAYER — the shared-element BLOOM ──────────────────────────────────
+// the active destination ref (the sheet for expand, the player for player). The bloom
+// FLIPs the dest FROM the pill's rect — the dest lays out at its full settled size and
+// the pill becomes its visual origin (the search field / now-playing row is the SAME
+// FLIPping element, so no orphan magnifier).
+const destRef = computed(() =>
+    mode.value === "player" ? playerRef.value : sheetRef.value,
+);
+const destRefBox = computed({
+    get: () => destRef.value,
+    set: () => {},
 });
 
-// the dock's controls ARE the split pieces — register them with the engine so a
-// split flies them out along --split-dx/dy · distance · t.
-let handles: ReturnType<typeof morph.registerPiece>[] = [];
-function registerControls(): void {
-    for (const h of handles) h.release();
-    handles = ctlIndices.value.map((i) =>
-        morph.registerPiece({
-            el: computed(() => ctlEls.value[i] ?? null),
-            angle: angleRad.value,
-            rank: i,
-            // a CONNECTED goo arm budding from the core: rank 0 at centre, each next
-            // ~30px further along θ — close enough that the metaball necks stay bridged
-            // (a wider gap separates the blobs; the reference is ONE connected arm).
-            distance: i * 30,
-        }),
-    );
-}
-watch([splitCount, angleRad], () => requestAnimationFrame(registerControls));
-onMounted(() => requestAnimationFrame(registerControls));
+const bloom = useBloomUp(dockRef, destRefBox, {
+    preset: "bouncy", // the emphatic large-surface bloom (iOS-27 sheet register)
+    blur: 5,
+    // NO static fieldHue — the leaf reads `--glass-ambient-hue` off the SOURCE pill (the
+    // AMBIENT-TINT convergence), which we set per-mode below: the PLAYER pill carries the
+    // album hue (the field warms to the album's color — the iOS "the whole world takes on
+    // the album's color"); the Places pill carries no hue (the field stays warm-cream).
+    field: stageRef, // write --glass-ambient-hue/-strength HERE, never on the surface
+    fieldStrength: 8, // the bounded sub-perceptual ceiling
+});
 
-// ── the actions — ONE scalar; the mode gates what reads it ───────────────────────
+function openBloom(): void {
+    open.value = true;
+    // mark the SOURCE pill's dominant hue so the bloom's 4th color channel reads it: the
+    // PLAYER warms the field to the album hue; EXPAND leaves it neutral (warm-cream).
+    const pill = dockRef.value;
+    if (pill) {
+        if (mode.value === "player") pill.style.setProperty("--glass-ambient-hue", albumHue);
+        else pill.style.removeProperty("--glass-ambient-hue");
+    }
+    // the overlay must be in the DOM + laid out at its full rect before we measure it,
+    // so we bloom on the next frame (after v-if mounts the dest).
+    requestAnimationFrame(() => {
+        bloom.bloom();
+    });
+}
+function close(): void {
+    bloom.reset(); // restore the dest to identity + release the field hue
+    open.value = false;
+}
+function toggleBloom(): void {
+    if (open.value) close();
+    else openBloom();
+}
+
+// ── ISLAND — the fission SPLIT ──────────────────────────────────────────────────
+// the rest state is ONE crisp glass pill (the .dock-fission-bridge host, goo OFF). The
+// two activity halves register as fission PIECES; split CARVES the pill — the goo neck
+// stretches-thins-snaps between them. The media signature = LATERAL PEEL (the now-playing
+// anchor stays, the timer peels — descriptor-driven, the DOCK_SPLIT_SIGNATURES map).
+const islandHostRef = ref<HTMLElement | null>(null);
+const timerPieceRef = ref<HTMLElement | null>(null);
+const musicPieceRef = ref<HTMLElement | null>(null);
+const islandSignature = ref(DOCK_SPLIT_SIGNATURES.media);
+
+const fission = useDockFission({
+    rootEl: islandHostRef,
+    signature: islandSignature,
+});
+
+// register the two halves as fission pieces with OPPOSITE vectors along the dock's
+// VISUAL axis (horizontal → the timer peels left, the music right; vertical → the timer
+// peels up, the music down — the vectors track the orientation so the carve always runs
+// along the layout axis). rank orders the stagger so the necks break in sequence.
+let islandHandles: { release(): void }[] = [];
+function registerIslandPieces(): void {
+    for (const h of islandHandles) h.release();
+    const vertical = orientation.value === "vertical";
+    islandHandles = [
+        fission.registerPiece({
+            el: timerPieceRef,
+            vector: vertical ? { dx: 0, dy: -1 } : { dx: -1, dy: 0 }, // peel LEFT / UP
+            rank: 0,
+        }),
+        fission.registerPiece({
+            el: musicPieceRef,
+            vector: vertical ? { dx: 0, dy: 1 } : { dx: 1, dy: 0 }, // peel RIGHT / DOWN
+            rank: 1,
+        }),
+    ];
+}
+const islandSplit = ref(false);
+function toggleIsland(): void {
+    islandSplit.value = !islandSplit.value;
+    fission.toggle();
+}
+
+// ── the unified Play/Close action — the timeline button drives the active mode ───
 function play(): void {
-    // open = "spread/apart" (t→1), closed = "merged/rest" (t→0). Split SPREADS the
-    // dock's controls; union MERGES them back into one — same scalar, inverse framing.
-    open.value = !open.value;
-    if (open.value) morph.split();
-    else morph.union();
+    if (mode.value === "island") toggleIsland();
+    else toggleBloom();
 }
 function reset(): void {
-    open.value = mode.value === "union";
-    if (open.value) morph.split();
-    else morph.union();
-}
-// ── the keyframes.js timeline scrubber — full manual control of the morph ────────
-// `progress` mirrors the live spring scalar (so the scrubber FOLLOWS a running play);
-// dragging it calls `morph.seek()` (disposes the spring, scrubs the scalar directly).
-const progress = computed(() => Math.round(morph.t.value * 100));
-function seekTo(v: number[] | undefined): void {
-    const p = (v?.[0] ?? 0) / 100;
-    morph.seek(p);
-    open.value = p > 0.5;
-}
-// a mode change re-seats: union STARTS spread (N separate pieces to merge); the others
-// start at rest. (so union demonstrably collapses N elements into one.)
-watch(mode, (m) => {
-    if (m === "union") {
-        open.value = true;
-        morph.split();
-    } else {
-        open.value = false;
-        morph.union();
+    // close every register to rest.
+    if (open.value) close();
+    if (islandSplit.value) {
+        islandSplit.value = false;
+        fission.merge();
     }
+}
+
+// re-seat on a mode change — close any open bloom + un-split the island so each mode
+// starts at rest (so a switch never strands an open overlay or a split island).
+watch(mode, () => {
+    if (open.value) close();
+    if (islandSplit.value) {
+        islandSplit.value = false;
+        fission.merge();
+    }
+    if (mode.value === "island") requestAnimationFrame(registerIslandPieces);
+});
+onMounted(() => {
+    if (mode.value === "island") requestAnimationFrame(registerIslandPieces);
+});
+// re-register the island pieces when the orientation flips (the vectors are axis-aware).
+watch(orientation, () => {
+    if (mode.value === "island") requestAnimationFrame(registerIslandPieces);
+});
+
+// the readout state (mirrors the active register's live progress for the caption).
+const readoutT = computed(() =>
+    mode.value === "island"
+        ? fission.t.value
+        : bloom.blooming.value
+          ? 0.5
+          : open.value
+            ? 1
+            : 0,
+);
+const readoutState = computed(() => {
+    if (mode.value === "island")
+        return fission.fissioned.value ? "split" : "merged";
+    if (bloom.blooming.value) return "blooming";
+    return open.value ? "open" : "rest";
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // THE RAIL — the carousel-stack on a vertical dock's right edge.
+// (BE.W-DOCK-RAIL-REALIZE scope — UNTOUCHED by this integration pass.)
 // ═══════════════════════════════════════════════════════════════════════════════
-
-// the rail's item set — glass disc facets (one per "place"). The chosen sits at the
-// dock line; the rest carousel-WRAP above + below.
 const railIcons = [Folder, Image, Music, Film, Star, Heart, Tag, Clock];
 const railLabels = ["Files", "Photos", "Music", "Video", "Starred", "Loved", "Tags", "Recent"];
-
-// the configurable above/below counts — the sketch's asymmetric window (golden 2x
-// above, partial below). For the prototype the projection's fadeRange owns the visible
-// span; these knobs retune the golden asymmetry + the fade span so the verification is
-// reachable headless.
 const itemsAbove = ref(2);
 const itemsBelow = ref(1);
 const railOpen = ref(false);
-
-// ONE registry — the consumer owns `chosenIdx`; the rail keeps no internal shadow.
 const chosenIdx = ref(0);
 const railCount = computed(() => railIcons.length);
 const railRoot = ref<HTMLElement | null>(null);
@@ -217,14 +274,6 @@ const rail = useLiquidRail({
     spring: "dock",
     rootEl: railRoot,
     geometry: {
-        // LIVE getters — the projection resolves them per-read, so the sliders re-fan
-        // the carousel without reconstructing the composable.
-        // the golden asymmetry the knobs drive: the above side fans ~φ² (≈2.618×, the
-        // pinned "golden ~2x above") the below span, scaled by the above/below ratio so
-        // the sliders retune it (the "partial peek below").
-        // the golden 2x ABOVE — now a FADE asymmetry (the below side fades ~2.2x
-        // faster, a "partial peek"), at UNIFORM tight spacing. More items read above
-        // the chosen than below, the sketch's golden register.
         goldenAbove: 2.2,
         fadeStart: 0.6,
         fadeRange: () => itemsAbove.value + 0.7,
@@ -250,12 +299,7 @@ function onRailLeave(): void {
     railOpen.value = false;
     rail.onPointerLeave();
 }
-// ── SCROLL the carousel — FLUID + SLOW. The wheel feeds the rail's CONTINUOUS
-// `position` scalar (fractional slot-units), so the items SLIDE smoothly under the
-// finger instead of jumping notch-by-notch. SCROLL_PX_PER_SLOT is large (slow — a long
-// scroll per item). On settle (wheel stops) the position spring-snaps to the nearest
-// slot + folds into `chosen` (a transition glides the final ≤0.5-slot landing). ──
-const SCROLL_PX_PER_SLOT = 150; // higher = slower; the items track the wheel 1:1 within
+const SCROLL_PX_PER_SLOT = 150;
 const railSettling = ref(false);
 let wheelTimer: ReturnType<typeof setTimeout> | undefined;
 let settleTimer: ReturnType<typeof setTimeout> | undefined;
@@ -263,7 +307,7 @@ function onRailWheel(e: WheelEvent): void {
     e.preventDefault();
     railOpen.value = true;
     rail.expandTo(true);
-    railSettling.value = false; // instant follow while actively scrolling
+    railSettling.value = false;
     rail.scrollBy(e.deltaY / SCROLL_PX_PER_SLOT);
     clearTimeout(wheelTimer);
     wheelTimer = setTimeout(settleRail, 150);
@@ -271,13 +315,11 @@ function onRailWheel(e: WheelEvent): void {
 function settleRail(): void {
     const pos = rail.position.value;
     const n = railCount.value;
-    // fold the fractional position into `chosen`, landing on the nearest slot. The
-    // transition (data-settling) glides the residual ≤0.5-slot move into place.
     if (Math.abs(pos) >= 0.001) {
         const target = Math.round(chosenIdx.value + pos);
         railSettling.value = true;
         chosenIdx.value = ((target % n) + n) % n;
-        rail.scrollBy(-pos); // position → 0; chosen now carries the landing
+        rail.scrollBy(-pos);
     }
     clearTimeout(settleTimer);
     settleTimer = setTimeout(() => {
@@ -287,9 +329,6 @@ function settleRail(): void {
     }, 520);
 }
 
-// The aurora is a DECORATIVE backdrop — handle a WebGL/shader init failure gracefully
-// (the canvas stays blank, the dock morph is the focus) so it never surfaces as an
-// unhandled rejection (the glass-ui deferred-init contract).
 function onAuroraInitError(err: Error): void {
     console.warn("[liquid-playground] aurora backdrop init failed:", err.message);
 }
@@ -297,19 +336,27 @@ function onAuroraInitError(err: Error): void {
 
 <template>
     <StoryPage>
+        <!-- the ONE library goo <filter> mount — the fission bridge references it by id
+             (var(--dock-fission-goo-filter) → url(#dock-fission-goo)). Mounted ONCE.
+             color-interpolation-filters=sRGB + a generous region + a non-zero host (the
+             Safari floor + the fix for the island waist). -->
+        <DockGooFilter />
+
         <StorySection
             heading="Liquid playground — the dock is the control interface"
             gap="md"
         >
             <p class="text-small text-muted-foreground">
-                The dock ITSELF morphs into real iOS surfaces. ONE engine —
-                <code class="rounded bg-muted px-1">useLiquidMorph</code> — writes one
-                dock-spring scalar onto the dock element:
-                <strong>SEARCH</strong> blooms the pill into a Maps Places sheet,
-                <strong>SPLIT</strong> fissions it into two distinct activity islands (a
-                timer + a now-playing), goo-bridged as they part — the Dynamic Island
-                split — and <strong>NOW PLAYING</strong> grows it into the full Apple
-                Music player.
+                The dock morphs into real iOS surfaces, composing the SHIPPED BE
+                primitives. <strong>SEARCH</strong> blooms the pill into a Maps Places
+                sheet via
+                <code class="rounded bg-muted px-1">useBloomUp</code> (the pill stays
+                pill-sized; the sheet FLIPs from its rect — no content crush, no orphan
+                magnifier). <strong>SPLIT</strong> fissions ONE crisp glass pill into two
+                activity islands via
+                <code class="rounded bg-muted px-1">useDockFission</code> — the goo neck
+                stretches then snaps. <strong>NOW PLAYING</strong> blooms it into the full
+                Apple Music player, the whole field warming to the album's color.
             </p>
 
             <!-- controls -->
@@ -320,41 +367,17 @@ function onAuroraInitError(err: Error): void {
                     <label class="text-mono-caption text-muted-foreground">Mode</label>
                     <SegmentedTabs v-model="mode" :options="modeTabs" />
                 </div>
-                <div
-                    v-show="mode === 'split' || mode === 'union'"
-                    class="flex min-w-[14rem] flex-1 flex-col gap-2"
-                >
+                <div class="flex min-w-[12rem] flex-1 flex-col gap-2">
                     <label class="text-mono-caption text-muted-foreground">
-                        Angle of attack — {{ angleDeg }}°
-                    </label>
-                    <Slider
-                        :model-value="[angleDeg]"
-                        :min="0"
-                        :max="360"
-                        :step="1"
-                        @update:model-value="(v) => (angleDeg = v?.[0] ?? 0)"
-                    />
-                </div>
-                <div
-                    v-show="mode === 'split' || mode === 'union'"
-                    class="flex min-w-[10rem] flex-1 flex-col gap-2"
-                >
-                    <label class="text-mono-caption text-muted-foreground">
-                        Controls — {{ splitCount }}
-                    </label>
-                    <Slider
-                        :model-value="[splitCount]"
-                        :min="2"
-                        :max="6"
-                        :step="1"
-                        @update:model-value="(v) => (splitCount = v?.[0] ?? 2)"
-                    />
-                </div>
-                <!-- the keyframes.js TIMELINE — click the DOCK to play, or scrub here.
-                     The slider FOLLOWS a running spring and SCRUBS the scalar on drag. -->
-                <div class="flex min-w-[18rem] flex-1 flex-col gap-2">
-                    <label class="text-mono-caption text-muted-foreground">
-                        Timeline — {{ progress }}%
+                        {{
+                            mode === "island"
+                                ? islandSplit
+                                    ? "Split open"
+                                    : "Merged"
+                                : open
+                                  ? "Open"
+                                  : "Rest"
+                        }}
                     </label>
                     <div class="flex items-center gap-3">
                         <Button
@@ -362,16 +385,19 @@ function onAuroraInitError(err: Error): void {
                             size="sm"
                             @click="play"
                         >
-                            {{ open ? "Close" : "Play ▶" }}
+                            {{
+                                mode === "island"
+                                    ? islandSplit
+                                        ? "Merge"
+                                        : "Split ▶"
+                                    : open
+                                      ? "Close"
+                                      : "Open ▶"
+                            }}
                         </Button>
-                        <Slider
-                            class="flex-1"
-                            :model-value="[progress]"
-                            :min="0"
-                            :max="100"
-                            :step="1"
-                            @update:model-value="seekTo"
-                        />
+                        <Button variant="outline" size="sm" @click="reset">
+                            Reset
+                        </Button>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -381,13 +407,16 @@ function onAuroraInitError(err: Error): void {
                 </div>
             </div>
 
-            <!-- the stage — the dock sits centred; it grows / splits IN PLACE -->
+            <!-- the stage — the [data-glass-field] the bloom's 4th color channel warms.
+                 The pill sits centred; the sheet/player BLOOMS over it; the island
+                 fissions in place. -->
             <div
-                class="relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
+                ref="stageRef"
+                data-glass-field
+                class="liquid-stage relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
                 data-testid="liquid-stage"
             >
-                <!-- the live aurora field — the dock's glass reads AGAINST it (the
-                     reference always has rich content behind the glass). Offscreen-
+                <!-- the live aurora field — the dock's glass reads AGAINST it. Offscreen-
                      paused by construction; ONE GL context for this route. -->
                 <Aurora
                     :config="DEFAULT_AURORA_CONFIG"
@@ -395,191 +424,222 @@ function onAuroraInitError(err: Error): void {
                     class="pointer-events-none absolute inset-0 size-full"
                     aria-hidden="true"
                 />
-                <!-- the goo <filter> — feGaussianBlur + threshold (Safari-safe,
-                     filter:url() inline). Referenced by .liquid-dock[data-mode=split]
-                     when the controls detach so they read as ONE metaball body. -->
-                <svg aria-hidden="true" width="0" height="0" style="position: absolute">
-                    <defs>
-                        <filter id="liquid-morph-goo">
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b" />
-                            <feColorMatrix
-                                in="b"
-                                mode="matrix"
-                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
-                                result="g"
-                            />
-                            <feComposite in="SourceGraphic" in2="g" operator="atop" />
-                        </filter>
-                    </defs>
-                </svg>
 
-                <!-- THE DOCK — the single morph subject. data-mode/data-open gate the
-                     CSS; --split-count sizes the control row; the engine writes
-                     --liquid-morph-t here (box grow) and onto each control (fly). -->
+                <!-- ════════════════════════════════════════════════════════════════
+                     EXPAND / PLAYER — the dock is a small PILL (stays pill-sized); the
+                     sheet/player BLOOMS from its rect. The pill is the bloom SOURCE.
+                     ════════════════════════════════════════════════════════════════ -->
                 <div
+                    v-if="mode !== 'island'"
                     ref="dockRef"
-                    class="liquid-dock"
+                    class="liquid-pill"
+                    :class="{ 'liquid-pill--hidden': open }"
                     role="button"
                     tabindex="0"
-                    :aria-pressed="open"
-                    aria-label="Toggle the dock morph"
-                    @click="play"
-                    @keydown.enter.prevent="play"
-                    @keydown.space.prevent="play"
+                    :aria-expanded="open"
+                    :aria-label="
+                        mode === 'expand' ? 'Open search' : 'Open now playing'
+                    "
+                    @click="toggleBloom"
+                    @keydown.enter.prevent="toggleBloom"
+                    @keydown.space.prevent="toggleBloom"
                     :data-mode="mode"
-                    :data-open="open"
                     :data-orientation="orientation"
-                    :data-reorienting="reorienting ? '' : undefined"
-                    :style="{
-                        '--liquid-dock-controls': splitCount,
-                        // sheets/players BLOOM UP from the bottom dock (reference motion);
-                        // the island split centres so it has room to fan apart.
-                        alignSelf: mode === 'island' ? 'center' : 'flex-end',
-                        marginBlockEnd: mode === 'island' ? '0' : '2rem',
-                    }"
-                    data-testid="liquid-dock"
+                    data-testid="liquid-pill"
                 >
-                    <!-- the controls (also the split pieces) -->
-                    <div class="liquid-dock-controls">
-                        <!-- the GOO BODY — the dock's mass IN the goo filter. On split the
-                             glass plate dissolves, this appears + CONTRACTS to the core as
-                             the icons fly off (the dock fissions, not an empty husk). -->
-                        <span class="liquid-dock-goo-body" aria-hidden="true" />
-                        <button
-                            v-for="i in ctlIndices"
-                            :key="i"
-                            :ref="(el) => setCtlEl(i, el as Element | null)"
-                            type="button"
-                            class="liquid-dock-control liquid-morph-piece"
-                            data-testid="liquid-control"
-                            :aria-label="`control ${i + 1}`"
-                        >
-                            <component :is="ctlIcons[i % ctlIcons.length]" class="size-5" />
-                        </button>
-                    </div>
+                    <!-- EXPAND — the Maps SEARCH PILL (the search field that the sheet's
+                         own field FLIPs from — one element, no orphan magnifier). -->
+                    <template v-if="mode === 'expand'">
+                        <Search class="liquid-pill-icon" />
+                        <span class="liquid-pill-hint">Search places</span>
+                        <Mic class="liquid-pill-trail" />
+                    </template>
+                    <!-- PLAYER — the now-playing PILL (album → title → play). -->
+                    <template v-else>
+                        <span class="liquid-pill-album" />
+                        <span class="liquid-pill-meta">
+                            <span class="liquid-pill-title">{{ track.title }}</span>
+                            <span class="liquid-pill-artist">{{ track.artist }}</span>
+                        </span>
+                        <span class="liquid-pill-play"><Play class="size-4" /></span>
+                    </template>
+                </div>
 
-                    <!-- the container pane the dock grows into (expand) — the iOS-27
-                         Maps "Places" sheet: a COLOURFUL Places row + a Recents list. -->
-                    <div class="liquid-dock-pane" aria-hidden="true">
-                        <span class="liquid-dock-grabber" />
-                        <div class="liquid-dock-places">
+                <!-- the EXPAND sheet — the Maps "Places" overlay. Rendered only while
+                     open||blooming; lays out at its FULL settled rect (the bloom FLIPs it
+                     FROM the pill — never a box-scale crush). The persistent search field
+                     at the bottom is the SAME element the pill's magnifier flips into. -->
+                <div
+                    v-if="mode === 'expand' && open"
+                    ref="sheetRef"
+                    class="liquid-sheet"
+                    :data-orientation="orientation"
+                    role="dialog"
+                    aria-label="Places"
+                    data-testid="liquid-sheet"
+                >
+                    <span class="liquid-sheet-grabber" aria-hidden="true" />
+                    <div class="liquid-sheet-body">
+                        <div class="liquid-sheet-places">
                             <span
                                 v-for="p in places"
                                 :key="p.label"
-                                class="liquid-dock-place"
+                                class="liquid-sheet-place"
                             >
                                 <IconChip
                                     :icon="p.icon"
                                     :section="p.section"
                                     :size="42"
                                 />
-                                <span class="liquid-dock-place-label">{{ p.label }}</span>
+                                <span class="liquid-sheet-place-label">{{
+                                    p.label
+                                }}</span>
                             </span>
                         </div>
-                        <div class="liquid-dock-recents">
-                            <p class="liquid-dock-recents-label">Recents</p>
-                            <span
+                        <div class="liquid-sheet-recents">
+                            <p class="liquid-sheet-recents-label">Recents</p>
+                            <button
                                 v-for="r in recents"
                                 :key="r.name"
-                                class="liquid-dock-recent"
+                                type="button"
+                                class="liquid-sheet-recent"
                             >
-                                <span class="liquid-dock-recent-icon">
+                                <span class="liquid-sheet-recent-icon">
                                     <component :is="r.icon" class="size-4" />
                                 </span>
-                                <span class="liquid-dock-recent-text">
-                                    <span class="liquid-dock-recent-name">{{ r.name }}</span>
-                                    <span class="liquid-dock-recent-sub">{{ r.sub }}</span>
+                                <span class="liquid-sheet-recent-text">
+                                    <span class="liquid-sheet-recent-name">{{
+                                        r.name
+                                    }}</span>
+                                    <span class="liquid-sheet-recent-sub">{{
+                                        r.sub
+                                    }}</span>
                                 </span>
-                            </span>
+                            </button>
                         </div>
                     </div>
+                    <!-- the persistent search field — the pill's magnifier FLIPs into
+                         THIS (one coherent element, no orphan). -->
+                    <button
+                        type="button"
+                        class="liquid-sheet-search"
+                        @click="close"
+                    >
+                        <Search class="liquid-pill-icon" />
+                        <span class="liquid-pill-hint">Search places</span>
+                        <Mic class="liquid-pill-trail" />
+                    </button>
+                </div>
 
-                    <!-- EXPAND mode — the dock is a Maps SEARCH PILL at rest (the
-                         "search-pill → sheet bloom" concept the intro names), cross-fading
-                         into the Places sheet as the dock blooms up. -->
-                    <div
-                        v-if="mode === 'expand'"
-                        class="liquid-dock-search"
-                        aria-hidden="true"
-                    >
-                        <Search class="liquid-dock-search-icon" />
-                        <span class="liquid-dock-search-hint">Search places</span>
-                        <Mic class="liquid-dock-search-mic" />
-                    </div>
-
-                    <!-- PLAYER mode — the now-playing PILL (rest) that grows into the
-                         full media player (expand): the iconic Apple Music dock facility,
-                         the dock AS the media control interface. -->
-                    <div
-                        v-if="mode === 'player'"
-                        class="liquid-dock-player-pill"
-                        aria-hidden="true"
-                    >
-                        <span class="liquid-dock-album" />
-                        <span class="liquid-dock-nowplaying">
-                            <span class="liquid-dock-track">{{ track.title }}</span>
-                            <span class="liquid-dock-artist">{{ track.artist }}</span>
-                        </span>
-                        <span class="liquid-dock-play"><Play class="size-4" /></span>
-                    </div>
-                    <div
-                        v-if="mode === 'player'"
-                        class="liquid-dock-player-pane"
-                        aria-hidden="true"
-                    >
-                        <span class="liquid-dock-grabber" />
-                        <span class="liquid-dock-album-big" />
-                        <span class="liquid-dock-track-big">{{ track.title }}</span>
-                        <span class="liquid-dock-artist-big">{{ track.artist }}</span>
-                        <span class="liquid-dock-scrubber">
-                            <span class="liquid-dock-scrubber-fill" />
-                        </span>
-                        <span class="liquid-dock-scrubber-times">
-                            <span>1:59</span>
-                            <span>-3:14</span>
-                        </span>
-                        <span class="liquid-dock-transport">
+                <!-- the PLAYER card — the full Apple Music player. Blooms from the pill;
+                     the field warms to the album hue (the 4th color channel). -->
+                <div
+                    v-if="mode === 'player' && open"
+                    ref="playerRef"
+                    class="liquid-player"
+                    :data-orientation="orientation"
+                    role="dialog"
+                    aria-label="Now playing"
+                    data-testid="liquid-player"
+                >
+                    <span class="liquid-sheet-grabber" aria-hidden="true" />
+                    <span class="liquid-player-album" />
+                    <span class="liquid-player-title">{{ track.title }}</span>
+                    <span class="liquid-player-artist">{{ track.artist }}</span>
+                    <span class="liquid-player-scrubber">
+                        <span class="liquid-player-scrubber-fill" />
+                    </span>
+                    <span class="liquid-player-times">
+                        <span>1:59</span>
+                        <span>-3:14</span>
+                    </span>
+                    <span class="liquid-player-transport">
+                        <button type="button" aria-label="Previous">
                             <SkipBack class="size-5" />
-                            <span class="liquid-dock-transport-play">
-                                <Play class="size-6" />
-                            </span>
+                        </button>
+                        <button
+                            type="button"
+                            class="liquid-player-transport-play"
+                            aria-label="Pause"
+                            @click="close"
+                        >
+                            <Pause class="size-6" />
+                        </button>
+                        <button type="button" aria-label="Next">
                             <SkipForward class="size-5" />
-                        </span>
-                    </div>
+                        </button>
+                    </span>
+                </div>
 
-                    <!-- ISLAND mode — the Dynamic Island SPLIT. The compact pill
-                         fissions into TWO real activity islands (a timer + a now-
-                         playing), goo-bridged as they part. TWO layers: the goo BLOB
-                         layer (solid metaballs, filter:url merges them into one body
-                         that necks + snaps) + the crisp CONTENT layer on top (NOT
-                         filtered, so the ring/text/eq stay sharp). Both share the
-                         center-anchored geometry (--island-w + the ±gap·t translate)
-                         so they track in lockstep. -->
-                    <template v-if="mode === 'island'">
-                        <div class="liquid-islands-goo" aria-hidden="true">
-                            <span class="liquid-island-blob liquid-island-blob--left" />
-                            <span class="liquid-island-blob liquid-island-blob--right" />
-                        </div>
-                        <div class="liquid-island liquid-island--left" aria-hidden="true">
+                <!-- ════════════════════════════════════════════════════════════════
+                     ISLAND — ONE crisp glass pill that FISSIONS. TWO co-moving layers
+                     (the morph-showcase goo-blob discipline): a goo BLOB layer (solid
+                     metaball plates, filter:url merges them into ONE body that necks +
+                     snaps) + a crisp CONTENT layer on top (un-filtered, so the ring/text/
+                     eq stay sharp — a translucent content layer would be thresholded away
+                     by the goo's feColorMatrix). Both read the SAME inheriting
+                     --dock-split-t scalar the fission spring writes, so they track in
+                     lockstep. The BLOB plates are the registered fission PIECES (they
+                     carry the translate/squish/neck); the content mirrors the same
+                     per-half vector off the host's scalar.
+                     ════════════════════════════════════════════════════════════════ -->
+                <div
+                    v-if="mode === 'island'"
+                    ref="islandHostRef"
+                    class="liquid-island-host"
+                    :data-orientation="orientation"
+                    role="button"
+                    tabindex="0"
+                    :aria-expanded="islandSplit"
+                    aria-label="Split the activity islands"
+                    @click="toggleIsland"
+                    @keydown.enter.prevent="toggleIsland"
+                    @keydown.space.prevent="toggleIsland"
+                    @pointermove="fission.onPointerMove"
+                    data-testid="liquid-island-host"
+                >
+                    <!-- the goo BLOB layer — the library `.dock-fission-bridge` recipe.
+                         It holds the two SOLID blob pieces + their goo necks and applies
+                         the library goo `filter: url()` ONLY while [data-fissioning] (the
+                         goo-OR-glass swap; crisp glass at rest). The metaball fuses the
+                         two solid blob plates + their necks into ONE body that necks
+                         apart. The blobs carry NO text (the goo threshold would mangle
+                         it) — the content rides the un-filtered layer below. -->
+                    <div class="dock-fission-bridge liquid-island-bridge" aria-hidden="true">
+                        <div
+                            ref="timerPieceRef"
+                            class="dock-fission-piece liquid-island-blob liquid-island-blob--timer"
+                            data-testid="liquid-island-timer"
+                        />
+                        <div
+                            ref="musicPieceRef"
+                            class="dock-fission-piece liquid-island-blob liquid-island-blob--music"
+                            data-testid="liquid-island-music"
+                        />
+                    </div>
+                    <!-- the crisp CONTENT layer — un-filtered, tracking the blobs via the
+                         SAME inheriting --dock-split-t scalar + per-half CSS vectors. -->
+                    <div class="liquid-island-content" aria-hidden="true">
+                        <div class="liquid-island liquid-island--timer">
+                            <span class="liquid-island-ring">
+                                <Timer class="size-4" aria-hidden="true" />
+                            </span>
                             <span class="liquid-island-meta">
                                 <span class="liquid-island-title">Timer</span>
                                 <span class="liquid-island-sub">Laundry · 8:24</span>
                             </span>
-                            <span class="liquid-island-ring">
-                                <span class="liquid-island-ring-time">8:24</span>
-                            </span>
                         </div>
-                        <div class="liquid-island liquid-island--right" aria-hidden="true">
+                        <div class="liquid-island liquid-island--music">
                             <span class="liquid-island-album" />
                             <span class="liquid-island-meta">
                                 <span class="liquid-island-title">{{ track.title }}</span>
                                 <span class="liquid-island-sub">{{ track.artist }}</span>
                             </span>
-                            <span class="liquid-island-eq">
+                            <span class="liquid-island-eq" aria-hidden="true">
                                 <i /><i /><i /><i />
                             </span>
                         </div>
-                    </template>
+                    </div>
                 </div>
             </div>
 
@@ -587,9 +647,8 @@ function onAuroraInitError(err: Error): void {
                 class="text-mono-caption text-muted-foreground"
                 data-testid="liquid-readout"
             >
-                mode = {{ mode }} · θ = {{ angleDeg }}° · controls = {{ splitCount }} ·
-                t = {{ morph.t.value.toFixed(2) }} ·
-                {{ morph.morphing.value ? "morphing" : open ? "open" : "rest" }}
+                mode = {{ mode }} · orientation = {{ orientation }} · t =
+                {{ readoutT.toFixed(2) }} · {{ readoutState }}
             </p>
         </StorySection>
 
@@ -662,8 +721,7 @@ function onAuroraInitError(err: Error): void {
                 </div>
             </div>
 
-            <!-- the rail stage — a vertical glass dock + the carousel rail on its right.
-                 hover the dock to expand; the chosen chip sits ON the dock edge line. -->
+            <!-- the rail stage — a vertical glass dock + the carousel rail on its right. -->
             <div
                 class="relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
                 data-testid="liquid-rail-stage"
@@ -675,10 +733,6 @@ function onAuroraInitError(err: Error): void {
                     aria-hidden="true"
                 />
 
-                <!-- the rail sits WITHIN a vertical glass DOCK — a tall capsule the
-                     carousel of icon chips scrolls inside. The chosen sits at the dock
-                     centre line (bright, full-scale); neighbours fan above/below, fading
-                     + receding toward the rounded dock ends. -->
                 <div
                     class="liquid-rail-dock"
                     :data-settling="railSettling ? '' : undefined"
@@ -687,9 +741,6 @@ function onAuroraInitError(err: Error): void {
                     @wheel="onRailWheel"
                     data-testid="liquid-rail-host"
                 >
-                    <!-- THE RAIL — the carousel-stack. Each item seats at the centre
-                         line, then the projection's transform fans it vertically. The
-                         chosen IS the dock-line item (no separate competing chip). -->
                     <div
                         ref="railRoot"
                         class="liquid-rail liquid-rail--centred"
@@ -735,16 +786,10 @@ function onAuroraInitError(err: Error): void {
 
 <style scoped>
 /* the .liquid-rail-dock glass capsule the carousel scrolls within is the LIBRARY recipe
-   in src/styles/dock/liquid-rail.css (loaded via /styles) — NOT a demo-scoped override
-   (a scoped rule here would win on [data-v] specificity + clobber the capsule sizing). */
+   in src/styles/dock/liquid-rail.css (loaded via /styles) — NOT a demo-scoped override. */
 
-/* the mode tabs — give the iOS-27 indicator a real LIQUID-GLASS sheen: a top specular
-   highlight gradient over the existing plate (more depth/dimension), an edge-light rim,
-   and a brighter catch-light at the top. The plate visibility is unchanged (the base
-   tinted-floating fill stays); only the GLASSY character is lifted. */
 /* the controls panel — a subtle warm gradient behind the glass so the tabs/controls
-   have something RICH to refract (over the flat page wash they couldn't read as liquid
-   glass). A whisper, not a wall — the controls stay legible. */
+   have something RICH to refract. A whisper, not a wall — the controls stay legible. */
 .liquid-controls::before {
     content: "";
     position: absolute;

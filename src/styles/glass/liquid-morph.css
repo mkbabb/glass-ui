@@ -1,323 +1,217 @@
 /*
- * liquid-morph.css — the LIQUID DOCK morph surface (BE.W-LIQUID-MORPH, wave 2).
+ * liquid-morph.css — the LIQUID DOCK surfaces (BE.W-LIQUID-MORPH, WF-2 integration).
  *
- * The DOCK ELEMENT ITSELF is the morph subject. `useLiquidMorph` writes ONE
- * dock-spring scalar `--liquid-morph-t` (0 rest → 1 morphed) onto the dock root and
- * onto each control (the split pieces). Two registers, gated by `data-mode`:
+ * RE-ARCHITECTED onto the SHIPPED BE library primitives. The throwaway box-scale /
+ * goo-blob / data-mode spike is GONE (no dual path):
  *
- *   • EXPAND — the dock box GROWS pill → container card IN PLACE (its own footprint,
- *     anchored at its own centre), the controls cross-fade out, the pane reveals.
- *   • SPLIT — the box stays a pill; the dock's OWN controls fly out along the
- *     engine's per-piece (--split-dx, --split-dy) · --liquid-morph-distance · t,
- *     merged by the SVG goo `filter: url()` (Safari-safe; never backdrop-filter:url).
+ *   • EXPAND / PLAYER — the dock is a small PILL (.liquid-pill) that STAYS PILL-SIZED.
+ *     The Places sheet (.liquid-sheet) / player card (.liquid-player) is a SEPARATE
+ *     overlay laid out at its FULL settled rect; `useBloomUp` FLIPs it FROM the pill's
+ *     rect (writing transform/opacity/filter INLINE — never a box-scale that crushes
+ *     content, never a layout-property animation). This CSS supplies only the STATIC
+ *     resting plates + content layout; the motion is the JS leaf's compositor transform.
+ *   • ISLAND — ONE crisp .glass-floating pill (.liquid-island-host, the
+ *     `.dock-fission-bridge` host) that FISSIONS. The two halves are `.dock-fission-piece`
+ *     pieces; the library `fission-bridge.css` owns the translate/squish/neck (the goo
+ *     stretch-thin-snap, the specular sweep, the goo-OR-glass swap). This CSS supplies
+ *     only each half's resting glass plate + content. NO blob layer, NO data-mode switch.
  *
- * The pieces read warm-cream glass (color-mix toward --card), not stark white.
+ * COMPOSITOR-ONLY (proof:no-layout-animation). This sheet animates ZERO layout property
+ * — the bloom transform is written inline by `useBloomUp`; the fission translate/scale
+ * lives in `fission-bridge.css`; the only @keyframes here is the eq bars (compositor
+ * `scaleY`). The plates read warm-cream glass (the --glass-* ladder, both modes).
  */
 @layer components {
-    .liquid-dock {
-        --t: var(--liquid-morph-t, 0);
-        /* the pill footprint scales with the control count; the card footprint is fixed */
-        --pill-w: calc(var(--liquid-dock-controls, 4) * 3.25rem + 1.5rem);
-        --pill-h: 4rem;
-        /* card width — BOX-INDEPENDENT (rem/vw, never %-of-box) so the fixed-size glass
-           plate + pane can reference it without tracking the growing box. Mobile shrinks
-           via the media query below (the references are all iPhone). */
-        --card-w: 22rem;
-        --card-h: 23rem; /* taller so Places/Recents fit ABOVE the persistent search bar */
+    /* ── The stage IS the [data-glass-field] the bloom's 4th color channel warms.
+       `useBloomUp` writes `--glass-ambient-hue` + ramps `--glass-ambient-strength` HERE;
+       this rule re-points the EXISTING `--glass-tint-source`/`--glass-tint-strength`
+       self-engage seam toward the ambient hue so every glass plate inside the stage
+       (the bloomed sheet/player) WARMS toward the source's color as it blooms — the iOS
+       "the whole world takes on the album's color." Neutral by default (transparent hue,
+       0% strength = the no-op floor; the warm-cream identity holds). The bias is keyed
+       off the registered @property customs (so the strength ramp INTERPOLATES). ── */
+    .liquid-stage {
+        --glass-tint-source: var(--glass-ambient-hue, transparent);
+        --glass-tint-strength: var(--glass-ambient-strength, 0%);
+    }
 
+    /* ── The bloom SOURCE — a small glass pill. STAYS PILL-SIZED in every state (the
+       bloom FLIPs the SHEET, not the pill). At rest it shows the search field / the
+       now-playing row; while the sheet is open it fades out (the sheet IS its bloomed
+       self — they share the visual identity). ── */
+    .liquid-pill {
         position: relative;
+        z-index: 2;
         box-sizing: border-box;
-        cursor: pointer; /* the dock IS the trigger — click it to morph */
-
-        /* BE.W-DOCK-FISSION (W1) — the COMPOSITOR-SAFE box morph, the
-           dockMorphContext reserve-then-scale pattern (layers.css) transposed onto
-           the liquid dock. The prior recipe lerped `inline-size`/`block-size` off
-           `--t` per frame (the C3 relayout-every-frame storm) and `transition`'d the
-           V↔H reshape on `inline-size`/`block-size` (the proof:no-layout-animation
-           MC3 RED). Now: the box RESERVES its SETTLED footprint (ONE layout solve,
-           never animated) and the live `--t` scalar drives a `transform: scale()`
-           between the from/to RATIO and 1.
-
-           The reserve is the EXPANDED card footprint (the `to`); the rest pill reads
-           as the scaled-down box. `--lm-scale-{x,y}` run `ratio → 1` as `t: 0 → 1`
-           (`ratio = pill/card` per axis), so at rest (t=0) the box paints at the pill
-           footprint via the compositor transform and at t=1 at the full card. The
-           content lays out COMPLETE at the reserved `to` behind the `overflow: clip`
-           aperture (below) — the clip uncovers the scaled box, never a half-painted
-           growing layout (the bloom-up reveal-seat). NO `inline-size`/`block-size`
-           reads the live scalar → ZERO per-frame relayout (the F1 compositor-bound
-           floor). The split/island modes keep their STATIC pill box (the scalar drives
-           the pieces' translate, not the box) and reset the scale to 1 below. */
-        --lm-ratio-x: calc(var(--pill-w) / var(--card-w));
-        --lm-ratio-y: calc(var(--pill-h) / var(--card-h));
-        --lm-scale-x: calc(var(--lm-ratio-x) + (1 - var(--lm-ratio-x)) * var(--t));
-        --lm-scale-y: calc(var(--lm-ratio-y) + (1 - var(--lm-ratio-y)) * var(--t));
-
-        /* the box RESERVES its settled `to` footprint — a single layout solve, NOT a
-           live-scalar calc. The split/island modes override these to their static pill
-           box (and reset the scale below). */
-        inline-size: var(--card-w);
-        block-size: var(--card-h);
-        /* the card stays GENEROUSLY rounded (iOS-27 sheets ~28px). The radius is a
-           SCALAR read (compositor-safe — `border-radius` is a paint property, not a
-           reflow trigger), Pill 2rem(32px) → card 1.75rem(28px), both liquid-round. */
-        border-radius: calc(2rem - 0.25rem * var(--t));
-        overflow: visible;
-        isolation: isolate;
-        will-change: auto; /* the transform layer is promoted ONLY while morphing (below) */
-
-        /* the transform composites over the reserved footprint. `transform-origin`
-           anchors the BOTTOM edge (the plate/pane bottom-anchor, below) so the box
-           BLOOMS UP from the pill base — the iOS-27 Maps/Music sheet-from-dock motion.
-           At rest (t=0) scale = pill/card; the box reads as the pill. */
-        transform: scale(var(--lm-scale-x), var(--lm-scale-y));
-        transform-origin: bottom center;
-    }
-    /* promote the transform layer ONLY while a morph is in flight (the engine arms
-       `[data-liquid-morphing]` on the root; cleared on settle — never a wasted
-       resting layer). Mirrors the dock morph's `[data-morphing]` will-change gate. */
-    .liquid-dock[data-liquid-morphing] {
-        will-change: transform;
-    }
-    /* OCCLUDE the row⇄column topology flip during the V↔H reshape — a brief opacity dip on
-       the rest content so the flex-direction snap is hidden behind the cross-fade (the cheap
-       CSS-only version of morph-showcase's goo / View-Transitions topology occlusion). The
-       content fades out FAST (by ~22%, hiding the flip), then fades back as the box settles. */
-    @keyframes liquid-reorient-occlude {
-        0% {
-            opacity: 1;
-        }
-        22% {
-            opacity: 0.08;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    /* MODE-SCOPED — crossfade only the VISIBLE rest content per mode (the controls are
-       opacity:0 in expand/player, so an unscoped animation would FLASH them visible). */
-    .liquid-dock[data-reorienting]:is([data-mode="split"], [data-mode="union"])
-        .liquid-dock-controls,
-    .liquid-dock[data-reorienting][data-mode="expand"] .liquid-dock-search,
-    .liquid-dock[data-reorienting][data-mode="player"] .liquid-dock-player-pill {
-        animation: liquid-reorient-occlude 0.44s ease both;
-    }
-    @media (prefers-reduced-motion: reduce) {
-        .liquid-dock[data-reorienting] .liquid-dock-controls,
-        .liquid-dock[data-reorienting] .liquid-dock-search,
-        .liquid-dock[data-reorienting] .liquid-dock-player-pill {
-            animation: none;
-        }
-    }
-
-    /* ── VERTICAL orientation — the rest pill is a narrow COLUMN; the morph swaps the
-       pill axis (narrow×tall pill ⇄ card). BE.W-DOCK-FISSION (W1) — the SAME reserve-
-       then-scale: the box still RESERVES the card footprint (one layout solve), only the
-       rest-pill RATIO swaps axes (narrow `--pill-h` wide × tall `--pill-w` high), so the
-       compositor scale reads as the column pill at rest. NO live-scalar size calc. The
-       controls stack; expand grows the same card.
-
-       TODO(BE.W-DOCK-CONTEXT-SILHOUETTE / W3+W6): the orientation flip is still a
-       discrete `data-orientation` reserve-swap occluded by the `[data-reorienting]`
-       opacity dip below. W3's descriptor engine makes slot geometry orientation-derived
-       (the `dim`-idiom) so the column layout falls out of the reserved footprint and the
-       reorient becomes a real silhouette FLIP (startViewTransition / goo-merge occlusion),
-       retiring the setTimeout-raced opacity blink. */
-    .liquid-dock[data-orientation="vertical"] {
-        --lm-ratio-x: calc(var(--pill-h) / var(--card-w));
-        --lm-ratio-y: calc(var(--pill-w) / var(--card-h));
-    }
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-controls {
-        flex-direction: column;
-    }
-
-    /* the glass PLATE — on a ::before so it can grow with the box (expand) yet
-       DISSOLVE independently as the controls leave (split — no empty husk). */
-    .liquid-dock::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        block-size: 4rem;
+        min-inline-size: 18rem;
+        padding-inline: 1.25rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        color: var(--foreground);
+        /* the glass plate — the warm-cream floating tier (real backdrop-filter + rim). */
         background: var(--glass-bg-floating);
         -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
         backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
         box-shadow:
             inset 0 0 0 0.5px var(--glass-edge-light),
             var(--shadow-floating);
-        z-index: 0;
+        /* the resting transition is the surface cross-fade only (color/bg/box-shadow —
+           NOT a layout property; compositor-safe). */
+        transition:
+            opacity var(--duration-fast, 150ms) var(--ease-out),
+            background var(--duration-fast, 150ms) var(--ease-out);
     }
-
-    /* BE.W-DOCK-FISSION (W1) — expand/player: the plate fills the RESERVED box
-       (`inset: 0`, base rule above) — the box itself IS the card footprint (one layout
-       solve) and the WHOLE box compositor-scales pill→card on `--t`, the plate riding
-       that transform. So the expensive `backdrop-filter` rasterizes ONCE at the reserved
-       card size and the box transform COMPOSITES the result (it never re-rasterizes per
-       frame — the smoothness the prior counter-sized fixed plate chased, now intrinsic to
-       the reserve-then-scale). The prior `inset:auto; inline-size:var(--card-w); …`
-       counter-size is RETIRED (it double-sized the plate against the now-reserved box).
-       Only the card radius differs from the base. */
-    .liquid-dock:is([data-mode="expand"], [data-mode="player"])::before {
-        border-radius: var(--radius-card);
+    .liquid-pill:focus-visible {
+        outline: none;
+        box-shadow:
+            var(--focus-ring-shadow),
+            inset 0 0 0 0.5px var(--glass-edge-light),
+            var(--shadow-floating);
     }
-
-    /* mobile — the card shrinks (vw/rem, box-independent) so it never overflows the
-       iPhone viewport while the fixed-plate optimisation holds. */
-    @media (max-width: 30rem) {
-        .liquid-dock {
-            --card-w: min(20rem, 88vw);
-        }
-    }
-    .liquid-dock-controls,
-    .liquid-dock-pane {
-        z-index: 1;
-    }
-
-    /* the control row — the pill content (also the split pieces) */
-    .liquid-dock-controls {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding-inline: 0.75rem;
-    }
-    .liquid-dock-control {
-        flex: 0 0 auto;
-        inline-size: 2.75rem;
-        block-size: 2.75rem;
-        display: grid;
-        place-items: center;
-        border-radius: 999px;
-        color: var(--foreground);
-        background: var(--glass-bg-resting);
-        cursor: pointer;
-        transition: background var(--duration-fast, 150ms) var(--ease-out);
-    }
-    .liquid-dock-control:hover {
-        background: var(--glass-bg-floating);
-    }
-
-    /* EXPAND mode — the dock is a Maps SEARCH PILL at rest (the "search-pill → sheet
-       bloom" the intro names). The icon row is SPLIT's; in expand it hides and this
-       search bar is the rest content, cross-fading out as the Places sheet blooms up. */
-    .liquid-dock[data-mode="expand"] .liquid-dock-controls {
+    /* while the sheet/player is open, the pill is the bloom ORIGIN — hide it (the bloomed
+       sheet carries the identity forward; restoring it would double the surface). */
+    .liquid-pill--hidden {
         opacity: 0;
         pointer-events: none;
     }
-    .liquid-dock-search {
-        position: absolute;
-        inset-block-end: 0;
-        inset-inline: 0;
-        block-size: var(--pill-h);
-        z-index: 2; /* above the pane content — it persists at the sheet bottom */
-        display: flex;
-        align-items: center;
-        gap: 0.625rem;
-        padding-inline: 1.25rem;
-        color: var(--muted-foreground);
-        opacity: 0;
-        pointer-events: none;
-    }
-    /* the search bar PERSISTS at the sheet bottom (Maps — the search bar stays as the
-       sheet blooms above it, never vanishes). The box grows UP from the pill, so the
-       bottom-anchored bar is stationary while Places/Recents fill in above it. A top
-       hairline + a faint field tint separate it from the content. */
-    .liquid-dock[data-mode="expand"] .liquid-dock-search {
-        opacity: 1;
-        border-radius: inherit; /* round the bar bg to the box so it never squares the corners */
-    }
-    /* the field tint + hairline ONLY when the sheet is OPEN — at REST the bar IS the
-       whole rounded pill, so a square tint bleeds over the rounded plate corners (the
-       aliasing). Open, the bar sits at the sheet bottom with content above it. */
-    .liquid-dock[data-mode="expand"][data-open="true"] .liquid-dock-search {
-        border-block-start: 1px solid
-            color-mix(in oklab, var(--foreground) 9%, transparent);
-        background: color-mix(in oklab, var(--card), transparent 35%);
-    }
-    .liquid-dock-search-icon {
+    .liquid-pill-icon {
         inline-size: 1.2rem;
         block-size: 1.2rem;
         flex: 0 0 auto;
         color: var(--foreground);
     }
-    .liquid-dock-search-hint {
+    .liquid-pill-hint {
         flex: 1 1 auto;
         font-size: var(--type-body, 1rem);
         color: var(--muted-foreground);
+        white-space: nowrap;
     }
-    .liquid-dock-search-mic {
+    .liquid-pill-trail {
         inline-size: 1.15rem;
         block-size: 1.15rem;
         flex: 0 0 auto;
         color: var(--muted-foreground);
     }
-    /* VERTICAL expand — a narrow tall pill can't hold a horizontal search bar; show just
-       the search ICON centred (the text + mic don't fit + were clipping at the bottom). */
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-search {
-        inset: 0;
-        block-size: auto;
-        justify-content: center;
-        padding: 0;
+    /* the player pill's album thumb + meta + play */
+    .liquid-pill-album {
+        flex: 0 0 auto;
+        inline-size: 3rem;
+        block-size: 3rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+            135deg,
+            var(--section-color-8),
+            var(--section-color-7) 55%,
+            var(--section-color-10)
+        );
+        box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--foreground) 40%, transparent);
     }
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-hint,
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-mic {
-        display: none;
+    .liquid-pill-meta {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        line-height: 1.2;
+        min-inline-size: 0;
     }
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-icon {
-        inline-size: 1.4rem;
-        block-size: 1.4rem;
+    .liquid-pill-title {
+        font-size: var(--type-small, 0.875rem);
+        color: var(--foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    /* VERTICAL player — a narrow tall pill can't hold the horizontal now-playing row;
-       show just the album thumb centred (track text + play don't fit, they clipped). */
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-player-pill {
-        justify-content: center;
-        padding: 0;
+    .liquid-pill-artist {
+        font-size: var(--type-caption, 0.75rem);
+        color: var(--muted-foreground);
+        white-space: nowrap;
     }
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-nowplaying,
-    .liquid-dock[data-orientation="vertical"] .liquid-dock-play {
-        display: none;
+    .liquid-pill-play {
+        display: grid;
+        place-items: center;
+        inline-size: 2.25rem;
+        block-size: 2.25rem;
+        border-radius: 999px;
+        background: var(--glass-bg-resting);
+        color: var(--foreground);
+        flex: 0 0 auto;
     }
 
-    /* expand/player CLIP the content to the growing box, so nothing OVERFLOWS outside
-       the dock mid-morph (the user's 'transitions partially overflow and occlude'). The
-       pane is pinned to the box BOTTOM at the FINAL card height + only fades in past the
-       half-grown mark, so the content reads complete behind the bloom-up aperture and
-       never squishes. */
-    .liquid-dock:is([data-mode="expand"], [data-mode="player"]) {
-        overflow: hidden;
-        /* clip-path DOES clip backdrop-filter (overflow:hidden does NOT) — so the
-           card-size ::before plate's saturate() can't bleed a square halo around the
-           rounded pill at rest. Round MATCHES the box radius. NOT applied in split/union
-           (the goo pieces must fly OUTSIDE the box). */
-        clip-path: inset(0 round calc(2rem - 0.25rem * var(--t)));
-    }
-    /* the container pane — laid out ONCE at the reserved card block-size, anchored to
-       the box TOP (which RISES as the box blooms up from the bottom origin), so the
-       content reveals TOP-FIRST: the Places row appears at the rising top edge, Recents
-       fills in below as the sheet grows taller (the Maps reveal order).
-       BE.W-DOCK-FISSION (W1) — the pane lays out ONCE here (`block-size: var(--card-h)`,
-       never a per-frame size calc) and reveals via OPACITY (below); the box's reserve-
-       then-scale envelope provides the bloom-up clip. The content blooms WITH the box
-       (the reveal gesture), reading complete behind the `overflow:hidden` aperture.
-       TODO(BE.W-BLOOM-UP): an optional inverse content counter-scale (the FLIP
-       text-lays-out-once refinement, W-CARD-COMPOSITE) is that wave's scope — the W1
-       mechanism is the compositor-safe box morph; the content already lays out once. */
-    .liquid-dock-pane {
-        position: absolute;
-        inset-block-start: 0;
-        inset-inline: 0;
-        block-size: var(--card-h);
-        padding: 1.5rem;
-        display: flex;
+    /* ── VERTICAL pill — a CONTENT REFLOW (a column), NOT a display:none amputation.
+       album/icon → title → trailing control stack down the column. ── */
+    .liquid-pill[data-orientation="vertical"] {
         flex-direction: column;
-        gap: 1rem;
-        opacity: 0;
-        pointer-events: none;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        block-size: auto;
+        min-inline-size: 0;
+        inline-size: 5rem;
+        min-block-size: 14rem;
+        padding-block: 1.25rem;
+        padding-inline: 0.5rem;
     }
-    /* the iOS sheet GRABBER — the small pill at the sheet's top edge (the Maps/iOS
-       bottom-sheet affordance the reference shows). Sits in the pane's top padding. */
-    .liquid-dock-grabber {
+    .liquid-pill[data-orientation="vertical"] .liquid-pill-hint,
+    .liquid-pill[data-orientation="vertical"] .liquid-pill-artist {
+        font-size: var(--type-caption, 0.75rem);
+        text-align: center;
+        white-space: normal;
+    }
+    .liquid-pill[data-orientation="vertical"] .liquid-pill-meta {
+        align-items: center;
+        flex: 0 0 auto;
+        text-align: center;
+    }
+    .liquid-pill[data-orientation="vertical"] .liquid-pill-title {
+        white-space: normal;
+        text-align: center;
+    }
+
+    /* ════════════════════════════════════════════════════════════════════════════
+       THE BLOOM DESTINATIONS — the sheet + the player. Laid out at their FULL settled
+       rect (one layout solve). `useBloomUp` FLIPs them FROM the pill's rect inline
+       (transform/opacity/filter) — this CSS never animates a layout property. They are
+       absolutely-positioned over the stage, anchored to the bottom (the iOS sheet-from-
+       dock origin). The content lays out ONCE at the full size and the bloom composites.
+       ════════════════════════════════════════════════════════════════════════════ */
+    .liquid-sheet,
+    .liquid-player {
+        position: absolute;
+        inset-block-end: 2rem;
+        inset-inline: 50%;
+        translate: -50% 0;
+        z-index: 3;
+        box-sizing: border-box;
+        inline-size: 22rem;
+        max-inline-size: 88vw;
+        border-radius: var(--radius-card, 1.5rem);
+        /* the glass plate — the floating sheet tier (real backdrop-filter + rim). The fill
+           COMPOSES the element-level oklab tint (the ladder.css seam) so the stage's
+           ambient-hue bias reaches it (the substitution-vs-inheritance fix — a raw
+           `var(--glass-bg-floating)` reads the pre-substituted :root value and would NOT
+           warm; composing the tint AT the element is the documented retune path). At the
+           0%/transparent default this is byte-identical to the raw rung. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating),
+            var(--glass-tint-source, transparent) var(--glass-tint-strength, 0%)
+        );
+        -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
+        backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
+        box-shadow:
+            inset 0 0 0 0.5px var(--glass-edge-light),
+            var(--shadow-floating);
+        overflow: hidden;
+        /* the base origin so the inline FLIP scales FROM the pill (the JS overrides
+           transform-origin per-bloom; this is the resting fallback). */
+        transform-origin: bottom center;
+    }
+
+    /* the iOS sheet GRABBER */
+    .liquid-sheet-grabber {
         position: absolute;
         inset-block-start: 0.6rem;
         inset-inline-start: 50%;
@@ -328,67 +222,64 @@
         background: color-mix(in oklab, var(--foreground) 20%, transparent);
         z-index: 3;
     }
-    .liquid-dock-pane-header {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    .liquid-dock-pane-chip {
-        display: grid;
-        place-items: center;
-        inline-size: 2.5rem;
-        block-size: 2.5rem;
-        border-radius: 999px;
-        background: var(--glass-bg-resting);
-        color: var(--foreground);
-        flex: 0 0 auto;
-    }
-    .liquid-dock-pane-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
 
-    /* the iOS-27 Maps "Places" row — a row of COLOURFUL icon chips (the vibrant
-       --section-color register via <IconChip>), each labelled. */
-    .liquid-dock-places {
+    /* ── the Places sheet body ── */
+    .liquid-sheet {
+        display: flex;
+        flex-direction: column;
+        block-size: 23rem;
+    }
+    .liquid-sheet-body {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.75rem 1.5rem 1rem;
+        overflow: hidden;
+    }
+    .liquid-sheet-places {
         display: flex;
         gap: 0.5rem;
         justify-content: space-between;
     }
-    .liquid-dock-place {
+    .liquid-sheet-place {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0.375rem;
         flex: 1 1 0;
     }
-    .liquid-dock-place-label {
+    .liquid-sheet-place-label {
         font-size: var(--type-caption, 0.75rem);
         color: var(--foreground);
         white-space: nowrap;
     }
-
-    /* the Recents list — real structured rows (icon + name + sub) */
-    .liquid-dock-recents {
+    .liquid-sheet-recents {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         margin-block-start: 0.25rem;
     }
-    .liquid-dock-recents-label {
+    .liquid-sheet-recents-label {
         font-family: var(--font-mono);
         font-size: var(--type-caption, 0.75rem);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: var(--muted-foreground);
     }
-    .liquid-dock-recent {
+    .liquid-sheet-recent {
         display: flex;
         align-items: center;
         gap: 0.625rem;
+        text-align: start;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
     }
-    .liquid-dock-recent-icon {
+    .liquid-sheet-recent-icon {
         display: grid;
         place-items: center;
         inline-size: 2rem;
@@ -398,109 +289,60 @@
         color: var(--muted-foreground);
         flex: 0 0 auto;
     }
-    .liquid-dock-recent-text {
+    .liquid-sheet-recent-text {
         display: flex;
         flex-direction: column;
         line-height: 1.2;
         min-inline-size: 0;
     }
-    .liquid-dock-recent-name {
+    .liquid-sheet-recent-name {
         font-size: var(--type-small, 0.875rem);
         color: var(--foreground);
     }
-    .liquid-dock-recent-sub {
+    .liquid-sheet-recent-sub {
         font-size: var(--type-caption, 0.75rem);
         color: var(--muted-foreground);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
-    /* ── PLAYER mode — the now-playing PILL (rest) cross-fades into the full media
-       PLAYER (expand), the same grow + cross-fade the Places sheet rides. ── */
-    .liquid-dock[data-mode="player"] .liquid-dock-controls {
-        opacity: 0;
-        pointer-events: none;
-    }
-    .liquid-dock-player-pill {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
+    /* the persistent search field at the sheet bottom — the pill's magnifier FLIPs
+       into THIS (one coherent search element, the orphan-magnifier fix). */
+    .liquid-sheet-search {
+        flex: 0 0 auto;
         display: flex;
         align-items: center;
         gap: 0.625rem;
-        padding-inline: 0.5rem;
-        opacity: 0;
+        block-size: 4rem;
+        padding-inline: 1.25rem;
+        border-block-start: 1px solid color-mix(in oklab, var(--foreground) 9%, transparent);
+        background: color-mix(in oklab, var(--card), transparent 35%);
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+        text-align: start;
     }
-    .liquid-dock[data-mode="player"] .liquid-dock-player-pill {
-        opacity: clamp(0, 1 - var(--t) * 1.7, 1); /* gone by t≈0.59 */
+    /* VERTICAL sheet — a narrower, taller column (the content already reflows: the
+       Places row + Recents stack down the column naturally). */
+    .liquid-sheet[data-orientation="vertical"] {
+        inline-size: 17rem;
+        block-size: 25rem;
     }
-    .liquid-dock-album,
-    .liquid-dock-album-big {
-        flex: 0 0 auto;
-        /* a vibrant album-art gradient (no real art) off the --section-color ramp */
-        background: linear-gradient(
-            135deg,
-            var(--section-color-8),
-            var(--section-color-7) 55%,
-            var(--section-color-10)
-        );
-    }
-    .liquid-dock-album {
-        inline-size: 3rem;
-        block-size: 3rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--foreground) 40%, transparent);
-    }
-    .liquid-dock-nowplaying {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-        min-inline-size: 0;
-        flex: 1 1 auto;
-    }
-    .liquid-dock-track {
-        font-size: var(--type-small, 0.875rem);
-        color: var(--foreground);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .liquid-dock-artist {
-        font-size: var(--type-caption, 0.75rem);
-        color: var(--muted-foreground);
-        white-space: nowrap;
-    }
-    .liquid-dock-play {
-        display: grid;
-        place-items: center;
-        inline-size: 2.25rem;
-        block-size: 2.25rem;
-        border-radius: 999px;
-        background: var(--glass-bg-resting);
-        color: var(--foreground);
-        flex: 0 0 auto;
-    }
-    .liquid-dock-player-pane {
-        position: absolute;
-        inset-block-start: 0;
-        inset-inline: 0;
-        block-size: var(--card-h);
-        z-index: 1;
+
+    /* ── the player card — the full Apple Music player ── */
+    .liquid-player {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 0.625rem;
-        padding: 1.25rem;
-        opacity: 0;
-        pointer-events: none;
-        overflow: hidden;
+        padding: 2rem 1.5rem 1.75rem;
+        block-size: 24rem;
     }
-    /* the Apple Music AMBIENT background — the player fills with the album art's own
-       colors, blurred (the iconic now-playing ambience). Reads the SAME --section-color
-       stops the album-art gradient uses, soft over the warm glass plate. */
-    .liquid-dock-player-pane::before {
+    /* the Apple Music AMBIENT background — the album's own colours, blurred (the iconic
+       now-playing ambience). The FIELD ambient-hue warm (the bloom 4th channel) sits on
+       the STAGE; this is the card's own bloom-art. */
+    .liquid-player::before {
         content: "";
         position: absolute;
         inset: -20%;
@@ -525,27 +367,31 @@
         opacity: 0.55;
         pointer-events: none;
     }
-    .liquid-dock[data-mode="player"] .liquid-dock-player-pane {
-        opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
-    }
-    .liquid-dock-album-big {
+    .liquid-player-album {
+        flex: 0 0 auto;
         inline-size: 8.5rem;
         block-size: 8.5rem;
         border-radius: 1rem;
+        background: linear-gradient(
+            135deg,
+            var(--section-color-8),
+            var(--section-color-7) 55%,
+            var(--section-color-10)
+        );
         box-shadow: 0 12px 32px -8px color-mix(in srgb, var(--foreground) 50%, transparent);
     }
-    .liquid-dock-track-big {
+    .liquid-player-title {
         font-size: var(--type-subheading);
         font-weight: 600;
         color: var(--foreground);
         text-align: center;
     }
-    .liquid-dock-artist-big {
+    .liquid-player-artist {
         font-size: var(--type-small, 0.875rem);
         color: var(--muted-foreground);
         margin-block-start: -0.375rem;
     }
-    .liquid-dock-scrubber {
+    .liquid-player-scrubber {
         inline-size: 100%;
         block-size: 4px;
         border-radius: 999px;
@@ -553,15 +399,14 @@
         overflow: hidden;
         margin-block-start: 0.25rem;
     }
-    .liquid-dock-scrubber-fill {
+    .liquid-player-scrubber-fill {
         display: block;
         inline-size: 38%;
         block-size: 100%;
         border-radius: 999px;
         background: var(--foreground);
     }
-    /* the elapsed / remaining times — the Apple Music scrubber readout. */
-    .liquid-dock-scrubber-times {
+    .liquid-player-times {
         display: flex;
         justify-content: space-between;
         inline-size: 100%;
@@ -570,237 +415,174 @@
         font-variant-numeric: tabular-nums;
         color: var(--muted-foreground);
     }
-    .liquid-dock-transport {
+    .liquid-player-transport {
         display: flex;
         align-items: center;
         gap: 1.5rem;
         color: var(--foreground);
         margin-block-start: 0.25rem;
     }
-    .liquid-dock-transport-play {
+    .liquid-player-transport button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: inherit;
         display: grid;
         place-items: center;
+    }
+    .liquid-player-transport-play {
         inline-size: 3rem;
         block-size: 3rem;
         border-radius: 999px;
-        background: var(--glass-bg-floating);
+        background: var(--glass-bg-floating) !important;
+    }
+    /* VERTICAL player — the column is the player's natural layout (album → title →
+       transport already stack); just narrow it for the vertical stage. */
+    .liquid-player[data-orientation="vertical"] {
+        inline-size: 17rem;
+        block-size: 25rem;
     }
 
-    /* ── EXPAND — box grows; controls cross-fade out, pane in. The ranges OVERLAP
-       (controls gone by ~0.6, pane in from ~0.32) so the dock is NEVER an empty box
-       mid-morph — a true cross-fade, not a dead zone. ── */
-    /* the icon row is hidden in expand — the SEARCH PILL is the rest content. */
-    .liquid-dock[data-mode="expand"] .liquid-dock-controls {
-        opacity: 0;
-    }
-    .liquid-dock[data-mode="expand"] .liquid-dock-pane {
-        opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
-        /* clear the persistent search bar at the sheet bottom (the Recents stop above it) */
-        padding-block-end: calc(1.5rem + var(--pill-h));
-    }
-
-    /* ── SPLIT — box stays a STATIC pill; the controls fly out, goo-merged. The box
-       does NOT morph here (the scalar drives the pieces' translate, not the box), so
-       it pins the pill footprint directly and RESETS the reserve-scale to 1 (the
-       compositor transform is inert — no box scale, the pill is its own size). The
-       horizontal pill; the vertical override below swaps the axes. ── */
-    .liquid-dock:is([data-mode="split"], [data-mode="union"]) {
-        inline-size: var(--pill-w);
-        block-size: var(--pill-h);
-        --lm-scale-x: 1;
-        --lm-scale-y: 1;
-        transform: none;
-    }
-    .liquid-dock[data-orientation="vertical"]:is([data-mode="split"], [data-mode="union"]) {
-        inline-size: var(--pill-h);
-        block-size: var(--pill-w);
-    }
-    /* the glass plate dissolves FAST — the dock cross-fades from GLASS to GOO */
-    .liquid-dock:is([data-mode="split"], [data-mode="union"])::before {
-        opacity: clamp(0, 1 - var(--t) * 3.2, 1); /* gone by t≈0.3 */
-    }
-    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-controls {
-        filter: url(#liquid-morph-goo);
-    }
-    /* the GOO BODY — the dock's MASS inside the goo filter. Hidden at rest (the glass
-       plate IS the dock); on split it APPEARS as the glass dissolves, then CONTRACTS
-       toward the core as the icons fly off — all goo-connected. So the DOCK ITSELF
-       fissions: glass pill → goo body → core + the flying icon facility. */
-    .liquid-dock-goo-body {
-        position: absolute;
-        inset: 0;
-        border-radius: 999px;
-        background: color-mix(in oklab, var(--card), oklch(0.74 0.07 62) 30%);
-        opacity: 0;
-        pointer-events: none;
-    }
-    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-goo-body {
-        opacity: clamp(0, var(--t) * 4, 1); /* appears as the glass dissolves */
-        transform: scaleX(calc(1 - 0.8 * var(--t))); /* contracts toward the core */
-        transform-origin: center;
-    }
-    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-control {
-        /* STACK every control on the dock centre, then fan from there — so they
-           originate from ONE point (the goo necks stay bridged), not their scattered
-           flex-row slots. */
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 50%;
-        margin: -1.375rem 0 0 -1.375rem; /* centre the 2.75rem disc */
-        transform: translate(
-                calc(
-                    var(--split-dx, 0) * var(--liquid-morph-distance, 0px) *
-                        var(--liquid-morph-t, 0)
-                ),
-                calc(
-                    var(--split-dy, 0) * var(--liquid-morph-distance, 0px) *
-                        var(--liquid-morph-t, 0)
-                )
-            )
-            scale(var(--stretch, 1));
-        /* a real WARM tan (chroma, not the near-neutral card↔ink mix) so the metaball
-           reads as warm glass material, not pale grey. */
-        background: color-mix(in oklab, var(--card), oklch(0.72 0.075 62) 32%);
-        box-shadow: none;
-        /* re-FAN smoothly when the ANGLE changes while split is open (the --split-dx/dy
-           shift) — gated OFF during the --t morph below so the spring owns the fan-out. */
-        transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .liquid-dock[data-liquid-morphing] .liquid-dock-control {
-        transition: none;
-    }
-    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-control:first-child {
-        /* the CORE the others bud from — a touch brighter so the origin reads */
-        background: color-mix(in oklab, var(--card), oklch(0.78 0.06 62) 22%);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════
-       ISLAND mode — the Dynamic Island SPLIT. The combined activity pill (a
-       timer half + a now-playing half, touching at centre → goo-merged into
-       ONE body) fissions into TWO distinct islands that translate apart on --t,
-       the goo NECK stretching then snapping. COMPOSITOR-ONLY (transform
-       translate) — the content is always present (no layout reveal), so the
-       morph stays smooth. Two layers: a goo BLOB layer (solid metaballs,
-       filter:url merges them) + a crisp CONTENT layer on top (un-filtered, so
-       the ring/text/eq stay sharp); both share the centre-anchored ±gap·t
-       geometry so they track in lockstep.
-       ═══════════════════════════════════════════════════════════════════════ */
-    .liquid-dock[data-mode="island"] {
-        --island-w: 8.5rem; /* each island's fixed width */
-        --island-gap: 2.4rem; /* each island's travel on full split */
-        inline-size: 17rem; /* STATIC bounding box — the islands float at its centre */
-        block-size: 3.5rem;
-        overflow: visible;
-        background: transparent;
-        /* the box itself is static (the islands carry the motion via their own
-           centre-anchored ±gap·t translate) — RESET the reserve-scale to 1 so the
-           bounding box never compositor-scales. */
-        --lm-scale-x: 1;
-        --lm-scale-y: 1;
-        transform: none;
-    }
-    /* the box's own glass plate is hidden — each island carries its own goo blob */
-    .liquid-dock[data-mode="island"]::before {
-        opacity: 0;
-    }
-    .liquid-dock[data-mode="island"] .liquid-dock-controls {
-        display: none;
-    }
-
-    .liquid-islands-goo {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        filter: url(#liquid-morph-goo);
-        pointer-events: none;
-    }
-    .liquid-island-blob {
-        position: absolute;
-        inset-block: 0;
-        block-size: 3.5rem;
-        inline-size: var(--island-w);
-        border-radius: 1.75rem;
-        background: color-mix(in oklab, var(--card), oklch(0.75 0.066 64) 18%);
-    }
-    .liquid-island-blob--left {
-        inset-inline-end: 50%;
-        translate: calc(-1 * var(--island-gap) * var(--t)) 0;
-    }
-    .liquid-island-blob--right {
-        inset-inline-start: 50%;
-        translate: calc(var(--island-gap) * var(--t)) 0;
-    }
-
-    .liquid-island {
-        position: absolute;
-        inset-block: 0;
-        inline-size: var(--island-w);
-        block-size: 3.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding-inline: 0.65rem;
-        color: var(--foreground);
-        z-index: 2;
-        pointer-events: none;
-        border-radius: 1.75rem;
-        box-shadow: inset 0 0.5px 0 0 color-mix(in oklab, white, transparent 55%);
-    }
-    .liquid-island--left {
-        inset-inline-end: 50%;
-        translate: calc(-1 * var(--island-gap) * var(--t)) 0;
-        justify-content: flex-end;
-    }
-    .liquid-island--right {
-        inset-inline-start: 50%;
-        translate: calc(var(--island-gap) * var(--t)) 0;
-        justify-content: flex-start;
-    }
-
-    /* the timer ring — a conic progress ring (mask → ring, not disc) + centre time */
-    .liquid-island-ring {
+    /* ════════════════════════════════════════════════════════════════════════════
+       THE ISLAND — ONE crisp glass pill that FISSIONS. The host IS the
+       `.dock-fission-bridge` (the library recipe owns the goo-OR-glass swap + the
+       --dock-split-t/--neck-t scalars). The two halves are `.dock-fission-piece`s (the
+       library owns their translate/squish/neck). This CSS supplies ONLY:
+         • the host's resting ONE-pill glass plate (the crisp pill at rest), and
+         • each half's content layout + a resting glass face.
+       NO blob layer, NO data-mode CSS switch, NO box-scale.
+       ════════════════════════════════════════════════════════════════════════════ */
+    .liquid-island-host {
         position: relative;
-        flex: 0 0 auto;
-        inline-size: 2.35rem;
-        block-size: 2.35rem;
-        display: grid;
-        place-items: center;
-        font: 650 0.6rem / 1 var(--font-mono, ui-monospace, monospace);
-        color: var(--foreground);
+        z-index: 2;
+        box-sizing: border-box;
+        inline-size: 19rem;
+        block-size: 3.75rem;
+        cursor: pointer;
+        border-radius: 1.875rem;
     }
-    .liquid-island-ring::before {
+    /* the ONE crisp glass pill at REST is the host's ::before PLATE (NOT the host's own
+       opacity — fading the host element would hide its children: the blob + content
+       layers). Real backdrop-filter + rim. The plate DISSOLVES as the split rises (the
+       goo-OR-glass swap — the solid blob layer fades IN over the bridge goo while THIS
+       plate fades out). Compositor-safe: an opacity cross-fade on the ::before keyed off
+       the inheriting --dock-split-t (gone by t≈0.3), never a layout animation. */
+    .liquid-island-host::before {
         content: "";
         position: absolute;
         inset: 0;
-        border-radius: 50%;
-        background: conic-gradient(
-            from -90deg,
-            var(--section-color-8),
-            var(--section-color-8) calc(0.68 * 360deg),
-            color-mix(in oklab, var(--foreground) 15%, transparent) calc(0.68 * 360deg)
-        );
-        -webkit-mask: radial-gradient(circle, transparent 56%, #000 59%);
-        mask: radial-gradient(circle, transparent 56%, #000 59%);
+        z-index: 0;
+        border-radius: inherit;
+        background: var(--glass-bg-floating);
+        -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
+        backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.4);
+        box-shadow:
+            inset 0 0 0 0.5px var(--glass-edge-light),
+            var(--shadow-floating);
+        opacity: clamp(0, calc(1 - var(--dock-split-t, 0) * 3.2), 1);
+        pointer-events: none;
     }
-    .liquid-island-ring-time {
-        position: relative;
+    /* the focus ring rides the host's ::after (un-faded, above everything). */
+    .liquid-island-host:focus-visible {
+        outline: none;
+    }
+    .liquid-island-host:focus-visible::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow: var(--focus-ring-shadow);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    /* WIRE the library goo mount into the bridge's `var(--dock-fission-goo-filter)`
+       swap. The .dock-fission-bridge base recipe is `position:absolute; inset:0;
+       pointer-events:none`. Here it is the FLEX layer holding the two pieces (the demo
+       lays them out; the library owns the goo + the neck + the translate/squish). The
+       goo `filter: url()` engages ONLY while the host carries [data-fissioning] (the
+       descendant `[data-fissioning] .dock-fission-bridge` rule), fusing the two piece
+       faces + their necks into ONE metaball body that carves apart. */
+    /* the goo BLOB layer — the `.dock-fission-bridge` flex host. The two SOLID blob
+       plates (the registered fission pieces) fuse + neck under the library goo. It holds
+       NO text (the goo feColorMatrix threshold would mangle it) — the content rides the
+       un-filtered .liquid-island-content layer. The base .dock-fission-bridge is
+       `inset:0` so it fills the host. */
+    .liquid-island-bridge {
+        --dock-fission-goo-filter: url(#dock-fission-goo);
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
         z-index: 1;
     }
-
-    /* the album thumbnail */
-    .liquid-island-album {
-        flex: 0 0 auto;
-        inline-size: 2.35rem;
-        block-size: 2.35rem;
-        border-radius: 0.5rem;
-        background: linear-gradient(
-            135deg,
-            var(--section-color-2),
-            var(--section-color-7) 72%
-        );
-        box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 60%);
+    /* each blob — a SOLID metaball plate (the registered `.dock-fission-piece`, which
+       owns the translate/squish/neck). SOLID warm fill so the goo threshold passes (a
+       translucent fill gets thresholded away). At rest the two abut to form ONE pill mass
+       (the goo at rest is OFF — the crisp host plate IS the pill); fissioning, they neck
+       apart. The fill matches the warm-cream glass register at full opacity (the goo
+       needs solid alpha; the host backdrop-filter at rest carries the real translucency). */
+    .liquid-island-blob {
+        flex: 1 1 0;
+        border-radius: 1.875rem;
+        background: color-mix(in oklab, var(--card), oklch(0.75 0.066 64) 16%);
+        /* the blob layer fades IN as the carve rises (so at rest the crisp host plate is
+           the one pill; from t>0 the solid blobs are the carved + necked mass). An
+           opacity cross-fade keyed off the inheriting --dock-split-t (compositor-safe). */
+        opacity: clamp(0, calc(var(--dock-split-t, 0) * 4), 1);
     }
 
+    /* the crisp CONTENT layer — un-filtered, ON TOP of the blob layer. It overlays the
+       host (inset:0) and tracks the blobs via the SAME inheriting --dock-split-t scalar +
+       per-half vectors. Compositor-only (translate, never a layout property). */
+    .liquid-island-content {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        pointer-events: none;
+        /* the resist-aware progress mirroring the library piece (the spring scalar pulled
+           back by the pointer --seam-tension so the content tracks the blob exactly). */
+        --piece-progress: clamp(
+            0,
+            calc(var(--dock-split-t, 0) - var(--seam-tension, 0)),
+            1
+        );
+        --piece-reach: var(--dock-fission-reach, 4.5rem);
+    }
+
+    /* each half — a content island. A half fills its share of the content layer (flex 1)
+       and TRANSLATES by the same (vector · reach · progress) the library blob piece uses,
+       so the crisp content tracks the goo blob exactly. NO own plate (the blob below is
+       the surface); just the readable content + a faint top rim catch-light. */
+    .liquid-island {
+        flex: 1 1 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-inline: 0.85rem;
+        color: var(--foreground);
+        border-radius: 1.875rem;
+    }
+    .liquid-island-content .liquid-island {
+        translate:
+            calc(var(--half-dx, 0) * var(--piece-reach) * var(--piece-progress))
+            calc(var(--half-dy, 0) * var(--piece-reach) * var(--piece-progress));
+        will-change: transform;
+    }
+    .liquid-island--timer {
+        justify-content: flex-end;
+        text-align: end;
+        --half-dx: -1; /* peel LEFT (matches the timer blob's --split-dx) */
+        --half-dy: 0;
+    }
+    .liquid-island--music {
+        justify-content: flex-start;
+        --half-dx: 1; /* peel RIGHT (matches the music blob's --split-dx) */
+        --half-dy: 0;
+    }
     .liquid-island-meta {
         display: flex;
         flex: 1 1 auto;
@@ -811,7 +593,7 @@
         overflow: hidden;
         white-space: nowrap;
     }
-    .liquid-island--left .liquid-island-meta {
+    .liquid-island--timer .liquid-island-meta {
         align-items: flex-end;
         text-align: right;
     }
@@ -831,7 +613,30 @@
         line-height: 1.1;
         text-overflow: ellipsis;
     }
-
+    /* the timer glyph chip */
+    .liquid-island-ring {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        inline-size: 2.35rem;
+        block-size: 2.35rem;
+        border-radius: 999px;
+        color: var(--section-color-8);
+        background: color-mix(in oklab, var(--section-color-8), transparent 82%);
+    }
+    /* the album thumbnail */
+    .liquid-island-album {
+        flex: 0 0 auto;
+        inline-size: 2.35rem;
+        block-size: 2.35rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+            135deg,
+            var(--section-color-2),
+            var(--section-color-7) 72%
+        );
+        box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 60%);
+    }
     /* the equalizer — compositor-safe scaleY bars (PRM gates the motion) */
     .liquid-island-eq {
         display: flex;
@@ -872,12 +677,65 @@
         }
     }
 
+    /* ── VERTICAL island — a CONTENT REFLOW (a column of two stacked halves), NOT a
+       display:none. Both the blob layer + the content layer stack vertically; each half
+       reflows to a column (glyph → meta) so nothing clips. The carve runs along the
+       COLUMN axis — the blob fission vectors are re-pointed to dy in the SFC, and the
+       content half-vectors are re-pointed here. ── */
+    .liquid-island-host[data-orientation="vertical"] {
+        block-size: auto;
+        inline-size: 9rem;
+        min-block-size: 12rem;
+    }
+    .liquid-island-host[data-orientation="vertical"] .liquid-island-bridge,
+    .liquid-island-host[data-orientation="vertical"] .liquid-island-content {
+        flex-direction: column;
+    }
+    .liquid-island-host[data-orientation="vertical"] .liquid-island {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.35rem;
+        padding-block: 0.75rem;
+    }
+    /* the carve axis swaps to the column (dy) so the content tracks the column-peeling
+       blobs (the SFC re-points the blob fission vectors to dy in lockstep). */
+    .liquid-island-host[data-orientation="vertical"] .liquid-island--timer {
+        justify-content: center;
+        --half-dx: 0;
+        --half-dy: -1; /* peel UP */
+    }
+    .liquid-island-host[data-orientation="vertical"] .liquid-island--music {
+        justify-content: center;
+        --half-dx: 0;
+        --half-dy: 1; /* peel DOWN */
+    }
+    .liquid-island-host[data-orientation="vertical"] .liquid-island-meta,
+    .liquid-island-host[data-orientation="vertical"] .liquid-island--timer .liquid-island-meta {
+        align-items: center;
+        text-align: center;
+    }
+    .liquid-island-host[data-orientation="vertical"] .liquid-island-title,
+    .liquid-island-host[data-orientation="vertical"] .liquid-island-sub {
+        white-space: normal;
+    }
+
     @media (prefers-reduced-motion: reduce) {
-        .liquid-dock,
-        .liquid-dock-control,
-        .liquid-dock-controls,
-        .liquid-dock-pane {
+        .liquid-pill,
+        .liquid-sheet,
+        .liquid-player {
             transition: none !important;
         }
+        /* the library fission-bridge PRM block zeroes `--dock-bridge-opacity` to hide the
+           goo NECK layer — but in this composition the bridge HOLDS the island pieces, so
+           keep the bridge (and thus the seated-apart pieces) visible. The library still
+           drops the neck/specular ::before/::after (display:none) under PRM; the pieces
+           are sync-seated at their endpoint by the orchestrator (an instant cut). */
+        .liquid-island-bridge {
+            --dock-bridge-opacity: 1;
+        }
+        /* the resting host plate stays at its split-keyed opacity (the orchestrator seats
+           --dock-split-t at the endpoint, so a seated-split host plate is correctly faded
+           and a merged one is the crisp pill — no animation, the seat is instant). */
     }
 }
