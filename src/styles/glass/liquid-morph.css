@@ -29,7 +29,9 @@
         /* the morph: the box grows in place off the ONE scalar */
         inline-size: calc(var(--pill-w) + (var(--card-w) - var(--pill-w)) * var(--t));
         block-size: calc(var(--pill-h) + (var(--card-h) - var(--pill-h)) * var(--t));
-        border-radius: calc(2rem + (var(--radius-card) - 2rem) * var(--t));
+        /* the card stays GENEROUSLY rounded (iOS-27 sheets ~28px) — was shrinking to a
+           square-ish 16px. Pill 2rem(32px) → card 1.75rem(28px), both liquid-round. */
+        border-radius: calc(2rem - 0.25rem * var(--t));
         overflow: visible;
         isolation: isolate;
         will-change: inline-size, block-size;

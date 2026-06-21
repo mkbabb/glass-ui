@@ -264,22 +264,6 @@ onBeforeUnmount(() => {
                 ref="mainEl"
                 class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
-                <!-- BA.W-ANIMATE Tier B — the compositor scroll-progress bar.
-                     A native `scroll()`-timeline 0..1 scaleX rail pinned to the
-                     top edge of the route scroller. `<main>` declares
-                     `scroll-timeline-name: --demo-main-progress` (dock-nav.css)
-                     and the bar's `--scroll-progress-scroller` resolves to it, so
-                     the bar tracks the ROUTE scroller (the route owns scroll, not
-                     `root`). Off-main-thread + PRM-safe by construction (the
-                     scroll-driven.css recipe's outer @media gate). The
-                     `useScrollProgress` JS fallback never attaches when the native
-                     timeline is present (the dual-path-single-writer rule). -->
-                <div
-                    class="scroll-progress demo-scroll-progress"
-                    aria-hidden="true"
-                    data-testid="demo-scroll-progress"
-                ></div>
-
                 <!-- BA.W-ANIMATE Tier A — the route page-enter. The
                      `<RouterView>` mount is wrapped in a <Transition> keyed on the
                      route so each navigation fires ONE coherent page-enter: the
