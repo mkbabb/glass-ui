@@ -1,7 +1,7 @@
 # BE tranche — SEED (iOS-27 liquid-glass alignment · the DOCK as hallmark · de-shadcn form)
 
-**Status:** tranche-DEVELOPMENT (planning-only, convergence loop). Pass 1 complete.
-**Convergence:** ~50% (pass 1 = broad sweep + gap map; the dedup/structure/de-shadcn-sweep/dock-mechanism-depth/gate-design remain).
+**Status:** tranche-DEVELOPMENT (planning-only, convergence loop). Pass 2 complete. See `WAVE-LIST.md` for the finalized ~30-wave dedup.
+**Convergence:** ~78% (pass 2 = de-shadcn re-scoped + dock-fission mechanism designed + 4 stale premises corrected + Safari decided + gate set designed + jubilance sited; the custom/ residue inventory + CLAUDE.md reconcile + the adversarial challenge remain).
 **Predecessor:** BD (converged 2-consecutive-clean; the post-cut discharge tranche). BE is the NEXT, larger tranche — the iOS-27 alignment + the dock hallmark + de-shadcn, a NEW-capability tranche (BD was discharge; this is build).
 **Inputs:** the two iOS-27 reference videos (V1 Apple Music dock/glass, V2 aurora album-art) + the Maps liquid-glass-card screenshot + 21-lens pass-1 fleet (frame-dissection · web-research · suite-audit · plan-brainstorm). Raw findings: `audit/pass-1-findings.json`; gap map: `PASS-1-GAPMAP.md`.
 
