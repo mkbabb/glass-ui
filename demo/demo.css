@@ -109,12 +109,14 @@
 @import "./stories/story-hero.css";
 /* the LIQUID-DOCK prototype surfaces are DEMO-ONLY (off the library bundle — the
    composables are already demo-only; the BE tranche productionizes both). Loaded here
-   after the library so the glass tokens + `@layer components` resolve. The fission
-   bridge (the library N-seam goo recipe — BE.W-DOCK-FISSION) is loaded AFTER
-   liquid-morph.css so the island host's `.dock-fission-bridge`/`.dock-fission-piece`
-   recipes resolve over the demo island faces. */
+   after the library so the glass tokens + `@layer components` resolve. liquid-morph.css
+   carries the demo island FACE/layout (`.liquid-island-*`) only; the fission bridge
+   BEHAVIOR (`.dock-fission-bridge`/`.dock-fission-piece` — the library N-seam goo recipe,
+   BE.W-DOCK-FISSION) now ships in the LIBRARY cascade via index.css → dock.css, so the
+   demo inherits it (no explicit @import) and a `@mkbabb/glass-ui/styles` consumer gets it
+   too. liquid-morph.css loads AFTER index.css so the demo island faces resolve over the
+   library behavior in `@layer components` source order. */
 @import "../src/styles/glass/liquid-morph.css";
-@import "../src/styles/dock/fission-bridge.css";
 
 @variant dark (&:where(.dark, .dark *));
 

@@ -403,7 +403,7 @@ onBeforeUnmount(() => {
         v-else
         ref="containerRef"
         :role="isUnderline ? 'tablist' : 'group'"
-        :aria-orientation="isVertical ? 'vertical' : 'horizontal'"
+        :aria-orientation="isUnderline ? (isVertical ? 'vertical' : 'horizontal') : undefined"
         :class="cn(
             'segmented-tabs',
             `segmented-tabs--${variant}`,

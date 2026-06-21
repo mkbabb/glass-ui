@@ -336,6 +336,23 @@ const readoutState = computed(() => {
     return open.value ? "open" : "rest";
 });
 
+// the polite aria-live announcement — a screen reader hears the surface OPEN/CLOSE
+// (the bloomed sheet/player is real content, not a husk; the open is a state change a
+// non-modal overlay must announce since focus does not auto-trap). Empty at rest so a
+// re-render does not re-announce; set on the open/close transition only.
+const liveAnnouncement = ref("");
+watch([open, mode], ([isOpen, m]) => {
+    if (m === "island") {
+        liveAnnouncement.value = "";
+        return;
+    }
+    liveAnnouncement.value = isOpen
+        ? m === "expand"
+            ? "Places sheet opened"
+            : "Now playing opened"
+        : "Closed";
+});
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // THE RAIL — the re-instated AZ context FACET CAROUSEL (BE.W-DOCK-RAIL-REALIZE).
 // The rail is NOT a standalone vertical dock — it is a HAIRLINE strip of accent-tinted
@@ -481,24 +498,42 @@ function onAuroraInitError(err: Error): void {
                     aria-hidden="true"
                 />
 
+                <!-- the polite open/close announcer — a non-modal bloom must announce
+                     its open to a screen reader (focus does not auto-trap). sr-only +
+                     aria-live="polite" + aria-atomic (the deck.vue precedent). -->
+                <p
+                    class="sr-only"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    data-testid="liquid-announcer"
+                >
+                    {{ liveAnnouncement }}
+                </p>
+
                 <!-- ════════════════════════════════════════════════════════════════
                      EXPAND / PLAYER — the dock is a small PILL (stays pill-sized); the
                      sheet/player BLOOMS from its rect. The pill is the bloom SOURCE.
                      ════════════════════════════════════════════════════════════════ -->
-                <div
+                <!-- The bloom SOURCE is ONE real, named control (a presentational
+                     <div> faking a button is de-shadcn'd — a real <button> carries
+                     native keyboard/role semantics). aria-expanded reflects the bloom;
+                     .focus-ring composes the token-first ring (box-shadow, survives the
+                     overflow:clip on the un-filtered layer). While the sheet is OPEN the
+                     pill is the bloom ORIGIN — STATE-DRIVEN :inert (the GlassDock
+                     precedent) removes it from the a11y tree + the tab order entirely
+                     (opacity:0 alone left it keyboard-reachable while invisible). -->
+                <button
                     v-if="mode !== 'island'"
                     ref="dockRef"
-                    class="liquid-pill"
+                    type="button"
+                    class="liquid-pill focus-ring"
                     :class="{ 'liquid-pill--hidden': open }"
-                    role="button"
-                    tabindex="0"
                     :aria-expanded="open"
                     :aria-label="
                         mode === 'expand' ? 'Open search' : 'Open now playing'
                     "
+                    :inert="open || undefined"
                     @click="toggleBloom"
-                    @keydown.enter.prevent="toggleBloom"
-                    @keydown.space.prevent="toggleBloom"
                     :data-mode="mode"
                     :data-orientation="orientation"
                     data-testid="liquid-pill"
@@ -519,7 +554,7 @@ function onAuroraInitError(err: Error): void {
                         </span>
                         <span class="liquid-pill-play"><Play class="size-4" /></span>
                     </template>
-                </div>
+                </button>
 
                 <!-- the EXPAND sheet — the Maps "Places" overlay. Rendered only while
                      open||blooming; lays out at its FULL settled rect (the bloom FLIPs it
@@ -639,18 +674,21 @@ function onAuroraInitError(err: Error): void {
                      carry the translate/squish/neck); the content mirrors the same
                      per-half vector off the host's scalar.
                      ════════════════════════════════════════════════════════════════ -->
-                <div
+                <!-- The fission trigger is ONE real, named control (the de-shadcn'd
+                     real <button>, NOT a div faking role=button). aria-expanded reflects
+                     the split; .focus-ring composes the token ring on the host's own
+                     un-filtered layer (placed off the goo filter). Its accessible NAME
+                     derives from the readable content layer below — only the goo blob
+                     layer + the eq bars are aria-hidden (truly decorative), the timer/
+                     track text is REAL content a screen reader reads (not a husk). -->
+                <button
                     v-if="mode === 'island'"
                     ref="islandHostRef"
-                    class="liquid-island-host"
+                    type="button"
+                    class="liquid-island-host focus-ring"
                     :data-orientation="orientation"
-                    role="button"
-                    tabindex="0"
                     :aria-expanded="islandSplit"
-                    aria-label="Split the activity islands"
                     @click="toggleIsland"
-                    @keydown.enter.prevent="toggleIsland"
-                    @keydown.space.prevent="toggleIsland"
                     @pointermove="fission.onPointerMove"
                     data-testid="liquid-island-host"
                 >
@@ -674,11 +712,14 @@ function onAuroraInitError(err: Error): void {
                         />
                     </div>
                     <!-- the crisp CONTENT layer — un-filtered, tracking the blobs via the
-                         SAME inheriting --dock-split-t scalar + per-half CSS vectors. -->
-                    <div class="liquid-island-content" aria-hidden="true">
+                         SAME inheriting --dock-split-t scalar + per-half CSS vectors. It
+                         is READABLE (NOT aria-hidden): the timer/track text is the host
+                         button's accessible name. Only the decorative glyph/album/eq stay
+                         aria-hidden. -->
+                    <div class="liquid-island-content">
                         <div class="liquid-island liquid-island--timer">
-                            <span class="liquid-island-ring">
-                                <Timer class="size-4" aria-hidden="true" />
+                            <span class="liquid-island-ring" aria-hidden="true">
+                                <Timer class="size-4" />
                             </span>
                             <span class="liquid-island-meta">
                                 <span class="liquid-island-title">Timer</span>
@@ -686,7 +727,7 @@ function onAuroraInitError(err: Error): void {
                             </span>
                         </div>
                         <div class="liquid-island liquid-island--music">
-                            <span class="liquid-island-album" />
+                            <span class="liquid-island-album" aria-hidden="true" />
                             <span class="liquid-island-meta">
                                 <span class="liquid-island-title">{{ track.title }}</span>
                                 <span class="liquid-island-sub">{{ track.artist }}</span>
@@ -696,7 +737,7 @@ function onAuroraInitError(err: Error): void {
                             </span>
                         </div>
                     </div>
-                </div>
+                </button>
             </div>
 
             <p

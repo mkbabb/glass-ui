@@ -44,6 +44,15 @@
 @import "./dock/stack-rail.css";
 @import "./dock/section.css";
 @import "./dock/morph-bridge.css";
+/* BE.W-DOCK-FISSION — the 1→N stretch-and-snap goo bridge (the sibling of morph-bridge's
+   1→1 V↔H crossfade; the per-seam `--neck-t` neck STRETCH→THIN→SNAP-BACK recoil + the
+   jubilance ripple/splash FLOOR). @import-ed into the LIBRARY cascade beside morph-bridge
+   so a consumer importing `@mkbabb/glass-ui/styles` gets the fission delights — the recipe
+   is `v-for`-shaped on `.dock-fission-piece`, compositor-only, PRM-removed, Safari-safe
+   (the REGULAR `filter: url()`, never backdrop-filter). The demo's island FACE/layout
+   (`.liquid-island-*`) stays demo-only (liquid-morph.css); this file owns only the
+   `.dock-fission-bridge`/`.dock-fission-piece` BEHAVIOR. */
+@import "./dock/fission-bridge.css";
 /* BC.W-AX-DOCK-CTA-SEAT — the [data-cta-pending] CTA-receive landing seat (the static
    resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */

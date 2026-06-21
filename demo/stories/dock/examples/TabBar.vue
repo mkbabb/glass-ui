@@ -1,142 +1,132 @@
 <script setup lang="ts">
-// A bottom TAB BAR dock for the dock-morph gallery. REST: a compact horizontal glass
-// pill with 4 tab icons + a sliding glass-tint highlight (the morphing iOS tab
-// indicator). OPEN: tapping the trailing "+" grows the bar UPWARD into a compose sheet
-// revealing 3 quick-action rows above the pinned tab row.
+// Tab bar — the tab strip rides the REAL `<SegmentedTabs>` engine (audit §W10:
+// "TabBar→<SegmentedTabs>"), and the trailing "+" BLOOMS a compose sheet on the REAL
+// `useBloomUp` engine. The facsimile hand-rolled the sliding indicator (a `--i` translateX
+// off a bespoke spring-bezier) AND animated the sheet's `max-block-size` (a layout
+// property). Both die here: the indicator is `<SegmentedTabs>`'s own elastic spring-clocked
+// glass plate (the W-TABS engine — squish-on-travel, the calibrated --tab-indicator-
+// duration), and the compose sheet is a SEPARATE overlay laid out at its full rect that
+// FLIPs from the "+" button (transform/opacity/filter, no layout animation).
 import { ref } from "vue";
 import { House, Search, Compass, User, Plus, FileText, ListChecks, Image } from "@lucide/vue";
+import DockExampleTile from "../DockExampleTile.vue";
+import { SegmentedTabs } from "../../../../src/components/custom/tabs";
+import { useBloomUp } from "../../../../src/composables/motion/useBloomUp";
 
-const open = ref(false);
-const selectedIndex = ref(0);
+import type { Component } from "vue";
 
-const tabs = [
-    { icon: House, label: "Home" },
-    { icon: Search, label: "Search" },
-    { icon: Compass, label: "Explore" },
-    { icon: User, label: "Profile" },
+const tab = ref("home");
+const tabOptions = [
+    { value: "home", label: "Home" },
+    { value: "search", label: "Search" },
+    { value: "explore", label: "Explore" },
+    { value: "profile", label: "Profile" },
 ];
+// value → glyph (the tab bar is icon-first; SegmentedTabs renders labels by default, so
+// the #option slot swaps in the lucide glyph while the accessible label stays the source).
+const tabGlyph: Record<string, Component> = {
+    home: House,
+    search: Search,
+    explore: Compass,
+    profile: User,
+};
 
 const actions = [
     { icon: FileText, label: "New Note" },
     { icon: ListChecks, label: "New List" },
     { icon: Image, label: "New Photo" },
 ];
+
+const open = ref(false);
+const addRef = ref<HTMLElement | null>(null);
+const sheetRef = ref<HTMLElement | null>(null);
+
+// the compose sheet blooms FROM the "+" button (the bloom SOURCE).
+const bloom = useBloomUp(addRef, sheetRef, { preset: "bouncy", blur: 5 });
+
+function toggleCompose(): void {
+    if (open.value) {
+        bloom.reset();
+        open.value = false;
+        return;
+    }
+    open.value = true;
+    requestAnimationFrame(() => bloom.bloom());
+}
 </script>
 
 <template>
-    <div class="tabbar-tile">
-        <div class="tabbar-bg" aria-hidden="true" />
-        <div class="tabbar-stage">
+    <DockExampleTile label="Tab bar" hint="SegmentedTabs strip · + blooms a compose sheet">
+        <template #bg>
+            <div class="tb-bg" />
+        </template>
+
+        <div class="tb-dock">
+            <!-- the pinned tab row — the REAL SegmentedTabs engine (its own spring-clocked
+                 elastic glass indicator; NO facsimile --i translateX). -->
+            <div class="tb-row">
+                <SegmentedTabs
+                    v-model="tab"
+                    :options="tabOptions"
+                    aria-label="Sections"
+                    class="tb-tabs"
+                >
+                    <template #option="{ option }">
+                        <component
+                            :is="tabGlyph[option.value]"
+                            class="size-5"
+                            :aria-label="option.label"
+                        />
+                    </template>
+                </SegmentedTabs>
+                <button
+                    ref="addRef"
+                    type="button"
+                    class="tb-add"
+                    :class="{ 'tb-add--open': open }"
+                    :aria-expanded="open"
+                    aria-label="Compose"
+                    @click="toggleCompose"
+                >
+                    <Plus class="size-5" />
+                </button>
+            </div>
+        </div>
+
+        <!-- the compose sheet — a SEPARATE overlay, rendered only while open. Lays out at
+             its FULL settled rect; useBloomUp FLIPs it FROM the "+" button. -->
+        <div
+            v-if="open"
+            ref="sheetRef"
+            class="tb-sheet"
+            role="dialog"
+            aria-label="Compose"
+        >
             <button
+                v-for="a in actions"
+                :key="a.label"
                 type="button"
-                class="tabbar-dock"
-                :class="{ 'is-open': open }"
-                :aria-pressed="open"
-                aria-label="Toggle the compose sheet"
-                @click="open = !open"
+                class="tb-action"
+                @click="toggleCompose"
             >
-                <!-- the compose sheet — quick-action rows revealed above the tab row -->
-                <span class="tabbar-sheet">
-                    <span
-                        v-for="a in actions"
-                        :key="a.label"
-                        class="tabbar-action"
-                    >
-                        <span class="tabbar-action-icon"><component :is="a.icon" class="size-4" /></span>
-                        <span class="tabbar-action-label">{{ a.label }}</span>
-                    </span>
-                </span>
-                <!-- the pinned tab row -->
-                <span class="tabbar-row">
-                    <span
-                        class="tabbar-indicator"
-                        :style="{ '--i': selectedIndex }"
-                        aria-hidden="true"
-                    />
-                    <span
-                        v-for="(t, i) in tabs"
-                        :key="t.label"
-                        class="tabbar-tab"
-                        :class="{ 'is-active': i === selectedIndex }"
-                        @click.stop="selectedIndex = i"
-                    >
-                        <component :is="t.icon" class="size-5" />
-                    </span>
-                    <span class="tabbar-add" :class="{ 'is-open': open }" aria-hidden="true">
-                        <Plus class="size-5" />
-                    </span>
-                </span>
+                <span class="tb-action-icon"><component :is="a.icon" class="size-4" /></span>
+                <span class="tb-action-label">{{ a.label }}</span>
             </button>
         </div>
-        <p class="tabbar-caption">
-            <span class="tabbar-label">Tab bar</span>
-            <span class="tabbar-hint">tabs slide · + to compose</span>
-        </p>
-    </div>
+    </DockExampleTile>
 </template>
 
 <style scoped>
-.tabbar-tile {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: var(--radius-card);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 8%, transparent);
-}
-/* warm AMBER gradient backdrop the glass reads against */
-.tabbar-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+.tb-bg {
     background:
         radial-gradient(120% 90% at 22% 18%, oklch(0.85 0.08 70 / 0.9), transparent 60%),
         radial-gradient(110% 100% at 88% 84%, oklch(0.8 0.1 45 / 0.82), transparent 55%),
         linear-gradient(150deg, oklch(0.89 0.05 80), oklch(0.83 0.08 55));
 }
-.tabbar-stage {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    min-block-size: 17rem;
-    padding: 1.5rem;
-    --ex-spring: cubic-bezier(0.34, 1.32, 0.5, 1);
-    --ex-ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-.tabbar-caption {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    padding: 0.85rem 1.1rem;
-    background: color-mix(in oklab, var(--card), transparent 12%);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-block-start: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
-}
-.tabbar-label {
-    font-size: 0.85rem;
-    font-weight: 650;
-    color: var(--foreground);
-}
-.tabbar-hint {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.68rem;
-    color: var(--muted-foreground);
-}
 
-/* the glass plate — the bar grows UPWARD (block-end anchored) on open */
-.tabbar-dock {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    cursor: pointer;
-    color: var(--foreground);
-    text-align: start;
-    inline-size: 17rem;
+/* the glass dock plate. */
+.tb-dock {
+    inline-size: 18rem;
     padding: 0.4rem;
     border-radius: 1.6rem;
     background: var(--glass-bg-floating);
@@ -145,47 +135,66 @@ const actions = [
     box-shadow:
         inset 0 0 0 0.5px var(--glass-edge-light, rgb(255 255 255 / 0.22)),
         var(--shadow-floating);
-    transition: border-radius 0.55s var(--ex-spring);
 }
-.tabbar-dock.is-open {
-    border-radius: 1.9rem;
+.tb-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.tb-tabs {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+}
+.tb-add {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 2.6rem;
+    block-size: 2.6rem;
+    border-radius: 0.85rem;
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--foreground) 8%, transparent);
+    /* the "+" rotates to "×" on open — the SHIPPED --ex-snappy (the dock register), NOT a
+       bespoke spring-bezier. The bloom owns the sheet; this is the trigger affordance. */
+    transition:
+        rotate var(--ex-snappy-duration, 0.34s) var(--ex-snappy),
+        background 0.2s var(--ex-ease);
+}
+.tb-add--open {
+    rotate: 45deg;
+    background: color-mix(in oklab, var(--foreground) 14%, transparent);
 }
 
-/* the compose sheet — collapsed (zero height + faded) at rest, revealed on open */
-.tabbar-sheet {
+/* the compose sheet — the bloom DEST. */
+.tb-sheet {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    max-block-size: 0;
-    opacity: 0;
-    overflow: hidden;
-    padding-inline: 0.35rem;
-    transition:
-        max-block-size 0.55s var(--ex-spring),
-        opacity 0.35s var(--ex-ease),
-        padding-block 0.55s var(--ex-spring);
+    gap: 0.25rem;
+    inline-size: 16rem;
+    padding: 0.5rem;
+    border-radius: 1.6rem;
+    background: var(--glass-bg-floating);
+    -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
+    backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
+    box-shadow:
+        inset 0 0 0 0.5px var(--glass-edge-light, rgb(255 255 255 / 0.22)),
+        var(--shadow-floating);
 }
-.tabbar-dock.is-open .tabbar-sheet {
-    max-block-size: 11rem;
-    opacity: 1;
-    padding-block: 0.55rem 0.45rem;
-    transition:
-        max-block-size 0.55s var(--ex-spring),
-        opacity 0.4s var(--ex-ease) 0.12s,
-        padding-block 0.55s var(--ex-spring);
-}
-.tabbar-action {
+.tb-action {
     display: flex;
     align-items: center;
     gap: 0.7rem;
     padding: 0.5rem 0.55rem;
     border-radius: 0.85rem;
-    transition: background 0.3s var(--ex-ease);
+    text-align: start;
+    color: var(--foreground);
+    transition: background 0.2s var(--ex-ease);
 }
-.tabbar-action:hover {
+.tb-action:hover {
     background: color-mix(in oklab, var(--foreground) 6%, transparent);
 }
-.tabbar-action-icon {
+.tb-action-icon {
     display: grid;
     place-items: center;
     flex: 0 0 auto;
@@ -196,74 +205,9 @@ const actions = [
     background: linear-gradient(135deg, oklch(0.72 0.14 70), oklch(0.65 0.13 45));
     box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 60%);
 }
-.tabbar-action-label {
+.tb-action-label {
     font-size: 0.82rem;
     font-weight: 600;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* the pinned tab row — 4 tabs + the sliding indicator + the trailing add */
-.tabbar-row {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) auto;
-    align-items: center;
-    gap: 0.15rem;
-}
-.tabbar-indicator {
-    position: absolute;
-    z-index: 0;
-    inset-block: 0;
-    inset-inline-start: 0;
-    /* one tab column = (100% of the four-tab span) / 4; the add button is auto-sized
-       and sits outside this track, so the indicator walks the four equal columns */
-    inline-size: calc((100% - 2.6rem) / 4);
-    border-radius: 0.85rem;
-    background: var(--dock-control-active-bg, color-mix(in oklab, var(--foreground) 10%, transparent));
-    box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 70%);
-    transform: translateX(calc(var(--i, 0) * 100%));
-    transition: transform 0.5s var(--ex-spring);
-}
-.tabbar-tab {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    block-size: 2.9rem;
-    border-radius: 0.85rem;
-    color: color-mix(in oklab, var(--foreground), transparent 42%);
-    transition: color 0.3s var(--ex-ease);
-}
-.tabbar-tab.is-active {
-    color: var(--foreground);
-}
-.tabbar-add {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    inline-size: 2.6rem;
-    block-size: 2.9rem;
-    border-radius: 0.85rem;
-    margin-inline-start: 0.15rem;
-    color: var(--foreground);
-    background: color-mix(in oklab, var(--foreground) 8%, transparent);
-    transition: transform 0.5s var(--ex-spring), background 0.3s var(--ex-ease);
-}
-.tabbar-add.is-open {
-    transform: rotate(45deg);
-    background: color-mix(in oklab, var(--foreground) 14%, transparent);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .tabbar-dock,
-    .tabbar-sheet,
-    .tabbar-indicator,
-    .tabbar-tab,
-    .tabbar-add {
-        transition-duration: 0.01ms !important;
-    }
 }
 </style>
