@@ -657,4 +657,23 @@ function onRailWheel(e: WheelEvent): void {
         inset 0 0 0 1px var(--glass-edge-light, rgb(255 255 255 / 0.18)),
         0 8px 24px -8px color-mix(in srgb, var(--foreground) 40%, transparent);
 }
+
+/* the mode tabs — give the iOS-27 indicator a real LIQUID-GLASS sheen: a top specular
+   highlight gradient over the existing plate (more depth/dimension), an edge-light rim,
+   and a brighter catch-light at the top. The plate visibility is unchanged (the base
+   tinted-floating fill stays); only the GLASSY character is lifted. */
+:deep(.segmented-indicator) {
+    background:
+        linear-gradient(
+            to bottom,
+            color-mix(in oklab, white, transparent 52%),
+            transparent 46%
+        ),
+        var(--glass-bg-floating-tinted);
+    box-shadow:
+        inset 0 1px 0 0 color-mix(in oklab, white, transparent 30%),
+        inset 0 0 0 0.5px var(--glass-edge-light, rgb(255 255 255 / 0.4)),
+        var(--glass-rim-bottom),
+        var(--glass-shadow-floating);
+}
 </style>
