@@ -258,6 +258,13 @@ function onRailWheel(e: WheelEvent): void {
         rail.expandTo(false);
     }, 1100);
 }
+
+// The aurora is a DECORATIVE backdrop — handle a WebGL/shader init failure gracefully
+// (the canvas stays blank, the dock morph is the focus) so it never surfaces as an
+// unhandled rejection (the glass-ui deferred-init contract).
+function onAuroraInitError(err: Error): void {
+    console.warn("[liquid-playground] aurora backdrop init failed:", err.message);
+}
 </script>
 
 <template>
@@ -356,6 +363,7 @@ function onRailWheel(e: WheelEvent): void {
                      paused by construction; ONE GL context for this route. -->
                 <Aurora
                     :config="DEFAULT_AURORA_CONFIG"
+                    :on-init-error="onAuroraInitError"
                     class="pointer-events-none absolute inset-0 size-full"
                     aria-hidden="true"
                 />
@@ -599,6 +607,7 @@ function onRailWheel(e: WheelEvent): void {
             >
                 <Aurora
                     :config="DEFAULT_AURORA_CONFIG"
+                    :on-init-error="onAuroraInitError"
                     class="pointer-events-none absolute inset-0 size-full"
                     aria-hidden="true"
                 />
