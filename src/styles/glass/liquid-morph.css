@@ -566,6 +566,12 @@
            reads as warm glass material, not pale grey. */
         background: color-mix(in oklab, var(--card), oklch(0.72 0.075 62) 32%);
         box-shadow: none;
+        /* re-FAN smoothly when the ANGLE changes while split is open (the --split-dx/dy
+           shift) — gated OFF during the --t morph below so the spring owns the fan-out. */
+        transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .liquid-dock[data-liquid-morphing] .liquid-dock-control {
+        transition: none;
     }
     .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-control:first-child {
         /* the CORE the others bud from — a touch brighter so the origin reads */
