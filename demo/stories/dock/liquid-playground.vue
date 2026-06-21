@@ -250,24 +250,41 @@ function onRailLeave(): void {
     railOpen.value = false;
     rail.onPointerLeave();
 }
-// ── SCROLL the carousel — wheel moves through the items (the rail stays open while
-// scrolling, then settles). The accumulator gives a notch-per-item discrete scroll. ──
-let wheelAccum = 0;
+// ── SCROLL the carousel — FLUID + SLOW. The wheel feeds the rail's CONTINUOUS
+// `position` scalar (fractional slot-units), so the items SLIDE smoothly under the
+// finger instead of jumping notch-by-notch. SCROLL_PX_PER_SLOT is large (slow — a long
+// scroll per item). On settle (wheel stops) the position spring-snaps to the nearest
+// slot + folds into `chosen` (a transition glides the final ≤0.5-slot landing). ──
+const SCROLL_PX_PER_SLOT = 150; // higher = slower; the items track the wheel 1:1 within
+const railSettling = ref(false);
 let wheelTimer: ReturnType<typeof setTimeout> | undefined;
+let settleTimer: ReturnType<typeof setTimeout> | undefined;
 function onRailWheel(e: WheelEvent): void {
     e.preventDefault();
     railOpen.value = true;
     rail.expandTo(true);
-    wheelAccum += e.deltaY;
-    while (Math.abs(wheelAccum) >= 36) {
-        stepChosen(wheelAccum > 0 ? 1 : -1);
-        wheelAccum -= Math.sign(wheelAccum) * 36;
-    }
+    railSettling.value = false; // instant follow while actively scrolling
+    rail.scrollBy(e.deltaY / SCROLL_PX_PER_SLOT);
     clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => {
+    wheelTimer = setTimeout(settleRail, 150);
+}
+function settleRail(): void {
+    const pos = rail.position.value;
+    const n = railCount.value;
+    // fold the fractional position into `chosen`, landing on the nearest slot. The
+    // transition (data-settling) glides the residual ≤0.5-slot move into place.
+    if (Math.abs(pos) >= 0.001) {
+        const target = Math.round(chosenIdx.value + pos);
+        railSettling.value = true;
+        chosenIdx.value = ((target % n) + n) % n;
+        rail.scrollBy(-pos); // position → 0; chosen now carries the landing
+    }
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+        railSettling.value = false;
         railOpen.value = false;
         rail.expandTo(false);
-    }, 1100);
+    }, 520);
 }
 
 // The aurora is a DECORATIVE backdrop — handle a WebGL/shader init failure gracefully
@@ -579,18 +596,22 @@ function onAuroraInitError(err: Error): void {
         <!-- ═══════════════════════════════════════════════════════════════════ -->
         <!-- THE RAIL — the carousel-stack on a vertical dock's right edge.       -->
         <!-- ═══════════════════════════════════════════════════════════════════ -->
-        <StorySection heading="The rail — a carousel-stack on the dock edge" gap="md">
+        <StorySection
+            heading="The rail — a carousel-stack WITHIN a vertical glass dock"
+            gap="md"
+        >
             <p class="text-small text-muted-foreground">
-                A vertical glass dock with a carousel-stack rail on its right edge —
-                <code class="rounded bg-muted px-1">useLiquidRail</code> projects the
-                <strong>chosen</strong> chip AT the dock line, items fanning
-                <strong>above</strong> (golden ~2x span) and <strong>below</strong> (a
-                partial peek). Collapsed by default; <strong>hover</strong> (or
-                <em>Expand rail</em>) fans the stack open, the far items fading toward 0
-                opacity (the <code class="rounded bg-muted px-1">↑z</code> fade). The
-                list CAROUSEL-WRAPS — step the chosen past the last item and it loops to
-                the first. NOT the macOS 3D fan — a STRAIGHT carousel-wrap, the depth
-                read from opacity + scale tiers.
+                A carousel-stack of icon chips scrolling INSIDE a vertical glass dock
+                capsule — <code class="rounded bg-muted px-1">useLiquidRail</code>
+                projects the <strong>chosen</strong> chip at the dock centre line, items
+                fanning <strong>above</strong> (golden ~2x span) and
+                <strong>below</strong> (a partial peek), fading + receding toward the
+                rounded ends. Collapsed by default; <strong>hover</strong> (or
+                <em>Expand rail</em>) fans the stack open. <strong>Scroll</strong> the
+                dock — the wheel feeds a CONTINUOUS position scalar, so the items SLIDE
+                fluidly under the finger (slow, ~150px per item) then spring-settle on
+                the nearest slot. The list CAROUSEL-WRAPS. NOT the macOS 3D fan — a
+                STRAIGHT carousel-wrap, the depth read from opacity + scale tiers.
             </p>
 
             <!-- rail controls -->
@@ -654,10 +675,13 @@ function onAuroraInitError(err: Error): void {
                     aria-hidden="true"
                 />
 
-                <!-- the host: a sized, positioned spine. The rail centres in it; the
-                     chosen chip sits AT the centre line, items fan above + below. -->
+                <!-- the rail sits WITHIN a vertical glass DOCK — a tall capsule the
+                     carousel of icon chips scrolls inside. The chosen sits at the dock
+                     centre line (bright, full-scale); neighbours fan above/below, fading
+                     + receding toward the rounded dock ends. -->
                 <div
-                    class="liquid-rail-host"
+                    class="liquid-rail-dock"
+                    :data-settling="railSettling ? '' : undefined"
                     @pointerenter="onRailEnter"
                     @pointerleave="onRailLeave"
                     @wheel="onRailWheel"
@@ -685,7 +709,10 @@ function onAuroraInitError(err: Error): void {
                             data-testid="liquid-rail-item"
                         >
                             <span class="liquid-rail-chip">
-                                <component :is="railIcons[item.index]" />
+                                <component
+                                    :is="railIcons[item.index]"
+                                    :stroke-width="2.1"
+                                />
                             </span>
                         </button>
                     </div>
@@ -707,27 +734,9 @@ function onAuroraInitError(err: Error): void {
 </template>
 
 <style scoped>
-/* the rail-section host chrome — a small vertical glass dock pill the rail clings to.
-   The carousel rail itself (.liquid-rail / .liquid-rail-item / .liquid-rail-chip) is
-   the LIBRARY recipe in src/styles/dock/liquid-rail.css (loaded via /styles). */
-.liquid-rail-host {
-    position: relative;
-    display: grid;
-    place-items: center;
-    /* the dock pill the rail anchors to */
-}
-
-.liquid-rail-dock {
-    display: grid;
-    place-items: center;
-    inline-size: 3.25rem;
-    block-size: 3.25rem;
-    border-radius: 2rem;
-    color: var(--foreground);
-    box-shadow:
-        inset 0 0 0 1px var(--glass-edge-light, rgb(255 255 255 / 0.18)),
-        0 8px 24px -8px color-mix(in srgb, var(--foreground) 40%, transparent);
-}
+/* the .liquid-rail-dock glass capsule the carousel scrolls within is the LIBRARY recipe
+   in src/styles/dock/liquid-rail.css (loaded via /styles) — NOT a demo-scoped override
+   (a scoped rule here would win on [data-v] specificity + clobber the capsule sizing). */
 
 /* the mode tabs — give the iOS-27 indicator a real LIQUID-GLASS sheen: a top specular
    highlight gradient over the existing plate (more depth/dimension), an edge-light rim,
