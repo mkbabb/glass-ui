@@ -31,7 +31,15 @@ import {
     Folder,
     Heart,
     Tag,
+    Briefcase,
+    Home,
+    Bookmark,
+    Plus,
+    MapPin,
+    Building2,
+    Scissors,
 } from "@lucide/vue";
+import { IconChip } from "../../../src/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Button } from "../../../src/components/ui/button";
@@ -62,6 +70,21 @@ const orientation = ref<"horizontal" | "vertical">("horizontal");
 function toggleOrientation(): void {
     orientation.value = orientation.value === "horizontal" ? "vertical" : "horizontal";
 }
+
+// the expand pane content — the iOS-27 Maps "Places" sheet: a COLORFUL Places row
+// (vibrant IconChips off the --section-color ramp) + a real Recents list, so the dock
+// grows into RICH, vibrant content the way the reference does, not generic grey chips.
+const places = [
+    { icon: Briefcase, label: "Work", section: 8 },
+    { icon: Home, label: "Home", section: 10 },
+    { icon: Bookmark, label: "Saved", section: 2 },
+    { icon: Plus, label: "Add", section: 6 },
+];
+const recents = [
+    { icon: MapPin, name: "Winston-Salem", sub: "North Carolina" },
+    { icon: Building2, name: "Costco Wholesale", sub: "1305 Hanes Mall Blvd" },
+    { icon: Scissors, name: "A Better Man's Barber", sub: "Reynolda Road" },
+];
 
 // ── the dock element IS the morph root ──────────────────────────────────────────
 const dockRef = ref<HTMLElement | null>(null);
@@ -328,24 +351,37 @@ function onRailLeave(): void {
                         </button>
                     </div>
 
-                    <!-- the container pane the dock grows into (expand) -->
+                    <!-- the container pane the dock grows into (expand) — the iOS-27
+                         Maps "Places" sheet: a COLOURFUL Places row + a Recents list. -->
                     <div class="liquid-dock-pane" aria-hidden="true">
-                        <div class="liquid-dock-pane-header">
-                            <span class="liquid-dock-pane-chip"><Layers class="size-5" /></span>
-                            <div>
-                                <h3 class="text-subheading">Container</h3>
-                                <p class="text-mono-caption text-muted-foreground">
-                                    the dock grew into this card
-                                </p>
-                            </div>
-                        </div>
-                        <div class="liquid-dock-pane-chips">
+                        <div class="liquid-dock-places">
                             <span
-                                v-for="chip in ['Recents', 'Shared', 'Favorites', 'Tags']"
-                                :key="chip"
-                                class="rounded-pill glass-resting px-3 py-1 text-small"
+                                v-for="p in places"
+                                :key="p.label"
+                                class="liquid-dock-place"
                             >
-                                {{ chip }}
+                                <IconChip
+                                    :icon="p.icon"
+                                    :section="p.section"
+                                    :size="42"
+                                />
+                                <span class="liquid-dock-place-label">{{ p.label }}</span>
+                            </span>
+                        </div>
+                        <div class="liquid-dock-recents">
+                            <p class="liquid-dock-recents-label">Recents</p>
+                            <span
+                                v-for="r in recents"
+                                :key="r.name"
+                                class="liquid-dock-recent"
+                            >
+                                <span class="liquid-dock-recent-icon">
+                                    <component :is="r.icon" class="size-4" />
+                                </span>
+                                <span class="liquid-dock-recent-text">
+                                    <span class="liquid-dock-recent-name">{{ r.name }}</span>
+                                    <span class="liquid-dock-recent-sub">{{ r.sub }}</span>
+                                </span>
                             </span>
                         </div>
                     </div>
