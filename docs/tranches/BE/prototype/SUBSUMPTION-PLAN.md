@@ -16,7 +16,7 @@ player); the **rail** carousel-stack section; the **orientation** (V⇄H) toggle
 
 | story | facility | playground coverage | verdict |
 |---|---|---|---|
-| `morph-showcase.vue` | V↔H orientation morph | **orientation toggle** (V⇄H, now ANIMATED — box reshape) | **PARTIAL** — CORRECTED: the orientation toggle was an instant SNAP (audit-caught), now fixed to animate the box reshape (232×64⇄64×232, spring-clocked). But morph-showcase's goo-bridge / View-Transitions topology-OCCLUSION is the richer morph: the playground reshapes the box without occluding the row⇄column content flip, while morph-showcase hides the topology change inside a crossfade/goo. Keep morph-showcase as the richer V↔H demo, OR enhance the playground's V↔H to occlude the topology (then retire). |
+| `morph-showcase.vue` | V↔H orientation morph | **orientation toggle** (V⇄H, now ANIMATED — box reshape) | **PARTIAL** — CORRECTED: the orientation toggle was an instant SNAP (audit-caught), now fixed to animate the box reshape (232×64⇄64×232, spring-clocked). The playground NOW occludes the row⇄column flip too — via a mode-scoped content cross-fade ([data-reorienting] opacity dip) while the box reshapes, the cheap CSS-only version of morph-showcase's goo/View-Transitions occlusion. So the V↔H is now functionally equivalent (topology occluded both ways); the only delta is the VISUAL mechanism — morph-showcase's goo-MERGE is a richer specific visual than the playground's fade. Whether that goo visual is worth a dedicated story (keep) or the playground's crossfade-occluded V↔H is sufficient (retire) is your call — but it is now genuinely close to subsumed. |
 | `rail.vue` | DockRail divider-seam strip | **liquid-rail** carousel-stack (a DISTINCT, richer rail) | PARTIAL — the liquid-rail is a superset carousel; the DockRail's divider-seam anchor is not yet ported |
 | `overview.vue` | nav-pattern dock (home-left, separators, nav items) | — | NOT COVERED (the playground is a morph showcase, not a nav dock) |
 | `layers.vue` | DockLayerGroup multi-layer + switcher rail | — | NOT COVERED |
@@ -43,10 +43,11 @@ story), and retiring any existing story would lose coverage.
    then retire the covered stories.
 2. **Keep ALL facility stories**, position the playground as the LEAD liquid-morph story
    (already registered first), retire NOTHING yet. (The earlier "retire morph-showcase"
-   recommendation is WITHDRAWN — the audit found its V↔H topology-occlusion is richer than
-   the playground's box-reshape, so retiring it would lose coverage.) To make
-   morph-showcase genuinely retireable, the playground's V↔H morph would first need to
-   occlude the row⇄column topology change (a crossfade/goo bridge, as morph-showcase does).
+   recommendation was WITHDRAWN, then PARTIALLY re-enabled: the playground's V↔H now
+   OCCLUDES the row⇄column topology change via a content crossfade — the prerequisite is
+   met. morph-showcase is now genuinely close to subsumed; the only remaining delta is its
+   goo-MERGE visual (richer than the playground's fade). Retiring it is now a clean
+   judgment call: keep it for the goo visual, or retire it as covered by the playground.)
 
 Path 2 (keep everything, playground is additive lead) is now the recommended default —
 zero coverage loss. Path 1 is the full subsumption the ask names, a focused future effort.
