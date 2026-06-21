@@ -11,8 +11,27 @@
 //     glass pieces at the configurable angle (the dock disintegrates into its
 //     controls, goo-necked). The dock is the body the pieces bud from.
 // No separate card, no FLIP-from-a-hidden-trigger. One element, one scalar.
+//
+// WAVE-2 — THE RAIL. A second section adds the carousel-stack rail: a vertical glass
+// dock with `useLiquidRail` projecting a carousel-WRAP stack on its right edge — the
+// chosen chip at the dock line, items fanning above (golden ~2x) + below, collapsed
+// by default, EXPANDING on hover (or the Expand-rail button), the far ones fading
+// toward 0 opacity (the ↑z fade). NOT the macOS 3D fan — a STRAIGHT carousel-wrap.
 import { computed, onMounted, ref, watch } from "vue";
-import { Layers, Search, Maximize2, Split as SplitIcon, Star, Clock } from "@lucide/vue";
+import {
+    Layers,
+    Search,
+    Maximize2,
+    Split as SplitIcon,
+    Star,
+    Clock,
+    Image,
+    Music,
+    Film,
+    Folder,
+    Heart,
+    Tag,
+} from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Button } from "../../../src/components/ui/button";
@@ -24,6 +43,7 @@ import {
     DIRECTED_SPLIT,
     type LiquidMorphMode,
 } from "../../../src/composables/motion/useLiquidMorph";
+import { useLiquidRail } from "../../../src/components/custom/dock/composables/useLiquidRail";
 
 // ── controls ──────────────────────────────────────────────────────────────────
 const mode = ref<LiquidMorphMode>("expand");
@@ -89,6 +109,70 @@ watch(mode, () => {
     open.value = false;
     morph.union();
 });
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// THE RAIL — the carousel-stack on a vertical dock's right edge.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// the rail's item set — glass disc facets (one per "place"). The chosen sits at the
+// dock line; the rest carousel-WRAP above + below.
+const railIcons = [Folder, Image, Music, Film, Star, Heart, Tag, Clock];
+const railLabels = ["Files", "Photos", "Music", "Video", "Starred", "Loved", "Tags", "Recent"];
+
+// the configurable above/below counts — the sketch's asymmetric window (golden 2x
+// above, partial below). For the prototype the projection's fadeRange owns the visible
+// span; these knobs retune the golden asymmetry + the fade span so the verification is
+// reachable headless.
+const itemsAbove = ref(2);
+const itemsBelow = ref(1);
+const railOpen = ref(false);
+
+// ONE registry — the consumer owns `chosenIdx`; the rail keeps no internal shadow.
+const chosenIdx = ref(0);
+const railCount = computed(() => railIcons.length);
+const railRoot = ref<HTMLElement | null>(null);
+
+const rail = useLiquidRail({
+    count: railCount,
+    chosen: chosenIdx,
+    edge: "right",
+    spring: "dock",
+    rootEl: railRoot,
+    geometry: {
+        // LIVE getters — the projection resolves them per-read, so the sliders re-fan
+        // the carousel without reconstructing the composable.
+        // the golden asymmetry the knobs drive: the above side fans ~φ² (≈2.618×, the
+        // pinned "golden ~2x above") the below span, scaled by the above/below ratio so
+        // the sliders retune it (the "partial peek below").
+        // the golden 2x ABOVE is a COUNT ratio (more items shown above than below),
+        // NOT a per-slot spacing blow-up. Keep the slot spacing UNIFORM + tight (a
+        // fanned deck), so the stack reads close like the sketch; the asymmetry comes
+        // from itemsAbove > itemsBelow.
+        goldenAbove: 1,
+        fadeStart: 0.6,
+        fadeRange: () => Math.max(itemsAbove.value, itemsBelow.value) + 0.6,
+        slotSpacing: 38,
+        tierRatio: 1.0,
+        scaleStep: 0.08,
+    },
+});
+
+function toggleRail(): void {
+    railOpen.value = !railOpen.value;
+    rail.expandTo(railOpen.value);
+}
+function stepChosen(delta: number): void {
+    const n = railCount.value;
+    chosenIdx.value = ((chosenIdx.value + delta) % n + n) % n;
+}
+function onRailEnter(): void {
+    railOpen.value = true;
+    rail.onPointerEnter();
+}
+function onRailLeave(): void {
+    railOpen.value = false;
+    rail.onPointerLeave();
+}
 </script>
 
 <template>
@@ -244,5 +328,155 @@ watch(mode, () => {
                 {{ morph.morphing.value ? "morphing" : open ? "open" : "rest" }}
             </p>
         </StorySection>
+
+        <!-- ═══════════════════════════════════════════════════════════════════ -->
+        <!-- THE RAIL — the carousel-stack on a vertical dock's right edge.       -->
+        <!-- ═══════════════════════════════════════════════════════════════════ -->
+        <StorySection heading="The rail — a carousel-stack on the dock edge" gap="md">
+            <p class="text-small text-muted-foreground">
+                A vertical glass dock with a carousel-stack rail on its right edge —
+                <code class="rounded bg-muted px-1">useLiquidRail</code> projects the
+                <strong>chosen</strong> chip AT the dock line, items fanning
+                <strong>above</strong> (golden ~2x span) and <strong>below</strong> (a
+                partial peek). Collapsed by default; <strong>hover</strong> (or
+                <em>Expand rail</em>) fans the stack open, the far items fading toward 0
+                opacity (the <code class="rounded bg-muted px-1">↑z</code> fade). The
+                list CAROUSEL-WRAPS — step the chosen past the last item and it loops to
+                the first. NOT the macOS 3D fan — a STRAIGHT carousel-wrap, the depth
+                read from opacity + scale tiers.
+            </p>
+
+            <!-- rail controls -->
+            <div
+                class="flex flex-wrap items-end gap-6 rounded-[var(--radius-card)] glass-resting p-5"
+            >
+                <div class="flex min-w-[10rem] flex-1 flex-col gap-2">
+                    <label class="text-mono-caption text-muted-foreground">
+                        Items above — {{ itemsAbove }}
+                    </label>
+                    <Slider
+                        :model-value="[itemsAbove]"
+                        :min="1"
+                        :max="4"
+                        :step="1"
+                        @update:model-value="(v) => (itemsAbove = v?.[0] ?? 1)"
+                    />
+                </div>
+                <div class="flex min-w-[10rem] flex-1 flex-col gap-2">
+                    <label class="text-mono-caption text-muted-foreground">
+                        Items below — {{ itemsBelow }}
+                    </label>
+                    <Slider
+                        :model-value="[itemsBelow]"
+                        :min="1"
+                        :max="3"
+                        :step="1"
+                        @update:model-value="(v) => (itemsBelow = v?.[0] ?? 1)"
+                    />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-mono-caption text-muted-foreground">
+                        Chosen — {{ railLabels[chosenIdx] }}
+                    </label>
+                    <div class="flex gap-2">
+                        <Button variant="outline" size="sm" @click="stepChosen(-1)">
+                            ↑ Prev
+                        </Button>
+                        <Button variant="outline" size="sm" @click="stepChosen(1)">
+                            ↓ Next
+                        </Button>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <Button variant="primary-audacious" @click="toggleRail">
+                        {{ railOpen ? "Collapse rail" : "Expand rail" }}
+                    </Button>
+                </div>
+            </div>
+
+            <!-- the rail stage — a vertical glass dock + the carousel rail on its right.
+                 hover the dock to expand; the chosen chip sits ON the dock edge line. -->
+            <div
+                class="relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
+                data-testid="liquid-rail-stage"
+            >
+                <Aurora
+                    :config="DEFAULT_AURORA_CONFIG"
+                    class="pointer-events-none absolute inset-0 size-full"
+                    aria-hidden="true"
+                />
+
+                <!-- the host: a sized, positioned spine. The rail centres in it; the
+                     chosen chip sits AT the centre line, items fan above + below. -->
+                <div
+                    class="liquid-rail-host"
+                    @pointerenter="onRailEnter"
+                    @pointerleave="onRailLeave"
+                    data-testid="liquid-rail-host"
+                >
+                    <!-- THE RAIL — the carousel-stack. Each item seats at the centre
+                         line, then the projection's transform fans it vertically. The
+                         chosen IS the dock-line item (no separate competing chip). -->
+                    <div
+                        ref="railRoot"
+                        class="liquid-rail liquid-rail--centred"
+                        data-edge="right"
+                        data-testid="liquid-rail"
+                    >
+                        <button
+                            v-for="item in rail.items.value"
+                            :key="item.index"
+                            type="button"
+                            class="liquid-rail-item"
+                            :data-chosen="item.chosen"
+                            :style="item.style"
+                            :aria-label="railLabels[item.index]"
+                            :title="railLabels[item.index]"
+                            @click="chosenIdx = item.index"
+                            data-testid="liquid-rail-item"
+                        >
+                            <span class="liquid-rail-chip">
+                                <component :is="railIcons[item.index]" />
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <p
+                class="text-mono-caption text-muted-foreground"
+                data-testid="liquid-rail-readout"
+            >
+                chosen = {{ railLabels[chosenIdx] }} ({{ chosenIdx }}) · above =
+                {{ itemsAbove }} · below = {{ itemsBelow }} · expand =
+                {{ rail.expand.value.toFixed(2) }} ·
+                {{ rail.expanding.value ? "fanning" : railOpen ? "open" : "collapsed" }}
+                · rendered = {{ rail.items.value.length }} items
+            </p>
+        </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+/* the rail-section host chrome — a small vertical glass dock pill the rail clings to.
+   The carousel rail itself (.liquid-rail / .liquid-rail-item / .liquid-rail-chip) is
+   the LIBRARY recipe in src/styles/dock/liquid-rail.css (loaded via /styles). */
+.liquid-rail-host {
+    position: relative;
+    display: grid;
+    place-items: center;
+    /* the dock pill the rail anchors to */
+}
+
+.liquid-rail-dock {
+    display: grid;
+    place-items: center;
+    inline-size: 3.25rem;
+    block-size: 3.25rem;
+    border-radius: 2rem;
+    color: var(--foreground);
+    box-shadow:
+        inset 0 0 0 1px var(--glass-edge-light, rgb(255 255 255 / 0.18)),
+        0 8px 24px -8px color-mix(in srgb, var(--foreground) 40%, transparent);
+}
+</style>

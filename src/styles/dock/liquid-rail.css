@@ -1,0 +1,230 @@
+/*
+ * liquid-rail.css — the carousel-stack RAIL surface (BE.W-DOCK-RAIL-REALIZE, wave 2).
+ *
+ * A VERTICAL carousel-stack anchored ON a dock edge. The CHOSEN item sits AT the dock
+ * line; configurable items fan ABOVE it (golden ~2x span) and BELOW it (a partial
+ * peek), and the list CAROUSEL-WRAPS. The per-item TRANSFORM + OPACITY are written
+ * INLINE by `useLiquidRail`'s pure projection (compositor-only — the box never
+ * reflows); this file owns ONLY the static chassis: the edge anchor, the chosen-at-
+ * the-line geometry, the glass disc chips, and a FadingScroll-style opacity feather at
+ * the wrap edges.
+ *
+ * The chips read the warm-cream glass identity (--glass-bg-floating fill, the
+ * --glass-blur-floating-radius backdrop, the --glass-edge-light rim) — never stark
+ * white. The chosen chip lifts onto the selected-as-glass tier.
+ *
+ * COMPOSITOR-ONLY + box-INVIOLATE: the rail is `position: absolute` against a non-
+ * clipping host, so it NEVER changes the dock's own box. PRM hides the travel via the
+ * spring's `respectReducedMotion` snap (the JS half) + the feather is a legibility cue
+ * that does NOT vanish under reduce (the FadingScroll discipline).
+ */
+
+/* The expand + scroll scalars — typed inheriting <number> @properties (the
+   `--dock-morph-t` / `--glass-level` precedent) so a bare var() INTERPOLATES not
+   snaps, and a host retunes the rail from any ancestor. Registered HERE (the
+   consuming-surface co-registration idiom — the `--fade-start`/`--fade-end` pattern).
+   @property MUST precede @layer in the file. */
+@property --rail-expand-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --rail-position {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@layer components {
+    /* the rail container — anchored ON a dock edge, the items column-align on the line.
+       It is `position: absolute` so it floats over the host's NON-clipping frame and
+       the host box stays inviolate. The chosen sits at the anchor; items fan from it. */
+    .liquid-rail {
+        --rail-slot-base: 3.25rem; /* the chip diameter + breathing — the φ tier-0 base */
+        --rail-chip-size: 2.75rem; /* the glass disc chip diameter */
+
+        position: absolute;
+        z-index: 20;
+        display: block;
+        inline-size: var(--rail-chip-size);
+        /* the rail reserves the ABOVE-side golden span + the below peek so the fanned
+           items never clip; the height is purely a feather frame (items paint via
+           transform, not flow). */
+        block-size: calc(var(--rail-slot-base) * 6);
+        pointer-events: auto;
+
+        /* the FadingScroll-style edge feather — the wrap edges dissolve behind a soft
+           mask so an item fading off the top/bottom does so gently, NOT a hard clip.
+           Reads the public `--fade-scroll-width` ramp (the BA.W-FADING-SCROLL token). */
+        --rail-fade: var(--fade-scroll-width, 1rem);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 var(--rail-fade),
+            #000 calc(100% - var(--rail-fade)),
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 var(--rail-fade),
+            #000 calc(100% - var(--rail-fade)),
+            transparent 100%
+        );
+    }
+
+    /* a HORIZONTAL-dock rail (top/bottom edge) fans on the inline axis — the feather
+       runs left↔right instead. */
+    .liquid-rail[data-edge="top"],
+    .liquid-rail[data-edge="bottom"] {
+        inline-size: calc(var(--rail-slot-base) * 6);
+        block-size: var(--rail-chip-size);
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 var(--rail-fade),
+            #000 calc(100% - var(--rail-fade)),
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 var(--rail-fade),
+            #000 calc(100% - var(--rail-fade)),
+            transparent 100%
+        );
+    }
+
+    /* edge anchoring — which side of the dock the rail clings to. The rail's local
+       origin (where the chosen-at-the-line chip seats) is centred on this edge. */
+    .liquid-rail[data-edge="right"] {
+        inset-inline-start: 100%;
+        inset-block-start: 50%;
+        margin-inline-start: 0.5rem;
+        translate: 0 -50%;
+    }
+    .liquid-rail[data-edge="left"] {
+        inset-inline-end: 100%;
+        inset-block-start: 50%;
+        margin-inline-end: 0.5rem;
+        translate: 0 -50%;
+    }
+    .liquid-rail[data-edge="top"] {
+        inset-block-end: 100%;
+        inset-inline-start: 50%;
+        margin-block-end: 0.5rem;
+        translate: -50% 0;
+    }
+    .liquid-rail[data-edge="bottom"] {
+        inset-block-start: 100%;
+        inset-inline-start: 50%;
+        margin-block-start: 0.5rem;
+        translate: -50% 0;
+    }
+
+    /* the demo host — a sized, positioned spine the rail centres in (so the rail's
+       absolute origin is the host centre, not the far stage edge). */
+    .liquid-rail-host {
+        position: relative;
+        inline-size: 3rem;
+        block-size: 22rem;
+        display: grid;
+        place-items: center;
+    }
+    /* the CENTRED rail — the chosen sits at the host's centre line (the demo's
+       dock line), items fan above/below from there. Overrides the edge offset. */
+    .liquid-rail.liquid-rail--centred {
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        margin: 0;
+        translate: -50% -50%;
+    }
+
+    /* the per-item track origin — every chip seats here (the dock LINE), then the
+       projection's inline `transform: translate()` fans it. ALL chips overlap at the
+       origin when collapsed (expand→0 ⇒ translate 0). */
+    .liquid-rail-item {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        inline-size: var(--rail-chip-size);
+        block-size: var(--rail-chip-size);
+        /* the base centring; the projection's transform composes ON this via the inline
+           style. We seat the centring as a margin so the inline `transform` is pure
+           translate/scale (the projection owns the compositor channel). */
+        margin-block-start: calc(var(--rail-chip-size) / -2);
+        margin-inline-start: calc(var(--rail-chip-size) / -2);
+        transform-origin: center;
+        will-change: transform, opacity;
+    }
+
+    /* the glass DISC chip — warm-cream liquid glass over the live field. */
+    .liquid-rail-chip {
+        display: grid;
+        place-items: center;
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: 999px;
+        color: var(--foreground);
+
+        background: var(--glass-bg-floating);
+        backdrop-filter: blur(
+                calc(var(--glass-blur-floating-radius) * var(--glass-level, 1))
+            )
+            saturate(var(--glass-saturate-floating, 1.1));
+        -webkit-backdrop-filter: blur(
+                calc(var(--glass-blur-floating-radius) * var(--glass-level, 1))
+            )
+            saturate(var(--glass-saturate-floating, 1.1));
+
+        /* the warm rim — the --glass-edge-light catch-light hairline + a soft lift */
+        box-shadow:
+            inset 0 0 0 1px var(--glass-edge-light, rgb(255 255 255 / 0.18)),
+            0 4px 14px -6px color-mix(in srgb, var(--foreground) 30%, transparent);
+
+        cursor: pointer;
+        /* the chip's OWN hover lift rides the §6 register (a surface bezier — the
+           projection owns the carousel transform, this is the per-chip pop). */
+        transition:
+            box-shadow var(--duration-fast, 140ms) var(--ease-standard, ease),
+            background var(--duration-fast, 140ms) var(--ease-standard, ease);
+    }
+
+    .liquid-rail-chip > svg {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .liquid-rail-chip:hover {
+        background: var(--glass-bg-floating);
+        box-shadow:
+            inset 0 0 0 1px var(--glass-edge-light, rgb(255 255 255 / 0.28)),
+            0 6px 18px -6px color-mix(in srgb, var(--foreground) 40%, transparent);
+    }
+
+    /* the CHOSEN chip at the dock line — the selected-reads-as-glass tier (a glass
+       tint FORWARD of the rest, the --dock-control-active-bg register), NOT a
+       saturated brand fill. A subtle accent rim marks it as the line item. */
+    .liquid-rail-item[data-chosen="true"] .liquid-rail-chip {
+        background: var(--dock-control-active-bg, var(--glass-bg-floating));
+        box-shadow:
+            inset 0 0 0 1px
+                color-mix(
+                    in oklab,
+                    var(--glass-edge-light, rgb(255 255 255 / 0.3)),
+                    var(--foreground) 12%
+                ),
+            0 8px 22px -6px color-mix(in srgb, var(--foreground) 45%, transparent);
+    }
+
+    /* PRM — the chip's own hover transition snaps; the carousel travel snaps via the
+       spring's respectReducedMotion (JS). The edge feather (mask) STAYS — a legibility
+       cue, not motion (the FadingScroll discipline). */
+    @media (prefers-reduced-motion: reduce) {
+        .liquid-rail-chip {
+            transition-duration: 0.01ms;
+        }
+    }
+}
