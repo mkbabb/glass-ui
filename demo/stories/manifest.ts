@@ -881,7 +881,13 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "liquid-playground",
                 "Liquid Morph",
-                "The dock as the primary control interface — a glass dock pill that EXPANDS into a container card (the iOS-27 search-pill → sheet bloom) and n-ary SPLITS into free-floating glass pieces at a configurable angle of attack. One generalized useLiquidMorph engine (split · union · expand) composing the real dock spring, the FLIP bloom, and the volume-preserving squish, over an angle-generalized SVG-goo bridge. Subsumes the dock demo set.",
+                "The dock as the primary control interface — a glass dock pill that EXPANDS into a Maps Places sheet, SPLITS into two Dynamic-Island activity islands (timer + now-playing, goo-bridged), and grows into the full Apple Music player. One generalized useLiquidMorph engine over the real dock spring + the SVG-goo metaball bridge, plus the carousel-stack RAIL within a vertical glass dock.",
+            ),
+            s(
+                "dock",
+                "dock-gallery",
+                "Dock Gallery",
+                "The BREADTH of dock morphs — a gallery of distinct iOS surfaces the dock shape-shifts into: the Apple Music mini-player → player + a separate queue panel, a Dynamic Island call pill → full call UI, and a notification pill → expanded card with actions. Tap each dock to morph it.",
             ),
             s(
                 "dock",
