@@ -353,8 +353,14 @@ function onRailLeave(): void {
                     :data-orientation="orientation"
                     :style="{
                         '--liquid-dock-controls': splitCount,
-                        alignSelf: 'flex-end',
-                        marginBlockEnd: '2rem',
+                        // sheets/players BLOOM UP from the bottom dock (reference motion);
+                        // the split/union goo BURST centres so it has room to fan.
+                        alignSelf:
+                            mode === 'split' || mode === 'union'
+                                ? 'center'
+                                : 'flex-end',
+                        marginBlockEnd:
+                            mode === 'split' || mode === 'union' ? '0' : '2rem',
                     }"
                     data-testid="liquid-dock"
                 >
