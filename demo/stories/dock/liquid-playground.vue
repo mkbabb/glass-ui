@@ -278,7 +278,7 @@ function onRailWheel(e: WheelEvent): void {
 
             <!-- controls -->
             <div
-                class="flex flex-wrap items-end gap-6 rounded-[var(--radius-card)] glass-resting p-5"
+                class="liquid-controls relative flex flex-wrap items-end gap-6 overflow-hidden rounded-[var(--radius-card)] glass-resting p-5"
             >
                 <div class="flex min-w-[14rem] flex-col gap-2">
                     <label class="text-mono-caption text-muted-foreground">Mode</label>
@@ -525,7 +525,7 @@ function onRailWheel(e: WheelEvent): void {
 
             <!-- rail controls -->
             <div
-                class="flex flex-wrap items-end gap-6 rounded-[var(--radius-card)] glass-resting p-5"
+                class="liquid-controls relative flex flex-wrap items-end gap-6 overflow-hidden rounded-[var(--radius-card)] glass-resting p-5"
             >
                 <div class="flex min-w-[10rem] flex-1 flex-col gap-2">
                     <label class="text-mono-caption text-muted-foreground">
@@ -662,6 +662,33 @@ function onRailWheel(e: WheelEvent): void {
    highlight gradient over the existing plate (more depth/dimension), an edge-light rim,
    and a brighter catch-light at the top. The plate visibility is unchanged (the base
    tinted-floating fill stays); only the GLASSY character is lifted. */
+/* the controls panel — a subtle warm gradient behind the glass so the tabs/controls
+   have something RICH to refract (over the flat page wash they couldn't read as liquid
+   glass). A whisper, not a wall — the controls stay legible. */
+.liquid-controls::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(
+            ellipse 75% 140% at 14% 20%,
+            color-mix(in oklab, var(--section-color-8), transparent 68%),
+            transparent 64%
+        ),
+        radial-gradient(
+            ellipse 65% 120% at 90% 88%,
+            color-mix(in oklab, var(--section-color-2), transparent 72%),
+            transparent 60%
+        ),
+        radial-gradient(
+            ellipse 50% 90% at 60% 50%,
+            color-mix(in oklab, var(--section-color-10), transparent 82%),
+            transparent 55%
+        );
+    pointer-events: none;
+}
+
 :deep(.segmented-indicator) {
     background:
         linear-gradient(
