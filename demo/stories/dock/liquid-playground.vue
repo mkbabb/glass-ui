@@ -313,7 +313,7 @@ function onRailLeave(): void {
 
             <!-- the stage — the dock sits centred; it grows / splits IN PLACE -->
             <div
-                class="relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
+                class="relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
                 data-testid="liquid-stage"
             >
                 <!-- the live aurora field — the dock's glass reads AGAINST it (the
@@ -523,7 +523,7 @@ function onRailLeave(): void {
             <!-- the rail stage — a vertical glass dock + the carousel rail on its right.
                  hover the dock to expand; the chosen chip sits ON the dock edge line. -->
             <div
-                class="relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
+                class="relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-4 sm:p-10"
                 data-testid="liquid-rail-stage"
             >
                 <Aurora

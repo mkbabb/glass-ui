@@ -19,7 +19,9 @@
         /* the pill footprint scales with the control count; the card footprint is fixed */
         --pill-w: calc(var(--liquid-dock-controls, 4) * 3.25rem + 1.5rem);
         --pill-h: 4rem;
-        --card-w: 22rem;
+        /* the card is at most 22rem, but SHRINKS to fit a narrow (mobile) stage — the
+           references are all iPhone, so the sheet must never overflow the viewport. */
+        --card-w: min(22rem, calc(100% - 1.5rem));
         --card-h: 20rem;
 
         position: relative;
