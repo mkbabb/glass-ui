@@ -459,6 +459,18 @@ function onRailWheel(e: WheelEvent): void {
                         </div>
                     </div>
 
+                    <!-- EXPAND mode — the dock is a Maps SEARCH PILL at rest (the
+                         "search-pill → sheet bloom" concept the intro names), cross-fading
+                         into the Places sheet as the dock blooms up. -->
+                    <div
+                        v-if="mode === 'expand'"
+                        class="liquid-dock-search"
+                        aria-hidden="true"
+                    >
+                        <Search class="liquid-dock-search-icon" />
+                        <span class="liquid-dock-search-hint">Search places</span>
+                    </div>
+
                     <!-- PLAYER mode — the now-playing PILL (rest) that grows into the
                          full media player (expand): the iconic Apple Music dock facility,
                          the dock AS the media control interface. -->

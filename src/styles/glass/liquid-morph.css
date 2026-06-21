@@ -121,6 +121,41 @@
         background: var(--glass-bg-floating);
     }
 
+    /* EXPAND mode — the dock is a Maps SEARCH PILL at rest (the "search-pill → sheet
+       bloom" the intro names). The icon row is SPLIT's; in expand it hides and this
+       search bar is the rest content, cross-fading out as the Places sheet blooms up. */
+    .liquid-dock[data-mode="expand"] .liquid-dock-controls {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .liquid-dock-search {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline: 0;
+        block-size: var(--pill-h);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding-inline: 1.25rem;
+        color: var(--muted-foreground);
+        opacity: 0;
+        pointer-events: none;
+    }
+    .liquid-dock[data-mode="expand"] .liquid-dock-search {
+        opacity: clamp(0, 1 - var(--t) * 1.9, 1); /* fades as the sheet blooms */
+    }
+    .liquid-dock-search-icon {
+        inline-size: 1.2rem;
+        block-size: 1.2rem;
+        flex: 0 0 auto;
+        color: var(--foreground);
+    }
+    .liquid-dock-search-hint {
+        font-size: var(--type-body, 1rem);
+        color: var(--muted-foreground);
+    }
+
     /* expand/player CLIP the content to the growing box, so nothing OVERFLOWS outside
        the dock mid-morph (the user's 'transitions partially overflow and occlude'). The
        pane is pinned to the box BOTTOM at the FINAL card height + only fades in past the
@@ -366,8 +401,9 @@
     /* ── EXPAND — box grows; controls cross-fade out, pane in. The ranges OVERLAP
        (controls gone by ~0.6, pane in from ~0.32) so the dock is NEVER an empty box
        mid-morph — a true cross-fade, not a dead zone. ── */
+    /* the icon row is hidden in expand — the SEARCH PILL is the rest content. */
     .liquid-dock[data-mode="expand"] .liquid-dock-controls {
-        opacity: clamp(0, 1 - var(--t) * 1.7, 1); /* gone by t≈0.59 */
+        opacity: 0;
     }
     .liquid-dock[data-mode="expand"] .liquid-dock-pane {
         opacity: clamp(0, (var(--t) - 0.32) * 2, 1); /* in from t≈0.32 */
