@@ -494,6 +494,7 @@ function onRailWheel(e: WheelEvent): void {
                         class="liquid-dock-player-pane"
                         aria-hidden="true"
                     >
+                        <span class="liquid-dock-grabber" />
                         <span class="liquid-dock-album-big" />
                         <span class="liquid-dock-track-big">{{ track.title }}</span>
                         <span class="liquid-dock-artist-big">{{ track.artist }}</span>
