@@ -50,6 +50,7 @@ const mode = ref<LiquidMorphMode>("expand");
 const modeTabs = [
     { value: "expand", label: "Expand → card" },
     { value: "split", label: "Split" },
+    { value: "union", label: "Union" },
 ];
 const angleDeg = ref(35);
 const splitCount = ref(4);
@@ -96,18 +97,27 @@ onMounted(() => requestAnimationFrame(registerControls));
 
 // ── the actions — ONE scalar; the mode gates what reads it ───────────────────────
 function play(): void {
+    // open = "spread/apart" (t→1), closed = "merged/rest" (t→0). Split SPREADS the
+    // dock's controls; union MERGES them back into one — same scalar, inverse framing.
     open.value = !open.value;
-    if (open.value) morph.split(); // drive t → 1
-    else morph.union(); // drive t → 0
+    if (open.value) morph.split();
+    else morph.union();
 }
 function reset(): void {
-    open.value = false;
-    morph.union();
+    open.value = mode.value === "union";
+    if (open.value) morph.split();
+    else morph.union();
 }
-// a mode change while open re-seats to rest so the two registers never overlap.
-watch(mode, () => {
-    open.value = false;
-    morph.union();
+// a mode change re-seats: union STARTS spread (N separate pieces to merge); the others
+// start at rest. (so union demonstrably collapses N elements into one.)
+watch(mode, (m) => {
+    if (m === "union") {
+        open.value = true;
+        morph.split();
+    } else {
+        open.value = false;
+        morph.union();
+    }
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -200,7 +210,7 @@ function onRailLeave(): void {
                     <SegmentedTabs v-model="mode" :options="modeTabs" />
                 </div>
                 <div
-                    v-show="mode === 'split'"
+                    v-show="mode !== 'expand'"
                     class="flex min-w-[14rem] flex-1 flex-col gap-2"
                 >
                     <label class="text-mono-caption text-muted-foreground">
@@ -215,7 +225,7 @@ function onRailLeave(): void {
                     />
                 </div>
                 <div
-                    v-show="mode === 'split'"
+                    v-show="mode !== 'expand'"
                     class="flex min-w-[10rem] flex-1 flex-col gap-2"
                 >
                     <label class="text-mono-caption text-muted-foreground">
@@ -231,7 +241,17 @@ function onRailLeave(): void {
                 </div>
                 <div class="flex gap-2">
                     <Button variant="primary-audacious" @click="play">
-                        {{ open ? "Collapse" : mode === "expand" ? "Expand" : "Split" }}
+                        {{
+                            mode === "union"
+                                ? open
+                                    ? "Merge"
+                                    : "Spread"
+                                : open
+                                  ? "Collapse"
+                                  : mode === "expand"
+                                    ? "Expand"
+                                    : "Split"
+                        }}
                     </Button>
                     <Button variant="outline" @click="reset">Reset</Button>
                 </div>

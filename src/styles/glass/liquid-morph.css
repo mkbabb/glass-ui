@@ -120,18 +120,18 @@
     }
 
     /* ── SPLIT — box stays a pill; controls fly out, goo-merged ── */
-    .liquid-dock[data-mode="split"] {
+    .liquid-dock:is([data-mode="split"], [data-mode="union"]) {
         inline-size: var(--pill-w);
         block-size: var(--pill-h);
     }
     /* the plate dissolves as the controls carry the mass away — no empty husk */
-    .liquid-dock[data-mode="split"]::before {
+    .liquid-dock:is([data-mode="split"], [data-mode="union"])::before {
         opacity: clamp(0, 1 - var(--t) * 1.25, 1);
     }
-    .liquid-dock[data-mode="split"] .liquid-dock-controls {
+    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-controls {
         filter: url(#liquid-morph-goo);
     }
-    .liquid-dock[data-mode="split"] .liquid-dock-control {
+    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-control {
         /* STACK every control on the dock centre, then fan from there — so they
            originate from ONE point (the goo necks stay bridged), not their scattered
            flex-row slots. */
@@ -155,7 +155,7 @@
         background: color-mix(in oklab, var(--card), oklch(0.72 0.075 62) 32%);
         box-shadow: none;
     }
-    .liquid-dock[data-mode="split"] .liquid-dock-control:first-child {
+    .liquid-dock:is([data-mode="split"], [data-mode="union"]) .liquid-dock-control:first-child {
         /* the CORE the others bud from — a touch brighter so the origin reads */
         background: color-mix(in oklab, var(--card), oklch(0.78 0.06 62) 22%);
     }
