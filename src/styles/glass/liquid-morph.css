@@ -162,6 +162,22 @@
         flex: 0 0 auto;
         color: var(--muted-foreground);
     }
+    /* VERTICAL expand — a narrow tall pill can't hold a horizontal search bar; show just
+       the search ICON centred (the text + mic don't fit + were clipping at the bottom). */
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-search {
+        inset: 0;
+        block-size: auto;
+        justify-content: center;
+        padding: 0;
+    }
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-hint,
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-mic {
+        display: none;
+    }
+    .liquid-dock[data-orientation="vertical"] .liquid-dock-search-icon {
+        inline-size: 1.4rem;
+        block-size: 1.4rem;
+    }
 
     /* expand/player CLIP the content to the growing box, so nothing OVERFLOWS outside
        the dock mid-morph (the user's 'transitions partially overflow and occlude'). The
