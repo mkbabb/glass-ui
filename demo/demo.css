@@ -107,6 +107,11 @@
    source; a hand-extracted src critical.css would RED). */
 @import "../src/styles/index.css";
 @import "./stories/story-hero.css";
+/* the LIQUID-DOCK prototype surfaces are DEMO-ONLY (off the library bundle — the
+   composables are already demo-only; the BE tranche productionizes both). Loaded here
+   after the library so the glass tokens + `@layer components` resolve. */
+@import "../src/styles/glass/liquid-morph.css";
+@import "../src/styles/dock/liquid-rail.css";
 
 @variant dark (&:where(.dark, .dark *));
 
