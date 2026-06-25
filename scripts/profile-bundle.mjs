@@ -221,7 +221,11 @@ const BUDGETS = {
     // 3_200 → 11_000 (actual 10_206) raw 8_500 → 33_500. A one-time conscious lift
     // sized to the WebGPU re-home, NOT per-wave creep.
     "dist/constellation.js": { raw: 42_000, gzip: 13_500 },
-    "dist/fourier-field.js": { raw: 33_500, gzip: 11_000 },
+    // BD greenfield (P5 viz) re-base — the fourier-field RE-INVENT register (the warm/
+    // no-teal field-consuming rebuild on the shared substrate) grew the chunk to raw
+    // ~40_961 / gzip ~12_950. A one-time conscious lift to raw 45_000 / gzip 14_000
+    // (thin headroom over the measured), NOT open-ended creep — an overrun still HALTS.
+    "dist/fourier-field.js": { raw: 45_000, gzip: 14_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.
