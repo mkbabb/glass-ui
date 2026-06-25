@@ -1,12 +1,13 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
-<!-- surface-hash: 0eeaf9f05cf73af5b623f78cec79bd24b47c212795d9124e52ce44ba5536655d -->
+<!-- surface-hash: 25c60d27651eba38b69af27691b4f1770a96c83bb68f5fdf07657b14416096fb -->
 <!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock
      width-seizure + punch/fission/hub, P7 the unifying blend-morph WELD) RE-RENDERED the dock-morph
      surfaces (dockMorphContext.ts / GlassDock.vue / dock/morph.css / dock/layers.css), DRIFTING the
-     surface-hash (BC 02e14c23… → BD 0eeaf9f0…) — the captured surface DRIFTED under the redesign, it
-     did NOT vanish (every surface-path RESOLVES at HEAD b8aa7033). The items-lag VERIFY-OR-FALSIFY
+     surface-hash (BC 02e14c23… → BD 0eeaf9f0… → BD §P10-final 25c60d27…, re-stamped 2026-06-25 as the
+     greenfield dock/blend-morph surfaces settled across the §P6–P7 close) — the captured surface DRIFTED
+     under the redesign, it did NOT vanish (every surface-path RESOLVES at HEAD 1fc03780). The items-lag VERIFY-OR-FALSIFY
      verdict (box↔scalar onset Δ=0) is RE-VALIDATED on current bytes BY CONSTRUCTION: the BD redesign
      PRESERVED the ONE-scalar morph contract — dockMorphContext.ts still writes the single `--dock-morph-t`
      0→1 scalar (only that one; :196-200), and layers.css still derives BOTH the box `inline-size`

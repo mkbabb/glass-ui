@@ -129,7 +129,7 @@ export function detectStructure(sources) {
 }
 
 // ── AY.W-DOCK2 (D4 / HG4) the FLIP-engine DRIFT-GUARD — BOOKED fold to W-GOD1 ───
-// W-DOCK2 found TWO near-identical FLIP-pin-measure-arm engines: the orchestrator
+// W-DOCK2 found TWO near-identical morph engines: the orchestrator
 // (`dockMorphContext.ts`, the superset — it carries the sibling-rebase the standalone
 // lacks) and the standalone `useLayerTransition.ts` (the only `DockLayerGroup.vue`
 // `else`-branch consumer + the `/dock` re-export). The clean fold is to delete the
@@ -137,23 +137,50 @@ export function detectStructure(sources) {
 // `/dock` public re-export of `useLayerTransition` (an external consumer — value.js,
 // "routes to AX.W34"), (b) re-homes the `morphRoot().closest(".glass-dock")` fallback
 // + the `directionTypes` hint, and (c) collides with the W-GOD1 GlassDock.vue carve
-// that touches the same FLIP code. So the fold is BOOKED to W-GOD1 (the carve is
-// cleaner over ONE engine; W-GOD1 absorbs the fold). Until then, this drift-guard
-// asserts the two engines carry IDENTICAL load-bearing FLIP-pin-measure-arm logic, so
-// a divergence in the SHARED dance REDs even while the two copies coexist.
+// that touches the same FLIP code. So the fold is BOOKED to W-GOD1; until then, this
+// drift-guard asserts the two engines carry IDENTICAL load-bearing logic on the SHARED
+// dance, so a divergence REDs even while the two copies coexist.
+//
+// BD.W-DOCK-CORE RE-POINT (the width-seizure cure). The orchestrator's per-swap FLIP
+// *measure* pipeline (measureAndArmMorph/forceNestedMaxContent/measureTo/armRootMorph
+// Span — the `--dock-morph-from`/`--dock-morph-to`/`max-content` width-FLIP) was
+// DELETED: the visible size now rides the ratio-free `--dock-live` convex blend of two
+// measure-ONCE endpoints (layers.css), so the unbounded from/to ratio that detonated
+// the width is GONE by construction. The orchestrator is therefore NO LONGER a width-
+// FLIP engine — it ONLY arms `[data-morphing]`, runs ONE `SpringProgress` on the
+// `DOCK_SPRING` clock writing the `--dock-morph-t` 0→1 scalar (`respectReducedMotion`),
+// and swaps the crossfade classes. The STANDALONE `useLayerTransition.ts` keeps its own
+// measure-FLIP (its `else`-branch / `/dock` re-export path is untouched). So the SHARED
+// dance the two engines must stay byte-faithful on is now the SINGLE-SCALAR SPRING dance
+// (below); the width-FLIP measure markers became STANDALONE-ONLY and are asserted as a
+// standalone-survivor (deleting them from `useLayerTransition.ts` regresses that path).
+// The witness re-points to the post-redesign shared dance (verified-isomorphic: the live
+// single-engine truth rides proof:dock-stack-rail π + proof:dock-tap-integrity).
 const BOOKED_FOLD_SUCCESSOR = "AY.W-GOD1";
-// The load-bearing FLIP-pin-measure-arm markers BOTH engines MUST carry verbatim (the
-// "single FLIP dance" the band has). A drift in any of these between the two files is
-// the drift hazard W-DOCK2 books — it REDs here.
+// The load-bearing SINGLE-SCALAR SPRING markers BOTH engines MUST carry verbatim (the
+// "one spring, one scalar, one clock" dance the band shares post-BD.W-DOCK-CORE). A
+// drift in any of these between the two files is the drift hazard W-DOCK2 books.
 const FLIP_MARKERS = [
-    // the PIN step: from=to=from + scalar 0 + data-morphing armed
+    // the ARM step: data-morphing armed on the morph root
+    /setAttribute\("data-morphing",/,
+    // the ONE scalar: the live 0→1 progress written as `--dock-morph-t`
+    /setProperty\("--dock-morph-t",/,
+    // the ONE engine on the ONE byte-fenced clock (DOCK_SPRING constants authority)
+    /new SpringProgress\(/,
+    /DOCK_SPRING\.response/,
+    /DOCK_SPRING\.dampingFraction/,
+    // the PRM-honoring re-base/arm on the live spring (interruptible-physics re-seat)
+    /respectReducedMotion:\s*true/,
+];
+// The width-FLIP measure markers BD.W-DOCK-CORE deleted from the orchestrator — they
+// now survive ONLY in the standalone `useLayerTransition.ts` (its `else`-branch box-
+// measure). Deleting them there would regress the standalone self-orchestrate path, so
+// the drift-guard asserts they REMAIN standalone-resident (a one-sided survivor check,
+// not a both-engines isomorphism — the orchestrator MUST NOT carry them back).
+const STANDALONE_ONLY_MEASURE_MARKERS = [
     /setProperty\("--dock-morph-from"/,
     /setProperty\("--dock-morph-to"/,
-    /setAttribute\("data-morphing"/,
-    // the deferred single MEASURE: force max-content on the morph axis, measure, clear
     /max-content/,
-    // the re-base/arm on the live spring (the interruptible-physics re-seat)
-    /respectReducedMotion:\s*true/,
 ];
 
 export function detectFlipDriftGuard(sources) {
@@ -174,8 +201,9 @@ export function detectFlipDriftGuard(sources) {
         return { facts, violations };
     }
 
-    // Both engines must carry EVERY load-bearing FLIP marker — a divergence in the
-    // shared pin-measure-arm dance is the drift the book guards against.
+    // Both engines must carry EVERY load-bearing SINGLE-SCALAR SPRING marker — a
+    // divergence in the shared one-spring/one-scalar/one-clock dance is the drift the
+    // book guards against (post-BD.W-DOCK-CORE; the width-FLIP measure left the orchestrator).
     const missing = { dockMorphContext: [], useLayerTransition: [] };
     for (const re of FLIP_MARKERS) {
         if (!re.test(morph)) missing.dockMorphContext.push(re.source);
@@ -185,10 +213,35 @@ export function detectFlipDriftGuard(sources) {
     facts.missing = missing;
     if (missing.dockMorphContext.length || missing.useLayerTransition.length) {
         violations.push(
-            `the two FLIP engines DRIFTED on the shared pin-measure-arm dance — missing markers: ` +
+            `the two morph engines DRIFTED on the shared single-scalar spring dance — missing markers: ` +
                 `dockMorphContext.ts [${missing.dockMorphContext.join(", ") || "none"}], ` +
                 `useLayerTransition.ts [${missing.useLayerTransition.join(", ") || "none"}]. ` +
                 `The fold is BOOKED to ${BOOKED_FOLD_SUCCESSOR}; until it lands, the two copies must stay byte-faithful on the load-bearing dance.`,
+        );
+    }
+
+    // BD.W-DOCK-CORE — the width-FLIP measure pipeline left the orchestrator (the
+    // width-seizure cure). The markers must (a) SURVIVE in the standalone (deleting them
+    // there regresses the `else`-branch box-measure) and (b) NOT return to the
+    // orchestrator (re-introducing the unbounded from/to ratio re-detonates the width).
+    const standaloneMissing = STANDALONE_ONLY_MEASURE_MARKERS.filter((re) => !re.test(layer));
+    const orchestratorRegression = STANDALONE_ONLY_MEASURE_MARKERS.filter((re) =>
+        re.test(morph),
+    );
+    facts.standaloneMeasureMissing = standaloneMissing.map((re) => re.source);
+    facts.orchestratorWidthFlipRegression = orchestratorRegression.map((re) => re.source);
+    if (standaloneMissing.length) {
+        violations.push(
+            `useLayerTransition.ts dropped its standalone width-FLIP measure marker(s) [${standaloneMissing
+                .map((re) => re.source)
+                .join(", ")}] — the standalone self-orchestrate box-measure regressed`,
+        );
+    }
+    if (orchestratorRegression.length) {
+        violations.push(
+            `dockMorphContext.ts re-introduced the width-FLIP measure marker(s) [${orchestratorRegression
+                .map((re) => re.source)
+                .join(", ")}] — BD.W-DOCK-CORE deleted the per-swap from/to measure (the width-seizure cure); the orchestrator must ride the ratio-free --dock-live blend, not a width-FLIP`,
         );
     }
 

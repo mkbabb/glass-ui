@@ -139,21 +139,32 @@ export function detect() {
     // ── 3. The PILL material reads the glass register (W-REGISTER-IOS), NOT gray. ──
     // The track is glass-quiet; the indicator is glass-floating. NO --surface-tint
     // gray plate on the track or a saturated --foreground fill on the indicator.
+    // BD.W-TAB-IOS-CAPSULE moved the warm-quiet track surface into the SHARED
+    // `.glass-capsule-track` register (glass/glass-capsule.css) — the pill track no
+    // longer declares `background: --glass-bg-quiet` inline; the SFC COMPOSES the
+    // `.glass-capsule-track` class onto the track (`!isUnderline && 'glass-capsule-track'`).
+    // The witness re-points (verified-isomorphic, the π arm reads the glass-quiet tier
+    // live): the shared track register rides `--glass-bg-quiet` AND the SFC composes it.
+    const capsuleCss = read("src/styles/glass/glass-capsule.css");
     assert(
-        "pill track rides the glass-quiet tier (no --surface-tint gray plate)",
-        /\.segmented-tabs\s*\{[^}]*background:\s*var\(--glass-bg-quiet\)/s.test(css),
+        "pill track rides the glass-quiet tier via .glass-capsule-track (no --surface-tint gray plate)",
+        /\.glass-capsule-track\s*\{[^}]*background:\s*var\(--glass-bg-quiet\)/s.test(capsuleCss) &&
+            /!isUnderline\s*&&\s*["']glass-capsule-track["']/.test(sfcCode),
     );
     assert(
-        // BC.W-TABS-IOS re-pointed the pill onto the element-level W55-tinted floating
-        // pair (`--glass-bg-floating-tinted` = color-mix(in oklab, --glass-bg-floating,
-        // …)) — STILL the glass-floating tier (the adaptive register reaching the pill),
-        // NOT a saturated --foreground fill or opaque bg-card. The clause accepts the
-        // raw rung OR its W55-tinted wrapper (the substitution-over-redeclaration shape
-        // BB.W-BUTTON-GLASS already navigated for the button register).
-        "pill indicator rides the glass-floating tier (selected-reads-as-glass)",
-        /\.segmented-indicator\s*\{[^}]*background:\s*var\(--glass-bg-floating(?:-tinted)?\)/s.test(
-            css,
-        ),
+        // BD.W-TAB-IOS-CAPSULE moved the pill fill into the SHARED `.glass-capsule`
+        // register (glass/glass-capsule.css). The pill indicator no longer declares its
+        // `background` inline; the SFC COMPOSES the `.glass-capsule` class (line ~449,
+        // `'glass-capsule'`). The capsule's fill is the warm-floor compose OVER the
+        // element-level W55-tinted floating pair (`--glass-bg-floating-tinted`) — STILL
+        // the glass-floating tier reaching the pill, never a saturated --foreground fill
+        // or opaque bg-card. Re-pointed (verified-isomorphic; the π arm reads selected-as-
+        // glass live): the capsule register composes `--glass-bg-floating-tinted` AND the
+        // SFC composes `.glass-capsule` onto the indicator.
+        "pill indicator rides the glass-floating tier via .glass-capsule (selected-reads-as-glass)",
+        /\.glass-capsule\s*\{[\s\S]*?background:\s*var\(\s*--glass-capsule-fill,[\s\S]*?var\(--glass-bg-floating-tinted\)/s.test(
+            capsuleCss,
+        ) && /["']glass-capsule["']/.test(sfcCode),
     );
     assert(
         "no --surface-tint-6 gray track survives on the pill register",
@@ -227,9 +238,24 @@ export function detect() {
             return facts.maxStretch != null && facts.maxStretch <= 1.2 && facts.maxStretch > 1;
         })(),
     );
+    // BD.W-TABS-LIQUID composed the travel-squish (`--stretch`) WITH the area-inflation
+    // blob (`--tab-blob`): the indicator scale is now
+    //   scale: calc(var(--tab-blob,1) * var(--stretch)) calc(var(--tab-blob,1) / var(--stretch));
+    // The `--stretch` arm is STILL volume-preserving — it enters X as `* --stretch` and Y
+    // as `/ --stretch`, so the stretch contribution to the area cancels exactly
+    // (X·Y = tab-blob² · (stretch/stretch) = tab-blob²; the squish moves no area, the blob
+    // alone inflates). The witness re-points to the composed expression and verifies the
+    // reciprocal cross on the `--stretch` axis (verified-isomorphic; the π arm reads
+    // --stretch > 1 mid-travel live). The vertical arm carries the mirror cross.
     assert(
-        "indicator squish is volume-preserving (scale X / reciprocal Y)",
-        /scale:\s*var\(--stretch\)\s*calc\(\s*1\s*\/\s*var\(--stretch\)\s*\)/.test(css),
+        "indicator squish is volume-preserving (--stretch enters X as * and Y as reciprocal /)",
+        /scale:\s*calc\(\s*var\(--tab-blob,?\s*1\)\s*\*\s*var\(--stretch\)\s*\)\s*calc\(\s*var\(--tab-blob,?\s*1\)\s*\/\s*var\(--stretch\)\s*\)/.test(
+            css,
+        ) &&
+            // the vertical arm mirrors it (block axis carries the stretch, inline the reciprocal)
+            /scale:\s*calc\(\s*var\(--tab-blob,?\s*1\)\s*\/\s*var\(--stretch\)\s*\)\s*calc\(\s*var\(--tab-blob,?\s*1\)\s*\*\s*var\(--stretch\)\s*\)/.test(
+                css,
+            ),
     );
     assert(
         "squish is prefers-reduced-motion-gated",
@@ -486,7 +512,7 @@ async function run() {
     console.log(`  SegmentedTabs.vue        : ${facts["SegmentedTabs.vue exists"]}`);
     console.log(`  variant axis (pill|underline): ${facts["variant type is the two-material axis (pill | underline)"]}`);
     console.log(`  orientation first-class  : ${facts["orientation prop present (horizontal | vertical)"]}`);
-    console.log(`  pill=glass / underline=paper : ${facts["pill track rides the glass-quiet tier (no --surface-tint gray plate)"]} / ${facts["underline track paints no surface (background:none / backdrop:none)"]}`);
+    console.log(`  pill=glass / underline=paper : ${facts["pill track rides the glass-quiet tier via .glass-capsule-track (no --surface-tint gray plate)"]} / ${facts["underline track paints no surface (background:none / backdrop:none)"]}`);
     console.log(`  calibrated clock         : ${facts["indicator glide reads --tab-indicator-duration (the calibrated clock)"]}`);
     console.log(`  release-at-arrival       : ${facts["release keys off arrival (INDICATOR_RELEASE_AT_ARRIVAL fraction)"]} (RELEASE_MS gone=${facts["INDICATOR_RELEASE_MS retired (the fixed mid-glide timer is gone)"]})`);
     console.log(`  BA-VJS-3 center-corrected: ${facts["JS slider is center-anchored (offsetLeft + width/2, not raw offsetLeft)"]}`);
