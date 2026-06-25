@@ -61,8 +61,25 @@ const depth = computed(() => current.value?.story.depth);
 </script>
 
 <template>
-    <TooltipProvider :delay-duration="250">
-        <!-- BB.W-SCROLL-MOTION: the route-enter PAGE-BUILD host. On each navigation
+    <!-- W-CUT P10c — the routed page presents a SINGLE ELEMENT root (this <article>)
+         to the AppShell route <Transition name="fade-slide">. <TooltipProvider> is a
+         context-only provider that renders a FRAGMENT (no DOM), so when it was the
+         template root the page's transitioning root resolved to a non-element node the
+         <Transition> cannot animate ("[Vue warn]: Component inside <Transition> renders
+         non-element root node"). Moving it INSIDE the <article> root provides the same
+         tooltip context to all descendants with zero layout/visual change. -->
+    <article
+        class="scroll-build story-page-article mx-auto w-full"
+        :data-variant="variant"
+        :style="{
+            maxInlineSize:
+                variant === 'page'
+                    ? 'var(--story-article-w)'
+                    : 'var(--story-page-max-inline)',
+        }"
+    >
+        <TooltipProvider :delay-duration="250">
+            <!-- BB.W-SCROLL-MOTION: the route-enter PAGE-BUILD host. On each navigation
              the <article> mounts inside the AppShell route <Transition>, and the
              `.scroll-build` register assembles the page in reading order: on a
              CONTENT page the <header> chrome (beat 0) rises, then the <StoryHero>
@@ -89,16 +106,6 @@ const depth = computed(() => current.value?.story.depth);
              the alive front-door read, untouched). -->
         <!-- BC.W-STORYBOOK-META — the bounded article rhythm survives on the HERO
              path (axis-3); the content path widens to the φ-ladder root. -->
-        <article
-            class="scroll-build story-page-article mx-auto w-full"
-            :data-variant="variant"
-            :style="{
-                maxInlineSize:
-                    variant === 'page'
-                        ? 'var(--story-article-w)'
-                        : 'var(--story-page-max-inline)',
-            }"
-        >
             <!-- BC.W-PAGE-CHASSIS — the chrome <header> hosts the AUDACIOUS hero cluster
                  on a CONTENT page (variant="page"): the ONE standardized page idiom
                  (the user-mandate uniformity — EVERY page carries the LARGE audacious
@@ -222,6 +229,6 @@ const depth = computed(() => current.value?.story.depth);
                     <slot />
                 </section>
             </StoryHero>
-        </article>
-    </TooltipProvider>
+        </TooltipProvider>
+    </article>
 </template>

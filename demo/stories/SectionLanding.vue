@@ -10,7 +10,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { TooltipProvider } from "../../src/components/ui/tooltip";
-import { Aurora } from "../../src/components/custom/aurora";
+import { auroraFallbackGround } from "../../src/components/custom/aurora";
 import { Card } from "../../src/components/ui/card";
 import { Button } from "../../src/components/ui/button";
 import { Slider } from "../../src/components/ui/slider";
@@ -44,19 +44,46 @@ const sectionHue = computed(() => hero.value?.sectionHue ?? 7);
 
 // BD.W-BENTO-SPECIMEN — the per-card WARM field hue (CONSUME `warmFieldHue`, the
 // ONE warm-projection source; teal/navy impossible by construction) + the ONE
-// per-category specimen spec (read off `previewKind`, DRY). The `field` specimen
-// rides Aurora's zero-GL CSS first-frame (`render-mode="css"`) on the WARM-FENCED
-// per-category palette — the one-GL budget: the landing adds zero live contexts.
+// per-category specimen spec (read off `previewKind`, DRY).
 const cardFieldH = computed(() => warmFieldHue(category.value?.id ?? "foundations"));
 const specimen = computed(() => categorySpecimen(category.value?.id ?? "foundations"));
-const fieldAuroraConfig = computed(() =>
-    hero.value ? heroAuroraConfig(hero.value.heroPalette) : undefined,
-);
+
+// P10c W-CUT GL-BUDGET — the `field` specimen is a FROZEN STILL, NOT a live GL
+// canvas. The prior `<Aurora render-mode="css">` mounts a real `<canvas>` element
+// per card even on the CSS substrate (unarmed, but present): a `/substrates`
+// landing with 11 `field` cards mounts 11 GL-capable canvases, and ANY
+// `getContext('webgl2')` probe (tooling / a future arm / the orchestrator's
+// budget-count filter) instantiates 11 real contexts — blowing the ~8 budget and
+// black-out-LOSING the cards on a constrained device. The category-landing
+// amendment MANDATES a one-GL-budget frozen still per `previewKind`, NOT live GL.
+//
+// THE FIX (the configurator pattern — usePresetThumbnails): the shipped device-free
+// `auroraFallbackGround(config)` paints the SAME palette + nuclei field the shader
+// uploads (the math mirrored CPU-side) into a tiny throwaway 2D-canvas raster →
+// `data:` URI, served as a plain `background-image` on a `<div>`. ZERO persistent
+// canvas, ZERO WebGL/WebGPU, deterministic, warm + recognizable (a real mini
+// aurora still, not a gray glyph). The landing now adds ZERO GL-capable elements.
+const fieldStill = computed(() => {
+    if (!hero.value) return null;
+    const config = heroAuroraConfig(hero.value.heroPalette);
+    // grid 10 → a 100-sample field; the bilinear CSS upscale reads as a smooth
+    // atmosphere, not a hard grid (same grid the preset thumbnails bake at).
+    const ground = auroraFallbackGround(config, { grid: 10 });
+    return {
+        backgroundImage: ground.backgroundImage,
+        backgroundColor: ground.backgroundColor,
+    };
+});
 </script>
 
 <template>
-    <TooltipProvider :delay-duration="250">
-        <article class="scroll-build mx-auto w-full max-w-6xl">
+    <!-- W-CUT P10c — the routed page presents a SINGLE ELEMENT root (this <article>) to
+         the AppShell route <Transition name="fade-slide">. <TooltipProvider> renders a
+         context-only FRAGMENT (no DOM); as the template root it made the transitioning
+         root a non-element node Vue cannot animate. Nesting it INSIDE <article> provides
+         the same tooltip context with zero layout/visual change. -->
+    <article class="scroll-build mx-auto w-full max-w-6xl">
+        <TooltipProvider :delay-duration="250">
             <StoryHero
                 v-if="category && landing"
                 :background="landing.background"
@@ -90,16 +117,23 @@ const fieldAuroraConfig = computed(() =>
                                  `previewKind` composing SHIPPED primitives, each
                                  FILLING its stage over the warm §3 field. The widget
                                  SHOWS its component (iOS-27 home-screen truth), never
-                                 a placeholder glyph. The one-GL budget: `field` rides
-                                 Aurora's zero-GL CSS first-frame, the rest are CSS-only
-                                 LIVE renders — the landing adds zero live contexts. -->
+                                 a placeholder glyph. The one-GL budget: `field` is a
+                                 device-free FROZEN-STILL raster (NO canvas), the rest
+                                 are CSS-only DOM renders — the landing adds ZERO
+                                 GL-capable elements (P10c W-CUT GL-BUDGET). -->
                             <template #preview>
-                                <!-- field — the frozen warm aurora still (zero-GL). -->
-                                <Aurora
-                                    v-if="specimen.kind === 'field' && fieldAuroraConfig"
-                                    render-mode="css"
-                                    :config="fieldAuroraConfig"
-                                    class="specimen-fill"
+                                <!-- field — the device-free FROZEN aurora still (P10c
+                                     W-CUT): a `<div>` painted from `auroraFallbackGround`
+                                     (the configurator's `data:`-URI raster pattern), NOT
+                                     a live `<Aurora>` canvas. A warm, recognizable mini
+                                     aurora specimen with zero WebGL contexts. -->
+                                <div
+                                    v-if="specimen.kind === 'field' && fieldStill"
+                                    class="specimen-fill specimen-field"
+                                    :style="{
+                                        backgroundImage: fieldStill.backgroundImage,
+                                        backgroundColor: fieldStill.backgroundColor,
+                                    }"
                                 />
                                 <!-- control — a real glass control STACK (earns the
                                      span-2 lead width by SHOWING more). The slider
@@ -166,8 +200,8 @@ const fieldAuroraConfig = computed(() =>
                     </div>
                 </section>
             </StoryHero>
-        </article>
-    </TooltipProvider>
+        </TooltipProvider>
+    </article>
 </template>
 
 <style scoped>
@@ -190,8 +224,17 @@ const fieldAuroraConfig = computed(() =>
     block-size: 100%;
 }
 
-/* field — the frozen aurora fills the bounded stage edge-to-edge. */
-:deep(.specimen-fill.aurora-root) {
+/* field — the device-free FROZEN aurora still (P10c W-CUT GL-BUDGET). The tiny
+   `auroraFallbackGround` raster (a 10×10 `data:`-URI) is CSS-upscaled to fill the
+   bounded stage edge-to-edge; `image-rendering: auto` bilinear-smooths it so it
+   reads as a continuous warm atmosphere (not a hard grid), the same upscale the
+   shipped Aurora CSS-substrate placeholder + the preset thumbnails use. NO canvas,
+   NO WebGL context — the budget-safe frozen specimen. */
+.specimen-field {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: auto;
     border-radius: inherit;
 }
 
