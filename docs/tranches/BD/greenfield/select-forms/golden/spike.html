@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SELECT GOLDEN spike — welling warm-glass listbox + POUR</title>
+<style>
+  /* ── the cartoon-punch curve (motion-spring-register GOLDEN mint; here for the spike) ──
+     dips < 0 at the open frame (anticipation), peaks > 1.1 (the welling punch), settles soft. */
+  :root {
+    --ease-cartoon-punch: linear(
+      0, -0.014 6%, -0.032 12%, 0.018 22%, 0.30 36%, 0.62 48%,
+      0.92 58%, 1.10 68%, 1.16 74%, 1.10 80%, 1.03 88%, 0.995 94%, 1 100%);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --motion-weight: 0.618;        /* 1/φ — the centroid scalar */
+    --reveal-dur: 0.46s;
+    --pour-dur: 0.52s;
+    --field-h: 48;                 /* FIELD_SCRIPT.forms — terracotta-warm */
+    --glass-accent: oklch(0.78 0.14 48);   /* the warm house amber */
+    --glass-tint-source: hsl(34 88% 92%);
+    --overlay-tint-floor: 10%;
+    /* a near-neutral floating fill — the STARVED token the floor must lift */
+    --glass-bg-floating: oklch(0.95 0.008 58 / 0.80);
+    --shadow-cartoon-lg:
+      -6px 4px 1px color-mix(in srgb, oklch(0.3 0.06 40) 14%, transparent),
+       0 10px 30px -8px color-mix(in srgb, oklch(0.3 0.06 40) 30%, transparent);
+    color-scheme: light;
+  }
+  body.dark {
+    --glass-tint-source: hsl(26 22% 17%);
+    --overlay-tint-floor: 8%;
+    --glass-bg-floating: oklch(0.42 0.012 50 / 0.88);
+    --glass-accent: oklch(0.72 0.13 50);
+    --shadow-cartoon-lg:
+      -6px 4px 1px color-mix(in srgb, oklch(0.9 0.04 60) 12%, transparent),
+       0 10px 30px -8px color-mix(in srgb, #000 55%, transparent);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font: 15px/1.4 -apple-system, "SF Pro Text", system-ui, sans-serif;
+    /* the FLAT page condition — born-RED substrate; the field below is what un-grays */
+    background: #fbfaf8;
+    color: #1a1714;
+    display: grid; place-items: center;
+    transition: background .3s;
+  }
+  body.dark { background: #0b0a09; color: #efe7df; }
+
+  /* ── §2b the warm route field (.paper-field analogue) BEHIND everything ── */
+  .paper-field {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 22% 18%, oklch(0.93 0.09 var(--field-h) / .55), transparent 70%),
+      radial-gradient(56% 52% at 84% 82%, oklch(0.90 0.08 calc(var(--field-h) + 18) / .50), transparent 68%),
+      radial-gradient(54% 56% at 60% 45%, oklch(0.92 0.06 calc(var(--field-h) - 14) / .48), transparent 72%);
+  }
+  body.dark .paper-field {
+    background:
+      radial-gradient(60% 50% at 22% 18%, oklch(0.40 0.10 var(--field-h) / .60), transparent 70%),
+      radial-gradient(56% 52% at 84% 82%, oklch(0.36 0.09 calc(var(--field-h) + 18) / .55), transparent 68%),
+      radial-gradient(54% 56% at 60% 45%, oklch(0.42 0.07 calc(var(--field-h) - 14) / .50), transparent 72%);
+  }
+
+  .stage { position: relative; z-index: 1; display: grid; gap: 28px; place-items: center; }
+
+  /* the trigger — a warm glass pill with a defined edge + hover lift */
+  .trigger {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    min-width: 240px; padding: 10px 14px; border-radius: 999px;
+    background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--overlay-tint-floor));
+    border: 1px solid color-mix(in oklab, var(--glass-accent) 22%, transparent);
+    box-shadow: 0 1px 0 oklch(1 0 0 / .5) inset, 0 4px 14px -8px oklch(0.3 0.05 40 / .4);
+    -webkit-backdrop-filter: blur(13px) saturate(1.6);
+    backdrop-filter: blur(13px) saturate(1.6);
+    cursor: pointer; font-weight: 540; transition: scale .14s var(--ease-cartoon-punch), box-shadow .2s;
+  }
+  .trigger:active { scale: 0.97; }   /* tap-squish = the anticipation wind-up */
+  .trigger .chev {
+    /* §3c COUPLED chevron — same clock + curve as the panel */
+    transition: rotate var(--reveal-dur) var(--ease-cartoon-punch);
+  }
+  body.open .trigger .chev { rotate: 180deg; }
+
+  /* ── §2 the menu surface — warm transmissive glass ──
+     the FILL is the floor-admitted tint; the field behind gives the blur chroma to bend. */
+  .menu {
+    position: absolute; left: 0; top: calc(100% + 8px);
+    width: 280px; padding: 6px; border-radius: 22px;
+    transform-origin: top left;     /* §3b bloom from the trigger lip */
+
+    /* §2a warm admit-FLOOR fill */
+    background: color-mix(in oklab, var(--glass-bg-floating),
+                var(--glass-tint-source) max(0%, var(--overlay-tint-floor)));
+    border: 1px solid color-mix(in oklab, var(--glass-accent) 16%, oklch(1 0 0 / .3));
+    -webkit-backdrop-filter: blur(13px) saturate(1.7);
+    backdrop-filter: blur(13px) saturate(1.7);
+    /* §2d the cartoon under-shadow */
+    box-shadow: var(--shadow-cartoon-lg), 0 1px 0 oklch(1 0 0 / .45) inset;
+
+    /* the .glass-reveal recipe — SPATIAL on the PUNCH, EFFECTS on ease-out (the split) */
+    --enter-scale: calc(1 - 0.14 * var(--motion-weight));   /* 0.913 @ 0.618 */
+    --menu-pour-t: 0;
+    scale: var(--enter-scale);
+    opacity: 0;
+    filter: blur(4px);
+    pointer-events: none;
+    transition:
+      scale var(--reveal-dur) var(--ease-cartoon-punch),
+      opacity calc(var(--reveal-dur) * 0.7) var(--ease-out),
+      filter calc(var(--reveal-dur) * 0.7) var(--ease-out),
+      --menu-pour-t var(--pour-dur) linear;
+  }
+  body.open .menu {
+    scale: 1; opacity: 1; filter: blur(0); pointer-events: auto;
+    --menu-pour-t: 1;
+  }
+
+  /* §2b the portal-field analogue clipped BEHIND the menu's own backdrop (the structural close) */
+  .menu::before {
+    content: ""; position: absolute; inset: -20%; z-index: -1; border-radius: inherit; pointer-events: none;
+    background:
+      radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.09 var(--field-h) / .50), transparent 72%),
+      radial-gradient(64% 58% at 82% 80%, oklch(0.88 0.08 calc(var(--field-h) + 18) / .45), transparent 70%);
+  }
+  body.dark .menu::before {
+    background:
+      radial-gradient(70% 60% at 24% 22%, oklch(0.42 0.11 var(--field-h) / .55), transparent 72%),
+      radial-gradient(64% 58% at 82% 80%, oklch(0.38 0.10 calc(var(--field-h) + 18) / .50), transparent 70%);
+  }
+
+  /* ── §4 the POUR + §5 the warm-accent rows ── */
+  @property --menu-pour-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+  /* typed so var() resolves inside the `scale:` property (Chrome/Safari both need this for
+     a calc()-bearing custom prop in a transformed channel — in src these live in property-regs.css) */
+  @property --motion-weight { syntax: "<number>"; inherits: true; initial-value: 0.618; }
+  @property --enter-scale   { syntax: "<number>"; inherits: false; initial-value: 1; }
+  @property --rp            { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+  .row {
+    --i: 0;
+    /* the windowed per-row progress off the ONE driven scalar */
+    --rp: clamp(0, calc((var(--menu-pour-t) - var(--i) * 0.10) / 0.5), 1);
+    display: flex; align-items: center; gap: 10px;
+    min-height: 40px; padding: 8px 12px 8px 30px; border-radius: 14px;
+    position: relative;
+    /* the arc + the micro settle-pop + the fade — all driven by --rp */
+    opacity: var(--rp);
+    translate: 0 calc((1 - var(--rp)) * -0.5rem);
+    scale: calc(1 + 0.04 * var(--rp) * (1 - var(--rp)));
+    color: inherit;
+    transition: background .18s var(--ease-out), color .18s;
+  }
+  .row .dot {
+    position: absolute; left: 12px; width: 7px; height: 7px; border-radius: 999px;
+    background: var(--glass-accent); opacity: 0; scale: 0.4;
+    transition: opacity .2s, scale .25s var(--ease-cartoon-punch);
+  }
+  .row[aria-selected="true"] .dot { opacity: 1; scale: 1; }
+
+  /* the ONE warm-accent hot lozenge */
+  .row:hover, .row[aria-selected="true"], .row[data-highlighted] {
+    background: color-mix(in oklab,
+      color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--overlay-tint-floor)),
+      var(--glass-accent) 16%);
+    box-shadow: 0 1px 0 oklch(1 0 0 / .4) inset;
+    translate: 0 -1px;
+  }
+  .row:active { scale: 1.02; }   /* the splash squash-pop */
+
+  /* PRM carve — motion-weight 0 → scale 1, no pour arc, opacity-only */
+  @media (prefers-reduced-motion: reduce) {
+    :root { --motion-weight: 0; }
+    .menu { --enter-scale: 1; transition: opacity .2s, --menu-pour-t .01s; filter: none; }
+    body.open .menu { filter: none; }
+    .row { translate: 0 !important; scale: 1 !important; }
+  }
+
+  .controls { position: fixed; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; }
+  .controls button { padding: 6px 12px; border-radius: 10px; border: 1px solid #8884; background: #fff8; cursor: pointer; }
+  body.dark .controls button { background: #2228; color: #eee; }
+  #readout { position: fixed; bottom: 12px; left: 12px; z-index: 10; font: 12px/1.5 ui-monospace, monospace;
+             background: #000a; color: #0f0; padding: 8px 10px; border-radius: 8px; white-space: pre; max-width: 92vw; }
+</style>
+</head>
+<body>
+  <div class="paper-field"></div>
+  <div class="controls">
+    <button onclick="toggleOpen()">toggle open</button>
+    <button onclick="document.body.classList.toggle('dark')">dark</button>
+    <button onclick="runProbe()">probe π</button>
+  </div>
+
+  <div class="stage">
+    <div style="position: relative;">
+      <div class="trigger" id="trigger" onclick="toggleOpen()">
+        <span>Terracotta</span>
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="menu" id="menu" role="listbox">
+        <div class="row" style="--i:0" role="option" aria-selected="true"><span class="dot"></span>Terracotta</div>
+        <div class="row" style="--i:1" role="option"><span class="dot"></span>Honey amber</div>
+        <div class="row" style="--i:2" role="option"><span class="dot"></span>Coral warmth</div>
+        <div class="row" style="--i:3" role="option"><span class="dot"></span>Saffron field</div>
+        <div class="row" style="--i:4" role="option"><span class="dot"></span>Burnt sienna</div>
+        <div class="row" style="--i:5" role="option"><span class="dot"></span>Ochre glow</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="readout">click "toggle open" then "probe π"</div>
+
+<script>
+  function toggleOpen(){ document.body.classList.toggle('open'); }
+
+  // ── the painted-pixel π: composite the menu fill over the live page, OKLab chroma ──
+  function srgbToOklab(r,g,b){
+    const f=v=>{v/=255; return v<=0.04045? v/12.92 : Math.pow((v+0.055)/1.055,2.4);};
+    r=f(r);g=f(g);b=f(b);
+    const l=0.4122214708*r+0.5363325363*g+0.0514459929*b;
+    const m=0.2119034982*r+0.6806995451*g+0.1073969566*b;
+    const s=0.0883024619*r+0.2817188376*g+0.6299787005*b;
+    const l_=Math.cbrt(l),m_=Math.cbrt(m),s_=Math.cbrt(s);
+    const L=0.2104542553*l_+0.7936177850*m_-0.0040720468*s_;
+    const A=1.9779984951*l_-2.4285922050*m_+0.4505937099*s_;
+    const B=0.0259040371*l_+0.7827717662*m_-0.8086757660*s_;
+    return {L, C: Math.hypot(A,B), H: (Math.atan2(B,A)*180/Math.PI+360)%360};
+  }
+  function parseColor(str){
+    const c=document.createElement('canvas'); c.width=c.height=1;
+    const ctx=c.getContext('2d'); ctx.fillStyle=str; ctx.fillRect(0,0,1,1);
+    const d=ctx.getImageData(0,0,1,1).data; return {r:d[0],g:d[1],b:d[2],a:d[3]/255};
+  }
+  // composite the resolved menu bg (with alpha) over the resolved page bg — the honest read
+  function compositeMenuOverPage(){
+    const menuBg = getComputedStyle(menu).backgroundColor;       // resolved color-mix
+    const pageBg = getComputedStyle(document.body).backgroundColor;
+    const m=parseColor(menuBg), p=parseColor(pageBg);
+    const a=m.a;
+    const r=m.r*a+p.r*(1-a), g=m.g*a+p.g*(1-a), b=m.b*a+p.b*(1-a);
+    return srgbToOklab(r,g,b);
+  }
+  function rowAccentDelta(){
+    const plate=compositeMenuOverPage();
+    const sel=document.querySelector('.row[aria-selected="true"]');
+    const c=parseColor(getComputedStyle(sel).backgroundColor);
+    const a=c.a||1; const p=parseColor(getComputedStyle(document.body).backgroundColor);
+    const o=srgbToOklab(c.r*a+p.r*(1-a), c.g*a+p.g*(1-a), c.b*a+p.b*(1-a));
+    return {dC:o.C-plate.C, dL:o.L-plate.L, hue:o.H};
+  }
+  function probePour(){
+    // sample --rp across rows at the current --menu-pour-t (mid-flight if open just fired)
+    return [...document.querySelectorAll('.row')].map(r=>{
+      const rp=getComputedStyle(r).getPropertyValue('--rp').trim();
+      return +(+rp).toFixed(2);
+    });
+  }
+  function runProbe(){
+    const menuColor=compositeMenuOverPage();
+    const acc=rowAccentDelta();
+    const pour=probePour();
+    const enterScale=getComputedStyle(menu).getPropertyValue('--enter-scale').trim();
+    const out =
+`MODE: ${document.body.classList.contains('dark')?'dark':'light'}  open: ${document.body.classList.contains('open')}
+G2 menu-not-gray   composited C = ${menuColor.C.toFixed(4)}  H = ${menuColor.H.toFixed(0)}   ${menuColor.C>=0.02&&menuColor.H>=16&&menuColor.H<=110?'PASS ≥0.02 warm':'RED'}
+G9 accent chip     ΔC = ${acc.dC.toFixed(4)}  ΔL = ${acc.dL.toFixed(4)}  H = ${acc.hue.toFixed(0)}   ${acc.dC>=0.02&&acc.dL>=0.05?'PASS':'(need open+settled)'}
+G5/6 enter-scale   = ${enterScale}  (PRM→1.0; punch dips<0 then >1 live)
+G8 pour --rp[]     = [${pour.join(', ')}]  ${pour.some((v,i)=>i>0&&v<pour[i-1])||pour.some(v=>v>0&&v<1)?'staggered (mid-flight)':'(probe during the 0.52s pour)'}`;
+    document.getElementById('readout').textContent=out;
+    console.log(out);
+  }
+  window.runProbe=runProbe; window.toggleOpen=toggleOpen;
+</script>
+</body>
+</html>

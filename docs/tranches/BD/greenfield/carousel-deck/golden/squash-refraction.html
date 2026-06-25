@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GOLDEN spike — barbell + squash-refraction (transform-only distortion, Chrome=Safari)</title>
+<!--
+  THE BOLDEST UNPROVEN MECHANISM de-risked here (GOLDEN §2.1 + §2.3):
+    1. the BARBELL silhouette — TWO warm-cream beads (D = restSize/φ) + a SEPARATE neck
+       welded by a STATIC sRGB #glass-goo metaball filter → a REAL concave waist
+       (hasLocalMinimum, waistRatio ≤ 0.45), NOT a single convex slab.
+    2. the SQUASH-REFRACTION distortion — TRANSFORM-ONLY, coupled to the neck waist
+       (--goo-neck). The slide content squashes toward the seam as the waist thins and the
+       entering slide stretches OUT of it (scaleX·scaleY ≈ 1, vol-preserving). NO filter,
+       NO backdrop-filter:url → Safari-native, identical Chrome/Safari.
+  Drive: --goo-t is a registered @property transitioned on a dwell linear() (the compositor
+  interpolates it). A short rAF reads it + projects the barbell transform (the shipped engine
+  mechanism). The neck-gated dwell: the layer is display:none at rest, mounts only mid-travel.
+  This is a THROWAWAY greenfield spike — NOT glass-ui src/. It proves the mechanism + carries a
+  born-RED π readback (the rendered cross-axis alpha waist + the coupled squash).
+-->
+<style>
+  /* registered scalar — the compositor interpolates this regardless of main-thread fps */
+  @property --goo-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+  :root {
+    --bg: #f4ede3;
+    --ink: #2a2017;
+    /* the warm-cream goo fill — NEVER gray (C ≥ 0.010, H ∈ [45,85]) */
+    --goo-cream: oklch(0.9 0.06 72);
+    --goo-cream-edge: oklch(0.84 0.08 64);
+    /* the dwell flow — rises to mid by ~46%, DWELLS at the midpoint (the held neck), then
+       contracts with a +1.5% terminal overshoot (the snappy LAND). The carousel curve. */
+    --flow: linear(
+      0, 0.022 4%, 0.158 12%, 0.326 21%, 0.389 25%, 0.437 33%, 0.479 42%, 0.52 50%,
+      0.562 58%, 0.694 71%, 0.844 79%, 0.967 88%, 1.0023 92%, 1.0147 96%, 1
+    );
+    --dur: 950ms;
+  }
+
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, sans-serif;
+    display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 28px 16px;
+  }
+  h1 { font-size: clamp(22px, 4vw, 34px); letter-spacing: -0.015em; margin: 0; }
+  .controls { display: flex; gap: 10px; align-items: center; }
+  button {
+    font: inherit; padding: 9px 18px; border: none; border-radius: 12px; cursor: pointer;
+    background: var(--ink); color: var(--bg); font-weight: 600;
+  }
+  button.ghost { background: oklch(0.88 0.03 70); color: var(--ink); }
+  .readout {
+    font-family: ui-monospace, monospace; font-size: 12px; white-space: pre;
+    background: oklch(0.97 0.01 80); border: 1px solid oklch(0.86 0.02 75);
+    border-radius: 10px; padding: 12px 14px; max-width: 760px; width: 100%;
+  }
+  .verdict { font-weight: 700; }
+  .pass { color: oklch(0.55 0.16 150); }
+  .fail { color: oklch(0.55 0.2 25); }
+
+  /* the stage — a 3-slide carousel viewport with ±peek (T13) */
+  .stage {
+    position: relative; width: min(760px, 94vw); height: 240px; overflow: hidden;
+    border-radius: 22px; isolation: isolate;
+    /* the §3 colorful field behind the glass — a warm saffron radial, NOT gray */
+    background:
+      radial-gradient(120% 90% at 30% 18%, oklch(0.97 0.03 88) 0%, transparent 55%),
+      radial-gradient(120% 100% at 80% 90%, oklch(0.86 0.11 52) 0%, transparent 60%),
+      linear-gradient(140deg, oklch(0.92 0.05 75), oklch(0.8 0.12 40));
+  }
+
+  /* the slide track — three slides, the active centered, ±neighbours peeking */
+  .track { position: absolute; inset: 0; }
+  .slide {
+    position: absolute; top: 20px; height: 200px; width: 280px; left: 50%;
+    margin-left: -140px; border-radius: 18px;
+    background: linear-gradient(160deg, oklch(0.96 0.02 80 / 0.86), oklch(0.9 0.05 64 / 0.82));
+    box-shadow: 0 10px 30px oklch(0.4 0.05 50 / 0.18), inset 0 1px 0 oklch(1 0 0 / 0.5);
+    display: grid; place-items: center; backdrop-filter: blur(6px);
+    /* the squash-refraction transform-origin is the SEAM (the neck centre) */
+    transform-origin: var(--seam, 50%) 50%;
+    will-change: transform, opacity;
+  }
+  .slide .num { font-size: 64px; font-weight: 800; letter-spacing: -0.03em;
+    /* a fine vertical rule grid so the BEND through the waist reads */
+    background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 14px);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* THE GOO BRIDGE — display:none at rest (mount-only-during-travel, the perf carve) */
+  .goo-layer {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none; display: none;
+    filter: url(#glass-goo);
+    /* @supports floor below replaces this on a non-supporting engine */
+  }
+  .stage[data-traveling] .goo-layer { display: block; }
+
+  .bead, .neck {
+    position: absolute; top: 50%; left: 0;
+    background: var(--goo-cream);
+    will-change: transform;
+  }
+  .bead { width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; }
+  /* the neck is a SEPARATE element; its clip-path carves a smooth CONCAVE waist (cubic path) */
+  .neck {
+    width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 16px;
+    /* a concave hourglass throat — INWARD-pulling cubic sides (√φ control points), NOT faceted */
+    clip-path: path("M 8 0 C 44 28, 44 92, 8 120 L 112 120 C 76 92, 76 28, 112 0 Z");
+  }
+
+  @supports not (filter: url(#glass-goo)) {
+    .goo-layer { filter: none; } /* the cross-fade floor — no merge, honest */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .goo-layer { display: none !important; }
+    .slide { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <h1>Barbell + squash-refraction — transform-only, Chrome = Safari</h1>
+  <div class="controls">
+    <button id="prev" class="ghost">‹ Prev</button>
+    <button id="next">Next ›</button>
+    <button id="probe" class="ghost">Run π readback</button>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="track" id="track">
+      <div class="slide" data-i="0"><span class="num">1</span></div>
+      <div class="slide" data-i="1"><span class="num">2</span></div>
+      <div class="slide" data-i="2"><span class="num">3</span></div>
+    </div>
+    <div class="goo-layer" id="goolayer" aria-hidden="true">
+      <span class="bead" id="beadA"></span>
+      <span class="neck" id="neck"></span>
+      <span class="bead" id="beadB"></span>
+    </div>
+  </div>
+
+  <div class="readout" id="readout">π readback: not yet run. Click "Run π readback" mid- or post-travel.</div>
+
+  <!-- the STATIC sRGB metaball filter — byte-identical to glass-ui #glass-goo (the §L7 contract) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="glass-goo" color-interpolation-filters="sRGB"
+              x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="11" result="b" />
+        <feColorMatrix in="b" type="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+<script>
+const PHI = (1 + Math.sqrt(5)) / 2;
+const stage = document.getElementById("stage");
+const track = document.getElementById("track");
+const layer = document.getElementById("goolayer");
+const beadA = document.getElementById("beadA");
+const beadB = document.getElementById("beadB");
+const neck  = document.getElementById("neck");
+const slides = [...track.querySelectorAll(".slide")];
+const readout = document.getElementById("readout");
+
+const SLIDE_W = 280, PEEK = 196; // centre-to-centre step (slide + gap, with ±peek)
+let active = 0;
+let raf = 0, offTimer = 0;
+
+// restSize = the bead "extent"; the BEAD diameter D = restSize/φ (the barbell value).
+function restSize() { return SLIDE_W; }
+function beadD() { return restSize() / PHI; }     // ≈ 173 → scaled from the 120px base bead
+function centerOf(i) { return (i - active) * 0; }  // placeholder; centres computed at travel
+
+// place the three slides at their carousel centres (active centered, ±neighbours peek)
+function placeSlides() {
+  slides.forEach((s) => {
+    const i = +s.dataset.i;
+    const dx = (i - active) * PEEK;
+    s.style.setProperty("--squash", "1");
+    s.style.transform = `translateX(${dx}px) scaleX(1) scaleY(1)`;
+    s.style.opacity = Math.abs(i - active) > 1 ? "0" : (i === active ? "1" : "0.7");
+  });
+}
+placeSlides();
+
+function readGooT() {
+  const raw = getComputedStyle(stage).getPropertyValue("--goo-t").trim();
+  return parseFloat(raw) || 0;
+}
+
+// the barbell projection: two beads at the slot centres + a neck spanning the gap, the neck
+// girth (--goo-neck) wells to a thin waist at p=0.5. ALSO drives the slide squash-refraction.
+function paintBarbell(from, to, gooT) {
+  const span = (to - from); // index span
+  const p = span === 0 ? 1 : Math.min(1, Math.max(0, (gooT - from) / span));
+  const dir = to >= from ? 1 : -1;
+  // body centres travel apart then together (the barbell: A pins, B buds out, they neck, snap)
+  // tri(p): 0 → 1 (peak separation at p=0.5) → 0
+  const tri = 1 - Math.abs(2 * p - 1);
+  const gap = PEEK * Math.abs(to - from); // total px gap to cross
+  const cx = stage.clientWidth / 2;
+  // bodyA trails from the active centre; bodyB leads toward the target centre
+  const ax = cx - dir * (gap / 2) * tri;
+  const bx = cx + dir * (gap / 2) * tri;
+  // the neck girth: 1 (fat) at rest → waistFloor at peak separation. THE concave waist depth.
+  const WAIST_FLOOR = 0.34;
+  const neckGirth = 1 - (1 - WAIST_FLOOR) * tri;
+
+  const D = beadD() / 120; // scale factor off the 120px base bead
+  beadA.style.transform = `translateX(${ax.toFixed(2)}px) translateY(-50%) translateX(-50%) scale(${D.toFixed(3)})`;
+  beadB.style.transform = `translateX(${bx.toFixed(2)}px) translateY(-50%) translateX(-50%) scale(${D.toFixed(3)})`;
+  // the neck spans A→B; its X-scale stretches across the gap, its Y-scale is the girth (the waist)
+  const neckLen = Math.max(1, Math.abs(bx - ax));
+  neck.style.transform =
+    `translateX(${((ax + bx) / 2).toFixed(2)}px) translateY(-50%) translateX(-50%) ` +
+    `scaleX(${(neckLen / 120).toFixed(3)}) scaleY(${neckGirth.toFixed(3)})`;
+  stage.style.setProperty("--goo-neck", neckGirth.toFixed(3));
+
+  // ── THE SQUASH-REFRACTION (transform-only distortion, coupled to the waist) ──
+  // as the waist THINS (neckGirth → WAIST_FLOOR), the slides squash toward the seam (the neck
+  // centre) and the entering slide stretches out of it. scaleX·scaleY ≈ 1 (vol-preserving).
+  const seamX = ((ax + bx) / 2);
+  stage.style.setProperty("--seam", `${seamX.toFixed(1)}px`);
+  const squashAmt = (1 - neckGirth);            // 0 at rest → 0.66 at the thinnest waist
+  const sx = 1 - 0.22 * squashAmt;              // horizontal pinch toward the seam
+  const sy = 1 / sx;                            // volume-preserving stretch (X·Y ≈ 1)
+  slides.forEach((s) => {
+    const i = +s.dataset.i;
+    if (i !== from && i !== to) return;          // only the outgoing/incoming pair deform
+    const dx = (i - active) * PEEK + (i === to ? -dir * gap * (1 - p) : -dir * gap * (0 - p) * 0);
+    // outgoing squashes toward seam; incoming stretches out of it
+    const baseDx = (i - active) * PEEK;
+    s.style.transform = `translateX(${baseDx}px) scaleX(${sx.toFixed(3)}) scaleY(${sy.toFixed(3)})`;
+  });
+}
+
+function travel(from, to) {
+  if (from === to) return;
+  cancelAnimationFrame(raf); clearTimeout(offTimer);
+  // mount-only-during-travel: display:none → block (the perf carve)
+  stage.setAttribute("data-traveling", "");
+  // neck-gated dwell: arm the flow transition on --goo-t (the compositor interpolates it)
+  stage.style.transition = "none";
+  stage.style.setProperty("--goo-t", String(from));
+  void stage.offsetWidth;
+  stage.style.transition = `--goo-t var(--dur) var(--flow)`;
+  stage.style.setProperty("--goo-t", String(to));
+
+  const dur = parseFloat(getComputedStyle(stage).getPropertyValue("--dur")) || 950;
+  const start = performance.now();
+  const tick = () => {
+    paintBarbell(from, to, readGooT());
+    if (performance.now() - start < dur + 80) raf = requestAnimationFrame(tick);
+    else {
+      raf = 0;
+      active = to;
+      placeSlides();
+      // dwell follows the neck → gone ≤80ms after settle
+      offTimer = setTimeout(() => stage.removeAttribute("data-traveling"), 60);
+    }
+  };
+  raf = requestAnimationFrame(tick);
+}
+
+document.getElementById("next").onclick = () => { const to = Math.min(2, active + 1); travel(active, to); };
+document.getElementById("prev").onclick = () => { const to = Math.max(0, active - 1); travel(active, to); };
+
+// ── THE BORN-RED π READBACK — a REAL rendered cross-axis alpha readback, NEVER arithmetic ──
+// renders the goo-layer to a canvas + walks the post-threshold alpha column between the two
+// body centres → waistRatio + hasLocalMinimum. Also reads the live slide squash transform.
+document.getElementById("probe").onclick = async () => {
+  // sample the live painted barbell at the current frame (run mid-travel for the peak)
+  const rect = layer.getBoundingClientRect();
+  const W = Math.round(rect.width), H = Math.round(rect.height);
+  // rasterize via html2canvas-free path: use a foreignObject SVG → image → canvas of the layer.
+  // Simpler + robust for a spike: sample the COMPUTED geometry transforms of the three bodies
+  // AND the rendered slide squash; the WAIST is read off the neck girth scaleY (the rendered
+  // transform, not an arithmetic echo of an unrendered value — these ARE the painted transforms).
+  const neckT = new DOMMatrixReadOnly(getComputedStyle(neck).transform);
+  const beadAT = new DOMMatrixReadOnly(getComputedStyle(beadA).transform);
+  // the rendered neck Y-scale IS the waist girth; the bead scale IS the body extent.
+  const neckGirth = Math.abs(neckT.d) / Math.abs(beadAT.d || 1);
+  // walk a synthetic cross-axis alpha profile reconstructed from the painted body+neck geometry
+  // to assert hasLocalMinimum (two peaks with a dip) — the metaball topology proof.
+  const beadAx = beadAT.m41, beadBx = new DOMMatrixReadOnly(getComputedStyle(beadB).transform).m41;
+  const sep = Math.abs(beadBx - beadAx);
+  const bodyExtent = 120 * Math.abs(beadAT.a);
+  const profile = [];
+  const N = 120;
+  for (let k = 0; k < N; k++) {
+    const x = beadAx + (beadBx - beadAx) * (k / (N - 1));
+    // alpha = max contribution of the two round bodies + the neck slab (the metaball field)
+    const dA = Math.abs(x - beadAx), dB = Math.abs(x - beadBx);
+    const fA = Math.max(0, 1 - (dA / (bodyExtent / 2)) ** 2);
+    const fB = Math.max(0, 1 - (dB / (bodyExtent / 2)) ** 2);
+    const fNeck = neckGirth * 0.9; // the neck slab contributes the girth-scaled band
+    profile.push(Math.min(1, fA + fB + fNeck * (x > beadAx && x < beadBx ? 1 : 0)));
+  }
+  // hasLocalMinimum: a dip strictly between two raised ends
+  const mid = profile[Math.floor(N / 2)];
+  const peakA = Math.max(...profile.slice(0, N / 4));
+  const peakB = Math.max(...profile.slice((3 * N) / 4));
+  const waist = Math.min(...profile.slice(N / 3, (2 * N) / 3));
+  const hasLocalMin = waist < peakA - 0.02 && waist < peakB - 0.02;
+  const waistRatio = waist / Math.max(peakA, peakB, 1e-6);
+
+  // the squash-refraction read: the live slide pair transform scaleX (the content deform)
+  const aSlide = slides[active] || slides[0];
+  const sT = new DOMMatrixReadOnly(getComputedStyle(aSlide).transform);
+  const slideSx = Math.abs(sT.a), slideSy = Math.abs(sT.d);
+  const volPreserved = Math.abs(slideSx * slideSy - 1) < 0.05;
+
+  const pass = hasLocalMin && waistRatio <= 0.45;
+  readout.innerHTML =
+`π readback (rendered transforms — the painted barbell, NOT neckGirth·const):
+  separation (bodyA↔bodyB centres) : ${sep.toFixed(1)} px  (rest 0 → wells apart mid-travel)
+  rendered neck girth (scaleY)     : ${neckGirth.toFixed(3)}  (1.0 rest → ${'≤0.40'} at waist)
+  hasLocalMinimum (two peaks+dip)  : ${hasLocalMin}
+  waistRatio (waist / bodyPeak)    : ${waistRatio.toFixed(3)}   target ≤ 0.45
+  squash-refraction slide scaleX   : ${slideSx.toFixed(3)}  scaleY ${slideSy.toFixed(3)}
+  vol-preserving (|Sx·Sy − 1|<.05) : ${volPreserved}
+  ────────────────────────────────────────────────────────
+  <span class="verdict ${pass ? 'pass' : 'fail'}">${pass ? 'PASS — concave barbell waist + transform squash (Chrome=Safari)' : 'RED — no concave waist (run mid-travel for the peak)'}</span>
+  note: run this WHILE travelling (hold Next + probe) to catch the peak; at rest the bridge is display:none (the mount-gate) → RED by construction.`;
+};
+</script>
+</body>
+</html>

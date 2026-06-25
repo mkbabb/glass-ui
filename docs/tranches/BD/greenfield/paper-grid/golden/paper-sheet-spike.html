@@ -1,0 +1,246 @@
+<!doctype html>
+<!--
+  GOLDEN spike — the LIT RIPPLING PAPER SHEET (throwaway de-risk).
+  Reproduces the GOLDEN mechanism in a single self-contained WebGL2 fragment pass,
+  numerically matching the planned waveField extension (cellHeight + faceRelief +
+  facePlateau + squash) so the rippling-sheet read can be verified in painted pixels
+  BEFORE any src/ change. NOT a library artifact; it lives only in the greenfield dir.
+
+  The kernel mirrors paper-grid.wgsl.ts fs_main + the proposed face layer:
+    g      = uv*gridScale
+    g      = cellTwist(g, ...)              // KEPT (the cell geometry — visible now)
+    cc     = cell center
+    h      = cellHeight(cc, t, wave, amp)   // NEW: travelingEnvelope*amp (the sheet height)
+    grad   = faceRelief(cc, ...)            // NEW: central-diff slope of h
+    shade  = 0.5 + dot(normalize(vec3(-grad, k)), L)*0.5   // NEW: Lambert fold-shade
+    inset  = baseInset*(1 - squashK*h)      // NEW: squash&stretch (face inflates at crest)
+    face   = facePlateau(g, inset)          // NEW: soft inset-square coverage
+    faceInk= mix(warmLo, warmHi, shade)     // warm-divergent ramp, hue in [20,90]
+    line   = Golus minor/major (KEPT — the creases)
+    composite: warm field -> face (under) -> crease (over), premultiplied
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<title>GOLDEN — lit rippling paper sheet</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  /* §3 colorful warm field BEHIND the transmissive sheet (the BD.W-PAGE-BACKGROUND warm-mesh
+     stand-in: a warm divergent conic so the spike proves "field behind glass + defined edge"). */
+  #field{position:fixed;inset:0;
+    background:
+      radial-gradient(120% 90% at 22% 18%, oklch(0.86 0.11 64) 0%, transparent 55%),
+      radial-gradient(110% 100% at 82% 30%, oklch(0.80 0.13 38) 0%, transparent 52%),
+      radial-gradient(120% 110% at 60% 88%, oklch(0.83 0.10 92) 0%, transparent 58%),
+      oklch(0.92 0.045 78);
+  }
+  canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+  #hud{position:fixed;left:8px;top:8px;font:11px ui-monospace,monospace;color:#3a2a12;
+    background:oklch(0.95 0.03 80 / .7);padding:4px 7px;border-radius:6px;white-space:pre}
+</style>
+</head>
+<body>
+<div id="field"></div>
+<canvas id="c"></canvas>
+<div id="hud">GOLDEN spike — booting…</div>
+<script type="text/javascript">
+const VERT = `#version 300 es
+void main(){
+  vec2 p = vec2((gl_VertexID==1)?3.:-1., (gl_VertexID==2)?3.:-1.);
+  gl_Position = vec4(p,0.,1.);
+}`;
+
+const FRAG = `#version 300 es
+precision highp float;
+out vec4 o;
+uniform vec2  uRes;
+uniform float uT;
+uniform float uGridScale;
+uniform vec2  uWaveDir;
+uniform float uWaveK, uWaveOmega, uWaveSigma;
+uniform float uTwistMax, uShearMax, uAmp;
+uniform float uMajorEvery, uMinorW, uMajorW, uMinorA, uMajorA;
+// face params (the GOLDEN layer)
+uniform float uFaceAlpha, uFaceRelief, uSquashK, uBaseInset;
+uniform vec3  uWarmLo, uWarmHi, uLineInk;
+uniform vec3  uLight;          // fixed cel key-light (upper-right)
+
+const float TAU = 6.283185307179586;
+const float TWIST_FLOOR = 0.62;
+
+// ---- shared noise basis (transcribes paperGrid.ts hash21/valueNoise/potentialFBM) ----
+float hash21(float x, float y){
+  float px = fract(x*0.1031); float py = fract(y*0.1031); float pz = fract(x*0.1031);
+  float d = px*(py+33.33)+py*(pz+33.33)+pz*(px+33.33);
+  px+=d; py+=d; pz+=d; return fract((px+py)*pz);
+}
+float valueNoise(float x, float y){
+  float ix=floor(x), iy=floor(y); float fx=x-ix, fy=y-iy;
+  float ux=fx*fx*fx*(fx*(fx*6.-15.)+10.); float uy=fy*fy*fy*(fy*(fy*6.-15.)+10.);
+  float a=hash21(ix,iy), b=hash21(ix+1.,iy), c=hash21(ix,iy+1.), e=hash21(ix+1.,iy+1.);
+  return mix(mix(a,b,ux),mix(c,e,ux),uy);
+}
+float potentialFBM(vec2 p){
+  float v=0., amp=0.5, freq=1.; float px=p.x, py=p.y;
+  for(int i=0;i<3;i++){ v+=amp*valueNoise(px*freq,py*freq);
+    float rx=0.8*px-0.6*py; float ry=0.6*px+0.8*py; px=rx; py=ry; freq*=2.; amp*=0.5; }
+  return v;
+}
+vec2 curlFBM(vec2 p){
+  float e=0.012;
+  float dx=potentialFBM(vec2(p.x+e,p.y))-potentialFBM(vec2(p.x-e,p.y));
+  float dy=potentialFBM(vec2(p.x,p.y+e))-potentialFBM(vec2(p.x,p.y-e));
+  float gx=dx/(2.*e), gy=dy/(2.*e); return vec2(gy,-gx);
+}
+
+// ---- shared waveField (transcribes waveField.wgsl.ts) ----
+float travelingEnvelope(vec2 pivot,float t,vec2 wd,float wk,float wo,float ws){
+  float coord=dot(pivot,wd)*wk - t*wo; float crest=fract(coord/TAU);
+  float z=(crest-0.5)*2.; return exp(-(z*z)/max(ws,1e-3));
+}
+float curlScalar(vec2 cc,float t){ vec2 f=curlFBM(vec2(cc.x*0.5+t*0.08,cc.y*0.5-t*0.06)); return clamp(f.x,-1.,1.); }
+float directedTwist(float s){ float mag=max(TWIST_FLOOR,abs(s)); return tanh(s*6.)*mag; }
+vec2 cellTwist(vec2 g,float cs,float t,vec2 wd,float wk,float wo,float ws,float tw,float sh,float amp){
+  cs=max(cs,1e-3); vec2 cell=floor(g/cs); vec2 cc=(cell+0.5)*cs;
+  float env=travelingEnvelope(cc,t,wd,wk,wo,ws)*amp;
+  float th=tw*env*directedTwist(curlScalar(cc,t));
+  float shr=sh*env*directedTwist(curlScalar(cc+vec2(17.3,9.1),t));
+  vec2 l=g-cc; float ct=cos(th), st=sin(th);
+  vec2 rot=vec2(ct*l.x-st*l.y, st*l.x+ct*l.y); rot.x+=shr*rot.y; return cc+rot;
+}
+// ---- GOLDEN additions (the proposed waveField extension) ----
+// cellHeight: the sheet displacement at a cell center = the SAME crest the twist rides.
+float cellHeight(vec2 cc,float t,vec2 wd,float wk,float wo,float ws,float amp){
+  return travelingEnvelope(cc,t,wd,wk,wo,ws)*amp;  // [0,1]
+}
+// faceRelief: central-difference slope of cellHeight across the cell (the fold normal).
+vec2 faceRelief(vec2 cc,float cs,float t,vec2 wd,float wk,float wo,float ws,float amp){
+  float e=0.5*cs;
+  float hx = cellHeight(cc+vec2(e,0.),t,wd,wk,wo,ws,amp) - cellHeight(cc-vec2(e,0.),t,wd,wk,wo,ws,amp);
+  float hy = cellHeight(cc+vec2(0.,e),t,wd,wk,wo,ws,amp) - cellHeight(cc-vec2(0.,e),t,wd,wk,wo,ws,amp);
+  return vec2(hx,hy);
+}
+// facePlateau: soft inset-square coverage inside the (warped) cell.
+float facePlateau(vec2 g,float inset,vec2 dv){
+  vec2 f=fract(g); float d=min(min(f.x,1.-f.x),min(f.y,1.-f.y)); // dist into cell from nearest gutter
+  float aa=max(max(dv.x,dv.y),1e-4);
+  return smoothstep(inset, inset+aa*2.0, d);
+}
+
+// ---- Golus crease lines (transcribes gridCoverage) ----
+float gridCoverage(vec2 g,float tw,vec2 dv){
+  vec2 gridUV=1.-abs(fract(g)*2.-1.);
+  vec2 dw=clamp(vec2(tw),dv,vec2(0.5));
+  vec2 aa=dv*1.5;
+  vec2 g2=smoothstep(dw+aa,dw-aa,gridUV);
+  g2*=clamp(vec2(tw)/max(dw,vec2(1e-6)),vec2(0.),vec2(1.));
+  g2=mix(g2,vec2(tw),clamp(dv*2.-1.,vec2(0.),vec2(1.)));
+  return max(g2.x,g2.y);
+}
+
+void main(){
+  vec2 frag = gl_FragCoord.xy;
+  float aspect = uRes.x/uRes.y;
+  vec2 uv = vec2((frag.x/uRes.x*2.-1.)*aspect, frag.y/uRes.y*2.-1.);
+  float t = uT;
+
+  vec2 g = uv*uGridScale;
+  g = cellTwist(g,1.0,t,uWaveDir,uWaveK,uWaveOmega,uWaveSigma,uTwistMax,uShearMax,uAmp);
+
+  // cell center of the twisted coord (for the height/relief reads)
+  vec2 cc = (floor(g)+0.5);
+
+  // GOLDEN face layer
+  float h = cellHeight(cc,t,uWaveDir,uWaveK,uWaveOmega,uWaveSigma,uAmp);
+  vec2  grad = faceRelief(cc,1.0,t,uWaveDir,uWaveK,uWaveOmega,uWaveSigma,uAmp);
+  vec3  n = normalize(vec3(-grad*uFaceRelief, 1.0));
+  float shade = clamp(0.5 + dot(n, normalize(uLight))*0.5, 0.0, 1.0);
+
+  vec2 dv = max(fwidth(g), vec2(1e-4));
+  float inset = uBaseInset*(1.0 - uSquashK*h);     // squash: face inflates at the crest
+  float face  = facePlateau(g, inset, dv);
+  // the face brightens where the crest passes (the ripple READS on the surface)
+  float faceA = face * uFaceAlpha * (0.45 + 0.55*h);
+  vec3  faceInk = mix(uWarmLo, uWarmHi, shade);
+
+  // creases (KEPT)
+  float minor = gridCoverage(g, uMinorW, dv);
+  float me = max(uMajorEvery,1.0);
+  float major = gridCoverage(g/me, uMajorW, dv/me);
+  float line = max(minor*uMinorA, major*uMajorA);
+
+  // composite over TRANSPARENT, premultiplied: face under, crease over.
+  // (the page/warm field reads through the gutters — the transmissive identity holds)
+  vec3 col = faceInk;
+  float a = faceA;
+  a = line + a*(1.0-line);
+  col = mix(col, uLineInk, line);
+
+  o = vec4(col*a, a);
+}`;
+
+const cv = document.getElementById('c');
+const gl = cv.getContext('webgl2', {alpha:true, premultipliedAlpha:true, antialias:false});
+const hud = document.getElementById('hud');
+function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+  if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){hud.textContent='SHADER ERR\\n'+gl.getShaderInfoLog(s);throw gl.getShaderInfoLog(s);}return s;}
+const prog=gl.createProgram();
+gl.attachShader(prog,sh(gl.VERTEX_SHADER,VERT));
+gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FRAG));
+gl.linkProgram(prog);
+if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){hud.textContent='LINK ERR\\n'+gl.getProgramInfoLog(prog);}
+gl.useProgram(prog);
+gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); // premultiplied over transparent
+const va=gl.createVertexArray(); gl.bindVertexArray(va);
+
+const U={};
+['uRes','uT','uGridScale','uWaveDir','uWaveK','uWaveOmega','uWaveSigma','uTwistMax','uShearMax','uAmp',
+ 'uMajorEvery','uMinorW','uMajorW','uMinorA','uMajorA','uFaceAlpha','uFaceRelief','uSquashK','uBaseInset',
+ 'uWarmLo','uWarmHi','uLineInk','uLight'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
+
+// GOLDEN demo preset (RIPPLE) — warm-divergent face, hue in [20,90], no teal/navy.
+const cfg = {
+  gridScale: 9.0,            // ~ view/cellPitch → a readable lattice
+  waveDir:[0.92,0.39], waveK:0.62, waveOmega:1.05, waveSigma:0.42,
+  twistMax:0.62, shearMax:0.26,
+  majorEvery:5, minorW:0.02, majorW:0.012, minorA:0.55, majorA:0.85,
+  faceAlpha:0.62, faceRelief:2.6, squashK:0.42, baseInset:0.14,
+  warmLo:[0.42,0.16,0.10],   // deep rose-umber trough  (linear-ish sRGB, hue~30)
+  warmHi:[0.99,0.86,0.55],   // warm-wheat crest highlight (hue~80)
+  lineInk:[0.30,0.18,0.06],  // warm umber crease
+  light:[0.55,0.70,0.45],
+};
+
+let amp=0, t0=performance.now();
+function resize(){const dpr=Math.min(devicePixelRatio,2);
+  cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; gl.viewport(0,0,cv.width,cv.height);}
+addEventListener('resize',resize); resize();
+
+function frame(now){
+  const t=(now-t0)/1000;
+  // spring-eased amp (mirrors usePaperGrid getAmp overshoot)
+  amp += (1.06-amp)*0.04; if(amp>1) amp=1+(amp-1)*0.85;
+  gl.useProgram(prog);
+  gl.uniform2f(U.uRes,cv.width,cv.height);
+  gl.uniform1f(U.uT,t);
+  gl.uniform1f(U.uGridScale,cfg.gridScale);
+  gl.uniform2f(U.uWaveDir,cfg.waveDir[0],cfg.waveDir[1]);
+  gl.uniform1f(U.uWaveK,cfg.waveK); gl.uniform1f(U.uWaveOmega,cfg.waveOmega); gl.uniform1f(U.uWaveSigma,cfg.waveSigma);
+  gl.uniform1f(U.uTwistMax,cfg.twistMax); gl.uniform1f(U.uShearMax,cfg.shearMax); gl.uniform1f(U.uAmp,amp);
+  gl.uniform1f(U.uMajorEvery,cfg.majorEvery);
+  gl.uniform1f(U.uMinorW,cfg.minorW); gl.uniform1f(U.uMajorW,cfg.majorW);
+  gl.uniform1f(U.uMinorA,cfg.minorA); gl.uniform1f(U.uMajorA,cfg.majorA);
+  gl.uniform1f(U.uFaceAlpha,cfg.faceAlpha); gl.uniform1f(U.uFaceRelief,cfg.faceRelief);
+  gl.uniform1f(U.uSquashK,cfg.squashK); gl.uniform1f(U.uBaseInset,cfg.baseInset);
+  gl.uniform3fv(U.uWarmLo,cfg.warmLo); gl.uniform3fv(U.uWarmHi,cfg.warmHi);
+  gl.uniform3fv(U.uLineInk,cfg.lineInk); gl.uniform3fv(U.uLight,cfg.light);
+  gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.bindVertexArray(va); gl.drawArrays(gl.TRIANGLES,0,3);
+  hud.textContent='GOLDEN spike · lit rippling sheet\\namp='+amp.toFixed(3)+'  t='+t.toFixed(1)+'  faceA='+cfg.faceAlpha;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+window.__spike={gl,cv,cfg};
+</script>
+</body>
+</html>

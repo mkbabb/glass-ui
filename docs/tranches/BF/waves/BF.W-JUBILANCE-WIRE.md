@@ -63,7 +63,7 @@ The painted-truth readback for the celebration burst (haptic is a body-confirm w
 
 ## The gestalt row
 
-**BF-roster surfaces: `dock-fission` (the merge-splash + petal jubilance) + `feedback-celebration` (the earned moment).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: an earned moment BLOOMS — warm-cream glass petals read as the SAME frosted material the surface is made of (not flat emoji-confetti); the dock re-merge rewards the completion with the petal bloom + gold splash; a drag/fission/press confirms in the body (the haptic, felt where the platform allows). Born-FAIL on the BE tree (the engines are dead — nothing fires); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surfaces: `dock-fission` (the merge-splash + petal jubilance) + `feedback-celebration` (the earned moment).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: an earned moment BLOOMS — warm-cream glass petals read as the SAME frosted material the surface is made of (not flat emoji-confetti); the dock re-merge rewards the completion with the petal bloom + gold splash; a drag/fission/press confirms in the body (the haptic, felt where the platform allows). Born-FAIL on the BE tree (the engines are dead — nothing fires); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

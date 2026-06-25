@@ -50,7 +50,7 @@ The painted-truth readback that the dock GROWS/SHRINKS under scroll + touch as O
 
 ## The gestalt row
 
-**Roster surface: `dock-grow-on-event`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the liquid dock reads as ALIVE to the user's hand — it condenses smoothly as the page scrolls (the iOS-27 mini-player / Safari-URL-bar condense, re-growing at the top) and can be PULLED bigger with a finger, all as ONE liquid box reshape (never a layout jump, never a stutter). PASS iff the condense reads as a continuous compositor scale AND the drag-grow reads as a direct-manipulation gesture. Rides `W-REFLECT`; surface-hash freshness floor binds.
+**Roster surface: `dock-grow-on-event`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the liquid dock reads as ALIVE to the user's hand — it condenses smoothly as the page scrolls (the iOS-27 mini-player / Safari-URL-bar condense, re-growing at the top) and can be PULLED bigger with a finger, all as ONE liquid box reshape (never a layout jump, never a stutter). PASS iff the condense reads as a continuous compositor scale AND the drag-grow reads as a direct-manipulation gesture. The binding paint is GREEN at its OWN close; W-REFLECT re-confirms on the union sweep (never the first paint); the surface-hash freshness floor binds.
 
 ## Fences
 

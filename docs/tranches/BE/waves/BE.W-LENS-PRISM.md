@@ -69,7 +69,7 @@ This wave WIRES them: the `.glass-lens` rim composes the `--glass-edge-dispersio
 
 ## π — the binding paint readback
 
-**Extend `tests-visual/lensing.spec.ts` (Chromium + WebKit, LOCAL real-render) — the dispersion-on-lens arm.** VISUAL wave → a `proof:ba-gestalt` glass/CTA verdict + a captured DELTA, both modes. NO source-green close; "rides W-REFLECT3" FORBIDDEN (G8).
+**Extend `tests-visual/lensing.spec.ts` (Chromium + WebKit, LOCAL real-render) — the dispersion-on-lens arm.** VISUAL wave → a `proof:ba-gestalt` glass/CTA verdict + a captured DELTA, both modes. NO source-green close; "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" FORBIDDEN (G8).
 
 - **The binding readback (the prism reads):** mount a `.glass-lens` surface over a busy backdrop and getImageData ACROSS the lens rim band — sample the rim's left edge vs right edge and assert a WARM hue shift on one edge + a COOL hue shift on the other (the spectral split — the dispersion fringe reads at the refracting rim). proof:lensing's existing π is getComputedStyle-only (no getImageData — verified lensing.spec.ts:72-90); THIS arm adds the REAL pixel fringe readback. BEFORE: the lens rim has no warm/cool split (refraction without dispersion). AFTER: the warm fringe ΔE on one edge, cool on the other.
 - **The press-bloom arm:** capture the lens at rest vs `:active` and assert the dispersion fringe INTENSIFIES under press (the spectral split blooms with the deform — the coupled EFFECTS leg).

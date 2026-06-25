@@ -52,7 +52,7 @@ The painted-truth readback (W-PI-AUTHOR authors the born-RED shell; this wave FL
 
 ## The gestalt row
 
-**BF-roster surface: `dock-rail-realize` (the facet-carousel verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the expanded facet carousel, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the facets read as a **tiered context carousel** — the active forward, the neighbours receding in a φ-tier fan, each carrying its own context hue — visibly distinct from the macOS un-tinted equal-spaced glyph stack; the dock box NEVER grows (the rail fans in its gutter, hairline-thin). Born-FAIL on the BE tree (the facets read collapsed-only, the φ-tier dead); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surface: `dock-rail-realize` (the facet-carousel verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the expanded facet carousel, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the facets read as a **tiered context carousel** — the active forward, the neighbours receding in a φ-tier fan, each carrying its own context hue — visibly distinct from the macOS un-tinted equal-spaced glyph stack; the dock box NEVER grows (the rail fans in its gutter, hairline-thin). Born-FAIL on the BE tree (the facets read collapsed-only, the φ-tier dead); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

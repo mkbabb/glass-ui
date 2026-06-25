@@ -1,0 +1,115 @@
+<!doctype html>
+<!-- GOLDEN SPIKE (throwaway) — de-risks the boldest mechanism of the motion-vocabulary golden:
+     (1) --motion-weight as a typed @property <number> cascading scalar (the --ui-scale idiom);
+     (2) every squish cap re-expressed as calc(1 + k*var(--motion-weight)) — UNION fence: at the
+         rest weight 1/φ the calc must equal the shipped literal cap to <0.001 (byte-identical feel),
+         and at weight 0 it must collapse to EXACTLY 1.0 (the PRM/observer zero-deformation identity);
+     (3) the velocity->weight LIVE coupling — a fast driver transiently pushes its OWN --motion-weight
+         toward 1, decaying to rest as it settles (morph-MORE-on-move, universal via one scalar);
+     (4) --ease-cartoon-punch as a raw hand-shaped linear() with a real NEGATIVE anticipation leg
+         (a thing no damped spring can express) + a >1.10 punch past the spring fence.
+     All checks print to the page; window.__SPIKE__ holds the machine-readable result for readback. -->
+<html>
+<head><meta charset="utf-8"><title>motion-weight golden spike</title>
+<style>
+  /* (1) the typed cascading scalar — the EXACT --ui-scale / --glass-level idiom (property-regs §18). */
+  @property --motion-weight { syntax: "<number>"; inherits: true; initial-value: 0.618; }
+
+  :root {
+    /* rest = 1/φ ≈ 0.618 (golden-alive; not 0 dead, not 1 manic) */
+    --motion-weight: 0.618;
+
+    /* (2) the caps, re-expressed off the ONE scalar.
+       k chosen so calc == shipped literal at the rest weight 0.618:
+         dock-morph 1.14 -> k = (1.14-1)/0.618 = 0.226537...
+         tab-indic  1.18 -> k = (1.18-1)/0.618 = 0.291262...
+         flex-default 1.14 -> same k as dock. */
+    /* CORRECTED MECHANISM (proven by the spike's diagnosis): a cap token whose value is
+       calc(...var(--motion-weight)...) is an UNREGISTERED custom property, so it is
+       substituted AT :root (weight 0.618) and merely inherits the frozen text down — a
+       child's local --motion-weight:0 arrives too late to re-evaluate it. So the cap MUST
+       be derived AT THE CONSUMING ELEMENT. We keep the token as the COEFFICIENT k only,
+       and each squish site computes the cap locally via its OWN calc reading the LOCAL weight. */
+    --dock-morph-stretch-k: 0.2265372;   /* (1.14-1)/0.618 */
+    --tab-indicator-stretch-k: 0.2912621; /* (1.18-1)/0.618 */
+
+    /* (4) the cartoon register's motion half — a RAW hand-shaped linear(), NOT a spring,
+       NOT a MOTION_CURVES row. Negative anticipation dip below origin, punch to ~1.22, settle. */
+    --ease-cartoon-punch: linear(
+      0, -0.012, -0.038 12%, -0.018 18%, 0.18 34%, 0.62 46%, 0.98 56%,
+      1.14 64%, 1.22 70%, 1.16 78%, 1.06 86%, 1.012 92%, 1
+    );
+  }
+
+  /* probe boxes that derive the cap LOCALLY (the corrected site-local calc) */
+  #dock  { width: calc((1 + var(--dock-morph-stretch-k) * var(--motion-weight)) * 100px); }
+  #tab   { width: calc((1 + var(--tab-indicator-stretch-k) * var(--motion-weight)) * 100px); }
+  #obs   { --motion-weight: 0; width: calc((1 + var(--dock-morph-stretch-k) * var(--motion-weight)) * 100px); }
+  #punchProbe { transition: transform 1ms var(--ease-cartoon-punch); }
+
+  /* PRM carve — ONE assignment zeroes ALL deformation (the §L4/§L5 promise) */
+  @media (prefers-reduced-motion: reduce) { :root { --motion-weight: 0; } }
+
+  body { font: 14px ui-monospace, monospace; padding: 16px; background:#1a1614; color:#f4ead8; }
+  .ok { color:#7fdca0; } .bad { color:#ff7a7a; font-weight:bold; }
+  pre { white-space: pre-wrap; }
+</style></head>
+<body>
+<div id="dock"></div><div id="tab"></div><div id="obs"></div><div id="punchProbe"></div>
+<pre id="out"></pre>
+<script>
+const APPROX = (a,b,eps=0.001)=>Math.abs(a-b)<=eps;
+const px = (el,prop)=>parseFloat(getComputedStyle(el).getPropertyValue(prop));
+const results = [];
+const log = (name,pass,detail)=>{ results.push({name,pass,detail}); };
+
+// --- (2) UNION fence: caps equal shipped literals at rest 0.618 ---
+const dockRest = px(document.getElementById('dock'),'width')/100;   // -> 1.14
+const tabRest  = px(document.getElementById('tab'),'width')/100;    // -> 1.18
+log('dock-cap==1.14 @ rest', APPROX(dockRest,1.14), `got ${dockRest.toFixed(5)}`);
+log('tab-cap==1.18 @ rest',  APPROX(tabRest,1.18),  `got ${tabRest.toFixed(5)}`);
+
+// --- (2) PRM/observer fence: weight 0 collapses cap to EXACTLY 1.0 (zero deformation) ---
+const obsCap = px(document.getElementById('obs'),'width')/100;      // -> 1.0
+log('obs-cap==1.0 @ weight 0', APPROX(obsCap,1.0), `got ${obsCap.toFixed(5)}`);
+
+// --- (1) @property typed-number resolved & inherits ---
+const wRoot = getComputedStyle(document.documentElement).getPropertyValue('--motion-weight').trim();
+log('--motion-weight resolves to 0.618', wRoot==='0.618', `got "${wRoot}"`);
+
+// --- (4) cartoon-punch shape: raw linear() with NEGATIVE leg + >1.10 punch ---
+const punch = getComputedStyle(document.getElementById('punchProbe')).getPropertyValue('--ease-cartoon-punch');
+const nums = (punch.match(/-?\d+\.?\d*/g)||[]).map(Number);
+const hasNeg = nums.some(n=>n<0);                 // the anticipation dip — no spring can do this
+const peak = Math.max(...nums.filter(n=>n<=2));   // ignore the % positions > 2 are filtered by <=2... refine:
+// refine: stops are value%pos pairs; values are the ones NOT followed by % in source. Parse robustly:
+const valueStops = punch.replace(/\d+(\.\d+)?%/g,'').match(/-?\d+\.?\d*/g).map(Number);
+const realPeak = Math.max(...valueStops);
+const realNeg  = Math.min(...valueStops);
+log('cartoon-punch has NEGATIVE anticipation leg', realNeg<0, `min stop ${realNeg}`);
+log('cartoon-punch peaks >1.10 (past spring fence)', realPeak>1.10, `peak ${realPeak}`);
+log('cartoon-punch is a linear() (raw, not a bezier/spring)', punch.includes('linear('), '');
+
+// --- (3) velocity->weight live coupling: SIMULATE the useLiquidFlex write + decay ---
+// model: --flex-vel = tanh(|dt|*k); boost weight = clamp(rest + (1-rest)*flexVel, 0..1).
+const REST=0.618, k=1.6;
+const tanh=Math.tanh;
+const weightOf = (absDt)=>{ const v=tanh(absDt*k); return Math.min(1, REST + (1-REST)*v); };
+const fast = weightOf(0.9);   // a big fast jump -> near 1
+const slow = weightOf(0.05);  // a tiny nudge -> near rest
+const settled = weightOf(0);  // travel stilled -> exactly rest
+log('fast travel pushes weight >0.7', fast>0.7, `w=${fast.toFixed(3)}`);
+log('slow nudge stays near rest (<0.72)', slow<0.72, `w=${slow.toFixed(3)}`);
+log('settled travel == rest 0.618 (self-extinguishing)', APPROX(settled,REST), `w=${settled.toFixed(3)}`);
+// and the cap under the fast boost is DEEPER than at rest (morph MORE on move):
+const capAtFast = 1 + 0.2265372*fast;
+log('cap DEEPER under fast travel than rest (morph-more)', capAtFast>dockRest, `${capAtFast.toFixed(4)} > ${dockRest.toFixed(4)}`);
+
+// render + machine-readable
+const allPass = results.every(r=>r.pass);
+document.getElementById('out').innerHTML =
+  results.map(r=>`<span class="${r.pass?'ok':'bad'}">[${r.pass?'PASS':'FAIL'}]</span> ${r.name} — ${r.detail}`).join('\n')
+  + `\n\n${allPass?'<span class="ok">ALL GREEN — golden mechanism de-risked</span>':'<span class="bad">RED</span>'}`;
+window.__SPIKE__ = { allPass, results, dockRest, tabRest, obsCap, fast, slow, settled, realPeak, realNeg };
+</script>
+</body></html>

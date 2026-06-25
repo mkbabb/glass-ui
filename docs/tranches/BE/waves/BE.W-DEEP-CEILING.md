@@ -85,7 +85,7 @@ The L4 self-test carries the load-bearing bites (`proof-glass-legibility.mjs`, V
 
 ## π — the binding paint readback
 
-**Extend `tests-visual/glass-depth.spec.ts` (Chromium + WebKit, LOCAL real-render).** VISUAL wave (Arm A) → a `proof:ba-gestalt` glass/CTA verdict + a captured DELTA on real GPU, both modes × desktop+mobile. NO source-green close; "rides W-REFLECT3" FORBIDDEN (G8).
+**Extend `tests-visual/glass-depth.spec.ts` (Chromium + WebKit, LOCAL real-render).** VISUAL wave (Arm A) → a `proof:ba-gestalt` glass/CTA verdict + a captured DELTA on real GPU, both modes × desktop+mobile. NO source-green close; "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" FORBIDDEN (G8).
 
 - **π readback (Arm A):** getComputedStyle on a `.glass-deep` surface over the live aurora, parse the resolved `backdrop-filter` blur radius, assert `>= 18px` AND read it against the calm floating 13px so the DELTA is measured (the richer diffusion reads). The `--glass-depth: 0.5` mid-depth read still LERPs to half-way (a host-dialed half-depth lands mid — the axis stayed a genuine driver). Both modes.
 - **The captured DELTA (chrome-devtools-MCP):** the `.glass-deep` surface at 16px (BEFORE — BB's W-DEEP-GLASS-DELTA prior capture) vs 18-20px (AFTER) over the warm-aurora paper-grid, BOTH modes, with the MEASURED median frame-time annotated on each (the budget proof) + the resolved blur radius. A human reads: visibly MORE glass (richer refraction, apple.com-nav-grade) over the warm-cream craft, CLS≈0 (the static reserve holds). Lands at `docs/tranches/BE/audit/visual/W-DEEP-CEILING-DELTA.md` with the apple.com nav `blur(20)/sat(1.8)` ground annotated (the comparison ceiling — glass-ui matches the MATERIAL but over craft).

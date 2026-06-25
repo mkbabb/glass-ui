@@ -1,69 +1,73 @@
 <script setup lang="ts">
-// Tab bar — the tab strip rides the REAL `<SegmentedTabs>` engine (audit §W10:
-// "TabBar→<SegmentedTabs>"), and the trailing "+" BLOOMS a compose sheet on the REAL
-// `useBloomUp` engine. The facsimile hand-rolled the sliding indicator (a `--i` translateX
-// off a bespoke spring-bezier) AND animated the sheet's `max-block-size` (a layout
-// property). Both die here: the indicator is `<SegmentedTabs>`'s own elastic spring-clocked
-// glass plate (the W-TABS engine — squish-on-travel, the calibrated --tab-indicator-
-// duration), and the compose sheet is a SEPARATE overlay laid out at its full rect that
-// FLIPs from the "+" button (transform/opacity/filter, no layout animation).
-import { ref } from "vue";
-import { House, Search, Compass, User, Plus, FileText, ListChecks, Image } from "@lucide/vue";
+// BD.W-DOCK-CORE (A10 / II.5) — the tab bar is now ONE `<GlassDock>` whose content IS the
+// library `<SegmentedTabs>` tabs facility + an in-dock "+" `<DockIconButton>` that SPLITS
+// (the SHIPPED fission engine, WIRED). The hand-rolled `.tb-dock` + `.tb-sheet` two-plate
+// facsimile ("two docks in one") is DELETED — clean break, no alias. The compose surface is
+// the dock MORPHING/SPLITTING (a real fission), not a second plate. All names are GENERIC
+// (Tab 1–4 / Action A–C) — no real product names.
+import { ref, useTemplateRef } from "vue";
+import { Plus, Star, Bookmark, Bell } from "@lucide/vue";
 import DockExampleTile from "../DockExampleTile.vue";
 import { SegmentedTabs } from "../../../../src/components/custom/tabs";
-import { useBloomUp } from "../../../../src/composables/motion/useBloomUp";
+import {
+    GlassDock,
+    DockIconButton,
+    DockSeparator,
+} from "../../../../src/components/custom/dock";
 
 import type { Component } from "vue";
 
-const tab = ref("home");
+const tab = ref("t1");
 const tabOptions = [
-    { value: "home", label: "Home" },
-    { value: "search", label: "Search" },
-    { value: "explore", label: "Explore" },
-    { value: "profile", label: "Profile" },
+    { value: "t1", label: "Tab 1" },
+    { value: "t2", label: "Tab 2" },
+    { value: "t3", label: "Tab 3" },
+    { value: "t4", label: "Tab 4" },
 ];
-// value → glyph (the tab bar is icon-first; SegmentedTabs renders labels by default, so
-// the #option slot swaps in the lucide glyph while the accessible label stays the source).
+// value → glyph (the tab bar is icon-first; SegmentedTabs renders labels by default, so the
+// #option slot swaps in a glyph while the accessible label stays the source).
 const tabGlyph: Record<string, Component> = {
-    home: House,
-    search: Search,
-    explore: Compass,
-    profile: User,
+    t1: Star,
+    t2: Bookmark,
+    t3: Bell,
+    t4: Plus,
 };
 
-const actions = [
-    { icon: FileText, label: "New Note" },
-    { icon: ListChecks, label: "New List" },
-    { icon: Image, label: "New Photo" },
-];
-
-const open = ref(false);
-const addRef = ref<HTMLElement | null>(null);
-const sheetRef = ref<HTMLElement | null>(null);
-
-// the compose sheet blooms FROM the "+" button (the bloom SOURCE).
-const bloom = useBloomUp(addRef, sheetRef, { preset: "bouncy", blur: 5 });
+// The compose actions DETACH from the dock as fission pieces (the "+" splits the dock into
+// these action chips, gooing apart, then merges back).
+const dockRef = useTemplateRef<InstanceType<typeof GlassDock>>("dockRef");
+const isSplit = ref(false);
 
 function toggleCompose(): void {
-    if (open.value) {
-        bloom.reset();
-        open.value = false;
-        return;
-    }
-    open.value = true;
-    requestAnimationFrame(() => bloom.bloom());
+    dockRef.value?.toggleSplit();
+    isSplit.value = !isSplit.value;
 }
 </script>
 
 <template>
-    <DockExampleTile label="Tab bar" hint="SegmentedTabs strip · + blooms a compose sheet">
+    <DockExampleTile
+        label="Tab bar"
+        hint="ONE GlassDock · SegmentedTabs · + SPLITS the dock"
+        style="--dock-island-reach-override: 5rem"
+    >
         <template #bg>
             <div class="tb-bg" />
         </template>
 
-        <div class="tb-dock">
-            <!-- the pinned tab row — the REAL SegmentedTabs engine (its own spring-clocked
-                 elastic glass indicator; NO facsimile --i translateX). -->
+        <!-- ONE GlassDock — the tabs facility lives INSIDE it; the "+" SPLITS it (fission).
+             The compose actions DETACH DOWNWARD into a sibling island dock (below the source
+             pill, inside the tile) — a real fission: the chips fly off + goo-neck + land in a
+             SECOND dock plate. `split-placement="below"` + a tile-local reach keep the island
+             on-screen inside the gallery tile. -->
+        <GlassDock
+            ref="dockRef"
+            always-expanded
+            splittable
+            split-context="search"
+            split-placement="below"
+            density="comfortable"
+            class="tb-glass-dock"
+        >
             <div class="tb-row">
                 <SegmentedTabs
                     v-model="tab"
@@ -79,40 +83,58 @@ function toggleCompose(): void {
                         />
                     </template>
                 </SegmentedTabs>
-                <button
-                    ref="addRef"
-                    type="button"
-                    class="tb-add"
-                    :class="{ 'tb-add--open': open }"
-                    :aria-expanded="open"
+
+                <DockSeparator />
+
+                <!-- the "+" SPLITS the dock: the three compose actions DETACH from the
+                     source pill (they retract into the goo neck) and MIGRATE into the
+                     sibling island dock below (the #split slot). Click toggles split↔merge;
+                     the rotate marks the open state. -->
+                <DockIconButton
+                    :aria-expanded="isSplit"
                     aria-label="Compose"
+                    :class="{ 'tb-add--open': isSplit }"
                     @click="toggleCompose"
                 >
                     <Plus class="size-5" />
-                </button>
-            </div>
-        </div>
+                </DockIconButton>
 
-        <!-- the compose sheet — a SEPARATE overlay, rendered only while open. Lays out at
-             its FULL settled rect; useBloomUp FLIPs it FROM the "+" button. -->
-        <div
-            v-if="open"
-            ref="sheetRef"
-            class="tb-sheet"
-            role="dialog"
-            aria-label="Compose"
-        >
-            <button
-                v-for="a in actions"
-                :key="a.label"
-                type="button"
-                class="tb-action"
-                @click="toggleCompose"
-            >
-                <span class="tb-action-icon"><component :is="a.icon" class="size-4" /></span>
-                <span class="tb-action-label">{{ a.label }}</span>
-            </button>
-        </div>
+                <!-- the three compose actions live in the source pill at rest; on split
+                     they retract (the SHIPPED fission — they fade into the goo neck). -->
+                <DockIconButton
+                    data-dock-splittable
+                    aria-label="Action A"
+                    class="tb-action-chip"
+                >
+                    <span class="tb-action-glyph">A</span>
+                </DockIconButton>
+                <DockIconButton
+                    data-dock-splittable
+                    aria-label="Action B"
+                    class="tb-action-chip"
+                >
+                    <span class="tb-action-glyph">B</span>
+                </DockIconButton>
+                <DockIconButton
+                    data-dock-splittable
+                    aria-label="Action C"
+                    class="tb-action-chip"
+                >
+                    <span class="tb-action-glyph">C</span>
+                </DockIconButton>
+            </div>
+
+            <!-- the SIBLING ISLAND dock content — the detached compose actions land here
+                 (a SECOND dock below the source pill, goo-necked to it). The source pieces
+                 retract as these arrive — the content MIGRATES into the new dock. -->
+            <template #split>
+                <div class="tb-island-row">
+                    <button type="button" class="tb-island-chip" aria-label="Action A">A</button>
+                    <button type="button" class="tb-island-chip" aria-label="Action B">B</button>
+                    <button type="button" class="tb-island-chip" aria-label="Action C">C</button>
+                </div>
+            </template>
+        </GlassDock>
     </DockExampleTile>
 </template>
 
@@ -124,90 +146,54 @@ function toggleCompose(): void {
         linear-gradient(150deg, oklch(0.89 0.05 80), oklch(0.83 0.08 55));
 }
 
-/* the glass dock plate. */
-.tb-dock {
-    inline-size: 18rem;
-    padding: 0.4rem;
-    border-radius: 1.6rem;
-    background: var(--glass-bg-floating);
-    -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
-    backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
-    box-shadow:
-        inset 0 0 0 0.5px var(--glass-edge-light, rgb(255 255 255 / 0.22)),
-        var(--shadow-floating);
+.tb-glass-dock {
+    position: relative;
 }
+
 .tb-row {
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 .tb-tabs {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-inline-size: 0;
-}
-.tb-add {
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-    inline-size: 2.6rem;
-    block-size: 2.6rem;
-    border-radius: 0.85rem;
-    color: var(--foreground);
-    background: color-mix(in oklab, var(--foreground) 8%, transparent);
-    /* the "+" rotates to "×" on open — the SHIPPED --ex-snappy (the dock register), NOT a
-       bespoke spring-bezier. The bloom owns the sheet; this is the trigger affordance. */
-    transition:
-        rotate var(--ex-snappy-duration, 0.34s) var(--ex-snappy),
-        background 0.2s var(--ex-ease);
 }
 .tb-add--open {
     rotate: 45deg;
-    background: color-mix(in oklab, var(--foreground) 14%, transparent);
 }
 
-/* the compose sheet — the bloom DEST. */
-.tb-sheet {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    inline-size: 16rem;
-    padding: 0.5rem;
-    border-radius: 1.6rem;
-    background: var(--glass-bg-floating);
-    -webkit-backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
-    backdrop-filter: blur(var(--glass-blur-floating-radius, 13px)) saturate(1.35);
-    box-shadow:
-        inset 0 0 0 0.5px var(--glass-edge-light, rgb(255 255 255 / 0.22)),
-        var(--shadow-floating);
+/* the compose action chips — a soft warm-cream tinted plate so they read as discrete
+   chips when they detach (the fission goo bridges them back to the dock body). */
+.tb-action-chip {
+    background: color-mix(in oklab, var(--foreground) 8%, transparent);
 }
-.tb-action {
+.tb-action-glyph {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+/* the detached island dock's content — the migrated compose actions as a row of chips. */
+.tb-island-row {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.5rem 0.55rem;
-    border-radius: 0.85rem;
-    text-align: start;
-    color: var(--foreground);
-    transition: background 0.2s var(--ex-ease);
+    gap: 0.5rem;
 }
-.tb-action:hover {
-    background: color-mix(in oklab, var(--foreground) 6%, transparent);
-}
-.tb-action-icon {
+.tb-island-chip {
     display: grid;
     place-items: center;
-    flex: 0 0 auto;
-    inline-size: 2.1rem;
-    block-size: 2.1rem;
-    border-radius: 0.65rem;
-    color: white;
-    background: linear-gradient(135deg, oklch(0.72 0.14 70), oklch(0.65 0.13 45));
-    box-shadow: inset 0 0 0 0.5px color-mix(in oklab, white, transparent 60%);
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: 999px;
+    border: none;
+    background: color-mix(in oklab, var(--foreground) 10%, transparent);
+    color: var(--foreground);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
-.tb-action-label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    white-space: nowrap;
+.tb-island-chip:hover {
+    background: color-mix(in oklab, var(--foreground) 16%, transparent);
 }
 </style>

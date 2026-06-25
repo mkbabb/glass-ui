@@ -62,6 +62,13 @@ export interface ContextLayer {
     id: string;
     label: string;
     icon: Component | string;
+    /**
+     * W-NAV-DOCK-FIX — the per-facet accent hue (the `mode="facets"` context carousel's
+     * `--glass-accent` rim, presets-in-consumers). A `--section-color-N` LIBRARY identity
+     * hue (READ by the demo, never minted here). Distinct per facet so the carousel reads
+     * as distinct accent-tinted contexts (no two adjacent chips share a hue).
+     */
+    accent: string;
     /** The within-category quick-jump entries this facet surfaces. */
     entries: ContextLayerEntry[];
 }
@@ -78,6 +85,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "tokens",
             label: "Tokens",
             icon: Palette as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "colors", label: "Colors" },
                 { storyId: "radii", label: "Radii" },
@@ -89,6 +97,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "type",
             label: "Type",
             icon: Type as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "typography", label: "Typography" },
                 { storyId: "icons", label: "Icons" },
@@ -98,6 +107,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "material",
             label: "Material",
             icon: Square as LucideIcon,
+            accent: "var(--section-color-7)",
             entries: [
                 { storyId: "paper-glass", label: "Paper & Glass" },
                 { storyId: "paper-texture", label: "Paper Texture" },
@@ -110,6 +120,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "fields",
             label: "Fields",
             icon: Droplet as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "aurora", label: "Aurora" },
                 { storyId: "constellation", label: "Constellation" },
@@ -120,6 +131,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "creatures",
             label: "Creatures",
             icon: SparklesIcon as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "blob", label: "GooBlob" },
                 { storyId: "glass-material", label: "Glass Material" },
@@ -131,6 +143,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "text",
             label: "Text",
             icon: Type as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "inputs", label: "Inputs" },
                 { storyId: "textarea", label: "Textarea" },
@@ -141,6 +154,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "selection",
             label: "Selection",
             icon: CheckSquare as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "select", label: "Select" },
                 { storyId: "combobox", label: "Combobox" },
@@ -151,6 +165,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "toggles",
             label: "Toggles",
             icon: ToggleLeft as LucideIcon,
+            accent: "var(--section-color-7)",
             entries: [
                 { storyId: "checks", label: "Checkbox · Radio · Switch" },
                 { storyId: "slider", label: "Slider" },
@@ -164,6 +179,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "surfaces",
             label: "Surfaces",
             icon: LayoutPanelTop as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "card", label: "Card" },
                 { storyId: "section", label: "Section" },
@@ -174,6 +190,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "atoms",
             label: "Atoms",
             icon: MousePointerClick as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "buttons", label: "Buttons" },
                 { storyId: "badge", label: "Badge" },
@@ -187,6 +204,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "modals",
             label: "Modals",
             icon: Frame as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "dialog", label: "Dialog" },
                 { storyId: "sheet", label: "Sheet" },
@@ -197,6 +215,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "floating",
             label: "Floating",
             icon: LayoutPanelTop as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "popover", label: "Popover" },
                 { storyId: "dropdown-menu", label: "Dropdown Menu" },
@@ -208,6 +227,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "disclosure",
             label: "Disclosure",
             icon: Layers as LucideIcon,
+            accent: "var(--section-color-7)",
             entries: [
                 { storyId: "accordion", label: "Accordion" },
                 { storyId: "collapsible", label: "Collapsible" },
@@ -220,6 +240,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "switchers",
             label: "Switchers",
             icon: NavIcon as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "tabs", label: "Tabs" },
                 { storyId: "carousel", label: "Carousel" },
@@ -231,6 +252,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "shell",
             label: "Shell",
             icon: PanelBottom as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "overview", label: "Overview" },
                 { storyId: "rail", label: "Vertical Dock" },
@@ -240,6 +262,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "panes",
             label: "Panes",
             icon: LayoutPanelTop as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [{ storyId: "layers", label: "Dock Layers" }],
         },
     ],
@@ -248,6 +271,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "tables",
             label: "Tables",
             icon: Table2 as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "table", label: "Table" },
                 { storyId: "data-table", label: "Data Table" },
@@ -258,6 +282,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "lists",
             label: "Lists",
             icon: Tags as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "sortable-list", label: "Sortable List" },
                 { storyId: "infinite-scroll", label: "Infinite Scroll" },
@@ -268,6 +293,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "series",
             label: "Series",
             icon: GitBranch as LucideIcon,
+            accent: "var(--section-color-7)",
             entries: [
                 { storyId: "timeline", label: "Timeline" },
                 { storyId: "metric-cell", label: "Metric Cell" },
@@ -280,6 +306,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "status",
             label: "Status",
             icon: BellRing as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "alert", label: "Alert" },
                 { storyId: "toast", label: "Toast" },
@@ -290,6 +317,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "progress",
             label: "Progress",
             icon: Loader as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "progress", label: "Progress" },
                 { storyId: "skeleton", label: "Skeleton" },
@@ -301,6 +329,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "engines",
             label: "Engines",
             icon: Waypoints as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "springs", label: "Spring Orchestrator" },
                 { storyId: "curve-gallery", label: "Curve Gallery" },
@@ -310,6 +339,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "text-fx",
             label: "Text FX",
             icon: TypeIcon as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "countup", label: "Count-up" },
                 { storyId: "typewriter", label: "Typewriter" },
@@ -321,6 +351,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "entrance",
             label: "Entrance",
             icon: Wand2 as LucideIcon,
+            accent: "var(--section-color-7)",
             entries: [{ storyId: "reveal", label: "v-reveal" }],
         },
     ],
@@ -329,6 +360,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "heroes",
             label: "Heroes",
             icon: Image as LucideIcon,
+            accent: "var(--section-color-2)",
             entries: [
                 { storyId: "hero", label: "Hero" },
                 { storyId: "auth-shell", label: "Auth Shell" },
@@ -339,6 +371,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             id: "patterns",
             label: "Patterns",
             icon: BoxesIcon as LucideIcon,
+            accent: "var(--section-color-3)",
             entries: [
                 { storyId: "settings", label: "Settings" },
                 { storyId: "configurator", label: "Configurator" },
@@ -354,5 +387,6 @@ export const FALLBACK_CONTEXT_LAYER: ContextLayer = {
     id: "section",
     label: "Section",
     icon: Wrench as LucideIcon,
+    accent: "var(--section-color-7)",
     entries: [],
 };

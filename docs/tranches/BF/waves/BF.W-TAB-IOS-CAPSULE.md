@@ -52,7 +52,7 @@ The painted-truth readback, BOTH modes (light + dark) AND the **webkit project**
 
 ## The gestalt row
 
-**BF-roster surface: `tab-ios-capsule` (the recessed-accent segmented register).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the tabs surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the segmented control reads as an iOS-27 RECESSED TRACK with a RAISED, LIT ACCENT CAPSULE riding in it (the channel sinks, the selected lozenge lifts — the unmistakable Apple segmented gestalt), and the dock tab strip's selected accent reads as the SAME capsule (one iOS selected-accent language across content tabs and dock tabs). Born-FAIL on the BE/HEAD tree (the track is flat, the two registers diverge); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surface: `tab-ios-capsule` (the recessed-accent segmented register).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the tabs surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the segmented control reads as an iOS-27 RECESSED TRACK with a RAISED, LIT ACCENT CAPSULE riding in it (the channel sinks, the selected lozenge lifts — the unmistakable Apple segmented gestalt), and the dock tab strip's selected accent reads as the SAME capsule (one iOS selected-accent language across content tabs and dock tabs). Born-FAIL on the BE/HEAD tree (the track is flat, the two registers diverge); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

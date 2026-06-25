@@ -80,7 +80,7 @@ The iOS-27 "Clear" material is the MAXIMALLY translucent register — the now-pl
 
 ## π — the binding paint readback
 
-**`tests-visual/clear-variant.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** VISUAL wave → a `proof:ba-gestalt` glass-band verdict + a captured DELTA, both modes × desktop+mobile. NO source-green close; "rides W-REFLECT3" FORBIDDEN (G8).
+**`tests-visual/clear-variant.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** VISUAL wave → a `proof:ba-gestalt` glass-band verdict + a captured DELTA, both modes × desktop+mobile. NO source-green close; "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" FORBIDDEN (G8).
 
 - **The binding double-ended readback (busy-bright AND dark):** mount a `surface="clear"` pill over (a) a BRIGHT album grid and (b) a DARK album grid at `:5199`. getImageData BEHIND the pill (the backdrop reads THROUGH the clear plate — sub-0.62 composited α) AND over the pill's title text. Assert: (a) the title clears 4.5:1 on its composited surface in BOTH the bright AND dark cases (the dynamic scrim does its job — the scrim is STRONGER over bright, the title legible regardless); (b) the backdrop's structure reads through (the clear register, not a slab). BEFORE: no clear register exists (the clearest is dialog 0.68 with no scrim).
 - **The luma-derived scrim proof:** capture the SAME pill over a bright vs dark grid and assert the scrim strength (the composited dim) is HIGHER over bright — the dynamic legibility that betters Apple's fixed scrim.

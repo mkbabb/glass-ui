@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>cartoon-shadow GOLDEN spike</title>
+<style>
+  /* ── De-risk spike for cartoon-shadow/GOLDEN.md §4 (the ::before caster + punch) and §2 (ink). ──
+     Throwaway. Self-contained. NOT glass-ui src/. Verifies the boldest mechanism live:
+       - the own warm cel ink (oklch-from, chroma-floored, oklab-mixed) reads CHROMATIC not gray;
+       - the 0-blur down-right layered stamp;
+       - the ::before ink-plate caster that translates/scales on a press scalar with the punch curve;
+       - the caster lag (follow-through) + the body squash.
+     Press / release with the mouse; PRM via the toggle. */
+
+  :root {
+    --foreground: hsl(24 10% 10%);
+    --card: hsl(40 36% 96%);
+    --border: hsl(30 12% 80%);
+
+    /* §2 — the OWN warm cel ink, hue-extracted + chroma-floored + deepened, oklab strengths. */
+    --cartoon-ink: oklch(from var(--foreground) clamp(0.16, l, 0.26) max(c, 0.07) h);
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 32%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 18%, transparent);
+
+    /* §3 — the bold layered stamp, 0-blur lead+mid, DOWN-RIGHT, φ cadence. */
+    --shadow-cartoon-md:
+      3px 3px 0   var(--cartoon-ink-lead),
+      5px 5px 0   var(--cartoon-ink-mid),
+      7px 7px 1px var(--cartoon-ink-contact);
+    --shadow-cartoon-lg:
+      4px 4px 0   var(--cartoon-ink-lead),
+      7px 7px 0   var(--cartoon-ink-mid),
+     11px 11px 2px var(--cartoon-ink-contact);
+
+    /* §5 — the motion tokens (design.md-verbatim). */
+    --motion-weight: 0.62;
+    --duration-normal: 320ms;
+    --scale-press: 0.96;
+    --lift-sm: -1px;
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-cartoon-punch: linear(
+      0, -0.012, -0.038 33%, 0 42%, 0.62, 0.93, 1.12, 1.22 66%,
+      1.18, 1.09, 1.02, 0.985, 0.98, 0.99, 0.997, 1
+    );
+  }
+  .dark {
+    --foreground: hsl(30 14% 90%);
+    --card: hsl(28 8% 12%);
+    --border: hsl(30 8% 28%);
+    --cartoon-ink: oklch(0.22 0.07 70);
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 46%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+  }
+
+  @property --cartoon-cast-dx { syntax: "<length>"; inherits: true; initial-value: 0px; }
+  @property --cartoon-cast-dy { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center; gap: 48px;
+    grid-auto-flow: column;
+    background:
+      radial-gradient(120% 120% at 20% 10%, hsl(265 70% 72% / .55), transparent 60%),
+      radial-gradient(120% 120% at 85% 80%, hsl(180 65% 60% / .5), transparent 55%),
+      var(--card);
+    font: 15px/1.4 system-ui, sans-serif; color: var(--foreground);
+    transition: background .4s;
+  }
+
+  /* ── §4 — the .cartoon-surface decoration: stamp on host box-shadow + ::before caster. ── */
+  .cartoon-surface {
+    position: relative;
+    width: 220px; height: 140px; border-radius: 20px;
+    border: 2px solid var(--border);
+    background: var(--card);
+    display: grid; place-items: center; font-weight: 600;
+    box-shadow: var(--shadow-cartoon-md);
+    translate: 0;
+    scale: 1;
+    --cartoon-press-t: 0;
+    transition:
+      translate var(--duration-normal) var(--ease-cartoon-punch),
+      scale     var(--duration-normal) var(--ease-cartoon-punch),
+      box-shadow var(--duration-normal) var(--ease-standard);
+    cursor: pointer; user-select: none;
+  }
+  .cartoon-surface::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit;
+    box-shadow: var(--shadow-cartoon-md);
+    --cast-travel: calc(6px * var(--motion-weight) * var(--cartoon-press-t));
+    --cast-spread: calc(1 + 0.18 * var(--motion-weight) * var(--cartoon-press-t));
+    translate:
+      calc(var(--cast-travel) + var(--cartoon-cast-dx))
+      calc(var(--cast-travel) + var(--cartoon-cast-dy));
+    scale: var(--cast-spread);
+    transition:
+      translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+      scale     calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+      --cartoon-cast-dx var(--duration-normal) var(--ease-cartoon-punch),
+      --cartoon-cast-dy var(--duration-normal) var(--ease-cartoon-punch);
+    will-change: translate, scale;
+  }
+  .cartoon-surface:hover:not(.pressed) {
+    translate: var(--lift-sm) var(--lift-sm);
+    box-shadow: var(--shadow-cartoon-lg);
+  }
+  .cartoon-surface:hover:not(.pressed)::before { box-shadow: var(--shadow-cartoon-lg); }
+  /* press state — body squashes + lifts up-left, caster scalar drives travel/spread. */
+  .cartoon-surface.pressed {
+    scale: var(--scale-press);
+    translate: -3px -3px;
+    --cartoon-press-t: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cartoon-surface, .cartoon-surface::before { --motion-weight: 0; transition: none; }
+  }
+  .prm .cartoon-surface, .prm .cartoon-surface::before { --motion-weight: 0; transition: none; }
+
+  .panel { display: grid; gap: 14px; place-items: center; }
+  .controls { position: fixed; top: 12px; left: 12px; display: flex; gap: 8px; }
+  button { font: inherit; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--foreground); cursor: pointer; }
+  #readout { position: fixed; bottom: 12px; left: 12px; font: 12px/1.5 ui-monospace, monospace;
+    white-space: pre; background: #0008; color: #fff; padding: 10px; border-radius: 8px; }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <button id="darkBtn">toggle dark</button>
+    <button id="prmBtn">toggle PRM</button>
+  </div>
+  <div class="panel">
+    <div class="cartoon-surface" id="card">press me</div>
+    <div style="opacity:.7">hover · press · release (watch the cast lag)</div>
+  </div>
+  <div id="readout">readout…</div>
+
+<script>
+  const card = document.getElementById('card');
+  const ro = document.getElementById('readout');
+  card.addEventListener('pointerdown', () => card.classList.add('pressed'));
+  addEventListener('pointerup', () => card.classList.remove('pressed'));
+  document.getElementById('darkBtn').onclick = () => document.documentElement.classList.toggle('dark');
+  document.getElementById('prmBtn').onclick   = () => document.documentElement.classList.toggle('prm');
+
+  // ── live readback for the born-RED gate (G1 ink + G3 caster). ──
+  function px(v){ return parseFloat(v) || 0; }
+  function report() {
+    const cs = getComputedStyle(card);
+    const before = getComputedStyle(card, '::before');
+    const inkLead = getComputedStyle(document.documentElement).getPropertyValue('--cartoon-ink-lead').trim();
+    // probe oklch chroma of the resolved ink via a scratch element
+    const probe = document.createElement('span');
+    probe.style.color = inkLead; document.body.appendChild(probe);
+    const resolved = getComputedStyle(probe).color; probe.remove();
+    ro.textContent =
+      `INK lead resolved : ${resolved}\n` +
+      `host box-shadow    : ${cs.boxShadow.slice(0,60)}…\n` +
+      `host scale         : ${cs.scale}\n` +
+      `host translate     : ${cs.translate}\n` +
+      `::before translate : ${before.translate}\n` +
+      `::before scale     : ${before.scale}\n` +
+      `--ease-cartoon-punch present: ${!!getComputedStyle(document.documentElement).getPropertyValue('--ease-cartoon-punch').trim()}\n` +
+      `--motion-weight    : ${getComputedStyle(document.documentElement).getPropertyValue('--motion-weight').trim()}`;
+    requestAnimationFrame(report);
+  }
+  report();
+  // expose for automated readback
+  window.__spikeProbe = () => {
+    const before = getComputedStyle(card, '::before');
+    const cs = getComputedStyle(card);
+    const probe = document.createElement('span');
+    probe.style.color = getComputedStyle(document.documentElement).getPropertyValue('--cartoon-ink-lead').trim();
+    document.body.appendChild(probe); const inkColor = getComputedStyle(probe).color; probe.remove();
+    return { inkColor, hostBoxShadow: cs.boxShadow, hostScale: cs.scale, hostTranslate: cs.translate,
+             beforeTranslate: before.translate, beforeScale: before.scale,
+             pressT: getComputedStyle(card).getPropertyValue('--cartoon-press-t') };
+  };
+</script>
+</body>
+</html>

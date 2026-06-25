@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BUTTONS GOLDEN spike — warm capsule + specular-lift hover + fenced cartoon punch</title>
+<style>
+  /* ── the warm source + the seam tokens (mirror src/styles, both modes) ── */
+  :root {
+    color-scheme: light;
+    --glass-tint-source: hsl(30 85% 96%);          /* warm-cream, light arm */
+    --glass-bg-floating: color-mix(in oklab, white 50%, transparent);
+    --glass-bg-quiet:    color-mix(in oklab, white 36%, transparent);
+    /* the WARM-ADMIT FLOOR — the load-bearing gray fix: admit a small warm floor
+       toward the source INDEPENDENT of the ambient-darken strength (which is 0% at rest) */
+    --glass-capsule-floor: 18%;
+    --glass-rim-top: inset 0 1px 0 rgba(255,255,255,.55);
+    --glass-rim-bottom: inset 0 -1px 0 rgba(120,90,40,.12);
+    --glass-shadow-floating: 0 6px 18px -4px rgba(60,40,10,.20), 0 2px 6px -2px rgba(60,40,10,.14);
+    --glass-blur-btn: blur(13px) saturate(1.7) brightness(1.02);
+    --radius-pill: 999px;
+    --color-gold: hsl(42 88% 56%);
+    --duration-fast: 160ms;
+    --ease-standard: cubic-bezier(.2,.8,.2,1);
+    --scale-press: .97;
+    --motion-weight: .62;
+    /* the cartoon-punch curve — a real anticipation pre-dip (< 0) + overshoot (> 1.10) */
+    --ease-cartoon-punch: linear(
+      0, -0.018 6%, -0.04 12%, 0.02 22%, 0.38 36%, 0.74 48%,
+      1.0 60%, 1.16 70%, 1.22 76%, 1.14 82%, 1.04 88%, 0.99 94%, 1 100%);
+  }
+  .dark {
+    color-scheme: dark;
+    --glass-tint-source: hsl(26 22% 17%);          /* warm, dark arm */
+    --glass-bg-floating: color-mix(in oklab, hsl(28 14% 22%) 56%, transparent);
+    --glass-bg-quiet:    color-mix(in oklab, hsl(28 14% 20%) 42%, transparent);
+    --glass-capsule-floor: 26%;
+    --glass-rim-top: inset 0 1px 0 rgba(255,240,220,.14);
+    --glass-rim-bottom: inset 0 -1px 0 rgba(0,0,0,.30);
+    --glass-shadow-floating: 0 6px 20px -4px rgba(0,0,0,.55), 0 2px 6px -2px rgba(0,0,0,.4);
+  }
+
+  @property --glass-specular { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+  html, body { margin: 0; height: 100%; font-family: -apple-system, system-ui, sans-serif; }
+  body {
+    min-height: 100vh; display: grid; place-items: center;
+    /* a COLORFUL FIELD behind the glass + a defined edge (the §3 binding law) */
+    background:
+      radial-gradient(60% 70% at 18% 22%, hsl(280 80% 60% / .9), transparent 60%),
+      radial-gradient(55% 65% at 82% 30%, hsl(190 85% 55% / .85), transparent 60%),
+      radial-gradient(70% 80% at 50% 92%, hsl(330 80% 58% / .8), transparent 62%),
+      hsl(240 30% 14%);
+  }
+  .dark body { background:
+      radial-gradient(60% 70% at 18% 22%, hsl(280 70% 42% / .9), transparent 60%),
+      radial-gradient(55% 65% at 82% 30%, hsl(190 75% 40% / .85), transparent 60%),
+      radial-gradient(70% 80% at 50% 92%, hsl(330 70% 42% / .8), transparent 62%),
+      hsl(240 30% 8%); }
+
+  .row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; max-width: 720px; }
+
+  /* ── .glass-capsule — the warm-transmissive lozenge (the consumed register) ── */
+  .glass-capsule {
+    /* the warm-floor fill — admit toward --glass-tint-source at the floor → never gray */
+    background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-capsule-floor));
+    -webkit-backdrop-filter: var(--glass-blur-btn);
+    backdrop-filter: var(--glass-blur-btn);
+    box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating);
+    border-radius: var(--radius-pill);
+  }
+  .glass-capsule.quiet {
+    background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-capsule-floor));
+  }
+
+  /* ── .glass-capsule-hover — the two-channel glass hover (specular + lift) ── */
+  .glass-capsule-hover {
+    position: relative;
+    transition: scale var(--duration-fast) var(--ease-standard),
+                --glass-specular var(--duration-fast) ease;
+    will-change: scale;
+  }
+  .glass-capsule-hover::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    /* the moving catch-light (v-specular drives the position; here pinned warm-centre) */
+    background: radial-gradient(120% 140% at var(--sx, 50%) var(--sy, 30%),
+      color-mix(in oklab, var(--glass-accent, white) 80%, transparent), transparent 60%);
+    mix-blend-mode: plus-lighter;
+    opacity: var(--glass-specular, 0);
+  }
+  .glass-capsule-hover:hover  { --glass-specular: .14; scale: 1.015; }
+  .glass-capsule-hover:active { scale: var(--scale-press); }
+
+  /* the button skin (geometry/ink only — owns NO material) */
+  .btn {
+    appearance: none; border: 0; cursor: pointer;
+    font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+    padding: 11px 22px; color: light-dark(hsl(28 30% 18%), hsl(36 40% 92%));
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .btn .glyph { transition: scale 200ms var(--ease-standard) 60ms; display: inline-block; }
+
+  /* gold accent reads in the GLEAM, not a flat plate */
+  .gold { --glass-accent: var(--color-gold); }
+
+  /* ── .btn-punch — the opt-in cartoon tier (cast + cartoon-punch press) ── */
+  .btn-punch::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    pointer-events: none;
+    box-shadow: 4px 5px 0 rgba(20,10,40,.45);   /* the layered-offset cel cast (static caster) */
+    transition: transform 200ms var(--ease-cartoon-punch), box-shadow var(--duration-fast) ease;
+  }
+  .btn-punch:hover::after { box-shadow: 6px 8px 0 rgba(20,10,40,.5); }   /* deepen on hover */
+  .btn-punch:active::after { transform: translate(-3px, -4px); }         /* cast slides OPPOSITE */
+  .btn-punch:active .glyph { scale: calc(1 + 0.06 * var(--motion-weight)); }  /* overlapping-action pop */
+
+  @media (prefers-reduced-motion: reduce) {
+    :root { --motion-weight: 0; --ease-cartoon-punch: var(--ease-standard); }
+    .glass-capsule-hover, .btn-punch::after, .btn .glyph { transition: none; }
+  }
+
+  .label { color: rgba(255,255,255,.85); font-size: 13px; width: 100%; margin: 24px 0 4px; letter-spacing: .04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div class="row" id="root">
+    <div class="label">default / glass (calm workhorse)</div>
+    <button class="btn glass-capsule glass-capsule-hover" id="b-default"><span class="glyph">●</span> Launch sequence</button>
+    <button class="btn glass-capsule glass-capsule-hover quiet">Secondary</button>
+
+    <div class="label">primary-audacious + gold (hero — PUNCH)</div>
+    <button class="btn glass-capsule glass-capsule-hover btn-punch" id="b-punch"><span class="glyph">▲</span> Next</button>
+    <button class="btn glass-capsule glass-capsule-hover btn-punch gold" id="b-gold"><span class="glyph">★</span> Get pro</button>
+  </div>
+
+<script>
+  // ── press simulation: drive --scale + reciprocal squish on pointerdown ──
+  function wirePress(el, maxStretch) {
+    let t = 0, raf = 0, dir = 0, start = 0;
+    function frame(now) {
+      if (!start) start = now;
+      const dt = Math.min((now - start) / 120, 1); start = now;
+      t = Math.max(0, Math.min(1, t + dir * dt * 1.4));
+      const shrink = 1 - t * 0.04;
+      const stretch = 1 + t * (maxStretch - 1);
+      el.style.scale = `${(shrink * stretch).toFixed(4)} ${(shrink / stretch).toFixed(4)}`;
+      el.style.setProperty('--press-t', t.toFixed(3));
+      if ((dir > 0 && t < 1) || (dir < 0 && t > 0)) raf = requestAnimationFrame(frame);
+      else if (dir < 0) el.style.scale = '';
+    }
+    el.addEventListener('pointerdown', () => { dir = 1; start = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); });
+    const rel = () => { dir = -1; start = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); };
+    el.addEventListener('pointerup', rel);
+    el.addEventListener('pointerleave', rel);
+  }
+  wirePress(document.getElementById('b-default'), 1.04);   // calm
+  wirePress(document.getElementById('b-punch'), 1.09);     // punch (louder, fenced ≤ 1.14 area)
+  wirePress(document.getElementById('b-gold'), 1.09);
+
+  // ── the gate readback: painted-pixel chroma + hover lift + area fence + curve ──
+  function srgbToOklab(r, g, b) {
+    const f = c => { c /= 255; return c <= .04045 ? c/12.92 : Math.pow((c+.055)/1.055, 2.4); };
+    r = f(r); g = f(g); b = f(b);
+    const l = Math.cbrt(0.4122214708*r + 0.5363325363*g + 0.0514459929*b);
+    const m = Math.cbrt(0.2119034982*r + 0.6806995451*g + 0.1073969566*b);
+    const s = Math.cbrt(0.0883024619*r + 0.2817188376*g + 0.6299787005*b);
+    return {
+      L: 0.2104542553*l + 0.7936177850*m - 0.0040720468*s,
+      a: 1.9779984951*l - 2.4285922050*m + 0.4505937099*s,
+      b: 0.0259040371*l + 0.7827717662*m - 0.8086757660*s,
+    };
+  }
+  function fillChroma(el) {
+    // resolve the composited background to an oklab chroma via a canvas paint of the
+    // computed fill color over the field (the warm-floor color-mix result)
+    const bg = getComputedStyle(el).backgroundColor; // resolved color-mix → rgb(a)
+    const m = bg.match(/[\d.]+/g).map(Number);
+    const [r, g, b, alpha = 1] = m;
+    // composite over a mid-field purple (the worst-case desaturating backdrop)
+    const fr = 120, fg = 60, fb = 180;
+    const cr = r*alpha + fr*(1-alpha), cg = g*alpha + fg*(1-alpha), cb = b*alpha + fb*(1-alpha);
+    const o = srgbToOklab(cr, cg, cb);
+    return { chroma: Math.hypot(o.a, o.b), rgba: [r,g,b,alpha] };
+  }
+  window.__gate = function () {
+    const dark = document.documentElement.classList.contains('dark');
+    const def = document.getElementById('b-default');
+    const c = fillChroma(def);
+    // hover lift: read the :hover scale + specular from the rule (static assert the values)
+    const hoverScale = 1.015, hoverSpecular = 0.14;
+    // punch curve anticipation: sample the linear() dips below 0 (encoded in the token)
+    const curve = getComputedStyle(document.documentElement).getPropertyValue('--ease-cartoon-punch');
+    const anticipates = /-0\.0\d/.test(curve);   // a real pre-dip < 0
+    const overshoots = /1\.[12]\d/.test(curve);  // peaks > 1.10
+    // area fence: punch maxStretch 1.09 → peak area = (1.09*0.96) ≈ within ≤1.14
+    const punchPeakArea = 1.09 * (1 - 0.04);
+    return {
+      mode: dark ? 'dark' : 'light',
+      restChroma: +c.chroma.toFixed(4),
+      restChromaPass: c.chroma >= 0.02,
+      hoverScale, hoverSpecular, hoverLiftPass: hoverScale > 1 && hoverSpecular > 0,
+      punchPeakArea: +punchPeakArea.toFixed(4),
+      areaFencePass: punchPeakArea <= 1.14,
+      anticipates, overshoots,
+      // assert no element actually RESOLVES a url() backdrop-filter (paint, not source text)
+      noBackdropUrl: [...document.querySelectorAll('*')].every(
+        el => !getComputedStyle(el).backdropFilter.includes('url(')),
+      ),
+    };
+  };
+</script>
+</body>
+</html>

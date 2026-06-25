@@ -1,0 +1,817 @@
+{
+  "$schema": "the BD historical-recap corpus manifest — one row per ATOMIC de-duplicated user ask.",
+  "law": "Every `addressed` row MUST list ≥1 carrier that recap.mjs can VERIFY on disk (a greenfield/<dir>, a viz/refine/<dir>, or a union/waves/<slug>.md). A `gap` row has zero live carrier and is born-RED. recap.mjs RE-DERIVES coverState from disk and OVERWRITES the typed value — a typed `addressed` whose carriers are absent auto-downgrades to GAP and exits 1. The typed coverState is a HINT the machine audits, never trusted.",
+  "recencyBands": {
+    "R0": {
+      "weight": 6,
+      "label": "THIS session (2026-06-24) greenfield + design edicts",
+      "halflife": "now"
+    },
+    "R1": {
+      "weight": 5,
+      "label": "batch3 2026-06-23 — the DOCK + ANIMATION overhaul"
+    },
+    "R2": {
+      "weight": 5,
+      "label": "batch2 2026-06-23 — nav docks + viz + procedural bg"
+    },
+    "R3": {
+      "weight": 4,
+      "label": "batch1 2026-06-23 — the gray-glass triumvirate"
+    },
+    "R4": {
+      "weight": 4,
+      "label": "MASTER §C — the /goal NEW design items"
+    },
+    "R5": {
+      "weight": 3,
+      "label": "MASTER §A/§B — Pass-D/E originals + dock-hub"
+    },
+    "R6": {
+      "weight": 2,
+      "label": "the 100+-session deferred long-tail (FOLD-LEDGER Classes A-J)"
+    }
+  },
+  "carrierRoots": {
+    "greenfield": "docs/tranches/BD/greenfield/<dir>/ (GOLDEN.md + DELTA-ASSAY.md + WAVE-AMENDMENT.md)",
+    "refine": "docs/tranches/BD/viz/refine/<dir>/",
+    "wave": "docs/tranches/BD/union/waves/<slug>.md OR docs/tranches/BD/waves/<slug>.md",
+    "foldLedger": "docs/tranches/BD/FOLD-LEDGER.md (a class disposition — DRY ingest, not re-authored)"
+  },
+  "rows": [
+    {
+      "id": "R0.1",
+      "verbatim": "design-language-edicts — abrogate shadcn + suffuse ios27 across EVERY element; the FULL fleet analyzes every page; design.md is the binding law.",
+      "band": "R0",
+      "class": "precept",
+      "recurrence": [
+        "R0.1",
+        "C3",
+        "mem:feedback_architectural_approach"
+      ],
+      "covers": {
+        "greenfield": [
+          "design-language-edicts"
+        ],
+        "wave": [
+          "BD.W-DESIGN-PRECEPT-AMENDMENT"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R0.2",
+      "verbatim": "category-landing — the /:category bento cards are USELESS gray placeholders; ABROGATE the gray + BAKE a real LIVE mini-demo into EVERY card + better proportion.",
+      "band": "R0",
+      "class": "bug",
+      "recurrence": [
+        "R0.2"
+      ],
+      "covers": {
+        "greenfield": [
+          "category-landing"
+        ],
+        "wave": [
+          "BD.W-BENTO-SPECIMEN"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R0.3",
+      "verbatim": "blend-morph-engine — generalized SDF/Houdini component morphing; Safari MUST work (Chrome-only NOT an option); DIAGNOSE+FIX /dock/morph-showcase (BROKEN, only teardrop preview works).",
+      "band": "R0",
+      "class": "feature",
+      "recurrence": [
+        "R0.3",
+        "R1.A13",
+        "C5"
+      ],
+      "covers": {
+        "greenfield": [
+          "blend-morph-engine"
+        ],
+        "wave": [
+          "BD.W-MORPH-FIELD-WELD",
+          "BD.W-GOO-BARBELL-NECK"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R0.4",
+      "verbatim": "hero-overflow — the audacious display HERO title overflows OFF the viewport (Substrates clips); clamp() responsive to the viewport width; fold into page-chrome.",
+      "band": "R0",
+      "class": "bug",
+      "recurrence": [
+        "R0.4"
+      ],
+      "covers": {
+        "greenfield": [
+          "page-chrome"
+        ],
+        "wave": [
+          "BD.W-HEADER-SCALE"
+        ]
+      },
+      "coverState": "partial"
+    },
+    {
+      "id": "R0.5",
+      "verbatim": "the DESIGN-ADHERENCE CONSISTENCY GATE — no locally-converged-but-globally-divergent specs; a REAL wired gate, not a prose keyword test (the wave-spec-audit ORCH ruling).",
+      "band": "R0",
+      "class": "process",
+      "recurrence": [
+        "R0.5",
+        "R0.1"
+      ],
+      "covers": {
+        "greenfield": [
+          "wave-spec-audit"
+        ],
+        "wave": [
+          "BD.W-GATE-TRUTH-AUDIT",
+          "BD.W-SECTION-HUE-WARM-FENCE"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R0.6",
+      "verbatim": "wave-spec-audit — the deep audit of the 116 union waves: cogency, correctness, coherence; augment/prune/excise; the corpus is a build-graph.",
+      "band": "R0",
+      "class": "process",
+      "recurrence": [
+        "R0.6"
+      ],
+      "covers": {
+        "greenfield": [
+          "wave-spec-audit"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R0.7",
+      "verbatim": "historical-recap — recap ALL 100+ sessions' prompts (recency-weighted); fold chronic/deferred; ensure nothing lost; confirm each addressed.",
+      "band": "R0",
+      "class": "process",
+      "recurrence": [
+        "R0.7"
+      ],
+      "covers": {
+        "greenfield": [
+          "historical-recap"
+        ]
+      },
+      "coverNote": "This very item — born-RED ON ITSELF by design. GOLDEN.md + golden/recap.mjs + recap.manifest.json LANDED this pass, but the DELTA-ASSAY.md (live-inspect current vs golden) is still OWED, so the greenfield dir is NOT yet a converged carrier and recap.mjs honestly derives GAP. The recap holds itself to the SAME born-RED bar it holds every other ask: it goes green only when its own DELTA-ASSAY lands. This is the anti-inflation discipline applied reflexively.",
+      "coverState": "gap"
+    },
+    {
+      "id": "R1.A_DOCK",
+      "verbatim": "THE CORE LIQUID DOCK — grow-from-CENTER (not right), synced icon morph (inertia-from-center, no out-of-sync bounce), blur dialed back, shrunken-state icon alignment + longer hover-collapse, dropdown-recolors-dock bug, popover/dropdown unify+align, bigger pill padding, draggable items.",
+      "band": "R1",
+      "class": "bug",
+      "recurrence": [
+        "R1.A_DOCK",
+        "R1.A1",
+        "R1.A2",
+        "R1.A3",
+        "R1.A4",
+        "R1.A5",
+        "R1.A6",
+        "R1.A7",
+        "R1.A8",
+        "R1.A9",
+        "R1.A11",
+        "R1.A12",
+        "R2.A_NAVDOCK",
+        "A7"
+      ],
+      "covers": {
+        "greenfield": [
+          "dock-core"
+        ],
+        "refine": [
+          "dock-core",
+          "nav-dock-fix"
+        ],
+        "wave": [
+          "W-DOCK-CORE"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R1.A13",
+      "verbatim": "THE BIG ONE — generalize the facility to MORPH the dock V or H; SPLITTABLE into ARBITRARY parts; an element splits OFF, MORPH and GOO into another dock beside/above/below. Like our ios demos.",
+      "band": "R1",
+      "class": "feature",
+      "recurrence": [
+        "R1.A13",
+        "R1.A10",
+        "B1"
+      ],
+      "covers": {
+        "greenfield": [
+          "dock-fission",
+          "dock-hub"
+        ],
+        "wave": [
+          "BD.W-DOCK-SUBDOCK",
+          "W-DOCK-SCROLL-FISSION"
+        ]
+      },
+      "coverState": "partial"
+    },
+    {
+      "id": "R1.A10",
+      "verbatim": "/dock/dock-gallery — none smooth/inertial/grow-shrink, docks DO NOT SPLIT, do not use real names; ONE dock with our TABS facility (not two docks in one).",
+      "band": "R1",
+      "class": "bug",
+      "recurrence": [
+        "R1.A10",
+        "B2"
+      ],
+      "covers": {
+        "greenfield": [
+          "dock-hub"
+        ],
+        "wave": [
+          "W-NO-HARDCODED-REFS"
+        ]
+      },
+      "coverState": "partial"
+    },
+    {
+      "id": "R1.B_ANIM",
+      "verbatim": "THE GLOBAL ANIMATION LAW — ALL animations SMOOTH, CONTROLLED, INERTIA, AUDACIOUS; NO tight/springy; flowing/gooey; MORPH MORE on move; tuned to ios27 (stretch/squeeze frame-by-frame).",
+      "band": "R1",
+      "class": "precept",
+      "recurrence": [
+        "R1.B_ANIM",
+        "R1.B1",
+        "R1.B2",
+        "C6",
+        "mem:feedback_liquid_weight_universal"
+      ],
+      "covers": {
+        "greenfield": [
+          "motion-spring-register"
+        ],
+        "refine": [
+          "anim-ios27-tune"
+        ],
+        "wave": [
+          "BD.W-MOTION-WEIGHT",
+          "BD.W-CARTOON-PUNCH"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R1.C_GOO",
+      "verbatim": "the goo effect is AWFUL — does NOT work on SAFARI, too SLOW, no blob↔meatball morph (Gemini-carousel reference); carousel/deck should share ONE substrate (de-dup); carousel transitions glassy+distortion+inertia.",
+      "band": "R1",
+      "class": "feature",
+      "recurrence": [
+        "R1.C_GOO",
+        "R1.C1",
+        "R1.C2",
+        "R1.C3",
+        "C5"
+      ],
+      "covers": {
+        "greenfield": [
+          "goo-morph",
+          "carousel-deck"
+        ],
+        "refine": [
+          "goo-carousel-deck",
+          "goo-morph-refine"
+        ],
+        "wave": [
+          "BD.W-GOO-BARBELL-NECK"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R1.D1",
+      "verbatim": "each page needs the corner ALIASING fixed (odd SQUARED OFF) — the page corner-radius/clip aliasing.",
+      "band": "R1",
+      "class": "bug",
+      "recurrence": [
+        "R1.D1"
+      ],
+      "covers": {
+        "greenfield": [
+          "page-chrome"
+        ],
+        "wave": [
+          "BD.W-CORNER-AA"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R1.D3",
+      "verbatim": "/navigation/toc-tracking TOC is UNREADABLE — needs a better glass background.",
+      "band": "R1",
+      "class": "bug",
+      "recurrence": [
+        "R1.D3"
+      ],
+      "covers": {
+        "greenfield": [
+          "page-chrome"
+        ],
+        "wave": [
+          "BD.W-TOC-MENU-GLASS",
+          "W-GLASS-ABROGATE-GRAY"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R1.D4",
+      "verbatim": "dock BUTTONS redolent of our glassy TABS; default BUTTONS more like tabs (glassy by default, better HOVER states).",
+      "band": "R1",
+      "class": "feature",
+      "recurrence": [
+        "R1.D4"
+      ],
+      "covers": {
+        "greenfield": [
+          "buttons",
+          "tabs"
+        ],
+        "wave": [
+          "BD.W-TAB-IOS-CAPSULE"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.A_NAVDOCK",
+      "verbatim": "NAV DOCKS broken — clicking categories does nothing; nav buttons flaky; the centre rail item TOTALLY BROKEN (use the real rail prototype); persistent controls + SCROLLING TABS of the category's pages; the SidebarDock+rail broken; the 'Pick a story' FOUC on reload (a MAJOR defect).",
+      "band": "R2",
+      "class": "bug",
+      "recurrence": [
+        "R2.A_NAVDOCK",
+        "R2.A1",
+        "R2.A2",
+        "R2.A3",
+        "R2.A4",
+        "R2.A5",
+        "R2.A6",
+        "R2.A7"
+      ],
+      "covers": {
+        "greenfield": [
+          "shell-layout"
+        ],
+        "refine": [
+          "nav-dock-fix"
+        ],
+        "wave": [
+          "W-NAV-DOCK-FIX"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.B_TOGGLE",
+      "verbatim": "toggle groups have no distinct selected state; toggle items not rounded; storybook chrome should be warm-cream everywhere; default reads gray; cards as WIDE as the hero title text.",
+      "band": "R2",
+      "class": "bug",
+      "recurrence": [
+        "R2.B_TOGGLE",
+        "R2.B1",
+        "R2.B2",
+        "R2.B3",
+        "R2.B4",
+        "R2.B5"
+      ],
+      "covers": {
+        "greenfield": [
+          "toggle-chip",
+          "glass-atoms",
+          "story-page-standard"
+        ],
+        "wave": [
+          "W-GLASS-ABROGATE-GRAY"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.C_VIZ",
+      "verbatim": "PROCEDURAL VIZ bugs — blob/goo-dot TOTALLY BROKEN; fourier cursor-follow + dead options; paper-grid should warp the CELLS not the lines (a wave passing through); dot-matrix more cursor gravity + 2d background; concentric = paper-grid mechanics with concentric LEVEL-SET lines (gradient topology).",
+      "band": "R2",
+      "class": "bug",
+      "recurrence": [
+        "R2.C_VIZ",
+        "R2.C1",
+        "R2.C2",
+        "R2.C3",
+        "R2.C4",
+        "R2.C5",
+        "R2.C6",
+        "A11"
+      ],
+      "covers": {
+        "greenfield": [
+          "goo-blob",
+          "goo-dot-matrix",
+          "fourier-field",
+          "paper-grid",
+          "dot-matrix",
+          "concentric"
+        ],
+        "refine": [
+          "viz-respec",
+          "viz-broken-fix"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.D1",
+      "verbatim": "each page a DIFFERENT, CUSTOM AURORA instead of a constellation (custom aurora OR images) to better show the glass.",
+      "band": "R2",
+      "class": "feature",
+      "recurrence": [
+        "R2.D1",
+        "A6"
+      ],
+      "covers": {
+        "greenfield": [
+          "page-background",
+          "aurora"
+        ],
+        "wave": [
+          "BD.W-PAGE-BACKGROUND",
+          "BD.W-AUR-VIVIDNESS"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.D3",
+      "verbatim": "a NEW procedural background: the BLURRED IMAGE — a base image blurred DRAMATICALLY with different ZONES of blur, the blur MOVING SUBTLY like an aurora.",
+      "band": "R2",
+      "class": "feature",
+      "recurrence": [
+        "R2.D3"
+      ],
+      "covers": {
+        "greenfield": [
+          "aurora"
+        ],
+        "wave": [
+          "BD.W-AUR-IMAGE-SOURCE"
+        ]
+      },
+      "coverNote": "The technique is CARRIED by BD.W-AUR-IMAGE-SOURCE (the aurora source:image axis). NOTE the stale-prune residue: union/waves/W-BLURRED-IMAGE-BG.md was PRUNED by the aurora amendment but its file still sits on disk — a citation MUST target the live BD.W-AUR-IMAGE-SOURCE, not the dead slug. recap.mjs flags W-BLURRED-IMAGE-BG as a stale-prune residue if any addressed row cites it.",
+      "coverState": "addressed"
+    },
+    {
+      "id": "R2.D2",
+      "verbatim": "research the web for MACRO images of FLOWERS and provide an ARRAY (the consumer asset set behind the blurred-image bg).",
+      "band": "R2",
+      "class": "media",
+      "recurrence": [
+        "R2.D2"
+      ],
+      "covers": {},
+      "coverNote": "GENUINE GAP. The blurred-image TECHNIQUE is homed (R2.D3 → BD.W-AUR-IMAGE-SOURCE); the curated macro-flower ASSET ARRAY is a consumer-asset deliverable (presets-in-consumers law) with NO carrier on disk. → fold as the consumer-asset arm of BD.W-AUR-IMAGE-SOURCE, OR a tiny consumer asset item.",
+      "coverState": "gap"
+    },
+    {
+      "id": "R3.GRAY",
+      "verbatim": "Why is our glass so grey — completely abrogate dark gray glass; warm-cream luminous glass everywhere (cards/buttons/chips/dropdowns/text), both modes; the select dropdown is a flat GRAY plate in LIGHT mode.",
+      "band": "R3",
+      "class": "precept",
+      "recurrence": [
+        "R3.GRAY",
+        "R3.1",
+        "R3.5",
+        "C4",
+        "R2.B1",
+        "R2.B4",
+        "R1.D3",
+        "mem:feedback_lightdark_inset_shadow"
+      ],
+      "covers": {
+        "greenfield": [
+          "glass-material"
+        ],
+        "refine": [
+          "glass-abrogate-gray"
+        ],
+        "wave": [
+          "W-GLASS-ABROGATE-GRAY",
+          "BD.W-GLASS-FIELD",
+          "BD.W-GLASS-KEY-EDGE"
+        ]
+      },
+      "coverState": "partial"
+    },
+    {
+      "id": "R3.2",
+      "verbatim": "/motion/deck awful — too fast, dot too small, goo/morph too subtle; should stretch and flow more SLOWLY.",
+      "band": "R3",
+      "class": "bug",
+      "recurrence": [
+        "R3.2",
+        "C5"
+      ],
+      "covers": {
+        "greenfield": [
+          "goo-morph"
+        ],
+        "refine": [
+          "goo-morph-refine"
+        ],
+        "wave": [
+          "BD.W-GOO-BARBELL-NECK"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R3.3",
+      "verbatim": "useLiquidReveal doesn't seem to work at all.",
+      "band": "R3",
+      "class": "bug",
+      "recurrence": [
+        "R3.3"
+      ],
+      "covers": {
+        "greenfield": [
+          "entrance-reveal"
+        ],
+        "wave": [
+          "W-LIQUID-REVEAL-FIX"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R3.4",
+      "verbatim": "/forms/select — the select animates when you click the trigger; the animation needs to be smoother and refined.",
+      "band": "R3",
+      "class": "bug",
+      "recurrence": [
+        "R3.4"
+      ],
+      "covers": {
+        "greenfield": [
+          "select-forms"
+        ],
+        "wave": [
+          "BD.W-MOTION-WEIGHT"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R3.6",
+      "verbatim": "Spacing and padding off; the x's (close glyphs) should be bigger and more stylized; padding is awful.",
+      "band": "R3",
+      "class": "bug",
+      "recurrence": [
+        "R3.6"
+      ],
+      "covers": {
+        "greenfield": [
+          "overlays",
+          "story-page-standard"
+        ]
+      },
+      "coverNote": "PARTIAL GAP. Padding/proportion folds into story-page-standard + the √φ concentric ladder, but the CLOSE-GLYPH stylize (bigger/stylized x's) has no explicit carrier — verify overlays/glass-atoms covers it, else AUGMENT a wave with the close-glyph register.",
+      "coverState": "partial"
+    },
+    {
+      "id": "R4.C1",
+      "verbatim": "Metallic aurora ×2: (a) PURE liquid metal, (b) GRADIENT metallic with minor sparkle imperfections + other colors — ios27 flow-field redolent.",
+      "band": "R4",
+      "class": "feature",
+      "recurrence": [
+        "R4.C1"
+      ],
+      "covers": {
+        "greenfield": [
+          "aurora"
+        ],
+        "wave": [
+          "BD.W-AUR-METAL-FINISH"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R4.C2",
+      "verbatim": "dot-flow-field: approach but FAR SURPASS a reference background.",
+      "band": "R4",
+      "class": "feature",
+      "recurrence": [
+        "R4.C2",
+        "A11"
+      ],
+      "covers": {
+        "greenfield": [
+          "dot-flow-field"
+        ],
+        "wave": [
+          "BD.W-DOTFLOW-REBUILD"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R4.C6",
+      "verbatim": "Liquid-weight UNIVERSAL — inertia/weight/bounce/squish on ALL motion + scrolling.",
+      "band": "R4",
+      "class": "precept",
+      "recurrence": [
+        "R4.C6",
+        "R1.B1",
+        "mem:feedback_liquid_weight_universal"
+      ],
+      "covers": {
+        "greenfield": [
+          "motion-spring-register",
+          "scroll-choreography"
+        ],
+        "wave": [
+          "BD.W-MOTION-WEIGHT"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.A2",
+      "verbatim": "Standardized storybook page component + sub-types (DemoStage/Specimen/Interaction/Matrix/Composition); conformity with natural variation; glassy sub-cards; bigger φ² stage.",
+      "band": "R5",
+      "class": "feature",
+      "recurrence": [
+        "R5.A2",
+        "R5.A8"
+      ],
+      "covers": {
+        "greenfield": [
+          "story-page-standard"
+        ],
+        "wave": [
+          "W-STORY-PAGE-STANDARD"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.A3",
+      "verbatim": "Frame-by-frame liquid entrance (squish/morph/fade); replicate generally + Safari.",
+      "band": "R5",
+      "class": "feature",
+      "recurrence": [
+        "R5.A3"
+      ],
+      "covers": {
+        "greenfield": [
+          "entrance-reveal"
+        ],
+        "wave": [
+          "W-LIQUID-ENTRANCE-GENERAL"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.A5",
+      "verbatim": "scroll-choreography doesn't work; the column-stagger dead no-op.",
+      "band": "R5",
+      "class": "bug",
+      "recurrence": [
+        "R5.A5"
+      ],
+      "covers": {
+        "greenfield": [
+          "scroll-choreography"
+        ],
+        "wave": [
+          "BB.W-SCROLL-MOTION"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.A13",
+      "verbatim": "Paper morphism — no grain/grit; the texture must be visible.",
+      "band": "R5",
+      "class": "bug",
+      "recurrence": [
+        "R5.A13"
+      ],
+      "covers": {
+        "greenfield": [
+          "paper-morphism",
+          "paper-grid"
+        ],
+        "wave": [
+          "BD.W-PAPER-MORPHISM"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.A14",
+      "verbatim": "Handmark audited/challenged.",
+      "band": "R5",
+      "class": "feature",
+      "recurrence": [
+        "R5.A14"
+      ],
+      "covers": {
+        "greenfield": [
+          "handmark"
+        ]
+      },
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.B1",
+      "verbatim": "Expand out from the dock into ARBITRARY facilities — a GENERALIZED dock-as-hub API, not hardcoded/overfit.",
+      "band": "R5",
+      "class": "feature",
+      "recurrence": [
+        "R5.B1",
+        "R1.A13"
+      ],
+      "covers": {
+        "greenfield": [
+          "dock-hub"
+        ],
+        "wave": [
+          "BD.W-DOCK-LINK-API"
+        ]
+      },
+      "coverNote": "The dock-hub amendment EXCISED W-DOCK-HUB-API and SUBSUMED it into BD.W-DOCK-LINK-API + <DockExpand>. The live successor is cited; recap.mjs would flag W-DOCK-HUB-API as a stale-prune residue.",
+      "coverState": "addressed"
+    },
+    {
+      "id": "R5.B2",
+      "verbatim": "NO hardcoded/referenced facilities like 'maps' — generalized glass precepts; a de-overfit census.",
+      "band": "R5",
+      "class": "process",
+      "recurrence": [
+        "R5.B2",
+        "R1.A10"
+      ],
+      "covers": {
+        "greenfield": [
+          "dock-hub"
+        ],
+        "wave": [
+          "W-NO-HARDCODED-REFS"
+        ]
+      },
+      "coverNote": "The dock-hub API is generalized, but the LIBRARY-WIDE real-name CENSUS (a grep over src/ for 'maps'/real-names) is a process arm to verify — fold as a proof:no-hardcoded-refs grep gate.",
+      "coverState": "partial"
+    },
+    {
+      "id": "R6.FOLD",
+      "verbatim": "The 100+-session deferred long-tail — every chronic/deferred engineering item (GL-fence tails, kf republish-gates, cross-repo adopt, Real-Metal-GPU parity, disposition-restamp watches).",
+      "band": "R6",
+      "class": "process",
+      "recurrence": [
+        "R6.FOLD",
+        "mem:project_bc_execution"
+      ],
+      "covers": {
+        "foldLedger": [
+          "FOLD-LEDGER"
+        ]
+      },
+      "coverNote": "DRY ingest — the FOLD-LEDGER (Classes A-J) is ALREADY a no-silent-drop machine with every row → a disposition. The recap CITES it (asserts FOLD-LEDGER.md exists), binds it to user-ask provenance, and does NOT re-author it. The TAIL is recap'd at lower fidelity by-reference (the BC fold is the prior-art).",
+      "coverState": "addressed"
+    },
+    {
+      "id": "R6.METAL",
+      "verbatim": "Real-Metal-GPU cross-backend parity (the single biggest owed engineering deferral — FOLD-LEDGER Class B).",
+      "band": "R6",
+      "class": "process",
+      "recurrence": [
+        "R6.METAL"
+      ],
+      "covers": {
+        "wave": [
+          "BD.W-VIZ-PARITY-METAL"
+        ]
+      },
+      "coverNote": "DEFERRED with an explicit HELD trigger (real-hardware Metal capture). The wave EXISTS on disk; the trigger is un-MET. Not lost — folded with its trigger.",
+      "coverState": "deferred"
+    }
+  ]
+}

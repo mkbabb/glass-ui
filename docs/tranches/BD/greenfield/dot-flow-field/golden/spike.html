@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+  AURORA CURRENT — GOLDEN spike (THROWAWAY). De-risks the boldest mechanism:
+  a WebGL2 (the Safari-real fallback path) GPGPU particle advection on a
+  divergence-free curl field + a TWO-FBO feedback-fade TRAIL buffer + a
+  speed-keyed technicolor ramp + a cursor VORTEX, with a born-RED-style
+  on-present readback (litFrac / meanChroma / frameDelta / anisotropy).
+
+  This is NOT glass-ui code. It transcribes the SAME math the library ships
+  (curlFBM, additive billboards, OKLab-ish ramp) to prove the gestalt paints,
+  flows, reads vivid, and the cursor bends the streaks — identically in the
+  WebGL2 path WebKit actually runs. If this is green in Chrome AND Safari, the
+  GOLDEN spec's risk is retired.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AURORA CURRENT — golden spike</title>
+<style>
+  html,body{margin:0;height:100%;background:#0a0806;overflow:hidden}
+  canvas{display:block;width:100vw;height:100vh}
+  #hud{position:fixed;left:10px;top:10px;font:12px/1.5 ui-monospace,Menlo,monospace;
+       color:#d8c9b0;background:rgba(20,14,8,.55);padding:8px 10px;border-radius:8px;
+       white-space:pre;pointer-events:none}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud">booting…</div>
+<script type="module">
+const cv = document.getElementById('c');
+const hud = document.getElementById('hud');
+// preserveDrawingBuffer:true is the load-bearing readback discipline (lens-c §0.3):
+// without it a 2D drawImage of the WebGL2 canvas reads all-zero post-composite.
+const gl = cv.getContext('webgl2', { antialias:false, preserveDrawingBuffer:true, premultipliedAlpha:false });
+if(!gl){ hud.textContent = 'no webgl2'; throw new Error('no webgl2'); }
+const cbf = gl.getExtension('EXT_color_buffer_float'); // RGBA16F render targets
+
+const DPR = Math.min(devicePixelRatio||1, 2);
+let W=0,H=0;
+function resize(){
+  W = Math.floor(innerWidth*DPR); H = Math.floor(innerHeight*DPR);
+  cv.width=W; cv.height=H;
+}
+resize(); addEventListener('resize', resize);
+
+// ---- N particles, state encoded in an RGBA32F texture (pos.xy, age, seed) ----
+const SIDE = 128;                 // 128*128 = 16384 particles (== MAX_PARTICLES)
+const N = SIDE*SIDE;
+
+function sh(type, src){
+  const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)+'\n'+src);
+  return s;
+}
+function prog(vs,fs){
+  const p=gl.createProgram(); gl.attachShader(p,sh(gl.VERTEX_SHADER,vs)); gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(p); if(!gl.getProgramParameter(p,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+  return p;
+}
+
+// shared divergence-free curl basis (transcribes the library's curlFBM gestalt)
+const CURL = `
+float hash(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+float vnoise(vec2 p){ vec2 i=floor(p),f=fract(p); f=f*f*(3.-2.*f);
+  float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
+  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y); }
+float potential(vec2 p){ float v=0.,a=.5; for(int i=0;i<4;i++){ v+=a*vnoise(p); p*=2.03; a*=.5;} return v; }
+vec2 curl(vec2 p){ float e=.012; // ∇⊥ψ — divergence-free by construction
+  float dx=potential(p+vec2(e,0.))-potential(p-vec2(e,0.));
+  float dy=potential(p+vec2(0.,e))-potential(p-vec2(0.,e));
+  return vec2(dy,-dx)/(2.*e); }
+`;
+
+const QUAD_VS = `#version 300 es
+in vec2 a; out vec2 uv; void main(){ uv=a*.5+.5; gl_Position=vec4(a,0.,1.); }`;
+
+// ---- advection pass: integrate p += V·dt + cursor vortex; age + respawn ----
+const ADVECT_FS = `#version 300 es
+precision highp float;
+in vec2 uv; out vec4 o;
+uniform sampler2D state; uniform float t,dt,curlStrength,speedScale;
+uniform vec2 cursor; uniform float vortexSpin, dragGain, burst, cursorOn;
+uniform vec2 vel;
+${CURL}
+void main(){
+  vec4 s=texture(state,uv); vec2 p=s.xy; float age=s.z, seed=s.w;
+  // domain is roughly [-1.6,1.6]; respawn on age-out or far escape
+  vec2 V = curl(p*1.4 + vec2(t*0.05,0.0))*curlStrength;
+  if(cursorOn>0.5){
+    vec2 r=p-cursor; float d=length(r)+1e-3; float fall=exp(-d*d/0.18);
+    vec2 swirl=vec2(-r.y,r.x)/d;                 // tangential ∇⊥ — a true vortex
+    V += (swirl*vortexSpin + vel*dragGain + (r/d)*burst*0.9)*fall;
+  }
+  p += V*dt*speedScale;
+  age -= dt*(0.35+0.25*seed);
+  bool dead = age<=0.0 || abs(p.x)>1.8 || abs(p.y)>1.8;
+  if(dead){
+    // stratified-ish respawn (jittered)
+    float a=hash(vec2(seed*91.7+t, uv.x*53.0));
+    float b=hash(vec2(uv.y*71.0, seed*13.0-t));
+    p=vec2(a,b)*3.2-1.6; age=0.6+1.4*hash(vec2(a,b));
+  }
+  o=vec4(p,age,seed);
+}`;
+
+// ---- render pass: instanced points, additive, speed-keyed technicolor ----
+const POINT_VS = `#version 300 es
+precision highp float;
+uniform sampler2D state; uniform float t,curlStrength,aspect;
+out float vspeed; out float vage;
+${CURL}
+void main(){
+  int id=gl_VertexID; int side=${SIDE};
+  vec2 uv=(vec2(float(id%side),float(id/side))+0.5)/float(side);
+  vec4 s=texture(state,uv); vec2 p=s.xy; vage=s.z;
+  vec2 V=curl(p*1.4+vec2(t*0.05,0.0))*curlStrength;
+  vspeed=clamp(length(V)*1.6,0.0,1.0);
+  vec2 sp=vec2(p.x/aspect,p.y)*0.55;            // fit the field on screen
+  gl_Position=vec4(sp,0.,1.); gl_PointSize=2.4;
+}`;
+const POINT_FS = `#version 300 es
+precision highp float;
+in float vspeed; in float vage; out vec4 o;
+// a bold 4-stop technicolor speed ramp (slow magenta → cyan → amber → white bloom)
+vec3 ramp(float x){
+  vec3 a=vec3(0.55,0.05,0.42); // magenta-violet
+  vec3 b=vec3(0.05,0.62,0.78); // electric cyan
+  vec3 c=vec3(0.98,0.62,0.12); // hot amber
+  vec3 d=vec3(1.0,0.96,0.82);  // near-white bloom
+  if(x<0.33) return mix(a,b,x/0.33);
+  if(x<0.66) return mix(b,c,(x-0.33)/0.33);
+  return mix(c,d,(x-0.66)/0.34);
+}
+void main(){
+  vec2 q=gl_PointCoord*2.0-1.0; float r=dot(q,q);
+  if(r>1.0) discard;
+  float soft=exp(-r*2.6);
+  float life=clamp(vage,0.0,1.0);
+  float bright=(0.25+0.95*vspeed)*soft*life;
+  o=vec4(ramp(vspeed)*bright, bright);          // additive (premult-ish)
+}`;
+
+// ---- trail decay + blit ----
+const DECAY_FS = `#version 300 es
+precision highp float; in vec2 uv; out vec4 o;
+uniform sampler2D prev; uniform float decay;
+void main(){ vec4 c=texture(prev,uv); o=vec4(c.rgb*decay, c.a*decay); }`;
+
+const BLIT_FS = `#version 300 es
+precision highp float; in vec2 uv; out vec4 o;
+uniform sampler2D trail;
+void main(){
+  vec3 c=texture(trail,uv).rgb;
+  // deep warm-near-black floor + the additive streaks bloom over it
+  vec3 floorc=vec3(0.043,0.033,0.024);
+  o=vec4(floorc + c, 1.0);
+}`;
+
+const pAdvect=prog(QUAD_VS,ADVECT_FS);
+const pPoint =prog(POINT_VS,POINT_FS);
+const pDecay =prog(QUAD_VS,DECAY_FS);
+const pBlit  =prog(QUAD_VS,BLIT_FS);
+
+// fullscreen quad
+const quad=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,quad);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 3,-1, -1,3]),gl.STATIC_DRAW);
+function drawQuad(p){
+  gl.useProgram(p); const loc=gl.getAttribLocation(p,'a');
+  gl.bindBuffer(gl.ARRAY_BUFFER,quad); gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0); gl.drawArrays(gl.TRIANGLES,0,3);
+}
+
+// ---- ping-pong state textures (RGBA32F) ----
+function mkTex(w,h,internal,fmt,type,data){
+  const t=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,t);
+  gl.texImage2D(gl.TEXTURE_2D,0,internal,w,h,0,fmt,type,data||null);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  return t;
+}
+const seed=new Float32Array(N*4);
+for(let i=0;i<N;i++){ seed[i*4]=Math.random()*3.2-1.6; seed[i*4+1]=Math.random()*3.2-1.6;
+  seed[i*4+2]=Math.random()*2.0; seed[i*4+3]=Math.random(); }
+let stA=mkTex(SIDE,SIDE,gl.RGBA32F,gl.RGBA,gl.FLOAT,seed);
+let stB=mkTex(SIDE,SIDE,gl.RGBA32F,gl.RGBA,gl.FLOAT,null);
+const stFbo=gl.createFramebuffer();
+
+// trail targets (screen res) — RGBA16F
+let trA,trB,trFbo;
+function mkTrails(){
+  trA=mkTex(W,H,cbf?gl.RGBA16F:gl.RGBA,gl.RGBA,cbf?gl.HALF_FLOAT:gl.UNSIGNED_BYTE,null);
+  trB=mkTex(W,H,cbf?gl.RGBA16F:gl.RGBA,gl.RGBA,cbf?gl.HALF_FLOAT:gl.UNSIGNED_BYTE,null);
+  trFbo=gl.createFramebuffer();
+}
+mkTrails(); let lastW=W,lastH=H;
+
+function setF(p,n,v){ gl.uniform1f(gl.getUniformLocation(p,n),v); }
+function set2(p,n,x,y){ gl.uniform2f(gl.getUniformLocation(p,n),x,y); }
+function setT(p,n,tex,unit){ gl.activeTexture(gl.TEXTURE0+unit); gl.bindTexture(gl.TEXTURE_2D,tex);
+  gl.uniform1i(gl.getUniformLocation(p,n),unit); }
+
+// ---- cursor / pointer field (eased velocity + flick burst) ----
+let cx=0,cy=0,pvx=0,pvy=0,burst=0,cursorOn=0,lcx=0,lcy=0;
+addEventListener('pointermove',e=>{
+  const nx=(e.clientX/innerWidth)*2-1, ny=-((e.clientY/innerHeight)*2-1);
+  pvx=0.7*pvx+0.3*(nx-cx)*4; pvy=0.7*pvy+0.3*(ny-cy)*4;
+  burst=Math.min(1.0, burst+Math.hypot(nx-cx,ny-cy)*3.0);
+  cx=nx; cy=ny; cursorOn=1;
+});
+addEventListener('pointerleave',()=>cursorOn=0);
+
+let t=0, last=performance.now(), frames=0;
+function frame(now){
+  let dt=Math.min((now-last)/1000,0.033); last=now; t+=dt;
+  burst*=0.94; pvx*=0.9; pvy*=0.9;
+
+  if(W!==lastW||H!==lastH){ mkTrails(); lastW=W; lastH=H; }
+
+  // 1) advect state A→B
+  gl.bindFramebuffer(gl.FRAMEBUFFER,stFbo);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,stB,0);
+  gl.viewport(0,0,SIDE,SIDE); gl.disable(gl.BLEND);
+  gl.useProgram(pAdvect);
+  setT(pAdvect,'state',stA,0);
+  setF(pAdvect,'t',t); setF(pAdvect,'dt',dt); setF(pAdvect,'curlStrength',0.9);
+  setF(pAdvect,'speedScale',0.9); set2(pAdvect,'cursor',cx,cy);
+  setF(pAdvect,'vortexSpin',1.1); setF(pAdvect,'dragGain',0.8);
+  setF(pAdvect,'burst',burst); setF(pAdvect,'cursorOn',cursorOn);
+  set2(pAdvect,'vel',pvx,pvy);
+  drawQuad(pAdvect);
+  [stA,stB]=[stB,stA];
+
+  // 2) decay trail A→B
+  gl.bindFramebuffer(gl.FRAMEBUFFER,trFbo);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,trB,0);
+  gl.viewport(0,0,W,H); gl.disable(gl.BLEND);
+  gl.useProgram(pDecay); setT(pDecay,'prev',trA,0); setF(pDecay,'decay',0.93);
+  drawQuad(pDecay);
+
+  // 3) draw points additively into trB
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE);
+  gl.useProgram(pPoint);
+  setT(pPoint,'state',stA,0); setF(pPoint,'t',t); setF(pPoint,'curlStrength',0.9);
+  setF(pPoint,'aspect',W/H);
+  // dummy VAO for gl_VertexID-only draw
+  const vao=gl.createVertexArray(); gl.bindVertexArray(vao);
+  gl.drawArrays(gl.POINTS,0,N); gl.bindVertexArray(null); gl.deleteVertexArray(vao);
+  [trA,trB]=[trB,trA];
+
+  // 4) blit trail → screen over the warm floor
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.viewport(0,0,W,H); gl.disable(gl.BLEND);
+  gl.useProgram(pBlit); setT(pBlit,'trail',trA,0); drawQuad(pBlit);
+
+  frames++;
+  if(frames%30===0) measure();
+  requestAnimationFrame(frame);
+}
+
+// ---- born-RED-style readback π (on-present, the gate sketch) ----
+let prevImg=null;
+function measure(){
+  // sample a downscaled grid via a 2D scratch (preserveDrawingBuffer makes this real)
+  const SW=64,SH=36; const sc=document.createElement('canvas'); sc.width=SW; sc.height=SH;
+  const ctx=sc.getContext('2d'); ctx.drawImage(cv,0,0,SW,SH);
+  const d=ctx.getImageData(0,0,SW,SH).data;
+  let lit=0,sumL=0,sumC=0,nC=0;
+  for(let i=0;i<d.length;i+=4){
+    const r=d[i],g=d[i+1],b=d[i+2];
+    const L=0.299*r+0.587*g+0.114*b; sumL+=L;
+    if(L>14){ lit++; const mx=Math.max(r,g,b),mn=Math.min(r,g,b); sumC+=(mx-mn); nC++; }
+  }
+  const px=(d.length/4);
+  const litFrac=lit/px, meanLum=sumL/px, meanChroma=nC?sumC/nC:0;
+  let frameDelta=0;
+  if(prevImg){ for(let i=0;i<d.length;i+=4) frameDelta+=Math.abs(d[i]-prevImg[i]); frameDelta/=px; }
+  prevImg=d.slice(0);
+  const pass=(m,lo)=>m>=lo?'PASS':'**RED**';
+  hud.textContent =
+   `backend: webgl2 (Safari-real path)  DPR ${DPR}\n`+
+   `litFrac    ${litFrac.toFixed(3)}   ${pass(litFrac,0.06)}  (floor .06)\n`+
+   `meanChroma ${meanChroma.toFixed(1)}   ${pass(meanChroma,18)}  (floor 18 — vivid)\n`+
+   `frameDelta ${frameDelta.toFixed(2)}   ${pass(frameDelta,1.5)}  (floor 1.5 — alive)\n`+
+   `cursor     ${cursorOn?'live vortex':'idle'}  burst ${burst.toFixed(2)}\n`+
+   `move the pointer → streaks bend & swirl`;
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Overlays GOLDEN spike — --stage-t, the four couplings</title>
+<style>
+  /* ── The ONE staging scalar (the spike's headline de-risk) ──────────────────
+     A registered @property so the browser interpolates the NUMBER on the
+     compositor; inherits:true so the wrapper, scrim, and sheet all read it. */
+  @property --stage-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+  :root {
+    /* warm-cream floor (BA.W-NO-GRAY), both modes */
+    --card: hsl(30 85% 96%);
+    --glass-bg-overlay: color-mix(in srgb, hsl(30 85% 96%) 70%, transparent);
+    --glass-tint-source: hsl(30 85% 70%);
+    --glass-tint-strength: 8%;
+    --glass-blur-overlay-radius: 20px;
+    --overlay-scrim-ink: hsl(24 10% 10%);   /* warm near-black, never flat */
+    --radius-panel: 16px;
+    --field-h: 48;                          /* forms terracotta */
+    --spring-snappy-duration: 0.45s;
+    /* the cartoon-punch linear() (anticipation dip <0 → ~22% overshoot → settle)
+       — minted here for the spike; the lib DEPENDs on Band-0's mint. */
+    --ease-cartoon-punch: linear(
+      0, -0.018 6%, -0.02 11%, 0.06 18%, 0.62 35%, 1.08 56%, 1.18 66%,
+      1.12 74%, 1.0 86%, 0.997 92%, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
+  }
+  .dark {
+    --card: hsl(26 22% 17%);
+    --glass-bg-overlay: color-mix(in srgb, hsl(26 22% 17%) 72%, transparent);
+    --glass-tint-source: hsl(30 60% 55%);
+    --glass-tint-strength: 12%;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: #2a2018; overflow: hidden; }
+
+  /* ── the page-root wrapper: coupling (C) page recede + scale ───────────────
+     A SINGLE compositor transform off --stage-t. shouldScaleBackground RETIRED:
+     this value moves real pixels. */
+  [data-stage-wrapper] {
+    scale: calc(1 - 0.05 * var(--stage-t));
+    border-radius: calc(var(--radius-panel) * var(--stage-t));
+    transform-origin: 50% 0;
+    overflow: clip;
+    filter: saturate(calc(1 - 0.18 * var(--stage-t)));
+    transition: scale var(--spring-snappy-duration) var(--ease-out),
+                filter var(--spring-snappy-duration) var(--ease-out),
+                border-radius var(--spring-snappy-duration) var(--ease-out);
+    min-height: 100vh;
+  }
+  .page {
+    min-height: 100vh; padding: 2rem;
+    /* a COLORFUL FIELD behind the glass (the §3 amplifier) */
+    background:
+      radial-gradient(60% 50% at 20% 18%, oklch(0.86 0.13 var(--field-h) / 0.9), transparent 70%),
+      radial-gradient(55% 55% at 82% 78%, oklch(0.80 0.14 calc(var(--field-h) + 30) / 0.85), transparent 68%),
+      radial-gradient(50% 60% at 60% 45%, oklch(0.84 0.11 calc(var(--field-h) - 20) / 0.8), transparent 72%),
+      var(--card);
+  }
+  .page h1 { font-size: clamp(2rem, 8vw, 4.5rem); letter-spacing: -0.015em; line-height: 1.05; margin: 0 0 1rem; color: hsl(26 30% 22%); }
+  .dark .page h1 { color: hsl(30 40% 88%); }
+  .card { background: oklch(0.95 0.04 var(--field-h)); border-radius: 14px; padding: 1.25rem; margin: 0.75rem 0; box-shadow: 0 8px 24px rgba(60,40,20,.15); }
+  .dark .card { background: oklch(0.30 0.04 var(--field-h)); }
+
+  /* ── the scrim: coupling (B) deepen ───────────────────────────────────────
+     warm ink, α tracks --stage-t. sits BELOW the sheet in z. */
+  [data-stage-scrim] {
+    position: fixed; inset: 0; z-index: 40; pointer-events: none;
+    background: color-mix(in srgb, var(--overlay-scrim-ink) calc(28% + var(--stage-t) * 44%), transparent);
+  }
+
+  /* ── the drawer sheet: coupling (A) FREEZE transmissive → solid ───────────
+     element-level color-mix toward --card + blur decay (the substitution-vs-
+     inheritance-safe path; NEVER an ancestor filter). */
+  .sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    height: 100%; max-height: 97vh; margin-top: 6rem;
+    border-start-start-radius: var(--radius-panel);
+    border-start-end-radius: var(--radius-panel);
+    border: 1px solid color-mix(in oklab, var(--glass-tint-source), transparent 60%);
+    border-bottom: 0;
+    box-shadow: 0 -8px 40px rgba(40,25,10,.35);
+    /* the snap translate the house writes; here a stand-in off --stage-t */
+    transform: translateY(calc((1 - var(--stage-t)) * 100%));
+    transition: transform var(--spring-snappy-duration) var(--ease-cartoon-punch);
+    padding: 1.5rem;
+    /* (A) the freeze: 0 until the commit floor (0.85), → 1 at full */
+    --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
+    background: color-mix(in oklab,
+      color-mix(in oklab,
+        color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength)),
+        var(--card) calc(var(--sheet-freeze) * 100%)),
+      var(--glass-tint-source) 0%);
+    backdrop-filter: blur(calc(var(--glass-blur-overlay-radius) * (1 - var(--sheet-freeze)))) saturate(1.6);
+    -webkit-backdrop-filter: blur(calc(var(--glass-blur-overlay-radius) * (1 - var(--sheet-freeze)))) saturate(1.6);
+  }
+  .handle { width: 2.25rem; height: 5px; border-radius: 99px; background: hsl(26 10% 40% / .5); margin: 0 auto 1rem; }
+  .sheet h2 { margin: 0 0 0.5rem; color: hsl(26 30% 22%); }
+  .dark .sheet h2 { color: hsl(30 40% 90%); }
+  .row { padding: 0.75rem 1rem; border-radius: 10px; background: color-mix(in oklab, var(--glass-tint-source), transparent 88%); margin: 0.4rem 0; color: hsl(26 25% 25%); }
+  .dark .row { color: hsl(30 30% 85%); }
+
+  /* the cartoon PUNCH reveal tier — a popover blooming from its anchor */
+  .popover {
+    position: fixed; z-index: 60; min-width: 12rem;
+    background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
+    backdrop-filter: blur(13px) saturate(1.6); -webkit-backdrop-filter: blur(13px) saturate(1.6);
+    border: 1px solid color-mix(in oklab, var(--glass-tint-source), transparent 55%);
+    border-radius: 12px; padding: 1rem;
+    box-shadow: 0 12px 40px rgba(40,25,10,.3);
+    transform-origin: top left;
+    scale: 0.82; opacity: 0; filter: blur(4px);
+    transition: scale var(--spring-snappy-duration) var(--ease-cartoon-punch),
+                opacity var(--spring-snappy-duration) var(--ease-out),
+                filter var(--spring-snappy-duration) var(--ease-out);
+  }
+  .popover.open { scale: 1; opacity: 1; filter: blur(0); }
+
+  .controls { position: fixed; top: 1rem; left: 1rem; z-index: 70; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; background: #fff8; backdrop-filter: blur(8px); padding: 0.6rem 0.8rem; border-radius: 12px; font-size: 13px; }
+  .controls button, .controls label { font: inherit; }
+  button { padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid #0002; background: #fff; cursor: pointer; }
+  #t { width: 160px; }
+  #readout { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <label>stage-t <input id="t" type="range" min="0" max="1" step="0.01" value="0"></label>
+    <button id="open">open→full</button>
+    <button id="peek">peek</button>
+    <button id="close">close</button>
+    <button id="pop">popover bloom</button>
+    <button id="dark">dark</button>
+    <span id="readout"></span>
+  </div>
+
+  <div data-stage-wrapper id="wrapper">
+    <div class="page" id="page">
+      <h1>The page recedes as the sheet rises.</h1>
+      <div class="card">A vibrant card — the field behind the glass.</div>
+      <div class="card">The scrim deepens, the sheet freezes solid at full.</div>
+      <div class="card">One <code>--stage-t</code>, four couplings, one weighted body.</div>
+    </div>
+  </div>
+
+  <div data-stage-scrim id="scrim"></div>
+
+  <div class="sheet" id="sheet">
+    <div class="handle"></div>
+    <h2>Detented drawer</h2>
+    <div class="row">Transmissive at peek/half — the page bleeds through.</div>
+    <div class="row">Near-opaque at full — solid --card, blur → 0.</div>
+    <div class="row">All coupled to the one snap-fraction scalar.</div>
+  </div>
+
+  <div class="popover" id="popover" style="top: 120px; left: 24px;">
+    <strong>Cartoon punch</strong>
+    <p style="margin:.5rem 0 0;font-size:13px;color:#765">anticipation dip → overshoot → settle, from the anchor.</p>
+  </div>
+
+<script>
+  const root = document.documentElement;
+  const t = document.getElementById('t');
+  const readout = document.getElementById('readout');
+  const setT = (v) => {
+    root.style.setProperty('--stage-t', v);
+    t.value = v;
+    const sheet = getComputedStyle(document.getElementById('sheet'));
+    readout.textContent = `t=${(+v).toFixed(2)} · sheet bg=${sheet.backgroundColor}`;
+  };
+  t.addEventListener('input', e => setT(e.target.value));
+  document.getElementById('open').onclick = () => animateT(1);
+  document.getElementById('peek').onclick = () => animateT(0.30);
+  document.getElementById('close').onclick = () => animateT(0);
+  document.getElementById('dark').onclick = () => root.classList.toggle('dark');
+  document.getElementById('pop').onclick = () => {
+    const p = document.getElementById('popover');
+    p.classList.remove('open'); void p.offsetWidth; p.classList.add('open');
+  };
+  // animate --stage-t over the snap clock (stand-in for useDrawerSnap SpringProgress)
+  let raf;
+  function animateT(target) {
+    cancelAnimationFrame(raf);
+    const start = parseFloat(getComputedStyle(root).getPropertyValue('--stage-t')) || 0;
+    const t0 = performance.now(), dur = 450;
+    const ease = x => 1 - Math.pow(1 - x, 3);
+    (function step(now){
+      const k = Math.min(1, (now - t0) / dur);
+      setT((start + (target - start) * ease(k)).toFixed(3));
+      if (k < 1) raf = requestAnimationFrame(step);
+    })(t0);
+  }
+  setT(0);
+  // expose a probe for the live-verify (samples composited sheet over page)
+  window.__probe = () => {
+    const s = getComputedStyle(document.getElementById('sheet'));
+    return { stageT: getComputedStyle(root).getPropertyValue('--stage-t').trim(),
+             sheetBg: s.backgroundColor, sheetBlur: s.backdropFilter,
+             wrapperScale: getComputedStyle(document.getElementById('wrapper')).scale,
+             scrimBg: getComputedStyle(document.getElementById('scrim')).backgroundColor };
+  };
+</script>
+</body>
+</html>

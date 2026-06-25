@@ -49,7 +49,7 @@ The painted-truth readback that the rail glides FLUIDLY (continuous-position) + 
 
 ## The gestalt row
 
-**Roster surface: `dock-rail-glide`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the rail scrolls as a SLOW LIQUID glide — the facets flow past continuously (the deleted `SCROLL_PX_PER_SLOT` feel restored) and spring-snap to the nearest slot on release, reading fluid + slow (the R11 "not fluid / not slow enough" defect closed), never the fast discrete native scrollbar. PASS iff the glide reads as a continuous-position liquid drift AND the snap reads as a spring settle. Rides `W-REFLECT`; surface-hash freshness floor binds.
+**Roster surface: `dock-rail-glide`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the rail scrolls as a SLOW LIQUID glide — the facets flow past continuously (the deleted `SCROLL_PX_PER_SLOT` feel restored) and spring-snap to the nearest slot on release, reading fluid + slow (the R11 "not fluid / not slow enough" defect closed), never the fast discrete native scrollbar. PASS iff the glide reads as a continuous-position liquid drift AND the snap reads as a spring settle. The binding paint is GREEN at its OWN close; W-REFLECT re-confirms on the union sweep (never the first paint); the surface-hash freshness floor binds.
 
 ## Fences
 

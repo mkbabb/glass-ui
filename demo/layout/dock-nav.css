@@ -30,6 +30,8 @@
     --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     /* The fixed sidebar rail column width. */
     --demo-nav-rail-w: 4.5rem;
+    /* W-NAV-DOCK-FIX F8 — the contextual facet-rail gap (the chip run spacing). */
+    --demo-facet-gap: 0.25rem;
 }
 
 /* ── Sidebar fixed-rail occupancy ──────────────────────────────────────────
@@ -245,4 +247,170 @@
        state so the rail reads as an affordance even before the user scrolls. */
     opacity: 0.85;
     pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL (the switch made liquid)
+   ───────────────────────────────────────────────────────────────────────
+   The route→facet resolver (`useContextualDockLayers`) was a DEAD computed; the rail
+   renders it as a real roving tablist of facet chips. Each chip is a <DockIconButton>
+   that COMPOSES the SHARED `.glass-capsule` register (the ONE warm lifted-lozenge
+   recipe — the demo NEVER forks a parallel selected-fill). The demo adds ONLY the
+   demo-private axes the library box cannot know: the rail run layout, the WARM accent
+   override on the selected chip's `--glass-capsule-fill`, and the one-shot accent-flood
+   on the `data-active` flip (the liquid SWITCH weight). Compositor-only + Safari-native.
+   ════════════════════════════════════════════════════════════════════════ */
+.demo-facet-rail {
+    display: flex;
+    align-items: center;
+    gap: var(--demo-facet-gap, 0.25rem);
+    min-inline-size: 0;
+}
+.demo-facet-rail--vertical {
+    flex-direction: column;
+}
+.demo-facet-rail--horizontal {
+    flex-direction: row;
+}
+
+/* The selected facet chip re-points the SHARED `.glass-capsule` fill toward its WARM
+   facet accent (the post-fence `--section-color-N`, passed inline as
+   `--dock-facet-accent`). It is a SUB-PERCEPTUAL warm bias over the capsule's own
+   lifted-plate composite — the accent rides a small `color-mix` toward the hue, NEVER a
+   saturated plate flood (the W-REGISTER-IOS "selected reads as glass, never a brand
+   flood" floor; the warm-cream identity holds). Unset accent ⇒ the capsule's default
+   selected glass tier (`--dock-control-active-bg`) reads through untouched. */
+.demo-facet-chip[data-active] {
+    --glass-capsule-fill: color-mix(
+        in oklab,
+        var(--dock-control-active-bg, var(--glass-bg-floating)),
+        var(--dock-facet-accent, transparent) 24%
+    );
+}
+
+/* The fallback dot for an icon-less facet (a small warm pip so the chip reads as a
+   selectable affordance, not an empty plate). At rest it is the muted ink; selected it
+   firms toward the accent. */
+.demo-facet-chip__dot {
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: var(--radius-pill, 9999px);
+    background: color-mix(
+        in oklab,
+        var(--muted-foreground),
+        var(--dock-facet-accent, transparent) 40%
+    );
+}
+.demo-facet-chip[data-active] .demo-facet-chip__dot {
+    background: var(--dock-facet-accent, var(--foreground));
+}
+
+/* The one-shot WARM ACCENT-FLOOD — the liquid SWITCH weight (GOLDEN M3-c, the T4
+   EFFECTS-after-SPATIAL signature). On the `data-active` flip a plus-lighter wash off
+   the facet accent blooms then CLEARS — a `::after` overlay that fades in fast and out
+   slow on the cartoon-punch clock, trailing the chip's own capsule glide. Decorative
+   (aria-hidden / pointer-events:none); the real affordance is `aria-selected`. The flood
+   restarts each time `data-active` is set (the `animation` re-fires on the attribute
+   add). Compositor-only opacity — Safari-native, no goo, no backdrop-filter:url. */
+.demo-facet-chip {
+    position: relative;
+}
+.demo-facet-chip[data-active]::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at center,
+        color-mix(in oklab, var(--dock-facet-accent, var(--primary)), transparent 35%),
+        transparent 72%
+    );
+    mix-blend-mode: plus-lighter;
+    opacity: 0;
+    animation: demo-facet-flood var(--duration-slow, 0.5s)
+        var(--ease-cartoon-punch, cubic-bezier(0.5, -0.2, 0.4, 1.2)) 1;
+}
+@keyframes demo-facet-flood {
+    0% {
+        opacity: 0;
+        scale: 0.86;
+    }
+    35% {
+        opacity: 0.85;
+        scale: 1.04;
+    }
+    100% {
+        opacity: 0;
+        scale: 1;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    /* PRM — the flood is motion; retire it (the selected state still reads via the
+       capsule fill + the firm accent). */
+    .demo-facet-chip[data-active]::after {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   BD.W-SHELL-ROUTE-BLOOM (V-b) — the route-bloom SKELETON layout (kills the void)
+   ───────────────────────────────────────────────────────────────────────
+   The matched-but-pending <main> void is filled by a glass placeholder LAYOUT that
+   mirrors the SectionLanding silhouette (eyebrow bar + √φ title block + bento shimmer
+   grid). It COMPOSES the SHIPPED <Skeleton surface="glass"> primitive (the translucent
+   over-glass base reads the warm field THROUGH); this file owns ONLY the demo-private
+   LAYOUT geometry (the silhouette proportions + the bento grid), never a 2nd skeleton
+   engine. The whole block blooms THROUGH on content-resolve via useBloomUp (AppShell).
+   ════════════════════════════════════════════════════════════════════════ */
+.section-landing-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.section-landing-skeleton__hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+/* The mono eyebrow bar (category · story) — a short caption-height pill. */
+.section-landing-skeleton__eyebrow {
+    block-size: 0.85rem;
+    inline-size: min(40%, 14rem);
+}
+/* The √φ display title block — the dominant mass (the hero title silhouette). */
+.section-landing-skeleton__title {
+    block-size: 2.75rem;
+    inline-size: min(72%, 30rem);
+    border-radius: var(--radius-card, 0.75rem);
+}
+/* The Fira-Code subpath chip beneath the title. */
+.section-landing-skeleton__chip {
+    block-size: 1.1rem;
+    inline-size: min(28%, 10rem);
+}
+/* The bento shimmer grid — rhymes with SectionLanding's
+   `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` so the placeholder reads as the SAME
+   bento it resolves into (zero layout jump on the bloom-through). */
+.section-landing-skeleton__bento {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-block-start: 0.5rem;
+}
+@media (min-width: 640px) {
+    .section-landing-skeleton__bento {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1024px) {
+    .section-landing-skeleton__bento {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.section-landing-skeleton__card {
+    block-size: 9rem;
+    border-radius: var(--radius-card, 0.75rem);
 }

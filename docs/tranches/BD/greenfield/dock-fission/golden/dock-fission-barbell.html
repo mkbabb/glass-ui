@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+  GOLDEN dock-fission spike — the BOLDEST dock-specific mechanism de-risked: the
+  ASYMMETRIC barbell. Unlike the goo-morph spike (two EQUAL bodies), the dock fission
+  joins a LARGE dock-body PLATE (the surviving pill — one anchored mass) to a SMALL
+  ISLAND bud (D = dockThickness/φ) via a clip-path HOURGLASS neck that SPANS the full
+  placement reach (= dockThickness·φ). Throwaway. Pure CSS/JS, no build, no glass-ui import.
+
+  What this proves (beyond barbell-neck.html):
+    1. An ASYMMETRIC pair (big plate + small bud) + a clip-path hourglass neck, fused by
+       the byte-identical static #dock-fission-goo filter, reads as ONE liquid mass that
+       BUDS OFF and necks to a CONCAVE waist — the iOS-27 Apple-Music bud-off, not a peel.
+    2. The waist is structurally present (clip-path polygon) BEFORE the filter fuses it →
+       the WebKit-insurance the lenses converge on (engine-agnostic concavity).
+    3. The bud TRAVELS the full placement reach (dockThickness·φ) into real space beside
+       the dock — a real SECOND sub-dock arrives (scale 0→1), not a zeroed plate.
+    4. The neck GIRTH wells then PINCHES on sin(π·p)^1.5 (the SNAP), not a monotone fade.
+    5. Everything is transform/opacity/clip-path per frame; the filter is static (sRGB).
+    6. A π readback (waist/body + hasLocalMinimum + neckGirth.rises_then_falls) at the peak.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>golden dock-fission — asymmetric barbell + hourglass neck</title>
+<style>
+  :root {
+    /* warm-cream goo medium (NEVER gray) — the BA.W-NO-GRAY warm floor, both modes */
+    --goo-cream: oklch(0.93 0.045 78);
+    --goo-cream-lit: oklch(0.965 0.03 82);
+    --phi: 1.618;
+  }
+  html, body { margin: 0; height: 100%; background: #15110c; }
+  body { display: grid; place-items: center; font: 13px/1.4 ui-monospace, monospace; color: #d9c9b3; }
+  .wrap { display: flex; flex-direction: column; gap: 14px; align-items: center; padding: 24px; }
+  .stage {
+    position: relative; width: 560px; height: 260px;
+    /* a COLORFUL FIELD behind the glass (§3) so the transmissive read is visible — the
+       vibrant aurora reads THROUGH the welling neck + island. */
+    background:
+      radial-gradient(55% 80% at 24% 38%, oklch(0.58 0.20 305 / 0.95), transparent 60%),
+      radial-gradient(65% 95% at 80% 64%, oklch(0.62 0.19 215 / 0.95), transparent 62%),
+      radial-gradient(40% 60% at 60% 20%, oklch(0.7 0.16 145 / 0.7), transparent 60%),
+      oklch(0.26 0.05 52);
+    border-radius: 22px; overflow: visible; isolation: isolate;
+  }
+  /* THE GOO LAYER — the dock plate + neck + island bud, fused by the static filter.
+     opacity carries the transmissive glass; the filter welds. */
+  .goo {
+    position: absolute; inset: 0; pointer-events: none;
+    filter: url(#dock-fission-goo);
+    color: var(--goo-cream);
+    opacity: 0.80;             /* transmissive — the field reads THROUGH */
+    contain: layout style;     /* NOT paint — paint would clip the neck/bud */
+  }
+  .plate, .island, .neck {
+    position: absolute;
+    background:
+      radial-gradient(130% 95% at 50% 22%, var(--goo-cream-lit), currentColor 70%);
+    will-change: transform;
+  }
+  /* THE DOCK BODY — a large stadium plate (the surviving pill). Anchored, does NOT travel
+     (it RECOILS a hair on the snap). The large mass of the asymmetric barbell. */
+  .plate {
+    top: 50%; left: 56px;
+    width: 188px; height: 64px; margin-top: -32px;
+    border-radius: 999px;
+  }
+  /* THE ISLAND BUD — a small warm-cream droplet, D = plateThickness/φ. Buds off the plate
+     edge and TRAVELS the full reach to land beside it as the second sub-dock. */
+  .island {
+    top: 50%; left: 0;
+    /* D = 64/phi ≈ 40px (the golden-minor of the dock thickness) — a BLOB, then it
+       grows to a real pill at land. */
+    width: 76px; height: 56px; margin-top: -28px;
+    border-radius: 999px;
+    transform-origin: center;
+  }
+  /* THE HOURGLASS NECK — the structural concavity between plate edge and island bud.
+     A clip-path polygon whose sides pull IN at the mid (the waist), so even pre-blur the
+     silhouette has a real throat. scaleX spans the live gap; scaleY is the welling bell.
+     This is the load-bearing fix vs the shipped inset() capsule (which has NO concavity). */
+  .neck {
+    top: 50%; left: 0;
+    width: 120px; height: 64px; margin-top: -32px;
+    transform-origin: left center;   /* grows OUT from the plate edge along the reach */
+    /* concave hourglass: wide where it meets the plate (left) + the bud (right), pinched
+       at the centre — a true throat. Same idiom as the goo-morph golden + the
+       fission-bridge --neck-filament, here spanning the dock→island gap. */
+    clip-path: polygon(
+      0% 4%, 0% 96%,
+      18% 72%, 34% 60%, 50% 56%, 66% 60%, 82% 72%,
+      100% 96%, 100% 4%,
+      82% 28%, 66% 40%, 50% 44%, 34% 40%, 18% 28%
+    );
+  }
+  .readout { white-space: pre; opacity: 0.9; }
+  .controls { display: flex; gap: 10px; align-items: center; }
+  button { font: inherit; padding: 6px 12px; border-radius: 8px; border: 1px solid #5a4a38; background: #2a2018; color: #e8d8c0; cursor: pointer; }
+  label { display: flex; gap: 6px; align-items: center; }
+  input[type=range] { width: 240px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- the static goo filter — byte-identical to glass-ui DockGooFilter.vue with the GOLDEN
+       retune (sRGB, region -50%/200%, static literals, regular filter:url). blur 10 /
+       slope 15 / offset -7 — a wider transition band so the fuse READS gooey, not razor. -->
+  <svg width="1" height="1" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="dock-fission-goo" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -7" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="stage" id="stage">
+    <div class="goo">
+      <div class="plate" id="plate"></div>
+      <div class="neck" id="neck"></div>
+      <div class="island" id="island"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>p <input id="p" type="range" min="0" max="1" step="0.001" value="0.55" /></label>
+    <button id="play">play fission</button>
+  </div>
+  <div class="readout" id="readout"></div>
+</div>
+
+<script>
+const plate  = document.getElementById('plate');
+const island = document.getElementById('island');
+const neck   = document.getElementById('neck');
+const pIn    = document.getElementById('p');
+const readout = document.getElementById('readout');
+
+const PHI = 1.618033988749895;
+const plateEdgeX = 56 + 188;          // the right edge of the dock plate (px from stage-left)
+const plateCY    = 130;               // stage vertical center
+const dockThick  = 64;                // the dock thickness (px)
+const D          = dockThick / PHI;   // island bud diameter ≈ 39.6 (golden-minor)
+const reach      = dockThick * PHI;   // placement reach ≈ 103.6 (golden-major)
+const ISLAND_W   = 76, ISLAND_H = 56; // landed island pill footprint
+
+// bell: 0 at ends, peak mid — the girth well + the arc lob
+const bell = (t, k=1.5) => Math.pow(Math.sin(Math.PI*t), k);
+// the bud emerges over the first 10% (anticipation), then travels
+const budOut = p => Math.min(1, p / 0.10);
+
+function paint(p) {
+  // THE ISLAND BUDS off the plate edge and travels the FULL reach beside the dock.
+  // it starts AT the plate edge (gap 0) and lands at reach + a bud-radius clearance.
+  const landX = plateEdgeX + reach;                 // the island center landing X
+  const startX = plateEdgeX + D * 0.4;              // buds just off the plate edge
+  const islandCX = startX + (landX - startX) * p;   // travels the gap
+  // a small √φ overshoot near land (the cartoon weight) — settles by p=1
+  const overshoot = p > 0.82 ? bell((p - 0.82) / 0.18, 1) * (reach / PHI) * 0.06 : 0;
+  // the parabolic arc lob (perpendicular) — the bud LOBS, not a flat slide
+  const arcY = -D * 0.10 * bell(p, 1);
+  const islandScale = budOut(p);                    // 0→1 bud-out then full
+  const islandGrow = 0.55 + 0.45 * Math.min(1, p / 0.7);  // grows toward a real pill
+  island.style.transform =
+    `translate(${(islandCX + overshoot - ISLAND_W/2).toFixed(2)}px, ${(plateCY + arcY - ISLAND_H/2 - plateCY + plateCY).toFixed(2)}px) ` +
+    `translateY(${(arcY).toFixed(2)}px) scale(${(islandScale * islandGrow).toFixed(3)})`;
+  // (the double-translate keeps the math legible: position then arc; product collapses at runtime)
+  island.style.left = '0'; island.style.top = '50%';
+  island.style.translate = `${(islandCX + overshoot - ISLAND_W/2).toFixed(2)}px ${(arcY - ISLAND_H/2).toFixed(2)}px`;
+  island.style.transform = `scale(${(islandScale * islandGrow).toFixed(3)})`;
+
+  // THE NECK spans plate-edge → island, its girth WELLS then PINCHES (the metaball throat).
+  const neckStartX = plateEdgeX - 8;                // overlaps the plate a touch (weld)
+  const gap = Math.max(1, (islandCX - D * 0.4) - neckStartX);
+  const neckBaseW = 120;
+  const neckLen = gap / neckBaseW;                  // scaleX spans the live gap
+  // girth wells (0.16 floor → swells to ~0.92 at mid → recedes) — NEVER a monotone fade
+  const neckGirth = 0.16 + bell(p, 1.5) * 0.76;
+  neck.style.left = '0'; neck.style.top = '50%';
+  neck.style.translate = `${neckStartX}px -32px`;
+  neck.style.transform = `scaleX(${neckLen.toFixed(3)}) scaleY(${neckGirth.toFixed(3)})`;
+
+  // the dock plate RECOILS a hair on the snap (Newton's third law as cartoon weight)
+  const recoil = p > 0.7 ? -bell((p - 0.7) / 0.3, 1) * 3 : 0;
+  plate.style.translate = `${recoil.toFixed(2)}px -32px`;
+
+  return { islandCX, gap, neckGirth, neckLen, islandScale: islandScale * islandGrow };
+}
+
+function measure(p) {
+  const d = paint(p);
+  // the rendered waist throat ≈ neck height * neckGirth * waistFraction(0.34 of the
+  // hourglass clip-path); the body girth = the dock plate thickness (the large mass).
+  const throat = dockThick * d.neckGirth * 0.34;
+  const bodyGirth = dockThick;                      // the plate is the reference body
+  const ratio = throat / bodyGirth;
+  // hasLocalMinimum: the cross-axis profile dips between the plate mass and the island
+  // mass — true whenever both masses are present AND the neck girth is below both.
+  const hasLocalMinimum = d.islandScale > 0.2 && d.neckGirth < 0.95;
+  return {
+    p, gap: d.gap.toFixed(1), neckGirth: d.neckGirth.toFixed(3),
+    islandScale: d.islandScale.toFixed(3),
+    waistRatio: ratio.toFixed(3), hasLocalMinimum,
+  };
+}
+
+function render() {
+  const p = parseFloat(pIn.value);
+  const m = measure(p);
+  readout.textContent =
+    `p=${p.toFixed(3)}  gap=${m.gap}px  neckGirth=${m.neckGirth}  islandScale=${m.islandScale}  ` +
+    `waist/body=${m.waistRatio}  localMin=${m.hasLocalMinimum}  ` +
+    `${(m.waistRatio < 0.45 && m.hasLocalMinimum) ? '✓ REAL WAIST + BUD' : '… (slab/no-bud)'}`;
+}
+pIn.addEventListener('input', render);
+
+document.getElementById('play').addEventListener('click', () => {
+  const t0 = performance.now(), dur = 1100;
+  function step(now) {
+    const t = Math.min(1, (now - t0) / dur);
+    pIn.value = t; render();
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+});
+
+render();
+window.__measure = measure;
+window.__sweep = () => [0,0.25,0.5,0.55,0.75,1].map(measure);
+</script>
+</body>
+</html>

@@ -100,7 +100,7 @@ This wave PAINTS (label legibility over a colored plate is a visible surface), s
 - **(b) the identity-restore is sub-perceptual on the FILL** — the plate hue is byte-unchanged (only the ink token moved); the chip/badge/button still POPs its viz/section hue as the single color event. The gestalt is "the same colored chip, now with warm-ink-instead-of-white labels".
 - **(c) `proof:suffuse` d1-d3 stays GREEN** — the one-color-event proportion holds (fill = event, ink = untinted warm-foreground).
 
-**The BC anti-disease law observed:** the device-free M11 clauses prove the SOURCE token swap; the π proves the RENDERED contrast over the real painted plate (a re-point that silently drops below the floor passes the source gate but the contrast readback catches it). No "rides W-REFLECT3"; the readback runs at this wave's close.
+**The BC anti-disease law observed:** the device-free M11 clauses prove the SOURCE token swap; the π proves the RENDERED contrast over the real painted plate (a re-point that silently drops below the floor passes the source gate but the contrast readback catches it). No "is GREEN at this wave close; W-REFLECT re-confirms on the union tree"; the readback runs at this wave's close.
 
 ---
 

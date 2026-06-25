@@ -58,7 +58,7 @@ The painted-truth readback, BOTH modes (light + dark) AND the **webkit project**
 
 ## The gestalt row
 
-**BF-roster surface: `dock-fission` (and `dock-nowplaying`).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the Now-Playing surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the rest pill reads as ONE seamless liquid-glass module (no concave waist); the split reads as N free-floating glass pieces bridged by a real goo neck that SPANS the gap; the bloom reads as the card growing FROM the pill (not flying in). Born-FAIL on the BE tree (the surface is demo-private, the goo is `none` in `src/`); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surface: `dock-fission` (and `dock-nowplaying`).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the Now-Playing surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the rest pill reads as ONE seamless liquid-glass module (no concave waist); the split reads as N free-floating glass pieces bridged by a real goo neck that SPANS the gap; the bloom reads as the card growing FROM the pill (not flying in). Born-FAIL on the BE tree (the surface is demo-private, the goo is `none` in `src/`); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

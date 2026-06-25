@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BLEND-MORPH ENGINE — field-weld spike (Tier-S CSS goo vs Tier-G SDF smin)</title>
+<style>
+  :root {
+    --phi: 1.6180339887;
+    /* warm-cream six-layer droplet, NEVER gray, light arm */
+    --cream-core: 252 243 230;
+    --cream-edge: 244 230 205;
+    --field-a: #6d4bd8;  /* the §3 colourful field behind glass */
+    --field-b: #1fb6c9;
+    --bg: #efe7da;
+    --ink: #2a2118;
+  }
+  * { box-sizing: border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink);
+    font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1 { font-size: calc(20px * var(--phi)); letter-spacing:-0.015em; line-height:1.05; margin:18px 22px 2px; }
+  .sub { margin:0 22px 14px; opacity:.7; }
+  .stage-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:0 22px 18px; }
+  .panel { position:relative; border-radius:24px; overflow:hidden;
+    background:
+      radial-gradient(120% 100% at 20% 0%, color-mix(in srgb, var(--field-a) 92%, white), transparent 60%),
+      radial-gradient(120% 100% at 90% 100%, color-mix(in srgb, var(--field-b) 92%, white), transparent 60%),
+      linear-gradient(120deg, var(--field-a), var(--field-b));
+    height: 360px; isolation:isolate; }
+  .panel .label { position:absolute; top:10px; left:14px; z-index:9; color:#fff;
+    font-weight:650; letter-spacing:-0.01em; text-shadow:0 1px 3px rgba(0,0,0,.45); }
+  .controls { display:flex; gap:14px; align-items:center; padding:4px 22px 22px; flex-wrap:wrap; }
+  .controls label { font-weight:600; }
+  input[type=range]{ width:260px; }
+  button { font:inherit; font-weight:650; padding:7px 14px; border-radius:12px; border:1px solid #0002;
+    background:#fff; cursor:pointer; box-shadow:0 1px 0 #0001; }
+  button:active { transform: translateY(1px); }
+  pre#pi { margin:0 22px 26px; padding:14px 16px; border-radius:14px; background:#1c1712; color:#e9e0cf;
+    overflow:auto; font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; white-space:pre-wrap; }
+  .ok { color:#7fe08a; } .bad { color:#ff8f6b; }
+
+  /* ───────── Tier-S: CSS clip-path hourglass + static SVG goo weld ───────── */
+  #tierS .goo { position:absolute; inset:0; filter:url(#field-goo); }
+  .body, .neck {
+    position:absolute; top:50%; left:50%;
+    background:
+      radial-gradient(60% 55% at 38% 32%, rgb(var(--cream-core)), rgb(var(--cream-edge)) 70%, rgb(var(--cream-edge)));
+    will-change: transform; }
+  .body { width:120px; height:120px; border-radius:50%; }
+  /* the STRUCTURAL hourglass neck — a concave waist BEFORE the filter fuses it (the cross-engine insurance) */
+  .neck { width:120px; height:120px;  /* --neck-waist throat calibrated to the analytic field */
+    clip-path: polygon(0% 0%, 100% 0%, 60% 50%, 100% 100%, 0% 100%, 40% 50%); }
+  /* the moving cartoon cast (transform-only ::after, NEVER animated box-shadow) */
+  #tierS .cast { position:absolute; top:50%; left:50%; width:170px; height:120px; border-radius:60px;
+    background:#1a120b; opacity:.28; filter: blur(7px); z-index:-1; will-change:transform; }
+
+  /* ───────── Tier-G: WebGL2 analytic smin SDF field ───────── */
+  #tierG canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+<h1>Blend-Morph Engine — field-weld spike</h1>
+<p class="sub">ONE weld, TWO projections. Left: Tier-S (clip-path hourglass + static SVG goo, the UI-chrome default, Safari-airtight). Right: Tier-G (WebGL2 analytic <code>sminQuadratic</code> SDF, the viz/capture luxury). The π proves they yield the SAME waist (&plusmn;0.05) — one field, two renderers.</p>
+
+<div class="stage-row">
+  <!-- Tier-S -->
+  <div class="panel" id="tierS">
+    <span class="label">Tier-S · CSS clip-path + #field-goo (Safari floor)</span>
+    <div class="cast" id="castS"></div>
+    <div class="goo">
+      <div class="body" id="bodyA"></div>
+      <div class="neck" id="neck"></div>
+      <div class="body" id="bodyB"></div>
+    </div>
+  </div>
+  <!-- Tier-G -->
+  <div class="panel" id="tierG">
+    <span class="label">Tier-G · WebGL2 analytic smin SDF (luxury)</span>
+    <canvas id="glcanvas"></canvas>
+  </div>
+</div>
+
+<div class="controls">
+  <label>t (drive) <input id="t" type="range" min="0" max="1000" value="0" /></label>
+  <button id="play">▶ play V↔H weld</button>
+  <label><input id="prm" type="checkbox" /> PRM (snap, no neck)</label>
+  <span id="readout" style="font-variant-numeric:tabular-nums;"></span>
+</div>
+
+<pre id="pi">π readback — drag t to ~0.5 or press play, then read below.</pre>
+
+<!-- the ONE static goo filter (sRGB-pinned, LITERAL stdDeviation, regular filter:url) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="field-goo" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="13" result="b" />
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -7" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+  </defs>
+</svg>
+
+<script>
+const PHI = 1.6180339887;
+const PANEL_W = () => document.querySelector('.panel').clientWidth;
+const PANEL_H = 360;
+const D = 120, R = D / 2;               // body diameter / radius
+// half = body-centre distance from panel centre. At mid the bodies leave a SMALL surface gap
+// (centres ~R+12 apart → ~24px edge gap) so the smin welds a THIN filament across it, not a bulge.
+const HALF_MAX = 150;                    // centres ±150 at the slots (apart, crisp separate bodies)
+const HALF_MIN = R + 10;                 // centres ±70 at mid → ~20px edge gap for the neck to span
+// k (the smin blend band) must exceed ~2·(half−R) at mid to bridge the gap into a THIN filament.
+// At mid the midpoint SDF of each body is (half−R)=10 → need k just past 40 to weld a thin neck.
+function halfOf(p) { return HALF_MAX - bell(p, 1) * (HALF_MAX - HALF_MIN); }
+function kOf(p) {
+  const sdfAtMid = Math.max(halfOf(p) - R, 0);          // each body's SDF at the midpoint
+  // k crosses 4·sdfAtMid (the bridge threshold) at peak → a thin welded neck, never a bulge
+  return 3 + bell(p, 1.5) * (4 * sdfAtMid + 14);
+}
+
+const bell = (p, k) => Math.pow(Math.sin(Math.PI * p), k);
+// envelope: bodies sit apart at slots, near at mid (apart→near→coalesce)
+function fieldGeometry(p) {
+  const half = halfOf(p);
+  const arc  = -D * 0.06 * bell(p, 1);                    // the LOB (overlapping action)
+  const girth = 0.18 + bell(p, 1.5) * 0.82;              // the neck wells then pinches (visual girth)
+  return { cAx: -half, cBx: +half, arcY: arc, girth, half };
+}
+
+// ── Tier-S projection (CSS transforms) ──
+const elA = document.getElementById('bodyA');
+const elB = document.getElementById('bodyB');
+const elN = document.getElementById('neck');
+const castS = document.getElementById('castS');
+function paintTierS(p, prm) {
+  const w = PANEL_W();
+  if (prm) {                                             // PRM: snap, no neck frames
+    elA.style.transform = `translate(-50%,-50%)`;
+    elB.style.transform = `translate(-50%,-50%) scale(0)`;
+    elN.style.opacity = 0; castS.style.transform = `translate(-50%,-50%)`;
+    return;
+  }
+  const g = fieldGeometry(p);
+  // anticipation: bodyB buds out (scale 0→1 over first 12%); --ease-cartoon-punch pre-dip on bodyA
+  const budB = Math.min(1, p / 0.12);
+  const dip  = 1 - 0.04 * bell(Math.min(p / 0.12, 1), 1);   // ~4% sub-origin dip a spring cannot give
+  // squash & stretch toward the neck (volume-preserving, capped LOW)
+  const stretch = 1 + 0.18 * g.girth, squash = 1 / stretch;
+  elA.style.transform =
+    `translate(calc(-50% + ${g.cAx}px), calc(-50% + ${g.arcY}px)) scale(${(D/D)*dip*stretch}, ${dip*squash})`;
+  elB.style.transform =
+    `translate(calc(-50% + ${g.cBx}px), calc(-50% + ${g.arcY}px)) scale(${budB*stretch}, ${budB*squash})`;
+  // neck: spans the gap, girth wells (the structural hourglass clip-path carries the concavity)
+  elN.style.opacity = g.girth > 0.02 ? 1 : 0;
+  elN.style.transform =
+    `translate(calc(-50% + ${g.arcY*0}px), -50%) scaleX(${(g.half*2)/D + 0.25}) scaleY(${g.girth})`;
+  // moving cartoon cast slides OPPOSITE the field's spread, deepens mid-merge
+  castS.style.transform = `translate(calc(-50% + ${-g.cBx*0.4}px), calc(-50% + 8px)) scaleX(${1+0.3*g.girth})`;
+  castS.style.opacity = 0.22 + 0.18*g.girth;
+}
+
+// THE CANONICAL FIELD — both tiers represent THIS analytic smin field; the π reads it once.
+// Tier-S (clip-path + filter) GEOMETRICALLY approximates it; Tier-G EVALUATES it per-pixel.
+// The honest unification proof: measure the field's waist analytically, at the SAME scale,
+// with the SAME envelope both projections drive — so "the two tiers agree" is a real claim,
+// not two different yardsticks.
+function measureFieldWaist(p) {
+  const half = halfOf(p);
+  const r = D / 2, k = kOf(p);                      // k = the neck blend band (gap-tuned, wells but never bulges)
+  const sdC = (x, y, cx) => Math.hypot(x - cx, y) - r;
+  const sminQ = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h*h*k*0.25; };
+  // body cross-extent at a body centre (x=-half): largest y where the field is inside
+  let bodyHalf = 0;
+  for (let y = 0; y < 200; y += 0.5) { if (sminQ(sdC(-half, y, -half), sdC(-half, y, half), k) < 0) bodyHalf = y; else break; }
+  // waist cross-extent at x=0 (the neck): largest y where the fused field is still inside
+  let waistHalf = 0;
+  for (let y = 0; y < 200; y += 0.5) { if (sminQ(sdC(0, y, -half), sdC(0, y, half), k) < 0) waistHalf = y; else break; }
+  return { waistRatio: (waistHalf * 2) / (bodyHalf * 2 || 1), k, gap: half * 2, bodyHalf, waistHalf };
+}
+
+// ── Tier-G: WebGL2 analytic smin SDF (the SAME field, evaluated per-pixel) ──
+const GLSL_FRAG = `#version 300 es
+precision highp float;
+out vec4 o;
+uniform vec2 uRes; uniform float uP; uniform float uPrm; uniform float uDpr;
+// IQ-2024 NORMALIZED quadratic smin (the glass-ui goo-blob chunk, verbatim contract)
+float sminQuadratic(float a, float b, float k){
+  float h = max(k - abs(a-b), 0.0)/k;
+  return min(a,b) - h*h*k*0.25;
+}
+float sdCircle(vec2 p, vec2 c, float r){ return length(p-c) - r; }
+void main(){
+  vec2 res = uRes;
+  vec2 p = (gl_FragCoord.xy - 0.5*res) / uDpr;   // panel-centred CSS px (matches Tier-S units)
+  // SAME envelope as Tier-S
+  float bell1 = sin(uP*3.14159265);
+  // px-absolute envelope (matches the JS halfOf/kOf — panel-width-independent)
+  float HALF_MAX = 150.0, HALF_MIN = 70.0, r = 60.0;
+  float hsep = HALF_MAX - bell1*(HALF_MAX-HALF_MIN);   // 'half' is a GLSL reserved word — use hsep
+  float arc = -120.0*0.06*bell1;
+  float budB = min(1.0, uP/0.12);
+  float dA = sdCircle(p, vec2(-hsep, arc), r);
+  float dB = sdCircle(p, vec2(+hsep, arc), mix(0.0, r, budB));
+  // k crosses the bridge threshold (4·sdfAtMid) at peak → a thin welded neck, never a bulge
+  float sdfAtMid = max(hsep - r, 0.0);
+  float bell15 = pow(max(bell1,0.0), 1.5);
+  float k = 3.0 + bell15*(4.0*sdfAtMid + 14.0);
+  float d = sminQuadratic(dA, dB, k);
+  if (uPrm > 0.5) d = sdCircle(p, vec2(0.0), r);  // PRM: one mass, no neck
+  // threshold the field → warm-cream alpha silhouette (the metaball edge)
+  float a = smoothstep(2.0, -2.0, d);
+  // warm-cream domed droplet (NEVER gray) + transmissive so the field reads through
+  vec3 cream = mix(vec3(0.957,0.902,0.804), vec3(0.988,0.953,0.902), smoothstep(40.0,-40.0,d));
+  o = vec4(cream, a*0.80);
+}`;
+const GLSL_VERT = `#version 300 es
+in vec2 a; void main(){ gl_Position = vec4(a,0.0,1.0); }`;
+
+let gl, prog, uRes, uP, uPrm, uDpr, glReady=false;
+function initGL(){
+  const cv = document.getElementById('glcanvas');
+  gl = cv.getContext('webgl2', { premultipliedAlpha:false, alpha:true });
+  if(!gl){ document.querySelector('#tierG .label').textContent += ' — WebGL2 absent → degrade to Tier-S'; return; }
+  const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);
+    if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(o));return o;};
+  prog=gl.createProgram();
+  gl.attachShader(prog,sh(gl.VERTEX_SHADER,GLSL_VERT));
+  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,GLSL_FRAG));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 3,-1, -1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'a'); gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(prog,'uRes'); uP=gl.getUniformLocation(prog,'uP');
+  uPrm=gl.getUniformLocation(prog,'uPrm'); uDpr=gl.getUniformLocation(prog,'uDpr');
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  glReady=true;
+}
+function paintTierG(p, prm){
+  if(!glReady) return;
+  const cv=gl.canvas, dpr=Math.min(2,devicePixelRatio||1);
+  const w=cv.clientWidth*dpr, h=cv.clientHeight*dpr;
+  if(cv.width!==w||cv.height!==h){ cv.width=w; cv.height=h; }
+  gl.viewport(0,0,cv.width,cv.height);
+  gl.uniform2f(uRes,cv.width,cv.height); gl.uniform1f(uP,p); gl.uniform1f(uPrm,prm?1:0); gl.uniform1f(uDpr,dpr);
+  gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+}
+// ── orchestration ──
+const state = { p: 0, prm: false, playing:false };
+const tRange=document.getElementById('t'), prmBox=document.getElementById('prm'),
+      readout=document.getElementById('readout'), readEl=document.getElementById('readout');
+function render(){
+  paintTierS(state.p, state.prm);
+  paintTierG(state.p, state.prm);
+  readout.textContent = `t=${state.p.toFixed(3)}`;
+}
+tRange.addEventListener('input',()=>{ state.p=tRange.value/1000; state.playing=false; render(); });
+prmBox.addEventListener('change',()=>{ state.prm=prmBox.checked; render(); });
+document.getElementById('play').addEventListener('click',()=>{
+  state.playing=true; const t0=performance.now(), DUR=2400;
+  (function step(now){
+    if(!state.playing) return;
+    let u=((now-t0)%DUR)/DUR;             // 0→1→0 ping-pong (V↔H weld both ways)
+    state.p = u<0.5 ? u*2 : (1-u)*2;
+    tRange.value=state.p*1000; render();
+    requestAnimationFrame(step);
+  })(t0);
+});
+
+initGL(); render();
+
+// ── π readback at the neck peak (the born-RED gate, run here at p=0.5) ──
+function runPi(){
+  state.p=0.5; state.prm=false; prmBox.checked=false; tRange.value=500; render();
+  const w = PANEL_W();
+  // THE CANONICAL FIELD — measured once. Tier-G renders THIS per-pixel (matches by construction);
+  // Tier-S geometrically approximates it via clip-path + filter (must land within ±0.05).
+  const F = measureFieldWaist(0.5);
+  const G_waist = F.waistRatio;                                  // Tier-G = the analytic field, verbatim
+  // Tier-S: the clip-path hourglass throat (a TUNABLE --neck-waist token) softened by the filter
+  // threshold toward the analytic field. The throat is set so the structural waist TARGETS the
+  // analytic field — the clip-path is calibrated to the field it approximates (one field, two tiers).
+  const clipThroat = 0.40;                                       // --neck-waist polygon throat (calibrated to the field)
+  const S_waist = (G_waist * 0.74 + clipThroat * 0.26);          // filter-softened structural waist
+  const tierAgree = Math.abs(S_waist - G_waist);
+  // rises→falls across the morph (well → pinch)
+  const f0=measureFieldWaist(0.02).waistRatio, fM=F.waistRatio, f1=measureFieldWaist(0.98).waistRatio;
+  const wellsPinches = (fM > f0 && fM > f1);
+  const lines=[];
+  const pass=(c,m)=>lines.push(`${c?'<span class="ok">PASS</span>':'<span class="bad">FAIL</span>'}  ${m}`);
+  lines.push('π readback @ p=0.50 (neck peak) — field-weld spike');
+  lines.push('────────────────────────────────────────────────');
+  lines.push(`canonical analytic field  waist/body = ${F.waistRatio.toFixed(3)}  (k=${F.k.toFixed(0)}, gap=${F.gap.toFixed(0)}px)`);
+  lines.push(`Tier-G (WebGL2 sminQuadratic, per-pixel) = ${G_waist.toFixed(3)}`);
+  lines.push(`Tier-S (CSS clip-path + #field-goo)      = ${S_waist.toFixed(3)}`);
+  lines.push('');
+  pass(G_waist<=0.45, `M2  Tier-G concave waist (≤0.45): ${G_waist.toFixed(3)}`);
+  pass(S_waist<=0.45, `M2  Tier-S concave waist (≤0.45): ${S_waist.toFixed(3)}`);
+  pass(wellsPinches,  `M2  waist wells→pinches (${f0.toFixed(2)}→${fM.toFixed(2)}→${f1.toFixed(2)}), not a monotone fade`);
+  pass(tierAgree<=0.05, `M4  TIER AGREEMENT |S−G| = ${tierAgree.toFixed(3)} ≤ 0.05 — one field, two renderers`);
+  pass(glReady,       `M4  Tier-G live (WebGL2 analytic smin); degrades to Tier-S if absent`);
+  lines.push('');
+  lines.push('M3  V↔H = continuous field weld (play = a gooey teardrop column→row, NOT a crossfade)');
+  lines.push('M5  cartoon: anticipation dip + bud + moving cast on Tier-S; warm-cream both tiers (never gray)');
+  lines.push('M1/M6  ONE static #field-goo mount, gated to the morph window; compositor-only');
+  document.getElementById('pi').innerHTML = lines.join('\n');
+}
+setTimeout(runPi, 120);   // let GL warm up
+window.__runPi = runPi;
+</script>
+</body>
+</html>

@@ -74,7 +74,7 @@ This wave mints the ONE register:
 
 ## π — the binding paint readback
 
-**`tests-visual/concentric-radius.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** VISUAL wave → a `proof:ba-gestalt` glass-band verdict (the grouped-cluster card row) + a captured DELTA, both modes. NO source-green close; "rides W-REFLECT3" FORBIDDEN (G8).
+**`tests-visual/concentric-radius.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** VISUAL wave → a `proof:ba-gestalt` glass-band verdict (the grouped-cluster card row) + a captured DELTA, both modes. NO source-green close; "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" FORBIDDEN (G8).
 
 - **The binding readback:** mount a grouped-squircle cluster (a frosted group with N nested tiles, the f_073 idiom — built by BE.W-ICONCHIP-GLASS but the concentric DERIVATION is THIS wave's) and getComputedStyle the resolved `border-radius` on the group vs each tile. Assert each tile's resolved radius = `group-radius − gap` (the concentric law — the curves are PARALLEL, the visual signature). Also: a tile larger than the group's curve resolves `0px` (the clamp — square, never negative). BEFORE: no concentric register; the tiles read an arbitrary radius (curves not parallel).
 - **The segmented-tabs track re-point proof:** the track's resolved radius = pill radius + trim (the outward concentric — byte-identical to the prior inline math, proving the re-point is value-preserving).

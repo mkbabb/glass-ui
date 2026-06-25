@@ -1,0 +1,24 @@
+# W-IOS27-SUFFUSE — abrogate shadcn-default styling, suffuse the ios27 Liquid Glass language (the umbrella alignment wave)
+
+**Surfaced by:** the user 2026-06-23 — "for our liquid glass: a FULL workflow fleet should analyze EVERY element, and ABROGATE shadcn styling, and then SUFFUSE the newer ios27 design language." Exemplars: IMG_1881 (the primary abrogate target) + IMG_1874 + the ScreenRecording_06-21 01-28-54 (tabs + ios27 glass transitions) + the screenshots 04.08.42/.48 + 01.41.17 + the Maps card (18.52.29). + "Our entire glass, dock, animation, card, tab, and aurora suite (alongside buttons, icons, etc) must be audited, researched, and FULLY aligned or bettered than the input." Research apple.com + awwwards + ios27/macos "golden gate" guidelines.
+
+## The target (the ios27 Liquid Glass language — from the analyzed exemplars)
+The Maps-card reference + the videos establish the target the whole library must hit or better:
+1. **Glass is TRANSMISSIVE, not opaque-gray.** The backdrop reads THROUGH every glass surface, tinted (warm in light, luminous-dark in dark) — the six-layer composite (blur+saturate · warm tint · edge rim · inner catch-light · drop shadow · grain). NEVER a flat gray/charcoal slab (the gray-glass defect, W-GLASS-ABROGATE-GRAY).
+2. **Vibrant colored accents** — the icon chips / selected states are SATURATED color (the Maps Work/Home/Walmart circles), not gray. The brand `--section-color`/`--viz-*` ramp + the IconChip register.
+3. **Rounded, concentric radii** — the φ-backed radius ladder; pills + cards + circles, never sharp shadcn corners.
+4. **Liquid motion everywhere** — inertia/weight/bounce/squish (W-LIQUID-ENTRANCE-GENERAL P7); the goo-morph, the dock morph, the album fade-up/out, the tab-indicator liquid glide.
+5. **Audacious large typography** + the golden-ratio spacing/padding (the card-pad ladder, the header-scale).
+6. **NO shadcn defaults** — the flat `bg-accent` hover, the gray `bg-muted`, the hard `bg-popover`, the default `ring`, the non-glass plates — all abrogated onto the glass-first register (AX.W54) + the menu-glass + the warm-chroma floor.
+
+## The mechanism — a per-element ABROGATE→SUFFUSE census (the fleet)
+This is the UMBRELLA wave that orchestrates an element-by-element audit fleet (paced, batches of 3) over the FULL component surface (the 41 ui/ + 49 custom/ families + the tokens): for EACH element, (a) DETECT any residual shadcn-default styling (the flat-accent hover, the gray plate, the non-glass surface, the hard ring, the sharp radius, the snappy-not-liquid motion) — extending `proof:no-shadcn-default` (the systemically-blind gate the Pass-D D1-3 flagged); (b) SUFFUSE the ios27 register (the transmissive glass tier, the warm-chroma, the vibrant accent, the rounded radius, the liquid motion, the audacious type) — composing the SHIPPED registers (no per-element fork). It FOLDS the existing alignment waves as instances: W-GLASS-ABROGATE-GRAY (the glass color), W-MENU-GLASS (the rows), W-FEEDBACK-TONE (the tones), W-GLASS-CONTROL (the controls), W-LIQUID-ENTRANCE-GENERAL (the motion), W-NO-GRAY (the chroma floor), W-CARD-PAD (the spacing). The frame-by-frame video audits (W-VIDEO-AUDIT-DOCK/AURORA, the extracted frames in `docs/tranches/BD/viz/video-audit/`) anchor the motion/transition fidelity; the SOTA research (apple/awwwards/ios27) anchors the target.
+
+## The fleet plan (paced, the user's "full workflow fleet... every element")
+A per-band ABROGATE-SUFFUSE audit (the Pass-E engine extended with the abrogate-shadcn/suffuse-ios27 lens), one band-chunk at a time (batches of 3): glass tiers · buttons · cards · tabs · dock · icons · the overlays (dialog/sheet/popover/drawer) · the form controls · the feedback · the data surfaces. Each chunk → a per-element abrogate/suffuse verdict + the fold into the relevant wave. Synthesized by the gestalt challenger → the convergence %.
+
+## Gate (real, tranche-dev)
+`proof:no-shadcn-default` HARDENED (the Pass-D systemic-blindness fixed — it actually scans for the residual shadcn patterns per element, born-RED on the live defects) + `proof:ios27-suffuse` (every audited element references the ios27 registers — transmissive-glass/vibrant-accent/rounded/liquid/audacious — not a shadcn default) + the binding π (the abrogated elements read as ios27 liquid glass over a colorful field, both modes) + the `proof:ba-gestalt` whole-surface verdict (the gestalt "reads as ios27, not shadcn"). The exemplars (IMG_1881 etc) + the SOTA research are the acceptance reference.
+
+## Sequencing
+DEPENDS: W-GLASS-ABROGATE-GRAY (the glass color must be warm-transmissive first) + W-LIQUID-ENTRANCE-GENERAL (the motion) + the video-audit fleets (the motion/transition target). The umbrella over the band-alignment waves; the per-element audit is the fleet; the convergence is the gestalt.

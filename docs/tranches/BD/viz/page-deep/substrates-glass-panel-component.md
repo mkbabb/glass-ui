@@ -1,0 +1,60 @@
+# Pass-E component deep-audit — substrates/glass-panel
+
+**Page:** `/substrates/glass-panel` · **Demo:** `demo/stories/substrates/glass-panel.vue` · **Import label audited:** `@mkbabb/glass-ui/glass-panel`
+
+## What this page actually demos (the real src)
+
+The page is a CONTRADICTION at HEAD. The demo story (`BC.W-GLASS-PRUNE`) demos the BARE five-rung `.glass-{wash,quiet,resting,floating,overlay}` CSS ladder over a live `<Aurora>` and declares verbatim "the `<GlassPanel>` component is GONE… there is no third 'panel' thing" — yet the actual `<GlassPanel>` SFC + its subpath are STILL published. The audited src is the orphaned component, not what the demo renders:
+
+- `src/components/custom/glass-panel/GlassPanel.vue` (193L) — the tiered glass surface SFC. Three render branches off a detected tier: `css` (composes the `.glass-{variant}` ladder), `svg-filter` (Chromium SVG-displacement overlay via `createGlassFilter`), `fallback` (opaque per-rung bg+border). Threads the BA.W-SURFACE-AXIS `{glass·veil·opaque}` decoration + the per-rung `data-variant` fix (AW.W12).
+- `src/composables/glass/useGlassRenderer.ts` (257L) — the detection cascade + `createGlassFilter`/`destroyGlassFilter`: Canvas2D Snell-law displacement map + a Fresnel specular map, composited into an inline `<svg><filter>` (`feImage`→`feDisplacementMap`→`feGaussianBlur`→`feImage`→`feBlend screen`), applied as `backdrop-filter: url(#id) blur() saturate() brightness()`, with a `ResizeObserver` that regenerates both maps on resize.
+- `src/subpaths/glass-panel.ts` + `package.json` `./glass-panel` export + `proof:glass-panel-tiers` + `tests/components/custom/glass-panel/GlassPanel.test.ts`.
+
+**The disposition is ALREADY DECIDED in BD:** `BD.W-CROSSREPO-ADOPT-SWEEP` retires `<GlassPanel>` via the green-handshake — HELD-FOLDED green until the Atlas (`usf-web`) consume-and-deletes its 3 SFCs (`HoverCard.vue:44,420` → `<Card tier="floating" surface="glass">`, `AuroraVeilStage.vue:30,72` → `<Card tier="floating">`, `GalleryView.vue:13,175` → `<div class="glass-resting">`/`<Card>`) AND the registry-consumer probe re-confirms ZERO live external consumers. This audit's job is to confirm the retire is the RIGHT call against the BD design north-star and to fence the live-renderer survivor.
+
+## Audit findings
+
+### (1) ANIMATION affordance — ABSENT. The component has ZERO animation; the canon LIES about it.
+- **No four-state contract, no spring, no entrance/exit.** `GlassPanel.vue` is a static `<div>` with a slot. It writes NO hover/active/focus state, mounts NO `vReveal`/`useLiquidReveal`/`.scroll-cascade`, attaches NO keyframes. Against the page brief ("HIGH animation affordance for EVERY component") and motion-canon P2 (enter-bouncy), it is a dead plate. The css-tier branch inherits whatever the `.glass-{rung}` ladder paints, but the COMPONENT contributes no motion hook of its own.
+- **The canon is FALSELY justified.** CLAUDE.md §Structure (`glass-panel/` line) records it "restored at AZ.W-PRUNE2 — live keyframes.js consumer." This is provably wrong: `grep keyframes|useSpring|SpringProgress|animation|transition src/components/custom/glass-panel/GlassPanel.vue` = ZERO. There is no keyframes.js anywhere in the component or its renderer. The restore rationale that keeps the subpath alive is a phantom.
+- The SVG-filter `createGlassFilter` path has a `ResizeObserver` that regenerates the displacement+specular maps + re-base64s `feImage hrefs` on every resize — a real cost, but NOT an animation; it is a static refraction recompute.
+
+### (2) PROCEDURAL VIZ — n/a (CSS/SVG material, no GPU viz). But the SVG-filter path violates the GPU-only/Safari bar by being Chromium-ONLY.
+The component is not a procedural-suite member. The `svg-filter` tier is a Canvas2D-baked displacement map inside `backdrop-filter: url()` — Chromium-ONLY (`detectTier()` gates on `(window as any).chrome` + `CSS.supports("backdrop-filter","url(#x) blur()")`). Safari/Firefox fall to the `css` blur base. This is the SAME `.glass-lens` refraction the BC band already ships idiomatically on the `.glass-material` grammar (`glass/surfaces.css`, `@supports(backdrop-filter:url())`-gated) — the GlassPanel renderer is a DUPLICATE, cruder path (a centred parabolic radial map, not the edge-concentrated squircle bevel-profile W-LENSING ships).
+
+### (3) PERFORMANCE — the SVG-filter path is the heaviest, least-idiomatic glass idiom in the repo.
+- `createGlassFilter` runs a per-pixel Canvas2D `createImageData` double loop (displacement + specular) at element/4 resolution, base64-encodes BOTH to data-URIs, and rebuilds them on EVERY `ResizeObserver` tick (`toDataURL()` ×2 per resize — a main-thread stall on a resizing panel). It appends TWO hidden canvases + one `<svg>` to `document.body` per instance (DOM litter; cleaned on unmount, but global-namespace `filterCounter` + body-appended filters are non-idiomatic).
+- The css-tier path is fine (pure `.glass-{rung}` ladder, compositor-only). The fallback path is fine. The cost is wholly in the dead-on-retire SVG branch.
+- No offscreen-pause / no PRM gate on the renderer (it is not a rAF loop, so offscreen-pause is n/a — but a resizing panel re-rasterizes with no throttle).
+
+### (4) SAFARI — the css/fallback tiers are correct; the svg-filter tier is hard-gated OFF for Safari by design (the wrong design — it should compose `.glass-lens`).
+Safari gets the `css` tier (plain `backdrop-filter: blur()` via the build's `-webkit-` prefix pass) — paints correctly. But the "refraction" affordance the component advertises (`refraction`/`chromaticAberration` props) is INERT on Safari (Chromium-only `feImage`-in-`backdrop-filter`). A consumer setting `refraction={0.5}` on Safari sees nothing. The idiomatic answer (`.glass-lens` `@supports`-degrade-to-blur-base) is what the BD band already ships — the renderer's bespoke gate is redundant.
+
+### (5) IDIOMATIC / no-legacy — the component is itself the legacy. THREE structural defects converge on RETIRE.
+- **Dead component.** ZERO in-repo live consumers. The demo story does NOT import it (the `import GlassPanel` line is gone — only explanatory comments remain). `grep <GlassPanel src/ demo/` = only comment text. The renderer's only other reference (`DockGooFilter.vue:13`) is a COMMENT citing the sRGB idiom, not an import. So `useGlassRenderer`/`createGlassFilter`/`destroyGlassFilter` have ZERO live runtime consumers besides GlassPanel itself — the whole cluster is dead-on-retire.
+- **Three-axis confusion.** `tier` (renderer pref) × `variant` (5-rung CSS selector) × `surface` (glass/veil/opaque) is THREE overlapping surface knobs on a component the demo says shouldn't exist. `<Card>` already owns `tier`+`surface` for content containers; the bare `.glass-{rung}` class owns the material. GlassPanel is the "third panel thing" the BC.W-GLASS-PRUNE canon explicitly killed.
+- **Phantom canon.** The "live keyframes.js consumer" restore note is false (finding 1). The AZ.W-PRUNE2 restore was an over-correction; BD correctly re-disposes it.
+
+### (6) The glass six-layer composite — PARTIAL, and only via inheritance.
+The css-tier path inherits the full six layers ONLY because the `.glass-{rung}` classes pull in `ladder.css` (backdrop blur+saturate · oklab surface tint · under+drop shadow · grain `::after`) + `material.css` (`::before` catch-light · rim). GlassPanel's OWN SFC adds zero layers — no `.glass-material` class, no `::before`/`::after`. The svg-filter path REPLACES the rim/catch-light with its OWN hand-rolled `box-shadow` + `feBlend screen` specular (a SECOND, divergent six-layer expression that drifts from the canonical material). The fallback path is opaque (no blur, no grain) — a deliberate degrade. So the only correct six-layer composite is the one the bare `.glass-{rung}` class already gives without the component.
+
+## Disposition map → BD tranche
+
+| # | Finding | Action | BD wave |
+|---|---|---|---|
+| 1 | `<GlassPanel>` is a dead, three-axis-confused component the BC.W-GLASS-PRUNE canon already declared GONE; ZERO in-repo consumers | **PRUNE** (already scheduled — confirm the call) | `BD.W-CROSSREPO-ADOPT-SWEEP` (the GlassPanel-retire green-handshake; held until Atlas consume-and-delete + registry probe = 0 external) |
+| 2 | "restored — live keyframes.js consumer" canon is FALSE (zero keyframes, zero animation) | **MODIFY** the CLAUDE.md §Structure `glass-panel/` line — at retire, delete the row; until then, correct the phantom rationale to the real one (held-folded behind the green-handshake, no animation) | `BD.W-BC-COMPONENT-CANON` (the canon-coherence wave — same surface that fixes phantom gate names) |
+| 3 | `useGlassRenderer`/`createGlassFilter` cluster has ZERO live runtime consumers (DockGooFilter only cites it in a comment) | **PRUNE** the renderer cluster IN LOCKSTEP with the component (a retire that drops the component but strands the dead renderer is a half-prune) — fold the prune into the same disposition; record in the FOLD-LEDGER | `BD.W-CROSSREPO-ADOPT-SWEEP` retire scope + `BD.W-FOLD-LEDGER` (record the renderer cluster + subpath + gate + test as co-pruned) |
+| 4 | The svg-filter refraction is a cruder Chromium-only DUPLICATE of the idiomatic `.glass-lens` squircle (W-LENSING) | **FOLD** — the refraction affordance is already canon on `.glass-material`; no successor needed, the duplicate evaporates with the component | covered by the retire (`BD.W-CROSSREPO-ADOPT-SWEEP`); no new wave |
+| 5 | The demo `substrates/glass-panel.vue` already renders the correct bare-ladder material but the route name + import label still advertise a "panel" | **AUGMENT** — the demo brief (bigger main card, per-subsection glassy cards, dock-API contextual switching, standardized import label, tightened language, glass over colorful aurora) lands on the DEMO, not the component | the demo-side companion (`substrates-glass-panel-demo` Pass-E doc + the substrates GESTALT) — out of THIS component doc's scope but cross-referenced |
+| 6 | If retire stalls on the green-handshake, the component must not ship as a dead-animation plate | **MODIFY** (conditional) — IF the Atlas adopt does not land this cut, do NOT add animation to a retiring component; keep it held-folded, no new hooks | `BD.W-WEAK-KEEP-REGRADE` (the held-fold posture) |
+
+**Fences honored:** the retire is SEQUENCED behind the green-handshake (no silent prune — the AY-retire-then-AZ-restore defense). The FOREIGN-TREE FENCE holds: the Atlas SFC swaps land in `usf-web` on its `^4.x` bump, never edited here. The renderer-cluster co-prune (finding 3) is the in-repo half and is the ONLY glass-ui-side edit, sequenced AFTER the registry probe = 0.
+
+## Verdict
+
+1. `<GlassPanel>` is a DEAD, three-axis-confused component the BC.W-GLASS-PRUNE canon already declared GONE — ZERO in-repo consumers (the demo renders the bare `.glass-{rung}` ladder, not the SFC); RETIRE is the right call and is already scheduled (`BD.W-CROSSREPO-ADOPT-SWEEP` green-handshake, held until Atlas consume-and-delete).
+2. ANIMATION: ABSENT — no four-state contract, no spring, no entrance/exit, zero keyframes; the CLAUDE.md "restored — live keyframes.js consumer" rationale is provably FALSE (MODIFY the canon, BD.W-BC-COMPONENT-CANON).
+3. The svg-filter refraction is a cruder, Chromium-ONLY Canvas2D-baked DUPLICATE of the idiomatic `.glass-lens` squircle (W-LENSING) — heaviest non-idiomatic glass path in the repo (per-pixel imageData + double `toDataURL()` on every resize); it evaporates with the component.
+4. The `useGlassRenderer`/`createGlassFilter` cluster has ZERO live runtime consumers (DockGooFilter only cites it in a comment) — PRUNE it IN LOCKSTEP (the in-repo half of the retire) and record in the FOLD-LEDGER, else the retire is a half-prune.
+5. SAFARI/six-layer: the css+fallback tiers degrade correctly and inherit the full six layers ONLY via the `.glass-{rung}` classes — the component adds no layers of its own, so the correct composite is the bare class the BC canon already blesses; no new glass-ui pixels, no `proof:ba-gestalt` owed (the demo-side brunt is the demo Pass-E's, not this component's).

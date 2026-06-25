@@ -58,7 +58,7 @@ The painted-truth readback, BOTH modes (light + dark) AND the **webkit project**
 
 ## The gestalt row
 
-**BF-roster surface: `chip-family` (the de-shadcn corner verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the chip-family surfaces, surface-hash freshness floor. The gestalt judgement: every chip reads as **the iOS-27 near-stadium pill** — the same soft corner language the library's controls/badges/tabs speak, NOT a shadcn-default rounded-rect with a square 4px corner. The chip family reads as ONE corner identity. Born-FAIL on the BE tree (the three chips ship raw shadcn radii); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by `W-GESTALT-WIRE`.
+**BF-roster surface: `chip-family` (the de-shadcn corner verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the chip-family surfaces, surface-hash freshness floor. The gestalt judgement: every chip reads as **the iOS-27 near-stadium pill** — the same soft corner language the library's controls/badges/tabs speak, NOT a shadcn-default rounded-rect with a square 4px corner. The chip family reads as ONE corner identity. Born-FAIL on the BE tree (the three chips ship raw shadcn radii); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by `W-GESTALT-WIRE`.
 
 ## Fences
 

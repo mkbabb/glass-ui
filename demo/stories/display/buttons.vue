@@ -19,6 +19,8 @@ import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { cn } from "../../../src/utils/cn";
+import { Aurora } from "../../../src/components/custom/aurora";
+import { PRESETS } from "../aurora/presets";
 
 const pressed = ref(false);
 
@@ -63,12 +65,25 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 restrained <code class="fira-code">--scale-hover-btn</code> lift on the
                 library's spring register. Staged over the live field so the lit glass reads.
             </p>
-            <ShowcaseFrame tier="field" pad="xl">
-                <div class="flex flex-wrap items-center gap-4">
+            <!-- BD §3 SPIKE (the buttons-invisible fix) — the glass CTAs staged over a
+                 COLORFUL AURORA field so the lit glass actually READS. Warming the glass
+                 alone (W-GLASS-ABROGATE-GRAY) is INSUFFICIENT: glass over a flat cream
+                 page is invisible-by-construction (the blur has nothing to bend). The
+                 demo's own thesis ("staged over the live field so the lit glass reads")
+                 was unmet because there was NO field. ONE GL context (within budget).
+                 Validates W-PAGE-BACKGROUND (colorful field MANDATORY for glass demos). -->
+            <div class="relative overflow-hidden rounded-card">
+                <Aurora
+                    :config="PRESETS.OPENAI_SKY"
+                    :opacity-ceiling="0.72"
+                    class="absolute inset-0 pointer-events-none"
+                    aria-hidden="true"
+                />
+                <div class="relative z-10 flex flex-wrap items-center gap-4 p-10">
                     <Button variant="primary-audacious" size="lg">Launch sequence</Button>
                     <Button variant="gold-audacious" size="lg">Next →</Button>
                 </div>
-            </ShowcaseFrame>
+            </div>
         </section>
 
         <!-- THE GLASS VARIANTS — staged over the live field (BG-2 fix). The glass

@@ -54,7 +54,7 @@ The painted-truth edge-AA readback the user's screenshot defect demands — a FR
 
 ## The gestalt row
 
-**BF-roster surface: `dock-corner-aa`** (the BF-roster row, wired by W-GESTALT-WIRE). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), over the live aurora, the liquid dock's corners read as CLEAN rounded glass — no square saturated halo bleeding around the rounded pill/sheet at rest OR mid-bloom; the edges are smoothly anti-aliased; the fission halves fly free (un-amputated). PASS iff the corner aliasing the user screenshotted is GONE in both modes. Born-FAIL on the BE/HEAD tree (the fix is lost — the halo is back); flips PASS at W-REFLECT; surface-hash freshness floor binds.
+**BF-roster surface: `dock-corner-aa`** (the BF-roster row, wired by W-GESTALT-WIRE). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), over the live aurora, the liquid dock's corners read as CLEAN rounded glass — no square saturated halo bleeding around the rounded pill/sheet at rest OR mid-bloom; the edges are smoothly anti-aliased; the fission halves fly free (un-amputated). PASS iff the corner aliasing the user screenshotted is GONE in both modes. Born-FAIL on the BE/HEAD tree (the fix is lost — the halo is back); GREEN at its OWN close; W-REFLECT re-confirms (never the first paint); surface-hash freshness floor binds.
 
 ## Fences
 

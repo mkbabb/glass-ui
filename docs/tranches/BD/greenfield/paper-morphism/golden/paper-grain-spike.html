@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GOLDEN paper-grain spike — dual-band + lum→alpha + per-mode blend</title>
+<style>
+  :root {
+    /* GOLDEN tokens (light) */
+    --paper-cream: rgb(251, 250, 248);
+    --paper-grain-opacity: 0.22;        /* LIGHT: multiply tooth on cream → std 3.65 */
+    --paper-grain-fiber-opacity: 0.55;  /* the quieter fiber arm, relative */
+    --paper-grain-tile-tooth: 132px;    /* coarse band period (~phi*81) */
+    --paper-grain-tile-fiber: 96px;
+    --story-paper-wash: color-mix(in srgb, #2a2520 4%, transparent);
+
+    /* === THE TWO-BAND TEXTURE TOKENS (measured: clears std>=3 both modes) ===
+       Technique: feTurbulence -> saturate 0 (GREY rgb, KEEP it — never zero the
+       RGB) -> per-channel linear-slope CONTRAST STRETCH (the letterpress bite) ->
+       paint the grey speckle straight (full alpha). multiply (light) darkens cream
+       into the tooth valleys; screen (dark) lifts fiber off the ink. */
+    /* TOOTH: coarse anisotropic cockle, slope 1.8 bite. */
+    --paper-grain-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.21' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+
+    /* FIBER: fine rag fleck, no bite — the soft second band. */
+    --paper-grain-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' seed='13' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+  .dark {
+    --paper-cream: rgb(28, 24, 20);
+    --paper-grain-opacity: 0.16;        /* DARK: screen tooth on ink → std 3.86 (bites harder, lower op) */
+    --story-paper-wash: color-mix(in srgb, #f5efe6 7%, transparent);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, system-ui, sans-serif; }
+
+  .stage {
+    min-height: 100vh; padding: 48px;
+    display: grid; gap: 32px; grid-template-columns: 1fr 1fr;
+    background: var(--paper-cream);
+  }
+  .dark.stage { color: #f5efe6; }
+
+  /* The wash plate — faint warm tint so multiply has something to bite. */
+  .plate {
+    position: relative; isolation: isolate;
+    border-radius: 24px; padding: 40px; min-height: 280px;
+    background: var(--paper-cream);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .plate::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: var(--story-paper-wash); z-index: -1;
+  }
+
+  /* === paper-grain-overlay: the dual ::after (tooth) + ::before (fiber) === */
+  .paper-grain { position: relative; isolation: isolate; }
+  .paper-grain::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--paper-grain-tooth);
+    background-size: var(--paper-grain-tile-tooth) var(--paper-grain-tile-tooth);
+    opacity: var(--paper-grain-opacity);
+    mix-blend-mode: multiply;   /* LIGHT: ink sinks into tooth */
+    z-index: 2;
+  }
+  .paper-grain::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--paper-grain-fiber);
+    background-size: var(--paper-grain-tile-fiber) var(--paper-grain-tile-fiber);
+    opacity: calc(var(--paper-grain-opacity) * var(--paper-grain-fiber-opacity));
+    mix-blend-mode: soft-light;  /* fiber is the quiet band */
+    z-index: 1;
+  }
+  .dark .paper-grain::after { mix-blend-mode: screen; } /* DARK: fiber catches light */
+
+  h2 { margin: 0 0 8px; font-size: 28px; }
+  p { margin: 0; opacity: 0.7; }
+  .sample { position: absolute; right: 12px; bottom: 12px; font-size: 11px; font-variant-numeric: tabular-nums; opacity: 0.5; }
+</style>
+</head>
+<body>
+  <div class="stage" id="light">
+    <div class="plate paper-grain"><h2>LIGHT · grained</h2><p>multiply tooth + soft-light fiber on warm cream</p><span class="sample" id="s-light"></span></div>
+    <div class="plate"><h2>LIGHT · bare</h2><p>flat cream control (no grain)</p></div>
+  </div>
+  <div class="stage dark" id="dark">
+    <div class="plate paper-grain"><h2>DARK · grained</h2><p>screen tooth + soft-light fiber on warm ink</p><span class="sample" id="s-dark"></span></div>
+    <div class="plate"><h2>DARK · bare</h2><p>flat ink control (no grain)</p></div>
+  </div>
+  <script>
+    // expose a measurement hook for the live π
+    window.__GOLD__ = { ready: true };
+  </script>
+</body>
+</html>

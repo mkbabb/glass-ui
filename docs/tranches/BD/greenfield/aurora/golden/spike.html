@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--
+  GOLDEN aurora spike — de-risks the single boldest mechanism:
+  (1) metal FINISH from the RE-PLUMBED structure-tensor gradient (Gx,Gy) the engine
+      already computes and discards (mediums.glsl.ts:52-53,:89) — a two-term anisotropic
+      BRDF (streak ALONG the tensor tangent × crest from the height-normal N·H), so it
+      reads as FOLDED LIQUID METAL, not a tinted orientation map;
+  (2) the cursor-z-synth LIGHT: lightDir3D = normalize(vec3(uCursor - p, LIGHT_Z)) — the
+      ONLY form that crosses to WGSL (no phantom uLightDir lane);
+  (3) the OKLab VIVIDNESS FLOOR — lift chroma toward a §3 transmissive bar, hue+L untouched.
+
+  This is the WebGL2 path verbatim-shaped to aurora.frag.ts; the WGSL twin is the SAME
+  arithmetic. Born-RED π: with metal/vividness OFF the readback FAILS the bars; ON it passes.
+  Throwaway — verifies the math renders + the gate separates, nothing more.
+-->
+<html><head><meta charset="utf8"><title>GOLDEN aurora spike</title>
+<style>html,body{margin:0;background:#111;color:#eee;font:13px ui-monospace,monospace}
+canvas{display:block;width:100vw;height:70vh}#hud{padding:8px 12px;white-space:pre-wrap}
+button{font:inherit;margin:2px;padding:4px 8px}</style></head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud">booting…</div>
+<div style="padding:0 12px">
+  <button onclick="setMode(0)">smooth (RED baseline)</button>
+  <button onclick="setMode(1)">metal</button>
+  <button onclick="setMode(2)">metal-gradient (sparkle)</button>
+  <label><input type="checkbox" id="viv" checked onchange="render()"> vividness floor</label>
+</div>
+<script type="x-shader/x-fragment" id="fs">#version 300 es
+precision highp float;
+out vec4 frag;
+uniform vec2 uRes; uniform float uTime; uniform vec2 uCursor; uniform float uCursorOn;
+uniform int uFinish;        // 0 smooth · 1 metal · 2 metal-gradient
+uniform float uVivid;       // 0..1 vividness floor strength
+
+const vec3 W_LUMA = vec3(0.2126,0.7152,0.0722);
+
+// ---- a drifting synthetic field (stand-in for nucleiField+samplePalette) ----
+// warm-cream identity: hue 30..75, this is the §3 colorful field the glass refracts.
+float hash21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+34.56); return fract(p.x*p.y); }
+float vnoise(vec2 p){ vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+  float a=hash21(i),b=hash21(i+vec2(1,0)),c=hash21(i+vec2(0,1)),d=hash21(i+vec2(1,1));
+  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y); }
+float fbm(vec2 p){ float s=0.0,a=0.5; for(int i=0;i<5;i++){ s+=a*vnoise(p); p*=2.03; a*=0.5;} return s; }
+
+// the field's base color (LINEAR sRGB) — a warm drifting wash, deliberately PALE
+// (mirrors the C:0.10 default — the born-RED condition the vividness floor cures).
+vec3 sampleBase(vec2 p, float t){
+  vec2 q = p*2.4 + vec2(0.0, t*0.04);
+  float n = fbm(q + fbm(q*0.7 + t*0.03)*0.8);  // domain-warped
+  float m = fbm(q*1.7 - t*0.02);
+  // pale warm palette: peach / pink / cream — low chroma on purpose.
+  vec3 peach = vec3(0.95,0.74,0.58);
+  vec3 pink  = vec3(0.93,0.66,0.70);
+  vec3 cream = vec3(0.97,0.92,0.84);
+  vec3 c = mix(peach, pink, smoothstep(0.3,0.7,n));
+  c = mix(c, cream, smoothstep(0.45,0.95,m));
+  return c*c; // to ~linear
+}
+
+// ===== OKLab (linear sRGB <-> OKLab), the shared procedural-color move =====
+vec3 lin2oklab(vec3 c){
+  float l=0.4122214708*c.r+0.5363325363*c.g+0.0514459929*c.b;
+  float m=0.2119034982*c.r+0.6806995451*c.g+0.1073969566*c.b;
+  float s=0.0883024619*c.r+0.2817188376*c.g+0.6299787005*c.b;
+  l=pow(max(l,0.0),1.0/3.0); m=pow(max(m,0.0),1.0/3.0); s=pow(max(s,0.0),1.0/3.0);
+  return vec3(0.2104542553*l+0.7936177850*m-0.0040720468*s,
+              1.9779984951*l-2.4285922050*m+0.4505937099*s,
+              0.0259040371*l+0.7827717662*m-0.8086757660*s);
+}
+vec3 oklab2lin(vec3 lab){
+  float l=lab.x+0.3963377774*lab.y+0.2158037573*lab.z;
+  float m=lab.x-0.1055613458*lab.y-0.0638541728*lab.z;
+  float s=lab.x-0.0894841775*lab.y-1.2914855480*lab.z;
+  l=l*l*l; m=m*m*m; s=s*s*s;
+  return vec3(4.0767416621*l-3.3077115913*m+0.2309699292*s,
+             -1.2684380046*l+2.6097574011*m-0.3413193965*s,
+             -0.0041960863*l-0.7034186147*m+1.7076147010*s);
+}
+
+// ===== the RE-PLUMBED structure tensor: returns vec4(dir, A, packedGrad) =====
+// byte-identical to mediums.glsl.ts:40-89 EXCEPT the return widens to carry (Gx,Gy).
+float packGrad(vec2 g){ return floor((g.x*0.5+0.5)*4095.0)+ (g.y*0.5+0.5); } // toy pack
+vec4 structureTensorField(vec2 p, float t, vec2 fallbackDir, out vec2 grad){
+  float e=0.0035;
+  float l00=dot(sampleBase(p+vec2(-e,-e),t),W_LUMA);
+  float l10=dot(sampleBase(p+vec2(0.0,-e),t),W_LUMA);
+  float l20=dot(sampleBase(p+vec2(e,-e),t),W_LUMA);
+  float l01=dot(sampleBase(p+vec2(-e,0.0),t),W_LUMA);
+  float l21=dot(sampleBase(p+vec2(e,0.0),t),W_LUMA);
+  float l02=dot(sampleBase(p+vec2(-e,e),t),W_LUMA);
+  float l12=dot(sampleBase(p+vec2(0.0,e),t),W_LUMA);
+  float l22=dot(sampleBase(p+vec2(e,e),t),W_LUMA);
+  float Gx=(l20+2.0*l21+l22)-(l00+2.0*l01+l02);
+  float Gy=(l02+2.0*l12+l22)-(l00+2.0*l10+l20);
+  grad = vec2(Gx,Gy);                                   // <-- the re-plumb (was discarded)
+  float Jxx=Gx*Gx,Jyy=Gy*Gy,Jxy=Gx*Gy;
+  float tr=Jxx+Jyy;
+  float disc=sqrt(max((Jxx-Jyy)*(Jxx-Jyy)+4.0*Jxy*Jxy,0.0));
+  float lambdaMaj=0.5*(tr+disc), lambdaMin=0.5*(tr-disc);
+  vec2 tangent;
+  if(disc<1e-7){ tangent=fallbackDir; }
+  else { float th=0.5*atan(2.0*Jxy,Jxx-Jyy); tangent=vec2(-sin(th),cos(th)); }
+  float A=clamp((lambdaMaj-lambdaMin)/(lambdaMaj+lambdaMin+1e-6),0.0,1.0);
+  if(dot(tangent,fallbackDir)<0.0) tangent=-tangent;
+  float blendW=pow(A,0.28);
+  vec2 dir=normalize(mix(fallbackDir,tangent,blendW)+1e-6);
+  return vec4(dir,A,1.0);
+}
+
+// ===== the metal FINISH — two-term anisotropic BRDF over the re-plumbed N =====
+const float METAL_HEIGHT_SCALE = 2.3;
+const float METAL_SHININESS_ANISO = 28.0;
+const float METAL_SHININESS_CREST = 6.0;
+const float METAL_VALLEY_FLOOR = 0.22;
+const float METAL_COHERENCE_FLOOR = 0.12;
+const float METAL_LIGHT_Z = 0.85;
+const vec3  METAL_CATCH_WARM = vec3(1.0,0.97,0.90);   // achromatic-warm catch (warm floor, NO hue)
+
+vec3 applyMetal(vec3 col, vec2 p, vec2 grad, vec2 T, float A, float t, bool gradient){
+  // height-field normal from the re-plumbed luma gradient. ZERO re-paid taps.
+  vec3 N = normalize(vec3(grad*METAL_HEIGHT_SCALE, 1.0));
+  // cursor-z-synth light — the ONLY form that crosses to WGSL (uCursor is in-struct).
+  vec3 L = (uCursorOn>0.5) ? normalize(vec3(uCursor-p, METAL_LIGHT_Z))
+                           : normalize(vec3(0.55,0.55,METAL_LIGHT_Z));  // idle upper-right rake
+  vec3 H = normalize(L + vec3(0.0,0.0,1.0));
+  // streak (WHERE): highlight runs ALONG the tensor tangent.
+  float sinTH = sqrt(max(1.0 - pow(dot(normalize(vec3(T,0.0)),H),2.0), 0.0));
+  float streak = pow(sinTH, METAL_SHININESS_ANISO);
+  // crest (BRIGHTNESS): N·H height specular — dark valleys, bright crests.
+  float NdotH = max(dot(N,H), 0.0);
+  float crest = pow(NdotH, METAL_SHININESS_CREST);
+  // a metal READ needs the full valley→crest swing: a dark Fresnel-ish valley term
+  // (the troughs go DEEP) + the bright streaked crest. This is what folds it.
+  float facing = max(N.z, 0.0);                         // crest faces viewer → bright; valley grazes → dark
+  float valley = mix(METAL_VALLEY_FLOOR, 1.0, facing);  // DEEP shadow density in the troughs
+  float spec = streak * mix(0.35, 1.0, crest);
+  spec *= smoothstep(0.0, METAL_COHERENCE_FLOOR, A);   // gate streak on coherence — no phantom banding
+  // base: the field's CHROMA preserved, but the LUMA driven by the height field
+  // (valley dark, crest bright) — the polished-metal body. Field hue tints the metal.
+  vec3 chroma = col / max(dot(col,W_LUMA), 1e-3);       // unit-luma hue of the field
+  vec3 base = gradient ? col : chroma * (valley * 0.55 + 0.10);
+  vec3 outc = base + spec * METAL_CATCH_WARM * 2.4;
+  if(gradient){
+    // twinkle-in-place: fixed per-cell seed, PHASE animated — flake glints, never boils.
+    vec2 cell = floor(p*90.0);
+    float seed = hash21(cell);
+    float tw = pow(max(sin(t*1.5 + seed*6.2831), 0.0), 40.0);
+    outc += tw * METAL_CATCH_WARM * 1.2 * smoothstep(0.0,0.3,facing);
+  }
+  return outc;
+}
+
+// ===== the OKLab VIVIDNESS FLOOR — lift chroma toward a §3 bar, hue+L untouched =====
+const float VIVID_TARGET = 0.115;   // OKLab chroma floor (transmissive-fit)
+vec3 applyVivid(vec3 col, float strength){
+  vec3 lab = lin2oklab(max(col,0.0));
+  float C = length(lab.yz);
+  float Cmin = strength * VIVID_TARGET;
+  float Clift = max(C, Cmin);
+  lab.yz *= (C>1e-4) ? (Clift/C) : 0.0;
+  return oklab2lin(lab);
+}
+
+void main(){
+  vec2 uv = gl_FragCoord.xy/uRes;
+  vec2 p = uv; p.x *= uRes.x/uRes.y;
+  vec3 col = sampleBase(p, uTime);
+  vec2 grad; vec2 fb = vec2(cos(uTime*0.1),sin(uTime*0.1));
+  vec4 stf = structureTensorField(p, uTime, fb, grad);
+  vec2 T = stf.xy; float A = stf.z;
+  if(uFinish==1) col = applyMetal(col, p, grad, T, A, uTime, false);
+  else if(uFinish==2) col = applyMetal(col, p, grad, T, A, uTime, true);
+  col = applyVivid(col, uVivid);
+  // simple tonemap + OETF
+  col = col/(col+vec3(0.9));
+  col = pow(max(col,0.0), vec3(1.0/2.2));
+  frag = vec4(col,1.0);
+}
+</script>
+<script>
+const cv=document.getElementById('c'), gl=cv.getContext('webgl2');
+const hud=document.getElementById('hud');
+let mode=0;
+const vs=`#version 300 es
+in vec2 a; void main(){ gl_Position=vec4(a,0.,1.); }`;
+function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);
+  if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(o); return o;}
+const prog=gl.createProgram();
+gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));
+gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,document.getElementById('fs').textContent));
+gl.linkProgram(prog);
+if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
+gl.useProgram(prog);
+const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const loc=gl.getAttribLocation(prog,'a'); gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(prog,n);
+let cursor=[0.5,0.5], cursorOn=0;
+cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();
+  cursor=[(e.clientX-r.left)/r.width, 1-(e.clientY-r.top)/r.height]; cursorOn=1;});
+function resize(){cv.width=cv.clientWidth*devicePixelRatio; cv.height=cv.clientHeight*devicePixelRatio;
+  gl.viewport(0,0,cv.width,cv.height);}
+window.addEventListener('resize',resize); resize();
+let t0=performance.now();
+function render(){
+  const t=(performance.now()-t0)/1000;
+  gl.uniform2f(U('uRes'),cv.width,cv.height);
+  gl.uniform1f(U('uTime'),t);
+  gl.uniform2f(U('uCursor'),cursor[0]*(cv.width/cv.height),cursor[1]);
+  gl.uniform1f(U('uCursorOn'),cursorOn);
+  gl.uniform1i(U('uFinish'),mode);
+  gl.uniform1f(U('uVivid'),document.getElementById('viv').checked?1.0:0.0);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+}
+function setMode(m){mode=m; render();}
+window.setMode=setMode; window.render=render;
+
+// ===== the π READBACK gate — proves the math renders + the gate SEPARATES =====
+// Reads pixels back, computes (a) crest/valley dynamic range (metal must FOLD, not flat-tint)
+// and (b) mean OKLab chroma (vividness floor must clear the §3 bar). Born-RED on smooth/no-vivid.
+function srgb2lin(u){u/=255; return u<=0.04045?u/12.92:Math.pow((u+0.055)/1.055,2.4);}
+function lin2oklabJS(r,g,b){
+  const l=Math.cbrt(0.4122214708*r+0.5363325363*g+0.0514459929*b);
+  const m=Math.cbrt(0.2119034982*r+0.6806995451*g+0.1073969566*b);
+  const s=Math.cbrt(0.0883024619*r+0.2817188376*g+0.6299787005*b);
+  return [0.2104542553*l+0.7936177850*m-0.0040720468*s,
+          1.9779984951*l-2.4285922050*m+0.4505937099*s,
+          0.0259040371*l+0.7827717662*m-0.8086757660*s];
+}
+function pi(){
+  render();
+  const w=cv.width,h=cv.height,px=new Uint8Array(w*h*4);
+  gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,px);
+  // mean OKLab chroma (vividness) + LOCAL crest-valley contrast (the metal FOLD signal:
+  // |ΔL| between a pixel and its horizontal neighbor a few px away — high-freq L texture,
+  // which folded metal has in abundance and a smooth wash does not).
+  let n=0,sumC=0,sumLocalDL=0,nDL=0;
+  const stepX=8; // neighbor offset in px
+  for(let y=0;y<h;y+=5){
+    for(let x=0;x<w-stepX;x+=13){
+      const i=(y*w+x)*4, j=(y*w+x+stepX)*4;
+      const r=srgb2lin(px[i]),g=srgb2lin(px[i+1]),b=srgb2lin(px[i+2]);
+      const lab=lin2oklabJS(r,g,b);
+      sumC+=Math.hypot(lab[1],lab[2]); n++;
+      const r2=srgb2lin(px[j]),g2=srgb2lin(px[j+1]),b2=srgb2lin(px[j+2]);
+      const lab2=lin2oklabJS(r2,g2,b2);
+      sumLocalDL+=Math.abs(lab[0]-lab2[0]); nDL++;
+    }
+  }
+  return {meanC:sumC/n, localContrast:sumLocalDL/nDL};
+}
+window.runGate=function(){
+  const results={};
+  // baseline: smooth + no vivid (born-RED)
+  mode=0; document.getElementById('viv').checked=false;
+  results.smooth_noVivid = pi();
+  // smooth + vivid floor
+  document.getElementById('viv').checked=true;
+  results.smooth_vivid = pi();
+  // metal + vivid
+  mode=1; results.metal_vivid = pi();
+  // metal-gradient + vivid
+  mode=2; results.metalGrad_vivid = pi();
+  const VIVID_BAR=0.045, METAL_FOLD_BAR=0.020; // smooth≈0.001, metal≈0.027, metal-grad≈0.030
+  const verdict = {
+    'vividness lifts chroma (smooth_vivid.meanC > smooth_noVivid.meanC, clears bar)':
+      results.smooth_vivid.meanC > results.smooth_noVivid.meanC && results.smooth_vivid.meanC>=VIVID_BAR,
+    'born-RED: smooth_noVivid FAILS the vivid bar':
+      results.smooth_noVivid.meanC < VIVID_BAR,
+    'metal FOLDS (metal localContrast > smooth + clears fold bar)':
+      results.metal_vivid.localContrast > results.smooth_vivid.localContrast*1.5 && results.metal_vivid.localContrast>=METAL_FOLD_BAR,
+    'born-RED: smooth localContrast FAILS the metal-fold bar':
+      results.smooth_vivid.localContrast < METAL_FOLD_BAR,
+  };
+  hud.textContent = 'π READBACK\n'+JSON.stringify(results,null,2)+'\n\nVERDICT\n'+
+    Object.entries(verdict).map(([k,v])=>(v?'PASS  ':'FAIL  ')+k).join('\n')+
+    '\n\nALL: '+(Object.values(verdict).every(Boolean)?'GREEN':'RED');
+  return verdict;
+};
+function loop(){ if(mode>=0) render(); requestAnimationFrame(loop); }
+loop();
+hud.textContent='ready — click a mode, move the pointer to rake the catch-light.\ncall runGate() in console (or it auto-runs in 1.5s).';
+setTimeout(()=>window.runGate(),1500);
+</script>
+</body></html>

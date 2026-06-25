@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// Concentric — the WebGPU-first radial-Fourier ring-interference studio. Thin bright
-// ELLIPSOID LINES from 2-4 sources beat into distinct sweeping WAVES (the IQ
-// gradient-normalized isoline render, the clean beating-families generator). The default is
-// the warm-cream library identity over transparent (the page reads through the troughs); the
-// teal-on-navy is a non-default named preset (presets-in-consumers). The configurator sits on
-// the RIGHT (the §E controls-right mandate).
+// Concentric — the WebGPU-first level-set TOPOGRAPHIC CONTOUR studio (paper-grid kin). The
+// iso-contours of a low-octave height field that TWIST and FLOW as a traveling wave passes
+// OVER and THROUGH the topography (the SAME cell-warp the paper-grid cells ride), the basins
+// breathing on the ω=√(g·k) swell, the cursor bulging the topography toward the pointer
+// (gravity). The default is the warm-cream library identity over transparent (basins cool-cream,
+// ridges warm-amber); the teal-on-navy is a non-default named preset (presets-in-consumers).
 import { computed, reactive, ref, watch } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -13,13 +13,10 @@ import {
     ConfiguratorLayer,
     ConfiguratorRow,
 } from "../../../src/components/custom/configurator";
-import { LabeledSlider, LabeledSelect, LabeledSwitch } from "../../../src/components/custom/labeled-field";
+import { LabeledSlider, LabeledSwitch } from "../../../src/components/custom/labeled-field";
 import {
     Concentric,
     type ConcentricConfig,
-    type ConcentricRenderMode,
-    type RingCenter,
-    buildDefaultRingComponents,
 } from "../../../src/components/custom/concentric";
 import { CONCENTRIC_PRESET_WARM, CONCENTRIC_PRESET_THEME } from "./presets";
 
@@ -31,66 +28,18 @@ const config = reactive<ConcentricConfig>(
 
 const paused = ref(false);
 
-// ── ring FAMILIES (1-4 centers) ────────────────────────────────────────────────
-const familyCount = ref(config.centers.length);
-const SEED_CENTERS: RingCenter[] = [
-    { x: -0.28, y: -0.18, weight: 1.0, rotAlpha: 0.35 },
-    { x: 0.3, y: 0.22, weight: 0.85, rotAlpha: -0.55 },
-    { x: 0.0, y: 0.34, weight: 0.7, rotAlpha: 1.1 },
-    { x: -0.34, y: 0.28, weight: 0.6, rotAlpha: -1.3 },
-];
-watch(familyCount, (n) => {
-    const count = Math.max(1, Math.min(4, Math.round(n)));
-    config.centers = SEED_CENTERS.slice(0, count).map((c) => ({ ...c }));
-});
-
-// ── base wavelength + beat detune rebuild the clean ring table ──────────────────
-const baseWavelength = ref(0.24);
-const beatDetune = ref(config.beatDetune);
-function rebuildRings(): void {
-    config.beatDetune = beatDetune.value;
-    config.ringComponents = buildDefaultRingComponents(
-        baseWavelength.value,
-        beatDetune.value,
-    );
-}
-watch([baseWavelength, beatDetune], rebuildRings);
-
-// ── axis ratio (the ellipsoid tilt) ────────────────────────────────────────────
-const axisB = ref(config.axisRatio[1]);
-watch(axisB, (b) => (config.axisRatio = [1, Math.max(0.2, Math.min(1, b))]));
-
-// ── render mode ────────────────────────────────────────────────────────────────
-const RENDER_MODES: readonly ConcentricRenderMode[] = [
-    "traveling-rings",
-    "static-contour",
-    "both",
-];
-const renderMode = ref<string>(config.renderMode);
-const renderModeOpen = ref(false);
-watch(renderMode, (m) => (config.renderMode = m as ConcentricRenderMode));
-
 // ── the named theme preset (warm-cream identity DEFAULT; teal-on-navy non-default) ──
 const useTheme = ref(false);
 function onTogglePreset(v: boolean): void {
     useTheme.value = v;
     const src = v ? CONCENTRIC_PRESET_THEME : CONCENTRIC_PRESET_WARM;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
-    // re-sync the control refs to the applied preset.
-    familyCount.value = config.centers.length;
-    beatDetune.value = config.beatDetune;
-    renderMode.value = config.renderMode;
-    axisB.value = config.axisRatio[1];
 }
 
-// ── line geometry refs (bound directly via v-model into config) ─────────────────
+// ── topography + contour refs (bound directly via v-model into config) ─────────────
 const lineWidth = computed({
     get: () => config.lineWidth,
     set: (v) => (config.lineWidth = v),
-});
-const lineSoftness = computed({
-    get: () => config.lineSoftness,
-    set: (v) => (config.lineSoftness = v),
 });
 const speed = computed({
     get: () => config.speed,
@@ -99,6 +48,18 @@ const speed = computed({
 const contourLevels = computed({
     get: () => config.contourLevels,
     set: (v) => (config.contourLevels = Math.round(v)),
+});
+const twistMax = computed({
+    get: () => config.twistMax,
+    set: (v) => (config.twistMax = v),
+});
+const swellAmp = computed({
+    get: () => config.swellAmp,
+    set: (v) => (config.swellAmp = v),
+});
+const cursorWell = computed({
+    get: () => config.cursorWell,
+    set: (v) => (config.cursorWell = v),
 });
 const interactive = computed({
     get: () => config.interactive,
@@ -110,8 +71,8 @@ const interactive = computed({
     <StoryPage>
         <StorySection
             heading="Concentric"
-            label="radial Fourier rings · ellipsoid lines forming distinct waves"
-            blurb="Thin bright ELLIPTICAL ring-lines spread from two-to-four sources across the field; where the families overlap they BEAT into a slow broad moiré envelope — distinct sweeping waves, like cymatics ripples seen edge-on. The lines are extracted as constant-width antialiased strokes (Inigo Quilez's gradient-normalized distance-estimation, the gradient closed-form since the field is a sum of sinusoids), over the SAME deep-water dispersion the dot-flow-field uses (Tessendorf 2001). WebGPU-FIRST: a pure fullscreen fragment pass evaluates f(p,t) per pixel, with a clean WebGL2 GLSL fallback where WebGPU is absent. Drag the cursor (interactive on) and a transient ripple-source follows it — the rings bend toward the pointer. The default is the warm-cream identity over transparent; the teal-on-navy is a non-default named preset."
+            label="level-set contour map · paper-grid kin · gradient topology"
+            blurb="A living TOPOGRAPHIC CONTOUR MAP — the level-set iso-contours of a low-octave height field, nested loops that TWIST and FLOW as a traveling wave passes OVER and THROUGH the topography (the SAME cell-warp that twists the paper-grid cells, so the two viz move together — vector calculus, level sets, gradient topology). The basins breathe in and out on the ω=√(g·k) deep-water swell (Tessendorf 2001); the contours bunch on steep ground (the density tracks 1/|∇H|). The lines are extracted via Inigo Quilez's gradient-free contour distance-estimation (perfect GPU AA at any DPR). WebGPU-FIRST: a pure fullscreen fragment pass over the shared waveField leaf, with a clean WebGL2 GLSL fallback. Move the cursor and the topography BULGES toward it (gravity). The default is the warm-cream identity over transparent (basins cool-cream, ridges warm-amber); the teal-on-navy is a non-default named preset."
         >
             <Configurator class="h-[min(78vh,720px)] shadow-cartoon" scroll-mode="auto">
                 <template #stage>
@@ -126,62 +87,15 @@ const interactive = computed({
 
                 <template #controls>
                     <div class="flex flex-col gap-2">
-                        <ConfiguratorLayer label="Ring families" dividers>
-                            <ConfiguratorRow label="Families" name="centers.length">
+                        <ConfiguratorLayer label="Contours" dividers>
+                            <ConfiguratorRow label="Contour levels" name="contourLevels">
                                 <LabeledSlider
-                                    v-model="familyCount"
-                                    label="Families"
-                                    tooltip="1-4 ring sources; ≥2 → interference beats"
-                                    :min="1"
-                                    :max="4"
+                                    v-model="contourLevels"
+                                    label="Contour levels"
+                                    tooltip="the iso-line density (a readable topographic map)"
+                                    :min="4"
+                                    :max="24"
                                     :step="1"
-                                    hide-label
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Base wavelength" name="ringComponents.wavelength">
-                                <LabeledSlider
-                                    v-model="baseWavelength"
-                                    label="Base wavelength"
-                                    tooltip="ring spacing (smaller = tighter rings)"
-                                    :min="0.1"
-                                    :max="0.35"
-                                    :step="0.005"
-                                    hide-label
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Beat detune" name="beatDetune">
-                                <LabeledSlider
-                                    v-model="beatDetune"
-                                    label="Beat detune"
-                                    tooltip="the moiré envelope wavelength — the 'distinct waves' dial"
-                                    :min="0"
-                                    :max="0.06"
-                                    :step="0.002"
-                                    hide-label
-                                />
-                            </ConfiguratorRow>
-                            <ConfiguratorRow label="Ellipsoid tilt" name="axisRatio.b">
-                                <LabeledSlider
-                                    v-model="axisB"
-                                    label="Ellipsoid tilt"
-                                    tooltip="axis ratio (a=1, b) — the ellipse squash"
-                                    :min="0.2"
-                                    :max="1"
-                                    :step="0.02"
-                                    hide-label
-                                />
-                            </ConfiguratorRow>
-                        </ConfiguratorLayer>
-
-                        <ConfiguratorLayer label="Lines" dividers>
-                            <ConfiguratorRow label="Render mode" name="renderMode">
-                                <LabeledSelect
-                                    v-model="renderMode"
-                                    :is-open="renderModeOpen"
-                                    @update:open="(v: boolean) => (renderModeOpen = v)"
-                                    label="Render mode"
-                                    tooltip="traveling crest-lines · static elevation-contour · both"
-                                    :items="RENDER_MODES"
                                     hide-label
                                 />
                             </ConfiguratorRow>
@@ -189,46 +103,60 @@ const interactive = computed({
                                 <LabeledSlider
                                     v-model="lineWidth"
                                     label="Line width"
-                                    tooltip="stroke thickness (field units)"
+                                    tooltip="contour stroke thickness (px)"
                                     :min="0.5"
                                     :max="4"
                                     :step="0.1"
                                     hide-label
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Line softness" name="lineSoftness">
+                        </ConfiguratorLayer>
+
+                        <ConfiguratorLayer label="The wave (paper-grid kin)" dividers>
+                            <ConfiguratorRow label="Twist max" name="twistMax">
                                 <LabeledSlider
-                                    v-model="lineSoftness"
-                                    label="Line softness"
-                                    tooltip="AA edge feather (field units)"
-                                    :min="0.5"
-                                    :max="3"
-                                    :step="0.1"
+                                    v-model="twistMax"
+                                    label="Twist max"
+                                    tooltip="how far the topography TWISTS at the wave crest (the cell-warp the contours ride)"
+                                    :min="0"
+                                    :max="0.9"
+                                    :step="0.01"
                                     hide-label
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Contour levels" name="contourLevels">
+                            <ConfiguratorRow label="Swell depth" name="swellAmp">
                                 <LabeledSlider
-                                    v-model="contourLevels"
-                                    label="Contour levels"
-                                    tooltip="evenly-spaced elevation lines (static-contour mode)"
-                                    :min="4"
-                                    :max="24"
-                                    :step="1"
+                                    v-model="swellAmp"
+                                    label="Swell depth"
+                                    tooltip="the ω=√(g·k) breathing — basins inflate/deflate (weight)"
+                                    :min="0"
+                                    :max="0.5"
+                                    :step="0.01"
+                                    hide-label
+                                />
+                            </ConfiguratorRow>
+                            <ConfiguratorRow label="Speed" name="speed">
+                                <LabeledSlider
+                                    v-model="speed"
+                                    label="Speed"
+                                    tooltip="the level-set flow speed (scales the traveling-wave time)"
+                                    :min="0"
+                                    :max="1.5"
+                                    :step="0.05"
                                     hide-label
                                 />
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
 
-                        <ConfiguratorLayer label="Motion & theme" dividers>
-                            <ConfiguratorRow label="Speed" name="speed">
+                        <ConfiguratorLayer label="Cursor & theme" dividers>
+                            <ConfiguratorRow label="Cursor gravity" name="cursorWell">
                                 <LabeledSlider
-                                    v-model="speed"
-                                    label="Speed"
-                                    tooltip="ring travel (scales ω)"
+                                    v-model="cursorWell"
+                                    label="Cursor gravity"
+                                    tooltip="the topography bulges toward the pointer (gravity well depth)"
                                     :min="0"
-                                    :max="1.5"
-                                    :step="0.05"
+                                    :max="1"
+                                    :step="0.02"
                                     hide-label
                                 />
                             </ConfiguratorRow>
@@ -237,7 +165,7 @@ const interactive = computed({
                                     :checked="interactive"
                                     @update:checked="(v: boolean) => (interactive = v)"
                                     label="Pointer-reactive"
-                                    tooltip="the rings warp toward the cursor; a flick fires a ripple"
+                                    tooltip="the topography bulges toward the cursor (gravity)"
                                     hide-label
                                 />
                             </ConfiguratorRow>
@@ -266,10 +194,11 @@ const interactive = computed({
 
             <p class="text-sm text-muted-foreground">
                 Under <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>
-                the substrate paints ONE static frame then parks — the rings freeze as a still
-                contour map. The ellipsoidal norm (axis ratio
-                <code class="font-mono text-xs">[1, 0.62]</code>) tilts the rings into
-                ellipses; two tilted families cross into the moiré beat.
+                the substrate paints ONE static frame then parks — the contours freeze as a
+                finished topographic map. The field is the level-set iso-contours of
+                <code class="font-mono text-xs">H = heightField(cellTwist(p)) + swell</code>
+                — the SAME traveling-wave cell-warp the paper-grid cells ride, so the two viz
+                move together (vector calculus: the contour density tracks 1/|∇H|).
             </p>
         </StorySection>
     </StoryPage>

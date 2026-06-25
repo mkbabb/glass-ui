@@ -15,20 +15,21 @@ import {
     DotMatrix,
     type DotMatrixConfig,
 } from "../../../src/components/custom/dot-matrix";
-import { DOT_MATRIX_PRESET_REFERENCE, DOT_MATRIX_PRESET_WARM } from "./presets";
+import { DOT_MATRIX_PRESET_SPHERE, DOT_MATRIX_PRESET_WARM } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;
-// a toggle is a clean reset, the library default). The DEFAULT is warm-cream.
-const useReference = ref(false);
+// a toggle is a clean reset, the library default). The DEFAULT is the 2D-PLANE background
+// register with strong cursor gravity; the 3D-sphere is the kept preset toggle.
+const useSphere = ref(false);
 const paused = ref(false);
 const interactive = ref(true);
 
 const config = reactive<DotMatrixConfig>({ ...DOT_MATRIX_PRESET_WARM, interactive: true });
 
-// Switch the whole config between the mono-warm-white-on-near-black TWO-globe reference and
-// the warm-cream identity (presets-in-consumers — the library default is warm-cream).
-function applyPreset(reference: boolean): void {
-    const src = reference ? DOT_MATRIX_PRESET_REFERENCE : DOT_MATRIX_PRESET_WARM;
+// Switch the whole config between the 2D-plane background (default) and the 3D dot-sphere
+// (the kept preset). presets-in-consumers — the library default is the 2D plane.
+function applyPreset(sphere: boolean): void {
+    const src = sphere ? DOT_MATRIX_PRESET_SPHERE : DOT_MATRIX_PRESET_WARM;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
     config.interactive = interactive.value;
 }
@@ -36,11 +37,11 @@ function applyPreset(reference: boolean): void {
 const liveConfig = computed<DotMatrixConfig>(() => ({ ...config }));
 
 function onTogglePreset(v: boolean): void {
-    useReference.value = v;
+    useSphere.value = v;
     applyPreset(v);
 }
 
-// Toggle the pointer interaction (the parallax + repel-dimple + flick-accel bloom).
+// Toggle the pointer interaction (the cursor gravity well + the flick burst).
 function onToggleInteractive(v: boolean): void {
     interactive.value = v;
     config.interactive = v;
@@ -51,23 +52,23 @@ function onToggleInteractive(v: boolean): void {
     <StoryPage>
         <StorySection
             heading="Dot matrix"
-            label="Fibonacci phyllotaxis dot-sphere · depth-shaded"
-            blurb="A calm globe of fine warm-cream dots laid on a sphere SURFACE — unmistakably a 3D sphere built from dots, the dots crowding the silhouette rim, the near hemisphere brighter + slightly larger while the rim and far side fade toward near-invisible. The dots sit at an even, fine spacing across the whole surface (the Fibonacci phyllotaxis golden-angle lattice — no pole-pinching, no banded rings; Martin Roberts / extremelearning, arXiv 0912.4540). The shape is painted by BRIGHTNESS + DEPTH, not motion: stop the spin and it STILL reads as a translucent dot-shell from the depth-shading alone (the Will-Howard / COBE / Stripe lineage). It spins slowly on a gently tilted axis — dignified, hero-grade, nothing darts. WebGPU-FIRST: the render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the globe subtly tracks it (a parallax depth illusion), a soft dimple pushes through the dot-shell near the cursor, and a flick fires a brief brightness bloom (the accel burst). ONE GL context (the sphere's own) — the one-GL-per-route budget held."
+            label="2D dot field · strong cursor gravity · phyllotaxis"
+            blurb="A 2D-PLANE background field of fine warm-cream dots that GRAVITATE toward the cursor — a deep, wide gravity well pulls the nearby dots in (they gather, brighten + swell), lagging the cursor with weight then easing back to the lattice on a spring with a slight overshoot (the liquid-weight bounce). The dots are laid on an even sunflower phyllotaxis disc (the golden-angle lattice — no banded rings; Martin Roberts / extremelearning, arXiv 0912.4540). A flick fires a transient over-pull (a comet-tail toward the cursor). Toggle the 3D-sphere register and it reads as the kept dot-globe — depth-shaded, slow tilted spin — with the SAME strong gravity well. WebGPU-FIRST: the render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots (born-GPU — no Canvas2D). ONE GL context — the one-GL-per-route budget held."
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
                     <Switch
-                        :model-value="useReference"
+                        :model-value="useSphere"
                         @update:model-value="onTogglePreset"
                     />
-                    <span class="text-sm">two-globe mono-on-near-black reference (off = warm-cream identity default)</span>
+                    <span class="text-sm">3D dot-sphere register (off = 2D-plane background default)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch
                         :model-value="interactive"
                         @update:model-value="onToggleInteractive"
                     />
-                    <span class="text-sm">interactive (parallax + dimple + flick bloom)</span>
+                    <span class="text-sm">interactive (cursor gravity + flick burst)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch v-model="paused" />

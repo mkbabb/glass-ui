@@ -1,0 +1,185 @@
+<!doctype html>
+<!--
+  GOLDEN spike — the .liquid-enter CEL-SLAM + lagging cartoon cast, PURE-CSS, cross-engine.
+  Throwaway de-risk for docs/tranches/BD/greenfield/entrance-reveal/GOLDEN.md §2b/§2c.
+  Tokens inlined from src/styles (scheme-motion.css spring linear() + shadow.css cartoon cast).
+  Verifies the BOLD mechanism in Chrome AND Safari:
+    1. four coupled channels (scale + reciprocal squish + opacity + filter-blur decongest)
+    2. the cel-slam arc (anticipation dip < origin, ~22% punch overshoot, settle) via a shaped @keyframes
+    3. the 1/φ overlap stagger on the --i TIME clock (Safari-15-safe, never view())
+    4. the LAGGING cartoon cast — a CHILD layer (never ::after{box-shadow}, never animated box-shadow)
+    5. PRM carve — reduce drops everything but opacity
+  __probe() returns a computed-style readback the live verifier samples (the born-RED gate proof).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GOLDEN · liquid-enter cel-slam spike</title>
+<style>
+  :root {
+    /* ── verbatim from src/styles/tokens/scheme-motion.css ── */
+    --spring-snappy-duration: 0.4s;
+    --spring-bouncy-duration: 0.62s;
+    --spring-snappy: linear(0, 0.10159 2.041%, 0.31119 4.082%, 0.53355 6.122%, 0.72176 8.163%, 0.86005 10.204%, 0.95002 12.245%, 1.00115 14.286%, 1.02488 16.327%, 1.03150 18.367%, 1.02891 20.408%, 1.02249 22.449%, 1.01542 24.490%, 1.00934 26.531%, 1.00480 28.571%, 1.00181 30.612%, 1.00009 32.653%, 0.99926 34.694%, 0.99901 36.735%, 0.99907 38.776%, 0.99949 42.857%, 1.00000 53.061%, 1);
+    --spring-bouncy: linear(0, 0.10599 2.041%, 0.33511 4.082%, 0.58672 6.122%, 0.80212 8.163%, 0.95655 10.204%, 1.04836 12.245%, 1.08867 14.286%, 1.09341 16.327%, 1.07802 18.367%, 1.05470 20.408%, 1.03159 22.449%, 1.01303 24.490%, 1.00049 26.531%, 0.99363 28.571%, 0.99150 32.653%, 0.99767 38.776%, 1.00023 42.857%, 1.00000 53.061%, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* ── the cel-slam shaped linear() — the Band-0 --ease-cartoon-punch TARGET ──
+       a REAL negative anticipation leg (dips ~4% below origin) then a ~22% PUNCH overshoot
+       then settle — a thing no damped spring can express. Fallback in src/ is var(…, --spring-bouncy). */
+    --ease-cartoon-punch: linear(
+      0 0%, -0.018 6%, -0.04 12%,            /* ANTICIPATION — below origin */
+      0.06 20%, 0.42 34%, 0.86 46%,          /* LAUNCH */
+      1.12 56%, 1.22 62%, 1.18 68%,          /* PUNCH overshoot ~22% */
+      1.07 76%, 1.015 86%, 1.0 96%, 1 100%   /* squash-settle */
+    );
+
+    /* ── verbatim from src/styles/tokens/shadow.css ── */
+    --foreground: #2b2622;
+    --shadow-cartoon: 3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+
+    /* the GOLDEN governor — rest 1/φ */
+    --motion-weight: 0.618;
+
+    /* the .liquid-enter knobs (GOLDEN §2b) */
+    --lq-enter-scale: 0.88;
+    --lq-enter-blur: 4px;
+    --lq-stretch-x: 1.06;   /* born wide */
+    --lq-stretch-y: 0.945;  /* born flat — vol-preserving (1.06 * 0.945 ≈ 1.002) */
+    --lq-enter-step: calc(var(--spring-snappy-duration) * 0.618);  /* the 1/φ overlap */
+
+    --bg: #f4ede1; --card: #fffaf0; --ink: #2b2622; --accent: #c0392b;
+    font-family: -apple-system, system-ui, sans-serif;
+  }
+
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); padding: 3rem; }
+  h1 { font-size: 2rem; letter-spacing: -0.015em; margin: 0 0 0.25rem; }
+  p.sub { margin: 0 0 2rem; opacity: 0.6; font-size: 0.9rem; }
+  .grid { display: flex; flex-wrap: wrap; gap: 1.25rem; max-width: 720px; }
+  button { font: inherit; padding: 0.6rem 1.1rem; border-radius: 0.6rem; border: 1px solid #0002;
+           background: var(--card); cursor: pointer; box-shadow: var(--shadow-cartoon); }
+
+  /* ════════ THE GOLDEN RECIPE — glass/liquid-enter.css §2b/§2c ════════ */
+  @media (prefers-reduced-motion: no-preference) {
+    /* the CEL register — explicit 3-stop punch (§7e: the punch lives in the STOPS, not the ease) */
+    @keyframes gl-cel-slam {
+      0% {  opacity: 0;                                                      /* ANTICIPATION: sink + squish DOWN */
+            transform: translateY(calc(14px * var(--motion-weight)))
+                       scale(calc(1 - 0.12 * var(--motion-weight)),          /* born flat (sx↓) */
+                             calc(1 + 0.06 * var(--motion-weight)));         /* tall (sy↑), vol-preserve */
+            filter: blur(var(--lq-enter-blur, 4px)); }                       /* DECONGEST — OWN pixels */
+      62% { opacity: 1;                                                      /* PUNCH: lift + stretch UP */
+            transform: translateY(calc(-3px * var(--motion-weight)))
+                       scale(calc(1 + 0.10 * var(--motion-weight)),          /* stretch (sx↑) */
+                             calc(1 - 0.05 * var(--motion-weight)));         /* (sy↓), vol-preserve */
+            filter: blur(0); }
+      100% { opacity: 1; transform: none; filter: blur(0); }                 /* FOLLOW-THROUGH SETTLE */
+    }
+    .liquid-enter {
+      animation: gl-cel-slam var(--spring-snappy-duration)
+                 var(--ease-cartoon-punch, var(--spring-bouncy)) both;       /* Band-0 upgrade, bouncy floor */
+      animation-delay: calc(var(--lq-enter-step) * var(--i, 0));             /* 1/φ overlap, TIME clock */
+      transform-origin: center;
+    }
+
+    /* ── the LAGGING cartoon cast — a CHILD layer (GOLDEN §2c), NEVER ::after{box-shadow} ── */
+    .liquid-enter.is-cel > .cartoon-cast {
+      position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+      box-shadow: var(--shadow-cartoon);                                     /* STATIC stamp — never animated */
+      animation: gl-cast-lag var(--spring-snappy-duration)
+                 var(--ease-cartoon-punch, var(--spring-snappy)) both;
+      animation-delay: calc(var(--lq-enter-step) * var(--i, 0)
+                          + 0.006s + 0.06s * var(--motion-weight, 0.618));   /* the LATE arrival */
+    }
+    @keyframes gl-cast-lag {
+      0%   { opacity: 0; transform: translate3d(0, calc(10px * var(--motion-weight)), 0) scale(0.92); }
+      100% { opacity: 1; transform: none; }
+    }
+  }
+
+  /* ── PRM carve §4 — fade only, no transform/scale/filter/stagger/cast ── */
+  @media (prefers-reduced-motion: reduce) {
+    @keyframes gl-liquid-enter-fade { from { opacity: 0; } to { opacity: 1; } }
+    .liquid-enter { animation: gl-liquid-enter-fade 0.2s var(--ease-out) both; animation-delay: 0s; }
+    .liquid-enter.is-cel > .cartoon-cast { animation: none; opacity: 1; }
+  }
+
+  .card {
+    position: relative; width: 200px; padding: 1.25rem; border-radius: 1rem;
+    background: var(--card); border: 1px solid #0001;
+    /* the resting plate carries the cartoon cast too — the entrance cast LANDS onto this */
+  }
+  .card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; }
+  .card p { margin: 0; font-size: 0.85rem; opacity: 0.7; }
+</style>
+</head>
+<body>
+  <h1>liquid-enter · cel-slam</h1>
+  <p class="sub">anticipation dip → punch overshoot → settle · reciprocal squish · 1/φ stagger · lagging cartoon cast</p>
+  <button id="replay">Replay entrance</button>
+  <div class="grid" id="grid"></div>
+
+<script>
+  const CARDS = [
+    ["Bloom", "scale 0.88→1 + squish"],
+    ["Punch", "≈22% overshoot"],
+    ["Cast", "shadow arrives late"],
+    ["Stagger", "1/φ overlap clock"],
+  ];
+  const grid = document.getElementById("grid");
+  function build() {
+    grid.innerHTML = "";
+    CARDS.forEach(([t, s], i) => {
+      const el = document.createElement("div");
+      el.className = "card liquid-enter is-cel";
+      el.style.setProperty("--i", i);
+      el.innerHTML = `<div class="cartoon-cast"></div><h3>${t}</h3><p>${s}</p>`;
+      grid.appendChild(el);
+    });
+  }
+  document.getElementById("replay").addEventListener("click", build);
+  build();
+
+  /* ── the born-RED gate readback (GOLDEN §7b) — sample the first card across the entrance window ── */
+  window.__probe = async function () {
+    build();
+    const card = grid.firstElementChild;
+    const cast = card.querySelector(".cartoon-cast");
+    const frames = [];
+    const t0 = performance.now();
+    return new Promise((resolve) => {
+      function tick() {
+        const cs = getComputedStyle(card);
+        const cc = getComputedStyle(cast);
+        // parse the transform: scale(sx,sy) leg → matrix(a,b,c,d,…) → a=sx, d=sy
+        const m = new DOMMatrixReadOnly(cs.transform === "none" ? "" : cs.transform);
+        frames.push({
+          t: Math.round(performance.now() - t0),
+          scale: parseFloat(cs.scale) || 1,        // the SPATIAL longhand
+          sx: +m.a.toFixed(4), sy: +m.d.toFixed(4), // the SQUISH leg (reciprocal)
+          opacity: +(+cs.opacity).toFixed(3),
+          filter: cs.filter,
+          castOpacity: +(+cc.opacity).toFixed(3),   // the cast lags → still ~0 while host is mid-flight
+        });
+        if (performance.now() - t0 < 700) requestAnimationFrame(tick);
+        else {
+          const sxsy = frames.filter((f) => f.sx !== 1).map((f) => +(f.sx * f.sy).toFixed(3));
+          resolve({
+            frameCount: frames.length,
+            bornWideFlat: frames.slice(0, 3).some((f) => f.sx < 0.94 && f.sy > 1.02),  // squish DOWN at birth
+            punchStretchUp: frames.some((f) => f.sx > 1.045),          // ~6-7% stretch at the punch beat
+            volPreserving: sxsy.every((p) => p > 0.88 && p < 1.12),    // X·Y ≈ 1 mid-flight
+            decongest: frames.some((f) => /blur\([1-9]/.test(f.filter)),
+            settled: frames.at(-1),
+            castLagged: frames.some((f) => f.t < 200 && f.opacity > 0.5 && f.castOpacity < 0.5), // host lit, cast dark
+            sample: frames.filter((_, i) => i % 4 === 0),
+          });
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  };
+</script>
+</body>
+</html>

@@ -62,7 +62,7 @@ The painted-truth readback, BOTH modes (light + dark) AND the **webkit project**
 
 ## The gestalt row
 
-**BF-roster surface: `dock-fission` (the filament-fidelity verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the fission surface at mid-split, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the split reads as **liquid that necks** — the two pieces bridged by ONE gel throat that visibly spans the gap, narrows to a tense filament, then snaps (the Apple-Music / Dynamic-Island read), NOT two discs drifting apart. The content rides its blob (no float-off). Born-FAIL on the BE tree (the neck is an `inset:0` capsule, the throat empty at mid-split); flips PASS at W-REFLECT on fresh pixels. The same roster row W-DOCK-INTEGRATE's integration earns — this wave raises its FIDELITY. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surface: `dock-fission` (the filament-fidelity verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the fission surface at mid-split, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the split reads as **liquid that necks** — the two pieces bridged by ONE gel throat that visibly spans the gap, narrows to a tense filament, then snaps (the Apple-Music / Dynamic-Island read), NOT two discs drifting apart. The content rides its blob (no float-off). Born-FAIL on the BE tree (the neck is an `inset:0` capsule, the throat empty at mid-split); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. The same roster row W-DOCK-INTEGRATE's integration earns — this wave raises its FIDELITY. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

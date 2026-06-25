@@ -50,7 +50,7 @@ NET-NEW, auto-enrolled in the visual-π runner (`tests-visual/pi-runner-manifest
 
 ## The gestalt row
 
-**BF-roster surface: `squircle-silhouette`** (a new row, wired by W-GESTALT-WIRE into `bf-gestalt-roster.md`; `surface-paths: src/styles/glass/squircle.css, src/styles/theme/radius.css`). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion) — and the binding Safari corner-capture rides W-SAFARI-CAPTURE — the card/chip/dock-control corners read as the iOS continuous-corner SQUIRCLE (the flatter-then-sharper superellipse silhouette), not a shadcn rounded-rect, in both modes. The warm-cream identity is untouched (a SHAPE change, zero hue delta — `meanChroma` band unchanged from the surface's existing roster floor). Born-FAIL on the BE/HEAD tree (Safari paints round); flips PASS at W-REFLECT; surface-hash freshness floor binds.
+**BF-roster surface: `squircle-silhouette`** (a new row, wired by W-GESTALT-WIRE into `bf-gestalt-roster.md`; `surface-paths: src/styles/glass/squircle.css, src/styles/theme/radius.css`). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion) — and the binding Safari corner-capture rides W-SAFARI-CAPTURE — the card/chip/dock-control corners read as the iOS continuous-corner SQUIRCLE (the flatter-then-sharper superellipse silhouette), not a shadcn rounded-rect, in both modes. The warm-cream identity is untouched (a SHAPE change, zero hue delta — `meanChroma` band unchanged from the surface's existing roster floor). Born-FAIL on the BE/HEAD tree (Safari paints round); GREEN at its OWN close; W-REFLECT re-confirms (never the first paint); surface-hash freshness floor binds.
 
 ## Fences
 

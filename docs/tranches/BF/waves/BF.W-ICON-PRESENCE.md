@@ -44,7 +44,7 @@ The painted-truth readback that the DockStack glyphs READ + the receding facets 
 
 ## The gestalt row
 
-**Roster surface: `dock-icon-presence`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the DockStack icons READ at a glance — the glyphs are crisp + present (the ≥20px register, off the runt 14px), and the facet carousel's receding contexts stay legible-but-dim (recede-but-visible, never vanished). PASS iff the glyphs read as confidently as the nav-icon family AND the receding facets are identifiable. Rides `W-REFLECT`; surface-hash freshness floor binds.
+**Roster surface: `dock-icon-presence`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the DockStack icons READ at a glance — the glyphs are crisp + present (the ≥20px register, off the runt 14px), and the facet carousel's receding contexts stay legible-but-dim (recede-but-visible, never vanished). PASS iff the glyphs read as confidently as the nav-icon family AND the receding facets are identifiable. The binding paint is GREEN at its OWN close; W-REFLECT re-confirms on the union sweep (never the first paint); the surface-hash freshness floor binds.
 
 ## Fences
 

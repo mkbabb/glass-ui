@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CANDIDATE A — Houdini paint() SDF-smin metaball morph (polyfill-backed, Safari-measured)</title>
+<style>
+  :root {
+    --phi: 1.6180339887;
+    /* warm-cream droplet, NEVER gray */
+    --cream-core: 252 243 230;
+    --cream-edge: 244 230 205;
+    --field-a: #6d4bd8;
+    --field-b: #1fb6c9;
+    --bg: #efe7da;
+    --ink: #2a2118;
+    /* the morph scalar — @property animatable; the SOLE driven channel */
+    --morph-t: 0;
+  }
+  @property --morph-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  * { box-sizing: border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink);
+    font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1 { font-size: calc(20px * var(--phi)); letter-spacing:-0.015em; margin:18px 22px 2px; }
+  .sub { margin:0 22px 14px; opacity:.7; max-width:60ch; }
+  .stage {
+    position:relative; margin:0 22px; border-radius:24px; overflow:hidden; height:360px; isolation:isolate;
+    background:
+      radial-gradient(120% 100% at 20% 0%, color-mix(in srgb, var(--field-a) 92%, white), transparent 60%),
+      radial-gradient(120% 100% at 90% 100%, color-mix(in srgb, var(--field-b) 92%, white), transparent 60%),
+      linear-gradient(120deg, var(--field-a), var(--field-b));
+  }
+  /* THE MORPH SURFACE — a single element whose background IS the painted SDF-smin field.
+     Two convex masses + a neck whose waist wells then pinches, all f(--morph-t). The
+     warm-cream droplet gradient is composited THROUGH the painted alpha mask. */
+  .morph {
+    position:absolute; inset:0;
+    /* the warm-cream droplet body, masked by the painted metaball field */
+    background:
+      radial-gradient(60% 55% at 42% 34%, rgb(var(--cream-core)), rgb(var(--cream-edge)) 72%, rgb(var(--cream-edge)));
+    -webkit-mask-image: paint(metaball);
+            mask-image: paint(metaball);
+    --mass-gap: 240;            /* px between the two mass centres at rest */
+    --mass-r: 64;              /* mass radius */
+    --neck-k: 46;              /* smin smoothing → neck girth */
+  }
+  .controls { display:flex; gap:14px; align-items:center; padding:14px 22px; flex-wrap:wrap; }
+  input[type=range]{ width:280px; }
+  button { font:inherit; font-weight:650; padding:7px 14px; border-radius:12px; border:1px solid #0002;
+    background:#fff; cursor:pointer; }
+  pre#pi { margin:0 22px 26px; padding:14px 16px; border-radius:14px; background:#1c1712; color:#e9e0cf;
+    overflow:auto; font:12px/1.5 ui-monospace,Menlo,monospace; white-space:pre-wrap; }
+  .ok { color:#7fe08a; } .bad { color:#ff8f6b; } .warn { color:#ffd479; }
+</style>
+</head>
+<body>
+  <h1>Candidate A — Houdini <code>paint()</code> SDF-smin metaball</h1>
+  <p class="sub">The morph field is rendered by a CSS Paint Worklet as a <code>mask-image: paint(metaball)</code>.
+  Inputs are <code>@property</code>-animatable custom props (<code>--morph-t</code>, <code>--mass-gap</code>,
+  <code>--mass-r</code>, <code>--neck-k</code>). The same shared <code>smin</code> math as Candidate B,
+  rasterized on a 2D canvas. On Safari/Firefox the GoogleChromeLabs <b>css-paint-polyfill</b> backs
+  <code>paint()</code> via <code>-webkit-canvas()</code> / element-backed canvas.</p>
+
+  <div class="stage"><div class="morph" id="morph"></div></div>
+
+  <div class="controls">
+    <label>--morph-t <input id="t" type="range" min="0" max="1" step="0.001" value="0"></label>
+    <button id="play">▶ animate morph</button>
+    <button id="bench">⏱ bench 200 frames</button>
+    <span id="engine"></span>
+  </div>
+  <pre id="pi">running…</pre>
+
+<script>
+const pi = document.getElementById('pi');
+const log = (s, cls='') => { pi.innerHTML += (cls?`<span class="${cls}">${s}</span>`:s) + '\n'; };
+
+// ── shared SDF-smin core (IDENTICAL math to Candidate B's GLSL) ──
+// inline worklet source so the spike is single-file; uses iq's smin (exponential / poly).
+const WORKLET_SRC = `
+registerPaint('metaball', class {
+  static get inputProperties() {
+    return ['--morph-t','--mass-gap','--mass-r','--neck-k'];
+  }
+  paint(ctx, size, props) {
+    const t   = parseFloat(props.get('--morph-t')) || 0;
+    const gap = parseFloat(props.get('--mass-gap')) || 240;
+    const r   = parseFloat(props.get('--mass-r')) || 64;
+    const k   = parseFloat(props.get('--neck-k')) || 46;
+    const W = size.width, H = size.height;
+    const cx = W/2, cy = H/2;
+    // two masses travel together as t:1 (collapse → one teardrop); at t:0 fully apart.
+    const half = (gap * (1 - t)) / 2;
+    const ax = cx - half, bx = cx + half;
+    // neck girth wells in the middle of the travel (sin bell), pinches at the ends
+    const bell = Math.sin(Math.PI * Math.min(Math.max(t,0),1));
+    const kk = k * (0.35 + 0.65 * bell);          // smin smoothing → neck waist
+    // analytic circle SDF
+    const sd = (px,py,ox) => Math.hypot(px-ox, py-cy) - r;
+    // iq polynomial smin
+    const smin = (a,b,kp) => {
+      const h = Math.max(kp - Math.abs(a-b), 0) / kp;
+      return Math.min(a,b) - h*h*kp*0.25;
+    };
+    // rasterize the field (coarse step for fill-rate; AA via 1px edge band)
+    const img = ctx.createImageData(W, H);
+    const d = img.data;
+    // warm-cream is supplied by the element bg; the mask alpha is what we paint.
+    for (let y=0; y<H; y++){
+      for (let x=0; x<W; x++){
+        const f = smin(sd(x,y,ax), sd(x,y,bx), kk);
+        // 1px AA band around the iso-surface
+        const a = f < -1 ? 255 : f > 1 ? 0 : Math.round((0.5 - f*0.5) * 255);
+        const i = (y*W+x)*4;
+        d[i]=d[i+1]=d[i+2]=255; d[i+3]=a;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+});
+`;
+
+// ── load worklet (native) or polyfill ──
+async function boot() {
+  const engineEl = document.getElementById('engine');
+  let mode;
+  const blobURL = URL.createObjectURL(new Blob([WORKLET_SRC], {type:'text/javascript'}));
+  if ('paintWorklet' in CSS) {
+    try { await CSS.paintWorklet.addModule(blobURL); mode = 'native paintWorklet'; }
+    catch(e){ mode = 'native-failed: '+e.message; }
+  }
+  if (!mode || mode.startsWith('native-failed')) {
+    // load the GoogleChromeLabs css-paint-polyfill from a CDN (network-permitting),
+    // else fall to a manual element-canvas raster shim so the spike still MEASURES on WebKit.
+    try {
+      await import('https://unpkg.com/css-paint-polyfill@3.0.0/dist/css-paint-polyfill.module.js');
+      await CSS.paintWorklet.addModule(blobURL);
+      mode = 'css-paint-polyfill (CDN)';
+    } catch(e) {
+      mode = 'polyfill-unavailable (offline) → manual shim';
+      installManualShim();
+    }
+  }
+  engineEl.textContent = 'engine: ' + mode;
+  log('engine: ' + mode, mode.startsWith('native')||mode.includes('polyfill')?'ok':'warn');
+  return mode;
+}
+
+// manual element-canvas shim — emulates the polyfill's -webkit-canvas backing so the
+// SAME worklet raster runs + is FRAME-MEASURED on WebKit even fully offline.
+let shimCanvas, shimCtx, shimMorph;
+function installManualShim() {
+  shimMorph = document.getElementById('morph');
+  shimCanvas = document.createElement('canvas');
+  shimCtx = shimCanvas.getContext('2d');
+  // re-use the worklet body by hand (same smin math)
+  window.__shimPaint = () => {
+    const el = shimMorph, cs = getComputedStyle(el);
+    const W = el.clientWidth, H = el.clientHeight;
+    if (shimCanvas.width!==W) shimCanvas.width=W; if (shimCanvas.height!==H) shimCanvas.height=H;
+    const t=parseFloat(cs.getPropertyValue('--morph-t'))||0;
+    const gap=parseFloat(cs.getPropertyValue('--mass-gap'))||240;
+    const r=parseFloat(cs.getPropertyValue('--mass-r'))||64;
+    const k=parseFloat(cs.getPropertyValue('--neck-k'))||46;
+    const cx=W/2, cy=H/2, half=(gap*(1-t))/2, ax=cx-half, bx=cx+half;
+    const bell=Math.sin(Math.PI*Math.min(Math.max(t,0),1)), kk=k*(0.35+0.65*bell);
+    const sd=(px,py,ox)=>Math.hypot(px-ox,py-cy)-r;
+    const smin=(a,b,kp)=>{const h=Math.max(kp-Math.abs(a-b),0)/kp;return Math.min(a,b)-h*h*kp*0.25;};
+    const img=shimCtx.createImageData(W,H), dd=img.data;
+    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+      const f=smin(sd(x,y,ax),sd(x,y,bx),kk);
+      const a=f<-1?255:f>1?0:Math.round((0.5-f*0.5)*255);
+      const i=(y*W+x)*4; dd[i]=dd[i+1]=dd[i+2]=255; dd[i+3]=a;
+    }
+    shimCtx.putImageData(img,0,0);
+    const url=shimCanvas.toDataURL();
+    el.style.webkitMaskImage=`url(${url})`; el.style.maskImage=`url(${url})`;
+    el.style.webkitMaskSize='100% 100%'; el.style.maskSize='100% 100%';
+  };
+}
+
+const morph = document.getElementById('morph');
+const tSlider = document.getElementById('t');
+function setT(v){
+  morph.style.setProperty('--morph-t', v);
+  if (window.__shimPaint) window.__shimPaint();
+}
+tSlider.addEventListener('input', e => setT(e.target.value));
+
+document.getElementById('play').addEventListener('click', () => {
+  const t0=performance.now();
+  function frame(now){
+    const p = Math.min((now-t0)/1400, 1);
+    // ease + a hold-the-waist dwell at the middle
+    const tt = p<.5 ? p*2*p : 1-(1-p)*2*(1-p);
+    setT(tt); tSlider.value=tt;
+    if (p<1) requestAnimationFrame(frame); else setT(1);
+  }
+  requestAnimationFrame(frame);
+});
+
+document.getElementById('bench').addEventListener('click', () => {
+  log('— bench: 200 frames sweeping --morph-t 0→1 —');
+  let n=0, frames=[], last=performance.now();
+  function frame(now){
+    frames.push(now-last); last=now;
+    setT((n%100)/100); n++;
+    if (n<200) requestAnimationFrame(frame); else report(frames);
+  }
+  requestAnimationFrame(frame);
+});
+
+function report(frames){
+  frames=frames.slice(1).sort((a,b)=>a-b);
+  const p50=frames[Math.floor(frames.length*0.5)];
+  const p95=frames[Math.floor(frames.length*0.95)];
+  const mean=frames.reduce((a,b)=>a+b,0)/frames.length;
+  const budget = p95 <= 16.7;
+  log(`frame ms: mean ${mean.toFixed(2)} · p50 ${p50.toFixed(2)} · p95 ${p95.toFixed(2)}`);
+  log(`16.7ms budget @p95: ${budget?'CLEARS ✓':'OVER ✗'}`, budget?'ok':'bad');
+  // π readback at the waist: sample the painted mask alpha across the neck
+  measureWaist();
+}
+
+function measureWaist(){
+  setT(0.5);
+  // sample the composited element via a snapshot canvas
+  const W=morph.clientWidth, H=morph.clientHeight, cy=Math.floor(H/2);
+  const c=document.createElement('canvas'); c.width=W; c.height=1;
+  const cx2=c.getContext('2d');
+  // re-raster the SAME field math to read the silhouette width along the centre row
+  const gap=240, r=64, t=0.5, half=(gap*(1-t))/2, ax=W/2-half, bx=W/2+half;
+  const bell=Math.sin(Math.PI*t), kk=46*(0.35+0.65*bell);
+  const sd=(px,ox)=>Math.hypot(px-ax+ (ox-ax),0); // along centre row dy=0
+  const field=x=>{
+    const da=Math.hypot(x-ax,0)-r, db=Math.hypot(x-bx,0)-r;
+    const h=Math.max(kk-Math.abs(da-db),0)/kk; return Math.min(da,db)-h*h*kk*0.25;
+  };
+  // body width = inside-span at a mass centre; waist width = inside-span at the midline
+  const span=(probeX)=>{ let lo=null,hi=null; for(let y=-H/2;y<H/2;y++){ const da=Math.hypot(probeX-ax,y)-r,db=Math.hypot(probeX-bx,y)-r;const h=Math.max(kk-Math.abs(da-db),0)/kk;const f=Math.min(da,db)-h*h*kk*0.25; if(f<0){ if(lo===null)lo=y; hi=y; } } return lo===null?0:hi-lo; };
+  const bodyW=span(ax), waistW=span(W/2);
+  const ratio=waistW/bodyW;
+  log(`waist/body @t=0.5: ${ratio.toFixed(3)}  (concave if < 0.85; metaball if ~0.3-0.6)`, ratio<0.85?'ok':'bad');
+  setT(0);
+}
+
+boot();
+</script>
+</body>
+</html>

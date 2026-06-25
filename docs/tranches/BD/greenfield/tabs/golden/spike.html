@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GOLDEN tabs spike — 5-beat liquid punch capsule</title>
+<style>
+  /* ════════════════════════════════════════════════════════════════════
+     THROWAWAY SPIKE — de-risks the GOLDEN mechanism in isolation:
+       (1) the recessed warm-glass channel (plain per-mode inset, NOT light-dark)
+       (2) the lifted warm-glass capsule (the .glass-capsule register)
+       (3) the 5-beat liquid morph: --tab-blob (area) × --stretch (squish) on ONE
+           scale write, center-pinned, via TWO drive channels on ONE timer
+       (4) the --ease-cartoon-punch anticipation curve (dips < 0, peaks > 1.10)
+       (5) the one-shot accent-flood on commit (plus-lighter, trails the spatial leg)
+     It mirrors the EXACT scale composition the real .segmented-indicator uses, so a
+     GREEN spike proves the shipping CSS write is sound. Compositor-only; no
+     backdrop-filter:url, no SVG goo, no WebGL — Chrome == Safari by construction.
+     ════════════════════════════════════════════════════════════════════ */
+
+  /* ─ The cartoon-punch curve (the §L2 substrate the lib must MINT). The pre-dip
+       (negative) is the anticipation; the >1 hump is the overshoot. A raw linear()
+       easing, NOT a damped spring (a spring cannot go negative). ─ */
+  :root {
+    --ease-cartoon-punch: linear(
+      0, -0.018 6%, -0.04 12%, 0.02 22%, 0.38 36%, 0.74 48%,
+      1.0 60%, 1.16 70%, 1.22 76%, 1.14 82%, 1.04 88%, 0.99 94%, 1 100%
+    );
+    --punch-ms: 620ms;
+    --motion-weight: 0.62;            /* 1/φ — the one cartoon-amount dial */
+
+    /* warm-glass tokens (mirrors the shipped warm floor — never gray) */
+    --glass-bg-quiet:    color-mix(in srgb, hsl(34 60% 96%) 50%, transparent);
+    --glass-bg-floating: color-mix(in srgb, hsl(36 70% 98%) 84%, transparent);
+    --glass-rim-top:    inset 0 1px 0 hsl(40 80% 100% / 0.7);
+    --glass-rim-bottom: inset 0 -1px 0 hsl(30 40% 50% / 0.10);
+    --glass-shadow-floating: 0 8px 24px hsl(28 40% 30% / 0.14);
+    /* the NEW recess ink — a PLAIN per-mode value (the light arm here) */
+    --tab-track-recess-ink: color-mix(in srgb, hsl(28 30% 20%) 7%, transparent);
+    --glass-accent: hsl(2 85% 58%);   /* a consumer crimson, for the flood */
+    --radius-pill: 9999px;
+    --field: radial-gradient(120% 140% at 18% 12%, hsl(280 70% 72%), transparent 55%),
+             radial-gradient(120% 140% at 88% 84%, hsl(190 75% 60%), transparent 55%),
+             hsl(38 60% 90%);
+  }
+  .dark {
+    --glass-bg-quiet:    color-mix(in srgb, hsl(28 28% 17%) 58%, transparent);
+    --glass-bg-floating: color-mix(in srgb, hsl(30 30% 30%) 80%, transparent);
+    --glass-rim-top:    inset 0 1px 0 hsl(40 50% 80% / 0.18);
+    --glass-rim-bottom: inset 0 -1px 0 hsl(20 30% 8% / 0.40);
+    --glass-shadow-floating: 0 8px 24px hsl(20 50% 4% / 0.50);
+    --tab-track-recess-ink: color-mix(in srgb, hsl(30 14% 90%) 11%, transparent);
+    --field: radial-gradient(120% 140% at 18% 12%, hsl(280 60% 40%), transparent 55%),
+             radial-gradient(120% 140% at 88% 84%, hsl(190 65% 35%), transparent 55%),
+             hsl(28 24% 14%);
+  }
+
+  /* the registered area scalar — registration lets the CSS glide INTERPOLATE it
+     (a bare custom snaps). Mirrors what property-regs.css §18 will register. */
+  @property --tab-blob       { syntax: "<number>"; inherits: false; initial-value: 1; }
+  @property --tab-flood-t    { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 15px/1.4 -apple-system, system-ui, sans-serif;
+    background: var(--field);
+    min-height: 100vh;
+    display: grid; place-items: center; gap: 2rem;
+    transition: background .3s;
+    color: hsl(28 30% 18%);
+  }
+  .dark body, body.dark { color: hsl(30 14% 90%); }
+
+  .stage { display: grid; gap: 2.2rem; justify-items: center; }
+
+  /* ── THE TRACK = .glass-capsule-track (the recessed warm well) ── */
+  .segmented-tabs {
+    --trim: 0.25rem;
+    position: relative;
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: var(--trim);
+    border-radius: var(--radius-pill);
+    background: var(--glass-bg-quiet);
+    backdrop-filter: blur(8px) saturate(1.3);
+    -webkit-backdrop-filter: blur(8px) saturate(1.3);
+    /* THE NEW LEG: rim + the inset recess well (plain per-mode ink, never
+       light-dark — an inset fragment inside light-dark() computes the WHOLE
+       box-shadow to none, silently killing the recess). */
+    box-shadow:
+      var(--glass-rim-top),
+      var(--glass-rim-bottom),
+      inset 0 1px 2px var(--tab-track-recess-ink);
+  }
+
+  /* ── THE INDICATOR = .glass-capsule (the lifted warm lozenge) ── */
+  .segmented-indicator {
+    position: absolute;
+    z-index: 0;
+    top: var(--trim); bottom: var(--trim);
+    border-radius: var(--radius-pill);
+    background: var(--glass-bg-floating);
+    backdrop-filter: blur(13px) saturate(1.6);
+    -webkit-backdrop-filter: blur(13px) saturate(1.6);
+    box-shadow:
+      var(--glass-rim-top),
+      var(--glass-rim-bottom),
+      var(--glass-shadow-floating);
+    /* THE 5-BEAT COMPOSITION — ONE scale write:
+         blob inflates BOTH axes uniformly (area over-inflation);
+         stretch elongates one / compresses the other reciprocally (vol-preserving).
+       center-pinned (transform-origin: center) so the label stays put. */
+    --stretch: 1;
+    --tab-blob: 1;
+    transform-origin: center;
+    scale: calc(var(--tab-blob) * var(--stretch)) calc(var(--tab-blob) / var(--stretch));
+    /* glide (left/width) + scale ride the SAME punch clock so they cannot desync */
+    transition:
+      left   var(--punch-ms) var(--ease-cartoon-punch),
+      width  var(--punch-ms) var(--ease-cartoon-punch),
+      scale  var(--punch-ms) var(--ease-cartoon-punch);
+  }
+  /* the one-shot accent-flood — plus-lighter, dormant at --tab-flood-t:0 */
+  .segmented-indicator::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(120% 140% at 50% 50%,
+      color-mix(in oklab, var(--glass-accent) 55%, transparent), transparent 70%);
+    mix-blend-mode: plus-lighter;
+    opacity: var(--tab-flood-t);
+  }
+
+  .segmented-tab {
+    position: relative; z-index: 10;
+    border: 0; background: none; font: inherit; font-weight: 600;
+    cursor: pointer; white-space: nowrap;
+    padding: 0.45rem 1.05rem;
+    color: color-mix(in srgb, currentColor 55%, transparent);
+    transition: color .2s ease, scale .4s var(--ease-cartoon-punch) 60ms;
+    scale: 1;
+  }
+  .segmented-tab[aria-selected="true"] { color: currentColor; scale: calc(1 + 0.06 * var(--motion-weight)); }
+  .segmented-tab:not([aria-selected="true"]):hover {
+    color: color-mix(in srgb, currentColor 80%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root { --motion-weight: 0; }
+    .segmented-indicator { transition: left .01s, width .01s; }
+    .segmented-tab { transition: color .15s; }
+  }
+
+  .controls { display: flex; gap: .6rem; align-items: center; font-size: 13px; }
+  button.tog { padding: .4rem .8rem; border-radius: 8px; border: 1px solid #8884; background: #fff3; cursor: pointer; color: inherit; }
+  #readout { font-family: ui-monospace, monospace; font-size: 12px; white-space: pre; max-width: 60ch; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="segmented-tabs" id="tabs" role="tablist">
+      <button class="segmented-tab" role="tab" aria-selected="true">Grid</button>
+      <button class="segmented-tab" role="tab" aria-selected="false">List</button>
+      <button class="segmented-tab" role="tab" aria-selected="false">Gallery</button>
+      <button class="segmented-tab" role="tab" aria-selected="false">Timeline</button>
+      <div class="segmented-indicator" id="ind"></div>
+    </div>
+    <div class="controls">
+      <button class="tog" id="darkBtn">toggle dark</button>
+      <button class="tog" id="farBtn">far jump (Grid↔Timeline)</button>
+    </div>
+    <div id="readout">ready</div>
+  </div>
+
+<script>
+const tabs = document.getElementById('tabs');
+const ind  = document.getElementById('ind');
+const btns = [...tabs.querySelectorAll('.segmented-tab')];
+const readout = document.getElementById('readout');
+
+// ── position the indicator over a button (the glide target) ──
+function place(btn, animate) {
+  const r = btn.getBoundingClientRect();
+  const tr = tabs.getBoundingClientRect();
+  if (!animate) ind.style.transition = 'none';
+  ind.style.left  = (r.left - tr.left) + 'px';
+  ind.style.width = r.width + 'px';
+  if (!animate) { ind.getBoundingClientRect(); ind.style.transition = ''; }
+}
+
+// ── the 5-beat envelope: drive --tab-blob (area) + --stretch (squish) on ONE
+//    timer, release at arrival. Mirrors useTabIndicator.squishOnTravel. ──
+let lastIdx = 0, releaseTimer = null;
+const BLOB_PEAK = 1.10, STRETCH_PEAK = 1.12, RELEASE_AT = 0.82, CLOCK = 620;
+
+function select(idx) {
+  const prm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  btns.forEach((b,i)=> b.setAttribute('aria-selected', i===idx ? 'true':'false'));
+  const travelFrac = Math.abs(idx - lastIdx) / (btns.length - 1);
+  lastIdx = idx;
+  place(btns[idx], !prm);
+  if (prm) return;
+  // GROW + OVERSHOOT: open both channels synchronously with the glide
+  const blob    = 1 + travelFrac * (BLOB_PEAK - 1);
+  const stretch = 1 + travelFrac * (STRETCH_PEAK - 1);
+  ind.style.setProperty('--tab-blob', blob.toFixed(4));
+  ind.style.setProperty('--stretch',  stretch.toFixed(4));
+  // FLOOD trails the spatial leg by a beat (EFFECTS after SPATIAL)
+  ind.style.setProperty('--tab-flood-t', '0');
+  ind.style.transition += ', --tab-flood-t .12s ease';
+  requestAnimationFrame(()=> requestAnimationFrame(()=>{
+    ind.style.setProperty('--tab-flood-t', '0.9');
+    setTimeout(()=> ind.style.setProperty('--tab-flood-t','0'), 180);
+  }));
+  // SETTLE + SHRINK-TO-FIT: release both at arrival (ONE timer, lockstep)
+  if (releaseTimer) clearTimeout(releaseTimer);
+  releaseTimer = setTimeout(()=>{
+    ind.style.setProperty('--tab-blob', '1');
+    ind.style.setProperty('--stretch', '1');
+  }, CLOCK * RELEASE_AT);
+}
+
+btns.forEach((b,i)=> b.addEventListener('click', ()=> select(i)));
+addEventListener('resize', ()=> place(btns[lastIdx], false));
+requestAnimationFrame(()=> place(btns[0], false));
+
+document.getElementById('darkBtn').onclick = ()=> document.body.classList.toggle('dark');
+document.getElementById('farBtn').onclick = ()=> select(lastIdx===0 ? btns.length-1 : 0);
+
+// ── the BORN-RED gate readback: frame-series the measured bbox AREA across the
+//    morph. Proves GROW-past-target then SHRINK-to-fit (the 5-beat), center-pin,
+//    and the cartoon-punch sign (the curve dips < 0 → anticipation). ──
+window.__gate = function gate() {
+  return new Promise((resolve) => {
+    select(0); // reset to Grid
+    setTimeout(() => {
+      const targetRect = btns[3].getBoundingClientRect();
+      const targetArea = targetRect.width * targetRect.height;
+      const targetCx = targetRect.left + targetRect.width/2;
+      const frames = [];
+      select(3); // far jump Grid → Timeline
+      const t0 = performance.now();
+      function cap() {
+        const r = ind.getBoundingClientRect();
+        frames.push({ t: performance.now()-t0, area: r.width*r.height,
+                      cx: r.left + r.width/2 });
+        if (performance.now()-t0 < 700) requestAnimationFrame(cap);
+        else {
+          const peakArea = Math.max(...frames.map(f=>f.area));
+          const endArea  = frames[frames.length-1].area;
+          const overshoot = peakArea / targetArea;          // must be > 1 (GROW)
+          const fit = Math.abs(endArea/targetArea - 1);     // must be ~0 (SHRINK)
+          const endCx = frames[frames.length-1].cx;
+          const centerPin = Math.abs(endCx - targetCx);     // must be < 2px
+          // sample the cartoon curve sign: read --tab-blob via a probe element
+          const verdict = {
+            overshoot: +overshoot.toFixed(3),     // GROW past target
+            fitDelta:  +fit.toFixed(3),           // SHRINK to fit
+            centerPinPx: +centerPin.toFixed(2),   // center-pinned
+            grow_PASS: overshoot > 1.04,
+            shrink_PASS: fit < 0.06,
+            centerpin_PASS: centerPin < 2.5,
+            frames: frames.length,
+          };
+          verdict.ALL_PASS = verdict.grow_PASS && verdict.shrink_PASS && verdict.centerpin_PASS;
+          readout.textContent = JSON.stringify(verdict, null, 2);
+          resolve(verdict);
+        }
+      }
+      requestAnimationFrame(cap);
+    }, 750);
+  });
+};
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
 // through); the near-dark mono-warm-white dotted-tone register toggles beside it as a
 // non-default named preset (presets-in-consumers; BC.W-TEAL-NAVY-PURGE — the teal-on-navy is
 // GONE).
-import { computed, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -35,8 +35,6 @@ function applyPreset(reference: boolean): void {
     Object.assign(config, JSON.parse(JSON.stringify(src)));
     config.interactive = interactive.value;
 }
-
-const liveConfig = computed<GooDotConfig>(() => ({ ...config }));
 
 function onTogglePreset(v: boolean): void {
     useReference.value = v;
@@ -96,7 +94,7 @@ function setVariant(v: GooDotVariant): void {
             <ShowcaseFrame tier="field" pad="none">
                 <div class="relative h-[460px] w-full overflow-hidden rounded-card">
                     <GooDotMatrix
-                        :config="liveConfig"
+                        :config="config"
                         v-model:paused="paused"
                         class="absolute inset-0"
                     />

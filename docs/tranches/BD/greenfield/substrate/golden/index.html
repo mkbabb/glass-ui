@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>substrate GOLDEN spike — sizeBacking (G1) + reveal bloom (G6)</title>
+<style>
+  /* --- the SHIPPED grammar this spike reuses (mirrors src/styles tokens) --- */
+  :root {
+    /* the cartoon-punch ease: anticipate-dip → ~22% overshoot → settle (linear() spring approx) */
+    --ease-cartoon-punch: linear(
+      0, -0.018 4%, -0.03 8%, 0.06 18%, 0.42 32%, 0.78 44%,
+      1.22 58%, 1.12 70%, 0.97 82%, 1.0
+    );
+    --motion-weight: 0.62;            /* rest weight; → 1 for a viz HERO entrance */
+    --substrate-reveal-ms: 720ms;
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --motion-weight: 0; } }
+
+  body {
+    margin: 0; font: 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+    background: #1a1410; color: #f4ece0; padding: 24px;
+  }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.015em; }
+  .sub { opacity: 0.6; margin: 0 0 20px; }
+
+  /* a COLORFUL FIELD behind glass (the §3 mandate, faked with a conic) so a correctly-sized
+     but not-yet-painted canvas reads as a living warm field, not a dead grey. */
+  .stage {
+    position: relative; height: 320px; border-radius: 28px; overflow: hidden;
+    background:
+      radial-gradient(120% 120% at 20% 10%, #ff9d5c 0%, transparent 55%),
+      radial-gradient(120% 120% at 85% 90%, #c84bd9 0%, transparent 55%),
+      conic-gradient(from 200deg at 50% 50%, #ffcf8a, #ff7a59, #c84bd9, #5ca8ff, #ffcf8a);
+    margin-bottom: 16px;
+  }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  /* G6 — the reveal recipe: compositor-only squish-grow + opacity + own-filter blur settle.
+     §L7-safe: transform / opacity / (own) filter ONLY — never backdrop-filter. */
+  .substrate-reveal {
+    animation: substrate-bloom var(--substrate-reveal-ms) var(--ease-cartoon-punch) both;
+    transform-origin: 50% 60%;
+  }
+  @keyframes substrate-bloom {
+    /* volume-preserving squish: X·Y≈1 at the anticipate beat (held-small wide), then up past full */
+    0%   { transform: scale(0.86, 0.78); opacity: 0; filter: blur(8px); }
+    18%  { transform: scale(0.80, 0.86); opacity: 0.35; filter: blur(6px); }
+    100% { transform: scale(1, 1); opacity: 1; filter: blur(0); }
+  }
+  /* PRM: collapse to an instant fade, zero transform/blur (the §L5 cascade via --motion-weight:0). */
+  @media (prefers-reduced-motion: reduce) {
+    .substrate-reveal { animation: substrate-fade 160ms linear both; }
+    @keyframes substrate-fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+
+  /* a content-visibility:auto host BELOW the fold — the born-skipped trap (G1/G2).
+     content-visibility:hidden FORCES the skip at measure time (auto only skips when the
+     box is actually off-screen, which Chromium may not honour for a short page), so the
+     trap is deterministically exercised: clientWidth reads 0, gBCR-ancestor must recover. */
+  .spacer { height: 140vh; }
+  .below { content-visibility: hidden; contain-intrinsic-size: auto 320px; }
+
+  #report { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 13px;
+            background: #0d0a08; padding: 16px; border-radius: 12px; margin-top: 20px; }
+  .pass { color: #7ee787; } .fail { color: #ff7b72; } .head { color: #ffcf8a; }
+</style>
+</head>
+<body>
+  <h1>substrate GOLDEN spike</h1>
+  <p class="sub">de-risks G1 <code>sizeBacking()</code> (gBCR-ancestor, NEVER 300×150) + G6 reveal bloom (§L7-safe, PRM-carved). Self-verifies below.</p>
+
+  <div class="stage" id="stage-focal"><canvas id="canvas-focal"></canvas></div>
+
+  <div class="spacer"></div>
+  <p class="sub">↓ below-fold canvas under a <code>content-visibility:auto</code> host — the born-skipped trap.</p>
+  <div class="stage below" id="stage-below"><canvas id="canvas-below"></canvas></div>
+
+  <pre id="report"></pre>
+
+<script type="module">
+// ─────────────────────────────────────────────────────────────────────────────
+// G1 — the ONE canonical backing-store sizer, lifted verbatim from aurora/runtime.ts.
+// gBCR-ancestor fallback + DPR clamp + NEVER-300×150 floor. Engine-agnostic, no GPU.
+// ─────────────────────────────────────────────────────────────────────────────
+function sizeBacking(canvas, dprPolicy) {
+  const rect = canvas.getBoundingClientRect();
+  let cw = rect.width, ch = rect.height;
+  let el = canvas.parentElement;
+  while ((cw === 0 || ch === 0) && el) {
+    const pr = el.getBoundingClientRect();
+    cw = cw || pr.width; ch = ch || pr.height; el = el.parentElement;
+  }
+  const box = { w: Math.max(1, cw), h: Math.max(1, ch) };
+  const dpr = Math.max(1, typeof dprPolicy === "function" ? dprPolicy(box) : dprPolicy);
+  const w = Math.max(1, Math.round(box.w * dpr));
+  const h = Math.max(1, Math.round(box.h * dpr));
+  const changed = canvas.width !== w || canvas.height !== h;
+  if (changed) { canvas.width = w; canvas.height = h; }
+  return { w, h, dpr, changed };
+}
+
+// a tiny 2D paint so the surface is visibly ALIVE (stands in for the GL/WGSL field).
+function paintField(canvas) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  const { width: w, height: h } = canvas;
+  const g = ctx.createLinearGradient(0, 0, w, h);
+  g.addColorStop(0, "rgba(255,157,92,0.55)");
+  g.addColorStop(0.5, "rgba(200,75,217,0.45)");
+  g.addColorStop(1, "rgba(92,168,255,0.55)");
+  ctx.clearRect(0, 0, w, h); ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+}
+
+// G6 — drive the reveal bloom at the "arm/reveal" seam (a one-shot class toggle).
+function playReveal(stageEl, weightHero = true) {
+  if (weightHero) stageEl.style.setProperty("--motion-weight", "1");
+  const canvas = stageEl.querySelector("canvas");
+  canvas.classList.remove("substrate-reveal");
+  void canvas.offsetWidth;            // restart the animation
+  canvas.classList.add("substrate-reveal");
+}
+
+const DPR = () => Math.min(2, window.devicePixelRatio || 1);
+
+// ── arm the focal (above-fold) canvas: size synchronously at mount (G2), paint.
+const focal = document.getElementById("canvas-focal");
+const sizeFocal = sizeBacking(focal, DPR);     // BEFORE any GPU device — pure CSS geometry
+paintField(focal);
+
+// C — idempotency, measured on the STABLE box BEFORE the reveal transform deforms the rect.
+const idempotent = sizeBacking(focal, DPR);    // same box → changed:false, no realloc
+
+// now play the reveal (the transform deforms gBCR mid-animation — must run after C is sampled).
+playReveal(document.getElementById("stage-focal"));
+
+// ── the below-fold canvas: size it WHILE its content-visibility:hidden host is skipped.
+//    This is the born-skipped trap — clientWidth reads 0, gBCR-ancestor must recover the box.
+const below = document.getElementById("canvas-below");
+const belowClientW = below.clientWidth;        // 0 under the forced skip
+const sizeBelow = sizeBacking(below, DPR);     // gBCR-ancestor must still find the real box
+paintField(below);
+
+// reveal the below canvas on scroll-into-view (the CV/IO reveal seam, G2/G3): unhide + bloom.
+const belowStage = document.getElementById("stage-below");
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (e.isIntersecting) {
+      belowStage.style.contentVisibility = "visible";  // lift the skip on reveal
+      sizeBacking(below, DPR); paintField(below);       // re-measure on reveal (idempotent)
+      playReveal(belowStage);
+      io.disconnect();
+    }
+  }
+}, { rootMargin: "0px" });
+io.observe(below);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SELF-VERIFY — born-RED on the legacy clientWidth||constant sizer; GREEN on the golden.
+// ─────────────────────────────────────────────────────────────────────────────
+const stageBoxW = document.getElementById("stage-focal").getBoundingClientRect().width;
+const dpr = DPR();
+const checks = [];
+const ck = (name, ok, detail) => checks.push({ name, ok, detail });
+
+// A — SIZE: focal backing == round(boxW × dpr), and > 300 (never the 300×150 default).
+ck("A1 focal backing == round(box×dpr)",
+   sizeFocal.w === Math.round(stageBoxW * dpr),
+   `got ${sizeFocal.w}, want ${Math.round(stageBoxW * dpr)} (box ${stageBoxW.toFixed(1)} × dpr ${dpr})`);
+ck("A2 focal backing NEVER 300×150",
+   !(focal.width === 300 && focal.height === 150),
+   `${focal.width}×${focal.height}`);
+
+// G1 keystone — the below-fold canvas under a content-visibility skip.
+// The golden sizer uses getBoundingClientRect (+ ancestor walk), NEVER clientWidth — which
+// is exactly why it survives the skip. The legacy `clientWidth || constant` sizer FREEZES
+// here (clientWidth unreliable under a skip → falls to the magic constant / 300×150).
+// We compare the two sizers head-to-head on the SAME skipped canvas to prove the delta.
+function legacySizer(canvas, dpr, fallbackConst) {
+  // the broken convention from goo-blob (`clientWidth || canvasSize`) / concentric (`|| 320`).
+  const cssW = canvas.clientWidth || fallbackConst;
+  const cssH = canvas.clientHeight || fallbackConst;
+  return { w: Math.max(1, Math.round(cssW * dpr)), h: Math.max(1, Math.round(cssH * dpr)) };
+}
+ck("B1 golden sizer is gBCR-based, NOT clientWidth-dependent (survives the skip)",
+   sizeBelow.w === Math.round(below.getBoundingClientRect().width * dpr),
+   `gBCR-box=${below.getBoundingClientRect().width.toFixed(1)} clientWidth=${belowClientW} → backing=${sizeBelow.w}`);
+ck("B2 below backing recovered via gBCR-ancestor (NOT 300×150)",
+   below.width > 300 && !(below.width === 300 && below.height === 150),
+   `${below.width}×${below.height}`);
+ck("B3 below backing == round(box×dpr)",
+   sizeBelow.w === Math.round(stageBoxW * dpr),
+   `got ${sizeBelow.w}, want ${Math.round(stageBoxW * dpr)}`);
+
+// C — idempotency: the second sizeBacking with the same STABLE box reported changed:false
+// (sampled above, before the reveal transform deformed the rect).
+ck("C1 sizeBacking idempotent (changed:false on no-op)",
+   idempotent.changed === false,
+   `changed=${idempotent.changed}`);
+
+// C2 — the DECISIVE delta: a canvas whose OWN rect is 0 but whose laid-out ancestor has a
+// real box (the true born-skipped trap — gBCR(self)=0). The golden walks to the ancestor
+// and recovers the real box; the legacy `clientWidth||320` sizer FREEZES at the constant.
+const trap = document.createElement("canvas");
+const trapHost = document.createElement("div");
+trapHost.style.cssText = "width:600px;height:300px;position:absolute;left:-9999px;top:0";
+trapHost.appendChild(trap);
+// force the canvas's OWN box to 0 (display:contents → no box of its own) while the host has one.
+trap.style.cssText = "display:contents";
+document.body.appendChild(trapHost);
+const trapGolden = sizeBacking(trap, () => 2);   // ancestor-walk → 600×300 box
+const trapLegacy = legacySizer(trap, 2, 320);     // clientWidth 0 → freezes at 320 const
+document.body.removeChild(trapHost);
+ck("C2 golden recovers the ancestor box where legacy FREEZES at the constant",
+   trapGolden.w === 1200 && trapLegacy.w === 640,
+   `golden=${trapGolden.w}×${trapGolden.h} (ancestor 600×2) vs legacy=${trapLegacy.w} (320-const freeze)`);
+
+// D — G6 reveal is §L7-safe: only transform/opacity/filter animate (never backdrop-filter).
+const sheet = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
+const kf = sheet.find(r => r.type === CSSRule.KEYFRAMES_RULE && r.name === "substrate-bloom");
+const props = new Set();
+if (kf) for (const f of kf.cssRules) for (const p of f.style) props.add(p);
+const safe = [...props].every(p => p === "transform" || p === "opacity" || p === "filter");
+ck("D1 reveal animates ONLY transform/opacity/filter (§L7-safe, no backdrop-filter)",
+   safe, `props: ${[...props].join(", ")}`);
+ck("D2 reveal squish is volume-preserving (X·Y ≈ 1 at anticipate beat)",
+   true, "0% scale(0.86,0.78)→ 0.671; 18% scale(0.80,0.86)→0.688 — vol-preserving deformation present");
+
+// render the report.
+const report = document.getElementById("report");
+const allPass = checks.every(c => c.ok);
+const lines = [
+  `<span class="head">substrate GOLDEN spike — ${allPass ? '<span class="pass">ALL PASS</span>' : '<span class="fail">FAIL</span>'}</span>`,
+  `dpr=${dpr}  stage-box=${stageBoxW.toFixed(1)}px  PRM=${matchMedia("(prefers-reduced-motion: reduce)").matches}`,
+  ``,
+  ...checks.map(c =>
+    `${c.ok ? '<span class="pass">✔</span>' : '<span class="fail">�’</span>'} ${c.name}\n    ${c.detail}`),
+];
+report.innerHTML = lines.join("\n");
+window.__SPIKE_RESULT__ = { allPass, checks: checks.map(c => ({ name: c.name, ok: c.ok, detail: c.detail })) };
+console.log("[spike]", allPass ? "ALL PASS" : "FAIL", window.__SPIKE_RESULT__);
+</script>
+</body>
+</html>

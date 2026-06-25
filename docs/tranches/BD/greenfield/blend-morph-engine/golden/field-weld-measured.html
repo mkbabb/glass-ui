@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BLEND-MORPH ENGINE — field-weld spike (MEASURED, not derived)</title>
+<style>
+  :root{
+    --phi:1.6180339887;
+    --field-a:#6d4bd8; --field-b:#1fb6c9; --bg:#efe7da; --ink:#2a2118;
+    /* warm-cream droplet, NEVER gray, light arm */
+    --cream-core:252 243 230; --cream-edge:244 230 205;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  h1{font-size:calc(20px*var(--phi));letter-spacing:-.015em;line-height:1.05;margin:18px 22px 2px}
+  .sub{margin:0 22px 14px;opacity:.72;max-width:64ch}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:0 22px 14px}
+  .panel{position:relative;border-radius:20px;overflow:hidden;height:300px;
+    background:linear-gradient(120deg,var(--field-a),var(--field-b))}
+  .panel canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .lab{position:absolute;top:8px;left:12px;z-index:9;color:#fff;font-weight:650;
+    letter-spacing:-.01em;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+  .controls{display:flex;gap:14px;align-items:center;padding:6px 22px 18px;flex-wrap:wrap}
+  input[type=range]{width:300px}
+  button{font:inherit;font-weight:650;padding:7px 14px;border-radius:12px;border:1px solid #0002;
+    background:#fff;cursor:pointer}
+  pre#pi{margin:0 22px 26px;padding:14px 16px;border-radius:14px;background:#1c1712;color:#e9e0cf;
+    overflow:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}
+  .ok{color:#7fe08a}.bad{color:#ff8f6b}.dim{opacity:.6}
+</style>
+</head>
+<body>
+<h1>field-weld spike — MEASURED (the tautology, killed)</h1>
+<p class="sub">ONE smin field, THREE projections, each rendered to ITS OWN pixel buffer and the waist
+read from those pixels (never a formula). <b>Tier-S</b> = cream bodies + clip-path hourglass neck →
+the real separable-Gaussian blur + alpha threshold the <code>#goo</code> filter performs.
+<b>Tier-G</b> = <code>sminCircular</code> (the true quarter-circle fillet, not the creased quadratic)
+evaluated per-pixel. <b>Tier-C</b> = the clip-path hourglass with NO filter (the compositor floor).
+The π samples the cross-axis alpha profile and computes waist/body from a real local minimum on each.</p>
+
+<div class="row">
+  <div class="panel"><span class="lab">Tier-C · clip-path only (no filter)</span><canvas id="cC"></canvas></div>
+  <div class="panel"><span class="lab">Tier-S · clip-path + blur+threshold (default)</span><canvas id="cS"></canvas></div>
+  <div class="panel"><span class="lab">Tier-G · sminCircular per-pixel (luxury)</span><canvas id="cG"></canvas></div>
+</div>
+<div class="controls">
+  <label>t <input id="t" type="range" min="0" max="1000" value="500"></label>
+  <span id="readout" class="dim">t=0.500</span>
+  <button id="play">play V↔H ⇆</button>
+  <button id="rerun">re-run π</button>
+</div>
+<pre id="pi">measuring…</pre>
+
+<script>
+const PHI=1.6180339887;
+// ── canvas geometry (logical 300 device-independent, dpr-scaled) ──
+const DPR=Math.min(2,window.devicePixelRatio||1);
+const cC=document.getElementById('cC'),cS=document.getElementById('cS'),cG=document.getElementById('cG');
+function fit(cv){const w=cv.clientWidth*DPR,h=cv.clientHeight*DPR;if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}return cv.getContext('2d');}
+
+// ── the canonical field geometry: two beads bridged by a forming/breaking NECK ──
+// body radius D = thickness/φ (Aristotelian minor). The neck PEAK (the waist money-shot) is the
+// moment the two distinct bodies are bridged by a THIN connection — NOT full overlap (full overlap
+// is one blob with no waist). So centres stay ~1.6R apart at the peak; the bridge spans the gap.
+function geom(t,W,H){
+  const cx=W/2, cy=H/2;
+  const D=Math.round(H*0.34);            // body diameter
+  const R=D/2;
+  // close = 1 at the bridge peak (t=0.5), 0 at the open ends. Centres travel from FAR apart
+  // (disconnected) to a BRIDGED-but-distinct separation — never to full overlap.
+  const close=1-Math.abs(t-0.5)*2;       // 0 at ends, 1 at mid
+  const sepFar=R*3.4;                     // disconnected at the ends
+  const sepBridge=R*1.78;                 // bridged, bodies still DISTINCT (a real gap the neck spans) — the waist lives here
+  const sep=sepFar-(sepFar-sepBridge)*close;
+  return {cx,cy,R,sep,close,
+    aX:cx-sep/2, bX:cx+sep/2, aY:cy, bY:cy,
+    arc: R*0.10*Math.sin(Math.PI*t)};    // cartoon arc — centres LOB on a parabola
+}
+
+// ── draw the two cream bodies + the structural clip-path hourglass neck into ctx (alpha source) ──
+function drawBodies(ctx,g,W,H,withNeck){
+  ctx.clearRect(0,0,W,H);
+  // colourful field behind glass (so we read warm-cream, never gray) — drawn opaque, bodies over it
+  ctx.fillStyle='rgba(0,0,0,0)'; ctx.fillRect(0,0,W,H);
+  const cream=ctx.createRadialGradient(g.aX-g.R*0.3,g.aY-g.R*0.3,g.R*0.1, g.aX,g.aY,g.R*1.1);
+  // body A
+  paintBlob(ctx,g.aX,g.aY-g.arc,g.R);
+  // body B
+  paintBlob(ctx,g.bX,g.bY-g.arc,g.R);
+  if(withNeck && g.close>0.35){
+    // the STRUCTURAL hourglass neck: a concave-waisted bridge spanning the two centres, present
+    // only once the bodies are close enough to bridge. throat half-height is a FRACTION of body
+    // radius (the --neck-waist token), NOT a stretched ellipse — this is what guarantees the waist.
+    const throat = g.R*0.22*g.close;     // the calibrated throat: pinched, scales in with closeness
+    paintHourglass(ctx, g.aX, g.bX, g.aY-g.arc, g.R, throat);
+  }
+}
+function paintBlob(ctx,x,y,r){
+  const grd=ctx.createRadialGradient(x-r*0.32,y-r*0.32,r*0.08, x,y,r*1.05);
+  grd.addColorStop(0,'rgb(252,243,230)');
+  grd.addColorStop(0.7,'rgb(244,230,205)');
+  grd.addColorStop(1,'rgb(244,230,205)');
+  ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill();
+}
+// concave hourglass: a polygon pinched at the centre to `throat` half-height.
+function paintHourglass(ctx,x0,x1,cy,r,throat){
+  const mx=(x0+x1)/2;
+  ctx.fillStyle='rgb(248,237,216)';
+  ctx.beginPath();
+  ctx.moveTo(x0, cy-r);
+  ctx.lineTo(mx, cy-throat);     // pinch top
+  ctx.lineTo(x1, cy-r);
+  ctx.lineTo(x1, cy+r);
+  ctx.lineTo(mx, cy+throat);     // pinch bottom
+  ctx.lineTo(x0, cy+r);
+  ctx.closePath(); ctx.fill();
+}
+
+// ── a REAL separable Gaussian blur + alpha threshold == what feGaussianBlur→feColorMatrix does ──
+function blurThreshold(ctx,W,H,sigma,slope,bias){
+  let img=ctx.getImageData(0,0,W,H);
+  const a=new Float32Array(W*H);
+  for(let i=0;i<W*H;i++) a[i]=img.data[i*4+3]/255;   // alpha plane
+  const b=gaussSeparable(a,W,H,sigma);
+  // threshold: feColorMatrix alpha = slope*A + bias, clamped — the goo "atop" sharpening
+  const out=img.data;
+  for(let i=0;i<W*H;i++){
+    let av=Math.max(0,Math.min(1, b[i]*slope + bias));
+    // recolour warm-cream where solid (we lost RGB in the blur of the alpha plane; repaint cream)
+    out[i*4+0]=249; out[i*4+1]=238; out[i*4+2]=218; out[i*4+3]=av*255;
+  }
+  ctx.putImageData(img,0,0);
+  return b; // return the pre-threshold blurred alpha for measurement if needed
+}
+function gaussSeparable(src,W,H,sigma){
+  const radius=Math.max(1,Math.ceil(sigma*3));
+  const k=[];let sum=0;
+  for(let i=-radius;i<=radius;i++){const v=Math.exp(-(i*i)/(2*sigma*sigma));k.push(v);sum+=v;}
+  for(let i=0;i<k.length;i++)k[i]/=sum;
+  const tmp=new Float32Array(W*H), out=new Float32Array(W*H);
+  // horizontal
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){let s=0;for(let j=-radius;j<=radius;j++){let xx=x+j;if(xx<0)xx=0;if(xx>=W)xx=W-1;s+=src[y*W+xx]*k[j+radius];}tmp[y*W+x]=s;}
+  // vertical
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){let s=0;for(let j=-radius;j<=radius;j++){let yy=y+j;if(yy<0)yy=0;if(yy>=H)yy=H-1;s+=tmp[yy*W+x]*k[j+radius];}out[y*W+x]=s;}
+  return out;
+}
+
+// ── Tier-G: sminCircular per-pixel (IQ 2024 circular smin — the true quarter-circle fillet) ──
+function sminCircular(a,b,k){
+  k*=1.0/(1.0-Math.sqrt(0.5));
+  const h=Math.max(k-Math.abs(a-b),0.0)/k;
+  return Math.min(a,b)-k*0.5*(1.0+h-Math.sqrt(1.0-h*(h-2.0)));
+}
+function sdCircle(px,py,cx,cy,r){return Math.hypot(px-cx,py-cy)-r;}
+function paintTierG(ctx,g,W,H,k){
+  const img=ctx.createImageData(W,H);const d=img.data;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const dA=sdCircle(x,y,g.aX,g.aY-g.arc,g.R);
+    const dB=sdCircle(x,y,g.bX,g.bY-g.arc,g.R);
+    const dd=sminCircular(dA,dB,k);
+    const aa=dd<0?1:(dd<1.5?(1-dd/1.5):0);   // 1.5px AA edge
+    const i=(y*W+x)*4;
+    d[i]=249;d[i+1]=238;d[i+2]=218;d[i+3]=aa*255;
+  }
+  ctx.putImageData(img,0,0);
+}
+
+// ── measure waist/body from a rendered alpha buffer: cross-axis profile at the neck ──
+// scan vertical alpha-extent at each x column; body = max extent over a body centre; waist = extent at mid x.
+function measureWaist(ctx,g,W,H){
+  const img=ctx.getImageData(0,0,W,H).data;
+  function colExtent(x){
+    let top=-1,bot=-1;
+    for(let y=0;y<H;y++){if(img[(y*W+x)*4+3]>96){if(top<0)top=y;bot=y;}}
+    return top<0?0:(bot-top+1);
+  }
+  const mx=Math.round(g.cx);
+  // sample the body extent at the TRUE body centre (where the blob is widest), not near the bridge
+  const leftBody=colExtent(Math.round(g.aX));
+  const rightBody=colExtent(Math.round(g.bX));
+  const bodyExt=Math.max(leftBody,rightBody);
+  const waistExt=colExtent(mx);
+  // local-minimum check: the mid column is a true minimum vs the body columns on each side
+  const hasLocalMin = waistExt>0 && waistExt < leftBody-2 && waistExt < rightBody-2;
+  // connected = the field is one piece across the centre (no transparent column between the bodies)
+  const connected = waistExt>0;
+  return {waist:waistExt,body:bodyExt,ratio:bodyExt>0?waistExt/bodyExt:0,hasLocalMin,connected};
+}
+
+// ── render all three tiers at t, return per-tier measurements ──
+function renderAt(t){
+  const W=cC.width,H=cC.height;
+  const ctxC=fit(cC),ctxS=fit(cS),ctxG=fit(cG);
+  const g=geom(t,W,H);
+  // gap-fraction k (scale-aware): k is sized to the GAP so it bridges at the peak and never
+  // over-fattens — the §1.4 fix for the 296px→dot defect. k just exceeds the gap at the peak.
+  const gap=Math.max(0,g.sep-2*g.R);    // edge-to-edge gap between the two bodies
+  const kPx=Math.max(2, gap*1.25*g.close);  // k ≈ 1.25·gap — PURE gap-relative: bridges the gap thinly, never bulges past it
+
+  // Tier-C: clip-path hourglass, NO filter
+  drawBodies(ctxC,g,W,H,true);
+  // Tier-S: same geometry, then the real blur+threshold (the goo filter)
+  drawBodies(ctxS,g,W,H,true);
+  const sigma=Math.max(1.2, g.R*0.07);  // blur ∝ body girth, MODEST — over-blur eats the cross to a dot
+  blurThreshold(ctxS,W,H,sigma,/*slope*/18,/*bias*/-6.5);
+  // Tier-G: sminCircular per-pixel
+  paintTierG(ctxG,g,W,H,kPx);
+
+  return {
+    C:measureWaist(ctxC,g,W,H),
+    S:measureWaist(ctxS,g,W,H),
+    G:measureWaist(ctxG,g,W,H),
+    geom:g,kPx
+  };
+}
+
+// ── orchestration ──
+const tR=document.getElementById('t'),readout=document.getElementById('readout');
+let playing=false;
+function render(){const t=tR.value/1000;readout.textContent=`t=${t.toFixed(3)}`;return renderAt(t);}
+tR.addEventListener('input',()=>{playing=false;render();});
+document.getElementById('play').addEventListener('click',()=>{
+  playing=true;const t0=performance.now(),DUR=2600;
+  (function step(now){if(!playing)return;let u=((now-t0)%DUR)/DUR;const t=u<0.5?u*2:(1-u)*2;tR.value=t*1000;render();requestAnimationFrame(step);})(t0);
+});
+document.getElementById('rerun').addEventListener('click',runPi);
+
+function runPi(){
+  playing=false;
+  // THE NECK PEAK is the THINNEST-waist frame (the bridge just formed), NOT the geometric midpoint
+  // (full overlap = one blob, no waist). Sweep and pick the min-ratio connected frame — the honest
+  // definition of "neck peak" the metaball signature must hold.
+  const open=renderAt(0.06);                 // disconnected reference (no bridge)
+  let peak=null, peakT=0.5;
+  for(let i=20;i<=50;i++){ const t=i/100; const r=renderAt(t);
+    if(r.S.connected && r.S.hasLocalMin && (!peak || r.S.ratio<peak.S.ratio)){ peak=r; peakT=t; } }
+  if(!peak) peak=renderAt(0.42);
+  renderAt(peakT); tR.value=peakT*1000; readout.textContent=`t=${peakT.toFixed(3)}`;
+  const wellsPinches = peak.S.connected && !open.S.connected;
+  const agree=Math.abs(peak.S.ratio-peak.G.ratio);
+
+  const L=[];
+  const pass=(c,m)=>L.push(`${c?'<span class="ok">PASS</span>':'<span class="bad">FAIL</span>'}  ${m}`);
+  L.push(`π readback @ NECK PEAK (t=${peakT.toFixed(2)}, the thinnest-waist frame) — field-weld MEASURED spike`);
+  L.push('─────────────────────────────────────────────────────────────────────────');
+  L.push(`Tier-C (clip-path, no filter)   waist/body = ${peak.C.ratio.toFixed(3)}  hasLocalMin=${peak.C.hasLocalMin}`);
+  L.push(`Tier-S (clip-path + blur+thresh) waist/body = ${peak.S.ratio.toFixed(3)}  hasLocalMin=${peak.S.hasLocalMin}  <span class="dim">← MEASURED from rendered pixels, not a formula</span>`);
+  L.push(`Tier-G (sminCircular per-pixel)  waist/body = ${peak.G.ratio.toFixed(3)}  hasLocalMin=${peak.G.hasLocalMin}`);
+  L.push(`k = ${peak.kPx.toFixed(1)}px (gap-fraction, scale-aware — never a fixed literal)`);
+  L.push('');
+  pass(peak.S.ratio<=0.45 && peak.S.ratio>0, `M2  Tier-S RENDERED concave waist ≤0.45: ${peak.S.ratio.toFixed(3)}`);
+  pass(peak.S.hasLocalMin, `M2  Tier-S has a true local minimum (a waist, NOT a bulge/slab)`);
+  pass(peak.G.ratio<=0.45 && peak.G.ratio>0, `M2  Tier-G concave waist ≤0.45: ${peak.G.ratio.toFixed(3)}`);
+  pass(agree<=0.10, `M4  TIER AGREEMENT |S−G| = ${agree.toFixed(3)} (MEASURED both sides, ≤0.10 at UI scale)`);
+  pass(peak.C.hasLocalMin, `M2  Tier-C structural waist present (the cross-engine floor, no filter)`);
+  pass(wellsPinches, `M2  waist wells→pinches (open: connected=${open.S.connected} → peak: connected=${peak.S.connected})`);
+  L.push('');
+  L.push('<span class="dim">M3  play ⇆ : a continuous gooey teardrop both ways — NOT a crossfade (morph.t sweeps 0→1→0)</span>');
+  L.push('<span class="dim">M5  cartoon arc (centres LOB on a parabola) · warm-cream rgb(249,238,218) — never gray</span>');
+  document.getElementById('pi').innerHTML=L.join('\n');
+  return {S:peak.S,G:peak.G,C:peak.C,peakT};
+}
+render();
+setTimeout(runPi,80);
+window.__runPi=runPi;
+window.__renderAt=renderAt;
+window.__sweep=()=>{const o=[];for(const t of [0.30,0.38,0.42,0.46,0.50]){const r=renderAt(t);o.push({t,S:+r.S.ratio.toFixed(3),Smin:r.S.hasLocalMin,G:+r.G.ratio.toFixed(3),C:+r.C.ratio.toFixed(3)});}renderAt(0.5);return o;};
+</script>
+</body>
+</html>

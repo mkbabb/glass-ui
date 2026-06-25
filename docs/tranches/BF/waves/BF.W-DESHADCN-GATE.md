@@ -53,7 +53,7 @@ The de-shadcn FORM lock is primarily a SOURCE-token regression gate (it asserts 
 
 ## The gestalt row
 
-**BF-roster surface: `form-register` (the de-shadcn FORM verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the FORM surfaces (menu / control-rest / chip / focus), surface-hash freshness floor. The gestalt judgement: the whole FORM reads as **the library's own iOS-27 register** — glass menu rows, one-material control rest, the token-first focus ring, the stadium chip — NOT a wall of shadcn defaults (flat `bg-accent` rows, gray `bg-secondary` controls, the inline ring chain, square chips). Born-FAIL on the BE tree (the shadcn FORM defaults survive); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by `W-GESTALT-WIRE`.
+**BF-roster surface: `form-register` (the de-shadcn FORM verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the FORM surfaces (menu / control-rest / chip / focus), surface-hash freshness floor. The gestalt judgement: the whole FORM reads as **the library's own iOS-27 register** — glass menu rows, one-material control rest, the token-first focus ring, the stadium chip — NOT a wall of shadcn defaults (flat `bg-accent` rows, gray `bg-secondary` controls, the inline ring chain, square chips). Born-FAIL on the BE tree (the shadcn FORM defaults survive); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by `W-GESTALT-WIRE`.
 
 ## Fences
 

@@ -50,7 +50,7 @@ function toggle(): void {
             <span class="nt-icon"><MessageCircle class="size-4" /></span>
             <span class="nt-body">
                 <span class="nt-row">
-                    <span class="nt-title">Mike Babb</span>
+                    <span class="nt-title">New message</span>
                     <span class="nt-time">now</span>
                 </span>
                 <span class="nt-preview">The liquid dock morph is shipping…</span>
@@ -64,12 +64,12 @@ function toggle(): void {
             ref="cardRef"
             class="nt-card"
             role="dialog"
-            aria-label="Notification from Mike Babb"
+            aria-label="Notification from New message"
         >
             <div class="nt-card-head">
                 <span class="nt-icon"><MessageCircle class="size-4" /></span>
                 <span class="nt-row nt-card-row">
-                    <span class="nt-title">Mike Babb</span>
+                    <span class="nt-title">New message</span>
                     <span class="nt-time">now</span>
                 </span>
             </div>

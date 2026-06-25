@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--
+  category-landing GOLDEN spike — throwaway de-risk of the BOLDEST mechanism:
+  the SPECIMEN-STAGE bento card = warm §3 field behind glass + a DEFINED edge +
+  a live/frozen specimen + the cartoon proscenium (layered-offset cast, squash
+  entrance, lagging specimen, liquid hover) — all CROSS-ENGINE (Chrome + Safari).
+
+  This is pure CSS/SVG so it runs identically in both engines with NO build.
+  It proves, by painted pixels:
+   (1) the preview window is a WARM colorful field (NEVER srgb 0 0 0 / .03 gray),
+       both modes, with a DEFINED transmissive edge (the §3 signature);
+   (2) the specimens PAINT the real thing (a frozen aurora field, a glass control
+       row, a glass surface, a metric badge) — not a placeholder glyph;
+   (3) NO teal — every hue ∈ [25,95] warm;
+   (4) the lead card's goo-merge neck is a STATIC-SVG metaball (sRGB interp, a
+       SIBLING layer, never backdrop-filter:url, Safari-safe);
+   (5) the cartoon cel-slam + lagging specimen + liquid hover read with WEIGHT.
+  Toggle .dark on <html> to check the warm-ember dark arm.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>category-landing GOLDEN spike</title>
+<style>
+  :root {
+    --phi: 1.618;
+    --inv-phi: 0.618;
+    /* the shipped cartoon cast (shadow.css), warm-ink layered offset */
+    --shadow-cartoon-md: -4px 3px 1px rgba(74,52,40,.16), -8px 7px 2px rgba(74,52,40,.10);
+    --shadow-cartoon-lg: -6px 4px 1px rgba(74,52,40,.18), -12px 11px 3px rgba(74,52,40,.12);
+    /* the shipped springs (spring.css) */
+    --spring-bouncy: linear(0,.106 2%,.335 4%,.587 6%,.802 8%,.957 10%,1.048 12%,1.089 14%,1.093 16%,1.078 18%,1.055 20%,1.032 22%,1.013 24%,1.0005 27%,.9936 29%,.9915 31%,.9933 35%,.9977 39%,1.0002 43%,1);
+    --spring-smooth: linear(0,.1 2%,.302 4%,.513 6%,.692 8%,.825 10%,.914 12%,.968 14%,.998 16%,1.011 18%,1.015 20%,1.014 22%,1.008 27%,1.003 31%,1);
+    --radius-card: 1.25rem;
+    --radius-md: 0.625rem;
+    color-scheme: light;
+  }
+  html.dark { color-scheme: dark; }
+
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    /* the page WARM field (page-background GOLDEN, scaled) — warm cream, NEVER gray/teal */
+    background:
+      radial-gradient(120% 90% at 12% 0%, oklch(0.95 0.045 72), transparent 55%),
+      radial-gradient(110% 110% at 100% 100%, oklch(0.93 0.05 48), transparent 60%),
+      oklch(0.965 0.022 70);
+    padding: 4vh 5vw;
+  }
+  html.dark body {
+    background:
+      radial-gradient(120% 90% at 12% 0%, oklch(0.34 0.05 68), transparent 55%),
+      radial-gradient(110% 110% at 100% 100%, oklch(0.30 0.055 44), transparent 60%),
+      oklch(0.24 0.03 64);
+  }
+
+  h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); letter-spacing: -0.02em; line-height: 1.02;
+       color: oklch(0.30 0.04 60); margin: 0 0 .2em; }
+  html.dark h1 { color: oklch(0.93 0.03 70); }
+  .eyebrow { font: 600 0.8rem/1 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase;
+             color: oklch(0.62 0.12 62); }
+  html.dark .eyebrow { color: oklch(0.78 0.12 66); }
+
+  /* ───────────────────────── the BENTO GRID ───────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(3, 1fr);
+           gap: calc(1rem * var(--phi)); margin-top: 2rem; max-width: 1100px; }
+  @media (max-width: 860px) { .bento { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } }
+
+  /* ───────────────────────── the SPECIMEN-STAGE CARD ───────────────────────── */
+  .card {
+    --field-h: 62;                       /* the WARMED category hue (NEVER teal); set per-card */
+    position: relative; display: flex; flex-direction: column; gap: .75rem;
+    padding: 1.15rem;
+    border-radius: var(--radius-card);
+    /* warm GLASS plate (the .glass-resting register), NEVER gray */
+    background: oklch(0.97 0.012 var(--field-h) / 0.72);
+    border: 1px solid oklch(1 0 0 / 0.5);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+    backdrop-filter: blur(10px) saturate(1.4);
+    /* the cartoon proscenium cast — layered-offset warm ink, the lifted WEIGHT */
+    box-shadow: var(--shadow-cartoon-md);
+    transition: transform var(--spring-smooth-duration,.42s) var(--spring-smooth),
+                box-shadow .3s ease;
+    text-decoration: none; cursor: pointer;
+    /* cel-slam entrance */
+    animation: cel-slam .6s var(--spring-bouncy) both;
+  }
+  html.dark .card {
+    background: oklch(0.32 0.022 var(--field-h) / 0.6);
+    border-color: oklch(1 0 0 / 0.12);
+  }
+  .card.lead { grid-column: span 2; }
+  @media (max-width: 560px) { .card.lead { grid-column: span 1; } }
+
+  /* lagging stagger — each card a beat after the last (overlapping action) */
+  .card:nth-child(1){animation-delay:.00s} .card:nth-child(2){animation-delay:.07s}
+  .card:nth-child(3){animation-delay:.14s} .card:nth-child(4){animation-delay:.21s}
+  .card:nth-child(5){animation-delay:.28s}
+
+  @keyframes cel-slam {
+    0%   { opacity: 0; transform: translateY(26px) scale(.86, .92); }
+    55%  { opacity: 1; transform: translateY(-4px) scale(1.02, .99); } /* overshoot+stretch */
+    100% { opacity: 1; transform: translateY(0) scale(1, 1); }
+  }
+
+  /* the liquid hover — lift + squish + the cast travels OPPOSITE (light stays fixed) */
+  .card:hover {
+    transform: translate(-2px, -3px) scale(1.018);
+    box-shadow: var(--shadow-cartoon-lg);
+  }
+  .card:hover .stage > * { transform: translateY(-2px); }   /* specimen parallax-lags the frame */
+  .card:active { transform: translate(-1px,-1px) scale(.97); } /* press squish */
+
+  .head { display: flex; align-items: flex-start; gap: .7rem; }
+  .chip {
+    flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    /* the IconChip POP — the ONE color event, WARMED hue */
+    background: oklch(0.72 0.13 var(--field-h) / 0.22);
+    border: 1px solid oklch(0.72 0.13 var(--field-h) / 0.4);
+    color: oklch(0.5 0.16 var(--field-h));
+    font-weight: 700;
+  }
+  html.dark .chip { color: oklch(0.82 0.14 var(--field-h)); }
+  .ttl { font-size: 1.05rem; font-weight: 650; color: oklch(0.32 0.03 60); }
+  html.dark .ttl { color: oklch(0.92 0.02 70); }
+  .sub { font: 0.72rem ui-monospace, monospace; color: oklch(0.6 0.02 60); }
+  html.dark .sub { color: oklch(0.7 0.02 65); }
+
+  /* ── the PREVIEW WINDOW: a bounded warm §3 field + a DEFINED edge — NEVER gray ── */
+  .stage {
+    position: relative; overflow: clip;
+    border-radius: var(--radius-md);
+    aspect-ratio: var(--phi);            /* φ proportion, not a fixed 7rem void */
+    display: grid; place-items: center;
+    /* the bounded warm-cel field (the .paper-field stop-script, scaled) */
+    background:
+      radial-gradient(120% 100% at 18% 0%, oklch(0.90 0.075 calc(var(--field-h) + 8) / .55), transparent 60%),
+      radial-gradient(120% 120% at 100% 100%, oklch(0.86 0.085 calc(var(--field-h) - 6) / .42), transparent 65%),
+      oklch(0.93 0.045 var(--field-h));
+    /* the §3 DEFINED transmissive edge — a lit rim, NOT a gray hairline */
+    box-shadow: inset 0 0 0 1px oklch(1 0 0 / .35), inset 0 1px 3px oklch(1 0 0 / .28);
+  }
+  html.dark .stage {
+    background:
+      radial-gradient(120% 100% at 18% 0%, oklch(0.46 0.075 calc(var(--field-h) + 8) / .55), transparent 60%),
+      radial-gradient(120% 120% at 100% 100%, oklch(0.40 0.085 calc(var(--field-h) - 6) / .42), transparent 65%),
+      oklch(0.30 0.040 var(--field-h));
+    box-shadow: inset 0 0 0 1px oklch(1 0 0 / .12), inset 0 1px 3px oklch(0 0 0 / .25);
+  }
+  .stage > * { transition: transform var(--spring-smooth-duration,.42s) var(--spring-smooth); }
+
+  /* ── SPECIMEN: field (a frozen aurora — Aurora renderMode="css" first-frame, mimicked) ── */
+  .spec-field { position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 70% at 30% 35%, oklch(0.86 0.13 78 / .9), transparent 60%),
+      radial-gradient(55% 60% at 72% 60%, oklch(0.80 0.14 42 / .85), transparent 62%),
+      radial-gradient(50% 55% at 55% 85%, oklch(0.88 0.10 92 / .8), transparent 60%);
+    filter: blur(2px) saturate(1.15); }
+
+  /* ── SPECIMEN: control (a real glass control row — Button+Slider+Switch, inert) ── */
+  .spec-control { display: flex; align-items: center; gap: .5rem; transform: scale(.82); }
+  .btn { padding: .35rem .7rem; border-radius: .55rem; font-size: .7rem; font-weight: 600;
+    background: oklch(0.72 0.13 var(--field-h) / .9); color: oklch(0.99 0.01 80);
+    border: 1px solid oklch(1 0 0 / .4); box-shadow: 0 1px 0 oklch(1 0 0 /.5) inset; }
+  .slider { width: 56px; height: 6px; border-radius: 3px; position: relative;
+    background: oklch(0.8 0.04 var(--field-h)); }
+  .slider::after { content:''; position:absolute; left:62%; top:50%; width:14px;height:14px;
+    border-radius:50%; transform:translate(-50%,-50%); background:oklch(0.98 0.01 80);
+    box-shadow:0 1px 3px oklch(0.3 0.05 50 /.4), 0 0 0 1px oklch(0.72 .12 var(--field-h));}
+  .switch { width: 34px; height: 20px; border-radius: 10px; position: relative;
+    background: oklch(0.7 0.14 var(--field-h)); }
+  .switch::after { content:''; position:absolute; right:2px; top:2px; width:16px; height:16px;
+    border-radius:50%; background:oklch(0.99 0.01 80); box-shadow:0 1px 2px oklch(0.3 .05 50/.4); }
+
+  /* ── SPECIMEN: surface (a glass Card-within-the-card, the matryoshka) ── */
+  .spec-surface { width: 72%; border-radius: .55rem; padding: .5rem .6rem;
+    background: oklch(0.98 0.012 var(--field-h) / .7); border: 1px solid oklch(1 0 0 /.55);
+    box-shadow: 0 4px 12px oklch(0.4 .04 50 /.14); transform: scale(.92); }
+  .spec-surface .bar { height: 6px; border-radius: 3px; background: oklch(0.78 0.06 var(--field-h)); }
+  .spec-surface .bar + .bar { margin-top: .35rem; width: 62%; opacity: .6; }
+
+  /* ── SPECIMEN: metric (a real MetricBadge — √φ figure + delta) ── */
+  .spec-metric { text-align: center; }
+  .spec-metric .fig { font: 800 2.1rem/1 ui-monospace, monospace; letter-spacing:-.02em;
+    color: oklch(0.42 0.13 var(--field-h)); }
+  html.dark .spec-metric .fig { color: oklch(0.85 0.14 var(--field-h)); }
+  .spec-metric .delta { display:inline-block; margin-top:.25rem; font-size:.62rem; font-weight:700;
+    padding:.1rem .4rem; border-radius:1rem; background:oklch(0.82 0.12 145 /.9); color:oklch(0.3 .1 145); }
+
+  /* ───────────────── the LEAD goo-merge — static SVG metaball, SIBLING layer ───────────────── */
+  .goo-bridge { position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    filter: url(#goo); mix-blend-mode: normal; }
+  .goo-bridge .blob { position: absolute; border-radius: 50%;
+    background: oklch(0.82 0.13 var(--field-h) / .5); }
+  .goo-bridge .b1 { left: 1rem; top: 1rem; width: 40px; height: 40px; }
+  .goo-bridge .b2 { left: 1.3rem; top: 3.2rem; width: 64px; height: 46px;
+    animation: goo-breathe 3.2s ease-in-out infinite alternate; }
+  @keyframes goo-breathe { to { transform: translate(6px, 4px) scale(1.06); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: none !important; }
+    .card:hover, .card:active, .card:hover .stage > * { transform: none; }
+    .goo-bridge .b2 { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <!-- the static goo filter: sRGB interp, Safari-safe, used only on a SIBLING layer -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="goo" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/>
+      <feColorMatrix in="b" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="g"/>
+      <feComposite in="SourceGraphic" in2="g" operator="atop"/>
+    </filter>
+  </svg>
+
+  <button onclick="document.documentElement.classList.toggle('dark')"
+    style="position:fixed;top:1rem;right:1rem;z-index:9;padding:.5rem 1rem;border-radius:.6rem;border:1px solid #8884;cursor:pointer">
+    toggle dark
+  </button>
+
+  <p class="eyebrow">substrates</p>
+  <h1>Procedural substrates</h1>
+
+  <div class="bento">
+    <!-- LEAD: substrates → frozen aurora field + goo-merge neck -->
+    <a class="card lead" style="--field-h:58">
+      <div class="goo-bridge"><span class="blob b1"></span><span class="blob b2"></span></div>
+      <div class="head" style="position:relative;z-index:1">
+        <span class="chip">◈</span>
+        <div><div class="ttl">Aurora</div><div class="sub">/substrates/aurora</div></div>
+      </div>
+      <div class="stage" style="position:relative;z-index:1"><span class="spec-field"></span></div>
+    </a>
+
+    <!-- forms → control row -->
+    <a class="card" style="--field-h:48">
+      <div class="head"><span class="chip">▭</span>
+        <div><div class="ttl">Inputs</div><div class="sub">/forms/inputs</div></div></div>
+      <div class="stage"><div class="spec-control">
+        <span class="btn">Submit</span><span class="slider"></span><span class="switch"></span>
+      </div></div>
+    </a>
+
+    <!-- display → glass surface -->
+    <a class="card" style="--field-h:82">
+      <div class="head"><span class="chip">▢</span>
+        <div><div class="ttl">Card</div><div class="sub">/containers/card</div></div></div>
+      <div class="stage"><div class="spec-surface"><div class="bar"></div><div class="bar"></div></div></div>
+    </a>
+
+    <!-- data → metric badge -->
+    <a class="card" style="--field-h:36">
+      <div class="head"><span class="chip">▤</span>
+        <div><div class="ttl">Metric</div><div class="sub">/data/metric</div></div></div>
+      <div class="stage"><div class="spec-metric"><div class="fig">1.618</div>
+        <span class="delta">▲ 6.2%</span></div></div>
+    </a>
+
+    <!-- motion → frozen field -->
+    <a class="card" style="--field-h:70">
+      <div class="head"><span class="chip">✦</span>
+        <div><div class="ttl">Constellation</div><div class="sub">/motion/constellation</div></div></div>
+      <div class="stage"><span class="spec-field" style="filter:blur(3px) saturate(1.2)"></span></div>
+    </a>
+  </div>
+</body>
+</html>

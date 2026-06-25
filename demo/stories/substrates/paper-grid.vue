@@ -58,18 +58,18 @@ const lineWidth = computed({
     set: (v) => (config.lineWidth = v),
 });
 
-// ── liquid (warp) refs ──────────────────────────────────────────────────────────
-const waveAmplitude = computed({
-    get: () => config.waveAmplitude,
-    set: (v) => (config.waveAmplitude = v),
+// ── liquid (cell-twist) refs ──────────────────────────────────────────────────────
+const twistMax = computed({
+    get: () => config.twistMax,
+    set: (v) => (config.twistMax = v),
 });
-const waveScale = computed({
-    get: () => config.waveScale,
-    set: (v) => (config.waveScale = v),
+const waveK = computed({
+    get: () => config.waveK,
+    set: (v) => (config.waveK = v),
 });
-const waveSpeed = computed({
-    get: () => config.waveSpeed,
-    set: (v) => (config.waveSpeed = v),
+const waveOmega = computed({
+    get: () => config.waveOmega,
+    set: (v) => (config.waveOmega = v),
 });
 const fieldAlpha = computed({
     get: () => config.fieldAlpha,
@@ -121,8 +121,8 @@ const boldOn = computed({
     <StoryPage>
         <StorySection
             heading="PaperGrid"
-            label="liquid AA-grid · evenly-spaced LARGER lines that morph + wave in a liquid way"
-            blurb="A calm engineering-graph-paper grid — evenly-spaced, LARGE cells, a crisp fine rule with a bolder major rule every 5 cells — drawn on a slowly breathing liquid sheet. Adjacent lines bow and flow TOGETHER as if the grid is ruled on a gently rippling pond (the Iñigo Quílez domain warp driven by the Bridson divergence-free curl flow), never a per-line jitter; the lines are exactly one device-pixel crisp at any DPR (the Ben Golus derivative-AA distance — the blurry-mess fix). WebGPU-FIRST: a pure fullscreen fragment pass over the proven substrate, with a clean WebGL2 GLSL fallback (the SAME field — no Canvas2D path). Drag the cursor (interactive on) and a soft Gaussian bulge presses the grid toward (repel: away from) the pointer like a finger pressed into the liquid. The default is the warm-cream identity over transparent — the page reads through the cells."
+            label="liquid AA-grid · evenly-spaced LARGER cells that TWIST + morph as a wave passes over and through"
+            blurb="An engineering-graph-paper grid — evenly-spaced, LARGE cells, a crisp fine rule with a bolder major rule every 5 cells — where the CELLS twist and morph as a wave passes OVER and THROUGH the sheet. The lines themselves do not bow; each box rotates + skews about its OWN center, gated by a moving Gaussian crest sweeping along a gentle diagonal and DIRECTED by the Bridson divergence-free curl flow so adjacent cells lean together (a windmill of warped boxes where the crest passes, calm square cells ahead and behind). The lines stay exactly one device-pixel crisp at any DPR (the Ben Golus derivative-AA distance reads the FINAL twisted coordinate — the blurry-mess fix). WebGPU-FIRST: a pure fullscreen fragment pass over the proven substrate, with a clean WebGL2 GLSL fallback (the SAME field — no Canvas2D path). Drag the cursor (interactive on) and a local swirl twists the cells around the pointer like a finger pressed into the liquid. The default is the warm-cream identity over transparent — the page reads through the cells."
         >
             <p class="text-muted-foreground mb-4 text-small">
                 <code class="font-mono text-xs">@mkbabb/glass-ui/paper-grid</code>
@@ -203,36 +203,36 @@ const boldOn = computed({
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
 
-                        <ConfiguratorLayer label="Liquid (the curl warp)" dividers>
-                            <ConfiguratorRow label="Wave amplitude" name="waveAmplitude">
+                        <ConfiguratorLayer label="Liquid (the cell-twist wave)" dividers>
+                            <ConfiguratorRow label="Twist max" name="twistMax">
                                 <LabeledSlider
-                                    v-model="waveAmplitude"
-                                    label="Wave amplitude"
-                                    tooltip="how far the lines bow (cell units; subtle = 'felt, not loud')"
+                                    v-model="twistMax"
+                                    label="Twist max"
+                                    tooltip="how far each CELL twists at the wave crest (rad; the boxes twist, the lines stay locally straight)"
                                     :min="0"
-                                    :max="0.5"
+                                    :max="0.9"
                                     :step="0.01"
                                     hide-label
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Wave scale" name="waveScale">
+                            <ConfiguratorRow label="Wave frequency" name="waveK">
                                 <LabeledSlider
-                                    v-model="waveScale"
-                                    label="Wave scale"
-                                    tooltip="the warp spatial frequency — LOW = the whole sheet bows together (HIGH = the noise we don't want)"
-                                    :min="0.2"
-                                    :max="2"
+                                    v-model="waveK"
+                                    label="Wave frequency"
+                                    tooltip="the crest-band spatial frequency — how many cells between crests as the wave passes OVER and THROUGH"
+                                    :min="0.1"
+                                    :max="1.5"
                                     :step="0.05"
                                     hide-label
                                 />
                             </ConfiguratorRow>
-                            <ConfiguratorRow label="Wave speed" name="waveSpeed">
+                            <ConfiguratorRow label="Wave speed" name="waveOmega">
                                 <LabeledSlider
-                                    v-model="waveSpeed"
+                                    v-model="waveOmega"
                                     label="Wave speed"
-                                    tooltip="the slow warp drift"
+                                    tooltip="the traveling-front speed (slow — inertia)"
                                     :min="0"
-                                    :max="1"
+                                    :max="1.5"
                                     :step="0.01"
                                     hide-label
                                 />
@@ -318,10 +318,11 @@ const boldOn = computed({
             </Configurator>
 
             <p class="text-muted-foreground mt-4 text-small">
-                The grid is computed at a WARPED coordinate
-                <code class="font-mono text-xs">g(uv) = uv + curlWarp(uv,t) + cursorBulge(uv)</code>
-                (the IQ domain-warp substitution driven by the Bridson divergence-free curl —
-                the whole sheet bows together, never a per-line jitter), and each line is
+                The grid is computed at a CELL-TWISTED coordinate
+                <code class="font-mono text-xs">g = cellTwist(uv·scale, t) + cursorSwirl(g)</code>
+                — each CELL rotates about its own center as a traveling Gaussian wave-crest
+                passes OVER and THROUGH the sheet (the boxes twist and morph, the lines stay
+                locally straight, never a uniform line-bow), and each line is
                 extracted as a constant-pixel-width stroke via the Ben Golus screen-space
                 derivative AA. Under
                 <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>

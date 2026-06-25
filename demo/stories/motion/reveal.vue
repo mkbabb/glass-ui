@@ -8,7 +8,7 @@
 // the CONSUMER-OWNED CSS the directive drives (the directive ships no keyframes by
 // design — that consumer CSS is the point of the pane, not a fork of a sibling
 // primitive).
-import { ref } from "vue";
+import { ref, type ComponentPublicInstance } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { vReveal } from "../../../src/composables/motion/vReveal";
@@ -27,8 +27,10 @@ const rows = ["Discover", "Compose", "Refine", "Ship", "Measure", "Iterate"];
 // ── The W-LIQUID-REVEAL bloom-from-source flagship ────────────────────────────
 // The overlay blooms FROM the trigger button's rect (scale + fade + blur-settle on
 // the snappy spring), composing the shipped useLiquidReveal leaf — the iOS-27
-// materialize-from-source move.
-const triggerRef = ref<HTMLElement | null>(null);
+// materialize-from-source move. The trigger is a `<Button>` COMPONENT, so the ref is
+// the component public instance — useLiquidReveal's asElement resolver reads its `.$el`
+// (the binding-verification cure; a bare HTMLElement annotation here silently no-oped).
+const triggerRef = ref<ComponentPublicInstance | null>(null);
 const surfaceRef = ref<HTMLElement | null>(null);
 const open = ref(false);
 const { reveal, conceal } = useLiquidReveal(surfaceRef, { trigger: triggerRef });

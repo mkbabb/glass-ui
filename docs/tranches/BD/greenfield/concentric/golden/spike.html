@@ -1,0 +1,171 @@
+<!doctype html>
+<!--
+  GOLDEN spike — the concentric "living hypsometric survey".
+  Throwaway WebGL2 standalone that MIRRORS the real src/ GLSL twin's level-set field
+  (waveFlow→heightField→swell→cursor, IQ contourInk) and adds the GOLDEN finishing layer:
+    1. OPAQUE hypsometric FILL (the §3 fix at the viz — kills the "lines over nothing" bleed-through)
+    2. index/minor two-tier contour (pure f(level), no buffer)
+    3. analytic hillshade (one ∇H, the 2.5-D relief pop)
+    4. per-mode warm ground (cream / ember) — toggle to prove BOTH modes never go gray
+  Purpose: pixel-prove the finishing layer reads as a vivid warm MAP in both modes before
+  writing GOLDEN.md. Field math is a faithful (slightly inlined) mirror of the shipped shader,
+  NOT a re-derivation for production.
+-->
+<html><head><meta charset="utf-8"><title>concentric golden spike</title>
+<style>
+  html,body{margin:0;height:100%;background:#0c0a09;font:13px ui-monospace,monospace;color:#e7e5e4}
+  #wrap{display:flex;gap:10px;padding:10px;flex-wrap:wrap}
+  canvas{width:520px;height:340px;border-radius:14px;display:block}
+  .cell{position:relative}
+  .lbl{position:absolute;top:8px;left:12px;background:#0008;padding:2px 8px;border-radius:8px}
+  #out{padding:8px 12px;white-space:pre;line-height:1.5}
+</style></head>
+<body>
+<div id="wrap">
+  <div class="cell"><div class="lbl">LIGHT — ink survey on cream</div><canvas id="cL"></canvas></div>
+  <div class="cell"><div class="lbl">DARK — luminous etch on ember</div><canvas id="cD"></canvas></div>
+</div>
+<div id="out">booting…</div>
+<script type="text/javascript">
+const FRAG = `#version 300 es
+precision highp float;
+in vec2 vUv; out vec4 fragColor;
+uniform float uTime, uAspect, uMode;      // uMode: 0=light 1=dark
+uniform vec2  uCursor; uniform float uCursorOn;
+// warm-identity ramp (linear-ish placeholder, OKLab in real shader). 4 stops.
+const vec3 S0=vec3(0.96,0.93,0.86);  // cream basin
+const vec3 S1=vec3(0.92,0.80,0.55);  // wheat
+const vec3 S2=vec3(0.86,0.55,0.22);  // amber slope
+const vec3 S3=vec3(0.62,0.26,0.08);  // ember ridge
+vec3 ramp(float t){ t=clamp(t,0.,1.);
+  if(t<.333) return mix(S0,S1,t/.333);
+  if(t<.666) return mix(S1,S2,(t-.333)/.333);
+  return mix(S2,S3,(t-.666)/.334); }
+
+float hash21(float x,float y){float px=fract(x*.1031),py=fract(y*.1031),pz=fract(x*.1031);
+  float d=px*(py+33.33)+py*(pz+33.33)+pz*(px+33.33);px+=d;py+=d;pz+=d;return fract((px+py)*pz);}
+float vnoise(float x,float y){float ix=floor(x),iy=floor(y),fx=x-ix,fy=y-iy;
+  float ux=fx*fx*fx*(fx*(fx*6.-15.)+10.),uy=fy*fy*fy*(fy*(fy*6.-15.)+10.);
+  float a=hash21(ix,iy),b=hash21(ix+1.,iy),c=hash21(ix,iy+1.),d=hash21(ix+1.,iy+1.);
+  return mix(mix(a,b,ux),mix(c,d,ux),uy);}
+float fbm(vec2 p){float v=0.,amp=.5,f=1.;vec2 q=p;
+  for(int i=0;i<3;i++){v+=amp*vnoise(q.x*f,q.y*f);
+    q=vec2(.8*q.x-.6*q.y,.6*q.x+.8*q.y);f*=2.;amp*=.5;}return v;}
+// a cheap traveling-wave flow warp (mirrors waveFlow's spirit: a moving crest twists coords)
+vec2 flow(vec2 p,float t){
+  float ph=dot(p,normalize(vec2(.92,.39)))*.42 - t*.7;
+  float env=exp(-pow(sin(ph)*1.6,2.));        // localized crest band
+  float a=env*.6;                              // twistMax
+  mat2 R=mat2(cos(a),-sin(a),sin(a),cos(a));
+  return R*p + env*.24*vec2(-p.y,p.x); }       // + shear
+float sampleH(vec2 p,float t){
+  vec2 g=flow(p,t);
+  if(uCursorOn>.5){ vec2 d=g-uCursor; g+= .5*exp(-dot(d,d)/.6)*vec2(-d.y,d.x);} // swirl
+  float H=fbm(g*0.9);
+  H+=0.22*sin(t*0.7);                          // swell
+  if(uCursorOn>.5){vec2 d=p-uCursor;H+=0.5*exp(-dot(d,d)/0.22);} // cursor peak
+  return H; }
+float contourInk(float fN,float hw){
+  float band=abs(fract(fN+.5)-.5); float aaW=max(fwidth(fN),1e-4);
+  float e0=hw, e1=hw+1.0;
+  float x=band/aaW; return 1.0 - clamp((x-e0)/max(e1-e0,1e-6),0.,1.)*clamp((x-e0)/max(e1-e0,1e-6),0.,1.)*(3.-2.*clamp((x-e0)/max(e1-e0,1e-6),0.,1.)); }
+void main(){
+  float aspect=max(uAspect,1e-4);
+  vec2 p=vec2(vUv.x*aspect,vUv.y)*2.2;
+  float t=uTime*0.6;
+  float levels=13.0;
+  float H=sampleH(p,t);
+  float fN=H*levels + 0.06*sin(floor(H*levels)*2.4+t*0.7);
+  // GOLDEN 1: tanh-expanded tone fills the ramp ends
+  float tone=0.5+0.5*tanh(H*1.6);
+  vec3 fill=ramp(tone);
+  // GOLDEN 3: analytic hillshade — one ∇H finite diff
+  float e=0.012;
+  float hx=sampleH(p+vec2(e,0.),t)-sampleH(p-vec2(e,0.),t);
+  float hy=sampleH(p+vec2(0.,e),t)-sampleH(p-vec2(0.,e),t);
+  vec2 grad=vec2(hx,hy)/(2.*e);
+  vec2 L=normalize(vec2(-0.6,0.8));
+  float shade=0.5+0.5*clamp(dot(normalize(grad+1e-5),L),-1.,1.);
+  fill*=mix(0.82,1.12,shade);                  // raking-light relief pop
+  // GOLDEN 2: two-tier index/minor contour
+  float lvl=floor(fN);
+  float isIndex = step(0.5, 1.0-abs(fract(lvl/5.0)-0.0)); // every 5th = index
+  isIndex = (mod(lvl,5.0)<0.5)?1.0:0.0;
+  float hw = mix(1.6, 3.0, isIndex);           // index ~2x
+  float ink=contourInk(fN,hw);
+  // ink color = a darker ember of the LOCAL fill (edge-of-its-own-band signature)
+  vec3 inkCol = mix(fill, fill*0.45, 0.85);
+  // per-mode arm: light = dark ink on bright fill ; dark = luminous etch on deep fill
+  vec3 ground = (uMode>0.5)? vec3(0.10,0.07,0.05) : vec3(0.97,0.94,0.88);
+  if(uMode>0.5){ fill = fill*vec3(0.85,0.62,0.42)*0.55 + ground; inkCol = mix(fill, fill+vec3(0.5,0.32,0.12), 0.9);}
+  vec3 col = mix(fill, inkCol, ink);
+  // OPAQUE output — the viz IS the colorful field, never lines-over-nothing
+  fragColor=vec4(clamp(col,0.,1.),1.0);
+}`;
+const VERT=`#version 300 es
+in vec2 a; out vec2 vUv; void main(){vUv=a;gl_Position=vec4(a,0.,1.);}`;
+function mk(canvas,mode){
+  const gl=canvas.getContext('webgl2',{preserveDrawingBuffer:true}); if(!gl){return {err:'no webgl2'};}
+  const dpr=Math.min(devicePixelRatio||1,2); canvas.width=520*dpr;canvas.height=340*dpr;
+  function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);
+    if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o;}
+  const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VERT));
+  gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw gl.getProgramInfoLog(pr);
+  gl.useProgram(pr);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const la=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(la);
+  gl.vertexAttribPointer(la,2,gl.FLOAT,false,0,0);
+  const U=n=>gl.getUniformLocation(pr,n);
+  return {gl,pr,U,mode,dpr,canvas};
+}
+const ctxs=[mk(document.getElementById('cL'),0),mk(document.getElementById('cD'),1)];
+let cursor=[0,0],cursorOn=0;
+addEventListener('pointermove',e=>{cursorOn=1;
+  // map to a rough domain coord on whichever canvas (spike: just animate)
+  cursor=[(e.clientX/innerWidth-0.5)*2.2,(0.5-e.clientY/innerHeight)*2.2];});
+function frame(ts){
+  for(const c of ctxs){ if(c.err)continue; const {gl,U,mode,canvas}=c;
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.uniform1f(U('uTime'),ts/1000);
+    gl.uniform1f(U('uAspect'),canvas.width/canvas.height);
+    gl.uniform1f(U('uMode'),mode);
+    gl.uniform2f(U('uCursor'),cursor[0],cursor[1]);
+    gl.uniform1f(U('uCursorOn'),cursorOn);
+    gl.drawArrays(gl.TRIANGLES,0,3);}
+  requestAnimationFrame(frame);
+}
+// readback proof: sample chroma + warm-fraction + non-gray on both canvases after first paint
+function probe(){
+  const res=[];
+  for(const c of ctxs){ if(c.err){res.push({err:c.err});continue;}
+    const {gl,canvas,mode}=c; const w=canvas.width,h=canvas.height;
+    const px=new Uint8Array(w*h*4); gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,px);
+    let n=0,warm=0,chromaSum=0,gray=0, inkDark=0, edgeVar=0, prevL=-1;
+    for(let i=0;i<px.length;i+=4*97){ // stride-sample
+      const r=px[i]/255,g=px[i+1]/255,b=px[i+2]/255; n++;
+      const mx=Math.max(r,g,b),mn=Math.min(r,g,b),chroma=mx-mn;
+      chromaSum+=chroma;
+      // warm = red dominant, blue least (hue in warm sector)
+      if(r>=g && g>=b && chroma>0.04) warm++;
+      if(chroma<0.02) gray++;
+      const Lum=0.3*r+0.59*g+0.11*b;
+      if(prevL>=0) edgeVar+=Math.abs(Lum-prevL); prevL=Lum;
+    }
+    res.push({mode:mode?'dark':'light',samples:n,
+      avgChroma:(chromaSum/n).toFixed(3),
+      warmFrac:(warm/n).toFixed(3),
+      grayFrac:(gray/n).toFixed(3),
+      lumVar:(edgeVar/n).toFixed(3)});
+  }
+  document.getElementById('out').textContent =
+    'GOLDEN spike readback (stride-sampled painted pixels):\n'+
+    JSON.stringify(res,null,2)+
+    '\n\nPASS bar: avgChroma>0.06, warmFrac>0.4, grayFrac<0.15, lumVar>0.02 (relief reads), both modes.';
+  window.__PROBE__=res;
+}
+requestAnimationFrame(frame);
+setTimeout(probe,400);
+</script>
+</body></html>

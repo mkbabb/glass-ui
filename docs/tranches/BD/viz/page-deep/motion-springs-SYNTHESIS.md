@@ -1,0 +1,73 @@
+# Pass-E SYNTHESIS — `motion/springs` (the binding per-page verdict)
+
+**Page:** `demo/stories/motion/springs.vue` (`manifest.ts:1050`, `background: "constellation"`).
+**Import label:** `@mkbabb/glass-ui/motion` (standardized — see §PASS).
+**Synthesizes:** `motion-springs-{demo,design,component}.md`.
+**Load-bearing src (audited, found SOUND):** `springPresets.ts` · `curves.ts` · `useNumericTransition.ts` · `useSpring.ts`.
+
+---
+
+## Verdict in one breath
+
+The src is excellent and DONE — `SPRING_PRESETS`/`curves.ts` are genuinely single-sourced (the dead `damped()` closed-form already pruned), no fork, no dead code. The DEMO is the inverse failure: a motion-explainer page whose own surfaces barely move, that drives a fixed-duration TWEEN + a raw rAF to "play" springs while the library SHIPS the real physics engine (`useSpring`) it never binds, wrapped in a double-titled, single-card, opaque-slab scaffold over a faint constellation. All three lenses converge HARD on the same six structural defects — and every one of them folds onto the systemic Band-16/17 chassis the dock + aurora GESTALTs already named (`W-STORY-PAGE-STANDARD` · `W-PAGE-BACKGROUND` · `W-LIQUID-ENTRANCE-GENERAL`) plus a MODIFY on the existing `W-DEEP-GLASS-20PX`. **ZERO net-new waves.** The page needs several more loops — it converges only after the chassis lands and re-audits.
+
+---
+
+## Reconciled findings (deduped across the 3 lenses, ranked by impact)
+
+The demo lens (springs-demo), the design lens (springs-design), and the component lens (springs-component A1/P1/P2/I1/I2/§6) describe the SAME page from three angles. Reconciled and impact-ranked:
+
+| Rank | Finding (merged) | demo | design | component |
+|---|---|---|---|---|
+| **1** | **Double-masthead (P0).** Chrome `StoryHeader` `<h1>` "Spring Orchestrator" PLUS the SFC's own hand-rolled `<header>` masthead (`section-label` + `text-display-3` violet "Springs", lines 157–165) — the descriptor + eyebrow stamped TWICE, the exact W-HIERARCHY2/D1-4 reading-order inversion the chassis kills. The in-SFC masthead must be DELETED; the violet display event routes onto the chrome `<h1>` via the manifest. | §7 bug | §1 + move 1 | — (chrome, not component) |
+| **2** | **Wrong engine teaches springs (architectural).** The flagship "Named registers" stage drives `useNumericTransition` — a **fixed-1100ms TWEEN** sampling the spring CURVE over one wall clock — and the playground HAND-ROLLS a raw rAF (lines 124–135). The library SHIPS the real physics: `useSpring`→`SpringProgress` (live-target, velocity-continuous, interruptible re-seat, per-register `--spring-<name>-duration` settle clock). A spring demo that cannot be re-pressed mid-flight and that runs every register on ONE clock under-teaches the system it documents — and the page's OWN header comment names this. | §7 | move 5 + §4 | A1 + I1 (the central finding) |
+| **3** | **No per-section glassy cards + no BIGGER main card (the user's headline ask, unmet).** The two `<StorySection>`s are bare transparent `flex flex-col gap-3/6` blocks stacked in ONE chassis card. Each demo should be its OWN `glass-resting`/`glass-quiet` sub-card; the protagonist travel stage (`h-48`) + main card are cramped at 1152px/1440px. | §4 (FAILS) | §2 + move 2 | §6 |
+| **4** | **The animated SPECIMEN is a flat sticker, not glass (highest-leverage visual move).** The hero spring tile is `bg: oklch(...) text-white shadow-cartoon` (lines 204–210) — a solid violet rounded rect. The ONE element on a glass+motion page that should be a refractive `.glass-resting`/`.glass-lens` tile bending the backdrop as it flies, coupled to the spring on a brightness/specular leg (motion-canon P3), is an iOS-7-flat purple sticker. The stages around it (`bg-background/40`, `bg-[var(--surface-tint-1)]`) are opaque slabs too (the BG-2 black-plate class; `ShowcaseFrame tier="field"` exists, unused). | §3 | §2 + move 3 | §6 |
+| **5** | **Wrong substrate — faint constellation, not the colorful aurora.** `background: "constellation"` is a sparse near-monochrome dot field that barely registers; the glass has nothing colorful behind it to refract (W54 "blur imperceptible over flat substrate" biting live). The motion-violet (`--motion-accent`/`--viz-legendre`) is the natural aurora seed — a violet-tuned `<Aurora>` (offscreen-paused, one-GL-per-route) unifies the color story AND makes the tiles POP. | §3 | §3 + move 4 | §2 (confirms demo-side, within budget) |
+| **6** | **Zero dock/tab APIs + dead animation affordance everywhere.** No dock composed by the page; the register `<Select>` is the canonical `<DockLayerGroup>`/`<DockStack mode="facets">`/`<SegmentedTabs>` case (the dock IS a spring consumer — `DOCK_SPRING`). Seed-chips are dead `transition-colors` pills (should be `useSpringPress` grab/squish); copy→check is instant (no spring pop, no `metal-glow` confirm); section bodies don't `.scroll-cascade`; the page that teaches entrances HAS none. | §2 (thin) | §4 + moves 6/7 | A2 + I2 |
+| 7 | **PRM VIOLATED (motion-canon P6) + the rAF leaks.** `NumericAnimation` has no PRM amplitude-scale → the named stage animates at FULL travel (360px + 18°) under `reduce`; the raw playground rAF has NO PRM gate, NO offscreen-pause, and NO `onBeforeUnmount` cancel (leaks on navigate-away). Binding `useSpring` (Rank 2) closes BOTH for free (`respectReducedMotion` + scope-dispose). | §7 | (implicit) | P1 + P2 |
+| 8 | **No curve visualization.** A spring page with NO plotted curve — `linear()` shown as raw text. `<EasingPicker>`/`<EasingConfigurator>` (BB.W-EASING-PRIMITIVE) plots the REAL value.js twin over the `--motion-accent` violet — the EXACT primitive this page should compose; doing so deletes the raw-text readout AND the hand-rolled rAF in one move. | (implicit) | §5 + move 5 | — |
+| 9 | **Superfluous copy.** The "Named registers"/"playground" blurbs (lines 168–169, 236) are commit-message internals ("the SAME springTimingFunction twin springLinearStops solves the CSS linear() token from. No local spring solver…") — teaches the maintainer, not the user. Plus wave-tag comments (`BB.W-SUFFUSE3` etc.) in a shipped SFC. → "Four shipped spring registers. Pick one, play it." | §6 | §7 + move 9 | I2 (rider) |
+| 10 | **Flat section weight + under-spent type ladder.** Both sections use the mono `label` eyebrow only, no `heading` rung (caption-not-heading trap). The hero numeric data (response/ζ/overshoot %) — the `text-display-mega`'s fast.com-peg home — is 14px `fira-code` body; the most interesting value is the smallest type on the page. | §4 | §1 + moves 8/10 | — |
+| ✓ | **Path-label standardized** — chip resolves `@mkbabb/glass-ui/motion` (manifest:309, live-confirmed). One of the 90 conformant pages, not the 28 `/cat/slug` stragglers. **No action.** | §5 ✓ | §7 ✓ | I3 ✓ |
+| ✓ | **Safari clean** — transform/oklch/custom-property only; oklch Baseline 15.4+; no `backdrop-filter`/`filter`/scroll-timeline animation. ONE caveat: if Rank 6 lands a `filter: blur()` entrance settle, it must carry the Safari `filter` arm `W-LIQUID-ENTRANCE-GENERAL` already scopes. | — | — | §4 ✓ |
+| ✓ | **src KEEP** — `SPRING_PRESETS`/`curves.ts` single-sourced, dead `damped()` already pruned, `PRESET_IDS` derived. No PRUNE. | — | — | §5 KEEP |
+
+### Conflicts resolved
+
+- **No real conflicts** — the three lenses agree on every defect. Demo adds the component-census (zero docks/tabs/procedural) + the structure FAIL; design adds the elevation/type-ladder framing + the curve-viz move; component adds the engine root-cause (tween-vs-physics), the PRM-blindness + rAF-leak, and confirms the colorful-backdrop + glass-absence are DEMO-side (the src is sound).
+- **One framing reconcile (the engine vs the chassis):** the component lens scopes the engine swap as an AUGMENT on `W-STORY-PAGE-STANDARD` (the `<DemoInteraction>` sub-type binds the real engine); the design lens frames it as "compose `<EasingPicker>`." **Resolution:** these are the SAME move at two altitudes — `<DemoInteraction>` is the standardized HOST, and `<EasingPicker>` (which already composes `useSpring`/`MOTION_CURVES`) is the CONTENT it hosts. Compose `<EasingPicker>` inside a `<DemoInteraction>` sub-card → the raw rAF, the raw-text readout, and the PRM-blindness all die at once. Routed to W-STORY-PAGE-STANDARD §drive-the-real-engine, content = `<EasingPicker>`.
+- **Component "no new wave" vs demo/design "big refactor":** not a conflict — different layers. The src (`composables/motion/`) needs no wave; the demo PAGE is where all 10 findings live, near-zero `src/` paint. The one `src/` touch is naming the spring stage as a `W-DEEP-GLASS-20PX` consumer (a MODIFY, not new).
+
+---
+
+## Tranche actions (per finding — FOLD / MODIFY / AUGMENT / PRUNE / NEW)
+
+| # | Finding | Action | Target wave |
+|---|---|---|---|
+| 1 | Double-masthead / triple-name | **FOLD** | **W-STORY-PAGE-STANDARD** §hierarchy (the W-HIERARCHY2 cluster + D1-4 suppression generalized: descriptor shown ONCE; the violet display event routes onto the chrome `<h1>` via manifest). |
+| 2 | Wrong engine (tween+rAF, not `useSpring`); not interruptible; one wall clock | **AUGMENT** | **W-STORY-PAGE-STANDARD** §`<DemoInteraction>` (the sub-type binds the SHIPPED engine — `useSpring` live target re-seat, per-register `--spring-<name>-duration` clock). Content = compose `<EasingPicker>`/`<EasingConfigurator>` (BB.W-EASING-PRIMITIVE, already composes `useSpring`). Springs is the canonical first consumer. |
+| 3 | Per-section glassy cards + BIGGER main card | **FOLD** | **W-STORY-PAGE-STANDARD** §`<DemoSpecimen>`/glassy-sub-card invariant — "Named registers" + "Spring playground" each a `glass-quiet`/`glass-resting` sub-card stepping DOWN from the `glass-floating` frame; the travel stage is the protagonist (bigger + taller). |
+| 4 | Specimen is a flat sticker; stages are opaque slabs | **MODIFY** | **W-DEEP-GLASS-20PX** — name the spring travel STAGE + the moving tile as a consumer (the moving specimen = a `.glass-deep`/`.glass-lens` tile bending the LIVE field as it flies, coupled brightness/specular on the spring's `--*-press-t` drive, motion-canon P3). The slab→`tier="field"` glass fix folds into W-STORY-PAGE-STANDARD's glassy-sub-card invariant (BG-2). |
+| 5 | Faint constellation, not colorful aurora | **FOLD** | **W-PAGE-BACKGROUND** (the dock-GESTALT systemic — the colorful field reaches UNDER the whole page so the demo glass refracts color). Springs → a `--motion-accent`-seeded violet `<Aurora>` (offscreen-paused, one-GL-per-route). Enroll in the background-reach π. |
+| 6 | Zero dock/tab APIs + dead chip/copy/entrance affordance | **FOLD** | **W-STORY-PAGE-STANDARD** §drive-the-APIs (the register selector → `<DockStack mode="facets">`/`<DockLayerGroup>` — pick a register from a dock rail, the dock morphs on the selected register's OWN curve, contextual-switch the user named) + **W-LIQUID-ENTRANCE-GENERAL** (section bodies `.scroll-cascade`; seed-chips → `useSpringPress` grab/squish; copy→check spring pop + `metal-glow` confirm). The chip → `<SelectableChip>`/`<ToggleGroup>`, copy → `<Button variant="ghost" size="icon">` — the "deftly composes a series of components" bar. |
+| 7 | PRM violated (P6) + rAF leaks | **AUGMENT** | **W-STORY-PAGE-STANDARD** §drive-the-real-engine — binding `useSpring` (Rank 2) gives free `respectReducedMotion` snap + `onScopeDispose` cleanup, closing P1/P2 with zero extra work. Record as the motion-canon P4/P6 conformity note on the `<DemoInteraction>` sub-type. |
+| 8 | No curve visualization | **AUGMENT** | **W-STORY-PAGE-STANDARD** §`<DemoInteraction>` content = `<EasingPicker>` (see #2 — same move). A taxonomy CONTENT choice, not a new wave. |
+| 9 | Superfluous copy + wave-tag comments | **FOLD** | **W-STORY-PAGE-STANDARD** §copy-discipline (one user-facing editorial line per blurb; the internal vocabulary moves to a code comment, off the rendered surface; wave-tags stripped). A conformity invariant of the standardized page. |
+| 10 | Flat section weight + under-spent type ladder | **FOLD** | **W-STORY-PAGE-STANDARD** §hierarchy — each section gets the canonical `text-subheading` `<h2>` heading rung; the live numeric readout (overshoot %/response/ζ) promotes to a `text-display-mega` anchor that re-shapes as you drag (the metric-number tier's home). |
+| ✓ | Path label `@mkbabb/glass-ui/motion` | **none** (conformant) | — |
+| ✓ | src KEEP (`SPRING_PRESETS`/`curves.ts` single-source) | **PRUNE (nothing)** | No PRUNE — every src asset load-bearing. The only "cut" is demo COPY (#9), routed above. |
+
+**No NEW wave required.** Every finding folds onto the systemic Band-16/17 chassis (`W-STORY-PAGE-STANDARD`, `W-PAGE-BACKGROUND`, `W-LIQUID-ENTRANCE-GENERAL`) + one MODIFY (`W-DEEP-GLASS-20PX` names the spring stage). This page contributes the canonical evidence that the standardized chassis must:
+1. **bind the SHIPPED engine** in its interactive sub-type (the springs page is the proof that a `<DemoInteraction>` hand-rolling rAF is a conformity failure — fold this requirement into the gate), and
+2. **be its own first proof** of `W-LIQUID-ENTRANCE-GENERAL` (the page that teaches entrances must HAVE one).
+
+---
+
+## Convergence call
+
+**~35% — NOT close; needs SEVERAL more loops.**
+
+- **Component/src layer: converged (~95%).** No new wave; `SPRING_PRESETS`/`curves.ts`/`useSpring.ts` are sound and single-sourced. The ONLY src touch is naming the spring stage as a `W-DEEP-GLASS-20PX` consumer (a MODIFY). This layer does not need another audit loop.
+- **Demo/design layer: ~25%.** All 10 structural defects open (double-title, wrong engine, no glassy cards, flat specimen, wrong substrate, zero dock APIs, PRM-blind, no curve viz, copy, flat weight). EIGHT fold into the systemic Band-16/17 chassis the dock + aurora GESTALTs already named — so this page does NOT get a bespoke redesign wave; it gets RE-AUDITED after the chassis lands.
+- **Loop plan:** loop 1 = author/land `W-STORY-PAGE-STANDARD` + `W-PAGE-BACKGROUND` + `W-LIQUID-ENTRANCE-GENERAL` (the systemic chassis) with the springs-derived requirements (bind-the-real-engine gate + entrance-self-proof); loop 2 = springs adopts the chassis (glassy sub-cards, `<EasingPicker>`-in-`<DemoInteraction>` binding `useSpring`, dock-rail register switcher, violet aurora, deep-glass moving tile, tight copy, kill the double-title); loop 3 = re-audit on a fresh capture → target HIGH convergence. **Springs is the canonical motion-band exemplar** for the chassis (as aurora is for substrates) — getting the bind-the-real-engine + entrance-self-proof requirements right HERE makes the other 11 motion pages inherit them.

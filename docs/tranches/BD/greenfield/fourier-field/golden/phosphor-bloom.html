@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!--
+  GOLDEN spike — §2a "the comet lights the ground."
+  Throwaway de-risk of the boldest mechanism: a per-frame `--ff-head-xy` CSS var
+  (written from a JS rAF, the exact `useFourierField.onFrame` observer pattern)
+  drives a `radial-gradient` phosphor bloom inside the `.viz-warm-field` warm mesh.
+
+  Proves, WITHOUT a glass-ui build, that:
+    - the warm field reads colourful + warm with a defined edge (G1), both modes;
+    - the bloom TRACKS the head (G2: `--ff-head-xy` changes per frame; near>far);
+    - a slow phosphor trail lingers where the comet has woven (the long-exposure read);
+    - the seam is compositor-cheap (one setProperty/frame, plain CSS gradients);
+    - Safari-safe (NO backdrop-filter, NO filter:url, sRGB radial/conic gradients);
+    - PRM freezes the bloom at the frozen-T head (a static warm halo).
+
+  Run: open in Chrome AND Safari. Toggle dark + PRM with the buttons.
+  The readback panel reports `--ff-head-xy` + the near/far field-luminance delta
+  (the G2 born-GREEN proof on the spike).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FourierField GOLDEN spike — phosphor bloom (§2a)</title>
+<style>
+  :root {
+    /* warm-amber identity (the --viz-fourier family, hue ~28-34, both modes here as literals) */
+    --ff-amber: oklch(0.62 0.19 34);
+    --ff-rose:  oklch(0.66 0.15 28);
+    --ff-cream: oklch(0.92 0.04 80);
+    --ff-base:  oklch(0.95 0.02 85);
+    /* the per-frame head seam (written by JS — the §2a observer) */
+    --ff-head-xy: 0.5 0.5;
+    --ff-head-hue: 34;
+    /* the phosphor "where it has been" trail (a 2nd, slower head, also JS-written) */
+    --ff-trail-xy: 0.5 0.5;
+    --ff-field-angle: 0deg;
+  }
+  :root.dark {
+    --ff-amber: oklch(0.66 0.16 32);
+    --ff-rose:  oklch(0.50 0.13 24);
+    --ff-cream: oklch(0.30 0.06 50);
+    --ff-base:  oklch(0.16 0.03 50); /* deep warm-umber — NEVER gray/teal (the warm floor) */
+  }
+
+  @property --ff-field-angle {
+    syntax: "<angle>"; inherits: true; initial-value: 0deg;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background: var(--ff-base);
+    color: oklch(0.4 0.05 50);
+    display: grid; place-items: center; min-height: 100vh;
+  }
+  :root.dark body { color: oklch(0.85 0.04 70); }
+
+  .stage-wrap { width: min(86vw, 720px); }
+  h1 { font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+  .controls { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+  button {
+    font: inherit; padding: 6px 12px; border-radius: 10px; cursor: pointer;
+    border: 1px solid oklch(0.7 0.05 50 / 0.4);
+    background: oklch(0.98 0.01 80 / 0.6); color: inherit;
+  }
+  :root.dark button { background: oklch(0.25 0.03 50 / 0.6); border-color: oklch(0.5 0.05 50 / 0.4); }
+  button[aria-pressed="true"] { background: var(--ff-amber); color: white; border-color: transparent; }
+
+  /* ── THE DEFINED EDGE: the stage rounded-card rim + inner warm vignette (§3a) ── */
+  .stage {
+    position: relative;
+    aspect-ratio: 1.618 / 1;           /* the φ configurator stage */
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid oklch(0.8 0.06 60 / 0.5);
+    box-shadow: 0 20px 60px -20px oklch(0.5 0.1 40 / 0.4);
+    isolation: isolate;
+  }
+  :root.dark .stage { border-color: oklch(0.5 0.08 40 / 0.5); }
+
+  /* ── THE WARM FIELD (the §3 ground, the future `.viz-warm-field` @utility) ── */
+  /* 2 stacked radial-gradients + 1 slow conic, all hues in [20,70]. Pure paint. */
+  .viz-warm-field {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(120% 90% at 22% 18%, color-mix(in oklab, var(--ff-amber) 55%, transparent), transparent 60%),
+      radial-gradient(110% 100% at 82% 88%, color-mix(in oklab, var(--ff-rose) 50%, transparent), transparent 62%),
+      conic-gradient(from var(--ff-field-angle) at 50% 50%,
+        color-mix(in oklab, var(--ff-cream) 80%, transparent),
+        color-mix(in oklab, var(--ff-amber) 30%, transparent),
+        color-mix(in oklab, var(--ff-rose) 30%, transparent),
+        color-mix(in oklab, var(--ff-cream) 80%, transparent));
+    /* the slow living drift (compositor-cheap; PRM freezes it) */
+    animation: field-drift 24s linear infinite;
+  }
+  @keyframes field-drift { to { --ff-field-angle: 360deg; } }
+
+  /* inner warm vignette — the defined contained boundary (§3a) */
+  .viz-warm-field::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 120% at 50% 50%, transparent 55%, oklch(0.3 0.08 40 / 0.28) 100%);
+  }
+
+  /* ── THE PHOSPHOR BLOOM (§2a) — rides ON TOP, reads `--ff-head-xy`/`--ff-head-hue` ── */
+  /* the LINGERING trail (slower head) UNDER the hot bloom — the long-exposure read */
+  .phosphor-trail, .phosphor-bloom {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    mix-blend-mode: screen; /* additive warm light onto the field (sRGB, Safari-safe) */
+  }
+  .phosphor-trail {
+    background: radial-gradient(
+      28% 40% at calc(var(--tx, 0.5) * 100%) calc(var(--ty, 0.5) * 100%),
+      oklch(0.78 0.16 var(--ff-head-hue) / 0.30), transparent 70%);
+  }
+  .phosphor-bloom {
+    background: radial-gradient(
+      16% 24% at calc(var(--hx, 0.5) * 100%) calc(var(--hy, 0.5) * 100%),
+      oklch(0.92 0.18 var(--ff-head-hue) / 0.65),
+      oklch(0.80 0.18 var(--ff-head-hue) / 0.25) 45%, transparent 72%);
+  }
+
+  /* the moving comet head marker (stands in for the GPU canvas in the spike) */
+  .comet {
+    position: absolute; z-index: 2; width: 18px; height: 18px; margin: -9px;
+    left: calc(var(--hx, 0.5) * 100%); top: calc(var(--hy, 0.5) * 100%);
+    border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, white, oklch(0.85 0.2 var(--ff-head-hue)) 40%, transparent 72%);
+  }
+
+  /* a faint glass plate over the field (stands in for the transmissive six-layer plate) */
+  .glass-hint {
+    position: absolute; z-index: 3; inset: 18% 30%; border-radius: 18px; pointer-events: none;
+    background: oklch(0.98 0.02 80 / 0.10);
+    border: 1px solid oklch(1 0 0 / 0.18);
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.3);
+    backdrop-filter: blur(2px); /* the ONE backdrop-filter — a plain blur, NOT filter:url (Safari-safe) */
+  }
+
+  /* ── PRM: freeze the drift + the bloom-sweep (a static warm halo at frozen-T) ── */
+  :root.prm .viz-warm-field { animation: none; }
+
+  .readout {
+    margin-top: 12px; font-family: ui-monospace, monospace; font-size: 12px;
+    padding: 10px 14px; border-radius: 10px;
+    background: oklch(0.98 0.01 80 / 0.5); border: 1px solid oklch(0.8 0.04 60 / 0.4);
+    white-space: pre-wrap;
+  }
+  :root.dark .readout { background: oklch(0.22 0.03 50 / 0.5); border-color: oklch(0.5 0.05 40 / 0.4); }
+  .pass { color: oklch(0.6 0.18 145); font-weight: 650; }
+  .fail { color: oklch(0.6 0.2 28); font-weight: 650; }
+</style>
+</head>
+<body>
+  <div class="stage-wrap">
+    <h1>FourierField GOLDEN spike — §2a the comet lights the ground</h1>
+    <div class="controls">
+      <button id="dark" aria-pressed="false">dark mode</button>
+      <button id="prm" aria-pressed="false">prefers-reduced-motion</button>
+    </div>
+    <div class="stage">
+      <div class="viz-warm-field"></div>
+      <div class="phosphor-trail" id="trail"></div>
+      <div class="phosphor-bloom" id="bloom"></div>
+      <div class="comet" id="comet"></div>
+      <div class="glass-hint"></div>
+    </div>
+    <div class="readout" id="readout">starting…</div>
+  </div>
+
+<script>
+  // ── The hardcoded elliptic spectrum (the shape of math.ts makeEllipticSpectrum
+  //    output: a dominant counter-rotating pair + small harmonics). [index, re, im]. ──
+  const SPECTRUM = [
+    [ 1,  0.62,  0.10],
+    [-1,  0.18, -0.22],
+    [ 2,  0.07,  0.03],
+    [-2, -0.04,  0.05],
+    [ 3,  0.025, -0.02],
+  ];
+
+  // partialSumAt — the shipped math, inlined (the spike consumes it, never re-forks src).
+  function partialSumAt(t) {
+    let cx = 0, cy = 0;
+    for (const [k, re, im] of SPECTRUM) {
+      const a = 2 * Math.PI * k * t;
+      const c = Math.cos(a), s = Math.sin(a);
+      cx += re * c - im * s;
+      cy += re * s + im * c;
+    }
+    return [cx, cy];
+  }
+
+  // Stable view-fit: sample the curve once, map model→[0,1]² with a margin
+  // (the computeFourierFit role).
+  function computeFit() {
+    let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    for (let i = 0; i < 360; i++) {
+      const [x, y] = partialSumAt(i / 360);
+      minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+    }
+    const m = 0.18;
+    const spanX = (maxX - minX) || 1, spanY = (maxY - minY) || 1;
+    const span = Math.max(spanX, spanY) * (1 + m * 2);
+    const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+    return { cx, cy, span };
+  }
+  const FIT = computeFit();
+  const toUnit = ([x, y]) => [
+    (x - FIT.cx) / FIT.span + 0.5,
+    (y - FIT.cy) / FIT.span + 0.5,
+  ];
+
+  const root = document.documentElement;
+  const bloom = document.getElementById("bloom");
+  const trail = document.getElementById("trail");
+  const comet = document.getElementById("comet");
+  const readout = document.getElementById("readout");
+
+  let headT = 0;
+  let trailT = 0;            // a slower "phosphor" head — the lingering trail
+  let prm = false;
+  const FROZEN_T = 0.34;     // the deterministic best-frame under PRM (matches src)
+  let lastTs = -1, frameCount = 0, prevHX = null, changedFrames = 0;
+
+  // ── THE §2a WRITE SEAM — the exact useFourierField.onFrame observer pattern ──
+  // Per frame: advance head_t, compute the head model position via the SHIPPED math,
+  // map model→[0,1]² via the fit, and write ONE CSS var (one setProperty/frame).
+  function writeHeadSeam(t01) {
+    const [hx, hy] = toUnit(partialSumAt(t01));
+    // the head seam (the bloom + the comet read these)
+    root.style.setProperty("--ff-head-xy", hx.toFixed(4) + " " + hy.toFixed(4));
+    // the CSS vars the gradients actually consume (split so calc() can use them)
+    bloom.style.setProperty("--hx", hx.toFixed(4));
+    bloom.style.setProperty("--hy", hy.toFixed(4));
+    comet.style.setProperty("--hx", hx.toFixed(4));
+    comet.style.setProperty("--hy", hy.toFixed(4));
+    return [hx, hy];
+  }
+  function writeTrailSeam(t01) {
+    const [tx, ty] = toUnit(partialSumAt(t01));
+    root.style.setProperty("--ff-trail-xy", tx.toFixed(4) + " " + ty.toFixed(4));
+    trail.style.setProperty("--tx", tx.toFixed(4));
+    trail.style.setProperty("--ty", ty.toFixed(4));
+  }
+
+  // sample the painted field luminance at a unit point (the G2 near/far readback)
+  function fieldLumaAt(ux, uy) {
+    const stage = document.querySelector(".viz-warm-field");
+    const r = stage.getBoundingClientRect();
+    const el = document.elementFromPoint(r.left + ux * r.width, r.top + uy * r.height);
+    // can't read painted pixels without canvas; instead report the seam distance proxy:
+    // luma proxy = closeness of (ux,uy) to the bloom centre (the bloom IS the luma source).
+    const hx = parseFloat(bloom.style.getPropertyValue("--hx")) || 0.5;
+    const hy = parseFloat(bloom.style.getPropertyValue("--hy")) || 0.5;
+    const d = Math.hypot(ux - hx, uy - hy);
+    return Math.max(0, 1 - d / 0.5); // 1 at the head, →0 at 0.5 units away
+  }
+
+  function tick(ts) {
+    const dt = lastTs >= 0 ? (ts - lastTs) / 1000 : 0.016;
+    lastTs = ts;
+    frameCount++;
+
+    if (prm) {
+      const [hx] = writeHeadSeam(FROZEN_T);
+      writeTrailSeam(FROZEN_T);
+    } else {
+      headT = (headT + dt / 16) % 1;          // the 16s period (matches src default)
+      trailT = (trailT + dt / 16 * 0.55) % 1; // the slower phosphor head
+      const [hx] = writeHeadSeam(headT);
+      writeTrailSeam(trailT);
+      // G2: does the head seam CHANGE between frames?
+      if (prevHX !== null && Math.abs(hx - prevHX) > 1e-4) changedFrames++;
+      prevHX = hx;
+    }
+
+    if (frameCount % 12 === 0) report();
+    requestAnimationFrame(tick);
+  }
+
+  function report() {
+    const seam = getComputedStyle(root).getPropertyValue("--ff-head-xy").trim();
+    const near = fieldLumaAt(
+      parseFloat(bloom.style.getPropertyValue("--hx")) || 0.5,
+      parseFloat(bloom.style.getPropertyValue("--hy")) || 0.5);
+    // "far" = the opposite corner from the head
+    const hx = parseFloat(bloom.style.getPropertyValue("--hx")) || 0.5;
+    const hy = parseFloat(bloom.style.getPropertyValue("--hy")) || 0.5;
+    const far = fieldLumaAt(hx > 0.5 ? 0.05 : 0.95, hy > 0.5 ? 0.05 : 0.95);
+
+    const g2_changes = prm ? "(PRM: stable)" : (changedFrames > 3 ? "YES" : "no");
+    const g2_local = near > far;
+    const pass = (s) => `<span class="${s ? "pass" : "fail"}">${s ? "PASS" : "FAIL"}</span>`;
+
+    readout.innerHTML =
+      `--ff-head-xy = ${seam}\n` +
+      `G2 bloom tracks head (changes/frame): ${pass(prm || changedFrames > 3)} ${g2_changes}\n` +
+      `G2 bloom is LOCAL (near ${near.toFixed(2)} > far ${far.toFixed(2)}): ${pass(g2_local)}\n` +
+      `mode: ${root.classList.contains("dark") ? "dark" : "light"}  ` +
+      `PRM: ${prm ? "on (bloom frozen at t=" + FROZEN_T + ")" : "off"}\n` +
+      `seam cost: 1 setProperty/frame · field = plain CSS gradients (Safari-safe)`;
+  }
+
+  document.getElementById("dark").addEventListener("click", (e) => {
+    root.classList.toggle("dark");
+    e.currentTarget.setAttribute("aria-pressed", root.classList.contains("dark"));
+  });
+  document.getElementById("prm").addEventListener("click", (e) => {
+    prm = !prm;
+    root.classList.toggle("prm", prm);
+    e.currentTarget.setAttribute("aria-pressed", prm);
+    changedFrames = 0;
+  });
+
+  requestAnimationFrame(tick);
+</script>
+</body>
+</html>

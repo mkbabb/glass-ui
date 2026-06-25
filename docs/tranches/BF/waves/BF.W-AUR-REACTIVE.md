@@ -55,7 +55,7 @@ The painted-truth readback, BOTH modes (light + dark) AND the **webkit project**
 
 ## The gestalt row
 
-**BF-roster surface: `aur-reactive` (the reactive Now-Playing field).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the reactive aurora surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the field reads as a LIVING album-reactive aurora (warm over a warm album, cool over a cool album — the hue follows the art), the dock staged over it reads as liquid glass against the live field (not a gray pill on a frozen wash), and a track-change re-tints the WHOLE field smoothly. Born-FAIL on the BE/HEAD tree (the field is frozen on the library default, no consumer-driven palette); flips PASS at W-REFLECT on fresh pixels. Wired into the BF roster by W-GESTALT-WIRE.
+**BF-roster surface: `aur-reactive` (the reactive Now-Playing field).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the reactive aurora surface, NEVER `reducedMotion`, surface-hash freshness floor. The gestalt judgement: the field reads as a LIVING album-reactive aurora (warm over a warm album, cool over a cool album — the hue follows the art), the dock staged over it reads as liquid glass against the live field (not a gray pill on a frozen wash), and a track-change re-tints the WHOLE field smoothly. Born-FAIL on the BE/HEAD tree (the field is frozen on the library default, no consumer-driven palette); GREEN at its OWN close; W-REFLECT re-confirms on fresh pixels, never the first paint. Wired into the BF roster by W-GESTALT-WIRE.
 
 ## Fences
 

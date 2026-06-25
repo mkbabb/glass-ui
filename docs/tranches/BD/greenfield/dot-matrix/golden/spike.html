@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DotMatrix GOLDEN — directional liquid-lens spike (throwaway)</title>
+<!--
+  DE-RISK SPIKE for docs/tranches/BD/greenfield/dot-matrix/GOLDEN.md §8.
+  THROWAWAY — NOT shipped. Reproduces ONLY the plane-branch warp math (the boldest
+  mechanism: the anisotropic velocity-warped ellipse + comet-tail wake + anticipation
+  lead + lens magnify), on a 2D-canvas phyllotaxis lattice driven by a real pointer,
+  so G1 (ellipse-along-travel) + G2 (fore/aft wake asymmetry) are eyeballable AND
+  measurable before the dual-twin WGSL/GLSL edit. The SAME terms (vdir/stretch/dE/wake)
+  the GOLDEN shader uses — 2D-canvas only so it runs anywhere, both engines, no GPU.
+-->
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #1a120b; }
+  /* §2.7 the colourful warm GROUND — the shipped auroraFallbackGround idiom (CSS warm mesh). */
+  #stage {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(120% 90% at 18% 22%, #6b3a1e 0%, transparent 55%),
+      radial-gradient(110% 85% at 82% 30%, #7a2f3a 0%, transparent 55%),
+      radial-gradient(130% 100% at 50% 95%, #5a2a16 0%, transparent 60%),
+      #241509;
+  }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #hud {
+    position: fixed; left: 12px; top: 12px; z-index: 9;
+    font: 12px/1.5 ui-monospace, monospace; color: #f0d9b8;
+    background: rgba(20,12,6,.55); padding: 8px 10px; border-radius: 10px;
+    backdrop-filter: blur(6px); white-space: pre; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<canvas id="c"></canvas>
+<div id="hud">move the pointer — fast, in a straight line</div>
+<script>
+const PHI = (1 + Math.sqrt(5)) / 2;
+const SQRT_PHI = Math.sqrt(PHI);
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
+// ── √φ-laddered constants (mirror GOLDEN §2.3; no magic) ──
+const GRAV_STRENGTH = 0.62;
+const GRAV_RADIUS   = 0.30;            // NDC falloff width
+// CALIBRATED by the live spike (see GOLDEN §8): a full LEAD makes the gather-centroid
+// sit AHEAD of the cursor and the comet-tail does not read. Temper LEAD to ~0.4 of the
+// √φ rung AND raise WAKE_GAIN so the lit-mass centroid crosses BEHIND (G2 reads).
+const LEAD          = (GRAV_RADIUS / (PHI * PHI)) * 0.4;   // tempered anticipation lead
+const STRETCH_GAIN  = 7.0;
+const STRETCH_CAP   = 1 / SQRT_PHI;    // ≈ 0.786
+const WAKE_GAIN     = 12.0;            // calibrated: the wake must dominate the lead to read
+const WAKE_BRIGHT   = 1.0;             // the comet-tail also READS via luminance (trailing glow)
+const LENS_MAGNIFY  = 1.6;             // dot swell near the lens
+const TWINKLE       = 0.12;
+
+const N = 1400;
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const hud = document.getElementById('hud');
+
+// phyllotaxis sunflower disc (unit circle, z=0) — the plane register lattice.
+const dots = [];
+for (let i = 0; i < N; i++) {
+  const r = Math.sqrt((i + 0.5) / N);
+  const th = i * GOLDEN_ANGLE;
+  dots.push({ x: Math.cos(th) * r, y: Math.sin(th) * r,
+              phase: (Math.sin(i * 12.9898) * 43758.5453) % (Math.PI * 2) });
+}
+
+let W = 0, H = 0, DPR = 1, planeScale = 1;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.width = Math.floor(innerWidth * DPR);
+  H = cv.height = Math.floor(innerHeight * DPR);
+  planeScale = 1.18 * Math.max(W / H, 1);
+}
+addEventListener('resize', resize); resize();
+
+// pointer field (NDC) + the shipped springStep velocity/active engage (ζ=0.7).
+const ptr = { ndcX: 0, ndcY: 0, px: 0.5, py: 0.5, active: 0, activeV: 0,
+              smX: 0.5, smY: 0.5, velX: 0, velY: 0, over: false };
+addEventListener('pointermove', e => {
+  ptr.over = true;
+  ptr.px = e.clientX / innerWidth;
+  ptr.py = e.clientY / innerHeight;
+});
+addEventListener('pointerleave', () => ptr.over = false);
+
+function springStep(value, vel, target, response, zeta, dt) {
+  const omega = (2 * Math.PI) / Math.max(response, 1e-3);
+  const accel = omega * omega * (target - value) - 2 * zeta * omega * vel;
+  const v = vel + accel * dt;
+  return [value + v * dt, v];
+}
+
+// NDC <-> pixel
+const ndc = (sx, sy) => [sx, sy];   // already NDC in [-1,1]-ish via planeScale
+function toPx(nx, ny) {
+  // x divided by aspect already folded via planeScale on the lattice; map NDC→pixel
+  const aspect = W / H;
+  return [ (nx / aspect * 0.5 + 0.5) * W, (-ny * 0.5 + 0.5) * H ];
+}
+
+let last = performance.now();
+let metricEcc = 1, metricWake = 0;
+
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 0.05); last = now;
+
+  // smooth the pointer + derive velocity (NDC/frame), like usePointerVelocityField.
+  const targetSm = ptr.over ? 0.3 : 0;
+  const nx = (ptr.px * 2 - 1), ny = (1 - ptr.py * 2);
+  const prevSmX = ptr.smX, prevSmY = ptr.smY;
+  ptr.smX += (nx - ptr.smX) * 0.35;
+  ptr.smY += (ny - ptr.smY) * 0.35;
+  ptr.velX += ((ptr.smX - prevSmX) - ptr.velX) * 0.3;
+  ptr.velY += ((ptr.smY - prevSmY) - ptr.velY) * 0.3;
+  [ptr.active, ptr.activeV] = springStep(ptr.active, ptr.activeV, ptr.over ? 1 : 0, 0.42, 0.7, dt);
+
+  const pointerNdc = [ptr.smX, ptr.smY];
+  const vel = [ptr.velX, ptr.velY];
+  const vmag = Math.hypot(vel[0], vel[1]);
+  const vdir = vmag > 1e-4 ? [vel[0] / vmag, vel[1] / vmag] : [0, 0];
+  const wake = ptr.active;
+  const pAct = ptr.active;
+  const t = now / 1000;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'lighter';
+
+  // wake measurement (G2): lit-mass CENTROID shift relative to the cursor, projected on −vdir.
+  // (>0 ⇒ the gathered/glowing mass sits BEHIND the cursor — the comet-tail reads.)
+  let cenX = 0, cenY = 0, cenW = 0;
+  // ellipse measurement (G1): second moments of lit dots near the well.
+  let sxx = 0, syy = 0, sxy = 0, mw = 0;
+
+  for (const dpt of dots) {
+    const base = [dpt.x * planeScale, dpt.y * planeScale];
+
+    // 1. ANTICIPATION lead
+    const wellC = [pointerNdc[0] + vdir[0] * wake * LEAD,
+                   pointerNdc[1] + vdir[1] * wake * LEAD];
+    const toLens = [wellC[0] - base[0], wellC[1] - base[1]];
+
+    // 2. SQUASH/STRETCH ellipse distance
+    const along = toLens[0] * vdir[0] + toLens[1] * vdir[1];
+    const perp  = toLens[0] * -vdir[1] + toLens[1] * vdir[0];
+    const stretch = 1 + Math.min(vmag * STRETCH_GAIN, STRETCH_CAP);
+    const dE = Math.hypot(along / stretch, perp * stretch);
+    const well = GRAV_STRENGTH * Math.exp(-(dE * dE) / (2 * GRAV_RADIUS * GRAV_RADIUS)) * pAct;
+    let lift = [toLens[0] * well, toLens[1] * well];
+
+    // 3. COMET-TAIL WAKE behind the lens
+    const behind = Math.max(0, -along);
+    const tail = wake * Math.exp(-(behind * behind) / (GRAV_RADIUS * GRAV_RADIUS)) * vmag * WAKE_GAIN;
+    lift[0] -= vdir[0] * tail * GRAV_RADIUS;
+    lift[1] -= vdir[1] * tail * GRAV_RADIUS;
+
+    const cx = base[0] + lift[0], cy = base[1] + lift[1];
+
+    // 4. LENS OPTICS — nearness drives magnify + brightness + rim tone
+    const nearness = Math.exp(-(dE * dE) / (2 * GRAV_RADIUS * GRAV_RADIUS));
+    const sizeTaper = 0.8 + LENS_MAGNIFY * nearness * pAct;
+    const twk = 0.5 + TWINKLE * Math.sin(t * 1.3 + dpt.phase);
+    // §2.5 vignette: dense edges, clear center, lens punches through
+    const presence = Math.max(0.28 + 0.72 * Math.min(1, Math.hypot(base[0], base[1]) / planeScale), nearness);
+    // the comet-tail READS via luminance: trailing dots (behind the lens) glow brighter.
+    const wakeGlow = 1 + WAKE_BRIGHT * (behind > 0 ? 1 : 0)
+      * Math.exp(-(behind * behind) / (GRAV_RADIUS * GRAV_RADIUS)) * vmag * 20 * pAct;
+    const alpha = (0.20 + 0.55 * nearness * pAct) * twk * presence * wakeGlow;
+    // tone: core cream-gold, rim ember
+    const rim = Math.max(0, Math.min(1, (1 - nearness - 0.25) / 0.35));
+    const r = Math.round(255 * (1 - 0.15 * rim));
+    const g = Math.round(210 - 60 * rim);
+    const b = Math.round(150 - 80 * rim);
+
+    const [sx, sy] = toPx(cx, cy);
+    const rad = 1.8 * DPR * sizeTaper;
+    ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+    ctx.beginPath();
+    ctx.arc(sx, sy, rad, 0, Math.PI * 2);
+    ctx.fill();
+
+    // metrics (only count lit dots in the well neighborhood, brightness-weighted)
+    if (nearness > 0.03 && pAct > 0.3 && vmag > 0.001) {
+      const w = nearness;
+      mw += w; sxx += w * along * along; syy += w * perp * perp; sxy += w * along * perp;
+      const bw = nearness * wakeGlow;     // the GLOWING mass (the comet-tail counts via luminance)
+      cenX += cx * bw; cenY += cy * bw; cenW += bw;
+    }
+  }
+
+  // G1 ellipse eccentricity (variance along-travel vs perp): >1 means elongated along travel.
+  if (mw > 1e-3) {
+    const vAlong = sxx / mw, vPerp = syy / mw;
+    metricEcc = vPerp > 1e-9 ? Math.sqrt(vAlong / vPerp) : 1;
+  }
+  // G2 wake: project the glowing-mass centroid offset from the cursor onto −vdir.
+  if (cenW > 1e-6 && vmag > 0.001) {
+    const ox = cenX / cenW - pointerNdc[0], oy = cenY / cenW - pointerNdc[1];
+    metricWake = ox * -vdir[0] + oy * -vdir[1];   // >0 ⇒ behind the cursor
+  }
+
+  hud.textContent =
+    `vmag ${vmag.toFixed(4)}  active ${ptr.active.toFixed(2)}\n` +
+    `G1 ellipse along/perp  ${metricEcc.toFixed(2)}  (>1 ⇒ stretched along travel)\n` +
+    `G2 wake centroid-behind ${metricWake.toFixed(3)}  (>0 ⇒ trails behind)`;
+
+  // expose for headless readback
+  window.__spikeMetrics = { vmag, ecc: metricEcc, wakeBehind: metricWake, active: ptr.active };
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

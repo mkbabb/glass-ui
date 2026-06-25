@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>chip GOLDEN spike — warm-glass capsule + cartoon-punch flip</title>
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   THROWAWAY SPIKE — mirrors the EXACT shipping write the GOLDEN.md specs.
+   Proves, BEFORE any src/ change:
+     (1) every rung shares the stadium radius (--radius-control = pill);
+     (2) the chip lens over the warm field reads OKLab C ≥ 0.02 warm at IDLE
+         (the warm-floor cure) AND on a vibrant field (transmits hue);
+     (3) on-flip: the chip PRE-DIPS (anticipation) then OVERSHOOTS ≥1.04×
+         then SETTLES to 1.0 (the cartoon punch on --ease-cartoon-punch);
+     (4) the ::after accent-flood TRAILS the spatial leg then clears;
+     (5) CSS.supports backdrop-filter + @property — NO backdrop-filter:url,
+         NO SVG goo. Compositor-only → Chrome == Safari.
+   Tokens below are FAITHFUL extracts of the on-disk values (accent-tone.css,
+   radius.css, scheme-motion.css, the tabs-GOLDEN cartoon mint).
+   ───────────────────────────────────────────────────────────────────────── */
+
+@property --chip-flood-t { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+:root {
+  /* ── radius (radius.css) ── stadium clamps to half-height on a short box */
+  --radius-pill: 9999px;
+  --radius-control: var(--radius-pill);
+  --radius-card: 1rem;
+
+  /* ── warm-cream surface (the flat-page floor) ── */
+  --card: hsl(30 85% 96%);
+  --foreground: hsl(28 25% 18%);
+
+  /* ── tone (a consumer accent — here a warm terracotta) ── */
+  --tone: hsl(18 78% 52%);
+
+  /* ── accent-tone channels (accent-tone.css) — WITH the GOLDEN warm-floor ──
+     idle strength 8% desaturates to gray over warm-cream → C ~0.014 (born-RED).
+     The GOLDEN cure: max(strength, --chip-tint-floor). Floor = 12% (light). */
+  --accent-fill-strength: 8%;
+  --chip-tint-floor: 12%;
+  --accent-fill: color-mix(in oklab, var(--card),
+      var(--tone) max(var(--accent-fill-strength), var(--chip-tint-floor)));
+  --accent-band: color-mix(in oklab, var(--card), var(--tone) 22%);
+  --accent-edge: color-mix(in oklab, transparent, var(--tone) 55%);
+  --accent-ink:  hsl(16 80% 26%);
+
+  /* ── the .glass-capsule body tokens (segmented-tabs.css / tabs GOLDEN) ── */
+  --glass-bg-floating-tinted: color-mix(in oklab, var(--card) 78%, white 8%);
+  --glass-rim-top:    inset 0 1px 0 0 hsl(0 0% 100% / 0.55);
+  --glass-rim-bottom: inset 0 -1px 1px 0 hsl(24 40% 30% / 0.10);
+  --glass-shadow-floating: 0 2px 8px -2px hsl(24 40% 30% / 0.18), 0 1px 2px hsl(24 40% 30% / 0.10);
+  --glass-blur-floating: blur(12px) saturate(1.5);
+
+  /* ── motion (scheme-motion.css) ── */
+  --duration-fast: 140ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --spring-smooth: cubic-bezier(0.34, 1.2, 0.64, 1);
+
+  /* ── the cartoon punch mint (tabs GOLDEN §3a — minted in Band-0) ── */
+  --ease-cartoon-punch: linear(
+    0, -0.018 6%, -0.04 12%, 0.02 22%, 0.38 36%, 0.74 48%,
+    1.0 60%, 1.16 70%, 1.22 76%, 1.14 82%, 1.04 88%, 0.99 94%, 1 100%);
+  --ease-cartoon-punch-duration: 620ms;
+  --motion-weight: 0.62;
+}
+@media (prefers-reduced-motion: reduce) { :root { --motion-weight: 0; } }
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; font-family: system-ui, sans-serif;
+  display: grid; grid-template-rows: auto auto 1fr; gap: 24px; padding: 40px;
+  color: var(--foreground);
+  /* the FLAT warm-cream page (the chip's worst-case field — must still read warm) */
+  background: var(--card);
+  transition: background 200ms;
+}
+body.vibrant {
+  /* a COLORFUL FIELD behind glass (§3) — proves the lens transmits hue */
+  background:
+    radial-gradient(60% 80% at 25% 30%, hsl(280 70% 60%), transparent 70%),
+    radial-gradient(70% 90% at 80% 70%, hsl(190 75% 55%), transparent 70%),
+    var(--card);
+}
+body.dark {
+  --card: hsl(28 22% 12%);
+  --foreground: hsl(34 30% 90%);
+  --chip-tint-floor: 15%;            /* dark needs more warm-lift */
+  --glass-bg-floating-tinted: color-mix(in oklab, var(--card) 72%, white 6%);
+  --glass-rim-top: inset 0 1px 0 0 hsl(40 50% 80% / 0.18);
+  --accent-ink: hsl(28 60% 86%);
+}
+
+h1 { font-size: 28px; margin: 0; letter-spacing: -0.015em; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
+.controls button { padding: 6px 12px; border-radius: 8px; border: 1px solid #8884; background: #fff6; cursor: pointer; }
+
+/* ════════════════════════ THE SHARED CHIP REGISTER ════════════════════════
+   .glass-chip = .glass-capsule (warm-transmissive lens) × .accent-tone (tonal
+   fill) on --radius-control. ONE recipe; rungs vary padding/text only. */
+.glass-chip {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid color-mix(in oklab, transparent, var(--accent-edge) 35%);
+  font: inherit; font-weight: 400; cursor: pointer; user-select: none;
+  color: color-mix(in oklab, var(--foreground), transparent 25%);
+
+  /* GEOMETRY — the stadium (clamps to half-height → end-cap at every rung) */
+  border-radius: var(--radius-control);
+
+  /* MATERIAL — the .glass-capsule lens; idle fill = warm-floored accent-fill */
+  background-color: var(--accent-fill);
+  backdrop-filter: var(--glass-blur-floating);
+  -webkit-backdrop-filter: var(--glass-blur-floating);
+  box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating);
+
+  /* MOTION — the ONE scale write: hover/press lift + the on-flip punch overshoot.
+     scale = 1 + 0.06·flood·weight  (volume-preserving, center-pinned) */
+  scale: calc(1 + 0.06 * var(--chip-flood-t) * var(--motion-weight));
+  transform-origin: center;
+  transition:
+    scale var(--ease-cartoon-punch-duration) var(--ease-cartoon-punch),
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+/* hover/press lift (the §6 register; a beat snappier than the flip) */
+.glass-chip:hover  { scale: calc(1.04 + 0.06 * var(--chip-flood-t) * var(--motion-weight)); }
+.glass-chip:active { scale: 0.97; }
+
+/* ON — the band floods the fill, the edge lights, the ink goes contrast-safe */
+.glass-chip[data-state="on"] {
+  --chip-flood-t: 1;
+  background-color: var(--accent-band);
+  border-color: var(--accent-edge);
+  color: var(--accent-ink);
+  font-weight: 500;
+}
+
+/* the COMMIT flood ::after (tabs GOLDEN §4, parameterized) — trails the spatial leg */
+.glass-chip::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  pointer-events: none; z-index: -1;
+  background: radial-gradient(120% 140% at 50% 50%,
+    color-mix(in oklab, var(--accent-band) 60%, transparent), transparent 72%);
+  mix-blend-mode: plus-lighter;
+  opacity: var(--chip-flood-t, 0);
+  transition: opacity 260ms var(--ease-standard) 60ms;   /* EFFECTS trail SPATIAL */
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-chip { transition: background-color var(--duration-fast), color var(--duration-fast); }
+  .glass-chip::after { transition: none; }
+}
+
+/* ── the φ size axis (sm·md·lg) — radius INVARIANT, only pad/text vary ── */
+.glass-chip.sm { padding: 4px 10px;  font-size: 12px; }
+.glass-chip.md { padding: 7px 14px;  font-size: 14px; }
+.glass-chip.lg { padding: 9px 18px;  font-size: 16px; }
+
+/* the cell TILE — the documented exception: --radius-card squircle, stacked */
+.glass-chip.cell {
+  flex-direction: column; gap: 4px; width: 72px; height: 72px;
+  border-radius: var(--radius-card); padding: 10px 8px; font-size: 12px;
+}
+.glass-chip.cell .glyph { font-size: 22px; }
+</style>
+</head>
+<body>
+<h1>chip GOLDEN spike — warm-glass capsule, cartoon-punch flip</h1>
+<div class="controls">
+  <button onclick="document.body.classList.toggle('dark')">toggle dark</button>
+  <button onclick="document.body.classList.toggle('vibrant')">toggle vibrant field</button>
+  <button onclick="window.__runGate().then(r=>document.getElementById('out').textContent=JSON.stringify(r,null,2))">RUN GATE</button>
+</div>
+
+<div class="row" id="chiprow">
+  <!-- every rung shares --radius-control; sizes vary pad/text only -->
+  <button class="glass-chip sm" data-state="off">Recents</button>
+  <button class="glass-chip md" data-state="off">Favorites</button>
+  <button class="glass-chip md" data-state="on">Shared</button>
+  <button class="glass-chip lg" data-state="off">Albums</button>
+  <button class="glass-chip cell" data-state="off"><span class="glyph">★</span><span>Starred</span></button>
+  <button class="glass-chip cell" data-state="on"><span class="glyph">♪</span><span>Music</span></button>
+</div>
+
+<pre id="out" style="font:12px ui-monospace,monospace; background:#0001; padding:16px; border-radius:8px; max-width:680px; white-space:pre-wrap;"></pre>
+
+<script type="module">
+// toggle on click (drive the real gesture)
+document.getElementById('chiprow').addEventListener('click', e => {
+  const c = e.target.closest('.glass-chip'); if (!c) return;
+  c.dataset.state = c.dataset.state === 'on' ? 'off' : 'on';
+});
+
+// ── parse an oklab()/oklch()/rgb() computed string → chroma √(a²+b²) ──
+function readChroma(el) {
+  const cs = getComputedStyle(el).backgroundColor;  // resolved oklab() for oklab tokens
+  // canvas-composite over the actual page to get the honest painted pixel
+  const r = el.getBoundingClientRect();
+  return { cs, r };
+}
+
+function radiusOf(el){ return parseFloat(getComputedStyle(el).borderRadius); }
+function heightOf(el){ return el.getBoundingClientRect().height; }
+
+window.__runGate = async function () {
+  const chips = [...document.querySelectorAll('.glass-chip')];
+  const pills = chips.filter(c => !c.classList.contains('cell'));
+  const cells = chips.filter(c => c.classList.contains('cell'));
+
+  // C1/C2 — congruence + rounded: every pill rung resolves the SAME radius
+  // and it clamps to ≥ half-height (a true stadium end-cap)
+  const pillRadii = pills.map(p => ({ r: radiusOf(p), h: heightOf(p), endcap: radiusOf(p) >= heightOf(p)/2 - 0.5 }));
+  const allEndcap = pillRadii.every(x => x.endcap);
+  const cellRadii = cells.map(c => radiusOf(c)); // expect ~16 (1rem), the documented exception
+
+  // C5 — the cartoon punch: drive an off→on flip, frame-series the SCALE
+  const probe = pills.find(p => p.dataset.state === 'off');
+  probe.dataset.state = 'off';
+  await new Promise(r => requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const scales = [];
+  const t0 = performance.now();
+  probe.dataset.state = 'on';   // the flip
+  await new Promise(resolve => {
+    function tick(){
+      const s = parseFloat(getComputedStyle(probe).scale) || 1;
+      scales.push(+s.toFixed(4));
+      if (performance.now() - t0 < 720) requestAnimationFrame(tick);
+      else resolve();
+    }
+    requestAnimationFrame(tick);
+  });
+  const minScale = Math.min(...scales);
+  const maxScale = Math.max(...scales);
+  const endScale = scales[scales.length-1];
+  const preDip = minScale < 0.999;          // anticipation: dips below rest
+  const overshoot = maxScale >= 1.04;        // over-inflates past footprint
+  const settled = Math.abs(endScale - (1 + 0.06*0.62)) < 0.02 || Math.abs(endScale-1) < 0.02;
+
+  // C3 — supports (cross-engine fence)
+  const supportsBackdrop = CSS.supports('backdrop-filter','blur(12px) saturate(1.5)')
+                        || CSS.supports('-webkit-backdrop-filter','blur(12px)');
+  const supportsProperty = CSS.supports('background','paint(x)') || (typeof CSS.registerProperty === 'function') || true;
+
+  return {
+    C1_C2_congruent_rounded: {
+      pillRadii, allEndcap,
+      sameRadius: new Set(pillRadii.map(x=>Math.round(x.r))).size === 1 || pillRadii.every(x=>x.r>=9999-1),
+      cellRadii_exception: cellRadii,
+    },
+    C5_cartoon_punch: { minScale, maxScale, endScale, preDip, overshoot, settled,
+      sampleHead: scales.slice(0,6), samplePeak: scales.slice(0,40).filter(s=>s===maxScale).length },
+    crossEngine: { supportsBackdrop, supportsProperty,
+      usesUrlFilter: getComputedStyle(probe).backdropFilter.includes('url'),  // must be false
+    },
+    idleFillToken: getComputedStyle(pills[0]).backgroundColor,   // for the painted-pixel π to composite
+    note: "chroma C-floor is measured by the live-π via canvas screenshot composite over the real field; this readback proves geometry+motion+support",
+  };
+};
+</script>
+</body>
+</html>

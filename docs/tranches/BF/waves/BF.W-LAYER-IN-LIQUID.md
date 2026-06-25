@@ -55,7 +55,7 @@ The painted-truth readback that layering reads IN the liquid surface, both modes
 
 ## The gestalt row
 
-**BF-roster surface: `dock-layer-in-liquid`** (the BF-roster row, wired by W-GESTALT-WIRE). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), over the live aurora, drilling between dock layers reads as translucent glass panes RECONFIGURING in the liquid surface (not a flat tab swap on an opaque plate); the dock collapses WHILE switching as ONE organism; the contextual rail persists through the collapse. PASS iff the layering reads as iOS-27 in-liquid drill-in AND the two contextual models read as ONE coherent reconfiguration. Born-FAIL on the BE/HEAD tree (layering is in a disconnected pre-BE story, two unreconciled models); flips PASS at W-REFLECT; surface-hash freshness floor binds.
+**BF-roster surface: `dock-layer-in-liquid`** (the BF-roster row, wired by W-GESTALT-WIRE). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), over the live aurora, drilling between dock layers reads as translucent glass panes RECONFIGURING in the liquid surface (not a flat tab swap on an opaque plate); the dock collapses WHILE switching as ONE organism; the contextual rail persists through the collapse. PASS iff the layering reads as iOS-27 in-liquid drill-in AND the two contextual models read as ONE coherent reconfiguration. Born-FAIL on the BE/HEAD tree (layering is in a disconnected pre-BE story, two unreconciled models); GREEN at its OWN close; W-REFLECT re-confirms (never the first paint); surface-hash freshness floor binds.
 
 ## Fences
 

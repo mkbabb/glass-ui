@@ -88,7 +88,7 @@ The default-OFF chromatic-aberration lens rim:
 
 ## 5. Paint verification (both modes — the BC anti-disease law)
 
-**This is a VISUAL wave — it earns a `proof:ba-gestalt` glass verdict and a CAPTURED paint delta on real GPU (Chromium — the lens is Chromium-only), both modes × desktop+mobile, per the BC gestalt-first-capture law. NO source-green close; "rides W-REFLECT3" FORBIDDEN (G8).**
+**This is a VISUAL wave — it earns a `proof:ba-gestalt` glass verdict and a CAPTURED paint delta on real GPU (Chromium — the lens is Chromium-only), both modes × desktop+mobile, per the BC gestalt-first-capture law. NO source-green close; "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" FORBIDDEN (G8).**
 
 **The feature witness is the dedicated π, NOT the region-mean (the realizability split, recorded honestly).** The `proof:ba-gestalt` glass verdict maps to the `glass-adaptive` roster row, whose probe is a COARSE whole-region OKLab mean (`meanChroma>=0.025`). A few-pixel chromatic-aberration RGB fringe at a high-contrast rim edge will NOT move that region mean — so the ba-gestalt row is the WHOLE-SURFACE gestalt pass (the glass still reads as glass), and the FRINGE FEATURE is verified by the dedicated `glass-chroma.spec.ts` π (the localized RGB-channel-separation readback below), NOT pretended to be caught by the region-mean. This is the same realizability discipline the band-3 viz waves carry (the dedicated feature-localized π is the real witness; the gestalt probe is the coarse whole-surface pass).
 

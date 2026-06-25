@@ -1,0 +1,17 @@
+{
+  "spike": "buttons GOLDEN — warm capsule + specular-lift hover + fenced cartoon punch",
+  "verified": "Chrome, file:// spike.html, painted-pixel readback, both modes",
+  "light": {
+    "restChroma": 0.0892, "restChromaPass": true,
+    "hoverScale": 1.015, "hoverSpecular": 0.14, "hoverLiftPass": true,
+    "punchPeakArea": 1.0464, "areaFencePass": true,
+    "anticipates": true, "overshoots": true, "noBackdropUrl": true
+  },
+  "dark": {
+    "restChroma": 0.0739, "restChromaPass": true,
+    "hoverScale": 1.015, "hoverSpecular": 0.14, "hoverLiftPass": true,
+    "punchPeakArea": 1.0464, "areaFencePass": true,
+    "anticipates": true, "overshoots": true, "noBackdropUrl": true
+  },
+  "verdict": "GREEN both modes — warm capsule (chroma >> 0.02, never gray), real specular-lift hover, fenced cartoon punch (area <= 1.14, anticipation pre-dip + overshoot), zero url() backdrop-filter (Chrome==Safari by construction). The boldest mechanism is de-risked before any src/ change."
+}

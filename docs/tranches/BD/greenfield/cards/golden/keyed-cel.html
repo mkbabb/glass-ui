@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CARDS GOLDEN spike — the keyed cel-lift over a warm field</title>
+<!--
+  Throwaway de-risk for docs/tranches/BD/greenfield/cards/GOLDEN.md §3 (the single boldest move:
+  the keyed cartoon cel-lift). ONE --glass-key light vector drives the directional rim, the inner
+  catch-light, AND the hard warm cast in lockstep, over a warm paper-field, both modes, with a
+  hover/press squash<->cast-gap coupling. Cross-engine by construction: NO backdrop-filter:url,
+  NO goo/SVG, plain per-mode arms (no light-dark() over an inset fragment), -webkit-mask-composite
+  arm present. Sampled by card-pi.mjs (the born-RED gate sketch). glass-ui src/ untouched.
+-->
+<style>
+  :root {
+    color-scheme: light dark;
+
+    /* ── The ONE light vector (the cel's sun) — a single angle drives 3 layers ── */
+    --glass-key-angle: 135deg;            /* top-left sun */
+    --glass-key-dx: -1;                   /* cos(225deg)-ish: cast offsets AWAY from the sun */
+    --glass-key-dy: 1;                     /* a lit object casts down-right from a top-left sun */
+
+    /* ── The warm field (page-background golden's paper-field, inlined for the spike) ── */
+    --field-amber:     oklch(0.93 0.07 78);
+    --field-terracotta: oklch(0.86 0.10 47);
+    --field-sand:      oklch(0.95 0.04 92);
+
+    /* ── The warm-cream glass material (leg a — FROZEN identity) ── */
+    --card: oklch(0.96 0.024 76);          /* hsl(30 85% 96%) ~ warm-cream */
+    --card-foreground: oklch(0.30 0.03 60);
+    --glass-bg-resting: color-mix(in oklab, var(--card) 66%, transparent);
+    /* leg a material floor — a small warm-admit so the plate clears C>=0.02 in the material itself */
+    --glass-tint-source: oklch(0.80 0.12 62);
+    --glass-tint-strength: 7%;
+    --glass-bg-resting-tinted: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
+
+    /* ── The keyed rim (defined-edge floor, >=8% ink) ── */
+    --glass-rim-ink: oklch(1 0 0 / 0.34);  /* the lit catch */
+    --glass-rim-under: oklch(0.40 0.05 60 / 0.16); /* the warm under-shadow */
+    --rim-border-ink: oklch(0.42 0.06 58 / 0.14);  /* 14% > the 8% floor (HEAD was 4%) */
+
+    /* ── The keyed warm cast (RE-BASE of --shadow-cartoon-* on the key, warm NEVER gray) ── */
+    --cast-color: oklch(0.46 0.07 52 / 0.36);
+    --cast-dist: 10px;                     /* the resting shadow-gap */
+    --radius-card: 26px;
+  }
+
+  .dark {
+    --field-amber:     oklch(0.30 0.06 64);
+    --field-terracotta: oklch(0.24 0.07 42);
+    --field-sand:      oklch(0.20 0.03 70);
+    --card: oklch(0.30 0.03 60);
+    --card-foreground: oklch(0.92 0.02 80);
+    --glass-tint-source: oklch(0.62 0.12 58);
+    --glass-tint-strength: 9%;
+    --glass-rim-ink: oklch(1 0 0 / 0.20);
+    --glass-rim-under: oklch(0.10 0.02 50 / 0.40);
+    --rim-border-ink: oklch(0.85 0.05 80 / 0.18);
+    --cast-color: oklch(0.08 0.05 48 / 0.55); /* deeper warm-umber */
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font: 16px/1.5 system-ui, -apple-system, sans-serif;
+    display: grid;
+    place-items: center;
+    /* ── leg b — the COLORFUL FIELD behind every card (static radial plenum) ── */
+    background:
+      radial-gradient(120% 90% at 12% 8%, var(--field-amber), transparent 60%),
+      radial-gradient(110% 100% at 88% 96%, var(--field-terracotta), transparent 62%),
+      var(--field-sand);
+    transition: background 0.4s ease;
+  }
+
+  .stage { display: flex; gap: 40px; flex-wrap: wrap; padding: 48px; }
+
+  /* ════════════════ THE LIT CEL — a warm-glass window over the field ════════════════ */
+  .cel {
+    position: relative;
+    width: 300px;
+    min-height: 200px;
+    padding: 28px;
+    border-radius: var(--radius-card);
+    color: var(--card-foreground);
+
+    /* leg a — warm material (the tinted resting rung; warm even on a dead ground) */
+    background: var(--glass-bg-resting-tinted);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+    backdrop-filter: blur(12px) saturate(1.5);
+
+    /* The defined border-ink floor (>=8%; HEAD was 4% cream-on-cream) */
+    border: 1px solid var(--rim-border-ink);
+
+    /* leg c — the keyed warm CAST (plain per-mode arm; offset AWAY from the sun).
+       Plus a subtle ambient under-shadow. NO light-dark() wrapping an inset fragment. */
+    box-shadow:
+      calc(var(--glass-key-dx) * var(--cast-dist)) calc(var(--glass-key-dy) * var(--cast-dist))
+        0 0 var(--cast-color),
+      0 2px 8px oklch(0 0 0 / 0.10);
+
+    /* squash drive — vol-preserving; coupled to the cast-gap below */
+    --squash: 1;
+    transform: scaleX(calc(1 / var(--squash, 1) * var(--lift-s, 1)))
+               scaleY(calc(var(--squash, 1) * var(--lift-s, 1)));
+    transition:
+      transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      --cast-dist 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* layer 3 — the directional KEYED RIM: a conic-gradient border keyed off the sun,
+     painted via mask-composite (Chrome) / -webkit-mask-composite (Safari). Bright on the
+     lit edge facing the key, fading to the warm under-shadow opposite. The defined-edge
+     floor AND the iOS-26 angle-varying specular in ONE device. */
+  .cel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from calc(var(--glass-key-angle) - 90deg),
+      var(--glass-rim-ink) 0deg,
+      var(--glass-rim-under) 130deg,
+      var(--glass-rim-under) 230deg,
+      var(--glass-rim-ink) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;          /* Safari arm */
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;              /* Chrome arm */
+    pointer-events: none;
+  }
+
+  /* layer 4 — the inner catch-light, concentrated TOWARD the key (one sun) */
+  .cel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      140% 120% at 18% 12%,           /* top-left = the sun */
+      oklch(1 0 0 / 0.22), transparent 46%
+    );
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  .dark .cel::after {
+    background: radial-gradient(140% 120% at 18% 12%, oklch(1 0 0 / 0.10), transparent 46%);
+  }
+
+  .cel h2 { margin: 0 0 8px; font-size: 1.6rem; letter-spacing: -0.015em; }
+  .cel p  { margin: 0; opacity: 0.82; position: relative; z-index: 1; }
+  .cel h2 { position: relative; z-index: 1; }
+
+  /* ── HOVER: the cel lifts toward the light, cast GROWS (follow-through) ── */
+  .cel:hover {
+    --lift-s: 1.015;
+    --cast-dist: 16px;                    /* the gap OPENS as it peels off the field */
+    box-shadow:
+      calc(var(--glass-key-dx) * 16px) calc(var(--glass-key-dy) * 16px) 0 0 var(--cast-color),
+      0 6px 18px oklch(0 0 0 / 0.14);
+  }
+
+  /* ── PRESS: anticipation + squash + the shadow-gap CLOSES (the lit object settles) ── */
+  .cel:active {
+    --squash: 1.018;                      /* squashes down toward the field */
+    --lift-s: 0.99;
+    box-shadow:
+      calc(var(--glass-key-dx) * 4px) calc(var(--glass-key-dy) * 4px) 0 0 var(--cast-color),
+      0 1px 4px oklch(0 0 0 / 0.10);
+  }
+
+  /* ── The cartoon (LOUD) amplitude — the same key, a bolder throw ── */
+  .cel.cartoon {
+    border-width: 2px;
+    --cast-color: oklch(0.40 0.09 50 / 0.5);
+    --cast-dist: 12px;
+    box-shadow:
+      calc(var(--glass-key-dx) * 12px) calc(var(--glass-key-dy) * 12px) 0 0 var(--cast-color),
+      0 3px 10px oklch(0 0 0 / 0.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cel { transition: none; }
+  }
+
+  .toolbar { position: fixed; top: 16px; left: 16px; display: flex; gap: 8px; }
+  .toolbar button {
+    padding: 8px 14px; border-radius: 12px; border: 1px solid oklch(0 0 0 / 0.15);
+    background: oklch(1 0 0 / 0.6); cursor: pointer; font: inherit;
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="document.documentElement.classList.toggle('dark')">toggle dark</button>
+  </div>
+  <div class="stage">
+    <article class="cel" id="cel-glass" tabindex="0">
+      <h2>Lit cel</h2>
+      <p>Warm glass window over a colorful field. One sun: rim, catch &amp; cast agree. Hover to peel off; press to settle.</p>
+    </article>
+    <article class="cel cartoon" tabindex="0">
+      <h2>Cartoon</h2>
+      <p>The loud amplitude — same key, a bolder Memphis throw. Never gray, both modes.</p>
+    </article>
+  </div>
+
+  <script>
+    // Expose a composite sampler for card-pi.mjs (the born-RED readback). Returns the
+    // computed material fill + the resolved border-ink + the resolved cast so the gate can
+    // assert K2/K3/K5 against the painted spike vs the HEAD baseline.
+    window.__celReadout = function () {
+      const el = document.getElementById('cel-glass');
+      const cs = getComputedStyle(el);
+      return {
+        background: cs.backgroundColor,
+        border: cs.borderTopColor,
+        borderWidth: cs.borderTopWidth,
+        boxShadow: cs.boxShadow,
+      };
+    };
+  </script>
+</body>
+</html>

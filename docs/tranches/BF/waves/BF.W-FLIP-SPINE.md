@@ -58,7 +58,7 @@ The painted-truth readback that the fold is BEHAVIOR-PRESERVING — a consolidat
 
 ## The gestalt row
 
-**Roster surface: `dock-bloom`** (the BF-roster row W-GESTALT-WIRE mints). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the dock pill blooms into its sheet/player as ONE continuous liquid layer — scale+fade+decongest read as a single coalescing material (the four-channel coupling), the field warms toward the source hue sub-perceptually, and the close is no-overshoot. PASS iff the bloom reads identical to (or better than) the pre-fold capture — the consolidation is invisible to the eye. Rides `W-REFLECT` for the final flip; the surface-hash freshness floor binds.
+**Roster surface: `dock-bloom`** (the BF-roster row W-GESTALT-WIRE mints). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the dock pill blooms into its sheet/player as ONE continuous liquid layer — scale+fade+decongest read as a single coalescing material (the four-channel coupling), the field warms toward the source hue sub-perceptually, and the close is no-overshoot. PASS iff the bloom reads identical to (or better than) the pre-fold capture — the consolidation is invisible to the eye. The binding paint is GREEN at its OWN close; W-REFLECT re-confirms on the final union flip (never the first paint); the surface-hash freshness floor binds.
 
 ## Fences
 

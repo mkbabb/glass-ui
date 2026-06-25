@@ -1,0 +1,66 @@
+# Pass-E SYNTHESIS — motion/animated-digit
+
+**Page:** `demo/stories/motion/animated-digit.vue` (63L) · **Component:** `src/components/custom/animated-digit/AnimatedDigit.vue` + `src/composables/motion/useAnimatedNumber.ts`
+**Import label:** `@mkbabb/glass-ui/animated-digit` (manifest `:319` + `:1121`) — **already standardized ✓** (all 3 lenses agree; no action).
+**Background:** `motion → constellation` (`manifest.ts:191`), no per-row override.
+**Sources reconciled:** `-demo.md` · `-design.md` · `-component.md`.
+
+---
+
+## 1 · One-line verdict
+
+A genuinely-good *typographic* page — the numbers ARE the protagonist at 245px hero scale (the ONE thing the sibling countup page got wrong, here right) — wrapped in a thin, flat, near-empty demo: two heroes brawl in a single bare flex row inside one `glass-wash` slab over a dead near-white constellation, nothing around the count is alive, and not a single card/tab/dock the user's ask names. The COMPONENT is clean and idiomatic; the DEMO is the work. Convergence is **demo-side** — the page needs the systemic motion-band rebuild, not a component rewrite.
+
+## 2 · Reconciliation — where the 3 lenses AGREE (high confidence, the binding findings)
+
+All three lenses independently converge on the same defect spine:
+
+- **A. Sub-sections are NOT in their own glassy cards.** demo §4 (`ownCard:false` both), design §2 (each `StorySection` is a bare `flex flex-col gap-3` inside ONE `glass-wash` StoryPage card), component F4. **The user's explicit bar, unmet on all three.**
+- **B. The field is a dead monochrome constellation, not a colorful aurora.** demo §3 (`blur(1px)` wash over near-white → glass barely reads), design §3 (gray-slab root cause; the dark capture proves it — same card reads glass-like over the dark field), component F4. **The user's "glass over colorful aurora" bar, unmet.** Design adds the seed: the page ALREADY owns `--motion-accent` violet (`oklch(0.739 0.134 318.1)`) — a violet-tuned `<Aurora>` is the single highest-leverage move and fixes the gray-slab at the root.
+- **C. Nothing around the count is alive.** design §4 (the count tweens its glyphs and NOTHING else moves — no scale-settle, no coupled brightness/specular, motion-canon P3 + DESIGN §L3 violated), component F1 (no coupled fade+transform mount entrance) + F2 (`data-is-animating` is a DEAD attribute — written, zero CSS/JS consumer). **The most kinetic value on the page reads as static.**
+- **D. Path-label already standardized + body blurb leaks `useAnimatedNumber`.** demo §5+§6, design §7. The import label is DONE; the language tighten is a small real fix (drop the duplicated section blurb, de-leak the composable name from rendered copy).
+
+## 3 · Conflicts resolved
+
+- **Host tier — `wash` vs `resting`.** demo says "thicker glass tier"; design §2 names it precisely (`glass-wash` → `glass-resting` per §L1 tier-selection, `wash` is the permeable-veil tier for dock/input chrome, not a hero stage). **Resolved: lift the host stage to `glass-resting`; each sub-section gets its own `glass-resting`/`glass-quiet` sub-card.** Design's tier-citation is the authority.
+- **`data-is-animating` — wire vs prune.** component F2 offers both. Design §4 + demo §1 both WANT a live "animating" read (a glint/catch-light). **Resolved: WIRE it** (a sub-perceptual `--motion-accent` glint while in flight) — it satisfies the four-state contract AND the "alive" bar at once; pruning would forfeit the affordance the page most needs. Born-RED bite: the attr has a CSS consumer XOR is absent.
+- **Mount entrance — bug or feature?** component F1 notes the `immediate:true` watcher makes the digit count up from 0 on mount (an UNINTENTIONAL, un-tuned entrance). **Resolved: make it DESIGNED** — couple a `--spring-snappy`-clocked fade-rise (motion-canon P3, the `transitions.css` `metric-swap` recipe model) so the unintentional 0-count becomes a deliberate materialize. Not a conflict, a refinement.
+- **Two-heroes layout.** demo §4 calls the wide dead horizontal space a structure miss; design §1+§6 names the fix precisely (ONE hero lead at `text-display-hero`/`-mega`, latency + jitter/packet-loss as `text-display-2/-3` satellites; a `[φ 1fr]` lead-plus-satellite split, not two coequal 245px slabs). **Resolved: design's φ lead-satellite composition is the binding layout.**
+
+## 4 · Ranked changes (by impact)
+
+1. **[HIGHEST] Live violet aurora field + glass tier lift.** Swap the dead constellation for a `--motion-accent`-seeded `<Aurora>` (offscreen-paused, one-GL-per-route, the `<DockStage>`/W-STAGE pattern); lift the host stage `glass-wash` → `glass-resting`. Fixes the gray-slab root cause (B), makes the morphism read as §L1 liquid glass, turns the timid accent dab into the page's color identity. Single highest-leverage move (design §3, all lenses).
+2. **[HIGH] Each sub-section → its own glassy sub-card; enlarge the metric stage.** Wrap the live-metric stage, the controls, and the placeholder state in distinct `glass-resting`/`glass-quiet` sub-cards; enlarge the metric stage as the protagonist surface. Fills the dead bottom-third with content. The user's explicit "own card / bigger stage" ask (A).
+3. **[HIGH] Couple physical motion to the count + wire the dead attr.** On arrival, scale-settle / brightness-pulse each figure on a `--spring-snappy` clock with the ~7% overshoot READ (P3 + §L3); add a designed coupled fade-rise entrance (F1); WIRE `data-is-animating` to a sub-perceptual `--motion-accent` glint (F2). The "alive" bar (C).
+4. **[HIGH] ONE hero, satellites below (φ composition).** Promote the download metric to the lead `text-display-hero`/`-mega`; demote latency + add jitter/packet-loss as `text-display-2/-3` satellites in a `[φ 1fr]` split. Kills the two-heroes brawl, gives the page a single numeric anchor (design §1/§6).
+5. **[MED] Auto-play + replay on scroll-in.** Wire the reel to a `view()`/`useIntersectionPause` trigger so the figures spin up on first paint and re-settle on re-entry — the kinetic primitive demos itself; Resample becomes "re-roll," not "the only way to see anything happen" (design §4).
+6. **[MED] Exercise the full API + compose a SERIES.** Add a `mode="progress"` reel, a `damping` stiff-vs-slack comparison, a `digitCount`-clamped no-reflow metric cell (the signature width-reservation contract, currently undemoed — the page literally shows the width-jump problem live); seat the figures in `MetricCell`/`MetricStack` (the speedtest siblings this component was lifted from); add `SegmentedTabs` to flip absolute↔progress (demo §1/§2).
+7. **[MED] Bind the dock APIs (contextual switching).** A `<DockStack mode="facets">` / `<DockLayerGroup>` metric-facet rail (download · latency · jitter · packet-loss) — the figures re-tween to the new dataset with a contextual crossfade on the dock's own `--spring-dock` clock. The user's named dock ask; the natural home for a multi-metric reel (design §4/§6, demo §1).
+8. **[MED] Turn the dead accent bars into live fills.** The static 32px violet ticks → a `<BorderProgress coverage="bottom-edge">` / draw-on fill synced 0→target, so the bar IS the count's progress (design §4, F3-adjacent).
+9. **[LOW] Placeholder→value handoff as a real demo.** A toggle that flips a figure null↔number so the viewer watches the `—` dissolve and the reel spin up — the actual interesting transition, never shown; give the section a card so it reads designed, not stray scaffolding (design §7, demo §1).
+10. **[LOW] Lift the primary action + add the heading rung.** Resample → a `default`/glass-register Button with a liquid-reveal lead (or a dock control); add `StorySection`'s `heading` (`text-subheading <h2>`) so sections read composed ("Live metric" / "Empty state"). `.scroll-cascade` stagger the stage + controls in (design §1/§8/§9).
+11. **[LOW] Tighten copy.** Drop the duplicated section blurb (`animated-digit.vue:23` restates the manifest verbatim + re-leaks `useAnimatedNumber`); de-leak the composable name from the manifest subtitle (`:1122`). Composable names move to code comments (all lenses, D).
+
+## 5 · Tranche actions
+
+| # | Change | Action | Target wave |
+|---|---|---|---|
+| 1 | Live violet aurora field + glass-tier lift | **MODIFY** | `BD.W-DATA-BAND-GLASS` is data-band-scoped (M9A census slice = `demo/stories/data/*`); the motion band has NO equivalent. **Author the motion-band sibling `BD.W-MOTION-BAND-GLASS`** under the SAME Band-5/Band-16 family (re-thread motion stories' opaque/wash plates onto `<ShowcaseFrame tier="field">` over the per-route field; the W-STAGE per-category-bg map already routes `motion → constellation` — this wave overrides animated-digit's row to an `--motion-accent`-seeded aurora). Mirrors the DATA-BAND-GLASS census-detector + ratchet shape. |
+| 2 | Sub-sections → glassy sub-cards; bigger stage | **FOLD** | Into **`BD.W-STORY-PAGE-STANDARD`** (Band 17, drafted) — animated-digit is a `<DemoSpecimen>` + `<DemoInteraction>` page; the standardized chassis GUARANTEES the per-sub-section glassy cards + the enlarged stage. This is the canonical home for the "own card / bigger stage" invariant (no bespoke per-page scaffold). |
+| 3a | Coupled scale-settle/brightness on arrival (P3+§L3) | **AUGMENT** | **`BD.W-LIQUID-ENTRANCE-GENERAL`** (Band 17, drafted) — the generalized iOS-27 squish/fade/settle entrance. The animated-digit figure's arrival-settle is a binding π row for this wave (the metric materialize + the ~7% overshoot READ). |
+| 3b | Designed fade-rise mount entrance (F1) | **AUGMENT** | **`BD.W-BC-COMPONENT-CANON`** (Band 7) — add an `AnimatedDigit` entrance-register canon note citing motion-canon P3 + the `transitions.css` `metric-swap` recipe; the SRC change (the coupled opacity/transform on mount) rides a NEW sub-wave beside it (`BD.W-ANIMATED-DIGIT-LIVE`, Band 2/component). |
+| 3c | Wire `data-is-animating` (F2) | **NEW** | **`BD.W-ANIMATED-DIGIT-LIVE`** (Band 2, component) — wire `[data-is-animating="true"]` to a sub-perceptual `--motion-accent` glint (a real SRC change, the four-state-paint fix). Gate: born-RED bite asserting the attr has a CSS consumer XOR is absent; π: the glint reads while in flight, both modes. F1 (3b) folds into this same sub-wave. |
+| 4 | φ ONE-hero-satellites composition | **FOLD** | Into **`BD.W-STORY-PAGE-STANDARD`** — the `<DemoStage>`/`<DemoSpecimen>` sub-type owns the lead-plus-satellite layout discipline (natural variation within the conformity chassis). Not a per-page bespoke fix. |
+| 5 | Auto-play + replay on scroll-in | **FOLD** | Into **`BD.W-STORY-PAGE-STANDARD`** — the demo-sub-type's `view()`/`useIntersectionPause` auto-demo trigger (a kinetic primitive demos itself) is a chassis affordance shared across motion pages. |
+| 6 | Full API + compose a series (MetricCell/Tabs/progress/damping/digitCount) | **AUGMENT** | The motion-band rebuild wave (`BD.W-MOTION-BAND-GLASS` or a `BD.W-MOTION-BAND-COMPOSE` sibling) — exercise `mode="progress"` + `damping` + `digitCount`-clamp + `MetricCell`/`MetricStack` seating + `SegmentedTabs`. Demo-private (zero src). |
+| 7 | Bind dock APIs (facet rail contextual switching) | **AUGMENT** | The motion-band rebuild wave — `<DockStack mode="facets">` metric-facet rail driving the reel dataset on `--spring-dock`. Demo-private; consumes the shipped dock APIs (no src). |
+| 8 | Live accent-bar fills | **AUGMENT** | The motion-band rebuild wave — swap the static ticks for `<BorderProgress coverage="bottom-edge">` synced 0→target. Demo-private. |
+| 9 | Placeholder→value handoff demo | **AUGMENT** | The motion-band rebuild wave — a null↔value toggle in its own sub-card. Demo-private. |
+| 10 | Lift action + heading rung + scroll-cascade | **FOLD** | Into **`BD.W-STORY-PAGE-STANDARD`** (heading rung + scroll-cascade are chassis invariants) + the motion-band rebuild (the primary-action lift). |
+| 11 | Tighten copy | **FOLD** | Into **`BD.W-MOTION-BAND-GLASS`**'s superfluous-language tighten arm (the DATA-BAND-GLASS waves carry a blurb-tighten arm; mirror it for motion). Drop the duplicated `animated-digit.vue:23` section blurb; de-leak `useAnimatedNumber` from `manifest.ts:1122`. |
+
+**Net:** ONE genuine SRC defect class (F1+F2 — entrance + dead four-state attr → **NEW `BD.W-ANIMATED-DIGIT-LIVE`**, Band 2). Everything else is demo-private and folds into the two drafted systemic chassis waves (`W-STORY-PAGE-STANDARD` + `W-LIQUID-ENTRANCE-GENERAL`, Band 17) + a NEW motion-band-glass sibling (`BD.W-MOTION-BAND-GLASS`, mirroring the DATA-BAND-GLASS census-ratchet shape). No PRUNE (the language tighten is a fold, not a cut).
+
+## 6 · Convergence
+
+**~35% converged — needs the systemic loop, NOT several bespoke loops.** The component is clean (one foldable SRC class). The page's gap is almost entirely the two drafted systemic chassis waves (own-card/bigger-stage/aurora/entrance) plus a motion-band-glass sibling that does not yet exist. Once `W-STORY-PAGE-STANDARD` + `W-LIQUID-ENTRANCE-GENERAL` land and the motion-band-glass wave is authored, this page rebuilds in ONE pass to ~85%+ (it has the hardest thing — typographic protagonist — already right). It is NOT a multi-loop bespoke page; it is a strong candidate to VALIDATE the systemic motion-band chassis once those waves exist. Re-audit AFTER the chassis waves, not before.

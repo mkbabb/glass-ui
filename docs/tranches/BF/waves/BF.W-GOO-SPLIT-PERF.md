@@ -55,7 +55,7 @@ This wave's "binding π" is the **MANUAL real-device DELTA**, not a server-side 
 
 ## The gestalt row
 
-**BF-roster surface: `dock-fission-perf` (the Safari-validated budget verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the shipped fission surface PLUS the committed `W-GOO-SPLIT-PERF-DELTA.md` with its real-device p50 + verdict (the captured-number freshness floor — the gestalt judgement is "does the shipped fission path read smooth on real Safari at the recorded budget"). Born-FAIL on the BE tree (no Safari capture, no perf number, the goo demo-private). Flips PASS at W-REFLECT when the DELTA carries a real-Metal p50 + a decided verdict + the matching shipped default renders smooth. Wired into the BF roster by `W-GESTALT-WIRE`.
+**BF-roster surface: `dock-fission-perf` (the Safari-validated budget verdict).** The verdict requirement: a FRESH whole-page both-mode `:5199` capture of the shipped fission surface PLUS the committed `W-GOO-SPLIT-PERF-DELTA.md` with its real-device p50 + verdict (the captured-number freshness floor — the gestalt judgement is "does the shipped fission path read smooth on real Safari at the recorded budget"). Born-FAIL on the BE tree (no Safari capture, no perf number, the goo demo-private). GREEN at its OWN close once the DELTA carries a real-Metal p50 + a decided verdict + the matching shipped default renders smooth. Wired into the BF roster by `W-GESTALT-WIRE`.
 
 ## Fences
 

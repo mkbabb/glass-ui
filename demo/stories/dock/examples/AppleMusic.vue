@@ -21,9 +21,9 @@ const cardRef = ref<HTMLElement | null>(null);
 const albumHue = "oklch(0.6 0.2 320)";
 
 const queue = [
-    { title: "The Beginning and the End", artist: "Shiro Sagisu" },
-    { title: "Bloody Battle", artist: "Shiro Sagisu" },
-    { title: "Thanatos", artist: "Loren & Mash" },
+    { title: "Track One", artist: "Artist" },
+    { title: "Track Two", artist: "Artist" },
+    { title: "Track Three", artist: "Artist" },
 ];
 
 const bloom = useBloomUp(pillRef, cardRef, {
@@ -64,8 +64,8 @@ function toggle(): void {
         >
             <span class="am-album" />
             <span class="am-meta">
-                <span class="am-title">You Are (Not) Alone</span>
-                <span class="am-artist">Shiro Sagisu</span>
+                <span class="am-title">Now Playing</span>
+                <span class="am-artist">Artist</span>
             </span>
             <span class="am-mini-play"><Play class="size-4" /></span>
         </button>
@@ -82,8 +82,8 @@ function toggle(): void {
             <div class="am-card-head">
                 <span class="am-card-album" />
                 <span class="am-card-meta">
-                    <span class="am-card-title">You Are (Not) Alone</span>
-                    <span class="am-card-artist">Shiro Sagisu</span>
+                    <span class="am-card-title">Now Playing</span>
+                    <span class="am-card-artist">Artist</span>
                 </span>
                 <button
                     type="button"

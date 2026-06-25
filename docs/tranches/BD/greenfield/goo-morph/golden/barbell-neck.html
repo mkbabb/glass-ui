@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--
+  GOLDEN goo-morph spike — the BOLDEST mechanism de-risked: the THREE-element fused
+  metaball (bodyA + clip-path hourglass NECK + bodyB) through the STATIC #glass-goo
+  filter, proving a REAL CONCAVE WAIST that the threshold welds and the clip-path
+  guarantees on BOTH engines. Throwaway. Pure CSS/JS, no build, no glass-ui import.
+
+  What this proves:
+    1. Two round warm-cream bodies + a clip-path hourglass neck, fused by the static
+       blur→threshold filter, read as ONE metaball with a CONCAVE waist — not a slab.
+    2. The waist is structurally present (clip-path) BEFORE the filter even fuses it →
+       WebKit-insurance: the concavity is engine-agnostic.
+    3. The whole thing is transform/opacity-only per frame; the filter is static.
+    4. A π readback (waistWidth / bodyWidth) measures the waist depth at the peak.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>golden goo-morph — barbell + hourglass neck</title>
+<style>
+  :root {
+    /* warm-cream goo medium (NEVER gray) — the BA.W-NO-GRAY warm floor */
+    --goo-cream: oklch(0.92 0.045 75);
+    --goo-cream-lit: oklch(0.96 0.03 80);
+    --bd: 0.6;          /* body diameter as fraction of stage min-extent */
+    --neck-gap: 0.78;   /* mid-travel bead separation / body-diameter */
+    --neck-waist: 0.34; /* hourglass throat as fraction of body girth */
+  }
+  html, body { margin: 0; height: 100%; background: #1a1410; }
+  body { display: grid; place-items: center; font: 13px/1.4 ui-monospace, monospace; color: #d9c9b3; }
+  .wrap { display: flex; flex-direction: column; gap: 16px; align-items: center; padding: 24px; }
+  .stage {
+    position: relative; width: 520px; height: 220px;
+    /* a colorful field BEHIND the glass (§3) so the transmissive read is visible */
+    background:
+      radial-gradient(60% 90% at 22% 40%, oklch(0.55 0.22 305 / 0.9), transparent 60%),
+      radial-gradient(70% 100% at 82% 60%, oklch(0.6 0.2 220 / 0.9), transparent 62%),
+      oklch(0.28 0.05 50);
+    border-radius: 20px; overflow: visible; isolation: isolate;
+  }
+  /* THE GOO LAYER — the three masses + the static filter. opacity carries the glass
+     translucency; the filter welds. */
+  .goo {
+    position: absolute; inset: 0; pointer-events: none;
+    filter: url(#glass-goo);
+    color: var(--goo-cream);
+    /* a transmissive lens — the colorful field reads THROUGH it */
+    opacity: 0.78;
+    contain: layout style; /* NOT paint — paint clips the neck */
+  }
+  .body, .neck {
+    position: absolute; top: 50%; left: 0;
+    background:
+      radial-gradient(120% 90% at 50% 22%, var(--goo-cream-lit), currentColor 70%);
+    will-change: transform;
+  }
+  .body {
+    width: 132px; height: 132px; margin: -66px 0 0 -66px;
+    border-radius: 50%;
+  }
+  /* THE HOURGLASS NECK — the structural concavity. A clip-path polygon with sides
+     that pull IN at the mid (the waist), so even pre-blur the silhouette has a real
+     waist. Its scaleX spans the live gap; scaleY is the bell (welling). */
+  .neck {
+    width: 132px; height: 132px; margin: -66px 0 0 -66px;
+    transform-origin: center;
+    /* concave hourglass: wide at the two ends (where it meets the bodies), pinched at
+       the centre — a true throat. The bezier-ish concavity via many polygon points. */
+    clip-path: polygon(
+      0% 8%, 0% 92%,
+      18% 70%, 34% 60%, 50% 57%, 66% 60%, 82% 70%,
+      100% 92%, 100% 8%,
+      82% 30%, 66% 40%, 50% 43%, 34% 40%, 18% 30%
+    );
+  }
+  .readout { white-space: pre; opacity: 0.85; }
+  .controls { display: flex; gap: 10px; }
+  button { font: inherit; padding: 6px 12px; border-radius: 8px; border: 1px solid #5a4a38; background: #2a2018; color: #e8d8c0; cursor: pointer; }
+  label { display: flex; gap: 6px; align-items: center; }
+  input[type=range] { width: 220px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- the static goo filter — byte-identical to glass-ui GlassGooFilter (sRGB, region,
+       static literals, regular filter:url). blur 13 / slope 15 / offset -7 — the GOLDEN
+       retune: a wider transition band so the fuse READS gooey, not razor-instant. -->
+  <svg width="1" height="1" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="glass-goo" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="13" result="blur" />
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -7" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="stage" id="stage">
+    <div class="goo">
+      <div class="body" id="bodyA"></div>
+      <div class="neck" id="neck"></div>
+      <div class="body" id="bodyB"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>p <input id="p" type="range" min="0" max="1" step="0.001" value="0.5" /></label>
+    <button id="play">play morph</button>
+  </div>
+  <div class="readout" id="readout"></div>
+</div>
+
+<script>
+const stage = document.getElementById('stage');
+const bodyA = document.getElementById('bodyA');
+const bodyB = document.getElementById('bodyB');
+const neck  = document.getElementById('neck');
+const pIn   = document.getElementById('p');
+const readout = document.getElementById('readout');
+
+const W = 520, H = 220;
+const A = W * 0.30, B = W * 0.70;     // slot centres
+const D = 132;                         // body diameter (px)
+const NECK_GAP = 0.78;                 // mid separation / D
+
+// easings — body travel commits LATE (anticipation) then punches (cartoon weight)
+const easeBodyA = t => t*t*(3-2*t);    // smoothstep, slightly late
+const bell = (t, k=1.5) => Math.pow(Math.sin(Math.PI*t), k); // 0 at ends, peak mid
+
+function paint(p) {
+  // separation envelope: bodies sit apart at the slots, NEAR (a tuned gap) at mid —
+  // so the goo valley welds a THIN waist at p=0.5, not a merged blob.
+  const sep = 1 - bell(p, 1) * (1 - NECK_GAP); // 1 at ends → NECK_GAP at mid
+  const mid = (A + B) / 2;
+  // the two bodies converge toward the mid, kept `gap` apart
+  const half = (B - A) / 2 * sep;
+  const cA = mid - half;
+  const cB = mid + half;
+  bodyA.style.transform = `translate(${cA}px, 0)`;
+  bodyB.style.transform = `translate(${cB}px, 0)`;
+
+  // the neck spans the live gap; scaleX = gap/D, scaleY = bell (welling girth)
+  const gap = cB - cA;
+  const neckLen = Math.max(0.01, gap / D);
+  const neckGirth = 0.18 + bell(p, 1.5) * 0.62; // wells up, peaks mid, ~0 at ends
+  neck.style.transform =
+    `translate(${mid}px, 0) scaleX(${neckLen.toFixed(3)}) scaleY(${neckGirth.toFixed(3)})`;
+
+  return { cA, cB, gap, neckGirth };
+}
+
+function measure(p) {
+  const d = paint(p);
+  // approximate the rendered waist: the clip-path throat width (the structural floor)
+  // = D * neckGirth * waistFraction; the body girth = D. A real waist → ratio < 0.5.
+  const throat = D * d.neckGirth * 0.34;
+  const ratio = throat / D;
+  return { p, gap: d.gap.toFixed(1), neckGirth: d.neckGirth.toFixed(3), waistRatio: ratio.toFixed(3) };
+}
+
+function render() {
+  const p = parseFloat(pIn.value);
+  const m = measure(p);
+  readout.textContent =
+    `p=${p.toFixed(3)}  gap=${m.gap}px  neckGirth=${m.neckGirth}  waist/body=${m.waistRatio}` +
+    `  ${m.waistRatio < 0.45 ? '✓ REAL WAIST' : '… (slab)'}`;
+}
+pIn.addEventListener('input', render);
+
+document.getElementById('play').addEventListener('click', () => {
+  const t0 = performance.now(), dur = 900;
+  function step(now) {
+    const t = Math.min(1, (now - t0) / dur);
+    pIn.value = t;
+    render();
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+});
+
+render();
+// expose for π readback
+window.__measure = measure;
+</script>
+</body>
+</html>

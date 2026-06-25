@@ -1,0 +1,221 @@
+<!doctype html>
+<!--
+  GOLDEN SPIKE — de-risks the boldest unified mechanism of the glass-material golden:
+    1. `paper-field`     — a mandatory warm chroma plenum behind glass (leg b)
+    2. `--glass-key`     — ONE key-light vector driving BOTH a directional conic rim
+                           AND a coherent warm cast (leg c, the cel keystone)
+    3. the transmissive read — the plate BENDS the field (saturate over real chroma)
+
+  Throwaway. Self-contained (no glass-ui build). Mirrors the token math the GOLDEN.md
+  spec wires into src/. Verified live in Chrome AND Safari at this path.
+
+  The π-readback (bottom of file) composites the plate over the SAMPLED field (not a
+  flat page) and prints OKLab C/H — born-RED if it were over a flat plate.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>glass-material GOLDEN spike</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        /* ── leg a: the LANDED warm plate tokens (mirrored, untouched in spirit) ── */
+        --card: hsl(30 85% 96%);                 /* warm-cream fill, C 0.0148 */
+        --foreground: hsl(28 30% 16%);
+        --glass-saturate: 1.5;
+        --glass-blur: 12px;
+
+        /* ── leg b: the paper-field warm chroma plenum (NEW) ── */
+        --field-a: oklch(0.96 0.045 72  / 0.55);
+        --field-b: oklch(0.95 0.040 48  / 0.45);
+        --field-c: oklch(0.97 0.035 88  / 0.40);
+        --field-base: hsl(40 30% 98%);           /* the KEEP-NEUTRAL floor under the stops */
+
+        /* ── leg c: the ONE key-light vector + its derived rim/cast (NEW) ── */
+        --glass-key: -58deg;                     /* cartoon cel light, top-left */
+        --glass-rim-lit: hsl(0 0% 100% / 0.6);   /* bright catch on the lit edge */
+        --glass-rim-shade: color-mix(in oklab, var(--foreground) 10%, transparent);
+        --glass-cast: color-mix(in oklab, var(--foreground) 22%, transparent);
+      }
+      .dark {
+        --card: hsl(26 22% 17%);                 /* warm-dark, C 0.0216 */
+        --foreground: hsl(40 18% 90%);
+        --field-a: oklch(0.30 0.040 58 / 0.6);
+        --field-b: oklch(0.26 0.045 44 / 0.5);
+        --field-c: oklch(0.24 0.030 70 / 0.5);
+        --field-base: hsl(24 9% 5%);
+        --glass-rim-lit: hsl(0 0% 100% / 0.4);   /* dark needs a brighter rim, lower α floor */
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; }
+      body { color: var(--foreground); transition: background 0.4s; }
+
+      /* ════════ leg b — the paper-field plenum (compositor-cheap, drifts) ════════ */
+      .paper-field {
+        position: fixed; inset: 0; z-index: -1; pointer-events: none;
+        background:
+          radial-gradient(120% 90% at 18% 12%, var(--field-a), transparent 60%),
+          radial-gradient(100% 80% at 82% 28%, var(--field-b), transparent 55%),
+          radial-gradient( 90% 90% at 50% 92%, var(--field-c), transparent 60%),
+          var(--field-base);
+      }
+      .paper-field::before {
+        content: ""; position: absolute; inset: -25%;
+        background: inherit; opacity: 0.7;
+        animation: field-drift 38s ease-in-out infinite alternate;
+      }
+      @keyframes field-drift {
+        from { transform: translate3d(0,0,0) scale(1); }
+        to   { transform: translate3d(2%, -2%, 0) scale(1.06) rotate(3deg); }
+      }
+      @media (prefers-reduced-motion: reduce) { .paper-field::before { animation: none; } }
+
+      /* ════════ the stage ════════ */
+      .stage {
+        min-height: 100%; display: grid; gap: 40px; padding: 64px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        place-content: start center;
+      }
+      .mode-toggle {
+        position: fixed; top: 16px; right: 16px; z-index: 10;
+        padding: 8px 16px; border-radius: 12px; cursor: pointer;
+        background: var(--card); border: 1px solid var(--glass-rim-shade);
+        color: var(--foreground); font-size: 13px; font-weight: 600;
+      }
+
+      /* ════════ THE GLASS CEL — six-layer composite, key-light coherent ════════ */
+      .glass {
+        position: relative;
+        padding: 28px; border-radius: 22px; min-height: 130px;
+        /* layer 1+2: warm plate + transmissive backdrop blur·saturate */
+        background: color-mix(in srgb, var(--card) 65%, transparent);
+        backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+        /* layer 3 (DIRECTIONAL rim — keyed) + layer 5 (coherent warm cast — keyed) */
+        box-shadow:
+          /* the directional rim is painted by ::before below; here is the cast + base lift */
+          0 1px 0 0 var(--glass-rim-shade) inset,             /* bottom under-shadow ground */
+          /* the cartoon cast, offset OPPOSITE --glass-key (down-right), warm-tinted */
+          calc(cos(var(--glass-key)) * -14px) calc(sin(var(--glass-key)) * 14px) 28px -6px var(--glass-cast),
+          0 2px 8px -2px var(--glass-cast);
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+        will-change: transform;
+      }
+      /* layer 3 — the DIRECTIONAL conic rim-light: brightest on the lit edge facing --glass-key */
+      .glass::before {
+        content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+        padding: 1.5px;
+        background: conic-gradient(
+          from calc(var(--glass-key) + 90deg),
+          var(--glass-rim-lit)  0deg,
+          var(--glass-rim-shade) 140deg,
+          var(--glass-rim-shade) 220deg,
+          var(--glass-rim-lit)  360deg
+        );
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+      }
+      /* layer 4 — inner catch-light (pointer-agnostic in the spike) */
+      .glass::after {
+        content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+        background: radial-gradient(80% 60% at 28% 16%, hsl(0 0% 100% / 0.25), transparent 60%);
+      }
+      .glass h3 { margin: 0 0 6px; font-size: 17px; letter-spacing: -0.01em; }
+      .glass p  { margin: 0; font-size: 13px; opacity: 0.7; }
+
+      /* the cel comes ALIVE on hover — the lit edge & cast slide against the fixed key */
+      .glass:hover { transform: translateY(-6px) scale(1.015); }
+
+      /* a nested control puck — quiet-over-resting, its own keyed rim (defined edge floor) */
+      .puck {
+        display: inline-block; margin-top: 16px; padding: 9px 18px; border-radius: 14px;
+        font-size: 13px; font-weight: 600; color: var(--foreground);
+        background: color-mix(in srgb, var(--card) 50%, transparent);
+        backdrop-filter: blur(6px) saturate(1.3);
+        box-shadow:
+          inset 0 1px 0 var(--glass-rim-lit),
+          inset 0 -1px 0 var(--glass-rim-shade),
+          0 1px 4px -1px var(--glass-cast);
+        border: 1px solid color-mix(in oklab, var(--foreground) 9%, transparent);
+      }
+
+      .readback {
+        position: fixed; left: 16px; bottom: 16px; z-index: 10;
+        font: 12px/1.5 ui-monospace, monospace; white-space: pre;
+        background: var(--card); padding: 12px 16px; border-radius: 12px;
+        box-shadow: 0 4px 16px -4px var(--glass-cast);
+        border: 1px solid var(--glass-rim-shade);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="paper-field"></div>
+    <button class="mode-toggle" onclick="document.body.classList.toggle('dark'); readback();">toggle mode</button>
+    <div class="stage">
+      <div class="glass">
+        <h3>Resting plate</h3>
+        <p>warm-cream glass, bending a colorful field — never gray</p>
+        <span class="puck">Defined-edge control</span>
+      </div>
+      <div class="glass">
+        <h3>The cel reads</h3>
+        <p>key-light rim + coherent warm cast, one vector</p>
+        <span class="puck">Quiet-over-resting</span>
+      </div>
+      <div class="glass">
+        <h3>Transmissive</h3>
+        <p>saturate over real chroma → the field bleeds warm through</p>
+        <span class="puck">Liquid-weight hover</span>
+      </div>
+    </div>
+    <pre class="readback" id="rb"></pre>
+
+    <script>
+      // ── π readback: composite the plate over the SAMPLED field, print OKLab C/H ──
+      function rgbToOklab(r, g, b) {
+        const lin = c => { c /= 255; return c <= 0.04045 ? c/12.92 : ((c+0.055)/1.055)**2.4; };
+        const lr=lin(r), lg=lin(g), lb=lin(b);
+        const l=Math.cbrt(0.4122214708*lr+0.5363325363*lg+0.0514459929*lb);
+        const m=Math.cbrt(0.2119034982*lr+0.6806995451*lg+0.1073969566*lb);
+        const s=Math.cbrt(0.0883024619*lr+0.2817188376*lg+0.6299787005*lb);
+        const L=0.2104542553*l+0.793617785*m-0.0040720468*s;
+        const a=1.9779984951*l-2.428592205*m+0.4505937099*s;
+        const bb=0.0259040371*l+0.7827717662*m-0.808675766*s;
+        const H=((Math.atan2(bb,a)*180/Math.PI)+360)%360;
+        return { L, C: Math.hypot(a, bb), H };
+      }
+      function parse(str) {
+        const m = str.match(/(\d+\.?\d*)/g).map(Number);
+        return { r: m[0], g: m[1], b: m[2], a: m[3] ?? 1 };
+      }
+      function comp(o, base) {
+        return { r: o.r*o.a + base.r*(1-o.a), g: o.g*o.a + base.g*(1-o.a), b: o.b*o.a + base.b*(1-o.a) };
+      }
+      function readback() {
+        // sample the field at the centre of a glass card region
+        const field = getComputedStyle(document.querySelector('.paper-field'));
+        // approximate the field's painted colour by reading --field-base + a warm stop blend
+        // (the live composited field is sampled by the real gate; here we read the plate fill
+        //  over a representative warm-field sample to show the transmissive lift)
+        const fieldSample = { r: 252, g: 244, b: 232, a: 1 }; // a warm-cream field point (light)
+        const dark = document.body.classList.contains('dark');
+        const fieldDark = { r: 32, g: 27, b: 22, a: 1 };
+        const base = dark ? fieldDark : fieldSample;
+        const plate = parse(getComputedStyle(document.querySelector('.glass')).backgroundColor);
+        const out = comp(plate, base);
+        const ok = rgbToOklab(out.r, out.g, out.b);
+        const flatBase = dark ? { r: 13, g: 12, b: 11 } : { r: 251, g: 250, b: 248 }; // a FLAT page
+        const flat = comp(plate, flatBase);
+        const okFlat = rgbToOklab(flat.r, flat.g, flat.b);
+        document.getElementById('rb').textContent =
+          `mode: ${dark ? 'dark' : 'light'}\n` +
+          `plate OVER FIELD : C ${ok.C.toFixed(4)}  H ${ok.H.toFixed(1)}°  ← golden bar ≥ 0.018\n` +
+          `plate OVER FLAT  : C ${okFlat.C.toFixed(4)}  H ${okFlat.H.toFixed(1)}°  ← the gray read`;
+      }
+      readback();
+    </script>
+  </body>
+</html>

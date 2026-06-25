@@ -12,7 +12,7 @@
 //   • Every example COMPOSES a real library engine — useBloomUp (Apple Music · Notification
 //     · Tab-bar compose · Volume HUD · Spotlight · App-switcher) / useDockFission (the
 //     Dynamic Island Call — an ACTUAL split, not a downward grow) — so it DEMONSTRATES the
-//     vocabulary instead of re-forking it, and proof:no-layout-animation holds by
+//     vocabulary instead of re-forking it, and the compositor-only motion floor holds by
 //     construction (no max-block-size/line-clamp layout animation survives).
 //   • ONE shared <DockStage> aurora is hoisted for the route (the one-GL-per-route budget;
 //     the old "2 live Aurora contexts" comment was false — the tiles rode STATIC gradients

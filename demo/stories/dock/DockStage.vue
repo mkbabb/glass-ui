@@ -19,14 +19,23 @@
 // OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
 // is NOT a transparent tile; it self-stages.
 import { computed, ref, useTemplateRef } from "vue";
-import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+import { Aurora, type AuroraConfig } from "../../../src/components/custom/aurora";
+import { PRESETS } from "../aurora/presets";
 
 withDefaults(
     defineProps<{
         /** How far back the shared field recedes behind the demos. */
         opacityCeiling?: number;
+        /**
+         * The staged aurora field. Defaults to a COLORFUL preset (OPENAI_SKY — vibrant
+         * cerulean) so the dock's warm-cream glass reads as LIQUID glass over a rich
+         * field, NOT a faint ghost over the calm Dawn wash (the Pass-E dock-staging
+         * finding: the §L1 lens needs a colorful backdrop to bend + concentrate). A
+         * consumer may stage a different preset.
+         */
+        config?: AuroraConfig;
     }>(),
-    { opacityCeiling: 0.42 },
+    { opacityCeiling: 0.55, config: () => PRESETS.OPENAI_SKY },
 );
 
 // BC.W-ADAPTIVE-RECONCILE — thread the shared aurora <canvas> to the docks staged over
@@ -49,7 +58,7 @@ const backgroundCanvas = computed<HTMLCanvasElement | null>(
              seam). aria-hidden — purely decorative staging. -->
         <Aurora
             ref="auroraRef"
-            :config="DEFAULT_AURORA_CONFIG"
+            :config="config"
             :opacity-ceiling="opacityCeiling"
             class="dock-stage-field"
             aria-hidden="true"

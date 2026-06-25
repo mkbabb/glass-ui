@@ -73,3 +73,20 @@ export const router = createRouter({
     routes: buildRoutes(),
     scrollBehavior: () => ({ top: 0 }),
 });
+
+// W-NAV-DOCK-FIX (defect 7) — eager-resolve the lazy component of the FIRST navigation
+// so the initial mount never paints an empty <RouterView> (the "Pick a story" flash).
+// Subsequent navigations are gated by the AppShell placeholder guard. A one-shot guard
+// that removes itself after the first resolve (no per-nav cost).
+let firstResolved = false;
+router.beforeResolve(async (to) => {
+    if (firstResolved) return true;
+    firstResolved = true;
+    const comps = to.matched
+        .map((r) => r.components?.default)
+        .filter(
+            (c): c is () => Promise<unknown> => typeof c === "function",
+        );
+    await Promise.all(comps.map((c) => c().catch(() => undefined)));
+    return true;
+});

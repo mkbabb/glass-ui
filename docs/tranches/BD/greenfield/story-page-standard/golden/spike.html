@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STORY-PAGE-STANDARD — GOLDEN spike (DemoFrame · field-floor · φ² stage · cel-slam)</title>
+<style>
+/* ============================================================================
+   GOLDEN spike — de-risks the THREE boldest mechanisms in ONE page, standalone:
+     1. the FIELD-IS-THE-FLOOR  (a fixed -z-1 warm .paper-field, per-route --field-h)
+     2. the φ² STAGE ESCAPE     (the prose stays measure-bound; the stage bleeds to φ²)
+     3. the CEL-SLAM ENTRANCE   (glassy cards slam in on a punch arc, the cast LAGS)
+   Pure compositor CSS (transform/opacity), oklch stops, sRGB interp pinned,
+   @supports(view()) gate, PRM floor — the cross-engine contract, no JS clock.
+   This stands in for the real DemoFrame.vue + demo-frame.css the GOLDEN specs.
+   ============================================================================ */
+
+:root {
+  color-scheme: light;
+  /* --- the warm field hue (per-route; here: display amber-gold h58) --- */
+  --field-h: 58;
+  --field-intensity: 1;
+  /* --- the φ proportion ladder (Aristotelian golden; off ONE article width) --- */
+  --phi: 1.618;
+  --story-page-max-inline: 72rem;                       /* the prose column (measure-bound) */
+  --story-article-w: min(96vw, 87rem);                   /* the WIDE article (kills the 288px dead margin) */
+  --story-prose-measure: calc(var(--story-article-w) / var(--phi));  /* φ⁻¹ — the read column */
+  --story-stage-w: var(--story-article-w);               /* the stage = φ² of the prose block */
+  /* --- the cartoon motion register --- */
+  --ease-cartoon-punch: cubic-bezier(.5,-0.22,.36,1.32);
+  --motion-weight: 0.62;                                  /* 1/φ rest scalar */
+  --cel-step: 0.62;
+  /* --- the warm-cream floor (NEVER gray — BA.W-NO-GRAY) --- */
+  --neutral-0: oklch(0.985 0.012 84);
+  --foreground: oklch(0.22 0.03 60);
+  --muted-foreground: oklch(0.48 0.03 64);
+  --radius-card: 1.5rem;
+  --shadow-cartoon: 4px 5px 0 0 oklch(0.62 0.10 58 / 0.18);
+}
+:root.dark {
+  color-scheme: dark;
+  --field-intensity: 1;
+  --neutral-0: oklch(0.20 0.02 60);
+  --foreground: oklch(0.94 0.02 80);
+  --muted-foreground: oklch(0.72 0.03 72);
+  --shadow-cartoon: 4px 5px 0 0 oklch(0.06 0.06 58 / 0.5);
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body { min-height: 100%; }
+body {
+  font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  color: var(--foreground);
+  background: var(--neutral-0);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 1. THE FIELD IS THE FLOOR — a fixed -z-1 warm .paper-field ============
+   Pure compositor CSS: radial + conic oklch gradients, sRGB interp pinned, a
+   slow transform drift. NO backdrop-filter:url, NO SVG goo. Identical Chrome↔Safari.
+   The glass cards above sample its COMPOSITED output (a painted -z sibling). */
+.paper-field {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  background: var(--neutral-0);
+  contain: strict;
+}
+.paper-field::before {
+  content: ""; position: absolute; inset: -20%;
+  --c1: oklch(0.92 0.11 calc(var(--field-h) - 10));
+  --c2: oklch(0.88 0.13 calc(var(--field-h) + 16));
+  --c3: oklch(0.95 0.07 calc(var(--field-h) + 34));
+  background:
+    radial-gradient(60% 50% at 22% 18%, var(--c1), transparent 70%),
+    radial-gradient(55% 60% at 82% 30%, var(--c2), transparent 72%),
+    conic-gradient(from 120deg at 50% 80%, var(--c3), var(--c1), var(--c2), var(--c3));
+  background-blend-mode: normal;
+  /* sRGB interp pinned (the Safari default is oklab — pin it for cross-engine parity) */
+  background-color: var(--neutral-0);
+  opacity: var(--field-intensity);
+  filter: saturate(1.05);
+  animation: field-drift 42s var(--ease-cartoon-punch) infinite alternate;
+  will-change: transform;
+}
+:root.dark .paper-field::before {
+  --c1: oklch(0.34 0.10 calc(var(--field-h) - 10));
+  --c2: oklch(0.30 0.12 calc(var(--field-h) + 16));
+  --c3: oklch(0.38 0.08 calc(var(--field-h) + 34));
+}
+@keyframes field-drift {
+  0%   { transform: translate3d(-2%, -1%, 0) scale(1.04) rotate(-1deg); }
+  100% { transform: translate3d( 2%,  2%, 0) scale(1.08) rotate( 1.5deg); }
+}
+
+/* ===== the article + header (ONE title) ===================================== */
+.story-article {
+  inline-size: var(--story-article-w);
+  margin-inline: auto;
+  padding: 4rem 0 8rem;
+}
+.story-header {
+  inline-size: var(--story-prose-measure); margin-inline: auto;
+  margin-block-end: 3rem;
+}
+.eyebrow {
+  font: 600 0.8rem/1 ui-monospace, monospace; letter-spacing: 0.08em;
+  text-transform: uppercase; color: oklch(0.55 0.16 var(--field-h));
+  margin-block-end: 0.75rem;
+}
+.story-title {
+  font-size: clamp(3rem, 7vw, 5.2rem); font-weight: 800;
+  letter-spacing: -0.018em; line-height: 1.02;
+  background: linear-gradient(180deg, var(--foreground), oklch(0.42 0.08 var(--field-h)));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.story-blurb { margin-block-start: 1rem; color: var(--muted-foreground); font-size: 1.05rem; max-width: 42ch; }
+.story-rule { height: 1px; background: oklch(0.5 0.05 var(--field-h) / 0.25); margin-block-start: 1.5rem; }
+
+/* ===== the section stack (the gap rhythm) ================================== */
+.story-stack { display: flex; flex-direction: column; gap: 3rem; }
+
+/* ===== 3. THE CEL — a glassy card that SLAMS in, the cast lagging ===========
+   <Card tier="quiet"> over the field: a translucent warm-glass plate. The cast
+   is a ::after offset-stamp that animates its OWN transform on a LATER clock
+   (a box-shadow cannot lag a transform on the same element). */
+.demo-cel {
+  position: relative;
+  inline-size: var(--story-prose-measure); margin-inline: auto;   /* prose-bound by default */
+  border-radius: var(--radius-card);
+  padding: 1.75rem 2rem;
+  /* the glass register: translucent warm bg + blur over the field's composited output */
+  background: oklch(0.97 0.02 var(--field-h) / 0.46);
+  border: 1px solid oklch(0.85 0.04 var(--field-h) / 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow-cartoon);
+}
+:root.dark .demo-cel {
+  background: oklch(0.32 0.03 var(--field-h) / 0.5);
+  border-color: oklch(0.5 0.05 var(--field-h) / 0.4);
+}
+.demo-cel__label { font: 600 0.78rem/1 ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: oklch(0.55 0.14 var(--field-h)); }
+.demo-cel__heading { font-size: 1.3rem; font-weight: 700; margin: 0.5rem 0 0.75rem; letter-spacing: -0.01em; }
+.demo-cel__body { color: var(--muted-foreground); }
+
+/* the matrix variant: a grid of glass cells */
+.demo-cel--matrix .cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 1rem; margin-top: 1rem; }
+.cell {
+  aspect-ratio: 1.618; border-radius: calc(var(--radius-card) - 1rem);
+  background: oklch(0.96 0.03 var(--field-h) / 0.55);
+  border: 1px solid oklch(0.85 0.05 var(--field-h) / 0.55);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  display: grid; place-items: center; font-weight: 700; color: oklch(0.45 0.1 var(--field-h));
+  box-shadow: var(--shadow-cartoon);
+}
+:root.dark .cell { background: oklch(0.34 0.04 var(--field-h) / 0.5); color: oklch(0.85 0.08 var(--field-h)); }
+
+/* ===== 2. THE φ² STAGE ESCAPE — the protagonist bleeds past the prose column = */
+.demo-cel--stage {
+  inline-size: var(--story-stage-w);            /* near-viewport; φ² of the prose block */
+  min-block-size: 56vh;
+  display: grid; grid-template-columns: 1fr minmax(13rem, 0.382fr); gap: 1.5rem;  /* 1/φ² rail */
+  align-items: stretch;
+}
+.demo-cel--stage .stage-canvas {
+  border-radius: calc(var(--radius-card) - 0.5rem);
+  background: oklch(0.9 0.12 var(--field-h) / 0.4);
+  display: grid; place-items: center; color: oklch(0.4 0.12 var(--field-h)); font-weight: 800; font-size: 1.5rem;
+}
+.demo-cel--stage .stage-rail { display: flex; flex-direction: column; gap: 0.75rem; }
+.rail-pill { border-radius: 0.9rem; padding: 0.7rem 1rem; background: oklch(0.95 0.03 var(--field-h) / 0.6); border: 1px solid oklch(0.85 0.05 var(--field-h) / 0.5); font-size: 0.85rem; }
+:root.dark .rail-pill { background: oklch(0.36 0.04 var(--field-h) / 0.55); }
+
+/* ===== the CEL-SLAM entrance + the LAGGING CAST ============================ */
+@supports (animation-timeline: view()) {
+  @media not (prefers-reduced-motion: reduce) {
+    .demo-cel {
+      animation: cel-slam 720ms var(--ease-cartoon-punch) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+      will-change: transform, opacity;
+    }
+    .demo-cel::after {        /* the cartoon cast — animates its OWN transform, +8% LATER */
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      border-radius: inherit; box-shadow: var(--shadow-cartoon);
+      animation: cast-lag 720ms var(--ease-cartoon-punch) both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 50%;
+    }
+  }
+}
+@keyframes cel-slam {
+  0%   { opacity: 0; transform: translate3d(0, calc(14px * var(--motion-weight)), 0) scale(calc(1 - 0.07 * var(--motion-weight)), calc(1 + 0.05 * var(--motion-weight))); }
+  60%  { transform: translate3d(0, calc(-4px * var(--motion-weight)), 0) scale(calc(1 + 0.02 * var(--motion-weight)), calc(1 - 0.02 * var(--motion-weight))); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes cast-lag {
+  0%   { opacity: 0; transform: translate3d(calc(-5px * var(--motion-weight)), calc(-7px * var(--motion-weight)), 0); }
+  100% { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-field::before, .demo-cel, .demo-cel::after { animation: none; }
+}
+
+/* mobile: the stage stacks, the rail drops below */
+@media (max-width: 720px) {
+  :root { --story-article-w: 94vw; }
+  .demo-cel, .demo-cel--stage { inline-size: 94vw; }
+  .demo-cel--stage { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+  <div class="paper-field" aria-hidden="true"></div>
+
+  <article class="story-article">
+    <header class="story-header">
+      <p class="eyebrow">DISPLAY · BUTTONS</p>
+      <h1 class="story-title">Buttons</h1>
+      <p class="story-blurb">The one standardized page chassis — a warm colorful field, glassy cards, a φ² stage, one title, an alive entrance.</p>
+      <div class="story-rule"></div>
+    </header>
+
+    <div class="story-stack">
+      <!-- the φ² STAGE: the protagonist, bled to near-viewport -->
+      <section class="demo-cel demo-cel--stage">
+        <div class="stage-canvas">PROTAGONIST STAGE — φ² of the prose block</div>
+        <div class="stage-rail">
+          <div class="rail-pill">variant: solid</div>
+          <div class="rail-pill">size: lg</div>
+          <div class="rail-pill">radius: card</div>
+          <div class="rail-pill">tone: warm</div>
+        </div>
+      </section>
+
+      <!-- a specimen cel (prose-bound) -->
+      <section class="demo-cel">
+        <p class="demo-cel__label">SPECIMEN</p>
+        <h2 class="demo-cel__heading">States</h2>
+        <p class="demo-cel__body">rest · hover · active · disabled — one glassy plate over the warm field.</p>
+      </section>
+
+      <!-- a matrix cel (prose-bound, grid body) -->
+      <section class="demo-cel demo-cel--matrix">
+        <p class="demo-cel__label">MATRIX</p>
+        <h2 class="demo-cel__heading">Variants</h2>
+        <div class="cells">
+          <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+          <div class="cell">D</div><div class="cell">E</div><div class="cell">F</div>
+        </div>
+      </section>
+
+      <section class="demo-cel">
+        <p class="demo-cel__label">INTERACTION</p>
+        <h2 class="demo-cel__heading">Live control</h2>
+        <p class="demo-cel__body">the live control + a readout that drives the real API.</p>
+      </section>
+    </div>
+  </article>
+
+  <button id="mode" style="position:fixed;top:1rem;right:1rem;z-index:10;padding:.5rem 1rem;border-radius:.75rem;border:1px solid #8884;background:#fff8;cursor:pointer;font:600 .8rem system-ui">toggle dark</button>
+  <script>
+    document.getElementById('mode').onclick = () => document.documentElement.classList.toggle('dark');
+  </script>
+</body>
+</html>

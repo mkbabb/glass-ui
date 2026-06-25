@@ -1,0 +1,213 @@
+<!doctype html>
+<!--
+  GLASS ATOMS — GOLDEN spike (THROWAWAY de-risk)
+  Proves the two boldest mechanisms are compositor-only + cross-engine, with NO library:
+    (1) the SLIDER WEIGHT-TRAIN — anticipation dip on grab, overlapping-action smear
+        (cel cast lags by velocity), follow-through overshoot-and-settle on release.
+        ALL on transform/scale, one --atom-drag-v var read only inside the drag window.
+    (2) the STACKED-ICON ARC fan-out — per-index transition-delay stagger + a hair of
+        rotate, the back pucks following the front (overlapping action), each casting.
+  Tokens here are LOCAL stand-ins for the DAG deps (--ease-cartoon-punch, --motion-weight,
+  --glass-fill-tint, --cartoon-ink); the real recipe CONSUMES them. NOT shipped to src/.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>glass-atoms golden spike</title>
+<style>
+  :root {
+    /* LOCAL stand-ins for the DAG deps */
+    --ease-cartoon-punch: linear(
+      0, 0.0039 1.7%, 0.0156 3.5%, -0.06 8%, 0.62 27%, 0.94 36%,
+      1.12 46%, 1.06 58%, 0.97 70%, 1.005 84%, 1
+    ); /* anticipation dip (negative) + ~12% overshoot + settle */
+    --motion-weight: 1;
+    --dur: calc(520ms * var(--motion-weight));
+    --field: radial-gradient(120% 140% at 20% 10%, oklch(0.93 0.09 70), oklch(0.9 0.07 40) 40%, oklch(0.88 0.06 25) 100%);
+    --glass-fill-tint: oklch(0.86 0.11 55);   /* warm amber — NOT gray, NOT --primary dark */
+    --cartoon-ink: oklch(0.32 0.11 50 / 0.9); /* warm 0-blur cel ink, K5-safe (chromatic, not white) */
+    --atom-drag-v: 0; /* 0..1 normalized drag velocity, set ONLY in the drag window */
+    --radius-control: 9999px;
+    color-scheme: light;
+  }
+  body.dark {
+    color-scheme: dark;
+    --field: radial-gradient(120% 140% at 20% 10%, oklch(0.34 0.08 60), oklch(0.28 0.06 35) 45%, oklch(0.22 0.05 25) 100%);
+    --glass-fill-tint: oklch(0.6 0.12 58);
+    --cartoon-ink: oklch(0.82 0.13 65 / 0.85); /* warm figure-ground in dark — NOT white-flip */
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; font: 15px/1.4 -apple-system, system-ui, sans-serif;
+    background: var(--field); color: #2a1d12; display: grid; gap: 56px;
+    place-content: center; padding: 64px; transition: background .4s;
+  }
+  body.dark { color: #f3e9dd; }
+  h2 { margin: 0 0 14px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .7; }
+  .row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  button.toggle { padding: 8px 16px; border-radius: 9999px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
+
+  /* ─────────── (1) SLIDER WEIGHT-TRAIN ─────────── */
+  .slider { position: relative; width: 360px; height: 26px; touch-action: none; cursor: grab; }
+  .slider:active { cursor: grabbing; }
+  .track {
+    position: absolute; inset: 0; border-radius: var(--radius-control);
+    background: color-mix(in oklab, white 60%, transparent);
+    backdrop-filter: blur(8px) saturate(1.3) brightness(1.05);
+    -webkit-backdrop-filter: blur(8px) saturate(1.3) brightness(1.05);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--cartoon-ink) 25%, transparent),
+                inset 0 1px 0 0 oklch(1 0 0 / .4);
+  }
+  /* the FILL is the .glass-atom cylinder — warm tint, transmits the field */
+  .fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: var(--val, 45%);
+    border-radius: var(--radius-control);
+    background: color-mix(in oklab, var(--glass-fill-tint) 80%, transparent);
+    backdrop-filter: blur(6px) saturate(1.5);
+    -webkit-backdrop-filter: blur(6px) saturate(1.5);
+    /* anticipation/smear/overshoot all ride transform-origin at the leading (right) edge */
+    transform-origin: right center;
+    /* smear: stretch in X (drag axis), vol-preserving compress in Y, scaled by drag velocity */
+    transform:
+      scaleX(calc(1 + var(--atom-drag-v) * 0.06))
+      scaleY(calc(1 - var(--atom-drag-v) * 0.05));
+    transition: transform var(--dur) var(--ease-cartoon-punch), width 0s;
+    box-shadow: inset 0 1px 0 0 oklch(1 0 0 / .35);
+  }
+  /* the CEL CAST — a separate compositor layer that LAGS the fill leading edge (overlapping action).
+     box-shadow is set ONCE (here); only its TRANSLATE animates (paint-fence). */
+  .fill::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    box-shadow: 5px 4px 0 0 var(--cartoon-ink); /* 0-blur cel cast, set once */
+    /* lag: the cast trails the leading edge by velocity (the smear) */
+    transform: translateX(calc(var(--atom-drag-v) * -10px));
+    transition: transform calc(var(--dur) * 1.15) var(--ease-cartoon-punch); /* 1.15x follow-through */
+  }
+  /* ANTICIPATION (grab): dip back + load Y, before value moves */
+  .slider[data-grab]:not([data-dragging]) .fill {
+    transform: translateX(-2px) scaleX(0.985) scaleY(0.92);
+  }
+  /* invisible value-handle (a11y stand-in) */
+  .thumb { position: absolute; top: 50%; left: var(--val, 45%); width: 1px; height: 1px; }
+
+  /* ─────────── (2) STACKED-ICON ARC FAN-OUT ─────────── */
+  .stack { position: relative; display: flex; --i: 0; }
+  .puck {
+    --i: 0;
+    width: 44px; height: 44px; border-radius: var(--radius-control);
+    margin-left: -16px; display: grid; place-items: center; font-weight: 700; color: #fff;
+    background: color-mix(in oklab, var(--glass-fill-tint) 78%, transparent);
+    backdrop-filter: blur(5px) saturate(1.5);
+    -webkit-backdrop-filter: blur(5px) saturate(1.5);
+    box-shadow: 4px 3px 0 0 var(--cartoon-ink), inset 0 1px 0 0 oklch(1 0 0 / .4),
+                inset 0 0 0 1.5px oklch(1 0 0 / .5);
+    transform-origin: bottom center;
+    /* per-index stagger: back pucks FOLLOW the front (overlapping action) */
+    transition:
+      transform var(--dur) var(--ease-cartoon-punch),
+      box-shadow var(--dur) ease;
+    transition-delay: calc(var(--i) * 38ms);
+    position: relative;
+  }
+  .puck:first-child { margin-left: 0; }
+  /* the ARC: translate along x + a hair of rotate + a lift — traces a shallow curve, not a flat slide */
+  .stack:hover .puck {
+    transform:
+      translateX(calc(var(--i) * 10px))
+      translateY(calc(var(--i) * var(--i) * -1.1px))   /* parabola → arc */
+      rotate(calc(var(--i) * 2.4deg));
+  }
+  .readout { font-variant-numeric: tabular-nums; opacity: .65; min-width: 120px; }
+</style>
+</head>
+<body>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">toggle dark</button>
+
+  <section>
+    <h2>(1) slider — the weight-train (grab · smear · follow-through)</h2>
+    <div class="row">
+      <div class="slider" id="sl">
+        <div class="track"></div>
+        <div class="fill"></div>
+        <div class="thumb"></div>
+      </div>
+      <div class="readout" id="ro">val 45% · v 0.00</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>(2) stacked-icons — the arc fan-out (hover) + overlapping-action stagger</h2>
+    <div class="row">
+      <div class="stack">
+        <div class="puck" style="--i:0">A</div>
+        <div class="puck" style="--i:1">B</div>
+        <div class="puck" style="--i:2">C</div>
+        <div class="puck" style="--i:3">+5</div>
+      </div>
+      <div class="readout">hover to fan</div>
+    </div>
+  </section>
+
+<script>
+  // The drag-window velocity read — the ONE bridge. Gated open by pointerdown,
+  // torn down on pointerup. No steady-state loop. Drives --atom-drag-v (0..1).
+  const sl = document.getElementById('sl');
+  const ro = document.getElementById('ro');
+  const fill = sl.querySelector('.fill');
+  let dragging = false, lastX = 0, lastT = 0, val = 45, raf = 0, vel = 0;
+
+  function setVal(clientX) {
+    const r = sl.getBoundingClientRect();
+    val = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+    fill.style.setProperty('--val', val + '%');
+    sl.querySelector('.thumb').style.left = val + '%';
+  }
+  function loop(t) {
+    if (!dragging) return;
+    // decay velocity toward 0 when the pointer is still
+    vel *= 0.86;
+    sl.style.setProperty('--atom-drag-v', vel.toFixed(3));
+    ro.textContent = `val ${val.toFixed(0)}% · v ${vel.toFixed(2)}`;
+    raf = requestAnimationFrame(loop);
+  }
+  sl.addEventListener('pointerdown', (e) => {
+    sl.setPointerCapture(e.pointerId);
+    sl.setAttribute('data-grab', '');           // ANTICIPATION
+    lastX = e.clientX; lastT = performance.now();
+    requestAnimationFrame(() => {               // next frame: commit to drag (release the dip)
+      dragging = true; sl.setAttribute('data-dragging', '');
+      setVal(e.clientX); raf = requestAnimationFrame(loop);
+    });
+  });
+  sl.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const now = performance.now(), dt = Math.max(1, now - lastT);
+    const dx = e.clientX - lastX;
+    // normalized velocity 0..1 (px/ms → clamp); morph MORE the faster you move
+    vel = Math.max(vel, Math.min(1, Math.abs(dx) / dt / 1.5));
+    lastX = e.clientX; lastT = now;
+    setVal(e.clientX);
+  });
+  function end() {
+    if (!dragging && !sl.hasAttribute('data-grab')) return;
+    dragging = false;
+    sl.removeAttribute('data-grab'); sl.removeAttribute('data-dragging');
+    cancelAnimationFrame(raf);
+    // FOLLOW-THROUGH: snap velocity to 0 → the --ease-cartoon-punch transition overshoots & settles
+    sl.style.setProperty('--atom-drag-v', '0');
+    ro.textContent = `val ${val.toFixed(0)}% · v 0.00 · settled`;
+  }
+  sl.addEventListener('pointerup', end);
+  sl.addEventListener('pointercancel', end);
+
+  // expose for the live assay
+  window.__spike = {
+    fillTransform: () => getComputedStyle(fill).transform,
+    castTransform: () => getComputedStyle(fill, '::after').transform,
+    castShadow:    () => getComputedStyle(fill, '::after').boxShadow,
+    fillBg:        () => getComputedStyle(fill).backgroundColor,
+  };
+</script>
+</body>
+</html>

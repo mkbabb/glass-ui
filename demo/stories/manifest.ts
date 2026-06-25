@@ -644,17 +644,16 @@ export const CATEGORIES: Category[] = [
                     heroScale: "hero",
                 },
             ),
-            // BB.W-VIZ-SUITE / W-CONCENTRIC — the NEW WebGPU-first radial Fourier
-            // ring-interference viz, closing the Batch-V substrates band. It self-stages
-            // its OWN GL/fragment context (the field IS the surface), so the route
-            // declares the FREE static `grid` wash behind the card and mounts exactly ONE
-            // live context — its own (the one-GL-per-route budget held, the dot-flow-field
-            // precedent above).
+            // BD.W-CONCENTRIC-RELIEF — the WebGPU-first level-set TOPOGRAPHIC CONTOUR viz
+            // (paper-grid kin), closing the Batch-V substrates band. It self-stages its OWN
+            // GL/fragment context (the field IS the surface), so the route declares the FREE
+            // static `grid` wash behind the card and mounts exactly ONE live context — its
+            // own (the one-GL-per-route budget held, the dot-flow-field precedent above).
             s(
                 "substrates",
                 "concentric",
                 "Concentric",
-                "A WebGPU-first radial Fourier ring-interference field — concentric ellipsoid rings whose interference is a sum of radial harmonics about one-or-more centers (the same Fourier-series / deep-water dispersion vocabulary the flow field uses — Tessendorf 2001). The 3D-rendered-to-2D look: an ellipsoidal norm reads a tilted disc as ellipses, and multi-center families cross into moiré beats. A pure fullscreen fragment pass (the aurora shape-class) on the WebGPU primary, with a clean WebGL2 GLSL fallback. The warm-cream identity is the library default; the demo themes the rings. Shipped /concentric.",
+                "A WebGPU-first level-set TOPOGRAPHIC CONTOUR survey — the iso-contours of a low-octave height field, nested loops that TWIST and FLOW as a traveling wave passes OVER and THROUGH the topography (the SAME cell-warp that twists the paper-grid cells, so the two viz move together — vector calculus, level sets, gradient topology). The basins breathe on the ω=√(g·k) deep-water swell (Tessendorf 2001); the contours bunch on steep ground (the density tracks 1/|∇H|). An opaque hypsometric fill (basins cool-cream, ridges warm-amber) under an analytic hillshade, with a two-tier index/minor contour hierarchy; the lines are extracted via Inigo Quilez's gradient-free contour distance-estimation (perfect GPU AA at any DPR). A pure fullscreen fragment pass over the shared waveField leaf on the WebGPU primary, with a clean WebGL2 GLSL fallback. Move the cursor and the topography HEAVES toward it. The warm-divergent identity is the library default; the demo themes the survey. Shipped /concentric.",
                 {
                     background: "grid",
                     hero: true,
@@ -669,7 +668,7 @@ export const CATEGORIES: Category[] = [
                 "substrates",
                 "paper-grid",
                 "Paper Grid",
-                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER lines on a slowly breathing curl-flow sheet. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix) on a Bridson divergence-free curl-warped UV (the IQ domain warp — the whole sheet bows together, never a per-line jitter). Drag the cursor for a soft Gaussian bulge through the liquid. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /paper-grid.",
+                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells that TWIST and MORPH as a traveling wave passes OVER and THROUGH the sheet. The individual cells deform (each box rotates + skews about its own center, gated by a moving Gaussian crest + directed by the Bridson divergence-free curl flow so neighbours lean together — a windmill of warped boxes where the front passes, calm square cells elsewhere), never a uniform line-bow. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL twisted coordinate). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /paper-grid.",
                 {
                     background: "grid",
                     hero: true,

@@ -99,7 +99,7 @@ This wave PAINTS, so it takes a **`proof:ba-gestalt` verdict on the `page-band` 
 - **(c) the radius is byte-identical** — the `rounded-2xl`→`rounded-card` retire is a no-op radius (both 16px); the confirm-card corner radius is unchanged.
 - **(d) both modes** — the folded cards read the warm-cream glass tier in both modes (the Card chassis handles the dark-arm).
 
-**The BC anti-disease law observed:** the device-free M14 clauses prove the SOURCE fold; the π proves the RENDERED card + the live anchor (a fold that drops the `relative isolate` passes the source gate's M14-3 only if the source carries it — but the LIVE anchor behaviour, the ConfirmDialog actually appearing inside the card, is the binding π Arm (b)). No "rides W-REFLECT3"; the readback runs at this wave's close.
+**The BC anti-disease law observed:** the device-free M14 clauses prove the SOURCE fold; the π proves the RENDERED card + the live anchor (a fold that drops the `relative isolate` passes the source gate's M14-3 only if the source carries it — but the LIVE anchor behaviour, the ConfirmDialog actually appearing inside the card, is the binding π Arm (b)). No "is GREEN at this wave close; W-REFLECT re-confirms on the union tree"; the readback runs at this wave's close.
 
 ---
 

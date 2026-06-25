@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GOLDEN spike — --pin-t spring-damped JS driver (every engine, liquid weight)</title>
+<style>
+  :root {
+    /* the GOLDEN tokens (subset) */
+    --scroll-scrub-pin: 0.50;          /* 1/φ-family — heavier pin drift */
+    --scroll-pin-lift: 2.5rem;
+    --scroll-pin-phase-reveal-end-frac: 0.45;
+    --motion-weight: 1;
+    --shadow-cartoon-md: 8px 10px 0 rgba(40, 24, 12, 0.28);
+    --bg: oklch(0.97 0.02 92);
+    --ink: oklch(0.28 0.04 60);
+    --card: oklch(0.99 0.03 95);
+    --edge: oklch(0.62 0.16 55);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  /* the REAL scroll port — mirrors main.demo-main-scroller (an ancestor scroller, NOT the pin) */
+  main.demo-main-scroller {
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 ui-rounded, system-ui, sans-serif;
+    scroll-behavior: auto;
+  }
+  .lead, .tail { padding: 4rem 2rem; max-width: 60ch; margin: 0 auto; }
+  .lead h1 { font-size: clamp(2rem, 6vw, 4rem); margin: 0 0 1rem; }
+
+  /* ── the .scroll-pin RE-INVENTION: NO scroll-timeline-name, NO @supports, NO timeline-scope ── */
+  /* the pin is a tall temporal container; the stage is plain sticky; phases read --pin-t. */
+  .scroll-pin { position: relative; block-size: 320vh; }
+  .scroll-pin-stage {
+    position: sticky;
+    inset-block-start: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  .scroll-pin-card {
+    position: relative;
+    width: min(40ch, 80vw);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    background: var(--card);
+    border: 2px solid var(--edge);
+    /* phase: read the SPRING-DAMPED --pin-t (written by the JS driver, every engine) */
+    --t: clamp(0, calc(var(--pin-t, 0) / var(--scroll-pin-phase-reveal-end-frac)), 1);
+    opacity: var(--t);
+    /* lift + vol-preserving squash (longhand scale), --motion-weight scaled */
+    translate: 0 calc((1 - var(--t)) * var(--scroll-pin-lift));
+    scale: calc(0.92 + 0.08 * var(--t));
+    will-change: transform, opacity;
+  }
+  /* the moving cel cast — a ::after offset shadow that travels OPPOSITE the pin drift (cartoon) */
+  .scroll-pin-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    background: var(--edge);
+    opacity: calc(0.5 * var(--t));
+    /* cast travels with --pin-t — the 1940s moving cast, a transform not an animated box-shadow */
+    translate: calc(10px * var(--motion-weight) * (1 - var(--t)) + 6px)
+               calc(10px * var(--motion-weight) * var(--t) + 6px);
+  }
+  .scroll-pin-card h2 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+  /* follow-through: caption settles a hair after the card (overlapping action) */
+  .scroll-pin-card .cap {
+    opacity: clamp(0, calc((var(--pin-t,0) - 0.08) / 0.45), 1);
+    translate: 0 calc((1 - clamp(0, calc((var(--pin-t,0) - 0.08) / 0.45), 1)) * 1rem);
+  }
+
+  .hud {
+    position: fixed; left: 12px; bottom: 12px; z-index: 99;
+    font: 12px/1.4 ui-monospace, monospace;
+    background: rgba(20,12,4,0.82); color: #ffe; padding: 8px 10px; border-radius: 8px;
+    white-space: pre; pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* PRM: --pin-t becomes a hard ratio (the driver snaps); terminal phase, no slam */
+    .scroll-pin-card, .scroll-pin-card .cap, .scroll-pin-card::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main class="demo-main-scroller" id="scroller">
+  <section class="lead">
+    <h1>Scroll down — the pin advances time</h1>
+    <p>The stage below pins while the tall container scrolls past. Its reveal phase is driven by a
+       <code>SmoothProgress</code>-damped <code>--pin-t</code> written by a JS driver over the real
+       scroll port — <strong>no <code>scroll-timeline-name</code>, no <code>@supports</code>, no
+       <code>timeline-scope</code></strong>. Works on every engine. Carries liquid weight: hold the
+       scroll and the card keeps settling.</p>
+  </section>
+
+  <div class="scroll-pin" id="pin">
+    <div class="scroll-pin-stage" id="stage">
+      <div class="scroll-pin-card">
+        <h2 id="phase-reveal" class="scroll-pin-phase-reveal">The pinned stage</h2>
+        <p class="cap">anticipation dip → overshoot → settle, scrubbed by a spring-damped --pin-t.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="tail">
+    <p>Past the pin. The cascade leg uses a <code>springLinearStops</code> easing on a native
+       <code>view()</code> timeline (compositor, zero JS) — not modelled in this spike, which de-risks
+       the load-bearing JS <code>--pin-t</code> mechanism only.</p>
+  </section>
+</main>
+
+<div class="hud" id="hud">booting…</div>
+
+<script type="module">
+  import { SmoothProgress, springLinearStops } from "@mkbabb/keyframes.js";
+
+  // ── the createScrollReader IDIOM (the shipped core, inlined for the throwaway spike) ──
+  function createScrollReader(source, onTick) {
+    let rafId = 0;
+    const reader = {
+      position: () => source.scrollTop,
+      extent: () => Math.max(0, source.scrollHeight - source.clientHeight),
+      schedule,
+    };
+    function schedule() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => { rafId = 0; onTick(reader); });
+    }
+    source.addEventListener("scroll", schedule, { passive: true });
+    return reader;
+  }
+
+  // ── useScrollPin — the GOLDEN boldest mechanism, on the SYNCHRONOUS kf primitives ──
+  // (NOT createScrollScene — that is a phantom at 4.3.0; SmoothProgress IS exported.)
+  function useScrollPin({ source, stage, scrub }) {
+    // map scrub (≈1/φ) → a SmoothProgress damping. Lower damping = heavier lag.
+    const damping = 0.06 + (1 - scrub) * 0.14; // scrub 0.5 → damping ~0.13 (a perceptible glide)
+    const smooth = new SmoothProgress({ damping, clamp: true, initial: 0 });
+    const prm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const pinEl = document.getElementById("pin");
+    function rawProgress() {
+      // the pin's own slice of the ancestor scroll: 0 when pin top hits viewport top,
+      // 1 when the pin bottom would leave — i.e. the sticky travel window.
+      const rect = pinEl.getBoundingClientRect();
+      const travel = rect.height - source.clientHeight;
+      if (travel <= 0) return 0;
+      return Math.max(0, Math.min(1, -rect.top / travel));
+    }
+
+    function write(v) { stage.style.setProperty("--pin-t", v.toFixed(4)); }
+
+    const reader = createScrollReader(source, () => {
+      const raw = rawProgress();
+      if (prm) { smooth.snap(); write(raw); return; } // PRM: hard 1:1, no smoother frames
+      smooth.setTarget(raw);
+      smooth.play((cur) => write(cur)); // managed rAF, auto-parks when settled (no perpetual loop)
+    });
+    // initial paint
+    write(prm ? rawProgress() : 0);
+    if (!prm) { smooth.setTarget(rawProgress()); smooth.play((cur) => write(cur)); }
+    return { smooth, rawProgress, reader };
+  }
+
+  const scroller = document.getElementById("scroller");
+  const stage = document.getElementById("stage");
+  const pin = useScrollPin({ source: scroller, stage, scrub: 0.5 });
+
+  // HUD + the spring-stop cascade easing proof (the cascade leg's ZERO-JS curve)
+  const cascadeEase = springLinearStops({ response: 0.5, dampingFraction: 0.85 });
+  const hud = document.getElementById("hud");
+  function frame() {
+    const raw = pin.rawProgress();
+    const pinT = parseFloat(getComputedStyle(stage).getPropertyValue("--pin-t")) || 0;
+    const reveal = document.getElementById("phase-reveal");
+    const cs = getComputedStyle(reveal.closest(".scroll-pin-card"));
+    hud.textContent =
+      `raw     ${raw.toFixed(3)}\n` +
+      `--pin-t ${pinT.toFixed(3)}  (lag = liquid weight)\n` +
+      `opacity ${(+cs.opacity).toFixed(2)}\n` +
+      `settled ${pin.smooth.settled}\n` +
+      `cascade ${cascadeEase.slice(0, 22)}…`;
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  // expose for the headless π readback
+  window.__spike = { pin, cascadeEase, scroller, stage };
+</script>
+</body>
+</html>

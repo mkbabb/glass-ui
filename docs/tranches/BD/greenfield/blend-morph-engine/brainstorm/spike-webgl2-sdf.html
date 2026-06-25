@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CANDIDATE B — WebGL2 + GLSL SDF + smin metaball morph (universal-GPU path)</title>
+<style>
+  :root {
+    --phi: 1.6180339887;
+    --cream-core: 252 243 230;
+    --cream-edge: 244 230 205;
+    --field-a: #6d4bd8;
+    --field-b: #1fb6c9;
+    --bg: #efe7da;
+    --ink: #2a2118;
+  }
+  * { box-sizing: border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink);
+    font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1 { font-size: calc(20px * var(--phi)); letter-spacing:-0.015em; margin:18px 22px 2px; }
+  .sub { margin:0 22px 14px; opacity:.7; max-width:62ch; }
+  .stage {
+    position:relative; margin:0 22px; border-radius:24px; overflow:hidden; height:360px; isolation:isolate;
+    background:
+      radial-gradient(120% 100% at 20% 0%, color-mix(in srgb, var(--field-a) 92%, white), transparent 60%),
+      radial-gradient(120% 100% at 90% 100%, color-mix(in srgb, var(--field-b) 92%, white), transparent 60%),
+      linear-gradient(120deg, var(--field-a), var(--field-b));
+  }
+  /* the warm-cream droplet element, masked by the GL-rendered SDF bitmap */
+  .morph { position:absolute; inset:0;
+    background:
+      radial-gradient(60% 55% at 42% 34%, rgb(var(--cream-core)), rgb(var(--cream-edge)) 72%, rgb(var(--cream-edge)));
+    -webkit-mask-size:100% 100%; mask-size:100% 100%; }
+  .controls { display:flex; gap:14px; align-items:center; padding:14px 22px; flex-wrap:wrap; }
+  input[type=range]{ width:280px; }
+  button { font:inherit; font-weight:650; padding:7px 14px; border-radius:12px; border:1px solid #0002; background:#fff; cursor:pointer; }
+  pre#pi { margin:0 22px 26px; padding:14px 16px; border-radius:14px; background:#1c1712; color:#e9e0cf;
+    overflow:auto; font:12px/1.5 ui-monospace,Menlo,monospace; white-space:pre-wrap; }
+  .ok { color:#7fe08a; } .bad { color:#ff8f6b; } .warn { color:#ffd479; }
+</style>
+</head>
+<body>
+  <h1>Candidate B — WebGL2 GLSL SDF + <code>smin</code> metaball</h1>
+  <p class="sub">A single fragment shader rasterizes the SAME analytic smin field (iq polynomial smin) to an
+  OffscreenCanvas; the result is applied as a CSS <code>mask-image</code> bitmap on the warm-cream droplet
+  element (no <code>backdrop-filter:url</code>, Safari-safe). One GL context, compositor-applied mask.</p>
+
+  <div class="stage"><div class="morph" id="morph"></div></div>
+  <div class="controls">
+    <label>t <input id="t" type="range" min="0" max="1" step="0.001" value="0"></label>
+    <button id="play">▶ animate</button>
+    <button id="bench">⏱ bench 200 frames</button>
+    <span id="engine"></span>
+  </div>
+  <pre id="pi">running…</pre>
+
+<script>
+const pi=document.getElementById('pi');
+const log=(s,cls='')=>{pi.innerHTML+=(cls?`<span class="${cls}">${s}</span>`:s)+'\n';};
+const morph=document.getElementById('morph');
+const tSlider=document.getElementById('t');
+
+const VERT=`#version 300 es
+in vec2 p; void main(){ gl_Position=vec4(p,0.,1.); }`;
+// SHARED smin math — identical to Candidate A's worklet.
+const FRAG=`#version 300 es
+precision highp float;
+uniform vec2 uRes; uniform float uT;
+out vec4 o;
+float sdCircle(vec2 p, vec2 c, float r){ return length(p-c)-r; }
+// iq polynomial smin
+float smin(float a, float b, float k){
+  float h=clamp(0.5+0.5*(b-a)/k,0.,1.);
+  return mix(b,a,h)-k*h*(1.-h);
+}
+void main(){
+  vec2 fc=gl_FragCoord.xy; vec2 ctr=uRes*0.5;
+  float gap=240., r=64., k=46.;
+  float hgap=(gap*(1.-uT))*0.5;
+  float bell=sin(3.14159265*clamp(uT,0.,1.));
+  float kk=k*(0.35+0.65*bell);
+  float da=sdCircle(fc, ctr-vec2(hgap,0.), r);
+  float db=sdCircle(fc, ctr+vec2(hgap,0.), r);
+  float f=smin(da,db,kk);
+  float a=smoothstep(1.,-1.,f);     // 1px AA band on the iso-surface
+  o=vec4(1.,1.,1.,a);
+}`;
+
+let gl, prog, uRes, uT, off, w=600, h=360, dpr=Math.min(devicePixelRatio||1, 2);
+function initGL(){
+  off = new OffscreenCanvas(w*dpr, h*dpr);
+  gl = off.getContext('webgl2', {premultipliedAlpha:false, alpha:true});
+  if(!gl){ document.getElementById('engine').textContent='engine: WebGL2 UNAVAILABLE'; log('WebGL2 unavailable','bad'); return false; }
+  const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh); if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)) log('shader err: '+gl.getShaderInfoLog(sh),'bad'); return sh;};
+  prog=gl.createProgram();
+  gl.attachShader(prog,mk(gl.VERTEX_SHADER,VERT));
+  gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,FRAG));
+  gl.bindAttribLocation(prog,0,'p'); gl.linkProgram(prog); gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(prog,'uRes'); uT=gl.getUniformLocation(prog,'uT');
+  gl.viewport(0,0,off.width,off.height);
+  document.getElementById('engine').textContent='engine: WebGL2 ('+gl.getParameter(gl.VERSION)+')';
+  log('engine: WebGL2 ok — '+gl.getParameter(gl.VERSION),'ok');
+  return true;
+}
+
+let bmp;
+function render(t){
+  gl.uniform2f(uRes, off.width, off.height);
+  gl.uniform1f(uT, t);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  // transfer to bitmap → CSS mask (Safari-OK path: OffscreenCanvas → transferToImageBitmap)
+  bmp = off.transferToImageBitmap();
+  // apply via a backing canvas as mask source (createImageBitmap masks are not CSS-addressable;
+  // use a data-url snapshot for the spike's mask application — measures the full cost incl. readback)
+  const c=document.createElement('canvas'); c.width=off.width; c.height=off.height;
+  const cx=c.getContext('bitmaprenderer'); cx.transferFromImageBitmap(bmp);
+  const url=c.toDataURL();
+  morph.style.webkitMaskImage=`url(${url})`; morph.style.maskImage=`url(${url})`;
+}
+
+function setT(v){ if(gl) render(parseFloat(v)); }
+tSlider.addEventListener('input',e=>setT(e.target.value));
+document.getElementById('play').addEventListener('click',()=>{
+  const t0=performance.now();
+  (function f(now){const p=Math.min((now-t0)/1400,1);const tt=p<.5?p*2*p:1-(1-p)*2*(1-p);setT(tt);tSlider.value=tt; if(p<1)requestAnimationFrame(f);else setT(1);})(performance.now());
+});
+document.getElementById('bench').addEventListener('click',()=>{
+  log('— bench: 200 frames sweeping t 0→1 —');
+  let n=0,frames=[],last=performance.now();
+  (function f(now){frames.push(now-last);last=now;setT((n%100)/100);n++; if(n<200)requestAnimationFrame(f);else report(frames);})(performance.now());
+});
+function report(frames){
+  frames=frames.slice(1).sort((a,b)=>a-b);
+  const p50=frames[Math.floor(frames.length*.5)],p95=frames[Math.floor(frames.length*.95)];
+  const mean=frames.reduce((a,b)=>a+b,0)/frames.length, budget=p95<=16.7;
+  log(`frame ms: mean ${mean.toFixed(2)} · p50 ${p50.toFixed(2)} · p95 ${p95.toFixed(2)}`);
+  log(`16.7ms budget @p95: ${budget?'CLEARS ✓':'OVER ✗'}`,budget?'ok':'bad');
+  measureWaist();
+}
+function measureWaist(){
+  // re-raster centre column from the same math, CPU-side, for the waist π
+  const W=w*dpr,H=h*dpr,gap=240*dpr,r=64*dpr,t=0.5,half=(gap*(1-t))/2,kk=46*dpr*(0.35+0.65*Math.sin(Math.PI*t));
+  const span=px=>{let lo=null,hi=null;for(let y=-H/2;y<H/2;y++){const da=Math.hypot(px+half,y)-r,db=Math.hypot(px-half,y)-r;const hh=Math.max(0,Math.min(1,0.5+0.5*(db-da)/kk));const f=(da*hh+db*(1-hh))-kk*hh*(1-hh); if(f<0){if(lo===null)lo=y;hi=y;}}return lo===null?0:hi-lo;};
+  const bodyW=span(half),waistW=span(0),ratio=waistW/bodyW;
+  log(`waist/body @t=0.5: ${ratio.toFixed(3)}  (metaball if ~0.3-0.6)`,ratio<0.85?'ok':'bad');
+}
+if(initGL()) setT(0);
+</script>
+</body>
+</html>

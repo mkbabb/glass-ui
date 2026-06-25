@@ -1,0 +1,49 @@
+# Pass-D — W-DOT-UNIFY + W-DOT-IMAGE (the dot-trio: dot-flow-field · dot-matrix · goo-dot-matrix)
+
+**Lane** BD viz / critique / passd-dots · **Bar** the 5-point SUBSTANCE bar (necessity · correctness · SOTA · not-overfit · works) · **Branch** `prototype/liquid-dock` · **2026-06-22** · zero `src/` edits.
+Grounded against the ACTUAL src (`dot-flow-field/**`, `dot-matrix/**`, `goo-dot-matrix/**`), the proof gates (`proof-viz-dotflow.mjs`, `proof-gpu-substrate-single.mjs`), the parity table, the demo stories, + `passd-D0-ground-truth.md` + the pass-1 `dot-unify.md`.
+
+VERDICT: **REVISE.** The pass-1 falsifications (F1 three-mechanisms / F2 name-collision / F3 DAG) STAND — re-confirmed against HEAD. Pass-D adds TWO new hard findings: (D1) a FALSE-GREEN parity row — dot-flow's "verified ΔE 0.0" is a field-only structural proxy that NEVER touches the render math, and the two render paths PROVABLY diverge; (D2) the near-invisibility is a DEMO-STAGE DEFAULT bug, not a src redevelopment — the cheap fix is W-VIZ-PRESENCE on the demo, and over-scoping it into a per-viz src rebuild is the wrong altitude.
+
+---
+
+## D1 — [HARDEST · BLOCKING] dot-flow's parity is FALSE-GREEN: `status:"verified" ΔE 0.0` proves the FIELD, not the RENDER, and the two render paths demonstrably diverge.
+
+The parity table (`gpu-parity-table.md:67`) marks dot-flow `"status":"verified"`, `"deltaE":{"mean":0.0,"p99":0.0}`, with the note "the height/displacement/brightness field is numerically identical at every (index, t)." The gate that backs it (`proof:viz-dotflow` clause F3, `proof-viz-dotflow.mjs:156-194`) is a **pure regex presence check** — it asserts the strings `fn sampleHeight` / `float sampleHeight` / `tanh(mag)` / `p.x * 0.55` EXIST in each shader. It NEVER evaluates a number and NEVER reads the render pass.
+
+But the WGSL render (`flow-field.render.wgsl.ts`) and the WebGL2 fragment (`flow-field.glsl.ts`) are NOT the same rendering — three concrete divergences, all in the RENDER, all outside F3's reach:
+
+1. **AA / dot-mask falloff differs.** WGSL: billboard-local `1 - smoothstep(1-feather, 1, r)`, `feather=0.4` (`render.wgsl.ts:137-138`). GLSL: domain-space `1 - smoothstep(radius*0.6, radius, dist)` (`flow-field.glsl.ts:206`). Different curves → different edge luminance → a real per-pixel ΔE the "0.0" denies.
+2. **Drift application differs.** WGSL paints the quad at the raw `particles[ii].data.xy` (the compute kernel ALREADY moved it, `render.wgsl.ts:102,127`). GLSL re-derives `dotCenter = o + disp*(uDisplaceAmp*pitch)` analytically per-pixel (`flow-field.glsl.ts:200-201`). Two different positions unless the compute pull has fully settled — which on the first frames it has not.
+3. **`globeMask` sample point differs.** WGSL reads the LIVE drifted position `p` (`render.wgsl.ts:113`); GLSL reads the ANCHOR `o` (`flow-field.glsl.ts:219`). Different argument → different mask.
+
+So "ΔE 0.0, numerically identical at every (index,t)" is true ONLY of the shared `flowField.ts` field evaluator and FALSE of the painted pixels. This is the EXACT FALSE-GREEN class batch-A found in `proof:aur-kuwahara` — a gate that greens a "parity" claim it does not actually measure. **Pass-1's F-trio is real; this is the missing fourth: the parity DISCIPLINE itself is unsound for this viz.** A unify that re-homes this row inherits the lie. FIX: the structural-proxy ΔE-0.0 must NOT be recorded as `verified` for an instanced-vs-fragment pair whose RENDER paths differ; the row is honestly `degraded` (its own note at one point even says so before contradicting it) until the binding real-GPU/real-backend capture-pair lands.
+
+## D2 — [BLOCKING the SCOPE] the near-invisibility is a DEMO-DEFAULT bug, not a src redevelopment — W-VIZ-PRESENCE is cheap + demo-side; the per-viz "richer default" is the wrong altitude.
+
+D0 reads blob/dot-flow/dot-matrix/goo-dot all "near-invisible warm-cream-on-cream." Traced to source, this is a STAGING default, not a missing register:
+
+- The dot color/alpha IS set, and a high-contrast register ALREADY EXISTS. `flow-field.render.wgsl.ts:142-146`: `bright = uBaseBright(0.22) + waveBand·uContrast(0.6)`; `alpha = mask·(bright·0.8+0.12)`; palette = `WARM_IDENTITY_PALETTE` `{L:0.92,C:0.03,h:78}` (`constants.ts:82-87`) over `background:"transparent"` (`constants.ts:115`). Warm-cream L0.92 at ~0.3-0.8 alpha over the warm-cream page = no contrast BY CONSTRUCTION.
+- The CONTRASTING register is already built + demo-local. `presets.ts:35-48` `FLOW_PRESET_MONO_REFERENCE` sets `background: NEAR_BLACK_GROUND {L:0.1}` + a warm-white ramp — mono-warm-white on near-black, which reads.
+- **The demo just defaults to the WRONG one.** `dot-flow-field.vue:26` seeds `config = reactive({...FLOW_PRESET_WARM,...})` and `FLOW_PRESET_WARM` is `{...DEFAULT_FLOW_CONFIG}` (transparent bg) hosted in `<ShowcaseFrame tier="field">` (no plate, `dot-flow-field.vue:79`) — warm-cream dots over the cream page. The near-black reference is hidden behind an OPT-IN toggle (`dot-flow-field.vue:64` "off = warm-cream identity default"). The `tier="field"` choice (plate-stripped) is the second half of the void: it removes the only thing that could give the warm-cream dots depth.
+
+So the honest fix is the W-VIZ-PRESENCE option-1 (a contrasting demo backdrop / default the monochrome dot stories to their near-black preset) — DEMO-SIDE, ~3 line changes per story, presets-in-consumers-clean. The warm-cream-DEFAULT TOKEN is the library identity (the fence is load-bearing, `proof:viz-dotflow` F5 reds a non-warm literal in `src/`), so option-2 ("richer src default") would FIGHT the identity fence it cannot win. **CUT the per-viz "richer default register" from the W-VIZ-PRESENCE scope; it is a demo-stage default + backdrop wave, full stop.** Over-scoping it into three src rebuilds is the altitude error D0's headline invites.
+
+## D3 — pass-1 F1/F2/F3 RE-CONFIRMED against HEAD (the unify is a RE-WRITE + a name-collision + a DAG hazard).
+
+- **F1 (three mechanisms) STANDS.** Re-grepped: dot-flow render = instanced billboard quads driven by a 64-wide `@compute` advection (`flow-field.compute.wgsl.ts:163`); its WebGL2 fallback is a *fullscreen-fragment* cell-lattice (`flow-field.glsl.ts:187-232`); goo-dot is a fullscreen-fragment quantizer; dot-matrix is instanced-static. `fwidth` is in goo-dot ONLY. The "ONE instanced+fwidth-SDF rasterizer common to all three" is fiction; the unify INVENTS a rasterizer none of the three uses. The genuinely-shared layer (substrate/color/pointer/configurator) is ALREADY shared via `createGpuSubstrate` + `procedural-color` + `usePointerVelocityField` — the DRY win targets the wrong layer.
+- **F2 (name collision) STANDS.** `dot-matrix/index.ts` exports `DotMatrix` on `/dot-matrix`. A unified `<DotMatrix>` on `/dot-matrix` silently re-renders every existing sphere consumer unless `projection="sphere"` is proven byte-default — which no doc commits to.
+- **F3 (DAG) STANDS + COMPOUNDS with D1.** goo-dot imports `sceneDistG`/`fibonacciDot` from `goo-blob`/`dot-matrix` — so W-DOT-UNIFY has un-named predecessor edges on W-BLOB-RENAME + the W-VIZ-TAILS `sceneDistG` tails. And re-homing dot-flow drags its FALSE-GREEN parity row (D1) into the unified component's gate surface.
+
+## D4 — challenge (c) cross-backend texture luminance: REAL + uncaught, AND the analytic parity can't catch it (because the analytic parity doesn't even catch D1).
+
+Pass-1's §2 holds: `copyExternalImageToTexture` (WGPU) vs `texImage2D(ImageBitmap)` (WebGL2-WebKit) carry DIFFERENT `UNPACK_PREMULTIPLY_ALPHA_WEBGL`/`UNPACK_COLORSPACE_CONVERSION_WEBGL`/flipY semantics — a genuine cross-backend luminance divergence. None of `copyExternalImageToTexture`/`texImage2D`/`ImageBitmap` appears anywhere in `src/` (re-grepped) — the texture path is 100% net-new on BOTH backends. The deeper point pass-D adds: the "ONE math source round-trips → ΔE 0.0" discipline CANNOT certify a texture-upload divergence — and D1 proves it cannot even certify the EXISTING render divergence. The parity gate must be hardened to a real pixel-pair BEFORE W-DOT-IMAGE leans on it.
+
+## D5 — challenge (d): the "wave washes over naturally" IS a real stateless `f(o,t)` front (for the EXISTING dot-flow). The hand-wave is W-DOT-IMAGE's NEW front.
+
+Traced: `sampleHeight(o,t)` (`flowField.ts:240`, transcribed `compute.wgsl.ts:83`) is a pure Gerstner sum `Σ aᵢ·sin(k·(d·o) − ω·t + φ)` — stateless, the phase sweeps spatially along `d` over time; `waveBand(h,center,width)` (`flowField.ts:294`) lights the iso-band. So the band genuinely WASHES across as `f(o,t)` — not a hand-wave, no accumulated state, no re-seed. The REAL gap is the same as D2: at the default (`waveBandWidth:0.55`, `baseBright:0.22`, `contrast:0.6`, warm-cream) the wash is a ~0.22→0.82 brightness ripple that is imperceptible over cream. Pass-1's §3 critique (washPhase under-specced) is correct but applies to W-DOT-IMAGE's NEW directional front + texture cross-fade — the EXISTING dot-flow wave is sound, just staged invisibly.
+
+## Salvage (delta over pass-1)
+- **NEW · HARDEN the parity gate FIRST (D1):** demote dot-flow to honest `degraded`; make `proof:gpu-substrate-single` require a real pixel-pair (or numeric eval) for instanced-vs-fragment rows, not a string-presence proxy — this is a prerequisite the unify + W-DOT-IMAGE both depend on, and it's the same FALSE-GREEN class as aur-kuwahara.
+- **NEW · DESCOPE W-VIZ-PRESENCE (D2):** it is a DEMO default-preset + backdrop wave (~3 lines/story), NOT three src rebuilds. The contrasting register already exists demo-local; default the monochrome dot stories to it. The warm-cream src token is the identity — leave it.
+- **CARRY pass-1:** rename or prove-sphere-default for `<DotMatrix>`; add W-BLOB-RENAME + W-VIZ-TAILS DAG edges; re-home/retire `tests-visual/{dot-matrix,goo-dot}.spec.ts`; downgrade `target` to construction-time permutations + budget the count; CUT the glyph 2D-trap axis.

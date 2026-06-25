@@ -1,0 +1,221 @@
+<!doctype html>
+<!--
+  GooDotMatrix GOLDEN spike — de-risks the BOLDEST mechanism: the READ-OUT math.
+  A throwaway WebGL2 (the Safari surface) spike with a faithful inline 2-blob smin
+  metaball field, proving in a real browser:
+    Move 1 — presence FLOOR: the dot lattice fills the WHOLE card (no step-gate void)
+    Move 2 — NECK-RIDGE: the weld between the two merging blobs is the FATTEST/BRIGHTEST dots
+    Move 3 — technicolor ramp + cartoon shadow (the layered-offset disc under each dot)
+    Move 4b — twinkle breathing + gradient flow advection
+  NOT the production shader — a math-faithful proxy of the goo-dot read-out re-author.
+  No src/ touched. Compositor-only / sRGB-in-shader / fwidth-AA in fs only (Safari-safe).
+-->
+<html lang="en"><head><meta charset="utf-8"><title>goo-dot GOLDEN spike</title>
+<style>
+  html,body{margin:0;height:100%;background:#0c0a09;font:13px/1.4 ui-monospace,monospace;color:#e7e2da}
+  #wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;height:calc(100% - 20px)}
+  .card{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+  .light{background:oklch(0.96 0.012 80)} /* the flat-cream library card (proves vivid-over-light) */
+  .dark{background:oklch(0.16 0.02 60)}   /* the warm near-black reference ground */
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .tag{position:absolute;left:12px;top:10px;padding:4px 9px;border-radius:8px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;z-index:2}
+  #hud{position:fixed;right:14px;bottom:12px;padding:8px 12px;border-radius:10px;background:rgba(0,0,0,.6);z-index:3;white-space:pre}
+</style></head>
+<body>
+<div id="wrap">
+  <div class="card light"><span class="tag">LIGHT card · vivid over flat cream</span><canvas id="c1"></canvas></div>
+  <div class="card dark"><span class="tag">DARK reference · field FILLS, neck-ridge weld</span><canvas id="c2"></canvas></div>
+</div>
+<div id="hud">booting…</div>
+<script type="text/javascript">
+const FRAG = `#version 300 es
+precision highp float;
+out vec4 fragColor;
+uniform vec2  uRes;
+uniform float uTime;
+uniform float uPix;          // dot cell px
+uniform float uPresenceFloor;// Move 1
+uniform float uWeldSwell;    // Move 2 — neck-ridge radius bonus
+uniform float uWeldSpecular; // Move 2 — neck-ridge brightness lift
+uniform float uFlowAmt;      // Move 4b
+uniform vec2  uA;            // blob A center (uv)
+uniform vec2  uB;            // blob B center (uv)
+uniform float uR;            // blob radius
+
+// --- sRGB / oklch color core (mirrors the lib's samplePaletteOklch chain, in-shader) ---
+vec3 oklabToLinear(vec3 c){
+  float l_=c.x+0.3963377774*c.y+0.2158037573*c.z;
+  float m_=c.x-0.1055613458*c.y-0.0638541728*c.z;
+  float s_=c.x-0.0894841775*c.y-1.2914855480*c.z;
+  float l=l_*l_*l_, m=m_*m_*m_, s=s_*s_*s_;
+  return vec3(
+    4.0767416621*l-3.3077115913*m+0.2309699292*s,
+   -1.2684380046*l+2.6097574011*m-0.3413193965*s,
+   -0.0041960863*l-0.7034186147*m+1.7076147010*s);
+}
+vec3 oklchToOklab(vec3 c){ return vec3(c.x, c.y*cos(c.z), c.y*sin(c.z)); }
+vec3 lin2srgb(vec3 c){ c=clamp(c,0.0,1.0); return mix(c*12.92, 1.055*pow(c,vec3(1.0/2.4))-0.055, step(0.0031308,c)); }
+float hash21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+
+// --- 3-stop TECHNICOLOR ramp (Move 3): core butter-gold / neck coral / rim amber ---
+vec3 ramp(float t){ // t: 0=core .. 1=rim
+  vec3 core=vec3(0.96,0.13,radians(85.0));
+  vec3 neck=vec3(0.82,0.18,radians(45.0));
+  vec3 rim =vec3(0.72,0.15,radians(62.0));
+  vec3 oklch = (t<0.5)? mix(core,neck,t*2.0) : mix(neck,rim,(t-0.5)*2.0);
+  return oklch;
+}
+
+// --- the metaball FIELD (faithful 2-blob smin — proxy of sceneDistG), returns d + grad ---
+float sdCircle(vec2 p, vec2 c, float r){ return length(p-c)-r; }
+float smin(float a,float b,float k){ float h=clamp(0.5+0.5*(b-a)/k,0.0,1.0); return mix(b,a,h)-k*h*(1.0-h); }
+// numeric gradient so the spike stays short; the production field returns analytic ∂d
+vec3 field(vec2 uv){
+  float k=0.18;
+  float d=smin(sdCircle(uv,uA,uR), sdCircle(uv,uB,uR), k);
+  float e=0.002;
+  float dx=smin(sdCircle(uv+vec2(e,0),uA,uR),sdCircle(uv+vec2(e,0),uB,uR),k)-d;
+  float dy=smin(sdCircle(uv+vec2(0,e),uA,uR),sdCircle(uv+vec2(0,e),uB,uR),k)-d;
+  return vec3(d, dx/e, dy/e);
+}
+
+void main(){
+  vec2 fragCoord = gl_FragCoord.xy;
+  float pix = max(uPix,1.0);
+  vec2 cell = floor(fragCoord/pix);
+  vec2 cellCtr = (cell+0.5)*pix;
+  vec2 cellCtrUv = (cellCtr/uRes - 0.5);
+  cellCtrUv.x *= uRes.x/uRes.y; // aspect-correct so blobs stay round
+
+  vec3 scene = field(cellCtrUv);
+  float bodyR = uR;
+  float gradMag = length(scene.yz);
+  // Move 4b — flow advect down the gradient toward a core, re-sample
+  vec2 flowUv = cellCtrUv - normalize(scene.yz+vec2(1e-6))*uFlowAmt*0.04;
+  vec3 scene2 = field(flowUv);
+  float fCell = clamp(-scene2.x/max(bodyR,1e-4), 0.0, 1.0);
+
+  // Move 1 — presence floor: bands
+  float fieldFloor=0.06;
+  float band = smoothstep(0.0, fieldFloor, fCell);     // meniscus rise
+  float core = smoothstep(fieldFloor, 1.0, fCell);     // body rise
+  float present = max(uPresenceFloor, band);
+
+  // Move 2 — neck-ridge: shallow gradient inside the body = a welding membrane
+  float weld = (1.0 - smoothstep(0.55, 1.05, gradMag)) * core;
+
+  float cellHalf = pix*0.5;
+  float dotMin=0.28, dotMax=0.46; // 1 : φ
+  float coreR = (dotMin + (dotMax-dotMin)*core)*cellHalf;
+  float baseR = mix(dotMin*cellHalf, coreR, present);
+  float dotR  = baseR * (1.0 + uWeldSwell*weld*4.0); // neck-ridge swell
+
+  // Move 4b — twinkle breathing (in-place)
+  float twinkle = 0.85 + 0.15*sin(uTime*0.6 + hash21(cell)*6.2831);
+
+  // brightness band + neck specular lift (Move 2/3)
+  float brightFloor=0.42;
+  float bright = brightFloor + (1.0-brightFloor)*core + uWeldSpecular*weld;
+  float tone = clamp(1.0-fCell, 0.0, 1.0);
+  vec3 oklch = ramp(tone);
+  oklch.x = clamp(oklch.x*clamp(bright,0.0,1.6), 0.0, 1.0);
+  vec3 rgb = lin2srgb(oklabToLinear(oklchToOklab(oklch)));
+
+  float pd = length(fragCoord - cellCtr);
+  float aa = max(fwidth(pd), 1e-4);
+
+  // Move 3 — CARTOON SHADOW: a larger, darker, offset disc UNDER the bright dot
+  vec2 shOff = vec2(1.0,1.6) * (1.0 + uFlowAmt*2.0); // offset (velocity-coupled stub)
+  float spd = length(fragCoord - cellCtr - shOff);
+  float shadow = (1.0 - smoothstep(dotR*1.18 - aa, dotR*1.18 + aa, spd));
+  float dot = (1.0 - smoothstep(dotR - aa, dotR + aa, pd));
+
+  float dotA = dot * present * twinkle;
+  float shA  = shadow * present * 0.35;
+  if (dotA < 0.002 && shA < 0.002) discard;
+
+  // composite shadow UNDER the bright dot, premultiplied
+  vec3 shadowRgb = vec3(0.10,0.06,0.03);
+  vec3 outRgb = shadowRgb*shA*(1.0-dotA) + rgb*dotA;
+  float outA = shA*(1.0-dotA) + dotA;
+  fragColor = vec4(outRgb, outA);
+}`;
+
+const VERT = `#version 300 es
+in vec2 p; void main(){ gl_Position=vec4(p,0.0,1.0); }`;
+
+function mk(canvas){
+  const gl = canvas.getContext('webgl2',{premultipliedAlpha:true, alpha:true, antialias:false});
+  if(!gl){ return null; }
+  const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);
+    if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o;};
+  const prog=gl.createProgram();
+  gl.attachShader(prog,sh(gl.VERTEX_SHADER,VERT));
+  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FRAG));
+  gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw gl.getProgramInfoLog(prog);
+  gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); // premultiplied
+  const U=n=>gl.getUniformLocation(prog,n);
+  const u={res:U('uRes'),time:U('uTime'),pix:U('uPix'),pf:U('uPresenceFloor'),
+    ws:U('uWeldSwell'),wsp:U('uWeldSpecular'),fa:U('uFlowAmt'),a:U('uA'),b:U('uB'),r:U('uR')};
+  return {gl,u};
+}
+
+const c1=document.getElementById('c1'), c2=document.getElementById('c2');
+const r1=mk(c1), r2=mk(c2);
+const hud=document.getElementById('hud');
+if(!r1||!r2){ hud.textContent='WebGL2 unavailable'; }
+
+function resize(canvas){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const w=Math.round(canvas.clientWidth*dpr), h=Math.round(canvas.clientHeight*dpr);
+  if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+  return [w,h];
+}
+
+function draw(r,canvas,t){
+  if(!r)return;
+  const [w,h]=resize(canvas);
+  const {gl,u}=r;
+  gl.viewport(0,0,w,h);
+  gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  // two blobs orbiting toward/away → a merge cycle (necks in then out)
+  const phase=t*0.4;
+  const sep=0.20 + 0.14*Math.cos(phase); // closes to ~0.06 (merged) then opens
+  gl.uniform2f(u.res,w,h);
+  gl.uniform1f(u.time,t);
+  gl.uniform1f(u.pix,12*Math.min(devicePixelRatio||1,2));
+  gl.uniform1f(u.pf,0.12);
+  gl.uniform1f(u.ws,0.18);
+  gl.uniform1f(u.wsp,0.30);
+  gl.uniform1f(u.fa,0.35);
+  gl.uniform2f(u.a,-sep,0.0);
+  gl.uniform2f(u.b, sep,0.0);
+  gl.uniform1f(u.r,0.14);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  return sep;
+}
+
+let t0=performance.now();
+function loop(){
+  const t=(performance.now()-t0)/1000;
+  draw(r1,c1,t);
+  const sep=draw(r2,c2,t);
+  hud.textContent=
+`spike LIVE · WebGL2 (the Safari surface)
+Move1 presenceFloor=0.12  field FILLS card
+Move2 neck-ridge weld swell=0.18 spec=0.30
+Move3 technicolor 3-stop + cartoon shadow
+Move4 flow=0.35 + twinkle breathing
+merge sep=${sep.toFixed(3)} (necks in@~0.06, out@~0.34)`;
+  requestAnimationFrame(loop);
+}
+loop();
+window.addEventListener('resize',()=>{}); // canvases re-measure each frame
+</script>
+</body></html>

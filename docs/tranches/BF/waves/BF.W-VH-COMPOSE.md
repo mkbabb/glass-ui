@@ -47,7 +47,7 @@ The painted-truth readback that the V↔H is the REAL spring morph (not a crossf
 
 ## The gestalt row
 
-**Roster surface: `dock-vh-morph`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the liquid dock morphs V↔H as ONE continuous liquid box reshape — the silhouette flows from the tall column to the wide bar (the topology change occluded at the midpoint), reading as the SAME organism reorienting, never two crossfaded plates. PASS iff the morph reads as the shipped spring morph (matching morph-showcase's quality) AND the grab-pull reads as a direct-manipulation gesture. Rides `W-REFLECT`; surface-hash freshness floor binds.
+**Roster surface: `dock-vh-morph`** (the BF-roster row). Verdict requirement: on a FRESH whole-page both-mode `:5199` capture (NEVER reducedMotion), the liquid dock morphs V↔H as ONE continuous liquid box reshape — the silhouette flows from the tall column to the wide bar (the topology change occluded at the midpoint), reading as the SAME organism reorienting, never two crossfaded plates. PASS iff the morph reads as the shipped spring morph (matching morph-showcase's quality) AND the grab-pull reads as a direct-manipulation gesture. The binding paint is GREEN at its OWN close; W-REFLECT re-confirms on the union sweep (never the first paint); the surface-hash freshness floor binds.
 
 ## Fences
 

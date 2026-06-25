@@ -4,7 +4,7 @@ A primitive design system for glassmorphic Vue 3 interfaces. Token-driven, compo
 
 ## Philosophy
 
-Four principles govern the library.
+Five principles govern the library.
 
 **Token-first.** Every visual behavior is a CSS custom property. Consumers override via a preset CSS file imported after the library. No consumer edits library source for styling. Visual parity between consumers is a side effect of token discipline.
 
@@ -14,13 +14,15 @@ Four principles govern the library.
 
 **Orthogonal variants.** Surface tier (opacity + blur + border + shadow) is independent of semantic variant (intent) is independent of structural variant (shape geometry). A ghost Button sits flat on any Card variant. These axes never collapse into one vocabulary.
 
+**Aristotelian proportion + the iOS-27 canon.** Geometry is golden, never arbitrary: the type ladder steps by √φ (≈1.272), long-form leading is φ (1.618), the rest motion-weight is 1/φ (≈0.62), and every free radius / spacing / measure derives from the φ family rather than a round px (§L6). And the library is not "iOS-inspired" — it builds **reference-grade canonical iOS-27 Liquid-Glass demos that MATCH or BETTER** the analyzed reference set (`docs/tranches/BD/viz/video-audit/IOS27-REFERENCE.md`, the bar T1–T17): perfected transmissive warm-cream glass (a colorful field behind glass + a defined edge, NEVER gray/dark/opaque, both modes), visible paper grain, audacious √φ type, cartoon flow & punch, golden proportion, and liquid weight on all motion. A primitive that merely *approximates* the reference has not shipped. Proportion is a *bias*, not a tyranny — hit targets, optical corrections, and the 1px hairline stay literal.
+
 ---
 
 ## Liquid Glass design language
 
-The four philosophy pillars describe HOW we ship the library. This section describes WHAT we ship — the design language those pillars carry. It is iOS-aligned (Liquid Glass material + spring physics + dynamic surface life) and idiomatic to the web (CSS custom properties, `backdrop-filter`, `linear()` easings, `@property`-typed interpolation).
+The four philosophy pillars describe HOW we ship the library. This section describes WHAT we ship — the design language those pillars carry. It is iOS-aligned (Liquid Glass material + spring physics + dynamic surface life) and idiomatic to the web (CSS custom properties, `backdrop-filter`, `linear()` easings, `@property`-typed interpolation). The reference bar is absolute and external: every surface clears or exceeds `IOS27-REFERENCE.md` (T1–T17). "iOS-aligned" is not aspiration — it is the measured floor; a primitive's spec is incomplete until it cites the reference target (`T1`…`T17`) it matches-or-betters.
 
-Five precepts compose the language. Each precept is canonical: when a primitive ships a surface, motion, tap response, motion tier, or a11y bracket, it consumes from this vocabulary rather than minting its own.
+Seven precepts compose the language. Each precept is canonical: when a primitive ships a surface, motion, tap response, motion tier, or a11y bracket, it consumes from this vocabulary rather than minting its own.
 
 ### §L1 — Liquid Glass
 
@@ -77,6 +79,8 @@ The keyframes.js `useSpringOrchestrator` composable (§Composables) accepts both
 
 The `--spring-gentle` curve (ζ=0.85, < 1% overshoot) lives alongside as the patient-settle variant for scroll-driven choreography and ambient transitions; it is the smooth-bouncy bridge for cases where `smooth` reads as too inert. See §Easing → Spring curves for the full `linear()` interpolation values.
 
+**The Cartoon punch curve — `--ease-cartoon-punch` (§Easing).** The four springs are the calm Liquid-Glass vocabulary; their overshoot is bounded to ≤10% by invariant (a tighter, "pointed" spring is the too-springy defect). The **Cartoon register** (§L4 → universal exaggeration; §Shadows → the moving cast) reaches *past* that ceiling for its deliberate exaggeration via a **shaped `linear()` keyframe**, not a spring: `--ease-cartoon-punch` anticipates (a real ~4% dip *below* origin — the §L4 anticipation principle made a curve, which no damped spring can express, since a single damped spring approaches its target monotonically from one side), then overshoots ~22%, then settles. It ships as a plain CSS easing token in §Easing — NOT a `SPRING_PRESETS` row (the ≤10% overshoot invariant + the analytic spring solver stay intact) and NOT a typed `MOTION_CURVES` entry (`MotionCurveKind` is the closed `"spring" | "bezier"` union; a hand-shaped `linear()` is neither, so it lives as a raw `--ease-*` custom property, requiring no engine extension). It is loud by design and opt-in; the workhorse remains `snappy`. PRM collapses it to `--ease-standard` like every spring (§L5).
+
 **Two cubic-bezier fallbacks** coexist as the substrate-cheap path for micro-interactions and the iOS-native decelerate register:
 
 - `--motion-ease-apple-spring` (`cubic-bezier(0.175, 0.885, 0.32, 1.275)`) — single-step elastic overshoot for switches and micro-hovers that don't want the multi-stop `linear()` cost.
@@ -106,36 +110,34 @@ The `useTouchGate` composable mediates the pointer / touch event distinction so 
 
 ### §L4 — Motion Tiers
 
-Disney's 12 principles of animation are the canonical taxonomy for UI motion; iOS embodies a specific subset, and glass-ui exposes the substrate to honor that subset. The principles split into three tiers: **strong** (every primitive ships them), **medium** (composition idioms exercise them), and **weak** (we don't pretend to ship them; they live at the consumer or the design tool).
+Disney's 12 principles are the canonical taxonomy for UI motion. **The library ships substrate for all twelve** — the *Liquid Weight is Universal* law: every **driver** motion (a motion the user's finger or a route-change caused) carries weight, inertia, bounce, and squish; it anticipates, overshoots, follows through, and travels an arc, and it morphs MORE the faster it moves (`useLiquidFlex` velocity-coupled squish). Motion that snaps tight with no give — instant, fade-only, no settle — is the anti-pattern, not a style. The principles split into two tiers by **who orchestrates them** (one primitive vs a scene), never by whether the library ships them.
 
-**Strong tier — these are non-negotiable.** Every primitive shipping motion must honor:
+**`--motion-weight` (0 → 1, rest `0.62 ≈ 1/φ`).** One scalar names *how much cartoon* a surface carries; it co-scales the squash depth, the overshoot share, the anticipation pull-back, and the cartoon-shadow travel together so they read as one proportioned deformation, never four unrelated tics. A primitive picks it once at rest (`0` = still, with a documented reason; dock / celebration push toward `1`). It is **driver-scoped**: an *observer* content-snap — a content carousel settling, a list reordering under the user's scroll — stays calm-overdamped per the §L2 driver-vs-observer rule (an over-springy carousel reads cheap; iOS reserves the bounce for open/morph). Liquid weight is universal on DRIVERS, not on every pixel that moves. PRM → `--motion-weight: 0` (the §L5 cascade zeroes the extra squash, overshoot, anticipation, arc, and stagger in one assignment). The token's value lands in §Motion per the Feature-token-home rule.
 
-| # | Principle | iOS embodiment | Glass-ui substrate |
+**Universal tier — every primitive shipping driver motion honors these:**
+
+| # | Principle | iOS-27 embodiment | Glass-ui substrate (live) |
 |---|---|---|---|
-| 1 | **Squash & stretch** | Button press → scale 0.96; bounces back | `--scale-press` + `--spring-snappy` (see §L3) |
-| 6 | **Slow in / slow out** | All non-spring animations use ease-in-out decelerate | `--ease-standard` (`cubic-bezier(0.4, 0, 0.2, 1)`) |
-| 9 | **Timing** | Tap < 250ms; transition 400–600ms; modal 500–800ms | `--duration-fast` / `--duration-base` / `--duration-slow` (see §Duration) |
-| 10 | **Exaggeration** | Spring overshoot (bounce > 0); pull-to-refresh elastic stretch | `--spring-snappy` / `--spring-bouncy` (see §L2) |
-| 11 | **Solid drawing** | Glass depth shadow conveys z-elevation; tier hierarchy enforces it | The §L1 seven-tier ladder + `--z-*` stack (see §Z-Index Stack) |
+| 1 | **Squash & stretch** | press → scale 0.96, bounce back; vol-preserving X·Y squish on move | `--scale-press` + `--spring-snappy` (§L3); `useLiquidFlex` (X·Y≈1) |
+| 2 | **Anticipation** | a control dips before it launches; a sheet pulls back before sliding up | `--ease-cartoon-punch` pre-dip (§L2 / §Easing); `--motion-weight` |
+| 5 | **Follow-through / overlap** | a child glyph settles *after* its parent; a label cross-fades trailing the indicator glide | `useStagger` / `useStaggerReveal` per-element delay (× `--motion-weight`) |
+| 6 | **Slow in / slow out** | every non-spring decelerates | `--ease-standard`; springs carry it intrinsically |
+| 7 | **Arc** | a morph travels a curved path, not a straight lerp | the fission `--split-dx`/`--split-dy` two-axis travel + the `useLiquidReveal` source-rect FLIP path — a real curve, not a line |
+| 9 | **Timing** | tap < 250ms; transition 400–600ms; modal 500–800ms | `--duration-fast` / `-base` / `-slow` (§Duration) |
+| 10 | **Exaggeration** | spring overshoot; pull-to-refresh elastic; the cartoon PUNCH | `--spring-bouncy` (§L2) → the cartoon `--ease-cartoon-punch` ceiling |
+| 11 | **Solid drawing** | glass depth conveys z; the cartoon layered-offset shadow gives a 2.5-D pop | the §L1 seven-tier ladder + `--z-*`; the §Shadows Cartoon register |
+| 12 | **Appeal** | distinctive personality — refraction, blob/meatball morph, technicolor punch | `<Aurora>` + the meatball goo (§L7) + the Cartoon register |
 
-**Medium tier — composition idioms exercise these.** They are not primitive-level; they are scene-level. A primitive does not "ship" anticipation, but a composition recipe (sheet entrance, pull-to-refresh, modal swipe-dismiss) does:
+**Scene-orchestrated tier — a composition orchestrates these from the universal substrate; the library *enables* them, no longer disclaims them:**
 
-| # | Principle | iOS embodiment | Composition site |
+| # | Principle | Why it is scene-level | How the library enables it |
 |---|---|---|---|
-| 2 | **Anticipation** | Sheet pulls back ~4px before sliding up; pull-to-refresh tug | Sheet + Drawer entrance recipes |
-| 4 | **Straight-ahead vs. pose-to-pose** | Gestures = spring (straight-ahead); transitions = keyframe (pose-to-pose) | Decision lives in §L2 spring-vs-ease rule |
-| 5 | **Follow-through / overlapping action** | Icon rotates *after* parent sheet finishes presenting | Composition discipline; see `useSpringOrchestrator` chaining |
-| 12 | **Appeal** | Distinctive personality — Liquid Glass refraction, blob morphs | `<Aurora>` + the K W6 disco-grain + sparkle-sweep recipe |
+| 3 | **Staging** | backdrop-dim + non-focal desaturate is a scene decision, not a widget's | the drawer `--glass-drawer-t → scrim / page-scale` coupling + `<Aurora>` tone controls — the substrate provides the scrim + scale tokens, the consumer stages |
+| 8 | **Secondary action** | which sibling reacts to a primary is a cascade the scene owns | `useStagger` / `useStaggerReveal` chains in a composition recipe + the tab-indicator glide (`--tab-indicator-*`) carrying a trailing label cross-fade |
 
-**Weak tier — we don't ship these.** I am explicit: these Disney principles do not have first-class glass-ui substrate, and a consumer reaching for them is reaching outside the library:
+Principle 4 (straight-ahead vs. pose-to-pose) is not a tier — it is the §L2 spring-vs-ease decision (gestures = straight-ahead spring; transitions = pose-to-pose keyframe).
 
-| # | Principle | Why we don't ship it |
-|---|---|---|
-| 3 | **Staging** | A scene-level concern — backdrop dim + non-focal desaturate live in the consumer's composition, not in a library primitive |
-| 7 | **Arc** | A path-shape concern — modal entries follow straight + spring; curved-arc trajectories are a custom-keyframe lift the consumer owns |
-| 8 | **Secondary action** | A composition-cascade concern — the consumer orchestrates icon-morph-while-badge-updates; no primitive bundles a secondary-action contract |
-
-A consumer building scene-level choreography (staged onboarding, arc-trajectory hero animation, secondary-action chains) should compose the library's strong + medium substrate manually rather than wait for a library primitive that will not arrive.
+Every principle now names its **live** substrate; the difference between the tiers is orchestration scope, not whether the library ships it. A primitive's spec names which principles it exercises, which `--motion-weight` it rests at, and which spring/curve (§L2) carries the motion.
 
 ### §L5 — Accessibility brackets
 
@@ -153,15 +155,51 @@ Each bracket disables a specific subsystem rather than degrading the entire voca
 
 **No silent degradation.** A glass surface MUST NOT silently fall back when `prefers-reduced-transparency` is on without also retiring the grain + the catch-light + the saturate boost — those layers are the refraction; without the blur they read as decorative noise on a solid plate. The §Glass Surfaces "Accessibility fallbacks" rules carry the cascade; primitives consume those rules by composing the tier classes (`.glass-<tier>`) rather than by hand-rolling the layer recipe.
 
-**Cross-references.** The substrate values for the five precepts live elsewhere in this document:
+### §L6 — Aristotelian Proportion
+
+Proportion is a governing axis, peer to glass and motion. **Nothing dimensional is arbitrary**: radii, spacing, padding, card width, the rest motion-weight, and the type ladder derive from the golden section (φ ≈ 1.618) and its root (√φ ≈ 1.272). The type ladder already obeys this (§Typography, √φ steps) — the proven exemplar; §L6 extends the law to all dimensional tokens.
+
+- **Type** — the √φ ladder (`--type-*`), unchanged.
+- **Radius** — the √φ-derived ladder (§Border Radius); **concentric** nested radii subtract the gap (`r_inner = r_outer − gap`) so corners stay parallel (the iOS concentric-radius law; `BD.W-CONCENTRIC-RADIUS`).
+- **Spacing / padding** — the canonical gaps step by √φ from a base; a card's padding and its corner radius share the proportion so it reads as one proportioned object.
+- **Card width / measure** — long-form measure targets the golden ratio of its column; hero stages target φ² of the body rung.
+- **Motion** — the rest `--motion-weight` is `1/φ ≈ 0.62` (§L4): present, alive, never manic.
+
+**Selection rule.** When a primitive needs a free dimension it reaches for the nearest φ-ladder token, never a hand-picked px. A new dimension earns a √φ-indexed rung; a non-φ value that is not a documented physical constant (1px hairline, hit-target floor, 60fps budget) is a defect the overfitting audit flags.
+
+**A11y carve.** Proportion is geometry, not motion or transparency — it has NO PRM / reduced-transparency bracket; it holds identically across all a11y states. (That is why it is its own precept, not folded into §L1 or §L4.)
+
+### §L7 — The Cross-Engine Floor
+
+Every glass, motion, and meatball precept must render **identically perfect in Chrome AND Safari/WebKit** — a hard gate, not best-effort (the reference bar is iOS; a WebKit defect is a failed surface). The floor names the sanctioned + forbidden mechanisms ONCE so every precept cross-references one rule instead of re-litigating "Safari-safe" per section.
+
+**Sanctioned (identical on both engines):**
+- **Compositor channels only for steady-state animation** — `transform`, `opacity`, and a surface's OWN `filter` (blur-settle, brightness) are GPU-composited on both engines.
+- **Meatball goo = a STATIC inline-SVG `filter: url()` over a frozen layer** — the `feGaussianBlur` + `feColorMatrix` alpha-threshold goo (`DockGooFilter` / `GlassGooFilter` / `#glass-goo`, `fission-bridge.css`) is applied to a layer whose *children* move on `transform`; the filter element itself is static. The merge is a **real metaball** — two blurred shapes whose alpha thresholds fuse at the waist (necks stretch, thin, and SNAP), **never a naive ellipsoid tween**. **`color-interpolation-filters: sRGB` is mandatory**: WebKit renders SVG filters in sRGB *regardless* of the `color-interpolation-filters` value (a known WebKit limitation — see `WatercolorDot.vue`), while Chrome/FF honor `linearRGB`; declaring `sRGB` forces Chrome to match WebKit's forced-sRGB threshold so the waist reads identically on both (the live filters already set it).
+- **`@supports` + PRM floors** — every glass / motion / goo precept ships its degraded arm (`@supports not (backdrop-filter)` solid arm; PRM → instant topology swap, zero neck frames).
+
+**Forbidden (breaks or janks on WebKit):**
+- **`backdrop-filter: url(#…)` for the goo or any steady-state** — WebKit drops an SVG-filter reference through `backdrop-filter`; the goo is a normal `filter` on the surface's own layer (the §L1 "glass cannot sample glass" trap is adjacent). *Sanctioned exception:* a **`@supports (backdrop-filter: url(#…))`-GATED, Chromium-only refraction enhancement with a plain-blur WebKit fallback** (the live `glass-refract` lens, `glass-refract.css`) — the gate + the fallback arm are what make it cross-engine-honest, never an un-gated declaration.
+- **A goo `filter: url(#…)` on an ANCESTOR of a transmissive glass surface** — an ancestor `filter` creates an isolated rendering buffer that KILLS `backdrop-filter` on EVERY descendant (both Chrome and WebKit), so the glass renders a flat opaque slab instead of transmitting the field behind it (a §3 / BA.W-NO-GRAY violation — the dock-hub goo-tear lesson). The goo metaball neck/bridge and a transmissive glass surface are mutually exclusive *under a shared ancestor filter*. The neck must be a **SIBLING** layer (the `fission-bridge.css` / goo-morph pattern — the goo rides its own layer next to the glass, never wrapping it), never an ancestor of the glass.
+- **Per-frame `backdrop-filter` re-blur in a steady-state loop** — re-samples the backdrop every frame (pathological on WebKit). Backdrop-blur ENGAGE is gated to a one-shot overlay-pull window, never a loop.
+- **`light-dark()` wrapping an inset-shadow fragment** — computes the whole `box-shadow` to none on both engines (the live `feedback_lightdark_inset_shadow` trap); per-mode arms only.
+- **Naive ellipsoid "blob" tweens** masquerading as metaballs — they read as two shapes sliding, not merging; the goo threshold is the only sanctioned merge.
+
+**The paint-cost fence.** Paint-bound animations (the cartoon `box-shadow` throw, a `border-radius` morph, a large `filter` region) are gated to discrete state-flips or one-shot transitions, never steady-state loops; steady-state motion uses transform/opacity only. A viz (Aurora, DotFlow) owns its own canvas (GPU-only, offscreen-paused via `useIntersectionPause`) and inherits the PRM-freeze + park-when-hidden floor.
+
+A precept's spec is incomplete if it ships a motion or goo mechanism without naming its §L7 arm (which channel, which fallback, which fence). The acceptance proof is a **paired-engine π capture** (Chromium AND WebKit), never a single-engine green.
+
+**Cross-references.** The substrate values for the seven precepts live elsewhere in this document:
 
 - §L1 Glass tier values → §Glass Surfaces (token table + accessibility fallbacks)
 - §L2 Spring curve values → §Easing → Spring curves
 - §L3 Press / lift / focus scales → §Interactive States
-- §L4 Duration tokens → §Duration; z-stack → §Z-Index Stack; motion primitives → §Motion + §Composables
+- §L4 Duration tokens → §Duration; z-stack → §Z-Index Stack; motion primitives → §Motion + §Composables; `--motion-weight` → §Motion
 - §L5 A11y fallback rules → §Glass Surfaces → Accessibility fallbacks
+- §L6 Proportion → §Border Radius (√φ ladder + concentric rule) + §Typography (√φ exemplar)
+- §L7 Cross-engine arms → §Glass `@supports`/PRM fallbacks + the goo filters + §Motion Safari fences
 
-A primitive's section in this document SHOULD name which tier (§L1), which spring (§L2), which tap rung (§L3), which Disney tier (§L4), and which a11y bracket (§L5) it consumes. Specs that ship without naming their precept-level vocabulary are incomplete.
+A primitive's section in this document SHOULD name which tier (§L1), which spring or curve (§L2), which tap rung (§L3), which motion principle + `--motion-weight` (§L4), which a11y bracket (§L5), which §L6 proportion rung, and which §L7 cross-engine arm (channel + fallback) it consumes. Specs that ship without naming their precept-level vocabulary are incomplete.
 
 ---
 
@@ -267,6 +305,16 @@ Generated from damped spring physics. Use `easing-function: var(--spring-*)` or 
          1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1)
   ```
 
+### Cartoon punch (`linear()`—shaped keyframe, NOT a spring)
+
+The Cartoon register's motion half (§L2, §Shadows). A shaped `linear()` with an explicit negative anticipation leg: it dips below origin (anticipation — a thing no damped spring can express), crosses 1.0, peaks ~1.22 (the punch overshoot, deliberately past the spring ≤10% fence — which is why it is a *register*, not a spring), then settles. Compositor-safe (drives `transform` only). Opt-in, loud by design. PRM → `--ease-standard`. Not a `SPRING_PRESETS` row and not a typed `MOTION_CURVES` entry — a raw CSS easing token.
+
+- **`--ease-cartoon-punch`**:
+  ```
+  linear(0, -0.012, -0.038 33%, 0 42%, 0.62, 0.93, 1.12, 1.22 66%, 1.18,
+         1.09, 1.02, 0.985, 0.98, 0.99, 0.997, 1)
+  ```
+
 ### Cubic-bezier (fallback, exits, non-spring)
 
 - `--ease-standard`: `cubic-bezier(0.4, 0, 0.2, 1)`—decelerate
@@ -320,6 +368,8 @@ Twelve-tier stacking, plus two out-of-band tiers:
 | `--radius-badge` | var(--radius-pill) | 9999 px               | Badges                     |
 | `--radius-dock`  | var(--radius-pill) | 9999 px               | Dock container             |
 
+**φ-derivation + the concentric rule (§L6).** The ladder is the √φ family, not arbitrary px: read `sm` (4px) as the base, `md` ≈ base·√φ, `--radius`/`lg` ≈ base·φ (the live 8px default), `xl` ≈ base·φ·√φ (12px), `2xl` ≈ base·φ² (16px) — the live values already sit on the ladder, so this is a derivation re-statement, not a visual break. **Nested surfaces are concentric**: an inner radius is `calc(var(--radius-outer) − var(--gap))` so the corners of a chip inside a card stay parallel to the card's (the iOS concentric-radius law; `BD.W-CONCENTRIC-RADIUS`). A new free radius earns a √φ-indexed rung, never a magic number.
+
 ---
 
 ## Shadows
@@ -343,21 +393,25 @@ Twelve-tier stacking, plus two out-of-band tiers:
 
 Offset-0 elevation token, no directional Y bias. Use case: dock-hosted icons (rightmost child of a horizontal dock pill, where the dock's `--shadow-dock` `0 4px 20px` downward cast reads as a per-icon right-edge halo). Consumers compose via `--shadow-dock-override: var(--shadow-uniform)` per-instance, or attach to per-icon-button shadow stacks where directional cast is wrong-shape. Same color-mix recipe family as the sized rungs above; reads as a peer elevation. Added Z.W2.T3a per A2 §B7.
 
-### Cartoon shadows (offset, layered)
+### Cartoon shadows (offset, layered) — the Cartoon register
+
+The cartoon shadow is not just an elevation token — it is the **visual half of the Cartoon register** (its motion half is `--ease-cartoon-punch`, §L2). The 1940s-technicolor reading: a surface pops off the page in bold, layered offset planes that **punch** when it moves. The live token source (`src/styles/tokens/shadow.css`) is the `color-mix` form below — **never raw `rgba(0,0,0,…)`** (the prior doc showed stale hardcoded black). The cast rides `--shadow-color` (which resolves to `var(--foreground)`), so it re-tints by construction across light/dark — a near-black ink stamp in light, near-white in dark:
 
 ```
---shadow-cartoon-sm: -3px 2px 1px rgba(0,0,0,0.10),
-                      0   3px 1px rgba(0,0,0,0.10),
-                     -3px 3px 1px rgba(0,0,0,0.06);
-
---shadow-cartoon-md: -4px 3px 1px rgba(0,0,0,0.12),
-                      0   4px 1px rgba(0,0,0,0.12),
-                     -4px 4px 2px rgba(0,0,0,0.08);
-
---shadow-cartoon-lg: -6px 4px 1px rgba(0,0,0,0.12),
-                      0   6px 1px rgba(0,0,0,0.12),
-                     -6px 6px 2px rgba(0,0,0,0.08);
+--shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                      0   3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                     -3px 3px 1px color-mix(in srgb, var(--shadow-color)  6%, transparent);
+--shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                      0   4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                     -4px 4px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
+--shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                      0   6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                     -6px 6px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
 ```
+
+> A *warm-tinted* (technicolor-color) cartoon cast — re-pointing the cartoon family off the neutral `--shadow-color`/`--foreground` toward a warm or chromatic ink — is a deliberate token decision deferred to the `cartoon-shadow` greenfield (`docs/tranches/BD/greenfield/cartoon-shadow/`), not asserted here.
+
+**The cast is a MOVING cast.** Under the register, the offset travels with the gesture: as a surface translates or presses, the cartoon-shadow offset slides *opposite* the motion (the cel's light source stays fixed while the object moves), scaled by `--motion-weight`. The travel is a `transform` on a `::after` shadow-caster layer — **never an animated `box-shadow`** (box-shadow is paint-bound, not compositor-cheap; §L7). The cast deepens on press (the object lifts off its shadow) and snaps back on release. A surface enters the register by composing a cartoon-shadow rung (the `.shadow-cartoon-{sm,md,lg}` utilities, or `<Card surface="cartoon">` / the `.cartoon-surface` utility, which read `--shadow-cartoon` directly) **with** `--ease-cartoon-punch` on its interactive transitions + the exaggerated `--scale-press` snap-and-settle. The register is opt-in (loud by design) — the default glass surface stays the calm six-layer composite. PRM → static cast, no travel, no punch. `prefers-contrast: more` → the cast opacity floors UP (the inked edge is a legibility asset); `prefers-reduced-transparency` does NOT touch it (opaque ink, not a transmissive layer — it survives as a bonus legibility anchor).
 
 ### Card flat-offset shadows
 
@@ -443,9 +497,9 @@ verification is asynchronous (Playwright-MCP or equivalent).
 
 ### Convenience shorthands
 
-- `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant.
+- `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via the `surface` ladder — `surface="cartoon"` → `.cartoon-surface`, or a hover tier) or in components that explicitly opt into a hover variant.
 - `.glass-pill`—`.glass-resting` + pill radius + press feedback (scale 0.97 on active)
-- `.glass-cartoon`—**interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to resting-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-resting)`) so consumers without cartoon-specific overrides still get a coherent surface. Carried by the `<CartoonCard>` sibling primitive (v0.8.0).
+- `.cartoon-surface`—**the cartoon decoration utility** (`cards.css`), composed by `<Card surface="cartoon">`: a 2px inked bezel + the layered-offset cel-shadow stamp (`--shadow-cartoon-md` → `-lg` on hover), and (the Cartoon register, §Shadows) the moving caster that punches on interaction. It composes ON TOP of the host's resolved glass tier — it is NOT itself a tier. (The former `.glass-cartoon` recipe + the `<CartoonCard>` sibling primitive are retired; this is the live carrier.)
 
 ### Accessibility fallbacks
 

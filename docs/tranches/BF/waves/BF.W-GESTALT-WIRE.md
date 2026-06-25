@@ -39,7 +39,7 @@ Two seams, no new gate logic (`proof:ba-gestalt`'s PIXEL reader, G1-G8, the `png
   | `fission-neck` | the neck SPANS the gap (body-anchored spanning filament, gap-sized goo blur) — R3/D14 | W-FISSION-FILAMENT |
   | `rail-facet` | the box-inviolate floating per-facet `--glass-accent` carousel along the gutter hairline — R4/R10 | W-RAIL-FIDELITY |
   | `dock-context` | the live context→silhouette (bar → bar+pill → split, the pill→tabbar fuse-meld) — R13 | W-SILHOUETTE-REALIZE |
-  | `player` | the now-playing media register (art-chip + transport reads warm glass, blooms from the dock) — R20 | W-DOCK-INTEGRATE · W-CONSUMER-BAND |
+  | `nowplaying-pill` | the now-playing media register — the album-hue pill-plate tint (`--glass-fill-tint` off `--glass-ambient-hue`) + art-chip + transport reads warm glass, blooms from the dock — R20 | W-DOCK-NOWPLAYING-PILL (the un-folded owner; W-DOCK-INTEGRATE paints the SFC, W-CONSUMER-BAND wires the hue) |
   | `vertical` | the V↔H morph + vertical content-REFLOW (the shipped `useDockOrientationMorph`, never a crossfade) — R5/R7 | W-VH-COMPOSE |
   | `layer-in-liquid` | `DockLayerGroup` drill-in / collapse-while-switching OVER the live aurora — R15 | W-LAYER-IN-LIQUID |
   | `grow-on-event` | scroll-condense + touch-drag-to-grow on the dock/sheet — R14 | W-LIQUID-GROW-ON-EVENT |

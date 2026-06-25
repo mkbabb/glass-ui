@@ -382,6 +382,15 @@ onBeforeUnmount(() => {
                 ref="mainEl"
                 class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
+                <!-- BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar.
+                     The `.scroll-progress` recipe (scroll-driven.css) drives a 0..1
+                     scaleX fill off a native scroll() timeline on the compositor;
+                     `.demo-scroll-progress` pins it to the top of the content column
+                     and points `--scroll-progress-scroller` at the `--demo-main-progress`
+                     scroll-timeline named on this `.demo-main-scroller` (the ROUTE owns
+                     scroll, not `root`). PRM-safe + zero-JS by construction (the recipe
+                     sits under the PRM + @supports(animation-timeline) gate). -->
+                <div class="demo-scroll-progress scroll-progress" aria-hidden="true" />
                 <!-- BA.W-ANIMATE Tier A — the route page-enter. The
                      `<RouterView>` mount is wrapped in a <Transition> keyed on the
                      route so each navigation fires ONE coherent page-enter: the

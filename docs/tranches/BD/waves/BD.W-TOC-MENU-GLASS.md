@@ -101,7 +101,7 @@ This wave PAINTS (the ToC chrome is a visible surface), so it takes a **`proof:b
 - **(c) the on-glass text clears the floor** — the muted ToC text + document body read the on-glass muted rung (legible over the composited glass plate, ≥4.5:1 — the `--on-glass-muted` derivation), quieter than the active row's `--foreground` ink (the muted-vs-ink register holds).
 - **(d) both modes** — the dark capture reads the BC dark-arm (`--on-glass-muted` brighter over the luminous-dark plate; the selected-glass tier lifts off the dark plate).
 
-**The BC anti-disease law observed:** the device-free M13 clauses prove the SOURCE re-point; the π proves the RENDERED glass (a re-point that leaves a competing flat wash, or whose `.glass-menu-row` silently no-ops, passes the source gate but reds the capture — the cascade-trap is exactly the silent-no-op class the live π catches). No "rides W-REFLECT3"; the readback runs at this wave's close.
+**The BC anti-disease law observed:** the device-free M13 clauses prove the SOURCE re-point; the π proves the RENDERED glass (a re-point that leaves a competing flat wash, or whose `.glass-menu-row` silently no-ops, passes the source gate but reds the capture — the cascade-trap is exactly the silent-no-op class the live π catches). No "is GREEN at this wave close; W-REFLECT re-confirms on the union tree"; the readback runs at this wave's close.
 
 ---
 

@@ -1,0 +1,18 @@
+# W-DOCK-SCROLL-FISSION — wire the SHIPPED fission engine to the live scroll-driven dock (the sub-dock goo-split)
+
+**Surfaced by:** the ios27 video-audit (`docs/tranches/BD/viz/video-audit/IOS27-REFERENCE.md` T2, the HEADLINE) + the user repeatedly — "notice how the apple music logo goo-splits off from the core dock to form the abstract bottom dock" / "sub-docks" / the dock changing form/function by context. The v3 reference's defining move: scroll → the 5-tab dock GOO-SPLITS into a `[Library●][◀player▶][●Search]` triad (transport-center, nav-buds-flank — the media signature), scroll-up → re-merge.
+
+## The finding (the convergence-changing insight)
+glass-ui ALREADY SHIPS THE ENTIRE ENGINE — `useDockFission` (n-ary detach, ONE `SpringProgress`/`DOCK_SPRING`, `--split-dx/dy`/`--neck-t`, `useLiquidFlex` tanh recoil capped LOW, `usePointerVelocityField` seam-tension, PRM sync-seat, bidirectional + interruptible) + `DockGooFilter.vue` (Safari-safe sRGB `filter:url()` metaball) + `fission-bridge.css` (necks + specular-sweep + ripple + merge-splash) + `DOCK_SPLIT_SIGNATURES` (search=radial / **media=lateral** / nav=inward — the media=lateral signature is EXACTLY the v3 f037-f040 lateral transport-anchored peel). **The gap is ASSEMBLY, not building: `useDockFission` is consumed ONLY in demo stories (`liquid-playground`, `DynamicIslandCall`, `AppleMusic`), NOT wired to the live nav-dock, NOT scroll-driven.** `useScrollChrome` (collapse-state) and `useDockFission` (split) exist as SEPARATE primitives never COMPOSED. **Engine 100%, assembly 0%.**
+
+## The wave (the assembly — ONE engine, no fork)
+Compose `useScrollChrome` → `useDockFission` on the real shell `GlassDock`: an opt-in `:fissionOnScroll` (default false) that, past a scroll threshold, drives the dock through the `media` split signature — the core 5-tab bar goo-splits into the persistent center transport capsule + the flanking nav-bud capsules; scroll-up re-merges. NO new engine — the wire is the missing composition of two shipped primitives. The live shell docks (BottomDock/SidebarDock) opt in; the box-INVIOLATE fence holds (each resting capsule carries its OWN margin + transmissive glass).
+
+## The HARDENED ios27 bar (from the frame-by-frame)
+(a) the necks must STRETCH + THIN to a metaball waist then SNAP (not a fade-disconnect) — the `DockGooFilter` mount reads at the split midpoint; (b) the three resting capsules each carry their OWN margin + transmissive glass (box-INVIOLATE); (c) bidirectional + interruptible (a mid-split scroll-reverse re-seats velocity-continuous off the live `(position, velocity)`); (d) PRM → instant topology swap, zero neck frames. The transport capsule is the persistent CENTER; the nav buds flank (the media signature, not a generic split).
+
+## Gate (real, tranche-dev)
+`proof:dock-scroll-fission` (the composition exists on the live shell, NOT a demo-only consume; `useScrollChrome`→`useDockFission` wired, no second engine; the media signature; the box-INVIOLATE three-capsule rest; bidirectional/interruptible/PRM) + the binding π frame-series (the waist + the three-capsule rest + the re-merge, BOTH modes; born-RED on the current unassembled state) + the `proof:ba-gestalt` dock verdict. **CONVERGENCE: ~80% (engine 100%, assembly 0%) — the highest-value-per-effort wave in the BD set: a wiring, not a build.**
+
+## Sequencing
+DEPENDS: `useDockFission` + `DockGooFilter` + `fission-bridge.css` + `useScrollChrome` (ALL shipped) + W-DOCK-MORPH-FAMILY. The flagship instance of W-DOCK-HUB-API (the dock-as-hub: the sub-dock is a generalized spawned dock). Anchors the ios27 dock fidelity (T2/T3 of IOS27-REFERENCE).

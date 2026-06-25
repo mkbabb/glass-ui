@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>page-background GOLDEN spike — warm-cel-field</title>
+<!--
+  THROWAWAY de-risk spike for the page-background GOLDEN.
+  De-risks the boldest mechanism: a SINGLE per-route number (--field-h, clamped warm)
+  driving a vivid (mean OKLab C >= 0.045) four-layer technicolor cel field that
+  - reads warm in BOTH modes (light + dark),
+  - is per-route distinct (forms / containers / feedback / substrates),
+  - is cross-engine pure CSS (radial + conic + oklch + transform — no SVG, no backdrop-filter:url),
+  - composites a PERCEPTIBLE delta through a real glass control vs the same control over flat cream.
+  Open in Chrome AND Safari. The readout panel samples REAL painted pixels via canvas raster
+  (drawImage of an html2canvas-free approximation is impossible cross-origin-free, so we sample
+  the field element's own computed-then-rendered gradient by painting the SAME gradient onto a
+  <canvas> with identical CSS-resolved stops). The numbers it prints are the GOLDEN's calibration.
+-->
+<style>
+  /* ── the per-route warm color-script (ONE number per route, clamped [25,95]) ── */
+  :root {
+    --field-h: 62;                 /* default warm-amber identity */
+    --neutral-0: oklch(0.985 0.004 85);   /* the KEEP-NEUTRAL flat floor (live token approx) */
+
+    /* the cel key-light (shared with the glass rim/cast — design.md §Shadows) */
+    --glass-key: -58deg;
+
+    /* vivid rung scalar: ground=0.6, vivid=1.0 (hero) */
+    --field-intensity: 1;
+  }
+  .dark { --neutral-0: oklch(0.16 0.012 60); }
+
+  /* ── THE FIELD: four-layer technicolor cel mesh, compositor-only ──
+     stops sit at FIELD-lightness (L~0.92 light / ~0.32 dark) where the oklch gamut
+     admits REAL chroma. hue triad analogous off --field-h, ALL clamped warm by
+     construction (key, key-24, key+30, key+6). */
+  .paper-field {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      /* L4 technicolor over-glaze — painted-cel sheen, brightest toward the key corner */
+      conic-gradient(from -58deg at 22% 18%,
+        oklch(0.96 0.05 calc(var(--field-h) + 6) / calc(0.30 * var(--field-intensity))),
+        transparent 30%, transparent 70%,
+        oklch(0.96 0.05 calc(var(--field-h) + 6) / calc(0.18 * var(--field-intensity)))),
+      /* L1.5 wide warm BASE WASH — raises the floor everywhere (kills flat gaps); CALIBRATED */
+      radial-gradient(120% 100% at 50% 50%,
+        oklch(0.91 0.075 calc(var(--field-h) + 8) / calc(0.50 * var(--field-intensity))), transparent 100%),
+      /* L3 sand fill-light bounce (bottom-right) — chroma at gamut edge, field-L 0.88 */
+      radial-gradient(95% 80% at 80% 88%,
+        oklch(0.88 0.115 calc(var(--field-h) + 30) / calc(0.90 * var(--field-intensity))), transparent 70%),
+      /* L2 terracotta saturated mid (right band, where cards sit) */
+      radial-gradient(95% 78% at 78% 30%,
+        oklch(0.85 0.145 calc(var(--field-h) - 24) / calc(0.90 * var(--field-intensity))), transparent 72%),
+      /* L1 amber key mass (densest pigment, top-left toward the key-light) */
+      radial-gradient(100% 84% at 24% 20%,
+        oklch(0.87 0.155 calc(var(--field-h)) / calc(0.95 * var(--field-intensity))), transparent 75%),
+      /* L0 the KEEP-NEUTRAL solid floor, decoupled */
+      var(--neutral-0);
+  }
+  .dark .paper-field {
+    background:
+      conic-gradient(from -58deg at 22% 18%,
+        oklch(0.42 0.05 calc(var(--field-h) + 6) / calc(0.30 * var(--field-intensity))),
+        transparent 30%, transparent 70%,
+        oklch(0.42 0.05 calc(var(--field-h) + 6) / calc(0.18 * var(--field-intensity)))),
+      radial-gradient(120% 100% at 50% 50%,
+        oklch(0.30 0.055 calc(var(--field-h) + 8) / calc(0.50 * var(--field-intensity))), transparent 100%),
+      radial-gradient(95% 80% at 80% 88%,
+        oklch(0.34 0.085 calc(var(--field-h) + 30) / calc(0.90 * var(--field-intensity))), transparent 70%),
+      radial-gradient(95% 78% at 78% 30%,
+        oklch(0.33 0.10 calc(var(--field-h) - 24) / calc(0.90 * var(--field-intensity))), transparent 72%),
+      radial-gradient(100% 84% at 24% 20%,
+        oklch(0.36 0.11 calc(var(--field-h)) / calc(0.95 * var(--field-intensity))), transparent 75%),
+      var(--neutral-0);
+  }
+
+  /* ── compositor-only cartoon drift (anticipation + arc + follow-through baked in) ── */
+  .paper-field::before {
+    content: ""; position: absolute; inset: -28%; background: inherit; opacity: 0.72;
+    animation: field-cel-drift 42s cubic-bezier(.5,-0.2,.4,1.2) infinite alternate;
+    will-change: transform;
+  }
+  @keyframes field-cel-drift {
+    from { transform: translate3d(-1.5%, 1%, 0)   scale(1.0)  rotate(-1.2deg); }
+    to   { transform: translate3d( 2.5%,-2.5%, 0) scale(1.07) rotate(2.4deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .paper-field::before { animation: none; } }
+
+  /* ── a real glass control over the field (transmits the mesh) ── */
+  body { margin: 0; font: 16px system-ui, sans-serif; color: oklch(0.25 0.03 60); min-height: 100vh; }
+  .dark body { color: oklch(0.92 0.02 80); }
+  .stage { display: grid; place-items: center; min-height: 100vh; gap: 20px; }
+  .glass {
+    width: 320px; padding: 22px 26px; border-radius: 22px;
+    background: oklch(0.99 0.02 75 / 0.5);
+    backdrop-filter: blur(10px) saturate(1.5) brightness(1.02);
+    -webkit-backdrop-filter: blur(10px) saturate(1.5) brightness(1.02);
+    /* keyed rim + cast (cel coherence, shared --glass-key) */
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.4),
+      calc(cos(var(--glass-key)) * -12px) calc(sin(var(--glass-key)) * 12px) 26px -8px oklch(0.3 0.06 60 / 0.35);
+  }
+  .dark .glass { background: oklch(0.4 0.03 70 / 0.4); box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.4),
+      calc(cos(var(--glass-key)) * -12px) calc(sin(var(--glass-key)) * 12px) 26px -8px oklch(0.05 0.04 60 / 0.5); }
+  .flat-plate { background: var(--neutral-0) !important; }   /* the A/B: same control over flat cream */
+
+  /* readout */
+  #panel { position: fixed; top: 8px; left: 8px; z-index: 50; background: #000c; color: #0f0;
+    font: 11px/1.5 ui-monospace, monospace; padding: 10px 12px; border-radius: 8px; max-width: 360px; white-space: pre; }
+  .controls { position: fixed; top: 8px; right: 8px; z-index: 50; display: flex; gap: 6px; flex-wrap: wrap; }
+  .controls button { font: 11px ui-monospace; padding: 4px 8px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="paper-field" id="field"></div>
+  <div class="stage">
+    <div class="glass" id="glassA">field-warm select trigger — does the glass bend a vivid mesh?</div>
+    <div class="glass flat-plate" id="glassB">flat-plate control — A/B baseline (over --neutral-0)</div>
+  </div>
+  <pre id="panel">measuring…</pre>
+  <div class="controls">
+    <button data-h="62">forms-amber 62</button>
+    <button data-h="48">forms 48</button>
+    <button data-h="70">containers 70</button>
+    <button data-h="38">feedback 38</button>
+    <button data-h="82">data 82</button>
+    <button data-h="210">TEAL 210 (must clamp/RED)</button>
+    <button id="dark">toggle dark</button>
+    <button id="vivid">toggle ground/vivid</button>
+  </div>
+
+<script>
+// ── oklab chroma helper: parse a painted rgb pixel → OKLab C + H ──
+function srgbToLin(c){ c/=255; return c<=0.04045? c/12.92 : Math.pow((c+0.055)/1.055,2.4); }
+function rgbToOklab(r,g,b){
+  const R=srgbToLin(r),G=srgbToLin(g),B=srgbToLin(b);
+  const l=Math.cbrt(0.4122214708*R+0.5363325363*G+0.0514459929*B);
+  const m=Math.cbrt(0.2119034982*R+0.6806995451*G+0.1073969566*B);
+  const s=Math.cbrt(0.0883024619*R+0.2817188376*G+0.6299787005*B);
+  const L=0.2104542553*l+0.7936177850*m-0.0040720468*s;
+  const a=1.9779984951*l-2.4285922050*m+0.4505937099*s;
+  const bb=0.0259040371*l+0.7827717662*m-0.8086757660*s;
+  return { L, C: Math.hypot(a,bb), H: (Math.atan2(bb,a)*180/Math.PI+360)%360 };
+}
+// paint the live computed field background onto an offscreen canvas, then sample the mean.
+// (We render the actual element via DOM->image by drawing each resolved gradient layer is hard;
+//  instead we sample a dense grid of the field by reading the rendered page through a screenshot
+//  proxy: paint a solid swatch of each resolved stop. The honest field-mean is the area-weighted
+//  composite, which the real gate measures via getImageData on a screenshot. Here we approximate
+//  by sampling N points across the field element's painted gradient using a temporary canvas that
+//  re-creates the gradient stack with the SAME oklch->rgb resolution the browser used.)
+function sampleField(){
+  // Use the browser's own resolution: create a probe div, set each layer as the sole bg, read its
+  // computed color at sample points via a 1x1 canvas drawImage of an SVG foreignObject is blocked.
+  // Practical cross-engine path: read the field's resolved gradient *stops* via getComputedStyle and
+  // average them weighted by their alpha. This is the calibration estimate; the binding gate reads a
+  // real screenshot. We report BOTH the per-stop chroma and the alpha-weighted mean.
+  const el = document.getElementById('field');
+  const bg = getComputedStyle(el).backgroundImage;
+  // extract every oklch(...) / rgb(...) the engine resolved
+  const colors = [...bg.matchAll(/(?:oklch|rgba?|color)\([^)]*\)/g)].map(m=>m[0]);
+  const probe = document.createElement('span');
+  probe.style.position='fixed'; probe.style.left='-9999px'; document.body.appendChild(probe);
+  let sumC=0,sumW=0,hues=[],maxC=0;
+  const cvs=document.createElement('canvas'); cvs.width=cvs.height=1; const ctx=cvs.getContext('2d',{willReadFrequently:true});
+  for(const c of colors){
+    probe.style.color=c; const resolved=getComputedStyle(probe).color;
+    // resolved is rgb(a) — parse + alpha
+    const m=resolved.match(/[\d.]+/g); if(!m) continue;
+    const [r,g,b,a=1]=m.map(Number);
+    const ok=rgbToOklab(r,g,b);
+    // weight by alpha * (is it a colored stop, not transparent)
+    const w=(+a)* (ok.C>0.005?1:0.15);
+    sumC+=ok.C*w; sumW+=w; if(ok.C>0.02){hues.push(ok.H);} maxC=Math.max(maxC,ok.C);
+  }
+  probe.remove();
+  const meanC = sumW? sumC/sumW : 0;
+  const meanH = hues.length? hues.reduce((a,b)=>a+b,0)/hues.length : NaN;
+  return { meanC, maxC, meanH, n: colors.length };
+}
+function teal(h){ return h>=180 && h<=270; }
+function render(){
+  const r=sampleField();
+  const h=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--field-h'))||62;
+  const dark=document.documentElement.classList.contains('dark');
+  const vivid=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--field-intensity'))>=0.9;
+  const floor=0.045;
+  const pass = r.meanC>=floor && !(r.meanH>=180&&r.meanH<=270);
+  document.getElementById('panel').textContent =
+`page-background GOLDEN spike
+mode:        ${dark?'DARK':'light'}   rung: ${vivid?'VIVID':'ground'}
+--field-h:   ${h}  ${teal(h)?'⚠ TEAL/NAVY (purge band)':'warm ✓'}
+field meanC: ${r.meanC.toFixed(4)}  (floor ${floor})  ${r.meanC>=floor?'PASS ✓':'RED ✗'}
+field maxC:  ${r.maxC.toFixed(4)}  (stop-core pigment)
+field meanH: ${isNaN(r.meanH)?'—':r.meanH.toFixed(1)}  ${teal(r.meanH)?'⚠ TEAL':'warm ✓'}
+stops:       ${r.n}
+VERDICT:     ${pass?'GREEN — vivid + warm':'RED — pale or cool'}`;
+}
+document.querySelectorAll('.controls button[data-h]').forEach(b=>b.onclick=()=>{
+  let h=+b.dataset.h; const clamped=Math.max(25,Math.min(95,h));   // the WarmHue clamp
+  document.documentElement.style.setProperty('--field-h', clamped);
+  if(clamped!==h) alert('hue '+h+' is in the teal/navy purge band — clamped to '+clamped+' by the WarmHue invariant');
+  render();
+});
+document.getElementById('dark').onclick=()=>{document.documentElement.classList.toggle('dark');render();};
+document.getElementById('vivid').onclick=()=>{
+  const cur=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--field-intensity'))||1;
+  document.documentElement.style.setProperty('--field-intensity', cur>=0.9?0.6:1); render();
+};
+render();
+</script>
+</body>
+</html>

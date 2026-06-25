@@ -137,14 +137,17 @@ defineExpose({ stageRef });
     color: var(--muted-foreground);
 }
 
-/* ── THE PRM BLOCK declared ONCE for the whole gallery — every transition inside any tile
-   collapses to 0.01ms under reduce (the example never re-declares it). The `:deep()`
-   reaches the slotted example's transitions; the bloom/fission JS engines own their own
-   PRM snap (the spring's respectReducedMotion), so this covers the chassis + any residual
-   example CSS transition (none should animate a layout property — proof:no-layout-animation
-   guards that the moment it widens to demo/). ── */
+/* ── THE PRM BLOCK declared ONCE for the chassis. The slotted example's residual CSS
+   transitions are already collapsed by the demo's SHIPPED global reduce — the
+   `@container style(--demo-reduce-motion: reduce)` `*:not([data-allow-motion])` bucket in
+   demo.css matches the `<html>` ancestor and so reaches every gallery descendant (no
+   brittle deep-wildcard reach needed). The bloom/fission JS engines own their own PRM snap
+   (the spring's respectReducedMotion). This block scopes ONLY the tile chassis transitions
+   (the named chassis elements, no wildcard). ── */
 @media (prefers-reduced-motion: reduce) {
-    .dock-example-tile :deep(*) {
+    .dock-example-tile,
+    .dock-example-stage,
+    .dock-example-caption {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }

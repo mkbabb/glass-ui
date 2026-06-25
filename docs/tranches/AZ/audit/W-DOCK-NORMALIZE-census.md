@@ -163,6 +163,15 @@ A home anchor would pollute the receive-seam teaching surface. EXEMPT, recorded 
 
 A home anchor would pollute the search-facility teaching surface. EXEMPT, recorded positively.
 
+### File: `demo/stories/dock/liquid-playground.vue` — FEATURE_EXEMPT (BE.W-DOCK-RAIL-REALIZE)
+
+| dock @line | class | home-status | verdict |
+|---|---|---|---|
+| the horizontal `<GlassDock orientation="horizontal">` hosting the facet carousel in its `#rail` gutter | FEATURE | none | EXEMPT (the dock is the RAIL-IN-A-DOCK SUBJECT — the `<DockStack mode="facets">` accent-facet context carousel fans in the box-INVIOLATE gutter; the rail is NOT a vertical dock; the in-flow controls are placeholder nav glyphs framing the rail facility, a home-pattern would pollute the rail teaching surface) |
+| the vertical `<GlassDock orientation="vertical">` hosting the same facet carousel | FEATURE | none | EXEMPT (the second orientation of the SAME rail facility — the strip fans along the trailing-edge gutter, box-equal `deltaW=deltaH=0`; same rationale) |
+
+A home anchor would pollute the rail-facility teaching surface. EXEMPT, recorded positively. (The two docks demonstrate the facet-carousel rail in BOTH orientations — the dock-as-control-interface liquid-morph register, same scope as `morph-showcase`/`cta-receive`/`dock-search`.)
+
 ## Census closure (W5 — the anti-gameability floor)
 
 The dock-bearing SFCs partition EXACTLY across the three declared lists — no unaccounted dock

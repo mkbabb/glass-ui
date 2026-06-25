@@ -68,7 +68,7 @@ A Drawer/Sheet at HEAD paints the heaviest `--glass-bg-overlay` rung (α 0.95 �
 
 ## π — the binding paint readback
 
-**`tests-visual/sheet-translucent.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** This is a VISUAL wave — it earns a `proof:ba-gestalt` container-band verdict + a captured DELTA, both modes × desktop+mobile. NO source-green close; the "rides W-REFLECT3" pattern is FORBIDDEN (G8).
+**`tests-visual/sheet-translucent.spec.ts` (NEW, Chromium + WebKit, LOCAL real-render).** This is a VISUAL wave — it earns a `proof:ba-gestalt` container-band verdict + a captured DELTA, both modes × desktop+mobile. NO source-green close; the "is GREEN at this wave close; W-REFLECT re-confirms on the union tree" pattern is FORBIDDEN (G8).
 
 - **The binding readback:** mount a Drawer (snap-points) over a BUSY backdrop (the live aurora grid at `:5199`), open to the half-snap, and getImageData over a region BEHIND the lifted sheet crown vs a region the sheet fully covers. Assert the composited sheet fill α is in the see-through band (sub-0.95 — the backdrop's structure reads through the frost) AND body text on the sheet clears 4.5:1 against the busy grid (the AA floor — the sheet is content-bearing). BEFORE (overlay 0.95): the backdrop does NOT read through (α ≈ 0.95). AFTER (sheet 0.74): the grid's luminance variance reads through the plate.
 - **Both modes:** light (warm-cream see-through) + dark (the W-DARK-MATERIAL luminous-dark sheet — the saturate companion glows the backdrop through). Assert the dark sheet ALSO reads through (the dark-arm saturate lift carries it).

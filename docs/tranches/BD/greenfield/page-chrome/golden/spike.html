@@ -1,0 +1,214 @@
+<!doctype html>
+<!--
+  PAGE-CHROME GOLDEN — throwaway de-risk spike.
+  De-risks the THREE boldest mechanisms AT ONCE, in ONE document, Chrome + Safari:
+    1. the CONDENSE PLACARD BAR — a `.story-hero-shrink::before` warm-glass backing that
+       FADES IN on the SAME native scroll() timeline as the shrink (the occlusion kill),
+       carrying the `--chrome-rule` seam as its bottom edge.
+    2. the CORNER-AA HALO CLIP — `clip-path: inset(0 round …)` co-declared on the same
+       element as `backdrop-filter`, clipping the square saturate halo to the silhouette
+       (Safari is the worst-case engine — load-bearing there).
+    3. the WARM-GLASS TOC — a `.glass-floating` warm plate (NEVER gray/transparent) with a
+       single goo-morph active marker that STRETCHES+SETTLES between items (liquid-weight).
+  Plus the chrome/hero SCALE SPLIT (the chrome title reads a calm `--chrome-title-rung`,
+  ~½ the live 109px) and the cel-slam ENTRANCE punch (chrome wears the cartoon on entrance,
+  the no-overshoot settle on condense). Tokens are inlined stand-ins for the shipped families.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>page-chrome GOLDEN spike</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --phi: 1.618;
+    --phi-inv: 0.618;
+    /* the warm field stand-in (page-background `.paper-field` proxy) */
+    --bg: oklch(0.97 0.012 85);
+    --fg: oklch(0.27 0.02 60);
+    --muted-fg: oklch(0.5 0.02 60);
+    /* glass tier stand-ins (the shipped `--glass-*-floating` family) */
+    --glass-bg-floating: oklch(0.96 0.014 85 / 0.62);
+    --glass-tint-source: oklch(0.86 0.07 70);
+    --glass-tint-strength: 14%;
+    --glass-blur-floating: blur(20px) saturate(1.7);
+    /* the ONE dark-adaptive seam token — plain per-mode arms (NO light-dark() inset trap) */
+    --chrome-rule: color-mix(in oklab, var(--fg) 11%, transparent);
+    /* the chrome title rung — the SPLIT: a calm display rung, NOT the protagonist hero rung */
+    --chrome-title-rung: clamp(2rem, 1.4rem + 2.2vw, 2.9rem); /* ~32–46px = ~½ the live 109px */
+    --radius-card: 22px;
+    --radius-md: 13px;
+    /* motion (motion-spring depends: --ease-cartoon-punch / --motion-weight stand-ins) */
+    --ease-cartoon-punch: linear(0,.08 6%,.3 14%,.78 30%,1.06 46%,1.1 54%,.99 72%,1 100%);
+    --ease-settle: cubic-bezier(.22,.61,.36,1);
+    --motion-weight: 0.618;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.21 0.012 70);
+      --fg: oklch(0.93 0.02 80);
+      --muted-fg: oklch(0.72 0.02 75);
+      --glass-bg-floating: oklch(0.34 0.02 75 / 0.5);
+      --glass-tint-source: oklch(0.6 0.09 65);
+      --glass-tint-strength: 22%;
+      --chrome-rule: color-mix(in oklab, var(--fg) 16%, transparent);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 16px/1.4 system-ui, sans-serif;
+    color: var(--fg);
+    /* a living warm field stand-in — a drifting radial mesh so the glass has a COLORFUL field to transmit */
+    background:
+      radial-gradient(60% 50% at 20% 18%, oklch(0.8 0.13 30 / .5), transparent 70%),
+      radial-gradient(55% 50% at 82% 30%, oklch(0.78 0.13 200 / .5), transparent 70%),
+      radial-gradient(70% 60% at 50% 88%, oklch(0.82 0.12 130 / .45), transparent 75%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  /* the route scroller — the scroll() timeline source */
+  main { height: 100vh; overflow-y: auto; scroll-padding-top: 4.5rem; }
+  .page { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem 60vh; }
+
+  /* ── the masthead cluster ─────────────────────────────────────────────── */
+  .chrome { position: sticky; top: 0; z-index: 2; transform-origin: left top;
+    --chrome-condense-scale: 0.82; --chrome-condense-range: 170px;
+    padding-block: calc(1.5rem * var(--phi)) calc(1rem * var(--phi-inv)); }
+  .chrome-eyebrow { font: 600 0.72rem/1 ui-monospace, monospace; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted-fg); margin: 0 0 .5rem; }
+  /* the kind-marked struck path STAMP (warm-glass placard, halo-clipped) */
+  .chrome-stamp { display: inline-flex; align-items: center; gap: .35rem;
+    font: 0.8rem/1 ui-monospace, monospace; color: var(--muted-fg);
+    padding: .2rem .55rem; border-radius: 999px; align-self: flex-start;
+    background: color-mix(in oklab, var(--glass-bg-floating), transparent 18%);
+    backdrop-filter: blur(8px) saturate(1.4);
+    clip-path: inset(0 round 999px); /* CORNER-AA on the stamp's own halo */
+    border: 1px solid var(--chrome-rule); }
+  .chrome-stamp[data-kind="route"] { opacity: .82; }
+  .chrome-stamp .glyph { font-size: .9em; }
+  .chrome-title { font-size: var(--chrome-title-rung); line-height: 1.05;
+    letter-spacing: -0.015em; font-weight: 680; margin: .5rem 0 .5rem; max-inline-size: 18ch; }
+  .chrome-blurb { color: var(--muted-fg); max-width: 60ch; margin: 0; }
+
+  /* the STRUCK dividing rule — drawn left→right on entrance, the masthead→body seam */
+  .chrome-rule { height: 0; border-block-end: 1px solid var(--chrome-rule);
+    margin-block-start: calc(1rem * var(--phi)); transform: scaleX(0); transform-origin: left; }
+
+  /* ── (1) the CONDENSE PLACARD BAR — the ::before warm-glass backing ──────── */
+  .chrome::before {
+    content: ""; position: absolute; inset: 0 -1.5rem 0; z-index: -1; border-radius: 0 0 var(--radius-md) var(--radius-md);
+    background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+    backdrop-filter: var(--glass-blur-floating);
+    clip-path: inset(0 round 0 0 var(--radius-md) var(--radius-md)); /* CORNER-AA on the bar halo */
+    border-block-end: 1px solid var(--chrome-rule);                  /* the seam = the bar's bottom edge */
+    opacity: 0;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes chrome-shrink { to { transform: scale(var(--chrome-condense-scale)) translateY(-.25rem); } }
+      @keyframes chrome-bar-in { 0%,40% { opacity: 0; } 100% { opacity: 1; } }
+      @keyframes chrome-subsume { to { opacity: 0; transform: translateY(.4rem); } }
+      /* the wrapper condenses on scroll() — no-overshoot SETTLE (audacious title never bounces) */
+      .chrome { animation: chrome-shrink linear both; animation-timeline: scroll(); animation-range: 0 var(--chrome-condense-range); }
+      /* the backing materializes IN on the SAME scroll() timeline — the occlusion kill */
+      .chrome::before { animation: chrome-bar-in linear both; animation-timeline: scroll(); animation-range: 0 var(--chrome-condense-range); }
+      /* the SUBSUME: eyebrow + blurb tuck away; title + stamp persist (the route identity) */
+      .chrome-eyebrow, .chrome-blurb { animation: chrome-subsume linear both; animation-timeline: scroll(); animation-range: 0 calc(var(--chrome-condense-range) * .75); }
+    }
+  }
+  /* the ENTRANCE cartoon — cel-slam punch on the title, struck rule drawn after (no-overshoot on CONDENSE, punch on ENTRANCE) */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes title-slam {
+      0% { opacity: 0; transform: translateY(calc(12px * var(--motion-weight))) scale(calc(1 - .06*var(--motion-weight)), calc(1 + .04*var(--motion-weight))); }
+      62% { transform: translateY(-3px) scale(1.02, .98); }
+      100% { opacity: 1; transform: none; }
+    }
+    @keyframes rule-strike { to { transform: scaleX(1); } }
+    .chrome-title { animation: title-slam 640ms var(--ease-cartoon-punch) both; }
+    .chrome-rule { animation: rule-strike 520ms var(--ease-cartoon-punch) 280ms both; }
+  }
+  @media (prefers-reduced-motion: reduce) { .chrome-rule { transform: scaleX(1); } }
+
+  .body-section { margin-block-start: 2.5rem; }
+  .demo-card { background: var(--glass-bg-floating); backdrop-filter: var(--glass-blur-floating);
+    clip-path: inset(0 round var(--radius-card)); border-radius: var(--radius-card);
+    border: 1px solid var(--chrome-rule); padding: 1.5rem; min-height: 160px; }
+
+  /* ── (3) the WARM-GLASS TOC + goo-morph active marker ───────────────────── */
+  .layout { display: grid; grid-template-columns: 1fr 16rem; gap: 2rem; align-items: start; margin-top: 2rem; }
+  .toc { position: sticky; top: 5rem; padding: .5rem;
+    background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+    backdrop-filter: var(--glass-blur-floating);
+    clip-path: inset(0 round var(--radius-md)); border-radius: var(--radius-md);
+    border: 1px solid var(--chrome-rule); }
+  .toc nav { position: relative; display: flex; flex-direction: column; }
+  .toc a { position: relative; z-index: 1; padding: .5rem .75rem; border-radius: 9px;
+    color: var(--muted-fg); text-decoration: none; font-size: .9rem; }
+  .toc a[data-active] { color: var(--fg); font-weight: 600; }
+  .toc-marker { position: absolute; inset-inline: .25rem; z-index: 0; border-radius: 9px;
+    background: color-mix(in oklab, var(--glass-tint-source) 40%, transparent); /* WARM, never gray */
+    transition: transform 360ms var(--ease-settle), height 360ms var(--ease-settle); }
+  @media (prefers-reduced-motion: reduce) { .toc-marker { transition-duration: 1ms; } }
+</style>
+</head>
+<body>
+<main id="scroller">
+  <div class="page">
+    <header class="chrome">
+      <p class="chrome-eyebrow">Display · Buttons</p>
+      <code class="chrome-stamp" data-kind="import"><span class="glyph" aria-hidden="true">▸</span>@mkbabb/glass-ui/button</code>
+      <h1 class="chrome-title">Buttons</h1>
+      <p class="chrome-blurb">The full button family — the calm chrome title is the page label, ~half the prior protagonist scale, condensing into a warm-glass bar you scroll FROM.</p>
+      <div class="chrome-rule"></div>
+    </header>
+    <div class="layout">
+      <div>
+        <section class="body-section" id="s1"><div class="demo-card">Section 1 — clean halo-clipped warm-glass corners.</div></section>
+        <section class="body-section" id="s2"><div class="demo-card">Section 2 — scroll up to see the placard bar materialize.</div></section>
+        <section class="body-section" id="s3"><div class="demo-card">Section 3 — the title + stamp persist; eyebrow + blurb tuck.</div></section>
+        <section class="body-section" id="s4"><div class="demo-card">Section 4 — the TOC marker stretches+settles between items.</div></section>
+        <section class="body-section" id="s5"><div class="demo-card">Section 5 — warm-glass, both modes, both engines.</div></section>
+      </div>
+      <aside class="toc">
+        <nav>
+          <span class="toc-marker" id="marker"></span>
+          <a href="#s1" data-active>Section 1</a>
+          <a href="#s2">Section 2</a>
+          <a href="#s3">Section 3</a>
+          <a href="#s4">Section 4</a>
+          <a href="#s5">Section 5</a>
+        </nav>
+      </aside>
+    </div>
+  </div>
+</main>
+<script>
+  // the goo-morph active marker — follows the active link (stretch+settle, liquid-weight)
+  const links = [...document.querySelectorAll('.toc a')];
+  const marker = document.getElementById('marker');
+  const nav = marker.parentElement;
+  function place(a) {
+    links.forEach(l => l.removeAttribute('data-active'));
+    a.setAttribute('data-active', '');
+    const r = a.getBoundingClientRect(), nr = nav.getBoundingClientRect();
+    marker.style.transform = `translateY(${r.top - nr.top}px)`;
+    marker.style.height = `${r.height}px`;
+  }
+  place(links[0]);
+  links.forEach(a => a.addEventListener('click', () => place(a)));
+  // track on scroll (the useScrollTracker stand-in)
+  const scroller = document.getElementById('scroller');
+  const secs = [...document.querySelectorAll('.body-section')];
+  scroller.addEventListener('scroll', () => {
+    const mid = scroller.scrollTop + scroller.clientHeight * 0.3;
+    let active = secs[0];
+    for (const s of secs) if (s.offsetTop <= mid) active = s;
+    const link = links[secs.indexOf(active)];
+    if (link && !link.hasAttribute('data-active')) place(link);
+  }, { passive: true });
+</script>
+</body>
+</html>

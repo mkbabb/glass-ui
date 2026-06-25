@@ -89,3 +89,6 @@ per-wave `bc-gestalt-roster.md` markdown roster + tests-visual specs ARE maintai
   docs/precepts submodule committed + pushed (9cad705). The anti-disease law is now ENFORCEABLE.
 - NEXT: Band 14 primitives (Tier 2.5) ‖ Band 1 glass spine (Tiers 3-7) — the first LIVE paint captures land at
   Band 1 (dev server :5199, both modes, gestalt verdicts flip the bc-gestalt-roster rows GREEN).
+
+## CUT COMPLETE (2026-06-20)
+glass-ui 4.1.0 LIVE on npm (provenance, release.yml run 27873146903 SUCCESS; tag v4.1.0 -> 9c0e06e2). The full 345-gate CI-accurate close battery PASSED siblings-absent (docs/precepts submodule ABSENT, as CI sees it). Slides NOT redeployed (user-gated). NEXT: phase 2 — the deep tranche-development audit (planning-only).

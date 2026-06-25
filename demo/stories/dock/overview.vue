@@ -23,11 +23,13 @@ import {
     DockIconButton,
     DockDropdownTrigger,
     DockSelectTrigger,
+    DockPopoverTrigger,
     DockSeparator,
     DockBackgroundToggle,
 } from "../../../src/components/custom/dock";
 import { Slider } from "../../../src/components/ui/slider";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
+import { Popover, PopoverContent } from "../../../src/components/ui/popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -139,9 +141,14 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded>
-                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
+                <GlassDock
+                    :background-canvas="backgroundCanvas"
+                    always-expanded
+                    draggable-items
+                >
+                    <DockIconButton data-dock-draggable aria-label="Previous"><SkipBack /></DockIconButton>
                     <DockIconButton
+                        data-dock-draggable
                         :aria-pressed="playing"
                         :aria-label="playing ? 'Pause' : 'Play'"
                         @click="togglePlay"
@@ -149,7 +156,7 @@ function togglePlay() {
                         <Pause v-if="playing" />
                         <Play v-else />
                     </DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
+                    <DockIconButton data-dock-draggable aria-label="Next"><SkipForward /></DockIconButton>
                     <DockSeparator />
                     <span
                         class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate"
@@ -215,6 +222,34 @@ function togglePlay() {
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
+
+                    <DockSeparator />
+
+                    <!-- BD.W-DOCK-CORE (A8 / F-2) — the POPOVER trigger UNIFIED into the
+                         dock overlay-trigger family. It composes <DockPopoverTrigger>
+                         (the SHARED `.dock-trigger` recipe) so it is byte-identical in
+                         geometry/baseline to the Select + Dropdown triggers beside it —
+                         the misaligned-popover defect closed by mounting the unified
+                         trigger on the SAME surface, not in an unrendered file. -->
+                    <Popover>
+                        <DockPopoverTrigger
+                            type="button"
+                            data-testid="dock-popover-trigger"
+                            aria-label="Dock info"
+                        >
+                            <Bell class="h-4 w-4" />
+                            <span class="text-xs">Info</span>
+                            <ChevronDown class="h-3 w-3 opacity-60" />
+                        </DockPopoverTrigger>
+                        <PopoverContent align="center" class="w-52">
+                            <p class="text-xs text-muted-foreground">
+                                The popover trigger shares the
+                                <code class="rounded bg-muted px-1">.dock-trigger</code>
+                                geometry with the select + dropdown — same padding,
+                                radius, baseline.
+                            </p>
+                        </PopoverContent>
+                    </Popover>
                 </GlassDock>
 
                 <div
