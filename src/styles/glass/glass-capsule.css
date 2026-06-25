@@ -49,10 +49,17 @@
            `transparent`); at `--glass-capsule-warm-floor: 16%` the painted capsule
            clears meanChroma ≥ 0.02 BOTH modes with negligible L lift (stays near-
            white). `--glass-capsule-warm` is a warm cream amber both modes. */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-floating-tinted),
-            var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+        /* The fill is INDIRECTED through `--glass-capsule-fill` so a consumer can
+           re-point the rung (quiet/loud/selected — buttons' quiet triplet, the dock
+           selected pill) WITHOUT forking the register; the default keeps the warm
+           floor compose. */
+        background: var(
+            --glass-capsule-fill,
+            color-mix(
+                in oklab,
+                var(--glass-bg-floating-tinted),
+                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+            )
         );
         backdrop-filter: var(--glass-blur-floating);
         -webkit-backdrop-filter: var(--glass-blur-floating);
@@ -94,7 +101,7 @@
     .glass-capsule-hover {
         transition:
             scale var(--duration-fast) var(--ease-standard),
-            --glass-specular var(--duration-fast) ease;
+            --specular-intensity var(--duration-fast) ease;
     }
     /* The SHARED specular-lift step — declared ONCE here, COMPOSED by both the hover
        register AND the drag-lift (BD.W-TAB-IOS-CAPSULE C7: one declaration of the
@@ -105,7 +112,11 @@
        sub-perceptual catch — a hair brighter at the specular edge, disco-FREE. */
     .glass-capsule-hover:hover,
     .glass-drag-lift {
-        --glass-specular: 0.14;
+        /* Drive the REAL gleam-opacity channel (`--specular-intensity`, read by the
+           moving-specular `::before` at material.css opacity) — not the dead
+           `--glass-specular` name. Composes with the material hover system; fires for
+           both the :hover register AND the grabbed `.glass-drag-lift` class. */
+        --specular-intensity: 0.14;
     }
     .glass-capsule-hover:hover {
         /* the 1.5% press-ready lift (the lift is hover-only; the drag-lift carries no
