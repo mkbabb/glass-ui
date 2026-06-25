@@ -30,6 +30,11 @@ const SPRING_TOKENS = [
     "--spring-gentle",
     "--spring-dock",
     "--spring-press",
+    // BD.W-TIMELINE-RAIL-UNIFY — the 3 ScrubberTimeline spring presets (head/fill/press),
+    // declared after the 6 base presets in SPRING_PRESETS, so emitted last among springs.
+    "--spring-timeline-head",
+    "--spring-timeline-fill",
+    "--spring-timeline-press",
 ] as const;
 
 const BEZIER_CANONICAL = [
@@ -38,6 +43,9 @@ const BEZIER_CANONICAL = [
     "--motion-ease-in",
     "--motion-ease-out-expo",
     "--motion-ease-apple",
+    // BD.W-CARTOON-PUNCH — the cartoon overshoot register (anticipation dip → +22%
+    // overshoot → settle), a canonical bezier row declared last in curves.ts CANONICAL.
+    "--ease-cartoon-punch",
 ] as const;
 
 const ALIAS_TOKENS = [
@@ -115,7 +123,7 @@ describe("MOTION_CURVES — the CSS↔JS curve table", () => {
         expect(motionCurve("--spring-snappy").token).toBe("--spring-snappy");
     });
 
-    it("the canonical list is the 11 canonical rows in declaration order", () => {
+    it("the canonical list is the 15 canonical rows in declaration order", () => {
         expect(MOTION_CURVES_CANONICAL.map((c) => c.token)).toEqual([
             ...SPRING_TOKENS,
             ...BEZIER_CANONICAL,

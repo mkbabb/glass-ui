@@ -1,7 +1,20 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
-<!-- surface-hash: 02e14c23480132a8aa1b1c34cd52e3e52fe120e0d962b0015b289cbd262d8b3a -->
+<!-- surface-hash: 0eeaf9f05cf73af5b623f78cec79bd24b47c212795d9124e52ce44ba5536655d -->
+<!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock
+     width-seizure + punch/fission/hub, P7 the unifying blend-morph WELD) RE-RENDERED the dock-morph
+     surfaces (dockMorphContext.ts / GlassDock.vue / dock/morph.css / dock/layers.css), DRIFTING the
+     surface-hash (BC 02e14c23… → BD 0eeaf9f0…) — the captured surface DRIFTED under the redesign, it
+     did NOT vanish (every surface-path RESOLVES at HEAD b8aa7033). The items-lag VERIFY-OR-FALSIFY
+     verdict (box↔scalar onset Δ=0) is RE-VALIDATED on current bytes BY CONSTRUCTION: the BD redesign
+     PRESERVED the ONE-scalar morph contract — dockMorphContext.ts still writes the single `--dock-morph-t`
+     0→1 scalar (only that one; :196-200), and layers.css still derives BOTH the box `inline-size`
+     (`clamp(0, --dock-morph-t, 1)`) AND the per-child stagger (`--dock-expand-t: var(--dock-morph-t)`)
+     from that SAME scalar, so box↔scalar onset Δ=0 holds by construction, unchanged by the redesign.
+     The own-surface W-DOCK1-*-{light,dark}.png frame-series captures remain the faithful midmorph
+     surface (the single-scalar mechanism they witness is byte-preserved). Re-stamped, not retire-dodged.
+     PRIOR RE-SHOTS: BB.W-DELTA-RESHOOT 2026-06-17; BC.W-DELTA-RESHOOT 2026-06-20. -->
 <!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN BC.W-DELTA-RESHOOT, 2026-06-20): the
      BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge, stamped 0db3a00c…) is REVERSED —
      the §0 re-grep falsifies its "surface is gone" premise (every dock-morph surface-path RESOLVES at

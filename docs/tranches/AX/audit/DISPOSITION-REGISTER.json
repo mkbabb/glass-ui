@@ -259,17 +259,17 @@
         },
         {
             "id": "css-at-function",
-            "disposition": "book",
+            "disposition": "retired",
             "summary": "G6 CSS `@function`.",
             "trigger": {
                 "kind": "min-consumers",
                 "n": 2,
                 "grep": "@function",
-                "note": "AT W0-L4 ledger #29 — Limited/Chromium-only + authoring-DRY-not-payload. Trigger: Baseline lifts to Newly AND a real cross-engine authoring-DRY site earns it. Re-evaluates un-MET."
+                "note": "AT W0-L4 ledger #29 — Limited/Chromium-only + authoring-DRY-not-payload. Trigger WAS: Baseline lifts to Newly AND a real cross-engine authoring-DRY site earns it. RETIRED at BD §P10: the bare-`@function` grep over-matches CSS-TOOLING (keyframes.js/value.js PARSE `@function` as fixture data; they do not AUTHOR it in a stylesheet) — the grep cannot express the real authoring-site trigger, and the semantic trigger is genuinely un-MET (no consumer authors `@function` in any real `.css`). Disposition decided RETIRE, not carried-forward."
             },
             "resolved": false,
-            "reStampedAt": "BC",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — Limited/Chromium-only, no cross-engine authoring-DRY site earns it yet; no BB wave decides it. BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
+            "reStampedAt": "BD",
+            "reStampNote": "BD §P10 close-battery RETIRE (the disposition is DECIDED, not re-booked). Baseline still Limited/Chromium-only (no Safari/Firefox) as of 2026-06; glass-ui targets Chrome+Safari, so authoring with `@function` would break Safari — it will NOT ship. The two consumer hits (keyframes.js, value.js) are CSS-PARSING/tooling libraries that handle `@function` as input data in their test fixtures + parser code; neither AUTHORS `@function` in a real stylesheet, so the semantic trigger (a cross-engine authoring-DRY site) is un-MET — the bare-substring grep false-fires on parser tooling and a tightened grep still can't distinguish 'parses @function' from 'authors @function'. The honest call: RETIRE (glass-ui declines the feature). retired rows are exempt from the trigger re-check + still counted by the register-COMPLETENESS clause (L-inv-8 honoured: folded in place, never deleted)."
         },
         {
             "id": "interestfor-previews",
@@ -434,11 +434,11 @@
                 "kind": "min-consumers",
                 "n": 2,
                 "grep": "metric-cell|metric-stack|instrument-chassis",
-                "note": "AX W28 residual (AY.W-TRIAGE DEFERS). The substrate is SHIPPED (/metric-cell, /metric-stack, /instrument-chassis subpaths); the RECEIVE is speedtest's (inv-16 — glass-ui writes glass-ui). Re-evaluates MET when ≥2 consumer repos import; booked, not AY-owned."
+                "note": "AX W28 residual (AY.W-TRIAGE DEFERS). The substrate is SHIPPED (/metric-cell, /metric-stack, /instrument-chassis subpaths); the RECEIVE is speedtest's (inv-16 — glass-ui writes glass-ui). Re-evaluates MET when ≥2 consumer repos import; booked, not AY-owned. RESOLVED at BD §P10: trigger re-evaluates MET — the RECEIVE LANDED."
             },
-            "resolved": false,
-            "reStampedAt": "BC",
-            "reStampNote": "BB re-stamp: STAY-booked (honest hold). Trigger re-evaluates un-MET — the substrate is SHIPPED but the RECEIVE is speedtest's (consumer-side, inv-16 glass-ui writes glass-ui); no BB wave decides it (re-evaluates MET only when ≥2 consumer repos import). BC §FOLD-LEDGER F7: STAY-booked, re-stamped reStampedAt:\"BC\" in-place (an honest hold is folded in place, never deleted — L-inv-8). Trigger re-evaluates un-MET against the present constellation; proof:disposition-live re-checks it each BC close."
+            "resolved": true,
+            "reStampedAt": "BD",
+            "reStampNote": "BD §P10 close-battery RESOLVE (the deferred consumer-side RECEIVE LANDED). The trigger re-evaluates MET against the present constellation: speedtest GENUINELY imports the shipped substrate subpaths `@mkbabb/glass-ui/instrument-chassis`, `/metric-cell`, `/metric-stack` (speedtest/vite.config.mjs optimizeDeps + the SharedResultView/App test mocks). The deferred RECEIVE is no longer pending — the substrate shipped (glass-ui) and the consumer adopted it (speedtest), exactly the inv-16 hand-off the row tracked. Disposition DECIDED resolved (set resolved:true; the row STAYS book + counted by the register-COMPLETENESS clause, exempt from the trigger re-check per the gate's `!item.resolved` arm — L-inv-8: folded in place, never deleted)."
         },
         {
             "id": "keyframes-prune-migration-dag",

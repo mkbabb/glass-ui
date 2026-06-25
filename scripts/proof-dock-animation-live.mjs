@@ -385,13 +385,24 @@ export function maxInterFrameJump(series) {
 
 // ── AX.W00 the TOKEN-PEAK SECONDARY (flake-free, device-free) ─────────────────
 // keyframes demoted its own dock gate to exactly this form: parse the
-// `--spring-dock` linear() ramp and assert its peak stop ≤ the published (0.32,0.7)
-// ~+4.6% baseline. It has NO rAF flake surface — a pure string parse over
+// `--spring-dock` linear() ramp and assert its peak stop ≤ the dock register's
+// overshoot fence. It has NO rAF flake surface — a pure string parse over
 // tokens.css — so it is the trivially-falsifiable secondary that catches a spring
-// retune to a bouncier register even on a runner with no browser. The published
-// peak is 1.04501 (+4.5% at 18.367%); the analytic underdamped overshoot for ζ=0.7
-// is exp(-ζπ/√(1-ζ²)) ≈ 0.046, so the ceil is 1.046 + a 0.005 parse/round margin.
-const SPRING_DOCK_PEAK_CEIL = 1.046 + 0.005;
+// retune PAST the design fence even on a runner with no browser.
+//
+// BD.W-ANIM-IOS27-TUNE re-calibrated the dock spring toward the iOS-27 weighty-gooey-
+// inertial pole (USER law: "SMOOTH, CONTROLLED, INERTIA, AUDACIOUS; MORPH MORE on move").
+// The dock preset is now (response 0.68, ζ 0.64) — src/composables/motion/springPresets.ts
+// `name:"dock"` — a graceful liquid settle that peaks at +7.3% (1.07303). This SUPERSEDES
+// the retired published (0.32,0.7) +4.6% spring (no backwards compat — the library's own
+// default tokens evolve with its identity). The DESIGN INVARIANT the gate now enforces is
+// the springPresets.ts overshoot FENCE: every spring overshoot ∈ [0%,10%] (the "touch of
+// overshoot" band; the OLD pointed bouncy 12.6% / dock 10.7% were RETIRED as the >10%
+// "too springy" defect). So the ceil is 1.10 (the 10% fence top) + a 0.005 parse/round
+// margin — a retune PAST +10% (back to the pointed-flick defect) still reds; the intended
+// +7.3% liquid dock passes. The `--spring-dock` token is GENERATED from the dock preset by
+// scripts/regen-spring-tokens.mjs (the (response,ζ) is the source of truth, not the ramp).
+const SPRING_DOCK_PEAK_CEIL = 1.1 + 0.005;
 
 /**
  * Read the token cascade body. `src/styles/tokens.css` is a thin `@import` ROOT

@@ -1,7 +1,18 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/composables/useLayerTransition.ts, src/components/custom/dock/DockLayerGroup.vue, src/styles/dock/layers.css -->
-<!-- surface-hash: 8ab9d82d4611cfa18e30f1f172ed2237f5b648b4d988ad54c03ba2371469f1ff -->
+<!-- surface-hash: 05361bf8d3626b97ab695bbe53cbb751078f585fe58ae6d2ae3c4824635184cc -->
+<!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock + P7 the
+     unifying blend-morph WELD) RE-RENDERED the entering-child lockstep surfaces (dockMorphContext.ts /
+     useLayerTransition.ts / DockLayerGroup.vue / dock/layers.css), DRIFTING the surface-hash (BC
+     8ab9d82d… → BD 05361bf8…) — the captured surface DRIFTED under the redesign, it did NOT vanish
+     (every surface-path RESOLVES at HEAD b8aa7033). The entering-child lockstep verdict (child→box onset
+     Δ within the morph budget) is RE-VALIDATED on current bytes BY CONSTRUCTION: the BD redesign
+     PRESERVED the single-scalar contract — the box and the per-child stagger both resolve from the ONE
+     `--dock-morph-t` scalar (`--dock-expand-t: var(--dock-morph-t)`), so the lockstep holds by
+     construction, unchanged by the redesign. The own-surface W-DOCK2-*-{light,dark}.png midmorph
+     captures remain the faithful surface. Re-stamped, not retire-dodged. PRIOR RE-SHOTS:
+     BB.W-DELTA-RESHOOT 2026-06-17; BC.W-DELTA-RESHOOT 2026-06-20. -->
 <!-- RE-SHOT (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN BC.W-DELTA-RESHOOT, 2026-06-20): the
      BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge, stamped a9750d0a…) is REVERSED —
      the §0 re-grep falsifies its "the rail it captured is no longer the live surface" premise
