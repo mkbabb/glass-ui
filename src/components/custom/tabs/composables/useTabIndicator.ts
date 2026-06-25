@@ -10,6 +10,7 @@ import {
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 import {
     DEFAULT_INDICATOR_MAX_STRETCH,
+    DEFAULT_INDICATOR_BLOB_MAX,
     INDICATOR_RELEASE_AT_ARRIVAL,
 } from "../constants";
 // AZ.W-MORPH-SHOWCASE (W-LIQUID fold) — the indicator squish is the SECOND consumer
@@ -181,6 +182,27 @@ export function useTabIndicator(
         maxStretch: () => capForSquish,
     });
 
+    // BD.W-TABS-LIQUID — the SECOND `useLiquidFlex` channel: the area-inflation BLOB
+    // (the 5-beat grow→overshoot→shrink envelope). The SAME shared primitive, used as
+    // a pure SIZE-span projection (`from: 1 → to: blobPeak`) rather than a velocity
+    // squish: `blob.drive(1)` on the open frame inflates the lozenge PAST its
+    // destination footprint (grow + overshoot), `blob.drive(0)` at the SAME `releaseAt`
+    // de-inflates it to 1 (shrink-to-fit). Both channels release in lockstep off the
+    // ONE `releaseTimer` — no second spring, no second rAF, no @keyframes. The blob is
+    // written IMPERATIVELY every frame (`el.style.setProperty("--tab-blob", …)`), NOT
+    // added to a CSS `transition` list — the indicator's existing composed-`scale`
+    // transition carries the glide; `@property --tab-blob` is registered ONLY so the
+    // discrete release-frame write interpolates instead of snap-flickering. The peak is
+    // read LIVE from `--tab-indicator-blob-max` (the consumer override), scaled by the
+    // same live `--motion-weight` the squish cap reads so PRM/observer collapses it to 1.
+    let blobPeak = DEFAULT_INDICATOR_BLOB_MAX;
+    const liquidBlob = useLiquidFlex({
+        from: 1,
+        to: () => blobPeak,
+        axis: "width",
+        squishLaw: "linear",
+    });
+
     function prefersReducedMotion() {
         return (
             typeof window !== "undefined" &&
@@ -248,6 +270,23 @@ export function useTabIndicator(
         const capToken = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
         capForSquish = effectiveCap(el, capToken);
         liquidSquish.squish(frac);
+        // BD.W-TABS-LIQUID — resolve the blob peak the SAME way the squish cap does:
+        // the live `--tab-indicator-blob-max` token, scaled by `--motion-weight` via
+        // `effectiveCap` (rest peak at weight 0.618, 1.0 at weight 0 — the PRM/observer
+        // fence collapses the inflation to nothing in ONE read). `effectiveCap`
+        // interpolates a cap token toward 1 by the weight, so a `1.045` peak at rest
+        // weight stays ~1.045 and a weight-0 peak is exactly 1 (no grow).
+        const blobRaw = cs.getPropertyValue("--tab-indicator-blob-max").trim();
+        const blobToken = Number(blobRaw) || DEFAULT_INDICATOR_BLOB_MAX;
+        // The blob inflates BOTH axes uniformly while the squish (volume-preserving)
+        // only deforms the aspect, so the COMPOSED visible bbox AREA ≈ blobPeak² (the
+        // squish's stretch×compress cancels in area). FENCE the composed area at
+        // ≤ ~1.14 (the anti-taffy bar, amendment §B.2): clamp blobPeak ≤ √1.14 ≈ 1.0677
+        // so even a fast far jump (where `effectiveCap` lifts the peak via `--flex-vel`)
+        // cannot breach. At rest weight the peak is the ~1.045 token (area ~1.09).
+        const BLOB_AREA_FENCE = Math.sqrt(1.14); // ≈ 1.0677
+        const lifted = effectiveCap(el, blobToken);
+        blobPeak = lifted > BLOB_AREA_FENCE ? BLOB_AREA_FENCE : lifted;
         // §2c — fold the travel velocity into the transient `--motion-weight` boost on
         // the indicator (the SAME element the cap getter reads), so a far jump deepens
         // its own squish and self-extinguishes at arrival.
@@ -256,6 +295,13 @@ export function useTabIndicator(
         if (releaseTimer) clearTimeout(releaseTimer);
         // Open the stretch synchronously with the glide…
         el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
+        // …and OPEN the blob: drive its size projection to `t=1` (the grow+overshoot
+        // beat — the lozenge over-inflates to `blobPeak`, bigger than the destination
+        // footprint), written imperatively to `--tab-blob`. The composed `scale`
+        // (`--tab-blob × --stretch`) the CSS reads carries the visible swell on the
+        // shared cartoon-punch clock; this write is NOT a CSS transition entry.
+        liquidBlob.drive(1);
+        el.style.setProperty("--tab-blob", String(liquidBlob.size.value));
         // …and release it so the indicator shrinks back to fit (the Material
         // "grow then shrink" close) AT ARRIVAL — the release fires when the glide
         // is within the arrival fraction of its target (the calibrated clock ×
@@ -265,6 +311,12 @@ export function useTabIndicator(
         releaseTimer = setTimeout(() => {
             liquidSquish.squish(0);
             el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
+            // BD.W-TABS-LIQUID — SHRINK-TO-FIT: the blob de-inflates to 1 at the SAME
+            // arrival the squish releases (both channels on the ONE timer, in lockstep).
+            // The discrete `--tab-blob` write back to 1 INTERPOLATES (the `@property`
+            // registration) on the cartoon-punch clock — no snap-flicker.
+            liquidBlob.drive(0);
+            el.style.setProperty("--tab-blob", String(liquidBlob.size.value));
             // §2c — the velocity boost self-extinguishes back to rest weight at arrival.
             writeVelocityWeight(el, 0);
             releaseTimer = null;

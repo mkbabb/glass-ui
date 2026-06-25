@@ -8,15 +8,24 @@
  * full-width jump reaches the cap and a tiny hop stays near 1. The token is the
  * authority; this is the no-token floor.
  *
- * BC.W-LIQUID-TAB — lifted 1.08 → 1.15 so a FAST liquid-tab pull visibly swells the
- * pill (the gel-squish READS as liquid, glass-dock-codebase.md §3.4) — still capped
- * LOW (≤1.2, the anti-taffy-pull bar). The cap is shared by the click travel-squish
- * AND the drag pull-morph (the SOLE cap source — the constant + the token in
- * lockstep, never a fork); the volume-preserving reciprocal pairing
- * (`scale: var(--stretch) calc(1/var(--stretch))`) is unchanged — only the magnitude
- * lifts.
+ * BD.W-TABS-LIQUID — re-tuned 1.18 → 1.11. The `--tab-blob` area-inflation channel now
+ * carries the 5-beat "grow"/overshoot, so the per-axis travel-squish cap drops: the FENCE
+ * is the COMPOSED visible bbox area (`blob × stretch`) ≤ ~1.14, NOT the bare per-axis
+ * scalar. The cap is shared by the click travel-squish AND the drag pull-morph (the SOLE
+ * cap source — the constant + the token in lockstep, never a fork); the volume-preserving
+ * reciprocal pairing (`scale: var(--stretch) calc(1/var(--stretch))`) is unchanged.
  */
-export const DEFAULT_INDICATOR_MAX_STRETCH = 1.15;
+export const DEFAULT_INDICATOR_MAX_STRETCH = 1.11;
+
+/**
+ * BD.W-TABS-LIQUID — fallback for `--tab-indicator-blob-max` when the cascade leaves it
+ * unset: the 5-beat blob's area-inflation overshoot peak. The 2nd `useLiquidFlex` channel
+ * drives `--tab-blob` toward this on the grow-overshoot beat, then de-inflates to 1 at
+ * arrival (shrink-to-fit). Kept LOW (~1.045) so the COMPOSED bbox area (`blob × stretch` ≈
+ * blob², the squish being volume-preserving) clears the ≤ ~1.14 anti-taffy fence. The
+ * token is the authority; this is the no-token floor (the SOLE blob-cap source).
+ */
+export const DEFAULT_INDICATOR_BLOB_MAX = 1.045;
 
 /**
  * The travel-progress fraction at which the squish RELEASES — the Material

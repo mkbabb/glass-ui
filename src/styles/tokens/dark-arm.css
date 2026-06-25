@@ -414,6 +414,12 @@
         inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
         inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
 
+    /* BD.W-TAB-IOS-CAPSULE — the `.glass-capsule-track` recess ink, DARK arm (the
+       PLAIN per-mode pair's dark leg; the light arm is in `tokens/glass-fx.css`).
+       NEVER a `light-dark()` fragment (the inset-shadow trap). Deeper on the dark
+       canvas (11%) so the sunken well still reads against the near-black page. */
+    --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 11%, transparent);
+
     /* AW.W23 — the chromatic-fringe + adaptive-tint dark arm. The fringe drops
        to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-
        source` auto-flips with `--card` (no override needed — the default already

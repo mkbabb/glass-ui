@@ -158,6 +158,29 @@
     --glass-tint-source:   var(--card);
     --glass-tint-strength: 0%;
 
+    /* BD.W-TAB-IOS-CAPSULE — the `.glass-capsule` warm-floor (C6). `--card` itself
+       is too pale to clear the meanChroma ≥ 0.02 floor (its own OKLab chroma is
+       ~0.015), so the capsule composes a SMALL fixed floor toward an explicitly
+       WARM oklch source — a warm cream/amber that carries real chroma. This is the
+       build-trap-(d) safe form (a warm color, never bare `transparent`). At the 16%
+       floor the painted capsule fill clears chroma ≥ 0.02 with negligible L lift
+       (stays near-white). Mode-invariant warm (the oklch reads warm on both the
+       light cream page and the dark canvas — the warm-floor is a property of the
+       LOZENGE, not the page); the floor is INDEPENDENT of the `--glass-tint-strength:
+       0%` adaptive default (which is zero-delta at rest, lifting only under the
+       bright bucket). Both are composed in `.glass-capsule`'s fill. */
+    --glass-capsule-warm: oklch(0.88 0.1 75);
+    --glass-capsule-warm-floor: 16%;
+
+    /* BD.W-TAB-IOS-CAPSULE — the `.glass-capsule-track` recess ink (the iOS-27
+       sunken-well inner-top edge). A PLAIN per-mode pair — this light arm + the dark
+       arm in `tokens/dark-arm.css`. NEVER a `light-dark()` fragment: an inset-shadow
+       leg inside `light-dark()` computes the WHOLE `box-shadow` to `none` (the
+       binding MEMORY lesson) and the recess would silently vanish. Bounded warm ink
+       so it darkens the inner-top edge without re-coloring the warm fill (no gray
+       well). */
+    --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 7%, transparent);
+
     /* AX.W55 — adaptive glass legibility (the iOS-26/27 "locally darken the glass
        over light content" move; G2). There is NO web API that reads the pixels
        painted BEHIND a `backdrop-filter` element, so the backdrop-luminance signal

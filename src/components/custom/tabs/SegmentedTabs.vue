@@ -147,6 +147,21 @@ const activeValues = computed<string[]>(() =>
 
 const isActive = (value: string) => activeValues.value.includes(value);
 
+// BD.W-TAB-IOS-CAPSULE — the NON-selected PILL tab composes the shared
+// `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
+// "ready to receive" read). Only the PILL material (the underline is paper — a
+// hairline does not lift), only non-selected (the selected tab's indicator carries
+// the lift; hovering it would double-lift), only enabled. The SAME register the
+// buttons greenfield composes wholesale.
+function pillHoverClass(option: SegmentedTabOption): string | false {
+    return (
+        !isUnderline.value &&
+        !isActive(option.value) &&
+        !option.disabled &&
+        "glass-capsule-hover"
+    );
+}
+
 // The JS slider writer is live only on the underline-EXCLUDED pill variant when
 // the engine lacks anchor support (underline runs the CSS anchor `::before`).
 const jsSliderActive = computed(() => !ANCHOR_SUPPORTED && !isUnderline.value);
@@ -408,6 +423,10 @@ onBeforeUnmount(() => {
             'segmented-tabs',
             `segmented-tabs--${variant}`,
             isVertical && 'segmented-tabs--vertical',
+            // BD.W-TAB-IOS-CAPSULE — the PILL track composes the shared recessed
+            // warm channel `.glass-capsule-track` (the recess + rim live there, ONE
+            // recipe). The underline material is paper (no track), so it does NOT.
+            !isUnderline && 'glass-capsule-track',
             props.class,
         )"
         @keydown="onStripKeydown"
@@ -424,6 +443,10 @@ onBeforeUnmount(() => {
             ref="indicatorRef"
             :class="[
                 'segmented-indicator',
+                // BD.W-TAB-IOS-CAPSULE — the active pill COMPOSES the shared
+                // `.glass-capsule` (warm-floor fill + rim + lift, ONE recipe; the
+                // dock-tab selected arm + buttons greenfield compose the SAME class).
+                'glass-capsule',
                 jsSingleSlider ? 'segmented-indicator--js' : 'segmented-indicator--anchor',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
@@ -447,7 +470,10 @@ onBeforeUnmount(() => {
                                 ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                                 : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
                             :disabled="option.disabled"
-                            :class="option.disabled && 'is-disabled'"
+                            :class="[
+                                option.disabled && 'is-disabled',
+                                pillHoverClass(option),
+                            ]"
                             @click="select(option.value, idx)"
                         >
                             <slot name="option" :option="option" :active="isActive(option.value)">
@@ -471,7 +497,10 @@ onBeforeUnmount(() => {
                     ? { 'aria-selected': isActive(option.value) ? 'true' : 'false' }
                     : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }"
                 :disabled="option.disabled"
-                :class="option.disabled && 'is-disabled'"
+                :class="[
+                    option.disabled && 'is-disabled',
+                    pillHoverClass(option),
+                ]"
                 @click="select(option.value, idx)"
             >
                 <slot name="option" :option="option" :active="isActive(option.value)">

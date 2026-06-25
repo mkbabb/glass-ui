@@ -58,6 +58,12 @@
    AFTER surfaces.css and BEFORE surface-axis.css (same @layer components, same
    source order — the dist is byte-isomorphic). */
 @import "./glass/control-surfaces.css";
+/* BD.W-TAB-IOS-CAPSULE — the ONE shared glassy register (`.glass-capsule` +
+   `.glass-capsule-track` + `.glass-capsule-hover`) the tabs/dock-tab/buttons/chips/
+   cards consumers compose. @import-ed AFTER surfaces.css (so the `--glass-bg-floating-
+   tinted` seam + the `--glass-rim-*`/`--glass-shadow-floating` tokens resolve) and
+   BEFORE the consuming recipes (segmented-tabs.css et al, imported by index.css). */
+@import "./glass/glass-capsule.css";
 @import "./glass/surface-axis.css";
 @import "./glass/reveal.css";
 @import "./glass/deep.css";

@@ -279,7 +279,7 @@
        seam — over a bright field the pill darkens-to-legible, over a calm field it
        stays warm-cream/near-white (the iOS adaptive register reaching the pill).
        ZERO-delta at the `--glass-tint-strength: 0%`/floor default. */
-    :where(.btn-glass, .segmented-indicator) {
+    :where(.btn-glass, .segmented-indicator, .glass-capsule) {
         --glass-bg-floating-tinted: color-mix(
             in oklab,
             var(--glass-bg-floating),
@@ -364,7 +364,22 @@
         padding-inline: 0.625rem;
         padding-block: 0.3125rem;
         border-radius: var(--radius-pill);
-        background: var(--glass-bg-floating);
+        /* BD.W-GOO-CAROUSEL-DECK — the element-level oklab TINT seam (NOT the raw
+           pre-substituted `--glass-bg-floating` :root token — the gray-hole
+           substitution-trap). At the `--glass-tint-strength: 0%` default this is the
+           no-op floor (`color-mix(in oklab, X, src 0%) ≡ X` — byte-identical pager pixels
+           over a flat page); over a declared/sampled BRIGHT carousel image
+           (`@container style(--glass-backdrop: light)`) the pill darkens-toward-ink for a
+           real silhouette (the W55 ≤24% clamp keeps it translucent); under `.dark` the
+           W-DARK-MATERIAL tint arm LIFTS it toward luminous warm-dark, never a charcoal
+           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+           `--surface-tint-*` brand fence is untouched). The dock `--glass-bg-dock`
+           self-re-point precedent applied to the pager chassis. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         backdrop-filter: var(--glass-blur-floating);
         -webkit-backdrop-filter: var(--glass-blur-floating);
         box-shadow:

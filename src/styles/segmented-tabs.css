@@ -54,19 +54,12 @@
     grid-auto-columns: 1fr;
     padding: var(--bouncy-track-trim);
     border-radius: var(--bouncy-track-radius);
-    /* BA.W-TABS — the pill track rides the glass quiet tier (the warm glass
-       material, the no-gray register) + a hairline edge. NOT a `--surface-tint`
-       gray plate (the R10-5 no-gray cut). */
-    background: var(--glass-bg-quiet);
-    backdrop-filter: var(--glass-blur-quiet);
-    -webkit-backdrop-filter: var(--glass-blur-quiet);
-    /* BC.W-TABS-IOS — the track hairline re-points off the `--border` ring (which read
-       dark over the cream plate — the D2 "black bar" on the strip top edge) onto the
-       BC.W-BLACK-BAR directional rim register: a bright top catch-light + a faint warm
-       under-shadow. The track is a thin warm-glass quiet capsule with a lit top edge,
-       never a dark hairline. The pill (above) carries the SAME rim plus the lift shadow
-       so it reads FORWARD; the track carries only the rim. */
-    box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+    /* BD.W-TAB-IOS-CAPSULE — the warm-glass quiet surface + the rim + the iOS-27
+       sunken recess now live in the SHARED `.glass-capsule-track` register (the SFC
+       composes it onto the pill track). The track is a thin warm-glass quiet capsule
+       with a lit top edge + a recessed well, never a dark hairline, never gray. The
+       indicator (`.glass-capsule`) reads FORWARD off the SAME rim + the lift shadow.
+       The underline material does NOT compose the track (paper, no surface). */
 }
 
 /* ── The vertical orientation axis (the block stack) ── */
@@ -90,35 +83,51 @@
 /* ── The shared indicator body (the PILL plate) ── */
 .segmented-indicator {
     position: absolute;
-    /* BC.W-TABS-IOS — the active pill is the iOS-27 / value.js DISTINCT LIFTED PLATE,
-       not a +30%-α same-hue brightness step. The fill reads the SHARED element-level
-       oklab-tinted floating pair (surfaces.css `:where(.btn-glass, .segmented-indicator)`)
-       — over a bright field it darkens-to-legible, over a calm field it stays
-       warm-cream/near-white (the W55 adaptive register reaching the pill, the "raised
-       near-white plate" the user pinned). The FORWARD-ness comes from the rim + lift
-       below, NOT from cranking the same-hue alpha. */
-    background: var(--glass-bg-floating-tinted);
-    backdrop-filter: var(--glass-blur-floating);
-    -webkit-backdrop-filter: var(--glass-blur-floating);
+    /* BD.W-TAB-IOS-CAPSULE — the active pill COMPOSES the shared `.glass-capsule`
+       (the SFC adds the class). The warm-floor fill (`--glass-bg-floating-tinted`
+       composed toward the warm-floor source, meanChroma ≥ 0.02 both modes — never
+       gray), the floating blur, the directional rim + the lift under-shadow ALL live
+       there now, ONE recipe ≥3 consumers. This block keeps only the position +
+       inset + the indicator-local stadium radius + the motion transform. */
     z-index: 0;
     inset-block: var(--bouncy-track-trim);
     border-radius: var(--bouncy-slider-radius);
-    /* BC.W-TABS-IOS — the lifted-plate composite: the BC.W-BLACK-BAR directional rim
-       (bright top catch-light `--glass-rim-top` + warm bottom under-shadow
-       `--glass-rim-bottom` — the iOS-27 top-light/bottom-shadow thickness the track does
-       NOT carry, the FORWARD-ness device, NEVER the dark D2 hairline) PLUS a real layered
-       glass under-shadow (`--glass-shadow-floating`) lifting the plate ~2-3px off the
-       quiet track. Replaces the HEAD weak `0 1px 3px rgba(0,0,0,0.08)` + the 30%-border
-       dark ring (the same-hue low-contrast plate that read "not glassy"). */
-    box-shadow:
-        var(--glass-rim-top),
-        var(--glass-rim-bottom),
-        var(--glass-shadow-floating);
-    /* The volume-preserving travel-squish: stretch along X, compress Y in
-       inverse proportion. `transform-origin: center` → a symmetric width-flex
-       as it travels (the indicator grows wider mid-travel, settles to fit). */
+    /* BD.W-TABS-LIQUID — the COMPOSED transform write: the area-inflation BLOB
+       (uniform, both axes, `--tab-blob` driven imperatively by the 2nd
+       `useLiquidFlex` channel — grow→overshoot→shrink) × the volume-preserving
+       travel-squish (`--stretch`, reciprocal). `transform-origin: center` → the blob
+       grows from center (the label stays put) and the squish stays center-pinned. */
     transform-origin: center;
-    scale: var(--stretch) calc(1 / var(--stretch));
+    scale: calc(var(--tab-blob, 1) * var(--stretch))
+        calc(var(--tab-blob, 1) / var(--stretch));
+}
+
+/* BD.W-TABS-LIQUID — the COMMIT accent-flood (T4, opt-in). A momentary full-capsule
+   wash of `--glass-accent`, driven by `--tab-flood-t` (0→1→0), that TRAILS the
+   spatial glide a beat then clears (EFFECTS-after-SPATIAL). `isolation: isolate` on
+   the host so the `plus-lighter` blend composites the flood against the capsule
+   only (not the page); the gradient is `in srgb` (additive bloom, NOT oklab). The
+   accent is a CONSUMER accent — default `--glass-accent: transparent` → byte-
+   identical rest, provable no-op. The SAME register dock-tabs adopt (dormant at
+   `--tab-flood-t: 0`). */
+.segmented-indicator {
+    isolation: isolate;
+}
+@supports (mix-blend-mode: plus-lighter) {
+    .segmented-indicator::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+            120% 140% at 50% 50%,
+            color-mix(in srgb, var(--glass-accent, transparent) 55%, transparent),
+            transparent 70%
+        );
+        mix-blend-mode: plus-lighter;
+        opacity: var(--tab-flood-t, 0);
+    }
 }
 
 /* Vertical: the indicator deforms on the BLOCK axis (compress X / stretch Y) and
@@ -126,15 +135,23 @@
 .segmented-tabs--vertical .segmented-indicator {
     inset-block: auto;
     inset-inline: var(--bouncy-track-trim);
-    scale: calc(1 / var(--stretch)) var(--stretch);
+    /* BD.W-TABS-LIQUID — the vertical arm mirrors the blob × squish: the block axis
+       carries the stretch, the inline axis its reciprocal, both uniformly inflated. */
+    scale: calc(var(--tab-blob, 1) / var(--stretch))
+        calc(var(--tab-blob, 1) * var(--stretch));
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .segmented-indicator {
-        /* ONE composited transform pair (translate+scale) on ONE calibrated
-           clock — the glide + the squish share `--tab-indicator-duration` so they
-           cannot desync (the R10-2 multi-property-desync class collapsed). */
-        transition: scale var(--tab-indicator-duration) var(--spring-snappy);
+        /* BD.W-TABS-LIQUID — the composed `scale` (`--tab-blob × --stretch`) rides the
+           DEPENDED `--ease-cartoon-punch` curve (the booked Band-0 token, CONSUMED
+           never minted) so the 5-beat blob anticipates (the curve's pre-dip < 0),
+           overshoots past the destination footprint (peaks > 1), then settles soft.
+           The discrete imperative `--tab-blob` writes (open/release) INTERPOLATE on
+           this clock via the `@property` registration — no snap-flicker. ONE clock,
+           ONE composited transform pair — the glide (inset) + the squish + the blob
+           cannot desync. The `--tab-flood-t` accent-flood trails a beat after. */
+        transition: scale var(--tab-indicator-duration) var(--ease-cartoon-punch);
     }
 }
 
@@ -227,7 +244,13 @@
     font: inherit;
     font-size: 0.8125rem;
     color: var(--muted-foreground);
-    transition: color var(--duration-fast) ease;
+    /* BD.W-TABS-LIQUID — the glyph scale-pop (overlapping action / follow-through):
+       the label settles AFTER the capsule (the child trails the parent). The `scale`
+       channel rides the snappy spring with a 60ms delay so it OVERLAPS the capsule
+       arrival; the colour cross-fade stays on the fast bezier. */
+    transition:
+        color var(--duration-fast) ease,
+        scale var(--spring-snappy-duration) var(--spring-snappy) 60ms;
     /* AQ.W3 identity base — keep `scale:1; translate:0` so a hover/press
        transform never mints a stacking context that severs `anchor()`
        resolution (the WAAPI press writes `transform` transiently — harmless). */
@@ -245,6 +268,19 @@
 .segmented-tab[aria-pressed="true"],
 .segmented-tab[aria-selected="true"] {
     color: var(--foreground);
+}
+
+/* BD.W-TABS-LIQUID — the glyph scale-pop on the PILL selection. The live selection
+   model is `aria-pressed` (the pill is a ToggleGroup-shaped surface — verified in
+   SegmentedTabs.vue, NOT `aria-selected` which the underline paper material uses).
+   The pop magnitude DEPENDS `--motion-weight` (the booked Band-0 token, CONSUMED):
+   `calc(1 + 0.06 × --motion-weight)` → ~+3.7% at rest weight 0.618, and exactly 1
+   under PRM (`--motion-weight: 0`). The 60ms transition delay (above) settles it a
+   beat after the capsule arrives (overlapping action). The underline label does NOT
+   pop (paper ink, no inflation — the material fence). */
+.segmented-tabs:not(.segmented-tabs--underline)
+    .segmented-tab[aria-pressed="true"] {
+    scale: calc(1 + 0.06 * var(--motion-weight));
 }
 
 .segmented-tab.is-disabled {
@@ -401,7 +437,9 @@
     /* Promote to its own compositor layer for the 1:1 follow (the translate write
        is compositor-only; the hint keeps the plate off the main-thread paint). */
     will-change: transform;
-    /* Sub-perceptual catch-light lift — the grabbed lozenge reads a hair brighter
-       at its specular edge (the W-GLASS-CAL specular register, disco-FREE). */
-    --glass-specular: 0.1;
+    /* BD.W-TAB-IOS-CAPSULE C7 — the grabbed-state catch-light COMPOSES the SHARED
+       specular-lift step declared ONCE in glass/glass-capsule.css (the
+       `.glass-capsule-hover:hover, .glass-drag-lift { --glass-specular }` group), NOT
+       a parallel `--glass-specular` fork. This block carries only the grabbing-distinct
+       bits (the grab cursor + the `will-change` hint). */
 }

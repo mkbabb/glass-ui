@@ -48,13 +48,26 @@
        `scale: var(--stretch) calc(1 / var(--stretch))`) so it reads as an elastic
        warp, never a size pump. A consumer dials the elasticity (or to 1 for none)
        without touching source.
-       BC.W-LIQUID-TAB — lifted 1.08 → 1.15 (in lockstep with the no-token floor
-       DEFAULT_INDICATOR_MAX_STRETCH, the SOLE cap source — constant + token never
-       fork). The click travel-squish AND the liquid-tab pull-morph read this ONE
-       cap; the lift makes a FAST pull visibly swell the pill so the gel-squish READS
-       as liquid (glass-dock-codebase.md §3.4) — still capped LOW (≤1.2, the
-       anti-taffy-pull bar; the pill swells, never taffy-pulls). */
-    --tab-indicator-max-stretch: 1.15;
+       The click travel-squish AND the liquid-tab pull-morph read this ONE cap (in
+       lockstep with the no-token floor DEFAULT_INDICATOR_MAX_STRETCH, the SOLE cap
+       source — constant + token never fork); a FAST pull visibly swells the pill so
+       the gel-squish READS as liquid — still capped LOW (the anti-taffy-pull bar;
+       the pill swells, never taffy-pulls).
+       BD.W-TABS-LIQUID — re-tuned 1.18 → 1.11. The `--tab-blob` area-inflation
+       channel now carries the "grow" (the 5-beat overshoot), so the per-axis stretch
+       drops: the FENCE is the COMPOSED visible bbox area `blob × stretch` ≤ ~1.14,
+       NOT the bare per-axis scalar. At blob ~1.045 (peak) × stretch ~1.11 (far jump)
+       the composed long-axis peak lands ≤ ~1.16 and the AREA (blob² since the squish
+       is volume-preserving) stays ≤ ~1.14 — lively, not taffy. */
+    --tab-indicator-max-stretch: 1.11;
+
+    /* BD.W-TABS-LIQUID — the area-inflation cap (the 5-beat blob's overshoot peak).
+       The 2nd `useLiquidFlex` channel drives `--tab-blob` toward this on the
+       grow-overshoot beat, then de-inflates to 1 at arrival (shrink-to-fit). Kept
+       LOW (~1.045) so the COMPOSED bbox area (blob × stretch, the volume-preserving
+       squish makes the area ≈ blob²) clears the ≤ ~1.14 anti-taffy fence. A consumer
+       dials it (or to 1 for no inflation) without touching source. */
+    --tab-indicator-blob-max: 1.045;
     /* BA.W-TABS — the indicator's OWN travel clock, re-pointed off the generic
        `--duration-normal` (0.3s, which dragged a ~190ms sub-pixel undershoot tail
        past the ~100ms 90%-travel point — the R10-2 "too slow" read) onto the
