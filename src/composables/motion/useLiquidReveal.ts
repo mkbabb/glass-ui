@@ -55,8 +55,31 @@ import {
     springTimingFunction,
     type Easing,
 } from "@mkbabb/keyframes.js";
-import { onScopeDispose, type Ref } from "vue";
+import {
+    onScopeDispose,
+    type ComponentPublicInstance,
+    type Ref,
+} from "vue";
 import { springPreset, type SpringPresetName } from "./springPresets";
+
+/**
+ * Resolve a templateRef value to its root HTMLElement — accepts an element directly OR
+ * a Vue component public instance (its `.$el`). Returns null for a fragment/text root or
+ * a nullish ref. THIS is the [[glass-ui binding verification]] cure: a `ref` bound to a
+ * COMPONENT (e.g. `<Button>`, a reka portal `<Dialog>`) resolves to the component public
+ * INSTANCE, which has no `getBoundingClientRect` — so the bloom silently no-ops / throws.
+ * Resolving `.$el` lets the surface/trigger bind either an element ref or a component ref
+ * without dying (the cta-receive `asElement` precedent). The same resolver `useDockCta
+ * Receive` ships, kept byte-shape so the bloom family reads as ONE.
+ */
+function asElement(
+    v: HTMLElement | ComponentPublicInstance | null | undefined,
+): HTMLElement | null {
+    if (!v) return null;
+    if (v instanceof HTMLElement) return v;
+    const el = (v as ComponentPublicInstance).$el;
+    return el instanceof HTMLElement ? el : null;
+}
 
 /** The reveal spring register — `snappy` (the quick app-open default) or `bouncy`
  *  (the emphatic large-dialog bloom). A subset of the named `SPRING_PRESETS` rows. */
@@ -65,11 +88,14 @@ export type LiquidRevealPreset = Extract<SpringPresetName, "snappy" | "bouncy">;
 export interface UseLiquidRevealOptions {
     /**
      * The trigger element the surface blooms FROM — the source rect (the button, the
-     * collapsed dock pill). When null at reveal time, the bloom degrades to a
+     * collapsed dock pill). A templateRef to the trigger ELEMENT or to a COMPONENT (e.g.
+     * `<Button>`), whose root element is resolved via `.$el` — the binding-verification
+     * cure: a `ref` on a component is the public instance (no `getBoundingClientRect`),
+     * which silently no-oped the bloom. When null at reveal time, the bloom degrades to a
      * center-anchored scale-from-self (the no-trigger fallback — still spring-clocked,
      * never the flat bezier zoom).
      */
-    trigger?: Ref<HTMLElement | null>;
+    trigger?: Ref<HTMLElement | ComponentPublicInstance | null>;
     /** The spring register (default `snappy`). */
     preset?: LiquidRevealPreset;
     /** The starting backdrop-blur radius in px (the decongest start). Default 4. */
@@ -118,7 +144,7 @@ function prefersReducedMotion(): boolean {
  * ```
  */
 export function useLiquidReveal(
-    surface: Ref<HTMLElement | null>,
+    surface: Ref<HTMLElement | ComponentPublicInstance | null>,
     options: UseLiquidRevealOptions = {},
 ): UseLiquidRevealReturn {
     const respectPRM = options.respectReducedMotion !== false;
@@ -154,7 +180,7 @@ export function useLiquidReveal(
     }
 
     function reveal(): void {
-        const el = surface.value;
+        const el = asElement(surface.value);
         if (!el) return;
         cancelRaf();
 
@@ -162,7 +188,7 @@ export function useLiquidReveal(
         // (the source) — when no trigger is bound, the bloom degrades to a center-
         // anchored self-scale (a small inset rect), still spring-clocked.
         const settled = el.getBoundingClientRect();
-        const triggerEl = options.trigger?.value ?? null;
+        const triggerEl = asElement(options.trigger?.value);
         const triggerRect = triggerEl
             ? triggerEl.getBoundingClientRect()
             : // No trigger: bloom from a 92%-inset of the surface's own center (the
@@ -246,7 +272,7 @@ export function useLiquidReveal(
     function conceal(): void {
         cancelRaf();
         morph = null;
-        const el = surface.value;
+        const el = asElement(surface.value);
         if (el) clearTransform(el);
     }
 

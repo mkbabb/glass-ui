@@ -22,6 +22,7 @@ import {
     supportsScrollTimeline,
     supportsViewTimeline,
 } from "../../../src/composables/motion/supportsCssTimeline";
+import { useScrollPin } from "../../../src/composables/motion/useScrollPin";
 
 // ── Capability badges ───────────────────────────────────────────────────────────
 const scrollOk = ref(false);
@@ -37,6 +38,24 @@ onMounted(() => {
         typeof CSS.supports === "function" &&
         CSS.supports("timeline-scope", "--x") &&
         !CSS.supports("timeline-scope", "gl-not-real");
+});
+
+// ── The scroll-PIN — the keyframes.js liquid spine (BD.W-SCROLL-LIQUID-ENGINE) ───
+// The prior `.scroll-pin` named `scroll-timeline` was structurally DEAD (its
+// `currentTime` was `null` on every engine — `.scroll-pin` is not a scroll port).
+// `useScrollPin` drives a spring-damped `--pin-t` onto the sticky stage off the REAL
+// scroll port (`main.demo-main-scroller`, the AppShell route scroller) via
+// `SpringProgress` over the ONE `createScrollReader` — so the reveal arrives with
+// inertia, overshoots, then settles, on EVERY engine.
+const pinContainer = ref<HTMLElement | null>(null);
+useScrollPin({
+    container: pinContainer,
+    // The route scroller the AppShell owns (px-scrolled, NOT the window). Resolved at
+    // mount — `useScrollScene` reads it inside its own `onMounted` attach.
+    source: () =>
+        (typeof document !== "undefined"
+            ? document.querySelector<HTMLElement>("main.demo-main-scroller")
+            : null),
 });
 </script>
 
@@ -121,31 +140,47 @@ onMounted(() => {
             <p class="text-prose text-muted-foreground max-w-prose">
                 Scrolling does not move the scene — it advances time inside it. The
                 stage below pins to the viewport while its tall container scrolls
-                past; the stage's internal phases (reveal → settle) advance against
-                the container's named scroll-timeline (linked via
-                <code class="fira-code">timeline-scope</code>). On a non-supporting
-                engine it is a correct static read (no broken silent stage).
+                past; the stage's internal phases (reveal → settle) advance against a
+                spring-damped <code class="fira-code">--pin-t</code> the keyframes.js
+                scroll spine writes off the real scroll port — so the reveal arrives
+                with inertia, overshoots, then settles, on every engine (no
+                <code class="fira-code">animation-timeline</code>, no Safari degrade).
             </p>
 
-            <!-- The .scroll-pin tall temporal container holds the sticky stage. -->
-            <div class="scroll-pin rounded-card border border-border/40">
+            <!-- The .scroll-pin tall temporal container holds the sticky stage. The
+                 ref feeds useScrollPin, which writes --pin-t onto it per scroll tick. -->
+            <div
+                ref="pinContainer"
+                class="scroll-pin rounded-card border border-border/40"
+            >
                 <div
                     class="scroll-pin-stage flex min-h-[60vh] flex-col items-center justify-center gap-6 p-8"
                 >
+                    <!-- The colorful field behind the reveal (the NO-GRAY repair —
+                         a coherent violet wash so the pin glass reads warm, not
+                         near-neutral; aria-hidden, purely decorative). -->
                     <div
-                        class="scroll-pin-phase-reveal glass-card rounded-card flex flex-col items-center gap-3 p-10"
+                        aria-hidden="true"
+                        class="pointer-events-none absolute inset-x-8 inset-y-12 rounded-card bg-[radial-gradient(circle_at_30%_30%,color-mix(in_oklab,var(--motion-accent)_38%,transparent),transparent_70%)] blur-2xl"
+                    />
+                    <!-- The reveal card: glass-card warm-cream + cartoon-surface (the
+                         2px defined edge + offset cel stamp) + the shipped .cartoon-cast
+                         inert child (the moving cel cast on --shadow-cartoon-md). -->
+                    <div
+                        class="scroll-pin-phase-reveal cartoon-surface glass-card rounded-card relative flex flex-col items-center gap-3 p-10"
                     >
+                        <span aria-hidden="true" class="cartoon-cast" />
                         <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
                         <p class="text-display-4 text-foreground">Pinned</p>
                         <p class="text-small text-muted-foreground">
-                            Phase 1 — the reveal (0–45% of the container scroll).
+                            Phase 1 — the spring reveal (slam → overshoot → settle).
                         </p>
                     </div>
                     <p
                         class="scroll-pin-phase-settle text-prose text-muted-foreground max-w-prose text-center"
                     >
-                        Phase 2 — the stage settles and drifts as you continue past
-                        (45–90%). The scene is fixed; scroll advances its time.
+                        Phase 2 — the stage settles and drifts as you continue past.
+                        The scene is fixed; scroll advances its time, with weight.
                     </p>
                 </div>
             </div>

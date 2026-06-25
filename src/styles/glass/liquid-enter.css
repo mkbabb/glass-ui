@@ -1,0 +1,252 @@
+/* glass/liquid-enter.css
+   BD.W-LIQUID-ENTRANCE-GENERAL — the UNIVERSAL LIQUID-ENTER mount recipe.
+
+   `.glass-reveal`'s four coupled channels (SPATIAL bloom + SQUISH + fade + decongest),
+   promoted from an overlay-only `data-state` TRANSITION to a mount `@keyframes` so a
+   `v-if`-born-at-open surface ANIMATES (a CSS transition needs a state-change a
+   born-at-open element lacks; an `@keyframes` does not). This is the everywhere
+   entrance EVERY mount surface opts into — cards, rows, controls, dock-modules, demo
+   sub-sections — on the `--i` 1/φ time-clock stagger. The flat fade dies.
+
+   THREE registers share ONE grammar (NOT three engines):
+     • MOUNT  — this file (`.liquid-enter`), plain @keyframes-on-mount, the Safari-15
+                floor, the DEFAULT. Zero JS.
+     • SCROLL — `.scroll-build`/`.scroll-cascade` (scroll-choreography.css), AUGMENTED
+                in place; this file does NOT touch them (Bug B: a 2nd `animation:`
+                shorthand on `.scroll-build > *` clobbers `gl-page-build`).
+     • TRIGGER— `useLiquidReveal`/`useBloomUp` (the JS source-rect bloom).
+
+   THE FOUR CHANNELS (the iOS-27 read, design.md §SPATIAL/EFFECTS split):
+     1. SPATIAL bloom — `translate:` rise (the LONGHAND, composes with a centering
+        transform) on the snappy spring.
+     2. SQUISH volume — the reciprocal `scale:` LONGHAND, born wide+flat (vol-preserving
+        sx·sy ≈ 1), settles square. NEVER a `transform: scale()` shorthand (Bug A: it
+        REPLACES a base centering `transform: translate(-50%,-50%)` → a centered dialog
+        snaps to the corner; AND it composes with a `scale:` longhand → double-scale,
+        born at 78% area). The bloom-from-small GRACE is the coupled rise + blur + fade,
+        NOT an isotropic shrink (a 0.88 multiplier re-introduces the 0.776-area shrink).
+        When a JS clock is present, `--stretch` (useLiquidFlex — the ONE squish engine)
+        is written live and paired reciprocally on THIS longhand.
+     3. EFFECTS fade — `opacity 0→1` (coupled so scale+fade read as ONE coalescing layer).
+     4. EFFECTS decongest — `filter: blur(b)→blur(0)` on the surface's OWN pixels
+        (`filter`, NEVER `backdrop-filter` — the resting glass plate is untouched + the
+        WebKit per-frame-reblur hole is avoided), on the SAME spring clock.
+
+   The four channels are governed by ONE number — `--motion-weight` (rest 1/φ ≈ 0.618,
+   the shipped Band-0 token): weight 0 ⇒ no visible punch (PRM), weight 1 ⇒ the full
+   celebration slam. Co-scaled, never four unrelated tics.
+
+   @import-ed by glass.css in cascade order, in its own @layer components. */
+
+@layer components {
+    /* The channel substrate — the public start knobs, shared with `.glass-reveal`
+       (which keys the same `--lq-enter-*` names so the MOUNT recipe + the reka
+       closed→open TRANSITION speak ONE grammar, no fork). */
+    .liquid-enter {
+        --lq-enter-rise: 0.5rem; /* the SPATIAL rise (the translate: longhand leg) */
+        --lq-enter-blur: 4px; /* the decongest start radius (the filter leg) */
+        --lq-enter-origin: center; /* the bloom anchor (a popper edge overrides) */
+        /* The born squish — wide+flat, vol-preserving (product ≈ 1.002). The settle is
+           1 1. A consumer driving useLiquidFlex writes --lq-stretch-x/-y live. */
+        --lq-stretch-x: 1.06;
+        --lq-stretch-y: 0.945;
+        /* The register's OWN clock — the 1/φ overlap stagger keys off THIS so the
+           "launch beat N+1 as beat N hits 62%" holds on the cel/bouncy clock too
+           (DELTA-ASSAY §3 — not hardcoded to the snappy duration). */
+        --lq-enter-duration: var(--spring-snappy-duration);
+    }
+
+    /* ── BASE register (the graceful floor, GREEN on the bouncy/snappy spring) ──
+       A 2-stop squish-grow: the spring's `linear()` overshoot interior supplies the
+       calibrated iOS bounce. ONE `scale:` longhand (the squish), ONE `translate:`
+       longhand (the rise) — NO `transform:` shorthand (Bug A). */
+    @media (prefers-reduced-motion: no-preference) {
+        .liquid-enter {
+            animation: gl-liquid-enter var(--lq-enter-duration) var(--spring-snappy)
+                both;
+            /* The 1/φ overlap — the per-beat delay is the spring settle × 1/φ ≈ 0.618,
+               so beat N+1 launches as beat N reaches ~62% (Disney follow-through /
+               overlap; the golden proportion). Keyed off THIS register's own clock. */
+            animation-delay: calc(
+                var(
+                    --lq-enter-step,
+                    calc(var(--lq-enter-duration) * 0.618)
+                ) * var(--i, 0)
+            );
+            transform-origin: var(--lq-enter-origin);
+        }
+
+        /* DISPLAY type arrives with GRAVITY, no bounce (a heading must not overshoot —
+           the W-HIERARCHY arrival law). The fade/decongest still ride the recipe. */
+        .liquid-enter.is-display {
+            animation-timing-function: var(--ease-out);
+        }
+
+        @keyframes gl-liquid-enter {
+            0% {
+                opacity: 0;
+                /* SQUISH on the scale: LONGHAND — born wide+flat (vol-preserving), the
+                   short axis pinches, the long swells. NO transform: shorthand here. */
+                scale: var(--lq-stretch-x, 1.06) var(--lq-stretch-y, 0.945);
+                /* SPATIAL rise on the translate: LONGHAND (composes with a base
+                   centering transform — never clobbers it). */
+                translate: 0 var(--lq-enter-rise, 0.5rem);
+                /* DECONGEST — the surface's OWN pixels (filter, not backdrop-filter). */
+                filter: blur(var(--lq-enter-blur, 4px));
+            }
+            100% {
+                opacity: 1;
+                scale: 1 1;
+                translate: 0 0;
+                filter: blur(0);
+            }
+        }
+    }
+
+    /* ── CEL register (`.is-cel`, the audacious cartoon-technicolor upgrade) ──
+       LIVE-PROVEN FINDING (GOLDEN §7e): the cel-slam PUNCH cannot come from
+       ease-overshoot across the narrow `scale: 0.88→1` span (a 0.12 span × a 1.22
+       ease-peak yields only ~2% absolute punch). The punch MUST live in EXPLICIT
+       keyframe STOPS (a 3-stop arc); `--ease-cartoon-punch` (the shipped loud
+       `linear()`) adds the anticipation dip + extra overshoot ON TOP. Same
+       `scale:`/`translate:` LONGHAND discipline — NO `transform:` shorthand.
+
+       The arc: ANTICIPATION (sink + squish DOWN) → PUNCH (lift + stretch UP) →
+       FOLLOW-THROUGH settle. Every magnitude rides `--motion-weight` so PRM
+       (weight 0) flattens the whole arc to the fade in ONE assignment. */
+    @media (prefers-reduced-motion: no-preference) {
+        .liquid-enter.is-cel {
+            animation: gl-cel-slam var(--lq-enter-duration)
+                var(--ease-cartoon-punch, var(--spring-bouncy)) both;
+        }
+
+        @keyframes gl-cel-slam {
+            0% {
+                opacity: 0;
+                /* ── ANTICIPATION — sink + squish DOWN (born flat, tall; vol-preserve) ── */
+                translate: 0
+                    calc(14px * var(--motion-weight, 0.618));
+                scale: calc(1 - 0.12 * var(--motion-weight, 0.618))
+                    calc(1 + 0.06 * var(--motion-weight, 0.618));
+                filter: blur(var(--lq-enter-blur, 4px));
+            }
+            62% {
+                opacity: 1;
+                /* ── PUNCH — lift + stretch UP (sx↑, sy↓; vol-preserve) ── */
+                translate: 0
+                    calc(-3px * var(--motion-weight, 0.618));
+                scale: calc(1 + 0.1 * var(--motion-weight, 0.618))
+                    calc(1 - 0.05 * var(--motion-weight, 0.618));
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                /* ── FOLLOW-THROUGH settle ── */
+                translate: 0 0;
+                scale: 1 1;
+                filter: blur(0);
+            }
+        }
+    }
+
+    /* ── The lagging cartoon CAST (`.is-cel`, opt-in) — a CHILD layer, never
+       ::after{box-shadow} ──
+       A box-shadow cannot LAG a transform (both repaint on the same element in
+       lockstep), and an animated box-shadow is a WebKit paint hole. So the cast is a
+       child caster layer carrying the STATIC layered `--shadow-cartoon-md` (the proper
+       1940s-technicolor punch, 3-layer ink — NOT the bare single-stamp whisper),
+       animated on its OWN transform clock +`6ms·--motion-weight` later: the object
+       slams in, its bold shadow catches up a beat behind (overlapping action). The
+       cast's TRANSFORM moves (compositor); the box-shadow is static-painted, never
+       animated. Capped to HERO/headline surfaces (perf — never a global .is-cel). */
+    .liquid-enter.is-cel > .cartoon-cast {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        /* STATIC layered stamp; re-tints per mode via the --cartoon-ink-* cohort
+           (shadow.css / dark-arm.css). NEVER animated. */
+        box-shadow: var(--shadow-cartoon-md);
+        pointer-events: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .liquid-enter.is-cel > .cartoon-cast {
+            animation: gl-cast-lag var(--lq-enter-duration)
+                var(--ease-cartoon-punch, var(--spring-snappy)) both;
+            /* the LATE arrival — the shadow trails the cel a beat behind */
+            animation-delay: calc(0.006s + 0.06s * var(--motion-weight, 0.618));
+        }
+        @keyframes gl-cast-lag {
+            0% {
+                opacity: 0;
+                translate: 0 calc(10px * var(--motion-weight, 0.618)) 0;
+                scale: 0.92;
+            }
+            100% {
+                opacity: 1;
+                translate: 0 0 0;
+                scale: 1;
+            }
+        }
+    }
+    /* Under prefers-contrast: more the inked edge is a LEGIBILITY asset — floor it on. */
+    @media (prefers-contrast: more) {
+        .liquid-enter.is-cel > .cartoon-cast {
+            opacity: 1;
+        }
+    }
+}
+
+/* ── The Safari < 17.2 `linear()` floor (DELTA-ASSAY §3) ──
+   `linear()` spring/punch curves UNPARSE before Safari 17.2 → the `animation`
+   timing falls to the UA default, killing the overshoot. Supply a cubic-bezier
+   floor so the entrance still reads bouncy (not a dead linear ramp) on legacy
+   WebKit. Plain @keyframes + scale/translate/opacity/filter longhands are
+   themselves Safari-15-safe; only the spring CURVE needs the floor. */
+@supports not (animation-timing-function: linear(0, 1)) {
+    @layer components {
+        @media (prefers-reduced-motion: no-preference) {
+            .liquid-enter {
+                animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .liquid-enter.is-cel,
+            .liquid-enter.is-cel > .cartoon-cast {
+                animation-timing-function: cubic-bezier(0.5, -0.2, 0.4, 1.4);
+            }
+        }
+    }
+}
+
+/* ── REDUCED-MOTION CARVE (the vestibular floor — WCAG 2.3.3 · design.md P6) ──
+   Under `prefers-reduced-motion: reduce` the entrance keeps the FADE and drops the
+   transform + squish + bounce + blur + stagger + cast in ONE arm (opacity is not a
+   vestibular trigger). One calm paint on the short clock, delay → 0. This mirrors the
+   `.glass-reveal` + `.scroll-build` PRM precedent. The shipped `--ease-cartoon-punch`
+   already re-aliases to `--ease-standard` under reduce (scheme-motion.css) and
+   `--motion-weight → 0` zeroes the arc — this carve is the belt-and-suspenders floor
+   that also drops the keyframe channels outright. */
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .liquid-enter,
+        .liquid-enter.is-cel {
+            animation: gl-liquid-enter-reduced var(--duration-fast) var(--ease-out)
+                both;
+            animation-delay: 0s;
+        }
+        .liquid-enter.is-cel > .cartoon-cast {
+            /* the cast still appears (its ink is a legibility asset) but does not fly */
+            animation: none;
+            opacity: 1;
+            translate: 0;
+            scale: 1;
+        }
+        @keyframes gl-liquid-enter-reduced {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    }
+}

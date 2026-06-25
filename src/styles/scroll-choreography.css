@@ -19,9 +19,11 @@
  *                     the implicit stagger [NO setTimeout], the spring-clocked
  *                     coupled transform+opacity build).
  *   .scroll-pin     — the fixed-stage-advances-time scroll-pinned register
- *                     (position: sticky stage + a named scroll-timeline linked via
- *                     timeline-scope; the stage's internal phases advance with
- *                     scroll progress, compositor channels only).
+ *                     (position: sticky stage; the stage's internal phases advance
+ *                     against a spring-damped `--pin-t` the keyframes.js scroll spine
+ *                     `useScrollPin` writes per scroll tick — EVERY engine, no
+ *                     `animation-timeline`. The dead `--gl-pin` named scroll-timeline
+ *                     is EXCISED — BD.W-SCROLL-LIQUID-ENGINE).
  *   .smooth-scroll  — the native scroll-behavior: smooth opt-in (PRM-gated,
  *                     zero runtime — a smooth-scroll under reduce is a vestibular
  *                     concern, so the smooth interpolation is dropped under PRM).
@@ -31,9 +33,10 @@
  * so under PRM no scroll/build animation attaches at all and content renders in
  * its terminal state (the `from` keyframe never applies because the animation
  * never binds; the .scroll-pin stage shows its terminal phase, no sweep). The
- * scroll-driven recipes sit under a second `@supports (animation-timeline: …)`
- * gate so a non-supporting engine gets the STATIC layout (the .scroll-pin stage
- * is a correct non-pinned read, never a broken silent stage).
+ * `view()`-cascade recipe sits under a second `@supports (animation-timeline: …)`
+ * gate so a non-supporting engine gets the STATIC cascade layout. The .scroll-pin
+ * register needs NO `@supports` gate — its `--pin-t` is JS-written by `useScrollPin`
+ * on every engine; under PRM the composable zeroes the scrub (1:1, no drift).
  *
  * COMPOSITOR-ONLY (the proof:no-layout-animation floor BB.W-CARD-COMPOSITE): every
  * @keyframes step + transition animates ONLY transform/translate/scale/opacity/
@@ -44,6 +47,43 @@
  * overshoot). The spring tokens are READ-ONLY (the W-GLASS-CAL clock fence — this
  * register THREADS them, it never re-tunes a spring value or a duration).
  */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * BD.W-SCROLL-LIQUID-ENGINE — the liquid-weight scroll tokens.
+ *
+ * The `--scroll-scrub` family is the ONE liquid-weight knob the JS spine
+ * (`useScrollScene`/`useScrollPin`) reads; the `--ease-scroll-spring` is the
+ * compositor spring-scrub the cascade rides (ZERO JS). The pin-phase fractions are
+ * the calc-friendly window bounds the `--pin-t` recipes read (a NUMBER, not the
+ * `%` the dead `animation-range` used). All golden-proportioned (1/φ family). The
+ * cartoon-punch deps (`--motion-weight`/`--ease-cartoon-punch`/`--shadow-cartoon-md`)
+ * SHIP today and are consumed via `var(…, fallback)` so the recipes stay GREEN. */
+:root {
+    /* The scroll liquid-weight rest — 1/φ. The felt-axis scrub the JS spine damps
+       toward; PRM → 0 (a 1:1 snap, inside the composable). */
+    --scroll-scrub: 0.618;
+    /* The pin drifts HEAVIER — 1/φ² (a scene, not a control). */
+    --scroll-scrub-pin: 0.382;
+    /* The spring-shaped compositor cascade ease — the `--spring-gentle` twin
+       (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set). Degrades to the
+       no-overshoot `--ease-out` where `linear()` is unsupported (Safari < 17.2 —
+       the house precedent). `--spring-gentle` SHIPS (scheme-motion.css). */
+    --ease-scroll-spring: var(--spring-gentle, var(--ease-out, ease-out));
+    /* The pin reveal/expand windows as 0..1 fractions (the `--pin-t` recipes read
+       a NUMBER for the calc, not the `%` the dead timeline used). 1/φ² + 0.9. */
+    --scroll-pin-phase-reveal-end-frac: 0.382;
+    --scroll-pin-phase-expand-end-frac: 0.9;
+    /* The volume-preserving squash depth — 1 − 1/φ⁴. */
+    --scroll-pin-squash-floor: 0.944;
+}
+
+@supports not (animation-timing-function: linear(0, 1)) {
+    :root {
+        /* Where `linear()` is unsupported the spring twin cannot resolve — fall to
+           the no-overshoot settle bezier (a scrubbed spring without the stop-set). */
+        --ease-scroll-spring: var(--ease-out, ease-out);
+    }
+}
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * .scroll-build — the route-enter page-build.
@@ -160,8 +200,15 @@
                progress map (the spring shaping lives in the section's own settle
                where the build is mount-driven; a scroll-bound timeline reads
                1:1 with scroll position — a spring on a scrubbed timeline reads as
-               a scrubbed spring, which is correct here as the linear progress map). */
-            animation: gl-cascade-build auto linear both;
+               a scrubbed spring, which is correct here as the linear progress map).
+
+               BD.W-SCROLL-LIQUID-ENGINE: the easing is the spring-shaped
+               `--ease-scroll-spring` (a `springLinearStops` `linear()` twin of
+               `--spring-gentle`, ζ ≈ 0.85) — each card's scroll-scrubbed entrance
+               reads with spring WEIGHT (a hair of overshoot at the end of its
+               range), ZERO JS (the platform carries it on the compositor). The
+               Safari-degrade-to-cel-slam arm lives in the entrance-reveal scope. */
+            animation: gl-cascade-build auto var(--ease-scroll-spring, linear) both;
             animation-timeline: view(block);
             animation-range: entry 0% entry var(--scroll-cascade-range-end, 45%);
         }
@@ -202,83 +249,97 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * .scroll-pin — the fixed-stage-advances-time scroll-pinned register.
+ * .scroll-pin — the fixed-stage-advances-time scroll-pinned register, RE-INVENTED
+ * on a JS-written `--pin-t` (BD.W-SCROLL-LIQUID-ENGINE).
  *
- * The SOTA "scrolling does not move the scene, it advances time inside it" model:
- * a `.scroll-pin` tall container (the `--scroll-pin-stage-height` temporal space)
- * holds a `.scroll-pin-stage` `position: sticky` element. The container declares
- * a named `scroll-timeline`; the stage's internal phase animations bind to that
- * named timeline via `timeline-scope` (so the stage animates against the
- * CONTAINER'S scroll progress — the fixed stage advances time). The phase
- * animations are compositor-only (transform/opacity/clip-path over the
- * `animation-range` phase windows — the Codrops phased sequence: a reveal phase
- * 0..45%, an expand phase 45..90%, a settle phase 90..100%).
+ * THE DEFECT (excised, no alias): the prior register bound the phase reveals to a
+ * named `scroll-timeline: --gl-pin` declared on `.scroll-pin` + `timeline-scope:
+ * --gl-pin`. A named scroll-timeline measures the DECLARING element's OWN scroll
+ * progress — but `.scroll-pin` is `overflow: visible` with zero internal scroll
+ * extent, so it is NOT a scroll port: `--gl-pin`'s `currentTime` was permanently
+ * `null` and the bound `gl-pin-reveal` animation parked at its `from` keyframe
+ * forever (dead on EVERY engine, including those that fully support the native
+ * feature — structural deadness, not a Safari degrade).
  *
- * `timeline-scope` is the newest primitive — the `@supports` gate probes it (NOT
- * just `scroll()`), so an engine with `scroll()`/`view()` but not `timeline-scope`
- * gets the STATIC layout (a correct non-pinned read: the stage is a plain sticky
- * element at its terminal phase, never a broken silent stage). In 2026
- * `timeline-scope` ships alongside `scroll()`/`view()` (the universal-support
- * convergence), so the CSS-only register is the ship; the JS fallback leaf (mirror
- * useScrollProgress's dual-path single-writer) is BOOKED only on a material
- * engine-gap reveal (the §Triumvirate support-matrix trigger) — never a JS scroll
- * lib (the no-net-dep fence is binding either way).
+ * THE FIX (every engine, no `animation-timeline`, no `@supports` gate): the stage
+ * is plain `position: sticky` + `contain: layout paint` (bounded recalc); the
+ * phases read a SPRING-DAMPED `--pin-t ∈ [0, 1]` that `useScrollPin` (the
+ * keyframes.js scroll spine — `SpringProgress` over the ONE `createScrollReader`)
+ * writes off the REAL scroll port per coalesced tick. The reveal arrives with
+ * inertia, overshoots (ζ ≈ 0.85), then settles — the cartoon-slam felt register.
+ * Works on Safari 15+ with no timeline primitive.
+ *
+ * Liquid weight is the DEFAULT here (the §L4 no-stiff-snap law): `useScrollPin`'s
+ * `SpringProgress` keeps converging AFTER the finger lifts. PRM zeroes the scrub
+ * (`--scroll-scrub-pin → 0` under reduce inside the composable) so `--pin-t` tracks
+ * scroll 1:1 with no interpolated drift — the vestibular floor.
  * ─────────────────────────────────────────────────────────────────────────── */
+
+/* The typed pin progress register — `inherits: true` so the sticky stage + the
+   phase children read the `--pin-t` written on the `.scroll-pin` container; a typed
+   `@property` makes the calc cheaper + lets an optional native cosmetic-parallax leg
+   composite it. Registered OUTSIDE the PRM gate (a custom property is inert — it only
+   drives motion through the recipes below, which ARE PRM-gated). */
+@property --pin-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+.scroll-pin {
+    position: relative;
+    block-size: var(--scroll-pin-stage-height, 320vh);
+}
+
+.scroll-pin-stage {
+    position: sticky;
+    inset-block-start: 0;
+    /* Bounded main-thread recalc — the `--pin-t` write is a style recalc on this
+       isolated subtree, NOT a reflow (translate/scale/opacity don't reflow). */
+    contain: layout paint;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) and (timeline-scope: --gl-pin) {
-        @keyframes gl-pin-reveal {
-            from {
-                opacity: 0;
-                transform: translateY(var(--scroll-pin-lift, 2.5rem)) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        @keyframes gl-pin-settle {
-            from {
-                transform: scale(1);
-                opacity: 1;
-            }
-            to {
-                /* The settle phase — a gentle compositor drift, never a layout move. */
-                transform: scale(1.02) translateY(calc(-1 * var(--scroll-pin-lift, 2.5rem)));
-                opacity: 1;
-            }
-        }
+    /* Phase 1 — the reveal. Reads `--pin-t` mapped across the reveal window
+       (0 .. --scroll-pin-phase-reveal-end-frac). The lift + squash ride the
+       compositor longhands (`translate`/`scale` — NEVER the `transform` shorthand,
+       which would fold a centering translate; the longhands stack independently).
+       The squash floor is volume-preserving (a hair of squash on entry). */
+    .scroll-pin-stage .scroll-pin-phase-reveal {
+        --t: clamp(
+            0,
+            calc(var(--pin-t, 0) / var(--scroll-pin-phase-reveal-end-frac, 0.382)),
+            1
+        );
+        opacity: var(--t);
+        translate: 0 calc((1 - var(--t)) * var(--scroll-pin-lift, 2.5rem));
+        scale: calc(
+            var(--scroll-pin-squash-floor, 0.944) +
+                (1 - var(--scroll-pin-squash-floor, 0.944)) * var(--t)
+        );
+        /* will-change scoped to the active phase — added while the pin is in range,
+           never the full 320vh lifetime (the audit's transient-promotion rule). */
+        will-change: transform, opacity;
+    }
 
-        /* The tall temporal container declares a named scroll-timeline + exposes it
-           to descendants via timeline-scope (the fixed-stage-advances-time link). */
-        .scroll-pin {
-            position: relative;
-            block-size: var(--scroll-pin-stage-height, 320vh);
-            scroll-timeline-name: --gl-pin;
-            scroll-timeline-axis: block;
-            timeline-scope: --gl-pin;
-        }
-
-        /* The sticky stage — pinned to the viewport while the container scrolls
-           past; its phases advance against the container's --gl-pin timeline. */
-        .scroll-pin-stage {
-            position: sticky;
-            inset-block-start: 0;
-        }
-
-        /* Phase 1 — the reveal (0..45% of the container scroll). */
-        .scroll-pin-stage .scroll-pin-phase-reveal {
-            animation: gl-pin-reveal auto linear both;
-            animation-timeline: --gl-pin;
-            animation-range: 0% var(--scroll-pin-phase-reveal-end, 45%);
-        }
-
-        /* Phase 2 — the settle/expand (the reveal-end..expand-end window). */
-        .scroll-pin-stage .scroll-pin-phase-settle {
-            animation: gl-pin-settle auto linear both;
-            animation-timeline: --gl-pin;
-            animation-range: var(--scroll-pin-phase-reveal-end, 45%)
-                var(--scroll-pin-phase-expand-end, 90%);
-        }
+    /* Phase 2 — the settle/drift. Reads the reveal-end..expand-end window of
+       `--pin-t`; a gentle compositor drift as the reader continues past, never a
+       layout move. */
+    .scroll-pin-stage .scroll-pin-phase-settle {
+        --t: clamp(
+            0,
+            calc(
+                (var(--pin-t, 0) - var(--scroll-pin-phase-reveal-end-frac, 0.382)) /
+                    (
+                        var(--scroll-pin-phase-expand-end-frac, 0.9) -
+                            var(--scroll-pin-phase-reveal-end-frac, 0.382)
+                    )
+            ),
+            1
+        );
+        opacity: 1;
+        translate: 0 calc(var(--t) * -1 * var(--scroll-pin-lift, 2.5rem));
+        scale: calc(1 + 0.02 * var(--t));
     }
 }
 

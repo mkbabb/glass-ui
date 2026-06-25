@@ -45,6 +45,19 @@
            clocks read the shared spring tokens (read-only — the W-GLASS-CAL fence). */
         --glass-reveal-blur: 4px;
         --glass-reveal-slide: 0.5rem;
+        /* The materialize squish — the surface blooms FROM 0.88 (a clear squish-grow,
+           the Control-Center round-toggle reference), not the near-no-op 0.95. The
+           authority lives here; the closed/exit leg reads it with a 0.88 fallback.
+           BD.W-ANIM-IOS27-TUNE */
+        --glass-reveal-enter-scale: 0.88;
+        /* The SQUISH channel — the same volume-preserving born-wide+flat squish the
+           universal `.liquid-enter` mount recipe speaks (ONE grammar, no fork). The
+           closed leg rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
+           settling to `1 1` at open; the bloom-from-small grace is the coupled
+           scale-down (--glass-reveal-enter-scale) × this squish, never a separate
+           transform: shorthand (which would clobber a centering transform). */
+        --lq-stretch-x: 1.06;
+        --lq-stretch-y: 0.945;
         transform-origin: var(--reka-popper-transform-origin, center);
         /* The coupled transition list — the SPATIAL legs (scale/translate) on the
            snappy spring's OWN settle clock, the EFFECTS legs (opacity/filter blur-
@@ -67,7 +80,7 @@
        from its edge) — the BASE never writes `translate`, so a center-anchored Dialog
        keeping its `-translate-x-1/2 -translate-y-1/2` centering is NEVER clobbered. */
     .glass-reveal[data-state="open"] {
-        scale: 1;
+        scale: 1 1;
         opacity: 1;
         filter: blur(0);
     }
@@ -77,7 +90,14 @@
        past gone, the §6/W-MOTION-CANON P2 doctrine); NO `--spring-*` token on the
        exit. The exit is faster + un-sprung — the surface recedes cleanly. */
     .glass-reveal[data-state="closed"] {
-        scale: var(--glass-reveal-enter-scale, 0.95);
+        /* Born wide+flat AND bloom-from-small: the SQUISH (--lq-stretch-x/-y,
+           vol-preserving) couples with the bloom-from-0.88 on the SAME `scale:`
+           LONGHAND (two factors, ONE longhand — never a second transform: shorthand
+           that would clobber a Dialog's centering translate). The deform stays
+           anisotropic (the long axis swells AS it blooms, the short pinches);
+           it settles to `1 1` at open. */
+        scale: calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-x, 1.06))
+            calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-y, 0.945));
         opacity: 0;
         filter: blur(var(--glass-reveal-blur));
         transition-timing-function: var(--ease-out);
