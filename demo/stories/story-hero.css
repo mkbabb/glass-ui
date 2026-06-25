@@ -43,6 +43,34 @@
     --story-page-max-inline: 72rem; /* the bounded article width (was max-w-6xl). */
     --story-page-section-gap: 2.5rem; /* the section cadence (was gap-10 = 2.5rem). */
     --story-page-header-gap: 0.5rem; /* the chrome-header micro-rhythm (was gap-2). */
+
+    /* ── BD.W-CUT page-chrome — the chrome/hero SCALE SPLIT (the one-token seam) ──
+       The over-scale on the CONTENT-page chrome <h1> was a SELECTION bug (the
+       `text-display-${heroScale≥4}` floor pinned the chrome page-title to the
+       PROTAGONIST rung — ~109px live, ~2× too loud for a calm page LABEL). The
+       split: the chrome page-title reads this CALM rung (the φ^2 display band, the
+       same √φ ladder, byte-untouched); the protagonist hero <h1> KEEPS the
+       audacious heroScale tiers (variant="hero"). A consumer who wants a louder
+       chrome title re-points `--chrome-title-rung` (presets-in-consumers). */
+    --chrome-title-rung: var(--type-display-1); /* φ^2, the calm display band — ~½ the audacious */
+
+    /* ── BD.W-CUT page-chrome — the ONE `--chrome-rule` seam (one token, N readers) ──
+       The dark-adaptive masthead→body dividing rule. Reuses the shipped
+       `--configurator-divider` family (a `light-dark()` warm-ink hairline that
+       survives the dark glass plate). USED ONLY as `border-color` — never an inset
+       shadow — so the MEMORY light-dark inset-shadow trap NEVER fires here. It
+       RETIRES the phantom `--story-header-rule` (referenced nowhere in src). */
+    --chrome-rule: var(--configurator-divider);
+
+    /* ── BD.W-CUT page-chrome — the corner-AA clip radius (demo-chassis chrome) ──
+       The chrome glass surfaces (the chrome header, the subpath stamp) clip their
+       backdrop/halo to their OWN radius so the saturate halo never bleeds a SQUARE
+       behind the rounded silhouette. The clip lands on a backdrop-only CHILD layer
+       (`.chrome-aa-clip`), NEVER the shadow-bearing host — the host's box-shadow /
+       floating lift / iOS under-shadow is left UNCLIPPED (a `clip-path` on the host
+       amputates the entire outer box-shadow; CSS Masking spec). Each surface points
+       this token at its own radius before composing the clip. */
+    --chrome-aa-radius: var(--radius-card);
 }
 
 /* BA.W-STAGE scope 4 — the DARK static-PAPER wash recalibration (BG-3 / DARK-4). The
@@ -164,6 +192,119 @@
     margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
     color: var(--foreground);
     max-inline-size: 18ch;
+
+    /* ── BD.W-CUT page-chrome — HERO-OVERFLOW: the audacious title always FITS ──
+       The √φ display ladder (`text-display-{4,5,mega,hero,audacious}`) is tuned on
+       a `vw` axis with poster-peak maxima (display-5 110px · mega 177px · hero
+       287px · audacious 352px). On a NARROW viewport a long unbreakable wordmark
+       (e.g. "Substrates") at that rung clips OFF the right edge — the verbatim
+       user defect. The fix bounds the resolved `font-size` to a viewport-width
+       BUDGET: `min(<the √φ ladder rung>, <the budget that fits>)`. The rung
+       (`--story-hero-title-rung`) is captured from the SAME `--type-display-*`
+       token the utility class resolves (set per `data-hero-scale` below — the
+       ladder stays BYTE-UNTOUCHED, the fence); the budget is the page inline
+       measure minus the chassis padding, divided by a √φ wordmark-length factor —
+       a rung that always lands inside the column. `overflow-wrap`/`hyphens` give a
+       multi-letter wordmark a break opportunity as the last-resort floor, so even
+       the longest single word can never run past the edge. The `font-size` fit-cap
+       lives on the HIGHER-specificity `[data-hero-scale]` / `.story-chrome-title`
+       selectors below (0,2,0 / 0,2,0) so it always WINS the bare `text-display-*`
+       utility (0,1,0) regardless of Tailwind source order. */
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+}
+
+/* The protagonist hero rung captured from the SAME √φ ladder token the
+   `text-display-*` utility resolves — so the `min()` fit-cap bounds the audacious
+   tier WITHOUT re-typing the ladder value (DRY; the ladder is the utility's,
+   byte-untouched). The chassis stamps `data-hero-scale` from the `heroScale` prop
+   (StoryHero.vue); these map it onto the rung token AND carry the fit-cap at
+   0,2,0 specificity (beats the bare utility). The `/7` wordmark factor in the fit
+   budget holds an ~7ch wordmark at the column edge; longer words hyphenate. */
+.story-hero-title[data-hero-scale] {
+    font-size: min(
+        var(--story-hero-title-rung, var(--type-display-4)),
+        var(--story-hero-title-fit, calc((100vw - 2 * var(--story-hero-pad, 2rem)) / 7))
+    );
+}
+.story-hero-title[data-hero-scale="4"] {
+    --story-hero-title-rung: var(--type-display-4);
+}
+.story-hero-title[data-hero-scale="5"] {
+    --story-hero-title-rung: var(--type-display-5);
+}
+.story-hero-title[data-hero-scale="mega"] {
+    --story-hero-title-rung: var(--type-display-mega);
+}
+.story-hero-title[data-hero-scale="hero"] {
+    --story-hero-title-rung: var(--type-display-hero);
+}
+.story-hero-title[data-hero-scale="audacious"] {
+    --story-hero-title-rung: var(--type-display-audacious);
+}
+
+/* ── BD.W-CUT page-chrome — the chrome/hero SCALE SPLIT (the calm page LABEL) ──
+   The CONTENT-page chrome <h1> (variant="page", StoryPage's <header>) reads the
+   CALM `--chrome-title-rung` (~½ the audacious), NOT the protagonist heroScale —
+   so the breadcrumb/page-title chrome is a calm LABEL while the hero stays
+   audacious. It STILL respects the fit-cap (a narrow viewport shrinks even the
+   calm rung). The explicit `.story-chrome-title` class marks the chrome <h1>
+   (StoryPage.vue); the `.story-hero-title.story-chrome-title` compound is 0,2,0
+   so it WINS any stray `text-display-*` utility regardless of source order. */
+.story-hero-title.story-chrome-title {
+    --story-hero-title-rung: var(--chrome-title-rung);
+    font-size: min(
+        var(--chrome-title-rung),
+        calc(100vw - 2 * var(--story-hero-pad, 1.5rem) - 1rem)
+    );
+    /* the calm display label keeps the display face/weight the retired
+       `text-display-*` utility carried — only the SIZE drops to the calm rung. */
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: var(--type-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+/* ── BD.W-CUT page-chrome — the `--chrome-rule` masthead→body dividing rule ──────
+   The chrome/hero SCALE SPLIT pairs a calm page-title with a STRUCK dividing rule
+   (the user ask: "the small breadcrumb/page-title chrome ... gets a dividing
+   rule"). ONE token `--chrome-rule`, read as a `border-color` ONLY (so the MEMORY
+   light-dark inset-shadow trap never fires — the token IS a `light-dark()` value
+   but is never an inset shadow here). It reads in THREE places by design: this
+   resting masthead→body rule, the condensed-bar bottom edge, and the toc edge
+   (those two are the sibling waves' readers — this lane owns the resting rule +
+   the token mint). The rule is a decorative `::after` (no semantics) on the chrome
+   header cluster, drawn the full route-column width with a φ gap to the body. */
+.story-page-article > header > .story-hero-cluster::after {
+    content: "";
+    display: block;
+    block-size: 0;
+    border-block-end: 1px solid var(--chrome-rule);
+    margin-block-start: calc(0.75rem * var(--phi, 1.618));
+    transform: scaleX(1);
+    transform-origin: left;
+}
+/* The rule is STRUCK left→right on entrance WHEN the motion-spring sibling delta
+   has landed (`--ease-cartoon-punch`; DEPENDS — un-landed today). Until then the
+   `@supports` guard keeps the rule STATIC (scaleX(1), painted) so it ships token-
+   independent NOW; the strike enriches it for free when the token arrives. PRM
+   holds the static rule (no draw). */
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .story-page-article > header > .story-hero-cluster.story-hero-shrink::after {
+            transform: scaleX(0);
+            animation: chrome-rule-strike 520ms
+                var(--ease-cartoon-punch, var(--ease-out, ease-out)) 240ms both;
+        }
+    }
+}
+@keyframes chrome-rule-strike {
+    to {
+        transform: scaleX(1);
+    }
 }
 
 /* ── BB.W-HIERARCHY2 — the ordered StoryHeader cluster + the cluster rhythm ──────
@@ -190,9 +331,42 @@
     margin-block-end: 0;
 }
 
+/* ── BD.W-CUT page-chrome — the corner-AA backdrop-child clip register ───────────
+   The library-wide corner-AA law: a `backdrop-filter` saturate halo bleeds a
+   SQUARE behind the rounded silhouette → a jaggy corner fringe (worst on WebKit).
+   The clip must NEVER land on the shadow-bearing host: `clip-path` clips the
+   host's ENTIRE rendering INCLUDING its outer `box-shadow` (CSS Masking spec) →
+   it amputates the floating lift + the iOS under-shadow. The register clips a
+   nested backdrop-only CHILD instead — the child owns the `backdrop-filter` +
+   `clip-path: inset(0 round <own-radius>)`, the host keeps its UNCLIPPED
+   box-shadow (the floating lift preserved). `inset(round)` is Safari-native
+   (`-webkit-clip-path` baseline; the halo squares WORST on WebKit so the clip is
+   load-bearing there). A chassis surface composes `.chrome-aa-host` on the
+   shadow-bearing host + a `.chrome-aa-clip` child carrying the backdrop, each
+   pointing `--chrome-aa-radius` at its OWN tier radius (NEVER the 10px global
+   `--radius`, which inner-notches a 16px box). */
+.chrome-aa-host {
+    position: relative;
+    /* the host carries the box-shadow / floating lift — left UNCLIPPED. */
+}
+.chrome-aa-clip {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--chrome-aa-radius, var(--radius-card));
+    /* the clip lands on THIS backdrop-only child, not the shadow-bearing host */
+    clip-path: inset(0 round var(--chrome-aa-radius, var(--radius-card)));
+    /* the backdrop-only child carries the saturate halo (no box-shadow here) */
+    backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
+    -webkit-backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
+}
+
 /* BC.W-PAGE-CHASSIS — the explicit Fira-Code subpath chip. The route identity in
    the eyebrow cluster — a code-rung mono caption that reads as the import line, and
-   PERSISTS through the scroll-shrink (it is the route identity, never faded away). */
+   PERSISTS through the scroll-shrink (it is the route identity, never faded away).
+   BD.W-CUT page-chrome — the chip plate is a flat color-mix (NO backdrop-filter),
+   so it has no saturate halo to clip — corner-AA-correct by construction (the
+   backdrop-child clip register is for the glass tiers that DO carry a halo). */
 .story-header-subpath {
     align-self: flex-start;
     color: var(--muted-foreground);
@@ -205,22 +379,34 @@
     border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
-/* ── BC.W-PAGE-CHASSIS — the scroll-shrink hero register (the CSS-native SOTA) ────
-   Every hero SHRINKS as you scroll: a large audacious title collapses into a slim
-   sticky page-header that holds the title + the subpath chip (the iOS-27 large-title
-   collapse). The mechanism is the NATIVE scroll() timeline — NO Lenis/GSAP/rAF scroll
-   engine (the binding fence, CLAUDE.md §BB.W-SCROLL-MOTION); the shrink is
-   COMPOSITOR-ONLY (transform: scale + translateY + opacity, NEVER font-size/width/
-   layout — the text lays out ONCE, the proof:no-layout-animation floor, BB.W-CARD-
-   COMPOSITE). The whole register is gated by @supports (animation-timeline: scroll())
-   (progressive enhancement — a non-supporting engine paints the static large hero, the
-   correct fallback; Baseline: scroll-driven animations Chrome 115+ / Safari 26+) AND
-   @media (prefers-reduced-motion: no-preference) (PRM → the large static hero holds,
-   no shrink — the vestibular floor). */
+/* ── BC.W-PAGE-CHASSIS — the scroll-shrink CONTENT-page header register (CSS-native) ──
+   On a CONTENT page (StoryPage.vue, variant="page") the page header SHRINKS as you
+   scroll: a large audacious title collapses into a slim sticky page-header that holds
+   the title + the subpath chip (the iOS-27 large-title collapse — a genuine slim nav
+   header for a prose/spec page). The mechanism is the NATIVE scroll() timeline — NO
+   Lenis/GSAP/rAF scroll engine (the binding fence, CLAUDE.md §BB.W-SCROLL-MOTION); the
+   shrink is COMPOSITOR-ONLY (transform: scale + translateY + opacity, NEVER font-size/
+   width/layout — the text lays out ONCE, the proof:no-layout-animation floor,
+   BB.W-CARD-COMPOSITE). The whole register is gated by @supports (animation-timeline:
+   scroll()) (progressive enhancement — a non-supporting engine paints the static large
+   header, the correct fallback; Baseline: scroll-driven animations Chrome 115+ /
+   Safari 26+) AND @media (prefers-reduced-motion: no-preference) (PRM → the large static
+   header holds, no shrink — the vestibular floor).
 
-/* The cluster sticks to the top of the <main> route-scroller so the shrunk header
-   persists while the body slides up under it. The sticky positioning is OUTSIDE the
-   @supports/PRM gate (it is harmless on every engine — a non-shrinking sticky header
+   ── BD.W-VIZ-BROKEN-FIX D5 — the sticky collapse is the CONTENT-PAGE register ONLY ──
+   The verbatim user defect — "the hero text should NOT scroll like this on every page"
+   — was this sticky collapse applied to the HERO / substrate-viz pages too, where a
+   giant `text-display-hero` word STUCK at full opacity over the viz canvas (22.8% canvas
+   overlap measured live, title opacity 1.0 at every scroll). The iOS large-title collapse
+   is the WRONG model for a viz page: a 0.82-scaled display-hero word is still a 200px
+   focal mass plastered over the very surface the page exists to show. The DECISIVE fix
+   (the user's literal ask): the hero cluster on a hero/viz page SCROLLS AWAY (the
+   `.story-hero-scroll-away` register below — NOT sticky, the field owns the viewport),
+   and the sticky collapse stays scoped HERE, to the content-page chrome header. */
+
+/* The CONTENT-page header sticks to the top of the <main> route-scroller so the shrunk
+   header persists while the body slides up under it. The sticky positioning is OUTSIDE
+   the @supports/PRM gate (it is harmless on every engine — a non-shrinking sticky header
    is the correct static fallback); the shrink ANIMATION is gated below. The cluster
    shrinks toward its leading edge (transform-origin: left top) so it collapses into a
    slim leading-aligned header, the iOS-27 large-title-collapse read. */
@@ -229,35 +415,117 @@
     top: 0;
     z-index: 2;
     transform-origin: left top;
+    /* The condense register knobs (the single retune seam). A gentle settle (0.82) +
+       a sooner-and-holds range + the eyebrow/blurb FADE (reclaiming visual room). */
+    --hero-condense-scale: 0.82;
+    --hero-condense-range: 160px;
+    --hero-condense-fade-range: 120px;
+}
+
+/* ── BD.W-VIZ-BROKEN-FIX D5 — the HERO / substrate-viz scroll-away register ───────────
+   On a HERO page (variant="hero" — every substrate viz: blob, goo-dot, fourier-field,
+   aurora, …) the title cluster is NOT sticky: it sits in normal flow and SCROLLS UP AND
+   OFF with the body as you scroll, so the viz owns the viewport (the verbatim user ask).
+   This is the disjoint twin of `.story-hero-shrink` — same cluster, opposite scroll
+   behaviour: the content-page header CONDENSES + STICKS (a slim nav bar); the viz-page
+   header SCROLLS AWAY (the field is the content, the title is its label, not chrome).
+
+   A liquid-weight gentle LEAVE (the [[feedback-liquid-weight-universal]] law): as the
+   cluster scrolls toward the top edge it eases its opacity + lifts a touch (a parallax
+   feather off the top), so the giant word DISSOLVES off the top rather than hard-clipping
+   at the scroller edge — inertia on the exit, never a snap. COMPOSITOR-ONLY (opacity +
+   translateY — never layout); native scroll() timeline (NO Lenis/GSAP); gated under
+   @supports + PRM (under reduce / a gap engine the cluster simply scrolls off in plain
+   flow — the correct static fallback, no fade). The cluster's intrinsic flow height is
+   reclaimed by the scroll (it is NOT sticky, so the body never scrolls UNDER it — the
+   overlap is structurally impossible). */
+.story-hero-scroll-away {
+    position: relative;
+    z-index: 1;
+    transform-origin: left top;
+    /* The leave register knobs (the single retune seam). The fade-leave window opens a
+       touch into the scroll (so the title reads FULL at rest) and completes as the giant
+       word clears the top. Px offsets against the scroll() timeline (the working
+       `.story-hero-shrink` precedent — `vh` offsets mis-anchor a scroll() timeline and
+       pin the END state at scrollTop 0). */
+    --hero-leave-range-start: 120px;
+    --hero-leave-range-end: 340px;
+    --hero-leave-lift: -1.5rem;
 }
 
 @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
-        /* The cluster shrinks: transform: scale(1 → 0.5) (the display→heading-class
-           collapse ratio), coupled with a slight upward translate so the shrunk
-           header hugs the top. COMPOSITOR-ONLY — scale + translate, NEVER font-size/
-           width/height (the text lays out ONCE; the proof:no-layout-animation floor,
-           BB.W-CARD-COMPOSITE). The scroll-shrink rides the cluster WRAPPER (not the
-           entrance-animated children), so it never collides with the 3-stage GRAVITY
-           entrance on the eyebrow/title/blurb — two disjoint registers, one wrapper. */
+        /* The cluster feathers off the top as it scrolls away — opacity 1 → 0 coupled
+           with a small upward lift (the liquid-weight parallax leave). It rides the
+           <main> route-scroller's own scroll() timeline over the cluster's leave window.
+           COMPOSITOR-ONLY (opacity + translateY). It is COMMA-APPENDED to the cluster's
+           3-stage GRAVITY entrance (the entrance on the document timeline `auto`, this
+           leave on `scroll()` — the per-animation timeline list pairs them positionally
+           so neither clobbers the other). */
+        @keyframes story-hero-scroll-leave {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(var(--hero-leave-lift, -1.5rem));
+            }
+        }
+        .story-hero-scroll-away {
+            animation: story-hero-scroll-leave linear both;
+            animation-timeline: scroll();
+            animation-range: var(--hero-leave-range-start, 120px)
+                var(--hero-leave-range-end, 340px);
+        }
+    }
+}
+
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        /* The cluster condenses GENTLY: transform: scale(1 → ~0.82) (a settle, NOT a
+           half-zoom), coupled with a slight upward translate so the shrunk header hugs
+           the top. COMPOSITOR-ONLY — scale + translate, NEVER font-size/width/height
+           (the text lays out ONCE; the proof:no-layout-animation floor, BB.W-CARD-
+           COMPOSITE). The scroll-shrink rides the cluster WRAPPER (not the entrance-
+           animated children), so it never collides with the 3-stage GRAVITY entrance on
+           the eyebrow/title/blurb — two disjoint registers, one wrapper. */
         @keyframes story-hero-shrink {
             from {
                 transform: scale(1) translateY(0);
             }
             to {
-                transform: scale(0.5) translateY(-0.25rem);
+                transform: scale(var(--hero-condense-scale, 0.82)) translateY(-0.25rem);
             }
         }
 
-        /* The shrink completes within the first ~240px of scroll then HOLDS the
-           shrunk state (animation-fill-mode: forwards). The native scroll() timeline
-           is the <main> route-scroller (the nearest scroll-container ancestor) — NO
-           JS, NO Lenis/GSAP (the binding fence). */
+        /* The condense completes within the first ~160px of scroll then HOLDS the
+           condensed state (animation-fill-mode: forwards). The native scroll() timeline
+           is the <main> route-scroller (the nearest scroll-container ancestor) — NO JS,
+           NO Lenis/GSAP (the binding fence). */
         .story-hero-shrink {
             animation: story-hero-shrink linear both;
             animation-timeline: scroll();
-            animation-range: 0 240px;
+            animation-range: 0 var(--hero-condense-range, 160px);
             animation-fill-mode: forwards;
+        }
+
+        /* The SUBORDINATE-RUNG fade (the iOS large-title-collapse read): the eyebrow +
+           blurb evaporate as you scroll (reclaiming the visual room the half-zoom used to
+           overlap), while the title + subpath chip persist. Compositor-only (opacity);
+           gated under the same @supports + PRM bracket as the condense (the static large
+           hero holds under reduce / a gap engine). It is COMMA-APPENDED to the 3-stage
+           GRAVITY entrance below (an element carries ONE animation property — the entrance
+           keyframe runs on the document timeline, this fade on the scroll() timeline, both
+           in the SAME shorthand so neither clobbers the other; the per-animation
+           animation-timeline list pairs them positionally). */
+        @keyframes story-hero-subordinate-fade {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
         }
     }
 }
@@ -315,11 +583,18 @@
             transform: translateY(0);
         }
     }
-    /* The eyebrow LEADS — stage 0, no delay. */
+    /* The eyebrow LEADS — stage 0, no delay. The D5 scroll-fade is comma-appended: the
+       FIRST animation is the document-timeline entrance, the SECOND is the scroll()-driven
+       subordinate fade (the per-animation animation-timeline/-range lists pair them
+       positionally — `auto` for the entrance, `scroll()` for the fade). */
     .story-hero-cluster .story-header-eyebrow.story-header-cluster--enter {
-        animation: story-hero-cluster-rise
-            var(--spring-smooth-duration, 0.36s) var(--ease-out, ease-out) both;
-        animation-delay: 0ms;
+        animation:
+            story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
+                var(--ease-out, ease-out) both,
+            story-hero-subordinate-fade linear both;
+        animation-delay: 0ms, 0s;
+        animation-timeline: auto, scroll();
+        animation-range: normal, 0 var(--hero-condense-fade-range, 120px);
     }
     /* The display title SETTLES — stage 1, ~60ms after the eyebrow. It keeps its OWN
        .story-hero-title--enter keyframe (the audacious-type GRAVITY register, 0.62s
@@ -328,11 +603,16 @@
     .story-hero-cluster .story-hero-title--enter {
         animation-delay: 60ms;
     }
-    /* The blurb fades in LAST — stage 2, ~120ms. */
+    /* The blurb fades in LAST — stage 2, ~120ms. The D5 scroll-fade is comma-appended (see
+       the eyebrow rule above — the entrance on the document timeline, the fade on scroll()). */
     .story-hero-cluster .story-header-blurb.story-header-cluster--enter {
-        animation: story-hero-cluster-rise
-            var(--spring-smooth-duration, 0.36s) var(--ease-out, ease-out) both;
-        animation-delay: 120ms;
+        animation:
+            story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
+                var(--ease-out, ease-out) both,
+            story-hero-subordinate-fade linear both;
+        animation-delay: 120ms, 0s;
+        animation-timeline: auto, scroll();
+        animation-range: normal, 0 var(--hero-condense-fade-range, 120px);
     }
 }
 

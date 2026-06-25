@@ -3,6 +3,7 @@ export { default as ConfiguratorLayer } from "./ConfiguratorLayer.vue";
 export { default as ConfiguratorRow } from "./ConfiguratorRow.vue";
 export type {
     ConfiguratorAsideSide,
+    ConfiguratorGalleryPlacement,
     ConfiguratorPreset,
     ConfiguratorScrollMode,
 } from "./Configurator.vue";

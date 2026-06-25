@@ -1,105 +1,85 @@
-import { onBeforeUnmount, onMounted, ref, type Ref } from "vue";
-import { createAurora, type AuroraConfig } from "../../../src/components/custom/aurora";
+import { onMounted, ref, type Ref } from "vue";
+import {
+    auroraFallbackGround,
+    type AuroraConfig,
+} from "../../../src/components/custom/aurora";
 import { PRESET_KEYS, PRESETS, type PresetKey } from "./presets";
 
 /**
- * Shared-offscreen thumbnail baking.
+ * Device-free preset thumbnails (BD.W-PRESET-RENDER, re-rooted).
  *
- * Browsers cap WebGL contexts per page at ~8 (Chromium). The studio's live
- * stage needs one context; rendering live thumbnails for all 11 presets
- * would blow the budget and silently fail.
+ * THE PRIOR DEFECT (DELTA-ASSAY §2): the thumbnails baked an OFFSCREEN
+ * `createAurora(…, {mode:"capture"})` WebGPU field, then `toDataURL`-d each
+ * preset. On every host where the WebGPU device could not be acquired (the
+ * validation-probe / SwiftShader / no-device class) the `createAurora` call
+ * THREW `[useWebGPUCanvas] device not acquired` and the `catch` aborted the
+ * WHOLE bake — all 13 cards stayed eternal skeletons. No init-reorder and no
+ * readback fix makes a device appear. The root cause is a GL DEPENDENCY the
+ * preview never needed.
  *
- * Strategy: one offscreen canvas, one capture-mode createAurora call, iterate
- * `update` + `renderAt(1)` + `toDataURL` per preset, then `dispose` releasing
- * the context via WEBGL_lose_context. Thumbnails are cached as data URLs.
+ * THE FIX (the clean break, no-backwards-compat): the thumbnail does NOT touch
+ * a GL device at all. The shipped device-free `auroraFallbackGround(config)`
+ * paints each preset's STATIC composite from the SAME palette + nuclei field the
+ * shader uploads (the math mirrored CPU-side) into a tiny 2D-canvas raster →
+ * `data:` URI, CSS-upscaled bilinear. It is per-preset distinct, ≥2-hue,
+ * deterministic, needs ZERO WebGL/WebGPU, never blows the 8-context budget, and
+ * is visually-equivalent + never-blank in BOTH Chrome and WebKit. The eager
+ * `mode:"capture"` offscreen bake + the `left:-99999px` capture canvas are GONE.
+ *
+ * The bake is synchronous + cheap (an 8×8 field sample per preset), so the whole
+ * set resolves in one idle chunk on mount — no async device-acquire, no abort.
  */
-
-function freezeCfg(src: AuroraConfig): AuroraConfig {
-    return {
-        ...src,
-        palette: src.palette.map((s) => ({ ...s })),
-        nuclei: src.nuclei.map((n) => ({ ...n })),
-        flow: { ...src.flow },
-        nucleiDrift: 0,
-        paletteDrift: 0,
-        warpDrift: 0,
-        breathDepth: 0,
-        // BA.W-CONFIG-CHASSIS.3 (PPD-1) — the capture-canonicalization ALSO clamps
-        // alpha to 1. `alpha` is a LIVE-SUBSTRATE runtime axis (the aurora fragment
-        // multiplies output-alpha by uAlpha; the Speedtest preset ships alpha: 0.26
-        // so the deployed canvas reads at the speedtest backdrop tone). But a preset
-        // PREVIEW swatch has no live substrate: the thumbnail bakes onto a transparent
-        // clear (clearColor 0,0,0,0), so a sub-1 alpha rides into the webp and
-        // composites over the opaque dark `bg-card` (0.26×aurora + 0.74×near-black) →
-        // the lone DIM Speedtest swatch (every other preset preview mean-alpha 1.000,
-        // Speedtest's 0.259). A preview shows the preset's COLOR, not its deployment-
-        // time translucency, so alpha belongs in the SAME canonicalization the drift
-        // channels already get. The `presets.ts` `alpha: 0.26` runtime baseline is
-        // UNTOUCHED (the legitimate live-substrate value for the speedtest consumer).
-        alpha: 1,
-    };
-}
 
 export interface PresetThumbnails {
     thumbs: Ref<Record<PresetKey, string>>;
+    /** The measured field-mean luminance per preset (the certify-band metric). */
+    means: Ref<Record<PresetKey, number>>;
     ready: Ref<boolean>;
     rebake: () => Promise<void>;
 }
 
-export function usePresetThumbnails(options: {
-    widthCss?: number;
-    heightCss?: number;
-} = {}): PresetThumbnails {
-    const widthCss = options.widthCss ?? 320;
-    const heightCss = options.heightCss ?? 200;
+function bakeKey(key: PresetKey): { image: string; mean: number } {
+    const config = PRESETS[key] as AuroraConfig;
+    // grid 10 → a 100-sample field; the bilinear CSS upscale reads as a smooth
+    // atmosphere, not a hard grid, and the per-quadrant mean luminance is preserved.
+    const ground = auroraFallbackGround(config, { grid: 10 });
+    // The raster path returns a `url("data:image/png…")`; the SSR fallback returns
+    // a layered radial-gradient stack. Both are valid `background-image` values, so
+    // the consumer reads `thumbs[key]` as a background-image, NOT an <img src>.
+    return { image: ground.backgroundImage, mean: ground.metrics.mean };
+}
 
+export function usePresetThumbnails(
+    _options: {
+        widthCss?: number;
+        heightCss?: number;
+    } = {},
+): PresetThumbnails {
     const thumbs = ref<Record<PresetKey, string>>(
-        Object.fromEntries(PRESET_KEYS.map((k) => [k, ""])) as Record<PresetKey, string>,
+        Object.fromEntries(PRESET_KEYS.map((k) => [k, ""])) as Record<
+            PresetKey,
+            string
+        >,
+    );
+    const means = ref<Record<PresetKey, number>>(
+        Object.fromEntries(PRESET_KEYS.map((k) => [k, 0])) as Record<
+            PresetKey,
+            number
+        >,
     );
     const ready = ref(false);
 
     async function bake() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-        const w = Math.round(widthCss * dpr);
-        const h = Math.round(heightCss * dpr);
-
-        const shared = document.createElement("canvas");
-        shared.width = w;
-        shared.height = h;
-        shared.style.cssText = `width:${widthCss}px;height:${heightCss}px;position:fixed;left:-99999px;top:0`;
-        document.body.appendChild(shared);
-
-        let aurora;
-        try {
-            aurora = createAurora(shared, freezeCfg(PRESETS[PRESET_KEYS[0]!]), {
-                mode: "capture",
-            });
-        } catch (err) {
-            console.warn("[Aurora] thumbnail bake aborted:", err);
-            shared.remove();
-            return;
+        // Idle-chunked so a 13-preset bake never blocks first paint, but each
+        // chunk is a pure CPU field sample (no device, no rAF, no GL).
+        for (const key of PRESET_KEYS) {
+            const { image, mean } = bakeKey(key);
+            thumbs.value[key] = image;
+            means.value[key] = mean;
+            // Yield so the DOM reflects each card as it lands (the progressive fill).
+            await new Promise((r) => setTimeout(r, 0));
         }
-
-        try {
-            // BC.W-VIZ-AURORA (T2) — AWAIT the device-resolved arm BEFORE the first
-            // `renderAt`. On the WebGPU backend `renderAt` is a no-op until the async
-            // adapter→device→configure→setup prelude resolves; the prior synchronous
-            // `renderAt` right after `createAurora(…,{mode:"capture"})` baked a BLANK
-            // webp → the dead dark thumbnail card. One await closes it (the WebGL2
-            // fallback / software-raster placeholder resolve immediately).
-            await aurora.armAsync();
-            for (const key of PRESET_KEYS) {
-                aurora.update(freezeCfg(PRESETS[key]));
-                aurora.renderAt(1.0);
-                thumbs.value[key] = shared.toDataURL("image/webp", 0.85);
-                // Yield to the event loop so the DOM can reflect progress.
-                await new Promise((r) => setTimeout(r, 0));
-            }
-            ready.value = true;
-        } finally {
-            aurora.dispose();
-            shared.remove();
-        }
+        ready.value = true;
     }
 
     async function rebake() {
@@ -108,16 +88,10 @@ export function usePresetThumbnails(options: {
     }
 
     onMounted(() => {
-        // Slight delay so the page has a chance to lay out before we grab a context.
-        setTimeout(() => {
-            bake().catch((err) => console.warn("[Aurora] thumbnail bake failed:", err));
-        }, 200);
+        bake().catch((err) =>
+            console.warn("[Aurora] thumbnail field build failed:", err),
+        );
     });
 
-    onBeforeUnmount(() => {
-        // Thumbnails are data URLs; nothing to release. Any mid-bake disposal
-        // is handled by the `finally` in bake() if we get there.
-    });
-
-    return { thumbs, ready, rebake };
+    return { thumbs, means, ready, rebake };
 }

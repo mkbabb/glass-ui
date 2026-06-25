@@ -37,7 +37,12 @@
 .configurator-presets {
     padding-block: var(--configurator-preset-row-weight);
 }
-.configurator-presets [role="tablist"] {
+/* The gallery track gap — the toggle-button group (BD.W-CONFIG-GALLERY-DOCK
+ * retired the `role="tablist"`/`role="tab"` ARIA-contradiction for the
+ * toggle-button `role="group"` + `aria-pressed` pattern). The token drives the
+ * inter-tile rhythm. */
+.configurator-presets .configurator-gallery-track,
+.configurator-presets [role="group"] {
     gap: var(--configurator-preset-row-gap);
 }
 
@@ -98,15 +103,166 @@
  * utility read — the token contract is byte-identical, only the MECHANISM moves
  * onto shipped CSS. The explicit mobile rows reset to `none` so one auto row
  * stretches to the taller column. */
+/* The MOBILE / base placement of the three section-level children (the gallery
+ * moved OUT of the aside to a grid sibling — BD.W-CONFIG-GALLERY-DOCK). Single
+ * column, three rows: gallery → stage → aside. The base `grid-template-rows`
+ * (`auto minmax(stage-min,auto) 1fr`) ships from the SFC; these rules pin each
+ * child to its row so the source order (gallery, stage, aside) reads correctly.
+ * When no gallery renders the `auto` row collapses to 0 (an empty track). */
+[data-slot="configurator"] > [data-gallery-dock] {
+    grid-row: 1;
+    grid-column: 1;
+}
+[data-slot="configurator"] > .configurator-stage {
+    grid-row: 2;
+    grid-column: 1;
+}
+[data-slot="configurator"] > .configurator-aside {
+    grid-row: 3;
+    grid-column: 1;
+}
+
 @media (min-width: 1024px) {
+    /* The DESKTOP TWO-COLUMN geometry. Two columns (stage 1fr | aside band) and
+     * two rows: the gallery row (auto) over the body row (1fr). The placement of
+     * the gallery dock is the ONLY thing the `data-gallery` axis swaps. */
     [data-slot="configurator"] {
         grid-template-columns: minmax(0, 1fr)
             minmax(
                 var(--configurator-aside-min, 280px),
                 var(--configurator-aside-max, 360px)
             );
-        grid-template-rows: none;
+        grid-template-rows: auto minmax(0, 1fr);
     }
+
+    /* data-gallery="aside" (the default, inspector idiom) — the gallery sits in
+     * the ASIDE column, row 1, above the controls; the stage spans BOTH rows on
+     * the left. Byte-equivalent to the legacy "preset row inside the aside top". */
+    [data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock] {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    [data-slot="configurator"][data-gallery="aside"] > .configurator-stage {
+        grid-row: 1 / span 2;
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-gallery="aside"] > .configurator-aside {
+        grid-row: 2;
+        grid-column: 2;
+    }
+
+    /* data-gallery="top" (the §2.1 reflow) — the gallery is a LARGE full-width
+     * dock spanning BOTH columns up-top; the stage (col 1) + controls (col 2)
+     * reclaim the full height in row 2. The gallery is now ~studio-width, not the
+     * 360px gutter — ~5 φ-tall tiles visible, horizontally scrollable. */
+    [data-slot="configurator"][data-gallery="top"] > [data-gallery-dock] {
+        grid-row: 1;
+        grid-column: 1 / span 2;
+    }
+    [data-slot="configurator"][data-gallery="top"] > .configurator-stage {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-gallery="top"] > .configurator-aside {
+        grid-row: 2;
+        grid-column: 2;
+    }
+}
+
+/* The gallery-dock chrome divider — the hairline under the up-top dock / the
+ * left edge of the aside-placed dock. A dark-adaptive border off the same token
+ * the rest of the instrument reads, so it survives both glass plates. */
+[data-slot="configurator"] > [data-gallery-dock] {
+    border-color: var(--configurator-divider);
+}
+[data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock] {
+    border-bottom-width: 1px;
+}
+@media (min-width: 1024px) {
+    /* The up-top dock carries a bottom hairline; the aside-placed dock carries it
+     * too (above the controls). */
+    [data-slot="configurator"][data-gallery="top"] > [data-gallery-dock] {
+        border-bottom-width: 1px;
+    }
+}
+
+/* ── The WARM-GLASS gallery tiles + the device-free field-well ────────────────
+ * BD.W-CONFIG-GALLERY-DOCK §5/§B1. The tile is a `.glass-capsule` warm-glass cel
+ * (composed in the SFC class list) — the §3 colourful field reads THROUGH, never
+ * a flat opaque bg-card scrim. These rules add the GEOMETRY the capsule register
+ * doesn't carry: the φ-tall card shape, the rounded field-well, the active ring,
+ * the loading shimmer. No new material is minted — the transmissive composite is
+ * the shared `.glass-capsule`; the cartoon cast is the shared `.cartoon-cast`. */
+
+/* The big field-well tile (the PresetPickerRow / baked-thumbnail form). A φ-tall
+ * card: a 16:10 field-well crowned by a label band. The capsule register paints
+ * the warm-glass body; this rule sets the card radius + the column flex so the
+ * well meets the rounded crown with zero bg leak. */
+.configurator-preset-tile {
+    inline-size: clamp(160px, 22vw, 232px);
+    border-radius: var(--radius-card);
+    /* The capsule fill is a warm-glass PILL by default (--radius-pill); a TILE is
+     * a card, so re-point the geometry to the card radius here. The transmissive
+     * fill + rim + cast all carry from .glass-capsule. */
+}
+
+/* The §3 field-well — the device-free `auroraFallbackGround` background-image is
+ * set inline per tile; this rule sets the cover sizing + the rounded inner crown.
+ * The well is the COLOURFUL field; the warm-glass capsule frames it. */
+.configurator-preset-well {
+    background-size: cover;
+    background-position: center;
+    /* a smooth bilinear upscale of the tiny raster (the per-quadrant mean
+     * luminance is preserved — the certify band reads true). */
+    image-rendering: auto;
+}
+
+/* The loading state — a warm shimmer until the field build lands (the field
+ * build is synchronous + cheap, so this is a sub-frame flicker at most). */
+.configurator-preset-well.is-loading {
+    background-image: linear-gradient(
+        100deg,
+        color-mix(in oklab, var(--card) 84%, transparent) 30%,
+        color-mix(in oklab, var(--foreground) 8%, var(--card)) 50%,
+        color-mix(in oklab, var(--card) 84%, transparent) 70%
+    );
+    background-size: 200% 100%;
+    animation: configurator-preset-shimmer 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+    .configurator-preset-well.is-loading {
+        animation: none;
+    }
+}
+@keyframes configurator-preset-shimmer {
+    from {
+        background-position: 200% 0;
+    }
+    to {
+        background-position: -200% 0;
+    }
+}
+
+/* The active tile ring — a 2px foreground-keyed inset crown over the warm-glass
+ * cel (an inset ring never clips on the scroll axis, the PresetPickerRow note).
+ * Composes with the capsule's own rim; the cast deepens to `-lg` in the SFC. */
+.configurator-preset-tile.is-active {
+    box-shadow:
+        inset 0 0 0 2px var(--ring),
+        var(--shadow-cartoon-lg);
+}
+
+/* The compact CHIP form (the default fallback gallery — text-only preset pills).
+ * The capsule register paints the warm-glass body; this rule restores the pill
+ * radius the capsule already ships, and the active chip reads a selected fill via
+ * the `--glass-capsule-fill` override hook (no fork). */
+.configurator-preset-chip {
+    border-radius: var(--radius-pill);
+}
+.configurator-preset-chip.is-active {
+    /* the selected rung — re-point the capsule fill toward the quiet glass-tint
+     * selected register via the documented override hook (NO new composite). */
+    --glass-capsule-fill: var(--glass-bg-quiet);
 }
 
 /* 5. The SIDE FLIP — a data-attr, default RIGHT (BC.W-CONFIG-RIGHT).
@@ -122,11 +278,20 @@
  * order — WCAG 1.3.2/2.4.3 inviolate, the AM.W0 contract). Below `lg` (single
  * column) neither side has meaning. */
 @media (min-width: 1024px) {
-    [data-slot="configurator"][data-aside-side="left"] .configurator-stage {
-        grid-column-start: 2;
+    /* The flip swaps the two BODY columns (stage ↔ aside) while DOM/tab order stays
+     * gallery→stage→aside. The selectors carry `>`-child specificity to match the
+     * `data-gallery` placement rules above (which also use `>`); a bare descendant
+     * selector would lose the cascade to those and the flip would no-op. The aside
+     * keeps its body row (row 2); only the column target moves. The aside-placed
+     * gallery dock follows the aside to column 1. */
+    [data-slot="configurator"][data-aside-side="left"] > .configurator-stage {
+        grid-column: 2;
     }
-    [data-slot="configurator"][data-aside-side="left"] .configurator-aside {
-        grid-column-start: 1;
-        grid-row-start: 1;
+    [data-slot="configurator"][data-aside-side="left"] > .configurator-aside {
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-aside-side="left"][data-gallery="aside"]
+        > [data-gallery-dock] {
+        grid-column: 1;
     }
 }

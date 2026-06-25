@@ -79,12 +79,25 @@ const depth = computed(() => current.value?.story.depth);
              recipe's outer @media gate; the page mounts at its terminal state). The
              reading-ORDER (the ordered cluster: eyebrow → title → blurb → body) is
              W-HIERARCHY2's; this register threads the entrance ON that order. -->
-        <!-- BC.W-STORYBOOK-META — the article width is the tokenized rhythm
-             (`--story-page-max-inline`, was `max-w-6xl`) so every page is bounded
-             to the SAME generous-whitespace width (axis-3). -->
+        <!-- W-STORY-PAGE-STANDARD — the box-model INVERSION. On a CONTENT page the
+             article WIDENS to `--story-article-w` (min(96vw, 87rem) — the φ ladder
+             root, killing the prior 1152-cap 288px dead margin) so the φ²-dominant
+             `<DemoFrame variant="stage">` cels can HOIST out of the prose measure as
+             direct article children (a fixed-width hoist, NO cqw, NO container-type
+             — the dock-collapse-scar-safe form). A HERO page keeps the bounded
+             `--story-page-max-inline` rhythm (the monolith StoryHero hero plate is
+             the alive front-door read, untouched). -->
+        <!-- BC.W-STORYBOOK-META — the bounded article rhythm survives on the HERO
+             path (axis-3); the content path widens to the φ-ladder root. -->
         <article
             class="scroll-build story-page-article mx-auto w-full"
-            :style="{ maxInlineSize: 'var(--story-page-max-inline)' }"
+            :data-variant="variant"
+            :style="{
+                maxInlineSize:
+                    variant === 'page'
+                        ? 'var(--story-article-w)'
+                        : 'var(--story-page-max-inline)',
+            }"
         >
             <!-- BC.W-PAGE-CHASSIS — the chrome <header> hosts the AUDACIOUS hero cluster
                  on a CONTENT page (variant="page"): the ONE standardized page idiom
@@ -106,26 +119,59 @@ const depth = computed(() => current.value?.story.depth);
                     class="story-hero-cluster story-hero-shrink"
                     :data-depth="depth"
                 >
+                    <!-- BD.W-CUT page-chrome — the chrome/hero SCALE SPLIT. The
+                         CONTENT-page chrome title is a CALM page LABEL, NOT the
+                         protagonist rung: it reads `--chrome-title-rung` (~½ the
+                         audacious, the φ^2 display band) via `.story-hero-title`
+                         under the chrome <header> (story-hero.css). The prior
+                         `text-display-${heroScale}` floor (≥4, ~109px) is RETIRED
+                         off the chrome title (clean break, no alias) — the
+                         audacious heroScale ladder survives ONLY on the protagonist
+                         hero <h1> (variant="hero", StoryHero.vue). -->
                     <h1
                         v-if="title"
-                        :class="
-                            cn(
-                                'story-hero-title story-hero-title--enter',
-                                `text-display-${heroScale}`,
-                            )
-                        "
+                        class="story-hero-title story-hero-title--enter story-chrome-title"
                     >
                         {{ title }}
                     </h1>
                 </StoryHeader>
             </header>
 
-            <!-- The body sits in a glass card over the per-page background. The
-                 page's StorySection stack flows inside the card. On a HERO page the
+            <!-- W-STORY-PAGE-STANDARD — the CONTENT-page body is the box-model
+                 INVERSION: NOT one monolith gray StoryHero card with flat sections
+                 inside, but a stack of FREE glassy cels (`<DemoFrame variant>`)
+                 floating DIRECTLY over the ONE shared warm field ([data-paper-field],
+                 mounted globally in AppShell). The cels are hoisted OUT of any prose
+                 wrapper (the φ²-stage cels are direct children of this section, so a
+                 `stage` cel can bleed to the wide article without a cqw container) —
+                 each cel transmits the field, carries the warm cartoon cast, and
+                 SLAMS in on the mount clock. The eyebrow + blurb + title live in the
+                 chrome <header> above (ONE title); this body owns no second header. -->
+            <!-- The cels own their OWN mount-clock entrance (the cel-slam on the
+                 punch arc, the `--i` overlapping stagger — demo-frame.css §5), so
+                 this stack is NOT a `.scroll-cascade` view-timeline host: a
+                 view-timeline would (a) miss the above-the-fold protagonist (it only
+                 fires as an element crosses INTO view) and (b) double-bind the cel.
+                 The `--i` overlap index is auto-assigned per cel by nth-of-type in
+                 demo-frame.css (no per-page wiring); a page may override `:i`. The
+                 stack is the calm DELIMITED rhythm (each cel its own glass plate, so
+                 no inter-section hairline is needed — the cels ARE the delimiters). -->
+            <section
+                v-if="variant === 'page'"
+                class="story-cels flex flex-col"
+                :style="{ gap: 'var(--story-page-section-gap)', '--i': 1 }"
+                :class="props.contentClass"
+            >
+                <slot />
+            </section>
+
+            <!-- The HERO page keeps the alive StoryHero front-door read — the
+                 monolith glass card floating over the LIVE substrate (the
+                 full-bleed aurora/constellation/fourier field IS the page bg). The
                  chassis hosts the ordered eyebrow→title→blurb cluster (the re-homed
-                 descriptor); on a CONTENT page the eyebrow+blurb are the chrome
-                 header above, so the chassis ignores them. -->
+                 descriptor) alongside the audacious display <h1>. UNTOUCHED. -->
             <StoryHero
+                v-else
                 :background="background"
                 :variant="variant"
                 :title="title"
@@ -135,7 +181,7 @@ const depth = computed(() => current.value?.story.depth);
                 :hero-scale="heroScale"
                 :depth="depth"
                 :hero-title="props.heroTitle"
-                :style="{ '--i': variant === 'page' ? 1 : 0 }"
+                :style="{ '--i': 0 }"
             >
                 <!-- BB.W-SCROLL-MOTION: the orchestrated section-CASCADE host
                      (supersedes the bare BA.W-ANIMATE `[data-scroll-reveal]` 6px

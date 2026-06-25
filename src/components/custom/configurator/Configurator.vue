@@ -33,6 +33,21 @@ export type ConfiguratorScrollMode = "auto" | "always" | "never";
 export type ConfiguratorAsideSide = "left" | "right";
 
 /**
+ * Where the preset gallery sits.
+ *
+ * `aside` (default) keeps the preset row inside the right-hand aside (the
+ * inspector idiom — the legacy placement, unchanged).
+ *
+ * `top` lifts the gallery OUT of the 360px aside and pins it as a large,
+ * full-width, horizontally-scrollable glass dock across the TOP of the studio
+ * frame — the §2.1 reflow (gallery up-top + larger + scrollable). The stage +
+ * controls reclaim the full height below it. An additive axis: the grid arm is
+ * the precompiled `[data-slot=configurator][data-gallery=top]` rule in
+ * configurator.css (never a dead JIT bracket — the BC.W-CONFIG-RIGHT lesson).
+ */
+export type ConfiguratorGalleryPlacement = "aside" | "top";
+
+/**
  * Generic preset descriptor. Consumers pass `T` as the live config shape.
  * The primitive carries no preset semantics beyond `key + label` for
  * the picker row and `config: T` for the active payload — preset
@@ -85,6 +100,13 @@ const props = withDefaults(
          */
         asideSide?: ConfiguratorAsideSide;
         /**
+         * Where the preset gallery sits. Default `"aside"` (the inspector idiom).
+         * `"top"` pins the gallery as a large full-width scrollable glass dock
+         * across the top of the studio (the §2.1 up-top reflow), driven by the
+         * precompiled `[data-gallery="top"]` rule in configurator.css.
+         */
+        galleryPlacement?: ConfiguratorGalleryPlacement;
+        /**
          * Aside width band at `lg`+ width, as a CSS length pair driving
          * `minmax(--configurator-aside-min, --configurator-aside-max)`. The
          * prop sets the two inline custom properties; consumers may instead
@@ -100,6 +122,7 @@ const props = withDefaults(
         scrollMode: "auto",
         density: "comfortable",
         asideSide: "right",
+        galleryPlacement: "aside",
     },
 );
 
@@ -141,6 +164,12 @@ const containerClass = computed(() =>
         // load-bearing on a JIT reach. The aside band still reads the SAME
         // `--configurator-aside-{min,max}` token pair (defaults 280px/360px,
         // retunable via the `asideWidth` prop or the cascade).
+        // BD.W-CONFIG-GALLERY-DOCK — the gallery is now a section-level grid
+        // child (a `data-gallery-dock` row), so the base single-column stack is
+        // gallery → stage → controls. The explicit named areas + the desktop
+        // two-column placement ride the precompiled configurator.css rules
+        // (`[data-slot=configurator]` + `[data-gallery=…]`) — never a dead JIT
+        // bracket. The base `grid-cols-1` keeps the mobile single column.
         "grid grid-cols-1",
         // AZ.W-BLOB-REDRESS — the single-column band sets EXPLICIT rows so the
         // stage row is a DEFINITE track (a `--configurator-stage-min` floor),
@@ -152,7 +181,13 @@ const containerClass = computed(() =>
         // the explicit rows reset to `none` there (one auto row stretched to the
         // taller column) — the `grid-template-rows: none` arm rides the same
         // precompiled desktop rule.
-        "grid-rows-[minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]",
+        // Mobile rows: gallery (auto) → stage (a definite `--configurator-stage-min`
+        // floor so a percentage/`h-full` stage child cannot collapse to 0 — the
+        // AZ.W-BLOB-REDRESS mobile 0×0 fix) → controls (the 1fr remainder, scrolls
+        // internally). When no gallery renders the first `auto` row collapses to 0.
+        // At `lg`+ the configurator.css rules reset the template to the two-column
+        // geometry (per `data-gallery`).
+        "grid-rows-[auto_minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]",
         "min-h-0",
         props.class,
     ),
@@ -203,9 +238,71 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
     <section
         data-slot="configurator"
         :data-aside-side="asideSide"
+        :data-gallery="galleryPlacement"
         :class="containerClass"
         :style="containerStyle"
     >
+        <!-- ── Preset GALLERY (BD.W-CONFIG-GALLERY-DOCK) ────────────────
+             The gallery is a SECTION-level child (no longer trapped inside the
+             360px aside), grid-PLACED by the precompiled
+             `[data-slot=configurator][data-gallery]` rules in configurator.css:
+               · data-gallery="aside" — it sits in the aside column, row 1 (the
+                 legacy inspector placement, byte-identical to before).
+               · data-gallery="top"   — it spans BOTH columns up-top as a large
+                 full-width scrollable glass dock; the stage + controls reclaim
+                 the full height below it (the §2.1 reflow).
+             ONE render — CSS owns the placement, no dual markup (KISS/DRY). -->
+        <div
+            v-if="$slots.presets || (presets && presets.length > 0)"
+            data-gallery-dock
+            class="configurator-presets shrink-0 px-3 py-2"
+        >
+            <slot name="presets" :presets="presets" :active-preset="activePreset">
+                <!--
+                    Default preset gallery: the warm-glass toggle-button tiles
+                    (BD.W-CONFIG-GALLERY-DOCK). The a11y fence is ONE pattern —
+                    plain type="button" + aria-pressed in a role="group"
+                    aria-label="Presets" container (NOT role="tab"+aria-selected,
+                    an ARIA contradiction; the FadingScroll is not a tablist).
+                    Each tile is a `.glass-capsule` warm-glass cel (the §3 field
+                    reads through) with the cartoon cast, NOT an opaque bg-card
+                    chip. Consumers wanting a baked field-well pass the slot.
+                -->
+                <FadingScroll
+                    axis="x"
+                    class="configurator-gallery-track flex gap-2 scrollbar-hidden"
+                    role="group"
+                    aria-label="Presets"
+                >
+                    <button
+                        v-for="p in presets"
+                        :key="p.key"
+                        type="button"
+                        data-preset-tile
+                        :data-active="p.key === activePreset || undefined"
+                        :aria-pressed="p.key === activePreset"
+                        :class="
+                            cn(
+                                // The warm-glass cel: `.glass-capsule` is the
+                                // shared warm-transmissive lozenge register (the
+                                // §3 field reads THROUGH, never a flat bg-card
+                                // scrim). `.glass-capsule-hover` is the shared
+                                // specular-lift + press-snap. `shadow-cartoon`
+                                // adds the static technicolor cel cast (a direct
+                                // box-shadow utility — the cast is static on a
+                                // chip, not the moving inert-child caster).
+                                'configurator-preset-chip glass-capsule glass-capsule-hover shadow-cartoon focus-ring shrink-0 px-3 py-1 text-xs font-medium text-foreground',
+                                p.key === activePreset && 'is-active',
+                            )
+                        "
+                        @click.stop="emit('select-preset', p.key)"
+                    >
+                        {{ p.label }}
+                    </button>
+                </FadingScroll>
+            </slot>
+        </div>
+
         <!-- ── Stage column (live specimen viewport) ─────────────────── -->
         <div
             class="configurator-stage relative min-h-0 min-w-0 overflow-hidden"
@@ -213,13 +310,12 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
             <slot name="stage" />
         </div>
 
-        <!-- ── Aside (preset row + controls) ─────────────────────────── -->
-        <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the aside/preset/footer chrome
-             dividers drop the inline `border-border/40` alpha; the dark-adaptive
-             --configurator-divider token paints the border-color via the
-             configurator.css `.configurator-aside`/`.configurator-presets`/
-             `.configurator-footer` rules, so the hairlines survive the dark glass
-             plate. The `border-t`/`border-b`/`lg:border-l` WIDTH stays here. -->
+        <!-- ── Aside (controls + footer) ─────────────────────────────── -->
+        <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the aside/footer chrome dividers read
+             the dark-adaptive --configurator-divider token (configurator.css), so
+             the hairlines survive the dark glass plate. The preset GALLERY moved
+             OUT to a section-level child (grid-placed); the aside now holds the
+             controls body + the optional footer. -->
         <aside
             :class="
                 cn(
@@ -228,58 +324,6 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                 )
             "
         >
-            <!-- Preset picker row -->
-            <div
-                v-if="$slots.presets || (presets && presets.length > 0)"
-                class="configurator-presets shrink-0 border-b px-3 py-2"
-            >
-                <slot name="presets" :presets="presets" :active-preset="activePreset">
-                    <!--
-                        Default preset row: horizontal scroll-fade chip list. Consumers
-                        with thumbnails / richer chrome should provide the slot.
-                        BA.W-CONFIG-CHASSIS.1c — the horizontal scroll-fade adopts
-                        <FadingScroll axis="x"> (the W-FADING-SCROLL primitive) off
-                        the static `.scroll-fade-mask`: the start edge stays SHARP at
-                        rest, the end feathers only while the chip row overflows.
-                    -->
-                    <FadingScroll
-                        axis="x"
-                        class="flex gap-2 scrollbar-hidden"
-                        role="tablist"
-                        aria-label="Presets"
-                    >
-                        <button
-                            v-for="p in presets"
-                            :key="p.key"
-                            type="button"
-                            role="tab"
-                            data-slot="configurator-preset"
-                            :aria-selected="p.key === activePreset"
-                            :data-active="p.key === activePreset || undefined"
-                            :class="
-                                cn(
-                                    // Glass-atoms chip: tap-squish press-spring +
-                                    // transition-control surface cross-fade + the
-                                    // canonical focus-ring + --radius-pill geometry.
-                                    // The active chip is a translucent glass-tier
-                                    // fill (the quiet glass-tint rung over a real
-                                    // backdrop-blur) — NOT an opaque bg-foreground
-                                    // stamp — so it reads as a glass pill seated on
-                                    // the aside, legible over the live AuroraStage.
-                                    'tap-squish focus-ring transition-control shrink-0 rounded-pill border px-3 py-1 text-xs font-medium',
-                                    p.key === activePreset
-                                        ? 'glass-quiet border-border/50 text-foreground'
-                                        : 'border-border/40 bg-card/40 text-foreground hover:bg-card/70',
-                                )
-                            "
-                            @click="emit('select-preset', p.key)"
-                        >
-                            {{ p.label }}
-                        </button>
-                    </FadingScroll>
-                </slot>
-            </div>
-
             <!-- Controls column (layered config body). BA.W-CONFIG-CHASSIS.1c —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">
                  scroll-port (sharp at rest, feathered while overflowing) off the

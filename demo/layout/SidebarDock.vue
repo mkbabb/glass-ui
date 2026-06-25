@@ -19,7 +19,6 @@ import {
     DockIconButton,
     DockSection,
     DockSeparator,
-    DockStack,
     GlassDock,
     type DockSectionDescriptor,
     type DockStackItem,
@@ -60,20 +59,14 @@ const activeCategoryId = computed<string | null>(() => {
     return loc ? loc.category.id : null;
 });
 
-// BC.W-DOCK-COLLAPSED-BOTH — the desktop fixed column is COLLAPSIBLE (it shrinks toward
-// the ℱ home + the active-category glyph, expands to the full nav column on hover/tap).
-// On the mobile off-canvas path the BottomDock hosts THIS component inside a <Sheet>
-// (passing `:show-tooltips="false"`) — there the Sheet IS the expand affordance, so the
-// rail body must stay fully expanded (a collapse inside the drawer would fight the
-// Sheet host). `showTooltips` is the host discriminator the surface already carries:
-// the desktop fixed column collapses; the Sheet-hosted drawer stays always-expanded.
-const collapsible = computed(() => props.showTooltips);
-
-// The active category's glyph — the compact collapsed summary (a single category
-// affordance you can read at a glance, then tap to open the full column).
-const activeCategory = computed(() =>
-    CATEGORIES.find((c) => c.id === activeCategoryId.value) ?? null,
-);
+// W-NAV-DOCK-FIX (defects 1, 6) — the desktop category rail is a PRIMARY nav surface,
+// so it is NEVER collapsed-by-default. A collapsed dock parks its category buttons in
+// the `inert`/`pointer-events:none` #default layer until a ~400ms hover-dwell (the
+// user's dead-click). It is now always-expanded: the categories are clickable from
+// frame 0. The mobile Sheet host already passed `:show-tooltips="false"` →
+// always-expanded, so this UNIFIES both hosts on the always-expanded register (the
+// collapse affordance is the BottomDock's job, not the category rail's). `showTooltips`
+// keeps its tooltip-anchor meaning only.
 
 // The primary categories ride the top of the rail. (The reference-only
 // Composables shelf was removed at AZ.W-SHELL-CONFIG — the demo IA no longer
@@ -117,6 +110,9 @@ const railItems = computed<DockStackItem[]>(() =>
               id: l.id,
               label: l.label,
               icon: typeof l.icon === "string" ? undefined : l.icon,
+              // W-NAV-DOCK-FIX — the per-facet context hue (the mode="facets" carousel's
+              // --glass-accent rim; a --section-color-N library identity).
+              accent: l.accent,
           }))
         : [],
 );
@@ -219,21 +215,37 @@ function openConfigurator(): void {
 function openDockMorph(): void {
     window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
 }
+
+// W-NAV-DOCK-FIX F8 — arrow-key roving across the facet tablist (the a11y contract for
+// a `role="tablist"`; the active chip is the only tab-stop, arrows move + activate). The
+// vertical rail roves on Up/Down; Home/End jump to the ends. Activating a facet writes
+// `railContext` (the ONE registry — navigates to the facet's first story).
+function onFacetKeydown(e: KeyboardEvent, index: number): void {
+    const items = railItems.value;
+    if (items.length === 0) return;
+    let next = -1;
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") next = (index + 1) % items.length;
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft")
+        next = (index - 1 + items.length) % items.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = items.length - 1;
+    else return;
+    e.preventDefault();
+    railContext.value = items[next]?.id;
+}
 </script>
 
 <template>
-    <!-- BC.W-DOCK-COLLAPSED-BOTH — the desktop fixed column is COLLAPSIBLE (the
-         `always-expanded` opt-out is dropped on the desktop host — a clean break). It
-         collapses on its BLOCK axis (height) toward the ℱ home + the active-category
-         glyph and expands to the full category column on hover/tap, riding the
-         orientation-agnostic engine + the BC.W-DOCK-ENGINE morph. When this same body is
-         hosted in the mobile BottomDock <Sheet> (`:show-tooltips="false"`), the Sheet is
-         the expand affordance, so it stays `always-expanded` (the collapse would fight
-         the drawer). The ℱ home stays in #persistent (visible in BOTH states). -->
+    <!-- W-NAV-DOCK-FIX (defects 1, 6) — the desktop category rail is a PRIMARY nav
+         surface, so it is ALWAYS-EXPANDED: the category buttons are clickable from frame
+         0 (a collapsed dock parked them in the inert/pointer-events:none #default layer
+         until a ~400ms hover-dwell — the user's dead-click). Both hosts (desktop fixed
+         column + mobile Sheet) are unified on the always-expanded register; the collapse
+         affordance is the BottomDock's job, not the category rail's. The ℱ home stays in
+         #persistent. -->
     <GlassDock
         orientation="vertical"
-        :always-expanded="!collapsible"
-        :start-collapsed="collapsible"
+        always-expanded
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"
         data-testid="sidebar-dock-collapsible"
@@ -349,6 +361,77 @@ function openDockMorph(): void {
                             {{ category.title }}
                         </TooltipContent>
                     </Tooltip>
+
+                    <!-- W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL. The
+                         route→facet resolver (`useContextualDockLayers` → `railItems`) was
+                         a DEAD computed (never rendered); it now drives a real roving
+                         tablist of facet chips, seated below the categories behind a
+                         <DockSeparator> seam, rendered ONLY when the section carries >1
+                         facet (a single-facet section shows no rail — no clutter). Each
+                         chip is a <DockIconButton :active> so it COMPOSES the SHARED
+                         `.glass-capsule` register (the ONE warm lifted-lozenge recipe) —
+                         the selected chip re-points `--glass-capsule-fill` toward its facet
+                         accent (the post-fence WARM `--section-color-N`), NEVER a parallel
+                         selected-fill. The active chip TRAVELS on a `data-active` flip with
+                         the capsule's own glide+lift; a one-shot warm accent-flood rides the
+                         `--dock-facet-flood` envelope (dock-nav.css). Clicking a chip writes
+                         `railContext` (the ONE registry — the SAME router navigation the
+                         category nav drives). role="tablist"/role="tab" + aria-selected +
+                         arrow-key roving = the real affordance; the flood is aria-hidden
+                         decoration. -->
+                    <template v-if="railItems.length > 1">
+                        <DockSeparator />
+                        <div
+                            class="demo-facet-rail demo-facet-rail--vertical"
+                            role="tablist"
+                            aria-orientation="vertical"
+                            aria-label="Section facets"
+                            data-testid="sidebar-facet-rail"
+                        >
+                            <Tooltip
+                                v-for="(facet, fi) in railItems"
+                                :key="facet.id"
+                            >
+                                <TooltipTrigger as-child>
+                                    <DockIconButton
+                                        type="button"
+                                        role="tab"
+                                        class="demo-facet-chip tap-squish"
+                                        :active="facet.id === railContext"
+                                        :aria-selected="facet.id === railContext"
+                                        :aria-label="facet.label"
+                                        :tabindex="facet.id === railContext ? 0 : -1"
+                                        :style="
+                                            facet.accent
+                                                ? { '--dock-facet-accent': facet.accent }
+                                                : undefined
+                                        "
+                                        @click="railContext = facet.id"
+                                        @keydown="onFacetKeydown($event, fi)"
+                                    >
+                                        <component
+                                            :is="facet.icon"
+                                            v-if="facet.icon"
+                                            class="h-4 w-4"
+                                            aria-hidden="true"
+                                        />
+                                        <span
+                                            v-else
+                                            class="demo-facet-chip__dot"
+                                            aria-hidden="true"
+                                        />
+                                    </DockIconButton>
+                                </TooltipTrigger>
+                                <TooltipContent
+                                    v-if="showTooltips"
+                                    side="right"
+                                    :side-offset="10"
+                                >
+                                    {{ facet.label }}
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    </template>
                 </TooltipProvider>
             </template>
 
@@ -406,45 +489,10 @@ function openDockMorph(): void {
             </template>
         </DockSection>
 
-        <!-- BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary. At rest the
-             collapsed vertical column shows the ℱ home (#persistent, above) + this single
-             active-category glyph — a compact summary you can read at a glance. It is a
-             REAL, named nav control (the active category's first story), so the collapsed
-             pill is operable, not a paint-only glyph; tap/hover it and the column blooms
-             to the full category nav (#default above). On the mobile Sheet host the dock
-             is always-expanded, so this summary never shows there. -->
-        <template #collapsed>
-            <DockIconButton
-                v-if="activeCategory"
-                type="button"
-                class="demo-sidebar-item is-active tap-squish"
-                :aria-label="`${activeCategory.title} — open navigation`"
-                @click="go(activeCategory.id)"
-            >
-                <component :is="activeCategory.icon" class="h-4 w-4" aria-hidden="true" />
-            </DockIconButton>
-        </template>
-
-        <!-- BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail (the clean-break
-             rebuild of the retired divider-carousel). The active section's contextual
-             facets are the stack's MEMBERS: a core anchor sits at the dock's trailing
-             edge; hover/focus fans the members OUT into the rail gutter (a row of
-             fully-visible glass icons), and selecting one navigates to that facet's first
-             story — the SAME navigation state the nav items drive (one registry, no
-             parallel store). It is dock chrome OUTSIDE the morph aperture, so it NEVER
-             changes the dock box AND it clears <main>/the <h1>/a form field BY TOPOLOGY:
-             the stack lives in its gutter beyond the dock edge, the fan extending away
-             from content at EVERY y (the chip-graze that revoked the BA dock/shell PASS
-             cannot recur — structure, not a chased seam-Y). Rendered only when the
-             section carries >1 facet. -->
-        <template #rail>
-            <DockStack
-                v-if="railItems.length"
-                v-model:selected="railContext"
-                :items="railItems"
-                core-label="Section facets"
-                data-testid="sidebar-dock-rail"
-            />
-        </template>
+        <!-- BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail is REMOVED
+             (clean break, no alias). The half-rendered facet carousel collided with the
+             dock content (the user's "erroneous BROKEN RAIL element"). The section's
+             contextual facets are carried by the in-flow `<DockSection>` category nav above
+             (the dock's own tabs/sections facility) — no orphaned carousel. -->
     </GlassDock>
 </template>

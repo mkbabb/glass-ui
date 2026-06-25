@@ -337,17 +337,27 @@ const cardTier = computed<CardTier>(() => {
                  rides --ease-out, NO overshoot — audacious type arrives with
                  GRAVITY, not bounce; PRM → static terminal state). The eyebrow +
                  blurb ride the same GRAVITY register as the cluster's 3-stage
-                 stagger (story-hero.css). -->
+                 stagger (story-hero.css).
+                 BD.W-VIZ-BROKEN-FIX D5 — the hero cluster on a HERO/substrate-viz
+                 page is `.story-hero-scroll-away`, NOT `.story-hero-shrink`: a giant
+                 `text-display-hero` word that STUCK over the viz is the verbatim
+                 defect ("the hero text should NOT scroll like this on every page").
+                 The viz IS the content here, so the title scrolls UP AND OFF with the
+                 body (it does not stick), the field owns the viewport. The sticky
+                 large-title-collapse stays the CONTENT-page chrome header's register
+                 (StoryPage.vue, variant="page"), where a slim sticky header is genuine
+                 nav. -->
             <StoryHeader
                 v-if="showCluster"
                 :eyebrow="eyebrow"
                 :subpath="subpath"
                 :blurb="blurb"
-                class="story-hero-cluster story-hero-shrink"
+                class="story-hero-cluster story-hero-scroll-away"
                 :data-depth="depth"
             >
                 <h1
                     v-if="showHeroTitle"
+                    :data-hero-scale="heroScale"
                     :class="
                         cn(
                             'story-hero-title story-hero-title--enter',
@@ -385,17 +395,27 @@ const cardTier = computed<CardTier>(() => {
                  rides --ease-out, NO overshoot — audacious type arrives with
                  GRAVITY, not bounce; PRM → static terminal state). The eyebrow +
                  blurb ride the same GRAVITY register as the cluster's 3-stage
-                 stagger (story-hero.css). -->
+                 stagger (story-hero.css).
+                 BD.W-VIZ-BROKEN-FIX D5 — the hero cluster on a HERO/substrate-viz
+                 page is `.story-hero-scroll-away`, NOT `.story-hero-shrink`: a giant
+                 `text-display-hero` word that STUCK over the viz is the verbatim
+                 defect ("the hero text should NOT scroll like this on every page").
+                 The viz IS the content here, so the title scrolls UP AND OFF with the
+                 body (it does not stick), the field owns the viewport. The sticky
+                 large-title-collapse stays the CONTENT-page chrome header's register
+                 (StoryPage.vue, variant="page"), where a slim sticky header is genuine
+                 nav. -->
             <StoryHeader
                 v-if="showCluster"
                 :eyebrow="eyebrow"
                 :subpath="subpath"
                 :blurb="blurb"
-                class="story-hero-cluster story-hero-shrink"
+                class="story-hero-cluster story-hero-scroll-away"
                 :data-depth="depth"
             >
                 <h1
                     v-if="showHeroTitle"
+                    :data-hero-scale="heroScale"
                     :class="
                         cn(
                             'story-hero-title story-hero-title--enter',

@@ -83,21 +83,45 @@ const HERO_WASH_L = 0.8; // the lifted lightness for the dominant stop
 const HERO_WASH_C_CAP = 0.13; // the chroma ceiling (the calm-drift bound)
 const HERO_CREAM_TAIL: HeroStop = { L: 0.92, C: 0.04, h: 30.0 }; // the warm-cream settle
 
+// BD.W-SECTION-HUE-WARM-FENCE — warm-project a raw color-wheel degree into the
+// warm aurora band [25,95]. A monotone fold around the warm anchor (amber ~62)
+// that keeps the 12 categories DISTINCT while landing every dominant stop warm —
+// the teal/navy hues (the user-screenshot defect) collapse toward terracotta/sand
+// and CANNOT paint cool. The same projection shape as `warm-field.ts`'s
+// `projectWarm` (the field floor) so the chassis reads coherent; the +18°
+// neighbour stop below keeps the SPECIMEN aurora a polychrome spread DISTINCT
+// from the flat field floor (the F7 distinct-from-field fold).
+const WARM_LO = 25;
+const WARM_HI = 95;
+function warmProjectHue(deg: number): number {
+    const h = ((deg % 360) + 360) % 360;
+    if (h >= 340 || h < 25) return 38; // reds → coral-terracotta floor
+    if (h <= 95) return h; // already in band
+    const t = (h - 95) / (340 - 95); // 0 green-edge → 1 magenta-edge
+    return WARM_LO + 20 + t * (WARM_HI - (WARM_LO + 20));
+}
+const clampWarm = (h: number): number =>
+    Math.max(WARM_LO, Math.min(WARM_HI, h));
+
 /**
  * Derive a painterly hero palette from a `--section-color-N` ramp index — the
  * per-category distinctness source (BC.W-HERO-AUDACIOUS Part B). Composes the
  * `/color` leaf `cssToOklch` (value.js — no re-rolled OKLCh math) to read the
- * section hue, then lifts it into the pastel-wash band a calm hero drifts in:
- * a 3-stop {hue · a cooler/warmer neighbour · warm-cream tail} ramp on the ONE
- * section hue (NOT a rainbow — the dominant stop carries the category identity).
+ * section hue, WARM-PROJECTS it into [25,95] (the warm-fence — no teal/navy
+ * specimen by construction), then lifts it into the pastel-wash band a calm hero
+ * drifts in: a 3-stop {hue · a warmer neighbour · warm-cream tail} ramp on the
+ * ONE warm hue (NOT a rainbow — the dominant stop carries the category identity).
  */
 export function sectionColorToHeroPalette(n: number): HeroStop[] {
     const css = SECTION_COLOR_OKLCH[((n % 13) + 13) % 13]!;
     const { h, C } = cssToOklch(css);
     const c = Math.min(C, HERO_WASH_C_CAP);
+    const warmH = warmProjectHue(h); // the warm-fenced dominant hue
     return [
-        { L: HERO_WASH_L, C: c, h }, // the category hue — the dominant wash
-        { L: HERO_WASH_L + 0.06, C: c * 0.78, h: (h + 18) % 360 }, // a near-neighbour for depth
+        { L: HERO_WASH_L, C: c, h: warmH }, // the category hue — the dominant warm wash
+        // a warmer-neighbour stop for a polychrome spread (clamped warm so the
+        // specimen reads DISTINCT-from-field yet never cools out of the fence).
+        { L: HERO_WASH_L + 0.06, C: c * 0.78, h: clampWarm(warmH + 18) },
         { ...HERO_CREAM_TAIL }, // the warm-cream settle (the shared identity tail)
     ];
 }

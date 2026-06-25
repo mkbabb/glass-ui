@@ -26,7 +26,6 @@ import {
     DockIconButton,
     DockSection,
     DockSeparator,
-    DockStack,
     DockTabButton,
     GlassDock,
     type DockSectionDescriptor,
@@ -46,6 +45,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "../../src/components/ui/tooltip";
+import { FadingScroll } from "../../src/components/custom/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";
@@ -53,28 +53,22 @@ import { useContextualDockLayers } from "../composables/useContextualDockLayers"
 const { current, next, prev, nextCategory, prevCategory, goTo } =
     useStoryNavigation();
 
-// BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary: the current story + its
-// immediate in-category neighbors, capped at ≤4 chips (NOT the whole strip). A slice of
-// the in-category nav so the collapsed pill ORIENTS you (where you are + what's next),
-// then taps open to the full control row. The full strip lives in the #default slot.
-const SUMMARY_MAX = 4;
-const summaryStories = computed(() => {
+// W-NAV-DOCK-FIX (defect 5) — the FULL in-category page list (NOT a ≤4 summary slice).
+// Every story in the active category is a jump-to-page tab in the scrolling strip; the
+// active one carries aria-current="page" (DockTabButton auto-lifts its selected-as-glass
+// tier). The strip scrolls horizontally inside the <FadingScroll> port — the dock box
+// stays one row (box-INVIOLATE).
+const categoryStories = computed(() => {
     const loc = current.value;
     if (!loc) return [];
-    const { category, storyIndex } = loc;
-    // Center the window on the current story; clamp to the category bounds.
-    const half = Math.floor(SUMMARY_MAX / 2);
-    let start = Math.max(0, storyIndex - half);
-    const end = Math.min(category.stories.length, start + SUMMARY_MAX);
-    start = Math.max(0, end - SUMMARY_MAX);
-    return category.stories.slice(start, end).map((story, i) => ({
+    return loc.category.stories.map((story, index) => ({
         story,
-        index: start + i,
-        active: start + i === storyIndex,
+        index,
+        active: index === loc.storyIndex,
     }));
 });
 
-function goToSummary(storyId: string): void {
+function goToStory(storyId: string): void {
     const loc = current.value;
     if (loc) goTo(loc.category.id, storyId);
 }
@@ -100,6 +94,9 @@ const railItems = computed<DockStackItem[]>(() =>
               id: l.id,
               label: l.label,
               icon: typeof l.icon === "string" ? undefined : l.icon,
+              // W-NAV-DOCK-FIX — the per-facet context hue (the mode="facets" carousel's
+              // --glass-accent rim; a --section-color-N library identity).
+              accent: l.accent,
           }))
         : [],
 );
@@ -170,20 +167,38 @@ const hasNext = computed(() =>
 function openDockMorph(): void {
     window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
 }
+
+// W-NAV-DOCK-FIX F8 — arrow-key roving across the facet tablist (the a11y contract; the
+// active chip is the only tab-stop, arrows move + activate). The horizontal rail roves on
+// Left/Right; Home/End jump to the ends. Activating writes `railContext` (the ONE registry).
+function onFacetKeydown(e: KeyboardEvent, index: number): void {
+    const items = railItems.value;
+    if (items.length === 0) return;
+    let next = -1;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (index + 1) % items.length;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+        next = (index - 1 + items.length) % items.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = items.length - 1;
+    else return;
+    e.preventDefault();
+    railContext.value = items[next]?.id;
+}
 </script>
 
 <template>
     <nav class="demo-bottom-dock" aria-label="Stories in category">
-        <!-- BC.W-DOCK-COLLAPSED-BOTH — the bottom dock is now COLLAPSIBLE (the
-             `always-expanded` opt-out is dropped — a clean break, no flag). At rest it
-             is a compact summary pill (the persistent category trigger + a few in-category
-             summary chips); hover/tap blooms it to the full control row, leave settles it
-             back. `fit-content` keeps the dock shrink-wrapped to whichever register is
-             active. The collapse rides the orientation-agnostic engine + the
-             BC.W-DOCK-ENGINE morph (center-out, crisp, scale-floored). -->
+        <!-- W-NAV-DOCK-FIX (defects 2, 5) — the bottom dock is ALWAYS-EXPANDED (a single
+             ~52px row): the persistent category trigger + the SCROLLING category-page tab
+             strip (a <FadingScroll axis="x"> of every in-category page) + the persistent
+             prev/next + category-jump nav group, all co-resident. The ≤4 collapsed-summary
+             register is retired — the full page strip in the story-nav zone supersedes it.
+             `fit-content` keeps the dock shrink-wrapped; the strip scrolls INSIDE its port
+             so the box never inflates (box-INVIOLATE). -->
         <GlassDock
             orientation="horizontal"
             fit-content
+            always-expanded
             class="demo-bottom-dock__shell"
             data-testid="bottom-dock-collapsible"
         >
@@ -246,14 +261,80 @@ function openDockMorph(): void {
             <DockSection :sections="sections" aria-label="Story dock sections">
                 <template #story-nav>
                     <TooltipProvider :delay-duration="250">
-                        <!-- Prev within the category — ADAPTIVE (B9): rendered only when
-                             there IS a previous story (no greyed-out dead chrome). -->
-                        <Tooltip v-if="hasPrev">
+                        <!-- W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL (the
+                             horizontal twin of the SidebarDock rail). The route→facet
+                             resolver (`useContextualDockLayers` → `railItems`) was a DEAD
+                             computed; it now drives a real roving tablist of facet chips
+                             leading the story-nav zone, rendered ONLY when the section
+                             carries >1 facet. Each chip is a <DockIconButton :active> that
+                             COMPOSES the SHARED `.glass-capsule` register — the selected chip
+                             re-points `--glass-capsule-fill` toward its WARM facet accent
+                             (the post-fence `--section-color-N`), travels on the capsule's
+                             glide+lift, and fires a one-shot warm accent-flood
+                             (`--dock-facet-flood`, dock-nav.css). Clicking writes
+                             `railContext` (the ONE registry). role="tablist"/role="tab" +
+                             aria-selected + arrow-key roving is the affordance. -->
+                        <template v-if="railItems.length > 1">
+                            <div
+                                class="demo-facet-rail demo-facet-rail--horizontal"
+                                role="tablist"
+                                aria-orientation="horizontal"
+                                aria-label="Section facets"
+                                data-testid="bottom-facet-rail"
+                            >
+                                <Tooltip
+                                    v-for="(facet, fi) in railItems"
+                                    :key="facet.id"
+                                >
+                                    <TooltipTrigger as-child>
+                                        <DockIconButton
+                                            type="button"
+                                            role="tab"
+                                            class="demo-facet-chip tap-squish"
+                                            :active="facet.id === railContext"
+                                            :aria-selected="facet.id === railContext"
+                                            :aria-label="facet.label"
+                                            :tabindex="facet.id === railContext ? 0 : -1"
+                                            :style="
+                                                facet.accent
+                                                    ? { '--dock-facet-accent': facet.accent }
+                                                    : undefined
+                                            "
+                                            @click="railContext = facet.id"
+                                            @keydown="onFacetKeydown($event, fi)"
+                                        >
+                                            <component
+                                                :is="facet.icon"
+                                                v-if="facet.icon"
+                                                class="h-4 w-4"
+                                                aria-hidden="true"
+                                            />
+                                            <span
+                                                v-else
+                                                class="demo-facet-chip__dot"
+                                                aria-hidden="true"
+                                            />
+                                        </DockIconButton>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top" :side-offset="10">
+                                        {{ facet.label }}
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                            <DockSeparator />
+                        </template>
+
+                        <!-- W-NAV-DOCK-FIX (defect 2) — prev/next are PERSISTENT four-state
+                             controls, never DOM-absent mid-row. Disabled (not removed) at a
+                             true boundary so the row geometry holds and the control reads
+                             honestly, never "flaky". -->
+                        <Tooltip>
                             <TooltipTrigger as-child>
                                 <DockIconButton
                                     type="button"
                                     class="tap-squish"
                                     aria-label="Previous story"
+                                    :disabled="!hasPrev"
                                     @click="prev()"
                                 >
                                     <ChevronLeft class="h-4 w-4" aria-hidden="true" />
@@ -265,14 +346,35 @@ function openDockMorph(): void {
                             </TooltipContent>
                         </Tooltip>
 
-                        <!-- Next within the category — ADAPTIVE (B9): absent at the last
-                             story, never a greyed forward arrow. -->
-                        <Tooltip v-if="hasNext">
+                        <!-- W-NAV-DOCK-FIX (defect 5) — the SCROLLING category-page tab
+                             strip. Every story in the active category as a jump-to-page
+                             DockTabButton, wrapped in the shipped <FadingScroll axis="x">
+                             (start sharp at rest, end feathered while overflowing). The
+                             strip scrolls INSIDE the port — the dock box stays one row
+                             (box-INVIOLATE). Clicking a tab navigates via goToStory (one
+                             registry). -->
+                        <FadingScroll axis="x" class="demo-bottom-dock__tabs">
+                            <DockTabButton
+                                v-for="entry in categoryStories"
+                                :key="entry.story.id"
+                                class="tap-squish"
+                                :aria-current="entry.active ? 'page' : undefined"
+                                :aria-label="entry.story.title"
+                                @click="goToStory(entry.story.id)"
+                            >
+                                {{ entry.story.title }}
+                            </DockTabButton>
+                        </FadingScroll>
+
+                        <!-- W-NAV-DOCK-FIX (defect 2) — next is PERSISTENT, disabled (not
+                             removed) at the last story; the row geometry never shifts. -->
+                        <Tooltip>
                             <TooltipTrigger as-child>
                                 <DockIconButton
                                     type="button"
                                     class="tap-squish"
                                     aria-label="Next story"
+                                    :disabled="!hasNext"
                                     @click="next()"
                                 >
                                     <ChevronRight class="h-4 w-4" aria-hidden="true" />
@@ -345,46 +447,36 @@ function openDockMorph(): void {
                 </template>
             </DockSection>
 
-            <!-- BC.W-DOCK-COLLAPSED-BOTH — the COMPACT collapsed summary. At rest the
-                 bottom dock shows the persistent category trigger (#persistent, above) +
-                 these few in-category story chips (the current story + its immediate
-                 neighbors, ≤4) — enough to orient you, NOT the whole strip (the full
-                 DockTabButton run lives in #default above, revealed on expand). Each
-                 chip is a REAL nav control (an accessible-named DockTabButton that
-                 navigates to its story), so the collapsed register is operable, not a
-                 paint-only pill. Tap/hover the pill → the dock blooms to the full row. -->
-            <template #collapsed>
-                <DockTabButton
-                    v-for="entry in summaryStories"
-                    :key="entry.story.id"
-                    class="demo-bottom-dock__summary-chip tap-squish"
-                    :aria-current="entry.active ? 'page' : undefined"
-                    :aria-label="entry.story.title"
-                    @click="goToSummary(entry.story.id)"
-                >
-                    {{ entry.story.title }}
-                </DockTabButton>
-            </template>
-
-            <!-- BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail (the clean-break
-                 rebuild of the retired divider-carousel). The in-category contextual facets
-                 are the stack's MEMBERS: a core anchor sits at the dock's trailing edge;
-                 hover/focus fans the members UP into the gutter ABOVE the dock row (a
-                 column of fully-visible glass icons, on-screen for the viewport-bottom
-                 dock), and selecting one navigates to that facet's first story — the SAME
-                 router navigation the arrows drive (one registry). It is dock chrome
-                 OUTSIDE the morph aperture, so it never changes the dock box AND it clears
-                 <main>/the title/a form field by topology (the fan extends into its gutter,
-                 never over content). Rendered only when the section carries >1 facet. -->
-            <template #rail>
-                <DockStack
-                    v-if="railItems.length"
-                    v-model:selected="railContext"
-                    :items="railItems"
-                    core-label="Section facets"
-                    data-testid="bottom-dock-rail"
-                />
-            </template>
+            <!-- BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail is REMOVED
+                 (clean break, no alias). The half-rendered facet carousel collided with the
+                 dock content (the user's "erroneous BROKEN RAIL element"). The in-category
+                 nav-facet context is already carried by the in-flow `<DockSection>` tabs +
+                 the `nav`-zone category-jump group above (the dock's own tabs facility) — no
+                 orphaned carousel. The macOS-fan `mode="stack"` <DockStack> survives in
+                 stories that genuinely want the hover-expand stack; it is the facets carousel
+                 that was broken, removed from the SHELL nav dock specifically. -->
         </GlassDock>
     </nav>
 </template>
+
+<style scoped>
+/* W-NAV-DOCK-FIX (defect 5) — the category-page tab strip scrolls horizontally inside
+   the FadingScroll port (the `.demo-bottom-dock__tabs` class is merged onto the
+   <FadingScroll> root, which IS the `.fading-scroll--x` scroll port). Lay the slotted
+   DockTabButtons in a row and cap the inline-size so overflow SCROLLS, never widening
+   the dock box (box-INVIOLATE). `min-inline-size: 0` lets the flex child shrink below
+   content; the cap keeps the strip a bounded scroller. */
+.demo-bottom-dock__tabs {
+    display: flex;
+    align-items: center;
+    gap: var(--dock-gap, 0.25rem);
+    min-inline-size: 0;
+    max-inline-size: min(60vw, 42rem);
+    flex: 1 1 auto;
+    /* The tab labels are short; keep each on one line so the strip reads as a row. */
+    white-space: nowrap;
+}
+.demo-bottom-dock__tabs > * {
+    flex: 0 0 auto;
+}
+</style>

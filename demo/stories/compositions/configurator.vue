@@ -89,6 +89,49 @@ const hues = computed(
     () => MEDIUM_HUES[cfg.config.medium] ?? MEDIUM_HUES.aurora!,
 );
 
+// BD.W-CONFIG-GALLERY-DOCK — the device-free preset field-well. Each gallery tile
+// paints its preset's field from the SAME medium hue triad the live stage uses —
+// a layered radial-gradient over a base fill, ZERO GL device, deterministic, never
+// blank, identical Chrome ⇄ Safari (the §4.1 Tier-0 idea applied to the demo
+// primitive). The well reads the preset's spread/bloom so two presets are visibly
+// distinct, mirroring the live-stage geometry at a thumbnail scale.
+// The well reads the RESOLVABLE `--rainbow-pastel-*` tokens directly (the `--bloom-*`
+// indirection is scoped to `.configurator-specimen`, undefined on the gallery tile —
+// so `color-mix(... var(--bloom-blue) ...)` would fall to transparent and the well
+// would read flat cream). Each medium maps to a concrete pastel triad here.
+const WELL_HUES: Record<string, readonly [string, string, string]> = {
+    aurora: [
+        "var(--rainbow-pastel-blue)",
+        "var(--rainbow-pastel-indigo)",
+        "var(--rainbow-pastel-violet)",
+    ],
+    ink: [
+        "var(--rainbow-pastel-indigo)",
+        "var(--rainbow-pastel-blue)",
+        "var(--rainbow-pastel-green)",
+    ],
+    gouache: [
+        "var(--rainbow-pastel-orange)",
+        "var(--rainbow-pastel-red)",
+        "var(--rainbow-pastel-yellow)",
+    ],
+};
+
+function presetWell(c: Cfg): string {
+    const triad = WELL_HUES[c.medium] ?? WELL_HUES.aurora!;
+    const [a, b, cc] = triad;
+    const spread = c.spread / 100;
+    const bloom = c.bloom / 100;
+    const off = 16 + spread * 24;
+    const r = 40 + bloom * 26;
+    return [
+        `radial-gradient(ellipse ${r}% ${r * 0.9}% at ${50 - off}% 38%, color-mix(in srgb, ${a} 80%, transparent), transparent 64%)`,
+        `radial-gradient(ellipse ${r * 0.92}% ${r * 0.82}% at ${50 + off}% 44%, color-mix(in srgb, ${b} 76%, transparent), transparent 64%)`,
+        `radial-gradient(ellipse ${r}% ${r * 0.86}% at 50% ${72 + spread * 8}%, color-mix(in srgb, ${cc} 72%, transparent), transparent 68%)`,
+        `linear-gradient(135deg, color-mix(in srgb, ${a} 22%, var(--card)), color-mix(in srgb, ${cc} 18%, var(--card)))`,
+    ].join(", ");
+}
+
 const stageStyle = computed(() => {
     const spread = cfg.config.spread / 100; // 0..1
     const bloom = cfg.config.bloom / 100; // 0..1
@@ -133,8 +176,8 @@ const density = computed(() => (isNarrow.value ? "mobile" : "comfortable"));
 <template>
     <StoryPage>
         <StorySection
-            label="studio shell — preset · layer · live stage"
-            blurb="One responsive configurator. The stage paints the live config — drag spread to fan the field, bloom to feather it, grain to layer the paper overlay. Density reads `mobile` at narrow widths and `comfortable` when there is room; the preset row drives useConfiguratorState (active-preset / isDirty / reset)."
+            label="studio shell — top gallery · layer · live stage"
+            blurb="One responsive configurator with the preset gallery UP-TOP (galleryPlacement=&quot;top&quot;) — a large, full-width, scrollable warm-glass dock of device-free preset tiles (each well a CSS field, no GL device, never blank). The stage paints the live config — drag spread to fan the field, bloom to feather it, grain to layer the paper overlay. Density reads `mobile` at narrow widths and `comfortable` when there is room; the gallery drives useConfiguratorState (active-preset / isDirty / reset)."
         >
             <ShowcaseFrame pad="lg" tier="quiet">
                 <Configurator
@@ -142,9 +185,53 @@ const density = computed(() => (isNarrow.value ? "mobile" : "comfortable"));
                     :density="density"
                     :presets="presets"
                     :active-preset="cfg.activePreset.value"
+                    gallery-placement="top"
                     @select-preset="cfg.selectPreset"
                     @reset="cfg.resetCurrent"
                 >
+                    <!-- BD.W-CONFIG-GALLERY-DOCK — the up-top warm-glass gallery
+                         dock, presets that RENDER device-free. Each tile is a
+                         `.glass-capsule` cel (the §3 field reads through) over a
+                         per-preset CSS field-well; the toggle-button a11y pattern
+                         (type=button + aria-pressed in a role=group). No GL device,
+                         never blank, identical Chrome ⇄ Safari. -->
+                    <template #presets>
+                        <div
+                            class="flex flex-col gap-3"
+                            role="group"
+                            aria-label="Presets"
+                        >
+                            <p class="text-admin-label text-muted-foreground">Presets</p>
+                            <div
+                                class="configurator-gallery-track flex gap-3 overflow-x-auto px-1 py-2 scrollbar-thin"
+                            >
+                                <button
+                                    v-for="p in presets"
+                                    :key="p.key"
+                                    type="button"
+                                    data-preset-tile
+                                    class="configurator-preset-tile group glass-capsule glass-capsule-hover shadow-cartoon-md focus-ring relative flex flex-shrink-0 flex-col overflow-hidden text-left"
+                                    :class="p.key === cfg.activePreset.value && 'is-active'"
+                                    :aria-pressed="p.key === cfg.activePreset.value"
+                                    @click.stop="cfg.selectPreset(p.key)"
+                                >
+                                    <div
+                                        class="configurator-preset-well aspect-[16/10] w-full"
+                                        :style="{ background: presetWell(p.config) }"
+                                        aria-hidden="true"
+                                    />
+                                    <div class="configurator-preset-label flex flex-col gap-0.5 px-3 py-2">
+                                        <span class="text-small font-medium text-foreground">
+                                            {{ p.label }}
+                                        </span>
+                                        <span class="text-admin-label text-muted-foreground">
+                                            {{ p.config.medium }} · spread {{ p.config.spread }}
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
                     <template #stage>
                         <!-- Live specimen: a painterly field that responds to
                              the config. The aurora story swaps this for a real
