@@ -31,6 +31,7 @@ actually works AND is beautiful.
 | D11 | **Category cards waste space** → wants LIVE real-component previews not icons | SectionLanding bento = icon + empty thumbnail | D-category-previews |
 | D12 | **Dock scrolling broken** | dock overflow port / scroll gates | D-previews-dockscroll |
 | D13 | **V↔H morph is a modal, esc broken; only liquid-teardrop works** → wants a DOCK BUTTON that morphs V↔H in place; remove the VT-crossfade variant | AppShell morphStage modal + dual VT/liquid variants | D-dock-morph |
+| D14 | **`/foundations/colors` palette scroll animation gone** (cute on-scroll cascade dead) | `.scroll-cascade--columns` `animation-range: calc(45% + 60ms*0)` mixes `%`+`<time>` → invalid calc → computes `normal` → entrance stretched across the whole viewport passage → imperceptible (runtime-confirmed) | D-scroll-cascade-columns (→ WS4 BG.W-SCROLL-SHRINK-UNIFY + WS7 cascade-animates gate) |
 
 ## The Siri new-capability references (the triumvirate, separate workflow)
 
