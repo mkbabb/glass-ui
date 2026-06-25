@@ -1,6 +1,15 @@
 # BD GREENFIELD — IMPLEMENTATION PHASE (W-CUT) — the build cursor
 
-> **STATUS: BUILDING.** User greenlit the implementation (W-CUT) 2026-06-24 with full
+> **STATUS: ✅ SHIPPED — glass-ui 4.2.0 PUBLISHED to npm (2026-06-25, provenance, release run 28164924541).**
+> All 10 phases built + live-π verified + the 356-gate `--run full` CI close green siblings-absent.
+> Every user-flagged defect fixed: the §3 gray (warm `.paper-field`), the dock width-seizure, the
+> `/dock/morph-showcase` crossfade, the carousel/deck goo barbell, the gray category cards → live
+> previews, the hero overflow, the broken scroll-choreography page. The close caught + FIXED ~20
+> real regressions (never masked) + the iterative cross-repo CI tail (value.js bridge, the [local]
+> π gates' device-free witnesses). master @ 91c6ca18; tag v4.2.0; peer keyframes ^5.0.0. The
+> consumer slides repos' adopt+CF-redeploy is OUT-OF-FENCE (sibling repos).
+>
+> **STATUS (historical): BUILDING.** User greenlit the implementation (W-CUT) 2026-06-24 with full
 > publish/push/deploy authority. Team-lead orchestrates (core model); Opus/Sonnet fan out.
 > Branch `prototype/liquid-dock`. The tranche is spec-converged (39 items, 116 union waves);
 > THIS doc tracks the SRC BUILD. Source of truth for WHAT to build: each
