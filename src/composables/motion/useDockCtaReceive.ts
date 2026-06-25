@@ -54,7 +54,13 @@ import {
     springTimingFunction,
     type Easing,
 } from "@mkbabb/keyframes.js";
-import { onScopeDispose, readonly, ref, type Ref } from "vue";
+import {
+    onScopeDispose,
+    readonly,
+    ref,
+    type ComponentPublicInstance,
+    type Ref,
+} from "vue";
 import { springPreset, type SpringPresetName } from "./springPresets";
 
 /** The receive spring register — `snappy` (the crisp absorb default) or `bouncy`
@@ -68,7 +74,14 @@ export interface UseDockCtaReceiveOptions {
      * `<DockIconButton>`/dock control element). When null at receive time, the morph
      * is a no-op snap (no destination to fly to) and `onReceived` fires immediately.
      */
-    dockControl: Ref<HTMLElement | null>;
+    /**
+     * The dock control the CTA flies onto — a templateRef to the control ELEMENT or to
+     * a component (e.g. `<DockIconButton>`), whose root element is resolved via `.$el`.
+     * Resolving both keeps the seam forgiving: a `useTemplateRef<HTMLElement>` annotation
+     * on a component ref (whose value is the component public instance) no longer throws
+     * `setAttribute is not a function` at runtime — the stale element-vs-component class.
+     */
+    dockControl: Ref<HTMLElement | ComponentPublicInstance | null>;
     /** The spring register (default `snappy`). */
     preset?: DockCtaReceivePreset;
     /** The ending congest blur radius in px (the CTA dissolves into the glass). Default 4. */
@@ -149,8 +162,22 @@ function prefersReducedMotion(): boolean {
  * function onCta() { receive() }
  * ```
  */
+/**
+ * Resolve a templateRef value to its root HTMLElement — accepts an element directly OR
+ * a Vue component public instance (its `.$el`). Returns null for a fragment/text root or
+ * a nullish ref. The seam binds either an element ref or a component ref without throwing.
+ */
+function asElement(
+    v: HTMLElement | ComponentPublicInstance | null | undefined,
+): HTMLElement | null {
+    if (!v) return null;
+    if (v instanceof HTMLElement) return v;
+    const el = (v as ComponentPublicInstance).$el;
+    return el instanceof HTMLElement ? el : null;
+}
+
 export function useDockCtaReceive(
-    cta: Ref<HTMLElement | null>,
+    cta: Ref<HTMLElement | ComponentPublicInstance | null>,
     options: UseDockCtaReceiveOptions,
 ): UseDockCtaReceiveReturn {
     const respectPRM = options.respectReducedMotion !== false;
@@ -180,7 +207,7 @@ export function useDockCtaReceive(
     const pending = ref(false);
 
     function setPending(): void {
-        const target = options.dockControl.value;
+        const target = asElement(options.dockControl.value);
         if (!target) return; // no seat to arm — a no-op until the control mounts
         target.setAttribute("data-cta-pending", "");
         pending.value = true;
@@ -188,7 +215,7 @@ export function useDockCtaReceive(
 
     function clearPending(): void {
         pending.value = false;
-        const target = options.dockControl.value;
+        const target = asElement(options.dockControl.value);
         if (!target) return;
         target.removeAttribute("data-cta-pending");
     }
@@ -215,12 +242,12 @@ export function useDockCtaReceive(
     }
 
     function receive(): void {
-        const el = cta.value;
+        const el = asElement(cta.value);
         if (!el) return;
         cancelRaf();
 
         const ctaRect = el.getBoundingClientRect();
-        const targetEl = options.dockControl.value;
+        const targetEl = asElement(options.dockControl.value);
 
         // No dock control to fly to — snap the CTA to gone + hand off (the gesture
         // still completes; nowhere to morph).
@@ -309,7 +336,7 @@ export function useDockCtaReceive(
     function reset(): void {
         cancelRaf();
         morph = null;
-        const el = cta.value;
+        const el = asElement(cta.value);
         if (el) clearTransform(el);
     }
 

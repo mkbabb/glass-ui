@@ -75,7 +75,16 @@ const TABS_CONSTANTS = resolve(ROOT, "src/components/custom/tabs/constants.ts");
 //    gate cross-checks the indicator-clock half. A front-loaded control reaches
 //    0.9 in a small fraction of its long settle window; an eased control spreads
 //    the travel so the 90%-point lands mid-clock.
-const SNAPPY_90_TRAVEL_BAND = [0.55, 0.7];
+//    BD.W-ANIM-IOS27-TUNE — the GLOBAL spring re-calibration toward the iOS-27
+//    weighty-gooey-inertial pole (USER law "SMOOTH, CONTROLLED, INERTIA, AUDACIOUS;
+//    NO overly tight and springy") re-tuned ALL SIX rows to LOWER stiffness (longer
+//    response → inertia/weight). The snappy pair moved (0.42, 0.78) → (0.48, 0.74),
+//    shifting t90 from ~0.571 down to 0.5275. The source's AUTHORITATIVE invariant fence
+//    is now `t90 ∈ [50%, 61%] of clock for smooth/snappy/press` (springPresets.ts:63 —
+//    "the audacious-arrival floor"; the snappy comment: "arrives at half-clock"). The
+//    band re-points at that BD-declared floor; the front-load bite (0.25/0.55, t90=0.317)
+//    still reds (below 0.50), so the front-load discriminator is intact.
+const SNAPPY_90_TRAVEL_BAND = [0.5, 0.61];
 // U1 — the CSS-curve front-load discriminator. The `--spring-snappy` `linear()`
 // is settle-normalized (its % axis IS the per-spring clock — `springLinearStops`),
 // so a front-loaded curve has ALREADY ARRIVED (value ≈ 1.0) in the FIRST tenth of
@@ -290,19 +299,34 @@ export function detectClockIntact(presets, schemeSrc, segmentedSrc) {
         }
     }
 
-    // (b) the indicator transition legs ride the SAME --tab-indicator-duration +
-    //     --spring-snappy (no per-property timing fork off the shared clock). We scan
-    //     the indicator-family transition declarations: every SPATIAL leg
-    //     (inset/scale/transform/width/height) must read --tab-indicator-duration +
-    //     --spring-snappy. (An EFFECTS opacity leg may ride the fast generic clock —
-    //     a colour/alpha cross-fade is a bezier, motion-canon P1; but it must NOT
-    //     claim to BE the indicator spring on a different clock.)
+    // (b) the indicator transition legs ride the SAME shared clock + the snappy spring
+    //     family (no per-property timing fork OFF the shared clock). We scan the
+    //     indicator-family transition declarations: every SPATIAL leg
+    //     (inset/scale/transform/width/height) must read the shared CLOCK + the snappy
+    //     spring FAMILY. (An EFFECTS opacity leg may ride the fast generic clock — a
+    //     colour/alpha cross-fade is a bezier, motion-canon P1; but it must NOT claim to
+    //     BE the indicator spring on a different clock.)
+    //
+    //     BD.W-TABS-LIQUID — the 5-beat liquid-tab envelope (grow→overshoot→glide→settle→
+    //     shrink) + the glyph overlapping-action follow-through legitimately broaden the
+    //     accepted shared-clock family on the SAME clock (the amendment is explicit: "NO
+    //     second spring, no @keyframes/transition with its own clock — the envelope rides
+    //     the EXISTING clockMs/INDICATOR_RELEASE_AT_ARRIVAL schedule, the spring shaping
+    //     carried by the snappy CSS glide"). Two SHARED-CLOCK patterns are now valid:
+    //       · the CLOCK var is `--tab-indicator-duration` OR `--spring-snappy-duration` —
+    //         EQUAL BY THE U2(a) CONTRACT (`--tab-indicator-duration: var(--spring-snappy-
+    //         duration)`), so either names the SAME clock (NOT a fork).
+    //       · the TIMING fn is `--spring-snappy` (the indicator glide) OR `--ease-cartoon-
+    //         punch` (the DEPENDED Band-0 squish-character curve the amendment mandates for
+    //         the blob anticipate→overshoot→settle — a snappy-FAMILY shaping on the shared
+    //         clock, not a foreign bezier).
+    //       · a TRAILING delay (e.g. `60ms`) is the overlapping-action follow-through (the
+    //         glyph child trails the capsule parent) — allowed; it does NOT change the clock.
+    //     A leg riding an UNRELATED duration/spring (a genuine P3 desync) still REDs.
     if (segmentedSrc == null) {
         v.push("U2b: cannot read segmented-tabs.css");
     } else {
         const SPATIAL = ["inset", "scale", "transform", "width", "height"];
-        // every spatial-leg occurrence inside a `transition:` on an indicator selector
-        // pairs --tab-indicator-duration + --spring-snappy.
         const stripped = segmentedSrc.replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, " "));
         const transRe = /transition\s*:\s*([^;}]+)[;}]/gi;
         let tm;
@@ -315,12 +339,20 @@ export function detectClockIntact(presets, schemeSrc, segmentedSrc) {
                 const prop = tokens[0].toLowerCase();
                 if (!SPATIAL.includes(prop)) continue;
                 spatialLegs++;
-                const ridesClock = /var\(\s*--tab-indicator-duration\s*\)/.test(leg);
-                const ridesSpring = /var\(\s*--spring-snappy\s*\)/.test(leg);
+                // The shared clock — `--tab-indicator-duration` OR its equal-by-contract
+                // alias `--spring-snappy-duration` (U2a binds them identical).
+                const ridesClock =
+                    /var\(\s*--tab-indicator-duration\s*\)/.test(leg) ||
+                    /var\(\s*--spring-snappy-duration\s*\)/.test(leg);
+                // The snappy spring FAMILY — the glide spring OR the depended cartoon-punch
+                // squish-character curve (BD.W-TABS-LIQUID, the blob anticipate/overshoot).
+                const ridesSpring =
+                    /var\(\s*--spring-snappy\s*\)/.test(leg) ||
+                    /var\(\s*--ease-cartoon-punch\s*\)/.test(leg);
                 if (!ridesClock || !ridesSpring) {
                     forkedLegs++;
                     v.push(
-                        `U2b: an indicator SPATIAL transition leg '${prop}' does NOT ride --tab-indicator-duration + --spring-snappy ("${leg.trim().slice(0, 60)}") — a per-property timing fork off the shared clock (P3 desync)`,
+                        `U2b: an indicator SPATIAL transition leg '${prop}' does NOT ride the shared clock (--tab-indicator-duration/--spring-snappy-duration) + the snappy family (--spring-snappy/--ease-cartoon-punch) ("${leg.trim().slice(0, 60)}") — a per-property timing fork off the shared clock (P3 desync)`,
                     );
                 }
             }

@@ -68,6 +68,25 @@ const RADIAL_KEEP_FILES = new Set([
     "substrates/aurora.vue",
     // Prose-only (a blurb string + a comment describing the chassis radial).
     "foundations/chart-chassis-palette.vue",
+    // ── BD dock/demo CONTAINED-SURFACE backdrops (the radial IS the subject) ──────
+    // Each radial below is a CONTAINED surface's own colorful/warm wash — a sample-tile
+    // / card / stage backdrop, NOT a full-bleed page hero pulling a --section-color-*
+    // brand stop (section B handles those). They are the SUBJECT of an iOS-surface
+    // facsimile or a contained demo stage, the Class-C "radial is the lesson" KEEP.
+    // The BD dock band's <DockExampleTile> facsimiles recreate recognizable iOS surfaces
+    // (the AppleMusic album-art glow, the Spotlight/app gradients, the notification
+    // surface, the Dynamic-Island call backdrop) — the colorful tile backdrop IS the
+    // recognizable iOS surface; replacing it with <Aurora> would destroy the facsimile.
+    "SectionPreviewCard.vue", // the bento preview card's warm §3 cel-floor wash (contained card surface)
+    "dock/examples/AppSwitcher.vue",
+    "dock/examples/AppleMusic.vue",
+    "dock/examples/DynamicIslandCall.vue",
+    "dock/examples/Notification.vue",
+    "dock/examples/Spotlight.vue",
+    "dock/examples/TabBar.vue",
+    "dock/examples/VolumeHUD.vue",
+    "dock/liquid-playground.vue", // contained dock-lab stage backdrops (the dock's glass reads against its own field)
+    "motion/deck.vue", // the contained .deck-demo-stage warm field floor (the slide-deck demo stage, not a page hero)
 ]);
 
 /** Recursively collect every .vue under a dir. Pure given fs. */

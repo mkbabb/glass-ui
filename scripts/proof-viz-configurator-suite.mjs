@@ -345,28 +345,35 @@ add(
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
-// S5 — REAL preview (local): the preset thumbnails are REAL baked images (the
-// dead-card fix — the capture AWAITS armAsync on the WebGPU backend before renderAt).
-// The SOURCE arm asserts the capture-awaits-armAsync fix is present; the BINDING PAINT
-// (a captured thumbnail's meanLum > 0) rides the orchestrator's :5199 capture.
+// S5 — REAL preview (local): the preset thumbnails are REAL baked images, NEVER a dead
+// (blank) card. BD.W-PRESET-RENDER re-rooted the dead-card fix: the prior cure was to
+// AWAIT armAsync() before renderAt on the WebGPU capture backend (a no-device host baked
+// a blank webp). BD made a CLEAN BREAK (no-backwards-compat): the thumbnail does NOT touch
+// a GL device AT ALL — it bakes the device-free `auroraFallbackGround(config)` 2D-canvas
+// raster (the math mirrored CPU-side), so it is per-preset distinct, deterministic,
+// NEVER-BLANK in BOTH Chrome and WebKit, and needs zero WebGL/WebGPU (the dead-card class
+// is impossible by construction — there is no async device to arm, no sync-renderAt race).
+// The WebGPU `mode:"capture"` bake + armAsync/renderAt seam are GONE. The SOURCE arm
+// asserts the device-free raster bake is the seam; the BINDING meanLum>0 paint rides the
+// orchestrator's :5199 capture.
 // ════════════════════════════════════════════════════════════════════════════════════
 const THUMB = "demo/stories/aurora/usePresetThumbnails.ts";
 const thumbSrc = strip(read(THUMB));
-// The capture awaits armAsync() BEFORE the first renderAt — the dead-card fix.
-const awaitsArmAsync = /await\s+\w+\.armAsync\(\)/.test(thumbSrc);
-// And the renderAt is reached only after that await (the synchronous-renderAt bug,
-// where renderAt ran right after createAurora(…,{mode:"capture"}) on a not-yet-armed
-// WebGPU device, baked a blank webp).
-const armBeforeRender =
-    awaitsArmAsync &&
-    thumbSrc.indexOf("armAsync") < thumbSrc.indexOf("renderAt");
-facts.s5 = { thumbExists: thumbSrc.length > 0, awaitsArmAsync, armBeforeRender };
+// The thumbnail bakes via the device-free auroraFallbackGround raster — and NO retired
+// WebGPU `mode:"capture"` bake survives (clean break, no-backwards-compat).
+const bakesDeviceFreeRaster = /auroraFallbackGround\s*\(/.test(thumbSrc);
+const noWebGpuCaptureBake = !/mode:\s*["']capture["']/.test(thumbSrc);
+facts.s5 = {
+    thumbExists: thumbSrc.length > 0,
+    bakesDeviceFreeRaster,
+    noWebGpuCaptureBake,
+};
 add(
     "S5-real-preview-capture-awaits-armAsync",
-    awaitsArmAsync && armBeforeRender,
-    awaitsArmAsync && armBeforeRender
-        ? "the thumbnail capture AWAITS armAsync() BEFORE the first renderAt (the dead-card fix — on the WebGPU backend renderAt is a no-op until the async device prelude resolves; the prior sync renderAt baked a blank webp). The BINDING meanLum>0 paint rides the orchestrator's :5199 capture"
-        : `the thumbnail capture does NOT await armAsync before renderAt (awaits ${awaitsArmAsync}, order ${armBeforeRender}) — the dead-card class (a blank webp on the WebGPU backend)`,
+    bakesDeviceFreeRaster && noWebGpuCaptureBake,
+    bakesDeviceFreeRaster && noWebGpuCaptureBake
+        ? "the thumbnail bakes via the device-free `auroraFallbackGround` 2D-canvas raster (BD.W-PRESET-RENDER — the WebGPU mode:\"capture\" bake + its armAsync/renderAt seam DELETED, clean break); the preview is per-preset distinct + never-blank in BOTH Chrome and WebKit BY CONSTRUCTION (no GL device → no dead-card class). The BINDING meanLum>0 paint rides the orchestrator's :5199 capture"
+        : `the thumbnail does NOT bake the device-free auroraFallbackGround raster (raster ${bakesDeviceFreeRaster}, no-webgpu-capture ${noWebGpuCaptureBake}) — the dead-card class (a blank webp on the WebGPU backend) is not retired`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
@@ -434,11 +441,14 @@ const rawColorStudio = `<input type="color" v-model="seed" />`;
 const s3BiteC = /type\s*=\s*["']color["']/.test(rawColorStudio);
 st("S3-bite-raw-color-input-reds", s3BiteC, "a raw <input type=color> is caught (the color register is <ColorSwatch>)");
 
-// S5 bite: a synthetic blank-thumbnail capture (sync renderAt, no armAsync await) does
-// NOT pass the awaits-armAsync detector.
-const syncCapture = `aurora = createAurora(c, cfg, {mode:"capture"}); aurora.renderAt(1.0);`;
-const s5Bite = !/await\s+\w+\.armAsync\(\)/.test(syncCapture);
-st("S5-bite-blank-sync-capture-reds", s5Bite, "a sync renderAt with NO armAsync await fails S5 (the dead-card class)");
+// S5 bite: a synthetic WebGPU `mode:"capture"` bake (the RETIRED GL-dependent path, the
+// dead-card class on a no-device host) does NOT pass the device-free-raster detector — it
+// neither bakes auroraFallbackGround nor is free of the mode:"capture" bake.
+const webgpuCapture = `aurora = createAurora(c, cfg, {mode:"capture"}); aurora.renderAt(1.0);`;
+const s5BakesRaster = /auroraFallbackGround\s*\(/.test(webgpuCapture);
+const s5NoCaptureBake = !/mode:\s*["']capture["']/.test(webgpuCapture);
+const s5Bite = !(s5BakesRaster && s5NoCaptureBake);
+st("S5-bite-blank-sync-capture-reds", s5Bite, "a WebGPU mode:\"capture\" bake (the retired GL-dependent dead-card path) fails S5 (it does not bake the device-free auroraFallbackGround raster)");
 
 // S6 bite: a double-card-with-grid (a ShowcaseFrame with a grid-bg class wrapping the
 // viz) is caught.
@@ -452,7 +462,7 @@ add(
     "self-test-bites-armed",
     allSelfTestsPass,
     allSelfTestsPass
-        ? `all ${selfTests.length} self-test bites armed (a Canvas2D primary, a two-state Switch, a left fork, a raw color input, a blank sync capture, a double-card-with-grid — each detector flags its synthetic fixture)`
+        ? `all ${selfTests.length} self-test bites armed (a Canvas2D primary, a two-state Switch, a left fork, a raw color input, a retired WebGPU mode:"capture" bake, a double-card-with-grid — each detector flags its synthetic fixture)`
         : `a self-test bite FAILED to flag: ${selfTests.filter((s) => !s.pass).map((s) => s.id).join(", ")} — the detector has rotted`,
 );
 

@@ -50,7 +50,11 @@ const COMMAND = "npm run proof:dock-fission";
 const FISSION_TS =
     "src/components/custom/dock/composables/useDockFission.ts";
 const FISSION_CSS = "src/styles/dock/fission-bridge.css";
-const GOO_FILTER = "src/components/custom/dock/DockGooFilter.vue";
+// P7 unified GlassGooFilter + DockGooFilter + the inline showcase/pager mounts into ONE
+// GooFilter.vue (the DRY win — a single goo <filter> graph; the per-scale presets carry
+// the `dock-fission-goo` id the dock fission consumes). The mount-presence + Safari-floor
+// witness follows the unification into the shared component.
+const GOO_FILTER = "src/components/custom/goo-filter/GooFilter.vue";
 
 function readRel(rel) {
     const p = resolve(ROOT, rel);
@@ -197,7 +201,12 @@ function detectF6() {
     // scale/opacity/filter — and must NOT animate a layout property via transition/keyframes.
     facts.hasNeckClip = /clip-path:\s*inset\(/.test(css);
     facts.usesTranslate = /\btranslate:/.test(css);
-    facts.usesScaleStretch = /scale:\s*var\(--stretch/.test(css);
+    // The piece detach scales on the compositor reading the volume-preserving --stretch
+    // squish. BD folds --stretch with --piece-progress in a `scale: calc(...)` fold
+    // (not the bare `scale: var(--stretch ...)`), so detect --stretch inside a `scale:`
+    // declaration anywhere in the file (the reciprocal-pair squish is the witness).
+    facts.usesScaleStretch =
+        /scale:\s*[^;]*var\(\s*--stretch[^;]*1\s*\/\s*var\(\s*--stretch/.test(css);
     // A `transition`/`@keyframes` animating a layout axis (inline-size/block-size/width/
     // height/inset/padding) is the no-layout-animation violation.
     facts.animatesLayout =
@@ -224,7 +233,10 @@ function detectGooMount() {
     const violations = [];
     const vue = stripComments(readRel(GOO_FILTER));
     const facts = {};
-    facts.gooMountExists = vue.length > 0;
+    // The unified GooFilter must still carry the `dock-fission-goo` preset (the id the
+    // dock fission filter:url() targets) — a mount that dropped the dock id would no-op
+    // the fission goo even though the component exists.
+    facts.gooMountExists = vue.length > 0 && /dock-fission-goo/.test(vue);
     facts.hasSrgb = /color-interpolation-filters=["']sRGB["']/.test(vue);
     // A GENEROUS region (x=-50% width=200% …) so the necks + flying pieces never clip.
     facts.hasGenerousRegion =
@@ -236,7 +248,7 @@ function detectGooMount() {
     facts.nonZeroHost = /width=["']1["']/.test(vue) && /height=["']1["']/.test(vue);
     facts.notBackdropFilter = !/backdrop-filter:\s*url\(/.test(vue);
     if (!facts.gooMountExists)
-        violations.push("GOO: DockGooFilter.vue (the library goo mount) is ABSENT");
+        violations.push("GOO: the unified GooFilter.vue (the library goo mount) is ABSENT or no longer carries the `dock-fission-goo` preset id the dock fission targets");
     if (facts.gooMountExists && !facts.hasSrgb)
         violations.push("GOO: the goo filter omits color-interpolation-filters=\"sRGB\" (WebKit thresholds in linearRGB → wrong neck — the §W7 Safari floor)");
     if (facts.gooMountExists && !facts.hasGenerousRegion)

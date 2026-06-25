@@ -71,7 +71,12 @@ const CANONICAL_LIGHT = {
     resting: 0.65,
     floating: 0.8,
     overlay: 0.95,
-    dock: 0.42,
+    // BD.W-DOCK-CORE (D3) — the dock identity alpha lifted 0.42 → 0.50 (margin-insurance
+    // for the warm-chromatic darken: the base composite chroma closes a notch before any
+    // tint engages). The library's OWN dock identity evolved (the lib default tokens
+    // evolve as the lib's identity changes); still the lightest chrome tier (< resting
+    // 0.65), still mode-invariant.
+    dock: 0.5,
     chassis: 0.28,
 };
 const CANONICAL_DARK = {

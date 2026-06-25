@@ -53,6 +53,7 @@ const ORIENTATION_MORPH =
     "src/components/custom/dock/composables/useDockOrientationMorph.ts";
 const BRIDGE_CSS = "src/styles/dock/morph-bridge.css";
 const SHOWCASE = "demo/stories/dock/morph-showcase.vue";
+const GOO_FILTER = "src/components/custom/goo-filter/GooFilter.vue";
 
 function read(rel) {
     const p = resolve(ROOT, rel);
@@ -187,10 +188,28 @@ export function detect() {
         "M5 — the showcase mounts no GooBlob (no free-running uTime/pointer-speed clock)",
         !mountsGooBlob,
     );
-    // The SVG-goo bridge IS present in the showcase (the chosen deterministic path).
-    const hasSvgGoo =
-        /feColorMatrix/.test(showcaseCode) && /dock-morph-goo/.test(showcaseCode);
-    assert("M5 — the deterministic CSS SVG-goo bridge is mounted (feColorMatrix)", hasSvgGoo);
+    // The deterministic SVG-goo bridge IS composed by the showcase. P7's M1 dedup hoisted
+    // the inline <filter> into the ONE shell-root <GooFilter> mount; the showcase now
+    // REFERENCES it as the REGULAR `filter: url(#dock-morph-goo)` (scalar-gated on
+    // --dock-morph-t), and the unified GooFilter.vue carries the `dock-morph-goo` graph
+    // (feColorMatrix). The witness follows the dedup: the showcase wires the goo by id +
+    // the shared mount provides the deterministic graph.
+    const referencesGoo = /url\(#dock-morph-goo\)/.test(showcaseCode);
+    const gooFilterSrc = stripComments(
+        existsSync(resolve(ROOT, GOO_FILTER))
+            ? readFileSync(resolve(ROOT, GOO_FILTER), "utf8")
+            : "",
+    );
+    const gooGraphPresent =
+        /feColorMatrix/.test(gooFilterSrc) && /dock-morph-goo/.test(gooFilterSrc);
+    assert(
+        "M5 — the showcase references the deterministic SVG-goo bridge by id (filter: url(#dock-morph-goo))",
+        referencesGoo,
+    );
+    assert(
+        "M5 — the unified GooFilter.vue carries the deterministic dock-morph-goo graph (feColorMatrix)",
+        gooGraphPresent,
+    );
 
     return { facts, violations };
 }

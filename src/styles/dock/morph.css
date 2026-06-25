@@ -76,8 +76,20 @@
         --dock-reveal-blur: 0px; /* resting: CRISP — no own-pixel self-blur */
     }
     .glass-dock[data-morphing] {
-        --dock-reveal-blur: 3px; /* the transient decongest bloom — mid-morph only */
-        filter: blur(calc(var(--dock-reveal-blur) * (1 - var(--dock-expand-t, 1))));
+        /* BD.W-DOCK-CORE (A4) — the blur DIAL-BACK. The peak drops 3px → 1.25px AND the
+           decay is FRONT-LOADED: the `clamp(0, (0.5 - expand-t)/0.5, 1)` ramp drives the
+           blur 1.25px → 0 as expand-t crosses 0 → 0.5, then HOLDS 0 for the back half — a
+           brief decongest FLASH, crisp by the morph's midpoint (the icons never read soft
+           through the slow grow). The resting self-blur stays 0px (above, untouched). The
+           9px BACKDROP blur (the material) is untouched — only the OWN-pixel self-blur is
+           dialed. PRM → 0 (the carve below). */
+        --dock-reveal-blur: 1.25px; /* the transient decongest bloom — mid-morph only */
+        filter: blur(
+            calc(
+                var(--dock-reveal-blur) *
+                    clamp(0, calc((0.5 - var(--dock-expand-t, 1)) / 0.5), 1)
+            )
+        );
     }
 
     /* The morphing root chrome — background / border-color interpolate between the
@@ -326,6 +338,27 @@
         margin-inline-start: 0;
     }
 
+    /* BD.W-DOCK-CORE (A5) — the collapsed persistent pill centers its single glyph on
+       BOTH axes (the empty-summary case where the #persistent control IS the collapsed
+       circle). The `--dock-control-safe-inset` padding (background-clip: content-box) must
+       not shift the glyph off the pill's geometric center — `place-items: center`
+       belt-and-braces both axes so the shrunken icon reads dead-center (A5 "icons in the
+       SHRUNKEN state are NOT ALIGNED"). */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent {
+        display: grid;
+        place-items: center;
+    }
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
+        place-self: center;
+    }
+    /* BD.W-DOCK-CORE (A5) — floor the collapsed glyph at the 16px-min the rail glyph
+       carries (never a sliver inside an inline-flex column). */
+    .glass-dock.collapsed .dock-persistent svg,
+    .glass-dock.collapsed .dock-layer--summary svg {
+        min-width: 1rem;
+        min-height: 1rem;
+    }
+
     /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.
        The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
        root transition above, so this hover scale settles on the SAME spring curve
@@ -383,117 +416,14 @@
             box-shadow var(--duration-fast) var(--ease-standard);
     }
 
-    /* AQ.W3 §W3.1b — open-descendant surface response. When a dock-hosted
-       trigger (`[data-state="open"]`) is open, the dock root holds its elevated
-       read natively (no consumer JS). Idempotent with `[data-held]` above (same
-       floating paint, different trigger). Decorative; `:has()` Baseline Widely. */
-    .glass-dock:has([data-state="open"]) {
-        /* AX.W55 — same oklab tint wrapper as `[data-held]` (zero-delta at rest). */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-floating, var(--glass-bg-resting)),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        border-color: var(--glass-border-floating, var(--glass-border-resting));
-    }
+    /* BD.W-DOCK-CORE (A7) — the whole-plate open-descendant recolor is DELETED (clean
+       break, no alias). HEAD repainted the ENTIRE dock plate to the floating tier when ANY
+       descendant overlay opened (a dropdown/select/popover) — 44%α warm-cream → 80.8%α
+       floating, the user's "a dropdown changes the color of the ENTIRE dock" bug. A
+       dropdown opening now leaves the dock plate INVARIANT; the open affordance is
+       TRIGGER-scoped (the trigger's own `[aria-expanded]`/`[data-state=open]` active-fill
+       in dock-controls/triggers.css). The `[data-held]` (slider-drag) lift above is KEPT —
+       a legitimate held-cursor cue, not the bug. */
 
-    /* ── Adaptive legibility: SELF-ENGAGE the dock over a light backdrop by default
-       (AZ.W-ADAPTIVE-AUTO Arm 1 — the literal G2 surface; "Glass dock over VERY
-       LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
-       The dock floats over WHATEVER the consumer painted — frequently a light/near-
-       white app surface (the canonical G2 case the user reported). AY.W-A11Y-PERF
-       O-1 set `--glass-backdrop: light` on the dock's OWN root (shell.css) intending
-       a self-darken, but CSS style queries NEVER self-match (the `@container
-       style()` block below reads an ANCESTOR — verified on Chrome 148), so the
-       self-declaration was a NO-OP. This `:where(.glass-dock)` rule is the genuine
-       UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
-       re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
-       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers (which compose
-       the oklab tint AT THE ELEMENT — the substitution-vs-inheritance-safe targets)
-       darken toward warm-ink in lockstep. `--dock-fg-on-aurora` re-points to the
-       warm-ink here too — ONE reconciled path, the foreground twin folded in (it
-       reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
-       sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
-       0%` on the dock root. The morph-root interp (`.glass-dock:not(.vertical)`
-       above) stays `color-mix(in srgb …)` for the transition — the adaptive darken
-       rides its RESTING endpoint (`--glass-bg-dock`), the in-flight morph frames are
-       sub-perceptual (the ratified resting-endpoint-only default). The muted body
-       register lifts to the full warm-ink under the engaged plate (the muted L40
-       tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
-       plate TOWARD muted's own luminance; the low-contrast muted register is
-       inappropriate over a busy glass plate, so it resolves to the legible dark
-       ink, which clears ~10:1). */
-    :where(.glass-dock) {
-        --glass-tint-source: var(--glass-tint-ink);
-        /* BC.W-ADAPTIVE-RECONCILE — the dock JOINS the continuous observer driver (the
-           literal G2 surface: "darken DYNAMICALLY like iOS 27"). The dock's own
-           `useGlassBackdropLuminance` observer samples the threaded `:background-canvas`
-           (aurora/blob) and WRITES `--glass-backdrop-luma`; this clamp READS it and lerps
-           the plate from the warm-cream floor toward the ≤24% AA ceiling as the field
-           brightens past the knee — deepening over a bright bleed, lifting translucent over
-           a dark trough (the SAME clamp the content/overlay tiers get — ONE axis/driver/
-           signal; the discrete `@container` bucket RETIRED). Calm (luma ≤ knee) → floor. */
-        --glass-tint-strength: clamp(
-            var(--glass-tint-strength-floor),
-            calc(
-                var(--glass-tint-strength-floor) +
-                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
-            ),
-            var(--glass-tint-strength-aa)
-        );
-        --dock-fg-on-aurora: var(--glass-tint-ink);
-        --muted-foreground: var(--foreground);
-    }
-
-    /* The ancestor-querying `@container` block KEPT — it reaches the DESCENDANT
-       nested-glass surfaces inside a dock when a consumer marks `--glass-backdrop:
-       light` on the dock's ancestor (the self-engage above re-points only the dock
-       root's own inheriting tokens; a consumer's explicit ancestor bucket still
-       cascades to nested glass through this block). */
-    @container style(--glass-backdrop: light) {
-        .glass-dock {
-            --glass-tint-source: var(--glass-tint-ink);
-            --glass-tint-strength: var(--glass-tint-strength-aa);
-            --dock-fg-on-aurora: var(--glass-tint-ink);
-        }
-    }
-
-    /* AX.W55 — the `contrast-color()` flip for the dock control foreground (Chrome
-       147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
-       declarative bucket above already carries AA on all engines (it darkens the dock
-       plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
-       floor). On a supporting engine `contrast-color()` REFINES the control ink,
-       anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
-       bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
-       DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
-       still-light dock plate), so the anchor is the light surface, matching the rung
-       refinement in glass.css. The bucket is the floor; this is the native pick. */
-    @supports (color: contrast-color(white)) {
-        /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
-           progressive enhancement only — the declarative darken is the AA floor. */
-        :where(.glass-dock) {
-            --dock-fg-on-aurora: contrast-color(var(--card));
-            --muted-foreground: contrast-color(var(--card));
-        }
-        @container style(--glass-backdrop: light) {
-            .glass-dock {
-                --dock-fg-on-aurora: contrast-color(var(--card));
-            }
-        }
-    }
 }
 
-/* BB.W-LIQUID-REVEAL — the dock-expand bloom beat's blur-settle is OFF under
-   `prefers-reduced-motion: reduce` (the vestibular floor): a reduced-motion dock reads
-   crisp at every state, no in-between blur frames.
-   BC.W-DOCK-SHRINK-BLUR — the self-blur is now gated to `[data-morphing]`, so the PRM
-   carve zeroes it on the ARMED scope too (specificity 0,2,0) — a PRM dock that briefly
-   arms `[data-morphing]` carries no 3px bloom; the resting `.glass-dock` is already
-   crisp by the re-gate. */
-@media (prefers-reduced-motion: reduce) {
-    .glass-dock,
-    .glass-dock[data-morphing] {
-        --dock-reveal-blur: 0px;
-    }
-}

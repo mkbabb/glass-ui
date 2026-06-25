@@ -48,7 +48,24 @@ defineEmits<{ "update:paused": [value: boolean] }>();
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
-const renderer = useGooDotMatrix(canvasRef, { config });
+// BD.W-VIZ-BROKEN-FIX D2 — forward a LIVE config Proxy (the GooBlob `renderConfig` idiom).
+// The renderer captures `config` BY REFERENCE and reads `config.variant`/`.dotPixelSize`/
+// `.field.*` per-frame; the prior bare `{ config }` pass-through handed it the destructured
+// prop, but the story minted a FRESH `{ ...config }` object each compute, so the captured
+// reference was forever stale (the "totally broken" dead-config defect). The Proxy forwards
+// every reflection to the live `config` prop, so a variant/interactive toggle reaches the
+// loop with NO re-feed. `config` is the destructured prop (DEFAULT_GOO_DOT_CONFIG default).
+const renderConfig = new Proxy({} as GooDotConfig, {
+    get: (_t, key) => Reflect.get(config, key),
+    has: (_t, key) => Reflect.has(config, key),
+    ownKeys: () => Reflect.ownKeys(config),
+    getOwnPropertyDescriptor: (_t, key) =>
+        Reflect.getOwnPropertyDescriptor(config, key),
+});
+const renderer = useGooDotMatrix(canvasRef, { config: renderConfig });
+
+// Wake a parked loop on a config edit (the blob paletteStops-watcher precedent).
+watch(() => config, () => renderer.wake(), { deep: true });
 
 // Drive the substrate pause/resume from the declarative `paused` prop.
 watch(

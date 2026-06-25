@@ -47,6 +47,13 @@ const PERIMETER_RUNGS = [
     "glass-border-dock",
 ];
 const PERIMETER_ALPHA_CEILING = 5; // percent
+// BD.W-NAV-DOCK-FIX (S2) — the DOCK perimeter is the ONE rung that needs a stronger
+// warm-ink silhouette: at 4% the dock chrome read as gray-glass with no edge over the
+// warm field (the gray-glass defect). The dock band is [6%, 8%] warm-ink (the W3
+// silhouette floor ≥6% + the shipped 8% cap) — STILL `--foreground` (warm-not-grey),
+// just a readable hairline, NOT a dark D2 black bar (the bar is a DARK omnidirectional
+// ring; this is a warm key-lit silhouette edge). The other 5 rungs keep the ≤5% ceiling.
+const DOCK_ALPHA_BAND = [6, 8]; // percent — the BD dock-silhouette warm-ink band.
 const RIM_TOP_MIN_ALPHA = 0.3; // the bright catch-light floor (apple-ios27.md §1.3)
 const UNDER_SHADOW_ALPHA_CEILING = 6; // the sanctioned bottom warm under-shadow
 
@@ -75,6 +82,16 @@ export function detectPerimeter(glassTokensRaw) {
             violations.push(`B1: --${name} is not a 'color-mix(in srgb, var(--foreground) N%, transparent)' — the warm-not-grey identity must hold (BA.W-NO-GRAY): '${m[1].trim().slice(0, 60)}'`);
             continue;
         }
+        if (name === "glass-border-dock") {
+            // the BD dock-silhouette warm-ink band (W-NAV-DOCK-FIX): [6%, 8%].
+            const [lo, hi] = DOCK_ALPHA_BAND;
+            if (pct < lo) {
+                violations.push(`B1: --${name} is ${pct}% α over --foreground — below the dock-silhouette floor (≥${lo}%); the dock chrome reads as gray-glass with no edge over the warm field (BD.W-NAV-DOCK-FIX)`);
+            } else if (pct > hi) {
+                violations.push(`B1: --${name} is ${pct}% α over --foreground — above the dock-silhouette cap (≤${hi}%); a heavier warm hairline starts to read as the D2 bar`);
+            }
+            continue;
+        }
         if (pct > PERIMETER_ALPHA_CEILING) {
             violations.push(`B1: --${name} is ${pct}% α over --foreground — above the ≤${PERIMETER_ALPHA_CEILING}% ceiling; the perimeter hairline reads as the D2 'black bar'`);
         }
@@ -92,10 +109,28 @@ export function detectDirectional(glassFxRaw, rimRaw) {
     const glassFx = stripCss(glassFxRaw ?? readFile("src/styles/tokens/glass-fx.css"));
     const rim = stripCss(rimRaw ?? readFile("src/styles/glass/rim.css"));
 
-    // --glass-rim-top: a TOP inset (`inset 0 1px 0 ...`) bearing a white catch-light.
+    // BD.W-GLASS-KEY-EDGE — the two-stop directional rim is now KEY-DRIVEN: the top inset
+    // offset is the `--glass-key-lit-y` token (default `1px` — the upper-right key), the
+    // bottom inset is `--glass-key-shade-y` (default `-1px`). The geometry is byte-
+    // compatible (the catch-light still rides the TOP edge, the under-shadow the BOTTOM)
+    // but parameterized so a consumer can move the key with ZERO new layer. Accept BOTH
+    // the literal `inset 0 1px 0 …` and the `inset 0 var(--glass-key-lit-y) 0 …` token
+    // form, AND assert the lit-y/shade-y defaults carry the correct sign (top +, bottom −)
+    // so the catch-light geometry is preserved.
+    const litYDefault = (glassFx.match(/--glass-key-lit-y:\s*(-?[\d.]+px)/) || [])[1] ?? null;
+    const shadeYDefault = (glassFx.match(/--glass-key-shade-y:\s*(-?[\d.]+px)/) || [])[1] ?? null;
+    facts.keyLitY = litYDefault;
+    facts.keyShadeY = shadeYDefault;
+    const litYPositive = litYDefault != null && Number.parseFloat(litYDefault) > 0;
+    const shadeYNegative = shadeYDefault != null && Number.parseFloat(shadeYDefault) < 0;
+
+    // --glass-rim-top: a TOP inset bearing a white catch-light (literal or key-driven).
     const topM = glassFx.match(/--glass-rim-top:\s*([^;]+);/);
     facts.rimTop = topM ? topM[1].trim() : null;
-    const topIsTopInset = facts.rimTop && /inset\s+0\s+1px\s+0/.test(facts.rimTop);
+    const topIsTopInset =
+        facts.rimTop &&
+        (/inset\s+0\s+1px\s+0/.test(facts.rimTop) ||
+            (/inset\s+0\s+var\(--glass-key-lit-y\)\s+0/.test(facts.rimTop) && litYPositive));
     const topAlphaM = facts.rimTop && facts.rimTop.match(/hsl\(\s*0\s+0%\s+100%\s*\/\s*([\d.]+)\s*\)/);
     const topAlpha = topAlphaM ? Number(topAlphaM[1]) : null;
     facts.rimTopAlpha = topAlpha;
@@ -111,7 +146,10 @@ export function detectDirectional(glassFxRaw, rimRaw) {
     // warm under-shadow at ≤6%.
     const botM = glassFx.match(/--glass-rim-bottom:\s*([^;]+);/);
     facts.rimBottom = botM ? botM[1].trim() : null;
-    const botIsBottomInset = facts.rimBottom && /inset\s+0\s+-1px\s+0/.test(facts.rimBottom);
+    const botIsBottomInset =
+        facts.rimBottom &&
+        (/inset\s+0\s+-1px\s+0/.test(facts.rimBottom) ||
+            (/inset\s+0\s+var\(--glass-key-shade-y\)\s+0/.test(facts.rimBottom) && shadeYNegative));
     const botPct = facts.rimBottom ? parseForegroundMixPct(facts.rimBottom) : null;
     facts.rimBottomPct = botPct;
     if (!facts.rimBottom) {
@@ -129,8 +167,14 @@ export function detectDirectional(glassFxRaw, rimRaw) {
     if (!facts.materialRim) {
         violations.push("B2: --glass-material-rim not found in glass/rim.css");
     } else {
-        const composesTop = /inset\s+0\s+1px\s+0/.test(facts.materialRim) || /var\(--glass-rim-top\)/.test(facts.materialRim);
-        const composesBottom = /var\(--glass-rim-bottom\)/.test(facts.materialRim) || /inset\s+0\s+-1px\s+0/.test(facts.materialRim);
+        const composesTop =
+            /inset\s+0\s+1px\s+0/.test(facts.materialRim) ||
+            /var\(--glass-rim-top\)/.test(facts.materialRim) ||
+            (/inset\s+0\s+var\(--glass-key-lit-y\)\s+0/.test(facts.materialRim) && litYPositive);
+        const composesBottom =
+            /var\(--glass-rim-bottom\)/.test(facts.materialRim) ||
+            /inset\s+0\s+-1px\s+0/.test(facts.materialRim) ||
+            (/inset\s+0\s+var\(--glass-key-shade-y\)\s+0/.test(facts.materialRim) && shadeYNegative);
         if (!composesTop) violations.push(`B2: --glass-material-rim does not compose the TOP catch-light (inset 0 1px 0 … / var(--glass-rim-top)): '${facts.materialRim.slice(0, 80)}'`);
         if (!composesBottom) violations.push(`B2: --glass-material-rim does not compose the BOTTOM under-shadow (var(--glass-rim-bottom) / inset 0 -1px 0 …): '${facts.materialRim.slice(0, 80)}'`);
     }
@@ -219,8 +263,12 @@ export function detectDock(shellRaw, glassTokensRaw) {
     }
     const dockPctM = glassTokens.match(/--glass-border-dock:\s*([^;]+);/);
     facts.dockBorderPct = dockPctM ? parseForegroundMixPct(dockPctM[1].trim()) : null;
-    if (facts.dockBorderPct !== null && facts.dockBorderPct > 4) {
-        violations.push(`B5: --glass-border-dock is ${facts.dockBorderPct}% — the dock perimeter must be ≤4% (the band reads the corrected token source)`);
+    // BD.W-NAV-DOCK-FIX (S2) — the dock perimeter is the BD silhouette band [6%, 8%]
+    // warm-ink (the gray-glass cure; B1 owns the same band). The dock reads the corrected
+    // token source; a value outside the band (a regress to 4% gray-glass OR a heavy bar) reds.
+    const [dockLo, dockHi] = DOCK_ALPHA_BAND;
+    if (facts.dockBorderPct !== null && (facts.dockBorderPct < dockLo || facts.dockBorderPct > dockHi)) {
+        violations.push(`B5: --glass-border-dock is ${facts.dockBorderPct}% — the dock perimeter must sit in the BD silhouette band [${dockLo}%, ${dockHi}%] warm-ink (the gray-glass cure, BD.W-NAV-DOCK-FIX)`);
     }
 
     // the dock box-shadow leads with the directional pair, NOT --glass-edge-light.
@@ -244,10 +292,19 @@ export function selfTest() {
     if (detectPerimeter(":root { --glass-border-resting: color-mix(in srgb, var(--foreground) 16%, transparent); }").violations.length === 0) {
         fails.push("self-test B1: a planted 16% --glass-border-resting did NOT red");
     }
-    // B1: a clean ≤5% rung set passes its alpha bound.
-    const cleanRungs = PERIMETER_RUNGS.map((n) => `--${n}: color-mix(in srgb, var(--foreground) 4%, transparent);`).join("\n");
+    // B1: a clean rung set passes its alpha bound — the 5 perimeter rungs ≤5%, the dock
+    // in the BD silhouette band [6%, 8%] (the dock-floor self-test arm).
+    const cleanRungs = PERIMETER_RUNGS.map((n) => {
+        const pct = n === "glass-border-dock" ? 8 : 4;
+        return `--${n}: color-mix(in srgb, var(--foreground) ${pct}%, transparent);`;
+    }).join("\n");
     if (detectPerimeter(`:root {\n${cleanRungs}\n}`).violations.length !== 0) {
-        fails.push("self-test B1: a clean 4% rung set unexpectedly red");
+        fails.push("self-test B1: a clean rung set (5×4% + dock 8%) unexpectedly red");
+    }
+    // B1: a dock that regresses to 4% (gray-glass) reds the dock-silhouette floor.
+    const dockRegress = PERIMETER_RUNGS.map((n) => `--${n}: color-mix(in srgb, var(--foreground) 4%, transparent);`).join("\n");
+    if (!detectPerimeter(`:root {\n${dockRegress}\n}`).violations.some((v) => v.includes("glass-border-dock"))) {
+        fails.push("self-test B1: a dock regress to 4% (gray-glass) did NOT red the silhouette floor");
     }
     // B2: a stripped --glass-rim-top reds.
     if (detectDirectional("", "").violations.length === 0) {

@@ -56,14 +56,27 @@
     .glass-dock-frame {
         display: contents;
     }
-    .glass-dock-frame[data-has-rail] {
+    .glass-dock-frame[data-has-rail],
+    /* BD.W-DOCK-CORE (II.2 — F-1) — a SPLITTABLE dock frame is ALSO a non-clipping
+       positioning context: the fission island + goo neck render as frame siblings of
+       `.glass-dock` and must paint OUTSIDE the dock's `contain: paint` clip box (beside/
+       above/below the source pill). Same escape the rail uses. */
+    .glass-dock-frame[data-splittable] {
         display: inline-flex;
         position: relative;
-        /* No containment, no overflow, no blur — the WHOLE point: the stack must paint
-           beyond the dock box. The wrapper shrink-wraps the dock (inline-flex) so its box
-           == the dock box and the rail anchors to the true edge. */
+        /* No containment, no overflow, no blur — the WHOLE point: the stack/island must
+           paint beyond the dock box. The wrapper shrink-wraps the dock (inline-flex) so its
+           box == the dock box and the rail/island anchors to the true edge. */
+        /* BD.W-DOCK-CORE (II.2 — F-1) — the ISLAND REACH resolved on the FRAME (the common
+           ancestor) so BOTH the pieces (inside the dock) AND the island/neck (frame
+           siblings) read ONE reach: the cluster lands exactly where the island plate
+           materializes. A `var(--dock-island-reach, 9rem)` form so a consumer ancestor
+           (a gallery tile) can retune the detach distance via a `:root`/ancestor override
+           — the frame re-PUBLISHES it (not a hard set that would shadow the override). */
+        --dock-island-reach: var(--dock-island-reach-override, 9rem);
     }
-    .glass-dock-frame[data-has-rail].vertical {
+    .glass-dock-frame[data-has-rail].vertical,
+    .glass-dock-frame[data-splittable].vertical {
         flex-direction: column;
         align-items: stretch;
     }
@@ -195,9 +208,9 @@
         transition:
             opacity var(--duration-fast) var(--ease-out)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
-            scale var(--duration-normal) var(--spring-dock, var(--ease-out))
+            scale var(--spring-dock-duration, var(--duration-normal)) var(--spring-dock, var(--ease-out))
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
-            translate var(--duration-normal) var(--spring-dock, var(--ease-out))
+            translate var(--spring-dock-duration, var(--duration-normal)) var(--spring-dock, var(--ease-out))
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
             filter var(--duration-fast) var(--ease-out)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),

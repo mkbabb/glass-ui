@@ -106,8 +106,21 @@ export const CSS_MONOLITHS = {
             // @import-ed IMMEDIATELY AFTER surfaces.css (same @layer components,
             // same source order — the dist is byte-isomorphic).
             "control-surfaces.css",
+            // BD.W-TAB-IOS-CAPSULE — the ONE shared .glass-capsule glassy register
+            // (the warm-transmissive lifted lozenge + recessed channel every consumer
+            // COMPOSES instead of re-forking), @import-ed AFTER control-surfaces.css
+            // (it composes the control REST register the prior partial mints) and
+            // BEFORE surface-axis.css; same @layer components, source-order-after.
+            "glass-capsule.css",
             "surface-axis.css",
             "reveal.css",
+            // BD.W-LIQUID-ENTRANCE-GENERAL — the universal liquid-enter mount recipe
+            // (.glass-reveal's four coupled channels promoted to a mount @keyframes so
+            // a v-if-born-at-open surface ANIMATES), @import-ed IMMEDIATELY AFTER
+            // reveal.css (it lifts the reveal register's channels into a mount keyframe)
+            // and BEFORE deep.css; same @layer, source-order-after so it rides the
+            // reveal recipe it promotes.
+            "liquid-enter.css",
             // BB.W-DEEP-GLASS — the OPT-IN .glass-deep decoration (a deep blur
             // token re-point ON a base rung, the .glass-opaque precedent), homed
             // after surfaces/surface-axis (the same @layer components, source-

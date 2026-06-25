@@ -82,19 +82,19 @@
        both engine paths are timing-IDENTICAL: the FLIP fallback (via
        `--dock-motion-resize`), the native View-Transition group (its
        `animation-timing-function`), AND the runtime SpringProgress driver
-       (AU.W8.3) consume this same `(0.32, 0.7)` source curve. Retires the AQ.W6
+       (AU.W8.3) consume this same source curve. Retires the AQ.W6
        fork where the VT path ran `--vt-ease` (apple-spring, +27.5% overshoot)
        while the FLIP ran the snappy spring. `--vt-ease` still defaults the
        other VT recipes (`.gl-list-item`).
 
-       AU.W8 — RETARGET snappy → dock. `--spring-snappy` (ζ=0.65, +6.8%) read as
-       mechanical: a stiff plateau at ~48% with too little overshoot to feel
-       alive ("not iOS-smooth"). AW.W2 then retuned the dock spring to the
-       iOS-control register: `--spring-dock` ((0.32, 0.7), ~+4.6%) settles snappy
-       with a restrained overshoot — the felt iOS dock morph, off the prior
-       playful +18.5% register. The runtime driver's DOCK_SPRING const MIRRORS the
-       (0.32, 0.7) PRESETS row, so the CSS token and the JS-driven morph are
-       bit-identical. */
+       BD.W-DOCK-CORE — the WEIGHTY iOS-27 re-tune. `--spring-dock` is now the
+       slow inertial gooey-morph register: (0.56s, ζ=0.58), an audacious overshoot
+       ~+11% then a deliberate settle over the 0.6s analytic clock — the
+       liquid-weight law (collapse/expand + V↔H + fission all share it). The prior
+       tight (0.32, 0.7) near-critical snap (~+4.6%) is retired. The runtime
+       driver's DOCK_SPRING const DERIVES from the `dock` PRESETS row via
+       `springPreset("dock")` (the no-second-authority fence — ONE table row, the
+       CSS token + the JS-driven morph + the const all flow from it). */
     --dock-resize-spring: var(--spring-dock);
 
     /* AT.W7-dock-b — dock-control press micro-feedback spring. A TRANSFORM-ONLY

@@ -107,7 +107,13 @@ function detectB2() {
     // The recoil writes --stretch (the squish) onto the piece; the CSS reads it
     // reciprocally on scale (compositor — NOT a layout property).
     facts.drivesStretch = /setProperty\(\s*["']--stretch["']/.test(ts) || /\.stretch\.value/.test(ts);
-    facts.scaleReadsStretch = /scale:\s*var\(--stretch/.test(css);
+    // BD folds the recoil --stretch squish with --piece-progress in a `scale: calc(...)`
+    // reciprocal pair (X = stretch × f, Y = (1/stretch) × f) — the volume-preserving
+    // requirement is met when --stretch appears in a `scale:` value BOTH as a forward
+    // factor AND inside a `1/...--stretch` reciprocal denominator (not the bare
+    // `scale: var(--stretch ...)` idiom).
+    facts.scaleReadsStretch =
+        /scale:\s*[^;]*var\(\s*--stretch[^;]*1\s*\/\s*var\(\s*--stretch/.test(css);
     // The anti-evasion bite: a recoil animating a layout axis (inline-size/inset/width/
     // height) reds B2 + the no-layout floor.
     facts.recoilAnimatesLayout =

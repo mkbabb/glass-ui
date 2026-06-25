@@ -166,12 +166,26 @@ function run() {
     if (deadArbitrary) {
         violations.push(`PagerDots.vue carries the var-in-arbitrary non-emit class \`${deadArbitrary[0]}\` — it emits NO CSS; drive the morph through a scoped [data-active] rule instead`);
     }
-    // The active emphasis must emit a REAL morph (width or height) in a scoped
-    // [data-active]::before rule in the emitted CSS.
-    const activeMorph = css.match(/\.pager-dot\[data-active\](?:\[[^\]]*\])?\s*:{1,2}before\s*\{([^}]*(?:width|height)\s*:[^}]*)\}/i);
+    // The active emphasis must emit a REAL morph in the emitted CSS — NOT a dead
+    // arbitrary class. BD (the goo-morph triumvirate / motion-canon P5) RE-EXPRESSED the
+    // active-dot emphasis: the carousel/deck dot now goo-morphs dot→dot like the Google-
+    // deck worm via a true BARBELL (bodyA + a concave neck + bodyB) wrapped in the SVG goo
+    // filter. The morph is COMPOSITOR-ONLY: the bodies deform on `scale` (the useLiquidFlex
+    // `--stretch` reciprocal, volume-preserving) + travel on `transform: translate` —
+    // NEVER an animated `width`/`height` (motion-canon P5, the layout-animation ban). So
+    // the prior `[data-active]::before { width }` morph is RETIRED by design (an animated
+    // width is now FORBIDDEN). The assert re-points at the NEW emitted morph: the
+    // `.goo-body` barbell carries the emitted `scale: …var(--stretch)…` reciprocal squish
+    // (the real compositor-only worm morph), driven by the JS `--stretch` write on every
+    // active change. The `--pager-dot-active` token + the goo-layer also emit (the rail).
+    const activeMorph = css.match(
+        /\.goo-body[^{]*\{[^}]*scale\s*:[^}]*var\(--stretch[^}]*\}/i,
+    );
     facts.activeMorphEmitted = Boolean(activeMorph);
     if (!activeMorph) {
-        violations.push("no emitted `.pager-dot[data-active]::before { width|height: … }` morph in dist/glass-ui.css — the active emphasis must be a REAL emitted morph, not a dead arbitrary class");
+        violations.push(
+            "no emitted compositor-only goo-morph (`.goo-body { scale: …var(--stretch)… }` barbell reciprocal squish) in dist/glass-ui.css — the active emphasis must be a REAL emitted morph (the BD goo-worm; motion-canon P5 forbids an animated width/height), not a dead arbitrary class",
+        );
     }
 
     const status = violations.length === 0 ? "pass" : "fail";

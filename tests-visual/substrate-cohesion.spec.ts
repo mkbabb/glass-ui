@@ -228,12 +228,21 @@ function peakChromaOklch(
 }
 
 /**
- * Count of "ink" pixels over the INTERIOR INSET (differ-from-bg by >= the hairline
- * threshold). The interior inset excludes the rounded-card corner pixels (dark,
- * outside the clip — IDENTICAL between the two recession instances, so they would
- * mask the lattice difference). At 0.4× alpha many edge pixels fall BELOW the
- * threshold entirely, so the painted-pixel COUNT cleanly separates the recessed
- * field (fewer surviving painted pixels) from the full field.
+ * The "ink" of the field over the INTERIOR INSET — the SUMMED diff-from-bg INTENSITY
+ * across painted pixels (NOT a binary above-threshold COUNT). The interior inset
+ * excludes the rounded-card corner pixels (dark, outside the clip — IDENTICAL between
+ * the two recession instances, so they would mask the lattice difference).
+ *
+ * THE RECESSION IS AN ALPHA EFFECT, NOT A COVERAGE EFFECT (AY.W-COHERE / BD W-CUT
+ * reconcile — live-verified at :5173). `opacityCeiling` scales every painted pixel's
+ * ALPHA, so a 0.4-ceiling lattice composites toward the card bg at 0.4× the strength —
+ * the SAME nodes/lines, each PROPORTIONALLY FAINTER. A binary above-threshold count
+ * barely moves (a 0.4-alpha line still crosses a hairline INK_DIFF_THRESHOLD over the
+ * cream card, so the count-ratio reads ~0.76 — above the 0.62 bar, a false-FAIL),
+ * while the SUMMED intensity tracks the alpha cleanly (live: full sumDiff 676k vs dim
+ * 278k = ratio 0.41 over the real cream composite). So `ink` is the alpha-faithful
+ * intensity integral, the true recession witness; INK_DIFF_THRESHOLD only floors out
+ * the JPEG/AA noise so a non-painted pixel contributes zero.
  */
 function inkCoverage(png: PNG, bg: [number, number, number]): number {
     const { width: w, height: h, data } = png;
@@ -241,13 +250,24 @@ function inkCoverage(png: PNG, bg: [number, number, number]): number {
     const x1 = Math.ceil(w * (1 - INTERIOR_INSET));
     const y0 = Math.floor(h * INTERIOR_INSET);
     const y1 = Math.ceil(h * (1 - INTERIOR_INSET));
-    let n = 0;
+    const bgLum = 0.299 * bg[0] + 0.587 * bg[1] + 0.114 * bg[2];
+    let sum = 0;
     for (let y = y0; y < y1; y++) {
         for (let x = x0; x < x1; x++) {
-            if (diffFromBg(data, (y * w + x) * 4, bg) >= INK_DIFF_THRESHOLD) n++;
+            const i = (y * w + x) * 4;
+            if (diffFromBg(data, i, bg) < INK_DIFF_THRESHOLD) continue; // noise floor
+            // The DARK-ink LUMINANCE DEFICIT — how much darker than the cream card this painted
+            // pixel is. The constellation's lattice lines/nodes are DARK ink; `opacityCeiling`
+            // scales their alpha, so a 0.4-ceiling node composites 0.4× toward the card =
+            // 0.4× the luminance deficit (live-verified darkRatio 0.39). The BRIGHT-side halo
+            // pixels (near-cream, from AA/glow) are compositing noise whose diff-from-modal-bg
+            // can INVERT under a backdrop shift (the 0.86 false-pass) — excluding them (only
+            // DARKER-than-bg ink counts) makes the witness alpha-faithful AND screenshot-stable.
+            const lum = 0.299 * data[i]! + 0.587 * data[i + 1]! + 0.114 * data[i + 2]!;
+            if (lum < bgLum) sum += bgLum - lum;
         }
     }
-    return n;
+    return sum;
 }
 
 /**
@@ -388,6 +408,11 @@ test.describe("substrate-cohesion: G-RECESSION (ONE recession contract)", () => 
         page,
     }) => {
         await page.goto(PI_TARGETS.constellation.path);
+        // The recession is an ALPHA effect (`opacityCeiling` scales each painted pixel's alpha) —
+        // measured by `inkCoverage`'s DARK-ink luminance deficit (below), the bare-canvas
+        // screenshot's dark lattice reads the alpha faithfully (live-verified darkInkRatio 0.40
+        // on real Metal — BD W-CUT reconcile; the prior binary-COVERAGE metric false-PASSED at
+        // ~0.93 because dimmer lines still crossed a hairline threshold).
         const full = page
             .locator('[data-testid="constellation-recession-full"] canvas')
             .first();

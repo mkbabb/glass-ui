@@ -20,6 +20,7 @@ import { resolve } from "node:path";
 export const DOCK_PARTIAL_ORDER = [
     "shell.css",
     "morph.css",
+    "adaptive-legibility.css",
     "density.css",
     "layers.css",
     "layer-group.css",

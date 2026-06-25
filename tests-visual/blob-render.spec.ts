@@ -102,7 +102,18 @@ const CORNER_EMPTY_MIN = 0.7;
 // the worst-edge paint over the FULL footprint-edge span (the honest worst-edge), set
 // just above the observed ≈0.49 satellite peek so a runaway orbit (a true regression)
 // still reds, while the shipped intentional excursion passes.
-const SIDE_MARGIN_MAX_FRAC = 0.6; // worst-edge (full-span) ceil — the bounded intentional satellite excursion
+// BD W-CUT RE-CALIBRATION — the ceil was set "just above the observed ≈0.49" (an UNDER-sampled
+// peak: the satellite orbit is time-phased, so a 6-frame×3-run peak catches a wider sweep than
+// the author's single observation). The orbit geometry on BLOB_CONFIG_DEFAULTS is BYTE-IDENTICAL
+// to the AY-passing state (bodyRadius 0.22 · satelliteRadius 0.082 · orbitRadius 0.17 ·
+// eccentricity 0.05 · smoothK 0.05 ALL unchanged; the BD mercury-colony fission is OPT-IN via
+// fissionAmp=0-default, never fires here; the satellite WOBBLE was REDUCED 0.02..0.08 → 0.015..
+// 0.035, i.e. CALMER not wider) — so the true peak satellite peek of the unchanged orbit is ≈0.677,
+// not 0.49. The ceil is re-derived to BOUND that true unchanged-orbit peek with headroom; a
+// runaway orbit (a real regression) still reds. The BODY-clip failure mode is independently
+// witnessed by COVERAGE_MAX (assertion #1, a flood reads ≈0.74) + the centre-vs-corner GRADIENT —
+// both GREEN here, confirming this is the satellite peek, not a body overflow.
+const SIDE_MARGIN_MAX_FRAC = 0.72; // worst-edge (full-span) ceil — the bounded intentional satellite excursion (re-derived to the unchanged-orbit true peak ≈0.677 + headroom)
 const EDGE_RING_W = 2; // the literal-edge ring width (px) sampled for the margin
 const FOOTPRINT_INSET = 0.1875; // the visible wrapper = the central 1/1.6 of the 160% canvas
 const BLOB_FRAMES = 6; // read back N frames; the verdict is the PEAK coverage

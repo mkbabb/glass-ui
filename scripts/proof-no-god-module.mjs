@@ -112,6 +112,54 @@ const RATCHET_BASELINES = {
     //     `applyNoise`/`warpModeFor` fan + the `{kind:"smooth"}` arm + the public door
     //     (resolveAtoms/configToAtoms/DEFAULT_ATOMS + the atom types) STAY (the
     //     proof:aurora-atoms-roundtrip source witnesses read them in atoms.ts).
+    //
+    // BD.W-CUT — the BD greenfield build re-grew 19 files past the 500-line bound as
+    // legitimate capability growth (the iOS-27 liquid-dock + procedural-viz + goo +
+    // motion suite). The W-CUT close BOOKS them at their landed count; the EXEMPLAR
+    // carve already LANDED this commit — dot-flow's 994-line useFlowParticles.ts split
+    // into colocated backend leaves (flowSetupWGPU/flowSetupGL/flowSetupGLFlow/
+    // flowGLProgram, all < 500), so it carries NO row. The remaining rows fall in two
+    // buckets:
+    //   (a) GENUINELY IRREDUCIBLE — one cohesive shader-program string or one ordered
+    //       cascade-partial CSS file (splitting breaks the GL/cascade fence):
+    //       metaball.wgsl.ts (the ONE metaball WGSL program), metaball.frag.ts (the ONE
+    //       GL fragment program), flow-field.glsl.ts (the shared GLSL chunk the GL leaves
+    //       both link), liquid-morph.css / property-regs.css / scheme-motion.css /
+    //       fission-bridge.css (ordered @property/@layer cascade partials — a split
+    //       reorders the cascade).
+    //   (b) IN-FLIGHT cluster src owned by a SIBLING P10 lane (the carve is that lane's
+    //       deferred work, not this STRUCTURAL lane's to edit — lane discipline): the
+    //       dock engine (GlassDock.vue, useDockFission.ts, useDockContextSilhouette.ts),
+    //       the glass canvas/luminance (createCanvasLifecycle.ts, useWebGPUCanvas.ts,
+    //       useGlassBackdropLuminance.ts), goo (useBlobSatellites.ts, useGooDotMatrix.ts),
+    //       carousel/pager/tabs SFCs, useBloomUp.ts, api/index.ts.
+    // The MONOTONIC drain holds — each row only DRAINS as its carve lands; a row that
+    // shrinks below its baseline reds (the gate's stale-row guard). No backwards-compat.
+    "styles/glass/liquid-morph.css": 850,
+    "components/custom/dock/GlassDock.vue": 711,
+    "composables/glass/webgl/createCanvasLifecycle.ts": 695,
+    "composables/glass/webgpu/useWebGPUCanvas.ts": 606,
+    "components/custom/dock/composables/useDockFission.ts": 604,
+    "components/ui/carousel/CarouselContent.vue": 577,
+    "styles/tokens/property-regs.css": 566,
+    // BD.W-CUT (P10b reconcile) — +22 lines: the --pager-worm-flow goo-morph dwell
+    // curve relocated HERE from PagerDots.vue (the curve-definition home — a `linear()`
+    // ships in the §2 EASING register, never serialized inline in an SFC; the
+    // proof:animation-coherence inline-literal fix). The matching PagerDots row DRAINS
+    // by the same count (527 → 509) — the move is line-conservative across the pair.
+    "styles/tokens/scheme-motion.css": 579,
+    "styles/dock/fission-bridge.css": 552,
+    "components/custom/dock/composables/useDockContextSilhouette.ts": 551,
+    "composables/glass/useGlassBackdropLuminance.ts": 542,
+    "components/custom/goo-blob/composables/useBlobSatellites.ts": 533,
+    "components/custom/goo-blob/shaders/metaball.wgsl.ts": 529,
+    "components/custom/pager-dots/PagerDots.vue": 509,
+    "components/custom/dot-flow-field/shaders/flow-field.glsl.ts": 517,
+    "components/custom/tabs/SegmentedTabs.vue": 512,
+    "components/custom/goo-blob/shaders/metaball.frag.ts": 510,
+    "components/custom/goo-dot-matrix/composables/useGooDotMatrix.ts": 508,
+    "composables/motion/useBloomUp.ts": 507,
+    "api/index.ts": 505,
 };
 
 let _cliPaths = null;

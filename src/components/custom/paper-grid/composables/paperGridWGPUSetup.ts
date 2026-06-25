@@ -22,8 +22,10 @@ const SHADER_STAGE_FRAGMENT = 0x2;
 export interface PaperGridWGPUSetupDeps {
     canvas: HTMLCanvasElement;
     config: PaperGridConfig;
-    /** The transient pointer cursor in GRID space — re-read each frame (the pointer bulge). */
+    /** The transient pointer cursor in GRID space — re-read each frame (the cursor swirl). */
     getCursor: () => Vec2;
+    /** The spring-eased traveling-wave envelope amplitude (0..1; PRM → 0). */
+    getAmp: () => number;
     /** Demand-gate (the renderer's quiescence layer — substrate-agnostic). */
     shouldContinue: () => boolean;
     /**
@@ -42,7 +44,7 @@ export function createPaperGridWGPUSetup(
     context: GPUCanvasContext,
     format: GPUTextureFormat,
 ) => WebGPUCanvasFrame {
-    const { canvas, config, getCursor, shouldContinue, onFrame } = deps;
+    const { canvas, config, getCursor, getAmp, shouldContinue, onFrame } = deps;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -124,7 +126,7 @@ export function createPaperGridWGPUSetup(
             // The grid scale derives from the backing-store extent so the cell pitch is honest
             // in device px (the Golus derivative reads the actual pixel).
             const viewExtentPx = canvas.height || Math.round(cssH * resolveBudgetDpr());
-            packPaperGridUniforms(scratch, config, timeSec, aspect, viewExtentPx, getCursor());
+            packPaperGridUniforms(scratch, config, timeSec, aspect, viewExtentPx, getCursor(), getAmp());
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 
             const encoder = device.createCommandEncoder({ label: "[PaperGrid] frame" });

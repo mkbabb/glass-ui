@@ -27,31 +27,39 @@ mount). The suffusion preset (`fieldAlpha ≈ 0.12`, large pitch, slow warp, `in
 and any themed colors are DEMO presets (presets-in-consumers — see
 `demo/stories/substrates/presets.ts`); they NEVER enter a library token.
 
-## The three cited techniques (the composition)
+## The cited techniques (the composition)
 
-The viz is the composition of THREE cited techniques on the proven substrate
-(research/viz/paper-grid.md §3):
+The viz composes cited techniques on the proven substrate (research/viz/paper-grid.md §3):
 
 1. **The crisp line — Ben Golus derivative-AA grid distance** (`gridCoverage`). The line
-   coverage is computed from the screen-space DERIVATIVE of the (warped) UV, so a line is
+   coverage is computed from the screen-space DERIVATIVE of the (twisted) UV, so a line is
    exactly N device-pixels wide at ANY DPR/zoom — never the CSS sub-pixel blur. Ben Golus,
    *The Best Darn Grid Shader (Yet)*; Evan Wallace, *Anti-Aliased Grid Shader*. This is the
    "blurry mess" fix.
-2. **The "liquid" — Iñigo Quílez domain warp** (`curlWarp`). The grid is computed not at `uv`
-   but at a WARPED coordinate `g(uv) = uv + warp(uv,t)` — the IQ substitution f(p)→f(g(p)),
-   g(p) = p + h(p) (iquilezles.org/articles/warp/). Because `h` is a smooth LOW-frequency
-   field, adjacent cells warp TOGETHER — the whole sheet bows and flows, never a per-line
-   jitter (the inverse-coherence law: LARGE structures come from LOW spatial frequency).
-3. **WHY liquid not noise — the Bridson divergence-free curl flow**. The warp field IS the
-   2D curl of an fbm potential (Bridson 2007: `∇×ψ = (∂ψ/∂y, −∂ψ/∂x)`, divergence-free BY
-   CONSTRUCTION — the SHARED `curlFBM` chunk). The curl preserves the sheet's local area, so
-   the grid folds and stretches like real fluid advection rather than the source-y bulge a
-   raw fbm gradient produces. A SECOND counter-flowing curl term at a different scale/speed
-   prevents a visible loop (Alex Harri counter-flow).
+2. **The "liquid" — the per-cell TWIST** (`cellTwist`, the shared `waveField` leaf). Each cell
+   ROTATES + shears about its OWN center (a windmill of warped boxes where a traveling Gaussian
+   crest passes, calm square cells elsewhere) — the deformation-gradient model (the C3 cure:
+   the box twists, the lines stay locally straight, never the retired uniform LINE-warp). The
+   crest sweeps along `waveDir`; FOLD C crest-gates the twist floor by the envelope so off-crest
+   cells relax to flat calm paper (a TRAVELING read, not static foil).
+3. **WHY liquid not noise — the Bridson divergence-free curl director**. The per-cell twist
+   direction IS the 2D curl of an fbm potential (Bridson 2007: `∇×ψ = (∂ψ/∂y, −∂ψ/∂x)`,
+   divergence-free BY CONSTRUCTION — the SHARED `curlFBM` chunk), so adjacent cells lean
+   TOGETHER (a flowing read, never per-cell noise).
+4. **The LIT FACE — the height-lit filled cell interior** (BD.W-PAPERGRID-FACE;
+   `cellHeight`/`faceRelief`/`facePlateau`, the shared `waveField` leaf). Each cell paints a
+   filled warm-paper FACE, lit by the SLOPE (`∇H`, central-difference — derivative-free, Safari-
+   safe) of the SAME traveling-wave height the twist rides, against a fixed upper-right cel
+   key-light. A volume-preserving SQUASH retreats the inset at the crest so the face physically
+   INFLATES. A 3-stop warm-DIVERGENT ramp (rose-umber trough → ember-amber → warm-wheat crest,
+   hue ∈ [20,90], keyed on `mix(shade,h)`) carries the technicolor punch. The face composites
+   UNDER the kept creases, premultiplied over transparent. **OPT-IN — `faceAlpha:0` default →
+   the face evaporates → byte-identical line render**; the vivid `PAPER_GRID_PRESET_RIPPLE` lifts
+   it (presets-in-consumers).
 
-The pointer adds a LOCAL Gaussian bulge on top (`cursorBulge`) — a finger pressed into the
-liquid (repel away / attract toward), coherent everywhere else. Velocity drags a directional
-wake; a flick fires a transient ripple impulse (`usePointerVelocityField`).
+The pointer adds a LOCAL Gaussian SWIRL on top (`cursorSwirl`) — a finger twists the cells around
+it (the re-aimed bulge), coherent everywhere else. Velocity drags a directional wake; a flick
+fires a transient ripple impulse (`usePointerVelocityField`).
 
 ## The pinned defaults (SUBTLE + LARGE + evenly-spaced)
 
@@ -75,9 +83,10 @@ wake; a flick fires a transient ripple impulse (`usePointerVelocityField`).
 - **ONE lifecycle leaf** — composes `createGpuSubstrate` over `createCanvasLifecycle` via
   `useGpuSubstrate`/`useWebGPUCanvas`; ZERO scheduling re-fork (offscreen-pause, live-PRM
   freeze, the demand loop all inherited).
-- **ONE math source** — `composables/paperGrid.ts` (pure, node-testable); the WGSL
-  `fs_main` + the GLSL fragment transcribe `potentialFBM`/`curlWarp`/`cursorBulge`/
-  `gridCoverage` line-for-line. `proof:viz-papergrid` clause P3 round-trips JS↔WGSL↔GLSL.
+- **ONE math source** — `composables/paperGrid.ts` (pure, node-testable) + the shared
+  `waveField` leaf; the WGSL `fs_main` + the GLSL fragment transcribe `potentialFBM`/
+  `gridCoverage` + the shared `cellTwist`/`cellHeight`/`faceRelief`/`facePlateau`/`cursorSwirl`
+  line-for-line. `proof:viz-papergrid` clause P3 round-trips JS↔WGSL↔GLSL.
 - **ONE curl source per backend** — the shared `curlFBM` chunk (`flow.glsl.ts` for WebGL2;
   `flow.wgsl.ts` for WebGPU — paper-grid is the FIRST WGSL curl consumer, the booked
   procedural-tail chunk discharged).

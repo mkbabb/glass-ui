@@ -75,20 +75,50 @@ function stripComments(src) {
         .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
 }
 
+// Extract a WGSL function's brace-balanced body by name (e.g. `fn cs_field(...) { … }`).
+// Returns "" when the function is absent. Comment-stripped input expected.
+function extractFnBody(src, fnName) {
+    const sig = new RegExp(`fn\\s+${fnName}\\s*\\(`);
+    const m = sig.exec(src);
+    if (!m) return "";
+    // find the opening brace after the signature.
+    let i = src.indexOf("{", m.index);
+    if (i < 0) return "";
+    let depth = 0;
+    const start = i;
+    for (; i < src.length; i++) {
+        const c = src[i];
+        if (c === "{") depth++;
+        else if (c === "}") {
+            depth--;
+            if (depth === 0) return src.slice(start, i + 1);
+        }
+    }
+    return src.slice(start);
+}
+
 // ── F1: anchored topology, no reseed ────────────────────────────────────────────
 function clauseTopology(over) {
     const viol = [];
     const wgsl = stripComments(
         over?.compute ?? read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts")),
     );
-    if (/\breseed\s*\(/.test(wgsl))
+    // The compute kernel is now DUAL-MODE: `cs_field` is the ANCHORED-LATTICE register (the F1
+    // subject — no advection, no reseed) and `cs_flow` is the AURORA-CURRENT register (the legit
+    // forward-Euler advection of the RE-INVENT flow mode). F1's reseed/advection witnesses are
+    // SCOPED to the cs_field brace-span (a whole-file grep false-trips the legit cs_flow
+    // integrator `pos = pos + v * dt * 60.0`). When cs_field is absent the gate falls back to the
+    // whole file (born-RED pre-split state).
+    const fieldBody = extractFnBody(wgsl, "cs_field") || wgsl;
+    if (/\breseed\s*\(/.test(fieldBody))
         viol.push(
-            "F1 topology: the compute kernel still calls reseed( — the anchored lattice has NO re-seed (delete the free-advection re-spawn branch)",
+            "F1 topology: cs_field still calls reseed( — the anchored lattice has NO re-seed (delete the free-advection re-spawn branch)",
         );
-    // The advection integrand `pos = pos + v * dt` (any spacing) — the free-walker step.
-    if (/\bpos\s*=\s*pos\s*\+\s*v\s*\*\s*dt\b/.test(wgsl))
+    // The advection integrand `pos = pos + v * dt` (any spacing) — the free-walker step. Scoped to
+    // cs_field; the cs_flow current legitimately advects (its own RE-INVENT register).
+    if (/\bpos\s*=\s*pos\s*\+\s*v\s*\*\s*dt\b/.test(fieldBody))
         viol.push(
-            "F1 topology: the compute kernel still integrates pos = pos + v*dt (forward-Euler advection) — the lattice does NOT advect, it eases to its anchor target",
+            "F1 topology: cs_field still integrates pos = pos + v*dt (forward-Euler advection) — the anchored lattice does NOT advect, it eases to its anchor target",
         );
     if (!/\bgridOrigin\s*\(/.test(wgsl))
         viol.push(
@@ -297,13 +327,22 @@ function runAll(over = {}) {
 // ── Self-test: a synthetic broken tree MUST red ──
 function selfTest() {
     const fails = [];
-    // (a) a planted reseed re-paste reds F1.
+    // (a) a planted reseed/advection re-paste INSIDE cs_field reds F1 (the scoped witness — the
+    //     anchored register must NOT advect or re-seed; the bite injects into cs_field's body).
     const liveCompute = read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts"));
     const reseedPlanted = runAll({
-        compute: liveCompute + "\nfn x(){ let r = reseed(1.0, 2.0); }",
+        compute: liveCompute.replace(
+            /fn cs_field\(([^)]*)\)\s*\{/,
+            "fn cs_field($1) {\n  let r = reseed(1.0, 2.0);\n  pos = pos + v * dt;",
+        ),
     });
     if (!reseedPlanted.some((v) => v.startsWith("F1")))
-        fails.push("self-test: a planted reseed( did NOT red F1");
+        fails.push("self-test: a planted reseed(/advection INSIDE cs_field did NOT red F1");
+    // (a2) the LEGIT cs_flow forward-Euler advection must NOT red F1 (the scope is real — a
+    //      whole-file grep would false-trip the cs_flow current register).
+    const flowAdvectionOnly = clauseTopology({ compute: liveCompute });
+    if (flowAdvectionOnly.some((v) => /advect/i.test(v)))
+        fails.push("self-test: the LEGIT cs_flow advection false-tripped F1 (the cs_field scope leaked)");
     // (b) octaves > 4 reds F2.
     const liveFlow = read(resolve(DIR, "composables/flowField.ts"));
     const octBroken = runAll({

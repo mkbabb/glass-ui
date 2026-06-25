@@ -125,42 +125,37 @@ function detectA1SelfTest() {
     return reads(PLANTED) === false && reads(REAL) === true;
 }
 
-// ── A2 — the footprint is consumer-targetable + floored (--dock-morph-min) ──
+// ── A2 — the footprint reserves the measure-ONCE endpoint (BD.W-DOCK-CORE supersede) ──
+// The reserved footprint is no longer the per-swap `--dock-morph-to` floored in CSS; it
+// is the measure-ONCE `--dock-expanded-px` endpoint (useDockExpandedSize), floored in JS
+// at `max(measured, collapsed)`. A2 witnesses the reserve names that endpoint on BOTH
+// axes (the to:0 white-morph root is closed by the JS floor, not a CSS max() wrapper).
 export function detectA2() {
     const violations = [];
     const facts = {};
     const layers = stripCss(readRel(LAYERS_CSS));
-    // The reserve is floored: `inline-size: max(var(--dock-morph-to), var(--dock-morph-min ...))`.
-    facts.reserveFloored =
-        /inline-size:\s*max\(\s*var\(\s*--dock-morph-to\s*\)\s*,\s*var\(\s*--dock-morph-min/.test(
-            layers,
-        ) &&
-        /block-size:\s*max\(\s*var\(\s*--dock-morph-to\s*\)\s*,\s*var\(\s*--dock-morph-min/.test(
-            layers,
-        );
-    if (!facts.reserveFloored)
+    facts.reserveEndpoint =
+        /inline-size:\s*var\(--dock-expanded-px\)/.test(layers) &&
+        /block-size:\s*var\(--dock-expanded-px\)/.test(layers);
+    if (!facts.reserveEndpoint)
         violations.push(
-            "A2: the layers.css reserve `inline-size`/`block-size` is not floored by max(var(--dock-morph-to), var(--dock-morph-min ...)) on BOTH axes (the BC.W-LIQUID-MORPH floor) — a to:0 measurement reserves zero (the white morph)",
+            "A2: the layers.css reserve `inline-size`/`block-size` does not name the measure-ONCE `var(--dock-expanded-px)` endpoint on BOTH axes (the ratio-free reserved footprint) — the reserved-footprint morph regressed",
         );
-    // The floor token is minted (density.css).
-    const density = stripCss(readRel(DENSITY_CSS));
-    facts.minMinted = /--dock-morph-min:/.test(density);
-    if (!facts.minMinted)
+    // The deleted per-swap --dock-morph-to reserve does not survive.
+    facts.noMorphTo = !/(?:inline|block)-size:\s*[^;]*var\(\s*--dock-morph-to\s*\)/.test(layers);
+    if (!facts.noMorphTo)
         violations.push(
-            "A2: --dock-morph-min is not minted in density.css (the reserve floor token)",
+            "A2: a deleted per-swap `var(--dock-morph-to)` reserve survives in layers.css (the seizure machinery the ratio-free blend replaced)",
         );
     return { violations, facts };
 }
-// A2 self-test bite — a bare unfloored `inline-size: var(--dock-morph-to)` MUST NOT
-// satisfy the floored detector; the floored `max(...)` MUST.
+// A2 self-test bite — the measure-ONCE `var(--dock-expanded-px)` reserve passes; the
+// deleted per-swap `var(--dock-morph-to)` reserve does NOT.
 function detectA2SelfTest() {
-    const BARE = `inline-size: var(--dock-morph-to);`;
-    const FLOORED = `inline-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));`;
-    const floored = (s) =>
-        /inline-size:\s*max\(\s*var\(\s*--dock-morph-to\s*\)\s*,\s*var\(\s*--dock-morph-min/.test(
-            s,
-        );
-    return floored(BARE) === false && floored(FLOORED) === true;
+    const ENDPOINT = `inline-size: var(--dock-expanded-px);`;
+    const SEIZURE = `inline-size: var(--dock-morph-to);`;
+    const reserves = (s) => /inline-size:\s*var\(--dock-expanded-px\)/.test(s);
+    return reserves(ENDPOINT) === true && reserves(SEIZURE) === false;
 }
 
 // ── A3 — compositor-only (no width/height/padding morph leg on the scalar) ──
@@ -244,13 +239,20 @@ export function detectA4() {
     const violations = [];
     const facts = {};
     const shape = stripCss(readRel("src/styles/dock/shape.css"));
-    // The shape-morph squish reads `--stretch` reciprocally (volume-preserving).
-    facts.shapeReadsStretch =
-        /scale:\s*var\(\s*--stretch[\s\S]*?calc\(\s*1\s*\/\s*var\(\s*--stretch/.test(shape) ||
-        /scale:\s*calc\(\s*1\s*\/\s*var\(\s*--stretch[\s\S]*?var\(\s*--stretch/.test(shape);
+    // The shape-morph squish reads `--stretch` reciprocally (volume-preserving). Under
+    // BD.W-DOCK-PUNCH-CHANNEL the `scale:` is a 3-factor fold (size × stretch × punch on
+    // one axis, the reciprocal 1/(stretch × punch) on the other). The volume-preserving
+    // requirement is met when `--stretch` appears in BOTH a forward factor AND inside a
+    // reciprocal `1 / (... var(--stretch ...))` denominator on the same `scale:`.
+    const scaleBlocks = shape.match(/scale:\s*calc\([\s\S]*?\)\s*(?:calc\([\s\S]*?\)\s*)?;/g) || [];
+    facts.shapeReadsStretch = scaleBlocks.some(
+        (b) =>
+            /var\(\s*--stretch/.test(b) &&
+            /1\s*\/\s*\(?[^;]*var\(\s*--stretch/.test(b),
+    );
     if (!facts.shapeReadsStretch)
         violations.push(
-            "A4: the shape-morph squish does not read the volume-preserving --stretch reciprocally (scale: var(--stretch) calc(1/--stretch)) — the squish is absent or hand-rolled",
+            "A4: the shape-morph squish does not read the volume-preserving --stretch reciprocally on the `scale:` fold (a forward factor + a 1/(...--stretch...) denominator) — the squish is absent or hand-rolled",
         );
     // No forked deformation math: the squish must read --stretch, NOT a dock-local
     // hand-rolled squish variable (a `scale: var(--my-squish)` not from useLiquidFlex).
@@ -345,7 +347,7 @@ function run() {
     });
     console.log(`proof:dock-arbitrary — ${status.toUpperCase()}`);
     console.log(`  A1 radius-reads-tokens=${facts.a1.radiusReadsTokens} clip-reads-tokens=${facts.a1.clipReadsTokens} tokens-minted=${facts.a1.tokensMinted}`);
-    console.log(`  A2 reserve-floored=${facts.a2.reserveFloored} min-minted=${facts.a2.minMinted}`);
+    console.log(`  A2 reserve-endpoint=${facts.a2.reserveEndpoint} no-morph-to=${facts.a2.noMorphTo}`);
     console.log(`  A3 layout-legs=${facts.a3.layoutLegs.length} compositor-morph=${facts.a3.compositorMorphPresent}`);
     console.log(`  A4 reads-stretch=${facts.a4.shapeReadsStretch} no-fork=${facts.a4.noForkedSquish} cap-read=${facts.a4.capRead}`);
     console.log(`  A5 composes-flex=${facts.a5.composesLiquidFlex} writes-stretch=${facts.a5.writesStretch} reads-cap=${facts.a5.readsCap}`);

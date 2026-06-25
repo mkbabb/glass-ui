@@ -204,7 +204,12 @@ const shrinkSticky =
     /\.story-hero-shrink\s*\{[^}]*position:\s*sticky/.test(heroCss);
 // the keyframe rides scroll() + animation-range
 const shrinkScrollTimeline = /animation-timeline:\s*scroll\(\)/.test(heroCss);
-const shrinkRange = /animation-range:\s*0\s+\d+px/.test(heroCss);
+// The condense window is `animation-range: 0 <end>` where <end> is a literal Npx OR the
+// tokenized `var(--hero-condense-range, Npx)` retune seam (BD.W-VIZ-BROKEN-FIX D5 — the
+// condense register is tokenized so W-STICKY-TITLE-CONDENSE tunes it; the range start stays
+// the literal 0).
+const shrinkRange =
+    /animation-range:\s*0\s+(?:\d+px|var\(--hero-condense-range[^)]*\))/.test(heroCss);
 // the @keyframes story-hero-shrink body animates ONLY transform/opacity (compositor).
 const kfBody = (() => {
     const i = heroCss.indexOf("@keyframes story-hero-shrink");
@@ -293,12 +298,29 @@ add(
 const PC3_ALLOWLIST = new Set([
     "compositions/auth-shell",
     "display/card",
+    // BD.W-PAGE-BACKGROUND / display-buttons Pass-E top-move #1 — the buttons
+    // glass-showcase stages its glass specimens over ONE shared aurora field (glass
+    // over flat cream is invisible-by-construction; the colorful field is MANDATORY for
+    // a glass demo). It is a SINGLE GL context (one <Aurora>, the one-GL-per-route budget
+    // intact — live-verified ONE canvas), NOT a double-card-on-a-field defect: the field
+    // IS the page's deliberate glass-showcase backdrop, not a second nested live field
+    // over the chassis's own. Allowlisted as the sanctioned ONE-GL glass-showcase route.
+    "display/buttons",
     "dock/overview",
     "dock/layers",
     "dock/morph-showcase",
     "dock/rail",
     "dock/sections",
     "dock/cta-receive",
+    // BD dock band — liquid-playground stages the live dock spring + morph engine over
+    // its OWN aurora field(s) (the glass dock must read against a live backdrop). The
+    // page's three demo stages (main liquid stage + the horizontal/vertical rail demos)
+    // each carry their own deliberate showcase field; the two rail stages are offscreen-
+    // paused by construction (live-verified: 3 canvases, the rail pair unresized/paused
+    // below the fold) — these are the page's OWN showcase surfaces, NOT a double-card
+    // defect (a nested grid-card-over-a-field inside the chassis card). PC3 guards the
+    // double-card DEFECT, not the canvas count of a deliberate dock-showcase route.
+    "dock/liquid-playground",
 ]);
 const doubleCardHits = [];
 const storyFiles = collectStoryFiles();

@@ -265,8 +265,13 @@ const LEDGER_BY_FILE = new Map(LEDGER.map((r) => [r.surface, r]));
 const storyHero = strip(read("demo/stories/StoryHero.vue"));
 // The hero <h1> binds the display rung via :class with the heroClass computed
 // (BC.W-PAGE-CHASSIS) — the <h1> carries `story-hero-title` + `heroClass`.
+// BD.W-CUT — the protagonist hero <h1> now also carries `:data-hero-scale="heroScale"`
+// (the explicit data-attr the CSS `[data-hero-scale]` rung reads) BEFORE the :class
+// binding, so the literal-distance from `<h1` to `story-hero-title` grew past the prior
+// 160-char window under Prettier indentation. The window is widened to admit the new
+// attr; the INTENT is unchanged (the <h1> binds the display rung via heroClass).
 const heroH1BindsComputed =
-    /<h1\b[\s\S]{0,160}\bstory-hero-title\b[\s\S]{0,120}\bheroClass\b/.test(storyHero) &&
+    /<h1\b[\s\S]{0,260}\bstory-hero-title\b[\s\S]{0,120}\bheroClass\b/.test(storyHero) &&
     /heroClass\s*=\s*computed\([\s\S]{0,80}?text-display-\$\{[^}]*heroScale/.test(storyHero) &&
     // the heroScale ladder is the DISPLAY register (≥ text-display-4 — never below).
     /heroScale\??:\s*["']audacious["']\s*\|\s*["']mega["']\s*\|\s*["']hero["']\s*\|\s*["']5["']\s*\|\s*["']4["']/.test(

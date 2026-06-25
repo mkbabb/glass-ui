@@ -214,11 +214,16 @@ const facts = {};
 // rungs that carry it; the PLATE floor is the materially-warm lift a near-white surface can.
 const STRONG_FLOOR = 0.02; // the perceptual "is it gray" threshold, mid/low-L rungs
 const CHIP_FLOOR = 0.011; // the L90 chip — gamut-bound; ≥ 2× HEAD (0.0055)
-const PLATE_FLOOR = 0.0035; // a near-white translucent glass plate — ≥ 2× HEAD (0.0017)
+const PLATE_FLOOR = 0.0035; // the thin Button-wash floor — a near-white 0.30-α plate (gamut-bound)
+// BD.W-GLASS-ABROGATE-GRAY G1 — the warm-MATERIAL plate floor (the CHIP_FLOOR-class perceptual
+// bar; ~2.8× the old PLATE_FLOOR). The source-green/visually-broken close-class fix: the old
+// PLATE_FLOOR (0.0035) greened a plate the eye still read GRAY. Calibrated against the FIX-A
+// floating composite C ≈ 0.0124 with headroom. The dropdown/Card/floating rungs must clear THIS.
+const WARM_PLATE_FLOOR = 0.01;
 const WARM_HUE_LO = 45; // the warm register the --foreground ink (H≈56°) anchors
 const WARM_HUE_HI = 85; // up to a warm amber-yellow; NEVER the HEAD yellow-green 95°
 const L_TOLERANCE = 0.02; // chroma-only moves — the L stays within tolerance of HEAD
-facts.floors = { STRONG_FLOOR, CHIP_FLOOR, PLATE_FLOOR, WARM_HUE_LO, WARM_HUE_HI, L_TOLERANCE };
+facts.floors = { STRONG_FLOOR, CHIP_FLOOR, PLATE_FLOOR, WARM_PLATE_FLOOR, WARM_HUE_LO, WARM_HUE_HI, L_TOLERANCE };
 
 // ════════════════════════════════════════════════════════════════════════════════════
 // W1 — THE FLOOR HOLDS. Each census WARM-IT token resolves OKLab C ≥ its floor, at the
@@ -333,18 +338,42 @@ facts.cardLight = { arg: cardLightArg, literal: cardLiteral };
 facts.pageLight = pageLightArg;
 let cardPlateC = null;
 let washPlateC = null;
+let floatPlate = null;
+let floatPlateC = null;
+let floatPlateOk = null;
 if (cardRgb && pageRgb) {
     const restingPlate = composite(cardRgb, 0.65, pageRgb);
     const washPlate = composite(cardRgb, 0.3, pageRgb);
+    floatPlate = composite(cardRgb, 0.8, pageRgb); // the floating rung — the literal dropdown panel
     cardPlateC = rgbToOklab(restingPlate).C;
     washPlateC = rgbToOklab(washPlate).C;
+    floatPlateOk = rgbToOklab(floatPlate);
+    floatPlateC = floatPlateOk.C;
 }
 facts.cardPlateC = cardPlateC ? Number(cardPlateC.toFixed(4)) : null;
 facts.washButtonPlateC = washPlateC ? Number(washPlateC.toFixed(4)) : null;
+facts.floatPlate = floatPlateOk
+    ? { L: Number(floatPlateOk.L.toFixed(4)), C: Number(floatPlateOk.C.toFixed(4)), H: Number(floatPlateOk.H.toFixed(1)) }
+    : null;
+// BD.W-GLASS-ABROGATE-GRAY G2 — the resting Card plate clears the WARM-MATERIAL floor (not the
+// old gray-greening PLATE_FLOOR). Born-RED on HEAD (0.0053 < 0.010), GREEN after FIX-A (0.0106).
 add(
     "card-plate-warm-light",
-    cardPlateC !== null && cardPlateC >= PLATE_FLOOR,
-    `the default Card plate (--card@0.65 over the page) composites OKLab C = ${cardPlateC ? cardPlateC.toFixed(4) : "?"} (≥ ${PLATE_FLOOR} — the G1 gray gone; HEAD ≈ 0.0027)`,
+    cardPlateC !== null && cardPlateC >= WARM_PLATE_FLOOR,
+    `the default Card plate (--card@0.65 over the page) composites OKLab C = ${cardPlateC ? cardPlateC.toFixed(4) : "?"} (≥ ${WARM_PLATE_FLOOR} WARM_PLATE_FLOOR — the gray gone; HEAD ≈ 0.0053)`,
+);
+// BD.W-GLASS-ABROGATE-GRAY G3 — the FLOATING rung (0.80, the literal Select dropdown panel)
+// clears the warm-material floor. Born-RED on HEAD (0.0059), GREEN after FIX-A (0.0124).
+add(
+    "floating-plate-warm-light",
+    floatPlateC !== null && floatPlateC >= WARM_PLATE_FLOOR,
+    `the dropdown/floating plate (--card@0.80 over the page) composites OKLab C = ${floatPlateC ? floatPlateC.toFixed(4) : "?"} (≥ ${WARM_PLATE_FLOOR} — the Select-panel gray gone; HEAD ≈ 0.0059)`,
+);
+// BD.W-GLASS-ABROGATE-GRAY G4 — the composited floating plate hue stays warm (not just --card).
+add(
+    "plate-warm-hue-light",
+    floatPlateOk !== null && floatPlateOk.H >= WARM_HUE_LO && floatPlateOk.H <= WARM_HUE_HI,
+    `the composited floating plate hue OKLab H = ${floatPlateOk ? floatPlateOk.H.toFixed(1) : "?"}° ∈ [${WARM_HUE_LO}, ${WARM_HUE_HI}] — warm-cream, never the yellow-green 95°`,
 );
 add(
     "button-plate-warm-light",
@@ -434,6 +463,30 @@ add(
     "aa-muted-fg-over-page-dark",
     aaMutedDark !== null && aaMutedDark >= 4.5,
     `dark --muted-foreground over the dark page = ${aaMutedDark ? aaMutedDark.toFixed(2) : "?"}:1 (≥ 4.5:1 — the warmed dark muted register legible; HEAD 7.39:1)`,
+);
+
+// BD.W-GLASS-ABROGATE-GRAY G5 — the DARK "too gray" half. The dark --card (lifted L10→L16 for
+// elevation but left at 8% saturation → OKLab C 0.0075 charcoal) is warmed onto the identity so
+// the dark plate reads as warm-LUMINOUS dark glass. Composite the dark --card@0.80 over the dark
+// page → OKLab C ≥ WARM_PLATE_FLOOR at the warm hue. Born-RED on HEAD dark (0.0066), GREEN after
+// FIX-C (0.0182).
+const darkCardRgb = colorToRgb(darkClassValue(darkArm, "card") ?? "");
+let darkFloatPlate = null;
+let darkFloatPlateOk = null;
+if (darkCardRgb && darkPageRgb) {
+    darkFloatPlate = composite(darkCardRgb, 0.8, darkPageRgb);
+    darkFloatPlateOk = rgbToOklab(darkFloatPlate);
+}
+facts.darkFloatPlate = darkFloatPlateOk
+    ? { L: Number(darkFloatPlateOk.L.toFixed(4)), C: Number(darkFloatPlateOk.C.toFixed(4)), H: Number(darkFloatPlateOk.H.toFixed(1)) }
+    : null;
+add(
+    "dark-card-warm-not-charcoal",
+    darkFloatPlateOk !== null &&
+        darkFloatPlateOk.C >= WARM_PLATE_FLOOR &&
+        darkFloatPlateOk.H >= WARM_HUE_LO &&
+        darkFloatPlateOk.H <= WARM_HUE_HI,
+    `the dark floating plate (dark --card@0.80 over the dark page) composites OKLab C = ${darkFloatPlateOk ? darkFloatPlateOk.C.toFixed(4) : "?"} at H = ${darkFloatPlateOk ? darkFloatPlateOk.H.toFixed(1) : "?"}° (≥ ${WARM_PLATE_FLOOR} warm — the dark charcoal-gray gone; HEAD ≈ 0.0066)`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
@@ -536,6 +589,168 @@ add(
         ),
     "the dark arm's oklch(from var(--foreground) …) is the INK SOURCE inside the unchanged color-mix(in srgb, …) α-mix — NOT a switch of the tint interpolation space (the AW.W26 fence holds; surface-tint-stays-srgb stays GREEN)",
 );
+
+// ── W-NAV-DOCK-FIX — the dock optical-gray witnesses (3 source arms, NO floor weakened) ─
+// The base --card chroma is met at HEAD (the WARM_PLATE_FLOOR/HUE asserts above pass), so
+// they do NOT catch the dock's OPTICAL gray-slab: the light --glass-blur-dock was blur()
+// ALONE (the only light tier with no saturate companion), so over the flat warm-cream page
+// the un-saturated backdrop-filter pulled the cream toward neutral. These witnesses lock
+// the saturate companion + the readable warm hairline (born-RED on HEAD, GREEN after S1/S2).
+
+// 1. The light --glass-blur-dock carries a saturate() term (the flat-slab root cannot
+//    regress silently back to blur-alone).
+const lightDockBlur =
+    /--glass-blur-dock:\s*([^;]+);/.exec(glassTokens)?.[1] ?? "";
+add(
+    "dock-blur-has-saturate-light",
+    /saturate\(/.test(lightDockBlur),
+    `the light --glass-blur-dock carries a saturate() companion (the dock concentrates light like every other tier — the flat-slab gray-read root is closed; matched "${lightDockBlur.trim().slice(0, 60)}…")`,
+);
+
+// 2. The light dock saturate ≥ 1.2 AND the dark arm carries its own saturate (the §2c
+//    per-mode pair — neither mode regresses to no-saturate).
+const lightDockSatTok =
+    /--glass-saturate-dock:\s*([0-9.]+)/.exec(glassTokens)?.[1];
+const lightDockSat = lightDockSatTok ? Number(lightDockSatTok) : null;
+const darkDockBlurHasSat = /--glass-blur-dock:[^;]*saturate\(/.test(darkArm);
+add(
+    "dock-blur-saturate-lockstep",
+    lightDockSat !== null && lightDockSat >= 1.2 && darkDockBlurHasSat,
+    `the light dock saturate = ${lightDockSat ?? "?"} (≥ 1.2) AND the dark arm --glass-blur-dock carries its own saturate (${darkDockBlurHasSat}) — the per-mode pair, neither mode the flat un-saturated slab`,
+);
+
+// 3. The light --glass-border-dock α ≥ 6% (the silhouette floor — catches a regression to
+//    the sub-threshold 4% that left the floating dock with no readable warm-ink edge).
+const dockBorderPct = Number(
+    /--glass-border-dock:\s*color-mix\(\s*in srgb,\s*var\(--foreground\)\s*([0-9.]+)%/.exec(
+        glassTokens,
+    )?.[1] ?? "0",
+);
+add(
+    "dock-border-readable-light",
+    dockBorderPct >= 6,
+    `the light --glass-border-dock = ${dockBorderPct}% warm-ink (≥ 6% — the floating-chrome silhouette floor; the dock floats over an UNKNOWN backdrop so it earns a readable warm rim, never the sub-threshold 4% that read edgeless)`,
+);
+
+// ── BD.W-DOCK-CORE — the warm-CHROMATIC dock tint ink (D1–D4). HEAD's dock self-engage
+// mixed the thin plate toward the near-black --foreground (C ≈ 0.0062) → it darkened L with
+// chroma DEAD-FLAT (the gray dock at the AA engage). The dock-SCOPED ink lifts the chroma
+// via oklch(from --foreground …) so the darken-over-light RAISES chroma toward a warm
+// material. Born-RED on HEAD (no --glass-tint-ink-dock token + the self-engage read the
+// frozen global --glass-tint-ink); GREEN after the fix.
+const dockInkLight =
+    /--glass-tint-ink-dock:\s*([^;]+);/.exec(glassTokens)?.[1] ?? "";
+// 1. The dock ink is minted AND is a warm-chromatic oklch(from …) source (NOT the flat
+//    near-black --foreground). Assert the relative-color form + a chroma ≥ 0.030 lift.
+const dockInkChroma = Number(/oklch\(from\s+var\(--foreground\)\s+[0-9.]+\s+([0-9.]+)\s+h\s*\)/.exec(dockInkLight)?.[1] ?? "0");
+add(
+    "dock-tint-ink-is-warm-chromatic",
+    /oklch\(from\s+var\(--foreground\)/.test(dockInkLight) && dockInkChroma >= 0.03,
+    `the light --glass-tint-ink-dock is a warm-chromatic oklch(from --foreground …) source with chroma ${dockInkChroma} (≥ 0.030 — well above --foreground's ~0.0062; the darken RAISES chroma toward warm material, never the flat near-black gray ink)`,
+);
+// 2. The dock self-engage reads --glass-tint-ink-dock, NOT the frozen global --glass-tint-ink.
+const morphCss = read("src/styles/dock/morph.css");
+const selfEngageReadsDockInk =
+    /:where\(\.glass-dock\)\s*\{[\s\S]{0,600}?--glass-tint-source:\s*var\(--glass-tint-ink-dock\)/.test(
+        morphCss,
+    );
+add(
+    "dock-self-engage-reads-dock-ink",
+    selfEngageReadsDockInk,
+    `the :where(.glass-dock) self-engage re-points --glass-tint-source → var(--glass-tint-ink-dock) (the warm-chromatic dock ink, NOT the frozen global --glass-tint-ink — one dock tint source, one global ink, file-line-disjoint)`,
+);
+// 3. The dark §2c lockstep — the dark dock ink is present + warm-chromatic (the LIFT mirror).
+const dockInkDark = /--glass-tint-ink-dock:\s*([^;]+);/.exec(darkArm)?.[1] ?? "";
+const dockInkDarkChroma = Number(/oklch\(from\s+var\(--foreground\)\s+[0-9.]+\s+([0-9.]+)\s+h\s*\)/.exec(dockInkDark)?.[1] ?? "0");
+add(
+    "dock-tint-ink-dark-lockstep",
+    /oklch\(from\s+var\(--foreground\)/.test(dockInkDark) && dockInkDarkChroma >= 0.03,
+    `the dark §2c --glass-tint-ink-dock twin is present + warm-chromatic (oklch(from --foreground …) chroma ${dockInkDarkChroma} ≥ 0.030 — the luminous-dark LIFT mirror of the light darken; the light + dark dock inks move in lockstep)`,
+);
+
+// ── BD.W-VIZ-BROKEN-FIX — the viz-palette-warm SOURCE arm (born-GREEN regression GUARD) ─
+// The four procedural-viz DEFAULT palettes ship WARM (the BA.W-NO-GRAY identity), never a
+// gray/teal-on-navy default (those are presets-in-consumers, demo-local). This reads each
+// palette's stops → OKLab and asserts EACH palette carries at least one stop that clears
+// STRONG_FLOOR (C ≥ 0.02) IN the warm band [WARM_HUE_LO, WARM_HUE_HI] — the "this viz is
+// warm material, not gray" guarantee. Born-GREEN (the palettes ship warm); a future gray/
+// teal viz default reds the arm. The plate/ladder/dark arms above are UNTOUCHED.
+function hexToRgbStops(hex) {
+    const h = hex.replace("#", "");
+    if (h.length !== 6) return null;
+    return [
+        parseInt(h.slice(0, 2), 16),
+        parseInt(h.slice(2, 4), 16),
+        parseInt(h.slice(4, 6), 16),
+    ];
+}
+/** Parse `{ L: 0.92, C: 0.03, h: 78 }` OKLCh-stop literals out of a source array body. */
+function oklchStopsFromSource(body) {
+    const stops = [];
+    const re = /\{\s*L:\s*([\d.]+)\s*,\s*C:\s*([\d.]+)\s*,\s*h:\s*([\d.]+)\s*\}/g;
+    let m;
+    while ((m = re.exec(body))) {
+        stops.push(rgbToOklab(oklchToRgb(Number(m[1]), Number(m[2]), Number(m[3]))));
+    }
+    return stops;
+}
+/** Parse a `["#hex", …]` paletteStops array body into OKLab stops. */
+function hexStopsFromSource(body) {
+    const stops = [];
+    const re = /["'](#[0-9a-fA-F]{6})["']/g;
+    let m;
+    while ((m = re.exec(body))) {
+        const rgb = hexToRgbStops(m[1]);
+        if (rgb) stops.push(rgbToOklab(rgb));
+    }
+    return stops;
+}
+/** Extract the named array body (`export const NAME … = [ … ];`) from a source string. */
+function arrayBody(srcStr, name) {
+    const re = new RegExp(`${name}[^=]*=\\s*\\[([\\s\\S]*?)\\];`, "m");
+    return re.exec(srcStr)?.[1] ?? "";
+}
+const VIZ_PALETTES = [
+    {
+        viz: "fourier-field",
+        stops: oklchStopsFromSource(
+            arrayBody(read("src/components/custom/fourier-field/constants.ts"), "WARM_IDENTITY_PALETTE"),
+        ),
+    },
+    {
+        viz: "goo-dot-matrix",
+        stops: oklchStopsFromSource(
+            arrayBody(read("src/components/custom/goo-dot-matrix/constants.ts"), "WARM_IDENTITY_PALETTE"),
+        ),
+    },
+    {
+        viz: "dot-matrix",
+        stops: oklchStopsFromSource(
+            arrayBody(read("src/components/custom/dot-matrix/constants.ts"), "WARM_IDENTITY_PALETTE"),
+        ),
+    },
+    {
+        viz: "goo-blob",
+        stops: hexStopsFromSource(
+            // BLOB_CONFIG_DEFAULTS.color.paletteStops — the only hex paletteStops in types.ts.
+            /paletteStops:\s*\[([^\]]*)\]/.exec(read("src/components/custom/goo-blob/types.ts"))?.[1] ?? "",
+        ),
+    },
+];
+facts.vizPalettes = VIZ_PALETTES.map((p) => ({
+    viz: p.viz,
+    stops: p.stops.map((s) => ({ L: +s.L.toFixed(3), C: +s.C.toFixed(4), H: +s.H.toFixed(1) })),
+}));
+for (const { viz, stops } of VIZ_PALETTES) {
+    const warmStop = stops.find(
+        (s) => s.C >= STRONG_FLOOR && s.H >= WARM_HUE_LO && s.H <= WARM_HUE_HI,
+    );
+    add(
+        `viz-palette-warm-${viz}`,
+        stops.length > 0 && warmStop != null,
+        `the ${viz} DEFAULT palette has a warm-material stop (C ${warmStop ? warmStop.C.toFixed(4) : "?"} ≥ ${STRONG_FLOOR} at OKLab H ${warmStop ? warmStop.H.toFixed(1) : "?"}° ∈ [${WARM_HUE_LO},${WARM_HUE_HI}]) — the viz is warm material, NEVER a gray/teal-on-navy default (those are presets-in-consumers); read ${stops.length} stop(s)`,
+    );
+}
 
 // ── The π readback spec is wired (the BINDING close) ────────────────────────────────
 add(

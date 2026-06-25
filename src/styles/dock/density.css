@@ -62,10 +62,11 @@
     --dock-shape-clip-to: none;
 
     /* The squish cap — the LOW volume-preserving `--stretch` ceiling for the shape-morph
-       deformation, mirroring the tab-indicator's iOS-segmented register (the
-       `DEFAULT_INDICATOR_MAX_STRETCH` 1.08). A fast morph swells the plate then caps —
-       a lively settle, never a taffy-pull. */
-    --dock-morph-max-stretch: 1.08;
+       deformation, mirroring the tab-indicator's iOS-segmented register. BD.W-ANIM-IOS27-
+       TUNE lifts 1.08 → 1.14 so the box-morph reads as FLOWING MASS (the "MORPH MORE on
+       move" mandate; the dock is the most-visible morph surface) — a fast morph swells
+       the plate then caps, a gooey settle, never a taffy-pull (≤1.2 anti-taffy bar). */
+    --dock-morph-max-stretch: 1.14;
 
     /* ── BC.W-LIQUID-MORPH — the reserve floor (the white morph can never paint) ──
        The morph box reserves `inline-size`/`block-size: max(var(--dock-morph-to),
@@ -108,11 +109,14 @@
        control + glyph; it is a proportional `calc(control-size + tile-pad)` so the
        icon-to-tile margin is ONE knob, not a per-density literal. */
     .glass-dock[data-density="compact"] {
+        /* BD.W-DOCK-CORE (A11) — the OUTER pill pad floors lifted ~+50% for the generous
+           warm-cream liquid breath (the sliver-pill defect). The inner
+           `--dock-control-safe-inset` plate clearance is untouched (a distinct axis). */
         --dock-padding-block: calc(
-            var(--dock-density-compact-padding-block, 0.25rem) * var(--dock-scale)
+            var(--dock-density-compact-padding-block, 0.375rem) * var(--dock-scale)
         );
         --dock-padding-inline: calc(
-            var(--dock-density-compact-padding-inline, 0.375rem) * var(--dock-scale)
+            var(--dock-density-compact-padding-inline, 0.5rem) * var(--dock-scale)
         );
         --dock-control-size: max(
             calc(var(--dock-density-compact-control-size, 2rem) * var(--dock-scale)),
@@ -163,11 +167,14 @@
     /* Comfortable density — the GlassDock default. Sits between compact
        and spacious. */
     .glass-dock[data-density="comfortable"] {
+        /* BD.W-DOCK-CORE (A11) — the generous liquid-pill pad: inline 0.5 → 0.75rem (+8px
+           total breath), block 0.375 → 0.5rem (softer). The vertical sliver-around-40px
+           becomes a soft warm-cream capsule. */
         --dock-padding-block: calc(
-            var(--dock-density-comfortable-padding-block, 0.375rem) * var(--dock-scale)
+            var(--dock-density-comfortable-padding-block, 0.5rem) * var(--dock-scale)
         );
         --dock-padding-inline: calc(
-            var(--dock-density-comfortable-padding-inline, 0.5rem) * var(--dock-scale)
+            var(--dock-density-comfortable-padding-inline, 0.75rem) * var(--dock-scale)
         );
         --dock-control-size: max(
             calc(
@@ -211,11 +218,12 @@
     }
 
     .glass-dock[data-density="spacious"] {
+        /* BD.W-DOCK-CORE (A11) — the spacious rung breathes in lockstep (~+33%). */
         --dock-padding-block: calc(
-            var(--dock-density-spacious-padding-block, 0.5rem) * var(--dock-scale)
+            var(--dock-density-spacious-padding-block, 0.625rem) * var(--dock-scale)
         );
         --dock-padding-inline: calc(
-            var(--dock-density-spacious-padding-inline, 0.75rem) * var(--dock-scale)
+            var(--dock-density-spacious-padding-inline, 1rem) * var(--dock-scale)
         );
         --dock-control-size: max(
             calc(

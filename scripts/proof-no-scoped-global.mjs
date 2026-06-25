@@ -52,10 +52,19 @@ function scopedStyleBlocks(source) {
     return blocks;
 }
 
+/** Blank out every `/* … *\/` CSS comment span while PRESERVING newline structure
+ *  (so line offsets stay exact). A `:global(` inside a comment is PROSE — the BD
+ *  greenfield documents the DROP-trap lesson in `/* … *\/` blocks; the gate guards
+ *  the SELECTOR, not the lesson text. The fixture born-RED selector is NOT in a
+ *  comment, so the gate keeps its teeth. */
+function stripCssComments(body) {
+    return body.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
+}
+
 /** Scan one SFC source for `:global(` inside a scoped style block. */
 function scanSource(source, relPath, violations) {
     for (const { body, lineOffset } of scopedStyleBlocks(source)) {
-        const lines = body.split("\n");
+        const lines = stripCssComments(body).split("\n");
         for (let i = 0; i < lines.length; i++) {
             SCOPED_GLOBAL.lastIndex = 0;
             if (SCOPED_GLOBAL.test(lines[i])) {

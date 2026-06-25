@@ -17,13 +17,18 @@
 // teardrop perf trace, captured to docs/tranches/BC/audit/visual/W-LIQUID-MORPH-DELTA.md.
 //
 // THE CARDINAL SPLIT this gate validates born-RED→GREEN itself (the SOURCE arm):
-//   M1 — the reserve floor: layers.css reserves `max(var(--dock-morph-to),
-//        var(--dock-morph-min ...))` on BOTH axes. Born-RED on HEAD's bare
-//        var(--dock-morph-to). Self-test bite: a planted bare reserve reds.
-//   M2 — the scale floor: --dock-morph-scale is `max(<calc>, 0.06)`. Born-RED on HEAD's
-//        unfloored calc. Self-test bite: an unfloored scale reds.
-//   M3 — the measure-failure guard: dockMorphContext.ts carries the measuredTo === 0 →
-//        seat-at-floor branch (morphMinFloorPx). Self-test bite: an unguarded measure reds.
+//   M1 — the reserve endpoint (BD.W-DOCK-CORE ratio-free supersede): layers.css reserves
+//        the measure-ONCE `inline/block-size: var(--dock-expanded-px)` on BOTH axes; no
+//        per-swap `var(--dock-morph-to)` reserve survives. Self-test bite: a planted
+//        --dock-morph-to reserve reds.
+//   M2 — the scale is the CLAMPED convex blend: `--dock-size-scale: clamp(...
+//        var(--dock-live)/max(var(--dock-expanded-px ...)))` (bounded by construction —
+//        not the deleted unbounded `--dock-morph-scale: max(<ratio>, 0.06)`). Self-test
+//        bite: the deleted --dock-morph-scale shape reds.
+//   M3 — the measure-failure floor: useDockExpandedSize seats
+//        `finalExpanded = Math.max(expandedSeed, collapsedPx)` (collapsedFloorPx 44px) —
+//        a 0 measurement seats at collapsed, never white. Self-test bite: an unfloored
+//        finalExpanded reds.
 //   M4 — the teardrop is compositor-only: morph-bridge.css animates NO width/height on
 //        --dock-morph-t (clip-path/scale/translate). Born-RED on HEAD's per-frame
 //        width/height calc. Self-test bite: a planted width: calc(... --dock-morph-t ...) reds.
@@ -59,92 +64,103 @@ const CTX_TS = "src/components/custom/dock/composables/dockMorphContext.ts";
 const MEASURE_TS = "src/components/custom/dock/composables/dockMorphMeasure.ts";
 const DELTA = "docs/tranches/BC/audit/visual/W-LIQUID-MORPH-DELTA.md";
 
-// ── M1 — the reserve floor (both axes) ──
+// ── M1 — the reserve endpoint is measure-ONCE + floored (both axes) ──
+// BD.W-DOCK-CORE superseded the per-swap `--dock-morph-to` reserve (the white-morph
+// root: a to:0 measurement) with the measure-ONCE `--dock-expanded-px` endpoint that
+// `useDockExpandedSize` FLOORS at `max(measured, collapsed)` in JS (dockMorphMeasure.ts)
+// — the white-morph guard MOVED from a CSS `max()` wrapper to the JS freshness floor.
+// M1 now witnesses the reserve names that floored endpoint on both axes.
 export function detectM1() {
     const violations = [];
     const facts = {};
     const layers = stripCss(readRel(LAYERS_CSS));
-    const floored = (prop) =>
-        new RegExp(
-            `${prop}:\\s*max\\(\\s*var\\(\\s*--dock-morph-to\\s*\\)\\s*,\\s*var\\(\\s*--dock-morph-min`,
-        ).test(layers);
-    facts.inlineFloored = floored("inline-size");
-    facts.blockFloored = floored("block-size");
-    // No BARE unfloored reserve survives (the white-morph root).
-    facts.noBareReserve =
-        !/inline-size:\s*var\(\s*--dock-morph-to\s*\)\s*;/.test(layers) &&
-        !/block-size:\s*var\(\s*--dock-morph-to\s*\)\s*;/.test(layers);
-    if (!facts.inlineFloored)
-        violations.push("M1: the inline-size reserve is not floored by max(var(--dock-morph-to), var(--dock-morph-min ...)) — a to:0 measurement reserves a zero-width box (the white morph)");
-    if (!facts.blockFloored)
-        violations.push("M1: the block-size reserve is not floored by max(var(--dock-morph-to), var(--dock-morph-min ...)) — a to:0 measurement reserves a zero-height box (the vertical white morph)");
-    if (!facts.noBareReserve)
-        violations.push("M1: a BARE unfloored `inline-size`/`block-size: var(--dock-morph-to)` reserve survives in layers.css — the white-morph root is not closed");
+    facts.inlineReservesEndpoint = /inline-size:\s*var\(--dock-expanded-px\)/.test(layers);
+    facts.blockReservesEndpoint = /block-size:\s*var\(--dock-expanded-px\)/.test(layers);
+    // No BARE per-swap `--dock-morph-to` reserve survives (the deleted seizure shape).
+    facts.noMorphToReserve =
+        !/(?:inline|block)-size:\s*[^;]*var\(\s*--dock-morph-to\s*\)/.test(layers);
+    if (!facts.inlineReservesEndpoint)
+        violations.push("M1: the inline-size reserve does not name the measure-ONCE `var(--dock-expanded-px)` endpoint — the ratio-free reserved footprint regressed");
+    if (!facts.blockReservesEndpoint)
+        violations.push("M1: the block-size reserve does not name the measure-ONCE `var(--dock-expanded-px)` endpoint — the vertical reserved footprint regressed");
+    if (!facts.noMorphToReserve)
+        violations.push("M1: a deleted per-swap `var(--dock-morph-to)` reserve survives in layers.css — the seizure-prone size machinery (the white-morph root) is not fully retired");
     return { violations, facts };
 }
 function detectM1SelfTest() {
-    const BARE = `.x { inline-size: var(--dock-morph-to); }`;
-    const FLOORED = `.x { inline-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem)); }`;
-    const floored = (s) =>
-        /inline-size:\s*max\(\s*var\(\s*--dock-morph-to\s*\)\s*,\s*var\(\s*--dock-morph-min/.test(s);
-    const bare = (s) => /inline-size:\s*var\(\s*--dock-morph-to\s*\)\s*;/.test(s);
-    return floored(BARE) === false && bare(BARE) === true && floored(FLOORED) === true;
+    const RESERVED = `.x { inline-size: var(--dock-expanded-px); }`;
+    const SEIZURE = `.x { inline-size: var(--dock-morph-to); }`;
+    const reserves = (s) => /inline-size:\s*var\(--dock-expanded-px\)/.test(s);
+    const morphTo = (s) => /inline-size:\s*[^;]*var\(\s*--dock-morph-to\s*\)/.test(s);
+    return reserves(RESERVED) === true && reserves(SEIZURE) === false && morphTo(SEIZURE) === true;
 }
 
-// ── M2 — the scale floor ──
+// ── M2 — the scale is the CLAMPED ratio-free blend (never scaleX(0)) ──
+// BD.W-DOCK-CORE replaced the degenerate `--dock-morph-scale: max(<ratio-calc>, 0.06)`
+// (a FLOOR with no CEILING — the seizure) with `--dock-size-scale: clamp(...)`, a
+// convex-blend ratio of the two MEASURED endpoints (`--dock-live/--dock-expanded-px`),
+// BOUNDED by construction (collapsed/expanded ≤ ratio ≤ 1). The clamp keeps the visible
+// sliver floor; the convex blend kills the unbounded ceiling. M2 witnesses THAT scalar.
 export function detectM2() {
     const violations = [];
     const facts = {};
     const layers = stripCss(readRel(LAYERS_CSS));
-    // --dock-morph-scale is `max(calc(...), 0.06)` (the degenerate ratio bottoms at a
-    // visible sliver, never scaleX(0)).
-    facts.scaleFloored =
-        /--dock-morph-scale:\s*max\(\s*calc\([\s\S]*?\)\s*,\s*0\.0\d+\s*\)/.test(layers);
-    if (!facts.scaleFloored)
-        violations.push("M2: --dock-morph-scale is not floored by max(<calc>, 0.06) — a degenerate ratio runs scaleX(0) (the zero-width white void)");
-    // The scaleX/scaleY composite still reads --dock-morph-scale (the morph mechanism kept).
-    facts.scaleStillComposited =
-        /scaleX\(var\(--dock-morph-scale\)\)/.test(layers) &&
-        /scaleY\(var\(--dock-morph-scale\)\)/.test(layers);
-    if (!facts.scaleStillComposited)
-        violations.push("M2: the scaleX/scaleY composite no longer reads --dock-morph-scale — the reserved-footprint scale morph regressed");
+    // --dock-size-scale is a CLAMPED ratio of the convex --dock-live blend over the
+    // measured expanded endpoint (bottoms at a visible sliver, never scale(0)).
+    facts.scaleClamped =
+        /--dock-size-scale:\s*clamp\([\s\S]*?var\(--dock-live\)\s*\/\s*max\(\s*var\(--dock-expanded-px/.test(layers);
+    if (!facts.scaleClamped)
+        violations.push("M2: --dock-size-scale is not the clamped convex-blend ratio `clamp(... var(--dock-live)/max(var(--dock-expanded-px ...)))` — a degenerate/unbounded scale could run (the zero-width or 56× seizure)");
+    // The size morph rides `scale: var(--dock-size-scale)` (the compositor footprint
+    // morph kept — composed in shape.css, where the size·squish·punch fold lives).
+    const shape = stripCss(readRel("src/styles/dock/shape.css"));
+    facts.scaleComposited = /var\(--dock-size-scale\b/.test(shape) || /var\(--dock-size-scale\b/.test(layers);
+    if (!facts.scaleComposited)
+        violations.push("M2: the `scale:` composite no longer reads --dock-size-scale (shape.css/layers.css) — the reserved-footprint scale morph regressed");
+    // The deleted per-swap --dock-morph-scale ratio does not survive.
+    facts.noMorphScale = !/--dock-morph-scale\s*:/.test(layers);
+    if (!facts.noMorphScale)
+        violations.push("M2: the deleted per-swap `--dock-morph-scale` ratio survives in layers.css — the seizure machinery is not fully retired");
     return { violations, facts };
 }
 function detectM2SelfTest() {
-    const UNFLOORED = `--dock-morph-scale: calc(var(--dock-morph-ratio) + (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0));`;
-    const FLOORED = `--dock-morph-scale: max(calc(var(--dock-morph-ratio) + (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0)), 0.06);`;
-    const floored = (s) => /--dock-morph-scale:\s*max\(\s*calc\([\s\S]*?\)\s*,\s*0\.0\d+\s*\)/.test(s);
-    return floored(UNFLOORED) === false && floored(FLOORED) === true;
+    const BLEND = `--dock-size-scale: clamp(var(--dock-collapsed-px) / var(--dock-expanded-px), calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)), 1);`;
+    const SEIZURE = `--dock-morph-scale: max(calc(var(--dock-morph-ratio) + (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0)), 0.06);`;
+    const clamped = (s) => /--dock-size-scale:\s*clamp\([\s\S]*?var\(--dock-live\)\s*\/\s*max\(\s*var\(--dock-expanded-px/.test(s);
+    return clamped(BLEND) === true && clamped(SEIZURE) === false;
 }
 
-// ── M3 — the measure-failure guard (measuredTo === 0 → seat at floor) ──
+// ── M3 — the measure-failure floor (expanded endpoint never below collapsed) ──
+// BD.W-DOCK-CORE deleted `morphMinFloorPx`/`measureAndArmMorph` and the per-target
+// generation gating; the white-morph guard is now `useDockExpandedSize`'s freshness
+// floor: `finalExpanded = Math.max(expandedSeed, collapsedPx)` (so collapsed/expanded
+// is never collapsed/0 = ∞) backed by `collapsedFloorPx` (the WCAG 44px touch floor).
+// A missed (0) measurement seats at the collapsed floor, NOT white. M3 follows the guard
+// into its new home (the W-CARVE reader-gate discipline: assert the floor where it lives).
 export function detectM3() {
     const violations = [];
     const facts = {};
-    const ctx = stripJs(readRel(CTX_TS));
     const measure = stripJs(readRel(MEASURE_TS));
-    // The orchestrator seats a 0 measurement at the floor span (morphMinFloorPx).
-    // BC.W-CARVE4 carved the measure/seat helpers OUT of dockMorphContext.ts INTO
-    // dockMorphMeasure.ts, so the seat-at-floor branch now lives in `measure` — the
-    // reader gate FOLLOWS the carve into the leaf (the W-CARVE4 reader-gate discipline).
+    // The expanded endpoint is floored at max(seed, collapsed) — never below collapsed,
+    // so the convex blend can never reserve a zero / divide by zero.
     facts.guardPresent =
-        /morphMinFloorPx/.test(measure) &&
-        /measuredTo\s*>\s*0\s*\?\s*measuredTo\s*:/.test(measure);
+        /useDockExpandedSize/.test(measure) &&
+        /Math\.max\(\s*expandedSeed\s*,\s*collapsedPx\s*\)/.test(measure);
     if (!facts.guardPresent)
-        violations.push("M3: dockMorphMeasure.ts has no `measuredTo === 0 → seat-at-floor` guard (the defensive measure-failure complement; W-CARVE4 carved the measure/seat helpers here from dockMorphContext.ts) — a missed measurement degrades to white, not visible-at-floor");
-    // The floor helper exists (pure, reads the resolved --dock-morph-min, falls back to 44px).
+        violations.push("M3: dockMorphMeasure.ts's useDockExpandedSize has no `finalExpanded = Math.max(expandedSeed, collapsedPx)` freshness floor — a missed (0) measurement degrades to white, not visible-at-collapsed-floor");
+    // The collapsed-floor helper exists (reads the resolved icon-square / WCAG touch
+    // floor, falls back to 44px).
     facts.floorHelperPresent =
-        /export function morphMinFloorPx/.test(measure) &&
-        /--dock-morph-min/.test(measure) &&
+        /function collapsedFloorPx/.test(measure) &&
         /44/.test(measure);
     if (!facts.floorHelperPresent)
-        violations.push("M3: dockMorphMeasure.ts has no morphMinFloorPx helper reading --dock-morph-min with the 44px WCAG fallback (the reserve-floor px)");
+        violations.push("M3: dockMorphMeasure.ts has no collapsedFloorPx helper with the 44px WCAG touch fallback (the reserve-floor px)");
     return { violations, facts };
 }
 function detectM3SelfTest() {
-    const UNGUARDED = `const toSize = getSize(elNow, axis); armTarget(t, id, fromSize, toSize);`;
-    const GUARDED = `const measuredTo = getSize(elNow, axis); const toSize = measuredTo > 0 ? measuredTo : morphMinFloorPx(elNow); armTarget(t, id, fromSize, toSize);`;
-    const guarded = (s) => /morphMinFloorPx/.test(s) && /measuredTo\s*>\s*0\s*\?\s*measuredTo\s*:/.test(s);
+    const UNGUARDED = `function useDockExpandedSize() { const finalExpanded = expandedSeed; root.style.setProperty("--dock-expanded-px", finalExpanded); }`;
+    const GUARDED = `function useDockExpandedSize() { const finalExpanded = Math.max(expandedSeed, collapsedPx); root.style.setProperty("--dock-expanded-px", finalExpanded); }`;
+    const guarded = (s) => /useDockExpandedSize/.test(s) && /Math\.max\(\s*expandedSeed\s*,\s*collapsedPx\s*\)/.test(s);
     return guarded(UNGUARDED) === false && guarded(GUARDED) === true;
 }
 
@@ -284,8 +300,8 @@ function run() {
         violations,
     });
     console.log(`proof:liquid-morph — ${status.toUpperCase()}`);
-    console.log(`  M1 inline-floored=${facts.m1.inlineFloored} block-floored=${facts.m1.blockFloored} no-bare=${facts.m1.noBareReserve}`);
-    console.log(`  M2 scale-floored=${facts.m2.scaleFloored} scale-composited=${facts.m2.scaleStillComposited}`);
+    console.log(`  M1 inline-endpoint=${facts.m1.inlineReservesEndpoint} block-endpoint=${facts.m1.blockReservesEndpoint} no-morph-to=${facts.m1.noMorphToReserve}`);
+    console.log(`  M2 scale-clamped=${facts.m2.scaleClamped} scale-composited=${facts.m2.scaleComposited} no-morph-scale=${facts.m2.noMorphScale}`);
     console.log(`  M3 guard=${facts.m3.guardPresent} floor-helper=${facts.m3.floorHelperPresent}`);
     console.log(`  M4 layout-legs=${facts.m4.layoutLegs.length} clip-path-morph=${facts.m4.clipPathMorphPresent}`);
     console.log(`  M5 delta-exists=${facts.m5.deltaExists} p50=${facts.m5.namesP50} throttle=${facts.m5.namesThrottle} gpu=${facts.m5.namesGpu} default=${facts.m5.namesDefault}`);

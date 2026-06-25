@@ -142,18 +142,21 @@ function ruleBlocks(css) {
 }
 
 // ── F1 — the morph is a COMPOSITOR TRANSFORM over a reserved footprint ───────────
-export function detectCompositorTransform(layersCss) {
+// BD.W-DOCK-CORE superseded the ratio machinery: the morph reserves the measure-ONCE
+// `var(--dock-expanded-px)` endpoint on `[data-morphing]` and the live size rides
+// `scale: var(--dock-size-scale)` (the ratio-free convex blend off `--dock-live`,
+// composed in shape.css's scale fold). F1 witnesses THAT compositor re-express, not the
+// deleted `--dock-morph-to`/`scaleX(--dock-morph-scale)` ratio seizure.
+export function detectCompositorTransform(layersCss, shapeCss = "") {
     const violations = [];
     const facts = {};
     const blocks = ruleBlocks(layersCss);
 
     // The morph-axis rules are the `[data-morphing]` ones that pin a box size span.
-    // The horizontal comma-group + the two vertical rules.
     const morphRules = blocks.filter(
         (b) =>
             /\[data-morphing\]/.test(b.selector) &&
-            /(\.dock-layers|\.dock-layer-stack)\b/.test(b.selector) &&
-            /(inline-size|block-size|transform)\s*:/.test(b.body),
+            /(inline-size|block-size|--dock-live|--dock-size-scale)\s*:/.test(b.body),
     );
     facts.morphRuleCount = morphRules.length;
     if (morphRules.length === 0) {
@@ -163,51 +166,47 @@ export function detectCompositorTransform(layersCss) {
         return { facts, violations };
     }
 
-    // (a) the live scalar lands on `transform` (a scale() reading --dock-morph-t or
-    //     --dock-morph-scale, which is derived FROM --dock-morph-t).
-    const anyTransformScalar = morphRules.some((b) =>
-        /transform\s*:\s*scale[XY]?\(\s*var\(\s*--dock-morph-scale\b/.test(b.body),
+    // (a) the live size lands on the compositor `scale:` reading --dock-size-scale (the
+    //     convex-blend ratio-free size, derived from the --dock-morph-t scalar via
+    //     --dock-live). The `scale:` fold lives in shape.css; the --dock-size-scale
+    //     derivation lives in layers.css under [data-morphing].
+    const derivesSizeScale = morphRules.some((b) =>
+        /--dock-size-scale\s*:\s*clamp\([\s\S]*?var\(--dock-live\)/.test(b.body),
     );
-    facts.transformOnScalar = anyTransformScalar;
-    if (!anyTransformScalar) {
+    const scaleReadsSizeScale = /scale:[^;]*var\(--dock-size-scale\b/.test(shapeCss) ||
+        morphRules.some((b) => /scale:[^;]*var\(--dock-size-scale\b/.test(b.body));
+    facts.transformOnScalar = derivesSizeScale && scaleReadsSizeScale;
+    if (!facts.transformOnScalar) {
         violations.push(
-            "F1: no morph-axis rule lands the live scalar on `transform: scaleX/Y(var(--dock-morph-scale))` — the compositor transform is absent (the box still morphs via the layout axis)",
+            "F1: the morph does not land the live size on the compositor `scale: var(--dock-size-scale)` (the ratio-free convex-blend derived from --dock-live, composed in shape.css) — the compositor re-express is absent (the box still morphs via the layout axis)",
         );
     }
 
-    // (b) the box RESERVES the settled `to` footprint — a layout property set to
-    //     `var(--dock-morph-to)` (the SETTLED value), NOT the live `--dock-morph-size`
-    //     calc. AND (the anti-evasion bite) NO morph rule animates a layout property
-    //     off the LIVE scalar (`inline-size`/`block-size: var(--dock-morph-size)` or
-    //     a calc reading --dock-morph-t).
-    // BC.W-LIQUID-MORPH owns the reserve FLOOR: the reserve may be bare
-    // `var(--dock-morph-to)` OR floored `max(var(--dock-morph-to), var(--dock-morph-min))`
-    // — both reserve the SETTLED `to` footprint (a single layout solve, NOT a live calc;
-    // the floor value contains no --dock-morph-t, so the liveLayoutAnim anti-evasion
-    // below still catches a real per-frame relayout). F1 tolerates the floor wrapper (the
-    // white-morph safety net).
+    // (b) the box RESERVES the measure-ONCE `--dock-expanded-px` endpoint (a single
+    //     layout solve, NOT a live calc reading --dock-morph-t).
     const anyReserve = morphRules.some((b) =>
-        /(inline-size|block-size)\s*:\s*(?:max\(\s*)?var\(\s*--dock-morph-to\s*\)/.test(b.body),
+        /(inline-size|block-size)\s*:\s*var\(\s*--dock-expanded-px\s*\)/.test(b.body),
     );
     facts.reservesSettledFootprint = anyReserve;
     if (!anyReserve) {
         violations.push(
-            "F1: no morph-axis rule RESERVES the settled `to` footprint (`inline-size`/`block-size: var(--dock-morph-to)`) — the box does not reserve its end geometry (the reveal-seat (b) requires the settled-footprint reserve)",
+            "F1: no morph-axis rule RESERVES the measure-ONCE `inline-size`/`block-size: var(--dock-expanded-px)` endpoint — the box does not reserve its settled geometry (the reveal-seat (b) requires the settled-footprint reserve)",
         );
     }
 
     // The anti-evasion bite: a layout property reading the LIVE scalar (the per-frame
-    // relayout) must be GONE. `--dock-morph-size` was the live calc; a layout prop
-    // reading it (or --dock-morph-t directly) REDs even if a transform is also added.
+    // relayout) must be GONE. A layout prop reading --dock-morph-t / --dock-live / the
+    // deleted --dock-morph-size REDs even if a transform is also added (the size must
+    // ride the compositor `scale:`, the box reserves only the settled endpoint).
     const liveLayoutAnim = morphRules.some(
         (b) =>
             /(inline-size|block-size)\s*:\s*var\(\s*--dock-morph-size\s*\)/.test(b.body) ||
-            /(inline-size|block-size)\s*:[^;]*var\(\s*--dock-morph-t\b/.test(b.body),
+            /(inline-size|block-size)\s*:[^;]*var\(\s*--dock-(?:morph-t|live)\b/.test(b.body),
     );
     facts.liveLayoutAnimationPresent = liveLayoutAnim;
     if (liveLayoutAnim) {
         violations.push(
-            "F1: a morph-axis rule still animates a LAYOUT property (`inline-size`/`block-size`) off the LIVE scalar (`--dock-morph-size`/`--dock-morph-t`) — the per-frame relayout must be GONE, not supplemented by a transform (the C3 defect)",
+            "F1: a morph-axis rule still animates a LAYOUT property (`inline-size`/`block-size`) off the LIVE scalar (`--dock-morph-t`/`--dock-live`) — the per-frame relayout must be GONE, the size rides the compositor `scale:` (the C3 defect)",
         );
     }
 
@@ -219,53 +218,43 @@ export function detectPrmSynchronousSeat(orchestratorTs, layerTransitionTs) {
     const violations = [];
     const facts = {};
 
+    // BD.W-DOCK-CORE deleted the measure/seat machinery (measureAndArmMorph/
+    // seatTargetSync/forceNestedMaxContent/the nested ordering). The size is now derived
+    // PURELY from the `--dock-morph-t` scalar via the CSS `--dock-live`/`--dock-size-scale`
+    // blend — there is NO measured JS span to seat, so the PRM path needs no synchronous
+    // measure-seat. The PRM correctness now rides the engine: the ONE `SpringProgress` is
+    // armed with `respectReducedMotion: true`, which JUMPS the scalar 0→1 in one frame; the
+    // CSS size follows instantly (no rAF morph window, no 10×74 sliver). F3 witnesses THAT.
     for (const [name, raw] of [
         ["dockMorphContext.ts", orchestratorTs],
         ["useLayerTransition.ts", layerTransitionTs],
     ]) {
         const src = stripAllComments(raw);
-        // (a) a PRM probe exists.
-        const hasProbe = /prefersReducedMotion\s*\(/.test(src) &&
-            /matchMedia\(\s*["'`]\(prefers-reduced-motion:\s*reduce\)["'`]\s*\)/.test(src);
-        // (b) a PRM branch seats synchronously via nextTick (post-flush, NOT an rAF
-        //     morph window). The branch guards the synchronous seat AND returns
-        //     (does not fall through to the rAF measure-defer).
-        const prmBranch = /if\s*\(\s*prefersReducedMotion\(\)\s*\)\s*\{[^}]*nextTick\([\s\S]*?seat[\s\S]*?\}/.test(
-            src.replace(/\n/g, " "),
+        // The SpringProgress that owns --dock-morph-t is armed with respectReducedMotion
+        // (the engine jumps 0→1 in one frame under PRM — the synchronous seat is the
+        // engine's, and the size is scalar-derived so nothing is left to defer).
+        const armsRespectPrm =
+            /new\s+SpringProgress\(\s*\{[\s\S]*?respectReducedMotion:\s*true/.test(src);
+        facts[`${name}.respectReducedMotion`] = armsRespectPrm;
+        if (!armsRespectPrm) {
+            violations.push(
+                `F3: ${name} does not arm its --dock-morph-t SpringProgress with \`respectReducedMotion: true\` — under PRM the scalar does not jump 0→1 in one frame (the in-between blur/sliver frames return)`,
+            );
+        }
+    }
+    // The deleted measure/seat machinery must NOT have crept back (no per-swap
+    // measureAndArmMorph/seatTargetSync/forceNestedMaxContent — the ratio-free blend
+    // replaced them with the useDockExpandedSize RO).
+    const orchSrc = stripAllComments(orchestratorTs);
+    const deadMachineryBack =
+        /\b(measureAndArmMorph|seatTargetSync|forceNestedMaxContent|rebaseSiblingSpans)\s*\(/.test(
+            orchSrc,
         );
-        // (c) the synchronous seat composes the BA-VJS-1 nested ordering (the
-        //     orchestrator) — `seatTargetSync`/`measureTo`/`nestedTargetsWithin`/
-        //     `forceNestedMaxContent` reached on the sync path; useLayerTransition is
-        //     the standalone (no nested targets), so it only needs the max-content
-        //     circular-measure escape. BB.W-CARVE4 — for the orchestrator, `src` is
-        //     the dockMorphContext.ts + dockMorphMeasure.ts CONCATENATION (the
-        //     measure/seat helpers carved into the sibling leaf; the assert FOLLOWS
-        //     the composition into it).
-        const composesNested =
-            name === "dockMorphContext.ts"
-                ? /seatTargetSync[\s\S]*measureTo\(/.test(src) &&
-                  /function\s+measureTo\([\s\S]*nestedTargetsWithin\(/.test(src)
-                : /function\s+seatSync\([\s\S]*max-content/.test(src);
-
-        facts[`${name}.prmProbe`] = hasProbe;
-        facts[`${name}.prmSyncBranch`] = prmBranch;
-        facts[`${name}.composesMeasure`] = composesNested;
-
-        if (!hasProbe) {
-            violations.push(
-                `F3: ${name} has no \`prefersReducedMotion()\` probe (matchMedia '(prefers-reduced-motion: reduce)') — the PRM synchronous seat is absent`,
-            );
-        }
-        if (!prmBranch) {
-            violations.push(
-                `F3: ${name} has no PRM branch that seats SYNCHRONOUSLY via \`nextTick(() => seat…)\` and returns (no rAF morph window) — the span still seats a rAF later under PRM (the 10×74 sliver)`,
-            );
-        }
-        if (!composesNested) {
-            violations.push(
-                `F3: ${name}'s synchronous seat does not compose the measure escape (the orchestrator's BA-VJS-1 nested \`max-content\` ordering / the standalone \`max-content\` circular-measure escape) — the nested group reads to:0 / the measure is circular`,
-            );
-        }
+    facts.deletedMeasureMachineryBack = deadMachineryBack;
+    if (deadMachineryBack) {
+        violations.push(
+            "F3: the deleted per-swap measure/seat machinery (measureAndArmMorph/seatTargetSync/forceNestedMaxContent/rebaseSiblingSpans) crept back into the orchestrator — BD.W-DOCK-CORE replaced it with the useDockExpandedSize RO + the ratio-free --dock-live blend",
+        );
     }
 
     return { facts, violations };
@@ -611,6 +600,7 @@ async function run() {
     const read = (p) => readFileSync(resolve(ROOT, p), "utf8");
     const layersCss = read("src/styles/dock/layers.css");
     const morphCss = read("src/styles/dock/morph.css");
+    const shapeCss = read("src/styles/dock/shape.css");
     const shellCss = read("src/styles/dock/shell.css");
     const dockCss = read("src/styles/dock.css");
     // BB.W-CARVE4 — the orchestrator's measure/seat mechanism (`seatTargetSync` +
@@ -629,7 +619,7 @@ async function run() {
     );
     const groupVue = read("src/components/custom/dock/DockLayerGroup.vue");
 
-    const f1 = detectCompositorTransform(layersCss);
+    const f1 = detectCompositorTransform(layersCss, shapeCss);
     const f3 = detectPrmSynchronousSeat(orchestratorTs, layerTransitionTs);
     const f4 = detectPeakSelfReserve(groupVue);
     const f5 = detectScalePropertyThread(dockCss);
@@ -676,7 +666,7 @@ function printSummary({ status, f1, f3, f4, f5, f6, selfTestFailures }) {
         `  F2 reveal-seat          : (asserted via F1 reserve + the π frame-series)`,
     );
     console.log(
-        `  F3 PRM synchronous-seat : orchestrator(probe/branch/measure)=${f3.facts["dockMorphContext.ts.prmProbe"]}/${f3.facts["dockMorphContext.ts.prmSyncBranch"]}/${f3.facts["dockMorphContext.ts.composesMeasure"]} layerTransition=${f3.facts["useLayerTransition.ts.prmProbe"]}/${f3.facts["useLayerTransition.ts.prmSyncBranch"]}/${f3.facts["useLayerTransition.ts.composesMeasure"]} ${f3.violations.length === 0 ? "OK" : "RED"}`,
+        `  F3 PRM respectReducedMotion : orchestrator=${f3.facts["dockMorphContext.ts.respectReducedMotion"]} layerTransition=${f3.facts["useLayerTransition.ts.respectReducedMotion"]} no-dead-machinery=${!f3.facts.deletedMeasureMachineryBack} ${f3.violations.length === 0 ? "OK" : "RED"}`,
     );
     console.log(
         `  F4 peak self-reserve    : measures=${f4.facts.measuresPeak} exposesVar=${f4.facts.exposesPeakVar} onGroupRoot=${f4.facts.reserveBoundOnGroupRoot} reMeasures=${f4.facts.reMeasuresOnResize} ${f4.violations.length === 0 ? "OK" : "RED"}`,

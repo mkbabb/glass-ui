@@ -331,30 +331,12 @@ function select(i: number): void {
     --pager-dot-inactive: color-mix(in srgb, var(--foreground) 52%, transparent);
     --pager-dot-hover: color-mix(in srgb, var(--foreground) 72%, transparent);
 
-    /* the goo-morph worm tokens (BD.W-PAGER-GOO-MORPH) — all var(--t, fallback) reads
-       so a consumer :root/scope override cascades in with zero :deep(). */
-    --pager-worm-flow: linear(
-        0, 0.02206 4.167%, 0.07922 8.333%, 0.15799 12.5%, 0.24486 16.667%,
-        0.32632 20.833%, 0.38889 25%, 0.41905 29.167%, 0.43667 33.333%,
-        0.4575 37.5%, 0.47833 41.667%, 0.49917 45.833%, 0.52 50%, 0.54083 54.167%,
-        0.56167 58.333%, 0.58373 62.5%, 0.62943 66.667%, 0.69424 70.833%,
-        0.76859 75%, 0.84373 79.167%, 0.91191 83.333%, 0.96658 87.5%,
-        1.0023 91.667%, 1.01466 95.833%, 1
-    ); /* the worm's OWN geometry-law flow curve (BD goo-morph-refine, iteration 2 — the
-       SPEED fix). NOT a normalized spring: `springLinearStops` front-loads (reaches ~0.5
-       by ~6% of clock REGARDLESS of ζ — the keyframes solver normalizes to settle-time),
-       so the prior `--spring-bouncy` collapsed the position+neck in ~150ms then sat dead
-       for the rest of the clock (the rejected "fast flicker"). This flow rises to ~mid by
-       ~46%, DWELLS at the midpoint (the FAT NECK held open across the gap for ~830ms @
-       1.8s — JUDGE-1 ≥700ms bar), then contracts with a gentle terminal overshoot (+1.5%,
-       the bouncy LAND). The worm-flow spreads --worm-t's 0→1 across the REAL clock — the
-       weighty, dramatic, slow liquid read the user demanded. */
-    --pager-worm-duration: 1.8s; /* slowed to 1.8s AND now genuinely HONORED — the flow
-       curve (above) dwells across the whole clock, so the neck is alive for ~1s rather
-       than the ~150ms the bouncy spring left it (the worm's OWN clock, motion-canon P4). */
-    --pager-worm-max-stretch: 1.45; /* the velocity-swell — a VISIBLE liquid squish (the
-       worm narrows ≈1/1.45≈0.69× cross-axis at peak swell, on top of the floored pinch;
-       floored in useWormMorph so even a single Next swells, JUDGE #3). */
+    /* the goo-morph worm tokens (BD.W-PAGER-GOO-MORPH). The geometry-law DWELL curve
+       (--pager-worm-flow) + its clock + swell SHIP from the §2 EASING register in
+       tokens/scheme-motion.css beside their --carousel-goo-flow / --deck-goo-flow family
+       (the curve-definition home — a `linear()` is never serialized inline in an SFC) and
+       cascade into .pager-dots from :root; a consumer :root/scope override still cascades
+       in with zero :deep(). Only the component-local goo-layer opacity lives here. */
     --pager-goo-layer-opacity: 0.65; /* the rail translucency, ONCE at the layer — a solid
        WET neck (still translucent glass, not opaque). */
     --pager-goo-filter: url(#pager-goo); /* consumer can swap a wetter/crisper filter */

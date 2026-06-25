@@ -209,17 +209,34 @@ add(
 );
 
 // ════════════════════════════════════════════════════════════════════════════
-// S3 — the scroll-pinned register composes sticky + a named-timeline + compositor.
-// `.scroll-pin`/`.scroll-pin-stage` composes position: sticky + a named
-// scroll-timeline/timeline-scope (the fixed-stage-scroll-advances-time model) and
-// the stage's phase animations are transform/opacity/clip-path ONLY.
+// S3 — the scroll-pinned register composes sticky + a scroll-advanced time channel +
+// compositor. `.scroll-pin`/`.scroll-pin-stage` composes position: sticky (the
+// fixed-stage-scroll-advances-time model) and the stage's phase animations are
+// transform/opacity/clip-path ONLY.
+//
+// BD.W-SCROLL-LIQUID-ENGINE re-invented the time channel: the prior register bound the
+// phases to a named `scroll-timeline: --gl-pin` declared ON `.scroll-pin` — but
+// `.scroll-pin` is `overflow: visible` with zero internal scroll extent, so it is NOT a
+// scroll port and the named timeline's `currentTime` was permanently `null` (the bound
+// reveal parked at its `from` keyframe forever, on EVERY engine — structural deadness, not
+// a Safari degrade). The FIX drives the phases off a SPRING-DAMPED typed `--pin-t`
+// `@property` that `useScrollPin` (the keyframes.js scroll spine) writes off the REAL
+// scroll port per coalesced tick — works Safari 15+, no `animation-timeline`, liquid-weight
+// by default. So the scroll-advanced-time WITNESS is EITHER the native named-timeline link
+// OR the typed `--pin-t @property` register the JS spine drives (no-backwards-compat: the
+// dead `scroll-timeline: --gl-pin` is GONE, never aliased).
 // ════════════════════════════════════════════════════════════════════════════
 const hasScrollPin = /\.scroll-pin\b/.test(choreo) || /\.scroll-pin-stage\b/.test(choreo);
 const pinSticky = /position:\s*sticky/.test(choreo);
+// The typed pin progress register — `@property --pin-t` declared + consumed by the phase
+// recipes (the JS-written scroll-advanced time channel of the BD re-invent).
+const pinTypedProgress =
+    /@property\s+--pin-t\b/.test(choreo) && /var\(\s*--pin-t/.test(choreo);
 const pinTimelineLink =
     /timeline-scope:/.test(choreo) ||
     /scroll-timeline-name:/.test(choreo) ||
-    /animation-timeline:\s*--[\w-]+/.test(choreo);
+    /animation-timeline:\s*--[\w-]+/.test(choreo) ||
+    pinTypedProgress;
 // The pin phase keyframes carry only compositor channels (no reflow — covered by
 // S2's whole-sheet reflow scan; here we positively assert a compositor phase channel).
 const pinCompositorPhase =
@@ -228,12 +245,13 @@ facts.scrollPin = {
     recipe: hasScrollPin,
     sticky: pinSticky,
     timelineLink: pinTimelineLink,
+    typedProgress: pinTypedProgress,
     compositorPhase: pinCompositorPhase,
 };
 add(
-    "s3-pin-sticky-named-timeline-compositor",
+    "s3-pin-sticky-scroll-advanced-compositor",
     hasScrollPin && pinSticky && pinTimelineLink && pinCompositorPhase,
-    `.scroll-pin/.scroll-pin-stage exists (${hasScrollPin}) + composes position: sticky (${pinSticky}) + a named scroll-timeline/timeline-scope/animation-timeline link (${pinTimelineLink}) + compositor-only phase channels (${pinCompositorPhase}) — the fixed-stage-advances-time model. A static sticky with no timeline link (not a scroll-advanced stage) reds.`,
+    `.scroll-pin/.scroll-pin-stage exists (${hasScrollPin}) + composes position: sticky (${pinSticky}) + a scroll-advanced time channel — a named scroll-timeline/timeline-scope/animation-timeline link OR the BD.W-SCROLL-LIQUID-ENGINE typed --pin-t @property the useScrollPin spine drives (${pinTimelineLink}; typedProgress=${pinTypedProgress}) + compositor-only phase channels (${pinCompositorPhase}) — the fixed-stage-advances-time model. A static sticky with no scroll-advanced time channel (not a scroll-advanced stage) reds.`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════

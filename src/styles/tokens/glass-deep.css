@@ -55,9 +55,12 @@
                                           BUDGET CALL (L4): stays 16px, the 18-20px push
                                           toward the apple.com nav ceiling is BOOKED
                                           behind a recorded profile:budget clearance. */
-    --glass-saturate-deep:       1.5;  /* >= 1.5 (toward Apple 1.8), > calm floating 1.18;
-                                          ≤ --glass-saturate-deep-ceiling (the apple.com
-                                          nav 1.8 bound — never over-shot, L4). */
+    --glass-saturate-deep:       1.8;  /* BD.W-GLASS-ABROGATE-GRAY — lifted 1.5→1.8 (the
+                                          apple.com nav ceiling) IN LOCKSTEP with FIX-D's
+                                          content/floating saturate lift, so the deep tier
+                                          STAYS the richest register (calm floating now 1.6;
+                                          deep must clear it). == --glass-saturate-deep-ceiling
+                                          (1.8 — at the bound, never over-shot, L4 holds). */
     --glass-saturate-deep-ceiling: 1.8; /* the apple.com-nav saturate CEILING, BAKED as
                                            the deep-tier load-bearing term (research/
                                            apple-glass.md §4); the deep saturate never
@@ -85,7 +88,8 @@
        chroma, it does NOT inject a hue; the warm-cream `--card` base is the same). */
     --glass-saturate-deep-active:
         calc(
-            1.18 + (var(--glass-saturate-deep) - 1.18) * var(--glass-depth)
+            var(--glass-saturate-floating)
+            + (var(--glass-saturate-deep) - var(--glass-saturate-floating)) * var(--glass-depth)
         );
 
     /* The composed deep backdrop-filter — the SEPARATE deep family. The calm

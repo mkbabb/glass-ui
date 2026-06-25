@@ -33,16 +33,18 @@ const props = withDefaults(
          * Render mode:
          *   `solid` (default) — the filled organic blob (the swatch background IS the
          *                       color; the existing register, unchanged).
-         *   `ghost`  — the SAME seeded blob SILHOUETTE traced as a DASHED outline: an
-         *              SVG <ellipse> `stroke-dasharray` carrying the SAME wet
-         *              `feDisplacementMap` filter, so the displacement wobbles the
-         *              dashed ellipse INTO the seeded organic outline (a dashed
-         *              OUTLINE following the silhouette — NOT a solid ring, NOT a CSS
-         *              dashed rectangle). A low-alpha `color` fill is kept behind the
-         *              stroke. A `ghost` of a given `color + seed` carries the SAME
-         *              seeded `border-radius` silhouette the `solid` dot of that seed
-         *              renders (both read the same `useWatercolorBlob` morph). The
-         *              empty-palette-slot / placeholder affordance.
+         *   `ghost`  — the SAME seeded blob SILHOUETTE traced as a DASHED outline: a
+         *              dashed CSS BORDER reading the SAME seeded `border-radius`
+         *              silhouette the solid dot fills (`activeBorderRadius`), carrying
+         *              the SAME wet `feDisplacementMap` filter so the displacement
+         *              wobbles the dashed border INTO the seeded organic outline. A
+         *              CSS dashed border hugs its own `border-radius`, so the outline
+         *              follows the seeded blob EXACTLY — NOT an ellipse, NOT a circle,
+         *              NOT a dashed rectangle. A low-alpha `color` fill is kept behind
+         *              the border. A `ghost` of a given `color + seed` traces the SAME
+         *              outline the `solid` dot of that seed fills (both read the same
+         *              `useWatercolorBlob` morph — the ONE shape source). The empty-
+         *              palette-slot / placeholder affordance.
          */
         variant?: "solid" | "ghost";
         /** Run the rAF-driven compositor transform wobble (default false → static). */
@@ -116,11 +118,12 @@ const activeTransform = computed(() =>
         :data-variant="variant"
         :style="{
             // The solid register fills with the color; the ghost register keeps a
-            // low-alpha fill (the CSS half) and traces the silhouette as a dashed SVG
-            // stroke. The SILHOUETTE (`borderRadius`) is the SAME seeded blob in both
-            // — a ghost of a given seed carries the solid dot's outline. The animate
-            // wobble rides `--watercolor-wobble` (a compositor transform, NOT a
-            // per-frame radius paint under the filter).
+            // low-alpha fill (the CSS half) and traces the silhouette as a dashed
+            // BORDER reading the SAME seeded `border-radius` silhouette the solid
+            // fills. The SILHOUETTE (`borderRadius`) is the SAME seeded blob in both
+            // — a ghost of a given seed traces the solid dot's outline (the ONE shape
+            // source). The animate wobble rides `--watercolor-wobble` (a compositor
+            // transform, NOT a per-frame radius paint under the filter).
             backgroundColor: variant === 'ghost' ? undefined : color,
             borderRadius: activeBorderRadius,
             '--watercolor-color': color,
@@ -191,37 +194,23 @@ const activeTransform = computed(() =>
             </defs>
         </svg>
         <!--
-          The GHOST register (BC.W-VIZ-WATERCOLOR) — the seeded blob silhouette traced
-          as a DASHED outline: an SVG <ellipse> `stroke-dasharray` carrying the SAME
-          wet `feDisplacementMap` filter, so the displacement wobbles the dashed ellipse
-          INTO the seeded organic outline. The dashes are arc-length-uniform along the
-          stroked path (no dashed-rounded-rect bunching) — a dashed OUTLINE following
-          the silhouette, NOT a solid ring and NOT a dashed rectangle. The dash pattern
-          is the `--watercolor-dash` / `--watercolor-gap` ghost-only axis (default 8px
-          dash / 5px gap, the hand-drawn-placeholder register). Static (no animation) →
-          PRM-neutral; the dashed outline reads either way.
+          The GHOST register (BC.W-VIZ-WATERCOLOR · BD.W-VIZ-BROKEN-FIX D4) — the seeded
+          blob silhouette traced as a DASHED outline that FOLLOWS THE SAME SHAPE the solid
+          dot fills. ONE shape source: this dashed BORDER `<div>` reads `activeBorderRadius`
+          — the SAME seeded 8-value `border-radius` superellipse the solid box takes from
+          `useWatercolorBlob` — and a CSS dashed border hugs its OWN `border-radius` exactly,
+          so the outline traces the seeded organic blob BY CONSTRUCTION (never an ellipse,
+          never a circle, never a dashed rect — the prior hardcoded `<ellipse rx=46 ry=46>`
+          + random noise was a noise-jittered CIRCLE geometrically disconnected from the
+          silhouette). The wet `feDisplacementMap` filter wobbles the dashed border INTO the
+          hand-painted organic edge (the design intent). Static → PRM-neutral.
         -->
-        <svg
+        <div
             v-if="variant === 'ghost'"
-            class="watercolor-ghost-overlay"
+            class="watercolor-ghost-stroke"
             aria-hidden="true"
-            focusable="false"
-            preserveAspectRatio="none"
-            viewBox="0 0 100 100"
-        >
-            <ellipse
-                class="watercolor-ghost-stroke"
-                cx="50"
-                cy="50"
-                rx="46"
-                ry="46"
-                fill="none"
-                :stroke="`var(--watercolor-color)`"
-                stroke-width="2"
-                vector-effect="non-scaling-stroke"
-                :style="{ filter: filterUrl }"
-            />
-        </svg>
+            :style="{ borderRadius: activeBorderRadius, filter: filterUrl }"
+        />
         <slot />
     </component>
 </template>
@@ -250,10 +239,13 @@ const activeTransform = computed(() =>
         filter var(--duration-fast) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard);
     position: relative;
-    /* The ghost dashed-outline axis (NEW, ghost-only): the hand-drawn-placeholder dash
-       pattern, tunable per consumer. */
+    /* The ghost dashed-outline axis (ghost-only): the hand-drawn-placeholder dash
+       pattern, tunable per consumer. The CSS dashed border's pitch is UA-derived, so
+       these document the dash register + carry the OPTION-B path-stroke escape; the
+       border WEIGHT is the load-bearing knob. */
     --watercolor-dash: 8px;
     --watercolor-gap: 5px;
+    --watercolor-ghost-weight: 2px;
 }
 
 /* The GHOST register (BC.W-VIZ-WATERCOLOR) — the box keeps the SAME seeded
@@ -281,25 +273,19 @@ const activeTransform = computed(() =>
     );
 }
 
-/* The dashed silhouette overlay — fills the swatch box, traces the silhouette as an
-   arc-length-uniform dashed stroke, displaced by the SAME wet filter so the dashed
-   ellipse wobbles into the organic outline. preserveAspectRatio="none" stretches the
-   100×100 viewBox to the box so the ellipse fills it; non-scaling-stroke keeps the
-   2px dash crisp at any size. */
-.watercolor-ghost-overlay {
+/* The GHOST dashed outline (BD.W-VIZ-BROKEN-FIX D4) — a div clipped to the SAME seeded
+   `border-radius` silhouette the solid dot fills (the ONE shape source: it reads
+   `activeBorderRadius` inline, the SAME `blob.borderRadius` the solid box takes). A dashed
+   CSS border hugs its own border-radius, so the outline traces the seeded organic blob
+   EXACTLY — never an ellipse, never a circle, never a dashed rectangle. The wet
+   `feDisplacementMap` filter (set inline) wobbles the dashed border into the hand-painted
+   organic edge. Static → PRM-neutral. */
+.watercolor-ghost-stroke {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
+    border: var(--watercolor-ghost-weight, 2px) dashed var(--watercolor-color);
+    /* border-radius set inline off activeBorderRadius (the seeded silhouette). */
     pointer-events: none;
-}
-
-.watercolor-ghost-stroke {
-    /* Arc-length-uniform dashes along the stroked path (the dashed-rounded-rect
-       bunching `border-style: dashed` on a `border-radius` box would produce is
-       avoided by stroking a path, not a box). */
-    stroke-dasharray: var(--watercolor-dash) var(--watercolor-gap);
 }
 
 /* Under prefers-reduced-transparency the low-alpha ghost fill firms up so the dashed

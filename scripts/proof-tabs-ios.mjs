@@ -37,6 +37,11 @@ function readFile(rel) {
 
 const TABS_CSS = "src/styles/segmented-tabs.css";
 const RADIUS_CSS = "src/styles/theme/radius.css";
+// BD.W-TAB-IOS-CAPSULE — the lifted-plate composite (fill + rim + lift shadow) was
+// extracted VERBATIM from the inline `.segmented-indicator` into the shared
+// `.glass-capsule` register; the active pill now COMPOSES the class (the SFC adds it).
+// T2/T5 read the composite off the capsule register, and assert the SFC composes it.
+const CAPSULE_CSS = "src/styles/glass/glass-capsule.css";
 const SFC = "src/components/custom/tabs/SegmentedTabs.vue";
 const ENGINE_FILES = [
     "src/components/custom/tabs/composables/useTabIndicator.ts",
@@ -99,28 +104,39 @@ export function detectStadiumRadius(radiusRaw, tabsRaw) {
 //   (--glass-bg-floating-tinted, NOT the raw --glass-bg-floating), AND its box-shadow
 //   composes the directional rim (--glass-rim-top/--glass-rim-bottom) + a real under-shadow
 //   (NOT the weak `0 1px 3px rgba(0,0,0,0.08)` alone).
-export function detectDistinctPlate(tabsRaw) {
+export function detectDistinctPlate(capsuleRaw, sfcRaw) {
     const violations = [];
     const facts = {};
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    // BD.W-TAB-IOS-CAPSULE — the composite moved VERBATIM onto `.glass-capsule`; the
+    // pill COMPOSES the class. Read the composite off the capsule register; assert the
+    // SFC threads `glass-capsule` onto the `.segmented-indicator` node.
+    const capsule = stripCss(capsuleRaw ?? readFile(CAPSULE_CSS));
+    const sfc = sfcRaw ?? readFile(SFC);
 
-    const indM = tabs.match(/\.segmented-indicator\s*\{([^}]*)\}/s);
+    const indM = capsule.match(/\.glass-capsule\s*\{([^}]*)\}/s);
     const indBlock = indM ? indM[1] : "";
-    facts.hasIndicatorBlock = !!indM;
+    facts.hasCapsuleBlock = !!indM;
     if (!indM) {
-        violations.push("T2: .segmented-indicator block not found in segmented-tabs.css");
+        violations.push("T2: .glass-capsule block not found in glass/glass-capsule.css (the extracted lifted-plate register the pill composes)");
         return { facts, violations };
     }
 
-    // The fill reads the W55-tinted floating pair, NOT the raw rung.
-    const bgM = indBlock.match(/background:\s*([^;]+);/);
-    facts.indicatorBg = bgM ? bgM[1].trim() : null;
+    // The active pill (.segmented-indicator) COMPOSES the .glass-capsule class.
+    facts.indicatorComposesCapsule = /'glass-capsule'/.test(sfc) || /"glass-capsule"/.test(sfc);
+    if (!facts.indicatorComposesCapsule) {
+        violations.push("T2: SegmentedTabs.vue no longer composes 'glass-capsule' onto the active pill — the lifted-plate register is not threaded onto the indicator");
+    }
+
+    // The capsule fill reads the W55-tinted floating pair (through the
+    // `--glass-capsule-fill` indirection + the warm-floor compose), NOT the raw rung.
+    const bgM = indBlock.match(/background:\s*([\s\S]*?);/);
+    facts.indicatorBg = bgM ? bgM[1].replace(/\s+/g, " ").trim() : null;
     if (!facts.indicatorBg) {
-        violations.push("T2: .segmented-indicator has no background declaration");
-    } else if (/var\(--glass-bg-floating\)/.test(facts.indicatorBg)) {
-        violations.push("T2: .segmented-indicator fills with the RAW var(--glass-bg-floating) — the W55 adaptive darken DROPS; read the element-level oklab-tinted seam var(--glass-bg-floating-tinted)");
+        violations.push("T2: .glass-capsule has no background declaration");
+    } else if (/var\(--glass-bg-floating\)(?!-)/.test(facts.indicatorBg)) {
+        violations.push("T2: .glass-capsule fills with the RAW var(--glass-bg-floating) — the W55 adaptive darken DROPS; read the element-level oklab-tinted seam var(--glass-bg-floating-tinted)");
     } else if (!/var\(--glass-bg-floating-tinted\)/.test(facts.indicatorBg)) {
-        violations.push(`T2: .segmented-indicator background is not the tinted floating seam var(--glass-bg-floating-tinted): '${facts.indicatorBg}'`);
+        violations.push(`T2: .glass-capsule background is not the tinted floating seam var(--glass-bg-floating-tinted): '${facts.indicatorBg}'`);
     }
 
     // The box-shadow composes the directional rim + a real under-shadow, NOT the weak
@@ -257,10 +273,13 @@ export function detectEngineFence(sfcRaw, scalePaperRaw, engineRaws) {
 //   the pill fill is the tinted-floating seam (NOT a saturated/dark fill that would bury
 //   --foreground), and the track keeps the quiet glass tier (the label reads over glass,
 //   not an opaque slab).
-export function detectActiveLabelLegibility(tabsRaw) {
+export function detectActiveLabelLegibility(tabsRaw, capsuleRaw) {
     const violations = [];
     const facts = {};
     const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    // BD.W-TAB-IOS-CAPSULE — the pill fill now lives on `.glass-capsule` (the indicator
+    // composes it); read the fill off the capsule register.
+    const capsule = stripCss(capsuleRaw ?? readFile(CAPSULE_CSS));
 
     // The active tab label is --foreground (the darkest ink — the legibility anchor).
     // Scan EVERY `.segmented-tab[aria-pressed="true"]` rule block and pick the one that
@@ -284,8 +303,8 @@ export function detectActiveLabelLegibility(tabsRaw) {
     // The pill fill is the tinted-floating tier (the bright/near-white plate the W55
     // darken reaches), NOT a saturated --foreground / opaque bg-card / a low-α dark fill
     // that would bury the --foreground label (the material-over-legibility trap).
-    const indM = tabs.match(/\.segmented-indicator\s*\{([^}]*)\}/s);
-    const indBg = indM ? (indM[1].match(/background:\s*([^;]+);/)?.[1]?.trim() ?? "") : "";
+    const indM = capsule.match(/\.glass-capsule\s*\{([^}]*)\}/s);
+    const indBg = indM ? (indM[1].match(/background:\s*([\s\S]*?);/)?.[1]?.replace(/\s+/g, " ").trim() ?? "") : "";
     facts.pillFill = indBg;
     if (/var\(--foreground\)/.test(indBg)) {
         violations.push("T5: the pill fill reads --foreground (a dark plate) — the active --foreground label would have ZERO contrast over it (the material-over-legibility trap)");
@@ -312,13 +331,18 @@ export function selfTest() {
     if (detectStadiumRadius(goodRadius, goodTabs).violations.length !== 0) {
         fails.push("self-test T1: the good stadium radius shape unexpectedly red");
     }
-    // T2: a planted raw --glass-bg-floating fill reds.
-    if (detectDistinctPlate(".segmented-indicator { background: var(--glass-bg-floating); box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating); }").violations.length === 0) {
+    // T2: a planted raw --glass-bg-floating fill reds (read off the capsule register).
+    const goodSfc = "<template><div :class=\"['segmented-indicator', 'glass-capsule']\"></div></template>";
+    if (detectDistinctPlate(".glass-capsule { background: var(--glass-bg-floating); box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating); }", goodSfc).violations.length === 0) {
         fails.push("self-test T2: a planted raw var(--glass-bg-floating) fill did NOT red");
     }
     // T2: the weak-lift-only shadow reds.
-    if (detectDistinctPlate(".segmented-indicator { background: var(--glass-bg-floating-tinted); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent); }").violations.length === 0) {
+    if (detectDistinctPlate(".glass-capsule { background: var(--glass-bg-floating-tinted); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent); }", goodSfc).violations.length === 0) {
         fails.push("self-test T2: a planted weak `0 1px 3px rgba(0,0,0,0.08)` lift-only did NOT red");
+    }
+    // T2: a SFC that drops the glass-capsule compose reds.
+    if (detectDistinctPlate(".glass-capsule { background: var(--glass-bg-floating-tinted); box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating); }", "<template><div class=\"segmented-indicator\"></div></template>").violations.length === 0) {
+        fails.push("self-test T2: a SFC that drops the 'glass-capsule' compose did NOT red");
     }
     // T3: a planted dark --border top ring reds.
     if (detectNoDarkRing(".segmented-indicator { box-shadow: 0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent); }").violations.length === 0) {
@@ -332,8 +356,8 @@ export function selfTest() {
     if (detectEngineFence("<template><button :tabindex=\"rovingTabindex(idx)\"></button></template>", "--tab-indicator-max-stretch: 1.08;\n--tab-indicator-duration: var(--spring-snappy-duration);", { constants: "export const DEFAULT_INDICATOR_MAX_STRETCH = 1.08; export const INDICATOR_RELEASE_AT_ARRIVAL = 0.82;" }).violations.length === 0) {
         fails.push("self-test T4: a SFC missing aria-pressed/aria-selected did NOT red");
     }
-    // T5: a planted dark pill fill reds.
-    if (detectActiveLabelLegibility(".segmented-tab[aria-pressed=\"true\"] { color: var(--foreground); } .segmented-indicator { background: var(--foreground); }").violations.length === 0) {
+    // T5: a planted dark pill fill reds (the fill now lives on the capsule register).
+    if (detectActiveLabelLegibility(".segmented-tab[aria-pressed=\"true\"] { color: var(--foreground); }", ".glass-capsule { background: var(--foreground); }").violations.length === 0) {
         fails.push("self-test T5: a planted dark var(--foreground) pill fill did NOT red");
     }
     return fails;

@@ -142,12 +142,16 @@ export function useConcentric(
         // velocity LEADS the well a hair (the gravity trails the cursor — liquid weight).
         const sp = pointer.smoothedPosition.value;
         const vel = pointer.velocity.value;
+        // The ACCELERATION axis (the second derivative) — the flick-anticipation that leads the
+        // well a HAIR further on a fast direction-change (the impulse the steady velocity misses).
+        const acc = pointer.acceleration.value;
         const lead = 0.1;
+        const accLead = 0.04;
         const canvas = canvasRef.value;
         const aspect = (canvas?.clientWidth || 320) / Math.max(canvas?.clientHeight || 320, 1);
         cursor = {
-            x: ((sp.x * 2 - 1) + vel.x * lead) * aspect,
-            y: -(sp.y * 2 - 1) - vel.y * lead,
+            x: ((sp.x * 2 - 1) + vel.x * lead + acc.x * accLead) * aspect,
+            y: -(sp.y * 2 - 1) - vel.y * lead - acc.y * accLead,
         };
 
         // The velocity-HEAVE — pointer SPEED scales the well depth/radius (morph-more-on-move).
@@ -156,7 +160,12 @@ export function useConcentric(
         const speed = Math.hypot(vel.x, vel.y);
         const s = Math.min(speed / 1.2, 1); // normalize a fast sweep toward the ceiling
         const ramp = s * s * (3 - 2 * s); // smoothstep — C1-smooth engage
-        wellScale = 1 + config.velocityHeave * ramp;
+        // The flick-BURST — a DISTINCT one-shot impulse a fast FLICK injects (the transient the
+        // velocity ramp can't carry: the burst decays on its own register, so a quick stab heaves
+        // the topography deeper for an instant then settles — velocity AND acceleration, not only
+        // the steady speed). The burst rides ON TOP of the velocity heave.
+        const burst = pointer.burst.value;
+        wellScale = 1 + config.velocityHeave * ramp + config.velocityHeave * 0.6 * burst;
     }
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;

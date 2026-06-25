@@ -308,21 +308,41 @@ void main() {
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
-    // ── BC.W-GOOBLOB-PLAIN — the STAGE-1 stripped floor (variant=blob). ──
-    // The minimal verifiable floor: SDF + smin (the meatball field, already in
-    // d/alpha above) + fwidth-AA (the crisp alpha) + warm-cream fill. NO surface
-    // normal, NO Fresnel, NO lit glint, NO iridescence, NO fake-SSS, NO shadow —
-    // deliberately FLAT. It returns BEFORE the STAGE-2 dressing, the GLSL twin of
-    // the WGSL primary's uStage > 0.5 branch. The teaching contrast: the "it
-    // renders, it meatballs" floor STAGE 2 layers the lit/shadow onto via the SAME
-    // uStage/uLit uniforms.
-    if (uStage > 0.5) {
-        oklch = gamutClampOklch(oklch);
-        vec3 lin1 = oklabToLinearSrgb(oklchToOklab(oklch));
-        vec3 rgb1 = clamp(linearToSrgb(lin1), 0.0, 1.0);
+    // ── BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING MORPH (uMorphT). ──
+    // The user #1 ask: the goo should MORPH BLOB and MEATBALL from one to another
+    // — a CONTINUOUS in-between, not a hard variant cut. The KEY FACT: the body
+    // GEOMETRY is IDENTICAL across blob/meatball (the smin SDF field, the satellites,
+    // the fwidth-AA — all computed ABOVE, before this gate). ONLY the SURFACE shading
+    // (flat fill vs lit/shadow/iridescence/SSS) differs. So the morph is a uMorphT
+    // scalar LERPING the SHADING — NOT a geometry rebuild, NOT a path interpolation.
+    //
+    //   uMorphT = 0  -> the flat warm-cream blob (the STAGE-1 floor, byte-identical to
+    //                   the old uStage > 0.5 early-return);
+    //   uMorphT = 1  -> the lit meatball (the full STAGE-2 dressing, byte-identical to
+    //                   the old else path);
+    //   0 < uMorphT < 1 -> the CONTINUOUS in-between (the morph the user asked for).
+    //
+    // uMorphT resolves from variant for back-compat (blob -> 0, meatball -> 1); a
+    // consumer ANIMATING config.morphT 0..1 gets the live morph. The smin field is
+    // byte-UNTOUCHED (the geometry is shared — that is the whole point).
+    //
+    // The flat color is computed ALWAYS (cheap); the EXPENSIVE dressing (the soft-shadow
+    // secondary march) is gated uMorphT > 0.0 so a pure blob pays ZERO shadow-march
+    // cost (the SLOW-fix discipline — a flat blob is as cheap as the old early-return).
+    float morphT = clamp(uMorphT, 0.0, 1.0);
+
+    // STAGE-1 flat fill — the warm-cream blob color, off the PRE-dressing oklch (the
+    // dressing mutates oklch below, so the flat read must snapshot it here).
+    vec3 flatOkl = gamutClampOklch(oklch);
+    vec3 flatLin = oklabToLinearSrgb(oklchToOklab(flatOkl));
+    vec3 flatRgb = clamp(linearToSrgb(flatLin), 0.0, 1.0);
+
+    // If we are fully flat (a pure blob, morphT == 0), emit the flat fill + dither and
+    // return — the byte-identical STAGE-1 floor, zero dressing cost.
+    if (morphT <= 0.0) {
         float ign1 = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
-        rgb1 = clamp(rgb1 + (ign1 - 0.5) / 255.0, 0.0, 1.0);
-        fragColor = vec4(rgb1 * alpha, alpha);
+        flatRgb = clamp(flatRgb + (ign1 - 0.5) / 255.0, 0.0, 1.0);
+        fragColor = vec4(flatRgb * alpha, alpha);
         return;
     }
 
@@ -468,6 +488,15 @@ void main() {
     }
 
     vec3 rgb = clamp(linearToSrgb(lin), 0.0, 1.0); // MANDATORY OETF — closes the seam
+
+    // ── BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING MORPH compose. ──
+    // rgb is the fully-dressed meatball surface; flatRgb (snapshotted before the
+    // dressing) is the flat blob fill. The morph is a CONTINUOUS lerp between them on
+    // morphT — at morphT==1 it is byte-identical to the dressed meatball, and the
+    // morphT==0 case already returned the flat fill above. The geometry (alpha/silhouette)
+    // is shared, so only the SURFACE shading interpolates (the morph from one to
+    // another). The dither below applies to the composited result.
+    rgb = mix(flatRgb, rgb, morphT);
 
     // IGN dither (AX.W15 [2][9]) — the low-chroma warm-cream dome BANDS on 8-bit
     // panels (visible Mach steps in the smooth L roll). Interleaved-gradient noise at

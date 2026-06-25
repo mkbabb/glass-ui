@@ -65,57 +65,59 @@ const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : null);
 const stripJsComments = (s) =>
     (s ?? "").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
 
-// ── S1: the STAGE-1 uStage-gated stripped floor exists in BOTH backends ──
+// ── S1: the STAGE-1 stripped flat floor exists in BOTH backends — RE-POINTED to the
+//        BD.W-GOO-CAROUSEL-DECK uMorphT SHADING-MORPH (the `uStage > 0.5` hard early-return
+//        is now a `uMorphT <= 0.0` flat-floor early-return + a `mix(flatRgb…, rgb, morphT)`
+//        continuous lerp). The intent is PRESERVED: the flat floor still EXISTS, still
+//        returns BEFORE the lit dressing (so a pure blob pays zero dressing cost), and the
+//        dressing is reached only for morphT > 0. The continuous-lerp witness is added. ──
 function clauseStage1(over = {}) {
     const viol = [];
     const wgsl = over.wgsl ?? read(WGSL) ?? "";
     const frag = over.frag ?? read(FRAG) ?? "";
 
-    // The WGSL fs_main reads uStage off the spare s7.w lane and gates an early-return
-    // fill-only branch BEFORE the lit/iridescence/SSS/surface-normal work.
+    // The WGSL fs_main reads the morph scalar off the base.w lane + uStage off s7.w.
+    if (!/let\s+uMorphT\s*=\s*clamp\(\s*u\.base\.w/.test(wgsl))
+        viol.push("S1: metaball.wgsl fs_main does not read uMorphT off the base.w lane");
     if (!/let\s+uStage\s*=\s*u\.s7\.w\s*;/.test(wgsl))
         viol.push("S1: metaball.wgsl fs_main does not read uStage off the s7.w lane");
-    const wgslBranch = /if\s*\(\s*uStage\s*>\s*0\.5\s*\)\s*\{/.test(wgsl);
+    const wgslBranch = /if\s*\(\s*uMorphT\s*<=\s*0\.0\s*\)\s*\{/.test(wgsl);
     if (!wgslBranch)
-        viol.push("S1: metaball.wgsl has no `if (uStage > 0.5)` STAGE-1 branch (the no-gate monolith)");
+        viol.push("S1: metaball.wgsl has no `if (uMorphT <= 0.0)` flat-floor early-return (the no-floor monolith)");
 
-    // The STAGE-1 branch must RETURN before the lit block (uLit) and the surface normal —
-    // structurally: the `if (uStage > 0.5)` block + its `return` must precede the
+    // The flat-floor branch must RETURN before the lit block (uLit) and the surface normal —
+    // structurally: the `if (uMorphT <= 0.0)` block + its `return` must precede the
     // `surfaceNormalFromGrad(` call and the `if (uLit > 0.5)` lit block in source order.
-    const idxStage = wgsl.search(/if\s*\(\s*uStage\s*>\s*0\.5\s*\)/);
+    const idxStage = wgsl.search(/if\s*\(\s*uMorphT\s*<=\s*0\.0\s*\)/);
     const idxNormal = wgsl.search(/let\s+N\s*=\s*surfaceNormalFromGrad\(/);
     const idxLit = wgsl.search(/if\s*\(\s*uLit\s*>\s*0\.5\s*\)/);
     if (wgslBranch && idxStage >= 0) {
-        // The stripped branch must contain its OWN return (the early-out) and sit BEFORE
-        // the normal/lit work — so STAGE 1 never reaches the dressing.
         const branchBody = wgsl.slice(idxStage, idxNormal >= 0 ? idxNormal : wgsl.length);
         if (!/return\s+vec4<f32>\(\s*rgb1\s*\*\s*alpha\s*,\s*alpha\s*\)\s*;/.test(branchBody))
-            viol.push("S1: the WGSL STAGE-1 branch does not return the premultiplied fill (no early-out)");
+            viol.push("S1: the WGSL flat-floor branch does not return the premultiplied fill (no early-out)");
         if (idxNormal >= 0 && idxStage > idxNormal)
-            viol.push("S1: the WGSL STAGE-1 branch sits AFTER the surface normal (the lit work is reached)");
+            viol.push("S1: the WGSL flat-floor branch sits AFTER the surface normal (the lit work is reached)");
         if (idxLit >= 0 && idxStage > idxLit)
-            viol.push("S1: the WGSL STAGE-1 branch sits AFTER the lit block (the dressing is reached)");
+            viol.push("S1: the WGSL flat-floor branch sits AFTER the lit block (the dressing is reached)");
     }
-    // The STAGE-1 fill path must NOT reach the lit/iridescence/SSS — assert the branch body
-    // carries no spec/rim/irid/sss identifiers (a planted always-lit STAGE-1 reds).
-    if (wgslBranch && idxStage >= 0) {
-        const branchBody = wgsl.slice(
-            idxStage,
-            wgsl.indexOf("\n", wgsl.indexOf("}", idxStage)),
-        );
-        if (/\b(spec|rimFres|iridHue|sss|highlight)\b/.test(branchBody))
-            viol.push("S1: the WGSL STAGE-1 branch reaches a lit/iridescence/SSS term (not the flat floor)");
-    }
+    // The continuous-lerp witness: the final compose mixes flat→dressed on uMorphT.
+    if (!/mix\(\s*flatRgbBase\s*,\s*rgb\s*,\s*uMorphT\s*\)/.test(wgsl))
+        viol.push("S1: metaball.wgsl does not lerp flat→dressed on uMorphT (the continuous morph is absent)");
 
-    // The GLSL fallback transcribes the SAME branch.
-    if (!/uniform\s+float\s+uStage\s*;/.test(over.uniforms ?? read(UNIFORMS) ?? ""))
+    // The GLSL fallback transcribes the SAME shape.
+    const uniformsSrc = over.uniforms ?? read(UNIFORMS) ?? "";
+    if (!/uniform\s+float\s+uStage\s*;/.test(uniformsSrc))
         viol.push("S1: metaball-uniforms.glsl does not declare uStage");
-    if (!/if\s*\(\s*uStage\s*>\s*0\.5\s*\)\s*\{/.test(frag))
-        viol.push("S1: metaball.frag has no `if (uStage > 0.5)` STAGE-1 branch (the GLSL twin)");
-    const fIdxStage = frag.search(/if\s*\(\s*uStage\s*>\s*0\.5\s*\)/);
+    if (!/uniform\s+float\s+uMorphT\s*;/.test(uniformsSrc))
+        viol.push("S1: metaball-uniforms.glsl does not declare uMorphT");
+    if (!/if\s*\(\s*morphT\s*<=\s*0\.0\s*\)\s*\{/.test(frag))
+        viol.push("S1: metaball.frag has no `if (morphT <= 0.0)` flat-floor early-return (the GLSL twin)");
+    if (!/mix\(\s*flatRgb\s*,\s*rgb\s*,\s*morphT\s*\)/.test(frag))
+        viol.push("S1: metaball.frag does not lerp flat→dressed on morphT (the GLSL continuous morph is absent)");
+    const fIdxStage = frag.search(/if\s*\(\s*morphT\s*<=\s*0\.0\s*\)/);
     const fIdxNormal = frag.search(/vec3\s+N\s*=\s*surfaceNormalFromGrad\(/);
     if (fIdxStage >= 0 && fIdxNormal >= 0 && fIdxStage > fIdxNormal)
-        viol.push("S1: the GLSL STAGE-1 branch sits AFTER the surface normal (the lit work is reached)");
+        viol.push("S1: the GLSL flat-floor branch sits AFTER the surface normal (the lit work is reached)");
 
     return viol;
 }
@@ -182,10 +184,13 @@ function clauseFwidthAndLane(over = {}) {
             );
     }
 
-    // The SoT extend: uStage rides the spare s7.w lane (the bridge writes it off
-    // config.variant — the typed-struct EXTEND, never a re-fork).
-    if (!/f32\[OFF\.s7\s*\+\s*3\]\s*=\s*config\.variant\s*===\s*["']blob["']\s*\?\s*1\.0\s*:\s*0\.0\s*;/.test(bridge))
-        viol.push("S3: the WGSL bridge does not write uStage off config.variant on the spare s7.w lane");
+    // The SoT extend: uStage rides the spare s7.w lane — RE-POINTED (BD.W-GOO-CAROUSEL-DECK)
+    // to be DERIVED from morphT (1.0 = the flat floor at morphT <= 0). The morphT scalar
+    // itself rides the base.w lane.
+    if (!/f32\[OFF\.s7\s*\+\s*3\]\s*=\s*morphT\s*<=\s*0\s*\?\s*1\.0\s*:\s*0\.0\s*;/.test(bridge))
+        viol.push("S3: the WGSL bridge does not write the morphT-derived uStage on the spare s7.w lane");
+    if (!/f32\[OFF\.base\s*\+\s*3\]\s*=\s*morphT\s*;/.test(bridge))
+        viol.push("S3: the WGSL bridge does not write uMorphT off config.morphT on the base.w lane");
 
     // The variant axis exists with the STAGE-1 "blob" member + the default "meatball" (no
     // regression — the full lit pipeline stays the default; no `variant="legacy"` alias).

@@ -153,7 +153,18 @@ export function detect(paths) {
         );
     } else {
         const body = ringRecipe[1];
-        const hasFloatingBg = /background\s*:\s*var\(--glass-bg-floating\)/.test(body);
+        // BD.W-GOO-CAROUSEL-DECK re-point: the background reads the translucent
+        // `--glass-bg-floating` rung either BARE (the prior raw token) OR through the
+        // element-level `color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-
+        // source) var(--glass-tint-strength))` tint seam (the gray-hole fix — at the 0%
+        // default it is the byte-identical no-op floor, over a bright/dark backdrop it
+        // darkens/lifts). EITHER form is the translucent floating tier, never an opaque
+        // bg-card. An opaque `bg-card`/`background: var(--card)` form still reds.
+        const hasFloatingBg =
+            /background\s*:\s*var\(--glass-bg-floating\)/.test(body) ||
+            /background\s*:\s*color-mix\([^)]*var\(--glass-bg-floating\)[\s\S]*?var\(--glass-tint-source\)/.test(
+                body,
+            );
         const hasFloatingBlur = /backdrop-filter\s*:\s*var\(--glass-blur-floating\)/.test(body);
         const hasPillRadius = /border-radius\s*:\s*var\(--radius-pill\)/.test(body);
         facts.ringFloatingBg = hasFloatingBg;

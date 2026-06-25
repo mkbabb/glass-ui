@@ -43,6 +43,8 @@ const VIEWPORTS = [
 const STRONG_FLOOR = 0.02;
 const CHIP_FLOOR = 0.011;
 const PLATE_FLOOR = 0.0035;
+// BD.W-GLASS-ABROGATE-GRAY G6 — the warm-MATERIAL plate floor (the perceptual bar; the gate twin).
+const WARM_PLATE_FLOOR = 0.01;
 const WARM_HUE_LO = 45;
 const WARM_HUE_HI = 88; // π allows a hair more headroom than the source gate (live AA-engine drift)
 
@@ -289,6 +291,56 @@ test.describe("no-gray (π — the warm-chroma floor, fail-CLOSED)", () => {
                 `the dark --surface-tint-15 chip composites OKLab H ${chipOk.H.toFixed(1)}° above the warm ceiling ${WARM_HUE_HI}° (a yellow-green cast). chip "${chip.chipBg}" over card "${chip.cardBg}"`,
             ).toBeLessThanOrEqual(WARM_HUE_HI);
         });
+    }
+
+    // ── (f) BD.W-GLASS-ABROGATE-GRAY — the LIVE /forms/select open dropdown panel reads warm ──
+    // The literal user-screenshot defect: the Select content panel (the .glass-floating overlay
+    // tier) composited over the real page reads a flat medium-GRAY in light mode. This arm opens
+    // the real Select, reads getComputedStyle(panel).backgroundColor, composites it over the page,
+    // and asserts the COMPOSITED OKLab C ≥ WARM_PLATE_FLOOR at the warm hue in BOTH modes — the
+    // binding paint mapping 1:1 to before-select-light.png. Fail-CLOSED.
+    for (const vp of VIEWPORTS) {
+        for (const mode of [false, true] as const) {
+            test(`(f) the LIVE Select dropdown panel composites warm [${mode ? "dark" : "light"}] @ ${vp.name}`, async ({
+                page,
+            }) => {
+                await page.setViewportSize({ width: vp.width, height: vp.height });
+                await page.goto("/forms/select", { waitUntil: "networkidle" });
+                await setDark(page, mode);
+                // open the first Select trigger.
+                const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+                await trigger.click();
+                await page.waitForTimeout(260); // the glass-reveal bloom settles
+                const read = await page.evaluate(() => {
+                    const panel = document.querySelector(
+                        '[data-slot="select-content"], [role="listbox"]',
+                    ) as HTMLElement | null;
+                    if (!panel) return null;
+                    return {
+                        panel: getComputedStyle(panel).backgroundColor,
+                        page: getComputedStyle(document.body).backgroundColor,
+                    };
+                });
+                expect(read, "the Select content panel did not open / was not found").not.toBeNull();
+                const panelOver = parseRgbA(read!.panel);
+                const pageRgb = parseRgbA(read!.page);
+                expect(panelOver, `could not parse panel bg "${read!.panel}"`).not.toBeNull();
+                expect(pageRgb, `could not parse page bg "${read!.page}"`).not.toBeNull();
+                const comp = composite(panelOver!, pageRgb!);
+                const ok = rgbToOklab(comp.r, comp.g, comp.b);
+                expect(
+                    ok.C,
+                    `the LIVE Select dropdown panel composites OKLab C ${ok.C.toFixed(4)} < WARM_PLATE_FLOOR ${WARM_PLATE_FLOOR} [${mode ? "dark" : "light"}] — the flat-gray dropdown slab persists. panel "${read!.panel}" over page "${read!.page}"`,
+                ).toBeGreaterThanOrEqual(WARM_PLATE_FLOOR);
+                expect(
+                    ok.H,
+                    `the LIVE Select panel composites OKLab H ${ok.H.toFixed(1)}° outside the warm register [${WARM_HUE_LO},${WARM_HUE_HI}]°. panel "${read!.panel}"`,
+                ).toBeGreaterThanOrEqual(WARM_HUE_LO);
+                expect(ok.H, `the LIVE Select panel hue ${ok.H.toFixed(1)}° above warm ceiling`).toBeLessThanOrEqual(
+                    WARM_HUE_HI,
+                );
+            });
+        }
     }
 
     // ── THE CAPTURED DELTA — whole-fixture frames (both modes; the cardinal-lesson artefact)

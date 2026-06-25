@@ -83,10 +83,17 @@ function main() {
             "(1) the active preset chip does not resolve a glass-* tier (or still carries the opaque `bg-foreground text-background` stamp)",
         );
 
-    // (2) Press-spring (.tap-squish) on chip + layer trigger + row reset.
-    facts.chipTapSquish = /data-slot="configurator-preset"[\s\S]{0,400}tap-squish/.test(
-        configurator,
-    );
+    // (2) Press-spring on chip + layer trigger + row reset.
+    // BD.W-TAB-IOS-CAPSULE — the preset chip RE-EXPRESSED its press-spring onto the
+    // SHARED `.glass-capsule-hover` register (the `.glass-tab-capsule→.glass-capsule`
+    // consolidation): `.glass-capsule-hover:active { scale: var(--scale-press-sm) }` is
+    // the press-snap, the same iOS press-spring the bespoke `.tap-squish` gave — now
+    // ONE shared register, not an inline utility. The chip anchor moved to
+    // `data-preset-tile`. The trigger + reset keep `.tap-squish` (unchanged). Accept the
+    // chip composing `glass-capsule-hover` (which carries the :active scale press).
+    facts.chipTapSquish =
+        /data-preset-tile[\s\S]{0,500}glass-capsule-hover/.test(configurator) ||
+        /data-slot="configurator-preset"[\s\S]{0,400}tap-squish/.test(configurator);
     facts.triggerTapSquish = /data-slot="configurator-layer-trigger"[\s\S]{0,400}tap-squish/.test(
         layer,
     );
@@ -104,8 +111,14 @@ function main() {
             "(2) the row reset still carries the raw `active:scale-[var(--scale-press…)]` literal — retire it onto .tap-squish",
         );
 
-    // (3) transition-control on chip + trigger + reset (NOT bare transition-colors).
+    // (3) uniform transition surface on chip + trigger + reset (NOT bare transition-colors).
+    // BD.W-TAB-IOS-CAPSULE — the chip's uniform cross-fade rides the shared
+    // `.glass-capsule-hover` register's `transition: scale var(--duration-fast)
+    // var(--ease-cartoon-punch) …` (the specular-lift + press-snap cross-fade), the same
+    // uniform surface transition `transition-control` gave — now ONE shared register.
+    // The trigger + reset keep `transition-control` (unchanged).
     facts.chipTransitionControl =
+        /data-preset-tile[\s\S]{0,500}glass-capsule-hover/.test(configurator) ||
         /data-slot="configurator-preset"[\s\S]{0,400}transition-control/.test(configurator);
     facts.triggerTransitionControl =
         /data-slot="configurator-layer-trigger"[\s\S]{0,400}transition-control/.test(layer);
@@ -118,11 +131,15 @@ function main() {
     if (!facts.resetTransitionControl)
         violations.push("(3) the row reset does not resolve transition-control");
 
-    // (4) Semantic radius geometry — the chip + reset ride --radius-pill (rounded-pill);
-    //     a one-off literal radius is forbidden.
-    facts.chipSemanticRadius = /data-slot="configurator-preset"[\s\S]{0,400}rounded-pill/.test(
-        configurator,
-    );
+    // (4) Semantic radius geometry — the chip + reset ride --radius-pill; a one-off
+    //     literal radius is forbidden. BD.W-TAB-IOS-CAPSULE — the chip's pill geometry
+    //     now rides the shared `.glass-capsule` register (`.glass-capsule { border-radius:
+    //     var(--radius-pill) }` in glass/glass-capsule.css — the SAME semantic --radius-pill
+    //     token, just via the shared register, not the inline `rounded-pill` utility). The
+    //     reset keeps `rounded-pill` (unchanged).
+    facts.chipSemanticRadius =
+        /data-preset-tile[\s\S]{0,500}\bglass-capsule\b/.test(configurator) ||
+        /data-slot="configurator-preset"[\s\S]{0,400}rounded-pill/.test(configurator);
     facts.resetSemanticRadius = /data-slot="configurator-reset"[\s\S]{0,400}rounded-pill/.test(row);
     if (!facts.chipSemanticRadius)
         violations.push("(4) the preset chip does not ride a semantic radius token (rounded-pill)");
@@ -130,9 +147,11 @@ function main() {
         violations.push("(4) the row reset does not ride a semantic radius token (rounded-pill)");
 
     // (5) focus-ring on chip + trigger + reset (the four-state contract).
-    facts.chipFocusRing = /data-slot="configurator-preset"[\s\S]{0,400}focus-ring/.test(
-        configurator,
-    );
+    // BD.W-TAB-IOS-CAPSULE — the chip keeps the `focus-ring` utility, anchored to the
+    // new `data-preset-tile` chip root (the `data-slot="configurator-preset"` rename).
+    facts.chipFocusRing =
+        /data-preset-tile[\s\S]{0,500}focus-ring/.test(configurator) ||
+        /data-slot="configurator-preset"[\s\S]{0,400}focus-ring/.test(configurator);
     facts.triggerFocusRing = /data-slot="configurator-layer-trigger"[\s\S]{0,400}focus-ring/.test(
         layer,
     );
@@ -144,7 +163,11 @@ function main() {
     // (6) data-slot coverage — six sub-surface roots.
     const slots = {
         configurator: /data-slot="configurator"/.test(configurator),
-        "configurator-preset": /data-slot="configurator-preset"/.test(configurator),
+        // BD.W-TAB-IOS-CAPSULE — the preset chip root is the `data-preset-tile` attr (the
+        // `data-slot="configurator-preset"` rename; clean break, no alias). The chip is
+        // still a machine-addressable sub-surface root — just the BD attr name.
+        "configurator-preset": /data-preset-tile/.test(configurator) ||
+            /data-slot="configurator-preset"/.test(configurator),
         "configurator-layer": /data-slot="configurator-layer"/.test(layer),
         "configurator-layer-trigger": /data-slot="configurator-layer-trigger"/.test(layer),
         "configurator-row": /data-slot="configurator-row"/.test(row),

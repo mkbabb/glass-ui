@@ -23,11 +23,14 @@
 //        `lowConcurrency || reducedMotion || saveData ? "css" : "webgl"`. Bite: a re-added
 //        `hardwareConcurrency <= 4` "css" branch reds.
 //
-//   A2 — THE CAPTURE PATH AWAITS THE DEVICE. usePresetThumbnails awaits `armAsync`/`arm`
-//        BEFORE the first `renderAt` (a synchronous `renderAt` right after
-//        createAurora(…,{mode:"capture"}) bakes a BLANK frame on the WebGPU backend). RED
-//        at HEAD: the loop calls `aurora.renderAt(1.0)` with no preceding await. Bite: a
-//        renderAt-before-await reds.
+//   A2 — THE PREVIEW IS DEVICE-FREE (BD.W-PRESET-RENDER re-root). usePresetThumbnails paints
+//        each preset via the device-free `auroraFallbackGround` (the CPU palette+nuclei mirror)
+//        — NO eager `createAurora({mode:"capture"})`, NO `aurora.renderAt` GL draw, NO -99999px
+//        offscreen capture canvas. The PRIOR diagnosis (an `await armAsync()`-before-`renderAt`
+//        init-reorder) was MIS-TRACED: the throw fired at the capture-mode createAurora CALL on
+//        every no-device host (validation-probe/SwiftShader), aborting all 13 cards before any
+//        renderAt — an init-reorder fixed nothing. The clean break is no GL device at all. Bite:
+//        a re-introduced capture-mode createAurora + renderAt reds.
 //
 //   A3 — THE WGSL PRIMARY CARRIES THE PAINTERLY MEDIUMS. aurora.wgsl.ts splices
 //        aurora-mediums.wgsl.ts (which dispatches uMedium 1-7 via applyMedium), and the
@@ -151,18 +154,35 @@ export function detectVizAurora(sources) {
         );
     }
 
-    // ── A2 — the capture path awaits the device before renderAt ─────────────────
+    // ── A2 — the preview is DEVICE-FREE (BD.W-PRESET-RENDER re-root) ─────────────
+    // The PRIOR diagnosis (an init-order/readback race the old A2 asserted: `await armAsync()`
+    // BEFORE `renderAt`) was MIS-TRACED by all three reads (GREENFIELD-HARDENING-PLAN
+    // configurator-presentation row): the throw fired at the `createAurora({mode:"capture"})`
+    // CALL on every no-device host (validation-probe/SwiftShader), aborting all 13 cards BEFORE
+    // any renderAt was reached — an init-reorder fixes nothing. The SHIPPED clean break
+    // (no-backwards-compat): the thumbnail does NOT touch a GL device at all — it paints each
+    // preset via the device-free `auroraFallbackGround` (the CPU palette+nuclei mirror). A2 now
+    // asserts that contract: NO eager `createAurora({mode:"capture"})`, NO `aurora.renderAt`, NO
+    // `-99999px` capture canvas; the device-free ground is composed. The binding never-blank
+    // chroma/ΔE π (both engines) rides the live π, NOT this device-free gate.
     facts.a2 = {};
-    // An await of armAsync/arm appears BEFORE the renderAt loop.
-    const awaitArmIdx = th.search(/await\s+aurora\.(armAsync|arm)\s*\(\s*\)/);
-    const renderAtIdx = th.search(/aurora\.renderAt\s*\(/);
-    facts.a2.awaitsArm = awaitArmIdx >= 0;
-    facts.a2.awaitBeforeRender =
-        awaitArmIdx >= 0 && renderAtIdx >= 0 && awaitArmIdx < renderAtIdx;
-    facts.a2.ok = facts.a2.awaitsArm && facts.a2.awaitBeforeRender;
+    facts.a2.noCaptureBake = !/createAurora\s*\([^)]*mode\s*:\s*["']capture["']/.test(th);
+    facts.a2.noRenderAt = !/aurora\.renderAt\s*\(/.test(th);
+    facts.a2.noCaptureCanvas = !/-99999px|left\s*:\s*-9999/.test(th);
+    facts.a2.composesDeviceFree = /auroraFallbackGround\s*\(/.test(th);
+    facts.a2.ok =
+        facts.a2.noCaptureBake &&
+        facts.a2.noRenderAt &&
+        facts.a2.noCaptureCanvas &&
+        facts.a2.composesDeviceFree;
     if (!facts.a2.ok) {
+        const why = [];
+        if (!facts.a2.noCaptureBake) why.push("an eager createAurora({mode:'capture'}) survives (the no-device-host abort root)");
+        if (!facts.a2.noRenderAt) why.push("an aurora.renderAt GL draw survives (the device path the preview never needed)");
+        if (!facts.a2.noCaptureCanvas) why.push("a -99999px offscreen capture canvas survives");
+        if (!facts.a2.composesDeviceFree) why.push("auroraFallbackGround (the device-free CPU ground) is not composed");
         violations.push(
-            "A2: usePresetThumbnails must `await aurora.armAsync()` BEFORE the first renderAt (a synchronous renderAt after createAurora(…,{mode:'capture'}) bakes a BLANK frame on the WebGPU backend — the dead-preview defect)",
+            `A2: usePresetThumbnails must be DEVICE-FREE (BD.W-PRESET-RENDER — the dead-preview cure is no GL device, never an init-reorder): ${why.join("; ")}`,
         );
     }
 
@@ -316,11 +336,15 @@ function selfTest() {
         if (mode !== "auto") return mode;
         return "webgl";
       }`;
+    // The NEW device-free shape (BD.W-PRESET-RENDER): NO createAurora({mode:"capture"}), NO
+    // renderAt, NO offscreen capture canvas — each preset paints via auroraFallbackGround.
     const goodThumbnails = `
+      function bakeKey(key) {
+        const ground = auroraFallbackGround(P[key], { grid: 10 });
+        return { image: ground.backgroundImage, mean: ground.metrics.mean };
+      }
       async function bake() {
-        const aurora = createAurora(shared, freezeCfg(P[0]), { mode: "capture" });
-        await aurora.armAsync();
-        for (const key of KEYS) { aurora.update(freezeCfg(P[key])); aurora.renderAt(1.0); }
+        for (const key of KEYS) { const { image } = bakeKey(key); thumbs.value[key] = image; }
       }`;
     const goodWgsl = `
       import { AURORA_MEDIUMS_WGSL } from "./aurora-mediums.wgsl";
@@ -386,11 +410,15 @@ function selfTest() {
         const { facts } = detectVizAurora({ ...base, renderMode: bad });
         bites.push({ name: "A1 dead-static-fall reds", reds: !facts.a1.ok });
     }
-    // Bite B — a synchronous renderAt-before-await reds A2 (the dead-preview).
+    // Bite B — a re-introduced eager createAurora({mode:"capture"}) + renderAt GL bake reds A2
+    // (the no-device-host abort root the device-free re-root deleted).
     {
-        const bad = goodThumbnails.replace("await aurora.armAsync();\n", "");
+        const bad = goodThumbnails.replace(
+            "function bakeKey(key) {",
+            'function bakeKey(key) {\n        const aurora = createAurora(shared, P[key], { mode: "capture" });\n        aurora.renderAt(1.0);',
+        );
         const { facts } = detectVizAurora({ ...base, thumbnails: bad });
-        bites.push({ name: "A2 sync-capture reds", reds: !facts.a2.ok });
+        bites.push({ name: "A2 device-bake-regression reds", reds: !facts.a2.ok });
     }
     // Bite C — a smooth-only WGSL (no applyMedium splice) reds A3 (the scope-gap).
     {
@@ -515,7 +543,7 @@ function run() {
         "proof:viz-aurora — the aurora WGSL-primary painterly field (BC.W-VIZ-AURORA, the device-free SOURCE arm)",
     );
     console.log(`  A1 dead-static 'auto' fall is GONE                     : ${yn(facts.a1.ok)}`);
-    console.log(`  A2 capture path awaits the device before renderAt     : ${yn(facts.a2.ok)}`);
+    console.log(`  A2 preset preview is DEVICE-FREE (no capture bake)    : ${yn(facts.a2.ok)}`);
     console.log(`  A3 WGSL primary carries the painterly mediums (lockstep): ${yn(facts.a3.ok)}`);
     console.log(`  A6 warm-cream default + no teal-on-navy in library     : ${yn(facts.a6.ok)}`);
     console.log(`  A7 deriveAurora ACCEPTS + HONORS avoidHues            : ${yn(facts.a7.ok)}`);

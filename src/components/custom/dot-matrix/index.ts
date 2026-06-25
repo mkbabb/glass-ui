@@ -7,6 +7,7 @@ export {
 export {
     type DotMatrixConfig,
     type DotPointerMode,
+    type DotLayout,
     DEFAULT_DOT_MATRIX_CONFIG,
     WARM_IDENTITY_PALETTE,
     MAX_DOTS,

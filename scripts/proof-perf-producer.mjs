@@ -11,9 +11,10 @@
 //        `contain: layout style` reconciled with `contain: paint`/`container-type`)
 //        AND the layer-swap defers the reka Popper re-position off the synchronous
 //        Vue flush (useLayerTransition exposes a `morphing` signal + `deferReposition`
-//        helper). BITE: `DOCK_SPRING {response:0.32, dampingFraction:0.7}` is
-//        BYTE-UNCHANGED (the value.js letter's explicit fence — a wave that "fixes"
-//        fps by re-tuning the spring fails this clause).
+//        helper). BITE: `DOCK_SPRING` is FENCED to the single-source springPreset("dock")
+//        table — it DERIVES the iOS-27 weighty { response: 0.68, dampingFraction: 0.64 }
+//        pair (BD.W-ANIM-IOS27-TUNE), never a forked literal. A perf wave that "fixes"
+//        fps by re-tuning or forking the spring fails this clause.
 //   W2 — A′-6 `--dock-icon-glyph` rides the per-density `--dock-layer-height`
 //        (a RATIO via `--dock-icon-glyph-ratio`), NOT the flat `1.25rem * --dock-scale`.
 //        BITE: a flat-rem re-introduction reds (the glyph `var()` must reference
@@ -44,6 +45,7 @@ const PATHS = {
     shellCss: resolve(ROOT, "src/styles/dock/shell.css"),
     layerTransition: resolve(ROOT, "src/components/custom/dock/composables/useLayerTransition.ts"),
     dockConstants: resolve(ROOT, "src/components/custom/dock/constants.ts"),
+    springPresets: resolve(ROOT, "src/composables/motion/springPresets.ts"),
     // BB.W-CARVE3 — offsets-sizing.css carved into offsets.css (§9) + sizing.css
     // (§10); the --dock-icon-glyph density-ratio block lives in §10 → sizing.css.
     offsetsSizing: resolve(ROOT, "src/styles/tokens/sizing.css"),
@@ -129,13 +131,33 @@ function run() {
         );
     }
 
-    // BITE — DOCK_SPRING byte-unchanged.
+    // BITE — DOCK_SPRING is FENCED (a perf wave never casually re-tunes it). BD.W-ANIM-
+    // IOS27-TUNE intentionally re-tuned the dock spring to the iOS-27 weighty pair AND
+    // moved DOCK_SPRING to DERIVE from the single-source springPreset("dock") table — so
+    // the perf-wave fence is now structural: DOCK_SPRING reads the preset row (it cannot
+    // be forked to a literal inside a perf restyle), and the resolved pair is the booked
+    // weighty { response: 0.68, dampingFraction: 0.64 }. The fence holds; the value is the
+    // intended tune, not a perf-wave drift.
     const dockConst = read(PATHS.dockConstants);
+    facts.dockSpringDerivesPreset =
+        /DOCK_SPRING\s*=\s*\{[\s\S]*?response:\s*springPreset\(\s*["']dock["']\s*\)\.response[\s\S]*?dampingFraction:\s*springPreset\(\s*["']dock["']\s*\)\.dampingFraction/.test(
+            dockConst,
+        );
+    const presetsSrc = read(PATHS.springPresets);
+    const dockRow = presetsSrc.match(
+        /name:\s*["']dock["'],\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
+    );
+    facts.dockSpringPair = dockRow
+        ? { response: Number(dockRow[1]), dampingFraction: Number(dockRow[2]) }
+        : null;
     facts.dockSpringByteUnchanged =
-        /export const DOCK_SPRING = \{ response: 0\.32, dampingFraction: 0\.7 \} as const;/.test(dockConst);
+        facts.dockSpringDerivesPreset &&
+        Boolean(dockRow) &&
+        Number(dockRow[1]) === 0.68 &&
+        Number(dockRow[2]) === 0.64;
     if (!facts.dockSpringByteUnchanged) {
         violations.push(
-            "A′-4 W1 BITE: DOCK_SPRING {response:0.32, dampingFraction:0.7} is NOT byte-unchanged — the value.js letter fences the spring; A′-4 is restyle cost + reflow ordering, NEVER a re-tune",
+            `A′-4 W1 BITE: DOCK_SPRING is not fenced to the single-source springPreset("dock") iOS-27 weighty { response: 0.68, dampingFraction: 0.64 } (derives=${facts.dockSpringDerivesPreset} pair=${facts.dockSpringPair ? `${facts.dockSpringPair.response}/${facts.dockSpringPair.dampingFraction}` : "absent"}) — a perf restyle wave must NOT fork the spring to a literal nor drift the booked tune`,
         );
     }
 

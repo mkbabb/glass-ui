@@ -301,6 +301,14 @@ function run() {
                 // BC.W-DOCK-SEARCH — the dock fuzzy-search composable surface (the
                 // useFuzzySearch consumer the dock band exposes on its composables barrel).
                 "useDockSearch", "UseDockSearchOptions", "UseDockSearchReturn",
+                // BE.W-DOCK-FISSION — the n-ary detach orchestrator (a CONSUMING seam
+                // BESIDE the morph engine; dockMorphContext/DOCK_SPRING byte-untouched).
+                // The dock-fission GREENFIELD wave re-exports the engine + its signature
+                // vocabulary on the dock composables barrel.
+                "useDockFission", "DOCK_SPLIT_SIGNATURES", "DockSplitContext",
+                "DockSplitVector", "DockSplitSquishPeak", "DockSplitSignature",
+                "DockFissionPieceRegistration", "DockFissionPieceHandle",
+                "UseDockFissionOptions", "UseDockFissionReturn",
             ],
         },
     };

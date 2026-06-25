@@ -271,8 +271,16 @@ function clauseWarmIdentity(over) {
         viol.push("5 warm-identity: DEFAULT_GOO_DOT_CONFIG.palette is not WARM_IDENTITY_PALETTE (the default must be warm-cream)");
     if (!/variant\s*:\s*["']dot-field["']/.test(consts))
         viol.push("5 warm-identity: DEFAULT_GOO_DOT_CONFIG.variant is not 'dot-field' (Register A — the smooth field-driven dot is the §T4 default)");
-    if (!/L\s*:\s*0\.92\s*,\s*C\s*:\s*0\.03\s*,\s*h\s*:\s*78/.test(consts))
-        viol.push("5 warm-identity: WARM_IDENTITY_PALETTE does not carry the warm-cream { L:0.92, C:0.03, h:78 } core stop");
+    // BD.W-GOODOT-LIQUID-FIELD Move 3 re-graded the near-mono cream-on-cream core (the old
+    // { L:0.92, C:0.03, h:78 } gray-cream) to REAL chroma (C_core ≥ 0.13, the no-gray warm floor —
+    // the invisible-separation defect cure). The warm-identity fence asserts the NEW reality: the
+    // WARM_IDENTITY_PALETTE carries a bright warm CORE stop in the warm hue band [30,100] with the
+    // chroma floor CLEARED (C ≥ 0.10 — not the old near-gray literal). The binding no-gray ΔL/C
+    // measurement is proof:goodot-liquid G3a (C_core ≥ 0.13).
+    const palBlock = (consts.match(/WARM_IDENTITY_PALETTE\s*:\s*OklchStop\[\]\s*=\s*\[([\s\S]*?)\]/) ?? [, ""])[1];
+    const warmCore = /\{\s*L\s*:\s*(0\.[5-9]\d*)\s*,\s*C\s*:\s*(0\.1[0-9]\d*|0\.[2-9]\d*)\s*,\s*h\s*:\s*([3-9]\d|100)(?:\.\d+)?\s*\}/.test(palBlock);
+    if (!warmCore)
+        viol.push("5 warm-identity: WARM_IDENTITY_PALETTE carries no bright warm CORE stop (L≥0.5, C≥0.10, h∈[30,100]) — the no-gray warm floor (BD.W-GOODOT Move 3, C_core≥0.13) is not cleared");
     const presets = stripComments(over?.presets ?? read(PRESETS));
     if (presets != null && /\bGOO_DOT_TEAL\b|\bGOO_DOT_NAVY\b/.test(presets))
         viol.push("5 warm-identity: a GOO_DOT_TEAL/GOO_DOT_NAVY symbol survives in presets.ts — the teal-on-navy fabricated reference is DELETED (clean break — BC.W-TEAL-NAVY-PURGE)");

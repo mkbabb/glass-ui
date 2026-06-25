@@ -72,6 +72,8 @@ const SUBPATH = resolve(ROOT, "src/subpaths/paper-grid.ts");
 const API = resolve(ROOT, "src/api/index.ts");
 const FLOW_WGSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.wgsl.ts");
 const FLOW_GLSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.glsl.ts");
+const WAVE_WGSL = resolve(ROOT, "src/composables/glass/wave/waveField.wgsl.ts");
+const WAVE_GLSL = resolve(ROOT, "src/composables/glass/wave/waveField.glsl.ts");
 const DEMO = resolve(ROOT, "demo/stories/substrates/paper-grid.vue");
 const AURORA_HERO = resolve(ROOT, "demo/stories/aurora-hero.ts");
 const STORY_HERO = resolve(ROOT, "demo/stories/StoryHero.vue");
@@ -137,19 +139,32 @@ function clauseRoundTrip(over) {
     const js = stripComments(over?.paperGrid ?? read(resolve(DIR, "composables/paperGrid.ts")));
     const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/paper-grid.wgsl.ts")));
     const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/paper-grid.glsl.ts")));
+    // BD.W-VIZ-RESPEC RETIRE: the LINE-warp `curlWarp` + the radial `cursorBulge` are GONE (clean
+    // break, no alias — paperGrid.ts:113). The active warp is the SHARED `cellTwist` (per-cell
+    // rotate/shear) + `cursorSwirl`, both from the `waveField` leaf — so the round-trip witnesses
+    // are re-pointed at those + the paper-grid-owned `potentialFBM`/`gridCoverage`/`samplePaperGrid`.
+    // The shared leaf fns (`cellTwist`/`cursorSwirl`) are SPLICED via WAVE_FIELD_{WGSL,GLSL}; the
+    // binding numeric ΔE round-trip rides proof:wave-field's assertParity (the harness, not the
+    // name-presence). Here P3 asserts the structural transcription presence.
+    const wgslHasWaveFn = (name) =>
+        new RegExp(`\\b${name}\\s*\\(`).test(wgsl) || /WAVE_FIELD_WGSL/.test(wgsl);
+    const glslHasWaveFn = (name) =>
+        new RegExp(`\\b${name}\\s*\\(`).test(glsl) || /WAVE_FIELD_GLSL/.test(glsl);
     const checks = [
         ["potentialFBM in JS", () => /export function potentialFBM/.test(js)],
-        ["curlWarp in JS", () => /export function curlWarp/.test(js)],
-        ["cursorBulge in JS", () => /export function cursorBulge/.test(js)],
+        ["cellTwist warp in JS", () => /\bcellTwist\b/.test(js)],
+        ["cursorSwirl warp in JS", () => /\bcursorSwirl\b/.test(js)],
         ["gridCoverage in JS", () => /export function gridCoverage/.test(js)],
         ["samplePaperGrid in JS", () => /export function samplePaperGrid/.test(js)],
+        // the retired ring/line-warp symbols must NOT come back (no-legacy fence).
+        ["the retired curlWarp/cursorBulge are GONE in JS", () => !/\bcurlWarp\b|\bcursorBulge\b/.test(js)],
         ["potentialFBM in WGSL", () => /fn potentialFBM/.test(wgsl)],
-        ["curlWarp in WGSL", () => /fn curlWarp/.test(wgsl)],
-        ["cursorBulge in WGSL", () => /fn cursorBulge/.test(wgsl)],
+        ["cellTwist warp in WGSL", () => wgslHasWaveFn("cellTwist")],
+        ["cursorSwirl warp in WGSL", () => wgslHasWaveFn("cursorSwirl")],
         ["gridCoverage in WGSL", () => /fn gridCoverage/.test(wgsl)],
         ["potentialFBM in GLSL", () => /float potentialFBM/.test(glsl)],
-        ["curlWarp in GLSL", () => /vec2 curlWarp/.test(glsl)],
-        ["cursorBulge in GLSL", () => /vec2 cursorBulge/.test(glsl)],
+        ["cellTwist warp in GLSL", () => glslHasWaveFn("cellTwist")],
+        ["cursorSwirl warp in GLSL", () => glslHasWaveFn("cursorSwirl")],
         ["gridCoverage in GLSL", () => /float gridCoverage/.test(glsl)],
     ];
     for (const [label, fn] of checks) {
@@ -199,15 +214,31 @@ function clauseCurlGolus(over) {
             "P4 curl: paper-grid.glsl.ts does not splice CURL_FBM_GLSL from flow.glsl (ONE curl source per backend)",
         );
 
-    // The warp is a curl term (it CALLS curlFBM), NOT a raw fbm gradient (the divergence-free
-    // assert — a bare potentialFBM-gradient warp is source-y, the "noise" we don't want).
-    if (!/curlFBM\s*\(/.test(wgsl))
+    // The warp is the SHARED `cellTwist`/`cursorSwirl` (the waveField leaf), which is itself a
+    // divergence-free CURL term — the leaf's cellTwist body CALLS curlFBM (the area-preserving
+    // warp, NOT a raw fbm gradient). The paper-grid shader SPLICES WAVE_FIELD_{WGSL,GLSL} (where
+    // cellTwist lives) and INVOKES cellTwist; the curlFBM call is inside the spliced chunk. P4
+    // asserts both halves: the shader composes cellTwist AND the spliced waveField leaf calls
+    // curlFBM (the divergence-free guarantee).
+    const waveWgsl = over?.waveWgsl ?? read(WAVE_WGSL);
+    const waveGlsl = over?.waveGlsl ?? read(WAVE_GLSL);
+    if (!/\bcellTwist\s*\(/.test(wgsl) || !/WAVE_FIELD_WGSL/.test(rawWgsl ?? ""))
         viol.push(
-            "P4 curl: the WGSL curlWarp does not call curlFBM( — the warp must be the divergence-free curl, NOT a raw fbm gradient (the source-y 'noise')",
+            "P4 curl: paper-grid.wgsl.ts does not compose the SHARED cellTwist warp from WAVE_FIELD_WGSL — the warp must be the divergence-free curl (the source-y 'noise' cure)",
         );
-    if (!/curlFBM\s*\(/.test(glsl))
+    if (!/\bcellTwist\s*\(/.test(glsl) || !/WAVE_FIELD_GLSL/.test(rawGlsl ?? ""))
         viol.push(
-            "P4 curl: the GLSL curlWarp does not call curlFBM( — the warp must be the divergence-free curl, NOT a raw fbm gradient",
+            "P4 curl: paper-grid.glsl.ts does not compose the SHARED cellTwist warp from WAVE_FIELD_GLSL — the warp must be the divergence-free curl",
+        );
+    // The spliced waveField leaf's cellTwist IS a curl warp (it calls curlFBM) — a re-derivation
+    // to a raw fbm gradient in the leaf reds.
+    if (waveWgsl && !/curlFBM\s*\(/.test(stripComments(waveWgsl)))
+        viol.push(
+            "P4 curl: the WGSL waveField leaf (cellTwist) does not call curlFBM( — the shared warp must be the divergence-free curl, NOT a raw fbm gradient",
+        );
+    if (waveGlsl && !/curlFBM\s*\(/.test(stripComments(waveGlsl)))
+        viol.push(
+            "P4 curl: the GLSL waveField leaf (cellTwist) does not call curlFBM( — the shared warp must be the divergence-free curl",
         );
 
     // The Golus derivative-AA distance: length(vec2(dpdx,dpdy)) (WGSL) / length(vec2(dFdx,dFdy))
@@ -316,10 +347,16 @@ function selfTest() {
     const noMoire = runAll({ wgsl: (liveWgsl ?? "").replace(/grid2 = mix\(grid2[^;]*;/g, "") });
     if (!noMoire.some((v) => v.startsWith("P3")))
         fails.push("self-test: a dropped Moiré-suppression mix did NOT red P3");
-    // (d) a warp that drops the curlFBM call reds P4 (a raw-fbm-gradient warp).
-    const noCurl = runAll({ wgsl: (liveWgsl ?? "").replace(/curlFBM\(/g, "potentialGrad(") });
+    // (d) the SHARED waveField leaf re-derived to a raw fbm gradient (drops curlFBM) reds P4 —
+    //     the curl warp now lives in the spliced leaf (cellTwist), not the paper-grid shader.
+    const liveWaveWgsl = read(WAVE_WGSL);
+    const noCurl = runAll({ waveWgsl: (liveWaveWgsl ?? "").replace(/curlFBM\(/g, "potentialGrad(") });
     if (!noCurl.some((v) => v.startsWith("P4")))
-        fails.push("self-test: a warp dropping curlFBM (a raw fbm gradient) did NOT red P4");
+        fails.push("self-test: a waveField leaf dropping curlFBM (a raw fbm gradient) did NOT red P4");
+    // (d2) the paper-grid shader dropping the cellTwist warp composition reds P4.
+    const noTwist = runAll({ wgsl: (liveWgsl ?? "").replace(/cellTwist\(/g, "rawWarp(") });
+    if (!noTwist.some((v) => v.startsWith("P4")))
+        fails.push("self-test: the paper-grid shader dropping the cellTwist warp did NOT red P4");
     // (e) a deleted flow.wgsl.ts reds P4.
     const noFlowWgsl = runAll({ flowWgsl: "" });
     if (!noFlowWgsl.some((v) => v.startsWith("P4")))

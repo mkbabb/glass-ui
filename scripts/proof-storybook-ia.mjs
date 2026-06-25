@@ -108,7 +108,12 @@ export const EXPECTED_TREE = [
     // `dock-search` joined at BC.W-DOCK-SEARCH (the dock-as-native-dynamic-search-bar
     // — the consumer #1 exerciser composing useDockSearch + the shipped /search
     // useFuzzySearch matcher + the virtual-section window + the ToC scroll-to subuse).
-    ["dock", ["overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search"]],
+    // `liquid-playground` + `dock-gallery` joined at the BD dock band (the iOS-27
+    // liquid-dock spec — the dock EXPANDS into a Maps Places sheet / SPLITS into two
+    // Dynamic-Island activity islands / grows into the Apple Music player on the one
+    // useLiquidMorph engine; `dock-gallery` is the BREADTH gallery of distinct iOS
+    // surfaces the dock shape-shifts into). Both are real routed manifest stories.
+    ["dock", ["liquid-playground", "dock-gallery", "overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",

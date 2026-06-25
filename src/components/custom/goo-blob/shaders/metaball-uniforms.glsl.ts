@@ -47,7 +47,16 @@ uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisc
 // fill-only floor (variant="blob"); 0.0 = the full lit pipeline (variant="meatball" /
 // STAGE 2). The WebGL2 fallback transcribes the SAME stripped branch the WGSL primary
 // gates (research/viz/goo-blob.md §5 — the GLSL twin).
+// BD.W-GOO-CAROUSEL-DECK — uStage is now DERIVED from uMorphT (uStage = uMorphT<=0 ?
+// 1 : 0) at upload; the SHADING morph (below) reads uMorphT directly.
 uniform float uStage;
+
+// BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING-MORPH scalar. 0.0 = the flat blob
+// fill (byte-identical to the STAGE-1 floor), 1.0 = the fully-dressed lit meatball; the
+// in-between LERPS the surface shading (NOT the geometry — the smin field is shared). The
+// renderer resolves it from config.morphT (variant to endpoint back-compat: blob to 0,
+// meatball to 1). A consumer ANIMATING morphT 0 to 1 gets the live morph.
+uniform float uMorphT;
 
 // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space). main() early-outs
 // to a transparent write for any fragment OUTSIDE this radius BEFORE the two 3-octave

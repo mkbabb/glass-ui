@@ -98,8 +98,8 @@ HeadFrame headFrame(vec2 head, vec2 headBack, float halfW) {
   HeadFrame fr;
   if (s <= TANGENT_EPS) { fr.T = vec2(1.0, 0.0); fr.sHat = 0.0; return fr; }
   fr.T = d / s;
-  float ref = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
-  fr.sHat = clamp(s / ref, 0.0, 1.0);
+  float refScale = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
+  fr.sHat = clamp(s / refScale, 0.0, 1.0);
   return fr;
 }
 

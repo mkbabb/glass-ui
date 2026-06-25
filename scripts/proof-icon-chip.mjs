@@ -414,15 +414,23 @@ export function detectIconChip(sources) {
 
     // c2 — the hover-bloom GROW (transform) rides --spring-smooth (enter smooth),
     // the color legs stay the bezier, the leave is no-overshoot.
-    // Scope to the .icon-chip--bloom:hover RULE BODY (stop at the first close
-    // brace) so a later keyframe `transform: scale()` cannot cross-match.
-    const bloomRuleBody =
-        (css.match(/\.icon-chip--bloom:hover\s*\{[^}]*\}/) || [""])[0];
-    const bloomTransformOnSpring =
+    // BD.W-CHIP-CONGRUENT-GLASS added a `.icon-chip--glass.icon-chip--bloom:hover`
+    // variant rule (the glass-chip's hover-bloom routing) EARLIER in the file — its
+    // selector CONTAINS the `.icon-chip--bloom:hover` substring, so a first-match
+    // regex anchored on that substring is shadowed by the prefixed variant (body
+    // `background-color: transparent` only). Scan EVERY `.icon-chip--bloom:hover` rule
+    // body and require AT LEAST ONE to carry the GROW + spring (the canonical bloom
+    // rule lives at the unprefixed selector). A nested `color-mix()` carries no `}`,
+    // so the `[^}]*` body-scope is safe.
+    const bloomRuleBodies = [
+        ...css.matchAll(/\.icon-chip--bloom:hover\s*\{([^}]*)\}/g),
+    ].map((m) => m[1]);
+    const bloomTransformOnSpring = bloomRuleBodies.some((body) =>
         /transition[\s\S]*?transform\s+var\(--spring-smooth-duration\)\s+var\(--spring-smooth\)/.test(
-            bloomRuleBody,
-        );
-    const bloomHasGrow = /transform\s*:\s*scale\(/.test(bloomRuleBody);
+            body,
+        ),
+    );
+    const bloomHasGrow = bloomRuleBodies.some((body) => /transform\s*:\s*scale\(/.test(body));
     if (!(bloomTransformOnSpring && bloomHasGrow)) {
         violations.push(
             `W7-c2: the hover-bloom GROW does not ride --spring-smooth (the §6 transform-hover register, enter smooth) — grow:${bloomHasGrow} springTransition:${bloomTransformOnSpring} (BB.W-SUFFUSE3 c2).`,

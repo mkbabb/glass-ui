@@ -129,11 +129,18 @@ export function detectHeroAudacious(sources) {
     const heroScaleHeroRows = (manifest.match(/heroScale:\s*"hero"/g) || []).length;
     facts.ha1.marqueeHeroRows = heroScaleHeroRows;
     facts.ha1.marqueeHeroEnough = heroScaleHeroRows >= 4;
-    // The chassis renders the hero <h1> off the per-route `heroScale` rung (no hardcoded
-    // `text-display-3` literal survives on a hero <h1> in StoryHero/StoryPage/intro).
+    // The chassis renders the PROTAGONIST hero <h1> off the per-route `heroScale` rung
+    // (no hardcoded `text-display-3` literal). BD.W-CUT split the chrome from the
+    // protagonist: the audacious `text-display-${heroScale}` ladder survives ONLY on the
+    // StoryHero protagonist <h1> (variant="hero"); the StoryPage CONTENT-page chrome <h1>
+    // is now the CALM page LABEL (the `.story-chrome-title` class reading
+    // `--chrome-title-rung: var(--type-display-1)`, the φ^2 calm band — LIVE-VERIFIED 38.4px,
+    // above the section), so the chrome no longer carries the dynamic heroScale rung (clean
+    // break, no alias). The assert: StoryHero binds the dynamic rung AND StoryPage carries
+    // EITHER the dynamic rung OR the calm `.story-chrome-title` label (the W-CUT shape).
     facts.ha1.chassisRungIsDynamic =
         /text-display-\$\{(?:props\.)?heroScale\}/.test(hero) &&
-        /text-display-\$\{heroScale\}/.test(page);
+        (/text-display-\$\{heroScale\}/.test(page) || /story-chrome-title/.test(page));
     facts.ha1.noPinnedDisplay3 =
         !/\btext-display-3\b/.test(hero) &&
         !/\btext-display-3\b/.test(page) &&

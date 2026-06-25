@@ -114,12 +114,28 @@ export function detectButtonGlass(sources) {
             idx,
         );
     facts.b1.noRawHoverActive = !rawHoverActive;
-    // (2) the tinted pair is referenced on the glass arms.
-    facts.b1.tintedReferenced =
-        /(?:hover|active|aria-pressed):bg-\(--glass-bg-resting-tinted\)/.test(idx) &&
-        /active:bg-\(--glass-bg-floating-tinted\)/.test(idx);
+    // (2) BD.W-BUTTON-GLASS-CONSUME — the glass-variant arms COMPOSE the shared
+    //     `.glass-capsule .glass-capsule-hover` register (the inline near-gray
+    //     `hover:bg-*`/`active:bg-*` chains were DELETED, clean break). The hover/active
+    //     fill + lift now come from the capsule register: `.glass-capsule`'s fill is the
+    //     element-level oklab-tinted FLOATING seam (`--glass-bg-floating-tinted`, warm-
+    //     floored, indirected through `--glass-capsule-fill`) and `.glass-capsule-hover`
+    //     carries the specular catch-light + scale lift. ONE recipe ≥3 consumers (the
+    //     A8 overfit clearance). So B1 asserts the glass arms COMPOSE the capsule register
+    //     (not an inline tinted-pair string), and the capsule fill resolves the tinted seam.
+    const glassArmStrings = (idx.match(/glass(?:-wash)?[^,'"`]*?glass-capsule[\s\S]*?['"`]/g) || []).join("\n");
+    facts.b1.composesCapsule =
+        /glass-capsule\b/.test(idx) && /glass-capsule-hover\b/.test(idx);
+    // the capsule register's own fill is the warm-floored oklab-tinted floating seam.
+    const cap = stripComments(sources.glassCapsuleCss ?? "");
+    const capFillBlock = cap.match(/\.glass-capsule\s*\{[\s\S]*?background:\s*([\s\S]*?);/)?.[1] ?? "";
+    facts.b1.capsuleFillTinted =
+        /var\(\s*--glass-capsule-fill\b/.test(capFillBlock) &&
+        /--glass-bg-floating-tinted\b/.test(capFillBlock) &&
+        /color-mix\(\s*in\s+oklab/.test(capFillBlock);
     // (3) surfaces.css mints the tinted pair on the W55 oklab seam (BOTH tint vars
-    //     present — the anti-evasion: a tint-FREE oklab swap REDs).
+    //     present — the anti-evasion: a tint-FREE oklab swap REDs). The glass button
+    //     reads `--glass-bg-floating-tinted` through the capsule; the seam must hold.
     const restingTintedBlock =
         surf.match(/--glass-bg-resting-tinted:\s*color-mix\([\s\S]*?\)\s*;/)?.[0] ??
         "";
@@ -136,12 +152,17 @@ export function detectButtonGlass(sources) {
 
     if (!facts.b1.noRawHoverActive) {
         violations.push(
-            "B1: a glass-variant arm still paints the RAW `bg-(--glass-bg-resting)`/`-floating` on hover/active — re-point onto the element-level oklab-tinted `--glass-bg-*-tinted` pair",
+            "B1: a glass-variant arm still paints the RAW `bg-(--glass-bg-resting)`/`-floating` on hover/active — re-point onto the element-level oklab-tinted register (the `.glass-capsule` fill / the `--glass-bg-*-tinted` pair)",
         );
     }
-    if (!facts.b1.tintedReferenced) {
+    if (!facts.b1.composesCapsule) {
         violations.push(
-            "B1: the glass-variant arms must paint the hover/active fill via the tinted pair (`--glass-bg-resting-tinted` on hover, `--glass-bg-floating-tinted` on active)",
+            "B1: the glass-variant arms must COMPOSE the shared `.glass-capsule .glass-capsule-hover` register (the hover/active tinted fill + specular lift live there, ONE recipe ≥3 consumers — the inline gray hover:bg-*/active:bg-* chains are DELETED)",
+        );
+    }
+    if (!facts.b1.capsuleFillTinted) {
+        violations.push(
+            "B1: `.glass-capsule`'s fill must read the element-level oklab-tinted FLOATING seam (`var(--glass-capsule-fill, color-mix(in oklab, var(--glass-bg-floating-tinted), …warm-floor…))`) — the W55 adaptive darken seam, never the raw rung",
         );
     }
     if (!(facts.b1.restingSeam && facts.b1.floatingSeam)) {
@@ -162,11 +183,20 @@ export function detectButtonGlass(sources) {
     // (scale: `${scaleX} ${scaleY}` with scaleX*stretch / scaleY/stretch) — assert
     // the `stretch` value is consumed (the squish is the deform, not a bare scale).
     facts.b2.squishConsumed = /\.stretch\b/.test(vue);
-    // the LOW cap — `maxStretch` ≤ 1.08 (the iOS-segmented register; an uncapped /
-    // high-cap taffy-pull REDs). Extract the numeric literal.
-    const capMatch = vue.match(/maxStretch:\s*([\d.]+)/);
-    facts.b2.cap = capMatch ? Number(capMatch[1]) : null;
-    facts.b2.capLow = facts.b2.cap !== null && facts.b2.cap <= 1.08;
+    // the LOW cap — BD.W-BUTTON-GLASS-CONSUME re-tuned the loud-press amplitude
+    // `maxStretch 1.04 (quiet) → 1.09 (punch)`. The squish is volume-preserving, so the
+    // peak bbox AREA ≈ maxStretch — the fence is the composed-area ≤ 1.14 anti-taffy bar
+    // (the SAME cartoon-punch family fence the tab blob rides), NOT the old per-axis 1.08.
+    // Scan EVERY maxStretch literal; the MAX must clear the area fence (an uncapped /
+    // taffy-pull >1.14 REDs).
+    // capture every numeric literal that follows a `maxStretch:` on the same line
+    // (handles `maxStretch: 1.08`, `maxStretch: () => (cond ? 1.09 : 1.04)` — both legs).
+    const capMatches = [];
+    for (const lineM of vue.matchAll(/maxStretch:\s*([^\n]*)/g)) {
+        for (const num of lineM[1].matchAll(/\b(\d\.\d+)\b/g)) capMatches.push(Number(num[1]));
+    }
+    facts.b2.cap = capMatches.length ? Math.max(...capMatches) : null;
+    facts.b2.capLow = facts.b2.cap !== null && facts.b2.cap <= 1.14 && facts.b2.cap > 1.0;
     // the CSS no-JS floor is RETAINED: the CVA base keeps `active:scale-(--scale-press-btn)`.
     facts.b2.cssFloorRetained = /active:scale-\(--scale-press-btn\)/.test(idx);
     // the per-spring drive token is registered (the --glass-btn-press-t typed @property).
@@ -184,7 +214,7 @@ export function detectButtonGlass(sources) {
     }
     if (!facts.b2.capLow) {
         violations.push(
-            `B2: the squish cap (maxStretch=${facts.b2.cap}) must be LOW (≤1.08, the iOS-segmented register) — an uncapped/high-cap taffy-pull REDs`,
+            `B2: the squish cap (max maxStretch=${facts.b2.cap}) must clear the composed-area anti-taffy fence (1.0 < cap ≤ 1.14, the volume-preserving peak area ≈ maxStretch; the cartoon-punch family fence) — an uncapped/taffy-pull >1.14 REDs`,
         );
     }
     if (!facts.b2.cssFloorRetained) {
@@ -512,6 +542,10 @@ function run() {
         // BC.W-BUTTON-GLASS-IOS — the iOS-tier blur lives in the glass tokens
         // (BG-IOS-1); the §C interaction lane lives in the π spec (BG-IOS-5).
         glassTokens: safeRead(resolve(ROOT, "src/styles/tokens/glass.css")),
+        // BD.W-BUTTON-GLASS-CONSUME — the glass button composes the shared
+        // `.glass-capsule` register; B1 reads the capsule fill (the warm-floored oklab-
+        // tinted floating seam) off its home.
+        glassCapsuleCss: safeRead(resolve(ROOT, "src/styles/glass/glass-capsule.css")),
         buttonGlassSpec: safeRead(
             resolve(ROOT, "tests-visual/button-glass.spec.ts"),
         ),
@@ -614,7 +648,8 @@ function run() {
     console.log(
         `  B1 hover/active fills oklab-tinted: ${yn(
             facts.b1.noRawHoverActive &&
-                facts.b1.tintedReferenced &&
+                facts.b1.composesCapsule &&
+                facts.b1.capsuleFillTinted &&
                 facts.b1.restingSeam &&
                 facts.b1.floatingSeam,
         )}`,

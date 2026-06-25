@@ -70,10 +70,14 @@ export function usePaperGrid(
         respectReducedMotion: config.respectReducedMotion,
     });
 
-    // The transient cursor in GRID space the setups read each frame (the pointer bulge). At
-    // rest it sits far off-screen so the Gaussian bulge contributes nothing.
+    // The transient cursor in GRID space the setups read each frame (the cursor swirl). At
+    // rest it sits far off-screen so the swirl contributes nothing.
     let cursor: Vec2 = { x: 1e6, y: 1e6 };
     const getCursor = (): Vec2 => cursor;
+    // The spring-eased traveling-wave envelope amplitude — ramps 0→1 on mount (the liquid-weight
+    // ease-in with a slight overshoot), snaps to 0 under PRM (one static SQUARE-grid frame).
+    let amp = 0;
+    const getAmp = (): number => amp;
     let lastFrameSec = 0;
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
@@ -87,6 +91,17 @@ export function usePaperGrid(
         const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
         pointer.tick(deltaMs);
+
+        // Drive the spring-eased traveling-wave envelope amplitude (the liquid-weight inertia).
+        // PRM → snap to 0 (one static SQUARE-grid frame). Else ease 0→1 with a slight overshoot
+        // settle (a critically-under-damped lerp; the wave-front itself carries the sweep).
+        if (handle?.reducedMotion) {
+            amp = 0;
+        } else {
+            const target = 1.06; // overshoot target → settles to ~1 (the liquid-weight bounce)
+            amp += (target - amp) * 0.04;
+            if (amp > 1) amp = 1 + (amp - 1) * 0.85; // soft cap so the overshoot relaxes to 1
+        }
 
         if (!config.interactive || !pointer.active.value) {
             // Park the cursor far off-screen so the bulge contributes nothing at rest.
@@ -155,6 +170,7 @@ export function usePaperGrid(
                     canvas,
                     config,
                     getCursor,
+                    getAmp,
                     shouldContinue: () => true,
                     onFrame,
                 }),
@@ -162,6 +178,7 @@ export function usePaperGrid(
                     canvas,
                     config,
                     getCursor,
+                    getAmp,
                     shouldContinue: () => true,
                     onFrame,
                 }),

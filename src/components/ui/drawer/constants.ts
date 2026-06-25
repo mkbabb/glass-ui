@@ -17,12 +17,14 @@ import type { DrawerDirection } from "./index";
  * give than the dock's crisp 0.32/0.7 box-morph). Co-located here so the pair is
  * defined ONCE rather than at the top of the composable.
  *
- * `response 0.4` — the angular period (≈ the swing time); a hair looser than the
- * dock so the sheet reads as a heavier surface settling. `dampingFraction 0.82` —
- * the iOS "smooth" register: sub-perceptual overshoot (a settled sheet, not a
- * bouncing one) while staying alive on a flung release.
+ * BD.W-ANIM-IOS27-TUNE — re-tuned `{0.4, 0.82}` → `{0.50, 0.74}` so the sheet-grow
+ * reads as inertial liquid MASS (the Maps-card reference): `response 0.50` lengthens
+ * the settle ~+25% (the flowing-heavy arrival) and `dampingFraction 0.74` adds a small
+ * ~3.2% liquid overshoot (vs the prior near-critical 0%) — the sheet settles cleanly to
+ * its detent WITHOUT over-shooting past the viewport (ζ ≥ 0.72 keeps overshoot ≤ ~4%).
+ * The fling-decision (`DRAWER_FLING_VELOCITY`) is SEPARATE + unchanged.
  */
-export const DRAWER_SNAP = { response: 0.4, dampingFraction: 0.82 } as const;
+export const DRAWER_SNAP = { response: 0.5, dampingFraction: 0.74 } as const;
 
 /**
  * BB-2 (the direction-aware default snap ladder fold) — the peek/half/full detent

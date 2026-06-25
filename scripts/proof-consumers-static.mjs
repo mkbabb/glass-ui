@@ -218,6 +218,40 @@ rootAllowed.add("UsePointerVelocityFieldOptions");
 rootAllowed.add("useCharStagger");
 rootAllowed.add("UseCharStaggerOptions");
 rootAllowed.add("UseCharStaggerReturn");
+// BD.W-GOO-CAROUSEL-DECK — useGooMorph is the ONE goo-morph engine (the de-dup of the
+// pager WORM): a two-edge stretch→merge→pinch→settle driver. Composes `useLiquidFlex` +
+// `vue` only — engine-FREE + vueuse-FREE, root-barrel safe per the `useCharStagger`
+// precedent (on /motion-core + the root). A targeted partial re-export the whole-file
+// contract cannot express.
+rootAllowed.add("useGooMorph");
+rootAllowed.add("GooBarbellRefs");
+rootAllowed.add("UseGooMorphParams");
+rootAllowed.add("UseGooMorphReturn");
+// BD.W-MORPH-FIELD-WELD — useMorphField is the ONE blend/morph WELD primitive every morph
+// consumes (the goo neck · every dock animation · general component morph). Composes
+// `useLiquidFlex` + `vue` ONLY — engine-FREE + vueuse-FREE, root-barrel safe per the
+// `useGooMorph` precedent (on /motion-core + the root). The MORPH_SIGNATURES register +
+// the morph type cohort ride with it.
+rootAllowed.add("useMorphField");
+rootAllowed.add("MORPH_SIGNATURES");
+rootAllowed.add("MorphSignature");
+rootAllowed.add("MorphSignatureName");
+rootAllowed.add("MorphVector");
+rootAllowed.add("MorphTier");
+rootAllowed.add("MorphSilhouette");
+rootAllowed.add("MorphFieldRect");
+rootAllowed.add("BodySpec");
+rootAllowed.add("MorphFieldOptions");
+rootAllowed.add("MorphFieldHandle");
+// BE.W-HAPTIC-COUPLE — useHaptic is the library's ONE haptic primitive (a thin,
+// feature-detected navigator.vibrate wrapper coupled to the platform's confirm-moments).
+// Imports `vue` only — engine-FREE + vueuse-FREE, root-barrel safe per the `useMorphField`
+// precedent (on /motion-core + the root); feature-detects to a clean no-op on iOS Safari +
+// SSR (never a throw).
+rootAllowed.add("useHaptic");
+rootAllowed.add("HapticPattern");
+rootAllowed.add("UseHapticOptions");
+rootAllowed.add("UseHapticReturn");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

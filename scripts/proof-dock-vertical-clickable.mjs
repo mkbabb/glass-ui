@@ -190,19 +190,23 @@ export function detectScaleFloor(layersCssSrc) {
     const violations = [];
     const facts = {};
     const src = stripCssComments(layersCssSrc);
-    // The BC.W-DOCK-ENGINE floor: `--dock-morph-scale: max( <ratio expr>, <floor> )`.
-    const floor = /--dock-morph-scale:\s*max\([\s\S]*?,\s*(0?\.\d+)\s*\)/.exec(src);
+    // BD.W-DOCK-CORE re-expressed the BC.W-DOCK-ENGINE `--dock-morph-scale: max(..., 0.06)`
+    // floor as the ratio-free `--dock-size-scale: clamp(0.06, <convex blend>, 1)`. The
+    // clamp LOWER bound (0.06) is the same visible-sliver floor — the size scale can never
+    // resolve to 0, so a vertical active pane keeps a non-zero hit area mid-morph. V4
+    // witnesses THAT clamp floor (the supersede preserves the no-zero-hit guarantee).
+    const floor = /--dock-size-scale:\s*clamp\(\s*(0?\.\d+)\s*,/.exec(src);
     facts.scaleFloor = floor ? floor[1] : null;
-    facts.floorPresent = floor != null;
+    facts.floorPresent = floor != null && Number(floor[1]) > 0;
     if (!facts.floorPresent)
         violations.push(
-            "V4: the `--dock-morph-scale` floor (`max(..., 0.0x)`, BC.W-DOCK-ENGINE) is absent from layers.css — a vertical active pane could resolve scaleY(0) (zero hit area), so a correctly-gated pane would still be unclickable mid-morph",
+            "V4: the `--dock-size-scale` clamp floor (`clamp(0.0x, ..., 1)`, BD.W-DOCK-CORE — the ratio-free supersede of the BC.W-DOCK-ENGINE max() floor) is absent/zero in layers.css — a vertical active pane could resolve scale(0) (zero hit area), so a correctly-gated pane would still be unclickable mid-morph",
         );
     return { violations, facts };
 }
 function detectScaleFloorSelfTest() {
-    // A degenerate scale WITHOUT the max() floor reds.
-    const NO_FLOOR = `--dock-morph-scale: calc(var(--dock-morph-ratio) + (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0));`;
+    // A degenerate scale WITHOUT the clamp floor reds.
+    const NO_FLOOR = `--dock-size-scale: calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px));`;
     return detectScaleFloor(NO_FLOOR).violations.length > 0;
 }
 

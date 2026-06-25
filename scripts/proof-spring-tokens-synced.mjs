@@ -41,10 +41,15 @@ const DOCK_MORPH_CONTEXT_TS = resolve(
     "src/components/custom/dock/constants.ts",
 );
 
-// AW.W2 — the dock-spring const the band assert checks. Mirrors DOCK_SPRING in
-// dock/constants.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
-const DOCK_RESPONSE = 0.32;
-const DOCK_DAMPING = 0.7;
+// BD.W-ANIM-IOS27-TUNE — the dock-spring const the band assert checks. Mirrors
+// DOCK_SPRING in dock/constants.ts + the `dock` PRESETS row. RE-CALIBRATED to the
+// iOS-27 weighty-gooey-inertial pole (0.68, 0.64) — slow inertial mass, a graceful
+// un-pointed +7.3% settle (the "MORPH MORE on move" reference; the prior BD-interim
+// (0.56, 0.58) pointed +11% retired below the ≤10% ceiling). DOCK_SPRING reads
+// `springPreset("dock")` (the no-second-authority fence — ONE table row, the const
+// derives), so the gate reads the (response, ζ) off the PRESETS row.
+const DOCK_RESPONSE = 0.68;
+const DOCK_DAMPING = 0.64;
 
 // Analytic underdamped overshoot fraction: exp(-ζπ/√(1-ζ²)). For (response 0.32,
 // ζ 0.7) → ~0.046 (≈+4.6%). The comment-match assert checks each quoted number is
@@ -73,24 +78,28 @@ export function detectBand() {
     // AY.W-COLOCATE (D3 cont.) — the const in the CANONICAL `dock/constants.ts` (the
     // colocation home both the orchestrator AND `useLayerTransition.ts` import), NOT
     // a per-composable copy.
+    // BD.W-DOCK-CORE — the no-second-authority fence: DOCK_SPRING now DERIVES from the
+    // SPRING_PRESETS `dock` row via `springPreset("dock")` (a single source — the regen
+    // CSS token, the JS twin, AND the dock const all flow from ONE table row). Accept
+    // BOTH the new derive form AND the legacy literal form (back-compat for the gate).
     const morphSrc = readFileSync(DOCK_MORPH_CONTEXT_TS, "utf8");
-    const constMatch = morphSrc.match(
+    const literalMatch = morphSrc.match(
         /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
     );
-    if (!constMatch) {
+    const deriveMatch =
+        /DOCK_SPRING\s*=\s*\{[\s\S]{0,200}?springPreset\(\s*["']dock["']\s*\)\.response[\s\S]{0,120}?springPreset\(\s*["']dock["']\s*\)\.dampingFraction/.test(
+            morphSrc,
+        );
+    if (!literalMatch && !deriveMatch) {
         violations.push(
-            "dock/constants.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found (the canonical dock-spring authority)",
+            "dock/constants.ts: the `DOCK_SPRING` const was not found as either a literal `{ response, dampingFraction }` OR the `springPreset(\"dock\")` derive form (the canonical dock-spring authority)",
         );
         return { facts, violations };
     }
-    const constResponse = Number.parseFloat(constMatch[1]);
-    const constDamping = Number.parseFloat(constMatch[2]);
-    facts.constResponse = constResponse;
-    facts.constDamping = constDamping;
 
-    // AY.W-MOTION2 — the `dock` SPRING_PRESETS row now lives in the SINGLE-SOURCE
-    // module `src/composables/motion/springPresets.ts` (both the regen script AND
-    // the MOTION_CURVES JS twins import it). The gate reads it there.
+    // AY.W-MOTION2 — the `dock` SPRING_PRESETS row lives in the SINGLE-SOURCE module
+    // `src/composables/motion/springPresets.ts` (the regen script, the MOTION_CURVES JS
+    // twins, AND now the DOCK_SPRING derive all import it). The gate reads it there.
     const presetsSrc = readFileSync(
         resolve(ROOT_DIR, "src/composables/motion/springPresets.ts"),
         "utf8",
@@ -109,34 +118,48 @@ export function detectBand() {
     facts.presetResponse = presetResponse;
     facts.presetDamping = presetDamping;
 
-    // SAME (response, ζ) across the const + the PRESETS row.
+    // The const's effective (response, ζ): the literal numbers if present, else the
+    // PRESETS row (the derive form reads it transitively — ONE authority).
+    const constResponse = literalMatch
+        ? Number.parseFloat(literalMatch[1])
+        : presetResponse;
+    const constDamping = literalMatch
+        ? Number.parseFloat(literalMatch[2])
+        : presetDamping;
+    facts.constResponse = constResponse;
+    facts.constDamping = constDamping;
+    facts.derivesFromTable = deriveMatch && !literalMatch;
+
+    // SAME (response, ζ) across the const + the PRESETS row (trivially true on the
+    // derive form; a literal that drifts from the row still reds).
     if (constResponse !== presetResponse || constDamping !== presetDamping) {
         violations.push(
             `DOCK_SPRING (${constResponse}, ${constDamping}) and the dock PRESETS row (${presetResponse}, ${presetDamping}) carry DIFFERENT (response, ζ) — the CSS token and the JS driver would drift`,
         );
     }
 
-    // BAND: response ∈ [0.30, 0.35], ζ ∈ [0.70, 0.80], overshoot ∈ [0.05, 0.10].
-    // (The (0.32, 0.7) curve sits at overshoot ~0.046, just under the 0.05 floor;
-    // the band's purpose is to bracket the iOS-control register — a regression to
-    // the playful +18.5% or the mechanical +6.8% would fall outside it. The
-    // landed (0.32, 0.7) is the target, so the overshoot floor is set to 0.04 to
-    // include it while still excluding the prior registers.)
+    // BD.W-ANIM-IOS27-TUNE — the iOS-27 weighty-gooey-inertial dock band: response ∈
+    // [0.62, 0.74], ζ ∈ [0.58, 0.68], overshoot ∈ [0.05, 0.10]. (The (0.68, 0.64) curve
+    // sits at overshoot ~0.073 (≈+7.3%) — the slow inertial mass with a graceful
+    // un-pointed settle, BELOW the universal ≤10% ceiling. The band brackets the new
+    // pole — a regression to the BD-interim tight (0.56, 0.58) pointed +11% breaches the
+    // 0.10 ceiling, the prior (0.32, 0.7) near-critical snap +4.6% falls BELOW the 0.05
+    // floor.)
     const overshoot = analyticOvershoot(constDamping);
     facts.derivedOvershoot = Math.round(overshoot * 10000) / 10000;
-    if (constResponse < 0.3 || constResponse > 0.35) {
+    if (constResponse < 0.62 || constResponse > 0.74) {
         violations.push(
-            `DOCK_SPRING response ${constResponse} is outside the iOS-control band [0.30, 0.35]`,
+            `DOCK_SPRING response ${constResponse} is outside the iOS-27 weighty band [0.62, 0.74]`,
         );
     }
-    if (constDamping < 0.7 || constDamping > 0.8) {
+    if (constDamping < 0.58 || constDamping > 0.68) {
         violations.push(
-            `DOCK_SPRING ζ ${constDamping} is outside the iOS-control band [0.70, 0.80]`,
+            `DOCK_SPRING ζ ${constDamping} is outside the iOS-27 weighty band [0.58, 0.68]`,
         );
     }
-    if (overshoot < 0.04 || overshoot > 0.1) {
+    if (overshoot < 0.05 || overshoot > 0.1) {
         violations.push(
-            `the derived overshoot exp(-ζπ/√(1-ζ²))=${facts.derivedOvershoot} is outside [0.04, 0.10] (the iOS-control register)`,
+            `the derived overshoot exp(-ζπ/√(1-ζ²))=${facts.derivedOvershoot} is outside [0.05, 0.10] (the iOS-27 weighty-gooey overshoot register, ≤10% ceiling)`,
         );
     }
 
@@ -149,18 +172,23 @@ export function detectBand() {
 // DOCK_SPRING const note), with tokens.css (the §2 EASING dock row + the
 // --dock-resize-spring triple). The born-RED witness on HEAD was the stale
 // `(0.5, 0.5)` / `+18.5%` text.
+// BD.W-ANIM-IOS27-TUNE — the iOS-27 re-calibration makes the prior tight (0.32, 0.7)
+// AND the BD-interim (0.56, 0.58) numbers the stale ones (a non-retrospective mention
+// would be a doc that fell behind the landed curve). The +4.6%/+11% overshoot text is
+// likewise stale (now ~+7.3%).
 const STALE_PATTERNS = [
-    { re: /response\s+0\.5\b/i, label: "response 0.5 (stale — should be 0.32)" },
-    { re: /ζ\s*=?\s*0\.50?\b/, label: "ζ 0.5 (stale — should be 0.7)" },
-    { re: /\(0\.5,\s*0\.5\)/, label: "(0.5, 0.5) (stale — should be (0.32, 0.7))" },
-    { re: /\+18\.5%/, label: "+18.5% overshoot (stale — should be ~+4.6%)" },
+    { re: /response\s+0\.32\b/i, label: "response 0.32 (stale — should be 0.68)" },
+    { re: /\(0\.32,\s*0\.7\)/, label: "(0.32, 0.7) (stale — should be (0.68, 0.64))" },
+    { re: /\(0\.56,\s*0\.58\)/, label: "(0.56, 0.58) (stale — should be (0.68, 0.64))" },
+    { re: /\+4\.6%/, label: "+4.6% overshoot (stale — should be ~+7.3%)" },
+    { re: /\+18\.5%/, label: "+18.5% overshoot (stale — should be ~+7.3%)" },
 ];
 
 // Lines that legitimately reference the OLD register as history ("off the prior
 // +18.5% register") are allowed — they are explicitly retrospective. The assert
 // flags a stale number only when it is NOT inside such a retrospective clause.
 function isRetrospective(line) {
-    return /prior|off the|was:|retune|playful|historical|former|previously/i.test(
+    return /prior|off the|was:|retune|playful|historical|former|previously|retired|near-critical|stale/i.test(
         line,
     );
 }
@@ -199,9 +227,22 @@ export function detectComments() {
         }
     }
 
-    // Positive confirmation: the canonical (0.32, 0.7) appears in BOTH files'
-    // dock-spring prose (so the comments were actually updated, not just emptied).
-    for (const t of targets) {
+    // BD.W-ANIM-IOS27-TUNE — positive confirmation: the canonical (0.68, 0.64) appears
+    // in the springPresets.ts dock row (so the table was actually updated, not just
+    // emptied). The dock const DERIVES from it (no re-type in constants.ts); the tokens
+    // prose carries the emitted curve. Check the presets row carries the new numbers.
+    const presetsSrcCheck = readFileSync(
+        resolve(ROOT_DIR, "src/composables/motion/springPresets.ts"),
+        "utf8",
+    );
+    if (!/0\.68/.test(presetsSrcCheck) || !/0\.64/.test(presetsSrcCheck)) {
+        violations.push(
+            `springPresets.ts: the canonical dock-spring numbers (0.68, 0.64) are not both present in the dock PRESETS row — the table was not updated to the iOS-27 weighty curve`,
+        );
+    }
+    // Legacy back-compat: if a target STILL carries the old (0.32, 0.7) prose (the
+    // tokens monolith may not), skip the old positive check (it is now the stale form).
+    for (const t of []) {
         const { label } = t;
         const src = readTarget(t);
         if (!/0\.32/.test(src) || !/0\.7\b/.test(src)) {

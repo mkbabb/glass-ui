@@ -100,7 +100,10 @@ struct Uniforms {
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
 
-// Noise + FBM (BC.W-CARVE6 → metaball-noise.wgsl) — spliced AFTER ${FBM_ROT_WGSL}.
+// Noise + FBM (BC.W-CARVE6 -> metaball-noise.wgsl) — spliced AFTER the FBM_ROT_WGSL chunk
+// below. NB: do NOT name the chunk with a template-interpolation form in a WGSL comment —
+// it injects the whole multi-line chunk into this // comment line and breaks the parse
+// (BD.W-VIZ-BROKEN-FIX D3c).
 ${FBM_ROT_WGSL}
 ${METABALL_NOISE_WGSL}
 
@@ -143,8 +146,12 @@ fn sminG(a: vec3<f32>, b: vec3<f32>, k: f32) -> vec3<f32> {
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 
-// OKLCh gamut clamp + palette sample + breath (BC.W-CARVE6 → metaball-palette.wgsl)
-// — spliced AFTER ${OKLCH_MATRICES_WGSL} (its matrix source).
+// OKLCh gamut clamp + palette sample + breath (BC.W-CARVE6 -> metaball-palette.wgsl)
+// — spliced AFTER the OKLCH_MATRICES_WGSL chunk above (its matrix source). NB: do NOT
+// write the chunk's identifier with a template-interpolation form in a WGSL comment — it
+// would inject the whole multi-line matrices chunk INTO this // comment line and break the
+// parse at the first injected newline (BD.W-VIZ-BROKEN-FIX D3c — the live WGSL syntax error
+// that silently fell every metaball/goo-dot to the WebGL2 net, masking the WGSL primary).
 ${METABALL_PALETTE_WGSL}
 
 // AX.W15 — the composite SDF field WITH its ANALYTIC GRADIENT vec3(dist, ∂/∂x, ∂/∂y).
@@ -282,6 +289,10 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let uPointerStrength = u.s7.z;
   // BC.W-GOOBLOB-PLAIN — the STAGE-1 gate (1.0 = the plain shadowless fill-only floor).
   let uStage = u.s7.w;
+  // BD.W-GOO-CAROUSEL-DECK — the blob to meatball SHADING-MORPH scalar (the base.w pad
+  // lane; the typed-struct SoT writes it). 0 = flat blob, 1 = lit meatball, in-between
+  // lerps the surface shading (the smin geometry is shared).
+  let uMorphT = clamp(u.base.w, 0.0, 1.0);
   let uPointer = u.ptr.xy;
   let uHueRange = u.s5.z;
   let uSatShift = u.s5.w;
@@ -306,10 +317,19 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   var uv = in.uv - 0.5;
 
-  // PRE-FBM bounding early-out — transparent WRITE (not a discard).
-  if (dot(uv, uv) > uMaxReach * uMaxReach) {
-    return vec4<f32>(0.0);
-  }
+  // PRE-FBM bounding test (BD.W-VIZ-BROKEN-FIX D3c — the uniformity fix). The GLSL fallback
+  // EARLY-RETURNS transparent here (a perf skip of the FBM border); WGSL CANNOT — an early
+  // return predicated on the per-fragment uv makes the fwidth(d)/fwidth(Nh) calls below
+  // reachable only through non-uniform control flow, which the WGSL uniformity analyzer
+  // REJECTS (fwidth must only be called from uniform control flow) so the metaball WGSL
+  // module never compiled and every GooBlob + goo-dot fell silently to the WebGL2 net (the
+  // "broken TOTALLY" the user reports, the un-exercised Safari-primary surface). So the
+  // bound is folded into the FINAL alpha (a flag, NOT a control-flow return): the derivative
+  // builtins stay in UNIFORM control flow, and an outside fragment writes transparent at the
+  // end — gestalt-identical to the GLSL early-out, just without the WGSL-illegal pre-
+  // derivative return. sceneDistG is derivative-FREE so running it on the border costs only
+  // ALU (no correctness hazard); the real GPU swallows it.
+  let inBounds = dot(uv, uv) <= uMaxReach * uMaxReach;
 
   // Pointer deformation — sign per AY.W-BLOB-CONFIG D2.
   if (uPointerActive > 0.5) {
@@ -327,9 +347,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let fieldGrad = scene.yz;
 
   // ── fwidth SITE #1 (metaball.frag.ts line 266) — AA-edge half-width from the SDF
-  //    screen-space gradient. The WGSL fragment-stage fwidth() transcription. ──
+  //    screen-space gradient. The WGSL fragment-stage fwidth() transcription. In UNIFORM
+  //    control flow (no early return precedes it — the bounding test above is a flag). ──
   let aa = max(fwidth(d), 1e-6);
-  let alpha = 1.0 - smoothstep(-aa, aa, d);
+  // The bounding test (D3c) folds in here: an out-of-bounds fragment is forced transparent
+  // (the GLSL early-out's transparent WRITE, expressed as an alpha gate, not a return).
+  let alpha = (1.0 - smoothstep(-aa, aa, d)) * select(0.0, 1.0, inBounds);
 
   // ── BC.W-GOOBLOB-MEATBALL — the WGSL uniformity STRUCTURAL fix (the meatball-armer).
   //    The Toksvig screen-space derivative (fwidth SITE #2) is hoisted HERE, into the SAME
@@ -376,13 +399,16 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // (the BB residual that kept STAGE 2 falling to the WebGL2 net is CLOSED). The
   // teaching contrast: this is the "it renders, it meatballs, it works on Safari"
   // floor STAGE 2 layers the lit/shadow onto via the SAME uniforms.
-  if (uStage > 0.5) {
-    let okl1 = gamutClampOklch(oklch);
-    var lin1 = oklabToLinearSrgb(oklchToOklab(okl1));
-    var rgb1 = clamp(linearToSrgb(lin1), vec3<f32>(0.0), vec3<f32>(1.0));
+  // BD.W-GOO-CAROUSEL-DECK — the flat blob fill is snapshotted from the PRE-dressing
+  // oklch (the dressing mutates oklch below). At morphT <= 0 (a pure blob) emit the
+  // flat fill + dither and return — the byte-identical STAGE-1 floor, zero dressing cost.
+  let flatOkl = gamutClampOklch(oklch);
+  let flatLin = oklabToLinearSrgb(oklchToOklab(flatOkl));
+  let flatRgbBase = clamp(linearToSrgb(flatLin), vec3<f32>(0.0), vec3<f32>(1.0));
+  if (uMorphT <= 0.0) {
     let fc1 = in.pos.xy;
     let ign1 = fract(52.9829189 * fract(dot(fc1, vec2<f32>(0.06711056, 0.00583715))));
-    rgb1 = clamp(rgb1 + (ign1 - 0.5) / 255.0, vec3<f32>(0.0), vec3<f32>(1.0));
+    let rgb1 = clamp(flatRgbBase + (ign1 - 0.5) / 255.0, vec3<f32>(0.0), vec3<f32>(1.0));
     return vec4<f32>(rgb1 * alpha, alpha);
   }
 
@@ -485,6 +511,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   }
 
   var rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+
+  // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH compose: lerp the flat blob
+  // fill -> the dressed meatball surface on uMorphT (the geometry/alpha is shared; only
+  // the surface shading interpolates). morphT == 1 is byte-identical to the dressed
+  // meatball; the morphT == 0 case already returned the flat fill above.
+  rgb = mix(flatRgbBase, rgb, uMorphT);
 
   // IGN dither — 1-LSB triangular dither in DISPLAY space, AFTER linearToSrgb.
   let fragCoord = in.pos.xy;

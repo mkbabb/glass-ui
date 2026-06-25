@@ -277,7 +277,7 @@
        The per-consumer dwell-flow curves the ONE `useGooMorph` engine reads off its
        `tokenPrefix` (`--{prefix}-flow`/`-duration`/`-max-stretch`). These are NOT new
        spring presets — they are the SAME geometry-law DWELL shape the dot-pip worm
-       (`--pager-worm-flow`, PagerDots.vue) ships: a curve that rises to ~mid by ~46% of
+       (`--pager-worm-flow`, defined just below) ships: a curve that rises to ~mid by ~46% of
        the clock, DWELLS at the midpoint (the FAT metaball NECK held open across the gap),
        then contracts. The dwell is what makes the morph read as weighty liquid rather than
        a fast flicker (the W-GLASS-CAL spring fence: a normalized spring `linear()`
@@ -313,6 +313,28 @@
     );
     --deck-goo-duration: 1.1s; /* the full-viewport register — slow + dignified. */
     --deck-goo-max-stretch: 1.1; /* the gentlest swell — a big slide necks barely. */
+
+    /* --pager-worm-flow: the dot-pip worm register (BD.W-PAGER-GOO-MORPH) — the SAME
+       geometry-law DWELL shape as the carousel/deck siblings (the metaball NECK held open
+       across the gap), with a gentle terminal overshoot (+1.5%, the bouncy LAND). Homed
+       HERE beside its goo-flow family (the curve-definition home — a `linear()` SHIPS in
+       the §2 EASING register, never serialized inline in the SFC) so the three goo-morph
+       dwell curves live as ONE charted family. NOT a normalized spring: `springLinearStops`
+       front-loads (reaches ~0.5 by ~6% REGARDLESS of ζ), so a `--spring-bouncy` would
+       collapse the neck in ~150ms; this dwell spreads `--worm-t`'s 0→1 across the REAL
+       1.8s clock (the FAT NECK alive ~830ms — JUDGE-1 ≥700ms bar). */
+    --pager-worm-flow: linear(
+        0, 0.02206 4.167%, 0.07922 8.333%, 0.15799 12.5%, 0.24486 16.667%,
+        0.32632 20.833%, 0.38889 25%, 0.41905 29.167%, 0.43667 33.333%,
+        0.4575 37.5%, 0.47833 41.667%, 0.49917 45.833%, 0.52 50%, 0.54083 54.167%,
+        0.56167 58.333%, 0.58373 62.5%, 0.62943 66.667%, 0.69424 70.833%,
+        0.76859 75%, 0.84373 79.167%, 0.91191 83.333%, 0.96658 87.5%,
+        1.0023 91.667%, 1.01466 95.833%, 1
+    );
+    --pager-worm-duration: 1.8s; /* the dot's OWN clock — slow + weighty (motion-canon P4);
+       the flow above dwells across the whole clock so the neck is alive for ~1s. */
+    --pager-worm-max-stretch: 1.45; /* the velocity-swell — a VISIBLE liquid squish (the
+       worm narrows ≈1/1.45≈0.69× cross-axis at peak swell, on top of the floored pinch). */
 
     /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
     --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);

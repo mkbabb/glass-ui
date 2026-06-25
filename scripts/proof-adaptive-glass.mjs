@@ -46,6 +46,11 @@ const glass = strip(readMonolith(ROOT, "glass"));
 // AZ.W-CARVE — dock-controls.css drained into dock-controls/*.css partials;
 // readMonolith concatenates the thin root + the five family partials in cascade
 // order so the seam checks resolve post-carve.
+// BD.W-DOCK-CORE — the dock's ADAPTIVE-LEGIBILITY self-engage (the unconditional
+// `:where(.glass-dock)` bright-bucket darken, the `@container style(--glass-backdrop:
+// light)` descendant bucket, the `--dock-fg-on-aurora` warm-ink re-point + the
+// contrast-color() flip) was CARVED OUT of the dock root into the new
+// `dock/adaptive-legibility.css` partial — read it so the carved seam checks resolve.
 const dock = [
     "src/styles/dock.css",
     "src/styles/dock/shell.css",
@@ -54,6 +59,7 @@ const dock = [
     "src/styles/dock/layer-group.css",
     "src/styles/dock/layers.css",
     "src/styles/dock/overflow.css",
+    "src/styles/dock/adaptive-legibility.css",
 ]
     .map((p) => strip(read(p)))
     .concat(strip(readMonolith(ROOT, "dock-controls")))
@@ -190,16 +196,23 @@ add(
     ),
     "the vertical dock plate threads color-mix(in oklab, var(--glass-bg-dock), --glass-tint-source --glass-tint-strength)",
 );
-// The held + open floating tiers thread the wrapper too (two oklab wraps over --glass-bg-floating).
+// BD.W-DOCK-CORE (MOVE III) — the per-state `:has([data-state="open"])` floating recolor
+// was DELETED (it NEVER applied the `:where(.glass-dock)` self-engage tint — the gray-hole
+// defect; "the gray dock sailed past"). It is SUPERSEDED by the ONE UNCONDITIONAL
+// `:where(.glass-dock)` self-engage (dock/adaptive-legibility.css) that darkens EVERY dock
+// state in lockstep (the `dock-self-engage-rule` check below witnesses it). So the floating
+// tier that still threads the oklab wrapper directly is the `[data-held]` armed tier (≥1);
+// the open state is covered by the unconditional self-engage, not a second per-state wrap.
 const dockFloatingWraps = (
     dockFlat.match(
         /color-mix\(\s*in oklab,\s*var\(--glass-bg-floating[^;]*?,\s*var\(--glass-tint-source\)\s*var\(--glass-tint-strength\)/g,
     ) ?? []
 ).length;
+const dockUnconditionalSelfEngage = /:where\(\.glass-dock\)\s*\{[\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink/.test(dock);
 add(
     "dock-floating-tiers-on-oklab-seam",
-    dockFloatingWraps >= 2,
-    `the [data-held] + :has([open]) floating tiers thread the oklab wrapper (${dockFloatingWraps} found, need ≥2)`,
+    dockFloatingWraps >= 1 && dockUnconditionalSelfEngage,
+    `the [data-held] floating tier threads the oklab wrapper (${dockFloatingWraps} found, need ≥1) AND the unconditional :where(.glass-dock) self-engage covers the open state (the deleted :has([open]) per-state recolor is superseded, BD.W-DOCK-CORE MOVE III): self-engage=${dockUnconditionalSelfEngage}`,
 );
 // The dock carries its own @container bright-bucket block re-pointing the tint tokens.
 add(

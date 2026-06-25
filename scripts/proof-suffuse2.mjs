@@ -260,21 +260,23 @@ add(
 // at the one-rung-above grade (a regress to a lower rung still reds).
 const storyPage = strip(read("demo/stories/StoryPage.vue"));
 const contentHeaderOk = /<header\b[^>]*v-if="variant === 'page'"/.test(storyPage);
-// BC.W-PAGE-CHASSIS lifted the content chrome <h1> off the W-STAGE `text-title`
-// rung onto the depth-keyed AUDACIOUS hero `text-display-${heroScale}` (≥
-// text-display-4 — the chassis hero is one√φ-or-MORE above the section register,
-// the display ladder still GRADES, never cliffs). The assert accepts BOTH the
-// legacy `text-title`/`text-display-1` literal rung AND the page-chassis
-// `text-display-${heroScale}` template rung (the cn(`text-display-${heroScale}`)
-// form) — either is strictly ABOVE the section <h2> text-subheading. The :class is
-// a cn() call (not a single class= literal), so the h1RungOk read scans the <h1>'s
-// class binding region, not only the static class attribute.
+// BD.W-CUT — the chrome/hero SCALE SPLIT. The content-page chrome <h1> is now a CALM
+// page LABEL, NOT the protagonist rung: the audacious `text-display-${heroScale}` floor
+// was RETIRED off the chrome title (clean break, no alias). It now carries the explicit
+// `.story-chrome-title` class, which reads `--chrome-title-rung: var(--type-display-1)`
+// (story-hero.css) — the φ^2 display band, LIVE-VERIFIED at 38.4px (/forms/select),
+// strictly ABOVE the section <h2> text-subheading (20.4px). The audacious heroScale
+// ladder survives ONLY on the protagonist hero <h1> (variant="hero", StoryHero.vue).
+// The assert re-points at the NEW reality: the chrome <h1> resolves the display rung via
+// `.story-chrome-title` (→ --type-display-1). The legacy literal text-title/display-1
+// rung is still accepted (the prior W-STAGE shape, for the non-CUT path / robustness).
 const h1Block = storyPage.match(/<h1\b[\s\S]*?>/);
 const h1ClassRegion = h1Block ? h1Block[0] : "";
 const h1RungOk =
     contentHeaderOk &&
     /v-if="title"/.test(h1ClassRegion) &&
-    (/\btext-(?:title|display-1)\b/.test(h1ClassRegion) ||
+    (/\bstory-chrome-title\b/.test(h1ClassRegion) ||
+        /\btext-(?:title|display-1)\b/.test(h1ClassRegion) ||
         /text-display-\$\{heroScale\}/.test(h1ClassRegion));
 add(
     "w2-content-h1-one-rung-above-section",

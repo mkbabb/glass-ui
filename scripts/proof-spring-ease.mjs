@@ -1,30 +1,31 @@
 #!/usr/bin/env node
-// proof:spring-ease — BC.W-SPRING-EASE (Band 7).
+// proof:spring-ease — BD.W-ANIM-IOS27-TUNE (the GLOBAL iOS-27 motion re-calibration).
 //
-// The retune that eased the two abrupt spring curves + minted the iOS interactive
-// press register (USER-DEFECTS §B/§D — "the spring curve EASED not abrupt" +
-// "every animation squishy/springy/quick/coupled"). This gate is the SOURCE arm:
-// it proves the curves are eased AT THE TABLE (born-RED on the front-loaded HEAD
-// pairs → GREEN at the retune), and that the universal no-abrupt-curve bar holds
-// across the styling corpus. The PAINT arm (the live :5199 frame-series) is the
-// π half (tests-visual/spring-ease.spec.ts) — this gate is device-free.
+// The user law (emphatic): "ALL of our animations should be SMOOTH, CONTROLLED, have
+// INERTIA and be AUDACIOUS; NO overly tight and springy. MORPH MORE on move." This is
+// the GLOBAL re-tune of the ONE `SPRING_PRESETS` table toward the iOS-27 weighty-gooey-
+// inertial pole — lower stiffness (longer response → mass), higher through-body damping
+// toward critically-damped-with-a-TOUCH-of-overshoot (kill the pointed flick), longer
+// settle (the flowing arrival), WHILE keeping the arrival AUDACIOUS (t90 mid-clock).
+// This gate is the SOURCE arm: it proves the table sits at the NEW pole (born-RED on the
+// BC crisp/quick pole → GREEN at the re-calibration). The bands encode the new pole (a
+// SMALL un-pointed terminal overshoot ≤10%); the BC crisp/quick pole is RETIRED. The
+// PAINT arm (the live frame-series) is the π half — this gate is device-free.
 //
-// SIX clauses (each born-RED on HEAD, each with a self-test bite):
-//   S1 — clock-fill (the abrupt fix). `snappy` (the control register) fills its
-//        clock: the analytic 90%-travel fraction t₉₀/t_settle ∈ [0.55, 0.70], NOT
-//        the front-load (HEAD 0.35/0.65 ≈ 0.41, BELOW the band). t₉₀ = the first
-//        time the analytic step response reaches 0.9; t_settle = the 2%-band clock
-//        the generator emits (the SAME `springSettleDurationSeconds`).
-//   S2 — the overshoot band. `bouncy` ∈ [0.12, 0.18] (the Apple band) AND ζ ≥ 0.55
-//        (the over-spring floor); `snappy`/`press` ≤ 0.08; `smooth` ≤ 0.02 (the
-//        kept sub-perceptual peak); `dock` ≤ 0.06 (the kept iOS-control).
-//   S3 — the press register minted + wired. `SPRING_PRESETS` carries `press`
-//        (0.15 / 0.86); `useSpringPress` defaults READ that row (single-source);
-//        `--spring-press` + `--spring-press-duration` emit.
-//   S4 — the single source held + the keeps fenced. `regen-spring-tokens.mjs` +
-//        `curves.ts` both import `SPRING_PRESETS`; the emitted CSS `linear()`
-//        matches the generator; `smooth`/`dock`/`gentle` rows are byte-unchanged
-//        (the canonical-keep pairs — the retune did NOT touch the keeps).
+// SIX clauses (each with a self-test bite):
+//   S1 — clock-fill. `snappy` (the control register) fills its clock: the analytic
+//        90%-travel fraction t₉₀/t_settle ∈ [0.45, 0.62] (the new weighty pair lands
+//        ≈0.52), NOT the front-load (<0.45 = the abrupt jerk).
+//   S2 — the overshoot band (the NEW iOS-27 pole). EVERY preset overshoot ≤ 0.10 (the
+//        universal "touch of overshoot" ceiling); `bouncy` ∈ [0.07, 0.10] AND ζ ≥ 0.58;
+//        `snappy` ≤ 0.05; `press` ≤ 0.03; `smooth` ≤ 0.03; `dock` ≤ 0.10. The OLD
+//        pointed bouncy 12.6% / dock 10.7% are RETIRED (>10% is the too-springy defect).
+//   S3 — the press register wired. `SPRING_PRESETS` carries `press` (0.20 / 0.80);
+//        `useSpringPress` defaults READ that row (single-source); the clocks emit.
+//   S4 — the single source held + the canon anchored. `regen-spring-tokens.mjs` +
+//        `curves.ts` both import `SPRING_PRESETS`; the emitted CSS `linear()` matches
+//        the generator; `smooth`/`dock`/`gentle` rows match the NEW canon anchors
+//        ({0.58,0.80}/{0.68,0.64}/{0.82,1.0}) — a drift OFF the new pole reds.
 //   S5 — the clock NOT truncated. Each `--spring-<name>-duration` is the
 //        generator's analytic output for the (response, ζ) pair, never a hand value.
 //   S6 — the universal no-abrupt-curve sweep (the user-mandate bar). The NET-NEW
@@ -57,22 +58,25 @@ const CURVES_TS = resolve(ROOT, "src/composables/motion/curves.ts");
 const REGEN_MJS = resolve(ROOT, "scripts/regen-spring-tokens.mjs");
 const SRC_DIR = resolve(ROOT, "src");
 
-// ── The retune targets + the byte-frozen KEEPS (the single-source canon S4 fences).
-// `snappy` is the control register S1 measures; `bouncy` the eased playful curve;
-// `press` the minted iOS interactive register; smooth/dock/gentle the frozen keeps.
-const SNAPPY_90_TRAVEL_BAND = [0.55, 0.7]; // S1 — the eased control fills its clock.
+// ── The re-calibration targets + the canon S4 fences (BD.W-ANIM-IOS27-TUNE).
+// `snappy` is the control register S1 measures; `bouncy` the playful curve; `press`
+// the iOS interactive register; smooth/dock/gentle the canonical anchors S4 asserts.
+const SNAPPY_90_TRAVEL_BAND = [0.45, 0.62]; // S1 — the weighty control fills its clock.
 const SNAPPY_90_FRONTLOAD_FLOOR = 0.4; // the self-test front-load bite reds below this.
 const KEEP_PAIRS = {
-    smooth: { response: 0.5, dampingFraction: 0.86 },
-    dock: { response: 0.32, dampingFraction: 0.7 },
-    gentle: { response: 0.7, dampingFraction: 1.0 },
+    smooth: { response: 0.58, dampingFraction: 0.8 },
+    dock: { response: 0.68, dampingFraction: 0.64 },
+    gentle: { response: 0.82, dampingFraction: 1.0 },
 };
-// S2 — the per-register overshoot bands (analytic exp(-ζπ/√(1-ζ²))).
-const OVERSHOOT_MAX = { snappy: 0.08, press: 0.08, smooth: 0.02, dock: 0.06 };
-const BOUNCY_OVERSHOOT_BAND = [0.12, 0.18];
-const BOUNCY_ZETA_FLOOR = 0.55; // the over-spring floor (a ζ < 0.55 on bouncy reds).
-// S3 — the minted press register (the Apple interactiveSpring).
-const PRESS_PAIR = { response: 0.15, dampingFraction: 0.86 };
+// S2 — the per-register overshoot bands (analytic exp(-ζπ/√(1-ζ²))). The NEW iOS-27
+// pole: a SMALL un-pointed terminal overshoot — every preset ≤ 0.10 (the universal
+// "touch of overshoot" ceiling). The OLD pointed bouncy 12.6% / dock 10.7% are RETIRED.
+const OVERSHOOT_MAX = { snappy: 0.05, press: 0.03, smooth: 0.03, dock: 0.1 };
+const OVERSHOOT_CEILING = 0.1; // every preset overshoot ≤ this (the [0%,10%] band).
+const BOUNCY_OVERSHOOT_BAND = [0.07, 0.1];
+const BOUNCY_ZETA_FLOOR = 0.58; // the over-spring floor (a ζ < 0.58 on bouncy reds).
+// S3 — the iOS interactive press register.
+const PRESS_PAIR = { response: 0.2, dampingFraction: 0.8 };
 
 // ── analytic spring metrics (no second math source — the SAME convention the
 //    generator uses: ωₙ = 2π/response, the iOS/Apple `response` solver input).
@@ -177,6 +181,16 @@ export function detectOvershoot(presets) {
         if (o > max) {
             v.push(
                 `S2: ${name} overshoot ${facts.overshoot[name]} exceeds its register cap ${max} (ζ ${p.dampingFraction})`,
+            );
+        }
+    }
+    // The universal [0%,10%] "touch of overshoot" ceiling — EVERY preset (the binding
+    // §1 fence; reds a future preset that re-introduces a pointed >10% pop).
+    for (const p of presets) {
+        const o = analyticOvershoot(p.dampingFraction);
+        if (o > OVERSHOOT_CEILING) {
+            v.push(
+                `S2: ${p.name} overshoot ${facts.overshoot[p.name]} exceeds the universal ceiling ${OVERSHOOT_CEILING} (the [0%,10%] band — ζ ${p.dampingFraction} re-introduces the pointed/too-springy pole)`,
             );
         }
     }
@@ -335,9 +349,18 @@ const RECLAIM_ALLOWLIST = [
             "the reka-ui Collapsible/Accordion content-height reclaim + the ConfiguratorLayer grid-template-rows reveal — a discrete user-initiated open/close where the body reflows; on the proof:no-layout-animation discrete-reclaim allowlist.",
     },
 ];
-// The canonical EASED-ARRIVAL curve a spatial leg may legitimately ride beside a
-// `--spring-*` (the SOTA decelerating arrival — motion-canon.md P1).
-const EASED_ARRIVAL = ["--ease-out-expo", "--motion-ease-out-expo"];
+// The canonical EASED-ARRIVAL / WEIGHTY-OVERSHOOT curves a spatial leg may legitimately
+// ride beside a `--spring-*` (the SOTA non-abrupt arrivals — motion-canon.md P1).
+//   · `--ease-out-expo` — the decelerating eased arrival.
+//   · `--ease-cartoon-punch` — BD.W-CARTOON-PUNCH: a CHARTED `linear()` curve with a
+//     negative-anticipation lead-in (0 → -0.038) and a ~1.22 terminal overshoot, the
+//     weighty cartoon-punch spatial-arrival curve (the OPPOSITE of an abrupt jerk — it
+//     IS the liquid-weight-universal "morph more on move" register, amplitude-scaled by
+//     `--motion-weight`, PRM-zeroed via the `--ease-cartoon-punch: var(--ease-standard)`
+//     reduced-motion fallback). It is the spatial currency the BD glass/cartoon family
+//     rides; a spatial leg on it carries weight, never jerks. NOT a closed `--spring-*`
+//     set member — the gate must enroll the new charted overshoot token, not red it.
+const EASED_ARRIVAL = ["--ease-out-expo", "--motion-ease-out-expo", "--ease-cartoon-punch"];
 
 // A spatial leg whose timing is a `--*-spring`/`--*-resize-spring`/`--slider-*-spring`
 // composite spring TOKEN (the dock-morph + slider thumb registers) is sprung, NOT
@@ -601,14 +624,17 @@ export function detectAll({ presets, schemeSrc, useSpringPressSrc, regenSrc, cur
 function selfTest() {
     const failures = [];
 
-    // S1 bite — a front-loaded control pair (90%-travel < 0.40) reds.
+    // S1 bite — a front-loaded control pair (90%-travel < 0.40) reds. The keep rows
+    // (smooth/dock/gentle/press) carry the NEW BD canon so only the synthetic snappy
+    // front-loads; the bouncy row stays at the OLD pointed ζ=0.55 so the §S2 ceiling
+    // self-test (mutating it to 0.45) reds against the new ≤10% band.
     const frontLoaded = [
-        { name: "smooth", response: 0.5, dampingFraction: 0.86, comment: "" },
+        { name: "smooth", response: 0.58, dampingFraction: 0.8, comment: "" },
         { name: "snappy", response: 0.25, dampingFraction: 0.55, comment: "" },
         { name: "bouncy", response: 0.5, dampingFraction: 0.55, comment: "" },
-        { name: "gentle", response: 0.7, dampingFraction: 1.0, comment: "" },
-        { name: "dock", response: 0.32, dampingFraction: 0.7, comment: "" },
-        { name: "press", response: 0.15, dampingFraction: 0.86, comment: "" },
+        { name: "gentle", response: 0.82, dampingFraction: 1.0, comment: "" },
+        { name: "dock", response: 0.68, dampingFraction: 0.64, comment: "" },
+        { name: "press", response: 0.2, dampingFraction: 0.8, comment: "" },
     ];
     if (
         ninetyTravelFraction(0.25, 0.55) >= SNAPPY_90_FRONTLOAD_FLOOR ||
@@ -628,7 +654,7 @@ function selfTest() {
     // S3 bite — a useSpringPress with a literal default (not the press row) reds.
     const literalPress = "const spring = useSpring(target, { response: options.response ?? 0.25, dampingFraction: options.dampingFraction ?? 0.7 });";
     if (
-        detectPressRegister(frontLoaded, literalPress, "--spring-press: linear(0, 1); --spring-press-duration: 0.11s;").violations
+        detectPressRegister(frontLoaded, literalPress, "--spring-press: linear(0, 1); --spring-press-duration: 0.16s;").violations
             .length === 0
     ) {
         failures.push("SELF-TEST S3: a useSpringPress literal default (0.25/0.7, not the row) did NOT red");
@@ -639,15 +665,15 @@ function selfTest() {
         failures.push("SELF-TEST S3: a missing press row did NOT red");
     }
 
-    // S4 bite — a drifted keep (smooth ζ retuned) reds.
+    // S4 bite — a drift OFF the NEW canonical smooth ({0.58,0.80}→{0.58,0.65}) reds.
     const driftedKeep = frontLoaded.map((p) =>
-        p.name === "smooth" ? { ...p, dampingFraction: 0.7 } : p,
+        p.name === "smooth" ? { ...p, dampingFraction: 0.65 } : p,
     );
     if (
         detectSingleSourceAndKeeps(driftedKeep, "x", "SPRING_PRESETS", "SPRING_PRESETS").violations
             .every((s) => !/kept `smooth`/.test(s))
     ) {
-        failures.push("SELF-TEST S4: a drifted `smooth` keep (ζ 0.86→0.7) did NOT red");
+        failures.push("SELF-TEST S4: a drifted `smooth` keep (ζ 0.80→0.65) did NOT red");
     }
 
     // S5 bite — a hand-truncated --spring-snappy-duration reds against the analytic.

@@ -106,8 +106,8 @@ fn headFrame(head: vec2<f32>, headBack: vec2<f32>, halfW: f32) -> HeadFrame {
     return out;
   }
   out.T = d / s;
-  let ref = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
-  out.sHat = clamp(s / ref, 0.0, 1.0);
+  let refScale = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
+  out.sHat = clamp(s / refScale, 0.0, 1.0);
   return out;
 }
 

@@ -307,9 +307,14 @@ function d6(src, { skipGitDiff = false } = {}) {
         ? "no demo-design pane re-mints a library-namespace token in its <style> block (the demo-private fence held — the panes READ the library --section-color/display tokens; demo-local scoped helper vars are sanctioned)"
         : `demo-design pane(s) re-mint a library token in <style>: ${mintOffenders.join(", ")}`;
     void skipGitDiff; // retained for the self-test signature; the probe is source-structural now
-    // (b) no GL context ADDED to a foundations/display static-wash pane. The
-    // foundations panes + the buttons (display) pane must reference ZERO GL tags
-    // (the one-GL-per-route budget — these routes are paper static-wash by design).
+    // (b) no GL context ADDED to a FOUNDATIONS static-wash pane. The foundations panes
+    // (typography/colors/icons/radii/shadows/surface-tints) stay paper static-wash by
+    // design — ZERO GL tags. BD.W-PAGE-BACKGROUND / display-buttons Pass-E top-move #1
+    // PROMOTED `buttons` off the static-wash list: it is now the sanctioned GLASS-SHOWCASE
+    // route that stages its glass specimens over ONE shared aurora field (glass over flat
+    // cream is invisible-by-construction; the colorful field is MANDATORY for a glass
+    // demo). The D3 arm above enforces the field-staging; the one-GL budget holds (one
+    // <Aurora>, live-verified ONE canvas). So `buttons` is no longer in the ZERO-GL set.
     const staticWashPanes = [
         "typography",
         "colors",
@@ -317,7 +322,6 @@ function d6(src, { skipGitDiff = false } = {}) {
         "radii",
         "shadows",
         "surfaceTints",
-        "buttons",
     ];
     const glOffenders = staticWashPanes.filter((k) => GL_TAGS.test(src[k]));
     return {

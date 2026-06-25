@@ -110,11 +110,18 @@
        MATERIAL luminosity lift — the SAME named tokens, per-mode (the plain per-mode
        pair idiom). The brightness() companions stay baked (this fold mints ONLY the
        saturate knob). Machine-locked by `proof:glass-legibility` L7. */
-    --glass-saturate-wash:     1.05;
-    --glass-saturate-quiet:    1.05;
-    --glass-saturate-resting:  1.05;
-    --glass-saturate-floating: 1.18;
-    --glass-saturate-overlay:  1.2;
+    --glass-saturate-wash:     1.4;
+    --glass-saturate-quiet:    1.4;
+    --glass-saturate-resting:  1.4;
+    --glass-saturate-floating: 1.6;
+    --glass-saturate-overlay:  1.6;
+    /* W-NAV-DOCK-FIX — the dock's named light-concentration saturate. The dock is a
+       calm chrome strip (the wash/quiet/resting register 1.4, NOT the floating 1.6).
+       Mirrors the dark arm's dock saturate; the single retune knob in both modes. The
+       light dock was the ONLY light surface with no saturate companion — over the flat
+       warm-cream page the un-saturated backdrop-filter pulled the cream toward neutral
+       (the flat-slab gray read). */
+    --glass-saturate-dock:     1.4;
 
     /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
@@ -139,7 +146,16 @@
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
     /* Dock blur composes blur() only — no saturate. */
-    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level)));
+    /* W-NAV-DOCK-FIX — the dock concentrates light like every other tier (apple-glass
+       §4): the saturate lifts the warm-cream chroma THROUGH the plate, the small
+       brightness is the light-concentration the quiet rung carries. The blur RADIUS is
+       untouched (the W-GLASS-CAL dial). Compositor-only (backdrop-filter is a paint op);
+       the prefers-reduced-transparency bracket maps --glass-blur-dock: none, so the
+       saturate drops with the blur (no separate carve owed). */
+    --glass-blur-dock:
+        blur(calc(var(--glass-blur-dock-radius) * var(--glass-level)))
+        saturate(var(--glass-saturate-dock))
+        brightness(1.02);
 
     /* AX.W52 → BC.W-GLASS-LEGIBILITY-MEASURED — the GLASS BUTTON blur, lifted to
        the FLOATING-tier "more glass" register. The `glass`/`glass-wash` button
@@ -164,7 +180,10 @@
        visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The
        value holds the surface register against the tightened 11px blur so the
        dock reads as painted chrome, not a frosted ghost. */
-    --glass-opacity-dock: 0.42;
+    /* BD.W-DOCK-CORE (D3) — the dock base alpha lifts 0.42 → 0.50 (margin-insurance for
+       the warm-chromatic darken: the base composite chroma closes a notch before any tint
+       engages). Stays the lightest chrome tier (below resting 0.65), mode-invariant. */
+    --glass-opacity-dock: 0.50;
 
     /* Dialog-specific opacity (0.68) — BC.W-DIALOG-GLASS. The iOS-27 control-
        center modal register: SEE-THROUGH frosted glass that reveals the page
@@ -313,7 +332,11 @@
     --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
     --glass-border-floating: color-mix(in srgb, var(--foreground) 5%, transparent);
     --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
-    --glass-border-dock:     color-mix(in srgb, var(--foreground) 4%, transparent);
+    /* W-NAV-DOCK-FIX — the dock is FLOATING chrome over an UNKNOWN backdrop (unlike a
+       content card on the page), so it earns a readable warm-INK hairline (the iOS-27
+       edge-rim layer). 8% warm-ink is still a whisper, never a black bar (--foreground
+       H≈56° → a WARM rim, never a gray line). */
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 8%, transparent);
     --glass-border:          var(--glass-border-quiet);
 
     /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────

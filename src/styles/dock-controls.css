@@ -41,6 +41,24 @@
 @import "./dock-controls/touch-floor.css";
 
 @layer components {
+    /* BD.W-DOCK-CORE (A12) — the draggable-item GRAB squish. A grabbed dock item
+       (`.glass-drag-lift`, written by useDockItemDrag while the gesture is in flight)
+       deforms with the volume-preserving `--stretch` register (the SHARED useLiquidFlex
+       "tanh" squish the tab indicator + dock morph already speak — ONE squish source, no
+       forked deformation). The grab follows the pointer via the JS-written `transform:
+       translate` (the compositor follow); this rule adds the gel-squish scale ON the
+       grabbed plate (stretch along the drag axis, compress across — volume-preserving).
+       The dock grabbable cursor + touch-action sit on `.glass-drag-grabbable` (the dock
+       root) via segmented-tabs.css. At rest `--stretch` is unset → 1/1 (no deform). The
+       global PRM gate strips `scale` → no squish under reduce (the gesture still follows).
+       Horizontal docks stretch X / compress Y; vertical stretch Y / compress X. */
+    .glass-dock.dock-items-draggable:not(.vertical) .dock-icon-button.glass-drag-lift {
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+    .glass-dock.dock-items-draggable.vertical .dock-icon-button.glass-drag-lift {
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+
     /* AV.W9.3 — momentum-gated dock-control press spring. The `:active` squish
        toward `--scale-press-dock` settles on a NO-OVERSHOOT spring (Apple,
        "Designing Fluid Interfaces": default 100% damping — no bounce — for a tap;

@@ -198,14 +198,25 @@ add(
     `the Appearance dark row renders the canonical <DarkModeToggle> (self-syncing over useGlobalDark), not the desynced <Switch v-model="darkModel"> NO-OP [toggle=${darkRowOnToggle}]`,
 );
 
-// ── The alpha-clamp source assert ──────────────────────────────────────────────────────
-// freezeCfg (usePresetThumbnails.ts) sets alpha: 1 in the capture canonicalization
-// (alongside the drift-zeroing), so the baked thumbnail is full-opacity.
-const alphaClamped = /nucleiDrift:\s*0[\s\S]{0,400}?alpha:\s*1\b/.test(thumbnails);
+// ── The full-opacity preview-color assert (BD.W-PRESET-RENDER, re-rooted) ───────────────
+// The thumbnail preview must show the preset COLOR, not its 0.26 deployment-time
+// translucency. BD.W-PRESET-RENDER DELETED the WebGPU `mode:"capture"` bake + its
+// `freezeCfg` `nucleiDrift:0 … alpha:1` canonicalization (clean break, no-backwards-compat
+// — the GL dependency the preview never needed; it left every card an eternal skeleton on
+// no-device hosts). The thumbnail now bakes via the device-free `auroraFallbackGround(config)`
+// 2D-canvas raster, which paints each preset's STATIC composite from the palette LUT at
+// FULL luminance ("the composite's SPATIAL luminance, not a partial-alpha approximation")
+// — so the preview is the preset color, full-opacity, never the deployed 0.26 translucency,
+// BY CONSTRUCTION (no clamp needed; the raster never applies the deployment alpha). The
+// assert re-points at the NEW seam: the thumbnail composes `auroraFallbackGround` (not the
+// retired WebGPU capture bake), and the runtime presets.ts baseline is untouched.
+const fullOpacityPreview =
+    /auroraFallbackGround\s*\(/.test(thumbnails) &&
+    !/mode:\s*["']capture["']/.test(thumbnails);
 add(
     "alpha-clamp-at-bake-seam",
-    alphaClamped,
-    `freezeCfg sets alpha: 1 in the capture canonicalization (the Speedtest preview shows the preset COLOR, not its 0.26 deployment-time translucency; the presets.ts runtime baseline is untouched) [clamped=${alphaClamped}]`,
+    fullOpacityPreview,
+    `the thumbnail bakes via the device-free auroraFallbackGround raster (BD.W-PRESET-RENDER — the WebGPU mode:"capture" bake + its freezeCfg alpha:1 clamp DELETED, clean break); the preview shows the preset COLOR at full opacity by construction, not the 0.26 deployment-time translucency (the presets.ts runtime baseline is untouched) [auroraFallbackGround=${fullOpacityPreview}]`,
 );
 
 // ── The subpath/package.json registration ──────────────────────────────────────────────

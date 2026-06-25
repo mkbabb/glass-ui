@@ -228,6 +228,11 @@ function detectStrayHue(sources, overrides = {}) {
 
 // ── M8 — glass-panel cap (the source half: no GL added to a static-wash pane) ──
 const GL_TAGS = /<(Aurora|Constellation|FourierField|GooBlob|DotFlowField|Concentric)\b/;
+// BD.W-PAGE-BACKGROUND / display-buttons Pass-E top-move #1 PROMOTED display/buttons off
+// the static-wash list: it is the sanctioned GLASS-SHOWCASE route now — its glass specimens
+// stage over ONE shared aurora field (glass over flat cream is invisible-by-construction;
+// the colorful field is MANDATORY for a glass demo). The one-GL budget holds (ONE <Aurora>,
+// live-verified ONE canvas). The FOUNDATIONS panes stay paper static-wash by design.
 const STATIC_WASH_PANES = [
     "demo/stories/foundations/typography.vue",
     "demo/stories/foundations/colors.vue",
@@ -235,7 +240,6 @@ const STATIC_WASH_PANES = [
     "demo/stories/foundations/radii.vue",
     "demo/stories/foundations/shadows.vue",
     "demo/stories/foundations/surface-tints.vue",
-    "demo/stories/display/buttons.vue",
 ];
 function detectGlassPanelCap(sources, overrides = {}) {
     const src = { ...sources, ...overrides };
@@ -322,6 +326,12 @@ const M9B_ALLOWLIST = new Set([
     "demo/stories/foundations/css-utilities.vue", // the scale-on-hover demo buttons
     "demo/stories/display/buttons.vue", // the button pane demonstrates raw vs <Button>
     "demo/stories/CodeBlock.vue", // the copy-affordance button (the chassis primitive)
+    // BD configurator — the preset-tile gallery selector is a bespoke configurator
+    // control (a `data-preset-tile` glass-capsule + glass-capsule-hover + focus-ring +
+    // aria-pressed thumbnail tile, the proof:configurator-glass-atoms primitive), a
+    // hand-rolled bare control by design — the same class as the aurora configurator
+    // control panes already allowlisted above.
+    "demo/stories/compositions/configurator.vue",
 ]);
 const M9B_BASELINE = new Set([
     "demo/stories/compositions/instrument-chassis.vue",
@@ -339,6 +349,22 @@ const M9B_BASELINE = new Set([
     // its dock-morph semantics). A dock-band control pane, recorded as a residual on
     // the idiom-audit ledger (the dock/overview · dock/layers control-pane precedent).
     "demo/stories/dock/dock-search.vue",
+    // BD dock band — the iOS-surface FACSIMILE example tiles + the liquid-playground
+    // lab. Each example recreates a recognizable iOS surface (AppleMusic transport,
+    // Notification Reply/Dismiss, Spotlight field, TabBar island chips, AppSwitcher
+    // tiles, VolumeHUD) whose controls are BESPOKE iOS UI elements carrying their own
+    // facsimile classes (nt-act / sp-field / tb-island-chip) — converting them to the
+    // generic glass <Button> would destroy the facsimile. The liquid-playground lab's
+    // real <button>s are the de-shadcn'd semantic affordances (a real <button>, not a
+    // <div> faking one). Same dock-band bespoke-affordance class as dock/overview ·
+    // dock/layers · dock/dock-search above; recorded residuals on the idiom-audit ledger.
+    "demo/stories/dock/examples/AppSwitcher.vue",
+    "demo/stories/dock/examples/AppleMusic.vue",
+    "demo/stories/dock/examples/Notification.vue",
+    "demo/stories/dock/examples/Spotlight.vue",
+    "demo/stories/dock/examples/TabBar.vue",
+    "demo/stories/dock/examples/VolumeHUD.vue",
+    "demo/stories/dock/liquid-playground.vue",
     "demo/stories/forms/combobox.vue",
     "demo/stories/foundations/shadows.vue",
     "demo/stories/navigation/toc-tracking.vue",

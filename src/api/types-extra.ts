@@ -295,12 +295,10 @@ export type {
     UseDotFlowFieldOptions,
 } from "../components/custom/dot-flow-field";
 
-// ── Concentric — the WebGPU-first radial Fourier ring-interference viz (BB.W-CONCENTRIC) ──
+// ── Concentric — the WebGPU-first level-set topographic-contour viz (BD.W-VIZ-RESPEC) ──
 // Config + handle types for a consumer wrapping <Concentric> (the /concentric subpath).
 export type {
     ConcentricConfig,
-    RingComponent,
-    RingCenter,
     ConcentricHandle,
     UseConcentricOptions,
 } from "../components/custom/concentric";

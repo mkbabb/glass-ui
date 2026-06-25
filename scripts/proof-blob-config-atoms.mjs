@@ -186,11 +186,27 @@ async function run() {
 
     if (defaults) {
         // Every top-level atom declared on BlobConfig must be present in the defaults.
-        const missingAtoms = topFields.filter((f) => !(f in defaults));
+        // OPTIONAL top-level atoms (declared `name?:`) legitimately carry NO default — their
+        // absence is the documented derived floor (e.g. BD.W-GOO-CAROUSEL-DECK's `morphT?`: when
+        // absent the upload derives the byte-identical STAGE-1 pure-blob floor, so the default
+        // blob is the un-morphed blob — a default would force a non-default identity). The
+        // "no orphan" rule binds only the REQUIRED atoms; an optional consumer-animated lever is
+        // exempt. (A REQUIRED atom with no default is still the orphan the gate guards.)
+        const optionalTop = body
+            ? body
+                  .split("\n")
+                  .map((l) => l.trim().match(/^([a-zA-Z_]\w*)\?\s*:/))
+                  .filter(Boolean)
+                  .map((m) => m[1])
+            : [];
+        facts.optionalTopAtoms = optionalTop;
+        const missingAtoms = topFields.filter(
+            (f) => !(f in defaults) && !optionalTop.includes(f),
+        );
         facts.missingAtomDefaults = missingAtoms;
         if (missingAtoms.length) {
             violations.push(
-                `BLOB_CONFIG_DEFAULTS is missing a default for atom(s): ${missingAtoms.join(", ")} (every declared atom must have a default — no orphan).`,
+                `BLOB_CONFIG_DEFAULTS is missing a default for REQUIRED atom(s): ${missingAtoms.join(", ")} (every required declared atom must have a default — no orphan; optional \`name?:\` levers are exempt).`,
             );
         }
         // Every declared field under each bundled atom must have a default. Cross-check the

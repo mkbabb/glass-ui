@@ -189,13 +189,20 @@ facts.w3MultiplyWired = w3Multiply;
 if (!w3Multiply) violations.push("W3(e): HandMark.vue must wire the multiply blend on the behind band");
 
 // ── W4 — the morphology is natural + seeded; the seed reconcile holds ─────────
+// BD.W-HANDMARK-AUDIT RE-INVENT: `naturalUnderlinePoints` is no longer a seeded sinusoid
+// (the period constants NATURAL_AMP_FRAC/PERIODS_MIN/PERIODS_MAX are DELETED — no-legacy).
+// The boil voice is now a φ-incommensurate fractal value-noise displacement: scale-relative
+// amplitude via NOISE_AMP_FRAC, irregular hump spacing via the NOISE_OCTAVES/NOISE_F0/NOISE_PHI
+// octave sum (φ mutually-irrational steps → the sum never closes into a period). W4 asserts the
+// NEW morphology constants (the binding spacing-CV discriminator rides proof:handmark-audit).
 const w4Procedural =
     /naturalUnderlinePoints/.test(geometry) &&
-    /NATURAL_AMP_FRAC/.test(geometry) &&
-    /PERIODS_MIN/.test(geometry) &&
-    /PERIODS_MAX/.test(geometry);
+    /NOISE_AMP_FRAC/.test(geometry) &&
+    /NOISE_OCTAVES/.test(geometry) &&
+    /NOISE_PHI/.test(geometry) &&
+    /NOISE_F0/.test(geometry);
 facts.w4Procedural = w4Procedural;
-if (!w4Procedural) violations.push("W4: geometry.ts must carry the procedural naturalUnderlinePoints (scale-relative amplitude + irregular periods)");
+if (!w4Procedural) violations.push("W4: geometry.ts must carry the φ-incommensurate naturalUnderlinePoints (scale-relative amplitude via NOISE_AMP_FRAC + irregular spacing via the NOISE_OCTAVES/NOISE_F0/NOISE_PHI octave sum)");
 
 // the seed reconcile — glass-ui handmark code imports mulberry32 from the HOUSE leaf,
 // NEVER from @mkbabb/pencil-boil. Grep every handmark .ts (+ the SFC) for the bad import.

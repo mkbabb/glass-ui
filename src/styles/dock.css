@@ -17,7 +17,12 @@
  *                            three-region body).
  *   - dock/morph.css       — the W01 single-scalar morph chrome + state response
  *                            (--dock-expand-t interp, collapsed/summary, held /
- *                            open, the W55 adaptive-legibility bucket).
+ *                            open).
+ *   - dock/adaptive-legibility.css — the darken-over-light self-engage (the
+ *                            continuous backdrop-luma tint clamp, the warm-chromatic
+ *                            dock ink, the @container light bucket, contrast-color()
+ *                            refinement, the PRM reveal-blur carve). Split from
+ *                            morph.css to keep both partials under the 500-line bound.
  *   - dock/density.css     — the W45 density × --dock-scale cascade.
  *   - dock/layers.css      — the `.dock-layer` crossfade + hit-test + reveal-
  *                            stagger contract + the `layout="grid"` tile grid.
@@ -36,6 +41,7 @@
    cascade is preserved bit-for-bit (the carve-isomorphism gate is the witness). */
 @import "./dock/shell.css";
 @import "./dock/morph.css";
+@import "./dock/adaptive-legibility.css";
 @import "./dock/density.css";
 @import "./dock/shape.css";
 @import "./dock/layers.css";

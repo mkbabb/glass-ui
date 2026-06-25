@@ -20,7 +20,7 @@
 // still override `--motion-accent` from any ancestor (the ppmycota fence: a demo
 // hue NEVER enters a library token, and the primitive is self-sufficient
 // standalone).
-import { computed, onUnmounted, useTemplateRef, watch } from "vue";
+import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
 import { Check, Copy } from "@lucide/vue";
 import {
     Select,
@@ -44,7 +44,6 @@ import {
     STEP_COUNT_MAX,
     STEP_COUNT_MIN,
 } from "./constants";
-import { ref } from "vue";
 
 const props = withDefaults(
     defineProps<{

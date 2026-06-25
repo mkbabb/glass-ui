@@ -80,10 +80,11 @@ function clauseGatingIntact(over = {}) {
     const viol = [];
     const wgsl = over.wgsl ?? read(WGSL) ?? "";
 
-    // The uStage early-return still strips the dressing (the STAGE-1 floor — the
-    // proof:gooblob-plain witness, re-asserted here so STAGE 2 cannot break the floor).
-    if (!/if\s*\(\s*uStage\s*>\s*0\.5\s*\)\s*\{/.test(wgsl))
-        viol.push("M1: the uStage STAGE-1 gate is GONE (the floor un-gated)");
+    // The morphT-gated flat-floor early-return still strips the dressing (the STAGE-1
+    // floor — RE-POINTED at BD.W-GOO-CAROUSEL-DECK: `uStage > 0.5` → `uMorphT <= 0.0`;
+    // re-asserted here so STAGE 2 cannot break the floor).
+    if (!/if\s*\(\s*uMorphT\s*<=\s*0\.0\s*\)\s*\{/.test(wgsl))
+        viol.push("M1: the uMorphT flat-floor gate is GONE (the floor un-gated)");
 
     // The lit block is GATED behind uLit; the shadow block GATED behind uShadow.
     if (!/if\s*\(\s*uLit\s*>\s*0\.5\s*\)\s*\{/.test(wgsl))
@@ -97,13 +98,13 @@ function clauseGatingIntact(over = {}) {
     // Ordering is computed on the COMMENT-STRIPPED source so a comment mention of an
     // `if (uLit > 0.5)` reference (the BB-residual prose) never confuses the index.
     const wgslCode = stripJsComments(wgsl);
-    const idxStage = wgslCode.search(/if\s*\(\s*uStage\s*>\s*0\.5\s*\)/);
+    const idxStage = wgslCode.search(/if\s*\(\s*uMorphT\s*<=\s*0\.0\s*\)/);
     const idxLit = wgslCode.search(/if\s*\(\s*uLit\s*>\s*0\.5\s*\)/);
     const idxShadow = wgslCode.search(/if\s*\(\s*uShadow\s*>\s*0\.5\s*\)/);
     if (idxStage >= 0 && idxLit >= 0 && idxStage > idxLit)
-        viol.push("M1: the STAGE-1 uStage branch sits AFTER the lit block (the dressing is reached on STAGE 1)");
+        viol.push("M1: the flat-floor branch sits AFTER the lit block (the dressing is reached on the flat floor)");
     if (idxStage >= 0 && idxShadow >= 0 && idxStage > idxShadow)
-        viol.push("M1: the STAGE-1 uStage branch sits AFTER the shadow block (the dressing is reached on STAGE 1)");
+        viol.push("M1: the flat-floor branch sits AFTER the shadow block (the dressing is reached on the flat floor)");
 
     // The STAGE-1 branch body must not reach a lit/shadow term (a planted always-lit reds).
     if (idxStage >= 0) {
@@ -115,15 +116,17 @@ function clauseGatingIntact(over = {}) {
             viol.push("M1: the STAGE-1 branch reaches a lit/shadow term (not the flat floor)");
     }
 
-    // The bridge flips uLit/uShadow OFF for variant=blob (the explicit per-variant flip,
-    // T1) — STAGE 1 ships shadowless+lightless regardless of the surface flags.
+    // The bridge flips uLit/uShadow ON for any morph in progress (morphT > 0) — the
+    // RE-POINTED per-variant flip (BD.W-GOO-CAROUSEL-DECK: `isMeatball` → `isDressed`;
+    // morphT resolves from config.morphT or variant for back-compat). A pure blob
+    // (morphT <= 0) early-returns before the lit/shadow work.
     const bridge = over.bridge ?? read(BRIDGE) ?? "";
-    if (!/const\s+isMeatball\s*=\s*config\.variant\s*!==\s*["']blob["']\s*;/.test(bridge))
-        viol.push("M1: the WGSL bridge does not gate uLit/uShadow on variant !== \"blob\" (the T1 per-variant flip)");
-    if (!/f32\[OFF\.s2\s*\+\s*3\]\s*=\s*isMeatball\s*&&\s*cSurf\.lit/.test(bridge))
-        viol.push("M1: the WGSL bridge does not flip uLit on isMeatball && surface.lit");
-    if (!/f32\[OFF\.res\s*\+\s*2\]\s*=\s*isMeatball\s*&&\s*cSurf\.shadow/.test(bridge))
-        viol.push("M1: the WGSL bridge does not flip uShadow on isMeatball && surface.shadow");
+    if (!/const\s+isDressed\s*=\s*morphT\s*>\s*0\s*;/.test(bridge))
+        viol.push("M1: the WGSL bridge does not gate uLit/uShadow on morphT > 0 (the RE-POINTED dressing flip)");
+    if (!/f32\[OFF\.s2\s*\+\s*3\]\s*=\s*isDressed\s*&&\s*cSurf\.lit/.test(bridge))
+        viol.push("M1: the WGSL bridge does not flip uLit on isDressed && surface.lit");
+    if (!/f32\[OFF\.res\s*\+\s*2\]\s*=\s*isDressed\s*&&\s*cSurf\.shadow/.test(bridge))
+        viol.push("M1: the WGSL bridge does not flip uShadow on isDressed && surface.shadow");
 
     return viol;
 }
@@ -235,7 +238,7 @@ function clauseShadowAndHoist(over = {}) {
         viol.push("M3: metaball-uniforms.glsl does not declare uShadow (the GLSL lockstep)");
     if (!/uniform\s+float\s+uShadowSoftness\s*;/.test(uniforms))
         viol.push("M3: metaball-uniforms.glsl does not declare uShadowSoftness (the GLSL lockstep)");
-    if (!/f32\[OFF\.res\s*\+\s*2\]\s*=\s*isMeatball\s*&&\s*cSurf\.shadow/.test(bridge))
+    if (!/f32\[OFF\.res\s*\+\s*2\]\s*=\s*isDressed\s*&&\s*cSurf\.shadow/.test(bridge))
         viol.push("M3: the WGSL bridge does not pack uShadow into the res.z lane (the SoT lockstep)");
     if (!/f32\[OFF\.res\s*\+\s*3\]\s*=\s*cSurf\.shadowSoftness\s*;/.test(bridge))
         viol.push("M3: the WGSL bridge does not pack uShadowSoftness into the res.w lane (the parity-ΔE-blowout suspect)");

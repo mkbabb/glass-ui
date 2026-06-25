@@ -162,7 +162,7 @@ export const buttonVariants = cva(
         'glass-wash':
           'glass-wash btn-glass text-foreground/70 hover:bg-foreground/[0.04] hover:border-(--surface-tint-22) hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
         // BD.W-BUTTON-GLASS-CONSUME — `ai` joins the SHARED glass register with an
-        // AMBER accent in the gleam (the prior opaque `bg-amber-500/*` palette fills
+        // AMBER accent in the gleam (the prior opaque `bg-amber-500` palette fills
         // DELETED). The amber reads in the catch-light core + rim glint (the same
         // accent axis `gold-audacious` uses), not a flat amber slab. The accent is a
         // warm oklch (build-trap-(d) safe — a warm color, never bare `transparent`).

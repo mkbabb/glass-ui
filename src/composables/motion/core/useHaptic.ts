@@ -127,8 +127,10 @@ export function useHaptic(options: UseHapticOptions = {}): UseHapticReturn {
         try {
             navigator.vibrate(resolvePattern(pattern));
         } catch {
-            // A spec-violating engine (a vibrate that throws on a valid pattern) must
-            // never bubble — the body-confirm is a delight, never a liability.
+            // fail-explicit: a spec-violating engine (a vibrate that throws on a valid
+            // pattern) must never bubble — the body-confirm is a BEFITTING delight, never
+            // a liability. The `supported` floor already gated the no-engine case; this
+            // catch only absorbs a non-conformant throw.
         }
     }
 

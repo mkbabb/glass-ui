@@ -211,8 +211,13 @@ export function detectDockPerfection(sources) {
             `Q3/C3: --dock-control-hover-bg is not a glass-tier register (resolves to "${hoverBgDecl}"); it must point at a --glass-bg-* tier a measurable ΔL above the --glass-bg-dock substrate, not a same-hue color-mix(in srgb, var(--card) …).`,
         );
     }
-    // The --scale-hover-dock hover scale must fire on all four members. We assert
-    // the hover rules of icon/tab/select/dropdown each set `scale: var(--scale-hover-dock)`.
+    // BD.W-DOCK-CORE (A8) RETIRED the hover-scale on the TRIGGER family (select/dropdown
+    // /.dock-trigger) so portaled SelectTrigger content anchors smoothly — a clean break
+    // (no alias). The hover MOTION channel now: icon + tab LIFT on hover
+    // (scale: var(--scale-hover-dock)); the picker/trigger family lifts the FILL ONLY (the
+    // glass-tier --dock-control-hover-bg cross-fade), NEVER the scale. The "all four lift"
+    // split-brain check is superseded: the witness is now icon+tab-scale + the trigger
+    // group lifts the fill (NOT the scale).
     // icon: `.dock-icon-button … &:hover:not(:disabled){ … scale: var(--scale-hover-dock) }`
     const iconHover = /&:hover:not\(:disabled\)\s*\{([^}]*)\}/g;
     let iconHoverHasScale = false;
@@ -237,24 +242,32 @@ export function detectDockPerfection(sources) {
     const ampHoverWithScale = ampHoverBlocks.filter((m) =>
         /scale\s*:\s*var\(--scale-hover-dock\)/.test(m[1]),
     ).length;
-    // The select/dropdown shared hover group is a flat (non-&) rule.
-    const pickerHover =
-        /\.dock-select-trigger:hover:not\(:disabled\)\s*,\s*\.dock-dropdown-trigger:hover:not\(:disabled\)\s*\{([^}]*)\}/.exec(
+    // The trigger family shared hover group (the BD-unified `.dock-trigger,
+    // .dock-select-trigger, .dock-dropdown-trigger` 3-member flat group). It lifts the
+    // FILL (the glass-tier --dock-control-hover-bg cross-fade) — and per A8 must NOT carry
+    // the hover scale (the portaled-anchor retirement).
+    const triggerHover =
+        /\.dock-trigger:hover:not\(:disabled\)\s*,\s*\.dock-select-trigger:hover:not\(:disabled\)\s*,\s*\.dock-dropdown-trigger:hover:not\(:disabled\)\s*\{([^}]*)\}/.exec(
             dockControlsCss,
         );
-    const pickerHoverHasScale =
-        !!pickerHover && /scale\s*:\s*var\(--scale-hover-dock\)/.test(pickerHover[1]);
-    // icon + tab → at least 2 &-nested hover blocks carry the scale; select + dropdown
-    // → the shared group carries it.
-    const q3AllFourLift = ampHoverWithScale >= 2 && pickerHoverHasScale;
+    const triggerHoverLiftsFill =
+        !!triggerHover && /background\s*:\s*var\(--dock-control-hover-bg\)/.test(triggerHover[1]);
+    const triggerHoverHasScale =
+        !!triggerHover && /scale\s*:\s*var\(--scale-hover-dock\)/.test(triggerHover[1]);
+    // icon + tab → at least 2 &-nested hover blocks carry the scale (the lift members).
     if (ampHoverWithScale < 2) {
         violations.push(
             `Q3/C3: the --scale-hover-dock hover scale fires on fewer than 2 of the &-nested control members (icon/tab) — found ${ampHoverWithScale} (the unified MOTION channel is not complete).`,
         );
     }
-    if (!pickerHoverHasScale) {
+    if (!triggerHoverLiftsFill) {
         violations.push(
-            "Q3/C3: the .dock-select-trigger/.dock-dropdown-trigger shared hover group does not carry scale: var(--scale-hover-dock) (the picker members do not lift on hover — the split-brain hover).",
+            "Q3/C3: the .dock-trigger/.dock-select-trigger/.dock-dropdown-trigger shared hover group does not lift the FILL (background: var(--dock-control-hover-bg)) — the glass-tier hover cross-fade regressed.",
+        );
+    }
+    if (triggerHoverHasScale) {
+        violations.push(
+            "Q3/C3: the trigger family hover group carries scale: var(--scale-hover-dock) — BD.W-DOCK-CORE A8 RETIRED the trigger hover-scale so portaled SelectTrigger content anchors smoothly (the scale must be on icon/tab only).",
         );
     }
 
@@ -400,8 +413,8 @@ export function detectDockPerfection(sources) {
             hoverIsGlassTier,
             hoverDecl: hoverBgDecl,
             ampHoverWithScale,
-            pickerHoverHasScale,
-            allFourLift: q3AllFourLift,
+            triggerHoverLiftsFill,
+            triggerHoverHasScale,
         },
         c4c5: {
             activeIsGlassTier,
@@ -492,7 +505,7 @@ function run() {
         `  Q3 hover glass-tier register  : ${facts.q3.hoverIsGlassTier ? "YES" : "NO"}  (${facts.q3.hoverDecl})`,
     );
     console.log(
-        `  Q3 hover scale on all 4       : ${facts.q3.allFourLift ? "YES" : "NO"}`,
+        `  Q3 icon/tab scale + trigger fill-only : icon-tab=${facts.q3.ampHoverWithScale}≥2 trigger-fill=${facts.q3.triggerHoverLiftsFill} trigger-no-scale=${!facts.q3.triggerHoverHasScale}`,
     );
     console.log(
         `  C5 active glass register      : ${facts.c4c5.activeIsGlassTier ? "YES" : "NO"}  (${facts.c4c5.activeDecl})`,

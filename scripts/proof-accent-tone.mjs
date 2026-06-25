@@ -50,6 +50,8 @@ function cliPaths() {
         USE_ACCENT_TONE: resolve(ROOT, "src/composables/color/useAccentTone.ts"),
         COLOR_INDEX: resolve(ROOT, "src/composables/color/index.ts"),
         TOGGLE_CHIP: resolve(ROOT, "src/components/custom/toggle-chip/index.ts"),
+        CHIP_VARIANTS: resolve(ROOT, "src/components/custom/selectable-chip/chipVariants.ts"),
+        GLASS_CHIP_CSS: resolve(ROOT, "src/styles/glass/glass-chip.css"),
         SELECTABLE_DIR: resolve(ROOT, "src/components/custom/selectable-chip"),
         SUBPATH: resolve(ROOT, "src/subpaths/selectable-chip.ts"),
         API_INDEX: resolve(ROOT, "src/api/index.ts"),
@@ -252,16 +254,32 @@ export function detectAccentTone(sources) {
         violations.push("A2: useAccentTone is not re-exported from the /color leaf (composables/color/index.ts)");
 
     // ── A3 — the N-pastes collapse (the ToggleChip hand-roll retired) ──
-    const tonalHandRoll = (toggle.match(/data-\[state=on\]:bg-\[color-mix/g) || []).length;
-    const primaryColorMix = (toggle.match(/color-mix\(in_srgb,var\(--primary\)/g) || []).length;
-    const pointsAtRegister = /accent-tone/.test(toggle) && /--accent-band/.test(toggle);
-    facts.a3 = { tonalHandRoll, primaryColorMix, pointsAtRegister };
+    //   BD.W-CHIP-CONGRUENT-GLASS — the toggle-chip collapsed onto the shared chip
+    //   family recipe: `index.ts` RE-POINTS onto `chipVariants` (which composes the
+    //   `.accent-tone` register: `"glass-chip glass-capsule glass-capsule-hover
+    //   accent-tone"`), and the `data-state="on"` band flood (the `--accent-band` event)
+    //   lives in `glass/glass-chip.css` (no class-binding at the call site). So the
+    //   re-point is now THROUGH chipVariants + the css band, not an inline string in
+    //   index.ts. A3 follows the composition: no hand-roll literal survives anywhere in
+    //   the chip family, the recipe composes `.accent-tone`, and the `--accent-band`
+    //   event is wired (the register is the SOLE active-fill source — no `--primary` fork).
+    const chipVariants = sources.chipVariants ?? "";
+    const glassChipCss = sources.glassChipCss ?? "";
+    const handRollScan = `${toggle}\n${chipVariants}`;
+    const tonalHandRoll = (handRollScan.match(/data-\[state=on\]:bg-\[color-mix/g) || []).length;
+    const primaryColorMix = (handRollScan.match(/color-mix\(in_srgb,var\(--primary\)/g) || []).length;
+    const composesAccentTone = /chipVariants\s*\(/.test(toggle) && /accent-tone/.test(chipVariants);
+    const bandEventWired = /--accent-band\b/.test(glassChipCss) && /data-state=["']?on/.test(glassChipCss);
+    const pointsAtRegister = composesAccentTone && bandEventWired;
+    facts.a3 = { tonalHandRoll, primaryColorMix, pointsAtRegister, composesAccentTone, bandEventWired };
     if (tonalHandRoll > 0)
-        violations.push(`A3: ${tonalHandRoll} active-fill color-mix hand-roll(s) survive in toggle-chip (re-point onto .accent-tone)`);
+        violations.push(`A3: ${tonalHandRoll} active-fill color-mix hand-roll(s) survive in the chip family (re-point onto .accent-tone)`);
     if (primaryColorMix > 0)
-        violations.push(`A3: ${primaryColorMix} per-state \`color-mix(…--primary…)\` literal(s) survive in toggle-chip`);
-    if (!pointsAtRegister)
-        violations.push("A3: toggle-chip does not re-point onto the .accent-tone register (--accent-band)");
+        violations.push(`A3: ${primaryColorMix} per-state \`color-mix(…--primary…)\` literal(s) survive in the chip family`);
+    if (!composesAccentTone)
+        violations.push("A3: toggle-chip does not re-point onto the shared chipVariants `.accent-tone` register (the chip-family congruence broke)");
+    if (!bandEventWired)
+        violations.push("A3: the `--accent-band` data-state=on active-fill event is not wired in glass/glass-chip.css (the register's selected flood)");
 
     // ── A4 — the idle FLOOR is enforced (the load-bearing new behavior) ──
     const fillStrengthLit = (css.match(/--accent-fill-strength:\s*([\d.]+)%/) || [])[1];
@@ -360,7 +378,9 @@ function selfTest() {
 }`,
         useAccentTone: `import { safeAccentColor } from "@mkbabb/value.js";\nexport function useAccentTone(){}`,
         colorIndex: `export { useAccentTone } from "./useAccentTone";`,
-        toggleChip: `chip: ["accent-tone","bg-(--accent-fill)","data-[state=on]:bg-(--accent-band)"]`,
+        toggleChip: `import { chipVariants } from "../selectable-chip/chipVariants";\nexport const toggleChipVariants = cva("", { variants: { variant: { chip: chipVariants({ size: "md" }) } } });`,
+        chipVariants: `export const chipVariants = cva("glass-chip glass-capsule glass-capsule-hover accent-tone", { variants: {} });`,
+        glassChipCss: `.glass-chip[data-state="on"] { --accent-band: color-mix(in oklab, var(--surface), var(--tone) 18%); }`,
         apiIndex: `export type { SelectableChipVariants, UseAccentToneOptions, UseAccentToneReturn } from "x";`,
         subpath: `export * from "../components/custom/selectable-chip";`,
         claudeMd: `│   │   ├── selectable-chip/`,
@@ -413,6 +433,8 @@ function run() {
         useAccentTone: stripBlockComments(safeRead(p.USE_ACCENT_TONE)),
         colorIndex: stripBlockComments(safeRead(p.COLOR_INDEX)),
         toggleChip: stripBlockComments(safeRead(p.TOGGLE_CHIP)),
+        chipVariants: stripBlockComments(safeRead(p.CHIP_VARIANTS)),
+        glassChipCss: stripBlockComments(safeRead(p.GLASS_CHIP_CSS)),
         apiIndex: stripBlockComments(safeRead(p.API_INDEX)),
         subpath: stripBlockComments(safeRead(p.SUBPATH)),
         claudeMd: safeRead(p.CLAUDE_MD),

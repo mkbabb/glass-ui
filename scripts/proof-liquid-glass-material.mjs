@@ -266,14 +266,29 @@ function run() {
         const overlaySat = satOf("overlay");
         facts.floatingSaturate = floatSat;
         facts.overlaySaturate = overlaySat;
-        if (!(floatSat <= 1.2)) {
+        // BD.W-GLASS-ABROGATE-GRAY (FIX-D) / W-NAV-DOCK-FIX — the LIGHT backdrop
+        // saturate was deliberately RE-SATURATED onto the warm identity (floating/overlay
+        // 1.18/1.2 → 1.6) to cure the flat warm-cream page reading toward neutral-gray
+        // over the field (the whole BD warm-field thesis — the surfaces are NOW warm, not
+        // an over-juiced garish smear: the field is a low-chroma warm plenum, the plate
+        // concentrates its light). The anti-overreach fence is no longer a fixed 1.2 — it
+        // is the deep refractive tier ceiling `--glass-saturate-deep` (the system's real
+        // upper bound, the SAME fence proof:glass-cal B3 enforces: no content/floating
+        // rung exceeds the deep tier). A rung at/above the deep ceiling REDs.
+        const deepGlassPath = resolve(ROOT, "src/styles/tokens/glass-deep.css");
+        const deepGlassSrc =
+            tok + (existsSync(deepGlassPath) ? "\n" + readFileSync(deepGlassPath, "utf8") : "");
+        const deepCeilM = deepGlassSrc.match(/--glass-saturate-deep:\s*([\d.]+)/);
+        const deepCeil = deepCeilM ? Number(deepCeilM[1]) : 1.8;
+        facts.deepSaturateCeiling = deepCeil;
+        if (!(floatSat < deepCeil)) {
             violations.push(
-                `--glass-blur-floating saturate ${floatSat} exceeds 1.2 — the backdrop is over-juiced (AX.W52)`,
+                `--glass-blur-floating saturate ${floatSat} is not below the deep-tier ceiling --glass-saturate-deep (${deepCeil}) — a content/floating rung must stay calmer than the deep refractive register (the warm-field re-saturate over-reached, BD.W-GLASS-ABROGATE-GRAY)`,
             );
         }
-        if (!(overlaySat <= 1.2)) {
+        if (!(overlaySat < deepCeil)) {
             violations.push(
-                `--glass-blur-overlay saturate ${overlaySat} exceeds 1.2 — the backdrop is over-juiced (AX.W52)`,
+                `--glass-blur-overlay saturate ${overlaySat} is not below the deep-tier ceiling --glass-saturate-deep (${deepCeil}) — the overlay rung over-reached the deep ceiling (BD.W-GLASS-ABROGATE-GRAY)`,
             );
         }
 
@@ -433,7 +448,7 @@ function run() {
         `  cohort              : hover=${facts.cohortHover ?? "?"} active=${facts.cohortActive ?? "?"} (dark ${facts.cohortDarkHover ?? "?"}/${facts.cohortDarkActive ?? "?"}; rest=${facts.cohortRest ?? "?"})  size-minted=${facts.specularSizeMinted ? "✓" : "✗"}`,
     );
     console.log(
-        `  saturate            : floating=${facts.floatingSaturate ?? "?"} overlay=${facts.overlaySaturate ?? "?"} (≤1.2)`,
+        `  saturate            : floating=${facts.floatingSaturate ?? "?"} overlay=${facts.overlaySaturate ?? "?"} (< deep ceiling ${facts.deepSaturateCeiling ?? "?"})`,
     );
     console.log(
         `  curvature           : warm-cream=${facts.curvatureWarmCream ? "✓" : "✗"} pure-white=${facts.curvaturePureWhite ? "PRESENT ✗" : "gone ✓"}  intensity light=${facts.curvatureRootIntensity ?? "?"}→dark=${facts.curvatureDarkIntensity ?? "?"} (softer)`,

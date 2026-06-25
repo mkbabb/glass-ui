@@ -68,6 +68,14 @@ const easeInFn: TimingFunction = CSSCubicBezier(0.4, 0, 1, 1);
 // analytic twin (the house expo curve) — reference it directly, not a re-sampled bezier.
 const easeOutExpoFn: TimingFunction = easeOutExpo;
 const easeAppleFn: TimingFunction = CSSCubicBezier(0.25, 0.1, 0.25, 1);
+// BD.W-CARTOON-PUNCH — the cartoon overshoot register (anticipation dip → +22% overshoot →
+// settle), the §cartoon-technicolor loud one-shot. The CSS half is a hand-authored
+// `linear()` (scheme-motion.css §2 — the deliberate -3.8% pre-dip + 1.22 peak that no
+// stock spring/bezier reproduces). The JS twin is the SAME anticipate-then-overshoot
+// control-point quad the consumers already declare as the no-token fallback
+// (`cubic-bezier(0.5, -0.2, 0.4, 1.2)`, e.g. paper.css:234) — value.js's CSSCubicBezier
+// (a peer symbol, no sampler fork). The negative y1 anticipates, the >1 y2 overshoots.
+const easeCartoonPunchFn: TimingFunction = CSSCubicBezier(0.5, -0.2, 0.4, 1.2);
 
 /** Build a canonical spring row from its shared preset (single-sourced pair). */
 function springRow(name: SpringPresetName): MotionCurve {
@@ -120,6 +128,19 @@ const CANONICAL: MotionCurve[] = [
         kind: "bezier",
         js: easeAppleFn,
         note: "Apple ambient — the Pulse aura register (NOT an interactive-transform authority)",
+    },
+    // BD.W-CARTOON-PUNCH — the cartoon overshoot register. The CSS half is the
+    // hand-authored `linear()` (scheme-motion.css §2: -3.8% anticipation dip → +22%
+    // overshoot → settle); the JS twin is the anticipate-then-overshoot CSSCubicBezier
+    // the consumers already name as the fallback. CONSUMED by cards / slider /
+    // segmented-tabs / paper / drawer / morph-field / stacked-icons / timeline /
+    // carousel (≥2-site bar cleared). A canonical row (measurably distinct from bouncy
+    // — louder peak + pre-dip — so NOT an alias).
+    {
+        token: "--ease-cartoon-punch",
+        kind: "bezier",
+        js: easeCartoonPunchFn,
+        note: "cartoon punch — anticipation dip → +22% overshoot → settle (the loud one-shot; BD.W-CARTOON-PUNCH)",
     },
 ];
 

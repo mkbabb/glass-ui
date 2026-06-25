@@ -67,6 +67,11 @@ const DOCK_CSS = "src/styles/dock.css";
 const SIDEBAR = "demo/layout/SidebarDock.vue";
 const BOTTOM = "demo/layout/BottomDock.vue";
 const RAIL_STORY = "demo/stories/dock/rail.vue";
+// BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail was REMOVED from the
+// SHELL nav docks (the user's "erroneous BROKEN RAIL element"); `<DockStack>` retains its
+// genuine STORY consumers — the macOS-fan `mode="stack"` (rail.vue) AND the facet carousel
+// `mode="facets"` (liquid-playground.vue). The ≥2-consumer bar is met by the two stories.
+const LIQUID_PLAYGROUND_STORY = "demo/stories/dock/liquid-playground.vue";
 
 const PRE_FIX_COMMIT = "452846c4"; // the BC.W-DOCK-ENGINE tree (the divider-carousel live)
 
@@ -266,14 +271,24 @@ export function detectS6() {
     const sidebar = stripVue(readRel(SIDEBAR));
     const bottom = stripVue(readRel(BOTTOM));
     const story = stripVue(readRel(RAIL_STORY));
+    const playground = stripVue(readRel(LIQUID_PLAYGROUND_STORY));
     const mountsStack = (s) => /<DockStack\b/.test(s);
     facts.sidebarMounts = mountsStack(sidebar);
     facts.bottomMounts = mountsStack(bottom);
     facts.storyMounts = mountsStack(story);
-    const consumerCount = [facts.sidebarMounts, facts.bottomMounts, facts.storyMounts].filter(Boolean).length;
+    facts.playgroundMounts = mountsStack(playground);
+    // BD.W-DOCK-CORE (A1) — the SHELL facets-rail mounts were removed (the broken-rail fix);
+    // the ≥2-consumer bar is met by the two STORY consumers (the macOS-fan rail story +
+    // the facet-carousel liquid-playground), with the shell mounts counting if present.
+    const consumerCount = [
+        facts.sidebarMounts,
+        facts.bottomMounts,
+        facts.storyMounts,
+        facts.playgroundMounts,
+    ].filter(Boolean).length;
     facts.consumerCount = consumerCount;
     if (consumerCount < 2)
-        violations.push(`S6: <DockStack> is bound on ${consumerCount} consumer(s) — the ≥2-consumer bar (SidebarDock + BottomDock + the /dock/rail story) is unmet`);
+        violations.push(`S6: <DockStack> is bound on ${consumerCount} consumer(s) — the ≥2-consumer bar (the macOS-fan rail story + the facet-carousel liquid-playground + any shell mount) is unmet`);
 
     // One-registry: DockStack owns NO internal ref()/reactive() shadow of the active member.
     // The selection is a defineModel (consumer-owned), never an internal store.

@@ -221,7 +221,12 @@ function buildCorpus(row, dirBodies) {
 
 // ── The affordance-class detectors (what "the source carries the affordance" means). ────
 const HAS_HOVER = (b) =>
-    /\bscale-hover(?:-btn|-dock)?\b|\btransition-control\b|--menu-row-lift\b|--scale-hover\b|data-held\b|\bcartoon-surface\b/.test(b);
+    // BD.W-TAB-IOS-CAPSULE — `.glass-capsule-hover` is the SHARED specular-lift + scale
+    // hover register (the iOS-27 catch-light lift), extracted ONCE and COMPOSED by the
+    // button/chip/tab/atom family (the buttons greenfield moved the hover-lift off the
+    // inline `--scale-hover-btn` onto this class). A component composing it IS wired with
+    // a hover-lift affordance — its definition lives in glass/glass-capsule.css.
+    /\bscale-hover(?:-btn|-dock)?\b|\btransition-control\b|--menu-row-lift\b|--scale-hover\b|data-held\b|\bcartoon-surface\b|\bglass-capsule-hover\b/.test(b);
 const HAS_GLEAM = (b) =>
     /\bv-specular\b|\bglass-specular-track\b|useSpecularTracking|useSpecularPointer|createSpecularWriter|--specular-/.test(b);
 const HAS_PRESS = (b) =>

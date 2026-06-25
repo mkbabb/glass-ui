@@ -85,7 +85,13 @@ const hasCollapsedSlot = (s) => /<template\s+#collapsed\s*>/.test(s);
 // Does the SFC author a `#persistent` slot (the in-flow sibling core control)?
 const hasPersistentSlot = (s) => /<template\s+#persistent\s*>/.test(s);
 
-// ── C1 — both shell docks are collapsible ──
+// ── C1 — both shell docks are always-expanded (the dead-click-free unified register) ──
+// BD nav-dock-fix (BUILD-REPORT F3/F6) SUPERSEDED the collapsed-both register: a collapsed
+// shell dock parked its category/nav controls in the inert `.dock-layer--full` (`inert,
+// pointer-events:none, opacity:0` at rest) → a ~400ms dead-click until hover-dwell. The
+// fix is the always-expanded unification — both shell docks render their controls clickable
+// from frame 0 (the full tab strip + persistent prev/next SUPERSEDE the collapse-summary).
+// A clean break (no alias). C1 now witnesses BOTH docks ARE always-expanded.
 export function detectC1(bottomSrc, sidebarSrc) {
     const violations = [];
     const facts = {};
@@ -93,13 +99,13 @@ export function detectC1(bottomSrc, sidebarSrc) {
     const sidebarHard = countHardAlwaysExpanded(stripVue(sidebarSrc));
     facts.bottomHardAlwaysExpanded = bottomHard;
     facts.sidebarHardAlwaysExpanded = sidebarHard;
-    if (bottomHard > 0)
+    if (bottomHard === 0)
         violations.push(
-            "C1: BottomDock.vue carries a hard `always-expanded` — the bottom dock never collapses (the few-tab + persistent-core collapsed register is structurally unmet)",
+            "C1: BottomDock.vue does NOT carry `always-expanded` — the bottom dock must render its full tab strip + persistent controls clickable from frame 0 (the BD dead-click fix; the collapse-summary register was cleanly removed)",
         );
-    if (sidebarHard > 0)
+    if (sidebarHard === 0)
         violations.push(
-            "C1: SidebarDock.vue carries a hard `always-expanded` — the vertical dock never collapses (the desktop column has no collapsed register)",
+            "C1: SidebarDock.vue does NOT carry `always-expanded` — the vertical category rail must be clickable from frame 0 (the BD dead-click fix; no inert parked-control register)",
         );
     return { violations, facts };
 }
@@ -120,26 +126,23 @@ export function detectC2(bottomSrc, sidebarSrc) {
     return { violations, facts };
 }
 
-// ── C3 — the collapsed summary is a FEW items, not the full set ──
+// ── C3 — the collapse-summary machinery is cleanly removed (no half-retired debris) ──
+// BD nav-dock-fix F6 dropped the `summaryStories`/`SUMMARY_MAX`/`#collapsed` machinery as
+// a CLEAN BREAK (the always-expanded full tab strip supersedes it). C3 witnesses the clean
+// break: no orphaned #collapsed slot + no orphaned SUMMARY_MAX cap survives in BottomDock.
 export function detectC3(bottomSrc) {
     const violations = [];
     const facts = {};
     const s = stripVue(bottomSrc);
     facts.bottomHasCollapsedSlot = hasCollapsedSlot(s);
-    if (!hasCollapsedSlot(s)) {
+    facts.summaryMaxSurvives = /SUMMARY_MAX\s*=/.test(s);
+    if (facts.bottomHasCollapsedSlot)
         violations.push(
-            "C3: BottomDock.vue has no #collapsed summary slot — the collapsed register must render a few summary chips (the current story + neighbors), not the full strip",
+            "C3: BottomDock.vue still carries a #collapsed summary slot — the always-expanded supersede dropped the collapse-summary register (a half-retired #collapsed slot is debris; clean break required)",
         );
-        return { violations, facts };
-    }
-    // The summary must be BOUNDED — a SUMMARY_MAX cap on the chip list. The bottom dock
-    // slices the in-category nav to a capped window (the summaryStories computed).
-    const hasCap = /SUMMARY_MAX\s*=\s*([0-9]+)/.exec(s);
-    facts.summaryMax = hasCap ? Number(hasCap[1]) : null;
-    facts.summaryBounded = hasCap != null && Number(hasCap[1]) <= 4;
-    if (!facts.summaryBounded)
+    if (facts.summaryMaxSurvives)
         violations.push(
-            "C3: the bottom dock's #collapsed summary is not bounded to ≤4 chips (no SUMMARY_MAX ≤4 cap) — a collapsed summary that re-renders the entire #default strip is not a summary",
+            "C3: BottomDock.vue still carries the SUMMARY_MAX cap — the collapse-summary machinery must be cleanly removed (the always-expanded full tab strip supersedes it)",
         );
     return { violations, facts };
 }
@@ -149,19 +152,20 @@ export function detectC4(morphSrc) {
     const violations = [];
     const facts = {};
     const src = stripCss(morphSrc);
-    // The resting `.glass-dock` must state `--dock-reveal-blur: 0` (crisp); the 3px
-    // decongest must live ONLY under `[data-morphing]`.
+    // The resting `.glass-dock` must state `--dock-reveal-blur: 0` (crisp); the decongest
+    // self-blur must live ONLY under `[data-morphing]`. BD.W-DOCK-CORE (A4) dialed the peak
+    // 3px → 1.25px; the GATING (not the literal value) is the no-blurry-mess guard, so C4
+    // asserts the decongest is a NON-ZERO px under [data-morphing], gated off the rest.
     facts.restingCrisp = /\.glass-dock\s*\{[^}]*--dock-reveal-blur:\s*0/.test(src);
-    facts.morphGatedBlur = /\.glass-dock\[data-morphing\]\s*\{[^}]*--dock-reveal-blur:\s*3px/.test(
-        src,
-    );
+    facts.morphGatedBlur =
+        /\.glass-dock\[data-morphing\]\s*\{[^}]*--dock-reveal-blur:\s*(?!0px\b)[\d.]+px/.test(src);
     if (!facts.restingCrisp)
         violations.push(
             "C4: the resting `.glass-dock` does not state `--dock-reveal-blur: 0` — the collapsed pill is not crisp at rest (BC.W-DOCK-SHRINK-BLUR dependency)",
         );
     if (!facts.morphGatedBlur)
         violations.push(
-            "C4: the 3px decongest blur is not gated to `.glass-dock[data-morphing]` — the resting collapsed pill carries a self-blur (the blurry-mess regression)",
+            "C4: the decongest self-blur is not gated to `.glass-dock[data-morphing]` (a non-zero px under the armed scope) — the resting collapsed pill carries a self-blur (the blurry-mess regression)",
         );
     return { violations, facts };
 }
@@ -249,9 +253,9 @@ async function reconstructBornRed() {
 // ── self-tests ──
 function selfTests() {
     const out = {};
-    // C1 — a re-added always-expanded reds.
-    out.c1 = detectC1(`<GlassDock orientation="horizontal" always-expanded>`, `<GlassDock />`).violations.length > 0;
-    // C3 — an unbounded summary (no SUMMARY_MAX cap) reds.
+    // C1 — a dock MISSING always-expanded (the dead-click register) reds.
+    out.c1 = detectC1(`<GlassDock orientation="horizontal">`, `<GlassDock always-expanded />`).violations.length > 0;
+    // C3 — a SURVIVING #collapsed slot / SUMMARY_MAX (half-retired debris) reds.
     out.c3 = detectC3(`<template #collapsed><DockTabButton v-for="s in allStories" /></template>`).violations.length > 0;
     // C4 — an ungated resting reveal-blur reds.
     out.c4 = detectC4(`.glass-dock { --dock-reveal-blur: 3px; }`).violations.length > 0;
@@ -282,17 +286,12 @@ export async function detect() {
     for (const [k, ok] of Object.entries(st))
         if (!ok) stViolations.push(`${k} self-test bite BROKE — the detector does not bite its planted ${k} fixture`);
 
+    // The gate's POLARITY flipped under BD nav-dock-fix: always-expanded is now the
+    // DESIRED dead-click-free state (it was the opt-OUT before). The old born-RED
+    // reconstruction (which asserted the pre-fix tree LACKED always-expanded) no longer
+    // witnesses the current polarity, so it is recorded for provenance but is NOT a fatal
+    // arm — the witness is the live always-expanded unification (C1) + the clean break (C3).
     const bornRedViolations = [];
-    if (bornRed.reconstructed) {
-        if (bornRed.bottomHardAtHead === 0)
-            bornRedViolations.push(
-                `born-RED: the pre-fix BottomDock (${PRE_FIX_COMMIT}) did NOT carry always-expanded — the gate is not born-RED against the pre-fix tree`,
-            );
-        if (bornRed.sidebarHardAtHead === 0)
-            bornRedViolations.push(
-                `born-RED: the pre-fix SidebarDock (${PRE_FIX_COMMIT}) did NOT carry always-expanded — not born-RED`,
-            );
-    }
 
     const violations = [
         ...c1.violations,
@@ -333,9 +332,9 @@ async function run() {
         violations,
     });
     console.log(`proof:dock-collapsed-both — ${status.toUpperCase()}`);
-    console.log(`  C1 collapsible: bottom-hard=${facts.c1.bottomHardAlwaysExpanded} sidebar-hard=${facts.c1.sidebarHardAlwaysExpanded}`);
+    console.log(`  C1 always-expanded (dead-click-free): bottom=${facts.c1.bottomHardAlwaysExpanded > 0} sidebar=${facts.c1.sidebarHardAlwaysExpanded > 0}`);
     console.log(`  C2 persistent: bottom=${facts.c2.BottomDockHasPersistent} sidebar=${facts.c2.SidebarDockHasPersistent}`);
-    console.log(`  C3 summary: slot=${facts.c3.bottomHasCollapsedSlot} max=${facts.c3.summaryMax} bounded=${facts.c3.summaryBounded}`);
+    console.log(`  C3 clean-break: collapsed-slot-gone=${!facts.c3.bottomHasCollapsedSlot} summary-max-gone=${!facts.c3.summaryMaxSurvives}`);
     console.log(`  C4 crisp: resting-crisp=${facts.c4.restingCrisp} morph-gated=${facts.c4.morphGatedBlur}`);
     console.log(`  C5 mobile: coarse-scale=${facts.c5.coarseScale} touch-floor-clamp=${facts.c5.touchFloorClamp}`);
     console.log(`  C6 a11y: bottom-named=${facts.c6.BottomDockCollapsedNamed} sidebar-named=${facts.c6.SidebarDockCollapsedNamed} root-aria(b/s)=${facts.c6.BottomDockRootAriaExpanded}/${facts.c6.SidebarDockRootAriaExpanded}`);

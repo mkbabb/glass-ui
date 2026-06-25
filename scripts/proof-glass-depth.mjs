@@ -52,11 +52,16 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 // The calm floating ceiling the deep tier must sit STRICTLY ABOVE (the W-GLASS-CAL
 // dial-back values). The deep tier reads these as its depth-0 floor.
 const CALM_FLOATING_RADIUS = 13;
-const CALM_FLOATING_SATURATE = 1.18;
+// BD.W-GLASS-ABROGATE-GRAY (FIX-D) — the calm floating saturate lifted 1.18→1.6 (the
+// warm-luminosity transmission term, toward the apple.com nav SOTA). The deep tier ladders
+// UP from this new floor; D3's anti-bleed assert (the calm composite reads the FLOATING
+// radius, not the deep radius) is load-bearing + unchanged.
+const CALM_FLOATING_SATURATE = 1.6;
 
 // The Apple deep band the deep radius must land inside.
 const APPLE_BAND = { min: 14, max: 20 };
-const DEEP_SATURATE_FLOOR = 1.5;
+// The deep saturate must stay STRICTLY above the lifted calm floating (1.6), ≤ ceiling 1.8.
+const DEEP_SATURATE_FLOOR = 1.6;
 
 // The W-GLASS-CAL frozen base radius primitives — D3 asserts each is byte-unchanged
 // (a deep mint that edits a base primitive to "reach Apple" REVERTS the user call).
@@ -184,19 +189,20 @@ function detectAxis() {
     // calm composed --glass-blur-floating still composes the calm floating radius
     // (NOT the deep radius — a copy-paste that re-pointed it would be the bleed).
     // BC.W-GLASS-LEGIBILITY-MEASURED (the speedtest-AX BC-W10 fold) — the calm floating
-    // saturate is now READ THROUGH the named --glass-saturate-floating knob (defaulting to
-    // the W52-D19 1.18 literal), so accept BOTH the literal `saturate(1.18)` AND the
-    // substitution `saturate(var(--glass-saturate-floating))` with the token at its 1.18
-    // default. The load-bearing assert is unchanged: the calm composite reads the FLOATING
-    // radius (NOT the deep radius — a copy-paste re-point would be the deep-into-base bleed).
+    // saturate is READ THROUGH the named --glass-saturate-floating knob. BD.W-GLASS-ABROGATE-
+    // GRAY (FIX-D) lifted its default 1.18→1.6 (the warm-luminosity transmission term), so
+    // accept BOTH the literal `saturate(1.6)` AND the substitution
+    // `saturate(var(--glass-saturate-floating))` with the token at its 1.6 default. The
+    // load-bearing assert is UNCHANGED: the calm composite reads the FLOATING radius (NOT the
+    // deep radius — a copy-paste re-point would be the deep-into-base bleed).
     const calmFloatingRadiusIntact =
         /--glass-blur-floating:\s*blur\(calc\(var\(--glass-blur-floating-radius\)\s*\*\s*var\(--glass-level\)\)\)\s*saturate\(/.test(
             tokensSquished,
         );
-    const calmFloatingSatLiteral = /--glass-blur-floating:[^;]*saturate\(1\.18\)/.test(tokensSquished);
+    const calmFloatingSatLiteral = /--glass-blur-floating:[^;]*saturate\(1\.6\)/.test(tokensSquished);
     const calmFloatingSatNamed =
         /--glass-blur-floating:[^;]*saturate\(var\(--glass-saturate-floating\)\)/.test(tokensSquished) &&
-        /--glass-saturate-floating:\s*1\.18\b/.test(tokensSquished);
+        /--glass-saturate-floating:\s*1\.6\b/.test(tokensSquished);
     const calmFloatingComposed = calmFloatingRadiusIntact && (calmFloatingSatLiteral || calmFloatingSatNamed);
     facts.calmFloatingComposedIntact = calmFloatingComposed;
     if (!calmFloatingComposed)

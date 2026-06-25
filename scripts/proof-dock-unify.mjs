@@ -145,6 +145,11 @@ const FEATURE_EXEMPT_DOCKS = [
         facility:
             "the BE.W-DOCK-RAIL-REALIZE facet-carousel RAIL facility — the two <GlassDock>s (one horizontal, one vertical) are the RAIL-IN-A-DOCK SUBJECT: each hosts the accent-facet context carousel in its #rail gutter via <DockStack mode=\"facets\"> (the box-INVIOLATE hairline strip — the rail is NOT a vertical dock), demonstrating the per-facet --glass-accent hues + the box-equality across both orientations; NOT a nav rail — the in-flow controls are placeholder nav glyphs framing the rail facility, a home-pattern would pollute the rail teaching surface (the dock-as-control-interface liquid-morph register, same scope as morph-showcase/cta-receive/dock-search)",
     },
+    {
+        path: "demo/stories/dock/examples/TabBar.vue",
+        facility:
+            "the BD.W-DOCK-CORE (A10/II.5) tab-bar facility — ONE <GlassDock> whose content IS the <SegmentedTabs> tabs facility + a split-eligible \"+\" control that FISSIONS the dock (the SHIPPED useDockFission engine, wired via <GlassDock splittable>) into its compose-action chips (goo necks stretch + snap); the dock is the TABS+SPLIT SUBJECT (the rebuild of the hand-rolled two-plate facsimile — the user's \"two docks in one\" A10 defect), NOT a nav rail — a home control would pollute the tabs/split teaching surface (the dock-as-control-interface register, same scope as morph-showcase/cta-receive/dock-search/liquid-playground)",
+    },
 ];
 
 let _cliPaths = null;

@@ -10,6 +10,16 @@
    tab-button.css. */
 
 @layer components {
+    /* BD.W-DOCK-CORE (A8) — `.dock-trigger` is the UNIFIED dock overlay-trigger register.
+       DockSelectTrigger, DockDropdownTrigger, AND DockPopoverTrigger all compose it (each
+       also keeps its legacy class for back-compat-free continuity within this file), so a
+       popover trigger inside a dock is byte-identical geometry + style + baseline alignment
+       to the dropdown trigger — the prior three-divergent-contracts misalignment (A8) is
+       gone. The hover-SCALE is OFF on all three (below): a scaling trigger shifts its
+       portaled-content anchor mid-open; the SelectTrigger's documented no-scale reason is
+       generalized to the whole family (clean break — the dropdown's lone hover-scale is
+       retired, no alias). */
+    .dock-trigger,
     .dock-select-trigger,
     .dock-dropdown-trigger {
         display: inline-flex;
@@ -63,20 +73,25 @@
        control members (icon/tab/select/dropdown) now lift on hover as one register,
        mirroring the unified glass-tier `--dock-control-hover-bg` cross-fade. The
        lone `.dock-dropdown-trigger:hover` scale rule is RETIRED into this group. */
+    /* BD.W-DOCK-CORE (A8) — hover lifts the FILL only; the hover-SCALE is RETIRED across
+       the whole trigger family so portaled content anchors smoothly (the SelectTrigger's
+       documented no-scale reason, generalized — clean break, no alias). */
+    .dock-trigger:hover:not(:disabled),
     .dock-select-trigger:hover:not(:disabled),
     .dock-dropdown-trigger:hover:not(:disabled) {
         background: var(--dock-control-hover-bg);
         color: var(--btn-hover-color, var(--foreground));
-        scale: var(--scale-hover-dock);
     }
 
     /* AZ.W-REGISTER-IOS — the iOS press darken-plus-shrink (see the icon-button). */
+    .dock-trigger:active:not(:disabled),
     .dock-select-trigger:active:not(:disabled),
     .dock-dropdown-trigger:active:not(:disabled) {
         background: var(--dock-control-press-bg);
         scale: var(--scale-press-dock);
     }
 
+    .dock-trigger:focus:not(:focus-visible),
     .dock-select-trigger:focus:not(:focus-visible),
     .dock-dropdown-trigger:focus:not(:focus-visible) {
         box-shadow: none;
@@ -86,6 +101,7 @@
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
        group in dock.css; this rule adds only the box-shadow fade transition.
        `scale` keeps the AT.W7-dock-b press micro-feedback spring. */
+    .dock-trigger:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
         transition:
@@ -96,6 +112,12 @@
             box-shadow var(--dock-motion-fast);
     }
 
+    .dock-trigger:is(
+        .is-active,
+        .active,
+        [aria-expanded="true"],
+        [aria-pressed="true"]
+    ),
     .dock-select-trigger:is(
         .is-active,
         .active,

@@ -91,6 +91,7 @@ export function detect() {
     // `const nested = nestedTargetsWithin` wiring stays in dockMorphContext.ts; the
     // `outerEl.contains` nested-detection moved to dockMorphMeasure.ts).
     const morphCtx = stripComments(read(MORPH_CTX) + "\n" + read(MORPH_MEASURE));
+    const morphCtxOnly = stripComments(read(MORPH_CTX));
     const constants = stripComments(read(CONSTANTS));
     const deltaRaw = read(DELTA); // not comment-stripped — prose is the content
 
@@ -175,34 +176,54 @@ export function detect() {
     assert("M4 — the DELTA exists (the in-situ π readback home)", deltaExists);
     assert("M4 — the DELTA records the §7 4×-throttle perf number + the shipped register", deltaHasPerf);
 
-    // ── M5 — BA-VJS-1: the nested-group measure orders the inner target ahead ────
-    // The onSwap outer measure composes the nested registered target's max-content
-    // contribution into the OUTER `to` measure (the inner is forced to its own span
-    // BEFORE the outer shrink-wrap reads it). The fix is the nestedTargetsWithin /
-    // forceNestedMaxContent ordering in the rAF measure window.
-    const nestedOrdering =
-        /nestedTargetsWithin\s*\(/.test(morphCtx) &&
-        /forceNestedMaxContent\s*\(/.test(morphCtx) &&
-        /outerEl\.contains\s*\(/.test(morphCtx);
-    assert("M5 — the onSwap measure composes the nested target's max-content into the outer `to`", nestedOrdering);
-    // The fix is wired INSIDE the rAF measure window (the inner force happens before
-    // the outer `max-content` measure + is restored after).
-    const wiredInMeasure =
-        /const\s+nested\s*=\s*nestedTargetsWithin/.test(morphCtx) &&
-        /const\s+restore\s*=\s*nested\.map/.test(morphCtx);
-    assert("M5 — the nested force is wired in the rAF measure window (restored after)", wiredInMeasure);
-    // The spring fence — DOCK_SPRING is byte-untouched (the letter's explicit fence).
-    // The canonical values stay {response:0.32, dampingFraction:0.7}; no re-tune.
+    // ── M5 — the nested-group size is the measure-ONCE convex blend (no per-swap rAF) ────
+    // BD.W-DOCK-CORE deleted the per-swap nested-measure ordering (nestedTargetsWithin/
+    // forceNestedMaxContent/the rAF outer-shrink-wrap window) that the to:0 nested defect
+    // needed. The size is now the ratio-free convex blend of two measure-ONCE endpoints
+    // (`useDockExpandedSize` RO writes `--dock-expanded-px`/`--dock-collapsed-px`; the CSS
+    // `--dock-live`/`--dock-size-scale` blends them off `--dock-morph-t`), and the nested
+    // group self-reserves its peak intrinsic size via CSS `max-content` — so the nested
+    // to:0 sliver is structurally impossible without the rAF ordering. M5 witnesses THAT
+    // supersede: the deleted machinery is gone AND the RO endpoint measure is composed.
+    const deadNestedMachineryBack =
+        /nestedTargetsWithin\s*\(/.test(morphCtx) ||
+        /forceNestedMaxContent\s*\(/.test(morphCtx) ||
+        /measureAndArmMorph\s*\(/.test(morphCtx);
+    assert(
+        "M5 — the deleted per-swap nested-measure machinery (nestedTargetsWithin/forceNestedMaxContent/measureAndArmMorph) does NOT survive — the ratio-free measure-once blend replaced it",
+        !deadNestedMachineryBack,
+    );
+    // The measure-once endpoint capture (useDockExpandedSize RO) is composed — the size
+    // endpoints are measured ONCE per content change, not per-swap in a fragile rAF.
+    const composesRoMeasure =
+        /useDockExpandedSize/.test(morphCtx) &&
+        /--dock-expanded-px/.test(morphCtx) &&
+        /--dock-collapsed-px/.test(morphCtx);
+    assert(
+        "M5 — the size endpoints are captured ONCE by the useDockExpandedSize ResizeObserver (--dock-expanded-px/--dock-collapsed-px), not a per-swap rAF measure",
+        composesRoMeasure,
+    );
+    // The spring fence — DOCK_SPRING DERIVES from the single-source springPreset("dock")
+    // (a morph wave cannot fork it to a literal), resolving the iOS-27 weighty pair
+    // { response: 0.68, dampingFraction: 0.64 } (BD.W-ANIM-IOS27-TUNE re-tuned it in the
+    // PRESETS table, the single source). The structural derive is the fence.
     const springFenceHeld =
-        /response:\s*0\.32/.test(constants) && /dampingFraction:\s*0\.7/.test(constants);
-    assert("M5 — DOCK_SPRING is byte-untouched (response:0.32 dampingFraction:0.7 — the spring fence)", springFenceHeld);
-    // The morph CONTEXT must NOT change a spring constant on the morph path (no
-    // response/dampingFraction literal re-assignment in dockMorphContext beyond the
-    // imported DOCK_SPRING read). A fix that re-tunes the spring to mask to:0 REDs.
-    const ctxRetunesSpring =
-        /response\s*:\s*0\.(?!32\b)\d/.test(morphCtx) ||
-        /dampingFraction\s*:\s*0\.(?!7\b)\d/.test(morphCtx);
-    assert("M5 — the morph context does not re-tune the spring to mask the to:0 (measure-ordering only)", !ctxRetunesSpring);
+        /DOCK_SPRING\s*=\s*\{[\s\S]*?response:\s*springPreset\(\s*["']dock["']\s*\)\.response[\s\S]*?dampingFraction:\s*springPreset\(\s*["']dock["']\s*\)\.dampingFraction/.test(
+            constants,
+        );
+    assert(
+        "M5 — DOCK_SPRING derives from the single-source springPreset(\"dock\") (the structural fence — no forked literal)",
+        springFenceHeld,
+    );
+    // The morph CONTEXT must NOT hand-type a spring (response/dampingFraction) literal —
+    // the spring is owned by the preset table, read via the imported DOCK_SPRING.
+    const ctxForksSpring =
+        /response\s*:\s*0\.\d/.test(morphCtxOnly) ||
+        /dampingFraction\s*:\s*0\.\d/.test(morphCtxOnly);
+    assert(
+        "M5 — the morph context does not fork a spring literal (the spring is the imported preset-derived DOCK_SPRING)",
+        !ctxForksSpring,
+    );
 
     return { facts, violations };
 }
@@ -240,7 +261,7 @@ function run() {
         `  M4 ship decision rides the recorded perf number : ${ok("M4 — the DELTA exists (the in-situ π readback home)", "M4 — the DELTA records the §7 4×-throttle perf number + the shipped register") ? "YES" : "NO"}`,
     );
     console.log(
-        `  M5 BA-VJS-1 nested-measure ordering (spring fenced): ${ok("M5 — the onSwap measure composes the nested target's max-content into the outer `to`", "M5 — the nested force is wired in the rAF measure window (restored after)", "M5 — DOCK_SPRING is byte-untouched (response:0.32 dampingFraction:0.7 — the spring fence)", "M5 — the morph context does not re-tune the spring to mask the to:0 (measure-ordering only)") ? "YES" : "NO"}`,
+        `  M5 ratio-free measure-once blend (spring preset-fenced): ${ok("M5 — the deleted per-swap nested-measure machinery (nestedTargetsWithin/forceNestedMaxContent/measureAndArmMorph) does NOT survive — the ratio-free measure-once blend replaced it", "M5 — the size endpoints are captured ONCE by the useDockExpandedSize ResizeObserver (--dock-expanded-px/--dock-collapsed-px), not a per-swap rAF measure", "M5 — DOCK_SPRING derives from the single-source springPreset(\"dock\") (the structural fence — no forked literal)", "M5 — the morph context does not fork a spring literal (the spring is the imported preset-derived DOCK_SPRING)") ? "YES" : "NO"}`,
     );
 
     if (violations.length > 0) {

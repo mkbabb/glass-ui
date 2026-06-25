@@ -208,10 +208,23 @@ export function detectContextual(fs) {
         const rendersStackRail =
             /<DockStack\b[\s\S]*?:items\s*=/.test(live) &&
             /contextLayers(?:\.value)?\s*\.map\b/.test(live);
-        const rendersContextual = rendersGroup || rendersStackRail;
+        // W-NAV-DOCK-FIX moved the contextual render OUT of the dock body onto the
+        // ALWAYS-EXPANDED facet rail (OUTSIDE the box): the seam return is mapped into a
+        // `railItems` descriptor (`railItems = contextLayers.value.map(...)`) which reaches
+        // a rendered surface BOTH as the `v-for in railItems` facet rail (the macOS-fan
+        // <DockStack>/the role="tablist" chips) AND a `<DockSection :sections>` grouping
+        // carrying it. The anti-decoy intent holds: the contextLayers must reach a rendered
+        // surface via the railItems descriptor (never an unbound import).
+        const seamMappedToRail = /railItems\b[\s\S]*?contextLayers(?:\.value)?\s*\.map\b/.test(live);
+        const railItemsRendered =
+            /v-for\s*=\s*["'][^"']*\bin\s+railItems\b/.test(live) ||
+            (/<DockSection\b[\s\S]*?:sections\s*=/.test(live) && /layers:\s*railItems(?:\.value)?/.test(live));
+        const rendersFacetRail = seamMappedToRail && railItemsRendered;
+        const rendersContextual = rendersGroup || rendersStackRail || rendersFacetRail;
         facts[`${key}ImportsSeam`] = importsSeam;
         facts[`${key}RendersGroup`] = rendersGroup;
         facts[`${key}RendersStackRail`] = rendersStackRail;
+        facts[`${key}RendersFacetRail`] = rendersFacetRail;
         facts[`${key}RendersContextual`] = rendersContextual;
         if (!importsSeam) {
             violations.push(

@@ -93,6 +93,10 @@ export function canvasCanHostWebGL2(canvas: HTMLCanvasElement): boolean {
     try {
         return canvas.getContext("webgl2") != null;
     } catch {
+        // fail-explicit: this IS the capability probe — a poisoned/unable canvas
+        // throws on getContext, and `false` is the surfaced verdict the picker reads
+        // to fall to the 2D/CSS substrate. The boolean return IS the explicit signal;
+        // re-raising would defeat the probe's whole purpose.
         return false;
     }
 }

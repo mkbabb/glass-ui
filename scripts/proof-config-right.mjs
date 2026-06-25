@@ -89,10 +89,14 @@ const desktopGridRule =
     /\[data-slot=["']?configurator["']?\]\s*\{[^}]*grid-template-columns\s*:\s*minmax\(\s*0\s*,\s*1fr\s*\)\s*minmax\([^}]*--configurator-aside-min[^}]*--configurator-aside-max[^}]*\}/s.test(
         cssLive,
     );
-// The desktop rule also resets the mobile explicit rows to none (the two-column band owns
-// the geometry; one auto row stretches to the taller column).
+// The desktop rule OWNS the row geometry (the two-column band sets it explicitly).
+// BD.W-CONFIG-GALLERY-DOCK moved the gallery OUT of the aside into a grid sibling, so
+// the desktop grid is now TWO rows — the gallery row (auto) over the body row (1fr):
+// `grid-template-rows: auto minmax(0, 1fr)` (the gallery-dock geometry). The prior
+// pre-gallery form was `grid-template-rows: none`. Either is the desktop band owning the
+// row geometry off the precompiled rule (NOT the dead arbitrary utility); accept both.
 const desktopRowsNone =
-    /\[data-slot=["']?configurator["']?\]\s*\{[^}]*grid-template-rows\s*:\s*none[^}]*\}/s.test(
+    /\[data-slot=["']?configurator["']?\]\s*\{[^}]*grid-template-rows\s*:\s*(?:none|auto\s+minmax\(\s*0\s*,\s*1fr\s*\))[^}]*\}/s.test(
         cssLive,
     );
 facts.cr1 = { hasDesktopMedia, desktopGridRule, desktopRowsNone };
@@ -100,7 +104,7 @@ add(
     "CR1-desktop-two-column-precompiled",
     hasDesktopMedia && desktopGridRule && desktopRowsNone,
     hasDesktopMedia && desktopGridRule && desktopRowsNone
-        ? "the desktop two-column layout SHIPS as a precompiled `@media (min-width:1024px)` rule on [data-slot=configurator] in configurator.css — grid-template-columns: minmax(0,1fr) minmax(--configurator-aside-min, --configurator-aside-max) + grid-template-rows: none (the BA.W-EMISSION discipline; never load-bearing on a content-scan reach)"
+        ? "the desktop two-column layout SHIPS as a precompiled `@media (min-width:1024px)` rule on [data-slot=configurator] in configurator.css — grid-template-columns: minmax(0,1fr) minmax(--configurator-aside-min, --configurator-aside-max) + grid-template-rows: auto minmax(0,1fr) (the BD.W-CONFIG-GALLERY-DOCK gallery-row geometry; the BA.W-EMISSION discipline, never load-bearing on a content-scan reach)"
         : `the precompiled desktop two-column rule is ABSENT/incomplete in configurator.css (media ${hasDesktopMedia}, grid-rule ${desktopGridRule}, rows-none ${desktopRowsNone}) — the layout would die silently as the dead arbitrary utility did (the born-RED state)`,
 );
 

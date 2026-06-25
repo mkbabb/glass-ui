@@ -57,6 +57,7 @@ const GALLERY = "demo/stories/dock/dock-gallery.vue";
 const CHASSIS = "demo/stories/dock/DockExampleTile.vue";
 const CALL = "demo/stories/dock/examples/DynamicIslandCall.vue";
 const EXAMPLES_DIR = "demo/stories/dock/examples";
+const SHELL = "demo/layout/AppShell.vue";
 
 const readRel = (rel) => {
     const p = resolve(ROOT, rel);
@@ -188,15 +189,22 @@ function detectG2() {
             .replace(/<style[\s\S]*?<\/style>/gi, "")
             .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
             .replace(/\/\/[^\n]*/g, "");
-        const composes =
+        // A real engine is composed EITHER by a direct composable import (useBloomUp/
+        // useDockFission) OR through the shipped GlassDock's exposed `toggleSplit()` API
+        // (which drives useDockFission internally — defineExpose in GlassDock.vue). The
+        // exposed-API path is a real-engine composition, NOT a CSS facsimile (TabBar splits
+        // the dock into fission chips via dockRef.toggleSplit()).
+        const composesImport =
             /import\s*\{[^}]*\b(useBloomUp|useDockFission)\b/.test(js) ||
-            /from\s*["'][^"']*(useBloomUp|composables)["']/.test(js) && ENGINE_IMPORT.test(js);
+            (/from\s*["'][^"']*(useBloomUp|composables)["']/.test(js) && ENGINE_IMPORT.test(js));
+        const composesExposedSplit = /\.toggleSplit\s*\(/.test(js);
+        const composes = composesImport || composesExposedSplit;
         // also require it to COMPOSE the chassis (no example re-pastes the tile chassis).
         const usesChassis = /DockExampleTile/.test(js);
-        facts.examples.push({ ex, composes, usesChassis });
+        facts.examples.push({ ex, composes, composesImport, composesExposedSplit, usesChassis });
         if (composes) facts.composed++;
         if (!composes)
-            v.push(`G2: ${ex} does not COMPOSE a real engine (useBloomUp/useDockFission) — a CSS-transition facsimile`);
+            v.push(`G2: ${ex} does not COMPOSE a real engine (useBloomUp/useDockFission import OR the shipped GlassDock toggleSplit() fission API) — a CSS-transition facsimile`);
         if (!usesChassis)
             v.push(`G2: ${ex} does not compose <DockExampleTile> — it re-pastes the tile chassis`);
     }
@@ -261,7 +269,14 @@ function detectG5() {
     const tpl = (tplMatch ? tplMatch[1] : "").replace(/<!--[\s\S]*?-->/g, "");
     // count OPENING tags only (a `</DockStage>` close must not double-count).
     facts.dockStageCount = (tpl.match(/<DockStage(?=[\s/>])/g) || []).length;
-    facts.gooFilterCount = (tpl.match(/<DockGooFilter(?=[\s/>])/g) || []).length;
+    // P7 hoisted the goo <filter> to ONE shell-root <GooFilter> (AppShell.vue) — the
+    // gallery route references it BY ID, it does NOT re-mount its own (a per-route mount
+    // would double-mount the #dock-fission-goo id live). So the gallery mounts ZERO inline
+    // goo filters; the single shell-root mount carries the route's goo.
+    facts.galleryGooMounts = (tpl.match(/<GooFilter(?=[\s/>])/g) || []).length;
+    const shellTplMatch = readRel(SHELL).match(/<template[^>]*>([\s\S]*?)<\/template>/i);
+    const shellTpl = (shellTplMatch ? shellTplMatch[1] : "").replace(/<!--[\s\S]*?-->/g, "");
+    facts.shellGooMounts = (shellTpl.match(/<GooFilter(?=[\s/>])/g) || []).length;
     // no example re-mints --ex-spring: cubic-bezier(...) — the shipped register is the
     // only motion authority across the gallery.
     const bespoke = [];
@@ -272,8 +287,10 @@ function detectG5() {
     facts.bespokeSpringFiles = bespoke;
     if (facts.dockStageCount !== 1)
         v.push(`G5: the gallery mounts ${facts.dockStageCount} <DockStage> (expected exactly ONE shared aurora field for the route)`);
-    if (facts.gooFilterCount !== 1)
-        v.push(`G5: the gallery mounts ${facts.gooFilterCount} <DockGooFilter> (expected exactly ONE goo <filter> mount for the route)`);
+    if (facts.galleryGooMounts !== 0)
+        v.push(`G5: the gallery route mounts ${facts.galleryGooMounts} inline <GooFilter> (expected ZERO — the goo <filter> is hoisted to the ONE shell-root mount; a per-route mount double-mounts the #dock-fission-goo id)`);
+    if (facts.shellGooMounts !== 1)
+        v.push(`G5: AppShell.vue mounts ${facts.shellGooMounts} shell-root <GooFilter> (expected exactly ONE unified goo <filter> for the app)`);
     for (const f of bespoke)
         v.push(`G5: ${f} re-mints --ex-spring: cubic-bezier(...) — a 2nd motion authority off the shipped --spring-* register`);
     return { violations: v, facts };

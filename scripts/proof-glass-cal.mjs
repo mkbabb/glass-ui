@@ -142,14 +142,25 @@ export function detectBlur() {
     //   companion is PRESERVED, not drifted: the composed string reads the named token,
     //   AND the named token DEFAULTS to the original W52-D19 literal (so the resolved
     //   blur is BYTE-IDENTICAL). B3 asserts BOTH — the substitution form is the
-    //   sanctioned shape, and `--glass-saturate-{tier}` carries the unchanged default.
-    //   A drifted DEFAULT (e.g. quiet → 1.30) reds B3 exactly as a baked drift would.
+    //   sanctioned shape, and `--glass-saturate-{tier}` carries the named default.
+    //   A drifted COMPOSED SHAPE (a baked literal, a dropped brightness companion, a
+    //   missing --glass-level scale) reds B3 exactly as before.
+    //
+    //   BD.W-GLASS-ABROGATE-GRAY (FIX-D) — the LIGHT content/floating/overlay saturate
+    //   defaults are LIFTED toward the apple.com nav-glass "concentrated light" SOTA
+    //   (content 1.05→1.4, floating 1.18→1.6, overlay 1.2→1.6) so the warm backdrop pulls
+    //   THROUGH the glass (the transmissive Maps-card read). This is the warm-LUMINOSITY
+    //   arm, NOT a radius dial-back: the RADIUS axis (B1/B2) is BYTE-FROZEN, and the
+    //   calm-vs-deep fence holds — every content tier stays BELOW the deep ceiling
+    //   --glass-saturate-deep 1.8 (asserted below). The named-knob substitution form is
+    //   unchanged; only the WARM-LUMINOSITY default value moves. The dark saturate arm
+    //   (dark-arm.css, already 1.22-1.35) is UNTOUCHED.
     const expectCompanions = [
-        { tok: "glass-blur-wash", radius: "wash", sat: "wash", satDefault: "1.05", bright: null },
-        { tok: "glass-blur-quiet", radius: "quiet", sat: "quiet", satDefault: "1.05", bright: "1.02" },
-        { tok: "glass-blur-resting", radius: "resting", sat: "resting", satDefault: "1.05", bright: null },
-        { tok: "glass-blur-floating", radius: "floating", sat: "floating", satDefault: "1.18", bright: null },
-        { tok: "glass-blur-overlay", radius: "overlay", sat: "overlay", satDefault: "1.2", bright: null },
+        { tok: "glass-blur-wash", radius: "wash", sat: "wash", satDefault: "1.4", bright: null },
+        { tok: "glass-blur-quiet", radius: "quiet", sat: "quiet", satDefault: "1.4", bright: "1.02" },
+        { tok: "glass-blur-resting", radius: "resting", sat: "resting", satDefault: "1.4", bright: null },
+        { tok: "glass-blur-floating", radius: "floating", sat: "floating", satDefault: "1.6", bright: null },
+        { tok: "glass-blur-overlay", radius: "overlay", sat: "overlay", satDefault: "1.6", bright: null },
     ];
     const satDefaultRe = (tier, value) =>
         new RegExp(`--glass-saturate-${tier}:\\s*${value.replace(".", "\\.")}\\s*;`);
@@ -172,11 +183,47 @@ export function detectBlur() {
         }
     }
     // The dark-arm companions (W-DARK-MATERIAL) preserved — radius-only.
+    // W-NAV-DOCK-FIX — the dark dock saturate was re-pointed onto the NAMED knob
+    // `saturate(var(--glass-saturate-dock))` (the SAME named-knob substitution the
+    // light/dark content tiers already ride above; the gate accepts that sanctioned
+    // shape). The brightness companion (the iOS-dark luminosity lift) + the radius ×
+    // --glass-level axis stay intact, and the `--glass-saturate-dock` default stays at
+    // the W52-D19 1.30 bake (byte-identical composed blur). A baked literal, a dropped
+    // brightness companion, a missing --glass-level scale, or a drifted default reds.
     const darkArm = stripCss(readFile("src/styles/tokens/dark-arm.css"));
-    const darkCompanionOk = /--glass-blur-dock:\s*blur\(calc\(var\(--glass-blur-dock-radius\) \* var\(--glass-level\)\)\) saturate\(1\.30\) brightness\(1\.12\)/.test(darkArm);
+    const darkCompanionShapeOk =
+        /--glass-blur-dock:\s*blur\(calc\(var\(--glass-blur-dock-radius\) \* var\(--glass-level\)\)\) saturate\(var\(--glass-saturate-dock\)\) brightness\(1\.12\)/.test(darkArm);
+    const darkDockSatDefaultOk = /--glass-saturate-dock:\s*1\.30\s*;/.test(darkArm);
+    const darkCompanionOk = darkCompanionShapeOk && darkDockSatDefaultOk;
     facts.companions.darkArm = darkCompanionOk;
-    if (!darkCompanionOk) {
-        violations.push("B3: the W-DARK-MATERIAL dark blur companions (dark-arm.css saturate/brightness) drifted — the radius pull must preserve them (radius-only)");
+    if (!darkCompanionShapeOk) {
+        violations.push("B3: the W-DARK-MATERIAL dark dock blur companion drifted — it must read saturate(var(--glass-saturate-dock)) brightness(1.12) with the radius × --glass-level axis intact (the named-knob substitution; the radius pull preserves the dark luminosity lift)");
+    }
+    if (!darkDockSatDefaultOk) {
+        violations.push("B3: the --glass-saturate-dock default drifted off 1.30 (the named knob must default to the W52-D19 bake so the composed dark dock blur is byte-identical)");
+    }
+
+    // BD.W-GLASS-ABROGATE-GRAY — the calm-vs-deep fence: every LIFTED content/floating/overlay
+    // saturate default stays STRICTLY BELOW the deep-tier ceiling --glass-saturate-deep (1.8,
+    // the apple.com nav ceiling in glass-deep.css). The deep tier stays the richest; content
+    // tiers lift TOWARD it but never reach it (the two-register fence).
+    const deepGlass = stripCss(readFile("src/styles/tokens/glass-deep.css"));
+    const deepM = deepGlass.match(/--glass-saturate-deep:\s*([\d.]+)\s*;/);
+    const deepSat = deepM ? Number(deepM[1]) : null;
+    facts.deepSaturate = deepSat;
+    const liftedSats = [
+        { tier: "floating", v: 1.6 },
+        { tier: "overlay", v: 1.6 },
+        { tier: "resting", v: 1.4 },
+    ];
+    if (deepSat === null) {
+        violations.push("B3: --glass-saturate-deep not found in tokens/glass-deep.css (the calm-vs-deep ceiling fence cannot resolve)");
+    } else {
+        for (const { tier, v } of liftedSats) {
+            if (!(v < deepSat)) {
+                violations.push(`B3: --glass-saturate-${tier} (${v}) is NOT strictly below the deep ceiling --glass-saturate-deep (${deepSat}) — the calm-vs-deep fence broke (a content tier must stay calmer than the deep refractive register)`);
+            }
+        }
     }
 
     return { facts, violations };
@@ -254,17 +301,39 @@ export function detectDisco() {
         violations.push("D3: DockTabButton.vue still auto-attaches `btn-audacious` on data-tier=primary — remove it (the utility is gone)");
     }
 
-    // ── D4 — the toggle-chip on §6 (no duration-150 / raw ease-out; a scale leg).
-    //   Comment-stripped so the retirement-NOTE that names the OLD `duration-150
-    //   ease-out` register in prose is not a false hit.
+    // ── D4 — the toggle-chip lifts via the SHARED chip-family §6 register.
+    //   BD.W-CHIP-CONGRUENT-GLASS collapsed the chip family onto ONE congruent recipe:
+    //   the toggle-chip's `index.ts` no longer carries an inline `--spring-smooth` scale
+    //   leg + the per-state `color-mix(…--primary…)` literals (clean break, no fork) — it
+    //   RE-POINTS onto `../selectable-chip/chipVariants`, which composes
+    //   `glass-chip glass-capsule glass-capsule-hover accent-tone`. The ONE `scale` write
+    //   (hover/press/punch, single source) lives in `glass/glass-chip.css` riding the
+    //   weighty `--ease-cartoon-punch` × `--motion-weight` register (the §6 lift) + the
+    //   shared `.glass-capsule-hover` specular step — so the chip LIFTS like its neighbors,
+    //   it no longer color-snaps flat. D4 asserts the NEW shape: no fast-snap literal in
+    //   index.ts, the recipe composes the shared lift register, and the register's scale
+    //   write rides the §6 weighty curve.
+    //   Comment-stripped so a retirement-NOTE naming the OLD register in prose is not a hit.
     const chip = stripAllComments(readFile("src/components/custom/toggle-chip/index.ts"));
+    const chipVariantsSrc = stripAllComments(readFile("src/components/custom/selectable-chip/chipVariants.ts"));
+    const glassChipCss = stripCss(readFile("src/styles/glass/glass-chip.css"));
     facts.chipNoFastSnap = !/duration-150/.test(chip) && !/\bease-out\b/.test(chip);
-    facts.chipScaleLeg = /scale-\(--scale-hover-btn\)|scale_var\(--spring-smooth/.test(chip) || /--spring-smooth/.test(chip);
+    // the recipe re-points onto the shared chipVariants AND that recipe composes the
+    // shared specular-lift register (`.glass-capsule-hover`).
+    facts.chipReadsSharedRecipe =
+        /chipVariants\s*\(/.test(chip) && /glass-capsule-hover/.test(chipVariantsSrc);
+    // the shared chip register carries the §6 scale lift on the weighty curve.
+    facts.chipScaleLeg =
+        /scale[\s\S]{0,200}var\(--ease-cartoon-punch\)/.test(glassChipCss) ||
+        /transition:[\s\S]{0,160}scale[\s\S]{0,160}var\(--ease-cartoon-punch\)/.test(glassChipCss);
     if (!facts.chipNoFastSnap) {
         violations.push("D4: toggle-chip still carries `duration-150` or a raw `ease-out` literal — it must read the §6 --duration-fast/--ease-standard register");
     }
+    if (!facts.chipReadsSharedRecipe) {
+        violations.push("D4: toggle-chip does not re-point onto the shared chipVariants lens (the `.glass-chip .glass-capsule .glass-capsule-hover .accent-tone` register) — the chip-family congruence (no fork) broke");
+    }
     if (!facts.chipScaleLeg) {
-        violations.push("D4: toggle-chip carries no §6 scale lift (a `--spring-smooth` scale leg + a hover scale) — it color-snaps flat instead of lifting like its neighbors");
+        violations.push("D4: the shared chip register (glass/glass-chip.css) carries no §6 scale lift on the weighty --ease-cartoon-punch curve — the chip color-snaps flat instead of lifting/punching like its neighbors");
     }
 
     // ── D5 — the FENCE held (anti-overreach): the good pops STAY.

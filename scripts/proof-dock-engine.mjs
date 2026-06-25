@@ -32,10 +32,13 @@
 //        paint/--*); `will-change` appears ONLY under [data-morphing]/:hover/:active/
 //        [data-held]/[data-active], NEVER as a permanent resting declaration. Self-test
 //        bite: a planted resting `.glass-dock { will-change: transform }` reds.
-//   E4 — the morph mechanism preserved: layers.css still reserves
-//        `inline-size: var(--dock-morph-to)` + composites scaleX/scaleY(
-//        var(--dock-morph-scale)); DOCK_SPRING {0.32, 0.7} byte-unchanged (the value.js
-//        fence). Self-test bite: a planted DOCK_SPRING edit reds.
+//   E4 — the ratio-free blend mechanism (BD.W-DOCK-CORE supersede): layers.css reserves
+//        the measure-ONCE `inline-size/block-size: var(--dock-expanded-px)` + derives
+//        `--dock-size-scale` off the `--dock-live` convex blend (collapsed +
+//        (expanded−collapsed)·--dock-morph-t), NOT the deleted per-swap
+//        `--dock-morph-scale`/scaleX ratio seizure; DOCK_SPRING DERIVES from springPreset("dock") (the
+//        single-source fence) + resolves the iOS-27 weighty (0.68, 0.64) pair
+//        (BD.W-ANIM-IOS27-TUNE). Self-test bite: a planted forked-literal DOCK_SPRING reds.
 //   E5 — the Atlas A-9 in-dock dark-toggle glyph clamp holds on coarse + fine: the
 //        in-dock toggle SVG + the --dark-mode-toggle-padding inset BOTH read the ONE
 //        --dock-control-glyph-size knob (clamped to --dock-icon-glyph, NOT the
@@ -244,8 +247,11 @@ function detectE1SelfTest() {
 // unit target: p(t) = 1 - e^{-ζωₙt} [ cos(ω_d t) + (ζ/√(1-ζ²)) sin(ω_d t) ],
 // ω_d = ωₙ√(1-ζ²). The "clock" is the 2%-band settle window (the same horizon
 // --spring-dock-duration is generated from, regen-spring-tokens.mjs).
-const DOCK_RESPONSE = 0.32;
-const DOCK_DAMPING = 0.7;
+// BD.W-ANIM-IOS27-TUNE — the dock spring re-calibrated to the iOS-27 weighty-gooey pole
+// (0.68, 0.64). DOCK_SPRING reads `springPreset("dock")` (the single-source fence), so
+// these mirror the `dock` PRESETS row; the E2 analytic envelope computes against them.
+const DOCK_RESPONSE = 0.68;
+const DOCK_DAMPING = 0.64;
 const SETTLE_BAND = 0.02;
 
 function springPosition(t, response, zeta) {
@@ -435,43 +441,79 @@ export function detectE4() {
     const violations = [];
     const facts = {};
     const layers = stripCss(readRel("src/styles/dock/layers.css"));
-    // BC.W-LIQUID-MORPH owns the reserve FLOOR: the reserve may be bare
-    // `var(--dock-morph-to)` OR floored `max(var(--dock-morph-to), var(--dock-morph-min))`
-    // — both reserve the SETTLED `to` footprint (a single layout solve, NOT a live-scalar
-    // calc), so the CDP-Layout-flat floor is preserved either way. E4 tolerates the floor
-    // wrapper (the white-morph safety net); a per-frame-scalar reserve still REDs (it
-    // would name --dock-morph-t, not --dock-morph-to, inside the size value).
-    facts.reservesInlineSize = /inline-size:\s*(?:max\(\s*)?var\(--dock-morph-to\)/.test(layers);
-    facts.reservesBlockSize = /block-size:\s*(?:max\(\s*)?var\(--dock-morph-to\)/.test(layers);
-    facts.scaleX = /transform:\s*scaleX\(var\(--dock-morph-scale\)\)/.test(layers);
-    facts.scaleY = /transform:\s*scaleY\(var\(--dock-morph-scale\)\)/.test(layers);
+    // BD.W-DOCK-CORE superseded the SEIZURE machinery: the per-swap `ratio = from/to`
+    // `--dock-root-scale`/`--dock-morph-scale`/`scaleX(--dock-morph-scale)` ran to ~56×
+    // (the live 2451px collapse). The size leg is now the ratio-FREE convex blend — the
+    // box RESERVES the measure-ONCE `--dock-expanded-px` (ONE layout solve, CDP-Layout-
+    // flat) and the visible footprint rides `scale: var(--dock-size-scale)` from
+    // `transform-origin: center`, where `--dock-size-scale = --dock-live/--dock-expanded-px`
+    // and `--dock-live = collapsed + (expanded−collapsed)·clamp(0,--dock-morph-t,1)`
+    // (BOUNDED by construction). E4 now witnesses THAT mechanism: the reserve names the
+    // measured endpoint (NOT --dock-morph-t per-frame), and the clamped size scalar derives
+    // off the convex blend. The actual `scale:` composite is folded in shape.css.
+    facts.reservesInlineSize = /inline-size:\s*var\(--dock-expanded-px\)/.test(layers);
+    facts.reservesBlockSize = /block-size:\s*var\(--dock-expanded-px\)/.test(layers);
+    facts.dockLiveBlend =
+        /--dock-live:\s*calc\([\s\S]*?--dock-collapsed-px[\s\S]*?--dock-expanded-px[\s\S]*?--dock-morph-t/.test(layers);
+    facts.sizeScale =
+        /--dock-size-scale:\s*clamp\([\s\S]*?var\(--dock-live\)\s*\/\s*max\(\s*var\(--dock-expanded-px/.test(layers);
+    // A per-frame-scalar size reserve (the regressed/seizure shape) would name
+    // --dock-morph-t INSIDE the size value — reds.
+    facts.noPerFrameReserve =
+        !/(?:inline|block)-size:\s*[^;]*var\(--dock-morph-t/.test(layers);
     if (!facts.reservesInlineSize)
-        violations.push("E4: layers.css no longer reserves `inline-size: var(--dock-morph-to)` (the CDP-Layout-flat floor regressed)");
-    if (!facts.scaleX)
-        violations.push("E4: layers.css no longer composites `transform: scaleX(var(--dock-morph-scale))` (the horizontal compositor morph regressed)");
-    if (!(facts.reservesBlockSize && facts.scaleY))
-        violations.push("E4: layers.css no longer reserves block-size + scaleY(var(--dock-morph-scale)) for the vertical morph (the vertical compositor morph regressed)");
+        violations.push("E4: layers.css no longer reserves `inline-size: var(--dock-expanded-px)` (the measure-ONCE CDP-Layout-flat footprint regressed)");
+    if (!facts.sizeScale)
+        violations.push("E4: layers.css no longer derives `--dock-size-scale: clamp(... var(--dock-live)/max(var(--dock-expanded-px ...)))` — the ratio-free convex-blend size morph regressed");
+    if (!facts.dockLiveBlend)
+        violations.push("E4: layers.css no longer computes the `--dock-live` convex blend off `--dock-collapsed-px`/`--dock-expanded-px`/`--dock-morph-t` — the bounded-by-construction size endpoint blend regressed");
+    if (!facts.reservesBlockSize)
+        violations.push("E4: layers.css no longer reserves `block-size: var(--dock-expanded-px)` for the vertical morph (the vertical reserved footprint regressed)");
+    if (!facts.noPerFrameReserve)
+        violations.push("E4: a per-frame `inline-size`/`block-size` reads --dock-morph-t directly — the seizure-prone per-swap-scalar reserve re-introduced (the ratio-free blend reserves the SETTLED endpoint, scales via transform)");
 
-    // DOCK_SPRING {0.32, 0.7} byte-unchanged (the value.js fence).
+    // DOCK_SPRING reads the `dock` PRESETS row (the single-source fence — the const
+    // DERIVES from springPreset("dock"), it does NOT re-type a literal). E4 asserts the
+    // sanctioned read-path is intact AND the resolved pair is the iOS-27 weighty
+    // (0.68, 0.64) — a structural edit (a forked literal, a wrong preset) reds.
     const constants = readRel("src/components/custom/dock/constants.ts");
-    const m = constants.match(
-        /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
-    );
-    facts.dockSpring = m ? { response: Number(m[1]), dampingFraction: Number(m[2]) } : null;
-    if (!m || Number(m[1]) !== DOCK_RESPONSE || Number(m[2]) !== DOCK_DAMPING) {
+    facts.readsPresetTable =
+        /DOCK_SPRING\s*=\s*\{[\s\S]*?response:\s*springPreset\(\s*["']dock["']\s*\)\.response[\s\S]*?dampingFraction:\s*springPreset\(\s*["']dock["']\s*\)\.dampingFraction/.test(
+            constants,
+        );
+    if (!facts.readsPresetTable) {
         violations.push(
-            `E4: DOCK_SPRING is not the byte-frozen { response: 0.32, dampingFraction: 0.7 } (found ${m ? `${m[1]}, ${m[2]}` : "absent"}) — the value.js fence broke`,
+            "E4: DOCK_SPRING no longer DERIVES from springPreset(\"dock\") — the single-source fence broke (a forked literal pair re-introduced)",
+        );
+    }
+    // Read the resolved pair off the SPRING_PRESETS dock row and assert it is the
+    // iOS-27 weighty pair (re-anchored from the prior byte-frozen literal in lockstep).
+    const presetsSrc = readRel("src/composables/motion/springPresets.ts");
+    const dockRow = presetsSrc.match(
+        /name:\s*["']dock["'],\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
+    );
+    facts.dockSpring = dockRow
+        ? { response: Number(dockRow[1]), dampingFraction: Number(dockRow[2]) }
+        : null;
+    if (!dockRow || Number(dockRow[1]) !== DOCK_RESPONSE || Number(dockRow[2]) !== DOCK_DAMPING) {
+        violations.push(
+            `E4: the SPRING_PRESETS dock row is not the iOS-27 weighty { response: 0.68, dampingFraction: 0.64 } (found ${dockRow ? `${dockRow[1]}, ${dockRow[2]}` : "absent"})`,
         );
     }
     return { violations, facts };
 }
-// E4 self-test bite — a planted DOCK_SPRING edit MUST flag.
+// E4 self-test bite — a planted DOCK_SPRING forked-literal (off the single-source
+// preset table, off the iOS-27 weighty pair) MUST flag.
 function detectE4SelfTest() {
     const PLANTED = `export const DOCK_SPRING = { response: 0.5, dampingFraction: 0.5 } as const;`;
+    // The forked literal does NOT derive from springPreset("dock") AND carries the wrong
+    // pair — both arms of the new E4 fence bite it.
+    const forkedLiteral = !/springPreset\(\s*["']dock["']\s*\)/.test(PLANTED);
     const m = PLANTED.match(
         /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
     );
-    return Boolean(m) && (Number(m[1]) !== DOCK_RESPONSE || Number(m[2]) !== DOCK_DAMPING);
+    const wrongPair = Boolean(m) && (Number(m[1]) !== DOCK_RESPONSE || Number(m[2]) !== DOCK_DAMPING);
+    return forkedLiteral && wrongPair;
 }
 
 // ── E5 — the Atlas A-9 in-dock dark-toggle glyph clamp on coarse + fine ──

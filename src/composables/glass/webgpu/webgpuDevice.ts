@@ -22,7 +22,12 @@ export class WebGPUInitError extends Error {
         | "device-request"
         | "no-navigator-gpu"
         | "software-adapter"
-        | "pipeline-validation";
+        | "pipeline-validation"
+        // The adapter/device acquisition HUNG past the bound — `requestAdapter()` or
+        // `requestDevice()` never settled (a known headless/virtualized-Metal + some-Chrome
+        // class where the device request resolves NEITHER way). A timeout is a recognized
+        // init failure the picker falls to the WebGL2 net on, exactly like a no-adapter host.
+        | "acquire-timeout";
     constructor(kind: WebGPUInitError["kind"], message: string, cause?: unknown) {
         super(message);
         this.name = "WebGPUInitError";

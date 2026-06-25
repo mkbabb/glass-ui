@@ -283,14 +283,23 @@ add(
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
-// W5 — the WatercolorDot `ghost` variant is a DASHED blob-SILHOUETTE stroke
-// (BC.W-VIZ-WATERCOLOR — NARROWED in place; born-RED on HEAD's solid-stroke ghost).
-// Anti-evasion: the source asserts the ghost reuses useWatercolorBlob (the same seeded
-// blob, not a fork) AND renders a DASHED SILHOUETTE stroke (a `stroke-dasharray` on the
-// ghost SVG <ellipse>/<path> — REQUIRED) while NOT painting a dashed RECTANGULAR box
-// border on the swatch root (FORBIDDEN). The prior "forbid ALL dashes" over-breadth is
-// narrowed: a dashed silhouette stroke is the affordance the user asked for; a dashed
-// box border is the affordance they did NOT.
+// W5 — the WatercolorDot `ghost` variant is a DASHED blob-SILHOUETTE outline
+// (BC.W-VIZ-WATERCOLOR · BD.W-VIZ-BROKEN-FIX D4 — the silhouette mechanism RE-INVENTED).
+//
+// The BD redesign REPLACED the prior SVG `<ellipse rx=46 ry=46> stroke-dasharray` (which
+// was a noise-jittered CIRCLE geometrically DISCONNECTED from the seeded blob silhouette)
+// with a CSS `border: … dashed` on a `.watercolor-ghost-stroke` div whose `border-radius`
+// is bound inline to `activeBorderRadius` — the SAME seeded 8-value superellipse the solid
+// dot fills (`blob.borderRadius`). A CSS dashed border hugs its OWN `border-radius`, so the
+// outline traces the seeded ORGANIC blob BY CONSTRUCTION — never a circle, never a
+// rectangle (LIVE-VERIFIED: the ghost-stroke border-radius byte-matches the swatch's seeded
+// superellipse, e.g. `60.9% 43.6% 21.9% 59.7% / 65.2% 44.8% 35.3% 25.8%`; .cache/gates/
+// watercolor-ghost-delta.png). So the "dashed silhouette" WITNESS is now the dashed border
+// on the ghost-stroke element BOUND to the seeded `activeBorderRadius`; the FORBIDDEN form
+// is a dashed border on a NON-seeded box (a plain rect — no `activeBorderRadius`/
+// `blob.borderRadius` binding). No-backwards-compat: the dead SVG-ellipse stroke is GONE,
+// never aliased. Anti-evasion: the ghost still reuses useWatercolorBlob (the same seeded
+// blob, not a fork).
 // ════════════════════════════════════════════════════════════════════════════════════
 const watercolorSrc = read("src/components/custom/watercolor-dot/WatercolorDot.vue");
 const watercolorStripped = strip(watercolorSrc);
@@ -304,14 +313,27 @@ const hasVariantAxis =
 const hasGhostValue = /["']ghost["']/.test(watercolorStripped);
 // The ghost reuses useWatercolorBlob (the same seeded blob, not a fork).
 const reusesBlob = /useWatercolorBlob/.test(watercolorStripped);
-// REQUIRED: the ghost renders a DASHED SILHOUETTE stroke — a `stroke-dasharray` on the
-// ghost SVG <ellipse>/<path> stroke. This is the dashed OUTLINE following the silhouette.
-const hasDashedSiloStroke = /stroke-dasharray/.test(watercolorStripped);
-// FORBIDDEN: a dashed RECTANGULAR box border on the swatch root (`border-style: dashed`
-// / `border: … dashed`). The narrowed negative — a dashed BOX, not a dashed silhouette.
-const isDashedBoxBorder = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
+// REQUIRED: the ghost renders a DASHED SILHOUETTE outline — a `.watercolor-ghost-stroke`
+// element carrying a `border: … dashed` whose `border-radius` is bound inline to the
+// seeded `activeBorderRadius` (the SAME 8-value superellipse `useWatercolorBlob` mints).
+// The dashed border hugs that organic radius, so it traces the seeded silhouette, not a
+// rect (BD.W-VIZ-BROKEN-FIX D4). The witness: a ghost-stroke `border: … dashed` AND a
+// `border-radius: activeBorderRadius` (or `blob.borderRadius`) inline binding on the same
+// ghost element.
+const hasGhostStrokeDashedBorder =
+    /\.watercolor-ghost-stroke[\s\S]*?border\s*:\s*[^;]*dashed/.test(watercolorStripped);
+const bindsSeededRadius =
+    /borderRadius\s*:\s*activeBorderRadius/.test(watercolorStripped) ||
+    /border-radius[\s\S]{0,40}activeBorderRadius/.test(watercolorStripped) ||
+    /borderRadius\s*:\s*blob\.borderRadius/.test(watercolorStripped);
+const hasDashedSiloStroke = hasGhostStrokeDashedBorder && bindsSeededRadius;
+// FORBIDDEN: a dashed RECTANGULAR box border — a `border: … dashed` that is NOT the
+// silhouette-bound ghost-stroke (i.e. a dashed border with no seeded `activeBorderRadius`
+// binding = a plain rect). The narrowed negative — a dashed BOX, not a dashed silhouette.
+const hasAnyDashedBorder = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
     watercolorStripped,
 );
+const isDashedBoxBorder = hasAnyDashedBorder && !hasDashedSiloStroke;
 // The filter seed is PER-INSTANCE (BC.W-VIZ-WATERCOLOR §3) — NOT a hardcoded constant;
 // it reads a computed off hashString(color + seed). Born-RED on HEAD's `seed="2"`.
 const hasHardcodedFilterSeed = /<feTurbulence[\s\S]*?\sseed\s*=\s*["']\d+["']/.test(
@@ -353,7 +375,7 @@ add(
     "watercolor-ghost-variant",
     watercolorGhostOK,
     watercolorGhostOK
-        ? "WatercolorDot `ghost` is a DASHED blob-silhouette `stroke-dasharray` (NOT a dashed box border), reuses the seeded useWatercolorBlob silhouette, the wet filter seed is per-instance off hashString(color+seed) (not the hardcoded seed=2), and the animate liveness rides a compositor `transform` wobble (NOT a per-frame border-radius paint under the filter — the §H Safari flash fix)"
+        ? "WatercolorDot `ghost` is a DASHED blob-silhouette outline — a `.watercolor-ghost-stroke` dashed border BOUND to the seeded `activeBorderRadius` superellipse (so it traces the organic blob, NOT a dashed rect; BD.W-VIZ-BROKEN-FIX D4), reuses the seeded useWatercolorBlob silhouette, the wet filter seed is per-instance off hashString(color+seed) (not the hardcoded seed=2), and the animate liveness rides a compositor `transform` wobble (NOT a per-frame border-radius paint under the filter — the §H Safari flash fix)"
         : `WatercolorDot ghost NOT correct (variant-axis ${hasVariantAxis}, ghost-value ${hasGhostValue}, reuses-blob ${reusesBlob}, dashed-silhouette-stroke ${hasDashedSiloStroke}, dashed-box-border ${isDashedBoxBorder} [forbidden], hardcoded-filter-seed ${hasHardcodedFilterSeed} [forbidden], per-instance-filter-seed ${hasPerInstanceFilterSeed}, per-frame-radius-paint ${hasPerFrameRadiusPaint} [forbidden], drives-transform-wobble ${drivesTransformWobble})`,
 );
 
@@ -362,11 +384,20 @@ add(
 // proving the narrowed ghost gate distinguishes the good dashed silhouette from the bad
 // dashed box / clone-seed / per-frame-paint forms (the anti-gameability floor).
 // ════════════════════════════════════════════════════════════════════════════════════
-const dashedBoxBite = /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(
-    `.watercolor-swatch { border: 2px dashed var(--watercolor-color); }`,
-);
-const removedDashBite = !/stroke-dasharray/.test(
-    `<ellipse stroke="x" stroke-width="2" />`,
+// A dashed border on the swatch root with NO seeded-radius-bound ghost-stroke = a plain
+// dashed RECT → must red as a box (the silhouette witness is absent, the box witness fires).
+const dashedBoxPlanted = `<div class="watercolor-swatch" /> <style>.watercolor-swatch { border: 2px dashed var(--watercolor-color); }</style>`;
+const plantedHasSilo =
+    /\.watercolor-ghost-stroke[\s\S]*?border\s*:\s*[^;]*dashed/.test(dashedBoxPlanted) &&
+    (/borderRadius\s*:\s*activeBorderRadius/.test(dashedBoxPlanted) ||
+        /border-radius[\s\S]{0,40}activeBorderRadius/.test(dashedBoxPlanted));
+const plantedHasDashed =
+    /border-style\s*:\s*dashed|border\s*:\s*[^;]*dashed/.test(dashedBoxPlanted);
+const dashedBoxBite = plantedHasDashed && !plantedHasSilo; // fires the FORBIDDEN box arm
+// A removed dashed border on the ghost-stroke (a bare silhouette div, no outline) → the
+// dashed-silhouette witness must NOT fire (the ghost has no traced outline).
+const removedDashBite = !/\.watercolor-ghost-stroke[\s\S]*?border\s*:\s*[^;]*dashed/.test(
+    `<div class="watercolor-ghost-stroke" :style="{ borderRadius: activeBorderRadius }" /> <style>.watercolor-ghost-stroke { position: absolute; inset: 0; }</style>`,
 );
 const clonedSeedBite = /<feTurbulence[\s\S]*?\sseed\s*=\s*["']\d+["']/.test(
     `<feTurbulence type="fractalNoise" seed="2" />`,

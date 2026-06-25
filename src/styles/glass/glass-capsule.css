@@ -99,8 +99,14 @@
        parallel block. The non-selected pill + the buttons greenfield compose this
        wholesale: glass at rest + specular-lift on hover + press-snap on active. */
     .glass-capsule-hover {
+        /* The SPATIAL leg (scale) rides the weighty cartoon-punch curve (the
+           liquid-weight-universal mandate — a hover lift carries inertia/overshoot,
+           never an abrupt bezier jerk; the SAME spatial currency `.glass-chip`/
+           `.glass-atom` ride, PRM-zeroed via the `--ease-cartoon-punch` fallback). The
+           EFFECTS leg (the `--specular-intensity` gleam channel) stays on the fast
+           bezier (motion-canon P1 — an effects cross-fade is not a spatial motion). */
         transition:
-            scale var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--ease-cartoon-punch),
             --specular-intensity var(--duration-fast) var(--ease-standard);
     }
     /* The SHARED specular-lift step — declared ONCE here, COMPOSED by both the hover

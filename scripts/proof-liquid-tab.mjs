@@ -103,16 +103,26 @@ export function detectPullIsDefault(sfcRaw) {
     return { facts, violations };
 }
 
-// ── L2 — the squish cap is the VISIBLE register, constant + token in lockstep.
-//   DEFAULT_INDICATOR_MAX_STRETCH ≥ 1.12 (the visible-gel band, ≤1.2 anti-taffy) AND
-//   --tab-indicator-max-stretch matches it (the SOLE cap source — the constant + the
-//   token in lockstep, NOT a fork). Born-RED: HEAD 1.08.
+// ── L2 — the visible swell is the BLOB area-inflation register; the per-axis squish is
+//   the (volume-preserving) travel-stretch. BD.W-TABS-LIQUID re-pointed the swell:
+//   the liquid pull READS via the `--tab-indicator-blob-max` area-inflation channel
+//   (grow→overshoot→shrink), NOT the bare per-axis `--tab-indicator-max-stretch` (which
+//   re-tuned 1.18 → 1.11 — a reciprocal squish, NOT the swell). The new fence:
+//     · the BLOB channel exists, > 1 (a real swell), and its AREA (≈ blob², the squish
+//       being volume-preserving) ≤ 1.14 (anti-taffy); constant + token in lockstep.
+//     · the per-axis stretch cap is in the lively-but-anti-taffy band [1.0, 1.2];
+//       constant + token in lockstep (the SOLE cap source — never a fork).
+//   The runtime COMPOSED-peak (`blob × stretch`) ≤ 1.14 upper-bound is the π readback
+//   arm (tab-ios-capsule.spec.ts) — a device-free source gate cannot measure the live
+//   transform; this L2 asserts the STATIC two-channel token relationship.
+//   Born-RED on HEAD: no blob channel (`--tab-indicator-blob-max` absent) + cap 1.08.
 export function detectVisibleSquishCap(constantsRaw, scalePaperRaw) {
     const violations = [];
     const facts = {};
     const constants = stripJs(constantsRaw ?? readFile(CONSTANTS));
     const scalePaper = stripCss(scalePaperRaw ?? readFile(SCALE_PAPER));
 
+    // — the per-axis travel-squish cap (the reciprocal squish, NOT the swell) —
     const constM = constants.match(/DEFAULT_INDICATOR_MAX_STRETCH\s*=\s*([\d.]+)\b/);
     const tokenM = scalePaper.match(/--tab-indicator-max-stretch:\s*([\d.]+)\s*;/);
     facts.cap = constM ? Number(constM[1]) : null;
@@ -120,27 +130,41 @@ export function detectVisibleSquishCap(constantsRaw, scalePaperRaw) {
 
     if (facts.cap == null) {
         violations.push("L2: DEFAULT_INDICATOR_MAX_STRETCH not found in constants.ts");
-    } else {
-        if (facts.cap < 1.12) {
-            violations.push(`L2: DEFAULT_INDICATOR_MAX_STRETCH=${facts.cap} is below the visible-gel band (≥1.12) — the liquid-tab pull will not read as a swell (the HEAD 1.08 defect)`);
-        }
-        if (facts.cap > 1.2) {
-            violations.push(`L2: DEFAULT_INDICATOR_MAX_STRETCH=${facts.cap} exceeds the anti-taffy bar (≤1.2) — the pill taffy-pulls instead of swelling`);
-        }
+    } else if (facts.cap < 1.0 || facts.cap > 1.2) {
+        violations.push(`L2: DEFAULT_INDICATOR_MAX_STRETCH=${facts.cap} is out of the lively-but-anti-taffy band [1.0, 1.2]`);
     }
     if (facts.token == null) {
         violations.push("L2: --tab-indicator-max-stretch not found in scale-paper.css (the cap token authority)");
-    } else {
-        if (facts.token < 1.12) {
-            violations.push(`L2: --tab-indicator-max-stretch=${facts.token} is below the visible-gel band (≥1.12)`);
-        }
-        if (facts.token > 1.2) {
-            violations.push(`L2: --tab-indicator-max-stretch=${facts.token} exceeds the anti-taffy bar (≤1.2)`);
-        }
+    } else if (facts.token < 1.0 || facts.token > 1.2) {
+        violations.push(`L2: --tab-indicator-max-stretch=${facts.token} is out of the lively-but-anti-taffy band [1.0, 1.2]`);
     }
-    // Lockstep — the constant + the token are the SOLE cap source, never a fork.
     if (facts.cap != null && facts.token != null && facts.cap !== facts.token) {
         violations.push(`L2: the squish cap FORKED — DEFAULT_INDICATOR_MAX_STRETCH=${facts.cap} ≠ --tab-indicator-max-stretch=${facts.token} (the constant + token are ONE cap source, in lockstep)`);
+    }
+
+    // — the BLOB area-inflation channel: the VISIBLE swell (the load-bearing fence) —
+    const blobConstM = constants.match(/DEFAULT_INDICATOR_BLOB_MAX\s*=\s*([\d.]+)\b/);
+    const blobTokenM = scalePaper.match(/--tab-indicator-blob-max:\s*([\d.]+)\s*;/);
+    facts.blobCap = blobConstM ? Number(blobConstM[1]) : null;
+    facts.blobToken = blobTokenM ? Number(blobTokenM[1]) : null;
+
+    if (facts.blobCap == null) {
+        violations.push("L2: DEFAULT_INDICATOR_BLOB_MAX not found in constants.ts — the area-inflation BLOB channel is the visible swell (the liquid pull will not read without it)");
+    } else if (facts.blobCap <= 1.0) {
+        violations.push(`L2: DEFAULT_INDICATOR_BLOB_MAX=${facts.blobCap} is not a swell (≤1) — the liquid-tab pull must inflate the pill's area (the visible gel)`);
+    } else if (facts.blobCap * facts.blobCap > 1.14) {
+        // the AREA ≈ blob² (the per-axis squish is volume-preserving) — the anti-taffy fence.
+        violations.push(`L2: DEFAULT_INDICATOR_BLOB_MAX=${facts.blobCap} inflates the AREA (≈blob²=${(facts.blobCap * facts.blobCap).toFixed(3)}) past the ≤1.14 anti-taffy fence — the pill taffy-blows instead of swelling`);
+    }
+    if (facts.blobToken == null) {
+        violations.push("L2: --tab-indicator-blob-max not found in scale-paper.css (the blob-cap token authority)");
+    } else if (facts.blobToken <= 1.0) {
+        violations.push(`L2: --tab-indicator-blob-max=${facts.blobToken} is not a swell (≤1)`);
+    } else if (facts.blobToken * facts.blobToken > 1.14) {
+        violations.push(`L2: --tab-indicator-blob-max=${facts.blobToken} inflates the AREA (≈blob²=${(facts.blobToken * facts.blobToken).toFixed(3)}) past the ≤1.14 anti-taffy fence`);
+    }
+    if (facts.blobCap != null && facts.blobToken != null && facts.blobCap !== facts.blobToken) {
+        violations.push(`L2: the blob cap FORKED — DEFAULT_INDICATOR_BLOB_MAX=${facts.blobCap} ≠ --tab-indicator-blob-max=${facts.blobToken} (the SOLE blob-cap source, in lockstep)`);
     }
     return { facts, violations };
 }
@@ -298,17 +322,30 @@ export function selfTest() {
         fails.push("self-test L1: the good `draggable: true` default unexpectedly flagged the default clause");
     }
 
-    // L2: a cap > 1.2 (taffy) reds.
-    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.35;", "--tab-indicator-max-stretch: 1.35;").violations.length === 0) {
+    // the good two-channel shape (per-axis stretch in band + blob swell area ≤1.14).
+    const goodConst =
+        "const DEFAULT_INDICATOR_MAX_STRETCH = 1.11; const DEFAULT_INDICATOR_BLOB_MAX = 1.045;";
+    const goodScale =
+        "--tab-indicator-max-stretch: 1.11; --tab-indicator-blob-max: 1.045;";
+    // L2: a per-axis cap > 1.2 (taffy) reds.
+    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.35; const DEFAULT_INDICATOR_BLOB_MAX = 1.045;", "--tab-indicator-max-stretch: 1.35; --tab-indicator-blob-max: 1.045;").violations.length === 0) {
         fails.push("self-test L2: a planted taffy cap (1.35 > 1.2) did NOT red");
     }
-    // L2: a constant/token fork reds.
-    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.15;", "--tab-indicator-max-stretch: 1.13;").violations.length === 0) {
-        fails.push("self-test L2: a planted constant/token fork (1.15 vs 1.13) did NOT red");
+    // L2: a per-axis constant/token fork reds.
+    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.11; const DEFAULT_INDICATOR_BLOB_MAX = 1.045;", "--tab-indicator-max-stretch: 1.13; --tab-indicator-blob-max: 1.045;").violations.length === 0) {
+        fails.push("self-test L2: a planted constant/token fork (1.11 vs 1.13) did NOT red");
     }
-    // L2: the good lockstep visible cap passes.
-    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.15;", "--tab-indicator-max-stretch: 1.15;").violations.length !== 0) {
-        fails.push("self-test L2: the good lockstep visible cap (1.15 == 1.15) unexpectedly red");
+    // L2: a missing BLOB channel reds (the swell is gone — the bare squish does not read).
+    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.11;", "--tab-indicator-max-stretch: 1.11;").violations.length === 0) {
+        fails.push("self-test L2: a missing --tab-indicator-blob-max swell channel did NOT red");
+    }
+    // L2: a blob that taffy-blows the area (blob²>1.14, e.g. 1.10→1.21) reds.
+    if (detectVisibleSquishCap("const DEFAULT_INDICATOR_MAX_STRETCH = 1.11; const DEFAULT_INDICATOR_BLOB_MAX = 1.10;", "--tab-indicator-max-stretch: 1.11; --tab-indicator-blob-max: 1.10;").violations.length === 0) {
+        fails.push("self-test L2: a planted taffy blob (area blob²=1.21 > 1.14) did NOT red");
+    }
+    // L2: the good two-channel shape passes.
+    if (detectVisibleSquishCap(goodConst, goodScale).violations.length !== 0) {
+        fails.push("self-test L2: the good two-channel cap (stretch 1.11 + blob 1.045) unexpectedly red");
     }
 
     // L3: a planted local rAF spring in the tab drag reds.
@@ -385,7 +422,7 @@ function run() {
 
     console.log("proof:liquid-tab — the LIQUID TAB: pull the active pill → it morphs/squishes/flings to location (BC.W-LIQUID-TAB, Band 3)");
     console.log(`  L1 pull is default   : draggable=${facts.pull.draggableDefault ?? "MISSING"}  click-path-intact=${facts.pull.clickPathIntact ? "yes ✓" : "NO ✗"}  underline-gated=${facts.pull.dragGatedUnderline ? "yes ✓" : "NO ✗"}`);
-    console.log(`  L2 squish cap reads  : const=${facts.cap.cap ?? "MISSING"}  token=${facts.cap.token ?? "MISSING"}  lockstep=${facts.cap.cap === facts.cap.token ? "yes ✓" : "NO ✗"}`);
+    console.log(`  L2 squish cap reads  : stretch const=${facts.cap.cap ?? "MISSING"} token=${facts.cap.token ?? "MISSING"} | blob const=${facts.cap.blobCap ?? "MISSING"} token=${facts.cap.blobToken ?? "MISSING"} (area≈${facts.cap.blobCap ? (facts.cap.blobCap * facts.cap.blobCap).toFixed(3) : "?"}) lockstep=${facts.cap.cap === facts.cap.token && facts.cap.blobCap === facts.cap.blobToken ? "yes ✓" : "NO ✗"}`);
     console.log(`  L3 no 2nd engine     : tab→useDragMorph=${facts.engine.tabUsesDragMorph} kf(Draggable,Spring,Flex,decayRest)=${facts.engine.composesDraggable}/${facts.engine.composesSpring}/${facts.engine.composesLiquidFlex}/${facts.engine.composesDecayRest} snappy-preset=${facts.engine.springIsPreset}`);
     console.log(`  L4 kf consume booked : marker=${facts.consume.hasConsumeMarker ? "yes ✓" : "NO ✗"}  book(snap+rubberBand)=${facts.consume.booksSnap ? "yes ✓" : "NO ✗"}  by-name=${facts.consume.booksByName ? "yes ✓" : "NO ✗"}`);
     console.log(`  L5 additive a11y     : roving=${facts.a11y.hasRovingTabindex} keydown=${facts.a11y.hasStripKeydown} ungated=${facts.a11y.rovingNotGatedOnDraggable} drag-writes-model=${facts.a11y.dragWritesModel}`);
