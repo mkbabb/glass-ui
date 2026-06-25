@@ -8,6 +8,11 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
 export { default as DockTabButton } from "./DockTabButton.vue";
 export { default as DockSelectTrigger } from "./DockSelectTrigger.vue";
 export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
+// BD.W-DOCK-CORE (A8) — the unified dock overlay-trigger family's third member: a
+// PopoverTrigger emitting the SHARED `.dock-trigger` recipe (byte-identical geometry +
+// style + baseline alignment to the dropdown trigger; the hover-scale is OFF across the
+// family so portaled content anchors smoothly).
+export { default as DockPopoverTrigger } from "./DockPopoverTrigger.vue";
 // AX.W45 D13-c / DK5 — the orientation+layout-aware dock divider primitive
 // (component-over-class: the raw `.dock-separator` was axis-blind). Reads the dock
 // orientation/layout via useOptionalDockContext and paints perpendicular to the
@@ -106,16 +111,19 @@ export {
 export { useDockSearch } from "./composables";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";
 
-// BE.W-DOCK-FISSION + BE.W-METABALL-BRIDGE2 — the n-ary detach orchestrator + the
-// LIBRARY goo `<filter>` mount. `useDockFission` is the CONSUMING seam BESIDE the morph
-// engine (dockMorphContext/DOCK_SPRING byte-untouched — the box-inviolate fence): ONE
-// `SpringProgress` on `DOCK_SPRING` writing `--dock-split-t` + per-piece DIRECTION-VECTOR
-// off a `DockSplitSignature` (search=radial / media=lateral / nav=inward-merge — data, not
-// three code paths), the snap-recoil on `useLiquidFlex`, the seam-tension on
-// `usePointerVelocityField` (fed from inside the ONE loop), PRM sync-seated. `DockGooFilter`
-// is the visually-hidden non-zero library goo mount (sRGB + the generous region — the
-// fission-bridge.css consumer). The CSS lives in `src/styles/dock/fission-bridge.css`.
-export { default as DockGooFilter } from "./DockGooFilter.vue";
+// BE.W-DOCK-FISSION + BE.W-METABALL-BRIDGE2 — the n-ary detach orchestrator. `useDockFission`
+// is the CONSUMING seam BESIDE the morph engine (dockMorphContext/DOCK_SPRING byte-untouched
+// — the box-inviolate fence): ONE `SpringProgress` on `DOCK_SPRING` writing `--dock-split-t`
+// + per-piece DIRECTION-VECTOR off a `DockSplitSignature` (search=radial / media=lateral /
+// nav=inward-merge — data, not three code paths), the snap-recoil on `useLiquidFlex`, the
+// seam-tension on `usePointerVelocityField` (fed from inside the ONE loop), PRM sync-seated.
+// The CSS lives in `src/styles/dock/fission-bridge.css`.
+//
+// BD.W-MORPH-FIELD-WELD — `GooFilter` is the ONE library metaball `<filter>` mount
+// (#dock-fission-goo / #dock-morph-goo / #glass-goo / #pager-goo / #morph-goo all off one
+// byte-identical sRGB graph at shell root — the DRY union of the prior four mounts; the
+// fission-bridge.css `url(#dock-fission-goo)` consumer reaches it). Mount ONCE at app root.
+export { GooFilter } from "../goo-filter";
 export {
     useDockFission,
     DOCK_SPLIT_SIGNATURES,

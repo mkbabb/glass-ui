@@ -28,7 +28,7 @@
 //     `--ease-cartoon-punch` pre-dip + arc + moving-cast + the trailing `--neck-specular-angle`
 //     sweep), gated on `--goo-weight`.
 //
-// SAFARI / PRM: the goo filter is the regular `filter: url(#glass-goo)` graph (GlassGooFilter
+// SAFARI / PRM: the goo filter is the regular `filter: url(#glass-goo)` graph (the ONE shell-root `<GooFilter>` mount
 // carries the WebKit-correctness facts); the concave throat is the engine-agnostic waist
 // floor; `@supports not (filter: url(#x))` drops the layer to a plain cross-fade floor; under
 // reduce the goo layer is `display:none`, the barbell coalesces to ONE body.
@@ -37,7 +37,6 @@ import { computed, nextTick, onMounted, ref, watch, onBeforeUnmount } from "vue"
 import { cn } from "../../../utils";
 import { useCarousel } from "./useCarousel";
 import { useGooMorph } from "../../../composables/motion/useGooMorph";
-import GlassGooFilter from "../../custom/goo-filter/GlassGooFilter.vue";
 
 defineOptions({
     inheritAttrs: false,
@@ -283,12 +282,10 @@ onBeforeUnmount(() => {
          track breaks embla's layout (the track stops scrolling). The overlay is therefore
          an absolutely-positioned sibling OVER the viewport. -->
     <div ref="rootEl" class="carousel-content-root">
-        <!-- the library goo <filter> mount (Safari-safe, static). ONE per carousel. The
-             BARBELL gooey-shoulder defaults (blur 11 / slope 15 / offset -7): a wider alpha
-             skirt so the two bodies feel each other → the concave neck wells gooier, then
-             the soft-shoulder threshold reads the WAIST (not the slope-24 razor that
-             sharpened the bleed before it could become a neck). STATIC literals (Safari). -->
-        <GlassGooFilter :blur="11" :threshold-slope="15" :threshold-offset="-7" />
+        <!-- BD.W-MORPH-FIELD-WELD — the goo `<filter>` is the ONE library `<GooFilter>`
+             mount at the app/shell root (`url(#glass-goo)`, the BARBELL plate-scale id). The
+             carousel references it by id below; a standalone consumer mounts `<GooFilter/>`
+             once at their own root (no per-carousel mount → zero duplicate `<filter id>`). -->
 
         <!-- THE CONCAVE NECK-THROAT clip-path (NET-NEW — the `--neck-waist` hourglass). An
              SVG <clipPath clipPathUnits="objectBoundingBox"> so the 0..1 cubic-Bézier

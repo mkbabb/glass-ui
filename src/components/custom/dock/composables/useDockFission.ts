@@ -51,12 +51,39 @@ import {
     usePointerVelocityField,
     type UsePointerVelocityField,
 } from "../../../../composables/motion/usePointerVelocityField";
+// BD.W-MORPH-FIELD-WELD — useDockFission is the `radialBurst`/`lateralPeel`/`inwardMerge`
+// RECIPE over the unified WELD. Its public API is box-INVIOLATE (the `--neck-t`/`--island-t`
+// drives, the `DockSplitSignature` descriptor, the orchestrator loop all UNCHANGED); the
+// goo `<filter>` it bridges through is the ONE shell-root `<GooFilter>` mount's
+// `#dock-fission-goo`. The per-context gooey magnitude (`neckHold`) now SOURCES from the
+// SHARED `MORPH_SIGNATURES` rows — ONE waist DATA source library-wide (search→radialBurst,
+// media→lateralPeel, nav→inwardMerge), not a per-fork literal cohort.
+import { MORPH_SIGNATURES } from "../../../../composables/motion/useMorphField";
 
 /** The three named fission CONTEXTS — each maps to a goo signature (F3). */
 export type DockSplitContext = "search" | "media" | "nav";
 
 /** The detach vector family a context selects. */
 export type DockSplitVector = "radial" | "lateral" | "inward-merge";
+
+/**
+ * BD.W-DOCK-CORE (II.2 — F-1 the headline fix). The placement axis the detached
+ * pieces TRAVEL ALONG to form the sibling island dock. The prior build let each
+ * piece scatter on its own radial center → it read as inline jitter inside the one
+ * pill, NOT a detach. A single COHERENT placement vector flies the whole piece
+ * cluster off the source plate so a second dock visibly materializes beside/above/
+ * below (the iOS-27 split read).
+ */
+export type DockSplitPlacement = "beside" | "above" | "below";
+
+/** The unit placement vector each `splitPlacement` flies the cluster along. */
+export const PLACEMENT_VECTOR: Readonly<
+    Record<DockSplitPlacement, { dx: number; dy: number }>
+> = {
+    beside: { dx: 1, dy: 0 }, // the cluster flies to the right → island lands beside
+    above: { dx: 0, dy: -1 }, // up → island above
+    below: { dx: 0, dy: 1 }, // down → island below
+};
 
 /** The squish-peak register — WHEN the `useLiquidFlex` swell peaks in the travel. */
 export type DockSplitSquishPeak = "late" | "long" | "coalesce";
@@ -96,7 +123,9 @@ export const DOCK_SPLIT_SIGNATURES: Readonly<
     search: {
         context: "search",
         vector: "radial",
-        neckHold: 0.55,
+        // BD.W-MORPH-FIELD-WELD — the gooey neck-hold SOURCES from the shared weld row
+        // (radialBurst — the tense radial pop). ONE waist-DATA source, not a fork literal.
+        neckHold: MORPH_SIGNATURES.radialBurst.neckHold,
         staggerRank: (i, count) => {
             // innermost-first: rank by distance from the center index.
             const mid = (count - 1) / 2;
@@ -109,7 +138,8 @@ export const DOCK_SPLIT_SIGNATURES: Readonly<
     media: {
         context: "media",
         vector: "lateral",
-        neckHold: 0.4,
+        // the lateral peel — the gooey neck-hold off the shared `lateralPeel` weld row.
+        neckHold: MORPH_SIGNATURES.lateralPeel.neckHold,
         staggerRank: (i, count) => {
             // outside-in: the outermost piece breaks first.
             const mid = (count - 1) / 2;
@@ -122,7 +152,8 @@ export const DOCK_SPLIT_SIGNATURES: Readonly<
     nav: {
         context: "nav",
         vector: "inward-merge",
-        neckHold: 0.35,
+        // the inward merge-to-ONE — the gooey neck-hold off the shared `inwardMerge` row.
+        neckHold: MORPH_SIGNATURES.inwardMerge.neckHold,
         staggerRank: (i, count) => {
             // simultaneous-ish inward coalesce: a gentle outside-in so the rim folds in.
             const mid = (count - 1) / 2;
@@ -164,6 +195,14 @@ export interface UseDockFissionOptions {
      * consumer can swap contexts; the orchestrator reads `.value` at split time.
      */
     signature: Ref<DockSplitSignature>;
+    /**
+     * BD.W-DOCK-CORE (II.2 — F-1). The placement the detached pieces fly to form the
+     * sibling island. A `Ref` so a consumer can swap placement. The orchestrator writes
+     * the per-piece travel along this ONE coherent vector (not per-piece radial scatter)
+     * so the cluster reads as a real detach into a second dock beside/above/below.
+     * Defaults to `"beside"`.
+     */
+    placement?: Ref<DockSplitPlacement>;
     /**
      * The LOW squish cap the `useLiquidFlex` recoil saturates at (≤1.08 — the anti-taffy
      * fence). May be a getter so a live `--*-max-stretch` cascade override re-resolves.
@@ -245,12 +284,18 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
     const {
         rootEl,
         signature,
+        placement,
         maxStretch,
         seamTensionCap = 0.12,
         seamTensionGain = 0.6,
         staggerStep = 0.08,
     } = options;
     const respectPRM = options.respectReducedMotion !== false;
+
+    /** The coherent placement vector — the SAME direction the whole cluster + island fly. */
+    function placementVector(): { dx: number; dy: number } {
+        return PLACEMENT_VECTOR[placement?.value ?? "beside"];
+    }
 
     const t = ref(0);
     const fissioned = ref(false);
@@ -269,6 +314,10 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
 
     const pieces = new Set<FissionPiece>();
     let lastFrameTs = 0;
+
+    function count(): number {
+        return pieces.size;
+    }
 
     function root(): HTMLElement | null {
         return rootEl.value;
@@ -299,10 +348,6 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
     function writePieces(tValue: number): void {
         const sig = signature.value;
         const count = pieces.size;
-        const cap =
-            typeof maxStretch === "function"
-                ? maxStretch()
-                : (maxStretch ?? 1.08);
         // The seam-tension scalar — clamp(0, speed·gain, cap). The neck-inset reads it as
         // `--dock-split-t MINUS --seam-tension` so a fast pull THINS the neck (resist),
         // and the spring re-bases from velocity on release (stretch-then-snap). ONE write.
@@ -311,12 +356,24 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             Math.max(0, field.speed.value * seamTensionGain),
         );
         const r = root();
-        if (r) r.style.setProperty("--seam-tension", String(tension));
+        if (r) {
+            r.style.setProperty("--seam-tension", String(tension));
+            // BD.W-DOCK-CORE (II.2 — F-1). The ISLAND geometry the second-dock plate +
+            // the goo neck read. `--island-t` is the live split scalar (the island scales
+            // up + the neck stretches off it); `--island-dx`/`--island-dy` are the
+            // COHERENT placement vector the cluster + island fly along (beside/above/
+            // below). ONE write on the root — every island/neck element inherits it. */
+            const pv = placementVector();
+            r.style.setProperty("--island-t", String(tValue));
+            r.style.setProperty("--island-dx", String(pv.dx));
+            r.style.setProperty("--island-dy", String(pv.dy));
+        }
 
+        const pv = placementVector();
+        const mid = (count - 1) / 2;
         for (const p of pieces) {
             const el = p.el.value;
             if (!el) continue;
-            const v = p.vectorOf();
             // The neck PHASE shift: each piece's `--neck-t` is `--dock-split-t` shifted by
             // its stagger rank × the step (so the N necks break in SEQUENCE). The neck is a
             // derivative of the split scalar — never a second clock (B5).
@@ -330,8 +387,21 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             // |Δt| derivative IS the squish travel (the swell on a fast pull, capped LOW).
             p.flex.drive(neckT);
 
-            el.style.setProperty("--split-dx", String(v.dx));
-            el.style.setProperty("--split-dy", String(v.dy));
+            // BD.W-DOCK-CORE (II.2 — F-1, THE FIX). The detach vector is the COHERENT
+            // placement vector (the whole cluster flies as ONE toward the island) PLUS a
+            // small per-piece cross-axis FAN so they spread into a row inside the island
+            // (not a stacked pile). The dominant motion is the placement travel — this is
+            // what reads as "the pieces detach into a sibling dock", not the prior
+            // per-piece radial scatter that stayed inside the source pill.
+            const fan = p.rank - mid; // -1, 0, +1 … the row spread
+            // cross-axis unit (perpendicular to the placement vector)
+            const crossX = -pv.dy;
+            const crossY = pv.dx;
+            const dx = pv.dx + crossX * fan * 0.42;
+            const dy = pv.dy + crossY * fan * 0.42;
+
+            el.style.setProperty("--split-dx", String(dx));
+            el.style.setProperty("--split-dy", String(dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(neckT));
             // The NECK SPECULAR-SWEEP angle (BE.W-METABALL-BRIDGE2 B3 / BE.W-DOCK-JUBILANCE
@@ -354,27 +424,38 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
     function seatSync(): void {
         t.value = target;
         const r = root();
+        const pv = placementVector();
         if (r) {
             r.style.setProperty("--dock-split-t", String(target));
+            r.style.setProperty("--island-t", String(target));
+            r.style.setProperty("--island-dx", String(pv.dx));
+            r.style.setProperty("--island-dy", String(pv.dy));
             // PRM: the bridge opacity is zeroed by the @media block; tension is zeroed.
             r.style.setProperty("--seam-tension", "0");
             if (target < SPLIT_THRESHOLD) {
                 r.removeAttribute("data-fissioning");
+                r.removeAttribute("data-fissioned");
             } else {
                 r.setAttribute("data-fissioning", "");
+                r.setAttribute("data-fissioned", "");
             }
             // PRM cut — no merge-splash paints (the §6 PRM-static jubilance fence).
             r.removeAttribute("data-merging");
         }
         field.tick(0); // zero the field (no live velocity under the cut).
         // Seat each piece at its endpoint vector, neck-t at the target, stretch at rest.
+        const mid = (count() - 1) / 2;
         for (const p of pieces) {
             const el = p.el.value;
             if (!el) continue;
-            const v = p.vectorOf();
+            const fan = p.rank - mid;
+            const crossX = -pv.dy;
+            const crossY = pv.dx;
+            const dx = pv.dx + crossX * fan * 0.42;
+            const dy = pv.dy + crossY * fan * 0.42;
             p.flex.drive(target);
-            el.style.setProperty("--split-dx", String(v.dx));
-            el.style.setProperty("--split-dy", String(v.dy));
+            el.style.setProperty("--split-dx", String(dx));
+            el.style.setProperty("--split-dy", String(dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(target));
             // PRM seat — the specular-sweep is static-OFF (the @media block hides the
@@ -417,6 +498,10 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
         activeSpring.reset(t.value, inheritedVelocity);
         activeSpring.target = target;
         r.setAttribute("data-fissioning", "");
+        // BD.W-DOCK-CORE (F-1) — the persistent split STATE hook (the island/neck CSS
+        // engages off `[data-fissioned]`). Set the instant a split begins (so the island
+        // materializes through the whole travel); cleared only when a merge fully settles.
+        if (target >= SPLIT_THRESHOLD) r.setAttribute("data-fissioned", "");
         // BE.W-DOCK-JUBILANCE §2 — the MERGE-DIRECTION signal. The merge-splash
         // gold-coalesce fires ONLY on the reverse fission (1→0, the pieces merging back
         // into ONE liquid surface — a completion event). `[data-merging]` gates the
@@ -446,6 +531,7 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
                 fissioned.value = target >= SPLIT_THRESHOLD;
                 if (target < SPLIT_THRESHOLD) {
                     rr.removeAttribute("data-fissioning");
+                    rr.removeAttribute("data-fissioned");
                     rr.style.removeProperty("--seam-tension");
                 }
                 // The merge-splash one-shot is spent once the merge settles — clear the

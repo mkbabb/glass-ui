@@ -676,7 +676,7 @@ defineExpose({
          leave the dock box (the empty-bridge / nothing-detaches F-1 defect). It carries the
          goo NECK (a stretching gel filament from the source edge to the island) + the
          sibling ISLAND plate (the SECOND dock the pieces fly into) + the ripple/merge-
-         splash jubilance (`::before`/`::after`). The SHIPPED `DockGooFilter` supplies the
+         splash jubilance (`::before`/`::after`). The SHIPPED ONE `<GooFilter>` mount supplies the
          goo `<filter>` the bridge applies via the REGULAR `filter` property (Safari). -->
     <div
         v-if="splittable"

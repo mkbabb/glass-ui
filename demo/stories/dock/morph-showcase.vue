@@ -1,25 +1,30 @@
 <script setup lang="ts">
-// AZ.W-MORPH-SHOWCASE — the R3-13 vertical↔horizontal liquid-glass dock morph
-// showcase. A button presses and the VERTICAL dock flows into the HORIZONTAL dock,
-// fully bidirectional + deterministic, with the topology reflow (flex column→row)
-// invisible (occluded at the midpoint).
+// BD.W-MORPH-FIELD-WELD (M3 — the crossfade DIES) — the vertical↔horizontal liquid-glass
+// dock morph showcase, RE-POINTED onto the unified WELD.
 //
-// THE H4 PERF FORK RESOLVED (§7, mechanical): the metaball-bridge (arm a — two real
-// DOM docks driven off the ONE --dock-morph-t scalar + an SVG-goo teardrop bridge) is
-// the highest-fidelity path, but its per-frame `feGaussianBlur` repaint + the live
-// dock-resize layout do NOT clear the strict HG5 budget under the 4× CPU-throttle
-// (measured median p50 ~13.7-15.1ms, never 0% over the 16.7ms cap — the trace is in
-// ground/W-MORPH-SHOWCASE-gperf-{v2h,h2v}.json). So per §H4/§7 the NUMBER falls to
-// arm (c): the SHIPPED DEFAULT is the View-Transitions crossfade (startViewTransition —
-// the library view-transition substrate, a compositor-snapshot crossfade that clears the budget,
-// deterministic + bidirectional). The amorphous metaball-teardrop fidelity is BOOKED
-// to a successor and demonstrable here as the perf-gated "Liquid teardrop (preview)"
-// mode — the deterministic scalar-driven two-dock morph + the goo bridge.
+// THE DEFECT THIS FIXES (the user's #2 — "/dock/morph-showcase does not work at all, only
+// the teardrop preview works"). HEAD shipped the V↔H as a `startViewTransition` crossfade
+// DEFAULT — pressing the button flipped `dock-morph-vt-vertical`→`-horizontal` in ONE
+// frame while `--dock-morph-t` stayed 0.000 the whole transition (the topology dodge: the
+// surface confessed "the platform cannot continuously interpolate a mismatched-topology
+// silhouette"). The morph never drove a field — it snapped. The ONLY thing that worked was
+// the opt-in "Liquid teardrop" preview, because that path actually drove the scalar.
 //
-// The W-LIQUID substrate (useLiquidFlex) + the deterministic V↔H driver
-// (useDockOrientationMorph) STILL SHIP as the substrate (HG2: useLiquidFlex ≥2
-// consumers) and drive the preview; the showcase is bidirectional + deterministic on
-// the ONE scalar in BOTH modes (HG1, arm-c marker on the shipped default).
+// THE FIX (the amendment §4b/M3): the crossfade DIES. A scalar FIELD has no topology — two
+// masses becoming one bar is a single weld over `--dock-morph-t`, no discrete reflow to
+// dodge. The continuous metaball teardrop is now the SHIPPED DEFAULT: pressing the button
+// drives `useDockOrientationMorph`'s `--dock-morph-t` spring (the SAME shipped scalar), the
+// two real docks ride it (the vertical collapses height while the horizontal grows width),
+// and the SVG-goo bridge (the ONE `<GooFilter>` mount's `#dock-morph-goo`) merges them into
+// one amorphous LOBBING teardrop through the midpoint. The `liquidPreview` gate evaporates
+// — there is ONE mode, the weld. PRM snaps (the morph still confirms, zero neck frames).
+//
+// CROSS-ENGINE (§L7). The goo filter is the REGULAR `filter:url(#dock-morph-goo)` off the
+// shell-root `<GooFilter>` mount (sRGB, generous region — NEVER backdrop-filter, bug
+// 245510), applied on the bridge SIBLING layer (never an ancestor of the glass docks — an
+// ancestor filter kills backdrop-filter on descendants). Gated to the occluded midpoint
+// window so it never steady-state re-blurs. The Tier-C clip-path teardrop under it is the
+// WebKit-Metal floor.
 import { computed, nextTick, onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -29,10 +34,7 @@ import {
     GlassDock,
     useDockOrientationMorph,
 } from "../../../src/components/custom/dock";
-import { startViewTransition } from "../../../src/composables/motion/useViewTransition";
 import { Button } from "../../../src/components/ui/button";
-import { Switch } from "../../../src/components/ui/switch";
-import { Label } from "../../../src/components/ui/label";
 import DockStage from "./DockStage.vue";
 
 const entries = [
@@ -43,66 +45,44 @@ const entries = [
     { id: "feedback", label: "Feedback", icon: Bell },
 ];
 
-// The stage root the ONE --dock-morph-t scalar is written to (the preview mode); the
-// two docks + the bridge live under it and read the inheriting scalar.
+// The stage root the ONE --dock-morph-t scalar is written to; the two docks + the bridge
+// live under it and read the inheriting scalar.
 const stageEl = useTemplateRef<HTMLElement>("stageEl");
 
-// The dock footprints (px) — the morph spans for the preview's liquid size morph.
+// The dock footprints (px) — the morph spans for the liquid size morph.
 const V_FULL_H = 296;
 const H_FULL_W = 332;
 
-// The deterministic V↔H driver (the W-LIQUID substrate consumer #1) — drives the
-// preview's two-dock scalar morph + the teardrop squish.
+// The deterministic V↔H driver — drives the two-dock scalar morph + the teardrop squish
+// off the ONE --dock-morph-t spring. THIS is the shipped default now (no VT crossfade arm).
 const morph = useDockOrientationMorph({
     rootEl: stageEl,
     verticalSize: V_FULL_H,
     horizontalSize: H_FULL_W,
 });
 
-// ── The SHIPPED default — the arm-c View-Transitions crossfade ──────────────────
-// The orientation state the VT crossfade swaps. The `<GlassDock :background-canvas="backgroundCanvas">` swap (vertical ↔
-// horizontal) is wrapped in `startViewTransition`, so the compositor crossfades the
-// before/after snapshots — budget-clearing, deterministic (a state flip), bidirectional.
-const vtOrientation = ref<"vertical" | "horizontal">("vertical");
+const facing = computed(() =>
+    morph.orientation.value === "vertical" ? "horizontal" : "vertical",
+);
 
-// The preview toggle — when ON, the perf-gated liquid-teardrop (arm-a) morph is shown
-// instead of the VT crossfade. OFF (default) ships the budget-clearing VT crossfade.
-const liquidPreview = ref(false);
-
-const facing = computed(() => {
-    const cur = liquidPreview.value ? morph.orientation.value : vtOrientation.value;
-    return cur === "vertical" ? "horizontal" : "vertical";
-});
-
-// The goo filter is gated to the occluded MIDPOINT window (t∈(0.18,0.82)) where the
-// plates merge — a pure f(--dock-morph-t), no clock (the M5 scalar-binding holds).
+// The goo filter is gated to the occluded MIDPOINT window (t∈(0.18,0.82)) where the plates
+// merge — a pure f(--dock-morph-t), no clock. The id resolves off the ONE shell-root
+// <GooFilter> mount (`#dock-morph-goo`), NOT an inline per-route <filter> (the M1 dedup).
 const gooFilter = computed(() =>
     morph.t.value > 0.18 && morph.t.value < 0.82 ? "url(#dock-morph-goo)" : "none",
 );
 
 function toggleMorph(): void {
-    if (liquidPreview.value) {
-        // The preview — the deterministic scalar-driven liquid teardrop morph.
-        morph.toggle();
-    } else {
-        // The shipped default — the VT crossfade, wrapped in startViewTransition.
-        startViewTransition(() => {
-            vtOrientation.value =
-                vtOrientation.value === "vertical" ? "horizontal" : "vertical";
-        });
-    }
+    // The continuous WELD — the SAME scalar both ways (bidirectional, interruptible). No
+    // crossfade, no topology dodge. PRM snaps inside the driver.
+    morph.toggle();
 }
 
-// DETERMINISTIC CAPTURE SEAM (HG1) — the π/Playwright arm drives EXACT t values
-// (0/.25/.5/.75/1, both directions) to capture the preview's frame-series. The scalar
-// is the ONE source; pinning it yields a frame-reproducible silhouette (no wall-clock —
-// the bridge has no free-running uTime). The seam forces the preview ON so the
-// teardrop morph is the captured surface.
+// DETERMINISTIC CAPTURE SEAM — the π/Playwright arm drives EXACT t values (0/.25/.5/.75/1,
+// both directions) to capture the weld's frame-series. The scalar is the ONE source;
+// pinning it yields a frame-reproducible silhouette (no wall-clock).
 function setMorphT(value: number): void {
-    if (!liquidPreview.value) liquidPreview.value = true;
-    void nextTick(() => {
-        morph.pin(value);
-    });
+    void nextTick(() => morph.pin(value));
     (window as unknown as { __morphT?: number }).__morphT = value;
 }
 
@@ -113,155 +93,62 @@ onMounted(() => {
                 setMorphT: (t: number) => void;
                 toggle: () => void;
                 morphTo: (o: "vertical" | "horizontal") => void;
-                setPreview: (on: boolean) => void;
             };
         }
     ).__dockMorphShowcase = {
         setMorphT,
-        toggle: () => {
-            if (!liquidPreview.value) liquidPreview.value = true;
-            void nextTick(() => morph.toggle());
-        },
-        morphTo: (o) => {
-            if (!liquidPreview.value) liquidPreview.value = true;
-            void nextTick(() => morph.morphTo(o));
-        },
-        setPreview: (on) => {
-            liquidPreview.value = on;
-        },
+        toggle: () => void nextTick(() => morph.toggle()),
+        morphTo: (o) => void nextTick(() => morph.morphTo(o)),
     };
 });
 </script>
 
 <template>
     <StoryPage>
-        <!-- BA.W-STAGE scope 9 (FD-DOCK-1) — the morph showcase is the money-shot:
-             the teardrop of glass morphing over a LIVE aurora. The stage sits over
-             the shared, offscreen-paused DockStage field (replacing the prior static
-             gradient wash); the goo-bridge threshold already occludes the topology
-             reflow, so a moving backdrop only helps. ONE GL context for the route. -->
+        <!-- The morph showcase money-shot: the teardrop of glass morphing over a LIVE
+             aurora. The stage sits over the shared, offscreen-paused DockStage field. ONE
+             GL context for the route. -->
         <DockStage #default="{ backgroundCanvas }">
-        <StorySection heading="Vertical ↔ horizontal liquid-glass morph" gap="md">
-            <p class="text-small text-muted-foreground">
-                Press the button and watch the dock flow from <strong>vertical</strong> to
-                <strong>horizontal</strong> and back, fully bidirectional and deterministic. The
-                <strong>shipped</strong> morph is a View-Transitions crossfade — the compositor
-                crossfades the two dock states, so it stays smooth and stable under load (it
-                clears the 60fps frame budget under a 4× CPU throttle). The topology reflow
-                (column → row) is hidden inside the crossfade — the platform cannot continuously
-                interpolate a mismatched-topology silhouette (a binding platform limit); the showcase
-                respects that limit rather than fighting it.
-            </p>
-            <p class="text-small text-muted-foreground">
-                Flip <strong>Liquid teardrop</strong> on to preview the higher-fidelity
-                metaball-bridge morph: the two real docks ride the ONE
-                <code class="rounded bg-muted px-1">--dock-morph-t</code> spring (the vertical
-                collapses its height while the horizontal grows its width), and an SVG-goo
-                metaball bridge merges them into one amorphous teardrop. It is the amorphous
-                register the user named — but its per-frame goo blur does not clear the strict
-                frame budget under throttle, so it is the perf-gated preview, not the shipped
-                default (the teardrop fidelity is booked to a successor).
-            </p>
+            <StorySection heading="Vertical ↔ horizontal liquid-glass morph" gap="md">
+                <p class="text-small text-muted-foreground">
+                    Press the button and watch the dock flow — as one amorphous metaball
+                    teardrop — from <strong>vertical</strong> to <strong>horizontal</strong>
+                    and back, fully bidirectional and deterministic. The two real docks ride
+                    the ONE
+                    <code class="rounded bg-muted px-1">--dock-morph-t</code> spring (the
+                    vertical collapses its height while the horizontal grows its width), and
+                    the SVG-goo bridge merges them into one liquid silhouette that LOBS
+                    column→row through the midpoint. A scalar field has no topology — there
+                    is nothing to crossfade, no reflow to dodge.
+                </p>
 
-            <div class="flex flex-wrap items-center gap-4">
-                <Button type="button" data-testid="morph-toggle" @click="toggleMorph">
-                    <ArrowLeftRight class="size-4" />
-                    Morph to {{ facing }}
-                </Button>
-                <div class="flex items-center gap-2">
-                    <Switch
-                        id="liquid-preview"
-                        v-model="liquidPreview"
-                        data-testid="liquid-preview-toggle"
-                    />
-                    <Label for="liquid-preview" class="text-small">Liquid teardrop (preview)</Label>
+                <div class="flex flex-wrap items-center gap-4">
+                    <Button type="button" data-testid="morph-toggle" @click="toggleMorph">
+                        <ArrowLeftRight class="size-4" />
+                        Morph to {{ facing }}
+                    </Button>
+                    <span
+                        class="text-mono-caption text-muted-foreground"
+                        data-testid="morph-readout"
+                    >
+                        t = {{ morph.t.value.toFixed(3) }}
+                    </span>
                 </div>
-                <span class="text-mono-caption text-muted-foreground" data-testid="morph-readout">
-                    mode = {{ liquidPreview ? "liquid" : "view-transition" }} · t =
-                    {{ morph.t.value.toFixed(3) }}
-                </span>
-            </div>
 
-            <!-- The morph stage — the ONE root the scalar inherits from. A static themed
-                 wash backdrop gives the glass something to read against (the rich live
-                 substrate that makes glass POP is the page-redesign's job — W60; this
-                 showcase proves the MORPH, not the backdrop). -->
-            <div
-                ref="stageEl"
-                class="dock-morph-stage relative flex min-h-[22rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
-                data-testid="dock-morph-stage"
-            >
-                <!-- ── The SHIPPED arm-c View-Transitions crossfade ── -->
-                <template v-if="!liquidPreview">
-                    <GlassDock :background-canvas="backgroundCanvas"
-                        v-if="vtOrientation === 'vertical'"
-                        orientation="vertical"
-                        always-expanded
-                        class="dock-morph-pane relative z-10"
-                        aria-label="Vertical dock"
-                        data-testid="dock-morph-vt-vertical"
-                    >
-                        <DockIconButton
-                            v-for="e in entries"
-                            :key="e.id"
-                            type="button"
-                            class="text-muted-foreground"
-                            :aria-label="e.label"
-                        >
-                            <component :is="e.icon" />
-                        </DockIconButton>
-                    </GlassDock>
-                    <GlassDock :background-canvas="backgroundCanvas"
-                        v-else
-                        orientation="horizontal"
-                        always-expanded
-                        class="dock-morph-pane relative z-10"
-                        aria-label="Horizontal dock"
-                        data-testid="dock-morph-vt-horizontal"
-                    >
-                        <DockIconButton
-                            v-for="e in entries"
-                            :key="e.id"
-                            type="button"
-                            class="text-muted-foreground"
-                            :aria-label="e.label"
-                        >
-                            <component :is="e.icon" />
-                        </DockIconButton>
-                    </GlassDock>
-                </template>
-
-                <!-- ── The perf-gated LIQUID-TEARDROP preview (arm-a) ── -->
-                <template v-else>
-                    <!-- The goo SVG filter — the classic gooey trick: blur the plates so
-                         their alpha bleeds together, then threshold the blurred alpha back
-                         to a sharp metaball edge. Deterministic: no animation, no clock —
-                         a static filter the plates pass through. -->
-                    <svg class="absolute size-0" aria-hidden="true">
-                        <defs>
-                            <filter
-                                id="dock-morph-goo"
-                                x="-10%"
-                                y="-10%"
-                                width="120%"
-                                height="120%"
-                            >
-                                <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
-                                <feColorMatrix
-                                    in="blur"
-                                    mode="matrix"
-                                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
-                                    result="goo"
-                                />
-                                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-                            </filter>
-                        </defs>
-                    </svg>
-
+                <!-- The morph stage — the ONE root the scalar inherits from, over the live
+                     DockStage aurora field. -->
+                <div
+                    ref="stageEl"
+                    class="dock-morph-stage relative flex min-h-[22rem] items-center justify-center overflow-hidden rounded-[var(--radius-card)] p-10"
+                    data-testid="dock-morph-stage"
+                >
                     <!-- The metaball-teardrop BRIDGE — behind both docks. The two plates
                          (vertical tall capsule + horizontal wide capsule) merge under the
-                         goo filter at the midpoint. Aspect is f(--dock-morph-t); squish
-                         reads --stretch (the scalar derivative). -->
+                         goo filter at the midpoint. The goo `<filter>` is the ONE shell-root
+                         <GooFilter> mount's `#dock-morph-goo` (no inline per-route filter —
+                         the M1 dedup). The bridge is a SIBLING layer to the glass docks, so
+                         its filter never kills their backdrop-filter (§L7). Aspect is
+                         f(--dock-morph-t); squish reads the morph stretch. -->
                     <div
                         class="dock-morph-bridge"
                         :style="{
@@ -284,7 +171,8 @@ onMounted(() => {
                     <!-- The two REAL DOM docks, crossfading under the goo veneer. The
                          vertical collapses its height while the horizontal grows its width,
                          both off the ONE scalar. -->
-                    <GlassDock :background-canvas="backgroundCanvas"
+                    <GlassDock
+                        :background-canvas="backgroundCanvas"
                         orientation="vertical"
                         always-expanded
                         class="dock-morph-pane dock-morph-pane--liquid relative z-10"
@@ -304,7 +192,8 @@ onMounted(() => {
                         </DockIconButton>
                     </GlassDock>
 
-                    <GlassDock :background-canvas="backgroundCanvas"
+                    <GlassDock
+                        :background-canvas="backgroundCanvas"
                         orientation="horizontal"
                         always-expanded
                         class="dock-morph-pane dock-morph-pane--liquid absolute z-10"
@@ -323,29 +212,23 @@ onMounted(() => {
                             <component :is="e.icon" />
                         </DockIconButton>
                     </GlassDock>
-                </template>
-            </div>
-        </StorySection>
+                </div>
+            </StorySection>
         </DockStage>
     </StoryPage>
 </template>
 
 <style scoped>
-/* BA.W-STAGE scope 9 — the stage is now TRANSPARENT: the live DockStage aurora
-   field IS the backdrop (the teardrop-of-glass-morphing-over-a-live-aurora
-   money-shot), replacing the prior static themed wash. The glass docks + the goo
-   teardrop read against the moving painterly field. The view-transition-name is
-   PRESERVED (load-bearing for the arm-c crossfade — the VT substrate's CSS half). */
+/* The stage is TRANSPARENT: the live DockStage aurora field IS the backdrop (the teardrop-
+   of-glass-morphing-over-a-live-aurora money-shot). The glass docks + the goo teardrop read
+   against the moving painterly field. */
 .dock-morph-stage {
     background: transparent;
-    /* The arm-c crossfade names the two dock states so the View-Transition group
-       crossfades them (the view-transition substrate's CSS half). */
-    view-transition-name: dock-morph-stage;
 }
 
-/* The liquid-preview panes are size-driven by the morph composable (the inline
-   width/height style); centered so they share the bridge's center as the teardrop
-   pivot. The crossfade opacity rides the inline style. */
+/* The liquid panes are size-driven by the morph composable (the inline width/height style);
+   centered so they share the bridge's center as the teardrop pivot. The crossfade opacity
+   rides the inline style. */
 .dock-morph-pane--liquid {
     overflow: hidden;
     transform-origin: center;

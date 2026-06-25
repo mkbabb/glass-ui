@@ -30,7 +30,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     <SelectTrigger
         v-specular
         v-bind="forwardedProps"
-        :class="cn('dock-select-trigger', props.class)"
+        :class="cn('dock-trigger dock-select-trigger', props.class)"
     >
         <slot />
         <SelectIcon as-child>

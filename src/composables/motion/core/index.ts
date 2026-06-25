@@ -65,6 +65,11 @@ export * from "../useLiquidFlex";
 // `/motion-core` surface AND the root barrel (the `useLiquidFlex` precedent). ≥2
 // consumers: PagerDots (worm) + CarouselContent (slide plate) + the deck demo.
 export * from "../useGooMorph";
+// BD.W-MORPH-FIELD-WELD — the ONE blend/morph WELD primitive (the WELD layer over N warm
+// bodies the goo/dock/fission/V↔H recipes consume). Composes `useLiquidFlex` + Vue only
+// (engine-FREE + vueuse-FREE), so it ships on `/motion-core` AND the root barrel (the
+// `useLiquidFlex` precedent — it underlies the root-exported `useGooMorph`).
+export * from "../useMorphField";
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
 // rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,

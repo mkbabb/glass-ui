@@ -7,9 +7,10 @@ import { vSpecular } from "../../../composables/glass";
 /**
  * <DockDropdownTrigger> — variable-width DropdownMenu trigger for use inside GlassDock.
  *
- * Emits the dock dropdown-trigger class contract. Interactive styling is owned
- * by src/styles/dock.css. Matches DockIconButton's hover-scale behaviour
- * unlike DockSelectTrigger, which doesn't scale.
+ * Emits the SHARED `.dock-trigger` recipe (BD.W-DOCK-CORE A8 — the unified dock
+ * overlay-trigger family: select/dropdown/popover are byte-identical geometry + style +
+ * baseline alignment). Interactive styling is owned by dock-controls/triggers.css; the
+ * hover-scale is OFF across the family so portaled content anchors smoothly.
  *
  * Consumers provide the button content (icon + text + optional chevron)
  * via the default slot.
@@ -31,7 +32,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     <DropdownMenuTrigger
         v-specular
         v-bind="forwardedProps"
-        :class="cn('dock-dropdown-trigger', props.class)"
+        :class="cn('dock-trigger dock-dropdown-trigger', props.class)"
     >
         <slot />
     </DropdownMenuTrigger>

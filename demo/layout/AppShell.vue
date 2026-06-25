@@ -21,7 +21,7 @@ import {
     Bell,
 } from "@lucide/vue";
 import {
-    DockGooFilter,
+    GooFilter,
     DockIconButton,
     GlassDock,
     useDockOrientationMorph,
@@ -264,11 +264,13 @@ onBeforeUnmount(() => {
          stay transparent or it would occlude the field. -->
     <PaperBackdrop field :field-hue="fieldHue" class="fixed inset-0 -z-10" />
 
-    <!-- BD.W-DOCK-CORE (II.1 / F1) — the library goo `<filter>` mount, ONCE at the shell
-         root. It is a global `<defs>` referenced by id (`url(#dock-fission-goo)` via
-         `var(--dock-fission-goo-filter)`); mounting twice dups the id. A `<GlassDock split>`
-         consumes it for its fission necks (the SHIPPED engine, WIRED). -->
-    <DockGooFilter />
+    <!-- BD.W-MORPH-FIELD-WELD (M1) — the ONE library goo `<filter>` mount, ONCE at the
+         shell root. It exposes EVERY library metaball id off one byte-identical sRGB graph
+         (`#glass-goo` carousel/deck · `#pager-goo` worm · `#dock-fission-goo` fission ·
+         `#dock-morph-goo` V↔H teardrop · `#morph-goo` generic) — the DRY union of the
+         prior four byte-near-identical mounts. A global `<defs>` referenced by id; mounting
+         twice dups the ids, so it lives HERE once and every route's morph reaches it. -->
+    <GooFilter />
 
     <div class="relative flex h-screen overflow-hidden text-foreground">
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile

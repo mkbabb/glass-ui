@@ -230,6 +230,27 @@ export {
     type UseGooMorphReturn,
 } from "./composables/motion/useGooMorph";
 
+// BD.W-MORPH-FIELD-WELD — the ONE blend/morph WELD primitive every morph consumes (the
+// goo neck · every dock animation · general component morph). The WELD layer over N warm
+// bodies, reading the consumer's EXISTING drive scalar (NO rename), the gap-fraction k
+// threshold (the scale-blind-goo fix), the dedicated --morph-squish channel, the 3-tier
+// caps ladder. `useGooMorph`/`useDockFission`/`useDockOrientationMorph` are thin recipes
+// over it. Composes `useLiquidFlex` + `vue` ONLY — engine-FREE + vueuse-FREE, root-barrel
+// safe + on `@mkbabb/glass-ui/motion-core` (the `useLiquidFlex` precedent).
+export {
+    useMorphField,
+    MORPH_SIGNATURES,
+    type MorphSignature,
+    type MorphSignatureName,
+    type MorphVector,
+    type MorphTier,
+    type MorphSilhouette,
+    type MorphFieldRect,
+    type BodySpec,
+    type MorphFieldOptions,
+    type MorphFieldHandle,
+} from "./composables/motion/useMorphField";
+
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
 // (NO own rAF — the one-loop discipline); under PRM it freezes (`tick(0)`). Imports

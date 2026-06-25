@@ -14,7 +14,7 @@
 //   • ISLAND (Split → islands) uses `useDockFission`: at REST the island is ONE crisp
 //     `.glass-floating` pill (goo OFF); the two activity halves register as fission
 //     PIECES with opposite vectors. On split the goo NECK stretches-thins-snaps between
-//     them (the `.dock-fission-bridge` host + the library `<DockGooFilter>` mount). No
+//     them (the `.dock-fission-bridge` host + the ONE library `<GooFilter>` mount). No
 //     two-abutting-blob waist.
 //   • VERTICAL is a CONTENT REFLOW per mode (album → title → transport stacked), never
 //     a `display:none` amputation to a bare square.
@@ -57,7 +57,6 @@ import {
     DOCK_SPLIT_SIGNATURES,
 } from "../../../src/components/custom/dock/composables";
 import {
-    DockGooFilter,
     DockIconButton,
     DockSeparator,
     DockStack,
@@ -79,7 +78,7 @@ const modeTabs = [
     { value: "player", label: "Now Playing" },
 ];
 const track = {
-    title: "You Are (Not) Alone",
+    title: "Now Playing",
     artist: "Shiro Sagisu",
     album: "Evangelion: 1.0",
 };
@@ -386,11 +385,10 @@ function onAuroraInitError(err: Error): void {
 
 <template>
     <StoryPage>
-        <!-- the ONE library goo <filter> mount — the fission bridge references it by id
-             (var(--dock-fission-goo-filter) → url(#dock-fission-goo)). Mounted ONCE.
-             color-interpolation-filters=sRGB + a generous region + a non-zero host (the
-             Safari floor + the fix for the island waist). -->
-        <DockGooFilter />
+        <!-- BD.W-MORPH-FIELD-WELD (M1, the double-mount fix) — the goo `<filter>` is the
+             ONE `<GooFilter>` mount at the shell root (AppShell). The fission bridge
+             references `#dock-fission-goo` off it; this route no longer mounts its own
+             (the prior `<DockGooFilter>` here double-mounted #dock-fission-goo live). -->
 
         <StorySection
             heading="Liquid playground — the dock is the control interface"

@@ -5,6 +5,7 @@
 // strings from here so a label is never re-typed at two call sites.
 
 import type { Component } from "vue";
+import { springPreset } from "../../../composables/motion/springPresets";
 
 /**
  * BC.W-DOCK-STACK-RAIL — one `<DockStack>` member descriptor: a stack member that fans
@@ -81,7 +82,10 @@ export interface DockSectionDescriptor {
  * pair is defined ONCE rather than duplicated at the top of each composable (the two
  * prior copies were a DRY hazard — a re-tune had to touch both).
  */
-export const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
+export const DOCK_SPRING = {
+    response: springPreset("dock").response,
+    dampingFraction: springPreset("dock").dampingFraction,
+} as const;
 
 /**
  * The CSS properties whose `transitionend` the dock-morph window watches to know a
@@ -118,4 +122,4 @@ export const EDGE_BAND_PX = 24;
  * a floor backstop only — the live `[data-morphing]` attribute is the primary
  * settle signal, this caps the window so a never-settling morph can't trap clicks
  * forever. Mirrors the slides interim 320ms guard (now retired by this root fix). */
-export const MORPH_SETTLE_MS = 320;
+export const MORPH_SETTLE_MS = 840;

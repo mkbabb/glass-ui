@@ -18,7 +18,6 @@ import {
     DeckPager,
 } from "../../../src/components/custom/deck";
 import { Button } from "../../../src/components/ui/button";
-import { GlassGooFilter } from "../../../src/components/custom/goo-filter";
 import { useGooMorph } from "../../../src/composables/motion/useGooMorph";
 
 const slides = [
@@ -43,7 +42,7 @@ const index = computed({
 
 // BD.W-GOO-BARBELL-NECK — the deck slide GOO-MORPH (the demo is consumer #3 of
 // `useGooMorph` — the pager #1, the carousel #2, the deck #3). The library SHIP is
-// `useGooMorph` + `GlassGooFilter`; this demo CONSUMES them. The outgoing→incoming slide
+// `useGooMorph` + the shell `<GooFilter>` mount; this demo CONSUMES them. The outgoing→incoming slide
 // bridge is the BARBELL: two warm-cream bodies neck a concave waist between them at the
 // calmer deck register (`--deck-goo-flow`, no-overshoot — the vestibular floor;
 // `--goo-weight: 0.4` zeroes the arc-lob). The `useDeck` library surface is byte-untouched.
@@ -149,9 +148,9 @@ watch(
                      on the --spring-deck slide-transition curve, with the GOO-MORPH neck
                      bridging the outgoing→incoming slide (BD.W-GOO-CAROUSEL-DECK). -->
                 <div ref="gooStageEl" class="deck-demo-stage glass-quiet rounded-card">
-                    <!-- the library goo <filter> mount (Safari-safe, static — the BARBELL
-                         gooey-shoulder defaults blur 10 / slope 15 / offset -7) -->
-                    <GlassGooFilter :blur="9" :threshold-slope="15" :threshold-offset="-7" />
+                    <!-- BD.W-MORPH-FIELD-WELD — the goo `<filter>` is the ONE `<GooFilter>`
+                         mount at the app/shell root (`url(#glass-goo)`); the deck references
+                         it by id. No per-deck mount → zero duplicate `<filter id>`. -->
                     <!-- the concave NECK-THROAT clipPath (the deck-scale `--neck-waist`
                          hourglass; objectBoundingBox cubic-Bézier sides, Safari-safe). -->
                     <svg class="deck-neck-defs" width="0" height="0" aria-hidden="true" focusable="false">

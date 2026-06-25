@@ -18,11 +18,10 @@
 //     the old "2 live Aurora contexts" comment was false — the tiles rode STATIC gradients
 //     and the route had no live field at all). The tiles keep their own static gradient
 //     backdrops; the shared field reads behind the column.
-//   • ONE <DockGooFilter> goo <filter> mount (the fission Call tile references it by id).
+//   • ONE <GooFilter> goo <filter> mount at shell root (the fission Call tile references it by id).
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import DockStage from "./DockStage.vue";
-import { DockGooFilter } from "../../../src/components/custom/dock";
 import AppleMusic from "./examples/AppleMusic.vue";
 import DynamicIslandCall from "./examples/DynamicIslandCall.vue";
 import Notification from "./examples/Notification.vue";
@@ -34,11 +33,9 @@ import AppSwitcher from "./examples/AppSwitcher.vue";
 
 <template>
     <StoryPage>
-        <!-- the ONE library goo <filter> mount — the fission Call tile's bridge references
-             it by id (var(--dock-fission-goo-filter) → url(#dock-fission-goo)). Mounted
-             ONCE for the whole route. -->
-        <DockGooFilter />
-
+        <!-- BD.W-DOCK-CORE (II.1) — the goo <filter> is now mounted ONCE at the AppShell
+             root (a global <defs id="dock-fission-goo"> referenced by id); the per-route
+             mount here is RETIRED to avoid a duplicate id. -->
         <StorySection
             heading="Dock morphs — the shape-shifting protagonist"
             gap="md"

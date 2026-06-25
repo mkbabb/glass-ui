@@ -6,7 +6,7 @@
 // halves DETACH along opposite vectors (the call-status anchor peels left, the controls
 // peel right — the `DOCK_SPLIT_SIGNATURES.media` lateral-peel signature), each bridged to
 // the body by a stretching goo NECK that thins then snaps (the library `fission-bridge.css`
-// recipe + the `<DockGooFilter>` mount the gallery hoists ONCE).
+// recipe + the ONE `<GooFilter>` mount the shell hoists ONCE).
 //
 // THE TWO-LAYER discipline (the morph-showcase goo-blob precedent): a goo BLOB layer
 // (solid metaball plates the `filter: url()` merges into ONE body that necks + snaps) +
@@ -80,9 +80,9 @@ function toggle(): void {
                  inheriting --dock-split-t scalar + per-half CSS vectors. -->
             <div class="ci-content" aria-hidden="true">
                 <div class="ci-half ci-half--left">
-                    <span class="ci-avatar">RZ</span>
+                    <span class="ci-avatar">●</span>
                     <span class="ci-meta">
-                        <span class="ci-name">Ray Zeisz</span>
+                        <span class="ci-name">Incoming call</span>
                         <span class="ci-status">04:12</span>
                     </span>
                 </div>

@@ -75,7 +75,11 @@ export interface UseDockStateReturn {
  * ```
  */
 export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
-    const { collapseDelay = 2500, rootEl, alwaysExpanded = false, isTransitioning, dockId, onStateChange } = options;
+    // BD.W-DOCK-CORE (A2) — the patient-dwell collapse delay (2500 → 3600ms): a more
+    // forgiving hover/interaction window before auto-collapse. The AZ.W-DOCK-FLICKER
+    // hysteresis (HOVER_INTENT_MS enter-dwell + EDGE_BAND_PX moving-edge recheck) is KEPT
+    // — the longer delay is a calmer dwell, the hysteresis prevents thrash at a moving edge.
+    const { collapseDelay = 3600, rootEl, alwaysExpanded = false, isTransitioning, dockId, onStateChange } = options;
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;

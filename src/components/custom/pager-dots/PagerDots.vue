@@ -249,23 +249,11 @@ function select(i: number): void {
             focusable="false"
         >
             <defs>
-                <filter
-                    id="pager-goo"
-                    x="-50%"
-                    y="-50%"
-                    width="200%"
-                    height="200%"
-                    color-interpolation-filters="sRGB"
-                >
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-                    <feColorMatrix
-                        in="blur"
-                        mode="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -5"
-                        result="goo"
-                    />
-                    <feBlend in="SourceGraphic" in2="goo" />
-                </filter>
+                <!-- BD.W-MORPH-FIELD-WELD (M1) — the goo `<filter id="pager-goo">` is NOT
+                     mounted here anymore (it dup-mounted per PagerDots instance). It lives
+                     ONCE at the app/shell root (`<GooFilter>`), and `.pager-goo-layer`
+                     references it by id (`url(#pager-goo)`). Only the per-instance clipPath
+                     stays inline (a structural clip, not the shared metaball graph). -->
                 <!-- the concave NECK-THROAT (NET-NEW — the dot-scale `--neck-waist`
                      hourglass). objectBoundingBox cubic-Bézier sides pulling IN to the 0.34
                      waist — a SMOOTH concave throat (NOT a faceted polygon, NOT `inset()`).

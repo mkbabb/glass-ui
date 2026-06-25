@@ -1,32 +1,39 @@
-# goo-filter — `GlassGooFilter`
+# goo-filter — `GooFilter`
 
-The library's Safari-safe goo `<filter>` mount (BD.W-GOO-BARBELL-NECK).
+The library's ONE Safari-safe goo `<filter>` mount (BD.W-MORPH-FIELD-WELD).
 
-`<GlassGooFilter>` is the metaball-merge SVG filter the carousel/deck slide BARBELL
-goo-morph references by id (`filter: url(#glass-goo)`). It welds the two round bodies + the
-concave neck into ONE warm silhouette with a real local-minimum waist. It is the plate-scale
-twin of the dot-scale `#pager-goo` (PagerDots) and the dock-scale `#dock-fission-goo`
-(DockGooFilter) — three distinct scales of the SAME classic blur→alpha-threshold gooey trick.
+`<GooFilter>` is the SINGLE metaball-merge SVG mount the whole library references by id. It
+exposes EVERY library metaball id off ONE byte-identical blur→alpha-threshold graph:
 
-The BARBELL defaults are the gooey-shoulder band: `blur 10` (a wider alpha skirt so the
-bodies feel each other → the concave neck wells gooier, bounded so it does not fill the
-thin throat), `thresholdSlope 15` (the soft-shoulder sweet spot, not the slope-24 mercury
-razor), `thresholdOffset -7` (re-solved for slope 15 — crisp at rest, gooey in the throat).
+| id | scale | consumer |
+|---|---|---|
+| `glass-goo` | plate | carousel / deck slide BARBELL goo-morph |
+| `pager-goo` | dot-pip | PagerDots worm |
+| `dock-fission-goo` | dock | the fission bridge necks |
+| `dock-morph-goo` | teardrop | the V↔H dock teardrop weld |
+| `morph-goo` | generic | `useMorphField` default |
+
+It is the DRY union of the prior FOUR byte-near-identical mounts (`GlassGooFilter`,
+`DockGooFilter`, the inline showcase filter, the pager filter) — and the fix for the live
+duplicate-`<filter id>` double-mount. A Safari regression can now happen in ONE place; a fix
+lands once. Each id is the SAME graph at its own `blur`/`slope`/`offset` (DATA in the
+`LIBRARY_IDS` register); a consumer tunes a one-off via the `extra` prop.
 
 ## Why it's Safari-first
 
 - REGULAR `filter: url(#…)` graph — NOT `backdrop-filter: url()` (WebKit bug 245510).
-- `color-interpolation-filters="sRGB"` — the WebKit-correct neck (bug 136418).
-- explicit region `-50%/-50%/200%/200%` — the metaball neck never clips.
+- `color-interpolation-filters="sRGB"` — the WebKit-correct neck (bug 136418); Chrome MATCHES
+  it so the waist thresholds IDENTICALLY on both engines.
+- explicit region `-50%/-50%/200%/200%` — the metaball neck + travelling masses never clip.
 - a visually-hidden NON-ZERO (1×1) host — the WebKit zero-sized-filter no-op avoided.
-- STATIC `stdDeviation`/`feColorMatrix` literals — the ONLY per-frame write is the
-  `transform`/`opacity` on the plates passing through; no `var()`-driven re-blur (the
+- STATIC `stdDeviation`/`feColorMatrix` literals per id — the ONLY per-frame write is the
+  `transform`/`opacity` on the masses passing through; no `var()`-driven re-blur (the
   WebKit-slow class, bug 283156).
 
 ## Usage
 
-INTERNAL — `<Carousel>` mounts it automatically inside `CarouselContent` (a bare
-`<Carousel>` consumer gets the goo bridge with zero wiring). The deck demo mounts it once
-at its stage root via the relative import. The `useGooMorph` engine drives the plates
-through it. Not a published subpath — both consumers reach it by relative import, and a
-`<Carousel>` consumer pulls it in transitively (the `/carousel` chunk).
+Mount `<GooFilter />` ONCE at the app/shell root (the demo's `AppShell` does). Every route's
+morph — carousel, deck, pager, dock fission, V↔H — reaches its id off that one mount. NEVER
+mount it twice (it is a global `<defs>`; a second mount dups every id). A standalone consumer
+using a bare `<Carousel>`/deck outside an app shell mounts `<GooFilter/>` once near their own
+root.

@@ -1,0 +1,229 @@
+/* motion/morph-field.css — BD.W-MORPH-FIELD-WELD — the ONE morph-field RECIPE.
+ *
+ * The body / neck / waist recipe + the DEDICATED squish channel every `useMorphField`
+ * consumer paints over. The weld JS (useMorphField.ts) writes the drive-derived custom
+ * properties once per frame (`--morph-squish`, `--morph-neck-girth`, `--morph-neck-gap`,
+ * `--morph-k`, `--morph-waist`, `--morph-specular-angle`); this sheet projects them onto
+ * the body + neck silhouettes. The MORPH_SIGNATURES rows live in the JS (motion-named
+ * DATA); this sheet is signature-agnostic — it paints whatever the masses carry.
+ *
+ * THE DEDICATED SQUISH CHANNEL (the dock-core hardening fence). The volume-preserving
+ * squish writes `--morph-squish`, NEVER `--stretch` (the 6-JS-owner + the
+ * `--dock-morph-max-stretch:1.14` clobber). A morph that ALSO rides --stretch (the dock
+ * collapse) keeps its own channel; the weld owns this one. Registered @property so a bare
+ * var() INTERPOLATES the ramp (the --dock-morph-t precedent).
+ *
+ * DETERMINISM (motion-canon P5 / the M5 scalar-binding). Every axis below is
+ * `f(var(--morph-*))` (the weld's drive-derived writes) — NEVER a CSS animation/transition
+ * with its own clock. A frame at a given drive value is byte-reproducible. Compositor-only
+ * (transform / scale / clip-path / opacity / --* — ZERO animated layout property).
+ *
+ * THE CARTOON PUNCH (welded IN, gated on the SHIPPED Band-0 tokens). The body squash rides
+ * `--morph-squish × --motion-weight`; the ink cast rides the `--shadow-cartoon-*` rung
+ * (never a hex literal, never an animated box-shadow); the neck specular-sweep lags the
+ * geometry (follow-through). `--motion-weight` and `--ease-cartoon-punch` are SHIPPED (P1,
+ * scheme-motion.css), so the punch is LIVE (not skipped); PRM zeroes --motion-weight → the
+ * squash/arc/cast collapse in ONE assignment.
+ *
+ * CROSS-ENGINE (§L7). The goo `<filter>` is the ONE `<GooFilter>` mount's REGULAR
+ * `filter:url(#…)` (NEVER backdrop-filter — bug 245510), applied on a SIBLING goo LAYER,
+ * never an ANCESTOR of glass (an ancestor filter kills backdrop-filter on descendants in
+ * both engines). The clip-path hourglass waist is the Tier-C cross-engine FLOOR under the
+ * filter — a concave waist on BOTH engines before any blur fuses it. The filter is gated to
+ * `[data-morphing]` (never a steady-state re-blur — the Safari budget fence). */
+
+/* The dedicated squish channel + the neck-drive channels — typed INHERITING @property so a
+   bare var() INTERPOLATES (the --dock-morph-t/--neck-t precedent). The weld writes them on
+   the host; descendant bodies + neck read the inheriting values. */
+@property --morph-squish {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+@property --morph-neck-girth {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+@property --morph-k {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+@property --morph-waist {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+@property --morph-specular-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0deg;
+}
+
+@layer components {
+    /* The morph FIELD host — the sibling goo LAYER the filter applies to (never an
+       ancestor of glass). The weld writes the drive-derived channels here; the bodies +
+       neck live under it and read the inheriting values. The filter engages ONLY while the
+       morph is in-flight (`[data-morphing]`) — crisp at rest, gooey during the merge. */
+    .morph-field {
+        position: relative;
+        pointer-events: none;
+        /* isolation keeps the blur/threshold scoped to the masses, not the page behind. */
+        isolation: isolate;
+        filter: none;
+    }
+    /* Gate the goo filter to the in-flight window — the §L7 Safari budget fence (no
+       steady-state re-blur). The weld sets `[data-morphing]` on the host (or the consumer
+       does). The filter id is the consumer's tuned instance off the ONE <GooFilter> mount
+       (`url(#glass-goo)` / `url(#pager-goo)` / `url(#dock-morph-goo)` / `url(#morph-goo)`),
+       passed via `--morph-goo-filter`. The REGULAR filter property (Safari-correct). */
+    [data-morphing].morph-field,
+    [data-morphing] .morph-field {
+        filter: var(--morph-goo-filter, url(#morph-goo));
+    }
+
+    /* A morph BODY — a warm-cream domed-droplet mass the weld translates/squashes. The fill
+       is the SAME six-layer warm-glass register the whole library reads (NEVER gray — the
+       transparent-plate bug the showcase had is exactly this fill being absent). The
+       transform is written INLINE by the weld (translate + scale); this sheet supplies the
+       resting silhouette + fill + the cast. */
+    .morph-body {
+        position: absolute;
+        border-radius: 999px;
+        /* the warm-cream domed droplet — a soft radial so the goo threshold reads a domed
+           mass, not a flat slab; transmissive (~0.55-0.80 α) so the colorful field reads
+           THROUGH it. Reads the shared --glass-* cohort (warm-cream identity, both modes). */
+        background: radial-gradient(
+            120% 120% at 50% 38%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 62%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        /* a 1px inner catch-light rim (the §3 defined edge) — the crisp metaball rim. */
+        box-shadow: inset 0 1px 0 0 color-mix(in oklab, white 22%, transparent);
+        overflow: clip;
+        transform-origin: center;
+        will-change: transform;
+    }
+
+    /* The welling NECK — the concave-throat filament between the two outermost bodies. Its
+       girth WELLS on `--morph-neck-girth` (peak mid, ~0 at the ends → no ghost throat at
+       rest) and its clip-path carves the structural hourglass waist (the Tier-C floor, both
+       engines, BEFORE the filter fuses it). The weld writes its transform inline (translate
+       + scaleX span + scaleY girth); this sheet supplies the fill + the waist clip + the
+       specular sweep. */
+    .morph-neck {
+        position: absolute;
+        border-radius: 999px;
+        background: radial-gradient(
+            130% 130% at 50% 40%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 70%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        /* THE CONCAVE WAIST — the clip-path hourglass pinches the throat toward the
+           centerline as the gap-fraction k narrows (the structural local-minimum waist read
+           on BOTH engines before the blur). The inset GROWS from the rim as the waist
+           tightens (`1 - --morph-waist`), `round 999px` so the throat is a gel capsule. */
+        --neck-pinch: calc((1 - clamp(0, var(--morph-waist, 1), 1)) * 42%);
+        clip-path: inset(var(--neck-pinch) 0 var(--neck-pinch) 0 round 999px);
+        /* the neck is visible EXACTLY while it wells (the opacity is the girth). */
+        opacity: var(--morph-neck-girth, 0);
+        transform-origin: center;
+        overflow: clip;
+        will-change: transform, clip-path, opacity;
+    }
+
+    /* THE NECK SPECULAR-SWEEP (follow-through) — a moving catch-light bending along the
+       throat as it stretches, reading the SHARED --glass-specular-core cohort (NO fork).
+       The conic angle LAGS the geometry (`--morph-specular-angle` carries the 60° trail the
+       weld writes). plus-lighter additive; a non-supporting engine degrades to a plain warm
+       overlay. */
+    .morph-neck::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        pointer-events: none;
+        background: conic-gradient(
+            from var(--morph-specular-angle, 0deg) at 50% 50%,
+            transparent 0deg,
+            color-mix(
+                in srgb,
+                var(--glass-specular-core, hsl(40 35% 92%)) 55%,
+                transparent
+            ) 18deg,
+            transparent 60deg,
+            transparent 360deg
+        );
+        opacity: calc(
+            var(--glass-specular-intensity-rest, 0.12) +
+                clamp(0, var(--morph-neck-girth, 0), 1) * 0.18
+        );
+        mix-blend-mode: plus-lighter;
+        will-change: opacity;
+    }
+
+    /* THE 1940s INK CAST (solid drawing — the most ALIVE detail). A `::after` caster on the
+       FIELD that slides OPPOSITE the morph motion and DEEPENS mid-merge, pooling darkest at
+       the thinnest waist (the mass is heaviest where the neck is thinnest). On the REAL
+       `--shadow-cartoon-*` rung (never a hex, never an animated box-shadow — a compositor
+       translate of a soft radial). Gated on `--motion-weight` so PRM zeroes it. */
+    .morph-field::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        border-radius: inherit;
+        /* the cast plane reads the cartoon shadow rung (the cards.css cohort) — a soft warm
+           ink pool that deepens as the waist thins. No hex; reads --shadow-color. */
+        background: radial-gradient(
+            60% 40% at 50% 60%,
+            color-mix(
+                    in srgb,
+                    var(--shadow-color, var(--foreground))
+                        calc(
+                            (18% + (1 - clamp(0, var(--morph-waist, 1), 1)) * 22%) *
+                                var(--motion-weight, 0)
+                        ),
+                    transparent
+                )
+                0%,
+            transparent 72%
+        );
+        /* slide OPPOSITE the morph — the cast trails the mass. The offset is the neck girth
+           × weight (deepest at mid-merge), on the cross axis. Compositor translate only. */
+        translate: 0
+            calc(var(--morph-neck-girth, 0) * 6px * var(--motion-weight, 0));
+        will-change: transform, background;
+    }
+
+    /* PRM (motion-canon P6 / §L5) — the goo layer drops, the neck never paints, the cast +
+       sweep are static-off; --motion-weight 0 (the :root PRM carve in scheme-motion.css)
+       already zeroes the squash/arc/cast amplitude. The morph still CONFIRMS (the weld's
+       seat() places one resting mass at the endpoint). */
+    @media (prefers-reduced-motion: reduce) {
+        [data-morphing].morph-field,
+        [data-morphing] .morph-field {
+            filter: none;
+        }
+        .morph-neck,
+        .morph-neck::after,
+        .morph-field::after {
+            display: none;
+        }
+    }
+
+    /* @supports floor — no `filter:url()` (the WebKit teardrop floor / a gap engine): the
+       clip-path hourglass waist on .morph-neck is the structural cross-engine FLOOR; the
+       bodies + the welling neck still read as a metaball via the clip-path waist alone (no
+       filter fuse). The morph degrades by SOFTENING, never to a non-morph crossfade. */
+    @supports not (filter: url("#morph-goo")) {
+        [data-morphing].morph-field,
+        [data-morphing] .morph-field {
+            filter: none;
+        }
+    }
+}

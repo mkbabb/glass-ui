@@ -40,6 +40,17 @@
 
 import { onScopeDispose, type Ref } from "vue";
 import { useLiquidFlex } from "./useLiquidFlex";
+import { MORPH_SIGNATURES } from "./useMorphField";
+
+// BD.W-MORPH-FIELD-WELD — useGooMorph is the `lateralNeck` RECIPE over the unified WELD.
+// It keeps its public API + the `--goo-t` drive (NO rename) + its barbell rAF projection,
+// but its neck-gap + threshold defaults now derive from the SHARED `MORPH_SIGNATURES`
+// `lateralNeck` row (DATA) — so the gooey waist + the gap-relative band are ONE source
+// library-wide (the carousel/deck/pager all neck off the same signature). The `<filter>`
+// it passes through is the ONE shell-root `<GooFilter>` mount's `#glass-goo`/`#pager-goo`.
+// The `kPeak` of `lateralNeck` IS the resting neck-gap floor (the bodies' nearness at the
+// gooey midpoint) — the single tuning the user's "carousel goo is awful" fix lives on.
+const LATERAL_NECK = MORPH_SIGNATURES.lateralNeck;
 
 /**
  * The three barbell silhouette elements the engine projects per frame. NOT
@@ -145,7 +156,11 @@ export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
         centerOf,
         restSize,
         tokenPrefix = "pager-worm",
-        neckGap = 0.78,
+        // BD.W-MORPH-FIELD-WELD — the neck-gap default is the SHARED `lateralNeck.kPeak`
+        // (the gap-FRACTION the bodies draw to at the gooey midpoint) — ONE source for the
+        // waist library-wide, not a per-fork literal. A consumer still overrides per call /
+        // per `--{prefix}-neck-gap` token; this is the unified DATA default.
+        neckGap = LATERAL_NECK.kPeak,
     } = params;
     const { bodyARef, bodyBRef, neckRef } = barbellRefs;
 
