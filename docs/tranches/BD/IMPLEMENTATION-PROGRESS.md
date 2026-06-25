@@ -23,7 +23,12 @@
 - [x] **P7 — blend-morph-engine** ✅ BUILT + LIVE-π VERIFIED (workflow wvuvn3y3k, verifier PASS forkCensus 22, vue-tsc+vite clean). Committed b494e526. `useMorphField` WELD atom (Tier-S SVG metaball + Tier-C clip-path floor + Tier-G selector); ONE `GooFilter.vue` at shell root (5 ids), GlassGooFilter+DockGooFilter DELETED, dock-fission-goo double-mount killed; 12+ forks re-pointed (box-INVIOLATE); goo on a SIBLING `.morph-field` layer (sRGB, WebKit floor). **FIXED /dock/morph-showcase** (was a startViewTransition CROSSFADE dodge, `--dock-morph-t≡0`): now the continuous weld is DEFAULT — LIVE (mine): drives `--dock-morph-t` 0→0.18→0.61→0.96→**1.073 √φ-overshoot**→settle 1.0, data-morphing armed. The 296px→dot midpoint fixed → fat fused warm-cream teardrop. Goo barbell wells-then-pinches (girth 0.013→0.999→0.889). Deferred: Safari capture + Tier-G GPU-SDF + useElementBloom capture-morph (P10/scoped). Artefact: `_verify/p7-morph-showcase.png`.
 - [ ] **P8 — Band-C CHASSIS** (fan out; depends P2,P3): story-page-standard(DemoFrame) · page-chrome(hero-overflow clamp + scale split) · category-landing(live previews + abrogate gray) · configurator-presentation · shell-layout
 - [ ] **P9 — Band-D MOTION**: entrance-reveal(longhand scale/translate) · scroll-choreography(SpringProgress) · liquid-reveal
-- [ ] **P10 — VERIFY + SHIP**: full Chrome+Safari live-π · vue-tsc + units + e2e · commit · push · publish (W-CUT) · deploy consumers (CF)
+- [ ] **P10 — VERIFY + HARDEN + SHIP** (sub-phases):
+  - [ ] P10a — reconcile the 17 failing UNIT tests (workflow wvvz3xu58, triage stale-vs-regression). gates.mjs short-circuits at the `test` step.
+  - [ ] P10b — re-run `gates.mjs --run local`, reconcile the broken PROOF GATES (the BD redesign invalidated gates encoding old `.glass-tab-capsule`/GooFilter/morph-fork reality; AUGMENT/UPDATE per amendments, never force-pass a regression)
+  - [ ] P10c — HARDEN (the P10-HARDEN list above: GL-budget frozen-stills, dot-flow contrast, the 3 stale proof scripts, author the missing born-RED gates)
+  - [ ] P10d — full Chrome gestalt sweep + Safari/WebKit pass
+  - [ ] P10e — SHIP: version bump 4.1.0→4.2.0 · `gates.mjs --run release` green · merge to master (user-authorized) · push v* tag → release.yml provenance publish · deploy consumers (CF)
 
 ## THE 7 CSS BUILD-TRAPS (every implementer agent must heed — from §build-DAG)
 (a) `@property inherits:false` on a pseudo → INITIAL on the pseudo (kills flood/caster); register `inherits:true` or drive from the element.
