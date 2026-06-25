@@ -131,6 +131,31 @@ const props = defineProps<{
    font-size animation. */
 .card-header--shrink {
   --card-title-shrink-ratio: 0.695;
+  /* BD.W-CARD-CEL-MOTION (§6) — the scroll-shrink lanes ease with the house
+     spring/cartoon-punch curve, NOT `linear both` (the liquid-weight-universal
+     law: a scroll-DRIVEN choreography is a DRIVER, not an observer — it earns
+     weight). The four `animation:` shorthands below carry `var(--card-shrink-ease)`
+     as their timing function so the title "sets down" with anticipation +
+     follow-through rather than scrubbing mechanically with the scrollbar. The
+     curve is the SHARED `--ease-cartoon-punch` (scheme-motion.css) — zero new
+     keyframe family, zero new curve. Under PRM the `@supports` block never binds
+     (the lanes render in terminal rest), so the eased curve only ever paints when
+     motion is allowed — the weight is free of an a11y carve. The 0..120 / 0..80
+     asymmetric cliff (good overlapping-action timing) is KEPT. */
+  --card-shrink-ease: var(--ease-cartoon-punch, linear);
+  /* BD.W-CARD-CEL-MOTION (§6) — re-point the stuck-header backplate to a KEYED
+     WARM-GLASS plate, not the flat `--card` 60% srgb mix (the shipped
+     `--card-header-bg`, shadow.css). Over the field a stuck header should read
+     warm-transmissive with ONE edge vocabulary (header + body): the SAME
+     `--glass-tint-*` warm-admit seam the card body reads (the W55 tinted floating
+     rung — the lifted/forward read). Card-LOCAL re-point of the token (the
+     shared-token at shadow.css is READ-ONLY); a consumer override on the host still
+     wins (it sets `--card-header-bg` at a higher specificity / inline). */
+  --card-header-bg: color-mix(
+    in oklab,
+    var(--glass-bg-floating),
+    var(--glass-tint-source) var(--glass-tint-strength)
+  );
   /* BB.W-SCROLL-CARD lane 4 (A4) — the header background is a scroll-driven
      LIFT, not a static tint. A `::before` BACKPLATE carries the
      `--card-header-bg` tint and fades `opacity: 0 → 1` on the same
@@ -150,6 +175,8 @@ const props = defineProps<{
   position: absolute;
   inset: 0;
   z-index: 0;
+  /* The backplate reads the (card-locally re-pointed) `--card-header-bg` warm-glass
+     seam — see the `.card-header--shrink` re-point above. */
   background: var(--card-header-bg);
   opacity: 0;
   border-radius: inherit;
@@ -190,7 +217,7 @@ const props = defineProps<{
        translateY so the top breathing room visually compresses; the
        header BOX keeps its layout size (no padding reflow). */
     .card-header--shrink {
-      animation: card-header-shrink linear both;
+      animation: card-header-shrink var(--card-shrink-ease) both;
       animation-timeline: --card-scroll;
       animation-range: 0px 120px;
       transform-origin: top;
@@ -202,7 +229,7 @@ const props = defineProps<{
        opacity is the compositor-safe channel (the box's own background is
        never animated). */
     .card-header--shrink::before {
-      animation: card-header-bg-lift linear both;
+      animation: card-header-bg-lift var(--card-shrink-ease) both;
       animation-timeline: --card-scroll;
       animation-range: 0px 120px;
     }
@@ -212,7 +239,7 @@ const props = defineProps<{
        toward --type-prose; the text run lays out ONCE at --type-heading.
        :slotted() reaches the slotted <CardTitle> (see the lane-3 base note). */
     .card-header--shrink > :slotted([data-slot="card-title"]) {
-      animation: card-title-shrink linear both;
+      animation: card-title-shrink var(--card-shrink-ease) both;
       animation-timeline: --card-scroll;
       animation-range: 0px 120px;
       transform-origin: left top;
@@ -221,7 +248,7 @@ const props = defineProps<{
     /* Lane 3 — description retire. opacity fade + scaleY collapse (origin
        top), the real-estate reclaim composited, not a grid-track relayout. */
     .card-header--shrink > :slotted([data-slot="card-description"]) {
-      animation: card-desc-shrink linear both;
+      animation: card-desc-shrink var(--card-shrink-ease) both;
       animation-timeline: --card-scroll;
       animation-range: 0px 80px;
     }

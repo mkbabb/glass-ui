@@ -27,6 +27,22 @@
  * --spring-snappy/--spring-smooth registers), no longer the fixed bezier.
  */
 
+/* BD.W-GLASS-ATOM-REGISTER — the shared `.glass-atom` warm-glass register the
+   small atoms (Badge-glass / metric-badge / slider fill / the `+N` chip) consume.
+   @import-ed HERE (icon-chip.css loads in index.css AFTER glass.css, so
+   `.glass-capsule` + the `--glass-*` axes are defined) — a consume-only recipe,
+   not a second material. CSS `@import` must precede every rule, so it leads the
+   file (the comment above is not a rule). */
+@import "./glass/glass-atom.css";
+/* BD.W-CHIP-CONGRUENT-GLASS — the chip family's warm-glass toggle register
+   (.glass-chip: the stadium-pill lens + the de-frauded colour-flood punch the
+   ToggleChip/SelectableChip/toggle-group children compose). @import-ed HERE
+   alongside glass-atom.css (icon-chip.css loads in index.css AFTER glass.css, so
+   `.glass-capsule` + `.accent-tone` + the `--glass-*` axes resolve) — a consume-
+   only recipe, not a second material. CSS `@import` must precede every rule, so it
+   leads with the atom import. */
+@import "./glass/glass-chip.css";
+
 :root {
     /* The chip≤glyph proportion (d2, structural). The diameter floors at
        `glyph × ratio` so the plate can NEVER paint under the glyph — a
@@ -108,6 +124,35 @@
    register keep) and the chip≤glyph ratio is untouched. */
 .icon-chip--saturated {
     --icon-chip-plate-strength: 40%;
+}
+
+/* ── The QUIET GLASS register (BD.W-GLASS-ATOM-REGISTER cross-link) ─────────────
+   The chip's SECOND register: the transmissive `.glass-atom` warm-glass capsule
+   tinted toward the event hue via `--glass-fill-tint`, NOT the loud `in srgb`
+   brand plate (the default, kept — AW.W26 fence). The component applies
+   `.glass-capsule .glass-atom` alongside `.icon-chip--glass`, so the body (warm
+   floor + `--glass-blur-quiet` backdrop + the keyed rim) comes from the SHARED
+   register — this rule only RETIRES the chip's own `in srgb` plate-color fill so
+   the two backgrounds don't double-paint (the capsule's translucent fill +
+   `.glass-atom`'s tinted `background-image` are the body). The glyph event color
+   is untouched (the one color event still reads). A flat capsule lens — the
+   backdrop-filter rides the shared `--glass-blur-quiet` (Safari-native, no
+   `backdrop-filter:url`, Fence 8). */
+.icon-chip--glass {
+    /* Retire the brand plate fill — the `.glass-capsule` body + the `.glass-atom`
+       tinted `background-image` paint the surface (no double-fill). The capsule's
+       `background:` shorthand + the atom's later `background-image` layer win the
+       cascade over this `background-color: transparent` reset by source order. */
+    background-color: transparent;
+}
+
+/* The glass chip's hover-bloom (when BOTH `--glass` + `--bloom`) routes the glow
+   ring through the SAME event color, over the glass body — the bloom GROW (the
+   base `.icon-chip--bloom:hover` transform/spring) is inherited unchanged. */
+@media (hover: hover) {
+    .icon-chip--glass.icon-chip--bloom:hover {
+        background-color: transparent;
+    }
 }
 
 /* ── The duotone axis — a low-alpha fill of the same hue UNDER the stroke ──── */

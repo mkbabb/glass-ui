@@ -271,12 +271,16 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     background: var(--timeline-dot-fill);
     backdrop-filter: var(--timeline-dot-blur);
     border-color: var(--timeline-dot-ring);
-    /* Symmetric soft shadow so the perceived centre coincides with the
-       math centre; a faint inner highlight gives the glass its convex
-       lensing read. */
+    /* BD.W-TIMELINE-RAIL-UNIFY (LEG 3) — the continuous dot is a flush RIVET
+       (the inverse of the segmented float-dot): an INNER keyed shadow reads it
+       as PRESSED-IN at the phase joint of the one bar. Lit top-inset +
+       shaded bottom-inset = the one key-light, sunk. A faint outer rim keeps
+       the perceived centre on the math centre. build-trap-(d): 0-alpha arms
+       are oklch(.../0), never bare transparent. */
     box-shadow:
-        0 0 4px color-mix(in srgb, var(--shadow-color) 22%, transparent),
-        inset 0 1px 1px color-mix(in srgb, var(--foreground) 8%, transparent);
+        var(--glass-material-rim),
+        inset 0 1px 1.5px color-mix(in oklab, var(--cartoon-ink, black) 16%, oklch(0 0 0 / 0)),
+        inset 0 -1px 1px color-mix(in oklab, white 22%, oklch(0 0 0 / 0));
 }
 
 .continuous-dot:hover,

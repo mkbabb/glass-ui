@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { useSpring } from "../../../composables/motion/useSpring";
+import { useLiquidFlex } from "../../../composables/motion/useLiquidFlex";
+import { useSpringPress } from "../../../composables/motion/useSpringPress";
+import { vSpecular } from "../../../composables/glass";
 
 /**
  * <ScrubberTimeline> — single-track normalized 0..1 scrubber.
@@ -10,6 +14,22 @@ import { ref } from "vue";
  *
  * AA.A4 §S-16 — the `aria-valuenow` binding coerces `Number(modelValue ?? 0)`
  * so a numeric attribute always renders (axe `aria-required-attr` regression).
+ *
+ * BD.W-TIMELINE-RAIL-UNIFY (LEG 2) — the head is RE-INVENTED as a warm-glass
+ * liquid lozenge. The four cartoon beats COMPOSE shipped engines only (no new
+ * motion engine): travel rides a `useSpring`/SpringProgress position written
+ * to `transform: translateX()` (NEVER `style.left` — Safari composites
+ * transform, not left); `useLiquidFlex` `"tanh"` velocity-squish multiplies
+ * into the SAME matrix (vol-preserving, cap ≤1.12); `useSpringPress` grab
+ * anticipation; the velocity term is the head spring's own derivative (the
+ * self-extinguishing per-frame velocity SpringProgress already computes — the
+ * GOLDEN §0 "drive off the spring derivative" path, no free-running rAF); the
+ * fill LAGS the head on a slower spring clock; release settles ζ<1 on the
+ * cartoon-punch clock; a one-shot accent-flood ripples on landing. Always
+ * visible (the
+ * `opacity:0`-until-hover is RETIRED — the affordance must be present during
+ * keyboard/touch scrub). The bead seats φ-INSIDE the channel; the 44px touch
+ * target is an invisible `::before` halo, decoupled from the visible bead.
  */
 const props = withDefaults(
     defineProps<{
@@ -32,6 +52,63 @@ const emit = defineEmits<{
 const trackRef = ref<HTMLElement>();
 const scrubbing = ref(false);
 
+// ── The HEAD position spring (compositor translateX travel, 0..1 fraction).
+// SpringProgress tracks the live model target with inertia + follow-through;
+// the head LAGS the pointer a hair, never a `style.left` teleport. The fill
+// LAGS the head on a slightly slower spring clock (the lane reads as liquid
+// trailing the bead).
+const headSpring = useSpring(() => props.modelValue, {
+    response: 0.34,
+    dampingFraction: 0.74, // ζ<1 — a hair of fling-overshoot then settle to 1.0
+});
+const fillSpring = useSpring(() => props.modelValue, {
+    response: 0.46, // slower clock — the fill trails the head
+    dampingFraction: 0.82,
+});
+
+// ── The velocity-squish (`useLiquidFlex` "tanh", vol-preserving, LOW cap).
+// Fed the head spring's per-frame velocity MAGNITUDE via `squish` (the tanh
+// law's velocity input), so a fast drag visibly STRETCHES the lozenge along X
+// + thins on Y, capped LOW. The spring owns the position; this is the
+// orthogonal squish channel off the SAME spring's derivative — 0 at rest,
+// swells on a fast travel, self-extinguishes as the spring settles (the same
+// per-frame value carries the release). `axis: "x"` (travel axis).
+const flex = useLiquidFlex({
+    from: 0,
+    to: 1,
+    axis: "width",
+    maxStretch: 1.12, // swells, never taffy
+    squishLaw: "tanh",
+});
+watch(
+    () => headSpring.velocity.value,
+    (v) => flex.squish(Math.abs(v)),
+);
+// the resolved squish scalar (≥1) — paired reciprocally in the matrix.
+const headStretch = computed(() => flex.stretch.value);
+
+// ── Beat 1 · ANTICIPATION — `useSpringPress` grab-squash on pointerdown.
+const press = useSpringPress({ response: 0.22, dampingFraction: 0.7 });
+// 1 at rest → 0.96 floor at full press (the --scale-press anticipation dip).
+const pressScale = computed(() => 1 - 0.04 * press.value.value);
+
+// ── Beat 4 · ACCENT-FLOOD — a one-shot wash that ripples down the fill from
+// the landed position then clears (PRM-static; the gesture still lands).
+const flooding = ref(false);
+let floodTimer: ReturnType<typeof setTimeout> | undefined;
+
+function fireFlood() {
+    flooding.value = false;
+    // re-trigger the keyframe on the next frame (toggle off→on).
+    requestAnimationFrame(() => {
+        flooding.value = true;
+        if (floodTimer) clearTimeout(floodTimer);
+        floodTimer = setTimeout(() => {
+            flooding.value = false;
+        }, 520);
+    });
+}
+
 function tFromPointer(e: PointerEvent): number {
     const rect = trackRef.value!.getBoundingClientRect();
     return Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
@@ -40,6 +117,7 @@ function tFromPointer(e: PointerEvent): number {
 function onTrackDown(e: PointerEvent) {
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     scrubbing.value = true;
+    press.press();
     emit("scrubStart");
     emit("update:modelValue", tFromPointer(e));
 }
@@ -50,7 +128,11 @@ function onTrackMove(e: PointerEvent) {
 }
 
 function onTrackUp() {
+    if (!scrubbing.value) return;
     scrubbing.value = false;
+    press.release();
+    // Beat 4 — the landing flood.
+    fireFlood();
     emit("scrubEnd");
 }
 
@@ -59,21 +141,53 @@ function onTrackKeydown(e: KeyboardEvent) {
     if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         e.preventDefault();
         emit("update:modelValue", Math.min(1, props.modelValue + step));
+        fireFlood();
     } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
         e.preventDefault();
         emit("update:modelValue", Math.max(0, props.modelValue - step));
+        fireFlood();
     }
 }
+
+// ── The head transform: travel = translateX (compositor, % of channel),
+// squish = scale(sx, 1/sx) (vol-preserving, center-pinned) × the press dip.
+// translateX is expressed in % of the head's own box so it tracks the
+// channel; the channel-relative offset is the spring fraction × 100%.
+const headStyle = computed(() => {
+    const t = headSpring.value.value;
+    const sx = headStretch.value;
+    const sy = (1 / sx) * pressScale.value;
+    return {
+        // travel rides translateX (NEVER left) — the channel offset is the
+        // spring fraction; `calc` keeps the bead centred on its own width.
+        transform:
+            `translateX(calc(${(t * 100).toFixed(3)}cqw - 50%)) ` +
+            `scale(${(sx * pressScale.value).toFixed(4)}, ${sy.toFixed(4)})`,
+        "--flex-vel": flex.flexVel.value.toFixed(4),
+    };
+});
+
+// the fill width tracks the LAGGING fill spring (the one non-compositor
+// channel — `will-change` gated to [data-scrubbing], dropped at rest).
+const fillStyle = computed(() => ({
+    width: `${(fillSpring.value.value * 100).toFixed(3)}%`,
+}));
 </script>
 
 <template>
     <div class="timeline-row">
-        <div v-if="label" class="timeline-caret" :style="{ left: (modelValue * 100) + '%' }">
+        <div
+            v-if="label"
+            class="timeline-caret"
+            :style="{ left: modelValue * 100 + '%' }"
+        >
             <span class="caret-value fira-code">{{ label }}</span>
         </div>
         <div
             ref="trackRef"
-            class="glass-track"
+            class="glass-track timeline-rail"
+            :class="{ 'is-flooding': flooding }"
+            :data-scrubbing="scrubbing ? '' : undefined"
             role="slider"
             tabindex="0"
             :aria-valuenow="Number(modelValue ?? 0)"
@@ -86,8 +200,12 @@ function onTrackKeydown(e: KeyboardEvent) {
             @pointercancel="onTrackUp"
             @keydown="onTrackKeydown"
         >
-            <div class="glass-fill" :style="{ width: (modelValue * 100) + '%' }" />
-            <div class="glass-thumb" :style="{ left: (modelValue * 100) + '%' }" />
+            <div class="glass-fill" :style="fillStyle" />
+            <!-- the warm-glass liquid lozenge — always visible, vSpecular
+                 catch, a `.shadow-cartoon-sm` cast, riding translateX. -->
+            <div class="glass-thumb-seat" :style="headStyle">
+                <div v-specular class="glass-thumb" aria-hidden="true" />
+            </div>
         </div>
     </div>
 </template>
@@ -132,27 +250,29 @@ function onTrackKeydown(e: KeyboardEvent) {
     white-space: nowrap;
 }
 
+/* The scrub channel COMPOSES `.timeline-rail` (warm-glass, from the
+   dispatcher's shared register) — this scoped block carries ONLY the
+   scrubber-local layout/interaction deltas. Height rides the √φ ladder's
+   tallest rung (the a11y scrub surface bears the 44px touch target).
+   `container-type: inline-size` so the head's translateX can read `cqw`
+   (channel-width %) for a compositor-only travel. */
 .glass-track {
-    position: relative;
     width: 100%;
-    height: 24px;
-    border-radius: var(--radius-pill);
-    background: var(--surface-tint-6);
-    backdrop-filter: var(--glass-blur-wash);
+    height: var(--timeline-h-scrubber, 0.625rem);
+    container-type: inline-size;
     cursor: pointer;
     touch-action: none;
-    overflow: hidden;
-    transition: background var(--duration-fast) var(--ease-standard);
+    /* NO `overflow: hidden` — the liquid head (LEG 2) reads as lifted ABOVE
+       the rail with its `.shadow-cartoon-sm` cast + the 44px `::before` halo,
+       both of which must escape the channel. The FILL clips itself. */
     outline: none;
 }
 
-.glass-track:hover,
 .glass-track:focus-visible {
-    background: var(--surface-tint-8);
-}
-
-.glass-track:focus-visible {
-    box-shadow: var(--focus-ring-shadow);
+    box-shadow:
+        var(--glass-material-rim),
+        var(--glass-under-shadow-default),
+        var(--focus-ring-shadow);
 }
 
 .glass-fill {
@@ -160,31 +280,113 @@ function onTrackKeydown(e: KeyboardEvent) {
     top: 0;
     left: 0;
     bottom: 0;
-    background: var(--surface-tint-8);
+    /* the warm accent lane — a translucent flood (the field bleeds through),
+       NOT the gray --surface-tint. build-trap-(d): 0-alpha is oklch(.../0). */
+    background: color-mix(
+        in oklab,
+        var(--cel-accent, var(--accent, var(--foreground))) 30%,
+        oklch(0 0 0 / 0)
+    );
     border-radius: var(--radius-pill);
+    /* clip the accent-flood `::after` to the fill's own pill. */
+    overflow: hidden;
     pointer-events: none;
 }
 
-.glass-thumb {
+/* Beat 4 · ACCENT-FLOOD — a one-shot `plus-lighter` wash that sweeps the fill
+   from the landed position then clears. PRM-static (the keyframe is gated). */
+.glass-track.is-flooding .glass-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    mix-blend-mode: plus-lighter;
+    background: linear-gradient(
+        90deg,
+        oklch(0 0 0 / 0),
+        color-mix(in oklab, var(--cel-accent, var(--accent)) 40%, oklch(0 0 0 / 0)),
+        oklch(0 0 0 / 0)
+    );
+    pointer-events: none;
+    animation: timeline-flood 0.5s var(--ease-out, ease-out) 1;
+}
+
+@keyframes timeline-flood {
+    from {
+        opacity: 0;
+        translate: -40% 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        translate: 40% 0;
+    }
+}
+
+/* the head SEAT carries the compositor travel (translateX) + the
+   vol-preserving squish matrix; the visible bead is its child. `will-change`
+   is gated to the active scrub only, dropped at rest (the Safari-safe paint
+   fence). */
+.glass-thumb-seat {
     position: absolute;
     top: 50%;
-    transform: translate(calc(-50% - 3px), -50%);
-    width: 6px;
-    height: 16px;
-    border-radius: var(--radius-sm);
-    background: var(--surface-tint-25);
-    opacity: 0;
+    left: 0;
+    width: var(--timeline-head, 0.875rem);
+    height: var(--timeline-head, 0.875rem);
+    margin-top: calc(var(--timeline-head, 0.875rem) / -2);
     pointer-events: none;
-    transition: opacity var(--duration-fast) var(--ease-standard),
-        width var(--duration-fast) var(--ease-standard),
-        height var(--duration-fast) var(--ease-standard),
-        background var(--duration-fast) var(--ease-standard);
+    /* the head LAGS via the spring — no CSS transition on transform (the
+       spring owns the per-frame value). */
 }
 
-.glass-track:hover .glass-thumb {
-    opacity: 1;
-    width: 8px;
-    height: 18px;
-    background: var(--surface-tint-40);
+.glass-track[data-scrubbing] .glass-thumb-seat {
+    will-change: transform;
+}
+
+.glass-track[data-scrubbing] .glass-fill {
+    will-change: width;
+}
+
+/* the warm-glass liquid lozenge — the brightest tier (reads forward of the
+   rail) with the keyed rim + a `.shadow-cartoon-sm` cast. ALWAYS visible. */
+.glass-thumb {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-pill);
+    background: var(--glass-bg-floating);
+    backdrop-filter: var(--glass-blur-floating);
+    -webkit-backdrop-filter: var(--glass-blur-floating);
+    /* the keyed rim + the bold layered-offset cartoon cast (the cast offsets
+       OPPOSITE the keyed rim so it coheres with the one key-light). Plain
+       box-shadow fallback if the cartoon token is absent. */
+    box-shadow:
+        var(--glass-material-rim),
+        var(--shadow-cartoon-sm, 0 2px 4px oklch(0 0 0 / 0.18));
+    border: 0.5px solid var(--glass-border-accent);
+}
+
+/* the 44px touch-target halo — an invisible `::before`, decoupled from the
+   visible bead (the bead seats φ-INSIDE the channel; the hit area extends to
+   the WCAG-2.5.5 floor without growing the glyph). */
+.glass-thumb::before {
+    content: "";
+    position: absolute;
+    inset: calc((44px - var(--timeline-head, 0.875rem)) / -2);
+    border-radius: inherit;
+}
+
+/* PRM — the squish/spring/flood collapse to an instant position set (the
+   springs already honour PRM via `respectReducedMotion`); kill the flood
+   keyframe + the caret transition. The bead still MOVES (the gesture works),
+   just without deformation. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-track.is-flooding .glass-fill::after {
+        animation: none;
+    }
+    .timeline-caret {
+        transition-duration: 0.01ms;
+    }
 }
 </style>

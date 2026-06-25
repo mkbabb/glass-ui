@@ -26,7 +26,11 @@ const forwardedProps = useForwardProps(delegatedProps)
     v-bind="forwardedProps"
     :class="
       cn(
-        'tap-squish focus-ring relative touch-hit-area aspect-square h-4 w-4 rounded-pill border border-(--control-ring) text-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:border-(--control-checked-bg) data-[state=checked]:bg-(--control-checked-bg) data-[state=checked]:text-primary-foreground',
+        // BD.W-SELECT-WELL — the radio composes `.glass-control-edge` (the keyed
+        // warm rim, select.css) so its faint `--control-ring` (foreground 12%) edge
+        // does not melt over the warm field — a defined warm lifted edge at rest.
+        // The focus-ring + checked-bg layer over by source order.
+        'glass-control-edge tap-squish focus-ring relative touch-hit-area aspect-square h-4 w-4 rounded-pill border border-(--control-ring) text-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:border-(--control-checked-bg) data-[state=checked]:bg-(--control-checked-bg) data-[state=checked]:text-primary-foreground',
         props.class,
       )
     "

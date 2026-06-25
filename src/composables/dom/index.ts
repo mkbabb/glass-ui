@@ -42,6 +42,11 @@
 //                        metric-cell/stack mis-prune).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
+// useDragVelocity — BD.W-GLASS-ATOM-REGISTER: the drag-window-gated velocity bridge
+// (writes `--atom-drag-v`, no-idle-rAF teardown) the slider weight-train + any
+// pull-to-smear atom reads. The ONE honest bridge (not `usePointerVelocityField`,
+// the wrong push-API shape).
+export * from "./useDragVelocity";
 export * from "./useTokenColor";
 export * from "./useResolveTokenColor";
 export * from "./useClipboard";

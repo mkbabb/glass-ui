@@ -1,0 +1,244 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .glass-atom — BD.W-GLASS-ATOM-REGISTER: the ONE shared warm-glass register
+   the four small atoms (Badge-glass · metric-badge · slider fill · the `+N`
+   chip) consume in two registers (loud opaque identity vs quiet transmissive
+   glass).
+
+   CONSUME-ONLY — declares ZERO own glass tokens (the no-fork fence, Fence 1).
+   It COMPOSES:
+     · `.glass-capsule`        — the warm-transmissive lozenge BODY (warm floor +
+                                 rim + lift). `.glass-atom` is a PEER of any
+                                 sized chip, NEVER `.glass-chip` itself (Fence 2):
+                                 both compose `.glass-capsule`. A consumer applies
+                                 BOTH classes (`class="glass-capsule glass-atom"`)
+                                 or composes the capsule body via the glass tier
+                                 the host already wears.
+     · `--glass-fill-tint` / `--glass-fill-strength` (BE.W-TINTED-CHIP, glass.css)
+                                 — the per-instance plate-fill data hue. The atom
+                                 is its ≥Nth consumer; it APPLIES the axis on the
+                                 quiet register, never re-mints a tint.
+     · `--glass-material-rim`  — the keyed directional rim (the defined edge), the
+                                 SHIPPED two-stop rim re-pointed by `--glass-key`.
+     · the inert `.cartoon-cast` child + `--cartoon-ink` / `--shadow-cartoon-*`
+                                 (BD.W-CARTOON-CASTER / -CEL-INK) — the warm cel
+                                 stamp; the loud register intensifies on `data-cast`.
+     · `--motion-weight` × `--ease-cartoon-punch` (BD.W-MOTION-WEIGHT /
+                                 -CARTOON-PUNCH) — the non-uniform press squash +
+                                 the weight-coupled smear/settle.
+
+   @layer components, @import-ed by icon-chip.css (in-lane) AFTER glass.css (so
+   `.glass-capsule` + the `--glass-*` axes resolve) and BEFORE the consuming
+   recipes. Every channel is compositor-only + Safari-native (no
+   `backdrop-filter: url()`, no goo — Fence 8). The warm 0-alpha sources are
+   explicit `oklch(L C H / 0)` (NEVER bare `transparent` — the WebKit
+   black-premultiply hole, build-trap-(d)).
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    /* ── The warm idle floor (the #2 dormant-tint cure) ──
+       The atom carries chroma BEFORE any field paints + on a dead ground. The
+       floor is NON-self-referential (build-trap-(b): a property reading ITSELF in
+       its own `max()` resolves to guaranteed-invalid and the term drops). A
+       SEPARATE input var is the source: a consumer (the accent ramp) writes
+       `--accent-fill-strength-in`, and the resolved fill strength floors at
+       `--atom-tint-floor` — PLAIN per-mode (12% light / 15% dark), NEVER
+       `light-dark()` (the inset-shadow trap). */
+    .glass-atom {
+        --atom-tint-floor: 12%;
+        --accent-fill-strength: max(
+            var(--accent-fill-strength-in, 0%),
+            var(--atom-tint-floor)
+        );
+        /* The quiet register's tint application — the plate body mixes toward the
+           per-instance data hue ON TOP of the capsule's warm composite. At the
+           `@property` defaults (`--glass-fill-tint: transparent` / strength 0%)
+           this is the byte-identical no-op floor; the warm floor above keeps the
+           idle body warm even at a transparent tint. The mix is `in oklab` (the
+           perceptual glass-tint family — NOT the in-srgb brand fence). */
+        --glass-atom-tinted: color-mix(
+            in oklab,
+            var(--glass-capsule-warm) calc(var(--atom-tint-floor) + var(--glass-fill-strength)),
+            oklch(0.9 0.05 75 / 0)
+        );
+        /* The motion register — the press/hover deform rides
+           `--motion-weight × --ease-cartoon-punch`. The atom inherits the rest
+           `--motion-weight: 0.618`; the loud register (`data-cast`, below) pushes
+           it to 1 so the punch is never muted (the loud-register coupling). The
+           SPATIAL legs (scale/translate) settle on the punch clock; the EFFECTS
+           legs (background/box-shadow) stay on the bezier (motion-canon P1). */
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            scale var(--duration-normal) var(--ease-cartoon-punch),
+            translate var(--duration-normal) var(--ease-cartoon-punch);
+    }
+    .dark .glass-atom {
+        --atom-tint-floor: 15%;
+    }
+
+    /* ── The non-uniform PRESS squash (the punch, NOT a shrink) ──
+       Widen X, compress Y (`scale: 1.04 0.94`) — real squash & stretch. The
+       `:active` is the no-JS floor; a consumer's `useLiquidPress` may drive a
+       continuous ramp via `--cartoon-press-t` (the caster reads it). The
+       `border-radius` is the pill, so under non-uniform scale the end-caps track
+       the scaled box (challenge #2 R4 — the capsule radius stays circle-tolerant). */
+    .glass-atom:active:not([data-disabled]):not(:disabled) {
+        scale: 1.04 0.94;
+    }
+
+    /* ── The cel cast — UNIVERSAL-but-GRADED (challenge #1 R5 / #3 R5) ──
+       Every atom carries a hairline warm rim-cast at rest (the family floor); the
+       loud flagships (`data-cast`) INTENSIFY to the loud layered-offset stamp.
+       The cast rides the inert `.cartoon-cast` child (BD.W-CARTOON-CASTER) — the
+       child carries `--shadow-cartoon-md` at rest and moves on `translate`/`scale`
+       only; here the atom only RE-POINTS the loud register's resting/hover rung
+       (it does not re-author the caster). The loud register pushes
+       `--motion-weight: 1` so the punch reads at full amplitude. */
+    .glass-atom[data-cast] {
+        --motion-weight: 1;
+    }
+    .glass-atom[data-cast] .cartoon-cast {
+        box-shadow: var(--shadow-cartoon-sm);
+    }
+    @media (hover: hover) {
+        .glass-atom[data-cast]:hover:not(:active) .cartoon-cast {
+            box-shadow: var(--shadow-cartoon-md);
+        }
+    }
+
+    /* ── The QUIET register (`[data-surface="glass"]`) — the transmissive tint ──
+       The quiet capsule applies the per-instance fill tint over the warm floor.
+       This is where the warm-not-gray read is won (badge-glass, the `+N` chip).
+       The body composes `.glass-capsule` (the consumer applies both classes); the
+       atom only LAYERS the tinted fill on top of the capsule's warm composite via
+       `background-image` (a later layer over the capsule's `background:` shorthand
+       — the proven `.paper-grid` coexistence seam, paints OVER the translucent
+       fill, UNDER content). The 0-alpha stop is warm `oklch(… / 0)`, never bare
+       `transparent` (challenge #1 R4 / #2 R4 — the WebKit desaturation fix). */
+    .glass-atom[data-surface="glass"] {
+        background-image: linear-gradient(
+            var(--glass-atom-tinted),
+            var(--glass-atom-tinted)
+        );
+    }
+
+    /* ── PRM/PRT carve ──
+       Under reduced-motion `--motion-weight: 0` zeroes the squash + the cast
+       travel/lag in ONE assignment (every `calc(… * --motion-weight)` in the
+       caster collapses to rest); the press scale collapses to 1. The warm tint +
+       the rim + the STATIC cel STAMP persist (a still frame, never a frozen
+       mid-animation — the legibility floor). */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-atom {
+            --motion-weight: 0;
+        }
+        .glass-atom:active:not([data-disabled]):not(:disabled) {
+            scale: 1;
+        }
+    }
+
+    /* ── prefers-contrast: more — the rim α floors UP (WCAG 1.4.11 non-text) ──
+       The keyed rim is the legibility CONTRACT (the cast is a supplement,
+       challenge #2 R6). Under more-contrast the atom floors its border ink so the
+       lit edge clears ≥3:1 vs the OPAQUE body, not only the glass body. */
+    @media (prefers-contrast: more) {
+        .glass-atom {
+            border-color: color-mix(in srgb, var(--foreground) 24%, transparent);
+        }
+    }
+
+    /* ════════════════════════════════════════════════════════════════════════
+       .badge-atom — the Badge consumer of the register (loud + quiet).
+
+       The LOUD register (the default opaque identity pill): the family signature
+       WITHOUT the glass body — the keyed warm rim (the defined edge, the
+       `border-transparent` melt fix), the non-uniform press-squish, the
+       universal-but-graded cel. The badge applies `.badge-atom` on EVERY variant
+       (the CVA base); `surface="glass"` ALSO applies `.glass-capsule .glass-atom`
+       for the quiet transmissive body.
+       ════════════════════════════════════════════════════════════════════════ */
+    .badge-atom {
+        position: relative;
+        /* AQ.W3 identity base — `scale`/`translate` longhands mint the stacking
+           context once so the press squash + the cast child compose cleanly. */
+        scale: 1;
+        translate: 0;
+        /* The DEFINED EDGE — the SHIPPED keyed two-stop rim (re-pointed by
+           `--glass-key`) as the pill's silhouette, so a sand `secondary` no longer
+           melts into a cream panel (the live `border-transparent` melt). It is a
+           box-shadow rim, NOT a `border` (the base CVA retired the `border`
+           keyword), so it adds zero layout box + reads warm. The press/lift scale
+           rides the punch register `× --motion-weight`. */
+        box-shadow: var(--glass-material-rim);
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            scale var(--duration-normal) var(--ease-cartoon-punch),
+            translate var(--duration-normal) var(--ease-cartoon-punch);
+    }
+
+    /* The non-uniform PRESS squash (widen X, compress Y — NOT a uniform shrink). */
+    .badge-atom:active:not([data-disabled]):not([aria-disabled='true']) {
+        scale: 1.04 0.94;
+    }
+
+    /* `outline` variant — the rim reads a louder warm-ink edge (it IS the edge). */
+    .badge-atom--outline {
+        box-shadow: var(--glass-material-rim);
+        border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+    }
+
+    /* The LOUD cel stamp (opt-in, `data-cast`) — pushes the weight to 1 so the
+       punch reads at full amplitude + intensifies the inert child's cast. The
+       hairline rim-cast family floor is the rim above; this is the LOUD layered
+       offset (the flagship sticker stamp). */
+    .badge-atom[data-cast] {
+        --motion-weight: 1;
+    }
+    .badge-atom[data-cast] .cartoon-cast {
+        box-shadow: var(--shadow-cartoon-sm);
+    }
+    @media (hover: hover) {
+        .badge-atom[data-cast]:hover:not(:active) .cartoon-cast {
+            box-shadow: var(--shadow-cartoon-md);
+        }
+    }
+
+    /* The QUIET glass register — retire the opaque `bg-*` plate so the warm-glass
+       `.glass-capsule` body + the `.glass-atom` tinted `background-image` paint the
+       surface (no double-fill). The variant `bg-*` utility sets `background-color`;
+       this resets it to transparent so the capsule fill + the data-hue tint win.
+       The text color (the variant's `text-*`) is kept — the label still reads. */
+    .badge-atom--glass {
+        background-color: transparent !important;
+        /* The quiet capsule tints toward the variant's SEMANTIC hue via the shared
+           `--glass-fill-tint` axis (BE.W-TINTED-CHIP) — colored glass, never a
+           forked tint. The strength is a calm stop (the body ink stays legible).
+           A consumer overrides `--glass-fill-tint` per-instance for a bespoke hue. */
+        --glass-fill-strength: var(--badge-glass-strength, 16%);
+    }
+    /* Per-variant glass tint — the data hue the quiet body mixes toward. The
+       semantic plate token becomes the tint source (the loud fill demoted to a
+       transmissive hue). `secondary`/`outline` are the calm/neutral routes. */
+    .badge-atom--glass[data-variant='default'] { --glass-fill-tint: var(--primary); }
+    .badge-atom--glass[data-variant='secondary'] { --glass-fill-tint: var(--glass-capsule-warm); }
+    .badge-atom--glass[data-variant='outline'] { --glass-fill-tint: var(--glass-capsule-warm); }
+    .badge-atom--glass[data-variant='destructive'] { --glass-fill-tint: var(--destructive); }
+    .badge-atom--glass[data-variant='success'] { --glass-fill-tint: var(--success); }
+    .badge-atom--glass[data-variant='warning'] { --glass-fill-tint: var(--warning); }
+    .badge-atom--glass[data-variant='info'] { --glass-fill-tint: var(--info); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .badge-atom {
+            --motion-weight: 0;
+        }
+        .badge-atom:active:not([data-disabled]) {
+            scale: 1;
+        }
+    }
+    @media (prefers-contrast: more) {
+        .badge-atom {
+            border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
+        }
+    }
+}

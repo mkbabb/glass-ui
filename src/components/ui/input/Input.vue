@@ -90,5 +90,10 @@ const elementAttrs = computed(() => ({
        re-points the height/font seam per rung. The `file:`-modifier-scoped literal
        is the file-upload sub-element register (exempt from C1); re-pointed onto the
        `--control-text-sm` token so it tracks the cohort under `--ui-scale`. -->
-  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] file:border-0 file:bg-transparent file:text-(length:--control-text-sm) file:font-medium', controlSizeClass(props.size), props.class)">
+  <!-- BD.W-SELECT-WELL — the pill composes `.glass-control-edge` (the keyed two-stop
+       warm rim, select.css) so the field reads as a lifted glass well with a DEFINED
+       warm edge over the page field, never a flat cream smudge (the `.input-pill`
+       border melts cream-on-cream without it). The `:focus-visible`/`:user-invalid`
+       rings layer OVER by source order + specificity (their box-shadow rules win). -->
+  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill glass-control-edge [--control-surface-bg:var(--input-on-glass)] file:border-0 file:bg-transparent file:text-(length:--control-text-sm) file:font-medium', controlSizeClass(props.size), props.class)">
 </template>

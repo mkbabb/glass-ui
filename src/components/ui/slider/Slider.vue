@@ -4,6 +4,7 @@ import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
 import { useTouchGate } from '../../../composables/dom/useTouchGate'
+import { useDragVelocity } from '../../../composables/dom/useDragVelocity'
 import { useOptionalDockContext } from '../../custom/dock/composables/dockContext'
 import { useDockHold } from '../../custom/dock/composables/useDockHold'
 import { sliderVariants, type SliderVariants } from './index'
@@ -21,6 +22,14 @@ const props = withDefaults(defineProps<SliderRootProps & {
    * `data-held` on its root, intensifying the thumb halo. Default: true.
    */
   keepDockOpen?: boolean
+  /**
+   * BD.W-GLASS-ATOM-REGISTER — the liquid weight-train on the fill: anticipation
+   * dip on grab → BOUNDED saturating smear while pulling (the cel cast lagging by
+   * `--motion-weight × velocity`) → follow-through overshoot on release. Composes
+   * the `useDragVelocity` bridge (writes `--atom-drag-v`, no-idle-rAF teardown).
+   * PRM collapses it to the plain squish floor. Default: true.
+   */
+  liquidDrag?: boolean
 }>(), {
   // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so the prior
   // `props.keepDockOpen ?? true` never reached `true` for the common
@@ -28,6 +37,7 @@ const props = withDefaults(defineProps<SliderRootProps & {
   // hold). `withDefaults` resolves an absent prop to `true`; an explicit
   // `:keep-dock-open="false"` still disarms. (AX.W03.)
   keepDockOpen: true,
+  liquidDrag: true,
 })
 const emits = defineEmits<SliderRootEmits>()
 
@@ -36,7 +46,7 @@ const s = computed<NonNullable<SliderVariants['size']>>(() => props.size ?? 'md'
 const keepDockOpen = computed(() => props.keepDockOpen)
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
+  const { class: _, variant: __, size: ___, keepDockOpen: ____, liquidDrag: _____, ...delegated } = props
   // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
   // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
   // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
@@ -84,6 +94,16 @@ function getRootEl(): HTMLElement | null {
 // (template refs are live by then). A resolver getter — not a ref Slider
 // populates in a sibling `onMounted` — sidesteps the onMounted-ordering trap.
 useDockHold(getRootEl, { enabled: () => keepDockOpen.value })
+
+/* BD.W-GLASS-ATOM-REGISTER — the weight-train velocity bridge. Writes the BOUNDED
+   `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag
+   window only; the rAF tears DOWN on `pointerup` (the no-idle-cost contract). The
+   `.slider-range` smear + the cel cast lag read the var in scoped CSS. The bridge
+   honors PRM (pins the var at 0, never opens the rAF) and is gated off when
+   `liquidDrag` is disabled (the host resolver returns the same element as the hold).
+   The same resolver getter sidesteps the onMounted-ordering trap. */
+const liquidDrag = computed(() => props.liquidDrag)
+useDragVelocity({ host: () => (liquidDrag.value ? getRootEl() : null) })
 
 /* N.W0 Lane A1 — useTouchGate scroll-vs-drag arbitration (a SEPARATE
    concern from the hold: it decides whether a touch is a drag or a
@@ -219,10 +239,20 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     position: absolute;
     height: 100%;
     border-radius: var(--radius-pill);
-    /* The fill tints toward --primary over the glass blur — a consumer
-       retints the cylinder via `--slider-range-bg`. The color-mix keeps the
-       backdrop bleed reading through the glass (the liquid-glass identity). */
-    background: color-mix(in oklab, var(--slider-range-bg, var(--primary)) 88%, transparent);
+    /* BD.W-GLASS-ATOM-REGISTER — the DEFAULT range tint flips from the dark muddy
+       `--primary` bar (live `oklab(0.216 …)`, C≈0.006) to the WARM glass floor:
+       the cylinder is a warm tinted `.glass-atom` over the field, not a dark bar.
+       This is a REFINE (the wrong default), not a re-invent — the blur/rim below
+       are byte-untouched. `--slider-range-bg` stays the consumer's LOUD override
+       (presets-in-consumers: the lib default is the warm material, the brand color
+       is the consumer's choice). The warm source is the shared `--glass-capsule-warm`
+       amber; the 0-alpha leg is warm `oklch(… / 0)`, NEVER bare `transparent` (the
+       WebKit black-premultiply hole, build-trap-(d)). */
+    background: color-mix(
+      in oklab,
+      var(--slider-range-bg, var(--glass-capsule-warm)) 88%,
+      oklch(0.9 0.05 75 / 0)
+    );
     /* AY.W-GLASS — the range blur routes the `--glass-blur-quiet` rung (the
        ~2px-equivalent radius that SCALES by `--glass-level`), not a literal
        `blur(2px)` off the level knob: when a consumer sets `--glass-level: 0`
@@ -305,14 +335,59 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     box-shadow: var(--focus-ring-shadow);
 }
 
-/* iOS press spring — the snappy spring ease on the transform channel gives the
-   whole continuous track a felt "give" under the pointer (a uniform shrink of the
-   fill, the felt press — there is no visible knob to shrink). */
+/* BD.W-GLASS-ATOM-REGISTER — the WEIGHT-TRAIN (the headline). The fill is a column
+   of warm tinted glass you PULL — it loads when you grab it, smears toward where you
+   drag, and overshoots when you let go. The track does NOT move (box-INVIOLATE) —
+   only the fill + cast deform on the compositor. `useDragVelocity` writes
+   `--atom-drag-v` (0..1, BOUNDED/saturating) on the root during the drag window
+   (no-idle-rAF). PRM zeroes `--motion-weight` → the train collapses to the plain
+   squish floor; the warm tint + rim persist.
+
+   ANTICIPATION + PRESS-SQUASH (grab): the fill compresses Y + widens X — a
+   NON-uniform squash, NOT the live uniform `scale(0.97)` shrink. `transform-origin:
+   left center` keeps the squash anchored at the rail's start. */
 .glass-slider:active .slider-range {
-    transform: scale(var(--scale-press-btn, 0.97));
+    transform: scale(1.02, 0.94);
     transform-origin: left center;
     transition: transform var(--duration-fast)
         var(--slider-thumb-spring, var(--spring-smooth));
+}
+
+/* OVERLAPPING-ACTION SMEAR (pull): while dragging fast, the fill STRETCHES along
+   the drag axis by the live `--atom-drag-v` (the leading edge LEADS). The X stretch
+   is volume-preserving (Y compresses as X grows). The smear SATURATES — `--atom-drag-v`
+   is already bounded ≤0.7 by `useDragVelocity`'s `tanh` clamp, so a faster pull
+   does not rubber-band (challenge #3 R3). The cel cast (the inert child) LAGS this
+   leading edge. `--motion-weight` couples the amplitude (PRM → 0 → no smear). */
+.glass-slider[data-held] .slider-range,
+.glass-slider:active .slider-range {
+    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+    transform: scale(
+        calc(1.02 + 0.16 * var(--smear)),
+        calc(0.94 - 0.06 * var(--smear))
+    );
+    transform-origin: left center;
+}
+
+/* FOLLOW-THROUGH (release): the `--ease-cartoon-punch` curve on the transform
+   channel carries the >1.0 overshoot-and-settle knot as the squash returns to rest —
+   a monotonic settle would be a dead spring. The cast recoils LATE (the caster's
+   1.15× lag). The transition swaps to the punch curve on release (no `:active`). */
+.glass-slider:not(:active):not([data-held]) .slider-range {
+    transition:
+        transform var(--duration-normal) var(--ease-cartoon-punch),
+        background var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* PRM — the train collapses to the plain non-uniform squish floor; no smear,
+       no overshoot. The warm tint + rim stay (the legibility floor, a still frame). */
+    .glass-slider:active .slider-range,
+    .glass-slider[data-held] .slider-range {
+        --motion-weight: 0;
+        transform: scale(1, 0.97);
+    }
 }
 
 .glass-slider[data-disabled] .slider-range {

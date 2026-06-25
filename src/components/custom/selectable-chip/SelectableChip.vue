@@ -20,7 +20,7 @@
  * chip chunk transitively reaches value.js — it ships on `/selectable-chip` ONLY, OFF
  * the value.js-free root barrel (the BorderProgress/EasingPicker SCC-trap precedent).
  */
-import type { HTMLAttributes } from "vue";
+import type { CSSProperties, HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { Toggle, type ToggleEmits, type ToggleProps, useForwardPropsEmits } from "reka-ui";
 import { cn } from "../../../utils";
@@ -55,13 +55,24 @@ const forwarded = useForwardPropsEmits(
 const chipClass = computed(() =>
     cn(selectableChipVariants({ size: props.size }), props.class),
 );
+
+// The chip is the ≥3rd `--glass-fill-tint` consumer — the translucent
+// `.glass-capsule` body tints toward the SAME `:tone` hue so the lens reads as
+// COLORED warm glass (the `.glass-chip` recipe applies the axis; a default tone
+// keeps the no-op warm floor). The strength is a calm stop (body ink stays
+// legible); `--glass-fill-tint` rides on top of `toneStyle`'s `--tone`/ink.
+const chipStyle = computed<CSSProperties>(() => ({
+    ...toneStyle.value,
+    "--glass-fill-tint": props.tone ?? "var(--primary)",
+    "--glass-fill-strength": "var(--chip-glass-strength, 12%)",
+}) as CSSProperties);
 </script>
 
 <template>
     <Toggle
         v-bind="forwarded"
         :class="chipClass"
-        :style="toneStyle"
+        :style="chipStyle"
     >
         <slot />
     </Toggle>

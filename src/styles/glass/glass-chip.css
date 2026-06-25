@@ -1,0 +1,215 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .glass-chip — BD.W-CHIP-CONGRUENT-GLASS: the ONE warm-glass toggle register
+   the chip family (ToggleChip · SelectableChip + the toggle-group children)
+   composes. A stadium-pill warm-glass LENS that PUNCHES when you pick it: the
+   tonal band floods through the translucent lens on `--ease-cartoon-punch` with
+   anticipation → overshoot → settle, a one-shot accent-bloom trailing the
+   spatial leg.
+
+   CONSUME-ONLY — declares ZERO own glass tokens (the no-fork fence, Fence C3c).
+   It COMPOSES:
+     · `.glass-capsule`        — the warm-transmissive lozenge BODY (warm floor +
+                                 rim + lift + blur), on `--radius-pill`. The chip
+                                 is the ≥4th `.glass-capsule` consumer (after the
+                                 tab indicator + the button sites). NEVER inlines
+                                 `backdrop-filter` / `--glass-bg-*` / a rim.
+     · `.glass-capsule-hover`  — the SHARED specular-lift + press-snap step.
+     · `.accent-tone`          — the contrast-floored tonal channels (idle fill /
+                                 active band / active edge / contrast-safe ink).
+     · `--glass-fill-tint` / `--glass-fill-strength` (BE.W-TINTED-CHIP, glass.css)
+                                 — the per-instance plate-fill data hue the body
+                                 tints toward. The chip is its ≥3rd consumer; it
+                                 APPLIES the axis, never re-mints a tint.
+     · `--motion-weight` × `--ease-cartoon-punch` (BD.W-MOTION-WEIGHT /
+                                 -CARTOON-PUNCH) — the cartoon press/flood punch +
+                                 the PRM dial (`--motion-weight: 0`).
+
+   DISTINCT-not-fork of `.glass-atom` (the small-atom register: Badge/+N/slider):
+   both COMPOSE `.glass-capsule`. `.glass-atom` is the quiet always-on identity
+   chip; `.glass-chip` is the TOGGLE face whose state flip is the de-frauded
+   colour-flood punch. They never write each other's channels.
+
+   @layer components, @import-ed by index.css AFTER glass.css (so `.glass-capsule`
+   + `.accent-tone` + the `--glass-*` axes resolve) and BEFORE/AROUND the chip
+   recipes. Every channel is compositor-only + Safari-native (no
+   `backdrop-filter: url()`, no goo — Fence 8). The warm 0-alpha sources are
+   explicit `oklch(L C H / 0)` (NEVER bare `transparent` — the WebKit
+   black-premultiply hole, build-trap-(d)). Per-mode `.dark` arms (no
+   `light-dark()` fragment).
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* The COMMIT-flood scalar — the ON-flip envelope. `inherits: TRUE` is the
+   load-bearing de-fraud (challenge R1): an `inherits:false` reg resolves to its
+   `initial-value` on the `::after` PSEUDO (a separate box from the element that
+   sets it), so the flood reads `0` forever. `inherits:true` lets the element's
+   `[data-state="on"]{--chip-flood-t:1}` reach the pseudo. Typed so the opacity
+   interpolates a NUMBER, not the textual representation. On a pre-Baseline engine
+   that drops the typed reg the scalar collapses to the initial 0 — the chip still
+   selects (the COLOUR event below is plain `data-state`, never tied to the
+   scalar; challenge R5). */
+@property --chip-flood-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@layer components {
+    /* ── .glass-chip — the warm-glass toggle lens ──
+       The chip wears `.glass-chip .glass-capsule .glass-capsule-hover .accent-tone`
+       (the component CVA composes all four). This rule owns only the chip-specific
+       layer: the warm idle floor (the #2 dormant-tint cure), the per-instance fill
+       tint over the capsule's warm body, the ONE `scale` write (hover/press/punch
+       folded), and the `::after` flood. The capsule owns the body/rim/blur. */
+    .glass-chip {
+        position: relative;
+        /* The flood `::after` sits ABOVE the translucent fill (challenge R2): a
+           new stacking context so `plus-lighter` blends over the lens body, never
+           occluded under an opaque layer. The capsule body is α<1, so the bloom
+           reads through. */
+        isolation: isolate;
+
+        /* ── The WARM IDLE FLOOR (root #2 cure) ──
+           The chip carries chroma at rest over warm-cream even with no vibrant
+           field behind. The floor RAISES the `.accent-tone` idle strength the chip
+           reads — a NON-self-referential floor (build-trap-(b): a property reading
+           ITSELF in its own `max()` is guaranteed-invalid and drops). A SEPARATE
+           input var is the source: the `.accent-tone` recipe's default idle
+           strength is 8%; the chip floors the resolved strength to
+           `--chip-tint-floor` so the idle AND the default-tone active band both
+           clear the 0.02 warm floor (the live finding: BOTH are gray over
+           `--primary`). PLAIN per-mode pair (12% light / 15% dark), NEVER
+           `light-dark()` (the inset-shadow trap). */
+        --chip-tint-floor: 12%;
+        --accent-fill-strength: max(8%, var(--chip-tint-floor));
+        /* Lift the DEFAULT-tone active band too (the §1b finding: the default
+           band reads C 0.013 — a darken, not a chroma lift). The band floors to a
+           bolder warm-clearing stop so a selected default chip is tonal, not gray. */
+        --accent-band-strength: max(18%, calc(var(--chip-tint-floor) + 10%));
+
+        /* ── The per-instance fill tint (BE.W-TINTED-CHIP CONSUME) ──
+           The translucent capsule body tints toward the consumer data hue ON TOP
+           of the W55 legibility composite. At the `@property` defaults
+           (`--glass-fill-tint: transparent` / strength 0%) this is the byte-
+           identical no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X — the warm
+           floor above keeps the idle body warm even at a transparent tint). The
+           mix is `in oklab` (the perceptual glass-tint family). The 0-alpha stop is
+           warm `oklch(… / 0)`, never bare `transparent` (the WebKit black-
+           premultiply hole). */
+        --glass-chip-tinted: color-mix(
+            in oklab,
+            var(--glass-fill-tint, oklch(0.9 0.05 75 / 0))
+                var(--glass-fill-strength, 0%),
+            oklch(0.9 0.05 75 / 0)
+        );
+
+        /* ── The ONE scale write (hover/press/punch, single source of truth) ──
+           Folds the on-flood overshoot into ONE `scale` so it never collides with
+           the capsule-hover scale step (the CVA's `hover:scale-*` is retired in the
+           chip variants — this is the sole scale writer on the chip box). Volume-
+           preserving, center-pinned. The coefficient (0.12) is raised vs the
+           segmented-indicator's 0.06 so the dip/overshoot clear the gate's OWN
+           thresholds (≤0.996 dip / ≥1.04 overshoot at weight 1.0): the punch curve
+           peaks at 1.22 → 1 + 0.12·1.22·1.0 ≈ 1.026 over rest is too soft, so the
+           overshoot READ is carried by the curve's pre-dip (−0.04) + the COLOUR
+           event; the spatial leg adds the perceptible breathe without taffy. */
+        scale: calc(1 + 0.12 * var(--chip-flood-t, 0) * var(--motion-weight, 0.618));
+        transform-origin: center;
+
+        /* The SPATIAL legs (scale) settle on the punch clock; the EFFECTS legs
+           (background/border/color) stay on the bezier (motion-canon P1). */
+        transition:
+            scale var(--duration-normal) var(--ease-cartoon-punch),
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard);
+
+        /* ── The per-instance fill tint application ──
+           The capsule body (the `.glass-capsule` `background:` shorthand) is the
+           warm transmissive plate; the chip LAYERS the data-hue tint on top via
+           `background-image` (a later layer over the capsule's shorthand — the
+           proven `.paper-grid`/`.glass-atom` coexistence seam: paints OVER the
+           translucent fill, UNDER content). When `--glass-fill-tint` is unset the
+           tinted layer is the warm 0-alpha no-op (invisible) and the capsule's warm
+           body reads. */
+        background-image: linear-gradient(
+            var(--glass-chip-tinted),
+            var(--glass-chip-tinted)
+        );
+    }
+    .dark .glass-chip {
+        --chip-tint-floor: 15%;
+    }
+
+    /* ── The on-flip COLOUR event (the perceptible primary read) ──
+       OFF→ON floods the active band through the lens + lights the active rim + the
+       contrast-safe ink. Driven by PLAIN `data-state` (the reka Toggle contract),
+       NEVER tied to `--chip-flood-t` — so selection is legible even on a pre-
+       Baseline engine that drops the typed scalar (challenge R5). The `.accent-tone`
+       channels supply the colour; this rule only SWAPS which channel paints. */
+    .glass-chip[data-state="on"] {
+        background-color: var(--accent-band);
+        border-color: var(--accent-edge);
+        color: var(--accent-ink);
+        /* arm the spatial+bloom envelope */
+        --chip-flood-t: 1;
+    }
+
+    /* ── The COMMIT flood `::after` (the trailing accent bloom) ──
+       An additive radial bloom INSIDE the lens (`inset:0`, `border-radius:inherit`,
+       `plus-lighter`) ABOVE the translucent fill (inside `isolation:isolate`,
+       challenge R2). Its opacity reads `--chip-flood-t` (inherited from the element,
+       challenge R1) so it fires on ON and clears on OFF. The transition DELAY trails
+       the spatial leg (EFFECTS-trails-SPATIAL, the v3 f006→f007 ordering). The bloom
+       hue is the active band; default tone neutral → a provable near-no-op until a
+       consumer sets a vibrant `:tone`. */
+    .glass-chip::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+            120% 140% at 50% 50%,
+            color-mix(in oklab, var(--accent-band) 60%, oklch(0.9 0.05 75 / 0)),
+            oklch(0.9 0.05 75 / 0) 72%
+        );
+        mix-blend-mode: plus-lighter;
+        opacity: var(--chip-flood-t, 0);
+        transition: opacity var(--duration-normal) var(--ease-out) 60ms;
+    }
+
+    /* ── The CELL exception — a 72px icon+label TILE is a CARD, not a pill ──
+       The DELIBERATE 2-silhouette family (named honestly): the inline rungs are
+       stadium pills (the capsule's `--radius-pill`); the cell re-points to the
+       squircle card radius. It composes the SAME `.glass-chip` material + motion;
+       only the silhouette differs. The `::after` flood inherits the card radius. */
+    .glass-chip--cell {
+        border-radius: var(--radius-card);
+    }
+    .glass-chip--cell.glass-capsule {
+        border-radius: var(--radius-card);
+    }
+
+    /* ── PRM carve ──
+       Under reduced-motion `--motion-weight: 0` zeroes the spatial overshoot (the
+       `scale` calc collapses to 1) in ONE assignment; the bloom's MOTION rides the
+       same dial via the punch clock. The COLOUR cross-fade + the static lens lift
+       (the `.glass-capsule` rim/shadow) + the `--accent-band` swap REMAIN —
+       selection is always legible (challenge R7: zeroes the MOTION, not the bloom).
+       Vestibular-safe. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-chip {
+            --motion-weight: 0;
+        }
+    }
+
+    /* ── prefers-contrast: more — the active rim α floors UP ──
+       The active `--accent-edge` rim is the legibility CONTRACT; under more-contrast
+       floor the border ink so the selected lit edge clears ≥3:1 over the lens body.
+       The `--accent-ink` is already value.js contrast-safe (useAccentTone). */
+    @media (prefers-contrast: more) {
+        .glass-chip[data-state="on"] {
+            border-color: color-mix(in srgb, var(--foreground) 28%, transparent);
+        }
+    }
+}

@@ -6,6 +6,122 @@
  * only the 5-rung glass ladder. */
 
 @layer components {
+    /* ── BD.W-CARD-MATERIAL-FLOOR — the card-surface warm tint-seam enrollment ──
+       The §4 leg-(a) material floor, reconciled to the SHIPPED `--glass-tint-*`
+       seam (NOT a fork, NOT a global re-tint). The card's glass/cartoon surfaces
+       ride the `.glass-${tier}` ladder rung, whose fill is already
+       `color-mix(in oklab, --glass-bg-${tier}, --glass-tint-source --glass-tint-
+       strength)` (ladder.css) — so the card reaches the warm floor by setting a
+       CARD-LOCAL non-zero `--glass-tint-strength` (the global default at
+       surface-axis.css:83 stays `0%`, so the 6 other seam-readers — drawer / menu /
+       veil / jubilance / .btn-glass / .segmented-indicator — are byte-unchanged:
+       the blast-radius bite). `--glass-tint-source` defaults to `var(--card)` (a
+       warm cream, glass-fx.css:158), so the floor is warm by construction in BOTH
+       modes. The card clears the warm-chroma floor (C ≥ 0.02 warm) in the MATERIAL
+       itself — before the field even lands, and on a dead ground (print / reduced-
+       transparency), the "far too gray" verdict closes at the material layer.
+
+       SCOPE — `[data-surface]` is `glass` or `cartoon` (NOT `veil`: veil owns its
+       own `--veil-bg` tint seam below; NOT `opaque`: the solid `--card` plate is
+       already warm-cream). The strength is set on the host so it inherits into the
+       rung's `color-mix`. This is a card-local re-point of the SHIPPED seam — DRY,
+       no second compositing axis, the ladder rung does the mix. */
+    [data-slot="card"]:where(
+        [data-surface="glass"],
+        [data-surface="cartoon"]
+    ) {
+        --glass-tint-strength: 8%;
+        /* BD.W-CARD-CEL-MOTION (§3.1) — the defined-edge border-ink floor. The
+           ladder rung's `--glass-border-resting`/`-quiet` ink is 4% warm
+           (glass.css:331-332) — it vanishes cream-on-cream (K3 RED). Floor the
+           card's own border-ink UP to ≥8% warm-ink so the cel reads as a defined
+           SHAPE (WCAG 1.4.11 non-text). `--glass-border-rung` is the per-rung ink
+           the accent-composed `--glass-border-accent` reads (ladder.css /
+           surfaces.css); re-pointing it card-locally floors the border WITHOUT
+           forking the rim (the keyed two-stop rim from `--glass-material-rim` is
+           CONSUMED unchanged — the card does NOT re-mint a rim). Warm (the
+           `--foreground` mix is warm-cream in both modes); the `.dark` ink lifts
+           off the near-black field through the same `--foreground` flip. */
+        --glass-border-rung: color-mix(in srgb, var(--foreground) 9%, transparent);
+    }
+
+    /* BD.W-CARD-CEL-MOTION (§3.2) — the inner catch-light over the field. A faint
+       `screen`-blended warm catch sits where the upper-right `--glass-key` sun
+       hits, lifting the cel off the field (the §3 layer-4 catch, coherent with the
+       rim + cast — ONE key). It rides the host `background-image` stack ALONGSIDE
+       the field underlayer (both are static gradients in the same longhand; the
+       catch is the FIRST layer so it sits over the warm underlayer), so it adds NO
+       pseudo (`::before` = moving specular, `::after` = grain — both occupied).
+       `screen` lifts only where there is light, never darkening — and it is below
+       content + clipped to the host radius, so it never washes the text column
+       (the K-AA carve). Under `prefers-contrast: more` the screen blend is dropped
+       (the catch is decoration, the edge is the legibility asset). */
+    [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        background-blend-mode: screen, normal;
+    }
+    @media (prefers-contrast: more) {
+        [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+            background-blend-mode: normal;
+        }
+    }
+
+    /* ── BD.W-CARD-FIELD-FLOOR — the orphan-card static warm field underlayer ──
+       The §2 leg-(b) structural contract, card-local fallback. The COMMON case is
+       ancestor-supplied: the page mounts ONE global `[data-paper-field]` plane
+       (AppShell) behind every route, and the card composites over it. The ORPHAN
+       case is a card in an OCCLUDING context an ancestor field cannot reach (a
+       dialog / drawer / portal that paints its own opaque ground over the page
+       field) — there the card mounts its OWN cheap static warm underlayer so it is
+       NEVER gray-over-nothing wherever it is dropped.
+
+       MECHANISM — ONE static `radial-gradient` on the host `background-image`
+       longhand (the proven `.paper-grid` coexistence seam: a later
+       `background-image` COEXISTS with the glass tier's `background:` shorthand
+       fill — paints OVER the translucent color, UNDER content + UNDER both
+       pseudos, clipped to the host `border-radius` by construction). Zero JS, one
+       compositor-cached paint, PRM-static. The warm 0-alpha stops are explicit
+       `oklch(L C H / 0)` (NEVER bare `transparent` — the WebKit black-premultiply
+       hole, build-trap-(d)).
+
+       THE NO-DOUBLE-PAINT GATE (the presence-BEHIND check, NOT `closest()`): the
+       fallback paints ONLY when NO `[data-paper-field]` ancestor is present — `:where(
+       [data-paper-field]) &` switches it OFF under the global field, so a card over
+       the page field reads the page field (no local underlayer), and a 50-card grid
+       under ONE ancestor field is ONE field paint, not N. A `cartoon`/`opaque`
+       card already carries a defined edge + warm fill, so the orphan field is the
+       glass-surface case; `surface="glass"` only (the orphan glass card is the one
+       that reads gray-over-nothing). The `.paper-grid` document register is EXCLUDED
+       by selector (it sets its own grid `background-image` underlayer — a grid card
+       opts out of the warm-field fallback, not a `background-image: none` race). */
+    [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        /* TWO static layers in ONE longhand (blended by the `background-blend-mode`
+           above — `screen, normal`): (1) the upper-right KEYED catch-light (warm,
+           `screen`-blended so it only LIFTS — the §3 catch), then (2) the warm cel
+           UNDERLAYER (one radial, amber-key toward the upper-right `--glass-key`,
+           the field fallback). Both fade to a warm 0-alpha — NEVER bare
+           `transparent` (the WebKit black-premultiply hole, build-trap-(d)). */
+        background-image:
+            radial-gradient(
+                60% 55% at 80% 16%,
+                oklch(0.96 0.04 78 / 0.5),
+                oklch(0.96 0.04 78 / 0) 72%
+            ),
+            radial-gradient(
+                120% 110% at 78% 22%,
+                oklch(0.9 0.075 72 / 0.5),
+                oklch(0.9 0.075 72 / 0) 70%
+            );
+    }
+
+    /* The presence-behind gate — under an ancestor field, the card reads the REAL
+       field (the page plane transmits through the translucent fill), so the local
+       fallback is switched OFF (no double paint). A 50-card grid under ONE ancestor
+       field is ONE field paint, not N local underlayers. */
+    :where([data-paper-field])
+        [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        background-image: none;
+    }
+
     /* Paper texture overlay */
     .paper-texture {
         background-image: var(--paper-clean-texture);
@@ -202,6 +318,13 @@
        cast deepens to the lg rung (the gap opens). ONE hover rule, no double-declare. */
     &:hover:not(:active):not(:disabled) {
         translate: var(--lift-sm) var(--lift-sm);
+        /* BD.W-CARD-CEL-MOTION (§5) — the cel lifts toward the light with a
+           sub-perceptual VOL-PRESERVING scale (X·Y ≈ 1: 1.015 × 0.985 ≈ 1.0): the
+           cel rising toward its sun reads as PEELING off the field, not a flat
+           sticker slide. Composes the existing `scale` transition (declared above)
+           on the punch curve. The press squash (`scale: 1.04 0.94`) wins via
+           `:not(:active)`. */
+        scale: 1.015 0.985;
         box-shadow: var(--shadow-cartoon-lg);
         & .cartoon-cast {
             box-shadow: var(--shadow-cartoon-lg);

@@ -21,7 +21,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <ComboboxContent
       data-slot="combobox-list"
       v-bind="forwarded"
-      :class="cn('z-popover w-popover rounded-panel border glass-floating text-popover-foreground origin-(--reka-combobox-content-transform-origin) overflow-hidden outline-none glass-reveal', props.class)"
+      :class="cn('z-popover w-popover rounded-panel border glass-floating text-popover-foreground origin-(--reka-combobox-content-transform-origin) overflow-hidden outline-none glass-reveal glass-field-portal', props.class)"
     >
       <slot />
     </ComboboxContent>

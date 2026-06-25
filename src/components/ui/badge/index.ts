@@ -9,14 +9,20 @@ export const badgeVariants = cva(
   // AX.W51 D18 — the un-sized GLYPH reads `--ui-glyph-sm` (the scaled `size-3.5`
   // register — a badge is a smaller control, so the quieter glyph rung), grown on
   // the ONE comfort axis with the size-rung fonts below.
-  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-(--ui-glyph-sm) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  // BD.W-GLASS-ATOM-REGISTER — `badge-atom` carries the loud-register family
+  // signature (the keyed warm rim so the pill has a DEFINED edge over a cream
+  // panel — the `border-transparent` melt fix, the press-squish, the idle-soft
+  // cel that `data-cast` intensifies). The `border` keyword is RETIRED from the
+  // base (it forced a transparent 1px on every variant — the live melt); the rim
+  // is the defined edge now, and `surface="glass"` routes the quiet register.
+  'badge-atom focus-ring inline-flex items-center gap-1.5 rounded-badge font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-(--ui-glyph-sm) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
         default:
-          'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+          'bg-primary text-primary-foreground hover:bg-primary/80',
         secondary:
-          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         // AY.W-PRIM-POLISH D4 — the dark destructive plate is DEEPENED at the
         // badge so the 14px/600 light-ink label clears AA. The shared dark
         // `--destructive` (hsl(0 80% 60%) = rgb(235,71,71)) painted only 3.07:1
@@ -27,18 +33,20 @@ export const badgeVariants = cva(
         // arm is re-pointed; the shared `--destructive` token is UNTOUCHED (other
         // destructive consumers — Button, input invalid-ring — keep their value).
         destructive:
-          'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-[hsl(0_70%_45%)] dark:hover:bg-[hsl(0_70%_45%)]/85',
-        outline: 'text-foreground',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-[hsl(0_70%_45%)] dark:hover:bg-[hsl(0_70%_45%)]/85',
+        // `outline` keeps a real border (it IS the edge) but reads the warm keyed
+        // rim ink, not a melting transparent line.
+        outline: 'badge-atom--outline text-foreground',
         // Status-tier variants — consume the canonical `--success / --warning
         // / --info` plate + `--{success,warning,info}-foreground` glyph
         // tokens (declared at tokens.css:244-256). Per audit U.W0.B-b
         // §"glass-ui gaps".
         success:
-          'border-transparent bg-success text-success-foreground hover:bg-success/80',
+          'bg-success text-success-foreground hover:bg-success/80',
         warning:
-          'border-transparent bg-warning text-warning-foreground hover:bg-warning/80',
+          'bg-warning text-warning-foreground hover:bg-warning/80',
         info:
-          'border-transparent bg-info text-info-foreground hover:bg-info/80',
+          'bg-info text-info-foreground hover:bg-info/80',
       },
       size: {
         // AX.W51 D18 — the badge font rungs ride the ONE comfort axis: sm reads the
@@ -49,10 +57,22 @@ export const badgeVariants = cva(
         md: 'text-[length:var(--control-text)] leading-5 px-2.5 py-1',
         lg: 'text-[length:calc(var(--type-body)*var(--ui-scale))] leading-6 px-3 py-1.5',
       },
+      // BD.W-GLASS-ATOM-REGISTER — the TWO registers (the family's load-bearing
+      // split): `loud` is the opaque saturated identity pill (default — a `success`
+      // badge is information, NOT see-through; the AA-ratified plates are kept),
+      // `glass` is the quiet transmissive `.glass-atom` capsule tinted via the
+      // shared `--glass-fill-tint` axis. `glass` composes the warm-glass body; the
+      // variant `bg-*` opaque plate is retired by the `.badge-atom--glass` rule so
+      // the warm capsule + the data-hue tint paint the surface.
+      surface: {
+        loud: '',
+        glass: 'badge-atom--glass glass-capsule glass-atom',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'md',
+      surface: 'loud',
     },
   },
 )

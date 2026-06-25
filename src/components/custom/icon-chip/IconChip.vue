@@ -8,11 +8,13 @@
                 props.duotone && 'icon-chip--duotone',
                 props.bloom && 'icon-chip--bloom',
                 props.saturated && 'icon-chip--saturated',
+                props.glass && 'icon-chip--glass glass-capsule glass-atom',
                 revealOptedIn && 'icon-chip--reveal',
                 props.class,
             )
         "
         :data-duotone="props.duotone ? '' : undefined"
+        :data-surface="props.glass ? 'glass' : undefined"
         :style="chipStyle"
     >
         <component
@@ -81,11 +83,20 @@ const revealStep = computed<number>(() => {
 // is `src/styles/icon-chip.css`.
 const chipStyle = computed<CSSProperties>(() => {
     const glyph = props.glyphSize ?? DEFAULT_GLYPH_SIZE;
-    return {
+    const style: Record<string, string> = {
         "--icon-chip-event-color": eventColor.value,
         "--icon-chip-plate-color": plateColor.value,
         "--icon-chip-glyph-size": `${glyph}px`,
         "--icon-chip-size": `${props.size ?? DEFAULT_SIZE}px`,
-    } as CSSProperties;
+    };
+    // The quiet glass register tints the `.glass-atom` warm capsule toward the
+    // event hue via the shared `--glass-fill-tint` axis (BD.W-GLASS-ATOM-REGISTER /
+    // BE.W-TINTED-CHIP) — never a forked tint. The strength dials a calm colored
+    // glass; the body ink stays legible (the W-ON-GLASS-FG floor).
+    if (props.glass) {
+        style["--glass-fill-tint"] = eventColor.value;
+        style["--glass-fill-strength"] = "var(--icon-chip-glass-strength, 14%)";
+    }
+    return style as CSSProperties;
 });
 </script>

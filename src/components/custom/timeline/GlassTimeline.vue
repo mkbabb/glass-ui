@@ -127,3 +127,108 @@ const emit = defineEmits<{
         @scrub-end="emit('scrubEnd')"
     />
 </template>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     BD.W-TIMELINE-RAIL-UNIFY — the ONE shared timeline register.
+
+     NON-SCOPED <style> block (the same portal-CSS-contract pattern
+     ContinuousTimeline.vue uses for `.timeline-popover`): the three variant
+     SFCs (scrubber · segmented · continuous) all COMPOSE `.timeline-rail`,
+     so the recipe lives ONCE in the dispatcher — which is always in the
+     render path — rather than re-forked into three scoped blocks. KISS/DRY:
+     one warm-glass substrate, three interiors.
+
+     This block COMPOSES the booked Band-0 register READ-ONLY — it re-mints
+     NOTHING the sibling amendments own. It DECLARES only the timeline-LOCAL
+     sizing root (`--sqrt-phi` + the √φ ladder off ONE `--timeline-h`) and the
+     `--cel-accent` interior default. Per LANE DISCIPLINE the shared register
+     files (glass-capsule.css, tokens/*.css, glass.css) stay untouched.
+     ════════════════════════════════════════════════════════════════════ -->
+<style>
+/* ── §A. The √φ sizing root (LEG 3) — MINT `--sqrt-phi` ONCE, re-base the
+   three rail heights + head/rivet/gap on the ladder off ONE `--timeline-h`.
+   Scoped to `.timeline-row` so the mint is timeline-local (the shared roots
+   are read-only). The base `--timeline-h` re-points the existing per-variant
+   height tokens; each variant rung is one √φ step off it (continuous = base,
+   segmented = h/√φ, scrubber = h·√φ — the tall a11y scrub surface). */
+.timeline-row {
+    --sqrt-phi: 1.272;
+    /* ONE base — the continuous rail (the loudest, the bar). */
+    --timeline-h: var(--timeline-continuous-height, 0.75rem);
+    /* √φ ladder rungs off the base. */
+    --timeline-h-segmented: calc(var(--timeline-h) / var(--sqrt-phi));
+    --timeline-h-scrubber: calc(var(--timeline-h) * var(--sqrt-phi));
+    /* the bead seats φ-INSIDE the scrub channel (head ≈ channel/√φ): reads as
+       a bead in the strip, never filling it. */
+    --timeline-head: calc(var(--timeline-h-scrubber) / var(--sqrt-phi));
+    /* the continuous rivet is one √φ step below the dot register. */
+    --timeline-rivet: calc(var(--timeline-dot-size, 0.875rem) / var(--sqrt-phi));
+    /* the segmented gap reveals the warm RAIL between cels (the iOS
+       battery/storage tinted-lane read) — a √φ-derived hairline, not a void. */
+    --timeline-segment-gap: calc(var(--timeline-h) / var(--sqrt-phi) / 5);
+    /* the tinted-glass cel accent default (segmented interior); consumers
+       re-point per-phase. Warm-neutral until a phase hue lands. */
+    --cel-accent: var(--accent, var(--foreground));
+}
+
+/* ── §B. `.timeline-rail` — the ONE warm-glass substrate (LEG 1).
+   COMPOSES the booked Band-0 register: the warm `--card`-derived floor +
+   REAL `--glass-blur-floating` transmission + the keyed rim + warm
+   under-shadow + the ambient-tint seam. Replaces the three private
+   `--surface-tint-6` + `--glass-blur-wash` gray recipes 1:1 (no alias, no
+   legacy). The fill/cels/head sit `inset:0` ABOVE the rail so the route's
+   `.paper-field` transmits THROUGH the whole bar — a lens, not a gray scrim. */
+.timeline-rail {
+    position: relative;
+    border-radius: var(--radius-pill);
+    /* §3 root-cause #2 (dormant-tint) CURE — the warm floor, both modes,
+       enrolled in the ambient seam (no-op at the default 0% strength). */
+    background: color-mix(
+        in oklab,
+        var(--glass-bg-resting),
+        var(--glass-tint-source, transparent) var(--glass-tint-strength, 0%)
+    );
+    /* §3 root-cause #1 (flat-field) CURE — REAL transmission (build owns the
+       -webkit- prefix into dist per the glass.css single-source policy). */
+    backdrop-filter: var(--glass-blur-floating);
+    -webkit-backdrop-filter: var(--glass-blur-floating);
+    /* §3 (c) defined edge — the keyed rim + warm under-shadow. */
+    border: 1px solid var(--glass-border-accent);
+    box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default);
+}
+
+/* deep-transmit opt-in (media-grade rail over a vibrant field) — re-points
+   the blur token only. */
+.timeline-rail.is-deep {
+    backdrop-filter: var(--glass-blur-deep);
+    -webkit-backdrop-filter: var(--glass-blur-deep);
+}
+
+/* PRT / prefers-contrast floor — the rail falls to the warm-but-opaque
+   `--card` shape (the ONE `--glass-level: 0` path — NOT a `.glass-opaque`
+   class, which does not exist). Warmth kept, transmission dropped. Authored
+   as plain per-feature arms (no light-dark() inset-fragment trap). */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    .timeline-rail {
+        --glass-level: 0;
+    }
+}
+
+/* ── §C. `.timeline-cel` — the tinted-GLASS interior cel (segmented; LEG 1).
+   RETIRES the opaque `gradientFor(seg)` `chart-*` fill: a translucent
+   `--cel-accent` glass over the warm rail (the field bleeds UP through it)
+   with a keyed inner cel edge so it reads as a DEFINED chip, not a pastel
+   ghost. build-trap-(d): the 0-alpha arm is `oklch(... / 0)`, NEVER bare
+   `transparent` (the WebKit black-premultiply hole). */
+.timeline-cel {
+    background: color-mix(
+        in oklab,
+        var(--cel-accent) 38%,
+        oklch(0 0 0 / 0)
+    );
+    /* the keyed inner cel edge — lit top, shaded bottom (one key-light). */
+    box-shadow:
+        inset 0 0.5px 0 0 color-mix(in oklab, white 26%, oklch(0 0 0 / 0)),
+        inset 0 -0.5px 0 0 color-mix(in oklab, var(--cartoon-ink, black) 14%, oklch(0 0 0 / 0));
+}
+</style>

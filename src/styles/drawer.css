@@ -26,6 +26,46 @@
     initial-value: 1;
 }
 
+/* BD.W-OVERLAY-STAGE-COUPLE — `--stage-t`, the ONE registered STAGING scalar (0 =
+ * closed/un-staged → 1 = fully staged). The whole modal band rides this ONE knob:
+ * the drawer's surface FREEZE (A), the scrim DEEPEN (B), the page RECEDE+SCALE (C),
+ * the opt-in blur ENGAGE (D) are all pure `calc()` reads OF it. `inherits: true` so
+ * a single writer at `:root` reaches the portaled scrim AND the page-wrapper sibling
+ * AND the sheet descendants from ONE write (the scrim is NOT a descendant of the
+ * content, so a content-local mirror could never reach it — the `:root` write is the
+ * cross-subtree path).
+ *
+ * THE SINGLE WRITER (fold C1·R2 — no dual scalar desync). `useDrawerSnap.writeScalar`
+ * writes BOTH `--glass-drawer-t` (the sheet's per-element translate) AND `--stage-t`
+ * (the scene scalar at `:root`) in the SAME call — atomically, never separately, so
+ * the two can never desync on a drag-cancel / fling-overshoot / interrupted snap. A
+ * plain modal (Dialog/Command) flips `--stage-t` 0→1 on `--spring-snappy` at open;
+ * the close-write removes the inline value so the registered property reverts to its
+ * `initial-value: 0` (the stale-latch fix). `initial-value: 0` so an un-staged page never
+ * recedes. EVERY consumer `clamp(0, …, 1)`-bounds it (a `--ease-cartoon-punch` fling
+ * can overshoot >1 — the page-scale / radius / scrim must not run past their
+ * endpoints). */
+@property --stage-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+/* The stage-t transition + close-write reset (the registered-property stale-latch
+ * fix, fold C3·R7).
+ *
+ * The drawer's single writer (useDrawerSnap) drives `--stage-t` per frame and
+ * REMOVES the inline value on close → the registered property reverts to its
+ * `initial-value: 0`. The centered modal (DialogContent) flips it 0→1 on open via the
+ * `data-stage-flip` marker on `:root`; this rule owns the FLIP TRANSITION (a snappy
+ * spring) so the dialog's `:root --stage-t` value glides 0→1 rather than snapping — a
+ * CSS-owned transition, NOT an inline `transition` shorthand on `:root` (which would
+ * clobber unrelated root transitions). On close the marker is dropped and the inline
+ * value removed → the property reverts to 0 (no stale full-staged latch on re-open). */
+:root[data-stage-flip] {
+    transition: --stage-t var(--spring-snappy-duration, 0.4s) var(--spring-snappy, ease);
+}
+
 :root {
     /* Detent grammar knobs — overridable per-consumer */
     --drawer-handle-w: 2.25rem;
@@ -131,6 +171,80 @@
     margin-top: 0;
 }
 
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (A): the surface FREEZE, composed AT THE
+ * ELEMENT. A detented sheet is SEE-THROUGH at peek/half (the page bleeds) and
+ * SOLIDIFIES toward a warm-tinted card at full (page does not bleed, blur → 0). This
+ * is the iOS-27 bottom-sheet crown the live α-0.95-at-every-detent flattened.
+ *
+ * A TWO-SEGMENT lerp on the ONE `--stage-t` knob (the self-standing crown — the wave
+ * owns BOTH endpoints so it does not block on BE.W-SHEET-TRANSLUCENT, fold C3·R1):
+ *   • DESCENT  t ∈ [0, 0.85] — the transmissive crown sinks `--glass-bg-overlay` α
+ *     toward the shipped see-through `--glass-bg-sheet` floor (`--glass-opacity-sheet:
+ *     0.74`). At peek/half the page bleeds through.
+ *   • SOLIDIFY t ∈ [0.85, 1] — `--sheet-freeze` lerps the descended plate toward a
+ *     WARM-TINTED card-mix (NOT bare `--card` — the gray-at-full carve hole, fold
+ *     C1·R4); `backdrop-filter` blur decays to 0 (a solid plate has no backdrop to
+ *     bend — a Safari win, no wasted sample behind an opaque plate).
+ *
+ * Composed AT THE ELEMENT (the `[data-surface=opaque]` substitution-safe path) via
+ * element-level `color-mix` — NEVER an ancestor `filter` (which would clobber the
+ * sheet's own backdrop-filter, the dock-hub goo-tear lesson, §7). `--stage-t` reads
+ * the `:root` scalar the single writer drives (mirrored from `--glass-drawer-t`).
+ */
+.glass-drawer[data-glass-drawer-snap-points="true"] {
+    /* the DESCENT fraction — 0 at closed → 1 at the commit floor (t=0.85). */
+    --sheet-descent: clamp(0, calc(var(--stage-t) / 0.85), 1);
+    /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
+    --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
+    /* the transmissive crown plate: the warm overlay fill sunk toward the shipped
+       see-through `--glass-bg-sheet` floor across the descent. */
+    --sheet-crown: color-mix(
+        in oklab,
+        color-mix(
+            in oklab,
+            var(--glass-bg-overlay),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        ),
+        var(--glass-bg-sheet) calc(var(--sheet-descent) * 100%)
+    );
+    /* the warm-tinted SOLID escape (fold C1·R4 — a warm card-mix toward the EXPLICIT
+       warm `--glass-capsule-warm` amber, NEVER bare `--card` and NEVER the
+       `--glass-tint-source` alias which resolves back to `--card` and would be a
+       no-op warm; build-trap-(d) safe — a warm oklch color, never bare `transparent`).
+       At the shared 16% warm floor a dark full sheet stays C ≥ 0.02 warm — no
+       charcoal holiday at full. */
+    --sheet-solid: color-mix(
+        in oklab,
+        var(--card),
+        var(--glass-capsule-warm) var(--glass-capsule-warm-floor, 16%)
+    );
+    background: color-mix(
+        in oklab,
+        var(--sheet-crown),
+        var(--sheet-solid) calc(var(--sheet-freeze) * 100%)
+    );
+    backdrop-filter: blur(
+            calc(var(--glass-blur-overlay-radius, 20px) * (1 - var(--sheet-freeze)))
+        )
+        saturate(1.6);
+    -webkit-backdrop-filter: blur(
+            calc(var(--glass-blur-overlay-radius, 20px) * (1 - var(--sheet-freeze)))
+        )
+        saturate(1.6);
+}
+
+/* The `surface=opaque` explicit escape still wins (it sets the solid plate
+   unconditionally regardless of detent) — the freeze is the DEFAULT glass crown; the
+   opt-out plate is the consumer's hard override. Source order keeps the opaque rule
+   (declared above) — re-assert it here so it beats the snap-points freeze at equal
+   specificity for a detented opaque sheet. */
+.glass-drawer[data-glass-drawer-snap-points="true"][data-surface="opaque"] {
+    background: color-mix(in srgb, var(--card), transparent 0%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
 /* Direction variants — the content root tags itself with the drag axis
    (`data-glass-drawer-direction`). Bottom is the default; the others ride the same
    surface so a top/side sheet inherits the grammar. The side-lens (left/right) is
@@ -220,6 +334,56 @@
     margin-inline: calc(var(--radius-panel) * -0.5);
     border: 0;
     background-color: var(--drawer-snap-rule-color);
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (B): the scrim DEEPEN. The scrim α tracks
+ * `--stage-t` so a peek drawer barely dims and a full drawer commits hard (the live
+ * fixed-α-0.8 at every detent is the born-RED). Reuses the SHIPPED warm
+ * `--overlay-scrim-ink` (the F7 warm near-black, never flat black), now t-coupled.
+ * `clamp(0,…,1)` bounds the fling overshoot. The scrim element gains
+ * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the inherited `:root` scalar.
+ */
+[data-stage-scrim] {
+    background: color-mix(
+        in srgb,
+        var(--overlay-scrim-ink)
+            calc((0.28 + clamp(0, var(--stage-t), 1) * 0.44) * 100%),
+        transparent
+    );
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (C): the page RECEDE + SCALE. The page wrapper
+ * scales `1 → 0.95` + corner-radius blooms as `--stage-t → 1` (the iOS "card recedes"
+ * depth cue), retiring the dead `shouldScaleBackground` boolean. `scale` +
+ * `border-radius` ONLY — NO `filter` (the ancestor-filter trap: `filter` on the app
+ * root establishes a containing block for `position:fixed` and force-rasterizes the
+ * page subtree every frame — fold C2·R1; §7). The wrapper is the consumer's app-root
+ * marker (`demo/App.vue` mounts `[data-stage-wrapper]`); when the honest
+ * `stage="none|dim"` enum is set the marker carries no `--stage-t` drive (or the
+ * `data-stage-scale` gate is absent) so (C) is a real no-op, never a lie. Under PRM
+ * `stage="scale"` degrades to `dim` at the SFC (no `data-stage-scale` attr) so the
+ * page never transforms (fold C1·R6) — this rule only fires when the scale gate is on.
+ */
+[data-stage-wrapper][data-stage-scale] {
+    scale: calc(1 - 0.05 * clamp(0, var(--stage-t), 1));
+    border-radius: calc(var(--radius-panel) * clamp(0, var(--stage-t), 1));
+    transform-origin: 50% 0; /* recede toward the top, iOS */
+    overflow: clip;
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (D): the blur ENGAGE (opt-in `immersive`, the
+ * Command spotlight). The scrim's `backdrop-filter` radius ramps `0 → deep` on
+ * `--stage-t`. ONE-SHOT over the open window (gated to the modal-flip 0→1 via
+ * `[data-stage-immersive]`, NEVER the drawer's per-frame scalar — the §L7 Safari
+ * fence: a per-frame full-viewport re-blur is the cardinal sin, fold C2·R). WebKit
+ * pays the sample once as the flip lands. Default OFF.
+ */
+[data-stage-scrim][data-stage-immersive] {
+    backdrop-filter: blur(calc(clamp(0, var(--stage-t), 1) * 16px));
+    -webkit-backdrop-filter: blur(calc(clamp(0, var(--stage-t), 1) * 16px));
 }
 
 /* Reduced-motion — the house `SpringProgress` snaps the detent deterministically

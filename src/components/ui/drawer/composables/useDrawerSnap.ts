@@ -86,9 +86,18 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     // frame under `prefers-reduced-motion: reduce` (the deterministic detent seat).
     let spring: SpringProgress | null = null;
 
+    // BD.W-OVERLAY-STAGE-COUPLE — the SINGLE writer (fold C1·R2, no dual-scalar
+    // desync). ONE call writes BOTH the sheet's per-element translate scalar
+    // (`--glass-drawer-t` on the content) AND the SCENE staging scalar (`--stage-t`
+    // at `:root`) atomically, so the surface freeze / scrim deepen / page recede can
+    // never desync from the translate on a drag-cancel / fling-overshoot / interrupted
+    // snap. `--stage-t` lives at `:root` (not the content) because the scrim is a
+    // PORTAL SIBLING and the page-wrapper is OUTSIDE the portal — neither is a
+    // descendant of the content, so only a `:root` (inherited) write reaches them.
     function writeScalar(t: number) {
         const el = contentEl.value;
         if (el) el.style.setProperty("--glass-drawer-t", `${t}`);
+        document.documentElement.style.setProperty("--stage-t", `${t}`);
     }
 
     function disposeSpring() {
@@ -96,6 +105,12 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
             spring.dispose();
             spring = null;
         }
+        // BD.W-OVERLAY-STAGE-COUPLE — clear the inline `:root --stage-t` on close so
+        // the CSS `:root:not(:has(…open…))` reset (drawer.css) takes over and the NEXT
+        // open does not inherit a stale full-staged value (the registered-property
+        // stale-latch fix, fold C3·R7). An inline write would otherwise out-specify
+        // the reset rule and latch the scene at the last detent fraction.
+        document.documentElement.style.removeProperty("--stage-t");
     }
 
     function ensureSpring(): SpringProgress {

@@ -34,6 +34,17 @@ interface Props extends PrimitiveProps {
   // re-rasterize — the one-refractive-element-per-route budget). Opt-in on glass
   // variants only (a non-glass `solid` button has no blur base to refract).
   liquid?: boolean
+  // BD.W-BUTTON-GLASS-CONSUME (§4b) — the opt-in LOUD cartoon-punch interaction
+  // tier. `.btn-punch` sits ON TOP of the shared `.glass-capsule` (it is NOT a
+  // material): the press rides `--ease-cartoon-punch` (anticipation pre-dip +
+  // overshoot follow-through), the reciprocal squish re-targets to a louder fenced
+  // amplitude (maxStretch 1.04→1.09, composed-area ≤1.14), the glyph settles a beat
+  // after the capsule (overlapping action, the BD.W-TABS-LIQUID register), and an
+  // INERT `.cartoon-cast` child carries the moving inked cel cast (the
+  // BD.W-CARTOON-CASTER caster — NEVER a button-local `::after` re-fork). Default-ON
+  // for the `primary-audacious`/`gold-audacious` hero register; opt-in elsewhere.
+  // The dock default stays CALM (no punch — a dock of punching icons is manic).
+  punch?: boolean
   // Element-specific <button> attributes forwarded to the rendered host. reka's
   // Primitive only types `as`/`as-child`, so these are spread through `$attrs`
   // (see `hostAttrs`) rather than bound on <Primitive> directly.
@@ -87,12 +98,28 @@ const surfaceDecoration = computed(() => {
 // magic-number spring (the W-GLASS-CAL spring fence) — the press physics live at the
 // ONE table, never a per-call literal. When SPRING-EASE lands the 0.15/0.86 row, the
 // press answers in the iOS window with zero edit here.
+// BD.W-BUTTON-GLASS-CONSUME (§4b) — `.btn-punch` is default-ON for the loud hero
+// register (`primary-audacious`/`gold-audacious`) + opt-in via the `punch` prop on
+// any variant. ONE source for both the class emission AND the louder squish cap (no
+// drift between the CSS class and the JS amplitude).
+const LOUD_VARIANTS = new Set<ButtonVariants['variant']>([
+  'primary-audacious',
+  'gold-audacious',
+])
+const punchActive = computed(
+  () => props.punch === true || LOUD_VARIANTS.has(props.variant ?? 'default'),
+)
+const punchDecoration = computed(() => (punchActive.value ? 'btn-punch' : undefined))
+
 const press = useSpringPress()
 const squish = useLiquidFlex({
   from: 0,
   to: 1,
   axis: 'width',
-  maxStretch: 1.04,
+  // The fenced louder amplitude on `.btn-punch` (1.09) vs the calm workhorse (1.04),
+  // read LIVE per drive (the getter form). Both stay under the composed-area ≤1.14
+  // anti-taffy fence (the squish is volume-preserving, so peak area ≈ maxStretch).
+  maxStretch: () => (punchActive.value ? 1.09 : 1.04),
   squishLaw: 'linear',
 })
 
@@ -128,6 +155,15 @@ const pressStyle = computed<CSSProperties>(() => {
     // glass reads as DEFORMING, not just shrinking.
     '--glass-btn-press-t': t.toFixed(4),
   } as CSSProperties
+  // BD.W-BUTTON-GLASS-CONSUME (§4b) — feed the SAME spring drive into the
+  // BD.W-CARTOON-CASTER ramp (`--cartoon-press-t`), so the inert `.cartoon-cast`
+  // child travels DOWN-LEFT + spreads on press, scaled by `--motion-weight` (the
+  // `.btn-punch` css sets `--motion-weight: 1` — the loud register). ONE press scalar
+  // drives the squish, the gleam, AND the cast — no second press var. Only emitted on
+  // the punch register (the calm workhorse carries no cast).
+  if (punchActive.value) {
+    ;(style as Record<string, string>)['--cartoon-press-t'] = t.toFixed(4)
+  }
   // Emit the JS reciprocal `scale` ONLY while the press is engaged (t past a
   // sub-perceptual threshold) — at rest the inline `scale` is OMITTED so the CVA
   // hover utilities (`hover:scale-(--scale-hover-btn)` on primary/gold-audacious)
@@ -154,6 +190,8 @@ const pressStyle = computed<CSSProperties>(() => {
 // `accent` now compose the `glass-wash btn-glass` register (the `.glass-wash::before`
 // gleam recipe), so the pointer-following gleam arms on them too (one material, the
 // same lit-control affordance). reka behavior is untouched — only the gleam arm widens.
+// BD.W-BUTTON-GLASS-CONSUME — `ai` now joins the shared glass register (amber accent
+// in the gleam), so it arms the pointer-following specular like the rest of the family.
 const GLASS_VARIANTS = new Set<ButtonVariants['variant']>([
   'default',
   'glass',
@@ -163,6 +201,7 @@ const GLASS_VARIANTS = new Set<ButtonVariants['variant']>([
   'outline',
   'secondary',
   'accent',
+  'ai',
 ])
 const specularArmed = computed(() => GLASS_VARIANTS.has(props.variant ?? 'default'))
 
@@ -192,13 +231,20 @@ const liquidDecoration = computed(() =>
     :data-size="size"
     :data-surface="surface"
     v-bind="hostAttrs"
-    :class="cn(buttonVariants({ variant, size }), surfaceDecoration, liquidDecoration, props.class)"
+    :class="cn(buttonVariants({ variant, size }), surfaceDecoration, liquidDecoration, punchDecoration, props.class)"
     :style="hostStyle"
     @pointerdown="press.press"
     @pointerup="press.release"
     @pointercancel="press.release"
     @pointerleave="press.release"
   >
+    <!-- BD.W-BUTTON-GLASS-CONSUME (§4b) — the INERT moving-cel cast child (the
+         BD.W-CARTOON-CASTER inert-child pattern: a real aria-hidden child, NEVER a
+         `::before`/`::after` — both pseudos are OCCUPIED on the glass carrier by the
+         specular catch-light + the grain overlay). The `.cartoon-cast` css (cards.css)
+         reads `--motion-weight × --cartoon-press-t` and travels on the compositor. Only
+         rendered on the punch register; absent (zero DOM cost) otherwise. -->
+    <span v-if="punchActive" class="cartoon-cast" aria-hidden="true" />
     <slot />
   </Primitive>
 </template>

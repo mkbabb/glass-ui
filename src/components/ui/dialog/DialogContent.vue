@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, type CSSProperties } from 'vue'
+import { type HTMLAttributes, computed, type CSSProperties, watch, onScopeDispose } from 'vue'
 import {
   DialogClose,
   DialogContent,
@@ -68,15 +68,64 @@ const props = withDefaults(
      * double-up. The default keeps every existing mount byte-identical.
      */
     showClose?: boolean;
+    /**
+     * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum for the centered modal band.
+     * `none` (default — byte-identical to HEAD) leaves the page untouched; `dim`/
+     * `scale`/`immersive` flip the ONE `--stage-t` scalar 0→1 on open so the page
+     * RECEDES + SCALES behind the dialog (the iOS card-recede) and the scrim deepens.
+     * PRM degrades `scale`/`immersive` → `dim` (no page transform, fold C1·R6).
+     */
+    stage?: 'none' | 'dim' | 'scale' | 'immersive';
   }>(),
-  { surface: 'glass', showClose: true },
+  { surface: 'glass', showClose: true, stage: 'none' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, surface: _su, scrimAnimation: _sa, spring: _sp, showClose: _sc, ...delegated } = props
+  const { class: _, surface: _su, scrimAnimation: _sa, spring: _sp, showClose: _sc, stage: _st, ...delegated } = props
   return delegated
 })
+
+// BD.W-OVERLAY-STAGE-COUPLE — the centered modal flips `--stage-t` 0→1 on open (the
+// drawer drives it per-frame; a dialog has no detent, so it transitions the ONE
+// scalar at `:root` on `--spring-snappy`). The honest `stage` enum gates the
+// page-wrapper recede; PRM degrades `scale`/`immersive` → `dim` (no page transform).
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+const resolvedStage = computed(() => {
+  const base = props.stage
+  if (prefersReducedMotion && (base === 'scale' || base === 'immersive')) return 'dim'
+  return base
+})
+const dialogRoot = injectDialogRootContext()
+function syncStage(open: boolean) {
+  if (typeof document === 'undefined' || props.stage === 'none') return
+  const root = document.documentElement
+  const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
+  const scrim = document.querySelector('[data-stage-scrim]') as HTMLElement | null
+  // Flip the ONE `--stage-t` scalar 0→1 on open. The `data-stage-flip` marker on
+  // `:root` arms the CSS-owned flip TRANSITION (`:root[data-stage-flip]` in drawer.css
+  // — a snappy spring, NOT an inline `transition` shorthand on `:root` which would
+  // clobber unrelated root transitions) so the value glides 0→1. On close the marker is
+  // dropped + the inline value removed → the registered property reverts to 0 (no stale
+  // full-staged latch on re-open).
+  if (open) {
+    root.setAttribute('data-stage-flip', '')
+    // seat at 0, then flip to 1 next frame so the CSS transition catches the delta.
+    root.style.setProperty('--stage-t', '0')
+    requestAnimationFrame(() => root.style.setProperty('--stage-t', '1'))
+  } else {
+    root.removeAttribute('data-stage-flip')
+    root.style.removeProperty('--stage-t')
+  }
+  const wantScale = open && (resolvedStage.value === 'scale' || resolvedStage.value === 'immersive')
+  const wantImmersive = open && resolvedStage.value === 'immersive'
+  if (wrapper) wrapper.toggleAttribute('data-stage-scale', wantScale)
+  if (scrim) scrim.toggleAttribute('data-stage-immersive', wantImmersive)
+}
+watch(() => dialogRoot?.open.value, (open) => syncStage(!!open), { immediate: true })
+onScopeDispose(() => syncStage(false))
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
@@ -123,14 +172,22 @@ const springMount = props.spring && rootContext
 const springStyle = computed<CSSProperties | undefined>(() => {
   if (!springMount) return undefined
   const p = springMount.position.value // 0 = mounted, 1 = dismissed
-  // Translate (-50%) preserves the centring; the entrance scales 0.95 → 1
-  // and opacity 0 → 1 as p slides 1 → 0.
+  // BD.W-OVERLAY-STAGE-COUPLE — the centered-dialog SQUISH via `scale:`/`translate:`
+  // LONGHANDS, never `transform: translate() scale()` (build-trap (e): a
+  // `transform:scale()` over a centering translate composes ONE matrix, so the squish
+  // would re-derive the -50% offset off the scaled box and drift the dialog off
+  // center mid-bloom). The centering rides `translate: -50% -50%` (its OWN channel);
+  // the entrance squishes `scale: 0.95 → 1` as p slides 1 → 0 (independent channels,
+  // no cross-talk). `transform: none` clears any utility-class matrix so the longhands
+  // are the sole source.
   const scale = 1 - 0.05 * p
   return {
-    transform: `translate(-50%, -50%) scale(${scale})`,
+    transform: 'none',
+    translate: '-50% -50%',
+    scale: String(scale),
     opacity: String(1 - p),
     // `animation: none` overrides tw-animate-css's enter/exit keyframes; the
-    // spring-driven inline transform / opacity must be the sole source.
+    // spring-driven inline longhands / opacity must be the sole source.
     animation: 'none',
     transition: 'none',
   }

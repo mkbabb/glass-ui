@@ -17,5 +17,16 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <DialogOverlay v-bind="delegatedProps" :class="cn('fixed inset-0 z-overlay bg-overlay-scrim-strong [backdrop-filter:var(--glass-blur-wash)]', props.class)" />
+  <!-- BD.W-OVERLAY-STAGE-COUPLE — the scrim DEEPENS with the detent (coupling B). The
+       `data-stage-scrim` attr routes the α onto the `--stage-t`-tracked recipe
+       (drawer.css) off the fixed `bg-overlay-scrim-strong` — a peek drawer barely
+       dims, a full drawer commits hard. The warm `--overlay-scrim-ink` hue is kept
+       (warm, never flat black); only the α is now t-coupled. The wash blur stays the
+       resting floor; the `immersive` engage (coupling D) ramps a deeper backdrop-blur
+       one-shot when `data-stage-immersive` is gated on (Drawer.vue). -->
+  <DialogOverlay
+    v-bind="delegatedProps"
+    data-stage-scrim
+    :class="cn('fixed inset-0 z-overlay [backdrop-filter:var(--glass-blur-wash)]', props.class)"
+  />
 </template>

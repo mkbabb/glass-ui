@@ -35,6 +35,20 @@ const groupRole = computed(() =>
   props.type === 'single' ? 'radiogroup' : 'group',
 )
 
+// BD.W-CHIP-CONGRUENT-GLASS — congruence-by-inheritance. An EXCLUSIVE
+// (`type="single"`) group is a segmented control: its chips sit in a RECESSED
+// warm channel — the SHARED `.glass-capsule-track` (the tabs-extract sunken well,
+// composed read-only, never re-forked). The multi-select arm keeps the bare flex
+// row (each chip carries its own punch — no traveling indicator). The gliding
+// `useTabIndicator` indicator is a DEFERRED follow-on (the tabs convergence); the
+// base group earns the well by inheritance with ZERO chip-specific work. A
+// recessed track needs inset padding so the chips do not paint over its rim.
+const groupTrack = computed(() =>
+  props.type === 'single'
+    ? 'glass-capsule-track rounded-pill p-1'
+    : '',
+)
+
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
   return delegated
@@ -45,7 +59,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <ToggleGroupRoot v-bind="forwarded" as-child>
-    <div data-slot="toggle-group" :role="groupRole" :class="cn('flex items-center justify-center gap-1', props.class)">
+    <div data-slot="toggle-group" :role="groupRole" :class="cn('flex items-center justify-center gap-1', groupTrack, props.class)">
       <slot />
     </div>
   </ToggleGroupRoot>

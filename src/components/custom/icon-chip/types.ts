@@ -76,6 +76,16 @@ export interface IconChipProps {
      */
     saturated?: boolean;
     /**
+     * The QUIET glass register (BD.W-GLASS-ATOM-REGISTER cross-link). The DEFAULT
+     * chip keeps its loud `in srgb` brand-overlay plate (AW.W26 fence); this opt-in
+     * routes the chip through the shared `.glass-atom` warm-glass capsule instead —
+     * a transmissive lozenge with the warm floor + the `--glass-blur-quiet` backdrop
+     * + the keyed rim, tinted by `--glass-fill-tint` toward the event hue. Two
+     * registers, exactly like Badge: loud brand pop (default) vs quiet glass lens
+     * (opt-in). Default `false`.
+     */
+    glass?: boolean;
+    /**
      * Entrance choreography — composes the shipped `vReveal` directive. A numeric
      * value is the `--d` stagger index; `true` is index 0. PRM-gated by `vReveal`'s
      * construction. Default `false`.

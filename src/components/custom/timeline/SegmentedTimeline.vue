@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { fillFor, gradientFor } from "./geometry";
+import { fillFor } from "./geometry";
 import type { TimelineSegment } from "./types";
 
 /**
@@ -31,6 +31,21 @@ const emit = defineEmits<{
 
 const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
 
+/**
+ * BD.W-TIMELINE-RAIL-UNIFY (LEG 1) — resolve a segment's single
+ * representative cel hue for the tinted-GLASS cel `--cel-accent`. RETIRES the
+ * opaque `gradientFor(seg)` `chart-*` fill: a `{from,to}` pair contributes its
+ * `to` (the saturated phase hue); a raw CSS string is not parseable into a
+ * single stop, so it falls back to the token default. The dispatcher's
+ * `.timeline-cel` recipe mixes this to a translucent glass over the warm rail.
+ */
+function celAccentFor(seg: TimelineSegment): string {
+    if (seg.gradient && typeof seg.gradient === "object") {
+        return seg.gradient.to;
+    }
+    return "var(--cel-accent)";
+}
+
 function onSegmentHover(seg: TimelineSegment) {
     emit("hover", { key: seg.key, segment: seg });
 }
@@ -57,7 +72,7 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
         role="group"
         aria-label="Timeline progress"
     >
-        <div class="segmented-track">
+        <div class="segmented-track timeline-rail">
             <div
                 v-for="(seg, i) in segmentList"
                 :key="seg.key"
@@ -70,9 +85,9 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                 :data-state="seg.state"
             >
                 <div
-                    class="segmented-band"
+                    class="segmented-band timeline-cel"
                     :style="{
-                        background: gradientFor(seg),
+                        '--cel-accent': celAccentFor(seg),
                         width: `${fillFor(seg) * 100}%`,
                     }"
                     aria-hidden="true"
@@ -121,15 +136,26 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     min-width: 0;
 }
 
+/* The segmented lane COMPOSES `.timeline-rail` (warm-glass, from the
+   dispatcher's shared register) — this scoped block carries ONLY the
+   segmented-local layout. BD.W-TIMELINE-RAIL-UNIFY (LEG 1+3): the rail is
+   PAINTED (warm lane); the `--timeline-segment-gap` between cels reveals the
+   RAIL (the iOS battery/storage tinted-lane read — NOT N independent
+   capsules). Height rides the √φ ladder's segmented rung (h/√φ). The cels are
+   translucent insets (`.timeline-cel`), so the warm field bleeds UP through
+   them. `overflow:hidden` clips the cels to the pill; the float-dots escape
+   via z-stacking above. */
 .segmented-track {
     position: relative;
     display: flex;
+    gap: var(--timeline-segment-gap, 2px);
     width: 100%;
-    height: var(--timeline-segmented-height, 12px);
-    border-radius: var(--radius-pill);
-    background: var(--surface-tint-6);
-    overflow: hidden;
-    backdrop-filter: var(--glass-blur-wash);
+    height: var(--timeline-h-segmented, 0.59rem);
+    /* NO `overflow: hidden` on the track — the float-dots (LEG 3) must escape
+       to read as lifted above the lane. The CELS clip to their own
+       `.segmented-cell` (overflow:hidden + radius) so the tinted glass still
+       rounds; the rail's own warm-glass background rounds via its border-
+       radius without a clip. */
 }
 
 .segmented-cell {
@@ -137,19 +163,18 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     flex: var(--timeline-segment-flex, 1 1 0);
     min-width: 0;
     height: 100%;
-}
-
-.segmented-cell + .segmented-cell {
-    border-left: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+    /* round the cel ends so each tinted chip reads as a lozenge in the lane. */
+    border-radius: var(--radius-sm);
+    overflow: hidden;
 }
 
 .segmented-band {
     position: absolute;
     inset: 0;
     width: 0%;
+    border-radius: inherit;
     transition:
-        width var(--duration-slow, 0.45s) var(--ease-out, ease-out),
-        background var(--duration-fast, 0.2s) var(--ease-standard, ease);
+        width var(--duration-slow, 0.45s) var(--ease-out, ease-out);
     will-change: width;
 }
 
@@ -168,15 +193,23 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     width: var(--timeline-dot-size, 14px);
     height: var(--timeline-dot-size, 14px);
     border-radius: 50%;
-    background: var(--surface-tint-15);
-    border: 2px solid var(--background, white);
-    box-shadow: 0 1px 2px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    /* BD.W-TIMELINE-RAIL-UNIFY (LEG 3) — the segmented dot FLOATS above the
+       lane (independence). A warm-glass fill + the keyed rim + a
+       `.shadow-cartoon-sm` cast (the cast offsets DOWN, opposite the upper
+       key-light, so it coheres with the one key). Warm, not gray. */
+    background: var(--glass-bg-floating);
+    backdrop-filter: var(--glass-blur-quiet);
+    -webkit-backdrop-filter: var(--glass-blur-quiet);
+    border: 1.5px solid var(--glass-border-accent);
+    box-shadow:
+        var(--glass-material-rim),
+        var(--shadow-cartoon-sm, 0 2px 4px oklch(0 0 0 / 0.18));
     padding: 0;
     cursor: pointer;
-    z-index: 1;
+    z-index: 2;
     transition:
         background var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-cartoon-punch, var(--ease-standard)),
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
@@ -215,9 +248,11 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 
 .segmented-dot:hover,
 .segmented-dot:focus-visible {
-    background: var(--surface-tint-40);
-    transform: translate(50%, -50%) scale(1.2);
-    box-shadow: 0 2px 6px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+    /* the float-dot lifts toward the key-light on hover (the cartoon punch). */
+    transform: translate(50%, -50%) scale(1.18);
+    box-shadow:
+        var(--glass-material-rim),
+        var(--shadow-cartoon-md, 0 3px 7px oklch(0 0 0 / 0.22));
 }
 
 .segmented-dot:focus-visible {
@@ -225,12 +260,22 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     box-shadow: var(--focus-ring-shadow);
 }
 
+/* per-state tints — a translucent wash of the lifecycle hue over the warm
+   glass (the dot stays glassy; build-trap-(d) 0-alpha is oklch(.../0)). */
 .segmented-cell[data-state="active"] .segmented-dot {
-    background: color-mix(in srgb, var(--accent, var(--foreground)) 60%, var(--surface-tint-15));
+    background: color-mix(
+        in oklab,
+        var(--accent, var(--foreground)) 55%,
+        var(--glass-bg-floating)
+    );
 }
 
 .segmented-cell[data-state="completed"] .segmented-dot {
-    background: color-mix(in srgb, var(--success, var(--foreground)) 70%, var(--surface-tint-15));
+    background: color-mix(
+        in oklab,
+        var(--success, var(--foreground)) 60%,
+        var(--glass-bg-floating)
+    );
 }
 
 /* Screen-reader-only span baked into the dot button. */

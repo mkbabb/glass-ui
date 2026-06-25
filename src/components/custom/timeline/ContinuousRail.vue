@@ -31,7 +31,7 @@ defineProps<{
 
 <template>
     <div
-        class="continuous-track"
+        class="continuous-track timeline-rail"
         role="progressbar"
         :aria-valuemin="0"
         :aria-valuemax="segments.length"
@@ -78,15 +78,16 @@ defineProps<{
 </template>
 
 <style scoped>
+/* The continuous rail COMPOSES `.timeline-rail` (warm-glass, from the
+   dispatcher's shared register) — RETIRES the private `--surface-tint-6` +
+   `--glass-blur-wash` gray recipe 1:1. This scoped block carries ONLY the
+   continuous-local layout. Height = the √φ ladder BASE (continuous is the
+   loudest, the bar). The stitched-gradient regions (geometry.ts, byte-
+   untouched) paint INSIDE the warm rail now. */
 .continuous-track {
-    position: relative;
     width: 100%;
-    height: var(--timeline-continuous-height, 12px);
-    border-radius: var(--radius-pill);
-    background: var(--surface-tint-6);
+    height: var(--timeline-h, var(--timeline-continuous-height, 0.75rem));
     overflow: hidden;
-    backdrop-filter: var(--glass-blur-wash);
-    -webkit-backdrop-filter: var(--glass-blur-wash);
 }
 
 .continuous-region {
@@ -98,7 +99,6 @@ defineProps<{
         width var(--duration-slow, 0.45s) var(--ease-out, ease-out),
         left var(--duration-slow, 0.45s) var(--ease-out, ease-out),
         background var(--duration-fast, 0.2s) var(--ease-standard, ease);
-    will-change: width, left, background;
 }
 
 /* AC.W9 (B2) — fill child WINDOWS into the ONE rail-spanning stitched

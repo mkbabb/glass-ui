@@ -45,6 +45,6 @@ const defaultAttrs = { inputmode: 'decimal' as const }
   <NumberFieldInput
     v-bind="{ ...defaultAttrs, ...$attrs }"
     data-slot="input"
-    :class="cn('input-pill rounded-field px-9 py-2 text-center', controlSizeClass(props.size))"
+    :class="cn('input-pill glass-control-edge rounded-field px-9 py-2 text-center', controlSizeClass(props.size))"
   />
 </template>

@@ -74,6 +74,6 @@ const elementAttrs = computed(() => ({
     data-slot="textarea"
     v-bind="{ ...$attrs, ...elementAttrs }"
     :data-autosize="autosize ? '' : undefined"
-    :class="cn('input-pill [--control-surface-bg:var(--input-on-glass)] rounded-field py-2', controlSizeClass(props.size), autosize ? '' : 'min-h-20', props.class)"
+    :class="cn('input-pill glass-control-edge [--control-surface-bg:var(--input-on-glass)] rounded-field py-2', controlSizeClass(props.size), autosize ? '' : 'min-h-20', props.class)"
   />
 </template>

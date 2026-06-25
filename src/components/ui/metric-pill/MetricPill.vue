@@ -50,7 +50,15 @@ const props = withDefaults(
     },
 );
 
-const composedClass = computed(() => cn("metric-pill", props.class));
+// BD.W-GLASS-ATOM-REGISTER — the MetricPill is a `.glass-atom` consumer (DRY): it
+// composes the shared warm-glass capsule register + the loud cel cast (the metric
+// pill is a cast FLAGSHIP — it lights the cartoon stamp by default, `data-cast`).
+// The press-squish + the keyed rim ride the register; the K5 dark white-flip is
+// fixed UPSTREAM at `--cartoon-ink` (BD.W-CARTOON-CEL-INK), no recipe edit here.
+// This clears the ≥2-consumer overfit bar alongside `<Badge surface="glass">`.
+const composedClass = computed(() =>
+    cn("metric-pill glass-atom", props.class),
+);
 </script>
 
 <template>
@@ -65,5 +73,6 @@ const composedClass = computed(() => cn("metric-pill", props.class));
         :label-position="labelPosition"
         :class="composedClass"
         :data-density="density"
+        data-cast
     />
 </template>

@@ -21,7 +21,19 @@ defineOptions({
 })
 
 const props = withDefaults(
-  defineProps<SelectContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(),
+  defineProps<SelectContentProps & {
+    class?: HTMLAttributes['class']
+    surface?: Surface
+    /**
+     * BD.W-SELECT-WELL — the route's warm-field HUE re-emitted onto the portalled
+     * menu so it transmits its route identity even though it escapes to <body>
+     * (the page field stops at the route root; the portal does not). The menu-local
+     * `.glass-field-portal` spine reads this `--field-h`. A forms route resolves 48
+     * (terracotta); a feedback route a different warm hue — so each dropdown reads as
+     * different warm glass, none gray. Unset → the select.css `--field-h: 48` floor.
+     */
+    fieldHue?: number
+  }>(),
   {
     position: 'popper',
     // BC.W-DROPDOWN-FIX — the panel's left edge tracks the trigger's left edge
@@ -39,13 +51,20 @@ const props = withDefaults(
 const emits = defineEmits<SelectContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, surface: __, ...delegated } = props
+  const { class: _, surface: __, fieldHue: ___, ...delegated } = props
 
   return delegated
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 const dockContext = useOptionalDockContext()
+
+// BD.W-SELECT-WELL — re-emit the route's warm-field hue onto the portalled menu.
+// Only writes `--field-h` when the consumer supplies it (a bare Select inherits the
+// select.css `--field-h: 48` floor); `data-field-palette` is a paint-inert marker.
+const fieldStyle = computed(() =>
+  props.fieldHue != null ? { '--field-h': String(props.fieldHue) } : undefined,
+)
 </script>
 
 <template>
@@ -74,10 +93,19 @@ const dockContext = useOptionalDockContext()
         position === 'popper'
           && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
         surfaceClass(props.surface, 'floating'),
+        // BD.W-SELECT-WELL — the portal escapes the route's field to <body>, so the
+        // menu carries its OWN clipped warm field. `.glass-field-portal` (select.css)
+        // paints a 3-stop warm spine keyed to `--field-h` BEHIND the plate so the
+        // floating `backdrop-filter` finally has warm chroma to bend (the un-gray
+        // amplifier — the floor in select.css is the guarantee). The route re-emits
+        // its own `--field-h` via the `:style` below; absent that it floors to 48
+        // (forms terracotta) so a bare Select still reads warm.
+        'glass-field-portal',
         '[--overlay-pad-inline:--spacing(1)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)]',
         props.class,
       )
       "
+      :style="fieldStyle"
     >
       <SelectScrollUpButton />
       <SelectViewport :class="cn('px-(--overlay-pad-inline) py-(--overlay-pad-block) overflow-y-auto', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width)')">

@@ -18,23 +18,14 @@
 import { computed, type ComputedRef, type Ref } from "vue";
 import type { TimelineSegment, TimelineSegmentGradient } from "./types";
 
-// ─── Per-segment gradient + fill helpers ──────────────────────────────────
-
-/**
- * Resolve a segment's gradient declaration to a CSS background expression.
- * - `string` (raw CSS): consumed verbatim — caller controls direction.
- * - `{from, to}` pair: expanded to `linear-gradient(90deg, from, to)`.
- * - undefined: falls through to the `--timeline-segment-default-gradient`
- *   token (consumer can override on the primitive or via a section-tone).
- */
-export function gradientFor(seg: TimelineSegment): string {
-    if (typeof seg.gradient === "string") return seg.gradient;
-    if (seg.gradient && typeof seg.gradient === "object") {
-        const g = seg.gradient as TimelineSegmentGradient;
-        return `linear-gradient(90deg, ${g.from}, ${g.to})`;
-    }
-    return "var(--timeline-segment-default-gradient, linear-gradient(90deg, var(--surface-tint-15), var(--surface-tint-25)))";
-}
+// ─── Per-segment fill helper ──────────────────────────────────────────────
+//
+// BD.W-TIMELINE-RAIL-UNIFY (LEG 1) — the opaque `gradientFor(seg)` `chart-*`
+// cel fill is RETIRED (no consumer left): the segmented cels are now tinted
+// GLASS over the warm rail (`.timeline-cel` + the per-segment `--cel-accent`
+// the SFC derives from the gradient `to`). The stitched continuous gradient
+// keeps its own `stitchColorFor`/`stitchedRailGradient` path below. No alias,
+// no legacy.
 
 /**
  * Fill percentage per state. Explicit `progress` wins; otherwise the

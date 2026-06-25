@@ -46,10 +46,17 @@ const delegatedProps = computed(() => {
 
 const forwardedProps = useForwardProps(delegatedProps)
 
+// BD.W-SELECT-WELL — the trigger composes the SHARED control register over the warm
+// field: `.control-surface` (the bg/border REST register, control-surfaces.css) +
+// `.glass-control-edge` (the keyed two-stop warm rim, select.css — fixes the
+// box-shadow:none cream-on-cream melt so the trigger reads as a lifted glass plate
+// with a defined warm edge over the field) + `.glass-capsule-hover` (the SHIPPED
+// specular-lift hover/press step, glass-capsule.css — the "ready to open" lift the
+// flat cream pill lacked). The ghost variant stays transparent/no-edge.
 const variantClass = computed(() =>
   props.variant === 'ghost'
     ? 'bg-transparent border-none shadow-none'
-    : 'control-surface',
+    : 'control-surface glass-control-edge glass-capsule-hover',
 )
 
 // AX.W51 D18 — the trigger HEIGHT rides the `--control-h-*` comfort cohort (the
@@ -123,7 +130,12 @@ const fontRungStyle = computed(() => {
   >
     <slot />
     <SelectIcon as-child>
-      <ChevronDown class="transition-transform duration-200 ease-standard [&[data-state=open]]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
+      <!-- BD.W-SELECT-WELL — the chevron joins the panel's spring + punch clock
+           (kill the 200ms ease-standard fork that desynced from the 0.4s welling
+           panel) so trigger + panel move as ONE liquid gesture. The `rotate`
+           longhand (not `transform`) composes with any other transform. Reads the
+           SHIPPED `--ease-cartoon-punch` (PRM re-aliases it to non-overshoot). -->
+      <ChevronDown class="[transition:rotate_var(--spring-snappy-duration)_var(--ease-cartoon-punch)] [&[data-state=open]]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
     </SelectIcon>
   </SelectTrigger>
 </template>

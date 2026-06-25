@@ -50,8 +50,23 @@ export const buttonVariants = cva(
         // one-deep-REFRACTIVE-register-per-route budget binds the `:liquid` SVG lens,
         // NOT the deep-blur tier — several deep-glass CTAs are fine, only one `:liquid`
         // lens per route).
+        // BD.W-BUTTON-GLASS-CONSUME — the gray dies at the SOURCE. The inline
+        // near-gray `hover:bg-*`/`active:bg-*`/`aria-pressed:bg-*` fill chains +
+        // the per-variant `hover:scale-*` are DELETED (clean break, no alias) and
+        // the variant COMPOSES the ONE shared `.glass-capsule` (the warm-floor lit
+        // lozenge fill + rim + lift, glass/glass-capsule.css) + `.glass-capsule-hover`
+        // (the specular catch-light bloom + 1.5% scale lift + press-snap). `.glass-wash`
+        // STAYS — it is the moving-specular `::before` gleam carrier the `v-specular`
+        // directive writes to (material.css `.glass-wash::before`) + the
+        // `--glass-specular-intensity-hover` bump; the capsule owns no `::before`.
+        // `.btn-glass` STAYS — it is the single backdrop owner (`--glass-blur-btn`,
+        // the A7 double-backdrop resolve) + the depth rim/under-shadow; `.glass-deep`
+        // re-points it to `--glass-blur-deep` (the apple.com-nav-grade hero blur). The
+        // capsule's warm fill wins over `.glass-wash`'s background by source order
+        // (glass-capsule.css @import-s after material.css). The variant KEY is a public
+        // contract — kept; only the class strings collapse. Buttons own NO material.
         default:
-          'glass-wash btn-glass glass-deep text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
+          'glass-wash btn-glass glass-deep glass-capsule glass-capsule-hover text-foreground',
         // BA.W-GLASS-CAL (H2a) — the disco RETIRED. `primary-audacious` collapses
         // onto the calm glass-first register: the `glass-wash btn-glass` surface (the
         // real 10px glass blur + the `--glass-specular` edge catch-light gleam from
@@ -65,16 +80,27 @@ export const buttonVariants = cva(
         // BC.W-BUTTON-GLASS-IOS (BG-IOS-2) — the hero CTA on the deep-glass register
         // (see `default` above); the `--scale-hover-btn` lift still distinguishes it as
         // the deliberate primary CTA.
+        // BD.W-BUTTON-GLASS-CONSUME — the hero CTA on the SHARED capsule + the
+        // opt-in `.btn-punch` cartoon tier (default-on, §4b). The special 1.05
+        // `--scale-hover-btn` is DROPPED — `primary-audacious` reads as the hero via
+        // the deep blur (`glass-deep`) + the PUNCH (anticipation + over-inflation +
+        // moving inked cast), not a one-off hover scale; the universal
+        // `.glass-capsule-hover` lift applies. `.btn-punch` (btn.css) re-targets the
+        // press at the louder fenced amplitude + composes the BD.W-CARTOON-CASTER
+        // inert cast (emitted by Button.vue).
         'primary-audacious':
-          'glass-wash btn-glass glass-deep text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
-        // BA.W-GLASS-CAL (H2a) — `gold-audacious` keeps the STATIC warm-gold tint (the
-        // at-rest 8%-gold linear-gradient wash over the glass surface, the AW.W13
-        // rest-text contract: rest text is the warm-ink `--foreground`) + the
-        // `--glass-specular` edge catch-light, MINUS the animated gold sweep + sparkle.
-        // The static wash + edge catch-light is hinge H2 arm (a): gold survives CALM.
-        // The gold tint rides a `background-image` over the `btn-glass` backdrop.
+          'glass-wash btn-glass glass-deep glass-capsule glass-capsule-hover btn-punch text-foreground',
+        // BD.W-BUTTON-GLASS-CONSUME — the static `background-image` gold PLATE is
+        // DELETED (clean break, no alias). The gold now reads in the GLEAM, not a flat
+        // gradient slab: `--glass-accent: var(--color-gold)` drives the catch-light core
+        // (material.css `--glass-specular-core` OKLab-mixes toward `--glass-accent` at
+        // `--glass-accent-strength`), so the warm-gold reads in the specular core + the
+        // rim glint where the pointer grazes — a gold lit lozenge, not a plate. The
+        // shared warm-floor capsule is the base; `.btn-punch` (default-on) gives the
+        // hero CTA its cartoon weight. `--glass-accent-strength` lifts the accent off
+        // the dormant default so the gold actually reads.
         'gold-audacious':
-          'glass-wash btn-glass text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_10%,transparent),color-mix(in_srgb,var(--color-gold-light)_6%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_10%,transparent))] hover:bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-gold)_16%,transparent),color-mix(in_srgb,var(--color-gold-light)_10%,transparent)_50%,color-mix(in_srgb,var(--color-gold)_16%,transparent))] hover:scale-(--scale-hover-btn) aria-pressed:scale-(--scale-press-btn)',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover btn-punch text-foreground [--glass-accent:var(--color-gold)] [--glass-accent-strength:32%]',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
         // BC.W-BUTTON-GLASS-IOS (move 7 / BG-IOS-6 — the de-shadcn A6 reskin). The
@@ -91,16 +117,28 @@ export const buttonVariants = cva(
         // public-prop break). reka behavior is INVIOLATE (only the class strings reskin).
         // `outline` is the glass-WELL: the quiet glass tier + the warm rim, the lit-
         // control hover deepening toward the resting rung.
+        // BD.W-BUTTON-GLASS-CONSUME — the de-shadcn quiet triplet composes the SHARED
+        // capsule (the gray inline `hover:bg-*`/`active:bg-*` chains DELETED). Prominence
+        // by TINT not slab: NO `glass-deep` (they stay at `--glass-blur-btn`, quieter
+        // than the hero's `--glass-blur-deep`), and `--glass-capsule-fill` is set to the
+        // QUIET tinted rung — the forward-compat selected/fill knob the AUGMENT-1 A6
+        // capsule token-expose consumes (a clean no-op until the capsule reads it; the
+        // ONE source, no fork). The warm rim/border stays via `--glass-border-*`.
         outline:
-          'glass-wash btn-glass text-foreground border-(--glass-border-floating) hover:bg-(--glass-bg-quiet-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-resting-tinted) active:border-(--glass-border-floating) aria-pressed:bg-(--glass-bg-resting-tinted)',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover text-foreground border-(--glass-border-floating) [--glass-capsule-fill:var(--glass-bg-quiet-tinted)]',
         // `secondary` — a quiet glass tier (the subordinate glass register).
         secondary:
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-quiet-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-resting-tinted) aria-pressed:bg-(--glass-bg-resting-tinted)',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover text-foreground [--glass-capsule-fill:var(--glass-bg-quiet-tinted)]',
         // `accent` — the glass tier with a faint warm rim (a notch warmer than secondary).
         accent:
-          'glass-wash btn-glass text-foreground border-(--glass-border-resting) hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-floating) active:bg-(--glass-bg-floating-tinted) aria-pressed:bg-(--glass-bg-resting-tinted)',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover text-foreground border-(--glass-border-resting) [--glass-capsule-fill:var(--glass-bg-quiet-tinted)]',
+        // BD.W-BUTTON-GLASS-CONSUME — `ghost` stays INK-first at rest (transparent,
+        // no glass plate — the quietest tier) but composes `.glass-capsule-hover` so
+        // even the quietest button answers the "better hover" ask with the universal
+        // scale lift (the specular bloom is inert without a glass `::before`, by design;
+        // the ink-bg hover carries the affordance). KEEP the four-state ink chain.
         ghost:
-          'bg-transparent text-foreground/70 hover:bg-foreground/8 hover:text-foreground active:bg-foreground/12 aria-pressed:bg-foreground/10 aria-pressed:text-foreground',
+          'glass-capsule-hover bg-transparent text-foreground/70 hover:bg-foreground/8 hover:text-foreground active:bg-foreground/12 aria-pressed:bg-foreground/10 aria-pressed:text-foreground',
         // AW.W22 — glass / glass-wash inherit the moving specular + edge rim
         // from the unified `.glass-material` mixin via the `glass-wash` ladder
         // rung they already compose (the per-component `glass-specular-track`
@@ -116,11 +154,20 @@ export const buttonVariants = cva(
         // glass button variants actually READ as liquid glass (live readback found
         // them at a negligible blur(1px)). The wash TILE tier keeps its 1px.
         // BB.W-BUTTON-GLASS (a) — same oklab-tinted hover/active re-point as `default`.
+        // BD.W-BUTTON-GLASS-CONSUME — `glass` is the mid-prominence glass register
+        // (the `default` recipe minus `glass-deep` — calmer blur). Composes the SHARED
+        // capsule; the inline gray fill chains DELETED.
         glass:
-          'glass-wash btn-glass text-foreground hover:bg-(--glass-bg-resting-tinted) hover:border-(--glass-border-resting) active:bg-(--glass-bg-floating-tinted) active:border-(--glass-border-floating) aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting-tinted))]',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover text-foreground',
         'glass-wash':
           'glass-wash btn-glass text-foreground/70 hover:bg-foreground/[0.04] hover:border-(--surface-tint-22) hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
-        ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',
+        // BD.W-BUTTON-GLASS-CONSUME — `ai` joins the SHARED glass register with an
+        // AMBER accent in the gleam (the prior opaque `bg-amber-500/*` palette fills
+        // DELETED). The amber reads in the catch-light core + rim glint (the same
+        // accent axis `gold-audacious` uses), not a flat amber slab. The accent is a
+        // warm oklch (build-trap-(d) safe — a warm color, never bare `transparent`).
+        // The amber ink stays for the label; the glass warmth carries the surface.
+        ai: 'glass-wash btn-glass glass-capsule glass-capsule-hover text-amber-700 dark:text-amber-400 [--glass-accent:oklch(0.78_0.14_75)] [--glass-accent-strength:34%]',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
       },
       size: {

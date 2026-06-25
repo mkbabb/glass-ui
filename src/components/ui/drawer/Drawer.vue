@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { DialogRoot } from 'reka-ui'
-import { computed, ref, toRef, watch } from 'vue'
-import type { DrawerDirection, DrawerMode } from './index'
+import { computed, ref, toRef, watch, onScopeDispose } from 'vue'
+import type { DrawerDirection, DrawerMode, DrawerStage } from './index'
 import { resolveDefaultSnapPoints } from './constants'
 import { provideDrawerSnapContext } from './composables/drawerSnapContext'
 
@@ -13,17 +13,31 @@ import { provideDrawerSnapContext } from './composables/drawerSnapContext'
  * owns the snap math vaul used to own.
  *
  * `mode` — additive shorthand (AN.W3). `"modal"` (default) keeps the iOS scale-down
- * look: `modal: true` (reka focus-traps + page-occludes). `"live-behind"` is the
- * non-modal peek/half/full bottom sheet — `modal: false` (no focus trap, no page
- * `aria-hidden`, page-behind stays interactive — reka delivers this natively),
- * `shouldScaleBackground: false`, and the direction-derived snap ladder. Every prop
- * the mode sets is still overridable by an explicit prop — `mode` only supplies
- * defaults.
+ * look: `modal: true` (reka focus-traps + page-occludes) + `stage: "scale"` (the page
+ * recedes). `"live-behind"` is the non-modal peek/half/full bottom sheet — `modal:
+ * false` (no focus trap, no page `aria-hidden`, page-behind stays interactive — reka
+ * delivers this natively), `stage: "none"`, and the direction-derived snap ladder.
+ * Every prop the mode sets is still overridable by an explicit prop — `mode` only
+ * supplies defaults.
  *
- * The snap props (`snapPoints`/`activeSnapPoint`/`direction`/`shouldScaleBackground`)
- * are HOUSE props now (they were vaul's `DrawerRootProps` surface — preserved by
- * shape so the consumer binding is byte-identical, but resolved by the house engine,
- * not forwarded to reka, which knows only `open`/`defaultOpen`/`modal`).
+ * The snap props (`snapPoints`/`activeSnapPoint`/`direction`) are HOUSE props now
+ * (they were vaul's `DrawerRootProps` surface — preserved by shape so the consumer
+ * binding is byte-identical, but resolved by the house engine, not forwarded to reka,
+ * which knows only `open`/`defaultOpen`/`modal`).
+ *
+ * BD.W-OVERLAY-STAGE-COUPLE — `stage` is the honest scene-staging enum that RETIRES
+ * the dead `shouldScaleBackground` boolean (clean break, no alias — the old boolean
+ * was read by NOTHING, `#app transform: none` at every detent):
+ *   • `none`      — no staging (the live-behind peek sheet leaves the page untouched).
+ *   • `dim`       — the scrim deepens with the detent; the page does NOT transform
+ *                   (the PRM-safe luminance-only depth cue; also the `scale` degrade).
+ *   • `scale`     — `dim` + the page RECEDES + SCALES (the iOS card-recede depth cue).
+ *   • `immersive` — `scale` + the scrim's backdrop-blur ENGAGES (the spotlight).
+ * Under `prefers-reduced-motion: reduce`, `scale`/`immersive` degrade to `dim` (no
+ * page transform — a full-page snap-scale IS perceived motion, fold C1·R6). The enum
+ * toggles `data-stage-scale` / `data-stage-immersive` on the page-wrapper marker
+ * (`[data-stage-wrapper]`, mounted by the consumer/demo shell) while the sheet is
+ * open; the `--stage-t` scalar the snap engine writes at `:root` drives the couplings.
  */
 const props = withDefaults(
   defineProps<{
@@ -41,8 +55,13 @@ const props = withDefaults(
     activeSnapPoint?: number | string | null
     /** Drag/slide axis (BB-2 default-ladder source). */
     direction?: DrawerDirection
-    /** iOS page scale-down on open (the modal look). Defaulted by `mode`. */
-    shouldScaleBackground?: boolean
+    /**
+     * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum (retires the dead
+     * `shouldScaleBackground`). `none` leaves the page untouched (the live-behind
+     * default); `dim` deepens the scrim only; `scale` recedes + scales the page;
+     * `immersive` adds the backdrop-blur engage. Defaulted by `mode`.
+     */
+    stage?: DrawerStage
   }>(),
   {
     mode: 'modal',
@@ -52,7 +71,7 @@ const props = withDefaults(
     snapPoints: undefined,
     activeSnapPoint: undefined,
     direction: 'bottom',
-    shouldScaleBackground: undefined,
+    stage: undefined,
   },
 )
 
@@ -87,6 +106,43 @@ const resolvedOpen = computed(() => (isControlled.value ? props.open! : localOpe
 // `mode` defaults — every value is still overridable by an explicit prop.
 const live = computed(() => props.mode === 'live-behind')
 const resolvedModal = computed(() => props.modal ?? (live.value ? false : true))
+
+// BD.W-OVERLAY-STAGE-COUPLE — the resolved stage. `modal` defaults to `scale` (the
+// iOS card-recede look the dead `shouldScaleBackground` only pretended to do);
+// `live-behind` defaults to `none` (the peek sheet leaves the page interactive +
+// untouched). An explicit `stage` always wins. Under PRM, `scale`/`immersive`
+// degrade to `dim` — a full-page snap-scale is perceived motion (fold C1·R6).
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+const resolvedStage = computed<DrawerStage>(() => {
+  const base = props.stage ?? (live.value ? 'none' : 'scale')
+  if (prefersReducedMotion && (base === 'scale' || base === 'immersive')) return 'dim'
+  return base
+})
+
+// Toggle the page-wrapper gates (`data-stage-scale` / `data-stage-immersive`) on the
+// consumer's `[data-stage-wrapper]` marker while the sheet is open. The `--stage-t`
+// scalar the snap engine writes at `:root` drives the actual recede; these attrs are
+// the per-stage GATES (so a `none`/`dim` drawer never moves the page — a real
+// no-op, no longer the `shouldScaleBackground` lie). Cleared on close.
+function syncStageGates(open: boolean) {
+  if (typeof document === 'undefined') return
+  const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
+  const scrim = document.querySelector('[data-stage-scrim]') as HTMLElement | null
+  const wantScale = open && (resolvedStage.value === 'scale' || resolvedStage.value === 'immersive')
+  const wantImmersive = open && resolvedStage.value === 'immersive'
+  if (wrapper) wrapper.toggleAttribute('data-stage-scale', wantScale)
+  // the immersive backdrop-blur engage rides the scrim element (one-shot, gated).
+  if (scrim) scrim.toggleAttribute('data-stage-immersive', wantImmersive)
+}
+watch(
+  () => resolvedOpen.value,
+  (open) => syncStageGates(open),
+  { immediate: true },
+)
+watch(resolvedStage, () => syncStageGates(resolvedOpen.value))
+onScopeDispose(() => syncStageGates(false))
 
 // BB-2 — the direction-aware default snap ladder. A consumer-supplied `snapPoints`
 // wins; otherwise the engine resolves it from `direction` (bottom/top →

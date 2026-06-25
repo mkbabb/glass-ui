@@ -24,10 +24,21 @@ export type DrawerDirection = "top" | "bottom" | "left" | "right";
  * focus-trapped (reka `:modal="true"`), page-behind scaled. `"live-behind"` is the
  * non-modal peek/half/full bottom sheet — reka `:modal="false"` (no focus trap, no
  * page `aria-hidden`, page-behind at native size + interactive) — bundling the
- * `modal:false` + `shouldScaleBackground:false` + the direction-derived snap ladder.
- * Explicit props still override the mode's defaults.
+ * `modal:false` + `stage:"none"` + the direction-derived snap ladder. Explicit props
+ * still override the mode's defaults.
  */
 export type DrawerMode = "modal" | "live-behind";
+
+/**
+ * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum (retires the dead
+ * `shouldScaleBackground` boolean, clean break). `none` leaves the page untouched;
+ * `dim` deepens the scrim only (the PRM-safe luminance depth cue); `scale` recedes +
+ * scales the page (the iOS card-recede); `immersive` adds the backdrop-blur engage.
+ * `modal` defaults to `scale`; `live-behind` to `none`. PRM degrades `scale`/
+ * `immersive` to `dim`. All four couplings ride the ONE `--stage-t` scalar the snap
+ * engine writes at `:root`.
+ */
+export type DrawerStage = "none" | "dim" | "scale" | "immersive";
 
 export { default as Drawer } from "./Drawer.vue";
 export { default as DrawerOverlay } from "./DrawerOverlay.vue";

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { ref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 import {
     Carousel,
     CarouselContent,
@@ -39,6 +39,37 @@ const stories = [
 // so the story wires count/active/@select rather than the prior auto-inject).
 const heroApi = ref<CarouselApi>();
 const heroIndex = ref(0);
+
+// BD.W-CAROUSEL-DECK-GLASS §5 — the AUTO-ADVANCE driver (the calm-auto-motion exerciser).
+// A plain interval `scrollNext`s the hero carousel — NO embla-autoplay dep (KISS). The
+// auto-advance is PROGRAMMATIC (no DOM gesture), so CarouselContent reads it as ambient and
+// stamps `data-autoplay` on the goo host → `--motion-weight: 0` mutes the cartoon punch
+// (calm). A real swipe/Next/keyboard dispatches a pointerdown/keydown → the weighty driver
+// punch returns. The timer pauses while the pointer is over the carousel (intent to read)
+// and respects reduced-motion (no ambient drift).
+const AUTOPLAY_MS = 3800;
+let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function startAutoplay() {
+    if (autoplayTimer || prefersReducedMotion) return;
+    autoplayTimer = setInterval(() => {
+        const api = heroApi.value;
+        if (!api) return;
+        if (api.canScrollNext()) api.scrollNext();
+        else api.scrollTo(0);
+    }, AUTOPLAY_MS);
+}
+function stopAutoplay() {
+    if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+    }
+}
+onBeforeUnmount(stopAutoplay);
+
 function setHeroApi(api: CarouselApi | undefined) {
     if (!api) return;
     heroApi.value = api;
@@ -46,6 +77,7 @@ function setHeroApi(api: CarouselApi | undefined) {
     api.on("select", () => {
         heroIndex.value = api.selectedScrollSnap();
     });
+    startAutoplay();
 }
 
 const pagerApi = ref<CarouselApi>();
@@ -96,6 +128,10 @@ function setApi(api: CarouselApi | undefined) {
                 <Carousel
                     class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4"
                     @init-api="setHeroApi"
+                    @pointerenter="stopAutoplay"
+                    @pointerleave="startAutoplay"
+                    @focusin="stopAutoplay"
+                    @focusout="startAutoplay"
                 >
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">

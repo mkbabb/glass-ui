@@ -49,7 +49,14 @@ const indicator = computed<'start' | 'none'>(() =>
          (the AN.W4 decorative-glyph discipline). -->
     <span v-if="indicator !== 'none'" aria-hidden="true" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectItemIndicator>
-        <span class="inline-block w-2 h-2 rounded-pill" style="background-color: var(--select-dot-color, currentColor)"></span>
+        <!-- BD.W-SELECT-WELL — the selected dot keys to the warm `--glass-accent`
+             axis (the SAME chromatic axis cards/tabs/the row-chip read) so the
+             selected dot + the warm-accent row read as ONE warm event, not a gray
+             tick. `--select-dot-color` stays the consumer override; its default
+             now resolves the accent (falling to currentColor when `--glass-accent`
+             is the neutral transparent identity). The dot stays aria-hidden
+             decorative — reka's `aria-selected` is the a11y truth (untouched). -->
+        <span class="inline-block w-2 h-2 rounded-pill" style="background-color: var(--select-dot-color, var(--glass-accent, currentColor))"></span>
       </SelectItemIndicator>
     </span>
 
