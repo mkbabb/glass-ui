@@ -22,7 +22,7 @@ actually works AND is beautiful.
 | D2 | **Metallic background everywhere** → wants AURORA per page | `paper.css .paper-field` conic-gradient cel-sheen + 4 high-chroma radials + `--paper-grain-tooth` feTurbulence speckle @0.22 | D-field-aurora |
 | D3 | **Red/maroon shadow-cast halo** around docks; **card corners don't clip**; **dock bottom-left aliasing** | `.cartoon-cast` child reads `--shadow-cartoon-*`/`--cartoon-ink` mis-tuned warm→red; glass-surface radius vs overflow/backdrop-filter clip | D-aliasing-clip |
 | D4 | **Titles no longer scroll-and-shrink** (ScrollCard register dead) | scroll timeline source / @supports / regressed selector | D-scroll-topbar |
-| D5 | **Aberrative bar at top of every page** | the `.demo-scroll-progress .scroll-progress` or a stray gradient | D-scroll-topbar |
+| D5 | **A preposterous full-width horizontal line on every page** (user screenshot 2026-06-25) | the `.demo-scroll-progress` reading rail: `.scroll-progress` references its named scroll-timeline via `scroll(--demo-main-progress block)`, but `scroll()` takes only root/nearest/self → invalid → `animation-timeline: auto` → the `scaleX(0→1)` fills instantly → stuck full-width. Fix: `animation-timeline: var(--scroll-progress-scroller, scroll(root block))` + scaleX(0) base | D5-scroll-progress-bar-confirmed → WS1 BG.W-SCROLL-PROGRESS-RAIL |
 | D6 | **/substrates previews broken** | viz canvas sizing / substrate arm / offscreen-pause / field occlusion | D-previews-dockscroll |
 | D7 | **Configurator drawer broken** | gear trigger / event wiring / Sheet / the dock-rework collateral | D-configurator |
 | D8 | **Persistent ℱ brand section** atop V+H dock useless → REMOVE | shell dock #persistent slot | D-dock-morph |
